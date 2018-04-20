@@ -12,17 +12,19 @@
  * details.
  */
 
-package com.liferay.commerce.user.segment.constants;
+package com.liferay.commerce.user.segment.model;
 
 /**
- * @author Marco Leo
+ * @author Andrea Di Giorgi
  */
-public class CommerceUserSegmentConstants {
+public class CommerceUserSegmentCriterionConstants {
 
-	public static final String RESOURCE_NAME =
-		"com.liferay.commerce.user.segment";
+	public static final String TYPE_ORGANIZATION = "organization";
 
-	public static final String SERVICE_NAME =
-		"com.liferay.commerce.user.segment";
+	public static final String TYPE_ROLE = "role";
+
+	public static final String TYPE_USER = "user";
+
+	public static final String TYPE_USER_GROUP = "user-group";
 
 }

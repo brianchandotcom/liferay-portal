@@ -44,7 +44,7 @@ public class KaleoTimerSoap implements Serializable {
 		soapModel.setKaleoClassPK(model.getKaleoClassPK());
 		soapModel.setKaleoDefinitionVersionId(model.getKaleoDefinitionVersionId());
 		soapModel.setName(model.getName());
-		soapModel.setBlocking(model.getBlocking());
+		soapModel.setBlocking(model.isBlocking());
 		soapModel.setDescription(model.getDescription());
 		soapModel.setDuration(model.getDuration());
 		soapModel.setScale(model.getScale());

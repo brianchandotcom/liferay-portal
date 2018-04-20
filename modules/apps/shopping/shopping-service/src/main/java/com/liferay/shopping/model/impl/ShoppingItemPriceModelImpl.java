@@ -153,9 +153,9 @@ public class ShoppingItemPriceModelImpl extends BaseModelImpl<ShoppingItemPrice>
 		attributes.put("maxQuantity", getMaxQuantity());
 		attributes.put("price", getPrice());
 		attributes.put("discount", getDiscount());
-		attributes.put("taxable", getTaxable());
+		attributes.put("taxable", isTaxable());
 		attributes.put("shipping", getShipping());
-		attributes.put("useShippingFormula", getUseShippingFormula());
+		attributes.put("useShippingFormula", isUseShippingFormula());
 		attributes.put("status", getStatus());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
@@ -406,9 +406,9 @@ public class ShoppingItemPriceModelImpl extends BaseModelImpl<ShoppingItemPrice>
 		shoppingItemPriceImpl.setMaxQuantity(getMaxQuantity());
 		shoppingItemPriceImpl.setPrice(getPrice());
 		shoppingItemPriceImpl.setDiscount(getDiscount());
-		shoppingItemPriceImpl.setTaxable(getTaxable());
+		shoppingItemPriceImpl.setTaxable(isTaxable());
 		shoppingItemPriceImpl.setShipping(getShipping());
-		shoppingItemPriceImpl.setUseShippingFormula(getUseShippingFormula());
+		shoppingItemPriceImpl.setUseShippingFormula(isUseShippingFormula());
 		shoppingItemPriceImpl.setStatus(getStatus());
 
 		shoppingItemPriceImpl.resetOriginalValues();
@@ -517,11 +517,11 @@ public class ShoppingItemPriceModelImpl extends BaseModelImpl<ShoppingItemPrice>
 
 		shoppingItemPriceCacheModel.discount = getDiscount();
 
-		shoppingItemPriceCacheModel.taxable = getTaxable();
+		shoppingItemPriceCacheModel.taxable = isTaxable();
 
 		shoppingItemPriceCacheModel.shipping = getShipping();
 
-		shoppingItemPriceCacheModel.useShippingFormula = getUseShippingFormula();
+		shoppingItemPriceCacheModel.useShippingFormula = isUseShippingFormula();
 
 		shoppingItemPriceCacheModel.status = getStatus();
 
@@ -547,11 +547,11 @@ public class ShoppingItemPriceModelImpl extends BaseModelImpl<ShoppingItemPrice>
 		sb.append(", discount=");
 		sb.append(getDiscount());
 		sb.append(", taxable=");
-		sb.append(getTaxable());
+		sb.append(isTaxable());
 		sb.append(", shipping=");
 		sb.append(getShipping());
 		sb.append(", useShippingFormula=");
-		sb.append(getUseShippingFormula());
+		sb.append(isUseShippingFormula());
 		sb.append(", status=");
 		sb.append(getStatus());
 		sb.append("}");
@@ -597,7 +597,7 @@ public class ShoppingItemPriceModelImpl extends BaseModelImpl<ShoppingItemPrice>
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>taxable</column-name><column-value><![CDATA[");
-		sb.append(getTaxable());
+		sb.append(isTaxable());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>shipping</column-name><column-value><![CDATA[");
@@ -605,7 +605,7 @@ public class ShoppingItemPriceModelImpl extends BaseModelImpl<ShoppingItemPrice>
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>useShippingFormula</column-name><column-value><![CDATA[");
-		sb.append(getUseShippingFormula());
+		sb.append(isUseShippingFormula());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>status</column-name><column-value><![CDATA[");

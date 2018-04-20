@@ -215,10 +215,10 @@ public class BlogsEntryPersistenceTest {
 		Assert.assertEquals(Time.getShortTimestamp(
 				existingBlogsEntry.getDisplayDate()),
 			Time.getShortTimestamp(newBlogsEntry.getDisplayDate()));
-		Assert.assertEquals(existingBlogsEntry.getAllowPingbacks(),
-			newBlogsEntry.getAllowPingbacks());
-		Assert.assertEquals(existingBlogsEntry.getAllowTrackbacks(),
-			newBlogsEntry.getAllowTrackbacks());
+		Assert.assertEquals(existingBlogsEntry.isAllowPingbacks(),
+			newBlogsEntry.isAllowPingbacks());
+		Assert.assertEquals(existingBlogsEntry.isAllowTrackbacks(),
+			newBlogsEntry.isAllowTrackbacks());
 		Assert.assertEquals(existingBlogsEntry.getTrackbacks(),
 			newBlogsEntry.getTrackbacks());
 		Assert.assertEquals(existingBlogsEntry.getCoverImageCaption(),
@@ -227,8 +227,8 @@ public class BlogsEntryPersistenceTest {
 			newBlogsEntry.getCoverImageFileEntryId());
 		Assert.assertEquals(existingBlogsEntry.getCoverImageURL(),
 			newBlogsEntry.getCoverImageURL());
-		Assert.assertEquals(existingBlogsEntry.getSmallImage(),
-			newBlogsEntry.getSmallImage());
+		Assert.assertEquals(existingBlogsEntry.isSmallImage(),
+			newBlogsEntry.isSmallImage());
 		Assert.assertEquals(existingBlogsEntry.getSmallImageFileEntryId(),
 			newBlogsEntry.getSmallImageFileEntryId());
 		Assert.assertEquals(existingBlogsEntry.getSmallImageId(),

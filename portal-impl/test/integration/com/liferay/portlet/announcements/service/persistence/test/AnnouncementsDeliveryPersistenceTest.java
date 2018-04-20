@@ -142,12 +142,12 @@ public class AnnouncementsDeliveryPersistenceTest {
 			newAnnouncementsDelivery.getUserId());
 		Assert.assertEquals(existingAnnouncementsDelivery.getType(),
 			newAnnouncementsDelivery.getType());
-		Assert.assertEquals(existingAnnouncementsDelivery.getEmail(),
-			newAnnouncementsDelivery.getEmail());
-		Assert.assertEquals(existingAnnouncementsDelivery.getSms(),
-			newAnnouncementsDelivery.getSms());
-		Assert.assertEquals(existingAnnouncementsDelivery.getWebsite(),
-			newAnnouncementsDelivery.getWebsite());
+		Assert.assertEquals(existingAnnouncementsDelivery.isEmail(),
+			newAnnouncementsDelivery.isEmail());
+		Assert.assertEquals(existingAnnouncementsDelivery.isSms(),
+			newAnnouncementsDelivery.isSms());
+		Assert.assertEquals(existingAnnouncementsDelivery.isWebsite(),
+			newAnnouncementsDelivery.isWebsite());
 	}
 
 	@Test

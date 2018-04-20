@@ -64,11 +64,11 @@ public class UserWrapper implements User, ModelWrapper<User> {
 		attributes.put("companyId", getCompanyId());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
-		attributes.put("defaultUser", getDefaultUser());
+		attributes.put("defaultUser", isDefaultUser());
 		attributes.put("contactId", getContactId());
 		attributes.put("password", getPassword());
-		attributes.put("passwordEncrypted", getPasswordEncrypted());
-		attributes.put("passwordReset", getPasswordReset());
+		attributes.put("passwordEncrypted", isPasswordEncrypted());
+		attributes.put("passwordReset", isPasswordReset());
 		attributes.put("passwordModifiedDate", getPasswordModifiedDate());
 		attributes.put("digest", getDigest());
 		attributes.put("reminderQueryQuestion", getReminderQueryQuestion());
@@ -95,10 +95,10 @@ public class UserWrapper implements User, ModelWrapper<User> {
 		attributes.put("lastLoginIP", getLastLoginIP());
 		attributes.put("lastFailedLoginDate", getLastFailedLoginDate());
 		attributes.put("failedLoginAttempts", getFailedLoginAttempts());
-		attributes.put("lockout", getLockout());
+		attributes.put("lockout", isLockout());
 		attributes.put("lockoutDate", getLockoutDate());
-		attributes.put("agreedToTermsOfUse", getAgreedToTermsOfUse());
-		attributes.put("emailAddressVerified", getEmailAddressVerified());
+		attributes.put("agreedToTermsOfUse", isAgreedToTermsOfUse());
+		attributes.put("emailAddressVerified", isEmailAddressVerified());
 		attributes.put("status", getStatus());
 
 		return attributes;

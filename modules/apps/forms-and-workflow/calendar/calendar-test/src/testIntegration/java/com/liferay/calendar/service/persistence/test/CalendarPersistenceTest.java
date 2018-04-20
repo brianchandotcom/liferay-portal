@@ -185,12 +185,12 @@ public class CalendarPersistenceTest {
 		Assert.assertEquals(existingCalendar.getTimeZoneId(),
 			newCalendar.getTimeZoneId());
 		Assert.assertEquals(existingCalendar.getColor(), newCalendar.getColor());
-		Assert.assertEquals(existingCalendar.getDefaultCalendar(),
-			newCalendar.getDefaultCalendar());
-		Assert.assertEquals(existingCalendar.getEnableComments(),
-			newCalendar.getEnableComments());
-		Assert.assertEquals(existingCalendar.getEnableRatings(),
-			newCalendar.getEnableRatings());
+		Assert.assertEquals(existingCalendar.isDefaultCalendar(),
+			newCalendar.isDefaultCalendar());
+		Assert.assertEquals(existingCalendar.isEnableComments(),
+			newCalendar.isEnableComments());
+		Assert.assertEquals(existingCalendar.isEnableRatings(),
+			newCalendar.isEnableRatings());
 		Assert.assertEquals(Time.getShortTimestamp(
 				existingCalendar.getLastPublishDate()),
 			Time.getShortTimestamp(newCalendar.getLastPublishDate()));

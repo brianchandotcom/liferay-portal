@@ -234,7 +234,7 @@ public class PhoneModelImpl extends BaseModelImpl<Phone> implements PhoneModel {
 		attributes.put("number", getNumber());
 		attributes.put("extension", getExtension());
 		attributes.put("typeId", getTypeId());
-		attributes.put("primary", getPrimary());
+		attributes.put("primary", isPrimary());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -671,7 +671,7 @@ public class PhoneModelImpl extends BaseModelImpl<Phone> implements PhoneModel {
 		phoneImpl.setNumber(getNumber());
 		phoneImpl.setExtension(getExtension());
 		phoneImpl.setTypeId(getTypeId());
-		phoneImpl.setPrimary(getPrimary());
+		phoneImpl.setPrimary(isPrimary());
 
 		phoneImpl.resetOriginalValues();
 
@@ -827,7 +827,7 @@ public class PhoneModelImpl extends BaseModelImpl<Phone> implements PhoneModel {
 
 		phoneCacheModel.typeId = getTypeId();
 
-		phoneCacheModel.primary = getPrimary();
+		phoneCacheModel.primary = isPrimary();
 
 		return phoneCacheModel;
 	}
@@ -863,7 +863,7 @@ public class PhoneModelImpl extends BaseModelImpl<Phone> implements PhoneModel {
 		sb.append(", typeId=");
 		sb.append(getTypeId());
 		sb.append(", primary=");
-		sb.append(getPrimary());
+		sb.append(isPrimary());
 		sb.append("}");
 
 		return sb.toString();
@@ -931,7 +931,7 @@ public class PhoneModelImpl extends BaseModelImpl<Phone> implements PhoneModel {
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>primary</column-name><column-value><![CDATA[");
-		sb.append(getPrimary());
+		sb.append(isPrimary());
 		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");

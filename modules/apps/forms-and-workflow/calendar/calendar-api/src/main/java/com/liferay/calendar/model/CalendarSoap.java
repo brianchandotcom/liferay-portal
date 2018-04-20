@@ -47,9 +47,9 @@ public class CalendarSoap implements Serializable {
 		soapModel.setDescription(model.getDescription());
 		soapModel.setTimeZoneId(model.getTimeZoneId());
 		soapModel.setColor(model.getColor());
-		soapModel.setDefaultCalendar(model.getDefaultCalendar());
-		soapModel.setEnableComments(model.getEnableComments());
-		soapModel.setEnableRatings(model.getEnableRatings());
+		soapModel.setDefaultCalendar(model.isDefaultCalendar());
+		soapModel.setEnableComments(model.isEnableComments());
+		soapModel.setEnableRatings(model.isEnableRatings());
 		soapModel.setLastPublishDate(model.getLastPublishDate());
 
 		return soapModel;

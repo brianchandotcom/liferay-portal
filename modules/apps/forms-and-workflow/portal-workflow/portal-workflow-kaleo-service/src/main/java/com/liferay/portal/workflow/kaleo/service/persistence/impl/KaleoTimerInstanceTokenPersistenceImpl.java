@@ -978,7 +978,7 @@ public class KaleoTimerInstanceTokenPersistenceImpl extends BasePersistenceImpl<
 			if ((list != null) && !list.isEmpty()) {
 				for (KaleoTimerInstanceToken kaleoTimerInstanceToken : list) {
 					if ((kaleoInstanceTokenId != kaleoTimerInstanceToken.getKaleoInstanceTokenId()) ||
-							(completed != kaleoTimerInstanceToken.getCompleted())) {
+							(completed != kaleoTimerInstanceToken.isCompleted())) {
 						list = null;
 
 						break;
@@ -1552,8 +1552,8 @@ public class KaleoTimerInstanceTokenPersistenceImpl extends BasePersistenceImpl<
 			if ((list != null) && !list.isEmpty()) {
 				for (KaleoTimerInstanceToken kaleoTimerInstanceToken : list) {
 					if ((kaleoInstanceTokenId != kaleoTimerInstanceToken.getKaleoInstanceTokenId()) ||
-							(blocking != kaleoTimerInstanceToken.getBlocking()) ||
-							(completed != kaleoTimerInstanceToken.getCompleted())) {
+							(blocking != kaleoTimerInstanceToken.isBlocking()) ||
+							(completed != kaleoTimerInstanceToken.isCompleted())) {
 						list = null;
 
 						break;
@@ -2326,7 +2326,7 @@ public class KaleoTimerInstanceTokenPersistenceImpl extends BasePersistenceImpl<
 
 			args = new Object[] {
 					kaleoTimerInstanceTokenModelImpl.getKaleoInstanceTokenId(),
-					kaleoTimerInstanceTokenModelImpl.getCompleted()
+					kaleoTimerInstanceTokenModelImpl.isCompleted()
 				};
 
 			finderCache.removeResult(FINDER_PATH_COUNT_BY_KITI_C, args);
@@ -2335,8 +2335,8 @@ public class KaleoTimerInstanceTokenPersistenceImpl extends BasePersistenceImpl<
 
 			args = new Object[] {
 					kaleoTimerInstanceTokenModelImpl.getKaleoInstanceTokenId(),
-					kaleoTimerInstanceTokenModelImpl.getBlocking(),
-					kaleoTimerInstanceTokenModelImpl.getCompleted()
+					kaleoTimerInstanceTokenModelImpl.isBlocking(),
+					kaleoTimerInstanceTokenModelImpl.isCompleted()
 				};
 
 			finderCache.removeResult(FINDER_PATH_COUNT_BY_KITI_B_C, args);

@@ -231,7 +231,7 @@ public class AppModelImpl extends BaseModelImpl<App> implements AppModel {
 		attributes.put("category", getCategory());
 		attributes.put("iconURL", getIconURL());
 		attributes.put("version", getVersion());
-		attributes.put("required", getRequired());
+		attributes.put("required", isRequired());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -635,7 +635,7 @@ public class AppModelImpl extends BaseModelImpl<App> implements AppModel {
 		appImpl.setCategory(getCategory());
 		appImpl.setIconURL(getIconURL());
 		appImpl.setVersion(getVersion());
-		appImpl.setRequired(getRequired());
+		appImpl.setRequired(isRequired());
 
 		appImpl.resetOriginalValues();
 
@@ -801,7 +801,7 @@ public class AppModelImpl extends BaseModelImpl<App> implements AppModel {
 			appCacheModel.version = null;
 		}
 
-		appCacheModel.required = getRequired();
+		appCacheModel.required = isRequired();
 
 		return appCacheModel;
 	}
@@ -837,7 +837,7 @@ public class AppModelImpl extends BaseModelImpl<App> implements AppModel {
 		sb.append(", version=");
 		sb.append(getVersion());
 		sb.append(", required=");
-		sb.append(getRequired());
+		sb.append(isRequired());
 		sb.append("}");
 
 		return sb.toString();
@@ -905,7 +905,7 @@ public class AppModelImpl extends BaseModelImpl<App> implements AppModel {
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>required</column-name><column-value><![CDATA[");
-		sb.append(getRequired());
+		sb.append(isRequired());
 		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");

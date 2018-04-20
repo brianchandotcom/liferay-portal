@@ -61,7 +61,7 @@ public class JournalContentSearchWrapper implements JournalContentSearch,
 		attributes.put("contentSearchId", getContentSearchId());
 		attributes.put("groupId", getGroupId());
 		attributes.put("companyId", getCompanyId());
-		attributes.put("privateLayout", getPrivateLayout());
+		attributes.put("privateLayout", isPrivateLayout());
 		attributes.put("layoutId", getLayoutId());
 		attributes.put("portletId", getPortletId());
 		attributes.put("articleId", getArticleId());

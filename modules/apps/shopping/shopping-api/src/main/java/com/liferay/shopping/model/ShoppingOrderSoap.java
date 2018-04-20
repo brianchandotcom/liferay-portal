@@ -45,8 +45,8 @@ public class ShoppingOrderSoap implements Serializable {
 		soapModel.setTax(model.getTax());
 		soapModel.setShipping(model.getShipping());
 		soapModel.setAltShipping(model.getAltShipping());
-		soapModel.setRequiresShipping(model.getRequiresShipping());
-		soapModel.setInsure(model.getInsure());
+		soapModel.setRequiresShipping(model.isRequiresShipping());
+		soapModel.setInsure(model.isInsure());
 		soapModel.setInsurance(model.getInsurance());
 		soapModel.setCouponCodes(model.getCouponCodes());
 		soapModel.setCouponDiscount(model.getCouponDiscount());
@@ -60,7 +60,7 @@ public class ShoppingOrderSoap implements Serializable {
 		soapModel.setBillingZip(model.getBillingZip());
 		soapModel.setBillingCountry(model.getBillingCountry());
 		soapModel.setBillingPhone(model.getBillingPhone());
-		soapModel.setShipToBilling(model.getShipToBilling());
+		soapModel.setShipToBilling(model.isShipToBilling());
 		soapModel.setShippingFirstName(model.getShippingFirstName());
 		soapModel.setShippingLastName(model.getShippingLastName());
 		soapModel.setShippingEmailAddress(model.getShippingEmailAddress());
@@ -83,8 +83,8 @@ public class ShoppingOrderSoap implements Serializable {
 		soapModel.setPpPaymentGross(model.getPpPaymentGross());
 		soapModel.setPpReceiverEmail(model.getPpReceiverEmail());
 		soapModel.setPpPayerEmail(model.getPpPayerEmail());
-		soapModel.setSendOrderEmail(model.getSendOrderEmail());
-		soapModel.setSendShippingEmail(model.getSendShippingEmail());
+		soapModel.setSendOrderEmail(model.isSendOrderEmail());
+		soapModel.setSendShippingEmail(model.isSendShippingEmail());
 
 		return soapModel;
 	}

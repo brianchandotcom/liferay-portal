@@ -296,8 +296,8 @@ public class KBArticleModelImpl extends BaseModelImpl<KBArticle>
 		attributes.put("priority", getPriority());
 		attributes.put("sections", getSections());
 		attributes.put("viewCount", getViewCount());
-		attributes.put("latest", getLatest());
-		attributes.put("main", getMain());
+		attributes.put("latest", isLatest());
+		attributes.put("main", isMain());
 		attributes.put("sourceURL", getSourceURL());
 		attributes.put("lastPublishDate", getLastPublishDate());
 		attributes.put("status", getStatus());
@@ -1185,8 +1185,8 @@ public class KBArticleModelImpl extends BaseModelImpl<KBArticle>
 		kbArticleImpl.setPriority(getPriority());
 		kbArticleImpl.setSections(getSections());
 		kbArticleImpl.setViewCount(getViewCount());
-		kbArticleImpl.setLatest(getLatest());
-		kbArticleImpl.setMain(getMain());
+		kbArticleImpl.setLatest(isLatest());
+		kbArticleImpl.setMain(isMain());
 		kbArticleImpl.setSourceURL(getSourceURL());
 		kbArticleImpl.setLastPublishDate(getLastPublishDate());
 		kbArticleImpl.setStatus(getStatus());
@@ -1405,9 +1405,9 @@ public class KBArticleModelImpl extends BaseModelImpl<KBArticle>
 
 		kbArticleCacheModel.viewCount = getViewCount();
 
-		kbArticleCacheModel.latest = getLatest();
+		kbArticleCacheModel.latest = isLatest();
 
-		kbArticleCacheModel.main = getMain();
+		kbArticleCacheModel.main = isMain();
 
 		kbArticleCacheModel.sourceURL = getSourceURL();
 
@@ -1497,9 +1497,9 @@ public class KBArticleModelImpl extends BaseModelImpl<KBArticle>
 		sb.append(", viewCount=");
 		sb.append(getViewCount());
 		sb.append(", latest=");
-		sb.append(getLatest());
+		sb.append(isLatest());
 		sb.append(", main=");
-		sb.append(getMain());
+		sb.append(isMain());
 		sb.append(", sourceURL=");
 		sb.append(getSourceURL());
 		sb.append(", lastPublishDate=");
@@ -1611,11 +1611,11 @@ public class KBArticleModelImpl extends BaseModelImpl<KBArticle>
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>latest</column-name><column-value><![CDATA[");
-		sb.append(getLatest());
+		sb.append(isLatest());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>main</column-name><column-value><![CDATA[");
-		sb.append(getMain());
+		sb.append(isMain());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>sourceURL</column-name><column-value><![CDATA[");

@@ -76,7 +76,7 @@ public class AnnouncementsEntryWrapper implements AnnouncementsEntry,
 		attributes.put("displayDate", getDisplayDate());
 		attributes.put("expirationDate", getExpirationDate());
 		attributes.put("priority", getPriority());
-		attributes.put("alert", getAlert());
+		attributes.put("alert", isAlert());
 
 		return attributes;
 	}

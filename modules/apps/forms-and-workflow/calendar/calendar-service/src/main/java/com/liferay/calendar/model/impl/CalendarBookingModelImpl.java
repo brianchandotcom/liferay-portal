@@ -301,7 +301,7 @@ public class CalendarBookingModelImpl extends BaseModelImpl<CalendarBooking>
 		attributes.put("location", getLocation());
 		attributes.put("startTime", getStartTime());
 		attributes.put("endTime", getEndTime());
-		attributes.put("allDay", getAllDay());
+		attributes.put("allDay", isAllDay());
 		attributes.put("recurrence", getRecurrence());
 		attributes.put("firstReminder", getFirstReminder());
 		attributes.put("firstReminderType", getFirstReminderType());
@@ -1535,7 +1535,7 @@ public class CalendarBookingModelImpl extends BaseModelImpl<CalendarBooking>
 		calendarBookingImpl.setLocation(getLocation());
 		calendarBookingImpl.setStartTime(getStartTime());
 		calendarBookingImpl.setEndTime(getEndTime());
-		calendarBookingImpl.setAllDay(getAllDay());
+		calendarBookingImpl.setAllDay(isAllDay());
 		calendarBookingImpl.setRecurrence(getRecurrence());
 		calendarBookingImpl.setFirstReminder(getFirstReminder());
 		calendarBookingImpl.setFirstReminderType(getFirstReminderType());
@@ -1747,7 +1747,7 @@ public class CalendarBookingModelImpl extends BaseModelImpl<CalendarBooking>
 
 		calendarBookingCacheModel.endTime = getEndTime();
 
-		calendarBookingCacheModel.allDay = getAllDay();
+		calendarBookingCacheModel.allDay = isAllDay();
 
 		calendarBookingCacheModel.recurrence = getRecurrence();
 
@@ -1851,7 +1851,7 @@ public class CalendarBookingModelImpl extends BaseModelImpl<CalendarBooking>
 		sb.append(", endTime=");
 		sb.append(getEndTime());
 		sb.append(", allDay=");
-		sb.append(getAllDay());
+		sb.append(isAllDay());
 		sb.append(", recurrence=");
 		sb.append(getRecurrence());
 		sb.append(", firstReminder=");
@@ -1959,7 +1959,7 @@ public class CalendarBookingModelImpl extends BaseModelImpl<CalendarBooking>
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>allDay</column-name><column-value><![CDATA[");
-		sb.append(getAllDay());
+		sb.append(isAllDay());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>recurrence</column-name><column-value><![CDATA[");

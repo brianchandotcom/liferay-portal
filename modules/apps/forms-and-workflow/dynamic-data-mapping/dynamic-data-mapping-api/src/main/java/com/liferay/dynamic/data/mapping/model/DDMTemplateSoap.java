@@ -55,8 +55,8 @@ public class DDMTemplateSoap implements Serializable {
 		soapModel.setMode(model.getMode());
 		soapModel.setLanguage(model.getLanguage());
 		soapModel.setScript(model.getScript());
-		soapModel.setCacheable(model.getCacheable());
-		soapModel.setSmallImage(model.getSmallImage());
+		soapModel.setCacheable(model.isCacheable());
+		soapModel.setSmallImage(model.isSmallImage());
 		soapModel.setSmallImageId(model.getSmallImageId());
 		soapModel.setSmallImageURL(model.getSmallImageURL());
 		soapModel.setLastPublishDate(model.getLastPublishDate());

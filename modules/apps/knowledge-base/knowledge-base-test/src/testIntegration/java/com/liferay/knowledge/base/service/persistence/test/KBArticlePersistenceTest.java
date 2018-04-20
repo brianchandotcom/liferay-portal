@@ -228,9 +228,9 @@ public class KBArticlePersistenceTest {
 			newKBArticle.getSections());
 		Assert.assertEquals(existingKBArticle.getViewCount(),
 			newKBArticle.getViewCount());
-		Assert.assertEquals(existingKBArticle.getLatest(),
-			newKBArticle.getLatest());
-		Assert.assertEquals(existingKBArticle.getMain(), newKBArticle.getMain());
+		Assert.assertEquals(existingKBArticle.isLatest(),
+			newKBArticle.isLatest());
+		Assert.assertEquals(existingKBArticle.isMain(), newKBArticle.isMain());
 		Assert.assertEquals(existingKBArticle.getSourceURL(),
 			newKBArticle.getSourceURL());
 		Assert.assertEquals(Time.getShortTimestamp(

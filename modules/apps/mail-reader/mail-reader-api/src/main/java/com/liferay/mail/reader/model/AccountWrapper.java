@@ -68,21 +68,21 @@ public class AccountWrapper implements Account, ModelWrapper<Account> {
 		attributes.put("protocol", getProtocol());
 		attributes.put("incomingHostName", getIncomingHostName());
 		attributes.put("incomingPort", getIncomingPort());
-		attributes.put("incomingSecure", getIncomingSecure());
+		attributes.put("incomingSecure", isIncomingSecure());
 		attributes.put("outgoingHostName", getOutgoingHostName());
 		attributes.put("outgoingPort", getOutgoingPort());
-		attributes.put("outgoingSecure", getOutgoingSecure());
+		attributes.put("outgoingSecure", isOutgoingSecure());
 		attributes.put("login", getLogin());
 		attributes.put("password", getPassword());
-		attributes.put("savePassword", getSavePassword());
+		attributes.put("savePassword", isSavePassword());
 		attributes.put("signature", getSignature());
-		attributes.put("useSignature", getUseSignature());
+		attributes.put("useSignature", isUseSignature());
 		attributes.put("folderPrefix", getFolderPrefix());
 		attributes.put("inboxFolderId", getInboxFolderId());
 		attributes.put("draftFolderId", getDraftFolderId());
 		attributes.put("sentFolderId", getSentFolderId());
 		attributes.put("trashFolderId", getTrashFolderId());
-		attributes.put("defaultSender", getDefaultSender());
+		attributes.put("defaultSender", isDefaultSender());
 
 		return attributes;
 	}

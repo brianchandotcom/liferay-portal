@@ -51,10 +51,10 @@ public class MBMessageSoap implements Serializable {
 		soapModel.setSubject(model.getSubject());
 		soapModel.setBody(model.getBody());
 		soapModel.setFormat(model.getFormat());
-		soapModel.setAnonymous(model.getAnonymous());
+		soapModel.setAnonymous(model.isAnonymous());
 		soapModel.setPriority(model.getPriority());
-		soapModel.setAllowPingbacks(model.getAllowPingbacks());
-		soapModel.setAnswer(model.getAnswer());
+		soapModel.setAllowPingbacks(model.isAllowPingbacks());
+		soapModel.setAnswer(model.isAnswer());
 		soapModel.setLastPublishDate(model.getLastPublishDate());
 		soapModel.setStatus(model.getStatus());
 		soapModel.setStatusByUserId(model.getStatusByUserId());

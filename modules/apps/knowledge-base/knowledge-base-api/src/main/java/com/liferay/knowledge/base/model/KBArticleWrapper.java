@@ -81,8 +81,8 @@ public class KBArticleWrapper implements KBArticle, ModelWrapper<KBArticle> {
 		attributes.put("priority", getPriority());
 		attributes.put("sections", getSections());
 		attributes.put("viewCount", getViewCount());
-		attributes.put("latest", getLatest());
-		attributes.put("main", getMain());
+		attributes.put("latest", isLatest());
+		attributes.put("main", isMain());
 		attributes.put("sourceURL", getSourceURL());
 		attributes.put("lastPublishDate", getLastPublishDate());
 		attributes.put("status", getStatus());

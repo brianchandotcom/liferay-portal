@@ -67,7 +67,7 @@ public class LayoutWrapper implements Layout, ModelWrapper<Layout> {
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
-		attributes.put("privateLayout", getPrivateLayout());
+		attributes.put("privateLayout", isPrivateLayout());
 		attributes.put("layoutId", getLayoutId());
 		attributes.put("parentLayoutId", getParentLayoutId());
 		attributes.put("name", getName());
@@ -77,7 +77,7 @@ public class LayoutWrapper implements Layout, ModelWrapper<Layout> {
 		attributes.put("robots", getRobots());
 		attributes.put("type", getType());
 		attributes.put("typeSettings", getTypeSettings());
-		attributes.put("hidden", getHidden());
+		attributes.put("hidden", isHidden());
 		attributes.put("friendlyURL", getFriendlyURL());
 		attributes.put("iconImageId", getIconImageId());
 		attributes.put("themeId", getThemeId());
@@ -86,7 +86,7 @@ public class LayoutWrapper implements Layout, ModelWrapper<Layout> {
 		attributes.put("priority", getPriority());
 		attributes.put("layoutPrototypeUuid", getLayoutPrototypeUuid());
 		attributes.put("layoutPrototypeLinkEnabled",
-			getLayoutPrototypeLinkEnabled());
+			isLayoutPrototypeLinkEnabled());
 		attributes.put("sourcePrototypeLayoutUuid",
 			getSourcePrototypeLayoutUuid());
 		attributes.put("lastPublishDate", getLastPublishDate());

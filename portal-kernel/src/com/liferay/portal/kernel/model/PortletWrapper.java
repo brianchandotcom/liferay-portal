@@ -60,7 +60,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 		attributes.put("companyId", getCompanyId());
 		attributes.put("portletId", getPortletId());
 		attributes.put("roles", getRoles());
-		attributes.put("active", getActive());
+		attributes.put("active", isActive());
 
 		return attributes;
 	}

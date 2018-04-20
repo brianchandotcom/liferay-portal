@@ -38,7 +38,7 @@ public class RegionSoap implements Serializable {
 		soapModel.setCountryId(model.getCountryId());
 		soapModel.setRegionCode(model.getRegionCode());
 		soapModel.setName(model.getName());
-		soapModel.setActive(model.getActive());
+		soapModel.setActive(model.isActive());
 
 		return soapModel;
 	}

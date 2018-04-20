@@ -234,7 +234,7 @@ public class WebsiteModelImpl extends BaseModelImpl<Website>
 		attributes.put("classPK", getClassPK());
 		attributes.put("url", getUrl());
 		attributes.put("typeId", getTypeId());
-		attributes.put("primary", getPrimary());
+		attributes.put("primary", isPrimary());
 		attributes.put("lastPublishDate", getLastPublishDate());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
@@ -666,7 +666,7 @@ public class WebsiteModelImpl extends BaseModelImpl<Website>
 		websiteImpl.setClassPK(getClassPK());
 		websiteImpl.setUrl(getUrl());
 		websiteImpl.setTypeId(getTypeId());
-		websiteImpl.setPrimary(getPrimary());
+		websiteImpl.setPrimary(isPrimary());
 		websiteImpl.setLastPublishDate(getLastPublishDate());
 
 		websiteImpl.resetOriginalValues();
@@ -815,7 +815,7 @@ public class WebsiteModelImpl extends BaseModelImpl<Website>
 
 		websiteCacheModel.typeId = getTypeId();
 
-		websiteCacheModel.primary = getPrimary();
+		websiteCacheModel.primary = isPrimary();
 
 		Date lastPublishDate = getLastPublishDate();
 
@@ -858,7 +858,7 @@ public class WebsiteModelImpl extends BaseModelImpl<Website>
 		sb.append(", typeId=");
 		sb.append(getTypeId());
 		sb.append(", primary=");
-		sb.append(getPrimary());
+		sb.append(isPrimary());
 		sb.append(", lastPublishDate=");
 		sb.append(getLastPublishDate());
 		sb.append("}");
@@ -924,7 +924,7 @@ public class WebsiteModelImpl extends BaseModelImpl<Website>
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>primary</column-name><column-value><![CDATA[");
-		sb.append(getPrimary());
+		sb.append(isPrimary());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>lastPublishDate</column-name><column-value><![CDATA[");

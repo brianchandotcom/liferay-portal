@@ -2976,7 +2976,7 @@ public class UserNotificationEventPersistenceImpl extends BasePersistenceImpl<Us
 			if ((list != null) && !list.isEmpty()) {
 				for (UserNotificationEvent userNotificationEvent : list) {
 					if ((userId != userNotificationEvent.getUserId()) ||
-							(delivered != userNotificationEvent.getDelivered())) {
+							(delivered != userNotificationEvent.isDelivered())) {
 						list = null;
 
 						break;
@@ -3527,7 +3527,7 @@ public class UserNotificationEventPersistenceImpl extends BasePersistenceImpl<Us
 			if ((list != null) && !list.isEmpty()) {
 				for (UserNotificationEvent userNotificationEvent : list) {
 					if ((userId != userNotificationEvent.getUserId()) ||
-							(archived != userNotificationEvent.getArchived())) {
+							(archived != userNotificationEvent.isArchived())) {
 						list = null;
 
 						break;
@@ -4092,7 +4092,7 @@ public class UserNotificationEventPersistenceImpl extends BasePersistenceImpl<Us
 				for (UserNotificationEvent userNotificationEvent : list) {
 					if ((userId != userNotificationEvent.getUserId()) ||
 							(deliveryType != userNotificationEvent.getDeliveryType()) ||
-							(delivered != userNotificationEvent.getDelivered())) {
+							(delivered != userNotificationEvent.isDelivered())) {
 						list = null;
 
 						break;
@@ -4688,7 +4688,7 @@ public class UserNotificationEventPersistenceImpl extends BasePersistenceImpl<Us
 				for (UserNotificationEvent userNotificationEvent : list) {
 					if ((userId != userNotificationEvent.getUserId()) ||
 							(deliveryType != userNotificationEvent.getDeliveryType()) ||
-							(archived != userNotificationEvent.getArchived())) {
+							(archived != userNotificationEvent.isArchived())) {
 						list = null;
 
 						break;
@@ -5282,8 +5282,8 @@ public class UserNotificationEventPersistenceImpl extends BasePersistenceImpl<Us
 			if ((list != null) && !list.isEmpty()) {
 				for (UserNotificationEvent userNotificationEvent : list) {
 					if ((userId != userNotificationEvent.getUserId()) ||
-							(delivered != userNotificationEvent.getDelivered()) ||
-							(actionRequired != userNotificationEvent.getActionRequired())) {
+							(delivered != userNotificationEvent.isDelivered()) ||
+							(actionRequired != userNotificationEvent.isActionRequired())) {
 						list = null;
 
 						break;
@@ -5879,8 +5879,8 @@ public class UserNotificationEventPersistenceImpl extends BasePersistenceImpl<Us
 			if ((list != null) && !list.isEmpty()) {
 				for (UserNotificationEvent userNotificationEvent : list) {
 					if ((userId != userNotificationEvent.getUserId()) ||
-							(actionRequired != userNotificationEvent.getActionRequired()) ||
-							(archived != userNotificationEvent.getArchived())) {
+							(actionRequired != userNotificationEvent.isActionRequired()) ||
+							(archived != userNotificationEvent.isArchived())) {
 						list = null;
 
 						break;
@@ -6486,7 +6486,7 @@ public class UserNotificationEventPersistenceImpl extends BasePersistenceImpl<Us
 							!Objects.equals(type,
 								userNotificationEvent.getType()) ||
 							(deliveryType != userNotificationEvent.getDeliveryType()) ||
-							(delivered != userNotificationEvent.getDelivered())) {
+							(delivered != userNotificationEvent.isDelivered())) {
 						list = null;
 
 						break;
@@ -7165,8 +7165,8 @@ public class UserNotificationEventPersistenceImpl extends BasePersistenceImpl<Us
 				for (UserNotificationEvent userNotificationEvent : list) {
 					if ((userId != userNotificationEvent.getUserId()) ||
 							(deliveryType != userNotificationEvent.getDeliveryType()) ||
-							(delivered != userNotificationEvent.getDelivered()) ||
-							(actionRequired != userNotificationEvent.getActionRequired())) {
+							(delivered != userNotificationEvent.isDelivered()) ||
+							(actionRequired != userNotificationEvent.isActionRequired())) {
 						list = null;
 
 						break;
@@ -7804,8 +7804,8 @@ public class UserNotificationEventPersistenceImpl extends BasePersistenceImpl<Us
 				for (UserNotificationEvent userNotificationEvent : list) {
 					if ((userId != userNotificationEvent.getUserId()) ||
 							(deliveryType != userNotificationEvent.getDeliveryType()) ||
-							(actionRequired != userNotificationEvent.getActionRequired()) ||
-							(archived != userNotificationEvent.getArchived())) {
+							(actionRequired != userNotificationEvent.isActionRequired()) ||
+							(archived != userNotificationEvent.isArchived())) {
 						list = null;
 
 						break;
@@ -8588,7 +8588,7 @@ public class UserNotificationEventPersistenceImpl extends BasePersistenceImpl<Us
 
 			args = new Object[] {
 					userNotificationEventModelImpl.getUserId(),
-					userNotificationEventModelImpl.getDelivered()
+					userNotificationEventModelImpl.isDelivered()
 				};
 
 			finderCache.removeResult(FINDER_PATH_COUNT_BY_U_D, args);
@@ -8597,7 +8597,7 @@ public class UserNotificationEventPersistenceImpl extends BasePersistenceImpl<Us
 
 			args = new Object[] {
 					userNotificationEventModelImpl.getUserId(),
-					userNotificationEventModelImpl.getArchived()
+					userNotificationEventModelImpl.isArchived()
 				};
 
 			finderCache.removeResult(FINDER_PATH_COUNT_BY_U_A, args);
@@ -8607,7 +8607,7 @@ public class UserNotificationEventPersistenceImpl extends BasePersistenceImpl<Us
 			args = new Object[] {
 					userNotificationEventModelImpl.getUserId(),
 					userNotificationEventModelImpl.getDeliveryType(),
-					userNotificationEventModelImpl.getDelivered()
+					userNotificationEventModelImpl.isDelivered()
 				};
 
 			finderCache.removeResult(FINDER_PATH_COUNT_BY_U_DT_D, args);
@@ -8617,7 +8617,7 @@ public class UserNotificationEventPersistenceImpl extends BasePersistenceImpl<Us
 			args = new Object[] {
 					userNotificationEventModelImpl.getUserId(),
 					userNotificationEventModelImpl.getDeliveryType(),
-					userNotificationEventModelImpl.getArchived()
+					userNotificationEventModelImpl.isArchived()
 				};
 
 			finderCache.removeResult(FINDER_PATH_COUNT_BY_U_DT_A, args);
@@ -8626,8 +8626,8 @@ public class UserNotificationEventPersistenceImpl extends BasePersistenceImpl<Us
 
 			args = new Object[] {
 					userNotificationEventModelImpl.getUserId(),
-					userNotificationEventModelImpl.getDelivered(),
-					userNotificationEventModelImpl.getActionRequired()
+					userNotificationEventModelImpl.isDelivered(),
+					userNotificationEventModelImpl.isActionRequired()
 				};
 
 			finderCache.removeResult(FINDER_PATH_COUNT_BY_U_D_A, args);
@@ -8636,8 +8636,8 @@ public class UserNotificationEventPersistenceImpl extends BasePersistenceImpl<Us
 
 			args = new Object[] {
 					userNotificationEventModelImpl.getUserId(),
-					userNotificationEventModelImpl.getActionRequired(),
-					userNotificationEventModelImpl.getArchived()
+					userNotificationEventModelImpl.isActionRequired(),
+					userNotificationEventModelImpl.isArchived()
 				};
 
 			finderCache.removeResult(FINDER_PATH_COUNT_BY_U_A_A, args);
@@ -8648,7 +8648,7 @@ public class UserNotificationEventPersistenceImpl extends BasePersistenceImpl<Us
 					userNotificationEventModelImpl.getUserId(),
 					userNotificationEventModelImpl.getType(),
 					userNotificationEventModelImpl.getDeliveryType(),
-					userNotificationEventModelImpl.getDelivered()
+					userNotificationEventModelImpl.isDelivered()
 				};
 
 			finderCache.removeResult(FINDER_PATH_COUNT_BY_U_T_DT_D, args);
@@ -8658,8 +8658,8 @@ public class UserNotificationEventPersistenceImpl extends BasePersistenceImpl<Us
 			args = new Object[] {
 					userNotificationEventModelImpl.getUserId(),
 					userNotificationEventModelImpl.getDeliveryType(),
-					userNotificationEventModelImpl.getDelivered(),
-					userNotificationEventModelImpl.getActionRequired()
+					userNotificationEventModelImpl.isDelivered(),
+					userNotificationEventModelImpl.isActionRequired()
 				};
 
 			finderCache.removeResult(FINDER_PATH_COUNT_BY_U_DT_D_A, args);
@@ -8669,8 +8669,8 @@ public class UserNotificationEventPersistenceImpl extends BasePersistenceImpl<Us
 			args = new Object[] {
 					userNotificationEventModelImpl.getUserId(),
 					userNotificationEventModelImpl.getDeliveryType(),
-					userNotificationEventModelImpl.getActionRequired(),
-					userNotificationEventModelImpl.getArchived()
+					userNotificationEventModelImpl.isActionRequired(),
+					userNotificationEventModelImpl.isArchived()
 				};
 
 			finderCache.removeResult(FINDER_PATH_COUNT_BY_U_DT_A_A, args);

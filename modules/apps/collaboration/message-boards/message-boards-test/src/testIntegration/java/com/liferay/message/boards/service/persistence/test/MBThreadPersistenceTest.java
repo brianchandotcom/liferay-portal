@@ -205,8 +205,8 @@ public class MBThreadPersistenceTest {
 			Time.getShortTimestamp(newMBThread.getLastPostDate()));
 		AssertUtils.assertEquals(existingMBThread.getPriority(),
 			newMBThread.getPriority());
-		Assert.assertEquals(existingMBThread.getQuestion(),
-			newMBThread.getQuestion());
+		Assert.assertEquals(existingMBThread.isQuestion(),
+			newMBThread.isQuestion());
 		Assert.assertEquals(Time.getShortTimestamp(
 				existingMBThread.getLastPublishDate()),
 			Time.getShortTimestamp(newMBThread.getLastPublishDate()));

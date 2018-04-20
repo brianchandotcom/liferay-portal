@@ -62,9 +62,9 @@ public class AnnouncementsDeliveryWrapper implements AnnouncementsDelivery,
 		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("type", getType());
-		attributes.put("email", getEmail());
-		attributes.put("sms", getSms());
-		attributes.put("website", getWebsite());
+		attributes.put("email", isEmail());
+		attributes.put("sms", isSms());
+		attributes.put("website", isWebsite());
 
 		return attributes;
 	}

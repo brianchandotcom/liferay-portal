@@ -170,7 +170,7 @@ public class SocialActivityCounterModelImpl extends BaseModelImpl<SocialActivity
 		attributes.put("graceValue", getGraceValue());
 		attributes.put("startPeriod", getStartPeriod());
 		attributes.put("endPeriod", getEndPeriod());
-		attributes.put("active", getActive());
+		attributes.put("active", isActive());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -544,7 +544,7 @@ public class SocialActivityCounterModelImpl extends BaseModelImpl<SocialActivity
 		socialActivityCounterImpl.setGraceValue(getGraceValue());
 		socialActivityCounterImpl.setStartPeriod(getStartPeriod());
 		socialActivityCounterImpl.setEndPeriod(getEndPeriod());
-		socialActivityCounterImpl.setActive(getActive());
+		socialActivityCounterImpl.setActive(isActive());
 
 		socialActivityCounterImpl.resetOriginalValues();
 
@@ -670,7 +670,7 @@ public class SocialActivityCounterModelImpl extends BaseModelImpl<SocialActivity
 
 		socialActivityCounterCacheModel.endPeriod = getEndPeriod();
 
-		socialActivityCounterCacheModel.active = getActive();
+		socialActivityCounterCacheModel.active = isActive();
 
 		return socialActivityCounterCacheModel;
 	}
@@ -704,7 +704,7 @@ public class SocialActivityCounterModelImpl extends BaseModelImpl<SocialActivity
 		sb.append(", endPeriod=");
 		sb.append(getEndPeriod());
 		sb.append(", active=");
-		sb.append(getActive());
+		sb.append(isActive());
 		sb.append("}");
 
 		return sb.toString();
@@ -768,7 +768,7 @@ public class SocialActivityCounterModelImpl extends BaseModelImpl<SocialActivity
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>active</column-name><column-value><![CDATA[");
-		sb.append(getActive());
+		sb.append(isActive());
 		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");

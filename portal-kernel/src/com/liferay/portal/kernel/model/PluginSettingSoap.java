@@ -39,7 +39,7 @@ public class PluginSettingSoap implements Serializable {
 		soapModel.setPluginId(model.getPluginId());
 		soapModel.setPluginType(model.getPluginType());
 		soapModel.setRoles(model.getRoles());
-		soapModel.setActive(model.getActive());
+		soapModel.setActive(model.isActive());
 
 		return soapModel;
 	}

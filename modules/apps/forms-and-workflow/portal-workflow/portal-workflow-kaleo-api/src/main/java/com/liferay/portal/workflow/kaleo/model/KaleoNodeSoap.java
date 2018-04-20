@@ -45,8 +45,8 @@ public class KaleoNodeSoap implements Serializable {
 		soapModel.setMetadata(model.getMetadata());
 		soapModel.setDescription(model.getDescription());
 		soapModel.setType(model.getType());
-		soapModel.setInitial(model.getInitial());
-		soapModel.setTerminal(model.getTerminal());
+		soapModel.setInitial(model.isInitial());
+		soapModel.setTerminal(model.isTerminal());
 
 		return soapModel;
 	}

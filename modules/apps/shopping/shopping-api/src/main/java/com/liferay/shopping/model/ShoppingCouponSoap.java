@@ -46,7 +46,7 @@ public class ShoppingCouponSoap implements Serializable {
 		soapModel.setDescription(model.getDescription());
 		soapModel.setStartDate(model.getStartDate());
 		soapModel.setEndDate(model.getEndDate());
-		soapModel.setActive(model.getActive());
+		soapModel.setActive(model.isActive());
 		soapModel.setLimitCategories(model.getLimitCategories());
 		soapModel.setLimitSkus(model.getLimitSkus());
 		soapModel.setMinOrder(model.getMinOrder());

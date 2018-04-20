@@ -46,7 +46,7 @@ public class EmailAddressSoap implements Serializable {
 		soapModel.setClassPK(model.getClassPK());
 		soapModel.setAddress(model.getAddress());
 		soapModel.setTypeId(model.getTypeId());
-		soapModel.setPrimary(model.getPrimary());
+		soapModel.setPrimary(model.isPrimary());
 
 		return soapModel;
 	}

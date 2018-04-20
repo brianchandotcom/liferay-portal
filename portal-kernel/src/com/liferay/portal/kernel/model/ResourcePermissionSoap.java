@@ -43,7 +43,7 @@ public class ResourcePermissionSoap implements Serializable {
 		soapModel.setRoleId(model.getRoleId());
 		soapModel.setOwnerId(model.getOwnerId());
 		soapModel.setActionIds(model.getActionIds());
-		soapModel.setViewActionId(model.getViewActionId());
+		soapModel.setViewActionId(model.isViewActionId());
 
 		return soapModel;
 	}

@@ -71,7 +71,7 @@ public class EmailAddressWrapper implements EmailAddress,
 		attributes.put("classPK", getClassPK());
 		attributes.put("address", getAddress());
 		attributes.put("typeId", getTypeId());
-		attributes.put("primary", getPrimary());
+		attributes.put("primary", isPrimary());
 
 		return attributes;
 	}

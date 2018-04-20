@@ -41,7 +41,7 @@ public class UserNotificationDeliverySoap implements Serializable {
 		soapModel.setClassNameId(model.getClassNameId());
 		soapModel.setNotificationType(model.getNotificationType());
 		soapModel.setDeliveryType(model.getDeliveryType());
-		soapModel.setDeliver(model.getDeliver());
+		soapModel.setDeliver(model.isDeliver());
 
 		return soapModel;
 	}

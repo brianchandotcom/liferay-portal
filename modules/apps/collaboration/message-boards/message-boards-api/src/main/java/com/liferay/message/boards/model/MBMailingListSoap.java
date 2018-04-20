@@ -46,19 +46,19 @@ public class MBMailingListSoap implements Serializable {
 		soapModel.setInProtocol(model.getInProtocol());
 		soapModel.setInServerName(model.getInServerName());
 		soapModel.setInServerPort(model.getInServerPort());
-		soapModel.setInUseSSL(model.getInUseSSL());
+		soapModel.setInUseSSL(model.isInUseSSL());
 		soapModel.setInUserName(model.getInUserName());
 		soapModel.setInPassword(model.getInPassword());
 		soapModel.setInReadInterval(model.getInReadInterval());
 		soapModel.setOutEmailAddress(model.getOutEmailAddress());
-		soapModel.setOutCustom(model.getOutCustom());
+		soapModel.setOutCustom(model.isOutCustom());
 		soapModel.setOutServerName(model.getOutServerName());
 		soapModel.setOutServerPort(model.getOutServerPort());
-		soapModel.setOutUseSSL(model.getOutUseSSL());
+		soapModel.setOutUseSSL(model.isOutUseSSL());
 		soapModel.setOutUserName(model.getOutUserName());
 		soapModel.setOutPassword(model.getOutPassword());
-		soapModel.setAllowAnonymous(model.getAllowAnonymous());
-		soapModel.setActive(model.getActive());
+		soapModel.setAllowAnonymous(model.isAllowAnonymous());
+		soapModel.setActive(model.isActive());
 
 		return soapModel;
 	}

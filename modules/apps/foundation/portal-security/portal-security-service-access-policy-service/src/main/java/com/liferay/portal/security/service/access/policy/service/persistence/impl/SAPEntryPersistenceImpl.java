@@ -3011,7 +3011,7 @@ public class SAPEntryPersistenceImpl extends BasePersistenceImpl<SAPEntry>
 			if ((list != null) && !list.isEmpty()) {
 				for (SAPEntry sapEntry : list) {
 					if ((companyId != sapEntry.getCompanyId()) ||
-							(defaultSAPEntry != sapEntry.getDefaultSAPEntry())) {
+							(defaultSAPEntry != sapEntry.isDefaultSAPEntry())) {
 						list = null;
 
 						break;
@@ -4405,7 +4405,7 @@ public class SAPEntryPersistenceImpl extends BasePersistenceImpl<SAPEntry>
 
 			args = new Object[] {
 					sapEntryModelImpl.getCompanyId(),
-					sapEntryModelImpl.getDefaultSAPEntry()
+					sapEntryModelImpl.isDefaultSAPEntry()
 				};
 
 			finderCache.removeResult(FINDER_PATH_COUNT_BY_C_D, args);

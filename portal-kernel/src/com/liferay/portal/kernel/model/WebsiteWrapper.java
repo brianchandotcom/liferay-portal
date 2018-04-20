@@ -70,7 +70,7 @@ public class WebsiteWrapper implements Website, ModelWrapper<Website> {
 		attributes.put("classPK", getClassPK());
 		attributes.put("url", getUrl());
 		attributes.put("typeId", getTypeId());
-		attributes.put("primary", getPrimary());
+		attributes.put("primary", isPrimary());
 		attributes.put("lastPublishDate", getLastPublishDate());
 
 		return attributes;

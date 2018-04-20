@@ -152,8 +152,8 @@ public class DLFileRankPersistenceTest {
 			Time.getShortTimestamp(newDLFileRank.getCreateDate()));
 		Assert.assertEquals(existingDLFileRank.getFileEntryId(),
 			newDLFileRank.getFileEntryId());
-		Assert.assertEquals(existingDLFileRank.getActive(),
-			newDLFileRank.getActive());
+		Assert.assertEquals(existingDLFileRank.isActive(),
+			newDLFileRank.isActive());
 	}
 
 	@Test

@@ -67,8 +67,8 @@ public class SAPEntryWrapper implements SAPEntry, ModelWrapper<SAPEntry> {
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("allowedServiceSignatures", getAllowedServiceSignatures());
-		attributes.put("defaultSAPEntry", getDefaultSAPEntry());
-		attributes.put("enabled", getEnabled());
+		attributes.put("defaultSAPEntry", isDefaultSAPEntry());
+		attributes.put("enabled", isEnabled());
 		attributes.put("name", getName());
 		attributes.put("title", getTitle());
 

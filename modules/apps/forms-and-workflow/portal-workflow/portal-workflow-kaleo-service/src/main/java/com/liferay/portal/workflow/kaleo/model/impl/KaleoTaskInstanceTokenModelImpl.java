@@ -185,7 +185,7 @@ public class KaleoTaskInstanceTokenModelImpl extends BaseModelImpl<KaleoTaskInst
 		attributes.put("className", getClassName());
 		attributes.put("classPK", getClassPK());
 		attributes.put("completionUserId", getCompletionUserId());
-		attributes.put("completed", getCompleted());
+		attributes.put("completed", isCompleted());
 		attributes.put("completionDate", getCompletionDate());
 		attributes.put("dueDate", getDueDate());
 		attributes.put("workflowContext", getWorkflowContext());
@@ -686,7 +686,7 @@ public class KaleoTaskInstanceTokenModelImpl extends BaseModelImpl<KaleoTaskInst
 		kaleoTaskInstanceTokenImpl.setClassName(getClassName());
 		kaleoTaskInstanceTokenImpl.setClassPK(getClassPK());
 		kaleoTaskInstanceTokenImpl.setCompletionUserId(getCompletionUserId());
-		kaleoTaskInstanceTokenImpl.setCompleted(getCompleted());
+		kaleoTaskInstanceTokenImpl.setCompleted(isCompleted());
 		kaleoTaskInstanceTokenImpl.setCompletionDate(getCompletionDate());
 		kaleoTaskInstanceTokenImpl.setDueDate(getDueDate());
 		kaleoTaskInstanceTokenImpl.setWorkflowContext(getWorkflowContext());
@@ -851,7 +851,7 @@ public class KaleoTaskInstanceTokenModelImpl extends BaseModelImpl<KaleoTaskInst
 
 		kaleoTaskInstanceTokenCacheModel.completionUserId = getCompletionUserId();
 
-		kaleoTaskInstanceTokenCacheModel.completed = getCompleted();
+		kaleoTaskInstanceTokenCacheModel.completed = isCompleted();
 
 		Date completionDate = getCompletionDate();
 
@@ -917,7 +917,7 @@ public class KaleoTaskInstanceTokenModelImpl extends BaseModelImpl<KaleoTaskInst
 		sb.append(", completionUserId=");
 		sb.append(getCompletionUserId());
 		sb.append(", completed=");
-		sb.append(getCompleted());
+		sb.append(isCompleted());
 		sb.append(", completionDate=");
 		sb.append(getCompletionDate());
 		sb.append(", dueDate=");
@@ -1000,7 +1000,7 @@ public class KaleoTaskInstanceTokenModelImpl extends BaseModelImpl<KaleoTaskInst
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>completed</column-name><column-value><![CDATA[");
-		sb.append(getCompleted());
+		sb.append(isCompleted());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>completionDate</column-name><column-value><![CDATA[");

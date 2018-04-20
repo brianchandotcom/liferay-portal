@@ -66,7 +66,7 @@ public class LayoutBranchWrapper implements LayoutBranch,
 		attributes.put("plid", getPlid());
 		attributes.put("name", getName());
 		attributes.put("description", getDescription());
-		attributes.put("master", getMaster());
+		attributes.put("master", isMaster());
 
 		return attributes;
 	}

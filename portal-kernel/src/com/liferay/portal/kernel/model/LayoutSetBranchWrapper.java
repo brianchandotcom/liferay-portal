@@ -65,10 +65,10 @@ public class LayoutSetBranchWrapper implements LayoutSetBranch,
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
-		attributes.put("privateLayout", getPrivateLayout());
+		attributes.put("privateLayout", isPrivateLayout());
 		attributes.put("name", getName());
 		attributes.put("description", getDescription());
-		attributes.put("master", getMaster());
+		attributes.put("master", isMaster());
 		attributes.put("logoId", getLogoId());
 		attributes.put("themeId", getThemeId());
 		attributes.put("colorSchemeId", getColorSchemeId());
@@ -76,7 +76,7 @@ public class LayoutSetBranchWrapper implements LayoutSetBranch,
 		attributes.put("settings", getSettings());
 		attributes.put("layoutSetPrototypeUuid", getLayoutSetPrototypeUuid());
 		attributes.put("layoutSetPrototypeLinkEnabled",
-			getLayoutSetPrototypeLinkEnabled());
+			isLayoutSetPrototypeLinkEnabled());
 
 		return attributes;
 	}

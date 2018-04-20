@@ -70,7 +70,7 @@ public class SocialActivityCounterWrapper implements SocialActivityCounter,
 		attributes.put("graceValue", getGraceValue());
 		attributes.put("startPeriod", getStartPeriod());
 		attributes.put("endPeriod", getEndPeriod());
-		attributes.put("active", getActive());
+		attributes.put("active", isActive());
 
 		return attributes;
 	}

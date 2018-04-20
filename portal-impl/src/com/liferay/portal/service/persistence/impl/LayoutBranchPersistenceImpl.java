@@ -1556,7 +1556,7 @@ public class LayoutBranchPersistenceImpl extends BasePersistenceImpl<LayoutBranc
 				for (LayoutBranch layoutBranch : list) {
 					if ((layoutSetBranchId != layoutBranch.getLayoutSetBranchId()) ||
 							(plid != layoutBranch.getPlid()) ||
-							(master != layoutBranch.getMaster())) {
+							(master != layoutBranch.isMaster())) {
 						list = null;
 
 						break;
@@ -2294,7 +2294,7 @@ public class LayoutBranchPersistenceImpl extends BasePersistenceImpl<LayoutBranc
 			args = new Object[] {
 					layoutBranchModelImpl.getLayoutSetBranchId(),
 					layoutBranchModelImpl.getPlid(),
-					layoutBranchModelImpl.getMaster()
+					layoutBranchModelImpl.isMaster()
 				};
 
 			finderCache.removeResult(FINDER_PATH_COUNT_BY_L_P_M, args);

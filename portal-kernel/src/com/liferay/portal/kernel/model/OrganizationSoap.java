@@ -46,7 +46,7 @@ public class OrganizationSoap implements Serializable {
 		soapModel.setTreePath(model.getTreePath());
 		soapModel.setName(model.getName());
 		soapModel.setType(model.getType());
-		soapModel.setRecursable(model.getRecursable());
+		soapModel.setRecursable(model.isRecursable());
 		soapModel.setRegionId(model.getRegionId());
 		soapModel.setCountryId(model.getCountryId());
 		soapModel.setStatusId(model.getStatusId());

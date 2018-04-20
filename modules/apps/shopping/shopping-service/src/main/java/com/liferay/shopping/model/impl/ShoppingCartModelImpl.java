@@ -161,7 +161,7 @@ public class ShoppingCartModelImpl extends BaseModelImpl<ShoppingCart>
 		attributes.put("itemIds", getItemIds());
 		attributes.put("couponCodes", getCouponCodes());
 		attributes.put("altShipping", getAltShipping());
-		attributes.put("insure", getInsure());
+		attributes.put("insure", isInsure());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -455,7 +455,7 @@ public class ShoppingCartModelImpl extends BaseModelImpl<ShoppingCart>
 		shoppingCartImpl.setItemIds(getItemIds());
 		shoppingCartImpl.setCouponCodes(getCouponCodes());
 		shoppingCartImpl.setAltShipping(getAltShipping());
-		shoppingCartImpl.setInsure(getInsure());
+		shoppingCartImpl.setInsure(isInsure());
 
 		shoppingCartImpl.resetOriginalValues();
 
@@ -587,7 +587,7 @@ public class ShoppingCartModelImpl extends BaseModelImpl<ShoppingCart>
 
 		shoppingCartCacheModel.altShipping = getAltShipping();
 
-		shoppingCartCacheModel.insure = getInsure();
+		shoppingCartCacheModel.insure = isInsure();
 
 		return shoppingCartCacheModel;
 	}
@@ -617,7 +617,7 @@ public class ShoppingCartModelImpl extends BaseModelImpl<ShoppingCart>
 		sb.append(", altShipping=");
 		sb.append(getAltShipping());
 		sb.append(", insure=");
-		sb.append(getInsure());
+		sb.append(isInsure());
 		sb.append("}");
 
 		return sb.toString();
@@ -673,7 +673,7 @@ public class ShoppingCartModelImpl extends BaseModelImpl<ShoppingCart>
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>insure</column-name><column-value><![CDATA[");
-		sb.append(getInsure());
+		sb.append(isInsure());
 		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");

@@ -199,10 +199,10 @@ public class AssetEntryPersistenceTest {
 			newAssetEntry.getClassUuid());
 		Assert.assertEquals(existingAssetEntry.getClassTypeId(),
 			newAssetEntry.getClassTypeId());
-		Assert.assertEquals(existingAssetEntry.getListable(),
-			newAssetEntry.getListable());
-		Assert.assertEquals(existingAssetEntry.getVisible(),
-			newAssetEntry.getVisible());
+		Assert.assertEquals(existingAssetEntry.isListable(),
+			newAssetEntry.isListable());
+		Assert.assertEquals(existingAssetEntry.isVisible(),
+			newAssetEntry.isVisible());
 		Assert.assertEquals(Time.getShortTimestamp(
 				existingAssetEntry.getStartDate()),
 			Time.getShortTimestamp(newAssetEntry.getStartDate()));

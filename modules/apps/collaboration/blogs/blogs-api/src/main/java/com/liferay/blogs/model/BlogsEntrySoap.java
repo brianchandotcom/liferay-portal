@@ -48,13 +48,13 @@ public class BlogsEntrySoap implements Serializable {
 		soapModel.setDescription(model.getDescription());
 		soapModel.setContent(model.getContent());
 		soapModel.setDisplayDate(model.getDisplayDate());
-		soapModel.setAllowPingbacks(model.getAllowPingbacks());
-		soapModel.setAllowTrackbacks(model.getAllowTrackbacks());
+		soapModel.setAllowPingbacks(model.isAllowPingbacks());
+		soapModel.setAllowTrackbacks(model.isAllowTrackbacks());
 		soapModel.setTrackbacks(model.getTrackbacks());
 		soapModel.setCoverImageCaption(model.getCoverImageCaption());
 		soapModel.setCoverImageFileEntryId(model.getCoverImageFileEntryId());
 		soapModel.setCoverImageURL(model.getCoverImageURL());
-		soapModel.setSmallImage(model.getSmallImage());
+		soapModel.setSmallImage(model.isSmallImage());
 		soapModel.setSmallImageFileEntryId(model.getSmallImageFileEntryId());
 		soapModel.setSmallImageId(model.getSmallImageId());
 		soapModel.setSmallImageURL(model.getSmallImageURL());

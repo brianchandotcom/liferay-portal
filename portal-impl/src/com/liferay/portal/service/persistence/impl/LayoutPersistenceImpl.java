@@ -4343,7 +4343,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 			if ((list != null) && !list.isEmpty()) {
 				for (Layout layout : list) {
 					if ((groupId != layout.getGroupId()) ||
-							(privateLayout != layout.getPrivateLayout())) {
+							(privateLayout != layout.isPrivateLayout())) {
 						list = null;
 
 						break;
@@ -7356,7 +7356,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 			if ((list != null) && !list.isEmpty()) {
 				for (Layout layout : list) {
 					if ((groupId != layout.getGroupId()) ||
-							(privateLayout != layout.getPrivateLayout()) ||
+							(privateLayout != layout.isPrivateLayout()) ||
 							(parentLayoutId != layout.getParentLayoutId())) {
 						list = null;
 
@@ -8344,7 +8344,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 			if ((list != null) && !list.isEmpty()) {
 				for (Layout layout : list) {
 					if ((groupId != layout.getGroupId()) ||
-							(privateLayout != layout.getPrivateLayout()) ||
+							(privateLayout != layout.isPrivateLayout()) ||
 							!ArrayUtil.contains(parentLayoutIds,
 								layout.getParentLayoutId())) {
 						list = null;
@@ -8878,7 +8878,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 			if ((list != null) && !list.isEmpty()) {
 				for (Layout layout : list) {
 					if ((groupId != layout.getGroupId()) ||
-							(privateLayout != layout.getPrivateLayout()) ||
+							(privateLayout != layout.isPrivateLayout()) ||
 							!Objects.equals(type, layout.getType())) {
 						list = null;
 
@@ -10524,7 +10524,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 			if ((list != null) && !list.isEmpty()) {
 				for (Layout layout : list) {
 					if ((groupId != layout.getGroupId()) ||
-							(privateLayout != layout.getPrivateLayout()) ||
+							(privateLayout != layout.isPrivateLayout()) ||
 							(parentLayoutId != layout.getParentLayoutId()) ||
 							(priority < layout.getPriority())) {
 						list = null;
@@ -11966,7 +11966,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 
 			args = new Object[] {
 					layoutModelImpl.getGroupId(),
-					layoutModelImpl.getPrivateLayout()
+					layoutModelImpl.isPrivateLayout()
 				};
 
 			finderCache.removeResult(FINDER_PATH_COUNT_BY_G_P, args);
@@ -11992,7 +11992,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 
 			args = new Object[] {
 					layoutModelImpl.getGroupId(),
-					layoutModelImpl.getPrivateLayout(),
+					layoutModelImpl.isPrivateLayout(),
 					layoutModelImpl.getParentLayoutId()
 				};
 
@@ -12002,8 +12002,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 
 			args = new Object[] {
 					layoutModelImpl.getGroupId(),
-					layoutModelImpl.getPrivateLayout(),
-					layoutModelImpl.getType()
+					layoutModelImpl.isPrivateLayout(), layoutModelImpl.getType()
 				};
 
 			finderCache.removeResult(FINDER_PATH_COUNT_BY_G_P_T, args);

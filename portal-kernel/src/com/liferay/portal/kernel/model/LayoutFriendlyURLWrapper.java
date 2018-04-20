@@ -69,7 +69,7 @@ public class LayoutFriendlyURLWrapper implements LayoutFriendlyURL,
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("plid", getPlid());
-		attributes.put("privateLayout", getPrivateLayout());
+		attributes.put("privateLayout", isPrivateLayout());
 		attributes.put("friendlyURL", getFriendlyURL());
 		attributes.put("languageId", getLanguageId());
 		attributes.put("lastPublishDate", getLastPublishDate());

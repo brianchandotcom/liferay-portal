@@ -160,12 +160,12 @@ public class ShoppingItemPricePersistenceTest {
 			newShoppingItemPrice.getPrice());
 		AssertUtils.assertEquals(existingShoppingItemPrice.getDiscount(),
 			newShoppingItemPrice.getDiscount());
-		Assert.assertEquals(existingShoppingItemPrice.getTaxable(),
-			newShoppingItemPrice.getTaxable());
+		Assert.assertEquals(existingShoppingItemPrice.isTaxable(),
+			newShoppingItemPrice.isTaxable());
 		AssertUtils.assertEquals(existingShoppingItemPrice.getShipping(),
 			newShoppingItemPrice.getShipping());
-		Assert.assertEquals(existingShoppingItemPrice.getUseShippingFormula(),
-			newShoppingItemPrice.getUseShippingFormula());
+		Assert.assertEquals(existingShoppingItemPrice.isUseShippingFormula(),
+			newShoppingItemPrice.isUseShippingFormula());
 		Assert.assertEquals(existingShoppingItemPrice.getStatus(),
 			newShoppingItemPrice.getStatus());
 	}

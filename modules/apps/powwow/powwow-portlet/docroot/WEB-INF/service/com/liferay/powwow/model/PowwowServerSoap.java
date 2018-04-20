@@ -44,7 +44,7 @@ public class PowwowServerSoap implements Serializable {
 		soapModel.setUrl(model.getUrl());
 		soapModel.setApiKey(model.getApiKey());
 		soapModel.setSecret(model.getSecret());
-		soapModel.setActive(model.getActive());
+		soapModel.setActive(model.isActive());
 
 		return soapModel;
 	}

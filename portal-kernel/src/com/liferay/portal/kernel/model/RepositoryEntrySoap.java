@@ -44,7 +44,7 @@ public class RepositoryEntrySoap implements Serializable {
 		soapModel.setModifiedDate(model.getModifiedDate());
 		soapModel.setRepositoryId(model.getRepositoryId());
 		soapModel.setMappedId(model.getMappedId());
-		soapModel.setManualCheckInRequired(model.getManualCheckInRequired());
+		soapModel.setManualCheckInRequired(model.isManualCheckInRequired());
 		soapModel.setLastPublishDate(model.getLastPublishDate());
 
 		return soapModel;

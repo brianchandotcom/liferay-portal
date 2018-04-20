@@ -6302,7 +6302,7 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 			if ((list != null) && !list.isEmpty()) {
 				for (DLFolder dlFolder : list) {
 					if ((groupId != dlFolder.getGroupId()) ||
-							(mountPoint != dlFolder.getMountPoint()) ||
+							(mountPoint != dlFolder.isMountPoint()) ||
 							(parentFolderId != dlFolder.getParentFolderId())) {
 						list = null;
 
@@ -8024,9 +8024,9 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 			if ((list != null) && !list.isEmpty()) {
 				for (DLFolder dlFolder : list) {
 					if ((groupId != dlFolder.getGroupId()) ||
-							(mountPoint != dlFolder.getMountPoint()) ||
+							(mountPoint != dlFolder.isMountPoint()) ||
 							(parentFolderId != dlFolder.getParentFolderId()) ||
-							(hidden != dlFolder.getHidden())) {
+							(hidden != dlFolder.isHidden())) {
 						list = null;
 
 						break;
@@ -9050,11 +9050,10 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 			if ((list != null) && !list.isEmpty()) {
 				for (DLFolder dlFolder : list) {
 					if ((groupId != dlFolder.getGroupId()) ||
-							(mountPoint != dlFolder.getMountPoint()) ||
+							(mountPoint != dlFolder.isMountPoint()) ||
 							!StringUtil.wildcardMatches(
 								dlFolder.getTreePath(), treePath, '_', '%',
-								'\\', true) ||
-							(hidden != dlFolder.getHidden())) {
+								'\\', true) || (hidden != dlFolder.isHidden())) {
 						list = null;
 
 						break;
@@ -10183,7 +10182,7 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 				for (DLFolder dlFolder : list) {
 					if ((groupId != dlFolder.getGroupId()) ||
 							(parentFolderId != dlFolder.getParentFolderId()) ||
-							(hidden != dlFolder.getHidden()) ||
+							(hidden != dlFolder.isHidden()) ||
 							(status != dlFolder.getStatus())) {
 						list = null;
 
@@ -11239,9 +11238,9 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 			if ((list != null) && !list.isEmpty()) {
 				for (DLFolder dlFolder : list) {
 					if ((groupId != dlFolder.getGroupId()) ||
-							(mountPoint != dlFolder.getMountPoint()) ||
+							(mountPoint != dlFolder.isMountPoint()) ||
 							(parentFolderId != dlFolder.getParentFolderId()) ||
-							(hidden != dlFolder.getHidden()) ||
+							(hidden != dlFolder.isHidden()) ||
 							(status != dlFolder.getStatus())) {
 						list = null;
 
@@ -12642,7 +12641,7 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 
 			args = new Object[] {
 					dlFolderModelImpl.getGroupId(),
-					dlFolderModelImpl.getMountPoint(),
+					dlFolderModelImpl.isMountPoint(),
 					dlFolderModelImpl.getParentFolderId()
 				};
 
@@ -12652,9 +12651,9 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 
 			args = new Object[] {
 					dlFolderModelImpl.getGroupId(),
-					dlFolderModelImpl.getMountPoint(),
+					dlFolderModelImpl.isMountPoint(),
 					dlFolderModelImpl.getParentFolderId(),
-					dlFolderModelImpl.getHidden()
+					dlFolderModelImpl.isHidden()
 				};
 
 			finderCache.removeResult(FINDER_PATH_COUNT_BY_G_M_P_H, args);
@@ -12664,7 +12663,7 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 			args = new Object[] {
 					dlFolderModelImpl.getGroupId(),
 					dlFolderModelImpl.getParentFolderId(),
-					dlFolderModelImpl.getHidden(), dlFolderModelImpl.getStatus()
+					dlFolderModelImpl.isHidden(), dlFolderModelImpl.getStatus()
 				};
 
 			finderCache.removeResult(FINDER_PATH_COUNT_BY_G_P_H_S, args);
@@ -12673,9 +12672,9 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 
 			args = new Object[] {
 					dlFolderModelImpl.getGroupId(),
-					dlFolderModelImpl.getMountPoint(),
+					dlFolderModelImpl.isMountPoint(),
 					dlFolderModelImpl.getParentFolderId(),
-					dlFolderModelImpl.getHidden(), dlFolderModelImpl.getStatus()
+					dlFolderModelImpl.isHidden(), dlFolderModelImpl.getStatus()
 				};
 
 			finderCache.removeResult(FINDER_PATH_COUNT_BY_G_M_P_H_S, args);

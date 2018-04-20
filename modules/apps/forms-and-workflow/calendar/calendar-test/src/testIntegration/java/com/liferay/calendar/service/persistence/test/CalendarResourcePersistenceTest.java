@@ -188,8 +188,8 @@ public class CalendarResourcePersistenceTest {
 			newCalendarResource.getName());
 		Assert.assertEquals(existingCalendarResource.getDescription(),
 			newCalendarResource.getDescription());
-		Assert.assertEquals(existingCalendarResource.getActive(),
-			newCalendarResource.getActive());
+		Assert.assertEquals(existingCalendarResource.isActive(),
+			newCalendarResource.isActive());
 		Assert.assertEquals(Time.getShortTimestamp(
 				existingCalendarResource.getLastPublishDate()),
 			Time.getShortTimestamp(newCalendarResource.getLastPublishDate()));

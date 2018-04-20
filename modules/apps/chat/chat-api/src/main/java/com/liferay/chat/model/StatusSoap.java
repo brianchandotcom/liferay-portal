@@ -35,11 +35,11 @@ public class StatusSoap implements Serializable {
 		soapModel.setStatusId(model.getStatusId());
 		soapModel.setUserId(model.getUserId());
 		soapModel.setModifiedDate(model.getModifiedDate());
-		soapModel.setOnline(model.getOnline());
-		soapModel.setAwake(model.getAwake());
+		soapModel.setOnline(model.isOnline());
+		soapModel.setAwake(model.isAwake());
 		soapModel.setActivePanelIds(model.getActivePanelIds());
 		soapModel.setMessage(model.getMessage());
-		soapModel.setPlaySound(model.getPlaySound());
+		soapModel.setPlaySound(model.isPlaySound());
 
 		return soapModel;
 	}

@@ -222,10 +222,10 @@ public class DDMTemplatePersistenceTest {
 			newDDMTemplate.getLanguage());
 		Assert.assertEquals(existingDDMTemplate.getScript(),
 			newDDMTemplate.getScript());
-		Assert.assertEquals(existingDDMTemplate.getCacheable(),
-			newDDMTemplate.getCacheable());
-		Assert.assertEquals(existingDDMTemplate.getSmallImage(),
-			newDDMTemplate.getSmallImage());
+		Assert.assertEquals(existingDDMTemplate.isCacheable(),
+			newDDMTemplate.isCacheable());
+		Assert.assertEquals(existingDDMTemplate.isSmallImage(),
+			newDDMTemplate.isSmallImage());
 		Assert.assertEquals(existingDDMTemplate.getSmallImageId(),
 			newDDMTemplate.getSmallImageId());
 		Assert.assertEquals(existingDDMTemplate.getSmallImageURL(),

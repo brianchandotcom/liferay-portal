@@ -175,14 +175,14 @@ public class LayoutSetBranchPersistenceTest {
 		Assert.assertEquals(Time.getShortTimestamp(
 				existingLayoutSetBranch.getModifiedDate()),
 			Time.getShortTimestamp(newLayoutSetBranch.getModifiedDate()));
-		Assert.assertEquals(existingLayoutSetBranch.getPrivateLayout(),
-			newLayoutSetBranch.getPrivateLayout());
+		Assert.assertEquals(existingLayoutSetBranch.isPrivateLayout(),
+			newLayoutSetBranch.isPrivateLayout());
 		Assert.assertEquals(existingLayoutSetBranch.getName(),
 			newLayoutSetBranch.getName());
 		Assert.assertEquals(existingLayoutSetBranch.getDescription(),
 			newLayoutSetBranch.getDescription());
-		Assert.assertEquals(existingLayoutSetBranch.getMaster(),
-			newLayoutSetBranch.getMaster());
+		Assert.assertEquals(existingLayoutSetBranch.isMaster(),
+			newLayoutSetBranch.isMaster());
 		Assert.assertEquals(existingLayoutSetBranch.getLogoId(),
 			newLayoutSetBranch.getLogoId());
 		Assert.assertEquals(existingLayoutSetBranch.getThemeId(),
@@ -195,8 +195,8 @@ public class LayoutSetBranchPersistenceTest {
 			newLayoutSetBranch.getSettings());
 		Assert.assertEquals(existingLayoutSetBranch.getLayoutSetPrototypeUuid(),
 			newLayoutSetBranch.getLayoutSetPrototypeUuid());
-		Assert.assertEquals(existingLayoutSetBranch.getLayoutSetPrototypeLinkEnabled(),
-			newLayoutSetBranch.getLayoutSetPrototypeLinkEnabled());
+		Assert.assertEquals(existingLayoutSetBranch.isLayoutSetPrototypeLinkEnabled(),
+			newLayoutSetBranch.isLayoutSetPrototypeLinkEnabled());
 	}
 
 	@Test

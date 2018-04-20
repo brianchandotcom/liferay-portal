@@ -169,8 +169,8 @@ public class LayoutFriendlyURLPersistenceTest {
 			Time.getShortTimestamp(newLayoutFriendlyURL.getModifiedDate()));
 		Assert.assertEquals(existingLayoutFriendlyURL.getPlid(),
 			newLayoutFriendlyURL.getPlid());
-		Assert.assertEquals(existingLayoutFriendlyURL.getPrivateLayout(),
-			newLayoutFriendlyURL.getPrivateLayout());
+		Assert.assertEquals(existingLayoutFriendlyURL.isPrivateLayout(),
+			newLayoutFriendlyURL.isPrivateLayout());
 		Assert.assertEquals(existingLayoutFriendlyURL.getFriendlyURL(),
 			newLayoutFriendlyURL.getFriendlyURL());
 		Assert.assertEquals(existingLayoutFriendlyURL.getLanguageId(),

@@ -47,7 +47,7 @@ public class AppSoap implements Serializable {
 		soapModel.setCategory(model.getCategory());
 		soapModel.setIconURL(model.getIconURL());
 		soapModel.setVersion(model.getVersion());
-		soapModel.setRequired(model.getRequired());
+		soapModel.setRequired(model.isRequired());
 
 		return soapModel;
 	}

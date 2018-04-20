@@ -46,7 +46,7 @@ public class KaleoInstanceSoap implements Serializable {
 		soapModel.setRootKaleoInstanceTokenId(model.getRootKaleoInstanceTokenId());
 		soapModel.setClassName(model.getClassName());
 		soapModel.setClassPK(model.getClassPK());
-		soapModel.setCompleted(model.getCompleted());
+		soapModel.setCompleted(model.isCompleted());
 		soapModel.setCompletionDate(model.getCompletionDate());
 		soapModel.setWorkflowContext(model.getWorkflowContext());
 

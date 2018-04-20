@@ -192,8 +192,8 @@ public class KaleoTaskAssignmentInstancePersistenceTest {
 			newKaleoTaskAssignmentInstance.getAssigneeClassName());
 		Assert.assertEquals(existingKaleoTaskAssignmentInstance.getAssigneeClassPK(),
 			newKaleoTaskAssignmentInstance.getAssigneeClassPK());
-		Assert.assertEquals(existingKaleoTaskAssignmentInstance.getCompleted(),
-			newKaleoTaskAssignmentInstance.getCompleted());
+		Assert.assertEquals(existingKaleoTaskAssignmentInstance.isCompleted(),
+			newKaleoTaskAssignmentInstance.isCompleted());
 		Assert.assertEquals(Time.getShortTimestamp(
 				existingKaleoTaskAssignmentInstance.getCompletionDate()),
 			Time.getShortTimestamp(

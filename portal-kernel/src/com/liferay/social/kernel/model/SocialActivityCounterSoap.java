@@ -45,7 +45,7 @@ public class SocialActivityCounterSoap implements Serializable {
 		soapModel.setGraceValue(model.getGraceValue());
 		soapModel.setStartPeriod(model.getStartPeriod());
 		soapModel.setEndPeriod(model.getEndPeriod());
-		soapModel.setActive(model.getActive());
+		soapModel.setActive(model.isActive());
 
 		return soapModel;
 	}

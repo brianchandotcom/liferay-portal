@@ -183,8 +183,8 @@ public class KaleoInstancePersistenceTest {
 			newKaleoInstance.getClassName());
 		Assert.assertEquals(existingKaleoInstance.getClassPK(),
 			newKaleoInstance.getClassPK());
-		Assert.assertEquals(existingKaleoInstance.getCompleted(),
-			newKaleoInstance.getCompleted());
+		Assert.assertEquals(existingKaleoInstance.isCompleted(),
+			newKaleoInstance.isCompleted());
 		Assert.assertEquals(Time.getShortTimestamp(
 				existingKaleoInstance.getCompletionDate()),
 			Time.getShortTimestamp(newKaleoInstance.getCompletionDate()));

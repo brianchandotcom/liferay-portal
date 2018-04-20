@@ -3502,7 +3502,7 @@ public class EmailAddressPersistenceImpl extends BasePersistenceImpl<EmailAddres
 					if ((companyId != emailAddress.getCompanyId()) ||
 							(classNameId != emailAddress.getClassNameId()) ||
 							(classPK != emailAddress.getClassPK()) ||
-							(primary != emailAddress.getPrimary())) {
+							(primary != emailAddress.isPrimary())) {
 						list = null;
 
 						break;
@@ -4307,7 +4307,7 @@ public class EmailAddressPersistenceImpl extends BasePersistenceImpl<EmailAddres
 					emailAddressModelImpl.getCompanyId(),
 					emailAddressModelImpl.getClassNameId(),
 					emailAddressModelImpl.getClassPK(),
-					emailAddressModelImpl.getPrimary()
+					emailAddressModelImpl.isPrimary()
 				};
 
 			finderCache.removeResult(FINDER_PATH_COUNT_BY_C_C_C_P, args);

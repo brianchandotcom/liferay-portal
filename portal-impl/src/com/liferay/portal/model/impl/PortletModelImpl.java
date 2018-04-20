@@ -190,7 +190,7 @@ public class PortletModelImpl extends BaseModelImpl<Portlet>
 		attributes.put("companyId", getCompanyId());
 		attributes.put("portletId", getPortletId());
 		attributes.put("roles", getRoles());
-		attributes.put("active", getActive());
+		attributes.put("active", isActive());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -377,7 +377,7 @@ public class PortletModelImpl extends BaseModelImpl<Portlet>
 		portletImpl.setCompanyId(getCompanyId());
 		portletImpl.setPortletId(getPortletId());
 		portletImpl.setRoles(getRoles());
-		portletImpl.setActive(getActive());
+		portletImpl.setActive(isActive());
 
 		portletImpl.resetOriginalValues();
 
@@ -475,7 +475,7 @@ public class PortletModelImpl extends BaseModelImpl<Portlet>
 			portletCacheModel.roles = null;
 		}
 
-		portletCacheModel.active = getActive();
+		portletCacheModel.active = isActive();
 
 		return portletCacheModel;
 	}
@@ -495,7 +495,7 @@ public class PortletModelImpl extends BaseModelImpl<Portlet>
 		sb.append(", roles=");
 		sb.append(getRoles());
 		sb.append(", active=");
-		sb.append(getActive());
+		sb.append(isActive());
 		sb.append("}");
 
 		return sb.toString();
@@ -531,7 +531,7 @@ public class PortletModelImpl extends BaseModelImpl<Portlet>
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>active</column-name><column-value><![CDATA[");
-		sb.append(getActive());
+		sb.append(isActive());
 		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");

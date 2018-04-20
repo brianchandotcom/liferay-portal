@@ -70,7 +70,7 @@ public class BackgroundTaskWrapper implements BackgroundTask,
 		attributes.put("servletContextNames", getServletContextNames());
 		attributes.put("taskExecutorClassName", getTaskExecutorClassName());
 		attributes.put("taskContextMap", getTaskContextMap());
-		attributes.put("completed", getCompleted());
+		attributes.put("completed", isCompleted());
 		attributes.put("completionDate", getCompletionDate());
 		attributes.put("status", getStatus());
 		attributes.put("statusMessage", getStatusMessage());

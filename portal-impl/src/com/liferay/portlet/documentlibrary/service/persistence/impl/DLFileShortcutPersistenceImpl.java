@@ -4100,7 +4100,7 @@ public class DLFileShortcutPersistenceImpl extends BasePersistenceImpl<DLFileSho
 				for (DLFileShortcut dlFileShortcut : list) {
 					if ((groupId != dlFileShortcut.getGroupId()) ||
 							(folderId != dlFileShortcut.getFolderId()) ||
-							(active != dlFileShortcut.getActive())) {
+							(active != dlFileShortcut.isActive())) {
 						list = null;
 
 						break;
@@ -5092,7 +5092,7 @@ public class DLFileShortcutPersistenceImpl extends BasePersistenceImpl<DLFileSho
 				for (DLFileShortcut dlFileShortcut : list) {
 					if ((groupId != dlFileShortcut.getGroupId()) ||
 							(folderId != dlFileShortcut.getFolderId()) ||
-							(active != dlFileShortcut.getActive()) ||
+							(active != dlFileShortcut.isActive()) ||
 							(status != dlFileShortcut.getStatus())) {
 						list = null;
 
@@ -6349,7 +6349,7 @@ public class DLFileShortcutPersistenceImpl extends BasePersistenceImpl<DLFileSho
 			args = new Object[] {
 					dlFileShortcutModelImpl.getGroupId(),
 					dlFileShortcutModelImpl.getFolderId(),
-					dlFileShortcutModelImpl.getActive()
+					dlFileShortcutModelImpl.isActive()
 				};
 
 			finderCache.removeResult(FINDER_PATH_COUNT_BY_G_F_A, args);
@@ -6359,7 +6359,7 @@ public class DLFileShortcutPersistenceImpl extends BasePersistenceImpl<DLFileSho
 			args = new Object[] {
 					dlFileShortcutModelImpl.getGroupId(),
 					dlFileShortcutModelImpl.getFolderId(),
-					dlFileShortcutModelImpl.getActive(),
+					dlFileShortcutModelImpl.isActive(),
 					dlFileShortcutModelImpl.getStatus()
 				};
 

@@ -150,7 +150,7 @@ public class SocialActivityAchievementModelImpl extends BaseModelImpl<SocialActi
 		attributes.put("userId", getUserId());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("name", getName());
-		attributes.put("firstInGroup", getFirstInGroup());
+		attributes.put("firstInGroup", isFirstInGroup());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -383,7 +383,7 @@ public class SocialActivityAchievementModelImpl extends BaseModelImpl<SocialActi
 		socialActivityAchievementImpl.setUserId(getUserId());
 		socialActivityAchievementImpl.setCreateDate(getCreateDate());
 		socialActivityAchievementImpl.setName(getName());
-		socialActivityAchievementImpl.setFirstInGroup(getFirstInGroup());
+		socialActivityAchievementImpl.setFirstInGroup(isFirstInGroup());
 
 		socialActivityAchievementImpl.resetOriginalValues();
 
@@ -485,7 +485,7 @@ public class SocialActivityAchievementModelImpl extends BaseModelImpl<SocialActi
 			socialActivityAchievementCacheModel.name = null;
 		}
 
-		socialActivityAchievementCacheModel.firstInGroup = getFirstInGroup();
+		socialActivityAchievementCacheModel.firstInGroup = isFirstInGroup();
 
 		return socialActivityAchievementCacheModel;
 	}
@@ -507,7 +507,7 @@ public class SocialActivityAchievementModelImpl extends BaseModelImpl<SocialActi
 		sb.append(", name=");
 		sb.append(getName());
 		sb.append(", firstInGroup=");
-		sb.append(getFirstInGroup());
+		sb.append(isFirstInGroup());
 		sb.append("}");
 
 		return sb.toString();
@@ -547,7 +547,7 @@ public class SocialActivityAchievementModelImpl extends BaseModelImpl<SocialActi
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>firstInGroup</column-name><column-value><![CDATA[");
-		sb.append(getFirstInGroup());
+		sb.append(isFirstInGroup());
 		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");

@@ -72,7 +72,7 @@ public class DLFileShortcutWrapper implements DLFileShortcut,
 		attributes.put("folderId", getFolderId());
 		attributes.put("toFileEntryId", getToFileEntryId());
 		attributes.put("treePath", getTreePath());
-		attributes.put("active", getActive());
+		attributes.put("active", isActive());
 		attributes.put("lastPublishDate", getLastPublishDate());
 		attributes.put("status", getStatus());
 		attributes.put("statusByUserId", getStatusByUserId());

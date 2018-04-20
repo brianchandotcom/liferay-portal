@@ -41,7 +41,7 @@ public class ReleaseSoap implements Serializable {
 		soapModel.setSchemaVersion(model.getSchemaVersion());
 		soapModel.setBuildNumber(model.getBuildNumber());
 		soapModel.setBuildDate(model.getBuildDate());
-		soapModel.setVerified(model.getVerified());
+		soapModel.setVerified(model.isVerified());
 		soapModel.setState(model.getState());
 		soapModel.setTestString(model.getTestString());
 

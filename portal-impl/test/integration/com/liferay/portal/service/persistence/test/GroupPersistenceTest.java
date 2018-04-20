@@ -185,18 +185,18 @@ public class GroupPersistenceTest {
 		Assert.assertEquals(existingGroup.getType(), newGroup.getType());
 		Assert.assertEquals(existingGroup.getTypeSettings(),
 			newGroup.getTypeSettings());
-		Assert.assertEquals(existingGroup.getManualMembership(),
-			newGroup.getManualMembership());
+		Assert.assertEquals(existingGroup.isManualMembership(),
+			newGroup.isManualMembership());
 		Assert.assertEquals(existingGroup.getMembershipRestriction(),
 			newGroup.getMembershipRestriction());
 		Assert.assertEquals(existingGroup.getFriendlyURL(),
 			newGroup.getFriendlyURL());
-		Assert.assertEquals(existingGroup.getSite(), newGroup.getSite());
+		Assert.assertEquals(existingGroup.isSite(), newGroup.isSite());
 		Assert.assertEquals(existingGroup.getRemoteStagingGroupCount(),
 			newGroup.getRemoteStagingGroupCount());
-		Assert.assertEquals(existingGroup.getInheritContent(),
-			newGroup.getInheritContent());
-		Assert.assertEquals(existingGroup.getActive(), newGroup.getActive());
+		Assert.assertEquals(existingGroup.isInheritContent(),
+			newGroup.isInheritContent());
+		Assert.assertEquals(existingGroup.isActive(), newGroup.isActive());
 	}
 
 	@Test

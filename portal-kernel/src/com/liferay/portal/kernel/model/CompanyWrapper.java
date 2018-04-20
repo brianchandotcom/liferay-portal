@@ -63,9 +63,9 @@ public class CompanyWrapper implements Company, ModelWrapper<Company> {
 		attributes.put("mx", getMx());
 		attributes.put("homeURL", getHomeURL());
 		attributes.put("logoId", getLogoId());
-		attributes.put("system", getSystem());
+		attributes.put("system", isSystem());
 		attributes.put("maxUsers", getMaxUsers());
-		attributes.put("active", getActive());
+		attributes.put("active", isActive());
 
 		return attributes;
 	}

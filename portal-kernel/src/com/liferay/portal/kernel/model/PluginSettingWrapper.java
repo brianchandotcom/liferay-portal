@@ -62,7 +62,7 @@ public class PluginSettingWrapper implements PluginSetting,
 		attributes.put("pluginId", getPluginId());
 		attributes.put("pluginType", getPluginType());
 		attributes.put("roles", getRoles());
-		attributes.put("active", getActive());
+		attributes.put("active", isActive());
 
 		return attributes;
 	}

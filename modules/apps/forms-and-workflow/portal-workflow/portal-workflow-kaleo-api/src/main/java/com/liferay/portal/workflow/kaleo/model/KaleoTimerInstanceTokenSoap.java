@@ -49,9 +49,9 @@ public class KaleoTimerInstanceTokenSoap implements Serializable {
 		soapModel.setKaleoTaskInstanceTokenId(model.getKaleoTaskInstanceTokenId());
 		soapModel.setKaleoTimerId(model.getKaleoTimerId());
 		soapModel.setKaleoTimerName(model.getKaleoTimerName());
-		soapModel.setBlocking(model.getBlocking());
+		soapModel.setBlocking(model.isBlocking());
 		soapModel.setCompletionUserId(model.getCompletionUserId());
-		soapModel.setCompleted(model.getCompleted());
+		soapModel.setCompleted(model.isCompleted());
 		soapModel.setCompletionDate(model.getCompletionDate());
 		soapModel.setWorkflowContext(model.getWorkflowContext());
 

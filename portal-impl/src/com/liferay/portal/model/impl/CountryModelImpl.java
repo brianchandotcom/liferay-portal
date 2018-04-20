@@ -202,8 +202,8 @@ public class CountryModelImpl extends BaseModelImpl<Country>
 		attributes.put("a3", getA3());
 		attributes.put("number", getNumber());
 		attributes.put("idd", getIdd());
-		attributes.put("zipRequired", getZipRequired());
-		attributes.put("active", getActive());
+		attributes.put("zipRequired", isZipRequired());
+		attributes.put("active", isActive());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -484,8 +484,8 @@ public class CountryModelImpl extends BaseModelImpl<Country>
 		countryImpl.setA3(getA3());
 		countryImpl.setNumber(getNumber());
 		countryImpl.setIdd(getIdd());
-		countryImpl.setZipRequired(getZipRequired());
-		countryImpl.setActive(getActive());
+		countryImpl.setZipRequired(isZipRequired());
+		countryImpl.setActive(isActive());
 
 		countryImpl.resetOriginalValues();
 
@@ -607,9 +607,9 @@ public class CountryModelImpl extends BaseModelImpl<Country>
 			countryCacheModel.idd = null;
 		}
 
-		countryCacheModel.zipRequired = getZipRequired();
+		countryCacheModel.zipRequired = isZipRequired();
 
-		countryCacheModel.active = getActive();
+		countryCacheModel.active = isActive();
 
 		return countryCacheModel;
 	}
@@ -633,9 +633,9 @@ public class CountryModelImpl extends BaseModelImpl<Country>
 		sb.append(", idd=");
 		sb.append(getIdd());
 		sb.append(", zipRequired=");
-		sb.append(getZipRequired());
+		sb.append(isZipRequired());
 		sb.append(", active=");
-		sb.append(getActive());
+		sb.append(isActive());
 		sb.append("}");
 
 		return sb.toString();
@@ -679,11 +679,11 @@ public class CountryModelImpl extends BaseModelImpl<Country>
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>zipRequired</column-name><column-value><![CDATA[");
-		sb.append(getZipRequired());
+		sb.append(isZipRequired());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>active</column-name><column-value><![CDATA[");
-		sb.append(getActive());
+		sb.append(isActive());
 		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");

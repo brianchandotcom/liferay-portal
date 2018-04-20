@@ -43,7 +43,7 @@ public class LayoutBranchSoap implements Serializable {
 		soapModel.setPlid(model.getPlid());
 		soapModel.setName(model.getName());
 		soapModel.setDescription(model.getDescription());
-		soapModel.setMaster(model.getMaster());
+		soapModel.setMaster(model.isMaster());
 
 		return soapModel;
 	}

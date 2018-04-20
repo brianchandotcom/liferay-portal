@@ -246,10 +246,10 @@ public class JournalArticlePersistenceTest {
 		Assert.assertEquals(Time.getShortTimestamp(
 				existingJournalArticle.getReviewDate()),
 			Time.getShortTimestamp(newJournalArticle.getReviewDate()));
-		Assert.assertEquals(existingJournalArticle.getIndexable(),
-			newJournalArticle.getIndexable());
-		Assert.assertEquals(existingJournalArticle.getSmallImage(),
-			newJournalArticle.getSmallImage());
+		Assert.assertEquals(existingJournalArticle.isIndexable(),
+			newJournalArticle.isIndexable());
+		Assert.assertEquals(existingJournalArticle.isSmallImage(),
+			newJournalArticle.isSmallImage());
 		Assert.assertEquals(existingJournalArticle.getSmallImageId(),
 			newJournalArticle.getSmallImageId());
 		Assert.assertEquals(existingJournalArticle.getSmallImageURL(),

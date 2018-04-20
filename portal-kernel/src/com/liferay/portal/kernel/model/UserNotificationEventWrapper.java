@@ -66,10 +66,10 @@ public class UserNotificationEventWrapper implements UserNotificationEvent,
 		attributes.put("timestamp", getTimestamp());
 		attributes.put("deliveryType", getDeliveryType());
 		attributes.put("deliverBy", getDeliverBy());
-		attributes.put("delivered", getDelivered());
+		attributes.put("delivered", isDelivered());
 		attributes.put("payload", getPayload());
-		attributes.put("actionRequired", getActionRequired());
-		attributes.put("archived", getArchived());
+		attributes.put("actionRequired", isActionRequired());
+		attributes.put("archived", isArchived());
 
 		return attributes;
 	}

@@ -46,11 +46,11 @@ public class WikiPageSoap implements Serializable {
 		soapModel.setNodeId(model.getNodeId());
 		soapModel.setTitle(model.getTitle());
 		soapModel.setVersion(model.getVersion());
-		soapModel.setMinorEdit(model.getMinorEdit());
+		soapModel.setMinorEdit(model.isMinorEdit());
 		soapModel.setContent(model.getContent());
 		soapModel.setSummary(model.getSummary());
 		soapModel.setFormat(model.getFormat());
-		soapModel.setHead(model.getHead());
+		soapModel.setHead(model.isHead());
 		soapModel.setParentTitle(model.getParentTitle());
 		soapModel.setRedirectTitle(model.getRedirectTitle());
 		soapModel.setLastPublishDate(model.getLastPublishDate());

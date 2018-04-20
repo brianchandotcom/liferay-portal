@@ -171,7 +171,7 @@ public class AppPersistenceTest {
 		Assert.assertEquals(existingApp.getCategory(), newApp.getCategory());
 		Assert.assertEquals(existingApp.getIconURL(), newApp.getIconURL());
 		Assert.assertEquals(existingApp.getVersion(), newApp.getVersion());
-		Assert.assertEquals(existingApp.getRequired(), newApp.getRequired());
+		Assert.assertEquals(existingApp.isRequired(), newApp.isRequired());
 	}
 
 	@Test

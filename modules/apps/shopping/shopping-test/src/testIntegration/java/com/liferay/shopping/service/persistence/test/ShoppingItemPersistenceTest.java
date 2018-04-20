@@ -221,8 +221,8 @@ public class ShoppingItemPersistenceTest {
 			newShoppingItem.getDescription());
 		Assert.assertEquals(existingShoppingItem.getProperties(),
 			newShoppingItem.getProperties());
-		Assert.assertEquals(existingShoppingItem.getFields(),
-			newShoppingItem.getFields());
+		Assert.assertEquals(existingShoppingItem.isFields(),
+			newShoppingItem.isFields());
 		Assert.assertEquals(existingShoppingItem.getFieldsQuantities(),
 			newShoppingItem.getFieldsQuantities());
 		Assert.assertEquals(existingShoppingItem.getMinQuantity(),
@@ -233,34 +233,34 @@ public class ShoppingItemPersistenceTest {
 			newShoppingItem.getPrice());
 		AssertUtils.assertEquals(existingShoppingItem.getDiscount(),
 			newShoppingItem.getDiscount());
-		Assert.assertEquals(existingShoppingItem.getTaxable(),
-			newShoppingItem.getTaxable());
+		Assert.assertEquals(existingShoppingItem.isTaxable(),
+			newShoppingItem.isTaxable());
 		AssertUtils.assertEquals(existingShoppingItem.getShipping(),
 			newShoppingItem.getShipping());
-		Assert.assertEquals(existingShoppingItem.getUseShippingFormula(),
-			newShoppingItem.getUseShippingFormula());
-		Assert.assertEquals(existingShoppingItem.getRequiresShipping(),
-			newShoppingItem.getRequiresShipping());
+		Assert.assertEquals(existingShoppingItem.isUseShippingFormula(),
+			newShoppingItem.isUseShippingFormula());
+		Assert.assertEquals(existingShoppingItem.isRequiresShipping(),
+			newShoppingItem.isRequiresShipping());
 		Assert.assertEquals(existingShoppingItem.getStockQuantity(),
 			newShoppingItem.getStockQuantity());
-		Assert.assertEquals(existingShoppingItem.getFeatured(),
-			newShoppingItem.getFeatured());
-		Assert.assertEquals(existingShoppingItem.getSale(),
-			newShoppingItem.getSale());
-		Assert.assertEquals(existingShoppingItem.getSmallImage(),
-			newShoppingItem.getSmallImage());
+		Assert.assertEquals(existingShoppingItem.isFeatured(),
+			newShoppingItem.isFeatured());
+		Assert.assertEquals(existingShoppingItem.isSale(),
+			newShoppingItem.isSale());
+		Assert.assertEquals(existingShoppingItem.isSmallImage(),
+			newShoppingItem.isSmallImage());
 		Assert.assertEquals(existingShoppingItem.getSmallImageId(),
 			newShoppingItem.getSmallImageId());
 		Assert.assertEquals(existingShoppingItem.getSmallImageURL(),
 			newShoppingItem.getSmallImageURL());
-		Assert.assertEquals(existingShoppingItem.getMediumImage(),
-			newShoppingItem.getMediumImage());
+		Assert.assertEquals(existingShoppingItem.isMediumImage(),
+			newShoppingItem.isMediumImage());
 		Assert.assertEquals(existingShoppingItem.getMediumImageId(),
 			newShoppingItem.getMediumImageId());
 		Assert.assertEquals(existingShoppingItem.getMediumImageURL(),
 			newShoppingItem.getMediumImageURL());
-		Assert.assertEquals(existingShoppingItem.getLargeImage(),
-			newShoppingItem.getLargeImage());
+		Assert.assertEquals(existingShoppingItem.isLargeImage(),
+			newShoppingItem.isLargeImage());
 		Assert.assertEquals(existingShoppingItem.getLargeImageId(),
 			newShoppingItem.getLargeImageId());
 		Assert.assertEquals(existingShoppingItem.getLargeImageURL(),

@@ -74,7 +74,7 @@ public class LayoutPageTemplateEntryWrapper implements LayoutPageTemplateEntry,
 		attributes.put("name", getName());
 		attributes.put("type", getType());
 		attributes.put("htmlPreviewEntryId", getHtmlPreviewEntryId());
-		attributes.put("defaultTemplate", getDefaultTemplate());
+		attributes.put("defaultTemplate", isDefaultTemplate());
 
 		return attributes;
 	}

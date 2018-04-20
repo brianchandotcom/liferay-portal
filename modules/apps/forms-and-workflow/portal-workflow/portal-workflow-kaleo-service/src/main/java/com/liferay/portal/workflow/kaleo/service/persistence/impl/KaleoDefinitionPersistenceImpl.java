@@ -989,7 +989,7 @@ public class KaleoDefinitionPersistenceImpl extends BasePersistenceImpl<KaleoDef
 			if ((list != null) && !list.isEmpty()) {
 				for (KaleoDefinition kaleoDefinition : list) {
 					if ((companyId != kaleoDefinition.getCompanyId()) ||
-							(active != kaleoDefinition.getActive())) {
+							(active != kaleoDefinition.isActive())) {
 						list = null;
 
 						break;
@@ -2393,7 +2393,7 @@ public class KaleoDefinitionPersistenceImpl extends BasePersistenceImpl<KaleoDef
 
 			args = new Object[] {
 					kaleoDefinitionModelImpl.getCompanyId(),
-					kaleoDefinitionModelImpl.getActive()
+					kaleoDefinitionModelImpl.isActive()
 				};
 
 			finderCache.removeResult(FINDER_PATH_COUNT_BY_C_A, args);

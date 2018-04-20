@@ -73,7 +73,7 @@ public class KaleoInstanceTokenWrapper implements KaleoInstanceToken,
 		attributes.put("currentKaleoNodeName", getCurrentKaleoNodeName());
 		attributes.put("className", getClassName());
 		attributes.put("classPK", getClassPK());
-		attributes.put("completed", getCompleted());
+		attributes.put("completed", isCompleted());
 		attributes.put("completionDate", getCompletionDate());
 
 		return attributes;

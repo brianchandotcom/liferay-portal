@@ -160,8 +160,8 @@ public class ResourcePermissionPersistenceTest {
 			newResourcePermission.getOwnerId());
 		Assert.assertEquals(existingResourcePermission.getActionIds(),
 			newResourcePermission.getActionIds());
-		Assert.assertEquals(existingResourcePermission.getViewActionId(),
-			newResourcePermission.getViewActionId());
+		Assert.assertEquals(existingResourcePermission.isViewActionId(),
+			newResourcePermission.isViewActionId());
 	}
 
 	@Test

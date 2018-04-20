@@ -49,7 +49,7 @@ public class KaleoTaskAssignmentInstanceSoap implements Serializable {
 		soapModel.setKaleoTaskName(model.getKaleoTaskName());
 		soapModel.setAssigneeClassName(model.getAssigneeClassName());
 		soapModel.setAssigneeClassPK(model.getAssigneeClassPK());
-		soapModel.setCompleted(model.getCompleted());
+		soapModel.setCompleted(model.isCompleted());
 		soapModel.setCompletionDate(model.getCompletionDate());
 
 		return soapModel;

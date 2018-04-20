@@ -4014,7 +4014,7 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 				for (AnnouncementsEntry announcementsEntry : list) {
 					if ((classNameId != announcementsEntry.getClassNameId()) ||
 							(classPK != announcementsEntry.getClassPK()) ||
-							(alert != announcementsEntry.getAlert())) {
+							(alert != announcementsEntry.isAlert())) {
 						list = null;
 
 						break;
@@ -5196,7 +5196,7 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 			args = new Object[] {
 					announcementsEntryModelImpl.getClassNameId(),
 					announcementsEntryModelImpl.getClassPK(),
-					announcementsEntryModelImpl.getAlert()
+					announcementsEntryModelImpl.isAlert()
 				};
 
 			finderCache.removeResult(FINDER_PATH_COUNT_BY_C_C_A, args);

@@ -46,7 +46,7 @@ public class DLFileShortcutSoap implements Serializable {
 		soapModel.setFolderId(model.getFolderId());
 		soapModel.setToFileEntryId(model.getToFileEntryId());
 		soapModel.setTreePath(model.getTreePath());
-		soapModel.setActive(model.getActive());
+		soapModel.setActive(model.isActive());
 		soapModel.setLastPublishDate(model.getLastPublishDate());
 		soapModel.setStatus(model.getStatus());
 		soapModel.setStatusByUserId(model.getStatusByUserId());

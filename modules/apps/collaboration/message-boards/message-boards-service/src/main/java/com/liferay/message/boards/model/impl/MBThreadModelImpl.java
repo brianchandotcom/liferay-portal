@@ -268,7 +268,7 @@ public class MBThreadModelImpl extends BaseModelImpl<MBThread>
 		attributes.put("lastPostByUserId", getLastPostByUserId());
 		attributes.put("lastPostDate", getLastPostDate());
 		attributes.put("priority", getPriority());
-		attributes.put("question", getQuestion());
+		attributes.put("question", isQuestion());
 		attributes.put("lastPublishDate", getLastPublishDate());
 		attributes.put("status", getStatus());
 		attributes.put("statusByUserId", getStatusByUserId());
@@ -1128,7 +1128,7 @@ public class MBThreadModelImpl extends BaseModelImpl<MBThread>
 		mbThreadImpl.setLastPostByUserId(getLastPostByUserId());
 		mbThreadImpl.setLastPostDate(getLastPostDate());
 		mbThreadImpl.setPriority(getPriority());
-		mbThreadImpl.setQuestion(getQuestion());
+		mbThreadImpl.setQuestion(isQuestion());
 		mbThreadImpl.setLastPublishDate(getLastPublishDate());
 		mbThreadImpl.setStatus(getStatus());
 		mbThreadImpl.setStatusByUserId(getStatusByUserId());
@@ -1314,7 +1314,7 @@ public class MBThreadModelImpl extends BaseModelImpl<MBThread>
 
 		mbThreadCacheModel.priority = getPriority();
 
-		mbThreadCacheModel.question = getQuestion();
+		mbThreadCacheModel.question = isQuestion();
 
 		Date lastPublishDate = getLastPublishDate();
 
@@ -1386,7 +1386,7 @@ public class MBThreadModelImpl extends BaseModelImpl<MBThread>
 		sb.append(", priority=");
 		sb.append(getPriority());
 		sb.append(", question=");
-		sb.append(getQuestion());
+		sb.append(isQuestion());
 		sb.append(", lastPublishDate=");
 		sb.append(getLastPublishDate());
 		sb.append(", status=");
@@ -1476,7 +1476,7 @@ public class MBThreadModelImpl extends BaseModelImpl<MBThread>
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>question</column-name><column-value><![CDATA[");
-		sb.append(getQuestion());
+		sb.append(isQuestion());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>lastPublishDate</column-name><column-value><![CDATA[");

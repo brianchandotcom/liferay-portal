@@ -52,8 +52,8 @@ public class AddressSoap implements Serializable {
 		soapModel.setRegionId(model.getRegionId());
 		soapModel.setCountryId(model.getCountryId());
 		soapModel.setTypeId(model.getTypeId());
-		soapModel.setMailing(model.getMailing());
-		soapModel.setPrimary(model.getPrimary());
+		soapModel.setMailing(model.isMailing());
+		soapModel.setPrimary(model.isPrimary());
 
 		return soapModel;
 	}

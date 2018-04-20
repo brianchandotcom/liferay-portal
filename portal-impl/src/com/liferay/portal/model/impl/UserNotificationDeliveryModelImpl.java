@@ -159,7 +159,7 @@ public class UserNotificationDeliveryModelImpl extends BaseModelImpl<UserNotific
 		attributes.put("classNameId", getClassNameId());
 		attributes.put("notificationType", getNotificationType());
 		attributes.put("deliveryType", getDeliveryType());
-		attributes.put("deliver", getDeliver());
+		attributes.put("deliver", isDeliver());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -458,7 +458,7 @@ public class UserNotificationDeliveryModelImpl extends BaseModelImpl<UserNotific
 		userNotificationDeliveryImpl.setClassNameId(getClassNameId());
 		userNotificationDeliveryImpl.setNotificationType(getNotificationType());
 		userNotificationDeliveryImpl.setDeliveryType(getDeliveryType());
-		userNotificationDeliveryImpl.setDeliver(getDeliver());
+		userNotificationDeliveryImpl.setDeliver(isDeliver());
 
 		userNotificationDeliveryImpl.resetOriginalValues();
 
@@ -568,7 +568,7 @@ public class UserNotificationDeliveryModelImpl extends BaseModelImpl<UserNotific
 
 		userNotificationDeliveryCacheModel.deliveryType = getDeliveryType();
 
-		userNotificationDeliveryCacheModel.deliver = getDeliver();
+		userNotificationDeliveryCacheModel.deliver = isDeliver();
 
 		return userNotificationDeliveryCacheModel;
 	}
@@ -594,7 +594,7 @@ public class UserNotificationDeliveryModelImpl extends BaseModelImpl<UserNotific
 		sb.append(", deliveryType=");
 		sb.append(getDeliveryType());
 		sb.append(", deliver=");
-		sb.append(getDeliver());
+		sb.append(isDeliver());
 		sb.append("}");
 
 		return sb.toString();
@@ -642,7 +642,7 @@ public class UserNotificationDeliveryModelImpl extends BaseModelImpl<UserNotific
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>deliver</column-name><column-value><![CDATA[");
-		sb.append(getDeliver());
+		sb.append(isDeliver());
 		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");

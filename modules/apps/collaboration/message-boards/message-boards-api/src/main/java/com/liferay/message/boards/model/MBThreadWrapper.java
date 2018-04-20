@@ -75,7 +75,7 @@ public class MBThreadWrapper implements MBThread, ModelWrapper<MBThread> {
 		attributes.put("lastPostByUserId", getLastPostByUserId());
 		attributes.put("lastPostDate", getLastPostDate());
 		attributes.put("priority", getPriority());
-		attributes.put("question", getQuestion());
+		attributes.put("question", isQuestion());
 		attributes.put("lastPublishDate", getLastPublishDate());
 		attributes.put("status", getStatus());
 		attributes.put("statusByUserId", getStatusByUserId());

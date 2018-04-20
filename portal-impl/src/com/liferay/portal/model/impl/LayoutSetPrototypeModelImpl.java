@@ -230,7 +230,7 @@ public class LayoutSetPrototypeModelImpl extends BaseModelImpl<LayoutSetPrototyp
 		attributes.put("name", getName());
 		attributes.put("description", getDescription());
 		attributes.put("settings", getSettings());
-		attributes.put("active", getActive());
+		attributes.put("active", isActive());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -830,7 +830,7 @@ public class LayoutSetPrototypeModelImpl extends BaseModelImpl<LayoutSetPrototyp
 		layoutSetPrototypeImpl.setName(getName());
 		layoutSetPrototypeImpl.setDescription(getDescription());
 		layoutSetPrototypeImpl.setSettings(getSettings());
-		layoutSetPrototypeImpl.setActive(getActive());
+		layoutSetPrototypeImpl.setActive(isActive());
 
 		layoutSetPrototypeImpl.resetOriginalValues();
 
@@ -978,7 +978,7 @@ public class LayoutSetPrototypeModelImpl extends BaseModelImpl<LayoutSetPrototyp
 			layoutSetPrototypeCacheModel.settings = null;
 		}
 
-		layoutSetPrototypeCacheModel.active = getActive();
+		layoutSetPrototypeCacheModel.active = isActive();
 
 		return layoutSetPrototypeCacheModel;
 	}
@@ -1010,7 +1010,7 @@ public class LayoutSetPrototypeModelImpl extends BaseModelImpl<LayoutSetPrototyp
 		sb.append(", settings=");
 		sb.append(getSettings());
 		sb.append(", active=");
-		sb.append(getActive());
+		sb.append(isActive());
 		sb.append("}");
 
 		return sb.toString();
@@ -1070,7 +1070,7 @@ public class LayoutSetPrototypeModelImpl extends BaseModelImpl<LayoutSetPrototyp
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>active</column-name><column-value><![CDATA[");
-		sb.append(getActive());
+		sb.append(isActive());
 		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");

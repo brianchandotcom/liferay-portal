@@ -41,9 +41,9 @@ public class CompanySoap implements Serializable {
 		soapModel.setMx(model.getMx());
 		soapModel.setHomeURL(model.getHomeURL());
 		soapModel.setLogoId(model.getLogoId());
-		soapModel.setSystem(model.getSystem());
+		soapModel.setSystem(model.isSystem());
 		soapModel.setMaxUsers(model.getMaxUsers());
-		soapModel.setActive(model.getActive());
+		soapModel.setActive(model.isActive());
 
 		return soapModel;
 	}

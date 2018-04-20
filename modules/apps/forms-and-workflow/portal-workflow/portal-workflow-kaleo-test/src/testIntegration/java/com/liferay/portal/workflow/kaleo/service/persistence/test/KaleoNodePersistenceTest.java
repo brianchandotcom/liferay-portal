@@ -175,10 +175,10 @@ public class KaleoNodePersistenceTest {
 		Assert.assertEquals(existingKaleoNode.getDescription(),
 			newKaleoNode.getDescription());
 		Assert.assertEquals(existingKaleoNode.getType(), newKaleoNode.getType());
-		Assert.assertEquals(existingKaleoNode.getInitial(),
-			newKaleoNode.getInitial());
-		Assert.assertEquals(existingKaleoNode.getTerminal(),
-			newKaleoNode.getTerminal());
+		Assert.assertEquals(existingKaleoNode.isInitial(),
+			newKaleoNode.isInitial());
+		Assert.assertEquals(existingKaleoNode.isTerminal(),
+			newKaleoNode.isTerminal());
 	}
 
 	@Test

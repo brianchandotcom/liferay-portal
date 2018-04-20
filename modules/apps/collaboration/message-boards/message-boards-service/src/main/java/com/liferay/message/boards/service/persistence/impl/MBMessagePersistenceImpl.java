@@ -9680,7 +9680,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 			if ((list != null) && !list.isEmpty()) {
 				for (MBMessage mbMessage : list) {
 					if ((threadId != mbMessage.getThreadId()) ||
-							(answer != mbMessage.getAnswer())) {
+							(answer != mbMessage.isAnswer())) {
 						list = null;
 
 						break;
@@ -16852,7 +16852,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 					if ((groupId != mbMessage.getGroupId()) ||
 							(categoryId != mbMessage.getCategoryId()) ||
 							(threadId != mbMessage.getThreadId()) ||
-							(answer != mbMessage.getAnswer())) {
+							(answer != mbMessage.isAnswer())) {
 						list = null;
 
 						break;
@@ -19862,7 +19862,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 
 			args = new Object[] {
 					mbMessageModelImpl.getThreadId(),
-					mbMessageModelImpl.getAnswer()
+					mbMessageModelImpl.isAnswer()
 				};
 
 			finderCache.removeResult(FINDER_PATH_COUNT_BY_T_A, args);
@@ -19951,7 +19951,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 					mbMessageModelImpl.getGroupId(),
 					mbMessageModelImpl.getCategoryId(),
 					mbMessageModelImpl.getThreadId(),
-					mbMessageModelImpl.getAnswer()
+					mbMessageModelImpl.isAnswer()
 				};
 
 			finderCache.removeResult(FINDER_PATH_COUNT_BY_G_C_T_A, args);

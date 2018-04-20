@@ -71,7 +71,7 @@ public class KaleoLogWrapper implements KaleoLog, ModelWrapper<KaleoLog> {
 		attributes.put("kaleoInstanceTokenId", getKaleoInstanceTokenId());
 		attributes.put("kaleoTaskInstanceTokenId", getKaleoTaskInstanceTokenId());
 		attributes.put("kaleoNodeName", getKaleoNodeName());
-		attributes.put("terminalKaleoNode", getTerminalKaleoNode());
+		attributes.put("terminalKaleoNode", isTerminalKaleoNode());
 		attributes.put("kaleoActionId", getKaleoActionId());
 		attributes.put("kaleoActionName", getKaleoActionName());
 		attributes.put("kaleoActionDescription", getKaleoActionDescription());

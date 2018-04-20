@@ -200,19 +200,19 @@ public class MBMailingListModelImpl extends BaseModelImpl<MBMailingList>
 		attributes.put("inProtocol", getInProtocol());
 		attributes.put("inServerName", getInServerName());
 		attributes.put("inServerPort", getInServerPort());
-		attributes.put("inUseSSL", getInUseSSL());
+		attributes.put("inUseSSL", isInUseSSL());
 		attributes.put("inUserName", getInUserName());
 		attributes.put("inPassword", getInPassword());
 		attributes.put("inReadInterval", getInReadInterval());
 		attributes.put("outEmailAddress", getOutEmailAddress());
-		attributes.put("outCustom", getOutCustom());
+		attributes.put("outCustom", isOutCustom());
 		attributes.put("outServerName", getOutServerName());
 		attributes.put("outServerPort", getOutServerPort());
-		attributes.put("outUseSSL", getOutUseSSL());
+		attributes.put("outUseSSL", isOutUseSSL());
 		attributes.put("outUserName", getOutUserName());
 		attributes.put("outPassword", getOutPassword());
-		attributes.put("allowAnonymous", getAllowAnonymous());
-		attributes.put("active", getActive());
+		attributes.put("allowAnonymous", isAllowAnonymous());
+		attributes.put("active", isActive());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -847,19 +847,19 @@ public class MBMailingListModelImpl extends BaseModelImpl<MBMailingList>
 		mbMailingListImpl.setInProtocol(getInProtocol());
 		mbMailingListImpl.setInServerName(getInServerName());
 		mbMailingListImpl.setInServerPort(getInServerPort());
-		mbMailingListImpl.setInUseSSL(getInUseSSL());
+		mbMailingListImpl.setInUseSSL(isInUseSSL());
 		mbMailingListImpl.setInUserName(getInUserName());
 		mbMailingListImpl.setInPassword(getInPassword());
 		mbMailingListImpl.setInReadInterval(getInReadInterval());
 		mbMailingListImpl.setOutEmailAddress(getOutEmailAddress());
-		mbMailingListImpl.setOutCustom(getOutCustom());
+		mbMailingListImpl.setOutCustom(isOutCustom());
 		mbMailingListImpl.setOutServerName(getOutServerName());
 		mbMailingListImpl.setOutServerPort(getOutServerPort());
-		mbMailingListImpl.setOutUseSSL(getOutUseSSL());
+		mbMailingListImpl.setOutUseSSL(isOutUseSSL());
 		mbMailingListImpl.setOutUserName(getOutUserName());
 		mbMailingListImpl.setOutPassword(getOutPassword());
-		mbMailingListImpl.setAllowAnonymous(getAllowAnonymous());
-		mbMailingListImpl.setActive(getActive());
+		mbMailingListImpl.setAllowAnonymous(isAllowAnonymous());
+		mbMailingListImpl.setActive(isActive());
 
 		mbMailingListImpl.resetOriginalValues();
 
@@ -1019,7 +1019,7 @@ public class MBMailingListModelImpl extends BaseModelImpl<MBMailingList>
 
 		mbMailingListCacheModel.inServerPort = getInServerPort();
 
-		mbMailingListCacheModel.inUseSSL = getInUseSSL();
+		mbMailingListCacheModel.inUseSSL = isInUseSSL();
 
 		mbMailingListCacheModel.inUserName = getInUserName();
 
@@ -1047,7 +1047,7 @@ public class MBMailingListModelImpl extends BaseModelImpl<MBMailingList>
 			mbMailingListCacheModel.outEmailAddress = null;
 		}
 
-		mbMailingListCacheModel.outCustom = getOutCustom();
+		mbMailingListCacheModel.outCustom = isOutCustom();
 
 		mbMailingListCacheModel.outServerName = getOutServerName();
 
@@ -1059,7 +1059,7 @@ public class MBMailingListModelImpl extends BaseModelImpl<MBMailingList>
 
 		mbMailingListCacheModel.outServerPort = getOutServerPort();
 
-		mbMailingListCacheModel.outUseSSL = getOutUseSSL();
+		mbMailingListCacheModel.outUseSSL = isOutUseSSL();
 
 		mbMailingListCacheModel.outUserName = getOutUserName();
 
@@ -1077,9 +1077,9 @@ public class MBMailingListModelImpl extends BaseModelImpl<MBMailingList>
 			mbMailingListCacheModel.outPassword = null;
 		}
 
-		mbMailingListCacheModel.allowAnonymous = getAllowAnonymous();
+		mbMailingListCacheModel.allowAnonymous = isAllowAnonymous();
 
-		mbMailingListCacheModel.active = getActive();
+		mbMailingListCacheModel.active = isActive();
 
 		return mbMailingListCacheModel;
 	}
@@ -1115,7 +1115,7 @@ public class MBMailingListModelImpl extends BaseModelImpl<MBMailingList>
 		sb.append(", inServerPort=");
 		sb.append(getInServerPort());
 		sb.append(", inUseSSL=");
-		sb.append(getInUseSSL());
+		sb.append(isInUseSSL());
 		sb.append(", inUserName=");
 		sb.append(getInUserName());
 		sb.append(", inPassword=");
@@ -1125,21 +1125,21 @@ public class MBMailingListModelImpl extends BaseModelImpl<MBMailingList>
 		sb.append(", outEmailAddress=");
 		sb.append(getOutEmailAddress());
 		sb.append(", outCustom=");
-		sb.append(getOutCustom());
+		sb.append(isOutCustom());
 		sb.append(", outServerName=");
 		sb.append(getOutServerName());
 		sb.append(", outServerPort=");
 		sb.append(getOutServerPort());
 		sb.append(", outUseSSL=");
-		sb.append(getOutUseSSL());
+		sb.append(isOutUseSSL());
 		sb.append(", outUserName=");
 		sb.append(getOutUserName());
 		sb.append(", outPassword=");
 		sb.append(getOutPassword());
 		sb.append(", allowAnonymous=");
-		sb.append(getAllowAnonymous());
+		sb.append(isAllowAnonymous());
 		sb.append(", active=");
-		sb.append(getActive());
+		sb.append(isActive());
 		sb.append("}");
 
 		return sb.toString();
@@ -1207,7 +1207,7 @@ public class MBMailingListModelImpl extends BaseModelImpl<MBMailingList>
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>inUseSSL</column-name><column-value><![CDATA[");
-		sb.append(getInUseSSL());
+		sb.append(isInUseSSL());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>inUserName</column-name><column-value><![CDATA[");
@@ -1227,7 +1227,7 @@ public class MBMailingListModelImpl extends BaseModelImpl<MBMailingList>
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>outCustom</column-name><column-value><![CDATA[");
-		sb.append(getOutCustom());
+		sb.append(isOutCustom());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>outServerName</column-name><column-value><![CDATA[");
@@ -1239,7 +1239,7 @@ public class MBMailingListModelImpl extends BaseModelImpl<MBMailingList>
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>outUseSSL</column-name><column-value><![CDATA[");
-		sb.append(getOutUseSSL());
+		sb.append(isOutUseSSL());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>outUserName</column-name><column-value><![CDATA[");
@@ -1251,11 +1251,11 @@ public class MBMailingListModelImpl extends BaseModelImpl<MBMailingList>
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>allowAnonymous</column-name><column-value><![CDATA[");
-		sb.append(getAllowAnonymous());
+		sb.append(isAllowAnonymous());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>active</column-name><column-value><![CDATA[");
-		sb.append(getActive());
+		sb.append(isActive());
 		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");

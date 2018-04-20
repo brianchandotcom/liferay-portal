@@ -178,7 +178,7 @@ public class KaleoInstanceTokenModelImpl extends BaseModelImpl<KaleoInstanceToke
 		attributes.put("currentKaleoNodeName", getCurrentKaleoNodeName());
 		attributes.put("className", getClassName());
 		attributes.put("classPK", getClassPK());
-		attributes.put("completed", getCompleted());
+		attributes.put("completed", isCompleted());
 		attributes.put("completionDate", getCompletionDate());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
@@ -596,7 +596,7 @@ public class KaleoInstanceTokenModelImpl extends BaseModelImpl<KaleoInstanceToke
 		kaleoInstanceTokenImpl.setCurrentKaleoNodeName(getCurrentKaleoNodeName());
 		kaleoInstanceTokenImpl.setClassName(getClassName());
 		kaleoInstanceTokenImpl.setClassPK(getClassPK());
-		kaleoInstanceTokenImpl.setCompleted(getCompleted());
+		kaleoInstanceTokenImpl.setCompleted(isCompleted());
 		kaleoInstanceTokenImpl.setCompletionDate(getCompletionDate());
 
 		kaleoInstanceTokenImpl.resetOriginalValues();
@@ -754,7 +754,7 @@ public class KaleoInstanceTokenModelImpl extends BaseModelImpl<KaleoInstanceToke
 
 		kaleoInstanceTokenCacheModel.classPK = getClassPK();
 
-		kaleoInstanceTokenCacheModel.completed = getCompleted();
+		kaleoInstanceTokenCacheModel.completed = isCompleted();
 
 		Date completionDate = getCompletionDate();
 
@@ -801,7 +801,7 @@ public class KaleoInstanceTokenModelImpl extends BaseModelImpl<KaleoInstanceToke
 		sb.append(", classPK=");
 		sb.append(getClassPK());
 		sb.append(", completed=");
-		sb.append(getCompleted());
+		sb.append(isCompleted());
 		sb.append(", completionDate=");
 		sb.append(getCompletionDate());
 		sb.append("}");
@@ -875,7 +875,7 @@ public class KaleoInstanceTokenModelImpl extends BaseModelImpl<KaleoInstanceToke
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>completed</column-name><column-value><![CDATA[");
-		sb.append(getCompleted());
+		sb.append(isCompleted());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>completionDate</column-name><column-value><![CDATA[");

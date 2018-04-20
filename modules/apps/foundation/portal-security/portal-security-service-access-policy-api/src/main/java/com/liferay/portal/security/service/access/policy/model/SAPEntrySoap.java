@@ -42,8 +42,8 @@ public class SAPEntrySoap implements Serializable {
 		soapModel.setCreateDate(model.getCreateDate());
 		soapModel.setModifiedDate(model.getModifiedDate());
 		soapModel.setAllowedServiceSignatures(model.getAllowedServiceSignatures());
-		soapModel.setDefaultSAPEntry(model.getDefaultSAPEntry());
-		soapModel.setEnabled(model.getEnabled());
+		soapModel.setDefaultSAPEntry(model.isDefaultSAPEntry());
+		soapModel.setEnabled(model.isEnabled());
 		soapModel.setName(model.getName());
 		soapModel.setTitle(model.getTitle());
 

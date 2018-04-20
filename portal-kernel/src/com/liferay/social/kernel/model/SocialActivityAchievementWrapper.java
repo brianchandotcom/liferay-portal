@@ -65,7 +65,7 @@ public class SocialActivityAchievementWrapper
 		attributes.put("userId", getUserId());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("name", getName());
-		attributes.put("firstInGroup", getFirstInGroup());
+		attributes.put("firstInGroup", isFirstInGroup());
 
 		return attributes;
 	}

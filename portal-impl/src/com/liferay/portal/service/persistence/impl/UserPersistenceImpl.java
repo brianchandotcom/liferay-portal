@@ -6871,7 +6871,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 			if ((list != null) && !list.isEmpty()) {
 				for (User user : list) {
 					if ((companyId != user.getCompanyId()) ||
-							(defaultUser != user.getDefaultUser()) ||
+							(defaultUser != user.isDefaultUser()) ||
 							(status != user.getStatus())) {
 						list = null;
 
@@ -7940,7 +7940,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 				args);
 
 			args = new Object[] {
-					userModelImpl.getCompanyId(), userModelImpl.getDefaultUser(),
+					userModelImpl.getCompanyId(), userModelImpl.isDefaultUser(),
 					userModelImpl.getStatus()
 				};
 

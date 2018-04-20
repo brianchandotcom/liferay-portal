@@ -3488,7 +3488,7 @@ public class WebsitePersistenceImpl extends BasePersistenceImpl<Website>
 					if ((companyId != website.getCompanyId()) ||
 							(classNameId != website.getClassNameId()) ||
 							(classPK != website.getClassPK()) ||
-							(primary != website.getPrimary())) {
+							(primary != website.isPrimary())) {
 						list = null;
 
 						break;
@@ -4286,7 +4286,7 @@ public class WebsitePersistenceImpl extends BasePersistenceImpl<Website>
 			args = new Object[] {
 					websiteModelImpl.getCompanyId(),
 					websiteModelImpl.getClassNameId(),
-					websiteModelImpl.getClassPK(), websiteModelImpl.getPrimary()
+					websiteModelImpl.getClassPK(), websiteModelImpl.isPrimary()
 				};
 
 			finderCache.removeResult(FINDER_PATH_COUNT_BY_C_C_C_P, args);

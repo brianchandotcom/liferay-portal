@@ -5449,7 +5449,7 @@ public class ResourcePermissionPersistenceImpl extends BasePersistenceImpl<Resou
 							(scope != resourcePermission.getScope()) ||
 							(primKeyId != resourcePermission.getPrimKeyId()) ||
 							(roleId != resourcePermission.getRoleId()) ||
-							(viewActionId != resourcePermission.getViewActionId())) {
+							(viewActionId != resourcePermission.isViewActionId())) {
 						list = null;
 
 						break;
@@ -6066,7 +6066,7 @@ public class ResourcePermissionPersistenceImpl extends BasePersistenceImpl<Resou
 							(primKeyId != resourcePermission.getPrimKeyId()) ||
 							!ArrayUtil.contains(roleIds,
 								resourcePermission.getRoleId()) ||
-							(viewActionId != resourcePermission.getViewActionId())) {
+							(viewActionId != resourcePermission.isViewActionId())) {
 						list = null;
 
 						break;
@@ -6771,7 +6771,7 @@ public class ResourcePermissionPersistenceImpl extends BasePersistenceImpl<Resou
 					resourcePermissionModelImpl.getScope(),
 					resourcePermissionModelImpl.getPrimKeyId(),
 					resourcePermissionModelImpl.getRoleId(),
-					resourcePermissionModelImpl.getViewActionId()
+					resourcePermissionModelImpl.isViewActionId()
 				};
 
 			finderCache.removeResult(FINDER_PATH_COUNT_BY_C_N_S_P_R_V, args);

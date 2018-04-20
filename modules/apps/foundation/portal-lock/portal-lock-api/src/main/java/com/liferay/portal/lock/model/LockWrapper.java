@@ -67,7 +67,7 @@ public class LockWrapper implements Lock, ModelWrapper<Lock> {
 		attributes.put("className", getClassName());
 		attributes.put("key", getKey());
 		attributes.put("owner", getOwner());
-		attributes.put("inheritable", getInheritable());
+		attributes.put("inheritable", isInheritable());
 		attributes.put("expirationDate", getExpirationDate());
 
 		return attributes;

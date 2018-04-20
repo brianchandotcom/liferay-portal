@@ -182,8 +182,8 @@ public class DLFileShortcutPersistenceTest {
 			newDLFileShortcut.getToFileEntryId());
 		Assert.assertEquals(existingDLFileShortcut.getTreePath(),
 			newDLFileShortcut.getTreePath());
-		Assert.assertEquals(existingDLFileShortcut.getActive(),
-			newDLFileShortcut.getActive());
+		Assert.assertEquals(existingDLFileShortcut.isActive(),
+			newDLFileShortcut.isActive());
 		Assert.assertEquals(Time.getShortTimestamp(
 				existingDLFileShortcut.getLastPublishDate()),
 			Time.getShortTimestamp(newDLFileShortcut.getLastPublishDate()));

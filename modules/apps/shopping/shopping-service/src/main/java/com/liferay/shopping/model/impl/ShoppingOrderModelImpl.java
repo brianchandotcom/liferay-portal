@@ -340,8 +340,8 @@ public class ShoppingOrderModelImpl extends BaseModelImpl<ShoppingOrder>
 		attributes.put("tax", getTax());
 		attributes.put("shipping", getShipping());
 		attributes.put("altShipping", getAltShipping());
-		attributes.put("requiresShipping", getRequiresShipping());
-		attributes.put("insure", getInsure());
+		attributes.put("requiresShipping", isRequiresShipping());
+		attributes.put("insure", isInsure());
 		attributes.put("insurance", getInsurance());
 		attributes.put("couponCodes", getCouponCodes());
 		attributes.put("couponDiscount", getCouponDiscount());
@@ -355,7 +355,7 @@ public class ShoppingOrderModelImpl extends BaseModelImpl<ShoppingOrder>
 		attributes.put("billingZip", getBillingZip());
 		attributes.put("billingCountry", getBillingCountry());
 		attributes.put("billingPhone", getBillingPhone());
-		attributes.put("shipToBilling", getShipToBilling());
+		attributes.put("shipToBilling", isShipToBilling());
 		attributes.put("shippingFirstName", getShippingFirstName());
 		attributes.put("shippingLastName", getShippingLastName());
 		attributes.put("shippingEmailAddress", getShippingEmailAddress());
@@ -378,8 +378,8 @@ public class ShoppingOrderModelImpl extends BaseModelImpl<ShoppingOrder>
 		attributes.put("ppPaymentGross", getPpPaymentGross());
 		attributes.put("ppReceiverEmail", getPpReceiverEmail());
 		attributes.put("ppPayerEmail", getPpPayerEmail());
-		attributes.put("sendOrderEmail", getSendOrderEmail());
-		attributes.put("sendShippingEmail", getSendShippingEmail());
+		attributes.put("sendOrderEmail", isSendOrderEmail());
+		attributes.put("sendShippingEmail", isSendShippingEmail());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -1574,8 +1574,8 @@ public class ShoppingOrderModelImpl extends BaseModelImpl<ShoppingOrder>
 		shoppingOrderImpl.setTax(getTax());
 		shoppingOrderImpl.setShipping(getShipping());
 		shoppingOrderImpl.setAltShipping(getAltShipping());
-		shoppingOrderImpl.setRequiresShipping(getRequiresShipping());
-		shoppingOrderImpl.setInsure(getInsure());
+		shoppingOrderImpl.setRequiresShipping(isRequiresShipping());
+		shoppingOrderImpl.setInsure(isInsure());
 		shoppingOrderImpl.setInsurance(getInsurance());
 		shoppingOrderImpl.setCouponCodes(getCouponCodes());
 		shoppingOrderImpl.setCouponDiscount(getCouponDiscount());
@@ -1589,7 +1589,7 @@ public class ShoppingOrderModelImpl extends BaseModelImpl<ShoppingOrder>
 		shoppingOrderImpl.setBillingZip(getBillingZip());
 		shoppingOrderImpl.setBillingCountry(getBillingCountry());
 		shoppingOrderImpl.setBillingPhone(getBillingPhone());
-		shoppingOrderImpl.setShipToBilling(getShipToBilling());
+		shoppingOrderImpl.setShipToBilling(isShipToBilling());
 		shoppingOrderImpl.setShippingFirstName(getShippingFirstName());
 		shoppingOrderImpl.setShippingLastName(getShippingLastName());
 		shoppingOrderImpl.setShippingEmailAddress(getShippingEmailAddress());
@@ -1612,8 +1612,8 @@ public class ShoppingOrderModelImpl extends BaseModelImpl<ShoppingOrder>
 		shoppingOrderImpl.setPpPaymentGross(getPpPaymentGross());
 		shoppingOrderImpl.setPpReceiverEmail(getPpReceiverEmail());
 		shoppingOrderImpl.setPpPayerEmail(getPpPayerEmail());
-		shoppingOrderImpl.setSendOrderEmail(getSendOrderEmail());
-		shoppingOrderImpl.setSendShippingEmail(getSendShippingEmail());
+		shoppingOrderImpl.setSendOrderEmail(isSendOrderEmail());
+		shoppingOrderImpl.setSendShippingEmail(isSendShippingEmail());
 
 		shoppingOrderImpl.resetOriginalValues();
 
@@ -1754,9 +1754,9 @@ public class ShoppingOrderModelImpl extends BaseModelImpl<ShoppingOrder>
 			shoppingOrderCacheModel.altShipping = null;
 		}
 
-		shoppingOrderCacheModel.requiresShipping = getRequiresShipping();
+		shoppingOrderCacheModel.requiresShipping = isRequiresShipping();
 
-		shoppingOrderCacheModel.insure = getInsure();
+		shoppingOrderCacheModel.insure = isInsure();
 
 		shoppingOrderCacheModel.insurance = getInsurance();
 
@@ -1851,7 +1851,7 @@ public class ShoppingOrderModelImpl extends BaseModelImpl<ShoppingOrder>
 			shoppingOrderCacheModel.billingPhone = null;
 		}
 
-		shoppingOrderCacheModel.shipToBilling = getShipToBilling();
+		shoppingOrderCacheModel.shipToBilling = isShipToBilling();
 
 		shoppingOrderCacheModel.shippingFirstName = getShippingFirstName();
 
@@ -2012,9 +2012,9 @@ public class ShoppingOrderModelImpl extends BaseModelImpl<ShoppingOrder>
 			shoppingOrderCacheModel.ppPayerEmail = null;
 		}
 
-		shoppingOrderCacheModel.sendOrderEmail = getSendOrderEmail();
+		shoppingOrderCacheModel.sendOrderEmail = isSendOrderEmail();
 
-		shoppingOrderCacheModel.sendShippingEmail = getSendShippingEmail();
+		shoppingOrderCacheModel.sendShippingEmail = isSendShippingEmail();
 
 		return shoppingOrderCacheModel;
 	}
@@ -2046,9 +2046,9 @@ public class ShoppingOrderModelImpl extends BaseModelImpl<ShoppingOrder>
 		sb.append(", altShipping=");
 		sb.append(getAltShipping());
 		sb.append(", requiresShipping=");
-		sb.append(getRequiresShipping());
+		sb.append(isRequiresShipping());
 		sb.append(", insure=");
-		sb.append(getInsure());
+		sb.append(isInsure());
 		sb.append(", insurance=");
 		sb.append(getInsurance());
 		sb.append(", couponCodes=");
@@ -2076,7 +2076,7 @@ public class ShoppingOrderModelImpl extends BaseModelImpl<ShoppingOrder>
 		sb.append(", billingPhone=");
 		sb.append(getBillingPhone());
 		sb.append(", shipToBilling=");
-		sb.append(getShipToBilling());
+		sb.append(isShipToBilling());
 		sb.append(", shippingFirstName=");
 		sb.append(getShippingFirstName());
 		sb.append(", shippingLastName=");
@@ -2122,9 +2122,9 @@ public class ShoppingOrderModelImpl extends BaseModelImpl<ShoppingOrder>
 		sb.append(", ppPayerEmail=");
 		sb.append(getPpPayerEmail());
 		sb.append(", sendOrderEmail=");
-		sb.append(getSendOrderEmail());
+		sb.append(isSendOrderEmail());
 		sb.append(", sendShippingEmail=");
-		sb.append(getSendShippingEmail());
+		sb.append(isSendShippingEmail());
 		sb.append("}");
 
 		return sb.toString();
@@ -2184,11 +2184,11 @@ public class ShoppingOrderModelImpl extends BaseModelImpl<ShoppingOrder>
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>requiresShipping</column-name><column-value><![CDATA[");
-		sb.append(getRequiresShipping());
+		sb.append(isRequiresShipping());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>insure</column-name><column-value><![CDATA[");
-		sb.append(getInsure());
+		sb.append(isInsure());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>insurance</column-name><column-value><![CDATA[");
@@ -2244,7 +2244,7 @@ public class ShoppingOrderModelImpl extends BaseModelImpl<ShoppingOrder>
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>shipToBilling</column-name><column-value><![CDATA[");
-		sb.append(getShipToBilling());
+		sb.append(isShipToBilling());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>shippingFirstName</column-name><column-value><![CDATA[");
@@ -2336,11 +2336,11 @@ public class ShoppingOrderModelImpl extends BaseModelImpl<ShoppingOrder>
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>sendOrderEmail</column-name><column-value><![CDATA[");
-		sb.append(getSendOrderEmail());
+		sb.append(isSendOrderEmail());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>sendShippingEmail</column-name><column-value><![CDATA[");
-		sb.append(getSendShippingEmail());
+		sb.append(isSendShippingEmail());
 		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");

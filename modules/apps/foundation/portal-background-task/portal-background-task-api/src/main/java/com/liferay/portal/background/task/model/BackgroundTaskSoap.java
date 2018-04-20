@@ -47,7 +47,7 @@ public class BackgroundTaskSoap implements Serializable {
 		soapModel.setServletContextNames(model.getServletContextNames());
 		soapModel.setTaskExecutorClassName(model.getTaskExecutorClassName());
 		soapModel.setTaskContextMap(model.getTaskContextMap());
-		soapModel.setCompleted(model.getCompleted());
+		soapModel.setCompleted(model.isCompleted());
 		soapModel.setCompletionDate(model.getCompletionDate());
 		soapModel.setStatus(model.getStatus());
 		soapModel.setStatusMessage(model.getStatusMessage());

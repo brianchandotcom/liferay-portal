@@ -899,7 +899,7 @@ public class StatusPersistenceImpl extends BasePersistenceImpl<Status>
 
 			if ((list != null) && !list.isEmpty()) {
 				for (Status status : list) {
-					if ((online != status.getOnline())) {
+					if ((online != status.isOnline())) {
 						list = null;
 
 						break;
@@ -1411,7 +1411,7 @@ public class StatusPersistenceImpl extends BasePersistenceImpl<Status>
 			if ((list != null) && !list.isEmpty()) {
 				for (Status status : list) {
 					if ((modifiedDate != status.getModifiedDate()) ||
-							(online != status.getOnline())) {
+							(online != status.isOnline())) {
 						list = null;
 
 						break;
@@ -2101,7 +2101,7 @@ public class StatusPersistenceImpl extends BasePersistenceImpl<Status>
 			finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_MODIFIEDDATE,
 				args);
 
-			args = new Object[] { statusModelImpl.getOnline() };
+			args = new Object[] { statusModelImpl.isOnline() };
 
 			finderCache.removeResult(FINDER_PATH_COUNT_BY_ONLINE, args);
 			finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_ONLINE,
@@ -2109,7 +2109,7 @@ public class StatusPersistenceImpl extends BasePersistenceImpl<Status>
 
 			args = new Object[] {
 					statusModelImpl.getModifiedDate(),
-					statusModelImpl.getOnline()
+					statusModelImpl.isOnline()
 				};
 
 			finderCache.removeResult(FINDER_PATH_COUNT_BY_M_O, args);

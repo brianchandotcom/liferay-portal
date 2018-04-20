@@ -138,7 +138,7 @@ public class PortletPersistenceTest {
 		Assert.assertEquals(existingPortlet.getPortletId(),
 			newPortlet.getPortletId());
 		Assert.assertEquals(existingPortlet.getRoles(), newPortlet.getRoles());
-		Assert.assertEquals(existingPortlet.getActive(), newPortlet.getActive());
+		Assert.assertEquals(existingPortlet.isActive(), newPortlet.isActive());
 	}
 
 	@Test

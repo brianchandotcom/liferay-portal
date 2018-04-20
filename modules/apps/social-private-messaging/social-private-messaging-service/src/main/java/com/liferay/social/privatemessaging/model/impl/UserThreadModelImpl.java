@@ -213,8 +213,8 @@ public class UserThreadModelImpl extends BaseModelImpl<UserThread>
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("mbThreadId", getMbThreadId());
 		attributes.put("topMBMessageId", getTopMBMessageId());
-		attributes.put("read", getRead());
-		attributes.put("deleted", getDeleted());
+		attributes.put("read", isRead());
+		attributes.put("deleted", isDeleted());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -523,8 +523,8 @@ public class UserThreadModelImpl extends BaseModelImpl<UserThread>
 		userThreadImpl.setModifiedDate(getModifiedDate());
 		userThreadImpl.setMbThreadId(getMbThreadId());
 		userThreadImpl.setTopMBMessageId(getTopMBMessageId());
-		userThreadImpl.setRead(getRead());
-		userThreadImpl.setDeleted(getDeleted());
+		userThreadImpl.setRead(isRead());
+		userThreadImpl.setDeleted(isDeleted());
 
 		userThreadImpl.resetOriginalValues();
 
@@ -649,9 +649,9 @@ public class UserThreadModelImpl extends BaseModelImpl<UserThread>
 
 		userThreadCacheModel.topMBMessageId = getTopMBMessageId();
 
-		userThreadCacheModel.read = getRead();
+		userThreadCacheModel.read = isRead();
 
-		userThreadCacheModel.deleted = getDeleted();
+		userThreadCacheModel.deleted = isDeleted();
 
 		return userThreadCacheModel;
 	}
@@ -677,9 +677,9 @@ public class UserThreadModelImpl extends BaseModelImpl<UserThread>
 		sb.append(", topMBMessageId=");
 		sb.append(getTopMBMessageId());
 		sb.append(", read=");
-		sb.append(getRead());
+		sb.append(isRead());
 		sb.append(", deleted=");
-		sb.append(getDeleted());
+		sb.append(isDeleted());
 		sb.append("}");
 
 		return sb.toString();
@@ -727,11 +727,11 @@ public class UserThreadModelImpl extends BaseModelImpl<UserThread>
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>read</column-name><column-value><![CDATA[");
-		sb.append(getRead());
+		sb.append(isRead());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>deleted</column-name><column-value><![CDATA[");
-		sb.append(getDeleted());
+		sb.append(isDeleted());
 		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");

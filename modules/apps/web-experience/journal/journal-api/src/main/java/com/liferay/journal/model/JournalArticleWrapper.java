@@ -84,8 +84,8 @@ public class JournalArticleWrapper implements JournalArticle,
 		attributes.put("displayDate", getDisplayDate());
 		attributes.put("expirationDate", getExpirationDate());
 		attributes.put("reviewDate", getReviewDate());
-		attributes.put("indexable", getIndexable());
-		attributes.put("smallImage", getSmallImage());
+		attributes.put("indexable", isIndexable());
+		attributes.put("smallImage", isSmallImage());
 		attributes.put("smallImageId", getSmallImageId());
 		attributes.put("smallImageURL", getSmallImageURL());
 		attributes.put("lastPublishDate", getLastPublishDate());

@@ -165,8 +165,8 @@ public class LayoutSetPrototypePersistenceTest {
 			newLayoutSetPrototype.getDescription());
 		Assert.assertEquals(existingLayoutSetPrototype.getSettings(),
 			newLayoutSetPrototype.getSettings());
-		Assert.assertEquals(existingLayoutSetPrototype.getActive(),
-			newLayoutSetPrototype.getActive());
+		Assert.assertEquals(existingLayoutSetPrototype.isActive(),
+			newLayoutSetPrototype.isActive());
 	}
 
 	@Test

@@ -45,7 +45,7 @@ public class UserGroupSoap implements Serializable {
 		soapModel.setParentUserGroupId(model.getParentUserGroupId());
 		soapModel.setName(model.getName());
 		soapModel.setDescription(model.getDescription());
-		soapModel.setAddedByLDAPImport(model.getAddedByLDAPImport());
+		soapModel.setAddedByLDAPImport(model.isAddedByLDAPImport());
 
 		return soapModel;
 	}

@@ -72,9 +72,9 @@ public class CalendarWrapper implements Calendar, ModelWrapper<Calendar> {
 		attributes.put("description", getDescription());
 		attributes.put("timeZoneId", getTimeZoneId());
 		attributes.put("color", getColor());
-		attributes.put("defaultCalendar", getDefaultCalendar());
-		attributes.put("enableComments", getEnableComments());
-		attributes.put("enableRatings", getEnableRatings());
+		attributes.put("defaultCalendar", isDefaultCalendar());
+		attributes.put("enableComments", isEnableComments());
+		attributes.put("enableRatings", isEnableRatings());
 		attributes.put("lastPublishDate", getLastPublishDate());
 
 		return attributes;

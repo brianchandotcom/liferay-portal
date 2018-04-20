@@ -46,7 +46,7 @@ public class WebsiteSoap implements Serializable {
 		soapModel.setClassPK(model.getClassPK());
 		soapModel.setUrl(model.getUrl());
 		soapModel.setTypeId(model.getTypeId());
-		soapModel.setPrimary(model.getPrimary());
+		soapModel.setPrimary(model.isPrimary());
 		soapModel.setLastPublishDate(model.getLastPublishDate());
 
 		return soapModel;

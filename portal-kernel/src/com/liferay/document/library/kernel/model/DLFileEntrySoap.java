@@ -62,7 +62,7 @@ public class DLFileEntrySoap implements Serializable {
 		soapModel.setLargeImageId(model.getLargeImageId());
 		soapModel.setCustom1ImageId(model.getCustom1ImageId());
 		soapModel.setCustom2ImageId(model.getCustom2ImageId());
-		soapModel.setManualCheckInRequired(model.getManualCheckInRequired());
+		soapModel.setManualCheckInRequired(model.isManualCheckInRequired());
 		soapModel.setLastPublishDate(model.getLastPublishDate());
 
 		return soapModel;

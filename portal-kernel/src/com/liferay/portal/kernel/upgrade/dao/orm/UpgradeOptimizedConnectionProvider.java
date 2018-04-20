@@ -21,7 +21,9 @@ import java.sql.SQLException;
 
 /**
  * @author Cristina González
+ * @deprecated As of 7.0.0, with no direct replacement
  */
+@Deprecated
 public interface UpgradeOptimizedConnectionProvider {
 
 	public Connection getConnection() throws SQLException;

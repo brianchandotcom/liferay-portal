@@ -273,6 +273,24 @@ public class PortletTracker
 			BundlePortletApp bundlePortletApp = createBundlePortletApp(
 				bundle, bundleClassLoader, serviceRegistrations);
 
+			String specVersion = (String)serviceReference.getProperty(
+				"javax.portlet.version");
+
+			if (specVersion != null) {
+				String[] specVersionParts = StringUtil.split(
+					specVersion, CharPool.PERIOD);
+
+				if (specVersionParts.length > 0) {
+					bundlePortletApp.setSpecMajorVersion(
+						GetterUtil.getInteger(specVersionParts[0], 2));
+
+					if (specVersionParts.length > 1) {
+						bundlePortletApp.setSpecMinorVersion(
+							GetterUtil.getInteger(specVersionParts[1]));
+					}
+				}
+			}
+
 			com.liferay.portal.kernel.model.Portlet portletModel =
 				buildPortletModel(bundlePortletApp, portletId);
 

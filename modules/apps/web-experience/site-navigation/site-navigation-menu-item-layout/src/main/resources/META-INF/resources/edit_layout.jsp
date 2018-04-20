@@ -43,7 +43,7 @@ String title = GetterUtil.getString(request.getAttribute(WebKeys.TITLE));
 	<span id="<portlet:namespace />layoutNameInput">
 		<c:choose>
 			<c:when test="<%= selLayout != null %>">
-				<%= selLayout.getName(locale) %>
+				<%= HtmlUtil.escape(selLayout.getName(locale)) %>
 			</c:when>
 			<c:otherwise>
 				<span class="text-muted"><liferay-ui:message key="none" /></span>

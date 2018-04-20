@@ -845,6 +845,10 @@ public class VersionedEntryTest {
 
 		Assert.assertSame(_versionedEntry, parameters[0]);
 
+		Assert.assertTrue(
+			methodNameToParametersMap.toString(),
+			methodNameToParametersMap.isEmpty());
+
 		_versionedEntry = null;
 
 		_versionService.unregisterListener(testVersionServiceListener);

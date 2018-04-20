@@ -14,12 +14,21 @@
 
 package com.liferay.jenkins.results.parser;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.apache.commons.lang.StringUtils;
+import org.apache.tools.ant.Project;
+
 /**
  * @author Peter Yoo
  */
 public class AutoCloseUtil {
 
-	public boolean autoCloseOnCriticalBatchFailures(Build topLevelBuild)
+	public boolean autoCloseOnCriticalBatchFailures(
+			Project project, Build topLevelBuild)
 		throws Exception {
 
 		String autoCloseCommentAvailable = project.getProperty(
@@ -41,12 +50,14 @@ public class AutoCloseUtil {
 			return false;
 		}
 
-		List rules = getAutoCloseRules();
+		List<AutoCloseRule> rules = getAutoCloseRules(project);
 
 		for (AutoCloseRule rule : rules) {
-			List downstreamBuilds = topLevelBuild.getDownstreamBuilds(null);
+			List<Build> downstreamBuilds = topLevelBuild.getDownstreamBuilds(
+				null);
 
-			List failedDownstreamBuilds = rule.evaluate(downstreamBuilds);
+			List<Build> failedDownstreamBuilds = rule.evaluate(
+				downstreamBuilds);
 
 			if (failedDownstreamBuilds.isEmpty()) {
 				continue;
@@ -54,7 +65,7 @@ public class AutoCloseUtil {
 
 			String repository = project.getProperty("repository");
 
-			Map attributes = new HashMap();
+			Map<String, String> attributes = new HashMap<>();
 
 			attributes.put(
 				"pull.request.number",
@@ -64,7 +75,8 @@ public class AutoCloseUtil {
 				"username",
 				project.getProperty("env.GITHUB_RECEIVER_USERNAME"));
 
-			runTask("close-github-pull-request", attributes);
+			AntUtil.callMacrodef(
+				project, "close-github-pull-request", attributes);
 
 			StringBuilder sb = new StringBuilder();
 
@@ -129,7 +141,7 @@ public class AutoCloseUtil {
 
 			attributes.put("comment.body", sb.toString());
 
-			runTask("post-github-comment", attributes);
+			AntUtil.callMacrodef(project, "post-github-comment", attributes);
 
 			return true;
 		}
@@ -137,7 +149,8 @@ public class AutoCloseUtil {
 		return false;
 	}
 
-	public boolean autoCloseOnCriticalTestFailures(Build topLevelBuild)
+	public boolean autoCloseOnCriticalTestFailures(
+			Project project, Build topLevelBuild)
 		throws Exception {
 
 		String autoCloseCommentAvailable = project.getProperty(
@@ -162,9 +175,9 @@ public class AutoCloseUtil {
 		}
 
 		Build failedDownstreamBuild = null;
-		List jenkinsJobFailureURLs = new ArrayList();
+		List<String> jenkinsJobFailureURLs = new ArrayList<>();
 
-		List downstreamBuilds = topLevelBuild.getDownstreamBuilds(null);
+		List<Build> downstreamBuilds = topLevelBuild.getDownstreamBuilds(null);
 
 		for (Build downstreamBuild : downstreamBuilds) {
 			String batchName = getBatchName(downstreamBuild);
@@ -202,7 +215,7 @@ public class AutoCloseUtil {
 						break;
 					}
 
-					List testResults = new ArrayList();
+					List<TestResult> testResults = new ArrayList<>();
 
 					testResults.addAll(
 						downstreamBuild.getTestResults("FAILED"));
@@ -237,7 +250,7 @@ public class AutoCloseUtil {
 		}
 
 		if (!jenkinsJobFailureURLs.isEmpty()) {
-			Map attributes = new HashMap();
+			Map<String, String> attributes = new HashMap<>();
 
 			attributes.put(
 				"pull.request.number",
@@ -247,7 +260,8 @@ public class AutoCloseUtil {
 				"username",
 				project.getProperty("env.GITHUB_RECEIVER_USERNAME"));
 
-			runTask("close-github-pull-request", attributes);
+			AntUtil.callMacrodef(
+				project, "close-github-pull-request", attributes);
 
 			StringBuilder sb = new StringBuilder();
 
@@ -301,7 +315,7 @@ public class AutoCloseUtil {
 
 			attributes.put("comment.body", sb.toString());
 
-			runTask("post-github-comment", attributes);
+			AntUtil.callMacrodef(project, "post-github-comment", attributes);
 
 			return true;
 		}
@@ -309,8 +323,10 @@ public class AutoCloseUtil {
 		return false;
 	}
 
-	public List getAutoCloseRules() throws Exception {
-		List list = new ArrayList();
+	public List<AutoCloseRule> getAutoCloseRules(Project project)
+		throws Exception {
+
+		List<AutoCloseRule> list = new ArrayList<>();
 
 		String propertyNameTemplate =
 			"test.batch.names.auto.close[" + project.getProperty("repository") +

@@ -212,7 +212,7 @@ portletURL.setParameter("delta", String.valueOf(delta));
 		if (form) {
 			var groupIds = Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds');
 
-			if (groupIds && confirm('<liferay:message key="disabling-a-sync-site-will-delete-all-associated-files-from-all-clients" />')) {
+			if (groupIds && confirm('<liferay-ui:message key="disabling-a-sync-site-will-delete-all-associated-files-from-all-clients" />')) {
 				form.querySelector('#<portlet:namespace />groupIds').value = groupIds;
 				form.querySelector('#<portlet:namespace />enabled').value = false;
 
@@ -239,7 +239,7 @@ portletURL.setParameter("delta", String.valueOf(delta));
 							}
 						},
 						id: '<portlet:namespace />editDefaultFilePermissionsDialog',
-					title: '<%= UnicodeLanguageUtil.get(request, "default-file-permissions") %>',
+						title: '<liferay-ui:message key="default-file-permissions" />',
 
 						<portlet:renderURL var="editSitesDefaultFilePermissionsURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
 							<portlet:param name="groupIds" value="{groupIds}" />

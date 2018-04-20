@@ -86,7 +86,7 @@ String groupId = String.valueOf(group.getGroupId());
 					}
 				},
 				id: '<portlet:namespace />editDefaultFilePermissionsDialog',
-				title: '<%= UnicodeLanguageUtil.get(request, "default-file-permissions") %>',
+				title: '<liferay-ui:message key="default-file-permissions" />',
 
 				<portlet:renderURL var="editDefaultFilePermissionsURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
 					<portlet:param name="groupIds" value="{groupId}" />

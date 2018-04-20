@@ -43,6 +43,7 @@ import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.service.Base${sessionTypeName}ServiceImpl;
 import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistryUtil;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.InfrastructureUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -205,6 +206,7 @@ import ${apiPackagePath}.service.${entity.name}${sessionTypeName}Service;
 			 * @return the new ${entity.humanName}
 			 */
 			@Override
+			@Transactional(enabled = false)
 			public ${entity.name} create() {
 				long primaryKey = counterLocalService.increment(${entity.name}.class.getName());
 
@@ -222,6 +224,7 @@ import ${apiPackagePath}.service.${entity.name}${sessionTypeName}Service;
 			* @return the new ${entity.humanName}
 			*/
 			@Override
+			@Transactional(enabled = false)
 			public ${entity.name} create${entity.name}(${entity.PKClassName} ${entity.PKVarName}) {
 				return ${entity.varName}Persistence.create(${entity.PKVarName});
 			}

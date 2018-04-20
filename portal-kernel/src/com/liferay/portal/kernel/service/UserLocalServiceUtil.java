@@ -1189,7 +1189,9 @@ public class UserLocalServiceUtil {
 	* Returns all the users who do not have any contacts.
 	*
 	* @return the users who do not have any contacts
+	* @deprecated As of 7.0.0, with no direct replacement
 	*/
+	@Deprecated
 	public static java.util.List<com.liferay.portal.kernel.model.User> getNoContacts() {
 		return getService().getNoContacts();
 	}

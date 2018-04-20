@@ -22,7 +22,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.apache.commons.lang.StringUtils;
-import org.apache.tools.ant.Project;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -132,31 +132,41 @@ public class PullRequest {
 
 		return baseJSONObject.getString("ref");
 	}
-	
+
 	public boolean isAutoCloseCommentAvailable() {
-		String url = JenkinsResultsParserUtil.combine(new String[] {"https://api.github.com/repos/", project.getProperty("env.GITHUB_RECEIVER_USERNAME"), "/", project.getProperty("repository"), "/issues/", project.getProperty("env.GITHUB_PULL_REQUEST_NUMBER"), "/comments?page="});
-	
+		String url = JenkinsResultsParserUtil.combine(
+			new String[] {
+				"https://api.github.com/repos/",
+				project.getProperty("env.GITHUB_RECEIVER_USERNAME"), "/",
+				project.getProperty("repository"), "/issues/",
+				project.getProperty("env.GITHUB_PULL_REQUEST_NUMBER"),
+				"/comments?page="
+			});
+
 		try {
 			int i = 1;
-	
-			while(true) {
-				String content = JenkinsResultsParserUtil.toString(url + i, false);
-	
+
+			while (true) {
+				String content = JenkinsResultsParserUtil.toString(
+					url + i, false);
+
 				if (content.contains("auto-close=\\\"false\\\"")) {
 					project.setProperty("auto.close.comment.available", "true");
-	
+
 					break;
 				}
-	
+
 				if (content.matches("\\s*\\[\\s*\\]\\s*")) {
 					break;
 				}
-	
+
 				i++;
 			}
-		} catch (Exception e) {
-			System.out.println("Unable to check for auto-close property in GitHub comments");
-		}	
+		}
+		catch (Exception e) {
+			System.out.println(
+				"Unable to check for auto-close property in GitHub comments");
+		}
 	}
 
 	public void refresh() {

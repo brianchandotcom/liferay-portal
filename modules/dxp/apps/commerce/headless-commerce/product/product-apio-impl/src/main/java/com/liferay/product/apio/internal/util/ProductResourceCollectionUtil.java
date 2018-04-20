@@ -86,7 +86,7 @@ public class ProductResourceCollectionUtil {
 			productTypeName, false, true, false, false, 0, 10, 10, 10, 10, 0,
 			false, false, null, true, displayDateMonth, displayDateDay,
 			displayDateYear, displayDateHour, displayDateMinute,
-			displayDateMonth, expirationDateDay, expirationDateYear,
+			expirationDateMonth, expirationDateDay, expirationDateYear,
 			expirationDateHour, expirationDateMinute, true, serviceContext);
 	}
 

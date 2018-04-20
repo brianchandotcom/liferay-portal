@@ -1093,6 +1093,8 @@ import ${apiPackagePath}.service.${entity.name}${sessionTypeName}Service;
 			</#list>
 			) throws PortalException {
 
+			${entityVarName} = ${entity.varName}Persistence.findByPrimaryKey(${entityVarName}.getPrimaryKey());
+
 			<#if entity.versionEntity??>
 				if (!${entityVarName}.isDraft()) {
 					throw new IllegalArgumentException("Can only update draft entries " + ${entityVarName}.getPrimaryKey());
@@ -1123,6 +1125,8 @@ import ${apiPackagePath}.service.${entity.name}${sessionTypeName}Service;
 				</#if>
 			</#list>
 			) throws PortalException {
+
+			${entityVarName} = ${entity.varName}Persistence.findByPrimaryKey(${entityVarName}.getPrimaryKey());
 
 			<#if entity.versionEntity??>
 				if (!${entityVarName}.isDraft()) {

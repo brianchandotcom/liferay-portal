@@ -18,6 +18,7 @@ import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.source.formatter.checks.util.JavaSourceUtil;
 import com.liferay.source.formatter.checkstyle.util.DetailASTUtil;
 
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
@@ -292,6 +293,18 @@ public class ChainingCheck extends BaseCheck {
 
 		if (dotAST == null) {
 			FileContents fileContents = getFileContents();
+
+			String fileName = StringUtil.replace(
+				fileContents.getFileName(), CharPool.BACK_SLASH,
+				CharPool.SLASH);
+
+			String className = JavaSourceUtil.getClassName(fileName);
+
+			for (String allowedClassName : _allowedClassNames) {
+				if (className.matches(allowedClassName)) {
+					return true;
+				}
+			}
 
 			FileText fileText = fileContents.getText();
 

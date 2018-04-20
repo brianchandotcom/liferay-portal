@@ -32,7 +32,7 @@ CommerceUserSegmentCriterion commerceUserSegmentCriterion = (CommerceUserSegment
 	<portlet:renderURL var="editURL">
 		<portlet:param name="mvcRenderCommandName" value="editCommerceUserSegmentCriterion" />
 		<portlet:param name="redirect" value="<%= currentURL %>" />
-		<portlet:param name="commerceUserSegmentCriterionId" value="<%= String.valueOf(commerceUserSegmentCriterion.getCommerceUserSegmentEntryId()) %>" />
+		<portlet:param name="commerceUserSegmentCriterionId" value="<%= String.valueOf(commerceUserSegmentCriterion.getCommerceUserSegmentCriterionId()) %>" />
 		<portlet:param name="commerceUserSegmentEntryId" value="<%= String.valueOf(commerceUserSegmentCriterion.getCommerceUserSegmentEntryId()) %>" />
 	</portlet:renderURL>
 
@@ -41,7 +41,7 @@ CommerceUserSegmentCriterion commerceUserSegmentCriterion = (CommerceUserSegment
 		url="<%= editURL %>"
 	/>
 
-	<portlet:actionURL name="editCommerceUserSegmentEntry" var="deleteURL">
+	<portlet:actionURL name="editCommerceUserSegmentCriterion" var="deleteURL">
 		<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE %>" />
 		<portlet:param name="redirect" value="<%= currentURL %>" />
 		<portlet:param name="commerceUserSegmentCriterionId" value="<%= String.valueOf(commerceUserSegmentCriterion.getCommerceUserSegmentCriterionId()) %>" />

@@ -153,7 +153,7 @@ AUI.add(
 
 						var settingsForm = instance.settingsForm;
 
-						return (settingsForm && settingsForm.hasFocus()) || instance._containsNode(activeElement) || instance._isFieldNode(activeElement);
+						return (settingsForm && settingsForm.hasFocus(node)) || instance._containsNode(activeElement) || instance._isFieldNode(activeElement);
 					},
 
 					updateFieldName: function(field) {

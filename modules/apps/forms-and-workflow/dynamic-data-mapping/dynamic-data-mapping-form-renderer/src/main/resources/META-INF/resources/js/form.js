@@ -127,7 +127,7 @@ AUI.add(
 						return (formNode || container).one('[type="submit"]');
 					},
 
-					hasFocus: function() {
+					hasFocus: function(node) {
 						var instance = this;
 
 						var container = instance.get('container');
@@ -136,7 +136,7 @@ AUI.add(
 
 						instance.eachField(
 							function(field) {
-								hasFocus = field.hasFocus();
+								hasFocus = field.hasFocus(node);
 
 								return hasFocus;
 							}

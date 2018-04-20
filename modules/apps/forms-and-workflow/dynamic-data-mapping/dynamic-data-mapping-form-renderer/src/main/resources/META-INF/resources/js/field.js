@@ -267,12 +267,12 @@ AUI.add(
 						return Lang.String.unescapeHTML(inputNode.val());
 					},
 
-					hasFocus: function() {
+					hasFocus: function(node) {
 						var instance = this;
 
 						var container = instance.get('container');
 
-						return container.contains(document.activeElement);
+						return container.contains(node);
 					},
 
 					render: function(target) {

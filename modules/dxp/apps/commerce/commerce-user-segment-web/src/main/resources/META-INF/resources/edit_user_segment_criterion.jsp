@@ -50,8 +50,10 @@ PortalUtil.addPortletBreadcrumbEntry(request, title, portletURL.toString(), data
 <aui:form action="<%= editCommerceUserSegmentCriterionActionURL %>" cssClass="container-fluid-1280" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveCommerceUserSegmentCriterion();" %>'>
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= (commerceUserSegmentCriterion == null) ? Constants.ADD : Constants.UPDATE %>" />
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
+	<aui:input name="addTypeSettings" type="hidden" />
 	<aui:input name="commerceUserSegmentEntryId" type="hidden" value="<%= commerceUserSegmentEntryId %>" />
 	<aui:input name="commerceUserSegmentCriterionId" type="hidden" value="<%= commerceUserSegmentCriterionId %>" />
+	<aui:input name="deleteTypeSettings" type="hidden" />
 
 	<div class="lfr-form-content">
 		<liferay-ui:error exception="<%= CommerceUserSegmentCriterionTypeException.class %>" message="please-select-a-valid-criterion-type" />
@@ -67,7 +69,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, title, portletURL.toString(), data
 						String commerceUserSegmentCriterionTypeKey = commerceUserSegmentCriterionType.getKey();
 					%>
 
-						<aui:option label="<%= commerceUserSegmentCriterionType.getLabel(locale) %>" selected="<%= (commerceUserSegmentCriterion != null) && commerceUserSegmentCriterionTypeKey.equals(criterionType) %>" value="<%= commerceUserSegmentCriterionTypeKey %>" />
+						<aui:option label="<%= commerceUserSegmentCriterionType.getLabel(locale) %>" selected="<%= (commerceUserSegmentCriterion != null) && commerceUserSegmentCriterionTypeKey.equals(type) %>" value="<%= commerceUserSegmentCriterionTypeKey %>" />
 
 					<%
 					}
@@ -75,7 +77,17 @@ PortalUtil.addPortletBreadcrumbEntry(request, title, portletURL.toString(), data
 
 				</aui:select>
 
-				<aui:input name="typeSettings" />
+				<%
+				CommerceUserSegmentCriterionTypeJSPContributor commerceUserSegmentCriterionTypeJSPContributor = commerceUserSegmentDisplayContext.getCommerceUserSegmentCriterionTypeJSPContributor(type);
+				%>
+
+				<c:if test="<%= commerceUserSegmentCriterionTypeJSPContributor != null %>">
+
+					<%
+					commerceUserSegmentCriterionTypeJSPContributor.render(commerceUserSegmentEntryId, commerceUserSegmentCriterionId, request, response);
+					%>
+
+				</c:if>
 
 				<aui:input name="priority" />
 			</aui:fieldset>

@@ -17,8 +17,10 @@ package com.liferay.commerce.user.segment.web.internal.portlet.action;
 import com.liferay.commerce.user.segment.constants.CommerceUserSegmentPortletKeys;
 import com.liferay.commerce.user.segment.exception.CommerceUserSegmentCriterionTypeException;
 import com.liferay.commerce.user.segment.exception.NoSuchUserSegmentCriterionException;
-import com.liferay.commerce.user.segment.model.CommerceUserSegmentEntry;
+import com.liferay.commerce.user.segment.exception.NoSuchUserSegmentEntryException;
+import com.liferay.commerce.user.segment.model.CommerceUserSegmentCriterion;
 import com.liferay.commerce.user.segment.service.CommerceUserSegmentCriterionService;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
@@ -26,9 +28,11 @@ import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -96,6 +100,7 @@ public class EditCommerceUserSegmentCriterionMVCActionCommand
 		}
 		catch (Exception e) {
 			if (e instanceof NoSuchUserSegmentCriterionException ||
+				e instanceof NoSuchUserSegmentEntryException ||
 				e instanceof PrincipalException) {
 
 				SessionErrors.add(actionRequest, e.getClass());
@@ -114,6 +119,56 @@ public class EditCommerceUserSegmentCriterionMVCActionCommand
 		}
 	}
 
+	protected String getTypeSettings(
+			long commerceUserSegmentCriterionId, String type,
+			ActionRequest actionRequest)
+		throws PortalException {
+
+		String typeSettings = ParamUtil.getString(
+			actionRequest, "typeSettings");
+
+		if (Validator.isNotNull(typeSettings)) {
+			return typeSettings;
+		}
+
+		CommerceUserSegmentCriterion commerceUserSegmentCriterion = null;
+
+		if (commerceUserSegmentCriterionId > 0) {
+			commerceUserSegmentCriterion =
+				_commerceUserSegmentCriterionService.
+					getCommerceUserSegmentCriterion(
+						commerceUserSegmentCriterionId);
+		}
+
+		if ((commerceUserSegmentCriterion != null) &&
+			type.equals(commerceUserSegmentCriterion.getType())) {
+
+			typeSettings = commerceUserSegmentCriterion.getTypeSettings();
+		}
+
+		String[] typeSettingsArray = StringUtil.split(
+			typeSettings, StringPool.COMMA);
+
+		String[] addTypeSettings = ParamUtil.getStringValues(
+			actionRequest, "addTypeSettings");
+		String[] deleteTypeSettings = ParamUtil.getStringValues(
+			actionRequest, "deleteTypeSettings");
+
+		if (deleteTypeSettings.length > 0) {
+			for (String deleteTypeSetting : deleteTypeSettings) {
+				typeSettingsArray = ArrayUtil.remove(
+					typeSettingsArray, deleteTypeSetting);
+			}
+		}
+
+		if (addTypeSettings.length > 0) {
+			typeSettingsArray = ArrayUtil.append(
+				typeSettingsArray, addTypeSettings);
+		}
+
+		return StringUtil.merge(typeSettingsArray);
+	}
+
 	protected void updateCommerceUserSegmentCriterion(
 			ActionRequest actionRequest)
 		throws PortalException {
@@ -125,12 +180,14 @@ public class EditCommerceUserSegmentCriterionMVCActionCommand
 			actionRequest, "commerceUserSegmentEntryId");
 
 		String type = ParamUtil.getString(actionRequest, "type");
-		String typeSettings = ParamUtil.getString(
-			actionRequest, "typeSettings");
+
+		String typeSettings = getTypeSettings(
+			commerceUserSegmentCriterionId, type, actionRequest);
+
 		double priority = ParamUtil.getDouble(actionRequest, "priority");
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			CommerceUserSegmentEntry.class.getName(), actionRequest);
+			CommerceUserSegmentCriterion.class.getName(), actionRequest);
 
 		if (commerceUserSegmentCriterionId > 0) {
 			_commerceUserSegmentCriterionService.

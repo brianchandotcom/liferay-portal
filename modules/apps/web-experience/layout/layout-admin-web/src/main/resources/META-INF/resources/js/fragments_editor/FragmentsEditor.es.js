@@ -349,6 +349,7 @@ class FragmentsEditor extends Component {
 							editableValues: {},
 							fragmentEntryId: event.fragmentEntryId,
 							fragmentEntryLinkId: response.fragmentEntryLinkId,
+							mappedValues: {},
 							name: event.fragmentName,
 							position
 						}
@@ -534,7 +535,15 @@ class FragmentsEditor extends Component {
 	 */
 
 	_handleMappeableFieldSelected(event) {
-		console.log(event);
+		const fragmentEntryLink = this.fragmentEntryLinks.find(
+			fragmentEntryLink => fragmentEntryLink.fragmentEntryLinkId === event.fragmentEntryLinkId
+		);
+
+		if (fragmentEntryLink) {
+			fragmentEntryLink.mappedValues[event.editableId] = event.key;
+		}
+
+		this._updateFragmentEntryLink(fragmentEntryLink);
 	}
 
 	/**
@@ -657,6 +666,11 @@ class FragmentsEditor extends Component {
 			formData.append(
 				`${this.portletNamespace}editableValues`,
 				JSON.stringify(fragmentEntryLink.editableValues)
+			);
+
+			formData.append(
+				`${this.portletNamespace}mappedValues`,
+				JSON.stringify(fragmentEntryLink.mappedValues)
 			);
 
 			fetch(
@@ -873,7 +887,16 @@ FragmentsEditor.STATE = {
 	 * @instance
 	 * @memberOf FragmentsEditor
 	 * @review
-	 * @type {Array<string>}
+	 * @type {Array<{
+	 *   config: Object,
+	 *   content: string,
+	 *   editableValues: Object,
+	 *   fragmentEntryId: !string,
+	 *   fragmentEntryLinkId: !string,
+	 *   mappedValues: Object,
+	 *   name: !string,
+	 *   position: !number
+	 * }>}
 	 */
 
 	fragmentEntryLinks: Config.arrayOf(
@@ -884,6 +907,7 @@ FragmentsEditor.STATE = {
 				editableValues: Config.object().value({}),
 				fragmentEntryId: Config.string().required(),
 				fragmentEntryLinkId: Config.string().required(),
+				mappedValues: Config.object().value({}),
 				name: Config.string().required(),
 				position: Config.number().required()
 			}

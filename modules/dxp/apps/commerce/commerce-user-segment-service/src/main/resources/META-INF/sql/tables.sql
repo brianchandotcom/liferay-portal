@@ -8,7 +8,7 @@ create table CommerceUserSegmentCriterion (
 	modifiedDate DATE null,
 	commerceUserSegmentEntryId LONG,
 	type_ VARCHAR(75) null,
-	typeSettings VARCHAR(75) null,
+	typeSettings TEXT null,
 	priority DOUBLE
 );
 

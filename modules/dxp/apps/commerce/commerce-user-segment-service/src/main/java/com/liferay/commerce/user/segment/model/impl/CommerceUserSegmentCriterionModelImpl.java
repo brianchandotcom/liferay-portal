@@ -78,7 +78,7 @@ public class CommerceUserSegmentCriterionModelImpl extends BaseModelImpl<Commerc
 			{ "modifiedDate", Types.TIMESTAMP },
 			{ "commerceUserSegmentEntryId", Types.BIGINT },
 			{ "type_", Types.VARCHAR },
-			{ "typeSettings", Types.VARCHAR },
+			{ "typeSettings", Types.CLOB },
 			{ "priority", Types.DOUBLE }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
@@ -93,11 +93,11 @@ public class CommerceUserSegmentCriterionModelImpl extends BaseModelImpl<Commerc
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("commerceUserSegmentEntryId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("type_", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("typeSettings", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("typeSettings", Types.CLOB);
 		TABLE_COLUMNS_MAP.put("priority", Types.DOUBLE);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table CommerceUserSegmentCriterion (commerceUserSegmentCriterionId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,commerceUserSegmentEntryId LONG,type_ VARCHAR(75) null,typeSettings VARCHAR(75) null,priority DOUBLE)";
+	public static final String TABLE_SQL_CREATE = "create table CommerceUserSegmentCriterion (commerceUserSegmentCriterionId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,commerceUserSegmentEntryId LONG,type_ VARCHAR(75) null,typeSettings TEXT null,priority DOUBLE)";
 	public static final String TABLE_SQL_DROP = "drop table CommerceUserSegmentCriterion";
 	public static final String ORDER_BY_JPQL = " ORDER BY commerceUserSegmentCriterion.priority ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY CommerceUserSegmentCriterion.priority ASC";

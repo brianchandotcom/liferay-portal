@@ -225,6 +225,12 @@ public class CommerceUserSegmentEntryLocalServiceUtil {
 			orderByComparator);
 	}
 
+	public static java.util.ArrayList<com.liferay.commerce.user.segment.model.CommerceUserSegmentEntry> getCommerceUserSegmentEntries(
+		long groupId, long userId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getCommerceUserSegmentEntries(groupId, userId);
+	}
+
 	/**
 	* Returns the number of commerce user segment entries.
 	*

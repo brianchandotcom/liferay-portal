@@ -42,6 +42,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.io.Serializable;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -209,6 +210,10 @@ public interface CommerceUserSegmentEntryLocalService extends BaseLocalService,
 	public List<CommerceUserSegmentEntry> getCommerceUserSegmentEntries(
 		long groupId, int start, int end,
 		OrderByComparator<CommerceUserSegmentEntry> orderByComparator);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ArrayList<CommerceUserSegmentEntry> getCommerceUserSegmentEntries(
+		long groupId, long userId) throws PortalException;
 
 	/**
 	* Returns the number of commerce user segment entries.

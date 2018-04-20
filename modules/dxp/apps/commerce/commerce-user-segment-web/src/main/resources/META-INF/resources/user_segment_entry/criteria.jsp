@@ -22,6 +22,8 @@ CommerceUserSegmentDisplayContext commerceUserSegmentDisplayContext = (CommerceU
 long commerceUserSegmentEntryId = commerceUserSegmentDisplayContext.getCommerceUserSegmentEntryId();
 SearchContainer<CommerceUserSegmentCriterion> commerceUserSegmentCriteriaSearchContainer = commerceUserSegmentDisplayContext.getCommerceUserSegmentCriteriaSearchContainer();
 PortletURL portletURL = commerceUserSegmentDisplayContext.getPortletURL();
+
+portletURL.setParameter("mvcRenderCommandName", "editCommerceUserSegmentEntry");
 %>
 
 <liferay-frontend:management-bar
@@ -71,6 +73,7 @@ PortletURL portletURL = commerceUserSegmentDisplayContext.getPortletURL();
 	<aui:input name="deleteCommerceUserSegmentCriterionIds" type="hidden" />
 
 	<liferay-ui:search-container
+		id="commerceUserSegmentCriteria"
 		searchContainer="<%= commerceUserSegmentCriteriaSearchContainer %>"
 	>
 		<liferay-ui:search-container-row
@@ -80,17 +83,8 @@ PortletURL portletURL = commerceUserSegmentDisplayContext.getPortletURL();
 		>
 			<liferay-ui:search-container-column-text
 				cssClass="table-cell-content"
-				property="criterionType"
-			/>
-
-			<liferay-ui:search-container-column-text
-				cssClass="table-cell-content"
-				property="condition"
-			/>
-
-			<liferay-ui:search-container-column-text
-				cssClass="table-cell-content"
-				property="value"
+				name="type"
+				value="<%= HtmlUtil.escape(LanguageUtil.get(request, commerceUserSegmentCriterion.getType())) %>"
 			/>
 
 			<liferay-ui:search-container-column-text

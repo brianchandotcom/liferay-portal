@@ -15,9 +15,18 @@
 package com.liferay.fragment.service.persistence.impl;
 
 import com.liferay.fragment.model.FragmentEntryLink;
+import com.liferay.fragment.model.impl.FragmentEntryLinkImpl;
 import com.liferay.fragment.service.persistence.FragmentEntryLinkFinder;
+import com.liferay.portal.dao.orm.custom.sql.CustomSQL;
+import com.liferay.portal.kernel.dao.orm.QueryPos;
+import com.liferay.portal.kernel.dao.orm.SQLQuery;
+import com.liferay.portal.kernel.dao.orm.Session;
+import com.liferay.portal.kernel.dao.orm.Type;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -37,7 +46,42 @@ public class FragmentEntryLinkFinderImpl
 		long groupId, long fragmentEntryId, long classNameId,
 		int layoutPageTemplateEntryType) {
 
-		return 0;
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			String sql = _customSQL.get(getClass(), COUNT_BY_G_F_C_L);
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+			q.addScalar(COUNT_COLUMN_NAME, Type.LONG);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(groupId);
+			qPos.add(fragmentEntryId);
+			qPos.add(classNameId);
+			qPos.add(layoutPageTemplateEntryType);
+
+			Iterator<Long> itr = q.iterate();
+
+			if (itr.hasNext()) {
+				Long count = itr.next();
+
+				if (count != null) {
+					return count.intValue();
+				}
+			}
+
+			return 0;
+		}
+		catch (Exception e) {
+			throw new SystemException(e);
+		}
+		finally {
+			closeSession(session);
+		}
 	}
 
 	@Override
@@ -46,7 +90,35 @@ public class FragmentEntryLinkFinderImpl
 		int layoutPageTemplateEntryType, int start, int end,
 		OrderByComparator<FragmentEntryLink> orderByComparator) {
 
-		return null;
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			String sql = _customSQL.get(getClass(), FIND_BY_G_F_C_L);
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+			q.addEntity("FragmentEntryLink", FragmentEntryLinkImpl.class);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(groupId);
+			qPos.add(fragmentEntryId);
+			qPos.add(classNameId);
+			qPos.add(layoutPageTemplateEntryType);
+
+			return q.list(true);
+		}
+		catch (Exception e) {
+			throw new SystemException(e);
+		}
+		finally {
+			closeSession(session);
+		}
 	}
+
+	@ServiceReference(type = CustomSQL.class)
+	private CustomSQL _customSQL;
 
 }

@@ -28,9 +28,6 @@ public class CommerceUserSegmentScreenNavigationConstants {
 	public static final String ENTRY_KEY_COMMERCE_USER_SEGMENT_ENTRY_DETAIL =
 		"detail";
 
-	public static final String ENTRY_KEY_COMMERCE_USER_SEGMENT_ENTRY_PREVIEW =
-		"preview";
-
 	public static final String
 		SCREEN_NAVIGATION_KEY_COMMERCE_USER_SEGMENT_ENTRY_GENERAL =
 			"commerce.user.segment.entry.general";

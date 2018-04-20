@@ -215,6 +215,41 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 
 	@Override
 	public LayoutPageTemplateEntry updateLayoutPageTemplateEntry(
+		long layoutPageTemplateEntryId, boolean defaultTemplate) {
+
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			fetchLayoutPageTemplateEntry(layoutPageTemplateEntryId);
+
+		if (layoutPageTemplateEntry == null) {
+			return null;
+		}
+
+		LayoutPageTemplateEntry defaultLayoutPageTemplateEntry =
+			layoutPageTemplateEntryPersistence.fetchByG_C_C_D_First(
+				layoutPageTemplateEntry.getGroupId(),
+				layoutPageTemplateEntry.getClassNameId(),
+				layoutPageTemplateEntry.getClassTypeId(), true, null);
+
+		if (defaultTemplate && (defaultLayoutPageTemplateEntry != null) &&
+			(defaultLayoutPageTemplateEntry.getLayoutPageTemplateEntryId() !=
+				layoutPageTemplateEntryId)) {
+
+			defaultLayoutPageTemplateEntry.setDefaultTemplate(false);
+
+			layoutPageTemplateEntryLocalService.updateLayoutPageTemplateEntry(
+				defaultLayoutPageTemplateEntry);
+		}
+
+		layoutPageTemplateEntry.setDefaultTemplate(defaultTemplate);
+
+		layoutPageTemplateEntryLocalService.updateLayoutPageTemplateEntry(
+			layoutPageTemplateEntry);
+
+		return layoutPageTemplateEntry;
+	}
+
+	@Override
+	public LayoutPageTemplateEntry updateLayoutPageTemplateEntry(
 			long layoutPageTemplateEntryId, long classNameId, long classTypeId)
 		throws PortalException {
 

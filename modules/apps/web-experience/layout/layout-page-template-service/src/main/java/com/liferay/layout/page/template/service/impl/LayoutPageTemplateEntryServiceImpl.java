@@ -252,35 +252,13 @@ public class LayoutPageTemplateEntryServiceImpl
 			long layoutPageTemplateEntryId, boolean defaultTemplate)
 		throws PortalException {
 
-		LayoutPageTemplateEntry layoutPageTemplateEntry =
-			fetchLayoutPageTemplateEntry(layoutPageTemplateEntryId);
+		_layoutPageTemplateEntryModelResourcePermission.check(
+			getPermissionChecker(), layoutPageTemplateEntryId,
+			ActionKeys.UPDATE);
 
-		if (layoutPageTemplateEntry == null) {
-			return null;
-		}
-
-		LayoutPageTemplateEntry defaultLayoutPageTemplateEntry =
-			fetchDefaultLayoutPageTemplateEntry(
-				layoutPageTemplateEntry.getGroupId(),
-				layoutPageTemplateEntry.getClassNameId(),
-				layoutPageTemplateEntry.getClassTypeId());
-
-		if (defaultTemplate && (defaultLayoutPageTemplateEntry != null) &&
-			(defaultLayoutPageTemplateEntry.getLayoutPageTemplateEntryId() !=
-				layoutPageTemplateEntryId)) {
-
-			defaultLayoutPageTemplateEntry.setDefaultTemplate(false);
-
-			layoutPageTemplateEntryLocalService.updateLayoutPageTemplateEntry(
-				defaultLayoutPageTemplateEntry);
-		}
-
-		layoutPageTemplateEntry.setDefaultTemplate(defaultTemplate);
-
-		layoutPageTemplateEntryLocalService.updateLayoutPageTemplateEntry(
-			layoutPageTemplateEntry);
-
-		return layoutPageTemplateEntry;
+		return layoutPageTemplateEntryLocalService.
+			updateLayoutPageTemplateEntry(
+				layoutPageTemplateEntryId, defaultTemplate);
 	}
 
 	@Override

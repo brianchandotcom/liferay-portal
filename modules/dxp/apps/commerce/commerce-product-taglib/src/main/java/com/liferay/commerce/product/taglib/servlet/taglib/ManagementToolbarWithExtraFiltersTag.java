@@ -20,38 +20,44 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.soy.ManagementToolbarTag;
  * @author Carlos Lancha
  */
 public class ManagementToolbarWithExtraFiltersTag extends ManagementToolbarTag {
-    public ManagementToolbarWithExtraFiltersTag() {
-        super("management-toolbar-with-extra-filters", "com.liferay.commerce.product.taglib.ManagementToolbarWithExtraFilters", true);
-    }
 
-    @Override
-    public String getModule() {
-        return "commerce-product-taglib/management_toolbar_with_extra_filters/ManagementToolbarWithExtraFilters.es";
-    }
+	public ManagementToolbarWithExtraFiltersTag() {
+		super(
+	"management-toolbar-with-extra-filters",
+	"com.liferay.commerce.product.taglib.ManagementToolbarWithExtraFilters",
+	true);
+	}
 
-    public void setCategorySelectorURL(String categorySelectorURL) {
-        putValue("categorySelectorURL", categorySelectorURL);
-    }
+	@Override
+	public String getModule() {
+		return "commerce-product-taglib/management_toolbar_with_extra_filters/ManagementToolbarWithExtraFilters.es";
+	}
 
-    public void setCpDefinitionsFacetsURL(String cpDefinitionsFacetsURL) {
-        putValue("cpDefinitionsFacetsURL", cpDefinitionsFacetsURL);
-    }
+	public void setCategorySelectorURL(String categorySelectorURL) {
+		putValue("categorySelectorURL", categorySelectorURL);
+	}
 
-    public void setGroupIds(String groupIds) {
-        putValue("groupIds", groupIds);
-    }
+	public void setCpDefinitionsFacetsURL(String cpDefinitionsFacetsURL) {
+		putValue("cpDefinitionsFacetsURL", cpDefinitionsFacetsURL);
+	}
 
-    @Override
-    public void setNamespace(String namespace) {
-        super.setNamespace(namespace);
-        putValue("namespace", namespace);
-    }
+	public void setGroupIds(String groupIds) {
+		putValue("groupIds", groupIds);
+	}
 
-    public void setPortletURL(String portletURL) {
-        putValue("portletURL", portletURL);
-    }
+	@Override
+	public void setNamespace(String namespace) {
+		super.setNamespace(namespace);
 
-    public void setVocabularyIds(String vocabularyIds) {
-        putValue("vocabularyIds", vocabularyIds);
-    }
+		putValue("namespace", namespace);
+	}
+
+	public void setPortletURL(String portletURL) {
+		putValue("portletURL", portletURL);
+	}
+
+	public void setVocabularyIds(String vocabularyIds) {
+		putValue("vocabularyIds", vocabularyIds);
+	}
+
 }

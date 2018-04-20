@@ -4,308 +4,307 @@
  * Render
 */
 {template .render}
-    {@param spritemap: string}
-    {@param? actionItems: list<[
-        disabled: bool,
-        href: string,
-        icon: string,
-        label: string,
-        quickAction: bool,
-        separator: bool,
-        type: string
-    ]>}
-    {@param? clearResultsURL: string}
-    {@param? contentRenderer: string}
-    {@param? creationMenu: [
-        caption: string,
-        helpText: string,
-        maxPrimaryItems: int,
-        maxSecondaryItems: int,
-        maxTotalItems: int,
-        primaryItems: list<[
-            disabled: bool,
-            href: string,
-            icon: string,
-            label: string,
-            separator: bool
-        ]>,
-        secondaryItems: list<[
-            disabled: bool,
-            href: string,
-            icon: string,
-            items: list<[
-                disabled: bool,
-                href: string,
-                icon: string,
-                label: string,
-                separator: bool
-            ]>,
-            label: string,
-            separator: bool
-        ]>,
-        viewMoreURL: string
-    ]}
-    {@param? disabled: bool}
-    {@param? elementClasses: string}
-    {@param? filterItems: list<[
-        checked: bool,
-        disabled: bool,
-        inputName: string,
-        inputValue: string,
-        label: string,
-        separator: bool,
-        type: string
-    ]>}
-    {@param? id: string}
-    {@param? infoPanelId: string}
-    {@param? searchActionURL: string}
-    {@param? searchContainerId: string}
-    {@param? searchFormName: string}
-    {@param? searchInputName: string}
-    {@param? searchValue: string}
-    {@param? selectable: bool}
-    {@param? selectedItems: number}
-    {@param? showAdvancedSearch: bool}
-    {@param? showCreationMenu: bool}
-    {@param? showFiltersDoneButton: bool}
-    {@param? showInfoButton: bool}
-    {@param? showSearch: bool}
-    {@param? sortingOrder: string}
-    {@param? sortingURL: string}
-    {@param? totalItems: number}
-    {@param? viewTypes: list<[
-        active: bool,
-        disabled: bool,
-        href: string,
-        icon: string,
-        label: string
-    ]>}
-    {@param? _currentSelection: string}
-    {@param? _handleAddFilter: any}
-    {@param? _handleOptionChange: any}
-    {@param? _handlerRemoveFilter: any}
-    {@param? _filters: ?}
-    {@param? _terms: ?}
-    {@param? _optionValues: ?}
+	{@param spritemap: string}
+	{@param? actionItems: list<[
+		disabled: bool,
+		href: string,
+		icon: string,
+		label: string,
+		quickAction: bool,
+		separator: bool,
+		type: string
+	]>}
+	{@param? clearResultsURL: string}
+	{@param? contentRenderer: string}
+	{@param? creationMenu: [
+		caption: string,
+		helpText: string,
+		maxPrimaryItems: int,
+		maxSecondaryItems: int,
+		maxTotalItems: int,
+		primaryItems: list<[
+			disabled: bool,
+			href: string,
+			icon: string,
+			label: string,
+			separator: bool
+		]>,
+		secondaryItems: list<[
+			disabled: bool,
+			href: string,
+			icon: string,
+			items: list<[
+				disabled: bool,
+				href: string,
+				icon: string,
+				label: string,
+				separator: bool
+			]>,
+			label: string,
+			separator: bool
+		]>,
+		viewMoreURL: string
+	]}
+	{@param? disabled: bool}
+	{@param? elementClasses: string}
+	{@param? filterItems: list<[
+		checked: bool,
+		disabled: bool,
+		inputName: string,
+		inputValue: string,
+		label: string,
+		separator: bool,
+		type: string
+	]>}
+	{@param? id: string}
+	{@param? infoPanelId: string}
+	{@param? searchActionURL: string}
+	{@param? searchContainerId: string}
+	{@param? searchFormName: string}
+	{@param? searchInputName: string}
+	{@param? searchValue: string}
+	{@param? selectable: bool}
+	{@param? selectedItems: number}
+	{@param? showAdvancedSearch: bool}
+	{@param? showCreationMenu: bool}
+	{@param? showFiltersDoneButton: bool}
+	{@param? showInfoButton: bool}
+	{@param? showSearch: bool}
+	{@param? sortingOrder: string}
+	{@param? sortingURL: string}
+	{@param? totalItems: number}
+	{@param? viewTypes: list<[
+		active: bool,
+		disabled: bool,
+		href: string,
+		icon: string,
+		label: string
+	]>}
+	{@param? _currentSelection: string}
+	{@param? _handleAddFilter: any}
+	{@param? _handleOptionChange: any}
+	{@param? _handlerRemoveFilter: any}
+	{@param? _filters: ?}
+	{@param? _terms: ?}
+	{@param? _optionValues: ?}
 
-    <div>
-        {call com.liferay.frontend.taglib.clay.ManagementToolbar.render data="all"}
-            {param ref: 'myToolbar' /}
-            {param actionItems: $actionItems /}
-            {param clearResultsURL: $clearResultsURL /}
-            {param contentRenderer: $contentRenderer /}
-            {param creationMenu: $creationMenu /}
-            {param disabled: $disabled /}
-            {param elementClasses: $elementClasses /}
-            {param filterItems: $filterItems /}
-            {param id: $id /}
-            {param infoPanelId: $infoPanelId /}
-            {param searchActionURL: $searchActionURL /}
-            {param searchContainerId: $searchContainerId /}
-            {param searchFormName: $searchFormName /}
-            {param searchInputName: $searchInputName /}
-            {param searchValue: $searchValue /}
-            {param selectable: $selectable /}
-            {param selectedItems: $selectedItems /}
-            {param showAdvancedSearch: $showAdvancedSearch /}
-            {param showCreationMenu: $showCreationMenu /}
-            {param showFiltersDoneButton: $showFiltersDoneButton /}
-            {param showInfoButton: $showInfoButton /}
-            {param showSearch: $showSearch /}
-            {param sortingOrder: $sortingOrder /}
-            {param sortingURL: $sortingURL /}
-            {param spritemap: $spritemap /}
-            {param totalItems: $totalItems /}
-            {param viewTypes: $viewTypes /}
-        {/call}
+	<div>
+		{call com.liferay.frontend.taglib.clay.ManagementToolbar.render data="all"}
+			{param ref: 'myToolbar' /}
+			{param actionItems: $actionItems /}
+			{param clearResultsURL: $clearResultsURL /}
+			{param contentRenderer: $contentRenderer /}
+			{param creationMenu: $creationMenu /}
+			{param disabled: $disabled /}
+			{param elementClasses: $elementClasses /}
+			{param filterItems: $filterItems /}
+			{param id: $id /}
+			{param infoPanelId: $infoPanelId /}
+			{param searchActionURL: $searchActionURL /}
+			{param searchContainerId: $searchContainerId /}
+			{param searchFormName: $searchFormName /}
+			{param searchInputName: $searchInputName /}
+			{param searchValue: $searchValue /}
+			{param selectable: $selectable /}
+			{param selectedItems: $selectedItems /}
+			{param showAdvancedSearch: $showAdvancedSearch /}
+			{param showCreationMenu: $showCreationMenu /}
+			{param showFiltersDoneButton: $showFiltersDoneButton /}
+			{param showInfoButton: $showInfoButton /}
+			{param showSearch: $showSearch /}
+			{param sortingOrder: $sortingOrder /}
+			{param sortingURL: $sortingURL /}
+			{param spritemap: $spritemap /}
+			{param totalItems: $totalItems /}
+			{param viewTypes: $viewTypes /}
+		{/call}
 
-        <div>
-            {call .filters}
-                {param _currentSelection: $_currentSelection /}
-                {param _handleAddFilter: $_handleAddFilter /}
-                {param _handleOptionChange: $_handleOptionChange /}
-                {param _handlerRemoveFilter: $_handlerRemoveFilter /}
-                {param _filters: $_filters /}
-                {param _terms: $_terms /}
-                {param _optionValues: $_optionValues /}
-                {param spritemap: $spritemap /}
-            {/call}
-        </div>
-    </div>
+		<div>
+			{call .filters}
+				{param _currentSelection: $_currentSelection /}
+				{param _handleAddFilter: $_handleAddFilter /}
+				{param _handleOptionChange: $_handleOptionChange /}
+				{param _handlerRemoveFilter: $_handlerRemoveFilter /}
+				{param _filters: $_filters /}
+				{param _terms: $_terms /}
+				{param _optionValues: $_optionValues /}
+				{param spritemap: $spritemap /}
+			{/call}
+		</div>
+	</div>
 {/template}
-
 
 /**
  * Definition Toolbar Filter
  *
  */
 {template .filters}
-    {@param? spritemap: string}
-    {@param? _currentSelection: string}
-    {@param? _handleAddFilter: any}
-    {@param? _handleOptionChange: any}
-    {@param? _handlerRemoveFilter: any}
-    {@param? _filters: ?}
-    {@param? _terms: ?}
-    {@param? _optionValues: ?}
+	{@param? spritemap: string}
+	{@param? _currentSelection: string}
+	{@param? _handleAddFilter: any}
+	{@param? _handleOptionChange: any}
+	{@param? _handlerRemoveFilter: any}
+	{@param? _filters: ?}
+	{@param? _terms: ?}
+	{@param? _optionValues: ?}
 
-    <div class="definition-toolbar-filter">
-        <div class="container-fluid-1280">
-            <div class="form-group form-inline filter-selector">
-                <div class="form-group">
-                    <div class=" form-group input-group-item input-group-item-shrink input-group-prepend">
-                        <select class="form-control filter-selector-select" onChange="_handleFilterChange">
-                            <option value="">{msg desc=""}select-filter{/msg}</option>
-                            <option value="productTypeName">{msg desc=""}product-type{/msg}</option>
-                            <option value="optionsNames">{msg desc=""}option{/msg}</option>
-                            <option value="status">{msg desc=""}status{/msg}</option>
-                            <option value="assetCategoryIds">{msg desc=""}category{/msg}</option>
-                        </select>
-                    </div>
+	<div class="definition-toolbar-filter">
+		<div class="container-fluid-1280">
+			<div class="form-group form-inline filter-selector">
+				<div class="form-group">
+					<div class=" form-group input-group-item input-group-item-shrink input-group-prepend">
+						<select class="form-control filter-selector-select" onChange="_handleFilterChange">
+							<option value="">{msg desc=""}select-filter{/msg}</option>
+							<option value="productTypeName">{msg desc=""}product-type{/msg}</option>
+							<option value="optionsNames">{msg desc=""}option{/msg}</option>
+							<option value="status">{msg desc=""}status{/msg}</option>
+							<option value="assetCategoryIds">{msg desc=""}category{/msg}</option>
+						</select>
+					</div>
 
-                    <div class=" form-group input-group-item input-group-item-shrink input-group-prepend">
-                        {switch $_currentSelection}
-                            {case 'status'}
-                                {call .status}
-                                    {param terms: $_terms /}
-                                {/call}
-                            {case 'productTypeName'}
-                                {call .productTypeName}
-                                    {param terms: $_terms /}
-                                {/call}
-                            {case 'optionsNames'}
-                                {call .option}
-                                    {param terms: $_terms /}
-                                    {param handleOptionChange: $_handleOptionChange /}
-                                {/call}
-                            {case 'assetCategoryIds'}
-                                {call .category}
-                                {/call}
-                        {/switch}
+					<div class=" form-group input-group-item input-group-item-shrink input-group-prepend">
+						{switch $_currentSelection}
+							{case 'status'}
+								{call .status}
+									{param terms: $_terms /}
+								{/call}
+							{case 'productTypeName'}
+								{call .productTypeName}
+									{param terms: $_terms /}
+								{/call}
+							{case 'optionsNames'}
+								{call .option}
+									{param terms: $_terms /}
+									{param handleOptionChange: $_handleOptionChange /}
+								{/call}
+							{case 'assetCategoryIds'}
+								{call .category}
+								{/call}
+						{/switch}
 
-                        {if $_currentSelection == 'optionsNames' and $_optionValues.length > 0 }
-                            {call .optionValues}
-                                {param optionValues: $_optionValues /}
-                            {/call}
-                        {/if}
-                    </div>
+						{if $_currentSelection == 'optionsNames' and $_optionValues.length > 0 }
+							{call .optionValues}
+								{param optionValues: $_optionValues /}
+							{/call}
+						{/if}
+					</div>
 
-                    <div class=" form-group input-group-item input-group-item-shrink">
-                        {if $_currentSelection != 'assetCategoryIds' }
-                            <button class="btn btn-secondary add-filter-button" onclick="{$_handleAddFilter}" type="button">{msg desc=""}add-filter{/msg}</button>
-                        {/if}
-                    </div>
-                </div>
-            </div>
+					<div class=" form-group input-group-item input-group-item-shrink">
+						{if $_currentSelection != 'assetCategoryIds' }
+							<button class="btn btn-secondary add-filter-button" onclick="{$_handleAddFilter}" type="button">{msg desc=""}add-filter{/msg}</button>
+						{/if}
+					</div>
+				</div>
+			</div>
 
-            {call .filterList}
-                {param filters: $_filters /}
-                {param spritemap: $spritemap /}
-                {param _handlerRemoveFilter: $_handlerRemoveFilter /}
-            {/call}
-        </div>
-    </div>
+			{call .filterList}
+				{param filters: $_filters /}
+				{param spritemap: $spritemap /}
+				{param _handlerRemoveFilter: $_handlerRemoveFilter /}
+			{/call}
+		</div>
+	</div>
 {/template}
 
 /**
  * Prints options filters
  */
 {template .option}
-    {@param? terms: ?}
-    {@param? handleOptionChange: any}
+	{@param? terms: ?}
+	{@param? handleOptionChange: any}
 
-    <label>{msg desc=""}is{/msg}</label>
-    <select class="form-control filter-select" id="optionsNames" onChange="{$handleOptionChange}">
-        <option value="">{msg desc=""}select-option{/msg}</option>
-        {if $terms}
-            {foreach $term in $terms}
-                <option data-label="{$term.label}" value="{$term.term}">{$term.label} ({$term.frequency})</option>
-            {/foreach}
-        {/if}
-    </select>
+	<label>{msg desc=""}is{/msg}</label>
+	<select class="form-control filter-select" id="optionsNames" onChange="{$handleOptionChange}">
+		<option value="">{msg desc=""}select-option{/msg}</option>
+		{if $terms}
+			{foreach $term in $terms}
+				<option data-label="{$term.label}" value="{$term.term}">{$term.label} ({$term.frequency})</option>
+			{/foreach}
+		{/if}
+	</select>
 {/template}
 
 /**
  * Prints option values filters
  */
 {template .optionValues}
-    {@param? optionValues: ?}
+	{@param? optionValues: ?}
 
-    <label>{msg desc=""}is{/msg}</label>
+	<label>{msg desc=""}is{/msg}</label>
 
-    <select class="form-control filter-select" id="optionValues">
-        {if $optionValues}
-            {foreach $optionValue in $optionValues}
-                <option data-label="{$optionValue.label}" value="{$optionValue.term}">{$optionValue.label} ({$optionValue.frequency})</option>
-            {/foreach}
-        {/if}
-    </select>
+	<select class="form-control filter-select" id="optionValues">
+		{if $optionValues}
+			{foreach $optionValue in $optionValues}
+				<option data-label="{$optionValue.label}" value="{$optionValue.term}">{$optionValue.label} ({$optionValue.frequency})</option>
+			{/foreach}
+		{/if}
+	</select>
 {/template}
 
 /**
  * Prints status filters
  */
 {template .status}
-    {@param? terms: ?}
+	{@param? terms: ?}
 
-    <label>{msg desc=""}is{/msg}</label>
-    <select class="form-control filter-select" id="status">
-        {if $terms}
-            {foreach $term in $terms}
-                <option data-label="{$term.label}" value="{$term.term}">{$term.label} ({$term.frequency})</option>
-            {/foreach}
-        {/if}
-    </select>
+	<label>{msg desc=""}is{/msg}</label>
+	<select class="form-control filter-select" id="status">
+		{if $terms}
+			{foreach $term in $terms}
+				<option data-label="{$term.label}" value="{$term.term}">{$term.label} ({$term.frequency})</option>
+			{/foreach}
+		{/if}
+	</select>
 {/template}
 
 /**
  * Prints productTypeName filters
  */
 {template .productTypeName}
-    {@param? terms: ?}
+	{@param? terms: ?}
 
-    <label>{msg desc=""}is{/msg}</label>
-    <select class="form-control filter-select" id="productTypeName">
-        {if $terms}
-            {foreach $term in $terms}
-                <option data-label="{$term.label}" value="{$term.term}">{$term.label} ({$term.frequency})</option>
-            {/foreach}
-        {/if}
-    </select>
+	<label>{msg desc=""}is{/msg}</label>
+	<select class="form-control filter-select" id="productTypeName">
+		{if $terms}
+			{foreach $term in $terms}
+				<option data-label="{$term.label}" value="{$term.term}">{$term.label} ({$term.frequency})</option>
+			{/foreach}
+		{/if}
+	</select>
 {/template}
 
 /**
  * Prints category filters
  */
 {template .category}
-    <div id="assetCategoriesSelector">
-    </div>
+	<div id="assetCategoriesSelector">
+	</div>
 
-    <input name="categoryIds" id="categoryIds" ref="hiddenInput" type="hidden" />
+	<input name="categoryIds" id="categoryIds" ref="hiddenInput" type="hidden" />
 {/template}
 
 /**
  * Prints filters
  */
 {template .filterList}
-    {@param? filters: ?}
-    {@param? spritemap: string}
-    {@param? _handlerRemoveFilter: any}
+	{@param? filters: ?}
+	{@param? spritemap: string}
+	{@param? _handlerRemoveFilter: any}
 
-    {if $filters and $filters.length > 0}
-        <div class="filter-list">
-            <p>
-                {foreach $filter in $filters}
-                    <span class="label label-dismissible label-lg label-secondary">
+	{if $filters and $filters.length > 0}
+		<div class="filter-list">
+			<p>
+				{foreach $filter in $filters}
+					<span class="label label-dismissible label-lg label-secondary">
 						{$filter.label}
-                        <button aria-label="Close" class="btn close btn-unstyled" data-index="{index($filter)}" onClick="{$_handlerRemoveFilter}" type="button">
+						<button aria-label="Close" class="btn close btn-unstyled" data-index="{index($filter)}" onClick="{$_handlerRemoveFilter}" type="button">
 							<svg aria-hidden="true" class="lexicon-icon lexicon-icon-times">
 								<use xlink:href="{$spritemap}/lexicon/icons.svg#times"></use>
 							</svg>
 						</button>
 					</span>
-                {/foreach}
-            </p>
-        </div>
-    {/if}
+				{/foreach}
+			</p>
+		</div>
+	{/if}
 {/template}

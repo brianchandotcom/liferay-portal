@@ -1,4 +1,5 @@
-<%@ taglib prefix="commerce-product" uri="http://liferay.com/tld/commerce-product" %>
+<%@ taglib uri="http://liferay.com/tld/commerce-product" prefix="commerce-product" %>
+
 <%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
@@ -26,24 +27,24 @@ CPDefinitionsDisplayContext cpDefinitionsDisplayContext = (CPDefinitionsDisplayC
 <liferay-portlet:resourceURL id="cpDefinitionsFacets" var="cpDefinitionsFacetsURL" />
 
 <commerce-product:management-toolbar-with-extra-filters
-    actionItems="<%= cpDefinitionsDisplayContext.getActionDropdownItems() %>"
-    categorySelectorURL='<%= cpDefinitionsDisplayContext.getCategorySelectorURL(renderResponse.getNamespace() + "selectCategory") %>'
-    clearResultsURL="<%= cpDefinitionsDisplayContext.getClearResultsURL() %>"
-    cpDefinitionsFacetsURL="<%= cpDefinitionsFacetsURL.toString() %>"
-    creationMenu="<%= cpDefinitionsDisplayContext.getCreationMenu() %>"
-    filterItems="<%= cpDefinitionsDisplayContext.getOrderByDropdownItems() %>"
-    groupIds="<%= String.valueOf(themeDisplay.getScopeGroupId()) %>"
+	actionItems="<%= cpDefinitionsDisplayContext.getActionDropdownItems() %>"
+	categorySelectorURL='<%= cpDefinitionsDisplayContext.getCategorySelectorURL(renderResponse.getNamespace() + "selectCategory") %>'
+	clearResultsURL="<%= cpDefinitionsDisplayContext.getClearResultsURL() %>"
+	cpDefinitionsFacetsURL="<%= cpDefinitionsFacetsURL.toString() %>"
+	creationMenu="<%= cpDefinitionsDisplayContext.getCreationMenu() %>"
+	filterItems="<%= cpDefinitionsDisplayContext.getOrderByDropdownItems() %>"
+	groupIds="<%= String.valueOf(themeDisplay.getScopeGroupId()) %>"
 	infoPanelId="infoPanelId"
-    namespace="<%= renderResponse.getNamespace() %>"
-    searchContainerId="<%= searchContainerId %>"
-    searchActionURL="<%= String.valueOf(cpDefinitionsDisplayContext.getPortletURL()) %>"
-    searchFormName="searchFm"
-    sortingOrder="<%= cpDefinitionsDisplayContext.getOrderByType() %>"
-    sortingURL="<%= cpDefinitionsDisplayContext.getSortingURL() %>"
-    portletURL="<%= cpDefinitionsDisplayContext.getPortletURL().toString() %>"
-    totalItems="<%= cpDefinitionsDisplayContext.getTotalItems() %>"
-    viewTypes="<%= cpDefinitionsDisplayContext.getViewTypeItems() %>"
-    vocabularyIds="<%= cpDefinitionsDisplayContext.getVocabularyIds() %>"
+	namespace="<%= renderResponse.getNamespace() %>"
+	portletURL="<%= cpDefinitionsDisplayContext.getPortletURL().toString() %>"
+	searchActionURL="<%= String.valueOf(cpDefinitionsDisplayContext.getPortletURL()) %>"
+	searchContainerId="<%= searchContainerId %>"
+	searchFormName="searchFm"
+	sortingOrder="<%= cpDefinitionsDisplayContext.getOrderByType() %>"
+	sortingURL="<%= cpDefinitionsDisplayContext.getSortingURL() %>"
+	totalItems="<%= cpDefinitionsDisplayContext.getTotalItems() %>"
+	viewTypes="<%= cpDefinitionsDisplayContext.getViewTypeItems() %>"
+	vocabularyIds="<%= cpDefinitionsDisplayContext.getVocabularyIds() %>"
 />
 
 <aui:script>

@@ -43,7 +43,6 @@ import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Sort;
-import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 <<<<<<< HEAD
@@ -68,8 +67,8 @@ import java.util.Objects;
 
 import javax.portlet.PortletException;
 import javax.portlet.PortletURL;
-
 import javax.portlet.RenderResponse;
+
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -99,11 +98,12 @@ public class CPDefinitionsDisplayContext
 	public List<DropdownItem> getActionDropdownItems() {
 		return new DropdownItemList(httpServletRequest) {
 			{
-				ThemeDisplay themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
+				ThemeDisplay themeDisplay =
+					(ThemeDisplay)httpServletRequest.getAttribute(
 						WebKeys.THEME_DISPLAY);
 
 				RenderResponse renderResponse =
-						(RenderResponse)httpServletRequest.getAttribute(JavaConstants.JAVAX_PORTLET_RESPONSE);
+					(RenderResponse)httpServletRequest.getAttribute(JavaConstants.JAVAX_PORTLET_RESPONSE);
 
 				add(
 						SafeConsumer.ignore(
@@ -113,13 +113,15 @@ public class CPDefinitionsDisplayContext
 													renderResponse.getNamespace() +
 													"deleteCPDefinitions();");
 
-									boolean trashEnabled = TrashUtil.isTrashEnabled(
+									boolean trashEnabled =
+										TrashUtil.isTrashEnabled(
 											themeDisplay.getScopeGroupId());
 
 									dropdownItem.setIcon(
-											trashEnabled ? "trash" : "times");
+										trashEnabled ? "trash" : "times");
 									dropdownItem.setLabel(
-											trashEnabled ? "recycle-bin" : "delete");
+											trashEnabled ? "recycle-bin" :
+												"delete");
 
 									dropdownItem.setQuickAction(true);
 								}));
@@ -156,23 +158,28 @@ public class CPDefinitionsDisplayContext
 	public CreationMenu getCreationMenu() throws PortalException {
 		return new CreationMenu(httpServletRequest) {
 			{
-				ThemeDisplay themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
+				ThemeDisplay themeDisplay =
+					(ThemeDisplay)httpServletRequest.getAttribute(
 						WebKeys.THEME_DISPLAY);
 
 				RenderResponse renderResponse =
-						(RenderResponse)httpServletRequest.getAttribute(JavaConstants.JAVAX_PORTLET_RESPONSE);
-
+					(RenderResponse)httpServletRequest.getAttribute(JavaConstants.JAVAX_PORTLET_RESPONSE);
 
 				for (CPType curCPType : getCPTypes()) {
 					addPrimaryDropdownItem(
 							dropdownItem -> {
 								dropdownItem.setHref(renderResponse.createRenderURL(),
-										Constants.CMD, Constants.ADD, "mvcRenderCommandName",
-										"editProductDefinition", "backURL", PortalUtil.getCurrentCompleteURL(httpServletRequest),
-										"productTypeName", curCPType.getName(), "toolbarItem", "view-product-definition-details");
-								dropdownItem.setLabel(curCPType.getLabel(themeDisplay.getLocale()));
-							}
-					);
+										Constants.CMD, Constants.ADD,
+										"mvcRenderCommandName",
+										"editProductDefinition", "backURL",
+										PortalUtil.getCurrentCompleteURL(httpServletRequest),
+										"productTypeName", curCPType.getName(),
+										"toolbarItem",
+										"view-product-definition-details");
+								dropdownItem.setLabel(
+									curCPType.getLabel(
+										themeDisplay.getLocale()));
+							});
 				}
 			}
 		};
@@ -291,16 +298,23 @@ public class CPDefinitionsDisplayContext
 							dropdownGroupItem.setDropdownItems(
 									new DropdownItemList(httpServletRequest) {
 										{
-											for (String orderColumn : getOrderColumns()) {
+											for (String orderColumn :
+													getOrderColumns()) {
+
 												add(
 														SafeConsumer.ignore(
 																dropdownItem -> {
-																	dropdownItem.setActive(orderColumn.equals(getOrderByCol()));
-																	dropdownItem.setHref(getPortletURL(), "orderByCol", orderColumn);
-																	dropdownItem.setLabel(orderColumn);
+																	dropdownItem.setActive(
+																		orderColumn.equals(
+																			getOrderByCol()));
+																	dropdownItem.setHref(
+																		getPortletURL(),
+																		"orderByCol",
+																		orderColumn);
+																	dropdownItem.setLabel(
+																		orderColumn);
 																}));
 											}
-
 										}
 									});
 							dropdownGroupItem.setLabel("order-by");
@@ -460,6 +474,7 @@ public class CPDefinitionsDisplayContext
 					addTableViewTypeItem();
 				}
 			}
+
 		};
 	}
 

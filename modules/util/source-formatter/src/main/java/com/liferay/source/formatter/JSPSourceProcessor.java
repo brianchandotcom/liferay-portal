@@ -208,8 +208,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 				sourceFormatterArgs.getBaseDirName());
 			_configuration = CheckstyleUtil.getConfiguration(
 				"checkstyle-alloy-mvc.xml", getPropertiesMap(),
-				sourceFormatterArgs.getMaxLineLength(),
-				sourceFormatterArgs.isShowDebugInformation());
+				sourceFormatterArgs);
 		}
 
 		_sourceFormatterMessages.addAll(

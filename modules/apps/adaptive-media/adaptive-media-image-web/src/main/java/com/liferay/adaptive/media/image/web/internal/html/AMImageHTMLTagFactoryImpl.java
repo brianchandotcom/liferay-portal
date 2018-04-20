@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.util.StringBundler;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -57,9 +56,7 @@ public class AMImageHTMLTagFactoryImpl implements AMImageHTMLTagFactory {
 
 		sourceElements.forEach(sb::append);
 
-		Matcher matcher = _pattern.matcher(originalImgTag);
-
-		sb.append(matcher.replaceAll(""));
+		sb.append(originalImgTag);
 
 		sb.append("</picture>");
 

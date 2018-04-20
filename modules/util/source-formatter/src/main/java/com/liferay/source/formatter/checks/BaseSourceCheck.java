@@ -286,11 +286,11 @@ public abstract class BaseSourceCheck implements SourceCheck {
 	}
 
 	protected List<String> getFileNames(
-			String basedir, String[] excludes, String[] includes)
+			String baseDirName, String[] excludes, String[] includes)
 		throws Exception {
 
 		return SourceFormatterUtil.scanForFiles(
-			basedir, excludes, includes, _sourceFormatterExcludes, true);
+			baseDirName, excludes, includes, _sourceFormatterExcludes, true);
 	}
 
 	protected int getLeadingTabCount(String line) {

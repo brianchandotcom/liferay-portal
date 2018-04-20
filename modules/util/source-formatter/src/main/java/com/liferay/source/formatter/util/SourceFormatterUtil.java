@@ -149,7 +149,7 @@ public class SourceFormatterUtil {
 	}
 
 	public static List<String> filterRecentChangesFileNames(
-			String baseDir, List<String> recentChangesFileNames,
+			String baseDirName, List<String> recentChangesFileNames,
 			String[] excludes, String[] includes,
 			SourceFormatterExcludes sourceFormatterExcludes,
 			boolean includeSubrepositories)
@@ -163,7 +163,7 @@ public class SourceFormatterUtil {
 			excludes, includes, sourceFormatterExcludes);
 
 		return _filterRecentChangesFileNames(
-			baseDir, recentChangesFileNames, pathMatchers);
+			baseDirName, recentChangesFileNames, pathMatchers);
 	}
 
 	public static List<String> getAttributeNames(
@@ -213,9 +213,9 @@ public class SourceFormatterUtil {
 		return getAttributeNames(null, checkName, propertiesMap);
 	}
 
-	public static File getFile(String baseDir, String fileName, int level) {
+	public static File getFile(String baseDirName, String fileName, int level) {
 		for (int i = 0; i < level; i++) {
-			File file = new File(baseDir + fileName);
+			File file = new File(baseDirName + fileName);
 
 			if (file.exists()) {
 				return file;
@@ -277,7 +277,7 @@ public class SourceFormatterUtil {
 	}
 
 	public static List<File> getSuppressionsFiles(
-			String basedir, List<String> allFileNames,
+			String baseDirName, List<String> allFileNames,
 			SourceFormatterExcludes sourceFormatterExcludes,
 			String... fileNames)
 		throws Exception {
@@ -293,7 +293,7 @@ public class SourceFormatterUtil {
 
 			// Find suppressions files in any parent directory
 
-			String parentDirName = basedir;
+			String parentDirName = baseDirName;
 
 			for (int j = 0; j < ToolsUtil.PORTAL_MAX_DIR_LEVEL; j++) {
 				File suppressionsFile = new File(parentDirName + fileName);
@@ -332,7 +332,7 @@ public class SourceFormatterUtil {
 	}
 
 	public static List<String> scanForFiles(
-			String baseDir, String[] excludes, String[] includes,
+			String baseDirName, String[] excludes, String[] includes,
 			SourceFormatterExcludes sourceFormatterExcludes,
 			boolean includeSubrepositories)
 		throws Exception {
@@ -344,7 +344,7 @@ public class SourceFormatterUtil {
 		PathMatchers pathMatchers = _getPathMatchers(
 			excludes, includes, sourceFormatterExcludes);
 
-		return _scanForFiles(baseDir, pathMatchers, includeSubrepositories);
+		return _scanForFiles(baseDirName, pathMatchers, includeSubrepositories);
 	}
 
 	private static String _createRegex(String s) {
@@ -388,7 +388,7 @@ public class SourceFormatterUtil {
 	}
 
 	private static List<String> _filterRecentChangesFileNames(
-			String baseDir, List<String> recentChangesFileNames,
+			String baseDirName, List<String> recentChangesFileNames,
 			PathMatchers pathMatchers)
 		throws Exception {
 
@@ -396,7 +396,7 @@ public class SourceFormatterUtil {
 
 		recentChangesFileNamesLoop:
 		for (String fileName : recentChangesFileNames) {
-			fileName = baseDir.concat(fileName);
+			fileName = baseDirName.concat(fileName);
 
 			File file = new File(fileName);
 
@@ -541,14 +541,14 @@ public class SourceFormatterUtil {
 	}
 
 	private static List<String> _scanForFiles(
-			final String baseDir, final PathMatchers pathMatchers,
+			final String baseDirName, final PathMatchers pathMatchers,
 			final boolean includeSubrepositories)
 		throws Exception {
 
 		final List<String> fileNames = new ArrayList<>();
 
 		Files.walkFileTree(
-			Paths.get(baseDir),
+			Paths.get(baseDirName),
 			new SimpleFileVisitor<Path>() {
 
 				@Override
@@ -565,7 +565,7 @@ public class SourceFormatterUtil {
 
 					if (!includeSubrepositories) {
 						String baseDirPath = SourceUtil.getAbsolutePath(
-							baseDir);
+							baseDirName);
 
 						if (!baseDirPath.equals(currentDirPath)) {
 							Path gitRepoPath = dirPath.resolve(".gitrepo");

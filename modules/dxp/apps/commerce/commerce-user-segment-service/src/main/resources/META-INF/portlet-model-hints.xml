@@ -11,7 +11,9 @@
 		<field name="modifiedDate" type="Date" />
 		<field name="commerceUserSegmentEntryId" type="long" />
 		<field name="type" type="String" />
-		<field name="typeSettings" type="String" />
+		<field name="typeSettings" type="String">
+			<hint-collection name="CLOB" />
+		</field>
 		<field name="priority" type="double" />
 	</model>
 	<model name="com.liferay.commerce.user.segment.model.CommerceUserSegmentEntry">

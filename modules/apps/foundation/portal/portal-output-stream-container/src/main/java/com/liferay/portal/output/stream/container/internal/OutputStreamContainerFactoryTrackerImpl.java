@@ -104,16 +104,18 @@ public class OutputStreamContainerFactoryTrackerImpl
 
 		try {
 			runnable.run();
-
-			outputStreamWriter.flush();
-		}
-		catch (IOException ioe) {
-			_logger.log(
-				org.apache.felix.utils.log.Logger.LOG_ERROR,
-				ioe.getLocalizedMessage());
 		}
 		finally {
 			_writerThreadLocal.set(writer);
+
+			try {
+				outputStreamWriter.flush();
+			}
+			catch (IOException ioe) {
+				_logger.log(
+					org.apache.felix.utils.log.Logger.LOG_ERROR,
+					ioe.getLocalizedMessage());
+			}
 		}
 	}
 

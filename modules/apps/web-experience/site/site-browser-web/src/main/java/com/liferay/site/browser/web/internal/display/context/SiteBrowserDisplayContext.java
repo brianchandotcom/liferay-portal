@@ -14,12 +14,20 @@
 
 package com.liferay.site.browser.web.internal.display.context;
 
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.SafeConsumer;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItemList;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
@@ -48,7 +56,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Objects;
 
+import javax.portlet.ActionRequest;
 import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
@@ -67,6 +77,14 @@ public class SiteBrowserDisplayContext {
 		_liferayPortletResponse = liferayPortletResponse;
 	}
 
+	public String getClearResultsURL() {
+		PortletURL clearResultsURL = getPortletURL();
+
+		clearResultsURL.setParameter("keywords", StringPool.BLANK);
+
+		return clearResultsURL.toString();
+	}
+
 	public String getDisplayStyle() {
 		if (Validator.isNotNull(_displayStyle)) {
 			return _displayStyle;
@@ -81,91 +99,24 @@ public class SiteBrowserDisplayContext {
 		return _displayStyle;
 	}
 
-	public String getFilter() {
-		if (_filter != null) {
-			return _filter;
-		}
+	public List<DropdownItem> getFilterDropdownItems() {
+		return new DropdownItemList(_request) {
+			{
+				addGroup(
+					dropdownGroupItem -> {
+						dropdownGroupItem.setDropdownItems(
+							_getFilterNavigationDropdownItems());
+						dropdownGroupItem.setLabel("filter-by-navigation");
+					});
 
-		_filter = ParamUtil.getString(_request, "filter");
-
-		return _filter;
-	}
-
-	public long getGroupId() {
-		if (_groupId != null) {
-			return _groupId;
-		}
-
-		_groupId = ParamUtil.getLong(_request, "groupId");
-
-		return _groupId;
-	}
-
-	public LinkedHashMap<String, Object> getGroupParams()
-		throws PortalException {
-
-		if (_groupParams != null) {
-			return _groupParams;
-		}
-
-		long groupId = ParamUtil.getLong(_request, "groupId");
-		boolean includeCurrentGroup = ParamUtil.getBoolean(
-			_request, "includeCurrentGroup", true);
-
-		String type = getType();
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		PermissionChecker permissionChecker =
-			themeDisplay.getPermissionChecker();
-		User user = themeDisplay.getUser();
-
-		boolean filterManageableGroups = true;
-
-		if (permissionChecker.isCompanyAdmin()) {
-			filterManageableGroups = false;
-		}
-
-		_groupParams = new LinkedHashMap<>();
-
-		_groupParams.put("active", Boolean.TRUE);
-
-		if (isManualMembership()) {
-			_groupParams.put("manualMembership", Boolean.TRUE);
-		}
-
-		if (type.equals("child-sites")) {
-			Group parentGroup = GroupLocalServiceUtil.getGroup(groupId);
-
-			List<Group> parentGroups = new ArrayList<>();
-
-			parentGroups.add(parentGroup);
-
-			_groupParams.put("groupsTree", parentGroups);
-		}
-		else if (filterManageableGroups) {
-			_groupParams.put("usersGroups", user.getUserId());
-		}
-
-		_groupParams.put("site", Boolean.TRUE);
-
-		if (!includeCurrentGroup && (groupId > 0)) {
-			List<Long> excludedGroupIds = new ArrayList<>();
-
-			Group group = GroupLocalServiceUtil.getGroup(groupId);
-
-			if (group.isStagingGroup()) {
-				excludedGroupIds.add(group.getLiveGroupId());
+				addGroup(
+					dropdownGroupItem -> {
+						dropdownGroupItem.setDropdownItems(
+							_getOrderByDropdownItems());
+						dropdownGroupItem.setLabel("order-by");
+					});
 			}
-			else {
-				excludedGroupIds.add(groupId);
-			}
-
-			_groupParams.put("excludedGroupIds", excludedGroupIds);
-		}
-
-		return _groupParams;
+		};
 	}
 
 	public GroupSearch getGroupSearch() throws Exception {
@@ -213,14 +164,12 @@ public class SiteBrowserDisplayContext {
 		if (type.equals("layoutScopes")) {
 			total = GroupLocalServiceUtil.getGroupsCount(
 				themeDisplay.getCompanyId(), Layout.class.getName(),
-				getGroupId());
+				_getGroupId());
 		}
-		else if (type.equals("parent-sites")) {
-		}
-		else {
+		else if (!type.equals("parent-sites")) {
 			total = GroupLocalServiceUtil.searchCount(
 				themeDisplay.getCompanyId(), classNameIds,
-				groupSearchTerms.getKeywords(), getGroupParams());
+				groupSearchTerms.getKeywords(), _getGroupParams());
 		}
 
 		total += additionalSites;
@@ -237,17 +186,17 @@ public class SiteBrowserDisplayContext {
 
 		if (type.equals("layoutScopes")) {
 			groups = GroupLocalServiceUtil.getGroups(
-				company.getCompanyId(), Layout.class.getName(), getGroupId(),
+				company.getCompanyId(), Layout.class.getName(), _getGroupId(),
 				start, groupSearch.getResultEnd() - additionalSites);
 
-			groups = _filterLayoutGroups(groups, isPrivateLayout());
+			groups = _filterLayoutGroups(groups, _isPrivateLayout());
 		}
 		else if (type.equals("parent-sites")) {
-			Group group = GroupLocalServiceUtil.getGroup(getGroupId());
+			Group group = GroupLocalServiceUtil.getGroup(_getGroupId());
 
 			groups = group.getAncestors();
 
-			String filter = getFilter();
+			String filter = _getFilter();
 
 			if (Validator.isNotNull(filter)) {
 				groups = _filterGroups(groups, filter);
@@ -262,7 +211,7 @@ public class SiteBrowserDisplayContext {
 		else {
 			groups = GroupLocalServiceUtil.search(
 				company.getCompanyId(), classNameIds,
-				groupSearchTerms.getKeywords(), getGroupParams(),
+				groupSearchTerms.getKeywords(), _getGroupParams(),
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 				groupSearch.getOrderByComparator());
 
@@ -286,7 +235,7 @@ public class SiteBrowserDisplayContext {
 	}
 
 	public List<NavigationItem> getNavigationItems() {
-		String[] types = getTypes();
+		String[] types = _getTypes();
 
 		if (types.length == 1) {
 			return new NavigationItemList() {
@@ -323,10 +272,29 @@ public class SiteBrowserDisplayContext {
 		return Collections.emptyList();
 	}
 
-	public PortletURL getPortletURL() throws PortalException {
+	public String getOrderByType() {
+		if (Validator.isNotNull(_orderByType)) {
+			return _orderByType;
+		}
+
+		_orderByType = ParamUtil.getString(_request, "orderByType", "asc");
+
+		return _orderByType;
+	}
+
+	public PortletURL getPortletURL() {
 		PortletURL portletURL = _liferayPortletResponse.createRenderURL();
 
-		User selUser = PortalUtil.getSelectedUser(_request);
+		User selUser = null;
+
+		try {
+			selUser = PortalUtil.getSelectedUser(_request);
+		}
+		catch (PortalException pe) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(pe, pe);
+			}
+		}
 
 		if (selUser != null) {
 			portletURL.setParameter(
@@ -344,11 +312,13 @@ public class SiteBrowserDisplayContext {
 			_liferayPortletResponse.getNamespace() + "selectSite");
 		String target = ParamUtil.getString(_request, "target");
 
-		portletURL.setParameter("groupId", String.valueOf(getGroupId()));
+		portletURL.setParameter("groupId", String.valueOf(_getGroupId()));
 		portletURL.setParameter("type", getType());
-		portletURL.setParameter("types", getTypes());
+		portletURL.setParameter("types", _getTypes());
 		portletURL.setParameter("displayStyle", getDisplayStyle());
-		portletURL.setParameter("filter", getFilter());
+		portletURL.setParameter("orderByCol", _getOrderByCol());
+		portletURL.setParameter("orderByType", getOrderByType());
+		portletURL.setParameter("filter", _getFilter());
 		portletURL.setParameter(
 			"includeCompany", String.valueOf(includeCompany));
 		portletURL.setParameter(
@@ -356,11 +326,33 @@ public class SiteBrowserDisplayContext {
 		portletURL.setParameter(
 			"includeUserPersonalSite", String.valueOf(includeUserPersonalSite));
 		portletURL.setParameter(
-			"manualMembership", String.valueOf(isManualMembership()));
+			"manualMembership", String.valueOf(_isManualMembership()));
 		portletURL.setParameter("eventName", eventName);
 		portletURL.setParameter("target", target);
 
 		return portletURL;
+	}
+
+	public String getSearchActionURL() {
+		PortletURL searchActionURL = getPortletURL();
+
+		return searchActionURL.toString();
+	}
+
+	public String getSortingURL() {
+		PortletURL sortingURL = getPortletURL();
+
+		sortingURL.setParameter(
+			"orderByType",
+			Objects.equals(getOrderByType(), "asc") ? "desc" : "asc");
+
+		return sortingURL.toString();
+	}
+
+	public int getTotalItems() throws Exception {
+		SearchContainer groupSearch = getGroupSearch();
+
+		return groupSearch.getTotal();
 	}
 
 	public String getType() {
@@ -370,7 +362,7 @@ public class SiteBrowserDisplayContext {
 
 		_type = ParamUtil.getString(_request, "type");
 
-		String[] types = getTypes();
+		String[] types = _getTypes();
 
 		if (Validator.isNull(_type)) {
 			_type = types[0];
@@ -379,45 +371,26 @@ public class SiteBrowserDisplayContext {
 		return _type;
 	}
 
-	public String[] getTypes() {
-		if (_types != null) {
-			return _types;
-		}
+	public List<ViewTypeItem> getViewTypeItems() {
+		PortletURL portletURL = _liferayPortletResponse.createActionURL();
 
-		_types = ParamUtil.getParameterValues(_request, "types");
+		portletURL.setParameter(
+			ActionRequest.ACTION_NAME, "changeDisplayStyle");
+		portletURL.setParameter("redirect", PortalUtil.getCurrentURL(_request));
 
-		if (_types.length == 0) {
-			_types = new String[] {"sites-that-i-administer"};
-		}
-
-		return _types;
-	}
-
-	public Boolean isManualMembership() {
-		if (_manualMembership != null) {
-			return _manualMembership;
-		}
-
-		_manualMembership = ParamUtil.getBoolean(_request, "manualMembership");
-
-		return _manualMembership;
-	}
-
-	public Boolean isPrivateLayout() {
-		if (_privateLayout != null) {
-			return _privateLayout;
-		}
-
-		_privateLayout = ParamUtil.getBoolean(_request, "privateLayout");
-
-		return _privateLayout;
+		return new ViewTypeItemList(_request, portletURL, getDisplayStyle()) {
+			{
+				addCardViewTypeItem();
+				addListViewTypeItem();
+				addTableViewTypeItem();
+			}
+		};
 	}
 
 	private List<Group> _filterGroups(
-			List<Group> groups, PermissionChecker permissionChecker)
-		throws Exception {
+		List<Group> groups, PermissionChecker permissionChecker) {
 
-		List<Group> filteredGroups = new ArrayList();
+		List<Group> filteredGroups = new ArrayList<>();
 
 		for (Group group : groups) {
 			if (permissionChecker.isGroupAdmin(group.getGroupId())) {
@@ -428,10 +401,8 @@ public class SiteBrowserDisplayContext {
 		return filteredGroups;
 	}
 
-	private List<Group> _filterGroups(List<Group> groups, String filter)
-		throws Exception {
-
-		List<Group> filteredGroups = new ArrayList();
+	private List<Group> _filterGroups(List<Group> groups, String filter) {
+		List<Group> filteredGroups = new ArrayList<>();
 
 		for (Group group : groups) {
 			if (filter.equals("contentSharingWithChildrenEnabled") &&
@@ -448,7 +419,7 @@ public class SiteBrowserDisplayContext {
 			List<Group> groups, Boolean privateLayout)
 		throws Exception {
 
-		List<Group> filteredGroups = new ArrayList();
+		List<Group> filteredGroups = new ArrayList<>();
 
 		if (privateLayout == null) {
 			return groups;
@@ -470,10 +441,180 @@ public class SiteBrowserDisplayContext {
 		return filteredGroups;
 	}
 
+	private String _getFilter() {
+		if (_filter != null) {
+			return _filter;
+		}
+
+		_filter = ParamUtil.getString(_request, "filter");
+
+		return _filter;
+	}
+
+	private List<DropdownItem> _getFilterNavigationDropdownItems() {
+		return new DropdownItemList(_request) {
+			{
+				add(
+					dropdownItem -> {
+						dropdownItem.setActive(true);
+						dropdownItem.setHref(getPortletURL());
+						dropdownItem.setLabel("all");
+					});
+			}
+		};
+	}
+
+	private long _getGroupId() {
+		if (_groupId != null) {
+			return _groupId;
+		}
+
+		_groupId = ParamUtil.getLong(_request, "groupId");
+
+		return _groupId;
+	}
+
+	private LinkedHashMap<String, Object> _getGroupParams()
+		throws PortalException {
+
+		if (_groupParams != null) {
+			return _groupParams;
+		}
+
+		long groupId = ParamUtil.getLong(_request, "groupId");
+		boolean includeCurrentGroup = ParamUtil.getBoolean(
+			_request, "includeCurrentGroup", true);
+
+		String type = getType();
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		PermissionChecker permissionChecker =
+			themeDisplay.getPermissionChecker();
+		User user = themeDisplay.getUser();
+
+		boolean filterManageableGroups = true;
+
+		if (permissionChecker.isCompanyAdmin()) {
+			filterManageableGroups = false;
+		}
+
+		_groupParams = new LinkedHashMap<>();
+
+		_groupParams.put("active", Boolean.TRUE);
+
+		if (_isManualMembership()) {
+			_groupParams.put("manualMembership", Boolean.TRUE);
+		}
+
+		if (type.equals("child-sites")) {
+			Group parentGroup = GroupLocalServiceUtil.getGroup(groupId);
+
+			List<Group> parentGroups = new ArrayList<>();
+
+			parentGroups.add(parentGroup);
+
+			_groupParams.put("groupsTree", parentGroups);
+		}
+		else if (filterManageableGroups) {
+			_groupParams.put("usersGroups", user.getUserId());
+		}
+
+		_groupParams.put("site", Boolean.TRUE);
+
+		if (!includeCurrentGroup && (groupId > 0)) {
+			List<Long> excludedGroupIds = new ArrayList<>();
+
+			Group group = GroupLocalServiceUtil.getGroup(groupId);
+
+			if (group.isStagingGroup()) {
+				excludedGroupIds.add(group.getLiveGroupId());
+			}
+			else {
+				excludedGroupIds.add(groupId);
+			}
+
+			_groupParams.put("excludedGroupIds", excludedGroupIds);
+		}
+
+		return _groupParams;
+	}
+
+	private String _getOrderByCol() {
+		if (Validator.isNotNull(_orderByCol)) {
+			return _orderByCol;
+		}
+
+		_orderByCol = ParamUtil.getString(_request, "orderByCol", "name");
+
+		return _orderByCol;
+	}
+
+	private List<DropdownItem> _getOrderByDropdownItems() {
+		return new DropdownItemList(_request) {
+			{
+				add(
+					dropdownItem -> {
+						dropdownItem.setActive(
+							Objects.equals(_getOrderByCol(), "name"));
+						dropdownItem.setHref(
+							getPortletURL(), "orderByCol", "name");
+						dropdownItem.setLabel("name");
+					});
+				add(
+					dropdownItem -> {
+						dropdownItem.setActive(
+							Objects.equals(_getOrderByCol(), "type"));
+						dropdownItem.setHref(
+							getPortletURL(), "orderByCol", "type");
+						dropdownItem.setLabel("type");
+					});
+			}
+		};
+	}
+
+	private String[] _getTypes() {
+		if (_types != null) {
+			return _types;
+		}
+
+		_types = ParamUtil.getParameterValues(_request, "types");
+
+		if (_types.length == 0) {
+			_types = new String[] {"sites-that-i-administer"};
+		}
+
+		return _types;
+	}
+
+	private Boolean _isManualMembership() {
+		if (_manualMembership != null) {
+			return _manualMembership;
+		}
+
+		_manualMembership = ParamUtil.getBoolean(_request, "manualMembership");
+
+		return _manualMembership;
+	}
+
+	private Boolean _isPrivateLayout() {
+		if (_privateLayout != null) {
+			return _privateLayout;
+		}
+
+		_privateLayout = ParamUtil.getBoolean(_request, "privateLayout");
+
+		return _privateLayout;
+	}
+
 	private static final long[] _CLASS_NAME_IDS = {
 		PortalUtil.getClassNameId(Group.class),
 		PortalUtil.getClassNameId(Organization.class)
 	};
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		SiteBrowserDisplayContext.class);
 
 	private String _displayStyle;
 	private String _filter;
@@ -482,6 +623,8 @@ public class SiteBrowserDisplayContext {
 	private final LiferayPortletRequest _liferayPortletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;
 	private Boolean _manualMembership;
+	private String _orderByCol;
+	private String _orderByType;
 	private Boolean _privateLayout;
 	private final HttpServletRequest _request;
 	private String _type;

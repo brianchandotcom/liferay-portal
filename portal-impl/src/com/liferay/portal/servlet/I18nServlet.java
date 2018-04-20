@@ -201,11 +201,9 @@ public class I18nServlet extends HttpServlet {
 				i18nPath = StringPool.SLASH + locale.getLanguage();
 			}
 
-			if (locale != null) {
-				i18nLanguageId = LocaleUtil.toLanguageId(locale);
+			i18nLanguageId = LocaleUtil.toLanguageId(locale);
 
-				i18nLanguageCode = locale.getLanguage();
-			}
+			i18nLanguageCode = locale.getLanguage();
 		}
 
 		if (!PropsValues.LOCALE_USE_DEFAULT_IF_NOT_AVAILABLE &&

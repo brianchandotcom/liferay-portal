@@ -43,6 +43,7 @@ import com.liferay.commerce.util.CommercePaymentEngineRegistry;
 import com.liferay.commerce.util.CommerceShippingHelper;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -325,10 +326,6 @@ public class CommerceOrderLocalServiceImpl
 	public CommerceOrder deleteCommerceOrder(CommerceOrder commerceOrder)
 		throws PortalException {
 
-		// Commerce order
-
-		commerceOrderPersistence.remove(commerceOrder);
-
 		// Commerce order items
 
 		commerceOrderItemLocalService.deleteCommerceOrderItems(
@@ -349,6 +346,10 @@ public class CommerceOrderLocalServiceImpl
 		commerceAddressLocalService.deleteCommerceAddresses(
 			commerceOrder.getModelClassName(),
 			commerceOrder.getCommerceOrderId());
+
+		// Commerce order
+
+		commerceOrderPersistence.remove(commerceOrder);
 
 		// Expando
 
@@ -528,6 +529,8 @@ public class CommerceOrderLocalServiceImpl
 	public CommerceOrder reorderCommerceOrder(long userId, long commerceOrderId)
 		throws PortalException {
 
+		// Commerce order
+
 		CommerceOrder commerceOrder = commerceOrderPersistence.findByPrimaryKey(
 			commerceOrderId);
 
@@ -552,7 +555,7 @@ public class CommerceOrderLocalServiceImpl
 			shippingAddressId = shippingAddress.getCommerceAddressId();
 		}
 
-		return addCommerceOrder(
+		CommerceOrder newCommerceOrder = addCommerceOrder(
 			commerceOrder.getSiteGroupId(),
 			commerceOrder.getOrderOrganizationId(),
 			commerceOrder.getOrderUserId(),
@@ -565,6 +568,23 @@ public class CommerceOrderLocalServiceImpl
 			CommerceOrderConstants.PAYMENT_STATUS_PENDING,
 			CommerceOrderConstants.SHIPPING_STATUS_NOT_SHIPPED,
 			CommerceOrderConstants.ORDER_STATUS_OPEN, serviceContext);
+
+		// Commerce order items
+
+		List<CommerceOrderItem> commerceOrderItems =
+			commerceOrderItemLocalService.getCommerceOrderItems(
+				commerceOrder.getCommerceOrderId(), QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS);
+
+		for (CommerceOrderItem commerceOrderItem : commerceOrderItems) {
+			commerceOrderItemLocalService.addCommerceOrderItem(
+				newCommerceOrder.getCommerceOrderId(),
+				commerceOrderItem.getCPInstanceId(),
+				commerceOrderItem.getQuantity(), 0, commerceOrderItem.getJson(),
+				commerceOrderItem.getPrice(), serviceContext);
+		}
+
+		return newCommerceOrder;
 	}
 
 	@Override

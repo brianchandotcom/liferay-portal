@@ -15,6 +15,7 @@
 package com.liferay.jenkins.results.parser;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -157,7 +158,7 @@ public class AutoCloseUtil {
 			"auto.close.comment.available");
 
 		if (autoCloseCommentAvailable.equals("true") ||
-			!isAutoCloseOnCriticalTestFailuresActive()) {
+			!isAutoCloseOnCriticalTestFailuresActive(project)) {
 
 			return false;
 		}
@@ -360,7 +361,7 @@ public class AutoCloseUtil {
 	}
 
 	public String getBatchName(Build downstreamBuild) throws Exception {
-		Map parameters = downstreamBuild.getParameters();
+		Map<String, String> parameters = downstreamBuild.getParameters();
 
 		if (parameters.containsKey("JOB_VARIANT")) {
 			return parameters.get("JOB_VARIANT");
@@ -374,7 +375,7 @@ public class AutoCloseUtil {
 		return null;
 	}
 
-	public boolean isAutoCloseBranch() {
+	public boolean isAutoCloseBranch(Project project) {
 		String repository = project.getProperty("repository");
 
 		String testBranchNamesAutoClose = project.getProperty(
@@ -386,13 +387,13 @@ public class AutoCloseUtil {
 
 		String branchName = project.getProperty("branch.name");
 
-		List testBranchNamesAutoCloseList = Arrays.asList(
+		List<String> testBranchNamesAutoCloseList = Arrays.asList(
 			testBranchNamesAutoClose.split(","));
 
 		return testBranchNamesAutoCloseList.contains(branchName);
 	}
 
-	public boolean isAutoCloseOnCriticalTestFailuresActive() {
+	public boolean isAutoCloseOnCriticalTestFailuresActive(Project project) {
 		String criticalTestBranchesString = project.getProperty(
 			"test.branch.names.critical.test[" +
 				project.getProperty("repository") + "]");

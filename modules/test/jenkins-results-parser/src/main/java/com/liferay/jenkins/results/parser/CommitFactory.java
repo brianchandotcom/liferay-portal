@@ -14,13 +14,41 @@
 
 package com.liferay.jenkins.results.parser;
 
+import java.io.IOException;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import org.json.JSONObject;
 
 /**
  * @author Michael Hashimoto
  */
 public class CommitFactory {
+
+	public static Commit newCommit(PullRequest pullRequest) {
+		String gitHubUserName = pullRequest.getOwnerUsername();
+		String repositoryName = pullRequest.getRepositoryName();
+		String sha = pullRequest.getSenderSHA();
+
+		String commitURL = JenkinsResultsParserUtil.combine(
+			"https://api.github.com/repos/", gitHubUserName, "/",
+			repositoryName, "/commits/", sha);
+
+		try {
+			JSONObject jsonObject = JenkinsResultsParserUtil.toJSONObject(
+				commitURL);
+
+			JSONObject commitJSONObject = jsonObject.getJSONObject("commit");
+
+			String message = commitJSONObject.getString("message");
+
+			return _newCommit(gitHubUserName, message, repositoryName, sha);
+		}
+		catch (IOException ioe) {
+			throw new RuntimeException(ioe);
+		}
+	}
 
 	public static Commit newCommit(
 		String gitLogEntity, GitWorkingDirectory gitWorkingDirectory) {
@@ -36,6 +64,14 @@ public class CommitFactory {
 		String message = matcher.group("message");
 		String repositoryName = gitWorkingDirectory.getRepositoryName();
 		String sha = matcher.group("sha");
+
+		return _newCommit(gitHubUserName, message, repositoryName, sha);
+	}
+
+	private static Commit _newCommit(
+		String gitHubUserName, String message, String repositoryName,
+		String sha) {
+
 		Commit.Type type = Commit.Type.MANUAL;
 
 		if (message.startsWith("archive:ignore")) {

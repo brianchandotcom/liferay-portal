@@ -78,11 +78,11 @@ public class DDMFormDisplayContext {
 
 	public DDMFormDisplayContext(
 			RenderRequest renderRequest, RenderResponse renderResponse,
+			DDMFormInstanceRecordVersionLocalService
+				ddmFormInstanceRecordVersionLocalService,
 			DDMFormInstanceService ddmFormInstanceService,
 			DDMFormInstanceVersionLocalService
 				ddmFormInstanceVersionLocalService,
-			DDMFormInstanceRecordVersionLocalService
-				ddmFormInstanceRecordVersionLocalService,
 			DDMFormRenderer ddmFormRenderer,
 			DDMFormValuesFactory ddmFormValuesFactory,
 			DDMFormValuesMerger ddmFormValuesMerger,
@@ -92,11 +92,11 @@ public class DDMFormDisplayContext {
 
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
+		_ddmFormInstanceRecordVersionLocalService =
+			ddmFormInstanceRecordVersionLocalService;
 		_ddmFormInstanceService = ddmFormInstanceService;
 		_ddmFormInstanceVersionLocalService =
 			ddmFormInstanceVersionLocalService;
-		_ddmFormInstanceRecordVersionLocalService =
-			ddmFormInstanceRecordVersionLocalService;
 		_ddmFormRenderer = ddmFormRenderer;
 		_ddmFormValuesFactory = ddmFormValuesFactory;
 		_ddmFormValuesMerger = ddmFormValuesMerger;

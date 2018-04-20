@@ -28,7 +28,7 @@ import org.apache.tools.ant.Project;
  */
 public class AutoCloseUtil {
 
-	public boolean autoCloseOnCriticalBatchFailures(
+	public static boolean autoCloseOnCriticalBatchFailures(
 			Project project, Build topLevelBuild)
 		throws Exception {
 
@@ -150,7 +150,7 @@ public class AutoCloseUtil {
 		return false;
 	}
 
-	public boolean autoCloseOnCriticalTestFailures(
+	public static boolean autoCloseOnCriticalTestFailures(
 			Project project, Build topLevelBuild)
 		throws Exception {
 
@@ -324,7 +324,7 @@ public class AutoCloseUtil {
 		return false;
 	}
 
-	public List<AutoCloseRule> getAutoCloseRules(Project project)
+	public static List<AutoCloseRule> getAutoCloseRules(Project project)
 		throws Exception {
 
 		List<AutoCloseRule> list = new ArrayList<>();
@@ -360,7 +360,7 @@ public class AutoCloseUtil {
 		return list;
 	}
 
-	public String getBatchName(Build downstreamBuild) throws Exception {
+	public static String getBatchName(Build downstreamBuild) throws Exception {
 		Map<String, String> parameters = downstreamBuild.getParameters();
 
 		if (parameters.containsKey("JOB_VARIANT")) {
@@ -375,7 +375,7 @@ public class AutoCloseUtil {
 		return null;
 	}
 
-	public boolean isAutoCloseBranch(Project project) {
+	public static boolean isAutoCloseBranch(Project project) {
 		String repository = project.getProperty("repository");
 
 		String testBranchNamesAutoClose = project.getProperty(
@@ -393,7 +393,9 @@ public class AutoCloseUtil {
 		return testBranchNamesAutoCloseList.contains(branchName);
 	}
 
-	public boolean isAutoCloseOnCriticalTestFailuresActive(Project project) {
+	public static boolean isAutoCloseOnCriticalTestFailuresActive(
+		Project project) {
+
 		String criticalTestBranchesString = project.getProperty(
 			"test.branch.names.critical.test[" +
 				project.getProperty("repository") + "]");

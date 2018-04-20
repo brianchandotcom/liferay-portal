@@ -49,9 +49,10 @@ public class MBThreadSoap implements Serializable {
 		soapModel.setViewCount(model.getViewCount());
 		soapModel.setLastPostByUserId(model.getLastPostByUserId());
 		soapModel.setLastPostDate(model.getLastPostDate());
+		soapModel.setLastPublishDate(model.getLastPublishDate());
 		soapModel.setPriority(model.getPriority());
 		soapModel.setQuestion(model.getQuestion());
-		soapModel.setLastPublishDate(model.getLastPublishDate());
+		soapModel.setTitle(model.getTitle());
 		soapModel.setStatus(model.getStatus());
 		soapModel.setStatusByUserId(model.getStatusByUserId());
 		soapModel.setStatusByUserName(model.getStatusByUserName());
@@ -228,6 +229,14 @@ public class MBThreadSoap implements Serializable {
 		_lastPostDate = lastPostDate;
 	}
 
+	public Date getLastPublishDate() {
+		return _lastPublishDate;
+	}
+
+	public void setLastPublishDate(Date lastPublishDate) {
+		_lastPublishDate = lastPublishDate;
+	}
+
 	public double getPriority() {
 		return _priority;
 	}
@@ -248,12 +257,12 @@ public class MBThreadSoap implements Serializable {
 		_question = question;
 	}
 
-	public Date getLastPublishDate() {
-		return _lastPublishDate;
+	public String getTitle() {
+		return _title;
 	}
 
-	public void setLastPublishDate(Date lastPublishDate) {
-		_lastPublishDate = lastPublishDate;
+	public void setTitle(String title) {
+		_title = title;
 	}
 
 	public int getStatus() {
@@ -303,9 +312,10 @@ public class MBThreadSoap implements Serializable {
 	private int _viewCount;
 	private long _lastPostByUserId;
 	private Date _lastPostDate;
+	private Date _lastPublishDate;
 	private double _priority;
 	private boolean _question;
-	private Date _lastPublishDate;
+	private String _title;
 	private int _status;
 	private long _statusByUserId;
 	private String _statusByUserName;

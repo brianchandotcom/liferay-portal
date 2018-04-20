@@ -16,9 +16,7 @@ package com.liferay.message.boards.internal.verify;
 
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.message.boards.internal.verify.model.MBBanVerifiableModel;
-import com.liferay.message.boards.internal.verify.model.MBCategoryVerifiableModel;
 import com.liferay.message.boards.internal.verify.model.MBDiscussionVerifiableModel;
-import com.liferay.message.boards.internal.verify.model.MBMessageVerifiableModel;
 import com.liferay.message.boards.internal.verify.model.MBThreadFlagVerifiableModel;
 import com.liferay.message.boards.internal.verify.model.MBThreadVerifiableModel;
 import com.liferay.message.boards.model.MBMessage;
@@ -34,7 +32,6 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.verify.VerifyAuditedModel;
 import com.liferay.portal.verify.VerifyGroupedModel;
 import com.liferay.portal.verify.VerifyProcess;
-import com.liferay.portal.verify.VerifyResourcePermissions;
 import com.liferay.portal.verify.VerifyUUID;
 
 import java.util.List;
@@ -57,7 +54,6 @@ public class MessageBoardsServiceVerifyProcess extends VerifyProcess {
 	protected void doVerify() throws Exception {
 		verifyAuditedModels();
 		verifyGroupedModels();
-		verifyResourcedModels();
 		verifyStatisticsForCategories();
 		verifyStatisticsForThreads();
 		verifyAssetsForMessages();
@@ -174,14 +170,6 @@ public class MessageBoardsServiceVerifyProcess extends VerifyProcess {
 		}
 	}
 
-	protected void verifyResourcedModels() throws Exception {
-		try (LoggingTimer loggingTimer = new LoggingTimer()) {
-			_verifyResourcePermissions.verify(
-				new MBCategoryVerifiableModel(),
-				new MBMessageVerifiableModel());
-		}
-	}
-
 	protected void verifyStatisticsForCategories() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
 			if (_log.isDebugEnabled()) {
@@ -263,7 +251,5 @@ public class MessageBoardsServiceVerifyProcess extends VerifyProcess {
 		new VerifyAuditedModel();
 	private final VerifyGroupedModel _verifyGroupedModel =
 		new VerifyGroupedModel();
-	private final VerifyResourcePermissions _verifyResourcePermissions =
-		new VerifyResourcePermissions();
 
 }

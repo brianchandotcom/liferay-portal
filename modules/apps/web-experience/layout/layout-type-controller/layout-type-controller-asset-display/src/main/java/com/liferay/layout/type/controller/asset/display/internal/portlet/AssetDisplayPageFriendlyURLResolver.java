@@ -84,7 +84,8 @@ public class AssetDisplayPageFriendlyURLResolver
 
 		LayoutPageTemplateEntry defaultLayoutPageTemplateEntry =
 			_layoutPageTemplateEntryService.fetchDefaultLayoutPageTemplateEntry(
-				groupId, assetEntry.getClassNameId());
+				groupId, assetEntry.getClassNameId(),
+				assetEntry.getClassTypeId());
 
 		if (defaultLayoutPageTemplateEntry != null) {
 			request.setAttribute(

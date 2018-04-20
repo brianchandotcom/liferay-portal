@@ -83,6 +83,33 @@ LayoutPageTemplateEntry layoutPageTemplateEntry = (LayoutPageTemplateEntry)row.g
 		/>
 	</c:if>
 
+	<c:if test="<%= Objects.equals(layoutPageTemplateEntry.getType(), LayoutPageTemplateEntryTypeConstants.TYPE_DISPLAY_PAGE) && (layoutPageTemplateEntry.getClassNameId() > 0) && LayoutPageTemplateEntryPermission.contains(permissionChecker, layoutPageTemplateEntry, ActionKeys.UPDATE) %>">
+		<portlet:actionURL name="/layout/edit_layout_page_template_settings" var="editLayoutPageTemplateSettingsURL">
+			<portlet:param name="redirect" value="<%= currentURL %>" />
+			<portlet:param name="layoutPageTemplateEntryId" value="<%= String.valueOf(layoutPageTemplateEntry.getLayoutPageTemplateEntryId()) %>" />
+			<portlet:param name="defaultTemplate" value="<%= Boolean.TRUE.toString() %>" />
+		</portlet:actionURL>
+
+		<%
+		String taglibOnClickPrimary = "submitForm(document.hrefFm, '" + editLayoutPageTemplateSettingsURL + "');";
+
+		LayoutPageTemplateEntry defaultLayoutPageTemplateEntry = LayoutPageTemplateEntryServiceUtil.fetchDefaultLayoutPageTemplateEntry(layoutPageTemplateEntry.getGroupId(), layoutPageTemplateEntry.getClassNameId(), layoutPageTemplateEntry.getClassTypeId());
+
+		if ((defaultLayoutPageTemplateEntry != null) && (defaultLayoutPageTemplateEntry.getLayoutPageTemplateEntryId() != layoutPageTemplateEntry.getLayoutPageTemplateEntryId())) {
+			taglibOnClickPrimary = "if (confirm('" + UnicodeLanguageUtil.format(request, "do-you-want-to-replace-x-for-x-as-the-default-display-page", new String[] {layoutPageTemplateEntry.getName(), defaultLayoutPageTemplateEntry.getName()}) + "')) { submitForm(document.hrefFm, '" + editLayoutPageTemplateSettingsURL + "'); } ";
+		}
+		%>
+
+		<liferay-ui:icon
+			icon='<%= layoutPageTemplateEntry.getDefaultTemplate() ? "check" : StringPool.BLANK %>'
+			iconCssClass="pull-right"
+			markupView="lexicon"
+			message="default"
+			onClick="<%= taglibOnClickPrimary %>"
+			url="javascript:;"
+		/>
+	</c:if>
+
 	<c:if test="<%= LayoutPageTemplateEntryPermission.contains(permissionChecker, layoutPageTemplateEntry, ActionKeys.DELETE) %>">
 		<portlet:actionURL name="/layout/delete_layout_page_template_entry" var="deleteDisplayPageURL">
 			<portlet:param name="redirect" value="<%= currentURL %>" />

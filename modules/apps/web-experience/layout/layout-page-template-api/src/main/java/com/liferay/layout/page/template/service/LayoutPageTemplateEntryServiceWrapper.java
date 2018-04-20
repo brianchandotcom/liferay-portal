@@ -72,9 +72,9 @@ public class LayoutPageTemplateEntryServiceWrapper
 
 	@Override
 	public com.liferay.layout.page.template.model.LayoutPageTemplateEntry fetchDefaultLayoutPageTemplateEntry(
-		long groupId, long classNameId) {
+		long groupId, long classNameId, long classTypeId) {
 		return _layoutPageTemplateEntryService.fetchDefaultLayoutPageTemplateEntry(groupId,
-			classNameId);
+			classNameId, classTypeId);
 	}
 
 	@Override
@@ -176,6 +176,14 @@ public class LayoutPageTemplateEntryServiceWrapper
 	@Override
 	public java.lang.String getOSGiServiceIdentifier() {
 		return _layoutPageTemplateEntryService.getOSGiServiceIdentifier();
+	}
+
+	@Override
+	public com.liferay.layout.page.template.model.LayoutPageTemplateEntry updateLayoutPageTemplateEntry(
+		long layoutPageTemplateEntryId, boolean defaultTemplate)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _layoutPageTemplateEntryService.updateLayoutPageTemplateEntry(layoutPageTemplateEntryId,
+			defaultTemplate);
 	}
 
 	@Override

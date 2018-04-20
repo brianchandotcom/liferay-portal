@@ -22,7 +22,6 @@ import com.liferay.commerce.user.segment.service.CommerceUserSegmentEntryService
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.criteria.UUIDItemSelectorReturnType;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
@@ -101,7 +100,7 @@ public class UserGroupCommerceUserSegmentCriterionTypeDisplayContext
 		}
 
 		String[] userGroupIds = StringUtil.split(
-			commerceUserSegmentCriterion.getTypeSettings(), StringPool.COMMA);
+			commerceUserSegmentCriterion.getTypeSettings());
 
 		for (String userGroupId : userGroupIds) {
 			UserGroup userGroup = _userGroupLocalService.fetchUserGroup(

@@ -25,7 +25,6 @@ import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.util.CPDefinitionHelper;
 import com.liferay.commerce.product.util.CPInstanceHelper;
 import com.liferay.document.library.kernel.service.DLAppService;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
@@ -139,7 +138,7 @@ public class CPSearchResultsPortlet
 				new BooleanClauseImpl<Query>(
 					new TermQueryImpl(
 						Field.ASSET_CATEGORY_IDS,
-						StringUtil.merge(assetCategoryIds, StringPool.COMMA)),
+						StringUtil.merge(assetCategoryIds)),
 					BooleanClauseOccur.MUST));
 		}
 		else {

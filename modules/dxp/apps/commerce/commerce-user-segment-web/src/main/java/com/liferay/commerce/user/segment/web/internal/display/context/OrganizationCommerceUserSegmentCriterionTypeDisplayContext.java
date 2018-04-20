@@ -23,7 +23,6 @@ import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.criteria.UUIDItemSelectorReturnType;
 import com.liferay.organizations.item.selector.OrganizationItemSelectorCriterion;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
@@ -102,7 +101,7 @@ public class OrganizationCommerceUserSegmentCriterionTypeDisplayContext
 		}
 
 		String[] organizationIds = StringUtil.split(
-			commerceUserSegmentCriterion.getTypeSettings(), StringPool.COMMA);
+			commerceUserSegmentCriterion.getTypeSettings());
 
 		for (String organizationId : organizationIds) {
 			Organization organization =

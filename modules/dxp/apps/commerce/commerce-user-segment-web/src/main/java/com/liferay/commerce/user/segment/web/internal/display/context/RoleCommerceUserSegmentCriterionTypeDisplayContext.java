@@ -22,7 +22,6 @@ import com.liferay.commerce.user.segment.service.CommerceUserSegmentEntryService
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.criteria.UUIDItemSelectorReturnType;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
@@ -100,7 +99,7 @@ public class RoleCommerceUserSegmentCriterionTypeDisplayContext
 		}
 
 		String[] roleIds = StringUtil.split(
-			commerceUserSegmentCriterion.getTypeSettings(), StringPool.COMMA);
+			commerceUserSegmentCriterion.getTypeSettings());
 
 		for (String roleId : roleIds) {
 			Role role = _roleLocalService.fetchRole(Long.parseLong(roleId));

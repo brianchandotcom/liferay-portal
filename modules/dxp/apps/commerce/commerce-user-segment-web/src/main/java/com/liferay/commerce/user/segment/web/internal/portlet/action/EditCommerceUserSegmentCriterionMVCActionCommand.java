@@ -20,7 +20,6 @@ import com.liferay.commerce.user.segment.exception.NoSuchUserSegmentCriterionExc
 import com.liferay.commerce.user.segment.exception.NoSuchUserSegmentEntryException;
 import com.liferay.commerce.user.segment.model.CommerceUserSegmentCriterion;
 import com.liferay.commerce.user.segment.service.CommerceUserSegmentCriterionService;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
@@ -146,8 +145,7 @@ public class EditCommerceUserSegmentCriterionMVCActionCommand
 			typeSettings = commerceUserSegmentCriterion.getTypeSettings();
 		}
 
-		String[] typeSettingsArray = StringUtil.split(
-			typeSettings, StringPool.COMMA);
+		String[] typeSettingsArray = StringUtil.split(typeSettings);
 
 		String[] addTypeSettings = ParamUtil.getStringValues(
 			actionRequest, "addTypeSettings");

@@ -91,8 +91,7 @@ public class CPSearchResultsDisplayContext {
 
 	public String getCategoryIds() {
 		return StringUtil.merge(
-			_cpSearchResultsPortletInstanceConfiguration.assetCategoryIds(),
-			StringPool.COMMA);
+			_cpSearchResultsPortletInstanceConfiguration.assetCategoryIds());
 	}
 
 	public String getConfigurationMethod() {

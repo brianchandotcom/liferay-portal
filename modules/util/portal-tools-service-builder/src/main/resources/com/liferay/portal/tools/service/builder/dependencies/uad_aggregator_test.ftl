@@ -46,6 +46,11 @@ public class ${entity.name}UADAggregatorTest extends BaseUADAggregatorTestCase<$
 		}
 	</#if>
 
+	@After
+	public void tearDown() throws Exception {
+		_${entity.varName}UADEntityTestHelper.cleanUpDependencies(_${entity.varNames});
+	}
+
 	@Override
 	protected ${entity.name} addBaseModel(long userId) throws Exception {
 		${entity.name} ${entity.varName} = _${entity.varName}UADEntityTestHelper.add${entity.name}(userId);
@@ -58,11 +63,6 @@ public class ${entity.name}UADAggregatorTest extends BaseUADAggregatorTestCase<$
 	@Override
 	protected UADAggregator getUADAggregator() {
 		return _uadAggregator;
-	}
-
-	@After
-	public void tearDown() throws Exception {
-		_${entity.varName}UADEntityTestHelper.cleanUpDependencies(_${entity.varNames});
 	}
 
 	@DeleteAfterTestRun

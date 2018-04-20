@@ -16,6 +16,8 @@ package com.liferay.commerce.user.segment.service.impl;
 
 import com.liferay.commerce.user.segment.model.CommerceUserSegmentEntry;
 import com.liferay.commerce.user.segment.service.base.CommerceUserSegmentEntryLocalServiceBaseImpl;
+import com.liferay.portal.kernel.cache.MultiVMPoolUtil;
+import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.SystemEventConstants;
@@ -32,6 +34,7 @@ import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.search.SortFactoryUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -144,6 +147,57 @@ public class CommerceUserSegmentEntryLocalServiceImpl
 	}
 
 	@Override
+	public ArrayList<CommerceUserSegmentEntry> getCommerceUserSegmentEntries(
+			long groupId, long userId)
+		throws PortalException {
+
+		PortalCache<String, Serializable> portalCache =
+			MultiVMPoolUtil.getPortalCache("USER_SEGMENTS_" + groupId);
+
+		boolean userSegmentsCalculated = GetterUtil.getBoolean(
+			portalCache.get(String.valueOf(userId) + "_calculated"));
+
+		ArrayList<CommerceUserSegmentEntry> commerceUserSegmentEntries =
+			(ArrayList<CommerceUserSegmentEntry>)portalCache.get(
+				String.valueOf(userId));
+
+		if (userSegmentsCalculated) {
+			return commerceUserSegmentEntries;
+		}
+
+		User user = userLocalService.getUser(userId);
+
+		SearchContext searchContext = buildSearchContext(
+			user.getCompanyId(), groupId, userId);
+
+		Indexer<CommerceUserSegmentEntry> indexer =
+			IndexerRegistryUtil.nullSafeGetIndexer(
+				CommerceUserSegmentEntry.class);
+
+		Hits hits = indexer.search(searchContext, Field.ENTRY_CLASS_PK);
+
+		List<Document> documents = hits.toList();
+
+		commerceUserSegmentEntries = new ArrayList<>();
+
+		for (Document document : documents) {
+			long commerceUserSegmentEntryId = GetterUtil.getLong(
+				document.get(Field.ENTRY_CLASS_PK));
+
+			CommerceUserSegmentEntry commerceUserSegmentEntry =
+				commerceUserSegmentEntryPersistence.fetchByPrimaryKey(
+					commerceUserSegmentEntryId);
+
+			commerceUserSegmentEntries.add(commerceUserSegmentEntry);
+		}
+
+		portalCache.put(String.valueOf(userId) + "_calculated", true);
+		portalCache.put(String.valueOf(userId), commerceUserSegmentEntries);
+
+		return commerceUserSegmentEntries;
+	}
+
+	@Override
 	public int getCommerceUserSegmentEntriesCount(long groupId) {
 		return commerceUserSegmentEntryPersistence.countByGroupId(groupId);
 	}
@@ -205,6 +259,36 @@ public class CommerceUserSegmentEntryLocalServiceImpl
 
 		return commerceUserSegmentEntryPersistence.update(
 			commerceUserSegmentEntry);
+	}
+
+	protected SearchContext buildSearchContext(
+		long companyId, long groupId, long userId) {
+
+		SearchContext searchContext = new SearchContext();
+
+		Map<String, Serializable> attributes = new HashMap<>();
+
+		attributes.put("criterionType", true);
+
+		searchContext.setAttributes(attributes);
+
+		searchContext.setCompanyId(companyId);
+		searchContext.setStart(0);
+		searchContext.setEnd(10);
+		searchContext.setGroupIds(new long[] {groupId});
+		searchContext.setUserId(userId);
+
+		QueryConfig queryConfig = searchContext.getQueryConfig();
+
+		queryConfig.setHighlightEnabled(false);
+		queryConfig.setScoreEnabled(false);
+
+		Sort sort = SortFactoryUtil.create(
+			Field.PRIORITY + "Number_sortable", true);
+
+		searchContext.setSorts(sort);
+
+		return searchContext;
 	}
 
 	protected SearchContext buildSearchContext(

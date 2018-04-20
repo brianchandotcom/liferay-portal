@@ -54,7 +54,7 @@ public class FragmentEntryExceptionRequestHandler {
 			jsonObject.put(
 				"error",
 				LanguageUtil.get(
-					themeDisplay.getLocale(), "this-field-is-required"));
+					themeDisplay.getLocale(), "please-enter-a-valid-name"));
 		}
 		else {
 			String errorMessage = "an-unexpected-error-occurred";

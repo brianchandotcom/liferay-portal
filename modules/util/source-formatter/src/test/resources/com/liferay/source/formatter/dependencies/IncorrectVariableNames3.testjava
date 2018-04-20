@@ -26,8 +26,6 @@ public class IncorrectVariableNames3 {
 		Map<String, Map<String, String>> TestMapWithARatherLongName =
 			new HashMap<>();
 
-		TestMapWithARatherLongName = null;
-
 		String TestString = "Hello World";
 
 		TestMapWithAVeryLongName.put(TestString, stringMap);

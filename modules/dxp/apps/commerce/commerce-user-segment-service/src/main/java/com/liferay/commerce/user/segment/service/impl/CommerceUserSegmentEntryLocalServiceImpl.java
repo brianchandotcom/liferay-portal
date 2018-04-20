@@ -98,15 +98,15 @@ public class CommerceUserSegmentEntryLocalServiceImpl
 			CommerceUserSegmentEntry commerceUserSegmentEntry)
 		throws PortalException {
 
-		// Commerce user segment entry
-
-		commerceUserSegmentEntryPersistence.remove(commerceUserSegmentEntry);
-
 		// Commerce user segment criteria
 
 		commerceUserSegmentCriterionLocalService.
 			deleteCommerceUserSegmentCriteria(
 				commerceUserSegmentEntry.getCommerceUserSegmentEntryId());
+
+		// Commerce user segment entry
+
+		commerceUserSegmentEntryPersistence.remove(commerceUserSegmentEntry);
 
 		// Resources
 

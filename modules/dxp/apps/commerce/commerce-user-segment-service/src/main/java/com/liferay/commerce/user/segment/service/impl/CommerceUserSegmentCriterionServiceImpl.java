@@ -62,7 +62,7 @@ public class CommerceUserSegmentCriterionServiceImpl
 
 		_commerceUserSegmentEntryResourcePermission.check(
 			getPermissionChecker(),
-			commerceUserSegmentCriterion.getCommerceUserSegmentCriterionId(),
+			commerceUserSegmentCriterion.getCommerceUserSegmentEntryId(),
 			CommerceUserSegmentActionKeys.
 				DELETE_COMMERCE_USER_SEGMENTATION_CRITERION);
 
@@ -127,7 +127,7 @@ public class CommerceUserSegmentCriterionServiceImpl
 
 		_commerceUserSegmentEntryResourcePermission.check(
 			getPermissionChecker(),
-			commerceUserSegmentCriterion.getCommerceUserSegmentCriterionId(),
+			commerceUserSegmentCriterion.getCommerceUserSegmentEntryId(),
 			CommerceUserSegmentActionKeys.
 				ADD_COMMERCE_USER_SEGMENTATION_CRITERION);
 

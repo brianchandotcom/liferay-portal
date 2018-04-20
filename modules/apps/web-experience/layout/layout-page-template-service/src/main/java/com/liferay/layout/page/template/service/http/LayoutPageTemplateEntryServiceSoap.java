@@ -351,12 +351,15 @@ public class LayoutPageTemplateEntryServiceSoap {
 		}
 	}
 
-	public static void setDefaultLayoutPageTemplateEntry(
-		com.liferay.layout.page.template.model.LayoutPageTemplateEntrySoap layoutPageTemplateEntry)
+	public static com.liferay.layout.page.template.model.LayoutPageTemplateEntrySoap updateLayoutPageTemplateEntry(
+		long layoutPageTemplateEntryId, boolean defaultTemplate)
 		throws RemoteException {
 		try {
-			LayoutPageTemplateEntryServiceUtil.setDefaultLayoutPageTemplateEntry(com.liferay.layout.page.template.model.impl.LayoutPageTemplateEntryModelImpl.toModel(
-					layoutPageTemplateEntry));
+			com.liferay.layout.page.template.model.LayoutPageTemplateEntry returnValue =
+				LayoutPageTemplateEntryServiceUtil.updateLayoutPageTemplateEntry(layoutPageTemplateEntryId,
+					defaultTemplate);
+
+			return com.liferay.layout.page.template.model.LayoutPageTemplateEntrySoap.toSoapModel(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);

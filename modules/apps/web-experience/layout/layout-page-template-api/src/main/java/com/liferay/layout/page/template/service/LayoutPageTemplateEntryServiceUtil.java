@@ -182,10 +182,12 @@ public class LayoutPageTemplateEntryServiceUtil {
 		return getService().getOSGiServiceIdentifier();
 	}
 
-	public static void setDefaultLayoutPageTemplateEntry(
-		com.liferay.layout.page.template.model.LayoutPageTemplateEntry layoutPageTemplateEntry)
+	public static com.liferay.layout.page.template.model.LayoutPageTemplateEntry updateLayoutPageTemplateEntry(
+		long layoutPageTemplateEntryId, boolean defaultTemplate)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().setDefaultLayoutPageTemplateEntry(layoutPageTemplateEntry);
+		return getService()
+				   .updateLayoutPageTemplateEntry(layoutPageTemplateEntryId,
+			defaultTemplate);
 	}
 
 	public static com.liferay.layout.page.template.model.LayoutPageTemplateEntry updateLayoutPageTemplateEntry(

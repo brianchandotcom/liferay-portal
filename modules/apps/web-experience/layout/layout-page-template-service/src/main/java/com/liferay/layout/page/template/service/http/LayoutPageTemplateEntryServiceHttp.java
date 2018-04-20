@@ -596,20 +596,22 @@ public class LayoutPageTemplateEntryServiceHttp {
 		}
 	}
 
-	public static void setDefaultLayoutPageTemplateEntry(
-		HttpPrincipal httpPrincipal,
-		com.liferay.layout.page.template.model.LayoutPageTemplateEntry layoutPageTemplateEntry)
+	public static com.liferay.layout.page.template.model.LayoutPageTemplateEntry updateLayoutPageTemplateEntry(
+		HttpPrincipal httpPrincipal, long layoutPageTemplateEntryId,
+		boolean defaultTemplate)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(LayoutPageTemplateEntryServiceUtil.class,
-					"setDefaultLayoutPageTemplateEntry",
-					_setDefaultLayoutPageTemplateEntryParameterTypes17);
+					"updateLayoutPageTemplateEntry",
+					_updateLayoutPageTemplateEntryParameterTypes17);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
-					layoutPageTemplateEntry);
+					layoutPageTemplateEntryId, defaultTemplate);
+
+			Object returnObj = null;
 
 			try {
-				TunnelUtil.invoke(httpPrincipal, methodHandler);
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
 			}
 			catch (Exception e) {
 				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
@@ -618,6 +620,8 @@ public class LayoutPageTemplateEntryServiceHttp {
 
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
+
+			return (com.liferay.layout.page.template.model.LayoutPageTemplateEntry)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -817,10 +821,8 @@ public class LayoutPageTemplateEntryServiceHttp {
 		new Class[] { long.class, long.class, java.lang.String.class };
 	private static final Class<?>[] _getLayoutPageTemplateEntriesCountParameterTypes16 =
 		new Class[] { long.class, java.lang.String.class, int.class };
-	private static final Class<?>[] _setDefaultLayoutPageTemplateEntryParameterTypes17 =
-		new Class[] {
-			com.liferay.layout.page.template.model.LayoutPageTemplateEntry.class
-		};
+	private static final Class<?>[] _updateLayoutPageTemplateEntryParameterTypes17 =
+		new Class[] { long.class, boolean.class };
 	private static final Class<?>[] _updateLayoutPageTemplateEntryParameterTypes18 =
 		new Class[] { long.class, long.class, long.class };
 	private static final Class<?>[] _updateLayoutPageTemplateEntryParameterTypes19 =

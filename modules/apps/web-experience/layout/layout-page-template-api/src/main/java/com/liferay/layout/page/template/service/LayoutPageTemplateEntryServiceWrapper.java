@@ -179,10 +179,11 @@ public class LayoutPageTemplateEntryServiceWrapper
 	}
 
 	@Override
-	public void setDefaultLayoutPageTemplateEntry(
-		com.liferay.layout.page.template.model.LayoutPageTemplateEntry layoutPageTemplateEntry)
+	public com.liferay.layout.page.template.model.LayoutPageTemplateEntry updateLayoutPageTemplateEntry(
+		long layoutPageTemplateEntryId, boolean defaultTemplate)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		_layoutPageTemplateEntryService.setDefaultLayoutPageTemplateEntry(layoutPageTemplateEntry);
+		return _layoutPageTemplateEntryService.updateLayoutPageTemplateEntry(layoutPageTemplateEntryId,
+			defaultTemplate);
 	}
 
 	@Override

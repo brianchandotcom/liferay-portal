@@ -316,6 +316,13 @@ public class LayoutPageTemplateEntryLocalServiceUtil {
 	}
 
 	public static com.liferay.layout.page.template.model.LayoutPageTemplateEntry updateLayoutPageTemplateEntry(
+		long layoutPageTemplateEntryId, boolean defaultTemplate) {
+		return getService()
+				   .updateLayoutPageTemplateEntry(layoutPageTemplateEntryId,
+			defaultTemplate);
+	}
+
+	public static com.liferay.layout.page.template.model.LayoutPageTemplateEntry updateLayoutPageTemplateEntry(
 		long layoutPageTemplateEntryId, long classNameId, long classTypeId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()

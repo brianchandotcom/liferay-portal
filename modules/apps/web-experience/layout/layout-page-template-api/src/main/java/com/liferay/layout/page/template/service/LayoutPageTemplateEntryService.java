@@ -138,8 +138,8 @@ public interface LayoutPageTemplateEntryService extends BaseService {
 	*/
 	public java.lang.String getOSGiServiceIdentifier();
 
-	public void setDefaultLayoutPageTemplateEntry(
-		LayoutPageTemplateEntry layoutPageTemplateEntry)
+	public LayoutPageTemplateEntry updateLayoutPageTemplateEntry(
+		long layoutPageTemplateEntryId, boolean defaultTemplate)
 		throws PortalException;
 
 	public LayoutPageTemplateEntry updateLayoutPageTemplateEntry(

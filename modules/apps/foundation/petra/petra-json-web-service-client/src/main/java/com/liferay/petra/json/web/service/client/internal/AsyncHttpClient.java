@@ -14,15 +14,10 @@
 
 package com.liferay.petra.json.web.service.client.internal;
 
-import com.google.common.util.concurrent.SettableFuture;
-
 import java.io.Closeable;
 import java.io.IOException;
 
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
-import java.util.concurrent.TimeUnit;
 
 import org.apache.http.HttpHost;
 import org.apache.http.HttpRequest;
@@ -31,8 +26,12 @@ import org.apache.http.client.protocol.HttpClientContext;
 import org.apache.http.impl.nio.client.CloseableHttpAsyncClient;
 import org.apache.http.protocol.HttpContext;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * @author Ivica Cardic
+ * @author Igor Beslic
  */
 public class AsyncHttpClient implements Closeable {
 
@@ -41,28 +40,11 @@ public class AsyncHttpClient implements Closeable {
 
 		_maxRetryCount = maxRetryCount;
 		_closeableHttpAsyncClient = closeableHttpAsyncClient;
-
-		if (_maxRetryCount > 0) {
-			executorService = Executors.newCachedThreadPool();
-		}
 	}
 
 	@Override
 	public void close() throws IOException {
 		_closeableHttpAsyncClient.close();
-
-		if (_maxRetryCount > 0) {
-			executorService.shutdown();
-
-			try {
-				if (!executorService.awaitTermination(5, TimeUnit.SECONDS)) {
-					executorService.shutdownNow();
-				}
-			}
-			catch (InterruptedException ie) {
-				executorService.shutdownNow();
-			}
-		}
 	}
 
 	public Future<HttpResponse> execute(
@@ -72,27 +54,49 @@ public class AsyncHttpClient implements Closeable {
 	}
 
 	public Future<HttpResponse> execute(
-		HttpHost httpHost, HttpRequest httpRequest, HttpContext httpContext) {
+		final HttpHost httpHost, HttpRequest httpRequest,
+		HttpContext httpContext) {
 
-		if (_maxRetryCount > 0) {
-			SettableFuture<HttpResponse> responseFuture =
-				SettableFuture.create();
+		for (int i = 0; i <= _maxRetryCount; i++) {
+			if ((_maxRetryCount == 0) || (i == _maxRetryCount)) {
+				return _closeableHttpAsyncClient.execute(
+					httpHost, httpRequest, httpContext, null);
+			}
 
-			executorService.submit(
-				new ExecuteTask(
-					httpHost, httpRequest, httpContext, responseFuture,
-					_closeableHttpAsyncClient, executorService,
-					_maxRetryCount));
+			try {
+				Future<HttpResponse> httpResponseFuture =
+					_closeableHttpAsyncClient.execute(
+						httpHost, httpRequest, httpContext, null);
 
-			return responseFuture;
+				httpResponseFuture.get();
+
+				return httpResponseFuture;
+			}
+			catch (Exception e) {
+				if (_logger.isTraceEnabled()) {
+					_logger.trace(
+						"Failed to execute http request in attempt " + i, e);
+				}
+
+				try {
+					Thread.sleep(100L);
+				}
+				catch (InterruptedException ie) {
+					_logger.error("Interrupted", ie);
+
+					if (_logger.isInfoEnabled()) {
+						_logger.info(
+							"Exiting execute loop after " + i + " retries");
+					}
+				}
+			}
 		}
-		else {
-			return _closeableHttpAsyncClient.execute(
-				httpHost, httpRequest, httpContext, null);
-		}
+
+		throw new RuntimeException("Unexpected execution state reached");
 	}
 
-	protected ExecutorService executorService;
+	private static final Logger _logger = LoggerFactory.getLogger(
+		AsyncHttpClient.class);
 
 	private final CloseableHttpAsyncClient _closeableHttpAsyncClient;
 	private final int _maxRetryCount;

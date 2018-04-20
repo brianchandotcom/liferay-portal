@@ -536,10 +536,10 @@ public class LiferayOAuthDataProvider
 	}
 
 	public OAuth2Application resolveOAuth2Application(Client client) {
-		Map<String, String> clientProperties = client.getProperties();
+		Map<String, String> properties = client.getProperties();
 
 		long companyId = GetterUtil.getLong(
-			clientProperties.get(
+			properties.get(
 				OAuth2ProviderRestEndpointConstants.PROPERTY_KEY_COMPANY_ID));
 
 		OAuth2Application oAuth2Application =
@@ -580,9 +580,10 @@ public class LiferayOAuthDataProvider
 
 	@Override
 	protected ServerAccessToken doCreateAccessToken(
-		AccessTokenRegistration atReg) {
+		AccessTokenRegistration accessTokenRegistration) {
 
-		ServerAccessToken serverAccessToken = super.doCreateAccessToken(atReg);
+		ServerAccessToken serverAccessToken = super.doCreateAccessToken(
+			accessTokenRegistration);
 
 		BearerTokenProvider.AccessToken accessToken = fromCXFAccessToken(
 			serverAccessToken);
@@ -886,10 +887,10 @@ public class LiferayOAuthDataProvider
 	}
 
 	@Override
-	protected void saveAccessToken(ServerAccessToken serverToken) {
+	protected void saveAccessToken(ServerAccessToken serverAccessToken) {
 		try {
 			_invokeTransactionally(
-				() -> _transactionalSaveAccessToken(serverToken));
+				() -> _transactionalSaveServerAccessToken(serverAccessToken));
 		}
 		catch (Throwable throwable) {
 			throw new OAuthServiceException(throwable);
@@ -940,7 +941,7 @@ public class LiferayOAuthDataProvider
 			});
 	}
 
-	private void _transactionalSaveAccessToken(
+	private void _transactionalSaveServerAccessToken(
 		ServerAccessToken serverAccessToken) {
 
 		Client client = serverAccessToken.getClient();

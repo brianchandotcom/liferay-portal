@@ -68,7 +68,7 @@ public class FragmentEntryLinkDisplayContext {
 						dropdownItem.setHref(
 							"javascript:" + _renderResponse.getNamespace() +
 								"propagate();");
-						dropdownItem.setIcon("reload");
+						dropdownItem.setIcon("upload");
 						dropdownItem.setLabel("propagate");
 						dropdownItem.setQuickAction(true);
 					});

@@ -74,9 +74,6 @@ public class DisplayPageDisplayContext {
 			return _displayPagesSearchContainer;
 		}
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		SearchContainer displayPagesSearchContainer = new SearchContainer(
 			_renderRequest, _renderResponse.createRenderURL(), null,
 			"there-are-no-display-pages");
@@ -105,7 +102,7 @@ public class DisplayPageDisplayContext {
 		if (isSearch()) {
 			layoutPageTemplateEntries =
 				LayoutPageTemplateEntryServiceUtil.getLayoutPageTemplateEntries(
-					themeDisplay.getScopeGroupId(), getKeywords(),
+					_themeDisplay.getScopeGroupId(), getKeywords(),
 					LayoutPageTemplateEntryTypeConstants.TYPE_DISPLAY_PAGE,
 					displayPagesSearchContainer.getStart(),
 					displayPagesSearchContainer.getEnd(), orderByComparator);
@@ -113,13 +110,13 @@ public class DisplayPageDisplayContext {
 			layoutPageTemplateEntriesCount =
 				LayoutPageTemplateEntryServiceUtil.
 					getLayoutPageTemplateEntriesCount(
-						themeDisplay.getScopeGroupId(), getKeywords(),
+						_themeDisplay.getScopeGroupId(), getKeywords(),
 						LayoutPageTemplateEntryTypeConstants.TYPE_DISPLAY_PAGE);
 		}
 		else {
 			layoutPageTemplateEntries =
 				LayoutPageTemplateEntryServiceUtil.getLayoutPageTemplateEntries(
-					themeDisplay.getScopeGroupId(),
+					_themeDisplay.getScopeGroupId(),
 					LayoutPageTemplateEntryTypeConstants.TYPE_DISPLAY_PAGE,
 					displayPagesSearchContainer.getStart(),
 					displayPagesSearchContainer.getEnd(), orderByComparator);
@@ -127,7 +124,7 @@ public class DisplayPageDisplayContext {
 			layoutPageTemplateEntriesCount =
 				LayoutPageTemplateEntryServiceUtil.
 					getLayoutPageTemplateEntriesCount(
-						themeDisplay.getScopeGroupId(),
+						_themeDisplay.getScopeGroupId(),
 						LayoutPageTemplateEntryTypeConstants.TYPE_DISPLAY_PAGE);
 		}
 
@@ -280,12 +277,9 @@ public class DisplayPageDisplayContext {
 	}
 
 	public boolean isShowAddButton(String actionId) {
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		if (LayoutPageTemplatePermission.contains(
-				themeDisplay.getPermissionChecker(),
-				themeDisplay.getSiteGroupId(), actionId)) {
+				_themeDisplay.getPermissionChecker(),
+				_themeDisplay.getSiteGroupId(), actionId)) {
 
 			return true;
 		}

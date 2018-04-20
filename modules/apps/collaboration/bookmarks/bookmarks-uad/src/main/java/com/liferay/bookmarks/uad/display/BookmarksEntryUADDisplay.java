@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.user.associated.data.display.UADDisplay;
 
+import java.util.Locale;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
@@ -69,7 +70,7 @@ public class BookmarksEntryUADDisplay implements UADDisplay<BookmarksEntry> {
 		return "A link to another page or website";
 	}
 
-	public String getTypeName() {
+	public String getTypeName(Locale locale) {
 		return "BookmarksEntry";
 	}
 

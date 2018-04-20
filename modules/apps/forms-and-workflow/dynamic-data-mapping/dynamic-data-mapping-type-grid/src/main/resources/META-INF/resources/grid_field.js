@@ -40,6 +40,20 @@ AUI.add(
 						);
 					},
 
+					focusOnTarget: function() {
+						var instance = this;
+
+						var container = instance.get('container');
+
+						var focusTarget = instance._getFocusTarget();
+
+						var row = container.one('[name="' + focusTarget.row + '"]');
+
+						var column = row.one('[data-row-index="' + focusTarget.index + '"]');
+
+						column.focus();
+					},
+
 					getTemplateContext: function() {
 						var instance = this;
 
@@ -65,6 +79,8 @@ AUI.add(
 						instance.set('value', value);
 
 						instance.render();
+
+						instance.focusOnTarget();
 					},
 
 					showErrorMessage: function() {

@@ -2261,7 +2261,9 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 * Returns all the users who do not have any contacts.
 	 *
 	 * @return the users who do not have any contacts
+	 * @deprecated As of 7.0.0, with no direct replacement
 	 */
+	@Deprecated
 	@Override
 	public List<User> getNoContacts() {
 		return userFinder.findByNoContacts();

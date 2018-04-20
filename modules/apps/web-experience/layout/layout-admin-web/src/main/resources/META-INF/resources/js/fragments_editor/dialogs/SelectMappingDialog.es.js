@@ -76,24 +76,28 @@ class SelectMappingDialog extends PortletBase {
 	 */
 
 	_loadMappeableFields() {
+		const classNameId = this.selectedMappingTypes.type ?
+			this.selectedMappingTypes.type.id : '';
+
+		const classTypeId = this.selectedMappingTypes.subtype ?
+			this.selectedMappingTypes.subtype.id : '';
+
 		this._loadingMappeableFields = true;
 		this._mappeableFields = null;
 
-		setTimeout(
-			() => {
+		return this.fetch(
+			this.mappingFieldsURL,
+			{
+				classNameId,
+				classTypeId
+			}
+		).then(
+			response => response.json()
+		).then(
+			responseContent => {
 				this._loadingMappeableFields = false;
-				this._mappeableFields = [
-					{
-						label: 'Field 1',
-						key: 'field-1'
-					},
-					{
-						label: 'Field 2',
-						key: 'field-2'
-					}
-				];
-			},
-			1000
+				this._mappeableFields = responseContent;
+			}
 		);
 	}
 
@@ -133,6 +137,54 @@ SelectMappingDialog.STATE = {
 	fragmentEntryLinkId: Config
 		.string()
 		.value(''),
+
+	/**
+	 * URL for getting the list of mapping fields
+	 * @default undefined
+	 * @instance
+	 * @memberOf SelectMappingDialog
+	 * @review
+	 * @type {!string}
+	 */
+
+	mappingFieldsURL: Config.string().required(),
+
+	/**
+	 * Selected mapping types
+	 * @default {}
+	 * @instance
+	 * @memberOf SelectMappingDialog
+	 * @review
+	 * @type {{
+	 *   subtype: {
+	 *   	id: !string,
+	 *   	label: !string
+	 *   },
+	 *   type: {
+	 *   	id: !string,
+	 *   	label: !string
+	 *   }
+	 * }}
+	 */
+
+	selectedMappingTypes: Config
+		.shapeOf(
+			{
+				subtype: Config.shapeOf(
+					{
+						id: Config.string().required(),
+						label: Config.string().required()
+					}
+				),
+				type: Config.shapeOf(
+					{
+						id: Config.string().required(),
+						label: Config.string().required()
+					}
+				)
+			}
+		)
+		.value({}),
 
 	/**
 	 * Path of the available icons.

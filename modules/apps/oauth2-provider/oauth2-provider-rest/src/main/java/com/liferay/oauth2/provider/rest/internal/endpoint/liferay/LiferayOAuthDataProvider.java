@@ -101,7 +101,6 @@ public class LiferayOAuthDataProvider
 		Client client, List<String> requestedScopes) {
 
 		List<String> invisibleToClientScopes = getInvisibleToClientScopes();
-
 		List<OAuthPermission> oAuth2Permissions = new ArrayList<>();
 
 		for (String requestedScope : requestedScopes) {
@@ -174,7 +173,6 @@ public class LiferayOAuthDataProvider
 
 		oAuth2Authorization.setAccessTokenContent(
 			OAuth2ProviderConstants.EXPIRED_TOKEN);
-
 		_oAuth2AuthorizationLocalService.updateOAuth2Authorization(
 			oAuth2Authorization);
 	}
@@ -192,7 +190,6 @@ public class LiferayOAuthDataProvider
 
 		oAuth2Authorization.setRefreshTokenContent(
 			OAuth2ProviderConstants.EXPIRED_TOKEN);
-
 		_oAuth2AuthorizationLocalService.updateOAuth2Authorization(
 			oAuth2Authorization);
 	}
@@ -202,7 +199,6 @@ public class LiferayOAuthDataProvider
 
 		OAuth2Application oAuth2Application = resolveOAuth2Application(
 			serverAccessToken.getClient());
-
 		UserSubject userSubject = serverAccessToken.getSubject();
 
 		return new AccessToken(
@@ -226,7 +222,6 @@ public class LiferayOAuthDataProvider
 
 		OAuth2Application oAuth2Application = resolveOAuth2Application(
 			refreshToken.getClient());
-
 		UserSubject userSubject = refreshToken.getSubject();
 
 		return new BearerTokenProvider.RefreshToken(
@@ -276,7 +271,6 @@ public class LiferayOAuthDataProvider
 		}
 		catch (PortalException pe) {
 			_log.error("Unable to populate access token", pe);
-
 			throw new OAuthServiceException(pe);
 		}
 	}
@@ -338,7 +332,6 @@ public class LiferayOAuthDataProvider
 		throws OAuthServiceException {
 
 		List<String> keys = _codeGrantsPortalCache.getKeys();
-
 		List<ServerAuthorizationCodeGrant> serverAuthorizationCodeGrants =
 			new ArrayList<>();
 
@@ -396,10 +389,8 @@ public class LiferayOAuthDataProvider
 			OAuth2Application oAuth2Application =
 				_oAuth2ApplicationLocalService.getOAuth2Application(
 					oAuth2Authorization.getOAuth2ApplicationId());
-
 			long issuedAt = toCXFTime(
 				oAuth2Authorization.getRefreshTokenCreateDate());
-
 			long expires = toCXFTime(
 				oAuth2Authorization.getRefreshTokenExpirationDate());
 
@@ -419,7 +410,6 @@ public class LiferayOAuthDataProvider
 				oAuth2Authorization.getAccessTokenContent());
 
 			refreshToken.setAccessTokens(accessTokens);
-
 			OAuth2ApplicationScopeAliases oAuth2ApplicationScopeAliases =
 				_oAuth2ApplicationScopeAliasesLocalService.
 					getOAuth2ApplicationScopeAliases(
@@ -509,13 +499,11 @@ public class LiferayOAuthDataProvider
 			client, oldRefreshToken, Collections.emptyList());
 
 		accessToken.setRefreshToken(oldRefreshToken.getTokenKey());
-
 		RefreshToken newRefreshToken = doCreateNewRefreshToken(accessToken);
 
 		List<String> accessTokens = newRefreshToken.getAccessTokens();
 
 		accessTokens.add(accessToken.getTokenKey());
-
 		try {
 			_invokeTransactionally(
 				() -> {
@@ -542,7 +530,6 @@ public class LiferayOAuthDataProvider
 
 		ServerAuthorizationCodeGrant serverAuthorizationCodeGrant =
 			_codeGrantsPortalCache.get(code);
-
 		_codeGrantsPortalCache.remove(code);
 
 		return serverAuthorizationCodeGrant;
@@ -626,7 +613,6 @@ public class LiferayOAuthDataProvider
 				serverAccessToken.getClient(), accessToken.getScopes()));
 		serverAccessToken.setTokenKey(accessToken.getTokenKey());
 		serverAccessToken.setTokenType(accessToken.getTokenType());
-
 		UserSubject userSubject = serverAccessToken.getSubject();
 
 		userSubject.setId(GetterUtil.getString(accessToken.getUserId()));
@@ -664,7 +650,6 @@ public class LiferayOAuthDataProvider
 				serverAccessToken.getClient(), refreshToken.getScopes()));
 		cxfRefreshToken.setTokenKey(refreshToken.getTokenKey());
 		cxfRefreshToken.setTokenType(refreshToken.getTokenType());
-
 		UserSubject userSubject = cxfRefreshToken.getSubject();
 
 		userSubject.setId(GetterUtil.getString(refreshToken.getUserId()));
@@ -742,10 +727,8 @@ public class LiferayOAuthDataProvider
 		}
 
 		Client client = getClient(oAuth2Application.getClientId());
-
 		long issuedAt = toCXFTime(
 			oAuth2Authorization.getAccessTokenCreateDate());
-
 		long expires = toCXFTime(
 			oAuth2Authorization.getAccessTokenExpirationDate());
 
@@ -770,7 +753,6 @@ public class LiferayOAuthDataProvider
 			client, oAuth2ApplicationScopeAliases.getScopeAliasesList());
 
 		serverAccessToken.setScopes(oAuth2Permissions);
-
 		Map<String, String> extraProperties =
 			serverAccessToken.getExtraProperties();
 
@@ -792,10 +774,8 @@ public class LiferayOAuthDataProvider
 			oAuth2Application.getClientId(), clientSecret,
 			!Validator.isBlank(clientSecret), oAuth2Application.getName(),
 			oAuth2Application.getHomePageURL());
-
 		List<GrantType> allowedGrantTypes =
 			oAuth2Application.getAllowedGrantTypesList();
-
 		List<String> clientGrantTypes = client.getAllowedGrantTypes();
 
 		for (GrantType allowedGrantType : allowedGrantTypes) {
@@ -860,20 +840,16 @@ public class LiferayOAuthDataProvider
 			catch (PortalException pe) {
 				_log.error(
 					"Unable to find associated application scope aliases", pe);
-
 				throw new OAuthServiceException(pe);
 			}
 		}
 
 		client.setRedirectUris(oAuth2Application.getRedirectURIsList());
-
 		client.setSubject(
 			populateUserSubject(
 				oAuth2Application.getCompanyId(), oAuth2Application.getUserId(),
 				oAuth2Application.getUserName()));
-
 		long companyId = oAuth2Application.getCompanyId();
-
 		Map<String, String> properties = client.getProperties();
 
 		properties.put(
@@ -931,7 +907,6 @@ public class LiferayOAuthDataProvider
 		Date createDate = fromCXFTime(refreshToken.getIssuedAt());
 		Date expirationDate = fromCXFTime(
 			refreshToken.getIssuedAt() + refreshToken.getExpiresIn());
-
 		Iterator<String> iterator = accessTokens.iterator();
 
 		String accessTokenContent = iterator.next();
@@ -944,7 +919,6 @@ public class LiferayOAuthDataProvider
 		oAuth2Authorization.setRefreshTokenContent(refreshToken.getTokenKey());
 		oAuth2Authorization.setRefreshTokenCreateDate(createDate);
 		oAuth2Authorization.setRefreshTokenExpirationDate(expirationDate);
-
 		_oAuth2AuthorizationLocalService.updateOAuth2Authorization(
 			oAuth2Authorization);
 	}
@@ -970,7 +944,6 @@ public class LiferayOAuthDataProvider
 		ServerAccessToken serverAccessToken) {
 
 		Client client = serverAccessToken.getClient();
-
 		Date createDate = fromCXFTime(serverAccessToken.getIssuedAt());
 		Date expirationDate = fromCXFTime(
 			serverAccessToken.getIssuedAt() + serverAccessToken.getExpiresIn());
@@ -985,10 +958,8 @@ public class LiferayOAuthDataProvider
 				serverAccessToken.getTokenKey());
 			oAuth2Authorization.setAccessTokenCreateDate(createDate);
 			oAuth2Authorization.setAccessTokenExpirationDate(expirationDate);
-
 			_oAuth2AuthorizationLocalService.updateOAuth2Authorization(
 				oAuth2Authorization);
-
 			return;
 		}
 
@@ -997,7 +968,6 @@ public class LiferayOAuthDataProvider
 		long companyId = oAuth2Application.getCompanyId();
 
 		UserSubject userSubject = serverAccessToken.getSubject();
-
 		long userId = 0;
 		String userName = StringPool.BLANK;
 
@@ -1034,7 +1004,6 @@ public class LiferayOAuthDataProvider
 
 		List<String> scopeList = OAuthUtils.convertPermissionsToScopeList(
 			serverAccessToken.getScopes());
-
 		Set<LiferayOAuth2Scope> liferayOAuth2Scopes = new HashSet<>();
 
 		for (String scope : scopeList) {
@@ -1049,7 +1018,6 @@ public class LiferayOAuthDataProvider
 		}
 		catch (PortalException pe) {
 			_log.error("Unable to find authorization " + oAuth2Authorization);
-
 			throw new OAuthServiceException(
 				"Unable to grant scope for token", pe);
 		}

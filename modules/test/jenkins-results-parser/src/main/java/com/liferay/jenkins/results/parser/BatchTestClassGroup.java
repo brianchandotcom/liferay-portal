@@ -167,7 +167,7 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 		int testClassFileCount = testClassFiles.size();
 
 		if (testClassFileCount == 0) {
-			if (includeAutoBalanceTests) {
+			if (includeAutoBalanceTests && !autoBalanceTestFiles.isEmpty()) {
 				int id = 0;
 
 				AxisTestClassGroup axisTestClassGroup = new AxisTestClassGroup(

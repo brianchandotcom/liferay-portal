@@ -81,8 +81,8 @@ public class DDMTemplateWrapper implements DDMTemplate,
 		attributes.put("mode", getMode());
 		attributes.put("language", getLanguage());
 		attributes.put("script", getScript());
-		attributes.put("cacheable", getCacheable());
-		attributes.put("smallImage", getSmallImage());
+		attributes.put("cacheable", isCacheable());
+		attributes.put("smallImage", isSmallImage());
 		attributes.put("smallImageId", getSmallImageId());
 		attributes.put("smallImageURL", getSmallImageURL());
 		attributes.put("lastPublishDate", getLastPublishDate());

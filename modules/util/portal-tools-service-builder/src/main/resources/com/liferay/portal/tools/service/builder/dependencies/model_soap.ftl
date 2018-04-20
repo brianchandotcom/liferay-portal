@@ -41,7 +41,11 @@ public class ${entity.name}Soap implements Serializable {
 		${entity.name}Soap soapModel = new ${entity.name}Soap();
 
 		<#list entity.regularEntityColumns as entityColumn>
-			soapModel.set${entityColumn.methodName}(model.get${entityColumn.methodName}());
+			<#if stringUtil.equals(entityColumn.type, "boolean")>
+				soapModel.set${entityColumn.methodName}(model.is${entityColumn.methodName}());
+			<#else>
+				soapModel.set${entityColumn.methodName}(model.get${entityColumn.methodName}());
+			</#if>
 		</#list>
 
 		return soapModel;

@@ -182,8 +182,8 @@ public class KaleoTimerPersistenceTest {
 			newKaleoTimer.getKaleoDefinitionVersionId());
 		Assert.assertEquals(existingKaleoTimer.getName(),
 			newKaleoTimer.getName());
-		Assert.assertEquals(existingKaleoTimer.getBlocking(),
-			newKaleoTimer.getBlocking());
+		Assert.assertEquals(existingKaleoTimer.isBlocking(),
+			newKaleoTimer.isBlocking());
 		Assert.assertEquals(existingKaleoTimer.getDescription(),
 			newKaleoTimer.getDescription());
 		AssertUtils.assertEquals(existingKaleoTimer.getDuration(),

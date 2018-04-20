@@ -160,8 +160,8 @@ public class ReleasePersistenceTest {
 		Assert.assertEquals(Time.getShortTimestamp(
 				existingRelease.getBuildDate()),
 			Time.getShortTimestamp(newRelease.getBuildDate()));
-		Assert.assertEquals(existingRelease.getVerified(),
-			newRelease.getVerified());
+		Assert.assertEquals(existingRelease.isVerified(),
+			newRelease.isVerified());
 		Assert.assertEquals(existingRelease.getState(), newRelease.getState());
 		Assert.assertEquals(existingRelease.getTestString(),
 			newRelease.getTestString());

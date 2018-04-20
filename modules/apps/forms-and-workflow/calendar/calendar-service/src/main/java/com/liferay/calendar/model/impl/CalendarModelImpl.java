@@ -249,9 +249,9 @@ public class CalendarModelImpl extends BaseModelImpl<Calendar>
 		attributes.put("description", getDescription());
 		attributes.put("timeZoneId", getTimeZoneId());
 		attributes.put("color", getColor());
-		attributes.put("defaultCalendar", getDefaultCalendar());
-		attributes.put("enableComments", getEnableComments());
-		attributes.put("enableRatings", getEnableRatings());
+		attributes.put("defaultCalendar", isDefaultCalendar());
+		attributes.put("enableComments", isEnableComments());
+		attributes.put("enableRatings", isEnableRatings());
 		attributes.put("lastPublishDate", getLastPublishDate());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
@@ -977,9 +977,9 @@ public class CalendarModelImpl extends BaseModelImpl<Calendar>
 		calendarImpl.setDescription(getDescription());
 		calendarImpl.setTimeZoneId(getTimeZoneId());
 		calendarImpl.setColor(getColor());
-		calendarImpl.setDefaultCalendar(getDefaultCalendar());
-		calendarImpl.setEnableComments(getEnableComments());
-		calendarImpl.setEnableRatings(getEnableRatings());
+		calendarImpl.setDefaultCalendar(isDefaultCalendar());
+		calendarImpl.setEnableComments(isEnableComments());
+		calendarImpl.setEnableRatings(isEnableRatings());
 		calendarImpl.setLastPublishDate(getLastPublishDate());
 
 		calendarImpl.resetOriginalValues();
@@ -1138,11 +1138,11 @@ public class CalendarModelImpl extends BaseModelImpl<Calendar>
 
 		calendarCacheModel.color = getColor();
 
-		calendarCacheModel.defaultCalendar = getDefaultCalendar();
+		calendarCacheModel.defaultCalendar = isDefaultCalendar();
 
-		calendarCacheModel.enableComments = getEnableComments();
+		calendarCacheModel.enableComments = isEnableComments();
 
-		calendarCacheModel.enableRatings = getEnableRatings();
+		calendarCacheModel.enableRatings = isEnableRatings();
 
 		Date lastPublishDate = getLastPublishDate();
 
@@ -1187,11 +1187,11 @@ public class CalendarModelImpl extends BaseModelImpl<Calendar>
 		sb.append(", color=");
 		sb.append(getColor());
 		sb.append(", defaultCalendar=");
-		sb.append(getDefaultCalendar());
+		sb.append(isDefaultCalendar());
 		sb.append(", enableComments=");
-		sb.append(getEnableComments());
+		sb.append(isEnableComments());
 		sb.append(", enableRatings=");
-		sb.append(getEnableRatings());
+		sb.append(isEnableRatings());
 		sb.append(", lastPublishDate=");
 		sb.append(getLastPublishDate());
 		sb.append("}");
@@ -1261,15 +1261,15 @@ public class CalendarModelImpl extends BaseModelImpl<Calendar>
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>defaultCalendar</column-name><column-value><![CDATA[");
-		sb.append(getDefaultCalendar());
+		sb.append(isDefaultCalendar());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>enableComments</column-name><column-value><![CDATA[");
-		sb.append(getEnableComments());
+		sb.append(isEnableComments());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>enableRatings</column-name><column-value><![CDATA[");
-		sb.append(getEnableRatings());
+		sb.append(isEnableRatings());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>lastPublishDate</column-name><column-value><![CDATA[");

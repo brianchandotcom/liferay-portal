@@ -310,7 +310,7 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 		attributes.put("largeImageId", getLargeImageId());
 		attributes.put("custom1ImageId", getCustom1ImageId());
 		attributes.put("custom2ImageId", getCustom2ImageId());
-		attributes.put("manualCheckInRequired", getManualCheckInRequired());
+		attributes.put("manualCheckInRequired", isManualCheckInRequired());
 		attributes.put("lastPublishDate", getLastPublishDate());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
@@ -1305,7 +1305,7 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 		dlFileEntryImpl.setLargeImageId(getLargeImageId());
 		dlFileEntryImpl.setCustom1ImageId(getCustom1ImageId());
 		dlFileEntryImpl.setCustom2ImageId(getCustom2ImageId());
-		dlFileEntryImpl.setManualCheckInRequired(getManualCheckInRequired());
+		dlFileEntryImpl.setManualCheckInRequired(isManualCheckInRequired());
 		dlFileEntryImpl.setLastPublishDate(getLastPublishDate());
 
 		dlFileEntryImpl.resetOriginalValues();
@@ -1576,7 +1576,7 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 
 		dlFileEntryCacheModel.custom2ImageId = getCustom2ImageId();
 
-		dlFileEntryCacheModel.manualCheckInRequired = getManualCheckInRequired();
+		dlFileEntryCacheModel.manualCheckInRequired = isManualCheckInRequired();
 
 		Date lastPublishDate = getLastPublishDate();
 
@@ -1651,7 +1651,7 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 		sb.append(", custom2ImageId=");
 		sb.append(getCustom2ImageId());
 		sb.append(", manualCheckInRequired=");
-		sb.append(getManualCheckInRequired());
+		sb.append(isManualCheckInRequired());
 		sb.append(", lastPublishDate=");
 		sb.append(getLastPublishDate());
 		sb.append("}");
@@ -1781,7 +1781,7 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>manualCheckInRequired</column-name><column-value><![CDATA[");
-		sb.append(getManualCheckInRequired());
+		sb.append(isManualCheckInRequired());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>lastPublishDate</column-name><column-value><![CDATA[");

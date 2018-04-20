@@ -145,13 +145,13 @@ public class StatusPersistenceTest {
 		Assert.assertEquals(existingStatus.getUserId(), newStatus.getUserId());
 		Assert.assertEquals(existingStatus.getModifiedDate(),
 			newStatus.getModifiedDate());
-		Assert.assertEquals(existingStatus.getOnline(), newStatus.getOnline());
-		Assert.assertEquals(existingStatus.getAwake(), newStatus.getAwake());
+		Assert.assertEquals(existingStatus.isOnline(), newStatus.isOnline());
+		Assert.assertEquals(existingStatus.isAwake(), newStatus.isAwake());
 		Assert.assertEquals(existingStatus.getActivePanelIds(),
 			newStatus.getActivePanelIds());
 		Assert.assertEquals(existingStatus.getMessage(), newStatus.getMessage());
-		Assert.assertEquals(existingStatus.getPlaySound(),
-			newStatus.getPlaySound());
+		Assert.assertEquals(existingStatus.isPlaySound(),
+			newStatus.isPlaySound());
 	}
 
 	@Test

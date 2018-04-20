@@ -199,15 +199,15 @@ public class WikiPagePersistenceTest {
 		Assert.assertEquals(existingWikiPage.getTitle(), newWikiPage.getTitle());
 		AssertUtils.assertEquals(existingWikiPage.getVersion(),
 			newWikiPage.getVersion());
-		Assert.assertEquals(existingWikiPage.getMinorEdit(),
-			newWikiPage.getMinorEdit());
+		Assert.assertEquals(existingWikiPage.isMinorEdit(),
+			newWikiPage.isMinorEdit());
 		Assert.assertEquals(existingWikiPage.getContent(),
 			newWikiPage.getContent());
 		Assert.assertEquals(existingWikiPage.getSummary(),
 			newWikiPage.getSummary());
 		Assert.assertEquals(existingWikiPage.getFormat(),
 			newWikiPage.getFormat());
-		Assert.assertEquals(existingWikiPage.getHead(), newWikiPage.getHead());
+		Assert.assertEquals(existingWikiPage.isHead(), newWikiPage.isHead());
 		Assert.assertEquals(existingWikiPage.getParentTitle(),
 			newWikiPage.getParentTitle());
 		Assert.assertEquals(existingWikiPage.getRedirectTitle(),

@@ -38,9 +38,9 @@ public class AnnouncementsDeliverySoap implements Serializable {
 		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setUserId(model.getUserId());
 		soapModel.setType(model.getType());
-		soapModel.setEmail(model.getEmail());
-		soapModel.setSms(model.getSms());
-		soapModel.setWebsite(model.getWebsite());
+		soapModel.setEmail(model.isEmail());
+		soapModel.setSms(model.isSms());
+		soapModel.setWebsite(model.isWebsite());
 
 		return soapModel;
 	}

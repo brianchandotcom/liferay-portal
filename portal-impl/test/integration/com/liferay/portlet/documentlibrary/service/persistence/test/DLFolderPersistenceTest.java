@@ -185,8 +185,8 @@ public class DLFolderPersistenceTest {
 			Time.getShortTimestamp(newDLFolder.getModifiedDate()));
 		Assert.assertEquals(existingDLFolder.getRepositoryId(),
 			newDLFolder.getRepositoryId());
-		Assert.assertEquals(existingDLFolder.getMountPoint(),
-			newDLFolder.getMountPoint());
+		Assert.assertEquals(existingDLFolder.isMountPoint(),
+			newDLFolder.isMountPoint());
 		Assert.assertEquals(existingDLFolder.getParentFolderId(),
 			newDLFolder.getParentFolderId());
 		Assert.assertEquals(existingDLFolder.getTreePath(),
@@ -199,8 +199,7 @@ public class DLFolderPersistenceTest {
 			Time.getShortTimestamp(newDLFolder.getLastPostDate()));
 		Assert.assertEquals(existingDLFolder.getDefaultFileEntryTypeId(),
 			newDLFolder.getDefaultFileEntryTypeId());
-		Assert.assertEquals(existingDLFolder.getHidden(),
-			newDLFolder.getHidden());
+		Assert.assertEquals(existingDLFolder.isHidden(), newDLFolder.isHidden());
 		Assert.assertEquals(existingDLFolder.getRestrictionType(),
 			newDLFolder.getRestrictionType());
 		Assert.assertEquals(Time.getShortTimestamp(

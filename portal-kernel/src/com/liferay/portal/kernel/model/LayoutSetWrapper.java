@@ -62,7 +62,7 @@ public class LayoutSetWrapper implements LayoutSet, ModelWrapper<LayoutSet> {
 		attributes.put("companyId", getCompanyId());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
-		attributes.put("privateLayout", getPrivateLayout());
+		attributes.put("privateLayout", isPrivateLayout());
 		attributes.put("logoId", getLogoId());
 		attributes.put("themeId", getThemeId());
 		attributes.put("colorSchemeId", getColorSchemeId());
@@ -71,7 +71,7 @@ public class LayoutSetWrapper implements LayoutSet, ModelWrapper<LayoutSet> {
 		attributes.put("settings", getSettings());
 		attributes.put("layoutSetPrototypeUuid", getLayoutSetPrototypeUuid());
 		attributes.put("layoutSetPrototypeLinkEnabled",
-			getLayoutSetPrototypeLinkEnabled());
+			isLayoutSetPrototypeLinkEnabled());
 
 		return attributes;
 	}

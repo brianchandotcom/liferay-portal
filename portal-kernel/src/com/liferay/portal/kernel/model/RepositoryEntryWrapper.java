@@ -70,7 +70,7 @@ public class RepositoryEntryWrapper implements RepositoryEntry,
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("repositoryId", getRepositoryId());
 		attributes.put("mappedId", getMappedId());
-		attributes.put("manualCheckInRequired", getManualCheckInRequired());
+		attributes.put("manualCheckInRequired", isManualCheckInRequired());
 		attributes.put("lastPublishDate", getLastPublishDate());
 
 		return attributes;

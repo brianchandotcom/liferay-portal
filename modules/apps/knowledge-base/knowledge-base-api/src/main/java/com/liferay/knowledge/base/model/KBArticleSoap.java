@@ -55,8 +55,8 @@ public class KBArticleSoap implements Serializable {
 		soapModel.setPriority(model.getPriority());
 		soapModel.setSections(model.getSections());
 		soapModel.setViewCount(model.getViewCount());
-		soapModel.setLatest(model.getLatest());
-		soapModel.setMain(model.getMain());
+		soapModel.setLatest(model.isLatest());
+		soapModel.setMain(model.isMain());
 		soapModel.setSourceURL(model.getSourceURL());
 		soapModel.setLastPublishDate(model.getLastPublishDate());
 		soapModel.setStatus(model.getStatus());

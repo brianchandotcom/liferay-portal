@@ -183,8 +183,8 @@ public class LayoutPageTemplateEntryPersistenceTest {
 			newLayoutPageTemplateEntry.getType());
 		Assert.assertEquals(existingLayoutPageTemplateEntry.getHtmlPreviewEntryId(),
 			newLayoutPageTemplateEntry.getHtmlPreviewEntryId());
-		Assert.assertEquals(existingLayoutPageTemplateEntry.getDefaultTemplate(),
-			newLayoutPageTemplateEntry.getDefaultTemplate());
+		Assert.assertEquals(existingLayoutPageTemplateEntry.isDefaultTemplate(),
+			newLayoutPageTemplateEntry.isDefaultTemplate());
 	}
 
 	@Test

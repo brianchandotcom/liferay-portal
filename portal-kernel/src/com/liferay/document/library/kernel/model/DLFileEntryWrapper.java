@@ -88,7 +88,7 @@ public class DLFileEntryWrapper implements DLFileEntry,
 		attributes.put("largeImageId", getLargeImageId());
 		attributes.put("custom1ImageId", getCustom1ImageId());
 		attributes.put("custom2ImageId", getCustom2ImageId());
-		attributes.put("manualCheckInRequired", getManualCheckInRequired());
+		attributes.put("manualCheckInRequired", isManualCheckInRequired());
 		attributes.put("lastPublishDate", getLastPublishDate());
 
 		return attributes;

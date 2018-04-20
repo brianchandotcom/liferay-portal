@@ -50,7 +50,7 @@ public class AnnouncementsEntrySoap implements Serializable {
 		soapModel.setDisplayDate(model.getDisplayDate());
 		soapModel.setExpirationDate(model.getExpirationDate());
 		soapModel.setPriority(model.getPriority());
-		soapModel.setAlert(model.getAlert());
+		soapModel.setAlert(model.isAlert());
 
 		return soapModel;
 	}

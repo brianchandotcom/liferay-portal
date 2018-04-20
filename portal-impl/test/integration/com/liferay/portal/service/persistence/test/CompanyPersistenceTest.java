@@ -152,10 +152,10 @@ public class CompanyPersistenceTest {
 		Assert.assertEquals(existingCompany.getHomeURL(),
 			newCompany.getHomeURL());
 		Assert.assertEquals(existingCompany.getLogoId(), newCompany.getLogoId());
-		Assert.assertEquals(existingCompany.getSystem(), newCompany.getSystem());
+		Assert.assertEquals(existingCompany.isSystem(), newCompany.isSystem());
 		Assert.assertEquals(existingCompany.getMaxUsers(),
 			newCompany.getMaxUsers());
-		Assert.assertEquals(existingCompany.getActive(), newCompany.getActive());
+		Assert.assertEquals(existingCompany.isActive(), newCompany.isActive());
 	}
 
 	@Test

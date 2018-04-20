@@ -69,7 +69,7 @@ public class PowwowServerWrapper implements PowwowServer,
 		attributes.put("url", getUrl());
 		attributes.put("apiKey", getApiKey());
 		attributes.put("secret", getSecret());
-		attributes.put("active", getActive());
+		attributes.put("active", isActive());
 
 		return attributes;
 	}

@@ -67,7 +67,7 @@ public class SiteNavigationMenuWrapper implements SiteNavigationMenu,
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("name", getName());
 		attributes.put("type", getType());
-		attributes.put("auto", getAuto());
+		attributes.put("auto", isAuto());
 
 		return attributes;
 	}

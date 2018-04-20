@@ -287,13 +287,13 @@ public class BlogsEntryModelImpl extends BaseModelImpl<BlogsEntry>
 		attributes.put("description", getDescription());
 		attributes.put("content", getContent());
 		attributes.put("displayDate", getDisplayDate());
-		attributes.put("allowPingbacks", getAllowPingbacks());
-		attributes.put("allowTrackbacks", getAllowTrackbacks());
+		attributes.put("allowPingbacks", isAllowPingbacks());
+		attributes.put("allowTrackbacks", isAllowTrackbacks());
 		attributes.put("trackbacks", getTrackbacks());
 		attributes.put("coverImageCaption", getCoverImageCaption());
 		attributes.put("coverImageFileEntryId", getCoverImageFileEntryId());
 		attributes.put("coverImageURL", getCoverImageURL());
-		attributes.put("smallImage", getSmallImage());
+		attributes.put("smallImage", isSmallImage());
 		attributes.put("smallImageFileEntryId", getSmallImageFileEntryId());
 		attributes.put("smallImageId", getSmallImageId());
 		attributes.put("smallImageURL", getSmallImageURL());
@@ -1263,13 +1263,13 @@ public class BlogsEntryModelImpl extends BaseModelImpl<BlogsEntry>
 		blogsEntryImpl.setDescription(getDescription());
 		blogsEntryImpl.setContent(getContent());
 		blogsEntryImpl.setDisplayDate(getDisplayDate());
-		blogsEntryImpl.setAllowPingbacks(getAllowPingbacks());
-		blogsEntryImpl.setAllowTrackbacks(getAllowTrackbacks());
+		blogsEntryImpl.setAllowPingbacks(isAllowPingbacks());
+		blogsEntryImpl.setAllowTrackbacks(isAllowTrackbacks());
 		blogsEntryImpl.setTrackbacks(getTrackbacks());
 		blogsEntryImpl.setCoverImageCaption(getCoverImageCaption());
 		blogsEntryImpl.setCoverImageFileEntryId(getCoverImageFileEntryId());
 		blogsEntryImpl.setCoverImageURL(getCoverImageURL());
-		blogsEntryImpl.setSmallImage(getSmallImage());
+		blogsEntryImpl.setSmallImage(isSmallImage());
 		blogsEntryImpl.setSmallImageFileEntryId(getSmallImageFileEntryId());
 		blogsEntryImpl.setSmallImageId(getSmallImageId());
 		blogsEntryImpl.setSmallImageURL(getSmallImageURL());
@@ -1470,9 +1470,9 @@ public class BlogsEntryModelImpl extends BaseModelImpl<BlogsEntry>
 			blogsEntryCacheModel.displayDate = Long.MIN_VALUE;
 		}
 
-		blogsEntryCacheModel.allowPingbacks = getAllowPingbacks();
+		blogsEntryCacheModel.allowPingbacks = isAllowPingbacks();
 
-		blogsEntryCacheModel.allowTrackbacks = getAllowTrackbacks();
+		blogsEntryCacheModel.allowTrackbacks = isAllowTrackbacks();
 
 		blogsEntryCacheModel.trackbacks = getTrackbacks();
 
@@ -1500,7 +1500,7 @@ public class BlogsEntryModelImpl extends BaseModelImpl<BlogsEntry>
 			blogsEntryCacheModel.coverImageURL = null;
 		}
 
-		blogsEntryCacheModel.smallImage = getSmallImage();
+		blogsEntryCacheModel.smallImage = isSmallImage();
 
 		blogsEntryCacheModel.smallImageFileEntryId = getSmallImageFileEntryId();
 
@@ -1580,9 +1580,9 @@ public class BlogsEntryModelImpl extends BaseModelImpl<BlogsEntry>
 		sb.append(", displayDate=");
 		sb.append(getDisplayDate());
 		sb.append(", allowPingbacks=");
-		sb.append(getAllowPingbacks());
+		sb.append(isAllowPingbacks());
 		sb.append(", allowTrackbacks=");
-		sb.append(getAllowTrackbacks());
+		sb.append(isAllowTrackbacks());
 		sb.append(", trackbacks=");
 		sb.append(getTrackbacks());
 		sb.append(", coverImageCaption=");
@@ -1592,7 +1592,7 @@ public class BlogsEntryModelImpl extends BaseModelImpl<BlogsEntry>
 		sb.append(", coverImageURL=");
 		sb.append(getCoverImageURL());
 		sb.append(", smallImage=");
-		sb.append(getSmallImage());
+		sb.append(isSmallImage());
 		sb.append(", smallImageFileEntryId=");
 		sb.append(getSmallImageFileEntryId());
 		sb.append(", smallImageId=");
@@ -1680,11 +1680,11 @@ public class BlogsEntryModelImpl extends BaseModelImpl<BlogsEntry>
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>allowPingbacks</column-name><column-value><![CDATA[");
-		sb.append(getAllowPingbacks());
+		sb.append(isAllowPingbacks());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>allowTrackbacks</column-name><column-value><![CDATA[");
-		sb.append(getAllowTrackbacks());
+		sb.append(isAllowTrackbacks());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>trackbacks</column-name><column-value><![CDATA[");
@@ -1704,7 +1704,7 @@ public class BlogsEntryModelImpl extends BaseModelImpl<BlogsEntry>
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>smallImage</column-name><column-value><![CDATA[");
-		sb.append(getSmallImage());
+		sb.append(isSmallImage());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>smallImageFileEntryId</column-name><column-value><![CDATA[");

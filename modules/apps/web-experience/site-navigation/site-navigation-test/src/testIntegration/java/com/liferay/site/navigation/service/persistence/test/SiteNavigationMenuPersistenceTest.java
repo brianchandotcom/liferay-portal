@@ -164,8 +164,8 @@ public class SiteNavigationMenuPersistenceTest {
 			newSiteNavigationMenu.getName());
 		Assert.assertEquals(existingSiteNavigationMenu.getType(),
 			newSiteNavigationMenu.getType());
-		Assert.assertEquals(existingSiteNavigationMenu.getAuto(),
-			newSiteNavigationMenu.getAuto());
+		Assert.assertEquals(existingSiteNavigationMenu.isAuto(),
+			newSiteNavigationMenu.isAuto());
 	}
 
 	@Test

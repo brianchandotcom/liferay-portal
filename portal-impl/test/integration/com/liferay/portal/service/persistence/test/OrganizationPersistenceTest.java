@@ -181,8 +181,8 @@ public class OrganizationPersistenceTest {
 			newOrganization.getName());
 		Assert.assertEquals(existingOrganization.getType(),
 			newOrganization.getType());
-		Assert.assertEquals(existingOrganization.getRecursable(),
-			newOrganization.getRecursable());
+		Assert.assertEquals(existingOrganization.isRecursable(),
+			newOrganization.isRecursable());
 		Assert.assertEquals(existingOrganization.getRegionId(),
 			newOrganization.getRegionId());
 		Assert.assertEquals(existingOrganization.getCountryId(),

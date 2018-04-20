@@ -66,7 +66,7 @@ public class UserNotificationDeliveryWrapper implements UserNotificationDelivery
 		attributes.put("classNameId", getClassNameId());
 		attributes.put("notificationType", getNotificationType());
 		attributes.put("deliveryType", getDeliveryType());
-		attributes.put("deliver", getDeliver());
+		attributes.put("deliver", isDeliver());
 
 		return attributes;
 	}

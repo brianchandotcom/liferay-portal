@@ -146,8 +146,8 @@ public class SocialActivityAchievementPersistenceTest {
 			newSocialActivityAchievement.getCreateDate());
 		Assert.assertEquals(existingSocialActivityAchievement.getName(),
 			newSocialActivityAchievement.getName());
-		Assert.assertEquals(existingSocialActivityAchievement.getFirstInGroup(),
-			newSocialActivityAchievement.getFirstInGroup());
+		Assert.assertEquals(existingSocialActivityAchievement.isFirstInGroup(),
+			newSocialActivityAchievement.isFirstInGroup());
 	}
 
 	@Test

@@ -39,9 +39,9 @@ public class ShoppingItemPriceSoap implements Serializable {
 		soapModel.setMaxQuantity(model.getMaxQuantity());
 		soapModel.setPrice(model.getPrice());
 		soapModel.setDiscount(model.getDiscount());
-		soapModel.setTaxable(model.getTaxable());
+		soapModel.setTaxable(model.isTaxable());
 		soapModel.setShipping(model.getShipping());
-		soapModel.setUseShippingFormula(model.getUseShippingFormula());
+		soapModel.setUseShippingFormula(model.isUseShippingFormula());
 		soapModel.setStatus(model.getStatus());
 
 		return soapModel;

@@ -191,21 +191,21 @@ public class AccountModelImpl extends BaseModelImpl<Account>
 		attributes.put("protocol", getProtocol());
 		attributes.put("incomingHostName", getIncomingHostName());
 		attributes.put("incomingPort", getIncomingPort());
-		attributes.put("incomingSecure", getIncomingSecure());
+		attributes.put("incomingSecure", isIncomingSecure());
 		attributes.put("outgoingHostName", getOutgoingHostName());
 		attributes.put("outgoingPort", getOutgoingPort());
-		attributes.put("outgoingSecure", getOutgoingSecure());
+		attributes.put("outgoingSecure", isOutgoingSecure());
 		attributes.put("login", getLogin());
 		attributes.put("password", getPassword());
-		attributes.put("savePassword", getSavePassword());
+		attributes.put("savePassword", isSavePassword());
 		attributes.put("signature", getSignature());
-		attributes.put("useSignature", getUseSignature());
+		attributes.put("useSignature", isUseSignature());
 		attributes.put("folderPrefix", getFolderPrefix());
 		attributes.put("inboxFolderId", getInboxFolderId());
 		attributes.put("draftFolderId", getDraftFolderId());
 		attributes.put("sentFolderId", getSentFolderId());
 		attributes.put("trashFolderId", getTrashFolderId());
-		attributes.put("defaultSender", getDefaultSender());
+		attributes.put("defaultSender", isDefaultSender());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -793,21 +793,21 @@ public class AccountModelImpl extends BaseModelImpl<Account>
 		accountImpl.setProtocol(getProtocol());
 		accountImpl.setIncomingHostName(getIncomingHostName());
 		accountImpl.setIncomingPort(getIncomingPort());
-		accountImpl.setIncomingSecure(getIncomingSecure());
+		accountImpl.setIncomingSecure(isIncomingSecure());
 		accountImpl.setOutgoingHostName(getOutgoingHostName());
 		accountImpl.setOutgoingPort(getOutgoingPort());
-		accountImpl.setOutgoingSecure(getOutgoingSecure());
+		accountImpl.setOutgoingSecure(isOutgoingSecure());
 		accountImpl.setLogin(getLogin());
 		accountImpl.setPassword(getPassword());
-		accountImpl.setSavePassword(getSavePassword());
+		accountImpl.setSavePassword(isSavePassword());
 		accountImpl.setSignature(getSignature());
-		accountImpl.setUseSignature(getUseSignature());
+		accountImpl.setUseSignature(isUseSignature());
 		accountImpl.setFolderPrefix(getFolderPrefix());
 		accountImpl.setInboxFolderId(getInboxFolderId());
 		accountImpl.setDraftFolderId(getDraftFolderId());
 		accountImpl.setSentFolderId(getSentFolderId());
 		accountImpl.setTrashFolderId(getTrashFolderId());
-		accountImpl.setDefaultSender(getDefaultSender());
+		accountImpl.setDefaultSender(isDefaultSender());
 
 		accountImpl.resetOriginalValues();
 
@@ -949,7 +949,7 @@ public class AccountModelImpl extends BaseModelImpl<Account>
 
 		accountCacheModel.incomingPort = getIncomingPort();
 
-		accountCacheModel.incomingSecure = getIncomingSecure();
+		accountCacheModel.incomingSecure = isIncomingSecure();
 
 		accountCacheModel.outgoingHostName = getOutgoingHostName();
 
@@ -961,7 +961,7 @@ public class AccountModelImpl extends BaseModelImpl<Account>
 
 		accountCacheModel.outgoingPort = getOutgoingPort();
 
-		accountCacheModel.outgoingSecure = getOutgoingSecure();
+		accountCacheModel.outgoingSecure = isOutgoingSecure();
 
 		accountCacheModel.login = getLogin();
 
@@ -979,7 +979,7 @@ public class AccountModelImpl extends BaseModelImpl<Account>
 			accountCacheModel.password = null;
 		}
 
-		accountCacheModel.savePassword = getSavePassword();
+		accountCacheModel.savePassword = isSavePassword();
 
 		accountCacheModel.signature = getSignature();
 
@@ -989,7 +989,7 @@ public class AccountModelImpl extends BaseModelImpl<Account>
 			accountCacheModel.signature = null;
 		}
 
-		accountCacheModel.useSignature = getUseSignature();
+		accountCacheModel.useSignature = isUseSignature();
 
 		accountCacheModel.folderPrefix = getFolderPrefix();
 
@@ -1007,7 +1007,7 @@ public class AccountModelImpl extends BaseModelImpl<Account>
 
 		accountCacheModel.trashFolderId = getTrashFolderId();
 
-		accountCacheModel.defaultSender = getDefaultSender();
+		accountCacheModel.defaultSender = isDefaultSender();
 
 		return accountCacheModel;
 	}
@@ -1039,23 +1039,23 @@ public class AccountModelImpl extends BaseModelImpl<Account>
 		sb.append(", incomingPort=");
 		sb.append(getIncomingPort());
 		sb.append(", incomingSecure=");
-		sb.append(getIncomingSecure());
+		sb.append(isIncomingSecure());
 		sb.append(", outgoingHostName=");
 		sb.append(getOutgoingHostName());
 		sb.append(", outgoingPort=");
 		sb.append(getOutgoingPort());
 		sb.append(", outgoingSecure=");
-		sb.append(getOutgoingSecure());
+		sb.append(isOutgoingSecure());
 		sb.append(", login=");
 		sb.append(getLogin());
 		sb.append(", password=");
 		sb.append(getPassword());
 		sb.append(", savePassword=");
-		sb.append(getSavePassword());
+		sb.append(isSavePassword());
 		sb.append(", signature=");
 		sb.append(getSignature());
 		sb.append(", useSignature=");
-		sb.append(getUseSignature());
+		sb.append(isUseSignature());
 		sb.append(", folderPrefix=");
 		sb.append(getFolderPrefix());
 		sb.append(", inboxFolderId=");
@@ -1067,7 +1067,7 @@ public class AccountModelImpl extends BaseModelImpl<Account>
 		sb.append(", trashFolderId=");
 		sb.append(getTrashFolderId());
 		sb.append(", defaultSender=");
-		sb.append(getDefaultSender());
+		sb.append(isDefaultSender());
 		sb.append("}");
 
 		return sb.toString();
@@ -1127,7 +1127,7 @@ public class AccountModelImpl extends BaseModelImpl<Account>
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>incomingSecure</column-name><column-value><![CDATA[");
-		sb.append(getIncomingSecure());
+		sb.append(isIncomingSecure());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>outgoingHostName</column-name><column-value><![CDATA[");
@@ -1139,7 +1139,7 @@ public class AccountModelImpl extends BaseModelImpl<Account>
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>outgoingSecure</column-name><column-value><![CDATA[");
-		sb.append(getOutgoingSecure());
+		sb.append(isOutgoingSecure());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>login</column-name><column-value><![CDATA[");
@@ -1151,7 +1151,7 @@ public class AccountModelImpl extends BaseModelImpl<Account>
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>savePassword</column-name><column-value><![CDATA[");
-		sb.append(getSavePassword());
+		sb.append(isSavePassword());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>signature</column-name><column-value><![CDATA[");
@@ -1159,7 +1159,7 @@ public class AccountModelImpl extends BaseModelImpl<Account>
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>useSignature</column-name><column-value><![CDATA[");
-		sb.append(getUseSignature());
+		sb.append(isUseSignature());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>folderPrefix</column-name><column-value><![CDATA[");
@@ -1183,7 +1183,7 @@ public class AccountModelImpl extends BaseModelImpl<Account>
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>defaultSender</column-name><column-value><![CDATA[");
-		sb.append(getDefaultSender());
+		sb.append(isDefaultSender());
 		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");

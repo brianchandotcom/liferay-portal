@@ -38,7 +38,7 @@ public class PortletSoap implements Serializable {
 		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setPortletId(model.getPortletId());
 		soapModel.setRoles(model.getRoles());
-		soapModel.setActive(model.getActive());
+		soapModel.setActive(model.isActive());
 
 		return soapModel;
 	}

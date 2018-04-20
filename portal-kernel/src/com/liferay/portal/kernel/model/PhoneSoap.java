@@ -47,7 +47,7 @@ public class PhoneSoap implements Serializable {
 		soapModel.setNumber(model.getNumber());
 		soapModel.setExtension(model.getExtension());
 		soapModel.setTypeId(model.getTypeId());
-		soapModel.setPrimary(model.getPrimary());
+		soapModel.setPrimary(model.isPrimary());
 
 		return soapModel;
 	}

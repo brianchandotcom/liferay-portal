@@ -188,8 +188,8 @@ public class AnnouncementsEntryPersistenceTest {
 			Time.getShortTimestamp(newAnnouncementsEntry.getExpirationDate()));
 		Assert.assertEquals(existingAnnouncementsEntry.getPriority(),
 			newAnnouncementsEntry.getPriority());
-		Assert.assertEquals(existingAnnouncementsEntry.getAlert(),
-			newAnnouncementsEntry.getAlert());
+		Assert.assertEquals(existingAnnouncementsEntry.isAlert(),
+			newAnnouncementsEntry.isAlert());
 	}
 
 	@Test

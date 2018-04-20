@@ -145,8 +145,8 @@ public class JournalContentSearchPersistenceTest {
 			newJournalContentSearch.getGroupId());
 		Assert.assertEquals(existingJournalContentSearch.getCompanyId(),
 			newJournalContentSearch.getCompanyId());
-		Assert.assertEquals(existingJournalContentSearch.getPrivateLayout(),
-			newJournalContentSearch.getPrivateLayout());
+		Assert.assertEquals(existingJournalContentSearch.isPrivateLayout(),
+			newJournalContentSearch.isPrivateLayout());
 		Assert.assertEquals(existingJournalContentSearch.getLayoutId(),
 			newJournalContentSearch.getLayoutId());
 		Assert.assertEquals(existingJournalContentSearch.getPortletId(),

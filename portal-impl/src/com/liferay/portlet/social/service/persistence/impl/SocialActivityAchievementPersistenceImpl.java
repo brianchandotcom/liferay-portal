@@ -1870,7 +1870,7 @@ public class SocialActivityAchievementPersistenceImpl
 			if ((list != null) && !list.isEmpty()) {
 				for (SocialActivityAchievement socialActivityAchievement : list) {
 					if ((groupId != socialActivityAchievement.getGroupId()) ||
-							(firstInGroup != socialActivityAchievement.getFirstInGroup())) {
+							(firstInGroup != socialActivityAchievement.isFirstInGroup())) {
 						list = null;
 
 						break;
@@ -2723,7 +2723,7 @@ public class SocialActivityAchievementPersistenceImpl
 				for (SocialActivityAchievement socialActivityAchievement : list) {
 					if ((groupId != socialActivityAchievement.getGroupId()) ||
 							(userId != socialActivityAchievement.getUserId()) ||
-							(firstInGroup != socialActivityAchievement.getFirstInGroup())) {
+							(firstInGroup != socialActivityAchievement.isFirstInGroup())) {
 						list = null;
 
 						break;
@@ -3490,7 +3490,7 @@ public class SocialActivityAchievementPersistenceImpl
 
 			args = new Object[] {
 					socialActivityAchievementModelImpl.getGroupId(),
-					socialActivityAchievementModelImpl.getFirstInGroup()
+					socialActivityAchievementModelImpl.isFirstInGroup()
 				};
 
 			finderCache.removeResult(FINDER_PATH_COUNT_BY_G_F, args);
@@ -3500,7 +3500,7 @@ public class SocialActivityAchievementPersistenceImpl
 			args = new Object[] {
 					socialActivityAchievementModelImpl.getGroupId(),
 					socialActivityAchievementModelImpl.getUserId(),
-					socialActivityAchievementModelImpl.getFirstInGroup()
+					socialActivityAchievementModelImpl.isFirstInGroup()
 				};
 
 			finderCache.removeResult(FINDER_PATH_COUNT_BY_G_U_F, args);

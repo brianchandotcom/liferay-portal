@@ -71,7 +71,7 @@ public class OrganizationWrapper implements Organization,
 		attributes.put("treePath", getTreePath());
 		attributes.put("name", getName());
 		attributes.put("type", getType());
-		attributes.put("recursable", getRecursable());
+		attributes.put("recursable", isRecursable());
 		attributes.put("regionId", getRegionId());
 		attributes.put("countryId", getCountryId());
 		attributes.put("statusId", getStatusId());

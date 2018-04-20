@@ -195,8 +195,8 @@ public class KaleoTaskInstanceTokenPersistenceTest {
 			newKaleoTaskInstanceToken.getClassPK());
 		Assert.assertEquals(existingKaleoTaskInstanceToken.getCompletionUserId(),
 			newKaleoTaskInstanceToken.getCompletionUserId());
-		Assert.assertEquals(existingKaleoTaskInstanceToken.getCompleted(),
-			newKaleoTaskInstanceToken.getCompleted());
+		Assert.assertEquals(existingKaleoTaskInstanceToken.isCompleted(),
+			newKaleoTaskInstanceToken.isCompleted());
 		Assert.assertEquals(Time.getShortTimestamp(
 				existingKaleoTaskInstanceToken.getCompletionDate()),
 			Time.getShortTimestamp(

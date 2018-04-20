@@ -64,9 +64,9 @@ public class ShoppingItemPriceWrapper implements ShoppingItemPrice,
 		attributes.put("maxQuantity", getMaxQuantity());
 		attributes.put("price", getPrice());
 		attributes.put("discount", getDiscount());
-		attributes.put("taxable", getTaxable());
+		attributes.put("taxable", isTaxable());
 		attributes.put("shipping", getShipping());
-		attributes.put("useShippingFormula", getUseShippingFormula());
+		attributes.put("useShippingFormula", isUseShippingFormula());
 		attributes.put("status", getStatus());
 
 		return attributes;

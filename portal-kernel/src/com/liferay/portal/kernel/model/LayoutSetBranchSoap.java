@@ -42,17 +42,17 @@ public class LayoutSetBranchSoap implements Serializable {
 		soapModel.setUserName(model.getUserName());
 		soapModel.setCreateDate(model.getCreateDate());
 		soapModel.setModifiedDate(model.getModifiedDate());
-		soapModel.setPrivateLayout(model.getPrivateLayout());
+		soapModel.setPrivateLayout(model.isPrivateLayout());
 		soapModel.setName(model.getName());
 		soapModel.setDescription(model.getDescription());
-		soapModel.setMaster(model.getMaster());
+		soapModel.setMaster(model.isMaster());
 		soapModel.setLogoId(model.getLogoId());
 		soapModel.setThemeId(model.getThemeId());
 		soapModel.setColorSchemeId(model.getColorSchemeId());
 		soapModel.setCss(model.getCss());
 		soapModel.setSettings(model.getSettings());
 		soapModel.setLayoutSetPrototypeUuid(model.getLayoutSetPrototypeUuid());
-		soapModel.setLayoutSetPrototypeLinkEnabled(model.getLayoutSetPrototypeLinkEnabled());
+		soapModel.setLayoutSetPrototypeLinkEnabled(model.isLayoutSetPrototypeLinkEnabled());
 
 		return soapModel;
 	}

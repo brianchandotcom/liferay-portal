@@ -3063,7 +3063,7 @@ public class LayoutSetPrototypePersistenceImpl extends BasePersistenceImpl<Layou
 			if ((list != null) && !list.isEmpty()) {
 				for (LayoutSetPrototype layoutSetPrototype : list) {
 					if ((companyId != layoutSetPrototype.getCompanyId()) ||
-							(active != layoutSetPrototype.getActive())) {
+							(active != layoutSetPrototype.isActive())) {
 						list = null;
 
 						break;
@@ -4166,7 +4166,7 @@ public class LayoutSetPrototypePersistenceImpl extends BasePersistenceImpl<Layou
 
 			args = new Object[] {
 					layoutSetPrototypeModelImpl.getCompanyId(),
-					layoutSetPrototypeModelImpl.getActive()
+					layoutSetPrototypeModelImpl.isActive()
 				};
 
 			finderCache.removeResult(FINDER_PATH_COUNT_BY_C_A, args);

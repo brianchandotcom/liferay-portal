@@ -50,7 +50,7 @@ public class MBThreadSoap implements Serializable {
 		soapModel.setLastPostByUserId(model.getLastPostByUserId());
 		soapModel.setLastPostDate(model.getLastPostDate());
 		soapModel.setPriority(model.getPriority());
-		soapModel.setQuestion(model.getQuestion());
+		soapModel.setQuestion(model.isQuestion());
 		soapModel.setLastPublishDate(model.getLastPublishDate());
 		soapModel.setStatus(model.getStatus());
 		soapModel.setStatusByUserId(model.getStatusByUserId());

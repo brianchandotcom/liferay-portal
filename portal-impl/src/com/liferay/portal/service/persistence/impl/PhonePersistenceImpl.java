@@ -3470,7 +3470,7 @@ public class PhonePersistenceImpl extends BasePersistenceImpl<Phone>
 					if ((companyId != phone.getCompanyId()) ||
 							(classNameId != phone.getClassNameId()) ||
 							(classPK != phone.getClassPK()) ||
-							(primary != phone.getPrimary())) {
+							(primary != phone.isPrimary())) {
 						list = null;
 
 						break;
@@ -4263,7 +4263,7 @@ public class PhonePersistenceImpl extends BasePersistenceImpl<Phone>
 			args = new Object[] {
 					phoneModelImpl.getCompanyId(),
 					phoneModelImpl.getClassNameId(), phoneModelImpl.getClassPK(),
-					phoneModelImpl.getPrimary()
+					phoneModelImpl.isPrimary()
 				};
 
 			finderCache.removeResult(FINDER_PATH_COUNT_BY_C_C_C_P, args);

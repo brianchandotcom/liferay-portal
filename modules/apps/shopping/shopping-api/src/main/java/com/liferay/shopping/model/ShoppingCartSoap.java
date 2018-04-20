@@ -43,7 +43,7 @@ public class ShoppingCartSoap implements Serializable {
 		soapModel.setItemIds(model.getItemIds());
 		soapModel.setCouponCodes(model.getCouponCodes());
 		soapModel.setAltShipping(model.getAltShipping());
-		soapModel.setInsure(model.getInsure());
+		soapModel.setInsure(model.isInsure());
 
 		return soapModel;
 	}

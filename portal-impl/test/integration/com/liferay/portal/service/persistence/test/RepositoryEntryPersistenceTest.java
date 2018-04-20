@@ -169,8 +169,8 @@ public class RepositoryEntryPersistenceTest {
 			newRepositoryEntry.getRepositoryId());
 		Assert.assertEquals(existingRepositoryEntry.getMappedId(),
 			newRepositoryEntry.getMappedId());
-		Assert.assertEquals(existingRepositoryEntry.getManualCheckInRequired(),
-			newRepositoryEntry.getManualCheckInRequired());
+		Assert.assertEquals(existingRepositoryEntry.isManualCheckInRequired(),
+			newRepositoryEntry.isManualCheckInRequired());
 		Assert.assertEquals(Time.getShortTimestamp(
 				existingRepositoryEntry.getLastPublishDate()),
 			Time.getShortTimestamp(newRepositoryEntry.getLastPublishDate()));

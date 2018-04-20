@@ -238,8 +238,8 @@ public class DLFileEntryPersistenceTest {
 			newDLFileEntry.getCustom1ImageId());
 		Assert.assertEquals(existingDLFileEntry.getCustom2ImageId(),
 			newDLFileEntry.getCustom2ImageId());
-		Assert.assertEquals(existingDLFileEntry.getManualCheckInRequired(),
-			newDLFileEntry.getManualCheckInRequired());
+		Assert.assertEquals(existingDLFileEntry.isManualCheckInRequired(),
+			newDLFileEntry.isManualCheckInRequired());
 		Assert.assertEquals(Time.getShortTimestamp(
 				existingDLFileEntry.getLastPublishDate()),
 			Time.getShortTimestamp(newDLFileEntry.getLastPublishDate()));

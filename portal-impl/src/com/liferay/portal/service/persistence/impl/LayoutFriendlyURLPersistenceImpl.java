@@ -4338,7 +4338,7 @@ public class LayoutFriendlyURLPersistenceImpl extends BasePersistenceImpl<Layout
 			if ((list != null) && !list.isEmpty()) {
 				for (LayoutFriendlyURL layoutFriendlyURL : list) {
 					if ((groupId != layoutFriendlyURL.getGroupId()) ||
-							(privateLayout != layoutFriendlyURL.getPrivateLayout()) ||
+							(privateLayout != layoutFriendlyURL.isPrivateLayout()) ||
 							!Objects.equals(friendlyURL,
 								layoutFriendlyURL.getFriendlyURL())) {
 						list = null;
@@ -5646,7 +5646,7 @@ public class LayoutFriendlyURLPersistenceImpl extends BasePersistenceImpl<Layout
 
 			args = new Object[] {
 					layoutFriendlyURLModelImpl.getGroupId(),
-					layoutFriendlyURLModelImpl.getPrivateLayout(),
+					layoutFriendlyURLModelImpl.isPrivateLayout(),
 					layoutFriendlyURLModelImpl.getFriendlyURL()
 				};
 

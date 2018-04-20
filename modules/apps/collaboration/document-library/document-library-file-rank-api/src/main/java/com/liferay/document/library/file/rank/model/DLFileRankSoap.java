@@ -39,7 +39,7 @@ public class DLFileRankSoap implements Serializable {
 		soapModel.setUserId(model.getUserId());
 		soapModel.setCreateDate(model.getCreateDate());
 		soapModel.setFileEntryId(model.getFileEntryId());
-		soapModel.setActive(model.getActive());
+		soapModel.setActive(model.isActive());
 
 		return soapModel;
 	}

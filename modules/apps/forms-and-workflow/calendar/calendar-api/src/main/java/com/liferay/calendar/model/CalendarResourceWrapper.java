@@ -74,7 +74,7 @@ public class CalendarResourceWrapper implements CalendarResource,
 		attributes.put("code", getCode());
 		attributes.put("name", getName());
 		attributes.put("description", getDescription());
-		attributes.put("active", getActive());
+		attributes.put("active", isActive());
 		attributes.put("lastPublishDate", getLastPublishDate());
 
 		return attributes;

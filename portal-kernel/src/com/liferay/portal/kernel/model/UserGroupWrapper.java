@@ -69,7 +69,7 @@ public class UserGroupWrapper implements UserGroup, ModelWrapper<UserGroup> {
 		attributes.put("parentUserGroupId", getParentUserGroupId());
 		attributes.put("name", getName());
 		attributes.put("description", getDescription());
-		attributes.put("addedByLDAPImport", getAddedByLDAPImport());
+		attributes.put("addedByLDAPImport", isAddedByLDAPImport());
 
 		return attributes;
 	}

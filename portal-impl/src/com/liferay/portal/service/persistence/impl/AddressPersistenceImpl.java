@@ -3488,7 +3488,7 @@ public class AddressPersistenceImpl extends BasePersistenceImpl<Address>
 					if ((companyId != address.getCompanyId()) ||
 							(classNameId != address.getClassNameId()) ||
 							(classPK != address.getClassPK()) ||
-							(mailing != address.getMailing())) {
+							(mailing != address.isMailing())) {
 						list = null;
 
 						break;
@@ -4115,7 +4115,7 @@ public class AddressPersistenceImpl extends BasePersistenceImpl<Address>
 					if ((companyId != address.getCompanyId()) ||
 							(classNameId != address.getClassNameId()) ||
 							(classPK != address.getClassPK()) ||
-							(primary != address.getPrimary())) {
+							(primary != address.isPrimary())) {
 						list = null;
 
 						break;
@@ -4913,7 +4913,7 @@ public class AddressPersistenceImpl extends BasePersistenceImpl<Address>
 			args = new Object[] {
 					addressModelImpl.getCompanyId(),
 					addressModelImpl.getClassNameId(),
-					addressModelImpl.getClassPK(), addressModelImpl.getMailing()
+					addressModelImpl.getClassPK(), addressModelImpl.isMailing()
 				};
 
 			finderCache.removeResult(FINDER_PATH_COUNT_BY_C_C_C_M, args);
@@ -4923,7 +4923,7 @@ public class AddressPersistenceImpl extends BasePersistenceImpl<Address>
 			args = new Object[] {
 					addressModelImpl.getCompanyId(),
 					addressModelImpl.getClassNameId(),
-					addressModelImpl.getClassPK(), addressModelImpl.getPrimary()
+					addressModelImpl.getClassPK(), addressModelImpl.isPrimary()
 				};
 
 			finderCache.removeResult(FINDER_PATH_COUNT_BY_C_C_C_P, args);

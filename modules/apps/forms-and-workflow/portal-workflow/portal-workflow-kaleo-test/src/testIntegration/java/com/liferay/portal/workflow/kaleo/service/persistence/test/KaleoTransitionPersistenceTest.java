@@ -189,8 +189,8 @@ public class KaleoTransitionPersistenceTest {
 			newKaleoTransition.getTargetKaleoNodeId());
 		Assert.assertEquals(existingKaleoTransition.getTargetKaleoNodeName(),
 			newKaleoTransition.getTargetKaleoNodeName());
-		Assert.assertEquals(existingKaleoTransition.getDefaultTransition(),
-			newKaleoTransition.getDefaultTransition());
+		Assert.assertEquals(existingKaleoTransition.isDefaultTransition(),
+			newKaleoTransition.isDefaultTransition());
 	}
 
 	@Test

@@ -68,8 +68,8 @@ public class AssetEntryWrapper implements AssetEntry, ModelWrapper<AssetEntry> {
 		attributes.put("classPK", getClassPK());
 		attributes.put("classUuid", getClassUuid());
 		attributes.put("classTypeId", getClassTypeId());
-		attributes.put("listable", getListable());
-		attributes.put("visible", getVisible());
+		attributes.put("listable", isListable());
+		attributes.put("visible", isVisible());
 		attributes.put("startDate", getStartDate());
 		attributes.put("endDate", getEndDate());
 		attributes.put("publishDate", getPublishDate());

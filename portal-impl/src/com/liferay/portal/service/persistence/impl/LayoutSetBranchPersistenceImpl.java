@@ -1084,7 +1084,7 @@ public class LayoutSetBranchPersistenceImpl extends BasePersistenceImpl<LayoutSe
 			if ((list != null) && !list.isEmpty()) {
 				for (LayoutSetBranch layoutSetBranch : list) {
 					if ((groupId != layoutSetBranch.getGroupId()) ||
-							(privateLayout != layoutSetBranch.getPrivateLayout())) {
+							(privateLayout != layoutSetBranch.isPrivateLayout())) {
 						list = null;
 
 						break;
@@ -2309,8 +2309,8 @@ public class LayoutSetBranchPersistenceImpl extends BasePersistenceImpl<LayoutSe
 			if ((list != null) && !list.isEmpty()) {
 				for (LayoutSetBranch layoutSetBranch : list) {
 					if ((groupId != layoutSetBranch.getGroupId()) ||
-							(privateLayout != layoutSetBranch.getPrivateLayout()) ||
-							(master != layoutSetBranch.getMaster())) {
+							(privateLayout != layoutSetBranch.isPrivateLayout()) ||
+							(master != layoutSetBranch.isMaster())) {
 						list = null;
 
 						break;
@@ -3486,7 +3486,7 @@ public class LayoutSetBranchPersistenceImpl extends BasePersistenceImpl<LayoutSe
 
 			args = new Object[] {
 					layoutSetBranchModelImpl.getGroupId(),
-					layoutSetBranchModelImpl.getPrivateLayout()
+					layoutSetBranchModelImpl.isPrivateLayout()
 				};
 
 			finderCache.removeResult(FINDER_PATH_COUNT_BY_G_P, args);
@@ -3495,8 +3495,8 @@ public class LayoutSetBranchPersistenceImpl extends BasePersistenceImpl<LayoutSe
 
 			args = new Object[] {
 					layoutSetBranchModelImpl.getGroupId(),
-					layoutSetBranchModelImpl.getPrivateLayout(),
-					layoutSetBranchModelImpl.getMaster()
+					layoutSetBranchModelImpl.isPrivateLayout(),
+					layoutSetBranchModelImpl.isMaster()
 				};
 
 			finderCache.removeResult(FINDER_PATH_COUNT_BY_G_P_M, args);

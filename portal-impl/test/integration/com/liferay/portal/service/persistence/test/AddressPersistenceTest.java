@@ -190,10 +190,8 @@ public class AddressPersistenceTest {
 		Assert.assertEquals(existingAddress.getCountryId(),
 			newAddress.getCountryId());
 		Assert.assertEquals(existingAddress.getTypeId(), newAddress.getTypeId());
-		Assert.assertEquals(existingAddress.getMailing(),
-			newAddress.getMailing());
-		Assert.assertEquals(existingAddress.getPrimary(),
-			newAddress.getPrimary());
+		Assert.assertEquals(existingAddress.isMailing(), newAddress.isMailing());
+		Assert.assertEquals(existingAddress.isPrimary(), newAddress.isPrimary());
 	}
 
 	@Test

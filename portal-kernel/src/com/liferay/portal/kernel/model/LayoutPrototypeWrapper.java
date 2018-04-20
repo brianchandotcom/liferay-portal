@@ -70,7 +70,7 @@ public class LayoutPrototypeWrapper implements LayoutPrototype,
 		attributes.put("name", getName());
 		attributes.put("description", getDescription());
 		attributes.put("settings", getSettings());
-		attributes.put("active", getActive());
+		attributes.put("active", isActive());
 
 		return attributes;
 	}

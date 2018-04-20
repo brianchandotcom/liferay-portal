@@ -73,19 +73,19 @@ public class MBMailingListWrapper implements MBMailingList,
 		attributes.put("inProtocol", getInProtocol());
 		attributes.put("inServerName", getInServerName());
 		attributes.put("inServerPort", getInServerPort());
-		attributes.put("inUseSSL", getInUseSSL());
+		attributes.put("inUseSSL", isInUseSSL());
 		attributes.put("inUserName", getInUserName());
 		attributes.put("inPassword", getInPassword());
 		attributes.put("inReadInterval", getInReadInterval());
 		attributes.put("outEmailAddress", getOutEmailAddress());
-		attributes.put("outCustom", getOutCustom());
+		attributes.put("outCustom", isOutCustom());
 		attributes.put("outServerName", getOutServerName());
 		attributes.put("outServerPort", getOutServerPort());
-		attributes.put("outUseSSL", getOutUseSSL());
+		attributes.put("outUseSSL", isOutUseSSL());
 		attributes.put("outUserName", getOutUserName());
 		attributes.put("outPassword", getOutPassword());
-		attributes.put("allowAnonymous", getAllowAnonymous());
-		attributes.put("active", getActive());
+		attributes.put("allowAnonymous", isAllowAnonymous());
+		attributes.put("active", isActive());
 
 		return attributes;
 	}

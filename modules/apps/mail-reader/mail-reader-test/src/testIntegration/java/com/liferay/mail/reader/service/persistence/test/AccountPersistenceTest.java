@@ -201,23 +201,23 @@ public class AccountPersistenceTest {
 			newAccount.getIncomingHostName());
 		Assert.assertEquals(existingAccount.getIncomingPort(),
 			newAccount.getIncomingPort());
-		Assert.assertEquals(existingAccount.getIncomingSecure(),
-			newAccount.getIncomingSecure());
+		Assert.assertEquals(existingAccount.isIncomingSecure(),
+			newAccount.isIncomingSecure());
 		Assert.assertEquals(existingAccount.getOutgoingHostName(),
 			newAccount.getOutgoingHostName());
 		Assert.assertEquals(existingAccount.getOutgoingPort(),
 			newAccount.getOutgoingPort());
-		Assert.assertEquals(existingAccount.getOutgoingSecure(),
-			newAccount.getOutgoingSecure());
+		Assert.assertEquals(existingAccount.isOutgoingSecure(),
+			newAccount.isOutgoingSecure());
 		Assert.assertEquals(existingAccount.getLogin(), newAccount.getLogin());
 		Assert.assertEquals(existingAccount.getPassword(),
 			newAccount.getPassword());
-		Assert.assertEquals(existingAccount.getSavePassword(),
-			newAccount.getSavePassword());
+		Assert.assertEquals(existingAccount.isSavePassword(),
+			newAccount.isSavePassword());
 		Assert.assertEquals(existingAccount.getSignature(),
 			newAccount.getSignature());
-		Assert.assertEquals(existingAccount.getUseSignature(),
-			newAccount.getUseSignature());
+		Assert.assertEquals(existingAccount.isUseSignature(),
+			newAccount.isUseSignature());
 		Assert.assertEquals(existingAccount.getFolderPrefix(),
 			newAccount.getFolderPrefix());
 		Assert.assertEquals(existingAccount.getInboxFolderId(),
@@ -228,8 +228,8 @@ public class AccountPersistenceTest {
 			newAccount.getSentFolderId());
 		Assert.assertEquals(existingAccount.getTrashFolderId(),
 			newAccount.getTrashFolderId());
-		Assert.assertEquals(existingAccount.getDefaultSender(),
-			newAccount.getDefaultSender());
+		Assert.assertEquals(existingAccount.isDefaultSender(),
+			newAccount.isDefaultSender());
 	}
 
 	@Test

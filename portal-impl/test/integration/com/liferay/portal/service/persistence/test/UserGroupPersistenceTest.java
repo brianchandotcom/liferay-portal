@@ -165,8 +165,8 @@ public class UserGroupPersistenceTest {
 		Assert.assertEquals(existingUserGroup.getName(), newUserGroup.getName());
 		Assert.assertEquals(existingUserGroup.getDescription(),
 			newUserGroup.getDescription());
-		Assert.assertEquals(existingUserGroup.getAddedByLDAPImport(),
-			newUserGroup.getAddedByLDAPImport());
+		Assert.assertEquals(existingUserGroup.isAddedByLDAPImport(),
+			newUserGroup.isAddedByLDAPImport());
 	}
 
 	@Test

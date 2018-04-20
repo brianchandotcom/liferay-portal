@@ -1,12 +1,20 @@
 <#if entityColumn.comparator == "=">
 	<#if entityColumn.isPrimitiveType(false)>
-		(${entityColumn.name} != ${entity.varName}.get${entityColumn.methodName}())
+		<#if stringUtil.equals(entityColumn.type, "boolean")>
+			(${entityColumn.name} != ${entity.varName}.is${entityColumn.methodName}())
+		<#else>
+			(${entityColumn.name} != ${entity.varName}.get${entityColumn.methodName}())
+		</#if>
 	<#else>
 		!Objects.equals(${entityColumn.name}, ${entity.varName}.get${entityColumn.methodName}())
 	</#if>
 <#elseif entityColumn.comparator == "!=">
 	<#if entityColumn.isPrimitiveType(false)>
-		(${entityColumn.name} == ${entity.varName}.get${entityColumn.methodName}())
+		<#if stringUtil.equals(entityColumn.type, "boolean")>
+			(${entityColumn.name} == ${entity.varName}.is${entityColumn.methodName}())
+		<#else>
+			(${entityColumn.name} == ${entity.varName}.get${entityColumn.methodName}())
+		</#if>
 	<#else>
 		Objects.equals(${entityColumn.name}, ${entity.varName}.get${entityColumn.methodName}())
 	</#if>

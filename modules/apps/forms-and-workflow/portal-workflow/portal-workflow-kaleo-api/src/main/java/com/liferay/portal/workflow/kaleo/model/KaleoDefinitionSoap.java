@@ -46,7 +46,7 @@ public class KaleoDefinitionSoap implements Serializable {
 		soapModel.setDescription(model.getDescription());
 		soapModel.setContent(model.getContent());
 		soapModel.setVersion(model.getVersion());
-		soapModel.setActive(model.getActive());
+		soapModel.setActive(model.isActive());
 
 		return soapModel;
 	}

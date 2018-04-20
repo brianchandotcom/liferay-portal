@@ -185,8 +185,8 @@ public class KaleoInstanceTokenPersistenceTest {
 			newKaleoInstanceToken.getClassName());
 		Assert.assertEquals(existingKaleoInstanceToken.getClassPK(),
 			newKaleoInstanceToken.getClassPK());
-		Assert.assertEquals(existingKaleoInstanceToken.getCompleted(),
-			newKaleoInstanceToken.getCompleted());
+		Assert.assertEquals(existingKaleoInstanceToken.isCompleted(),
+			newKaleoInstanceToken.isCompleted());
 		Assert.assertEquals(Time.getShortTimestamp(
 				existingKaleoInstanceToken.getCompletionDate()),
 			Time.getShortTimestamp(newKaleoInstanceToken.getCompletionDate()));

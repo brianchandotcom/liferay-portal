@@ -58,8 +58,8 @@ public class JournalArticleSoap implements Serializable {
 		soapModel.setDisplayDate(model.getDisplayDate());
 		soapModel.setExpirationDate(model.getExpirationDate());
 		soapModel.setReviewDate(model.getReviewDate());
-		soapModel.setIndexable(model.getIndexable());
-		soapModel.setSmallImage(model.getSmallImage());
+		soapModel.setIndexable(model.isIndexable());
+		soapModel.setSmallImage(model.isSmallImage());
 		soapModel.setSmallImageId(model.getSmallImageId());
 		soapModel.setSmallImageURL(model.getSmallImageURL());
 		soapModel.setLastPublishDate(model.getLastPublishDate());

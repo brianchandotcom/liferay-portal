@@ -42,8 +42,8 @@ public class UserThreadSoap implements Serializable {
 		soapModel.setModifiedDate(model.getModifiedDate());
 		soapModel.setMbThreadId(model.getMbThreadId());
 		soapModel.setTopMBMessageId(model.getTopMBMessageId());
-		soapModel.setRead(model.getRead());
-		soapModel.setDeleted(model.getDeleted());
+		soapModel.setRead(model.isRead());
+		soapModel.setDeleted(model.isDeleted());
 
 		return soapModel;
 	}

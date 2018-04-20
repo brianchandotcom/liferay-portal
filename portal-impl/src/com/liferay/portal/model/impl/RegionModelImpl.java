@@ -191,7 +191,7 @@ public class RegionModelImpl extends BaseModelImpl<Region>
 		attributes.put("countryId", getCountryId());
 		attributes.put("regionCode", getRegionCode());
 		attributes.put("name", getName());
-		attributes.put("active", getActive());
+		attributes.put("active", isActive());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -392,7 +392,7 @@ public class RegionModelImpl extends BaseModelImpl<Region>
 		regionImpl.setCountryId(getCountryId());
 		regionImpl.setRegionCode(getRegionCode());
 		regionImpl.setName(getName());
-		regionImpl.setActive(getActive());
+		regionImpl.setActive(isActive());
 
 		regionImpl.resetOriginalValues();
 
@@ -492,7 +492,7 @@ public class RegionModelImpl extends BaseModelImpl<Region>
 			regionCacheModel.name = null;
 		}
 
-		regionCacheModel.active = getActive();
+		regionCacheModel.active = isActive();
 
 		return regionCacheModel;
 	}
@@ -512,7 +512,7 @@ public class RegionModelImpl extends BaseModelImpl<Region>
 		sb.append(", name=");
 		sb.append(getName());
 		sb.append(", active=");
-		sb.append(getActive());
+		sb.append(isActive());
 		sb.append("}");
 
 		return sb.toString();
@@ -548,7 +548,7 @@ public class RegionModelImpl extends BaseModelImpl<Region>
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>active</column-name><column-value><![CDATA[");
-		sb.append(getActive());
+		sb.append(isActive());
 		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");

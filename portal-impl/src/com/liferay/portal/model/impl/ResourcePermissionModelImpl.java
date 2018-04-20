@@ -216,7 +216,7 @@ public class ResourcePermissionModelImpl extends BaseModelImpl<ResourcePermissio
 		attributes.put("roleId", getRoleId());
 		attributes.put("ownerId", getOwnerId());
 		attributes.put("actionIds", getActionIds());
-		attributes.put("viewActionId", getViewActionId());
+		attributes.put("viewActionId", isViewActionId());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -551,7 +551,7 @@ public class ResourcePermissionModelImpl extends BaseModelImpl<ResourcePermissio
 		resourcePermissionImpl.setRoleId(getRoleId());
 		resourcePermissionImpl.setOwnerId(getOwnerId());
 		resourcePermissionImpl.setActionIds(getActionIds());
-		resourcePermissionImpl.setViewActionId(getViewActionId());
+		resourcePermissionImpl.setViewActionId(isViewActionId());
 
 		resourcePermissionImpl.resetOriginalValues();
 
@@ -677,7 +677,7 @@ public class ResourcePermissionModelImpl extends BaseModelImpl<ResourcePermissio
 
 		resourcePermissionCacheModel.actionIds = getActionIds();
 
-		resourcePermissionCacheModel.viewActionId = getViewActionId();
+		resourcePermissionCacheModel.viewActionId = isViewActionId();
 
 		return resourcePermissionCacheModel;
 	}
@@ -707,7 +707,7 @@ public class ResourcePermissionModelImpl extends BaseModelImpl<ResourcePermissio
 		sb.append(", actionIds=");
 		sb.append(getActionIds());
 		sb.append(", viewActionId=");
-		sb.append(getViewActionId());
+		sb.append(isViewActionId());
 		sb.append("}");
 
 		return sb.toString();
@@ -763,7 +763,7 @@ public class ResourcePermissionModelImpl extends BaseModelImpl<ResourcePermissio
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>viewActionId</column-name><column-value><![CDATA[");
-		sb.append(getViewActionId());
+		sb.append(isViewActionId());
 		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");

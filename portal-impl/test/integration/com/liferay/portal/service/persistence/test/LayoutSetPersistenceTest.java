@@ -162,8 +162,8 @@ public class LayoutSetPersistenceTest {
 		Assert.assertEquals(Time.getShortTimestamp(
 				existingLayoutSet.getModifiedDate()),
 			Time.getShortTimestamp(newLayoutSet.getModifiedDate()));
-		Assert.assertEquals(existingLayoutSet.getPrivateLayout(),
-			newLayoutSet.getPrivateLayout());
+		Assert.assertEquals(existingLayoutSet.isPrivateLayout(),
+			newLayoutSet.isPrivateLayout());
 		Assert.assertEquals(existingLayoutSet.getLogoId(),
 			newLayoutSet.getLogoId());
 		Assert.assertEquals(existingLayoutSet.getThemeId(),
@@ -177,8 +177,8 @@ public class LayoutSetPersistenceTest {
 			newLayoutSet.getSettings());
 		Assert.assertEquals(existingLayoutSet.getLayoutSetPrototypeUuid(),
 			newLayoutSet.getLayoutSetPrototypeUuid());
-		Assert.assertEquals(existingLayoutSet.getLayoutSetPrototypeLinkEnabled(),
-			newLayoutSet.getLayoutSetPrototypeLinkEnabled());
+		Assert.assertEquals(existingLayoutSet.isLayoutSetPrototypeLinkEnabled(),
+			newLayoutSet.isLayoutSetPrototypeLinkEnabled());
 	}
 
 	@Test

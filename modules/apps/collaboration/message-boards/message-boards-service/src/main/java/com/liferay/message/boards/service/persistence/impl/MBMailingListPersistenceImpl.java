@@ -1588,7 +1588,7 @@ public class MBMailingListPersistenceImpl extends BasePersistenceImpl<MBMailingL
 
 			if ((list != null) && !list.isEmpty()) {
 				for (MBMailingList mbMailingList : list) {
-					if ((active != mbMailingList.getActive())) {
+					if ((active != mbMailingList.isActive())) {
 						list = null;
 
 						break;
@@ -2573,7 +2573,7 @@ public class MBMailingListPersistenceImpl extends BasePersistenceImpl<MBMailingL
 			finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID_C,
 				args);
 
-			args = new Object[] { mbMailingListModelImpl.getActive() };
+			args = new Object[] { mbMailingListModelImpl.isActive() };
 
 			finderCache.removeResult(FINDER_PATH_COUNT_BY_ACTIVE, args);
 			finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_ACTIVE,

@@ -72,7 +72,7 @@ public class AppWrapper implements App, ModelWrapper<App> {
 		attributes.put("category", getCategory());
 		attributes.put("iconURL", getIconURL());
 		attributes.put("version", getVersion());
-		attributes.put("required", getRequired());
+		attributes.put("required", isRequired());
 
 		return attributes;
 	}

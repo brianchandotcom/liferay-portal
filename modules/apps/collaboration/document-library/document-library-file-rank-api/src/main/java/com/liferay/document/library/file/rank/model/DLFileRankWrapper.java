@@ -63,7 +63,7 @@ public class DLFileRankWrapper implements DLFileRank, ModelWrapper<DLFileRank> {
 		attributes.put("userId", getUserId());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("fileEntryId", getFileEntryId());
-		attributes.put("active", getActive());
+		attributes.put("active", isActive());
 
 		return attributes;
 	}

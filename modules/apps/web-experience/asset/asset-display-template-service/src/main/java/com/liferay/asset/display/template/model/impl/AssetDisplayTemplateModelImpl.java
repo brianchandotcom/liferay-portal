@@ -219,7 +219,7 @@ public class AssetDisplayTemplateModelImpl extends BaseModelImpl<AssetDisplayTem
 		attributes.put("name", getName());
 		attributes.put("classNameId", getClassNameId());
 		attributes.put("DDMTemplateId", getDDMTemplateId());
-		attributes.put("main", getMain());
+		attributes.put("main", isMain());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -551,7 +551,7 @@ public class AssetDisplayTemplateModelImpl extends BaseModelImpl<AssetDisplayTem
 		assetDisplayTemplateImpl.setName(getName());
 		assetDisplayTemplateImpl.setClassNameId(getClassNameId());
 		assetDisplayTemplateImpl.setDDMTemplateId(getDDMTemplateId());
-		assetDisplayTemplateImpl.setMain(getMain());
+		assetDisplayTemplateImpl.setMain(isMain());
 
 		assetDisplayTemplateImpl.resetOriginalValues();
 
@@ -677,7 +677,7 @@ public class AssetDisplayTemplateModelImpl extends BaseModelImpl<AssetDisplayTem
 
 		assetDisplayTemplateCacheModel.DDMTemplateId = getDDMTemplateId();
 
-		assetDisplayTemplateCacheModel.main = getMain();
+		assetDisplayTemplateCacheModel.main = isMain();
 
 		return assetDisplayTemplateCacheModel;
 	}
@@ -707,7 +707,7 @@ public class AssetDisplayTemplateModelImpl extends BaseModelImpl<AssetDisplayTem
 		sb.append(", DDMTemplateId=");
 		sb.append(getDDMTemplateId());
 		sb.append(", main=");
-		sb.append(getMain());
+		sb.append(isMain());
 		sb.append("}");
 
 		return sb.toString();
@@ -764,7 +764,7 @@ public class AssetDisplayTemplateModelImpl extends BaseModelImpl<AssetDisplayTem
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>main</column-name><column-value><![CDATA[");
-		sb.append(getMain());
+		sb.append(isMain());
 		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");

@@ -60,7 +60,7 @@ public class RegionWrapper implements Region, ModelWrapper<Region> {
 		attributes.put("countryId", getCountryId());
 		attributes.put("regionCode", getRegionCode());
 		attributes.put("name", getName());
-		attributes.put("active", getActive());
+		attributes.put("active", isActive());
 
 		return attributes;
 	}

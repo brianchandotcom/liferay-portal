@@ -68,14 +68,14 @@ public class DLFolderWrapper implements DLFolder, ModelWrapper<DLFolder> {
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("repositoryId", getRepositoryId());
-		attributes.put("mountPoint", getMountPoint());
+		attributes.put("mountPoint", isMountPoint());
 		attributes.put("parentFolderId", getParentFolderId());
 		attributes.put("treePath", getTreePath());
 		attributes.put("name", getName());
 		attributes.put("description", getDescription());
 		attributes.put("lastPostDate", getLastPostDate());
 		attributes.put("defaultFileEntryTypeId", getDefaultFileEntryTypeId());
-		attributes.put("hidden", getHidden());
+		attributes.put("hidden", isHidden());
 		attributes.put("restrictionType", getRestrictionType());
 		attributes.put("lastPublishDate", getLastPublishDate());
 		attributes.put("status", getStatus());

@@ -133,7 +133,7 @@ public class ClusterGroupModelImpl extends BaseModelImpl<ClusterGroup>
 		attributes.put("clusterGroupId", getClusterGroupId());
 		attributes.put("name", getName());
 		attributes.put("clusterNodeIds", getClusterNodeIds());
-		attributes.put("wholeCluster", getWholeCluster());
+		attributes.put("wholeCluster", isWholeCluster());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -270,7 +270,7 @@ public class ClusterGroupModelImpl extends BaseModelImpl<ClusterGroup>
 		clusterGroupImpl.setClusterGroupId(getClusterGroupId());
 		clusterGroupImpl.setName(getName());
 		clusterGroupImpl.setClusterNodeIds(getClusterNodeIds());
-		clusterGroupImpl.setWholeCluster(getWholeCluster());
+		clusterGroupImpl.setWholeCluster(isWholeCluster());
 
 		clusterGroupImpl.resetOriginalValues();
 
@@ -357,7 +357,7 @@ public class ClusterGroupModelImpl extends BaseModelImpl<ClusterGroup>
 			clusterGroupCacheModel.clusterNodeIds = null;
 		}
 
-		clusterGroupCacheModel.wholeCluster = getWholeCluster();
+		clusterGroupCacheModel.wholeCluster = isWholeCluster();
 
 		return clusterGroupCacheModel;
 	}
@@ -375,7 +375,7 @@ public class ClusterGroupModelImpl extends BaseModelImpl<ClusterGroup>
 		sb.append(", clusterNodeIds=");
 		sb.append(getClusterNodeIds());
 		sb.append(", wholeCluster=");
-		sb.append(getWholeCluster());
+		sb.append(isWholeCluster());
 		sb.append("}");
 
 		return sb.toString();
@@ -407,7 +407,7 @@ public class ClusterGroupModelImpl extends BaseModelImpl<ClusterGroup>
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>wholeCluster</column-name><column-value><![CDATA[");
-		sb.append(getWholeCluster());
+		sb.append(isWholeCluster());
 		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");

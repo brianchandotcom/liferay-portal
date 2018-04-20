@@ -60,7 +60,7 @@ public class ClusterGroupWrapper implements ClusterGroup,
 		attributes.put("clusterGroupId", getClusterGroupId());
 		attributes.put("name", getName());
 		attributes.put("clusterNodeIds", getClusterNodeIds());
-		attributes.put("wholeCluster", getWholeCluster());
+		attributes.put("wholeCluster", isWholeCluster());
 
 		return attributes;
 	}

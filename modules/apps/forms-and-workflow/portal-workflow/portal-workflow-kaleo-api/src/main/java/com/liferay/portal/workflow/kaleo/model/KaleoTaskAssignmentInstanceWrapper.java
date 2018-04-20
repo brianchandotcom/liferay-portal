@@ -76,7 +76,7 @@ public class KaleoTaskAssignmentInstanceWrapper
 		attributes.put("kaleoTaskName", getKaleoTaskName());
 		attributes.put("assigneeClassName", getAssigneeClassName());
 		attributes.put("assigneeClassPK", getAssigneeClassPK());
-		attributes.put("completed", getCompleted());
+		attributes.put("completed", isCompleted());
 		attributes.put("completionDate", getCompletionDate());
 
 		return attributes;

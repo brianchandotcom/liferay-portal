@@ -231,7 +231,7 @@ public class EmailAddressModelImpl extends BaseModelImpl<EmailAddress>
 		attributes.put("classPK", getClassPK());
 		attributes.put("address", getAddress());
 		attributes.put("typeId", getTypeId());
-		attributes.put("primary", getPrimary());
+		attributes.put("primary", isPrimary());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -645,7 +645,7 @@ public class EmailAddressModelImpl extends BaseModelImpl<EmailAddress>
 		emailAddressImpl.setClassPK(getClassPK());
 		emailAddressImpl.setAddress(getAddress());
 		emailAddressImpl.setTypeId(getTypeId());
-		emailAddressImpl.setPrimary(getPrimary());
+		emailAddressImpl.setPrimary(isPrimary());
 
 		emailAddressImpl.resetOriginalValues();
 
@@ -793,7 +793,7 @@ public class EmailAddressModelImpl extends BaseModelImpl<EmailAddress>
 
 		emailAddressCacheModel.typeId = getTypeId();
 
-		emailAddressCacheModel.primary = getPrimary();
+		emailAddressCacheModel.primary = isPrimary();
 
 		return emailAddressCacheModel;
 	}
@@ -827,7 +827,7 @@ public class EmailAddressModelImpl extends BaseModelImpl<EmailAddress>
 		sb.append(", typeId=");
 		sb.append(getTypeId());
 		sb.append(", primary=");
-		sb.append(getPrimary());
+		sb.append(isPrimary());
 		sb.append("}");
 
 		return sb.toString();
@@ -891,7 +891,7 @@ public class EmailAddressModelImpl extends BaseModelImpl<EmailAddress>
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>primary</column-name><column-value><![CDATA[");
-		sb.append(getPrimary());
+		sb.append(isPrimary());
 		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");

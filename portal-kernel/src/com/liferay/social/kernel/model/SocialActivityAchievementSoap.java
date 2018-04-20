@@ -39,7 +39,7 @@ public class SocialActivityAchievementSoap implements Serializable {
 		soapModel.setUserId(model.getUserId());
 		soapModel.setCreateDate(model.getCreateDate());
 		soapModel.setName(model.getName());
-		soapModel.setFirstInGroup(model.getFirstInGroup());
+		soapModel.setFirstInGroup(model.isFirstInGroup());
 
 		return soapModel;
 	}

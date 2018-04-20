@@ -40,7 +40,7 @@ public class LayoutSetSoap implements Serializable {
 		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setCreateDate(model.getCreateDate());
 		soapModel.setModifiedDate(model.getModifiedDate());
-		soapModel.setPrivateLayout(model.getPrivateLayout());
+		soapModel.setPrivateLayout(model.isPrivateLayout());
 		soapModel.setLogoId(model.getLogoId());
 		soapModel.setThemeId(model.getThemeId());
 		soapModel.setColorSchemeId(model.getColorSchemeId());
@@ -48,7 +48,7 @@ public class LayoutSetSoap implements Serializable {
 		soapModel.setPageCount(model.getPageCount());
 		soapModel.setSettings(model.getSettings());
 		soapModel.setLayoutSetPrototypeUuid(model.getLayoutSetPrototypeUuid());
-		soapModel.setLayoutSetPrototypeLinkEnabled(model.getLayoutSetPrototypeLinkEnabled());
+		soapModel.setLayoutSetPrototypeLinkEnabled(model.isLayoutSetPrototypeLinkEnabled());
 
 		return soapModel;
 	}

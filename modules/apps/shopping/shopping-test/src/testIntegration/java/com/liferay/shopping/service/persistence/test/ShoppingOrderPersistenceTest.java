@@ -253,10 +253,10 @@ public class ShoppingOrderPersistenceTest {
 			newShoppingOrder.getShipping());
 		Assert.assertEquals(existingShoppingOrder.getAltShipping(),
 			newShoppingOrder.getAltShipping());
-		Assert.assertEquals(existingShoppingOrder.getRequiresShipping(),
-			newShoppingOrder.getRequiresShipping());
-		Assert.assertEquals(existingShoppingOrder.getInsure(),
-			newShoppingOrder.getInsure());
+		Assert.assertEquals(existingShoppingOrder.isRequiresShipping(),
+			newShoppingOrder.isRequiresShipping());
+		Assert.assertEquals(existingShoppingOrder.isInsure(),
+			newShoppingOrder.isInsure());
 		AssertUtils.assertEquals(existingShoppingOrder.getInsurance(),
 			newShoppingOrder.getInsurance());
 		Assert.assertEquals(existingShoppingOrder.getCouponCodes(),
@@ -283,8 +283,8 @@ public class ShoppingOrderPersistenceTest {
 			newShoppingOrder.getBillingCountry());
 		Assert.assertEquals(existingShoppingOrder.getBillingPhone(),
 			newShoppingOrder.getBillingPhone());
-		Assert.assertEquals(existingShoppingOrder.getShipToBilling(),
-			newShoppingOrder.getShipToBilling());
+		Assert.assertEquals(existingShoppingOrder.isShipToBilling(),
+			newShoppingOrder.isShipToBilling());
 		Assert.assertEquals(existingShoppingOrder.getShippingFirstName(),
 			newShoppingOrder.getShippingFirstName());
 		Assert.assertEquals(existingShoppingOrder.getShippingLastName(),
@@ -329,10 +329,10 @@ public class ShoppingOrderPersistenceTest {
 			newShoppingOrder.getPpReceiverEmail());
 		Assert.assertEquals(existingShoppingOrder.getPpPayerEmail(),
 			newShoppingOrder.getPpPayerEmail());
-		Assert.assertEquals(existingShoppingOrder.getSendOrderEmail(),
-			newShoppingOrder.getSendOrderEmail());
-		Assert.assertEquals(existingShoppingOrder.getSendShippingEmail(),
-			newShoppingOrder.getSendShippingEmail());
+		Assert.assertEquals(existingShoppingOrder.isSendOrderEmail(),
+			newShoppingOrder.isSendOrderEmail());
+		Assert.assertEquals(existingShoppingOrder.isSendShippingEmail(),
+			newShoppingOrder.isSendShippingEmail());
 	}
 
 	@Test

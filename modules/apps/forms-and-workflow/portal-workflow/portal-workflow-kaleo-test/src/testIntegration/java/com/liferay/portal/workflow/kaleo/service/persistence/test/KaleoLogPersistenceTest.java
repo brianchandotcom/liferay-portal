@@ -213,8 +213,8 @@ public class KaleoLogPersistenceTest {
 			newKaleoLog.getKaleoTaskInstanceTokenId());
 		Assert.assertEquals(existingKaleoLog.getKaleoNodeName(),
 			newKaleoLog.getKaleoNodeName());
-		Assert.assertEquals(existingKaleoLog.getTerminalKaleoNode(),
-			newKaleoLog.getTerminalKaleoNode());
+		Assert.assertEquals(existingKaleoLog.isTerminalKaleoNode(),
+			newKaleoLog.isTerminalKaleoNode());
 		Assert.assertEquals(existingKaleoLog.getKaleoActionId(),
 			newKaleoLog.getKaleoActionId());
 		Assert.assertEquals(existingKaleoLog.getKaleoActionName(),

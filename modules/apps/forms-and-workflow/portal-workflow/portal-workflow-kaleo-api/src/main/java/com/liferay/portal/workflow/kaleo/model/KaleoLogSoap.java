@@ -47,7 +47,7 @@ public class KaleoLogSoap implements Serializable {
 		soapModel.setKaleoInstanceTokenId(model.getKaleoInstanceTokenId());
 		soapModel.setKaleoTaskInstanceTokenId(model.getKaleoTaskInstanceTokenId());
 		soapModel.setKaleoNodeName(model.getKaleoNodeName());
-		soapModel.setTerminalKaleoNode(model.getTerminalKaleoNode());
+		soapModel.setTerminalKaleoNode(model.isTerminalKaleoNode());
 		soapModel.setKaleoActionId(model.getKaleoActionId());
 		soapModel.setKaleoActionName(model.getKaleoActionName());
 		soapModel.setKaleoActionDescription(model.getKaleoActionDescription());

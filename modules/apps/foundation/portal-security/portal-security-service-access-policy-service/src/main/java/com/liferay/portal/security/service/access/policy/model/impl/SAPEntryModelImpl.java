@@ -227,8 +227,8 @@ public class SAPEntryModelImpl extends BaseModelImpl<SAPEntry>
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("allowedServiceSignatures", getAllowedServiceSignatures());
-		attributes.put("defaultSAPEntry", getDefaultSAPEntry());
-		attributes.put("enabled", getEnabled());
+		attributes.put("defaultSAPEntry", isDefaultSAPEntry());
+		attributes.put("enabled", isEnabled());
 		attributes.put("name", getName());
 		attributes.put("title", getTitle());
 
@@ -736,8 +736,8 @@ public class SAPEntryModelImpl extends BaseModelImpl<SAPEntry>
 		sapEntryImpl.setCreateDate(getCreateDate());
 		sapEntryImpl.setModifiedDate(getModifiedDate());
 		sapEntryImpl.setAllowedServiceSignatures(getAllowedServiceSignatures());
-		sapEntryImpl.setDefaultSAPEntry(getDefaultSAPEntry());
-		sapEntryImpl.setEnabled(getEnabled());
+		sapEntryImpl.setDefaultSAPEntry(isDefaultSAPEntry());
+		sapEntryImpl.setEnabled(isEnabled());
 		sapEntryImpl.setName(getName());
 		sapEntryImpl.setTitle(getTitle());
 
@@ -872,9 +872,9 @@ public class SAPEntryModelImpl extends BaseModelImpl<SAPEntry>
 			sapEntryCacheModel.allowedServiceSignatures = null;
 		}
 
-		sapEntryCacheModel.defaultSAPEntry = getDefaultSAPEntry();
+		sapEntryCacheModel.defaultSAPEntry = isDefaultSAPEntry();
 
-		sapEntryCacheModel.enabled = getEnabled();
+		sapEntryCacheModel.enabled = isEnabled();
 
 		sapEntryCacheModel.name = getName();
 
@@ -916,9 +916,9 @@ public class SAPEntryModelImpl extends BaseModelImpl<SAPEntry>
 		sb.append(", allowedServiceSignatures=");
 		sb.append(getAllowedServiceSignatures());
 		sb.append(", defaultSAPEntry=");
-		sb.append(getDefaultSAPEntry());
+		sb.append(isDefaultSAPEntry());
 		sb.append(", enabled=");
-		sb.append(getEnabled());
+		sb.append(isEnabled());
 		sb.append(", name=");
 		sb.append(getName());
 		sb.append(", title=");
@@ -971,11 +971,11 @@ public class SAPEntryModelImpl extends BaseModelImpl<SAPEntry>
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>defaultSAPEntry</column-name><column-value><![CDATA[");
-		sb.append(getDefaultSAPEntry());
+		sb.append(isDefaultSAPEntry());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>enabled</column-name><column-value><![CDATA[");
-		sb.append(getEnabled());
+		sb.append(isEnabled());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>name</column-name><column-value><![CDATA[");

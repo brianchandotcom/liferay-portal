@@ -36,7 +36,7 @@ public class JournalContentSearchSoap implements Serializable {
 		soapModel.setContentSearchId(model.getContentSearchId());
 		soapModel.setGroupId(model.getGroupId());
 		soapModel.setCompanyId(model.getCompanyId());
-		soapModel.setPrivateLayout(model.getPrivateLayout());
+		soapModel.setPrivateLayout(model.isPrivateLayout());
 		soapModel.setLayoutId(model.getLayoutId());
 		soapModel.setPortletId(model.getPortletId());
 		soapModel.setArticleId(model.getArticleId());

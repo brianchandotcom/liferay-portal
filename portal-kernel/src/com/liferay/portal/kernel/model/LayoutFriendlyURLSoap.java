@@ -43,7 +43,7 @@ public class LayoutFriendlyURLSoap implements Serializable {
 		soapModel.setCreateDate(model.getCreateDate());
 		soapModel.setModifiedDate(model.getModifiedDate());
 		soapModel.setPlid(model.getPlid());
-		soapModel.setPrivateLayout(model.getPrivateLayout());
+		soapModel.setPrivateLayout(model.isPrivateLayout());
 		soapModel.setFriendlyURL(model.getFriendlyURL());
 		soapModel.setLanguageId(model.getLanguageId());
 		soapModel.setLastPublishDate(model.getLastPublishDate());

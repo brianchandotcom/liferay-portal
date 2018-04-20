@@ -197,12 +197,12 @@ public class KaleoTimerInstanceTokenPersistenceTest {
 			newKaleoTimerInstanceToken.getKaleoTimerId());
 		Assert.assertEquals(existingKaleoTimerInstanceToken.getKaleoTimerName(),
 			newKaleoTimerInstanceToken.getKaleoTimerName());
-		Assert.assertEquals(existingKaleoTimerInstanceToken.getBlocking(),
-			newKaleoTimerInstanceToken.getBlocking());
+		Assert.assertEquals(existingKaleoTimerInstanceToken.isBlocking(),
+			newKaleoTimerInstanceToken.isBlocking());
 		Assert.assertEquals(existingKaleoTimerInstanceToken.getCompletionUserId(),
 			newKaleoTimerInstanceToken.getCompletionUserId());
-		Assert.assertEquals(existingKaleoTimerInstanceToken.getCompleted(),
-			newKaleoTimerInstanceToken.getCompleted());
+		Assert.assertEquals(existingKaleoTimerInstanceToken.isCompleted(),
+			newKaleoTimerInstanceToken.isCompleted());
 		Assert.assertEquals(Time.getShortTimestamp(
 				existingKaleoTimerInstanceToken.getCompletionDate()),
 			Time.getShortTimestamp(

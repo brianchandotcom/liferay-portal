@@ -68,7 +68,7 @@ public class ShoppingCartWrapper implements ShoppingCart,
 		attributes.put("itemIds", getItemIds());
 		attributes.put("couponCodes", getCouponCodes());
 		attributes.put("altShipping", getAltShipping());
-		attributes.put("insure", getInsure());
+		attributes.put("insure", isInsure());
 
 		return attributes;
 	}

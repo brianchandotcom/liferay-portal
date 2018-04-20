@@ -6023,7 +6023,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 			if ((list != null) && !list.isEmpty()) {
 				for (JournalArticle journalArticle : list) {
 					if ((resourcePrimKey != journalArticle.getResourcePrimKey()) ||
-							(indexable != journalArticle.getIndexable())) {
+							(indexable != journalArticle.isIndexable())) {
 						list = null;
 
 						break;
@@ -20108,7 +20108,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 			if ((list != null) && !list.isEmpty()) {
 				for (JournalArticle journalArticle : list) {
 					if ((resourcePrimKey != journalArticle.getResourcePrimKey()) ||
-							(indexable != journalArticle.getIndexable()) ||
+							(indexable != journalArticle.isIndexable()) ||
 							(status != journalArticle.getStatus())) {
 						list = null;
 
@@ -20608,7 +20608,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 			if ((list != null) && !list.isEmpty()) {
 				for (JournalArticle journalArticle : list) {
 					if ((resourcePrimKey != journalArticle.getResourcePrimKey()) ||
-							(indexable != journalArticle.getIndexable()) ||
+							(indexable != journalArticle.isIndexable()) ||
 							!ArrayUtil.contains(statuses,
 								journalArticle.getStatus())) {
 						list = null;
@@ -31956,7 +31956,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 
 			args = new Object[] {
 					journalArticleModelImpl.getResourcePrimKey(),
-					journalArticleModelImpl.getIndexable()
+					journalArticleModelImpl.isIndexable()
 				};
 
 			finderCache.removeResult(FINDER_PATH_COUNT_BY_R_I, args);
@@ -32073,7 +32073,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 
 			args = new Object[] {
 					journalArticleModelImpl.getResourcePrimKey(),
-					journalArticleModelImpl.getIndexable(),
+					journalArticleModelImpl.isIndexable(),
 					journalArticleModelImpl.getStatus()
 				};
 

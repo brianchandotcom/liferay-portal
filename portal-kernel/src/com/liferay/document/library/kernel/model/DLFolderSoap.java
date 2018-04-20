@@ -43,14 +43,14 @@ public class DLFolderSoap implements Serializable {
 		soapModel.setCreateDate(model.getCreateDate());
 		soapModel.setModifiedDate(model.getModifiedDate());
 		soapModel.setRepositoryId(model.getRepositoryId());
-		soapModel.setMountPoint(model.getMountPoint());
+		soapModel.setMountPoint(model.isMountPoint());
 		soapModel.setParentFolderId(model.getParentFolderId());
 		soapModel.setTreePath(model.getTreePath());
 		soapModel.setName(model.getName());
 		soapModel.setDescription(model.getDescription());
 		soapModel.setLastPostDate(model.getLastPostDate());
 		soapModel.setDefaultFileEntryTypeId(model.getDefaultFileEntryTypeId());
-		soapModel.setHidden(model.getHidden());
+		soapModel.setHidden(model.isHidden());
 		soapModel.setRestrictionType(model.getRestrictionType());
 		soapModel.setLastPublishDate(model.getLastPublishDate());
 		soapModel.setStatus(model.getStatus());

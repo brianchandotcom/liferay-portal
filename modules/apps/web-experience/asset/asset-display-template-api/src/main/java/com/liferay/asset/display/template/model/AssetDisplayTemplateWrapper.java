@@ -69,7 +69,7 @@ public class AssetDisplayTemplateWrapper implements AssetDisplayTemplate,
 		attributes.put("name", getName());
 		attributes.put("classNameId", getClassNameId());
 		attributes.put("DDMTemplateId", getDDMTemplateId());
-		attributes.put("main", getMain());
+		attributes.put("main", isMain());
 
 		return attributes;
 	}

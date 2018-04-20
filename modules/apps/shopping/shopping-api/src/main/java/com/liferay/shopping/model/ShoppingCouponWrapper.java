@@ -70,7 +70,7 @@ public class ShoppingCouponWrapper implements ShoppingCoupon,
 		attributes.put("description", getDescription());
 		attributes.put("startDate", getStartDate());
 		attributes.put("endDate", getEndDate());
-		attributes.put("active", getActive());
+		attributes.put("active", isActive());
 		attributes.put("limitCategories", getLimitCategories());
 		attributes.put("limitSkus", getLimitSkus());
 		attributes.put("minOrder", getMinOrder());

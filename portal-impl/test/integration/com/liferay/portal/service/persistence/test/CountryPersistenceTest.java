@@ -142,9 +142,9 @@ public class CountryPersistenceTest {
 		Assert.assertEquals(existingCountry.getA3(), newCountry.getA3());
 		Assert.assertEquals(existingCountry.getNumber(), newCountry.getNumber());
 		Assert.assertEquals(existingCountry.getIdd(), newCountry.getIdd());
-		Assert.assertEquals(existingCountry.getZipRequired(),
-			newCountry.getZipRequired());
-		Assert.assertEquals(existingCountry.getActive(), newCountry.getActive());
+		Assert.assertEquals(existingCountry.isZipRequired(),
+			newCountry.isZipRequired());
+		Assert.assertEquals(existingCountry.isActive(), newCountry.isActive());
 	}
 
 	@Test

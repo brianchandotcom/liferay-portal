@@ -68,10 +68,10 @@ public class LayoutRevisionWrapper implements LayoutRevision,
 		attributes.put("layoutSetBranchId", getLayoutSetBranchId());
 		attributes.put("layoutBranchId", getLayoutBranchId());
 		attributes.put("parentLayoutRevisionId", getParentLayoutRevisionId());
-		attributes.put("head", getHead());
-		attributes.put("major", getMajor());
+		attributes.put("head", isHead());
+		attributes.put("major", isMajor());
 		attributes.put("plid", getPlid());
-		attributes.put("privateLayout", getPrivateLayout());
+		attributes.put("privateLayout", isPrivateLayout());
 		attributes.put("name", getName());
 		attributes.put("title", getTitle());
 		attributes.put("description", getDescription());

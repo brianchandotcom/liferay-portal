@@ -76,8 +76,8 @@ public class AddressWrapper implements Address, ModelWrapper<Address> {
 		attributes.put("regionId", getRegionId());
 		attributes.put("countryId", getCountryId());
 		attributes.put("typeId", getTypeId());
-		attributes.put("mailing", getMailing());
-		attributes.put("primary", getPrimary());
+		attributes.put("mailing", isMailing());
+		attributes.put("primary", isPrimary());
 
 		return attributes;
 	}

@@ -168,8 +168,8 @@ public class AssetDisplayTemplatePersistenceTest {
 			newAssetDisplayTemplate.getClassNameId());
 		Assert.assertEquals(existingAssetDisplayTemplate.getDDMTemplateId(),
 			newAssetDisplayTemplate.getDDMTemplateId());
-		Assert.assertEquals(existingAssetDisplayTemplate.getMain(),
-			newAssetDisplayTemplate.getMain());
+		Assert.assertEquals(existingAssetDisplayTemplate.isMain(),
+			newAssetDisplayTemplate.isMain());
 	}
 
 	@Test

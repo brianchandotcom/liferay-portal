@@ -166,10 +166,10 @@ public class SAPEntryPersistenceTest {
 			Time.getShortTimestamp(newSAPEntry.getModifiedDate()));
 		Assert.assertEquals(existingSAPEntry.getAllowedServiceSignatures(),
 			newSAPEntry.getAllowedServiceSignatures());
-		Assert.assertEquals(existingSAPEntry.getDefaultSAPEntry(),
-			newSAPEntry.getDefaultSAPEntry());
-		Assert.assertEquals(existingSAPEntry.getEnabled(),
-			newSAPEntry.getEnabled());
+		Assert.assertEquals(existingSAPEntry.isDefaultSAPEntry(),
+			newSAPEntry.isDefaultSAPEntry());
+		Assert.assertEquals(existingSAPEntry.isEnabled(),
+			newSAPEntry.isEnabled());
 		Assert.assertEquals(existingSAPEntry.getName(), newSAPEntry.getName());
 		Assert.assertEquals(existingSAPEntry.getTitle(), newSAPEntry.getTitle());
 	}

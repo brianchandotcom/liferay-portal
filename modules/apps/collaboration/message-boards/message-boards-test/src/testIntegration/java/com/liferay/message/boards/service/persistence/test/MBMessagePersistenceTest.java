@@ -213,14 +213,14 @@ public class MBMessagePersistenceTest {
 		Assert.assertEquals(existingMBMessage.getBody(), newMBMessage.getBody());
 		Assert.assertEquals(existingMBMessage.getFormat(),
 			newMBMessage.getFormat());
-		Assert.assertEquals(existingMBMessage.getAnonymous(),
-			newMBMessage.getAnonymous());
+		Assert.assertEquals(existingMBMessage.isAnonymous(),
+			newMBMessage.isAnonymous());
 		AssertUtils.assertEquals(existingMBMessage.getPriority(),
 			newMBMessage.getPriority());
-		Assert.assertEquals(existingMBMessage.getAllowPingbacks(),
-			newMBMessage.getAllowPingbacks());
-		Assert.assertEquals(existingMBMessage.getAnswer(),
-			newMBMessage.getAnswer());
+		Assert.assertEquals(existingMBMessage.isAllowPingbacks(),
+			newMBMessage.isAllowPingbacks());
+		Assert.assertEquals(existingMBMessage.isAnswer(),
+			newMBMessage.isAnswer());
 		Assert.assertEquals(Time.getShortTimestamp(
 				existingMBMessage.getLastPublishDate()),
 			Time.getShortTimestamp(newMBMessage.getLastPublishDate()));

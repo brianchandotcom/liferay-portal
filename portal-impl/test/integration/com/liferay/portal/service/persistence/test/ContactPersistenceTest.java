@@ -210,7 +210,7 @@ public class ContactPersistenceTest {
 			newContact.getPrefixId());
 		Assert.assertEquals(existingContact.getSuffixId(),
 			newContact.getSuffixId());
-		Assert.assertEquals(existingContact.getMale(), newContact.getMale());
+		Assert.assertEquals(existingContact.isMale(), newContact.isMale());
 		Assert.assertEquals(Time.getShortTimestamp(
 				existingContact.getBirthday()),
 			Time.getShortTimestamp(newContact.getBirthday()));

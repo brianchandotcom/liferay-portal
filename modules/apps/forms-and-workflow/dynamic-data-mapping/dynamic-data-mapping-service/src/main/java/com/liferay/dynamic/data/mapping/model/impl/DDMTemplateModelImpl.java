@@ -289,8 +289,8 @@ public class DDMTemplateModelImpl extends BaseModelImpl<DDMTemplate>
 		attributes.put("mode", getMode());
 		attributes.put("language", getLanguage());
 		attributes.put("script", getScript());
-		attributes.put("cacheable", getCacheable());
-		attributes.put("smallImage", getSmallImage());
+		attributes.put("cacheable", isCacheable());
+		attributes.put("smallImage", isSmallImage());
 		attributes.put("smallImageId", getSmallImageId());
 		attributes.put("smallImageURL", getSmallImageURL());
 		attributes.put("lastPublishDate", getLastPublishDate());
@@ -1301,8 +1301,8 @@ public class DDMTemplateModelImpl extends BaseModelImpl<DDMTemplate>
 		ddmTemplateImpl.setMode(getMode());
 		ddmTemplateImpl.setLanguage(getLanguage());
 		ddmTemplateImpl.setScript(getScript());
-		ddmTemplateImpl.setCacheable(getCacheable());
-		ddmTemplateImpl.setSmallImage(getSmallImage());
+		ddmTemplateImpl.setCacheable(isCacheable());
+		ddmTemplateImpl.setSmallImage(isSmallImage());
 		ddmTemplateImpl.setSmallImageId(getSmallImageId());
 		ddmTemplateImpl.setSmallImageURL(getSmallImageURL());
 		ddmTemplateImpl.setLastPublishDate(getLastPublishDate());
@@ -1531,9 +1531,9 @@ public class DDMTemplateModelImpl extends BaseModelImpl<DDMTemplate>
 			ddmTemplateCacheModel.script = null;
 		}
 
-		ddmTemplateCacheModel.cacheable = getCacheable();
+		ddmTemplateCacheModel.cacheable = isCacheable();
 
-		ddmTemplateCacheModel.smallImage = getSmallImage();
+		ddmTemplateCacheModel.smallImage = isSmallImage();
 
 		ddmTemplateCacheModel.smallImageId = getSmallImageId();
 
@@ -1606,9 +1606,9 @@ public class DDMTemplateModelImpl extends BaseModelImpl<DDMTemplate>
 		sb.append(", script=");
 		sb.append(getScript());
 		sb.append(", cacheable=");
-		sb.append(getCacheable());
+		sb.append(isCacheable());
 		sb.append(", smallImage=");
-		sb.append(getSmallImage());
+		sb.append(isSmallImage());
 		sb.append(", smallImageId=");
 		sb.append(getSmallImageId());
 		sb.append(", smallImageURL=");
@@ -1714,11 +1714,11 @@ public class DDMTemplateModelImpl extends BaseModelImpl<DDMTemplate>
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>cacheable</column-name><column-value><![CDATA[");
-		sb.append(getCacheable());
+		sb.append(isCacheable());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>smallImage</column-name><column-value><![CDATA[");
-		sb.append(getSmallImage());
+		sb.append(isSmallImage());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>smallImageId</column-name><column-value><![CDATA[");

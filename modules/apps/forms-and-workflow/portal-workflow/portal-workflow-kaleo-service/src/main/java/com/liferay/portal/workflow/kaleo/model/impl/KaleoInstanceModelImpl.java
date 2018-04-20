@@ -180,7 +180,7 @@ public class KaleoInstanceModelImpl extends BaseModelImpl<KaleoInstance>
 		attributes.put("rootKaleoInstanceTokenId", getRootKaleoInstanceTokenId());
 		attributes.put("className", getClassName());
 		attributes.put("classPK", getClassPK());
-		attributes.put("completed", getCompleted());
+		attributes.put("completed", isCompleted());
 		attributes.put("completionDate", getCompletionDate());
 		attributes.put("workflowContext", getWorkflowContext());
 
@@ -648,7 +648,7 @@ public class KaleoInstanceModelImpl extends BaseModelImpl<KaleoInstance>
 		kaleoInstanceImpl.setRootKaleoInstanceTokenId(getRootKaleoInstanceTokenId());
 		kaleoInstanceImpl.setClassName(getClassName());
 		kaleoInstanceImpl.setClassPK(getClassPK());
-		kaleoInstanceImpl.setCompleted(getCompleted());
+		kaleoInstanceImpl.setCompleted(isCompleted());
 		kaleoInstanceImpl.setCompletionDate(getCompletionDate());
 		kaleoInstanceImpl.setWorkflowContext(getWorkflowContext());
 
@@ -817,7 +817,7 @@ public class KaleoInstanceModelImpl extends BaseModelImpl<KaleoInstance>
 
 		kaleoInstanceCacheModel.classPK = getClassPK();
 
-		kaleoInstanceCacheModel.completed = getCompleted();
+		kaleoInstanceCacheModel.completed = isCompleted();
 
 		Date completionDate = getCompletionDate();
 
@@ -870,7 +870,7 @@ public class KaleoInstanceModelImpl extends BaseModelImpl<KaleoInstance>
 		sb.append(", classPK=");
 		sb.append(getClassPK());
 		sb.append(", completed=");
-		sb.append(getCompleted());
+		sb.append(isCompleted());
 		sb.append(", completionDate=");
 		sb.append(getCompletionDate());
 		sb.append(", workflowContext=");
@@ -942,7 +942,7 @@ public class KaleoInstanceModelImpl extends BaseModelImpl<KaleoInstance>
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>completed</column-name><column-value><![CDATA[");
-		sb.append(getCompleted());
+		sb.append(isCompleted());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>completionDate</column-name><column-value><![CDATA[");

@@ -48,7 +48,7 @@ public class KaleoTransitionSoap implements Serializable {
 		soapModel.setSourceKaleoNodeName(model.getSourceKaleoNodeName());
 		soapModel.setTargetKaleoNodeId(model.getTargetKaleoNodeId());
 		soapModel.setTargetKaleoNodeName(model.getTargetKaleoNodeName());
-		soapModel.setDefaultTransition(model.getDefaultTransition());
+		soapModel.setDefaultTransition(model.isDefaultTransition());
 
 		return soapModel;
 	}

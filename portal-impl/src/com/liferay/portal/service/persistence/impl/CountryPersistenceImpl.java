@@ -885,7 +885,7 @@ public class CountryPersistenceImpl extends BasePersistenceImpl<Country>
 
 			if ((list != null) && !list.isEmpty()) {
 				for (Country country : list) {
-					if ((active != country.getActive())) {
+					if ((active != country.isActive())) {
 						list = null;
 
 						break;
@@ -1595,7 +1595,7 @@ public class CountryPersistenceImpl extends BasePersistenceImpl<Country>
 		}
 		else
 		 if (isNew) {
-			Object[] args = new Object[] { countryModelImpl.getActive() };
+			Object[] args = new Object[] { countryModelImpl.isActive() };
 
 			finderCache.removeResult(FINDER_PATH_COUNT_BY_ACTIVE, args);
 			finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_ACTIVE,

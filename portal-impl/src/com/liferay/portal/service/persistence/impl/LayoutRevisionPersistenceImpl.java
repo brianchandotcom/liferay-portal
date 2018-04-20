@@ -1237,7 +1237,7 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 			if ((list != null) && !list.isEmpty()) {
 				for (LayoutRevision layoutRevision : list) {
 					if ((layoutSetBranchId != layoutRevision.getLayoutSetBranchId()) ||
-							(head != layoutRevision.getHead())) {
+							(head != layoutRevision.isHead())) {
 						list = null;
 
 						break;
@@ -2867,7 +2867,7 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 
 			if ((list != null) && !list.isEmpty()) {
 				for (LayoutRevision layoutRevision : list) {
-					if ((head != layoutRevision.getHead()) ||
+					if ((head != layoutRevision.isHead()) ||
 							(plid != layoutRevision.getPlid())) {
 						list = null;
 
@@ -5416,7 +5416,7 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 			if ((list != null) && !list.isEmpty()) {
 				for (LayoutRevision layoutRevision : list) {
 					if ((layoutSetBranchId != layoutRevision.getLayoutSetBranchId()) ||
-							(head != layoutRevision.getHead()) ||
+							(head != layoutRevision.isHead()) ||
 							(plid != layoutRevision.getPlid())) {
 						list = null;
 
@@ -7112,7 +7112,7 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 
 			args = new Object[] {
 					layoutRevisionModelImpl.getLayoutSetBranchId(),
-					layoutRevisionModelImpl.getHead()
+					layoutRevisionModelImpl.isHead()
 				};
 
 			finderCache.removeResult(FINDER_PATH_COUNT_BY_L_H, args);
@@ -7138,7 +7138,7 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 				args);
 
 			args = new Object[] {
-					layoutRevisionModelImpl.getHead(),
+					layoutRevisionModelImpl.isHead(),
 					layoutRevisionModelImpl.getPlid()
 				};
 
@@ -7168,7 +7168,7 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 
 			args = new Object[] {
 					layoutRevisionModelImpl.getLayoutSetBranchId(),
-					layoutRevisionModelImpl.getHead(),
+					layoutRevisionModelImpl.isHead(),
 					layoutRevisionModelImpl.getPlid()
 				};
 

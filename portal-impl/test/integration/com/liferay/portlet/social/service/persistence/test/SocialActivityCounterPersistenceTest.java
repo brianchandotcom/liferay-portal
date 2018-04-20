@@ -170,8 +170,8 @@ public class SocialActivityCounterPersistenceTest {
 			newSocialActivityCounter.getStartPeriod());
 		Assert.assertEquals(existingSocialActivityCounter.getEndPeriod(),
 			newSocialActivityCounter.getEndPeriod());
-		Assert.assertEquals(existingSocialActivityCounter.getActive(),
-			newSocialActivityCounter.getActive());
+		Assert.assertEquals(existingSocialActivityCounter.isActive(),
+			newSocialActivityCounter.isActive());
 	}
 
 	@Test

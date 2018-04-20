@@ -161,8 +161,8 @@ public class LockPersistenceTest {
 		Assert.assertEquals(existingLock.getClassName(), newLock.getClassName());
 		Assert.assertEquals(existingLock.getKey(), newLock.getKey());
 		Assert.assertEquals(existingLock.getOwner(), newLock.getOwner());
-		Assert.assertEquals(existingLock.getInheritable(),
-			newLock.getInheritable());
+		Assert.assertEquals(existingLock.isInheritable(),
+			newLock.isInheritable());
 		Assert.assertEquals(Time.getShortTimestamp(
 				existingLock.getExpirationDate()),
 			Time.getShortTimestamp(newLock.getExpirationDate()));

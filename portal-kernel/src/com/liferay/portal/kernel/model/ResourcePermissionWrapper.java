@@ -66,7 +66,7 @@ public class ResourcePermissionWrapper implements ResourcePermission,
 		attributes.put("roleId", getRoleId());
 		attributes.put("ownerId", getOwnerId());
 		attributes.put("actionIds", getActionIds());
-		attributes.put("viewActionId", getViewActionId());
+		attributes.put("viewActionId", isViewActionId());
 
 		return attributes;
 	}

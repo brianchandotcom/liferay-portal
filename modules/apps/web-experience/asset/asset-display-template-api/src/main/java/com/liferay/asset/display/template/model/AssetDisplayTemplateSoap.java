@@ -45,7 +45,7 @@ public class AssetDisplayTemplateSoap implements Serializable {
 		soapModel.setName(model.getName());
 		soapModel.setClassNameId(model.getClassNameId());
 		soapModel.setDDMTemplateId(model.getDDMTemplateId());
-		soapModel.setMain(model.getMain());
+		soapModel.setMain(model.isMain());
 
 		return soapModel;
 	}

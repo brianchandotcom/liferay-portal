@@ -3006,7 +3006,7 @@ public class SiteNavigationMenuPersistenceImpl extends BasePersistenceImpl<SiteN
 			if ((list != null) && !list.isEmpty()) {
 				for (SiteNavigationMenu siteNavigationMenu : list) {
 					if ((groupId != siteNavigationMenu.getGroupId()) ||
-							(auto != siteNavigationMenu.getAuto())) {
+							(auto != siteNavigationMenu.isAuto())) {
 						list = null;
 
 						break;
@@ -4093,7 +4093,7 @@ public class SiteNavigationMenuPersistenceImpl extends BasePersistenceImpl<SiteN
 
 			args = new Object[] {
 					siteNavigationMenuModelImpl.getGroupId(),
-					siteNavigationMenuModelImpl.getAuto()
+					siteNavigationMenuModelImpl.isAuto()
 				};
 
 			finderCache.removeResult(FINDER_PATH_COUNT_BY_G_A, args);

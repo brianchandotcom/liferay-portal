@@ -73,7 +73,7 @@ public class ContactWrapper implements Contact, ModelWrapper<Contact> {
 		attributes.put("lastName", getLastName());
 		attributes.put("prefixId", getPrefixId());
 		attributes.put("suffixId", getSuffixId());
-		attributes.put("male", getMale());
+		attributes.put("male", isMale());
 		attributes.put("birthday", getBirthday());
 		attributes.put("smsSn", getSmsSn());
 		attributes.put("facebookSn", getFacebookSn());

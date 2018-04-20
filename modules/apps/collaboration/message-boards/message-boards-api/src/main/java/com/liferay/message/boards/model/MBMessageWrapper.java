@@ -76,10 +76,10 @@ public class MBMessageWrapper implements MBMessage, ModelWrapper<MBMessage> {
 		attributes.put("subject", getSubject());
 		attributes.put("body", getBody());
 		attributes.put("format", getFormat());
-		attributes.put("anonymous", getAnonymous());
+		attributes.put("anonymous", isAnonymous());
 		attributes.put("priority", getPriority());
-		attributes.put("allowPingbacks", getAllowPingbacks());
-		attributes.put("answer", getAnswer());
+		attributes.put("allowPingbacks", isAllowPingbacks());
+		attributes.put("answer", isAnswer());
 		attributes.put("lastPublishDate", getLastPublishDate());
 		attributes.put("status", getStatus());
 		attributes.put("statusByUserId", getStatusByUserId());

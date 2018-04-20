@@ -65,8 +65,8 @@ public class UserThreadWrapper implements UserThread, ModelWrapper<UserThread> {
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("mbThreadId", getMbThreadId());
 		attributes.put("topMBMessageId", getTopMBMessageId());
-		attributes.put("read", getRead());
-		attributes.put("deleted", getDeleted());
+		attributes.put("read", isRead());
+		attributes.put("deleted", isDeleted());
 
 		return attributes;
 	}

@@ -73,13 +73,13 @@ public class BlogsEntryWrapper implements BlogsEntry, ModelWrapper<BlogsEntry> {
 		attributes.put("description", getDescription());
 		attributes.put("content", getContent());
 		attributes.put("displayDate", getDisplayDate());
-		attributes.put("allowPingbacks", getAllowPingbacks());
-		attributes.put("allowTrackbacks", getAllowTrackbacks());
+		attributes.put("allowPingbacks", isAllowPingbacks());
+		attributes.put("allowTrackbacks", isAllowTrackbacks());
 		attributes.put("trackbacks", getTrackbacks());
 		attributes.put("coverImageCaption", getCoverImageCaption());
 		attributes.put("coverImageFileEntryId", getCoverImageFileEntryId());
 		attributes.put("coverImageURL", getCoverImageURL());
-		attributes.put("smallImage", getSmallImage());
+		attributes.put("smallImage", isSmallImage());
 		attributes.put("smallImageFileEntryId", getSmallImageFileEntryId());
 		attributes.put("smallImageId", getSmallImageId());
 		attributes.put("smallImageURL", getSmallImageURL());

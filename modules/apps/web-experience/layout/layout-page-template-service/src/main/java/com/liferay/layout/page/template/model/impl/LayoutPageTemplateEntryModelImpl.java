@@ -236,7 +236,7 @@ public class LayoutPageTemplateEntryModelImpl extends BaseModelImpl<LayoutPageTe
 		attributes.put("name", getName());
 		attributes.put("type", getType());
 		attributes.put("htmlPreviewEntryId", getHtmlPreviewEntryId());
-		attributes.put("defaultTemplate", getDefaultTemplate());
+		attributes.put("defaultTemplate", isDefaultTemplate());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -660,7 +660,7 @@ public class LayoutPageTemplateEntryModelImpl extends BaseModelImpl<LayoutPageTe
 		layoutPageTemplateEntryImpl.setName(getName());
 		layoutPageTemplateEntryImpl.setType(getType());
 		layoutPageTemplateEntryImpl.setHtmlPreviewEntryId(getHtmlPreviewEntryId());
-		layoutPageTemplateEntryImpl.setDefaultTemplate(getDefaultTemplate());
+		layoutPageTemplateEntryImpl.setDefaultTemplate(isDefaultTemplate());
 
 		layoutPageTemplateEntryImpl.resetOriginalValues();
 
@@ -804,7 +804,7 @@ public class LayoutPageTemplateEntryModelImpl extends BaseModelImpl<LayoutPageTe
 
 		layoutPageTemplateEntryCacheModel.htmlPreviewEntryId = getHtmlPreviewEntryId();
 
-		layoutPageTemplateEntryCacheModel.defaultTemplate = getDefaultTemplate();
+		layoutPageTemplateEntryCacheModel.defaultTemplate = isDefaultTemplate();
 
 		return layoutPageTemplateEntryCacheModel;
 	}
@@ -840,7 +840,7 @@ public class LayoutPageTemplateEntryModelImpl extends BaseModelImpl<LayoutPageTe
 		sb.append(", htmlPreviewEntryId=");
 		sb.append(getHtmlPreviewEntryId());
 		sb.append(", defaultTemplate=");
-		sb.append(getDefaultTemplate());
+		sb.append(isDefaultTemplate());
 		sb.append("}");
 
 		return sb.toString();
@@ -909,7 +909,7 @@ public class LayoutPageTemplateEntryModelImpl extends BaseModelImpl<LayoutPageTe
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>defaultTemplate</column-name><column-value><![CDATA[");
-		sb.append(getDefaultTemplate());
+		sb.append(isDefaultTemplate());
 		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");

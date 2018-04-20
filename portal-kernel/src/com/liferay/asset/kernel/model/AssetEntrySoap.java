@@ -45,8 +45,8 @@ public class AssetEntrySoap implements Serializable {
 		soapModel.setClassPK(model.getClassPK());
 		soapModel.setClassUuid(model.getClassUuid());
 		soapModel.setClassTypeId(model.getClassTypeId());
-		soapModel.setListable(model.getListable());
-		soapModel.setVisible(model.getVisible());
+		soapModel.setListable(model.isListable());
+		soapModel.setVisible(model.isVisible());
 		soapModel.setStartDate(model.getStartDate());
 		soapModel.setEndDate(model.getEndDate());
 		soapModel.setPublishDate(model.getPublishDate());

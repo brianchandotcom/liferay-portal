@@ -191,8 +191,8 @@ public class ShoppingCouponPersistenceTest {
 		Assert.assertEquals(Time.getShortTimestamp(
 				existingShoppingCoupon.getEndDate()),
 			Time.getShortTimestamp(newShoppingCoupon.getEndDate()));
-		Assert.assertEquals(existingShoppingCoupon.getActive(),
-			newShoppingCoupon.getActive());
+		Assert.assertEquals(existingShoppingCoupon.isActive(),
+			newShoppingCoupon.isActive());
 		Assert.assertEquals(existingShoppingCoupon.getLimitCategories(),
 			newShoppingCoupon.getLimitCategories());
 		Assert.assertEquals(existingShoppingCoupon.getLimitSkus(),

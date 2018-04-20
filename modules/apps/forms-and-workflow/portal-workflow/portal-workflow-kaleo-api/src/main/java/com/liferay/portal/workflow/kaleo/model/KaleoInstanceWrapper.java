@@ -71,7 +71,7 @@ public class KaleoInstanceWrapper implements KaleoInstance,
 		attributes.put("rootKaleoInstanceTokenId", getRootKaleoInstanceTokenId());
 		attributes.put("className", getClassName());
 		attributes.put("classPK", getClassPK());
-		attributes.put("completed", getCompleted());
+		attributes.put("completed", isCompleted());
 		attributes.put("completionDate", getCompletionDate());
 		attributes.put("workflowContext", getWorkflowContext());
 

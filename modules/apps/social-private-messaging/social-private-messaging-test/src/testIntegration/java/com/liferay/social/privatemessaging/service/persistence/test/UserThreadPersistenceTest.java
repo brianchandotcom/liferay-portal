@@ -163,10 +163,9 @@ public class UserThreadPersistenceTest {
 			newUserThread.getMbThreadId());
 		Assert.assertEquals(existingUserThread.getTopMBMessageId(),
 			newUserThread.getTopMBMessageId());
-		Assert.assertEquals(existingUserThread.getRead(),
-			newUserThread.getRead());
-		Assert.assertEquals(existingUserThread.getDeleted(),
-			newUserThread.getDeleted());
+		Assert.assertEquals(existingUserThread.isRead(), newUserThread.isRead());
+		Assert.assertEquals(existingUserThread.isDeleted(),
+			newUserThread.isDeleted());
 	}
 
 	@Test

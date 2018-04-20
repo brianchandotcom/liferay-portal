@@ -169,8 +169,8 @@ public class ShoppingCartPersistenceTest {
 			newShoppingCart.getCouponCodes());
 		Assert.assertEquals(existingShoppingCart.getAltShipping(),
 			newShoppingCart.getAltShipping());
-		Assert.assertEquals(existingShoppingCart.getInsure(),
-			newShoppingCart.getInsure());
+		Assert.assertEquals(existingShoppingCart.isInsure(),
+			newShoppingCart.isInsure());
 	}
 
 	@Test

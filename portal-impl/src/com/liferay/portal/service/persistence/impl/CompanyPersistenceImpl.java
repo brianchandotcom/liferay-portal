@@ -876,7 +876,7 @@ public class CompanyPersistenceImpl extends BasePersistenceImpl<Company>
 
 			if ((list != null) && !list.isEmpty()) {
 				for (Company company : list) {
-					if ((system != company.getSystem())) {
+					if ((system != company.isSystem())) {
 						list = null;
 
 						break;
@@ -1585,7 +1585,7 @@ public class CompanyPersistenceImpl extends BasePersistenceImpl<Company>
 		}
 		else
 		 if (isNew) {
-			Object[] args = new Object[] { companyModelImpl.getSystem() };
+			Object[] args = new Object[] { companyModelImpl.isSystem() };
 
 			finderCache.removeResult(FINDER_PATH_COUNT_BY_SYSTEM, args);
 			finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_SYSTEM,

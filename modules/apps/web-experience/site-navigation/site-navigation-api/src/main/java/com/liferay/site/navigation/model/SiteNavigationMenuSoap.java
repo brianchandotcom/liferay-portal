@@ -43,7 +43,7 @@ public class SiteNavigationMenuSoap implements Serializable {
 		soapModel.setModifiedDate(model.getModifiedDate());
 		soapModel.setName(model.getName());
 		soapModel.setType(model.getType());
-		soapModel.setAuto(model.getAuto());
+		soapModel.setAuto(model.isAuto());
 
 		return soapModel;
 	}

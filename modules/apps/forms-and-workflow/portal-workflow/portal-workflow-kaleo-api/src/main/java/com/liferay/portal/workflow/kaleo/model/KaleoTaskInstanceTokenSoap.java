@@ -49,7 +49,7 @@ public class KaleoTaskInstanceTokenSoap implements Serializable {
 		soapModel.setClassName(model.getClassName());
 		soapModel.setClassPK(model.getClassPK());
 		soapModel.setCompletionUserId(model.getCompletionUserId());
-		soapModel.setCompleted(model.getCompleted());
+		soapModel.setCompleted(model.isCompleted());
 		soapModel.setCompletionDate(model.getCompletionDate());
 		soapModel.setDueDate(model.getDueDate());
 		soapModel.setWorkflowContext(model.getWorkflowContext());

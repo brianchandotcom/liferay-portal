@@ -291,26 +291,26 @@ public class ShoppingItemModelImpl extends BaseModelImpl<ShoppingItem>
 		attributes.put("name", getName());
 		attributes.put("description", getDescription());
 		attributes.put("properties", getProperties());
-		attributes.put("fields", getFields());
+		attributes.put("fields", isFields());
 		attributes.put("fieldsQuantities", getFieldsQuantities());
 		attributes.put("minQuantity", getMinQuantity());
 		attributes.put("maxQuantity", getMaxQuantity());
 		attributes.put("price", getPrice());
 		attributes.put("discount", getDiscount());
-		attributes.put("taxable", getTaxable());
+		attributes.put("taxable", isTaxable());
 		attributes.put("shipping", getShipping());
-		attributes.put("useShippingFormula", getUseShippingFormula());
-		attributes.put("requiresShipping", getRequiresShipping());
+		attributes.put("useShippingFormula", isUseShippingFormula());
+		attributes.put("requiresShipping", isRequiresShipping());
 		attributes.put("stockQuantity", getStockQuantity());
-		attributes.put("featured", getFeatured());
-		attributes.put("sale", getSale());
-		attributes.put("smallImage", getSmallImage());
+		attributes.put("featured", isFeatured());
+		attributes.put("sale", isSale());
+		attributes.put("smallImage", isSmallImage());
 		attributes.put("smallImageId", getSmallImageId());
 		attributes.put("smallImageURL", getSmallImageURL());
-		attributes.put("mediumImage", getMediumImage());
+		attributes.put("mediumImage", isMediumImage());
 		attributes.put("mediumImageId", getMediumImageId());
 		attributes.put("mediumImageURL", getMediumImageURL());
-		attributes.put("largeImage", getLargeImage());
+		attributes.put("largeImage", isLargeImage());
 		attributes.put("largeImageId", getLargeImageId());
 		attributes.put("largeImageURL", getLargeImageURL());
 
@@ -1150,26 +1150,26 @@ public class ShoppingItemModelImpl extends BaseModelImpl<ShoppingItem>
 		shoppingItemImpl.setName(getName());
 		shoppingItemImpl.setDescription(getDescription());
 		shoppingItemImpl.setProperties(getProperties());
-		shoppingItemImpl.setFields(getFields());
+		shoppingItemImpl.setFields(isFields());
 		shoppingItemImpl.setFieldsQuantities(getFieldsQuantities());
 		shoppingItemImpl.setMinQuantity(getMinQuantity());
 		shoppingItemImpl.setMaxQuantity(getMaxQuantity());
 		shoppingItemImpl.setPrice(getPrice());
 		shoppingItemImpl.setDiscount(getDiscount());
-		shoppingItemImpl.setTaxable(getTaxable());
+		shoppingItemImpl.setTaxable(isTaxable());
 		shoppingItemImpl.setShipping(getShipping());
-		shoppingItemImpl.setUseShippingFormula(getUseShippingFormula());
-		shoppingItemImpl.setRequiresShipping(getRequiresShipping());
+		shoppingItemImpl.setUseShippingFormula(isUseShippingFormula());
+		shoppingItemImpl.setRequiresShipping(isRequiresShipping());
 		shoppingItemImpl.setStockQuantity(getStockQuantity());
-		shoppingItemImpl.setFeatured(getFeatured());
-		shoppingItemImpl.setSale(getSale());
-		shoppingItemImpl.setSmallImage(getSmallImage());
+		shoppingItemImpl.setFeatured(isFeatured());
+		shoppingItemImpl.setSale(isSale());
+		shoppingItemImpl.setSmallImage(isSmallImage());
 		shoppingItemImpl.setSmallImageId(getSmallImageId());
 		shoppingItemImpl.setSmallImageURL(getSmallImageURL());
-		shoppingItemImpl.setMediumImage(getMediumImage());
+		shoppingItemImpl.setMediumImage(isMediumImage());
 		shoppingItemImpl.setMediumImageId(getMediumImageId());
 		shoppingItemImpl.setMediumImageURL(getMediumImageURL());
-		shoppingItemImpl.setLargeImage(getLargeImage());
+		shoppingItemImpl.setLargeImage(isLargeImage());
 		shoppingItemImpl.setLargeImageId(getLargeImageId());
 		shoppingItemImpl.setLargeImageURL(getLargeImageURL());
 
@@ -1343,7 +1343,7 @@ public class ShoppingItemModelImpl extends BaseModelImpl<ShoppingItem>
 			shoppingItemCacheModel.properties = null;
 		}
 
-		shoppingItemCacheModel.fields = getFields();
+		shoppingItemCacheModel.fields = isFields();
 
 		shoppingItemCacheModel.fieldsQuantities = getFieldsQuantities();
 
@@ -1361,21 +1361,21 @@ public class ShoppingItemModelImpl extends BaseModelImpl<ShoppingItem>
 
 		shoppingItemCacheModel.discount = getDiscount();
 
-		shoppingItemCacheModel.taxable = getTaxable();
+		shoppingItemCacheModel.taxable = isTaxable();
 
 		shoppingItemCacheModel.shipping = getShipping();
 
-		shoppingItemCacheModel.useShippingFormula = getUseShippingFormula();
+		shoppingItemCacheModel.useShippingFormula = isUseShippingFormula();
 
-		shoppingItemCacheModel.requiresShipping = getRequiresShipping();
+		shoppingItemCacheModel.requiresShipping = isRequiresShipping();
 
 		shoppingItemCacheModel.stockQuantity = getStockQuantity();
 
-		shoppingItemCacheModel.featured = getFeatured();
+		shoppingItemCacheModel.featured = isFeatured();
 
-		shoppingItemCacheModel.sale = getSale();
+		shoppingItemCacheModel.sale = isSale();
 
-		shoppingItemCacheModel.smallImage = getSmallImage();
+		shoppingItemCacheModel.smallImage = isSmallImage();
 
 		shoppingItemCacheModel.smallImageId = getSmallImageId();
 
@@ -1387,7 +1387,7 @@ public class ShoppingItemModelImpl extends BaseModelImpl<ShoppingItem>
 			shoppingItemCacheModel.smallImageURL = null;
 		}
 
-		shoppingItemCacheModel.mediumImage = getMediumImage();
+		shoppingItemCacheModel.mediumImage = isMediumImage();
 
 		shoppingItemCacheModel.mediumImageId = getMediumImageId();
 
@@ -1399,7 +1399,7 @@ public class ShoppingItemModelImpl extends BaseModelImpl<ShoppingItem>
 			shoppingItemCacheModel.mediumImageURL = null;
 		}
 
-		shoppingItemCacheModel.largeImage = getLargeImage();
+		shoppingItemCacheModel.largeImage = isLargeImage();
 
 		shoppingItemCacheModel.largeImageId = getLargeImageId();
 
@@ -1443,7 +1443,7 @@ public class ShoppingItemModelImpl extends BaseModelImpl<ShoppingItem>
 		sb.append(", properties=");
 		sb.append(getProperties());
 		sb.append(", fields=");
-		sb.append(getFields());
+		sb.append(isFields());
 		sb.append(", fieldsQuantities=");
 		sb.append(getFieldsQuantities());
 		sb.append(", minQuantity=");
@@ -1455,33 +1455,33 @@ public class ShoppingItemModelImpl extends BaseModelImpl<ShoppingItem>
 		sb.append(", discount=");
 		sb.append(getDiscount());
 		sb.append(", taxable=");
-		sb.append(getTaxable());
+		sb.append(isTaxable());
 		sb.append(", shipping=");
 		sb.append(getShipping());
 		sb.append(", useShippingFormula=");
-		sb.append(getUseShippingFormula());
+		sb.append(isUseShippingFormula());
 		sb.append(", requiresShipping=");
-		sb.append(getRequiresShipping());
+		sb.append(isRequiresShipping());
 		sb.append(", stockQuantity=");
 		sb.append(getStockQuantity());
 		sb.append(", featured=");
-		sb.append(getFeatured());
+		sb.append(isFeatured());
 		sb.append(", sale=");
-		sb.append(getSale());
+		sb.append(isSale());
 		sb.append(", smallImage=");
-		sb.append(getSmallImage());
+		sb.append(isSmallImage());
 		sb.append(", smallImageId=");
 		sb.append(getSmallImageId());
 		sb.append(", smallImageURL=");
 		sb.append(getSmallImageURL());
 		sb.append(", mediumImage=");
-		sb.append(getMediumImage());
+		sb.append(isMediumImage());
 		sb.append(", mediumImageId=");
 		sb.append(getMediumImageId());
 		sb.append(", mediumImageURL=");
 		sb.append(getMediumImageURL());
 		sb.append(", largeImage=");
-		sb.append(getLargeImage());
+		sb.append(isLargeImage());
 		sb.append(", largeImageId=");
 		sb.append(getLargeImageId());
 		sb.append(", largeImageURL=");
@@ -1549,7 +1549,7 @@ public class ShoppingItemModelImpl extends BaseModelImpl<ShoppingItem>
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>fields</column-name><column-value><![CDATA[");
-		sb.append(getFields());
+		sb.append(isFields());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>fieldsQuantities</column-name><column-value><![CDATA[");
@@ -1573,7 +1573,7 @@ public class ShoppingItemModelImpl extends BaseModelImpl<ShoppingItem>
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>taxable</column-name><column-value><![CDATA[");
-		sb.append(getTaxable());
+		sb.append(isTaxable());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>shipping</column-name><column-value><![CDATA[");
@@ -1581,11 +1581,11 @@ public class ShoppingItemModelImpl extends BaseModelImpl<ShoppingItem>
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>useShippingFormula</column-name><column-value><![CDATA[");
-		sb.append(getUseShippingFormula());
+		sb.append(isUseShippingFormula());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>requiresShipping</column-name><column-value><![CDATA[");
-		sb.append(getRequiresShipping());
+		sb.append(isRequiresShipping());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>stockQuantity</column-name><column-value><![CDATA[");
@@ -1593,15 +1593,15 @@ public class ShoppingItemModelImpl extends BaseModelImpl<ShoppingItem>
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>featured</column-name><column-value><![CDATA[");
-		sb.append(getFeatured());
+		sb.append(isFeatured());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>sale</column-name><column-value><![CDATA[");
-		sb.append(getSale());
+		sb.append(isSale());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>smallImage</column-name><column-value><![CDATA[");
-		sb.append(getSmallImage());
+		sb.append(isSmallImage());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>smallImageId</column-name><column-value><![CDATA[");
@@ -1613,7 +1613,7 @@ public class ShoppingItemModelImpl extends BaseModelImpl<ShoppingItem>
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>mediumImage</column-name><column-value><![CDATA[");
-		sb.append(getMediumImage());
+		sb.append(isMediumImage());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>mediumImageId</column-name><column-value><![CDATA[");
@@ -1625,7 +1625,7 @@ public class ShoppingItemModelImpl extends BaseModelImpl<ShoppingItem>
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>largeImage</column-name><column-value><![CDATA[");
-		sb.append(getLargeImage());
+		sb.append(isLargeImage());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>largeImageId</column-name><column-value><![CDATA[");

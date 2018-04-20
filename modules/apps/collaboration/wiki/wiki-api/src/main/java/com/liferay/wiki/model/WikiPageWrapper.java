@@ -71,11 +71,11 @@ public class WikiPageWrapper implements WikiPage, ModelWrapper<WikiPage> {
 		attributes.put("nodeId", getNodeId());
 		attributes.put("title", getTitle());
 		attributes.put("version", getVersion());
-		attributes.put("minorEdit", getMinorEdit());
+		attributes.put("minorEdit", isMinorEdit());
 		attributes.put("content", getContent());
 		attributes.put("summary", getSummary());
 		attributes.put("format", getFormat());
-		attributes.put("head", getHead());
+		attributes.put("head", isHead());
 		attributes.put("parentTitle", getParentTitle());
 		attributes.put("redirectTitle", getRedirectTitle());
 		attributes.put("lastPublishDate", getLastPublishDate());

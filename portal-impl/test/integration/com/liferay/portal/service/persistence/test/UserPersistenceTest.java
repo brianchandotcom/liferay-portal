@@ -213,14 +213,14 @@ public class UserPersistenceTest {
 		Assert.assertEquals(Time.getShortTimestamp(
 				existingUser.getModifiedDate()),
 			Time.getShortTimestamp(newUser.getModifiedDate()));
-		Assert.assertEquals(existingUser.getDefaultUser(),
-			newUser.getDefaultUser());
+		Assert.assertEquals(existingUser.isDefaultUser(),
+			newUser.isDefaultUser());
 		Assert.assertEquals(existingUser.getContactId(), newUser.getContactId());
 		Assert.assertEquals(existingUser.getPassword(), newUser.getPassword());
-		Assert.assertEquals(existingUser.getPasswordEncrypted(),
-			newUser.getPasswordEncrypted());
-		Assert.assertEquals(existingUser.getPasswordReset(),
-			newUser.getPasswordReset());
+		Assert.assertEquals(existingUser.isPasswordEncrypted(),
+			newUser.isPasswordEncrypted());
+		Assert.assertEquals(existingUser.isPasswordReset(),
+			newUser.isPasswordReset());
 		Assert.assertEquals(Time.getShortTimestamp(
 				existingUser.getPasswordModifiedDate()),
 			Time.getShortTimestamp(newUser.getPasswordModifiedDate()));
@@ -268,14 +268,14 @@ public class UserPersistenceTest {
 			Time.getShortTimestamp(newUser.getLastFailedLoginDate()));
 		Assert.assertEquals(existingUser.getFailedLoginAttempts(),
 			newUser.getFailedLoginAttempts());
-		Assert.assertEquals(existingUser.getLockout(), newUser.getLockout());
+		Assert.assertEquals(existingUser.isLockout(), newUser.isLockout());
 		Assert.assertEquals(Time.getShortTimestamp(
 				existingUser.getLockoutDate()),
 			Time.getShortTimestamp(newUser.getLockoutDate()));
-		Assert.assertEquals(existingUser.getAgreedToTermsOfUse(),
-			newUser.getAgreedToTermsOfUse());
-		Assert.assertEquals(existingUser.getEmailAddressVerified(),
-			newUser.getEmailAddressVerified());
+		Assert.assertEquals(existingUser.isAgreedToTermsOfUse(),
+			newUser.isAgreedToTermsOfUse());
+		Assert.assertEquals(existingUser.isEmailAddressVerified(),
+			newUser.isEmailAddressVerified());
 		Assert.assertEquals(existingUser.getStatus(), newUser.getStatus());
 	}
 

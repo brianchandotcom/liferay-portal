@@ -231,7 +231,7 @@ public class KaleoDefinitionModelImpl extends BaseModelImpl<KaleoDefinition>
 		attributes.put("description", getDescription());
 		attributes.put("content", getContent());
 		attributes.put("version", getVersion());
-		attributes.put("active", getActive());
+		attributes.put("active", isActive());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -749,7 +749,7 @@ public class KaleoDefinitionModelImpl extends BaseModelImpl<KaleoDefinition>
 		kaleoDefinitionImpl.setDescription(getDescription());
 		kaleoDefinitionImpl.setContent(getContent());
 		kaleoDefinitionImpl.setVersion(getVersion());
-		kaleoDefinitionImpl.setActive(getActive());
+		kaleoDefinitionImpl.setActive(isActive());
 
 		kaleoDefinitionImpl.resetOriginalValues();
 
@@ -911,7 +911,7 @@ public class KaleoDefinitionModelImpl extends BaseModelImpl<KaleoDefinition>
 
 		kaleoDefinitionCacheModel.version = getVersion();
 
-		kaleoDefinitionCacheModel.active = getActive();
+		kaleoDefinitionCacheModel.active = isActive();
 
 		return kaleoDefinitionCacheModel;
 	}
@@ -945,7 +945,7 @@ public class KaleoDefinitionModelImpl extends BaseModelImpl<KaleoDefinition>
 		sb.append(", version=");
 		sb.append(getVersion());
 		sb.append(", active=");
-		sb.append(getActive());
+		sb.append(isActive());
 		sb.append("}");
 
 		return sb.toString();
@@ -1009,7 +1009,7 @@ public class KaleoDefinitionModelImpl extends BaseModelImpl<KaleoDefinition>
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>active</column-name><column-value><![CDATA[");
-		sb.append(getActive());
+		sb.append(isActive());
 		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");

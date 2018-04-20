@@ -161,14 +161,14 @@ public class UserNotificationEventPersistenceTest {
 			newUserNotificationEvent.getDeliveryType());
 		Assert.assertEquals(existingUserNotificationEvent.getDeliverBy(),
 			newUserNotificationEvent.getDeliverBy());
-		Assert.assertEquals(existingUserNotificationEvent.getDelivered(),
-			newUserNotificationEvent.getDelivered());
+		Assert.assertEquals(existingUserNotificationEvent.isDelivered(),
+			newUserNotificationEvent.isDelivered());
 		Assert.assertEquals(existingUserNotificationEvent.getPayload(),
 			newUserNotificationEvent.getPayload());
-		Assert.assertEquals(existingUserNotificationEvent.getActionRequired(),
-			newUserNotificationEvent.getActionRequired());
-		Assert.assertEquals(existingUserNotificationEvent.getArchived(),
-			newUserNotificationEvent.getArchived());
+		Assert.assertEquals(existingUserNotificationEvent.isActionRequired(),
+			newUserNotificationEvent.isActionRequired());
+		Assert.assertEquals(existingUserNotificationEvent.isArchived(),
+			newUserNotificationEvent.isArchived());
 	}
 
 	@Test

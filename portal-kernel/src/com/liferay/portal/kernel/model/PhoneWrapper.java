@@ -71,7 +71,7 @@ public class PhoneWrapper implements Phone, ModelWrapper<Phone> {
 		attributes.put("number", getNumber());
 		attributes.put("extension", getExtension());
 		attributes.put("typeId", getTypeId());
-		attributes.put("primary", getPrimary());
+		attributes.put("primary", isPrimary());
 
 		return attributes;
 	}

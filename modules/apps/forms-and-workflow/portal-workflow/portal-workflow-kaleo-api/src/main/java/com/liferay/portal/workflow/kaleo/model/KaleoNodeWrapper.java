@@ -69,8 +69,8 @@ public class KaleoNodeWrapper implements KaleoNode, ModelWrapper<KaleoNode> {
 		attributes.put("metadata", getMetadata());
 		attributes.put("description", getDescription());
 		attributes.put("type", getType());
-		attributes.put("initial", getInitial());
-		attributes.put("terminal", getTerminal());
+		attributes.put("initial", isInitial());
+		attributes.put("terminal", isTerminal());
 
 		return attributes;
 	}

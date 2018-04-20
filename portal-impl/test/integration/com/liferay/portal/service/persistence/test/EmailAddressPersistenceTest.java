@@ -169,8 +169,8 @@ public class EmailAddressPersistenceTest {
 			newEmailAddress.getAddress());
 		Assert.assertEquals(existingEmailAddress.getTypeId(),
 			newEmailAddress.getTypeId());
-		Assert.assertEquals(existingEmailAddress.getPrimary(),
-			newEmailAddress.getPrimary());
+		Assert.assertEquals(existingEmailAddress.isPrimary(),
+			newEmailAddress.isPrimary());
 	}
 
 	@Test

@@ -40,8 +40,8 @@ public class CountrySoap implements Serializable {
 		soapModel.setA3(model.getA3());
 		soapModel.setNumber(model.getNumber());
 		soapModel.setIdd(model.getIdd());
-		soapModel.setZipRequired(model.getZipRequired());
-		soapModel.setActive(model.getActive());
+		soapModel.setZipRequired(model.isZipRequired());
+		soapModel.setActive(model.isActive());
 
 		return soapModel;
 	}

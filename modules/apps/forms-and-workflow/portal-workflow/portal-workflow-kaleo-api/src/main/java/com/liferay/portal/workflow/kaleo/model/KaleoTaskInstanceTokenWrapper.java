@@ -74,7 +74,7 @@ public class KaleoTaskInstanceTokenWrapper implements KaleoTaskInstanceToken,
 		attributes.put("className", getClassName());
 		attributes.put("classPK", getClassPK());
 		attributes.put("completionUserId", getCompletionUserId());
-		attributes.put("completed", getCompleted());
+		attributes.put("completed", isCompleted());
 		attributes.put("completionDate", getCompletionDate());
 		attributes.put("dueDate", getDueDate());
 		attributes.put("workflowContext", getWorkflowContext());

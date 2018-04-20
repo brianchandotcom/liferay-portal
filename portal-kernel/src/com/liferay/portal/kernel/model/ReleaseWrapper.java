@@ -64,7 +64,7 @@ public class ReleaseWrapper implements Release, ModelWrapper<Release> {
 		attributes.put("schemaVersion", getSchemaVersion());
 		attributes.put("buildNumber", getBuildNumber());
 		attributes.put("buildDate", getBuildDate());
-		attributes.put("verified", getVerified());
+		attributes.put("verified", isVerified());
 		attributes.put("state", getState());
 		attributes.put("testString", getTestString());
 

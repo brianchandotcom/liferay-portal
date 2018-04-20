@@ -4336,7 +4336,7 @@ public class LayoutPageTemplateEntryPersistenceImpl extends BasePersistenceImpl<
 				for (LayoutPageTemplateEntry layoutPageTemplateEntry : list) {
 					if ((groupId != layoutPageTemplateEntry.getGroupId()) ||
 							(classNameId != layoutPageTemplateEntry.getClassNameId()) ||
-							(defaultTemplate != layoutPageTemplateEntry.getDefaultTemplate())) {
+							(defaultTemplate != layoutPageTemplateEntry.isDefaultTemplate())) {
 						list = null;
 
 						break;
@@ -6619,7 +6619,7 @@ public class LayoutPageTemplateEntryPersistenceImpl extends BasePersistenceImpl<
 			args = new Object[] {
 					layoutPageTemplateEntryModelImpl.getGroupId(),
 					layoutPageTemplateEntryModelImpl.getClassNameId(),
-					layoutPageTemplateEntryModelImpl.getDefaultTemplate()
+					layoutPageTemplateEntryModelImpl.isDefaultTemplate()
 				};
 
 			finderCache.removeResult(FINDER_PATH_COUNT_BY_G_C_D, args);

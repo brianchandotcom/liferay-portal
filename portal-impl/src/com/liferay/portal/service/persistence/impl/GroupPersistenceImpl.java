@@ -3891,7 +3891,7 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 			if ((list != null) && !list.isEmpty()) {
 				for (Group group : list) {
 					if ((companyId != group.getCompanyId()) ||
-							(site != group.getSite())) {
+							(site != group.isSite())) {
 						list = null;
 
 						break;
@@ -4427,7 +4427,7 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 			if ((list != null) && !list.isEmpty()) {
 				for (Group group : list) {
 					if ((companyId != group.getCompanyId()) ||
-							(active != group.getActive())) {
+							(active != group.isActive())) {
 						list = null;
 
 						break;
@@ -5499,7 +5499,7 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 			if ((list != null) && !list.isEmpty()) {
 				for (Group group : list) {
 					if ((type != group.getType()) ||
-							(active != group.getActive())) {
+							(active != group.isActive())) {
 						list = null;
 
 						break;
@@ -7286,7 +7286,7 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 				for (Group group : list) {
 					if ((companyId != group.getCompanyId()) ||
 							(parentGroupId != group.getParentGroupId()) ||
-							(site != group.getSite())) {
+							(site != group.isSite())) {
 						list = null;
 
 						break;
@@ -8130,7 +8130,7 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 					if ((companyId != group.getCompanyId()) ||
 							!StringUtil.wildcardMatches(group.getTreePath(),
 								treePath, '_', '%', '\\', true) ||
-							(site != group.getSite())) {
+							(site != group.isSite())) {
 						list = null;
 
 						break;
@@ -9518,8 +9518,8 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 				for (Group group : list) {
 					if ((companyId != group.getCompanyId()) ||
 							(parentGroupId != group.getParentGroupId()) ||
-							(site != group.getSite()) ||
-							(inheritContent != group.getInheritContent())) {
+							(site != group.isSite()) ||
+							(inheritContent != group.isInheritContent())) {
 						list = null;
 
 						break;
@@ -10541,7 +10541,7 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 				args);
 
 			args = new Object[] {
-					groupModelImpl.getCompanyId(), groupModelImpl.getSite()
+					groupModelImpl.getCompanyId(), groupModelImpl.isSite()
 				};
 
 			finderCache.removeResult(FINDER_PATH_COUNT_BY_C_S, args);
@@ -10549,7 +10549,7 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 				args);
 
 			args = new Object[] {
-					groupModelImpl.getCompanyId(), groupModelImpl.getActive()
+					groupModelImpl.getCompanyId(), groupModelImpl.isActive()
 				};
 
 			finderCache.removeResult(FINDER_PATH_COUNT_BY_C_A, args);
@@ -10565,7 +10565,7 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 				args);
 
 			args = new Object[] {
-					groupModelImpl.getType(), groupModelImpl.getActive()
+					groupModelImpl.getType(), groupModelImpl.isActive()
 				};
 
 			finderCache.removeResult(FINDER_PATH_COUNT_BY_T_A, args);
@@ -10584,7 +10584,7 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 
 			args = new Object[] {
 					groupModelImpl.getCompanyId(),
-					groupModelImpl.getParentGroupId(), groupModelImpl.getSite()
+					groupModelImpl.getParentGroupId(), groupModelImpl.isSite()
 				};
 
 			finderCache.removeResult(FINDER_PATH_COUNT_BY_C_P_S, args);
@@ -10593,8 +10593,8 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 
 			args = new Object[] {
 					groupModelImpl.getCompanyId(),
-					groupModelImpl.getParentGroupId(), groupModelImpl.getSite(),
-					groupModelImpl.getInheritContent()
+					groupModelImpl.getParentGroupId(), groupModelImpl.isSite(),
+					groupModelImpl.isInheritContent()
 				};
 
 			finderCache.removeResult(FINDER_PATH_COUNT_BY_C_P_S_I, args);

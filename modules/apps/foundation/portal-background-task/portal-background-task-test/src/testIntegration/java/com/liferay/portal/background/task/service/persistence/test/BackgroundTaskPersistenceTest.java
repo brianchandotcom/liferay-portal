@@ -182,8 +182,8 @@ public class BackgroundTaskPersistenceTest {
 			newBackgroundTask.getTaskExecutorClassName());
 		Assert.assertEquals(existingBackgroundTask.getTaskContextMap(),
 			newBackgroundTask.getTaskContextMap());
-		Assert.assertEquals(existingBackgroundTask.getCompleted(),
-			newBackgroundTask.getCompleted());
+		Assert.assertEquals(existingBackgroundTask.isCompleted(),
+			newBackgroundTask.isCompleted());
 		Assert.assertEquals(Time.getShortTimestamp(
 				existingBackgroundTask.getCompletionDate()),
 			Time.getShortTimestamp(newBackgroundTask.getCompletionDate()));

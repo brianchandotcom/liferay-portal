@@ -69,8 +69,8 @@ public class ShoppingOrderWrapper implements ShoppingOrder,
 		attributes.put("tax", getTax());
 		attributes.put("shipping", getShipping());
 		attributes.put("altShipping", getAltShipping());
-		attributes.put("requiresShipping", getRequiresShipping());
-		attributes.put("insure", getInsure());
+		attributes.put("requiresShipping", isRequiresShipping());
+		attributes.put("insure", isInsure());
 		attributes.put("insurance", getInsurance());
 		attributes.put("couponCodes", getCouponCodes());
 		attributes.put("couponDiscount", getCouponDiscount());
@@ -84,7 +84,7 @@ public class ShoppingOrderWrapper implements ShoppingOrder,
 		attributes.put("billingZip", getBillingZip());
 		attributes.put("billingCountry", getBillingCountry());
 		attributes.put("billingPhone", getBillingPhone());
-		attributes.put("shipToBilling", getShipToBilling());
+		attributes.put("shipToBilling", isShipToBilling());
 		attributes.put("shippingFirstName", getShippingFirstName());
 		attributes.put("shippingLastName", getShippingLastName());
 		attributes.put("shippingEmailAddress", getShippingEmailAddress());
@@ -107,8 +107,8 @@ public class ShoppingOrderWrapper implements ShoppingOrder,
 		attributes.put("ppPaymentGross", getPpPaymentGross());
 		attributes.put("ppReceiverEmail", getPpReceiverEmail());
 		attributes.put("ppPayerEmail", getPpPayerEmail());
-		attributes.put("sendOrderEmail", getSendOrderEmail());
-		attributes.put("sendShippingEmail", getSendShippingEmail());
+		attributes.put("sendOrderEmail", isSendOrderEmail());
+		attributes.put("sendShippingEmail", isSendShippingEmail());
 
 		return attributes;
 	}

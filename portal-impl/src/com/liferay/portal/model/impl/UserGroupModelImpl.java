@@ -249,7 +249,7 @@ public class UserGroupModelImpl extends BaseModelImpl<UserGroup>
 		attributes.put("parentUserGroupId", getParentUserGroupId());
 		attributes.put("name", getName());
 		attributes.put("description", getDescription());
-		attributes.put("addedByLDAPImport", getAddedByLDAPImport());
+		attributes.put("addedByLDAPImport", isAddedByLDAPImport());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -602,7 +602,7 @@ public class UserGroupModelImpl extends BaseModelImpl<UserGroup>
 		userGroupImpl.setParentUserGroupId(getParentUserGroupId());
 		userGroupImpl.setName(getName());
 		userGroupImpl.setDescription(getDescription());
-		userGroupImpl.setAddedByLDAPImport(getAddedByLDAPImport());
+		userGroupImpl.setAddedByLDAPImport(isAddedByLDAPImport());
 
 		userGroupImpl.resetOriginalValues();
 
@@ -744,7 +744,7 @@ public class UserGroupModelImpl extends BaseModelImpl<UserGroup>
 			userGroupCacheModel.description = null;
 		}
 
-		userGroupCacheModel.addedByLDAPImport = getAddedByLDAPImport();
+		userGroupCacheModel.addedByLDAPImport = isAddedByLDAPImport();
 
 		return userGroupCacheModel;
 	}
@@ -776,7 +776,7 @@ public class UserGroupModelImpl extends BaseModelImpl<UserGroup>
 		sb.append(", description=");
 		sb.append(getDescription());
 		sb.append(", addedByLDAPImport=");
-		sb.append(getAddedByLDAPImport());
+		sb.append(isAddedByLDAPImport());
 		sb.append("}");
 
 		return sb.toString();
@@ -836,7 +836,7 @@ public class UserGroupModelImpl extends BaseModelImpl<UserGroup>
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>addedByLDAPImport</column-name><column-value><![CDATA[");
-		sb.append(getAddedByLDAPImport());
+		sb.append(isAddedByLDAPImport());
 		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");

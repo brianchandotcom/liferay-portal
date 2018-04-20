@@ -1795,7 +1795,7 @@ public class KaleoInstancePersistenceImpl extends BasePersistenceImpl<KaleoInsta
 			if ((list != null) && !list.isEmpty()) {
 				for (KaleoInstance kaleoInstance : list) {
 					if ((kaleoDefinitionVersionId != kaleoInstance.getKaleoDefinitionVersionId()) ||
-							(completed != kaleoInstance.getCompleted())) {
+							(completed != kaleoInstance.isCompleted())) {
 						list = null;
 
 						break;
@@ -3815,7 +3815,7 @@ public class KaleoInstancePersistenceImpl extends BasePersistenceImpl<KaleoInsta
 
 			args = new Object[] {
 					kaleoInstanceModelImpl.getKaleoDefinitionVersionId(),
-					kaleoInstanceModelImpl.getCompleted()
+					kaleoInstanceModelImpl.isCompleted()
 				};
 
 			finderCache.removeResult(FINDER_PATH_COUNT_BY_KDVI_C, args);

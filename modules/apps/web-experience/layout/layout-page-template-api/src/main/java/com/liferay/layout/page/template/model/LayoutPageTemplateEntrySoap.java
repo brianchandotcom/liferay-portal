@@ -48,7 +48,7 @@ public class LayoutPageTemplateEntrySoap implements Serializable {
 		soapModel.setName(model.getName());
 		soapModel.setType(model.getType());
 		soapModel.setHtmlPreviewEntryId(model.getHtmlPreviewEntryId());
-		soapModel.setDefaultTemplate(model.getDefaultTemplate());
+		soapModel.setDefaultTemplate(model.isDefaultTemplate());
 
 		return soapModel;
 	}

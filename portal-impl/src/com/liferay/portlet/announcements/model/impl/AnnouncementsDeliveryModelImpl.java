@@ -198,9 +198,9 @@ public class AnnouncementsDeliveryModelImpl extends BaseModelImpl<AnnouncementsD
 		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("type", getType());
-		attributes.put("email", getEmail());
-		attributes.put("sms", getSms());
-		attributes.put("website", getWebsite());
+		attributes.put("email", isEmail());
+		attributes.put("sms", isSms());
+		attributes.put("website", isWebsite());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -426,9 +426,9 @@ public class AnnouncementsDeliveryModelImpl extends BaseModelImpl<AnnouncementsD
 		announcementsDeliveryImpl.setCompanyId(getCompanyId());
 		announcementsDeliveryImpl.setUserId(getUserId());
 		announcementsDeliveryImpl.setType(getType());
-		announcementsDeliveryImpl.setEmail(getEmail());
-		announcementsDeliveryImpl.setSms(getSms());
-		announcementsDeliveryImpl.setWebsite(getWebsite());
+		announcementsDeliveryImpl.setEmail(isEmail());
+		announcementsDeliveryImpl.setSms(isSms());
+		announcementsDeliveryImpl.setWebsite(isWebsite());
 
 		announcementsDeliveryImpl.resetOriginalValues();
 
@@ -518,11 +518,11 @@ public class AnnouncementsDeliveryModelImpl extends BaseModelImpl<AnnouncementsD
 			announcementsDeliveryCacheModel.type = null;
 		}
 
-		announcementsDeliveryCacheModel.email = getEmail();
+		announcementsDeliveryCacheModel.email = isEmail();
 
-		announcementsDeliveryCacheModel.sms = getSms();
+		announcementsDeliveryCacheModel.sms = isSms();
 
-		announcementsDeliveryCacheModel.website = getWebsite();
+		announcementsDeliveryCacheModel.website = isWebsite();
 
 		return announcementsDeliveryCacheModel;
 	}
@@ -540,11 +540,11 @@ public class AnnouncementsDeliveryModelImpl extends BaseModelImpl<AnnouncementsD
 		sb.append(", type=");
 		sb.append(getType());
 		sb.append(", email=");
-		sb.append(getEmail());
+		sb.append(isEmail());
 		sb.append(", sms=");
-		sb.append(getSms());
+		sb.append(isSms());
 		sb.append(", website=");
-		sb.append(getWebsite());
+		sb.append(isWebsite());
 		sb.append("}");
 
 		return sb.toString();
@@ -577,15 +577,15 @@ public class AnnouncementsDeliveryModelImpl extends BaseModelImpl<AnnouncementsD
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>email</column-name><column-value><![CDATA[");
-		sb.append(getEmail());
+		sb.append(isEmail());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>sms</column-name><column-value><![CDATA[");
-		sb.append(getSms());
+		sb.append(isSms());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>website</column-name><column-value><![CDATA[");
-		sb.append(getWebsite());
+		sb.append(isWebsite());
 		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");

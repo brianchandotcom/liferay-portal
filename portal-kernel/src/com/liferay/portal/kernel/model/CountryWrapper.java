@@ -62,8 +62,8 @@ public class CountryWrapper implements Country, ModelWrapper<Country> {
 		attributes.put("a3", getA3());
 		attributes.put("number", getNumber());
 		attributes.put("idd", getIdd());
-		attributes.put("zipRequired", getZipRequired());
-		attributes.put("active", getActive());
+		attributes.put("zipRequired", isZipRequired());
+		attributes.put("active", isActive());
 
 		return attributes;
 	}

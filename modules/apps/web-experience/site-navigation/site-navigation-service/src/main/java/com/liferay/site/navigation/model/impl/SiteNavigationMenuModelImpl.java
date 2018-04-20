@@ -214,7 +214,7 @@ public class SiteNavigationMenuModelImpl extends BaseModelImpl<SiteNavigationMen
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("name", getName());
 		attributes.put("type", getType());
-		attributes.put("auto", getAuto());
+		attributes.put("auto", isAuto());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -519,7 +519,7 @@ public class SiteNavigationMenuModelImpl extends BaseModelImpl<SiteNavigationMen
 		siteNavigationMenuImpl.setModifiedDate(getModifiedDate());
 		siteNavigationMenuImpl.setName(getName());
 		siteNavigationMenuImpl.setType(getType());
-		siteNavigationMenuImpl.setAuto(getAuto());
+		siteNavigationMenuImpl.setAuto(isAuto());
 
 		siteNavigationMenuImpl.resetOriginalValues();
 
@@ -649,7 +649,7 @@ public class SiteNavigationMenuModelImpl extends BaseModelImpl<SiteNavigationMen
 
 		siteNavigationMenuCacheModel.type = getType();
 
-		siteNavigationMenuCacheModel.auto = getAuto();
+		siteNavigationMenuCacheModel.auto = isAuto();
 
 		return siteNavigationMenuCacheModel;
 	}
@@ -677,7 +677,7 @@ public class SiteNavigationMenuModelImpl extends BaseModelImpl<SiteNavigationMen
 		sb.append(", type=");
 		sb.append(getType());
 		sb.append(", auto=");
-		sb.append(getAuto());
+		sb.append(isAuto());
 		sb.append("}");
 
 		return sb.toString();
@@ -729,7 +729,7 @@ public class SiteNavigationMenuModelImpl extends BaseModelImpl<SiteNavigationMen
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>auto</column-name><column-value><![CDATA[");
-		sb.append(getAuto());
+		sb.append(isAuto());
 		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");

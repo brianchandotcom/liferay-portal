@@ -318,8 +318,8 @@ public class JournalArticleModelImpl extends BaseModelImpl<JournalArticle>
 		attributes.put("displayDate", getDisplayDate());
 		attributes.put("expirationDate", getExpirationDate());
 		attributes.put("reviewDate", getReviewDate());
-		attributes.put("indexable", getIndexable());
-		attributes.put("smallImage", getSmallImage());
+		attributes.put("indexable", isIndexable());
+		attributes.put("smallImage", isSmallImage());
 		attributes.put("smallImageId", getSmallImageId());
 		attributes.put("smallImageURL", getSmallImageURL());
 		attributes.put("lastPublishDate", getLastPublishDate());
@@ -1512,8 +1512,8 @@ public class JournalArticleModelImpl extends BaseModelImpl<JournalArticle>
 		journalArticleImpl.setDisplayDate(getDisplayDate());
 		journalArticleImpl.setExpirationDate(getExpirationDate());
 		journalArticleImpl.setReviewDate(getReviewDate());
-		journalArticleImpl.setIndexable(getIndexable());
-		journalArticleImpl.setSmallImage(getSmallImage());
+		journalArticleImpl.setIndexable(isIndexable());
+		journalArticleImpl.setSmallImage(isSmallImage());
 		journalArticleImpl.setSmallImageId(getSmallImageId());
 		journalArticleImpl.setSmallImageURL(getSmallImageURL());
 		journalArticleImpl.setLastPublishDate(getLastPublishDate());
@@ -1809,9 +1809,9 @@ public class JournalArticleModelImpl extends BaseModelImpl<JournalArticle>
 			journalArticleCacheModel.reviewDate = Long.MIN_VALUE;
 		}
 
-		journalArticleCacheModel.indexable = getIndexable();
+		journalArticleCacheModel.indexable = isIndexable();
 
-		journalArticleCacheModel.smallImage = getSmallImage();
+		journalArticleCacheModel.smallImage = isSmallImage();
 
 		journalArticleCacheModel.smallImageId = getSmallImageId();
 
@@ -1911,9 +1911,9 @@ public class JournalArticleModelImpl extends BaseModelImpl<JournalArticle>
 		sb.append(", reviewDate=");
 		sb.append(getReviewDate());
 		sb.append(", indexable=");
-		sb.append(getIndexable());
+		sb.append(isIndexable());
 		sb.append(", smallImage=");
-		sb.append(getSmallImage());
+		sb.append(isSmallImage());
 		sb.append(", smallImageId=");
 		sb.append(getSmallImageId());
 		sb.append(", smallImageURL=");
@@ -2039,11 +2039,11 @@ public class JournalArticleModelImpl extends BaseModelImpl<JournalArticle>
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>indexable</column-name><column-value><![CDATA[");
-		sb.append(getIndexable());
+		sb.append(isIndexable());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>smallImage</column-name><column-value><![CDATA[");
-		sb.append(getSmallImage());
+		sb.append(isSmallImage());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>smallImageId</column-name><column-value><![CDATA[");

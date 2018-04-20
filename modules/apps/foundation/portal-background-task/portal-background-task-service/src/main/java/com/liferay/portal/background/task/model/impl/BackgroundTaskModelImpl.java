@@ -236,7 +236,7 @@ public class BackgroundTaskModelImpl extends BaseModelImpl<BackgroundTask>
 		attributes.put("servletContextNames", getServletContextNames());
 		attributes.put("taskExecutorClassName", getTaskExecutorClassName());
 		attributes.put("taskContextMap", getTaskContextMap());
-		attributes.put("completed", getCompleted());
+		attributes.put("completed", isCompleted());
 		attributes.put("completionDate", getCompletionDate());
 		attributes.put("status", getStatus());
 		attributes.put("statusMessage", getStatusMessage());
@@ -691,7 +691,7 @@ public class BackgroundTaskModelImpl extends BaseModelImpl<BackgroundTask>
 		backgroundTaskImpl.setServletContextNames(getServletContextNames());
 		backgroundTaskImpl.setTaskExecutorClassName(getTaskExecutorClassName());
 		backgroundTaskImpl.setTaskContextMap(getTaskContextMap());
-		backgroundTaskImpl.setCompleted(getCompleted());
+		backgroundTaskImpl.setCompleted(isCompleted());
 		backgroundTaskImpl.setCompletionDate(getCompletionDate());
 		backgroundTaskImpl.setStatus(getStatus());
 		backgroundTaskImpl.setStatusMessage(getStatusMessage());
@@ -849,7 +849,7 @@ public class BackgroundTaskModelImpl extends BaseModelImpl<BackgroundTask>
 
 		backgroundTaskCacheModel.taskContextMap = getTaskContextMap();
 
-		backgroundTaskCacheModel.completed = getCompleted();
+		backgroundTaskCacheModel.completed = isCompleted();
 
 		Date completionDate = getCompletionDate();
 
@@ -902,7 +902,7 @@ public class BackgroundTaskModelImpl extends BaseModelImpl<BackgroundTask>
 		sb.append(", taskContextMap=");
 		sb.append(getTaskContextMap());
 		sb.append(", completed=");
-		sb.append(getCompleted());
+		sb.append(isCompleted());
 		sb.append(", completionDate=");
 		sb.append(getCompletionDate());
 		sb.append(", status=");
@@ -972,7 +972,7 @@ public class BackgroundTaskModelImpl extends BaseModelImpl<BackgroundTask>
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>completed</column-name><column-value><![CDATA[");
-		sb.append(getCompleted());
+		sb.append(isCompleted());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>completionDate</column-name><column-value><![CDATA[");

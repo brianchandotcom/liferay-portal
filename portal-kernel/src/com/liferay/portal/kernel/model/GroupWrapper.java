@@ -70,13 +70,13 @@ public class GroupWrapper implements Group, ModelWrapper<Group> {
 		attributes.put("description", getDescription());
 		attributes.put("type", getType());
 		attributes.put("typeSettings", getTypeSettings());
-		attributes.put("manualMembership", getManualMembership());
+		attributes.put("manualMembership", isManualMembership());
 		attributes.put("membershipRestriction", getMembershipRestriction());
 		attributes.put("friendlyURL", getFriendlyURL());
-		attributes.put("site", getSite());
+		attributes.put("site", isSite());
 		attributes.put("remoteStagingGroupCount", getRemoteStagingGroupCount());
-		attributes.put("inheritContent", getInheritContent());
-		attributes.put("active", getActive());
+		attributes.put("inheritContent", isInheritContent());
+		attributes.put("active", isActive());
 
 		return attributes;
 	}

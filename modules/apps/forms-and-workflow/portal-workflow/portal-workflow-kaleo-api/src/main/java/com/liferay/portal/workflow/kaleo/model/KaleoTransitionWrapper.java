@@ -73,7 +73,7 @@ public class KaleoTransitionWrapper implements KaleoTransition,
 		attributes.put("sourceKaleoNodeName", getSourceKaleoNodeName());
 		attributes.put("targetKaleoNodeId", getTargetKaleoNodeId());
 		attributes.put("targetKaleoNodeName", getTargetKaleoNodeName());
-		attributes.put("defaultTransition", getDefaultTransition());
+		attributes.put("defaultTransition", isDefaultTransition());
 
 		return attributes;
 	}

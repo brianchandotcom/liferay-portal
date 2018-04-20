@@ -44,21 +44,21 @@ public class AccountSoap implements Serializable {
 		soapModel.setProtocol(model.getProtocol());
 		soapModel.setIncomingHostName(model.getIncomingHostName());
 		soapModel.setIncomingPort(model.getIncomingPort());
-		soapModel.setIncomingSecure(model.getIncomingSecure());
+		soapModel.setIncomingSecure(model.isIncomingSecure());
 		soapModel.setOutgoingHostName(model.getOutgoingHostName());
 		soapModel.setOutgoingPort(model.getOutgoingPort());
-		soapModel.setOutgoingSecure(model.getOutgoingSecure());
+		soapModel.setOutgoingSecure(model.isOutgoingSecure());
 		soapModel.setLogin(model.getLogin());
 		soapModel.setPassword(model.getPassword());
-		soapModel.setSavePassword(model.getSavePassword());
+		soapModel.setSavePassword(model.isSavePassword());
 		soapModel.setSignature(model.getSignature());
-		soapModel.setUseSignature(model.getUseSignature());
+		soapModel.setUseSignature(model.isUseSignature());
 		soapModel.setFolderPrefix(model.getFolderPrefix());
 		soapModel.setInboxFolderId(model.getInboxFolderId());
 		soapModel.setDraftFolderId(model.getDraftFolderId());
 		soapModel.setSentFolderId(model.getSentFolderId());
 		soapModel.setTrashFolderId(model.getTrashFolderId());
-		soapModel.setDefaultSender(model.getDefaultSender());
+		soapModel.setDefaultSender(model.isDefaultSender());
 
 		return soapModel;
 	}

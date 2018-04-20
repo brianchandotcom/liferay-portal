@@ -222,8 +222,8 @@ public class CalendarBookingPersistenceTest {
 			newCalendarBooking.getStartTime());
 		Assert.assertEquals(existingCalendarBooking.getEndTime(),
 			newCalendarBooking.getEndTime());
-		Assert.assertEquals(existingCalendarBooking.getAllDay(),
-			newCalendarBooking.getAllDay());
+		Assert.assertEquals(existingCalendarBooking.isAllDay(),
+			newCalendarBooking.isAllDay());
 		Assert.assertEquals(existingCalendarBooking.getRecurrence(),
 			newCalendarBooking.getRecurrence());
 		Assert.assertEquals(existingCalendarBooking.getFirstReminder(),

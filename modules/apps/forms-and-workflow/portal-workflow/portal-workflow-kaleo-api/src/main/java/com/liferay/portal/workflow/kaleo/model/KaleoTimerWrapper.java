@@ -68,7 +68,7 @@ public class KaleoTimerWrapper implements KaleoTimer, ModelWrapper<KaleoTimer> {
 		attributes.put("kaleoClassPK", getKaleoClassPK());
 		attributes.put("kaleoDefinitionVersionId", getKaleoDefinitionVersionId());
 		attributes.put("name", getName());
-		attributes.put("blocking", getBlocking());
+		attributes.put("blocking", isBlocking());
 		attributes.put("description", getDescription());
 		attributes.put("duration", getDuration());
 		attributes.put("scale", getScale());

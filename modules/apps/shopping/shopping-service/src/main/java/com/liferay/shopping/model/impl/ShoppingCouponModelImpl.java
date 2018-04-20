@@ -239,7 +239,7 @@ public class ShoppingCouponModelImpl extends BaseModelImpl<ShoppingCoupon>
 		attributes.put("description", getDescription());
 		attributes.put("startDate", getStartDate());
 		attributes.put("endDate", getEndDate());
-		attributes.put("active", getActive());
+		attributes.put("active", isActive());
 		attributes.put("limitCategories", getLimitCategories());
 		attributes.put("limitSkus", getLimitSkus());
 		attributes.put("minOrder", getMinOrder());
@@ -691,7 +691,7 @@ public class ShoppingCouponModelImpl extends BaseModelImpl<ShoppingCoupon>
 		shoppingCouponImpl.setDescription(getDescription());
 		shoppingCouponImpl.setStartDate(getStartDate());
 		shoppingCouponImpl.setEndDate(getEndDate());
-		shoppingCouponImpl.setActive(getActive());
+		shoppingCouponImpl.setActive(isActive());
 		shoppingCouponImpl.setLimitCategories(getLimitCategories());
 		shoppingCouponImpl.setLimitSkus(getLimitSkus());
 		shoppingCouponImpl.setMinOrder(getMinOrder());
@@ -849,7 +849,7 @@ public class ShoppingCouponModelImpl extends BaseModelImpl<ShoppingCoupon>
 			shoppingCouponCacheModel.endDate = Long.MIN_VALUE;
 		}
 
-		shoppingCouponCacheModel.active = getActive();
+		shoppingCouponCacheModel.active = isActive();
 
 		shoppingCouponCacheModel.limitCategories = getLimitCategories();
 
@@ -911,7 +911,7 @@ public class ShoppingCouponModelImpl extends BaseModelImpl<ShoppingCoupon>
 		sb.append(", endDate=");
 		sb.append(getEndDate());
 		sb.append(", active=");
-		sb.append(getActive());
+		sb.append(isActive());
 		sb.append(", limitCategories=");
 		sb.append(getLimitCategories());
 		sb.append(", limitSkus=");
@@ -985,7 +985,7 @@ public class ShoppingCouponModelImpl extends BaseModelImpl<ShoppingCoupon>
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>active</column-name><column-value><![CDATA[");
-		sb.append(getActive());
+		sb.append(isActive());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>limitCategories</column-name><column-value><![CDATA[");

@@ -75,9 +75,9 @@ public class KaleoTimerInstanceTokenWrapper implements KaleoTimerInstanceToken,
 		attributes.put("kaleoTaskInstanceTokenId", getKaleoTaskInstanceTokenId());
 		attributes.put("kaleoTimerId", getKaleoTimerId());
 		attributes.put("kaleoTimerName", getKaleoTimerName());
-		attributes.put("blocking", getBlocking());
+		attributes.put("blocking", isBlocking());
 		attributes.put("completionUserId", getCompletionUserId());
-		attributes.put("completed", getCompleted());
+		attributes.put("completed", isCompleted());
 		attributes.put("completionDate", getCompletionDate());
 		attributes.put("workflowContext", getWorkflowContext());
 

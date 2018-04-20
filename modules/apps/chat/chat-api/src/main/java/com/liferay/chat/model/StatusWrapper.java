@@ -59,11 +59,11 @@ public class StatusWrapper implements Status, ModelWrapper<Status> {
 		attributes.put("statusId", getStatusId());
 		attributes.put("userId", getUserId());
 		attributes.put("modifiedDate", getModifiedDate());
-		attributes.put("online", getOnline());
-		attributes.put("awake", getAwake());
+		attributes.put("online", isOnline());
+		attributes.put("awake", isAwake());
 		attributes.put("activePanelIds", getActivePanelIds());
 		attributes.put("message", getMessage());
-		attributes.put("playSound", getPlaySound());
+		attributes.put("playSound", isPlaySound());
 
 		return attributes;
 	}

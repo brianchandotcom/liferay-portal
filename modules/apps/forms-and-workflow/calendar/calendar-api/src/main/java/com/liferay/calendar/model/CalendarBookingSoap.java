@@ -52,7 +52,7 @@ public class CalendarBookingSoap implements Serializable {
 		soapModel.setLocation(model.getLocation());
 		soapModel.setStartTime(model.getStartTime());
 		soapModel.setEndTime(model.getEndTime());
-		soapModel.setAllDay(model.getAllDay());
+		soapModel.setAllDay(model.isAllDay());
 		soapModel.setRecurrence(model.getRecurrence());
 		soapModel.setFirstReminder(model.getFirstReminder());
 		soapModel.setFirstReminderType(model.getFirstReminderType());

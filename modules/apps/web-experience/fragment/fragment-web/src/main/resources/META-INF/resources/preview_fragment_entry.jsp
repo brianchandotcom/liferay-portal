@@ -40,6 +40,8 @@
 		document.open();
 
 		document.write(content);
+
+		localStorage.removeItem(NAMESPACE);
 	}
 
 	if (!window[NAMESPACE]) {

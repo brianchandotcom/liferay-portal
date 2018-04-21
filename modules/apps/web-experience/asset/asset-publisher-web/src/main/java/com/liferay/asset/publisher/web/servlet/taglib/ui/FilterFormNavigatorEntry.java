@@ -15,10 +15,18 @@
 package com.liferay.asset.publisher.web.servlet.taglib.ui;
 
 import com.liferay.asset.publisher.constants.AssetPublisherConstants;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorEntry;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.WebKeys;
+
+import java.io.IOException;
 
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -44,6 +52,30 @@ public class FilterFormNavigatorEntry
 	}
 
 	@Override
+	public void include(
+			HttpServletRequest request, HttpServletResponse response)
+		throws IOException {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		try {
+			long[] categorizableGroupIds = _portal.getSharedContentSiteGroupIds(
+				themeDisplay.getCompanyId(), themeDisplay.getScopeGroupId(),
+				themeDisplay.getUserId());
+
+			request.setAttribute(
+				"configuration.jsp-categorizableGroupIds",
+				categorizableGroupIds);
+		}
+		catch (PortalException pe) {
+			throw new IOException(pe);
+		}
+
+		super.include(request, response);
+	}
+
+	@Override
 	public boolean isVisible(User user, Object object) {
 		if (isDynamicAssetSelection()) {
 			return true;
@@ -65,5 +97,8 @@ public class FilterFormNavigatorEntry
 	protected String getJspPath() {
 		return "/configuration/filter.jsp";
 	}
+
+	@Reference
+	private Portal _portal;
 
 }

@@ -1,6 +1,0 @@
-Bundle-Name: Liferay Commerce Price List Qualification Type Service
-Bundle-SymbolicName: com.liferay.commerce.price.list.qualification.type.service
-Bundle-Version: 1.0.0
-Liferay-Require-SchemaVersion: 1.0.0
-Liferay-Service: true
--dsannotations-options: inherit

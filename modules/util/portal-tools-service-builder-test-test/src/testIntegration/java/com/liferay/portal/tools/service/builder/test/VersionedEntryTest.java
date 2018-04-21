@@ -911,6 +911,8 @@ public class VersionedEntryTest {
 		VersionedEntryContent expectedVersionedEntryContent,
 		List<VersionedEntryContent> versionedEntryContents) {
 
+		boolean found = false;
+
 		for (VersionedEntryContent versionedEntryContent :
 				versionedEntryContents) {
 
@@ -922,14 +924,17 @@ public class VersionedEntryTest {
 					expectedVersionedEntryContent.getContent(),
 					versionedEntryContent.getContent());
 
-				return;
+				found = true;
+
+				break;
 			}
 		}
 
-		Assert.fail(
+		Assert.assertTrue(
 			StringBundler.concat(
 				"Failed to find ", expectedVersionedEntryContent.toString(),
-				" in ", versionedEntryContents.toString()));
+				" in ", versionedEntryContents.toString()),
+			found);
 	}
 
 	private void _assertNotContains(

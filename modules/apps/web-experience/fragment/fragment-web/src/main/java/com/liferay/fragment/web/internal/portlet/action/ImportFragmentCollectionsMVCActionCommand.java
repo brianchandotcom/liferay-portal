@@ -15,6 +15,7 @@
 package com.liferay.fragment.web.internal.portlet.action;
 
 import com.liferay.fragment.constants.FragmentPortletKeys;
+import com.liferay.fragment.exception.InvalidImportFileException;
 import com.liferay.fragment.web.internal.constatns.ExportImportConstants;
 import com.liferay.fragment.web.internal.portlet.util.ImportUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -131,6 +132,11 @@ public class ImportFragmentCollectionsMVCActionCommand
 
 				ZipReader zipReader = ZipReaderFactoryUtil.getZipReader(
 					tempFileEntry.getContentStream());
+
+				if (!_importUtil.hasFragmentCollection(zipReader)) {
+					throw new InvalidImportFileException(
+						"selected-file-does-not-contain-fragment-collections");
+				}
 
 				_importUtil.importFragmentCollections(
 					actionRequest, zipReader, overwrite);

@@ -17,9 +17,9 @@ package com.liferay.commerce.price.list.web.internal.portlet.action;
 import com.liferay.commerce.constants.CommercePortletKeys;
 import com.liferay.commerce.exception.NoSuchPriceListException;
 import com.liferay.commerce.model.CommercePriceList;
-import com.liferay.commerce.model.CommercePriceListQualificationTypeRel;
-import com.liferay.commerce.service.CommercePriceListQualificationTypeRelService;
+import com.liferay.commerce.model.CommercePriceListUserSegmentEntryRel;
 import com.liferay.commerce.service.CommercePriceListService;
+import com.liferay.commerce.service.CommercePriceListUserSegmentEntryRelService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
@@ -212,68 +212,63 @@ public class EditCommercePriceListMVCActionCommand
 		}
 
 		if (commercePriceList != null) {
-			updateCommercePriceListQualificationTypeRels(
+			updateCommercePriceListUserSegmentEntryRels(
 				actionRequest, commercePriceList);
 		}
 
 		return commercePriceList;
 	}
 
-	protected void updateCommercePriceListQualificationTypeRels(
+	protected void updateCommercePriceListUserSegmentEntryRels(
 			ActionRequest actionRequest, CommercePriceList commercePriceList)
 		throws PortalException {
 
-		String[] addCommercePriceListQualificationTypeRelKeys =
-			ParamUtil.getStringValues(
-				actionRequest, "addCommercePriceListQualificationTypeRelKeys");
-		long[] deleteCommercePriceListQualificationTypeRelIds =
+		long[] addCommerceUserSegmentEntryIds =
+			ParamUtil.getLongValues(
+				actionRequest, "addCommerceUserSegmentEntryIds");
+		long[] deleteCommercePriceListUserSegmentEntryRelIds =
 			ParamUtil.getLongValues(
 				actionRequest,
-				"deleteCommercePriceListQualificationTypeRelIds");
+				"deleteCommercePriceListUserSegmentEntryRelIds");
 
-		if (deleteCommercePriceListQualificationTypeRelIds.length > 0) {
-			for (long commercePriceListQualificationTypeRelId :
-					deleteCommercePriceListQualificationTypeRelIds) {
+		if (deleteCommercePriceListUserSegmentEntryRelIds.length > 0) {
+			for (long deleteCommercePriceListUserSegmentEntryRelId :
+				deleteCommercePriceListUserSegmentEntryRelIds) {
 
-				_commercePriceListQualificationTypeRelService.
-					deleteCommercePriceListQualificationTypeRel(
-						commercePriceListQualificationTypeRelId);
+				_commercePriceListUserSegmentEntryRelService.
+					deleteCommercePriceListUserSegmentEntryRel(
+						deleteCommercePriceListUserSegmentEntryRelId);
 			}
 		}
 
-		if (addCommercePriceListQualificationTypeRelKeys.length > 0) {
+		if (addCommerceUserSegmentEntryIds.length > 0) {
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(
-				CommercePriceListQualificationTypeRel.class.getName(),
+				CommercePriceListUserSegmentEntryRel.class.getName(),
 				actionRequest);
 
-			for (int i = 0;
-				 i < addCommercePriceListQualificationTypeRelKeys.length;
-				 i++) {
+			for (long addCommerceUserSegmentEntryId :
+				addCommerceUserSegmentEntryIds) {
 
-				String commercePriceListQualificationTypeRelKey =
-					addCommercePriceListQualificationTypeRelKeys[i];
+				CommercePriceListUserSegmentEntryRel
+					commercePriceListUserSegmentEntryRel =
+						_commercePriceListUserSegmentEntryRelService.
+							fetchCommercePriceListUserSegmentEntryRel(
+								commercePriceList.getCommercePriceListId(),
+								addCommerceUserSegmentEntryId);
 
-				CommercePriceListQualificationTypeRel
-					commercePriceListQualificationTypeRel =
-						_commercePriceListQualificationTypeRelService.
-							fetchCommercePriceListQualificationTypeRel(
-								commercePriceListQualificationTypeRelKey,
-								commercePriceList.getCommercePriceListId());
-
-				if (commercePriceListQualificationTypeRel == null) {
-					_commercePriceListQualificationTypeRelService.
-						addCommercePriceListQualificationTypeRel(
+				if (commercePriceListUserSegmentEntryRel == null) {
+					_commercePriceListUserSegmentEntryRelService.
+						addCommercePriceListUserSegmentEntryRel(
 							commercePriceList.getCommercePriceListId(),
-							commercePriceListQualificationTypeRelKey, i,
-							serviceContext);
+							addCommerceUserSegmentEntryId, 0, serviceContext);
 				}
 			}
 		}
 	}
 
 	@Reference
-	private CommercePriceListQualificationTypeRelService
-		_commercePriceListQualificationTypeRelService;
+	private CommercePriceListUserSegmentEntryRelService
+		_commercePriceListUserSegmentEntryRelService;
 
 	@Reference
 	private CommercePriceListService _commercePriceListService;

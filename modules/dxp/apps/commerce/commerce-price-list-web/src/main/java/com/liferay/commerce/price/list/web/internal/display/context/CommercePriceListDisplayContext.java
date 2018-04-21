@@ -17,15 +17,13 @@ package com.liferay.commerce.price.list.web.internal.display.context;
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.service.CommerceCurrencyService;
 import com.liferay.commerce.currency.util.comparator.CommerceCurrencyPriorityComparator;
-import com.liferay.commerce.item.selector.criterion.CommercePriceListQualificationTypeItemSelectorCriterion;
 import com.liferay.commerce.model.CommercePriceList;
-import com.liferay.commerce.model.CommercePriceListQualificationTypeRel;
-import com.liferay.commerce.price.CommercePriceListQualificationType;
-import com.liferay.commerce.price.CommercePriceListQualificationTypeRegistry;
+import com.liferay.commerce.model.CommercePriceListUserSegmentEntryRel;
 import com.liferay.commerce.price.list.web.display.context.BaseCommercePriceListDisplayContext;
 import com.liferay.commerce.price.list.web.portlet.action.CommercePriceListActionHelper;
-import com.liferay.commerce.service.CommercePriceListQualificationTypeRelService;
 import com.liferay.commerce.service.CommercePriceListService;
+import com.liferay.commerce.service.CommercePriceListUserSegmentEntryRelService;
+import com.liferay.commerce.user.segment.item.selector.criterion.CommerceUserSegmentEntryItemSelectorCriterion;
 import com.liferay.commerce.util.CommerceUtil;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.ItemSelectorReturnType;
@@ -38,7 +36,6 @@ import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -48,6 +45,7 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Stream;
 
 import javax.portlet.PortletURL;
 
@@ -62,20 +60,16 @@ public class CommercePriceListDisplayContext
 	public CommercePriceListDisplayContext(
 		CommercePriceListActionHelper commercePriceListActionHelper,
 		CommerceCurrencyService commerceCurrencyService,
-		CommercePriceListQualificationTypeRegistry
-			commercePriceListQualificationTypeRegistry,
-		CommercePriceListQualificationTypeRelService
-			commercePriceListQualificationTypeRelService,
+		CommercePriceListUserSegmentEntryRelService
+			commercePriceListUserSegmentEntryRelService,
 		CommercePriceListService commercePriceListService,
 		HttpServletRequest httpServletRequest, ItemSelector itemSelector) {
 
 		super(commercePriceListActionHelper, httpServletRequest);
 
 		_commerceCurrencyService = commerceCurrencyService;
-		_commercePriceListQualificationTypeRegistry =
-			commercePriceListQualificationTypeRegistry;
-		_commercePriceListQualificationTypeRelService =
-			commercePriceListQualificationTypeRelService;
+		_commercePriceListUserSegmentEntryRelService =
+			commercePriceListUserSegmentEntryRelService;
 		_commercePriceListService = commercePriceListService;
 		_itemSelector = itemSelector;
 
@@ -93,51 +87,37 @@ public class CommercePriceListDisplayContext
 			QueryUtil.ALL_POS, new CommerceCurrencyPriorityComparator(true));
 	}
 
-	public CommercePriceListQualificationType
-		getCommercePriceListQualificationType(String key) {
-
-		return _commercePriceListQualificationTypeRegistry.
-			getCommercePriceListQualificationType(key);
-	}
-
-	public List<CommercePriceListQualificationTypeRel>
-			getCommercePriceListQualificationTypeRels()
+	public List<CommercePriceListUserSegmentEntryRel>
+			getCommercePriceListUserSegmentEntryRels()
 		throws PortalException {
 
-		return _commercePriceListQualificationTypeRelService.
-			getCommercePriceListQualificationTypeRels(getCommercePriceListId());
-	}
-
-	public List<CommercePriceListQualificationType>
-		getCommercePriceListQualificationTypes() {
-
-		return _commercePriceListQualificationTypeRegistry.
-			getCommercePriceListQualificationTypes();
+		return _commercePriceListUserSegmentEntryRelService.
+			getCommercePriceListUserSegmentEntryRels(getCommercePriceListId());
 	}
 
 	public String getItemSelectorUrl() throws PortalException {
 		RequestBackedPortletURLFactory requestBackedPortletURLFactory =
 			RequestBackedPortletURLFactoryUtil.create(httpServletRequest);
 
-		CommercePriceListQualificationTypeItemSelectorCriterion
-			commercePriceListQualificationTypeItemSelectorCriterion =
-				new CommercePriceListQualificationTypeItemSelectorCriterion();
+		CommerceUserSegmentEntryItemSelectorCriterion
+			commerceUserSegmentEntryItemSelectorCriterion =
+				new CommerceUserSegmentEntryItemSelectorCriterion();
 
-		commercePriceListQualificationTypeItemSelectorCriterion.
+		commerceUserSegmentEntryItemSelectorCriterion.
 			setDesiredItemSelectorReturnTypes(
 				Collections.<ItemSelectorReturnType>singletonList(
 					new UUIDItemSelectorReturnType()));
 
 		PortletURL itemSelectorURL = _itemSelector.getItemSelectorURL(
-			requestBackedPortletURLFactory, "qualificationTypesSelectItem",
-			commercePriceListQualificationTypeItemSelectorCriterion);
+			requestBackedPortletURLFactory, "userSegmentSelectItem",
+			commerceUserSegmentEntryItemSelectorCriterion);
 
-		String checkedCommercePriceListQualificationTypeKeys = StringUtil.merge(
-			getCheckedCommercePriceListQualificationTypeKeys());
+		String checkedCommerceUserSegmentEntryIds = StringUtil.merge(
+			getCheckedCommerceUserSegmentEntryIds());
 
 		itemSelectorURL.setParameter(
-			"checkedCommercePriceListQualificationTypeKeys",
-			checkedCommercePriceListQualificationTypeKeys);
+			"checkedCommerceUserSegmentEntryIds",
+			checkedCommerceUserSegmentEntryIds);
 
 		return itemSelectorURL.toString();
 	}
@@ -219,38 +199,38 @@ public class CommercePriceListDisplayContext
 		return _status;
 	}
 
-	protected String[] getCheckedCommercePriceListQualificationTypeKeys()
+	protected long[] getCheckedCommerceUserSegmentEntryIds()
 		throws PortalException {
 
-		List<String> commercePriceListQualificationTypeKeysList =
+		List<Long> commercePriceListUserSegmentEntryRelIdsList =
 			new ArrayList<>();
 
-		List<CommercePriceListQualificationTypeRel>
-			commercePriceListQualificationTypeRels =
-				getCommercePriceListQualificationTypeRels();
+		List<CommercePriceListUserSegmentEntryRel>
+			commercePriceListUserSegmentEntryRels =
+				getCommercePriceListUserSegmentEntryRels();
 
-		for (CommercePriceListQualificationTypeRel
-				commercePriceListQualificationTypeRel :
-					commercePriceListQualificationTypeRels) {
+		for (CommercePriceListUserSegmentEntryRel
+			 commercePriceListUserSegmentEntryRel :
+				commercePriceListUserSegmentEntryRels) {
 
-			commercePriceListQualificationTypeKeysList.add(
-				commercePriceListQualificationTypeRel.
-					getCommercePriceListQualificationType());
+			commercePriceListUserSegmentEntryRelIdsList.add(
+				commercePriceListUserSegmentEntryRel.
+					getCommercePriceListUserSegmentEntryRelId());
 		}
 
-		if (!commercePriceListQualificationTypeKeysList.isEmpty()) {
-			return ArrayUtil.toStringArray(
-				commercePriceListQualificationTypeKeysList);
+		if (commercePriceListUserSegmentEntryRelIdsList.isEmpty()) {
+			return new long[0];
 		}
 
-		return new String[0];
+		Stream<Long> stream =
+			commercePriceListUserSegmentEntryRelIdsList.stream();
+
+		return  stream.mapToLong(l -> l).toArray();
 	}
 
 	private final CommerceCurrencyService _commerceCurrencyService;
-	private final CommercePriceListQualificationTypeRegistry
-		_commercePriceListQualificationTypeRegistry;
-	private final CommercePriceListQualificationTypeRelService
-		_commercePriceListQualificationTypeRelService;
+	private final CommercePriceListUserSegmentEntryRelService
+		_commercePriceListUserSegmentEntryRelService;
 	private final CommercePriceListService _commercePriceListService;
 	private final ItemSelector _itemSelector;
 	private Integer _status;

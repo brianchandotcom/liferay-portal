@@ -15,9 +15,13 @@
 package com.liferay.fragment.entry.processor.editable.parser.impl;
 
 import com.liferay.fragment.entry.processor.editable.parser.EditableElementParser;
+import com.liferay.fragment.exception.FragmentEntryContentException;
+import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.ResourceBundle;
 
 import org.jsoup.nodes.Element;
 
@@ -47,6 +51,21 @@ public class ImageEditableElementParser implements EditableElementParser {
 		}
 
 		replaceableElement.attr("src", value);
+	}
+
+	@Override
+	public void validate(Element element) throws FragmentEntryContentException {
+		List<Element> elements = element.getElementsByTag("img");
+
+		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+			"content.Language", getClass());
+
+		if (elements.size() != 1) {
+			throw new FragmentEntryContentException(
+				LanguageUtil.get(
+					resourceBundle,
+					"each-editable-image-element-must-contain-img-tag"));
+		}
 	}
 
 }

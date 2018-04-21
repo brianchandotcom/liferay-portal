@@ -31,6 +31,22 @@ fragmentEntryLink.setCss(css);
 fragmentEntryLink.setHtml(html);
 fragmentEntryLink.setJs(js);
 fragmentEntryLink.setFragmentEntryId(fragmentEntryId);
+
+String content = StringPool.BLANK;
+String errorMessage = StringPool.BLANK;
+
+try {
+	content = FragmentEntryRenderUtil.renderFragmentEntryLink(fragmentEntryLink, PortletMode.VIEW.toString(), request, response);
+}
+catch (FragmentEntryContentException fece) {
+	errorMessage = fece.getMessage();
+}
 %>
 
-<%= FragmentEntryRenderUtil.renderFragmentEntryLink(fragmentEntryLink, PortletMode.VIEW.toString(), request, response) %>
+<c:if test="<%= Validator.isNotNull(errorMessage) %>">
+	<div class="alert alert-danger">
+		<liferay-ui:message key="<%= errorMessage %>" />
+	</div>
+</c:if>
+
+<%= content %>

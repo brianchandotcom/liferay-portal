@@ -179,6 +179,10 @@ public class PullRequest {
 			LabelFactory.newLabel(
 				getLabelsURL(), sb.toString(), testSuiteStatus.getColor()));
 
+		if (targetURL == null) {
+			return;
+		}
+
 		if (testSuiteStatus == TestSuiteStatus.MISSING) {
 			return;
 		}

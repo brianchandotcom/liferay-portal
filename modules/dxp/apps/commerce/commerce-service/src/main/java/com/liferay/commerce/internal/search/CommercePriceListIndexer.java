@@ -15,11 +15,9 @@
 package com.liferay.commerce.internal.search;
 
 import com.liferay.commerce.model.CommercePriceList;
-import com.liferay.commerce.model.CommercePriceListQualificationTypeRel;
-import com.liferay.commerce.price.CommercePriceListQualificationType;
-import com.liferay.commerce.price.CommercePriceListQualificationTypeRegistry;
+import com.liferay.commerce.model.CommercePriceListUserSegmentEntryRel;
 import com.liferay.commerce.service.CommercePriceListLocalService;
-import com.liferay.commerce.service.CommercePriceListQualificationTypeRelLocalService;
+import com.liferay.commerce.service.CommercePriceListUserSegmentEntryRelLocalService;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -45,6 +43,7 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.stream.Stream;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
@@ -102,25 +101,6 @@ public class CommercePriceListIndexer extends BaseIndexer<CommercePriceList> {
 				Field.STATUS, String.valueOf(WorkflowConstants.STATUS_IN_TRASH),
 				BooleanClauseOccur.MUST_NOT);
 		}
-
-		boolean qualifitacionTypes = GetterUtil.getBoolean(
-			searchContext.getAttribute("qualifitacionTypes"));
-
-		if (qualifitacionTypes) {
-			List<CommercePriceListQualificationType>
-				commercePriceListQualificationTypes =
-					_commercePriceListQualificationTypeRegistry.
-						getCommercePriceListQualificationTypes();
-
-			for (CommercePriceListQualificationType
-					commercePriceListQualificationType :
-						commercePriceListQualificationTypes) {
-
-				commercePriceListQualificationType.
-					postProcessContextBooleanFilter(
-						contextBooleanFilter, searchContext);
-			}
-		}
 	}
 
 	@Override
@@ -171,31 +151,23 @@ public class CommercePriceListIndexer extends BaseIndexer<CommercePriceList> {
 		document.addNumberSortable(
 			Field.PRIORITY, commercePriceList.getPriority());
 
-		try {
-			List<CommercePriceListQualificationTypeRel>
-				commercePriceListQualificationTypeRels =
-					_commercePriceListQualificationTypeRelLocalService.
-						getCommercePriceListQualificationTypeRels(
-							commercePriceList.getCommercePriceListId());
+		List<CommercePriceListUserSegmentEntryRel>
+			commercePriceListUserSegmentEntryRels =
+				_commercePriceListUserSegmentEntryRelLocalService.
+					getCommercePriceListUserSegmentEntryRels(
+						commercePriceList.getCommercePriceListId());
 
-			for (CommercePriceListQualificationTypeRel
-					commercePriceListQualificationTypeRel :
-						commercePriceListQualificationTypeRels) {
+		Stream<CommercePriceListUserSegmentEntryRel> stream =
+			commercePriceListUserSegmentEntryRels.stream();
 
-				CommercePriceListQualificationType
-					commercePriceListQualificationType =
-						_commercePriceListQualificationTypeRegistry.
-							getCommercePriceListQualificationType(
-								commercePriceListQualificationTypeRel.
-									getCommercePriceListQualificationType());
+		long[] commerceUserSegmentEntryIds =
+			stream.mapToLong(l -> l.getCommerceUserSegmentEntryId()).toArray();
 
-				commercePriceListQualificationType.contributeToDocument(
-					commercePriceList, document);
-			}
-		}
-		catch (Exception ex) {
-			_log.error("Error indexing Document" + commercePriceList, ex);
-		}
+		document.addNumber(
+			"commerceUserSegmentEntryIds", commercePriceList.getPriority());
+		document.addNumber(
+			"commerceUserSegmentEntryIds_required_matches",
+			commerceUserSegmentEntryIds.length);
 
 		if (_log.isDebugEnabled()) {
 			_log.debug(
@@ -288,12 +260,8 @@ public class CommercePriceListIndexer extends BaseIndexer<CommercePriceList> {
 	private CommercePriceListLocalService _commercePriceListLocalService;
 
 	@Reference
-	private CommercePriceListQualificationTypeRegistry
-		_commercePriceListQualificationTypeRegistry;
-
-	@Reference
-	private CommercePriceListQualificationTypeRelLocalService
-		_commercePriceListQualificationTypeRelLocalService;
+	private CommercePriceListUserSegmentEntryRelLocalService
+		_commercePriceListUserSegmentEntryRelLocalService;
 
 	@Reference
 	private IndexWriterHelper _indexWriterHelper;

@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.ResourceBundle;
 
 import org.jsoup.nodes.Element;
@@ -40,15 +39,7 @@ public class ImageEditableElementParser implements EditableElementParser {
 	public void replace(Element element, String value) {
 		List<Element> elements = element.getElementsByTag("img");
 
-		if (elements.size() != 1) {
-			return;
-		}
-
 		Element replaceableElement = elements.get(0);
-
-		if (!Objects.equals(replaceableElement.nodeName(), "img")) {
-			return;
-		}
 
 		replaceableElement.attr("src", value);
 	}

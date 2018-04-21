@@ -11,6 +11,7 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
+
 package com.liferay.commerce.exception;
 
 import aQute.bnd.annotation.ProviderType;
@@ -21,7 +22,8 @@ import com.liferay.portal.kernel.exception.NoSuchModelException;
  * @author Alessio Antonio Rendina
  */
 @ProviderType
-public class NoSuchPriceListUserSegmentEntryRelException extends NoSuchModelException {
+public class NoSuchPriceListUserSegmentEntryRelException
+	extends NoSuchModelException {
 
 	public NoSuchPriceListUserSegmentEntryRelException() {
 	}
@@ -30,7 +32,9 @@ public class NoSuchPriceListUserSegmentEntryRelException extends NoSuchModelExce
 		super(msg);
 	}
 
-	public NoSuchPriceListUserSegmentEntryRelException(String msg, Throwable cause) {
+	public NoSuchPriceListUserSegmentEntryRelException(
+		String msg, Throwable cause) {
+
 		super(msg, cause);
 	}
 

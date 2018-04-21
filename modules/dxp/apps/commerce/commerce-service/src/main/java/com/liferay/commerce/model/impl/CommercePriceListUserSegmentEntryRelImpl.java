@@ -25,4 +25,5 @@ public class CommercePriceListUserSegmentEntryRelImpl
 
 	public CommercePriceListUserSegmentEntryRelImpl() {
 	}
+
 }

@@ -31,10 +31,9 @@ public class CommercePriceListUserSegmentEntryRelLocalServiceImpl
 
 	@Override
 	public CommercePriceListUserSegmentEntryRel
-		addCommercePriceListUserSegmentEntryRel(
-			long commercePriceListId,
-			long commerceUserSegmentEntryId, int order,
-			ServiceContext serviceContext)
+			addCommercePriceListUserSegmentEntryRel(
+				long commercePriceListId, long commerceUserSegmentEntryId,
+				int order, ServiceContext serviceContext)
 		throws PortalException {
 
 		User user = userLocalService.getUser(serviceContext.getUserId());
@@ -45,8 +44,8 @@ public class CommercePriceListUserSegmentEntryRelLocalServiceImpl
 
 		CommercePriceListUserSegmentEntryRel
 			commercePriceListUserSegmentEntryRel =
-			commercePriceListUserSegmentEntryRelPersistence.create(
-				commercePriceListUserSegmentEntryRelId);
+				commercePriceListUserSegmentEntryRelPersistence.create(
+					commercePriceListUserSegmentEntryRelId);
 
 		commercePriceListUserSegmentEntryRel.setUuid(serviceContext.getUuid());
 		commercePriceListUserSegmentEntryRel.setGroupId(groupId);
@@ -76,8 +75,7 @@ public class CommercePriceListUserSegmentEntryRelLocalServiceImpl
 	@Override
 	public CommercePriceListUserSegmentEntryRel
 		fetchCommercePriceListUserSegmentEntryRel(
-			long commercePriceListId,
-			long commerceUserSegmentEntryId) {
+			long commercePriceListId, long commerceUserSegmentEntryId) {
 
 		return commercePriceListUserSegmentEntryRelPersistence.fetchByC_C(
 			commercePriceListId, commerceUserSegmentEntryId);
@@ -85,7 +83,7 @@ public class CommercePriceListUserSegmentEntryRelLocalServiceImpl
 
 	@Override
 	public List<CommercePriceListUserSegmentEntryRel>
-	getCommercePriceListUserSegmentEntryRels(long commercePriceListId) {
+		getCommercePriceListUserSegmentEntryRels(long commercePriceListId) {
 
 		return commercePriceListUserSegmentEntryRelPersistence.
 			findByCommercePriceListId(commercePriceListId);
@@ -93,10 +91,10 @@ public class CommercePriceListUserSegmentEntryRelLocalServiceImpl
 
 	@Override
 	public List<CommercePriceListUserSegmentEntryRel>
-	getCommercePriceListUserSegmentEntryRels(
-		long commercePriceListId, int start, int end,
-		OrderByComparator<CommercePriceListUserSegmentEntryRel>
-			orderByComparator) {
+		getCommercePriceListUserSegmentEntryRels(
+			long commercePriceListId, int start, int end,
+			OrderByComparator<CommercePriceListUserSegmentEntryRel>
+				orderByComparator) {
 
 		return commercePriceListUserSegmentEntryRelPersistence.
 			findByCommercePriceListId(
@@ -113,9 +111,9 @@ public class CommercePriceListUserSegmentEntryRelLocalServiceImpl
 
 	@Override
 	public CommercePriceListUserSegmentEntryRel
-	updateCommercePriceListUserSegmentEntryRel(
-		long commercePriceListUserSegmentEntryRelId, int order,
-		ServiceContext serviceContext)
+			updateCommercePriceListUserSegmentEntryRel(
+				long commercePriceListUserSegmentEntryRelId, int order,
+				ServiceContext serviceContext)
 		throws PortalException {
 
 		CommercePriceListUserSegmentEntryRel
@@ -130,4 +128,5 @@ public class CommercePriceListUserSegmentEntryRelLocalServiceImpl
 		return commercePriceListUserSegmentEntryRelPersistence.update(
 			commercePriceListUserSegmentEntryRel);
 	}
+
 }

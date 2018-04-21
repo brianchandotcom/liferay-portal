@@ -74,11 +74,11 @@ public class EditCommercePriceListMVCRenderCommand implements MVCRenderCommand {
 	private CommercePriceListActionHelper _commercePriceListActionHelper;
 
 	@Reference
-	private CommercePriceListUserSegmentEntryRelService
-		_commercePriceListUserSegmentEntryRelService;
+	private CommercePriceListService _commercePriceListService;
 
 	@Reference
-	private CommercePriceListService _commercePriceListService;
+	private CommercePriceListUserSegmentEntryRelService
+		_commercePriceListUserSegmentEntryRelService;
 
 	@Reference
 	private ItemSelector _itemSelector;

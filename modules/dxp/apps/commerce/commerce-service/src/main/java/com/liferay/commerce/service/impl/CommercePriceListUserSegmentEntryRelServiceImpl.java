@@ -30,10 +30,9 @@ public class CommercePriceListUserSegmentEntryRelServiceImpl
 
 	@Override
 	public CommercePriceListUserSegmentEntryRel
-		addCommercePriceListUserSegmentEntryRel(
-			long commercePriceListId,
-			long commerceUserSegmentEntryId, int order,
-			ServiceContext serviceContext)
+			addCommercePriceListUserSegmentEntryRel(
+				long commercePriceListId, long commerceUserSegmentEntryId,
+				int order, ServiceContext serviceContext)
 		throws PortalException {
 
 		return commercePriceListUserSegmentEntryRelLocalService.
@@ -44,7 +43,7 @@ public class CommercePriceListUserSegmentEntryRelServiceImpl
 
 	@Override
 	public void deleteCommercePriceListUserSegmentEntryRel(
-		long commercePriceListUserSegmentEntryRelId)
+			long commercePriceListUserSegmentEntryRelId)
 		throws PortalException {
 
 		commercePriceListUserSegmentEntryRelLocalService.
@@ -55,8 +54,7 @@ public class CommercePriceListUserSegmentEntryRelServiceImpl
 	@Override
 	public CommercePriceListUserSegmentEntryRel
 		fetchCommercePriceListUserSegmentEntryRel(
-			long commercePriceListId,
-			long commerceUserSegmentEntryId) {
+			long commercePriceListId, long commerceUserSegmentEntryId) {
 
 		return commercePriceListUserSegmentEntryRelLocalService.
 			fetchCommercePriceListUserSegmentEntryRel(
@@ -65,7 +63,7 @@ public class CommercePriceListUserSegmentEntryRelServiceImpl
 
 	@Override
 	public List<CommercePriceListUserSegmentEntryRel>
-	getCommercePriceListUserSegmentEntryRels(long commercePriceListId) {
+		getCommercePriceListUserSegmentEntryRels(long commercePriceListId) {
 
 		return commercePriceListUserSegmentEntryRelLocalService.
 			getCommercePriceListUserSegmentEntryRels(commercePriceListId);
@@ -93,9 +91,9 @@ public class CommercePriceListUserSegmentEntryRelServiceImpl
 
 	@Override
 	public CommercePriceListUserSegmentEntryRel
-		updateCommercePriceListUserSegmentEntryRel(
-			long commercePriceListUserSegmentEntryRelId, int order,
-			ServiceContext serviceContext)
+			updateCommercePriceListUserSegmentEntryRel(
+				long commercePriceListUserSegmentEntryRelId, int order,
+				ServiceContext serviceContext)
 		throws PortalException {
 
 		return commercePriceListUserSegmentEntryRelLocalService.

@@ -24,6 +24,8 @@ import com.liferay.commerce.price.list.web.portlet.action.CommercePriceListActio
 import com.liferay.commerce.service.CommercePriceListService;
 import com.liferay.commerce.service.CommercePriceListUserSegmentEntryRelService;
 import com.liferay.commerce.user.segment.item.selector.criterion.CommerceUserSegmentEntryItemSelectorCriterion;
+import com.liferay.commerce.user.segment.model.CommerceUserSegmentEntry;
+import com.liferay.commerce.user.segment.service.CommerceUserSegmentEntryService;
 import com.liferay.commerce.util.CommerceUtil;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.ItemSelectorReturnType;
@@ -60,6 +62,7 @@ public class CommercePriceListDisplayContext
 	public CommercePriceListDisplayContext(
 		CommercePriceListActionHelper commercePriceListActionHelper,
 		CommerceCurrencyService commerceCurrencyService,
+		CommerceUserSegmentEntryService commerceUserSegmentEntryService,
 		CommercePriceListUserSegmentEntryRelService
 			commercePriceListUserSegmentEntryRelService,
 		CommercePriceListService commercePriceListService,
@@ -68,6 +71,7 @@ public class CommercePriceListDisplayContext
 		super(commercePriceListActionHelper, httpServletRequest);
 
 		_commerceCurrencyService = commerceCurrencyService;
+		_commerceUserSegmentEntryService = commerceUserSegmentEntryService;
 		_commercePriceListUserSegmentEntryRelService =
 			commercePriceListUserSegmentEntryRelService;
 		_commercePriceListService = commercePriceListService;
@@ -95,6 +99,14 @@ public class CommercePriceListDisplayContext
 			getCommercePriceListUserSegmentEntryRels(getCommercePriceListId());
 	}
 
+	public CommerceUserSegmentEntry getCommerceUserSegmentEntry(
+			long commerceUserSegmentEntryId)
+		throws PortalException {
+
+		return _commerceUserSegmentEntryService.getCommerceUserSegmentEntry(
+			commerceUserSegmentEntryId);
+	}
+
 	public String getItemSelectorUrl() throws PortalException {
 		RequestBackedPortletURLFactory requestBackedPortletURLFactory =
 			RequestBackedPortletURLFactoryUtil.create(httpServletRequest);
@@ -109,7 +121,7 @@ public class CommercePriceListDisplayContext
 					new UUIDItemSelectorReturnType()));
 
 		PortletURL itemSelectorURL = _itemSelector.getItemSelectorURL(
-			requestBackedPortletURLFactory, "userSegmentSelectItem",
+			requestBackedPortletURLFactory, "userSegmentsSelectItem",
 			commerceUserSegmentEntryItemSelectorCriterion);
 
 		String checkedCommerceUserSegmentEntryIds = StringUtil.merge(
@@ -210,8 +222,8 @@ public class CommercePriceListDisplayContext
 				getCommercePriceListUserSegmentEntryRels();
 
 		for (CommercePriceListUserSegmentEntryRel
-			 commercePriceListUserSegmentEntryRel :
-				commercePriceListUserSegmentEntryRels) {
+				commercePriceListUserSegmentEntryRel :
+					commercePriceListUserSegmentEntryRels) {
 
 			commercePriceListUserSegmentEntryRelIdsList.add(
 				commercePriceListUserSegmentEntryRel.
@@ -225,13 +237,15 @@ public class CommercePriceListDisplayContext
 		Stream<Long> stream =
 			commercePriceListUserSegmentEntryRelIdsList.stream();
 
-		return  stream.mapToLong(l -> l).toArray();
+		return stream.mapToLong(l -> l).toArray();
 	}
 
 	private final CommerceCurrencyService _commerceCurrencyService;
+	private final CommercePriceListService _commercePriceListService;
 	private final CommercePriceListUserSegmentEntryRelService
 		_commercePriceListUserSegmentEntryRelService;
-	private final CommercePriceListService _commercePriceListService;
+	private final CommerceUserSegmentEntryService
+		_commerceUserSegmentEntryService;
 	private final ItemSelector _itemSelector;
 	private Integer _status;
 

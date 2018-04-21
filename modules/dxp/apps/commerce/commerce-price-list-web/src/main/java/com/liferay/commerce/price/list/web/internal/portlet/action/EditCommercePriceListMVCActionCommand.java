@@ -223,17 +223,15 @@ public class EditCommercePriceListMVCActionCommand
 			ActionRequest actionRequest, CommercePriceList commercePriceList)
 		throws PortalException {
 
-		long[] addCommerceUserSegmentEntryIds =
-			ParamUtil.getLongValues(
-				actionRequest, "addCommerceUserSegmentEntryIds");
+		long[] addCommerceUserSegmentEntryIds = ParamUtil.getLongValues(
+			actionRequest, "addCommerceUserSegmentEntryIds");
 		long[] deleteCommercePriceListUserSegmentEntryRelIds =
 			ParamUtil.getLongValues(
-				actionRequest,
-				"deleteCommercePriceListUserSegmentEntryRelIds");
+				actionRequest, "deleteCommercePriceListUserSegmentEntryRelIds");
 
 		if (deleteCommercePriceListUserSegmentEntryRelIds.length > 0) {
 			for (long deleteCommercePriceListUserSegmentEntryRelId :
-				deleteCommercePriceListUserSegmentEntryRelIds) {
+					deleteCommercePriceListUserSegmentEntryRelIds) {
 
 				_commercePriceListUserSegmentEntryRelService.
 					deleteCommercePriceListUserSegmentEntryRel(
@@ -247,7 +245,7 @@ public class EditCommercePriceListMVCActionCommand
 				actionRequest);
 
 			for (long addCommerceUserSegmentEntryId :
-				addCommerceUserSegmentEntryIds) {
+					addCommerceUserSegmentEntryIds) {
 
 				CommercePriceListUserSegmentEntryRel
 					commercePriceListUserSegmentEntryRel =
@@ -267,11 +265,11 @@ public class EditCommercePriceListMVCActionCommand
 	}
 
 	@Reference
-	private CommercePriceListUserSegmentEntryRelService
-		_commercePriceListUserSegmentEntryRelService;
+	private CommercePriceListService _commercePriceListService;
 
 	@Reference
-	private CommercePriceListService _commercePriceListService;
+	private CommercePriceListUserSegmentEntryRelService
+		_commercePriceListUserSegmentEntryRelService;
 
 	@Reference
 	private Portal _portal;

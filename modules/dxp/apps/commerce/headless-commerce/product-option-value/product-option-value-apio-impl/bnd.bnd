@@ -1,0 +1,5 @@
+Bundle-Name: Liferay Product Option Value Apio Implementation
+Bundle-SymbolicName: com.liferay.product.option.value.apio.impl
+Bundle-Version: 1.0.0
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Site Management

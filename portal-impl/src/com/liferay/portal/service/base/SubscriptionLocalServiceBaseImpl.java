@@ -44,6 +44,7 @@ import com.liferay.portal.kernel.service.persistence.ClassNamePersistence;
 import com.liferay.portal.kernel.service.persistence.SubscriptionPersistence;
 import com.liferay.portal.kernel.service.persistence.UserFinder;
 import com.liferay.portal.kernel.service.persistence.UserPersistence;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 
@@ -93,12 +94,13 @@ public abstract class SubscriptionLocalServiceBaseImpl
 	}
 
 	/**
-	 * Creates a new subscription with the primary key. Does not add the subscription to the database.
-	 *
-	 * @param subscriptionId the primary key for the new subscription
-	 * @return the new subscription
-	 */
+	* Creates a new subscription with the primary key. Does not add the subscription to the database.
+	*
+	* @param subscriptionId the primary key for the new subscription
+	* @return the new subscription
+	*/
 	@Override
+	@Transactional(enabled = false)
 	public Subscription createSubscription(long subscriptionId) {
 		return subscriptionPersistence.create(subscriptionId);
 	}

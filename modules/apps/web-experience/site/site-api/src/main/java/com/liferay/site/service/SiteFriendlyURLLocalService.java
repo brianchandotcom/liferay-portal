@@ -91,6 +91,7 @@ public interface SiteFriendlyURLLocalService extends BaseLocalService,
 	* @param siteFriendlyURLId the primary key for the new site friendly url
 	* @return the new site friendly url
 	*/
+	@Transactional(enabled = false)
 	public SiteFriendlyURL createSiteFriendlyURL(long siteFriendlyURLId);
 
 	/**

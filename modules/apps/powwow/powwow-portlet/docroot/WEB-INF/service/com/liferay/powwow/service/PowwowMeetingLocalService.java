@@ -89,6 +89,7 @@ public interface PowwowMeetingLocalService extends BaseLocalService,
 	* @param powwowMeetingId the primary key for the new powwow meeting
 	* @return the new powwow meeting
 	*/
+	@Transactional(enabled = false)
 	public PowwowMeeting createPowwowMeeting(long powwowMeetingId);
 
 	/**

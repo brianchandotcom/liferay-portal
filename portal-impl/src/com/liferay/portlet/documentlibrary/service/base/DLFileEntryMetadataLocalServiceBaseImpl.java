@@ -43,6 +43,7 @@ import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
 import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.kernel.service.persistence.ClassNamePersistence;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 
@@ -90,12 +91,13 @@ public abstract class DLFileEntryMetadataLocalServiceBaseImpl
 	}
 
 	/**
-	 * Creates a new document library file entry metadata with the primary key. Does not add the document library file entry metadata to the database.
-	 *
-	 * @param fileEntryMetadataId the primary key for the new document library file entry metadata
-	 * @return the new document library file entry metadata
-	 */
+	* Creates a new document library file entry metadata with the primary key. Does not add the document library file entry metadata to the database.
+	*
+	* @param fileEntryMetadataId the primary key for the new document library file entry metadata
+	* @return the new document library file entry metadata
+	*/
 	@Override
+	@Transactional(enabled = false)
 	public DLFileEntryMetadata createDLFileEntryMetadata(
 		long fileEntryMetadataId) {
 		return dlFileEntryMetadataPersistence.create(fileEntryMetadataId);

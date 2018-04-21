@@ -82,6 +82,7 @@ public interface MessageLocalService extends BaseLocalService,
 	* @param messageId the primary key for the new message
 	* @return the new message
 	*/
+	@Transactional(enabled = false)
 	public Message createMessage(long messageId);
 
 	/**

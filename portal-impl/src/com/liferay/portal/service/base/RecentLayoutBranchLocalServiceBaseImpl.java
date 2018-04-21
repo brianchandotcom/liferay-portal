@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.kernel.service.RecentLayoutBranchLocalService;
 import com.liferay.portal.kernel.service.persistence.LayoutBranchPersistence;
 import com.liferay.portal.kernel.service.persistence.RecentLayoutBranchPersistence;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 
@@ -86,12 +87,13 @@ public abstract class RecentLayoutBranchLocalServiceBaseImpl
 	}
 
 	/**
-	 * Creates a new recent layout branch with the primary key. Does not add the recent layout branch to the database.
-	 *
-	 * @param recentLayoutBranchId the primary key for the new recent layout branch
-	 * @return the new recent layout branch
-	 */
+	* Creates a new recent layout branch with the primary key. Does not add the recent layout branch to the database.
+	*
+	* @param recentLayoutBranchId the primary key for the new recent layout branch
+	* @return the new recent layout branch
+	*/
 	@Override
+	@Transactional(enabled = false)
 	public RecentLayoutBranch createRecentLayoutBranch(
 		long recentLayoutBranchId) {
 		return recentLayoutBranchPersistence.create(recentLayoutBranchId);

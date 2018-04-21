@@ -87,6 +87,7 @@ public interface MBThreadFlagLocalService extends BaseLocalService,
 	* @param threadFlagId the primary key for the new message boards thread flag
 	* @return the new message boards thread flag
 	*/
+	@Transactional(enabled = false)
 	public MBThreadFlag createMBThreadFlag(long threadFlagId);
 
 	/**

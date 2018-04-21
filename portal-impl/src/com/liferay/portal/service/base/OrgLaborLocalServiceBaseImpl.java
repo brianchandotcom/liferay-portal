@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.service.OrgLaborLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.kernel.service.persistence.ListTypePersistence;
 import com.liferay.portal.kernel.service.persistence.OrgLaborPersistence;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 
@@ -84,12 +85,13 @@ public abstract class OrgLaborLocalServiceBaseImpl extends BaseLocalServiceImpl
 	}
 
 	/**
-	 * Creates a new org labor with the primary key. Does not add the org labor to the database.
-	 *
-	 * @param orgLaborId the primary key for the new org labor
-	 * @return the new org labor
-	 */
+	* Creates a new org labor with the primary key. Does not add the org labor to the database.
+	*
+	* @param orgLaborId the primary key for the new org labor
+	* @return the new org labor
+	*/
 	@Override
+	@Transactional(enabled = false)
 	public OrgLabor createOrgLabor(long orgLaborId) {
 		return orgLaborPersistence.create(orgLaborId);
 	}

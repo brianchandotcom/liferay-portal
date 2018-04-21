@@ -43,6 +43,7 @@ import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
 import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.kernel.service.persistence.GroupPersistence;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
@@ -90,12 +91,13 @@ public abstract class BlogsStatsUserLocalServiceBaseImpl
 	}
 
 	/**
-	 * Creates a new blogs stats user with the primary key. Does not add the blogs stats user to the database.
-	 *
-	 * @param statsUserId the primary key for the new blogs stats user
-	 * @return the new blogs stats user
-	 */
+	* Creates a new blogs stats user with the primary key. Does not add the blogs stats user to the database.
+	*
+	* @param statsUserId the primary key for the new blogs stats user
+	* @return the new blogs stats user
+	*/
 	@Override
+	@Transactional(enabled = false)
 	public BlogsStatsUser createBlogsStatsUser(long statsUserId) {
 		return blogsStatsUserPersistence.create(statsUserId);
 	}

@@ -80,6 +80,7 @@ public interface WorkflowDefinitionLinkLocalService extends BaseLocalService,
 	* @param workflowDefinitionLinkId the primary key for the new workflow definition link
 	* @return the new workflow definition link
 	*/
+	@Transactional(enabled = false)
 	public WorkflowDefinitionLink createWorkflowDefinitionLink(
 		long workflowDefinitionLinkId);
 

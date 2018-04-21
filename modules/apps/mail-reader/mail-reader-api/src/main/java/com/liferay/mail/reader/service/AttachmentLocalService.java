@@ -82,6 +82,7 @@ public interface AttachmentLocalService extends BaseLocalService,
 	* @param attachmentId the primary key for the new attachment
 	* @return the new attachment
 	*/
+	@Transactional(enabled = false)
 	public Attachment createAttachment(long attachmentId);
 
 	/**

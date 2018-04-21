@@ -47,6 +47,7 @@ import com.liferay.portal.kernel.service.RepositoryEntryLocalService;
 import com.liferay.portal.kernel.service.persistence.RepositoryEntryPersistence;
 import com.liferay.portal.kernel.service.persistence.UserFinder;
 import com.liferay.portal.kernel.service.persistence.UserPersistence;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 
@@ -93,12 +94,13 @@ public abstract class RepositoryEntryLocalServiceBaseImpl
 	}
 
 	/**
-	 * Creates a new repository entry with the primary key. Does not add the repository entry to the database.
-	 *
-	 * @param repositoryEntryId the primary key for the new repository entry
-	 * @return the new repository entry
-	 */
+	* Creates a new repository entry with the primary key. Does not add the repository entry to the database.
+	*
+	* @param repositoryEntryId the primary key for the new repository entry
+	* @return the new repository entry
+	*/
 	@Override
+	@Transactional(enabled = false)
 	public RepositoryEntry createRepositoryEntry(long repositoryEntryId) {
 		return repositoryEntryPersistence.create(repositoryEntryId);
 	}

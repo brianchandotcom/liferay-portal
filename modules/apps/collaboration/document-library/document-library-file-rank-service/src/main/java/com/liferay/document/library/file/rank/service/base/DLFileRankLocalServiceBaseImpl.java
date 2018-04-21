@@ -42,6 +42,7 @@ import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
 import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.kernel.service.persistence.LayoutPersistence;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
@@ -89,12 +90,13 @@ public abstract class DLFileRankLocalServiceBaseImpl
 	}
 
 	/**
-	 * Creates a new document library file rank with the primary key. Does not add the document library file rank to the database.
-	 *
-	 * @param fileRankId the primary key for the new document library file rank
-	 * @return the new document library file rank
-	 */
+	* Creates a new document library file rank with the primary key. Does not add the document library file rank to the database.
+	*
+	* @param fileRankId the primary key for the new document library file rank
+	* @return the new document library file rank
+	*/
 	@Override
+	@Transactional(enabled = false)
 	public DLFileRank createDLFileRank(long fileRankId) {
 		return dlFileRankPersistence.create(fileRankId);
 	}

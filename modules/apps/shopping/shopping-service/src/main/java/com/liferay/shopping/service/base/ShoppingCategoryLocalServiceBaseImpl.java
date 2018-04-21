@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
 import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.kernel.service.persistence.UserPersistence;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
@@ -91,12 +92,13 @@ public abstract class ShoppingCategoryLocalServiceBaseImpl
 	}
 
 	/**
-	 * Creates a new shopping category with the primary key. Does not add the shopping category to the database.
-	 *
-	 * @param categoryId the primary key for the new shopping category
-	 * @return the new shopping category
-	 */
+	* Creates a new shopping category with the primary key. Does not add the shopping category to the database.
+	*
+	* @param categoryId the primary key for the new shopping category
+	* @return the new shopping category
+	*/
 	@Override
+	@Transactional(enabled = false)
 	public ShoppingCategory createShoppingCategory(long categoryId) {
 		return shoppingCategoryPersistence.create(categoryId);
 	}

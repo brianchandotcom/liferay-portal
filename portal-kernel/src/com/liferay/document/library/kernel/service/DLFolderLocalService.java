@@ -105,6 +105,7 @@ public interface DLFolderLocalService extends BaseLocalService,
 	* @param folderId the primary key for the new document library folder
 	* @return the new document library folder
 	*/
+	@Transactional(enabled = false)
 	public DLFolder createDLFolder(long folderId);
 
 	/**

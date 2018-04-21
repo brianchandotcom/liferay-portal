@@ -43,6 +43,7 @@ import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
 import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.kernel.service.persistence.UserPersistence;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
@@ -94,12 +95,13 @@ public abstract class SiteFriendlyURLLocalServiceBaseImpl
 	}
 
 	/**
-	 * Creates a new site friendly url with the primary key. Does not add the site friendly url to the database.
-	 *
-	 * @param siteFriendlyURLId the primary key for the new site friendly url
-	 * @return the new site friendly url
-	 */
+	* Creates a new site friendly url with the primary key. Does not add the site friendly url to the database.
+	*
+	* @param siteFriendlyURLId the primary key for the new site friendly url
+	* @return the new site friendly url
+	*/
 	@Override
+	@Transactional(enabled = false)
 	public SiteFriendlyURL createSiteFriendlyURL(long siteFriendlyURLId) {
 		return siteFriendlyURLPersistence.create(siteFriendlyURLId);
 	}

@@ -77,6 +77,7 @@ public interface ShoppingOrderItemLocalService extends BaseLocalService,
 	* @param orderItemId the primary key for the new shopping order item
 	* @return the new shopping order item
 	*/
+	@Transactional(enabled = false)
 	public ShoppingOrderItem createShoppingOrderItem(long orderItemId);
 
 	/**

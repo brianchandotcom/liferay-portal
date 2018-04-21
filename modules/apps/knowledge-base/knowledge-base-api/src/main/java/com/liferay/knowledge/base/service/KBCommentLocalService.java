@@ -90,6 +90,7 @@ public interface KBCommentLocalService extends BaseLocalService,
 	* @param kbCommentId the primary key for the new kb comment
 	* @return the new kb comment
 	*/
+	@Transactional(enabled = false)
 	public KBComment createKBComment(long kbCommentId);
 
 	/**

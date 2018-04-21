@@ -63,6 +63,7 @@ import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
 import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.kernel.service.persistence.UserFinder;
 import com.liferay.portal.kernel.service.persistence.UserPersistence;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -113,12 +114,13 @@ public abstract class DLFileShortcutLocalServiceBaseImpl
 	}
 
 	/**
-	 * Creates a new document library file shortcut with the primary key. Does not add the document library file shortcut to the database.
-	 *
-	 * @param fileShortcutId the primary key for the new document library file shortcut
-	 * @return the new document library file shortcut
-	 */
+	* Creates a new document library file shortcut with the primary key. Does not add the document library file shortcut to the database.
+	*
+	* @param fileShortcutId the primary key for the new document library file shortcut
+	* @return the new document library file shortcut
+	*/
 	@Override
+	@Transactional(enabled = false)
 	public DLFileShortcut createDLFileShortcut(long fileShortcutId) {
 		return dlFileShortcutPersistence.create(fileShortcutId);
 	}

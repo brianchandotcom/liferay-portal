@@ -91,6 +91,7 @@ public interface LayoutFriendlyURLLocalService extends BaseLocalService,
 	* @param layoutFriendlyURLId the primary key for the new layout friendly url
 	* @return the new layout friendly url
 	*/
+	@Transactional(enabled = false)
 	public LayoutFriendlyURL createLayoutFriendlyURL(long layoutFriendlyURLId);
 
 	/**

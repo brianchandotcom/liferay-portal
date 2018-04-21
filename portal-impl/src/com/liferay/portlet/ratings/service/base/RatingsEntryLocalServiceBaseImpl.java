@@ -50,6 +50,7 @@ import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.kernel.service.persistence.ClassNamePersistence;
 import com.liferay.portal.kernel.service.persistence.UserFinder;
 import com.liferay.portal.kernel.service.persistence.UserPersistence;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 
@@ -103,12 +104,13 @@ public abstract class RatingsEntryLocalServiceBaseImpl
 	}
 
 	/**
-	 * Creates a new ratings entry with the primary key. Does not add the ratings entry to the database.
-	 *
-	 * @param entryId the primary key for the new ratings entry
-	 * @return the new ratings entry
-	 */
+	* Creates a new ratings entry with the primary key. Does not add the ratings entry to the database.
+	*
+	* @param entryId the primary key for the new ratings entry
+	* @return the new ratings entry
+	*/
 	@Override
+	@Transactional(enabled = false)
 	public RatingsEntry createRatingsEntry(long entryId) {
 		return ratingsEntryPersistence.create(entryId);
 	}

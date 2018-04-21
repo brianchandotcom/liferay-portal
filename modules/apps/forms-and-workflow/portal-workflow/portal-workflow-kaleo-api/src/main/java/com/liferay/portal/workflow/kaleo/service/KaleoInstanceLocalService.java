@@ -85,6 +85,7 @@ public interface KaleoInstanceLocalService extends BaseLocalService,
 	* @param kaleoInstanceId the primary key for the new kaleo instance
 	* @return the new kaleo instance
 	*/
+	@Transactional(enabled = false)
 	public KaleoInstance createKaleoInstance(long kaleoInstanceId);
 
 	public void deleteCompanyKaleoInstances(long companyId);

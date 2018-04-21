@@ -83,6 +83,7 @@ public interface PollsChoiceLocalService extends BaseLocalService,
 	* @param choiceId the primary key for the new polls choice
 	* @return the new polls choice
 	*/
+	@Transactional(enabled = false)
 	public PollsChoice createPollsChoice(long choiceId);
 
 	/**

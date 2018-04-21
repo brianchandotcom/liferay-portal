@@ -41,6 +41,7 @@ import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
 import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.kernel.service.persistence.UserPersistence;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
@@ -90,12 +91,13 @@ public abstract class LayoutPageTemplateCollectionLocalServiceBaseImpl
 	}
 
 	/**
-	 * Creates a new layout page template collection with the primary key. Does not add the layout page template collection to the database.
-	 *
-	 * @param layoutPageTemplateCollectionId the primary key for the new layout page template collection
-	 * @return the new layout page template collection
-	 */
+	* Creates a new layout page template collection with the primary key. Does not add the layout page template collection to the database.
+	*
+	* @param layoutPageTemplateCollectionId the primary key for the new layout page template collection
+	* @return the new layout page template collection
+	*/
 	@Override
+	@Transactional(enabled = false)
 	public LayoutPageTemplateCollection createLayoutPageTemplateCollection(
 		long layoutPageTemplateCollectionId) {
 		return layoutPageTemplateCollectionPersistence.create(layoutPageTemplateCollectionId);

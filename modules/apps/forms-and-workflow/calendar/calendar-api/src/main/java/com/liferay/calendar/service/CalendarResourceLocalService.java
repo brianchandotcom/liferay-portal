@@ -91,6 +91,7 @@ public interface CalendarResourceLocalService extends BaseLocalService,
 	* @param calendarResourceId the primary key for the new calendar resource
 	* @return the new calendar resource
 	*/
+	@Transactional(enabled = false)
 	public CalendarResource createCalendarResource(long calendarResourceId);
 
 	/**

@@ -83,6 +83,7 @@ public interface AppLocalService extends BaseLocalService,
 	* @param appId the primary key for the new app
 	* @return the new app
 	*/
+	@Transactional(enabled = false)
 	public App createApp(long appId);
 
 	/**

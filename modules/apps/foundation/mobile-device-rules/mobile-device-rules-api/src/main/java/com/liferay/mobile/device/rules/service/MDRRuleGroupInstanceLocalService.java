@@ -91,6 +91,7 @@ public interface MDRRuleGroupInstanceLocalService extends BaseLocalService,
 	* @param ruleGroupInstanceId the primary key for the new mdr rule group instance
 	* @return the new mdr rule group instance
 	*/
+	@Transactional(enabled = false)
 	public MDRRuleGroupInstance createMDRRuleGroupInstance(
 		long ruleGroupInstanceId);
 

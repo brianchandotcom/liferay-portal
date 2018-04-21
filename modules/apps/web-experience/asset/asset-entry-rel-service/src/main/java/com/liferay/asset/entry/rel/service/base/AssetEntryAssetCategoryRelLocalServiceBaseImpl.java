@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
 import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
@@ -87,12 +88,13 @@ public abstract class AssetEntryAssetCategoryRelLocalServiceBaseImpl
 	}
 
 	/**
-	 * Creates a new asset entry asset category rel with the primary key. Does not add the asset entry asset category rel to the database.
-	 *
-	 * @param assetEntryAssetCategoryRelId the primary key for the new asset entry asset category rel
-	 * @return the new asset entry asset category rel
-	 */
+	* Creates a new asset entry asset category rel with the primary key. Does not add the asset entry asset category rel to the database.
+	*
+	* @param assetEntryAssetCategoryRelId the primary key for the new asset entry asset category rel
+	* @return the new asset entry asset category rel
+	*/
 	@Override
+	@Transactional(enabled = false)
 	public AssetEntryAssetCategoryRel createAssetEntryAssetCategoryRel(
 		long assetEntryAssetCategoryRelId) {
 		return assetEntryAssetCategoryRelPersistence.create(assetEntryAssetCategoryRelId);

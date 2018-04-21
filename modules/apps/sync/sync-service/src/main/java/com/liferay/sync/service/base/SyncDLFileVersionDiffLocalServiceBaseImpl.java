@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.kernel.service.persistence.ClassNamePersistence;
 import com.liferay.portal.kernel.service.persistence.CompanyPersistence;
 import com.liferay.portal.kernel.service.persistence.UserPersistence;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
@@ -93,12 +94,13 @@ public abstract class SyncDLFileVersionDiffLocalServiceBaseImpl
 	}
 
 	/**
-	 * Creates a new sync dl file version diff with the primary key. Does not add the sync dl file version diff to the database.
-	 *
-	 * @param syncDLFileVersionDiffId the primary key for the new sync dl file version diff
-	 * @return the new sync dl file version diff
-	 */
+	* Creates a new sync dl file version diff with the primary key. Does not add the sync dl file version diff to the database.
+	*
+	* @param syncDLFileVersionDiffId the primary key for the new sync dl file version diff
+	* @return the new sync dl file version diff
+	*/
 	@Override
+	@Transactional(enabled = false)
 	public SyncDLFileVersionDiff createSyncDLFileVersionDiff(
 		long syncDLFileVersionDiffId) {
 		return syncDLFileVersionDiffPersistence.create(syncDLFileVersionDiffId);

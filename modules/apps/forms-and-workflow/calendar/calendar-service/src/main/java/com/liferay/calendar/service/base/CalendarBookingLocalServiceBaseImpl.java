@@ -68,6 +68,7 @@ import com.liferay.portal.kernel.service.persistence.CompanyPersistence;
 import com.liferay.portal.kernel.service.persistence.GroupPersistence;
 import com.liferay.portal.kernel.service.persistence.UserPersistence;
 import com.liferay.portal.kernel.service.persistence.WorkflowInstanceLinkPersistence;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -121,12 +122,13 @@ public abstract class CalendarBookingLocalServiceBaseImpl
 	}
 
 	/**
-	 * Creates a new calendar booking with the primary key. Does not add the calendar booking to the database.
-	 *
-	 * @param calendarBookingId the primary key for the new calendar booking
-	 * @return the new calendar booking
-	 */
+	* Creates a new calendar booking with the primary key. Does not add the calendar booking to the database.
+	*
+	* @param calendarBookingId the primary key for the new calendar booking
+	* @return the new calendar booking
+	*/
 	@Override
+	@Transactional(enabled = false)
 	public CalendarBooking createCalendarBooking(long calendarBookingId) {
 		return calendarBookingPersistence.create(calendarBookingId);
 	}

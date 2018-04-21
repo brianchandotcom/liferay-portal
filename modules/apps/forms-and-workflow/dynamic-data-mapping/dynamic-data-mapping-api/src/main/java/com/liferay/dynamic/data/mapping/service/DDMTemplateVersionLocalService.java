@@ -77,6 +77,7 @@ public interface DDMTemplateVersionLocalService extends BaseLocalService,
 	* @param templateVersionId the primary key for the new ddm template version
 	* @return the new ddm template version
 	*/
+	@Transactional(enabled = false)
 	public DDMTemplateVersion createDDMTemplateVersion(long templateVersionId);
 
 	/**

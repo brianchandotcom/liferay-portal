@@ -83,6 +83,7 @@ public interface KaleoTransitionLocalService extends BaseLocalService,
 	* @param kaleoTransitionId the primary key for the new kaleo transition
 	* @return the new kaleo transition
 	*/
+	@Transactional(enabled = false)
 	public KaleoTransition createKaleoTransition(long kaleoTransitionId);
 
 	public void deleteCompanyKaleoTransitions(long companyId);

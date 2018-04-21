@@ -86,6 +86,7 @@ public interface BookmarksFolderLocalService extends BaseLocalService,
 	* @param folderId the primary key for the new bookmarks folder
 	* @return the new bookmarks folder
 	*/
+	@Transactional(enabled = false)
 	public BookmarksFolder createBookmarksFolder(long folderId);
 
 	/**

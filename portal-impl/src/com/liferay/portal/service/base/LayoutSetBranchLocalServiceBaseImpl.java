@@ -47,6 +47,7 @@ import com.liferay.portal.kernel.service.persistence.LayoutSetPersistence;
 import com.liferay.portal.kernel.service.persistence.RecentLayoutSetBranchPersistence;
 import com.liferay.portal.kernel.service.persistence.UserFinder;
 import com.liferay.portal.kernel.service.persistence.UserPersistence;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 
@@ -93,12 +94,13 @@ public abstract class LayoutSetBranchLocalServiceBaseImpl
 	}
 
 	/**
-	 * Creates a new layout set branch with the primary key. Does not add the layout set branch to the database.
-	 *
-	 * @param layoutSetBranchId the primary key for the new layout set branch
-	 * @return the new layout set branch
-	 */
+	* Creates a new layout set branch with the primary key. Does not add the layout set branch to the database.
+	*
+	* @param layoutSetBranchId the primary key for the new layout set branch
+	* @return the new layout set branch
+	*/
 	@Override
+	@Transactional(enabled = false)
 	public LayoutSetBranch createLayoutSetBranch(long layoutSetBranchId) {
 		return layoutSetBranchPersistence.create(layoutSetBranchId);
 	}

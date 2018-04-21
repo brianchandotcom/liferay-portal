@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
 import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
@@ -87,12 +88,13 @@ public abstract class ShoppingItemFieldLocalServiceBaseImpl
 	}
 
 	/**
-	 * Creates a new shopping item field with the primary key. Does not add the shopping item field to the database.
-	 *
-	 * @param itemFieldId the primary key for the new shopping item field
-	 * @return the new shopping item field
-	 */
+	* Creates a new shopping item field with the primary key. Does not add the shopping item field to the database.
+	*
+	* @param itemFieldId the primary key for the new shopping item field
+	* @return the new shopping item field
+	*/
 	@Override
+	@Transactional(enabled = false)
 	public ShoppingItemField createShoppingItemField(long itemFieldId) {
 		return shoppingItemFieldPersistence.create(itemFieldId);
 	}

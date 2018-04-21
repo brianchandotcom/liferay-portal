@@ -42,6 +42,7 @@ import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
 import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.kernel.service.persistence.ClassNamePersistence;
 import com.liferay.portal.kernel.service.persistence.UserPersistence;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
@@ -88,12 +89,13 @@ public abstract class ModuleLocalServiceBaseImpl extends BaseLocalServiceImpl
 	}
 
 	/**
-	 * Creates a new module with the primary key. Does not add the module to the database.
-	 *
-	 * @param moduleId the primary key for the new module
-	 * @return the new module
-	 */
+	* Creates a new module with the primary key. Does not add the module to the database.
+	*
+	* @param moduleId the primary key for the new module
+	* @return the new module
+	*/
 	@Override
+	@Transactional(enabled = false)
 	public Module createModule(long moduleId) {
 		return modulePersistence.create(moduleId);
 	}

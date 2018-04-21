@@ -41,6 +41,7 @@ import com.liferay.portal.kernel.service.persistence.ClassNamePersistence;
 import com.liferay.portal.kernel.service.persistence.PortletItemPersistence;
 import com.liferay.portal.kernel.service.persistence.UserFinder;
 import com.liferay.portal.kernel.service.persistence.UserPersistence;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 
@@ -87,12 +88,13 @@ public abstract class PortletItemLocalServiceBaseImpl
 	}
 
 	/**
-	 * Creates a new portlet item with the primary key. Does not add the portlet item to the database.
-	 *
-	 * @param portletItemId the primary key for the new portlet item
-	 * @return the new portlet item
-	 */
+	* Creates a new portlet item with the primary key. Does not add the portlet item to the database.
+	*
+	* @param portletItemId the primary key for the new portlet item
+	* @return the new portlet item
+	*/
 	@Override
+	@Transactional(enabled = false)
 	public PortletItem createPortletItem(long portletItemId) {
 		return portletItemPersistence.create(portletItemId);
 	}

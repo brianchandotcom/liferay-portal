@@ -44,6 +44,7 @@ import com.liferay.portal.kernel.service.persistence.UserGroupGroupRoleFinder;
 import com.liferay.portal.kernel.service.persistence.UserGroupGroupRolePK;
 import com.liferay.portal.kernel.service.persistence.UserGroupGroupRolePersistence;
 import com.liferay.portal.kernel.service.persistence.UserGroupPersistence;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 
@@ -91,12 +92,13 @@ public abstract class UserGroupGroupRoleLocalServiceBaseImpl
 	}
 
 	/**
-	 * Creates a new user group group role with the primary key. Does not add the user group group role to the database.
-	 *
-	 * @param userGroupGroupRolePK the primary key for the new user group group role
-	 * @return the new user group group role
-	 */
+	* Creates a new user group group role with the primary key. Does not add the user group group role to the database.
+	*
+	* @param userGroupGroupRolePK the primary key for the new user group group role
+	* @return the new user group group role
+	*/
 	@Override
+	@Transactional(enabled = false)
 	public UserGroupGroupRole createUserGroupGroupRole(
 		UserGroupGroupRolePK userGroupGroupRolePK) {
 		return userGroupGroupRolePersistence.create(userGroupGroupRolePK);

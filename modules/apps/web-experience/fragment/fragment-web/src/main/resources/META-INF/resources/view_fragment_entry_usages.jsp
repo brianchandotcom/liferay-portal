@@ -125,7 +125,6 @@ renderResponse.setTitle(LanguageUtil.format(request, "usages-and-propagation-x",
 				/>
 
 				<portlet:actionURL name="/fragment/propagate_fragment_entry_changes" var="propagateFragmentEntryChangesURL">
-					<portlet:param name="fragmentEntryId" value="<%= String.valueOf(fragmentEntryLinkDisplayContext.getFragmentEntryId()) %>" />
 					<portlet:param name="redirect" value="<%= currentURL %>" />
 				</portlet:actionURL>
 

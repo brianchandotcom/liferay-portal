@@ -18,8 +18,6 @@ import com.liferay.fragment.constants.FragmentPortletKeys;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
-import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.util.ParamUtil;
 
 import javax.portlet.ActionRequest;
@@ -47,27 +45,13 @@ public class PropagateFragmentEntryChangesMVCActionCommand
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		long[] fragmentEntryLinkIds = null;
+		long[] fragmentEntryLinkIds = ParamUtil.getLongValues(
+			actionRequest, "rowIds");
 
-		long fragmentEntryId = ParamUtil.getLong(
-			actionRequest, "fragmentEntryId");
-
-		long fragmentEntryLinkId = ParamUtil.getLong(
-			actionRequest, "fragmentEntryLinkId");
-
-		if (fragmentEntryLinkId > 0) {
-			fragmentEntryLinkIds = new long[] {fragmentEntryLinkId};
+		for (long fragmentEntryLinkId : fragmentEntryLinkIds) {
+			_fragmentEntryLinkLocalService.updateLatestChanges(
+				fragmentEntryLinkId);
 		}
-		else {
-			fragmentEntryLinkIds = ParamUtil.getLongValues(
-				actionRequest, "rowIds");
-		}
-
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			actionRequest);
-
-		_fragmentEntryLinkLocalService.updateFragmentEntryLinks(
-			fragmentEntryLinkIds, fragmentEntryId, serviceContext);
 	}
 
 	@Reference

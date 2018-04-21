@@ -198,6 +198,7 @@
 		<exception>FragmentCollectionName</exception>
 		<exception>FragmentEntryContent</exception>
 		<exception>FragmentEntryName</exception>
+		<exception>InvalidImportFile</exception>
 		<exception>RequiredFragmentEntry</exception>
 	</exceptions>
 </service-builder>

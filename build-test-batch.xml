@@ -3385,18 +3385,32 @@ ${output.content}</echo>
 				<if>
 					<contains string="${build.services.output.txt.content}" substring="Writing " />
 					<then>
-						<exec executable="git">
+						<exec executable="git" output="${project.dir}/build.services.diff.txt">
 							<arg value="diff" />
 							<arg value="&quot;:!*/*-portlet-service.jar&quot;" />
 							<arg value="&quot;:!*/service.properties&quot;" />
 						</exec>
 
-						<fail>
+						<loadfile
+							property="build.services.diff.txt.content"
+							srcfile="${project.dir}/build.services.diff.txt"
+						/>
+
+						<delete file="${project.dir}/build.services.diff.txt" />
+
+						<if>
+							<isset property="build.services.diff.txt.content" />
+							<then>
+								<echo message="${build.services.diff.txt.content}" />
+
+								<fail>
 .
 
 Detected build services changes. See above build services log for more
 information. Make sure to commit in all build services results.
-						</fail>
+								</fail>
+							</then>
+						</if>
 					</then>
 				</if>
 			</test-action>

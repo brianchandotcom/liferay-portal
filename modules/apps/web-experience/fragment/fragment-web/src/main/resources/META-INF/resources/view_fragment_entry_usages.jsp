@@ -177,9 +177,7 @@ renderResponse.setTitle(LanguageUtil.format(request, "usages-and-propagation-x",
 </div>
 
 <aui:script>
-	var form = document.querySelector('#<portlet:namespace />fm');
-
 	window.<portlet:namespace/>propagate = function() {
-		submitForm(form);
+		submitForm(document.querySelector('#<portlet:namespace />fm'));
 	};
 </aui:script>

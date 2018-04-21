@@ -32,6 +32,16 @@ public interface Commit {
 
 	public Type getType();
 
+	public void setStatus(
+		Commit.Status status, String context, String description,
+		String targetURL);
+
+	public enum Status {
+
+		ERROR, FAILURE, PENDING, SUCCESS
+
+	}
+
 	public enum Type {
 
 		LEGACY_ARCHIVE, MANUAL

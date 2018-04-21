@@ -14,6 +14,10 @@
 
 package com.liferay.jenkins.results.parser;
 
+import java.io.IOException;
+
+import org.apache.commons.lang.StringUtils;
+
 import org.json.JSONObject;
 
 /**
@@ -66,6 +70,36 @@ public class BaseCommit implements Commit {
 		return json.hashCode();
 	}
 
+	@Override
+	public void setStatus(
+		Commit.Status status, String context, String description,
+		String targetURL) {
+
+		JSONObject jsonObject = new JSONObject();
+
+		jsonObject.put("state", StringUtils.lowerCase(status.toString()));
+
+		if (context != null) {
+			jsonObject.put("context", context);
+		}
+
+		if (description != null) {
+			jsonObject.put("description", description);
+		}
+
+		if ((targetURL != null) && targetURL.matches("https?\\:\\/\\/.*")) {
+			jsonObject.put("target_url", targetURL);
+		}
+
+		try {
+			JenkinsResultsParserUtil.toJSONObject(
+				getGitHubStatusURL(), jsonObject.toString());
+		}
+		catch (IOException ioe) {
+			throw new RuntimeException(ioe);
+		}
+	}
+
 	protected BaseCommit(
 		String gitHubUserName, String message, String sha,
 		String repositoryName, Type type) {
@@ -75,6 +109,12 @@ public class BaseCommit implements Commit {
 		_sha = sha;
 		_repositoryName = repositoryName;
 		_type = type;
+	}
+
+	protected String getGitHubStatusURL() {
+		return JenkinsResultsParserUtil.combine(
+			"https://api.github.com/repos/", _gitHubUserName, "/",
+			_repositoryName, "/statuses/", getSHA());
 	}
 
 	protected GitWorkingDirectory gitWorkingDirectory;

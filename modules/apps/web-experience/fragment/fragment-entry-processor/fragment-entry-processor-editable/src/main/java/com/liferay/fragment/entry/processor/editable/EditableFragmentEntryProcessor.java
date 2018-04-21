@@ -109,6 +109,7 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 	@Override
 	public void validateFragmentEntryHTML(String html) throws PortalException {
 		_validateAttributes(html);
+		_validateEditableElements(html);
 		_validateDuplicatedIds(html);
 	}
 
@@ -183,6 +184,23 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 				LanguageUtil.get(
 					resourceBundle,
 					"you-must-define-an-unique-id-for-each-editable-element"));
+		}
+	}
+
+	private void _validateEditableElements(String html)
+		throws FragmentEntryContentException {
+
+		Document document = _getDocument(html);
+
+		for (Element element : document.select("lfr-editable")) {
+			EditableElementParser editableElementParser =
+				_editableElementParsers.get(element.attr("type"));
+
+			if (editableElementParser == null) {
+				continue;
+			}
+
+			editableElementParser.validate(element);
 		}
 	}
 

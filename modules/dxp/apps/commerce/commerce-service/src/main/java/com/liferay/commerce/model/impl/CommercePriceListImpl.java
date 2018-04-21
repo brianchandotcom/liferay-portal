@@ -18,8 +18,6 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.service.CommerceCurrencyLocalServiceUtil;
-import com.liferay.commerce.model.CommercePriceListQualificationTypeRel;
-import com.liferay.commerce.service.CommercePriceListQualificationTypeRelLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 
 /**
@@ -29,15 +27,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 public class CommercePriceListImpl extends CommercePriceListBaseImpl {
 
 	public CommercePriceListImpl() {
-	}
-
-	@Override
-	public CommercePriceListQualificationTypeRel
-		fetchCommercePriceListQualificationTypeRel(String key) {
-
-		return CommercePriceListQualificationTypeRelLocalServiceUtil.
-			fetchCommercePriceListQualificationTypeRel(
-				key, getCommercePriceListId());
 	}
 
 	@Override

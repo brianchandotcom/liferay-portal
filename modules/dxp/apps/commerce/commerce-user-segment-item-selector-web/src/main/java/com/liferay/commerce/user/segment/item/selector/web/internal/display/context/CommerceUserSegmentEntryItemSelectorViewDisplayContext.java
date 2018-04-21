@@ -120,9 +120,10 @@ public class CommerceUserSegmentEntryItemSelectorViewDisplayContext {
 		}
 		else {
 			int total =
-				_commerceUserSegmentEntryService.getCommerceUserSegmentEntriesCount(
-					_commerceUserSegmentItemSelectorRequestHelper.
-						getScopeGroupId());
+				_commerceUserSegmentEntryService.
+					getCommerceUserSegmentEntriesCount(
+						_commerceUserSegmentItemSelectorRequestHelper.
+							getScopeGroupId());
 
 			_searchContainer.setTotal(total);
 
@@ -145,14 +146,6 @@ public class CommerceUserSegmentEntryItemSelectorViewDisplayContext {
 			"checkedCommerceUserSegmentEntryIds");
 	}
 
-	protected boolean isSearch() {
-		if (Validator.isNotNull(getKeywords())) {
-			return true;
-		}
-
-		return false;
-	}
-
 	protected String getKeywords() {
 		if (_keywords != null) {
 			return _keywords;
@@ -165,13 +158,21 @@ public class CommerceUserSegmentEntryItemSelectorViewDisplayContext {
 		return _keywords;
 	}
 
+	protected boolean isSearch() {
+		if (Validator.isNotNull(getKeywords())) {
+			return true;
+		}
+
+		return false;
+	}
+
 	private final CommerceUserSegmentEntryService
 		_commerceUserSegmentEntryService;
 	private final CommerceUserSegmentItemSelectorRequestHelper
 		_commerceUserSegmentItemSelectorRequestHelper;
 	private final String _itemSelectedEventName;
-	private SearchContainer<CommerceUserSegmentEntry> _searchContainer;
 	private String _keywords;
 	private final PortletURL _portletURL;
+	private SearchContainer<CommerceUserSegmentEntry> _searchContainer;
 
 }

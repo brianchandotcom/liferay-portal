@@ -230,7 +230,7 @@ public class CommercePriceEntryModelImpl extends BaseModelImpl<CommercePriceEntr
 		attributes.put("CPInstanceId", getCPInstanceId());
 		attributes.put("commercePriceListId", getCommercePriceListId());
 		attributes.put("price", getPrice());
-		attributes.put("hasTierPrice", getHasTierPrice());
+		attributes.put("hasTierPrice", isHasTierPrice());
 		attributes.put("lastPublishDate", getLastPublishDate());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
@@ -607,7 +607,7 @@ public class CommercePriceEntryModelImpl extends BaseModelImpl<CommercePriceEntr
 		commercePriceEntryImpl.setCPInstanceId(getCPInstanceId());
 		commercePriceEntryImpl.setCommercePriceListId(getCommercePriceListId());
 		commercePriceEntryImpl.setPrice(getPrice());
-		commercePriceEntryImpl.setHasTierPrice(getHasTierPrice());
+		commercePriceEntryImpl.setHasTierPrice(isHasTierPrice());
 		commercePriceEntryImpl.setLastPublishDate(getLastPublishDate());
 
 		commercePriceEntryImpl.resetOriginalValues();
@@ -747,7 +747,7 @@ public class CommercePriceEntryModelImpl extends BaseModelImpl<CommercePriceEntr
 
 		commercePriceEntryCacheModel.price = getPrice();
 
-		commercePriceEntryCacheModel.hasTierPrice = getHasTierPrice();
+		commercePriceEntryCacheModel.hasTierPrice = isHasTierPrice();
 
 		Date lastPublishDate = getLastPublishDate();
 
@@ -788,7 +788,7 @@ public class CommercePriceEntryModelImpl extends BaseModelImpl<CommercePriceEntr
 		sb.append(", price=");
 		sb.append(getPrice());
 		sb.append(", hasTierPrice=");
-		sb.append(getHasTierPrice());
+		sb.append(isHasTierPrice());
 		sb.append(", lastPublishDate=");
 		sb.append(getLastPublishDate());
 		sb.append("}");
@@ -850,7 +850,7 @@ public class CommercePriceEntryModelImpl extends BaseModelImpl<CommercePriceEntr
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>hasTierPrice</column-name><column-value><![CDATA[");
-		sb.append(getHasTierPrice());
+		sb.append(isHasTierPrice());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>lastPublishDate</column-name><column-value><![CDATA[");

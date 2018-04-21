@@ -213,7 +213,7 @@ public class CommerceOrderNoteModelImpl extends BaseModelImpl<CommerceOrderNote>
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("commerceOrderId", getCommerceOrderId());
 		attributes.put("content", getContent());
-		attributes.put("restricted", getRestricted());
+		attributes.put("restricted", isRestricted());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -498,7 +498,7 @@ public class CommerceOrderNoteModelImpl extends BaseModelImpl<CommerceOrderNote>
 		commerceOrderNoteImpl.setModifiedDate(getModifiedDate());
 		commerceOrderNoteImpl.setCommerceOrderId(getCommerceOrderId());
 		commerceOrderNoteImpl.setContent(getContent());
-		commerceOrderNoteImpl.setRestricted(getRestricted());
+		commerceOrderNoteImpl.setRestricted(isRestricted());
 
 		commerceOrderNoteImpl.resetOriginalValues();
 
@@ -623,7 +623,7 @@ public class CommerceOrderNoteModelImpl extends BaseModelImpl<CommerceOrderNote>
 			commerceOrderNoteCacheModel.content = null;
 		}
 
-		commerceOrderNoteCacheModel.restricted = getRestricted();
+		commerceOrderNoteCacheModel.restricted = isRestricted();
 
 		return commerceOrderNoteCacheModel;
 	}
@@ -651,7 +651,7 @@ public class CommerceOrderNoteModelImpl extends BaseModelImpl<CommerceOrderNote>
 		sb.append(", content=");
 		sb.append(getContent());
 		sb.append(", restricted=");
-		sb.append(getRestricted());
+		sb.append(isRestricted());
 		sb.append("}");
 
 		return sb.toString();
@@ -703,7 +703,7 @@ public class CommerceOrderNoteModelImpl extends BaseModelImpl<CommerceOrderNote>
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>restricted</column-name><column-value><![CDATA[");
-		sb.append(getRestricted());
+		sb.append(isRestricted());
 		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");

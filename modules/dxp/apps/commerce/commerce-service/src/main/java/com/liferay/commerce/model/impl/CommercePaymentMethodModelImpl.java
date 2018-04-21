@@ -233,7 +233,7 @@ public class CommercePaymentMethodModelImpl extends BaseModelImpl<CommercePaymen
 		attributes.put("imageId", getImageId());
 		attributes.put("engineKey", getEngineKey());
 		attributes.put("priority", getPriority());
-		attributes.put("active", getActive());
+		attributes.put("active", isActive());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -845,7 +845,7 @@ public class CommercePaymentMethodModelImpl extends BaseModelImpl<CommercePaymen
 		commercePaymentMethodImpl.setImageId(getImageId());
 		commercePaymentMethodImpl.setEngineKey(getEngineKey());
 		commercePaymentMethodImpl.setPriority(getPriority());
-		commercePaymentMethodImpl.setActive(getActive());
+		commercePaymentMethodImpl.setActive(isActive());
 
 		commercePaymentMethodImpl.resetOriginalValues();
 
@@ -995,7 +995,7 @@ public class CommercePaymentMethodModelImpl extends BaseModelImpl<CommercePaymen
 
 		commercePaymentMethodCacheModel.priority = getPriority();
 
-		commercePaymentMethodCacheModel.active = getActive();
+		commercePaymentMethodCacheModel.active = isActive();
 
 		return commercePaymentMethodCacheModel;
 	}
@@ -1029,7 +1029,7 @@ public class CommercePaymentMethodModelImpl extends BaseModelImpl<CommercePaymen
 		sb.append(", priority=");
 		sb.append(getPriority());
 		sb.append(", active=");
-		sb.append(getActive());
+		sb.append(isActive());
 		sb.append("}");
 
 		return sb.toString();
@@ -1093,7 +1093,7 @@ public class CommercePaymentMethodModelImpl extends BaseModelImpl<CommercePaymen
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>active</column-name><column-value><![CDATA[");
-		sb.append(getActive());
+		sb.append(isActive());
 		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");

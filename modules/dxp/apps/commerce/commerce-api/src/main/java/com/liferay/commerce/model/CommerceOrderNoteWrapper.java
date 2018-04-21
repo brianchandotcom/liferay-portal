@@ -67,7 +67,7 @@ public class CommerceOrderNoteWrapper implements CommerceOrderNote,
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("commerceOrderId", getCommerceOrderId());
 		attributes.put("content", getContent());
-		attributes.put("restricted", getRestricted());
+		attributes.put("restricted", isRestricted());
 
 		return attributes;
 	}

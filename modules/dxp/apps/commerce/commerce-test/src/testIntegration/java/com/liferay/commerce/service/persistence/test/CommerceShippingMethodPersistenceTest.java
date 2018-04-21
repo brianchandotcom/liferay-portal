@@ -180,8 +180,8 @@ public class CommerceShippingMethodPersistenceTest {
 			newCommerceShippingMethod.getEngineKey());
 		AssertUtils.assertEquals(existingCommerceShippingMethod.getPriority(),
 			newCommerceShippingMethod.getPriority());
-		Assert.assertEquals(existingCommerceShippingMethod.getActive(),
-			newCommerceShippingMethod.getActive());
+		Assert.assertEquals(existingCommerceShippingMethod.isActive(),
+			newCommerceShippingMethod.isActive());
 	}
 
 	@Test

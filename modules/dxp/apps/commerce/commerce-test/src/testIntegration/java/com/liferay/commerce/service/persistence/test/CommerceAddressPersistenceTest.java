@@ -215,10 +215,10 @@ public class CommerceAddressPersistenceTest {
 			newCommerceAddress.getLongitude());
 		Assert.assertEquals(existingCommerceAddress.getPhoneNumber(),
 			newCommerceAddress.getPhoneNumber());
-		Assert.assertEquals(existingCommerceAddress.getDefaultBilling(),
-			newCommerceAddress.getDefaultBilling());
-		Assert.assertEquals(existingCommerceAddress.getDefaultShipping(),
-			newCommerceAddress.getDefaultShipping());
+		Assert.assertEquals(existingCommerceAddress.isDefaultBilling(),
+			newCommerceAddress.isDefaultBilling());
+		Assert.assertEquals(existingCommerceAddress.isDefaultShipping(),
+			newCommerceAddress.isDefaultShipping());
 	}
 
 	@Test

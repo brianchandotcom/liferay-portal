@@ -722,7 +722,7 @@ public class CommerceWarehousePersistenceImpl extends BasePersistenceImpl<Commer
 			if ((list != null) && !list.isEmpty()) {
 				for (CommerceWarehouse commerceWarehouse : list) {
 					if ((groupId != commerceWarehouse.getGroupId()) ||
-							(active != commerceWarehouse.getActive())) {
+							(active != commerceWarehouse.isActive())) {
 						list = null;
 
 						break;
@@ -1835,7 +1835,7 @@ public class CommerceWarehousePersistenceImpl extends BasePersistenceImpl<Commer
 			if ((list != null) && !list.isEmpty()) {
 				for (CommerceWarehouse commerceWarehouse : list) {
 					if ((groupId != commerceWarehouse.getGroupId()) ||
-							(active != commerceWarehouse.getActive()) ||
+							(active != commerceWarehouse.isActive()) ||
 							(commerceCountryId != commerceWarehouse.getCommerceCountryId())) {
 						list = null;
 
@@ -2562,7 +2562,7 @@ public class CommerceWarehousePersistenceImpl extends BasePersistenceImpl<Commer
 
 			args = new Object[] {
 					commerceWarehouseModelImpl.getGroupId(),
-					commerceWarehouseModelImpl.getActive()
+					commerceWarehouseModelImpl.isActive()
 				};
 
 			finderCache.removeResult(FINDER_PATH_COUNT_BY_G_A, args);
@@ -2580,7 +2580,7 @@ public class CommerceWarehousePersistenceImpl extends BasePersistenceImpl<Commer
 
 			args = new Object[] {
 					commerceWarehouseModelImpl.getGroupId(),
-					commerceWarehouseModelImpl.getActive(),
+					commerceWarehouseModelImpl.isActive(),
 					commerceWarehouseModelImpl.getCommerceCountryId()
 				};
 

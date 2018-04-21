@@ -204,12 +204,6 @@ public class CommercePriceListWrapper implements CommercePriceList,
 	}
 
 	@Override
-	public CommercePriceListQualificationTypeRel fetchCommercePriceListQualificationTypeRel(
-		java.lang.String key) {
-		return _commercePriceList.fetchCommercePriceListQualificationTypeRel(key);
-	}
-
-	@Override
 	public com.liferay.commerce.currency.model.CommerceCurrency getCommerceCurrency()
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _commercePriceList.getCommerceCurrency();

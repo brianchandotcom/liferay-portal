@@ -43,7 +43,7 @@ public class CommerceOrderNoteSoap implements Serializable {
 		soapModel.setModifiedDate(model.getModifiedDate());
 		soapModel.setCommerceOrderId(model.getCommerceOrderId());
 		soapModel.setContent(model.getContent());
-		soapModel.setRestricted(model.getRestricted());
+		soapModel.setRestricted(model.isRestricted());
 
 		return soapModel;
 	}

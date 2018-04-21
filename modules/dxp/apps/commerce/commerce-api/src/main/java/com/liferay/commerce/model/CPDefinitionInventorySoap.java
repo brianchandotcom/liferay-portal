@@ -46,10 +46,10 @@ public class CPDefinitionInventorySoap implements Serializable {
 		soapModel.setCPDefinitionId(model.getCPDefinitionId());
 		soapModel.setCPDefinitionInventoryEngine(model.getCPDefinitionInventoryEngine());
 		soapModel.setLowStockActivity(model.getLowStockActivity());
-		soapModel.setDisplayAvailability(model.getDisplayAvailability());
-		soapModel.setDisplayStockQuantity(model.getDisplayStockQuantity());
+		soapModel.setDisplayAvailability(model.isDisplayAvailability());
+		soapModel.setDisplayStockQuantity(model.isDisplayStockQuantity());
 		soapModel.setMinStockQuantity(model.getMinStockQuantity());
-		soapModel.setBackOrders(model.getBackOrders());
+		soapModel.setBackOrders(model.isBackOrders());
 		soapModel.setMinOrderQuantity(model.getMinOrderQuantity());
 		soapModel.setMaxOrderQuantity(model.getMaxOrderQuantity());
 		soapModel.setAllowedOrderQuantities(model.getAllowedOrderQuantities());

@@ -69,14 +69,14 @@ public class CommerceCountryWrapper implements CommerceCountry,
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("name", getName());
-		attributes.put("billingAllowed", getBillingAllowed());
-		attributes.put("shippingAllowed", getShippingAllowed());
+		attributes.put("billingAllowed", isBillingAllowed());
+		attributes.put("shippingAllowed", isShippingAllowed());
 		attributes.put("twoLettersISOCode", getTwoLettersISOCode());
 		attributes.put("threeLettersISOCode", getThreeLettersISOCode());
 		attributes.put("numericISOCode", getNumericISOCode());
-		attributes.put("subjectToVAT", getSubjectToVAT());
+		attributes.put("subjectToVAT", isSubjectToVAT());
 		attributes.put("priority", getPriority());
-		attributes.put("active", getActive());
+		attributes.put("active", isActive());
 		attributes.put("lastPublishDate", getLastPublishDate());
 
 		return attributes;

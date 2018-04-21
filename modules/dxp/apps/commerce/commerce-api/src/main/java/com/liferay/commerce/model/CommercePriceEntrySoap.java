@@ -45,7 +45,7 @@ public class CommercePriceEntrySoap implements Serializable {
 		soapModel.setCPInstanceId(model.getCPInstanceId());
 		soapModel.setCommercePriceListId(model.getCommercePriceListId());
 		soapModel.setPrice(model.getPrice());
-		soapModel.setHasTierPrice(model.getHasTierPrice());
+		soapModel.setHasTierPrice(model.isHasTierPrice());
 		soapModel.setLastPublishDate(model.getLastPublishDate());
 
 		return soapModel;

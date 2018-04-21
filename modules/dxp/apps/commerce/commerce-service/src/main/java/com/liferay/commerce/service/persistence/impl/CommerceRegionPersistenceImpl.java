@@ -2131,7 +2131,7 @@ public class CommerceRegionPersistenceImpl extends BasePersistenceImpl<CommerceR
 			if ((list != null) && !list.isEmpty()) {
 				for (CommerceRegion commerceRegion : list) {
 					if ((commerceCountryId != commerceRegion.getCommerceCountryId()) ||
-							(active != commerceRegion.getActive())) {
+							(active != commerceRegion.isActive())) {
 						list = null;
 
 						break;
@@ -2896,7 +2896,7 @@ public class CommerceRegionPersistenceImpl extends BasePersistenceImpl<CommerceR
 
 			args = new Object[] {
 					commerceRegionModelImpl.getCommerceCountryId(),
-					commerceRegionModelImpl.getActive()
+					commerceRegionModelImpl.isActive()
 				};
 
 			finderCache.removeResult(FINDER_PATH_COUNT_BY_C_A, args);

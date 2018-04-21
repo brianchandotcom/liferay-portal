@@ -251,14 +251,14 @@ public class CommerceCountryModelImpl extends BaseModelImpl<CommerceCountry>
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("name", getName());
-		attributes.put("billingAllowed", getBillingAllowed());
-		attributes.put("shippingAllowed", getShippingAllowed());
+		attributes.put("billingAllowed", isBillingAllowed());
+		attributes.put("shippingAllowed", isShippingAllowed());
 		attributes.put("twoLettersISOCode", getTwoLettersISOCode());
 		attributes.put("threeLettersISOCode", getThreeLettersISOCode());
 		attributes.put("numericISOCode", getNumericISOCode());
-		attributes.put("subjectToVAT", getSubjectToVAT());
+		attributes.put("subjectToVAT", isSubjectToVAT());
 		attributes.put("priority", getPriority());
-		attributes.put("active", getActive());
+		attributes.put("active", isActive());
 		attributes.put("lastPublishDate", getLastPublishDate());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
@@ -920,14 +920,14 @@ public class CommerceCountryModelImpl extends BaseModelImpl<CommerceCountry>
 		commerceCountryImpl.setCreateDate(getCreateDate());
 		commerceCountryImpl.setModifiedDate(getModifiedDate());
 		commerceCountryImpl.setName(getName());
-		commerceCountryImpl.setBillingAllowed(getBillingAllowed());
-		commerceCountryImpl.setShippingAllowed(getShippingAllowed());
+		commerceCountryImpl.setBillingAllowed(isBillingAllowed());
+		commerceCountryImpl.setShippingAllowed(isShippingAllowed());
 		commerceCountryImpl.setTwoLettersISOCode(getTwoLettersISOCode());
 		commerceCountryImpl.setThreeLettersISOCode(getThreeLettersISOCode());
 		commerceCountryImpl.setNumericISOCode(getNumericISOCode());
-		commerceCountryImpl.setSubjectToVAT(getSubjectToVAT());
+		commerceCountryImpl.setSubjectToVAT(isSubjectToVAT());
 		commerceCountryImpl.setPriority(getPriority());
-		commerceCountryImpl.setActive(getActive());
+		commerceCountryImpl.setActive(isActive());
 		commerceCountryImpl.setLastPublishDate(getLastPublishDate());
 
 		commerceCountryImpl.resetOriginalValues();
@@ -1082,9 +1082,9 @@ public class CommerceCountryModelImpl extends BaseModelImpl<CommerceCountry>
 			commerceCountryCacheModel.name = null;
 		}
 
-		commerceCountryCacheModel.billingAllowed = getBillingAllowed();
+		commerceCountryCacheModel.billingAllowed = isBillingAllowed();
 
-		commerceCountryCacheModel.shippingAllowed = getShippingAllowed();
+		commerceCountryCacheModel.shippingAllowed = isShippingAllowed();
 
 		commerceCountryCacheModel.twoLettersISOCode = getTwoLettersISOCode();
 
@@ -1105,11 +1105,11 @@ public class CommerceCountryModelImpl extends BaseModelImpl<CommerceCountry>
 
 		commerceCountryCacheModel.numericISOCode = getNumericISOCode();
 
-		commerceCountryCacheModel.subjectToVAT = getSubjectToVAT();
+		commerceCountryCacheModel.subjectToVAT = isSubjectToVAT();
 
 		commerceCountryCacheModel.priority = getPriority();
 
-		commerceCountryCacheModel.active = getActive();
+		commerceCountryCacheModel.active = isActive();
 
 		Date lastPublishDate = getLastPublishDate();
 
@@ -1146,9 +1146,9 @@ public class CommerceCountryModelImpl extends BaseModelImpl<CommerceCountry>
 		sb.append(", name=");
 		sb.append(getName());
 		sb.append(", billingAllowed=");
-		sb.append(getBillingAllowed());
+		sb.append(isBillingAllowed());
 		sb.append(", shippingAllowed=");
-		sb.append(getShippingAllowed());
+		sb.append(isShippingAllowed());
 		sb.append(", twoLettersISOCode=");
 		sb.append(getTwoLettersISOCode());
 		sb.append(", threeLettersISOCode=");
@@ -1156,11 +1156,11 @@ public class CommerceCountryModelImpl extends BaseModelImpl<CommerceCountry>
 		sb.append(", numericISOCode=");
 		sb.append(getNumericISOCode());
 		sb.append(", subjectToVAT=");
-		sb.append(getSubjectToVAT());
+		sb.append(isSubjectToVAT());
 		sb.append(", priority=");
 		sb.append(getPriority());
 		sb.append(", active=");
-		sb.append(getActive());
+		sb.append(isActive());
 		sb.append(", lastPublishDate=");
 		sb.append(getLastPublishDate());
 		sb.append("}");
@@ -1214,11 +1214,11 @@ public class CommerceCountryModelImpl extends BaseModelImpl<CommerceCountry>
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>billingAllowed</column-name><column-value><![CDATA[");
-		sb.append(getBillingAllowed());
+		sb.append(isBillingAllowed());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>shippingAllowed</column-name><column-value><![CDATA[");
-		sb.append(getShippingAllowed());
+		sb.append(isShippingAllowed());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>twoLettersISOCode</column-name><column-value><![CDATA[");
@@ -1234,7 +1234,7 @@ public class CommerceCountryModelImpl extends BaseModelImpl<CommerceCountry>
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>subjectToVAT</column-name><column-value><![CDATA[");
-		sb.append(getSubjectToVAT());
+		sb.append(isSubjectToVAT());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>priority</column-name><column-value><![CDATA[");
@@ -1242,7 +1242,7 @@ public class CommerceCountryModelImpl extends BaseModelImpl<CommerceCountry>
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>active</column-name><column-value><![CDATA[");
-		sb.append(getActive());
+		sb.append(isActive());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>lastPublishDate</column-name><column-value><![CDATA[");

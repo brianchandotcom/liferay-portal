@@ -47,7 +47,7 @@ public class CommercePaymentMethodSoap implements Serializable {
 		soapModel.setImageId(model.getImageId());
 		soapModel.setEngineKey(model.getEngineKey());
 		soapModel.setPriority(model.getPriority());
-		soapModel.setActive(model.getActive());
+		soapModel.setActive(model.isActive());
 
 		return soapModel;
 	}

@@ -71,7 +71,7 @@ public class CommercePriceEntryWrapper implements CommercePriceEntry,
 		attributes.put("CPInstanceId", getCPInstanceId());
 		attributes.put("commercePriceListId", getCommercePriceListId());
 		attributes.put("price", getPrice());
-		attributes.put("hasTierPrice", getHasTierPrice());
+		attributes.put("hasTierPrice", isHasTierPrice());
 		attributes.put("lastPublishDate", getLastPublishDate());
 
 		return attributes;

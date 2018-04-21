@@ -248,10 +248,10 @@ public class CPDefinitionInventoryModelImpl extends BaseModelImpl<CPDefinitionIn
 		attributes.put("CPDefinitionInventoryEngine",
 			getCPDefinitionInventoryEngine());
 		attributes.put("lowStockActivity", getLowStockActivity());
-		attributes.put("displayAvailability", getDisplayAvailability());
-		attributes.put("displayStockQuantity", getDisplayStockQuantity());
+		attributes.put("displayAvailability", isDisplayAvailability());
+		attributes.put("displayStockQuantity", isDisplayStockQuantity());
 		attributes.put("minStockQuantity", getMinStockQuantity());
-		attributes.put("backOrders", getBackOrders());
+		attributes.put("backOrders", isBackOrders());
 		attributes.put("minOrderQuantity", getMinOrderQuantity());
 		attributes.put("maxOrderQuantity", getMaxOrderQuantity());
 		attributes.put("allowedOrderQuantities", getAllowedOrderQuantities());
@@ -753,10 +753,10 @@ public class CPDefinitionInventoryModelImpl extends BaseModelImpl<CPDefinitionIn
 		cpDefinitionInventoryImpl.setCPDefinitionId(getCPDefinitionId());
 		cpDefinitionInventoryImpl.setCPDefinitionInventoryEngine(getCPDefinitionInventoryEngine());
 		cpDefinitionInventoryImpl.setLowStockActivity(getLowStockActivity());
-		cpDefinitionInventoryImpl.setDisplayAvailability(getDisplayAvailability());
-		cpDefinitionInventoryImpl.setDisplayStockQuantity(getDisplayStockQuantity());
+		cpDefinitionInventoryImpl.setDisplayAvailability(isDisplayAvailability());
+		cpDefinitionInventoryImpl.setDisplayStockQuantity(isDisplayStockQuantity());
 		cpDefinitionInventoryImpl.setMinStockQuantity(getMinStockQuantity());
-		cpDefinitionInventoryImpl.setBackOrders(getBackOrders());
+		cpDefinitionInventoryImpl.setBackOrders(isBackOrders());
 		cpDefinitionInventoryImpl.setMinOrderQuantity(getMinOrderQuantity());
 		cpDefinitionInventoryImpl.setMaxOrderQuantity(getMaxOrderQuantity());
 		cpDefinitionInventoryImpl.setAllowedOrderQuantities(getAllowedOrderQuantities());
@@ -907,13 +907,13 @@ public class CPDefinitionInventoryModelImpl extends BaseModelImpl<CPDefinitionIn
 			cpDefinitionInventoryCacheModel.lowStockActivity = null;
 		}
 
-		cpDefinitionInventoryCacheModel.displayAvailability = getDisplayAvailability();
+		cpDefinitionInventoryCacheModel.displayAvailability = isDisplayAvailability();
 
-		cpDefinitionInventoryCacheModel.displayStockQuantity = getDisplayStockQuantity();
+		cpDefinitionInventoryCacheModel.displayStockQuantity = isDisplayStockQuantity();
 
 		cpDefinitionInventoryCacheModel.minStockQuantity = getMinStockQuantity();
 
-		cpDefinitionInventoryCacheModel.backOrders = getBackOrders();
+		cpDefinitionInventoryCacheModel.backOrders = isBackOrders();
 
 		cpDefinitionInventoryCacheModel.minOrderQuantity = getMinOrderQuantity();
 
@@ -960,13 +960,13 @@ public class CPDefinitionInventoryModelImpl extends BaseModelImpl<CPDefinitionIn
 		sb.append(", lowStockActivity=");
 		sb.append(getLowStockActivity());
 		sb.append(", displayAvailability=");
-		sb.append(getDisplayAvailability());
+		sb.append(isDisplayAvailability());
 		sb.append(", displayStockQuantity=");
-		sb.append(getDisplayStockQuantity());
+		sb.append(isDisplayStockQuantity());
 		sb.append(", minStockQuantity=");
 		sb.append(getMinStockQuantity());
 		sb.append(", backOrders=");
-		sb.append(getBackOrders());
+		sb.append(isBackOrders());
 		sb.append(", minOrderQuantity=");
 		sb.append(getMinOrderQuantity());
 		sb.append(", maxOrderQuantity=");
@@ -1034,11 +1034,11 @@ public class CPDefinitionInventoryModelImpl extends BaseModelImpl<CPDefinitionIn
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>displayAvailability</column-name><column-value><![CDATA[");
-		sb.append(getDisplayAvailability());
+		sb.append(isDisplayAvailability());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>displayStockQuantity</column-name><column-value><![CDATA[");
-		sb.append(getDisplayStockQuantity());
+		sb.append(isDisplayStockQuantity());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>minStockQuantity</column-name><column-value><![CDATA[");
@@ -1046,7 +1046,7 @@ public class CPDefinitionInventoryModelImpl extends BaseModelImpl<CPDefinitionIn
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>backOrders</column-name><column-value><![CDATA[");
-		sb.append(getBackOrders());
+		sb.append(isBackOrders());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>minOrderQuantity</column-name><column-value><![CDATA[");

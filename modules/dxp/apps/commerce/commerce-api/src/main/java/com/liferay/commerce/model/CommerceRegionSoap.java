@@ -46,7 +46,7 @@ public class CommerceRegionSoap implements Serializable {
 		soapModel.setName(model.getName());
 		soapModel.setCode(model.getCode());
 		soapModel.setPriority(model.getPriority());
-		soapModel.setActive(model.getActive());
+		soapModel.setActive(model.isActive());
 		soapModel.setLastPublishDate(model.getLastPublishDate());
 
 		return soapModel;

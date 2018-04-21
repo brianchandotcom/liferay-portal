@@ -79,8 +79,8 @@ public class CommerceAddressWrapper implements CommerceAddress,
 		attributes.put("latitude", getLatitude());
 		attributes.put("longitude", getLongitude());
 		attributes.put("phoneNumber", getPhoneNumber());
-		attributes.put("defaultBilling", getDefaultBilling());
-		attributes.put("defaultShipping", getDefaultShipping());
+		attributes.put("defaultBilling", isDefaultBilling());
+		attributes.put("defaultShipping", isDefaultShipping());
 
 		return attributes;
 	}

@@ -44,8 +44,8 @@ public class CommerceTaxMethodSoap implements Serializable {
 		soapModel.setName(model.getName());
 		soapModel.setDescription(model.getDescription());
 		soapModel.setEngineKey(model.getEngineKey());
-		soapModel.setPercentage(model.getPercentage());
-		soapModel.setActive(model.getActive());
+		soapModel.setPercentage(model.isPercentage());
+		soapModel.setActive(model.isActive());
 
 		return soapModel;
 	}

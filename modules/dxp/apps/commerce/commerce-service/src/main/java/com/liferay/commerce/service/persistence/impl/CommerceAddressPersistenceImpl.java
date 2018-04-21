@@ -2409,7 +2409,7 @@ public class CommerceAddressPersistenceImpl extends BasePersistenceImpl<Commerce
 					if ((groupId != commerceAddress.getGroupId()) ||
 							(classNameId != commerceAddress.getClassNameId()) ||
 							(classPK != commerceAddress.getClassPK()) ||
-							(defaultBilling != commerceAddress.getDefaultBilling())) {
+							(defaultBilling != commerceAddress.isDefaultBilling())) {
 						list = null;
 
 						break;
@@ -3046,7 +3046,7 @@ public class CommerceAddressPersistenceImpl extends BasePersistenceImpl<Commerce
 					if ((groupId != commerceAddress.getGroupId()) ||
 							(classNameId != commerceAddress.getClassNameId()) ||
 							(classPK != commerceAddress.getClassPK()) ||
-							(defaultShipping != commerceAddress.getDefaultShipping())) {
+							(defaultShipping != commerceAddress.isDefaultShipping())) {
 						list = null;
 
 						break;
@@ -3816,7 +3816,7 @@ public class CommerceAddressPersistenceImpl extends BasePersistenceImpl<Commerce
 					commerceAddressModelImpl.getGroupId(),
 					commerceAddressModelImpl.getClassNameId(),
 					commerceAddressModelImpl.getClassPK(),
-					commerceAddressModelImpl.getDefaultBilling()
+					commerceAddressModelImpl.isDefaultBilling()
 				};
 
 			finderCache.removeResult(FINDER_PATH_COUNT_BY_G_C_C_DB, args);
@@ -3827,7 +3827,7 @@ public class CommerceAddressPersistenceImpl extends BasePersistenceImpl<Commerce
 					commerceAddressModelImpl.getGroupId(),
 					commerceAddressModelImpl.getClassNameId(),
 					commerceAddressModelImpl.getClassPK(),
-					commerceAddressModelImpl.getDefaultShipping()
+					commerceAddressModelImpl.isDefaultShipping()
 				};
 
 			finderCache.removeResult(FINDER_PATH_COUNT_BY_G_C_C_DS, args);

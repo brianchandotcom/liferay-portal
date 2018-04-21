@@ -43,7 +43,7 @@ public class CommerceWarehouseSoap implements Serializable {
 		soapModel.setModifiedDate(model.getModifiedDate());
 		soapModel.setName(model.getName());
 		soapModel.setDescription(model.getDescription());
-		soapModel.setActive(model.getActive());
+		soapModel.setActive(model.isActive());
 		soapModel.setStreet1(model.getStreet1());
 		soapModel.setStreet2(model.getStreet2());
 		soapModel.setStreet3(model.getStreet3());

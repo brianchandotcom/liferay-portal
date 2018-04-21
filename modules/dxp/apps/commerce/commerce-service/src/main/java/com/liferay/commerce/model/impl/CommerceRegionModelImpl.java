@@ -232,7 +232,7 @@ public class CommerceRegionModelImpl extends BaseModelImpl<CommerceRegion>
 		attributes.put("name", getName());
 		attributes.put("code", getCode());
 		attributes.put("priority", getPriority());
-		attributes.put("active", getActive());
+		attributes.put("active", isActive());
 		attributes.put("lastPublishDate", getLastPublishDate());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
@@ -637,7 +637,7 @@ public class CommerceRegionModelImpl extends BaseModelImpl<CommerceRegion>
 		commerceRegionImpl.setName(getName());
 		commerceRegionImpl.setCode(getCode());
 		commerceRegionImpl.setPriority(getPriority());
-		commerceRegionImpl.setActive(getActive());
+		commerceRegionImpl.setActive(isActive());
 		commerceRegionImpl.setLastPublishDate(getLastPublishDate());
 
 		commerceRegionImpl.resetOriginalValues();
@@ -796,7 +796,7 @@ public class CommerceRegionModelImpl extends BaseModelImpl<CommerceRegion>
 
 		commerceRegionCacheModel.priority = getPriority();
 
-		commerceRegionCacheModel.active = getActive();
+		commerceRegionCacheModel.active = isActive();
 
 		Date lastPublishDate = getLastPublishDate();
 
@@ -839,7 +839,7 @@ public class CommerceRegionModelImpl extends BaseModelImpl<CommerceRegion>
 		sb.append(", priority=");
 		sb.append(getPriority());
 		sb.append(", active=");
-		sb.append(getActive());
+		sb.append(isActive());
 		sb.append(", lastPublishDate=");
 		sb.append(getLastPublishDate());
 		sb.append("}");
@@ -905,7 +905,7 @@ public class CommerceRegionModelImpl extends BaseModelImpl<CommerceRegion>
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>active</column-name><column-value><![CDATA[");
-		sb.append(getActive());
+		sb.append(isActive());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>lastPublishDate</column-name><column-value><![CDATA[");

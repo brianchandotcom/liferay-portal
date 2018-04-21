@@ -73,10 +73,10 @@ public class CPDefinitionInventoryWrapper implements CPDefinitionInventory,
 		attributes.put("CPDefinitionInventoryEngine",
 			getCPDefinitionInventoryEngine());
 		attributes.put("lowStockActivity", getLowStockActivity());
-		attributes.put("displayAvailability", getDisplayAvailability());
-		attributes.put("displayStockQuantity", getDisplayStockQuantity());
+		attributes.put("displayAvailability", isDisplayAvailability());
+		attributes.put("displayStockQuantity", isDisplayStockQuantity());
 		attributes.put("minStockQuantity", getMinStockQuantity());
-		attributes.put("backOrders", getBackOrders());
+		attributes.put("backOrders", isBackOrders());
 		attributes.put("minOrderQuantity", getMinOrderQuantity());
 		attributes.put("maxOrderQuantity", getMaxOrderQuantity());
 		attributes.put("allowedOrderQuantities", getAllowedOrderQuantities());

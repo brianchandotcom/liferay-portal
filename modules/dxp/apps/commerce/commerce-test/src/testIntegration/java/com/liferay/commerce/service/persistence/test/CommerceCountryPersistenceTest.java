@@ -183,22 +183,22 @@ public class CommerceCountryPersistenceTest {
 			Time.getShortTimestamp(newCommerceCountry.getModifiedDate()));
 		Assert.assertEquals(existingCommerceCountry.getName(),
 			newCommerceCountry.getName());
-		Assert.assertEquals(existingCommerceCountry.getBillingAllowed(),
-			newCommerceCountry.getBillingAllowed());
-		Assert.assertEquals(existingCommerceCountry.getShippingAllowed(),
-			newCommerceCountry.getShippingAllowed());
+		Assert.assertEquals(existingCommerceCountry.isBillingAllowed(),
+			newCommerceCountry.isBillingAllowed());
+		Assert.assertEquals(existingCommerceCountry.isShippingAllowed(),
+			newCommerceCountry.isShippingAllowed());
 		Assert.assertEquals(existingCommerceCountry.getTwoLettersISOCode(),
 			newCommerceCountry.getTwoLettersISOCode());
 		Assert.assertEquals(existingCommerceCountry.getThreeLettersISOCode(),
 			newCommerceCountry.getThreeLettersISOCode());
 		Assert.assertEquals(existingCommerceCountry.getNumericISOCode(),
 			newCommerceCountry.getNumericISOCode());
-		Assert.assertEquals(existingCommerceCountry.getSubjectToVAT(),
-			newCommerceCountry.getSubjectToVAT());
+		Assert.assertEquals(existingCommerceCountry.isSubjectToVAT(),
+			newCommerceCountry.isSubjectToVAT());
 		AssertUtils.assertEquals(existingCommerceCountry.getPriority(),
 			newCommerceCountry.getPriority());
-		Assert.assertEquals(existingCommerceCountry.getActive(),
-			newCommerceCountry.getActive());
+		Assert.assertEquals(existingCommerceCountry.isActive(),
+			newCommerceCountry.isActive());
 		Assert.assertEquals(Time.getShortTimestamp(
 				existingCommerceCountry.getLastPublishDate()),
 			Time.getShortTimestamp(newCommerceCountry.getLastPublishDate()));

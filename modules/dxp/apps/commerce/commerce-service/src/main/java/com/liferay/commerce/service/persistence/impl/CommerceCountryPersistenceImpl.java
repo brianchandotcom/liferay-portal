@@ -2338,7 +2338,7 @@ public class CommerceCountryPersistenceImpl extends BasePersistenceImpl<Commerce
 			if ((list != null) && !list.isEmpty()) {
 				for (CommerceCountry commerceCountry : list) {
 					if ((groupId != commerceCountry.getGroupId()) ||
-							(active != commerceCountry.getActive())) {
+							(active != commerceCountry.isActive())) {
 						list = null;
 
 						break;
@@ -2898,8 +2898,8 @@ public class CommerceCountryPersistenceImpl extends BasePersistenceImpl<Commerce
 			if ((list != null) && !list.isEmpty()) {
 				for (CommerceCountry commerceCountry : list) {
 					if ((groupId != commerceCountry.getGroupId()) ||
-							(billingAllowed != commerceCountry.getBillingAllowed()) ||
-							(active != commerceCountry.getActive())) {
+							(billingAllowed != commerceCountry.isBillingAllowed()) ||
+							(active != commerceCountry.isActive())) {
 						list = null;
 
 						break;
@@ -3492,8 +3492,8 @@ public class CommerceCountryPersistenceImpl extends BasePersistenceImpl<Commerce
 			if ((list != null) && !list.isEmpty()) {
 				for (CommerceCountry commerceCountry : list) {
 					if ((groupId != commerceCountry.getGroupId()) ||
-							(shippingAllowed != commerceCountry.getShippingAllowed()) ||
-							(active != commerceCountry.getActive())) {
+							(shippingAllowed != commerceCountry.isShippingAllowed()) ||
+							(active != commerceCountry.isActive())) {
 						list = null;
 
 						break;
@@ -4328,7 +4328,7 @@ public class CommerceCountryPersistenceImpl extends BasePersistenceImpl<Commerce
 
 			args = new Object[] {
 					commerceCountryModelImpl.getGroupId(),
-					commerceCountryModelImpl.getActive()
+					commerceCountryModelImpl.isActive()
 				};
 
 			finderCache.removeResult(FINDER_PATH_COUNT_BY_G_A, args);
@@ -4337,8 +4337,8 @@ public class CommerceCountryPersistenceImpl extends BasePersistenceImpl<Commerce
 
 			args = new Object[] {
 					commerceCountryModelImpl.getGroupId(),
-					commerceCountryModelImpl.getBillingAllowed(),
-					commerceCountryModelImpl.getActive()
+					commerceCountryModelImpl.isBillingAllowed(),
+					commerceCountryModelImpl.isActive()
 				};
 
 			finderCache.removeResult(FINDER_PATH_COUNT_BY_G_B_A, args);
@@ -4347,8 +4347,8 @@ public class CommerceCountryPersistenceImpl extends BasePersistenceImpl<Commerce
 
 			args = new Object[] {
 					commerceCountryModelImpl.getGroupId(),
-					commerceCountryModelImpl.getShippingAllowed(),
-					commerceCountryModelImpl.getActive()
+					commerceCountryModelImpl.isShippingAllowed(),
+					commerceCountryModelImpl.isActive()
 				};
 
 			finderCache.removeResult(FINDER_PATH_COUNT_BY_G_S_A, args);

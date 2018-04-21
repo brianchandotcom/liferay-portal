@@ -228,8 +228,8 @@ public class CommerceTaxMethodModelImpl extends BaseModelImpl<CommerceTaxMethod>
 		attributes.put("name", getName());
 		attributes.put("description", getDescription());
 		attributes.put("engineKey", getEngineKey());
-		attributes.put("percentage", getPercentage());
-		attributes.put("active", getActive());
+		attributes.put("percentage", isPercentage());
+		attributes.put("active", isActive());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -827,8 +827,8 @@ public class CommerceTaxMethodModelImpl extends BaseModelImpl<CommerceTaxMethod>
 		commerceTaxMethodImpl.setName(getName());
 		commerceTaxMethodImpl.setDescription(getDescription());
 		commerceTaxMethodImpl.setEngineKey(getEngineKey());
-		commerceTaxMethodImpl.setPercentage(getPercentage());
-		commerceTaxMethodImpl.setActive(getActive());
+		commerceTaxMethodImpl.setPercentage(isPercentage());
+		commerceTaxMethodImpl.setActive(isActive());
 
 		commerceTaxMethodImpl.resetOriginalValues();
 
@@ -969,9 +969,9 @@ public class CommerceTaxMethodModelImpl extends BaseModelImpl<CommerceTaxMethod>
 			commerceTaxMethodCacheModel.engineKey = null;
 		}
 
-		commerceTaxMethodCacheModel.percentage = getPercentage();
+		commerceTaxMethodCacheModel.percentage = isPercentage();
 
-		commerceTaxMethodCacheModel.active = getActive();
+		commerceTaxMethodCacheModel.active = isActive();
 
 		return commerceTaxMethodCacheModel;
 	}
@@ -1001,9 +1001,9 @@ public class CommerceTaxMethodModelImpl extends BaseModelImpl<CommerceTaxMethod>
 		sb.append(", engineKey=");
 		sb.append(getEngineKey());
 		sb.append(", percentage=");
-		sb.append(getPercentage());
+		sb.append(isPercentage());
 		sb.append(", active=");
-		sb.append(getActive());
+		sb.append(isActive());
 		sb.append("}");
 
 		return sb.toString();
@@ -1059,11 +1059,11 @@ public class CommerceTaxMethodModelImpl extends BaseModelImpl<CommerceTaxMethod>
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>percentage</column-name><column-value><![CDATA[");
-		sb.append(getPercentage());
+		sb.append(isPercentage());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>active</column-name><column-value><![CDATA[");
-		sb.append(getActive());
+		sb.append(isActive());
 		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");

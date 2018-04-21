@@ -55,8 +55,8 @@ public class CommerceAddressSoap implements Serializable {
 		soapModel.setLatitude(model.getLatitude());
 		soapModel.setLongitude(model.getLongitude());
 		soapModel.setPhoneNumber(model.getPhoneNumber());
-		soapModel.setDefaultBilling(model.getDefaultBilling());
-		soapModel.setDefaultShipping(model.getDefaultShipping());
+		soapModel.setDefaultBilling(model.isDefaultBilling());
+		soapModel.setDefaultShipping(model.isDefaultShipping());
 
 		return soapModel;
 	}

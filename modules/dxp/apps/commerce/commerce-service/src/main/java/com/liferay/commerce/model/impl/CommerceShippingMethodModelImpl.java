@@ -233,7 +233,7 @@ public class CommerceShippingMethodModelImpl extends BaseModelImpl<CommerceShipp
 		attributes.put("imageId", getImageId());
 		attributes.put("engineKey", getEngineKey());
 		attributes.put("priority", getPriority());
-		attributes.put("active", getActive());
+		attributes.put("active", isActive());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -845,7 +845,7 @@ public class CommerceShippingMethodModelImpl extends BaseModelImpl<CommerceShipp
 		commerceShippingMethodImpl.setImageId(getImageId());
 		commerceShippingMethodImpl.setEngineKey(getEngineKey());
 		commerceShippingMethodImpl.setPriority(getPriority());
-		commerceShippingMethodImpl.setActive(getActive());
+		commerceShippingMethodImpl.setActive(isActive());
 
 		commerceShippingMethodImpl.resetOriginalValues();
 
@@ -995,7 +995,7 @@ public class CommerceShippingMethodModelImpl extends BaseModelImpl<CommerceShipp
 
 		commerceShippingMethodCacheModel.priority = getPriority();
 
-		commerceShippingMethodCacheModel.active = getActive();
+		commerceShippingMethodCacheModel.active = isActive();
 
 		return commerceShippingMethodCacheModel;
 	}
@@ -1029,7 +1029,7 @@ public class CommerceShippingMethodModelImpl extends BaseModelImpl<CommerceShipp
 		sb.append(", priority=");
 		sb.append(getPriority());
 		sb.append(", active=");
-		sb.append(getActive());
+		sb.append(isActive());
 		sb.append("}");
 
 		return sb.toString();
@@ -1093,7 +1093,7 @@ public class CommerceShippingMethodModelImpl extends BaseModelImpl<CommerceShipp
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>active</column-name><column-value><![CDATA[");
-		sb.append(getActive());
+		sb.append(isActive());
 		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");

@@ -983,7 +983,7 @@ public class CommercePaymentMethodPersistenceImpl extends BasePersistenceImpl<Co
 			if ((list != null) && !list.isEmpty()) {
 				for (CommercePaymentMethod commercePaymentMethod : list) {
 					if ((groupId != commercePaymentMethod.getGroupId()) ||
-							(active != commercePaymentMethod.getActive())) {
+							(active != commercePaymentMethod.isActive())) {
 						list = null;
 
 						break;
@@ -1734,7 +1734,7 @@ public class CommercePaymentMethodPersistenceImpl extends BasePersistenceImpl<Co
 
 			args = new Object[] {
 					commercePaymentMethodModelImpl.getGroupId(),
-					commercePaymentMethodModelImpl.getActive()
+					commercePaymentMethodModelImpl.isActive()
 				};
 
 			finderCache.removeResult(FINDER_PATH_COUNT_BY_G_A, args);

@@ -67,7 +67,7 @@ public class CommerceWarehouseWrapper implements CommerceWarehouse,
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("name", getName());
 		attributes.put("description", getDescription());
-		attributes.put("active", getActive());
+		attributes.put("active", isActive());
 		attributes.put("street1", getStreet1());
 		attributes.put("street2", getStreet2());
 		attributes.put("street3", getStreet3());

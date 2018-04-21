@@ -183,8 +183,8 @@ public class CommerceWarehousePersistenceTest {
 			newCommerceWarehouse.getName());
 		Assert.assertEquals(existingCommerceWarehouse.getDescription(),
 			newCommerceWarehouse.getDescription());
-		Assert.assertEquals(existingCommerceWarehouse.getActive(),
-			newCommerceWarehouse.getActive());
+		Assert.assertEquals(existingCommerceWarehouse.isActive(),
+			newCommerceWarehouse.isActive());
 		Assert.assertEquals(existingCommerceWarehouse.getStreet1(),
 			newCommerceWarehouse.getStreet1());
 		Assert.assertEquals(existingCommerceWarehouse.getStreet2(),

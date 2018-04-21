@@ -43,14 +43,14 @@ public class CommerceCountrySoap implements Serializable {
 		soapModel.setCreateDate(model.getCreateDate());
 		soapModel.setModifiedDate(model.getModifiedDate());
 		soapModel.setName(model.getName());
-		soapModel.setBillingAllowed(model.getBillingAllowed());
-		soapModel.setShippingAllowed(model.getShippingAllowed());
+		soapModel.setBillingAllowed(model.isBillingAllowed());
+		soapModel.setShippingAllowed(model.isShippingAllowed());
 		soapModel.setTwoLettersISOCode(model.getTwoLettersISOCode());
 		soapModel.setThreeLettersISOCode(model.getThreeLettersISOCode());
 		soapModel.setNumericISOCode(model.getNumericISOCode());
-		soapModel.setSubjectToVAT(model.getSubjectToVAT());
+		soapModel.setSubjectToVAT(model.isSubjectToVAT());
 		soapModel.setPriority(model.getPriority());
-		soapModel.setActive(model.getActive());
+		soapModel.setActive(model.isActive());
 		soapModel.setLastPublishDate(model.getLastPublishDate());
 
 		return soapModel;

@@ -34,7 +34,7 @@ import com.liferay.commerce.service.persistence.CommercePaymentMethodPersistence
 import com.liferay.commerce.service.persistence.CommercePriceEntryPersistence;
 import com.liferay.commerce.service.persistence.CommercePriceListFinder;
 import com.liferay.commerce.service.persistence.CommercePriceListPersistence;
-import com.liferay.commerce.service.persistence.CommercePriceListQualificationTypeRelPersistence;
+import com.liferay.commerce.service.persistence.CommercePriceListUserSegmentEntryRelPersistence;
 import com.liferay.commerce.service.persistence.CommerceRegionPersistence;
 import com.liferay.commerce.service.persistence.CommerceShipmentItemPersistence;
 import com.liferay.commerce.service.persistence.CommerceShipmentPersistence;
@@ -993,41 +993,41 @@ public abstract class CommerceOrderLocalServiceBaseImpl
 	}
 
 	/**
-	 * Returns the commerce price list qualification type rel local service.
+	 * Returns the commerce price list user segment entry rel local service.
 	 *
-	 * @return the commerce price list qualification type rel local service
+	 * @return the commerce price list user segment entry rel local service
 	 */
-	public com.liferay.commerce.service.CommercePriceListQualificationTypeRelLocalService getCommercePriceListQualificationTypeRelLocalService() {
-		return commercePriceListQualificationTypeRelLocalService;
+	public com.liferay.commerce.service.CommercePriceListUserSegmentEntryRelLocalService getCommercePriceListUserSegmentEntryRelLocalService() {
+		return commercePriceListUserSegmentEntryRelLocalService;
 	}
 
 	/**
-	 * Sets the commerce price list qualification type rel local service.
+	 * Sets the commerce price list user segment entry rel local service.
 	 *
-	 * @param commercePriceListQualificationTypeRelLocalService the commerce price list qualification type rel local service
+	 * @param commercePriceListUserSegmentEntryRelLocalService the commerce price list user segment entry rel local service
 	 */
-	public void setCommercePriceListQualificationTypeRelLocalService(
-		com.liferay.commerce.service.CommercePriceListQualificationTypeRelLocalService commercePriceListQualificationTypeRelLocalService) {
-		this.commercePriceListQualificationTypeRelLocalService = commercePriceListQualificationTypeRelLocalService;
+	public void setCommercePriceListUserSegmentEntryRelLocalService(
+		com.liferay.commerce.service.CommercePriceListUserSegmentEntryRelLocalService commercePriceListUserSegmentEntryRelLocalService) {
+		this.commercePriceListUserSegmentEntryRelLocalService = commercePriceListUserSegmentEntryRelLocalService;
 	}
 
 	/**
-	 * Returns the commerce price list qualification type rel persistence.
+	 * Returns the commerce price list user segment entry rel persistence.
 	 *
-	 * @return the commerce price list qualification type rel persistence
+	 * @return the commerce price list user segment entry rel persistence
 	 */
-	public CommercePriceListQualificationTypeRelPersistence getCommercePriceListQualificationTypeRelPersistence() {
-		return commercePriceListQualificationTypeRelPersistence;
+	public CommercePriceListUserSegmentEntryRelPersistence getCommercePriceListUserSegmentEntryRelPersistence() {
+		return commercePriceListUserSegmentEntryRelPersistence;
 	}
 
 	/**
-	 * Sets the commerce price list qualification type rel persistence.
+	 * Sets the commerce price list user segment entry rel persistence.
 	 *
-	 * @param commercePriceListQualificationTypeRelPersistence the commerce price list qualification type rel persistence
+	 * @param commercePriceListUserSegmentEntryRelPersistence the commerce price list user segment entry rel persistence
 	 */
-	public void setCommercePriceListQualificationTypeRelPersistence(
-		CommercePriceListQualificationTypeRelPersistence commercePriceListQualificationTypeRelPersistence) {
-		this.commercePriceListQualificationTypeRelPersistence = commercePriceListQualificationTypeRelPersistence;
+	public void setCommercePriceListUserSegmentEntryRelPersistence(
+		CommercePriceListUserSegmentEntryRelPersistence commercePriceListUserSegmentEntryRelPersistence) {
+		this.commercePriceListUserSegmentEntryRelPersistence = commercePriceListUserSegmentEntryRelPersistence;
 	}
 
 	/**
@@ -1835,10 +1835,10 @@ public abstract class CommerceOrderLocalServiceBaseImpl
 	protected CommercePriceListPersistence commercePriceListPersistence;
 	@BeanReference(type = CommercePriceListFinder.class)
 	protected CommercePriceListFinder commercePriceListFinder;
-	@BeanReference(type = com.liferay.commerce.service.CommercePriceListQualificationTypeRelLocalService.class)
-	protected com.liferay.commerce.service.CommercePriceListQualificationTypeRelLocalService commercePriceListQualificationTypeRelLocalService;
-	@BeanReference(type = CommercePriceListQualificationTypeRelPersistence.class)
-	protected CommercePriceListQualificationTypeRelPersistence commercePriceListQualificationTypeRelPersistence;
+	@BeanReference(type = com.liferay.commerce.service.CommercePriceListUserSegmentEntryRelLocalService.class)
+	protected com.liferay.commerce.service.CommercePriceListUserSegmentEntryRelLocalService commercePriceListUserSegmentEntryRelLocalService;
+	@BeanReference(type = CommercePriceListUserSegmentEntryRelPersistence.class)
+	protected CommercePriceListUserSegmentEntryRelPersistence commercePriceListUserSegmentEntryRelPersistence;
 	@BeanReference(type = com.liferay.commerce.service.CommerceRegionLocalService.class)
 	protected com.liferay.commerce.service.CommerceRegionLocalService commerceRegionLocalService;
 	@BeanReference(type = CommerceRegionPersistence.class)

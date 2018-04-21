@@ -189,14 +189,14 @@ public class CPDefinitionInventoryPersistenceTest {
 			newCPDefinitionInventory.getCPDefinitionInventoryEngine());
 		Assert.assertEquals(existingCPDefinitionInventory.getLowStockActivity(),
 			newCPDefinitionInventory.getLowStockActivity());
-		Assert.assertEquals(existingCPDefinitionInventory.getDisplayAvailability(),
-			newCPDefinitionInventory.getDisplayAvailability());
-		Assert.assertEquals(existingCPDefinitionInventory.getDisplayStockQuantity(),
-			newCPDefinitionInventory.getDisplayStockQuantity());
+		Assert.assertEquals(existingCPDefinitionInventory.isDisplayAvailability(),
+			newCPDefinitionInventory.isDisplayAvailability());
+		Assert.assertEquals(existingCPDefinitionInventory.isDisplayStockQuantity(),
+			newCPDefinitionInventory.isDisplayStockQuantity());
 		Assert.assertEquals(existingCPDefinitionInventory.getMinStockQuantity(),
 			newCPDefinitionInventory.getMinStockQuantity());
-		Assert.assertEquals(existingCPDefinitionInventory.getBackOrders(),
-			newCPDefinitionInventory.getBackOrders());
+		Assert.assertEquals(existingCPDefinitionInventory.isBackOrders(),
+			newCPDefinitionInventory.isBackOrders());
 		Assert.assertEquals(existingCPDefinitionInventory.getMinOrderQuantity(),
 			newCPDefinitionInventory.getMinOrderQuantity());
 		Assert.assertEquals(existingCPDefinitionInventory.getMaxOrderQuantity(),

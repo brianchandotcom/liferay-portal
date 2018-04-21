@@ -240,7 +240,7 @@ public class CommerceWarehouseModelImpl extends BaseModelImpl<CommerceWarehouse>
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("name", getName());
 		attributes.put("description", getDescription());
-		attributes.put("active", getActive());
+		attributes.put("active", isActive());
 		attributes.put("street1", getStreet1());
 		attributes.put("street2", getStreet2());
 		attributes.put("street3", getStreet3());
@@ -729,7 +729,7 @@ public class CommerceWarehouseModelImpl extends BaseModelImpl<CommerceWarehouse>
 		commerceWarehouseImpl.setModifiedDate(getModifiedDate());
 		commerceWarehouseImpl.setName(getName());
 		commerceWarehouseImpl.setDescription(getDescription());
-		commerceWarehouseImpl.setActive(getActive());
+		commerceWarehouseImpl.setActive(isActive());
 		commerceWarehouseImpl.setStreet1(getStreet1());
 		commerceWarehouseImpl.setStreet2(getStreet2());
 		commerceWarehouseImpl.setStreet3(getStreet3());
@@ -870,7 +870,7 @@ public class CommerceWarehouseModelImpl extends BaseModelImpl<CommerceWarehouse>
 			commerceWarehouseCacheModel.description = null;
 		}
 
-		commerceWarehouseCacheModel.active = getActive();
+		commerceWarehouseCacheModel.active = isActive();
 
 		commerceWarehouseCacheModel.street1 = getStreet1();
 
@@ -946,7 +946,7 @@ public class CommerceWarehouseModelImpl extends BaseModelImpl<CommerceWarehouse>
 		sb.append(", description=");
 		sb.append(getDescription());
 		sb.append(", active=");
-		sb.append(getActive());
+		sb.append(isActive());
 		sb.append(", street1=");
 		sb.append(getStreet1());
 		sb.append(", street2=");
@@ -1016,7 +1016,7 @@ public class CommerceWarehouseModelImpl extends BaseModelImpl<CommerceWarehouse>
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>active</column-name><column-value><![CDATA[");
-		sb.append(getActive());
+		sb.append(isActive());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>street1</column-name><column-value><![CDATA[");

@@ -180,8 +180,8 @@ public class CommercePaymentMethodPersistenceTest {
 			newCommercePaymentMethod.getEngineKey());
 		AssertUtils.assertEquals(existingCommercePaymentMethod.getPriority(),
 			newCommercePaymentMethod.getPriority());
-		Assert.assertEquals(existingCommercePaymentMethod.getActive(),
-			newCommercePaymentMethod.getActive());
+		Assert.assertEquals(existingCommercePaymentMethod.isActive(),
+			newCommercePaymentMethod.isActive());
 	}
 
 	@Test

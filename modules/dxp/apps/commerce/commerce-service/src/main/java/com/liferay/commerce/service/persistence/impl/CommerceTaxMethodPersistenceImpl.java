@@ -978,7 +978,7 @@ public class CommerceTaxMethodPersistenceImpl extends BasePersistenceImpl<Commer
 			if ((list != null) && !list.isEmpty()) {
 				for (CommerceTaxMethod commerceTaxMethod : list) {
 					if ((groupId != commerceTaxMethod.getGroupId()) ||
-							(active != commerceTaxMethod.getActive())) {
+							(active != commerceTaxMethod.isActive())) {
 						list = null;
 
 						break;
@@ -1720,7 +1720,7 @@ public class CommerceTaxMethodPersistenceImpl extends BasePersistenceImpl<Commer
 
 			args = new Object[] {
 					commerceTaxMethodModelImpl.getGroupId(),
-					commerceTaxMethodModelImpl.getActive()
+					commerceTaxMethodModelImpl.isActive()
 				};
 
 			finderCache.removeResult(FINDER_PATH_COUNT_BY_G_A, args);

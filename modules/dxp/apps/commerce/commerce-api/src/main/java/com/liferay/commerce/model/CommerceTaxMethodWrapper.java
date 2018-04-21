@@ -68,8 +68,8 @@ public class CommerceTaxMethodWrapper implements CommerceTaxMethod,
 		attributes.put("name", getName());
 		attributes.put("description", getDescription());
 		attributes.put("engineKey", getEngineKey());
-		attributes.put("percentage", getPercentage());
-		attributes.put("active", getActive());
+		attributes.put("percentage", isPercentage());
+		attributes.put("active", isActive());
 
 		return attributes;
 	}

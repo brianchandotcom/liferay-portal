@@ -164,8 +164,8 @@ public class CommerceOrderNotePersistenceTest {
 			newCommerceOrderNote.getCommerceOrderId());
 		Assert.assertEquals(existingCommerceOrderNote.getContent(),
 			newCommerceOrderNote.getContent());
-		Assert.assertEquals(existingCommerceOrderNote.getRestricted(),
-			newCommerceOrderNote.getRestricted());
+		Assert.assertEquals(existingCommerceOrderNote.isRestricted(),
+			newCommerceOrderNote.isRestricted());
 	}
 
 	@Test

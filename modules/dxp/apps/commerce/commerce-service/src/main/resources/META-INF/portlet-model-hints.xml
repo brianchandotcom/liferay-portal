@@ -227,9 +227,9 @@
 		<field name="statusByUserName" type="String" />
 		<field name="statusDate" type="Date" />
 	</model>
-	<model name="com.liferay.commerce.model.CommercePriceListQualificationTypeRel">
+	<model name="com.liferay.commerce.model.CommercePriceListUserSegmentEntryRel">
 		<field name="uuid" type="String" />
-		<field name="commercePriceListQualificationTypeRelId" type="long" />
+		<field name="commercePriceListUserSegmentEntryRelId" type="long" />
 		<field name="groupId" type="long" />
 		<field name="companyId" type="long" />
 		<field name="userId" type="long" />
@@ -237,7 +237,7 @@
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
 		<field name="commercePriceListId" type="long" />
-		<field name="commercePriceListQualificationType" type="String" />
+		<field name="commerceUserSegmentEntryId" type="long" />
 		<field name="order" type="int" />
 		<field name="lastPublishDate" type="Date" />
 	</model>

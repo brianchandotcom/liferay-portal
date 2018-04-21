@@ -172,10 +172,10 @@ public class CommerceTaxMethodPersistenceTest {
 			newCommerceTaxMethod.getDescription());
 		Assert.assertEquals(existingCommerceTaxMethod.getEngineKey(),
 			newCommerceTaxMethod.getEngineKey());
-		Assert.assertEquals(existingCommerceTaxMethod.getPercentage(),
-			newCommerceTaxMethod.getPercentage());
-		Assert.assertEquals(existingCommerceTaxMethod.getActive(),
-			newCommerceTaxMethod.getActive());
+		Assert.assertEquals(existingCommerceTaxMethod.isPercentage(),
+			newCommerceTaxMethod.isPercentage());
+		Assert.assertEquals(existingCommerceTaxMethod.isActive(),
+			newCommerceTaxMethod.isActive());
 	}
 
 	@Test

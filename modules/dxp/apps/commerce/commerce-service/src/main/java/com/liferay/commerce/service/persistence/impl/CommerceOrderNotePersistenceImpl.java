@@ -733,7 +733,7 @@ public class CommerceOrderNotePersistenceImpl extends BasePersistenceImpl<Commer
 			if ((list != null) && !list.isEmpty()) {
 				for (CommerceOrderNote commerceOrderNote : list) {
 					if ((commerceOrderId != commerceOrderNote.getCommerceOrderId()) ||
-							(restricted != commerceOrderNote.getRestricted())) {
+							(restricted != commerceOrderNote.isRestricted())) {
 						list = null;
 
 						break;
@@ -1415,7 +1415,7 @@ public class CommerceOrderNotePersistenceImpl extends BasePersistenceImpl<Commer
 
 			args = new Object[] {
 					commerceOrderNoteModelImpl.getCommerceOrderId(),
-					commerceOrderNoteModelImpl.getRestricted()
+					commerceOrderNoteModelImpl.isRestricted()
 				};
 
 			finderCache.removeResult(FINDER_PATH_COUNT_BY_C_R, args);

@@ -271,8 +271,8 @@ public class CommerceAddressModelImpl extends BaseModelImpl<CommerceAddress>
 		attributes.put("latitude", getLatitude());
 		attributes.put("longitude", getLongitude());
 		attributes.put("phoneNumber", getPhoneNumber());
-		attributes.put("defaultBilling", getDefaultBilling());
-		attributes.put("defaultShipping", getDefaultShipping());
+		attributes.put("defaultBilling", isDefaultBilling());
+		attributes.put("defaultShipping", isDefaultShipping());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -911,8 +911,8 @@ public class CommerceAddressModelImpl extends BaseModelImpl<CommerceAddress>
 		commerceAddressImpl.setLatitude(getLatitude());
 		commerceAddressImpl.setLongitude(getLongitude());
 		commerceAddressImpl.setPhoneNumber(getPhoneNumber());
-		commerceAddressImpl.setDefaultBilling(getDefaultBilling());
-		commerceAddressImpl.setDefaultShipping(getDefaultShipping());
+		commerceAddressImpl.setDefaultBilling(isDefaultBilling());
+		commerceAddressImpl.setDefaultShipping(isDefaultShipping());
 
 		commerceAddressImpl.resetOriginalValues();
 
@@ -1123,9 +1123,9 @@ public class CommerceAddressModelImpl extends BaseModelImpl<CommerceAddress>
 			commerceAddressCacheModel.phoneNumber = null;
 		}
 
-		commerceAddressCacheModel.defaultBilling = getDefaultBilling();
+		commerceAddressCacheModel.defaultBilling = isDefaultBilling();
 
-		commerceAddressCacheModel.defaultShipping = getDefaultShipping();
+		commerceAddressCacheModel.defaultShipping = isDefaultShipping();
 
 		return commerceAddressCacheModel;
 	}
@@ -1177,9 +1177,9 @@ public class CommerceAddressModelImpl extends BaseModelImpl<CommerceAddress>
 		sb.append(", phoneNumber=");
 		sb.append(getPhoneNumber());
 		sb.append(", defaultBilling=");
-		sb.append(getDefaultBilling());
+		sb.append(isDefaultBilling());
 		sb.append(", defaultShipping=");
-		sb.append(getDefaultShipping());
+		sb.append(isDefaultShipping());
 		sb.append("}");
 
 		return sb.toString();
@@ -1279,11 +1279,11 @@ public class CommerceAddressModelImpl extends BaseModelImpl<CommerceAddress>
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>defaultBilling</column-name><column-value><![CDATA[");
-		sb.append(getDefaultBilling());
+		sb.append(isDefaultBilling());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>defaultShipping</column-name><column-value><![CDATA[");
-		sb.append(getDefaultShipping());
+		sb.append(isDefaultShipping());
 		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");

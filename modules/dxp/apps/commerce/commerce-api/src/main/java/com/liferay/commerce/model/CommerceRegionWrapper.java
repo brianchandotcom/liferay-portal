@@ -72,7 +72,7 @@ public class CommerceRegionWrapper implements CommerceRegion,
 		attributes.put("name", getName());
 		attributes.put("code", getCode());
 		attributes.put("priority", getPriority());
-		attributes.put("active", getActive());
+		attributes.put("active", isActive());
 		attributes.put("lastPublishDate", getLastPublishDate());
 
 		return attributes;

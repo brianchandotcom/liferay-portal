@@ -181,8 +181,8 @@ public class CommerceRegionPersistenceTest {
 			newCommerceRegion.getCode());
 		AssertUtils.assertEquals(existingCommerceRegion.getPriority(),
 			newCommerceRegion.getPriority());
-		Assert.assertEquals(existingCommerceRegion.getActive(),
-			newCommerceRegion.getActive());
+		Assert.assertEquals(existingCommerceRegion.isActive(),
+			newCommerceRegion.isActive());
 		Assert.assertEquals(Time.getShortTimestamp(
 				existingCommerceRegion.getLastPublishDate()),
 			Time.getShortTimestamp(newCommerceRegion.getLastPublishDate()));

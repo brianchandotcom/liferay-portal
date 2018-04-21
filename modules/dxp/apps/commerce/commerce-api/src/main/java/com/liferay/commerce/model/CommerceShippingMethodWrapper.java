@@ -71,7 +71,7 @@ public class CommerceShippingMethodWrapper implements CommerceShippingMethod,
 		attributes.put("imageId", getImageId());
 		attributes.put("engineKey", getEngineKey());
 		attributes.put("priority", getPriority());
-		attributes.put("active", getActive());
+		attributes.put("active", isActive());
 
 		return attributes;
 	}

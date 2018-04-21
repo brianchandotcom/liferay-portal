@@ -177,8 +177,8 @@ public class CommercePriceEntryPersistenceTest {
 			newCommercePriceEntry.getCommercePriceListId());
 		AssertUtils.assertEquals(existingCommercePriceEntry.getPrice(),
 			newCommercePriceEntry.getPrice());
-		Assert.assertEquals(existingCommercePriceEntry.getHasTierPrice(),
-			newCommercePriceEntry.getHasTierPrice());
+		Assert.assertEquals(existingCommercePriceEntry.isHasTierPrice(),
+			newCommercePriceEntry.isHasTierPrice());
 		Assert.assertEquals(Time.getShortTimestamp(
 				existingCommercePriceEntry.getLastPublishDate()),
 			Time.getShortTimestamp(newCommercePriceEntry.getLastPublishDate()));

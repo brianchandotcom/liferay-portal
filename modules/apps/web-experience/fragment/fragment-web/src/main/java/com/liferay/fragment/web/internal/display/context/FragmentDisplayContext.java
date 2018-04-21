@@ -34,6 +34,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
@@ -308,29 +309,36 @@ public class FragmentDisplayContext {
 		List<FragmentCollection> fragmentCollections = null;
 		int fragmentCollectionsCount = 0;
 
+		Group scopeGroup = themeDisplay.getScopeGroup();
+
+		long scopeGroupId = scopeGroup.getGroupId();
+
+		if (scopeGroup.isStagingGroup()) {
+			scopeGroupId = scopeGroup.getLiveGroupId();
+		}
+
 		if (_isSearch()) {
 			fragmentCollections =
 				FragmentCollectionServiceUtil.getFragmentCollections(
-					themeDisplay.getScopeGroupId(), _getKeywords(),
+					scopeGroupId, _getKeywords(),
 					fragmentCollectionsSearchContainer.getStart(),
 					fragmentCollectionsSearchContainer.getEnd(),
 					orderByComparator);
 
 			fragmentCollectionsCount =
 				FragmentCollectionServiceUtil.getFragmentCollectionsCount(
-					themeDisplay.getScopeGroupId(), _getKeywords());
+					scopeGroupId, _getKeywords());
 		}
 		else {
 			fragmentCollections =
 				FragmentCollectionServiceUtil.getFragmentCollections(
-					themeDisplay.getScopeGroupId(),
-					fragmentCollectionsSearchContainer.getStart(),
+					scopeGroupId, fragmentCollectionsSearchContainer.getStart(),
 					fragmentCollectionsSearchContainer.getEnd(),
 					orderByComparator);
 
 			fragmentCollectionsCount =
 				FragmentCollectionServiceUtil.getFragmentCollectionsCount(
-					themeDisplay.getScopeGroupId());
+					scopeGroupId);
 		}
 
 		fragmentCollectionsSearchContainer.setTotal(fragmentCollectionsCount);
@@ -400,26 +408,33 @@ public class FragmentDisplayContext {
 		List<FragmentEntry> fragmentEntries = null;
 		int fragmentEntriesCount = 0;
 
+		Group scopeGroup = themeDisplay.getScopeGroup();
+
+		long scopeGroupId = scopeGroup.getGroupId();
+
+		if (scopeGroup.isStagingGroup()) {
+			scopeGroupId = scopeGroup.getLiveGroupId();
+		}
+
 		if (_isSearch()) {
 			fragmentEntries = FragmentEntryServiceUtil.getFragmentEntries(
-				themeDisplay.getScopeGroupId(), getFragmentCollectionId(),
-				_getKeywords(), fragmentEntriesSearchContainer.getStart(),
-				fragmentEntriesSearchContainer.getEnd(), orderByComparator);
-
-			fragmentEntriesCount =
-				FragmentEntryServiceUtil.getFragmentCollectionsCount(
-					themeDisplay.getScopeGroupId(), getFragmentCollectionId(),
-					_getKeywords());
-		}
-		else {
-			fragmentEntries = FragmentEntryServiceUtil.getFragmentEntries(
-				themeDisplay.getScopeGroupId(), getFragmentCollectionId(),
+				scopeGroupId, getFragmentCollectionId(), _getKeywords(),
 				fragmentEntriesSearchContainer.getStart(),
 				fragmentEntriesSearchContainer.getEnd(), orderByComparator);
 
 			fragmentEntriesCount =
 				FragmentEntryServiceUtil.getFragmentCollectionsCount(
-					themeDisplay.getScopeGroupId(), getFragmentCollectionId());
+					scopeGroupId, getFragmentCollectionId(), _getKeywords());
+		}
+		else {
+			fragmentEntries = FragmentEntryServiceUtil.getFragmentEntries(
+				scopeGroupId, getFragmentCollectionId(),
+				fragmentEntriesSearchContainer.getStart(),
+				fragmentEntriesSearchContainer.getEnd(), orderByComparator);
+
+			fragmentEntriesCount =
+				FragmentEntryServiceUtil.getFragmentCollectionsCount(
+					scopeGroupId, getFragmentCollectionId());
 		}
 
 		fragmentEntriesSearchContainer.setResults(fragmentEntries);

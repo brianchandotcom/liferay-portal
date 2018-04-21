@@ -62,7 +62,6 @@ PortletURL portletURL = commerceUserSegmentEntryItemSelectorViewDisplayContext.g
 			keyProperty="commerceUserSegmentEntryId"
 			modelVar="commerceUserSegmentEntry"
 		>
-
 			<liferay-ui:search-container-column-text
 				cssClass="table-cell-content"
 				property="name"

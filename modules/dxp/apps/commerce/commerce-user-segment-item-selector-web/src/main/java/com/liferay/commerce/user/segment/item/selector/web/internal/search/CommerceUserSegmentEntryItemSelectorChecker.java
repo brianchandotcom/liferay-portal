@@ -18,13 +18,15 @@ import com.liferay.commerce.user.segment.model.CommerceUserSegmentEntry;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.util.SetUtil;
 
-import javax.portlet.RenderResponse;
 import java.util.Set;
+
+import javax.portlet.RenderResponse;
 
 /**
  * @author Alessio Antonio Rendina
  */
-public class CommerceUserSegmentEntryItemSelectorChecker extends EmptyOnClickRowChecker {
+public class CommerceUserSegmentEntryItemSelectorChecker
+	extends EmptyOnClickRowChecker {
 
 	public CommerceUserSegmentEntryItemSelectorChecker(
 		RenderResponse renderResponse,

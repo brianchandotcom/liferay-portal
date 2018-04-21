@@ -147,7 +147,7 @@ public class UADApplicationExportController {
 
 		sb.append(uadDisplay.getApplicationName());
 		sb.append(StringPool.FORWARD_SLASH);
-		sb.append(uadDisplay.getTypeName());
+		sb.append(uadRegistryKey);
 		sb.append(StringPool.FORWARD_SLASH);
 		sb.append(fileName);
 

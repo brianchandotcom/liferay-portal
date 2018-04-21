@@ -25,6 +25,7 @@ import com.liferay.user.associated.data.display.UADDisplay;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -62,12 +63,7 @@ public class MBMessageUADDisplay implements UADDisplay<MBMessage> {
 	}
 
 	@Override
-	public String getTypeDescription() {
-		return "";
-	}
-
-	@Override
-	public String getTypeName() {
+	public String getTypeName(Locale locale) {
 		return "MBMessage";
 	}
 

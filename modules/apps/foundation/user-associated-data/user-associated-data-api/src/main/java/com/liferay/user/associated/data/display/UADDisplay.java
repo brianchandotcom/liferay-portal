@@ -17,6 +17,7 @@ package com.liferay.user.associated.data.display;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -37,8 +38,6 @@ public interface UADDisplay<T> {
 
 	public Map<String, Object> getNonanonymizableFieldValues(T t);
 
-	public String getTypeDescription();
-
-	public String getTypeName();
+	public String getTypeName(Locale locale);
 
 }

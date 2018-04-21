@@ -19,6 +19,7 @@ import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.processor.FragmentEntryProcessorRegistry;
 import com.liferay.fragment.service.FragmentEntryLocalServiceUtil;
 import com.liferay.osgi.util.ServiceTrackerFactory;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.template.StringTemplateResource;
@@ -148,6 +149,10 @@ public class FragmentEntryRenderUtil {
 			String html, HttpServletRequest request,
 			HttpServletResponse response)
 		throws PortalException {
+
+		if (Validator.isNull(html)) {
+			return StringPool.BLANK;
+		}
 
 		TemplateResource templateResource = new StringTemplateResource(
 			"template_id", html);

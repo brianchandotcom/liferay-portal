@@ -21,7 +21,7 @@ CommercePriceListDisplayContext commercePriceListDisplayContext = (CommercePrice
 
 CommercePriceList commercePriceList = commercePriceListDisplayContext.getCommercePriceList();
 
-List<CommercePriceListQualificationTypeRel> commercePriceListQualificationTypeRels = commercePriceListDisplayContext.getCommercePriceListQualificationTypeRels();
+List<CommercePriceListUserSegmentEntryRel> commercePriceListUserSegmentEntryRels = commercePriceListDisplayContext.getCommercePriceListUserSegmentEntryRels();
 %>
 
 <liferay-ui:error-marker
@@ -32,7 +32,7 @@ List<CommercePriceListQualificationTypeRel> commercePriceListQualificationTypeRe
 <aui:model-context bean="<%= commercePriceList %>" model="<%= CommercePriceList.class %>" />
 
 <liferay-util:buffer
-	var="removeCommercePriceListQualificationTypeIcon"
+	var="removeCommercePriceListUserSegmentEntryRelIcon"
 >
 	<liferay-ui:icon
 		icon="times"
@@ -66,34 +66,33 @@ List<CommercePriceListQualificationTypeRel> commercePriceListQualificationTypeRe
 <h5 class="text-default"><liferay-ui:message key="criteria" /></h5>
 
 <liferay-ui:search-container
-	cssClass="lfr-search-container-qualification-type-rels"
-	curParam="commercePriceListQualificationTypeCur"
+	curParam="commercePriceListUserSegmentEntryRel"
 	headerNames="null,null"
-	id="commercePriceListQualificationTypeRelSearchContainer"
+	id="commercePriceListUserSegmentEntryRelSearchContainer"
 	iteratorURL="<%= currentURLObj %>"
-	total="<%= commercePriceListQualificationTypeRels.size() %>"
+	total="<%= commercePriceListUserSegmentEntryRels.size() %>"
 >
 	<liferay-ui:search-container-results
-		results="<%= commercePriceListQualificationTypeRels.subList(searchContainer.getStart(), searchContainer.getResultEnd()) %>"
+		results="<%= commercePriceListUserSegmentEntryRels.subList(searchContainer.getStart(), searchContainer.getResultEnd()) %>"
 	/>
 
 	<liferay-ui:search-container-row
-		className="com.liferay.commerce.model.CommercePriceListQualificationTypeRel"
-		keyProperty="commercePriceListQualificationTypeRelId"
-		modelVar="commercePriceListQualificationTypeRel"
+		className="com.liferay.commerce.model.CommercePriceListUserSegmentEntryRel"
+		keyProperty="commercePriceListUserSegmentEntryRelId"
+		modelVar="commercePriceListUserSegmentEntryRel"
 	>
 
 		<%
-		CommercePriceListQualificationType commercePriceListQualificationType = commercePriceListDisplayContext.getCommercePriceListQualificationType(commercePriceListQualificationTypeRel.getCommercePriceListQualificationType());
+		CommerceUserSegmentEntry commerceUserSegmentEntry = commercePriceListDisplayContext.getCommerceUserSegmentEntry(commercePriceListUserSegmentEntryRel.getCommerceUserSegmentEntryId());
 		%>
 
 		<liferay-ui:search-container-column-text
 			cssClass="table-cell-content"
-			value="<%= HtmlUtil.escape(commercePriceListQualificationType.getLabel(locale)) %>"
+			value="<%= HtmlUtil.escape(commerceUserSegmentEntry.getName(locale)) %>"
 		/>
 
 		<liferay-ui:search-container-column-text>
-			<a class="modify-link" data-rowId="<%= commercePriceListQualificationTypeRel.getCommercePriceListQualificationTypeRelId() %>" href="javascript:;"><%= removeCommercePriceListQualificationTypeIcon %></a>
+			<a class="modify-link" data-rowId="<%= commercePriceListUserSegmentEntryRel.getCommercePriceListUserSegmentEntryRelId() %>" href="javascript:;"><%= removeCommercePriceListUserSegmentEntryRelIcon %></a>
 		</liferay-ui:search-container-column-text>
 	</liferay-ui:search-container-row>
 
@@ -102,17 +101,17 @@ List<CommercePriceListQualificationTypeRel> commercePriceListQualificationTypeRe
 	/>
 </liferay-ui:search-container>
 
-<aui:button name="selectCommercePriceListQualificationType" value="select" />
+<aui:button name="selectCommercePriceListUserSegmentEntryRel" value="select" />
 
 <aui:script use="liferay-item-selector-dialog">
-	$('#<portlet:namespace />selectCommercePriceListQualificationType').on(
+	$('#<portlet:namespace />selectCommercePriceListUserSegmentEntryRel').on(
 		'click',
 		function(event) {
 			event.preventDefault();
 
 			var itemSelectorDialog = new A.LiferayItemSelectorDialog(
 				{
-					eventName: 'qualificationTypesSelectItem',
+					eventName: 'userSegmentsSelectItem',
 					on: {
 						selectedItemChange: function(event) {
 							var selectedItems = event.newVal;
@@ -123,7 +122,7 @@ List<CommercePriceListQualificationTypeRel> commercePriceListQualificationTypeRe
 								A.Array.each(
 									selectedItems,
 									function(item, index, selectedItems) {
-										<portlet:namespace />addCommercePriceListQualificationTypeRel(item);
+										<portlet:namespace />addCommercePriceListUserSegmentEntryRel(item);
 									}
 								);
 							}
@@ -140,47 +139,47 @@ List<CommercePriceListQualificationTypeRel> commercePriceListQualificationTypeRe
 </aui:script>
 
 <aui:script>
-	var <portlet:namespace />addCommercePriceListQualificationTypeRelKeys = [];
-	var <portlet:namespace />deleteCommercePriceListQualificationTypeRelIds = [];
+	var <portlet:namespace />addCommerceUserSegmentEntryIds = [];
+	var <portlet:namespace />deleteCommercePriceListUserSegmentEntryRelIds = [];
 
-	function <portlet:namespace />addCommercePriceListQualificationTypeRel(item) {
+	function <portlet:namespace />addCommercePriceListUserSegmentEntryRel(item) {
 		var A = AUI();
 
-		var searchContainer = Liferay.SearchContainer.get('<portlet:namespace />commercePriceListQualificationTypeRelSearchContainer');
+		var searchContainer = Liferay.SearchContainer.get('<portlet:namespace />commercePriceListUserSegmentEntryRelSearchContainer');
 
 		var rowColumns = [];
 
 		rowColumns.push(item.label);
-		rowColumns.push('<a class="modify-link" data-rowId="' + item.key + '" href="javascript:;"><%= UnicodeFormatter.toString(removeCommercePriceListQualificationTypeIcon) %></a>');
+		rowColumns.push('<a class="modify-link" data-rowId="' + item.key + '" href="javascript:;"><%= UnicodeFormatter.toString(removeCommercePriceListUserSegmentEntryRelIcon) %></a>');
 
-		A.Array.removeItem(<portlet:namespace />deleteCommercePriceListQualificationTypeRelIds, item.key);
+		A.Array.removeItem(<portlet:namespace />deleteCommercePriceListUserSegmentEntryRelIds, item.key);
 
-		<portlet:namespace />addCommercePriceListQualificationTypeRelKeys.push(item.key);
+		<portlet:namespace />addCommerceUserSegmentEntryIds.push(item.key);
 
-		document.<portlet:namespace />fm.<portlet:namespace />addCommercePriceListQualificationTypeRelKeys.value = <portlet:namespace />addCommercePriceListQualificationTypeRelKeys.join(',');
-		document.<portlet:namespace />fm.<portlet:namespace />deleteCommercePriceListQualificationTypeRelIds.value = <portlet:namespace />deleteCommercePriceListQualificationTypeRelIds.join(',');
+		document.<portlet:namespace />fm.<portlet:namespace />addCommerceUserSegmentEntryIds.value = <portlet:namespace />addCommerceUserSegmentEntryIds.join(',');
+		document.<portlet:namespace />fm.<portlet:namespace />deleteCommercePriceListUserSegmentEntryRelIds.value = <portlet:namespace />deleteCommercePriceListUserSegmentEntryRelIds.join(',');
 
 		searchContainer.addRow(rowColumns, item.key);
 
 		searchContainer.updateDataStore();
 	}
 
-	function <portlet:namespace />deleteCommercePriceListQualificationTypeRel(commercePriceListQualificationTypeRelId) {
+	function <portlet:namespace />deleteCommercePriceListUserSegmentEntryRel(commercePriceListUserSegmentEntryRelId) {
 		var A = AUI();
 
-		A.Array.removeItem(<portlet:namespace />addCommercePriceListQualificationTypeRelKeys, commercePriceListQualificationTypeRelId);
+		A.Array.removeItem(<portlet:namespace />addCommerceUserSegmentEntryIds, commercePriceListUserSegmentEntryRelId);
 
-		<portlet:namespace />deleteCommercePriceListQualificationTypeRelIds.push(commercePriceListQualificationTypeRelId);
+		<portlet:namespace />deleteCommercePriceListUserSegmentEntryRelIds.push(commercePriceListUserSegmentEntryRelId);
 
-		document.<portlet:namespace />fm.<portlet:namespace />addCommercePriceListQualificationTypeRelKeys.value = <portlet:namespace />addCommercePriceListQualificationTypeRelKeys.join(',');
-		document.<portlet:namespace />fm.<portlet:namespace />deleteCommercePriceListQualificationTypeRelIds.value = <portlet:namespace />deleteCommercePriceListQualificationTypeRelIds.join(',');
+		document.<portlet:namespace />fm.<portlet:namespace />addCommerceUserSegmentEntryIds.value = <portlet:namespace />addCommerceUserSegmentEntryIds.join(',');
+		document.<portlet:namespace />fm.<portlet:namespace />deleteCommercePriceListUserSegmentEntryRelIds.value = <portlet:namespace />deleteCommercePriceListUserSegmentEntryRelIds.join(',');
 	}
 </aui:script>
 
 <aui:script use="liferay-search-container">
 	var Util = Liferay.Util;
 
-	var searchContainer = Liferay.SearchContainer.get('<portlet:namespace />commercePriceListQualificationTypeRelSearchContainer');
+	var searchContainer = Liferay.SearchContainer.get('<portlet:namespace />commercePriceListUserSegmentEntryRelSearchContainer');
 
 	var searchContainerContentBox = searchContainer.get('contentBox');
 
@@ -195,7 +194,7 @@ List<CommercePriceListQualificationTypeRel> commercePriceListQualificationTypeRe
 
 			searchContainer.deleteRow(tr, link.getAttribute('data-rowId'));
 
-			<portlet:namespace />deleteCommercePriceListQualificationTypeRel(rowId);
+			<portlet:namespace />deleteCommercePriceListUserSegmentEntryRel(rowId);
 		},
 		'.modify-link'
 	);

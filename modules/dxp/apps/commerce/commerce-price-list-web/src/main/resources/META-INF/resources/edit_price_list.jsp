@@ -29,9 +29,9 @@ long commercePriceListId = commercePriceListDisplayContext.getCommercePriceListI
 <aui:form action="<%= editCommercePriceListActionURL %>" cssClass="container-fluid-1280" method="post" name="fm">
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
 	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
-	<aui:input name="addCommercePriceListQualificationTypeRelKeys" type="hidden" value="" />
+	<aui:input name="addCommerceUserSegmentEntryIds" type="hidden" value="" />
 	<aui:input name="commercePriceListId" type="hidden" value="<%= commercePriceListId %>" />
-	<aui:input name="deleteCommercePriceListQualificationTypeRelIds" type="hidden" value="" />
+	<aui:input name="deleteCommercePriceListUserSegmentEntryRelIds" type="hidden" value="" />
 	<aui:input name="workflowAction" type="hidden" value="<%= String.valueOf(WorkflowConstants.ACTION_SAVE_DRAFT) %>" />
 
 	<c:if test="<%= (commercePriceList != null) && !commercePriceList.isNew() %>">

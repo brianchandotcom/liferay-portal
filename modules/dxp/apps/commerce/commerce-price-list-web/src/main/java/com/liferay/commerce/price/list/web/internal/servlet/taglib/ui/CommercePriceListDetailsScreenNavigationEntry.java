@@ -20,6 +20,7 @@ import com.liferay.commerce.price.list.web.internal.display.context.CommercePric
 import com.liferay.commerce.price.list.web.portlet.action.CommercePriceListActionHelper;
 import com.liferay.commerce.service.CommercePriceListService;
 import com.liferay.commerce.service.CommercePriceListUserSegmentEntryRelService;
+import com.liferay.commerce.user.segment.service.CommerceUserSegmentEntryService;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationCategory;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
@@ -87,6 +88,7 @@ public class CommercePriceListDetailsScreenNavigationEntry
 			CommercePriceListDisplayContext commercePriceListDisplayContext =
 				new CommercePriceListDisplayContext(
 					_commercePriceListActionHelper, _commerceCurrencyService,
+					_commerceUserSegmentEntryService,
 					_commercePriceListUserSegmentEntryRelService,
 					_commercePriceListService, httpServletRequest,
 					_itemSelector);
@@ -119,6 +121,9 @@ public class CommercePriceListDetailsScreenNavigationEntry
 	@Reference
 	private CommercePriceListUserSegmentEntryRelService
 		_commercePriceListUserSegmentEntryRelService;
+
+	@Reference
+	private CommerceUserSegmentEntryService _commerceUserSegmentEntryService;
 
 	@Reference
 	private ItemSelector _itemSelector;

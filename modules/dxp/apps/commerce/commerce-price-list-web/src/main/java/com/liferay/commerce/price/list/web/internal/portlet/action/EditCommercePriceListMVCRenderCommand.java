@@ -20,6 +20,7 @@ import com.liferay.commerce.price.list.web.internal.display.context.CommercePric
 import com.liferay.commerce.price.list.web.portlet.action.CommercePriceListActionHelper;
 import com.liferay.commerce.service.CommercePriceListService;
 import com.liferay.commerce.service.CommercePriceListUserSegmentEntryRelService;
+import com.liferay.commerce.user.segment.service.CommerceUserSegmentEntryService;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.util.Portal;
@@ -58,6 +59,7 @@ public class EditCommercePriceListMVCRenderCommand implements MVCRenderCommand {
 		CommercePriceListDisplayContext commercePriceListDisplayContext =
 			new CommercePriceListDisplayContext(
 				_commercePriceListActionHelper, _commerceCurrencyService,
+				_commerceUserSegmentEntryService,
 				_commercePriceListUserSegmentEntryRelService,
 				_commercePriceListService, httpServletRequest, _itemSelector);
 
@@ -79,6 +81,9 @@ public class EditCommercePriceListMVCRenderCommand implements MVCRenderCommand {
 	@Reference
 	private CommercePriceListUserSegmentEntryRelService
 		_commercePriceListUserSegmentEntryRelService;
+
+	@Reference
+	private CommerceUserSegmentEntryService _commerceUserSegmentEntryService;
 
 	@Reference
 	private ItemSelector _itemSelector;

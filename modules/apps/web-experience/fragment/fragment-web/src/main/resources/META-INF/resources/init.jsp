@@ -33,6 +33,7 @@ page import="com.liferay.fragment.exception.DuplicateFragmentCollectionKeyExcept
 page import="com.liferay.fragment.exception.DuplicateFragmentEntryKeyException" %><%@
 page import="com.liferay.fragment.exception.FragmentCollectionNameException" %><%@
 page import="com.liferay.fragment.exception.FragmentEntryContentException" %><%@
+page import="com.liferay.fragment.exception.InvalidImportFileException" %><%@
 page import="com.liferay.fragment.exception.RequiredFragmentEntryException" %><%@
 page import="com.liferay.fragment.model.FragmentCollection" %><%@
 page import="com.liferay.fragment.model.FragmentEntry" %><%@

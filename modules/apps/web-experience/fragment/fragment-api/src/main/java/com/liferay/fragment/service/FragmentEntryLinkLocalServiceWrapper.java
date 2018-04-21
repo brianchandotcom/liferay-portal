@@ -466,12 +466,10 @@ public class FragmentEntryLinkLocalServiceWrapper
 	}
 
 	@Override
-	public void updateFragmentEntryLinks(long[] fragmentEntryLinkIds,
-		long fragmentEntryId,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+	public com.liferay.fragment.model.FragmentEntryLink updateLatestChanges(
+		long fragmentEntryLinkId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		_fragmentEntryLinkLocalService.updateFragmentEntryLinks(fragmentEntryLinkIds,
-			fragmentEntryId, serviceContext);
+		return _fragmentEntryLinkLocalService.updateLatestChanges(fragmentEntryLinkId);
 	}
 
 	@Override

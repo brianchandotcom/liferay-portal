@@ -291,27 +291,24 @@ public class FragmentEntryLinkLocalServiceImpl
 	}
 
 	@Override
-	public void updateLatestChanges(
-			long[] fragmentEntryLinkIds, long fragmentEntryId,
-			ServiceContext serviceContext)
+	public FragmentEntryLink updateLatestChanges(long fragmentEntryLinkId)
 		throws PortalException {
 
+		FragmentEntryLink fragmentEntryLink =
+			fragmentEntryLinkPersistence.findByPrimaryKey(fragmentEntryLinkId);
+
 		FragmentEntry fragmentEntry = fragmentEntryPersistence.findByPrimaryKey(
-			fragmentEntryId);
+			fragmentEntryLink.getFragmentEntryId());
 
-		for (long fragmentEntryLinkId : fragmentEntryLinkIds) {
-			FragmentEntryLink fragmentEntryLink =
-				fragmentEntryLinkPersistence.findByPrimaryKey(
-					fragmentEntryLinkId);
+		fragmentEntryLink.setCss(fragmentEntry.getCss());
+		fragmentEntryLink.setHtml(fragmentEntry.getHtml());
+		fragmentEntryLink.setJs(fragmentEntry.getJs());
 
-			fragmentEntryLink.setCss(fragmentEntry.getCss());
-			fragmentEntryLink.setHtml(fragmentEntry.getHtml());
-			fragmentEntryLink.setJs(fragmentEntry.getJs());
-			fragmentEntryLink.setLastPropagationDate(
-				serviceContext.getModifiedDate(new Date()));
+		fragmentEntryLink.setLastPropagationDate(new Date());
 
-			fragmentEntryLinkPersistence.update(fragmentEntryLink);
-		}
+		fragmentEntryLinkPersistence.update(fragmentEntryLink);
+
+		return fragmentEntryLink;
 	}
 
 	@ServiceReference(type = JSONFactory.class)

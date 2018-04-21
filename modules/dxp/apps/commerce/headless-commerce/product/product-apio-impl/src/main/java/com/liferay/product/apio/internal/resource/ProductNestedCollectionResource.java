@@ -71,7 +71,7 @@ public class ProductNestedCollectionResource
 
 	@Override
 	public String getName() {
-		return "product";
+		return "products";
 	}
 
 	@Override
@@ -90,24 +90,22 @@ public class ProductNestedCollectionResource
 		Representor.Builder<CPDefinition, Long> builder) {
 
 		return builder.types(
-			"product"
+			"Product"
 		).identifier(
 			CPDefinition::getCPDefinitionId
 		).addBidirectionalModel(
-			"webSite", "product", WebSiteIdentifier.class,
+			"webSite", "products", WebSiteIdentifier.class,
 			CPDefinitionModel::getGroupId
 		).addDate(
 			"dateCreated", CPDefinition::getCreateDate
 		).addDate(
 			"dateModified", CPDefinition::getModifiedDate
-		).addDate(
-			"datePublished", CPDefinition::getLastPublishDate
 		).addLinkedModel(
-			"author", PersonIdentifier.class, this::_getUserOptional
-		).addLinkedModel(
-			"creator", PersonIdentifier.class, this::_getUserOptional
+			"author", PersonIdentifier.class, CPDefinition::getUserId
 		).addString(
 			"description", CPDefinition::getDescription
+		).addString(
+			"short-description", CPDefinition::getShortDescription
 		).addString(
 			"title", CPDefinition::getTitle
 		).build();
@@ -180,10 +178,6 @@ public class ProductNestedCollectionResource
 		catch (PortalException pe) {
 			throw new ServerErrorException(500, pe);
 		}
-	}
-
-	private Long _getUserOptional(CPDefinition cpDefinition) {
-		return cpDefinition.getUserId();
 	}
 
 	@Reference

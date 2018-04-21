@@ -101,13 +101,13 @@ public class BaseCommit implements Commit {
 	}
 
 	protected BaseCommit(
-		String gitHubUserName, String message, String sha,
-		String repositoryName, Type type) {
+		String gitHubUserName, String message, String repositoryName,
+		String sha, Type type) {
 
 		_gitHubUserName = gitHubUserName;
 		_message = message;
-		_sha = sha;
 		_repositoryName = repositoryName;
+		_sha = sha;
 		_type = type;
 	}
 

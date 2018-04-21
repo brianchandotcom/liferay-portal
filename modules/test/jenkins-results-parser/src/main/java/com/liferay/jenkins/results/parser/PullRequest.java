@@ -195,7 +195,7 @@ public class PullRequest {
 		String context = _TEST_SUITE_NAME_DEFAULT;
 
 		if (!_testSuiteName.equals(_TEST_SUITE_NAME_DEFAULT)) {
-			context = "ci:test:" + _testSuiteName;
+			context = "liferay/ci:test:" + _testSuiteName;
 		}
 
 		sb = new StringBuilder();

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.product.option.apio.internal.resource;
+package com.liferay.product.option.value.apio.internal.resource;
 
 import com.liferay.apio.architect.pagination.PageItems;
 import com.liferay.apio.architect.pagination.Pagination;
@@ -74,14 +74,16 @@ public class ProductOptionNestedCollectionResource
 		return builder.types(
 			"ProductOption"
 		).identifier(
-			CPDefinitionOptionRel::getCPDefinitionId
+			CPDefinitionOptionRel::getCPDefinitionOptionRelId
 		).addBidirectionalModel(
 			"product", "productOptions", ProductDefinitionIdentifier.class,
-			CPDefinitionOptionRelModel::getGroupId
+			CPDefinitionOptionRelModel::getCPDefinitionId
 		).addDate(
 			"dateCreated", CPDefinitionOptionRel::getCreateDate
 		).addDate(
 			"dateModified", CPDefinitionOptionRel::getModifiedDate
+		).addNumber(
+			"priority", CPDefinitionOptionRel::getPriority
 		).addString(
 			"title", this::_getTitle
 		).addString(
@@ -105,7 +107,7 @@ public class ProductOptionNestedCollectionResource
 		Pagination pagination, Long cpDefinitionId) {
 
 		try {
-			List<CPDefinitionOptionRel> cpDefinitions =
+			List<CPDefinitionOptionRel> cpDefinitionOptionRels =
 				_cpDefinitionOptionRelService.getCPDefinitionOptionRels(
 					cpDefinitionId, pagination.getStartPosition(),
 					pagination.getEndPosition());
@@ -113,7 +115,7 @@ public class ProductOptionNestedCollectionResource
 				_cpDefinitionOptionRelService.getCPDefinitionOptionRelsCount(
 					cpDefinitionId);
 
-			return new PageItems<>(cpDefinitions, count);
+			return new PageItems<>(cpDefinitionOptionRels, count);
 		}
 		catch (PortalException pe) {
 			throw new ServerErrorException(500, pe);

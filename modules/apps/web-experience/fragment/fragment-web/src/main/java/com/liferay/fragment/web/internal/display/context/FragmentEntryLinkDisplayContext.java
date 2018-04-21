@@ -164,25 +164,23 @@ public class FragmentEntryLinkDisplayContext {
 			FragmentEntryLink fragmentEntryLink)
 		throws PortalException {
 
-		long classNameId = fragmentEntryLink.getClassNameId();
+		if (fragmentEntryLink.getClassNameId() ==
+				PortalUtil.getClassNameId(Layout.class)) {
 
-		if (classNameId == PortalUtil.getClassNameId(Layout.class)) {
 			return "page";
 		}
-		else {
-			LayoutPageTemplateEntry layoutPageTemplateEntry =
-				LayoutPageTemplateEntryLocalServiceUtil.
-					getLayoutPageTemplateEntry(fragmentEntryLink.getClassPK());
 
-			if (layoutPageTemplateEntry.getType() ==
-					LayoutPageTemplateEntryTypeConstants.TYPE_DISPLAY_PAGE) {
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			LayoutPageTemplateEntryLocalServiceUtil.getLayoutPageTemplateEntry(
+				fragmentEntryLink.getClassPK());
 
-				return "display-page";
-			}
-			else {
-				return "page-template";
-			}
+		if (layoutPageTemplateEntry.getType() ==
+				LayoutPageTemplateEntryTypeConstants.TYPE_DISPLAY_PAGE) {
+
+			return "display-page";
 		}
+
+		return "page-template";
 	}
 
 	public String getKeywords() {

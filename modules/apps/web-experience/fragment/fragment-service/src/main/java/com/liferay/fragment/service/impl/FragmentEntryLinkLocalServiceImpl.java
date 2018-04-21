@@ -291,7 +291,7 @@ public class FragmentEntryLinkLocalServiceImpl
 	}
 
 	@Override
-	public void updateFragmentEntryLinks(
+	public void updateLatestChanges(
 			long[] fragmentEntryLinkIds, long fragmentEntryId,
 			ServiceContext serviceContext)
 		throws PortalException {

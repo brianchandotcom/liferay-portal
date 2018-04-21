@@ -26,7 +26,7 @@ import com.liferay.commerce.product.service.CPDefinitionOptionRelService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.product.apio.identifier.ProductDefinitionIdentifier;
-import com.liferay.product.option.apio.identifier.ProductOptionDefinitionIdentifier;
+import com.liferay.product.option.apio.identifier.ProductOptionIdentifier;
 
 import java.util.List;
 
@@ -42,8 +42,7 @@ import org.osgi.service.component.annotations.Reference;
 public class ProductOptionNestedCollectionResource
 	implements
 		NestedCollectionResource<CPDefinitionOptionRel, Long,
-			ProductOptionDefinitionIdentifier, Long,
-			ProductDefinitionIdentifier> {
+			ProductOptionIdentifier, Long, ProductDefinitionIdentifier> {
 
 	@Override
 	public NestedCollectionRoutes<CPDefinitionOptionRel, Long> collectionRoutes(

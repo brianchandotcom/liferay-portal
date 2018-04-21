@@ -20,5 +20,5 @@ import com.liferay.apio.architect.identifier.Identifier;
  * @author Zoltán Takács
  * @review
  */
-public interface ProductOptionDefinitionIdentifier extends Identifier<Long> {
+public interface ProductOptionIdentifier extends Identifier<Long> {
 }

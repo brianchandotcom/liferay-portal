@@ -30,4 +30,6 @@ dependencies {
 	compileOnly project(":private:apps:commerce:commerce-product-item-selector-api")
 	compileOnly project(":private:apps:commerce:commerce-product-service")
 	compileOnly project(":private:apps:commerce:commerce-service")
+	compileOnly project(":private:apps:commerce:commerce-user-segment-api")
+	compileOnly project(":private:apps:commerce:commerce-user-segment-item-selector-api")
 }

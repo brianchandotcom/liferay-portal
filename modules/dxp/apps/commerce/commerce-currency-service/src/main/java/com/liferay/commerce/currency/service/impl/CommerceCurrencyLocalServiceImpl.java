@@ -43,6 +43,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -58,7 +59,7 @@ public class CommerceCurrencyLocalServiceImpl
 
 	@Override
 	public CommerceCurrency addCommerceCurrency(
-			String code, Map<Locale, String> nameMap, double rate,
+			String code, Map<Locale, String> nameMap, BigDecimal rate,
 			String roundingType, boolean primary, double priority,
 			boolean active, ServiceContext serviceContext)
 		throws PortalException {
@@ -67,7 +68,7 @@ public class CommerceCurrencyLocalServiceImpl
 		long groupId = serviceContext.getScopeGroupId();
 
 		if (primary) {
-			rate = 1;
+			rate = BigDecimal.ONE;
 		}
 
 		validate(0, groupId, code, nameMap, primary);
@@ -188,8 +189,8 @@ public class CommerceCurrencyLocalServiceImpl
 			nameMap.put(serviceContext.getLocale(), name);
 
 			addCommerceCurrency(
-				code, nameMap, 1, StringPool.BLANK, primary, priority, true,
-				serviceContext);
+				code, nameMap, BigDecimal.ONE, StringPool.BLANK, primary,
+				priority, true, serviceContext);
 		}
 
 		for (String exchangeRateProviderKey :
@@ -237,15 +238,15 @@ public class CommerceCurrencyLocalServiceImpl
 	@Override
 	public CommerceCurrency updateCommerceCurrency(
 			long commerceCurrencyId, String code, Map<Locale, String> nameMap,
-			double rate, String roundingType, boolean primary, double priority,
-			boolean active, ServiceContext serviceContext)
+			BigDecimal rate, String roundingType, boolean primary,
+			double priority, boolean active, ServiceContext serviceContext)
 		throws PortalException {
 
 		CommerceCurrency commerceCurrency =
 			commerceCurrencyPersistence.findByPrimaryKey(commerceCurrencyId);
 
 		if (primary) {
-			rate = 1;
+			rate = BigDecimal.ONE;
 		}
 
 		validate(
@@ -267,7 +268,7 @@ public class CommerceCurrencyLocalServiceImpl
 
 	@Override
 	public CommerceCurrency updateCommerceCurrencyRate(
-			long commerceCurrencyId, double rate)
+			long commerceCurrencyId, BigDecimal rate)
 		throws PortalException {
 
 		CommerceCurrency commerceCurrency =
@@ -301,7 +302,7 @@ public class CommerceCurrencyLocalServiceImpl
 			return;
 		}
 
-		double exchangeRate = 0;
+		BigDecimal exchangeRate = BigDecimal.ZERO;
 
 		try {
 			exchangeRate = exchangeRateProvider.getExchangeRate(

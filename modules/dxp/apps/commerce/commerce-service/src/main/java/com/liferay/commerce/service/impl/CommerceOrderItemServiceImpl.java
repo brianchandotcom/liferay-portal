@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermi
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
 import com.liferay.portal.kernel.service.ServiceContext;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -36,7 +37,7 @@ public class CommerceOrderItemServiceImpl
 	@Override
 	public CommerceOrderItem addCommerceOrderItem(
 			long commerceOrderId, long cpInstanceId, int quantity,
-			int shippedQuantity, String json, Double price,
+			int shippedQuantity, String json, BigDecimal price,
 			ServiceContext serviceContext)
 		throws PortalException {
 
@@ -175,7 +176,8 @@ public class CommerceOrderItemServiceImpl
 
 	@Override
 	public CommerceOrderItem updateCommerceOrderItem(
-			long commerceOrderItemId, int quantity, String json, double price)
+			long commerceOrderItemId, int quantity, String json,
+			BigDecimal price)
 		throws PortalException {
 
 		CommerceOrderItem commerceOrderItem =

@@ -51,6 +51,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -65,7 +66,7 @@ public class CommerceOrderItemLocalServiceImpl
 	@Override
 	public CommerceOrderItem addCommerceOrderItem(
 			long commerceOrderId, long cpInstanceId, int quantity,
-			int shippedQuantity, String json, Double price,
+			int shippedQuantity, String json, BigDecimal price,
 			ServiceContext serviceContext)
 		throws PortalException {
 
@@ -290,7 +291,9 @@ public class CommerceOrderItemLocalServiceImpl
 
 		CPInstance cpInstance = commerceOrderItem.getCPInstance();
 
-		double price = cpInstance.getPrice() * quantity;
+		BigDecimal price = cpInstance.getPrice();
+
+		price = price.multiply(new BigDecimal(quantity));
 
 		return updateCommerceOrderItem(
 			commerceOrderItemId, quantity, commerceOrderItem.getJson(), price);
@@ -299,7 +302,8 @@ public class CommerceOrderItemLocalServiceImpl
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public CommerceOrderItem updateCommerceOrderItem(
-			long commerceOrderItemId, int quantity, String json, double price)
+			long commerceOrderItemId, int quantity, String json,
+			BigDecimal price)
 		throws PortalException {
 
 		CommerceOrderItem commerceOrderItem =

@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -36,7 +37,7 @@ public class CommerceTierPriceEntryServiceImpl
 
 	@Override
 	public CommerceTierPriceEntry addCommerceTierPriceEntry(
-			long commercePriceEntryId, double price, int minQuantity,
+			long commercePriceEntryId, BigDecimal price, int minQuantity,
 			ServiceContext serviceContext)
 		throws PortalException {
 
@@ -118,7 +119,7 @@ public class CommerceTierPriceEntryServiceImpl
 
 	@Override
 	public CommerceTierPriceEntry updateCommerceTierPriceEntry(
-			long commerceTierPriceEntryId, double price, int minQuantity,
+			long commerceTierPriceEntryId, BigDecimal price, int minQuantity,
 			ServiceContext serviceContext)
 		throws PortalException {
 

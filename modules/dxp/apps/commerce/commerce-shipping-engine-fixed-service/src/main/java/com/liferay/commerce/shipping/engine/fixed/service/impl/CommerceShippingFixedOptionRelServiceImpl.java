@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -35,8 +36,9 @@ public class CommerceShippingFixedOptionRelServiceImpl
 			long commerceShippingMethodId, long commerceShippingFixedOptionId,
 			long commerceWarehouseId, long commerceCountryId,
 			long commerceRegionId, String zip, double weightFrom,
-			double weightTo, double fixedPrice, double rateUnitWeightPrice,
-			double ratePercentage, ServiceContext serviceContext)
+			double weightTo, BigDecimal fixedPrice,
+			BigDecimal rateUnitWeightPrice, double ratePercentage,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		CommercePermission.check(
@@ -156,8 +158,8 @@ public class CommerceShippingFixedOptionRelServiceImpl
 	public CommerceShippingFixedOptionRel updateCommerceShippingFixedOptionRel(
 			long commerceShippingFixedOptionRelId, long commerceWarehouseId,
 			long commerceCountryId, long commerceRegionId, String zip,
-			double weightFrom, double weightTo, double fixedPrice,
-			double rateUnitWeightPrice, double ratePercentage)
+			double weightFrom, double weightTo, BigDecimal fixedPrice,
+			BigDecimal rateUnitWeightPrice, double ratePercentage)
 		throws PortalException {
 
 		CommerceShippingFixedOptionRel commerceShippingFixedOptionRel =

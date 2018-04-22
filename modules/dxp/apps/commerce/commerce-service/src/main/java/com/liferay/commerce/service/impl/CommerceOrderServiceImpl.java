@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.workflow.WorkflowTask;
 import com.liferay.portal.kernel.workflow.WorkflowTaskManager;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -347,7 +348,7 @@ public class CommerceOrderServiceImpl extends CommerceOrderServiceBaseImpl {
 			long commerceOrderId, long billingAddressId, long shippingAddressId,
 			long commercePaymentMethodId, long commerceShippingMethodId,
 			String shippingOptionName, String purchaseOrderNumber,
-			double subtotal, double shippingPrice, double total,
+			BigDecimal subtotal, BigDecimal shippingPrice, BigDecimal total,
 			String advanceStatus)
 		throws PortalException {
 

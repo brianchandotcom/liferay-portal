@@ -78,6 +78,7 @@ import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -116,8 +117,8 @@ public class CommerceOrderLocalServiceImpl
 
 		return addCommerceOrder(
 			siteGroupId, orderOrganizationId, userId, 0, 0, shippingAddressId,
-			0, 0, null, purchaseOrderNumber, 0, 0, 0,
-			CommerceOrderConstants.PAYMENT_STATUS_PENDING,
+			0, 0, null, purchaseOrderNumber, BigDecimal.ZERO, BigDecimal.ZERO,
+			BigDecimal.ZERO, CommerceOrderConstants.PAYMENT_STATUS_PENDING,
 			CommerceOrderConstants.SHIPPING_STATUS_NOT_SHIPPED,
 			CommerceOrderConstants.ORDER_STATUS_OPEN, serviceContext);
 	}
@@ -149,7 +150,8 @@ public class CommerceOrderLocalServiceImpl
 		}
 
 		return addCommerceOrder(
-			groupId, 0, orderUserId, 0, 0, 0, 0, 0, null, null, 0, 0, 0,
+			groupId, 0, orderUserId, 0, 0, 0, 0, 0, null, null, BigDecimal.ZERO,
+			BigDecimal.ZERO, BigDecimal.ZERO,
 			CommerceOrderConstants.PAYMENT_STATUS_PENDING,
 			CommerceOrderConstants.SHIPPING_STATUS_NOT_SHIPPED,
 			CommerceOrderConstants.ORDER_STATUS_OPEN, serviceContext);
@@ -232,11 +234,12 @@ public class CommerceOrderLocalServiceImpl
 
 		serviceContext.setScopeGroupId(commerceOrder.getGroupId());
 
-		double subtotal = commercePriceCalculationLocalService.getOrderSubtotal(
-			commerceOrder);
-		double shippingPrice = commerceOrder.getShippingPrice();
+		BigDecimal subtotal =
+			commercePriceCalculationLocalService.getOrderSubtotal(
+				commerceOrder);
+		BigDecimal shippingPrice = commerceOrder.getShippingPrice();
 
-		double total = subtotal + shippingPrice;
+		BigDecimal total = subtotal.add(shippingPrice);
 
 		commerceOrder.setSubtotal(subtotal);
 		commerceOrder.setTotal(total);
@@ -600,7 +603,8 @@ public class CommerceOrderLocalServiceImpl
 			commerceOrder.getShippingAddressId(),
 			commerceOrder.getCommercePaymentMethodId(), 0, null,
 			commerceOrder.getPurchaseOrderNumber(), commerceOrder.getSubtotal(),
-			0, commerceOrder.getTotal(), commerceOrder.getAdvanceStatus());
+			BigDecimal.ZERO, commerceOrder.getTotal(),
+			commerceOrder.getAdvanceStatus());
 	}
 
 	@Override
@@ -765,7 +769,7 @@ public class CommerceOrderLocalServiceImpl
 			long commerceOrderId, long billingAddressId, long shippingAddressId,
 			long commercePaymentMethodId, long commerceShippingMethodId,
 			String shippingOptionName, String purchaseOrderNumber,
-			double subtotal, double shippingPrice, double total,
+			BigDecimal subtotal, BigDecimal shippingPrice, BigDecimal total,
 			String advanceStatus)
 		throws PortalException {
 
@@ -907,9 +911,9 @@ public class CommerceOrderLocalServiceImpl
 			long commerceCurrencyId, long billingAddressId,
 			long shippingAddressId, long commercePaymentMethodId,
 			long commerceShippingMethodId, String shippingOptionName,
-			String purchaseOrderNumber, double subtotal, double shippingPrice,
-			double total, int paymentStatus, int shippingStatus,
-			int orderStatus, ServiceContext serviceContext)
+			String purchaseOrderNumber, BigDecimal subtotal,
+			BigDecimal shippingPrice, BigDecimal total, int paymentStatus,
+			int shippingStatus, int orderStatus, ServiceContext serviceContext)
 		throws PortalException {
 
 		// Commerce order

@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -34,8 +35,8 @@ public class CommerceShippingFixedOptionLocalServiceImpl
 	@Override
 	public CommerceShippingFixedOption addCommerceShippingFixedOption(
 			long commerceShippingMethodId, Map<Locale, String> nameMap,
-			Map<Locale, String> descriptionMap, double amount, double priority,
-			ServiceContext serviceContext)
+			Map<Locale, String> descriptionMap, BigDecimal amount,
+			double priority, ServiceContext serviceContext)
 		throws PortalException {
 
 		User user = userLocalService.getUser(serviceContext.getUserId());
@@ -120,7 +121,8 @@ public class CommerceShippingFixedOptionLocalServiceImpl
 	@Override
 	public CommerceShippingFixedOption updateCommerceShippingFixedOption(
 			long commerceShippingFixedOptionId, Map<Locale, String> nameMap,
-			Map<Locale, String> descriptionMap, double amount, double priority)
+			Map<Locale, String> descriptionMap, BigDecimal amount,
+			double priority)
 		throws PortalException {
 
 		CommerceShippingFixedOption commerceShippingFixedOption =

@@ -43,6 +43,7 @@ import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -58,7 +59,7 @@ public class CommerceTierPriceEntryLocalServiceImpl
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public CommerceTierPriceEntry addCommerceTierPriceEntry(
-			long commercePriceEntryId, double price, int minQuantity,
+			long commercePriceEntryId, BigDecimal price, int minQuantity,
 			ServiceContext serviceContext)
 		throws PortalException {
 
@@ -224,7 +225,7 @@ public class CommerceTierPriceEntryLocalServiceImpl
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public CommerceTierPriceEntry updateCommerceTierPriceEntry(
-			long commerceTierPriceEntryId, double price, int minQuantity,
+			long commerceTierPriceEntryId, BigDecimal price, int minQuantity,
 			ServiceContext serviceContext)
 		throws PortalException {
 

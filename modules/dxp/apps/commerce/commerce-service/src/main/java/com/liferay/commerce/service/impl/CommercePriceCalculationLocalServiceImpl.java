@@ -28,6 +28,7 @@ import com.liferay.commerce.service.base.CommercePriceCalculationLocalServiceBas
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
@@ -38,7 +39,7 @@ public class CommercePriceCalculationLocalServiceImpl
 	extends CommercePriceCalculationLocalServiceBaseImpl {
 
 	@Override
-	public String formatPrice(long groupId, double price)
+	public String formatPrice(long groupId, BigDecimal price)
 		throws PortalException {
 
 		CommerceCurrency commerceCurrency =
@@ -49,7 +50,8 @@ public class CommercePriceCalculationLocalServiceImpl
 	}
 
 	@Override
-	public String formatPriceWithCurrency(long commerceCurrencyId, double price)
+	public String formatPriceWithCurrency(
+			long commerceCurrencyId, BigDecimal price)
 		throws PortalException {
 
 		CommerceCurrency commerceCurrency =
@@ -59,17 +61,17 @@ public class CommercePriceCalculationLocalServiceImpl
 	}
 
 	@Override
-	public double getFinalPrice(
+	public BigDecimal getFinalPrice(
 			long groupId, long userId, long cpInstanceId, int quantity)
 		throws PortalException {
 
-		double price = getUnitPrice(groupId, userId, cpInstanceId, quantity);
+		BigDecimal price = getUnitPrice(groupId, userId, cpInstanceId, quantity);
 
-		return price * quantity;
+		return price.multiply(new BigDecimal(quantity));
 	}
 
 	@Override
-	public double getFinalPrice(
+	public BigDecimal getFinalPrice(
 			long groupId, long commerceCurrencyId, long userId,
 			long cpInstanceId, int quantity)
 		throws PortalException {
@@ -77,11 +79,11 @@ public class CommercePriceCalculationLocalServiceImpl
 		CommerceCurrency commerceCurrency =
 			_commerceCurrencyService.fetchPrimaryCommerceCurrency(groupId);
 
-		double price = getUnitPrice(
+		BigDecimal price = getUnitPrice(
 			groupId, commerceCurrency.getCommerceCurrencyId(), userId,
 			cpInstanceId, quantity);
 
-		return price * quantity;
+		return price.multiply(new BigDecimal(quantity));
 	}
 
 	@Override
@@ -92,7 +94,7 @@ public class CommercePriceCalculationLocalServiceImpl
 		CommerceCurrency commerceCurrency =
 			_commerceCurrencyService.fetchPrimaryCommerceCurrency(groupId);
 
-		double price = getFinalPrice(
+		BigDecimal price = getFinalPrice(
 			groupId, commerceCurrency.getCommerceCurrencyId(), userId,
 			cpInstanceId, quantity);
 
@@ -108,7 +110,7 @@ public class CommercePriceCalculationLocalServiceImpl
 		CommerceCurrency commerceCurrency =
 			_commerceCurrencyService.getCommerceCurrency(commerceCurrencyId);
 
-		double price = getFinalPrice(
+		BigDecimal price = getFinalPrice(
 			groupId, commerceCurrencyId, userId, cpInstanceId, quantity);
 
 		return _commercePriceFormatter.format(commerceCurrency, price);
@@ -118,37 +120,37 @@ public class CommercePriceCalculationLocalServiceImpl
 	public String getFormattedOrderSubtotal(CommerceOrder commerceOrder)
 		throws PortalException {
 
-		double orderSubtotal = getOrderSubtotal(commerceOrder);
+		BigDecimal orderSubtotal = getOrderSubtotal(commerceOrder);
 
 		return _commercePriceFormatter.format(
 			commerceOrder.getSiteGroupId(), orderSubtotal);
 	}
 
 	@Override
-	public double getOrderSubtotal(CommerceOrder commerceOrder)
+	public BigDecimal getOrderSubtotal(CommerceOrder commerceOrder)
 		throws PortalException {
 
 		if (commerceOrder == null) {
-			return 0;
+			return BigDecimal.ZERO;
 		}
 
-		double orderSubtotal = 0;
+		BigDecimal orderSubtotal = BigDecimal.ZERO;
 
 		List<CommerceOrderItem> commerceOrderItems =
 			commerceOrder.getCommerceOrderItems();
 
 		for (CommerceOrderItem commerceOrderItem : commerceOrderItems) {
-			orderSubtotal += getFinalPrice(
+			orderSubtotal.add(getFinalPrice(
 				commerceOrder.getSiteGroupId(), commerceOrder.getOrderUserId(),
 				commerceOrderItem.getCPInstanceId(),
-				commerceOrderItem.getQuantity());
+				commerceOrderItem.getQuantity()));
 		}
 
 		return orderSubtotal;
 	}
 
 	@Override
-	public double getUnitPrice(
+	public BigDecimal getUnitPrice(
 			long groupId, long userId, long cpInstanceId, int quantity)
 		throws PortalException {
 
@@ -161,14 +163,14 @@ public class CommercePriceCalculationLocalServiceImpl
 	}
 
 	@Override
-	public double getUnitPrice(
+	public BigDecimal getUnitPrice(
 			long groupId, long commerceCurrencyId, long userId,
 			long cpInstanceId, int quantity)
 		throws PortalException {
 
 		CPInstance cpInstance = _cpInstanceService.getCPInstance(cpInstanceId);
 
-		double price = cpInstance.getPrice();
+		BigDecimal price = cpInstance.getPrice();
 
 		Optional<CommercePriceList> commercePriceListOptional =
 			commercePriceListLocalService.getUserCommercePriceList(
@@ -202,7 +204,7 @@ public class CommercePriceCalculationLocalServiceImpl
 						commercePriceList.getCommerceCurrencyId());
 
 				if (!priceListCurrency.isPrimary()) {
-					price = price / priceListCurrency.getRate();
+					price = price.divide(priceListCurrency.getRate());
 				}
 			}
 		}
@@ -211,7 +213,7 @@ public class CommercePriceCalculationLocalServiceImpl
 			_commerceCurrencyService.getCommerceCurrency(commerceCurrencyId);
 
 		if (!commerceCurrency.isPrimary()) {
-			price = price * commerceCurrency.getRate();
+			price = price.multiply( commerceCurrency.getRate());
 		}
 
 		return price;

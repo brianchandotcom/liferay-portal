@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -35,7 +36,7 @@ public class CommerceCurrencyServiceImpl
 
 	@Override
 	public CommerceCurrency addCommerceCurrency(
-			String code, Map<Locale, String> nameMap, double rate,
+			String code, Map<Locale, String> nameMap, BigDecimal rate,
 			String roundingType, boolean primary, double priority,
 			boolean active, ServiceContext serviceContext)
 		throws PortalException {
@@ -139,8 +140,8 @@ public class CommerceCurrencyServiceImpl
 	@Override
 	public CommerceCurrency updateCommerceCurrency(
 			long commerceCurrencyId, String code, Map<Locale, String> nameMap,
-			double rate, String roundingType, boolean primary, double priority,
-			boolean active, ServiceContext serviceContext)
+			BigDecimal rate, String roundingType, boolean primary,
+			double priority, boolean active, ServiceContext serviceContext)
 		throws PortalException {
 
 		CommerceCurrency commerceCurrency =

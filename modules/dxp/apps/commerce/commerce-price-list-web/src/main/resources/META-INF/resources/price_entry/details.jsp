@@ -38,5 +38,5 @@ if (commercePriceEntry != null) {
 <aui:model-context bean="<%= commercePriceEntry %>" model="<%= CommercePriceEntry.class %>" />
 
 <aui:fieldset>
-	<aui:input name="price" suffix="<%= currencyCode %>" />
+	<aui:input name="price" suffix="<%= currencyCode %>" type="text" value="<%= commercePriceEntry.getPrice().toPlainString() %>" />
 </aui:fieldset>

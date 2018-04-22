@@ -43,9 +43,9 @@ productSkusURL.setParameter("screenNavigationCategoryKey", cpInstancePricingInfo
 
 	<aui:fieldset-group markupView="lexicon">
 		<aui:fieldset>
-			<aui:input name="cost" suffix="<%= cpInstancePricingInfoDisplayContext.getCommerceCurrencyCode() %>" />
+			<aui:input name="cost" suffix="<%= cpInstancePricingInfoDisplayContext.getCommerceCurrencyCode() %>" type="text" value="<%= cpInstance.getCost().toPlainString() %>" />
 
-			<aui:input name="price" suffix="<%= cpInstancePricingInfoDisplayContext.getCommerceCurrencyCode() %>" />
+			<aui:input name="price" suffix="<%= cpInstancePricingInfoDisplayContext.getCommerceCurrencyCode() %>" type="text" value="<%= cpInstance.getPrice().toPlainString() %>" />
 		</aui:fieldset>
 	</aui:fieldset-group>
 

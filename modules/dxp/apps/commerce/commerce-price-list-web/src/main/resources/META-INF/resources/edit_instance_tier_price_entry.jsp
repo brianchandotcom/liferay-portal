@@ -72,7 +72,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, title, StringPool.BLANK, data);
 
 		<aui:fieldset-group>
 			<aui:fieldset>
-				<aui:input name="price" suffix="<%= commerceCurrency.getCode() %>" />
+				<aui:input name="price" suffix="<%= commerceCurrency.getCode() %>" type="text" value="<%= commerceTierPriceEntry.getPrice().toPlainString() %>" />
 
 				<aui:input name="minQuantity" />
 			</aui:fieldset>

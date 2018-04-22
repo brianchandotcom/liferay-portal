@@ -213,7 +213,7 @@ public class CPRuleModelImpl extends BaseModelImpl<CPRule>
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("name", getName());
-		attributes.put("active", getActive());
+		attributes.put("active", isActive());
 		attributes.put("type", getType());
 		attributes.put("typeSettings", getTypeSettings());
 
@@ -514,7 +514,7 @@ public class CPRuleModelImpl extends BaseModelImpl<CPRule>
 		cpRuleImpl.setCreateDate(getCreateDate());
 		cpRuleImpl.setModifiedDate(getModifiedDate());
 		cpRuleImpl.setName(getName());
-		cpRuleImpl.setActive(getActive());
+		cpRuleImpl.setActive(isActive());
 		cpRuleImpl.setType(getType());
 		cpRuleImpl.setTypeSettings(getTypeSettings());
 
@@ -634,7 +634,7 @@ public class CPRuleModelImpl extends BaseModelImpl<CPRule>
 			cpRuleCacheModel.name = null;
 		}
 
-		cpRuleCacheModel.active = getActive();
+		cpRuleCacheModel.active = isActive();
 
 		cpRuleCacheModel.type = getType();
 
@@ -676,7 +676,7 @@ public class CPRuleModelImpl extends BaseModelImpl<CPRule>
 		sb.append(", name=");
 		sb.append(getName());
 		sb.append(", active=");
-		sb.append(getActive());
+		sb.append(isActive());
 		sb.append(", type=");
 		sb.append(getType());
 		sb.append(", typeSettings=");
@@ -728,7 +728,7 @@ public class CPRuleModelImpl extends BaseModelImpl<CPRule>
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>active</column-name><column-value><![CDATA[");
-		sb.append(getActive());
+		sb.append(isActive());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>type</column-name><column-value><![CDATA[");

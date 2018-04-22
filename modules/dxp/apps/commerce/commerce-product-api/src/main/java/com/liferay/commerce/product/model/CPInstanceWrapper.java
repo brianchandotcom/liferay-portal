@@ -25,6 +25,8 @@ import com.liferay.portal.kernel.service.ServiceContext;
 
 import java.io.Serializable;
 
+import java.math.BigDecimal;
+
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -71,7 +73,7 @@ public class CPInstanceWrapper implements CPInstance, ModelWrapper<CPInstance> {
 		attributes.put("sku", getSku());
 		attributes.put("gtin", getGtin());
 		attributes.put("manufacturerPartNumber", getManufacturerPartNumber());
-		attributes.put("purchasable", getPurchasable());
+		attributes.put("purchasable", isPurchasable());
 		attributes.put("DDMContent", getDDMContent());
 		attributes.put("width", getWidth());
 		attributes.put("height", getHeight());
@@ -79,7 +81,7 @@ public class CPInstanceWrapper implements CPInstance, ModelWrapper<CPInstance> {
 		attributes.put("weight", getWeight());
 		attributes.put("cost", getCost());
 		attributes.put("price", getPrice());
-		attributes.put("published", getPublished());
+		attributes.put("published", isPublished());
 		attributes.put("displayDate", getDisplayDate());
 		attributes.put("expirationDate", getExpirationDate());
 		attributes.put("lastPublishDate", getLastPublishDate());
@@ -202,13 +204,13 @@ public class CPInstanceWrapper implements CPInstance, ModelWrapper<CPInstance> {
 			setWeight(weight);
 		}
 
-		Double cost = (Double)attributes.get("cost");
+		BigDecimal cost = (BigDecimal)attributes.get("cost");
 
 		if (cost != null) {
 			setCost(cost);
 		}
 
-		Double price = (Double)attributes.get("price");
+		BigDecimal price = (BigDecimal)attributes.get("price");
 
 		if (price != null) {
 			setPrice(price);
@@ -289,7 +291,7 @@ public class CPInstanceWrapper implements CPInstance, ModelWrapper<CPInstance> {
 	* @return the cost of this cp instance
 	*/
 	@Override
-	public double getCost() {
+	public BigDecimal getCost() {
 		return _cpInstance.getCost();
 	}
 
@@ -440,7 +442,7 @@ public class CPInstanceWrapper implements CPInstance, ModelWrapper<CPInstance> {
 	* @return the price of this cp instance
 	*/
 	@Override
-	public double getPrice() {
+	public BigDecimal getPrice() {
 		return _cpInstance.getPrice();
 	}
 
@@ -808,7 +810,7 @@ public class CPInstanceWrapper implements CPInstance, ModelWrapper<CPInstance> {
 	* @param cost the cost of this cp instance
 	*/
 	@Override
-	public void setCost(double cost) {
+	public void setCost(BigDecimal cost) {
 		_cpInstance.setCost(cost);
 	}
 
@@ -970,7 +972,7 @@ public class CPInstanceWrapper implements CPInstance, ModelWrapper<CPInstance> {
 	* @param price the price of this cp instance
 	*/
 	@Override
-	public void setPrice(double price) {
+	public void setPrice(BigDecimal price) {
 		_cpInstance.setPrice(price);
 	}
 

@@ -46,7 +46,7 @@ public class CPFriendlyURLEntrySoap implements Serializable {
 		soapModel.setClassPK(model.getClassPK());
 		soapModel.setLanguageId(model.getLanguageId());
 		soapModel.setUrlTitle(model.getUrlTitle());
-		soapModel.setMain(model.getMain());
+		soapModel.setMain(model.isMain());
 
 		return soapModel;
 	}

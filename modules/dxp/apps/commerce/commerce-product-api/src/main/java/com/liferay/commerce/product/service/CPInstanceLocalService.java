@@ -46,6 +46,8 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.io.Serializable;
 
+import java.math.BigDecimal;
+
 import java.util.List;
 import java.util.Map;
 
@@ -94,11 +96,12 @@ public interface CPInstanceLocalService extends BaseLocalService,
 	public CPInstance addCPInstance(long cpDefinitionId, java.lang.String sku,
 		java.lang.String gtin, java.lang.String manufacturerPartNumber,
 		boolean purchasable, java.lang.String ddmContent, double width,
-		double height, double depth, double weight, double cost, double price,
-		boolean published, int displayDateMonth, int displayDateDay,
-		int displayDateYear, int displayDateHour, int displayDateMinute,
-		int expirationDateMonth, int expirationDateDay, int expirationDateYear,
-		int expirationDateHour, int expirationDateMinute, boolean neverExpire,
+		double height, double depth, double weight, BigDecimal cost,
+		BigDecimal price, boolean published, int displayDateMonth,
+		int displayDateDay, int displayDateYear, int displayDateHour,
+		int displayDateMinute, int expirationDateMonth, int expirationDateDay,
+		int expirationDateYear, int expirationDateHour,
+		int expirationDateMinute, boolean neverExpire,
 		ServiceContext serviceContext) throws PortalException;
 
 	public void buildCPInstances(long cpDefinitionId,
@@ -387,15 +390,16 @@ public interface CPInstanceLocalService extends BaseLocalService,
 	public CPInstance updateCPInstance(long cpInstanceId, java.lang.String sku,
 		java.lang.String gtin, java.lang.String manufacturerPartNumber,
 		boolean purchasable, double width, double height, double depth,
-		double weight, double cost, double price, boolean published,
+		double weight, BigDecimal cost, BigDecimal price, boolean published,
 		int displayDateMonth, int displayDateDay, int displayDateYear,
 		int displayDateHour, int displayDateMinute, int expirationDateMonth,
 		int expirationDateDay, int expirationDateYear, int expirationDateHour,
 		int expirationDateMinute, boolean neverExpire,
 		ServiceContext serviceContext) throws PortalException;
 
-	public CPInstance updatePricingInfo(long cpInstanceId, double cost,
-		double price, ServiceContext serviceContext) throws PortalException;
+	public CPInstance updatePricingInfo(long cpInstanceId, BigDecimal cost,
+		BigDecimal price, ServiceContext serviceContext)
+		throws PortalException;
 
 	public CPInstance updateShippingInfo(long cpInstanceId, double width,
 		double height, double depth, double weight,

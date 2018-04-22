@@ -240,7 +240,7 @@ public class CPSpecificationOptionModelImpl extends BaseModelImpl<CPSpecificatio
 		attributes.put("CPOptionCategoryId", getCPOptionCategoryId());
 		attributes.put("title", getTitle());
 		attributes.put("description", getDescription());
-		attributes.put("facetable", getFacetable());
+		attributes.put("facetable", isFacetable());
 		attributes.put("key", getKey());
 		attributes.put("lastPublishDate", getLastPublishDate());
 
@@ -901,7 +901,7 @@ public class CPSpecificationOptionModelImpl extends BaseModelImpl<CPSpecificatio
 		cpSpecificationOptionImpl.setCPOptionCategoryId(getCPOptionCategoryId());
 		cpSpecificationOptionImpl.setTitle(getTitle());
 		cpSpecificationOptionImpl.setDescription(getDescription());
-		cpSpecificationOptionImpl.setFacetable(getFacetable());
+		cpSpecificationOptionImpl.setFacetable(isFacetable());
 		cpSpecificationOptionImpl.setKey(getKey());
 		cpSpecificationOptionImpl.setLastPublishDate(getLastPublishDate());
 
@@ -1049,7 +1049,7 @@ public class CPSpecificationOptionModelImpl extends BaseModelImpl<CPSpecificatio
 			cpSpecificationOptionCacheModel.description = null;
 		}
 
-		cpSpecificationOptionCacheModel.facetable = getFacetable();
+		cpSpecificationOptionCacheModel.facetable = isFacetable();
 
 		cpSpecificationOptionCacheModel.key = getKey();
 
@@ -1098,7 +1098,7 @@ public class CPSpecificationOptionModelImpl extends BaseModelImpl<CPSpecificatio
 		sb.append(", description=");
 		sb.append(getDescription());
 		sb.append(", facetable=");
-		sb.append(getFacetable());
+		sb.append(isFacetable());
 		sb.append(", key=");
 		sb.append(getKey());
 		sb.append(", lastPublishDate=");
@@ -1162,7 +1162,7 @@ public class CPSpecificationOptionModelImpl extends BaseModelImpl<CPSpecificatio
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>facetable</column-name><column-value><![CDATA[");
-		sb.append(getFacetable());
+		sb.append(isFacetable());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>key</column-name><column-value><![CDATA[");

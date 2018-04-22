@@ -243,7 +243,7 @@ public class CPMeasurementUnitModelImpl extends BaseModelImpl<CPMeasurementUnit>
 		attributes.put("name", getName());
 		attributes.put("key", getKey());
 		attributes.put("rate", getRate());
-		attributes.put("primary", getPrimary());
+		attributes.put("primary", isPrimary());
 		attributes.put("priority", getPriority());
 		attributes.put("type", getType());
 		attributes.put("lastPublishDate", getLastPublishDate());
@@ -820,7 +820,7 @@ public class CPMeasurementUnitModelImpl extends BaseModelImpl<CPMeasurementUnit>
 		cpMeasurementUnitImpl.setName(getName());
 		cpMeasurementUnitImpl.setKey(getKey());
 		cpMeasurementUnitImpl.setRate(getRate());
-		cpMeasurementUnitImpl.setPrimary(getPrimary());
+		cpMeasurementUnitImpl.setPrimary(isPrimary());
 		cpMeasurementUnitImpl.setPriority(getPriority());
 		cpMeasurementUnitImpl.setType(getType());
 		cpMeasurementUnitImpl.setLastPublishDate(getLastPublishDate());
@@ -981,7 +981,7 @@ public class CPMeasurementUnitModelImpl extends BaseModelImpl<CPMeasurementUnit>
 
 		cpMeasurementUnitCacheModel.rate = getRate();
 
-		cpMeasurementUnitCacheModel.primary = getPrimary();
+		cpMeasurementUnitCacheModel.primary = isPrimary();
 
 		cpMeasurementUnitCacheModel.priority = getPriority();
 
@@ -1026,7 +1026,7 @@ public class CPMeasurementUnitModelImpl extends BaseModelImpl<CPMeasurementUnit>
 		sb.append(", rate=");
 		sb.append(getRate());
 		sb.append(", primary=");
-		sb.append(getPrimary());
+		sb.append(isPrimary());
 		sb.append(", priority=");
 		sb.append(getPriority());
 		sb.append(", type=");
@@ -1092,7 +1092,7 @@ public class CPMeasurementUnitModelImpl extends BaseModelImpl<CPMeasurementUnit>
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>primary</column-name><column-value><![CDATA[");
-		sb.append(getPrimary());
+		sb.append(isPrimary());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>priority</column-name><column-value><![CDATA[");

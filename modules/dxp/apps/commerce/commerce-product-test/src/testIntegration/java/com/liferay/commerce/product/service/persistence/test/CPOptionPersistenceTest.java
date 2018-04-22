@@ -180,12 +180,12 @@ public class CPOptionPersistenceTest {
 			newCPOption.getDescription());
 		Assert.assertEquals(existingCPOption.getDDMFormFieldTypeName(),
 			newCPOption.getDDMFormFieldTypeName());
-		Assert.assertEquals(existingCPOption.getFacetable(),
-			newCPOption.getFacetable());
-		Assert.assertEquals(existingCPOption.getRequired(),
-			newCPOption.getRequired());
-		Assert.assertEquals(existingCPOption.getSkuContributor(),
-			newCPOption.getSkuContributor());
+		Assert.assertEquals(existingCPOption.isFacetable(),
+			newCPOption.isFacetable());
+		Assert.assertEquals(existingCPOption.isRequired(),
+			newCPOption.isRequired());
+		Assert.assertEquals(existingCPOption.isSkuContributor(),
+			newCPOption.isSkuContributor());
 		Assert.assertEquals(existingCPOption.getKey(), newCPOption.getKey());
 		Assert.assertEquals(Time.getShortTimestamp(
 				existingCPOption.getLastPublishDate()),

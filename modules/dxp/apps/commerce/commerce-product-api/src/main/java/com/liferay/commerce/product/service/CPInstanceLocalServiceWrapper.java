@@ -69,11 +69,11 @@ public class CPInstanceLocalServiceWrapper implements CPInstanceLocalService,
 		long cpDefinitionId, java.lang.String sku, java.lang.String gtin,
 		java.lang.String manufacturerPartNumber, boolean purchasable,
 		java.lang.String ddmContent, double width, double height, double depth,
-		double weight, double cost, double price, boolean published,
-		int displayDateMonth, int displayDateDay, int displayDateYear,
-		int displayDateHour, int displayDateMinute, int expirationDateMonth,
-		int expirationDateDay, int expirationDateYear, int expirationDateHour,
-		int expirationDateMinute, boolean neverExpire,
+		double weight, java.math.BigDecimal cost, java.math.BigDecimal price,
+		boolean published, int displayDateMonth, int displayDateDay,
+		int displayDateYear, int displayDateHour, int displayDateMinute,
+		int expirationDateMonth, int expirationDateDay, int expirationDateYear,
+		int expirationDateHour, int expirationDateMinute, boolean neverExpire,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _cpInstanceLocalService.addCPInstance(cpDefinitionId, sku, gtin,
@@ -507,12 +507,12 @@ public class CPInstanceLocalServiceWrapper implements CPInstanceLocalService,
 	public com.liferay.commerce.product.model.CPInstance updateCPInstance(
 		long cpInstanceId, java.lang.String sku, java.lang.String gtin,
 		java.lang.String manufacturerPartNumber, boolean purchasable,
-		double width, double height, double depth, double weight, double cost,
-		double price, boolean published, int displayDateMonth,
-		int displayDateDay, int displayDateYear, int displayDateHour,
-		int displayDateMinute, int expirationDateMonth, int expirationDateDay,
-		int expirationDateYear, int expirationDateHour,
-		int expirationDateMinute, boolean neverExpire,
+		double width, double height, double depth, double weight,
+		java.math.BigDecimal cost, java.math.BigDecimal price,
+		boolean published, int displayDateMonth, int displayDateDay,
+		int displayDateYear, int displayDateHour, int displayDateMinute,
+		int expirationDateMonth, int expirationDateDay, int expirationDateYear,
+		int expirationDateHour, int expirationDateMinute, boolean neverExpire,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _cpInstanceLocalService.updateCPInstance(cpInstanceId, sku,
@@ -526,7 +526,8 @@ public class CPInstanceLocalServiceWrapper implements CPInstanceLocalService,
 
 	@Override
 	public com.liferay.commerce.product.model.CPInstance updatePricingInfo(
-		long cpInstanceId, double cost, double price,
+		long cpInstanceId, java.math.BigDecimal cost,
+		java.math.BigDecimal price,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _cpInstanceLocalService.updatePricingInfo(cpInstanceId, cost,

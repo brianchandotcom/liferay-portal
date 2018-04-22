@@ -243,9 +243,9 @@ public class CPOptionModelImpl extends BaseModelImpl<CPOption>
 		attributes.put("title", getTitle());
 		attributes.put("description", getDescription());
 		attributes.put("DDMFormFieldTypeName", getDDMFormFieldTypeName());
-		attributes.put("facetable", getFacetable());
-		attributes.put("required", getRequired());
-		attributes.put("skuContributor", getSkuContributor());
+		attributes.put("facetable", isFacetable());
+		attributes.put("required", isRequired());
+		attributes.put("skuContributor", isSkuContributor());
 		attributes.put("key", getKey());
 		attributes.put("lastPublishDate", getLastPublishDate());
 
@@ -945,9 +945,9 @@ public class CPOptionModelImpl extends BaseModelImpl<CPOption>
 		cpOptionImpl.setTitle(getTitle());
 		cpOptionImpl.setDescription(getDescription());
 		cpOptionImpl.setDDMFormFieldTypeName(getDDMFormFieldTypeName());
-		cpOptionImpl.setFacetable(getFacetable());
-		cpOptionImpl.setRequired(getRequired());
-		cpOptionImpl.setSkuContributor(getSkuContributor());
+		cpOptionImpl.setFacetable(isFacetable());
+		cpOptionImpl.setRequired(isRequired());
+		cpOptionImpl.setSkuContributor(isSkuContributor());
 		cpOptionImpl.setKey(getKey());
 		cpOptionImpl.setLastPublishDate(getLastPublishDate());
 
@@ -1098,11 +1098,11 @@ public class CPOptionModelImpl extends BaseModelImpl<CPOption>
 			cpOptionCacheModel.DDMFormFieldTypeName = null;
 		}
 
-		cpOptionCacheModel.facetable = getFacetable();
+		cpOptionCacheModel.facetable = isFacetable();
 
-		cpOptionCacheModel.required = getRequired();
+		cpOptionCacheModel.required = isRequired();
 
-		cpOptionCacheModel.skuContributor = getSkuContributor();
+		cpOptionCacheModel.skuContributor = isSkuContributor();
 
 		cpOptionCacheModel.key = getKey();
 
@@ -1151,11 +1151,11 @@ public class CPOptionModelImpl extends BaseModelImpl<CPOption>
 		sb.append(", DDMFormFieldTypeName=");
 		sb.append(getDDMFormFieldTypeName());
 		sb.append(", facetable=");
-		sb.append(getFacetable());
+		sb.append(isFacetable());
 		sb.append(", required=");
-		sb.append(getRequired());
+		sb.append(isRequired());
 		sb.append(", skuContributor=");
-		sb.append(getSkuContributor());
+		sb.append(isSkuContributor());
 		sb.append(", key=");
 		sb.append(getKey());
 		sb.append(", lastPublishDate=");
@@ -1219,15 +1219,15 @@ public class CPOptionModelImpl extends BaseModelImpl<CPOption>
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>facetable</column-name><column-value><![CDATA[");
-		sb.append(getFacetable());
+		sb.append(isFacetable());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>required</column-name><column-value><![CDATA[");
-		sb.append(getRequired());
+		sb.append(isRequired());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>skuContributor</column-name><column-value><![CDATA[");
-		sb.append(getSkuContributor());
+		sb.append(isSkuContributor());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>key</column-name><column-value><![CDATA[");

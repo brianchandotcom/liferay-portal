@@ -45,7 +45,7 @@ public class CPMeasurementUnitSoap implements Serializable {
 		soapModel.setName(model.getName());
 		soapModel.setKey(model.getKey());
 		soapModel.setRate(model.getRate());
-		soapModel.setPrimary(model.getPrimary());
+		soapModel.setPrimary(model.isPrimary());
 		soapModel.setPriority(model.getPriority());
 		soapModel.setType(model.getType());
 		soapModel.setLastPublishDate(model.getLastPublishDate());

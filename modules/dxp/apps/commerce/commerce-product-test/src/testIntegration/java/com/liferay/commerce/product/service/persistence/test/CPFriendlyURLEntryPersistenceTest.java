@@ -178,8 +178,8 @@ public class CPFriendlyURLEntryPersistenceTest {
 			newCPFriendlyURLEntry.getLanguageId());
 		Assert.assertEquals(existingCPFriendlyURLEntry.getUrlTitle(),
 			newCPFriendlyURLEntry.getUrlTitle());
-		Assert.assertEquals(existingCPFriendlyURLEntry.getMain(),
-			newCPFriendlyURLEntry.getMain());
+		Assert.assertEquals(existingCPFriendlyURLEntry.isMain(),
+			newCPFriendlyURLEntry.isMain());
 	}
 
 	@Test

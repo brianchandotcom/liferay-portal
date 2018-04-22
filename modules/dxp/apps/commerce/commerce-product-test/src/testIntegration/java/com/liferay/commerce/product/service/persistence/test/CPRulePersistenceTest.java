@@ -161,7 +161,7 @@ public class CPRulePersistenceTest {
 				existingCPRule.getModifiedDate()),
 			Time.getShortTimestamp(newCPRule.getModifiedDate()));
 		Assert.assertEquals(existingCPRule.getName(), newCPRule.getName());
-		Assert.assertEquals(existingCPRule.getActive(), newCPRule.getActive());
+		Assert.assertEquals(existingCPRule.isActive(), newCPRule.isActive());
 		Assert.assertEquals(existingCPRule.getType(), newCPRule.getType());
 		Assert.assertEquals(existingCPRule.getTypeSettings(),
 			newCPRule.getTypeSettings());

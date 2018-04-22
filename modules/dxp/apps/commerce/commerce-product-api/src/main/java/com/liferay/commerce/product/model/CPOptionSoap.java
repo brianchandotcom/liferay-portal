@@ -45,9 +45,9 @@ public class CPOptionSoap implements Serializable {
 		soapModel.setTitle(model.getTitle());
 		soapModel.setDescription(model.getDescription());
 		soapModel.setDDMFormFieldTypeName(model.getDDMFormFieldTypeName());
-		soapModel.setFacetable(model.getFacetable());
-		soapModel.setRequired(model.getRequired());
-		soapModel.setSkuContributor(model.getSkuContributor());
+		soapModel.setFacetable(model.isFacetable());
+		soapModel.setRequired(model.isRequired());
+		soapModel.setSkuContributor(model.isSkuContributor());
 		soapModel.setKey(model.getKey());
 		soapModel.setLastPublishDate(model.getLastPublishDate());
 

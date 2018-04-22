@@ -52,6 +52,8 @@ import org.junit.runner.RunWith;
 
 import java.io.Serializable;
 
+import java.math.BigDecimal;
+
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -159,9 +161,9 @@ public class CPInstancePersistenceTest {
 
 		newCPInstance.setWeight(RandomTestUtil.nextDouble());
 
-		newCPInstance.setCost(RandomTestUtil.nextDouble());
+		newCPInstance.setCost(new BigDecimal(RandomTestUtil.nextDouble()));
 
-		newCPInstance.setPrice(RandomTestUtil.nextDouble());
+		newCPInstance.setPrice(new BigDecimal(RandomTestUtil.nextDouble()));
 
 		newCPInstance.setPublished(RandomTestUtil.randomBoolean());
 
@@ -208,8 +210,8 @@ public class CPInstancePersistenceTest {
 			newCPInstance.getGtin());
 		Assert.assertEquals(existingCPInstance.getManufacturerPartNumber(),
 			newCPInstance.getManufacturerPartNumber());
-		Assert.assertEquals(existingCPInstance.getPurchasable(),
-			newCPInstance.getPurchasable());
+		Assert.assertEquals(existingCPInstance.isPurchasable(),
+			newCPInstance.isPurchasable());
 		Assert.assertEquals(existingCPInstance.getDDMContent(),
 			newCPInstance.getDDMContent());
 		AssertUtils.assertEquals(existingCPInstance.getWidth(),
@@ -220,12 +222,12 @@ public class CPInstancePersistenceTest {
 			newCPInstance.getDepth());
 		AssertUtils.assertEquals(existingCPInstance.getWeight(),
 			newCPInstance.getWeight());
-		AssertUtils.assertEquals(existingCPInstance.getCost(),
+		Assert.assertEquals(existingCPInstance.getCost(),
 			newCPInstance.getCost());
-		AssertUtils.assertEquals(existingCPInstance.getPrice(),
+		Assert.assertEquals(existingCPInstance.getPrice(),
 			newCPInstance.getPrice());
-		Assert.assertEquals(existingCPInstance.getPublished(),
-			newCPInstance.getPublished());
+		Assert.assertEquals(existingCPInstance.isPublished(),
+			newCPInstance.isPublished());
 		Assert.assertEquals(Time.getShortTimestamp(
 				existingCPInstance.getDisplayDate()),
 			Time.getShortTimestamp(newCPInstance.getDisplayDate()));
@@ -641,9 +643,9 @@ public class CPInstancePersistenceTest {
 
 		cpInstance.setWeight(RandomTestUtil.nextDouble());
 
-		cpInstance.setCost(RandomTestUtil.nextDouble());
+		cpInstance.setCost(new BigDecimal(RandomTestUtil.nextDouble()));
 
-		cpInstance.setPrice(RandomTestUtil.nextDouble());
+		cpInstance.setPrice(new BigDecimal(RandomTestUtil.nextDouble()));
 
 		cpInstance.setPublished(RandomTestUtil.randomBoolean());
 

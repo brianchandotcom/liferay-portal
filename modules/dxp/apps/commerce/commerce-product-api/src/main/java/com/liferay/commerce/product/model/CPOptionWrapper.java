@@ -70,9 +70,9 @@ public class CPOptionWrapper implements CPOption, ModelWrapper<CPOption> {
 		attributes.put("title", getTitle());
 		attributes.put("description", getDescription());
 		attributes.put("DDMFormFieldTypeName", getDDMFormFieldTypeName());
-		attributes.put("facetable", getFacetable());
-		attributes.put("required", getRequired());
-		attributes.put("skuContributor", getSkuContributor());
+		attributes.put("facetable", isFacetable());
+		attributes.put("required", isRequired());
+		attributes.put("skuContributor", isSkuContributor());
 		attributes.put("key", getKey());
 		attributes.put("lastPublishDate", getLastPublishDate());
 

@@ -236,10 +236,10 @@
 		<field name="weight" type="double">
 			<validator name="number" />
 		</field>
-		<field name="cost" type="double">
+		<field name="cost" type="BigDecimal">
 			<validator name="number" />
 		</field>
-		<field name="price" type="double">
+		<field name="price" type="BigDecimal">
 			<validator name="number" />
 		</field>
 		<field name="published" type="boolean">

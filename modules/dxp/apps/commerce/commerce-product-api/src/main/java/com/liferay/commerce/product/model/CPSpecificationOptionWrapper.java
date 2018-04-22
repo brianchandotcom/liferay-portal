@@ -72,7 +72,7 @@ public class CPSpecificationOptionWrapper implements CPSpecificationOption,
 		attributes.put("CPOptionCategoryId", getCPOptionCategoryId());
 		attributes.put("title", getTitle());
 		attributes.put("description", getDescription());
-		attributes.put("facetable", getFacetable());
+		attributes.put("facetable", isFacetable());
 		attributes.put("key", getKey());
 		attributes.put("lastPublishDate", getLastPublishDate());
 

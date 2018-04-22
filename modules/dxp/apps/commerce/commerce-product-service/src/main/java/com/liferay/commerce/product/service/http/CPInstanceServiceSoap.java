@@ -97,11 +97,11 @@ public class CPInstanceServiceSoap {
 		long cpDefinitionId, java.lang.String sku, java.lang.String gtin,
 		java.lang.String manufacturerPartNumber, boolean purchasable,
 		java.lang.String ddmContent, double width, double height, double depth,
-		double weight, double cost, double price, boolean published,
-		int displayDateMonth, int displayDateDay, int displayDateYear,
-		int displayDateHour, int displayDateMinute, int expirationDateMonth,
-		int expirationDateDay, int expirationDateYear, int expirationDateHour,
-		int expirationDateMinute, boolean neverExpire,
+		double weight, java.math.BigDecimal cost, java.math.BigDecimal price,
+		boolean published, int displayDateMonth, int displayDateDay,
+		int displayDateYear, int displayDateHour, int displayDateMinute,
+		int expirationDateMonth, int expirationDateDay, int expirationDateYear,
+		int expirationDateHour, int expirationDateMinute, boolean neverExpire,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
@@ -305,12 +305,12 @@ public class CPInstanceServiceSoap {
 	public static com.liferay.commerce.product.model.CPInstanceSoap updateCPInstance(
 		long cpInstanceId, java.lang.String sku, java.lang.String gtin,
 		java.lang.String manufacturerPartNumber, boolean purchasable,
-		double width, double height, double depth, double weight, double cost,
-		double price, boolean published, int displayDateMonth,
-		int displayDateDay, int displayDateYear, int displayDateHour,
-		int displayDateMinute, int expirationDateMonth, int expirationDateDay,
-		int expirationDateYear, int expirationDateHour,
-		int expirationDateMinute, boolean neverExpire,
+		double width, double height, double depth, double weight,
+		java.math.BigDecimal cost, java.math.BigDecimal price,
+		boolean published, int displayDateMonth, int displayDateDay,
+		int displayDateYear, int displayDateHour, int displayDateMinute,
+		int expirationDateMonth, int expirationDateDay, int expirationDateYear,
+		int expirationDateHour, int expirationDateMinute, boolean neverExpire,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
@@ -332,7 +332,8 @@ public class CPInstanceServiceSoap {
 	}
 
 	public static com.liferay.commerce.product.model.CPInstanceSoap updatePricingInfo(
-		long cpInstanceId, double cost, double price,
+		long cpInstanceId, java.math.BigDecimal cost,
+		java.math.BigDecimal price,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {

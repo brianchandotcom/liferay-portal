@@ -30,6 +30,8 @@ import com.liferay.portal.kernel.service.ServiceContext;
 
 import java.io.Serializable;
 
+import java.math.BigDecimal;
+
 import java.util.Date;
 
 /**
@@ -368,28 +370,28 @@ public interface CPInstanceModel extends BaseModel<CPInstance>, ShardedModel,
 	 *
 	 * @return the cost of this cp instance
 	 */
-	public double getCost();
+	public BigDecimal getCost();
 
 	/**
 	 * Sets the cost of this cp instance.
 	 *
 	 * @param cost the cost of this cp instance
 	 */
-	public void setCost(double cost);
+	public void setCost(BigDecimal cost);
 
 	/**
 	 * Returns the price of this cp instance.
 	 *
 	 * @return the price of this cp instance
 	 */
-	public double getPrice();
+	public BigDecimal getPrice();
 
 	/**
 	 * Sets the price of this cp instance.
 	 *
 	 * @param price the price of this cp instance
 	 */
-	public void setPrice(double price);
+	public void setPrice(BigDecimal price);
 
 	/**
 	 * Returns the published of this cp instance.

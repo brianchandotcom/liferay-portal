@@ -18,6 +18,8 @@ import aQute.bnd.annotation.ProviderType;
 
 import java.io.Serializable;
 
+import java.math.BigDecimal;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -46,7 +48,7 @@ public class CPInstanceSoap implements Serializable {
 		soapModel.setSku(model.getSku());
 		soapModel.setGtin(model.getGtin());
 		soapModel.setManufacturerPartNumber(model.getManufacturerPartNumber());
-		soapModel.setPurchasable(model.getPurchasable());
+		soapModel.setPurchasable(model.isPurchasable());
 		soapModel.setDDMContent(model.getDDMContent());
 		soapModel.setWidth(model.getWidth());
 		soapModel.setHeight(model.getHeight());
@@ -54,7 +56,7 @@ public class CPInstanceSoap implements Serializable {
 		soapModel.setWeight(model.getWeight());
 		soapModel.setCost(model.getCost());
 		soapModel.setPrice(model.getPrice());
-		soapModel.setPublished(model.getPublished());
+		soapModel.setPublished(model.isPublished());
 		soapModel.setDisplayDate(model.getDisplayDate());
 		soapModel.setExpirationDate(model.getExpirationDate());
 		soapModel.setLastPublishDate(model.getLastPublishDate());
@@ -262,19 +264,19 @@ public class CPInstanceSoap implements Serializable {
 		_weight = weight;
 	}
 
-	public double getCost() {
+	public BigDecimal getCost() {
 		return _cost;
 	}
 
-	public void setCost(double cost) {
+	public void setCost(BigDecimal cost) {
 		_cost = cost;
 	}
 
-	public double getPrice() {
+	public BigDecimal getPrice() {
 		return _price;
 	}
 
-	public void setPrice(double price) {
+	public void setPrice(BigDecimal price) {
 		_price = price;
 	}
 
@@ -364,8 +366,8 @@ public class CPInstanceSoap implements Serializable {
 	private double _height;
 	private double _depth;
 	private double _weight;
-	private double _cost;
-	private double _price;
+	private BigDecimal _cost;
+	private BigDecimal _price;
 	private boolean _published;
 	private Date _displayDate;
 	private Date _expirationDate;

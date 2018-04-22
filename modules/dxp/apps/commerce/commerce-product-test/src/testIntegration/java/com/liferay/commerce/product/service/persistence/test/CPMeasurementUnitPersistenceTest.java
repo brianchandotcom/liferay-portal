@@ -181,8 +181,8 @@ public class CPMeasurementUnitPersistenceTest {
 			newCPMeasurementUnit.getKey());
 		AssertUtils.assertEquals(existingCPMeasurementUnit.getRate(),
 			newCPMeasurementUnit.getRate());
-		Assert.assertEquals(existingCPMeasurementUnit.getPrimary(),
-			newCPMeasurementUnit.getPrimary());
+		Assert.assertEquals(existingCPMeasurementUnit.isPrimary(),
+			newCPMeasurementUnit.isPrimary());
 		AssertUtils.assertEquals(existingCPMeasurementUnit.getPriority(),
 			newCPMeasurementUnit.getPriority());
 		Assert.assertEquals(existingCPMeasurementUnit.getType(),

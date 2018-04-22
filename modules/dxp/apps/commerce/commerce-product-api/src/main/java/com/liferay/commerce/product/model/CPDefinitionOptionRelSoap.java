@@ -49,9 +49,9 @@ public class CPDefinitionOptionRelSoap implements Serializable {
 		soapModel.setDescription(model.getDescription());
 		soapModel.setDDMFormFieldTypeName(model.getDDMFormFieldTypeName());
 		soapModel.setPriority(model.getPriority());
-		soapModel.setFacetable(model.getFacetable());
-		soapModel.setRequired(model.getRequired());
-		soapModel.setSkuContributor(model.getSkuContributor());
+		soapModel.setFacetable(model.isFacetable());
+		soapModel.setRequired(model.isRequired());
+		soapModel.setSkuContributor(model.isSkuContributor());
 
 		return soapModel;
 	}

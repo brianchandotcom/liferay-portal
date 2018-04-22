@@ -233,7 +233,7 @@ public class CPFriendlyURLEntryModelImpl extends BaseModelImpl<CPFriendlyURLEntr
 		attributes.put("classPK", getClassPK());
 		attributes.put("languageId", getLanguageId());
 		attributes.put("urlTitle", getUrlTitle());
-		attributes.put("main", getMain());
+		attributes.put("main", isMain());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -670,7 +670,7 @@ public class CPFriendlyURLEntryModelImpl extends BaseModelImpl<CPFriendlyURLEntr
 		cpFriendlyURLEntryImpl.setClassPK(getClassPK());
 		cpFriendlyURLEntryImpl.setLanguageId(getLanguageId());
 		cpFriendlyURLEntryImpl.setUrlTitle(getUrlTitle());
-		cpFriendlyURLEntryImpl.setMain(getMain());
+		cpFriendlyURLEntryImpl.setMain(isMain());
 
 		cpFriendlyURLEntryImpl.resetOriginalValues();
 
@@ -856,7 +856,7 @@ public class CPFriendlyURLEntryModelImpl extends BaseModelImpl<CPFriendlyURLEntr
 			cpFriendlyURLEntryCacheModel.urlTitle = null;
 		}
 
-		cpFriendlyURLEntryCacheModel.main = getMain();
+		cpFriendlyURLEntryCacheModel.main = isMain();
 
 		return cpFriendlyURLEntryCacheModel;
 	}
@@ -890,7 +890,7 @@ public class CPFriendlyURLEntryModelImpl extends BaseModelImpl<CPFriendlyURLEntr
 		sb.append(", urlTitle=");
 		sb.append(getUrlTitle());
 		sb.append(", main=");
-		sb.append(getMain());
+		sb.append(isMain());
 		sb.append("}");
 
 		return sb.toString();
@@ -954,7 +954,7 @@ public class CPFriendlyURLEntryModelImpl extends BaseModelImpl<CPFriendlyURLEntr
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>main</column-name><column-value><![CDATA[");
-		sb.append(getMain());
+		sb.append(isMain());
 		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");

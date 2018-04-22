@@ -75,9 +75,9 @@ public class CPDefinitionOptionRelWrapper implements CPDefinitionOptionRel,
 		attributes.put("description", getDescription());
 		attributes.put("DDMFormFieldTypeName", getDDMFormFieldTypeName());
 		attributes.put("priority", getPriority());
-		attributes.put("facetable", getFacetable());
-		attributes.put("required", getRequired());
-		attributes.put("skuContributor", getSkuContributor());
+		attributes.put("facetable", isFacetable());
+		attributes.put("required", isRequired());
+		attributes.put("skuContributor", isSkuContributor());
 
 		return attributes;
 	}

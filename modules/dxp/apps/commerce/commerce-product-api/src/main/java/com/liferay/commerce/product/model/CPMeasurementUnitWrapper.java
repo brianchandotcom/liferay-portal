@@ -71,7 +71,7 @@ public class CPMeasurementUnitWrapper implements CPMeasurementUnit,
 		attributes.put("name", getName());
 		attributes.put("key", getKey());
 		attributes.put("rate", getRate());
-		attributes.put("primary", getPrimary());
+		attributes.put("primary", isPrimary());
 		attributes.put("priority", getPriority());
 		attributes.put("type", getType());
 		attributes.put("lastPublishDate", getLastPublishDate());

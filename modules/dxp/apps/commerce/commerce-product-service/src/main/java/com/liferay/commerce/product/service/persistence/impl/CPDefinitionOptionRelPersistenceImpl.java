@@ -3171,7 +3171,7 @@ public class CPDefinitionOptionRelPersistenceImpl extends BasePersistenceImpl<CP
 			if ((list != null) && !list.isEmpty()) {
 				for (CPDefinitionOptionRel cpDefinitionOptionRel : list) {
 					if ((CPDefinitionId != cpDefinitionOptionRel.getCPDefinitionId()) ||
-							(skuContributor != cpDefinitionOptionRel.getSkuContributor())) {
+							(skuContributor != cpDefinitionOptionRel.isSkuContributor())) {
 						list = null;
 
 						break;
@@ -3967,7 +3967,7 @@ public class CPDefinitionOptionRelPersistenceImpl extends BasePersistenceImpl<CP
 
 			args = new Object[] {
 					cpDefinitionOptionRelModelImpl.getCPDefinitionId(),
-					cpDefinitionOptionRelModelImpl.getSkuContributor()
+					cpDefinitionOptionRelModelImpl.isSkuContributor()
 				};
 
 			finderCache.removeResult(FINDER_PATH_COUNT_BY_C_SC, args);

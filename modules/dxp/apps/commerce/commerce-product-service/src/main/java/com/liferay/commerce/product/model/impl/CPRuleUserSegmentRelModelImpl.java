@@ -211,7 +211,7 @@ public class CPRuleUserSegmentRelModelImpl extends BaseModelImpl<CPRuleUserSegme
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("CPRuleId", getCPRuleId());
 		attributes.put("commerceUserSegmentEntryId",
-			getCommerceUserSegmentEntryId());
+			isCommerceUserSegmentEntryId());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -476,7 +476,7 @@ public class CPRuleUserSegmentRelModelImpl extends BaseModelImpl<CPRuleUserSegme
 		cpRuleUserSegmentRelImpl.setCreateDate(getCreateDate());
 		cpRuleUserSegmentRelImpl.setModifiedDate(getModifiedDate());
 		cpRuleUserSegmentRelImpl.setCPRuleId(getCPRuleId());
-		cpRuleUserSegmentRelImpl.setCommerceUserSegmentEntryId(getCommerceUserSegmentEntryId());
+		cpRuleUserSegmentRelImpl.setCommerceUserSegmentEntryId(isCommerceUserSegmentEntryId());
 
 		cpRuleUserSegmentRelImpl.resetOriginalValues();
 
@@ -593,7 +593,7 @@ public class CPRuleUserSegmentRelModelImpl extends BaseModelImpl<CPRuleUserSegme
 
 		cpRuleUserSegmentRelCacheModel.CPRuleId = getCPRuleId();
 
-		cpRuleUserSegmentRelCacheModel.commerceUserSegmentEntryId = getCommerceUserSegmentEntryId();
+		cpRuleUserSegmentRelCacheModel.commerceUserSegmentEntryId = isCommerceUserSegmentEntryId();
 
 		return cpRuleUserSegmentRelCacheModel;
 	}
@@ -619,7 +619,7 @@ public class CPRuleUserSegmentRelModelImpl extends BaseModelImpl<CPRuleUserSegme
 		sb.append(", CPRuleId=");
 		sb.append(getCPRuleId());
 		sb.append(", commerceUserSegmentEntryId=");
-		sb.append(getCommerceUserSegmentEntryId());
+		sb.append(isCommerceUserSegmentEntryId());
 		sb.append("}");
 
 		return sb.toString();
@@ -667,7 +667,7 @@ public class CPRuleUserSegmentRelModelImpl extends BaseModelImpl<CPRuleUserSegme
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>commerceUserSegmentEntryId</column-name><column-value><![CDATA[");
-		sb.append(getCommerceUserSegmentEntryId());
+		sb.append(isCommerceUserSegmentEntryId());
 		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");

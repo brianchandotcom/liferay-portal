@@ -27,6 +27,8 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
+import java.math.BigDecimal;
+
 import java.util.Date;
 
 /**
@@ -249,7 +251,8 @@ public class CPInstanceCacheModel implements CacheModel<CPInstance>,
 	}
 
 	@Override
-	public void readExternal(ObjectInput objectInput) throws IOException {
+	public void readExternal(ObjectInput objectInput)
+		throws ClassNotFoundException, IOException {
 		uuid = objectInput.readUTF();
 
 		CPInstanceId = objectInput.readLong();
@@ -278,10 +281,8 @@ public class CPInstanceCacheModel implements CacheModel<CPInstance>,
 		depth = objectInput.readDouble();
 
 		weight = objectInput.readDouble();
-
-		cost = objectInput.readDouble();
-
-		price = objectInput.readDouble();
+		cost = (BigDecimal)objectInput.readObject();
+		price = (BigDecimal)objectInput.readObject();
 
 		published = objectInput.readBoolean();
 		displayDate = objectInput.readLong();
@@ -362,10 +363,8 @@ public class CPInstanceCacheModel implements CacheModel<CPInstance>,
 		objectOutput.writeDouble(depth);
 
 		objectOutput.writeDouble(weight);
-
-		objectOutput.writeDouble(cost);
-
-		objectOutput.writeDouble(price);
+		objectOutput.writeObject(cost);
+		objectOutput.writeObject(price);
 
 		objectOutput.writeBoolean(published);
 		objectOutput.writeLong(displayDate);
@@ -404,8 +403,8 @@ public class CPInstanceCacheModel implements CacheModel<CPInstance>,
 	public double height;
 	public double depth;
 	public double weight;
-	public double cost;
-	public double price;
+	public BigDecimal cost;
+	public BigDecimal price;
 	public boolean published;
 	public long displayDate;
 	public long expirationDate;

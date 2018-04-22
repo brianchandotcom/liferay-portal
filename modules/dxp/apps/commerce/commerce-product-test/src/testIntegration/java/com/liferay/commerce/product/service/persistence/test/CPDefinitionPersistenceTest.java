@@ -211,16 +211,16 @@ public class CPDefinitionPersistenceTest {
 			Time.getShortTimestamp(newCPDefinition.getModifiedDate()));
 		Assert.assertEquals(existingCPDefinition.getProductTypeName(),
 			newCPDefinition.getProductTypeName());
-		Assert.assertEquals(existingCPDefinition.getAvailableIndividually(),
-			newCPDefinition.getAvailableIndividually());
-		Assert.assertEquals(existingCPDefinition.getIgnoreSKUCombinations(),
-			newCPDefinition.getIgnoreSKUCombinations());
-		Assert.assertEquals(existingCPDefinition.getShippable(),
-			newCPDefinition.getShippable());
-		Assert.assertEquals(existingCPDefinition.getFreeShipping(),
-			newCPDefinition.getFreeShipping());
-		Assert.assertEquals(existingCPDefinition.getShipSeparately(),
-			newCPDefinition.getShipSeparately());
+		Assert.assertEquals(existingCPDefinition.isAvailableIndividually(),
+			newCPDefinition.isAvailableIndividually());
+		Assert.assertEquals(existingCPDefinition.isIgnoreSKUCombinations(),
+			newCPDefinition.isIgnoreSKUCombinations());
+		Assert.assertEquals(existingCPDefinition.isShippable(),
+			newCPDefinition.isShippable());
+		Assert.assertEquals(existingCPDefinition.isFreeShipping(),
+			newCPDefinition.isFreeShipping());
+		Assert.assertEquals(existingCPDefinition.isShipSeparately(),
+			newCPDefinition.isShipSeparately());
 		AssertUtils.assertEquals(existingCPDefinition.getShippingExtraPrice(),
 			newCPDefinition.getShippingExtraPrice());
 		AssertUtils.assertEquals(existingCPDefinition.getWidth(),
@@ -233,14 +233,14 @@ public class CPDefinitionPersistenceTest {
 			newCPDefinition.getWeight());
 		Assert.assertEquals(existingCPDefinition.getCPTaxCategoryId(),
 			newCPDefinition.getCPTaxCategoryId());
-		Assert.assertEquals(existingCPDefinition.getTaxExempt(),
-			newCPDefinition.getTaxExempt());
-		Assert.assertEquals(existingCPDefinition.getTelcoOrElectronics(),
-			newCPDefinition.getTelcoOrElectronics());
+		Assert.assertEquals(existingCPDefinition.isTaxExempt(),
+			newCPDefinition.isTaxExempt());
+		Assert.assertEquals(existingCPDefinition.isTelcoOrElectronics(),
+			newCPDefinition.isTelcoOrElectronics());
 		Assert.assertEquals(existingCPDefinition.getDDMStructureKey(),
 			newCPDefinition.getDDMStructureKey());
-		Assert.assertEquals(existingCPDefinition.getPublished(),
-			newCPDefinition.getPublished());
+		Assert.assertEquals(existingCPDefinition.isPublished(),
+			newCPDefinition.isPublished());
 		Assert.assertEquals(Time.getShortTimestamp(
 				existingCPDefinition.getDisplayDate()),
 			Time.getShortTimestamp(newCPDefinition.getDisplayDate()));

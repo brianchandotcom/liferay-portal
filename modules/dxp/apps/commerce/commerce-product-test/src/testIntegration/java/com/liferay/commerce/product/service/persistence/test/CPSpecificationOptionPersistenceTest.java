@@ -179,8 +179,8 @@ public class CPSpecificationOptionPersistenceTest {
 			newCPSpecificationOption.getTitle());
 		Assert.assertEquals(existingCPSpecificationOption.getDescription(),
 			newCPSpecificationOption.getDescription());
-		Assert.assertEquals(existingCPSpecificationOption.getFacetable(),
-			newCPSpecificationOption.getFacetable());
+		Assert.assertEquals(existingCPSpecificationOption.isFacetable(),
+			newCPSpecificationOption.isFacetable());
 		Assert.assertEquals(existingCPSpecificationOption.getKey(),
 			newCPSpecificationOption.getKey());
 		Assert.assertEquals(Time.getShortTimestamp(

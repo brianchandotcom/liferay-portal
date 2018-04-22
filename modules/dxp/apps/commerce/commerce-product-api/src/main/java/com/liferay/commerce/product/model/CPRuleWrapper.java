@@ -65,7 +65,7 @@ public class CPRuleWrapper implements CPRule, ModelWrapper<CPRule> {
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("name", getName());
-		attributes.put("active", getActive());
+		attributes.put("active", isActive());
 		attributes.put("type", getType());
 		attributes.put("typeSettings", getTypeSettings());
 

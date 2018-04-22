@@ -2864,7 +2864,7 @@ public class CPFriendlyURLEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 					if ((groupId != cpFriendlyURLEntry.getGroupId()) ||
 							(classNameId != cpFriendlyURLEntry.getClassNameId()) ||
 							(classPK != cpFriendlyURLEntry.getClassPK()) ||
-							(main != cpFriendlyURLEntry.getMain())) {
+							(main != cpFriendlyURLEntry.isMain())) {
 						list = null;
 
 						break;
@@ -4933,7 +4933,7 @@ public class CPFriendlyURLEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 					cpFriendlyURLEntryModelImpl.getGroupId(),
 					cpFriendlyURLEntryModelImpl.getClassNameId(),
 					cpFriendlyURLEntryModelImpl.getClassPK(),
-					cpFriendlyURLEntryModelImpl.getMain()
+					cpFriendlyURLEntryModelImpl.isMain()
 				};
 
 			finderCache.removeResult(FINDER_PATH_COUNT_BY_G_C_C_M, args);

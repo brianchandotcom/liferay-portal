@@ -103,11 +103,12 @@ public class CPInstanceServiceHttp {
 		HttpPrincipal httpPrincipal, long cpDefinitionId, java.lang.String sku,
 		java.lang.String gtin, java.lang.String manufacturerPartNumber,
 		boolean purchasable, java.lang.String ddmContent, double width,
-		double height, double depth, double weight, double cost, double price,
-		boolean published, int displayDateMonth, int displayDateDay,
-		int displayDateYear, int displayDateHour, int displayDateMinute,
-		int expirationDateMonth, int expirationDateDay, int expirationDateYear,
-		int expirationDateHour, int expirationDateMinute, boolean neverExpire,
+		double height, double depth, double weight, java.math.BigDecimal cost,
+		java.math.BigDecimal price, boolean published, int displayDateMonth,
+		int displayDateDay, int displayDateYear, int displayDateHour,
+		int displayDateMinute, int expirationDateMonth, int expirationDateDay,
+		int expirationDateYear, int expirationDateHour,
+		int expirationDateMinute, boolean neverExpire,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -649,11 +650,11 @@ public class CPInstanceServiceHttp {
 		HttpPrincipal httpPrincipal, long cpInstanceId, java.lang.String sku,
 		java.lang.String gtin, java.lang.String manufacturerPartNumber,
 		boolean purchasable, double width, double height, double depth,
-		double weight, double cost, double price, boolean published,
-		int displayDateMonth, int displayDateDay, int displayDateYear,
-		int displayDateHour, int displayDateMinute, int expirationDateMonth,
-		int expirationDateDay, int expirationDateYear, int expirationDateHour,
-		int expirationDateMinute, boolean neverExpire,
+		double weight, java.math.BigDecimal cost, java.math.BigDecimal price,
+		boolean published, int displayDateMonth, int displayDateDay,
+		int displayDateYear, int displayDateHour, int displayDateMinute,
+		int expirationDateMonth, int expirationDateDay, int expirationDateYear,
+		int expirationDateHour, int expirationDateMinute, boolean neverExpire,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -692,8 +693,8 @@ public class CPInstanceServiceHttp {
 	}
 
 	public static com.liferay.commerce.product.model.CPInstance updatePricingInfo(
-		HttpPrincipal httpPrincipal, long cpInstanceId, double cost,
-		double price,
+		HttpPrincipal httpPrincipal, long cpInstanceId,
+		java.math.BigDecimal cost, java.math.BigDecimal price,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -805,10 +806,10 @@ public class CPInstanceServiceHttp {
 	private static final Class<?>[] _addCPInstanceParameterTypes1 = new Class[] {
 			long.class, java.lang.String.class, java.lang.String.class,
 			java.lang.String.class, boolean.class, java.lang.String.class,
-			double.class, double.class, double.class, double.class, double.class,
-			double.class, boolean.class, int.class, int.class, int.class,
-			int.class, int.class, int.class, int.class, int.class, int.class,
-			int.class, boolean.class,
+			double.class, double.class, double.class, double.class,
+			java.math.BigDecimal.class, java.math.BigDecimal.class,
+			boolean.class, int.class, int.class, int.class, int.class, int.class,
+			int.class, int.class, int.class, int.class, int.class, boolean.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _buildCPInstancesParameterTypes2 = new Class[] {
@@ -868,13 +869,14 @@ public class CPInstanceServiceHttp {
 	private static final Class<?>[] _updateCPInstanceParameterTypes17 = new Class[] {
 			long.class, java.lang.String.class, java.lang.String.class,
 			java.lang.String.class, boolean.class, double.class, double.class,
-			double.class, double.class, double.class, double.class,
-			boolean.class, int.class, int.class, int.class, int.class, int.class,
-			int.class, int.class, int.class, int.class, int.class, boolean.class,
+			double.class, double.class, java.math.BigDecimal.class,
+			java.math.BigDecimal.class, boolean.class, int.class, int.class,
+			int.class, int.class, int.class, int.class, int.class, int.class,
+			int.class, int.class, boolean.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _updatePricingInfoParameterTypes18 = new Class[] {
-			long.class, double.class, double.class,
+			long.class, java.math.BigDecimal.class, java.math.BigDecimal.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _updateShippingInfoParameterTypes19 = new Class[] {

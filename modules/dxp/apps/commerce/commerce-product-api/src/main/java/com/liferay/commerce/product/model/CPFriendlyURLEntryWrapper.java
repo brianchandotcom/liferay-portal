@@ -72,7 +72,7 @@ public class CPFriendlyURLEntryWrapper implements CPFriendlyURLEntry,
 		attributes.put("classPK", getClassPK());
 		attributes.put("languageId", getLanguageId());
 		attributes.put("urlTitle", getUrlTitle());
-		attributes.put("main", getMain());
+		attributes.put("main", isMain());
 
 		return attributes;
 	}

@@ -46,7 +46,7 @@ public class CPSpecificationOptionSoap implements Serializable {
 		soapModel.setCPOptionCategoryId(model.getCPOptionCategoryId());
 		soapModel.setTitle(model.getTitle());
 		soapModel.setDescription(model.getDescription());
-		soapModel.setFacetable(model.getFacetable());
+		soapModel.setFacetable(model.isFacetable());
 		soapModel.setKey(model.getKey());
 		soapModel.setLastPublishDate(model.getLastPublishDate());
 

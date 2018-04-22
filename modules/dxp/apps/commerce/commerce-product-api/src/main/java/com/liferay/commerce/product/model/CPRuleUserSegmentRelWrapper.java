@@ -68,7 +68,7 @@ public class CPRuleUserSegmentRelWrapper implements CPRuleUserSegmentRel,
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("CPRuleId", getCPRuleId());
 		attributes.put("commerceUserSegmentEntryId",
-			getCommerceUserSegmentEntryId());
+			isCommerceUserSegmentEntryId());
 
 		return attributes;
 	}

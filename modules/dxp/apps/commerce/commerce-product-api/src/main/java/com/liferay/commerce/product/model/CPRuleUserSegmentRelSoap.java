@@ -43,7 +43,7 @@ public class CPRuleUserSegmentRelSoap implements Serializable {
 		soapModel.setCreateDate(model.getCreateDate());
 		soapModel.setModifiedDate(model.getModifiedDate());
 		soapModel.setCPRuleId(model.getCPRuleId());
-		soapModel.setCommerceUserSegmentEntryId(model.getCommerceUserSegmentEntryId());
+		soapModel.setCommerceUserSegmentEntryId(model.isCommerceUserSegmentEntryId());
 
 		return soapModel;
 	}

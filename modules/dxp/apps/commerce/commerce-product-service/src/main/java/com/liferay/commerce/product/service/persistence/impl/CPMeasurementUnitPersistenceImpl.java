@@ -2960,7 +2960,7 @@ public class CPMeasurementUnitPersistenceImpl extends BasePersistenceImpl<CPMeas
 			if ((list != null) && !list.isEmpty()) {
 				for (CPMeasurementUnit cpMeasurementUnit : list) {
 					if ((groupId != cpMeasurementUnit.getGroupId()) ||
-							(primary != cpMeasurementUnit.getPrimary()) ||
+							(primary != cpMeasurementUnit.isPrimary()) ||
 							(type != cpMeasurementUnit.getType())) {
 						list = null;
 
@@ -3807,7 +3807,7 @@ public class CPMeasurementUnitPersistenceImpl extends BasePersistenceImpl<CPMeas
 
 			args = new Object[] {
 					cpMeasurementUnitModelImpl.getGroupId(),
-					cpMeasurementUnitModelImpl.getPrimary(),
+					cpMeasurementUnitModelImpl.isPrimary(),
 					cpMeasurementUnitModelImpl.getType()
 				};
 

@@ -42,7 +42,7 @@ public class CPRuleSoap implements Serializable {
 		soapModel.setCreateDate(model.getCreateDate());
 		soapModel.setModifiedDate(model.getModifiedDate());
 		soapModel.setName(model.getName());
-		soapModel.setActive(model.getActive());
+		soapModel.setActive(model.isActive());
 		soapModel.setType(model.getType());
 		soapModel.setTypeSettings(model.getTypeSettings());
 

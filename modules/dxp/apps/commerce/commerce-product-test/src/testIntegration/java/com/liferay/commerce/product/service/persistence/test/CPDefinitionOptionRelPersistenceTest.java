@@ -192,12 +192,12 @@ public class CPDefinitionOptionRelPersistenceTest {
 			newCPDefinitionOptionRel.getDDMFormFieldTypeName());
 		AssertUtils.assertEquals(existingCPDefinitionOptionRel.getPriority(),
 			newCPDefinitionOptionRel.getPriority());
-		Assert.assertEquals(existingCPDefinitionOptionRel.getFacetable(),
-			newCPDefinitionOptionRel.getFacetable());
-		Assert.assertEquals(existingCPDefinitionOptionRel.getRequired(),
-			newCPDefinitionOptionRel.getRequired());
-		Assert.assertEquals(existingCPDefinitionOptionRel.getSkuContributor(),
-			newCPDefinitionOptionRel.getSkuContributor());
+		Assert.assertEquals(existingCPDefinitionOptionRel.isFacetable(),
+			newCPDefinitionOptionRel.isFacetable());
+		Assert.assertEquals(existingCPDefinitionOptionRel.isRequired(),
+			newCPDefinitionOptionRel.isRequired());
+		Assert.assertEquals(existingCPDefinitionOptionRel.isSkuContributor(),
+			newCPDefinitionOptionRel.isSkuContributor());
 	}
 
 	@Test

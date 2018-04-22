@@ -724,7 +724,7 @@ public class CPRuleUserSegmentRelPersistenceImpl extends BasePersistenceImpl<CPR
 
 			if ((list != null) && !list.isEmpty()) {
 				for (CPRuleUserSegmentRel cpRuleUserSegmentRel : list) {
-					if ((commerceUserSegmentEntryId != cpRuleUserSegmentRel.getCommerceUserSegmentEntryId())) {
+					if ((commerceUserSegmentEntryId != cpRuleUserSegmentRel.isCommerceUserSegmentEntryId())) {
 						list = null;
 
 						break;
@@ -1389,7 +1389,7 @@ public class CPRuleUserSegmentRelPersistenceImpl extends BasePersistenceImpl<CPR
 				args);
 
 			args = new Object[] {
-					cpRuleUserSegmentRelModelImpl.getCommerceUserSegmentEntryId()
+					cpRuleUserSegmentRelModelImpl.isCommerceUserSegmentEntryId()
 				};
 
 			finderCache.removeResult(FINDER_PATH_COUNT_BY_COMMERCEUSERSEGMENTENTRYID,

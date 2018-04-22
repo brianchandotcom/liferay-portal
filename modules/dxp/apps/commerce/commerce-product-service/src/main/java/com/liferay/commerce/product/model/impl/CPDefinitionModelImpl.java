@@ -294,21 +294,21 @@ public class CPDefinitionModelImpl extends BaseModelImpl<CPDefinition>
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("productTypeName", getProductTypeName());
-		attributes.put("availableIndividually", getAvailableIndividually());
-		attributes.put("ignoreSKUCombinations", getIgnoreSKUCombinations());
-		attributes.put("shippable", getShippable());
-		attributes.put("freeShipping", getFreeShipping());
-		attributes.put("shipSeparately", getShipSeparately());
+		attributes.put("availableIndividually", isAvailableIndividually());
+		attributes.put("ignoreSKUCombinations", isIgnoreSKUCombinations());
+		attributes.put("shippable", isShippable());
+		attributes.put("freeShipping", isFreeShipping());
+		attributes.put("shipSeparately", isShipSeparately());
 		attributes.put("shippingExtraPrice", getShippingExtraPrice());
 		attributes.put("width", getWidth());
 		attributes.put("height", getHeight());
 		attributes.put("depth", getDepth());
 		attributes.put("weight", getWeight());
 		attributes.put("CPTaxCategoryId", getCPTaxCategoryId());
-		attributes.put("taxExempt", getTaxExempt());
-		attributes.put("telcoOrElectronics", getTelcoOrElectronics());
+		attributes.put("taxExempt", isTaxExempt());
+		attributes.put("telcoOrElectronics", isTelcoOrElectronics());
 		attributes.put("DDMStructureKey", getDDMStructureKey());
-		attributes.put("published", getPublished());
+		attributes.put("published", isPublished());
 		attributes.put("displayDate", getDisplayDate());
 		attributes.put("expirationDate", getExpirationDate());
 		attributes.put("lastPublishDate", getLastPublishDate());
@@ -1660,21 +1660,21 @@ public class CPDefinitionModelImpl extends BaseModelImpl<CPDefinition>
 		cpDefinitionImpl.setCreateDate(getCreateDate());
 		cpDefinitionImpl.setModifiedDate(getModifiedDate());
 		cpDefinitionImpl.setProductTypeName(getProductTypeName());
-		cpDefinitionImpl.setAvailableIndividually(getAvailableIndividually());
-		cpDefinitionImpl.setIgnoreSKUCombinations(getIgnoreSKUCombinations());
-		cpDefinitionImpl.setShippable(getShippable());
-		cpDefinitionImpl.setFreeShipping(getFreeShipping());
-		cpDefinitionImpl.setShipSeparately(getShipSeparately());
+		cpDefinitionImpl.setAvailableIndividually(isAvailableIndividually());
+		cpDefinitionImpl.setIgnoreSKUCombinations(isIgnoreSKUCombinations());
+		cpDefinitionImpl.setShippable(isShippable());
+		cpDefinitionImpl.setFreeShipping(isFreeShipping());
+		cpDefinitionImpl.setShipSeparately(isShipSeparately());
 		cpDefinitionImpl.setShippingExtraPrice(getShippingExtraPrice());
 		cpDefinitionImpl.setWidth(getWidth());
 		cpDefinitionImpl.setHeight(getHeight());
 		cpDefinitionImpl.setDepth(getDepth());
 		cpDefinitionImpl.setWeight(getWeight());
 		cpDefinitionImpl.setCPTaxCategoryId(getCPTaxCategoryId());
-		cpDefinitionImpl.setTaxExempt(getTaxExempt());
-		cpDefinitionImpl.setTelcoOrElectronics(getTelcoOrElectronics());
+		cpDefinitionImpl.setTaxExempt(isTaxExempt());
+		cpDefinitionImpl.setTelcoOrElectronics(isTelcoOrElectronics());
 		cpDefinitionImpl.setDDMStructureKey(getDDMStructureKey());
-		cpDefinitionImpl.setPublished(getPublished());
+		cpDefinitionImpl.setPublished(isPublished());
 		cpDefinitionImpl.setDisplayDate(getDisplayDate());
 		cpDefinitionImpl.setExpirationDate(getExpirationDate());
 		cpDefinitionImpl.setLastPublishDate(getLastPublishDate());
@@ -1833,15 +1833,15 @@ public class CPDefinitionModelImpl extends BaseModelImpl<CPDefinition>
 			cpDefinitionCacheModel.productTypeName = null;
 		}
 
-		cpDefinitionCacheModel.availableIndividually = getAvailableIndividually();
+		cpDefinitionCacheModel.availableIndividually = isAvailableIndividually();
 
-		cpDefinitionCacheModel.ignoreSKUCombinations = getIgnoreSKUCombinations();
+		cpDefinitionCacheModel.ignoreSKUCombinations = isIgnoreSKUCombinations();
 
-		cpDefinitionCacheModel.shippable = getShippable();
+		cpDefinitionCacheModel.shippable = isShippable();
 
-		cpDefinitionCacheModel.freeShipping = getFreeShipping();
+		cpDefinitionCacheModel.freeShipping = isFreeShipping();
 
-		cpDefinitionCacheModel.shipSeparately = getShipSeparately();
+		cpDefinitionCacheModel.shipSeparately = isShipSeparately();
 
 		cpDefinitionCacheModel.shippingExtraPrice = getShippingExtraPrice();
 
@@ -1855,9 +1855,9 @@ public class CPDefinitionModelImpl extends BaseModelImpl<CPDefinition>
 
 		cpDefinitionCacheModel.CPTaxCategoryId = getCPTaxCategoryId();
 
-		cpDefinitionCacheModel.taxExempt = getTaxExempt();
+		cpDefinitionCacheModel.taxExempt = isTaxExempt();
 
-		cpDefinitionCacheModel.telcoOrElectronics = getTelcoOrElectronics();
+		cpDefinitionCacheModel.telcoOrElectronics = isTelcoOrElectronics();
 
 		cpDefinitionCacheModel.DDMStructureKey = getDDMStructureKey();
 
@@ -1867,7 +1867,7 @@ public class CPDefinitionModelImpl extends BaseModelImpl<CPDefinition>
 			cpDefinitionCacheModel.DDMStructureKey = null;
 		}
 
-		cpDefinitionCacheModel.published = getPublished();
+		cpDefinitionCacheModel.published = isPublished();
 
 		Date displayDate = getDisplayDate();
 
@@ -1951,15 +1951,15 @@ public class CPDefinitionModelImpl extends BaseModelImpl<CPDefinition>
 		sb.append(", productTypeName=");
 		sb.append(getProductTypeName());
 		sb.append(", availableIndividually=");
-		sb.append(getAvailableIndividually());
+		sb.append(isAvailableIndividually());
 		sb.append(", ignoreSKUCombinations=");
-		sb.append(getIgnoreSKUCombinations());
+		sb.append(isIgnoreSKUCombinations());
 		sb.append(", shippable=");
-		sb.append(getShippable());
+		sb.append(isShippable());
 		sb.append(", freeShipping=");
-		sb.append(getFreeShipping());
+		sb.append(isFreeShipping());
 		sb.append(", shipSeparately=");
-		sb.append(getShipSeparately());
+		sb.append(isShipSeparately());
 		sb.append(", shippingExtraPrice=");
 		sb.append(getShippingExtraPrice());
 		sb.append(", width=");
@@ -1973,13 +1973,13 @@ public class CPDefinitionModelImpl extends BaseModelImpl<CPDefinition>
 		sb.append(", CPTaxCategoryId=");
 		sb.append(getCPTaxCategoryId());
 		sb.append(", taxExempt=");
-		sb.append(getTaxExempt());
+		sb.append(isTaxExempt());
 		sb.append(", telcoOrElectronics=");
-		sb.append(getTelcoOrElectronics());
+		sb.append(isTelcoOrElectronics());
 		sb.append(", DDMStructureKey=");
 		sb.append(getDDMStructureKey());
 		sb.append(", published=");
-		sb.append(getPublished());
+		sb.append(isPublished());
 		sb.append(", displayDate=");
 		sb.append(getDisplayDate());
 		sb.append(", expirationDate=");
@@ -2047,23 +2047,23 @@ public class CPDefinitionModelImpl extends BaseModelImpl<CPDefinition>
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>availableIndividually</column-name><column-value><![CDATA[");
-		sb.append(getAvailableIndividually());
+		sb.append(isAvailableIndividually());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>ignoreSKUCombinations</column-name><column-value><![CDATA[");
-		sb.append(getIgnoreSKUCombinations());
+		sb.append(isIgnoreSKUCombinations());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>shippable</column-name><column-value><![CDATA[");
-		sb.append(getShippable());
+		sb.append(isShippable());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>freeShipping</column-name><column-value><![CDATA[");
-		sb.append(getFreeShipping());
+		sb.append(isFreeShipping());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>shipSeparately</column-name><column-value><![CDATA[");
-		sb.append(getShipSeparately());
+		sb.append(isShipSeparately());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>shippingExtraPrice</column-name><column-value><![CDATA[");
@@ -2091,11 +2091,11 @@ public class CPDefinitionModelImpl extends BaseModelImpl<CPDefinition>
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>taxExempt</column-name><column-value><![CDATA[");
-		sb.append(getTaxExempt());
+		sb.append(isTaxExempt());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>telcoOrElectronics</column-name><column-value><![CDATA[");
-		sb.append(getTelcoOrElectronics());
+		sb.append(isTelcoOrElectronics());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>DDMStructureKey</column-name><column-value><![CDATA[");
@@ -2103,7 +2103,7 @@ public class CPDefinitionModelImpl extends BaseModelImpl<CPDefinition>
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>published</column-name><column-value><![CDATA[");
-		sb.append(getPublished());
+		sb.append(isPublished());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>displayDate</column-name><column-value><![CDATA[");

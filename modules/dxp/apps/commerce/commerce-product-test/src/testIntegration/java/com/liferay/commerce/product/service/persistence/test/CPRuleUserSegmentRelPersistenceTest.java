@@ -160,8 +160,8 @@ public class CPRuleUserSegmentRelPersistenceTest {
 			Time.getShortTimestamp(newCPRuleUserSegmentRel.getModifiedDate()));
 		Assert.assertEquals(existingCPRuleUserSegmentRel.getCPRuleId(),
 			newCPRuleUserSegmentRel.getCPRuleId());
-		Assert.assertEquals(existingCPRuleUserSegmentRel.getCommerceUserSegmentEntryId(),
-			newCPRuleUserSegmentRel.getCommerceUserSegmentEntryId());
+		Assert.assertEquals(existingCPRuleUserSegmentRel.isCommerceUserSegmentEntryId(),
+			newCPRuleUserSegmentRel.isCommerceUserSegmentEntryId());
 	}
 
 	@Test

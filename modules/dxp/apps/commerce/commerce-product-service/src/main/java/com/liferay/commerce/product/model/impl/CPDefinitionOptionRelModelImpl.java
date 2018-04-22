@@ -252,9 +252,9 @@ public class CPDefinitionOptionRelModelImpl extends BaseModelImpl<CPDefinitionOp
 		attributes.put("description", getDescription());
 		attributes.put("DDMFormFieldTypeName", getDDMFormFieldTypeName());
 		attributes.put("priority", getPriority());
-		attributes.put("facetable", getFacetable());
-		attributes.put("required", getRequired());
-		attributes.put("skuContributor", getSkuContributor());
+		attributes.put("facetable", isFacetable());
+		attributes.put("required", isRequired());
+		attributes.put("skuContributor", isSkuContributor());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -982,9 +982,9 @@ public class CPDefinitionOptionRelModelImpl extends BaseModelImpl<CPDefinitionOp
 		cpDefinitionOptionRelImpl.setDescription(getDescription());
 		cpDefinitionOptionRelImpl.setDDMFormFieldTypeName(getDDMFormFieldTypeName());
 		cpDefinitionOptionRelImpl.setPriority(getPriority());
-		cpDefinitionOptionRelImpl.setFacetable(getFacetable());
-		cpDefinitionOptionRelImpl.setRequired(getRequired());
-		cpDefinitionOptionRelImpl.setSkuContributor(getSkuContributor());
+		cpDefinitionOptionRelImpl.setFacetable(isFacetable());
+		cpDefinitionOptionRelImpl.setRequired(isRequired());
+		cpDefinitionOptionRelImpl.setSkuContributor(isSkuContributor());
 
 		cpDefinitionOptionRelImpl.resetOriginalValues();
 
@@ -1153,11 +1153,11 @@ public class CPDefinitionOptionRelModelImpl extends BaseModelImpl<CPDefinitionOp
 
 		cpDefinitionOptionRelCacheModel.priority = getPriority();
 
-		cpDefinitionOptionRelCacheModel.facetable = getFacetable();
+		cpDefinitionOptionRelCacheModel.facetable = isFacetable();
 
-		cpDefinitionOptionRelCacheModel.required = getRequired();
+		cpDefinitionOptionRelCacheModel.required = isRequired();
 
-		cpDefinitionOptionRelCacheModel.skuContributor = getSkuContributor();
+		cpDefinitionOptionRelCacheModel.skuContributor = isSkuContributor();
 
 		return cpDefinitionOptionRelCacheModel;
 	}
@@ -1195,11 +1195,11 @@ public class CPDefinitionOptionRelModelImpl extends BaseModelImpl<CPDefinitionOp
 		sb.append(", priority=");
 		sb.append(getPriority());
 		sb.append(", facetable=");
-		sb.append(getFacetable());
+		sb.append(isFacetable());
 		sb.append(", required=");
-		sb.append(getRequired());
+		sb.append(isRequired());
 		sb.append(", skuContributor=");
-		sb.append(getSkuContributor());
+		sb.append(isSkuContributor());
 		sb.append("}");
 
 		return sb.toString();
@@ -1271,15 +1271,15 @@ public class CPDefinitionOptionRelModelImpl extends BaseModelImpl<CPDefinitionOp
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>facetable</column-name><column-value><![CDATA[");
-		sb.append(getFacetable());
+		sb.append(isFacetable());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>required</column-name><column-value><![CDATA[");
-		sb.append(getRequired());
+		sb.append(isRequired());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>skuContributor</column-name><column-value><![CDATA[");
-		sb.append(getSkuContributor());
+		sb.append(isSkuContributor());
 		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");

@@ -66,17 +66,18 @@ public class CPInstanceServiceUtil {
 		java.lang.String manufacturerPartNumber, boolean purchasable,
 		java.lang.String ddmContent, double width, double height, double depth,
 		double weight, java.math.BigDecimal cost, java.math.BigDecimal price,
-		boolean published, int displayDateMonth, int displayDateDay,
-		int displayDateYear, int displayDateHour, int displayDateMinute,
-		int expirationDateMonth, int expirationDateDay, int expirationDateYear,
-		int expirationDateHour, int expirationDateMinute, boolean neverExpire,
+		java.math.BigDecimal promoPrice, boolean published,
+		int displayDateMonth, int displayDateDay, int displayDateYear,
+		int displayDateHour, int displayDateMinute, int expirationDateMonth,
+		int expirationDateDay, int expirationDateYear, int expirationDateHour,
+		int expirationDateMinute, boolean neverExpire,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addCPInstance(cpDefinitionId, sku, gtin,
 			manufacturerPartNumber, purchasable, ddmContent, width, height,
-			depth, weight, cost, price, published, displayDateMonth,
-			displayDateDay, displayDateYear, displayDateHour,
+			depth, weight, cost, price, promoPrice, published,
+			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
 			displayDateMinute, expirationDateMonth, expirationDateDay,
 			expirationDateYear, expirationDateHour, expirationDateMinute,
 			neverExpire, serviceContext);
@@ -208,29 +209,31 @@ public class CPInstanceServiceUtil {
 		java.lang.String manufacturerPartNumber, boolean purchasable,
 		double width, double height, double depth, double weight,
 		java.math.BigDecimal cost, java.math.BigDecimal price,
-		boolean published, int displayDateMonth, int displayDateDay,
-		int displayDateYear, int displayDateHour, int displayDateMinute,
-		int expirationDateMonth, int expirationDateDay, int expirationDateYear,
-		int expirationDateHour, int expirationDateMinute, boolean neverExpire,
+		java.math.BigDecimal promoPrice, boolean published,
+		int displayDateMonth, int displayDateDay, int displayDateYear,
+		int displayDateHour, int displayDateMinute, int expirationDateMonth,
+		int expirationDateDay, int expirationDateYear, int expirationDateHour,
+		int expirationDateMinute, boolean neverExpire,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .updateCPInstance(cpInstanceId, sku, gtin,
 			manufacturerPartNumber, purchasable, width, height, depth, weight,
-			cost, price, published, displayDateMonth, displayDateDay,
-			displayDateYear, displayDateHour, displayDateMinute,
-			expirationDateMonth, expirationDateDay, expirationDateYear,
-			expirationDateHour, expirationDateMinute, neverExpire,
-			serviceContext);
+			cost, price, promoPrice, published, displayDateMonth,
+			displayDateDay, displayDateYear, displayDateHour,
+			displayDateMinute, expirationDateMonth, expirationDateDay,
+			expirationDateYear, expirationDateHour, expirationDateMinute,
+			neverExpire, serviceContext);
 	}
 
 	public static com.liferay.commerce.product.model.CPInstance updatePricingInfo(
 		long cpInstanceId, java.math.BigDecimal cost,
-		java.math.BigDecimal price,
+		java.math.BigDecimal price, java.math.BigDecimal promoPrice,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
-				   .updatePricingInfo(cpInstanceId, cost, price, serviceContext);
+				   .updatePricingInfo(cpInstanceId, cost, price, promoPrice,
+			serviceContext);
 	}
 
 	public static com.liferay.commerce.product.model.CPInstance updateShippingInfo(

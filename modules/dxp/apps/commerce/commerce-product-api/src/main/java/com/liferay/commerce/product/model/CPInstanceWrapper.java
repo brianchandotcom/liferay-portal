@@ -81,6 +81,7 @@ public class CPInstanceWrapper implements CPInstance, ModelWrapper<CPInstance> {
 		attributes.put("weight", getWeight());
 		attributes.put("cost", getCost());
 		attributes.put("price", getPrice());
+		attributes.put("promoPrice", getPromoPrice());
 		attributes.put("published", isPublished());
 		attributes.put("displayDate", getDisplayDate());
 		attributes.put("expirationDate", getExpirationDate());
@@ -214,6 +215,12 @@ public class CPInstanceWrapper implements CPInstance, ModelWrapper<CPInstance> {
 
 		if (price != null) {
 			setPrice(price);
+		}
+
+		BigDecimal promoPrice = (BigDecimal)attributes.get("promoPrice");
+
+		if (promoPrice != null) {
+			setPromoPrice(promoPrice);
 		}
 
 		Boolean published = (Boolean)attributes.get("published");
@@ -459,6 +466,16 @@ public class CPInstanceWrapper implements CPInstance, ModelWrapper<CPInstance> {
 	@Override
 	public Serializable getPrimaryKeyObj() {
 		return _cpInstance.getPrimaryKeyObj();
+	}
+
+	/**
+	* Returns the promo price of this cp instance.
+	*
+	* @return the promo price of this cp instance
+	*/
+	@Override
+	public BigDecimal getPromoPrice() {
+		return _cpInstance.getPromoPrice();
 	}
 
 	/**
@@ -989,6 +1006,16 @@ public class CPInstanceWrapper implements CPInstance, ModelWrapper<CPInstance> {
 	@Override
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
 		_cpInstance.setPrimaryKeyObj(primaryKeyObj);
+	}
+
+	/**
+	* Sets the promo price of this cp instance.
+	*
+	* @param promoPrice the promo price of this cp instance
+	*/
+	@Override
+	public void setPromoPrice(BigDecimal promoPrice) {
+		_cpInstance.setPromoPrice(promoPrice);
 	}
 
 	/**

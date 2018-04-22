@@ -67,7 +67,7 @@ public class CPInstanceCacheModel implements CacheModel<CPInstance>,
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(57);
+		StringBundler sb = new StringBundler(59);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -109,6 +109,8 @@ public class CPInstanceCacheModel implements CacheModel<CPInstance>,
 		sb.append(cost);
 		sb.append(", price=");
 		sb.append(price);
+		sb.append(", promoPrice=");
+		sb.append(promoPrice);
 		sb.append(", published=");
 		sb.append(published);
 		sb.append(", displayDate=");
@@ -205,6 +207,7 @@ public class CPInstanceCacheModel implements CacheModel<CPInstance>,
 		cpInstanceImpl.setWeight(weight);
 		cpInstanceImpl.setCost(cost);
 		cpInstanceImpl.setPrice(price);
+		cpInstanceImpl.setPromoPrice(promoPrice);
 		cpInstanceImpl.setPublished(published);
 
 		if (displayDate == Long.MIN_VALUE) {
@@ -283,6 +286,7 @@ public class CPInstanceCacheModel implements CacheModel<CPInstance>,
 		weight = objectInput.readDouble();
 		cost = (BigDecimal)objectInput.readObject();
 		price = (BigDecimal)objectInput.readObject();
+		promoPrice = (BigDecimal)objectInput.readObject();
 
 		published = objectInput.readBoolean();
 		displayDate = objectInput.readLong();
@@ -365,6 +369,7 @@ public class CPInstanceCacheModel implements CacheModel<CPInstance>,
 		objectOutput.writeDouble(weight);
 		objectOutput.writeObject(cost);
 		objectOutput.writeObject(price);
+		objectOutput.writeObject(promoPrice);
 
 		objectOutput.writeBoolean(published);
 		objectOutput.writeLong(displayDate);
@@ -405,6 +410,7 @@ public class CPInstanceCacheModel implements CacheModel<CPInstance>,
 	public double weight;
 	public BigDecimal cost;
 	public BigDecimal price;
+	public BigDecimal promoPrice;
 	public boolean published;
 	public long displayDate;
 	public long expirationDate;

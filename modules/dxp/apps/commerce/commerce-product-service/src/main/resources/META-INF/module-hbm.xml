@@ -223,6 +223,7 @@
 		<property name="weight" type="com.liferay.portal.dao.orm.hibernate.DoubleType" />
 		<property name="cost" type="org.hibernate.type.BigDecimalType" />
 		<property name="price" type="org.hibernate.type.BigDecimalType" />
+		<property name="promoPrice" type="org.hibernate.type.BigDecimalType" />
 		<property name="published" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
 		<property name="displayDate" type="org.hibernate.type.TimestampType" />
 		<property name="expirationDate" type="org.hibernate.type.TimestampType" />

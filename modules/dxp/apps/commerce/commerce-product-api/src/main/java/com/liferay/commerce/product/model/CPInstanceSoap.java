@@ -56,6 +56,7 @@ public class CPInstanceSoap implements Serializable {
 		soapModel.setWeight(model.getWeight());
 		soapModel.setCost(model.getCost());
 		soapModel.setPrice(model.getPrice());
+		soapModel.setPromoPrice(model.getPromoPrice());
 		soapModel.setPublished(model.isPublished());
 		soapModel.setDisplayDate(model.getDisplayDate());
 		soapModel.setExpirationDate(model.getExpirationDate());
@@ -280,6 +281,14 @@ public class CPInstanceSoap implements Serializable {
 		_price = price;
 	}
 
+	public BigDecimal getPromoPrice() {
+		return _promoPrice;
+	}
+
+	public void setPromoPrice(BigDecimal promoPrice) {
+		_promoPrice = promoPrice;
+	}
+
 	public boolean getPublished() {
 		return _published;
 	}
@@ -368,6 +377,7 @@ public class CPInstanceSoap implements Serializable {
 	private double _weight;
 	private BigDecimal _cost;
 	private BigDecimal _price;
+	private BigDecimal _promoPrice;
 	private boolean _published;
 	private Date _displayDate;
 	private Date _expirationDate;

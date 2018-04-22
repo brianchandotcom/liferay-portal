@@ -7145,6 +7145,7 @@ public class CPInstancePersistenceImpl extends BasePersistenceImpl<CPInstance>
 		cpInstanceImpl.setWeight(cpInstance.getWeight());
 		cpInstanceImpl.setCost(cpInstance.getCost());
 		cpInstanceImpl.setPrice(cpInstance.getPrice());
+		cpInstanceImpl.setPromoPrice(cpInstance.getPromoPrice());
 		cpInstanceImpl.setPublished(cpInstance.isPublished());
 		cpInstanceImpl.setDisplayDate(cpInstance.getDisplayDate());
 		cpInstanceImpl.setExpirationDate(cpInstance.getExpirationDate());

@@ -242,6 +242,7 @@
 		<field name="price" type="BigDecimal">
 			<validator name="number" />
 		</field>
+		<field name="promoPrice" type="BigDecimal" />
 		<field name="published" type="boolean">
 			<hint name="default-value">true</hint>
 		</field>

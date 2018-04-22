@@ -100,6 +100,7 @@ public class CPInstanceModelImpl extends BaseModelImpl<CPInstance>
 			{ "weight", Types.DOUBLE },
 			{ "cost", Types.DECIMAL },
 			{ "price", Types.DECIMAL },
+			{ "promoPrice", Types.DECIMAL },
 			{ "published", Types.BOOLEAN },
 			{ "displayDate", Types.TIMESTAMP },
 			{ "expirationDate", Types.TIMESTAMP },
@@ -132,6 +133,7 @@ public class CPInstanceModelImpl extends BaseModelImpl<CPInstance>
 		TABLE_COLUMNS_MAP.put("weight", Types.DOUBLE);
 		TABLE_COLUMNS_MAP.put("cost", Types.DECIMAL);
 		TABLE_COLUMNS_MAP.put("price", Types.DECIMAL);
+		TABLE_COLUMNS_MAP.put("promoPrice", Types.DECIMAL);
 		TABLE_COLUMNS_MAP.put("published", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("displayDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("expirationDate", Types.TIMESTAMP);
@@ -142,7 +144,7 @@ public class CPInstanceModelImpl extends BaseModelImpl<CPInstance>
 		TABLE_COLUMNS_MAP.put("statusDate", Types.TIMESTAMP);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table CPInstance (uuid_ VARCHAR(75) null,CPInstanceId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,CPDefinitionId LONG,sku VARCHAR(75) null,gtin VARCHAR(75) null,manufacturerPartNumber VARCHAR(75) null,purchasable BOOLEAN,DDMContent TEXT null,width DOUBLE,height DOUBLE,depth DOUBLE,weight DOUBLE,cost DECIMAL(30, 16) null,price DECIMAL(30, 16) null,published BOOLEAN,displayDate DATE null,expirationDate DATE null,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table CPInstance (uuid_ VARCHAR(75) null,CPInstanceId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,CPDefinitionId LONG,sku VARCHAR(75) null,gtin VARCHAR(75) null,manufacturerPartNumber VARCHAR(75) null,purchasable BOOLEAN,DDMContent TEXT null,width DOUBLE,height DOUBLE,depth DOUBLE,weight DOUBLE,cost DECIMAL(30, 16) null,price DECIMAL(30, 16) null,promoPrice DECIMAL(30, 16) null,published BOOLEAN,displayDate DATE null,expirationDate DATE null,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table CPInstance";
 	public static final String ORDER_BY_JPQL = " ORDER BY cpInstance.displayDate DESC, cpInstance.createDate DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY CPInstance.displayDate DESC, CPInstance.createDate DESC";
@@ -200,6 +202,7 @@ public class CPInstanceModelImpl extends BaseModelImpl<CPInstance>
 		model.setWeight(soapModel.getWeight());
 		model.setCost(soapModel.getCost());
 		model.setPrice(soapModel.getPrice());
+		model.setPromoPrice(soapModel.getPromoPrice());
 		model.setPublished(soapModel.getPublished());
 		model.setDisplayDate(soapModel.getDisplayDate());
 		model.setExpirationDate(soapModel.getExpirationDate());
@@ -292,6 +295,7 @@ public class CPInstanceModelImpl extends BaseModelImpl<CPInstance>
 		attributes.put("weight", getWeight());
 		attributes.put("cost", getCost());
 		attributes.put("price", getPrice());
+		attributes.put("promoPrice", getPromoPrice());
 		attributes.put("published", isPublished());
 		attributes.put("displayDate", getDisplayDate());
 		attributes.put("expirationDate", getExpirationDate());
@@ -428,6 +432,12 @@ public class CPInstanceModelImpl extends BaseModelImpl<CPInstance>
 
 		if (price != null) {
 			setPrice(price);
+		}
+
+		BigDecimal promoPrice = (BigDecimal)attributes.get("promoPrice");
+
+		if (promoPrice != null) {
+			setPromoPrice(promoPrice);
 		}
 
 		Boolean published = (Boolean)attributes.get("published");
@@ -811,6 +821,17 @@ public class CPInstanceModelImpl extends BaseModelImpl<CPInstance>
 	@Override
 	public void setPrice(BigDecimal price) {
 		_price = price;
+	}
+
+	@JSON
+	@Override
+	public BigDecimal getPromoPrice() {
+		return _promoPrice;
+	}
+
+	@Override
+	public void setPromoPrice(BigDecimal promoPrice) {
+		_promoPrice = promoPrice;
 	}
 
 	@JSON
@@ -1218,6 +1239,7 @@ public class CPInstanceModelImpl extends BaseModelImpl<CPInstance>
 		cpInstanceImpl.setWeight(getWeight());
 		cpInstanceImpl.setCost(getCost());
 		cpInstanceImpl.setPrice(getPrice());
+		cpInstanceImpl.setPromoPrice(getPromoPrice());
 		cpInstanceImpl.setPublished(isPublished());
 		cpInstanceImpl.setDisplayDate(getDisplayDate());
 		cpInstanceImpl.setExpirationDate(getExpirationDate());
@@ -1418,6 +1440,8 @@ public class CPInstanceModelImpl extends BaseModelImpl<CPInstance>
 
 		cpInstanceCacheModel.price = getPrice();
 
+		cpInstanceCacheModel.promoPrice = getPromoPrice();
+
 		cpInstanceCacheModel.published = isPublished();
 
 		Date displayDate = getDisplayDate();
@@ -1473,7 +1497,7 @@ public class CPInstanceModelImpl extends BaseModelImpl<CPInstance>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(57);
+		StringBundler sb = new StringBundler(59);
 
 		sb.append("{uuid=");
 		sb.append(getUuid());
@@ -1515,6 +1539,8 @@ public class CPInstanceModelImpl extends BaseModelImpl<CPInstance>
 		sb.append(getCost());
 		sb.append(", price=");
 		sb.append(getPrice());
+		sb.append(", promoPrice=");
+		sb.append(getPromoPrice());
 		sb.append(", published=");
 		sb.append(isPublished());
 		sb.append(", displayDate=");
@@ -1538,7 +1564,7 @@ public class CPInstanceModelImpl extends BaseModelImpl<CPInstance>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(88);
+		StringBundler sb = new StringBundler(91);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.commerce.product.model.CPInstance");
@@ -1625,6 +1651,10 @@ public class CPInstanceModelImpl extends BaseModelImpl<CPInstance>
 		sb.append(getPrice());
 		sb.append("]]></column-value></column>");
 		sb.append(
+			"<column><column-name>promoPrice</column-name><column-value><![CDATA[");
+		sb.append(getPromoPrice());
+		sb.append("]]></column-value></column>");
+		sb.append(
 			"<column><column-name>published</column-name><column-value><![CDATA[");
 		sb.append(isPublished());
 		sb.append("]]></column-value></column>");
@@ -1695,6 +1725,7 @@ public class CPInstanceModelImpl extends BaseModelImpl<CPInstance>
 	private double _weight;
 	private BigDecimal _cost;
 	private BigDecimal _price;
+	private BigDecimal _promoPrice;
 	private boolean _published;
 	private Date _displayDate;
 	private Date _originalDisplayDate;

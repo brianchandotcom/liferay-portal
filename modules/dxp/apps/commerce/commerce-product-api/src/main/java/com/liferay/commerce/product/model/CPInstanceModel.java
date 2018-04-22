@@ -394,6 +394,20 @@ public interface CPInstanceModel extends BaseModel<CPInstance>, ShardedModel,
 	public void setPrice(BigDecimal price);
 
 	/**
+	 * Returns the promo price of this cp instance.
+	 *
+	 * @return the promo price of this cp instance
+	 */
+	public BigDecimal getPromoPrice();
+
+	/**
+	 * Sets the promo price of this cp instance.
+	 *
+	 * @param promoPrice the promo price of this cp instance
+	 */
+	public void setPromoPrice(BigDecimal promoPrice);
+
+	/**
 	 * Returns the published of this cp instance.
 	 *
 	 * @return the published of this cp instance

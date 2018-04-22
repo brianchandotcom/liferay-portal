@@ -78,10 +78,10 @@ public interface CPInstanceService extends BaseService {
 		java.lang.String gtin, java.lang.String manufacturerPartNumber,
 		boolean purchasable, java.lang.String ddmContent, double width,
 		double height, double depth, double weight, BigDecimal cost,
-		BigDecimal price, boolean published, int displayDateMonth,
-		int displayDateDay, int displayDateYear, int displayDateHour,
-		int displayDateMinute, int expirationDateMonth, int expirationDateDay,
-		int expirationDateYear, int expirationDateHour,
+		BigDecimal price, BigDecimal promoPrice, boolean published,
+		int displayDateMonth, int displayDateDay, int displayDateYear,
+		int displayDateHour, int displayDateMinute, int expirationDateMonth,
+		int expirationDateDay, int expirationDateYear, int expirationDateHour,
 		int expirationDateMinute, boolean neverExpire,
 		ServiceContext serviceContext) throws PortalException;
 
@@ -162,15 +162,16 @@ public interface CPInstanceService extends BaseService {
 	public CPInstance updateCPInstance(long cpInstanceId, java.lang.String sku,
 		java.lang.String gtin, java.lang.String manufacturerPartNumber,
 		boolean purchasable, double width, double height, double depth,
-		double weight, BigDecimal cost, BigDecimal price, boolean published,
-		int displayDateMonth, int displayDateDay, int displayDateYear,
-		int displayDateHour, int displayDateMinute, int expirationDateMonth,
-		int expirationDateDay, int expirationDateYear, int expirationDateHour,
+		double weight, BigDecimal cost, BigDecimal price,
+		BigDecimal promoPrice, boolean published, int displayDateMonth,
+		int displayDateDay, int displayDateYear, int displayDateHour,
+		int displayDateMinute, int expirationDateMonth, int expirationDateDay,
+		int expirationDateYear, int expirationDateHour,
 		int expirationDateMinute, boolean neverExpire,
 		ServiceContext serviceContext) throws PortalException;
 
 	public CPInstance updatePricingInfo(long cpInstanceId, BigDecimal cost,
-		BigDecimal price, ServiceContext serviceContext)
+		BigDecimal price, BigDecimal promoPrice, ServiceContext serviceContext)
 		throws PortalException;
 
 	public CPInstance updateShippingInfo(long cpInstanceId, double width,

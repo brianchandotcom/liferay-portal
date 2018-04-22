@@ -190,6 +190,7 @@ create table CPInstance (
 	weight DOUBLE,
 	cost DECIMAL(30, 16) null,
 	price DECIMAL(30, 16) null,
+	promoPrice DECIMAL(30, 16) null,
 	published BOOLEAN,
 	displayDate DATE null,
 	expirationDate DATE null,

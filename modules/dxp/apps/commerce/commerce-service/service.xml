@@ -583,6 +583,9 @@
 
 		<!-- Finder methods -->
 
+		<finder name="ParentCommercePriceListId" return-type="CommercePriceList">
+			<finder-column name="parentCommercePriceListId" />
+		</finder>
 		<finder name="GroupId" return-type="Collection">
 			<finder-column name="groupId" />
 		</finder>

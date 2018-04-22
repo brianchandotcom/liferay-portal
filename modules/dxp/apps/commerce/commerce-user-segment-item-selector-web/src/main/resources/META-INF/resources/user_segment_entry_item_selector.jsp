@@ -62,6 +62,16 @@ PortletURL portletURL = commerceUserSegmentEntryItemSelectorViewDisplayContext.g
 			keyProperty="commerceUserSegmentEntryId"
 			modelVar="commerceUserSegmentEntry"
 		>
+
+			<%
+			Map<String, Object> data = new HashMap<>();
+
+			data.put("commerce-user-segment-entry-id", commerceUserSegmentEntry.getCommerceUserSegmentEntryId());
+			data.put("name", commerceUserSegmentEntry.getName(locale));
+
+			row.setData(data);
+			%>
+
 			<liferay-ui:search-container-column-text
 				cssClass="table-cell-content"
 				property="name"
@@ -92,10 +102,24 @@ PortletURL portletURL = commerceUserSegmentEntryItemSelectorViewDisplayContext.g
 	searchContainer.on(
 		'rowToggled',
 		function(event) {
+
+			var allSelectedElements = event.elements.allSelectedElements
+			var arr = [];
+
+			allSelectedElements.each(
+				function() {
+					var row = this.ancestor('tr');
+
+					var data = row.getDOM().dataset;
+
+					arr.push({commerceUserSegmentEntryId : data.commerceUserSegmentEntryId, name : data.name});
+				}
+			);
+
 			Liferay.Util.getOpener().Liferay.fire(
 				'<%= HtmlUtil.escapeJS(itemSelectedEventName) %>',
 				{
-					data: Liferay.Util.listCheckedExcept(commerceUserSegmentEntrySelectorWrapper, '<portlet:namespace />allRowIds')
+					data: arr
 				}
 			);
 		}

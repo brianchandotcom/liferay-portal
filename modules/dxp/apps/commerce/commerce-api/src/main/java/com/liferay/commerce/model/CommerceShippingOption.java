@@ -23,6 +23,7 @@ public class CommerceShippingOption {
 
 	public CommerceShippingOption(
 		String name, String label, BigDecimal amount) {
+
 		_name = name;
 		_label = label;
 		_amount = amount;

@@ -17,6 +17,7 @@ package com.liferay.commerce.model;
 import java.io.Serializable;
 
 import java.math.BigDecimal;
+
 import java.util.LinkedHashMap;
 import java.util.Locale;
 import java.util.Map;

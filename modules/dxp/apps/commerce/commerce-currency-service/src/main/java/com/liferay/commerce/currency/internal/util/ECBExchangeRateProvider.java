@@ -19,7 +19,6 @@ import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.util.ExchangeRateProvider;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -31,6 +30,7 @@ import java.io.IOException;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+
 import java.net.URL;
 
 import java.util.List;
@@ -114,7 +114,9 @@ public class ECBExchangeRateProvider implements ExchangeRateProvider {
 				rateToSecondary = rate;
 			}
 
-			if ((rateToPrimary.compareTo(BigDecimal.ZERO) > 0) && (rateToSecondary.compareTo(BigDecimal.ZERO) > 0)) {
+			if ((rateToPrimary.compareTo(BigDecimal.ZERO) > 0) &&
+				(rateToSecondary.compareTo(BigDecimal.ZERO) > 0)) {
+
 				break;
 			}
 		}

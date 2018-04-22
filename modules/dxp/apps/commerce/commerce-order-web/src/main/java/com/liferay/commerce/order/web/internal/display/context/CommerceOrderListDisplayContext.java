@@ -73,6 +73,7 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.util.PropsValues;
 
 import java.math.BigDecimal;
+
 import java.text.DateFormat;
 import java.text.Format;
 

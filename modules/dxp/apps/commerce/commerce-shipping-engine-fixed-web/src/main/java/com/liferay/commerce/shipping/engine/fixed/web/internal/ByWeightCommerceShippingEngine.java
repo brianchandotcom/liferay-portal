@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
 import java.math.BigDecimal;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -153,13 +154,12 @@ public class ByWeightCommerceShippingEngine implements CommerceShippingEngine {
 			commerceShippingFixedOptionRel.getRateUnitWeightPrice();
 
 		if (rateUnitWeightPrice.compareTo(BigDecimal.ZERO) > 0) {
-
 			amount = amount.add(
 				rateUnitWeightPrice.multiply(new BigDecimal(orderWeight)));
 		}
 
-		BigDecimal ratePercentage =
-			new BigDecimal(commerceShippingFixedOptionRel.getRatePercentage());
+		BigDecimal ratePercentage = new BigDecimal(
+			commerceShippingFixedOptionRel.getRatePercentage());
 
 		amount = amount.add(
 			ratePercentage.multiply(orderPrice.divide(new BigDecimal(100))));

@@ -75,7 +75,6 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.KeyValuePair;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.MathUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -221,7 +220,7 @@ public class FedExCommerceShippingOptionHelper {
 
 			BigDecimal amount = BigDecimal.ZERO;
 
-			for(BigDecimal amountCur: amounts){
+			for (BigDecimal amountCur : amounts) {
 				amount = amount.add(amountCur);
 			}
 
@@ -471,8 +470,7 @@ public class FedExCommerceShippingOptionHelper {
 	}
 
 	private Money _getMoney(BigDecimal amount) {
-		return new Money(
-			_commerceCurrency.getCode(), amount);
+		return new Money(_commerceCurrency.getCode(), amount);
 	}
 
 	private NonNegativeInteger _getNonNegativeInteger(int d) {
@@ -522,7 +520,8 @@ public class FedExCommerceShippingOptionHelper {
 
 			price = price.add(
 				_commercePriceCalculationLocalService.getFinalPrice(
-					commerceOrder.getSiteGroupId(), commerceOrder.getOrderUserId(),
+					commerceOrder.getSiteGroupId(),
+					commerceOrder.getOrderUserId(),
 					commerceOrderItem.getCPInstanceId(),
 					commerceOrderItem.getQuantity()));
 		}
@@ -683,9 +682,11 @@ public class FedExCommerceShippingOptionHelper {
 			double fedExWeight = _getFedExWeight(
 				_commerceShippingHelper.getWeight(cpInstance));
 
-			BigDecimal price = _commercePriceCalculationLocalService.getFinalPrice(
-				commerceOrder.getSiteGroupId(), commerceOrder.getOrderUserId(),
-				cpInstance.getCPInstanceId(), 1);
+			BigDecimal price =
+				_commercePriceCalculationLocalService.getFinalPrice(
+					commerceOrder.getSiteGroupId(),
+					commerceOrder.getOrderUserId(),
+					cpInstance.getCPInstanceId(), 1);
 
 			for (int j = 0; j < commerceOrderItem.getQuantity(); j++) {
 				RequestedPackageLineItem requestedPackageLineItem =

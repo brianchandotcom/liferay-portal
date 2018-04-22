@@ -17,6 +17,7 @@ package com.liferay.commerce.currency.util;
 import aQute.bnd.annotation.ProviderType;
 
 import java.math.BigDecimal;
+
 import java.util.Locale;
 
 /**

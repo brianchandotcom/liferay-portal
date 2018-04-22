@@ -52,6 +52,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.math.BigDecimal;
+
 import java.util.ArrayList;
 import java.util.List;
 

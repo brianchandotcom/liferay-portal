@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.math.BigDecimal;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -65,7 +66,8 @@ public class CommercePriceCalculationLocalServiceImpl
 			long groupId, long userId, long cpInstanceId, int quantity)
 		throws PortalException {
 
-		BigDecimal price = getUnitPrice(groupId, userId, cpInstanceId, quantity);
+		BigDecimal price = getUnitPrice(
+			groupId, userId, cpInstanceId, quantity);
 
 		return price.multiply(new BigDecimal(quantity));
 	}
@@ -140,10 +142,12 @@ public class CommercePriceCalculationLocalServiceImpl
 			commerceOrder.getCommerceOrderItems();
 
 		for (CommerceOrderItem commerceOrderItem : commerceOrderItems) {
-			orderSubtotal.add(getFinalPrice(
-				commerceOrder.getSiteGroupId(), commerceOrder.getOrderUserId(),
-				commerceOrderItem.getCPInstanceId(),
-				commerceOrderItem.getQuantity()));
+			orderSubtotal.add(
+				getFinalPrice(
+					commerceOrder.getSiteGroupId(),
+					commerceOrder.getOrderUserId(),
+					commerceOrderItem.getCPInstanceId(),
+					commerceOrderItem.getQuantity()));
 		}
 
 		return orderSubtotal;
@@ -213,7 +217,7 @@ public class CommercePriceCalculationLocalServiceImpl
 			_commerceCurrencyService.getCommerceCurrency(commerceCurrencyId);
 
 		if (!commerceCurrency.isPrimary()) {
-			price = price.multiply( commerceCurrency.getRate());
+			price = price.multiply(commerceCurrency.getRate());
 		}
 
 		return price;

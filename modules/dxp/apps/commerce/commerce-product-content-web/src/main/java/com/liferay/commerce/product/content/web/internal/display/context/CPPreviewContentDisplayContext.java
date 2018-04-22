@@ -47,6 +47,7 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import java.io.Serializable;
 
 import java.math.BigDecimal;
+
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;

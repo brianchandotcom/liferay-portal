@@ -23,12 +23,13 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.Portal;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+
 import java.text.DecimalFormat;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Marco Leo
@@ -72,7 +73,9 @@ public class CommercePriceFormatterImpl implements CommercePriceFormatter {
 	}
 
 	@Override
-	public String format(long groupId, BigDecimal price) throws PortalException {
+	public String format(long groupId, BigDecimal price)
+		throws PortalException {
+
 		CommerceCurrency commerceCurrency =
 			_commerceCurrencyService.fetchPrimaryCommerceCurrency(groupId);
 

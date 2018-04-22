@@ -27,6 +27,8 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
+import java.math.BigDecimal;
+
 import java.util.Date;
 
 /**
@@ -227,7 +229,8 @@ public class CommerceOrderCacheModel implements CacheModel<CommerceOrder>,
 	}
 
 	@Override
-	public void readExternal(ObjectInput objectInput) throws IOException {
+	public void readExternal(ObjectInput objectInput)
+		throws ClassNotFoundException, IOException {
 		uuid = objectInput.readUTF();
 
 		commerceOrderId = objectInput.readLong();
@@ -258,12 +261,9 @@ public class CommerceOrderCacheModel implements CacheModel<CommerceOrder>,
 		commerceShippingMethodId = objectInput.readLong();
 		shippingOptionName = objectInput.readUTF();
 		purchaseOrderNumber = objectInput.readUTF();
-
-		subtotal = objectInput.readDouble();
-
-		shippingPrice = objectInput.readDouble();
-
-		total = objectInput.readDouble();
+		subtotal = (BigDecimal)objectInput.readObject();
+		shippingPrice = (BigDecimal)objectInput.readObject();
+		total = (BigDecimal)objectInput.readObject();
 		advanceStatus = objectInput.readUTF();
 
 		paymentStatus = objectInput.readInt();
@@ -337,11 +337,9 @@ public class CommerceOrderCacheModel implements CacheModel<CommerceOrder>,
 			objectOutput.writeUTF(purchaseOrderNumber);
 		}
 
-		objectOutput.writeDouble(subtotal);
-
-		objectOutput.writeDouble(shippingPrice);
-
-		objectOutput.writeDouble(total);
+		objectOutput.writeObject(subtotal);
+		objectOutput.writeObject(shippingPrice);
+		objectOutput.writeObject(total);
 
 		if (advanceStatus == null) {
 			objectOutput.writeUTF("");
@@ -388,9 +386,9 @@ public class CommerceOrderCacheModel implements CacheModel<CommerceOrder>,
 	public long commerceShippingMethodId;
 	public String shippingOptionName;
 	public String purchaseOrderNumber;
-	public double subtotal;
-	public double shippingPrice;
-	public double total;
+	public BigDecimal subtotal;
+	public BigDecimal shippingPrice;
+	public BigDecimal total;
 	public String advanceStatus;
 	public int paymentStatus;
 	public int shippingStatus;

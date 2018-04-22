@@ -59,8 +59,8 @@ public class CommerceShippingFixedOptionRelServiceHttp {
 		HttpPrincipal httpPrincipal, long commerceShippingMethodId,
 		long commerceShippingFixedOptionId, long commerceWarehouseId,
 		long commerceCountryId, long commerceRegionId, java.lang.String zip,
-		double weightFrom, double weightTo, double fixedPrice,
-		double rateUnitWeightPrice, double ratePercentage,
+		double weightFrom, double weightTo, java.math.BigDecimal fixedPrice,
+		java.math.BigDecimal rateUnitWeightPrice, double ratePercentage,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -362,8 +362,8 @@ public class CommerceShippingFixedOptionRelServiceHttp {
 		HttpPrincipal httpPrincipal, long commerceShippingFixedOptionRelId,
 		long commerceWarehouseId, long commerceCountryId,
 		long commerceRegionId, java.lang.String zip, double weightFrom,
-		double weightTo, double fixedPrice, double rateUnitWeightPrice,
-		double ratePercentage)
+		double weightTo, java.math.BigDecimal fixedPrice,
+		java.math.BigDecimal rateUnitWeightPrice, double ratePercentage)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(CommerceShippingFixedOptionRelServiceUtil.class,
@@ -401,8 +401,8 @@ public class CommerceShippingFixedOptionRelServiceHttp {
 	private static final Class<?>[] _addCommerceShippingFixedOptionRelParameterTypes0 =
 		new Class[] {
 			long.class, long.class, long.class, long.class, long.class,
-			java.lang.String.class, double.class, double.class, double.class,
-			double.class, double.class,
+			java.lang.String.class, double.class, double.class,
+			java.math.BigDecimal.class, java.math.BigDecimal.class, double.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _deleteCommerceShippingFixedOptionRelParameterTypes1 =
@@ -435,7 +435,7 @@ public class CommerceShippingFixedOptionRelServiceHttp {
 	private static final Class<?>[] _updateCommerceShippingFixedOptionRelParameterTypes10 =
 		new Class[] {
 			long.class, long.class, long.class, long.class,
-			java.lang.String.class, double.class, double.class, double.class,
-			double.class, double.class
+			java.lang.String.class, double.class, double.class,
+			java.math.BigDecimal.class, java.math.BigDecimal.class, double.class
 		};
 }

@@ -55,7 +55,7 @@ public class CommerceTierPriceEntryLocalServiceUtil {
 	}
 
 	public static com.liferay.commerce.model.CommerceTierPriceEntry addCommerceTierPriceEntry(
-		long commercePriceEntryId, double price, int minQuantity,
+		long commercePriceEntryId, java.math.BigDecimal price, int minQuantity,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
@@ -379,7 +379,8 @@ public class CommerceTierPriceEntryLocalServiceUtil {
 	}
 
 	public static com.liferay.commerce.model.CommerceTierPriceEntry updateCommerceTierPriceEntry(
-		long commerceTierPriceEntryId, double price, int minQuantity,
+		long commerceTierPriceEntryId, java.math.BigDecimal price,
+		int minQuantity,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()

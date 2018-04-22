@@ -108,9 +108,9 @@
 		<field name="commerceShippingMethodId" type="long" />
 		<field name="shippingOptionName" type="String" />
 		<field name="purchaseOrderNumber" type="String" />
-		<field name="subtotal" type="double" />
-		<field name="shippingPrice" type="double" />
-		<field name="total" type="double" />
+		<field name="subtotal" type="BigDecimal" />
+		<field name="shippingPrice" type="BigDecimal" />
+		<field name="total" type="BigDecimal" />
 		<field name="advanceStatus" type="String" />
 		<field name="paymentStatus" type="int" />
 		<field name="shippingStatus" type="int" />
@@ -137,7 +137,7 @@
 		</field>
 		<field localized="true" name="title" type="String" />
 		<field name="sku" type="String" />
-		<field name="price" type="double">
+		<field name="price" type="BigDecimal">
 			<validator name="number" />
 		</field>
 	</model>
@@ -338,7 +338,7 @@
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
 		<field name="commercePriceEntryId" type="long" />
-		<field name="price" type="double" />
+		<field name="price" type="BigDecimal" />
 		<field name="minQuantity" type="int" />
 		<field name="lastPublishDate" type="Date" />
 	</model>

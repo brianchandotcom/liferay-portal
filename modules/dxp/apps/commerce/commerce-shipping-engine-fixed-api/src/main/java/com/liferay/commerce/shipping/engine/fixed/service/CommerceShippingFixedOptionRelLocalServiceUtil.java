@@ -16,7 +16,8 @@ package com.liferay.commerce.shipping.engine.fixed.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.osgi.util.ServiceTrackerFactory;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
 
 import org.osgi.util.tracker.ServiceTracker;
 
@@ -58,8 +59,8 @@ public class CommerceShippingFixedOptionRelLocalServiceUtil {
 		long commerceShippingMethodId, long commerceShippingFixedOptionId,
 		long commerceWarehouseId, long commerceCountryId,
 		long commerceRegionId, java.lang.String zip, double weightFrom,
-		double weightTo, double fixedPrice, double rateUnitWeightPrice,
-		double ratePercentage,
+		double weightTo, java.math.BigDecimal fixedPrice,
+		java.math.BigDecimal rateUnitWeightPrice, double ratePercentage,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
@@ -333,8 +334,8 @@ public class CommerceShippingFixedOptionRelLocalServiceUtil {
 	public static com.liferay.commerce.shipping.engine.fixed.model.CommerceShippingFixedOptionRel updateCommerceShippingFixedOptionRel(
 		long commerceShippingFixedOptionRelId, long commerceWarehouseId,
 		long commerceCountryId, long commerceRegionId, java.lang.String zip,
-		double weightFrom, double weightTo, double fixedPrice,
-		double rateUnitWeightPrice, double ratePercentage)
+		double weightFrom, double weightTo, java.math.BigDecimal fixedPrice,
+		java.math.BigDecimal rateUnitWeightPrice, double ratePercentage)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .updateCommerceShippingFixedOptionRel(commerceShippingFixedOptionRelId,
@@ -347,6 +348,17 @@ public class CommerceShippingFixedOptionRelLocalServiceUtil {
 		return _serviceTracker.getService();
 	}
 
-	private static ServiceTracker<CommerceShippingFixedOptionRelLocalService, CommerceShippingFixedOptionRelLocalService> _serviceTracker =
-		ServiceTrackerFactory.open(CommerceShippingFixedOptionRelLocalService.class);
+	private static ServiceTracker<CommerceShippingFixedOptionRelLocalService, CommerceShippingFixedOptionRelLocalService> _serviceTracker;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(CommerceShippingFixedOptionRelLocalService.class);
+
+		ServiceTracker<CommerceShippingFixedOptionRelLocalService, CommerceShippingFixedOptionRelLocalService> serviceTracker =
+			new ServiceTracker<CommerceShippingFixedOptionRelLocalService, CommerceShippingFixedOptionRelLocalService>(bundle.getBundleContext(),
+				CommerceShippingFixedOptionRelLocalService.class, null);
+
+		serviceTracker.open();
+
+		_serviceTracker = serviceTracker;
+	}
 }

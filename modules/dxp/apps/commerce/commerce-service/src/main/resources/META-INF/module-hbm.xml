@@ -123,9 +123,9 @@
 		<property name="commerceShippingMethodId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="shippingOptionName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="purchaseOrderNumber" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="subtotal" type="com.liferay.portal.dao.orm.hibernate.DoubleType" />
-		<property name="shippingPrice" type="com.liferay.portal.dao.orm.hibernate.DoubleType" />
-		<property name="total" type="com.liferay.portal.dao.orm.hibernate.DoubleType" />
+		<property name="subtotal" type="org.hibernate.type.BigDecimalType" />
+		<property name="shippingPrice" type="org.hibernate.type.BigDecimalType" />
+		<property name="total" type="org.hibernate.type.BigDecimalType" />
 		<property name="advanceStatus" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="paymentStatus" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 		<property name="shippingStatus" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
@@ -152,7 +152,7 @@
 		<property name="json" type="com.liferay.portal.dao.orm.hibernate.StringClobType" />
 		<property name="title" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="sku" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="price" type="com.liferay.portal.dao.orm.hibernate.DoubleType" />
+		<property name="price" type="org.hibernate.type.BigDecimalType" />
 	</class>
 	<class name="com.liferay.commerce.model.impl.CommerceOrderNoteImpl" table="CommerceOrderNote">
 		<id name="commerceOrderNoteId" type="long">
@@ -354,7 +354,7 @@
 		<property name="createDate" type="org.hibernate.type.TimestampType" />
 		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
 		<property name="commercePriceEntryId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="price" type="com.liferay.portal.dao.orm.hibernate.DoubleType" />
+		<property name="price" type="org.hibernate.type.BigDecimalType" />
 		<property name="minQuantity" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 		<property name="lastPublishDate" type="org.hibernate.type.TimestampType" />
 	</class>

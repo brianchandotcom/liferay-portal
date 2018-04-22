@@ -27,6 +27,8 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
+import java.math.BigDecimal;
+
 import java.util.Date;
 
 /**
@@ -166,7 +168,8 @@ public class CommerceShippingFixedOptionRelCacheModel implements CacheModel<Comm
 	}
 
 	@Override
-	public void readExternal(ObjectInput objectInput) throws IOException {
+	public void readExternal(ObjectInput objectInput)
+		throws ClassNotFoundException, IOException {
 		commerceShippingFixedOptionRelId = objectInput.readLong();
 
 		groupId = objectInput.readLong();
@@ -192,10 +195,8 @@ public class CommerceShippingFixedOptionRelCacheModel implements CacheModel<Comm
 		weightFrom = objectInput.readDouble();
 
 		weightTo = objectInput.readDouble();
-
-		fixedPrice = objectInput.readDouble();
-
-		rateUnitWeightPrice = objectInput.readDouble();
+		fixedPrice = (BigDecimal)objectInput.readObject();
+		rateUnitWeightPrice = (BigDecimal)objectInput.readObject();
 
 		ratePercentage = objectInput.readDouble();
 	}
@@ -241,10 +242,8 @@ public class CommerceShippingFixedOptionRelCacheModel implements CacheModel<Comm
 		objectOutput.writeDouble(weightFrom);
 
 		objectOutput.writeDouble(weightTo);
-
-		objectOutput.writeDouble(fixedPrice);
-
-		objectOutput.writeDouble(rateUnitWeightPrice);
+		objectOutput.writeObject(fixedPrice);
+		objectOutput.writeObject(rateUnitWeightPrice);
 
 		objectOutput.writeDouble(ratePercentage);
 	}
@@ -264,7 +263,7 @@ public class CommerceShippingFixedOptionRelCacheModel implements CacheModel<Comm
 	public String zip;
 	public double weightFrom;
 	public double weightTo;
-	public double fixedPrice;
-	public double rateUnitWeightPrice;
+	public BigDecimal fixedPrice;
+	public BigDecimal rateUnitWeightPrice;
 	public double ratePercentage;
 }

@@ -30,6 +30,8 @@ import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
+import java.math.BigDecimal;
+
 import java.util.List;
 
 /**
@@ -151,9 +153,9 @@ public interface CommerceOrderService extends BaseService {
 		long billingAddressId, long shippingAddressId,
 		long commercePaymentMethodId, long commerceShippingMethodId,
 		java.lang.String shippingOptionName,
-		java.lang.String purchaseOrderNumber, double subtotal,
-		double shippingPrice, double total, java.lang.String advanceStatus)
-		throws PortalException;
+		java.lang.String purchaseOrderNumber, BigDecimal subtotal,
+		BigDecimal shippingPrice, BigDecimal total,
+		java.lang.String advanceStatus) throws PortalException;
 
 	public CommerceOrder updateOrderStatus(long commerceOrderId, int orderStatus)
 		throws PortalException;

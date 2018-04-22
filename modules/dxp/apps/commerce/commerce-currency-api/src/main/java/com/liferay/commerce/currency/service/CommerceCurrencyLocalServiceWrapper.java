@@ -49,9 +49,9 @@ public class CommerceCurrencyLocalServiceWrapper
 	@Override
 	public com.liferay.commerce.currency.model.CommerceCurrency addCommerceCurrency(
 		java.lang.String code,
-		java.util.Map<java.util.Locale, java.lang.String> nameMap, double rate,
-		java.lang.String roundingType, boolean primary, double priority,
-		boolean active,
+		java.util.Map<java.util.Locale, java.lang.String> nameMap,
+		java.math.BigDecimal rate, java.lang.String roundingType,
+		boolean primary, double priority, boolean active,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _commerceCurrencyLocalService.addCommerceCurrency(code, nameMap,
@@ -417,9 +417,9 @@ public class CommerceCurrencyLocalServiceWrapper
 	@Override
 	public com.liferay.commerce.currency.model.CommerceCurrency updateCommerceCurrency(
 		long commerceCurrencyId, java.lang.String code,
-		java.util.Map<java.util.Locale, java.lang.String> nameMap, double rate,
-		java.lang.String roundingType, boolean primary, double priority,
-		boolean active,
+		java.util.Map<java.util.Locale, java.lang.String> nameMap,
+		java.math.BigDecimal rate, java.lang.String roundingType,
+		boolean primary, double priority, boolean active,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _commerceCurrencyLocalService.updateCommerceCurrency(commerceCurrencyId,
@@ -429,7 +429,7 @@ public class CommerceCurrencyLocalServiceWrapper
 
 	@Override
 	public com.liferay.commerce.currency.model.CommerceCurrency updateCommerceCurrencyRate(
-		long commerceCurrencyId, double rate)
+		long commerceCurrencyId, java.math.BigDecimal rate)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _commerceCurrencyLocalService.updateCommerceCurrencyRate(commerceCurrencyId,
 			rate);

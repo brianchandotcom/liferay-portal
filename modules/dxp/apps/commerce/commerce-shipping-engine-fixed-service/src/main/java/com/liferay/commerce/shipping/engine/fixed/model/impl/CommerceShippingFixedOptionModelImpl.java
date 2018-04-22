@@ -41,6 +41,8 @@ import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
 
+import java.math.BigDecimal;
+
 import java.sql.Types;
 
 import java.util.ArrayList;
@@ -86,7 +88,7 @@ public class CommerceShippingFixedOptionModelImpl extends BaseModelImpl<Commerce
 			{ "commerceShippingMethodId", Types.BIGINT },
 			{ "name", Types.VARCHAR },
 			{ "description", Types.VARCHAR },
-			{ "amount", Types.DOUBLE },
+			{ "amount", Types.DECIMAL },
 			{ "priority", Types.DOUBLE }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
@@ -102,11 +104,11 @@ public class CommerceShippingFixedOptionModelImpl extends BaseModelImpl<Commerce
 		TABLE_COLUMNS_MAP.put("commerceShippingMethodId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("description", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("amount", Types.DOUBLE);
+		TABLE_COLUMNS_MAP.put("amount", Types.DECIMAL);
 		TABLE_COLUMNS_MAP.put("priority", Types.DOUBLE);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table CommerceShippingFixedOption (commerceShippingFixedOptionId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,commerceShippingMethodId LONG,name STRING null,description STRING null,amount DOUBLE,priority DOUBLE)";
+	public static final String TABLE_SQL_CREATE = "create table CommerceShippingFixedOption (commerceShippingFixedOptionId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,commerceShippingMethodId LONG,name STRING null,description STRING null,amount DECIMAL(30, 16) null,priority DOUBLE)";
 	public static final String TABLE_SQL_DROP = "drop table CommerceShippingFixedOption";
 	public static final String ORDER_BY_JPQL = " ORDER BY commerceShippingFixedOption.priority ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY CommerceShippingFixedOption.priority ASC";
@@ -300,7 +302,7 @@ public class CommerceShippingFixedOptionModelImpl extends BaseModelImpl<Commerce
 			setDescription(description);
 		}
 
-		Double amount = (Double)attributes.get("amount");
+		BigDecimal amount = (BigDecimal)attributes.get("amount");
 
 		if (amount != null) {
 			setAmount(amount);
@@ -645,12 +647,12 @@ public class CommerceShippingFixedOptionModelImpl extends BaseModelImpl<Commerce
 
 	@JSON
 	@Override
-	public double getAmount() {
+	public BigDecimal getAmount() {
 		return _amount;
 	}
 
 	@Override
-	public void setAmount(double amount) {
+	public void setAmount(BigDecimal amount) {
 		_amount = amount;
 	}
 
@@ -1050,7 +1052,7 @@ public class CommerceShippingFixedOptionModelImpl extends BaseModelImpl<Commerce
 	private String _nameCurrentLanguageId;
 	private String _description;
 	private String _descriptionCurrentLanguageId;
-	private double _amount;
+	private BigDecimal _amount;
 	private double _priority;
 	private long _columnBitmask;
 	private CommerceShippingFixedOption _escapedModel;

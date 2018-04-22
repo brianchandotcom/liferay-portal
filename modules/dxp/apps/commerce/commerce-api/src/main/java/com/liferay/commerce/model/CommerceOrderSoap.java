@@ -18,6 +18,8 @@ import aQute.bnd.annotation.ProviderType;
 
 import java.io.Serializable;
 
+import java.math.BigDecimal;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -259,27 +261,27 @@ public class CommerceOrderSoap implements Serializable {
 		_purchaseOrderNumber = purchaseOrderNumber;
 	}
 
-	public double getSubtotal() {
+	public BigDecimal getSubtotal() {
 		return _subtotal;
 	}
 
-	public void setSubtotal(double subtotal) {
+	public void setSubtotal(BigDecimal subtotal) {
 		_subtotal = subtotal;
 	}
 
-	public double getShippingPrice() {
+	public BigDecimal getShippingPrice() {
 		return _shippingPrice;
 	}
 
-	public void setShippingPrice(double shippingPrice) {
+	public void setShippingPrice(BigDecimal shippingPrice) {
 		_shippingPrice = shippingPrice;
 	}
 
-	public double getTotal() {
+	public BigDecimal getTotal() {
 		return _total;
 	}
 
-	public void setTotal(double total) {
+	public void setTotal(BigDecimal total) {
 		_total = total;
 	}
 
@@ -365,9 +367,9 @@ public class CommerceOrderSoap implements Serializable {
 	private long _commerceShippingMethodId;
 	private String _shippingOptionName;
 	private String _purchaseOrderNumber;
-	private double _subtotal;
-	private double _shippingPrice;
-	private double _total;
+	private BigDecimal _subtotal;
+	private BigDecimal _shippingPrice;
+	private BigDecimal _total;
 	private String _advanceStatus;
 	private int _paymentStatus;
 	private int _shippingStatus;

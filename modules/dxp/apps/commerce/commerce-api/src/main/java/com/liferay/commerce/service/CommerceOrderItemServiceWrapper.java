@@ -36,7 +36,7 @@ public class CommerceOrderItemServiceWrapper implements CommerceOrderItemService
 	@Override
 	public com.liferay.commerce.model.CommerceOrderItem addCommerceOrderItem(
 		long commerceOrderId, long cpInstanceId, int quantity,
-		int shippedQuantity, java.lang.String json, java.lang.Double price,
+		int shippedQuantity, java.lang.String json, java.math.BigDecimal price,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _commerceOrderItemService.addCommerceOrderItem(commerceOrderId,
@@ -123,7 +123,7 @@ public class CommerceOrderItemServiceWrapper implements CommerceOrderItemService
 	@Override
 	public com.liferay.commerce.model.CommerceOrderItem updateCommerceOrderItem(
 		long commerceOrderItemId, int quantity, java.lang.String json,
-		double price)
+		java.math.BigDecimal price)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _commerceOrderItemService.updateCommerceOrderItem(commerceOrderItemId,
 			quantity, json, price);

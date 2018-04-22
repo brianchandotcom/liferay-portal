@@ -52,6 +52,8 @@ import org.junit.runner.RunWith;
 
 import java.io.Serializable;
 
+import java.math.BigDecimal;
+
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -143,7 +145,7 @@ public class CommerceCurrencyPersistenceTest {
 
 		newCommerceCurrency.setName(RandomTestUtil.randomString());
 
-		newCommerceCurrency.setRate(RandomTestUtil.nextDouble());
+		newCommerceCurrency.setRate(new BigDecimal(RandomTestUtil.nextDouble()));
 
 		newCommerceCurrency.setRoundingType(RandomTestUtil.randomString());
 
@@ -181,16 +183,16 @@ public class CommerceCurrencyPersistenceTest {
 			newCommerceCurrency.getCode());
 		Assert.assertEquals(existingCommerceCurrency.getName(),
 			newCommerceCurrency.getName());
-		AssertUtils.assertEquals(existingCommerceCurrency.getRate(),
+		Assert.assertEquals(existingCommerceCurrency.getRate(),
 			newCommerceCurrency.getRate());
 		Assert.assertEquals(existingCommerceCurrency.getRoundingType(),
 			newCommerceCurrency.getRoundingType());
-		Assert.assertEquals(existingCommerceCurrency.getPrimary(),
-			newCommerceCurrency.getPrimary());
+		Assert.assertEquals(existingCommerceCurrency.isPrimary(),
+			newCommerceCurrency.isPrimary());
 		AssertUtils.assertEquals(existingCommerceCurrency.getPriority(),
 			newCommerceCurrency.getPriority());
-		Assert.assertEquals(existingCommerceCurrency.getActive(),
-			newCommerceCurrency.getActive());
+		Assert.assertEquals(existingCommerceCurrency.isActive(),
+			newCommerceCurrency.isActive());
 		Assert.assertEquals(Time.getShortTimestamp(
 				existingCommerceCurrency.getLastPublishDate()),
 			Time.getShortTimestamp(newCommerceCurrency.getLastPublishDate()));
@@ -519,7 +521,7 @@ public class CommerceCurrencyPersistenceTest {
 
 		commerceCurrency.setName(RandomTestUtil.randomString());
 
-		commerceCurrency.setRate(RandomTestUtil.nextDouble());
+		commerceCurrency.setRate(new BigDecimal(RandomTestUtil.nextDouble()));
 
 		commerceCurrency.setRoundingType(RandomTestUtil.randomString());
 

@@ -42,6 +42,8 @@ import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
 
+import java.math.BigDecimal;
+
 import java.sql.Types;
 
 import java.util.ArrayList;
@@ -91,7 +93,7 @@ public class CommerceOrderItemModelImpl extends BaseModelImpl<CommerceOrderItem>
 			{ "json", Types.CLOB },
 			{ "title", Types.VARCHAR },
 			{ "sku", Types.VARCHAR },
-			{ "price", Types.DOUBLE }
+			{ "price", Types.DECIMAL }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
@@ -110,10 +112,10 @@ public class CommerceOrderItemModelImpl extends BaseModelImpl<CommerceOrderItem>
 		TABLE_COLUMNS_MAP.put("json", Types.CLOB);
 		TABLE_COLUMNS_MAP.put("title", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("sku", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("price", Types.DOUBLE);
+		TABLE_COLUMNS_MAP.put("price", Types.DECIMAL);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table CommerceOrderItem (commerceOrderItemId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,commerceOrderId LONG,CPInstanceId LONG,quantity INTEGER,shippedQuantity INTEGER,json TEXT null,title STRING null,sku VARCHAR(75) null,price DOUBLE)";
+	public static final String TABLE_SQL_CREATE = "create table CommerceOrderItem (commerceOrderItemId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,commerceOrderId LONG,CPInstanceId LONG,quantity INTEGER,shippedQuantity INTEGER,json TEXT null,title STRING null,sku VARCHAR(75) null,price DECIMAL(30, 16) null)";
 	public static final String TABLE_SQL_DROP = "drop table CommerceOrderItem";
 	public static final String ORDER_BY_JPQL = " ORDER BY commerceOrderItem.createDate ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY CommerceOrderItem.createDate ASC";
@@ -334,7 +336,7 @@ public class CommerceOrderItemModelImpl extends BaseModelImpl<CommerceOrderItem>
 			setSku(sku);
 		}
 
-		Double price = (Double)attributes.get("price");
+		BigDecimal price = (BigDecimal)attributes.get("price");
 
 		if (price != null) {
 			setPrice(price);
@@ -648,12 +650,12 @@ public class CommerceOrderItemModelImpl extends BaseModelImpl<CommerceOrderItem>
 
 	@JSON
 	@Override
-	public double getPrice() {
+	public BigDecimal getPrice() {
 		return _price;
 	}
 
 	@Override
-	public void setPrice(double price) {
+	public void setPrice(BigDecimal price) {
 		_price = price;
 	}
 
@@ -1050,7 +1052,7 @@ public class CommerceOrderItemModelImpl extends BaseModelImpl<CommerceOrderItem>
 	private String _title;
 	private String _titleCurrentLanguageId;
 	private String _sku;
-	private double _price;
+	private BigDecimal _price;
 	private long _columnBitmask;
 	private CommerceOrderItem _escapedModel;
 }

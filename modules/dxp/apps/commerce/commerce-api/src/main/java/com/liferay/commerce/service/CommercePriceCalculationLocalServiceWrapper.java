@@ -35,30 +35,30 @@ public class CommercePriceCalculationLocalServiceWrapper
 	}
 
 	@Override
-	public java.lang.String formatPrice(long groupId, double price)
+	public java.lang.String formatPrice(long groupId, java.math.BigDecimal price)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _commercePriceCalculationLocalService.formatPrice(groupId, price);
 	}
 
 	@Override
 	public java.lang.String formatPriceWithCurrency(long commerceCurrencyId,
-		double price)
+		java.math.BigDecimal price)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _commercePriceCalculationLocalService.formatPriceWithCurrency(commerceCurrencyId,
 			price);
 	}
 
 	@Override
-	public double getFinalPrice(long groupId, long userId, long cpInstanceId,
-		int quantity)
+	public java.math.BigDecimal getFinalPrice(long groupId, long userId,
+		long cpInstanceId, int quantity)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _commercePriceCalculationLocalService.getFinalPrice(groupId,
 			userId, cpInstanceId, quantity);
 	}
 
 	@Override
-	public double getFinalPrice(long groupId, long commerceCurrencyId,
-		long userId, long cpInstanceId, int quantity)
+	public java.math.BigDecimal getFinalPrice(long groupId,
+		long commerceCurrencyId, long userId, long cpInstanceId, int quantity)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _commercePriceCalculationLocalService.getFinalPrice(groupId,
 			commerceCurrencyId, userId, cpInstanceId, quantity);
@@ -88,7 +88,7 @@ public class CommercePriceCalculationLocalServiceWrapper
 	}
 
 	@Override
-	public double getOrderSubtotal(
+	public java.math.BigDecimal getOrderSubtotal(
 		com.liferay.commerce.model.CommerceOrder commerceOrder)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _commercePriceCalculationLocalService.getOrderSubtotal(commerceOrder);
@@ -105,16 +105,16 @@ public class CommercePriceCalculationLocalServiceWrapper
 	}
 
 	@Override
-	public double getUnitPrice(long groupId, long userId, long cpInstanceId,
-		int quantity)
+	public java.math.BigDecimal getUnitPrice(long groupId, long userId,
+		long cpInstanceId, int quantity)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _commercePriceCalculationLocalService.getUnitPrice(groupId,
 			userId, cpInstanceId, quantity);
 	}
 
 	@Override
-	public double getUnitPrice(long groupId, long commerceCurrencyId,
-		long userId, long cpInstanceId, int quantity)
+	public java.math.BigDecimal getUnitPrice(long groupId,
+		long commerceCurrencyId, long userId, long cpInstanceId, int quantity)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _commercePriceCalculationLocalService.getUnitPrice(groupId,
 			commerceCurrencyId, userId, cpInstanceId, quantity);

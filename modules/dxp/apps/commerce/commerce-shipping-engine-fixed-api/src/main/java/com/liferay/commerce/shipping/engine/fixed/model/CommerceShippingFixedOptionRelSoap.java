@@ -18,6 +18,8 @@ import aQute.bnd.annotation.ProviderType;
 
 import java.io.Serializable;
 
+import java.math.BigDecimal;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -230,19 +232,19 @@ public class CommerceShippingFixedOptionRelSoap implements Serializable {
 		_weightTo = weightTo;
 	}
 
-	public double getFixedPrice() {
+	public BigDecimal getFixedPrice() {
 		return _fixedPrice;
 	}
 
-	public void setFixedPrice(double fixedPrice) {
+	public void setFixedPrice(BigDecimal fixedPrice) {
 		_fixedPrice = fixedPrice;
 	}
 
-	public double getRateUnitWeightPrice() {
+	public BigDecimal getRateUnitWeightPrice() {
 		return _rateUnitWeightPrice;
 	}
 
-	public void setRateUnitWeightPrice(double rateUnitWeightPrice) {
+	public void setRateUnitWeightPrice(BigDecimal rateUnitWeightPrice) {
 		_rateUnitWeightPrice = rateUnitWeightPrice;
 	}
 
@@ -269,7 +271,7 @@ public class CommerceShippingFixedOptionRelSoap implements Serializable {
 	private String _zip;
 	private double _weightFrom;
 	private double _weightTo;
-	private double _fixedPrice;
-	private double _rateUnitWeightPrice;
+	private BigDecimal _fixedPrice;
+	private BigDecimal _rateUnitWeightPrice;
 	private double _ratePercentage;
 }

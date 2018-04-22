@@ -51,6 +51,8 @@ import org.junit.runner.RunWith;
 
 import java.io.Serializable;
 
+import java.math.BigDecimal;
+
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -151,9 +153,11 @@ public class CommerceShippingFixedOptionRelPersistenceTest {
 
 		newCommerceShippingFixedOptionRel.setWeightTo(RandomTestUtil.nextDouble());
 
-		newCommerceShippingFixedOptionRel.setFixedPrice(RandomTestUtil.nextDouble());
+		newCommerceShippingFixedOptionRel.setFixedPrice(new BigDecimal(
+				RandomTestUtil.nextDouble()));
 
-		newCommerceShippingFixedOptionRel.setRateUnitWeightPrice(RandomTestUtil.nextDouble());
+		newCommerceShippingFixedOptionRel.setRateUnitWeightPrice(new BigDecimal(
+				RandomTestUtil.nextDouble()));
 
 		newCommerceShippingFixedOptionRel.setRatePercentage(RandomTestUtil.nextDouble());
 
@@ -196,9 +200,9 @@ public class CommerceShippingFixedOptionRelPersistenceTest {
 			newCommerceShippingFixedOptionRel.getWeightFrom());
 		AssertUtils.assertEquals(existingCommerceShippingFixedOptionRel.getWeightTo(),
 			newCommerceShippingFixedOptionRel.getWeightTo());
-		AssertUtils.assertEquals(existingCommerceShippingFixedOptionRel.getFixedPrice(),
+		Assert.assertEquals(existingCommerceShippingFixedOptionRel.getFixedPrice(),
 			newCommerceShippingFixedOptionRel.getFixedPrice());
-		AssertUtils.assertEquals(existingCommerceShippingFixedOptionRel.getRateUnitWeightPrice(),
+		Assert.assertEquals(existingCommerceShippingFixedOptionRel.getRateUnitWeightPrice(),
 			newCommerceShippingFixedOptionRel.getRateUnitWeightPrice());
 		AssertUtils.assertEquals(existingCommerceShippingFixedOptionRel.getRatePercentage(),
 			newCommerceShippingFixedOptionRel.getRatePercentage());
@@ -497,9 +501,11 @@ public class CommerceShippingFixedOptionRelPersistenceTest {
 
 		commerceShippingFixedOptionRel.setWeightTo(RandomTestUtil.nextDouble());
 
-		commerceShippingFixedOptionRel.setFixedPrice(RandomTestUtil.nextDouble());
+		commerceShippingFixedOptionRel.setFixedPrice(new BigDecimal(
+				RandomTestUtil.nextDouble()));
 
-		commerceShippingFixedOptionRel.setRateUnitWeightPrice(RandomTestUtil.nextDouble());
+		commerceShippingFixedOptionRel.setRateUnitWeightPrice(new BigDecimal(
+				RandomTestUtil.nextDouble()));
 
 		commerceShippingFixedOptionRel.setRatePercentage(RandomTestUtil.nextDouble());
 

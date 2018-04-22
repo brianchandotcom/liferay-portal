@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
-import com.liferay.portal.kernel.test.AssertUtils;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -51,6 +50,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import java.io.Serializable;
+
+import java.math.BigDecimal;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -141,7 +142,8 @@ public class CommerceTierPriceEntryPersistenceTest {
 
 		newCommerceTierPriceEntry.setCommercePriceEntryId(RandomTestUtil.nextLong());
 
-		newCommerceTierPriceEntry.setPrice(RandomTestUtil.nextDouble());
+		newCommerceTierPriceEntry.setPrice(new BigDecimal(
+				RandomTestUtil.nextDouble()));
 
 		newCommerceTierPriceEntry.setMinQuantity(RandomTestUtil.nextInt());
 
@@ -172,7 +174,7 @@ public class CommerceTierPriceEntryPersistenceTest {
 			Time.getShortTimestamp(newCommerceTierPriceEntry.getModifiedDate()));
 		Assert.assertEquals(existingCommerceTierPriceEntry.getCommercePriceEntryId(),
 			newCommerceTierPriceEntry.getCommercePriceEntryId());
-		AssertUtils.assertEquals(existingCommerceTierPriceEntry.getPrice(),
+		Assert.assertEquals(existingCommerceTierPriceEntry.getPrice(),
 			newCommerceTierPriceEntry.getPrice());
 		Assert.assertEquals(existingCommerceTierPriceEntry.getMinQuantity(),
 			newCommerceTierPriceEntry.getMinQuantity());
@@ -531,7 +533,8 @@ public class CommerceTierPriceEntryPersistenceTest {
 
 		commerceTierPriceEntry.setCommercePriceEntryId(RandomTestUtil.nextLong());
 
-		commerceTierPriceEntry.setPrice(RandomTestUtil.nextDouble());
+		commerceTierPriceEntry.setPrice(new BigDecimal(
+				RandomTestUtil.nextDouble()));
 
 		commerceTierPriceEntry.setMinQuantity(RandomTestUtil.nextInt());
 

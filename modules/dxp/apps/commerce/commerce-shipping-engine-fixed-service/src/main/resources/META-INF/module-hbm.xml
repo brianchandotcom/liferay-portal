@@ -17,7 +17,7 @@
 		<property name="commerceShippingMethodId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="description" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="amount" type="com.liferay.portal.dao.orm.hibernate.DoubleType" />
+		<property name="amount" type="org.hibernate.type.BigDecimalType" />
 		<property name="priority" type="com.liferay.portal.dao.orm.hibernate.DoubleType" />
 	</class>
 	<class name="com.liferay.commerce.shipping.engine.fixed.model.impl.CommerceShippingFixedOptionRelImpl" table="CShippingFixedOptionRel">
@@ -38,8 +38,8 @@
 		<property name="zip" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="weightFrom" type="com.liferay.portal.dao.orm.hibernate.DoubleType" />
 		<property name="weightTo" type="com.liferay.portal.dao.orm.hibernate.DoubleType" />
-		<property name="fixedPrice" type="com.liferay.portal.dao.orm.hibernate.DoubleType" />
-		<property name="rateUnitWeightPrice" type="com.liferay.portal.dao.orm.hibernate.DoubleType" />
+		<property name="fixedPrice" type="org.hibernate.type.BigDecimalType" />
+		<property name="rateUnitWeightPrice" type="org.hibernate.type.BigDecimalType" />
 		<property name="ratePercentage" type="com.liferay.portal.dao.orm.hibernate.DoubleType" />
 	</class>
 </hibernate-mapping>

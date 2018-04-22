@@ -18,6 +18,8 @@ import aQute.bnd.annotation.ProviderType;
 
 import java.io.Serializable;
 
+import java.math.BigDecimal;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -174,11 +176,11 @@ public class CommerceTierPriceEntrySoap implements Serializable {
 		_commercePriceEntryId = commercePriceEntryId;
 	}
 
-	public double getPrice() {
+	public BigDecimal getPrice() {
 		return _price;
 	}
 
-	public void setPrice(double price) {
+	public void setPrice(BigDecimal price) {
 		_price = price;
 	}
 
@@ -207,7 +209,7 @@ public class CommerceTierPriceEntrySoap implements Serializable {
 	private Date _createDate;
 	private Date _modifiedDate;
 	private long _commercePriceEntryId;
-	private double _price;
+	private BigDecimal _price;
 	private int _minQuantity;
 	private Date _lastPublishDate;
 }

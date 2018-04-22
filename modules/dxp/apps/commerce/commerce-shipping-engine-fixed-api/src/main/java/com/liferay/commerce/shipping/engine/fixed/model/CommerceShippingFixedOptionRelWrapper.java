@@ -23,6 +23,8 @@ import com.liferay.portal.kernel.service.ServiceContext;
 
 import java.io.Serializable;
 
+import java.math.BigDecimal;
+
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -179,13 +181,13 @@ public class CommerceShippingFixedOptionRelWrapper
 			setWeightTo(weightTo);
 		}
 
-		Double fixedPrice = (Double)attributes.get("fixedPrice");
+		BigDecimal fixedPrice = (BigDecimal)attributes.get("fixedPrice");
 
 		if (fixedPrice != null) {
 			setFixedPrice(fixedPrice);
 		}
 
-		Double rateUnitWeightPrice = (Double)attributes.get(
+		BigDecimal rateUnitWeightPrice = (BigDecimal)attributes.get(
 				"rateUnitWeightPrice");
 
 		if (rateUnitWeightPrice != null) {
@@ -331,7 +333,7 @@ public class CommerceShippingFixedOptionRelWrapper
 	* @return the fixed price of this commerce shipping fixed option rel
 	*/
 	@Override
-	public double getFixedPrice() {
+	public BigDecimal getFixedPrice() {
 		return _commerceShippingFixedOptionRel.getFixedPrice();
 	}
 
@@ -386,7 +388,7 @@ public class CommerceShippingFixedOptionRelWrapper
 	* @return the rate unit weight price of this commerce shipping fixed option rel
 	*/
 	@Override
-	public double getRateUnitWeightPrice() {
+	public BigDecimal getRateUnitWeightPrice() {
 		return _commerceShippingFixedOptionRel.getRateUnitWeightPrice();
 	}
 
@@ -584,7 +586,7 @@ public class CommerceShippingFixedOptionRelWrapper
 	* @param fixedPrice the fixed price of this commerce shipping fixed option rel
 	*/
 	@Override
-	public void setFixedPrice(double fixedPrice) {
+	public void setFixedPrice(BigDecimal fixedPrice) {
 		_commerceShippingFixedOptionRel.setFixedPrice(fixedPrice);
 	}
 
@@ -644,7 +646,7 @@ public class CommerceShippingFixedOptionRelWrapper
 	* @param rateUnitWeightPrice the rate unit weight price of this commerce shipping fixed option rel
 	*/
 	@Override
-	public void setRateUnitWeightPrice(double rateUnitWeightPrice) {
+	public void setRateUnitWeightPrice(BigDecimal rateUnitWeightPrice) {
 		_commerceShippingFixedOptionRel.setRateUnitWeightPrice(rateUnitWeightPrice);
 	}
 

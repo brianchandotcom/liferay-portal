@@ -43,7 +43,7 @@ public class CommerceTierPriceEntryServiceUtil {
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.commerce.service.impl.CommerceTierPriceEntryServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static com.liferay.commerce.model.CommerceTierPriceEntry addCommerceTierPriceEntry(
-		long commercePriceEntryId, double price, int minQuantity,
+		long commercePriceEntryId, java.math.BigDecimal price, int minQuantity,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
@@ -107,7 +107,8 @@ public class CommerceTierPriceEntryServiceUtil {
 	}
 
 	public static com.liferay.commerce.model.CommerceTierPriceEntry updateCommerceTierPriceEntry(
-		long commerceTierPriceEntryId, double price, int minQuantity,
+		long commerceTierPriceEntryId, java.math.BigDecimal price,
+		int minQuantity,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()

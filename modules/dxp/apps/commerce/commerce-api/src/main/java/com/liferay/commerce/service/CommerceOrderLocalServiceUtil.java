@@ -483,8 +483,9 @@ public class CommerceOrderLocalServiceUtil {
 		long commerceOrderId, long billingAddressId, long shippingAddressId,
 		long commercePaymentMethodId, long commerceShippingMethodId,
 		java.lang.String shippingOptionName,
-		java.lang.String purchaseOrderNumber, double subtotal,
-		double shippingPrice, double total, java.lang.String advanceStatus)
+		java.lang.String purchaseOrderNumber, java.math.BigDecimal subtotal,
+		java.math.BigDecimal shippingPrice, java.math.BigDecimal total,
+		java.lang.String advanceStatus)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .updateCommerceOrder(commerceOrderId, billingAddressId,

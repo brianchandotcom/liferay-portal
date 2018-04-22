@@ -51,6 +51,8 @@ import org.junit.runner.RunWith;
 
 import java.io.Serializable;
 
+import java.math.BigDecimal;
+
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -141,7 +143,8 @@ public class CommerceShippingFixedOptionPersistenceTest {
 
 		newCommerceShippingFixedOption.setDescription(RandomTestUtil.randomString());
 
-		newCommerceShippingFixedOption.setAmount(RandomTestUtil.nextDouble());
+		newCommerceShippingFixedOption.setAmount(new BigDecimal(
+				RandomTestUtil.nextDouble()));
 
 		newCommerceShippingFixedOption.setPriority(RandomTestUtil.nextDouble());
 
@@ -174,7 +177,7 @@ public class CommerceShippingFixedOptionPersistenceTest {
 			newCommerceShippingFixedOption.getName());
 		Assert.assertEquals(existingCommerceShippingFixedOption.getDescription(),
 			newCommerceShippingFixedOption.getDescription());
-		AssertUtils.assertEquals(existingCommerceShippingFixedOption.getAmount(),
+		Assert.assertEquals(existingCommerceShippingFixedOption.getAmount(),
 			newCommerceShippingFixedOption.getAmount());
 		AssertUtils.assertEquals(existingCommerceShippingFixedOption.getPriority(),
 			newCommerceShippingFixedOption.getPriority());
@@ -452,7 +455,8 @@ public class CommerceShippingFixedOptionPersistenceTest {
 
 		commerceShippingFixedOption.setDescription(RandomTestUtil.randomString());
 
-		commerceShippingFixedOption.setAmount(RandomTestUtil.nextDouble());
+		commerceShippingFixedOption.setAmount(new BigDecimal(
+				RandomTestUtil.nextDouble()));
 
 		commerceShippingFixedOption.setPriority(RandomTestUtil.nextDouble());
 

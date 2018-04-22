@@ -29,6 +29,8 @@ import com.liferay.portal.kernel.service.ServiceContext;
 
 import java.io.Serializable;
 
+import java.math.BigDecimal;
+
 import java.util.Date;
 
 /**
@@ -372,42 +374,42 @@ public interface CommerceOrderModel extends BaseModel<CommerceOrder>,
 	 *
 	 * @return the subtotal of this commerce order
 	 */
-	public double getSubtotal();
+	public BigDecimal getSubtotal();
 
 	/**
 	 * Sets the subtotal of this commerce order.
 	 *
 	 * @param subtotal the subtotal of this commerce order
 	 */
-	public void setSubtotal(double subtotal);
+	public void setSubtotal(BigDecimal subtotal);
 
 	/**
 	 * Returns the shipping price of this commerce order.
 	 *
 	 * @return the shipping price of this commerce order
 	 */
-	public double getShippingPrice();
+	public BigDecimal getShippingPrice();
 
 	/**
 	 * Sets the shipping price of this commerce order.
 	 *
 	 * @param shippingPrice the shipping price of this commerce order
 	 */
-	public void setShippingPrice(double shippingPrice);
+	public void setShippingPrice(BigDecimal shippingPrice);
 
 	/**
 	 * Returns the total of this commerce order.
 	 *
 	 * @return the total of this commerce order
 	 */
-	public double getTotal();
+	public BigDecimal getTotal();
 
 	/**
 	 * Sets the total of this commerce order.
 	 *
 	 * @param total the total of this commerce order
 	 */
-	public void setTotal(double total);
+	public void setTotal(BigDecimal total);
 
 	/**
 	 * Returns the advance status of this commerce order.

@@ -16,7 +16,8 @@ package com.liferay.commerce.shipping.engine.fixed.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.osgi.util.ServiceTrackerFactory;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
 
 import org.osgi.util.tracker.ServiceTracker;
 
@@ -58,7 +59,7 @@ public class CommerceShippingFixedOptionLocalServiceUtil {
 		long commerceShippingMethodId,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		double amount, double priority,
+		java.math.BigDecimal amount, double priority,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
@@ -301,7 +302,7 @@ public class CommerceShippingFixedOptionLocalServiceUtil {
 		long commerceShippingFixedOptionId,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		double amount, double priority)
+		java.math.BigDecimal amount, double priority)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .updateCommerceShippingFixedOption(commerceShippingFixedOptionId,
@@ -312,6 +313,17 @@ public class CommerceShippingFixedOptionLocalServiceUtil {
 		return _serviceTracker.getService();
 	}
 
-	private static ServiceTracker<CommerceShippingFixedOptionLocalService, CommerceShippingFixedOptionLocalService> _serviceTracker =
-		ServiceTrackerFactory.open(CommerceShippingFixedOptionLocalService.class);
+	private static ServiceTracker<CommerceShippingFixedOptionLocalService, CommerceShippingFixedOptionLocalService> _serviceTracker;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(CommerceShippingFixedOptionLocalService.class);
+
+		ServiceTracker<CommerceShippingFixedOptionLocalService, CommerceShippingFixedOptionLocalService> serviceTracker =
+			new ServiceTracker<CommerceShippingFixedOptionLocalService, CommerceShippingFixedOptionLocalService>(bundle.getBundleContext(),
+				CommerceShippingFixedOptionLocalService.class, null);
+
+		serviceTracker.open();
+
+		_serviceTracker = serviceTracker;
+	}
 }

@@ -37,6 +37,8 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.io.Serializable;
 
+import java.math.BigDecimal;
+
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -76,7 +78,7 @@ public interface CommerceShippingFixedOptionLocalService
 
 	public CommerceShippingFixedOption addCommerceShippingFixedOption(
 		long commerceShippingMethodId, Map<Locale, java.lang.String> nameMap,
-		Map<Locale, java.lang.String> descriptionMap, double amount,
+		Map<Locale, java.lang.String> descriptionMap, BigDecimal amount,
 		double priority, ServiceContext serviceContext)
 		throws PortalException;
 
@@ -261,6 +263,6 @@ public interface CommerceShippingFixedOptionLocalService
 	public CommerceShippingFixedOption updateCommerceShippingFixedOption(
 		long commerceShippingFixedOptionId,
 		Map<Locale, java.lang.String> nameMap,
-		Map<Locale, java.lang.String> descriptionMap, double amount,
+		Map<Locale, java.lang.String> descriptionMap, BigDecimal amount,
 		double priority) throws PortalException;
 }

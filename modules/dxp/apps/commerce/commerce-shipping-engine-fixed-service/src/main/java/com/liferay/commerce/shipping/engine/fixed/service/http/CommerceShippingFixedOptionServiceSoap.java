@@ -73,7 +73,7 @@ public class CommerceShippingFixedOptionServiceSoap {
 		long commerceShippingMethodId, java.lang.String[] nameMapLanguageIds,
 		java.lang.String[] nameMapValues,
 		java.lang.String[] descriptionMapLanguageIds,
-		java.lang.String[] descriptionMapValues, double amount,
+		java.lang.String[] descriptionMapValues, java.math.BigDecimal amount,
 		double priority,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
@@ -177,8 +177,8 @@ public class CommerceShippingFixedOptionServiceSoap {
 		java.lang.String[] nameMapLanguageIds,
 		java.lang.String[] nameMapValues,
 		java.lang.String[] descriptionMapLanguageIds,
-		java.lang.String[] descriptionMapValues, double amount, double priority)
-		throws RemoteException {
+		java.lang.String[] descriptionMapValues, java.math.BigDecimal amount,
+		double priority) throws RemoteException {
 		try {
 			Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(nameMapLanguageIds,
 					nameMapValues);

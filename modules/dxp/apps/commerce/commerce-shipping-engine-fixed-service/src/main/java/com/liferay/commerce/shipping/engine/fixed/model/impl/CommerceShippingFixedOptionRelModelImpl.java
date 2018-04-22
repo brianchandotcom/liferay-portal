@@ -37,6 +37,8 @@ import com.liferay.portal.kernel.util.StringBundler;
 
 import java.io.Serializable;
 
+import java.math.BigDecimal;
+
 import java.sql.Types;
 
 import java.util.ArrayList;
@@ -84,8 +86,8 @@ public class CommerceShippingFixedOptionRelModelImpl extends BaseModelImpl<Comme
 			{ "zip", Types.VARCHAR },
 			{ "weightFrom", Types.DOUBLE },
 			{ "weightTo", Types.DOUBLE },
-			{ "fixedPrice", Types.DOUBLE },
-			{ "rateUnitWeightPrice", Types.DOUBLE },
+			{ "fixedPrice", Types.DECIMAL },
+			{ "rateUnitWeightPrice", Types.DECIMAL },
 			{ "ratePercentage", Types.DOUBLE }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
@@ -106,12 +108,12 @@ public class CommerceShippingFixedOptionRelModelImpl extends BaseModelImpl<Comme
 		TABLE_COLUMNS_MAP.put("zip", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("weightFrom", Types.DOUBLE);
 		TABLE_COLUMNS_MAP.put("weightTo", Types.DOUBLE);
-		TABLE_COLUMNS_MAP.put("fixedPrice", Types.DOUBLE);
-		TABLE_COLUMNS_MAP.put("rateUnitWeightPrice", Types.DOUBLE);
+		TABLE_COLUMNS_MAP.put("fixedPrice", Types.DECIMAL);
+		TABLE_COLUMNS_MAP.put("rateUnitWeightPrice", Types.DECIMAL);
 		TABLE_COLUMNS_MAP.put("ratePercentage", Types.DOUBLE);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table CShippingFixedOptionRel (CShippingFixedOptionRelId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,commerceShippingMethodId LONG,commerceShippingFixedOptionId LONG,commerceWarehouseId LONG,commerceCountryId LONG,commerceRegionId LONG,zip VARCHAR(75) null,weightFrom DOUBLE,weightTo DOUBLE,fixedPrice DOUBLE,rateUnitWeightPrice DOUBLE,ratePercentage DOUBLE)";
+	public static final String TABLE_SQL_CREATE = "create table CShippingFixedOptionRel (CShippingFixedOptionRelId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,commerceShippingMethodId LONG,commerceShippingFixedOptionId LONG,commerceWarehouseId LONG,commerceCountryId LONG,commerceRegionId LONG,zip VARCHAR(75) null,weightFrom DOUBLE,weightTo DOUBLE,fixedPrice DECIMAL(30, 16) null,rateUnitWeightPrice DECIMAL(30, 16) null,ratePercentage DOUBLE)";
 	public static final String TABLE_SQL_DROP = "drop table CShippingFixedOptionRel";
 	public static final String ORDER_BY_JPQL = " ORDER BY commerceShippingFixedOptionRel.commerceCountryId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY CShippingFixedOptionRel.commerceCountryId ASC";
@@ -350,13 +352,13 @@ public class CommerceShippingFixedOptionRelModelImpl extends BaseModelImpl<Comme
 			setWeightTo(weightTo);
 		}
 
-		Double fixedPrice = (Double)attributes.get("fixedPrice");
+		BigDecimal fixedPrice = (BigDecimal)attributes.get("fixedPrice");
 
 		if (fixedPrice != null) {
 			setFixedPrice(fixedPrice);
 		}
 
-		Double rateUnitWeightPrice = (Double)attributes.get(
+		BigDecimal rateUnitWeightPrice = (BigDecimal)attributes.get(
 				"rateUnitWeightPrice");
 
 		if (rateUnitWeightPrice != null) {
@@ -597,23 +599,23 @@ public class CommerceShippingFixedOptionRelModelImpl extends BaseModelImpl<Comme
 
 	@JSON
 	@Override
-	public double getFixedPrice() {
+	public BigDecimal getFixedPrice() {
 		return _fixedPrice;
 	}
 
 	@Override
-	public void setFixedPrice(double fixedPrice) {
+	public void setFixedPrice(BigDecimal fixedPrice) {
 		_fixedPrice = fixedPrice;
 	}
 
 	@JSON
 	@Override
-	public double getRateUnitWeightPrice() {
+	public BigDecimal getRateUnitWeightPrice() {
 		return _rateUnitWeightPrice;
 	}
 
 	@Override
-	public void setRateUnitWeightPrice(double rateUnitWeightPrice) {
+	public void setRateUnitWeightPrice(BigDecimal rateUnitWeightPrice) {
 		_rateUnitWeightPrice = rateUnitWeightPrice;
 	}
 
@@ -986,8 +988,8 @@ public class CommerceShippingFixedOptionRelModelImpl extends BaseModelImpl<Comme
 	private String _zip;
 	private double _weightFrom;
 	private double _weightTo;
-	private double _fixedPrice;
-	private double _rateUnitWeightPrice;
+	private BigDecimal _fixedPrice;
+	private BigDecimal _rateUnitWeightPrice;
 	private double _ratePercentage;
 	private long _columnBitmask;
 	private CommerceShippingFixedOptionRel _escapedModel;

@@ -25,6 +25,8 @@ import com.liferay.portal.kernel.service.ServiceContext;
 
 import java.io.Serializable;
 
+import java.math.BigDecimal;
+
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -206,19 +208,19 @@ public class CommerceOrderWrapper implements CommerceOrder,
 			setPurchaseOrderNumber(purchaseOrderNumber);
 		}
 
-		Double subtotal = (Double)attributes.get("subtotal");
+		BigDecimal subtotal = (BigDecimal)attributes.get("subtotal");
 
 		if (subtotal != null) {
 			setSubtotal(subtotal);
 		}
 
-		Double shippingPrice = (Double)attributes.get("shippingPrice");
+		BigDecimal shippingPrice = (BigDecimal)attributes.get("shippingPrice");
 
 		if (shippingPrice != null) {
 			setShippingPrice(shippingPrice);
 		}
 
-		Double total = (Double)attributes.get("total");
+		BigDecimal total = (BigDecimal)attributes.get("total");
 
 		if (total != null) {
 			setTotal(total);
@@ -559,7 +561,7 @@ public class CommerceOrderWrapper implements CommerceOrder,
 	* @return the shipping price of this commerce order
 	*/
 	@Override
-	public double getShippingPrice() {
+	public BigDecimal getShippingPrice() {
 		return _commerceOrder.getShippingPrice();
 	}
 
@@ -639,7 +641,7 @@ public class CommerceOrderWrapper implements CommerceOrder,
 	* @return the subtotal of this commerce order
 	*/
 	@Override
-	public double getSubtotal() {
+	public BigDecimal getSubtotal() {
 		return _commerceOrder.getSubtotal();
 	}
 
@@ -649,7 +651,7 @@ public class CommerceOrderWrapper implements CommerceOrder,
 	* @return the total of this commerce order
 	*/
 	@Override
-	public double getTotal() {
+	public BigDecimal getTotal() {
 		return _commerceOrder.getTotal();
 	}
 
@@ -1047,7 +1049,7 @@ public class CommerceOrderWrapper implements CommerceOrder,
 	* @param shippingPrice the shipping price of this commerce order
 	*/
 	@Override
-	public void setShippingPrice(double shippingPrice) {
+	public void setShippingPrice(BigDecimal shippingPrice) {
 		_commerceOrder.setShippingPrice(shippingPrice);
 	}
 
@@ -1127,7 +1129,7 @@ public class CommerceOrderWrapper implements CommerceOrder,
 	* @param subtotal the subtotal of this commerce order
 	*/
 	@Override
-	public void setSubtotal(double subtotal) {
+	public void setSubtotal(BigDecimal subtotal) {
 		_commerceOrder.setSubtotal(subtotal);
 	}
 
@@ -1137,7 +1139,7 @@ public class CommerceOrderWrapper implements CommerceOrder,
 	* @param total the total of this commerce order
 	*/
 	@Override
-	public void setTotal(double total) {
+	public void setTotal(BigDecimal total) {
 		_commerceOrder.setTotal(total);
 	}
 

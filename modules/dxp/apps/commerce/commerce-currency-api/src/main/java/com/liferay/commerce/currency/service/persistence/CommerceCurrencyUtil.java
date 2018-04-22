@@ -18,11 +18,12 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.commerce.currency.model.CommerceCurrency;
 
-import com.liferay.osgi.util.ServiceTrackerFactory;
-
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
 
 import org.osgi.util.tracker.ServiceTracker;
 
@@ -1363,6 +1364,17 @@ public class CommerceCurrencyUtil {
 		return _serviceTracker.getService();
 	}
 
-	private static ServiceTracker<CommerceCurrencyPersistence, CommerceCurrencyPersistence> _serviceTracker =
-		ServiceTrackerFactory.open(CommerceCurrencyPersistence.class);
+	private static ServiceTracker<CommerceCurrencyPersistence, CommerceCurrencyPersistence> _serviceTracker;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(CommerceCurrencyPersistence.class);
+
+		ServiceTracker<CommerceCurrencyPersistence, CommerceCurrencyPersistence> serviceTracker =
+			new ServiceTracker<CommerceCurrencyPersistence, CommerceCurrencyPersistence>(bundle.getBundleContext(),
+				CommerceCurrencyPersistence.class, null);
+
+		serviceTracker.open();
+
+		_serviceTracker = serviceTracker;
+	}
 }

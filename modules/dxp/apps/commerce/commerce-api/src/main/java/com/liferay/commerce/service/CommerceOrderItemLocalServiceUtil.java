@@ -56,7 +56,7 @@ public class CommerceOrderItemLocalServiceUtil {
 
 	public static com.liferay.commerce.model.CommerceOrderItem addCommerceOrderItem(
 		long commerceOrderId, long cpInstanceId, int quantity,
-		int shippedQuantity, java.lang.String json, java.lang.Double price,
+		int shippedQuantity, java.lang.String json, java.math.BigDecimal price,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
@@ -349,7 +349,7 @@ public class CommerceOrderItemLocalServiceUtil {
 
 	public static com.liferay.commerce.model.CommerceOrderItem updateCommerceOrderItem(
 		long commerceOrderItemId, int quantity, java.lang.String json,
-		double price)
+		java.math.BigDecimal price)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .updateCommerceOrderItem(commerceOrderItemId, quantity,

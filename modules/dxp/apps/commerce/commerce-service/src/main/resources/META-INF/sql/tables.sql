@@ -142,9 +142,9 @@ create table CommerceOrder (
 	commerceShippingMethodId LONG,
 	shippingOptionName VARCHAR(75) null,
 	purchaseOrderNumber VARCHAR(75) null,
-	subtotal DOUBLE,
-	shippingPrice DOUBLE,
-	total DOUBLE,
+	subtotal DECIMAL(30, 16) null,
+	shippingPrice DECIMAL(30, 16) null,
+	total DECIMAL(30, 16) null,
 	advanceStatus VARCHAR(75) null,
 	paymentStatus INTEGER,
 	shippingStatus INTEGER,
@@ -170,7 +170,7 @@ create table CommerceOrderItem (
 	json TEXT null,
 	title STRING null,
 	sku VARCHAR(75) null,
-	price DOUBLE
+	price DECIMAL(30, 16) null
 );
 
 create table CommerceOrderNote (
@@ -345,7 +345,7 @@ create table CommerceTierPriceEntry (
 	createDate DATE null,
 	modifiedDate DATE null,
 	commercePriceEntryId LONG,
-	price DOUBLE,
+	price DECIMAL(30, 16) null,
 	minQuantity INTEGER,
 	lastPublishDate DATE null
 );

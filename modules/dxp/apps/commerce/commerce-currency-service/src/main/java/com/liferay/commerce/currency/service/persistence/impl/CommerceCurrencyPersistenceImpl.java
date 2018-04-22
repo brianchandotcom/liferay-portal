@@ -2118,7 +2118,7 @@ public class CommerceCurrencyPersistenceImpl extends BasePersistenceImpl<Commerc
 			if ((list != null) && !list.isEmpty()) {
 				for (CommerceCurrency commerceCurrency : list) {
 					if ((groupId != commerceCurrency.getGroupId()) ||
-							(primary != commerceCurrency.getPrimary())) {
+							(primary != commerceCurrency.isPrimary())) {
 						list = null;
 
 						break;
@@ -2664,7 +2664,7 @@ public class CommerceCurrencyPersistenceImpl extends BasePersistenceImpl<Commerc
 			if ((list != null) && !list.isEmpty()) {
 				for (CommerceCurrency commerceCurrency : list) {
 					if ((groupId != commerceCurrency.getGroupId()) ||
-							(active != commerceCurrency.getActive())) {
+							(active != commerceCurrency.isActive())) {
 						list = null;
 
 						break;
@@ -3224,8 +3224,8 @@ public class CommerceCurrencyPersistenceImpl extends BasePersistenceImpl<Commerc
 			if ((list != null) && !list.isEmpty()) {
 				for (CommerceCurrency commerceCurrency : list) {
 					if ((groupId != commerceCurrency.getGroupId()) ||
-							(primary != commerceCurrency.getPrimary()) ||
-							(active != commerceCurrency.getActive())) {
+							(primary != commerceCurrency.isPrimary()) ||
+							(active != commerceCurrency.isActive())) {
 						list = null;
 
 						break;
@@ -4021,7 +4021,7 @@ public class CommerceCurrencyPersistenceImpl extends BasePersistenceImpl<Commerc
 
 			args = new Object[] {
 					commerceCurrencyModelImpl.getGroupId(),
-					commerceCurrencyModelImpl.getPrimary()
+					commerceCurrencyModelImpl.isPrimary()
 				};
 
 			finderCache.removeResult(FINDER_PATH_COUNT_BY_G_P, args);
@@ -4030,7 +4030,7 @@ public class CommerceCurrencyPersistenceImpl extends BasePersistenceImpl<Commerc
 
 			args = new Object[] {
 					commerceCurrencyModelImpl.getGroupId(),
-					commerceCurrencyModelImpl.getActive()
+					commerceCurrencyModelImpl.isActive()
 				};
 
 			finderCache.removeResult(FINDER_PATH_COUNT_BY_G_A, args);
@@ -4039,8 +4039,8 @@ public class CommerceCurrencyPersistenceImpl extends BasePersistenceImpl<Commerc
 
 			args = new Object[] {
 					commerceCurrencyModelImpl.getGroupId(),
-					commerceCurrencyModelImpl.getPrimary(),
-					commerceCurrencyModelImpl.getActive()
+					commerceCurrencyModelImpl.isPrimary(),
+					commerceCurrencyModelImpl.isActive()
 				};
 
 			finderCache.removeResult(FINDER_PATH_COUNT_BY_G_P_A, args);

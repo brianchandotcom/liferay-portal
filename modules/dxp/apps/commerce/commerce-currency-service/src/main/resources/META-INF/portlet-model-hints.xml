@@ -16,7 +16,7 @@
 		<field localized="true" name="name" type="String">
 			<validator name="required" />
 		</field>
-		<field name="rate" type="double">
+		<field name="rate" type="BigDecimal">
 			<validator name="min">[0]</validator>
 			<validator name="number" />
 		</field>

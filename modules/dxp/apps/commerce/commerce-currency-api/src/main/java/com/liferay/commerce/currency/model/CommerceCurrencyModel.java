@@ -29,6 +29,8 @@ import com.liferay.portal.kernel.service.ServiceContext;
 
 import java.io.Serializable;
 
+import java.math.BigDecimal;
+
 import java.util.Date;
 import java.util.Locale;
 import java.util.Map;
@@ -332,14 +334,14 @@ public interface CommerceCurrencyModel extends BaseModel<CommerceCurrency>,
 	 *
 	 * @return the rate of this commerce currency
 	 */
-	public double getRate();
+	public BigDecimal getRate();
 
 	/**
 	 * Sets the rate of this commerce currency.
 	 *
 	 * @param rate the rate of this commerce currency
 	 */
-	public void setRate(double rate);
+	public void setRate(BigDecimal rate);
 
 	/**
 	 * Returns the rounding type of this commerce currency.

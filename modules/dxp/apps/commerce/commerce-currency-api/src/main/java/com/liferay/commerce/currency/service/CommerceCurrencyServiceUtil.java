@@ -16,7 +16,8 @@ package com.liferay.commerce.currency.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.osgi.util.ServiceTrackerFactory;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
 
 import org.osgi.util.tracker.ServiceTracker;
 
@@ -43,9 +44,9 @@ public class CommerceCurrencyServiceUtil {
 	 */
 	public static com.liferay.commerce.currency.model.CommerceCurrency addCommerceCurrency(
 		java.lang.String code,
-		java.util.Map<java.util.Locale, java.lang.String> nameMap, double rate,
-		java.lang.String roundingType, boolean primary, double priority,
-		boolean active,
+		java.util.Map<java.util.Locale, java.lang.String> nameMap,
+		java.math.BigDecimal rate, java.lang.String roundingType,
+		boolean primary, double priority, boolean active,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
@@ -115,9 +116,9 @@ public class CommerceCurrencyServiceUtil {
 
 	public static com.liferay.commerce.currency.model.CommerceCurrency updateCommerceCurrency(
 		long commerceCurrencyId, java.lang.String code,
-		java.util.Map<java.util.Locale, java.lang.String> nameMap, double rate,
-		java.lang.String roundingType, boolean primary, double priority,
-		boolean active,
+		java.util.Map<java.util.Locale, java.lang.String> nameMap,
+		java.math.BigDecimal rate, java.lang.String roundingType,
+		boolean primary, double priority, boolean active,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
@@ -142,6 +143,17 @@ public class CommerceCurrencyServiceUtil {
 		return _serviceTracker.getService();
 	}
 
-	private static ServiceTracker<CommerceCurrencyService, CommerceCurrencyService> _serviceTracker =
-		ServiceTrackerFactory.open(CommerceCurrencyService.class);
+	private static ServiceTracker<CommerceCurrencyService, CommerceCurrencyService> _serviceTracker;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(CommerceCurrencyService.class);
+
+		ServiceTracker<CommerceCurrencyService, CommerceCurrencyService> serviceTracker =
+			new ServiceTracker<CommerceCurrencyService, CommerceCurrencyService>(bundle.getBundleContext(),
+				CommerceCurrencyService.class, null);
+
+		serviceTracker.open();
+
+		_serviceTracker = serviceTracker;
+	}
 }

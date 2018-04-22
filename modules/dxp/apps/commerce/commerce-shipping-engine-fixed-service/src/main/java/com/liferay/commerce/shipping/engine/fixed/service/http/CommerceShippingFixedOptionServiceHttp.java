@@ -59,7 +59,7 @@ public class CommerceShippingFixedOptionServiceHttp {
 		HttpPrincipal httpPrincipal, long commerceShippingMethodId,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		double amount, double priority,
+		java.math.BigDecimal amount, double priority,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -241,7 +241,7 @@ public class CommerceShippingFixedOptionServiceHttp {
 		HttpPrincipal httpPrincipal, long commerceShippingFixedOptionId,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		double amount, double priority)
+		java.math.BigDecimal amount, double priority)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(CommerceShippingFixedOptionServiceUtil.class,
@@ -277,8 +277,9 @@ public class CommerceShippingFixedOptionServiceHttp {
 	private static Log _log = LogFactoryUtil.getLog(CommerceShippingFixedOptionServiceHttp.class);
 	private static final Class<?>[] _addCommerceShippingFixedOptionParameterTypes0 =
 		new Class[] {
-			long.class, java.util.Map.class, java.util.Map.class, double.class,
-			double.class, com.liferay.portal.kernel.service.ServiceContext.class
+			long.class, java.util.Map.class, java.util.Map.class,
+			java.math.BigDecimal.class, double.class,
+			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _deleteCommerceShippingFixedOptionParameterTypes1 =
 		new Class[] { long.class };
@@ -295,7 +296,7 @@ public class CommerceShippingFixedOptionServiceHttp {
 		new Class[] { long.class };
 	private static final Class<?>[] _updateCommerceShippingFixedOptionParameterTypes6 =
 		new Class[] {
-			long.class, java.util.Map.class, java.util.Map.class, double.class,
-			double.class
+			long.class, java.util.Map.class, java.util.Map.class,
+			java.math.BigDecimal.class, double.class
 		};
 }

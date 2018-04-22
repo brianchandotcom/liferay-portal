@@ -25,6 +25,8 @@ import com.liferay.portal.kernel.service.ServiceContext;
 
 import java.io.Serializable;
 
+import java.math.BigDecimal;
+
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -134,7 +136,7 @@ public class CommerceTierPriceEntryWrapper implements CommerceTierPriceEntry,
 			setCommercePriceEntryId(commercePriceEntryId);
 		}
 
-		Double price = (Double)attributes.get("price");
+		BigDecimal price = (BigDecimal)attributes.get("price");
 
 		if (price != null) {
 			setPrice(price);
@@ -260,7 +262,7 @@ public class CommerceTierPriceEntryWrapper implements CommerceTierPriceEntry,
 	* @return the price of this commerce tier price entry
 	*/
 	@Override
-	public double getPrice() {
+	public BigDecimal getPrice() {
 		return _commerceTierPriceEntry.getPrice();
 	}
 
@@ -456,7 +458,7 @@ public class CommerceTierPriceEntryWrapper implements CommerceTierPriceEntry,
 	* @param price the price of this commerce tier price entry
 	*/
 	@Override
-	public void setPrice(double price) {
+	public void setPrice(BigDecimal price) {
 		_commerceTierPriceEntry.setPrice(price);
 	}
 

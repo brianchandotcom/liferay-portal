@@ -42,6 +42,8 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.io.Serializable;
 
+import java.math.BigDecimal;
+
 import java.sql.Types;
 
 import java.util.ArrayList;
@@ -92,9 +94,9 @@ public class CommerceOrderModelImpl extends BaseModelImpl<CommerceOrder>
 			{ "commerceShippingMethodId", Types.BIGINT },
 			{ "shippingOptionName", Types.VARCHAR },
 			{ "purchaseOrderNumber", Types.VARCHAR },
-			{ "subtotal", Types.DOUBLE },
-			{ "shippingPrice", Types.DOUBLE },
-			{ "total", Types.DOUBLE },
+			{ "subtotal", Types.DECIMAL },
+			{ "shippingPrice", Types.DECIMAL },
+			{ "total", Types.DECIMAL },
 			{ "advanceStatus", Types.VARCHAR },
 			{ "paymentStatus", Types.INTEGER },
 			{ "shippingStatus", Types.INTEGER },
@@ -125,9 +127,9 @@ public class CommerceOrderModelImpl extends BaseModelImpl<CommerceOrder>
 		TABLE_COLUMNS_MAP.put("commerceShippingMethodId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("shippingOptionName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("purchaseOrderNumber", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("subtotal", Types.DOUBLE);
-		TABLE_COLUMNS_MAP.put("shippingPrice", Types.DOUBLE);
-		TABLE_COLUMNS_MAP.put("total", Types.DOUBLE);
+		TABLE_COLUMNS_MAP.put("subtotal", Types.DECIMAL);
+		TABLE_COLUMNS_MAP.put("shippingPrice", Types.DECIMAL);
+		TABLE_COLUMNS_MAP.put("total", Types.DECIMAL);
 		TABLE_COLUMNS_MAP.put("advanceStatus", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("paymentStatus", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("shippingStatus", Types.INTEGER);
@@ -138,7 +140,7 @@ public class CommerceOrderModelImpl extends BaseModelImpl<CommerceOrder>
 		TABLE_COLUMNS_MAP.put("statusDate", Types.TIMESTAMP);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table CommerceOrder (uuid_ VARCHAR(75) null,commerceOrderId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,siteGroupId LONG,orderOrganizationId LONG,orderUserId LONG,commerceCurrencyId LONG,billingAddressId LONG,shippingAddressId LONG,commercePaymentMethodId LONG,commerceShippingMethodId LONG,shippingOptionName VARCHAR(75) null,purchaseOrderNumber VARCHAR(75) null,subtotal DOUBLE,shippingPrice DOUBLE,total DOUBLE,advanceStatus VARCHAR(75) null,paymentStatus INTEGER,shippingStatus INTEGER,orderStatus INTEGER,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table CommerceOrder (uuid_ VARCHAR(75) null,commerceOrderId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,siteGroupId LONG,orderOrganizationId LONG,orderUserId LONG,commerceCurrencyId LONG,billingAddressId LONG,shippingAddressId LONG,commercePaymentMethodId LONG,commerceShippingMethodId LONG,shippingOptionName VARCHAR(75) null,purchaseOrderNumber VARCHAR(75) null,subtotal DECIMAL(30, 16) null,shippingPrice DECIMAL(30, 16) null,total DECIMAL(30, 16) null,advanceStatus VARCHAR(75) null,paymentStatus INTEGER,shippingStatus INTEGER,orderStatus INTEGER,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table CommerceOrder";
 	public static final String ORDER_BY_JPQL = " ORDER BY commerceOrder.createDate ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY CommerceOrder.createDate ASC";
@@ -419,19 +421,19 @@ public class CommerceOrderModelImpl extends BaseModelImpl<CommerceOrder>
 			setPurchaseOrderNumber(purchaseOrderNumber);
 		}
 
-		Double subtotal = (Double)attributes.get("subtotal");
+		BigDecimal subtotal = (BigDecimal)attributes.get("subtotal");
 
 		if (subtotal != null) {
 			setSubtotal(subtotal);
 		}
 
-		Double shippingPrice = (Double)attributes.get("shippingPrice");
+		BigDecimal shippingPrice = (BigDecimal)attributes.get("shippingPrice");
 
 		if (shippingPrice != null) {
 			setShippingPrice(shippingPrice);
 		}
 
-		Double total = (Double)attributes.get("total");
+		BigDecimal total = (BigDecimal)attributes.get("total");
 
 		if (total != null) {
 			setTotal(total);
@@ -834,34 +836,34 @@ public class CommerceOrderModelImpl extends BaseModelImpl<CommerceOrder>
 
 	@JSON
 	@Override
-	public double getSubtotal() {
+	public BigDecimal getSubtotal() {
 		return _subtotal;
 	}
 
 	@Override
-	public void setSubtotal(double subtotal) {
+	public void setSubtotal(BigDecimal subtotal) {
 		_subtotal = subtotal;
 	}
 
 	@JSON
 	@Override
-	public double getShippingPrice() {
+	public BigDecimal getShippingPrice() {
 		return _shippingPrice;
 	}
 
 	@Override
-	public void setShippingPrice(double shippingPrice) {
+	public void setShippingPrice(BigDecimal shippingPrice) {
 		_shippingPrice = shippingPrice;
 	}
 
 	@JSON
 	@Override
-	public double getTotal() {
+	public BigDecimal getTotal() {
 		return _total;
 	}
 
 	@Override
-	public void setTotal(double total) {
+	public void setTotal(BigDecimal total) {
 		_total = total;
 	}
 
@@ -1592,9 +1594,9 @@ public class CommerceOrderModelImpl extends BaseModelImpl<CommerceOrder>
 	private long _commerceShippingMethodId;
 	private String _shippingOptionName;
 	private String _purchaseOrderNumber;
-	private double _subtotal;
-	private double _shippingPrice;
-	private double _total;
+	private BigDecimal _subtotal;
+	private BigDecimal _shippingPrice;
+	private BigDecimal _total;
 	private String _advanceStatus;
 	private int _paymentStatus;
 	private int _shippingStatus;

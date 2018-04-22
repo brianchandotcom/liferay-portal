@@ -16,7 +16,7 @@
 		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
 		<property column="code_" name="code" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="rate" type="com.liferay.portal.dao.orm.hibernate.DoubleType" />
+		<property name="rate" type="org.hibernate.type.BigDecimalType" />
 		<property name="roundingType" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property column="primary_" name="primary" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
 		<property name="priority" type="com.liferay.portal.dao.orm.hibernate.DoubleType" />

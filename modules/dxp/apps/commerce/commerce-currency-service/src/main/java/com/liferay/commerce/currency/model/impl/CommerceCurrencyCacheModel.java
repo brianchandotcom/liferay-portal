@@ -27,6 +27,8 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
+import java.math.BigDecimal;
+
 import java.util.Date;
 
 /**
@@ -181,7 +183,8 @@ public class CommerceCurrencyCacheModel implements CacheModel<CommerceCurrency>,
 	}
 
 	@Override
-	public void readExternal(ObjectInput objectInput) throws IOException {
+	public void readExternal(ObjectInput objectInput)
+		throws ClassNotFoundException, IOException {
 		uuid = objectInput.readUTF();
 
 		commerceCurrencyId = objectInput.readLong();
@@ -196,8 +199,7 @@ public class CommerceCurrencyCacheModel implements CacheModel<CommerceCurrency>,
 		modifiedDate = objectInput.readLong();
 		code = objectInput.readUTF();
 		name = objectInput.readUTF();
-
-		rate = objectInput.readDouble();
+		rate = (BigDecimal)objectInput.readObject();
 		roundingType = objectInput.readUTF();
 
 		primary = objectInput.readBoolean();
@@ -250,7 +252,7 @@ public class CommerceCurrencyCacheModel implements CacheModel<CommerceCurrency>,
 			objectOutput.writeUTF(name);
 		}
 
-		objectOutput.writeDouble(rate);
+		objectOutput.writeObject(rate);
 
 		if (roundingType == null) {
 			objectOutput.writeUTF("");
@@ -277,7 +279,7 @@ public class CommerceCurrencyCacheModel implements CacheModel<CommerceCurrency>,
 	public long modifiedDate;
 	public String code;
 	public String name;
-	public double rate;
+	public BigDecimal rate;
 	public String roundingType;
 	public boolean primary;
 	public double priority;

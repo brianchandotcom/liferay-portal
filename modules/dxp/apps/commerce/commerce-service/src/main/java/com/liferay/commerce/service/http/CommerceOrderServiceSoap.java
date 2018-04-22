@@ -413,9 +413,9 @@ public class CommerceOrderServiceSoap {
 		long commerceOrderId, long billingAddressId, long shippingAddressId,
 		long commercePaymentMethodId, long commerceShippingMethodId,
 		java.lang.String shippingOptionName,
-		java.lang.String purchaseOrderNumber, double subtotal,
-		double shippingPrice, double total, java.lang.String advanceStatus)
-		throws RemoteException {
+		java.lang.String purchaseOrderNumber, java.math.BigDecimal subtotal,
+		java.math.BigDecimal shippingPrice, java.math.BigDecimal total,
+		java.lang.String advanceStatus) throws RemoteException {
 		try {
 			com.liferay.commerce.model.CommerceOrder returnValue = CommerceOrderServiceUtil.updateCommerceOrder(commerceOrderId,
 					billingAddressId, shippingAddressId,

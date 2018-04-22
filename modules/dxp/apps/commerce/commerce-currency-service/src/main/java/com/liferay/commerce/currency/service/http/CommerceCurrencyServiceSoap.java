@@ -71,7 +71,7 @@ import java.util.Map;
 public class CommerceCurrencyServiceSoap {
 	public static com.liferay.commerce.currency.model.CommerceCurrencySoap addCommerceCurrency(
 		java.lang.String code, java.lang.String[] nameMapLanguageIds,
-		java.lang.String[] nameMapValues, double rate,
+		java.lang.String[] nameMapValues, java.math.BigDecimal rate,
 		java.lang.String roundingType, boolean primary, double priority,
 		boolean active,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
@@ -231,7 +231,7 @@ public class CommerceCurrencyServiceSoap {
 	public static com.liferay.commerce.currency.model.CommerceCurrencySoap updateCommerceCurrency(
 		long commerceCurrencyId, java.lang.String code,
 		java.lang.String[] nameMapLanguageIds,
-		java.lang.String[] nameMapValues, double rate,
+		java.lang.String[] nameMapValues, java.math.BigDecimal rate,
 		java.lang.String roundingType, boolean primary, double priority,
 		boolean active,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)

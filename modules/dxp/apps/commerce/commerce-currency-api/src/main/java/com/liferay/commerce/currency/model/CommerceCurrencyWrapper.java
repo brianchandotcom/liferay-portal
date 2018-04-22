@@ -25,6 +25,8 @@ import com.liferay.portal.kernel.service.ServiceContext;
 
 import java.io.Serializable;
 
+import java.math.BigDecimal;
+
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -72,9 +74,9 @@ public class CommerceCurrencyWrapper implements CommerceCurrency,
 		attributes.put("name", getName());
 		attributes.put("rate", getRate());
 		attributes.put("roundingType", getRoundingType());
-		attributes.put("primary", getPrimary());
+		attributes.put("primary", isPrimary());
 		attributes.put("priority", getPriority());
-		attributes.put("active", getActive());
+		attributes.put("active", isActive());
 		attributes.put("lastPublishDate", getLastPublishDate());
 
 		return attributes;
@@ -142,7 +144,7 @@ public class CommerceCurrencyWrapper implements CommerceCurrency,
 			setName(name);
 		}
 
-		Double rate = (Double)attributes.get("rate");
+		BigDecimal rate = (BigDecimal)attributes.get("rate");
 
 		if (rate != null) {
 			setRate(rate);
@@ -402,7 +404,7 @@ public class CommerceCurrencyWrapper implements CommerceCurrency,
 	* @return the rate of this commerce currency
 	*/
 	@Override
-	public double getRate() {
+	public BigDecimal getRate() {
 		return _commerceCurrency.getRate();
 	}
 
@@ -722,7 +724,7 @@ public class CommerceCurrencyWrapper implements CommerceCurrency,
 	* @param rate the rate of this commerce currency
 	*/
 	@Override
-	public void setRate(double rate) {
+	public void setRate(BigDecimal rate) {
 		_commerceCurrency.setRate(rate);
 	}
 

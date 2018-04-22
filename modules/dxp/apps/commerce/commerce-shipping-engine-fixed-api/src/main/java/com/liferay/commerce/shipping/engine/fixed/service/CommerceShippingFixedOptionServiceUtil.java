@@ -16,7 +16,8 @@ package com.liferay.commerce.shipping.engine.fixed.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.osgi.util.ServiceTrackerFactory;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
 
 import org.osgi.util.tracker.ServiceTracker;
 
@@ -45,7 +46,7 @@ public class CommerceShippingFixedOptionServiceUtil {
 		long commerceShippingMethodId,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		double amount, double priority,
+		java.math.BigDecimal amount, double priority,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
@@ -100,7 +101,7 @@ public class CommerceShippingFixedOptionServiceUtil {
 		long commerceShippingFixedOptionId,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		double amount, double priority)
+		java.math.BigDecimal amount, double priority)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .updateCommerceShippingFixedOption(commerceShippingFixedOptionId,
@@ -111,6 +112,17 @@ public class CommerceShippingFixedOptionServiceUtil {
 		return _serviceTracker.getService();
 	}
 
-	private static ServiceTracker<CommerceShippingFixedOptionService, CommerceShippingFixedOptionService> _serviceTracker =
-		ServiceTrackerFactory.open(CommerceShippingFixedOptionService.class);
+	private static ServiceTracker<CommerceShippingFixedOptionService, CommerceShippingFixedOptionService> _serviceTracker;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(CommerceShippingFixedOptionService.class);
+
+		ServiceTracker<CommerceShippingFixedOptionService, CommerceShippingFixedOptionService> serviceTracker =
+			new ServiceTracker<CommerceShippingFixedOptionService, CommerceShippingFixedOptionService>(bundle.getBundleContext(),
+				CommerceShippingFixedOptionService.class, null);
+
+		serviceTracker.open();
+
+		_serviceTracker = serviceTracker;
+	}
 }

@@ -18,6 +18,8 @@ import aQute.bnd.annotation.ProviderType;
 
 import java.io.Serializable;
 
+import java.math.BigDecimal;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -46,9 +48,9 @@ public class CommerceCurrencySoap implements Serializable {
 		soapModel.setName(model.getName());
 		soapModel.setRate(model.getRate());
 		soapModel.setRoundingType(model.getRoundingType());
-		soapModel.setPrimary(model.getPrimary());
+		soapModel.setPrimary(model.isPrimary());
 		soapModel.setPriority(model.getPriority());
-		soapModel.setActive(model.getActive());
+		soapModel.setActive(model.isActive());
 		soapModel.setLastPublishDate(model.getLastPublishDate());
 
 		return soapModel;
@@ -184,11 +186,11 @@ public class CommerceCurrencySoap implements Serializable {
 		_name = name;
 	}
 
-	public double getRate() {
+	public BigDecimal getRate() {
 		return _rate;
 	}
 
-	public void setRate(double rate) {
+	public void setRate(BigDecimal rate) {
 		_rate = rate;
 	}
 
@@ -250,7 +252,7 @@ public class CommerceCurrencySoap implements Serializable {
 	private Date _modifiedDate;
 	private String _code;
 	private String _name;
-	private double _rate;
+	private BigDecimal _rate;
 	private String _roundingType;
 	private boolean _primary;
 	private double _priority;

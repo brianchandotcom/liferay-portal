@@ -40,6 +40,8 @@ import com.liferay.portal.kernel.util.StringBundler;
 
 import java.io.Serializable;
 
+import java.math.BigDecimal;
+
 import java.sql.Types;
 
 import java.util.ArrayList;
@@ -81,7 +83,7 @@ public class CommerceTierPriceEntryModelImpl extends BaseModelImpl<CommerceTierP
 			{ "createDate", Types.TIMESTAMP },
 			{ "modifiedDate", Types.TIMESTAMP },
 			{ "commercePriceEntryId", Types.BIGINT },
-			{ "price", Types.DOUBLE },
+			{ "price", Types.DECIMAL },
 			{ "minQuantity", Types.INTEGER },
 			{ "lastPublishDate", Types.TIMESTAMP }
 		};
@@ -97,12 +99,12 @@ public class CommerceTierPriceEntryModelImpl extends BaseModelImpl<CommerceTierP
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("commercePriceEntryId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("price", Types.DOUBLE);
+		TABLE_COLUMNS_MAP.put("price", Types.DECIMAL);
 		TABLE_COLUMNS_MAP.put("minQuantity", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("lastPublishDate", Types.TIMESTAMP);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table CommerceTierPriceEntry (uuid_ VARCHAR(75) null,commerceTierPriceEntryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,commercePriceEntryId LONG,price DOUBLE,minQuantity INTEGER,lastPublishDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table CommerceTierPriceEntry (uuid_ VARCHAR(75) null,commerceTierPriceEntryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,commercePriceEntryId LONG,price DECIMAL(30, 16) null,minQuantity INTEGER,lastPublishDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table CommerceTierPriceEntry";
 	public static final String ORDER_BY_JPQL = " ORDER BY commerceTierPriceEntry.minQuantity ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY CommerceTierPriceEntry.minQuantity ASC";
@@ -291,7 +293,7 @@ public class CommerceTierPriceEntryModelImpl extends BaseModelImpl<CommerceTierP
 			setCommercePriceEntryId(commercePriceEntryId);
 		}
 
-		Double price = (Double)attributes.get("price");
+		BigDecimal price = (BigDecimal)attributes.get("price");
 
 		if (price != null) {
 			setPrice(price);
@@ -487,12 +489,12 @@ public class CommerceTierPriceEntryModelImpl extends BaseModelImpl<CommerceTierP
 
 	@JSON
 	@Override
-	public double getPrice() {
+	public BigDecimal getPrice() {
 		return _price;
 	}
 
 	@Override
-	public void setPrice(double price) {
+	public void setPrice(BigDecimal price) {
 		_price = price;
 	}
 
@@ -850,7 +852,7 @@ public class CommerceTierPriceEntryModelImpl extends BaseModelImpl<CommerceTierP
 	private long _commercePriceEntryId;
 	private long _originalCommercePriceEntryId;
 	private boolean _setOriginalCommercePriceEntryId;
-	private double _price;
+	private BigDecimal _price;
 	private int _minQuantity;
 	private int _originalMinQuantity;
 	private boolean _setOriginalMinQuantity;

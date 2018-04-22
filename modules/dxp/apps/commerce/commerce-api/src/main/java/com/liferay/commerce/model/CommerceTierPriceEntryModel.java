@@ -27,6 +27,8 @@ import com.liferay.portal.kernel.service.ServiceContext;
 
 import java.io.Serializable;
 
+import java.math.BigDecimal;
+
 import java.util.Date;
 
 /**
@@ -228,14 +230,14 @@ public interface CommerceTierPriceEntryModel extends BaseModel<CommerceTierPrice
 	 *
 	 * @return the price of this commerce tier price entry
 	 */
-	public double getPrice();
+	public BigDecimal getPrice();
 
 	/**
 	 * Sets the price of this commerce tier price entry.
 	 *
 	 * @param price the price of this commerce tier price entry
 	 */
-	public void setPrice(double price);
+	public void setPrice(BigDecimal price);
 
 	/**
 	 * Returns the min quantity of this commerce tier price entry.

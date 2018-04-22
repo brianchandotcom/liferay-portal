@@ -27,6 +27,8 @@ import com.liferay.portal.kernel.service.ServiceContext;
 
 import java.io.Serializable;
 
+import java.math.BigDecimal;
+
 import java.util.Date;
 
 /**
@@ -312,28 +314,28 @@ public interface CommerceShippingFixedOptionRelModel extends BaseModel<CommerceS
 	 *
 	 * @return the fixed price of this commerce shipping fixed option rel
 	 */
-	public double getFixedPrice();
+	public BigDecimal getFixedPrice();
 
 	/**
 	 * Sets the fixed price of this commerce shipping fixed option rel.
 	 *
 	 * @param fixedPrice the fixed price of this commerce shipping fixed option rel
 	 */
-	public void setFixedPrice(double fixedPrice);
+	public void setFixedPrice(BigDecimal fixedPrice);
 
 	/**
 	 * Returns the rate unit weight price of this commerce shipping fixed option rel.
 	 *
 	 * @return the rate unit weight price of this commerce shipping fixed option rel
 	 */
-	public double getRateUnitWeightPrice();
+	public BigDecimal getRateUnitWeightPrice();
 
 	/**
 	 * Sets the rate unit weight price of this commerce shipping fixed option rel.
 	 *
 	 * @param rateUnitWeightPrice the rate unit weight price of this commerce shipping fixed option rel
 	 */
-	public void setRateUnitWeightPrice(double rateUnitWeightPrice);
+	public void setRateUnitWeightPrice(BigDecimal rateUnitWeightPrice);
 
 	/**
 	 * Returns the rate percentage of this commerce shipping fixed option rel.

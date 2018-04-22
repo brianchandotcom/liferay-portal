@@ -23,6 +23,8 @@ import com.liferay.portal.kernel.service.ServiceContext;
 
 import java.io.Serializable;
 
+import java.math.BigDecimal;
+
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -141,7 +143,7 @@ public class CommerceShippingFixedOptionWrapper
 			setDescription(description);
 		}
 
-		Double amount = (Double)attributes.get("amount");
+		BigDecimal amount = (BigDecimal)attributes.get("amount");
 
 		if (amount != null) {
 			setAmount(amount);
@@ -171,7 +173,7 @@ public class CommerceShippingFixedOptionWrapper
 	* @return the amount of this commerce shipping fixed option
 	*/
 	@Override
-	public double getAmount() {
+	public BigDecimal getAmount() {
 		return _commerceShippingFixedOption.getAmount();
 	}
 
@@ -505,7 +507,7 @@ public class CommerceShippingFixedOptionWrapper
 	* @param amount the amount of this commerce shipping fixed option
 	*/
 	@Override
-	public void setAmount(double amount) {
+	public void setAmount(BigDecimal amount) {
 		_commerceShippingFixedOption.setAmount(amount);
 	}
 

@@ -9,7 +9,7 @@ create table CommerceCurrency (
 	modifiedDate DATE null,
 	code_ VARCHAR(75) null,
 	name STRING null,
-	rate DOUBLE,
+	rate DECIMAL(30, 16) null,
 	roundingType VARCHAR(75) null,
 	primary_ BOOLEAN,
 	priority DOUBLE,

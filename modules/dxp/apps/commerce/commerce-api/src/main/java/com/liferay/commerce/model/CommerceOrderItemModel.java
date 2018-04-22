@@ -29,6 +29,8 @@ import com.liferay.portal.kernel.service.ServiceContext;
 
 import java.io.Serializable;
 
+import java.math.BigDecimal;
+
 import java.util.Date;
 import java.util.Locale;
 import java.util.Map;
@@ -386,14 +388,14 @@ public interface CommerceOrderItemModel extends BaseModel<CommerceOrderItem>,
 	 *
 	 * @return the price of this commerce order item
 	 */
-	public double getPrice();
+	public BigDecimal getPrice();
 
 	/**
 	 * Sets the price of this commerce order item.
 	 *
 	 * @param price the price of this commerce order item
 	 */
-	public void setPrice(double price);
+	public void setPrice(BigDecimal price);
 
 	@Override
 	public boolean isNew();

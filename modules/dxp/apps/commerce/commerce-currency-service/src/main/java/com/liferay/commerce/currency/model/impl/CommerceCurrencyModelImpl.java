@@ -44,6 +44,8 @@ import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
 
+import java.math.BigDecimal;
+
 import java.sql.Types;
 
 import java.util.ArrayList;
@@ -89,7 +91,7 @@ public class CommerceCurrencyModelImpl extends BaseModelImpl<CommerceCurrency>
 			{ "modifiedDate", Types.TIMESTAMP },
 			{ "code_", Types.VARCHAR },
 			{ "name", Types.VARCHAR },
-			{ "rate", Types.DOUBLE },
+			{ "rate", Types.DECIMAL },
 			{ "roundingType", Types.VARCHAR },
 			{ "primary_", Types.BOOLEAN },
 			{ "priority", Types.DOUBLE },
@@ -109,7 +111,7 @@ public class CommerceCurrencyModelImpl extends BaseModelImpl<CommerceCurrency>
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("code_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("rate", Types.DOUBLE);
+		TABLE_COLUMNS_MAP.put("rate", Types.DECIMAL);
 		TABLE_COLUMNS_MAP.put("roundingType", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("primary_", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("priority", Types.DOUBLE);
@@ -117,7 +119,7 @@ public class CommerceCurrencyModelImpl extends BaseModelImpl<CommerceCurrency>
 		TABLE_COLUMNS_MAP.put("lastPublishDate", Types.TIMESTAMP);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table CommerceCurrency (uuid_ VARCHAR(75) null,commerceCurrencyId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,code_ VARCHAR(75) null,name STRING null,rate DOUBLE,roundingType VARCHAR(75) null,primary_ BOOLEAN,priority DOUBLE,active_ BOOLEAN,lastPublishDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table CommerceCurrency (uuid_ VARCHAR(75) null,commerceCurrencyId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,code_ VARCHAR(75) null,name STRING null,rate DECIMAL(30, 16) null,roundingType VARCHAR(75) null,primary_ BOOLEAN,priority DOUBLE,active_ BOOLEAN,lastPublishDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table CommerceCurrency";
 	public static final String ORDER_BY_JPQL = " ORDER BY commerceCurrency.priority ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY CommerceCurrency.priority ASC";
@@ -246,9 +248,9 @@ public class CommerceCurrencyModelImpl extends BaseModelImpl<CommerceCurrency>
 		attributes.put("name", getName());
 		attributes.put("rate", getRate());
 		attributes.put("roundingType", getRoundingType());
-		attributes.put("primary", getPrimary());
+		attributes.put("primary", isPrimary());
 		attributes.put("priority", getPriority());
-		attributes.put("active", getActive());
+		attributes.put("active", isActive());
 		attributes.put("lastPublishDate", getLastPublishDate());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
@@ -319,7 +321,7 @@ public class CommerceCurrencyModelImpl extends BaseModelImpl<CommerceCurrency>
 			setName(name);
 		}
 
-		Double rate = (Double)attributes.get("rate");
+		BigDecimal rate = (BigDecimal)attributes.get("rate");
 
 		if (rate != null) {
 			setRate(rate);
@@ -625,12 +627,12 @@ public class CommerceCurrencyModelImpl extends BaseModelImpl<CommerceCurrency>
 
 	@JSON
 	@Override
-	public double getRate() {
+	public BigDecimal getRate() {
 		return _rate;
 	}
 
 	@Override
-	public void setRate(double rate) {
+	public void setRate(BigDecimal rate) {
 		_rate = rate;
 	}
 
@@ -842,9 +844,9 @@ public class CommerceCurrencyModelImpl extends BaseModelImpl<CommerceCurrency>
 		commerceCurrencyImpl.setName(getName());
 		commerceCurrencyImpl.setRate(getRate());
 		commerceCurrencyImpl.setRoundingType(getRoundingType());
-		commerceCurrencyImpl.setPrimary(getPrimary());
+		commerceCurrencyImpl.setPrimary(isPrimary());
 		commerceCurrencyImpl.setPriority(getPriority());
-		commerceCurrencyImpl.setActive(getActive());
+		commerceCurrencyImpl.setActive(isActive());
 		commerceCurrencyImpl.setLastPublishDate(getLastPublishDate());
 
 		commerceCurrencyImpl.resetOriginalValues();
@@ -1009,11 +1011,11 @@ public class CommerceCurrencyModelImpl extends BaseModelImpl<CommerceCurrency>
 			commerceCurrencyCacheModel.roundingType = null;
 		}
 
-		commerceCurrencyCacheModel.primary = getPrimary();
+		commerceCurrencyCacheModel.primary = isPrimary();
 
 		commerceCurrencyCacheModel.priority = getPriority();
 
-		commerceCurrencyCacheModel.active = getActive();
+		commerceCurrencyCacheModel.active = isActive();
 
 		Date lastPublishDate = getLastPublishDate();
 
@@ -1056,11 +1058,11 @@ public class CommerceCurrencyModelImpl extends BaseModelImpl<CommerceCurrency>
 		sb.append(", roundingType=");
 		sb.append(getRoundingType());
 		sb.append(", primary=");
-		sb.append(getPrimary());
+		sb.append(isPrimary());
 		sb.append(", priority=");
 		sb.append(getPriority());
 		sb.append(", active=");
-		sb.append(getActive());
+		sb.append(isActive());
 		sb.append(", lastPublishDate=");
 		sb.append(getLastPublishDate());
 		sb.append("}");
@@ -1126,7 +1128,7 @@ public class CommerceCurrencyModelImpl extends BaseModelImpl<CommerceCurrency>
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>primary</column-name><column-value><![CDATA[");
-		sb.append(getPrimary());
+		sb.append(isPrimary());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>priority</column-name><column-value><![CDATA[");
@@ -1134,7 +1136,7 @@ public class CommerceCurrencyModelImpl extends BaseModelImpl<CommerceCurrency>
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>active</column-name><column-value><![CDATA[");
-		sb.append(getActive());
+		sb.append(isActive());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>lastPublishDate</column-name><column-value><![CDATA[");
@@ -1167,7 +1169,7 @@ public class CommerceCurrencyModelImpl extends BaseModelImpl<CommerceCurrency>
 	private String _code;
 	private String _name;
 	private String _nameCurrentLanguageId;
-	private double _rate;
+	private BigDecimal _rate;
 	private String _roundingType;
 	private boolean _primary;
 	private boolean _originalPrimary;

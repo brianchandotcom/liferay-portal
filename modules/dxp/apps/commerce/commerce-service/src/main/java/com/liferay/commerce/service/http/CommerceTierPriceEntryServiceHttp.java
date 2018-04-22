@@ -56,8 +56,8 @@ import com.liferay.portal.kernel.util.MethodKey;
 @ProviderType
 public class CommerceTierPriceEntryServiceHttp {
 	public static com.liferay.commerce.model.CommerceTierPriceEntry addCommerceTierPriceEntry(
-		HttpPrincipal httpPrincipal, long commercePriceEntryId, double price,
-		int minQuantity,
+		HttpPrincipal httpPrincipal, long commercePriceEntryId,
+		java.math.BigDecimal price, int minQuantity,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -300,7 +300,7 @@ public class CommerceTierPriceEntryServiceHttp {
 
 	public static com.liferay.commerce.model.CommerceTierPriceEntry updateCommerceTierPriceEntry(
 		HttpPrincipal httpPrincipal, long commerceTierPriceEntryId,
-		double price, int minQuantity,
+		java.math.BigDecimal price, int minQuantity,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -335,7 +335,7 @@ public class CommerceTierPriceEntryServiceHttp {
 
 	private static Log _log = LogFactoryUtil.getLog(CommerceTierPriceEntryServiceHttp.class);
 	private static final Class<?>[] _addCommerceTierPriceEntryParameterTypes0 = new Class[] {
-			long.class, double.class, int.class,
+			long.class, java.math.BigDecimal.class, int.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _deleteCommerceTierPriceEntryParameterTypes1 =
@@ -362,7 +362,7 @@ public class CommerceTierPriceEntryServiceHttp {
 		};
 	private static final Class<?>[] _updateCommerceTierPriceEntryParameterTypes8 =
 		new Class[] {
-			long.class, double.class, int.class,
+			long.class, java.math.BigDecimal.class, int.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 }

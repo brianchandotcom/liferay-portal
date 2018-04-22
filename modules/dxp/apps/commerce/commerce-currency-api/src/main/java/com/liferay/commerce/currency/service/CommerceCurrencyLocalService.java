@@ -42,6 +42,8 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.io.Serializable;
 
+import java.math.BigDecimal;
+
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -80,7 +82,7 @@ public interface CommerceCurrencyLocalService extends BaseLocalService,
 		CommerceCurrency commerceCurrency);
 
 	public CommerceCurrency addCommerceCurrency(java.lang.String code,
-		Map<Locale, java.lang.String> nameMap, double rate,
+		Map<Locale, java.lang.String> nameMap, BigDecimal rate,
 		java.lang.String roundingType, boolean primary, double priority,
 		boolean active, ServiceContext serviceContext)
 		throws PortalException;
@@ -334,12 +336,12 @@ public interface CommerceCurrencyLocalService extends BaseLocalService,
 
 	public CommerceCurrency updateCommerceCurrency(long commerceCurrencyId,
 		java.lang.String code, Map<Locale, java.lang.String> nameMap,
-		double rate, java.lang.String roundingType, boolean primary,
+		BigDecimal rate, java.lang.String roundingType, boolean primary,
 		double priority, boolean active, ServiceContext serviceContext)
 		throws PortalException;
 
 	public CommerceCurrency updateCommerceCurrencyRate(
-		long commerceCurrencyId, double rate) throws PortalException;
+		long commerceCurrencyId, BigDecimal rate) throws PortalException;
 
 	public void updateExchangeRate(long commerceCurrencyId,
 		java.lang.String exchangeRateProviderKey) throws PortalException;

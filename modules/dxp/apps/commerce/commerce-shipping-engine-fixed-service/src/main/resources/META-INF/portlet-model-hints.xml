@@ -12,7 +12,7 @@
 		<field name="commerceShippingMethodId" type="long" />
 		<field localized="true" name="name" type="String" />
 		<field localized="true" name="description" type="String" />
-		<field name="amount" type="double" />
+		<field name="amount" type="BigDecimal" />
 		<field name="priority" type="double" />
 	</model>
 	<model name="com.liferay.commerce.shipping.engine.fixed.model.CommerceShippingFixedOptionRel">
@@ -31,8 +31,8 @@
 		<field name="zip" type="String" />
 		<field name="weightFrom" type="double" />
 		<field name="weightTo" type="double" />
-		<field name="fixedPrice" type="double" />
-		<field name="rateUnitWeightPrice" type="double" />
+		<field name="fixedPrice" type="BigDecimal" />
+		<field name="rateUnitWeightPrice" type="BigDecimal" />
 		<field name="ratePercentage" type="double" />
 	</model>
 </model-hints>

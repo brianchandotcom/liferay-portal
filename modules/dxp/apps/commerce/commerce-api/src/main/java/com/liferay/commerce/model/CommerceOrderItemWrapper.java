@@ -23,6 +23,8 @@ import com.liferay.portal.kernel.service.ServiceContext;
 
 import java.io.Serializable;
 
+import java.math.BigDecimal;
+
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -163,7 +165,7 @@ public class CommerceOrderItemWrapper implements CommerceOrderItem,
 			setSku(sku);
 		}
 
-		Double price = (Double)attributes.get("price");
+		BigDecimal price = (BigDecimal)attributes.get("price");
 
 		if (price != null) {
 			setPrice(price);
@@ -305,7 +307,7 @@ public class CommerceOrderItemWrapper implements CommerceOrderItem,
 	* @return the price of this commerce order item
 	*/
 	@Override
-	public double getPrice() {
+	public BigDecimal getPrice() {
 		return _commerceOrderItem.getPrice();
 	}
 
@@ -611,7 +613,7 @@ public class CommerceOrderItemWrapper implements CommerceOrderItem,
 	* @param price the price of this commerce order item
 	*/
 	@Override
-	public void setPrice(double price) {
+	public void setPrice(BigDecimal price) {
 		_commerceOrderItem.setPrice(price);
 	}
 

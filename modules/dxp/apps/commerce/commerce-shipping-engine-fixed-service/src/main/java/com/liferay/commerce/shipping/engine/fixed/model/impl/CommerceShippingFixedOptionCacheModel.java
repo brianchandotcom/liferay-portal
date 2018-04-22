@@ -27,6 +27,8 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
+import java.math.BigDecimal;
+
 import java.util.Date;
 
 /**
@@ -153,7 +155,8 @@ public class CommerceShippingFixedOptionCacheModel implements CacheModel<Commerc
 	}
 
 	@Override
-	public void readExternal(ObjectInput objectInput) throws IOException {
+	public void readExternal(ObjectInput objectInput)
+		throws ClassNotFoundException, IOException {
 		commerceShippingFixedOptionId = objectInput.readLong();
 
 		groupId = objectInput.readLong();
@@ -168,8 +171,7 @@ public class CommerceShippingFixedOptionCacheModel implements CacheModel<Commerc
 		commerceShippingMethodId = objectInput.readLong();
 		name = objectInput.readUTF();
 		description = objectInput.readUTF();
-
-		amount = objectInput.readDouble();
+		amount = (BigDecimal)objectInput.readObject();
 
 		priority = objectInput.readDouble();
 	}
@@ -211,7 +213,7 @@ public class CommerceShippingFixedOptionCacheModel implements CacheModel<Commerc
 			objectOutput.writeUTF(description);
 		}
 
-		objectOutput.writeDouble(amount);
+		objectOutput.writeObject(amount);
 
 		objectOutput.writeDouble(priority);
 	}
@@ -226,6 +228,6 @@ public class CommerceShippingFixedOptionCacheModel implements CacheModel<Commerc
 	public long commerceShippingMethodId;
 	public String name;
 	public String description;
-	public double amount;
+	public BigDecimal amount;
 	public double priority;
 }

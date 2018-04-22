@@ -36,9 +36,9 @@ public class CommerceCurrencyServiceWrapper implements CommerceCurrencyService,
 	@Override
 	public com.liferay.commerce.currency.model.CommerceCurrency addCommerceCurrency(
 		java.lang.String code,
-		java.util.Map<java.util.Locale, java.lang.String> nameMap, double rate,
-		java.lang.String roundingType, boolean primary, double priority,
-		boolean active,
+		java.util.Map<java.util.Locale, java.lang.String> nameMap,
+		java.math.BigDecimal rate, java.lang.String roundingType,
+		boolean primary, double priority, boolean active,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _commerceCurrencyService.addCommerceCurrency(code, nameMap,
@@ -118,9 +118,9 @@ public class CommerceCurrencyServiceWrapper implements CommerceCurrencyService,
 	@Override
 	public com.liferay.commerce.currency.model.CommerceCurrency updateCommerceCurrency(
 		long commerceCurrencyId, java.lang.String code,
-		java.util.Map<java.util.Locale, java.lang.String> nameMap, double rate,
-		java.lang.String roundingType, boolean primary, double priority,
-		boolean active,
+		java.util.Map<java.util.Locale, java.lang.String> nameMap,
+		java.math.BigDecimal rate, java.lang.String roundingType,
+		boolean primary, double priority, boolean active,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _commerceCurrencyService.updateCommerceCurrency(commerceCurrencyId,

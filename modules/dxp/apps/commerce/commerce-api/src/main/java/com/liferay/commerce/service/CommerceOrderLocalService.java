@@ -42,6 +42,8 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.io.Serializable;
 
+import java.math.BigDecimal;
+
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -389,9 +391,9 @@ public interface CommerceOrderLocalService extends BaseLocalService,
 		long billingAddressId, long shippingAddressId,
 		long commercePaymentMethodId, long commerceShippingMethodId,
 		java.lang.String shippingOptionName,
-		java.lang.String purchaseOrderNumber, double subtotal,
-		double shippingPrice, double total, java.lang.String advanceStatus)
-		throws PortalException;
+		java.lang.String purchaseOrderNumber, BigDecimal subtotal,
+		BigDecimal shippingPrice, BigDecimal total,
+		java.lang.String advanceStatus) throws PortalException;
 
 	@Indexable(type = IndexableType.REINDEX)
 	public CommerceOrder updateOrderStatus(long commerceOrderId, int orderStatus)

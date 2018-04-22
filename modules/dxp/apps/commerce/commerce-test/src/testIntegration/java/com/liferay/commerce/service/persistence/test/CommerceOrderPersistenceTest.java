@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
-import com.liferay.portal.kernel.test.AssertUtils;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -51,6 +50,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import java.io.Serializable;
+
+import java.math.BigDecimal;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -159,11 +160,12 @@ public class CommerceOrderPersistenceTest {
 
 		newCommerceOrder.setPurchaseOrderNumber(RandomTestUtil.randomString());
 
-		newCommerceOrder.setSubtotal(RandomTestUtil.nextDouble());
+		newCommerceOrder.setSubtotal(new BigDecimal(RandomTestUtil.nextDouble()));
 
-		newCommerceOrder.setShippingPrice(RandomTestUtil.nextDouble());
+		newCommerceOrder.setShippingPrice(new BigDecimal(
+				RandomTestUtil.nextDouble()));
 
-		newCommerceOrder.setTotal(RandomTestUtil.nextDouble());
+		newCommerceOrder.setTotal(new BigDecimal(RandomTestUtil.nextDouble()));
 
 		newCommerceOrder.setAdvanceStatus(RandomTestUtil.randomString());
 
@@ -223,11 +225,11 @@ public class CommerceOrderPersistenceTest {
 			newCommerceOrder.getShippingOptionName());
 		Assert.assertEquals(existingCommerceOrder.getPurchaseOrderNumber(),
 			newCommerceOrder.getPurchaseOrderNumber());
-		AssertUtils.assertEquals(existingCommerceOrder.getSubtotal(),
+		Assert.assertEquals(existingCommerceOrder.getSubtotal(),
 			newCommerceOrder.getSubtotal());
-		AssertUtils.assertEquals(existingCommerceOrder.getShippingPrice(),
+		Assert.assertEquals(existingCommerceOrder.getShippingPrice(),
 			newCommerceOrder.getShippingPrice());
-		AssertUtils.assertEquals(existingCommerceOrder.getTotal(),
+		Assert.assertEquals(existingCommerceOrder.getTotal(),
 			newCommerceOrder.getTotal());
 		Assert.assertEquals(existingCommerceOrder.getAdvanceStatus(),
 			newCommerceOrder.getAdvanceStatus());
@@ -613,11 +615,12 @@ public class CommerceOrderPersistenceTest {
 
 		commerceOrder.setPurchaseOrderNumber(RandomTestUtil.randomString());
 
-		commerceOrder.setSubtotal(RandomTestUtil.nextDouble());
+		commerceOrder.setSubtotal(new BigDecimal(RandomTestUtil.nextDouble()));
 
-		commerceOrder.setShippingPrice(RandomTestUtil.nextDouble());
+		commerceOrder.setShippingPrice(new BigDecimal(
+				RandomTestUtil.nextDouble()));
 
-		commerceOrder.setTotal(RandomTestUtil.nextDouble());
+		commerceOrder.setTotal(new BigDecimal(RandomTestUtil.nextDouble()));
 
 		commerceOrder.setAdvanceStatus(RandomTestUtil.randomString());
 

@@ -51,7 +51,7 @@ public class CommerceShippingFixedOptionLocalServiceWrapper
 		long commerceShippingMethodId,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		double amount, double priority,
+		java.math.BigDecimal amount, double priority,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _commerceShippingFixedOptionLocalService.addCommerceShippingFixedOption(commerceShippingMethodId,
@@ -311,7 +311,7 @@ public class CommerceShippingFixedOptionLocalServiceWrapper
 		long commerceShippingFixedOptionId,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		double amount, double priority)
+		java.math.BigDecimal amount, double priority)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _commerceShippingFixedOptionLocalService.updateCommerceShippingFixedOption(commerceShippingFixedOptionId,
 			nameMap, descriptionMap, amount, priority);

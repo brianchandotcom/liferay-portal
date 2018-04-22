@@ -58,7 +58,7 @@ public class CommerceOrderItemServiceHttp {
 	public static com.liferay.commerce.model.CommerceOrderItem addCommerceOrderItem(
 		HttpPrincipal httpPrincipal, long commerceOrderId, long cpInstanceId,
 		int quantity, int shippedQuantity, java.lang.String json,
-		java.lang.Double price,
+		java.math.BigDecimal price,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -387,7 +387,7 @@ public class CommerceOrderItemServiceHttp {
 
 	public static com.liferay.commerce.model.CommerceOrderItem updateCommerceOrderItem(
 		HttpPrincipal httpPrincipal, long commerceOrderItemId, int quantity,
-		java.lang.String json, double price)
+		java.lang.String json, java.math.BigDecimal price)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(CommerceOrderItemServiceUtil.class,
@@ -422,7 +422,7 @@ public class CommerceOrderItemServiceHttp {
 	private static Log _log = LogFactoryUtil.getLog(CommerceOrderItemServiceHttp.class);
 	private static final Class<?>[] _addCommerceOrderItemParameterTypes0 = new Class[] {
 			long.class, long.class, int.class, int.class, java.lang.String.class,
-			java.lang.Double.class,
+			java.math.BigDecimal.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _deleteCommerceOrderItemParameterTypes1 = new Class[] {
@@ -455,6 +455,7 @@ public class CommerceOrderItemServiceHttp {
 			long.class, int.class
 		};
 	private static final Class<?>[] _updateCommerceOrderItemParameterTypes10 = new Class[] {
-			long.class, int.class, java.lang.String.class, double.class
+			long.class, int.class, java.lang.String.class,
+			java.math.BigDecimal.class
 		};
 }

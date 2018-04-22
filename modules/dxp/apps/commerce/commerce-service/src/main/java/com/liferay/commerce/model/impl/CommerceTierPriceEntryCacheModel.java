@@ -27,6 +27,8 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
+import java.math.BigDecimal;
+
 import java.util.Date;
 
 /**
@@ -151,7 +153,8 @@ public class CommerceTierPriceEntryCacheModel implements CacheModel<CommerceTier
 	}
 
 	@Override
-	public void readExternal(ObjectInput objectInput) throws IOException {
+	public void readExternal(ObjectInput objectInput)
+		throws ClassNotFoundException, IOException {
 		uuid = objectInput.readUTF();
 
 		commerceTierPriceEntryId = objectInput.readLong();
@@ -166,8 +169,7 @@ public class CommerceTierPriceEntryCacheModel implements CacheModel<CommerceTier
 		modifiedDate = objectInput.readLong();
 
 		commercePriceEntryId = objectInput.readLong();
-
-		price = objectInput.readDouble();
+		price = (BigDecimal)objectInput.readObject();
 
 		minQuantity = objectInput.readInt();
 		lastPublishDate = objectInput.readLong();
@@ -202,8 +204,7 @@ public class CommerceTierPriceEntryCacheModel implements CacheModel<CommerceTier
 		objectOutput.writeLong(modifiedDate);
 
 		objectOutput.writeLong(commercePriceEntryId);
-
-		objectOutput.writeDouble(price);
+		objectOutput.writeObject(price);
 
 		objectOutput.writeInt(minQuantity);
 		objectOutput.writeLong(lastPublishDate);
@@ -218,7 +219,7 @@ public class CommerceTierPriceEntryCacheModel implements CacheModel<CommerceTier
 	public long createDate;
 	public long modifiedDate;
 	public long commercePriceEntryId;
-	public double price;
+	public BigDecimal price;
 	public int minQuantity;
 	public long lastPublishDate;
 }

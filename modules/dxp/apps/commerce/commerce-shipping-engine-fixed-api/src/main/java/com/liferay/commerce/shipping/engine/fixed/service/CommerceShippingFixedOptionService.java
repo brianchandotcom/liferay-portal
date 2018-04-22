@@ -30,6 +30,8 @@ import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
+import java.math.BigDecimal;
+
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -60,7 +62,7 @@ public interface CommerceShippingFixedOptionService extends BaseService {
 	 */
 	public CommerceShippingFixedOption addCommerceShippingFixedOption(
 		long commerceShippingMethodId, Map<Locale, java.lang.String> nameMap,
-		Map<Locale, java.lang.String> descriptionMap, double amount,
+		Map<Locale, java.lang.String> descriptionMap, BigDecimal amount,
 		double priority, ServiceContext serviceContext)
 		throws PortalException;
 
@@ -94,6 +96,6 @@ public interface CommerceShippingFixedOptionService extends BaseService {
 	public CommerceShippingFixedOption updateCommerceShippingFixedOption(
 		long commerceShippingFixedOptionId,
 		Map<Locale, java.lang.String> nameMap,
-		Map<Locale, java.lang.String> descriptionMap, double amount,
+		Map<Locale, java.lang.String> descriptionMap, BigDecimal amount,
 		double priority) throws PortalException;
 }

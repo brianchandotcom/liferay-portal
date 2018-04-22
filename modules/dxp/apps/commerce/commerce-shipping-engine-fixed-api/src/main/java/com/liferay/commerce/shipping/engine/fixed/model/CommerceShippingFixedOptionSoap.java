@@ -18,6 +18,8 @@ import aQute.bnd.annotation.ProviderType;
 
 import java.io.Serializable;
 
+import java.math.BigDecimal;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -183,11 +185,11 @@ public class CommerceShippingFixedOptionSoap implements Serializable {
 		_description = description;
 	}
 
-	public double getAmount() {
+	public BigDecimal getAmount() {
 		return _amount;
 	}
 
-	public void setAmount(double amount) {
+	public void setAmount(BigDecimal amount) {
 		_amount = amount;
 	}
 
@@ -209,6 +211,6 @@ public class CommerceShippingFixedOptionSoap implements Serializable {
 	private long _commerceShippingMethodId;
 	private String _name;
 	private String _description;
-	private double _amount;
+	private BigDecimal _amount;
 	private double _priority;
 }

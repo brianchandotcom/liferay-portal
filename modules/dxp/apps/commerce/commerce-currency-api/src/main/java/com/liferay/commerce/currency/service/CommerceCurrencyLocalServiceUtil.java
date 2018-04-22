@@ -16,7 +16,8 @@ package com.liferay.commerce.currency.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.osgi.util.ServiceTrackerFactory;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
 
 import org.osgi.util.tracker.ServiceTracker;
 
@@ -55,9 +56,9 @@ public class CommerceCurrencyLocalServiceUtil {
 
 	public static com.liferay.commerce.currency.model.CommerceCurrency addCommerceCurrency(
 		java.lang.String code,
-		java.util.Map<java.util.Locale, java.lang.String> nameMap, double rate,
-		java.lang.String roundingType, boolean primary, double priority,
-		boolean active,
+		java.util.Map<java.util.Locale, java.lang.String> nameMap,
+		java.math.BigDecimal rate, java.lang.String roundingType,
+		boolean primary, double priority, boolean active,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
@@ -383,9 +384,9 @@ public class CommerceCurrencyLocalServiceUtil {
 
 	public static com.liferay.commerce.currency.model.CommerceCurrency updateCommerceCurrency(
 		long commerceCurrencyId, java.lang.String code,
-		java.util.Map<java.util.Locale, java.lang.String> nameMap, double rate,
-		java.lang.String roundingType, boolean primary, double priority,
-		boolean active,
+		java.util.Map<java.util.Locale, java.lang.String> nameMap,
+		java.math.BigDecimal rate, java.lang.String roundingType,
+		boolean primary, double priority, boolean active,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
@@ -394,7 +395,7 @@ public class CommerceCurrencyLocalServiceUtil {
 	}
 
 	public static com.liferay.commerce.currency.model.CommerceCurrency updateCommerceCurrencyRate(
-		long commerceCurrencyId, double rate)
+		long commerceCurrencyId, java.math.BigDecimal rate)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().updateCommerceCurrencyRate(commerceCurrencyId, rate);
 	}
@@ -415,6 +416,17 @@ public class CommerceCurrencyLocalServiceUtil {
 		return _serviceTracker.getService();
 	}
 
-	private static ServiceTracker<CommerceCurrencyLocalService, CommerceCurrencyLocalService> _serviceTracker =
-		ServiceTrackerFactory.open(CommerceCurrencyLocalService.class);
+	private static ServiceTracker<CommerceCurrencyLocalService, CommerceCurrencyLocalService> _serviceTracker;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(CommerceCurrencyLocalService.class);
+
+		ServiceTracker<CommerceCurrencyLocalService, CommerceCurrencyLocalService> serviceTracker =
+			new ServiceTracker<CommerceCurrencyLocalService, CommerceCurrencyLocalService>(bundle.getBundleContext(),
+				CommerceCurrencyLocalService.class, null);
+
+		serviceTracker.open();
+
+		_serviceTracker = serviceTracker;
+	}
 }

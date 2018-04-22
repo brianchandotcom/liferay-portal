@@ -29,6 +29,8 @@ import com.liferay.portal.kernel.service.ServiceContext;
 
 import java.io.Serializable;
 
+import java.math.BigDecimal;
+
 import java.util.Date;
 import java.util.Locale;
 import java.util.Map;
@@ -416,14 +418,14 @@ public interface CommerceShippingFixedOptionModel extends BaseModel<CommerceShip
 	 *
 	 * @return the amount of this commerce shipping fixed option
 	 */
-	public double getAmount();
+	public BigDecimal getAmount();
 
 	/**
 	 * Sets the amount of this commerce shipping fixed option.
 	 *
 	 * @param amount the amount of this commerce shipping fixed option
 	 */
-	public void setAmount(double amount);
+	public void setAmount(BigDecimal amount);
 
 	/**
 	 * Returns the priority of this commerce shipping fixed option.

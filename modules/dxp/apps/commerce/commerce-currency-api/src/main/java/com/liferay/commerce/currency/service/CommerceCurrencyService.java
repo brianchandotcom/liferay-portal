@@ -30,6 +30,8 @@ import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
+import java.math.BigDecimal;
+
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -59,7 +61,7 @@ public interface CommerceCurrencyService extends BaseService {
 	 * Never modify or reference this interface directly. Always use {@link CommerceCurrencyServiceUtil} to access the commerce currency remote service. Add custom service methods to {@link com.liferay.commerce.currency.service.impl.CommerceCurrencyServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	public CommerceCurrency addCommerceCurrency(java.lang.String code,
-		Map<Locale, java.lang.String> nameMap, double rate,
+		Map<Locale, java.lang.String> nameMap, BigDecimal rate,
 		java.lang.String roundingType, boolean primary, double priority,
 		boolean active, ServiceContext serviceContext)
 		throws PortalException;
@@ -105,7 +107,7 @@ public interface CommerceCurrencyService extends BaseService {
 
 	public CommerceCurrency updateCommerceCurrency(long commerceCurrencyId,
 		java.lang.String code, Map<Locale, java.lang.String> nameMap,
-		double rate, java.lang.String roundingType, boolean primary,
+		BigDecimal rate, java.lang.String roundingType, boolean primary,
 		double priority, boolean active, ServiceContext serviceContext)
 		throws PortalException;
 

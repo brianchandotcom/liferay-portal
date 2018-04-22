@@ -30,6 +30,8 @@ import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
+import java.math.BigDecimal;
+
 import java.util.List;
 
 /**
@@ -60,7 +62,7 @@ public interface CommerceShippingFixedOptionRelService extends BaseService {
 		long commerceShippingMethodId, long commerceShippingFixedOptionId,
 		long commerceWarehouseId, long commerceCountryId,
 		long commerceRegionId, java.lang.String zip, double weightFrom,
-		double weightTo, double fixedPrice, double rateUnitWeightPrice,
+		double weightTo, BigDecimal fixedPrice, BigDecimal rateUnitWeightPrice,
 		double ratePercentage, ServiceContext serviceContext)
 		throws PortalException;
 
@@ -112,7 +114,7 @@ public interface CommerceShippingFixedOptionRelService extends BaseService {
 	public CommerceShippingFixedOptionRel updateCommerceShippingFixedOptionRel(
 		long commerceShippingFixedOptionRelId, long commerceWarehouseId,
 		long commerceCountryId, long commerceRegionId, java.lang.String zip,
-		double weightFrom, double weightTo, double fixedPrice,
-		double rateUnitWeightPrice, double ratePercentage)
+		double weightFrom, double weightTo, BigDecimal fixedPrice,
+		BigDecimal rateUnitWeightPrice, double ratePercentage)
 		throws PortalException;
 }

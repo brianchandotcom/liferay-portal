@@ -42,26 +42,27 @@ public class CommercePriceCalculationLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.commerce.service.impl.CommercePriceCalculationLocalServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static java.lang.String formatPrice(long groupId, double price)
+	public static java.lang.String formatPrice(long groupId,
+		java.math.BigDecimal price)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().formatPrice(groupId, price);
 	}
 
 	public static java.lang.String formatPriceWithCurrency(
-		long commerceCurrencyId, double price)
+		long commerceCurrencyId, java.math.BigDecimal price)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().formatPriceWithCurrency(commerceCurrencyId, price);
 	}
 
-	public static double getFinalPrice(long groupId, long userId,
+	public static java.math.BigDecimal getFinalPrice(long groupId, long userId,
 		long cpInstanceId, int quantity)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .getFinalPrice(groupId, userId, cpInstanceId, quantity);
 	}
 
-	public static double getFinalPrice(long groupId, long commerceCurrencyId,
-		long userId, long cpInstanceId, int quantity)
+	public static java.math.BigDecimal getFinalPrice(long groupId,
+		long commerceCurrencyId, long userId, long cpInstanceId, int quantity)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .getFinalPrice(groupId, commerceCurrencyId, userId,
@@ -90,7 +91,7 @@ public class CommercePriceCalculationLocalServiceUtil {
 		return getService().getFormattedOrderSubtotal(commerceOrder);
 	}
 
-	public static double getOrderSubtotal(
+	public static java.math.BigDecimal getOrderSubtotal(
 		com.liferay.commerce.model.CommerceOrder commerceOrder)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getOrderSubtotal(commerceOrder);
@@ -105,14 +106,14 @@ public class CommercePriceCalculationLocalServiceUtil {
 		return getService().getOSGiServiceIdentifier();
 	}
 
-	public static double getUnitPrice(long groupId, long userId,
+	public static java.math.BigDecimal getUnitPrice(long groupId, long userId,
 		long cpInstanceId, int quantity)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getUnitPrice(groupId, userId, cpInstanceId, quantity);
 	}
 
-	public static double getUnitPrice(long groupId, long commerceCurrencyId,
-		long userId, long cpInstanceId, int quantity)
+	public static java.math.BigDecimal getUnitPrice(long groupId,
+		long commerceCurrencyId, long userId, long cpInstanceId, int quantity)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .getUnitPrice(groupId, commerceCurrencyId, userId,

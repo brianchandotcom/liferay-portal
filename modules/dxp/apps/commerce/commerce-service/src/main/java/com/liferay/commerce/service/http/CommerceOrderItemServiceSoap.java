@@ -67,7 +67,7 @@ import java.rmi.RemoteException;
 public class CommerceOrderItemServiceSoap {
 	public static com.liferay.commerce.model.CommerceOrderItemSoap addCommerceOrderItem(
 		long commerceOrderId, long cpInstanceId, int quantity,
-		int shippedQuantity, java.lang.String json, java.lang.Double price,
+		int shippedQuantity, java.lang.String json, java.math.BigDecimal price,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
@@ -185,7 +185,7 @@ public class CommerceOrderItemServiceSoap {
 
 	public static com.liferay.commerce.model.CommerceOrderItemSoap updateCommerceOrderItem(
 		long commerceOrderItemId, int quantity, java.lang.String json,
-		double price) throws RemoteException {
+		java.math.BigDecimal price) throws RemoteException {
 		try {
 			com.liferay.commerce.model.CommerceOrderItem returnValue = CommerceOrderItemServiceUtil.updateCommerceOrderItem(commerceOrderItemId,
 					quantity, json, price);

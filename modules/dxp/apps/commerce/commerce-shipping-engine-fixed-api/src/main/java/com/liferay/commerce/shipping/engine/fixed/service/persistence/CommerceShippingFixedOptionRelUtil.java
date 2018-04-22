@@ -18,11 +18,12 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.commerce.shipping.engine.fixed.model.CommerceShippingFixedOptionRel;
 
-import com.liferay.osgi.util.ServiceTrackerFactory;
-
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
 
 import org.osgi.util.tracker.ServiceTracker;
 
@@ -644,6 +645,17 @@ public class CommerceShippingFixedOptionRelUtil {
 		return _serviceTracker.getService();
 	}
 
-	private static ServiceTracker<CommerceShippingFixedOptionRelPersistence, CommerceShippingFixedOptionRelPersistence> _serviceTracker =
-		ServiceTrackerFactory.open(CommerceShippingFixedOptionRelPersistence.class);
+	private static ServiceTracker<CommerceShippingFixedOptionRelPersistence, CommerceShippingFixedOptionRelPersistence> _serviceTracker;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(CommerceShippingFixedOptionRelPersistence.class);
+
+		ServiceTracker<CommerceShippingFixedOptionRelPersistence, CommerceShippingFixedOptionRelPersistence> serviceTracker =
+			new ServiceTracker<CommerceShippingFixedOptionRelPersistence, CommerceShippingFixedOptionRelPersistence>(bundle.getBundleContext(),
+				CommerceShippingFixedOptionRelPersistence.class, null);
+
+		serviceTracker.open();
+
+		_serviceTracker = serviceTracker;
+	}
 }

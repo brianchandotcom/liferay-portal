@@ -90,5 +90,7 @@
 	</entity>
 	<exceptions>
 		<exception>CommerceUserSegmentCriterionType</exception>
+		<exception>CommerceUserSegmentEntryKey</exception>
+		<exception>CommerceUserSegmentEntrySystem</exception>
 	</exceptions>
 </service-builder>

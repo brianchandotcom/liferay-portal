@@ -63,8 +63,10 @@
 		<!-- Other fields -->
 
 		<column localized="true" name="name" type="String" />
-		<column name="priority" type="double" />
+		<column name="key" type="boolean" />
 		<column name="active" type="boolean" />
+		<column name="system" type="boolean" />
+		<column name="priority" type="double" />
 
 		<!-- Order -->
 

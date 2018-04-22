@@ -40,13 +40,15 @@ CommerceUserSegmentEntry commerceUserSegmentEntry = (CommerceUserSegmentEntry)ro
 		url="<%= editURL %>"
 	/>
 
-	<portlet:actionURL name="editCommerceUserSegmentEntry" var="deleteURL">
-		<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE %>" />
-		<portlet:param name="redirect" value="<%= currentURL %>" />
-		<portlet:param name="commerceUserSegmentEntryId" value="<%= String.valueOf(commerceUserSegmentEntry.getCommerceUserSegmentEntryId()) %>" />
-	</portlet:actionURL>
+	<c:if test="<%= !commerceUserSegmentEntry.isSystem() %>">
+		<portlet:actionURL name="editCommerceUserSegmentEntry" var="deleteURL">
+			<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE %>" />
+			<portlet:param name="redirect" value="<%= currentURL %>" />
+			<portlet:param name="commerceUserSegmentEntryId" value="<%= String.valueOf(commerceUserSegmentEntry.getCommerceUserSegmentEntryId()) %>" />
+		</portlet:actionURL>
 
-	<liferay-ui:icon-delete
-		url="<%= deleteURL %>"
-	/>
+		<liferay-ui:icon-delete
+			url="<%= deleteURL %>"
+		/>
+	</c:if>
 </liferay-ui:icon-menu>

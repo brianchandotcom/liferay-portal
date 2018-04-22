@@ -122,8 +122,10 @@ public class EditCommerceUserSegmentEntryMVCActionCommand
 			actionRequest, "commerceUserSegmentEntryId");
 
 		String name = ParamUtil.getString(actionRequest, "name");
-		double priority = ParamUtil.getDouble(actionRequest, "priority");
+
+		String key = ParamUtil.getString(actionRequest, "key", name);
 		boolean active = ParamUtil.getBoolean(actionRequest, "active", true);
+		double priority = ParamUtil.getDouble(actionRequest, "priority");
 
 		Map<Locale, String> nameMap = new HashMap<>();
 
@@ -135,14 +137,14 @@ public class EditCommerceUserSegmentEntryMVCActionCommand
 				actionRequest, "name");
 
 			_commerceUserSegmentEntryService.updateCommerceUserSegmentEntry(
-				commerceUserSegmentEntryId, nameMap, priority, active,
+				commerceUserSegmentEntryId, nameMap, key, active, priority,
 				serviceContext);
 		}
 		else {
 			nameMap.put(_portal.getLocale(actionRequest), name);
 
 			_commerceUserSegmentEntryService.addCommerceUserSegmentEntry(
-				nameMap, priority, active, serviceContext);
+				nameMap, key, active, false, priority, serviceContext);
 
 			JSONObject jsonObject = _jsonFactory.createJSONObject();
 

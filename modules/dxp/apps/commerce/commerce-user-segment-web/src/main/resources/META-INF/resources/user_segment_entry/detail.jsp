@@ -37,9 +37,11 @@ long commerceUserSegmentEntryId = commerceUserSegmentDisplayContext.getCommerceU
 			<aui:fieldset>
 				<aui:input autoFocus="<%= true %>" name="name" />
 
+				<aui:input disabled="<%= commerceUserSegmentEntry.isSystem() %>" helpMessage="key-help" name="key" />
+
 				<aui:input name="priority" />
 
-				<aui:input name="active" />
+				<aui:input disabled="<%= commerceUserSegmentEntry.isSystem() %>" name="active" />
 			</aui:fieldset>
 		</aui:fieldset-group>
 	</div>
@@ -56,3 +58,21 @@ long commerceUserSegmentEntryId = commerceUserSegmentDisplayContext.getCommerceU
 		submitForm(document.<portlet:namespace />fm);
 	}
 </aui:script>
+
+<c:if test="<%= commerceUserSegmentEntry == null %>">
+	<aui:script sandbox="<%= true %>">
+		var form = $(document.<portlet:namespace />fm);
+
+		var keyInput = form.fm('key');
+		var nameInput = form.fm('name');
+
+		var onNameInput = _.debounce(
+			function(event) {
+				keyInput.val(nameInput.val());
+			},
+			200
+		);
+
+		nameInput.on('input', onNameInput);
+	</aui:script>
+</c:if>

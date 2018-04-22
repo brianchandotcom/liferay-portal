@@ -561,6 +561,7 @@
 
 		<!-- Other fields -->
 
+		<column name="parentCommercePriceListId" type="long" />
 		<column name="commerceCurrencyId" type="long" />
 		<column name="name" type="String" />
 		<column name="priority" type="double" />

@@ -161,15 +161,15 @@ public class EditCommercePriceEntryMVCActionCommand
 			long commercePriceEntryId, ActionRequest actionRequest)
 		throws Exception {
 
-		String price = ParamUtil.getString(actionRequest, "price");
+		double price = ParamUtil.getDouble(actionRequest, "price");
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			CommercePriceEntry.class.getName(), actionRequest);
 
 		CommercePriceEntry commercePriceEntry =
 			_commercePriceEntryService.updateCommercePriceEntry(
-				commercePriceEntryId, new BigDecimal(price), BigDecimal.ZERO,
-				serviceContext);
+				commercePriceEntryId, BigDecimal.valueOf(price),
+				BigDecimal.ZERO, serviceContext);
 
 		return commercePriceEntry;
 	}

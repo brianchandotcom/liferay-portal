@@ -258,11 +258,11 @@ public class EditCPInstanceMVCActionCommand extends BaseMVCActionCommand {
 
 		long cpInstanceId = ParamUtil.getLong(actionRequest, "cpInstanceId");
 
-		String cost = ParamUtil.getString(actionRequest, "cost");
-		String price = ParamUtil.getString(actionRequest, "price");
+		double cost = ParamUtil.getDouble(actionRequest, "cost");
+		double price = ParamUtil.getDouble(actionRequest, "price");
 
 		_cpInstanceService.updatePricingInfo(
-			cpInstanceId, new BigDecimal(cost), new BigDecimal(price),
+			cpInstanceId, BigDecimal.valueOf(cost), BigDecimal.valueOf(price),
 			serviceContext);
 	}
 

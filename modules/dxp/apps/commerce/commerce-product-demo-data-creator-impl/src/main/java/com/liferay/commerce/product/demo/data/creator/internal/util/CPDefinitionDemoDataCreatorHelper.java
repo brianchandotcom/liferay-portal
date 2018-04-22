@@ -139,7 +139,7 @@ public class CPDefinitionDemoDataCreatorHelper
 
 				// Update commerce product instances price
 
-				String price = productJSONObject.getString("price");
+				double price = productJSONObject.getDouble("price");
 
 				List<CPInstance> cpInstances =
 					_cpInstanceLocalService.getCPDefinitionInstances(
@@ -148,7 +148,7 @@ public class CPDefinitionDemoDataCreatorHelper
 				for (CPInstance cpInstance : cpInstances) {
 					_cpInstanceLocalService.updatePricingInfo(
 						cpInstance.getCPInstanceId(), cpInstance.getCost(),
-						new BigDecimal(price), serviceContext);
+						BigDecimal.valueOf(price), serviceContext);
 				}
 			}
 		}

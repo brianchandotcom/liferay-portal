@@ -63,7 +63,7 @@
 		<!-- Other fields -->
 
 		<column localized="true" name="name" type="String" />
-		<column name="key" type="boolean" />
+		<column name="key" type="String" />
 		<column name="active" type="boolean" />
 		<column name="system" type="boolean" />
 		<column name="priority" type="double" />
@@ -79,12 +79,13 @@
 		<finder name="GroupId" return-type="Collection">
 			<finder-column name="groupId" />
 		</finder>
+		<finder name="G_K" return-type="CommerceUserSegmentEntry" unique="true">
+			<finder-column name="groupId" />
+			<finder-column name="key" />
+		</finder>
 		<finder name="G_A" return-type="Collection">
 			<finder-column name="groupId" />
 			<finder-column name="active" />
-		</finder>
-		<finder name="Key" return-type="CommerceUserSegmentEntry" unique="true">
-			<finder-column name="key" />
 		</finder>
 		<reference entity="ExpandoRow" package-path="com.liferay.portlet.expando" />
 	</entity>

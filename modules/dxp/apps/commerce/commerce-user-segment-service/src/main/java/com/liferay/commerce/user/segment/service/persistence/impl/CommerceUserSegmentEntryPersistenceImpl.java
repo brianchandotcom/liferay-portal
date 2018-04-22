@@ -54,6 +54,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -1093,7 +1094,7 @@ public class CommerceUserSegmentEntryPersistenceImpl extends BasePersistenceImpl
 			if ((list != null) && !list.isEmpty()) {
 				for (CommerceUserSegmentEntry commerceUserSegmentEntry : list) {
 					if ((groupId != commerceUserSegmentEntry.getGroupId()) ||
-							(active != commerceUserSegmentEntry.getActive())) {
+							(active != commerceUserSegmentEntry.isActive())) {
 						list = null;
 
 						break;
@@ -1907,6 +1908,263 @@ public class CommerceUserSegmentEntryPersistenceImpl extends BasePersistenceImpl
 	private static final String _FINDER_COLUMN_G_A_GROUPID_2 = "commerceUserSegmentEntry.groupId = ? AND ";
 	private static final String _FINDER_COLUMN_G_A_ACTIVE_2 = "commerceUserSegmentEntry.active = ?";
 	private static final String _FINDER_COLUMN_G_A_ACTIVE_2_SQL = "commerceUserSegmentEntry.active_ = ?";
+	public static final FinderPath FINDER_PATH_FETCH_BY_G_K = new FinderPath(CommerceUserSegmentEntryModelImpl.ENTITY_CACHE_ENABLED,
+			CommerceUserSegmentEntryModelImpl.FINDER_CACHE_ENABLED,
+			CommerceUserSegmentEntryImpl.class, FINDER_CLASS_NAME_ENTITY,
+			"fetchByG_K",
+			new String[] { Long.class.getName(), String.class.getName() },
+			CommerceUserSegmentEntryModelImpl.GROUPID_COLUMN_BITMASK |
+			CommerceUserSegmentEntryModelImpl.KEY_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_G_K = new FinderPath(CommerceUserSegmentEntryModelImpl.ENTITY_CACHE_ENABLED,
+			CommerceUserSegmentEntryModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_K",
+			new String[] { Long.class.getName(), String.class.getName() });
+
+	/**
+	 * Returns the commerce user segment entry where groupId = &#63; and key = &#63; or throws a {@link NoSuchUserSegmentEntryException} if it could not be found.
+	 *
+	 * @param groupId the group ID
+	 * @param key the key
+	 * @return the matching commerce user segment entry
+	 * @throws NoSuchUserSegmentEntryException if a matching commerce user segment entry could not be found
+	 */
+	@Override
+	public CommerceUserSegmentEntry findByG_K(long groupId, String key)
+		throws NoSuchUserSegmentEntryException {
+		CommerceUserSegmentEntry commerceUserSegmentEntry = fetchByG_K(groupId,
+				key);
+
+		if (commerceUserSegmentEntry == null) {
+			StringBundler msg = new StringBundler(6);
+
+			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+			msg.append("groupId=");
+			msg.append(groupId);
+
+			msg.append(", key=");
+			msg.append(key);
+
+			msg.append("}");
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(msg.toString());
+			}
+
+			throw new NoSuchUserSegmentEntryException(msg.toString());
+		}
+
+		return commerceUserSegmentEntry;
+	}
+
+	/**
+	 * Returns the commerce user segment entry where groupId = &#63; and key = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param groupId the group ID
+	 * @param key the key
+	 * @return the matching commerce user segment entry, or <code>null</code> if a matching commerce user segment entry could not be found
+	 */
+	@Override
+	public CommerceUserSegmentEntry fetchByG_K(long groupId, String key) {
+		return fetchByG_K(groupId, key, true);
+	}
+
+	/**
+	 * Returns the commerce user segment entry where groupId = &#63; and key = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param groupId the group ID
+	 * @param key the key
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the matching commerce user segment entry, or <code>null</code> if a matching commerce user segment entry could not be found
+	 */
+	@Override
+	public CommerceUserSegmentEntry fetchByG_K(long groupId, String key,
+		boolean retrieveFromCache) {
+		Object[] finderArgs = new Object[] { groupId, key };
+
+		Object result = null;
+
+		if (retrieveFromCache) {
+			result = finderCache.getResult(FINDER_PATH_FETCH_BY_G_K,
+					finderArgs, this);
+		}
+
+		if (result instanceof CommerceUserSegmentEntry) {
+			CommerceUserSegmentEntry commerceUserSegmentEntry = (CommerceUserSegmentEntry)result;
+
+			if ((groupId != commerceUserSegmentEntry.getGroupId()) ||
+					!Objects.equals(key, commerceUserSegmentEntry.getKey())) {
+				result = null;
+			}
+		}
+
+		if (result == null) {
+			StringBundler query = new StringBundler(4);
+
+			query.append(_SQL_SELECT_COMMERCEUSERSEGMENTENTRY_WHERE);
+
+			query.append(_FINDER_COLUMN_G_K_GROUPID_2);
+
+			boolean bindKey = false;
+
+			if (key == null) {
+				query.append(_FINDER_COLUMN_G_K_KEY_1);
+			}
+			else if (key.equals("")) {
+				query.append(_FINDER_COLUMN_G_K_KEY_3);
+			}
+			else {
+				bindKey = true;
+
+				query.append(_FINDER_COLUMN_G_K_KEY_2);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(groupId);
+
+				if (bindKey) {
+					qPos.add(key);
+				}
+
+				List<CommerceUserSegmentEntry> list = q.list();
+
+				if (list.isEmpty()) {
+					finderCache.putResult(FINDER_PATH_FETCH_BY_G_K, finderArgs,
+						list);
+				}
+				else {
+					CommerceUserSegmentEntry commerceUserSegmentEntry = list.get(0);
+
+					result = commerceUserSegmentEntry;
+
+					cacheResult(commerceUserSegmentEntry);
+
+					if ((commerceUserSegmentEntry.getGroupId() != groupId) ||
+							(commerceUserSegmentEntry.getKey() == null) ||
+							!commerceUserSegmentEntry.getKey().equals(key)) {
+						finderCache.putResult(FINDER_PATH_FETCH_BY_G_K,
+							finderArgs, commerceUserSegmentEntry);
+					}
+				}
+			}
+			catch (Exception e) {
+				finderCache.removeResult(FINDER_PATH_FETCH_BY_G_K, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		if (result instanceof List<?>) {
+			return null;
+		}
+		else {
+			return (CommerceUserSegmentEntry)result;
+		}
+	}
+
+	/**
+	 * Removes the commerce user segment entry where groupId = &#63; and key = &#63; from the database.
+	 *
+	 * @param groupId the group ID
+	 * @param key the key
+	 * @return the commerce user segment entry that was removed
+	 */
+	@Override
+	public CommerceUserSegmentEntry removeByG_K(long groupId, String key)
+		throws NoSuchUserSegmentEntryException {
+		CommerceUserSegmentEntry commerceUserSegmentEntry = findByG_K(groupId,
+				key);
+
+		return remove(commerceUserSegmentEntry);
+	}
+
+	/**
+	 * Returns the number of commerce user segment entries where groupId = &#63; and key = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param key the key
+	 * @return the number of matching commerce user segment entries
+	 */
+	@Override
+	public int countByG_K(long groupId, String key) {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_G_K;
+
+		Object[] finderArgs = new Object[] { groupId, key };
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(3);
+
+			query.append(_SQL_COUNT_COMMERCEUSERSEGMENTENTRY_WHERE);
+
+			query.append(_FINDER_COLUMN_G_K_GROUPID_2);
+
+			boolean bindKey = false;
+
+			if (key == null) {
+				query.append(_FINDER_COLUMN_G_K_KEY_1);
+			}
+			else if (key.equals("")) {
+				query.append(_FINDER_COLUMN_G_K_KEY_3);
+			}
+			else {
+				bindKey = true;
+
+				query.append(_FINDER_COLUMN_G_K_KEY_2);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(groupId);
+
+				if (bindKey) {
+					qPos.add(key);
+				}
+
+				count = (Long)q.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_G_K_GROUPID_2 = "commerceUserSegmentEntry.groupId = ? AND ";
+	private static final String _FINDER_COLUMN_G_K_KEY_1 = "commerceUserSegmentEntry.key IS NULL";
+	private static final String _FINDER_COLUMN_G_K_KEY_2 = "commerceUserSegmentEntry.key = ?";
+	private static final String _FINDER_COLUMN_G_K_KEY_3 = "(commerceUserSegmentEntry.key IS NULL OR commerceUserSegmentEntry.key = '')";
 
 	public CommerceUserSegmentEntryPersistenceImpl() {
 		setModelClass(CommerceUserSegmentEntry.class);
@@ -1919,6 +2177,7 @@ public class CommerceUserSegmentEntryPersistenceImpl extends BasePersistenceImpl
 
 			Map<String, String> dbColumnNames = new HashMap<String, String>();
 
+			dbColumnNames.put("key", "key_");
 			dbColumnNames.put("active", "active_");
 
 			field.set(this, dbColumnNames);
@@ -1940,6 +2199,12 @@ public class CommerceUserSegmentEntryPersistenceImpl extends BasePersistenceImpl
 		entityCache.putResult(CommerceUserSegmentEntryModelImpl.ENTITY_CACHE_ENABLED,
 			CommerceUserSegmentEntryImpl.class,
 			commerceUserSegmentEntry.getPrimaryKey(), commerceUserSegmentEntry);
+
+		finderCache.putResult(FINDER_PATH_FETCH_BY_G_K,
+			new Object[] {
+				commerceUserSegmentEntry.getGroupId(),
+				commerceUserSegmentEntry.getKey()
+			}, commerceUserSegmentEntry);
 
 		commerceUserSegmentEntry.resetOriginalValues();
 	}
@@ -1996,6 +2261,9 @@ public class CommerceUserSegmentEntryPersistenceImpl extends BasePersistenceImpl
 
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+		clearUniqueFindersCache((CommerceUserSegmentEntryModelImpl)commerceUserSegmentEntry,
+			true);
 	}
 
 	@Override
@@ -2008,6 +2276,47 @@ public class CommerceUserSegmentEntryPersistenceImpl extends BasePersistenceImpl
 			entityCache.removeResult(CommerceUserSegmentEntryModelImpl.ENTITY_CACHE_ENABLED,
 				CommerceUserSegmentEntryImpl.class,
 				commerceUserSegmentEntry.getPrimaryKey());
+
+			clearUniqueFindersCache((CommerceUserSegmentEntryModelImpl)commerceUserSegmentEntry,
+				true);
+		}
+	}
+
+	protected void cacheUniqueFindersCache(
+		CommerceUserSegmentEntryModelImpl commerceUserSegmentEntryModelImpl) {
+		Object[] args = new Object[] {
+				commerceUserSegmentEntryModelImpl.getGroupId(),
+				commerceUserSegmentEntryModelImpl.getKey()
+			};
+
+		finderCache.putResult(FINDER_PATH_COUNT_BY_G_K, args, Long.valueOf(1),
+			false);
+		finderCache.putResult(FINDER_PATH_FETCH_BY_G_K, args,
+			commerceUserSegmentEntryModelImpl, false);
+	}
+
+	protected void clearUniqueFindersCache(
+		CommerceUserSegmentEntryModelImpl commerceUserSegmentEntryModelImpl,
+		boolean clearCurrent) {
+		if (clearCurrent) {
+			Object[] args = new Object[] {
+					commerceUserSegmentEntryModelImpl.getGroupId(),
+					commerceUserSegmentEntryModelImpl.getKey()
+				};
+
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_G_K, args);
+			finderCache.removeResult(FINDER_PATH_FETCH_BY_G_K, args);
+		}
+
+		if ((commerceUserSegmentEntryModelImpl.getColumnBitmask() &
+				FINDER_PATH_FETCH_BY_G_K.getColumnBitmask()) != 0) {
+			Object[] args = new Object[] {
+					commerceUserSegmentEntryModelImpl.getOriginalGroupId(),
+					commerceUserSegmentEntryModelImpl.getOriginalKey()
+				};
+
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_G_K, args);
+			finderCache.removeResult(FINDER_PATH_FETCH_BY_G_K, args);
 		}
 	}
 
@@ -2186,7 +2495,7 @@ public class CommerceUserSegmentEntryPersistenceImpl extends BasePersistenceImpl
 
 			args = new Object[] {
 					commerceUserSegmentEntryModelImpl.getGroupId(),
-					commerceUserSegmentEntryModelImpl.getActive()
+					commerceUserSegmentEntryModelImpl.isActive()
 				};
 
 			finderCache.removeResult(FINDER_PATH_COUNT_BY_G_A, args);
@@ -2245,6 +2554,9 @@ public class CommerceUserSegmentEntryPersistenceImpl extends BasePersistenceImpl
 			commerceUserSegmentEntry.getPrimaryKey(), commerceUserSegmentEntry,
 			false);
 
+		clearUniqueFindersCache(commerceUserSegmentEntryModelImpl, false);
+		cacheUniqueFindersCache(commerceUserSegmentEntryModelImpl);
+
 		commerceUserSegmentEntry.resetOriginalValues();
 
 		return commerceUserSegmentEntry;
@@ -2269,8 +2581,10 @@ public class CommerceUserSegmentEntryPersistenceImpl extends BasePersistenceImpl
 		commerceUserSegmentEntryImpl.setCreateDate(commerceUserSegmentEntry.getCreateDate());
 		commerceUserSegmentEntryImpl.setModifiedDate(commerceUserSegmentEntry.getModifiedDate());
 		commerceUserSegmentEntryImpl.setName(commerceUserSegmentEntry.getName());
-		commerceUserSegmentEntryImpl.setPriority(commerceUserSegmentEntry.getPriority());
+		commerceUserSegmentEntryImpl.setKey(commerceUserSegmentEntry.getKey());
 		commerceUserSegmentEntryImpl.setActive(commerceUserSegmentEntry.isActive());
+		commerceUserSegmentEntryImpl.setSystem(commerceUserSegmentEntry.isSystem());
+		commerceUserSegmentEntryImpl.setPriority(commerceUserSegmentEntry.getPriority());
 
 		return commerceUserSegmentEntryImpl;
 	}
@@ -2711,6 +3025,6 @@ public class CommerceUserSegmentEntryPersistenceImpl extends BasePersistenceImpl
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No CommerceUserSegmentEntry exists with the key {";
 	private static final Log _log = LogFactoryUtil.getLog(CommerceUserSegmentEntryPersistenceImpl.class);
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(new String[] {
-				"active"
+				"key", "active"
 			});
 }

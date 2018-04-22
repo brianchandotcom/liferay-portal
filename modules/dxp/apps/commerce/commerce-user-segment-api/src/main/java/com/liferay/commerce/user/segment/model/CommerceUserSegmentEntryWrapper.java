@@ -68,8 +68,10 @@ public class CommerceUserSegmentEntryWrapper implements CommerceUserSegmentEntry
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("name", getName());
+		attributes.put("key", getKey());
+		attributes.put("active", isActive());
+		attributes.put("system", isSystem());
 		attributes.put("priority", getPriority());
-		attributes.put("active", getActive());
 
 		return attributes;
 	}
@@ -125,16 +127,28 @@ public class CommerceUserSegmentEntryWrapper implements CommerceUserSegmentEntry
 			setName(name);
 		}
 
-		Double priority = (Double)attributes.get("priority");
+		String key = (String)attributes.get("key");
 
-		if (priority != null) {
-			setPriority(priority);
+		if (key != null) {
+			setKey(key);
 		}
 
 		Boolean active = (Boolean)attributes.get("active");
 
 		if (active != null) {
 			setActive(active);
+		}
+
+		Boolean system = (Boolean)attributes.get("system");
+
+		if (system != null) {
+			setSystem(system);
+		}
+
+		Double priority = (Double)attributes.get("priority");
+
+		if (priority != null) {
+			setPriority(priority);
 		}
 	}
 
@@ -211,6 +225,16 @@ public class CommerceUserSegmentEntryWrapper implements CommerceUserSegmentEntry
 	@Override
 	public long getGroupId() {
 		return _commerceUserSegmentEntry.getGroupId();
+	}
+
+	/**
+	* Returns the key of this commerce user segment entry.
+	*
+	* @return the key of this commerce user segment entry
+	*/
+	@Override
+	public java.lang.String getKey() {
+		return _commerceUserSegmentEntry.getKey();
 	}
 
 	/**
@@ -326,6 +350,16 @@ public class CommerceUserSegmentEntryWrapper implements CommerceUserSegmentEntry
 	}
 
 	/**
+	* Returns the system of this commerce user segment entry.
+	*
+	* @return the system of this commerce user segment entry
+	*/
+	@Override
+	public boolean getSystem() {
+		return _commerceUserSegmentEntry.getSystem();
+	}
+
+	/**
 	* Returns the user ID of this commerce user segment entry.
 	*
 	* @return the user ID of this commerce user segment entry
@@ -383,6 +417,16 @@ public class CommerceUserSegmentEntryWrapper implements CommerceUserSegmentEntry
 	@Override
 	public boolean isNew() {
 		return _commerceUserSegmentEntry.isNew();
+	}
+
+	/**
+	* Returns <code>true</code> if this commerce user segment entry is system.
+	*
+	* @return <code>true</code> if this commerce user segment entry is system; <code>false</code> otherwise
+	*/
+	@Override
+	public boolean isSystem() {
+		return _commerceUserSegmentEntry.isSystem();
 	}
 
 	@Override
@@ -472,6 +516,16 @@ public class CommerceUserSegmentEntryWrapper implements CommerceUserSegmentEntry
 	@Override
 	public void setGroupId(long groupId) {
 		_commerceUserSegmentEntry.setGroupId(groupId);
+	}
+
+	/**
+	* Sets the key of this commerce user segment entry.
+	*
+	* @param key the key of this commerce user segment entry
+	*/
+	@Override
+	public void setKey(java.lang.String key) {
+		_commerceUserSegmentEntry.setKey(key);
 	}
 
 	/**
@@ -573,6 +627,16 @@ public class CommerceUserSegmentEntryWrapper implements CommerceUserSegmentEntry
 	@Override
 	public void setPriority(double priority) {
 		_commerceUserSegmentEntry.setPriority(priority);
+	}
+
+	/**
+	* Sets whether this commerce user segment entry is system.
+	*
+	* @param system the system of this commerce user segment entry
+	*/
+	@Override
+	public void setSystem(boolean system) {
+		_commerceUserSegmentEntry.setSystem(system);
 	}
 
 	/**

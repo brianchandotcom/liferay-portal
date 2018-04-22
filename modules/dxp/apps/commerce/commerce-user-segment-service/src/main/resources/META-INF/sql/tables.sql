@@ -21,6 +21,8 @@ create table CommerceUserSegmentEntry (
 	createDate DATE null,
 	modifiedDate DATE null,
 	name STRING null,
-	priority DOUBLE,
-	active_ BOOLEAN
+	key_ VARCHAR(75) null,
+	active_ BOOLEAN,
+	system BOOLEAN,
+	priority DOUBLE
 );

@@ -56,12 +56,12 @@ public class CommerceUserSegmentEntryLocalServiceUtil {
 
 	public static com.liferay.commerce.user.segment.model.CommerceUserSegmentEntry addCommerceUserSegmentEntry(
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
-		double priority, boolean active,
+		java.lang.String key, boolean active, boolean system, double priority,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
-				   .addCommerceUserSegmentEntry(nameMap, priority, active,
-			serviceContext);
+				   .addCommerceUserSegmentEntry(nameMap, key, active, system,
+			priority, serviceContext);
 	}
 
 	/**
@@ -74,6 +74,11 @@ public class CommerceUserSegmentEntryLocalServiceUtil {
 		long commerceUserSegmentEntryId) {
 		return getService()
 				   .createCommerceUserSegmentEntry(commerceUserSegmentEntryId);
+	}
+
+	public static void deleteCommerceUserSegmentEntries(long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().deleteCommerceUserSegmentEntries(groupId);
 	}
 
 	/**
@@ -197,6 +202,11 @@ public class CommerceUserSegmentEntryLocalServiceUtil {
 				   .fetchCommerceUserSegmentEntry(commerceUserSegmentEntryId);
 	}
 
+	public static com.liferay.commerce.user.segment.model.CommerceUserSegmentEntry fetchCommerceUserSegmentEntry(
+		long groupId, java.lang.String key) {
+		return getService().fetchCommerceUserSegmentEntry(groupId, key);
+	}
+
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
 		return getService().getActionableDynamicQuery();
 	}
@@ -277,6 +287,12 @@ public class CommerceUserSegmentEntryLocalServiceUtil {
 		return getService().getPersistedModel(primaryKeyObj);
 	}
 
+	public static void importSystemCommerceUserSegmentEntries(
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().importSystemCommerceUserSegmentEntries(serviceContext);
+	}
+
 	public static com.liferay.portal.kernel.search.BaseModelSearchResult<com.liferay.commerce.user.segment.model.CommerceUserSegmentEntry> searchCommerceUserSegmentEntries(
 		long companyId, long groupId, java.lang.String keywords, int start,
 		int end, com.liferay.portal.kernel.search.Sort sort)
@@ -307,12 +323,12 @@ public class CommerceUserSegmentEntryLocalServiceUtil {
 	public static com.liferay.commerce.user.segment.model.CommerceUserSegmentEntry updateCommerceUserSegmentEntry(
 		long commerceUserSegmentEntryId,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
-		double priority, boolean active,
+		java.lang.String key, boolean active, double priority,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .updateCommerceUserSegmentEntry(commerceUserSegmentEntryId,
-			nameMap, priority, active, serviceContext);
+			nameMap, key, active, priority, serviceContext);
 	}
 
 	public static CommerceUserSegmentEntryLocalService getService() {

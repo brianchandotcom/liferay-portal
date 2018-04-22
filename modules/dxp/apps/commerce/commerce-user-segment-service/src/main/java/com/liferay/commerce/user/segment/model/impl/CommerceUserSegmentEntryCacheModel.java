@@ -65,7 +65,7 @@ public class CommerceUserSegmentEntryCacheModel implements CacheModel<CommerceUs
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(21);
+		StringBundler sb = new StringBundler(25);
 
 		sb.append("{commerceUserSegmentEntryId=");
 		sb.append(commerceUserSegmentEntryId);
@@ -83,10 +83,14 @@ public class CommerceUserSegmentEntryCacheModel implements CacheModel<CommerceUs
 		sb.append(modifiedDate);
 		sb.append(", name=");
 		sb.append(name);
-		sb.append(", priority=");
-		sb.append(priority);
+		sb.append(", key=");
+		sb.append(key);
 		sb.append(", active=");
 		sb.append(active);
+		sb.append(", system=");
+		sb.append(system);
+		sb.append(", priority=");
+		sb.append(priority);
 		sb.append("}");
 
 		return sb.toString();
@@ -129,8 +133,16 @@ public class CommerceUserSegmentEntryCacheModel implements CacheModel<CommerceUs
 			commerceUserSegmentEntryImpl.setName(name);
 		}
 
-		commerceUserSegmentEntryImpl.setPriority(priority);
+		if (key == null) {
+			commerceUserSegmentEntryImpl.setKey("");
+		}
+		else {
+			commerceUserSegmentEntryImpl.setKey(key);
+		}
+
 		commerceUserSegmentEntryImpl.setActive(active);
+		commerceUserSegmentEntryImpl.setSystem(system);
+		commerceUserSegmentEntryImpl.setPriority(priority);
 
 		commerceUserSegmentEntryImpl.resetOriginalValues();
 
@@ -150,10 +162,13 @@ public class CommerceUserSegmentEntryCacheModel implements CacheModel<CommerceUs
 		createDate = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
 		name = objectInput.readUTF();
-
-		priority = objectInput.readDouble();
+		key = objectInput.readUTF();
 
 		active = objectInput.readBoolean();
+
+		system = objectInput.readBoolean();
+
+		priority = objectInput.readDouble();
 	}
 
 	@Override
@@ -184,9 +199,18 @@ public class CommerceUserSegmentEntryCacheModel implements CacheModel<CommerceUs
 			objectOutput.writeUTF(name);
 		}
 
-		objectOutput.writeDouble(priority);
+		if (key == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(key);
+		}
 
 		objectOutput.writeBoolean(active);
+
+		objectOutput.writeBoolean(system);
+
+		objectOutput.writeDouble(priority);
 	}
 
 	public long commerceUserSegmentEntryId;
@@ -197,6 +221,8 @@ public class CommerceUserSegmentEntryCacheModel implements CacheModel<CommerceUs
 	public long createDate;
 	public long modifiedDate;
 	public String name;
-	public double priority;
+	public String key;
 	public boolean active;
+	public boolean system;
+	public double priority;
 }

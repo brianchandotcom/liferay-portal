@@ -37,11 +37,11 @@ public class CommerceUserSegmentEntryServiceWrapper
 	@Override
 	public com.liferay.commerce.user.segment.model.CommerceUserSegmentEntry addCommerceUserSegmentEntry(
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
-		double priority, boolean active,
+		java.lang.String key, boolean active, boolean system, double priority,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _commerceUserSegmentEntryService.addCommerceUserSegmentEntry(nameMap,
-			priority, active, serviceContext);
+			key, active, system, priority, serviceContext);
 	}
 
 	@Override
@@ -103,11 +103,11 @@ public class CommerceUserSegmentEntryServiceWrapper
 	public com.liferay.commerce.user.segment.model.CommerceUserSegmentEntry updateCommerceUserSegmentEntry(
 		long commerceUserSegmentEntryId,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
-		double priority, boolean active,
+		java.lang.String key, boolean active, double priority,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _commerceUserSegmentEntryService.updateCommerceUserSegmentEntry(commerceUserSegmentEntryId,
-			nameMap, priority, active, serviceContext);
+			nameMap, key, active, priority, serviceContext);
 	}
 
 	@Override

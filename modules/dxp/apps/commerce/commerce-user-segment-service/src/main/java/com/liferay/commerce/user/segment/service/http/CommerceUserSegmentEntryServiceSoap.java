@@ -71,7 +71,8 @@ import java.util.Map;
 public class CommerceUserSegmentEntryServiceSoap {
 	public static com.liferay.commerce.user.segment.model.CommerceUserSegmentEntrySoap addCommerceUserSegmentEntry(
 		java.lang.String[] nameMapLanguageIds,
-		java.lang.String[] nameMapValues, double priority, boolean active,
+		java.lang.String[] nameMapValues, java.lang.String key, boolean active,
+		boolean system, double priority,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
@@ -80,7 +81,7 @@ public class CommerceUserSegmentEntryServiceSoap {
 
 			com.liferay.commerce.user.segment.model.CommerceUserSegmentEntry returnValue =
 				CommerceUserSegmentEntryServiceUtil.addCommerceUserSegmentEntry(nameMap,
-					priority, active, serviceContext);
+					key, active, system, priority, serviceContext);
 
 			return com.liferay.commerce.user.segment.model.CommerceUserSegmentEntrySoap.toSoapModel(returnValue);
 		}
@@ -155,7 +156,8 @@ public class CommerceUserSegmentEntryServiceSoap {
 
 	public static com.liferay.commerce.user.segment.model.CommerceUserSegmentEntrySoap updateCommerceUserSegmentEntry(
 		long commerceUserSegmentEntryId, java.lang.String[] nameMapLanguageIds,
-		java.lang.String[] nameMapValues, double priority, boolean active,
+		java.lang.String[] nameMapValues, java.lang.String key, boolean active,
+		double priority,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
@@ -164,7 +166,7 @@ public class CommerceUserSegmentEntryServiceSoap {
 
 			com.liferay.commerce.user.segment.model.CommerceUserSegmentEntry returnValue =
 				CommerceUserSegmentEntryServiceUtil.updateCommerceUserSegmentEntry(commerceUserSegmentEntryId,
-					nameMap, priority, active, serviceContext);
+					nameMap, key, active, priority, serviceContext);
 
 			return com.liferay.commerce.user.segment.model.CommerceUserSegmentEntrySoap.toSoapModel(returnValue);
 		}

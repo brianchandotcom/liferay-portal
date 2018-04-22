@@ -84,8 +84,10 @@ public class CommerceUserSegmentEntryModelImpl extends BaseModelImpl<CommerceUse
 			{ "createDate", Types.TIMESTAMP },
 			{ "modifiedDate", Types.TIMESTAMP },
 			{ "name", Types.VARCHAR },
-			{ "priority", Types.DOUBLE },
-			{ "active_", Types.BOOLEAN }
+			{ "key_", Types.VARCHAR },
+			{ "active_", Types.BOOLEAN },
+			{ "system", Types.BOOLEAN },
+			{ "priority", Types.DOUBLE }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
@@ -98,11 +100,13 @@ public class CommerceUserSegmentEntryModelImpl extends BaseModelImpl<CommerceUse
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("priority", Types.DOUBLE);
+		TABLE_COLUMNS_MAP.put("key_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("active_", Types.BOOLEAN);
+		TABLE_COLUMNS_MAP.put("system", Types.BOOLEAN);
+		TABLE_COLUMNS_MAP.put("priority", Types.DOUBLE);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table CommerceUserSegmentEntry (commerceUserSegmentEntryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name STRING null,priority DOUBLE,active_ BOOLEAN)";
+	public static final String TABLE_SQL_CREATE = "create table CommerceUserSegmentEntry (commerceUserSegmentEntryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name STRING null,key_ VARCHAR(75) null,active_ BOOLEAN,system BOOLEAN,priority DOUBLE)";
 	public static final String TABLE_SQL_DROP = "drop table CommerceUserSegmentEntry";
 	public static final String ORDER_BY_JPQL = " ORDER BY commerceUserSegmentEntry.priority ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY CommerceUserSegmentEntry.priority ASC";
@@ -120,7 +124,8 @@ public class CommerceUserSegmentEntryModelImpl extends BaseModelImpl<CommerceUse
 			true);
 	public static final long ACTIVE_COLUMN_BITMASK = 1L;
 	public static final long GROUPID_COLUMN_BITMASK = 2L;
-	public static final long PRIORITY_COLUMN_BITMASK = 4L;
+	public static final long KEY_COLUMN_BITMASK = 4L;
+	public static final long PRIORITY_COLUMN_BITMASK = 8L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -144,8 +149,10 @@ public class CommerceUserSegmentEntryModelImpl extends BaseModelImpl<CommerceUse
 		model.setCreateDate(soapModel.getCreateDate());
 		model.setModifiedDate(soapModel.getModifiedDate());
 		model.setName(soapModel.getName());
-		model.setPriority(soapModel.getPriority());
+		model.setKey(soapModel.getKey());
 		model.setActive(soapModel.getActive());
+		model.setSystem(soapModel.getSystem());
+		model.setPriority(soapModel.getPriority());
 
 		return model;
 	}
@@ -220,8 +227,10 @@ public class CommerceUserSegmentEntryModelImpl extends BaseModelImpl<CommerceUse
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("name", getName());
+		attributes.put("key", getKey());
+		attributes.put("active", isActive());
+		attributes.put("system", isSystem());
 		attributes.put("priority", getPriority());
-		attributes.put("active", getActive());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -280,16 +289,28 @@ public class CommerceUserSegmentEntryModelImpl extends BaseModelImpl<CommerceUse
 			setName(name);
 		}
 
-		Double priority = (Double)attributes.get("priority");
+		String key = (String)attributes.get("key");
 
-		if (priority != null) {
-			setPriority(priority);
+		if (key != null) {
+			setKey(key);
 		}
 
 		Boolean active = (Boolean)attributes.get("active");
 
 		if (active != null) {
 			setActive(active);
+		}
+
+		Boolean system = (Boolean)attributes.get("system");
+
+		if (system != null) {
+			setSystem(system);
+		}
+
+		Double priority = (Double)attributes.get("priority");
+
+		if (priority != null) {
+			setPriority(priority);
 		}
 	}
 
@@ -510,15 +531,28 @@ public class CommerceUserSegmentEntryModelImpl extends BaseModelImpl<CommerceUse
 
 	@JSON
 	@Override
-	public double getPriority() {
-		return _priority;
+	public String getKey() {
+		if (_key == null) {
+			return "";
+		}
+		else {
+			return _key;
+		}
 	}
 
 	@Override
-	public void setPriority(double priority) {
-		_columnBitmask = -1L;
+	public void setKey(String key) {
+		_columnBitmask |= KEY_COLUMN_BITMASK;
 
-		_priority = priority;
+		if (_originalKey == null) {
+			_originalKey = _key;
+		}
+
+		_key = key;
+	}
+
+	public String getOriginalKey() {
+		return GetterUtil.getString(_originalKey);
 	}
 
 	@JSON
@@ -548,6 +582,36 @@ public class CommerceUserSegmentEntryModelImpl extends BaseModelImpl<CommerceUse
 
 	public boolean getOriginalActive() {
 		return _originalActive;
+	}
+
+	@JSON
+	@Override
+	public boolean getSystem() {
+		return _system;
+	}
+
+	@JSON
+	@Override
+	public boolean isSystem() {
+		return _system;
+	}
+
+	@Override
+	public void setSystem(boolean system) {
+		_system = system;
+	}
+
+	@JSON
+	@Override
+	public double getPriority() {
+		return _priority;
+	}
+
+	@Override
+	public void setPriority(double priority) {
+		_columnBitmask = -1L;
+
+		_priority = priority;
 	}
 
 	public long getColumnBitmask() {
@@ -650,8 +714,10 @@ public class CommerceUserSegmentEntryModelImpl extends BaseModelImpl<CommerceUse
 		commerceUserSegmentEntryImpl.setCreateDate(getCreateDate());
 		commerceUserSegmentEntryImpl.setModifiedDate(getModifiedDate());
 		commerceUserSegmentEntryImpl.setName(getName());
+		commerceUserSegmentEntryImpl.setKey(getKey());
+		commerceUserSegmentEntryImpl.setActive(isActive());
+		commerceUserSegmentEntryImpl.setSystem(isSystem());
 		commerceUserSegmentEntryImpl.setPriority(getPriority());
-		commerceUserSegmentEntryImpl.setActive(getActive());
 
 		commerceUserSegmentEntryImpl.resetOriginalValues();
 
@@ -726,6 +792,8 @@ public class CommerceUserSegmentEntryModelImpl extends BaseModelImpl<CommerceUse
 
 		commerceUserSegmentEntryModelImpl._setModifiedDate = false;
 
+		commerceUserSegmentEntryModelImpl._originalKey = commerceUserSegmentEntryModelImpl._key;
+
 		commerceUserSegmentEntryModelImpl._originalActive = commerceUserSegmentEntryModelImpl._active;
 
 		commerceUserSegmentEntryModelImpl._setOriginalActive = false;
@@ -779,16 +847,26 @@ public class CommerceUserSegmentEntryModelImpl extends BaseModelImpl<CommerceUse
 			commerceUserSegmentEntryCacheModel.name = null;
 		}
 
-		commerceUserSegmentEntryCacheModel.priority = getPriority();
+		commerceUserSegmentEntryCacheModel.key = getKey();
 
-		commerceUserSegmentEntryCacheModel.active = getActive();
+		String key = commerceUserSegmentEntryCacheModel.key;
+
+		if ((key != null) && (key.length() == 0)) {
+			commerceUserSegmentEntryCacheModel.key = null;
+		}
+
+		commerceUserSegmentEntryCacheModel.active = isActive();
+
+		commerceUserSegmentEntryCacheModel.system = isSystem();
+
+		commerceUserSegmentEntryCacheModel.priority = getPriority();
 
 		return commerceUserSegmentEntryCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(21);
+		StringBundler sb = new StringBundler(25);
 
 		sb.append("{commerceUserSegmentEntryId=");
 		sb.append(getCommerceUserSegmentEntryId());
@@ -806,10 +884,14 @@ public class CommerceUserSegmentEntryModelImpl extends BaseModelImpl<CommerceUse
 		sb.append(getModifiedDate());
 		sb.append(", name=");
 		sb.append(getName());
+		sb.append(", key=");
+		sb.append(getKey());
+		sb.append(", active=");
+		sb.append(isActive());
+		sb.append(", system=");
+		sb.append(isSystem());
 		sb.append(", priority=");
 		sb.append(getPriority());
-		sb.append(", active=");
-		sb.append(getActive());
 		sb.append("}");
 
 		return sb.toString();
@@ -817,7 +899,7 @@ public class CommerceUserSegmentEntryModelImpl extends BaseModelImpl<CommerceUse
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(34);
+		StringBundler sb = new StringBundler(40);
 
 		sb.append("<model><model-name>");
 		sb.append(
@@ -857,12 +939,20 @@ public class CommerceUserSegmentEntryModelImpl extends BaseModelImpl<CommerceUse
 		sb.append(getName());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>priority</column-name><column-value><![CDATA[");
-		sb.append(getPriority());
+			"<column><column-name>key</column-name><column-value><![CDATA[");
+		sb.append(getKey());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>active</column-name><column-value><![CDATA[");
-		sb.append(getActive());
+		sb.append(isActive());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>system</column-name><column-value><![CDATA[");
+		sb.append(isSystem());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>priority</column-name><column-value><![CDATA[");
+		sb.append(getPriority());
 		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
@@ -886,10 +976,13 @@ public class CommerceUserSegmentEntryModelImpl extends BaseModelImpl<CommerceUse
 	private boolean _setModifiedDate;
 	private String _name;
 	private String _nameCurrentLanguageId;
-	private double _priority;
+	private String _key;
+	private String _originalKey;
 	private boolean _active;
 	private boolean _originalActive;
 	private boolean _setOriginalActive;
+	private boolean _system;
+	private double _priority;
 	private long _columnBitmask;
 	private CommerceUserSegmentEntry _escapedModel;
 }

@@ -44,12 +44,12 @@ public class CommerceUserSegmentEntryServiceUtil {
 	 */
 	public static com.liferay.commerce.user.segment.model.CommerceUserSegmentEntry addCommerceUserSegmentEntry(
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
-		double priority, boolean active,
+		java.lang.String key, boolean active, boolean system, double priority,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
-				   .addCommerceUserSegmentEntry(nameMap, priority, active,
-			serviceContext);
+				   .addCommerceUserSegmentEntry(nameMap, key, active, system,
+			priority, serviceContext);
 	}
 
 	public static com.liferay.commerce.user.segment.model.CommerceUserSegmentEntry deleteCommerceUserSegmentEntry(
@@ -107,12 +107,12 @@ public class CommerceUserSegmentEntryServiceUtil {
 	public static com.liferay.commerce.user.segment.model.CommerceUserSegmentEntry updateCommerceUserSegmentEntry(
 		long commerceUserSegmentEntryId,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
-		double priority, boolean active,
+		java.lang.String key, boolean active, double priority,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .updateCommerceUserSegmentEntry(commerceUserSegmentEntryId,
-			nameMap, priority, active, serviceContext);
+			nameMap, key, active, priority, serviceContext);
 	}
 
 	public static CommerceUserSegmentEntryService getService() {

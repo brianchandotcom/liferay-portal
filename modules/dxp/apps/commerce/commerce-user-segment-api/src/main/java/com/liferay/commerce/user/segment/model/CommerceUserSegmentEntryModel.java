@@ -296,18 +296,19 @@ public interface CommerceUserSegmentEntryModel extends BaseModel<CommerceUserSeg
 	public void setNameMap(Map<Locale, String> nameMap, Locale defaultLocale);
 
 	/**
-	 * Returns the priority of this commerce user segment entry.
+	 * Returns the key of this commerce user segment entry.
 	 *
-	 * @return the priority of this commerce user segment entry
+	 * @return the key of this commerce user segment entry
 	 */
-	public double getPriority();
+	@AutoEscape
+	public String getKey();
 
 	/**
-	 * Sets the priority of this commerce user segment entry.
+	 * Sets the key of this commerce user segment entry.
 	 *
-	 * @param priority the priority of this commerce user segment entry
+	 * @param key the key of this commerce user segment entry
 	 */
-	public void setPriority(double priority);
+	public void setKey(String key);
 
 	/**
 	 * Returns the active of this commerce user segment entry.
@@ -329,6 +330,41 @@ public interface CommerceUserSegmentEntryModel extends BaseModel<CommerceUserSeg
 	 * @param active the active of this commerce user segment entry
 	 */
 	public void setActive(boolean active);
+
+	/**
+	 * Returns the system of this commerce user segment entry.
+	 *
+	 * @return the system of this commerce user segment entry
+	 */
+	public boolean getSystem();
+
+	/**
+	 * Returns <code>true</code> if this commerce user segment entry is system.
+	 *
+	 * @return <code>true</code> if this commerce user segment entry is system; <code>false</code> otherwise
+	 */
+	public boolean isSystem();
+
+	/**
+	 * Sets whether this commerce user segment entry is system.
+	 *
+	 * @param system the system of this commerce user segment entry
+	 */
+	public void setSystem(boolean system);
+
+	/**
+	 * Returns the priority of this commerce user segment entry.
+	 *
+	 * @return the priority of this commerce user segment entry
+	 */
+	public double getPriority();
+
+	/**
+	 * Sets the priority of this commerce user segment entry.
+	 *
+	 * @param priority the priority of this commerce user segment entry
+	 */
+	public void setPriority(double priority);
 
 	@Override
 	public boolean isNew();

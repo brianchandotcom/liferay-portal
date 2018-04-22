@@ -62,7 +62,8 @@ public interface CommerceUserSegmentEntryService extends BaseService {
 	 * Never modify or reference this interface directly. Always use {@link CommerceUserSegmentEntryServiceUtil} to access the commerce user segment entry remote service. Add custom service methods to {@link com.liferay.commerce.user.segment.service.impl.CommerceUserSegmentEntryServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	public CommerceUserSegmentEntry addCommerceUserSegmentEntry(
-		Map<Locale, java.lang.String> nameMap, double priority, boolean active,
+		Map<Locale, java.lang.String> nameMap, java.lang.String key,
+		boolean active, boolean system, double priority,
 		ServiceContext serviceContext) throws PortalException;
 
 	public CommerceUserSegmentEntry deleteCommerceUserSegmentEntry(
@@ -100,6 +101,6 @@ public interface CommerceUserSegmentEntryService extends BaseService {
 
 	public CommerceUserSegmentEntry updateCommerceUserSegmentEntry(
 		long commerceUserSegmentEntryId, Map<Locale, java.lang.String> nameMap,
-		double priority, boolean active, ServiceContext serviceContext)
-		throws PortalException;
+		java.lang.String key, boolean active, double priority,
+		ServiceContext serviceContext) throws PortalException;
 }

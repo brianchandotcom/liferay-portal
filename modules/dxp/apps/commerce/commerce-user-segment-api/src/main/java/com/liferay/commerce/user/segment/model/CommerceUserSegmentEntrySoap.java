@@ -43,8 +43,10 @@ public class CommerceUserSegmentEntrySoap implements Serializable {
 		soapModel.setCreateDate(model.getCreateDate());
 		soapModel.setModifiedDate(model.getModifiedDate());
 		soapModel.setName(model.getName());
+		soapModel.setKey(model.getKey());
+		soapModel.setActive(model.isActive());
+		soapModel.setSystem(model.isSystem());
 		soapModel.setPriority(model.getPriority());
-		soapModel.setActive(model.getActive());
 
 		return soapModel;
 	}
@@ -164,12 +166,12 @@ public class CommerceUserSegmentEntrySoap implements Serializable {
 		_name = name;
 	}
 
-	public double getPriority() {
-		return _priority;
+	public String getKey() {
+		return _key;
 	}
 
-	public void setPriority(double priority) {
-		_priority = priority;
+	public void setKey(String key) {
+		_key = key;
 	}
 
 	public boolean getActive() {
@@ -184,6 +186,26 @@ public class CommerceUserSegmentEntrySoap implements Serializable {
 		_active = active;
 	}
 
+	public boolean getSystem() {
+		return _system;
+	}
+
+	public boolean isSystem() {
+		return _system;
+	}
+
+	public void setSystem(boolean system) {
+		_system = system;
+	}
+
+	public double getPriority() {
+		return _priority;
+	}
+
+	public void setPriority(double priority) {
+		_priority = priority;
+	}
+
 	private long _commerceUserSegmentEntryId;
 	private long _groupId;
 	private long _companyId;
@@ -192,6 +214,8 @@ public class CommerceUserSegmentEntrySoap implements Serializable {
 	private Date _createDate;
 	private Date _modifiedDate;
 	private String _name;
-	private double _priority;
+	private String _key;
 	private boolean _active;
+	private boolean _system;
+	private double _priority;
 }

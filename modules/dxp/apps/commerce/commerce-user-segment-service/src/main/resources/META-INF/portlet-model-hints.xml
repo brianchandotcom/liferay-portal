@@ -25,7 +25,9 @@
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
 		<field localized="true" name="name" type="String" />
-		<field name="priority" type="double" />
+		<field name="key" type="String" />
 		<field name="active" type="boolean" />
+		<field name="system" type="boolean" />
+		<field name="priority" type="double" />
 	</model>
 </model-hints>

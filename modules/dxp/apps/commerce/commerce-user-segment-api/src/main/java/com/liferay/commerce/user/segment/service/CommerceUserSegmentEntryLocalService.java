@@ -82,7 +82,8 @@ public interface CommerceUserSegmentEntryLocalService extends BaseLocalService,
 
 	@Indexable(type = IndexableType.REINDEX)
 	public CommerceUserSegmentEntry addCommerceUserSegmentEntry(
-		Map<Locale, java.lang.String> nameMap, double priority, boolean active,
+		Map<Locale, java.lang.String> nameMap, java.lang.String key,
+		boolean active, boolean system, double priority,
 		ServiceContext serviceContext) throws PortalException;
 
 	/**
@@ -93,6 +94,9 @@ public interface CommerceUserSegmentEntryLocalService extends BaseLocalService,
 	*/
 	public CommerceUserSegmentEntry createCommerceUserSegmentEntry(
 		long commerceUserSegmentEntryId);
+
+	public void deleteCommerceUserSegmentEntries(long groupId)
+		throws PortalException;
 
 	/**
 	* Deletes the commerce user segment entry from the database. Also notifies the appropriate model listeners.
@@ -189,6 +193,10 @@ public interface CommerceUserSegmentEntryLocalService extends BaseLocalService,
 		long commerceUserSegmentEntryId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CommerceUserSegmentEntry fetchCommerceUserSegmentEntry(
+		long groupId, java.lang.String key);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
 
 	/**
@@ -252,6 +260,9 @@ public interface CommerceUserSegmentEntryLocalService extends BaseLocalService,
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
 
+	public void importSystemCommerceUserSegmentEntries(
+		ServiceContext serviceContext) throws PortalException;
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public BaseModelSearchResult<CommerceUserSegmentEntry> searchCommerceUserSegmentEntries(
 		long companyId, long groupId, java.lang.String keywords, int start,
@@ -274,6 +285,6 @@ public interface CommerceUserSegmentEntryLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.REINDEX)
 	public CommerceUserSegmentEntry updateCommerceUserSegmentEntry(
 		long commerceUserSegmentEntryId, Map<Locale, java.lang.String> nameMap,
-		double priority, boolean active, ServiceContext serviceContext)
-		throws PortalException;
+		java.lang.String key, boolean active, double priority,
+		ServiceContext serviceContext) throws PortalException;
 }

@@ -38,8 +38,8 @@ public class CommerceTierPriceEntryServiceImpl
 
 	@Override
 	public CommerceTierPriceEntry addCommerceTierPriceEntry(
-			long commercePriceEntryId, BigDecimal price, int minQuantity,
-			ServiceContext serviceContext)
+			long commercePriceEntryId, BigDecimal price, BigDecimal promoPrice,
+			int minQuantity, ServiceContext serviceContext)
 		throws PortalException {
 
 		CommercePermission.check(
@@ -47,7 +47,8 @@ public class CommerceTierPriceEntryServiceImpl
 			CommerceActionKeys.MANAGE_COMMERCE_PRICE_LISTS);
 
 		return commerceTierPriceEntryLocalService.addCommerceTierPriceEntry(
-			commercePriceEntryId, price, minQuantity, serviceContext);
+			commercePriceEntryId, price, promoPrice,  minQuantity,
+			serviceContext);
 	}
 
 	@Override
@@ -120,7 +121,8 @@ public class CommerceTierPriceEntryServiceImpl
 
 	@Override
 	public CommerceTierPriceEntry updateCommerceTierPriceEntry(
-			long commerceTierPriceEntryId, BigDecimal price, int minQuantity,
+			long commerceTierPriceEntryId, BigDecimal price,
+			BigDecimal promoPrice, int minQuantity,
 			ServiceContext serviceContext)
 		throws PortalException {
 
@@ -129,7 +131,8 @@ public class CommerceTierPriceEntryServiceImpl
 			CommerceActionKeys.MANAGE_COMMERCE_PRICE_LISTS);
 
 		return commerceTierPriceEntryLocalService.updateCommerceTierPriceEntry(
-			commerceTierPriceEntryId, price, minQuantity, serviceContext);
+			commerceTierPriceEntryId, price, promoPrice,minQuantity,
+			serviceContext);
 	}
 
 }

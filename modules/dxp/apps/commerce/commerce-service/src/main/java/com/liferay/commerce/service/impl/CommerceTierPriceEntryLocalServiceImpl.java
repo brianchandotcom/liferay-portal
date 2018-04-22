@@ -60,8 +60,8 @@ public class CommerceTierPriceEntryLocalServiceImpl
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public CommerceTierPriceEntry addCommerceTierPriceEntry(
-			long commercePriceEntryId, BigDecimal price, int minQuantity,
-			ServiceContext serviceContext)
+			long commercePriceEntryId, BigDecimal price, BigDecimal promoPrice,
+			int minQuantity, ServiceContext serviceContext)
 		throws PortalException {
 
 		// Commerce tier price entry
@@ -81,6 +81,7 @@ public class CommerceTierPriceEntryLocalServiceImpl
 		commerceTierPriceEntry.setUserName(user.getFullName());
 		commerceTierPriceEntry.setCommercePriceEntryId(commercePriceEntryId);
 		commerceTierPriceEntry.setPrice(price);
+		commerceTierPriceEntry.setPromoPrice(promoPrice);
 		commerceTierPriceEntry.setMinQuantity(minQuantity);
 		commerceTierPriceEntry.setExpandoBridgeAttributes(serviceContext);
 
@@ -226,7 +227,8 @@ public class CommerceTierPriceEntryLocalServiceImpl
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public CommerceTierPriceEntry updateCommerceTierPriceEntry(
-			long commerceTierPriceEntryId, BigDecimal price, int minQuantity,
+			long commerceTierPriceEntryId, BigDecimal price,
+			BigDecimal promoPrice, int minQuantity,
 			ServiceContext serviceContext)
 		throws PortalException {
 
@@ -235,6 +237,7 @@ public class CommerceTierPriceEntryLocalServiceImpl
 				commerceTierPriceEntryId);
 
 		commerceTierPriceEntry.setPrice(price);
+		commerceTierPriceEntry.setPromoPrice(promoPrice);
 		commerceTierPriceEntry.setMinQuantity(minQuantity);
 		commerceTierPriceEntry.setExpandoBridgeAttributes(serviceContext);
 

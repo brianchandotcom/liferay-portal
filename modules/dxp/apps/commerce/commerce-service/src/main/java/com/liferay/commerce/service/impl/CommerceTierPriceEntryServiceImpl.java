@@ -47,7 +47,7 @@ public class CommerceTierPriceEntryServiceImpl
 			CommerceActionKeys.MANAGE_COMMERCE_PRICE_LISTS);
 
 		return commerceTierPriceEntryLocalService.addCommerceTierPriceEntry(
-			commercePriceEntryId, price, promoPrice,  minQuantity,
+			commercePriceEntryId, price, promoPrice, minQuantity,
 			serviceContext);
 	}
 
@@ -131,7 +131,7 @@ public class CommerceTierPriceEntryServiceImpl
 			CommerceActionKeys.MANAGE_COMMERCE_PRICE_LISTS);
 
 		return commerceTierPriceEntryLocalService.updateCommerceTierPriceEntry(
-			commerceTierPriceEntryId, price, promoPrice,minQuantity,
+			commerceTierPriceEntryId, price, promoPrice, minQuantity,
 			serviceContext);
 	}
 

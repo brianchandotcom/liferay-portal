@@ -123,7 +123,7 @@ public class EditCommerceUserSegmentEntryMVCActionCommand
 
 		String name = ParamUtil.getString(actionRequest, "name");
 		double priority = ParamUtil.getDouble(actionRequest, "priority");
-		boolean active = ParamUtil.getBoolean(actionRequest, "active");
+		boolean active = ParamUtil.getBoolean(actionRequest, "active", true);
 
 		Map<Locale, String> nameMap = new HashMap<>();
 

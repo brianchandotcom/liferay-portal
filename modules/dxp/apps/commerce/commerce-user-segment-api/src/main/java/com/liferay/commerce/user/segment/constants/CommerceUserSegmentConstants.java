@@ -25,4 +25,6 @@ public class CommerceUserSegmentConstants {
 	public static final String SERVICE_NAME =
 		"com.liferay.commerce.user.segment";
 
+	public static final String USER_SEGMENT_GUEST = "guest";
+
 }

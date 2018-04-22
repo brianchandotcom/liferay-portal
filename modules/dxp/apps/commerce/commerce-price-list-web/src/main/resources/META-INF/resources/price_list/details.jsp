@@ -63,7 +63,7 @@ List<CommercePriceListUserSegmentEntryRel> commercePriceListUserSegmentEntryRels
 	<aui:input name="priority" />
 </aui:fieldset>
 
-<h5 class="text-default"><liferay-ui:message key="criteria" /></h5>
+<h5 class="text-default"><liferay-ui:message key="user-segments" /></h5>
 
 <liferay-ui:search-container
 	curParam="commercePriceListUserSegmentEntryRel"
@@ -149,17 +149,17 @@ List<CommercePriceListUserSegmentEntryRel> commercePriceListUserSegmentEntryRels
 
 		var rowColumns = [];
 
-		rowColumns.push(item.label);
-		rowColumns.push('<a class="modify-link" data-rowId="' + item.key + '" href="javascript:;"><%= UnicodeFormatter.toString(removeCommercePriceListUserSegmentEntryRelIcon) %></a>');
+		rowColumns.push(item.name);
+		rowColumns.push('<a class="modify-link" data-rowId="' + item.commerceUserSegmentEntryId + '" href="javascript:;"><%= UnicodeFormatter.toString(removeCommercePriceListUserSegmentEntryRelIcon) %></a>');
 
-		A.Array.removeItem(<portlet:namespace />deleteCommercePriceListUserSegmentEntryRelIds, item.key);
+		A.Array.removeItem(<portlet:namespace />deleteCommercePriceListUserSegmentEntryRelIds, item.commerceUserSegmentEntryId);
 
-		<portlet:namespace />addCommerceUserSegmentEntryIds.push(item.key);
+		<portlet:namespace />addCommerceUserSegmentEntryIds.push(item.commerceUserSegmentEntryId);
 
 		document.<portlet:namespace />fm.<portlet:namespace />addCommerceUserSegmentEntryIds.value = <portlet:namespace />addCommerceUserSegmentEntryIds.join(',');
 		document.<portlet:namespace />fm.<portlet:namespace />deleteCommercePriceListUserSegmentEntryRelIds.value = <portlet:namespace />deleteCommercePriceListUserSegmentEntryRelIds.join(',');
 
-		searchContainer.addRow(rowColumns, item.key);
+		searchContainer.addRow(rowColumns, item.commerceUserSegmentEntryId);
 
 		searchContainer.updateDataStore();
 	}

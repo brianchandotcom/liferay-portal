@@ -33,6 +33,8 @@ long commerceUserSegmentEntryId = commerceUserSegmentDisplayContext.getCommerceU
 	<div class="lfr-form-content">
 		<aui:model-context bean="<%= commerceUserSegmentEntry %>" model="<%= CommerceUserSegmentEntry.class %>" />
 
+		<liferay-ui:error exception="<%= CommerceUserSegmentEntryKeyException.class %>" message="key-is-already-used" />
+
 		<aui:fieldset-group markupView="lexicon">
 			<aui:fieldset>
 				<aui:input autoFocus="<%= true %>" name="name" />

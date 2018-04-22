@@ -29,6 +29,7 @@ taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 page import="com.liferay.commerce.user.segment.criterion.CommerceUserSegmentCriterionType" %><%@
 page import="com.liferay.commerce.user.segment.criterion.CommerceUserSegmentCriterionTypeJSPContributor" %><%@
 page import="com.liferay.commerce.user.segment.exception.CommerceUserSegmentCriterionTypeException" %><%@
+page import="com.liferay.commerce.user.segment.exception.CommerceUserSegmentEntryKeyException" %><%@
 page import="com.liferay.commerce.user.segment.exception.NoSuchUserSegmentCriterionException" %><%@
 page import="com.liferay.commerce.user.segment.exception.NoSuchUserSegmentEntryException" %><%@
 page import="com.liferay.commerce.user.segment.model.CommerceUserSegmentCriterion" %><%@

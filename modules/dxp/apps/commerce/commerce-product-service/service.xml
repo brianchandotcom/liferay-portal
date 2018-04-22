@@ -534,6 +534,7 @@
 		<column name="weight" type="double" />
 		<column name="cost" type="BigDecimal" />
 		<column name="price" type="BigDecimal" />
+		<column name="promoPrice" type="BigDecimal" />
 		<column name="published" type="boolean" />
 		<column name="displayDate" type="Date" />
 		<column name="expirationDate" type="Date" />

@@ -900,6 +900,7 @@
 
 		<column name="commercePriceEntryId" type="long" />
 		<column name="price" type="BigDecimal" />
+		<column name="promoPrice" type="BigDecimal" />
 		<column name="minQuantity" type="int" />
 		<column name="lastPublishDate" type="Date" />
 

@@ -64,6 +64,7 @@ import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
 
 import java.io.Serializable;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -109,7 +110,7 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 			long cpDefinitionId, String sku, String gtin,
 			String manufacturerPartNumber, boolean purchasable,
 			String ddmContent, double width, double height, double depth,
-			double weight, double cost, double price, boolean published,
+			double weight, BigDecimal cost, BigDecimal price, boolean published,
 			int displayDateMonth, int displayDateDay, int displayDateYear,
 			int displayDateHour, int displayDateMinute, int expirationDateMonth,
 			int expirationDateDay, int expirationDateYear,
@@ -568,8 +569,8 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 	public CPInstance updateCPInstance(
 			long cpInstanceId, String sku, String gtin,
 			String manufacturerPartNumber, boolean purchasable, double width,
-			double height, double depth, double weight, double cost,
-			double price, boolean published, int displayDateMonth,
+			double height, double depth, double weight, BigDecimal cost,
+			BigDecimal price, boolean published, int displayDateMonth,
 			int displayDateDay, int displayDateYear, int displayDateHour,
 			int displayDateMinute, int expirationDateMonth,
 			int expirationDateDay, int expirationDateYear,
@@ -640,7 +641,7 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 
 	@Override
 	public CPInstance updatePricingInfo(
-			long cpInstanceId, double cost, double price,
+			long cpInstanceId, BigDecimal cost, BigDecimal price,
 			ServiceContext serviceContext)
 		throws PortalException {
 

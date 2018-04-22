@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.io.Serializable;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 
@@ -68,7 +69,7 @@ public class CPInstanceServiceImpl extends CPInstanceServiceBaseImpl {
 			long cpDefinitionId, String sku, String gtin,
 			String manufacturerPartNumber, boolean purchasable,
 			String ddmContent, double width, double height, double depth,
-			double weight, double cost, double price, boolean published,
+			double weight, BigDecimal cost, BigDecimal price, boolean published,
 			int displayDateMonth, int displayDateDay, int displayDateYear,
 			int displayDateHour, int displayDateMinute, int expirationDateMonth,
 			int expirationDateDay, int expirationDateYear,
@@ -261,8 +262,8 @@ public class CPInstanceServiceImpl extends CPInstanceServiceBaseImpl {
 	public CPInstance updateCPInstance(
 			long cpInstanceId, String sku, String gtin,
 			String manufacturerPartNumber, boolean purchasable, double width,
-			double height, double depth, double weight, double cost,
-			double price, boolean published, int displayDateMonth,
+			double height, double depth, double weight, BigDecimal cost,
+			BigDecimal price, boolean published, int displayDateMonth,
 			int displayDateDay, int displayDateYear, int displayDateHour,
 			int displayDateMinute, int expirationDateMonth,
 			int expirationDateDay, int expirationDateYear,
@@ -285,7 +286,7 @@ public class CPInstanceServiceImpl extends CPInstanceServiceBaseImpl {
 
 	@Override
 	public CPInstance updatePricingInfo(
-			long cpInstanceId, double cost, double price,
+			long cpInstanceId, BigDecimal cost, BigDecimal price,
 			ServiceContext serviceContext)
 		throws PortalException {
 

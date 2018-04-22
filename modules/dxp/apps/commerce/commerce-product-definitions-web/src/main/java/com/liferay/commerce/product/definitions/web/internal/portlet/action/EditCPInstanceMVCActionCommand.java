@@ -260,10 +260,11 @@ public class EditCPInstanceMVCActionCommand extends BaseMVCActionCommand {
 
 		double cost = ParamUtil.getDouble(actionRequest, "cost");
 		double price = ParamUtil.getDouble(actionRequest, "price");
+		double promoPrice = ParamUtil.getDouble(actionRequest, "promoPrice");
 
 		_cpInstanceService.updatePricingInfo(
 			cpInstanceId, BigDecimal.valueOf(cost), BigDecimal.valueOf(price),
-			serviceContext);
+			BigDecimal.valueOf(promoPrice), serviceContext);
 	}
 
 	protected void updateShippingInfo(ActionRequest actionRequest)

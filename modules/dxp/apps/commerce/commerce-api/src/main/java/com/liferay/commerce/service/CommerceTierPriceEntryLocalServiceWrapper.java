@@ -48,11 +48,12 @@ public class CommerceTierPriceEntryLocalServiceWrapper
 
 	@Override
 	public com.liferay.commerce.model.CommerceTierPriceEntry addCommerceTierPriceEntry(
-		long commercePriceEntryId, java.math.BigDecimal price, int minQuantity,
+		long commercePriceEntryId, java.math.BigDecimal price,
+		java.math.BigDecimal promoPrice, int minQuantity,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _commerceTierPriceEntryLocalService.addCommerceTierPriceEntry(commercePriceEntryId,
-			price, minQuantity, serviceContext);
+			price, promoPrice, minQuantity, serviceContext);
 	}
 
 	/**
@@ -398,11 +399,11 @@ public class CommerceTierPriceEntryLocalServiceWrapper
 	@Override
 	public com.liferay.commerce.model.CommerceTierPriceEntry updateCommerceTierPriceEntry(
 		long commerceTierPriceEntryId, java.math.BigDecimal price,
-		int minQuantity,
+		java.math.BigDecimal promoPrice, int minQuantity,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _commerceTierPriceEntryLocalService.updateCommerceTierPriceEntry(commerceTierPriceEntryId,
-			price, minQuantity, serviceContext);
+			price, promoPrice, minQuantity, serviceContext);
 	}
 
 	@Override

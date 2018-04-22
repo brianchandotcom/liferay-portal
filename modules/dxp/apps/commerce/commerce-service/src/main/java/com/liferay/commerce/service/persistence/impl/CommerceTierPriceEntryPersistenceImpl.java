@@ -4358,6 +4358,7 @@ public class CommerceTierPriceEntryPersistenceImpl extends BasePersistenceImpl<C
 		commerceTierPriceEntryImpl.setModifiedDate(commerceTierPriceEntry.getModifiedDate());
 		commerceTierPriceEntryImpl.setCommercePriceEntryId(commerceTierPriceEntry.getCommercePriceEntryId());
 		commerceTierPriceEntryImpl.setPrice(commerceTierPriceEntry.getPrice());
+		commerceTierPriceEntryImpl.setPromoPrice(commerceTierPriceEntry.getPromoPrice());
 		commerceTierPriceEntryImpl.setMinQuantity(commerceTierPriceEntry.getMinQuantity());
 		commerceTierPriceEntryImpl.setLastPublishDate(commerceTierPriceEntry.getLastPublishDate());
 

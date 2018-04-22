@@ -84,6 +84,7 @@ public class CommerceTierPriceEntryModelImpl extends BaseModelImpl<CommerceTierP
 			{ "modifiedDate", Types.TIMESTAMP },
 			{ "commercePriceEntryId", Types.BIGINT },
 			{ "price", Types.DECIMAL },
+			{ "promoPrice", Types.DECIMAL },
 			{ "minQuantity", Types.INTEGER },
 			{ "lastPublishDate", Types.TIMESTAMP }
 		};
@@ -100,11 +101,12 @@ public class CommerceTierPriceEntryModelImpl extends BaseModelImpl<CommerceTierP
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("commercePriceEntryId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("price", Types.DECIMAL);
+		TABLE_COLUMNS_MAP.put("promoPrice", Types.DECIMAL);
 		TABLE_COLUMNS_MAP.put("minQuantity", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("lastPublishDate", Types.TIMESTAMP);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table CommerceTierPriceEntry (uuid_ VARCHAR(75) null,commerceTierPriceEntryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,commercePriceEntryId LONG,price DECIMAL(30, 16) null,minQuantity INTEGER,lastPublishDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table CommerceTierPriceEntry (uuid_ VARCHAR(75) null,commerceTierPriceEntryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,commercePriceEntryId LONG,price DECIMAL(30, 16) null,promoPrice DECIMAL(30, 16) null,minQuantity INTEGER,lastPublishDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table CommerceTierPriceEntry";
 	public static final String ORDER_BY_JPQL = " ORDER BY commerceTierPriceEntry.minQuantity ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY CommerceTierPriceEntry.minQuantity ASC";
@@ -150,6 +152,7 @@ public class CommerceTierPriceEntryModelImpl extends BaseModelImpl<CommerceTierP
 		model.setModifiedDate(soapModel.getModifiedDate());
 		model.setCommercePriceEntryId(soapModel.getCommercePriceEntryId());
 		model.setPrice(soapModel.getPrice());
+		model.setPromoPrice(soapModel.getPromoPrice());
 		model.setMinQuantity(soapModel.getMinQuantity());
 		model.setLastPublishDate(soapModel.getLastPublishDate());
 
@@ -227,6 +230,7 @@ public class CommerceTierPriceEntryModelImpl extends BaseModelImpl<CommerceTierP
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("commercePriceEntryId", getCommercePriceEntryId());
 		attributes.put("price", getPrice());
+		attributes.put("promoPrice", getPromoPrice());
 		attributes.put("minQuantity", getMinQuantity());
 		attributes.put("lastPublishDate", getLastPublishDate());
 
@@ -297,6 +301,12 @@ public class CommerceTierPriceEntryModelImpl extends BaseModelImpl<CommerceTierP
 
 		if (price != null) {
 			setPrice(price);
+		}
+
+		BigDecimal promoPrice = (BigDecimal)attributes.get("promoPrice");
+
+		if (promoPrice != null) {
+			setPromoPrice(promoPrice);
 		}
 
 		Integer minQuantity = (Integer)attributes.get("minQuantity");
@@ -500,6 +510,17 @@ public class CommerceTierPriceEntryModelImpl extends BaseModelImpl<CommerceTierP
 
 	@JSON
 	@Override
+	public BigDecimal getPromoPrice() {
+		return _promoPrice;
+	}
+
+	@Override
+	public void setPromoPrice(BigDecimal promoPrice) {
+		_promoPrice = promoPrice;
+	}
+
+	@JSON
+	@Override
 	public int getMinQuantity() {
 		return _minQuantity;
 	}
@@ -579,6 +600,7 @@ public class CommerceTierPriceEntryModelImpl extends BaseModelImpl<CommerceTierP
 		commerceTierPriceEntryImpl.setModifiedDate(getModifiedDate());
 		commerceTierPriceEntryImpl.setCommercePriceEntryId(getCommercePriceEntryId());
 		commerceTierPriceEntryImpl.setPrice(getPrice());
+		commerceTierPriceEntryImpl.setPromoPrice(getPromoPrice());
 		commerceTierPriceEntryImpl.setMinQuantity(getMinQuantity());
 		commerceTierPriceEntryImpl.setLastPublishDate(getLastPublishDate());
 
@@ -722,6 +744,8 @@ public class CommerceTierPriceEntryModelImpl extends BaseModelImpl<CommerceTierP
 
 		commerceTierPriceEntryCacheModel.price = getPrice();
 
+		commerceTierPriceEntryCacheModel.promoPrice = getPromoPrice();
+
 		commerceTierPriceEntryCacheModel.minQuantity = getMinQuantity();
 
 		Date lastPublishDate = getLastPublishDate();
@@ -738,7 +762,7 @@ public class CommerceTierPriceEntryModelImpl extends BaseModelImpl<CommerceTierP
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(25);
+		StringBundler sb = new StringBundler(27);
 
 		sb.append("{uuid=");
 		sb.append(getUuid());
@@ -760,6 +784,8 @@ public class CommerceTierPriceEntryModelImpl extends BaseModelImpl<CommerceTierP
 		sb.append(getCommercePriceEntryId());
 		sb.append(", price=");
 		sb.append(getPrice());
+		sb.append(", promoPrice=");
+		sb.append(getPromoPrice());
 		sb.append(", minQuantity=");
 		sb.append(getMinQuantity());
 		sb.append(", lastPublishDate=");
@@ -771,7 +797,7 @@ public class CommerceTierPriceEntryModelImpl extends BaseModelImpl<CommerceTierP
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(40);
+		StringBundler sb = new StringBundler(43);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.commerce.model.CommerceTierPriceEntry");
@@ -818,6 +844,10 @@ public class CommerceTierPriceEntryModelImpl extends BaseModelImpl<CommerceTierP
 		sb.append(getPrice());
 		sb.append("]]></column-value></column>");
 		sb.append(
+			"<column><column-name>promoPrice</column-name><column-value><![CDATA[");
+		sb.append(getPromoPrice());
+		sb.append("]]></column-value></column>");
+		sb.append(
 			"<column><column-name>minQuantity</column-name><column-value><![CDATA[");
 		sb.append(getMinQuantity());
 		sb.append("]]></column-value></column>");
@@ -853,6 +883,7 @@ public class CommerceTierPriceEntryModelImpl extends BaseModelImpl<CommerceTierP
 	private long _originalCommercePriceEntryId;
 	private boolean _setOriginalCommercePriceEntryId;
 	private BigDecimal _price;
+	private BigDecimal _promoPrice;
 	private int _minQuantity;
 	private int _originalMinQuantity;
 	private boolean _setOriginalMinQuantity;

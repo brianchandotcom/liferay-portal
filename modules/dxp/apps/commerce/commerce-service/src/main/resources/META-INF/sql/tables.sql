@@ -346,6 +346,7 @@ create table CommerceTierPriceEntry (
 	modifiedDate DATE null,
 	commercePriceEntryId LONG,
 	price DECIMAL(30, 16) null,
+	promoPrice DECIMAL(30, 16) null,
 	minQuantity INTEGER,
 	lastPublishDate DATE null
 );

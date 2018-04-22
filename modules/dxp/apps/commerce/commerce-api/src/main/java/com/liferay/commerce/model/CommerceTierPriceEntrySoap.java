@@ -47,6 +47,7 @@ public class CommerceTierPriceEntrySoap implements Serializable {
 		soapModel.setModifiedDate(model.getModifiedDate());
 		soapModel.setCommercePriceEntryId(model.getCommercePriceEntryId());
 		soapModel.setPrice(model.getPrice());
+		soapModel.setPromoPrice(model.getPromoPrice());
 		soapModel.setMinQuantity(model.getMinQuantity());
 		soapModel.setLastPublishDate(model.getLastPublishDate());
 
@@ -184,6 +185,14 @@ public class CommerceTierPriceEntrySoap implements Serializable {
 		_price = price;
 	}
 
+	public BigDecimal getPromoPrice() {
+		return _promoPrice;
+	}
+
+	public void setPromoPrice(BigDecimal promoPrice) {
+		_promoPrice = promoPrice;
+	}
+
 	public int getMinQuantity() {
 		return _minQuantity;
 	}
@@ -210,6 +219,7 @@ public class CommerceTierPriceEntrySoap implements Serializable {
 	private Date _modifiedDate;
 	private long _commercePriceEntryId;
 	private BigDecimal _price;
+	private BigDecimal _promoPrice;
 	private int _minQuantity;
 	private Date _lastPublishDate;
 }

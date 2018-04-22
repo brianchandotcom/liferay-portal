@@ -145,6 +145,9 @@ public class CommerceTierPriceEntryPersistenceTest {
 		newCommerceTierPriceEntry.setPrice(new BigDecimal(
 				RandomTestUtil.nextDouble()));
 
+		newCommerceTierPriceEntry.setPromoPrice(new BigDecimal(
+				RandomTestUtil.nextDouble()));
+
 		newCommerceTierPriceEntry.setMinQuantity(RandomTestUtil.nextInt());
 
 		newCommerceTierPriceEntry.setLastPublishDate(RandomTestUtil.nextDate());
@@ -176,6 +179,8 @@ public class CommerceTierPriceEntryPersistenceTest {
 			newCommerceTierPriceEntry.getCommercePriceEntryId());
 		Assert.assertEquals(existingCommerceTierPriceEntry.getPrice(),
 			newCommerceTierPriceEntry.getPrice());
+		Assert.assertEquals(existingCommerceTierPriceEntry.getPromoPrice(),
+			newCommerceTierPriceEntry.getPromoPrice());
 		Assert.assertEquals(existingCommerceTierPriceEntry.getMinQuantity(),
 			newCommerceTierPriceEntry.getMinQuantity());
 		Assert.assertEquals(Time.getShortTimestamp(
@@ -276,7 +281,8 @@ public class CommerceTierPriceEntryPersistenceTest {
 			"uuid", true, "commerceTierPriceEntryId", true, "groupId", true,
 			"companyId", true, "userId", true, "userName", true, "createDate",
 			true, "modifiedDate", true, "commercePriceEntryId", true, "price",
-			true, "minQuantity", true, "lastPublishDate", true);
+			true, "promoPrice", true, "minQuantity", true, "lastPublishDate",
+			true);
 	}
 
 	@Test
@@ -534,6 +540,9 @@ public class CommerceTierPriceEntryPersistenceTest {
 		commerceTierPriceEntry.setCommercePriceEntryId(RandomTestUtil.nextLong());
 
 		commerceTierPriceEntry.setPrice(new BigDecimal(
+				RandomTestUtil.nextDouble()));
+
+		commerceTierPriceEntry.setPromoPrice(new BigDecimal(
 				RandomTestUtil.nextDouble()));
 
 		commerceTierPriceEntry.setMinQuantity(RandomTestUtil.nextInt());

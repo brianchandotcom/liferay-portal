@@ -85,8 +85,9 @@ public interface CommerceTierPriceEntryLocalService extends BaseLocalService,
 
 	@Indexable(type = IndexableType.REINDEX)
 	public CommerceTierPriceEntry addCommerceTierPriceEntry(
-		long commercePriceEntryId, BigDecimal price, int minQuantity,
-		ServiceContext serviceContext) throws PortalException;
+		long commercePriceEntryId, BigDecimal price, BigDecimal promoPrice,
+		int minQuantity, ServiceContext serviceContext)
+		throws PortalException;
 
 	/**
 	* Creates a new commerce tier price entry with the primary key. Does not add the commerce tier price entry to the database.
@@ -335,6 +336,7 @@ public interface CommerceTierPriceEntryLocalService extends BaseLocalService,
 
 	@Indexable(type = IndexableType.REINDEX)
 	public CommerceTierPriceEntry updateCommerceTierPriceEntry(
-		long commerceTierPriceEntryId, BigDecimal price, int minQuantity,
-		ServiceContext serviceContext) throws PortalException;
+		long commerceTierPriceEntryId, BigDecimal price, BigDecimal promoPrice,
+		int minQuantity, ServiceContext serviceContext)
+		throws PortalException;
 }

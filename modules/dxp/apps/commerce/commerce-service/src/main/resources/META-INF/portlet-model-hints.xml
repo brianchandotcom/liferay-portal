@@ -339,6 +339,7 @@
 		<field name="modifiedDate" type="Date" />
 		<field name="commercePriceEntryId" type="long" />
 		<field name="price" type="BigDecimal" />
+		<field name="promoPrice" type="BigDecimal" />
 		<field name="minQuantity" type="int" />
 		<field name="lastPublishDate" type="Date" />
 	</model>

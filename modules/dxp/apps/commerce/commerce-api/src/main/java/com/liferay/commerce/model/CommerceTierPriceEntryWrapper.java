@@ -73,6 +73,7 @@ public class CommerceTierPriceEntryWrapper implements CommerceTierPriceEntry,
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("commercePriceEntryId", getCommercePriceEntryId());
 		attributes.put("price", getPrice());
+		attributes.put("promoPrice", getPromoPrice());
 		attributes.put("minQuantity", getMinQuantity());
 		attributes.put("lastPublishDate", getLastPublishDate());
 
@@ -140,6 +141,12 @@ public class CommerceTierPriceEntryWrapper implements CommerceTierPriceEntry,
 
 		if (price != null) {
 			setPrice(price);
+		}
+
+		BigDecimal promoPrice = (BigDecimal)attributes.get("promoPrice");
+
+		if (promoPrice != null) {
+			setPromoPrice(promoPrice);
 		}
 
 		Integer minQuantity = (Integer)attributes.get("minQuantity");
@@ -279,6 +286,16 @@ public class CommerceTierPriceEntryWrapper implements CommerceTierPriceEntry,
 	@Override
 	public Serializable getPrimaryKeyObj() {
 		return _commerceTierPriceEntry.getPrimaryKeyObj();
+	}
+
+	/**
+	* Returns the promo price of this commerce tier price entry.
+	*
+	* @return the promo price of this commerce tier price entry
+	*/
+	@Override
+	public BigDecimal getPromoPrice() {
+		return _commerceTierPriceEntry.getPromoPrice();
 	}
 
 	/**
@@ -475,6 +492,16 @@ public class CommerceTierPriceEntryWrapper implements CommerceTierPriceEntry,
 	@Override
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
 		_commerceTierPriceEntry.setPrimaryKeyObj(primaryKeyObj);
+	}
+
+	/**
+	* Sets the promo price of this commerce tier price entry.
+	*
+	* @param promoPrice the promo price of this commerce tier price entry
+	*/
+	@Override
+	public void setPromoPrice(BigDecimal promoPrice) {
+		_commerceTierPriceEntry.setPromoPrice(promoPrice);
 	}
 
 	/**

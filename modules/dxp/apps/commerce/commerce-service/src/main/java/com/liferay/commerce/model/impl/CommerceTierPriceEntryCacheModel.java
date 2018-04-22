@@ -67,7 +67,7 @@ public class CommerceTierPriceEntryCacheModel implements CacheModel<CommerceTier
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(25);
+		StringBundler sb = new StringBundler(27);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -89,6 +89,8 @@ public class CommerceTierPriceEntryCacheModel implements CacheModel<CommerceTier
 		sb.append(commercePriceEntryId);
 		sb.append(", price=");
 		sb.append(price);
+		sb.append(", promoPrice=");
+		sb.append(promoPrice);
 		sb.append(", minQuantity=");
 		sb.append(minQuantity);
 		sb.append(", lastPublishDate=");
@@ -137,6 +139,7 @@ public class CommerceTierPriceEntryCacheModel implements CacheModel<CommerceTier
 
 		commerceTierPriceEntryImpl.setCommercePriceEntryId(commercePriceEntryId);
 		commerceTierPriceEntryImpl.setPrice(price);
+		commerceTierPriceEntryImpl.setPromoPrice(promoPrice);
 		commerceTierPriceEntryImpl.setMinQuantity(minQuantity);
 
 		if (lastPublishDate == Long.MIN_VALUE) {
@@ -170,6 +173,7 @@ public class CommerceTierPriceEntryCacheModel implements CacheModel<CommerceTier
 
 		commercePriceEntryId = objectInput.readLong();
 		price = (BigDecimal)objectInput.readObject();
+		promoPrice = (BigDecimal)objectInput.readObject();
 
 		minQuantity = objectInput.readInt();
 		lastPublishDate = objectInput.readLong();
@@ -205,6 +209,7 @@ public class CommerceTierPriceEntryCacheModel implements CacheModel<CommerceTier
 
 		objectOutput.writeLong(commercePriceEntryId);
 		objectOutput.writeObject(price);
+		objectOutput.writeObject(promoPrice);
 
 		objectOutput.writeInt(minQuantity);
 		objectOutput.writeLong(lastPublishDate);
@@ -220,6 +225,7 @@ public class CommerceTierPriceEntryCacheModel implements CacheModel<CommerceTier
 	public long modifiedDate;
 	public long commercePriceEntryId;
 	public BigDecimal price;
+	public BigDecimal promoPrice;
 	public int minQuantity;
 	public long lastPublishDate;
 }

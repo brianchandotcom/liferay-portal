@@ -355,6 +355,7 @@
 		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
 		<property name="commercePriceEntryId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="price" type="org.hibernate.type.BigDecimalType" />
+		<property name="promoPrice" type="org.hibernate.type.BigDecimalType" />
 		<property name="minQuantity" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 		<property name="lastPublishDate" type="org.hibernate.type.TimestampType" />
 	</class>

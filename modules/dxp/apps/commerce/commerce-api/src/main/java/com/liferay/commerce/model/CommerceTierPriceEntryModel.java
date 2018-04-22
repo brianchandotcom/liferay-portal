@@ -240,6 +240,20 @@ public interface CommerceTierPriceEntryModel extends BaseModel<CommerceTierPrice
 	public void setPrice(BigDecimal price);
 
 	/**
+	 * Returns the promo price of this commerce tier price entry.
+	 *
+	 * @return the promo price of this commerce tier price entry
+	 */
+	public BigDecimal getPromoPrice();
+
+	/**
+	 * Sets the promo price of this commerce tier price entry.
+	 *
+	 * @param promoPrice the promo price of this commerce tier price entry
+	 */
+	public void setPromoPrice(BigDecimal promoPrice);
+
+	/**
 	 * Returns the min quantity of this commerce tier price entry.
 	 *
 	 * @return the min quantity of this commerce tier price entry

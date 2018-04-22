@@ -86,7 +86,8 @@ renderResponse.setTitle(LanguageUtil.get(request, "price-lists"));
 
 		<aui:fieldset-group markupView="lexicon">
 			<aui:fieldset>
-				<aui:input name="price" suffix="<%= commerceCurrency.getCode() %>" type="text" value="<%= cpInstance.getPrice().toPlainString() %>" />
+				<aui:input name="price" suffix="<%= commerceCurrency.getCode() %>" type="text" value="<%= commerceTierPriceEntry.getPrice().toPlainString() %>" />
+				<aui:input name="promoPrice" suffix="<%= commerceCurrency.getCode() %>" type="text" value="<%= commerceTierPriceEntry.getPromoPrice().toPlainString() %>" />
 
 				<aui:input name="minQuantity" />
 			</aui:fieldset>

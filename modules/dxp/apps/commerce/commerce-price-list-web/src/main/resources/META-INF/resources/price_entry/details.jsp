@@ -39,4 +39,5 @@ if (commercePriceEntry != null) {
 
 <aui:fieldset>
 	<aui:input name="price" suffix="<%= currencyCode %>" type="text" value="<%= commercePriceEntry.getPrice().toPlainString() %>" />
+	<aui:input name="promoPrice" suffix="<%= currencyCode %>" type="text" value="<%= commercePriceEntry.getPromoPrice().toPlainString() %>" />
 </aui:fieldset>

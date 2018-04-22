@@ -80,7 +80,7 @@ public class EditCPInstanceCommercePriceEntryMVCActionCommand
 		for (long addCommercePriceListId : addCommercePriceListIds) {
 			_commercePriceEntryService.addCommercePriceEntry(
 				cpInstanceId, addCommercePriceListId, cpInstance.getPrice(),
-				cpInstance.getPrice(), serviceContext);
+				cpInstance.getPromoPrice(), serviceContext);
 		}
 	}
 
@@ -163,6 +163,7 @@ public class EditCPInstanceCommercePriceEntryMVCActionCommand
 			actionRequest, "commercePriceEntryId");
 
 		double price = ParamUtil.getDouble(actionRequest, "price");
+		double promoPrice = ParamUtil.getDouble(actionRequest, "promoPrice");
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			CommercePriceEntry.class.getName(), actionRequest);
@@ -170,7 +171,7 @@ public class EditCPInstanceCommercePriceEntryMVCActionCommand
 		CommercePriceEntry commercePriceEntry =
 			_commercePriceEntryService.updateCommercePriceEntry(
 				commercePriceEntryId, BigDecimal.valueOf(price),
-				BigDecimal.valueOf(price), serviceContext);
+				BigDecimal.valueOf(promoPrice), serviceContext);
 
 		return commercePriceEntry;
 	}

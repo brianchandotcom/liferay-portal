@@ -42,6 +42,7 @@ import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -49,6 +50,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
+ * @author Marco Leo
  * @author Alessio Antonio Rendina
  */
 public class CommercePriceEntryLocalServiceImpl
@@ -57,8 +59,8 @@ public class CommercePriceEntryLocalServiceImpl
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public CommercePriceEntry addCommercePriceEntry(
-			long cpInstanceId, long commercePriceListId, double price,
-			ServiceContext serviceContext)
+			long cpInstanceId, long commercePriceListId, BigDecimal price,
+			BigDecimal promoPrice, ServiceContext serviceContext)
 		throws PortalException {
 
 		User user = userLocalService.getUser(serviceContext.getUserId());
@@ -79,6 +81,7 @@ public class CommercePriceEntryLocalServiceImpl
 		commercePriceEntry.setCPInstanceId(cpInstanceId);
 		commercePriceEntry.setCommercePriceListId(commercePriceListId);
 		commercePriceEntry.setPrice(price);
+		commercePriceEntry.setPromoPrice(promoPrice);
 		commercePriceEntry.setExpandoBridgeAttributes(serviceContext);
 
 		return commercePriceEntryPersistence.update(commercePriceEntry);
@@ -245,7 +248,7 @@ public class CommercePriceEntryLocalServiceImpl
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public CommercePriceEntry updateCommercePriceEntry(
-			long commercePriceEntryId, double price,
+			long commercePriceEntryId, BigDecimal price, BigDecimal promoPrice,
 			ServiceContext serviceContext)
 		throws PortalException {
 
@@ -254,6 +257,7 @@ public class CommercePriceEntryLocalServiceImpl
 				commercePriceEntryId);
 
 		commercePriceEntry.setPrice(price);
+		commercePriceEntry.setPromoPrice(promoPrice);
 		commercePriceEntry.setExpandoBridgeAttributes(serviceContext);
 
 		return commercePriceEntryPersistence.update(commercePriceEntry);

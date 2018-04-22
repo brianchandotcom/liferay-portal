@@ -26,9 +26,11 @@ import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 /**
+ * @author Marco Leo
  * @author Alessio Antonio Rendina
  */
 public class CommercePriceEntryServiceImpl
@@ -36,8 +38,8 @@ public class CommercePriceEntryServiceImpl
 
 	@Override
 	public CommercePriceEntry addCommercePriceEntry(
-			long cpInstanceId, long commercePriceListId, double price,
-			ServiceContext serviceContext)
+			long cpInstanceId, long commercePriceListId, BigDecimal price,
+			BigDecimal promoPrice, ServiceContext serviceContext)
 		throws PortalException {
 
 		CommercePermission.check(
@@ -45,7 +47,8 @@ public class CommercePriceEntryServiceImpl
 			CommerceActionKeys.MANAGE_COMMERCE_PRICE_LISTS);
 
 		return commercePriceEntryLocalService.addCommercePriceEntry(
-			cpInstanceId, commercePriceListId, price, serviceContext);
+			cpInstanceId, commercePriceListId, price, promoPrice,
+			serviceContext);
 	}
 
 	@Override
@@ -139,7 +142,7 @@ public class CommercePriceEntryServiceImpl
 
 	@Override
 	public CommercePriceEntry updateCommercePriceEntry(
-			long commercePriceEntryId, double price,
+			long commercePriceEntryId, BigDecimal price, BigDecimal promoPrice,
 			ServiceContext serviceContext)
 		throws PortalException {
 
@@ -148,7 +151,7 @@ public class CommercePriceEntryServiceImpl
 			CommerceActionKeys.MANAGE_COMMERCE_PRICE_LISTS);
 
 		return commercePriceEntryLocalService.updateCommercePriceEntry(
-			commercePriceEntryId, price, serviceContext);
+			commercePriceEntryId, price, promoPrice, serviceContext);
 	}
 
 }

@@ -507,7 +507,7 @@
 
 		<column name="CPInstanceId" type="long" />
 		<column name="commercePriceListId" type="long" />
-		<column name="price" type="double" />
+		<column name="price" type="BigDecimal" />
 		<column name="promoPrice" type="BigDecimal" />
 		<column name="hasTierPrice" type="boolean" />
 		<column name="lastPublishDate" type="Date" />

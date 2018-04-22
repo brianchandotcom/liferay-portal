@@ -82,6 +82,7 @@ public class CommercePriceListModelImpl extends BaseModelImpl<CommercePriceList>
 			{ "userName", Types.VARCHAR },
 			{ "createDate", Types.TIMESTAMP },
 			{ "modifiedDate", Types.TIMESTAMP },
+			{ "parentCommercePriceListId", Types.BIGINT },
 			{ "commerceCurrencyId", Types.BIGINT },
 			{ "name", Types.VARCHAR },
 			{ "priority", Types.DOUBLE },
@@ -104,6 +105,7 @@ public class CommercePriceListModelImpl extends BaseModelImpl<CommercePriceList>
 		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
+		TABLE_COLUMNS_MAP.put("parentCommercePriceListId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("commerceCurrencyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("priority", Types.DOUBLE);
@@ -116,7 +118,7 @@ public class CommercePriceListModelImpl extends BaseModelImpl<CommercePriceList>
 		TABLE_COLUMNS_MAP.put("statusDate", Types.TIMESTAMP);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table CommercePriceList (uuid_ VARCHAR(75) null,commercePriceListId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,commerceCurrencyId LONG,name VARCHAR(75) null,priority DOUBLE,displayDate DATE null,expirationDate DATE null,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table CommercePriceList (uuid_ VARCHAR(75) null,commercePriceListId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,parentCommercePriceListId LONG,commerceCurrencyId LONG,name VARCHAR(75) null,priority DOUBLE,displayDate DATE null,expirationDate DATE null,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table CommercePriceList";
 	public static final String ORDER_BY_JPQL = " ORDER BY commercePriceList.displayDate DESC, commercePriceList.createDate DESC, commercePriceList.priority DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY CommercePriceList.displayDate DESC, CommercePriceList.createDate DESC, CommercePriceList.priority DESC";
@@ -136,10 +138,11 @@ public class CommercePriceListModelImpl extends BaseModelImpl<CommercePriceList>
 	public static final long COMPANYID_COLUMN_BITMASK = 2L;
 	public static final long DISPLAYDATE_COLUMN_BITMASK = 4L;
 	public static final long GROUPID_COLUMN_BITMASK = 8L;
-	public static final long STATUS_COLUMN_BITMASK = 16L;
-	public static final long UUID_COLUMN_BITMASK = 32L;
-	public static final long CREATEDATE_COLUMN_BITMASK = 64L;
-	public static final long PRIORITY_COLUMN_BITMASK = 128L;
+	public static final long PARENTCOMMERCEPRICELISTID_COLUMN_BITMASK = 16L;
+	public static final long STATUS_COLUMN_BITMASK = 32L;
+	public static final long UUID_COLUMN_BITMASK = 64L;
+	public static final long CREATEDATE_COLUMN_BITMASK = 128L;
+	public static final long PRIORITY_COLUMN_BITMASK = 256L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -162,6 +165,7 @@ public class CommercePriceListModelImpl extends BaseModelImpl<CommercePriceList>
 		model.setUserName(soapModel.getUserName());
 		model.setCreateDate(soapModel.getCreateDate());
 		model.setModifiedDate(soapModel.getModifiedDate());
+		model.setParentCommercePriceListId(soapModel.getParentCommercePriceListId());
 		model.setCommerceCurrencyId(soapModel.getCommerceCurrencyId());
 		model.setName(soapModel.getName());
 		model.setPriority(soapModel.getPriority());
@@ -245,6 +249,8 @@ public class CommercePriceListModelImpl extends BaseModelImpl<CommercePriceList>
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
+		attributes.put("parentCommercePriceListId",
+			getParentCommercePriceListId());
 		attributes.put("commerceCurrencyId", getCommerceCurrencyId());
 		attributes.put("name", getName());
 		attributes.put("priority", getPriority());
@@ -310,6 +316,13 @@ public class CommercePriceListModelImpl extends BaseModelImpl<CommercePriceList>
 
 		if (modifiedDate != null) {
 			setModifiedDate(modifiedDate);
+		}
+
+		Long parentCommercePriceListId = (Long)attributes.get(
+				"parentCommercePriceListId");
+
+		if (parentCommercePriceListId != null) {
+			setParentCommercePriceListId(parentCommercePriceListId);
 		}
 
 		Long commerceCurrencyId = (Long)attributes.get("commerceCurrencyId");
@@ -525,6 +538,29 @@ public class CommercePriceListModelImpl extends BaseModelImpl<CommercePriceList>
 		_setModifiedDate = true;
 
 		_modifiedDate = modifiedDate;
+	}
+
+	@JSON
+	@Override
+	public long getParentCommercePriceListId() {
+		return _parentCommercePriceListId;
+	}
+
+	@Override
+	public void setParentCommercePriceListId(long parentCommercePriceListId) {
+		_columnBitmask |= PARENTCOMMERCEPRICELISTID_COLUMN_BITMASK;
+
+		if (!_setOriginalParentCommercePriceListId) {
+			_setOriginalParentCommercePriceListId = true;
+
+			_originalParentCommercePriceListId = _parentCommercePriceListId;
+		}
+
+		_parentCommercePriceListId = parentCommercePriceListId;
+	}
+
+	public long getOriginalParentCommercePriceListId() {
+		return _originalParentCommercePriceListId;
 	}
 
 	@JSON
@@ -824,6 +860,7 @@ public class CommercePriceListModelImpl extends BaseModelImpl<CommercePriceList>
 		commercePriceListImpl.setUserName(getUserName());
 		commercePriceListImpl.setCreateDate(getCreateDate());
 		commercePriceListImpl.setModifiedDate(getModifiedDate());
+		commercePriceListImpl.setParentCommercePriceListId(getParentCommercePriceListId());
 		commercePriceListImpl.setCommerceCurrencyId(getCommerceCurrencyId());
 		commercePriceListImpl.setName(getName());
 		commercePriceListImpl.setPriority(getPriority());
@@ -934,6 +971,10 @@ public class CommercePriceListModelImpl extends BaseModelImpl<CommercePriceList>
 
 		commercePriceListModelImpl._setModifiedDate = false;
 
+		commercePriceListModelImpl._originalParentCommercePriceListId = commercePriceListModelImpl._parentCommercePriceListId;
+
+		commercePriceListModelImpl._setOriginalParentCommercePriceListId = false;
+
 		commercePriceListModelImpl._originalCommerceCurrencyId = commercePriceListModelImpl._commerceCurrencyId;
 
 		commercePriceListModelImpl._setOriginalCommerceCurrencyId = false;
@@ -992,6 +1033,8 @@ public class CommercePriceListModelImpl extends BaseModelImpl<CommercePriceList>
 		else {
 			commercePriceListCacheModel.modifiedDate = Long.MIN_VALUE;
 		}
+
+		commercePriceListCacheModel.parentCommercePriceListId = getParentCommercePriceListId();
 
 		commercePriceListCacheModel.commerceCurrencyId = getCommerceCurrencyId();
 
@@ -1058,7 +1101,7 @@ public class CommercePriceListModelImpl extends BaseModelImpl<CommercePriceList>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(37);
+		StringBundler sb = new StringBundler(39);
 
 		sb.append("{uuid=");
 		sb.append(getUuid());
@@ -1076,6 +1119,8 @@ public class CommercePriceListModelImpl extends BaseModelImpl<CommercePriceList>
 		sb.append(getCreateDate());
 		sb.append(", modifiedDate=");
 		sb.append(getModifiedDate());
+		sb.append(", parentCommercePriceListId=");
+		sb.append(getParentCommercePriceListId());
 		sb.append(", commerceCurrencyId=");
 		sb.append(getCommerceCurrencyId());
 		sb.append(", name=");
@@ -1103,7 +1148,7 @@ public class CommercePriceListModelImpl extends BaseModelImpl<CommercePriceList>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(58);
+		StringBundler sb = new StringBundler(61);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.commerce.model.CommercePriceList");
@@ -1140,6 +1185,10 @@ public class CommercePriceListModelImpl extends BaseModelImpl<CommercePriceList>
 		sb.append(
 			"<column><column-name>modifiedDate</column-name><column-value><![CDATA[");
 		sb.append(getModifiedDate());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>parentCommercePriceListId</column-name><column-value><![CDATA[");
+		sb.append(getParentCommercePriceListId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>commerceCurrencyId</column-name><column-value><![CDATA[");
@@ -1205,6 +1254,9 @@ public class CommercePriceListModelImpl extends BaseModelImpl<CommercePriceList>
 	private Date _createDate;
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
+	private long _parentCommercePriceListId;
+	private long _originalParentCommercePriceListId;
+	private boolean _setOriginalParentCommercePriceListId;
 	private long _commerceCurrencyId;
 	private long _originalCommerceCurrencyId;
 	private boolean _setOriginalCommerceCurrencyId;

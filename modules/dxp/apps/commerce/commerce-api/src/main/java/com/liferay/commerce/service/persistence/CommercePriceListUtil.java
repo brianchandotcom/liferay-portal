@@ -510,6 +510,71 @@ public class CommercePriceListUtil {
 	}
 
 	/**
+	* Returns the commerce price list where parentCommercePriceListId = &#63; or throws a {@link NoSuchPriceListException} if it could not be found.
+	*
+	* @param parentCommercePriceListId the parent commerce price list ID
+	* @return the matching commerce price list
+	* @throws NoSuchPriceListException if a matching commerce price list could not be found
+	*/
+	public static CommercePriceList findByParentCommercePriceListId(
+		long parentCommercePriceListId)
+		throws com.liferay.commerce.exception.NoSuchPriceListException {
+		return getPersistence()
+				   .findByParentCommercePriceListId(parentCommercePriceListId);
+	}
+
+	/**
+	* Returns the commerce price list where parentCommercePriceListId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	*
+	* @param parentCommercePriceListId the parent commerce price list ID
+	* @return the matching commerce price list, or <code>null</code> if a matching commerce price list could not be found
+	*/
+	public static CommercePriceList fetchByParentCommercePriceListId(
+		long parentCommercePriceListId) {
+		return getPersistence()
+				   .fetchByParentCommercePriceListId(parentCommercePriceListId);
+	}
+
+	/**
+	* Returns the commerce price list where parentCommercePriceListId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	*
+	* @param parentCommercePriceListId the parent commerce price list ID
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the matching commerce price list, or <code>null</code> if a matching commerce price list could not be found
+	*/
+	public static CommercePriceList fetchByParentCommercePriceListId(
+		long parentCommercePriceListId, boolean retrieveFromCache) {
+		return getPersistence()
+				   .fetchByParentCommercePriceListId(parentCommercePriceListId,
+			retrieveFromCache);
+	}
+
+	/**
+	* Removes the commerce price list where parentCommercePriceListId = &#63; from the database.
+	*
+	* @param parentCommercePriceListId the parent commerce price list ID
+	* @return the commerce price list that was removed
+	*/
+	public static CommercePriceList removeByParentCommercePriceListId(
+		long parentCommercePriceListId)
+		throws com.liferay.commerce.exception.NoSuchPriceListException {
+		return getPersistence()
+				   .removeByParentCommercePriceListId(parentCommercePriceListId);
+	}
+
+	/**
+	* Returns the number of commerce price lists where parentCommercePriceListId = &#63;.
+	*
+	* @param parentCommercePriceListId the parent commerce price list ID
+	* @return the number of matching commerce price lists
+	*/
+	public static int countByParentCommercePriceListId(
+		long parentCommercePriceListId) {
+		return getPersistence()
+				   .countByParentCommercePriceListId(parentCommercePriceListId);
+	}
+
+	/**
 	* Returns all the commerce price lists where groupId = &#63;.
 	*
 	* @param groupId the group ID

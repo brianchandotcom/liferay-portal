@@ -65,7 +65,7 @@ public class CommercePriceListCacheModel implements CacheModel<CommercePriceList
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(37);
+		StringBundler sb = new StringBundler(39);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -83,6 +83,8 @@ public class CommercePriceListCacheModel implements CacheModel<CommercePriceList
 		sb.append(createDate);
 		sb.append(", modifiedDate=");
 		sb.append(modifiedDate);
+		sb.append(", parentCommercePriceListId=");
+		sb.append(parentCommercePriceListId);
 		sb.append(", commerceCurrencyId=");
 		sb.append(commerceCurrencyId);
 		sb.append(", name=");
@@ -145,6 +147,7 @@ public class CommercePriceListCacheModel implements CacheModel<CommercePriceList
 			commercePriceListImpl.setModifiedDate(new Date(modifiedDate));
 		}
 
+		commercePriceListImpl.setParentCommercePriceListId(parentCommercePriceListId);
 		commercePriceListImpl.setCommerceCurrencyId(commerceCurrencyId);
 
 		if (name == null) {
@@ -214,6 +217,8 @@ public class CommercePriceListCacheModel implements CacheModel<CommercePriceList
 		createDate = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
 
+		parentCommercePriceListId = objectInput.readLong();
+
 		commerceCurrencyId = objectInput.readLong();
 		name = objectInput.readUTF();
 
@@ -257,6 +262,8 @@ public class CommercePriceListCacheModel implements CacheModel<CommercePriceList
 		objectOutput.writeLong(createDate);
 		objectOutput.writeLong(modifiedDate);
 
+		objectOutput.writeLong(parentCommercePriceListId);
+
 		objectOutput.writeLong(commerceCurrencyId);
 
 		if (name == null) {
@@ -293,6 +300,7 @@ public class CommercePriceListCacheModel implements CacheModel<CommercePriceList
 	public String userName;
 	public long createDate;
 	public long modifiedDate;
+	public long parentCommercePriceListId;
 	public long commerceCurrencyId;
 	public String name;
 	public double priority;

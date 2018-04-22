@@ -229,6 +229,7 @@
 		<property name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="createDate" type="org.hibernate.type.TimestampType" />
 		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
+		<property name="parentCommercePriceListId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="commerceCurrencyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="priority" type="com.liferay.portal.dao.orm.hibernate.DoubleType" />

@@ -60,6 +60,7 @@ create index IX_473B4D8D on CommercePriceList (commerceCurrencyId);
 create index IX_2AA1AF56 on CommercePriceList (companyId);
 create index IX_31913054 on CommercePriceList (displayDate, status);
 create index IX_2C5B7A3E on CommercePriceList (groupId, status);
+create index IX_863045BB on CommercePriceList (parentCommercePriceListId);
 create index IX_FCE28706 on CommercePriceList (uuid_[$COLUMN_LENGTH:75$], companyId);
 create unique index IX_554D1708 on CommercePriceList (uuid_[$COLUMN_LENGTH:75$], groupId);
 

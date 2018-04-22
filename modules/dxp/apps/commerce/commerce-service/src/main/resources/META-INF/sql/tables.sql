@@ -242,6 +242,7 @@ create table CommercePriceList (
 	userName VARCHAR(75) null,
 	createDate DATE null,
 	modifiedDate DATE null,
+	parentCommercePriceListId LONG,
 	commerceCurrencyId LONG,
 	name VARCHAR(75) null,
 	priority DOUBLE,

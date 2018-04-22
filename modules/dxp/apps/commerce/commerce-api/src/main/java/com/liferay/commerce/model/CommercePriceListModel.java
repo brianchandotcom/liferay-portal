@@ -211,6 +211,20 @@ public interface CommercePriceListModel extends BaseModel<CommercePriceList>,
 	public void setModifiedDate(Date modifiedDate);
 
 	/**
+	 * Returns the parent commerce price list ID of this commerce price list.
+	 *
+	 * @return the parent commerce price list ID of this commerce price list
+	 */
+	public long getParentCommercePriceListId();
+
+	/**
+	 * Sets the parent commerce price list ID of this commerce price list.
+	 *
+	 * @param parentCommercePriceListId the parent commerce price list ID of this commerce price list
+	 */
+	public void setParentCommercePriceListId(long parentCommercePriceListId);
+
+	/**
 	 * Returns the commerce currency ID of this commerce price list.
 	 *
 	 * @return the commerce currency ID of this commerce price list

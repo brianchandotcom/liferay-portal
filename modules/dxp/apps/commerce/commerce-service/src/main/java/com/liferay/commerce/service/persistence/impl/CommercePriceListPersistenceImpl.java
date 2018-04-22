@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
@@ -1494,6 +1495,227 @@ public class CommercePriceListPersistenceImpl extends BasePersistenceImpl<Commer
 	private static final String _FINDER_COLUMN_UUID_C_UUID_2 = "commercePriceList.uuid = ? AND ";
 	private static final String _FINDER_COLUMN_UUID_C_UUID_3 = "(commercePriceList.uuid IS NULL OR commercePriceList.uuid = '') AND ";
 	private static final String _FINDER_COLUMN_UUID_C_COMPANYID_2 = "commercePriceList.companyId = ?";
+	public static final FinderPath FINDER_PATH_FETCH_BY_PARENTCOMMERCEPRICELISTID =
+		new FinderPath(CommercePriceListModelImpl.ENTITY_CACHE_ENABLED,
+			CommercePriceListModelImpl.FINDER_CACHE_ENABLED,
+			CommercePriceListImpl.class, FINDER_CLASS_NAME_ENTITY,
+			"fetchByParentCommercePriceListId",
+			new String[] { Long.class.getName() },
+			CommercePriceListModelImpl.PARENTCOMMERCEPRICELISTID_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_PARENTCOMMERCEPRICELISTID =
+		new FinderPath(CommercePriceListModelImpl.ENTITY_CACHE_ENABLED,
+			CommercePriceListModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"countByParentCommercePriceListId",
+			new String[] { Long.class.getName() });
+
+	/**
+	 * Returns the commerce price list where parentCommercePriceListId = &#63; or throws a {@link NoSuchPriceListException} if it could not be found.
+	 *
+	 * @param parentCommercePriceListId the parent commerce price list ID
+	 * @return the matching commerce price list
+	 * @throws NoSuchPriceListException if a matching commerce price list could not be found
+	 */
+	@Override
+	public CommercePriceList findByParentCommercePriceListId(
+		long parentCommercePriceListId) throws NoSuchPriceListException {
+		CommercePriceList commercePriceList = fetchByParentCommercePriceListId(parentCommercePriceListId);
+
+		if (commercePriceList == null) {
+			StringBundler msg = new StringBundler(4);
+
+			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+			msg.append("parentCommercePriceListId=");
+			msg.append(parentCommercePriceListId);
+
+			msg.append("}");
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(msg.toString());
+			}
+
+			throw new NoSuchPriceListException(msg.toString());
+		}
+
+		return commercePriceList;
+	}
+
+	/**
+	 * Returns the commerce price list where parentCommercePriceListId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param parentCommercePriceListId the parent commerce price list ID
+	 * @return the matching commerce price list, or <code>null</code> if a matching commerce price list could not be found
+	 */
+	@Override
+	public CommercePriceList fetchByParentCommercePriceListId(
+		long parentCommercePriceListId) {
+		return fetchByParentCommercePriceListId(parentCommercePriceListId, true);
+	}
+
+	/**
+	 * Returns the commerce price list where parentCommercePriceListId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param parentCommercePriceListId the parent commerce price list ID
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the matching commerce price list, or <code>null</code> if a matching commerce price list could not be found
+	 */
+	@Override
+	public CommercePriceList fetchByParentCommercePriceListId(
+		long parentCommercePriceListId, boolean retrieveFromCache) {
+		Object[] finderArgs = new Object[] { parentCommercePriceListId };
+
+		Object result = null;
+
+		if (retrieveFromCache) {
+			result = finderCache.getResult(FINDER_PATH_FETCH_BY_PARENTCOMMERCEPRICELISTID,
+					finderArgs, this);
+		}
+
+		if (result instanceof CommercePriceList) {
+			CommercePriceList commercePriceList = (CommercePriceList)result;
+
+			if ((parentCommercePriceListId != commercePriceList.getParentCommercePriceListId())) {
+				result = null;
+			}
+		}
+
+		if (result == null) {
+			StringBundler query = new StringBundler(3);
+
+			query.append(_SQL_SELECT_COMMERCEPRICELIST_WHERE);
+
+			query.append(_FINDER_COLUMN_PARENTCOMMERCEPRICELISTID_PARENTCOMMERCEPRICELISTID_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(parentCommercePriceListId);
+
+				List<CommercePriceList> list = q.list();
+
+				if (list.isEmpty()) {
+					finderCache.putResult(FINDER_PATH_FETCH_BY_PARENTCOMMERCEPRICELISTID,
+						finderArgs, list);
+				}
+				else {
+					if (list.size() > 1) {
+						Collections.sort(list, Collections.reverseOrder());
+
+						if (_log.isWarnEnabled()) {
+							_log.warn(
+								"CommercePriceListPersistenceImpl.fetchByParentCommercePriceListId(long, boolean) with parameters (" +
+								StringUtil.merge(finderArgs) +
+								") yields a result set with more than 1 result. This violates the logical unique restriction. There is no order guarantee on which result is returned by this finder.");
+						}
+					}
+
+					CommercePriceList commercePriceList = list.get(0);
+
+					result = commercePriceList;
+
+					cacheResult(commercePriceList);
+
+					if ((commercePriceList.getParentCommercePriceListId() != parentCommercePriceListId)) {
+						finderCache.putResult(FINDER_PATH_FETCH_BY_PARENTCOMMERCEPRICELISTID,
+							finderArgs, commercePriceList);
+					}
+				}
+			}
+			catch (Exception e) {
+				finderCache.removeResult(FINDER_PATH_FETCH_BY_PARENTCOMMERCEPRICELISTID,
+					finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		if (result instanceof List<?>) {
+			return null;
+		}
+		else {
+			return (CommercePriceList)result;
+		}
+	}
+
+	/**
+	 * Removes the commerce price list where parentCommercePriceListId = &#63; from the database.
+	 *
+	 * @param parentCommercePriceListId the parent commerce price list ID
+	 * @return the commerce price list that was removed
+	 */
+	@Override
+	public CommercePriceList removeByParentCommercePriceListId(
+		long parentCommercePriceListId) throws NoSuchPriceListException {
+		CommercePriceList commercePriceList = findByParentCommercePriceListId(parentCommercePriceListId);
+
+		return remove(commercePriceList);
+	}
+
+	/**
+	 * Returns the number of commerce price lists where parentCommercePriceListId = &#63;.
+	 *
+	 * @param parentCommercePriceListId the parent commerce price list ID
+	 * @return the number of matching commerce price lists
+	 */
+	@Override
+	public int countByParentCommercePriceListId(long parentCommercePriceListId) {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_PARENTCOMMERCEPRICELISTID;
+
+		Object[] finderArgs = new Object[] { parentCommercePriceListId };
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(2);
+
+			query.append(_SQL_COUNT_COMMERCEPRICELIST_WHERE);
+
+			query.append(_FINDER_COLUMN_PARENTCOMMERCEPRICELISTID_PARENTCOMMERCEPRICELISTID_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(parentCommercePriceListId);
+
+				count = (Long)q.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_PARENTCOMMERCEPRICELISTID_PARENTCOMMERCEPRICELISTID_2 =
+		"commercePriceList.parentCommercePriceListId = ?";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_GROUPID = new FinderPath(CommercePriceListModelImpl.ENTITY_CACHE_ENABLED,
 			CommercePriceListModelImpl.FINDER_CACHE_ENABLED,
 			CommercePriceListImpl.class,
@@ -4723,6 +4945,10 @@ public class CommercePriceListPersistenceImpl extends BasePersistenceImpl<Commer
 				commercePriceList.getUuid(), commercePriceList.getGroupId()
 			}, commercePriceList);
 
+		finderCache.putResult(FINDER_PATH_FETCH_BY_PARENTCOMMERCEPRICELISTID,
+			new Object[] { commercePriceList.getParentCommercePriceListId() },
+			commercePriceList);
+
 		commercePriceList.resetOriginalValues();
 	}
 
@@ -4806,6 +5032,15 @@ public class CommercePriceListPersistenceImpl extends BasePersistenceImpl<Commer
 			Long.valueOf(1), false);
 		finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G, args,
 			commercePriceListModelImpl, false);
+
+		args = new Object[] {
+				commercePriceListModelImpl.getParentCommercePriceListId()
+			};
+
+		finderCache.putResult(FINDER_PATH_COUNT_BY_PARENTCOMMERCEPRICELISTID,
+			args, Long.valueOf(1), false);
+		finderCache.putResult(FINDER_PATH_FETCH_BY_PARENTCOMMERCEPRICELISTID,
+			args, commercePriceListModelImpl, false);
 	}
 
 	protected void clearUniqueFindersCache(
@@ -4830,6 +5065,29 @@ public class CommercePriceListPersistenceImpl extends BasePersistenceImpl<Commer
 
 			finderCache.removeResult(FINDER_PATH_COUNT_BY_UUID_G, args);
 			finderCache.removeResult(FINDER_PATH_FETCH_BY_UUID_G, args);
+		}
+
+		if (clearCurrent) {
+			Object[] args = new Object[] {
+					commercePriceListModelImpl.getParentCommercePriceListId()
+				};
+
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_PARENTCOMMERCEPRICELISTID,
+				args);
+			finderCache.removeResult(FINDER_PATH_FETCH_BY_PARENTCOMMERCEPRICELISTID,
+				args);
+		}
+
+		if ((commercePriceListModelImpl.getColumnBitmask() &
+				FINDER_PATH_FETCH_BY_PARENTCOMMERCEPRICELISTID.getColumnBitmask()) != 0) {
+			Object[] args = new Object[] {
+					commercePriceListModelImpl.getOriginalParentCommercePriceListId()
+				};
+
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_PARENTCOMMERCEPRICELISTID,
+				args);
+			finderCache.removeResult(FINDER_PATH_FETCH_BY_PARENTCOMMERCEPRICELISTID,
+				args);
 		}
 	}
 
@@ -5203,6 +5461,7 @@ public class CommercePriceListPersistenceImpl extends BasePersistenceImpl<Commer
 		commercePriceListImpl.setUserName(commercePriceList.getUserName());
 		commercePriceListImpl.setCreateDate(commercePriceList.getCreateDate());
 		commercePriceListImpl.setModifiedDate(commercePriceList.getModifiedDate());
+		commercePriceListImpl.setParentCommercePriceListId(commercePriceList.getParentCommercePriceListId());
 		commercePriceListImpl.setCommerceCurrencyId(commercePriceList.getCommerceCurrencyId());
 		commercePriceListImpl.setName(commercePriceList.getName());
 		commercePriceListImpl.setPriority(commercePriceList.getPriority());

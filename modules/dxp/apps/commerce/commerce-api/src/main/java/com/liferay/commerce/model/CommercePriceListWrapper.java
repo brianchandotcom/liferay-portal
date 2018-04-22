@@ -68,6 +68,8 @@ public class CommercePriceListWrapper implements CommercePriceList,
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
+		attributes.put("parentCommercePriceListId",
+			getParentCommercePriceListId());
 		attributes.put("commerceCurrencyId", getCommerceCurrencyId());
 		attributes.put("name", getName());
 		attributes.put("priority", getPriority());
@@ -130,6 +132,13 @@ public class CommercePriceListWrapper implements CommercePriceList,
 
 		if (modifiedDate != null) {
 			setModifiedDate(modifiedDate);
+		}
+
+		Long parentCommercePriceListId = (Long)attributes.get(
+				"parentCommercePriceListId");
+
+		if (parentCommercePriceListId != null) {
+			setParentCommercePriceListId(parentCommercePriceListId);
 		}
 
 		Long commerceCurrencyId = (Long)attributes.get("commerceCurrencyId");
@@ -312,6 +321,16 @@ public class CommercePriceListWrapper implements CommercePriceList,
 	@Override
 	public java.lang.String getName() {
 		return _commercePriceList.getName();
+	}
+
+	/**
+	* Returns the parent commerce price list ID of this commerce price list.
+	*
+	* @return the parent commerce price list ID of this commerce price list
+	*/
+	@Override
+	public long getParentCommercePriceListId() {
+		return _commercePriceList.getParentCommercePriceListId();
 	}
 
 	/**
@@ -658,6 +677,16 @@ public class CommercePriceListWrapper implements CommercePriceList,
 	@Override
 	public void setNew(boolean n) {
 		_commercePriceList.setNew(n);
+	}
+
+	/**
+	* Sets the parent commerce price list ID of this commerce price list.
+	*
+	* @param parentCommercePriceListId the parent commerce price list ID of this commerce price list
+	*/
+	@Override
+	public void setParentCommercePriceListId(long parentCommercePriceListId) {
+		_commercePriceList.setParentCommercePriceListId(parentCommercePriceListId);
 	}
 
 	/**

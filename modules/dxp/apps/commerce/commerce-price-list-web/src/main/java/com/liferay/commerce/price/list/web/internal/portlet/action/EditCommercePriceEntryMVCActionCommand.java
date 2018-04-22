@@ -39,6 +39,8 @@ import javax.portlet.ActionResponse;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
+import java.math.BigDecimal;
+
 /**
  * @author Alessio Antonio Rendina
  */
@@ -79,7 +81,7 @@ public class EditCommercePriceEntryMVCActionCommand
 
 			_commercePriceEntryService.addCommercePriceEntry(
 				addCPInstanceId, commercePriceListId, cpInstance.getPrice(),
-				serviceContext);
+				cpInstance.getPrice(), serviceContext);
 		}
 	}
 
@@ -159,14 +161,15 @@ public class EditCommercePriceEntryMVCActionCommand
 			long commercePriceEntryId, ActionRequest actionRequest)
 		throws Exception {
 
-		double price = ParamUtil.getDouble(actionRequest, "price");
+		String price = ParamUtil.getString(actionRequest, "price");
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			CommercePriceEntry.class.getName(), actionRequest);
 
 		CommercePriceEntry commercePriceEntry =
 			_commercePriceEntryService.updateCommercePriceEntry(
-				commercePriceEntryId, price, serviceContext);
+				commercePriceEntryId, new BigDecimal(price), BigDecimal.ZERO,
+				serviceContext);
 
 		return commercePriceEntry;
 	}

@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
+import java.math.BigDecimal;
 import java.util.Calendar;
 
 import javax.portlet.ActionRequest;
@@ -256,11 +257,12 @@ public class EditCPInstanceMVCActionCommand extends BaseMVCActionCommand {
 
 		long cpInstanceId = ParamUtil.getLong(actionRequest, "cpInstanceId");
 
-		double cost = ParamUtil.getDouble(actionRequest, "cost");
-		double price = ParamUtil.getDouble(actionRequest, "price");
+		String cost = ParamUtil.getString(actionRequest, "cost");
+		String price = ParamUtil.getString(actionRequest, "price");
 
 		_cpInstanceService.updatePricingInfo(
-			cpInstanceId, cost, price, serviceContext);
+			cpInstanceId, new BigDecimal(cost), new BigDecimal(price),
+			serviceContext);
 	}
 
 	protected void updateShippingInfo(ActionRequest actionRequest)

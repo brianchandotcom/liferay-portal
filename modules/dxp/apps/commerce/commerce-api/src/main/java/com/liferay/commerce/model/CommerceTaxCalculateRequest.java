@@ -16,6 +16,7 @@ package com.liferay.commerce.model;
 
 import java.io.Serializable;
 
+import java.math.BigDecimal;
 import java.util.LinkedHashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -41,7 +42,7 @@ public class CommerceTaxCalculateRequest {
 		return _locale;
 	}
 
-	public double getPrice() {
+	public BigDecimal getPrice() {
 		return _price;
 	}
 
@@ -73,7 +74,7 @@ public class CommerceTaxCalculateRequest {
 		_locale = locale;
 	}
 
-	public void setPrice(double price) {
+	public void setPrice(BigDecimal price) {
 		_price = price;
 	}
 
@@ -93,7 +94,7 @@ public class CommerceTaxCalculateRequest {
 	private long _commerceAddressId;
 	private long _commerceTaxMethodId;
 	private Locale _locale;
-	private double _price;
+	private BigDecimal _price;
 	private long _siteGroupId;
 	private long _taxCategoryId;
 	private long _userId;

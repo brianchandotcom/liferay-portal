@@ -46,6 +46,7 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.io.Serializable;
 
+import java.math.BigDecimal;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -118,7 +119,7 @@ public class CPPreviewContentDisplayContext {
 		return DLUtil.getThumbnailSrc(fileEntry, themeDisplay);
 	}
 
-	public String getFormattedPrice(double price) throws PortalException {
+	public String getFormattedPrice(BigDecimal price) throws PortalException {
 		ThemeDisplay themeDisplay = (ThemeDisplay)_renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 

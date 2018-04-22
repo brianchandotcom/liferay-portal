@@ -14,18 +14,21 @@
 
 package com.liferay.commerce.model;
 
+import java.math.BigDecimal;
+
 /**
  * @author Andrea Di Giorgi
  */
 public class CommerceShippingOption {
 
-	public CommerceShippingOption(String name, String label, double amount) {
+	public CommerceShippingOption(
+		String name, String label, BigDecimal amount) {
 		_name = name;
 		_label = label;
 		_amount = amount;
 	}
 
-	public double getAmount() {
+	public BigDecimal getAmount() {
 		return _amount;
 	}
 
@@ -37,7 +40,7 @@ public class CommerceShippingOption {
 		return _name;
 	}
 
-	private final double _amount;
+	private final BigDecimal _amount;
 	private final String _label;
 	private final String _name;
 

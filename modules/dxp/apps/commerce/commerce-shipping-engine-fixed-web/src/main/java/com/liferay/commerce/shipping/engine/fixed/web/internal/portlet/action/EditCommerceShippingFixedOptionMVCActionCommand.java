@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
+import java.math.BigDecimal;
 import java.util.Locale;
 import java.util.Map;
 
@@ -123,7 +124,7 @@ public class EditCommerceShippingFixedOptionMVCActionCommand
 			actionRequest, "name");
 		Map<Locale, String> descriptionMap =
 			LocalizationUtil.getLocalizationMap(actionRequest, "description");
-		double amount = ParamUtil.getDouble(actionRequest, "amount");
+		String amount = ParamUtil.getString(actionRequest, "amount");
 		double priority = ParamUtil.getDouble(actionRequest, "priority");
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
@@ -133,12 +134,12 @@ public class EditCommerceShippingFixedOptionMVCActionCommand
 			_commerceShippingFixedOptionService.
 				updateCommerceShippingFixedOption(
 					commerceShippingFixedOptionId, nameMap, descriptionMap,
-					amount, priority);
+					new BigDecimal(amount), priority);
 		}
 		else {
 			_commerceShippingFixedOptionService.addCommerceShippingFixedOption(
-				commerceShippingMethodId, nameMap, descriptionMap, amount,
-				priority, serviceContext);
+				commerceShippingMethodId, nameMap, descriptionMap,
+				new BigDecimal(amount), priority, serviceContext);
 		}
 	}
 

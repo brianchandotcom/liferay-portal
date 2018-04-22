@@ -17,6 +17,8 @@ package com.liferay.commerce.util.comparator;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
+import java.math.BigDecimal;
+
 /**
  * @author Andrea Di Giorgi
  */
@@ -41,8 +43,9 @@ public class CommerceOrderTotalComparator
 	public int compare(
 		CommerceOrder commerceOrder1, CommerceOrder commerceOrder2) {
 
-		int value = Double.compare(
-			commerceOrder1.getTotal(), commerceOrder2.getTotal());
+		BigDecimal total1 = commerceOrder1.getTotal();
+
+		int value = total1.compareTo(commerceOrder2.getTotal());
 
 		if (_ascending) {
 			return value;

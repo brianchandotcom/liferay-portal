@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -138,7 +139,7 @@ public class FixedCommerceShippingEngine implements CommerceShippingEngine {
 			}
 
 			String name = commerceShippingFixedOption.getName(locale);
-			double amount = commerceShippingFixedOption.getAmount();
+			BigDecimal amount = commerceShippingFixedOption.getAmount();
 
 			commerceShippingOptions.add(
 				new CommerceShippingOption(name, name, amount));

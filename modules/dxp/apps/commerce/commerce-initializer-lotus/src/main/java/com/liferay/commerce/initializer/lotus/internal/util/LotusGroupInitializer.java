@@ -64,6 +64,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 
+import java.math.BigDecimal;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.Locale;
@@ -434,7 +435,7 @@ public class LotusGroupInitializer implements GroupInitializer {
 		_commerceShippingFixedOptionLocalService.addCommerceShippingFixedOption(
 			commerceShippingMethod.getCommerceShippingMethodId(),
 			shippingFixedOptionNameMap, Collections.<Locale, String>emptyMap(),
-			0, 1, serviceContext);
+			BigDecimal.ZERO, 1, serviceContext);
 	}
 
 	protected void setSiteNavigationMenuPortletSettings(

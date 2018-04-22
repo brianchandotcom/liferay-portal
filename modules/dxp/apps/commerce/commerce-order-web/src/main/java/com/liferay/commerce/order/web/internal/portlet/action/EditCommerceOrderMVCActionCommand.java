@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowInstanceManager;
 import com.liferay.portal.kernel.workflow.WorkflowTaskManager;
 
+import java.math.BigDecimal;
 import java.util.concurrent.Callable;
 
 import javax.portlet.ActionRequest;
@@ -275,10 +276,10 @@ public class EditCommerceOrderMVCActionCommand extends BaseMVCActionCommand {
 		CommerceOrder commerceOrder = _commerceOrderService.getCommerceOrder(
 			commerceOrderId);
 
-		double subtotal = ParamUtil.getDouble(actionRequest, "subtotal");
-		double shippingPrice = ParamUtil.getDouble(
+		String subtotal = ParamUtil.getString(actionRequest, "subtotal");
+		String shippingPrice = ParamUtil.getString(
 			actionRequest, "shippingPrice");
-		double total = ParamUtil.getDouble(actionRequest, "total");
+		String total = ParamUtil.getString(actionRequest, "total");
 
 		_commerceOrderService.updateCommerceOrder(
 			commerceOrder.getCommerceOrderId(),
@@ -287,8 +288,9 @@ public class EditCommerceOrderMVCActionCommand extends BaseMVCActionCommand {
 			commerceOrder.getCommercePaymentMethodId(),
 			commerceOrder.getCommerceShippingMethodId(),
 			commerceOrder.getShippingOptionName(),
-			commerceOrder.getPurchaseOrderNumber(), subtotal, shippingPrice,
-			total, commerceOrder.getAdvanceStatus());
+			commerceOrder.getPurchaseOrderNumber(), new BigDecimal(subtotal),
+			new BigDecimal(shippingPrice), new BigDecimal(total),
+			commerceOrder.getAdvanceStatus());
 	}
 
 	private static final TransactionConfig _transactionConfig;

@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.WebKeys;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import javax.portlet.RenderRequest;
@@ -85,7 +86,7 @@ public class CommerceShippingFixedOptionsDisplayContext
 		return commerceShippingFixedOption;
 	}
 
-	public String getCommerceShippingFixedOptionAmount(double amount)
+	public String getCommerceShippingFixedOptionAmount(BigDecimal amount)
 		throws PortalException {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(

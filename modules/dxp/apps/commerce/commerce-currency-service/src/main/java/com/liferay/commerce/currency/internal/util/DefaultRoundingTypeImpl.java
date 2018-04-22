@@ -17,6 +17,7 @@ package com.liferay.commerce.currency.internal.util;
 import com.liferay.commerce.currency.util.RoundingType;
 import com.liferay.portal.kernel.language.LanguageUtil;
 
+import java.math.BigDecimal;
 import java.math.RoundingMode;
 
 import java.text.DecimalFormat;
@@ -51,12 +52,12 @@ public class DefaultRoundingTypeImpl implements RoundingType {
 	}
 
 	@Override
-	public String round(double value) {
+	public String round(BigDecimal value) {
 		DecimalFormat decimalFormat = new DecimalFormat("#.##");
 
 		decimalFormat.setMaximumFractionDigits(2);
 		decimalFormat.setMinimumFractionDigits(2);
-		decimalFormat.setRoundingMode(RoundingMode.HALF_UP);
+		decimalFormat.setRoundingMode(RoundingMode.HALF_EVEN);
 
 		return decimalFormat.format(value);
 	}

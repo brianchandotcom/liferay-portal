@@ -80,6 +80,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.PropsValues;
 
+import java.math.BigDecimal;
 import java.text.DateFormat;
 import java.text.Format;
 
@@ -439,7 +440,7 @@ public class CommerceOrganizationOrderDisplayContext {
 	public String getCommerceOrderValue(CommerceOrder commerceOrder)
 		throws PortalException {
 
-		double value = commerceOrder.getTotal();
+		BigDecimal value = commerceOrder.getTotal();
 
 		if (commerceOrder.isOpen()) {
 			value = _commercePriceCalculationLocalService.getOrderSubtotal(

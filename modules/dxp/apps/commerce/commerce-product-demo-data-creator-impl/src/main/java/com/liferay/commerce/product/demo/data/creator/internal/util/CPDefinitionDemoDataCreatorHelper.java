@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
@@ -137,7 +138,7 @@ public class CPDefinitionDemoDataCreatorHelper
 
 				// Update commerce product instances price
 
-				double price = productJSONObject.getDouble("price");
+				String price = productJSONObject.getString("price");
 
 				List<CPInstance> cpInstances =
 					_cpInstanceLocalService.getCPDefinitionInstances(
@@ -146,7 +147,7 @@ public class CPDefinitionDemoDataCreatorHelper
 				for (CPInstance cpInstance : cpInstances) {
 					_cpInstanceLocalService.updatePricingInfo(
 						cpInstance.getCPInstanceId(), cpInstance.getCost(),
-						price, serviceContext);
+						new BigDecimal(price), serviceContext);
 				}
 			}
 		}

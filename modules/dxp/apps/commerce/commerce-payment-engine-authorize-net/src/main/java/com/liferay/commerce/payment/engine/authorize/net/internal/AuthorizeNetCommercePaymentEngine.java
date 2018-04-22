@@ -393,10 +393,12 @@ public class AuthorizeNetCommercePaymentEngine
 			lineItem.setQuantity(
 				BigDecimal.valueOf(commerceOrderItem.getQuantity()));
 
-			double unitPrice =
-				commerceOrderItem.getPrice() / commerceOrderItem.getQuantity();
+			BigDecimal unitPrice = commerceOrderItem.getPrice();
 
-			lineItem.setUnitPrice(BigDecimal.valueOf(unitPrice));
+			unitPrice = unitPrice.divide(
+				new BigDecimal(commerceOrderItem.getQuantity()));
+
+			lineItem.setUnitPrice(unitPrice);
 
 			lineItems.add(lineItem);
 		}
@@ -454,8 +456,7 @@ public class AuthorizeNetCommercePaymentEngine
 
 		ExtendedAmountType extendedAmount = new ExtendedAmountType();
 
-		extendedAmount.setAmount(
-			BigDecimal.valueOf(commerceOrder.getShippingPrice()));
+		extendedAmount.setAmount(commerceOrder.getShippingPrice());
 
 		CommerceShippingMethod commerceShippingMethod =
 			commerceOrder.getCommerceShippingMethod();
@@ -483,8 +484,7 @@ public class AuthorizeNetCommercePaymentEngine
 		TransactionRequestType transactionRequest =
 			new TransactionRequestType();
 
-		transactionRequest.setAmount(
-			BigDecimal.valueOf(commerceOrder.getTotal()));
+		transactionRequest.setAmount(commerceOrder.getTotal());
 		transactionRequest.setBillTo(
 			_getCustomerAddress(commerceOrder.getBillingAddress(), locale));
 		transactionRequest.setCurrencyCode(commerceCurrency.getCode());

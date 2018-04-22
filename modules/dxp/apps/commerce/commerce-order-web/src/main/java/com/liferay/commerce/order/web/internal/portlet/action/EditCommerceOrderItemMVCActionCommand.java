@@ -35,6 +35,8 @@ import javax.portlet.ActionResponse;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
+import java.math.BigDecimal;
+
 /**
  * @author Alessio Antonio Rendina
  * @author Andrea Di Giorgi
@@ -126,7 +128,7 @@ public class EditCommerceOrderItemMVCActionCommand
 		CommerceOrder commerceOrder = commerceOrderItem.getCommerceOrder();
 
 		int quantity = ParamUtil.getInteger(actionRequest, "quantity");
-		double price = ParamUtil.getDouble(actionRequest, "price");
+		String price = ParamUtil.getString(actionRequest, "price");
 
 		if (commerceOrder.isOpen()) {
 			_commerceOrderItemService.updateCommerceOrderItem(
@@ -135,7 +137,7 @@ public class EditCommerceOrderItemMVCActionCommand
 		else {
 			_commerceOrderItemService.updateCommerceOrderItem(
 				commerceOrderItemId, quantity, commerceOrderItem.getJson(),
-				price);
+				new BigDecimal(price));
 		}
 	}
 

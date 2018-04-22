@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.util.KeyValuePair;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -129,7 +130,8 @@ public class CommerceCartContentDisplayContext {
 
 		if (commerceOrder == null) {
 			return _commercePriceCalculationLocalService.formatPrice(
-				commerceCartContentRequestHelper.getScopeGroupId(), 0);
+				commerceCartContentRequestHelper.getScopeGroupId(),
+				BigDecimal.ZERO);
 		}
 
 		return _commercePriceCalculationLocalService.getFormattedOrderSubtotal(

@@ -68,6 +68,7 @@ import com.worldpay.sdk.OrderService;
 import com.worldpay.sdk.WorldpayRestClient;
 import com.worldpay.sdk.util.JsonParser;
 
+import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
@@ -227,10 +228,13 @@ public class WorldpayCommercePaymentEngine implements CommercePaymentEngine {
 	private int _getAmount(
 		CommerceOrder commerceOrder, CurrencyCode currencyCode) {
 
-		double amount =
-			commerceOrder.getTotal() * Math.pow(10, currencyCode.getExponent());
+		BigDecimal amount = commerceOrder.getTotal();
 
-		return (int)amount;
+		amount = amount.multiply(
+			new BigDecimal(Math.pow(10, currencyCode.getExponent())));
+
+
+		return amount.intValue();
 	}
 
 	private CountryCode _getCountryCode(CommerceCountry commerceCountry) {

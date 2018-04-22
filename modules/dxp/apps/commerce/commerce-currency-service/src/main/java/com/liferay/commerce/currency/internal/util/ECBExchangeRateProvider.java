@@ -29,6 +29,8 @@ import com.liferay.portal.kernel.xml.SAXReader;
 
 import java.io.IOException;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.net.URL;
 
 import java.util.List;
@@ -52,7 +54,7 @@ import org.osgi.service.component.annotations.Reference;
 public class ECBExchangeRateProvider implements ExchangeRateProvider {
 
 	@Override
-	public double getExchangeRate(
+	public BigDecimal getExchangeRate(
 			CommerceCurrency primaryCommerceCurrency,
 			CommerceCurrency secondaryCommerceCurrency)
 		throws Exception {
@@ -96,12 +98,12 @@ public class ECBExchangeRateProvider implements ExchangeRateProvider {
 
 		List<Element> cubeElements = cubeParentElement.elements("Cube");
 
-		double rateToPrimary = 0;
-		double rateToSecondary = 0;
+		BigDecimal rateToPrimary = BigDecimal.ZERO;
+		BigDecimal rateToSecondary = BigDecimal.ZERO;
 
 		for (Element cubeElement : cubeElements) {
 			String currency = cubeElement.attributeValue("currency");
-			double rate = GetterUtil.getDouble(
+			BigDecimal rate = new BigDecimal(
 				cubeElement.attributeValue("rate"));
 
 			if (currency.equals(primaryCurrencyCode)) {
@@ -112,20 +114,20 @@ public class ECBExchangeRateProvider implements ExchangeRateProvider {
 				rateToSecondary = rate;
 			}
 
-			if ((rateToPrimary > 0) && (rateToSecondary > 0)) {
+			if ((rateToPrimary.compareTo(BigDecimal.ZERO) > 0) && (rateToSecondary.compareTo(BigDecimal.ZERO) > 0)) {
 				break;
 			}
 		}
 
 		if (primaryCurrencyCode.equals("EUR")) {
-			rateToPrimary = 1;
+			rateToPrimary = BigDecimal.ONE;
 		}
 
 		if (secondaryCurrencyCode.equals("EUR")) {
-			rateToSecondary = 1;
+			rateToSecondary = BigDecimal.ONE;
 		}
 
-		return Math.round((rateToSecondary / rateToPrimary) * 10000D) / 10000D;
+		return rateToSecondary.divide(rateToPrimary, 4, RoundingMode.HALF_EVEN);
 	}
 
 	@Activate

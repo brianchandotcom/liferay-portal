@@ -194,7 +194,7 @@ public class FedExCommerceShippingOptionHelper {
 	public List<CommerceShippingOption> getCommerceShippingOptions()
 		throws Exception {
 
-		Map<String, List<Double>> rates = new HashMap<>();
+		Map<String, List<BigDecimal>> rates = new HashMap<>();
 
 		Map<CommerceAddress, List<CommerceOrderItem>> originAddresses =
 			_commerceShippingOriginLocator.getOriginAddresses(_commerceOrder);
@@ -208,9 +208,9 @@ public class FedExCommerceShippingOptionHelper {
 		List<CommerceShippingOption> commerceShippingOptions = new ArrayList<>(
 			_serviceTypes.size());
 
-		for (Map.Entry<String, List<Double>> entry : rates.entrySet()) {
+		for (Map.Entry<String, List<BigDecimal>> entry : rates.entrySet()) {
 			String name = entry.getKey();
-			List<Double> amounts = entry.getValue();
+			List<BigDecimal> amounts = entry.getValue();
 
 			if (amounts.size() < originAddresses.size()) {
 				continue;
@@ -218,7 +218,12 @@ public class FedExCommerceShippingOptionHelper {
 
 			String label = getCommerceShippingOptionLabel(
 				name, _resourceBundle);
-			double amount = MathUtil.sum(amounts.toArray(new Double[0]));
+
+			BigDecimal amount = BigDecimal.ZERO;
+
+			for(BigDecimal amountCur: amounts){
+				amount = amount.add(amountCur);
+			}
 
 			commerceShippingOptions.add(
 				new CommerceShippingOption(name, label, amount));
@@ -228,7 +233,7 @@ public class FedExCommerceShippingOptionHelper {
 	}
 
 	private void _executeRateRequest(
-			Map<String, List<Double>> rates,
+			Map<String, List<BigDecimal>> rates,
 			List<CommerceOrderItem> commerceOrderItems,
 			CommerceAddress originAddress)
 		throws Exception {
@@ -277,7 +282,7 @@ public class FedExCommerceShippingOptionHelper {
 				continue;
 			}
 
-			double amount = 0;
+			BigDecimal amount = BigDecimal.ZERO;
 
 			for (RatedShipmentDetail ratedShipmentDetail :
 					rateReplyDetail.getRatedShipmentDetails()) {
@@ -302,7 +307,7 @@ public class FedExCommerceShippingOptionHelper {
 				}
 			}
 
-			List<Double> amounts = rates.get(name);
+			List<BigDecimal> amounts = rates.get(name);
 
 			if (amounts == null) {
 				amounts = new ArrayList<>();
@@ -361,7 +366,7 @@ public class FedExCommerceShippingOptionHelper {
 		return address;
 	}
 
-	private double _getAmount(Money money)
+	private BigDecimal _getAmount(Money money)
 		throws CommerceShippingEngineException {
 
 		CommerceCurrency moneyCommerceCurrency = null;
@@ -386,7 +391,7 @@ public class FedExCommerceShippingOptionHelper {
 
 		BigDecimal amount = money.getAmount();
 
-		return amount.doubleValue() * moneyCommerceCurrency.getRate();
+		return amount.multiply(moneyCommerceCurrency.getRate());
 	}
 
 	private ClientDetail _getClientDetail() {
@@ -465,9 +470,9 @@ public class FedExCommerceShippingOptionHelper {
 		return fedExWeight;
 	}
 
-	private Money _getMoney(double amount) {
+	private Money _getMoney(BigDecimal amount) {
 		return new Money(
-			_commerceCurrency.getCode(), BigDecimal.valueOf(amount));
+			_commerceCurrency.getCode(), amount);
 	}
 
 	private NonNegativeInteger _getNonNegativeInteger(int d) {
@@ -507,18 +512,19 @@ public class FedExCommerceShippingOptionHelper {
 		return new PositiveInteger(String.valueOf(i));
 	}
 
-	private double _getPrice(List<CommerceOrderItem> commerceOrderItems)
+	private BigDecimal _getPrice(List<CommerceOrderItem> commerceOrderItems)
 		throws PortalException {
 
-		double price = 0;
+		BigDecimal price = BigDecimal.ZERO;
 
 		for (CommerceOrderItem commerceOrderItem : commerceOrderItems) {
 			CommerceOrder commerceOrder = commerceOrderItem.getCommerceOrder();
 
-			price += _commercePriceCalculationLocalService.getFinalPrice(
-				commerceOrder.getSiteGroupId(), commerceOrder.getOrderUserId(),
-				commerceOrderItem.getCPInstanceId(),
-				commerceOrderItem.getQuantity());
+			price = price.add(
+				_commercePriceCalculationLocalService.getFinalPrice(
+					commerceOrder.getSiteGroupId(), commerceOrder.getOrderUserId(),
+					commerceOrderItem.getCPInstanceId(),
+					commerceOrderItem.getQuantity()));
 		}
 
 		return price;
@@ -545,7 +551,7 @@ public class FedExCommerceShippingOptionHelper {
 
 	private RequestedPackageLineItem _getRequestedPackageLineItem(
 		int fedExWidth, int fedExHeight, int fedExDepth, double fedExWeight,
-		double price, int groupPackageCount, int sequenceNumber) {
+		BigDecimal price, int groupPackageCount, int sequenceNumber) {
 
 		RequestedPackageLineItem requestedPackageLineItem =
 			new RequestedPackageLineItem();
@@ -615,7 +621,7 @@ public class FedExCommerceShippingOptionHelper {
 			tooHeavy = true;
 		}
 
-		double price = _getPrice(commerceOrderItems);
+		BigDecimal price = _getPrice(commerceOrderItems);
 
 		if (!tooHeavy && !tooLarge) {
 			RequestedPackageLineItem requestedPackageLineItem =
@@ -638,7 +644,7 @@ public class FedExCommerceShippingOptionHelper {
 		int packageFedExHeight = Math.max(fedExHeight / packagesCount, 1);
 		int packageFedExDepth = Math.max(fedExDepth / packagesCount, 1);
 		double packageFedExWeight = Math.max(fedExWeight / packagesCount, 1);
-		double packagePrice = price / packagesCount;
+		BigDecimal packagePrice = price.divide(new BigDecimal(packagesCount));
 
 		RequestedPackageLineItem[] requestedPackageLineItems =
 			new RequestedPackageLineItem[packagesCount];
@@ -677,7 +683,7 @@ public class FedExCommerceShippingOptionHelper {
 			double fedExWeight = _getFedExWeight(
 				_commerceShippingHelper.getWeight(cpInstance));
 
-			double price = _commercePriceCalculationLocalService.getFinalPrice(
+			BigDecimal price = _commercePriceCalculationLocalService.getFinalPrice(
 				commerceOrder.getSiteGroupId(), commerceOrder.getOrderUserId(),
 				cpInstance.getCPInstanceId(), 1);
 

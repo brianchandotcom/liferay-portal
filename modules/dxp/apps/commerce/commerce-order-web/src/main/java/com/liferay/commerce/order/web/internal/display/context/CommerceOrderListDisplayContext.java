@@ -72,6 +72,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.util.PropsValues;
 
+import java.math.BigDecimal;
 import java.text.DateFormat;
 import java.text.Format;
 
@@ -249,7 +250,7 @@ public class CommerceOrderListDisplayContext {
 	public String getCommerceOrderValue(CommerceOrder commerceOrder)
 		throws PortalException {
 
-		double value = commerceOrder.getTotal();
+		BigDecimal value = commerceOrder.getTotal();
 
 		if (commerceOrder.isOpen()) {
 			value = _commercePriceCalculationLocalService.getOrderSubtotal(

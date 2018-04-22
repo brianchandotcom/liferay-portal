@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
+import java.math.BigDecimal;
 import java.util.Locale;
 import java.util.Map;
 
@@ -164,7 +165,7 @@ public class EditCommerceCurrencyMVCActionCommand extends BaseMVCActionCommand {
 		String code = ParamUtil.getString(actionRequest, "code");
 		Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(
 			actionRequest, "name");
-		double rate = ParamUtil.getDouble(actionRequest, "rate");
+		String rate = ParamUtil.getString(actionRequest, "rate");
 		String roundingType = ParamUtil.getString(
 			actionRequest, "roundingType");
 		boolean primary = ParamUtil.getBoolean(actionRequest, "primary");
@@ -178,13 +179,13 @@ public class EditCommerceCurrencyMVCActionCommand extends BaseMVCActionCommand {
 
 		if (commerceCurrencyId <= 0) {
 			commerceCurrency = _commerceCurrencyService.addCommerceCurrency(
-				code, nameMap, rate, roundingType, primary, priority, active,
-				serviceContext);
+				code, nameMap, new BigDecimal(rate), roundingType, primary,
+				priority, active, serviceContext);
 		}
 		else {
 			commerceCurrency = _commerceCurrencyService.updateCommerceCurrency(
-				commerceCurrencyId, code, nameMap, rate, roundingType, primary,
-				priority, active, serviceContext);
+				commerceCurrencyId, code, nameMap, new BigDecimal(rate),
+				roundingType, primary, priority, active, serviceContext);
 		}
 
 		return commerceCurrency;

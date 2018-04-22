@@ -44,6 +44,7 @@ import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -400,7 +401,7 @@ public class CommerceAddressLocalServiceImpl
 			long commerceShippingMethodId =
 				commerceOrder.getCommerceShippingMethodId();
 			String shippingOptionName = commerceOrder.getShippingOptionName();
-			double shippingPrice = commerceOrder.getShippingPrice();
+			BigDecimal shippingPrice = commerceOrder.getShippingPrice();
 
 			if (billingAddressId == commerceAddressId) {
 				billingAddressId = 0;
@@ -411,7 +412,7 @@ public class CommerceAddressLocalServiceImpl
 
 				commerceShippingMethodId = 0;
 				shippingOptionName = null;
-				shippingPrice = 0;
+				shippingPrice = BigDecimal.ZERO;
 			}
 
 			commerceOrderLocalService.updateCommerceOrder(

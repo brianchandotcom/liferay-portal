@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -125,7 +126,7 @@ public class ByWeightCommerceShippingEngine implements CommerceShippingEngine {
 		List<CommerceOrderItem> commerceOrderItems =
 			commerceOrder.getCommerceOrderItems();
 
-		double orderPrice =
+		BigDecimal orderPrice =
 			_commercePriceCalculationLocalService.getOrderSubtotal(
 				commerceOrder);
 		double orderWeight = _commerceShippingHelper.getWeight(
@@ -146,18 +147,22 @@ public class ByWeightCommerceShippingEngine implements CommerceShippingEngine {
 
 		String name = commerceShippingFixedOption.getName(locale);
 
-		double amount = commerceShippingFixedOptionRel.getFixedPrice();
+		BigDecimal amount = commerceShippingFixedOptionRel.getFixedPrice();
 
-		double rateUnitWeightPrice =
+		BigDecimal rateUnitWeightPrice =
 			commerceShippingFixedOptionRel.getRateUnitWeightPrice();
 
-		if (rateUnitWeightPrice > 0) {
-			amount += orderWeight * rateUnitWeightPrice;
+		if (rateUnitWeightPrice.compareTo(BigDecimal.ZERO) > 0) {
+
+			amount = amount.add(
+				rateUnitWeightPrice.multiply(new BigDecimal(orderWeight)));
 		}
 
-		amount +=
-			(orderPrice / 100) *
-				commerceShippingFixedOptionRel.getRatePercentage();
+		BigDecimal ratePercentage =
+			new BigDecimal(commerceShippingFixedOptionRel.getRatePercentage());
+
+		amount = amount.add(
+			ratePercentage.multiply(orderPrice.divide(new BigDecimal(100))));
 
 		return new CommerceShippingOption(name, name, amount);
 	}

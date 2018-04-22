@@ -26,6 +26,10 @@ import com.liferay.portal.kernel.util.Portal;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
+
 /**
  * @author Marco Leo
  * @author Alessio Antonio Rendina
@@ -35,7 +39,7 @@ import org.osgi.service.component.annotations.Reference;
 public class CommercePriceFormatterImpl implements CommercePriceFormatter {
 
 	@Override
-	public String format(CommerceCurrency commerceCurrency, double price) {
+	public String format(CommerceCurrency commerceCurrency, BigDecimal price) {
 		String roundingTypeName = null;
 
 		if (commerceCurrency != null) {
@@ -51,7 +55,13 @@ public class CommercePriceFormatterImpl implements CommercePriceFormatter {
 			value = roundingType.round(price);
 		}
 		else {
-			value = Double.toString(price);
+			DecimalFormat decimalFormat = new DecimalFormat("#.##");
+
+			decimalFormat.setMaximumFractionDigits(2);
+			decimalFormat.setMinimumFractionDigits(2);
+			decimalFormat.setRoundingMode(RoundingMode.HALF_EVEN);
+
+			value = decimalFormat.format(price);
 		}
 
 		if (commerceCurrency == null) {
@@ -62,7 +72,7 @@ public class CommercePriceFormatterImpl implements CommercePriceFormatter {
 	}
 
 	@Override
-	public String format(long groupId, double price) throws PortalException {
+	public String format(long groupId, BigDecimal price) throws PortalException {
 		CommerceCurrency commerceCurrency =
 			_commerceCurrencyService.fetchPrimaryCommerceCurrency(groupId);
 

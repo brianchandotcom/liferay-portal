@@ -34,6 +34,8 @@ import javax.portlet.ActionResponse;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
+import java.math.BigDecimal;
+
 /**
  * @author Alessio Antonio Rendina
  */
@@ -119,7 +121,7 @@ public class EditCommerceTierPriceEntryMVCActionCommand
 		long commercePriceEntryId = ParamUtil.getLong(
 			actionRequest, "commercePriceEntryId");
 
-		double price = ParamUtil.getDouble(actionRequest, "price");
+		String price = ParamUtil.getString(actionRequest, "price");
 		int minQuantity = ParamUtil.getInteger(actionRequest, "minQuantity");
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
@@ -130,13 +132,14 @@ public class EditCommerceTierPriceEntryMVCActionCommand
 		if (commerceTierPriceEntryId <= 0) {
 			commerceTierPriceEntry =
 				_commerceTierPriceEntryService.addCommerceTierPriceEntry(
-					commercePriceEntryId, price, minQuantity, serviceContext);
+					commercePriceEntryId, new BigDecimal(price), minQuantity,
+					serviceContext);
 		}
 		else {
 			commerceTierPriceEntry =
 				_commerceTierPriceEntryService.updateCommerceTierPriceEntry(
-					commerceTierPriceEntryId, price, minQuantity,
-					serviceContext);
+					commerceTierPriceEntryId, new BigDecimal(price),
+					minQuantity, serviceContext);
 		}
 
 		return commerceTierPriceEntry;

@@ -16,6 +16,7 @@ package com.liferay.commerce.currency.util;
 
 import aQute.bnd.annotation.ProviderType;
 
+import java.math.BigDecimal;
 import java.util.Locale;
 
 /**
@@ -29,6 +30,6 @@ public interface RoundingType {
 
 	public String getName();
 
-	public String round(double value);
+	public String round(BigDecimal value);
 
 }

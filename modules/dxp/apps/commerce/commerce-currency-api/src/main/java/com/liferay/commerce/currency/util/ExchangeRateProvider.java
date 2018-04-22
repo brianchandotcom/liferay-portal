@@ -16,13 +16,15 @@ package com.liferay.commerce.currency.util;
 
 import com.liferay.commerce.currency.model.CommerceCurrency;
 
+import java.math.BigDecimal;
+
 /**
  * @author Marco Leo
  * @author Alessio Antonio Rendina
  */
 public interface ExchangeRateProvider {
 
-	public double getExchangeRate(
+	public BigDecimal getExchangeRate(
 			CommerceCurrency primaryCommerceCurrency,
 			CommerceCurrency secondaryCommerceCurrency)
 		throws Exception;

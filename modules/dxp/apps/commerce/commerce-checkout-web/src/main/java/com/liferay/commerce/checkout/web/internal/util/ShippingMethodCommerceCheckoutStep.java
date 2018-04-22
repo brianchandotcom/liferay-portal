@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Locale;
 
@@ -137,7 +138,7 @@ public class ShippingMethodCommerceCheckoutStep
 			"/checkout_step/shipping_method.jsp");
 	}
 
-	protected double getShippingPrice(
+	protected BigDecimal getShippingPrice(
 			CommerceOrder commerceOrder, long commerceShippingMethodId,
 			String shippingOptionName, Locale locale)
 		throws PortalException {
@@ -202,7 +203,7 @@ public class ShippingMethodCommerceCheckoutStep
 		String shippingOptionName = commerceShippingOptionKey.substring(
 			pos + 1);
 
-		double shippingPrice = getShippingPrice(
+		BigDecimal shippingPrice = getShippingPrice(
 			commerceOrder, commerceShippingMethodId, shippingOptionName,
 			themeDisplay.getLocale());
 

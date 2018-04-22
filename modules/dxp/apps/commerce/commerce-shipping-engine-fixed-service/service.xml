@@ -27,7 +27,7 @@
 		<column name="commerceShippingMethodId" type="long" />
 		<column localized="true" name="name" type="String" />
 		<column localized="true" name="description" type="String" />
-		<column name="amount" type="double" />
+		<column name="amount" type="BigDecimal" />
 		<column name="priority" type="double" />
 
 		<!-- Order -->
@@ -70,8 +70,8 @@
 		<column name="zip" type="String" />
 		<column name="weightFrom" type="double" />
 		<column name="weightTo" type="double" />
-		<column name="fixedPrice" type="double" />
-		<column name="rateUnitWeightPrice" type="double" />
+		<column name="fixedPrice" type="BigDecimal" />
+		<column name="rateUnitWeightPrice" type="BigDecimal" />
 		<column name="ratePercentage" type="double" />
 
 		<!-- Order -->

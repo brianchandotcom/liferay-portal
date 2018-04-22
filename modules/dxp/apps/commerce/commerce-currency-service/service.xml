@@ -26,7 +26,7 @@
 
 		<column name="code" type="String" />
 		<column localized="true" name="name" type="String" />
-		<column name="rate" type="double" />
+		<column name="rate" type="BigDecimal" />
 		<column name="roundingType" type="String" />
 		<column name="primary" type="boolean" />
 		<column name="priority" type="double" />

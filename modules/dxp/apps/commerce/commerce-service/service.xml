@@ -249,9 +249,9 @@
 		<column name="commerceShippingMethodId" type="long" />
 		<column name="shippingOptionName" type="String" />
 		<column name="purchaseOrderNumber" type="String" />
-		<column name="subtotal" type="double" />
-		<column name="shippingPrice" type="double" />
-		<column name="total" type="double" />
+		<column name="subtotal" type="BigDecimal" />
+		<column name="shippingPrice" type="BigDecimal" />
+		<column name="total" type="BigDecimal" />
 		<column name="advanceStatus" type="String" />
 		<column name="paymentStatus" type="int" />
 		<column name="shippingStatus" type="int" />
@@ -330,7 +330,7 @@
 		<column name="json" type="String" />
 		<column localized="true" name="title" type="String" />
 		<column name="sku" type="String" />
-		<column name="price" type="double" />
+		<column name="price" type="BigDecimal" />
 
 		<!-- Order -->
 
@@ -899,7 +899,7 @@
 		<!-- Other fields -->
 
 		<column name="commercePriceEntryId" type="long" />
-		<column name="price" type="double" />
+		<column name="price" type="BigDecimal" />
 		<column name="minQuantity" type="int" />
 		<column name="lastPublishDate" type="Date" />
 

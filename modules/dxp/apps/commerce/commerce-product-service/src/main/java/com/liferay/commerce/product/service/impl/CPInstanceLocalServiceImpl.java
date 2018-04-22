@@ -97,11 +97,12 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 		return cpInstanceLocalService.addCPInstance(
 			cpDefinitionId, sku, gtin, manufacturerPartNumber, purchasable,
 			ddmContent, cpDefinition.getWidth(), cpDefinition.getHeight(),
-			cpDefinition.getDepth(), cpDefinition.getWeight(), 0, 0, published,
-			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
-			displayDateMinute, expirationDateMonth, expirationDateDay,
-			expirationDateYear, expirationDateHour, expirationDateMinute,
-			neverExpire, serviceContext);
+			cpDefinition.getDepth(), cpDefinition.getWeight(), BigDecimal.ZERO,
+			BigDecimal.ZERO, published, displayDateMonth, displayDateDay,
+			displayDateYear, displayDateHour, displayDateMinute,
+			expirationDateMonth, expirationDateDay, expirationDateYear,
+			expirationDateHour, expirationDateMinute, neverExpire,
+			serviceContext);
 	}
 
 	@Indexable(type = IndexableType.REINDEX)
@@ -283,8 +284,9 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 					cpDefinitionId, skuSB.toString(), StringPool.BLANK,
 					StringPool.BLANK, true, jsonArray.toString(),
 					cpDefinition.getWidth(), cpDefinition.getHeight(),
-					cpDefinition.getDepth(), cpDefinition.getWeight(), 0, 0,
-					true, cpDefinition.getDisplayDate(),
+					cpDefinition.getDepth(), cpDefinition.getWeight(),
+					BigDecimal.ZERO, BigDecimal.ZERO, true,
+					cpDefinition.getDisplayDate(),
 					cpDefinition.getExpirationDate(), neverExpire,
 					serviceContext);
 			}
@@ -730,7 +732,7 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 			long cpDefinitionId, String sku, String gtin,
 			String manufacturerPartNumber, boolean purchasable,
 			String ddmContent, double width, double height, double depth,
-			double weight, double cost, double price, boolean published,
+			double weight, BigDecimal cost, BigDecimal price, boolean published,
 			Date displayDate, Date expirationDate, boolean neverExpire,
 			ServiceContext serviceContext)
 		throws PortalException {

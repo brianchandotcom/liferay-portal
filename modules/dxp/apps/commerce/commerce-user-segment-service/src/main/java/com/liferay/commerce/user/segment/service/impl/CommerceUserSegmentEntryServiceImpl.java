@@ -42,8 +42,8 @@ public class CommerceUserSegmentEntryServiceImpl
 
 	@Override
 	public CommerceUserSegmentEntry addCommerceUserSegmentEntry(
-			Map<Locale, String> nameMap, double priority, boolean active,
-			ServiceContext serviceContext)
+			Map<Locale, String> nameMap, String key, boolean active,
+			boolean system, double priority, ServiceContext serviceContext)
 		throws PortalException {
 
 		_portletResourcePermission.check(
@@ -51,7 +51,7 @@ public class CommerceUserSegmentEntryServiceImpl
 			CommerceUserSegmentActionKeys.ADD_COMMERCE_USER_SEGMENTATION_ENTRY);
 
 		return commerceUserSegmentEntryLocalService.addCommerceUserSegmentEntry(
-			nameMap, priority, active, serviceContext);
+			nameMap, key, active, system, priority, serviceContext);
 	}
 
 	@Override
@@ -129,7 +129,8 @@ public class CommerceUserSegmentEntryServiceImpl
 	@Override
 	public CommerceUserSegmentEntry updateCommerceUserSegmentEntry(
 			long commerceUserSegmentEntryId, Map<Locale, String> nameMap,
-			double priority, boolean active, ServiceContext serviceContext)
+			String key, boolean active, double priority,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		_commerceUserSegmentEntryResourcePermission.check(
@@ -138,7 +139,7 @@ public class CommerceUserSegmentEntryServiceImpl
 
 		return commerceUserSegmentEntryLocalService.
 			updateCommerceUserSegmentEntry(
-				commerceUserSegmentEntryId, nameMap, priority, active,
+				commerceUserSegmentEntryId, nameMap, key, active, priority,
 				serviceContext);
 	}
 

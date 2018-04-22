@@ -14,6 +14,9 @@
 
 package com.liferay.commerce.user.segment.service.impl;
 
+import com.liferay.commerce.user.segment.constants.CommerceUserSegmentConstants;
+import com.liferay.commerce.user.segment.exception.CommerceUserSegmentEntryKeyException;
+import com.liferay.commerce.user.segment.exception.CommerceUserSegmentEntrySystemException;
 import com.liferay.commerce.user.segment.model.CommerceUserSegmentEntry;
 import com.liferay.commerce.user.segment.service.base.CommerceUserSegmentEntryLocalServiceBaseImpl;
 import com.liferay.portal.kernel.cache.MultiVMPoolUtil;
@@ -37,6 +40,7 @@ import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.SortFactoryUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
+import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Validator;
@@ -60,14 +64,18 @@ public class CommerceUserSegmentEntryLocalServiceImpl
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public CommerceUserSegmentEntry addCommerceUserSegmentEntry(
-			Map<Locale, String> nameMap, double priority, boolean active,
-			ServiceContext serviceContext)
+			Map<Locale, String> nameMap, String key, boolean active,
+			boolean system, double priority, ServiceContext serviceContext)
 		throws PortalException {
 
 		// Commerce user segment entry
 
 		User user = userLocalService.getUser(serviceContext.getUserId());
 		long groupId = serviceContext.getScopeGroupId();
+
+		key = FriendlyURLNormalizerUtil.normalize(key);
+
+		validate(0, groupId, key);
 
 		long commerceUserSegmentEntryId = counterLocalService.increment();
 
@@ -80,8 +88,10 @@ public class CommerceUserSegmentEntryLocalServiceImpl
 		commerceUserSegmentEntry.setUserId(user.getUserId());
 		commerceUserSegmentEntry.setUserName(user.getFullName());
 		commerceUserSegmentEntry.setNameMap(nameMap);
-		commerceUserSegmentEntry.setPriority(priority);
+		commerceUserSegmentEntry.setKey(key);
 		commerceUserSegmentEntry.setActive(active);
+		commerceUserSegmentEntry.setSystem(system);
+		commerceUserSegmentEntry.setPriority(priority);
 		commerceUserSegmentEntry.setExpandoBridgeAttributes(serviceContext);
 
 		commerceUserSegmentEntryPersistence.update(commerceUserSegmentEntry);
@@ -94,12 +104,31 @@ public class CommerceUserSegmentEntryLocalServiceImpl
 		return commerceUserSegmentEntry;
 	}
 
+	@Override
+	public void deleteCommerceUserSegmentEntries(long groupId)
+		throws PortalException {
+
+		List<CommerceUserSegmentEntry> commerceUserSegmentEntries =
+			commerceUserSegmentEntryPersistence.findByGroupId(groupId);
+
+		for (CommerceUserSegmentEntry commerceUserSegmentEntry :
+				commerceUserSegmentEntries) {
+
+			commerceUserSegmentEntryLocalService.deleteCommerceUserSegmentEntry(
+				commerceUserSegmentEntry.getCommerceUserSegmentEntryId());
+		}
+	}
+
 	@Indexable(type = IndexableType.DELETE)
 	@Override
 	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
 	public CommerceUserSegmentEntry deleteCommerceUserSegmentEntry(
 			CommerceUserSegmentEntry commerceUserSegmentEntry)
 		throws PortalException {
+
+		if (commerceUserSegmentEntry.isSystem()) {
+			throw new CommerceUserSegmentEntrySystemException();
+		}
 
 		// Commerce user segment criteria
 
@@ -135,6 +164,13 @@ public class CommerceUserSegmentEntryLocalServiceImpl
 
 		return commerceUserSegmentEntryLocalService.
 			deleteCommerceUserSegmentEntry(commerceUserSegmentEntry);
+	}
+
+	@Override
+	public CommerceUserSegmentEntry fetchCommerceUserSegmentEntry(
+		long groupId, String key) {
+
+		return commerceUserSegmentEntryPersistence.fetchByG_K(groupId, key);
 	}
 
 	@Override
@@ -203,6 +239,31 @@ public class CommerceUserSegmentEntryLocalServiceImpl
 	}
 
 	@Override
+	public void importSystemCommerceUserSegmentEntries(
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		CommerceUserSegmentEntry commerceUserSegmentEntry =
+			commerceUserSegmentEntryPersistence.fetchByG_K(
+				serviceContext.getScopeGroupId(),
+				CommerceUserSegmentConstants.USER_SEGMENT_GUEST);
+
+		if (commerceUserSegmentEntry != null) {
+			return;
+		}
+
+		Map<Locale, String> nameMap = new HashMap<>();
+
+		nameMap.put(
+			serviceContext.getLocale(),
+			CommerceUserSegmentConstants.USER_SEGMENT_GUEST);
+
+		commerceUserSegmentEntryLocalService.addCommerceUserSegmentEntry(
+			nameMap, CommerceUserSegmentConstants.USER_SEGMENT_GUEST, true,
+			true, 0, serviceContext);
+	}
+
+	@Override
 	public BaseModelSearchResult<CommerceUserSegmentEntry>
 			searchCommerceUserSegmentEntries(
 				long companyId, long groupId, String keywords, int start,
@@ -245,16 +306,28 @@ public class CommerceUserSegmentEntryLocalServiceImpl
 	@Override
 	public CommerceUserSegmentEntry updateCommerceUserSegmentEntry(
 			long commerceUserSegmentEntryId, Map<Locale, String> nameMap,
-			double priority, boolean active, ServiceContext serviceContext)
+			String key, boolean active, double priority,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		CommerceUserSegmentEntry commerceUserSegmentEntry =
 			commerceUserSegmentEntryPersistence.findByPrimaryKey(
 				commerceUserSegmentEntryId);
 
+		key = FriendlyURLNormalizerUtil.normalize(key);
+
+		validate(
+			commerceUserSegmentEntryId, commerceUserSegmentEntry.getGroupId(),
+			key);
+
 		commerceUserSegmentEntry.setNameMap(nameMap);
+
+		if (!commerceUserSegmentEntry.isSystem()) {
+			commerceUserSegmentEntry.setKey(key);
+			commerceUserSegmentEntry.setActive(active);
+		}
+
 		commerceUserSegmentEntry.setPriority(priority);
-		commerceUserSegmentEntry.setActive(active);
 		commerceUserSegmentEntry.setExpandoBridgeAttributes(serviceContext);
 
 		return commerceUserSegmentEntryPersistence.update(
@@ -363,6 +436,21 @@ public class CommerceUserSegmentEntryLocalServiceImpl
 		}
 
 		return commerceUserSegmentEntries;
+	}
+
+	protected void validate(
+			long commerceUserSegmentEntryId, long groupId, String key)
+		throws PortalException {
+
+		CommerceUserSegmentEntry commerceUserSegmentEntry =
+			commerceUserSegmentEntryPersistence.fetchByG_K(groupId, key);
+
+		if ((commerceUserSegmentEntry != null) &&
+			(commerceUserSegmentEntry.getCommerceUserSegmentEntryId() !=
+				commerceUserSegmentEntryId)) {
+
+			throw new CommerceUserSegmentEntryKeyException();
+		}
 	}
 
 	private static final String[] _SELECTED_FIELD_NAMES =

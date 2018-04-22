@@ -27,6 +27,8 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 
+import java.math.BigDecimal;
+
 /**
  * @author Andrea Di Giorgi
  */
@@ -62,8 +64,8 @@ public class CommerceTestUtil {
 
 		return CommerceOrderItemLocalServiceUtil.addCommerceOrderItem(
 			commerceOrderId, cpInstanceId, RandomTestUtil.randomInt(),
-			RandomTestUtil.randomInt(), null, RandomTestUtil.randomDouble(),
-			serviceContext);
+			RandomTestUtil.randomInt(), null,
+			new BigDecimal(RandomTestUtil.nextDouble()), serviceContext);
 	}
 
 	public static CommerceWarehouse addCommerceWarehouse(

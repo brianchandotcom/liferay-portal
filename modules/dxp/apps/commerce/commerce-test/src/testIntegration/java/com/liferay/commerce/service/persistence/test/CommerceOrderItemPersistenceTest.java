@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
-import com.liferay.portal.kernel.test.AssertUtils;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.transaction.Propagation;
@@ -50,6 +49,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import java.io.Serializable;
+
+import java.math.BigDecimal;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -149,7 +150,8 @@ public class CommerceOrderItemPersistenceTest {
 
 		newCommerceOrderItem.setSku(RandomTestUtil.randomString());
 
-		newCommerceOrderItem.setPrice(RandomTestUtil.nextDouble());
+		newCommerceOrderItem.setPrice(new BigDecimal(
+				RandomTestUtil.nextDouble()));
 
 		_commerceOrderItems.add(_persistence.update(newCommerceOrderItem));
 
@@ -185,7 +187,7 @@ public class CommerceOrderItemPersistenceTest {
 			newCommerceOrderItem.getTitle());
 		Assert.assertEquals(existingCommerceOrderItem.getSku(),
 			newCommerceOrderItem.getSku());
-		AssertUtils.assertEquals(existingCommerceOrderItem.getPrice(),
+		Assert.assertEquals(existingCommerceOrderItem.getPrice(),
 			newCommerceOrderItem.getPrice());
 	}
 
@@ -468,7 +470,7 @@ public class CommerceOrderItemPersistenceTest {
 
 		commerceOrderItem.setSku(RandomTestUtil.randomString());
 
-		commerceOrderItem.setPrice(RandomTestUtil.nextDouble());
+		commerceOrderItem.setPrice(new BigDecimal(RandomTestUtil.nextDouble()));
 
 		_commerceOrderItems.add(_persistence.update(commerceOrderItem));
 

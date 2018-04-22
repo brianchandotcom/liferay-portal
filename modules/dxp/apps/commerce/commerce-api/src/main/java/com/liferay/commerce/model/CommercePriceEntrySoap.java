@@ -18,6 +18,8 @@ import aQute.bnd.annotation.ProviderType;
 
 import java.io.Serializable;
 
+import java.math.BigDecimal;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -45,6 +47,7 @@ public class CommercePriceEntrySoap implements Serializable {
 		soapModel.setCPInstanceId(model.getCPInstanceId());
 		soapModel.setCommercePriceListId(model.getCommercePriceListId());
 		soapModel.setPrice(model.getPrice());
+		soapModel.setPromoPrice(model.getPromoPrice());
 		soapModel.setHasTierPrice(model.isHasTierPrice());
 		soapModel.setLastPublishDate(model.getLastPublishDate());
 
@@ -182,12 +185,20 @@ public class CommercePriceEntrySoap implements Serializable {
 		_commercePriceListId = commercePriceListId;
 	}
 
-	public double getPrice() {
+	public BigDecimal getPrice() {
 		return _price;
 	}
 
-	public void setPrice(double price) {
+	public void setPrice(BigDecimal price) {
 		_price = price;
+	}
+
+	public BigDecimal getPromoPrice() {
+		return _promoPrice;
+	}
+
+	public void setPromoPrice(BigDecimal promoPrice) {
+		_promoPrice = promoPrice;
 	}
 
 	public boolean getHasTierPrice() {
@@ -220,7 +231,8 @@ public class CommercePriceEntrySoap implements Serializable {
 	private Date _modifiedDate;
 	private long _CPInstanceId;
 	private long _commercePriceListId;
-	private double _price;
+	private BigDecimal _price;
+	private BigDecimal _promoPrice;
 	private boolean _hasTierPrice;
 	private Date _lastPublishDate;
 }

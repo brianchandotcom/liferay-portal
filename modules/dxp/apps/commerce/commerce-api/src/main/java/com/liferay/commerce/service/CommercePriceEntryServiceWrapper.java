@@ -36,11 +36,12 @@ public class CommercePriceEntryServiceWrapper
 
 	@Override
 	public com.liferay.commerce.model.CommercePriceEntry addCommercePriceEntry(
-		long cpInstanceId, long commercePriceListId, double price,
+		long cpInstanceId, long commercePriceListId,
+		java.math.BigDecimal price, java.math.BigDecimal promoPrice,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _commercePriceEntryService.addCommercePriceEntry(cpInstanceId,
-			commercePriceListId, price, serviceContext);
+			commercePriceListId, price, promoPrice, serviceContext);
 	}
 
 	@Override
@@ -123,11 +124,12 @@ public class CommercePriceEntryServiceWrapper
 
 	@Override
 	public com.liferay.commerce.model.CommercePriceEntry updateCommercePriceEntry(
-		long commercePriceEntryId, double price,
+		long commercePriceEntryId, java.math.BigDecimal price,
+		java.math.BigDecimal promoPrice,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _commercePriceEntryService.updateCommercePriceEntry(commercePriceEntryId,
-			price, serviceContext);
+			price, promoPrice, serviceContext);
 	}
 
 	@Override

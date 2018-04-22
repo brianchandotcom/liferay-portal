@@ -41,6 +41,8 @@ import com.liferay.portal.kernel.util.StringBundler;
 
 import java.io.Serializable;
 
+import java.math.BigDecimal;
+
 import java.sql.Types;
 
 import java.util.ArrayList;
@@ -83,7 +85,8 @@ public class CommercePriceEntryModelImpl extends BaseModelImpl<CommercePriceEntr
 			{ "modifiedDate", Types.TIMESTAMP },
 			{ "CPInstanceId", Types.BIGINT },
 			{ "commercePriceListId", Types.BIGINT },
-			{ "price", Types.DOUBLE },
+			{ "price", Types.DECIMAL },
+			{ "promoPrice", Types.DECIMAL },
 			{ "hasTierPrice", Types.BOOLEAN },
 			{ "lastPublishDate", Types.TIMESTAMP }
 		};
@@ -100,12 +103,13 @@ public class CommercePriceEntryModelImpl extends BaseModelImpl<CommercePriceEntr
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("CPInstanceId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("commercePriceListId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("price", Types.DOUBLE);
+		TABLE_COLUMNS_MAP.put("price", Types.DECIMAL);
+		TABLE_COLUMNS_MAP.put("promoPrice", Types.DECIMAL);
 		TABLE_COLUMNS_MAP.put("hasTierPrice", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("lastPublishDate", Types.TIMESTAMP);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table CommercePriceEntry (uuid_ VARCHAR(75) null,commercePriceEntryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,CPInstanceId LONG,commercePriceListId LONG,price DOUBLE,hasTierPrice BOOLEAN,lastPublishDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table CommercePriceEntry (uuid_ VARCHAR(75) null,commercePriceEntryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,CPInstanceId LONG,commercePriceListId LONG,price DECIMAL(30, 16) null,promoPrice DECIMAL(30, 16) null,hasTierPrice BOOLEAN,lastPublishDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table CommercePriceEntry";
 	public static final String ORDER_BY_JPQL = " ORDER BY commercePriceEntry.createDate DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY CommercePriceEntry.createDate DESC";
@@ -152,6 +156,7 @@ public class CommercePriceEntryModelImpl extends BaseModelImpl<CommercePriceEntr
 		model.setCPInstanceId(soapModel.getCPInstanceId());
 		model.setCommercePriceListId(soapModel.getCommercePriceListId());
 		model.setPrice(soapModel.getPrice());
+		model.setPromoPrice(soapModel.getPromoPrice());
 		model.setHasTierPrice(soapModel.getHasTierPrice());
 		model.setLastPublishDate(soapModel.getLastPublishDate());
 
@@ -230,6 +235,7 @@ public class CommercePriceEntryModelImpl extends BaseModelImpl<CommercePriceEntr
 		attributes.put("CPInstanceId", getCPInstanceId());
 		attributes.put("commercePriceListId", getCommercePriceListId());
 		attributes.put("price", getPrice());
+		attributes.put("promoPrice", getPromoPrice());
 		attributes.put("hasTierPrice", isHasTierPrice());
 		attributes.put("lastPublishDate", getLastPublishDate());
 
@@ -301,10 +307,16 @@ public class CommercePriceEntryModelImpl extends BaseModelImpl<CommercePriceEntr
 			setCommercePriceListId(commercePriceListId);
 		}
 
-		Double price = (Double)attributes.get("price");
+		BigDecimal price = (BigDecimal)attributes.get("price");
 
 		if (price != null) {
 			setPrice(price);
+		}
+
+		BigDecimal promoPrice = (BigDecimal)attributes.get("promoPrice");
+
+		if (promoPrice != null) {
+			setPromoPrice(promoPrice);
 		}
 
 		Boolean hasTierPrice = (Boolean)attributes.get("hasTierPrice");
@@ -522,13 +534,24 @@ public class CommercePriceEntryModelImpl extends BaseModelImpl<CommercePriceEntr
 
 	@JSON
 	@Override
-	public double getPrice() {
+	public BigDecimal getPrice() {
 		return _price;
 	}
 
 	@Override
-	public void setPrice(double price) {
+	public void setPrice(BigDecimal price) {
 		_price = price;
+	}
+
+	@JSON
+	@Override
+	public BigDecimal getPromoPrice() {
+		return _promoPrice;
+	}
+
+	@Override
+	public void setPromoPrice(BigDecimal promoPrice) {
+		_promoPrice = promoPrice;
 	}
 
 	@JSON
@@ -607,6 +630,7 @@ public class CommercePriceEntryModelImpl extends BaseModelImpl<CommercePriceEntr
 		commercePriceEntryImpl.setCPInstanceId(getCPInstanceId());
 		commercePriceEntryImpl.setCommercePriceListId(getCommercePriceListId());
 		commercePriceEntryImpl.setPrice(getPrice());
+		commercePriceEntryImpl.setPromoPrice(getPromoPrice());
 		commercePriceEntryImpl.setHasTierPrice(isHasTierPrice());
 		commercePriceEntryImpl.setLastPublishDate(getLastPublishDate());
 
@@ -747,6 +771,8 @@ public class CommercePriceEntryModelImpl extends BaseModelImpl<CommercePriceEntr
 
 		commercePriceEntryCacheModel.price = getPrice();
 
+		commercePriceEntryCacheModel.promoPrice = getPromoPrice();
+
 		commercePriceEntryCacheModel.hasTierPrice = isHasTierPrice();
 
 		Date lastPublishDate = getLastPublishDate();
@@ -763,7 +789,7 @@ public class CommercePriceEntryModelImpl extends BaseModelImpl<CommercePriceEntr
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(27);
+		StringBundler sb = new StringBundler(29);
 
 		sb.append("{uuid=");
 		sb.append(getUuid());
@@ -787,6 +813,8 @@ public class CommercePriceEntryModelImpl extends BaseModelImpl<CommercePriceEntr
 		sb.append(getCommercePriceListId());
 		sb.append(", price=");
 		sb.append(getPrice());
+		sb.append(", promoPrice=");
+		sb.append(getPromoPrice());
 		sb.append(", hasTierPrice=");
 		sb.append(isHasTierPrice());
 		sb.append(", lastPublishDate=");
@@ -798,7 +826,7 @@ public class CommercePriceEntryModelImpl extends BaseModelImpl<CommercePriceEntr
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(43);
+		StringBundler sb = new StringBundler(46);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.commerce.model.CommercePriceEntry");
@@ -849,6 +877,10 @@ public class CommercePriceEntryModelImpl extends BaseModelImpl<CommercePriceEntr
 		sb.append(getPrice());
 		sb.append("]]></column-value></column>");
 		sb.append(
+			"<column><column-name>promoPrice</column-name><column-value><![CDATA[");
+		sb.append(getPromoPrice());
+		sb.append("]]></column-value></column>");
+		sb.append(
 			"<column><column-name>hasTierPrice</column-name><column-value><![CDATA[");
 		sb.append(isHasTierPrice());
 		sb.append("]]></column-value></column>");
@@ -886,7 +918,8 @@ public class CommercePriceEntryModelImpl extends BaseModelImpl<CommercePriceEntr
 	private long _commercePriceListId;
 	private long _originalCommercePriceListId;
 	private boolean _setOriginalCommercePriceListId;
-	private double _price;
+	private BigDecimal _price;
+	private BigDecimal _promoPrice;
 	private boolean _hasTierPrice;
 	private Date _lastPublishDate;
 	private long _columnBitmask;

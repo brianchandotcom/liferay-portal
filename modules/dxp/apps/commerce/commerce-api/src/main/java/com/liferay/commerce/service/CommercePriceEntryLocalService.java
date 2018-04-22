@@ -46,6 +46,8 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.io.Serializable;
 
+import java.math.BigDecimal;
+
 import java.util.List;
 
 /**
@@ -83,8 +85,8 @@ public interface CommercePriceEntryLocalService extends BaseLocalService,
 
 	@Indexable(type = IndexableType.REINDEX)
 	public CommercePriceEntry addCommercePriceEntry(long cpInstanceId,
-		long commercePriceListId, double price, ServiceContext serviceContext)
-		throws PortalException;
+		long commercePriceListId, BigDecimal price, BigDecimal promoPrice,
+		ServiceContext serviceContext) throws PortalException;
 
 	/**
 	* Creates a new commerce price entry with the primary key. Does not add the commerce price entry to the database.
@@ -350,6 +352,6 @@ public interface CommercePriceEntryLocalService extends BaseLocalService,
 
 	@Indexable(type = IndexableType.REINDEX)
 	public CommercePriceEntry updateCommercePriceEntry(
-		long commercePriceEntryId, double price, ServiceContext serviceContext)
-		throws PortalException;
+		long commercePriceEntryId, BigDecimal price, BigDecimal promoPrice,
+		ServiceContext serviceContext) throws PortalException;
 }

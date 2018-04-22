@@ -213,7 +213,8 @@
 		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
 		<property name="CPInstanceId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="commercePriceListId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="price" type="com.liferay.portal.dao.orm.hibernate.DoubleType" />
+		<property name="price" type="org.hibernate.type.BigDecimalType" />
+		<property name="promoPrice" type="org.hibernate.type.BigDecimalType" />
 		<property name="hasTierPrice" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
 		<property name="lastPublishDate" type="org.hibernate.type.TimestampType" />
 	</class>

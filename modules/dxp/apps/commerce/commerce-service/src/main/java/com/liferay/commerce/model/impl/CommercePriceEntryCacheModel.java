@@ -27,6 +27,8 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
+import java.math.BigDecimal;
+
 import java.util.Date;
 
 /**
@@ -65,7 +67,7 @@ public class CommercePriceEntryCacheModel implements CacheModel<CommercePriceEnt
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(27);
+		StringBundler sb = new StringBundler(29);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -89,6 +91,8 @@ public class CommercePriceEntryCacheModel implements CacheModel<CommercePriceEnt
 		sb.append(commercePriceListId);
 		sb.append(", price=");
 		sb.append(price);
+		sb.append(", promoPrice=");
+		sb.append(promoPrice);
 		sb.append(", hasTierPrice=");
 		sb.append(hasTierPrice);
 		sb.append(", lastPublishDate=");
@@ -138,6 +142,7 @@ public class CommercePriceEntryCacheModel implements CacheModel<CommercePriceEnt
 		commercePriceEntryImpl.setCPInstanceId(CPInstanceId);
 		commercePriceEntryImpl.setCommercePriceListId(commercePriceListId);
 		commercePriceEntryImpl.setPrice(price);
+		commercePriceEntryImpl.setPromoPrice(promoPrice);
 		commercePriceEntryImpl.setHasTierPrice(hasTierPrice);
 
 		if (lastPublishDate == Long.MIN_VALUE) {
@@ -153,7 +158,8 @@ public class CommercePriceEntryCacheModel implements CacheModel<CommercePriceEnt
 	}
 
 	@Override
-	public void readExternal(ObjectInput objectInput) throws IOException {
+	public void readExternal(ObjectInput objectInput)
+		throws ClassNotFoundException, IOException {
 		uuid = objectInput.readUTF();
 
 		commercePriceEntryId = objectInput.readLong();
@@ -170,8 +176,8 @@ public class CommercePriceEntryCacheModel implements CacheModel<CommercePriceEnt
 		CPInstanceId = objectInput.readLong();
 
 		commercePriceListId = objectInput.readLong();
-
-		price = objectInput.readDouble();
+		price = (BigDecimal)objectInput.readObject();
+		promoPrice = (BigDecimal)objectInput.readObject();
 
 		hasTierPrice = objectInput.readBoolean();
 		lastPublishDate = objectInput.readLong();
@@ -208,8 +214,8 @@ public class CommercePriceEntryCacheModel implements CacheModel<CommercePriceEnt
 		objectOutput.writeLong(CPInstanceId);
 
 		objectOutput.writeLong(commercePriceListId);
-
-		objectOutput.writeDouble(price);
+		objectOutput.writeObject(price);
+		objectOutput.writeObject(promoPrice);
 
 		objectOutput.writeBoolean(hasTierPrice);
 		objectOutput.writeLong(lastPublishDate);
@@ -225,7 +231,8 @@ public class CommercePriceEntryCacheModel implements CacheModel<CommercePriceEnt
 	public long modifiedDate;
 	public long CPInstanceId;
 	public long commercePriceListId;
-	public double price;
+	public BigDecimal price;
+	public BigDecimal promoPrice;
 	public boolean hasTierPrice;
 	public long lastPublishDate;
 }

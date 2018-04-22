@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
-import com.liferay.portal.kernel.test.AssertUtils;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -51,6 +50,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import java.io.Serializable;
+
+import java.math.BigDecimal;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -143,7 +144,11 @@ public class CommercePriceEntryPersistenceTest {
 
 		newCommercePriceEntry.setCommercePriceListId(RandomTestUtil.nextLong());
 
-		newCommercePriceEntry.setPrice(RandomTestUtil.nextDouble());
+		newCommercePriceEntry.setPrice(new BigDecimal(
+				RandomTestUtil.nextDouble()));
+
+		newCommercePriceEntry.setPromoPrice(new BigDecimal(
+				RandomTestUtil.nextDouble()));
 
 		newCommercePriceEntry.setHasTierPrice(RandomTestUtil.randomBoolean());
 
@@ -175,8 +180,10 @@ public class CommercePriceEntryPersistenceTest {
 			newCommercePriceEntry.getCPInstanceId());
 		Assert.assertEquals(existingCommercePriceEntry.getCommercePriceListId(),
 			newCommercePriceEntry.getCommercePriceListId());
-		AssertUtils.assertEquals(existingCommercePriceEntry.getPrice(),
+		Assert.assertEquals(existingCommercePriceEntry.getPrice(),
 			newCommercePriceEntry.getPrice());
+		Assert.assertEquals(existingCommercePriceEntry.getPromoPrice(),
+			newCommercePriceEntry.getPromoPrice());
 		Assert.assertEquals(existingCommercePriceEntry.isHasTierPrice(),
 			newCommercePriceEntry.isHasTierPrice());
 		Assert.assertEquals(Time.getShortTimestamp(
@@ -274,8 +281,8 @@ public class CommercePriceEntryPersistenceTest {
 			"uuid", true, "commercePriceEntryId", true, "groupId", true,
 			"companyId", true, "userId", true, "userName", true, "createDate",
 			true, "modifiedDate", true, "CPInstanceId", true,
-			"commercePriceListId", true, "price", true, "hasTierPrice", true,
-			"lastPublishDate", true);
+			"commercePriceListId", true, "price", true, "promoPrice", true,
+			"hasTierPrice", true, "lastPublishDate", true);
 	}
 
 	@Test
@@ -523,7 +530,10 @@ public class CommercePriceEntryPersistenceTest {
 
 		commercePriceEntry.setCommercePriceListId(RandomTestUtil.nextLong());
 
-		commercePriceEntry.setPrice(RandomTestUtil.nextDouble());
+		commercePriceEntry.setPrice(new BigDecimal(RandomTestUtil.nextDouble()));
+
+		commercePriceEntry.setPromoPrice(new BigDecimal(
+				RandomTestUtil.nextDouble()));
 
 		commercePriceEntry.setHasTierPrice(RandomTestUtil.randomBoolean());
 

@@ -34,6 +34,8 @@ import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
+import java.math.BigDecimal;
+
 import java.util.List;
 
 /**
@@ -61,8 +63,8 @@ public interface CommercePriceEntryService extends BaseService {
 	 * Never modify or reference this interface directly. Always use {@link CommercePriceEntryServiceUtil} to access the commerce price entry remote service. Add custom service methods to {@link com.liferay.commerce.service.impl.CommercePriceEntryServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	public CommercePriceEntry addCommercePriceEntry(long cpInstanceId,
-		long commercePriceListId, double price, ServiceContext serviceContext)
-		throws PortalException;
+		long commercePriceListId, BigDecimal price, BigDecimal promoPrice,
+		ServiceContext serviceContext) throws PortalException;
 
 	public void deleteCommercePriceEntry(long commercePriceEntryId)
 		throws PortalException;
@@ -111,6 +113,6 @@ public interface CommercePriceEntryService extends BaseService {
 		throws PortalException;
 
 	public CommercePriceEntry updateCommercePriceEntry(
-		long commercePriceEntryId, double price, ServiceContext serviceContext)
-		throws PortalException;
+		long commercePriceEntryId, BigDecimal price, BigDecimal promoPrice,
+		ServiceContext serviceContext) throws PortalException;
 }

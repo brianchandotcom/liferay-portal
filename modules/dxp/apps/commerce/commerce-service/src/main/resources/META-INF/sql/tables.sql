@@ -227,7 +227,8 @@ create table CommercePriceEntry (
 	modifiedDate DATE null,
 	CPInstanceId LONG,
 	commercePriceListId LONG,
-	price DOUBLE,
+	price DECIMAL(30, 16) null,
+	promoPrice DECIMAL(30, 16) null,
 	hasTierPrice BOOLEAN,
 	lastPublishDate DATE null
 );

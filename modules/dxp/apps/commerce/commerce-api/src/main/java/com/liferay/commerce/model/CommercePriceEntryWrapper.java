@@ -25,6 +25,8 @@ import com.liferay.portal.kernel.service.ServiceContext;
 
 import java.io.Serializable;
 
+import java.math.BigDecimal;
+
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -71,6 +73,7 @@ public class CommercePriceEntryWrapper implements CommercePriceEntry,
 		attributes.put("CPInstanceId", getCPInstanceId());
 		attributes.put("commercePriceListId", getCommercePriceListId());
 		attributes.put("price", getPrice());
+		attributes.put("promoPrice", getPromoPrice());
 		attributes.put("hasTierPrice", isHasTierPrice());
 		attributes.put("lastPublishDate", getLastPublishDate());
 
@@ -139,10 +142,16 @@ public class CommercePriceEntryWrapper implements CommercePriceEntry,
 			setCommercePriceListId(commercePriceListId);
 		}
 
-		Double price = (Double)attributes.get("price");
+		BigDecimal price = (BigDecimal)attributes.get("price");
 
 		if (price != null) {
 			setPrice(price);
+		}
+
+		BigDecimal promoPrice = (BigDecimal)attributes.get("promoPrice");
+
+		if (promoPrice != null) {
+			setPromoPrice(promoPrice);
 		}
 
 		Boolean hasTierPrice = (Boolean)attributes.get("hasTierPrice");
@@ -281,7 +290,7 @@ public class CommercePriceEntryWrapper implements CommercePriceEntry,
 	* @return the price of this commerce price entry
 	*/
 	@Override
-	public double getPrice() {
+	public BigDecimal getPrice() {
 		return _commercePriceEntry.getPrice();
 	}
 
@@ -298,6 +307,16 @@ public class CommercePriceEntryWrapper implements CommercePriceEntry,
 	@Override
 	public Serializable getPrimaryKeyObj() {
 		return _commercePriceEntry.getPrimaryKeyObj();
+	}
+
+	/**
+	* Returns the promo price of this commerce price entry.
+	*
+	* @return the promo price of this commerce price entry
+	*/
+	@Override
+	public BigDecimal getPromoPrice() {
+		return _commercePriceEntry.getPromoPrice();
 	}
 
 	/**
@@ -497,7 +516,7 @@ public class CommercePriceEntryWrapper implements CommercePriceEntry,
 	* @param price the price of this commerce price entry
 	*/
 	@Override
-	public void setPrice(double price) {
+	public void setPrice(BigDecimal price) {
 		_commercePriceEntry.setPrice(price);
 	}
 
@@ -514,6 +533,16 @@ public class CommercePriceEntryWrapper implements CommercePriceEntry,
 	@Override
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
 		_commercePriceEntry.setPrimaryKeyObj(primaryKeyObj);
+	}
+
+	/**
+	* Sets the promo price of this commerce price entry.
+	*
+	* @param promoPrice the promo price of this commerce price entry
+	*/
+	@Override
+	public void setPromoPrice(BigDecimal promoPrice) {
+		_commercePriceEntry.setPromoPrice(promoPrice);
 	}
 
 	/**

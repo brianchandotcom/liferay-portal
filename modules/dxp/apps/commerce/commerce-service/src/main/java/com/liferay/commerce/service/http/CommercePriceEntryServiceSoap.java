@@ -66,12 +66,13 @@ import java.rmi.RemoteException;
 @ProviderType
 public class CommercePriceEntryServiceSoap {
 	public static com.liferay.commerce.model.CommercePriceEntrySoap addCommercePriceEntry(
-		long cpInstanceId, long commercePriceListId, double price,
+		long cpInstanceId, long commercePriceListId,
+		java.math.BigDecimal price, java.math.BigDecimal promoPrice,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
 			com.liferay.commerce.model.CommercePriceEntry returnValue = CommercePriceEntryServiceUtil.addCommercePriceEntry(cpInstanceId,
-					commercePriceListId, price, serviceContext);
+					commercePriceListId, price, promoPrice, serviceContext);
 
 			return com.liferay.commerce.model.CommercePriceEntrySoap.toSoapModel(returnValue);
 		}
@@ -205,12 +206,13 @@ public class CommercePriceEntryServiceSoap {
 	}
 
 	public static com.liferay.commerce.model.CommercePriceEntrySoap updateCommercePriceEntry(
-		long commercePriceEntryId, double price,
+		long commercePriceEntryId, java.math.BigDecimal price,
+		java.math.BigDecimal promoPrice,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
 			com.liferay.commerce.model.CommercePriceEntry returnValue = CommercePriceEntryServiceUtil.updateCommercePriceEntry(commercePriceEntryId,
-					price, serviceContext);
+					price, promoPrice, serviceContext);
 
 			return com.liferay.commerce.model.CommercePriceEntrySoap.toSoapModel(returnValue);
 		}

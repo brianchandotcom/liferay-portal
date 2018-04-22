@@ -199,9 +199,10 @@
 		<field name="modifiedDate" type="Date" />
 		<field name="CPInstanceId" type="long" />
 		<field name="commercePriceListId" type="long" />
-		<field name="price" type="double">
+		<field name="price" type="BigDecimal">
 			<validator name="number" />
 		</field>
+		<field name="promoPrice" type="BigDecimal" />
 		<field name="hasTierPrice" type="boolean" />
 		<field name="lastPublishDate" type="Date" />
 	</model>

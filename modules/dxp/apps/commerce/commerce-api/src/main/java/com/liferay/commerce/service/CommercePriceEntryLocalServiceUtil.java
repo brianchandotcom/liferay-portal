@@ -55,12 +55,13 @@ public class CommercePriceEntryLocalServiceUtil {
 	}
 
 	public static com.liferay.commerce.model.CommercePriceEntry addCommercePriceEntry(
-		long cpInstanceId, long commercePriceListId, double price,
+		long cpInstanceId, long commercePriceListId,
+		java.math.BigDecimal price, java.math.BigDecimal promoPrice,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addCommercePriceEntry(cpInstanceId, commercePriceListId,
-			price, serviceContext);
+			price, promoPrice, serviceContext);
 	}
 
 	/**
@@ -402,12 +403,13 @@ public class CommercePriceEntryLocalServiceUtil {
 	}
 
 	public static com.liferay.commerce.model.CommercePriceEntry updateCommercePriceEntry(
-		long commercePriceEntryId, double price,
+		long commercePriceEntryId, java.math.BigDecimal price,
+		java.math.BigDecimal promoPrice,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .updateCommercePriceEntry(commercePriceEntryId, price,
-			serviceContext);
+			promoPrice, serviceContext);
 	}
 
 	public static CommercePriceEntryLocalService getService() {

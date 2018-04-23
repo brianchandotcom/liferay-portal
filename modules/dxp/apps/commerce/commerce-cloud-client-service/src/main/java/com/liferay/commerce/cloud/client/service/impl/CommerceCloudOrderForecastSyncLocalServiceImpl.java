@@ -14,11 +14,63 @@
 
 package com.liferay.commerce.cloud.client.service.impl;
 
+import com.liferay.commerce.cloud.client.model.CommerceCloudOrderForecastSync;
 import com.liferay.commerce.cloud.client.service.base.CommerceCloudOrderForecastSyncLocalServiceBaseImpl;
+import com.liferay.commerce.model.CommerceOrder;
+import com.liferay.commerce.service.CommerceOrderLocalService;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 
 /**
  * @author Andrea Di Giorgi
  */
 public class CommerceCloudOrderForecastSyncLocalServiceImpl
 	extends CommerceCloudOrderForecastSyncLocalServiceBaseImpl {
+
+	@Override
+	public CommerceCloudOrderForecastSync addCommerceCloudOrderForecastSync(
+			long commerceOrderId)
+		throws PortalException {
+
+		CommerceCloudOrderForecastSync commerceCloudOrderForecastSync =
+			commerceCloudOrderForecastSyncPersistence.fetchByCommerceOrderId(
+				commerceOrderId);
+
+		if (commerceCloudOrderForecastSync != null) {
+			return commerceCloudOrderForecastSync;
+		}
+
+		CommerceOrder commerceOrder =
+			_commerceOrderLocalService.getCommerceOrder(commerceOrderId);
+
+		long commerceCloudOrderForecastSyncId = counterLocalService.increment();
+
+		commerceCloudOrderForecastSync =
+			commerceCloudOrderForecastSyncPersistence.create(
+				commerceCloudOrderForecastSyncId);
+
+		commerceCloudOrderForecastSync.setGroupId(commerceOrder.getGroupId());
+		commerceCloudOrderForecastSync.setCompanyId(
+			commerceOrder.getCompanyId());
+		commerceCloudOrderForecastSync.setCommerceOrderId(
+			commerceOrder.getCommerceOrderId());
+
+		return commerceCloudOrderForecastSyncPersistence.update(
+			commerceCloudOrderForecastSync);
+	}
+
+	@Override
+	public CommerceCloudOrderForecastSync
+			deleteCommerceCloudOrderForecastSyncByCommerceOrderId(
+				long commerceOrderId)
+		throws PortalException {
+
+		return
+			commerceCloudOrderForecastSyncPersistence.removeByCommerceOrderId(
+				commerceOrderId);
+	}
+
+	@ServiceReference(type = CommerceOrderLocalService.class)
+	private CommerceOrderLocalService _commerceOrderLocalService;
+
 }

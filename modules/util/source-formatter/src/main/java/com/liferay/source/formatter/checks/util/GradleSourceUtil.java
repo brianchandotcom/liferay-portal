@@ -41,17 +41,17 @@ public class GradleSourceUtil {
 
 			String s = content.substring(matcher.start(), x + 1);
 
-			int level = SourceUtil.getLevel(s, "{", "}");
-
-			if (level == 0) {
-				if (s.matches("(?is).*executable\\s*=\\s*true.*") &&
-					s.matches("(?is).*mainClass\\s*=.*")) {
-
-					return true;
-				}
-
-				return false;
+			if (SourceUtil.getLevel(s, "{", "}") != 0) {
+				continue;
 			}
+
+			if (s.matches("(?is).*executable\\s*=\\s*true.*") &&
+				s.matches("(?is).*mainClass\\s*=.*")) {
+
+				return true;
+			}
+
+			return false;
 		}
 	}
 

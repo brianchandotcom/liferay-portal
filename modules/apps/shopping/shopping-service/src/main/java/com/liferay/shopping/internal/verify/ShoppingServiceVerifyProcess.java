@@ -18,8 +18,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.verify.VerifyProcess;
 import com.liferay.portal.verify.VerifyResourcePermissions;
-import com.liferay.shopping.internal.verify.model.ShoppingCategoryVerifiableModel;
-import com.liferay.shopping.internal.verify.model.ShoppingItemVerifiableResourcedModel;
 import com.liferay.shopping.internal.verify.model.ShoppingOrderVerifiableModel;
 import com.liferay.shopping.service.ShoppingCartLocalService;
 
@@ -47,10 +45,6 @@ public class ShoppingServiceVerifyProcess extends VerifyProcess {
 	}
 
 	protected void verifyResourcedModels() throws Exception {
-		_verifyResourcePermissions.verify(
-			new ShoppingCategoryVerifiableModel());
-		_verifyResourcePermissions.verify(
-			new ShoppingItemVerifiableResourcedModel());
 		_verifyResourcePermissions.verify(new ShoppingOrderVerifiableModel());
 	}
 

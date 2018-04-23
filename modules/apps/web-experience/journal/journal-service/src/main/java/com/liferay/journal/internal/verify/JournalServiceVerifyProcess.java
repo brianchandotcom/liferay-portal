@@ -19,7 +19,6 @@ import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.dynamic.data.mapping.exception.NoSuchStructureException;
 import com.liferay.journal.configuration.JournalServiceConfiguration;
 import com.liferay.journal.internal.verify.model.JournalArticleResourceVerifiableModel;
-import com.liferay.journal.internal.verify.model.JournalArticleVerifiableModel;
 import com.liferay.journal.internal.verify.model.JournalFeedVerifiableModel;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalArticleConstants;
@@ -52,7 +51,6 @@ import com.liferay.portal.kernel.xml.Node;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.verify.VerifyLayout;
 import com.liferay.portal.verify.VerifyProcess;
-import com.liferay.portal.verify.VerifyResourcePermissions;
 import com.liferay.portal.verify.VerifyUUID;
 
 import java.sql.PreparedStatement;
@@ -87,7 +85,6 @@ public class JournalServiceVerifyProcess extends VerifyLayout {
 		verifyContentSearch();
 		verifyFolderAssets();
 		verifyPermissions();
-		verifyResourcedModels();
 		verifyUUIDModels();
 
 		VerifyProcess verifyProcess =
@@ -583,14 +580,6 @@ public class JournalServiceVerifyProcess extends VerifyLayout {
 		}
 	}
 
-	protected void verifyResourcedModels() throws Exception {
-		try (LoggingTimer loggingTimer = new LoggingTimer()) {
-			_verifyResourcePermissions.verify(
-				new JournalArticleVerifiableModel());
-			_verifyResourcePermissions.verify(new JournalFeedVerifiableModel());
-		}
-	}
-
 	protected void verifyUUIDModels() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
 			VerifyUUID.verify(new JournalArticleResourceVerifiableModel());
@@ -613,7 +602,5 @@ public class JournalServiceVerifyProcess extends VerifyLayout {
 
 	private ResourceLocalService _resourceLocalService;
 	private SystemEventLocalService _systemEventLocalService;
-	private final VerifyResourcePermissions _verifyResourcePermissions =
-		new VerifyResourcePermissions();
 
 }

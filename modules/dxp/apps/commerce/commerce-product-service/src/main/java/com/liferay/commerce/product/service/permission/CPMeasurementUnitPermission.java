@@ -15,6 +15,7 @@
 package com.liferay.commerce.product.service.permission;
 
 import com.liferay.commerce.admin.constants.CommerceAdminPortletKeys;
+import com.liferay.commerce.product.constants.CPConstants;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.BaseResourcePermissionChecker;
@@ -27,12 +28,10 @@ import org.osgi.service.component.annotations.Component;
  * @author Alessio Antonio Rendina
  */
 @Component(
-	property = "resource.name=" + CPMeasurementUnitPermission.RESOURCE_NAME,
+	property = "resource.name=" + CPConstants.RESOURCE_NAME,
 	service = ResourcePermissionChecker.class
 )
 public class CPMeasurementUnitPermission extends BaseResourcePermissionChecker {
-
-	public static final String RESOURCE_NAME = "com.liferay.commerce.product";
 
 	public static void check(
 			PermissionChecker permissionChecker, long groupId, String actionId)
@@ -40,8 +39,8 @@ public class CPMeasurementUnitPermission extends BaseResourcePermissionChecker {
 
 		if (!contains(permissionChecker, groupId, actionId)) {
 			throw new PrincipalException.MustHavePermission(
-				permissionChecker.getUserId(), RESOURCE_NAME, groupId,
-				actionId);
+				permissionChecker.getUserId(), CPConstants.RESOURCE_NAME,
+				groupId, actionId);
 		}
 	}
 
@@ -49,7 +48,7 @@ public class CPMeasurementUnitPermission extends BaseResourcePermissionChecker {
 		PermissionChecker permissionChecker, long groupId, String actionId) {
 
 		return contains(
-			permissionChecker, RESOURCE_NAME,
+			permissionChecker, CPConstants.RESOURCE_NAME,
 			CommerceAdminPortletKeys.COMMERCE_ADMIN, groupId, actionId);
 	}
 

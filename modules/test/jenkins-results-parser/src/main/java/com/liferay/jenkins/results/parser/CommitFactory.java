@@ -14,45 +14,15 @@
 
 package com.liferay.jenkins.results.parser;
 
-import java.io.IOException;
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.json.JSONObject;
-
 /**
  * @author Michael Hashimoto
  */
 public class CommitFactory {
-
-	public static Commit newCommit(PullRequest pullRequest) {
-		String gitHubUserName = pullRequest.getOwnerUsername();
-		String repositoryName = pullRequest.getRepositoryName();
-		String sha = pullRequest.getSenderSHA();
-
-		String commitURL = _getCommitURL(gitHubUserName, repositoryName, sha);
-
-		if (_commits.containsKey(commitURL)) {
-			return _commits.get(commitURL);
-		}
-
-		try {
-			JSONObject jsonObject = JenkinsResultsParserUtil.toJSONObject(
-				commitURL);
-
-			JSONObject commitJSONObject = jsonObject.getJSONObject("commit");
-
-			String message = commitJSONObject.getString("message");
-
-			return _newCommit(gitHubUserName, message, repositoryName, sha);
-		}
-		catch (IOException ioe) {
-			throw new RuntimeException(ioe);
-		}
-	}
 
 	public static Commit newCommit(
 		String gitLogEntity, GitWorkingDirectory gitWorkingDirectory) {
@@ -69,24 +39,10 @@ public class CommitFactory {
 		String repositoryName = gitWorkingDirectory.getRepositoryName();
 		String sha = matcher.group("sha");
 
-		String commitURL = _getCommitURL(gitHubUserName, repositoryName, sha);
-
-		if (_commits.containsKey(commitURL)) {
-			return _commits.get(commitURL);
-		}
-
-		return _newCommit(gitHubUserName, message, repositoryName, sha);
+		return newCommit(gitHubUserName, message, repositoryName, sha);
 	}
 
-	private static String _getCommitURL(
-		String gitHubUserName, String repositoryName, String sha) {
-
-		return JenkinsResultsParserUtil.combine(
-			"https://api.github.com/repos/", gitHubUserName, "/",
-			repositoryName, "/commits/", sha);
-	}
-
-	private static Commit _newCommit(
+	public static Commit newCommit(
 		String gitHubUserName, String message, String repositoryName,
 		String sha) {
 
@@ -96,13 +52,26 @@ public class CommitFactory {
 			type = Commit.Type.LEGACY_ARCHIVE;
 		}
 
+		String commitURL = _getCommitURL(gitHubUserName, repositoryName, sha);
+
+		if (_commits.containsKey(commitURL)) {
+			return _commits.get(commitURL);
+		}
+
 		Commit commit = new BaseCommit(
 			gitHubUserName, message, repositoryName, sha, type);
 
-		_commits.put(
-			_getCommitURL(gitHubUserName, repositoryName, sha), commit);
+		_commits.put(commitURL, commit);
 
 		return commit;
+	}
+
+	private static String _getCommitURL(
+		String gitHubUserName, String repositoryName, String sha) {
+
+		return JenkinsResultsParserUtil.combine(
+			"https://api.github.com/repos/", gitHubUserName, "/",
+			repositoryName, "/commits/", sha);
 	}
 
 	private static final Map<String, Commit> _commits = new HashMap<>();

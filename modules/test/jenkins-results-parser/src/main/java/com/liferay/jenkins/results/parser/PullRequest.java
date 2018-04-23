@@ -73,6 +73,31 @@ public class PullRequest {
 		}
 	}
 
+	public Commit getCommit() {
+		String gitHubUserName = getOwnerUsername();
+		String repositoryName = getRepositoryName();
+		String sha = getSenderSHA();
+
+		String commitURL = JenkinsResultsParserUtil.combine(
+			"https://api.github.com/repos/", gitHubUserName, "/",
+			repositoryName, "/commits/", sha);
+
+		try {
+			JSONObject jsonObject = JenkinsResultsParserUtil.toJSONObject(
+				commitURL);
+
+			JSONObject commitJSONObject = jsonObject.getJSONObject("commit");
+
+			String message = commitJSONObject.getString("message");
+
+			return CommitFactory.newCommit(
+				gitHubUserName, message, repositoryName, sha);
+		}
+		catch (IOException ioe) {
+			throw new RuntimeException("Unable to get commit details", ioe);
+		}
+	}
+
 	public String getHtmlURL() {
 		return _jsonObject.getString("html_url");
 	}
@@ -187,7 +212,7 @@ public class PullRequest {
 			return;
 		}
 
-		Commit commit = CommitFactory.newCommit(this);
+		Commit commit = getCommit();
 
 		Commit.Status status = Commit.Status.valueOf(
 			testSuiteStatus.toString());

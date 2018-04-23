@@ -31,6 +31,21 @@ fragmentEntryLink.setCss(css);
 fragmentEntryLink.setHtml(html);
 fragmentEntryLink.setJs(js);
 fragmentEntryLink.setFragmentEntryId(fragmentEntryId);
+
+try {
 %>
 
-<%= FragmentEntryRenderUtil.renderFragmentEntryLink(fragmentEntryLink, PortletMode.VIEW.toString(), request, response) %>
+	<%= FragmentEntryRenderUtil.renderFragmentEntryLink(fragmentEntryLink, PortletMode.VIEW.toString(), request, response) %>
+
+<%
+}
+catch (FragmentEntryContentException fece) {
+%>
+
+	<div class="alert alert-danger">
+		<liferay-ui:message key="<%= fece.getMessage() %>" />
+	</div>
+
+<%
+}
+%>

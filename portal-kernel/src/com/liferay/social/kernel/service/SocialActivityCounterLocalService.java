@@ -140,6 +140,7 @@ public interface SocialActivityCounterLocalService extends BaseLocalService,
 	* @param activityCounterId the primary key for the new social activity counter
 	* @return the new social activity counter
 	*/
+	@Transactional(enabled = false)
 	public SocialActivityCounter createSocialActivityCounter(
 		long activityCounterId);
 

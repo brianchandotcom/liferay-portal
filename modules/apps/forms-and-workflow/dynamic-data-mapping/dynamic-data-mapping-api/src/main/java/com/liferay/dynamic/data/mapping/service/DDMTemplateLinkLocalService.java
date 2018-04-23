@@ -79,6 +79,7 @@ public interface DDMTemplateLinkLocalService extends BaseLocalService,
 	* @param templateLinkId the primary key for the new ddm template link
 	* @return the new ddm template link
 	*/
+	@Transactional(enabled = false)
 	public DDMTemplateLink createDDMTemplateLink(long templateLinkId);
 
 	/**

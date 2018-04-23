@@ -83,6 +83,7 @@ public interface HtmlPreviewEntryLocalService extends BaseLocalService,
 	* @param htmlPreviewEntryId the primary key for the new html preview entry
 	* @return the new html preview entry
 	*/
+	@Transactional(enabled = false)
 	public HtmlPreviewEntry createHtmlPreviewEntry(long htmlPreviewEntryId);
 
 	/**

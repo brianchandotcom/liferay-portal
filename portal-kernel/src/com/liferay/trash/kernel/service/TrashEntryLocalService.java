@@ -123,11 +123,12 @@ public interface TrashEntryLocalService extends BaseLocalService,
 	* @param typeSettingsProperties the type settings properties
 	* @return the trashEntry
 	*/
+	@Transactional(enabled = false)
 	public TrashEntry addTrashEntry(long userId, long groupId,
 		java.lang.String className, long classPK, java.lang.String classUuid,
 		java.lang.String referrerClassName, int status,
 		List<ObjectValuePair<java.lang.Long, java.lang.Integer>> statusOVPs,
-		UnicodeProperties typeSettingsProperties) throws PortalException;
+		UnicodeProperties typeSettingsProperties) throws PortalException;	
 
 	/**
 	* Creates a new trash entry with the primary key. Does not add the trash entry to the database.

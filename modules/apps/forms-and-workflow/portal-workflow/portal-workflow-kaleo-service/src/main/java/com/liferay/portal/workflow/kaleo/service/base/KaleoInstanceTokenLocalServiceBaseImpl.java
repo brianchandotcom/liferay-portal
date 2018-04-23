@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
 import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.kernel.service.persistence.ClassNamePersistence;
 import com.liferay.portal.kernel.service.persistence.UserPersistence;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
@@ -107,12 +108,13 @@ public abstract class KaleoInstanceTokenLocalServiceBaseImpl
 	}
 
 	/**
-	 * Creates a new kaleo instance token with the primary key. Does not add the kaleo instance token to the database.
-	 *
-	 * @param kaleoInstanceTokenId the primary key for the new kaleo instance token
-	 * @return the new kaleo instance token
-	 */
+	* Creates a new kaleo instance token with the primary key. Does not add the kaleo instance token to the database.
+	*
+	* @param kaleoInstanceTokenId the primary key for the new kaleo instance token
+	* @return the new kaleo instance token
+	*/
 	@Override
+	@Transactional(enabled = false)
 	public KaleoInstanceToken createKaleoInstanceToken(
 		long kaleoInstanceTokenId) {
 		return kaleoInstanceTokenPersistence.create(kaleoInstanceTokenId);

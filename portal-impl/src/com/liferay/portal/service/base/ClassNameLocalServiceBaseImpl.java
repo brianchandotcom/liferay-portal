@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.kernel.service.persistence.ClassNamePersistence;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 
@@ -83,12 +84,13 @@ public abstract class ClassNameLocalServiceBaseImpl extends BaseLocalServiceImpl
 	}
 
 	/**
-	 * Creates a new class name with the primary key. Does not add the class name to the database.
-	 *
-	 * @param classNameId the primary key for the new class name
-	 * @return the new class name
-	 */
+	* Creates a new class name with the primary key. Does not add the class name to the database.
+	*
+	* @param classNameId the primary key for the new class name
+	* @return the new class name
+	*/
 	@Override
+	@Transactional(enabled = false)
 	public ClassName createClassName(long classNameId) {
 		return classNamePersistence.create(classNameId);
 	}

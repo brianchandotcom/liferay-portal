@@ -81,6 +81,7 @@ public interface DDMStructureLinkLocalService extends BaseLocalService,
 	* @param structureLinkId the primary key for the new ddm structure link
 	* @return the new ddm structure link
 	*/
+	@Transactional(enabled = false)
 	public DDMStructureLink createDDMStructureLink(long structureLinkId);
 
 	/**

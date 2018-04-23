@@ -84,6 +84,7 @@ public interface LayoutRevisionLocalService extends BaseLocalService,
 	* @param layoutRevisionId the primary key for the new layout revision
 	* @return the new layout revision
 	*/
+	@Transactional(enabled = false)
 	public LayoutRevision createLayoutRevision(long layoutRevisionId);
 
 	public void deleteLayoutLayoutRevisions(long plid)

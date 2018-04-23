@@ -104,6 +104,7 @@ public interface AnnouncementsEntryLocalService extends BaseLocalService,
 	* @param entryId the primary key for the new announcements entry
 	* @return the new announcements entry
 	*/
+	@Transactional(enabled = false)
 	public AnnouncementsEntry createAnnouncementsEntry(long entryId);
 
 	/**

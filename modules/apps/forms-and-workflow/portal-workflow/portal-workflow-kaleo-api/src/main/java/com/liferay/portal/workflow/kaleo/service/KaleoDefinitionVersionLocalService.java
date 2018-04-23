@@ -83,6 +83,7 @@ public interface KaleoDefinitionVersionLocalService extends BaseLocalService,
 	* @param kaleoDefinitionVersionId the primary key for the new kaleo definition version
 	* @return the new kaleo definition version
 	*/
+	@Transactional(enabled = false)
 	public KaleoDefinitionVersion createKaleoDefinitionVersion(
 		long kaleoDefinitionVersionId);
 

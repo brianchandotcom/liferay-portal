@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
 import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.kernel.service.ReleaseLocalService;
 import com.liferay.portal.kernel.service.persistence.ReleasePersistence;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 
@@ -83,12 +84,13 @@ public abstract class ReleaseLocalServiceBaseImpl extends BaseLocalServiceImpl
 	}
 
 	/**
-	 * Creates a new release with the primary key. Does not add the release to the database.
-	 *
-	 * @param releaseId the primary key for the new release
-	 * @return the new release
-	 */
+	* Creates a new release with the primary key. Does not add the release to the database.
+	*
+	* @param releaseId the primary key for the new release
+	* @return the new release
+	*/
 	@Override
+	@Transactional(enabled = false)
 	public Release createRelease(long releaseId) {
 		return releasePersistence.create(releaseId);
 	}

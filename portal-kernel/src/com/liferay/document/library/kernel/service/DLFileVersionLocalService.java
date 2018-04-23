@@ -79,6 +79,7 @@ public interface DLFileVersionLocalService extends BaseLocalService,
 	* @param fileVersionId the primary key for the new document library file version
 	* @return the new document library file version
 	*/
+	@Transactional(enabled = false)
 	public DLFileVersion createDLFileVersion(long fileVersionId);
 
 	/**

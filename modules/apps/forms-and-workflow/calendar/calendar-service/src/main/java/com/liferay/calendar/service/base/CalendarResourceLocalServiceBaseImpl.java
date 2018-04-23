@@ -58,6 +58,7 @@ import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
 import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.kernel.service.persistence.ClassNamePersistence;
 import com.liferay.portal.kernel.service.persistence.UserPersistence;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
@@ -106,12 +107,13 @@ public abstract class CalendarResourceLocalServiceBaseImpl
 	}
 
 	/**
-	 * Creates a new calendar resource with the primary key. Does not add the calendar resource to the database.
-	 *
-	 * @param calendarResourceId the primary key for the new calendar resource
-	 * @return the new calendar resource
-	 */
+	* Creates a new calendar resource with the primary key. Does not add the calendar resource to the database.
+	*
+	* @param calendarResourceId the primary key for the new calendar resource
+	* @return the new calendar resource
+	*/
 	@Override
+	@Transactional(enabled = false)
 	public CalendarResource createCalendarResource(long calendarResourceId) {
 		return calendarResourcePersistence.create(calendarResourceId);
 	}

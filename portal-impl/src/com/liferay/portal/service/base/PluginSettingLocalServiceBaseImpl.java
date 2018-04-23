@@ -42,6 +42,7 @@ import com.liferay.portal.kernel.service.persistence.RoleFinder;
 import com.liferay.portal.kernel.service.persistence.RolePersistence;
 import com.liferay.portal.kernel.service.persistence.UserFinder;
 import com.liferay.portal.kernel.service.persistence.UserPersistence;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 
@@ -88,12 +89,13 @@ public abstract class PluginSettingLocalServiceBaseImpl
 	}
 
 	/**
-	 * Creates a new plugin setting with the primary key. Does not add the plugin setting to the database.
-	 *
-	 * @param pluginSettingId the primary key for the new plugin setting
-	 * @return the new plugin setting
-	 */
+	* Creates a new plugin setting with the primary key. Does not add the plugin setting to the database.
+	*
+	* @param pluginSettingId the primary key for the new plugin setting
+	* @return the new plugin setting
+	*/
 	@Override
+	@Transactional(enabled = false)
 	public PluginSetting createPluginSetting(long pluginSettingId) {
 		return pluginSettingPersistence.create(pluginSettingId);
 	}

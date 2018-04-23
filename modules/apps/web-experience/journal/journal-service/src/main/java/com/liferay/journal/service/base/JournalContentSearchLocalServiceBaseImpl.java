@@ -42,6 +42,7 @@ import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.kernel.service.persistence.GroupPersistence;
 import com.liferay.portal.kernel.service.persistence.LayoutPersistence;
 import com.liferay.portal.kernel.service.persistence.PortletPreferencesPersistence;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
@@ -90,12 +91,13 @@ public abstract class JournalContentSearchLocalServiceBaseImpl
 	}
 
 	/**
-	 * Creates a new journal content search with the primary key. Does not add the journal content search to the database.
-	 *
-	 * @param contentSearchId the primary key for the new journal content search
-	 * @return the new journal content search
-	 */
+	* Creates a new journal content search with the primary key. Does not add the journal content search to the database.
+	*
+	* @param contentSearchId the primary key for the new journal content search
+	* @return the new journal content search
+	*/
 	@Override
+	@Transactional(enabled = false)
 	public JournalContentSearch createJournalContentSearch(long contentSearchId) {
 		return journalContentSearchPersistence.create(contentSearchId);
 	}

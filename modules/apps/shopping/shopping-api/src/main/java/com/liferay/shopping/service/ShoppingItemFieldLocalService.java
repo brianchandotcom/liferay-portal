@@ -77,6 +77,7 @@ public interface ShoppingItemFieldLocalService extends BaseLocalService,
 	* @param itemFieldId the primary key for the new shopping item field
 	* @return the new shopping item field
 	*/
+	@Transactional(enabled = false)
 	public ShoppingItemField createShoppingItemField(long itemFieldId);
 
 	/**

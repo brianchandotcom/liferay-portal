@@ -89,6 +89,7 @@ public interface DDMDataProviderInstanceLocalService extends BaseLocalService,
 	* @param dataProviderInstanceId the primary key for the new ddm data provider instance
 	* @return the new ddm data provider instance
 	*/
+	@Transactional(enabled = false)
 	public DDMDataProviderInstance createDDMDataProviderInstance(
 		long dataProviderInstanceId);
 

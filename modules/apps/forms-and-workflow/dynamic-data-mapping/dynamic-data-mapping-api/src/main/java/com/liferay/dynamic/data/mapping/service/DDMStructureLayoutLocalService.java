@@ -88,6 +88,7 @@ public interface DDMStructureLayoutLocalService extends BaseLocalService,
 	* @param structureLayoutId the primary key for the new ddm structure layout
 	* @return the new ddm structure layout
 	*/
+	@Transactional(enabled = false)
 	public DDMStructureLayout createDDMStructureLayout(long structureLayoutId);
 
 	/**

@@ -79,6 +79,7 @@ public interface AnnouncementsFlagLocalService extends BaseLocalService,
 	* @param flagId the primary key for the new announcements flag
 	* @return the new announcements flag
 	*/
+	@Transactional(enabled = false)
 	public AnnouncementsFlag createAnnouncementsFlag(long flagId);
 
 	/**

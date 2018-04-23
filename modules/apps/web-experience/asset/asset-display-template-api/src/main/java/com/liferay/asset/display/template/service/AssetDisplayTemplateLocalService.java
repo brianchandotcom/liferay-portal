@@ -83,6 +83,7 @@ public interface AssetDisplayTemplateLocalService extends BaseLocalService,
 	* @param assetDisplayTemplateId the primary key for the new asset display template
 	* @return the new asset display template
 	*/
+	@Transactional(enabled = false)
 	public AssetDisplayTemplate createAssetDisplayTemplate(
 		long assetDisplayTemplateId);
 

@@ -188,6 +188,7 @@ public interface SocialActivityLocalService extends BaseLocalService,
 	* @param activityId the primary key for the new social activity
 	* @return the new social activity
 	*/
+	@Transactional(enabled = false)
 	public SocialActivity createSocialActivity(long activityId);
 
 	/**

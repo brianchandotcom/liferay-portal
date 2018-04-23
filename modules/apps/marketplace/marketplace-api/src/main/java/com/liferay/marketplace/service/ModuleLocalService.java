@@ -89,6 +89,7 @@ public interface ModuleLocalService extends BaseLocalService,
 	* @param moduleId the primary key for the new module
 	* @return the new module
 	*/
+	@Transactional(enabled = false)
 	public Module createModule(long moduleId);
 
 	/**

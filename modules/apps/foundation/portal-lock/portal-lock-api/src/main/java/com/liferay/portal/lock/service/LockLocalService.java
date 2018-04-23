@@ -78,6 +78,7 @@ public interface LockLocalService extends BaseLocalService,
 	* @param lockId the primary key for the new lock
 	* @return the new lock
 	*/
+	@Transactional(enabled = false)
 	public Lock createLock(long lockId);
 
 	/**

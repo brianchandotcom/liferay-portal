@@ -81,6 +81,7 @@ public interface TicketLocalService extends BaseLocalService,
 	* @param ticketId the primary key for the new ticket
 	* @return the new ticket
 	*/
+	@Transactional(enabled = false)
 	public Ticket createTicket(long ticketId);
 
 	/**

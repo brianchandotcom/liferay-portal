@@ -58,6 +58,7 @@ import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
 import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -105,12 +106,13 @@ public abstract class DLFileVersionLocalServiceBaseImpl
 	}
 
 	/**
-	 * Creates a new document library file version with the primary key. Does not add the document library file version to the database.
-	 *
-	 * @param fileVersionId the primary key for the new document library file version
-	 * @return the new document library file version
-	 */
+	* Creates a new document library file version with the primary key. Does not add the document library file version to the database.
+	*
+	* @param fileVersionId the primary key for the new document library file version
+	* @return the new document library file version
+	*/
 	@Override
+	@Transactional(enabled = false)
 	public DLFileVersion createDLFileVersion(long fileVersionId) {
 		return dlFileVersionPersistence.create(fileVersionId);
 	}

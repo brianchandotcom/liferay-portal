@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
 import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.kernel.service.persistence.ClassNamePersistence;
 import com.liferay.portal.kernel.service.persistence.UserPersistence;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
@@ -92,12 +93,13 @@ public abstract class MeetupsRegistrationLocalServiceBaseImpl
 	}
 
 	/**
-	 * Creates a new meetups registration with the primary key. Does not add the meetups registration to the database.
-	 *
-	 * @param meetupsRegistrationId the primary key for the new meetups registration
-	 * @return the new meetups registration
-	 */
+	* Creates a new meetups registration with the primary key. Does not add the meetups registration to the database.
+	*
+	* @param meetupsRegistrationId the primary key for the new meetups registration
+	* @return the new meetups registration
+	*/
 	@Override
+	@Transactional(enabled = false)
 	public MeetupsRegistration createMeetupsRegistration(
 		long meetupsRegistrationId) {
 		return meetupsRegistrationPersistence.create(meetupsRegistrationId);

@@ -84,6 +84,7 @@ public interface SystemEventLocalService extends BaseLocalService,
 	* @param systemEventId the primary key for the new system event
 	* @return the new system event
 	*/
+	@Transactional(enabled = false)
 	public SystemEvent createSystemEvent(long systemEventId);
 
 	/**

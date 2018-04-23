@@ -77,6 +77,7 @@ public interface OrgLaborLocalService extends BaseLocalService,
 	* @param orgLaborId the primary key for the new org labor
 	* @return the new org labor
 	*/
+	@Transactional(enabled = false)
 	public OrgLabor createOrgLabor(long orgLaborId);
 
 	/**

@@ -103,6 +103,7 @@ public interface MDRRuleLocalService extends BaseLocalService,
 	* @param ruleId the primary key for the new mdr rule
 	* @return the new mdr rule
 	*/
+	@Transactional(enabled = false)
 	public MDRRule createMDRRule(long ruleId);
 
 	/**

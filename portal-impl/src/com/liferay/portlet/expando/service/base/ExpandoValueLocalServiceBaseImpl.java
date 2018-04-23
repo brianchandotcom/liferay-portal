@@ -45,6 +45,7 @@ import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.kernel.service.persistence.ClassNamePersistence;
 import com.liferay.portal.kernel.service.persistence.UserFinder;
 import com.liferay.portal.kernel.service.persistence.UserPersistence;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 
@@ -91,12 +92,13 @@ public abstract class ExpandoValueLocalServiceBaseImpl
 	}
 
 	/**
-	 * Creates a new expando value with the primary key. Does not add the expando value to the database.
-	 *
-	 * @param valueId the primary key for the new expando value
-	 * @return the new expando value
-	 */
+	* Creates a new expando value with the primary key. Does not add the expando value to the database.
+	*
+	* @param valueId the primary key for the new expando value
+	* @return the new expando value
+	*/
 	@Override
+	@Transactional(enabled = false)
 	public ExpandoValue createExpandoValue(long valueId) {
 		return expandoValuePersistence.create(valueId);
 	}

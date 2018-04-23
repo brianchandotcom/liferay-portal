@@ -46,6 +46,7 @@ import com.liferay.portal.kernel.service.persistence.LayoutSetBranchPersistence;
 import com.liferay.portal.kernel.service.persistence.LayoutSetPersistence;
 import com.liferay.portal.kernel.service.persistence.PluginSettingPersistence;
 import com.liferay.portal.kernel.service.persistence.VirtualHostPersistence;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 
@@ -91,12 +92,13 @@ public abstract class LayoutSetLocalServiceBaseImpl extends BaseLocalServiceImpl
 	}
 
 	/**
-	 * Creates a new layout set with the primary key. Does not add the layout set to the database.
-	 *
-	 * @param layoutSetId the primary key for the new layout set
-	 * @return the new layout set
-	 */
+	* Creates a new layout set with the primary key. Does not add the layout set to the database.
+	*
+	* @param layoutSetId the primary key for the new layout set
+	* @return the new layout set
+	*/
 	@Override
+	@Transactional(enabled = false)
 	public LayoutSet createLayoutSet(long layoutSetId) {
 		return layoutSetPersistence.create(layoutSetId);
 	}

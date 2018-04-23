@@ -64,6 +64,7 @@ import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.kernel.service.persistence.GroupPersistence;
 import com.liferay.portal.kernel.service.persistence.UserPersistence;
 import com.liferay.portal.kernel.service.persistence.WorkflowInstanceLinkPersistence;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -116,12 +117,13 @@ public abstract class MBThreadLocalServiceBaseImpl extends BaseLocalServiceImpl
 	}
 
 	/**
-	 * Creates a new message boards thread with the primary key. Does not add the message boards thread to the database.
-	 *
-	 * @param threadId the primary key for the new message boards thread
-	 * @return the new message boards thread
-	 */
+	* Creates a new message boards thread with the primary key. Does not add the message boards thread to the database.
+	*
+	* @param threadId the primary key for the new message boards thread
+	* @return the new message boards thread
+	*/
 	@Override
+	@Transactional(enabled = false)
 	public MBThread createMBThread(long threadId) {
 		return mbThreadPersistence.create(threadId);
 	}

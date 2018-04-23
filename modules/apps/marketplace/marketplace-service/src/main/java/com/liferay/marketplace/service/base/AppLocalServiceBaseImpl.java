@@ -49,6 +49,7 @@ import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
 import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.kernel.service.persistence.ClassNamePersistence;
 import com.liferay.portal.kernel.service.persistence.UserPersistence;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
@@ -95,12 +96,13 @@ public abstract class AppLocalServiceBaseImpl extends BaseLocalServiceImpl
 	}
 
 	/**
-	 * Creates a new app with the primary key. Does not add the app to the database.
-	 *
-	 * @param appId the primary key for the new app
-	 * @return the new app
-	 */
+	* Creates a new app with the primary key. Does not add the app to the database.
+	*
+	* @param appId the primary key for the new app
+	* @return the new app
+	*/
 	@Override
+	@Transactional(enabled = false)
 	public App createApp(long appId) {
 		return appPersistence.create(appId);
 	}

@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
 import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 
@@ -86,12 +87,13 @@ public abstract class AnnouncementsFlagLocalServiceBaseImpl
 	}
 
 	/**
-	 * Creates a new announcements flag with the primary key. Does not add the announcements flag to the database.
-	 *
-	 * @param flagId the primary key for the new announcements flag
-	 * @return the new announcements flag
-	 */
+	* Creates a new announcements flag with the primary key. Does not add the announcements flag to the database.
+	*
+	* @param flagId the primary key for the new announcements flag
+	* @return the new announcements flag
+	*/
 	@Override
+	@Transactional(enabled = false)
 	public AnnouncementsFlag createAnnouncementsFlag(long flagId) {
 		return announcementsFlagPersistence.create(flagId);
 	}

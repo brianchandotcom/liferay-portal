@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
 import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.kernel.service.persistence.UserPersistence;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
@@ -88,12 +89,13 @@ public abstract class SiteNavigationMenuItemLocalServiceBaseImpl
 	}
 
 	/**
-	 * Creates a new site navigation menu item with the primary key. Does not add the site navigation menu item to the database.
-	 *
-	 * @param siteNavigationMenuItemId the primary key for the new site navigation menu item
-	 * @return the new site navigation menu item
-	 */
+	* Creates a new site navigation menu item with the primary key. Does not add the site navigation menu item to the database.
+	*
+	* @param siteNavigationMenuItemId the primary key for the new site navigation menu item
+	* @return the new site navigation menu item
+	*/
 	@Override
+	@Transactional(enabled = false)
 	public SiteNavigationMenuItem createSiteNavigationMenuItem(
 		long siteNavigationMenuItemId) {
 		return siteNavigationMenuItemPersistence.create(siteNavigationMenuItemId);

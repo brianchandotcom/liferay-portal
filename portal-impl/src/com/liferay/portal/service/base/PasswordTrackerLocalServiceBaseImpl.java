@@ -42,6 +42,7 @@ import com.liferay.portal.kernel.service.persistence.PasswordPolicyPersistence;
 import com.liferay.portal.kernel.service.persistence.PasswordTrackerPersistence;
 import com.liferay.portal.kernel.service.persistence.UserFinder;
 import com.liferay.portal.kernel.service.persistence.UserPersistence;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 
@@ -88,12 +89,13 @@ public abstract class PasswordTrackerLocalServiceBaseImpl
 	}
 
 	/**
-	 * Creates a new password tracker with the primary key. Does not add the password tracker to the database.
-	 *
-	 * @param passwordTrackerId the primary key for the new password tracker
-	 * @return the new password tracker
-	 */
+	* Creates a new password tracker with the primary key. Does not add the password tracker to the database.
+	*
+	* @param passwordTrackerId the primary key for the new password tracker
+	* @return the new password tracker
+	*/
 	@Override
+	@Transactional(enabled = false)
 	public PasswordTracker createPasswordTracker(long passwordTrackerId) {
 		return passwordTrackerPersistence.create(passwordTrackerId);
 	}

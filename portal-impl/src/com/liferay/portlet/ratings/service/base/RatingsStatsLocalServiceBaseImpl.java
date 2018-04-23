@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.kernel.service.persistence.ClassNamePersistence;
 import com.liferay.portal.kernel.service.persistence.UserFinder;
 import com.liferay.portal.kernel.service.persistence.UserPersistence;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 
@@ -91,12 +92,13 @@ public abstract class RatingsStatsLocalServiceBaseImpl
 	}
 
 	/**
-	 * Creates a new ratings stats with the primary key. Does not add the ratings stats to the database.
-	 *
-	 * @param statsId the primary key for the new ratings stats
-	 * @return the new ratings stats
-	 */
+	* Creates a new ratings stats with the primary key. Does not add the ratings stats to the database.
+	*
+	* @param statsId the primary key for the new ratings stats
+	* @return the new ratings stats
+	*/
 	@Override
+	@Transactional(enabled = false)
 	public RatingsStats createRatingsStats(long statsId) {
 		return ratingsStatsPersistence.create(statsId);
 	}

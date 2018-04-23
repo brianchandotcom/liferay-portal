@@ -90,6 +90,7 @@ public interface MBThreadLocalService extends BaseLocalService,
 	* @param threadId the primary key for the new message boards thread
 	* @return the new message boards thread
 	*/
+	@Transactional(enabled = false)
 	public MBThread createMBThread(long threadId);
 
 	/**

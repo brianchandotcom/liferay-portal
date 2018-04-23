@@ -43,23 +43,34 @@ NotificationsUtil.populateResults(themeDisplay.getUserId(), actionRequired, navi
 PortletURL navigationURL = PortletURLUtil.clone(currentURLObj, renderResponse);
 
 navigationURL.setParameter(SearchContainer.DEFAULT_CUR_PARAM, "0");
+
+int notificationsCount = UserNotificationEventLocalServiceUtil.getDeliveredUserNotificationEventsCount(themeDisplay.getUserId(), UserNotificationDeliveryConstants.TYPE_WEBSITE, true, false);
+int requestsCount = UserNotificationEventLocalServiceUtil.getArchivedUserNotificationEventsCount(themeDisplay.getUserId(), UserNotificationDeliveryConstants.TYPE_WEBSITE, true, false);
 %>
 
-<aui:nav-bar markupView="lexicon">
-	<aui:nav cssClass="navbar-nav">
-		<liferay-portlet:renderURL var="viewNotificationsURL">
-			<liferay-portlet:param name="actionRequired" value="<%= StringPool.FALSE %>" />
-		</liferay-portlet:renderURL>
+<clay:navigation-bar
+	inverted="<%= true %>"
+	items="<%=
+		new JSPNavigationItemList(pageContext) {
+			{
+				add(
+					navigationItem -> {
+						navigationItem.setActive(!actionRequired);
+						navigationItem.setHref(renderResponse.createRenderURL(), "actionRequired", StringPool.FALSE);
+						navigationItem.setLabel(LanguageUtil.format(request, "notifications-list-x", String.valueOf(notificationsCount)));
+					});
 
-		<aui:nav-item href="<%= viewNotificationsURL %>" label='<%= LanguageUtil.format(request, "notifications-list-x", String.valueOf(UserNotificationEventLocalServiceUtil.getDeliveredUserNotificationEventsCount(themeDisplay.getUserId(), UserNotificationDeliveryConstants.TYPE_WEBSITE, true, false))) %>' selected="<%= !actionRequired %>" />
+				add(
+					navigationItem -> {
 
-		<liferay-portlet:renderURL var="viewRequestsURL">
-			<liferay-portlet:param name="actionRequired" value="<%= StringPool.TRUE %>" />
-		</liferay-portlet:renderURL>
-
-		<aui:nav-item href="<%= viewRequestsURL %>" label='<%= LanguageUtil.format(request, "requests-list-x", String.valueOf(UserNotificationEventLocalServiceUtil.getArchivedUserNotificationEventsCount(themeDisplay.getUserId(), UserNotificationDeliveryConstants.TYPE_WEBSITE, true, false))) %>' selected="<%= actionRequired %>" />
-	</aui:nav>
-</aui:nav-bar>
+						navigationItem.setActive(actionRequired);
+						navigationItem.setHref(renderResponse.createRenderURL(), "actionRequired", StringPool.TRUE);
+						navigationItem.setLabel(LanguageUtil.format(request, "requests-list-x", String.valueOf(requestsCount)));
+					});
+			}
+		}
+	%>"
+/>
 
 <liferay-frontend:management-bar
 	disabled="<%= NotificationsUtil.getAllNotificationsCount(themeDisplay.getUserId(), actionRequired) == 0 %>"

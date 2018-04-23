@@ -53,9 +53,10 @@ public class ImageEditableElementParser implements EditableElementParser {
 				"content.Language", getClass());
 
 			throw new FragmentEntryContentException(
-				LanguageUtil.get(
+				LanguageUtil.format(
 					resourceBundle,
-					"each-editable-image-element-must-contain-an-img-tag"));
+					"each-editable-image-element-must-contain-an-img-tag",
+					new Object[] {"<em>", "</em>"}, false));
 		}
 	}
 

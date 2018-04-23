@@ -89,6 +89,8 @@ public class SendmailHook implements Hook {
 		addUserCmd = StringUtil.replace(
 			addUserCmd, "%1%", String.valueOf(userId));
 
+		String[] arguments = StringUtil.split(addUserCmd, StringPool.SPACE);
+
 		try {
 			Future<?> future = ProcessUtil.execute(
 				new LoggingOutputProcessor(
@@ -100,7 +102,7 @@ public class SendmailHook implements Hook {
 							_log.info(line);
 						}
 					}),
-				addUserCmd);
+				arguments);
 
 			future.get();
 		}

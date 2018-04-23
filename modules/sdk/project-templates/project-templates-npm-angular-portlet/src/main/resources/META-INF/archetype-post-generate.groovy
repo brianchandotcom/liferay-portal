@@ -12,7 +12,9 @@
  * details.
  */
 
-import java.nio.file.*
+import java.nio.file.Files
+import java.nio.file.Path
+import java.nio.file.Paths
 
 Path projectPath = Paths.get(request.outputDirectory, request.artifactId)
 
@@ -23,9 +25,16 @@ Files.deleteIfExists(buildGradlePath)
 String liferayVersion = request.properties.get('liferayVersion')
 
 if (liferayVersion != '7.1') {
-	String className = properties.get('className')
+	String className = request.properties.get('className')
+	String packageString = request.properties.get('package')
 
-	Path resourcePath = Paths.get('src', 'main', 'java', 'constants', className + 'WebKeys.java')
+	String[] packageList = packageString.split("\\.")
+
+	List<String> pathList = ['src', 'main', 'java']
+	pathList.addAll(packageList)
+	pathList.add('constants')
+	pathList.add(className + 'WebKeys.java')
+	Path resourcePath = Paths.get("", pathList.toArray() as String[])
 
 	Path resourceFullPath = projectPath.resolve(resourcePath)
 

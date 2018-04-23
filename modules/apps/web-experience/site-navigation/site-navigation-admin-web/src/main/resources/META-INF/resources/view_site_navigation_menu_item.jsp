@@ -43,6 +43,7 @@ request.setAttribute("edit_site_navigation_menu.jsp-siteNavigationMenuItemId", s
 			actionJsp="/site_navigation_menu_item_action.jsp"
 			actionJspServletContext="<%= application %>"
 			text="<%= title %>"
+			url="javascript:;"
 		>
 			<div class="drag-icon">
 				<liferay-ui:icon

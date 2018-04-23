@@ -19,6 +19,9 @@ package com.liferay.portal.kernel.module.framework;
  */
 public interface ModuleServiceLifecycle {
 
+	public String COMPONENT_SCAN_READY =
+		"(module.service.lifecycle=component.scan.ready)";
+
 	public String DATABASE_INITIALIZED =
 		"(module.service.lifecycle=database.initialized)";
 

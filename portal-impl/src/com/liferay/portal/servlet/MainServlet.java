@@ -143,8 +143,11 @@ public class MainServlet extends ActionServlet {
 			_log.debug("Destroy plugins");
 		}
 
-		_moduleServiceLifecycleServiceRegistration.unregister();
+		_portalInitializedModuleServiceLifecycleServiceRegistration.
+			unregister();
 		_servletContextServiceRegistration.unregister();
+		_componentScanReadyModuleServiceLifecycleServiceRegistration.
+			unregister();
 
 		PortalLifecycleUtil.flushDestroys();
 
@@ -1341,9 +1344,10 @@ public class MainServlet extends ActionServlet {
 		properties.put("service.vendor", ReleaseInfo.getVendor());
 		properties.put("service.version", ReleaseInfo.getVersion());
 
-		_moduleServiceLifecycleServiceRegistration = registry.registerService(
-			ModuleServiceLifecycle.class, new ModuleServiceLifecycle() {},
-			properties);
+		_portalInitializedModuleServiceLifecycleServiceRegistration =
+			registry.registerService(
+				ModuleServiceLifecycle.class, new ModuleServiceLifecycle() {},
+				properties);
 
 		ServletContext servletContext = getServletContext();
 
@@ -1367,6 +1371,17 @@ public class MainServlet extends ActionServlet {
 
 		_servletContextServiceRegistration = registry.registerService(
 			ServletContext.class, servletContext, properties);
+
+		properties = new HashMap<>();
+
+		properties.put("module.service.lifecycle", "component.scan.ready");
+		properties.put("service.vendor", ReleaseInfo.getVendor());
+		properties.put("service.version", ReleaseInfo.getVersion());
+
+		_componentScanReadyModuleServiceLifecycleServiceRegistration =
+			registry.registerService(
+				ModuleServiceLifecycle.class, new ModuleServiceLifecycle() {},
+				properties);
 	}
 
 	protected void sendError(
@@ -1411,7 +1426,9 @@ public class MainServlet extends ActionServlet {
 			"_inactiveRequestHandler", false);
 
 	private ServiceRegistration<ModuleServiceLifecycle>
-		_moduleServiceLifecycleServiceRegistration;
+		_componentScanReadyModuleServiceLifecycleServiceRegistration;
+	private ServiceRegistration<ModuleServiceLifecycle>
+		_portalInitializedModuleServiceLifecycleServiceRegistration;
 	private ServiceRegistration<ServletContext>
 		_servletContextServiceRegistration;
 

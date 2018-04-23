@@ -1,4 +1,0 @@
-Bundle-Name: Liferay Shopping Web
-Bundle-SymbolicName: com.liferay.shopping.web
-Bundle-Version: 2.0.0
-Web-ContextPath: /shopping-web

@@ -96,10 +96,10 @@ renderResponse.setTitle(title);
 </aui:form>
 
 <%
-Layout renderLayout = LayoutLocalServiceUtil.fetchFirstLayout(themeDisplay.getScopeGroupId(), false, 0);
+Layout renderLayout = LayoutLocalServiceUtil.fetchFirstLayout(themeDisplay.getScopeGroupId(), false, LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
 
 if (renderLayout == null) {
-	renderLayout = LayoutLocalServiceUtil.fetchFirstLayout(themeDisplay.getScopeGroupId(), true, 0);
+	renderLayout = LayoutLocalServiceUtil.fetchFirstLayout(themeDisplay.getScopeGroupId(), true, LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
 
 	if (renderLayout == null) {
 		renderLayout = themeDisplay.getLayout();

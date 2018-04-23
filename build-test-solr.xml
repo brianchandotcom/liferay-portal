@@ -309,7 +309,7 @@ schema=schema.xml</echo>
 	<target name="start-solr">
 		<unzip-solr />
 
-		<prepare-solr-configurations/>
+		<prepare-solr-configurations />
 
 		<delete-elasticseach-osgi-bundle />
 

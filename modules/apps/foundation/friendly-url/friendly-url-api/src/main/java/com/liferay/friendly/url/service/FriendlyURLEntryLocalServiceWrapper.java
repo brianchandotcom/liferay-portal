@@ -271,6 +271,13 @@ public class FriendlyURLEntryLocalServiceWrapper
 
 	@Override
 	public com.liferay.friendly.url.model.FriendlyURLEntryLocalization fetchFriendlyURLEntryLocalization(
+		long groupId, long classNameId, java.lang.String urlTitle) {
+		return _friendlyURLEntryLocalService.fetchFriendlyURLEntryLocalization(groupId,
+			classNameId, urlTitle);
+	}
+
+	@Override
+	public com.liferay.friendly.url.model.FriendlyURLEntryLocalization fetchFriendlyURLEntryLocalization(
 		long friendlyURLEntryId, java.lang.String languageId) {
 		return _friendlyURLEntryLocalService.fetchFriendlyURLEntryLocalization(friendlyURLEntryId,
 			languageId);

@@ -256,6 +256,13 @@ public class FriendlyURLEntryLocalServiceUtil {
 	}
 
 	public static com.liferay.friendly.url.model.FriendlyURLEntryLocalization fetchFriendlyURLEntryLocalization(
+		long groupId, long classNameId, java.lang.String urlTitle) {
+		return getService()
+				   .fetchFriendlyURLEntryLocalization(groupId, classNameId,
+			urlTitle);
+	}
+
+	public static com.liferay.friendly.url.model.FriendlyURLEntryLocalization fetchFriendlyURLEntryLocalization(
 		long friendlyURLEntryId, java.lang.String languageId) {
 		return getService()
 				   .fetchFriendlyURLEntryLocalization(friendlyURLEntryId,

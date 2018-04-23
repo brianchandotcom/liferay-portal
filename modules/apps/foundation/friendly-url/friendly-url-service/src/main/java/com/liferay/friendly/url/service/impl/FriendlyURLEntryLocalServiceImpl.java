@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.model.ModelHintsUtil;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
+import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.spring.extender.service.ServiceReference;
@@ -286,6 +287,14 @@ public class FriendlyURLEntryLocalServiceImpl
 	}
 
 	@Override
+	public FriendlyURLEntryLocalization fetchFriendlyURLEntryLocalization(
+		long groupId, long classNameId, String urlTitle) {
+
+		return friendlyURLEntryLocalizationPersistence.fetchByG_C_U(
+			groupId, classNameId, urlTitle);
+	}
+
+	@Override
 	public List<FriendlyURLEntry> getFriendlyURLEntries(
 		long groupId, long classNameId, long classPK) {
 
@@ -319,8 +328,8 @@ public class FriendlyURLEntryLocalServiceImpl
 	public String getUniqueUrlTitle(
 		long groupId, long classNameId, long classPK, String urlTitle) {
 
-		String normalizedUrlTitle = FriendlyURLNormalizerUtil.normalize(
-			urlTitle);
+		String normalizedUrlTitle =
+			FriendlyURLNormalizerUtil.normalizeWithEncoding(urlTitle);
 
 		int maxLength = ModelHintsUtil.getMaxLength(
 			FriendlyURLEntryLocalization.class.getName(), "urlTitle");
@@ -346,7 +355,7 @@ public class FriendlyURLEntryLocalServiceImpl
 				Math.min(
 					maxLength - suffix.length(), normalizedUrlTitle.length()));
 
-			curUrlTitle = FriendlyURLNormalizerUtil.normalize(prefix + suffix);
+			curUrlTitle = prefix + suffix;
 		}
 
 		return curUrlTitle;
@@ -509,14 +518,14 @@ public class FriendlyURLEntryLocalServiceImpl
 		long classPK, Map<String, String> urlTitleMap) {
 
 		for (Map.Entry<String, String> entry : urlTitleMap.entrySet()) {
-			String urlTitle = entry.getValue();
+			String urlTitle = HttpUtil.decodePath(entry.getValue());
 
 			if (Validator.isNull(urlTitle)) {
 				continue;
 			}
 
-			String normalizedUrlTitle = FriendlyURLNormalizerUtil.normalize(
-				urlTitle);
+			String normalizedUrlTitle =
+				FriendlyURLNormalizerUtil.normalizeWithEncoding(urlTitle);
 
 			FriendlyURLEntryLocalization existingFriendlyURLEntryLocalization =
 				friendlyURLEntryLocalizationPersistence.fetchByG_C_U(

@@ -133,13 +133,16 @@ public class EditCPDefinitionLinkMVCActionCommand extends BaseMVCActionCommand {
 			ActionRequest actionRequest)
 		throws Exception {
 
+		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			CPDefinitionLink.class.getName(), actionRequest);
+
 		long cpDefinitionLinkId = ParamUtil.getLong(
 			actionRequest, "cpDefinitionLinkId");
 
 		double priority = ParamUtil.getDouble(actionRequest, "priority");
 
 		return _cpDefinitionLinkService.updateCPDefinitionLink(
-			cpDefinitionLinkId, priority);
+			cpDefinitionLinkId, priority, serviceContext);
 	}
 
 	@Reference

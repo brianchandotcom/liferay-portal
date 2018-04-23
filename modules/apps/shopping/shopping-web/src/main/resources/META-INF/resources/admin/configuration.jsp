@@ -267,28 +267,30 @@ shoppingGroupServiceOverriddenConfiguration = ConfigurationProviderUtil.getConfi
 
 <aui:script>
 	function <portlet:namespace />saveConfiguration() {
-		var form = AUI.$(document.<portlet:namespace />fm);
+		var form = document.querySelector('#<portlet:namespace />fm');
 
-		form.fm('preferences--ccTypes--').val(Liferay.Util.listSelect(form.fm('current_cc_types')));
+		if (form) {
+			form.querySelector('#<portlet:namespace />preferences--ccTypes--').value = Liferay.Util.listSelect(form.querySelector('#<portlet:namespace />current_cc_types'));
 
-		<portlet:namespace />saveEmails();
+			<portlet:namespace />saveEmails();
 
-		submitForm(form);
+			submitForm(form);
+		}
 	}
 
 	function <portlet:namespace />saveEmails() {
-		var form = AUI.$(document.<portlet:namespace />fm);
-
 		var emailOrderConfirmation = window['<portlet:namespace />emailOrderConfirmation'];
 
+		var form = document.querySelector('#<portlet:namespace />fm');
+
 		if (emailOrderConfirmation) {
-			form.fm('preferences--emailOrderConfirmationBody--').val(emailOrderConfirmation.getHTML());
+			form.querySelector('#<portlet:namespace />preferences--emailOrderConfirmationBody--').value = emailOrderConfirmation.getHTML();
 		}
 
 		var emailOrderShipping = window['<portlet:namespace />emailOrderShipping'];
 
 		if (emailOrderShipping) {
-			form.fm('preferences--emailOrderShippingBody--').val(emailOrderShipping.getHTML());
+			form.querySelector('#<portlet:namespace />preferences--emailOrderShippingBody--').value = emailOrderShipping.getHTML();
 		}
 	}
 </aui:script>

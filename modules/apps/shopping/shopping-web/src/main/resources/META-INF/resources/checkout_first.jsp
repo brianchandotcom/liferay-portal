@@ -255,34 +255,39 @@ List addresses = AddressServiceUtil.getAddresses(Contact.class.getName(), contac
 
 <aui:script>
 	function <portlet:namespace />updateAddress(addressId, type) {
-		var form = AUI.$(document.<portlet:namespace />fm);
+		var form = document.querySelector('#<portlet:namespace />fm');
 
-		<%
-		for (int i = 0; addresses != null && i < addresses.size(); i++) {
-			Address address = (Address)addresses.get(i);
+		if (form) {
 
-			Region region = address.getRegion();
-			Country country = address.getCountry();
-		%>
+			<%
+			for (int i = 0; addresses != null && i < addresses.size(); i++) {
+				Address address = (Address)addresses.get(i);
 
-			if (addressId == '<%= address.getAddressId() %>') {
-				form.fm(type + 'Street').val('<%= HtmlUtil.escapeJS(address.getStreet1()) %>');
-				form.fm(type + 'City').val('<%= HtmlUtil.escapeJS(address.getCity()) %>');
+				Region region = address.getRegion();
+				Country country = address.getCountry();
+			%>
 
-				var stateSel = form.fm(type + 'StateSel');
-				var stateSelValue = '<%= HtmlUtil.escapeJS(region.getRegionCode()) %>';
+				if (addressId == '<%= address.getAddressId() %>') {
+					form.querySelector('#<portlet:namespace />' + type + 'Street').value = '<%= HtmlUtil.escapeJS(address.getStreet1()) %>';
 
-				if (stateSel.find('option[value="' + stateSelValue + '"]').length) {
-					stateSel.val(stateSelValue);
+					form.querySelector('#<portlet:namespace />' + type + 'City').value = '<%= HtmlUtil.escapeJS(address.getCity()) %>';
+
+					var stateSel = form.querySelector('#<portlet:namespace />' + type + 'StateSel');
+
+					var stateSelValue = '<%= HtmlUtil.escapeJS(region.getRegionCode()) %>';
+
+					if (form.querySelector('option[value="' + stateSelValue + '"]').length) {
+						form.querySelector('#' + type + 'StateSel').value = stateSelValue;
+					}
+
+					form.querySelector('#' + type + 'Zip').value = '<%= HtmlUtil.escapeJS(address.getZip()) %>';
+					form.querySelector('#' + type + 'Country').value = '<%= HtmlUtil.escapeJS(country.getName()) %>');
 				}
 
-				form.fm(type + 'Zip').val('<%= HtmlUtil.escapeJS(address.getZip()) %>');
-				form.fm(type + 'Country').val('<%= HtmlUtil.escapeJS(country.getName()) %>');
+			<%
 			}
+			%>
 
-		<%
 		}
-		%>
-
 	}
 </aui:script>

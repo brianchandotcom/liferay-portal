@@ -161,7 +161,8 @@ public class CommercePriceListIndexer extends BaseIndexer<CommercePriceList> {
 			commercePriceListUserSegmentEntryRels.stream();
 
 		long[] commerceUserSegmentEntryIds = stream.mapToLong(
-			l -> l.getCommerceUserSegmentEntryId()).toArray();
+			CommercePriceListUserSegmentEntryRel::getCommerceUserSegmentEntryId
+		).toArray();
 
 		document.addNumber(
 			"commerceUserSegmentEntryIds", commercePriceList.getPriority());

@@ -45,19 +45,29 @@ announcementsEntriesSearchContainer.setResults(AnnouncementsEntryLocalServiceUti
 List<AnnouncementsEntry> announcementsEntries = announcementsEntriesSearchContainer.getResults();
 %>
 
-<aui:nav-bar markupView="lexicon">
-	<aui:nav cssClass="navbar-nav">
-		<portlet:renderURL var="viewEntriesURL" />
+<clay:navigation-bar
+	inverted="<%= true %>"
+	items="<%=
+		new JSPNavigationItemList(pageContext) {
+			{
+				add(
+					navigationItem -> {
+						navigationItem.setActive(navigation.equals("announcements"));
+						navigationItem.setHref(renderResponse.createRenderURL());
+						navigationItem.setLabel(LanguageUtil.get(request, "announcements"));
+					});
 
-		<aui:nav-item href="<%= viewEntriesURL %>" label="announcements" selected='<%= navigation.equals("announcements") %>' />
+				add(
+					navigationItem -> {
+						navigationItem.setActive(navigation.equals("alerts"));
+						navigationItem.setHref(renderResponse.createRenderURL(), "navigation", "alerts");
+						navigationItem.setLabel(LanguageUtil.get(request, "alerts"));
+					});
 
-		<portlet:renderURL var="viewAlertsURL">
-			<portlet:param name="navigation" value="alerts" />
-		</portlet:renderURL>
-
-		<aui:nav-item href="<%= viewAlertsURL %>" label="alerts" selected='<%= navigation.equals("alerts") %>' />
-	</aui:nav>
-</aui:nav-bar>
+			}
+		}
+	%>"
+/>
 
 <liferay-frontend:management-bar
 	disabled="<%= announcementsEntries.isEmpty() %>"

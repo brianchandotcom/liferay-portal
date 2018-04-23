@@ -56,9 +56,13 @@
 		"liferay-jest-junit-reporter": "0.0.3",
 		"liferay-npm-bundler": "1.6.1",
 		"liferay-npm-bundler-preset-standard": "1.6.1",
-		"metal-tools-soy": "^6.0.0"
+		"metal-tools-soy": "^6.0.0",
+		"rimraf": "^2.6.2"
 	},
 	"jest": {
+		"moduleNameMapper": {
+			"(.*)\\.soy": "$1.soy.js"
+		},
 		"testMatch": [
 			"**/test/**/*.js"
 		],
@@ -70,11 +74,12 @@
 	"name": "frontend-taglib-clay",
 	"private": true,
 	"scripts": {
-		"build": "metalsoy --soyDeps 'node_modules/clay-+(button|checkbox|dropdown|icon|link|portal|radio|management-toolbar)/src/**/*.soy' && cross-env NODE_ENV=production babel --source-maps -d classes/META-INF/resources src/main/resources/META-INF/resources && liferay-npm-bundler",
+		"build": "metalsoy --soyDeps 'node_modules/clay-+(button|checkbox|dropdown|icon|link|portal|radio|management-toolbar)/src/**/*.soy' && cross-env NODE_ENV=production babel --source-maps -d classes/META-INF/resources src/main/resources/META-INF/resources && liferay-npm-bundler && npm run cleanSoy",
 		"checkFormat": "npm run csf",
+		"cleanSoy": "rimraf src/**/*.soy.js",
 		"csf": "csf src/**/*.es.js test/**/*.es.js",
 		"format": "npm run csf -- -i",
-		"test": "jest"
+		"test": "metalsoy --soyDeps 'node_modules/clay-+(button|checkbox|dropdown|icon|link|portal|radio|management-toolbar)/src/**/*.soy' && jest && npm run cleanSoy"
 	},
 	"version": "1.0.0"
 }

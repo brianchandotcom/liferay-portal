@@ -73,9 +73,7 @@ public class AssetEntryDocumentContributor implements DocumentContributor {
 				Field.EXPIRATION_DATE, assetEntry.getExpirationDate());
 		}
 		else {
-			document.addDate(
-				Field.EXPIRATION_DATE,
-				new Date(System.currentTimeMillis() + (Time.YEAR * 1000)));
+			document.addDate(Field.EXPIRATION_DATE, new Date(Long.MAX_VALUE));
 		}
 
 		if (!document.hasField(Field.MODIFIED_DATE)) {

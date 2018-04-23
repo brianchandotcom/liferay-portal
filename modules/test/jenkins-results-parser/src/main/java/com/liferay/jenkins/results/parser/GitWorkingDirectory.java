@@ -964,31 +964,19 @@ public class GitWorkingDirectory {
 	}
 
 	public List<Commit> log(int num, File file) {
-		List<Commit> commits = new ArrayList<>(num * 5);
+		List<Commit> commits = new ArrayList<>(num);
 
-		for (int i = 0; i < 5; i++) {
-			try {
-				String gitLog = _log(num, file, "%H %s");
+		String gitLog = _log(num, file, "%H %s");
 
-				gitLog = gitLog.replaceAll(
-					"Finished executing Bash commands.", "");
+		gitLog = gitLog.replaceAll("Finished executing Bash commands.", "");
 
-				String[] gitLogEntities = gitLog.split("\n");
+		String[] gitLogEntities = gitLog.split("\n");
 
-				for (String gitLogEntity : gitLogEntities) {
-					commits.add(getCommit(gitLogEntity));
-				}
-
-				return commits;
-			}
-			catch (RuntimeException re) {
-				re.printStackTrace();
-
-				JenkinsResultsParserUtil.sleep(1000);
-			}
+		for (String gitLogEntity : gitLogEntities) {
+			commits.add(getCommit(gitLogEntity));
 		}
 
-		throw new RuntimeException("Unable to run: git log");
+		return commits;
 	}
 
 	public boolean pushToRemote(boolean force, Branch remoteBranch) {
@@ -1318,7 +1306,7 @@ public class GitWorkingDirectory {
 	}
 
 	protected ExecutionResult executeBashCommands(
-		int maxRetries, long timeout, String... commands) {
+		int maxRetries, long retryDelay, long timeout, String... commands) {
 
 		Process process = null;
 
@@ -1341,8 +1329,12 @@ public class GitWorkingDirectory {
 						e);
 				}
 
-				System.out.println("Fetch attempt failed retrying... ");
+				System.out.println(
+					"Unable to execute bash commands retrying... ");
+
 				e.printStackTrace();
+
+				JenkinsResultsParserUtil.sleep(retryDelay);
 			}
 		}
 
@@ -1369,6 +1361,12 @@ public class GitWorkingDirectory {
 
 		return new ExecutionResult(
 			process.exitValue(), standardErr.trim(), standardOut.trim());
+	}
+
+	protected ExecutionResult executeBashCommands(
+		int maxRetries, long timeout, String... commands) {
+
+		return executeBashCommands(maxRetries, 1000, timeout, commands);
 	}
 
 	protected ExecutionResult executeBashCommands(String... commands) {
@@ -1729,7 +1727,8 @@ public class GitWorkingDirectory {
 			}
 		}
 
-		ExecutionResult result = executeBashCommands(sb.toString());
+		ExecutionResult result = executeBashCommands(
+			5, 1000, 30 * 1000, sb.toString());
 
 		if (result.getExitValue() != 0) {
 			throw new RuntimeException("Unable to run: git log");

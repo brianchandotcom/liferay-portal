@@ -22,6 +22,7 @@ import com.liferay.adaptive.media.image.html.AMImageHTMLTagFactory;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -48,6 +49,12 @@ public class AMBackwardsCompatibilityHtmlContentTransformer
 
 	@Override
 	protected FileEntry getFileEntry(Matcher matcher) throws PortalException {
+		if (StringUtil.containsIgnoreCase(
+				matcher.group(0), "data-fileEntryId")) {
+
+			return null;
+		}
+
 		if (matcher.group(4) != null) {
 			long groupId = Long.valueOf(matcher.group(1));
 
@@ -72,6 +79,10 @@ public class AMBackwardsCompatibilityHtmlContentTransformer
 	@Override
 	protected String getReplacement(String originalImgTag, FileEntry fileEntry)
 		throws PortalException {
+
+		if (fileEntry == null) {
+			return originalImgTag;
+		}
 
 		return _amImageHTMLTagFactory.create(originalImgTag, fileEntry);
 	}

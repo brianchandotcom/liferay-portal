@@ -96,7 +96,15 @@ renderResponse.setTitle(title);
 </aui:form>
 
 <%
-Layout renderLayout = LayoutLocalServiceUtil.fetchFirstLayout(themeDisplay.getScopeGroupId(), false, 0);
+Layout renderLayout = LayoutLocalServiceUtil.fetchFirstLayout(themeDisplay.getScopeGroupId(), false, LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
+
+if (renderLayout == null) {
+	renderLayout = LayoutLocalServiceUtil.fetchFirstLayout(themeDisplay.getScopeGroupId(), true, LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
+
+	if (renderLayout == null) {
+		renderLayout = themeDisplay.getLayout();
+	}
+}
 %>
 
 <liferay-portlet:renderURL plid="<%= renderLayout.getPlid() %>" var="renderFragmentEntryURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">

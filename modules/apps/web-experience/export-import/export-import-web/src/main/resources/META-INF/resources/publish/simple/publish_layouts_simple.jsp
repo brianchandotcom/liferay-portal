@@ -105,18 +105,27 @@ Map<String, String[]> parameterMap = (Map<String, String[]>)settingsMap.get("par
 							<ul class="portlet-list">
 
 								<%
-								LayoutSet selLayoutSet = LayoutSetLocalServiceUtil.getLayoutSet(groupDisplayContextHelper.getGroupId(), privateLayout);
+								int layoutsCount = 0;
+
+								long layoutSetBranchId = ParamUtil.getLong(request, "layoutSetBranchId");
+
+								if (layoutSetBranchId > 0) {
+									List<LayoutRevision> approvedLayoutRevisions = LayoutRevisionLocalServiceUtil.getLayoutRevisions(layoutSetBranchId, WorkflowConstants.STATUS_APPROVED);
+									List<LayoutRevision> pendingLayoutRevisions = LayoutRevisionLocalServiceUtil.getLayoutRevisions(layoutSetBranchId, WorkflowConstants.STATUS_PENDING);
+
+									layoutsCount = approvedLayoutRevisions.size() + pendingLayoutRevisions.size();
+								}
+								else {
+									LayoutSet selLayoutSet = LayoutSetLocalServiceUtil.getLayoutSet(groupDisplayContextHelper.getGroupId(), privateLayout);
+
+									layoutsCount = selLayoutSet.getPageCount();
+								}
 								%>
 
 								<liferay-util:buffer
 									var="badgeHTML"
 								>
 									<span class="badge badge-info">
-
-										<%
-										int layoutsCount = selLayoutSet.getPageCount();
-										%>
-
 										<c:choose>
 											<c:when test="<%= layoutsCount == 0 %>">
 												<liferay-ui:message key="none" />

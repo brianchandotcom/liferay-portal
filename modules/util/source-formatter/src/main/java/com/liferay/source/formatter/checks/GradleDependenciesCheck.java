@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.tools.ToolsUtil;
+import com.liferay.source.formatter.checks.util.GradleSourceUtil;
 import com.liferay.source.formatter.checks.util.SourceUtil;
 
 import java.io.File;
@@ -117,7 +118,7 @@ public class GradleDependenciesCheck extends BaseFileCheck {
 		boolean checkScope = false;
 
 		if (isModulesApp(absolutePath, false) && _hasBNDFile(absolutePath) &&
-			!_isSpringBootExecutable(content)) {
+			!GradleSourceUtil.isSpringBootExecutable(content)) {
 
 			checkScope = true;
 		}
@@ -214,38 +215,6 @@ public class GradleDependenciesCheck extends BaseFileCheck {
 		return file.exists();
 	}
 
-	private boolean _isSpringBootExecutable(String content) {
-		Matcher matcher = _springBootPattern.matcher(content);
-
-		if (!matcher.find()) {
-			return false;
-		}
-
-		int x = matcher.start();
-
-		while (true) {
-			x = content.indexOf("}", x + 1);
-
-			if (x == -1) {
-				return false;
-			}
-
-			String s = content.substring(matcher.start(), x + 1);
-
-			int level = getLevel(s, "{", "}");
-
-			if (level == 0) {
-				if (s.matches("(?is).*executable\\s*=\\s*true.*") &&
-					s.matches("(?is).*mainClass\\s*=.*")) {
-
-					return true;
-				}
-
-				return false;
-			}
-		}
-	}
-
 	private boolean _isTestUtilModule(String absolutePath) {
 		int x = absolutePath.lastIndexOf(StringPool.SLASH);
 
@@ -266,8 +235,6 @@ public class GradleDependenciesCheck extends BaseFileCheck {
 		"(^[^\\s]+)\\s+\"([^:]+?):([^:]+?):([^\"]+?)\"(.*?)", Pattern.DOTALL);
 	private final Pattern _incorrectWhitespacePattern = Pattern.compile(
 		":[^ \n]");
-	private final Pattern _springBootPattern = Pattern.compile(
-		"\\s*springBoot\\s*\\{", Pattern.CASE_INSENSITIVE);
 
 	private class GradleDependencyComparator
 		implements Comparator<String>, Serializable {

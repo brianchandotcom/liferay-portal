@@ -14,8 +14,12 @@
 
 package com.liferay.jenkins.results.parser;
 
+import java.io.IOException;
+
 import java.util.HashMap;
 import java.util.Map;
+
+import org.json.JSONObject;
 
 /**
  * @author Michael Hashimoto
@@ -23,19 +27,43 @@ import java.util.Map;
 public class CommitFactory {
 
 	public static Commit newCommit(
-		String gitHubUserName, String message, String repositoryName,
-		String sha) {
-
-		Commit.Type type = Commit.Type.MANUAL;
-
-		if (message.startsWith("archive:ignore")) {
-			type = Commit.Type.LEGACY_ARCHIVE;
-		}
+		String gitHubUserName, String repositoryName, String sha) {
 
 		String commitURL = _getCommitURL(gitHubUserName, repositoryName, sha);
 
 		if (_commits.containsKey(commitURL)) {
 			return _commits.get(commitURL);
+		}
+
+		try {
+			JSONObject jsonObject = JenkinsResultsParserUtil.toJSONObject(
+				commitURL);
+
+			JSONObject commitJSONObject = jsonObject.getJSONObject("commit");
+
+			String message = commitJSONObject.getString("message");
+
+			return newCommit(gitHubUserName, message, repositoryName, sha);
+		}
+		catch (IOException ioe) {
+			throw new RuntimeException("Unable to get commit details", ioe);
+		}
+	}
+
+	public static Commit newCommit(
+		String gitHubUserName, String message, String repositoryName,
+		String sha) {
+
+		String commitURL = _getCommitURL(gitHubUserName, repositoryName, sha);
+
+		if (_commits.containsKey(commitURL)) {
+			return _commits.get(commitURL);
+		}
+
+		Commit.Type type = Commit.Type.MANUAL;
+
+		if (message.startsWith("archive:ignore")) {
+			type = Commit.Type.LEGACY_ARCHIVE;
 		}
 
 		Commit commit = new BaseCommit(

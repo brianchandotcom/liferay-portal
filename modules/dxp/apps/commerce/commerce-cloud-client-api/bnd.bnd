@@ -1,0 +1,11 @@
+Bundle-Name: Liferay Commerce Cloud Client API
+Bundle-SymbolicName: com.liferay.commerce.cloud.client.api
+Bundle-Version: 1.0.0
+Export-Package:\
+	com.liferay.commerce.cloud.client.configuration,\
+	com.liferay.commerce.cloud.client.constants,\
+	com.liferay.commerce.cloud.client.exception,\
+	com.liferay.commerce.cloud.client.model,\
+	com.liferay.commerce.cloud.client.service,\
+	com.liferay.commerce.cloud.client.service.persistence,\
+	com.liferay.commerce.cloud.client.util

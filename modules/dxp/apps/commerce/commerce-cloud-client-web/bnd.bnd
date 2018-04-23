@@ -1,0 +1,5 @@
+Bundle-Name: Liferay Commerce Cloud Client Web
+Bundle-SymbolicName: com.liferay.commerce.cloud.client.web
+Bundle-Version: 1.0.0
+Web-ContextPath: /commerce-cloud-client-web
+-dsannotations-options: inherit

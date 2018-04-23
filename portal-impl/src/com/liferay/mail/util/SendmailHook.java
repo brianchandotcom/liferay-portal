@@ -137,6 +137,8 @@ public class SendmailHook implements Hook {
 		deleteUserCmd = StringUtil.replace(
 			deleteUserCmd, "%1%", String.valueOf(userId));
 
+		String[] arguments = StringUtil.split(deleteUserCmd, StringPool.SPACE);
+
 		try {
 			Future<?> future = ProcessUtil.execute(
 				new LoggingOutputProcessor(
@@ -148,7 +150,7 @@ public class SendmailHook implements Hook {
 							_log.info(line);
 						}
 					}),
-				deleteUserCmd);
+				arguments);
 
 			future.get();
 		}

@@ -3746,7 +3746,7 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 
 							<stop-app-server
 								app.server.bundle.index="@{app.server.bundle.index}"
-								count="${app.server.explicit.stop.count}"
+								app.server.explicit.stop.count="${app.server.explicit.stop.count}"
 							/>
 						</then>
 					</if>

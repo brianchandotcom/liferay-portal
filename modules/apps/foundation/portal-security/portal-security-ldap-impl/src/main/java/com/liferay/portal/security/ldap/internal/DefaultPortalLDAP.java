@@ -154,11 +154,7 @@ public class DefaultPortalLDAP implements PortalLDAP {
 		}
 		catch (Exception e) {
 			if (_log.isWarnEnabled()) {
-				_log.warn("Unable to bind to the LDAP server");
-			}
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(e, e);
+				_log.warn("Unable to bind to the LDAP server", e);
 			}
 		}
 

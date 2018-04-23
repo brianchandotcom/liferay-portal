@@ -193,8 +193,8 @@ public class LDAPAuth implements Authenticator {
 				ldapAuthResult.setResponseControl(responseControls);
 			}
 			catch (Exception e) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(
+				if (_log.isWarnEnabled()) {
+					_log.warn(
 						StringBundler.concat(
 							"Failed to bind to the LDAP server with userDN ",
 							userDN, " and password ", password),

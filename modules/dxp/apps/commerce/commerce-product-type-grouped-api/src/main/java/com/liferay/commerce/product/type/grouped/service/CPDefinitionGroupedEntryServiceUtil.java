@@ -16,7 +16,8 @@ package com.liferay.commerce.product.type.grouped.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.osgi.util.ServiceTrackerFactory;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
 
 import org.osgi.util.tracker.ServiceTracker;
 
@@ -99,6 +100,17 @@ public class CPDefinitionGroupedEntryServiceUtil {
 		return _serviceTracker.getService();
 	}
 
-	private static ServiceTracker<CPDefinitionGroupedEntryService, CPDefinitionGroupedEntryService> _serviceTracker =
-		ServiceTrackerFactory.open(CPDefinitionGroupedEntryService.class);
+	private static ServiceTracker<CPDefinitionGroupedEntryService, CPDefinitionGroupedEntryService> _serviceTracker;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(CPDefinitionGroupedEntryService.class);
+
+		ServiceTracker<CPDefinitionGroupedEntryService, CPDefinitionGroupedEntryService> serviceTracker =
+			new ServiceTracker<CPDefinitionGroupedEntryService, CPDefinitionGroupedEntryService>(bundle.getBundleContext(),
+				CPDefinitionGroupedEntryService.class, null);
+
+		serviceTracker.open();
+
+		_serviceTracker = serviceTracker;
+	}
 }

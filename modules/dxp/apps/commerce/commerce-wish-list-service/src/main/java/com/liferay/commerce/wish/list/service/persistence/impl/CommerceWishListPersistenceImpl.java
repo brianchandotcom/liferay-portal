@@ -3754,7 +3754,7 @@ public class CommerceWishListPersistenceImpl extends BasePersistenceImpl<Commerc
 				for (CommerceWishList commerceWishList : list) {
 					if ((groupId != commerceWishList.getGroupId()) ||
 							(userId != commerceWishList.getUserId()) ||
-							(defaultWishList != commerceWishList.getDefaultWishList())) {
+							(defaultWishList != commerceWishList.isDefaultWishList())) {
 						list = null;
 
 						break;
@@ -4567,7 +4567,7 @@ public class CommerceWishListPersistenceImpl extends BasePersistenceImpl<Commerc
 			args = new Object[] {
 					commerceWishListModelImpl.getGroupId(),
 					commerceWishListModelImpl.getUserId(),
-					commerceWishListModelImpl.getDefaultWishList()
+					commerceWishListModelImpl.isDefaultWishList()
 				};
 
 			finderCache.removeResult(FINDER_PATH_COUNT_BY_G_U_D, args);

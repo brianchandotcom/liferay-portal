@@ -201,14 +201,14 @@ public class CPDefinitionVirtualSettingPersistenceTest {
 			newCPDefinitionVirtualSetting.getDuration());
 		Assert.assertEquals(existingCPDefinitionVirtualSetting.getMaxUsages(),
 			newCPDefinitionVirtualSetting.getMaxUsages());
-		Assert.assertEquals(existingCPDefinitionVirtualSetting.getUseSample(),
-			newCPDefinitionVirtualSetting.getUseSample());
+		Assert.assertEquals(existingCPDefinitionVirtualSetting.isUseSample(),
+			newCPDefinitionVirtualSetting.isUseSample());
 		Assert.assertEquals(existingCPDefinitionVirtualSetting.getSampleFileEntryId(),
 			newCPDefinitionVirtualSetting.getSampleFileEntryId());
 		Assert.assertEquals(existingCPDefinitionVirtualSetting.getSampleUrl(),
 			newCPDefinitionVirtualSetting.getSampleUrl());
-		Assert.assertEquals(existingCPDefinitionVirtualSetting.getTermsOfUseRequired(),
-			newCPDefinitionVirtualSetting.getTermsOfUseRequired());
+		Assert.assertEquals(existingCPDefinitionVirtualSetting.isTermsOfUseRequired(),
+			newCPDefinitionVirtualSetting.isTermsOfUseRequired());
 		Assert.assertEquals(existingCPDefinitionVirtualSetting.getTermsOfUseContent(),
 			newCPDefinitionVirtualSetting.getTermsOfUseContent());
 		Assert.assertEquals(existingCPDefinitionVirtualSetting.getTermsOfUseJournalArticleResourcePrimKey(),

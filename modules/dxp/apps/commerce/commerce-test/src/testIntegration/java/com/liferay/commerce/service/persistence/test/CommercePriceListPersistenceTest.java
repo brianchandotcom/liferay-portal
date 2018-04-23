@@ -239,14 +239,6 @@ public class CommercePriceListPersistenceTest {
 	}
 
 	@Test
-	public void testCountByParentCommercePriceListId()
-		throws Exception {
-		_persistence.countByParentCommercePriceListId(RandomTestUtil.nextLong());
-
-		_persistence.countByParentCommercePriceListId(0L);
-	}
-
-	@Test
 	public void testCountByGroupId() throws Exception {
 		_persistence.countByGroupId(RandomTestUtil.nextLong());
 
@@ -258,6 +250,14 @@ public class CommercePriceListPersistenceTest {
 		_persistence.countByCompanyId(RandomTestUtil.nextLong());
 
 		_persistence.countByCompanyId(0L);
+	}
+
+	@Test
+	public void testCountByParentCommercePriceListId()
+		throws Exception {
+		_persistence.countByParentCommercePriceListId(RandomTestUtil.nextLong());
+
+		_persistence.countByParentCommercePriceListId(0L);
 	}
 
 	@Test

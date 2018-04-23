@@ -18,11 +18,12 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.commerce.product.type.virtual.model.CPDefinitionVirtualSetting;
 
-import com.liferay.osgi.util.ServiceTrackerFactory;
-
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
 
 import org.osgi.util.tracker.ServiceTracker;
 
@@ -743,6 +744,17 @@ public class CPDefinitionVirtualSettingUtil {
 		return _serviceTracker.getService();
 	}
 
-	private static ServiceTracker<CPDefinitionVirtualSettingPersistence, CPDefinitionVirtualSettingPersistence> _serviceTracker =
-		ServiceTrackerFactory.open(CPDefinitionVirtualSettingPersistence.class);
+	private static ServiceTracker<CPDefinitionVirtualSettingPersistence, CPDefinitionVirtualSettingPersistence> _serviceTracker;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(CPDefinitionVirtualSettingPersistence.class);
+
+		ServiceTracker<CPDefinitionVirtualSettingPersistence, CPDefinitionVirtualSettingPersistence> serviceTracker =
+			new ServiceTracker<CPDefinitionVirtualSettingPersistence, CPDefinitionVirtualSettingPersistence>(bundle.getBundleContext(),
+				CPDefinitionVirtualSettingPersistence.class, null);
+
+		serviceTracker.open();
+
+		_serviceTracker = serviceTracker;
+	}
 }

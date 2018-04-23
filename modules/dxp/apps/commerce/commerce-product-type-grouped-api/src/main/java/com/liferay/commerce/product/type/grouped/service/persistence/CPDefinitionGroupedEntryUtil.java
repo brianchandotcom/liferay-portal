@@ -18,11 +18,12 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.commerce.product.type.grouped.model.CPDefinitionGroupedEntry;
 
-import com.liferay.osgi.util.ServiceTrackerFactory;
-
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
 
 import org.osgi.util.tracker.ServiceTracker;
 
@@ -917,6 +918,17 @@ public class CPDefinitionGroupedEntryUtil {
 		return _serviceTracker.getService();
 	}
 
-	private static ServiceTracker<CPDefinitionGroupedEntryPersistence, CPDefinitionGroupedEntryPersistence> _serviceTracker =
-		ServiceTrackerFactory.open(CPDefinitionGroupedEntryPersistence.class);
+	private static ServiceTracker<CPDefinitionGroupedEntryPersistence, CPDefinitionGroupedEntryPersistence> _serviceTracker;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(CPDefinitionGroupedEntryPersistence.class);
+
+		ServiceTracker<CPDefinitionGroupedEntryPersistence, CPDefinitionGroupedEntryPersistence> serviceTracker =
+			new ServiceTracker<CPDefinitionGroupedEntryPersistence, CPDefinitionGroupedEntryPersistence>(bundle.getBundleContext(),
+				CPDefinitionGroupedEntryPersistence.class, null);
+
+		serviceTracker.open();
+
+		_serviceTracker = serviceTracker;
+	}
 }

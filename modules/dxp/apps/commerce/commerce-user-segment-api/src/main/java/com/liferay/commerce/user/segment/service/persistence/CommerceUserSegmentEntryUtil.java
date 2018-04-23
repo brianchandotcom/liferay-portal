@@ -351,6 +351,69 @@ public class CommerceUserSegmentEntryUtil {
 	}
 
 	/**
+	* Returns the commerce user segment entry where groupId = &#63; and key = &#63; or throws a {@link NoSuchUserSegmentEntryException} if it could not be found.
+	*
+	* @param groupId the group ID
+	* @param key the key
+	* @return the matching commerce user segment entry
+	* @throws NoSuchUserSegmentEntryException if a matching commerce user segment entry could not be found
+	*/
+	public static CommerceUserSegmentEntry findByG_K(long groupId,
+		java.lang.String key)
+		throws com.liferay.commerce.user.segment.exception.NoSuchUserSegmentEntryException {
+		return getPersistence().findByG_K(groupId, key);
+	}
+
+	/**
+	* Returns the commerce user segment entry where groupId = &#63; and key = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	*
+	* @param groupId the group ID
+	* @param key the key
+	* @return the matching commerce user segment entry, or <code>null</code> if a matching commerce user segment entry could not be found
+	*/
+	public static CommerceUserSegmentEntry fetchByG_K(long groupId,
+		java.lang.String key) {
+		return getPersistence().fetchByG_K(groupId, key);
+	}
+
+	/**
+	* Returns the commerce user segment entry where groupId = &#63; and key = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	*
+	* @param groupId the group ID
+	* @param key the key
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the matching commerce user segment entry, or <code>null</code> if a matching commerce user segment entry could not be found
+	*/
+	public static CommerceUserSegmentEntry fetchByG_K(long groupId,
+		java.lang.String key, boolean retrieveFromCache) {
+		return getPersistence().fetchByG_K(groupId, key, retrieveFromCache);
+	}
+
+	/**
+	* Removes the commerce user segment entry where groupId = &#63; and key = &#63; from the database.
+	*
+	* @param groupId the group ID
+	* @param key the key
+	* @return the commerce user segment entry that was removed
+	*/
+	public static CommerceUserSegmentEntry removeByG_K(long groupId,
+		java.lang.String key)
+		throws com.liferay.commerce.user.segment.exception.NoSuchUserSegmentEntryException {
+		return getPersistence().removeByG_K(groupId, key);
+	}
+
+	/**
+	* Returns the number of commerce user segment entries where groupId = &#63; and key = &#63;.
+	*
+	* @param groupId the group ID
+	* @param key the key
+	* @return the number of matching commerce user segment entries
+	*/
+	public static int countByG_K(long groupId, java.lang.String key) {
+		return getPersistence().countByG_K(groupId, key);
+	}
+
+	/**
 	* Returns all the commerce user segment entries where groupId = &#63; and active = &#63;.
 	*
 	* @param groupId the group ID
@@ -609,69 +672,6 @@ public class CommerceUserSegmentEntryUtil {
 	*/
 	public static int filterCountByG_A(long groupId, boolean active) {
 		return getPersistence().filterCountByG_A(groupId, active);
-	}
-
-	/**
-	* Returns the commerce user segment entry where groupId = &#63; and key = &#63; or throws a {@link NoSuchUserSegmentEntryException} if it could not be found.
-	*
-	* @param groupId the group ID
-	* @param key the key
-	* @return the matching commerce user segment entry
-	* @throws NoSuchUserSegmentEntryException if a matching commerce user segment entry could not be found
-	*/
-	public static CommerceUserSegmentEntry findByG_K(long groupId,
-		java.lang.String key)
-		throws com.liferay.commerce.user.segment.exception.NoSuchUserSegmentEntryException {
-		return getPersistence().findByG_K(groupId, key);
-	}
-
-	/**
-	* Returns the commerce user segment entry where groupId = &#63; and key = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	*
-	* @param groupId the group ID
-	* @param key the key
-	* @return the matching commerce user segment entry, or <code>null</code> if a matching commerce user segment entry could not be found
-	*/
-	public static CommerceUserSegmentEntry fetchByG_K(long groupId,
-		java.lang.String key) {
-		return getPersistence().fetchByG_K(groupId, key);
-	}
-
-	/**
-	* Returns the commerce user segment entry where groupId = &#63; and key = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
-	*
-	* @param groupId the group ID
-	* @param key the key
-	* @param retrieveFromCache whether to retrieve from the finder cache
-	* @return the matching commerce user segment entry, or <code>null</code> if a matching commerce user segment entry could not be found
-	*/
-	public static CommerceUserSegmentEntry fetchByG_K(long groupId,
-		java.lang.String key, boolean retrieveFromCache) {
-		return getPersistence().fetchByG_K(groupId, key, retrieveFromCache);
-	}
-
-	/**
-	* Removes the commerce user segment entry where groupId = &#63; and key = &#63; from the database.
-	*
-	* @param groupId the group ID
-	* @param key the key
-	* @return the commerce user segment entry that was removed
-	*/
-	public static CommerceUserSegmentEntry removeByG_K(long groupId,
-		java.lang.String key)
-		throws com.liferay.commerce.user.segment.exception.NoSuchUserSegmentEntryException {
-		return getPersistence().removeByG_K(groupId, key);
-	}
-
-	/**
-	* Returns the number of commerce user segment entries where groupId = &#63; and key = &#63;.
-	*
-	* @param groupId the group ID
-	* @param key the key
-	* @return the number of matching commerce user segment entries
-	*/
-	public static int countByG_K(long groupId, java.lang.String key) {
-		return getPersistence().countByG_K(groupId, key);
 	}
 
 	/**

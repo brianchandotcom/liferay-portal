@@ -77,10 +77,10 @@ public class CPDefinitionVirtualSettingWrapper
 		attributes.put("activationStatus", getActivationStatus());
 		attributes.put("duration", getDuration());
 		attributes.put("maxUsages", getMaxUsages());
-		attributes.put("useSample", getUseSample());
+		attributes.put("useSample", isUseSample());
 		attributes.put("sampleFileEntryId", getSampleFileEntryId());
 		attributes.put("sampleUrl", getSampleUrl());
-		attributes.put("termsOfUseRequired", getTermsOfUseRequired());
+		attributes.put("termsOfUseRequired", isTermsOfUseRequired());
 		attributes.put("termsOfUseContent", getTermsOfUseContent());
 		attributes.put("termsOfUseJournalArticleResourcePrimKey",
 			getTermsOfUseJournalArticleResourcePrimKey());

@@ -16,7 +16,8 @@ package com.liferay.commerce.product.type.virtual.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.osgi.util.ServiceTrackerFactory;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
 
 import org.osgi.util.tracker.ServiceTracker;
 
@@ -375,6 +376,17 @@ public class CPDefinitionVirtualSettingLocalServiceUtil {
 		return _serviceTracker.getService();
 	}
 
-	private static ServiceTracker<CPDefinitionVirtualSettingLocalService, CPDefinitionVirtualSettingLocalService> _serviceTracker =
-		ServiceTrackerFactory.open(CPDefinitionVirtualSettingLocalService.class);
+	private static ServiceTracker<CPDefinitionVirtualSettingLocalService, CPDefinitionVirtualSettingLocalService> _serviceTracker;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(CPDefinitionVirtualSettingLocalService.class);
+
+		ServiceTracker<CPDefinitionVirtualSettingLocalService, CPDefinitionVirtualSettingLocalService> serviceTracker =
+			new ServiceTracker<CPDefinitionVirtualSettingLocalService, CPDefinitionVirtualSettingLocalService>(bundle.getBundleContext(),
+				CPDefinitionVirtualSettingLocalService.class, null);
+
+		serviceTracker.open();
+
+		_serviceTracker = serviceTracker;
+	}
 }

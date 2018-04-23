@@ -219,7 +219,7 @@ public class CommerceWishListModelImpl extends BaseModelImpl<CommerceWishList>
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("name", getName());
-		attributes.put("defaultWishList", getDefaultWishList());
+		attributes.put("defaultWishList", isDefaultWishList());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -557,7 +557,7 @@ public class CommerceWishListModelImpl extends BaseModelImpl<CommerceWishList>
 		commerceWishListImpl.setCreateDate(getCreateDate());
 		commerceWishListImpl.setModifiedDate(getModifiedDate());
 		commerceWishListImpl.setName(getName());
-		commerceWishListImpl.setDefaultWishList(getDefaultWishList());
+		commerceWishListImpl.setDefaultWishList(isDefaultWishList());
 
 		commerceWishListImpl.resetOriginalValues();
 
@@ -697,7 +697,7 @@ public class CommerceWishListModelImpl extends BaseModelImpl<CommerceWishList>
 			commerceWishListCacheModel.name = null;
 		}
 
-		commerceWishListCacheModel.defaultWishList = getDefaultWishList();
+		commerceWishListCacheModel.defaultWishList = isDefaultWishList();
 
 		return commerceWishListCacheModel;
 	}
@@ -725,7 +725,7 @@ public class CommerceWishListModelImpl extends BaseModelImpl<CommerceWishList>
 		sb.append(", name=");
 		sb.append(getName());
 		sb.append(", defaultWishList=");
-		sb.append(getDefaultWishList());
+		sb.append(isDefaultWishList());
 		sb.append("}");
 
 		return sb.toString();
@@ -777,7 +777,7 @@ public class CommerceWishListModelImpl extends BaseModelImpl<CommerceWishList>
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>defaultWishList</column-name><column-value><![CDATA[");
-		sb.append(getDefaultWishList());
+		sb.append(isDefaultWishList());
 		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");

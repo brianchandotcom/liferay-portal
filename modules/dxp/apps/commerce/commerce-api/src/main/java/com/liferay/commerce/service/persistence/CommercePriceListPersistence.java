@@ -374,52 +374,6 @@ public interface CommercePriceListPersistence extends BasePersistence<CommercePr
 	public int countByUuid_C(java.lang.String uuid, long companyId);
 
 	/**
-	* Returns the commerce price list where parentCommercePriceListId = &#63; or throws a {@link NoSuchPriceListException} if it could not be found.
-	*
-	* @param parentCommercePriceListId the parent commerce price list ID
-	* @return the matching commerce price list
-	* @throws NoSuchPriceListException if a matching commerce price list could not be found
-	*/
-	public CommercePriceList findByParentCommercePriceListId(
-		long parentCommercePriceListId) throws NoSuchPriceListException;
-
-	/**
-	* Returns the commerce price list where parentCommercePriceListId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	*
-	* @param parentCommercePriceListId the parent commerce price list ID
-	* @return the matching commerce price list, or <code>null</code> if a matching commerce price list could not be found
-	*/
-	public CommercePriceList fetchByParentCommercePriceListId(
-		long parentCommercePriceListId);
-
-	/**
-	* Returns the commerce price list where parentCommercePriceListId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
-	*
-	* @param parentCommercePriceListId the parent commerce price list ID
-	* @param retrieveFromCache whether to retrieve from the finder cache
-	* @return the matching commerce price list, or <code>null</code> if a matching commerce price list could not be found
-	*/
-	public CommercePriceList fetchByParentCommercePriceListId(
-		long parentCommercePriceListId, boolean retrieveFromCache);
-
-	/**
-	* Removes the commerce price list where parentCommercePriceListId = &#63; from the database.
-	*
-	* @param parentCommercePriceListId the parent commerce price list ID
-	* @return the commerce price list that was removed
-	*/
-	public CommercePriceList removeByParentCommercePriceListId(
-		long parentCommercePriceListId) throws NoSuchPriceListException;
-
-	/**
-	* Returns the number of commerce price lists where parentCommercePriceListId = &#63;.
-	*
-	* @param parentCommercePriceListId the parent commerce price list ID
-	* @return the number of matching commerce price lists
-	*/
-	public int countByParentCommercePriceListId(long parentCommercePriceListId);
-
-	/**
 	* Returns all the commerce price lists where groupId = &#63;.
 	*
 	* @param groupId the group ID
@@ -682,6 +636,52 @@ public interface CommercePriceListPersistence extends BasePersistence<CommercePr
 	* @return the number of matching commerce price lists
 	*/
 	public int countByCompanyId(long companyId);
+
+	/**
+	* Returns the commerce price list where parentCommercePriceListId = &#63; or throws a {@link NoSuchPriceListException} if it could not be found.
+	*
+	* @param parentCommercePriceListId the parent commerce price list ID
+	* @return the matching commerce price list
+	* @throws NoSuchPriceListException if a matching commerce price list could not be found
+	*/
+	public CommercePriceList findByParentCommercePriceListId(
+		long parentCommercePriceListId) throws NoSuchPriceListException;
+
+	/**
+	* Returns the commerce price list where parentCommercePriceListId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	*
+	* @param parentCommercePriceListId the parent commerce price list ID
+	* @return the matching commerce price list, or <code>null</code> if a matching commerce price list could not be found
+	*/
+	public CommercePriceList fetchByParentCommercePriceListId(
+		long parentCommercePriceListId);
+
+	/**
+	* Returns the commerce price list where parentCommercePriceListId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	*
+	* @param parentCommercePriceListId the parent commerce price list ID
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the matching commerce price list, or <code>null</code> if a matching commerce price list could not be found
+	*/
+	public CommercePriceList fetchByParentCommercePriceListId(
+		long parentCommercePriceListId, boolean retrieveFromCache);
+
+	/**
+	* Removes the commerce price list where parentCommercePriceListId = &#63; from the database.
+	*
+	* @param parentCommercePriceListId the parent commerce price list ID
+	* @return the commerce price list that was removed
+	*/
+	public CommercePriceList removeByParentCommercePriceListId(
+		long parentCommercePriceListId) throws NoSuchPriceListException;
+
+	/**
+	* Returns the number of commerce price lists where parentCommercePriceListId = &#63;.
+	*
+	* @param parentCommercePriceListId the parent commerce price list ID
+	* @return the number of matching commerce price lists
+	*/
+	public int countByParentCommercePriceListId(long parentCommercePriceListId);
 
 	/**
 	* Returns all the commerce price lists where commerceCurrencyId = &#63;.

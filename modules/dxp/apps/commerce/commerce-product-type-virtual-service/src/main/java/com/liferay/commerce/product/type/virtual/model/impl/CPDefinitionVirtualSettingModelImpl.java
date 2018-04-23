@@ -264,10 +264,10 @@ public class CPDefinitionVirtualSettingModelImpl extends BaseModelImpl<CPDefinit
 		attributes.put("activationStatus", getActivationStatus());
 		attributes.put("duration", getDuration());
 		attributes.put("maxUsages", getMaxUsages());
-		attributes.put("useSample", getUseSample());
+		attributes.put("useSample", isUseSample());
 		attributes.put("sampleFileEntryId", getSampleFileEntryId());
 		attributes.put("sampleUrl", getSampleUrl());
-		attributes.put("termsOfUseRequired", getTermsOfUseRequired());
+		attributes.put("termsOfUseRequired", isTermsOfUseRequired());
 		attributes.put("termsOfUseContent", getTermsOfUseContent());
 		attributes.put("termsOfUseJournalArticleResourcePrimKey",
 			getTermsOfUseJournalArticleResourcePrimKey());
@@ -957,10 +957,10 @@ public class CPDefinitionVirtualSettingModelImpl extends BaseModelImpl<CPDefinit
 		cpDefinitionVirtualSettingImpl.setActivationStatus(getActivationStatus());
 		cpDefinitionVirtualSettingImpl.setDuration(getDuration());
 		cpDefinitionVirtualSettingImpl.setMaxUsages(getMaxUsages());
-		cpDefinitionVirtualSettingImpl.setUseSample(getUseSample());
+		cpDefinitionVirtualSettingImpl.setUseSample(isUseSample());
 		cpDefinitionVirtualSettingImpl.setSampleFileEntryId(getSampleFileEntryId());
 		cpDefinitionVirtualSettingImpl.setSampleUrl(getSampleUrl());
-		cpDefinitionVirtualSettingImpl.setTermsOfUseRequired(getTermsOfUseRequired());
+		cpDefinitionVirtualSettingImpl.setTermsOfUseRequired(isTermsOfUseRequired());
 		cpDefinitionVirtualSettingImpl.setTermsOfUseContent(getTermsOfUseContent());
 		cpDefinitionVirtualSettingImpl.setTermsOfUseJournalArticleResourcePrimKey(getTermsOfUseJournalArticleResourcePrimKey());
 		cpDefinitionVirtualSettingImpl.setLastPublishDate(getLastPublishDate());
@@ -1116,7 +1116,7 @@ public class CPDefinitionVirtualSettingModelImpl extends BaseModelImpl<CPDefinit
 
 		cpDefinitionVirtualSettingCacheModel.maxUsages = getMaxUsages();
 
-		cpDefinitionVirtualSettingCacheModel.useSample = getUseSample();
+		cpDefinitionVirtualSettingCacheModel.useSample = isUseSample();
 
 		cpDefinitionVirtualSettingCacheModel.sampleFileEntryId = getSampleFileEntryId();
 
@@ -1128,7 +1128,7 @@ public class CPDefinitionVirtualSettingModelImpl extends BaseModelImpl<CPDefinit
 			cpDefinitionVirtualSettingCacheModel.sampleUrl = null;
 		}
 
-		cpDefinitionVirtualSettingCacheModel.termsOfUseRequired = getTermsOfUseRequired();
+		cpDefinitionVirtualSettingCacheModel.termsOfUseRequired = isTermsOfUseRequired();
 
 		cpDefinitionVirtualSettingCacheModel.termsOfUseContent = getTermsOfUseContent();
 
@@ -1185,13 +1185,13 @@ public class CPDefinitionVirtualSettingModelImpl extends BaseModelImpl<CPDefinit
 		sb.append(", maxUsages=");
 		sb.append(getMaxUsages());
 		sb.append(", useSample=");
-		sb.append(getUseSample());
+		sb.append(isUseSample());
 		sb.append(", sampleFileEntryId=");
 		sb.append(getSampleFileEntryId());
 		sb.append(", sampleUrl=");
 		sb.append(getSampleUrl());
 		sb.append(", termsOfUseRequired=");
-		sb.append(getTermsOfUseRequired());
+		sb.append(isTermsOfUseRequired());
 		sb.append(", termsOfUseContent=");
 		sb.append(getTermsOfUseContent());
 		sb.append(", termsOfUseJournalArticleResourcePrimKey=");
@@ -1270,7 +1270,7 @@ public class CPDefinitionVirtualSettingModelImpl extends BaseModelImpl<CPDefinit
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>useSample</column-name><column-value><![CDATA[");
-		sb.append(getUseSample());
+		sb.append(isUseSample());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>sampleFileEntryId</column-name><column-value><![CDATA[");
@@ -1282,7 +1282,7 @@ public class CPDefinitionVirtualSettingModelImpl extends BaseModelImpl<CPDefinit
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>termsOfUseRequired</column-name><column-value><![CDATA[");
-		sb.append(getTermsOfUseRequired());
+		sb.append(isTermsOfUseRequired());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>termsOfUseContent</column-name><column-value><![CDATA[");

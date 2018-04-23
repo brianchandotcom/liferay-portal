@@ -166,8 +166,8 @@ public class CommerceWishListPersistenceTest {
 			Time.getShortTimestamp(newCommerceWishList.getModifiedDate()));
 		Assert.assertEquals(existingCommerceWishList.getName(),
 			newCommerceWishList.getName());
-		Assert.assertEquals(existingCommerceWishList.getDefaultWishList(),
-			newCommerceWishList.getDefaultWishList());
+		Assert.assertEquals(existingCommerceWishList.isDefaultWishList(),
+			newCommerceWishList.isDefaultWishList());
 	}
 
 	@Test

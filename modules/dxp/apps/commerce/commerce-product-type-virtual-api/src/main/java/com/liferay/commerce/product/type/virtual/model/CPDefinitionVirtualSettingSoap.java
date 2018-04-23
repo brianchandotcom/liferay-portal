@@ -49,10 +49,10 @@ public class CPDefinitionVirtualSettingSoap implements Serializable {
 		soapModel.setActivationStatus(model.getActivationStatus());
 		soapModel.setDuration(model.getDuration());
 		soapModel.setMaxUsages(model.getMaxUsages());
-		soapModel.setUseSample(model.getUseSample());
+		soapModel.setUseSample(model.isUseSample());
 		soapModel.setSampleFileEntryId(model.getSampleFileEntryId());
 		soapModel.setSampleUrl(model.getSampleUrl());
-		soapModel.setTermsOfUseRequired(model.getTermsOfUseRequired());
+		soapModel.setTermsOfUseRequired(model.isTermsOfUseRequired());
 		soapModel.setTermsOfUseContent(model.getTermsOfUseContent());
 		soapModel.setTermsOfUseJournalArticleResourcePrimKey(model.getTermsOfUseJournalArticleResourcePrimKey());
 		soapModel.setLastPublishDate(model.getLastPublishDate());

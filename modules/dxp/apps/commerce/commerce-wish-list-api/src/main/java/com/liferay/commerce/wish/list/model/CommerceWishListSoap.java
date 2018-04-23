@@ -43,7 +43,7 @@ public class CommerceWishListSoap implements Serializable {
 		soapModel.setCreateDate(model.getCreateDate());
 		soapModel.setModifiedDate(model.getModifiedDate());
 		soapModel.setName(model.getName());
-		soapModel.setDefaultWishList(model.getDefaultWishList());
+		soapModel.setDefaultWishList(model.isDefaultWishList());
 
 		return soapModel;
 	}

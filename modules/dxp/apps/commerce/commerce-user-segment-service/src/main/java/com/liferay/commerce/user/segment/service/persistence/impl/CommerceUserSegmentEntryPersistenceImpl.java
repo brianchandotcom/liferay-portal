@@ -970,6 +970,263 @@ public class CommerceUserSegmentEntryPersistenceImpl extends BasePersistenceImpl
 	}
 
 	private static final String _FINDER_COLUMN_GROUPID_GROUPID_2 = "commerceUserSegmentEntry.groupId = ?";
+	public static final FinderPath FINDER_PATH_FETCH_BY_G_K = new FinderPath(CommerceUserSegmentEntryModelImpl.ENTITY_CACHE_ENABLED,
+			CommerceUserSegmentEntryModelImpl.FINDER_CACHE_ENABLED,
+			CommerceUserSegmentEntryImpl.class, FINDER_CLASS_NAME_ENTITY,
+			"fetchByG_K",
+			new String[] { Long.class.getName(), String.class.getName() },
+			CommerceUserSegmentEntryModelImpl.GROUPID_COLUMN_BITMASK |
+			CommerceUserSegmentEntryModelImpl.KEY_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_G_K = new FinderPath(CommerceUserSegmentEntryModelImpl.ENTITY_CACHE_ENABLED,
+			CommerceUserSegmentEntryModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_K",
+			new String[] { Long.class.getName(), String.class.getName() });
+
+	/**
+	 * Returns the commerce user segment entry where groupId = &#63; and key = &#63; or throws a {@link NoSuchUserSegmentEntryException} if it could not be found.
+	 *
+	 * @param groupId the group ID
+	 * @param key the key
+	 * @return the matching commerce user segment entry
+	 * @throws NoSuchUserSegmentEntryException if a matching commerce user segment entry could not be found
+	 */
+	@Override
+	public CommerceUserSegmentEntry findByG_K(long groupId, String key)
+		throws NoSuchUserSegmentEntryException {
+		CommerceUserSegmentEntry commerceUserSegmentEntry = fetchByG_K(groupId,
+				key);
+
+		if (commerceUserSegmentEntry == null) {
+			StringBundler msg = new StringBundler(6);
+
+			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+			msg.append("groupId=");
+			msg.append(groupId);
+
+			msg.append(", key=");
+			msg.append(key);
+
+			msg.append("}");
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(msg.toString());
+			}
+
+			throw new NoSuchUserSegmentEntryException(msg.toString());
+		}
+
+		return commerceUserSegmentEntry;
+	}
+
+	/**
+	 * Returns the commerce user segment entry where groupId = &#63; and key = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param groupId the group ID
+	 * @param key the key
+	 * @return the matching commerce user segment entry, or <code>null</code> if a matching commerce user segment entry could not be found
+	 */
+	@Override
+	public CommerceUserSegmentEntry fetchByG_K(long groupId, String key) {
+		return fetchByG_K(groupId, key, true);
+	}
+
+	/**
+	 * Returns the commerce user segment entry where groupId = &#63; and key = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param groupId the group ID
+	 * @param key the key
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the matching commerce user segment entry, or <code>null</code> if a matching commerce user segment entry could not be found
+	 */
+	@Override
+	public CommerceUserSegmentEntry fetchByG_K(long groupId, String key,
+		boolean retrieveFromCache) {
+		Object[] finderArgs = new Object[] { groupId, key };
+
+		Object result = null;
+
+		if (retrieveFromCache) {
+			result = finderCache.getResult(FINDER_PATH_FETCH_BY_G_K,
+					finderArgs, this);
+		}
+
+		if (result instanceof CommerceUserSegmentEntry) {
+			CommerceUserSegmentEntry commerceUserSegmentEntry = (CommerceUserSegmentEntry)result;
+
+			if ((groupId != commerceUserSegmentEntry.getGroupId()) ||
+					!Objects.equals(key, commerceUserSegmentEntry.getKey())) {
+				result = null;
+			}
+		}
+
+		if (result == null) {
+			StringBundler query = new StringBundler(4);
+
+			query.append(_SQL_SELECT_COMMERCEUSERSEGMENTENTRY_WHERE);
+
+			query.append(_FINDER_COLUMN_G_K_GROUPID_2);
+
+			boolean bindKey = false;
+
+			if (key == null) {
+				query.append(_FINDER_COLUMN_G_K_KEY_1);
+			}
+			else if (key.equals("")) {
+				query.append(_FINDER_COLUMN_G_K_KEY_3);
+			}
+			else {
+				bindKey = true;
+
+				query.append(_FINDER_COLUMN_G_K_KEY_2);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(groupId);
+
+				if (bindKey) {
+					qPos.add(key);
+				}
+
+				List<CommerceUserSegmentEntry> list = q.list();
+
+				if (list.isEmpty()) {
+					finderCache.putResult(FINDER_PATH_FETCH_BY_G_K, finderArgs,
+						list);
+				}
+				else {
+					CommerceUserSegmentEntry commerceUserSegmentEntry = list.get(0);
+
+					result = commerceUserSegmentEntry;
+
+					cacheResult(commerceUserSegmentEntry);
+
+					if ((commerceUserSegmentEntry.getGroupId() != groupId) ||
+							(commerceUserSegmentEntry.getKey() == null) ||
+							!commerceUserSegmentEntry.getKey().equals(key)) {
+						finderCache.putResult(FINDER_PATH_FETCH_BY_G_K,
+							finderArgs, commerceUserSegmentEntry);
+					}
+				}
+			}
+			catch (Exception e) {
+				finderCache.removeResult(FINDER_PATH_FETCH_BY_G_K, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		if (result instanceof List<?>) {
+			return null;
+		}
+		else {
+			return (CommerceUserSegmentEntry)result;
+		}
+	}
+
+	/**
+	 * Removes the commerce user segment entry where groupId = &#63; and key = &#63; from the database.
+	 *
+	 * @param groupId the group ID
+	 * @param key the key
+	 * @return the commerce user segment entry that was removed
+	 */
+	@Override
+	public CommerceUserSegmentEntry removeByG_K(long groupId, String key)
+		throws NoSuchUserSegmentEntryException {
+		CommerceUserSegmentEntry commerceUserSegmentEntry = findByG_K(groupId,
+				key);
+
+		return remove(commerceUserSegmentEntry);
+	}
+
+	/**
+	 * Returns the number of commerce user segment entries where groupId = &#63; and key = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param key the key
+	 * @return the number of matching commerce user segment entries
+	 */
+	@Override
+	public int countByG_K(long groupId, String key) {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_G_K;
+
+		Object[] finderArgs = new Object[] { groupId, key };
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(3);
+
+			query.append(_SQL_COUNT_COMMERCEUSERSEGMENTENTRY_WHERE);
+
+			query.append(_FINDER_COLUMN_G_K_GROUPID_2);
+
+			boolean bindKey = false;
+
+			if (key == null) {
+				query.append(_FINDER_COLUMN_G_K_KEY_1);
+			}
+			else if (key.equals("")) {
+				query.append(_FINDER_COLUMN_G_K_KEY_3);
+			}
+			else {
+				bindKey = true;
+
+				query.append(_FINDER_COLUMN_G_K_KEY_2);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(groupId);
+
+				if (bindKey) {
+					qPos.add(key);
+				}
+
+				count = (Long)q.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_G_K_GROUPID_2 = "commerceUserSegmentEntry.groupId = ? AND ";
+	private static final String _FINDER_COLUMN_G_K_KEY_1 = "commerceUserSegmentEntry.key IS NULL";
+	private static final String _FINDER_COLUMN_G_K_KEY_2 = "commerceUserSegmentEntry.key = ?";
+	private static final String _FINDER_COLUMN_G_K_KEY_3 = "(commerceUserSegmentEntry.key IS NULL OR commerceUserSegmentEntry.key = '')";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_G_A = new FinderPath(CommerceUserSegmentEntryModelImpl.ENTITY_CACHE_ENABLED,
 			CommerceUserSegmentEntryModelImpl.FINDER_CACHE_ENABLED,
 			CommerceUserSegmentEntryImpl.class,
@@ -1908,263 +2165,6 @@ public class CommerceUserSegmentEntryPersistenceImpl extends BasePersistenceImpl
 	private static final String _FINDER_COLUMN_G_A_GROUPID_2 = "commerceUserSegmentEntry.groupId = ? AND ";
 	private static final String _FINDER_COLUMN_G_A_ACTIVE_2 = "commerceUserSegmentEntry.active = ?";
 	private static final String _FINDER_COLUMN_G_A_ACTIVE_2_SQL = "commerceUserSegmentEntry.active_ = ?";
-	public static final FinderPath FINDER_PATH_FETCH_BY_G_K = new FinderPath(CommerceUserSegmentEntryModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceUserSegmentEntryModelImpl.FINDER_CACHE_ENABLED,
-			CommerceUserSegmentEntryImpl.class, FINDER_CLASS_NAME_ENTITY,
-			"fetchByG_K",
-			new String[] { Long.class.getName(), String.class.getName() },
-			CommerceUserSegmentEntryModelImpl.GROUPID_COLUMN_BITMASK |
-			CommerceUserSegmentEntryModelImpl.KEY_COLUMN_BITMASK);
-	public static final FinderPath FINDER_PATH_COUNT_BY_G_K = new FinderPath(CommerceUserSegmentEntryModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceUserSegmentEntryModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_K",
-			new String[] { Long.class.getName(), String.class.getName() });
-
-	/**
-	 * Returns the commerce user segment entry where groupId = &#63; and key = &#63; or throws a {@link NoSuchUserSegmentEntryException} if it could not be found.
-	 *
-	 * @param groupId the group ID
-	 * @param key the key
-	 * @return the matching commerce user segment entry
-	 * @throws NoSuchUserSegmentEntryException if a matching commerce user segment entry could not be found
-	 */
-	@Override
-	public CommerceUserSegmentEntry findByG_K(long groupId, String key)
-		throws NoSuchUserSegmentEntryException {
-		CommerceUserSegmentEntry commerceUserSegmentEntry = fetchByG_K(groupId,
-				key);
-
-		if (commerceUserSegmentEntry == null) {
-			StringBundler msg = new StringBundler(6);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("groupId=");
-			msg.append(groupId);
-
-			msg.append(", key=");
-			msg.append(key);
-
-			msg.append("}");
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(msg.toString());
-			}
-
-			throw new NoSuchUserSegmentEntryException(msg.toString());
-		}
-
-		return commerceUserSegmentEntry;
-	}
-
-	/**
-	 * Returns the commerce user segment entry where groupId = &#63; and key = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param groupId the group ID
-	 * @param key the key
-	 * @return the matching commerce user segment entry, or <code>null</code> if a matching commerce user segment entry could not be found
-	 */
-	@Override
-	public CommerceUserSegmentEntry fetchByG_K(long groupId, String key) {
-		return fetchByG_K(groupId, key, true);
-	}
-
-	/**
-	 * Returns the commerce user segment entry where groupId = &#63; and key = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
-	 *
-	 * @param groupId the group ID
-	 * @param key the key
-	 * @param retrieveFromCache whether to retrieve from the finder cache
-	 * @return the matching commerce user segment entry, or <code>null</code> if a matching commerce user segment entry could not be found
-	 */
-	@Override
-	public CommerceUserSegmentEntry fetchByG_K(long groupId, String key,
-		boolean retrieveFromCache) {
-		Object[] finderArgs = new Object[] { groupId, key };
-
-		Object result = null;
-
-		if (retrieveFromCache) {
-			result = finderCache.getResult(FINDER_PATH_FETCH_BY_G_K,
-					finderArgs, this);
-		}
-
-		if (result instanceof CommerceUserSegmentEntry) {
-			CommerceUserSegmentEntry commerceUserSegmentEntry = (CommerceUserSegmentEntry)result;
-
-			if ((groupId != commerceUserSegmentEntry.getGroupId()) ||
-					!Objects.equals(key, commerceUserSegmentEntry.getKey())) {
-				result = null;
-			}
-		}
-
-		if (result == null) {
-			StringBundler query = new StringBundler(4);
-
-			query.append(_SQL_SELECT_COMMERCEUSERSEGMENTENTRY_WHERE);
-
-			query.append(_FINDER_COLUMN_G_K_GROUPID_2);
-
-			boolean bindKey = false;
-
-			if (key == null) {
-				query.append(_FINDER_COLUMN_G_K_KEY_1);
-			}
-			else if (key.equals("")) {
-				query.append(_FINDER_COLUMN_G_K_KEY_3);
-			}
-			else {
-				bindKey = true;
-
-				query.append(_FINDER_COLUMN_G_K_KEY_2);
-			}
-
-			String sql = query.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query q = session.createQuery(sql);
-
-				QueryPos qPos = QueryPos.getInstance(q);
-
-				qPos.add(groupId);
-
-				if (bindKey) {
-					qPos.add(key);
-				}
-
-				List<CommerceUserSegmentEntry> list = q.list();
-
-				if (list.isEmpty()) {
-					finderCache.putResult(FINDER_PATH_FETCH_BY_G_K, finderArgs,
-						list);
-				}
-				else {
-					CommerceUserSegmentEntry commerceUserSegmentEntry = list.get(0);
-
-					result = commerceUserSegmentEntry;
-
-					cacheResult(commerceUserSegmentEntry);
-
-					if ((commerceUserSegmentEntry.getGroupId() != groupId) ||
-							(commerceUserSegmentEntry.getKey() == null) ||
-							!commerceUserSegmentEntry.getKey().equals(key)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_G_K,
-							finderArgs, commerceUserSegmentEntry);
-					}
-				}
-			}
-			catch (Exception e) {
-				finderCache.removeResult(FINDER_PATH_FETCH_BY_G_K, finderArgs);
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		if (result instanceof List<?>) {
-			return null;
-		}
-		else {
-			return (CommerceUserSegmentEntry)result;
-		}
-	}
-
-	/**
-	 * Removes the commerce user segment entry where groupId = &#63; and key = &#63; from the database.
-	 *
-	 * @param groupId the group ID
-	 * @param key the key
-	 * @return the commerce user segment entry that was removed
-	 */
-	@Override
-	public CommerceUserSegmentEntry removeByG_K(long groupId, String key)
-		throws NoSuchUserSegmentEntryException {
-		CommerceUserSegmentEntry commerceUserSegmentEntry = findByG_K(groupId,
-				key);
-
-		return remove(commerceUserSegmentEntry);
-	}
-
-	/**
-	 * Returns the number of commerce user segment entries where groupId = &#63; and key = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param key the key
-	 * @return the number of matching commerce user segment entries
-	 */
-	@Override
-	public int countByG_K(long groupId, String key) {
-		FinderPath finderPath = FINDER_PATH_COUNT_BY_G_K;
-
-		Object[] finderArgs = new Object[] { groupId, key };
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler query = new StringBundler(3);
-
-			query.append(_SQL_COUNT_COMMERCEUSERSEGMENTENTRY_WHERE);
-
-			query.append(_FINDER_COLUMN_G_K_GROUPID_2);
-
-			boolean bindKey = false;
-
-			if (key == null) {
-				query.append(_FINDER_COLUMN_G_K_KEY_1);
-			}
-			else if (key.equals("")) {
-				query.append(_FINDER_COLUMN_G_K_KEY_3);
-			}
-			else {
-				bindKey = true;
-
-				query.append(_FINDER_COLUMN_G_K_KEY_2);
-			}
-
-			String sql = query.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query q = session.createQuery(sql);
-
-				QueryPos qPos = QueryPos.getInstance(q);
-
-				qPos.add(groupId);
-
-				if (bindKey) {
-					qPos.add(key);
-				}
-
-				count = (Long)q.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
-	}
-
-	private static final String _FINDER_COLUMN_G_K_GROUPID_2 = "commerceUserSegmentEntry.groupId = ? AND ";
-	private static final String _FINDER_COLUMN_G_K_KEY_1 = "commerceUserSegmentEntry.key IS NULL";
-	private static final String _FINDER_COLUMN_G_K_KEY_2 = "commerceUserSegmentEntry.key = ?";
-	private static final String _FINDER_COLUMN_G_K_KEY_3 = "(commerceUserSegmentEntry.key IS NULL OR commerceUserSegmentEntry.key = '')";
 
 	public CommerceUserSegmentEntryPersistenceImpl() {
 		setModelClass(CommerceUserSegmentEntry.class);

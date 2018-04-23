@@ -69,7 +69,7 @@ public class CommerceWishListWrapper implements CommerceWishList,
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("name", getName());
-		attributes.put("defaultWishList", getDefaultWishList());
+		attributes.put("defaultWishList", isDefaultWishList());
 
 		return attributes;
 	}

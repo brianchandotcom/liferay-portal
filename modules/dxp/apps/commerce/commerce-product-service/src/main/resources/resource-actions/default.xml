@@ -6,6 +6,7 @@
 		<model-name>com.liferay.commerce.product</model-name>
 		<portlet-ref>
 			<portlet-name>com_liferay_commerce_admin_web_internal_portlet_CommerceAdminPortlet</portlet-name>
+			<portlet-name>com_liferay_commerce_product_catalog_rule_web_internal_portlet_CPCatalogRulePortlet</portlet-name>
 			<portlet-name>com_liferay_commerce_product_definitions_web_internal_portlet_CPDefinitionsPortlet</portlet-name>
 			<portlet-name>com_liferay_commerce_product_options_web_internal_portlet_CPOptionCategoriesPortlet</portlet-name>
 			<portlet-name>com_liferay_commerce_product_options_web_internal_portlet_CPOptionsPortlet</portlet-name>
@@ -18,6 +19,7 @@
 				<action-key>ADD_COMMERCE_PRODUCT_DEFINITION</action-key>
 				<action-key>ADD_COMMERCE_PRODUCT_OPTION</action-key>
 				<action-key>ADD_COMMERCE_PRODUCT_OPTION_CATEGORY</action-key>
+				<action-key>ADD_COMMERCE_PRODUCT_RULE</action-key>
 				<action-key>ADD_COMMERCE_PRODUCT_SPECIFICATION_OPTION</action-key>
 				<action-key>ENABLE_COMMERCE_FEATURES</action-key>
 				<action-key>MANAGE_COMMERCE_PRODUCT_ATTACHMENTS</action-key>
@@ -25,6 +27,7 @@
 				<action-key>MANAGE_COMMERCE_PRODUCT_MEASUREMENT_UNITS</action-key>
 				<action-key>MANAGE_COMMERCE_PRODUCT_TAX_CATEGORIES</action-key>
 				<action-key>PERMISSIONS</action-key>
+				<action-key>VIEW_COMMERCE_PRODUCT_RULES</action-key>
 			</supports>
 			<site-member-defaults />
 			<guest-defaults />
@@ -32,6 +35,7 @@
 				<action-key>ADD_COMMERCE_PRODUCT_DEFINITION</action-key>
 				<action-key>ADD_COMMERCE_PRODUCT_OPTION</action-key>
 				<action-key>ADD_COMMERCE_PRODUCT_OPTION_CATEGORY</action-key>
+				<action-key>ADD_COMMERCE_PRODUCT_RULE</action-key>
 				<action-key>ADD_COMMERCE_PRODUCT_SPECIFICATION_OPTION</action-key>
 				<action-key>ENABLE_COMMERCE_FEATURES</action-key>
 				<action-key>MANAGE_COMMERCE_PRODUCT_ATTACHMENTS</action-key>
@@ -120,6 +124,31 @@
 			<guest-unsupported>
 				<action-key>DELETE</action-key>
 				<action-key>PERMISSIONS</action-key>
+				<action-key>UPDATE</action-key>
+			</guest-unsupported>
+		</permissions>
+	</model-resource>
+	<model-resource>
+		<model-name>com.liferay.commerce.product.model.CPRule</model-name>
+		<portlet-ref>
+			<portlet-name>com_liferay_commerce_product_catalog_rule_web_internal_portlet_CPCatalogRulePortlet</portlet-name>
+		</portlet-ref>
+		<weight>2</weight>
+		<permissions>
+			<supports>
+				<action-key>ADD_COMMERCE_PRODUCT_RULE_USER_SEGMENT</action-key>
+				<action-key>DELETE</action-key>
+				<action-key>DELETE_COMMERCE_PRODUCT_RULE_USER_SEGMENT</action-key>
+				<action-key>PERMISSIONS</action-key>
+				<action-key>UPDATE</action-key>
+				<action-key>VIEW</action-key>
+			</supports>
+			<site-member-defaults />
+			<guest-defaults />
+			<guest-unsupported>
+				<action-key>ADD_COMMERCE_PRODUCT_RULE_USER_SEGMENT</action-key>
+				<action-key>DELETE</action-key>
+				<action-key>DELETE_COMMERCE_PRODUCT_RULE_USER_SEGMENT</action-key>
 				<action-key>UPDATE</action-key>
 			</guest-unsupported>
 		</permissions>

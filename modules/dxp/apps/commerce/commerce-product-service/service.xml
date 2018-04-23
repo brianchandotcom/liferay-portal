@@ -227,6 +227,7 @@
 			<finder-column name="CPDefinitionId2" />
 			<finder-column name="type" />
 		</finder>
+		<reference entity="ExpandoRow" package-path="com.liferay.portlet.expando" />
 	</entity>
 	<entity local-service="true" name="CPDefinitionOptionRel" remote-service="true" uuid="true">
 

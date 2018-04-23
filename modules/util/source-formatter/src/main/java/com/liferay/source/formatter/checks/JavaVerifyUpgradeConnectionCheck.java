@@ -30,7 +30,9 @@ public class JavaVerifyUpgradeConnectionCheck extends BaseFileCheck {
 	protected String doProcess(
 		String fileName, String absolutePath, String content) {
 
-		if (fileName.endsWith("Test.java") ||
+		if (absolutePath.contains("/test/") ||
+			fileName.endsWith("DBUpgrader.java") ||
+			fileName.endsWith("Test.java") ||
 			fileName.endsWith("UpgradeTableListener.java") ||
 			content.contains("Callable<Void>")) {
 

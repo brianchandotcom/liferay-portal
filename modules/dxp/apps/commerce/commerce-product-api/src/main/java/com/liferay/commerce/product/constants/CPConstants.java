@@ -16,11 +16,14 @@ package com.liferay.commerce.product.constants;
 
 /**
  * @author Marco Leo
+ * @author Alessio Antonio Rendina
  */
 public class CPConstants {
 
 	public static final String CP_OPTION_SERVICE_NAME =
 		"com.liferay.commerce.product.option";
+
+	public static final String RESOURCE_NAME = "com.liferay.commerce.product";
 
 	public static final String SEPARATOR_ASSET_CATEGORY_URL = "/g/";
 

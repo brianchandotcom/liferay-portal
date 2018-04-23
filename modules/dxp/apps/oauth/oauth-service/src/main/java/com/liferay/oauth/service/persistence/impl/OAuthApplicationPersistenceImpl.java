@@ -2681,8 +2681,6 @@ public class OAuthApplicationPersistenceImpl extends BasePersistenceImpl<OAuthAp
 
 	@Override
 	protected OAuthApplication removeImpl(OAuthApplication oAuthApplication) {
-		oAuthApplication = toUnwrappedModel(oAuthApplication);
-
 		Session session = null;
 
 		try {
@@ -2713,8 +2711,6 @@ public class OAuthApplicationPersistenceImpl extends BasePersistenceImpl<OAuthAp
 
 	@Override
 	public OAuthApplication updateImpl(OAuthApplication oAuthApplication) {
-		oAuthApplication = toUnwrappedModel(oAuthApplication);
-
 		boolean isNew = oAuthApplication.isNew();
 
 		OAuthApplicationModelImpl oAuthApplicationModelImpl = (OAuthApplicationModelImpl)oAuthApplication;
@@ -2835,36 +2831,6 @@ public class OAuthApplicationPersistenceImpl extends BasePersistenceImpl<OAuthAp
 		oAuthApplication.resetOriginalValues();
 
 		return oAuthApplication;
-	}
-
-	protected OAuthApplication toUnwrappedModel(
-		OAuthApplication oAuthApplication) {
-		if (oAuthApplication instanceof OAuthApplicationImpl) {
-			return oAuthApplication;
-		}
-
-		OAuthApplicationImpl oAuthApplicationImpl = new OAuthApplicationImpl();
-
-		oAuthApplicationImpl.setNew(oAuthApplication.isNew());
-		oAuthApplicationImpl.setPrimaryKey(oAuthApplication.getPrimaryKey());
-
-		oAuthApplicationImpl.setOAuthApplicationId(oAuthApplication.getOAuthApplicationId());
-		oAuthApplicationImpl.setCompanyId(oAuthApplication.getCompanyId());
-		oAuthApplicationImpl.setUserId(oAuthApplication.getUserId());
-		oAuthApplicationImpl.setUserName(oAuthApplication.getUserName());
-		oAuthApplicationImpl.setCreateDate(oAuthApplication.getCreateDate());
-		oAuthApplicationImpl.setModifiedDate(oAuthApplication.getModifiedDate());
-		oAuthApplicationImpl.setName(oAuthApplication.getName());
-		oAuthApplicationImpl.setDescription(oAuthApplication.getDescription());
-		oAuthApplicationImpl.setConsumerKey(oAuthApplication.getConsumerKey());
-		oAuthApplicationImpl.setConsumerSecret(oAuthApplication.getConsumerSecret());
-		oAuthApplicationImpl.setAccessLevel(oAuthApplication.getAccessLevel());
-		oAuthApplicationImpl.setLogoId(oAuthApplication.getLogoId());
-		oAuthApplicationImpl.setShareableAccessToken(oAuthApplication.isShareableAccessToken());
-		oAuthApplicationImpl.setCallbackURI(oAuthApplication.getCallbackURI());
-		oAuthApplicationImpl.setWebsiteURL(oAuthApplication.getWebsiteURL());
-
-		return oAuthApplicationImpl;
 	}
 
 	/**

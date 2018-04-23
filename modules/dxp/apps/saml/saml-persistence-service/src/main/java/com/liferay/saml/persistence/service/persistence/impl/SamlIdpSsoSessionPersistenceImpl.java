@@ -1079,8 +1079,6 @@ public class SamlIdpSsoSessionPersistenceImpl extends BasePersistenceImpl<SamlId
 
 	@Override
 	protected SamlIdpSsoSession removeImpl(SamlIdpSsoSession samlIdpSsoSession) {
-		samlIdpSsoSession = toUnwrappedModel(samlIdpSsoSession);
-
 		Session session = null;
 
 		try {
@@ -1111,8 +1109,6 @@ public class SamlIdpSsoSessionPersistenceImpl extends BasePersistenceImpl<SamlId
 
 	@Override
 	public SamlIdpSsoSession updateImpl(SamlIdpSsoSession samlIdpSsoSession) {
-		samlIdpSsoSession = toUnwrappedModel(samlIdpSsoSession);
-
 		boolean isNew = samlIdpSsoSession.isNew();
 
 		SamlIdpSsoSessionModelImpl samlIdpSsoSessionModelImpl = (SamlIdpSsoSessionModelImpl)samlIdpSsoSession;
@@ -1184,28 +1180,6 @@ public class SamlIdpSsoSessionPersistenceImpl extends BasePersistenceImpl<SamlId
 		samlIdpSsoSession.resetOriginalValues();
 
 		return samlIdpSsoSession;
-	}
-
-	protected SamlIdpSsoSession toUnwrappedModel(
-		SamlIdpSsoSession samlIdpSsoSession) {
-		if (samlIdpSsoSession instanceof SamlIdpSsoSessionImpl) {
-			return samlIdpSsoSession;
-		}
-
-		SamlIdpSsoSessionImpl samlIdpSsoSessionImpl = new SamlIdpSsoSessionImpl();
-
-		samlIdpSsoSessionImpl.setNew(samlIdpSsoSession.isNew());
-		samlIdpSsoSessionImpl.setPrimaryKey(samlIdpSsoSession.getPrimaryKey());
-
-		samlIdpSsoSessionImpl.setSamlIdpSsoSessionId(samlIdpSsoSession.getSamlIdpSsoSessionId());
-		samlIdpSsoSessionImpl.setCompanyId(samlIdpSsoSession.getCompanyId());
-		samlIdpSsoSessionImpl.setUserId(samlIdpSsoSession.getUserId());
-		samlIdpSsoSessionImpl.setUserName(samlIdpSsoSession.getUserName());
-		samlIdpSsoSessionImpl.setCreateDate(samlIdpSsoSession.getCreateDate());
-		samlIdpSsoSessionImpl.setModifiedDate(samlIdpSsoSession.getModifiedDate());
-		samlIdpSsoSessionImpl.setSamlIdpSsoSessionKey(samlIdpSsoSession.getSamlIdpSsoSessionKey());
-
-		return samlIdpSsoSessionImpl;
 	}
 
 	/**

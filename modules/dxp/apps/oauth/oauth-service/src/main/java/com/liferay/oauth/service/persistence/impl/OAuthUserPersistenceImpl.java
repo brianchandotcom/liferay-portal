@@ -1779,8 +1779,6 @@ public class OAuthUserPersistenceImpl extends BasePersistenceImpl<OAuthUser>
 
 	@Override
 	protected OAuthUser removeImpl(OAuthUser oAuthUser) {
-		oAuthUser = toUnwrappedModel(oAuthUser);
-
 		Session session = null;
 
 		try {
@@ -1811,8 +1809,6 @@ public class OAuthUserPersistenceImpl extends BasePersistenceImpl<OAuthUser>
 
 	@Override
 	public OAuthUser updateImpl(OAuthUser oAuthUser) {
-		oAuthUser = toUnwrappedModel(oAuthUser);
-
 		boolean isNew = oAuthUser.isNew();
 
 		OAuthUserModelImpl oAuthUserModelImpl = (OAuthUserModelImpl)oAuthUser;
@@ -1932,29 +1928,6 @@ public class OAuthUserPersistenceImpl extends BasePersistenceImpl<OAuthUser>
 		oAuthUser.resetOriginalValues();
 
 		return oAuthUser;
-	}
-
-	protected OAuthUser toUnwrappedModel(OAuthUser oAuthUser) {
-		if (oAuthUser instanceof OAuthUserImpl) {
-			return oAuthUser;
-		}
-
-		OAuthUserImpl oAuthUserImpl = new OAuthUserImpl();
-
-		oAuthUserImpl.setNew(oAuthUser.isNew());
-		oAuthUserImpl.setPrimaryKey(oAuthUser.getPrimaryKey());
-
-		oAuthUserImpl.setOAuthUserId(oAuthUser.getOAuthUserId());
-		oAuthUserImpl.setCompanyId(oAuthUser.getCompanyId());
-		oAuthUserImpl.setUserId(oAuthUser.getUserId());
-		oAuthUserImpl.setUserName(oAuthUser.getUserName());
-		oAuthUserImpl.setCreateDate(oAuthUser.getCreateDate());
-		oAuthUserImpl.setModifiedDate(oAuthUser.getModifiedDate());
-		oAuthUserImpl.setOAuthApplicationId(oAuthUser.getOAuthApplicationId());
-		oAuthUserImpl.setAccessToken(oAuthUser.getAccessToken());
-		oAuthUserImpl.setAccessSecret(oAuthUser.getAccessSecret());
-
-		return oAuthUserImpl;
 	}
 
 	/**

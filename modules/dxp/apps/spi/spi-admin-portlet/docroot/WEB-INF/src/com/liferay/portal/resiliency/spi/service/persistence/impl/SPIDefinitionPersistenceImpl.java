@@ -3151,8 +3151,6 @@ public class SPIDefinitionPersistenceImpl extends BasePersistenceImpl<SPIDefinit
 
 	@Override
 	protected SPIDefinition removeImpl(SPIDefinition spiDefinition) {
-		spiDefinition = toUnwrappedModel(spiDefinition);
-
 		Session session = null;
 
 		try {
@@ -3183,8 +3181,6 @@ public class SPIDefinitionPersistenceImpl extends BasePersistenceImpl<SPIDefinit
 
 	@Override
 	public SPIDefinition updateImpl(SPIDefinition spiDefinition) {
-		spiDefinition = toUnwrappedModel(spiDefinition);
-
 		boolean isNew = spiDefinition.isNew();
 
 		SPIDefinitionModelImpl spiDefinitionModelImpl = (SPIDefinitionModelImpl)spiDefinition;
@@ -3310,36 +3306,6 @@ public class SPIDefinitionPersistenceImpl extends BasePersistenceImpl<SPIDefinit
 		spiDefinition.resetOriginalValues();
 
 		return spiDefinition;
-	}
-
-	protected SPIDefinition toUnwrappedModel(SPIDefinition spiDefinition) {
-		if (spiDefinition instanceof SPIDefinitionImpl) {
-			return spiDefinition;
-		}
-
-		SPIDefinitionImpl spiDefinitionImpl = new SPIDefinitionImpl();
-
-		spiDefinitionImpl.setNew(spiDefinition.isNew());
-		spiDefinitionImpl.setPrimaryKey(spiDefinition.getPrimaryKey());
-
-		spiDefinitionImpl.setSpiDefinitionId(spiDefinition.getSpiDefinitionId());
-		spiDefinitionImpl.setCompanyId(spiDefinition.getCompanyId());
-		spiDefinitionImpl.setUserId(spiDefinition.getUserId());
-		spiDefinitionImpl.setUserName(spiDefinition.getUserName());
-		spiDefinitionImpl.setCreateDate(spiDefinition.getCreateDate());
-		spiDefinitionImpl.setModifiedDate(spiDefinition.getModifiedDate());
-		spiDefinitionImpl.setName(spiDefinition.getName());
-		spiDefinitionImpl.setConnectorAddress(spiDefinition.getConnectorAddress());
-		spiDefinitionImpl.setConnectorPort(spiDefinition.getConnectorPort());
-		spiDefinitionImpl.setDescription(spiDefinition.getDescription());
-		spiDefinitionImpl.setJvmArguments(spiDefinition.getJvmArguments());
-		spiDefinitionImpl.setPortletIds(spiDefinition.getPortletIds());
-		spiDefinitionImpl.setServletContextNames(spiDefinition.getServletContextNames());
-		spiDefinitionImpl.setTypeSettings(spiDefinition.getTypeSettings());
-		spiDefinitionImpl.setStatus(spiDefinition.getStatus());
-		spiDefinitionImpl.setStatusMessage(spiDefinition.getStatusMessage());
-
-		return spiDefinitionImpl;
 	}
 
 	/**

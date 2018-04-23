@@ -1623,8 +1623,6 @@ public class SamlIdpSpSessionPersistenceImpl extends BasePersistenceImpl<SamlIdp
 
 	@Override
 	protected SamlIdpSpSession removeImpl(SamlIdpSpSession samlIdpSpSession) {
-		samlIdpSpSession = toUnwrappedModel(samlIdpSpSession);
-
 		Session session = null;
 
 		try {
@@ -1655,8 +1653,6 @@ public class SamlIdpSpSessionPersistenceImpl extends BasePersistenceImpl<SamlIdp
 
 	@Override
 	public SamlIdpSpSession updateImpl(SamlIdpSpSession samlIdpSpSession) {
-		samlIdpSpSession = toUnwrappedModel(samlIdpSpSession);
-
 		boolean isNew = samlIdpSpSession.isNew();
 
 		SamlIdpSpSessionModelImpl samlIdpSpSessionModelImpl = (SamlIdpSpSessionModelImpl)samlIdpSpSession;
@@ -1759,31 +1755,6 @@ public class SamlIdpSpSessionPersistenceImpl extends BasePersistenceImpl<SamlIdp
 		samlIdpSpSession.resetOriginalValues();
 
 		return samlIdpSpSession;
-	}
-
-	protected SamlIdpSpSession toUnwrappedModel(
-		SamlIdpSpSession samlIdpSpSession) {
-		if (samlIdpSpSession instanceof SamlIdpSpSessionImpl) {
-			return samlIdpSpSession;
-		}
-
-		SamlIdpSpSessionImpl samlIdpSpSessionImpl = new SamlIdpSpSessionImpl();
-
-		samlIdpSpSessionImpl.setNew(samlIdpSpSession.isNew());
-		samlIdpSpSessionImpl.setPrimaryKey(samlIdpSpSession.getPrimaryKey());
-
-		samlIdpSpSessionImpl.setSamlIdpSpSessionId(samlIdpSpSession.getSamlIdpSpSessionId());
-		samlIdpSpSessionImpl.setCompanyId(samlIdpSpSession.getCompanyId());
-		samlIdpSpSessionImpl.setUserId(samlIdpSpSession.getUserId());
-		samlIdpSpSessionImpl.setUserName(samlIdpSpSession.getUserName());
-		samlIdpSpSessionImpl.setCreateDate(samlIdpSpSession.getCreateDate());
-		samlIdpSpSessionImpl.setModifiedDate(samlIdpSpSession.getModifiedDate());
-		samlIdpSpSessionImpl.setSamlIdpSsoSessionId(samlIdpSpSession.getSamlIdpSsoSessionId());
-		samlIdpSpSessionImpl.setSamlSpEntityId(samlIdpSpSession.getSamlSpEntityId());
-		samlIdpSpSessionImpl.setNameIdFormat(samlIdpSpSession.getNameIdFormat());
-		samlIdpSpSessionImpl.setNameIdValue(samlIdpSpSession.getNameIdValue());
-
-		return samlIdpSpSessionImpl;
 	}
 
 	/**

@@ -1077,8 +1077,6 @@ public class SamlSpIdpConnectionPersistenceImpl extends BasePersistenceImpl<Saml
 	@Override
 	protected SamlSpIdpConnection removeImpl(
 		SamlSpIdpConnection samlSpIdpConnection) {
-		samlSpIdpConnection = toUnwrappedModel(samlSpIdpConnection);
-
 		Session session = null;
 
 		try {
@@ -1110,8 +1108,6 @@ public class SamlSpIdpConnectionPersistenceImpl extends BasePersistenceImpl<Saml
 	@Override
 	public SamlSpIdpConnection updateImpl(
 		SamlSpIdpConnection samlSpIdpConnection) {
-		samlSpIdpConnection = toUnwrappedModel(samlSpIdpConnection);
-
 		boolean isNew = samlSpIdpConnection.isNew();
 
 		SamlSpIdpConnectionModelImpl samlSpIdpConnectionModelImpl = (SamlSpIdpConnectionModelImpl)samlSpIdpConnection;
@@ -1210,40 +1206,6 @@ public class SamlSpIdpConnectionPersistenceImpl extends BasePersistenceImpl<Saml
 		samlSpIdpConnection.resetOriginalValues();
 
 		return samlSpIdpConnection;
-	}
-
-	protected SamlSpIdpConnection toUnwrappedModel(
-		SamlSpIdpConnection samlSpIdpConnection) {
-		if (samlSpIdpConnection instanceof SamlSpIdpConnectionImpl) {
-			return samlSpIdpConnection;
-		}
-
-		SamlSpIdpConnectionImpl samlSpIdpConnectionImpl = new SamlSpIdpConnectionImpl();
-
-		samlSpIdpConnectionImpl.setNew(samlSpIdpConnection.isNew());
-		samlSpIdpConnectionImpl.setPrimaryKey(samlSpIdpConnection.getPrimaryKey());
-
-		samlSpIdpConnectionImpl.setSamlSpIdpConnectionId(samlSpIdpConnection.getSamlSpIdpConnectionId());
-		samlSpIdpConnectionImpl.setCompanyId(samlSpIdpConnection.getCompanyId());
-		samlSpIdpConnectionImpl.setUserId(samlSpIdpConnection.getUserId());
-		samlSpIdpConnectionImpl.setUserName(samlSpIdpConnection.getUserName());
-		samlSpIdpConnectionImpl.setCreateDate(samlSpIdpConnection.getCreateDate());
-		samlSpIdpConnectionImpl.setModifiedDate(samlSpIdpConnection.getModifiedDate());
-		samlSpIdpConnectionImpl.setSamlIdpEntityId(samlSpIdpConnection.getSamlIdpEntityId());
-		samlSpIdpConnectionImpl.setAssertionSignatureRequired(samlSpIdpConnection.isAssertionSignatureRequired());
-		samlSpIdpConnectionImpl.setClockSkew(samlSpIdpConnection.getClockSkew());
-		samlSpIdpConnectionImpl.setEnabled(samlSpIdpConnection.isEnabled());
-		samlSpIdpConnectionImpl.setForceAuthn(samlSpIdpConnection.isForceAuthn());
-		samlSpIdpConnectionImpl.setLdapImportEnabled(samlSpIdpConnection.isLdapImportEnabled());
-		samlSpIdpConnectionImpl.setMetadataUrl(samlSpIdpConnection.getMetadataUrl());
-		samlSpIdpConnectionImpl.setMetadataXml(samlSpIdpConnection.getMetadataXml());
-		samlSpIdpConnectionImpl.setMetadataUpdatedDate(samlSpIdpConnection.getMetadataUpdatedDate());
-		samlSpIdpConnectionImpl.setName(samlSpIdpConnection.getName());
-		samlSpIdpConnectionImpl.setNameIdFormat(samlSpIdpConnection.getNameIdFormat());
-		samlSpIdpConnectionImpl.setSignAuthnRequest(samlSpIdpConnection.isSignAuthnRequest());
-		samlSpIdpConnectionImpl.setUserAttributeMappings(samlSpIdpConnection.getUserAttributeMappings());
-
-		return samlSpIdpConnectionImpl;
 	}
 
 	/**

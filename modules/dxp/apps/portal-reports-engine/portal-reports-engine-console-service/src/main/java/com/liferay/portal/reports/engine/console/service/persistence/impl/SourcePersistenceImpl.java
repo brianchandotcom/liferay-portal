@@ -3039,8 +3039,6 @@ public class SourcePersistenceImpl extends BasePersistenceImpl<Source>
 
 	@Override
 	protected Source removeImpl(Source source) {
-		source = toUnwrappedModel(source);
-
 		Session session = null;
 
 		try {
@@ -3071,8 +3069,6 @@ public class SourcePersistenceImpl extends BasePersistenceImpl<Source>
 
 	@Override
 	public Source updateImpl(Source source) {
-		source = toUnwrappedModel(source);
-
 		boolean isNew = source.isNew();
 
 		SourceModelImpl sourceModelImpl = (SourceModelImpl)source;
@@ -3245,34 +3241,6 @@ public class SourcePersistenceImpl extends BasePersistenceImpl<Source>
 		source.resetOriginalValues();
 
 		return source;
-	}
-
-	protected Source toUnwrappedModel(Source source) {
-		if (source instanceof SourceImpl) {
-			return source;
-		}
-
-		SourceImpl sourceImpl = new SourceImpl();
-
-		sourceImpl.setNew(source.isNew());
-		sourceImpl.setPrimaryKey(source.getPrimaryKey());
-
-		sourceImpl.setUuid(source.getUuid());
-		sourceImpl.setSourceId(source.getSourceId());
-		sourceImpl.setGroupId(source.getGroupId());
-		sourceImpl.setCompanyId(source.getCompanyId());
-		sourceImpl.setUserId(source.getUserId());
-		sourceImpl.setUserName(source.getUserName());
-		sourceImpl.setCreateDate(source.getCreateDate());
-		sourceImpl.setModifiedDate(source.getModifiedDate());
-		sourceImpl.setLastPublishDate(source.getLastPublishDate());
-		sourceImpl.setName(source.getName());
-		sourceImpl.setDriverClassName(source.getDriverClassName());
-		sourceImpl.setDriverUrl(source.getDriverUrl());
-		sourceImpl.setDriverUserName(source.getDriverUserName());
-		sourceImpl.setDriverPassword(source.getDriverPassword());
-
-		return sourceImpl;
 	}
 
 	/**

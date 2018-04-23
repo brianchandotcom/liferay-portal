@@ -1462,93 +1462,6 @@ public class VerifyProperties extends VerifyProcess {
 			"com.liferay.rss.web"
 		},
 
-		// Shopping
-
-		new String[] {
-			"shopping.cart.min.qty.multiple", "cart.min.qty.multiple",
-			"com.liferay.shopping.service"
-		},
-		new String[] {
-			"shopping.category.forward.to.cart", "category.forward.to.cart",
-			"com.liferay.shopping.service"
-		},
-		new String[] {
-			"shopping.category.show.special.items",
-			"category.show.special.items", "com.liferay.shopping.service"
-		},
-		new String[] {
-			"shopping.credit.card.types", "credit.card.types",
-			"com.liferay.shopping.service"
-		},
-		new String[] {
-			"shopping.currency.id", "currency.id",
-			"com.liferay.shopping.service"
-		},
-		new String[] {
-			"shopping.email.from.address", "email.from.address",
-			"com.liferay.shopping.service"
-		},
-		new String[] {
-			"shopping.email.from.name", "email.from.name",
-			"com.liferay.shopping.service"
-		},
-		new String[] {
-			"shopping.email.order.confirmation.enabled",
-			"email.order.confirmation.enabled", "com.liferay.shopping.service"
-		},
-		new String[] {
-			"shopping.email.order.confirmation.subject",
-			"email.order.confirmation.subject", "com.liferay.shopping.service"
-		},
-		new String[] {
-			"shopping.email.order.confirmation.body",
-			"email.order.confirmation.body", "com.liferay.shopping.service"
-		},
-		new String[] {
-			"shopping.email.order.shipping.enabled",
-			"email.order.shipping.enabled", "com.liferay.shopping.service"
-		},
-		new String[] {
-			"shopping.email.order.shipping.subject",
-			"email.order.shipping.subject", "com.liferay.shopping.service"
-		},
-		new String[] {
-			"shopping.email.order.shipping.body", "email.order.shipping.body",
-			"com.liferay.shopping.service"
-		},
-		new String[] {
-			"shopping.insurance", "insurance", "com.liferay.shopping.service"
-		},
-		new String[] {
-			"shopping.insurance.formula", "insurance.formula",
-			"com.liferay.shopping.service"
-		},
-		new String[] {
-			"shopping.item.show.availability", "item.show.availability",
-			"com.liferay.shopping.service"
-		},
-		new String[] {
-			"shopping.min.order", "min.order", "com.liferay.shopping.service"
-		},
-		new String[] {
-			"shopping.order.comments.enabled", "order.comments.enabled",
-			"com.liferay.shopping.service"
-		},
-		new String[] {
-			"shopping.paypal.email.address", "paypal.email.address",
-			"com.liferay.shopping.service"
-		},
-		new String[] {
-			"shopping.shipping", "shipping", "com.liferay.shopping.service"
-		},
-		new String[] {
-			"shopping.shipping.formula", "shipping.formula",
-			"com.liferay.shopping.service"
-		},
-		new String[] {
-			"shopping.tax.rate", "tax.rate", "com.liferay.shopping.service"
-		},
-
 		// Scripting
 
 		new String[] {
@@ -1902,8 +1815,6 @@ public class VerifyProperties extends VerifyProcess {
 		"schema.run.minimal", "search.container.page.iterator.page.values",
 		"service.builder.service.read.only.prefixes", "setup.database.types",
 		"shard.available.names", "shard.default.name", "shard.selector",
-		"shopping.image.extensions", "shopping.image.large.max.size",
-		"shopping.image.medium.max.size", "shopping.image.small.max.size",
 		"siteminder.auth.enabled", "siteminder.import.from.ldap",
 		"siteminder.user.header", "sites.form.add.advanced",
 		"sites.form.add.main", "sites.form.add.miscellaneous",
@@ -2030,12 +1941,6 @@ public class VerifyProperties extends VerifyProcess {
 			"editor.wysiwyg.portal-web.docroot.html.portlet.message_boards." +
 				"edit_configuration.jsp",
 			"editor.wysiwyg.portal-web.docroot.html.portlet.message_boards." +
-				"configuration.jsp"
-		},
-		new String[] {
-			"editor.wysiwyg.portal-web.docroot.html.portlet.shopping." +
-				"edit_configuration.jsp",
-			"editor.wysiwyg.portal-web.docroot.html.portlet.shopping." +
 				"configuration.jsp"
 		},
 		new String[] {

@@ -57,7 +57,7 @@
 					var baseSrc = '<%= HtmlUtil.escapeJS(iFrameDisplayContext.getIframeBaseSrc()) %>';
 
 					if (!(/^https?\:\/\//.test(hash)) || !A.Lang.String.startsWith(hash, baseSrc)) {
-						src = A.QueryString.escape(hash);
+						src = baseSrc + A.QueryString.unescape(hash);
 					}
 
 					var iframe = A.one('#<portlet:namespace />iframe');

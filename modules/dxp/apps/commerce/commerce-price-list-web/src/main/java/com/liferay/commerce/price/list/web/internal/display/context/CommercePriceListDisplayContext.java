@@ -44,7 +44,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Stream;
@@ -214,30 +213,20 @@ public class CommercePriceListDisplayContext
 	protected long[] getCheckedCommerceUserSegmentEntryIds()
 		throws PortalException {
 
-		List<Long> commercePriceListUserSegmentEntryRelIdsList =
-			new ArrayList<>();
-
 		List<CommercePriceListUserSegmentEntryRel>
 			commercePriceListUserSegmentEntryRels =
 				getCommercePriceListUserSegmentEntryRels();
 
-		for (CommercePriceListUserSegmentEntryRel
-				commercePriceListUserSegmentEntryRel :
-					commercePriceListUserSegmentEntryRels) {
-
-			commercePriceListUserSegmentEntryRelIdsList.add(
-				commercePriceListUserSegmentEntryRel.
-					getCommercePriceListUserSegmentEntryRelId());
-		}
-
-		if (commercePriceListUserSegmentEntryRelIdsList.isEmpty()) {
+		if (commercePriceListUserSegmentEntryRels.isEmpty()) {
 			return new long[0];
 		}
 
-		Stream<Long> stream =
-			commercePriceListUserSegmentEntryRelIdsList.stream();
+		Stream<CommercePriceListUserSegmentEntryRel> stream =
+			commercePriceListUserSegmentEntryRels.stream();
 
-		return stream.mapToLong(l -> l).toArray();
+		return stream.mapToLong(
+			CommercePriceListUserSegmentEntryRel::getCommerceUserSegmentEntryId
+		).toArray();
 	}
 
 	private final CommerceCurrencyService _commerceCurrencyService;

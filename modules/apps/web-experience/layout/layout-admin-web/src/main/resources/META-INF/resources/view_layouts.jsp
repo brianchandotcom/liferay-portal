@@ -54,7 +54,7 @@
 				inline="<%= true %>"
 			>
 				<liferay-frontend:add-menu-item
-					title='<%= LanguageUtil.get(request, "select-template") %>'
+					title='<%= LanguageUtil.get(request, "add-page") %>'
 					url="<%= layoutsAdminDisplayContext.getSelectLayoutPageTemplateEntryURL() %>"
 				/>
 			</liferay-frontend:add-menu>

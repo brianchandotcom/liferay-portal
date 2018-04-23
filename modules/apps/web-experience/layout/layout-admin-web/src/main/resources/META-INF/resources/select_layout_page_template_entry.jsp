@@ -22,7 +22,7 @@ SelectLayoutPageTemplateEntryDisplayContext selectLayoutPageTemplateEntryDisplay
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(String.valueOf(layoutsAdminDisplayContext.getPortletURL()));
 
-renderResponse.setTitle(LanguageUtil.get(request, "select-template"));
+renderResponse.setTitle(LanguageUtil.get(request, "add-page"));
 %>
 
 <clay:navigation-bar

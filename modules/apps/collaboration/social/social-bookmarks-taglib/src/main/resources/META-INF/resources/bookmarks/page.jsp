@@ -58,9 +58,7 @@ String randomNamespace = PortalUtil.generateRandomKey(request, "taglib_ui_social
 			<ul class="list-unstyled <%= displayStyle %>">
 
 				<%
-				int maxInlineElements = 3;
-
-				for (int i = 0; i < Math.min(types.length, maxInlineElements); i++) {
+				for (int i = 0; i < Math.min(types.length, maxInlineItems); i++) {
 					SocialBookmark socialBookmark = SocialBookmarksRegistryUtil.getSocialBookmark(types[i]);
 					String styleClass = "taglib-social-bookmark-" + types[i];
 				%>
@@ -82,7 +80,7 @@ String randomNamespace = PortalUtil.generateRandomKey(request, "taglib_ui_social
 			</ul>
 
 			<%
-			if (types.length > maxInlineElements) {
+			if (types.length > maxInlineItems) {
 			%>
 
 				<clay:dropdown-menu
@@ -92,7 +90,7 @@ String randomNamespace = PortalUtil.generateRandomKey(request, "taglib_ui_social
 					items="<%=
 						new JSPDropdownItemList(pageContext) {
 							{
-								for (int i = maxInlineElements; i < types.length; i++) {
+								for (int i = maxInlineItems; i < types.length; i++) {
 									SocialBookmark socialBookmark = SocialBookmarksRegistryUtil.getSocialBookmark(types[i]);
 									final String type = types[i];
 

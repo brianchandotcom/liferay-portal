@@ -67,6 +67,10 @@ public class SocialBookmarksTag extends IncludeTag {
 		}
 	}
 
+	public void setMaxInlineItems(int maxInlineItems) {
+		_maxInlineItems = maxInlineItems;
+	}
+
 	@Override
 	public void setPageContext(PageContext pageContext) {
 		super.setPageContext(pageContext);
@@ -109,6 +113,7 @@ public class SocialBookmarksTag extends IncludeTag {
 		_title = null;
 		_types = null;
 		_url = null;
+		_maxInlineItems = 3;
 	}
 
 	@Override
@@ -125,6 +130,9 @@ public class SocialBookmarksTag extends IncludeTag {
 		request.setAttribute(
 			"liferay-social-bookmarks:bookmarks:displayStyle", _displayStyle);
 		request.setAttribute(
+			"liferay-social-bookmarks:bookmarks:maxInlineItems",
+			_maxInlineItems);
+		request.setAttribute(
 			"liferay-social-bookmarks:bookmarks:target", _target);
 		request.setAttribute(
 			"liferay-social-bookmarks:bookmarks:title", _title);
@@ -138,6 +146,7 @@ public class SocialBookmarksTag extends IncludeTag {
 	private String _className;
 	private long _classPK;
 	private String _displayStyle;
+	private int _maxInlineItems = 3;
 	private String _target;
 	private String _title;
 	private String[] _types;

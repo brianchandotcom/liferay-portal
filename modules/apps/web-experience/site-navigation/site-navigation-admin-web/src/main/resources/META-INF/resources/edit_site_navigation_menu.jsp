@@ -118,7 +118,7 @@ renderResponse.setTitle(siteNavigationAdminDisplayContext.getSiteNavigationMenuN
 	var addMenuItemClickHandler = dom.delegate(
 		document.body,
 		'click',
-		'.add-menu-item-link',
+		'.add-menu-item-link, .dropdown-item',
 		function(event) {
 			Liferay.Util.openInDialog(
 				event,
@@ -130,7 +130,7 @@ renderResponse.setTitle(siteNavigationAdminDisplayContext.getSiteNavigationMenuN
 						bodyCssClass: 'dialog-with-footer'
 					},
 					id: '<portlet:namespace/>addMenuItem',
-					title: event.delegateTarget.title,
+					title: event.delegateTarget.title || event.delegateTarget.innerText,
 					uri: event.delegateTarget.href
 				}
 			);
@@ -152,7 +152,7 @@ renderResponse.setTitle(siteNavigationAdminDisplayContext.getSiteNavigationMenuN
 			editSiteNavigationMenuItemParentURL: '<portlet:actionURL name="/navigation_menu/edit_site_navigation_menu_item_parent"><portlet:param name="redirect" value="<%= currentURL %>" /></portlet:actionURL>',
 			menuContainerSelector: '.site-navigation-menu-container',
 			menuItemContainerSelector: '.container-item',
-			menuItemSelector: '.site-navigation-menu-item',
+			menuItemSelector: '.site-navigation-menu-item .lfr-card-title-text a',
 			namespace: '<portlet:namespace />'
 		}
 	);
@@ -250,15 +250,17 @@ renderResponse.setTitle(siteNavigationAdminDisplayContext.getSiteNavigationMenuN
 
 					var currentTarget = event.currentTarget;
 
+					var siteNavigationMenuItem = currentTarget.ancestor('.site-navigation-menu-item');
+
 					var data = Liferay.Util.ns(
 						'<portlet:namespace />',
 						{
 							redirect: '<%= currentURL %>',
-							siteNavigationMenuItemId: currentTarget.attr('data-site-navigation-menu-item-id')
+							siteNavigationMenuItemId: siteNavigationMenuItem.attr('data-site-navigation-menu-item-id')
 						}
 					);
 
-					openSidebar(currentTarget.attr('data-title'));
+					openSidebar(siteNavigationMenuItem.attr('data-title'));
 
 					A.io.request(
 						'<portlet:renderURL windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>"><portlet:param name="mvcPath" value="/edit_site_navigation_menu_item.jsp" /></portlet:renderURL>',
@@ -274,7 +276,7 @@ renderResponse.setTitle(siteNavigationAdminDisplayContext.getSiteNavigationMenuN
 						}
 					);
 				},
-				'.site-navigation-menu-item'
+				'.site-navigation-menu-item .lfr-card-title-text a'
 			);
 
 			A.one('#<portlet:namespace />showSiteNavigationMenuSettings').on(

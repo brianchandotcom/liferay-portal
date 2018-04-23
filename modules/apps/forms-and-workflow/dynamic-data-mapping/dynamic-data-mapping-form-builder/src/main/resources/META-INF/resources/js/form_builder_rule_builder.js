@@ -378,7 +378,12 @@ AUI.add(
 								);
 							}
 							else if (type === 'jump-to-page') {
+								var pageIndex = action.target;
 								var pages = instance.getPages();
+
+								var page = pages[pageIndex];
+
+								var pageLabel = page ? page.label : (parseInt(pageIndex) + 1);
 
 								actionDescription = Lang.sub(
 									Liferay.Language.get('jump-to-page-x'),
@@ -386,7 +391,7 @@ AUI.add(
 										Lang.sub(
 											ACTION_LABEL,
 											{
-												content: pages[action.target].label
+												content: pageLabel.toString()
 											}
 										)
 									]

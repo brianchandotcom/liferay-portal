@@ -262,34 +262,55 @@ AUI.add(
 					_getActionOptions: function() {
 						var instance = this;
 
+						var actions = [];
+						var pages = instance.get('pages');
 						var strings = instance.get('strings');
 
-						return [
+						actions.push(
 							{
 								label: strings.show,
 								value: 'show'
-							},
+							}
+						);
+
+						actions.push(
 							{
 								label: strings.enable,
 								value: 'enable'
-							},
+							}
+						);
+
+						actions.push(
 							{
 								label: strings.require,
 								value: 'require'
-							},
+							}
+						);
+
+						actions.push(
 							{
 								label: strings.autofill,
 								value: 'auto-fill'
-							},
-							{
-								label: strings.jumpToPage,
-								value: 'jump-to-page'
-							},
+							}
+						);
+
+						if (pages.length > 2) {
+							actions.push(
+								{
+									label: strings.jumpToPage,
+									value: 'jump-to-page'
+								}
+							);
+						}
+
+						actions.push(
 							{
 								label: strings.calculate,
 								value: 'calculate'
 							}
-						];
+						);
+
+						return actions;
 					},
 
 					_getActions: function() {
@@ -320,19 +341,19 @@ AUI.add(
 					_getConditionSelectedFieldsPage: function() {
 						var instance = this;
 
-						var fields = [];
+						var pages = [];
 
 						for (var conditionKey in instance._conditions) {
 							if (!!conditionKey.match('-condition-second-operand-select') || !!conditionKey.match('-condition-first-operand')) {
 								var fieldName = instance._getSelectFieldFirstValue(instance._conditions[conditionKey]);
 
 								if (fieldName && fieldName != 'user') {
-									fields.push(instance._getFieldPageIndex(fieldName));
+									pages.push(instance._getFieldPageIndex(fieldName));
 								}
 							}
 						}
 
-						return fields;
+						return pages;
 					},
 
 					_getFieldDataType: function(fieldName) {

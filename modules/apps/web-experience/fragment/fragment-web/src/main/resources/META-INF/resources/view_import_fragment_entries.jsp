@@ -33,7 +33,7 @@ DLConfiguration dlConfiguration = ConfigurationProviderUtil.getSystemConfigurati
 	<liferay-ui:message arguments="<%= dfeke.getMessage() %>" key="a-fragment-entry-with-the-key-x-already-exists" />
 </liferay-ui:error>
 
-<liferay-ui:error exception="<%= InvalidFragmentEntryFileException.class %>" message="fragment-collection-cannot-be-imported-into-existing-fragment-collection" />
+<liferay-ui:error exception="<%= InvalidFragmentEntryFileException.class %>" message="fragment-collection-cannot-be-imported-into-an-existing-fragment-collection" />
 
 <div class="lfr-dynamic-uploader" id="<portlet:namespace />uploaderContainer">
 	<div class="container-fluid-1280">

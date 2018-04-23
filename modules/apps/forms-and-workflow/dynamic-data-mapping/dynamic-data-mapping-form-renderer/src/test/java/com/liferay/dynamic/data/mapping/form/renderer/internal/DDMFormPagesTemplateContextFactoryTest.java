@@ -180,10 +180,6 @@ public class DDMFormPagesTemplateContextFactoryTest extends PowerMockito {
 				"Field1", String.format(_HTML_WRAPPER, "label"),
 				"checkbox-multiple", "string", false, false, true,
 				String.format(_HTML_WRAPPER, "tip"),
-				StringBundler.concat(
-					StringPool.OPEN_BRACKET,
-					String.format(_HTML_WRAPPER, "predefinedValue"),
-					StringPool.CLOSE_BRACKET),
 				String.format(_HTML_WRAPPER, "option")));
 
 		mockDDMFormFieldTypeServicesTracker(
@@ -217,11 +213,6 @@ public class DDMFormPagesTemplateContextFactoryTest extends PowerMockito {
 		Map<String, String> optionField = options.get(0);
 
 		Assert.assertEquals("option", optionField.get("label"));
-
-		Object predefinedValue = fieldTemplateContext.get("predefinedValue");
-
-		Assert.assertEquals(
-			"[\"predefinedValue\"]", predefinedValue.toString());
 
 		Assert.assertEquals("tip", fieldTemplateContext.get("tip"));
 	}
@@ -507,10 +498,6 @@ public class DDMFormPagesTemplateContextFactoryTest extends PowerMockito {
 				"Field1", String.format(_HTML_WRAPPER, "label"), "select",
 				"string", false, false, true,
 				String.format(_HTML_WRAPPER, "tip"),
-				StringBundler.concat(
-					StringPool.OPEN_BRACKET,
-					String.format(_HTML_WRAPPER, "predefinedValue"),
-					StringPool.CLOSE_BRACKET),
 				String.format(_HTML_WRAPPER, "option")));
 
 		mockDDMFormFieldTypeServicesTracker(
@@ -544,11 +531,6 @@ public class DDMFormPagesTemplateContextFactoryTest extends PowerMockito {
 		Map<String, String> optionField = options.get(0);
 
 		Assert.assertEquals("option", optionField.get("label"));
-
-		Object predefinedValue = fieldTemplateContext.get("predefinedValue");
-
-		Assert.assertEquals(
-			"[\"predefinedValue\"]", predefinedValue.toString());
 
 		Assert.assertEquals("tip", fieldTemplateContext.get("tip"));
 	}

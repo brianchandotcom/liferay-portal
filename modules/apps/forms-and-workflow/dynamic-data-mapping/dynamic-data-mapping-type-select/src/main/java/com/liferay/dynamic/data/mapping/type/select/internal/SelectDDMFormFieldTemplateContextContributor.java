@@ -179,10 +179,6 @@ public class SelectDDMFormFieldTemplateContextContributor
 		String predefinedValueString = predefinedValue.getString(
 			ddmFormFieldRenderingContext.getLocale());
 
-		if (ddmFormFieldRenderingContext.isViewMode()) {
-			predefinedValueString = HtmlUtil.extractText(predefinedValueString);
-		}
-
 		return predefinedValueString;
 	}
 

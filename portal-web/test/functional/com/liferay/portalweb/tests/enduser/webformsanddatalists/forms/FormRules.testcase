@@ -1090,6 +1090,15 @@
 
 		<execute macro="FormRules#save" />
 
+		<execute macro="FormRules#viewSummary">
+			<var name="action" value="Require" />
+			<var name="actionTarget" value="Text Field 2" />
+			<var name="conditionField" value="Text Field 1" />
+			<var name="conditionFieldConstant" value="test" />
+			<var name="conditionOperator" value="Is equal to" />
+			<var name="ruleNumber" value="1" />
+		</execute>
+
 		<execute macro="FormsAdminNavigator#gotoFormBuilder" />
 
 		<execute macro="Form#publishForm" />

@@ -623,8 +623,6 @@
 	</command>
 
 	<command name="moveToTheRecycleBinExportTemplate">
-		<var name="key_exportTemplateName" value="${exportTemplateName}" />
-
 		<execute macro="LexiconEntry#gotoEllipsisMenuItem">
 			<var name="menuItem" value="Move to the Recycle Bin" />
 		</execute>

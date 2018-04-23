@@ -201,8 +201,6 @@
 	<command name="editCP">
 		<execute function="Pause" locator1="5000" />
 
-		<var name="key_userGroupName" value="${userGroupName}" />
-
 		<execute macro="LexiconEntry#gotoEllipsisMenuItem">
 			<var name="menuItem" value="Edit" />
 		</execute>

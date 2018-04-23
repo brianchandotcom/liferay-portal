@@ -1,7 +1,5 @@
 <definition>
 	<command name="addCP">
-		<var name="key_orgName" value="${orgName}" />
-
 		<execute macro="LexiconEntry#gotoEllipsisMenuItem">
 			<var name="menuItem" value="Add Organization" />
 		</execute>

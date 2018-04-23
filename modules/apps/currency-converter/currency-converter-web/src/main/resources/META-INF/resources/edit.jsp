@@ -60,10 +60,12 @@
 
 <aui:script>
 	function <portlet:namespace />saveCurrency() {
-		var form = AUI.$(document.<portlet:namespace />fm);
+		var form = document.querySelector('#<portlet:namespace />fm');
 
-		form.fm('symbols').val(Liferay.Util.listSelect(form.fm('current_actions')));
+		if (form) {
+			form.querySelector('#<portlet:namespace />symbols').value = Liferay.Util.listSelect(form.querySelector('#<portlet:namespace />current_actions');
 
-		submitForm(form);
+			submitForm(form);
+		}
 	}
 </aui:script>

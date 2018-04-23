@@ -139,8 +139,8 @@ public class GroupServiceUtil {
 	* <p>
 	* The group is unstaged and its assets and resources including layouts,
 	* membership requests, subscriptions, teams, blogs, bookmarks, calendar
-	* events, image gallery, journals, message boards, polls, shopping related
-	* entities, and wikis are also deleted.
+	* events, image gallery, journals, message boards, polls, and wikis are
+	* also deleted.
 	* </p>
 	*
 	* @param groupId the primary key of the group

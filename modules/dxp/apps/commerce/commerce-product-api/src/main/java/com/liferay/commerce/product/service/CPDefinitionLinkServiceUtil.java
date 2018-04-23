@@ -91,9 +91,12 @@ public class CPDefinitionLinkServiceUtil {
 	}
 
 	public static com.liferay.commerce.product.model.CPDefinitionLink updateCPDefinitionLink(
-		long cpDefinitionLinkId, double priority)
+		long cpDefinitionLinkId, double priority,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().updateCPDefinitionLink(cpDefinitionLinkId, priority);
+		return getService()
+				   .updateCPDefinitionLink(cpDefinitionLinkId, priority,
+			serviceContext);
 	}
 
 	public static void updateCPDefinitionLinks(long cpDefinitionId1,

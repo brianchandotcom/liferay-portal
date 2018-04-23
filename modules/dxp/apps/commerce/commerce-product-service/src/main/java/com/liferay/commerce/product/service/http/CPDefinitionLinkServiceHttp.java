@@ -253,7 +253,8 @@ public class CPDefinitionLinkServiceHttp {
 	}
 
 	public static com.liferay.commerce.product.model.CPDefinitionLink updateCPDefinitionLink(
-		HttpPrincipal httpPrincipal, long cpDefinitionLinkId, double priority)
+		HttpPrincipal httpPrincipal, long cpDefinitionLinkId, double priority,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(CPDefinitionLinkServiceUtil.class,
@@ -261,7 +262,7 @@ public class CPDefinitionLinkServiceHttp {
 					_updateCPDefinitionLinkParameterTypes6);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
-					cpDefinitionLinkId, priority);
+					cpDefinitionLinkId, priority, serviceContext);
 
 			Object returnObj = null;
 
@@ -336,7 +337,8 @@ public class CPDefinitionLinkServiceHttp {
 			long.class, java.lang.String.class
 		};
 	private static final Class<?>[] _updateCPDefinitionLinkParameterTypes6 = new Class[] {
-			long.class, double.class
+			long.class, double.class,
+			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _updateCPDefinitionLinksParameterTypes7 = new Class[] {
 			long.class, long[].class, java.lang.String.class,

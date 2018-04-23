@@ -312,7 +312,8 @@ public interface CPDefinitionLinkLocalService extends BaseLocalService,
 		CPDefinitionLink cpDefinitionLink);
 
 	public CPDefinitionLink updateCPDefinitionLink(long cpDefinitionLinkId,
-		double priority) throws PortalException;
+		double priority, ServiceContext serviceContext)
+		throws PortalException;
 
 	public void updateCPDefinitionLinks(long cpDefinitionId1,
 		long[] cpDefinitionIds2, java.lang.String type,

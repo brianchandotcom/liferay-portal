@@ -91,10 +91,11 @@ public class CPDefinitionLinkServiceWrapper implements CPDefinitionLinkService,
 
 	@Override
 	public com.liferay.commerce.product.model.CPDefinitionLink updateCPDefinitionLink(
-		long cpDefinitionLinkId, double priority)
+		long cpDefinitionLinkId, double priority,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _cpDefinitionLinkService.updateCPDefinitionLink(cpDefinitionLinkId,
-			priority);
+			priority, serviceContext);
 	}
 
 	@Override

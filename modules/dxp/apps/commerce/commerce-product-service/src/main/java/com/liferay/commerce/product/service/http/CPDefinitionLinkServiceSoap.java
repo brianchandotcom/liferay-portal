@@ -157,10 +157,12 @@ public class CPDefinitionLinkServiceSoap {
 	}
 
 	public static com.liferay.commerce.product.model.CPDefinitionLinkSoap updateCPDefinitionLink(
-		long cpDefinitionLinkId, double priority) throws RemoteException {
+		long cpDefinitionLinkId, double priority,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws RemoteException {
 		try {
 			com.liferay.commerce.product.model.CPDefinitionLink returnValue = CPDefinitionLinkServiceUtil.updateCPDefinitionLink(cpDefinitionLinkId,
-					priority);
+					priority, serviceContext);
 
 			return com.liferay.commerce.product.model.CPDefinitionLinkSoap.toSoapModel(returnValue);
 		}

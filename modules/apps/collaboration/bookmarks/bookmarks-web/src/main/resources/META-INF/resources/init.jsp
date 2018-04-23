@@ -20,6 +20,7 @@
 
 <%@ taglib uri="http://liferay.com/tld/asset" prefix="liferay-asset" %><%@
 taglib uri="http://liferay.com/tld/aui" prefix="aui" %><%@
+taglib uri="http://liferay.com/tld/clay" prefix="clay" %><%@
 taglib uri="http://liferay.com/tld/expando" prefix="liferay-expando" %><%@
 taglib uri="http://liferay.com/tld/export-import-changeset" prefix="liferay-export-import-changeset" %><%@
 taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
@@ -59,6 +60,7 @@ page import="com.liferay.bookmarks.web.internal.search.EntriesChecker" %><%@
 page import="com.liferay.bookmarks.web.internal.search.EntriesMover" %><%@
 page import="com.liferay.bookmarks.web.internal.security.permission.resource.BookmarksEntryPermission" %><%@
 page import="com.liferay.bookmarks.web.internal.security.permission.resource.BookmarksFolderPermission" %><%@
+page import="com.liferay.frontend.taglib.clay.servlet.taglib.util.JSPNavigationItemList" %><%@
 page import="com.liferay.frontend.taglib.servlet.taglib.AddMenuItem" %><%@
 page import="com.liferay.petra.string.CharPool" %><%@
 page import="com.liferay.petra.string.StringPool" %><%@

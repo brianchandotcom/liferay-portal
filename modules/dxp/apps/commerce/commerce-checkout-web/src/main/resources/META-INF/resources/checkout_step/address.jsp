@@ -28,12 +28,14 @@ if (commerceAddressId == 0) {
 	commerceAddressId = defaultCommerceAddressId;
 }
 
+String selectLabel = "choose-" + baseAddressCheckoutStepDisplayContext.getTitle();
+
 long commerceCountryId = ParamUtil.getLong(request, "commerceCountryId");
 long commerceRegionId = ParamUtil.getLong(request, "commerceRegionId");
 %>
 
 <div class="form-group-autofit">
-	<aui:select label="choose-shipping-address" name="shippingAddress" onChange='<%= renderResponse.getNamespace() + "selectAddress();" %>' wrapperCssClass="form-group-item">
+	<aui:select label="<%= selectLabel %>" name="commerceAddress" onChange='<%= renderResponse.getNamespace() + "selectAddress();" %>' wrapperCssClass="form-group-item">
 		<aui:option label="add-new-address" value="0" />
 
 		<%
@@ -48,7 +50,7 @@ long commerceRegionId = ParamUtil.getLong(request, "commerceRegionId");
 
 	</aui:select>
 
-	<aui:input disabled="<%= commerceAddresses.isEmpty() ? true : false %>" name="<%= baseAddressCheckoutStepDisplayContext.getParamName() %>" type="hidden" value="" />
+	<aui:input disabled="<%= commerceAddresses.isEmpty() ? true : false %>" name="<%= baseAddressCheckoutStepDisplayContext.getParamName() %>" type="hidden" value="<%= defaultCommerceAddressId %>" />
 
 	<aui:input name="newAddress" type="hidden" value='<%= (commerceAddressId > 0) ? "0" : "1" %>' />
 </div>
@@ -140,34 +142,34 @@ long commerceRegionId = ParamUtil.getLong(request, "commerceRegionId");
 			var A = AUI();
 
 			var newAddress = A.one('#<portlet:namespace />newAddress');
-			var shippingAddress = A.one('#<portlet:namespace />shippingAddress');
-			var shippingAddressParamName = A.one('#<%= renderResponse.getNamespace() + baseAddressCheckoutStepDisplayContext.getParamName() %>');
+			var commerceAddress = A.one('#<portlet:namespace />commerceAddress');
+			var commerceAddressParamName = A.one('#<%= renderResponse.getNamespace() + baseAddressCheckoutStepDisplayContext.getParamName() %>');
 
 			var isNewAddress = 0;
 
-			if (newAddress && shippingAddress && shippingAddressParamName) {
-				var shippingAddressVal = shippingAddress.val();
+			if (newAddress && commerceAddress && commerceAddressParamName) {
+				var commerceAddressVal = commerceAddress.val();
 
-				var disableShippingAddressParamName = false;
+				var disableCommerceAddressParamName = false;
 
-				if (shippingAddressVal == '0') {
+				if (commerceAddressVal == '0') {
 					isNewAddress = 1;
 
-					disableShippingAddressParamName = true;
+					disableCommerceAddressParamName = true;
 
 					<portlet:namespace />clearAddressFields();
 
 					<portlet:namespace />toggleAddressFields(false);
 				}
 				else {
-					<portlet:namespace />updateAddressFields(shippingAddress.get('selectedIndex'));
+					<portlet:namespace />updateAddressFields(commerceAddress.get('selectedIndex'));
 				}
 
-				shippingAddressParamName.val(shippingAddressVal);
+				commerceAddressParamName.val(commerceAddressVal);
 
 				newAddress.val(isNewAddress);
 
-				Liferay.Util.toggleDisabled(shippingAddressParamName, disableShippingAddressParamName);
+				Liferay.Util.toggleDisabled(commerceAddressParamName, disableCommerceAddressParamName);
 			}
 		},
 		['aui-base']
@@ -197,10 +199,10 @@ long commerceRegionId = ParamUtil.getLong(request, "commerceRegionId");
 			var A = AUI();
 
 			if (selectedVal && selectedVal != '0') {
-				var shippingAddress = A.one('#<portlet:namespace />shippingAddress');
+				var commerceAddress = A.one('#<portlet:namespace />commerceAddress');
 
-				if (shippingAddress) {
-					var options = shippingAddress.get('options');
+				if (commerceAddress) {
+					var options = commerceAddress.get('options');
 
 					var selectedOption = options.item(selectedVal);
 

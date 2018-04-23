@@ -48,10 +48,10 @@ public class ImageEditableElementParser implements EditableElementParser {
 	public void validate(Element element) throws FragmentEntryContentException {
 		List<Element> elements = element.getElementsByTag("img");
 
-		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-			"content.Language", getClass());
-
 		if (elements.size() != 1) {
+			ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+				"content.Language", getClass());
+
 			throw new FragmentEntryContentException(
 				LanguageUtil.get(
 					resourceBundle,

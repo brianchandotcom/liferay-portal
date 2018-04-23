@@ -940,6 +940,7 @@ message.
 			dest="${liferay.home}"
 			src="${project.dir}/tmp/${nightly.bundle.file}"
 		>
+			<patternset excludes="${nightly.bundle.excludes}" />
 			<mapper>
 				<globmapper
 					from="liferay-portal-${git.working.branch.name}/*"

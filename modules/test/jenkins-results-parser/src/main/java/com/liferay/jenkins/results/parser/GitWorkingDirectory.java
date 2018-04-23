@@ -959,11 +959,13 @@ public class GitWorkingDirectory {
 		return false;
 	}
 
-	public String log(int num) {
+	public List<Commit> log(int num) {
 		return log(num, null);
 	}
 
-	public String log(int num, File file) {
+	public List<Commit> log(int num, File file) {
+		List<Commit> commits = new ArrayList<>(num * 5);
+
 		for (int i = 0; i < 5; i++) {
 			try {
 				String gitLog = _log(num, file, "%H %s");
@@ -971,15 +973,13 @@ public class GitWorkingDirectory {
 				gitLog = gitLog.replaceAll(
 					"Finished executing Bash commands.", "");
 
-				String[] gitLogItems = gitLog.split("\n");
+				String[] gitLogEntities = gitLog.split("\n");
 
-				for (String gitLogItem : gitLogItems) {
-					if (!gitLogItem.matches("([0-9a-f]{40}) (.*)")) {
-						throw new RuntimeException("Unable to run: git log");
-					}
+				for (String gitLogEntity : gitLogEntities) {
+					commits.add(getCommit(gitLogEntity));
 				}
 
-				return gitLog;
+				return commits;
 			}
 			catch (RuntimeException re) {
 				re.printStackTrace();
@@ -1375,6 +1375,22 @@ public class GitWorkingDirectory {
 		return executeBashCommands(1, 1000 * 30, commands);
 	}
 
+	protected Commit getCommit(String gitLogEntity) {
+		Matcher matcher = _gitLogEntityPattern.matcher(gitLogEntity);
+
+		if (!matcher.matches()) {
+			throw new RuntimeException("Unable to find Git SHA");
+		}
+
+		String gitHubUserName = getGitHubUserName(getRemote("upstream"));
+		String message = matcher.group("message");
+		String repositoryName = getRepositoryName();
+		String sha = matcher.group("sha");
+
+		return CommitFactory.newCommit(
+			gitHubUserName, message, repositoryName, sha);
+	}
+
 	protected List<String> getLocalBranchNames() {
 		ExecutionResult executionResult = executeBashCommands(
 			"git for-each-ref refs/heads --format=\"%(refname)\"");
@@ -1736,6 +1752,8 @@ public class GitWorkingDirectory {
 
 	private static final Pattern _gitDirectoryPathPattern = Pattern.compile(
 		"gitdir\\: (.*\\.git)");
+	private static final Pattern _gitLogEntityPattern = Pattern.compile(
+		"(?<sha>[0-9a-f]{40}) (?<message>.*)");
 	private static final Pattern _gitLsRemotePattern = Pattern.compile(
 		"(?<sha>[^\\s]{40}+)[\\s]+refs/heads/(?<name>[^\\s]+)");
 	private static final List<String> _privateOnlyRepositoryNames =

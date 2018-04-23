@@ -16,31 +16,11 @@ package com.liferay.jenkins.results.parser;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * @author Michael Hashimoto
  */
 public class CommitFactory {
-
-	public static Commit newCommit(
-		String gitLogEntity, GitWorkingDirectory gitWorkingDirectory) {
-
-		Matcher matcher = _pattern.matcher(gitLogEntity);
-
-		if (!matcher.matches()) {
-			throw new RuntimeException("Unable to find Git SHA");
-		}
-
-		String gitHubUserName = GitWorkingDirectory.getGitHubUserName(
-			gitWorkingDirectory.getRemote("upstream"));
-		String message = matcher.group("message");
-		String repositoryName = gitWorkingDirectory.getRepositoryName();
-		String sha = matcher.group("sha");
-
-		return newCommit(gitHubUserName, message, repositoryName, sha);
-	}
 
 	public static Commit newCommit(
 		String gitHubUserName, String message, String repositoryName,
@@ -75,7 +55,5 @@ public class CommitFactory {
 	}
 
 	private static final Map<String, Commit> _commits = new HashMap<>();
-	private static final Pattern _pattern = Pattern.compile(
-		"(?<sha>[0-9a-f]{40}) (?<message>.*)");
 
 }

@@ -440,7 +440,7 @@
 			property="artifact.location.wsdd.dest"
 		>
 			<filterchain>
-				<replaceregex pattern="\.jar$" replace="-wsdd.jar" />
+				<replaceregex pattern="(.*?)(-\d+\.\d+\.\d+)(\..+)?(\.[jw]ar)" replace="\1-wsdd\2\3\4" />
 
 				<striplinebreaks />
 			</filterchain>

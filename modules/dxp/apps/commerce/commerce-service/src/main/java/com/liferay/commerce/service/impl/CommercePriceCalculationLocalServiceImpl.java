@@ -142,7 +142,7 @@ public class CommercePriceCalculationLocalServiceImpl
 			commerceOrder.getCommerceOrderItems();
 
 		for (CommerceOrderItem commerceOrderItem : commerceOrderItems) {
-			orderSubtotal.add(
+			orderSubtotal = orderSubtotal.add(
 				getFinalPrice(
 					commerceOrder.getSiteGroupId(),
 					commerceOrder.getOrderUserId(),

@@ -1056,6 +1056,15 @@ app.server.type=@{app.server.type}]]></echo>
 						<then>
 							<prepare-test-environment />
 
+							<if>
+								<isset property="env.CI_TEST_SUITE" />
+								<then>
+									<propertycopy from="search.engine[${env.CI_TEST_SUITE}]" name="search.engine" silent="true" />
+
+									<prepare-search-engine search.engine="${search.engine}" />
+								</then>
+							</if>
+
 							<antcall inheritAll="false" target="record-test-class-file-names">
 								<param name="test.class.groups.size" value="${test.batch.size}" />
 							</antcall>
@@ -1606,6 +1615,15 @@ app.server.type=@{app.server.type}]]></echo>
 						<isset property="env.DIST_PATH" />
 						<then>
 							<prepare-test-environment />
+
+							<if>
+								<isset property="env.CI_TEST_SUITE" />
+								<then>
+									<propertycopy from="search.engine[${env.CI_TEST_SUITE}]" name="search.engine" silent="true" />
+
+									<prepare-search-engine search.engine="${search.engine}" />
+								</then>
+							</if>
 						</then>
 						<else>
 							<prepare-test-build />

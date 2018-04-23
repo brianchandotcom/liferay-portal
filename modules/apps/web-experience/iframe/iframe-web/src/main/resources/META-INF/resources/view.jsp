@@ -33,39 +33,6 @@
 
 <c:if test="<%= iFramePortletInstanceConfiguration.dynamicUrlEnabled() %>">
 	<aui:script>
-		function <portlet:namespace />monitorIframe() {
-			var A = AUI();
-
-			var url = null;
-
-			try {
-				var iframe = document.getElementById('<portlet:namespace />iframe');
-
-				url = iframe.contentWindow.document.location.href;
-			}
-			catch (e) {
-				return true;
-			}
-
-			iframe.contentWindow.Liferay.on('endNavigate', <portlet:namespace />monitorIframe);
-
-			var baseSrc = '<%= HtmlUtil.escapeJS(iFrameDisplayContext.getIframeBaseSrc()) %>';
-			var iframeSrc = '<%= HtmlUtil.escapeJS(iFrameDisplayContext.getIframeSrc()) %>';
-
-			if ((url == iframeSrc) || (url == (iframeSrc + '/'))) {
-			}
-			else if (A.Lang.String.startsWith(url, baseSrc)) {
-				url = url.substring(baseSrc.length);
-
-				<portlet:namespace />updateHash(url);
-			}
-			else {
-				<portlet:namespace />updateHash(url);
-			}
-
-			return true;
-		}
-
 		Liferay.provide(
 			window,
 			'<portlet:namespace />init',
@@ -90,7 +57,7 @@
 					var baseSrc = '<%= HtmlUtil.escapeJS(iFrameDisplayContext.getIframeBaseSrc()) %>';
 
 					if (!(/^https?\:\/\//.test(hash)) || !A.Lang.String.startsWith(hash, baseSrc)) {
-						src = A.QueryString.escape(hash);
+						src = baseSrc + A.QueryString.unescape(hash);
 					}
 
 					var iframe = A.one('#<portlet:namespace />iframe');
@@ -101,6 +68,42 @@
 				}
 			},
 			['aui-base', 'querystring']
+		);
+
+		Liferay.provide(
+			window,
+			'<portlet:namespace />monitorIframe',
+			function() {
+				var A = AUI();
+
+				var url = null;
+
+				try {
+					var iframe = document.getElementById('<portlet:namespace />iframe');
+
+					url = iframe.contentWindow.document.location.href;
+
+					iframe.contentWindow.Liferay.on('endNavigate', <portlet:namespace />monitorIframe);
+				}
+				catch (e) {
+					return true;
+				}
+
+				var baseSrc = '<%= HtmlUtil.escapeJS(iFrameDisplayContext.getIframeBaseSrc()) %>';
+				var iframeSrc = '<%= HtmlUtil.escapeJS(iFrameDisplayContext.getIframeSrc()) %>';
+
+				var hasBaseSrc = A.Lang.String.startsWith(url, baseSrc);
+
+				if (hasBaseSrc) {
+					url = url.substring(baseSrc.length);
+
+					<portlet:namespace />updateHash(url);
+				}
+				else if (!(url == iframeSrc || url == (iframeSrc + '/')) && !hasBaseSrc) {
+					<portlet:namespace />updateHash(url);
+				}
+			},
+			['aui-base']
 		);
 
 		Liferay.provide(

@@ -17,6 +17,8 @@ package com.liferay.jenkins.results.parser;
 import java.io.File;
 import java.io.IOException;
 
+import java.util.List;
+
 /**
  * @author Michael Hashimoto
  */
@@ -24,10 +26,10 @@ public class LegacyDataArchive {
 
 	public Commit getCommit() {
 		if (_legacyDataArchiveFile.exists()) {
-			String gitLog = _legacyGitWorkingDirectory.log(
+			List<Commit> commits = _legacyGitWorkingDirectory.log(
 				1, _legacyDataArchiveFile);
 
-			return CommitFactory.newCommit(gitLog, _legacyGitWorkingDirectory);
+			return commits.get(0);
 		}
 
 		return null;

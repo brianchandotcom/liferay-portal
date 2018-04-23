@@ -88,6 +88,7 @@ public interface MBBanLocalService extends BaseLocalService,
 	* @param banId the primary key for the new message boards ban
 	* @return the new message boards ban
 	*/
+	@Transactional(enabled = false)
 	public MBBan createMBBan(long banId);
 
 	public void deleteBan(long banId) throws PortalException;

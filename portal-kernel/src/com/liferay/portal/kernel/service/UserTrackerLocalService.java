@@ -79,6 +79,7 @@ public interface UserTrackerLocalService extends BaseLocalService,
 	* @param userTrackerId the primary key for the new user tracker
 	* @return the new user tracker
 	*/
+	@Transactional(enabled = false)
 	public UserTracker createUserTracker(long userTrackerId);
 
 	/**

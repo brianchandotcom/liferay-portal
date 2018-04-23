@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.kernel.service.persistence.ClassNamePersistence;
 import com.liferay.portal.kernel.service.persistence.UserFinder;
 import com.liferay.portal.kernel.service.persistence.UserPersistence;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 
@@ -97,6 +98,7 @@ public abstract class RatingsStatsLocalServiceBaseImpl
 	 * @return the new ratings stats
 	 */
 	@Override
+	@Transactional(enabled = false)
 	public RatingsStats createRatingsStats(long statsId) {
 		return ratingsStatsPersistence.create(statsId);
 	}

@@ -76,6 +76,7 @@ public interface StatusLocalService extends BaseLocalService,
 	* @param statusId the primary key for the new status
 	* @return the new status
 	*/
+	@Transactional(enabled = false)
 	public Status createStatus(long statusId);
 
 	/**

@@ -67,6 +67,7 @@ import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.kernel.service.persistence.GroupPersistence;
 import com.liferay.portal.kernel.service.persistence.SystemEventPersistence;
 import com.liferay.portal.kernel.service.persistence.UserPersistence;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -126,6 +127,7 @@ public abstract class MBCategoryLocalServiceBaseImpl
 	 * @return the new message boards category
 	 */
 	@Override
+	@Transactional(enabled = false)
 	public MBCategory createMBCategory(long categoryId) {
 		return mbCategoryPersistence.create(categoryId);
 	}

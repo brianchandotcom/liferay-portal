@@ -73,6 +73,7 @@ import com.liferay.portal.kernel.service.persistence.PortletPreferencesPersisten
 import com.liferay.portal.kernel.service.persistence.TicketPersistence;
 import com.liferay.portal.kernel.service.persistence.UserPersistence;
 import com.liferay.portal.kernel.service.persistence.WorkflowInstanceLinkPersistence;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -130,6 +131,7 @@ public abstract class KBArticleLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 * @return the new kb article
 	 */
 	@Override
+	@Transactional(enabled = false)
 	public KBArticle createKBArticle(long kbArticleId) {
 		return kbArticlePersistence.create(kbArticleId);
 	}

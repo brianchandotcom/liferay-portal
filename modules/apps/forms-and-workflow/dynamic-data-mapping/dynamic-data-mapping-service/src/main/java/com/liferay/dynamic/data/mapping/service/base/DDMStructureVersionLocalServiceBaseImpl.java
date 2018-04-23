@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
 import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
@@ -93,6 +94,7 @@ public abstract class DDMStructureVersionLocalServiceBaseImpl
 	 * @return the new ddm structure version
 	 */
 	@Override
+	@Transactional(enabled = false)
 	public DDMStructureVersion createDDMStructureVersion(
 		long structureVersionId) {
 		return ddmStructureVersionPersistence.create(structureVersionId);

@@ -79,6 +79,7 @@ public interface ExpandoRowLocalService extends BaseLocalService,
 	* @param rowId the primary key for the new expando row
 	* @return the new expando row
 	*/
+	@Transactional(enabled = false)
 	public ExpandoRow createExpandoRow(long rowId);
 
 	/**

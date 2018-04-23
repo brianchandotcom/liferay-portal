@@ -78,6 +78,7 @@ public interface ShoppingCartLocalService extends BaseLocalService,
 	* @param cartId the primary key for the new shopping cart
 	* @return the new shopping cart
 	*/
+	@Transactional(enabled = false)
 	public ShoppingCart createShoppingCart(long cartId);
 
 	public void deleteGroupCarts(long groupId);

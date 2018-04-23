@@ -44,6 +44,7 @@ import com.liferay.portal.kernel.service.persistence.GroupPersistence;
 import com.liferay.portal.kernel.service.persistence.LayoutPersistence;
 import com.liferay.portal.kernel.service.persistence.UserGroupRolePersistence;
 import com.liferay.portal.kernel.service.persistence.UserPersistence;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
@@ -97,6 +98,7 @@ public abstract class MemberRequestLocalServiceBaseImpl
 	 * @return the new member request
 	 */
 	@Override
+	@Transactional(enabled = false)
 	public MemberRequest createMemberRequest(long memberRequestId) {
 		return memberRequestPersistence.create(memberRequestId);
 	}

@@ -76,6 +76,7 @@ public interface FeedLocalService extends BaseLocalService,
 	* @param feedId the primary key for the new feed
 	* @return the new feed
 	*/
+	@Transactional(enabled = false)
 	public Feed createFeed(long feedId);
 
 	/**

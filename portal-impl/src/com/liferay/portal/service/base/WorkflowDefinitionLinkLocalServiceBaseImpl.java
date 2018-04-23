@@ -41,6 +41,7 @@ import com.liferay.portal.kernel.service.persistence.ClassNamePersistence;
 import com.liferay.portal.kernel.service.persistence.UserFinder;
 import com.liferay.portal.kernel.service.persistence.UserPersistence;
 import com.liferay.portal.kernel.service.persistence.WorkflowDefinitionLinkPersistence;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 
@@ -94,6 +95,7 @@ public abstract class WorkflowDefinitionLinkLocalServiceBaseImpl
 	 * @return the new workflow definition link
 	 */
 	@Override
+	@Transactional(enabled = false)
 	public WorkflowDefinitionLink createWorkflowDefinitionLink(
 		long workflowDefinitionLinkId) {
 		return workflowDefinitionLinkPersistence.create(workflowDefinitionLinkId);

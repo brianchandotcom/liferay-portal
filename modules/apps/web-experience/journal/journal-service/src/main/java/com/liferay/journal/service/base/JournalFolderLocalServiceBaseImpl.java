@@ -67,6 +67,7 @@ import com.liferay.portal.kernel.service.persistence.GroupPersistence;
 import com.liferay.portal.kernel.service.persistence.UserPersistence;
 import com.liferay.portal.kernel.service.persistence.WorkflowDefinitionLinkPersistence;
 import com.liferay.portal.kernel.service.persistence.WorkflowInstanceLinkPersistence;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -126,6 +127,7 @@ public abstract class JournalFolderLocalServiceBaseImpl
 	 * @return the new journal folder
 	 */
 	@Override
+	@Transactional(enabled = false)
 	public JournalFolder createJournalFolder(long folderId) {
 		return journalFolderPersistence.create(folderId);
 	}

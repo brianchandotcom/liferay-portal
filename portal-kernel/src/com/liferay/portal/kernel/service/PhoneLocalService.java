@@ -82,6 +82,7 @@ public interface PhoneLocalService extends BaseLocalService,
 	* @param phoneId the primary key for the new phone
 	* @return the new phone
 	*/
+	@Transactional(enabled = false)
 	public Phone createPhone(long phoneId);
 
 	/**

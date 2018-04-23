@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
 import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistryUtil;
 import com.liferay.portal.kernel.service.persistence.ClassNamePersistence;
 import com.liferay.portal.kernel.service.persistence.UserPersistence;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 
@@ -96,6 +97,7 @@ public abstract class PowwowMeetingLocalServiceBaseImpl
 	 * @return the new powwow meeting
 	 */
 	@Override
+	@Transactional(enabled = false)
 	public PowwowMeeting createPowwowMeeting(long powwowMeetingId) {
 		return powwowMeetingPersistence.create(powwowMeetingId);
 	}

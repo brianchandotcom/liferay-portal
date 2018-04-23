@@ -87,6 +87,7 @@ public interface SocialRelationLocalService extends BaseLocalService,
 	* @param relationId the primary key for the new social relation
 	* @return the new social relation
 	*/
+	@Transactional(enabled = false)
 	public SocialRelation createSocialRelation(long relationId);
 
 	/**

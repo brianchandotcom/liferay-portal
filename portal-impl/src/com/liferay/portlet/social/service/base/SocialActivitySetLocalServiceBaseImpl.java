@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
 import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 
@@ -95,6 +96,7 @@ public abstract class SocialActivitySetLocalServiceBaseImpl
 	 * @return the new social activity set
 	 */
 	@Override
+	@Transactional(enabled = false)
 	public SocialActivitySet createSocialActivitySet(long activitySetId) {
 		return socialActivitySetPersistence.create(activitySetId);
 	}

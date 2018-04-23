@@ -75,6 +75,7 @@ public interface ListTypeLocalService extends BaseLocalService,
 	* @param listTypeId the primary key for the new list type
 	* @return the new list type
 	*/
+	@Transactional(enabled = false)
 	public ListType createListType(long listTypeId);
 
 	/**

@@ -87,6 +87,7 @@ public interface ExpandoTableLocalService extends BaseLocalService,
 	* @param tableId the primary key for the new expando table
 	* @return the new expando table
 	*/
+	@Transactional(enabled = false)
 	public ExpandoTable createExpandoTable(long tableId);
 
 	/**

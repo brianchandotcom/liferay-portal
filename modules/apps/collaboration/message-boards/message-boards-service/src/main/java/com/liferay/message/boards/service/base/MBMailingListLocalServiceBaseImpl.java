@@ -47,6 +47,7 @@ import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
 import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.kernel.service.persistence.UserPersistence;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
@@ -100,6 +101,7 @@ public abstract class MBMailingListLocalServiceBaseImpl
 	 * @return the new message boards mailing list
 	 */
 	@Override
+	@Transactional(enabled = false)
 	public MBMailingList createMBMailingList(long mailingListId) {
 		return mbMailingListPersistence.create(mailingListId);
 	}

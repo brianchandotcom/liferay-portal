@@ -78,6 +78,7 @@ public interface LayoutSetLocalService extends BaseLocalService,
 	* @param layoutSetId the primary key for the new layout set
 	* @return the new layout set
 	*/
+	@Transactional(enabled = false)
 	public LayoutSet createLayoutSet(long layoutSetId);
 
 	/**

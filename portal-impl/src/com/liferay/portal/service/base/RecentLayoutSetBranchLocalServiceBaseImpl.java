@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.kernel.service.RecentLayoutSetBranchLocalService;
 import com.liferay.portal.kernel.service.persistence.LayoutSetBranchPersistence;
 import com.liferay.portal.kernel.service.persistence.RecentLayoutSetBranchPersistence;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 
@@ -92,6 +93,7 @@ public abstract class RecentLayoutSetBranchLocalServiceBaseImpl
 	 * @return the new recent layout set branch
 	 */
 	@Override
+	@Transactional(enabled = false)
 	public RecentLayoutSetBranch createRecentLayoutSetBranch(
 		long recentLayoutSetBranchId) {
 		return recentLayoutSetBranchPersistence.create(recentLayoutSetBranchId);

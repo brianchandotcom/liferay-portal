@@ -110,6 +110,7 @@ public interface PortletLocalService extends BaseLocalService,
 	* @param id the primary key for the new portlet
 	* @return the new portlet
 	*/
+	@Transactional(enabled = false)
 	public Portlet createPortlet(long id);
 
 	/**

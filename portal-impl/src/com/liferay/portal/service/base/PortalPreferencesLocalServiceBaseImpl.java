@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
 import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.kernel.service.PortalPreferencesLocalService;
 import com.liferay.portal.kernel.service.persistence.PortalPreferencesPersistence;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 
@@ -91,6 +92,7 @@ public abstract class PortalPreferencesLocalServiceBaseImpl
 	 * @return the new portal preferences
 	 */
 	@Override
+	@Transactional(enabled = false)
 	public PortalPreferences createPortalPreferences(long portalPreferencesId) {
 		return portalPreferencesPersistence.create(portalPreferencesId);
 	}

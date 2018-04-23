@@ -100,6 +100,7 @@ public interface FriendlyURLEntryLocalService extends BaseLocalService,
 	* @param friendlyURLEntryId the primary key for the new friendly url entry
 	* @return the new friendly url entry
 	*/
+	@Transactional(enabled = false)
 	public FriendlyURLEntry createFriendlyURLEntry(long friendlyURLEntryId);
 
 	/**

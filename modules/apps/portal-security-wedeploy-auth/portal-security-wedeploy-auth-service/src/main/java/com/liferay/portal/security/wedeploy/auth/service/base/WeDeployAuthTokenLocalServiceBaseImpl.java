@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
 import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.kernel.service.persistence.ClassNamePersistence;
 import com.liferay.portal.kernel.service.persistence.UserPersistence;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.security.wedeploy.auth.model.WeDeployAuthToken;
@@ -95,6 +96,7 @@ public abstract class WeDeployAuthTokenLocalServiceBaseImpl
 	 * @return the new we deploy auth token
 	 */
 	@Override
+	@Transactional(enabled = false)
 	public WeDeployAuthToken createWeDeployAuthToken(long weDeployAuthTokenId) {
 		return weDeployAuthTokenPersistence.create(weDeployAuthTokenId);
 	}

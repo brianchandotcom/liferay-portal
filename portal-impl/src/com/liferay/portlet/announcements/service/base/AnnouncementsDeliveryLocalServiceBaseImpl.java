@@ -41,6 +41,7 @@ import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
 import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.kernel.service.persistence.UserFinder;
 import com.liferay.portal.kernel.service.persistence.UserPersistence;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 
@@ -94,6 +95,7 @@ public abstract class AnnouncementsDeliveryLocalServiceBaseImpl
 	 * @return the new announcements delivery
 	 */
 	@Override
+	@Transactional(enabled = false)
 	public AnnouncementsDelivery createAnnouncementsDelivery(long deliveryId) {
 		return announcementsDeliveryPersistence.create(deliveryId);
 	}

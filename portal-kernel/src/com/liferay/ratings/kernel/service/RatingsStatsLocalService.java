@@ -79,6 +79,7 @@ public interface RatingsStatsLocalService extends BaseLocalService,
 	* @param statsId the primary key for the new ratings stats
 	* @return the new ratings stats
 	*/
+	@Transactional(enabled = false)
 	public RatingsStats createRatingsStats(long statsId);
 
 	/**

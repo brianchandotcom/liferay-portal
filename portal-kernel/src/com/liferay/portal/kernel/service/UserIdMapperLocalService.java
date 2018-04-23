@@ -73,6 +73,7 @@ public interface UserIdMapperLocalService extends BaseLocalService,
 	* @param userIdMapperId the primary key for the new user ID mapper
 	* @return the new user ID mapper
 	*/
+	@Transactional(enabled = false)
 	public UserIdMapper createUserIdMapper(long userIdMapperId);
 
 	/**

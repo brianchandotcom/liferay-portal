@@ -40,6 +40,7 @@ import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
 import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
@@ -93,6 +94,7 @@ public abstract class AssetTagStatsLocalServiceBaseImpl
 	 * @return the new asset tag stats
 	 */
 	@Override
+	@Transactional(enabled = false)
 	public AssetTagStats createAssetTagStats(long tagStatsId) {
 		return assetTagStatsPersistence.create(tagStatsId);
 	}

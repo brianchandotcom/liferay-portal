@@ -82,6 +82,7 @@ public interface ResourceBlockPermissionLocalService extends BaseLocalService,
 	* @param resourceBlockPermissionId the primary key for the new resource block permission
 	* @return the new resource block permission
 	*/
+	@Transactional(enabled = false)
 	public ResourceBlockPermission createResourceBlockPermission(
 		long resourceBlockPermissionId);
 

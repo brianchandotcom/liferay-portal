@@ -67,6 +67,7 @@ import com.liferay.portal.kernel.service.persistence.UserGroupGroupRolePersisten
 import com.liferay.portal.kernel.service.persistence.UserGroupRoleFinder;
 import com.liferay.portal.kernel.service.persistence.UserGroupRolePersistence;
 import com.liferay.portal.kernel.service.persistence.UserPersistence;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 
@@ -118,6 +119,7 @@ public abstract class RoleLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 * @return the new role
 	 */
 	@Override
+	@Transactional(enabled = false)
 	public Role createRole(long roleId) {
 		return rolePersistence.create(roleId);
 	}

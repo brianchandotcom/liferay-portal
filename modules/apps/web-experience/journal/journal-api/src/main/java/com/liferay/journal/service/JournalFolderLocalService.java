@@ -91,6 +91,7 @@ public interface JournalFolderLocalService extends BaseLocalService,
 	* @param folderId the primary key for the new journal folder
 	* @return the new journal folder
 	*/
+	@Transactional(enabled = false)
 	public JournalFolder createJournalFolder(long folderId);
 
 	@Indexable(type = IndexableType.DELETE)

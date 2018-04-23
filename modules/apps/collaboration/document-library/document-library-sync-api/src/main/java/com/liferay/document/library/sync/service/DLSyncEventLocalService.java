@@ -79,6 +79,7 @@ public interface DLSyncEventLocalService extends BaseLocalService,
 	* @param syncEventId the primary key for the new dl sync event
 	* @return the new dl sync event
 	*/
+	@Transactional(enabled = false)
 	public DLSyncEvent createDLSyncEvent(long syncEventId);
 
 	/**

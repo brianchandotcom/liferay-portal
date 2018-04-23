@@ -42,6 +42,7 @@ import com.liferay.portal.kernel.service.persistence.ResourcePermissionFinder;
 import com.liferay.portal.kernel.service.persistence.ResourcePermissionPersistence;
 import com.liferay.portal.kernel.service.persistence.RoleFinder;
 import com.liferay.portal.kernel.service.persistence.RolePersistence;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 
@@ -95,6 +96,7 @@ public abstract class ResourcePermissionLocalServiceBaseImpl
 	 * @return the new resource permission
 	 */
 	@Override
+	@Transactional(enabled = false)
 	public ResourcePermission createResourcePermission(
 		long resourcePermissionId) {
 		return resourcePermissionPersistence.create(resourcePermissionId);

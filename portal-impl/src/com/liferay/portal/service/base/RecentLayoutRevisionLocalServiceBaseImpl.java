@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.kernel.service.RecentLayoutRevisionLocalService;
 import com.liferay.portal.kernel.service.persistence.LayoutRevisionPersistence;
 import com.liferay.portal.kernel.service.persistence.RecentLayoutRevisionPersistence;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 
@@ -92,6 +93,7 @@ public abstract class RecentLayoutRevisionLocalServiceBaseImpl
 	 * @return the new recent layout revision
 	 */
 	@Override
+	@Transactional(enabled = false)
 	public RecentLayoutRevision createRecentLayoutRevision(
 		long recentLayoutRevisionId) {
 		return recentLayoutRevisionPersistence.create(recentLayoutRevisionId);

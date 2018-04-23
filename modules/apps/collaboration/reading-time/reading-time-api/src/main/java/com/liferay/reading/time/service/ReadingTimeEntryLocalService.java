@@ -88,6 +88,7 @@ public interface ReadingTimeEntryLocalService extends BaseLocalService,
 	* @param readingTimeEntryId the primary key for the new reading time entry
 	* @return the new reading time entry
 	*/
+	@Transactional(enabled = false)
 	public ReadingTimeEntry createReadingTimeEntry(long readingTimeEntryId);
 
 	/**

@@ -71,6 +71,11 @@ public interface CommerceCloudOrderForecastSyncLocalService
 	public CommerceCloudOrderForecastSync addCommerceCloudOrderForecastSync(
 		CommerceCloudOrderForecastSync commerceCloudOrderForecastSync);
 
+	public CommerceCloudOrderForecastSync addCommerceCloudOrderForecastSync(
+		long commerceOrderId) throws PortalException;
+
+	public void checkCommerceCloudOrderForecastSyncs();
+
 	/**
 	* Creates a new commerce cloud order forecast sync with the primary key. Does not add the commerce cloud order forecast sync to the database.
 	*
@@ -101,6 +106,9 @@ public interface CommerceCloudOrderForecastSyncLocalService
 	@Indexable(type = IndexableType.DELETE)
 	public CommerceCloudOrderForecastSync deleteCommerceCloudOrderForecastSync(
 		long commerceCloudOrderForecastSyncId) throws PortalException;
+
+	public CommerceCloudOrderForecastSync deleteCommerceCloudOrderForecastSyncByCommerceOrderId(
+		long commerceOrderId) throws PortalException;
 
 	/**
 	* @throws PortalException

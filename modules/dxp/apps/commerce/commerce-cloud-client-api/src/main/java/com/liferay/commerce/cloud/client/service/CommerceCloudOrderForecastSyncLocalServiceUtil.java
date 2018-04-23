@@ -55,6 +55,16 @@ public class CommerceCloudOrderForecastSyncLocalServiceUtil {
 				   .addCommerceCloudOrderForecastSync(commerceCloudOrderForecastSync);
 	}
 
+	public static com.liferay.commerce.cloud.client.model.CommerceCloudOrderForecastSync addCommerceCloudOrderForecastSync(
+		long commerceOrderId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().addCommerceCloudOrderForecastSync(commerceOrderId);
+	}
+
+	public static void checkCommerceCloudOrderForecastSyncs() {
+		getService().checkCommerceCloudOrderForecastSyncs();
+	}
+
 	/**
 	* Creates a new commerce cloud order forecast sync with the primary key. Does not add the commerce cloud order forecast sync to the database.
 	*
@@ -91,6 +101,13 @@ public class CommerceCloudOrderForecastSyncLocalServiceUtil {
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .deleteCommerceCloudOrderForecastSync(commerceCloudOrderForecastSyncId);
+	}
+
+	public static com.liferay.commerce.cloud.client.model.CommerceCloudOrderForecastSync deleteCommerceCloudOrderForecastSyncByCommerceOrderId(
+		long commerceOrderId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .deleteCommerceCloudOrderForecastSyncByCommerceOrderId(commerceOrderId);
 	}
 
 	/**

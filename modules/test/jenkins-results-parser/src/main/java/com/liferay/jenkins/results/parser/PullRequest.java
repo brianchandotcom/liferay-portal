@@ -73,6 +73,14 @@ public class PullRequest {
 		}
 	}
 
+	public Commit getCommit() {
+		String gitHubUserName = getOwnerUsername();
+		String repositoryName = getRepositoryName();
+		String sha = getSenderSHA();
+
+		return CommitFactory.newCommit(gitHubUserName, repositoryName, sha);
+	}
+
 	public String getHtmlURL() {
 		return _jsonObject.getString("html_url");
 	}
@@ -153,6 +161,12 @@ public class PullRequest {
 	}
 
 	public void setTestSuiteStatus(TestSuiteStatus testSuiteStatus) {
+		setTestSuiteStatus(testSuiteStatus, null);
+	}
+
+	public void setTestSuiteStatus(
+		TestSuiteStatus testSuiteStatus, String targetURL) {
+
 		_testSuiteStatus = testSuiteStatus;
 
 		removeTestSuiteLabels();
@@ -172,6 +186,50 @@ public class PullRequest {
 		addLabel(
 			LabelFactory.newLabel(
 				getLabelsURL(), sb.toString(), testSuiteStatus.getColor()));
+
+		if (targetURL == null) {
+			return;
+		}
+
+		if (testSuiteStatus == TestSuiteStatus.MISSING) {
+			return;
+		}
+
+		Commit commit = getCommit();
+
+		Commit.Status status = Commit.Status.valueOf(
+			testSuiteStatus.toString());
+
+		String context = _TEST_SUITE_NAME_DEFAULT;
+
+		if (!_testSuiteName.equals(_TEST_SUITE_NAME_DEFAULT)) {
+			context = "liferay/ci:test:" + _testSuiteName;
+		}
+
+		sb = new StringBuilder();
+
+		sb.append("\"ci:test");
+
+		if (!_testSuiteName.equals(_TEST_SUITE_NAME_DEFAULT)) {
+			sb.append(":");
+			sb.append(_testSuiteName);
+		}
+
+		sb.append("\"");
+
+		if ((testSuiteStatus == TestSuiteStatus.ERROR) ||
+			(testSuiteStatus == TestSuiteStatus.FAILURE)) {
+
+			sb.append(" has FAILED.");
+		}
+		else if (testSuiteStatus == TestSuiteStatus.PENDING) {
+			sb.append(" is running.");
+		}
+		else if (testSuiteStatus == TestSuiteStatus.SUCCESS) {
+			sb.append(" has PASSED.");
+		}
+
+		commit.setStatus(status, context, sb.toString(), targetURL);
 	}
 
 	public static enum TestSuiteStatus {

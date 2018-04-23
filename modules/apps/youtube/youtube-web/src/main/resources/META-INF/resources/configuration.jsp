@@ -53,7 +53,7 @@ String redirect = ParamUtil.getString(request, "redirect");
 				</aui:fieldset>
 
 				<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="advanced-options">
-					<aui:input name="preferences--showThumbnail--" type="toggle-switch" value="<%= youTubeDisplayContext.isShowThumbnail() %>" />
+					<aui:input name="preferences--showThumbnail--" label="watch-this-video-at-youtube" type="toggle-switch" value="<%= youTubeDisplayContext.isShowThumbnail() %>" />
 
 					<div class="<%= youTubeDisplayContext.isShowThumbnail() ? "hide" : StringPool.BLANK %>" id="<portlet:namespace />videoPreferences">
 						<aui:input inlineField="<%= true %>" label="auto-play" name="preferences--autoplay--" type="toggle-switch" value="<%= youTubeDisplayContext.isAutoPlay() %>" />
@@ -83,14 +83,11 @@ String redirect = ParamUtil.getString(request, "redirect");
 </aui:form>
 
 <aui:script>
-	var <portlet:namespace />customHeight;
-	var <portlet:namespace />customWidth;
-
 	function <portlet:namespace />updateFrameSize(value) {
 		var Util = Liferay.Util;
 
-		var heightNode = AUI.$('#<portlet:namespace />height');
-		var widthNode = AUI.$('#<portlet:namespace />width');
+		var heightNode = document.querySelector('#<portlet:namespace />height');
+		var widthNode = document.querySelector('#<portlet:namespace />width');
 
 		var useDefaults = value != 'custom';
 
@@ -100,27 +97,8 @@ String redirect = ParamUtil.getString(request, "redirect");
 		if (useDefaults) {
 			var dimensions = value.split('x');
 
-			heightNode.val(dimensions[1]);
-			widthNode.val(dimensions[0]);
-		}
-		else {
-			heightNode.on(
-				'blur',
-				function(event) {
-					<portlet:namespace />customHeight = event.currentTarget.value;
-				}
-			);
-
-			heightNode.val(<portlet:namespace />customHeight);
-
-			widthNode.on(
-				'blur',
-				function(event) {
-					<portlet:namespace />customWidth = event.currentTarget.value;
-				}
-			);
-
-			widthNode.val(<portlet:namespace />customWidth);
+			heightNode.value = dimensions[1];
+			widthNode.value = dimensions[0];
 		}
 	}
 

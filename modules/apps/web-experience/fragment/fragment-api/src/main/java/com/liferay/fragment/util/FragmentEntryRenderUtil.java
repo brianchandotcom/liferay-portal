@@ -136,7 +136,9 @@ public class FragmentEntryRenderUtil {
 			fragmentEntryProcessorRegistry.processFragmentEntryLinkHTML(
 				fragmentEntryLink, mode);
 
-		html = _processTemplate(html, request, response);
+		if (Validator.isNotNull(html)) {
+			html = _processTemplate(html, request, response);
+		}
 
 		return renderFragmentEntry(
 			fragmentEntryLink.getFragmentEntryId(),

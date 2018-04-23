@@ -25,49 +25,46 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * Provides a specialized interface to define a social bookmark.
  *
- * Every OSGi service registered to this interface will be ready to use in the
- * social bookmarks configuration menu.
- *
- * Implementations must be registered with a value set for the property
- * 'social.bookmarks.type' indicating a unique key by which the sharing service
- * can be identified (e.g. facebook). If 2 services share the same value for the
- * property, the one wich a highest service ranking will be chosen.
+ * Every OSGi service registered with this interface is available in the social
+ * bookmarks configuration menu. When registering an implementation, the
+ * property 'social.bookmarks.type' must be set to a unique key identifying the
+ * sharing service (e.g. facebook). If two services share the same value for
+ * this property, the one with the highest service ranking is used.
  *
  * @author Alejandro Tardín
  */
 public interface SocialBookmark {
 
 	/**
-	 * Must return the name of the social bookmark. It is the name that will be
-	 * displayed in places like settings, tooltips, etc...
+	 * Returns the social bookmark's name. This name is displayed in settings,
+	 * tooltips, and so on.
 	 *
 	 * @param locale the requested locale of the message
 	 */
 	public String getName(Locale locale);
 
 	/**
-	 * Must return the URL responsible for sharing the content. This is the URL that
-	 * users will be redirected to when clicking on the social bookmark.
+	 * Returns the URL that users are redirected to when clicking the social
+	 * bookmark.
 	 *
 	 * @param title the title of the content being shared
-	 * @param url the url of the content being shared (e.g. current page)
+	 * @param url the URL of the content being shared (e.g., the current page)
 	 */
 	public String getPostURL(String title, String url);
 
 	/**
-	 * This method is responsible for rendering the content of the social
-	 * bookmark. It will be called when the 'inline' display style is configured.
+	 * Renders the social bookmark's content. This method is called when using
+	 * the {@code inline} display style.
 	 *
-	 * This will typically render a link with a custom icon or image pointing to
-	 * the saring URL. However if the sharing platform used provides their own
-	 * code to display the bookmark it can also be rendered from this method.
+	 * This typically renders a link to the sharing URL with a custom icon or
+	 * image. However, if the sharing platform provides code to display the
+	 * bookmark it can also be rendered from this method.
 	 *
-	 * @param target the desired target for the link (e.g. _blank)
-	 * @param title the title of the content being shared
-	 * @param url the url of the content being shared (e.g. current page)
-	 * @param request the servlet request to obtain any useful information from the current page
-	 * @param response the servlet response to write the render result
-	 *
+	 * @param  target the desired target for the link (e.g. _blank)
+	 * @param  title the title of the content being shared
+	 * @param  url the URL of the content being shared (e.g., the current page)
+	 * @param  request the servlet request
+	 * @param  response the servlet response
 	 * @throws IOException
 	 * @throws ServletException
 	 */

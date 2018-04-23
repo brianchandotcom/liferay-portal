@@ -24,25 +24,25 @@ import java.util.List;
 public interface SocialBookmarksRegistry {
 
 	/**
-	 * Retrieves a social bookmark given its type (e.g. facebook).
+	 * Retrieves a social bookmark given its type (e.g., facebook).
 	 *
-	 * @param type the key identifying the social bookmark
-	 * @return the social bookmark service
+	 * @param  type the social bookmark's key
+	 * @return the social bookmark
 	 */
 	public SocialBookmark getSocialBookmark(String type);
 
 	/**
 	 * Retrieves every available social bookmark.
 	 *
-	 * @return the list containing all the social bookmark services
+	 * @return the social bookmarks
 	 */
 	public List<SocialBookmark> getSocialBookmarks();
 
 	/**
-	 * Retrieves all the social bookmarks types available. These are the keys
-	 * that identify each social bookmark.
+	 * Retrieves all available social bookmark types. These are the keys that
+	 * identify each social bookmark.
 	 *
-	 * @return the list containing all the social bookmark services
+	 * @return the social bookmark types
 	 */
 	public List<String> getSocialBookmarksTypes();
 

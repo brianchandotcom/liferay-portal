@@ -39,7 +39,7 @@
 			</then>
 		</if>
 
-		<execute function="AssertClick" locator1="ApplicationDisplayTemplatesConfiguration#MANAGE_DISPLAY_TEMPLATES_LINK" value1="Manage Templates" />
+		<execute function="AssertClick" locator1="ApplicationDisplayTemplatesConfiguration#MANAGE_DISPLAY_TEMPLATES_LINK" value1="Manage Display Templates for ${siteName}" />
 
 		<var name="key_adtType" value="RSS" />
 
@@ -78,7 +78,7 @@
 
 			<then>
 				<execute macro="Navigator#gotoNavTab">
-					<var name="key_tab" value="Display Settings" />
+					<var name="navTab" value="Display Settings" />
 				</execute>
 			</then>
 			<elseif>
@@ -94,7 +94,7 @@
 			</elseif>
 		</if>
 
-		<execute function="AssertClick" locator1="ApplicationDisplayTemplatesConfiguration#MANAGE_DISPLAY_TEMPLATES_LINK" value1="Manage Templates" />
+		<execute function="AssertClick" locator1="ApplicationDisplayTemplatesConfiguration#MANAGE_DISPLAY_TEMPLATES_LINK" value1="Manage Display Templates for ${siteName}" />
 
 		<var name="key_adtType" value="${adtType}" />
 
@@ -132,7 +132,7 @@
 
 		<execute function="Pause" locator1="3000" />
 
-		<execute function="AssertClick#assertPartialTextClickAt" locator1="ApplicationDisplayTemplatesConfiguration#MANAGE_DISPLAY_TEMPLATES_LINK" value1="Manage Templates" />
+		<execute function="AssertClick#assertPartialTextClickAt" locator1="ApplicationDisplayTemplatesConfiguration#MANAGE_DISPLAY_TEMPLATES_LINK" value1="Manage Display Templates for ${siteName}" />
 
 		<execute function="SelectFrameTop" />
 

@@ -25,7 +25,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 @Meta.OCD(
 	id = "com.liferay.commerce.configuration.CommerceOrderConfiguration",
 	localization = "content/Language",
-	name = "commerce-order-configuration-name"
+	name = "orders-configuration-name"
 )
 public interface CommerceOrderConfiguration {
 
@@ -35,15 +35,11 @@ public interface CommerceOrderConfiguration {
 	@Meta.AD(deflt = "43200", name = "order-delete-interval", required = false)
 	public int deleteInterval();
 
-	@Meta.AD(
-		deflt = "10000", name = "commerce-order-guest-cart-max-allowed",
-		required = false
-	)
+	@Meta.AD(deflt = "10000", name = "guest-cart-max-allowed", required = false)
 	public int guestCartMaxAllowed();
 
 	@Meta.AD(
-		deflt = "1000", name = "commerce-order-guest-cart-item-max-allowed",
-		required = false
+		deflt = "1000", name = "guest-cart-item-max-allowed", required = false
 	)
 	public int guestCartItemMaxAllowed();
 

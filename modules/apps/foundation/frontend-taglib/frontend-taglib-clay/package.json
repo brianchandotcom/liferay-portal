@@ -6,6 +6,9 @@
 					"env": {
 						"jest": true
 					},
+					"globals": {
+						"AUI": true
+					},
 					"rules": {
 						"no-console": 0,
 						"no-eval": 0,

@@ -1,11 +1,9 @@
 import {
 	actionItemsValidator,
-	ClayManagementToolbar,
 	creationMenuItemsValidator,
-	filterItemsValidator,
+	filterItemsValidator
 } from 'clay-management-toolbar';
 import {Config} from 'metal-state';
-import {EventHandler} from 'metal-events';
 import ClayComponent from 'clay-component';
 import Soy from 'metal-soy';
 
@@ -37,7 +35,7 @@ class ManagementToolbar extends ClayComponent {
 		);
 
 		if (this.infoPanelId) {
-			let sidenavToggle = $(this.refs.managementToolbar.refs.infoButton);
+			let sidenavToggle = AUI.$(this.refs.managementToolbar.refs.infoButton);
 
 			if (!sidenavToggle.sideNavigation('instance')) {
 				sidenavToggle.sideNavigation(
@@ -113,7 +111,6 @@ class ManagementToolbar extends ClayComponent {
 		}
 	}
 
-
 	/**
 	 * Updates management toolbar selectedItems count on searchContainer element
 	 * toggled.
@@ -137,6 +134,7 @@ class ManagementToolbar extends ClayComponent {
  */
 
 ManagementToolbar.STATE = {
+
 	/**
 	 * List of items to display in the actions menu on active state.
 	 * @default undefined
@@ -144,6 +142,7 @@ ManagementToolbar.STATE = {
 	 * @memberof ManagementToolbar
 	 * @type {?(array|undefined)}
 	 */
+
 	actionItems: actionItemsValidator,
 
 	/**
@@ -153,6 +152,7 @@ ManagementToolbar.STATE = {
 	 * @memberof ManagementToolbar
 	 * @type {?(string|undefined)}
 	 */
+
 	clearResultsURL: Config.string(),
 
 	/**
@@ -162,6 +162,7 @@ ManagementToolbar.STATE = {
 	 * @memberof ManagementToolbar
 	 * @type {?(string|undefined)}
 	 */
+
 	contentRenderer: Config.string(),
 
 	/**
@@ -174,16 +175,19 @@ ManagementToolbar.STATE = {
 	 * @memberof ManagementToolbar
 	 * @type {?(object|string|bool|undefined)}
 	 */
-	creationMenu: Config.shapeOf({
-		caption: Config.string(),
-		helpText: Config.string(),
-		maxPrimaryItems: Config.number(),
-		maxSecondaryItems: Config.number(),
-		maxTotalItems: Config.number(),
-		primaryItems: creationMenuItemsValidator,
-		secondaryItems: creationMenuItemsValidator,
-		viewMoreURL: Config.string(),
-	}),
+
+	creationMenu: Config.shapeOf(
+		{
+			caption: Config.string(),
+			helpText: Config.string(),
+			maxPrimaryItems: Config.number(),
+			maxSecondaryItems: Config.number(),
+			maxTotalItems: Config.number(),
+			primaryItems: creationMenuItemsValidator,
+			secondaryItems: creationMenuItemsValidator,
+			viewMoreURL: Config.string()
+		}
+	),
 
 	/**
 	 * Flag to indicate if the managment toolbar is disabled or not.
@@ -192,6 +196,7 @@ ManagementToolbar.STATE = {
 	 * @memberof ManagementToolbar
 	 * @type {?bool}
 	 */
+
 	disabled: Config.bool().value(false),
 
 	/**
@@ -201,6 +206,7 @@ ManagementToolbar.STATE = {
 	 * @memberof ManagementToolbar
 	 * @type {?(string|undefined)}
 	 */
+
 	elementClasses: Config.string(),
 
 	/**
@@ -210,6 +216,7 @@ ManagementToolbar.STATE = {
 	 * @memberof ManagementToolbar
 	 * @type {?(array|undefined)}
 	 */
+
 	filterItems: filterItemsValidator,
 
 	/**
@@ -219,6 +226,7 @@ ManagementToolbar.STATE = {
 	 * @memberof ManagementToolbar
 	 * @type {?(string|undefined)}
 	 */
+
 	id: Config.string(),
 
 	/**
@@ -239,6 +247,7 @@ ManagementToolbar.STATE = {
 	 * @memberof ManagementToolbar
 	 * @type {?(string|undefined)}
 	 */
+
 	searchActionURL: Config.string(),
 
 	/**
@@ -259,6 +268,7 @@ ManagementToolbar.STATE = {
 	 * @memberof ManagementToolbar
 	 * @type {?(string|undefined)}
 	 */
+
 	searchFormName: Config.string(),
 
 	/**
@@ -268,6 +278,7 @@ ManagementToolbar.STATE = {
 	 * @memberof ManagementToolbar
 	 * @type {?(string|undefined)}
 	 */
+
 	searchInputName: Config.string(),
 
 	/**
@@ -277,6 +288,7 @@ ManagementToolbar.STATE = {
 	 * @memberof ManagementToolbar
 	 * @type {?(string|undefined)}
 	 */
+
 	searchValue: Config.string(),
 
 	/**
@@ -287,6 +299,7 @@ ManagementToolbar.STATE = {
 	 * @memberof ManagementToolbar
 	 * @type {?(bool|undefined)}
 	 */
+
 	selectable: Config.bool().value(false),
 
 	/**
@@ -296,6 +309,7 @@ ManagementToolbar.STATE = {
 	 * @memberof ManagementToolbar
 	 * @type {?(number|undefined)}
 	 */
+
 	selectedItems: Config.number(),
 
 	/**
@@ -305,6 +319,7 @@ ManagementToolbar.STATE = {
 	 * @memberof ManagementToolbar
 	 * @type {?bool}
 	 */
+
 	showAdvancedSearch: Config.bool().value(false),
 
 	/**
@@ -314,6 +329,7 @@ ManagementToolbar.STATE = {
 	 * @memberof ManagementToolbar
 	 * @type {?bool}
 	 */
+
 	showCreationMenu: Config.bool().value(true),
 
 	/**
@@ -324,6 +340,7 @@ ManagementToolbar.STATE = {
 	 * @memberof ManagementToolbar
 	 * @type {?bool}
 	 */
+
 	showFiltersDoneButton: Config.bool().value(true),
 
 	/**
@@ -333,6 +350,7 @@ ManagementToolbar.STATE = {
 	 * @memberof ManagementToolbar
 	 * @type {?bool}
 	 */
+
 	showInfoButton: Config.bool().value(false),
 
 	/**
@@ -342,6 +360,7 @@ ManagementToolbar.STATE = {
 	 * @memberof ManagementToolbar
 	 * @type {?bool}
 	 */
+
 	showSearch: Config.bool().value(true),
 
 	/**
@@ -351,6 +370,7 @@ ManagementToolbar.STATE = {
 	 * @memberof ManagementToolbar
 	 * @type {?(string|undefined)}
 	 */
+
 	sortingURL: Config.string(),
 
 	/**
@@ -360,6 +380,7 @@ ManagementToolbar.STATE = {
 	 * @memberof ManagementToolbar
 	 * @type {?(string|undefined)}
 	 */
+
 	sortingOrder: Config.oneOf(['asc', 'desc']),
 
 	/**
@@ -369,6 +390,7 @@ ManagementToolbar.STATE = {
 	 * @memberof ManagementToolbar
 	 * @type {?(string|undefined)}
 	 */
+
 	spritemap: Config.string().required(),
 
 	/**
@@ -379,6 +401,7 @@ ManagementToolbar.STATE = {
 	 * @memberof ManagementToolbar
 	 * @type {?(number|undefined)}
 	 */
+
 	totalItems: Config.number(),
 
 	/**
@@ -388,15 +411,18 @@ ManagementToolbar.STATE = {
 	 * @memberof ManagementToolbar
 	 * @type {?(array|undefined)}
 	 */
+
 	viewTypes: Config.arrayOf(
-		Config.shapeOf({
-			active: Config.bool().value(false),
-			disabled: Config.bool().value(false),
-			href: Config.string(),
-			icon: Config.string().required(),
-			label: Config.string().required(),
-		})
-	),
+		Config.shapeOf(
+			{
+				active: Config.bool().value(false),
+				disabled: Config.bool().value(false),
+				href: Config.string(),
+				icon: Config.string().required(),
+				label: Config.string().required()
+			}
+		)
+	)
 };
 
 Soy.register(ManagementToolbar, templates);

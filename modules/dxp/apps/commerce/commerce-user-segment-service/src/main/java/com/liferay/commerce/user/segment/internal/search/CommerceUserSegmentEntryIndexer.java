@@ -220,10 +220,10 @@ public class CommerceUserSegmentEntryIndexer
 	protected void doReindex(String[] ids) throws Exception {
 		long companyId = GetterUtil.getLong(ids[0]);
 
-		reindexCommercePriceLists(companyId);
+		reindexCommerceUserSegmentEntries(companyId);
 	}
 
-	protected void reindexCommercePriceLists(long companyId)
+	protected void reindexCommerceUserSegmentEntries(long companyId)
 		throws PortalException {
 
 		final IndexableActionableDynamicQuery indexableActionableDynamicQuery =

@@ -85,15 +85,28 @@ public class CPAssetCategoriesNavigationDisplayContext {
 			return _assetCategories;
 		}
 
-		AssetVocabulary assetVocabulary = getAssetVocabulary();
+		AssetCategory category =
+			(AssetCategory)_httpServletRequest.getAttribute(
+				WebKeys.ASSET_CATEGORY);
 
-		if (assetVocabulary == null) {
-			return Collections.emptyList();
+		if (category != null) {
+			_assetCategories = _assetCategoryService.getVocabularyCategories(
+				category.getCategoryId(), category.getVocabularyId(),
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 		}
+		else {
+			AssetVocabulary assetVocabulary = getAssetVocabulary();
 
-		_assetCategories = _assetCategoryService.getVocabularyRootCategories(
-			assetVocabulary.getGroupId(), assetVocabulary.getVocabularyId(),
-			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+			if (assetVocabulary == null) {
+				return Collections.emptyList();
+			}
+
+			_assetCategories =
+				_assetCategoryService.getVocabularyRootCategories(
+					assetVocabulary.getGroupId(),
+					assetVocabulary.getVocabularyId(), QueryUtil.ALL_POS,
+					QueryUtil.ALL_POS, null);
+		}
 
 		return _assetCategories;
 	}

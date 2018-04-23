@@ -16,13 +16,26 @@ package com.liferay.commerce.product.model.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.commerce.user.segment.model.CommerceUserSegmentEntry;
+import com.liferay.commerce.user.segment.service.CommerceUserSegmentEntryLocalServiceUtil;
+import com.liferay.portal.kernel.exception.PortalException;
+
 /**
  * @author Marco Leo
+ * @author Alessio Antonio Rendina
  */
 @ProviderType
 public class CPRuleUserSegmentRelImpl extends CPRuleUserSegmentRelBaseImpl {
 
 	public CPRuleUserSegmentRelImpl() {
+	}
+
+	@Override
+	public CommerceUserSegmentEntry getCommerceUserSegmentEntry()
+		throws PortalException {
+
+		return CommerceUserSegmentEntryLocalServiceUtil.
+			getCommerceUserSegmentEntry(getCommerceUserSegmentEntryId());
 	}
 
 }

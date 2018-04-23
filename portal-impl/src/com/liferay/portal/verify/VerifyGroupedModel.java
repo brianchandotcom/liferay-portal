@@ -152,7 +152,7 @@ public class VerifyGroupedModel extends VerifyProcess {
 			sb.append(verifiableGroupedModel.getTableName());
 			sb.append(" where groupId is null");
 
-			try (Connection con = DataAccess.getConnection();
+			try (Connection con = DataAccess.getUpgradeOptimizedConnection();
 				PreparedStatement ps1 = con.prepareStatement(sb.toString());
 				ResultSet rs = ps1.executeQuery()) {
 

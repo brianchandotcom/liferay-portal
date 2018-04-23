@@ -34,8 +34,11 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
+import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -606,6 +609,29 @@ public class FragmentDisplayContext {
 		_orderByType = ParamUtil.getString(_request, "orderByType", "asc");
 
 		return _orderByType;
+	}
+
+	public long getRenderLayoutPlid() {
+		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		Layout renderLayout = LayoutLocalServiceUtil.fetchFirstLayout(
+			themeDisplay.getScopeGroupId(), false,
+			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
+
+		if (renderLayout != null) {
+			return renderLayout.getPlid();
+		}
+
+		renderLayout = LayoutLocalServiceUtil.fetchFirstLayout(
+			themeDisplay.getScopeGroupId(), true,
+			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
+
+		if (renderLayout != null) {
+			return renderLayout.getPlid();
+		}
+
+		return themeDisplay.getPlid();
 	}
 
 	public boolean isDisabledFragmentCollectionsManagementBar() {

@@ -158,7 +158,7 @@ public class EditCommerceUserSegmentEntryMVCActionCommand
 				addCommerceUserSegmentEntry(actionRequest, actionResponse);
 			}
 			else if (cmd.equals(Constants.UPDATE)) {
-				updateCommerceUserSegmentEntry(actionRequest, actionResponse);
+				updateCommerceUserSegmentEntry(actionRequest);
 			}
 			else if (cmd.equals(Constants.DELETE)) {
 				deleteCommerceUserSegmentEntries(actionRequest);
@@ -180,8 +180,7 @@ public class EditCommerceUserSegmentEntryMVCActionCommand
 		}
 	}
 
-	protected void updateCommerceUserSegmentEntry(
-			ActionRequest actionRequest, ActionResponse actionResponse)
+	protected void updateCommerceUserSegmentEntry(ActionRequest actionRequest)
 		throws Exception {
 
 		long commerceUserSegmentEntryId = ParamUtil.getLong(

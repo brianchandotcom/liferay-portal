@@ -107,14 +107,15 @@ public class CPDefinitionLinkServiceImpl
 
 	@Override
 	public CPDefinitionLink updateCPDefinitionLink(
-			long cpDefinitionLinkId, double priority)
+			long cpDefinitionLinkId, double priority,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		CPDefinitionPermission.checkCPDefinitionLink(
 			getPermissionChecker(), cpDefinitionLinkId, ActionKeys.UPDATE);
 
 		return cpDefinitionLinkLocalService.updateCPDefinitionLink(
-			cpDefinitionLinkId, priority);
+			cpDefinitionLinkId, priority, serviceContext);
 	}
 
 	@Override

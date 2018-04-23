@@ -58,6 +58,7 @@ public class CPDefinitionLinkLocalServiceImpl
 		cpDefinitionLink.setCPDefinitionId2(cpDefinitionId2);
 		cpDefinitionLink.setPriority(priority);
 		cpDefinitionLink.setType(type);
+		cpDefinitionLink.setExpandoBridgeAttributes(serviceContext);
 
 		cpDefinitionLinkPersistence.update(cpDefinitionLink);
 
@@ -106,13 +107,15 @@ public class CPDefinitionLinkLocalServiceImpl
 
 	@Override
 	public CPDefinitionLink updateCPDefinitionLink(
-			long cpDefinitionLinkId, double priority)
+			long cpDefinitionLinkId, double priority,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		CPDefinitionLink cpDefinitionLink =
 			cpDefinitionLinkPersistence.findByPrimaryKey(cpDefinitionLinkId);
 
 		cpDefinitionLink.setPriority(priority);
+		cpDefinitionLink.setExpandoBridgeAttributes(serviceContext);
 
 		cpDefinitionLinkPersistence.update(cpDefinitionLink);
 

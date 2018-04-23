@@ -35,9 +35,9 @@ import java.util.Map;
 public class ManagementToolbarTag extends BaseClayTag {
 
 	public ManagementToolbarTag() {
-		super(
+		this(
 			"management-toolbar",
-			"com.liferay.frontend.taglib.clay.ManagementToolbar", true);
+			_TEMPLATE_NAMESPACE, true);
 	}
 
 	public ManagementToolbarTag(
@@ -205,5 +205,8 @@ public class ManagementToolbarTag extends BaseClayTag {
 	private static final String[] _NAMESPACED_PARAMS = {
 		"infoPanelId", "searchContainerId", "searchFormName", "searchInputName"
 	};
+
+	private static final String _TEMPLATE_NAMESPACE =
+		"com.liferay.frontend.taglib.clay.ManagementToolbar";
 
 }

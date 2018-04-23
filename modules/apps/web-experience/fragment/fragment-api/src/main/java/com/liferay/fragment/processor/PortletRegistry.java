@@ -14,60 +14,15 @@
 
 package com.liferay.fragment.processor;
 
-import com.liferay.portal.kernel.util.MapUtil;
-
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-
-import javax.portlet.Portlet;
-
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferenceCardinality;
-import org.osgi.service.component.annotations.ReferencePolicy;
 
 /**
- * @author Pavel Savinov
+ * @author Lance Ji
  */
-@Component(immediate = true, service = PortletRegistry.class)
-public class PortletRegistry {
+public interface PortletRegistry {
 
-	public List<String> getPortletAliases() {
-		return new ArrayList<>(_portletNames.keySet());
-	}
+	public List<String> getPortletAliases();
 
-	public String getPortletName(String alias) {
-		return _portletNames.get(alias);
-	}
-
-	@Reference(
-		cardinality = ReferenceCardinality.MULTIPLE,
-		policy = ReferencePolicy.DYNAMIC,
-		target = "(com.liferay.fragment.entry.processor.portlet.alias=*)",
-		unbind = "unsetPortlet"
-	)
-	protected void setPortlet(Portlet portlet, Map<String, Object> properties) {
-		String alias = MapUtil.getString(
-			properties, "com.liferay.fragment.entry.processor.portlet.alias");
-		String portletName = MapUtil.getString(
-			properties, "javax.portlet.name");
-
-		_portletNames.put(alias, portletName);
-	}
-
-	protected void unsetPortlet(
-		Portlet portlet, Map<String, Object> properties) {
-
-		String alias = MapUtil.getString(
-			properties, "com.liferay.fragment.entry.processor.portlet.alias");
-		String portletName = MapUtil.getString(
-			properties, "javax.portlet.name");
-
-		_portletNames.remove(alias, portletName);
-	}
-
-	private final Map<String, String> _portletNames = new ConcurrentHashMap<>();
+	public String getPortletName(String alias);
 
 }

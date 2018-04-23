@@ -14,51 +14,15 @@
 
 package com.liferay.asset.display.contributor;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferenceCardinality;
-import org.osgi.service.component.annotations.ReferencePolicy;
 
 /**
- * @author Jürgen Kappler
+ * @author Lance Ji
  */
-@Component(immediate = true, service = AssetDisplayContributorTracker.class)
-public class AssetDisplayContributorTracker {
+public interface AssetDisplayContributorTracker {
 
-	public AssetDisplayContributor getAssetDisplayContributor(
-		String className) {
+	public AssetDisplayContributor getAssetDisplayContributor(String className);
 
-		return _assetDisplayContributor.get(className);
-	}
-
-	public List<AssetDisplayContributor> getAssetDisplayContributors() {
-		return new ArrayList(_assetDisplayContributor.values());
-	}
-
-	@Reference(
-		cardinality = ReferenceCardinality.MULTIPLE,
-		policy = ReferencePolicy.DYNAMIC,
-		unbind = "unsetAssetDisplayContributor"
-	)
-	protected void setAssetDisplayContributor(
-		AssetDisplayContributor assetDisplayContributor) {
-
-		_assetDisplayContributor.put(
-			assetDisplayContributor.getClassName(), assetDisplayContributor);
-	}
-
-	protected void unsetAssetDisplayContributor(
-		AssetDisplayContributor assetDisplayContributor) {
-
-		_assetDisplayContributor.remove(assetDisplayContributor.getClassName());
-	}
-
-	private final Map<String, AssetDisplayContributor>
-		_assetDisplayContributor = new ConcurrentHashMap<>();
+	public List<AssetDisplayContributor> getAssetDisplayContributors();
 
 }

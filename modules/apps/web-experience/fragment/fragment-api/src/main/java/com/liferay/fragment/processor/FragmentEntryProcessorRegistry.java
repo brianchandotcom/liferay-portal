@@ -15,73 +15,21 @@
 package com.liferay.fragment.processor;
 
 import com.liferay.fragment.model.FragmentEntryLink;
-import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
-import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
-import com.liferay.osgi.service.tracker.collections.map.PropertyServiceReferenceComparator;
 import com.liferay.portal.kernel.exception.PortalException;
 
-import java.util.Collections;
-
-import javax.portlet.PortletMode;
-
-import org.osgi.framework.BundleContext;
-import org.osgi.service.component.annotations.Activate;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Deactivate;
-
 /**
- * @author Pavel Savinov
+ * @author Lance Ji
  */
-@Component(immediate = true, service = FragmentEntryProcessorRegistry.class)
-public class FragmentEntryProcessorRegistry {
+public interface FragmentEntryProcessorRegistry {
 
 	public String processFragmentEntryLinkHTML(
 			FragmentEntryLink fragmentEntryLink)
-		throws PortalException {
-
-		return processFragmentEntryLinkHTML(
-			fragmentEntryLink, PortletMode.EDIT.toString());
-	}
+		throws PortalException;
 
 	public String processFragmentEntryLinkHTML(
 			FragmentEntryLink fragmentEntryLink, String mode)
-		throws PortalException {
+		throws PortalException;
 
-		String html = fragmentEntryLink.getHtml();
-
-		for (FragmentEntryProcessor fragmentEntryProcessor :
-				_serviceTrackerList) {
-
-			html = fragmentEntryProcessor.processFragmentEntryLinkHTML(
-				fragmentEntryLink, html, mode);
-		}
-
-		return html;
-	}
-
-	public void validateFragmentEntryHTML(String html) throws PortalException {
-		for (FragmentEntryProcessor fragmentEntryProcessor :
-				_serviceTrackerList) {
-
-			fragmentEntryProcessor.validateFragmentEntryHTML(html);
-		}
-	}
-
-	@Activate
-	protected void activate(final BundleContext bundleContext) {
-		_serviceTrackerList = ServiceTrackerListFactory.open(
-			bundleContext, FragmentEntryProcessor.class,
-			Collections.reverseOrder(
-				new PropertyServiceReferenceComparator(
-					"fragment.entry.processor.priority")));
-	}
-
-	@Deactivate
-	protected void deactivate() {
-		_serviceTrackerList.close();
-	}
-
-	private ServiceTrackerList<FragmentEntryProcessor, FragmentEntryProcessor>
-		_serviceTrackerList;
+	public void validateFragmentEntryHTML(String html) throws PortalException;
 
 }

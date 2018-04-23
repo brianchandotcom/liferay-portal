@@ -280,9 +280,6 @@ public class FragmentDisplayContext {
 			return _fragmentCollectionsSearchContainer;
 		}
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		SearchContainer fragmentCollectionsSearchContainer =
 			new SearchContainer(
 				_renderRequest, _renderResponse.createRenderURL(), null,
@@ -309,36 +306,29 @@ public class FragmentDisplayContext {
 		List<FragmentCollection> fragmentCollections = null;
 		int fragmentCollectionsCount = 0;
 
-		Group scopeGroup = themeDisplay.getScopeGroup();
-
-		long scopeGroupId = scopeGroup.getGroupId();
-
-		if (scopeGroup.isStagingGroup()) {
-			scopeGroupId = scopeGroup.getLiveGroupId();
-		}
-
 		if (_isSearch()) {
 			fragmentCollections =
 				FragmentCollectionServiceUtil.getFragmentCollections(
-					scopeGroupId, _getKeywords(),
+					_getGroupId(), _getKeywords(),
 					fragmentCollectionsSearchContainer.getStart(),
 					fragmentCollectionsSearchContainer.getEnd(),
 					orderByComparator);
 
 			fragmentCollectionsCount =
 				FragmentCollectionServiceUtil.getFragmentCollectionsCount(
-					scopeGroupId, _getKeywords());
+					_getGroupId(), _getKeywords());
 		}
 		else {
 			fragmentCollections =
 				FragmentCollectionServiceUtil.getFragmentCollections(
-					scopeGroupId, fragmentCollectionsSearchContainer.getStart(),
+					_getGroupId(),
+					fragmentCollectionsSearchContainer.getStart(),
 					fragmentCollectionsSearchContainer.getEnd(),
 					orderByComparator);
 
 			fragmentCollectionsCount =
 				FragmentCollectionServiceUtil.getFragmentCollectionsCount(
-					scopeGroupId);
+					_getGroupId());
 		}
 
 		fragmentCollectionsSearchContainer.setTotal(fragmentCollectionsCount);
@@ -383,9 +373,6 @@ public class FragmentDisplayContext {
 			return _fragmentEntriesSearchContainer;
 		}
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		SearchContainer fragmentEntriesSearchContainer = new SearchContainer(
 			_renderRequest, _renderResponse.createRenderURL(), null,
 			"there-are-no-fragments");
@@ -408,33 +395,25 @@ public class FragmentDisplayContext {
 		List<FragmentEntry> fragmentEntries = null;
 		int fragmentEntriesCount = 0;
 
-		Group scopeGroup = themeDisplay.getScopeGroup();
-
-		long scopeGroupId = scopeGroup.getGroupId();
-
-		if (scopeGroup.isStagingGroup()) {
-			scopeGroupId = scopeGroup.getLiveGroupId();
-		}
-
 		if (_isSearch()) {
 			fragmentEntries = FragmentEntryServiceUtil.getFragmentEntries(
-				scopeGroupId, getFragmentCollectionId(), _getKeywords(),
+				_getGroupId(), getFragmentCollectionId(), _getKeywords(),
 				fragmentEntriesSearchContainer.getStart(),
 				fragmentEntriesSearchContainer.getEnd(), orderByComparator);
 
 			fragmentEntriesCount =
 				FragmentEntryServiceUtil.getFragmentCollectionsCount(
-					scopeGroupId, getFragmentCollectionId(), _getKeywords());
+					_getGroupId(), getFragmentCollectionId(), _getKeywords());
 		}
 		else {
 			fragmentEntries = FragmentEntryServiceUtil.getFragmentEntries(
-				scopeGroupId, getFragmentCollectionId(),
+				_getGroupId(), getFragmentCollectionId(),
 				fragmentEntriesSearchContainer.getStart(),
 				fragmentEntriesSearchContainer.getEnd(), orderByComparator);
 
 			fragmentEntriesCount =
 				FragmentEntryServiceUtil.getFragmentCollectionsCount(
-					scopeGroupId, getFragmentCollectionId());
+					_getGroupId(), getFragmentCollectionId());
 		}
 
 		fragmentEntriesSearchContainer.setResults(fragmentEntries);
@@ -835,6 +814,21 @@ public class FragmentDisplayContext {
 		}
 
 		return portletURL;
+	}
+
+	private long _getGroupId() {
+		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		Group scopeGroup = themeDisplay.getScopeGroup();
+
+		long scopeGroupId = scopeGroup.getGroupId();
+
+		if (scopeGroup.isStagingGroup()) {
+			scopeGroupId = scopeGroup.getLiveGroupId();
+		}
+
+		return scopeGroupId;
 	}
 
 	private String _getKeywords() {

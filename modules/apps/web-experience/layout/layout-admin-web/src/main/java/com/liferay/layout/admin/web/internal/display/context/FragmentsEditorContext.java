@@ -189,6 +189,18 @@ public class FragmentsEditorContext {
 		return actionURL.toString();
 	}
 
+	private long _getGroupId() {
+		Group scopeGroup = _themeDisplay.getScopeGroup();
+
+		long scopeGroupId = scopeGroup.getGroupId();
+
+		if (scopeGroup.isStagingGroup()) {
+			scopeGroupId = scopeGroup.getLiveGroupId();
+		}
+
+		return scopeGroupId;
+	}
+
 	private ItemSelectorCriterion _getImageItemSelectorCriterion() {
 		List<ItemSelectorReturnType> desiredItemSelectorReturnTypes =
 			new ArrayList<>();
@@ -302,16 +314,8 @@ public class FragmentsEditorContext {
 	private List<SoyContext> _getSoyContextFragmentCollections() {
 		List<SoyContext> soyContexts = new ArrayList<>();
 
-		Group scopeGroup = _themeDisplay.getScopeGroup();
-
-		long scopeGroupId = scopeGroup.getGroupId();
-
-		if (scopeGroup.isStagingGroup()) {
-			scopeGroupId = scopeGroup.getLiveGroupId();
-		}
-
 		List<FragmentCollection> fragmentCollections =
-			FragmentCollectionServiceUtil.getFragmentCollections(scopeGroupId);
+			FragmentCollectionServiceUtil.getFragmentCollections(_getGroupId());
 
 		for (FragmentCollection fragmentCollection : fragmentCollections) {
 			List<FragmentEntry> fragmentEntries =

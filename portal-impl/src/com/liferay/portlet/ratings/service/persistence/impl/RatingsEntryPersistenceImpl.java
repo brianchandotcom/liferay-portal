@@ -3158,8 +3158,6 @@ public class RatingsEntryPersistenceImpl extends BasePersistenceImpl<RatingsEntr
 
 	@Override
 	protected RatingsEntry removeImpl(RatingsEntry ratingsEntry) {
-		ratingsEntry = toUnwrappedModel(ratingsEntry);
-
 		Session session = null;
 
 		try {
@@ -3190,8 +3188,6 @@ public class RatingsEntryPersistenceImpl extends BasePersistenceImpl<RatingsEntr
 
 	@Override
 	public RatingsEntry updateImpl(RatingsEntry ratingsEntry) {
-		ratingsEntry = toUnwrappedModel(ratingsEntry);
-
 		boolean isNew = ratingsEntry.isNew();
 
 		RatingsEntryModelImpl ratingsEntryModelImpl = (RatingsEntryModelImpl)ratingsEntry;
@@ -3418,30 +3414,6 @@ public class RatingsEntryPersistenceImpl extends BasePersistenceImpl<RatingsEntr
 		ratingsEntry.resetOriginalValues();
 
 		return ratingsEntry;
-	}
-
-	protected RatingsEntry toUnwrappedModel(RatingsEntry ratingsEntry) {
-		if (ratingsEntry instanceof RatingsEntryImpl) {
-			return ratingsEntry;
-		}
-
-		RatingsEntryImpl ratingsEntryImpl = new RatingsEntryImpl();
-
-		ratingsEntryImpl.setNew(ratingsEntry.isNew());
-		ratingsEntryImpl.setPrimaryKey(ratingsEntry.getPrimaryKey());
-
-		ratingsEntryImpl.setUuid(ratingsEntry.getUuid());
-		ratingsEntryImpl.setEntryId(ratingsEntry.getEntryId());
-		ratingsEntryImpl.setCompanyId(ratingsEntry.getCompanyId());
-		ratingsEntryImpl.setUserId(ratingsEntry.getUserId());
-		ratingsEntryImpl.setUserName(ratingsEntry.getUserName());
-		ratingsEntryImpl.setCreateDate(ratingsEntry.getCreateDate());
-		ratingsEntryImpl.setModifiedDate(ratingsEntry.getModifiedDate());
-		ratingsEntryImpl.setClassNameId(ratingsEntry.getClassNameId());
-		ratingsEntryImpl.setClassPK(ratingsEntry.getClassPK());
-		ratingsEntryImpl.setScore(ratingsEntry.getScore());
-
-		return ratingsEntryImpl;
 	}
 
 	/**

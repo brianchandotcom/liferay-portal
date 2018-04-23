@@ -2558,8 +2558,6 @@ public class KaleoActionPersistenceImpl extends BasePersistenceImpl<KaleoAction>
 
 	@Override
 	protected KaleoAction removeImpl(KaleoAction kaleoAction) {
-		kaleoAction = toUnwrappedModel(kaleoAction);
-
 		Session session = null;
 
 		try {
@@ -2590,8 +2588,6 @@ public class KaleoActionPersistenceImpl extends BasePersistenceImpl<KaleoAction>
 
 	@Override
 	public KaleoAction updateImpl(KaleoAction kaleoAction) {
-		kaleoAction = toUnwrappedModel(kaleoAction);
-
 		boolean isNew = kaleoAction.isNew();
 
 		KaleoActionModelImpl kaleoActionModelImpl = (KaleoActionModelImpl)kaleoAction;
@@ -2776,38 +2772,6 @@ public class KaleoActionPersistenceImpl extends BasePersistenceImpl<KaleoAction>
 		kaleoAction.resetOriginalValues();
 
 		return kaleoAction;
-	}
-
-	protected KaleoAction toUnwrappedModel(KaleoAction kaleoAction) {
-		if (kaleoAction instanceof KaleoActionImpl) {
-			return kaleoAction;
-		}
-
-		KaleoActionImpl kaleoActionImpl = new KaleoActionImpl();
-
-		kaleoActionImpl.setNew(kaleoAction.isNew());
-		kaleoActionImpl.setPrimaryKey(kaleoAction.getPrimaryKey());
-
-		kaleoActionImpl.setKaleoActionId(kaleoAction.getKaleoActionId());
-		kaleoActionImpl.setGroupId(kaleoAction.getGroupId());
-		kaleoActionImpl.setCompanyId(kaleoAction.getCompanyId());
-		kaleoActionImpl.setUserId(kaleoAction.getUserId());
-		kaleoActionImpl.setUserName(kaleoAction.getUserName());
-		kaleoActionImpl.setCreateDate(kaleoAction.getCreateDate());
-		kaleoActionImpl.setModifiedDate(kaleoAction.getModifiedDate());
-		kaleoActionImpl.setKaleoClassName(kaleoAction.getKaleoClassName());
-		kaleoActionImpl.setKaleoClassPK(kaleoAction.getKaleoClassPK());
-		kaleoActionImpl.setKaleoDefinitionVersionId(kaleoAction.getKaleoDefinitionVersionId());
-		kaleoActionImpl.setKaleoNodeName(kaleoAction.getKaleoNodeName());
-		kaleoActionImpl.setName(kaleoAction.getName());
-		kaleoActionImpl.setDescription(kaleoAction.getDescription());
-		kaleoActionImpl.setExecutionType(kaleoAction.getExecutionType());
-		kaleoActionImpl.setScript(kaleoAction.getScript());
-		kaleoActionImpl.setScriptLanguage(kaleoAction.getScriptLanguage());
-		kaleoActionImpl.setScriptRequiredContexts(kaleoAction.getScriptRequiredContexts());
-		kaleoActionImpl.setPriority(kaleoAction.getPriority());
-
-		return kaleoActionImpl;
 	}
 
 	/**

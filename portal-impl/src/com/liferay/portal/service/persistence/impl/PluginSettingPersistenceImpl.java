@@ -1132,8 +1132,6 @@ public class PluginSettingPersistenceImpl extends BasePersistenceImpl<PluginSett
 
 	@Override
 	protected PluginSetting removeImpl(PluginSetting pluginSetting) {
-		pluginSetting = toUnwrappedModel(pluginSetting);
-
 		Session session = null;
 
 		try {
@@ -1164,8 +1162,6 @@ public class PluginSettingPersistenceImpl extends BasePersistenceImpl<PluginSett
 
 	@Override
 	public PluginSetting updateImpl(PluginSetting pluginSetting) {
-		pluginSetting = toUnwrappedModel(pluginSetting);
-
 		boolean isNew = pluginSetting.isNew();
 
 		PluginSettingModelImpl pluginSettingModelImpl = (PluginSettingModelImpl)pluginSetting;
@@ -1238,27 +1234,6 @@ public class PluginSettingPersistenceImpl extends BasePersistenceImpl<PluginSett
 		pluginSetting.resetOriginalValues();
 
 		return pluginSetting;
-	}
-
-	protected PluginSetting toUnwrappedModel(PluginSetting pluginSetting) {
-		if (pluginSetting instanceof PluginSettingImpl) {
-			return pluginSetting;
-		}
-
-		PluginSettingImpl pluginSettingImpl = new PluginSettingImpl();
-
-		pluginSettingImpl.setNew(pluginSetting.isNew());
-		pluginSettingImpl.setPrimaryKey(pluginSetting.getPrimaryKey());
-
-		pluginSettingImpl.setMvccVersion(pluginSetting.getMvccVersion());
-		pluginSettingImpl.setPluginSettingId(pluginSetting.getPluginSettingId());
-		pluginSettingImpl.setCompanyId(pluginSetting.getCompanyId());
-		pluginSettingImpl.setPluginId(pluginSetting.getPluginId());
-		pluginSettingImpl.setPluginType(pluginSetting.getPluginType());
-		pluginSettingImpl.setRoles(pluginSetting.getRoles());
-		pluginSettingImpl.setActive(pluginSetting.isActive());
-
-		return pluginSettingImpl;
 	}
 
 	/**

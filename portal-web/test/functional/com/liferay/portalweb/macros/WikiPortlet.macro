@@ -31,21 +31,11 @@
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 
-	<command name="gotoConfiguration">
-		<execute function="Click" locator1="Icon#HEADER_VERTICAL_ELLIPSIS" />
-
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Configuration">
-			<var name="key_menuItem" value="Configuration" />
-		</execute>
-	</command>
-
 	<command name="subscribeToNodeCP">
 		<var name="key_wikiNodeName" value="${wikiNodeName}" />
 
-		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
-
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Subscribe">
-			<var name="key_menuItem" value="Subscribe" />
+		<execute macro="LexiconEntry#gotoEllipsisMenuItem">
+			<var name="menuItem" value="Subscribe" />
 		</execute>
 
 		<execute macro="Alert#viewSuccessMessage" />

@@ -163,8 +163,9 @@
 
 		<execute macro="FormsAdminNavigator#gotoBack" />
 
-		<execute macro="FormsAdminNavigator#gotoEdit">
-			<var name="formName" value="Element Set 1" />
+		<execute macro="LexiconEntry#gotoEntryMenuItem">
+			<var name="menuItem" value="Edit" />
+			<var name="rowEntry" value="Element Set 1" />
 		</execute>
 
 		<execute macro="DDLRecord#addTranslation">
@@ -1214,7 +1215,10 @@
 
 		<execute macro="FormsAdminNavigator#gotoBack" />
 
-		<execute macro="FormsAdminNavigator#gotoEdit" />
+		<execute macro="LexiconEntry#gotoEntryMenuItem">
+			<var name="menuItem" value="Edit" />
+			<var name="rowEntry" value="Created Form Name" />
+		</execute>
 	</command>
 
 	<command name="CreateUntitledForm" priority="3">
@@ -1352,7 +1356,10 @@
 			<var name="portlet" value="Forms" />
 		</execute>
 
-		<execute macro="FormsAdminNavigator#gotoEdit" />
+		<execute macro="LexiconEntry#gotoEntryMenuItem">
+			<var name="menuItem" value="Edit" />
+			<var name="rowEntry" value="Created Form Name" />
+		</execute>
 
 		<execute macro="FormsAdminNavigator#gotoDeleteField">
 			<var name="fieldLabel" value="Date Field" />
@@ -1518,8 +1525,9 @@
 			<var name="portlet" value="Forms" />
 		</execute>
 
-		<execute macro="FormsAdminNavigator#gotoEdit">
-			<var name="formName" value="Delete Select Option Test" />
+		<execute macro="LexiconEntry#gotoEntryMenuItem">
+			<var name="menuItem" value="Edit" />
+			<var name="rowEntry" value="Delete Select Option Test" />
 		</execute>
 
 		<execute macro="FormsAdminNavigator#gotoEditField">
@@ -3264,8 +3272,9 @@
 			<var name="portlet" value="Forms" />
 		</execute>
 
-		<execute macro="FormsAdminNavigator#gotoEdit">
-			<var name="formName" value="Created Form Name" />
+		<execute macro="LexiconEntry#gotoEntryMenuItem">
+			<var name="menuItem" value="Edit" />
+			<var name="rowEntry" value="Created Form Name" />
 		</execute>
 
 		<execute macro="FormsAdminNavigator#gotoEditField">
@@ -5380,8 +5389,9 @@
 
 		<execute macro="Navigator#gotoBack" />
 
-		<execute macro="FormsAdminNavigator#gotoEdit">
-			<var name="formName" value="Untitled Form" />
+		<execute macro="LexiconEntry#gotoEntryMenuItem">
+			<var name="menuItem" value="Edit" />
+			<var name="rowEntry" value="Untitled Form" />
 		</execute>
 	</command>
 
@@ -5781,7 +5791,10 @@
 
 		<execute macro="FormsAdminNavigator#gotoBack" />
 
-		<execute macro="FormsAdminNavigator#gotoEdit" />
+		<execute macro="LexiconEntry#gotoEntryMenuItem">
+			<var name="menuItem" value="Edit" />
+			<var name="rowEntry" value="Created Form Name" />
+		</execute>
 	</command>
 
 	<command name="ViewSuccessPage" priority="5">

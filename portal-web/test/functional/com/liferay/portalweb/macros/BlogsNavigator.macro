@@ -1,10 +1,4 @@
 <definition>
-	<command name="gotoAbstractField">
-		<execute macro="Panel#expandPanel">
-			<var name="panel" value="Configuration" />
-		</execute>
-	</command>
-
 	<command name="gotoAddEntry">
 		<if>
 			<condition function="IsElementPresent" locator1="Blogs#ADD_BLOGS_ENTRY" />
@@ -22,10 +16,8 @@
 	</command>
 
 	<command name="gotoBlogsEntriesPermissionsCP">
-		<execute function="Click" locator1="Icon#HEADER_VERTICAL_ELLIPSIS" />
-
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Entries Permissions">
-			<var name="key_menuItem" value="Entries Permissions" />
+		<execute macro="LexiconEntry#gotoHeaderMenuItem">
+			<var name="menuItem" value="Entries Permissions" />
 		</execute>
 
 		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
@@ -45,10 +37,8 @@
 			<var name="portletTitleName" value="Blogs" />
 		</execute>
 
-		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
-
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Permissions">
-			<var name="key_menuItem" value="Permissions" />
+		<execute macro="LexiconEntry#gotoEllipsisMenuItem">
+			<var name="menuItem" value="Permissions" />
 		</execute>
 
 		<execute function="SelectFrame" locator1="IFrame#DIALOG" />

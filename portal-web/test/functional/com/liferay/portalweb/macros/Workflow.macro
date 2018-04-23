@@ -156,10 +156,8 @@
 			<var name="workflowTask" value="${workflowTask}" />
 		</execute>
 
-		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
-
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Approve">
-			<var name="key_menuItem" value="Approve" />
+		<execute macro="LexiconEntry#gotoEllipsisMenuItem">
+			<var name="menuItem" value="Approve" />
 		</execute>
 
 		<execute macro="Workflow#confirmWorkflowAction" />
@@ -173,9 +171,9 @@
 	</command>
 
 	<command name="assignByDetails">
-		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
-
-		<execute function="AssertClick" locator1="MyWorkflowTasksTask#MENU_ASSIGN" value1="Assign to..." />
+		<execute macro="LexiconEntry#gotoEllipsisMenuItem">
+			<var name="menuItem" value="Assign to..." />
+		</execute>
 
 		<execute function="AssertTextEquals" locator1="MyWorkflowTasks#DIALOG_BOX_TITLE" value1="Assign to..." />
 
@@ -254,7 +252,9 @@
 			<var name="workflowTask" value="${workflowTask}" />
 		</execute>
 
-		<execute macro="Workflow#clickAssignToMeByDetails" />
+		<execute macro="LexiconEntry#gotoEllipsisMenuItem">
+			<var name="menuItem" value="Assign to Me" />
+		</execute>
 
 		<execute macro="Workflow#confirmWorkflowAction" />
 
@@ -266,18 +266,6 @@
 			<var name="workflowAssetType" value="${workflowAssetType}" />
 			<var name="workflowTask" value="${workflowTask}" />
 		</execute>
-	</command>
-
-	<command name="clickApproveByDetails">
-		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
-
-		<execute function="AssertClick" locator1="MyWorkflowTasksTask#MENU_APPROVE" value1="Approve" />
-	</command>
-
-	<command name="clickAssignToMeByDetails">
-		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
-
-		<execute function="AssertClick" locator1="MyWorkflowTasksTask#MENU_ASSIGN_TO_ME" value1="Assign to Me" />
 	</command>
 
 	<command name="configureWorkflow">
@@ -304,10 +292,8 @@
 	<command name="configureWorkflowViaFolderInfo">
 		<execute function="Click" locator1="Icon#INFO" />
 
-		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
-
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Edit">
-			<var name="key_menuItem" value="Edit" />
+		<execute macro="LexiconEntry#gotoEllipsisMenuItem">
+			<var name="menuItem" value="Edit" />
 		</execute>
 
 		<execute function="Select" locator1="AssetWorkflow#ALL_STRUCTURES_WORKFLOW_SELECT" value1="${workflowDefinition}" />
@@ -316,10 +302,8 @@
 	</command>
 
 	<command name="configureWorkflowViaPortlet">
-		<execute function="Click" locator1="Icon#HEADER_VERTICAL_ELLIPSIS" />
-
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Edit">
-			<var name="key_menuItem" value="Edit" />
+		<execute macro="LexiconEntry#gotoHeaderMenuItem">
+			<var name="menuItem" value="Edit" />
 		</execute>
 
 		<execute function="Select" locator1="AssetWorkflow#ALL_STRUCTURES_WORKFLOW_SELECT" value1="${workflowDefinition}" />
@@ -529,10 +513,8 @@
 			<var name="workflowTask" value="${workflowTask}" />
 		</execute>
 
-		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
-
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Reject">
-			<var name="key_menuItem" value="Reject" />
+		<execute macro="LexiconEntry#gotoEllipsisMenuItem">
+			<var name="menuItem" value="Reject" />
 		</execute>
 
 		<execute macro="Workflow#confirmWorkflowAction" />
@@ -589,10 +571,8 @@
 			<var name="workflowTask" value="${workflowTask}" />
 		</execute>
 
-		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
-
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Resubmit">
-			<var name="key_menuItem" value="Resubmit" />
+		<execute macro="LexiconEntry#gotoEllipsisMenuItem">
+			<var name="menuItem" value="Resubmit" />
 		</execute>
 
 		<execute macro="Workflow#confirmWorkflowAction" />
@@ -1220,12 +1200,8 @@
 
 		<execute macro="Workflow#_gotoPendingFilter" />
 
-		<var name="key_workflowAssetTitle" value="${workflowAssetTitle}" />
-
-		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
-
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Withdraw Submission">
-			<var name="key_menuItem" value="Withdraw Submission" />
+		<execute macro="LexiconEntry#gotoEllipsisMenuItem">
+			<var name="menuItem" value="Withdraw Submission" />
 		</execute>
 
 		<execute macro="Workflow#waitForSuccessMessageHide" />
@@ -1252,10 +1228,8 @@
 			<var name="workflowDefinition" value="${workflowDefinition}" />
 		</execute>
 
-		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
-
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Withdraw Submission">
-			<var name="key_menuItem" value="Withdraw Submission" />
+		<execute macro="LexiconEntry#gotoEllipsisMenuItem">
+			<var name="menuItem" value="Withdraw Submission" />
 		</execute>
 
 		<execute macro="Workflow#waitForSuccessMessageHide" />

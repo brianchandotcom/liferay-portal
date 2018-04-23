@@ -61,7 +61,9 @@
 
 		<execute function="AssertTextEquals" locator1="PortalInstances#INSTANCE_TABLE_VIRTUAL_HOST" value1="${virtualHost}" />
 
-		<execute macro="PortletEntry#clickEditFromEllipsis" />
+		<execute macro="LexiconEntry#gotoEllipsisMenuItem">
+			<var name="menuItem" value="Edit" />
+		</execute>
 
 		<execute function="Type" locator1="TextInput#MAIL_DOMAIN" value1="${mailDomain}" />
 

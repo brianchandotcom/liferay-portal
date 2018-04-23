@@ -42,7 +42,9 @@
 
 		<execute function="AssertElementPresent#assertVisible" locator1="NavBar#ASSET_TITLE" value1="Templates" />
 
-		<execute macro="DDLNavigator#gotoAddDisplayTemplate" />
+		<execute macro="LexiconEntry#gotoAddMenuItem">
+			<var name="menuItem" value="Add Display Template" />
+		</execute>
 
 		<execute function="Click" locator1="TextInput#NAME" />
 

@@ -195,9 +195,8 @@
 	</command>
 
 	<command name="copyApplicationsFromPageToPage">
-		<execute macro="SitePages#gotoPageMenuItem">
+		<execute macro="LexiconEntry#gotoHeaderMenuItem">
 			<var name="menuItem" value="Copy Applications" />
-			<var name="pageName" value="${pageName}" />
 		</execute>
 
 		<execute function="AssertTextEquals" locator1="Message#INFO" value1="The applications in page ${pageName} will be replaced with the ones in the page you select below." />
@@ -367,12 +366,8 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute function="AssertElementPresent" locator1="Icon#HEADER_VERTICAL_ELLIPSIS" />
-
-		<execute function="Click" locator1="Icon#HEADER_VERTICAL_ELLIPSIS" />
-
-		<execute function="AssertClickNoError" locator1="MenuItem#ANY_MENU_ITEM" value1="Delete">
-			<var name="key_menuItem" value="Delete" />
+		<execute macro="LexiconEntry#gotoHeaderMenuItemNoError">
+			<var name="menuItem" value="Delete" />
 		</execute>
 
 		<execute function="Confirm" value1="Are you sure you want to delete the selected page?" />
@@ -455,10 +450,8 @@
 	</command>
 
 	<command name="manageDeviceFamilyActions">
-		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
-
-		<execute function="Click" locator1="MenuItem#ANY_MENU_ITEM" value1="Manage Actions">
-			<var name="key_menuItem" value="Manage Actions" />
+		<execute macro="LexiconEntry#gotoEllipsisMenuItem">
+			<var name="menuItem" value="Manage Actions" />
 		</execute>
 
 		<execute function="SelectFrame" locator1="IFrame#DIALOG" />

@@ -46,16 +46,6 @@
 		</if>
 	</command>
 
-	<command name="gotoViewMyCustomizedPage">
-		<execute function="Click" locator1="Icon#HEADER_VERTICAL_ELLIPSIS" />
-
-		<var name="key_menuItem" value="View My Customized Page" />
-
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="View My Customized Page">
-			<var name="key_menuItem" value="View My Customized Page" />
-		</execute>
-	</command>
-
 	<command name="viewCustomizablePagePG">
 		<execute function="Click" locator1="Icon#PAGE_CUSTOMIZATION_ELLIPSIS" />
 

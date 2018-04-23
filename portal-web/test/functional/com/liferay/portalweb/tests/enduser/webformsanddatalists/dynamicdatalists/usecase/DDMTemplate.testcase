@@ -91,8 +91,9 @@
 			<var name="navItem" value="Templates" />
 		</execute>
 
-		<execute macro="WebContentNavigator#gotoEditTemplate">
-			<var name="templateName" value="WC Template Name" />
+		<execute macro="LexiconEntry#gotoEntryMenuItem">
+			<var name="menuItem" value="Edit" />
+			<var name="rowEntry" value="WC Template Name" />
 		</execute>
 
 		<execute macro="Panel#expandPanel">

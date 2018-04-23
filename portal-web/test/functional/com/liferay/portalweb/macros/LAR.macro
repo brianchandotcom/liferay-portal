@@ -397,10 +397,8 @@
 	</command>
 
 	<command name="addExportTemplateCP">
-		<execute function="Click" locator1="Icon#HEADER_VERTICAL_ELLIPSIS" />
-
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Export Templates">
-			<var name="key_menuItem" value="Export Templates" />
+		<execute macro="LexiconEntry#gotoHeaderMenuItem">
+			<var name="menuItem" value="Export Templates" />
 		</execute>
 
 		<execute macro="LexiconEntry#gotoAdd" />
@@ -458,16 +456,6 @@
 		</execute>
 	</command>
 
-	<command name="deleteCurrentAndPreviousProcess">
-		<execute function="Click" locator1="Icon#ROW_VERTICAL_ELLIPSIS">
-			<var name="key_rowEntry" value="${larFileName}" />
-		</execute>
-
-		<execute function="Click" locator1="MenuItem#ANY_MENU_ITEM">
-			<var name="key_menuItem" value="Clear" />
-		</execute>
-	</command>
-
 	<command name="downloadLar">
 		<execute function="Click" locator1="SitePagesExport#CURRENT_AND_PREVIOUS_DOWNLOAD" />
 
@@ -498,11 +486,9 @@
 	</command>
 
 	<command name="exportExportTemplateCP">
-		<var name="key_exportTemplateName" value="${exportTemplateName}" />
-
-		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
-
-		<execute function="Click" locator1="SitePagesExport#EXPORT_TEMPLATES_TABLE_EXPORT_BUTTON" />
+		<execute macro="LexiconEntry#gotoEllipsisMenuItem">
+			<var name="menuItem" value="Export" />
+		</execute>
 
 		<if>
 			<isset var="larFileName" />
@@ -589,14 +575,6 @@
 		</execute>
 	</command>
 
-	<command name="gotoExportTemplateCP">
-		<execute function="Click" locator1="Icon#HEADER_VERTICAL_ELLIPSIS" />
-
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Export Templates">
-			<var name="key_menuItem" value="Export Templates" />
-		</execute>
-	</command>
-
 	<command name="importPortlet">
 		<execute macro="LAR#_gotoExportImport" />
 
@@ -645,11 +623,9 @@
 	</command>
 
 	<command name="moveToTheRecycleBinExportTemplate">
-		<var name="key_exportTemplateName" value="${exportTemplateName}" />
-
-		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
-
-		<execute function="Click" locator1="Link#MOVE_TO_THE_RECYCLING_BIN" />
+		<execute macro="LexiconEntry#gotoEllipsisMenuItem">
+			<var name="menuItem" value="Move to the Recycle Bin" />
+		</execute>
 
 		<execute function="AssertElementPresent" locator1="Message#SUCCESS" />
 	</command>
@@ -662,13 +638,6 @@
 		<var name="key_filterValue" value="Completion Date" />
 
 		<execute function="AssertClick" locator1="Dropdown#FILTER_ORDER_VALUES" value1="Completion Date" />
-	</command>
-
-	<command name="relaunchExport">
-		<execute macro="LexiconEntry#gotoEntryMenuItem">
-			<var name="menuItem" value="Relaunch" />
-			<var name="rowEntry" value="${larFileName}" />
-		</execute>
 	</command>
 
 	<command name="saveExportTemplateCP">

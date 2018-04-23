@@ -1062,10 +1062,8 @@
 	</command>
 
 	<command name="renameWikiPageCP">
-		<execute function="Click" locator1="Icon#HEADER_VERTICAL_ELLIPSIS" />
-
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Move">
-			<var name="key_menuItem" value="Move" />
+		<execute macro="LexiconEntry#gotoHeaderMenuItem">
+			<var name="menuItem" value="Move" />
 		</execute>
 
 		<execute function="AssertTextEquals" locator1="Portlet#H3_HEADER" value1="${wikiPageTitle}" />
@@ -1211,9 +1209,9 @@
 		<while>
 			<condition function="IsTextNotEqual" locator1="WikiTable#ALL_PAGES_REVISION" value1="1.0 (Minor Edit)" />
 			<then>
-				<execute function="Click" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
-
-				<execute macro="PortletEntry#clickMoveToRecycleBin" />
+				<execute macro="LexiconEntry#gotoEllipsisMenuItem">
+					<var name="menuItem" value="Move to the Recycle Bin" />
+				</execute>
 
 				<execute function="AssertElementPresent" locator1="Message#SUCCESS" />
 			</then>

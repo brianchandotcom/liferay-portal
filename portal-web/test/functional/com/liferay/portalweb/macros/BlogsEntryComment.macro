@@ -53,10 +53,8 @@
 
 		<execute function="MouseOver" locator1="Comments#COMMENT_BODY_SPECIFIC" value1="${entryComment}" />
 
-		<execute function="Click#clickAt" locator1="BlogsEntry#REPLY_VERTICAL_ELLIPSES" />
-
-		<execute function="AssertClickNoError" locator1="MenuItem#ANY_MENU_ITEM" value1="Delete">
-			<var name="key_menuItem" value="Delete" />
+		<execute macro="LexiconEntry#gotoEllipsisMenuItemNoError">
+			<var name="menuItem" value="Delete" />
 		</execute>
 
 		<execute function="Confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
@@ -84,10 +82,8 @@
 
 		<execute function="MouseOver" locator1="Comments#COMMENT_BODY_SPECIFIC" />
 
-		<execute function="Click#clickAt" locator1="BlogsEntry#REPLY_VERTICAL_ELLIPSES" />
-
-		<execute function="Click#clickAt" locator1="MenuItem#ANY_MENU_ITEM" value1="Edit">
-			<var name="key_menuItem" value="Edit" />
+		<execute macro="LexiconEntry#gotoEllipsisMenuItem">
+			<var name="menuItem" value="Edit" />
 		</execute>
 
 		<execute function="Click#clickAt" locator1="Comments#EDIT_COMMENT_FIELD" />

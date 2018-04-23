@@ -64,14 +64,6 @@
 		</if>
 	</command>
 
-	<command name="markAllAsRead">
-		<execute function="Click" locator1="Icon#HEADER_VERTICAL_ELLIPSIS" />
-
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Mark All Notifications as Read">
-			<var name="key_menuItem" value="Mark All Notifications as Read" />
-		</execute>
-	</command>
-
 	<command name="navigateToContent">
 		<var name="key_contentBody" value="${contentBody}" />
 

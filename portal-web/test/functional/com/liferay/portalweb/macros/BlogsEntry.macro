@@ -175,7 +175,9 @@
 			<var name="entryTitle" value="${entryTitle2}" />
 		</execute>
 
-		<execute macro="BlogsNavigator#gotoAbstractField" />
+		<execute macro="Panel#expandPanel">
+			<var name="panelHeading" value="Configuration" />
+		</execute>
 
 		<execute function="Paste" locator1="TextInput#TRACKBACKS" />
 
@@ -236,11 +238,9 @@
 	</command>
 
 	<command name="editContentViaCardViewPG">
-		<execute macro="Portlet#mouseOverPortletTitle">
-			<var name="portletTitleName" value="Blogs" />
+		<execute macro="LexiconEntry#gotoEllipsisMenuItem">
+			<var name="menuItem" value="Edit" />
 		</execute>
-
-		<execute macro="PortletEntry#clickEditFromEllipsis" />
 
 		<execute macro="BlogsEntry#editContent">
 			<var name="entryContent" value="${entryContent}" />
@@ -342,11 +342,9 @@
 	</command>
 
 	<command name="editTitleViaCardViewPG">
-		<execute macro="Portlet#mouseOverPortletTitle">
-			<var name="portletTitleName" value="Blogs" />
+		<execute macro="LexiconEntry#gotoEllipsisMenuItem">
+			<var name="menuItem" value="Edit" />
 		</execute>
-
-		<execute macro="PortletEntry#clickEditFromEllipsis" />
 
 		<execute macro="BlogsEntry#editTitle">
 			<var name="entryTitle" value="${entryTitle}" />
@@ -1009,10 +1007,8 @@
 			<var name="portletTitleName" value="Blogs" />
 		</execute>
 
-		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
-
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Permissions">
-			<var name="key_menuItem" value="Permissions" />
+		<execute macro="LexiconEntry#gotoEllipsisMenuItem">
+			<var name="menuItem" value="Permissions" />
 		</execute>
 
 		<execute macro="IFrame#selectPermissionsFrame" />

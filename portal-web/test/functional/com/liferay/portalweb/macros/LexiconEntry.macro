@@ -40,6 +40,22 @@
 		</execute>
 	</command>
 
+	<command name="gotoEllipsisMenuItem">
+		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
+
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="${menuItem}">
+			<var name="key_menuItem" value="${menuItem}" />
+		</execute>
+	</command>
+
+	<command name="gotoEllipsisMenuItemNoError">
+		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
+
+		<execute function="AssertClickNoError" locator1="MenuItem#ANY_MENU_ITEM" value1="${menuItem}">
+			<var name="key_menuItem" value="${menuItem}" />
+		</execute>
+	</command>
+
 	<command name="gotoEntry">
 		<if>
 			<condition function="IsElementPresent" locator1="Icon#DISPLAY_STYLE_ACTIVE">
@@ -73,6 +89,42 @@
 		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#ROW_VERTICAL_ELLIPSIS">
 			<var name="key_rowEntry" value="${rowEntry}" />
 		</execute>
+
+		<execute function="AssertClickNoError" locator1="MenuItem#ANY_MENU_ITEM" value1="${menuItem}">
+			<var name="key_menuItem" value="${menuItem}" />
+		</execute>
+	</command>
+
+	<command name="gotoEntryMenuItemNoWait">
+		<execute function="Click" locator1="Icon#ROW_VERTICAL_ELLIPSIS">
+			<var name="key_rowEntry" value="${rowEntry}" />
+		</execute>
+
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="${menuItem}">
+			<var name="key_menuItem" value="${menuItem}" />
+		</execute>
+	</command>
+
+	<command name="gotoEntryMenuItemNoWaitNoError">
+		<execute function="Click" locator1="Icon#ROW_VERTICAL_ELLIPSIS">
+			<var name="key_rowEntry" value="${rowEntry}" />
+		</execute>
+
+		<execute function="AssertClickNoError" locator1="MenuItem#ANY_MENU_ITEM" value1="${menuItem}">
+			<var name="key_menuItem" value="${menuItem}" />
+		</execute>
+	</command>
+
+	<command name="gotoHeaderMenuItem">
+		<execute function="Click" locator1="Icon#HEADER_VERTICAL_ELLIPSIS" />
+
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="${menuItem}">
+			<var name="key_menuItem" value="${menuItem}" />
+		</execute>
+	</command>
+
+	<command name="gotoHeaderMenuItemNoError">
+		<execute function="Click" locator1="Icon#HEADER_VERTICAL_ELLIPSIS" />
 
 		<execute function="AssertClickNoError" locator1="MenuItem#ANY_MENU_ITEM" value1="${menuItem}">
 			<var name="key_menuItem" value="${menuItem}" />

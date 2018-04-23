@@ -1,20 +1,4 @@
 <definition>
-	<command name="_gotoAddArticleViaTemplate">
-		<execute macro="LexiconEntry#gotoAdd" />
-
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="${kbTemplateTitle}">
-			<var name="key_menuItem" value="${kbTemplateTitle}" />
-		</execute>
-	</command>
-
-	<command name="_gotoAddBasicArticle">
-		<execute macro="LexiconEntry#gotoAdd" />
-
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Basic Article">
-			<var name="key_menuItem" value="Basic Article" />
-		</execute>
-	</command>
-
 	<command name="_gotoChildArticle">
 		<var name="key_kbChildArticleTitle" value="${kbChildArticleTitle}" />
 
@@ -22,14 +6,6 @@
 		<execute function="AssertTextEquals" locator1="KnowledgeBase#CHILD_PAGE_TITLE" value1="${kbChildArticleTitle}" />
 
 		<execute function="AssertClick" locator1="KnowledgeBase#CHILD_PAGE_TITLE" value1="${kbChildArticleTitle}" />
-	</command>
-
-	<command name="_gotoImportArticle">
-		<execute macro="LexiconEntry#gotoAdd" />
-
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Import">
-			<var name="key_menuItem" value="Import" />
-		</execute>
 	</command>
 
 	<command name="addChildArticleViaKBAdmin">
@@ -116,12 +92,14 @@
 		<if>
 			<isset var="kbTemplateTitle" />
 			<then>
-				<execute macro="KBArticle#_gotoAddArticleViaTemplate">
-					<var name="kbTemplateTitle" value="${kbTemplateTitle}" />
+				<execute macro="LexiconEntry#gotoAddMenuItem">
+					<var name="menuItem" value="${kbTemplateTitle}" />
 				</execute>
 			</then>
 			<else>
-				<execute macro="KBArticle#_gotoAddBasicArticle" />
+				<execute macro="LexiconEntry#gotoAddMenuItem">
+					<var name="menuItem" value="Basic Article" />
+				</execute>
 			</else>
 		</if>
 
@@ -386,7 +364,9 @@
 	</command>
 
 	<command name="cancelAddKBArticle">
-		<execute macro="KBArticle#_gotoAddBasicArticle" />
+		<execute macro="LexiconEntry#gotoAddMenuItem">
+			<var name="menuItem" value="Basic Article" />
+		</execute>
 
 		<execute function="AssertElementPresent" locator1="AlloyEditor#EDITOR">
 			<var name="key_editor" value="title" />
@@ -980,7 +960,9 @@
 	</command>
 
 	<command name="importCP">
-		<execute macro="KBArticle#_gotoImportArticle" />
+		<execute macro="LexiconEntry#gotoAddMenuItem">
+			<var name="menuItem" value="Import" />
+		</execute>
 
 		<execute function="UploadCommonFile" locator1="TextInput#UPLOAD_FILE" value1="${kbZipFile}" />
 
@@ -1233,10 +1215,8 @@
 	</command>
 
 	<command name="subscribeCP">
-		<execute function="Click" locator1="Icon#HEADER_VERTICAL_ELLIPSIS" />
-
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Subscribe">
-			<var name="key_menuItem" value="Subscribe" />
+		<execute macro="LexiconEntry#gotoHeaderMenuItem">
+			<var name="menuItem" value="Subscribe" />
 		</execute>
 
 		<execute macro="Alert#viewSuccessMessage" />

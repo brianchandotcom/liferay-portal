@@ -752,10 +752,8 @@
 			</else>
 		</if>
 
-		<execute function="Click" locator1="Icon#HEADER_VERTICAL_ELLIPSIS" />
-
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Cancel Checkout">
-			<var name="key_menuItem" value="Cancel Checkout" />
+		<execute macro="LexiconEntry#gotoHeaderMenuItem">
+			<var name="menuItem" value="Cancel Checkout" />
 		</execute>
 
 		<execute macro="Alert#viewSuccessMessage" />
@@ -768,7 +766,7 @@
 
 		<execute function="AssertTextEquals" locator1="Message#CHECKOUT_SUCCESS" value1="You now have a lock on this document. No one else can edit this document until you unlock it. This lock will automatically expire in 1 day." />
 
-		<execute function="AssertClick#assertTextClick" locator1="Button#CANCEL_CHECKOUT" value1="Cancel Checkout" />
+		<execute function="AssertClick" locator1="Button#CANCEL_CHECKOUT" value1="Cancel Checkout" />
 
 		<execute macro="Alert#viewSuccessMessage" />
 	</command>
@@ -803,10 +801,8 @@
 			</else>
 		</if>
 
-		<execute function="Click" locator1="Icon#HEADER_VERTICAL_ELLIPSIS" />
-
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Checkin">
-			<var name="key_menuItem" value="Checkin" />
+		<execute macro="LexiconEntry#gotoHeaderMenuItem">
+			<var name="menuItem" value="Checkin" />
 		</execute>
 
 		<if>
@@ -846,7 +842,7 @@
 
 		<execute function="AssertTextEquals" locator1="Message#CHECKOUT_SUCCESS" value1="You now have a lock on this document. No one else can edit this document until you unlock it. This lock will automatically expire in 1 day." />
 
-		<execute function="AssertClick#assertTextClick" locator1="Button#CHECKIN" value1="Checkin" />
+		<execute function="AssertClick" locator1="Button#CHECKIN" value1="Checkin" />
 
 		<if>
 			<condition function="IsElementPresent" locator1="Radio#MAJOR_VERSION" />
@@ -944,7 +940,7 @@
 
 		<execute function="AssertClick" locator1="DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_TITLE" value1="${dmDocumentTitle}" />
 
-		<execute function="AssertClick#assertTextClick" locator1="Button#CHECKOUT" value1="Checkout" />
+		<execute function="AssertClick" locator1="Button#CHECKOUT" value1="Checkout" />
 
 		<execute macro="Alert#viewSuccessMessage" />
 
@@ -997,20 +993,20 @@
 			<var name="dmDocumentTitle" value="${dmDocumentTitle}" />
 		</execute>
 
-		<execute function="AssertClick#assertTextClick" locator1="Button#MOVE_TO_THE_RECYCLE_BIN" value1="Move to the Recycle Bin" />
+		<execute function="AssertClick" locator1="Button#MOVE_TO_THE_RECYCLE_BIN" value1="Move to the Recycle Bin" />
 
 		<execute function="AssertElementPresent" locator1="Message#SUCCESS" />
 	</command>
 
 	<command name="deletePGViaMG">
-		<var name="key_mgDocumentTitle" value="${mgDocumentTitle}" />
-
-		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
-
-		<execute macro="PortletEntry#clickMoveToRecycleBin" />
+		<execute macro="LexiconEntry#gotoEllipsisMenuItem">
+			<var name="menuItem" value="Move to the Recycle Bin" />
+		</execute>
 
 		<execute function="AssertElementPresent" locator1="Message#SUCCESS" />
-		<execute function="AssertElementNotPresent" locator1="MediaGallery#IMAGE_TITLE" />
+		<execute function="AssertElementNotPresent" locator1="MediaGallery#IMAGE_TITLE">
+			<var name="key_mgDocumentTitle" value="${mgDocumentTitle}" />
+		</execute>
 	</command>
 
 	<command name="deleteViaActionsPG">
@@ -1065,7 +1061,7 @@
 
 		<execute function="AssertClick" locator1="DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_TITLE" value1="${dmDocumentTitle}" />
 
-		<execute function="AssertClick#assertTextClick" locator1="Button#DOWNLOAD" value1="Download" />
+		<execute function="AssertClick" locator1="Button#DOWNLOAD" value1="Download" />
 	</command>
 
 	<command name="editCmd">
@@ -1112,7 +1108,7 @@
 				<execute function="AssertTextEquals#assertPartialText" locator1="Message#ERROR_2" value1="You cannot modify this document because it was locked by ${userName}" />
 			</then>
 			<else>
-				<execute function="AssertClick#assertTextClick" locator1="Button#EDIT" value1="Edit" />
+				<execute function="AssertClick" locator1="Button#EDIT" value1="Edit" />
 			</else>
 		</if>
 
@@ -1267,12 +1263,8 @@
 	</command>
 
 	<command name="editPGViaMG">
-		<var name="key_mgDocumentTitle" value="${mgDocumentTitle}" />
-
-		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
-
-		<execute function="Click" locator1="MenuItem#ANY_MENU_ITEM" value1="Edit">
-			<var name="key_menuItem" value="Edit" />
+		<execute macro="LexiconEntry#gotoEllipsisMenuItem">
+			<var name="menuItem" value="Edit" />
 		</execute>
 
 		<execute macro="PortletEntry#inputTitle">
@@ -1285,9 +1277,9 @@
 
 		<execute macro="PortletEntry#publish" />
 
-		<var name="key_mgDocumentTitle" value="${mgDocumentTitleEdit}" />
-
-		<execute function="AssertTextEquals" locator1="MediaGallery#IMAGE_TITLE" value1="${mgDocumentTitleEdit}" />
+		<execute function="AssertTextEquals" locator1="MediaGallery#IMAGE_TITLE" value1="${mgDocumentTitleEdit}">
+			<var name="key_mgDocumentTitle" value="${mgDocumentTitleEdit}" />
+		</execute>
 	</command>
 
 	<command name="editSaveAndCheckinPG">
@@ -1710,7 +1702,7 @@
 
 		<execute function="Click" locator1="DocumentsAndMedia#ICON_DOCUMENT_THUMBNAIL" />
 
-		<execute function="AssertClick#assertTextClick" locator1="Button#EDIT" value1="Edit" />
+		<execute function="AssertClick" locator1="Button#EDIT" value1="Edit" />
 
 		<execute macro="PortletEntry#publish" />
 	</command>
@@ -1995,7 +1987,7 @@
 
 		<execute function="AssertElementPresent" locator1="Message#SUCCESS" />
 
-		<execute function="AssertClick#assertTextClick" locator1="Button#EDIT" value1="Edit" />
+		<execute function="AssertClick" locator1="Button#EDIT" value1="Edit" />
 
 		<execute function="AssertElementPresent" locator1="Message#SUCCESS" />
 	</command>

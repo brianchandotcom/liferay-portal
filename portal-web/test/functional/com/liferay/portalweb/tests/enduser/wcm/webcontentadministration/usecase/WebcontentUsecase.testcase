@@ -3302,7 +3302,9 @@
 			<var name="webContentTitle" value="English (United States) Title" />
 		</execute>
 
-		<execute macro="WebContentNavigator#gotoViewSource" />
+		<execute macro="LexiconEntry#gotoHeaderMenuItem">
+			<var name="menuItem" value="View Source" />
+		</execute>
 
 		<execute function="AssertElementNotPresent" locator1="WC#SOURCE_GARBAGE_DATA" />
 	</command>

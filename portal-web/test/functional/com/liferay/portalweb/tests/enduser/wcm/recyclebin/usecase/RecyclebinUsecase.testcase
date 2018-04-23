@@ -1606,8 +1606,9 @@
 			<var name="webContentTitle" value="WC Folder Name" />
 		</execute>
 
-		<execute macro="WebContent#gotoViewSpecificVersionHistoryCP">
-			<var name="webContentTitle" value="Web Content Title Edit Draft" />
+		<execute macro="LexiconEntry#gotoEntryMenuItem">
+			<var name="menuItem" value="View History" />
+			<var name="rowEntry" value="Web Content Title Edit Draft" />
 		</execute>
 
 		<execute macro="WebContent#viewSpecificVersionHistoryCP">

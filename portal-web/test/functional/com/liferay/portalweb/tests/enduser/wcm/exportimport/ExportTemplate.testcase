@@ -77,7 +77,9 @@
 			<var name="portlet" value="Export" />
 		</execute>
 
-		<execute macro="LAR#gotoExportTemplateCP" />
+		<execute macro="LexiconEntry#gotoHeaderMenuItem">
+			<var name="menuItem" value="Export Templates" />
+		</execute>
 
 		<execute macro="LAR#viewExportTemplateCP">
 			<var name="exportTemplateDescription" value="Export Template Description" />
@@ -102,8 +104,9 @@
 
 		<echo message="lar file name ${larFileName}" />
 
-		<execute macro="LAR#relaunchExport">
-			<var name="larFileName" value="${larFileName}" />
+		<execute macro="LexiconEntry#gotoEntryMenuItem">
+			<var name="menuItem" value="Relaunch" />
+			<var name="rowEntry" value="${larFileName}" />
 		</execute>
 
 		<execute function="AssertTextEquals#assertPartialText" locator1="SitePagesExport#CURRENT_AND_PREVIOUS_STATUS" value1="Successful" />
@@ -128,7 +131,9 @@
 			<var name="portlet" value="Export" />
 		</execute>
 
-		<execute macro="LAR#gotoExportTemplateCP" />
+		<execute macro="LexiconEntry#gotoHeaderMenuItem">
+			<var name="menuItem" value="Export Templates" />
+		</execute>
 
 		<execute macro="LAR#searchTemplate">
 			<var name="exportTemplateDescription" value="Export Template Description" />

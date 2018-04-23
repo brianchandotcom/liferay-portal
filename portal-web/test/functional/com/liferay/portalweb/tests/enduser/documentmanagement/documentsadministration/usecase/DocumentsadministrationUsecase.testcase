@@ -802,11 +802,11 @@
 			<var name="pageName" value="Documents and Media Page" />
 		</execute>
 
-		<execute function="AssertClick" locator1="DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_TITLE" value1="Document1">
-			<var name="key_dmDocumentTitle" value="Document1" />
+		<execute macro="LexiconEntry#gotoEntry">
+			<var name="rowEntry" value="Document1" />
 		</execute>
 
-		<execute function="AssertClick#assertTextClick" locator1="Button#EDIT" value1="Edit" />
+		<execute function="AssertClick" locator1="Button#EDIT" value1="Edit" />
 
 		<while>
 			<condition function="IsElementPresent" locator1="AssetCategorization#TAGS_REMOVE_ICON_GENERIC" />

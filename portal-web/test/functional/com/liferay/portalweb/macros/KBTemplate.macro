@@ -30,10 +30,8 @@
 			<var name="portlet" value="Knowledge Base" />
 		</execute>
 
-		<execute function="Click" locator1="Icon#HEADER_VERTICAL_ELLIPSIS" />
-
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Templates">
-			<var name="key_menuItem" value="Templates" />
+		<execute macro="LexiconEntry#gotoHeaderMenuItem">
+			<var name="menuItem" value="Templates" />
 		</execute>
 
 		<if>
@@ -60,8 +58,8 @@
 	</command>
 
 	<command name="viewCPViaAddTemplate">
-		<execute macro="KBArticle#_gotoAddArticleViaTemplate">
-			<var name="kbTemplateTitle" value="${kbTemplateTitle}" />
+		<execute macro="LexiconEntry#gotoAddMenuItem">
+			<var name="menuItem" value="${kbTemplateTitle}" />
 		</execute>
 
 		<execute function="AssertTextEquals" locator1="AlloyEditor#EDITOR" value1="${kbTemplateTitle}">

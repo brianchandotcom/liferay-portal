@@ -68,10 +68,8 @@
 	<command name="gotoManageDataDefinitions">
 		<execute function="Pause" locator1="5000" />
 
-		<execute function="Click" locator1="Icon#HEADER_VERTICAL_ELLIPSIS" />
-
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Manage Data Definitions">
-			<var name="key_menuItem" value="Manage Data Definitions" />
+		<execute macro="LexiconEntry#gotoHeaderMenuItem">
+			<var name="menuItem" value="Manage Data Definitions" />
 		</execute>
 
 		<execute function="AssertTextEquals" locator1="Portlet#HEADER" value1="Data Definitions" />

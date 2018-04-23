@@ -32,7 +32,9 @@
 			<var name="portlet" value="Forms" />
 		</execute>
 
-		<execute macro="FormsAdminNavigator#gotoDataProviders" />
+		<execute macro="LexiconEntry#gotoHeaderMenuItem">
+			<var name="menuItem" value="Data Providers" />
+		</execute>
 
 		<execute macro="FormsAdminNavigator#gotoAddDataProvider" />
 
@@ -92,8 +94,9 @@
 			<var name="portlet" value="Forms" />
 		</execute>
 
-		<execute macro="FormsAdminNavigator#gotoEdit">
-			<var name="formName" value="Created Form Name" />
+		<execute macro="LexiconEntry#gotoEntryMenuItem">
+			<var name="menuItem" value="Edit" />
+			<var name="rowEntry" value="Created Form Name" />
 		</execute>
 
 		<execute macro="FormsAdminNavigator#gotoEditField">
@@ -221,7 +224,9 @@
 			<var name="portlet" value="Forms" />
 		</execute>
 
-		<execute macro="FormsAdminNavigator#gotoDataProviders" />
+		<execute macro="LexiconEntry#gotoHeaderMenuItem">
+			<var name="menuItem" value="Data Providers" />
+		</execute>
 
 		<execute macro="FormsAdminNavigator#gotoAddDataProvider" />
 
@@ -340,7 +345,9 @@
 			<var name="portlet" value="Forms" />
 		</execute>
 
-		<execute macro="FormsAdminNavigator#gotoDataProviders" />
+		<execute macro="LexiconEntry#gotoHeaderMenuItem">
+			<var name="menuItem" value="Data Providers" />
+		</execute>
 
 		<execute macro="FormsAdminNavigator#gotoAddDataProvider" />
 

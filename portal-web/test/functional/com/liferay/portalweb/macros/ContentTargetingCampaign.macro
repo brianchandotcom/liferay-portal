@@ -171,12 +171,8 @@
 			<var name="navItem" value="Campaigns" />
 		</execute>
 
-		<var name="key_rowEntry" value="${campaignName}" />
-
-		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
-
-		<execute function="ClickNoError" locator1="MenuItem#ANY_MENU_ITEM" value1="Delete">
-			<var name="key_menuItem" value="Delete" />
+		<execute macro="LexiconEntry#gotoEllipsisMenuItemNoError">
+			<var name="menuItem" value="Delete" />
 		</execute>
 
 		<execute function="Confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
@@ -187,12 +183,8 @@
 			<var name="navItem" value="Campaigns" />
 		</execute>
 
-		<var name="key_rowEntry" value="${campaignName}" />
-
-		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
-
-		<execute function="Click" locator1="MenuItem#ANY_MENU_ITEM" value1="Edit">
-			<var name="key_menuItem" value="Edit" />
+		<execute macro="LexiconEntry#gotoEllipsisMenuItem">
+			<var name="menuItem" value="Edit" />
 		</execute>
 
 		<execute macro="PortletEntry#inputName">
@@ -399,10 +391,8 @@
 
 		<var name="key_reportType" value="${viewReportType}" />
 
-		<execute function="Click" locator1="Icon#HEADER_VERTICAL_ELLIPSIS" />
-
-		<execute function="Click" locator1="MenuItem#ANY_MENU_ITEM">
-			<var name="key_menuItem" value="Update" />
+		<execute macro="LexiconEntry#gotoHeaderMenuItem">
+			<var name="menuItem" value="Update" />
 		</execute>
 
 		<execute function="Pause" locator1="1000" />
@@ -439,8 +429,6 @@
 		<if>
 			<isset var="userSegmentSelect" />
 			<then>
-				<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
-
 				<execute function="Click" locator1="MenuItem#ANY_MENU_ITEM" value1="Edit">
 					<var name="key_menuItem" value="Edit" />
 				</execute>

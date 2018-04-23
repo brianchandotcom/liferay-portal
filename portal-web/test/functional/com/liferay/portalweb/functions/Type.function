@@ -1,28 +1,4 @@
 <definition default="type" summary="Type to '${locator1}' the value '${value1}'">
-	<command name="clickAtSendKeys">
-		<execute function="WaitForSPARefresh" />
-
-		<execute selenium="waitForVisible" />
-
-		<execute selenium="mouseOver" />
-
-		<execute selenium="clickAt" />
-
-		<execute argument1="1000" selenium="pause" />
-
-		<execute selenium="sendKeys" />
-
-		<execute argument1="1000" selenium="pause" />
-
-		<execute selenium="clickAt" />
-
-		<execute argument1="1000" selenium="pause" />
-
-		<execute selenium="assertJavaScriptErrors" />
-
-		<execute selenium="assertLiferayErrors" />
-	</command>
-
 	<command name="clickAtType">
 		<execute function="WaitForSPARefresh" />
 
@@ -75,36 +51,12 @@
 		<execute selenium="assertLiferayErrors" />
 	</command>
 
-	<command name="sendKeysAceEditorNoMouseOver">
-		<execute function="WaitForSPARefresh" />
-
-		<execute selenium="waitForElementPresent" />
-
-		<execute selenium="sendKeysAceEditor" />
-
-		<execute selenium="assertJavaScriptErrors" />
-
-		<execute selenium="assertLiferayErrors" />
-	</command>
-
 	<command name="sendKeysApplicationSearch">
 		<execute function="WaitForSPARefresh" />
 
 		<execute argument1="//script[contains(@src,'/autocomplete-filters/autocomplete-filters')]" selenium="waitForElementPresent" />
 
 		<execute function="Type#sendKeys" />
-
-		<execute selenium="assertJavaScriptErrors" />
-
-		<execute selenium="assertLiferayErrors" />
-	</command>
-
-	<command name="sendKeysNoWait">
-		<execute function="WaitForSPARefresh" />
-
-		<execute selenium="mouseOver" />
-
-		<execute selenium="sendKeys" />
 
 		<execute selenium="assertJavaScriptErrors" />
 
@@ -241,20 +193,6 @@
 		<execute selenium="type" />
 
 		<execute argument1="1000" selenium="pause" />
-
-		<execute selenium="assertJavaScriptErrors" />
-
-		<execute selenium="assertLiferayErrors" />
-	</command>
-
-	<command name="typeWaitForCKEditor">
-		<execute function="WaitForSPARefresh" />
-
-		<execute argument1="//a[contains(@class,'cke_button__unlink') and contains(@class,'cke_button_disabled')]" selenium="waitForVisible" />
-
-		<execute argument1="1000" selenium="pause" />
-
-		<execute function="Type#type" />
 
 		<execute selenium="assertJavaScriptErrors" />
 

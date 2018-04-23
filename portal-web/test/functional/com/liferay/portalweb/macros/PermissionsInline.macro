@@ -120,10 +120,8 @@
 
 		<execute function="Click" locator1="Button#INFO" />
 
-		<execute function="Click" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
-
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Permissions">
-			<var name="key_menuItem" value="Permissions" />
+		<execute macro="LexiconEntry#gotoEllipsisMenuItem">
+			<var name="menuItem" value="Permissions" />
 		</execute>
 
 		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
@@ -185,9 +183,8 @@
 			<var name="portlet" value="Site Pages" />
 		</execute>
 
-		<execute macro="SitePages#gotoPageMenuItem">
+		<execute macro="LexiconEntry#gotoHeaderMenuItem">
 			<var name="menuItem" value="Permissions" />
-			<var name="pageName" value="${pageName}" />
 		</execute>
 
 		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
@@ -209,9 +206,8 @@
 	</command>
 
 	<command name="gotoSitepageCP">
-		<execute macro="SitePages#gotoPageMenuItem">
+		<execute macro="LexiconEntry#gotoHeaderMenuItem">
 			<var name="menuItem" value="Permissions" />
-			<var name="pageName" value="${pageName}" />
 		</execute>
 
 		<execute macro="IFrame#selectPermissionsFrame" />
@@ -243,9 +239,8 @@
 			<var name="portlet" value="Site Pages" />
 		</execute>
 
-		<execute macro="SitePages#gotoPageMenuItem">
+		<execute macro="LexiconEntry#gotoHeaderMenuItem">
 			<var name="menuItem" value="Permissions" />
-			<var name="pageName" value="${page}" />
 		</execute>
 	</command>
 

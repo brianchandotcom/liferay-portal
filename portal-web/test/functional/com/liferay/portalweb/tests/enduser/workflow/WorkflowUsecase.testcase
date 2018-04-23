@@ -1147,7 +1147,9 @@
 			<var name="user" value="Test Test" />
 		</execute>
 
-		<execute macro="Workflow#clickAssignToMeByDetails" />
+		<execute macro="LexiconEntry#gotoEllipsisMenuItem">
+			<var name="menuItem" value="Assign to Me" />
+		</execute>
 
 		<execute macro="Workflow#confirmWorkflowAction" />
 
@@ -1174,7 +1176,9 @@
 			<var name="workflowTask" value="Review" />
 		</execute>
 
-		<execute macro="Workflow#clickApproveByDetails" />
+		<execute macro="LexiconEntry#gotoEllipsisMenuItem">
+			<var name="menuItem" value="Approve" />
+		</execute>
 
 		<execute macro="Workflow#confirmWorkflowAction" />
 

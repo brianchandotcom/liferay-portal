@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.model.LayoutType;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.UnicodeProperties;
@@ -175,6 +176,13 @@ public class LayoutSiteNavigationMenuItemType
 	@Override
 	public String getUnescapedName(
 		SiteNavigationMenuItem siteNavigationMenuItem, String languageId) {
+
+		String title = getTitle(
+			siteNavigationMenuItem, LocaleUtil.fromLanguageId(languageId));
+
+		if (Validator.isNotNull(title)) {
+			return title;
+		}
 
 		Layout layout = _getLayout(siteNavigationMenuItem);
 

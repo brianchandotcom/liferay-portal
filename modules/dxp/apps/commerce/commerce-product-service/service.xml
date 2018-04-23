@@ -837,6 +837,10 @@
 		<finder name="GroupId" return-type="Collection">
 			<finder-column name="groupId" />
 		</finder>
+
+		<!-- References -->
+
+		<reference entity="ExpandoRow" package-path="com.liferay.portlet.expando" />
 	</entity>
 	<entity local-service="true" name="CPRuleUserSegmentRel" remote-service="true">
 
@@ -859,7 +863,7 @@
 		<!-- Other fields -->
 
 		<column name="CPRuleId" type="long" />
-		<column name="commerceUserSegmentEntryId" type="boolean" />
+		<column name="commerceUserSegmentEntryId" type="long" />
 
 		<!-- Order -->
 
@@ -872,7 +876,7 @@
 		<finder name="CPRuleId" return-type="Collection">
 			<finder-column name="CPRuleId" />
 		</finder>
-		<finder name="commerceUserSegmentEntryId" return-type="Collection">
+		<finder name="CommerceUserSegmentEntryId" return-type="Collection">
 			<finder-column name="commerceUserSegmentEntryId" />
 		</finder>
 	</entity>

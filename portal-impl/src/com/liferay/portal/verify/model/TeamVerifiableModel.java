@@ -14,20 +14,12 @@
 
 package com.liferay.portal.verify.model;
 
-import com.liferay.portal.kernel.model.Team;
-import com.liferay.portal.kernel.verify.model.VerifiableResourcedModel;
 import com.liferay.portal.kernel.verify.model.VerifiableUUIDModel;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class TeamVerifiableModel
-	implements VerifiableResourcedModel, VerifiableUUIDModel {
-
-	@Override
-	public String getModelName() {
-		return Team.class.getName();
-	}
+public class TeamVerifiableModel implements VerifiableUUIDModel {
 
 	@Override
 	public String getPrimaryKeyColumnName() {
@@ -37,11 +29,6 @@ public class TeamVerifiableModel
 	@Override
 	public String getTableName() {
 		return "Team";
-	}
-
-	@Override
-	public String getUserIdColumnName() {
-		return "userId";
 	}
 
 }

@@ -16,6 +16,7 @@ package com.liferay.commerce.service.impl;
 
 import com.liferay.commerce.configuration.CommerceOrderConfiguration;
 import com.liferay.commerce.constants.CommerceConstants;
+import com.liferay.commerce.constants.CommerceDestinationNames;
 import com.liferay.commerce.constants.CommerceOrderConstants;
 import com.liferay.commerce.constants.CommerceOrderPaymentConstants;
 import com.liferay.commerce.currency.model.CommerceCurrency;
@@ -47,6 +48,8 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.messaging.Message;
+import com.liferay.portal.kernel.messaging.MessageBusUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserConstants;
@@ -61,6 +64,7 @@ import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -85,6 +89,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.Callable;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
 
@@ -799,6 +804,8 @@ public class CommerceOrderLocalServiceImpl
 			long commerceOrderId, int orderStatus)
 		throws PortalException {
 
+		// Commerce order
+
 		CommerceOrder commerceOrder = commerceOrderPersistence.findByPrimaryKey(
 			commerceOrderId);
 
@@ -806,7 +813,30 @@ public class CommerceOrderLocalServiceImpl
 
 		commerceOrder.setOrderStatus(orderStatus);
 
-		return commerceOrderPersistence.update(commerceOrder);
+		commerceOrderPersistence.update(commerceOrder);
+
+		// Messaging
+
+		TransactionCommitCallbackUtil.registerCallback(
+			new Callable<Void>() {
+
+				@Override
+				public Void call() throws Exception {
+					Message message = new Message();
+
+					message.put(
+						"commerceOrderId", commerceOrder.getCommerceOrderId());
+					message.put("orderStatus", commerceOrder.getOrderStatus());
+
+					MessageBusUtil.sendMessage(
+						CommerceDestinationNames.ORDER_STATUS, message);
+
+					return null;
+				}
+
+			});
+
+		return commerceOrder;
 	}
 
 	@Override

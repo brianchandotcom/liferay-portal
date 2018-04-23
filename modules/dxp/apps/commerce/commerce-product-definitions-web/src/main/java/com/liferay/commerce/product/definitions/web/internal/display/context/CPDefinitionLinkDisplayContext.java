@@ -29,9 +29,12 @@ import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.taglib.util.CustomAttributesUtil;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -180,6 +183,16 @@ public class CPDefinitionLinkDisplayContext
 
 	public String getType() {
 		return _type;
+	}
+
+	public boolean hasCustomAttributesAvailable() throws Exception {
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		return CustomAttributesUtil.hasCustomAttributes(
+			themeDisplay.getCompanyId(), CPDefinitionLink.class.getName(),
+			getCPDefinitionLinkId(), null);
 	}
 
 	protected long[] getCheckedCPDefinitionIds(long cpDefinitionId, String type)

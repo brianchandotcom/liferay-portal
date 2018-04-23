@@ -70,6 +70,17 @@ PortalUtil.addPortletBreadcrumbEntry(request, title, StringPool.BLANK, data);
 			<aui:fieldset>
 				<aui:input name="priority" />
 			</aui:fieldset>
+
+			<c:if test="<%= cpDefinitionLinkDisplayContext.hasCustomAttributesAvailable() %>">
+				<aui:fieldset collapsible="<%= true %>" label="custom-attribute">
+					<liferay-expando:custom-attribute-list
+						className="<%= CPDefinitionLink.class.getName() %>"
+						classPK="<%= (cpDefinitionLink != null) ? cpDefinitionLink.getCPDefinitionLinkId() : 0 %>"
+						editable="<%= true %>"
+						label="<%= true %>"
+					/>
+				</aui:fieldset>
+			</c:if>
 		</aui:fieldset-group>
 
 		<aui:button-row>

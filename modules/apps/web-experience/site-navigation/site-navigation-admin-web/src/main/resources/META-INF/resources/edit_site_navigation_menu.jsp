@@ -118,7 +118,7 @@ renderResponse.setTitle(siteNavigationAdminDisplayContext.getSiteNavigationMenuN
 	var addMenuItemClickHandler = dom.delegate(
 		document.body,
 		'click',
-		'.add-menu-item-link',
+		'.add-menu-item-link, .dropdown-item',
 		function(event) {
 			Liferay.Util.openInDialog(
 				event,
@@ -130,7 +130,7 @@ renderResponse.setTitle(siteNavigationAdminDisplayContext.getSiteNavigationMenuN
 						bodyCssClass: 'dialog-with-footer'
 					},
 					id: '<portlet:namespace/>addMenuItem',
-					title: event.delegateTarget.title,
+					title: event.delegateTarget.title || event.delegateTarget.innerText,
 					uri: event.delegateTarget.href
 				}
 			);

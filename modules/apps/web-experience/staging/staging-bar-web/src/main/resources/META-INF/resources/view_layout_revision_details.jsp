@@ -24,6 +24,8 @@ if ((layoutRevision == null) && (layout != null)) {
 }
 
 LayoutSetBranch layoutSetBranch = (LayoutSetBranch)request.getAttribute(StagingProcessesWebKeys.LAYOUT_SET_BRANCH);
+List<LayoutSetBranch> layoutSetBranches = (List<LayoutSetBranch>)request.getAttribute(StagingProcessesWebKeys.LAYOUT_SET_BRANCHES);
+String stagingURL = (String)request.getAttribute(StagingProcessesWebKeys.STAGING_URL);
 
 if (layoutSetBranch == null) {
 	layoutSetBranch = LayoutSetBranchLocalServiceUtil.getLayoutSetBranch(layoutRevision.getLayoutSetBranchId());
@@ -53,6 +55,48 @@ else {
 %>
 
 <ul class="control-menu-nav staging-layout-revision-details-list">
+	<c:if test="<%= (layoutSetBranches != null) && (layoutSetBranches.size() >= 1) %>">
+		<li class="control-menu-nav-item">
+			<div class="control-menu-label staging-variation-label">
+				<liferay-ui:message key="site-pages-variation" />
+			</div>
+
+			<div class="dropdown">
+				<a class="dropdown-toggle layout-set-branch-selector staging-variation-selector" data-toggle="dropdown" href="#1">
+					<liferay-ui:message key="<%= HtmlUtil.escape(layoutSetBranchDisplayContext.getLayoutSetBranchDisplayName(layoutSetBranch)) %>" localizeKey="<%= false %>" />
+
+					<aui:icon image="caret-double-l" markupView="lexicon" />
+				</a>
+
+				<ul class="dropdown-menu">
+
+					<%
+					for (LayoutSetBranch curLayoutSetBranch : layoutSetBranches) {
+						boolean selected = (group.isStagingGroup() || group.isStagedRemotely()) && (curLayoutSetBranch.getLayoutSetBranchId() == layoutRevision.getLayoutSetBranchId());
+					%>
+
+					<portlet:actionURL name="selectLayoutSetBranch" var="curLayoutSetBranchURL">
+						<portlet:param name="redirect" value="<%= stagingURL %>" />
+						<portlet:param name="groupId" value="<%= String.valueOf(curLayoutSetBranch.getGroupId()) %>" />
+						<portlet:param name="privateLayout" value="<%= String.valueOf(layout.isPrivateLayout()) %>" />
+						<portlet:param name="layoutSetBranchId" value="<%= String.valueOf(curLayoutSetBranch.getLayoutSetBranchId()) %>" />
+					</portlet:actionURL>
+
+					<li>
+						<a class="<%= selected ? "disabled" : StringPool.BLANK %>" href="<%= selected ? "javascript:;" : "javascript:submitForm(document.hrefFm, '" + HtmlUtil.escapeJS(curLayoutSetBranchURL) + "');" %>">
+							<liferay-ui:message key="<%= HtmlUtil.escape(layoutSetBranchDisplayContext.getLayoutSetBranchDisplayName(curLayoutSetBranch)) %>" localizeKey="<%= false %>" />
+						</a>
+					</li>
+
+					<%
+					}
+					%>
+
+				</ul>
+			</div>
+		</li>
+	</c:if>
+
 	<c:if test="<%= !hasWorkflowTask %>">
 		<c:if test="<%= !layoutRevision.isHead() && LayoutPermissionUtil.contains(permissionChecker, layoutRevision.getPlid(), ActionKeys.UPDATE) %>">
 			<li class="control-menu-nav-item">

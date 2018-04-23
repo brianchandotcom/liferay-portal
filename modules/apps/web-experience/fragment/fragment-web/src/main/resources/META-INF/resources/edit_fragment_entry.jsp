@@ -97,6 +97,14 @@ renderResponse.setTitle(title);
 
 <%
 Layout renderLayout = LayoutLocalServiceUtil.fetchFirstLayout(themeDisplay.getScopeGroupId(), false, 0);
+
+if (renderLayout == null) {
+	renderLayout = LayoutLocalServiceUtil.fetchFirstLayout(themeDisplay.getScopeGroupId(), true, 0);
+
+	if (renderLayout == null) {
+		renderLayout = themeDisplay.getLayout();
+	}
+}
 %>
 
 <liferay-portlet:renderURL plid="<%= renderLayout.getPlid() %>" var="renderFragmentEntryURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">

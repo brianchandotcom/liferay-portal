@@ -583,14 +583,14 @@
 
 		<!-- Finder methods -->
 
-		<finder name="ParentCommercePriceListId" return-type="CommercePriceList">
-			<finder-column name="parentCommercePriceListId" />
-		</finder>
 		<finder name="GroupId" return-type="Collection">
 			<finder-column name="groupId" />
 		</finder>
 		<finder name="CompanyId" return-type="Collection">
 			<finder-column name="companyId" />
+		</finder>
+		<finder name="ParentCommercePriceListId" return-type="CommercePriceList">
+			<finder-column name="parentCommercePriceListId" />
 		</finder>
 		<finder name="CommerceCurrencyId" return-type="Collection">
 			<finder-column name="commerceCurrencyId" />

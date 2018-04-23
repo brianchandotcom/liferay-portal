@@ -49,6 +49,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CARDS</td>
+	<td>//button[*[name()='svg'][contains(@class,'lexicon-icon-cards')]]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CARET_LEFT</td>
 	<td>//span[contains(@class,'icon-caret-left')]</td>
 	<td></td>
@@ -164,6 +169,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>LIST</td>
+	<td>//button[*[name()='svg'][contains(@class,'lexicon-icon-list')]]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>LOCALIZED_FLAG</td>
 	<td>//li[@role='menuitem' and @data-value='${key_localizationName}']/a</td>
 	<td></td>
@@ -221,6 +231,11 @@
 <tr>
 	<td>SUBSCRIBE</td>
 	<td>//a[span/*[name()='svg'][contains(@class,'icon-star')]]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TABLE</td>
+	<td>//button[*[name()='svg'][contains(@class,'lexicon-icon-table')]]</td>
 	<td></td>
 </tr>
 <tr>

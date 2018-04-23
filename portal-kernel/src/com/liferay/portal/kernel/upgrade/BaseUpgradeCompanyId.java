@@ -94,7 +94,8 @@ public abstract class BaseUpgradeCompanyId extends UpgradeProcess {
 		@Override
 		public final Void call() throws Exception {
 			try (LoggingTimer loggingTimer = new LoggingTimer(_tableName);
-				Connection connection = DataAccess.getConnection()) {
+				Connection connection =
+					DataAccess.getUpgradeOptimizedConnection()) {
 
 				if (_createCompanyIdColumn) {
 					if (_log.isInfoEnabled()) {

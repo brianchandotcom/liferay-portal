@@ -86,7 +86,7 @@ public abstract class UpgradeProcess
 			_log.info("Upgrading " + ClassUtil.getClassName(this));
 		}
 
-		try (Connection con = DataAccess.getConnection()) {
+		try (Connection con = DataAccess.getUpgradeOptimizedConnection()) {
 			connection = con;
 
 			doUpgrade();

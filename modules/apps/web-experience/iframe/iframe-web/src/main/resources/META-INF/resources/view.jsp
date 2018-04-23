@@ -79,7 +79,7 @@
 				var url = null;
 
 				try {
-					var iframe = A.one('<portlet:namespace />iframe');
+					var iframe = document.getElementById('<portlet:namespace />iframe');
 
 					url = iframe.contentWindow.document.location.href;
 

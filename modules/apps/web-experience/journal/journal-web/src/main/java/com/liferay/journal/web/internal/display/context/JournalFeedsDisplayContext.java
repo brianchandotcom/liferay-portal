@@ -79,13 +79,17 @@ public class JournalFeedsDisplayContext {
 	}
 
 	public CreationMenu getCreationMenu() {
+		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
 		return new CreationMenu(_request) {
 			{
 				addPrimaryDropdownItem(
 					dropdownItem -> {
 						dropdownItem.setHref(
 							_renderResponse.createRenderURL(), "mvcPath",
-							"/edit_feed.jsp");
+							"/edit_feed.jsp", "redirect",
+							themeDisplay.getURLCurrent());
 						dropdownItem.setLabel("add-feed");
 					});
 			}

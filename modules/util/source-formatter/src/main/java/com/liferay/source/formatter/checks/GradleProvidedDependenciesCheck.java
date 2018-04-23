@@ -15,6 +15,7 @@
 package com.liferay.source.formatter.checks;
 
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.source.formatter.checks.util.GradleSourceUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,21 +35,21 @@ public class GradleProvidedDependenciesCheck extends BaseFileCheck {
 			return content;
 		}
 
+		String scope = _getScope(content);
+
 		for (String block : _getBlocks(content)) {
-			content = _format(content, block);
+			content = _format(content, block, scope);
 		}
 
 		return StringUtil.replace(
 			content,
 			new String[] {"configurations.provided", "extendsFrom provided"},
-			new String[] {
-				"configurations.compileOnly", "extendsFrom compileOnly"
-			});
+			new String[] {"configurations." + scope, "extendsFrom " + scope});
 	}
 
-	private String _format(String content, String dependencies) {
+	private String _format(String content, String dependencies, String scope) {
 		String newDependencies = dependencies.replaceAll(
-			"\\bprovided\\b", "compileOnly");
+			"\\bprovided\\b", scope);
 
 		return StringUtil.replace(content, dependencies, newDependencies);
 	}
@@ -63,6 +64,14 @@ public class GradleProvidedDependenciesCheck extends BaseFileCheck {
 		}
 
 		return blocks;
+	}
+
+	private String _getScope(String content) {
+		if (GradleSourceUtil.isSpringBootExecutable(content)) {
+			return "compile";
+		}
+
+		return "compileOnly";
 	}
 
 	private final Pattern _blocksPattern = Pattern.compile(

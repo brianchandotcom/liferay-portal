@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.tools.ToolsUtil;
+import com.liferay.source.formatter.checks.util.GradleSourceUtil;
 import com.liferay.source.formatter.checks.util.SourceUtil;
 
 import java.io.File;
@@ -114,6 +115,14 @@ public class GradleDependenciesCheck extends BaseFileCheck {
 			uniqueDependencies.add(dependency);
 		}
 
+		boolean checkScope = false;
+
+		if (isModulesApp(absolutePath, false) && _hasBNDFile(absolutePath) &&
+			!GradleSourceUtil.isSpringBootExecutable(content)) {
+
+			checkScope = true;
+		}
+
 		StringBundler sb = new StringBundler();
 
 		String previousConfiguration = null;
@@ -121,9 +130,7 @@ public class GradleDependenciesCheck extends BaseFileCheck {
 		for (String dependency : uniqueDependencies) {
 			String configuration = _getConfiguration(dependency);
 
-			if (isModulesApp(absolutePath, false) &&
-				_hasBNDFile(absolutePath)) {
-
+			if (checkScope) {
 				if (!_isTestUtilModule(absolutePath) &&
 					configuration.equals("compile")) {
 

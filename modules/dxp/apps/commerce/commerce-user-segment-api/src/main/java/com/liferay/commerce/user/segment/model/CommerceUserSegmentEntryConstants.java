@@ -12,17 +12,13 @@
  * details.
  */
 
-package com.liferay.commerce.user.segment.constants;
+package com.liferay.commerce.user.segment.model;
 
 /**
- * @author Marco Leo
+ * @author Andrea Di Giorgi
  */
-public class CommerceUserSegmentConstants {
+public class CommerceUserSegmentEntryConstants {
 
-	public static final String RESOURCE_NAME =
-		"com.liferay.commerce.user.segment";
-
-	public static final String SERVICE_NAME =
-		"com.liferay.commerce.user.segment";
+	public static final String KEY_GUEST = "guest";
 
 }

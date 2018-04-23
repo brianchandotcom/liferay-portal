@@ -14,10 +14,10 @@
 
 package com.liferay.commerce.user.segment.service.impl;
 
-import com.liferay.commerce.user.segment.constants.CommerceUserSegmentConstants;
 import com.liferay.commerce.user.segment.exception.CommerceUserSegmentEntryKeyException;
 import com.liferay.commerce.user.segment.exception.CommerceUserSegmentEntrySystemException;
 import com.liferay.commerce.user.segment.model.CommerceUserSegmentEntry;
+import com.liferay.commerce.user.segment.model.CommerceUserSegmentEntryConstants;
 import com.liferay.commerce.user.segment.service.base.CommerceUserSegmentEntryLocalServiceBaseImpl;
 import com.liferay.portal.kernel.cache.MultiVMPoolUtil;
 import com.liferay.portal.kernel.cache.PortalCache;
@@ -246,7 +246,7 @@ public class CommerceUserSegmentEntryLocalServiceImpl
 		CommerceUserSegmentEntry commerceUserSegmentEntry =
 			commerceUserSegmentEntryPersistence.fetchByG_K(
 				serviceContext.getScopeGroupId(),
-				CommerceUserSegmentConstants.USER_SEGMENT_GUEST);
+				CommerceUserSegmentEntryConstants.KEY_GUEST);
 
 		if (commerceUserSegmentEntry != null) {
 			return;
@@ -256,11 +256,11 @@ public class CommerceUserSegmentEntryLocalServiceImpl
 
 		nameMap.put(
 			serviceContext.getLocale(),
-			CommerceUserSegmentConstants.USER_SEGMENT_GUEST);
+			CommerceUserSegmentEntryConstants.KEY_GUEST);
 
 		commerceUserSegmentEntryLocalService.addCommerceUserSegmentEntry(
-			nameMap, CommerceUserSegmentConstants.USER_SEGMENT_GUEST, true,
-			true, 0, serviceContext);
+			nameMap, CommerceUserSegmentEntryConstants.KEY_GUEST, true, true, 0,
+			serviceContext);
 	}
 
 	@Override

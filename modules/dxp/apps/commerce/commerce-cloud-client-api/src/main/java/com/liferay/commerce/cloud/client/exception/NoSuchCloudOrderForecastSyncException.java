@@ -11,6 +11,7 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
+
 package com.liferay.commerce.cloud.client.exception;
 
 import aQute.bnd.annotation.ProviderType;
@@ -21,7 +22,8 @@ import com.liferay.portal.kernel.exception.NoSuchModelException;
  * @author Andrea Di Giorgi
  */
 @ProviderType
-public class NoSuchCloudOrderForecastSyncException extends NoSuchModelException {
+public class NoSuchCloudOrderForecastSyncException
+	extends NoSuchModelException {
 
 	public NoSuchCloudOrderForecastSyncException() {
 	}

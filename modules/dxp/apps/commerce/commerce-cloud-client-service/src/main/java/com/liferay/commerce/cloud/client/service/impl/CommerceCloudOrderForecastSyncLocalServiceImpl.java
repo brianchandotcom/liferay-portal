@@ -17,24 +17,8 @@ package com.liferay.commerce.cloud.client.service.impl;
 import com.liferay.commerce.cloud.client.service.base.CommerceCloudOrderForecastSyncLocalServiceBaseImpl;
 
 /**
- * The implementation of the commerce cloud order forecast sync local service.
- *
- * <p>
- * All custom service methods should be put in this class. Whenever methods are added, rerun ServiceBuilder to copy their definitions into the {@link com.liferay.commerce.cloud.client.service.CommerceCloudOrderForecastSyncLocalService} interface.
- *
- * <p>
- * This is a local service. Methods of this service will not have security checks based on the propagated JAAS credentials because this service can only be accessed from within the same VM.
- * </p>
- *
  * @author Andrea Di Giorgi
- * @see CommerceCloudOrderForecastSyncLocalServiceBaseImpl
- * @see com.liferay.commerce.cloud.client.service.CommerceCloudOrderForecastSyncLocalServiceUtil
  */
 public class CommerceCloudOrderForecastSyncLocalServiceImpl
 	extends CommerceCloudOrderForecastSyncLocalServiceBaseImpl {
-	/*
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this class directly. Always use {@link com.liferay.commerce.cloud.client.service.CommerceCloudOrderForecastSyncLocalServiceUtil} to access the commerce cloud order forecast sync local service.
-	 */
 }

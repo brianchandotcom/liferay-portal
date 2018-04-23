@@ -17,22 +17,13 @@ package com.liferay.commerce.cloud.client.model.impl;
 import aQute.bnd.annotation.ProviderType;
 
 /**
- * The extended model implementation for the CommerceCloudOrderForecastSync service. Represents a row in the &quot;CCOrderForecastSync&quot; database table, with each column mapped to a property of this class.
- *
- * <p>
- * Helper methods and all application logic should be put in this class. Whenever methods are added, rerun ServiceBuilder to copy their definitions into the {@link com.liferay.commerce.cloud.client.model.CommerceCloudOrderForecastSync} interface.
- * </p>
- *
  * @author Andrea Di Giorgi
  */
 @ProviderType
 public class CommerceCloudOrderForecastSyncImpl
 	extends CommerceCloudOrderForecastSyncBaseImpl {
-	/*
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this class directly. All methods that expect a commerce cloud order forecast sync model instance should use the {@link com.liferay.commerce.cloud.client.model.CommerceCloudOrderForecastSync} interface instead.
-	 */
+
 	public CommerceCloudOrderForecastSyncImpl() {
 	}
+
 }

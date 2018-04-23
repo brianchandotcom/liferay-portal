@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+
+<beans
+	default-destroy-method="destroy"
+	default-init-method="afterPropertiesSet"
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd"
+>
+	<bean class="com.liferay.commerce.cloud.client.service.impl.CommerceCloudOrderForecastSyncLocalServiceImpl" id="com.liferay.commerce.cloud.client.service.CommerceCloudOrderForecastSyncLocalService" />
+	<bean class="com.liferay.commerce.cloud.client.service.persistence.impl.CommerceCloudOrderForecastSyncPersistenceImpl" id="com.liferay.commerce.cloud.client.service.persistence.CommerceCloudOrderForecastSyncPersistence" parent="basePersistence" />
+</beans>

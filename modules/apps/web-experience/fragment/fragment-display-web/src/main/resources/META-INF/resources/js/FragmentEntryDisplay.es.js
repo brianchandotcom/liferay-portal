@@ -23,7 +23,25 @@ class FragmentEntryDisplay extends Component {
 	 */
 
 	_handleEditableChanged(data) {
-		this.fragmentEntryLink.editableValues[data.editableId] = data.value;
+		const editableValues = this.fragmentEntryLink.editableValues || {};
+
+		const newEditableValue = Object.assign(
+			{},
+			editableValues[data.editableId] || {},
+			{defaultValue: data.value}
+		);
+
+		const newEditableValues = Object.assign(
+			{},
+			editableValues,
+			{[data.editableId]: newEditableValue}
+		);
+
+		this.fragmentEntryLink = Object.assign(
+			{},
+			this.fragmentEntryLink,
+			{editableValues: newEditableValues}
+		);
 
 		this._updateFragmentEntryLink();
 	}

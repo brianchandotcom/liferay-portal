@@ -1,0 +1,15 @@
+sourceCompatibility = "1.8"
+targetCompatibility = "1.8"
+
+dependencies {
+	testIntegrationCompile group: "com.liferay.arquillian", name: "com.liferay.arquillian.docker.extension", version: "0.0.1-20170927.134515-3"
+	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
+	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
+	testIntegrationCompile project(":apps:adaptive-media:adaptive-media-api")
+	testIntegrationCompile project(":apps:adaptive-media:adaptive-media-content-transformer-api")
+	testIntegrationCompile project(":apps:adaptive-media:adaptive-media-image-api")
+	testIntegrationCompile project(":core:petra:petra-concurrent")
+	testIntegrationCompile project(":core:petra:petra-memory")
+	testIntegrationCompile project(":core:petra:petra-string")
+	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
+}

@@ -12,8 +12,10 @@
  * details.
  */
 
-package com.liferay.adaptive.media.content.transformer;
+package com.liferay.adaptive.media.content.transformer.internal;
 
+import com.liferay.adaptive.media.content.transformer.ContentTransformer;
+import com.liferay.adaptive.media.content.transformer.ContentTransformerContentType;
 import com.liferay.adaptive.media.exception.AMException;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -37,16 +39,17 @@ import org.osgi.framework.BundleException;
 /**
  * @author Alejandro Tardín
  */
-public class ContentTransformerTest {
+public class ContentTransformerHandlerImplTest {
 
 	@Before
 	public void setUp() throws BundleException {
-		_contentTransformerHandler.setServiceTrackerMap(_mockServiceTrackerMap);
+		_contentTransformerHandlerImpl.setServiceTrackerMap(
+			_mockServiceTrackerMap);
 	}
 
 	@After
 	public final void tearDown() throws Exception {
-		_contentTransformerHandler.deactivate();
+		_contentTransformerHandlerImpl.deactivate();
 	}
 
 	@Test
@@ -73,11 +76,11 @@ public class ContentTransformerTest {
 
 		Assert.assertEquals(
 			transformedContentA,
-			_contentTransformerHandler.transform(
+			_contentTransformerHandlerImpl.transform(
 				contentTransformerContentTypeA, _ORIGINAL_CONTENT));
 		Assert.assertEquals(
 			transformedContentB,
-			_contentTransformerHandler.transform(
+			_contentTransformerHandlerImpl.transform(
 				contentTransformerContentTypeB, _ORIGINAL_CONTENT));
 	}
 
@@ -99,7 +102,7 @@ public class ContentTransformerTest {
 
 		Assert.assertEquals(
 			finalTransformedContent,
-			_contentTransformerHandler.transform(
+			_contentTransformerHandlerImpl.transform(
 				_contentTransformerContentType, _ORIGINAL_CONTENT));
 	}
 
@@ -115,7 +118,7 @@ public class ContentTransformerTest {
 
 		Assert.assertEquals(
 			transformedContent,
-			_contentTransformerHandler.transform(
+			_contentTransformerHandlerImpl.transform(
 				_contentTransformerContentType, _ORIGINAL_CONTENT));
 	}
 
@@ -128,7 +131,7 @@ public class ContentTransformerTest {
 
 		Assert.assertSame(
 			_ORIGINAL_CONTENT,
-			_contentTransformerHandler.transform(
+			_contentTransformerHandlerImpl.transform(
 				_contentTransformerContentType, _ORIGINAL_CONTENT));
 	}
 
@@ -136,7 +139,7 @@ public class ContentTransformerTest {
 	public void testReturnsTheSameContentIfThereAreNoContentTransformers() {
 		Assert.assertSame(
 			_ORIGINAL_CONTENT,
-			_contentTransformerHandler.transform(
+			_contentTransformerHandlerImpl.transform(
 				_contentTransformerContentType, _ORIGINAL_CONTENT));
 	}
 
@@ -155,7 +158,7 @@ public class ContentTransformerTest {
 
 		Assert.assertEquals(
 			transformedContent,
-			_contentTransformerHandler.transform(
+			_contentTransformerHandlerImpl.transform(
 				_contentTransformerContentType, _ORIGINAL_CONTENT));
 	}
 
@@ -206,8 +209,8 @@ public class ContentTransformerTest {
 	private final ContentTransformerContentType<String>
 		_contentTransformerContentType =
 			new TestContentTransformerContentType<>();
-	private final ContentTransformerHandler _contentTransformerHandler =
-		new ContentTransformerHandler();
+	private final ContentTransformerHandlerImpl _contentTransformerHandlerImpl =
+		new ContentTransformerHandlerImpl();
 	private final MockServiceTrackerMap _mockServiceTrackerMap =
 		new MockServiceTrackerMap();
 

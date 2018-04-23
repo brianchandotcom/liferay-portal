@@ -14,7 +14,6 @@
 
 package com.liferay.portal.osgi.debug.spring.extender.internal;
 
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.StringBundler;
 
 import java.util.ArrayList;
@@ -78,7 +77,7 @@ public class UnavailableComponentUtil {
 			}
 
 			if (!unavailableComponentDeclarations.isEmpty()) {
-				sb.append("Found unavailable component in bundle {id: ");
+				sb.append("\nBundle {id: ");
 				sb.append(bundle.getBundleId());
 				sb.append(", name: ");
 				sb.append(bundle.getSymbolicName());
@@ -108,7 +107,7 @@ public class UnavailableComponentUtil {
 						sb.append("\n\t\t");
 					}
 
-					sb.setStringAt(StringPool.NEW_LINE, sb.index() - 1);
+					sb.setIndex(sb.index() - 1);
 				}
 			}
 		}

@@ -25,6 +25,7 @@ import com.liferay.wiki.uad.constants.WikiUADConstants;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -61,12 +62,7 @@ public class WikiNodeUADDisplay implements UADDisplay<WikiNode> {
 	}
 
 	@Override
-	public String getTypeDescription() {
-		return "A wiki node";
-	}
-
-	@Override
-	public String getTypeName() {
+	public String getTypeName(Locale locale) {
 		return "WikiNode";
 	}
 

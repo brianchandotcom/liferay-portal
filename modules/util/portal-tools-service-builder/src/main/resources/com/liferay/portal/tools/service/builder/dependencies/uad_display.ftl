@@ -7,6 +7,7 @@ import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.user.associated.data.display.UADDisplay;
 
+import java.util.Locale;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
@@ -46,12 +47,7 @@ public class ${entity.name}UADDisplay implements UADDisplay<${entity.name}> {
 	}
 
 	@Override
-	public String getTypeDescription() {
-		return "${entity.UADTypeDescription}";
-	}
-
-	@Override
-	public String getTypeName() {
+	public String getTypeName(Locale locale) {
 		return "${entity.name}";
 	}
 

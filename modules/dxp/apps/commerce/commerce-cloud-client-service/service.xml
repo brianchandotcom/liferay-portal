@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<!DOCTYPE service-builder PUBLIC "-//Liferay//DTD Service Builder 7.0.0//EN" "http://www.liferay.com/dtd/liferay-service-builder_7_0_0.dtd">
+
+<service-builder auto-namespace-tables="false" package-path="com.liferay.commerce.cloud.client">
+	<author>Andrea Di Giorgi</author>
+	<namespace>Commerce</namespace>
+	<entity local-service="true" name="CommerceCloudOrderForecastSync" remote-service="false" table="CCOrderForecastSync">
+
+		<!-- PK fields -->
+
+		<column db-name="CCOrderForecastSyncId" name="commerceCloudOrderForecastSyncId" primary="true" type="long" />
+
+		<!-- Group instance -->
+
+		<column name="groupId" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="createDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column accessor="true" name="commerceOrderId" type="long" />
+		<column name="syncDate" type="Date" />
+
+		<!-- Order -->
+
+		<order by="asc">
+			<order-column name="createDate" />
+		</order>
+
+		<!-- Finder methods -->
+
+		<finder name="CommerceOrderId" return-type="CommerceCloudOrderForecastSync" unique="true">
+			<finder-column name="commerceOrderId" />
+		</finder>
+		<finder name="SyncDate" return-type="Collection">
+			<finder-column name="syncDate" />
+		</finder>
+	</entity>
+	<exceptions>
+		<exception>CommerceCloudClient</exception>
+	</exceptions>
+</service-builder>

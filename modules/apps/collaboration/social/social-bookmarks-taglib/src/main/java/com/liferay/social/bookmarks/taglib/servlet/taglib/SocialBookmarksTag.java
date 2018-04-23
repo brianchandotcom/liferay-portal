@@ -34,7 +34,7 @@ public class SocialBookmarksTag extends IncludeTag {
 
 	@Override
 	public int doEndTag() throws JspException {
-		if (_types.length == 0) {
+		if ((_types != null) && (_types.length == 0)) {
 			return EVAL_PAGE;
 		}
 
@@ -43,7 +43,7 @@ public class SocialBookmarksTag extends IncludeTag {
 
 	@Override
 	public int doStartTag() throws JspException {
-		if (_types.length == 0) {
+		if ((_types != null) && (_types.length == 0)) {
 			return SKIP_BODY;
 		}
 
@@ -67,6 +67,10 @@ public class SocialBookmarksTag extends IncludeTag {
 		}
 	}
 
+	public void setMaxInlineItems(int maxInlineItems) {
+		_maxInlineItems = maxInlineItems;
+	}
+
 	@Override
 	public void setPageContext(PageContext pageContext) {
 		super.setPageContext(pageContext);
@@ -86,12 +90,6 @@ public class SocialBookmarksTag extends IncludeTag {
 		if (types != null) {
 			_types = StringUtil.split(types);
 		}
-		else {
-			List<String> allTypes =
-				SocialBookmarksRegistryUtil.getSocialBookmarksTypes();
-
-			_types = allTypes.toArray(new String[0]);
-		}
 	}
 
 	public void setUrl(String url) {
@@ -109,6 +107,7 @@ public class SocialBookmarksTag extends IncludeTag {
 		_title = null;
 		_types = null;
 		_url = null;
+		_maxInlineItems = 3;
 	}
 
 	@Override
@@ -118,6 +117,15 @@ public class SocialBookmarksTag extends IncludeTag {
 
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
+		String[] types = _types;
+
+		if (types == null) {
+			List<String> allTypes =
+				SocialBookmarksRegistryUtil.getSocialBookmarksTypes();
+
+			types = allTypes.toArray(new String[0]);
+		}
+
 		request.setAttribute(
 			"liferay-social-bookmarks:bookmarks:className", _className);
 		request.setAttribute(
@@ -125,11 +133,13 @@ public class SocialBookmarksTag extends IncludeTag {
 		request.setAttribute(
 			"liferay-social-bookmarks:bookmarks:displayStyle", _displayStyle);
 		request.setAttribute(
+			"liferay-social-bookmarks:bookmarks:maxInlineItems",
+			_maxInlineItems);
+		request.setAttribute(
 			"liferay-social-bookmarks:bookmarks:target", _target);
 		request.setAttribute(
 			"liferay-social-bookmarks:bookmarks:title", _title);
-		request.setAttribute(
-			"liferay-social-bookmarks:bookmarks:types", _types);
+		request.setAttribute("liferay-social-bookmarks:bookmarks:types", types);
 		request.setAttribute("liferay-social-bookmarks:bookmarks:url", _url);
 	}
 
@@ -138,6 +148,7 @@ public class SocialBookmarksTag extends IncludeTag {
 	private String _className;
 	private long _classPK;
 	private String _displayStyle;
+	private int _maxInlineItems = 3;
 	private String _target;
 	private String _title;
 	private String[] _types;

@@ -8,6 +8,5 @@ dependencies {
 	compileOnly project(":apps:adaptive-media:adaptive-media-api");
 	compileOnly project(":core:osgi-service-tracker-collections")
 
-	testCompile group: "org.mockito", name: "mockito-core", version: "1.10.8"
 	testCompile project(":core:petra:petra-lang")
 }

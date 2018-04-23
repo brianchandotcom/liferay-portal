@@ -16,16 +16,17 @@ package com.liferay.commerce.product.constants;
 
 /**
  * @author Marco Leo
+ * @author Alessio Antonio Rendina
  */
 public class CPPortletKeys {
-
-	public static final String COMMERCE_WIZARD =
-		"com_liferay_commerce_wizard_web_internal_portlet_" +
-			"CommerceWizardPortlet";
 
 	public static final String CP_ASSET_CATEGORIES_NAVIGATION =
 		"com_liferay_commerce_product_asset_categories_navigation_web" +
 			"_internal_portlet_CPAssetCategoriesNavigationPortlet";
+
+	public static final String CP_CATALOG_RULE =
+		"com_liferay_commerce_product_catalog_rule_web_internal_portlet_" +
+			"CPCatalogRulePortlet";
 
 	public static final String CP_CATEGORY_CONTENT_WEB =
 		"com_liferay_commerce_product_content_web_internal_portlet_" +

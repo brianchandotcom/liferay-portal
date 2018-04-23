@@ -15,6 +15,10 @@
 package com.liferay.portal.service.impl;
 
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.Property;
+import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.DuplicateOrganizationException;
@@ -24,6 +28,8 @@ import com.liferay.portal.kernel.exception.OrganizationTypeException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.RequiredOrganizationException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Country;
 import com.liferay.portal.kernel.model.Group;
@@ -39,6 +45,7 @@ import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserGroupRole;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
+import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
@@ -49,6 +56,7 @@ import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
+import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
 import com.liferay.portal.kernel.tree.TreeModelTasksAdapter;
 import com.liferay.portal.kernel.tree.TreePathUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -97,6 +105,80 @@ import java.util.Set;
  */
 public class OrganizationLocalServiceImpl
 	extends OrganizationLocalServiceBaseImpl {
+
+	/**
+	 * Adds the organization to the group.
+	 *
+	 * @param organizationId the primary key of the organization
+	 * @param groupId the primary key of the group
+	 */
+	@Override
+	public void addGroupOrganization(long groupId, long organizationId) {
+		super.addGroupOrganization(groupId, organizationId);
+
+		try {
+			reindexUsers(organizationId);
+		}
+		catch (PortalException pe) {
+			throw new SystemException(pe);
+		}
+	}
+
+	/**
+	 * Adds the organization to the group.
+	 *
+	 * @param organization the organization
+	 * @param groupId the primary key of the group
+	 */
+	@Override
+	public void addGroupOrganization(long groupId, Organization organization) {
+		super.addGroupOrganization(groupId, organization);
+
+		try {
+			reindexUsers(organization);
+		}
+		catch (PortalException pe) {
+			throw new SystemException(pe);
+		}
+	}
+
+	/**
+	 * Adds the organizations to the group.
+	 *
+	 * @param organizations the organizations
+	 * @param groupId the primary key of the group
+	 */
+	@Override
+	public void addGroupOrganizations(long groupId,
+		List<Organization> organizations) {
+
+		super.addGroupOrganizations(groupId, organizations);
+
+		try {
+			reindexUsers(organizations);
+		}
+		catch (PortalException pe) {
+			throw new SystemException(pe);
+		}
+	}
+
+	/**
+	 * Adds the organizations to the group.
+	 *
+	 * @param organizationIds the primary keys of the organizations
+	 * @param groupId the primary key of the group
+	 */
+	@Override
+	public void addGroupOrganizations(long groupId, long[] organizationIds) {
+		super.addGroupOrganizations(groupId, organizationIds);
+
+		try {
+			reindexUsers(organizationIds);
+		}
+		catch (PortalException pe) {
+			throw new SystemException(pe);
+		}
+	}
 
 	/**
 	 * Adds an organization.
@@ -1701,6 +1783,13 @@ public class OrganizationLocalServiceImpl
 	@Override
 	public void unsetGroupOrganizations(long groupId, long[] organizationIds) {
 		groupPersistence.removeOrganizations(groupId, organizationIds);
+
+		try {
+			reindexUsers(organizationIds);
+		}
+		catch (PortalException pe) {
+			throw new SystemException(pe);
+		}
 	}
 
 	/**
@@ -1861,6 +1950,8 @@ public class OrganizationLocalServiceImpl
 
 		if (group.isSite() != site) {
 			groupLocalService.updateSite(group.getGroupId(), site);
+
+			reindexUsers(organizationId);
 		}
 
 		// Organizations
@@ -2242,6 +2333,88 @@ public class OrganizationLocalServiceImpl
 		return true;
 	}
 
+	protected void reindex(long companyId, long[] userIds)
+		throws PortalException {
+
+		final Indexer<User> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+			User.class);
+
+		final IndexableActionableDynamicQuery indexableActionableDynamicQuery =
+			userLocalService.getIndexableActionableDynamicQuery();
+
+		indexableActionableDynamicQuery.setAddCriteriaMethod(
+			dynamicQuery -> {
+				Property userId = PropertyFactoryUtil.forName("userId");
+
+				dynamicQuery.add(userId.in(userIds));
+			});
+		indexableActionableDynamicQuery.setCompanyId(companyId);
+		indexableActionableDynamicQuery.setPerformActionMethod(
+			new ActionableDynamicQuery.PerformActionMethod<User>() {
+
+				@Override
+				public void performAction(User user) {
+					if (!user.isDefaultUser()) {
+						try {
+							Document document = indexer.getDocument(user);
+
+							indexableActionableDynamicQuery.addDocuments(
+								document);
+						}
+						catch (PortalException pe) {
+							if (_log.isWarnEnabled()) {
+								_log.warn(
+									"Unable to index user " + user.getUserId(),
+									pe);
+							}
+						}
+					}
+				}
+
+			});
+		indexableActionableDynamicQuery.setSearchEngineId(
+			indexer.getSearchEngineId());
+
+		indexableActionableDynamicQuery.performActions();
+	}
+
+	protected void reindexUsers(List<Organization> organizations)
+		throws PortalException {
+
+		for (Organization organization : organizations) {
+			reindexUsers(organization);
+		}
+	}
+
+	protected void reindexUsers(long organizationId) throws PortalException {
+		Organization organization = getOrganization(organizationId);
+
+		reindexUsers(organization);
+	}
+
+	protected void reindexUsers(long[] organizationIds) throws PortalException {
+		for (long organizationId : organizationIds) {
+			reindexUsers(organizationId);
+		}
+	}
+
+	protected void reindexUsers(Organization organization)
+		throws PortalException {
+
+		long companyId = organization.getCompanyId();
+
+		long[] userIds = getUserPrimaryKeys(organization.getOrganizationId());
+
+		if (ArrayUtil.isNotEmpty(userIds)) {
+			TransactionCommitCallbackUtil.registerCallback(
+				() -> {
+					reindex(companyId, userIds);
+
+					return null;
+				});
+		}
+	}
+
 	protected void validate(
 			long companyId, long organizationId, long parentOrganizationId,
 			String name, String type, long countryId, long statusId)
@@ -2341,6 +2514,9 @@ public class OrganizationLocalServiceImpl
 			companyId, 0, parentOrganizationId, name, type, countryId,
 			statusId);
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		OrganizationLocalServiceImpl.class);
 
 	private static volatile OrganizationTypesSettings
 		_organizationTypesSettings =

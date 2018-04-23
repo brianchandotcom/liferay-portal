@@ -16,7 +16,11 @@ package com.liferay.users.admin.indexer.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
@@ -27,11 +31,17 @@ import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.search.Summary;
 import com.liferay.portal.kernel.search.highlight.HighlightUtil;
+import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.OrganizationLocalService;
+import com.liferay.portal.kernel.service.UserGroupLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
+import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.kernel.test.util.OrganizationTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.test.util.UserGroupTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -335,8 +345,129 @@ public class UserIndexerTest {
 				HighlightUtil.HIGHLIGHT_TAG_CLOSE));
 	}
 
+	@Test
+	public void testUserInGroupViaOrganization() throws Exception {
+		_expectedUser = UserTestUtil.addUser();
+
+		_organization = OrganizationTestUtil.addOrganization();
+
+		_group = GroupTestUtil.addGroup();
+
+		_organizationLocalService.addUserOrganization(
+			_expectedUser.getUserId(), _organization);
+
+		_organizationLocalService.addGroupOrganization(
+			_group.getGroupId(), _organization);
+
+		assertSearch(_group, _expectedUser.getFullName(), _expectedUser);
+	}
+
+	@Test
+	public void testUserInGroupViaUserGroup() throws Exception {
+		_expectedUser = UserTestUtil.addUser();
+
+		_userGroup = UserGroupTestUtil.addUserGroup();
+
+		_group = GroupTestUtil.addGroup();
+
+		_userGroupLocalService.addUserUserGroup(
+			_expectedUser.getUserId(), _userGroup);
+
+		_userGroupLocalService.addGroupUserGroup(
+			_group.getGroupId(), _userGroup);
+
+		assertSearch(_group, _expectedUser.getFullName(), _expectedUser);
+	}
+
+	@Test
+	public void testUserInOrganizationGroup() throws Exception {
+		_expectedUser = UserTestUtil.addUser();
+
+		_organization = OrganizationTestUtil.addOrganization();
+
+		Group organizationGroup = _organization.getGroup();
+
+		_organizationLocalService.addUserOrganization(
+			_expectedUser.getUserId(), _organization);
+
+		toggleCreateSite(_organization, true);
+
+		assertSearch(
+			organizationGroup, _expectedUser.getFullName(), _expectedUser);
+	}
+
+	@Test
+	public void testUserNotInGroupViaOrganization() throws Exception {
+		_expectedUser = UserTestUtil.addUser();
+
+		_organization = OrganizationTestUtil.addOrganization();
+
+		long organizationId = _organization.getOrganizationId();
+
+		_group = GroupTestUtil.addGroup();
+
+		long groupId = _group.getGroupId();
+
+		_organizationLocalService.addUserOrganization(
+			_expectedUser.getUserId(), _organization);
+
+		_organizationLocalService.addGroupOrganization(groupId, _organization);
+
+		_organizationLocalService.unsetGroupOrganizations(
+			groupId, new long[] {organizationId});
+
+		assertNoHits(_group, _expectedUser.getFullName());
+	}
+
+	@Test
+	public void testUserNotInGroupViaUserGroup() throws Exception {
+		_expectedUser = UserTestUtil.addUser();
+
+		_userGroup = UserGroupTestUtil.addUserGroup();
+
+		long userGroupId = _userGroup.getUserGroupId();
+
+		_group = GroupTestUtil.addGroup();
+
+		long groupId = _group.getGroupId();
+
+		_userGroupLocalService.addUserUserGroup(
+			_expectedUser.getUserId(), _userGroup);
+
+		_userGroupLocalService.addGroupUserGroup(groupId, _userGroup);
+
+		_userGroupLocalService.unsetGroupUserGroups(
+			groupId, new long[] {userGroupId});
+
+		assertNoHits(_group, _expectedUser.getFullName());
+	}
+
+	@Test
+	public void testUserNotInOrganizationGroup() throws Exception {
+		_expectedUser = UserTestUtil.addUser();
+
+		_organization = OrganizationTestUtil.addOrganization();
+
+		Group organizationGroup = _organization.getGroup();
+
+		_organizationLocalService.addUserOrganization(
+			_expectedUser.getUserId(), _organization);
+
+		toggleCreateSite(_organization, true);
+
+		toggleCreateSite(_organization, false);
+
+		assertNoHits(organizationGroup, _expectedUser.getFullName());
+	}
+
 	protected void assertLength(Hits hits, int length) {
 		Assert.assertEquals(hits.toString(), length, hits.getLength());
+	}
+
+	protected void assertNoHits(Group group, String keywords) throws Exception {
+		Hits hits = search(group, keywords);
+
+		assertLength(hits, 0);
 	}
 
 	protected void assertNoHits(String keywords) throws Exception {
@@ -349,6 +480,15 @@ public class UserIndexerTest {
 		Hits hits = search(field, value);
 
 		assertLength(hits, 0);
+	}
+
+	protected List<User> assertSearch(
+			Group group, String keywords, User... expectedUsers)
+		throws Exception {
+
+		Hits hits = search(group, keywords);
+
+		return assertSearch(hits, expectedUsers);
 	}
 
 	protected List<User> assertSearch(Hits hits, User... expectedUsers)
@@ -447,6 +587,15 @@ public class UserIndexerTest {
 		return searchContext;
 	}
 
+	protected SearchContext getSearchContext(Group group) throws Exception {
+		SearchContext searchContext = new SearchContext();
+
+		searchContext.setCompanyId(group.getCompanyId());
+		searchContext.setGroupIds(new long[] {group.getGroupId()});
+
+		return searchContext;
+	}
+
 	protected User getUser(Document document) throws Exception {
 		long userId = GetterUtil.getLong(document.get(Field.USER_ID));
 
@@ -473,6 +622,14 @@ public class UserIndexerTest {
 		}
 
 		return users;
+	}
+
+	protected Hits search(Group group, String keywords) throws Exception {
+		SearchContext searchContext = getSearchContext(group);
+
+		searchContext.setKeywords(keywords);
+
+		return search(searchContext);
 	}
 
 	protected Hits search(SearchContext searchContext) throws Exception {
@@ -522,6 +679,17 @@ public class UserIndexerTest {
 		Assert.assertEquals(middleName, actualUser.getMiddleName());
 	}
 
+	protected void toggleCreateSite(Organization organization, boolean site)
+		throws PortalException {
+
+		_organizationLocalService.updateOrganization(
+			organization.getCompanyId(), organization.getOrganizationId(),
+			organization.getParentOrganizationId(), organization.getName(),
+			organization.getType(), organization.getRegionId(),
+			organization.getCountryId(), organization.getStatusId(),
+			organization.getComments(), false, null, site, null);
+	}
+
 	protected String toString(List<String> strings) {
 		Collections.sort(strings);
 
@@ -529,7 +697,16 @@ public class UserIndexerTest {
 	}
 
 	@Inject
+	private static GroupLocalService _groupLocalService;
+
+	@Inject
 	private static IndexerRegistry _indexerRegistry;
+
+	@Inject
+	private static OrganizationLocalService _organizationLocalService;
+
+	@Inject
+	private static UserGroupLocalService _userGroupLocalService;
 
 	@Inject
 	private static UserLocalService _userLocalService;
@@ -537,6 +714,15 @@ public class UserIndexerTest {
 	@DeleteAfterTestRun
 	private User _expectedUser;
 
+	@DeleteAfterTestRun
+	private Group _group;
+
 	private Indexer<User> _indexer;
+
+	@DeleteAfterTestRun
+	private Organization _organization;
+
+	@DeleteAfterTestRun
+	private UserGroup _userGroup;
 
 }

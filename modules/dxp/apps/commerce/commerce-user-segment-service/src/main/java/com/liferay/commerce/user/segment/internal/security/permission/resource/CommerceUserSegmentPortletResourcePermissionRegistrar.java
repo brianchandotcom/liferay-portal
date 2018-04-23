@@ -35,7 +35,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Marco Leo
  */
 @Component(immediate = true)
-public class CommerceUserSegmentsPortletResourcePermissionRegistrar {
+public class CommerceUserSegmentPortletResourcePermissionRegistrar {
 
 	@Activate
 	public void activate(BundleContext bundleContext) {

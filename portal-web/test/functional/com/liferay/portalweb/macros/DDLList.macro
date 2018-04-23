@@ -82,9 +82,9 @@
 	</command>
 
 	<command name="deleteCP">
-		<var name="key_ddlListName" value="${ddlListName}" />
-
-		<execute function="AssertTextEquals" locator1="DDL#LIST_TABLE_NAME" value1="${ddlListName}" />
+		<execute macro="LexiconEntry#viewEntryName">
+			<var name="rowEntry" value="${ddlListName}" />
+		</execute>
 
 		<execute macro="LexiconEntry#gotoEllipsisMenuItemNoError">
 			<var name="menuItem" value="Delete" />
@@ -94,13 +94,15 @@
 
 		<execute macro="Alert#viewSuccessMessage" />
 
-		<execute function="AssertTextNotPresent" value1="${ddlListName}" />
+		<execute macro="LexiconEntry#viewNoEntry">
+			<var name="rowEntry" value="${ddlListName}" />
+		</execute>
 	</command>
 
 	<command name="editCP">
-		<var name="key_ddlListName" value="${ddlListName}" />
-
-		<execute function="AssertTextEquals" locator1="DDL#LIST_TABLE_NAME" value1="${ddlListName}" />
+		<execute macro="LexiconEntry#viewEntryName">
+			<var name="rowEntry" value="${ddlListName}" />
+		</execute>
 
 		<execute macro="LexiconEntry#gotoEllipsisMenuItem">
 			<var name="menuItem" value="Edit" />
@@ -199,9 +201,9 @@
 	</command>
 
 	<command name="viewCP">
-		<var name="key_ddlListName" value="${ddlListName}" />
-
-		<execute function="AssertTextEquals" locator1="DDL#LIST_TABLE_NAME" value1="${ddlListName}" />
+		<execute macro="LexiconEntry#viewEntryName">
+			<var name="rowEntry" value="${ddlListName}" />
+		</execute>
 
 		<if>
 			<isset var="ddlListDescription" />
@@ -212,7 +214,9 @@
 			</then>
 		</if>
 
-		<execute function="AssertClick" locator1="DDL#LIST_TABLE_NAME" value1="${ddlListName}" />
+		<execute macro="LexiconEntry#gotoEntry">
+			<var name="rowEntry" value="${ddlListName}" />
+		</execute>
 
 		<execute macro="SiteAdmin#viewPortletTitle">
 			<var name="portletTitle" value="${ddlListName}" />

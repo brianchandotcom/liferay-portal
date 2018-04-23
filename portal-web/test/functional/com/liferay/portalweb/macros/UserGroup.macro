@@ -84,13 +84,13 @@
 	</command>
 
 	<command name="assignAllMembersCP">
-		<var name="key_userGroupName" value="${userGroupName}" />
-
 		<execute macro="Search#searchCP">
 			<var name="searchTerm" value="${userGroupName}" />
 		</execute>
 
-		<execute function="AssertTextEquals" locator1="UserGroups#USER_GROUP_TABLE_NAME" value1="${userGroupName}" />
+		<execute macro="LexiconEntry#viewEntryName">
+			<var name="rpwEntry" value="${userGroupName}" />
+		</execute>
 
 		<execute macro="LexiconEntry#gotoEllipsisMenuItem">
 			<var name="menuItem" value="Assign Members" />
@@ -215,28 +215,25 @@
 	</command>
 
 	<command name="gotoActionsCmd">
-		<var name="key_userGroupName" value="${userGroupName}" />
-
 		<execute macro="Search#searchCP">
 			<var name="searchTerm" value="${userGroupName}" />
 		</execute>
 
 		<execute function="Pause" locator1="5000" />
 
-		<execute function="AssertTextEquals" locator1="UserGroups#USER_GROUP_TABLE_NAME" value1="${userGroupName}" />
+		<execute macro="LexiconEntry#viewEntryName">
+			<var name="rowEntry" value="${userGroupName}" />
+		</execute>
 	</command>
 
 	<command name="gotoAddPageCP">
-		<var name="key_userGroupName" value="${userGroupName}" />
-
 		<execute macro="Search#searchCP">
 			<var name="searchTerm" value="${userGroupName}" />
 		</execute>
 
-		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
-
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Manage Pages">
-			<var name="key_menuItem" value="Manage Pages" />
+		<execute macro="LexiconEntry#gotoEllipsisMenuItem">
+			<var name="menuItem" value="Manage Pages" />
+			<var name="rowEntry" value="${userGroupName}" />
 		</execute>
 	</command>
 
@@ -247,9 +244,9 @@
 
 		<execute function="Pause" locator1="5000" />
 
-		<var name="key_userGroupName" value="${userGroupName}" />
-
-		<execute function="AssertTextEquals" locator1="UserGroups#USER_GROUP_TABLE_NAME" value1="${userGroupName}" />
+		<execute macro="LexiconEntry#viewEntryName">
+			<var name="rowEntry" value="${userGroupName}" />
+		</execute>
 
 		<execute macro="LexiconEntry#gotoEllipsisMenuItem">
 			<var name="menuItem" value="Assign Members" />
@@ -265,19 +262,21 @@
 	</command>
 
 	<command name="searchCP">
-		<var name="key_userGroupName" value="${userGroupName}" />
-
 		<execute macro="Search#searchCP">
 			<var name="searchTerm" value="${userGroupName}" />
 		</execute>
 
-		<execute function="AssertTextEquals" locator1="UserGroups#USER_GROUP_TABLE_NAME" value1="${userGroupName}" />
+		<execute macro="LexiconEntry#viewEntryName">
+			<var name="rowEntry" value="${userGroupName}" />
+		</execute>
 
 		<execute macro="Search#searchCP">
 			<var name="searchTerm" value="UG1 UserGroup1 Name1" />
 		</execute>
 
-		<execute function="AssertTextNotPresent" locator1="UserGroups#USER_GROUP_TABLE_NAME" value1="${userGroupName}" />
+		<execute macro="LexiconEntry#viewNoEntry">
+			<var name="rowEntry" value="${userGroupName}" />
+		</execute>
 	</command>
 
 	<command name="tearDownCP">

@@ -12,9 +12,9 @@
 
 		<execute function="SelectFrame" locator1="EditUserSegment#USER_SEGMENT_RULE_BEHAVIOR_CONTENT_VISITED_SELECT_WEB_CONTENT_IFRAME" />
 
-		<var name="key_rowEntry" value="${webContentTitle}" />
-
-		<execute function="Click" locator1="ContentRow#ENTRY_CONTENT_ENTRY_NAME_LINK" />
+		<execute macro="LexiconEntry#gotoEntry">
+			<var name="rowEntry" value="${webContentTitle}" />
+		</execute>
 
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>
@@ -406,12 +406,11 @@
 			<var name="navItem" value="Reports" />
 		</execute>
 
-		<var name="key_rowEntry" value="${reportName}" />
-
-		<execute function="AssertTextEquals" locator1="ContentRow#ENTRY_CONTENT_ENTRY_NAME_LINK" value1="${reportName}" />
 		<execute function="AssertTextEquals" locator1="ContentRow#ENTRY_CONTENT_ENTRY_DESCRIPTION_TD3" value1="Displays the number of times that content has been viewed by a user who belongs to the current user segment." />
 
-		<execute function="Click" locator1="ContentRow#ENTRY_CONTENT_ENTRY_NAME_LINK" />
+		<execute macro="LexiconEntry#gotoEntry">
+			<var name="rowEntry" value="${reportName}" />
+		</execute>
 
 		<execute macro="LexiconEntry#gotoHeaderMenuItem">
 			<var name="menuItem" value="Update" />
@@ -432,9 +431,9 @@
 	</command>
 
 	<command name="viewContentVisitedRuleEmpty">
-		<var name="key_rowEntry" value="${userSegmentName}" />
-
-		<execute function="Click" locator1="ContentRow#ENTRY_CONTENT_ENTRY_NAME_LINK" value1="${userSegmentName}" />
+		<execute macro="LexiconEntry#gotoEntry">
+			<var name="rowEntry" value="${userSegmentName}" />
+		</execute>
 
 		<execute macro="LexiconEntry#gotoHeaderMenuItem">
 			<var name="menuItem" value="Edit" />
@@ -448,9 +447,9 @@
 			<var name="navItem" value="User Segments" />
 		</execute>
 
-		<var name="key_rowEntry" value="${userSegmentName}" />
-
-		<execute function="AssertTextEquals" locator1="ContentRow#ENTRY_CONTENT_ENTRY_NAME_LINK" value1="${userSegmentName}" />
+		<execute macro="LexiconEntry#viewEntryName">
+			<var name="rowEntry" value="${userSegmentName}" />
+		</execute>
 
 		<execute function="AssertTextEquals" locator1="ContentRow#ENTRY_CONTENT_ENTRY_DESCRIPTION_TD3" value1="${userSegmentDescription}" />
 	</command>
@@ -460,9 +459,9 @@
 			<var name="navItem" value="User Segments" />
 		</execute>
 
-		<var name="key_rowEntry" value="${userSegmentName}" />
-
-		<execute function="AssertTextNotPresent" locator1="ContentRow#ENTRY_CONTENT_ENTRY_NAME_LINK" value1="${userSegmentName}" />
+		<execute macro="LexiconEntry#viewNoEntry">
+			<var name="rowEntry" value="${userSegmentName}" />
+		</execute>
 	</command>
 
 	<command name="viewReportContentViews">

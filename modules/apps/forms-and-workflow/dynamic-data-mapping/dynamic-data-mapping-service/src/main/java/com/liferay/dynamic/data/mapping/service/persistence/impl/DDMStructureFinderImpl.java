@@ -168,8 +168,8 @@ public class DDMStructureFinderImpl
 		}
 
 		return filterCountByC_G_C_N_D_S_T_S(
-			companyId, groupIds, classNameId, names, descriptions, null,
-			DDMStructureConstants.TYPE_DEFAULT, status, andOperator);
+			companyId, groupIds, classNameId, names, descriptions, null, type,
+			status, andOperator);
 	}
 
 	@Override

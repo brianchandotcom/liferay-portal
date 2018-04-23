@@ -313,9 +313,21 @@ schema=schema.xml</echo>
 
 		<delete-elasticseach-osgi-bundle />
 
-		<gradle-execute dir="modules/apps/portal-search-solr/portal-search-solr" task="deploy">
-			<arg value="clean" />
-		</gradle-execute>
+		<local name="Liferay-Releng-App-Title" />
+
+		<property file="${project.dir}/modules/apps/portal-search-solr/app.bnd" />
+
+		<if>
+			<available file="${project.dir}/plugins/dist/${Liferay-Releng-App-Title}.lpkg" />
+			<then>
+				<antcall target="deploy-osgi-apps" />
+			</then>
+			<else>
+				<gradle-execute dir="modules/apps/portal-search-solr/portal-search-solr" task="deploy">
+					<arg value="clean" />
+				</gradle-execute>
+			</else>
+		</if>
 
 		<configure-liferay-solr-adapter-osgi-configs />
 

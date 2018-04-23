@@ -5020,6 +5020,15 @@ go]]></replacevalue>
 	<target name="deploy-osgi-apps">
 		<get-testcase-property property.name="osgi.app.includes" />
 
+		<get-testcase-property property.name="solr.enabled" />
+
+		<if>
+			<equals arg1="${solr.enabled}" arg2="true" />
+			<then>
+				<var name="osgi.app.includes" value="${osgi.app.includes},portal-search-solr" />
+			</then>
+		</if>
+
 		<if>
 			<isset property="osgi.app.includes" />
 			<then>

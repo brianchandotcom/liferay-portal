@@ -16,9 +16,16 @@ package com.liferay.commerce.product.service.http;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.commerce.product.service.CPRuleServiceUtil;
+
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+
+import java.rmi.RemoteException;
+
 /**
  * Provides the SOAP utility for the
- * {@link com.liferay.commerce.product.service.CPRuleServiceUtil} service utility. The
+ * {@link CPRuleServiceUtil} service utility. The
  * static methods of this class calls the same methods of the service utility.
  * However, the signatures are different because it is difficult for SOAP to
  * support certain types.
@@ -53,9 +60,105 @@ import aQute.bnd.annotation.ProviderType;
  * @author Marco Leo
  * @see CPRuleServiceHttp
  * @see com.liferay.commerce.product.model.CPRuleSoap
- * @see com.liferay.commerce.product.service.CPRuleServiceUtil
+ * @see CPRuleServiceUtil
  * @generated
  */
 @ProviderType
 public class CPRuleServiceSoap {
+	public static com.liferay.commerce.product.model.CPRuleSoap addCPRule(
+		java.lang.String name, boolean active, java.lang.String type,
+		java.lang.String typeSettings,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws RemoteException {
+		try {
+			com.liferay.commerce.product.model.CPRule returnValue = CPRuleServiceUtil.addCPRule(name,
+					active, type, typeSettings, serviceContext);
+
+			return com.liferay.commerce.product.model.CPRuleSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.commerce.product.model.CPRuleSoap deleteCPRule(
+		long cpRuleId) throws RemoteException {
+		try {
+			com.liferay.commerce.product.model.CPRule returnValue = CPRuleServiceUtil.deleteCPRule(cpRuleId);
+
+			return com.liferay.commerce.product.model.CPRuleSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.commerce.product.model.CPRuleSoap[] getCPRules(
+		long groupId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.product.model.CPRule> orderByComparator)
+		throws RemoteException {
+		try {
+			java.util.List<com.liferay.commerce.product.model.CPRule> returnValue =
+				CPRuleServiceUtil.getCPRules(groupId, start, end,
+					orderByComparator);
+
+			return com.liferay.commerce.product.model.CPRuleSoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static int getCPRulesCount(long groupId) throws RemoteException {
+		try {
+			int returnValue = CPRuleServiceUtil.getCPRulesCount(groupId);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.commerce.product.model.CPRuleSoap getCPRule(
+		long cpRuleId) throws RemoteException {
+		try {
+			com.liferay.commerce.product.model.CPRule returnValue = CPRuleServiceUtil.getCPRule(cpRuleId);
+
+			return com.liferay.commerce.product.model.CPRuleSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.commerce.product.model.CPRuleSoap updateCPRule(
+		long cpRuleId, java.lang.String name, boolean active,
+		java.lang.String type, java.lang.String typeSettings,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws RemoteException {
+		try {
+			com.liferay.commerce.product.model.CPRule returnValue = CPRuleServiceUtil.updateCPRule(cpRuleId,
+					name, active, type, typeSettings, serviceContext);
+
+			return com.liferay.commerce.product.model.CPRuleSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	private static Log _log = LogFactoryUtil.getLog(CPRuleServiceSoap.class);
 }

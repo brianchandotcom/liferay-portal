@@ -55,4 +55,7 @@ public interface CPRuleUserSegmentRel extends CPRuleUserSegmentRelModel,
 				return CPRuleUserSegmentRel.class;
 			}
 		};
+
+	public com.liferay.commerce.user.segment.model.CommerceUserSegmentEntry getCommerceUserSegmentEntry()
+		throws com.liferay.portal.kernel.exception.PortalException;
 }

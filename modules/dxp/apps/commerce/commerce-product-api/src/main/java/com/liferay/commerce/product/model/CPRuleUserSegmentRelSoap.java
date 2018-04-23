@@ -43,7 +43,7 @@ public class CPRuleUserSegmentRelSoap implements Serializable {
 		soapModel.setCreateDate(model.getCreateDate());
 		soapModel.setModifiedDate(model.getModifiedDate());
 		soapModel.setCPRuleId(model.getCPRuleId());
-		soapModel.setCommerceUserSegmentEntryId(model.isCommerceUserSegmentEntryId());
+		soapModel.setCommerceUserSegmentEntryId(model.getCommerceUserSegmentEntryId());
 
 		return soapModel;
 	}
@@ -163,16 +163,11 @@ public class CPRuleUserSegmentRelSoap implements Serializable {
 		_CPRuleId = CPRuleId;
 	}
 
-	public boolean getCommerceUserSegmentEntryId() {
+	public long getCommerceUserSegmentEntryId() {
 		return _commerceUserSegmentEntryId;
 	}
 
-	public boolean isCommerceUserSegmentEntryId() {
-		return _commerceUserSegmentEntryId;
-	}
-
-	public void setCommerceUserSegmentEntryId(
-		boolean commerceUserSegmentEntryId) {
+	public void setCommerceUserSegmentEntryId(long commerceUserSegmentEntryId) {
 		_commerceUserSegmentEntryId = commerceUserSegmentEntryId;
 	}
 
@@ -184,5 +179,5 @@ public class CPRuleUserSegmentRelSoap implements Serializable {
 	private Date _createDate;
 	private Date _modifiedDate;
 	private long _CPRuleId;
-	private boolean _commerceUserSegmentEntryId;
+	private long _commerceUserSegmentEntryId;
 }

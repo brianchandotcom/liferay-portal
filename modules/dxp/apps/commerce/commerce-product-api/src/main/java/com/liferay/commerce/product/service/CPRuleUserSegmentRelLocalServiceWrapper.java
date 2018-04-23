@@ -46,6 +46,15 @@ public class CPRuleUserSegmentRelLocalServiceWrapper
 		return _cpRuleUserSegmentRelLocalService.addCPRuleUserSegmentRel(cpRuleUserSegmentRel);
 	}
 
+	@Override
+	public com.liferay.commerce.product.model.CPRuleUserSegmentRel addCPRuleUserSegmentRel(
+		long cpRuleId, long commerceUserSegmentEntryId,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _cpRuleUserSegmentRelLocalService.addCPRuleUserSegmentRel(cpRuleId,
+			commerceUserSegmentEntryId, serviceContext);
+	}
+
 	/**
 	* Creates a new cp rule user segment rel with the primary key. Does not add the cp rule user segment rel to the database.
 	*
@@ -63,10 +72,12 @@ public class CPRuleUserSegmentRelLocalServiceWrapper
 	*
 	* @param cpRuleUserSegmentRel the cp rule user segment rel
 	* @return the cp rule user segment rel that was removed
+	* @throws PortalException
 	*/
 	@Override
 	public com.liferay.commerce.product.model.CPRuleUserSegmentRel deleteCPRuleUserSegmentRel(
-		com.liferay.commerce.product.model.CPRuleUserSegmentRel cpRuleUserSegmentRel) {
+		com.liferay.commerce.product.model.CPRuleUserSegmentRel cpRuleUserSegmentRel)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _cpRuleUserSegmentRelLocalService.deleteCPRuleUserSegmentRel(cpRuleUserSegmentRel);
 	}
 
@@ -82,6 +93,19 @@ public class CPRuleUserSegmentRelLocalServiceWrapper
 		long CPRuleUserSegmentRelId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _cpRuleUserSegmentRelLocalService.deleteCPRuleUserSegmentRel(CPRuleUserSegmentRelId);
+	}
+
+	@Override
+	public void deleteCPRuleUserSegmentRelsByCommerceUserSegmentEntryId(
+		long commerceUserSegmentEntryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_cpRuleUserSegmentRelLocalService.deleteCPRuleUserSegmentRelsByCommerceUserSegmentEntryId(commerceUserSegmentEntryId);
+	}
+
+	@Override
+	public void deleteCPRuleUserSegmentRelsByCPRuleId(long cpRuleId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_cpRuleUserSegmentRelLocalService.deleteCPRuleUserSegmentRelsByCPRuleId(cpRuleId);
 	}
 
 	/**
@@ -223,6 +247,14 @@ public class CPRuleUserSegmentRelLocalServiceWrapper
 			end);
 	}
 
+	@Override
+	public java.util.List<com.liferay.commerce.product.model.CPRuleUserSegmentRel> getCPRuleUserSegmentRels(
+		long cpRuleId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.product.model.CPRuleUserSegmentRel> orderByComparator) {
+		return _cpRuleUserSegmentRelLocalService.getCPRuleUserSegmentRels(cpRuleId,
+			start, end, orderByComparator);
+	}
+
 	/**
 	* Returns the number of cp rule user segment rels.
 	*
@@ -231,6 +263,11 @@ public class CPRuleUserSegmentRelLocalServiceWrapper
 	@Override
 	public int getCPRuleUserSegmentRelsCount() {
 		return _cpRuleUserSegmentRelLocalService.getCPRuleUserSegmentRelsCount();
+	}
+
+	@Override
+	public int getCPRuleUserSegmentRelsCount(long cpRuleId) {
+		return _cpRuleUserSegmentRelLocalService.getCPRuleUserSegmentRelsCount(cpRuleId);
 	}
 
 	@Override

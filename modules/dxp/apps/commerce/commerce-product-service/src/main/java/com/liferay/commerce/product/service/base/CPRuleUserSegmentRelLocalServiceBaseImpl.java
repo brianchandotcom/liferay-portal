@@ -139,11 +139,12 @@ public abstract class CPRuleUserSegmentRelLocalServiceBaseImpl
 	 *
 	 * @param cpRuleUserSegmentRel the cp rule user segment rel
 	 * @return the cp rule user segment rel that was removed
+	 * @throws PortalException
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
 	public CPRuleUserSegmentRel deleteCPRuleUserSegmentRel(
-		CPRuleUserSegmentRel cpRuleUserSegmentRel) {
+		CPRuleUserSegmentRel cpRuleUserSegmentRel) throws PortalException {
 		return cpRuleUserSegmentRelPersistence.remove(cpRuleUserSegmentRel);
 	}
 

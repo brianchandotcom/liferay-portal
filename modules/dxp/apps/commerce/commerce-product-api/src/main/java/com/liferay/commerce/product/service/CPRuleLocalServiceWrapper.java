@@ -44,6 +44,16 @@ public class CPRuleLocalServiceWrapper implements CPRuleLocalService,
 		return _cpRuleLocalService.addCPRule(cpRule);
 	}
 
+	@Override
+	public com.liferay.commerce.product.model.CPRule addCPRule(
+		java.lang.String name, boolean active, java.lang.String type,
+		java.lang.String typeSettings,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _cpRuleLocalService.addCPRule(name, active, type, typeSettings,
+			serviceContext);
+	}
+
 	/**
 	* Creates a new cp rule with the primary key. Does not add the cp rule to the database.
 	*
@@ -60,10 +70,12 @@ public class CPRuleLocalServiceWrapper implements CPRuleLocalService,
 	*
 	* @param cpRule the cp rule
 	* @return the cp rule that was removed
+	* @throws PortalException
 	*/
 	@Override
 	public com.liferay.commerce.product.model.CPRule deleteCPRule(
-		com.liferay.commerce.product.model.CPRule cpRule) {
+		com.liferay.commerce.product.model.CPRule cpRule)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _cpRuleLocalService.deleteCPRule(cpRule);
 	}
 
@@ -78,6 +90,12 @@ public class CPRuleLocalServiceWrapper implements CPRuleLocalService,
 	public com.liferay.commerce.product.model.CPRule deleteCPRule(long CPRuleId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _cpRuleLocalService.deleteCPRule(CPRuleId);
+	}
+
+	@Override
+	public void deleteCPRules(long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_cpRuleLocalService.deleteCPRules(groupId);
 	}
 
 	/**
@@ -214,6 +232,14 @@ public class CPRuleLocalServiceWrapper implements CPRuleLocalService,
 		return _cpRuleLocalService.getCPRules(start, end);
 	}
 
+	@Override
+	public java.util.List<com.liferay.commerce.product.model.CPRule> getCPRules(
+		long groupId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.product.model.CPRule> orderByComparator) {
+		return _cpRuleLocalService.getCPRules(groupId, start, end,
+			orderByComparator);
+	}
+
 	/**
 	* Returns the number of cp rules.
 	*
@@ -222,6 +248,11 @@ public class CPRuleLocalServiceWrapper implements CPRuleLocalService,
 	@Override
 	public int getCPRulesCount() {
 		return _cpRuleLocalService.getCPRulesCount();
+	}
+
+	@Override
+	public int getCPRulesCount(long groupId) {
+		return _cpRuleLocalService.getCPRulesCount(groupId);
 	}
 
 	@Override
@@ -246,6 +277,22 @@ public class CPRuleLocalServiceWrapper implements CPRuleLocalService,
 		return _cpRuleLocalService.getPersistedModel(primaryKeyObj);
 	}
 
+	@Override
+	public com.liferay.portal.kernel.search.BaseModelSearchResult<com.liferay.commerce.product.model.CPRule> searchCPRules(
+		long companyId, long groupId, java.lang.String keywords, int start,
+		int end, com.liferay.portal.kernel.search.Sort sort)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _cpRuleLocalService.searchCPRules(companyId, groupId, keywords,
+			start, end, sort);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.search.BaseModelSearchResult<com.liferay.commerce.product.model.CPRule> searchCPRules(
+		com.liferay.portal.kernel.search.SearchContext searchContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _cpRuleLocalService.searchCPRules(searchContext);
+	}
+
 	/**
 	* Updates the cp rule in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
@@ -256,6 +303,16 @@ public class CPRuleLocalServiceWrapper implements CPRuleLocalService,
 	public com.liferay.commerce.product.model.CPRule updateCPRule(
 		com.liferay.commerce.product.model.CPRule cpRule) {
 		return _cpRuleLocalService.updateCPRule(cpRule);
+	}
+
+	@Override
+	public com.liferay.commerce.product.model.CPRule updateCPRule(
+		long cpRuleId, java.lang.String name, boolean active,
+		java.lang.String type, java.lang.String typeSettings,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _cpRuleLocalService.updateCPRule(cpRuleId, name, active, type,
+			typeSettings, serviceContext);
 	}
 
 	@Override

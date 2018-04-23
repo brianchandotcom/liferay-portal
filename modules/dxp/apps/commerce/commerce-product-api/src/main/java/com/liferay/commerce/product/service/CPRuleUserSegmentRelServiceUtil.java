@@ -42,6 +42,39 @@ public class CPRuleUserSegmentRelServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.commerce.product.service.impl.CPRuleUserSegmentRelServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static com.liferay.commerce.product.model.CPRuleUserSegmentRel addCPRuleUserSegmentRel(
+		long cpRuleId, long commerceUserSegmentEntryId,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .addCPRuleUserSegmentRel(cpRuleId,
+			commerceUserSegmentEntryId, serviceContext);
+	}
+
+	public static void deleteCPRuleUserSegmentRel(long cpRuleUserSegmentRelId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().deleteCPRuleUserSegmentRel(cpRuleUserSegmentRelId);
+	}
+
+	public static com.liferay.commerce.product.model.CPRuleUserSegmentRel getCPRuleUserSegmentRel(
+		long cpRuleUserSegmentRelId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getCPRuleUserSegmentRel(cpRuleUserSegmentRelId);
+	}
+
+	public static java.util.List<com.liferay.commerce.product.model.CPRuleUserSegmentRel> getCPRuleUserSegmentRels(
+		long cpRuleId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.product.model.CPRuleUserSegmentRel> orderByComparator)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .getCPRuleUserSegmentRels(cpRuleId, start, end,
+			orderByComparator);
+	}
+
+	public static int getCPRuleUserSegmentRelsCount(long cpRuleId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getCPRuleUserSegmentRelsCount(cpRuleId);
+	}
 
 	/**
 	* Returns the OSGi service identifier.

@@ -68,7 +68,7 @@ public class CPRuleUserSegmentRelWrapper implements CPRuleUserSegmentRel,
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("CPRuleId", getCPRuleId());
 		attributes.put("commerceUserSegmentEntryId",
-			isCommerceUserSegmentEntryId());
+			getCommerceUserSegmentEntryId());
 
 		return attributes;
 	}
@@ -124,7 +124,7 @@ public class CPRuleUserSegmentRelWrapper implements CPRuleUserSegmentRel,
 			setCPRuleId(CPRuleId);
 		}
 
-		Boolean commerceUserSegmentEntryId = (Boolean)attributes.get(
+		Long commerceUserSegmentEntryId = (Long)attributes.get(
 				"commerceUserSegmentEntryId");
 
 		if (commerceUserSegmentEntryId != null) {
@@ -142,13 +142,19 @@ public class CPRuleUserSegmentRelWrapper implements CPRuleUserSegmentRel,
 		return _cpRuleUserSegmentRel.compareTo(cpRuleUserSegmentRel);
 	}
 
+	@Override
+	public com.liferay.commerce.user.segment.model.CommerceUserSegmentEntry getCommerceUserSegmentEntry()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _cpRuleUserSegmentRel.getCommerceUserSegmentEntry();
+	}
+
 	/**
 	* Returns the commerce user segment entry ID of this cp rule user segment rel.
 	*
 	* @return the commerce user segment entry ID of this cp rule user segment rel
 	*/
 	@Override
-	public boolean getCommerceUserSegmentEntryId() {
+	public long getCommerceUserSegmentEntryId() {
 		return _cpRuleUserSegmentRel.getCommerceUserSegmentEntryId();
 	}
 
@@ -272,16 +278,6 @@ public class CPRuleUserSegmentRelWrapper implements CPRuleUserSegmentRel,
 		return _cpRuleUserSegmentRel.isCachedModel();
 	}
 
-	/**
-	* Returns <code>true</code> if this cp rule user segment rel is commerce user segment entry ID.
-	*
-	* @return <code>true</code> if this cp rule user segment rel is commerce user segment entry ID; <code>false</code> otherwise
-	*/
-	@Override
-	public boolean isCommerceUserSegmentEntryId() {
-		return _cpRuleUserSegmentRel.isCommerceUserSegmentEntryId();
-	}
-
 	@Override
 	public boolean isEscapedModel() {
 		return _cpRuleUserSegmentRel.isEscapedModel();
@@ -303,13 +299,12 @@ public class CPRuleUserSegmentRelWrapper implements CPRuleUserSegmentRel,
 	}
 
 	/**
-	* Sets whether this cp rule user segment rel is commerce user segment entry ID.
+	* Sets the commerce user segment entry ID of this cp rule user segment rel.
 	*
 	* @param commerceUserSegmentEntryId the commerce user segment entry ID of this cp rule user segment rel
 	*/
 	@Override
-	public void setCommerceUserSegmentEntryId(
-		boolean commerceUserSegmentEntryId) {
+	public void setCommerceUserSegmentEntryId(long commerceUserSegmentEntryId) {
 		_cpRuleUserSegmentRel.setCommerceUserSegmentEntryId(commerceUserSegmentEntryId);
 	}
 

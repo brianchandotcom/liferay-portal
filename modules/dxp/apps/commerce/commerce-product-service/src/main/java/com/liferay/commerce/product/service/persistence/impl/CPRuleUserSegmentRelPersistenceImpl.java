@@ -602,9 +602,9 @@ public class CPRuleUserSegmentRelPersistenceImpl extends BasePersistenceImpl<CPR
 			CPRuleUserSegmentRelModelImpl.FINDER_CACHE_ENABLED,
 			CPRuleUserSegmentRelImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
-			"findBycommerceUserSegmentEntryId",
+			"findByCommerceUserSegmentEntryId",
 			new String[] {
-				Boolean.class.getName(),
+				Long.class.getName(),
 				
 			Integer.class.getName(), Integer.class.getName(),
 				OrderByComparator.class.getName()
@@ -614,16 +614,16 @@ public class CPRuleUserSegmentRelPersistenceImpl extends BasePersistenceImpl<CPR
 			CPRuleUserSegmentRelModelImpl.FINDER_CACHE_ENABLED,
 			CPRuleUserSegmentRelImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"findBycommerceUserSegmentEntryId",
-			new String[] { Boolean.class.getName() },
+			"findByCommerceUserSegmentEntryId",
+			new String[] { Long.class.getName() },
 			CPRuleUserSegmentRelModelImpl.COMMERCEUSERSEGMENTENTRYID_COLUMN_BITMASK |
 			CPRuleUserSegmentRelModelImpl.CREATEDATE_COLUMN_BITMASK);
 	public static final FinderPath FINDER_PATH_COUNT_BY_COMMERCEUSERSEGMENTENTRYID =
 		new FinderPath(CPRuleUserSegmentRelModelImpl.ENTITY_CACHE_ENABLED,
 			CPRuleUserSegmentRelModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countBycommerceUserSegmentEntryId",
-			new String[] { Boolean.class.getName() });
+			"countByCommerceUserSegmentEntryId",
+			new String[] { Long.class.getName() });
 
 	/**
 	 * Returns all the cp rule user segment rels where commerceUserSegmentEntryId = &#63;.
@@ -632,9 +632,9 @@ public class CPRuleUserSegmentRelPersistenceImpl extends BasePersistenceImpl<CPR
 	 * @return the matching cp rule user segment rels
 	 */
 	@Override
-	public List<CPRuleUserSegmentRel> findBycommerceUserSegmentEntryId(
-		boolean commerceUserSegmentEntryId) {
-		return findBycommerceUserSegmentEntryId(commerceUserSegmentEntryId,
+	public List<CPRuleUserSegmentRel> findByCommerceUserSegmentEntryId(
+		long commerceUserSegmentEntryId) {
+		return findByCommerceUserSegmentEntryId(commerceUserSegmentEntryId,
 			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
 
@@ -651,9 +651,9 @@ public class CPRuleUserSegmentRelPersistenceImpl extends BasePersistenceImpl<CPR
 	 * @return the range of matching cp rule user segment rels
 	 */
 	@Override
-	public List<CPRuleUserSegmentRel> findBycommerceUserSegmentEntryId(
-		boolean commerceUserSegmentEntryId, int start, int end) {
-		return findBycommerceUserSegmentEntryId(commerceUserSegmentEntryId,
+	public List<CPRuleUserSegmentRel> findByCommerceUserSegmentEntryId(
+		long commerceUserSegmentEntryId, int start, int end) {
+		return findByCommerceUserSegmentEntryId(commerceUserSegmentEntryId,
 			start, end, null);
 	}
 
@@ -671,10 +671,10 @@ public class CPRuleUserSegmentRelPersistenceImpl extends BasePersistenceImpl<CPR
 	 * @return the ordered range of matching cp rule user segment rels
 	 */
 	@Override
-	public List<CPRuleUserSegmentRel> findBycommerceUserSegmentEntryId(
-		boolean commerceUserSegmentEntryId, int start, int end,
+	public List<CPRuleUserSegmentRel> findByCommerceUserSegmentEntryId(
+		long commerceUserSegmentEntryId, int start, int end,
 		OrderByComparator<CPRuleUserSegmentRel> orderByComparator) {
-		return findBycommerceUserSegmentEntryId(commerceUserSegmentEntryId,
+		return findByCommerceUserSegmentEntryId(commerceUserSegmentEntryId,
 			start, end, orderByComparator, true);
 	}
 
@@ -693,8 +693,8 @@ public class CPRuleUserSegmentRelPersistenceImpl extends BasePersistenceImpl<CPR
 	 * @return the ordered range of matching cp rule user segment rels
 	 */
 	@Override
-	public List<CPRuleUserSegmentRel> findBycommerceUserSegmentEntryId(
-		boolean commerceUserSegmentEntryId, int start, int end,
+	public List<CPRuleUserSegmentRel> findByCommerceUserSegmentEntryId(
+		long commerceUserSegmentEntryId, int start, int end,
 		OrderByComparator<CPRuleUserSegmentRel> orderByComparator,
 		boolean retrieveFromCache) {
 		boolean pagination = true;
@@ -724,7 +724,7 @@ public class CPRuleUserSegmentRelPersistenceImpl extends BasePersistenceImpl<CPR
 
 			if ((list != null) && !list.isEmpty()) {
 				for (CPRuleUserSegmentRel cpRuleUserSegmentRel : list) {
-					if ((commerceUserSegmentEntryId != cpRuleUserSegmentRel.isCommerceUserSegmentEntryId())) {
+					if ((commerceUserSegmentEntryId != cpRuleUserSegmentRel.getCommerceUserSegmentEntryId())) {
 						list = null;
 
 						break;
@@ -809,11 +809,11 @@ public class CPRuleUserSegmentRelPersistenceImpl extends BasePersistenceImpl<CPR
 	 * @throws NoSuchCPRuleUserSegmentRelException if a matching cp rule user segment rel could not be found
 	 */
 	@Override
-	public CPRuleUserSegmentRel findBycommerceUserSegmentEntryId_First(
-		boolean commerceUserSegmentEntryId,
+	public CPRuleUserSegmentRel findByCommerceUserSegmentEntryId_First(
+		long commerceUserSegmentEntryId,
 		OrderByComparator<CPRuleUserSegmentRel> orderByComparator)
 		throws NoSuchCPRuleUserSegmentRelException {
-		CPRuleUserSegmentRel cpRuleUserSegmentRel = fetchBycommerceUserSegmentEntryId_First(commerceUserSegmentEntryId,
+		CPRuleUserSegmentRel cpRuleUserSegmentRel = fetchByCommerceUserSegmentEntryId_First(commerceUserSegmentEntryId,
 				orderByComparator);
 
 		if (cpRuleUserSegmentRel != null) {
@@ -840,10 +840,10 @@ public class CPRuleUserSegmentRelPersistenceImpl extends BasePersistenceImpl<CPR
 	 * @return the first matching cp rule user segment rel, or <code>null</code> if a matching cp rule user segment rel could not be found
 	 */
 	@Override
-	public CPRuleUserSegmentRel fetchBycommerceUserSegmentEntryId_First(
-		boolean commerceUserSegmentEntryId,
+	public CPRuleUserSegmentRel fetchByCommerceUserSegmentEntryId_First(
+		long commerceUserSegmentEntryId,
 		OrderByComparator<CPRuleUserSegmentRel> orderByComparator) {
-		List<CPRuleUserSegmentRel> list = findBycommerceUserSegmentEntryId(commerceUserSegmentEntryId,
+		List<CPRuleUserSegmentRel> list = findByCommerceUserSegmentEntryId(commerceUserSegmentEntryId,
 				0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -862,11 +862,11 @@ public class CPRuleUserSegmentRelPersistenceImpl extends BasePersistenceImpl<CPR
 	 * @throws NoSuchCPRuleUserSegmentRelException if a matching cp rule user segment rel could not be found
 	 */
 	@Override
-	public CPRuleUserSegmentRel findBycommerceUserSegmentEntryId_Last(
-		boolean commerceUserSegmentEntryId,
+	public CPRuleUserSegmentRel findByCommerceUserSegmentEntryId_Last(
+		long commerceUserSegmentEntryId,
 		OrderByComparator<CPRuleUserSegmentRel> orderByComparator)
 		throws NoSuchCPRuleUserSegmentRelException {
-		CPRuleUserSegmentRel cpRuleUserSegmentRel = fetchBycommerceUserSegmentEntryId_Last(commerceUserSegmentEntryId,
+		CPRuleUserSegmentRel cpRuleUserSegmentRel = fetchByCommerceUserSegmentEntryId_Last(commerceUserSegmentEntryId,
 				orderByComparator);
 
 		if (cpRuleUserSegmentRel != null) {
@@ -893,16 +893,16 @@ public class CPRuleUserSegmentRelPersistenceImpl extends BasePersistenceImpl<CPR
 	 * @return the last matching cp rule user segment rel, or <code>null</code> if a matching cp rule user segment rel could not be found
 	 */
 	@Override
-	public CPRuleUserSegmentRel fetchBycommerceUserSegmentEntryId_Last(
-		boolean commerceUserSegmentEntryId,
+	public CPRuleUserSegmentRel fetchByCommerceUserSegmentEntryId_Last(
+		long commerceUserSegmentEntryId,
 		OrderByComparator<CPRuleUserSegmentRel> orderByComparator) {
-		int count = countBycommerceUserSegmentEntryId(commerceUserSegmentEntryId);
+		int count = countByCommerceUserSegmentEntryId(commerceUserSegmentEntryId);
 
 		if (count == 0) {
 			return null;
 		}
 
-		List<CPRuleUserSegmentRel> list = findBycommerceUserSegmentEntryId(commerceUserSegmentEntryId,
+		List<CPRuleUserSegmentRel> list = findByCommerceUserSegmentEntryId(commerceUserSegmentEntryId,
 				count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -922,8 +922,8 @@ public class CPRuleUserSegmentRelPersistenceImpl extends BasePersistenceImpl<CPR
 	 * @throws NoSuchCPRuleUserSegmentRelException if a cp rule user segment rel with the primary key could not be found
 	 */
 	@Override
-	public CPRuleUserSegmentRel[] findBycommerceUserSegmentEntryId_PrevAndNext(
-		long CPRuleUserSegmentRelId, boolean commerceUserSegmentEntryId,
+	public CPRuleUserSegmentRel[] findByCommerceUserSegmentEntryId_PrevAndNext(
+		long CPRuleUserSegmentRelId, long commerceUserSegmentEntryId,
 		OrderByComparator<CPRuleUserSegmentRel> orderByComparator)
 		throws NoSuchCPRuleUserSegmentRelException {
 		CPRuleUserSegmentRel cpRuleUserSegmentRel = findByPrimaryKey(CPRuleUserSegmentRelId);
@@ -935,13 +935,13 @@ public class CPRuleUserSegmentRelPersistenceImpl extends BasePersistenceImpl<CPR
 
 			CPRuleUserSegmentRel[] array = new CPRuleUserSegmentRelImpl[3];
 
-			array[0] = getBycommerceUserSegmentEntryId_PrevAndNext(session,
+			array[0] = getByCommerceUserSegmentEntryId_PrevAndNext(session,
 					cpRuleUserSegmentRel, commerceUserSegmentEntryId,
 					orderByComparator, true);
 
 			array[1] = cpRuleUserSegmentRel;
 
-			array[2] = getBycommerceUserSegmentEntryId_PrevAndNext(session,
+			array[2] = getByCommerceUserSegmentEntryId_PrevAndNext(session,
 					cpRuleUserSegmentRel, commerceUserSegmentEntryId,
 					orderByComparator, false);
 
@@ -955,9 +955,9 @@ public class CPRuleUserSegmentRelPersistenceImpl extends BasePersistenceImpl<CPR
 		}
 	}
 
-	protected CPRuleUserSegmentRel getBycommerceUserSegmentEntryId_PrevAndNext(
+	protected CPRuleUserSegmentRel getByCommerceUserSegmentEntryId_PrevAndNext(
 		Session session, CPRuleUserSegmentRel cpRuleUserSegmentRel,
-		boolean commerceUserSegmentEntryId,
+		long commerceUserSegmentEntryId,
 		OrderByComparator<CPRuleUserSegmentRel> orderByComparator,
 		boolean previous) {
 		StringBundler query = null;
@@ -1069,9 +1069,9 @@ public class CPRuleUserSegmentRelPersistenceImpl extends BasePersistenceImpl<CPR
 	 * @param commerceUserSegmentEntryId the commerce user segment entry ID
 	 */
 	@Override
-	public void removeBycommerceUserSegmentEntryId(
-		boolean commerceUserSegmentEntryId) {
-		for (CPRuleUserSegmentRel cpRuleUserSegmentRel : findBycommerceUserSegmentEntryId(
+	public void removeByCommerceUserSegmentEntryId(
+		long commerceUserSegmentEntryId) {
+		for (CPRuleUserSegmentRel cpRuleUserSegmentRel : findByCommerceUserSegmentEntryId(
 				commerceUserSegmentEntryId, QueryUtil.ALL_POS,
 				QueryUtil.ALL_POS, null)) {
 			remove(cpRuleUserSegmentRel);
@@ -1085,8 +1085,8 @@ public class CPRuleUserSegmentRelPersistenceImpl extends BasePersistenceImpl<CPR
 	 * @return the number of matching cp rule user segment rels
 	 */
 	@Override
-	public int countBycommerceUserSegmentEntryId(
-		boolean commerceUserSegmentEntryId) {
+	public int countByCommerceUserSegmentEntryId(
+		long commerceUserSegmentEntryId) {
 		FinderPath finderPath = FINDER_PATH_COUNT_BY_COMMERCEUSERSEGMENTENTRYID;
 
 		Object[] finderArgs = new Object[] { commerceUserSegmentEntryId };
@@ -1389,7 +1389,7 @@ public class CPRuleUserSegmentRelPersistenceImpl extends BasePersistenceImpl<CPR
 				args);
 
 			args = new Object[] {
-					cpRuleUserSegmentRelModelImpl.isCommerceUserSegmentEntryId()
+					cpRuleUserSegmentRelModelImpl.getCommerceUserSegmentEntryId()
 				};
 
 			finderCache.removeResult(FINDER_PATH_COUNT_BY_COMMERCEUSERSEGMENTENTRYID,
@@ -1470,7 +1470,7 @@ public class CPRuleUserSegmentRelPersistenceImpl extends BasePersistenceImpl<CPR
 		cpRuleUserSegmentRelImpl.setCreateDate(cpRuleUserSegmentRel.getCreateDate());
 		cpRuleUserSegmentRelImpl.setModifiedDate(cpRuleUserSegmentRel.getModifiedDate());
 		cpRuleUserSegmentRelImpl.setCPRuleId(cpRuleUserSegmentRel.getCPRuleId());
-		cpRuleUserSegmentRelImpl.setCommerceUserSegmentEntryId(cpRuleUserSegmentRel.isCommerceUserSegmentEntryId());
+		cpRuleUserSegmentRelImpl.setCommerceUserSegmentEntryId(cpRuleUserSegmentRel.getCommerceUserSegmentEntryId());
 
 		return cpRuleUserSegmentRelImpl;
 	}

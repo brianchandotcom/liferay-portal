@@ -54,6 +54,15 @@ public class CPRuleUserSegmentRelLocalServiceUtil {
 		return getService().addCPRuleUserSegmentRel(cpRuleUserSegmentRel);
 	}
 
+	public static com.liferay.commerce.product.model.CPRuleUserSegmentRel addCPRuleUserSegmentRel(
+		long cpRuleId, long commerceUserSegmentEntryId,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .addCPRuleUserSegmentRel(cpRuleId,
+			commerceUserSegmentEntryId, serviceContext);
+	}
+
 	/**
 	* Creates a new cp rule user segment rel with the primary key. Does not add the cp rule user segment rel to the database.
 	*
@@ -70,9 +79,11 @@ public class CPRuleUserSegmentRelLocalServiceUtil {
 	*
 	* @param cpRuleUserSegmentRel the cp rule user segment rel
 	* @return the cp rule user segment rel that was removed
+	* @throws PortalException
 	*/
 	public static com.liferay.commerce.product.model.CPRuleUserSegmentRel deleteCPRuleUserSegmentRel(
-		com.liferay.commerce.product.model.CPRuleUserSegmentRel cpRuleUserSegmentRel) {
+		com.liferay.commerce.product.model.CPRuleUserSegmentRel cpRuleUserSegmentRel)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().deleteCPRuleUserSegmentRel(cpRuleUserSegmentRel);
 	}
 
@@ -87,6 +98,18 @@ public class CPRuleUserSegmentRelLocalServiceUtil {
 		long CPRuleUserSegmentRelId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().deleteCPRuleUserSegmentRel(CPRuleUserSegmentRelId);
+	}
+
+	public static void deleteCPRuleUserSegmentRelsByCommerceUserSegmentEntryId(
+		long commerceUserSegmentEntryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService()
+			.deleteCPRuleUserSegmentRelsByCommerceUserSegmentEntryId(commerceUserSegmentEntryId);
+	}
+
+	public static void deleteCPRuleUserSegmentRelsByCPRuleId(long cpRuleId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().deleteCPRuleUserSegmentRelsByCPRuleId(cpRuleId);
 	}
 
 	/**
@@ -214,6 +237,14 @@ public class CPRuleUserSegmentRelLocalServiceUtil {
 		return getService().getCPRuleUserSegmentRels(start, end);
 	}
 
+	public static java.util.List<com.liferay.commerce.product.model.CPRuleUserSegmentRel> getCPRuleUserSegmentRels(
+		long cpRuleId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.product.model.CPRuleUserSegmentRel> orderByComparator) {
+		return getService()
+				   .getCPRuleUserSegmentRels(cpRuleId, start, end,
+			orderByComparator);
+	}
+
 	/**
 	* Returns the number of cp rule user segment rels.
 	*
@@ -221,6 +252,10 @@ public class CPRuleUserSegmentRelLocalServiceUtil {
 	*/
 	public static int getCPRuleUserSegmentRelsCount() {
 		return getService().getCPRuleUserSegmentRelsCount();
+	}
+
+	public static int getCPRuleUserSegmentRelsCount(long cpRuleId) {
+		return getService().getCPRuleUserSegmentRelsCount(cpRuleId);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {

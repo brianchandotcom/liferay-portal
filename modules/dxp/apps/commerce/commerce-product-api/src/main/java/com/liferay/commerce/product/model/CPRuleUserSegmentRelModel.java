@@ -211,22 +211,14 @@ public interface CPRuleUserSegmentRelModel extends BaseModel<CPRuleUserSegmentRe
 	 *
 	 * @return the commerce user segment entry ID of this cp rule user segment rel
 	 */
-	public boolean getCommerceUserSegmentEntryId();
+	public long getCommerceUserSegmentEntryId();
 
 	/**
-	 * Returns <code>true</code> if this cp rule user segment rel is commerce user segment entry ID.
-	 *
-	 * @return <code>true</code> if this cp rule user segment rel is commerce user segment entry ID; <code>false</code> otherwise
-	 */
-	public boolean isCommerceUserSegmentEntryId();
-
-	/**
-	 * Sets whether this cp rule user segment rel is commerce user segment entry ID.
+	 * Sets the commerce user segment entry ID of this cp rule user segment rel.
 	 *
 	 * @param commerceUserSegmentEntryId the commerce user segment entry ID of this cp rule user segment rel
 	 */
-	public void setCommerceUserSegmentEntryId(
-		boolean commerceUserSegmentEntryId);
+	public void setCommerceUserSegmentEntryId(long commerceUserSegmentEntryId);
 
 	@Override
 	public boolean isNew();

@@ -78,7 +78,7 @@ public class CPRuleUserSegmentRelModelImpl extends BaseModelImpl<CPRuleUserSegme
 			{ "createDate", Types.TIMESTAMP },
 			{ "modifiedDate", Types.TIMESTAMP },
 			{ "CPRuleId", Types.BIGINT },
-			{ "commerceUserSegmentEntryId", Types.BOOLEAN }
+			{ "commerceUserSegmentEntryId", Types.BIGINT }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
@@ -91,10 +91,10 @@ public class CPRuleUserSegmentRelModelImpl extends BaseModelImpl<CPRuleUserSegme
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("CPRuleId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("commerceUserSegmentEntryId", Types.BOOLEAN);
+		TABLE_COLUMNS_MAP.put("commerceUserSegmentEntryId", Types.BIGINT);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table CPRuleUserSegmentRel (CPRuleUserSegmentRelId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,CPRuleId LONG,commerceUserSegmentEntryId BOOLEAN)";
+	public static final String TABLE_SQL_CREATE = "create table CPRuleUserSegmentRel (CPRuleUserSegmentRelId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,CPRuleId LONG,commerceUserSegmentEntryId LONG)";
 	public static final String TABLE_SQL_DROP = "drop table CPRuleUserSegmentRel";
 	public static final String ORDER_BY_JPQL = " ORDER BY cpRuleUserSegmentRel.createDate DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY CPRuleUserSegmentRel.createDate DESC";
@@ -211,7 +211,7 @@ public class CPRuleUserSegmentRelModelImpl extends BaseModelImpl<CPRuleUserSegme
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("CPRuleId", getCPRuleId());
 		attributes.put("commerceUserSegmentEntryId",
-			isCommerceUserSegmentEntryId());
+			getCommerceUserSegmentEntryId());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -270,7 +270,7 @@ public class CPRuleUserSegmentRelModelImpl extends BaseModelImpl<CPRuleUserSegme
 			setCPRuleId(CPRuleId);
 		}
 
-		Boolean commerceUserSegmentEntryId = (Boolean)attributes.get(
+		Long commerceUserSegmentEntryId = (Long)attributes.get(
 				"commerceUserSegmentEntryId");
 
 		if (commerceUserSegmentEntryId != null) {
@@ -409,19 +409,12 @@ public class CPRuleUserSegmentRelModelImpl extends BaseModelImpl<CPRuleUserSegme
 
 	@JSON
 	@Override
-	public boolean getCommerceUserSegmentEntryId() {
-		return _commerceUserSegmentEntryId;
-	}
-
-	@JSON
-	@Override
-	public boolean isCommerceUserSegmentEntryId() {
+	public long getCommerceUserSegmentEntryId() {
 		return _commerceUserSegmentEntryId;
 	}
 
 	@Override
-	public void setCommerceUserSegmentEntryId(
-		boolean commerceUserSegmentEntryId) {
+	public void setCommerceUserSegmentEntryId(long commerceUserSegmentEntryId) {
 		_columnBitmask |= COMMERCEUSERSEGMENTENTRYID_COLUMN_BITMASK;
 
 		if (!_setOriginalCommerceUserSegmentEntryId) {
@@ -433,7 +426,7 @@ public class CPRuleUserSegmentRelModelImpl extends BaseModelImpl<CPRuleUserSegme
 		_commerceUserSegmentEntryId = commerceUserSegmentEntryId;
 	}
 
-	public boolean getOriginalCommerceUserSegmentEntryId() {
+	public long getOriginalCommerceUserSegmentEntryId() {
 		return _originalCommerceUserSegmentEntryId;
 	}
 
@@ -476,7 +469,7 @@ public class CPRuleUserSegmentRelModelImpl extends BaseModelImpl<CPRuleUserSegme
 		cpRuleUserSegmentRelImpl.setCreateDate(getCreateDate());
 		cpRuleUserSegmentRelImpl.setModifiedDate(getModifiedDate());
 		cpRuleUserSegmentRelImpl.setCPRuleId(getCPRuleId());
-		cpRuleUserSegmentRelImpl.setCommerceUserSegmentEntryId(isCommerceUserSegmentEntryId());
+		cpRuleUserSegmentRelImpl.setCommerceUserSegmentEntryId(getCommerceUserSegmentEntryId());
 
 		cpRuleUserSegmentRelImpl.resetOriginalValues();
 
@@ -593,7 +586,7 @@ public class CPRuleUserSegmentRelModelImpl extends BaseModelImpl<CPRuleUserSegme
 
 		cpRuleUserSegmentRelCacheModel.CPRuleId = getCPRuleId();
 
-		cpRuleUserSegmentRelCacheModel.commerceUserSegmentEntryId = isCommerceUserSegmentEntryId();
+		cpRuleUserSegmentRelCacheModel.commerceUserSegmentEntryId = getCommerceUserSegmentEntryId();
 
 		return cpRuleUserSegmentRelCacheModel;
 	}
@@ -619,7 +612,7 @@ public class CPRuleUserSegmentRelModelImpl extends BaseModelImpl<CPRuleUserSegme
 		sb.append(", CPRuleId=");
 		sb.append(getCPRuleId());
 		sb.append(", commerceUserSegmentEntryId=");
-		sb.append(isCommerceUserSegmentEntryId());
+		sb.append(getCommerceUserSegmentEntryId());
 		sb.append("}");
 
 		return sb.toString();
@@ -667,7 +660,7 @@ public class CPRuleUserSegmentRelModelImpl extends BaseModelImpl<CPRuleUserSegme
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>commerceUserSegmentEntryId</column-name><column-value><![CDATA[");
-		sb.append(isCommerceUserSegmentEntryId());
+		sb.append(getCommerceUserSegmentEntryId());
 		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
@@ -690,8 +683,8 @@ public class CPRuleUserSegmentRelModelImpl extends BaseModelImpl<CPRuleUserSegme
 	private long _CPRuleId;
 	private long _originalCPRuleId;
 	private boolean _setOriginalCPRuleId;
-	private boolean _commerceUserSegmentEntryId;
-	private boolean _originalCommerceUserSegmentEntryId;
+	private long _commerceUserSegmentEntryId;
+	private long _originalCommerceUserSegmentEntryId;
 	private boolean _setOriginalCommerceUserSegmentEntryId;
 	private long _columnBitmask;
 	private CPRuleUserSegmentRel _escapedModel;

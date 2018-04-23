@@ -16,14 +16,24 @@ package com.liferay.commerce.product.service;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.commerce.product.model.CPRule;
+
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
+import com.liferay.portal.kernel.search.BaseModelSearchResult;
+import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.security.access.control.AccessControlled;
 import com.liferay.portal.kernel.service.BaseService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.transaction.Isolation;
+import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.portal.kernel.util.OrderByComparator;
+
+import java.util.List;
 
 /**
  * Provides the remote service interface for CPRule. Methods of this
@@ -49,6 +59,21 @@ public interface CPRuleService extends BaseService {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CPRuleServiceUtil} to access the cp rule remote service. Add custom service methods to {@link com.liferay.commerce.product.service.impl.CPRuleServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public CPRule addCPRule(java.lang.String name, boolean active,
+		java.lang.String type, java.lang.String typeSettings,
+		ServiceContext serviceContext) throws PortalException;
+
+	public CPRule deleteCPRule(long cpRuleId) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CPRule getCPRule(long cpRuleId) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CPRule> getCPRules(long groupId, int start, int end,
+		OrderByComparator<CPRule> orderByComparator) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCPRulesCount(long groupId) throws PortalException;
 
 	/**
 	* Returns the OSGi service identifier.
@@ -56,4 +81,17 @@ public interface CPRuleService extends BaseService {
 	* @return the OSGi service identifier
 	*/
 	public java.lang.String getOSGiServiceIdentifier();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public BaseModelSearchResult<CPRule> searchCPRules(long companyId,
+		long groupId, java.lang.String keywords, int start, int end, Sort sort)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public BaseModelSearchResult<CPRule> searchCPRules(
+		SearchContext searchContext) throws PortalException;
+
+	public CPRule updateCPRule(long cpRuleId, java.lang.String name,
+		boolean active, java.lang.String type, java.lang.String typeSettings,
+		ServiceContext serviceContext) throws PortalException;
 }

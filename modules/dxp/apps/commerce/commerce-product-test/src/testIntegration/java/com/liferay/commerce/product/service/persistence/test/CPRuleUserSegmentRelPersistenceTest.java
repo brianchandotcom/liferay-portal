@@ -136,7 +136,7 @@ public class CPRuleUserSegmentRelPersistenceTest {
 
 		newCPRuleUserSegmentRel.setCPRuleId(RandomTestUtil.nextLong());
 
-		newCPRuleUserSegmentRel.setCommerceUserSegmentEntryId(RandomTestUtil.randomBoolean());
+		newCPRuleUserSegmentRel.setCommerceUserSegmentEntryId(RandomTestUtil.nextLong());
 
 		_cpRuleUserSegmentRels.add(_persistence.update(newCPRuleUserSegmentRel));
 
@@ -160,8 +160,8 @@ public class CPRuleUserSegmentRelPersistenceTest {
 			Time.getShortTimestamp(newCPRuleUserSegmentRel.getModifiedDate()));
 		Assert.assertEquals(existingCPRuleUserSegmentRel.getCPRuleId(),
 			newCPRuleUserSegmentRel.getCPRuleId());
-		Assert.assertEquals(existingCPRuleUserSegmentRel.isCommerceUserSegmentEntryId(),
-			newCPRuleUserSegmentRel.isCommerceUserSegmentEntryId());
+		Assert.assertEquals(existingCPRuleUserSegmentRel.getCommerceUserSegmentEntryId(),
+			newCPRuleUserSegmentRel.getCommerceUserSegmentEntryId());
 	}
 
 	@Test
@@ -172,11 +172,11 @@ public class CPRuleUserSegmentRelPersistenceTest {
 	}
 
 	@Test
-	public void testCountBycommerceUserSegmentEntryId()
+	public void testCountByCommerceUserSegmentEntryId()
 		throws Exception {
-		_persistence.countBycommerceUserSegmentEntryId(RandomTestUtil.randomBoolean());
+		_persistence.countByCommerceUserSegmentEntryId(RandomTestUtil.nextLong());
 
-		_persistence.countBycommerceUserSegmentEntryId(RandomTestUtil.randomBoolean());
+		_persistence.countByCommerceUserSegmentEntryId(0L);
 	}
 
 	@Test
@@ -428,7 +428,7 @@ public class CPRuleUserSegmentRelPersistenceTest {
 
 		cpRuleUserSegmentRel.setCPRuleId(RandomTestUtil.nextLong());
 
-		cpRuleUserSegmentRel.setCommerceUserSegmentEntryId(RandomTestUtil.randomBoolean());
+		cpRuleUserSegmentRel.setCommerceUserSegmentEntryId(RandomTestUtil.nextLong());
 
 		_cpRuleUserSegmentRels.add(_persistence.update(cpRuleUserSegmentRel));
 

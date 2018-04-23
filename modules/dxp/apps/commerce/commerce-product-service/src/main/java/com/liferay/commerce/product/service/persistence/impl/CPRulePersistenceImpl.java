@@ -28,9 +28,11 @@ import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Query;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.CompanyProvider;
@@ -524,6 +526,315 @@ public class CPRulePersistenceImpl extends BasePersistenceImpl<CPRule>
 	}
 
 	/**
+	 * Returns all the cp rules that the user has permission to view where groupId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @return the matching cp rules that the user has permission to view
+	 */
+	@Override
+	public List<CPRule> filterFindByGroupId(long groupId) {
+		return filterFindByGroupId(groupId, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the cp rules that the user has permission to view where groupId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CPRuleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param start the lower bound of the range of cp rules
+	 * @param end the upper bound of the range of cp rules (not inclusive)
+	 * @return the range of matching cp rules that the user has permission to view
+	 */
+	@Override
+	public List<CPRule> filterFindByGroupId(long groupId, int start, int end) {
+		return filterFindByGroupId(groupId, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the cp rules that the user has permissions to view where groupId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CPRuleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param start the lower bound of the range of cp rules
+	 * @param end the upper bound of the range of cp rules (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching cp rules that the user has permission to view
+	 */
+	@Override
+	public List<CPRule> filterFindByGroupId(long groupId, int start, int end,
+		OrderByComparator<CPRule> orderByComparator) {
+		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+			return findByGroupId(groupId, start, end, orderByComparator);
+		}
+
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(3 +
+					(orderByComparator.getOrderByFields().length * 2));
+		}
+		else {
+			query = new StringBundler(4);
+		}
+
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_CPRULE_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_CPRULE_NO_INLINE_DISTINCT_WHERE_1);
+		}
+
+		query.append(_FINDER_COLUMN_GROUPID_GROUPID_2);
+
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_CPRULE_NO_INLINE_DISTINCT_WHERE_2);
+		}
+
+		if (orderByComparator != null) {
+			if (getDB().isSupportsInlineDistinct()) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator, true);
+			}
+			else {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_TABLE,
+					orderByComparator, true);
+			}
+		}
+		else {
+			if (getDB().isSupportsInlineDistinct()) {
+				query.append(CPRuleModelImpl.ORDER_BY_JPQL);
+			}
+			else {
+				query.append(CPRuleModelImpl.ORDER_BY_SQL);
+			}
+		}
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+				CPRule.class.getName(), _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
+				groupId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+			if (getDB().isSupportsInlineDistinct()) {
+				q.addEntity(_FILTER_ENTITY_ALIAS, CPRuleImpl.class);
+			}
+			else {
+				q.addEntity(_FILTER_ENTITY_TABLE, CPRuleImpl.class);
+			}
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(groupId);
+
+			return (List<CPRule>)QueryUtil.list(q, getDialect(), start, end);
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	/**
+	 * Returns the cp rules before and after the current cp rule in the ordered set of cp rules that the user has permission to view where groupId = &#63;.
+	 *
+	 * @param CPRuleId the primary key of the current cp rule
+	 * @param groupId the group ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next cp rule
+	 * @throws NoSuchCPRuleException if a cp rule with the primary key could not be found
+	 */
+	@Override
+	public CPRule[] filterFindByGroupId_PrevAndNext(long CPRuleId,
+		long groupId, OrderByComparator<CPRule> orderByComparator)
+		throws NoSuchCPRuleException {
+		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+			return findByGroupId_PrevAndNext(CPRuleId, groupId,
+				orderByComparator);
+		}
+
+		CPRule cpRule = findByPrimaryKey(CPRuleId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			CPRule[] array = new CPRuleImpl[3];
+
+			array[0] = filterGetByGroupId_PrevAndNext(session, cpRule, groupId,
+					orderByComparator, true);
+
+			array[1] = cpRule;
+
+			array[2] = filterGetByGroupId_PrevAndNext(session, cpRule, groupId,
+					orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected CPRule filterGetByGroupId_PrevAndNext(Session session,
+		CPRule cpRule, long groupId,
+		OrderByComparator<CPRule> orderByComparator, boolean previous) {
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(5 +
+					(orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			query = new StringBundler(4);
+		}
+
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_CPRULE_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_CPRULE_NO_INLINE_DISTINCT_WHERE_1);
+		}
+
+		query.append(_FINDER_COLUMN_GROUPID_GROUPID_2);
+
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_CPRULE_NO_INLINE_DISTINCT_WHERE_2);
+		}
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				if (getDB().isSupportsInlineDistinct()) {
+					query.append(_ORDER_BY_ENTITY_ALIAS);
+				}
+				else {
+					query.append(_ORDER_BY_ENTITY_TABLE);
+				}
+
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				if (getDB().isSupportsInlineDistinct()) {
+					query.append(_ORDER_BY_ENTITY_ALIAS);
+				}
+				else {
+					query.append(_ORDER_BY_ENTITY_TABLE);
+				}
+
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			if (getDB().isSupportsInlineDistinct()) {
+				query.append(CPRuleModelImpl.ORDER_BY_JPQL);
+			}
+			else {
+				query.append(CPRuleModelImpl.ORDER_BY_SQL);
+			}
+		}
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+				CPRule.class.getName(), _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
+				groupId);
+
+		SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		if (getDB().isSupportsInlineDistinct()) {
+			q.addEntity(_FILTER_ENTITY_ALIAS, CPRuleImpl.class);
+		}
+		else {
+			q.addEntity(_FILTER_ENTITY_TABLE, CPRuleImpl.class);
+		}
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(groupId);
+
+		if (orderByComparator != null) {
+			Object[] values = orderByComparator.getOrderByConditionValues(cpRule);
+
+			for (Object value : values) {
+				qPos.add(value);
+			}
+		}
+
+		List<CPRule> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
 	 * Removes all the cp rules where groupId = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -585,6 +896,54 @@ public class CPRulePersistenceImpl extends BasePersistenceImpl<CPRule>
 		}
 
 		return count.intValue();
+	}
+
+	/**
+	 * Returns the number of cp rules that the user has permission to view where groupId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @return the number of matching cp rules that the user has permission to view
+	 */
+	@Override
+	public int filterCountByGroupId(long groupId) {
+		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+			return countByGroupId(groupId);
+		}
+
+		StringBundler query = new StringBundler(2);
+
+		query.append(_FILTER_SQL_COUNT_CPRULE_WHERE);
+
+		query.append(_FINDER_COLUMN_GROUPID_GROUPID_2);
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+				CPRule.class.getName(), _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
+				groupId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+			q.addScalar(COUNT_COLUMN_NAME,
+				com.liferay.portal.kernel.dao.orm.Type.LONG);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(groupId);
+
+			Long count = (Long)q.uniqueResult();
+
+			return count.intValue();
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
 	}
 
 	private static final String _FINDER_COLUMN_GROUPID_GROUPID_2 = "cpRule.groupId = ?";
@@ -1319,7 +1678,17 @@ public class CPRulePersistenceImpl extends BasePersistenceImpl<CPRule>
 	private static final String _SQL_SELECT_CPRULE_WHERE = "SELECT cpRule FROM CPRule cpRule WHERE ";
 	private static final String _SQL_COUNT_CPRULE = "SELECT COUNT(cpRule) FROM CPRule cpRule";
 	private static final String _SQL_COUNT_CPRULE_WHERE = "SELECT COUNT(cpRule) FROM CPRule cpRule WHERE ";
+	private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN = "cpRule.CPRuleId";
+	private static final String _FILTER_SQL_SELECT_CPRULE_WHERE = "SELECT DISTINCT {cpRule.*} FROM CPRule cpRule WHERE ";
+	private static final String _FILTER_SQL_SELECT_CPRULE_NO_INLINE_DISTINCT_WHERE_1 =
+		"SELECT {CPRule.*} FROM (SELECT DISTINCT cpRule.CPRuleId FROM CPRule cpRule WHERE ";
+	private static final String _FILTER_SQL_SELECT_CPRULE_NO_INLINE_DISTINCT_WHERE_2 =
+		") TEMP_TABLE INNER JOIN CPRule ON TEMP_TABLE.CPRuleId = CPRule.CPRuleId";
+	private static final String _FILTER_SQL_COUNT_CPRULE_WHERE = "SELECT COUNT(DISTINCT cpRule.CPRuleId) AS COUNT_VALUE FROM CPRule cpRule WHERE ";
+	private static final String _FILTER_ENTITY_ALIAS = "cpRule";
+	private static final String _FILTER_ENTITY_TABLE = "CPRule";
 	private static final String _ORDER_BY_ENTITY_ALIAS = "cpRule.";
+	private static final String _ORDER_BY_ENTITY_TABLE = "CPRule.";
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No CPRule exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No CPRule exists with the key {";
 	private static final Log _log = LogFactoryUtil.getLog(CPRulePersistenceImpl.class);

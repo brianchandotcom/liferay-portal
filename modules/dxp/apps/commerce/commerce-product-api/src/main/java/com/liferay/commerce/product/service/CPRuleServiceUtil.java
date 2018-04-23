@@ -42,6 +42,38 @@ public class CPRuleServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.commerce.product.service.impl.CPRuleServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static com.liferay.commerce.product.model.CPRule addCPRule(
+		java.lang.String name, boolean active, java.lang.String type,
+		java.lang.String typeSettings,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .addCPRule(name, active, type, typeSettings, serviceContext);
+	}
+
+	public static com.liferay.commerce.product.model.CPRule deleteCPRule(
+		long cpRuleId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().deleteCPRule(cpRuleId);
+	}
+
+	public static com.liferay.commerce.product.model.CPRule getCPRule(
+		long cpRuleId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getCPRule(cpRuleId);
+	}
+
+	public static java.util.List<com.liferay.commerce.product.model.CPRule> getCPRules(
+		long groupId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.product.model.CPRule> orderByComparator)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getCPRules(groupId, start, end, orderByComparator);
+	}
+
+	public static int getCPRulesCount(long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getCPRulesCount(groupId);
+	}
 
 	/**
 	* Returns the OSGi service identifier.
@@ -50,6 +82,30 @@ public class CPRuleServiceUtil {
 	*/
 	public static java.lang.String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
+	}
+
+	public static com.liferay.portal.kernel.search.BaseModelSearchResult<com.liferay.commerce.product.model.CPRule> searchCPRules(
+		long companyId, long groupId, java.lang.String keywords, int start,
+		int end, com.liferay.portal.kernel.search.Sort sort)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .searchCPRules(companyId, groupId, keywords, start, end, sort);
+	}
+
+	public static com.liferay.portal.kernel.search.BaseModelSearchResult<com.liferay.commerce.product.model.CPRule> searchCPRules(
+		com.liferay.portal.kernel.search.SearchContext searchContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().searchCPRules(searchContext);
+	}
+
+	public static com.liferay.commerce.product.model.CPRule updateCPRule(
+		long cpRuleId, java.lang.String name, boolean active,
+		java.lang.String type, java.lang.String typeSettings,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .updateCPRule(cpRuleId, name, active, type, typeSettings,
+			serviceContext);
 	}
 
 	public static CPRuleService getService() {

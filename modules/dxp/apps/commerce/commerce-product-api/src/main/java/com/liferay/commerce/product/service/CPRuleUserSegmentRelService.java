@@ -16,14 +16,21 @@ package com.liferay.commerce.product.service;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.commerce.product.model.CPRuleUserSegmentRel;
+
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
 import com.liferay.portal.kernel.security.access.control.AccessControlled;
 import com.liferay.portal.kernel.service.BaseService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.transaction.Isolation;
+import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.portal.kernel.util.OrderByComparator;
+
+import java.util.List;
 
 /**
  * Provides the remote service interface for CPRuleUserSegmentRel. Methods of this
@@ -49,6 +56,26 @@ public interface CPRuleUserSegmentRelService extends BaseService {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CPRuleUserSegmentRelServiceUtil} to access the cp rule user segment rel remote service. Add custom service methods to {@link com.liferay.commerce.product.service.impl.CPRuleUserSegmentRelServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public CPRuleUserSegmentRel addCPRuleUserSegmentRel(long cpRuleId,
+		long commerceUserSegmentEntryId, ServiceContext serviceContext)
+		throws PortalException;
+
+	public void deleteCPRuleUserSegmentRel(long cpRuleUserSegmentRelId)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CPRuleUserSegmentRel getCPRuleUserSegmentRel(
+		long cpRuleUserSegmentRelId) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CPRuleUserSegmentRel> getCPRuleUserSegmentRels(long cpRuleId,
+		int start, int end,
+		OrderByComparator<CPRuleUserSegmentRel> orderByComparator)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCPRuleUserSegmentRelsCount(long cpRuleId)
+		throws PortalException;
 
 	/**
 	* Returns the OSGi service identifier.

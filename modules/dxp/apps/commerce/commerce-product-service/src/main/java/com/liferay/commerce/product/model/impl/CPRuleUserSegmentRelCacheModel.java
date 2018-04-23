@@ -143,7 +143,7 @@ public class CPRuleUserSegmentRelCacheModel implements CacheModel<CPRuleUserSegm
 
 		CPRuleId = objectInput.readLong();
 
-		commerceUserSegmentEntryId = objectInput.readBoolean();
+		commerceUserSegmentEntryId = objectInput.readLong();
 	}
 
 	@Override
@@ -169,7 +169,7 @@ public class CPRuleUserSegmentRelCacheModel implements CacheModel<CPRuleUserSegm
 
 		objectOutput.writeLong(CPRuleId);
 
-		objectOutput.writeBoolean(commerceUserSegmentEntryId);
+		objectOutput.writeLong(commerceUserSegmentEntryId);
 	}
 
 	public long CPRuleUserSegmentRelId;
@@ -180,5 +180,5 @@ public class CPRuleUserSegmentRelCacheModel implements CacheModel<CPRuleUserSegm
 	public long createDate;
 	public long modifiedDate;
 	public long CPRuleId;
-	public boolean commerceUserSegmentEntryId;
+	public long commerceUserSegmentEntryId;
 }

@@ -332,7 +332,7 @@
 		<property name="createDate" type="org.hibernate.type.TimestampType" />
 		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
 		<property name="CPRuleId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="commerceUserSegmentEntryId" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="commerceUserSegmentEntryId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 	</class>
 	<class name="com.liferay.commerce.product.model.impl.CPSpecificationOptionImpl" table="CPSpecificationOption">
 		<id name="CPSpecificationOptionId" type="long">

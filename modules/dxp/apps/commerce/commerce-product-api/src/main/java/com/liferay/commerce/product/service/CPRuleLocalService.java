@@ -25,10 +25,16 @@ import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.PersistedModel;
+import com.liferay.portal.kernel.model.SystemEventConstants;
+import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
+import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.service.BaseLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -70,6 +76,11 @@ public interface CPRuleLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.REINDEX)
 	public CPRule addCPRule(CPRule cpRule);
 
+	@Indexable(type = IndexableType.REINDEX)
+	public CPRule addCPRule(java.lang.String name, boolean active,
+		java.lang.String type, java.lang.String typeSettings,
+		ServiceContext serviceContext) throws PortalException;
+
 	/**
 	* Creates a new cp rule with the primary key. Does not add the cp rule to the database.
 	*
@@ -83,9 +94,11 @@ public interface CPRuleLocalService extends BaseLocalService,
 	*
 	* @param cpRule the cp rule
 	* @return the cp rule that was removed
+	* @throws PortalException
 	*/
 	@Indexable(type = IndexableType.DELETE)
-	public CPRule deleteCPRule(CPRule cpRule);
+	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
+	public CPRule deleteCPRule(CPRule cpRule) throws PortalException;
 
 	/**
 	* Deletes the cp rule with the primary key from the database. Also notifies the appropriate model listeners.
@@ -96,6 +109,8 @@ public interface CPRuleLocalService extends BaseLocalService,
 	*/
 	@Indexable(type = IndexableType.DELETE)
 	public CPRule deleteCPRule(long CPRuleId) throws PortalException;
+
+	public void deleteCPRules(long groupId) throws PortalException;
 
 	/**
 	* @throws PortalException
@@ -193,6 +208,10 @@ public interface CPRuleLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CPRule> getCPRules(int start, int end);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CPRule> getCPRules(long groupId, int start, int end,
+		OrderByComparator<CPRule> orderByComparator);
+
 	/**
 	* Returns the number of cp rules.
 	*
@@ -200,6 +219,9 @@ public interface CPRuleLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getCPRulesCount();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCPRulesCount(long groupId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
@@ -216,6 +238,15 @@ public interface CPRuleLocalService extends BaseLocalService,
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public BaseModelSearchResult<CPRule> searchCPRules(long companyId,
+		long groupId, java.lang.String keywords, int start, int end, Sort sort)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public BaseModelSearchResult<CPRule> searchCPRules(
+		SearchContext searchContext) throws PortalException;
+
 	/**
 	* Updates the cp rule in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
@@ -224,4 +255,9 @@ public interface CPRuleLocalService extends BaseLocalService,
 	*/
 	@Indexable(type = IndexableType.REINDEX)
 	public CPRule updateCPRule(CPRule cpRule);
+
+	@Indexable(type = IndexableType.REINDEX)
+	public CPRule updateCPRule(long cpRuleId, java.lang.String name,
+		boolean active, java.lang.String type, java.lang.String typeSettings,
+		ServiceContext serviceContext) throws PortalException;
 }

@@ -367,7 +367,7 @@
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
 		<field name="CPRuleId" type="long" />
-		<field name="commerceUserSegmentEntryId" type="boolean" />
+		<field name="commerceUserSegmentEntryId" type="long" />
 	</model>
 	<model name="com.liferay.commerce.product.model.CPSpecificationOption">
 		<field name="uuid" type="String" />

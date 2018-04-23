@@ -293,7 +293,7 @@ create table CPRuleUserSegmentRel (
 	createDate DATE null,
 	modifiedDate DATE null,
 	CPRuleId LONG,
-	commerceUserSegmentEntryId BOOLEAN
+	commerceUserSegmentEntryId LONG
 );
 
 create table CPSpecificationOption (

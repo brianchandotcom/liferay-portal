@@ -25,10 +25,13 @@ import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.PersistedModel;
+import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -71,6 +74,10 @@ public interface CPRuleUserSegmentRelLocalService extends BaseLocalService,
 	public CPRuleUserSegmentRel addCPRuleUserSegmentRel(
 		CPRuleUserSegmentRel cpRuleUserSegmentRel);
 
+	public CPRuleUserSegmentRel addCPRuleUserSegmentRel(long cpRuleId,
+		long commerceUserSegmentEntryId, ServiceContext serviceContext)
+		throws PortalException;
+
 	/**
 	* Creates a new cp rule user segment rel with the primary key. Does not add the cp rule user segment rel to the database.
 	*
@@ -85,10 +92,12 @@ public interface CPRuleUserSegmentRelLocalService extends BaseLocalService,
 	*
 	* @param cpRuleUserSegmentRel the cp rule user segment rel
 	* @return the cp rule user segment rel that was removed
+	* @throws PortalException
 	*/
 	@Indexable(type = IndexableType.DELETE)
+	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
 	public CPRuleUserSegmentRel deleteCPRuleUserSegmentRel(
-		CPRuleUserSegmentRel cpRuleUserSegmentRel);
+		CPRuleUserSegmentRel cpRuleUserSegmentRel) throws PortalException;
 
 	/**
 	* Deletes the cp rule user segment rel with the primary key from the database. Also notifies the appropriate model listeners.
@@ -100,6 +109,12 @@ public interface CPRuleUserSegmentRelLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.DELETE)
 	public CPRuleUserSegmentRel deleteCPRuleUserSegmentRel(
 		long CPRuleUserSegmentRelId) throws PortalException;
+
+	public void deleteCPRuleUserSegmentRelsByCommerceUserSegmentEntryId(
+		long commerceUserSegmentEntryId) throws PortalException;
+
+	public void deleteCPRuleUserSegmentRelsByCPRuleId(long cpRuleId)
+		throws PortalException;
 
 	/**
 	* @throws PortalException
@@ -200,6 +215,11 @@ public interface CPRuleUserSegmentRelLocalService extends BaseLocalService,
 	public List<CPRuleUserSegmentRel> getCPRuleUserSegmentRels(int start,
 		int end);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CPRuleUserSegmentRel> getCPRuleUserSegmentRels(long cpRuleId,
+		int start, int end,
+		OrderByComparator<CPRuleUserSegmentRel> orderByComparator);
+
 	/**
 	* Returns the number of cp rule user segment rels.
 	*
@@ -207,6 +227,9 @@ public interface CPRuleUserSegmentRelLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getCPRuleUserSegmentRelsCount();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCPRuleUserSegmentRelsCount(long cpRuleId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();

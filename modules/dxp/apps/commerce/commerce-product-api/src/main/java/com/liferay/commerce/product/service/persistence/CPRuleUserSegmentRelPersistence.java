@@ -179,8 +179,8 @@ public interface CPRuleUserSegmentRelPersistence extends BasePersistence<CPRuleU
 	* @param commerceUserSegmentEntryId the commerce user segment entry ID
 	* @return the matching cp rule user segment rels
 	*/
-	public java.util.List<CPRuleUserSegmentRel> findBycommerceUserSegmentEntryId(
-		boolean commerceUserSegmentEntryId);
+	public java.util.List<CPRuleUserSegmentRel> findByCommerceUserSegmentEntryId(
+		long commerceUserSegmentEntryId);
 
 	/**
 	* Returns a range of all the cp rule user segment rels where commerceUserSegmentEntryId = &#63;.
@@ -194,8 +194,8 @@ public interface CPRuleUserSegmentRelPersistence extends BasePersistence<CPRuleU
 	* @param end the upper bound of the range of cp rule user segment rels (not inclusive)
 	* @return the range of matching cp rule user segment rels
 	*/
-	public java.util.List<CPRuleUserSegmentRel> findBycommerceUserSegmentEntryId(
-		boolean commerceUserSegmentEntryId, int start, int end);
+	public java.util.List<CPRuleUserSegmentRel> findByCommerceUserSegmentEntryId(
+		long commerceUserSegmentEntryId, int start, int end);
 
 	/**
 	* Returns an ordered range of all the cp rule user segment rels where commerceUserSegmentEntryId = &#63;.
@@ -210,8 +210,8 @@ public interface CPRuleUserSegmentRelPersistence extends BasePersistence<CPRuleU
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching cp rule user segment rels
 	*/
-	public java.util.List<CPRuleUserSegmentRel> findBycommerceUserSegmentEntryId(
-		boolean commerceUserSegmentEntryId, int start, int end,
+	public java.util.List<CPRuleUserSegmentRel> findByCommerceUserSegmentEntryId(
+		long commerceUserSegmentEntryId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<CPRuleUserSegmentRel> orderByComparator);
 
 	/**
@@ -228,8 +228,8 @@ public interface CPRuleUserSegmentRelPersistence extends BasePersistence<CPRuleU
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching cp rule user segment rels
 	*/
-	public java.util.List<CPRuleUserSegmentRel> findBycommerceUserSegmentEntryId(
-		boolean commerceUserSegmentEntryId, int start, int end,
+	public java.util.List<CPRuleUserSegmentRel> findByCommerceUserSegmentEntryId(
+		long commerceUserSegmentEntryId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<CPRuleUserSegmentRel> orderByComparator,
 		boolean retrieveFromCache);
 
@@ -241,8 +241,8 @@ public interface CPRuleUserSegmentRelPersistence extends BasePersistence<CPRuleU
 	* @return the first matching cp rule user segment rel
 	* @throws NoSuchCPRuleUserSegmentRelException if a matching cp rule user segment rel could not be found
 	*/
-	public CPRuleUserSegmentRel findBycommerceUserSegmentEntryId_First(
-		boolean commerceUserSegmentEntryId,
+	public CPRuleUserSegmentRel findByCommerceUserSegmentEntryId_First(
+		long commerceUserSegmentEntryId,
 		com.liferay.portal.kernel.util.OrderByComparator<CPRuleUserSegmentRel> orderByComparator)
 		throws NoSuchCPRuleUserSegmentRelException;
 
@@ -253,8 +253,8 @@ public interface CPRuleUserSegmentRelPersistence extends BasePersistence<CPRuleU
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching cp rule user segment rel, or <code>null</code> if a matching cp rule user segment rel could not be found
 	*/
-	public CPRuleUserSegmentRel fetchBycommerceUserSegmentEntryId_First(
-		boolean commerceUserSegmentEntryId,
+	public CPRuleUserSegmentRel fetchByCommerceUserSegmentEntryId_First(
+		long commerceUserSegmentEntryId,
 		com.liferay.portal.kernel.util.OrderByComparator<CPRuleUserSegmentRel> orderByComparator);
 
 	/**
@@ -265,8 +265,8 @@ public interface CPRuleUserSegmentRelPersistence extends BasePersistence<CPRuleU
 	* @return the last matching cp rule user segment rel
 	* @throws NoSuchCPRuleUserSegmentRelException if a matching cp rule user segment rel could not be found
 	*/
-	public CPRuleUserSegmentRel findBycommerceUserSegmentEntryId_Last(
-		boolean commerceUserSegmentEntryId,
+	public CPRuleUserSegmentRel findByCommerceUserSegmentEntryId_Last(
+		long commerceUserSegmentEntryId,
 		com.liferay.portal.kernel.util.OrderByComparator<CPRuleUserSegmentRel> orderByComparator)
 		throws NoSuchCPRuleUserSegmentRelException;
 
@@ -277,8 +277,8 @@ public interface CPRuleUserSegmentRelPersistence extends BasePersistence<CPRuleU
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching cp rule user segment rel, or <code>null</code> if a matching cp rule user segment rel could not be found
 	*/
-	public CPRuleUserSegmentRel fetchBycommerceUserSegmentEntryId_Last(
-		boolean commerceUserSegmentEntryId,
+	public CPRuleUserSegmentRel fetchByCommerceUserSegmentEntryId_Last(
+		long commerceUserSegmentEntryId,
 		com.liferay.portal.kernel.util.OrderByComparator<CPRuleUserSegmentRel> orderByComparator);
 
 	/**
@@ -290,8 +290,8 @@ public interface CPRuleUserSegmentRelPersistence extends BasePersistence<CPRuleU
 	* @return the previous, current, and next cp rule user segment rel
 	* @throws NoSuchCPRuleUserSegmentRelException if a cp rule user segment rel with the primary key could not be found
 	*/
-	public CPRuleUserSegmentRel[] findBycommerceUserSegmentEntryId_PrevAndNext(
-		long CPRuleUserSegmentRelId, boolean commerceUserSegmentEntryId,
+	public CPRuleUserSegmentRel[] findByCommerceUserSegmentEntryId_PrevAndNext(
+		long CPRuleUserSegmentRelId, long commerceUserSegmentEntryId,
 		com.liferay.portal.kernel.util.OrderByComparator<CPRuleUserSegmentRel> orderByComparator)
 		throws NoSuchCPRuleUserSegmentRelException;
 
@@ -300,8 +300,8 @@ public interface CPRuleUserSegmentRelPersistence extends BasePersistence<CPRuleU
 	*
 	* @param commerceUserSegmentEntryId the commerce user segment entry ID
 	*/
-	public void removeBycommerceUserSegmentEntryId(
-		boolean commerceUserSegmentEntryId);
+	public void removeByCommerceUserSegmentEntryId(
+		long commerceUserSegmentEntryId);
 
 	/**
 	* Returns the number of cp rule user segment rels where commerceUserSegmentEntryId = &#63;.
@@ -309,8 +309,8 @@ public interface CPRuleUserSegmentRelPersistence extends BasePersistence<CPRuleU
 	* @param commerceUserSegmentEntryId the commerce user segment entry ID
 	* @return the number of matching cp rule user segment rels
 	*/
-	public int countBycommerceUserSegmentEntryId(
-		boolean commerceUserSegmentEntryId);
+	public int countByCommerceUserSegmentEntryId(
+		long commerceUserSegmentEntryId);
 
 	/**
 	* Caches the cp rule user segment rel in the entity cache if it is enabled.

@@ -182,7 +182,9 @@
 		</check>
 		<check name="JavaCleanUpMethodSuperCleanUpCheck" />
 		<check name="JavaCleanUpMethodVariablesCheck" />
-		<check name="JavaDataAccessConnectionCheck" />
+		<check name="JavaDataAccessConnectionCheck">
+			<property name="enabled" value="false" />
+		</check>
 		<check name="JavaDeprecatedKernelClassesCheck">
 			<property name="enabled" value="false" />
 		</check>
@@ -203,7 +205,9 @@
 		<check name="JavaVariableTypeCheck">
 			<property name="immutableFieldTypes" value="boolean,byte,char,double,float,int,long,short,Boolean,Byte,Character,Class,Double,Float,Int,Long,Number,Short,String" />
 		</check>
-		<check name="JavaVerifyUpgradeConnectionCheck" />
+		<check name="JavaVerifyUpgradeConnectionCheck">
+			<property name="enabled" value="false" />
+		</check>
 		<check name="JavaXMLSecurityCheck" />
 		<check name="LanguageKeysCheck" />
 		<check name="ResourceBundleCheck" />

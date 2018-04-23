@@ -34,6 +34,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
@@ -279,9 +280,6 @@ public class FragmentDisplayContext {
 			return _fragmentCollectionsSearchContainer;
 		}
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		SearchContainer fragmentCollectionsSearchContainer =
 			new SearchContainer(
 				_renderRequest, _renderResponse.createRenderURL(), null,
@@ -311,26 +309,26 @@ public class FragmentDisplayContext {
 		if (_isSearch()) {
 			fragmentCollections =
 				FragmentCollectionServiceUtil.getFragmentCollections(
-					themeDisplay.getScopeGroupId(), _getKeywords(),
+					_getGroupId(), _getKeywords(),
 					fragmentCollectionsSearchContainer.getStart(),
 					fragmentCollectionsSearchContainer.getEnd(),
 					orderByComparator);
 
 			fragmentCollectionsCount =
 				FragmentCollectionServiceUtil.getFragmentCollectionsCount(
-					themeDisplay.getScopeGroupId(), _getKeywords());
+					_getGroupId(), _getKeywords());
 		}
 		else {
 			fragmentCollections =
 				FragmentCollectionServiceUtil.getFragmentCollections(
-					themeDisplay.getScopeGroupId(),
+					_getGroupId(),
 					fragmentCollectionsSearchContainer.getStart(),
 					fragmentCollectionsSearchContainer.getEnd(),
 					orderByComparator);
 
 			fragmentCollectionsCount =
 				FragmentCollectionServiceUtil.getFragmentCollectionsCount(
-					themeDisplay.getScopeGroupId());
+					_getGroupId());
 		}
 
 		fragmentCollectionsSearchContainer.setTotal(fragmentCollectionsCount);
@@ -375,9 +373,6 @@ public class FragmentDisplayContext {
 			return _fragmentEntriesSearchContainer;
 		}
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		SearchContainer fragmentEntriesSearchContainer = new SearchContainer(
 			_renderRequest, _renderResponse.createRenderURL(), null,
 			"there-are-no-fragments");
@@ -402,24 +397,23 @@ public class FragmentDisplayContext {
 
 		if (_isSearch()) {
 			fragmentEntries = FragmentEntryServiceUtil.getFragmentEntries(
-				themeDisplay.getScopeGroupId(), getFragmentCollectionId(),
-				_getKeywords(), fragmentEntriesSearchContainer.getStart(),
-				fragmentEntriesSearchContainer.getEnd(), orderByComparator);
-
-			fragmentEntriesCount =
-				FragmentEntryServiceUtil.getFragmentCollectionsCount(
-					themeDisplay.getScopeGroupId(), getFragmentCollectionId(),
-					_getKeywords());
-		}
-		else {
-			fragmentEntries = FragmentEntryServiceUtil.getFragmentEntries(
-				themeDisplay.getScopeGroupId(), getFragmentCollectionId(),
+				_getGroupId(), getFragmentCollectionId(), _getKeywords(),
 				fragmentEntriesSearchContainer.getStart(),
 				fragmentEntriesSearchContainer.getEnd(), orderByComparator);
 
 			fragmentEntriesCount =
 				FragmentEntryServiceUtil.getFragmentCollectionsCount(
-					themeDisplay.getScopeGroupId(), getFragmentCollectionId());
+					_getGroupId(), getFragmentCollectionId(), _getKeywords());
+		}
+		else {
+			fragmentEntries = FragmentEntryServiceUtil.getFragmentEntries(
+				_getGroupId(), getFragmentCollectionId(),
+				fragmentEntriesSearchContainer.getStart(),
+				fragmentEntriesSearchContainer.getEnd(), orderByComparator);
+
+			fragmentEntriesCount =
+				FragmentEntryServiceUtil.getFragmentCollectionsCount(
+					_getGroupId(), getFragmentCollectionId());
 		}
 
 		fragmentEntriesSearchContainer.setResults(fragmentEntries);
@@ -820,6 +814,21 @@ public class FragmentDisplayContext {
 		}
 
 		return portletURL;
+	}
+
+	private long _getGroupId() {
+		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		Group scopeGroup = themeDisplay.getScopeGroup();
+
+		long scopeGroupId = scopeGroup.getGroupId();
+
+		if (scopeGroup.isStagingGroup()) {
+			scopeGroupId = scopeGroup.getLiveGroupId();
+		}
+
+		return scopeGroupId;
 	}
 
 	private String _getKeywords() {

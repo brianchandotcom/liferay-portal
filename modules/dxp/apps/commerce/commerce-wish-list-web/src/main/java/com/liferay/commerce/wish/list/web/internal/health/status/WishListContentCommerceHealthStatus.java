@@ -78,8 +78,8 @@ public class WishListContentCommerceHealthStatus
 			CommerceWishListPortletKeys.COMMERCE_WISH_LIST_CONTENT);
 
 		_layoutService.updateLayout(
-			layout.getGroupId(), layout.getPrivateLayout(),
-			layout.getLayoutId(), layout.getTypeSettings());
+			layout.getGroupId(), layout.isPrivateLayout(), layout.getLayoutId(),
+			layout.getTypeSettings());
 	}
 
 	@Override

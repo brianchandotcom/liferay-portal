@@ -82,8 +82,8 @@ public class CPContentCommerceHealthStatus implements CommerceHealthStatus {
 			CPPortletKeys.CP_CONTENT_WEB);
 
 		_layoutService.updateLayout(
-			layout.getGroupId(), layout.getPrivateLayout(),
-			layout.getLayoutId(), layout.getTypeSettings());
+			layout.getGroupId(), layout.isPrivateLayout(), layout.getLayoutId(),
+			layout.getTypeSettings());
 	}
 
 	@Override

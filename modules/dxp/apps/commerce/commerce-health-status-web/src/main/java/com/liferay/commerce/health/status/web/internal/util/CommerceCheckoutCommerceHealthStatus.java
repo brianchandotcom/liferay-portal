@@ -83,8 +83,8 @@ public class CommerceCheckoutCommerceHealthStatus
 			CommercePortletKeys.COMMERCE_CHECKOUT);
 
 		_layoutService.updateLayout(
-			layout.getGroupId(), layout.getPrivateLayout(),
-			layout.getLayoutId(), layout.getTypeSettings());
+			layout.getGroupId(), layout.isPrivateLayout(), layout.getLayoutId(),
+			layout.getTypeSettings());
 	}
 
 	@Override

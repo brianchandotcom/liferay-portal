@@ -410,7 +410,7 @@
 </tr>
 <tr>
 	<td>SEARCH</td>
-	<td>//input[contains(@title,'S') or contains(@title,'s')][contains(@title,'earch')]</td>
+	<td>//input[contains(@aria-label,'S') or contains(@title,'s')][contains(@aria-label,'earch')]</td>
 	<td></td>
 </tr>
 <tr>

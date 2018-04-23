@@ -252,8 +252,7 @@ public class CommerceUserSegmentDisplayContext {
 		}
 
 		String screenNavigationEntryKey = ParamUtil.getString(
-			commerceUserSegmentRequestHelper.getRequest(),
-			"screenNavigationEntryKey");
+			httpServletRequest, "screenNavigationEntryKey");
 
 		if (Validator.isNotNull(screenNavigationEntryKey)) {
 			portletURL.setParameter(

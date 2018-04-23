@@ -476,7 +476,7 @@
 		<execute macro="Navigator#openURL" />
 
 		<execute macro="Page#viewSpecificPG">
-			<var name="pageNameList" value="Page Category" />
+			<var name="pageNameList" value="Test Page Name" />
 		</execute>
 	</command>
 

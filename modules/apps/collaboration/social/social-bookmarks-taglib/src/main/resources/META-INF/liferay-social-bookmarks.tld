@@ -58,13 +58,13 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>The display style of the bookmarks. Options are <![CDATA[<code>menu</code>]]>, <![CDATA[<code>simple</code>]]>, <![CDATA[<code>vertical</code>]]>, and <![CDATA[<code>horizontal</code>]]>.</description>
+			<description>The display style of the bookmarks. Options are <![CDATA[<code>inline</code>]]> and <![CDATA[<code>menu</code>]]>.</description>
 			<name>displayStyle</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>The maximum number of inline items to display if displayStyle is "inline".</description>
+			<description>The maximum number of items to display if <![CDATA[<code>displayStyle</code>]]> is <![CDATA[<code>inline</code>]]>.</description>
 			<name>maxInlineItems</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

@@ -70,6 +70,12 @@ public class AMBackwardsCompatibilityHtmlContentTransformerTest {
 
 	@Test
 	public void testReplacesImageTagsWithLegacyContent() throws Exception {
+		Mockito.when(
+			_dlAppLocalService.getFileEntry(20138, 0, "sample.jpg")
+		).thenReturn(
+			_fileEntry
+		);
+
 		Assert.assertEquals(
 			_CONTENT_PREFIX + "[REPLACED]" + _CONTENT_SUFFIX,
 			_contentTransformer.transform(

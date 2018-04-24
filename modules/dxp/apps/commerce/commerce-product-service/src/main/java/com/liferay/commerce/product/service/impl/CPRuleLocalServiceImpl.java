@@ -14,6 +14,9 @@
 
 package com.liferay.commerce.product.service.impl;
 
+import com.liferay.commerce.product.catalog.rule.CPRuleType;
+import com.liferay.commerce.product.catalog.rule.CPRuleTypeRegistry;
+import com.liferay.commerce.product.exception.CPRuleTypeException;
 import com.liferay.commerce.product.model.CPRule;
 import com.liferay.commerce.product.service.base.CPRuleLocalServiceBaseImpl;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -37,6 +40,7 @@ import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
 
@@ -63,6 +67,8 @@ public class CPRuleLocalServiceImpl extends CPRuleLocalServiceBaseImpl {
 
 		User user = userLocalService.getUser(serviceContext.getUserId());
 		long groupId = serviceContext.getScopeGroupId();
+
+		validate(type);
 
 		long cpRuleId = counterLocalService.increment();
 
@@ -186,6 +192,8 @@ public class CPRuleLocalServiceImpl extends CPRuleLocalServiceBaseImpl {
 
 		CPRule cpRule = cpRulePersistence.findByPrimaryKey(cpRuleId);
 
+		validate(type);
+
 		cpRule.setName(name);
 		cpRule.setActive(active);
 		cpRule.setType(type);
@@ -263,7 +271,18 @@ public class CPRuleLocalServiceImpl extends CPRuleLocalServiceBaseImpl {
 		return cpRules;
 	}
 
+	protected void validate(String type) throws PortalException {
+		CPRuleType cpRuleType = _cpRuleTypeRegistry.getCPRuleType(type);
+
+		if (cpRuleType == null) {
+			throw new CPRuleTypeException();
+		}
+	}
+
 	private static final String[] _SELECTED_FIELD_NAMES =
 		{Field.ENTRY_CLASS_PK, Field.COMPANY_ID, Field.GROUP_ID, Field.UID};
+
+	@ServiceReference(type = CPRuleTypeRegistry.class)
+	private CPRuleTypeRegistry _cpRuleTypeRegistry;
 
 }

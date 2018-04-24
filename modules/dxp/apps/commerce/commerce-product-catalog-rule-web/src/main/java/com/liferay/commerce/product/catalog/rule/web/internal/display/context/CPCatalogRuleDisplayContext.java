@@ -14,6 +14,10 @@
 
 package com.liferay.commerce.product.catalog.rule.web.internal.display.context;
 
+import com.liferay.commerce.product.catalog.rule.CPRuleType;
+import com.liferay.commerce.product.catalog.rule.CPRuleTypeJSPContributor;
+import com.liferay.commerce.product.catalog.rule.CPRuleTypeJSPContributorRegistry;
+import com.liferay.commerce.product.catalog.rule.CPRuleTypeRegistry;
 import com.liferay.commerce.product.catalog.rule.web.internal.display.context.util.CPCatalogRuleRequestHelper;
 import com.liferay.commerce.product.catalog.rule.web.internal.util.CPCatalogRulePortletUtil;
 import com.liferay.commerce.product.model.CPRule;
@@ -58,10 +62,14 @@ public class CPCatalogRuleDisplayContext {
 
 	public CPCatalogRuleDisplayContext(
 		CPRuleService cpRuleService,
+		CPRuleTypeJSPContributorRegistry cpRuleTypeJSPContributorRegistry,
+		CPRuleTypeRegistry cpRuleTypeRegistry,
 		CPRuleUserSegmentRelService cpRuleUserSegmentRelService,
 		HttpServletRequest httpServletRequest, ItemSelector itemSelector) {
 
 		_cpRuleService = cpRuleService;
+		_cpRuleTypeJSPContributorRegistry = cpRuleTypeJSPContributorRegistry;
+		_cpRuleTypeRegistry = cpRuleTypeRegistry;
 		_cpRuleUserSegmentRelService = cpRuleUserSegmentRelService;
 		_itemSelector = itemSelector;
 
@@ -96,6 +104,15 @@ public class CPCatalogRuleDisplayContext {
 		}
 
 		return cpRule.getCPRuleId();
+	}
+
+	public CPRuleTypeJSPContributor getCPRuleTypeJSPContributor(String key) {
+		return _cpRuleTypeJSPContributorRegistry.getCPRuleTypeJSPContributor(
+			key);
+	}
+
+	public List<CPRuleType> getCPRuleTypes() {
+		return _cpRuleTypeRegistry.getCPRuleTypes();
 	}
 
 	public SearchContainer<CPRuleUserSegmentRel>
@@ -214,6 +231,14 @@ public class CPCatalogRuleDisplayContext {
 
 		if (Validator.isNotNull(redirect)) {
 			portletURL.setParameter("redirect", redirect);
+		}
+
+		String screenNavigationCategoryKey = ParamUtil.getString(
+			httpServletRequest, "screenNavigationCategoryKey");
+
+		if (Validator.isNotNull(screenNavigationCategoryKey)) {
+			portletURL.setParameter(
+				"screenNavigationCategoryKey", screenNavigationCategoryKey);
 		}
 
 		String screenNavigationEntryKey = ParamUtil.getString(
@@ -379,6 +404,9 @@ public class CPCatalogRuleDisplayContext {
 	private final CPCatalogRuleRequestHelper _cpCatalogRuleRequestHelper;
 	private CPRule _cpRule;
 	private final CPRuleService _cpRuleService;
+	private final CPRuleTypeJSPContributorRegistry
+		_cpRuleTypeJSPContributorRegistry;
+	private final CPRuleTypeRegistry _cpRuleTypeRegistry;
 	private final CPRuleUserSegmentRelService _cpRuleUserSegmentRelService;
 	private SearchContainer<CPRuleUserSegmentRel>
 		_cpRuleUserSegmentRelsSearchContainer;

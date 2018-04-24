@@ -14,12 +14,13 @@
 
 package com.liferay.source.formatter.checks;
 
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.source.formatter.checks.util.JavaSourceUtil;
 
 /**
  * @author Hugo Huijser
  */
-public class JavaVerifyUpgradeConnectionCheck extends BaseFileCheck {
+public class JavaDataAccessConnectionCheck extends BaseFileCheck {
 
 	@Override
 	public boolean isPortalCheck() {
@@ -30,36 +31,14 @@ public class JavaVerifyUpgradeConnectionCheck extends BaseFileCheck {
 	protected String doProcess(
 		String fileName, String absolutePath, String content) {
 
-		if (absolutePath.contains("/test/") ||
-			fileName.endsWith("DBUpgrader.java") ||
-			fileName.endsWith("Test.java") ||
-			fileName.endsWith("UpgradeTableListener.java") ||
-			content.contains("Callable<Void>")) {
+		String packageName = JavaSourceUtil.getPackageName(content);
 
-			return content;
-		}
+		if (packageName.matches(".*\\.upgrade(\\.v[_0-9]+)?") ||
+			packageName.endsWith(".verify")) {
 
-		String className = JavaSourceUtil.getClassName(fileName);
-
-		if (!className.contains("Upgrade") && !className.contains("Verify")) {
-			return content;
-		}
-
-		int x = -1;
-
-		while (true) {
-			x = content.indexOf(
-				"DataAccess.getUpgradeOptimizedConnection", x + 1);
-
-			if (x == -1) {
-				break;
-			}
-
-			addMessage(
-				fileName,
-				"Use existing connection field instead of " +
-					"DataAccess.getUpgradeOptimizedConnection",
-				getLineCount(content, x));
+			content = StringUtil.replace(
+				content, "DataAccess.getConnection",
+				"DataAccess.getUpgradeOptimizedConnection");
 		}
 
 		return content;

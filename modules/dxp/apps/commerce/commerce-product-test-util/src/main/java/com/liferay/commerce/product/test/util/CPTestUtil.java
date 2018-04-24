@@ -49,8 +49,8 @@ import java.util.Map;
 public class CPTestUtil {
 
 	public static CPDefinition addCPDefinition(
-			String productTypeName, boolean ignoreSKUCombinations,
-			boolean hasDefaultInstance, long groupId)
+			long groupId, String productTypeName, boolean ignoreSKUCombinations,
+			boolean hasDefaultInstance)
 		throws Exception {
 
 		ServiceContext serviceContext =
@@ -129,7 +129,7 @@ public class CPTestUtil {
 			serviceContext);
 	}
 
-	public static void buildCPInstances(long cpDefinitionId, long groupId)
+	public static void buildCPInstances(long groupId, long cpDefinitionId)
 		throws Exception {
 
 		ServiceContext serviceContext =

@@ -1,36 +1,32 @@
+$translatedColor: #3DC513;
+$transparentWhite: rgba(255, 255, 255, 0);
+$untranslatedColor: #A7A9BC;
+
 lfr-editable {
-display: block;
-position: relative;
+	display: block;
+	position: relative;
 }
 
 .translating {
-.translated {
-	background-image: linear-gradient(45deg, #FFFFFF00 46.67%, #3DC513 46.67%, #3DC513 50%, #FFFFFF00 50%, #FFFFFF00 96.67%, #3DC513 96.67%, #3DC513 100%);
-	background-size: 21.21px 21.21px;
-	border: solid 1px #3DC513;
-}
+	.translated {
+		background-image: linear-gradient(45deg, $transparentWhite 46.67%, $translatedColor 46.67%, $translatedColor 50%, $transparentWhite 50%, $transparentWhite 96.67%, $translatedColor 96.67%, $translatedColor 100%);
+		background-size: 21.21px 21.21px;
+		border: solid 1px $translatedColor;
+	}
 
-.translated[type="image"]:after {
-	content: '';
-	height: 100%;
-	left: 0;
-	position: absolute;
-	top: 0;
-	width: 100%;
-}
+	.untranslated {
+		background-image: linear-gradient(45deg, $transparentWhite 46.67%, $untranslatedColor 46.67%, $untranslatedColor 50%, $transparentWhite 50%, $transparentWhite 96.67%, $untranslatedColor 96.67%, $untranslatedColor 100%);
+		background-size: 21.21px 21.21px;
+		border: solid 1px $untranslatedColor;
+	}
 
-.untranslated {
-	background-image: linear-gradient(45deg, #FFFFFF00 46.67%, #A7A9BC 46.67%, #A7A9BC 50%, #FFFFFF00 50%, #FFFFFF00 96.67%, #A7A9BC 96.67%, #A7A9BC 100%);
-	background-size: 21.21px 21.21px;
-	border: solid 1px #A7A9BC;
-}
-
-.untranslated[type="image"]:after {
-	content: '';
-	height: 100%;
-	left: 0;
-	position: absolute;
-	top: 0;
-	width: 100%;
-}
+	.translated[type="image"]:after,
+	.untranslated[type="image"]:after {
+		content: '';
+		height: 100%;
+		left: 0;
+		position: absolute;
+		top: 0;
+		width: 100%;
+	}
 }

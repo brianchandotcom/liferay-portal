@@ -2,7 +2,7 @@
 <!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
 
 <log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
-	<category name="com.liferay.portal.osgi.debug.internal.SystemCheckerTracker">
+	<category name="com.liferay.portal.osgi.debug.internal.SystemCheckOSGiCommands">
 		<priority value="INFO" />
 	</category>
 </log4j:configuration>

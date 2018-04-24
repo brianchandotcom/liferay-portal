@@ -44,6 +44,11 @@ public class DeclarativeServiceSystemChecker implements SystemChecker {
 		return "ds:unsatisfied";
 	}
 
+	@Override
+	public String toString() {
+		return getName();
+	}
+
 	@Activate
 	protected void activate(BundleContext bundleContext) {
 		_bundleContext = bundleContext;

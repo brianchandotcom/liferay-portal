@@ -17,9 +17,13 @@ package com.liferay.portal.osgi.debug.internal;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.osgi.debug.SystemChecker;
+
+import java.util.Collection;
+import java.util.Map;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
@@ -28,75 +32,77 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.util.tracker.ServiceTracker;
-import org.osgi.util.tracker.ServiceTrackerCustomizer;
 
 /**
  * @author Tina Tian
  */
-@Component(immediate = true)
-public class SystemCheckerTracker {
+@Component(
+	immediate = true,
+	property = {"osgi.command.function=check", "osgi.command.scope=system"},
+	service = SystemCheckOSGiCommands.class
+)
+public class SystemCheckOSGiCommands {
 
 	@Activate
 	public void activate(final BundleContext bundleContext) {
 		_serviceTracker = new ServiceTracker<>(
-			bundleContext, SystemChecker.class,
-			new ServiceTrackerCustomizer<SystemChecker, SystemChecker>() {
-
-				@Override
-				public SystemChecker addingService(
-					ServiceReference<SystemChecker> serviceReference) {
-
-					SystemChecker systemChecker = bundleContext.getService(
-						serviceReference);
-
-					StringBundler sb = new StringBundler(4);
-
-					sb.append(systemChecker.getName());
-					sb.append(" is ready for use. You can run \"");
-					sb.append(systemChecker.getOSGiCommand());
-					sb.append("\" in gogoshell to check result.");
-
-					if (_log.isInfoEnabled()) {
-						_log.info(sb.toString());
-					}
-
-					String result = systemChecker.check();
-
-					if (Validator.isNull(result)) {
-						if (_log.isInfoEnabled()) {
-							_log.info(
-								systemChecker.getName() +
-									" check result: No issue is found.");
-						}
-					}
-					else {
-						if (_log.isWarnEnabled()) {
-							_log.warn(
-								systemChecker.getName() + " check result: " +
-									result);
-						}
-					}
-
-					return systemChecker;
-				}
-
-				@Override
-				public void modifiedService(
-					ServiceReference<SystemChecker> serviceReference,
-					SystemChecker systemChecker) {
-				}
-
-				@Override
-				public void removedService(
-					ServiceReference<SystemChecker> serviceReference,
-					SystemChecker systemChecker) {
-
-					bundleContext.ungetService(serviceReference);
-				}
-
-			});
+			bundleContext, SystemChecker.class, null);
 
 		_serviceTracker.open();
+
+		if (GetterUtil.getBoolean(
+				bundleContext.getProperty("initial.system.check.enabled"),
+				true)) {
+
+			if (_log.isInfoEnabled()) {
+				_log.info(
+					"Running system check. You can run this with command " +
+						"\"system:check\" in gogo shell");
+			}
+
+			check();
+		}
+	}
+
+	public void check() {
+		Map<ServiceReference<SystemChecker>, SystemChecker> systemCheckerMap =
+			_serviceTracker.getTracked();
+
+		Collection<SystemChecker> systemCheckers = systemCheckerMap.values();
+
+		if (_log.isInfoEnabled()) {
+			_log.info("Available checkers :" + systemCheckers);
+		}
+
+		for (SystemChecker systemChecker : systemCheckers) {
+			StringBundler sb = new StringBundler(5);
+
+			sb.append("Running \"");
+			sb.append(systemChecker.getName());
+			sb.append("\". You can run this by itself with command \"");
+			sb.append(systemChecker.getOSGiCommand());
+			sb.append("\" in gogo shell.");
+
+			if (_log.isInfoEnabled()) {
+				_log.info(sb.toString());
+			}
+
+			String result = systemChecker.check();
+
+			if (Validator.isNull(result)) {
+				if (_log.isInfoEnabled()) {
+					_log.info(
+						systemChecker.getName() +
+							" check result: No issue is found.");
+				}
+			}
+			else {
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						systemChecker.getName() + " check result: " + result);
+				}
+			}
+		}
 	}
 
 	@Deactivate
@@ -110,7 +116,7 @@ public class SystemCheckerTracker {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		SystemCheckerTracker.class);
+		SystemCheckOSGiCommands.class);
 
 	private ServiceTracker<SystemChecker, SystemChecker> _serviceTracker;
 

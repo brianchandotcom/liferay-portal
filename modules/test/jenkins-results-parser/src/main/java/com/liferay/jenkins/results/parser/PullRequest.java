@@ -135,9 +135,8 @@ public class PullRequest {
 
 	public boolean isAutoCloseCommentAvailable() {
 		String url = JenkinsResultsParserUtil.combine(
-			"https://api.github.com/repos/",
-			getOwnerUsername(), "/", getRepositoryName(), "/issues/",
-			getNumber(), "/comments?page=");
+			"https://api.github.com/repos/", getOwnerUsername(), "/",
+			getRepositoryName(), "/issues/", getNumber(), "/comments?page=");
 
 		try {
 			int i = 1;
@@ -156,7 +155,7 @@ public class PullRequest {
 
 				i++;
 			}
-			
+
 			return false;
 		}
 		catch (IOException ioe) {

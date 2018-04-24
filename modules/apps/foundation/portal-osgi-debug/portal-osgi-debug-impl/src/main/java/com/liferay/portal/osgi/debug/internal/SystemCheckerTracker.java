@@ -34,7 +34,7 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
 /**
  * @author Tina Tian
  */
-@Component(immediate = true, service = SystemCheckerTracker.class)
+@Component(immediate = true)
 public class SystemCheckerTracker
 	implements ServiceTrackerCustomizer<SystemChecker, SystemChecker> {
 

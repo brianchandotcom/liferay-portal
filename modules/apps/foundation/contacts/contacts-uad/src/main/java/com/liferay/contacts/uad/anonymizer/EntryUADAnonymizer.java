@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.model.User;
 
 import com.liferay.user.associated.data.anonymizer.DynamicQueryUADAnonymizer;
 import com.liferay.user.associated.data.anonymizer.UADAnonymizer;
-import com.liferay.user.associated.data.util.UADAnonymizerHelper;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -40,10 +39,8 @@ import java.util.List;
 	"model.class.name=" + ContactsUADConstants.CLASS_NAME_ENTRY}, service = UADAnonymizer.class)
 public class EntryUADAnonymizer extends DynamicQueryUADAnonymizer<Entry> {
 	@Override
-	public void autoAnonymize(Entry entry, long userId)
+	public void autoAnonymize(Entry entry, long userId, User anonymousUser)
 		throws PortalException {
-		User anonymousUser = _uadAnonymizerHelper.getAnonymousUser();
-
 		if (entry.getUserId() == userId) {
 			entry.setUserId(anonymousUser.getUserId());
 			entry.setUserName(anonymousUser.getFullName());
@@ -74,6 +71,4 @@ public class EntryUADAnonymizer extends DynamicQueryUADAnonymizer<Entry> {
 
 	@Reference
 	private EntryLocalService _entryLocalService;
-	@Reference
-	private UADAnonymizerHelper _uadAnonymizerHelper;
 }

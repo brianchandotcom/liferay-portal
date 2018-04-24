@@ -16,7 +16,11 @@ package com.liferay.commerce.cloud.client.exception;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+
+import java.io.IOException;
 
 /**
  * @author Andrea Di Giorgi
@@ -37,6 +41,64 @@ public class CommerceCloudClientException extends PortalException {
 
 	public CommerceCloudClientException(Throwable cause) {
 		super(cause);
+	}
+
+	public static class MustBeConfigured extends CommerceCloudClientException {
+
+		public MustBeConfigured(String message) {
+			super(message);
+		}
+
+	}
+
+	public static class ServerError extends CommerceCloudClientException {
+
+		public ServerError(String url, IOException ioe) {
+			super("Request " + url + " failed", ioe);
+
+			_url = url;
+		}
+
+		public String getUrl() {
+			return _url;
+		}
+
+		private final String _url;
+
+	}
+
+	public static class ServerResponseError
+		extends CommerceCloudClientException {
+
+		public ServerResponseError(
+			String url, int responseCode, String responseBody) {
+
+			super(
+				StringBundler.concat(
+					"Request ", url, " failed: ", String.valueOf(responseCode),
+					StringPool.SPACE, responseBody));
+
+			_url = url;
+			_responseCode = responseCode;
+			_responseBody = responseBody;
+		}
+
+		public String getResponseBody() {
+			return _responseBody;
+		}
+
+		public int getResponseCode() {
+			return _responseCode;
+		}
+
+		public String getUrl() {
+			return _url;
+		}
+
+		private final String _responseBody;
+		private final int _responseCode;
+		private final String _url;
+
 	}
 
 }

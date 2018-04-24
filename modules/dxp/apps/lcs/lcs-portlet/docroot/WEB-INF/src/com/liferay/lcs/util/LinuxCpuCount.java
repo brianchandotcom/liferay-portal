@@ -14,6 +14,7 @@
 
 package com.liferay.lcs.util;
 
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
 /**
@@ -27,7 +28,7 @@ public class LinuxCpuCount implements CpuCount {
 
 		Process process = runtime.exec("nproc");
 
-		return Integer.parseInt(StringUtil.read(process.getInputStream()));
+		return GetterUtil.getInteger(StringUtil.read(process.getInputStream()));
 	}
 
 }

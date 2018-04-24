@@ -14,6 +14,8 @@
 
 package com.liferay.lcs.security;
 
+import com.liferay.portal.kernel.util.GetterUtil;
+
 import java.security.KeyStore;
 
 import java.util.Enumeration;
@@ -46,7 +48,7 @@ public class KeyStoreAdvisor {
 				continue;
 			}
 
-			int aliasNumberSuffix = Integer.parseInt(
+			int aliasNumberSuffix = GetterUtil.getInteger(
 				alias.substring(keyAlias.length()));
 
 			if (buildNumber == aliasNumberSuffix) {
@@ -91,7 +93,7 @@ public class KeyStoreAdvisor {
 				continue;
 			}
 
-			int aliasNumberSuffix = Integer.parseInt(
+			int aliasNumberSuffix = GetterUtil.getInteger(
 				alias.substring(keyAlias.length()));
 
 			if (latestNumberSuffix < aliasNumberSuffix) {

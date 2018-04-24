@@ -34,6 +34,7 @@ import com.liferay.portal.upgrade.internal.configuration.ReleaseManagerConfigura
 import com.liferay.portal.upgrade.internal.executor.UpgradeExecutor;
 import com.liferay.portal.upgrade.internal.graph.ReleaseGraphManager;
 import com.liferay.portal.upgrade.internal.registry.UpgradeInfo;
+import com.liferay.portal.upgrade.internal.registry.UpgradeStepRegistratorThreadLocal;
 
 import java.util.Collections;
 import java.util.HashSet;
@@ -233,6 +234,25 @@ public class ReleaseManagerOSGiCommands {
 				new PropertyServiceReferenceComparator<UpgradeStep>(
 					"upgrade.from.schema.version")),
 			serviceTrackerMapListener);
+
+		if (_releaseManagerConfiguration.autoUpgrade()) {
+			Set<String> upgradedBundleSymbolicNames = new HashSet<>();
+
+			Set<String> bundleSymbolicNames = _serviceTrackerMap.keySet();
+
+			while (upgradedBundleSymbolicNames.addAll(bundleSymbolicNames)) {
+				for (String bundleSymbolicName : bundleSymbolicNames) {
+					List<UpgradeInfo> upgradeSteps =
+						_serviceTrackerMap.getService(bundleSymbolicName);
+
+					_upgradeExecutor.execute(bundleSymbolicName, upgradeSteps);
+				}
+
+				bundleSymbolicNames = _serviceTrackerMap.keySet();
+			}
+		}
+
+		_activated = true;
 	}
 
 	@Deactivate
@@ -330,6 +350,7 @@ public class ReleaseManagerOSGiCommands {
 
 	private static Logger _logger;
 
+	private boolean _activated;
 	private ReleaseLocalService _releaseLocalService;
 	private ReleaseManagerConfiguration _releaseManagerConfiguration;
 	private ServiceTrackerMap<String, List<UpgradeInfo>> _serviceTrackerMap;
@@ -427,7 +448,9 @@ public class ReleaseManagerOSGiCommands {
 			final String key, UpgradeInfo upgradeInfo,
 			List<UpgradeInfo> upgradeInfos) {
 
-			_upgradeExecutor.execute(key, upgradeInfos);
+			if (_activated && UpgradeStepRegistratorThreadLocal.isEnabled()) {
+				_upgradeExecutor.execute(key, upgradeInfos);
+			}
 		}
 
 		@Override

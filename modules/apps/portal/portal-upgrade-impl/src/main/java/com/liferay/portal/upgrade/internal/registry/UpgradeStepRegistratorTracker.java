@@ -15,6 +15,7 @@
 package com.liferay.portal.upgrade.internal.registry;
 
 import com.liferay.osgi.util.ServiceTrackerFactory;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.configuration.ConfigurationFactoryUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -23,12 +24,15 @@ import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.upgrade.UpgradeStep;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
+import com.liferay.portal.upgrade.internal.configuration.ReleaseManagerConfiguration;
+import com.liferay.portal.upgrade.internal.release.osgi.commands.ReleaseManagerOSGiCommands;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Dictionary;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 
 import org.osgi.framework.Bundle;
@@ -50,8 +54,13 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
 public class UpgradeStepRegistratorTracker {
 
 	@Activate
-	protected void activate(BundleContext bundleContext) {
+	protected void activate(
+		BundleContext bundleContext, Map<String, Object> properties) {
+
 		_bundleContext = bundleContext;
+
+		_releaseManagerConfiguration = ConfigurableUtil.createConfigurable(
+			ReleaseManagerConfiguration.class, properties);
 
 		_serviceTracker = ServiceTrackerFactory.open(
 			bundleContext, UpgradeStepRegistrator.class,
@@ -70,6 +79,11 @@ public class UpgradeStepRegistratorTracker {
 		UpgradeStepRegistratorTracker.class);
 
 	private BundleContext _bundleContext;
+	private ReleaseManagerConfiguration _releaseManagerConfiguration;
+
+	@Reference
+	private ReleaseManagerOSGiCommands _releaseManagerOSGiCommands;
+
 	private ServiceTracker
 		<UpgradeStepRegistrator, Collection<ServiceRegistration<UpgradeStep>>>
 			_serviceTracker;
@@ -128,27 +142,41 @@ public class UpgradeStepRegistratorTracker {
 			List<ServiceRegistration<UpgradeStep>> serviceRegistrations =
 				new ArrayList<>(upgradeInfos.size());
 
-			for (UpgradeInfo upgradeInfo : upgradeInfos) {
-				Dictionary<String, Object> properties =
-					new HashMapDictionary<>();
+			boolean enabled = UpgradeStepRegistratorThreadLocal.isEnabled();
 
-				properties.put("build.number", upgradeInfo.getBuildNumber());
-				properties.put(
-					"upgrade.bundle.symbolic.name", bundleSymbolicName);
-				properties.put("upgrade.db.type", "any");
-				properties.put(
-					"upgrade.from.schema.version",
-					upgradeInfo.getFromSchemaVersionString());
-				properties.put(
-					"upgrade.to.schema.version",
-					upgradeInfo.getToSchemaVersionString());
+			try {
+				UpgradeStepRegistratorThreadLocal.setEnabled(false);
 
-				ServiceRegistration<UpgradeStep> serviceRegistration =
-					_bundleContext.registerService(
-						UpgradeStep.class, upgradeInfo.getUpgradeStep(),
-						properties);
+				for (UpgradeInfo upgradeInfo : upgradeInfos) {
+					Dictionary<String, Object> properties =
+						new HashMapDictionary<>();
 
-				serviceRegistrations.add(serviceRegistration);
+					properties.put(
+						"build.number", upgradeInfo.getBuildNumber());
+					properties.put(
+						"upgrade.bundle.symbolic.name", bundleSymbolicName);
+					properties.put("upgrade.db.type", "any");
+					properties.put(
+						"upgrade.from.schema.version",
+						upgradeInfo.getFromSchemaVersionString());
+					properties.put(
+						"upgrade.to.schema.version",
+						upgradeInfo.getToSchemaVersionString());
+
+					ServiceRegistration<UpgradeStep> serviceRegistration =
+						_bundleContext.registerService(
+							UpgradeStep.class, upgradeInfo.getUpgradeStep(),
+							properties);
+
+					serviceRegistrations.add(serviceRegistration);
+				}
+			}
+			finally {
+				UpgradeStepRegistratorThreadLocal.setEnabled(enabled);
+			}
+
+			if (_releaseManagerConfiguration.autoUpgrade()) {
+				_releaseManagerOSGiCommands.execute(bundleSymbolicName);
 			}
 
 			return serviceRegistrations;

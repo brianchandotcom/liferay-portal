@@ -241,9 +241,13 @@ public class ReleaseManagerOSGiCommands {
 		String bundleSymbolicName,
 		ServiceTrackerMap<String, List<UpgradeInfo>> serviceTrackerMap) {
 
-		List<List<UpgradeInfo>> upgradeInfosList = getUpgradeInfosList(
-			bundleSymbolicName,
+		String schemaVersionString = getSchemaVersionString(bundleSymbolicName);
+
+		ReleaseGraphManager releaseGraphManager = new ReleaseGraphManager(
 			serviceTrackerMap.getService(bundleSymbolicName));
+
+		List<List<UpgradeInfo>> upgradeInfosList =
+			releaseGraphManager.getUpgradeInfosList(schemaVersionString);
 
 		int size = upgradeInfosList.size();
 
@@ -251,8 +255,7 @@ public class ReleaseManagerOSGiCommands {
 			throw new IllegalStateException(
 				StringBundler.concat(
 					"There are ", String.valueOf(size),
-					" possible end nodes for ",
-					getSchemaVersionString(bundleSymbolicName)));
+					" possible end nodes for ", schemaVersionString));
 		}
 
 		if (size == 0) {
@@ -320,21 +323,14 @@ public class ReleaseManagerOSGiCommands {
 		return upgradableBundleSymbolicNames;
 	}
 
-	protected List<List<UpgradeInfo>> getUpgradeInfosList(
-		String bundleSymbolicName, List<UpgradeInfo> upgradeInfos) {
-
+	protected boolean isUpgradable(String bundleSymbolicName) {
 		String schemaVersionString = getSchemaVersionString(bundleSymbolicName);
 
 		ReleaseGraphManager releaseGraphManager = new ReleaseGraphManager(
-			upgradeInfos);
-
-		return releaseGraphManager.getUpgradeInfosList(schemaVersionString);
-	}
-
-	protected boolean isUpgradable(String bundleSymbolicName) {
-		List<List<UpgradeInfo>> upgradeInfosList = getUpgradeInfosList(
-			bundleSymbolicName,
 			_serviceTrackerMap.getService(bundleSymbolicName));
+
+		List<List<UpgradeInfo>> upgradeInfosList =
+			releaseGraphManager.getUpgradeInfosList(schemaVersionString);
 
 		if (upgradeInfosList.size() == 1) {
 			return true;

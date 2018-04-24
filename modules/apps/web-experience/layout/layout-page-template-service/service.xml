@@ -113,6 +113,12 @@
 			<finder-column case-sensitive="false" comparator="LIKE" name="name" />
 			<finder-column name="type" />
 		</finder>
+		<finder name="G_C_C_T" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="classNameId" />
+			<finder-column name="classTypeId" />
+			<finder-column name="type" />
+		</finder>
 		<finder name="G_C_C_D" return-type="Collection">
 			<finder-column name="groupId" />
 			<finder-column name="classNameId" />

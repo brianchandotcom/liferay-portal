@@ -353,6 +353,8 @@ public class ReleaseManagerOSGiCommands {
 					"upgrade.from.schema.version");
 			String toSchemaVersionString = (String)serviceReference.getProperty(
 				"upgrade.to.schema.version");
+			Object buildNumberObject = serviceReference.getProperty(
+				"build.number");
 
 			UpgradeStep upgradeStep = _bundleContext.getService(
 				serviceReference);
@@ -368,23 +370,28 @@ public class ReleaseManagerOSGiCommands {
 
 			int buildNumber = 0;
 
-			try {
-				Class<? extends UpgradeStep> clazz = upgradeStep.getClass();
+			if (buildNumberObject == null) {
+				try {
+					Class<? extends UpgradeStep> clazz = upgradeStep.getClass();
 
-				Configuration configuration =
-					ConfigurationFactoryUtil.getConfiguration(
-						clazz.getClassLoader(), "service");
+					Configuration configuration =
+						ConfigurationFactoryUtil.getConfiguration(
+							clazz.getClassLoader(), "service");
 
-				Properties properties = configuration.getProperties();
+					Properties properties = configuration.getProperties();
 
-				buildNumber = GetterUtil.getInteger(
-					properties.getProperty("build.number"));
+					buildNumber = GetterUtil.getInteger(
+						properties.getProperty("build.number"));
+				}
+				catch (Exception e) {
+					_logger.log(
+						Logger.LOG_DEBUG,
+						"Unable to read service.properties for " +
+							serviceReference);
+				}
 			}
-			catch (Exception e) {
-				_logger.log(
-					Logger.LOG_DEBUG,
-					"Unable to read service.properties for " +
-						serviceReference);
+			else {
+				buildNumber = GetterUtil.getInteger(buildNumberObject);
 			}
 
 			return new UpgradeInfo(

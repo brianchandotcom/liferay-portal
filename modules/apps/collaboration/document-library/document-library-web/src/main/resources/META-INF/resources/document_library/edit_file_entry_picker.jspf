@@ -24,6 +24,7 @@ DLFilePicker dlFilePicker = dlEditFileEntryDisplayContext.getDLFilePicker("onFil
 			<aui:validator name="acceptFiles">
 				'<%= StringUtil.merge(dlConfiguration.fileExtensions()) %>'
 			</aui:validator>
+			<aui:validator name="maxFileSize"><%= dlEditFileEntryDisplayContext.getMaximumUploadSize() %></aui:validator>
 		</aui:input>
 	</c:when>
 	<c:otherwise>

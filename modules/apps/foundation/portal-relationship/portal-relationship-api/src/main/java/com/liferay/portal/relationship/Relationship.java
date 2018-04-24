@@ -80,17 +80,7 @@ public class Relationship<T extends ClassedModel> {
 			}
 
 			public <U extends ClassedModel> RelationshipStep
-				inboundRelationship(Function<T, U> function) {
-
-				Objects.requireNonNull(function);
-
-				_relationship._inboundSingleRelationshipFunctions.add(function);
-
-				return this;
-			}
-
-			public <U extends ClassedModel> RelationshipStep
-				inboundRelationship(
+				inboundMultiRelationship(
 					MultiRelationshipFunction<T, U> multiRelationshipFunction) {
 
 				Objects.requireNonNull(multiRelationshipFunction);
@@ -102,24 +92,34 @@ public class Relationship<T extends ClassedModel> {
 			}
 
 			public <U extends ClassedModel> RelationshipStep
-				outboundRelationship(Function<T, U> function) {
+				inboundSingleRelationship(Function<T, U> function) {
 
 				Objects.requireNonNull(function);
 
-				_relationship._outboundSingleRelationshipFunctions.add(
-					function);
+				_relationship._inboundSingleRelationshipFunctions.add(function);
 
 				return this;
 			}
 
 			public <U extends ClassedModel> RelationshipStep
-				outboundRelationship(
+				outboundMultiRelationship(
 					MultiRelationshipFunction<T, U> multiRelationshipFunction) {
 
 				Objects.requireNonNull(multiRelationshipFunction);
 
 				_relationship._outboundMultiRelationshipFunctions.add(
 					multiRelationshipFunction);
+
+				return this;
+			}
+
+			public <U extends ClassedModel> RelationshipStep
+				outboundSingleRelationship(Function<T, U> function) {
+
+				Objects.requireNonNull(function);
+
+				_relationship._outboundSingleRelationshipFunctions.add(
+					function);
 
 				return this;
 			}

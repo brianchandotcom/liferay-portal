@@ -21,7 +21,6 @@ import com.liferay.announcements.kernel.model.AnnouncementsFlagConstants;
 import com.liferay.announcements.kernel.service.AnnouncementsEntryLocalServiceUtil;
 import com.liferay.announcements.kernel.service.AnnouncementsFlagLocalServiceUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Organization;
@@ -64,6 +63,48 @@ public class AnnouncementsEntryLocalServiceTest {
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
+
+	@Test
+	public void testDeleteEntriesInDifferentCompany() throws Exception {
+		addEntry(0, 0);
+		addEntry(0, 0);
+		addEntry(0, 0);
+
+		Company company = CompanyTestUtil.addCompany();
+
+		AnnouncementsEntryLocalServiceUtil.deleteEntries(
+			company.getCompanyId(), 0, 0);
+
+		List<AnnouncementsEntry> entries =
+			AnnouncementsEntryLocalServiceUtil.getEntries(
+				TestPropsValues.getCompanyId(), 0, 0, false, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS);
+
+		Assert.assertEquals(entries.toString(), 3, entries.size());
+
+		AnnouncementsEntryLocalServiceUtil.deleteEntries(
+			TestPropsValues.getCompanyId(), 0, 0);
+	}
+
+	@Test
+	public void testDeleteEntriesInSameCompany() throws Exception {
+		addEntry(0, 0);
+		addEntry(0, 0);
+		addEntry(0, 0);
+
+		AnnouncementsEntryLocalServiceUtil.deleteEntries(
+			TestPropsValues.getCompanyId(), 0, 0);
+
+		List<AnnouncementsEntry> entries =
+			AnnouncementsEntryLocalServiceUtil.getEntries(
+				TestPropsValues.getCompanyId(), 0, 0, false, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS);
+
+		Assert.assertEquals(entries.toString(), 0, entries.size());
+
+		AnnouncementsEntryLocalServiceUtil.deleteEntries(
+			TestPropsValues.getCompanyId(), 0, 0);
+	}
 
 	@Test
 	public void testDeleteGroupAnnouncements() throws Exception {
@@ -210,6 +251,9 @@ public class AnnouncementsEntryLocalServiceTest {
 			company.getCompanyId(), 0, 0, false);
 
 		Assert.assertEquals(0, entriesCount);
+
+		AnnouncementsEntryLocalServiceUtil.deleteEntries(
+			TestPropsValues.getCompanyId(), 0, 0);
 	}
 
 	@Test
@@ -222,7 +266,10 @@ public class AnnouncementsEntryLocalServiceTest {
 		int entriesCount = AnnouncementsEntryLocalServiceUtil.getEntriesCount(
 			TestPropsValues.getCompanyId(), 0, 0, false);
 
-		Assert.assertEquals(0, entriesCount);
+		Assert.assertEquals(1, entriesCount);
+
+		AnnouncementsEntryLocalServiceUtil.deleteEntries(
+			TestPropsValues.getCompanyId(), 0, 0);
 	}
 
 	@Test
@@ -237,6 +284,9 @@ public class AnnouncementsEntryLocalServiceTest {
 				QueryUtil.ALL_POS);
 
 		Assert.assertEquals(entries.toString(), 0, entries.size());
+
+		AnnouncementsEntryLocalServiceUtil.deleteEntries(
+			TestPropsValues.getCompanyId(), 0, 0);
 	}
 
 	@Test
@@ -254,6 +304,9 @@ public class AnnouncementsEntryLocalServiceTest {
 		Assert.assertEquals(entries.toString(), 1, entries.size());
 
 		Assert.assertEquals(entry, entries.get(0));
+
+		AnnouncementsEntryLocalServiceUtil.deleteEntries(
+			TestPropsValues.getCompanyId(), 0, 0);
 	}
 
 	protected AnnouncementsEntry addEntry(long classNameId, long classPK)

@@ -52,38 +52,6 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
 @Component(immediate = true)
 public class UpgradeStepRegistratorTracker {
 
-	public static void register(
-		List<ServiceRegistration<UpgradeStep>> serviceRegistrations,
-		BundleContext bundleContext, String bundleSymbolicName,
-		String fromSchemaVersionString, String toSchemaVersionString,
-		int buildNumber, UpgradeStep... upgradeSteps) {
-
-		List<UpgradeInfo> upgradeInfos = createUpgradeInfos(
-			fromSchemaVersionString, toSchemaVersionString, buildNumber,
-			upgradeSteps);
-
-		for (UpgradeInfo upgradeInfo : upgradeInfos) {
-			Dictionary<String, Object> properties = new HashMapDictionary<>();
-
-			properties.put("build.number", upgradeInfo.getBuildNumber());
-			properties.put("upgrade.bundle.symbolic.name", bundleSymbolicName);
-			properties.put("upgrade.db.type", "any");
-			properties.put(
-				"upgrade.from.schema.version",
-				upgradeInfo.getFromSchemaVersionString());
-			properties.put(
-				"upgrade.to.schema.version",
-				upgradeInfo.getToSchemaVersionString());
-
-			ServiceRegistration<UpgradeStep> serviceRegistration =
-				bundleContext.registerService(
-					UpgradeStep.class, upgradeInfo.getUpgradeStep(),
-					properties);
-
-			serviceRegistrations.add(serviceRegistration);
-		}
-	}
-
 	protected static List<UpgradeInfo> createUpgradeInfos(
 		String fromSchemaVersionString, String toSchemaVersionString,
 		int buildNumber, UpgradeStep... upgradeSteps) {
@@ -192,9 +160,35 @@ public class UpgradeStepRegistratorTracker {
 				}
 			}
 
-			upgradeStepRegistrator.register(
-				new UpgradeStepRegistry(
-					bundleSymbolicName, buildNumber, serviceRegistrations));
+			UpgradeStepRegistry upgradeStepRegistry = new UpgradeStepRegistry(
+				buildNumber);
+
+			upgradeStepRegistrator.register(upgradeStepRegistry);
+
+			for (UpgradeInfo upgradeInfo :
+					upgradeStepRegistry.getUpgradeInfos()) {
+
+				Dictionary<String, Object> properties =
+					new HashMapDictionary<>();
+
+				properties.put("build.number", upgradeInfo.getBuildNumber());
+				properties.put(
+					"upgrade.bundle.symbolic.name", bundleSymbolicName);
+				properties.put("upgrade.db.type", "any");
+				properties.put(
+					"upgrade.from.schema.version",
+					upgradeInfo.getFromSchemaVersionString());
+				properties.put(
+					"upgrade.to.schema.version",
+					upgradeInfo.getToSchemaVersionString());
+
+				ServiceRegistration<UpgradeStep> serviceRegistration =
+					_bundleContext.registerService(
+						UpgradeStep.class, upgradeInfo.getUpgradeStep(),
+						properties);
+
+				serviceRegistrations.add(serviceRegistration);
+			}
 
 			return serviceRegistrations;
 		}
@@ -219,7 +213,11 @@ public class UpgradeStepRegistratorTracker {
 
 	}
 
-	private class UpgradeStepRegistry implements Registry {
+	private static class UpgradeStepRegistry implements Registry {
+
+		public List<UpgradeInfo> getUpgradeInfos() {
+			return _upgradeInfos;
+		}
 
 		@Override
 		public void register(
@@ -235,25 +233,18 @@ public class UpgradeStepRegistratorTracker {
 			String fromSchemaVersionString, String toSchemaVersionString,
 			UpgradeStep... upgradeSteps) {
 
-			UpgradeStepRegistratorTracker.register(
-				_serviceRegistrations, _bundleContext, _bundleSymbolicName,
-				fromSchemaVersionString, toSchemaVersionString, _buildNumber,
-				upgradeSteps);
+			_upgradeInfos.addAll(
+				createUpgradeInfos(
+					fromSchemaVersionString, toSchemaVersionString,
+					_buildNumber, upgradeSteps));
 		}
 
-		private UpgradeStepRegistry(
-			String bundleSymbolicName, int buildNumber,
-			List<ServiceRegistration<UpgradeStep>> serviceRegistrations) {
-
-			_bundleSymbolicName = bundleSymbolicName;
+		private UpgradeStepRegistry(int buildNumber) {
 			_buildNumber = buildNumber;
-			_serviceRegistrations = serviceRegistrations;
 		}
 
 		private final int _buildNumber;
-		private final String _bundleSymbolicName;
-		private final List<ServiceRegistration<UpgradeStep>>
-			_serviceRegistrations;
+		private final List<UpgradeInfo> _upgradeInfos = new ArrayList<>();
 
 	}
 

@@ -150,7 +150,7 @@ public class FragmentDisplayContext {
 	}
 
 	public List<DropdownItem> getFragmentCollectionActionItemsDropdownItems() {
-		return new DropdownItemList(_request) {
+		return new DropdownItemList() {
 			{
 				add(
 					dropdownItem -> {
@@ -158,7 +158,8 @@ public class FragmentDisplayContext {
 							"javascript:" + _renderResponse.getNamespace() +
 								"exportSelectedFragmentCollections();");
 						dropdownItem.setIcon("import-export");
-						dropdownItem.setLabel("export");
+						dropdownItem.setLabel(
+							LanguageUtil.get(_request, "export"));
 						dropdownItem.setQuickAction(true);
 					});
 
@@ -168,7 +169,8 @@ public class FragmentDisplayContext {
 							"javascript:" + _renderResponse.getNamespace() +
 								"deleteSelectedFragmentCollections();");
 						dropdownItem.setIcon("trash");
-						dropdownItem.setLabel("delete");
+						dropdownItem.setLabel(
+							LanguageUtil.get(_request, "delete"));
 						dropdownItem.setQuickAction(true);
 					});
 			}
@@ -184,7 +186,7 @@ public class FragmentDisplayContext {
 	}
 
 	public CreationMenu getFragmentCollectionCreationMenu() {
-		return new CreationMenu(_request) {
+		return new CreationMenu() {
 			{
 				addPrimaryDropdownItem(
 					dropdownItem -> {
@@ -192,27 +194,30 @@ public class FragmentDisplayContext {
 							_renderResponse.createRenderURL(),
 							"mvcRenderCommandName",
 							"/fragment/edit_fragment_collection");
-						dropdownItem.setLabel("add-collection");
+						dropdownItem.setLabel(
+							LanguageUtil.get(_request, "add-collection"));
 					});
 			}
 		};
 	}
 
 	public List<DropdownItem> getFragmentCollectionFilterItemsDropdownItems() {
-		return new DropdownItemList(_request) {
+		return new DropdownItemList() {
 			{
 				addGroup(
 					dropdownGroupItem -> {
 						dropdownGroupItem.setDropdownItems(
 							_getFragmentCollectionFilterNavigationDropdownItems());
-						dropdownGroupItem.setLabel("filter-by-navigation");
+						dropdownGroupItem.setLabel(
+							LanguageUtil.get(_request, "filter-by-navigation"));
 					});
 
 				addGroup(
 					dropdownGroupItem -> {
 						dropdownGroupItem.setDropdownItems(
 							_getFragmentCollectionOrderByDropdownItems());
-						dropdownGroupItem.setLabel("order-by");
+						dropdownGroupItem.setLabel(
+							LanguageUtil.get(_request, "order-by"));
 					});
 			}
 		};
@@ -359,7 +364,7 @@ public class FragmentDisplayContext {
 
 	public List<ViewTypeItem> getFragmentCollectionViewTypeItems() {
 		return new ViewTypeItemList(
-			_request, _getFragmentCollectionPortletURL(), getDisplayStyle()) {
+			_getFragmentCollectionPortletURL(), getDisplayStyle()) {
 
 			{
 				addCardViewTypeItem();
@@ -436,7 +441,7 @@ public class FragmentDisplayContext {
 	}
 
 	public List<DropdownItem> getFragmentEntryActionItemsDropdownItems() {
-		return new DropdownItemList(_request) {
+		return new DropdownItemList() {
 			{
 				add(
 					dropdownItem -> {
@@ -444,7 +449,8 @@ public class FragmentDisplayContext {
 							"javascript:" + _renderResponse.getNamespace() +
 								"exportSelectedFragmentEntries();");
 						dropdownItem.setIcon("import-export");
-						dropdownItem.setLabel("export");
+						dropdownItem.setLabel(
+							LanguageUtil.get(_request, "export"));
 						dropdownItem.setQuickAction(true);
 					});
 
@@ -454,7 +460,8 @@ public class FragmentDisplayContext {
 							"javascript:" + _renderResponse.getNamespace() +
 								"deleteSelectedFragmentEntries();");
 						dropdownItem.setIcon("trash");
-						dropdownItem.setLabel("delete");
+						dropdownItem.setLabel(
+							LanguageUtil.get(_request, "delete"));
 						dropdownItem.setQuickAction(true);
 					});
 			}
@@ -470,20 +477,22 @@ public class FragmentDisplayContext {
 	}
 
 	public List<DropdownItem> getFragmentEntryFilterItemsDropdownItems() {
-		return new DropdownItemList(_request) {
+		return new DropdownItemList() {
 			{
 				addGroup(
 					dropdownGroupItem -> {
 						dropdownGroupItem.setDropdownItems(
 							_getFragmentEntryFilterNavigationDropdownItems());
-						dropdownGroupItem.setLabel("filter-by-navigation");
+						dropdownGroupItem.setLabel(
+							LanguageUtil.get(_request, "filter-by-navigation"));
 					});
 
 				addGroup(
 					dropdownGroupItem -> {
 						dropdownGroupItem.setDropdownItems(
 							_getFragmentEntryOrderByDropdownItems());
-						dropdownGroupItem.setLabel("order-by");
+						dropdownGroupItem.setLabel(
+							LanguageUtil.get(_request, "order-by"));
 					});
 			}
 		};
@@ -544,7 +553,7 @@ public class FragmentDisplayContext {
 
 	public List<ViewTypeItem> getFragmentEntryViewTypeItems() {
 		return new ViewTypeItemList(
-			_request, _getFragmentEntryPortletURL(), getDisplayStyle()) {
+			_getFragmentEntryPortletURL(), getDisplayStyle()) {
 
 			{
 				addCardViewTypeItem();
@@ -669,21 +678,22 @@ public class FragmentDisplayContext {
 	private List<DropdownItem>
 		_getFragmentCollectionFilterNavigationDropdownItems() {
 
-		return new DropdownItemList(_request) {
+		return new DropdownItemList() {
 			{
 				add(
 					dropdownItem -> {
 						dropdownItem.setActive(true);
 						dropdownItem.setHref(
 							_getFragmentCollectionPortletURL());
-						dropdownItem.setLabel("all");
+						dropdownItem.setLabel(
+							LanguageUtil.get(_request, "all"));
 					});
 			}
 		};
 	}
 
 	private List<DropdownItem> _getFragmentCollectionOrderByDropdownItems() {
-		return new DropdownItemList(_request) {
+		return new DropdownItemList() {
 			{
 				add(
 					dropdownItem -> {
@@ -692,7 +702,8 @@ public class FragmentDisplayContext {
 						dropdownItem.setHref(
 							_getFragmentCollectionPortletURL(), "orderByCol",
 							"name");
-						dropdownItem.setLabel("name");
+						dropdownItem.setLabel(
+							LanguageUtil.get(_request, "name"));
 					});
 
 				add(
@@ -702,7 +713,8 @@ public class FragmentDisplayContext {
 						dropdownItem.setHref(
 							_getFragmentCollectionPortletURL(), "orderByCol",
 							"create-date");
-						dropdownItem.setLabel("create-date");
+						dropdownItem.setLabel(
+							LanguageUtil.get(_request, "create-date"));
 					});
 			}
 		};
@@ -743,20 +755,21 @@ public class FragmentDisplayContext {
 	private List<DropdownItem>
 		_getFragmentEntryFilterNavigationDropdownItems() {
 
-		return new DropdownItemList(_request) {
+		return new DropdownItemList() {
 			{
 				add(
 					dropdownItem -> {
 						dropdownItem.setActive(true);
 						dropdownItem.setHref(_getFragmentEntryPortletURL());
-						dropdownItem.setLabel("all");
+						dropdownItem.setLabel(
+							LanguageUtil.get(_request, "all"));
 					});
 			}
 		};
 	}
 
 	private List<DropdownItem> _getFragmentEntryOrderByDropdownItems() {
-		return new DropdownItemList(_request) {
+		return new DropdownItemList() {
 			{
 				add(
 					dropdownItem -> {
@@ -765,7 +778,8 @@ public class FragmentDisplayContext {
 						dropdownItem.setHref(
 							_getFragmentEntryPortletURL(), "orderByCol",
 							"name");
-						dropdownItem.setLabel("name");
+						dropdownItem.setLabel(
+							LanguageUtil.get(_request, "name"));
 					});
 
 				add(
@@ -775,7 +789,8 @@ public class FragmentDisplayContext {
 						dropdownItem.setHref(
 							_getFragmentEntryPortletURL(), "orderByCol",
 							"create-date");
-						dropdownItem.setLabel("create-date");
+						dropdownItem.setLabel(
+							LanguageUtil.get(_request, "create-date"));
 					});
 			}
 		};

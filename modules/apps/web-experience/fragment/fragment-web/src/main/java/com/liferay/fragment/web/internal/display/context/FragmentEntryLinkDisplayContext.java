@@ -27,6 +27,7 @@ import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServ
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -60,10 +61,7 @@ public class FragmentEntryLinkDisplayContext {
 	}
 
 	public DropdownItemList getActionItemsDropdownItemList() {
-		HttpServletRequest request = PortalUtil.getHttpServletRequest(
-			_renderRequest);
-
-		return new DropdownItemList(request) {
+		return new DropdownItemList() {
 			{
 				add(
 					dropdownItem -> {
@@ -71,7 +69,8 @@ public class FragmentEntryLinkDisplayContext {
 							"javascript:" + _renderResponse.getNamespace() +
 								"propagate();");
 						dropdownItem.setIcon("reload");
-						dropdownItem.setLabel("propagate");
+						dropdownItem.setLabel(
+							LanguageUtil.get(_request, "propagate"));
 						dropdownItem.setQuickAction(true);
 					});
 			}
@@ -94,13 +93,14 @@ public class FragmentEntryLinkDisplayContext {
 	}
 
 	public List<DropdownItem> getFilterItemsDropdownItems() {
-		return new DropdownItemList(_request) {
+		return new DropdownItemList() {
 			{
 				addGroup(
 					dropdownGroupItem -> {
 						dropdownGroupItem.setDropdownItems(
 							_getOrderByDropdownItems());
-						dropdownGroupItem.setLabel("order-by");
+						dropdownGroupItem.setLabel(
+							LanguageUtil.get(_request, "order-by"));
 					});
 			}
 		};
@@ -330,7 +330,7 @@ public class FragmentEntryLinkDisplayContext {
 	}
 
 	public List<ViewTypeItem> getViewTypeItems() {
-		return new ViewTypeItemList(_request, getPortletURL(), "list") {
+		return new ViewTypeItemList(getPortletURL(), "list") {
 			{
 				addTableViewTypeItem();
 			}
@@ -338,14 +338,15 @@ public class FragmentEntryLinkDisplayContext {
 	}
 
 	private List<DropdownItem> _getOrderByDropdownItems() {
-		return new DropdownItemList(_request) {
+		return new DropdownItemList() {
 			{
 				add(
 					dropdownItem -> {
 						dropdownItem.setActive(true);
 						dropdownItem.setHref(
 							getPortletURL(), "orderByCol", "last-propagation");
-						dropdownItem.setLabel("last-propagation");
+						dropdownItem.setLabel(
+							LanguageUtil.get(_request, "last-propagation"));
 					});
 			}
 		};

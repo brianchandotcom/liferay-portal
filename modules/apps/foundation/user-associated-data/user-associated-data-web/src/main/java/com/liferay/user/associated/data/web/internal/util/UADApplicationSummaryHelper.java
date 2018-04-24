@@ -17,6 +17,7 @@ package com.liferay.user.associated.data.web.internal.util;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
@@ -65,7 +66,7 @@ public class UADApplicationSummaryHelper {
 		HttpServletRequest request = _portal.getHttpServletRequest(
 			renderRequest);
 
-		return new DropdownItemList(request) {
+		return new DropdownItemList() {
 			{
 				DropdownItemList filterByNavigationDropdownItemList =
 					getFilterByNavigationDropdownItemList(
@@ -75,7 +76,8 @@ public class UADApplicationSummaryHelper {
 					dropdownGroupItem -> {
 						dropdownGroupItem.setDropdownItems(
 							filterByNavigationDropdownItemList);
-						dropdownGroupItem.setLabel("filter-by-navigation");
+						dropdownGroupItem.setLabel(
+							LanguageUtil.get(request, "filter-by-navigation"));
 					});
 
 				DropdownItemList orderByNavigationDropdownItemList =
@@ -85,7 +87,8 @@ public class UADApplicationSummaryHelper {
 					dropdownGroupItem -> {
 						dropdownGroupItem.setDropdownItems(
 							orderByNavigationDropdownItemList);
-						dropdownGroupItem.setLabel("order-by");
+						dropdownGroupItem.setLabel(
+							LanguageUtil.get(request, "order-by"));
 					});
 			}
 		};
@@ -229,7 +232,7 @@ public class UADApplicationSummaryHelper {
 
 		PortletURL baseURL = getBaseURL(renderRequest, renderResponse);
 
-		return new DropdownItemList(request) {
+		return new DropdownItemList() {
 			{
 				for (String navigation :
 						new String[] {"all", "in-progress", "done"}) {
@@ -241,7 +244,8 @@ public class UADApplicationSummaryHelper {
 									getNavigation(renderRequest)));
 							dropdownItem.setHref(
 								baseURL, "navigation", navigation);
-							dropdownItem.setLabel(navigation);
+							dropdownItem.setLabel(
+								LanguageUtil.get(request, navigation));
 						});
 				}
 			}
@@ -265,7 +269,7 @@ public class UADApplicationSummaryHelper {
 
 		PortletURL baseURL = getBaseURL(renderRequest, renderResponse);
 
-		return new DropdownItemList(request) {
+		return new DropdownItemList() {
 			{
 				for (String orderByCol :
 						new String[] {"name", "items", "status"}) {
@@ -277,7 +281,8 @@ public class UADApplicationSummaryHelper {
 									getOrderByCol(renderRequest)));
 							dropdownItem.setHref(
 								baseURL, "orderByCol", orderByCol);
-							dropdownItem.setLabel(orderByCol);
+							dropdownItem.setLabel(
+								LanguageUtil.get(request, orderByCol));
 						});
 				}
 			}

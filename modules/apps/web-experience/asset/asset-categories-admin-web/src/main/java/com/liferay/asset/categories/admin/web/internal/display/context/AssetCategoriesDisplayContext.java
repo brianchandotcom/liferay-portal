@@ -221,7 +221,7 @@ public class AssetCategoriesDisplayContext {
 	}
 
 	public List<DropdownItem> getCategoriesActionItemsDropdownItems() {
-		return new DropdownItemList(_request) {
+		return new DropdownItemList() {
 			{
 				add(
 					dropdownItem -> {
@@ -229,7 +229,8 @@ public class AssetCategoriesDisplayContext {
 							"javascript:" + _renderResponse.getNamespace() +
 								"deleteSelectedCategories();");
 						dropdownItem.setIcon("trash");
-						dropdownItem.setLabel("delete");
+						dropdownItem.setLabel(
+							LanguageUtil.get(_request, "delete"));
 						dropdownItem.setQuickAction(true);
 					});
 			}
@@ -254,7 +255,7 @@ public class AssetCategoriesDisplayContext {
 	}
 
 	public CreationMenu getCategoriesCreationMenu() {
-		return new CreationMenu(_request) {
+		return new CreationMenu() {
 			{
 				addPrimaryDropdownItem(
 					dropdownItem -> {
@@ -281,27 +282,30 @@ public class AssetCategoriesDisplayContext {
 							label = "add-subcategory";
 						}
 
-						dropdownItem.setLabel(label);
+						dropdownItem.setLabel(
+							LanguageUtil.get(_request, label));
 					});
 			}
 		};
 	}
 
 	public List<DropdownItem> getCategoriesFilterItemsDropdownItems() {
-		return new DropdownItemList(_request) {
+		return new DropdownItemList() {
 			{
 				addGroup(
 					dropdownGroupItem -> {
 						dropdownGroupItem.setDropdownItems(
 							_getCategoriesFilterNavigationDropdownItems());
-						dropdownGroupItem.setLabel("filter-by-navigation");
+						dropdownGroupItem.setLabel(
+							LanguageUtil.get(_request, "filter-by-navigation"));
 					});
 
 				addGroup(
 					dropdownGroupItem -> {
 						dropdownGroupItem.setDropdownItems(
 							_getCategoriesOrderByDropdownItems());
-						dropdownGroupItem.setLabel("order-by");
+						dropdownGroupItem.setLabel(
+							LanguageUtil.get(_request, "order-by"));
 					});
 			}
 		};
@@ -506,7 +510,7 @@ public class AssetCategoriesDisplayContext {
 			ActionRequest.ACTION_NAME, "changeDisplayStyle");
 		portletURL.setParameter("redirect", PortalUtil.getCurrentURL(_request));
 
-		return new ViewTypeItemList(_request, portletURL, getDisplayStyle()) {
+		return new ViewTypeItemList(portletURL, getDisplayStyle()) {
 			{
 				if (!isFlattenedNavigationAllowed()) {
 					addCardViewTypeItem();
@@ -652,7 +656,7 @@ public class AssetCategoriesDisplayContext {
 	}
 
 	public List<DropdownItem> getVocabulariesActionItemsDropdownItems() {
-		return new DropdownItemList(_request) {
+		return new DropdownItemList() {
 			{
 				add(
 					dropdownItem -> {
@@ -660,7 +664,8 @@ public class AssetCategoriesDisplayContext {
 							"javascript:" + _renderResponse.getNamespace() +
 								"deleteSelectedVocabularies();");
 						dropdownItem.setIcon("trash");
-						dropdownItem.setLabel("delete");
+						dropdownItem.setLabel(
+							LanguageUtil.get(_request, "delete"));
 						dropdownItem.setQuickAction(true);
 					});
 			}
@@ -676,34 +681,37 @@ public class AssetCategoriesDisplayContext {
 	}
 
 	public CreationMenu getVocabulariesCreationMenu() {
-		return new CreationMenu(_request) {
+		return new CreationMenu() {
 			{
 				addPrimaryDropdownItem(
 					dropdownItem -> {
 						dropdownItem.setHref(
 							_renderResponse.createRenderURL(), "mvcPath",
 							"/edit_vocabulary.jsp");
-						dropdownItem.setLabel("add-vocabulary");
+						dropdownItem.setLabel(
+							LanguageUtil.get(_request, "add-vocabulary"));
 					});
 			}
 		};
 	}
 
 	public List<DropdownItem> getVocabulariesFilterItemsDropdownItems() {
-		return new DropdownItemList(_request) {
+		return new DropdownItemList() {
 			{
 				addGroup(
 					dropdownGroupItem -> {
 						dropdownGroupItem.setDropdownItems(
 							_getVocabulariesFilterNavigationDropdownItems());
-						dropdownGroupItem.setLabel("filter-by-navigation");
+						dropdownGroupItem.setLabel(
+							LanguageUtil.get(_request, "filter-by-navigation"));
 					});
 
 				addGroup(
 					dropdownGroupItem -> {
 						dropdownGroupItem.setDropdownItems(
 							_getVocabulariesOrderByDropdownItems());
-						dropdownGroupItem.setLabel("order-by");
+						dropdownGroupItem.setLabel(
+							LanguageUtil.get(_request, "order-by"));
 					});
 			}
 		};
@@ -839,7 +847,7 @@ public class AssetCategoriesDisplayContext {
 			ActionRequest.ACTION_NAME, "changeDisplayStyle");
 		portletURL.setParameter("redirect", PortalUtil.getCurrentURL(_request));
 
-		return new ViewTypeItemList(_request, portletURL, getDisplayStyle()) {
+		return new ViewTypeItemList(portletURL, getDisplayStyle()) {
 			{
 				addCardViewTypeItem();
 				addListViewTypeItem();
@@ -1001,14 +1009,15 @@ public class AssetCategoriesDisplayContext {
 	}
 
 	private List<DropdownItem> _getCategoriesFilterNavigationDropdownItems() {
-		return new DropdownItemList(_request) {
+		return new DropdownItemList() {
 			{
 				add(
 					dropdownItem -> {
 						dropdownItem.setActive(_isNavigationAll());
 						dropdownItem.setHref(
 							_getIteratorURL(), "navigation", "all");
-						dropdownItem.setLabel("all");
+						dropdownItem.setLabel(
+							LanguageUtil.get(_request, "all"));
 					});
 
 				if (isFlattenedNavigationAllowed()) {
@@ -1018,7 +1027,8 @@ public class AssetCategoriesDisplayContext {
 							dropdownItem.setHref(
 								"javascript:" + _renderResponse.getNamespace() +
 									"selectCategory();");
-							dropdownItem.setLabel("category");
+							dropdownItem.setLabel(
+								LanguageUtil.get(_request, "category"));
 						});
 				}
 			}
@@ -1026,7 +1036,7 @@ public class AssetCategoriesDisplayContext {
 	}
 
 	private List<DropdownItem> _getCategoriesOrderByDropdownItems() {
-		return new DropdownItemList(_request) {
+		return new DropdownItemList() {
 			{
 				if (isFlattenedNavigationAllowed()) {
 					add(
@@ -1035,7 +1045,8 @@ public class AssetCategoriesDisplayContext {
 								Objects.equals(_getOrderByCol(), "path"));
 							dropdownItem.setHref(
 								_getIteratorURL(), "orderByCol", "path");
-							dropdownItem.setLabel("path");
+							dropdownItem.setLabel(
+								LanguageUtil.get(_request, "path"));
 						});
 				}
 				else {
@@ -1046,7 +1057,8 @@ public class AssetCategoriesDisplayContext {
 									_getOrderByCol(), "create-date"));
 							dropdownItem.setHref(
 								_getIteratorURL(), "orderByCol", "create-date");
-							dropdownItem.setLabel("create-date");
+							dropdownItem.setLabel(
+								LanguageUtil.get(_request, "create-date"));
 						});
 				}
 			}
@@ -1099,26 +1111,28 @@ public class AssetCategoriesDisplayContext {
 	}
 
 	private List<DropdownItem> _getVocabulariesFilterNavigationDropdownItems() {
-		return new DropdownItemList(_request) {
+		return new DropdownItemList() {
 			{
 				add(
 					dropdownItem -> {
 						dropdownItem.setActive(true);
 						dropdownItem.setHref(_renderResponse.createRenderURL());
-						dropdownItem.setLabel("all");
+						dropdownItem.setLabel(
+							LanguageUtil.get(_request, "all"));
 					});
 			}
 		};
 	}
 
 	private List<DropdownItem> _getVocabulariesOrderByDropdownItems() {
-		return new DropdownItemList(_request) {
+		return new DropdownItemList() {
 			{
 				add(
 					dropdownItem -> {
 						dropdownItem.setActive(true);
 						dropdownItem.setHref(_renderResponse.createRenderURL());
-						dropdownItem.setLabel("create-date");
+						dropdownItem.setLabel(
+							LanguageUtil.get(_request, "create-date"));
 					});
 			}
 		};

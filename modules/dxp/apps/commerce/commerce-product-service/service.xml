@@ -988,6 +988,7 @@
 		<exception>CPOptionCategoryKey</exception>
 		<exception>CPOptionKey</exception>
 		<exception>CPOptionValueKey</exception>
+		<exception>CPRuleType</exception>
 		<exception>CPSpecificationOptionKey</exception>
 		<exception>CPSpecificationOptionTitle</exception>
 		<exception>CPTaxCategoryName</exception>

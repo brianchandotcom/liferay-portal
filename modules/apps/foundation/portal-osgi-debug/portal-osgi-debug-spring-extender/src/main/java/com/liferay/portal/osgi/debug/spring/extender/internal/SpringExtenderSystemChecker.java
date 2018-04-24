@@ -39,4 +39,9 @@ public class SpringExtenderSystemChecker implements SystemChecker {
 		return "dm na";
 	}
 
+	@Override
+	public String toString() {
+		return getName();
+	}
+
 }

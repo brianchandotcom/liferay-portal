@@ -77,8 +77,7 @@ public class ClaySamplePortlet extends MVCPortlet {
 			dropdownsDisplayContext);
 
 		ManagementToolbarsDisplayContext managementToolbarsDisplayContext =
-			new ManagementToolbarsDisplayContext(
-				_portal.getHttpServletRequest(renderRequest));
+			new ManagementToolbarsDisplayContext();
 
 		renderRequest.setAttribute(
 			ClaySamplePortletKeys.MANAGEMENT_TOOLBARS_DISPLAY_CONTEXT,

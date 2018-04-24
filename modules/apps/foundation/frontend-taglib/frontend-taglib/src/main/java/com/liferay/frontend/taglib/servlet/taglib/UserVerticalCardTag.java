@@ -23,8 +23,10 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ServiceProxyFactory;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.taglib.util.LexiconUtil;
+import com.liferay.users.admin.kernel.file.uploads.UserFileUploadsSettings;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -69,13 +71,19 @@ public class UserVerticalCardTag extends VerticalCardTag {
 			LexiconUtil.getUserColorCssClass(user));
 
 		if (user != null) {
-			if ((user.getPortraitId() > 0) ||
-				LanguageConstants.VALUE_IMAGE.equals(
+			boolean imageDefaultUseInitials =
+				_userFileUploadsSettings.isImageDefaultUseInitials();
+
+			if (LanguageConstants.VALUE_IMAGE.equals(
 					LanguageUtil.get(
 						user.getLocale(),
 						LanguageConstants.KEY_USER_DEFAULT_PORTRAIT,
 						LanguageConstants.VALUE_INITIALS))) {
 
+				imageDefaultUseInitials = false;
+			}
+
+			if ((user.getPortraitId() > 0) || !imageDefaultUseInitials) {
 				ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 					WebKeys.THEME_DISPLAY);
 
@@ -106,6 +114,11 @@ public class UserVerticalCardTag extends VerticalCardTag {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		UserVerticalCardTag.class);
+
+	private static volatile UserFileUploadsSettings _userFileUploadsSettings =
+		ServiceProxyFactory.newServiceTrackedInstance(
+			UserFileUploadsSettings.class, UserVerticalCardTag.class,
+			"_userFileUploadsSettings", false);
 
 	private long _userId;
 

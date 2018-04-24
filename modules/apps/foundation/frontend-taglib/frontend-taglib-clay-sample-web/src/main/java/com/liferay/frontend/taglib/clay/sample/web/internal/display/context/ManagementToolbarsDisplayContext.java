@@ -22,16 +22,10 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItemList;
 
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
-
 /**
  * @author Carlos Lancha
  */
 public class ManagementToolbarsDisplayContext {
-
-	public ManagementToolbarsDisplayContext(HttpServletRequest request) {
-		_request = request;
-	}
 
 	public List<DropdownItem> getActionDropdownItems() {
 		if (_actionDropdownItems != null) {
@@ -72,7 +66,7 @@ public class ManagementToolbarsDisplayContext {
 			return _creationMenu;
 		}
 
-		_creationMenu = new CreationMenu(_request) {
+		_creationMenu = new CreationMenu() {
 			{
 				addPrimaryDropdownItem(
 					dropdownItem -> {
@@ -192,7 +186,6 @@ public class ManagementToolbarsDisplayContext {
 	private List<DropdownItem> _actionDropdownItems;
 	private CreationMenu _creationMenu;
 	private List<DropdownItem> _filterDropdownItems;
-	private final HttpServletRequest _request;
 	private List<ViewTypeItem> _viewTypeItems;
 
 }

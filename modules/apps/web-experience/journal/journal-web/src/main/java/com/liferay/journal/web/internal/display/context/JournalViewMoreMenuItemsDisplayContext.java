@@ -116,20 +116,22 @@ public class JournalViewMoreMenuItemsDisplayContext {
 	}
 
 	public List<DropdownItem> getFilterItemsDropdownItems() {
-		return new DropdownItemList(_request) {
+		return new DropdownItemList() {
 			{
 				addGroup(
 					dropdownGroupItem -> {
 						dropdownGroupItem.setDropdownItems(
 							_getFilterNavigationDropdownItems());
-						dropdownGroupItem.setLabel("filter-by-navigation");
+						dropdownGroupItem.setLabel(
+							LanguageUtil.get(_request, "filter-by-navigation"));
 					});
 
 				addGroup(
 					dropdownGroupItem -> {
 						dropdownGroupItem.setDropdownItems(
 							_getOrderByDropdownItems());
-						dropdownGroupItem.setLabel("order-by");
+						dropdownGroupItem.setLabel(
+							LanguageUtil.get(_request, "order-by"));
 					});
 			}
 		};
@@ -214,7 +216,7 @@ public class JournalViewMoreMenuItemsDisplayContext {
 	}
 
 	public List<ViewTypeItem> getViewTypeItems() {
-		return new ViewTypeItemList(_request, getPortletURL(), "list") {
+		return new ViewTypeItemList(getPortletURL(), "list") {
 			{
 				addTableViewTypeItem();
 			}
@@ -222,13 +224,14 @@ public class JournalViewMoreMenuItemsDisplayContext {
 	}
 
 	private List<DropdownItem> _getFilterNavigationDropdownItems() {
-		return new DropdownItemList(_request) {
+		return new DropdownItemList() {
 			{
 				add(
 					dropdownItem -> {
 						dropdownItem.setActive(true);
 						dropdownItem.setHref(_renderResponse.createRenderURL());
-						dropdownItem.setLabel("all");
+						dropdownItem.setLabel(
+							LanguageUtil.get(_request, "all"));
 					});
 			}
 		};
@@ -257,14 +260,15 @@ public class JournalViewMoreMenuItemsDisplayContext {
 	}
 
 	private List<DropdownItem> _getOrderByDropdownItems() {
-		return new DropdownItemList(_request) {
+		return new DropdownItemList() {
 			{
 				add(
 					dropdownItem -> {
 						dropdownItem.setActive(true);
 						dropdownItem.setHref(
 							getPortletURL(), "orderByCol", "modified-date");
-						dropdownItem.setLabel("modified-date");
+						dropdownItem.setLabel(
+							LanguageUtil.get(_request, "modified-date"));
 					});
 			}
 		};

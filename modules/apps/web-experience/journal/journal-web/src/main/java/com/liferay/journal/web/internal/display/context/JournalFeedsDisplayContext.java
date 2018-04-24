@@ -25,6 +25,7 @@ import com.liferay.journal.web.internal.search.FeedSearchTerms;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -55,7 +56,7 @@ public class JournalFeedsDisplayContext {
 	}
 
 	public List<DropdownItem> getActionItemsDropdownItems() {
-		return new DropdownItemList(_request) {
+		return new DropdownItemList() {
 			{
 				add(
 					dropdownItem -> {
@@ -63,7 +64,8 @@ public class JournalFeedsDisplayContext {
 							"javascript:" + _renderResponse.getNamespace() +
 								"deleteFeeds();");
 						dropdownItem.setIcon("trash");
-						dropdownItem.setLabel("delete");
+						dropdownItem.setLabel(
+							LanguageUtil.get(_request, "delete"));
 						dropdownItem.setQuickAction(true);
 					});
 			}
@@ -82,7 +84,7 @@ public class JournalFeedsDisplayContext {
 		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		return new CreationMenu(_request) {
+		return new CreationMenu() {
 			{
 				addPrimaryDropdownItem(
 					dropdownItem -> {
@@ -90,7 +92,8 @@ public class JournalFeedsDisplayContext {
 							_renderResponse.createRenderURL(), "mvcPath",
 							"/edit_feed.jsp", "redirect",
 							themeDisplay.getURLCurrent());
-						dropdownItem.setLabel("add-feed");
+						dropdownItem.setLabel(
+							LanguageUtil.get(_request, "add-feed"));
 					});
 			}
 		};
@@ -139,20 +142,22 @@ public class JournalFeedsDisplayContext {
 	}
 
 	public List<DropdownItem> getFilterItemsDropdownItems() {
-		return new DropdownItemList(_request) {
+		return new DropdownItemList() {
 			{
 				addGroup(
 					dropdownGroupItem -> {
 						dropdownGroupItem.setDropdownItems(
 							_getFilterNavigationDropdownItems());
-						dropdownGroupItem.setLabel("filter-by-navigation");
+						dropdownGroupItem.setLabel(
+							LanguageUtil.get(_request, "filter-by-navigation"));
 					});
 
 				addGroup(
 					dropdownGroupItem -> {
 						dropdownGroupItem.setDropdownItems(
 							_getOrderByDropdownItems());
-						dropdownGroupItem.setLabel("order-by");
+						dropdownGroupItem.setLabel(
+							LanguageUtil.get(_request, "order-by"));
 					});
 			}
 		};
@@ -222,9 +227,7 @@ public class JournalFeedsDisplayContext {
 	}
 
 	public List<ViewTypeItem> getViewTypeItems() {
-		return new ViewTypeItemList(
-			_request, getPortletURL(), getDisplayStyle()) {
-
+		return new ViewTypeItemList(getPortletURL(), getDisplayStyle()) {
 			{
 				addCardViewTypeItem();
 				addListViewTypeItem();
@@ -259,13 +262,14 @@ public class JournalFeedsDisplayContext {
 	}
 
 	private List<DropdownItem> _getFilterNavigationDropdownItems() {
-		return new DropdownItemList(_request) {
+		return new DropdownItemList() {
 			{
 				add(
 					dropdownItem -> {
 						dropdownItem.setActive(true);
 						dropdownItem.setHref(_renderResponse.createRenderURL());
-						dropdownItem.setLabel("all");
+						dropdownItem.setLabel(
+							LanguageUtil.get(_request, "all"));
 					});
 			}
 		};
@@ -282,7 +286,7 @@ public class JournalFeedsDisplayContext {
 	}
 
 	private List<DropdownItem> _getOrderByDropdownItems() {
-		return new DropdownItemList(_request) {
+		return new DropdownItemList() {
 			{
 				add(
 					dropdownItem -> {
@@ -290,7 +294,8 @@ public class JournalFeedsDisplayContext {
 							Objects.equals(getOrderByCol(), "name"));
 						dropdownItem.setHref(
 							getPortletURL(), "orderByCol", "name");
-						dropdownItem.setLabel("name");
+						dropdownItem.setLabel(
+							LanguageUtil.get(_request, "name"));
 					});
 
 				add(
@@ -299,7 +304,7 @@ public class JournalFeedsDisplayContext {
 							Objects.equals(getOrderByCol(), "id"));
 						dropdownItem.setHref(
 							getPortletURL(), "orderByCol", "id");
-						dropdownItem.setLabel("id");
+						dropdownItem.setLabel(LanguageUtil.get(_request, "id"));
 					});
 			}
 		};

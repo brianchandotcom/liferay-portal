@@ -59,7 +59,7 @@ public class DLViewFileEntryTypesDisplayContext {
 				themeDisplay.getPermissionChecker(),
 				themeDisplay.getScopeGroupId(), ActionKeys.ADD_DOCUMENT_TYPE)) {
 
-			CreationMenu creationMenu = new CreationMenu(request);
+			CreationMenu creationMenu = new CreationMenu();
 
 			PortletURL creationURL = renderResponse.createRenderURL();
 

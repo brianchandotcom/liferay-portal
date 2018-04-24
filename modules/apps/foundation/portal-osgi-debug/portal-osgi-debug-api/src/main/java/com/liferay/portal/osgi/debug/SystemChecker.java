@@ -12,31 +12,17 @@
  * details.
  */
 
-package com.liferay.portal.osgi.debug.spring.extender.internal;
-
-import com.liferay.portal.osgi.debug.ComponentScanner;
-
-import org.osgi.service.component.annotations.Component;
+package com.liferay.portal.osgi.debug;
 
 /**
  * @author Tina Tian
  */
-@Component(immediate = true, service = ComponentScanner.class)
-public class SpringExtenderComponentScanner implements ComponentScanner {
+public interface SystemChecker {
 
-	@Override
-	public String getName() {
-		return "Spring Extender Component Scanner";
-	}
+	public String check();
 
-	@Override
-	public String getOSGiCommand() {
-		return "dm na";
-	}
+	public String getName();
 
-	@Override
-	public String scan() {
-		return UnavailableComponentUtil.scanUnavailableComponents();
-	}
+	public String getOSGiCommand();
 
 }

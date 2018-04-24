@@ -12,17 +12,31 @@
  * details.
  */
 
-package com.liferay.portal.osgi.debug;
+package com.liferay.portal.osgi.debug.spring.extender.internal;
+
+import com.liferay.portal.osgi.debug.SystemChecker;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Tina Tian
  */
-public interface ComponentScanner {
+@Component(immediate = true, service = SystemChecker.class)
+public class SpringExtenderSystemChecker implements SystemChecker {
 
-	public String getName();
+	@Override
+	public String check() {
+		return UnavailableComponentUtil.scanUnavailableComponents();
+	}
 
-	public String getOSGiCommand();
+	@Override
+	public String getName() {
+		return "Spring Extender Component Checker";
+	}
 
-	public String scan();
+	@Override
+	public String getOSGiCommand() {
+		return "dm na";
+	}
 
 }

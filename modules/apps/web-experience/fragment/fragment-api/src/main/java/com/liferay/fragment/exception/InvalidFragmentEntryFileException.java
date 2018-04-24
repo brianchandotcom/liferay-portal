@@ -22,20 +22,20 @@ import com.liferay.portal.kernel.exception.PortalException;
  * @author Brian Wing Shun Chan
  */
 @ProviderType
-public class InvalidImportFileException extends PortalException {
+public class InvalidFragmentEntryFileException extends PortalException {
 
-	public InvalidImportFileException() {
+	public InvalidFragmentEntryFileException() {
 	}
 
-	public InvalidImportFileException(String msg) {
+	public InvalidFragmentEntryFileException(String msg) {
 		super(msg);
 	}
 
-	public InvalidImportFileException(String msg, Throwable cause) {
+	public InvalidFragmentEntryFileException(String msg, Throwable cause) {
 		super(msg, cause);
 	}
 
-	public InvalidImportFileException(Throwable cause) {
+	public InvalidFragmentEntryFileException(Throwable cause) {
 		super(cause);
 	}
 

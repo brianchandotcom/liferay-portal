@@ -17,6 +17,7 @@ package com.liferay.user.associated.data.anonymizer;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.user.associated.data.util.UADDynamicQueryUtil;
 
 /**
@@ -26,12 +27,14 @@ public abstract class DynamicQueryUADAnonymizer<T extends BaseModel>
 	implements UADAnonymizer<T> {
 
 	@Override
-	public void autoAnonymizeAll(long userId) throws PortalException {
+	public void autoAnonymizeAll(long userId, User anonymousUser)
+		throws PortalException {
+
 		ActionableDynamicQuery actionableDynamicQuery =
 			_getActionableDynamicQuery(userId);
 
 		actionableDynamicQuery.setPerformActionMethod(
-			(T baseModel) -> autoAnonymize(baseModel, userId));
+			(T baseModel) -> autoAnonymize(baseModel, userId, anonymousUser));
 
 		actionableDynamicQuery.performActions();
 	}

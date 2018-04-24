@@ -11,7 +11,7 @@ buildscript {
 
 ext {
 	projectTemplateTokens = [
-		"com.liferay.ant.bnd.version": "2.0.49",
+		"com.liferay.ant.bnd.version": "2.0.50",
 		"com.liferay.css.builder.version": "2.0.2",
 		"com.liferay.gradle.plugins.css.builder.version": "2.1.4",
 		"com.liferay.gradle.plugins.theme.builder.version": "2.0.2",

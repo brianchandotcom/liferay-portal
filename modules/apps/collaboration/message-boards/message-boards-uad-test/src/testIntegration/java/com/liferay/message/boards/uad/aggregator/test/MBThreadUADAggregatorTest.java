@@ -20,7 +20,6 @@ import com.liferay.message.boards.model.MBThread;
 import com.liferay.message.boards.uad.constants.MBUADConstants;
 import com.liferay.message.boards.uad.test.MBThreadUADEntityTestHelper;
 
-import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.test.rule.Inject;
@@ -44,14 +43,14 @@ import java.util.List;
  * @generated
  */
 @RunWith(Arquillian.class)
-public class MBThreadUADAggregatorTest extends BaseUADAggregatorTestCase
-	implements WhenHasStatusByUserIdField {
+public class MBThreadUADAggregatorTest extends BaseUADAggregatorTestCase<MBThread>
+	implements WhenHasStatusByUserIdField<MBThread> {
 	@ClassRule
 	@Rule
 	public static final AggregateTestRule aggregateTestRule = new LiferayIntegrationTestRule();
 
 	@Override
-	public BaseModel<?> addBaseModelWithStatusByUserId(long userId,
+	public MBThread addBaseModelWithStatusByUserId(long userId,
 		long statusByUserId) throws Exception {
 		MBThread mbThread = _mbThreadUADEntityTestHelper.addMBThreadWithStatusByUserId(userId,
 				statusByUserId);
@@ -61,8 +60,13 @@ public class MBThreadUADAggregatorTest extends BaseUADAggregatorTestCase
 		return mbThread;
 	}
 
+	@After
+	public void tearDown() throws Exception {
+		_mbThreadUADEntityTestHelper.cleanUpDependencies(_mbThreads);
+	}
+
 	@Override
-	protected BaseModel<?> addBaseModel(long userId) throws Exception {
+	protected MBThread addBaseModel(long userId) throws Exception {
 		MBThread mbThread = _mbThreadUADEntityTestHelper.addMBThread(userId);
 
 		_mbThreads.add(mbThread);
@@ -73,11 +77,6 @@ public class MBThreadUADAggregatorTest extends BaseUADAggregatorTestCase
 	@Override
 	protected UADAggregator getUADAggregator() {
 		return _uadAggregator;
-	}
-
-	@After
-	public void tearDown() throws Exception {
-		_mbThreadUADEntityTestHelper.cleanUpDependencies(_mbThreads);
 	}
 
 	@DeleteAfterTestRun

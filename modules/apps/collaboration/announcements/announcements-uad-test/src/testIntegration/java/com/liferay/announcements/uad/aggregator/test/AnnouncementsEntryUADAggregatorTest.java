@@ -18,7 +18,6 @@ import com.liferay.announcements.kernel.model.AnnouncementsEntry;
 import com.liferay.announcements.uad.constants.AnnouncementsUADConstants;
 import com.liferay.announcements.uad.test.AnnouncementsEntryUADEntityTestHelper;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.test.rule.Inject;
@@ -38,7 +37,7 @@ import org.junit.runner.RunWith;
  */
 @RunWith(Arquillian.class)
 public class AnnouncementsEntryUADAggregatorTest
-	extends BaseUADAggregatorTestCase {
+	extends BaseUADAggregatorTestCase<AnnouncementsEntry> {
 
 	@ClassRule
 	@Rule
@@ -46,7 +45,7 @@ public class AnnouncementsEntryUADAggregatorTest
 		new LiferayIntegrationTestRule();
 
 	@Override
-	protected BaseModel<?> addBaseModel(long userId) throws Exception {
+	protected AnnouncementsEntry addBaseModel(long userId) throws Exception {
 		AnnouncementsEntry announcementsEntry =
 			_announcementsEntryUADEntityTestHelper.addAnnouncementsEntry(
 				userId);

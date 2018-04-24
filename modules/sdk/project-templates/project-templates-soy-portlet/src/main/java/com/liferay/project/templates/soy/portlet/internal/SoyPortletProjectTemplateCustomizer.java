@@ -47,6 +47,23 @@ public class SoyPortletProjectTemplateCustomizer
 
 			Files.deleteIfExists(gulpfileJsPath);
 		}
+
+		String className = projectTemplatesArgs.getClassName();
+		String liferayVersion = projectTemplatesArgs.getLiferayVersion();
+
+		Path destinationDirPath = destinationDir.toPath();
+
+		Path projectDirPath = destinationDirPath.resolve(
+			projectTemplatesArgs.getName());
+
+		if (liferayVersion.equals("7.1")) {
+			ProjectTemplateCustomizer.deleteFileInPath(
+				className + "Portlet.java", projectDirPath);
+		}
+		else {
+			ProjectTemplateCustomizer.deleteFileInPath(
+				className + "SoyPortletRegister.java", projectDirPath);
+		}
 	}
 
 	@Override

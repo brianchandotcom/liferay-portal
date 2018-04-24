@@ -12,22 +12,17 @@
  * details.
  */
 
-package com.liferay.portal.kernel.module.framework;
+package com.liferay.portal.osgi.debug;
 
 /**
- * @author Miguel Ángel Pastor Olivar
+ * @author Tina Tian
  */
-public interface ModuleServiceLifecycle {
+public interface SystemChecker {
 
-	public String DATABASE_INITIALIZED =
-		"(module.service.lifecycle=database.initialized)";
+	public String check();
 
-	public String PORTAL_INITIALIZED =
-		"(module.service.lifecycle=portal.initialized)";
+	public String getName();
 
-	public String SPRING_INITIALIZED =
-		"(module.service.lifecycle=spring.initialized)";
-
-	public String SYSTEM_CHECK = "(module.service.lifecycle=system.check)";
+	public String getOSGiCommand();
 
 }

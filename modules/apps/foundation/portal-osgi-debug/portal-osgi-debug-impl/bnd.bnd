@@ -1,0 +1,3 @@
+Bundle-Name: Liferay Portal OSGi Debug Implementation
+Bundle-SymbolicName: com.liferay.portal.osgi.debug.impl
+Bundle-Version: 1.0.0

@@ -16,24 +16,14 @@ package com.liferay.portal.osgi.debug.spring.extender.internal;
 
 import static java.lang.Thread.sleep;
 
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.osgi.debug.spring.extender.internal.configuration.UnavailableComponentScannerConfiguration;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
-import org.apache.felix.dm.ComponentDeclaration;
-import org.apache.felix.dm.ComponentDependencyDeclaration;
-import org.apache.felix.dm.DependencyManager;
-
-import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -82,99 +72,6 @@ public class UnavailableComponentScanner {
 		}
 	}
 
-	private static void _scanUnavailableComponents() {
-		StringBundler sb = new StringBundler();
-
-		for (DependencyManager dependencyManager :
-				(List<DependencyManager>)
-					DependencyManager.getDependencyManagers()) {
-
-			BundleContext bundleContext = dependencyManager.getBundleContext();
-
-			Bundle bundle = bundleContext.getBundle();
-
-			Map<ComponentDeclaration, List<ComponentDependencyDeclaration>>
-				unavailableComponentDeclarations = new HashMap<>();
-
-			for (ComponentDeclaration componentDeclaration :
-					(List<ComponentDeclaration>)
-						dependencyManager.getComponents()) {
-
-				if (componentDeclaration.getState() !=
-						ComponentDeclaration.STATE_UNREGISTERED) {
-
-					continue;
-				}
-
-				List<ComponentDependencyDeclaration>
-					componentDependencyDeclarations =
-						unavailableComponentDeclarations.computeIfAbsent(
-							componentDeclaration, key -> new ArrayList<>());
-
-				for (ComponentDependencyDeclaration
-						componentDependencyDeclaration :
-							componentDeclaration.getComponentDependencies()) {
-
-					if (componentDependencyDeclaration.getState() ==
-							ComponentDependencyDeclaration.
-								STATE_UNAVAILABLE_REQUIRED) {
-
-						componentDependencyDeclarations.add(
-							componentDependencyDeclaration);
-					}
-				}
-			}
-
-			if (!unavailableComponentDeclarations.isEmpty()) {
-				sb.append("Found unavailable component in bundle {id: ");
-				sb.append(bundle.getBundleId());
-				sb.append(", name: ");
-				sb.append(bundle.getSymbolicName());
-				sb.append(", version: ");
-				sb.append(bundle.getVersion());
-				sb.append("}.\n");
-
-				for (Map.Entry
-						<ComponentDeclaration,
-							List<ComponentDependencyDeclaration>> entry :
-								unavailableComponentDeclarations.entrySet()) {
-
-					sb.append("\tComponent with ID ");
-
-					ComponentDeclaration componentDeclaration = entry.getKey();
-
-					sb.append(componentDeclaration.getId());
-
-					sb.append(" is unavailable due to missing required ");
-					sb.append("dependencies:\n\t\t");
-
-					for (ComponentDependencyDeclaration
-							componentDependencyDeclaration :
-								entry.getValue()) {
-
-						sb.append(componentDependencyDeclaration);
-						sb.append("\n\t\t");
-					}
-
-					sb.setStringAt(StringPool.NEW_LINE, sb.index() - 1);
-				}
-			}
-		}
-
-		if (sb.index() == 0) {
-			if (_log.isInfoEnabled()) {
-				_log.info(
-					"All Spring extender dependency manager components are " +
-						"registered");
-			}
-		}
-		else {
-			if (_log.isWarnEnabled()) {
-				_log.warn(sb.toString());
-			}
-		}
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		UnavailableComponentScanner.class);
 
@@ -188,7 +85,21 @@ public class UnavailableComponentScanner {
 				while (true) {
 					sleep(_scanningInterval);
 
-					_scanUnavailableComponents();
+					String scanResult =
+						UnavailableComponentUtil.scanUnavailableComponents();
+
+					if (scanResult.isEmpty()) {
+						if (_log.isInfoEnabled()) {
+							_log.info(
+								"All Spring extender dependency manager " +
+									"components are registered");
+						}
+					}
+					else {
+						if (_log.isWarnEnabled()) {
+							_log.warn(scanResult);
+						}
+					}
 				}
 			}
 			catch (InterruptedException ie) {

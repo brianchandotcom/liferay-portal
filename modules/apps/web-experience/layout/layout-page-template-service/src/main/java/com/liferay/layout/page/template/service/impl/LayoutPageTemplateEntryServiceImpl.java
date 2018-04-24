@@ -196,6 +196,15 @@ public class LayoutPageTemplateEntryServiceImpl
 
 	@Override
 	public List<LayoutPageTemplateEntry> getLayoutPageTemplateEntries(
+			long groupId, long classNameId, long classTypeId, int type)
+		throws PortalException {
+
+		return layoutPageTemplateEntryPersistence.filterFindByG_C_C_T(
+			groupId, classNameId, classTypeId, type);
+	}
+
+	@Override
+	public List<LayoutPageTemplateEntry> getLayoutPageTemplateEntries(
 		long groupId, long layoutPageTemplateCollectionId, String name,
 		int start, int end,
 		OrderByComparator<LayoutPageTemplateEntry> orderByComparator) {
@@ -228,6 +237,15 @@ public class LayoutPageTemplateEntryServiceImpl
 
 		return layoutPageTemplateEntryPersistence.filterCountByG_L(
 			groupId, layoutPageTemplateFolder);
+	}
+
+	@Override
+	public int getLayoutPageTemplateEntriesCount(
+			long groupId, long classNameId, long classTypeId, int type)
+		throws PortalException {
+
+		return layoutPageTemplateEntryPersistence.filterCountByG_C_C_T(
+			groupId, classNameId, classTypeId, type);
 	}
 
 	@Override

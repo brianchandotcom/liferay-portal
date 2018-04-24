@@ -17,23 +17,13 @@ package com.liferay.frontend.taglib.clay.servlet.taglib.util;
 import java.util.ArrayList;
 import java.util.function.Consumer;
 
-import javax.servlet.http.HttpServletRequest;
-
 /**
  * @author Brian Wing Shun Chan
  */
 public class DropdownItemList extends ArrayList<DropdownItem> {
 
-	public DropdownItemList() {
-		_request = null;
-	}
-
-	public DropdownItemList(HttpServletRequest request) {
-		_request = request;
-	}
-
 	public void add(Consumer<DropdownItem> consumer) {
-		DropdownItem dropdownItem = new DropdownItem(_request);
+		DropdownItem dropdownItem = new DropdownItem();
 
 		consumer.accept(dropdownItem);
 
@@ -41,8 +31,7 @@ public class DropdownItemList extends ArrayList<DropdownItem> {
 	}
 
 	public void addCheckbox(Consumer<DropdownCheckboxItem> consumer) {
-		DropdownCheckboxItem dropdownCheckboxItem = new DropdownCheckboxItem(
-			_request);
+		DropdownCheckboxItem dropdownCheckboxItem = new DropdownCheckboxItem();
 
 		consumer.accept(dropdownCheckboxItem);
 
@@ -50,7 +39,7 @@ public class DropdownItemList extends ArrayList<DropdownItem> {
 	}
 
 	public void addGroup(Consumer<DropdownGroupItem> consumer) {
-		DropdownGroupItem dropdownGroupItem = new DropdownGroupItem(_request);
+		DropdownGroupItem dropdownGroupItem = new DropdownGroupItem();
 
 		consumer.accept(dropdownGroupItem);
 
@@ -58,7 +47,7 @@ public class DropdownItemList extends ArrayList<DropdownItem> {
 	}
 
 	public void addRadio(Consumer<DropdownRadioItem> consumer) {
-		DropdownRadioItem dropdownRadioItem = new DropdownRadioItem(_request);
+		DropdownRadioItem dropdownRadioItem = new DropdownRadioItem();
 
 		consumer.accept(dropdownRadioItem);
 
@@ -67,13 +56,11 @@ public class DropdownItemList extends ArrayList<DropdownItem> {
 
 	public void addRadioGroup(Consumer<DropdownRadioGroupItem> consumer) {
 		DropdownRadioGroupItem dropdownRadioGroupItem =
-			new DropdownRadioGroupItem(_request);
+			new DropdownRadioGroupItem();
 
 		consumer.accept(dropdownRadioGroupItem);
 
 		add(dropdownRadioGroupItem);
 	}
-
-	private final HttpServletRequest _request;
 
 }

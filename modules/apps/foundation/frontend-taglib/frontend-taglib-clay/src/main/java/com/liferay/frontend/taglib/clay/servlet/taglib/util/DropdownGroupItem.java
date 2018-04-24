@@ -16,20 +16,12 @@ package com.liferay.frontend.taglib.clay.servlet.taglib.util;
 
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
-
 /**
  * @author Carlos Lancha
  */
 public class DropdownGroupItem extends DropdownItem {
 
 	public DropdownGroupItem() {
-		this(null);
-	}
-
-	public DropdownGroupItem(HttpServletRequest request) {
-		super(request);
-
 		put("type", "group");
 	}
 

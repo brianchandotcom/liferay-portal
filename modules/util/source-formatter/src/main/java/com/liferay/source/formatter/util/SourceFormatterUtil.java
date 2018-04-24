@@ -537,10 +537,9 @@ public class SourceFormatterUtil {
 					pathMatchers.getIncludeFilePathMatchers()) {
 
 				if (pathMatcher.matches(filePath)) {
-					fileName = StringUtil.replace(
-						fileName, CharPool.SLASH, CharPool.BACK_SLASH);
+					Path curFilePath = Paths.get(fileName);
 
-					fileNames.add(fileName);
+					fileNames.add(curFilePath.toString());
 
 					continue recentChangesFileNamesLoop;
 				}

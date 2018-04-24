@@ -6562,8 +6562,6 @@ public class LayoutPageTemplateEntryPersistenceImpl extends BasePersistenceImpl<
 	@Override
 	protected LayoutPageTemplateEntry removeImpl(
 		LayoutPageTemplateEntry layoutPageTemplateEntry) {
-		layoutPageTemplateEntry = toUnwrappedModel(layoutPageTemplateEntry);
-
 		Session session = null;
 
 		try {
@@ -6595,8 +6593,6 @@ public class LayoutPageTemplateEntryPersistenceImpl extends BasePersistenceImpl<
 	@Override
 	public LayoutPageTemplateEntry updateImpl(
 		LayoutPageTemplateEntry layoutPageTemplateEntry) {
-		layoutPageTemplateEntry = toUnwrappedModel(layoutPageTemplateEntry);
-
 		boolean isNew = layoutPageTemplateEntry.isNew();
 
 		LayoutPageTemplateEntryModelImpl layoutPageTemplateEntryModelImpl = (LayoutPageTemplateEntryModelImpl)layoutPageTemplateEntry;
@@ -6794,35 +6790,6 @@ public class LayoutPageTemplateEntryPersistenceImpl extends BasePersistenceImpl<
 		layoutPageTemplateEntry.resetOriginalValues();
 
 		return layoutPageTemplateEntry;
-	}
-
-	protected LayoutPageTemplateEntry toUnwrappedModel(
-		LayoutPageTemplateEntry layoutPageTemplateEntry) {
-		if (layoutPageTemplateEntry instanceof LayoutPageTemplateEntryImpl) {
-			return layoutPageTemplateEntry;
-		}
-
-		LayoutPageTemplateEntryImpl layoutPageTemplateEntryImpl = new LayoutPageTemplateEntryImpl();
-
-		layoutPageTemplateEntryImpl.setNew(layoutPageTemplateEntry.isNew());
-		layoutPageTemplateEntryImpl.setPrimaryKey(layoutPageTemplateEntry.getPrimaryKey());
-
-		layoutPageTemplateEntryImpl.setLayoutPageTemplateEntryId(layoutPageTemplateEntry.getLayoutPageTemplateEntryId());
-		layoutPageTemplateEntryImpl.setGroupId(layoutPageTemplateEntry.getGroupId());
-		layoutPageTemplateEntryImpl.setCompanyId(layoutPageTemplateEntry.getCompanyId());
-		layoutPageTemplateEntryImpl.setUserId(layoutPageTemplateEntry.getUserId());
-		layoutPageTemplateEntryImpl.setUserName(layoutPageTemplateEntry.getUserName());
-		layoutPageTemplateEntryImpl.setCreateDate(layoutPageTemplateEntry.getCreateDate());
-		layoutPageTemplateEntryImpl.setModifiedDate(layoutPageTemplateEntry.getModifiedDate());
-		layoutPageTemplateEntryImpl.setLayoutPageTemplateCollectionId(layoutPageTemplateEntry.getLayoutPageTemplateCollectionId());
-		layoutPageTemplateEntryImpl.setClassNameId(layoutPageTemplateEntry.getClassNameId());
-		layoutPageTemplateEntryImpl.setClassTypeId(layoutPageTemplateEntry.getClassTypeId());
-		layoutPageTemplateEntryImpl.setName(layoutPageTemplateEntry.getName());
-		layoutPageTemplateEntryImpl.setType(layoutPageTemplateEntry.getType());
-		layoutPageTemplateEntryImpl.setHtmlPreviewEntryId(layoutPageTemplateEntry.getHtmlPreviewEntryId());
-		layoutPageTemplateEntryImpl.setDefaultTemplate(layoutPageTemplateEntry.isDefaultTemplate());
-
-		return layoutPageTemplateEntryImpl;
 	}
 
 	/**

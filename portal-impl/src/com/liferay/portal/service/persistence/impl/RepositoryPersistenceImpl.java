@@ -2544,8 +2544,6 @@ public class RepositoryPersistenceImpl extends BasePersistenceImpl<Repository>
 
 	@Override
 	protected Repository removeImpl(Repository repository) {
-		repository = toUnwrappedModel(repository);
-
 		Session session = null;
 
 		try {
@@ -2576,8 +2574,6 @@ public class RepositoryPersistenceImpl extends BasePersistenceImpl<Repository>
 
 	@Override
 	public Repository updateImpl(Repository repository) {
-		repository = toUnwrappedModel(repository);
-
 		boolean isNew = repository.isNew();
 
 		RepositoryModelImpl repositoryModelImpl = (RepositoryModelImpl)repository;
@@ -2730,36 +2726,6 @@ public class RepositoryPersistenceImpl extends BasePersistenceImpl<Repository>
 		repository.resetOriginalValues();
 
 		return repository;
-	}
-
-	protected Repository toUnwrappedModel(Repository repository) {
-		if (repository instanceof RepositoryImpl) {
-			return repository;
-		}
-
-		RepositoryImpl repositoryImpl = new RepositoryImpl();
-
-		repositoryImpl.setNew(repository.isNew());
-		repositoryImpl.setPrimaryKey(repository.getPrimaryKey());
-
-		repositoryImpl.setMvccVersion(repository.getMvccVersion());
-		repositoryImpl.setUuid(repository.getUuid());
-		repositoryImpl.setRepositoryId(repository.getRepositoryId());
-		repositoryImpl.setGroupId(repository.getGroupId());
-		repositoryImpl.setCompanyId(repository.getCompanyId());
-		repositoryImpl.setUserId(repository.getUserId());
-		repositoryImpl.setUserName(repository.getUserName());
-		repositoryImpl.setCreateDate(repository.getCreateDate());
-		repositoryImpl.setModifiedDate(repository.getModifiedDate());
-		repositoryImpl.setClassNameId(repository.getClassNameId());
-		repositoryImpl.setName(repository.getName());
-		repositoryImpl.setDescription(repository.getDescription());
-		repositoryImpl.setPortletId(repository.getPortletId());
-		repositoryImpl.setTypeSettings(repository.getTypeSettings());
-		repositoryImpl.setDlFolderId(repository.getDlFolderId());
-		repositoryImpl.setLastPublishDate(repository.getLastPublishDate());
-
-		return repositoryImpl;
 	}
 
 	/**

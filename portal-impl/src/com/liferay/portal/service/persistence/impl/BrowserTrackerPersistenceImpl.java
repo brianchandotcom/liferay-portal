@@ -479,8 +479,6 @@ public class BrowserTrackerPersistenceImpl extends BasePersistenceImpl<BrowserTr
 
 	@Override
 	protected BrowserTracker removeImpl(BrowserTracker browserTracker) {
-		browserTracker = toUnwrappedModel(browserTracker);
-
 		Session session = null;
 
 		try {
@@ -511,8 +509,6 @@ public class BrowserTrackerPersistenceImpl extends BasePersistenceImpl<BrowserTr
 
 	@Override
 	public BrowserTracker updateImpl(BrowserTracker browserTracker) {
-		browserTracker = toUnwrappedModel(browserTracker);
-
 		boolean isNew = browserTracker.isNew();
 
 		BrowserTrackerModelImpl browserTrackerModelImpl = (BrowserTrackerModelImpl)browserTracker;
@@ -560,25 +556,6 @@ public class BrowserTrackerPersistenceImpl extends BasePersistenceImpl<BrowserTr
 		browserTracker.resetOriginalValues();
 
 		return browserTracker;
-	}
-
-	protected BrowserTracker toUnwrappedModel(BrowserTracker browserTracker) {
-		if (browserTracker instanceof BrowserTrackerImpl) {
-			return browserTracker;
-		}
-
-		BrowserTrackerImpl browserTrackerImpl = new BrowserTrackerImpl();
-
-		browserTrackerImpl.setNew(browserTracker.isNew());
-		browserTrackerImpl.setPrimaryKey(browserTracker.getPrimaryKey());
-
-		browserTrackerImpl.setMvccVersion(browserTracker.getMvccVersion());
-		browserTrackerImpl.setBrowserTrackerId(browserTracker.getBrowserTrackerId());
-		browserTrackerImpl.setCompanyId(browserTracker.getCompanyId());
-		browserTrackerImpl.setUserId(browserTracker.getUserId());
-		browserTrackerImpl.setBrowserKey(browserTracker.getBrowserKey());
-
-		return browserTrackerImpl;
 	}
 
 	/**

@@ -545,8 +545,6 @@ public class FeedPersistenceImpl extends BasePersistenceImpl<Feed>
 
 	@Override
 	protected Feed removeImpl(Feed feed) {
-		feed = toUnwrappedModel(feed);
-
 		Session session = null;
 
 		try {
@@ -576,8 +574,6 @@ public class FeedPersistenceImpl extends BasePersistenceImpl<Feed>
 
 	@Override
 	public Feed updateImpl(Feed feed) {
-		feed = toUnwrappedModel(feed);
-
 		boolean isNew = feed.isNew();
 
 		FeedModelImpl feedModelImpl = (FeedModelImpl)feed;
@@ -646,29 +642,6 @@ public class FeedPersistenceImpl extends BasePersistenceImpl<Feed>
 		feed.resetOriginalValues();
 
 		return feed;
-	}
-
-	protected Feed toUnwrappedModel(Feed feed) {
-		if (feed instanceof FeedImpl) {
-			return feed;
-		}
-
-		FeedImpl feedImpl = new FeedImpl();
-
-		feedImpl.setNew(feed.isNew());
-		feedImpl.setPrimaryKey(feed.getPrimaryKey());
-
-		feedImpl.setFeedId(feed.getFeedId());
-		feedImpl.setCompanyId(feed.getCompanyId());
-		feedImpl.setUserId(feed.getUserId());
-		feedImpl.setUserName(feed.getUserName());
-		feedImpl.setCreateDate(feed.getCreateDate());
-		feedImpl.setModifiedDate(feed.getModifiedDate());
-		feedImpl.setTwitterUserId(feed.getTwitterUserId());
-		feedImpl.setTwitterScreenName(feed.getTwitterScreenName());
-		feedImpl.setLastStatusId(feed.getLastStatusId());
-
-		return feedImpl;
 	}
 
 	/**

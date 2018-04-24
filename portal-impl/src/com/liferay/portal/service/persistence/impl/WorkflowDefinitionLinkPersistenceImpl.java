@@ -2389,8 +2389,6 @@ public class WorkflowDefinitionLinkPersistenceImpl extends BasePersistenceImpl<W
 	@Override
 	protected WorkflowDefinitionLink removeImpl(
 		WorkflowDefinitionLink workflowDefinitionLink) {
-		workflowDefinitionLink = toUnwrappedModel(workflowDefinitionLink);
-
 		Session session = null;
 
 		try {
@@ -2422,8 +2420,6 @@ public class WorkflowDefinitionLinkPersistenceImpl extends BasePersistenceImpl<W
 	@Override
 	public WorkflowDefinitionLink updateImpl(
 		WorkflowDefinitionLink workflowDefinitionLink) {
-		workflowDefinitionLink = toUnwrappedModel(workflowDefinitionLink);
-
 		boolean isNew = workflowDefinitionLink.isNew();
 
 		WorkflowDefinitionLinkModelImpl workflowDefinitionLinkModelImpl = (WorkflowDefinitionLinkModelImpl)workflowDefinitionLink;
@@ -2591,34 +2587,6 @@ public class WorkflowDefinitionLinkPersistenceImpl extends BasePersistenceImpl<W
 		workflowDefinitionLink.resetOriginalValues();
 
 		return workflowDefinitionLink;
-	}
-
-	protected WorkflowDefinitionLink toUnwrappedModel(
-		WorkflowDefinitionLink workflowDefinitionLink) {
-		if (workflowDefinitionLink instanceof WorkflowDefinitionLinkImpl) {
-			return workflowDefinitionLink;
-		}
-
-		WorkflowDefinitionLinkImpl workflowDefinitionLinkImpl = new WorkflowDefinitionLinkImpl();
-
-		workflowDefinitionLinkImpl.setNew(workflowDefinitionLink.isNew());
-		workflowDefinitionLinkImpl.setPrimaryKey(workflowDefinitionLink.getPrimaryKey());
-
-		workflowDefinitionLinkImpl.setMvccVersion(workflowDefinitionLink.getMvccVersion());
-		workflowDefinitionLinkImpl.setWorkflowDefinitionLinkId(workflowDefinitionLink.getWorkflowDefinitionLinkId());
-		workflowDefinitionLinkImpl.setGroupId(workflowDefinitionLink.getGroupId());
-		workflowDefinitionLinkImpl.setCompanyId(workflowDefinitionLink.getCompanyId());
-		workflowDefinitionLinkImpl.setUserId(workflowDefinitionLink.getUserId());
-		workflowDefinitionLinkImpl.setUserName(workflowDefinitionLink.getUserName());
-		workflowDefinitionLinkImpl.setCreateDate(workflowDefinitionLink.getCreateDate());
-		workflowDefinitionLinkImpl.setModifiedDate(workflowDefinitionLink.getModifiedDate());
-		workflowDefinitionLinkImpl.setClassNameId(workflowDefinitionLink.getClassNameId());
-		workflowDefinitionLinkImpl.setClassPK(workflowDefinitionLink.getClassPK());
-		workflowDefinitionLinkImpl.setTypePK(workflowDefinitionLink.getTypePK());
-		workflowDefinitionLinkImpl.setWorkflowDefinitionName(workflowDefinitionLink.getWorkflowDefinitionName());
-		workflowDefinitionLinkImpl.setWorkflowDefinitionVersion(workflowDefinitionLink.getWorkflowDefinitionVersion());
-
-		return workflowDefinitionLinkImpl;
 	}
 
 	/**

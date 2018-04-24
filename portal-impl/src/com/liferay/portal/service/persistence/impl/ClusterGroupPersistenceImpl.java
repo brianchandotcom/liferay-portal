@@ -230,8 +230,6 @@ public class ClusterGroupPersistenceImpl extends BasePersistenceImpl<ClusterGrou
 
 	@Override
 	protected ClusterGroup removeImpl(ClusterGroup clusterGroup) {
-		clusterGroup = toUnwrappedModel(clusterGroup);
-
 		Session session = null;
 
 		try {
@@ -262,8 +260,6 @@ public class ClusterGroupPersistenceImpl extends BasePersistenceImpl<ClusterGrou
 
 	@Override
 	public ClusterGroup updateImpl(ClusterGroup clusterGroup) {
-		clusterGroup = toUnwrappedModel(clusterGroup);
-
 		boolean isNew = clusterGroup.isNew();
 
 		Session session = null;
@@ -302,25 +298,6 @@ public class ClusterGroupPersistenceImpl extends BasePersistenceImpl<ClusterGrou
 		clusterGroup.resetOriginalValues();
 
 		return clusterGroup;
-	}
-
-	protected ClusterGroup toUnwrappedModel(ClusterGroup clusterGroup) {
-		if (clusterGroup instanceof ClusterGroupImpl) {
-			return clusterGroup;
-		}
-
-		ClusterGroupImpl clusterGroupImpl = new ClusterGroupImpl();
-
-		clusterGroupImpl.setNew(clusterGroup.isNew());
-		clusterGroupImpl.setPrimaryKey(clusterGroup.getPrimaryKey());
-
-		clusterGroupImpl.setMvccVersion(clusterGroup.getMvccVersion());
-		clusterGroupImpl.setClusterGroupId(clusterGroup.getClusterGroupId());
-		clusterGroupImpl.setName(clusterGroup.getName());
-		clusterGroupImpl.setClusterNodeIds(clusterGroup.getClusterNodeIds());
-		clusterGroupImpl.setWholeCluster(clusterGroup.isWholeCluster());
-
-		return clusterGroupImpl;
 	}
 
 	/**

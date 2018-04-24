@@ -1953,8 +1953,6 @@ public class DDMStructureLayoutPersistenceImpl extends BasePersistenceImpl<DDMSt
 	@Override
 	protected DDMStructureLayout removeImpl(
 		DDMStructureLayout ddmStructureLayout) {
-		ddmStructureLayout = toUnwrappedModel(ddmStructureLayout);
-
 		Session session = null;
 
 		try {
@@ -1985,8 +1983,6 @@ public class DDMStructureLayoutPersistenceImpl extends BasePersistenceImpl<DDMSt
 
 	@Override
 	public DDMStructureLayout updateImpl(DDMStructureLayout ddmStructureLayout) {
-		ddmStructureLayout = toUnwrappedModel(ddmStructureLayout);
-
 		boolean isNew = ddmStructureLayout.isNew();
 
 		DDMStructureLayoutModelImpl ddmStructureLayoutModelImpl = (DDMStructureLayoutModelImpl)ddmStructureLayout;
@@ -2119,31 +2115,6 @@ public class DDMStructureLayoutPersistenceImpl extends BasePersistenceImpl<DDMSt
 		ddmStructureLayout.resetOriginalValues();
 
 		return ddmStructureLayout;
-	}
-
-	protected DDMStructureLayout toUnwrappedModel(
-		DDMStructureLayout ddmStructureLayout) {
-		if (ddmStructureLayout instanceof DDMStructureLayoutImpl) {
-			return ddmStructureLayout;
-		}
-
-		DDMStructureLayoutImpl ddmStructureLayoutImpl = new DDMStructureLayoutImpl();
-
-		ddmStructureLayoutImpl.setNew(ddmStructureLayout.isNew());
-		ddmStructureLayoutImpl.setPrimaryKey(ddmStructureLayout.getPrimaryKey());
-
-		ddmStructureLayoutImpl.setUuid(ddmStructureLayout.getUuid());
-		ddmStructureLayoutImpl.setStructureLayoutId(ddmStructureLayout.getStructureLayoutId());
-		ddmStructureLayoutImpl.setGroupId(ddmStructureLayout.getGroupId());
-		ddmStructureLayoutImpl.setCompanyId(ddmStructureLayout.getCompanyId());
-		ddmStructureLayoutImpl.setUserId(ddmStructureLayout.getUserId());
-		ddmStructureLayoutImpl.setUserName(ddmStructureLayout.getUserName());
-		ddmStructureLayoutImpl.setCreateDate(ddmStructureLayout.getCreateDate());
-		ddmStructureLayoutImpl.setModifiedDate(ddmStructureLayout.getModifiedDate());
-		ddmStructureLayoutImpl.setStructureVersionId(ddmStructureLayout.getStructureVersionId());
-		ddmStructureLayoutImpl.setDefinition(ddmStructureLayout.getDefinition());
-
-		return ddmStructureLayoutImpl;
 	}
 
 	/**

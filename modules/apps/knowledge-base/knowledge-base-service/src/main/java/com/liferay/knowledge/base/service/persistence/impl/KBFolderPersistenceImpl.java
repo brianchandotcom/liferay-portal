@@ -3272,8 +3272,6 @@ public class KBFolderPersistenceImpl extends BasePersistenceImpl<KBFolder>
 
 	@Override
 	protected KBFolder removeImpl(KBFolder kbFolder) {
-		kbFolder = toUnwrappedModel(kbFolder);
-
 		Session session = null;
 
 		try {
@@ -3304,8 +3302,6 @@ public class KBFolderPersistenceImpl extends BasePersistenceImpl<KBFolder>
 
 	@Override
 	public KBFolder updateImpl(KBFolder kbFolder) {
-		kbFolder = toUnwrappedModel(kbFolder);
-
 		boolean isNew = kbFolder.isNew();
 
 		KBFolderModelImpl kbFolderModelImpl = (KBFolderModelImpl)kbFolder;
@@ -3463,33 +3459,6 @@ public class KBFolderPersistenceImpl extends BasePersistenceImpl<KBFolder>
 		kbFolder.resetOriginalValues();
 
 		return kbFolder;
-	}
-
-	protected KBFolder toUnwrappedModel(KBFolder kbFolder) {
-		if (kbFolder instanceof KBFolderImpl) {
-			return kbFolder;
-		}
-
-		KBFolderImpl kbFolderImpl = new KBFolderImpl();
-
-		kbFolderImpl.setNew(kbFolder.isNew());
-		kbFolderImpl.setPrimaryKey(kbFolder.getPrimaryKey());
-
-		kbFolderImpl.setUuid(kbFolder.getUuid());
-		kbFolderImpl.setKbFolderId(kbFolder.getKbFolderId());
-		kbFolderImpl.setGroupId(kbFolder.getGroupId());
-		kbFolderImpl.setCompanyId(kbFolder.getCompanyId());
-		kbFolderImpl.setUserId(kbFolder.getUserId());
-		kbFolderImpl.setUserName(kbFolder.getUserName());
-		kbFolderImpl.setCreateDate(kbFolder.getCreateDate());
-		kbFolderImpl.setModifiedDate(kbFolder.getModifiedDate());
-		kbFolderImpl.setParentKBFolderId(kbFolder.getParentKBFolderId());
-		kbFolderImpl.setName(kbFolder.getName());
-		kbFolderImpl.setUrlTitle(kbFolder.getUrlTitle());
-		kbFolderImpl.setDescription(kbFolder.getDescription());
-		kbFolderImpl.setLastPublishDate(kbFolder.getLastPublishDate());
-
-		return kbFolderImpl;
 	}
 
 	/**

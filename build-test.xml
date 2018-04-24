@@ -9281,7 +9281,10 @@ module.framework.properties.blacklist.portal.profile.names=${blacklist.portal.pr
 			</and>
 			<then>
 				<if>
-					<resourcecontains resource="${app.server.tomcat.dir}/bin/setenv${file.suffix.bat}" substring="${dummy.socket.proxy}" />
+					<resourcecontains
+						resource="${app.server.tomcat.dir}/bin/setenv${file.suffix.bat}"
+						substring="${dummy.socket.proxy}"
+					/>
 					<then>
 						<replace
 							file="${app.server.tomcat.dir}/bin/setenv${file.suffix.bat}"

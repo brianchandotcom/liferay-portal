@@ -25,6 +25,6 @@ Path servicePath = projectPath.resolve(request.artifactId + "-service")
 Path apiBuildGradlePath = apiPath.resolve("build.gradle")
 Path serviceBuildGradlePath = servicePath.resolve("build.gradle")
 
-Files.deleteIfExists(apiBuildGradlePath)
-Files.deleteIfExists(buildGradlePath)
-Files.deleteIfExists(serviceBuildGradlePath)
+Files.deleteIfExists apiBuildGradlePath
+Files.deleteIfExists buildGradlePath
+Files.deleteIfExists serviceBuildGradlePath

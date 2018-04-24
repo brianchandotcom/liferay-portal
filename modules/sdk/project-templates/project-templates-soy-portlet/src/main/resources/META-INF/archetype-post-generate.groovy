@@ -21,7 +21,7 @@ Path projectPath = Paths.get(request.outputDirectory, request.artifactId)
 
 Path buildGradlePath = projectPath.resolve("build.gradle")
 
-Files.deleteIfExists(buildGradlePath)
+Files.deleteIfExists buildGradlePath
 
 String className = request.properties.get("className")
 String liferayVersion = request.properties.get("liferayVersion")
@@ -30,18 +30,18 @@ String packageString = request.properties.get("package")
 String[] packageList = packageString.split("\\.")
 List<String> pathList = ["src", "main", "java"]
 
-pathList.addAll(packageList)
-pathList.add("portlet")
+pathList.addAll packageList
+pathList.add "portlet"
 
 if (liferayVersion == "7.1") {
-	pathList.add(className + "Portlet.java")
+	pathList.add className + "Portlet.java"
 }
 else {
-	pathList.add(className + "SoyPortletRegister.java")
+	pathList.add className + "SoyPortletRegister.java"
 }
 
 Path resourcePath = Paths.get("", pathList.toArray() as String[])
 
 Path resourceFullPath = projectPath.resolve(resourcePath)
 
-Files.deleteIfExists(resourceFullPath)
+Files.deleteIfExists resourceFullPath

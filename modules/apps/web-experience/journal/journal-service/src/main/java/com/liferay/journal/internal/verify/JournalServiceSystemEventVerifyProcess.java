@@ -40,16 +40,6 @@ import java.util.List;
  */
 public class JournalServiceSystemEventVerifyProcess extends VerifyProcess {
 
-	/**
-	 * @deprecated As of 4.0.0
-	 */
-	@Deprecated
-	public JournalServiceSystemEventVerifyProcess() {
-		_journalArticleLocalService = null;
-		_journalArticleResourceLocalService = null;
-		_systemEventLocalService = null;
-	}
-
 	public JournalServiceSystemEventVerifyProcess(
 		JournalArticleLocalService journalArticleLocalService,
 		JournalArticleResourceLocalService journalArticleResourceLocalService,
@@ -64,30 +54,6 @@ public class JournalServiceSystemEventVerifyProcess extends VerifyProcess {
 	@Override
 	protected void doVerify() throws Exception {
 		verifyJournalArticleDeleteSystemEvents();
-	}
-
-	/**
-	 * @deprecated As of 4.0.0
-	 */
-	@Deprecated
-	protected void setJournalArticleLocalService(
-		JournalArticleLocalService journalArticleLocalService) {
-	}
-
-	/**
-	 * @deprecated As of 4.0.0
-	 */
-	@Deprecated
-	protected void setJournalArticleResourceLocalService(
-		JournalArticleResourceLocalService journalArticleResourceLocalService) {
-	}
-
-	/**
-	 * @deprecated As of 4.0.0
-	 */
-	@Deprecated
-	protected void setSystemEventLocalService(
-		SystemEventLocalService systemEventLocalService) {
 	}
 
 	protected void verifyJournalArticleDeleteSystemEvents() throws Exception {

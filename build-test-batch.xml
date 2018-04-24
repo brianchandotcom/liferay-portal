@@ -1012,6 +1012,23 @@ app.server.type=@{app.server.type}]]></echo>
 						</then>
 					</if>
 
+					<if>
+						<isset property="env.CI_TEST_SUITE" />
+						<then>
+							<propertycopy from="search.engine[${env.CI_TEST_SUITE}]" name="search.engine" silent="true" />
+
+							<if>
+								<or>
+									<equals arg1="${search.engine}" arg2="elasticsearch6" />
+									<equals arg1="${search.engine}" arg2="solr" />
+								</or>
+								<then>
+									<prepare-search-engine search.engine="${search.engine}" />
+								</then>
+							</if>
+						</then>
+					</if>
+
 					<echo if:set="env.JENKINS_HOME">ANT_OPTS=${env.ANT_OPTS}</echo>
 				</test-set-up>
 

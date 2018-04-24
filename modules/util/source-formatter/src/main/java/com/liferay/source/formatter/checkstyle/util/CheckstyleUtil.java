@@ -88,14 +88,8 @@ public class CheckstyleUtil {
 		configuration = _addAttribute(
 			configuration, "maxLineLength",
 			String.valueOf(sourceFormatterArgs.getMaxLineLength()),
-			"com.liferay.source.formatter.checkstyle.checks.AppendCheck");
-		configuration = _addAttribute(
-			configuration, "maxLineLength",
-			String.valueOf(sourceFormatterArgs.getMaxLineLength()),
-			"com.liferay.source.formatter.checkstyle.checks.ConcatCheck");
-		configuration = _addAttribute(
-			configuration, "maxLineLength",
-			String.valueOf(sourceFormatterArgs.getMaxLineLength()),
+			"com.liferay.source.formatter.checkstyle.checks.AppendCheck",
+			"com.liferay.source.formatter.checkstyle.checks.ConcatCheck",
 			"com.liferay.source.formatter.checkstyle.checks." +
 				"PlusStatementCheck");
 		configuration = _addAttribute(

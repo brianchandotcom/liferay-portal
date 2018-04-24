@@ -103,9 +103,15 @@ request.setAttribute("view.jsp-orderByType", orderByType);
 
 <liferay-util:include page="/document_library/navigation.jsp" servletContext="<%= application %>" />
 
-<liferay-util:include page="/document_library/toolbar.jsp" servletContext="<%= application %>">
-	<liferay-util:param name="searchContainerId" value="entries" />
-</liferay-util:include>
+<clay:management-toolbar
+	clearResultsURL="<%= String.valueOf(renderResponse.createRenderURL()) %>"
+	creationMenu="<%= null %>"
+	disabled="<%= DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcutsCount(repositoryId, folderId, WorkflowConstants.STATUS_ANY, true) <= 0 %>"
+	searchActionURL="<%= String.valueOf(renderResponse.createRenderURL()) %>"
+	searchFormName="fm"
+	selectable="<%= dlPortletInstanceSettingsHelper.isShowActions() %>"
+	totalItems="<%= 0 %>"
+/>
 
 <div id="<portlet:namespace />documentLibraryContainer">
 

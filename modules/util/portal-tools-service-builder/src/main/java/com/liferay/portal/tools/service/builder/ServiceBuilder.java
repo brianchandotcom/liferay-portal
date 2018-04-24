@@ -5618,6 +5618,15 @@ public class ServiceBuilder {
 				uadNonanonymizable);
 
 			if (primary) {
+				if (!(columnType.equals("int") || columnType.equals("long") ||
+					columnType.equals("String"))) {
+
+					throw new IllegalArgumentException(
+						StringBundler.concat(
+							"Primary key ", columnName, " of entity ",
+							entityName, " must be an int, long, or String"));
+				}
+
 				pkEntityColumns.add(entityColumn);
 			}
 

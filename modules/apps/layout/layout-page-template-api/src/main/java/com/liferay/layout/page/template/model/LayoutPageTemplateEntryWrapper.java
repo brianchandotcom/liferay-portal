@@ -75,6 +75,10 @@ public class LayoutPageTemplateEntryWrapper implements LayoutPageTemplateEntry,
 		attributes.put("type", getType());
 		attributes.put("htmlPreviewEntryId", getHtmlPreviewEntryId());
 		attributes.put("defaultTemplate", isDefaultTemplate());
+		attributes.put("status", getStatus());
+		attributes.put("statusByUserId", getStatusByUserId());
+		attributes.put("statusByUserName", getStatusByUserName());
+		attributes.put("statusDate", getStatusDate());
 
 		return attributes;
 	}
@@ -165,6 +169,30 @@ public class LayoutPageTemplateEntryWrapper implements LayoutPageTemplateEntry,
 
 		if (defaultTemplate != null) {
 			setDefaultTemplate(defaultTemplate);
+		}
+
+		Integer status = (Integer)attributes.get("status");
+
+		if (status != null) {
+			setStatus(status);
+		}
+
+		Long statusByUserId = (Long)attributes.get("statusByUserId");
+
+		if (statusByUserId != null) {
+			setStatusByUserId(statusByUserId);
+		}
+
+		String statusByUserName = (String)attributes.get("statusByUserName");
+
+		if (statusByUserName != null) {
+			setStatusByUserName(statusByUserName);
+		}
+
+		Date statusDate = (Date)attributes.get("statusDate");
+
+		if (statusDate != null) {
+			setStatusDate(statusDate);
 		}
 	}
 
@@ -331,6 +359,56 @@ public class LayoutPageTemplateEntryWrapper implements LayoutPageTemplateEntry,
 	}
 
 	/**
+	* Returns the status of this layout page template entry.
+	*
+	* @return the status of this layout page template entry
+	*/
+	@Override
+	public int getStatus() {
+		return _layoutPageTemplateEntry.getStatus();
+	}
+
+	/**
+	* Returns the status by user ID of this layout page template entry.
+	*
+	* @return the status by user ID of this layout page template entry
+	*/
+	@Override
+	public long getStatusByUserId() {
+		return _layoutPageTemplateEntry.getStatusByUserId();
+	}
+
+	/**
+	* Returns the status by user name of this layout page template entry.
+	*
+	* @return the status by user name of this layout page template entry
+	*/
+	@Override
+	public String getStatusByUserName() {
+		return _layoutPageTemplateEntry.getStatusByUserName();
+	}
+
+	/**
+	* Returns the status by user uuid of this layout page template entry.
+	*
+	* @return the status by user uuid of this layout page template entry
+	*/
+	@Override
+	public String getStatusByUserUuid() {
+		return _layoutPageTemplateEntry.getStatusByUserUuid();
+	}
+
+	/**
+	* Returns the status date of this layout page template entry.
+	*
+	* @return the status date of this layout page template entry
+	*/
+	@Override
+	public Date getStatusDate() {
+		return _layoutPageTemplateEntry.getStatusDate();
+	}
+
+	/**
 	* Returns the type of this layout page template entry.
 	*
 	* @return the type of this layout page template entry
@@ -375,6 +453,16 @@ public class LayoutPageTemplateEntryWrapper implements LayoutPageTemplateEntry,
 		return _layoutPageTemplateEntry.hashCode();
 	}
 
+	/**
+	* Returns <code>true</code> if this layout page template entry is approved.
+	*
+	* @return <code>true</code> if this layout page template entry is approved; <code>false</code> otherwise
+	*/
+	@Override
+	public boolean isApproved() {
+		return _layoutPageTemplateEntry.isApproved();
+	}
+
 	@Override
 	public boolean isCachedModel() {
 		return _layoutPageTemplateEntry.isCachedModel();
@@ -390,14 +478,84 @@ public class LayoutPageTemplateEntryWrapper implements LayoutPageTemplateEntry,
 		return _layoutPageTemplateEntry.isDefaultTemplate();
 	}
 
+	/**
+	* Returns <code>true</code> if this layout page template entry is denied.
+	*
+	* @return <code>true</code> if this layout page template entry is denied; <code>false</code> otherwise
+	*/
+	@Override
+	public boolean isDenied() {
+		return _layoutPageTemplateEntry.isDenied();
+	}
+
+	/**
+	* Returns <code>true</code> if this layout page template entry is a draft.
+	*
+	* @return <code>true</code> if this layout page template entry is a draft; <code>false</code> otherwise
+	*/
+	@Override
+	public boolean isDraft() {
+		return _layoutPageTemplateEntry.isDraft();
+	}
+
 	@Override
 	public boolean isEscapedModel() {
 		return _layoutPageTemplateEntry.isEscapedModel();
 	}
 
+	/**
+	* Returns <code>true</code> if this layout page template entry is expired.
+	*
+	* @return <code>true</code> if this layout page template entry is expired; <code>false</code> otherwise
+	*/
+	@Override
+	public boolean isExpired() {
+		return _layoutPageTemplateEntry.isExpired();
+	}
+
+	/**
+	* Returns <code>true</code> if this layout page template entry is inactive.
+	*
+	* @return <code>true</code> if this layout page template entry is inactive; <code>false</code> otherwise
+	*/
+	@Override
+	public boolean isInactive() {
+		return _layoutPageTemplateEntry.isInactive();
+	}
+
+	/**
+	* Returns <code>true</code> if this layout page template entry is incomplete.
+	*
+	* @return <code>true</code> if this layout page template entry is incomplete; <code>false</code> otherwise
+	*/
+	@Override
+	public boolean isIncomplete() {
+		return _layoutPageTemplateEntry.isIncomplete();
+	}
+
 	@Override
 	public boolean isNew() {
 		return _layoutPageTemplateEntry.isNew();
+	}
+
+	/**
+	* Returns <code>true</code> if this layout page template entry is pending.
+	*
+	* @return <code>true</code> if this layout page template entry is pending; <code>false</code> otherwise
+	*/
+	@Override
+	public boolean isPending() {
+		return _layoutPageTemplateEntry.isPending();
+	}
+
+	/**
+	* Returns <code>true</code> if this layout page template entry is scheduled.
+	*
+	* @return <code>true</code> if this layout page template entry is scheduled; <code>false</code> otherwise
+	*/
+	@Override
+	public boolean isScheduled() {
+		return _layoutPageTemplateEntry.isScheduled();
 	}
 
 	@Override
@@ -560,6 +718,56 @@ public class LayoutPageTemplateEntryWrapper implements LayoutPageTemplateEntry,
 	@Override
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
 		_layoutPageTemplateEntry.setPrimaryKeyObj(primaryKeyObj);
+	}
+
+	/**
+	* Sets the status of this layout page template entry.
+	*
+	* @param status the status of this layout page template entry
+	*/
+	@Override
+	public void setStatus(int status) {
+		_layoutPageTemplateEntry.setStatus(status);
+	}
+
+	/**
+	* Sets the status by user ID of this layout page template entry.
+	*
+	* @param statusByUserId the status by user ID of this layout page template entry
+	*/
+	@Override
+	public void setStatusByUserId(long statusByUserId) {
+		_layoutPageTemplateEntry.setStatusByUserId(statusByUserId);
+	}
+
+	/**
+	* Sets the status by user name of this layout page template entry.
+	*
+	* @param statusByUserName the status by user name of this layout page template entry
+	*/
+	@Override
+	public void setStatusByUserName(String statusByUserName) {
+		_layoutPageTemplateEntry.setStatusByUserName(statusByUserName);
+	}
+
+	/**
+	* Sets the status by user uuid of this layout page template entry.
+	*
+	* @param statusByUserUuid the status by user uuid of this layout page template entry
+	*/
+	@Override
+	public void setStatusByUserUuid(String statusByUserUuid) {
+		_layoutPageTemplateEntry.setStatusByUserUuid(statusByUserUuid);
+	}
+
+	/**
+	* Sets the status date of this layout page template entry.
+	*
+	* @param statusDate the status date of this layout page template entry
+	*/
+	@Override
+	public void setStatusDate(Date statusDate) {
+		_layoutPageTemplateEntry.setStatusDate(statusDate);
 	}
 
 	/**

@@ -1,5 +1,4 @@
 $translatedColor: #3DC513;
-$transparentWhite: rgba(255, 255, 255, 0);
 $untranslatedColor: #A7A9BC;
 
 .fragments-editor__fragment-entry-links {
@@ -9,16 +8,19 @@ $untranslatedColor: #A7A9BC;
 	}
 
 	&.translating {
+		.translated,
+		.untranslated {
+			background-size: 6px 6px;
+		}
+
 		.translated {
-			background-image: linear-gradient(45deg, $transparentWhite 46.67%, $translatedColor 46.67%, $translatedColor 50%, $transparentWhite 50%, $transparentWhite 96.67%, $translatedColor 96.67%, $translatedColor 100%);
-			background-size: 21.21px 21.21px;
-			border: solid 1px $translatedColor;
+			background-image: linear-gradient(45deg, transparent 0%, transparent calc(50% - 1px), fade_out($translatedColor, 0.75) 50%, transparent calc(50% + 1px), transparent 100%);
+			box-shadow: 0 0 0 1px fade_out($translatedColor, 0.4);
 		}
 
 		.untranslated {
-			background-image: linear-gradient(45deg, $transparentWhite 46.67%, $untranslatedColor 46.67%, $untranslatedColor 50%, $transparentWhite 50%, $transparentWhite 96.67%, $untranslatedColor 96.67%, $untranslatedColor 100%);
-			background-size: 21.21px 21.21px;
-			border: solid 1px $untranslatedColor;
+			background-image: linear-gradient(45deg, transparent 0%, transparent calc(50% - 1px), fade_out($untranslatedColor, 0.75) 50%, transparent calc(50% + 1px), transparent 100%);
+			box-shadow: 0 0 0 1px fade_out($untranslatedColor, 0.4);
 		}
 
 		.translated[type="image"]:after,

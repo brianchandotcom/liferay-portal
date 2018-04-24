@@ -78,6 +78,12 @@
 		}
 	}
 
+	.navigation-bar > .container {
+		margin-left: 24px;
+		margin-right: 24px;
+		padding: 0;
+	}
+
 	.panel-group .panel {
 		border-left-width: 0;
 		border-radius: 0;
@@ -144,7 +150,7 @@
 
 			left: 0;
 			margin: 0;
-			padding: 10px 15px;
+			padding: 10px 24px;
 			width: 100%;
 
 			@include md {

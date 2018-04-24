@@ -1681,10 +1681,6 @@ app.server.type=@{app.server.type}]]></echo>
 
 	<macrodef name="setup-testable-tomcat-dummy-socket-proxy">
 		<sequential>
-			<local name="dummy.socket.proxy" />
-
-			<property name="dummy.socket.proxy" value="-DsocksProxyHost=127.0.0.1 -DsocksProxyPort=8888" />
-
 			<if>
 				<not>
 					<resourcecontains

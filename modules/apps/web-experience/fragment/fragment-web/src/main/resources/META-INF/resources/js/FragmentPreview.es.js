@@ -71,6 +71,13 @@ class FragmentPreview extends Component {
 		this.off('cssChanged', this._updatePreview);
 		this.off('htmlChanged', this._updatePreview);
 		this.off('jsChanged', this._updatePreview);
+
+		if (this.refs.previewFrame && this.refs.previewFrame.contentWindow) {
+			this.refs.previewFrame.contentWindow.postMessage(
+				JSON.stringify({data: ''}),
+				'*'
+			);
+		}
 	}
 
 	/**

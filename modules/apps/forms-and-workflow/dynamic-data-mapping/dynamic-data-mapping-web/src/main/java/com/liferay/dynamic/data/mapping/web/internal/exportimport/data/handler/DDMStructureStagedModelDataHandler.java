@@ -521,7 +521,7 @@ public class DDMStructureStagedModelDataHandler
 				DDMDataProviderInstance.class);
 
 		for (String ddmDataProviderInstanceId : ddmDataProviderInstanceIds) {
-			long oldDDMDataProviderInstanceId = Long.parseLong(
+			long oldDDMDataProviderInstanceId = GetterUtil.getLong(
 				ddmDataProviderInstanceId);
 
 			long newDDMDataProviderInstanceId = MapUtil.getLong(

@@ -17,6 +17,7 @@ package com.liferay.knowledge.base.internal.upgrade.v2_0_2;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.util.GetterUtil;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -67,7 +68,7 @@ public class UpgradeKBArticle extends UpgradeProcess {
 			return urlTitle + _DEFAULT_SUFFIX;
 		}
 
-		int counter = Integer.parseInt(urlTitle.substring(i + 1));
+		int counter = GetterUtil.getInteger(urlTitle.substring(i + 1));
 
 		int spreadValue = 16 + n;
 

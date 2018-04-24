@@ -43,6 +43,7 @@ import static com.liferay.dynamic.data.mapping.expression.internal.parser.DDMExp
 import com.liferay.dynamic.data.mapping.expression.DDMExpressionFunction;
 import com.liferay.dynamic.data.mapping.expression.internal.parser.DDMExpressionBaseVisitor;
 import com.liferay.dynamic.data.mapping.expression.internal.parser.DDMExpressionParser;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.ArrayList;
@@ -128,7 +129,7 @@ public class DDMExpressionEvaluatorVisitor
 	public Object visitFloatingPointLiteral(
 		@NotNull FloatingPointLiteralContext context) {
 
-		return Double.parseDouble(context.getText());
+		return GetterUtil.getDouble(context.getText());
 	}
 
 	@Override
@@ -172,7 +173,7 @@ public class DDMExpressionEvaluatorVisitor
 
 	@Override
 	public Object visitIntegerLiteral(@NotNull IntegerLiteralContext context) {
-		Number number = Long.parseLong(context.getText());
+		Number number = GetterUtil.getLong(context.getText());
 
 		return number.doubleValue();
 	}

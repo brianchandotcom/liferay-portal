@@ -21,6 +21,7 @@ import com.liferay.apio.architect.uri.mapper.PathIdentifierMapper;
 import com.liferay.apio.architect.wiring.osgi.manager.representable.IdentifierClassManager;
 import com.liferay.apio.architect.wiring.osgi.manager.representable.NameManager;
 import com.liferay.portal.apio.identifier.ClassNameClassPK;
+import com.liferay.portal.kernel.util.GetterUtil;
 
 import java.util.Optional;
 
@@ -63,7 +64,7 @@ public class ClassNameClassPKIdentifierMapper
 				"No resource found for path " + components[0]));
 
 		Long classPK = Try.fromFallible(
-			() -> Long.parseLong(components[1])
+			() -> GetterUtil.getLong(components[1])
 		).orElseThrow(
 			() -> new BadRequestException(
 				"Unable to convert " + id + " to a long class PK")

@@ -42,7 +42,7 @@ public class ThumbnailConfiguration {
 			return 0;
 		}
 
-		return Long.parseLong(matcher.group(1));
+		return GetterUtil.getLong(matcher.group(1));
 	}
 
 	public boolean matches(

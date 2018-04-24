@@ -18,12 +18,12 @@ import java.nio.file.Paths
 
 Path projectPath = Paths.get(request.outputDirectory, request.artifactId)
 
-Path apiPath = projectPath.resolve(request.artifactId + '-api')
-Path buildGradlePath = projectPath.resolve('build.gradle')
-Path servicePath = projectPath.resolve(request.artifactId + '-service')
+Path apiPath = projectPath.resolve(request.artifactId + "-api")
+Path buildGradlePath = projectPath.resolve("build.gradle")
+Path servicePath = projectPath.resolve(request.artifactId + "-service")
 
-Path apiBuildGradlePath = apiPath.resolve('build.gradle')
-Path serviceBuildGradlePath = servicePath.resolve('build.gradle')
+Path apiBuildGradlePath = apiPath.resolve("build.gradle")
+Path serviceBuildGradlePath = servicePath.resolve("build.gradle")
 
 Files.deleteIfExists(apiBuildGradlePath)
 Files.deleteIfExists(buildGradlePath)

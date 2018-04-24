@@ -22,7 +22,7 @@ class TranslationStatus extends Component {
 
 		this.emit(
 			'languageChange',
-			event.delegateTarget.getAttribute('data-languageid')
+			{languageId: event.delegateTarget.getAttribute('data-languageid')}
 		);
 	}
 }

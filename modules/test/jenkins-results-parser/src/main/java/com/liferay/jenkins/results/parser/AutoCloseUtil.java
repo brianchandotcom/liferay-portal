@@ -540,6 +540,10 @@ public class AutoCloseUtil {
 				batchName = build.getParameterValue("JENKINS_JOB_VARIANT");
 			}
 
+			if ((batchName == null) || batchName.isEmpty()) {
+				return build.getJobName();
+			}
+
 			return batchName;
 		}
 

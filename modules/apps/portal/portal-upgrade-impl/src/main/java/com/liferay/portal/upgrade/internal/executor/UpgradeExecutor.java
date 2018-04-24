@@ -45,7 +45,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(immediate = true, service = UpgradeExecutor.class)
 public class UpgradeExecutor {
 
-	public void doExecute(
+	public void execute(
 		String bundleSymbolicName, List<UpgradeInfo> upgradeInfos) {
 
 		ReleaseGraphManager releaseGraphManager = new ReleaseGraphManager(

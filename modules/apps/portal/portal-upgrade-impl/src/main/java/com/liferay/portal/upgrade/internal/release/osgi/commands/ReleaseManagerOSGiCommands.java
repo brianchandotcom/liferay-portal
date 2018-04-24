@@ -129,7 +129,7 @@ public class ReleaseManagerOSGiCommands {
 			List<UpgradeInfo> upgradeInfos = _serviceTrackerMap.getService(
 				bundleSymbolicName);
 
-			_upgradeExecutor.doExecute(bundleSymbolicName, upgradeInfos);
+			_upgradeExecutor.execute(bundleSymbolicName, upgradeInfos);
 		}
 		catch (Throwable t) {
 			t.printStackTrace(System.out);
@@ -260,7 +260,7 @@ public class ReleaseManagerOSGiCommands {
 				List<UpgradeInfo> upgradeInfos = _serviceTrackerMap.getService(
 					upgradableBundleSymbolicName);
 
-				_upgradeExecutor.doExecute(
+				_upgradeExecutor.execute(
 					upgradableBundleSymbolicName, upgradeInfos);
 			}
 			catch (Throwable t) {
@@ -420,7 +420,7 @@ public class ReleaseManagerOSGiCommands {
 			final String key, UpgradeInfo upgradeInfo,
 			List<UpgradeInfo> upgradeInfos) {
 
-			_upgradeExecutor.doExecute(key, upgradeInfos);
+			_upgradeExecutor.execute(key, upgradeInfos);
 		}
 
 		@Override

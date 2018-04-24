@@ -150,6 +150,14 @@ public class LayoutPageTemplateEntryPersistenceTest {
 
 		newLayoutPageTemplateEntry.setDefaultTemplate(RandomTestUtil.randomBoolean());
 
+		newLayoutPageTemplateEntry.setStatus(RandomTestUtil.nextInt());
+
+		newLayoutPageTemplateEntry.setStatusByUserId(RandomTestUtil.nextLong());
+
+		newLayoutPageTemplateEntry.setStatusByUserName(RandomTestUtil.randomString());
+
+		newLayoutPageTemplateEntry.setStatusDate(RandomTestUtil.nextDate());
+
 		_layoutPageTemplateEntries.add(_persistence.update(
 				newLayoutPageTemplateEntry));
 
@@ -185,6 +193,15 @@ public class LayoutPageTemplateEntryPersistenceTest {
 			newLayoutPageTemplateEntry.getHtmlPreviewEntryId());
 		Assert.assertEquals(existingLayoutPageTemplateEntry.isDefaultTemplate(),
 			newLayoutPageTemplateEntry.isDefaultTemplate());
+		Assert.assertEquals(existingLayoutPageTemplateEntry.getStatus(),
+			newLayoutPageTemplateEntry.getStatus());
+		Assert.assertEquals(existingLayoutPageTemplateEntry.getStatusByUserId(),
+			newLayoutPageTemplateEntry.getStatusByUserId());
+		Assert.assertEquals(existingLayoutPageTemplateEntry.getStatusByUserName(),
+			newLayoutPageTemplateEntry.getStatusByUserName());
+		Assert.assertEquals(Time.getShortTimestamp(
+				existingLayoutPageTemplateEntry.getStatusDate()),
+			Time.getShortTimestamp(newLayoutPageTemplateEntry.getStatusDate()));
 	}
 
 	@Test
@@ -303,7 +320,9 @@ public class LayoutPageTemplateEntryPersistenceTest {
 			true, "userId", true, "userName", true, "createDate", true,
 			"modifiedDate", true, "layoutPageTemplateCollectionId", true,
 			"classNameId", true, "classTypeId", true, "name", true, "type",
-			true, "htmlPreviewEntryId", true, "defaultTemplate", true);
+			true, "htmlPreviewEntryId", true, "defaultTemplate", true,
+			"status", true, "statusByUserId", true, "statusByUserName", true,
+			"statusDate", true);
 	}
 
 	@Test
@@ -560,6 +579,14 @@ public class LayoutPageTemplateEntryPersistenceTest {
 		layoutPageTemplateEntry.setHtmlPreviewEntryId(RandomTestUtil.nextLong());
 
 		layoutPageTemplateEntry.setDefaultTemplate(RandomTestUtil.randomBoolean());
+
+		layoutPageTemplateEntry.setStatus(RandomTestUtil.nextInt());
+
+		layoutPageTemplateEntry.setStatusByUserId(RandomTestUtil.nextLong());
+
+		layoutPageTemplateEntry.setStatusByUserName(RandomTestUtil.randomString());
+
+		layoutPageTemplateEntry.setStatusDate(RandomTestUtil.nextDate());
 
 		_layoutPageTemplateEntries.add(_persistence.update(
 				layoutPageTemplateEntry));

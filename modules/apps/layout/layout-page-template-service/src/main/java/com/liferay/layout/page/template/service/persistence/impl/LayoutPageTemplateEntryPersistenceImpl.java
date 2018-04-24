@@ -9098,6 +9098,10 @@ public class LayoutPageTemplateEntryPersistenceImpl extends BasePersistenceImpl<
 		layoutPageTemplateEntryImpl.setType(layoutPageTemplateEntry.getType());
 		layoutPageTemplateEntryImpl.setHtmlPreviewEntryId(layoutPageTemplateEntry.getHtmlPreviewEntryId());
 		layoutPageTemplateEntryImpl.setDefaultTemplate(layoutPageTemplateEntry.isDefaultTemplate());
+		layoutPageTemplateEntryImpl.setStatus(layoutPageTemplateEntry.getStatus());
+		layoutPageTemplateEntryImpl.setStatusByUserId(layoutPageTemplateEntry.getStatusByUserId());
+		layoutPageTemplateEntryImpl.setStatusByUserName(layoutPageTemplateEntry.getStatusByUserName());
+		layoutPageTemplateEntryImpl.setStatusDate(layoutPageTemplateEntry.getStatusDate());
 
 		return layoutPageTemplateEntryImpl;
 	}

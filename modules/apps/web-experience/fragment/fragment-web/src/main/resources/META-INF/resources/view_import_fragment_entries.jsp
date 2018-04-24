@@ -33,13 +33,13 @@ DLConfiguration dlConfiguration = ConfigurationProviderUtil.getSystemConfigurati
 	<liferay-ui:message arguments="<%= dfeke.getMessage() %>" key="a-fragment-entry-with-the-key-x-already-exists" />
 </liferay-ui:error>
 
-<liferay-ui:error exception="<%= InvalidImportFileException.class %>">
+<liferay-ui:error exception="<%= InvalidFragmentEntryFileException.class %>">
 
 	<%
-	InvalidImportFileException iife = (InvalidImportFileException)errorException;
+	InvalidFragmentEntryFileException ifefe = (InvalidFragmentEntryFileException)errorException;
 	%>
 
-	<liferay-ui:message key="<%= iife.getMessage() %>" />
+	<liferay-ui:message key="<%= ifefe.getMessage() %>" />
 </liferay-ui:error>
 
 <div class="lfr-dynamic-uploader" id="<portlet:namespace />uploaderContainer">

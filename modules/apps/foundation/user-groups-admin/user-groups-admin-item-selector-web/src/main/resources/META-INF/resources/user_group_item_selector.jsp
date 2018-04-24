@@ -66,6 +66,16 @@ PortletURL portletURL = userGroupItemSelectorViewDisplayContext.getPortletURL();
 			keyProperty="userGroupId"
 			modelVar="userGroup"
 		>
+
+			<%
+			Map<String, Object> data = new HashMap<>();
+
+			data.put("id", userGroup.getUserGroupId());
+			data.put("name", userGroup.getName);
+
+			row.setData(data);
+			%>
+
 			<liferay-ui:search-container-column-text
 				cssClass="table-cell-content"
 				property="name"
@@ -93,10 +103,23 @@ PortletURL portletURL = userGroupItemSelectorViewDisplayContext.getPortletURL();
 	searchContainer.on(
 		'rowToggled',
 		function(event) {
+			var allSelectedElements = event.elements.allSelectedElements
+			var arr = [];
+
+			allSelectedElements.each(
+				function() {
+					var row = this.ancestor('tr');
+
+					var data = row.getDOM().dataset;
+
+					arr.push({id : data.id, name : data.name});
+				}
+			);
+
 			Liferay.Util.getOpener().Liferay.fire(
 				'<%= HtmlUtil.escapeJS(itemSelectedEventName) %>',
 				{
-					data: Liferay.Util.listCheckedExcept(userGroupSelectorWrapper, '<portlet:namespace />allRowIds')
+					data: arr
 				}
 			);
 		}

@@ -26,6 +26,9 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 page import="com.liferay.user.groups.admin.item.selector.web.internal.constants.UserGroupItemSelectorWebKeys" %><%@
 page import="com.liferay.user.groups.admin.item.selector.web.internal.display.context.UserGroupItemSelectorViewDisplayContext" %>
 
+<%@ page import="java.util.HashMap" %><%@
+page import="java.util.Map" %>
+
 <%@ page import="javax.portlet.PortletURL" %>
 
 <liferay-frontend:defineObjects />

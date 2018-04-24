@@ -18,6 +18,7 @@ import com.liferay.dynamic.data.mapping.constants.DDMActionKeys;
 import com.liferay.dynamic.data.mapping.constants.DDMPortletKeys;
 import com.liferay.dynamic.data.mapping.form.values.query.DDMFormValuesQuery;
 import com.liferay.dynamic.data.mapping.form.values.query.DDMFormValuesQueryFactory;
+import com.liferay.dynamic.data.mapping.form.web.internal.portlet.action.util.BaseDDMFormMVCResourceCommand;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceVersion;
 import com.liferay.dynamic.data.mapping.model.Value;
@@ -29,7 +30,6 @@ import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.ResourcePermission;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.RoleConstants;
-import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
@@ -59,7 +59,7 @@ import org.osgi.service.component.annotations.Reference;
 	service = MVCResourceCommand.class
 )
 public class PublishFormInstanceMVCResourceCommand
-	extends BaseMVCResourceCommand {
+	extends BaseDDMFormMVCResourceCommand {
 
 	@Override
 	protected void doServeResource(
@@ -104,10 +104,12 @@ public class PublishFormInstanceMVCResourceCommand
 					"status", latestFormInstanceVersion.getStatus());
 			}
 
-			_formInstanceService.updateFormInstance(
+			formInstance = _formInstanceService.updateFormInstance(
 				formInstanceId, formInstance.getStructureId(),
 				formInstance.getNameMap(), formInstance.getDescriptionMap(),
 				settingsDDMFormValues, serviceContext);
+
+			writeResponse(resourceRequest, resourceResponse, formInstance);
 		}
 		catch (Throwable t) {
 			resourceResponse.setProperty(

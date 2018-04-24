@@ -15,30 +15,15 @@
 package com.liferay.dynamic.data.mapping.form.web.internal.portlet.action;
 
 import com.liferay.dynamic.data.mapping.constants.DDMPortletKeys;
+import com.liferay.dynamic.data.mapping.form.web.internal.portlet.action.util.BaseDDMFormMVCResourceCommand;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
-import com.liferay.portal.kernel.json.JSONFactory;
-import com.liferay.portal.kernel.json.JSONSerializer;
-import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.portlet.PortletResponseUtil;
-import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.TransactionConfig;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
-import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.IOException;
 
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.format.DateTimeFormatter;
-import java.time.format.FormatStyle;
-
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.Map;
 import java.util.concurrent.Callable;
 
 import javax.portlet.ResourceRequest;
@@ -60,57 +45,25 @@ import org.osgi.service.component.annotations.Reference;
 	},
 	service = MVCResourceCommand.class
 )
-public class SaveFormInstanceMVCResourceCommand extends BaseMVCResourceCommand {
+public class SaveFormInstanceMVCResourceCommand
+	extends BaseDDMFormMVCResourceCommand {
 
 	@Override
 	protected void doServeResource(
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws IOException {
 
-		Map<String, Object> response = new HashMap<>();
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		try {
 			DDMFormInstance formInstance = saveFormInstanceInTransaction(
 				resourceRequest, resourceResponse);
 
-			response.put("ddmStructureId", formInstance.getStructureId());
-			response.put("formInstanceId", formInstance.getFormInstanceId());
-
-			User user = themeDisplay.getUser();
-
-			response.put(
-				"modifiedDate",
-				formatDate(
-					formInstance.getModifiedDate(), user.getLocale(),
-					user.getTimeZoneId()));
+			writeResponse(resourceRequest, resourceResponse, formInstance);
 		}
 		catch (Throwable t) {
 			resourceResponse.setProperty(
 				ResourceResponse.HTTP_STATUS_CODE,
 				String.valueOf(HttpServletResponse.SC_BAD_REQUEST));
-
-			response.clear();
 		}
-
-		JSONSerializer jsonSerializer = jsonFactory.createJSONSerializer();
-
-		PortletResponseUtil.write(
-			resourceResponse, jsonSerializer.serializeDeep(response));
-	}
-
-	protected String formatDate(Date date, Locale locale, String timezoneId) {
-		DateTimeFormatter dateTimeFormatter =
-			DateTimeFormatter.ofLocalizedDateTime(FormatStyle.SHORT);
-
-		dateTimeFormatter = dateTimeFormatter.withLocale(locale);
-
-		LocalDateTime localDateTime = LocalDateTime.ofInstant(
-			date.toInstant(), ZoneId.of(timezoneId));
-
-		return dateTimeFormatter.format(localDateTime);
 	}
 
 	protected DDMFormInstance saveFormInstanceInTransaction(
@@ -130,9 +83,6 @@ public class SaveFormInstanceMVCResourceCommand extends BaseMVCResourceCommand {
 
 		return TransactionInvokerUtil.invoke(_transactionConfig, callable);
 	}
-
-	@Reference
-	protected JSONFactory jsonFactory;
 
 	@Reference
 	protected SaveFormInstanceMVCCommandHelper saveFormInstanceMVCCommandHelper;

@@ -14,15 +14,25 @@
 
 package com.liferay.commerce.product.test.util;
 
+import com.liferay.commerce.product.configuration.CPOptionConfiguration;
+import com.liferay.commerce.product.constants.CPConstants;
 import com.liferay.commerce.product.model.CPDefinition;
+import com.liferay.commerce.product.model.CPDefinitionOptionRel;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.model.CPInstanceConstants;
+import com.liferay.commerce.product.model.CPOption;
+import com.liferay.commerce.product.model.CPOptionValue;
 import com.liferay.commerce.product.service.CPDefinitionLocalServiceUtil;
+import com.liferay.commerce.product.service.CPDefinitionOptionRelLocalServiceUtil;
 import com.liferay.commerce.product.service.CPInstanceLocalServiceUtil;
+import com.liferay.commerce.product.service.CPOptionLocalServiceUtil;
+import com.liferay.commerce.product.service.CPOptionValueLocalServiceUtil;
 import com.liferay.commerce.product.type.simple.constants.SimpleCPTypeConstants;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
+import com.liferay.portal.kernel.settings.SystemSettingsLocator;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
@@ -51,6 +61,29 @@ public class CPTestUtil {
 			serviceContext);
 	}
 
+	public static CPDefinitionOptionRel addCPDefinitionOptionRel(
+			long groupId, long cpDefinitionId, long cpOptionId)
+		throws Exception {
+
+		CPOptionConfiguration cpOptionConfiguration =
+			ConfigurationProviderUtil.getConfiguration(
+				CPOptionConfiguration.class,
+				new SystemSettingsLocator(CPConstants.CP_OPTION_SERVICE_NAME));
+
+		String[] ddmFormFieldTypesAllowed =
+			cpOptionConfiguration.ddmFormFieldTypesAllowed();
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(groupId);
+
+		return CPDefinitionOptionRelLocalServiceUtil.addCPDefinitionOptionRel(
+			cpDefinitionId, cpOptionId, RandomTestUtil.randomLocaleStringMap(),
+			RandomTestUtil.randomLocaleStringMap(), ddmFormFieldTypesAllowed[0],
+			RandomTestUtil.randomDouble(), RandomTestUtil.randomBoolean(),
+			RandomTestUtil.randomBoolean(), RandomTestUtil.randomBoolean(),
+			true, serviceContext);
+	}
+
 	public static CPInstance addCPInstance(long groupId) throws Exception {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(groupId);
@@ -61,6 +94,49 @@ public class CPTestUtil {
 
 		return CPInstanceLocalServiceUtil.getCPInstance(
 			cpDefinition.getCPDefinitionId(), CPInstanceConstants.DEFAULT_SKU);
+	}
+
+	public static CPOption addCPOption(long groupId, boolean skuContributor)
+		throws Exception {
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(groupId);
+
+		CPOptionConfiguration cpOptionConfiguration =
+			ConfigurationProviderUtil.getConfiguration(
+				CPOptionConfiguration.class,
+				new SystemSettingsLocator(CPConstants.CP_OPTION_SERVICE_NAME));
+
+		String[] ddmFormFieldTypesAllowed =
+			cpOptionConfiguration.ddmFormFieldTypesAllowed();
+
+		return CPOptionLocalServiceUtil.addCPOption(
+			RandomTestUtil.randomLocaleStringMap(),
+			RandomTestUtil.randomLocaleStringMap(), ddmFormFieldTypesAllowed[0],
+			RandomTestUtil.randomBoolean(), RandomTestUtil.randomBoolean(),
+			skuContributor, RandomTestUtil.randomString(), serviceContext);
+	}
+
+	public static CPOptionValue addCPOptionValue(long groupId, long cpOptionId)
+		throws Exception {
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(groupId);
+
+		return CPOptionValueLocalServiceUtil.addCPOptionValue(
+			cpOptionId, RandomTestUtil.randomLocaleStringMap(),
+			RandomTestUtil.randomDouble(), RandomTestUtil.randomString(),
+			serviceContext);
+	}
+
+	public static void buildCPInstances(long cpDefinitionId, long groupId)
+		throws Exception {
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(groupId);
+
+		CPInstanceLocalServiceUtil.buildCPInstances(
+			cpDefinitionId, serviceContext);
 	}
 
 	private static CPDefinition _addCPDefinition(

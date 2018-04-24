@@ -90,9 +90,6 @@ public class UpgradeStepRegistratorTracker {
 				return null;
 			}
 
-			List<ServiceRegistration<UpgradeStep>> serviceRegistrations =
-				new ArrayList<>();
-
 			Class<? extends UpgradeStepRegistrator> clazz =
 				upgradeStepRegistrator.getClass();
 
@@ -125,9 +122,13 @@ public class UpgradeStepRegistratorTracker {
 
 			upgradeStepRegistrator.register(upgradeStepRegistry);
 
-			for (UpgradeInfo upgradeInfo :
-					upgradeStepRegistry.getUpgradeInfos()) {
+			List<UpgradeInfo> upgradeInfos =
+				upgradeStepRegistry.getUpgradeInfos();
 
+			List<ServiceRegistration<UpgradeStep>> serviceRegistrations =
+				new ArrayList<>(upgradeInfos.size());
+
+			for (UpgradeInfo upgradeInfo : upgradeInfos) {
 				Dictionary<String, Object> properties =
 					new HashMapDictionary<>();
 

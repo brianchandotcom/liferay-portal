@@ -23,7 +23,10 @@
 		var data = event.data;
 		var prevData = localStorage.getItem(NAMESPACE) || '';
 
-		if (data && data !== prevData) {
+		if (data === '') {
+			localStorage.removeItem(NAMESPACE);
+		}
+		else if (data && data !== prevData) {
 			localStorage.setItem(NAMESPACE, data);
 			location.reload();
 		}
@@ -40,8 +43,6 @@
 		document.open();
 
 		document.write(content);
-
-		localStorage.removeItem(NAMESPACE);
 	}
 
 	if (!window[NAMESPACE]) {

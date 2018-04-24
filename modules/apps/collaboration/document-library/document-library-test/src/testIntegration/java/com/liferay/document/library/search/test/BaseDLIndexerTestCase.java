@@ -12,12 +12,10 @@
  * details.
  */
 
-package com.liferay.calendar.search.test;
+package com.liferay.document.library.search.test;
 
-import com.liferay.calendar.model.Calendar;
-import com.liferay.calendar.model.CalendarBooking;
-import com.liferay.calendar.service.CalendarBookingLocalService;
-import com.liferay.calendar.service.CalendarLocalService;
+import com.liferay.document.library.kernel.service.DLAppLocalService;
+import com.liferay.document.library.kernel.service.DLFileEntryMetadataLocalService;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.IndexerRegistry;
@@ -30,27 +28,27 @@ import com.liferay.portal.test.rule.Inject;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.Before;
-
 /**
  * @author Wade Cao
+ * @author Eric Yan
  */
-public abstract class BaseCalendarIndexerTestCase {
+public abstract class BaseDLIndexerTestCase {
 
-	@Before
 	public void setUp() throws Exception {
-		calendarFixture = createCalendarFixture();
+		dlFixture = createDLFixture();
 
-		calendarFixture.setUp();
+		dlFixture.setUp();
 
-		calendarSearchFixture = createSingleDocumentSearchFixture();
+		dlSearchFixture = createDLSearchFixture();
 		indexedFieldsFixture = createIndexedFieldsFixture();
 	}
 
-	protected CalendarFixture createCalendarFixture() {
-		return new CalendarFixture(
-			_calendars, _calendarBookings, _groups, _users,
-			calendarLocalService, calendarBookingLocalService);
+	protected DLFixture createDLFixture() {
+		return new DLFixture(dlAppLocalService, _groups, _users);
+	}
+
+	protected DLSearchFixture createDLSearchFixture() {
+		return new DLSearchFixture(indexerRegistry);
 	}
 
 	protected IndexedFieldsFixture createIndexedFieldsFixture() {
@@ -58,33 +56,28 @@ public abstract class BaseCalendarIndexerTestCase {
 			resourcePermissionLocalService, searchEngineHelper);
 	}
 
-	protected CalendarSearchFixture createSingleDocumentSearchFixture() {
-		return new CalendarSearchFixture(indexerRegistry);
-	}
-
 	protected void setGroup(Group group) {
-		calendarFixture.setGroup(group);
-		calendarSearchFixture.setGroup(group);
+		dlFixture.setGroup(group);
+		dlSearchFixture.setGroup(group);
 	}
 
 	protected void setIndexerClass(Class<?> clazz) {
-		calendarSearchFixture.setIndexerClass(clazz);
+		dlSearchFixture.setIndexerClass(clazz);
 	}
 
 	protected void setUser(User user) {
-		calendarFixture.setUser(user);
-		calendarSearchFixture.setUser(user);
+		dlFixture.setUser(user);
+		dlSearchFixture.setUser(user);
 	}
 
 	@Inject
-	protected CalendarBookingLocalService calendarBookingLocalService;
-
-	protected CalendarFixture calendarFixture;
+	protected DLAppLocalService dlAppLocalService;
 
 	@Inject
-	protected CalendarLocalService calendarLocalService;
+	protected DLFileEntryMetadataLocalService dlFileEntryMetadataLocalService;
 
-	protected CalendarSearchFixture calendarSearchFixture;
+	protected DLFixture dlFixture;
+	protected DLSearchFixture dlSearchFixture;
 	protected IndexedFieldsFixture indexedFieldsFixture;
 
 	@Inject
@@ -95,12 +88,6 @@ public abstract class BaseCalendarIndexerTestCase {
 
 	@Inject
 	protected SearchEngineHelper searchEngineHelper;
-
-	@DeleteAfterTestRun
-	private final List<CalendarBooking> _calendarBookings = new ArrayList<>(1);
-
-	@DeleteAfterTestRun
-	private final List<Calendar> _calendars = new ArrayList<>(1);
 
 	@DeleteAfterTestRun
 	private final List<Group> _groups = new ArrayList<>(1);

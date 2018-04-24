@@ -5,6 +5,7 @@ dependencies {
 	testIntegrationCompile group: "com.liferay", name: "org.hibernate.core", version: "3.6.10.LIFERAY-PATCHED-3"
 	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
+	testIntegrationCompile group: "org.jodd", name: "jodd-core", version: "3.6.4"
 	testIntegrationCompile project(":apps:collaboration:document-library:document-library-api")
 	testIntegrationCompile project(":apps:collaboration:document-library:document-library-content-api")
 	testIntegrationCompile project(":apps:collaboration:document-library:document-library-sync-api")
@@ -21,5 +22,6 @@ dependencies {
 	testIntegrationCompile project(":apps:web-experience:trash:trash-test-util")
 	testIntegrationCompile project(":core:petra:petra-reflect")
 	testIntegrationCompile project(":core:petra:petra-string")
+	testIntegrationCompile project(":core:registry-api")
 	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
 }

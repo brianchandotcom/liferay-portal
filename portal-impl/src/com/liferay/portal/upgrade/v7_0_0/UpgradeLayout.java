@@ -44,6 +44,7 @@ public class UpgradeLayout extends UpgradeProcess {
 		deleteLinkedOrphanedLayouts();
 		updateUnlinkedOrphanedLayouts();
 		verifyFriendlyURL();
+		verifyLayoutPrototypeLinkEnabled();
 	}
 
 	protected void updateUnlinkedOrphanedLayouts() throws Exception {
@@ -82,6 +83,15 @@ public class UpgradeLayout extends UpgradeProcess {
 
 				ps2.executeBatch();
 			}
+		}
+	}
+
+	protected void verifyLayoutPrototypeLinkEnabled() throws Exception {
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			runSQL(
+				"update Layout set layoutPrototypeLinkEnabled = [$FALSE$] " +
+					"where type_ = 'link_to_layout' and " +
+						"layoutPrototypeLinkEnabled = [$TRUE$]");
 		}
 	}
 

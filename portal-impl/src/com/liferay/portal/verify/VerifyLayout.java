@@ -25,17 +25,7 @@ public class VerifyLayout extends VerifyProcess {
 
 	@Override
 	protected void doVerify() throws Exception {
-		verifyLayoutPrototypeLinkEnabled();
 		verifyUuid();
-	}
-
-	protected void verifyLayoutPrototypeLinkEnabled() throws Exception {
-		try (LoggingTimer loggingTimer = new LoggingTimer()) {
-			runSQL(
-				"update Layout set layoutPrototypeLinkEnabled = [$FALSE$] " +
-					"where type_ = 'link_to_layout' and " +
-						"layoutPrototypeLinkEnabled = [$TRUE$]");
-		}
 	}
 
 	protected void verifyUuid() throws Exception {

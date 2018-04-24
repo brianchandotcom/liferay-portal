@@ -15,6 +15,7 @@
 package com.liferay.commerce.product.catalog.rule.web.internal.servlet.taglib.ui;
 
 import com.liferay.commerce.product.model.CPRule;
+import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationCategory;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -36,11 +37,14 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alessio Antonio Rendina
  */
 @Component(
-	property = "screen.navigation.entry.order:Integer=10",
-	service = ScreenNavigationEntry.class
+	property = {
+		"screen.navigation.category.order:Integer=10",
+		"screen.navigation.entry.order:Integer=10"
+	},
+	service = {ScreenNavigationCategory.class, ScreenNavigationEntry.class}
 )
 public class CPRuleDetailScreenNavigationEntry
-	implements ScreenNavigationEntry<CPRule> {
+	implements ScreenNavigationCategory, ScreenNavigationEntry<CPRule> {
 
 	@Override
 	public String getCategoryKey() {

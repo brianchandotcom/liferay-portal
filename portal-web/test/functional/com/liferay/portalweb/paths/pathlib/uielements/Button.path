@@ -399,11 +399,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>FIND</td>
-	<td>//button[contains(.,'Find')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>FINISH_CONFIGURATION</td>
 	<td>//button[contains(.,'Finish Configuration')]</td>
 	<td></td>

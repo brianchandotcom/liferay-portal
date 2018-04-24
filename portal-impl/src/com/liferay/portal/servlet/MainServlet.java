@@ -146,8 +146,7 @@ public class MainServlet extends ActionServlet {
 		_portalInitializedModuleServiceLifecycleServiceRegistration.
 			unregister();
 		_servletContextServiceRegistration.unregister();
-		_componentScanReadyModuleServiceLifecycleServiceRegistration.
-			unregister();
+		_systemCheckModuleServiceLifecycleServiceRegistration.unregister();
 
 		PortalLifecycleUtil.flushDestroys();
 
@@ -1374,11 +1373,11 @@ public class MainServlet extends ActionServlet {
 
 		properties = new HashMap<>();
 
-		properties.put("module.service.lifecycle", "component.scan.ready");
+		properties.put("module.service.lifecycle", "system.check");
 		properties.put("service.vendor", ReleaseInfo.getVendor());
 		properties.put("service.version", ReleaseInfo.getVersion());
 
-		_componentScanReadyModuleServiceLifecycleServiceRegistration =
+		_systemCheckModuleServiceLifecycleServiceRegistration =
 			registry.registerService(
 				ModuleServiceLifecycle.class, new ModuleServiceLifecycle() {},
 				properties);
@@ -1426,10 +1425,10 @@ public class MainServlet extends ActionServlet {
 			"_inactiveRequestHandler", false);
 
 	private ServiceRegistration<ModuleServiceLifecycle>
-		_componentScanReadyModuleServiceLifecycleServiceRegistration;
-	private ServiceRegistration<ModuleServiceLifecycle>
 		_portalInitializedModuleServiceLifecycleServiceRegistration;
 	private ServiceRegistration<ServletContext>
 		_servletContextServiceRegistration;
+	private ServiceRegistration<ModuleServiceLifecycle>
+		_systemCheckModuleServiceLifecycleServiceRegistration;
 
 }

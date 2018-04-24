@@ -14,7 +14,7 @@
 
 package com.liferay.portal.osgi.debug.declarative.service.internal;
 
-import com.liferay.portal.osgi.debug.ComponentScanner;
+import com.liferay.portal.osgi.debug.SystemChecker;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
@@ -25,8 +25,14 @@ import org.osgi.service.component.runtime.ServiceComponentRuntime;
 /**
  * @author Tina Tian
  */
-@Component(immediate = true, service = ComponentScanner.class)
-public class DeclarativeServiceComponentScanner implements ComponentScanner {
+@Component(immediate = true, service = SystemChecker.class)
+public class DeclarativeServiceSystemChecker implements SystemChecker {
+
+	@Override
+	public String check() {
+		return UnsatisfiedComponentUtil.listUnsatisfiedComponents(
+			_serviceComponentRuntime, _bundleContext.getBundles());
+	}
 
 	@Override
 	public String getName() {
@@ -36,12 +42,6 @@ public class DeclarativeServiceComponentScanner implements ComponentScanner {
 	@Override
 	public String getOSGiCommand() {
 		return "ds:unsatisfied";
-	}
-
-	@Override
-	public String scan() {
-		return UnsatisfiedComponentUtil.listUnsatisfiedComponents(
-			_serviceComponentRuntime, _bundleContext.getBundles());
 	}
 
 	@Activate

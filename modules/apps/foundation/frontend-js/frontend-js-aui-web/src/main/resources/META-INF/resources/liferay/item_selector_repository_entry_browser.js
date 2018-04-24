@@ -179,7 +179,17 @@ AUI.add(
 										var validExtensions = instance.get('validExtensions');
 
 										if (validExtensions === '*' || validExtensions.indexOf(fileExtension) != -1) {
-											instance._previewFile(dataTransfer.files[0]);
+
+											var maxFileSize = instance.get('maxFileSize');
+
+											if (dataTransfer.files[0].size <= maxFileSize) {
+												instance._previewFile(dataTransfer.files[0]);
+											}
+											else {
+												var message =  Lang.sub(Liferay.Language.get('please-enter-a-file-with-a-valid-file-size-no-larger-than-x'), [instance.formatStorage(instance.get('maxFileSize'))]);
+
+												instance._showError(message);
+											}
 										}
 										else {
 											var message = Lang.sub(Liferay.Language.get('please-enter-a-file-with-a-valid-extension-x'), [validExtensions]);
@@ -258,7 +268,18 @@ AUI.add(
 					_onInputFileChanged: function(event) {
 						var instance = this;
 
-						instance._previewFile(event.currentTarget.getDOMNode().files[0]);
+						var maxFileSize = instance.get('maxFileSize');
+
+						var file = event.currentTarget.getDOMNode().files[0];
+
+						if (file.size > maxFileSize) {
+							var message = Lang.sub(Liferay.Language.get('please-enter-a-file-with-a-valid-file-size-no-larger-than-x'), [instance.formatStorage(instance.get('maxFileSize'))]);
+
+							instance._showError(message);
+						}
+						else {
+							instance._previewFile(file);
+						}
 					},
 
 					_onItemSelected: function(itemViewer) {
@@ -348,6 +369,7 @@ AUI.add(
 					},
 
 					_showFile: function(file, preview) {
+
 						var instance = this;
 
 						var returnType = instance.get('uploadItemReturnType');

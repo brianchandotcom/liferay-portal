@@ -214,7 +214,8 @@ public class AnnouncementsEntryLocalServiceTest {
 
 	@Test
 	public void testGetEntriesCountInSameCompany() throws Exception {
-		resetCompanyEntries();
+		AnnouncementsEntryLocalServiceUtil.deleteEntries(
+			TestPropsValues.getCompanyId(), 0, 0);
 
 		addEntry(0, 0);
 
@@ -222,17 +223,6 @@ public class AnnouncementsEntryLocalServiceTest {
 			TestPropsValues.getCompanyId(), 0, 0, false);
 
 		Assert.assertEquals(0, entriesCount);
-	}
-
-	protected void resetCompanyEntries() throws PortalException {
-		List<AnnouncementsEntry> entries =
-			AnnouncementsEntryLocalServiceUtil.getEntries(
-				TestPropsValues.getCompanyId(), 0, 0, false, QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS);
-
-		for (AnnouncementsEntry entry : entries) {
-			AnnouncementsEntryLocalServiceUtil.deleteEntry(entry.getEntryId());
-		}
 	}
 
 	@Test
@@ -251,7 +241,8 @@ public class AnnouncementsEntryLocalServiceTest {
 
 	@Test
 	public void testGetEntriesInSameCompany() throws Exception {
-		resetCompanyEntries();
+		AnnouncementsEntryLocalServiceUtil.deleteEntries(
+			TestPropsValues.getCompanyId(), 0, 0);
 
 		AnnouncementsEntry entry = addEntry(0, 0);
 

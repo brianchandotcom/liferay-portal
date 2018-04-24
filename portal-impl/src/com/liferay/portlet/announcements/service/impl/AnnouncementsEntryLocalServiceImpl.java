@@ -182,16 +182,24 @@ public class AnnouncementsEntryLocalServiceImpl
 		_previousCheckDate = now;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #deleteEntries(long, long,
+	 *             long)}
+	 */
+	@Deprecated
 	@Override
 	public void deleteEntries(long classNameId, long classPK)
 		throws PortalException {
 
-		List<AnnouncementsEntry> entries =
-			announcementsEntryPersistence.findByC_C(classNameId, classPK);
+		deleteEntries(CompanyThreadLocal.getCompanyId(), classNameId, classPK);
+	}
 
-		for (AnnouncementsEntry entry : entries) {
-			deleteEntry(entry);
-		}
+	@Override
+	public void deleteEntries(long companyId, long classNameId, long classPK)
+		throws PortalException {
+
+		announcementsEntryPersistence.removeByC_C_C(
+			companyId, classNameId, classPK);
 	}
 
 	@Override

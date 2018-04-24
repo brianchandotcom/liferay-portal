@@ -38,6 +38,7 @@ import com.liferay.user.associated.data.web.internal.registry.UADRegistry;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import javax.portlet.PortletException;
@@ -179,13 +180,14 @@ public class ViewUADEntitiesMVCRenderCommand implements MVCRenderCommand {
 
 		NavigationItemList navigationItemList = new NavigationItemList();
 
+		Locale locale = LocaleThreadLocal.getThemeDisplayLocale();
+		PortletURL tabPortletURL = PortletURLUtil.clone(
+			currentURL, liferayPortletResponse);
+
 		for (UADDisplay uadDisplay : _uadRegistry.getUADDisplays()) {
 			if (!applicationName.equals(uadDisplay.getApplicationName())) {
 				continue;
 			}
-
-			PortletURL tabPortletURL = PortletURLUtil.clone(
-				currentURL, liferayPortletResponse);
 
 			navigationItemList.add(
 				navigationItem -> {
@@ -193,9 +195,7 @@ public class ViewUADEntitiesMVCRenderCommand implements MVCRenderCommand {
 						uadRegistryKey.equals(uadDisplay.getKey()));
 					navigationItem.setHref(
 						tabPortletURL, "uadRegistryKey", uadDisplay.getKey());
-					navigationItem.setLabel(
-						uadDisplay.getTypeName(
-							LocaleThreadLocal.getThemeDisplayLocale()));
+					navigationItem.setLabel(uadDisplay.getTypeName(locale));
 				});
 		}
 

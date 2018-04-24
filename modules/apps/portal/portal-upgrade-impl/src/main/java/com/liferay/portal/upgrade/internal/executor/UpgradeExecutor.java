@@ -91,21 +91,19 @@ public class UpgradeExecutor {
 			outputStreamContainerFactory.create(
 				"upgrade-" + bundleSymbolicName);
 
-		OutputStream outputStream = outputStreamContainer.getOutputStream();
-
 		Release release = _releaseLocalService.fetchRelease(bundleSymbolicName);
 
 		if (release != null) {
 			_releasePublisher.publishInProgress(release);
 		}
 
-		_outputStreamContainerFactoryTracker.runWithSwappedLog(
-			new UpgradeInfosRunnable(
-				bundleSymbolicName, upgradeInfos, outputStream),
-			outputStreamContainer.getDescription(), outputStream);
+		try (OutputStream outputStream =
+				outputStreamContainer.getOutputStream()) {
 
-		try {
-			outputStream.close();
+			_outputStreamContainerFactoryTracker.runWithSwappedLog(
+				new UpgradeInfosRunnable(
+					bundleSymbolicName, upgradeInfos, outputStream),
+				outputStreamContainer.getDescription(), outputStream);
 		}
 		catch (IOException ioe) {
 			throw new RuntimeException(ioe);

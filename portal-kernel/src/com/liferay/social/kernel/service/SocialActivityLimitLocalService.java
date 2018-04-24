@@ -82,6 +82,7 @@ public interface SocialActivityLimitLocalService extends BaseLocalService,
 	* @param activityLimitId the primary key for the new social activity limit
 	* @return the new social activity limit
 	*/
+	@Transactional(enabled = false)
 	public SocialActivityLimit createSocialActivityLimit(long activityLimitId);
 
 	/**

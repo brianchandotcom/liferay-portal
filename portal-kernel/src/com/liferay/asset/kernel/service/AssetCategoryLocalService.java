@@ -119,6 +119,7 @@ public interface AssetCategoryLocalService extends BaseLocalService,
 	* @param categoryId the primary key for the new asset category
 	* @return the new asset category
 	*/
+	@Transactional(enabled = false)
 	public AssetCategory createAssetCategory(long categoryId);
 
 	/**

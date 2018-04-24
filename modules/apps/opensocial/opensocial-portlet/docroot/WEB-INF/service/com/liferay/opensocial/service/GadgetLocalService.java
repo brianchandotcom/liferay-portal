@@ -87,6 +87,7 @@ public interface GadgetLocalService extends BaseLocalService,
 	* @param gadgetId the primary key for the new gadget
 	* @return the new gadget
 	*/
+	@Transactional(enabled = false)
 	public Gadget createGadget(long gadgetId);
 
 	/**

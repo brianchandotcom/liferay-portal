@@ -92,6 +92,7 @@ public interface CalendarLocalService extends BaseLocalService,
 	* @param calendarId the primary key for the new calendar
 	* @return the new calendar
 	*/
+	@Transactional(enabled = false)
 	public Calendar createCalendar(long calendarId);
 
 	/**

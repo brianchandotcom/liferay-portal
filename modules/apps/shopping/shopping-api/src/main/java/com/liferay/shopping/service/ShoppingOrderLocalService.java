@@ -86,6 +86,7 @@ public interface ShoppingOrderLocalService extends BaseLocalService,
 	* @param orderId the primary key for the new shopping order
 	* @return the new shopping order
 	*/
+	@Transactional(enabled = false)
 	public ShoppingOrder createShoppingOrder(long orderId);
 
 	public void deleteOrder(long orderId) throws PortalException;

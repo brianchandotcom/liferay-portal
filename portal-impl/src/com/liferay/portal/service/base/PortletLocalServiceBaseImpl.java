@@ -45,6 +45,7 @@ import com.liferay.portal.kernel.service.persistence.ResourcePermissionFinder;
 import com.liferay.portal.kernel.service.persistence.ResourcePermissionPersistence;
 import com.liferay.portal.kernel.service.persistence.RoleFinder;
 import com.liferay.portal.kernel.service.persistence.RolePersistence;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 
@@ -96,6 +97,7 @@ public abstract class PortletLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 * @return the new portlet
 	 */
 	@Override
+	@Transactional(enabled = false)
 	public Portlet createPortlet(long id) {
 		return portletPersistence.create(id);
 	}

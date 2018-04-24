@@ -43,6 +43,7 @@ import com.liferay.portal.kernel.service.persistence.GroupFinder;
 import com.liferay.portal.kernel.service.persistence.GroupPersistence;
 import com.liferay.portal.kernel.service.persistence.UserFinder;
 import com.liferay.portal.kernel.service.persistence.UserPersistence;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 
@@ -103,6 +104,7 @@ public abstract class SocialActivityCounterLocalServiceBaseImpl
 	 * @return the new social activity counter
 	 */
 	@Override
+	@Transactional(enabled = false)
 	public SocialActivityCounter createSocialActivityCounter(
 		long activityCounterId) {
 		return socialActivityCounterPersistence.create(activityCounterId);

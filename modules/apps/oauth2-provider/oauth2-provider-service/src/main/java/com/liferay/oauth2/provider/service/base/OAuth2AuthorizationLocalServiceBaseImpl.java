@@ -42,6 +42,7 @@ import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
 import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
@@ -96,6 +97,7 @@ public abstract class OAuth2AuthorizationLocalServiceBaseImpl
 	 * @return the new o auth2 authorization
 	 */
 	@Override
+	@Transactional(enabled = false)
 	public OAuth2Authorization createOAuth2Authorization(
 		long oAuth2AuthorizationId) {
 		return oAuth2AuthorizationPersistence.create(oAuth2AuthorizationId);

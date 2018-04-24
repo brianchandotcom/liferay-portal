@@ -91,6 +91,7 @@ public interface OAuth2ApplicationLocalService extends BaseLocalService,
 	* @param oAuth2ApplicationId the primary key for the new o auth2 application
 	* @return the new o auth2 application
 	*/
+	@Transactional(enabled = false)
 	public OAuth2Application createOAuth2Application(long oAuth2ApplicationId);
 
 	/**

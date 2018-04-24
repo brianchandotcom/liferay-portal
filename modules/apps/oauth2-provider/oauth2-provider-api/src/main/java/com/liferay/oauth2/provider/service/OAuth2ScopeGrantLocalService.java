@@ -94,6 +94,7 @@ public interface OAuth2ScopeGrantLocalService extends BaseLocalService,
 	* @param oAuth2ScopeGrantId the primary key for the new o auth2 scope grant
 	* @return the new o auth2 scope grant
 	*/
+	@Transactional(enabled = false)
 	public OAuth2ScopeGrant createOAuth2ScopeGrant(long oAuth2ScopeGrantId);
 
 	public OAuth2ScopeGrant createOAuth2ScopeGrant(long companyId,

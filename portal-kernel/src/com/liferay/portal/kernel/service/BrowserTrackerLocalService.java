@@ -73,6 +73,7 @@ public interface BrowserTrackerLocalService extends BaseLocalService,
 	* @param browserTrackerId the primary key for the new browser tracker
 	* @return the new browser tracker
 	*/
+	@Transactional(enabled = false)
 	public BrowserTracker createBrowserTracker(long browserTrackerId);
 
 	/**

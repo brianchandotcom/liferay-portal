@@ -77,6 +77,7 @@ public interface BlogsStatsUserLocalService extends BaseLocalService,
 	* @param statsUserId the primary key for the new blogs stats user
 	* @return the new blogs stats user
 	*/
+	@Transactional(enabled = false)
 	public BlogsStatsUser createBlogsStatsUser(long statsUserId);
 
 	/**

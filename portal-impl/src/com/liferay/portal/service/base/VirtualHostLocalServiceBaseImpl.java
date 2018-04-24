@@ -42,6 +42,7 @@ import com.liferay.portal.kernel.service.persistence.GroupFinder;
 import com.liferay.portal.kernel.service.persistence.GroupPersistence;
 import com.liferay.portal.kernel.service.persistence.LayoutSetPersistence;
 import com.liferay.portal.kernel.service.persistence.VirtualHostPersistence;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 
@@ -94,6 +95,7 @@ public abstract class VirtualHostLocalServiceBaseImpl
 	 * @return the new virtual host
 	 */
 	@Override
+	@Transactional(enabled = false)
 	public VirtualHost createVirtualHost(long virtualHostId) {
 		return virtualHostPersistence.create(virtualHostId);
 	}

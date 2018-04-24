@@ -81,6 +81,7 @@ public interface SyncDLFileVersionDiffLocalService extends BaseLocalService,
 	* @param syncDLFileVersionDiffId the primary key for the new sync dl file version diff
 	* @return the new sync dl file version diff
 	*/
+	@Transactional(enabled = false)
 	public SyncDLFileVersionDiff createSyncDLFileVersionDiff(
 		long syncDLFileVersionDiffId);
 

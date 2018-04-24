@@ -40,6 +40,7 @@ import com.liferay.portal.kernel.service.UserNotificationDeliveryLocalService;
 import com.liferay.portal.kernel.service.persistence.UserFinder;
 import com.liferay.portal.kernel.service.persistence.UserNotificationDeliveryPersistence;
 import com.liferay.portal.kernel.service.persistence.UserPersistence;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 
@@ -93,6 +94,7 @@ public abstract class UserNotificationDeliveryLocalServiceBaseImpl
 	 * @return the new user notification delivery
 	 */
 	@Override
+	@Transactional(enabled = false)
 	public UserNotificationDelivery createUserNotificationDelivery(
 		long userNotificationDeliveryId) {
 		return userNotificationDeliveryPersistence.create(userNotificationDeliveryId);

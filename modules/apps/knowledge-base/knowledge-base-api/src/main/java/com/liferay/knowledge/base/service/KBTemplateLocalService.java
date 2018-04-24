@@ -87,6 +87,7 @@ public interface KBTemplateLocalService extends BaseLocalService,
 	* @param kbTemplateId the primary key for the new kb template
 	* @return the new kb template
 	*/
+	@Transactional(enabled = false)
 	public KBTemplate createKBTemplate(long kbTemplateId);
 
 	public void deleteGroupKBTemplates(long groupId) throws PortalException;

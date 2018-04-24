@@ -57,6 +57,7 @@ import com.liferay.portal.kernel.service.persistence.UserFinder;
 import com.liferay.portal.kernel.service.persistence.UserPersistence;
 import com.liferay.portal.kernel.service.persistence.WorkflowDefinitionLinkPersistence;
 import com.liferay.portal.kernel.service.persistence.WorkflowInstanceLinkPersistence;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 
@@ -109,6 +110,7 @@ public abstract class DLFileEntryTypeLocalServiceBaseImpl
 	 * @return the new document library file entry type
 	 */
 	@Override
+	@Transactional(enabled = false)
 	public DLFileEntryType createDLFileEntryType(long fileEntryTypeId) {
 		return dlFileEntryTypePersistence.create(fileEntryTypeId);
 	}

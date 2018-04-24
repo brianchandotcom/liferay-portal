@@ -84,6 +84,7 @@ public interface DDMContentLocalService extends BaseLocalService,
 	* @param contentId the primary key for the new ddm content
 	* @return the new ddm content
 	*/
+	@Transactional(enabled = false)
 	public DDMContent createDDMContent(long contentId);
 
 	public void deleteContent(DDMContent content);

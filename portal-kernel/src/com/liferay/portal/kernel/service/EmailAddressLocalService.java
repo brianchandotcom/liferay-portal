@@ -83,6 +83,7 @@ public interface EmailAddressLocalService extends BaseLocalService,
 	* @param emailAddressId the primary key for the new email address
 	* @return the new email address
 	*/
+	@Transactional(enabled = false)
 	public EmailAddress createEmailAddress(long emailAddressId);
 
 	/**

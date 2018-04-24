@@ -77,6 +77,7 @@ public interface DDLRecordVersionLocalService extends BaseLocalService,
 	* @param recordVersionId the primary key for the new ddl record version
 	* @return the new ddl record version
 	*/
+	@Transactional(enabled = false)
 	public DDLRecordVersion createDDLRecordVersion(long recordVersionId);
 
 	/**

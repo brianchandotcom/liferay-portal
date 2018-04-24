@@ -78,6 +78,7 @@ public interface ClusterGroupLocalService extends BaseLocalService,
 	* @param clusterGroupId the primary key for the new cluster group
 	* @return the new cluster group
 	*/
+	@Transactional(enabled = false)
 	public ClusterGroup createClusterGroup(long clusterGroupId);
 
 	/**

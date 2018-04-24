@@ -81,6 +81,7 @@ public interface PushNotificationsDeviceLocalService extends BaseLocalService,
 	* @param pushNotificationsDeviceId the primary key for the new push notifications device
 	* @return the new push notifications device
 	*/
+	@Transactional(enabled = false)
 	public PushNotificationsDevice createPushNotificationsDevice(
 		long pushNotificationsDeviceId);
 

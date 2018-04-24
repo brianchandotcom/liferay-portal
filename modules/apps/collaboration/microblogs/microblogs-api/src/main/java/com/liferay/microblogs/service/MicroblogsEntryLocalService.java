@@ -86,6 +86,7 @@ public interface MicroblogsEntryLocalService extends BaseLocalService,
 	* @param microblogsEntryId the primary key for the new microblogs entry
 	* @return the new microblogs entry
 	*/
+	@Transactional(enabled = false)
 	public MicroblogsEntry createMicroblogsEntry(long microblogsEntryId);
 
 	public void deleteMicroblogsEntries(long creatorClassNameId,

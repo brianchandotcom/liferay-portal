@@ -41,6 +41,7 @@ import com.liferay.portal.kernel.service.persistence.CompanyPersistence;
 import com.liferay.portal.kernel.service.persistence.ResourceActionPersistence;
 import com.liferay.portal.kernel.service.persistence.ResourcePermissionFinder;
 import com.liferay.portal.kernel.service.persistence.ResourcePermissionPersistence;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 
@@ -93,6 +94,7 @@ public abstract class ResourceActionLocalServiceBaseImpl
 	 * @return the new resource action
 	 */
 	@Override
+	@Transactional(enabled = false)
 	public ResourceAction createResourceAction(long resourceActionId) {
 		return resourceActionPersistence.create(resourceActionId);
 	}

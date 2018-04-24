@@ -68,6 +68,7 @@ import com.liferay.portal.kernel.service.persistence.CompanyPersistence;
 import com.liferay.portal.kernel.service.persistence.GroupPersistence;
 import com.liferay.portal.kernel.service.persistence.UserPersistence;
 import com.liferay.portal.kernel.service.persistence.WorkflowInstanceLinkPersistence;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -127,6 +128,7 @@ public abstract class CalendarBookingLocalServiceBaseImpl
 	 * @return the new calendar booking
 	 */
 	@Override
+	@Transactional(enabled = false)
 	public CalendarBooking createCalendarBooking(long calendarBookingId) {
 		return calendarBookingPersistence.create(calendarBookingId);
 	}

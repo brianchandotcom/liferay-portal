@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.kernel.service.persistence.ClassNamePersistence;
 import com.liferay.portal.kernel.service.persistence.UserFinder;
 import com.liferay.portal.kernel.service.persistence.UserPersistence;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 
@@ -94,6 +95,7 @@ public abstract class SocialRequestLocalServiceBaseImpl
 	 * @return the new social request
 	 */
 	@Override
+	@Transactional(enabled = false)
 	public SocialRequest createSocialRequest(long requestId) {
 		return socialRequestPersistence.create(requestId);
 	}

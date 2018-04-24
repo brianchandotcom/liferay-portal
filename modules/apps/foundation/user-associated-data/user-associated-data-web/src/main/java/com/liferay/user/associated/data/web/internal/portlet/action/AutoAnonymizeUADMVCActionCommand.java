@@ -18,11 +18,13 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.user.associated.data.anonymizer.UADAnonymizer;
 import com.liferay.user.associated.data.constants.UserAssociatedDataPortletKeys;
+import com.liferay.user.associated.data.web.internal.util.UADAnonymizerHelper;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author William Newbury
@@ -44,11 +46,16 @@ public class AutoAnonymizeUADMVCActionCommand extends BaseUADMVCActionCommand {
 
 		UADAnonymizer uadAnonymizer = getUADAnonymizer(actionRequest);
 
-		uadAnonymizer.autoAnonymizeAll(getSelectedUserId(actionRequest));
+		uadAnonymizer.autoAnonymizeAll(
+			getSelectedUserId(actionRequest),
+			_uadAnonymizerHelper.getAnonymousUser());
 
 		String redirect = ParamUtil.getString(actionRequest, "redirect");
 
 		sendRedirect(actionRequest, actionResponse, redirect);
 	}
+
+	@Reference
+	private UADAnonymizerHelper _uadAnonymizerHelper;
 
 }

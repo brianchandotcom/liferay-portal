@@ -14,8 +14,10 @@
 
 package com.liferay.user.associated.data.web.internal.portlet.action;
 
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemList;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.model.User;
@@ -75,6 +77,8 @@ public class ViewUADEntitiesMVCRenderCommand implements MVCRenderCommand {
 			ViewUADEntitiesDisplay viewUADEntitiesDisplay =
 				new ViewUADEntitiesDisplay();
 
+			viewUADEntitiesDisplay.setActionDropdownItems(
+				_getActionDropdownItems(renderRequest, renderResponse));
 			viewUADEntitiesDisplay.setApplicationName(applicationName);
 
 			LiferayPortletResponse liferayPortletResponse =
@@ -137,6 +141,34 @@ public class ViewUADEntitiesMVCRenderCommand implements MVCRenderCommand {
 		}
 
 		return uadEntity;
+	}
+
+	private DropdownItemList _getActionDropdownItems(
+		RenderRequest renderRequest, RenderResponse renderResponse) {
+
+		return new DropdownItemList(
+			_portal.getHttpServletRequest(renderRequest)) {
+
+			{
+				add(
+					dropdownItem -> {
+						dropdownItem.setHref(
+							StringBundler.concat(
+								"javascript:", renderResponse.getNamespace(),
+								"doAnonymizeMultiple();"));
+						dropdownItem.setLabel("anonymize");
+					});
+				add(
+					dropdownItem -> {
+						dropdownItem.setHref(
+							StringBundler.concat(
+								"javascript:", renderResponse.getNamespace(),
+								"doDeleteMultiple();"));
+						dropdownItem.setLabel("delete");
+					});
+			}
+
+		};
 	}
 
 	private List<NavigationItem> _getNavigationItems(

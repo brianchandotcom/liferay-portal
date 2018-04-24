@@ -36,7 +36,7 @@ if (liferayVersion != "7.1") {
 
 	paths.addAll segments
 	paths.add "constants"
-	paths.add className + "WebKeys.java"
+	paths.add "${className}WebKeys.java"
 
 	Path resourcePath = Paths.get("", paths.toArray() as String[])
 

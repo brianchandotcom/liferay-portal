@@ -34,10 +34,10 @@ pathList.addAll packageList
 pathList.add "portlet"
 
 if (liferayVersion == "7.1") {
-	pathList.add className + "Portlet.java"
+	pathList.add "${className}Portlet.java"
 }
 else {
-	pathList.add className + "SoyPortletRegister.java"
+	pathList.add "${className}SoyPortletRegister.java"
 }
 
 Path resourcePath = Paths.get("", pathList.toArray() as String[])

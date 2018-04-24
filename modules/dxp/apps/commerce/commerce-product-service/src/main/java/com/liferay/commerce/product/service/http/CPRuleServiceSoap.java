@@ -97,6 +97,20 @@ public class CPRuleServiceSoap {
 		}
 	}
 
+	public static com.liferay.commerce.product.model.CPRuleSoap getCPRule(
+		long cpRuleId) throws RemoteException {
+		try {
+			com.liferay.commerce.product.model.CPRule returnValue = CPRuleServiceUtil.getCPRule(cpRuleId);
+
+			return com.liferay.commerce.product.model.CPRuleSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static com.liferay.commerce.product.model.CPRuleSoap[] getCPRules(
 		long groupId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.product.model.CPRule> orderByComparator)
@@ -120,20 +134,6 @@ public class CPRuleServiceSoap {
 			int returnValue = CPRuleServiceUtil.getCPRulesCount(groupId);
 
 			return returnValue;
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-
-			throw new RemoteException(e.getMessage());
-		}
-	}
-
-	public static com.liferay.commerce.product.model.CPRuleSoap getCPRule(
-		long cpRuleId) throws RemoteException {
-		try {
-			com.liferay.commerce.product.model.CPRule returnValue = CPRuleServiceUtil.getCPRule(cpRuleId);
-
-			return com.liferay.commerce.product.model.CPRuleSoap.toSoapModel(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);

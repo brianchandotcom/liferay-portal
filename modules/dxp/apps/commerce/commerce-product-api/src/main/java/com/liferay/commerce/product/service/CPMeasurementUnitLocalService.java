@@ -90,6 +90,7 @@ public interface CPMeasurementUnitLocalService extends BaseLocalService,
 	* @param CPMeasurementUnitId the primary key for the new cp measurement unit
 	* @return the new cp measurement unit
 	*/
+	@Transactional(enabled = false)
 	public CPMeasurementUnit createCPMeasurementUnit(long CPMeasurementUnitId);
 
 	/**

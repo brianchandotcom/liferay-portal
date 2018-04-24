@@ -82,6 +82,7 @@ public interface CPDisplayLayoutLocalService extends BaseLocalService,
 	* @param CPDisplayLayoutId the primary key for the new cp display layout
 	* @return the new cp display layout
 	*/
+	@Transactional(enabled = false)
 	public CPDisplayLayout createCPDisplayLayout(long CPDisplayLayoutId);
 
 	public void deleteCPDisplayLayout(java.lang.Class<?> clazz, long classPK);

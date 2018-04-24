@@ -70,6 +70,7 @@ import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
 import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.kernel.service.persistence.ClassNamePersistence;
 import com.liferay.portal.kernel.service.persistence.UserPersistence;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
@@ -124,6 +125,7 @@ public abstract class CPDefinitionOptionValueRelLocalServiceBaseImpl
 	 * @return the new cp definition option value rel
 	 */
 	@Override
+	@Transactional(enabled = false)
 	public CPDefinitionOptionValueRel createCPDefinitionOptionValueRel(
 		long CPDefinitionOptionValueRelId) {
 		return cpDefinitionOptionValueRelPersistence.create(CPDefinitionOptionValueRelId);

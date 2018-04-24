@@ -106,6 +106,7 @@ public interface CPDefinitionOptionRelLocalService extends BaseLocalService,
 	* @param CPDefinitionOptionRelId the primary key for the new cp definition option rel
 	* @return the new cp definition option rel
 	*/
+	@Transactional(enabled = false)
 	public CPDefinitionOptionRel createCPDefinitionOptionRel(
 		long CPDefinitionOptionRelId);
 

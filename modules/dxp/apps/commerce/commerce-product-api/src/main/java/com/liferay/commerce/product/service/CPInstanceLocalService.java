@@ -118,6 +118,7 @@ public interface CPInstanceLocalService extends BaseLocalService,
 	* @param CPInstanceId the primary key for the new cp instance
 	* @return the new cp instance
 	*/
+	@Transactional(enabled = false)
 	public CPInstance createCPInstance(long CPInstanceId);
 
 	/**

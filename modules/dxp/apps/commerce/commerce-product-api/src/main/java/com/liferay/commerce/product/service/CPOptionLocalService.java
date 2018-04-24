@@ -95,6 +95,7 @@ public interface CPOptionLocalService extends BaseLocalService,
 	* @param CPOptionId the primary key for the new cp option
 	* @return the new cp option
 	*/
+	@Transactional(enabled = false)
 	public CPOption createCPOption(long CPOptionId);
 
 	/**

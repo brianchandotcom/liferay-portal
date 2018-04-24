@@ -102,6 +102,7 @@ public interface CPAttachmentFileEntryLocalService extends BaseLocalService,
 	* @param CPAttachmentFileEntryId the primary key for the new cp attachment file entry
 	* @return the new cp attachment file entry
 	*/
+	@Transactional(enabled = false)
 	public CPAttachmentFileEntry createCPAttachmentFileEntry(
 		long CPAttachmentFileEntryId);
 

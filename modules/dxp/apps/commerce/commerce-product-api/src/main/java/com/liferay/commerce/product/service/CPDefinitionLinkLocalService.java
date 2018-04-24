@@ -85,6 +85,7 @@ public interface CPDefinitionLinkLocalService extends BaseLocalService,
 	* @param CPDefinitionLinkId the primary key for the new cp definition link
 	* @return the new cp definition link
 	*/
+	@Transactional(enabled = false)
 	public CPDefinitionLink createCPDefinitionLink(long CPDefinitionLinkId);
 
 	/**

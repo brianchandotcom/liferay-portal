@@ -86,6 +86,7 @@ public interface CPTaxCategoryLocalService extends BaseLocalService,
 	* @param CPTaxCategoryId the primary key for the new cp tax category
 	* @return the new cp tax category
 	*/
+	@Transactional(enabled = false)
 	public CPTaxCategory createCPTaxCategory(long CPTaxCategoryId);
 
 	public void deleteCPTaxCategories(long groupId);

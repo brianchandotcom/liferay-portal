@@ -96,6 +96,7 @@ public interface CPSpecificationOptionLocalService extends BaseLocalService,
 	* @param CPSpecificationOptionId the primary key for the new cp specification option
 	* @return the new cp specification option
 	*/
+	@Transactional(enabled = false)
 	public CPSpecificationOption createCPSpecificationOption(
 		long CPSpecificationOptionId);
 

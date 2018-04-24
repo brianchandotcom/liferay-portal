@@ -91,6 +91,7 @@ public interface CPOptionCategoryLocalService extends BaseLocalService,
 	* @param CPOptionCategoryId the primary key for the new cp option category
 	* @return the new cp option category
 	*/
+	@Transactional(enabled = false)
 	public CPOptionCategory createCPOptionCategory(long CPOptionCategoryId);
 
 	public void deleteCPOptionCategories(long groupId)

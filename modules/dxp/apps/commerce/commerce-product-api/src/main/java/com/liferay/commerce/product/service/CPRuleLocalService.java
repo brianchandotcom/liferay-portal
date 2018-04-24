@@ -87,6 +87,7 @@ public interface CPRuleLocalService extends BaseLocalService,
 	* @param CPRuleId the primary key for the new cp rule
 	* @return the new cp rule
 	*/
+	@Transactional(enabled = false)
 	public CPRule createCPRule(long CPRuleId);
 
 	/**

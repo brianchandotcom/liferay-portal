@@ -84,6 +84,7 @@ public interface CPRuleUserSegmentRelLocalService extends BaseLocalService,
 	* @param CPRuleUserSegmentRelId the primary key for the new cp rule user segment rel
 	* @return the new cp rule user segment rel
 	*/
+	@Transactional(enabled = false)
 	public CPRuleUserSegmentRel createCPRuleUserSegmentRel(
 		long CPRuleUserSegmentRelId);
 

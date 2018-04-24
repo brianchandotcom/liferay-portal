@@ -120,13 +120,44 @@ public class CPRuleServiceHttp {
 		}
 	}
 
+	public static com.liferay.commerce.product.model.CPRule getCPRule(
+		HttpPrincipal httpPrincipal, long cpRuleId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		try {
+			MethodKey methodKey = new MethodKey(CPRuleServiceUtil.class,
+					"getCPRule", _getCPRuleParameterTypes2);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey, cpRuleId);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return (com.liferay.commerce.product.model.CPRule)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
 	public static java.util.List<com.liferay.commerce.product.model.CPRule> getCPRules(
 		HttpPrincipal httpPrincipal, long groupId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.product.model.CPRule> orderByComparator)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(CPRuleServiceUtil.class,
-					"getCPRules", _getCPRulesParameterTypes2);
+					"getCPRules", _getCPRulesParameterTypes3);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
 					start, end, orderByComparator);
@@ -157,7 +188,7 @@ public class CPRuleServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(CPRuleServiceUtil.class,
-					"getCPRulesCount", _getCPRulesCountParameterTypes3);
+					"getCPRulesCount", _getCPRulesCountParameterTypes4);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId);
 
@@ -175,37 +206,6 @@ public class CPRuleServiceHttp {
 			}
 
 			return ((Integer)returnObj).intValue();
-		}
-		catch (com.liferay.portal.kernel.exception.SystemException se) {
-			_log.error(se, se);
-
-			throw se;
-		}
-	}
-
-	public static com.liferay.commerce.product.model.CPRule getCPRule(
-		HttpPrincipal httpPrincipal, long cpRuleId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		try {
-			MethodKey methodKey = new MethodKey(CPRuleServiceUtil.class,
-					"getCPRule", _getCPRuleParameterTypes4);
-
-			MethodHandler methodHandler = new MethodHandler(methodKey, cpRuleId);
-
-			Object returnObj = null;
-
-			try {
-				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
-			}
-			catch (Exception e) {
-				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
-					throw (com.liferay.portal.kernel.exception.PortalException)e;
-				}
-
-				throw new com.liferay.portal.kernel.exception.SystemException(e);
-			}
-
-			return (com.liferay.commerce.product.model.CPRule)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -324,14 +324,14 @@ public class CPRuleServiceHttp {
 	private static final Class<?>[] _deleteCPRuleParameterTypes1 = new Class[] {
 			long.class
 		};
-	private static final Class<?>[] _getCPRulesParameterTypes2 = new Class[] {
+	private static final Class<?>[] _getCPRuleParameterTypes2 = new Class[] {
+			long.class
+		};
+	private static final Class<?>[] _getCPRulesParameterTypes3 = new Class[] {
 			long.class, int.class, int.class,
 			com.liferay.portal.kernel.util.OrderByComparator.class
 		};
-	private static final Class<?>[] _getCPRulesCountParameterTypes3 = new Class[] {
-			long.class
-		};
-	private static final Class<?>[] _getCPRuleParameterTypes4 = new Class[] {
+	private static final Class<?>[] _getCPRulesCountParameterTypes4 = new Class[] {
 			long.class
 		};
 	private static final Class<?>[] _searchCPRulesParameterTypes5 = new Class[] {

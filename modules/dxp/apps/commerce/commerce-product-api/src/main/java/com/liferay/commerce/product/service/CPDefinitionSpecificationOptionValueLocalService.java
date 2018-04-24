@@ -89,6 +89,7 @@ public interface CPDefinitionSpecificationOptionValueLocalService
 	* @param CPDefinitionSpecificationOptionValueId the primary key for the new cp definition specification option value
 	* @return the new cp definition specification option value
 	*/
+	@Transactional(enabled = false)
 	public CPDefinitionSpecificationOptionValue createCPDefinitionSpecificationOptionValue(
 		long CPDefinitionSpecificationOptionValueId);
 

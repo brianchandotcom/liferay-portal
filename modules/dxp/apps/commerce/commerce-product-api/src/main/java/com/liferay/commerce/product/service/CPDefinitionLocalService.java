@@ -146,6 +146,7 @@ public interface CPDefinitionLocalService extends BaseLocalService,
 	* @param CPDefinitionId the primary key for the new cp definition
 	* @return the new cp definition
 	*/
+	@Transactional(enabled = false)
 	public CPDefinition createCPDefinition(long CPDefinitionId);
 
 	public void deleteAssetCategoryCPDefinition(long cpDefinitionId,

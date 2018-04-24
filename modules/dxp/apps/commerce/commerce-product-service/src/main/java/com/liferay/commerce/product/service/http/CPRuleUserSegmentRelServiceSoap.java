@@ -94,6 +94,20 @@ public class CPRuleUserSegmentRelServiceSoap {
 		}
 	}
 
+	public static com.liferay.commerce.product.model.CPRuleUserSegmentRelSoap getCPRuleUserSegmentRel(
+		long cpRuleUserSegmentRelId) throws RemoteException {
+		try {
+			com.liferay.commerce.product.model.CPRuleUserSegmentRel returnValue = CPRuleUserSegmentRelServiceUtil.getCPRuleUserSegmentRel(cpRuleUserSegmentRelId);
+
+			return com.liferay.commerce.product.model.CPRuleUserSegmentRelSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static com.liferay.commerce.product.model.CPRuleUserSegmentRelSoap[] getCPRuleUserSegmentRels(
 		long cpRuleId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.product.model.CPRuleUserSegmentRel> orderByComparator)
@@ -118,20 +132,6 @@ public class CPRuleUserSegmentRelServiceSoap {
 			int returnValue = CPRuleUserSegmentRelServiceUtil.getCPRuleUserSegmentRelsCount(cpRuleId);
 
 			return returnValue;
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-
-			throw new RemoteException(e.getMessage());
-		}
-	}
-
-	public static com.liferay.commerce.product.model.CPRuleUserSegmentRelSoap getCPRuleUserSegmentRel(
-		long cpRuleUserSegmentRelId) throws RemoteException {
-		try {
-			com.liferay.commerce.product.model.CPRuleUserSegmentRel returnValue = CPRuleUserSegmentRelServiceUtil.getCPRuleUserSegmentRel(cpRuleUserSegmentRelId);
-
-			return com.liferay.commerce.product.model.CPRuleUserSegmentRelSoap.toSoapModel(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);

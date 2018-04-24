@@ -85,6 +85,7 @@ import com.liferay.portal.kernel.service.persistence.CompanyPersistence;
 import com.liferay.portal.kernel.service.persistence.GroupPersistence;
 import com.liferay.portal.kernel.service.persistence.UserPersistence;
 import com.liferay.portal.kernel.service.persistence.WorkflowInstanceLinkPersistence;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -144,6 +145,7 @@ public abstract class CPDefinitionLocalServiceBaseImpl
 	 * @return the new cp definition
 	 */
 	@Override
+	@Transactional(enabled = false)
 	public CPDefinition createCPDefinition(long CPDefinitionId) {
 		return cpDefinitionPersistence.create(CPDefinitionId);
 	}

@@ -88,6 +88,7 @@ public interface CPFriendlyURLEntryLocalService extends BaseLocalService,
 	* @param CPFriendlyURLEntryId the primary key for the new cp friendly url entry
 	* @return the new cp friendly url entry
 	*/
+	@Transactional(enabled = false)
 	public CPFriendlyURLEntry createCPFriendlyURLEntry(
 		long CPFriendlyURLEntryId);
 

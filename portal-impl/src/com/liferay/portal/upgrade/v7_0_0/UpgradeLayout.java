@@ -14,9 +14,13 @@
 
 package com.liferay.portal.upgrade.v7_0_0;
 
+import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.StringBundler;
+
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 
 /**
  * @author Jonathan McCann
@@ -39,6 +43,7 @@ public class UpgradeLayout extends UpgradeProcess {
 	protected void doUpgrade() throws Exception {
 		deleteLinkedOrphanedLayouts();
 		updateUnlinkedOrphanedLayouts();
+		verifyFriendlyURL();
 	}
 
 	protected void updateUnlinkedOrphanedLayouts() throws Exception {
@@ -51,6 +56,32 @@ public class UpgradeLayout extends UpgradeProcess {
 			sb.append("layoutPrototypeLinkEnabled = FALSE");
 
 			runSQL(sb.toString());
+		}
+	}
+
+	protected void verifyFriendlyURL() throws Exception {
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			try (PreparedStatement ps1 = connection.prepareStatement(
+					"select layoutFriendlyURLId from LayoutFriendlyURL" +
+						"where plid not in (select plid from Layout)");
+				PreparedStatement ps2 =
+					AutoBatchPreparedStatementUtil.concurrentAutoBatch(
+						connection,
+						"delete from LayoutFriendlyURL where" +
+							"layoutFriendlyURLId = ?");
+				ResultSet rs = ps1.executeQuery()) {
+
+				while (rs.next()) {
+					long layoutFriendlyURLid = rs.getLong(
+						"layoutFriendlyURLId");
+
+					ps2.setLong(1, layoutFriendlyURLid);
+
+					ps2.addBatch();
+				}
+
+				ps2.executeBatch();
+			}
 		}
 	}
 

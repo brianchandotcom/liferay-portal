@@ -199,16 +199,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>INTEREST_PAID</td>
-	<td>//input[@type='text' and contains(@name,'interestPaid')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>INTEREST_RATE</td>
-	<td>//input[@type='text' and contains(@name,'interestRate')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>JABBER</td>
 	<td>//div[label[contains(.,'Jabber')]]//input[@type='text']</td>
 	<td></td>
@@ -241,11 +231,6 @@
 <tr>
 	<td>KEYWORDS</td>
 	<td>//input[contains(@title,'keywords')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>LOAN_AMOUNT</td>
-	<td>//input[@type='text' and contains(@name,'loanAmount')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -306,11 +291,6 @@
 <tr>
 	<td>MINIMUM_UPPER_CASE</td>
 	<td>//div[label[contains(.,'Minimum Upper Case')]]//input[@type='text']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>MONTHLY_PAYMENT</td>
-	<td>//input[@type='text' and contains(@name,'monthlyPayment')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -489,11 +469,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>TOTAL_PAID</td>
-	<td>//input[@type='text' and contains(@name,'totalPaid')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>TRACKBACKS</td>
 	<td>//input[contains(@id,'trackbacks')]</td>
 	<td></td>
@@ -531,11 +506,6 @@
 <tr>
 	<td>WEB_ID</td>
 	<td>//input[contains(@id,'webId') and contains(@class,'input-text')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>YEARS</td>
-	<td>//input[@type='text' and contains(@name,'years')]</td>
 	<td></td>
 </tr>
 <tr>

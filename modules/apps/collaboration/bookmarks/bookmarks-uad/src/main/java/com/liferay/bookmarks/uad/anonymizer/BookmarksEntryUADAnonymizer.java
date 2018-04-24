@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.user.associated.data.anonymizer.DynamicQueryUADAnonymizer;
 import com.liferay.user.associated.data.anonymizer.UADAnonymizer;
-import com.liferay.user.associated.data.util.UADAnonymizerHelper;
 
 import java.util.Arrays;
 import java.util.List;
@@ -42,10 +41,9 @@ public class BookmarksEntryUADAnonymizer
 	extends DynamicQueryUADAnonymizer<BookmarksEntry> {
 
 	@Override
-	public void autoAnonymize(BookmarksEntry bookmarksEntry, long userId)
+	public void autoAnonymize(
+			BookmarksEntry bookmarksEntry, long userId, User anonymousUser)
 		throws PortalException {
-
-		User anonymousUser = _uadAnonymizerHelper.getAnonymousUser();
 
 		if (bookmarksEntry.getStatusByUserId() == userId) {
 			bookmarksEntry.setStatusByUserId(anonymousUser.getUserId());
@@ -82,8 +80,5 @@ public class BookmarksEntryUADAnonymizer
 
 	@Reference
 	private BookmarksEntryLocalService _bookmarksEntryLocalService;
-
-	@Reference
-	private UADAnonymizerHelper _uadAnonymizerHelper;
 
 }

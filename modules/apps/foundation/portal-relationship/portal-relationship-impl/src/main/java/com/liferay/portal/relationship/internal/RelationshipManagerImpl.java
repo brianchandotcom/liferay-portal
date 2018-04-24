@@ -24,7 +24,9 @@ import com.liferay.portal.relationship.Relationship;
 import com.liferay.portal.relationship.RelationshipManager;
 import com.liferay.portal.relationship.RelationshipResource;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -43,41 +45,50 @@ public class RelationshipManagerImpl implements RelationshipManager {
 	public <T extends ClassedModel> Collection<? extends ClassedModel>
 		getInboundRelatedModels(Class<T> modelClass, long primKey) {
 
-		Relationship<T> relationship = _getRelationship(modelClass);
+		List<Relationship<T>> relationships = _getRelationships(modelClass);
 
-		Stream<? extends ClassedModel> stream =
-			relationship.getInboundRelatedModelStream(primKey);
+		Stream<Relationship<T>> stream = relationships.stream();
 
-		return stream.collect(Collectors.toList());
+		return stream.flatMap(
+			relationship -> relationship.getInboundRelatedModelStream(primKey)
+		).collect(
+			Collectors.toList()
+		);
 	}
 
 	@Override
 	public <T extends ClassedModel> Collection<? extends ClassedModel>
 		getOutboundRelatedModels(Class<T> modelClass, long primKey) {
 
-		Relationship<T> relationship = _getRelationship(modelClass);
+		List<Relationship<T>> relationships = _getRelationships(modelClass);
 
-		Stream<? extends ClassedModel> stream =
-			relationship.getOutboundRelatedModelStream(primKey);
+		Stream<Relationship<T>> stream = relationships.stream();
 
-		return stream.collect(Collectors.toList());
+		return stream.flatMap(
+			relationship -> relationship.getOutboundRelatedModelStream(primKey)
+		).collect(
+			Collectors.toList()
+		);
 	}
 
 	@Override
 	public <T extends ClassedModel> Collection<? extends ClassedModel>
 		getRelatedModels(Class<T> modelClass, long primKey) {
 
-		Relationship<T> relationship = _getRelationship(modelClass);
+		List<Relationship<T>> relationships = _getRelationships(modelClass);
 
-		Stream<? extends ClassedModel> stream =
-			relationship.getRelatedModelStream(primKey);
+		Stream<Relationship<T>> stream = relationships.stream();
 
-		return stream.collect(Collectors.toList());
+		return stream.flatMap(
+			relationship -> relationship.getRelatedModelStream(primKey)
+		).collect(
+			Collectors.toList()
+		);
 	}
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
-		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
+		_serviceTrackerMap = ServiceTrackerMapFactory.openMultiValueMap(
 			bundleContext, RelationshipResource.class, null,
 			(serviceReference, emitter) -> {
 				String modelClassName = (String)serviceReference.getProperty(
@@ -99,20 +110,32 @@ public class RelationshipManagerImpl implements RelationshipManager {
 	}
 
 	@SuppressWarnings("unchecked")
-	private <T extends ClassedModel> Relationship<T> _getRelationship(
+	private <T extends ClassedModel> List<Relationship<T>> _getRelationships(
 		Class<T> modelClass) {
 
-		RelationshipResource<T> relationshipResource =
+		List<RelationshipResource> relationshipResources =
 			_serviceTrackerMap.getService(modelClass.getName());
 
-		Relationship.Builder<T> builder = new Relationship.Builder<>();
+		List<Relationship<T>> relationships = new ArrayList<>();
 
-		return relationshipResource.relationship(builder);
+		for (RelationshipResource relationshipResource :
+				relationshipResources) {
+
+			Relationship.Builder<T> builder = new Relationship.Builder<>();
+
+			Relationship<T> relationship = relationshipResource.relationship(
+				builder);
+
+			relationships.add(relationship);
+		}
+
+		return relationships;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		RelationshipManagerImpl.class);
 
-	private ServiceTrackerMap<String, RelationshipResource> _serviceTrackerMap;
+	private ServiceTrackerMap<String, List<RelationshipResource>>
+		_serviceTrackerMap;
 
 }

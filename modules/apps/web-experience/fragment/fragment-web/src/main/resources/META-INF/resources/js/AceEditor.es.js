@@ -70,7 +70,7 @@ class AceEditor extends Component {
 	_handleDocumentChanged() {
 		const valid = this._editorSession.getAnnotations().reduce(
 			(acc, annotation) => {
-				return (!acc || annotation.type === 'error') ?
+				return (!acc || (annotation.type === 'error')) ?
 					false : acc;
 			},
 			true

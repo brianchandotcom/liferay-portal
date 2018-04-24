@@ -26,7 +26,7 @@
 		if (data === '') {
 			localStorage.removeItem(NAMESPACE);
 		}
-		else if (data && data !== prevData) {
+		else if (data && (data !== prevData)) {
 			localStorage.setItem(NAMESPACE, data);
 			location.reload();
 		}

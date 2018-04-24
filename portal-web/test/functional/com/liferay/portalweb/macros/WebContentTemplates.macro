@@ -2,7 +2,9 @@
 	<command name="addCP">
 		<execute macro="LexiconEntry#gotoAdd" />
 
-		<execute function="Type#clickAtType" locator1="TextInput#NAME" value1="${templateName}" />
+		<execute macro="PortletEntry#inputName">
+			<var name="name" value="${templateName}" />
+		</execute>
 
 		<execute macro="Panel#expandPanel">
 			<var name="panel" value="Details" />

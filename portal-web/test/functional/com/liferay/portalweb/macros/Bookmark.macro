@@ -526,11 +526,11 @@
 
 		<execute function="Click" locator1="AP#ASSET_ABSTRACT_BOOKMARK_DETAIL_LINK" />
 
-		<execute function="SelectWindow" locator1="title=Liferay: Transform your whole enterprise" />
+		<execute function="SelectWindow" locator1="title=Liferay: Digital experience software tailored to your needs" />
 
 		<execute function="AssertElementPresent#assertElementPresent" locator1="AP#ASSET_ABSTRACT_BOOKMARK_LIFERAY_LOGO" />
 
-		<execute function="Close" locator1="title=Liferay: Transform your whole enterprise" />
+		<execute function="Close" locator1="title=Liferay: Digital experience software tailored to your needs" />
 	</command>
 
 	<command name="viewEntry">

@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.util.ArrayList;
@@ -76,6 +77,7 @@ public class FragmentEntryLinkLocalServiceImpl
 		fragmentEntryLink.setPosition(position);
 		fragmentEntryLink.setLastPropagationDate(
 			serviceContext.getCreateDate(new Date()));
+		fragmentEntryLink.setNamespace(StringUtil.randomId());
 
 		fragmentEntryLinkPersistence.update(fragmentEntryLink);
 

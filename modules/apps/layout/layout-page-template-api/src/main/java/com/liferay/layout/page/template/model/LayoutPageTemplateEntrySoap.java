@@ -49,6 +49,10 @@ public class LayoutPageTemplateEntrySoap implements Serializable {
 		soapModel.setType(model.getType());
 		soapModel.setHtmlPreviewEntryId(model.getHtmlPreviewEntryId());
 		soapModel.setDefaultTemplate(model.isDefaultTemplate());
+		soapModel.setStatus(model.getStatus());
+		soapModel.setStatusByUserId(model.getStatusByUserId());
+		soapModel.setStatusByUserName(model.getStatusByUserName());
+		soapModel.setStatusDate(model.getStatusDate());
 
 		return soapModel;
 	}
@@ -221,6 +225,38 @@ public class LayoutPageTemplateEntrySoap implements Serializable {
 		_defaultTemplate = defaultTemplate;
 	}
 
+	public int getStatus() {
+		return _status;
+	}
+
+	public void setStatus(int status) {
+		_status = status;
+	}
+
+	public long getStatusByUserId() {
+		return _statusByUserId;
+	}
+
+	public void setStatusByUserId(long statusByUserId) {
+		_statusByUserId = statusByUserId;
+	}
+
+	public String getStatusByUserName() {
+		return _statusByUserName;
+	}
+
+	public void setStatusByUserName(String statusByUserName) {
+		_statusByUserName = statusByUserName;
+	}
+
+	public Date getStatusDate() {
+		return _statusDate;
+	}
+
+	public void setStatusDate(Date statusDate) {
+		_statusDate = statusDate;
+	}
+
 	private long _layoutPageTemplateEntryId;
 	private long _groupId;
 	private long _companyId;
@@ -235,4 +271,8 @@ public class LayoutPageTemplateEntrySoap implements Serializable {
 	private int _type;
 	private long _htmlPreviewEntryId;
 	private boolean _defaultTemplate;
+	private int _status;
+	private long _statusByUserId;
+	private String _statusByUserName;
+	private Date _statusDate;
 }

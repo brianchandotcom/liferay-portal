@@ -54,7 +54,7 @@ import java.util.Map;
  *
  * @author Brian Wing Shun Chan
  * @see WikiNodeLocalServiceUtil
- * @see com.liferay.wiki.service.base.WikiNodeLocalServiceBaseImpl
+ * @see WikiNodeLocalServiceBaseImpl
  * @see com.liferay.wiki.service.impl.WikiNodeLocalServiceImpl
  * @generated
  */

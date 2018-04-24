@@ -46,7 +46,7 @@ import java.util.List;
  *
  * @author Brian Wing Shun Chan
  * @see WikiPageResourceLocalServiceUtil
- * @see com.liferay.wiki.service.base.WikiPageResourceLocalServiceBaseImpl
+ * @see WikiPageResourceLocalServiceBaseImpl
  * @see com.liferay.wiki.service.impl.WikiPageResourceLocalServiceImpl
  * @generated
  */

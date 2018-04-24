@@ -11,20 +11,20 @@ class TranslationStatus extends Component {
 
 	/**
 	 * Handles a click on a language item to notify parent components that a
-     * change in the selected language needs to be initiated.
+	 * change in the selected language needs to be initiated.
 	 * @param {Event} event
 	 * @private
-     * @review
+	 * @review
 	 */
 
-    _handleLanguageChange(event) {
-        event.preventDefault();
+	_handleLanguageChange(event) {
+		event.preventDefault();
 
-        this.emit(
-            'languageChange',
-            event.delegateTarget.getAttribute('data-languageid')
-        );
-    }
+		this.emit(
+			'languageChange',
+			event.delegateTarget.getAttribute('data-languageid')
+		);
+	}
 }
 
 Soy.register(TranslationStatus, templates);

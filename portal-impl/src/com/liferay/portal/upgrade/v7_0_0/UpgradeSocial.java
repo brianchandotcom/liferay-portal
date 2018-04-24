@@ -42,6 +42,19 @@ public class UpgradeSocial extends UpgradeProcess {
 		}
 	}
 
+	protected void deleteOrphanedSocialRequests() throws Exception {
+		try (Statement s = connection.createStatement()) {
+			StringBundler sb = new StringBundler(4);
+
+			sb.append("delete from SocialRequest where classNameId = (select ");
+			sb.append("classNameId from ClassName_ where value = ");
+			sb.append("'com.liferay.portal.kernel.model.Group') and classPk ");
+			sb.append("not in (select groupId from Group_)");
+
+			s.execute(sb.toString());
+		}
+	}
+
 	@Override
 	protected void doUpgrade() throws Exception {
 		if (getSocialActivitySetsCount() > 0) {
@@ -53,6 +66,8 @@ public class UpgradeSocial extends UpgradeProcess {
 		long delta = getDelta(increment);
 
 		addSocialActivitySets(delta);
+
+		deleteOrphanedSocialRequests();
 
 		updateSocialActivities(delta);
 

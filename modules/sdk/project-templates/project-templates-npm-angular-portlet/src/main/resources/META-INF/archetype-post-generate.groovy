@@ -22,11 +22,13 @@ Path buildGradlePath = projectPath.resolve('build.gradle')
 
 Files.deleteIfExists(buildGradlePath)
 
-String liferayVersion = request.properties.get('liferayVersion')
+Properties properties = request.properties
+
+String liferayVersion = properties.get('liferayVersion')
 
 if (liferayVersion != '7.1') {
-	String className = request.properties.get('className')
-	String packageString = request.properties.get('package')
+	String className = properties.get('className')
+	String packageString = properties.get('package')
 
 	String[] packageList = packageString.split("\\.")
 

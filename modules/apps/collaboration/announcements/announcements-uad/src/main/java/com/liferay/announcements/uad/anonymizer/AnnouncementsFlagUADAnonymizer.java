@@ -19,9 +19,9 @@ import com.liferay.announcements.kernel.service.AnnouncementsFlagLocalService;
 import com.liferay.announcements.uad.constants.AnnouncementsUADConstants;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.user.associated.data.anonymizer.DynamicQueryUADAnonymizer;
 import com.liferay.user.associated.data.anonymizer.UADAnonymizer;
-import com.liferay.user.associated.data.util.UADAnonymizerHelper;
 
 import java.util.Collections;
 import java.util.List;
@@ -41,10 +41,12 @@ public class AnnouncementsFlagUADAnonymizer
 	extends DynamicQueryUADAnonymizer<AnnouncementsFlag> {
 
 	@Override
-	public void autoAnonymize(AnnouncementsFlag announcementsFlag, long userId)
+	public void autoAnonymize(
+			AnnouncementsFlag announcementsFlag, long userId,
+			User anonymousUser)
 		throws PortalException {
 
-		announcementsFlag.setUserId(_uadAnonymizerHelper.getAnonymousUserId());
+		announcementsFlag.setUserId(anonymousUser.getUserId());
 
 		_announcementsFlagLocalService.updateAnnouncementsFlag(
 			announcementsFlag);
@@ -72,8 +74,5 @@ public class AnnouncementsFlagUADAnonymizer
 
 	@Reference
 	private AnnouncementsFlagLocalService _announcementsFlagLocalService;
-
-	@Reference
-	private UADAnonymizerHelper _uadAnonymizerHelper;
 
 }

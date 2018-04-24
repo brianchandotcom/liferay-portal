@@ -60,21 +60,15 @@ renderResponse.setTitle(StringBundler.concat(selectedUser.getFullName(), " - ", 
 		<div class="sheet-section">
 			<h3 class="sheet-subtitle"><liferay-ui:message key="applications" /></h3>
 
-			<liferay-frontend:management-bar>
-				<liferay-frontend:management-bar-filters>
-					<liferay-frontend:management-bar-navigation
-						navigationKeys='<%= new String[] {"all", "in-progress", "done"} %>'
-						portletURL="<%= PortletURLUtil.clone(currentURLObj, renderResponse) %>"
-					/>
-
-					<liferay-frontend:management-bar-sort
-						orderByCol="<%= uadApplicationsSummaryDisplaySearchContainer.getOrderByCol() %>"
-						orderByType="<%= uadApplicationsSummaryDisplaySearchContainer.getOrderByType() %>"
-						orderColumns='<%= new String[] {"name", "items", "status"} %>'
-						portletURL="<%= PortletURLUtil.clone(currentURLObj, renderResponse) %>"
-					/>
-				</liferay-frontend:management-bar-filters>
-			</liferay-frontend:management-bar>
+			<clay:management-toolbar
+				filterItems="<%= viewUADApplicationsSummaryDisplay.getManagementBarFilterItems() %>"
+				namespace="<%= renderResponse.getNamespace() %>"
+				searchContainerId="uadApplicationSummaryDisplays"
+				selectable="<%= false %>"
+				showSearch="<%= false %>"
+				sortingOrder="<%= uadApplicationsSummaryDisplaySearchContainer.getOrderByType() %>"
+				sortingURL="<%= viewUADApplicationsSummaryDisplay.getSortingURL() %>"
+			/>
 
 			<liferay-ui:search-container
 				id="uadApplicationSummaryDisplays"

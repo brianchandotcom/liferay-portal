@@ -20,7 +20,6 @@ import com.liferay.message.boards.model.MBCategory;
 import com.liferay.message.boards.uad.constants.MBUADConstants;
 import com.liferay.message.boards.uad.test.MBCategoryUADEntityTestHelper;
 
-import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.test.rule.Inject;
@@ -44,14 +43,14 @@ import java.util.List;
  * @generated
  */
 @RunWith(Arquillian.class)
-public class MBCategoryUADAggregatorTest extends BaseUADAggregatorTestCase
-	implements WhenHasStatusByUserIdField {
+public class MBCategoryUADAggregatorTest extends BaseUADAggregatorTestCase<MBCategory>
+	implements WhenHasStatusByUserIdField<MBCategory> {
 	@ClassRule
 	@Rule
 	public static final AggregateTestRule aggregateTestRule = new LiferayIntegrationTestRule();
 
 	@Override
-	public BaseModel<?> addBaseModelWithStatusByUserId(long userId,
+	public MBCategory addBaseModelWithStatusByUserId(long userId,
 		long statusByUserId) throws Exception {
 		MBCategory mbCategory = _mbCategoryUADEntityTestHelper.addMBCategoryWithStatusByUserId(userId,
 				statusByUserId);
@@ -61,8 +60,13 @@ public class MBCategoryUADAggregatorTest extends BaseUADAggregatorTestCase
 		return mbCategory;
 	}
 
+	@After
+	public void tearDown() throws Exception {
+		_mbCategoryUADEntityTestHelper.cleanUpDependencies(_mbCategories);
+	}
+
 	@Override
-	protected BaseModel<?> addBaseModel(long userId) throws Exception {
+	protected MBCategory addBaseModel(long userId) throws Exception {
 		MBCategory mbCategory = _mbCategoryUADEntityTestHelper.addMBCategory(userId);
 
 		_mbCategories.add(mbCategory);
@@ -73,11 +77,6 @@ public class MBCategoryUADAggregatorTest extends BaseUADAggregatorTestCase
 	@Override
 	protected UADAggregator getUADAggregator() {
 		return _uadAggregator;
-	}
-
-	@After
-	public void tearDown() throws Exception {
-		_mbCategoryUADEntityTestHelper.cleanUpDependencies(_mbCategories);
 	}
 
 	@DeleteAfterTestRun

@@ -249,11 +249,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>LOWER_CASE_LETTERS</td>
-	<td>//label[contains(.,'Lower Case Letters')]/input[@type='checkbox']</td>
-	<td></td>
-</tr>
-<tr>
 	<td>MAILING</td>
 	<td>//label[contains(.,'Mailing')]/input[@type='checkbox']</td>
 	<td></td>
@@ -286,11 +281,6 @@
 <tr>
 	<td>NEVER_REVIEW</td>
 	<td>//input[contains(@name,'neverReview') and @type='checkbox']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>NUMBERS</td>
-	<td>//label[contains(.,'Numbers')]/input[@type='checkbox']</td>
 	<td></td>
 </tr>
 <tr>
@@ -421,11 +411,6 @@
 <tr>
 	<td>TWITTER</td>
 	<td>//input[contains(@id,'twitter')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>UPPER_CASE_LETTERS</td>
-	<td>//label[contains(.,'Upper Case Letters')]/input[@type='checkbox']</td>
 	<td></td>
 </tr>
 </tbody>

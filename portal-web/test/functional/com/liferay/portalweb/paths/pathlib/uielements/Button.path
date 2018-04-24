@@ -169,11 +169,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>CALCULATE</td>
-	<td>//button[contains(.,'Calculate')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>CANCEL</td>
 	<td>//a[contains(@class,'cancel') and contains(@class,'btn')] | //button[contains(.,'Cancel')] | //a[contains(@class,'btn') and contains(.,'Cancel')]</td>
 	<td></td>
@@ -399,18 +394,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>FIND</td>
-	<td>//button[contains(.,'Find')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>FINISH_CONFIGURATION</td>
 	<td>//button[contains(.,'Finish Configuration')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>GENERATE</td>
-	<td>//button[contains(.,'Generate')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -14,6 +14,8 @@
 
 package com.liferay.tag.apio.internal.resource;
 
+import static com.liferay.portal.apio.idempotent.Idempotent.idempotent;
+
 import com.liferay.apio.architect.pagination.PageItems;
 import com.liferay.apio.architect.pagination.Pagination;
 import com.liferay.apio.architect.representor.Representor;
@@ -23,8 +25,11 @@ import com.liferay.apio.architect.routes.NestedCollectionRoutes;
 import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.asset.kernel.service.AssetTagService;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.site.apio.identifier.WebSiteIdentifier;
 import com.liferay.tag.apio.identifier.TagIdentifier;
+import com.liferay.tag.apio.internal.form.TagForm;
 
 import java.util.List;
 
@@ -46,7 +51,15 @@ public class TagNestedCollectionResource
 	public NestedCollectionRoutes<AssetTag, Long> collectionRoutes(
 		NestedCollectionRoutes.Builder<AssetTag, Long> builder) {
 
-		return builder.addGetter(
+		return builder.addCreator(
+			this::_addTag,
+			(credentials, groupId) -> {
+				//TODO Permission for creating tags
+
+				return true;
+			},
+			TagForm::buildForm
+		).addGetter(
 			this::_getPageItems
 		).build();
 	}
@@ -62,6 +75,21 @@ public class TagNestedCollectionResource
 
 		return builder.addGetter(
 			_assetTagService::getTag
+		).addRemover(
+			idempotent(_assetTagService::deleteTag),
+			(credentials, assetTagId) -> {
+				//TODO Permissions for removing tags
+
+				return true;
+			}
+		).addUpdater(
+			this::_updateTag,
+			(credentials, assetTagId) -> {
+				//TODO Permissions for updating tags
+
+				return true;
+			},
+			TagForm::buildForm
 		).build();
 	}
 
@@ -81,11 +109,24 @@ public class TagNestedCollectionResource
 		).addNumber(
 			"usages",
 			assetTag -> {
-				//TODO
+				//TODO Compute tag usages
 
 				return null;
 			}
 		).build();
+	}
+
+	private AssetTag _addTag(Long groupId, TagForm tagForm)
+		throws PortalException {
+
+		ServiceContext serviceContext = new ServiceContext();
+
+		serviceContext.setAddGroupPermissions(true);
+		serviceContext.setAddGuestPermissions(true);
+		serviceContext.setScopeGroupId(groupId);
+
+		return _assetTagService.addTag(
+			groupId, tagForm.getName(), serviceContext);
 	}
 
 	private PageItems<AssetTag> _getPageItems(
@@ -98,6 +139,12 @@ public class TagNestedCollectionResource
 		int totalCount = _assetTagLocalService.getGroupTagsCount(groupId);
 
 		return new PageItems<>(tags, totalCount);
+	}
+
+	private AssetTag _updateTag(Long assetTagId, TagForm tagForm)
+		throws PortalException {
+
+		return _assetTagService.updateTag(assetTagId, tagForm.getName(), null);
 	}
 
 	@Reference

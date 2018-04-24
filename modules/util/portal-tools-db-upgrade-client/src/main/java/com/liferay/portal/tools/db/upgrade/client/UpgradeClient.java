@@ -14,7 +14,7 @@
 
 package com.liferay.portal.tools.db.upgrade.client;
 
-import com.liferay.portal.tools.db.upgrade.client.util.GogoTelnetClient;
+import com.liferay.gogo.shell.client.GogoShellClient;
 import com.liferay.portal.tools.db.upgrade.client.util.Properties;
 import com.liferay.portal.tools.db.upgrade.client.util.TeePrintStream;
 
@@ -223,8 +223,8 @@ public class UpgradeClient {
 			ioe.printStackTrace();
 		}
 
-		try (GogoTelnetClient gogoTelnetClient = new GogoTelnetClient()) {
-			if (_shell || !_isFinished(gogoTelnetClient)) {
+		try (GogoShellClient gogoShellClient = new GogoShellClient()) {
+			if (_shell || !_isFinished(gogoShellClient)) {
 				System.out.println("You are connected to Gogo shell.");
 
 				_printHelp();
@@ -238,7 +238,7 @@ public class UpgradeClient {
 						break;
 					}
 					else {
-						System.out.println(gogoTelnetClient.send(line));
+						System.out.println(gogoShellClient.send(line));
 					}
 				}
 			}
@@ -347,14 +347,14 @@ public class UpgradeClient {
 		return sb.toString();
 	}
 
-	private boolean _isFinished(GogoTelnetClient gogoTelnetClient)
+	private boolean _isFinished(GogoShellClient gogoShellClient)
 		throws IOException {
 
 		System.out.print("Checking to see if all upgrades have completed...");
 
-		String upgradeCheck = gogoTelnetClient.send("upgrade:check");
+		String upgradeCheck = gogoShellClient.send("upgrade:check");
 
-		String upgradeSteps = gogoTelnetClient.send(
+		String upgradeSteps = gogoShellClient.send(
 			"upgrade:list | grep Registered | grep step");
 
 		if (!upgradeCheck.equals("upgrade:check") ||

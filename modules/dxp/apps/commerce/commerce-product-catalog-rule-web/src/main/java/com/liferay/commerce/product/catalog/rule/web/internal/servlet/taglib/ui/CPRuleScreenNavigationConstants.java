@@ -22,6 +22,9 @@ public class CPRuleScreenNavigationConstants {
 	public static final String CATEGORY_KEY_COMMERCE_PRODUCT_RULE_DETAIL =
 		"detail";
 
+	public static final String
+		CATEGORY_KEY_COMMERCE_PRODUCT_RULE_USER_SEGMENTS = "user-segments";
+
 	public static final String ENTRY_KEY_COMMERCE_PRODUCT_RULE_DETAIL =
 		"detail";
 

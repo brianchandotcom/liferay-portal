@@ -14,6 +14,8 @@
 
 package com.liferay.commerce.product.catalog.rule.web.internal.portlet;
 
+import com.liferay.commerce.product.catalog.rule.CPRuleTypeJSPContributorRegistry;
+import com.liferay.commerce.product.catalog.rule.CPRuleTypeRegistry;
 import com.liferay.commerce.product.catalog.rule.web.internal.display.context.CPCatalogRuleDisplayContext;
 import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.service.CPRuleService;
@@ -74,7 +76,8 @@ public class CPCatalogRulePortlet extends MVCPortlet {
 
 		CPCatalogRuleDisplayContext cpCatalogRuleDisplayContext =
 			new CPCatalogRuleDisplayContext(
-				_cpRuleService, _cpRuleUserSegmentRelService,
+				_cpRuleService, _cpRuleTypeJSPContributorRegistry,
+				_cpRuleTypeRegistry, _cpRuleUserSegmentRelService,
 				httpServletRequest, _itemSelector);
 
 		renderRequest.setAttribute(
@@ -85,6 +88,12 @@ public class CPCatalogRulePortlet extends MVCPortlet {
 
 	@Reference
 	private CPRuleService _cpRuleService;
+
+	@Reference
+	private CPRuleTypeJSPContributorRegistry _cpRuleTypeJSPContributorRegistry;
+
+	@Reference
+	private CPRuleTypeRegistry _cpRuleTypeRegistry;
 
 	@Reference
 	private CPRuleUserSegmentRelService _cpRuleUserSegmentRelService;

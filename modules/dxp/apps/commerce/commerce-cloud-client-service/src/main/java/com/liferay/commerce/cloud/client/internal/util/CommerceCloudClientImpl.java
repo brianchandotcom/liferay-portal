@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.Validator;
@@ -90,6 +91,25 @@ public class CommerceCloudClientImpl implements CommerceCloudClient {
 		}
 	}
 
+	@Override
+	public void updateServerConfiguration(JSONObject jsonObject)
+		throws CommerceCloudClientException {
+
+		String location = getLocation("/configuration/");
+
+		Http.Options options = new Http.Options();
+
+		options.addHeader(
+			HttpHeaders.CONTENT_TYPE, ContentTypes.APPLICATION_JSON);
+		options.setBody(
+			jsonObject.toJSONString(), ContentTypes.APPLICATION_JSON,
+			StringPool.UTF8);
+		options.setLocation(location);
+		options.setPut(true);
+
+		executeRequest(options);
+	}
+
 	@Activate
 	@Modified
 	protected void activate(Map<String, Object> properties) {
@@ -117,6 +137,9 @@ public class CommerceCloudClientImpl implements CommerceCloudClient {
 		String location = getLocation("/orders/");
 
 		Http.Options options = new Http.Options();
+
+		options.addHeader(
+			HttpHeaders.CONTENT_TYPE, ContentTypes.APPLICATION_JSON);
 
 		JSONArray jsonArray = _jsonFactory.createJSONArray();
 

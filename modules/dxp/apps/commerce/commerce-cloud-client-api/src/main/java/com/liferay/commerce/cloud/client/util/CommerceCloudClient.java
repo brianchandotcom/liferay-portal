@@ -36,4 +36,7 @@ public interface CommerceCloudClient {
 				commerceCloudOrderForecastSyncs)
 		throws CommerceCloudClientException;
 
+	public void updateServerConfiguration(JSONObject jsonObject)
+		throws CommerceCloudClientException;
+
 }

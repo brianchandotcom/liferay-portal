@@ -141,9 +141,7 @@ public class ImportFragmentEntriesMVCActionCommand
 					tempFileEntry.getContentStream());
 
 				if (_importUtil.hasFragmentCollection(zipReader)) {
-					throw new InvalidFragmentEntryFileException(
-						"fragment-collection-cannot-be-imported-into-" +
-							"existing-fragment-collection");
+					throw new InvalidFragmentEntryFileException();
 				}
 
 				_importUtil.importFragmentEntries(

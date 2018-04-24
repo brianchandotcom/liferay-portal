@@ -31,14 +31,7 @@ DLConfiguration dlConfiguration = ConfigurationProviderUtil.getSystemConfigurati
 	<liferay-ui:message arguments="<%= dfcke.getMessage() %>" key="a-fragment-collection-with-the-key-x-already-exists" />
 </liferay-ui:error>
 
-<liferay-ui:error exception="<%= InvalidFragmentCollectionFileException.class %>">
-
-	<%
-	InvalidFragmentCollectionFileException ifcfe = (InvalidFragmentCollectionFileException)errorException;
-	%>
-
-	<liferay-ui:message key="<%= ifcfe.getMessage() %>" />
-</liferay-ui:error>
+<liferay-ui:error exception="<%= InvalidFragmentCollectionFileException.class %>" message="selected-file-does-not-contain-fragment-collections" />
 
 <div class="lfr-dynamic-uploader" id="<portlet:namespace />uploaderContainer">
 	<div class="container-fluid-1280">

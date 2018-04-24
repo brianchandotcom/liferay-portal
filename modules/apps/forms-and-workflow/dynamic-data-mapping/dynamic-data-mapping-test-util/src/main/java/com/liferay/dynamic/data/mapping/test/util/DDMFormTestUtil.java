@@ -101,9 +101,18 @@ public class DDMFormTestUtil {
 		String name, String label, String type, String dataType,
 		boolean localizable, boolean repeatable, boolean required) {
 
-		return createDDMFormField(
-			name, label, type, dataType, localizable, repeatable, required,
-			null, null, null, null, null);
+		DDMFormField ddmFormField = new DDMFormField(name, type);
+
+		ddmFormField.setDataType(dataType);
+		ddmFormField.setLocalizable(localizable);
+		ddmFormField.setRepeatable(repeatable);
+		ddmFormField.setRequired(required);
+
+		LocalizedValue localizedValue = ddmFormField.getLabel();
+
+		localizedValue.addString(LocaleUtil.US, label);
+
+		return ddmFormField;
 	}
 
 	public static DDMFormField createDDMFormField(
@@ -112,7 +121,7 @@ public class DDMFormTestUtil {
 
 		return createDDMFormField(
 			name, label, type, dataType, localizable, repeatable, required, tip,
-			null, null, null, null);
+			null);
 	}
 
 	public static DDMFormField createDDMFormField(
@@ -122,7 +131,7 @@ public class DDMFormTestUtil {
 
 		return createDDMFormField(
 			name, label, type, dataType, localizable, repeatable, required, tip,
-			null, null, null, option);
+			null, option);
 	}
 
 	public static DDMFormField createDDMFormField(
@@ -141,51 +150,36 @@ public class DDMFormTestUtil {
 		String predefinedValue, String placeHolder, String toolTip,
 		String option) {
 
-		DDMFormField ddmFormField = new DDMFormField(name, type);
+		DDMFormField ddmFormField = createDDMFormField(
+			name, label, type, dataType, localizable, repeatable, required);
 
-		ddmFormField.setDataType(dataType);
-		ddmFormField.setLocalizable(localizable);
-		ddmFormField.setRepeatable(repeatable);
-		ddmFormField.setRequired(required);
+		LocalizedValue tipLocalizedValue =
+			DDMFormValuesTestUtil.createLocalizedValue(tip, LocaleUtil.US);
 
-		if (tip != null) {
-			LocalizedValue tipLocalizedValue =
-				DDMFormValuesTestUtil.createLocalizedValue(tip, LocaleUtil.US);
+		ddmFormField.setTip(tipLocalizedValue);
 
-			ddmFormField.setTip(tipLocalizedValue);
-		}
+		LocalizedValue predefinedValueLocalizedValue =
+			DDMFormValuesTestUtil.createLocalizedValue(
+				predefinedValue, LocaleUtil.US);
 
-		if (predefinedValue != null) {
-			LocalizedValue predefinedValueLocalizedValue =
-				DDMFormValuesTestUtil.createLocalizedValue(
-					predefinedValue, LocaleUtil.US);
+		ddmFormField.setPredefinedValue(predefinedValueLocalizedValue);
 
-			ddmFormField.setPredefinedValue(predefinedValueLocalizedValue);
-		}
+		LocalizedValue placeHolderLocalizedValue =
+			DDMFormValuesTestUtil.createLocalizedValue(
+				placeHolder, LocaleUtil.US);
 
-		if (placeHolder != null) {
-			LocalizedValue placeHolderLocalizedValue =
-				DDMFormValuesTestUtil.createLocalizedValue(
-					placeHolder, LocaleUtil.US);
+		ddmFormField.setProperty("placeholder", placeHolderLocalizedValue);
 
-			ddmFormField.setProperty("placeholder", placeHolderLocalizedValue);
-		}
+		LocalizedValue toolTipLocalizedValue =
+			DDMFormValuesTestUtil.createLocalizedValue(toolTip, LocaleUtil.US);
 
-		if (toolTip != null) {
-			LocalizedValue toolTipLocalizedValue =
-				DDMFormValuesTestUtil.createLocalizedValue(
-					toolTip, LocaleUtil.US);
+		ddmFormField.setProperty("tooltip", toolTipLocalizedValue);
 
-			ddmFormField.setProperty("tooltip", toolTipLocalizedValue);
-		}
+		DDMFormFieldOptions ddmFormFieldOptions = new DDMFormFieldOptions();
 
-		if (option != null) {
-			DDMFormFieldOptions ddmFormFieldOptions = new DDMFormFieldOptions();
+		ddmFormFieldOptions.addOptionLabel(option, LocaleUtil.US, option);
 
-			ddmFormFieldOptions.addOptionLabel(option, LocaleUtil.US, option);
-
-			ddmFormField.setDDMFormFieldOptions(ddmFormFieldOptions);
-		}
+		ddmFormField.setDDMFormFieldOptions(ddmFormFieldOptions);
 
 		LocalizedValue localizedValue = ddmFormField.getLabel();
 

@@ -89,6 +89,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CURRENT_DISPLAY_STYLE</td>
+	<td>//ul[@class='navbar-nav'][2]//li[contains(@class,'dropdown nav-item')]//button[contains(@class,'dropdown-toggle')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>DELETE</td>
 	<td>//*[*[name()='svg'][contains(@class,'icon-trash')]]</td>
 	<td></td>
@@ -150,7 +155,7 @@
 </tr>
 <tr>
 	<td>INFO</td>
-	<td>//*[@data-qa-id='infoButton'] | //div[contains(@class,'management-bar-default')]//a[contains(@class,'infoPanelToggler')]</td>
+	<td>//*[@data-qa-id='infoButton'] | //div[contains(@class,'management-bar-default')]//a[contains(@class,'infoPanelToggler')] | //button[*[name()='svg'][contains(@class,'lexicon-icon-info')]]</td>
 	<td></td>
 </tr>
 <tr>

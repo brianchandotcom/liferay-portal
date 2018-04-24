@@ -894,8 +894,8 @@
 			<else>
 				<execute macro="PortletEntry#publish" />
 
-				<execute macro="Portlet#changeDisplayStyle">
-					<var name="displayStyle" value="descriptive" />
+				<execute macro="LexiconEntry#changeDisplayStyle">
+					<var name="displayStyle" value="list" />
 				</execute>
 
 				<var name="key_webContentTitle" value="${webContentTitleEdit}" />
@@ -1110,8 +1110,8 @@
 	</command>
 
 	<command name="moveMultipleToFolderCP">
-		<execute macro="Portlet#changeDisplayStyle">
-			<var name="displayStyle" value="descriptive" />
+		<execute macro="LexiconEntry#changeDisplayStyle">
+			<var name="displayStyle" value="list" />
 		</execute>
 
 		<for list="${rowEntryCheckList}" param="rowEntry">
@@ -1202,8 +1202,8 @@
 	</command>
 
 	<command name="moveToRecycleBinViaDeleteIconCP">
-		<execute macro="Portlet#changeDisplayStyle">
-			<var name="displayStyle" value="descriptive" />
+		<execute macro="LexiconEntry#changeDisplayStyle">
+			<var name="displayStyle" value="list" />
 		</execute>
 
 		<execute macro="PortletEntry#selectAll" />
@@ -1409,8 +1409,8 @@
 			<var name="portlet" value="Web Content" />
 		</execute>
 
-		<execute macro="Portlet#changeDisplayStyle">
-			<var name="displayStyle" value="descriptive" />
+		<execute macro="LexiconEntry#changeDisplayStyle">
+			<var name="displayStyle" value="list" />
 		</execute>
 
 		<if>
@@ -1468,8 +1468,8 @@
 	<command name="viewApprovedStatus">
 		<var name="key_webContentTitle" value="${webContentTitle}" />
 
-		<execute macro="Portlet#changeDisplayStyle">
-			<var name="displayStyle" value="list" />
+		<execute macro="LexiconEntry#changeDisplayStyle">
+			<var name="displayStyle" value="table" />
 		</execute>
 
 		<execute function="AssertTextEquals" locator1="WC#ENTRY_LIST_WORKFLOW_STATUS" value1="Approved" />
@@ -1530,8 +1530,8 @@
 	</command>
 
 	<command name="viewCategoryDescriptiveCP">
-		<execute macro="Portlet#changeDisplayStyle">
-			<var name="displayStyle" value="descriptive" />
+		<execute macro="LexiconEntry#changeDisplayStyle">
+			<var name="displayStyle" value="list" />
 		</execute>
 
 		<execute function="AssertElementPresent#pauseAssertVisible" locator1="WC#ENTRY_DESCRIPTIVE_THUMBNAIL">
@@ -1639,8 +1639,8 @@
 	</command>
 
 	<command name="viewDefaultCP">
-		<execute macro="Portlet#changeDisplayStyle">
-			<var name="displayStyle" value="descriptive" />
+		<execute macro="LexiconEntry#changeDisplayStyle">
+			<var name="displayStyle" value="list" />
 		</execute>
 
 		<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="No web content was found." />
@@ -1675,24 +1675,24 @@
 	</command>
 
 	<command name="viewDisplayStyleCP">
-		<execute macro="Portlet#changeDisplayStyle">
-			<var name="displayStyle" value="icon" />
+		<execute macro="LexiconEntry#changeDisplayStyle">
+			<var name="displayStyle" value="cards" />
 		</execute>
 
 		<execute function="AssertElementPresent#pauseAssertVisible" locator1="WC#ENTRY_ICON_THUMBNAIL">
 			<var name="key_webContentTitle" value="${webContentTitle}" />
 		</execute>
 
-		<execute macro="Portlet#changeDisplayStyle">
-			<var name="displayStyle" value="descriptive" />
+		<execute macro="LexiconEntry#changeDisplayStyle">
+			<var name="displayStyle" value="list" />
 		</execute>
 
 		<execute function="AssertElementPresent#pauseAssertVisible" locator1="WC#ENTRY_DESCRIPTIVE_THUMBNAIL">
 			<var name="key_webContentTitle" value="${webContentTitle}" />
 		</execute>
 
-		<execute macro="Portlet#changeDisplayStyle">
-			<var name="displayStyle" value="list" />
+		<execute macro="LexiconEntry#changeDisplayStyle">
+			<var name="displayStyle" value="table" />
 		</execute>
 
 		<execute function="AssertElementPresent" locator1="WC#ENTRY_LIST_TITLE">
@@ -2076,8 +2076,8 @@
 	</command>
 
 	<command name="viewWithStructureCP">
-		<execute macro="Portlet#changeDisplayStyle">
-			<var name="displayStyle" value="descriptive" />
+		<execute macro="LexiconEntry#changeDisplayStyle">
+			<var name="displayStyle" value="list" />
 		</execute>
 
 		<execute macro="WebContentNavigator#gotoEditCP">

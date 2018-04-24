@@ -14,7 +14,6 @@
 
 package com.liferay.portal.osgi.debug.internal;
 
-import com.liferay.osgi.util.ServiceTrackerFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
@@ -42,8 +41,10 @@ public class SystemCheckerTracker
 	public void activate(BundleContext bundleContext) {
 		_bundleContext = bundleContext;
 
-		_serviceTracker = ServiceTrackerFactory.open(
+		_serviceTracker = new ServiceTracker<>(
 			_bundleContext, SystemChecker.class, this);
+
+		_serviceTracker.open();
 	}
 
 	@Override
@@ -58,7 +59,7 @@ public class SystemCheckerTracker
 		sb.append(systemChecker.getName());
 		sb.append(" is ready for use. You can run \"");
 		sb.append(systemChecker.getOSGiCommand());
-		sb.append("\" in gogoshell to get scan result.");
+		sb.append("\" in gogoshell to check result.");
 
 		if (_log.isInfoEnabled()) {
 			_log.info(sb.toString());
@@ -70,12 +71,12 @@ public class SystemCheckerTracker
 			if (_log.isInfoEnabled()) {
 				_log.info(
 					systemChecker.getName() +
-						" scan result: All components are satisfied.");
+						" check result: No issue is found.");
 			}
 		}
 		else {
 			if (_log.isWarnEnabled()) {
-				_log.warn(systemChecker.getName() + " scan result: " + result);
+				_log.warn(systemChecker.getName() + " check result: " + result);
 			}
 		}
 

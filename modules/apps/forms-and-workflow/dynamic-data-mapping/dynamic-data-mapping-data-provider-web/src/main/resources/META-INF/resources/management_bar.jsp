@@ -20,48 +20,21 @@
 PortletURL portletURL = ddmDataProviderDisplayContext.getPortletURL();
 %>
 
-<liferay-frontend:management-bar
-	includeCheckBox="<%= true %>"
-	searchContainerId="dataProviderInstance"
->
-	<liferay-frontend:management-bar-buttons>
-		<liferay-util:include page="/display_style_buttons.jsp" servletContext="<%= application %>" />
-
-		<liferay-util:include page="/display_add_button.jsp" servletContext="<%= application %>" />
-	</liferay-frontend:management-bar-buttons>
-
-	<liferay-frontend:management-bar-filters>
-		<liferay-frontend:management-bar-navigation
-			navigationKeys='<%= new String[] {"all"} %>'
-			portletURL="<%= portletURL %>"
-		/>
-
-		<liferay-frontend:management-bar-sort
-			orderByCol="<%= ddmDataProviderDisplayContext.getOrderByCol() %>"
-			orderByType="<%= ddmDataProviderDisplayContext.getOrderByType() %>"
-			orderColumns='<%= new String[] {"create-date", "modified-date", "name"} %>'
-			portletURL="<%= portletURL %>"
-		/>
-
-		<li>
-			<c:if test="<%= ddmDataProviderDisplayContext.isShowSearch() %>">
-				<aui:form action="<%= ddmDataProviderDisplayContext.getPortletURL() %>" method="post" name="fm1">
-					<liferay-ui:input-search
-						markupView="lexicon"
-					/>
-				</aui:form>
-			</c:if>
-		</li>
-	</liferay-frontend:management-bar-filters>
-
-	<liferay-frontend:management-bar-action-buttons>
-		<liferay-frontend:management-bar-button
-			href='<%= "javascript:" + renderResponse.getNamespace() + "deleteDataProviderInstances();" %>'
-			icon="trash"
-			label="delete"
-		/>
-	</liferay-frontend:management-bar-action-buttons>
-</liferay-frontend:management-bar>
+<clay:management-toolbar
+	actionItems="<%= ddmDataProviderDisplayContext.getActionItemsDropdownItemList() %>"
+	clearResultsURL="<%= ddmDataProviderDisplayContext.getClearResultsURL() %>"
+	creationMenu="<%= ddmDataProviderDisplayContext.getCreationMenu() %>"
+	disabled="<%= ddmDataProviderDisplayContext.isDisabledManagementBar() %>"
+	filterItems="<%= ddmDataProviderDisplayContext.getFilterItemsDropdownItemList() %>"
+	namespace="<%= renderResponse.getNamespace() %>"
+	searchActionURL="<%= portletURL.toString() %>"
+	searchContainerId="<%= ddmDataProviderDisplayContext.getSearchContainerId() %>"
+	searchFormName="fm1"
+	sortingOrder="<%= ddmDataProviderDisplayContext.getOrderByType() %>"
+	sortingURL="<%= ddmDataProviderDisplayContext.getSortingURL() %>"
+	totalItems="<%= ddmDataProviderDisplayContext.getTotalItems() %>"
+	viewTypes="<%= ddmDataProviderDisplayContext.getViewTypesItemList() %>"
+/>
 
 <aui:script>
 	function <portlet:namespace />deleteDataProviderInstances() {

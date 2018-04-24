@@ -40,7 +40,7 @@ else {
 	pathList.add "${className}SoyPortletRegister.java"
 }
 
-Path resourcePath = Paths.get("", pathList.toArray() as String[])
+Path resourcePath = Paths.get("", pathList as String[])
 
 Path resourceFullPath = projectPath.resolve(resourcePath)
 

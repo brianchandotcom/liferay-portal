@@ -38,7 +38,7 @@ if (liferayVersion != "7.1") {
 	paths.add "constants"
 	paths.add "${className}WebKeys.java"
 
-	Path resourcePath = Paths.get("", paths.toArray() as String[])
+	Path resourcePath = Paths.get("", paths as String[])
 
 	Path resourceFullPath = projectPath.resolve(resourcePath)
 

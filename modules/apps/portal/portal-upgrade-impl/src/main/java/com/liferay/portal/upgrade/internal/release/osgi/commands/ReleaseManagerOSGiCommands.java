@@ -307,13 +307,17 @@ public class ReleaseManagerOSGiCommands {
 	}
 
 	protected String getSchemaVersionString(String bundleSymbolicName) {
+		String schemaVersionString = "0.0.0";
+
 		Release release = _releaseLocalService.fetchRelease(bundleSymbolicName);
 
-		if ((release == null) || Validator.isNull(release.getSchemaVersion())) {
-			return "0.0.0";
+		if ((release != null) &&
+			Validator.isNotNull(release.getSchemaVersion())) {
+
+			schemaVersionString = release.getSchemaVersion();
 		}
 
-		return release.getSchemaVersion();
+		return schemaVersionString;
 	}
 
 	protected Set<String> getUpgradableBundleSymbolicNames() {

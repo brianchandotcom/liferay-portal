@@ -47,7 +47,6 @@ import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.Node;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
-import com.liferay.portal.verify.VerifyLayout;
 import com.liferay.portal.verify.VerifyProcess;
 
 import java.sql.PreparedStatement;
@@ -68,16 +67,15 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = "verify.process.name=com.liferay.journal.service",
-	service = {JournalServiceVerifyProcess.class, VerifyProcess.class}
+	service = VerifyProcess.class
 )
-public class JournalServiceVerifyProcess extends VerifyLayout {
+public class JournalServiceVerifyProcess extends VerifyProcess {
 
 	@Override
 	protected void doVerify() throws Exception {
 		verifyArticleAssets();
 		verifyArticleContents();
 		verifyArticleExpirationDate();
-		verifyArticleLayouts();
 		verifyArticleStructures();
 		verifyContentSearch();
 		verifyFolderAssets();
@@ -451,12 +449,6 @@ public class JournalServiceVerifyProcess extends VerifyLayout {
 						groupId, articleId, expirationDate, status);
 				}
 			}
-		}
-	}
-
-	protected void verifyArticleLayouts() throws Exception {
-		try (LoggingTimer loggingTimer = new LoggingTimer()) {
-			verifyUuid("JournalArticle");
 		}
 	}
 

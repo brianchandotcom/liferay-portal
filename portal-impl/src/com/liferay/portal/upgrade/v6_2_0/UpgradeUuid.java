@@ -12,20 +12,22 @@
  * details.
  */
 
-package com.liferay.portal.verify;
+package com.liferay.portal.upgrade.v6_2_0;
 
+import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.StringBundler;
 
 /**
- * @author Brian Wing Shun Chan
- * @author Kenneth Chang
+ * @author Jonathan McCann
  */
-public class VerifyLayout extends VerifyProcess {
+public class UpgradeUuid extends UpgradeProcess {
 
-	@Override
-	protected void doVerify() throws Exception {
+	protected void doUpgrade() throws Exception {
 		verifyUuid();
+
+		verifyUuid("AssetEntry");
+		verifyUuid("JournalArticle");
 	}
 
 	protected void verifyUuid() throws Exception {

@@ -46,15 +46,10 @@
 			<var name="portletName" value="Breadcrumb" />
 		</execute>
 
-		<execute macro="TestCase#getSiteName">
-			<return from="siteName" name="siteName" />
-			<var name="siteName" value="${siteName}" />
-		</execute>
-
 		<execute macro="ApplicationDisplayTemplates#addPortletADTWithFieldEntry">
 			<var name="fieldName" value="Breadcrumb Entry" />
 			<var name="portletName" value="Breadcrumb" />
-			<var name="siteName" value="${siteName}" />
+			<var name="siteName" value="Liferay" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">

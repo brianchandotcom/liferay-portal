@@ -203,10 +203,6 @@ public class UpgradeStepRegistratorTracker {
 		public void modifiedService(
 			ServiceReference<UpgradeStepRegistrator> serviceReference,
 			Collection<ServiceRegistration<UpgradeStep>> serviceRegistrations) {
-
-			removedService(serviceReference, serviceRegistrations);
-
-			addingService(serviceReference);
 		}
 
 		@Override

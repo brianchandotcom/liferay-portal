@@ -1,21 +1,7 @@
 <definition>
 	<command name="changeDisplayStyle">
-		<if>
-			<condition function="IsElementPresent" locator1="Icon#CARDS" />
-			<then>
-				<execute function="Click" locator1="Icon#CARDS" />
-			</then>
-			<elseif>
-				<condition function="IsElementPresent" locator1="Icon#TABLE" />
-				<then>
-					<execute function="Click" locator1="Icon#TABLE" />
-				</then>
-			</elseif>
-			<else>
-				<execute function="Click" locator1="Icon#LIST" />
-			</else>
-		</if>
-		
+		<execute function="Click" locator1="Icon#CURRENT_DISPLAY_STYLE" />
+
 		<execute function="Click" locator1="MenuItem#ANY_MENU_ITEM">
 			<var method="StringUtil#upperCaseFirstLetter('${displayStyle}')" name="key_menuItem" />
 		</execute>

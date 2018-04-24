@@ -15,26 +15,21 @@
 package com.liferay.commerce.product.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.commerce.product.configuration.CPOptionConfiguration;
-import com.liferay.commerce.product.constants.CPConstants;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPInstance;
+import com.liferay.commerce.product.model.CPInstanceConstants;
 import com.liferay.commerce.product.model.CPOption;
 import com.liferay.commerce.product.service.CPDefinitionOptionRelLocalService;
+import com.liferay.commerce.product.service.CPDefinitionOptionValueRelLocalService;
 import com.liferay.commerce.product.service.CPInstanceLocalService;
 import com.liferay.commerce.product.service.CPOptionLocalService;
 import com.liferay.commerce.product.service.CPOptionValueLocalService;
 import com.liferay.commerce.product.test.util.CPTestUtil;
 import com.liferay.commerce.product.type.simple.constants.SimpleCPTypeConstants;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
-import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.settings.SystemSettingsLocator;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
-import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -50,6 +45,10 @@ import org.junit.runner.RunWith;
 
 /**
  * @author Luca Pellizzon
+ *
+ * Test CPDefinition in 4 different ways,
+ * based on ignoreSKUCombinations and hasDefaultInstance parameters,
+ * split in 5 tests.
  */
 @RunWith(Arquillian.class)
 public class CPDefinitionAddTest {
@@ -64,19 +63,34 @@ public class CPDefinitionAddTest {
 		_group = GroupTestUtil.addGroup();
 	}
 
+	/**
+	 * testAddCPDefinition, where both ignoreSKUCombinations
+	 * and hasDefaultInstance are set to false
+	 * The expected result is: the CPDefinition status is set to Draft
+	 *
+	 * @throws Exception
+	 */
 	@Test
 	public void testAddCPDefinition() throws Exception {
 		CPDefinition cpDefinition = CPTestUtil.addCPDefinition(
-			SimpleCPTypeConstants.NAME, false, false, _group.getGroupId());
+			_group.getGroupId(), SimpleCPTypeConstants.NAME, false, false);
 
 		Assert.assertEquals(
 			WorkflowConstants.STATUS_DRAFT, cpDefinition.getStatus());
 	}
 
+	/**
+	 * testAddCPDefinitionWithDefaultInstance, where ignoreSKUCombinations
+	 * is set to false and hasDefaultInstance is set to true
+	 * The expected result is: the CPDefinition status is set to Draft and
+	 * the default CPInstance is set to Inactive
+	 *
+	 * @throws Exception
+	 */
 	@Test
-	public void testAddCPDefinition_HDI() throws Exception {
+	public void testAddCPDefinitionWithDefaultInstance() throws Exception {
 		CPDefinition cpDefinition = CPTestUtil.addCPDefinition(
-			SimpleCPTypeConstants.NAME, false, true, _group.getGroupId());
+			_group.getGroupId(), SimpleCPTypeConstants.NAME, false, true);
 
 		Assert.assertEquals(
 			WorkflowConstants.STATUS_DRAFT, cpDefinition.getStatus());
@@ -93,46 +107,35 @@ public class CPDefinitionAddTest {
 			WorkflowConstants.STATUS_INACTIVE, cpInstance.getStatus());
 	}
 
+	/**
+	 * testAddCPDefinitionWithDefaultInstanceAndSKUs, like the one before,
+	 * but with some SKUs (CPInstance) associated to the CPDefinition.
+	 * The SKUs are created by setting up some CPOptions for the CPDefinition
+	 * with the skuContributor set to true
+	 * The expected result is: the CPDefinition status is set to Approved and
+	 * the default CPInstance is set to Inactive
+	 *
+	 * @throws Exception
+	 */
 	@Test
-	public void testAddCPDefinition_HDI_MultiSKUs() throws Exception {
-		int skuContributors = 0;
-		int numberOfOptions = 10;
+	public void testAddCPDefinitionWithDefaultInstanceAndSKUs()
+		throws Exception {
+
+		int numberOfOptions = 2;
+		int numberOfValues = 2;
 
 		CPDefinition cpDefinition = CPTestUtil.addCPDefinition(
-			SimpleCPTypeConstants.NAME, false, true, _group.getGroupId());
-
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
-
-		CPOptionConfiguration cpOptionConfiguration =
-			ConfigurationProviderUtil.getConfiguration(
-				CPOptionConfiguration.class,
-				new SystemSettingsLocator(CPConstants.CP_OPTION_SERVICE_NAME));
-
-		String[] ddmFormFieldTypesAllowed =
-			cpOptionConfiguration.ddmFormFieldTypesAllowed();
+			_group.getGroupId(), SimpleCPTypeConstants.NAME, false, true);
 
 		for (int i = 0; i < numberOfOptions; i++) {
-			CPOption cpOption = _cpOptionLocalService.addCPOption(
-				RandomTestUtil.randomLocaleStringMap(),
-				RandomTestUtil.randomLocaleStringMap(),
-				ddmFormFieldTypesAllowed[0], RandomTestUtil.randomBoolean(),
-				RandomTestUtil.randomBoolean(), RandomTestUtil.randomBoolean(),
-				RandomTestUtil.randomString(), serviceContext);
+			CPOption cpOption = CPTestUtil.addCPOption(
+				_group.getGroupId(), true);
 
-			_cpOptionValueLocalService.addCPOptionValue(
-				cpOption.getCPOptionId(),
-				RandomTestUtil.randomLocaleStringMap(),
-				RandomTestUtil.nextDouble(), RandomTestUtil.randomString(),
-				serviceContext);
+			_createOptionsValues(cpOption.getCPOptionId(), numberOfValues);
 
-			_cpDefinitionOptionRelLocalService.addCPDefinitionOptionRel(
-				cpDefinition.getCPDefinitionId(), cpOption.getCPOptionId(),
-				serviceContext);
-
-			if (cpOption.isSkuContributor()) {
-				skuContributors++;
-			}
+			CPTestUtil.addCPDefinitionOptionRel(
+				_group.getGroupId(), cpDefinition.getCPDefinitionId(),
+				cpOption.getCPOptionId());
 		}
 
 		int cpOptionCount = _cpOptionLocalService.getCPOptionsCount(
@@ -146,38 +149,33 @@ public class CPDefinitionAddTest {
 
 		Assert.assertEquals(numberOfOptions, cpDefinitionOptionRelCount);
 
-		_cpInstanceLocalService.buildCPInstances(
-			cpDefinition.getCPDefinitionId(), serviceContext);
-
-		List<CPInstance> cpInstances =
-			_cpInstanceLocalService.getCPDefinitionInstances(
-				cpDefinition.getCPDefinitionId());
+		CPTestUtil.buildCPInstances(
+			_group.getGroupId(), cpDefinition.getCPDefinitionId());
 
 		Assert.assertEquals(
-			cpInstances.toString(), skuContributors + 1, cpInstances.size());
-
-		int end = _cpOptionLocalService.getCPOptionsCount(_group.getGroupId());
-		int start = 0;
-
-		List<CPOption> cpOptions = _cpOptionLocalService.getCPOptions(
-			start, end);
-
-		if (skuContributors > 0) {
-			Assert.assertEquals(
-				WorkflowConstants.STATUS_APPROVED, cpDefinition.getStatus());
-		}
+			WorkflowConstants.STATUS_APPROVED, cpDefinition.getStatus());
 
 		CPInstance cpInstance = _cpInstanceLocalService.getCPInstance(
-			cpDefinition.getCPDefinitionId(), "default");
+			cpDefinition.getCPDefinitionId(), CPInstanceConstants.DEFAULT_SKU);
 
 		Assert.assertEquals(
 			WorkflowConstants.STATUS_INACTIVE, cpInstance.getStatus());
 	}
 
+	/**
+	 * testAddCPDefinitionWithIgnoreSKUCombinations, where ignoreSKUCombinations
+	 * is set to true and hasDefaultInstance is set to false
+	 * The expected result is: the CPDefinition status is set to Draft and
+	 * there is no CPInstance associated to it
+	 *
+	 * @throws Exception
+	 */
 	@Test
-	public void testAddCPDefinition_ISC() throws Exception {
+	public void testAddCPDefinitionWithIgnoreSKUCombinations()
+		throws Exception {
+
 		CPDefinition cpDefinition = CPTestUtil.addCPDefinition(
-			SimpleCPTypeConstants.NAME, true, false, _group.getGroupId());
+			_group.getGroupId(), SimpleCPTypeConstants.NAME, true, false);
 
 		Assert.assertEquals(
 			WorkflowConstants.STATUS_DRAFT, cpDefinition.getStatus());
@@ -188,10 +186,20 @@ public class CPDefinitionAddTest {
 		Assert.assertEquals(0, count);
 	}
 
+	/**
+	 * testAddCPDefinitionWithIgnoreSKUCombinationsAndDefaultInstance,
+	 * where both ignoreSKUCombinations and hasDefaultInstance are set to true
+	 * The expected result is: the CPDefinition status is set to Approved and
+	 * the default CPInstance status is set to Approved
+	 *
+	 * @throws Exception
+	 */
 	@Test
-	public void testAddCPDefinition_ISC_HDI() throws Exception {
+	public void testAddCPDefinitionWithIgnoreSKUCombinationsAndDefaultInstance()
+		throws Exception {
+
 		CPDefinition cpDefinition = CPTestUtil.addCPDefinition(
-			SimpleCPTypeConstants.NAME, true, true, _group.getGroupId());
+			_group.getGroupId(), SimpleCPTypeConstants.NAME, true, true);
 
 		Assert.assertEquals(
 			WorkflowConstants.STATUS_APPROVED, cpDefinition.getStatus());
@@ -211,9 +219,21 @@ public class CPDefinitionAddTest {
 		Assert.assertEquals(1, onlyOneApproved);
 	}
 
+	private void _createOptionsValues(long cpOptionId, int numberOfValues)
+		throws Exception {
+
+		for (int i = 0; i < numberOfValues; i++) {
+			CPTestUtil.addCPOptionValue(_group.getGroupId(), cpOptionId);
+		}
+	}
+
 	@Inject
 	private static CPDefinitionOptionRelLocalService
 		_cpDefinitionOptionRelLocalService;
+
+	@Inject
+	private static CPDefinitionOptionValueRelLocalService
+		_cpDefinitionOptionValueRelLocalService;
 
 	@Inject
 	private static CPInstanceLocalService _cpInstanceLocalService;

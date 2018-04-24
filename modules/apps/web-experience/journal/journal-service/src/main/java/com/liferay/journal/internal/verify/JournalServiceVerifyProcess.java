@@ -20,6 +20,7 @@ import com.liferay.dynamic.data.mapping.exception.NoSuchStructureException;
 import com.liferay.journal.configuration.JournalServiceConfiguration;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalArticleConstants;
+import com.liferay.journal.model.JournalArticleResource;
 import com.liferay.journal.model.JournalContentSearch;
 import com.liferay.journal.model.JournalFolder;
 import com.liferay.journal.service.JournalArticleLocalService;
@@ -32,8 +33,12 @@ import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.SystemEvent;
+import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
@@ -81,12 +86,7 @@ public class JournalServiceVerifyProcess extends VerifyProcess {
 		verifyFolderAssets();
 		verifyPermissions();
 
-		VerifyProcess verifyProcess =
-			new JournalServiceSystemEventVerifyProcess(
-				_journalArticleLocalService,
-				_journalArticleResourceLocalService, _systemEventLocalService);
-
-		verifyProcess.verify();
+		verifyJournalArticleDeleteSystemEvents();
 	}
 
 	@Reference(unbind = "-")
@@ -550,6 +550,72 @@ public class JournalServiceVerifyProcess extends VerifyProcess {
 
 			if (_log.isDebugEnabled()) {
 				_log.debug("Assets verified for folders");
+			}
+		}
+	}
+
+	protected void verifyJournalArticleDeleteSystemEvents() throws Exception {
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			DynamicQuery dynamicQuery = _systemEventLocalService.dynamicQuery();
+
+			Property classNameIdProperty = PropertyFactoryUtil.forName(
+				"classNameId");
+
+			dynamicQuery.add(
+				classNameIdProperty.eq(
+					_portal.getClassNameId(JournalArticle.class)));
+
+			Property typeProperty = PropertyFactoryUtil.forName("type");
+
+			dynamicQuery.add(typeProperty.eq(SystemEventConstants.TYPE_DELETE));
+
+			List<SystemEvent> systemEvents =
+				_systemEventLocalService.dynamicQuery(dynamicQuery);
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					StringBundler.concat(
+						"Processing ", String.valueOf(systemEvents.size()),
+						" delete system events for journal articles"));
+			}
+
+			for (SystemEvent systemEvent : systemEvents) {
+				JSONObject extraDataJSONObject =
+					JSONFactoryUtil.createJSONObject(
+						systemEvent.getExtraData());
+
+				if (extraDataJSONObject.has("uuid") ||
+					!extraDataJSONObject.has("version")) {
+
+					continue;
+				}
+
+				JournalArticleResource journalArticleResource =
+					_journalArticleResourceLocalService.
+						fetchJournalArticleResourceByUuidAndGroupId(
+							systemEvent.getClassUuid(),
+							systemEvent.getGroupId());
+
+				if (journalArticleResource == null) {
+					continue;
+				}
+
+				JournalArticle journalArticle =
+					_journalArticleLocalService.fetchArticle(
+						systemEvent.getGroupId(),
+						journalArticleResource.getArticleId(),
+						extraDataJSONObject.getDouble("version"));
+
+				if ((journalArticle == null) || journalArticle.isInTrash()) {
+					continue;
+				}
+
+				_systemEventLocalService.deleteSystemEvent(systemEvent);
+			}
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Delete system events verified for journal articles");
 			}
 		}
 	}

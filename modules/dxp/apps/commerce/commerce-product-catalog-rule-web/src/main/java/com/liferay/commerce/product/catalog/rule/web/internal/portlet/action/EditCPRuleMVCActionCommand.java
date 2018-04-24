@@ -15,6 +15,7 @@
 package com.liferay.commerce.product.catalog.rule.web.internal.portlet.action;
 
 import com.liferay.commerce.product.constants.CPPortletKeys;
+import com.liferay.commerce.product.exception.CPRuleTypeException;
 import com.liferay.commerce.product.exception.NoSuchCPRuleException;
 import com.liferay.commerce.product.model.CPRule;
 import com.liferay.commerce.product.service.CPRuleService;
@@ -98,6 +99,14 @@ public class EditCPRuleMVCActionCommand extends BaseMVCActionCommand {
 				SessionErrors.add(actionRequest, e.getClass());
 
 				actionResponse.setRenderParameter("mvcPath", "/error.jsp");
+			}
+			else if (e instanceof CPRuleTypeException) {
+				SessionErrors.add(actionRequest, e.getClass());
+
+				String redirect = ParamUtil.getString(
+					actionRequest, "redirect");
+
+				sendRedirect(actionRequest, actionResponse, redirect);
 			}
 			else {
 				throw e;

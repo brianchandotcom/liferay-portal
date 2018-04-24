@@ -21,6 +21,10 @@ CPCatalogRuleDisplayContext cpCatalogRuleDisplayContext = (CPCatalogRuleDisplayC
 
 CPRule cpRule = cpCatalogRuleDisplayContext.getCPRule();
 long cpRuleId = cpCatalogRuleDisplayContext.getCPRuleId();
+List<CPRuleType> cpRuleTypes = cpCatalogRuleDisplayContext.getCPRuleTypes();
+
+String name = BeanParamUtil.getString(cpRule, request, "name");
+String type = BeanParamUtil.getString(cpRule, request, "type");
 %>
 
 <portlet:actionURL name="editCPRule" var="editCPRuleActionURL" />
@@ -31,17 +35,42 @@ long cpRuleId = cpCatalogRuleDisplayContext.getCPRuleId();
 	<aui:input name="cpRuleId" type="hidden" value="<%= cpRuleId %>" />
 
 	<div class="lfr-form-content">
+		<liferay-ui:error exception="<%= CPRuleTypeException.class %>" message="please-select-a-valid-catalog-rule-type" />
+
 		<aui:model-context bean="<%= cpRule %>" model="<%= CPRule.class %>" />
 
 		<aui:fieldset-group markupView="lexicon">
 			<aui:fieldset>
-				<aui:input autoFocus="<%= true %>" name="name" />
+				<aui:input autoFocus="<%= true %>" name="name" value="<%= name %>" />
 
 				<aui:input name="active" />
 
-				<aui:input name="type" />
+				<aui:select name="type" onChange='<%= renderResponse.getNamespace() + "selectType();" %>' showEmptyOption="<%= true %>">
 
-				<aui:input name="typeSettings" />
+					<%
+					for (CPRuleType cpRuleType : cpRuleTypes) {
+						String cpRuleTypeKey = cpRuleType.getKey();
+					%>
+
+						<aui:option label="<%= cpRuleType.getLabel(locale) %>" selected="<%= (cpRule != null) && cpRuleTypeKey.equals(type) %>" value="<%= cpRuleTypeKey %>" />
+
+					<%
+					}
+					%>
+
+				</aui:select>
+
+				<%
+				CPRuleTypeJSPContributor cpRuleTypeJSPContributor = cpCatalogRuleDisplayContext.getCPRuleTypeJSPContributor(type);
+				%>
+
+				<c:if test="<%= cpRuleTypeJSPContributor != null %>">
+
+					<%
+					cpRuleTypeJSPContributor.render(cpRuleId, request, response);
+					%>
+
+				</c:if>
 			</aui:fieldset>
 		</aui:fieldset-group>
 	</div>
@@ -57,4 +86,23 @@ long cpRuleId = cpCatalogRuleDisplayContext.getCPRuleId();
 	function <portlet:namespace />saveCPRule() {
 		submitForm(document.<portlet:namespace />fm);
 	}
+
+	Liferay.provide(
+		window,
+		'<portlet:namespace />selectType',
+		function() {
+			var A = AUI();
+
+			var name = A.one('#<portlet:namespace />name').val();
+			var type = A.one('#<portlet:namespace />type').val();
+
+			var portletURL = new Liferay.PortletURL.createURL('<%= currentURLObj %>');
+
+			portletURL.setParameter('name', name);
+			portletURL.setParameter('type', type);
+
+			window.location.replace(portletURL.toString());
+		},
+		['liferay-portlet-url']
+	);
 </aui:script>

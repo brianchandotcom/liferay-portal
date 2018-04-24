@@ -28,15 +28,17 @@ String liferayVersion = properties.get('liferayVersion')
 
 if (liferayVersion != '7.1') {
 	String className = properties.get('className')
-	String packageString = properties.get('package')
+	String packageName = properties.get('package')
 
-	String[] packageList = packageString.split("\\.")
+	String[] segments = packageName.split("\\.")
 
-	List<String> pathList = ['src', 'main', 'java']
-	pathList.addAll(packageList)
-	pathList.add('constants')
-	pathList.add(className + 'WebKeys.java')
-	Path resourcePath = Paths.get("", pathList.toArray() as String[])
+	List<String> paths = ['src', 'main', 'java']
+
+	paths.addAll(segments)
+	paths.add('constants')
+	paths.add(className + 'WebKeys.java')
+
+	Path resourcePath = Paths.get("", paths.toArray() as String[])
 
 	Path resourceFullPath = projectPath.resolve(resourcePath)
 

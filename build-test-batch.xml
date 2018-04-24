@@ -3733,6 +3733,8 @@ go
 exec sp_dboption 'lportal', 'allow nulls by default' , true
 go
 exec sp_dboption 'lportal', 'select into/bulkcopy/pllsort' , true
+go
+exec sp_dboption 'lportal', 'trunc log on chkpt', true
 go</echo>
 
 		<retry retrycount="10">

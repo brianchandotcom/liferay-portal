@@ -88,6 +88,7 @@ public interface SourceLocalService extends BaseLocalService,
 	* @param sourceId the primary key for the new source
 	* @return the new source
 	*/
+	@Transactional(enabled = false)
 	public Source createSource(long sourceId);
 
 	/**

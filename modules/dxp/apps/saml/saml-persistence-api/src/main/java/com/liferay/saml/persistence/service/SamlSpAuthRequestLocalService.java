@@ -82,6 +82,7 @@ public interface SamlSpAuthRequestLocalService extends BaseLocalService,
 	* @param samlSpAuthnRequestId the primary key for the new saml sp auth request
 	* @return the new saml sp auth request
 	*/
+	@Transactional(enabled = false)
 	public SamlSpAuthRequest createSamlSpAuthRequest(long samlSpAuthnRequestId);
 
 	public void deleteExpiredSamlSpAuthRequests();

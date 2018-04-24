@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
 import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.kernel.service.persistence.ClassNamePersistence;
 import com.liferay.portal.kernel.service.persistence.UserPersistence;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
@@ -95,6 +96,7 @@ public abstract class SharepointOAuth2TokenEntryLocalServiceBaseImpl
 	 * @return the new sharepoint o auth2 token entry
 	 */
 	@Override
+	@Transactional(enabled = false)
 	public SharepointOAuth2TokenEntry createSharepointOAuth2TokenEntry(
 		long sharepointOAuth2TokenEntryId) {
 		return sharepointOAuth2TokenEntryPersistence.create(sharepointOAuth2TokenEntryId);

@@ -84,6 +84,7 @@ public interface SamlSpSessionLocalService extends BaseLocalService,
 	* @param samlSpSessionId the primary key for the new saml sp session
 	* @return the new saml sp session
 	*/
+	@Transactional(enabled = false)
 	public SamlSpSession createSamlSpSession(long samlSpSessionId);
 
 	/**

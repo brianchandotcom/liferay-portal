@@ -82,6 +82,7 @@ public interface SamlIdpSsoSessionLocalService extends BaseLocalService,
 	* @param samlIdpSsoSessionId the primary key for the new saml idp sso session
 	* @return the new saml idp sso session
 	*/
+	@Transactional(enabled = false)
 	public SamlIdpSsoSession createSamlIdpSsoSession(long samlIdpSsoSessionId);
 
 	public void deleteExpiredSamlIdpSsoSessions();

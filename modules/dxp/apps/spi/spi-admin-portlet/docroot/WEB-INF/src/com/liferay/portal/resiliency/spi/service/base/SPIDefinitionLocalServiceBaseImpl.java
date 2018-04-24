@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
 import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistryUtil;
 import com.liferay.portal.kernel.service.persistence.ClassNamePersistence;
 import com.liferay.portal.kernel.service.persistence.UserPersistence;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.resiliency.spi.model.SPIDefinition;
@@ -94,6 +95,7 @@ public abstract class SPIDefinitionLocalServiceBaseImpl
 	 * @return the new spi definition
 	 */
 	@Override
+	@Transactional(enabled = false)
 	public SPIDefinition createSPIDefinition(long spiDefinitionId) {
 		return spiDefinitionPersistence.create(spiDefinitionId);
 	}

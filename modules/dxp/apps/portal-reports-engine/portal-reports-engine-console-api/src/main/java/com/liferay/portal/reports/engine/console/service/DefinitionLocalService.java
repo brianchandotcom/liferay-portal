@@ -91,6 +91,7 @@ public interface DefinitionLocalService extends BaseLocalService,
 	* @param definitionId the primary key for the new definition
 	* @return the new definition
 	*/
+	@Transactional(enabled = false)
 	public Definition createDefinition(long definitionId);
 
 	/**

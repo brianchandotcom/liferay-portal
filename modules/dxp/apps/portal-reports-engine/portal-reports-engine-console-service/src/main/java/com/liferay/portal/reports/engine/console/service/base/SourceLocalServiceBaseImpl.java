@@ -44,6 +44,7 @@ import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
 import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.kernel.service.persistence.ClassNamePersistence;
 import com.liferay.portal.kernel.service.persistence.UserPersistence;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.reports.engine.console.model.Source;
@@ -104,6 +105,7 @@ public abstract class SourceLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 * @return the new source
 	 */
 	@Override
+	@Transactional(enabled = false)
 	public Source createSource(long sourceId) {
 		return sourcePersistence.create(sourceId);
 	}

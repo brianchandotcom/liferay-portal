@@ -82,6 +82,7 @@ public interface SamlSpMessageLocalService extends BaseLocalService,
 	* @param samlSpMessageId the primary key for the new saml sp message
 	* @return the new saml sp message
 	*/
+	@Transactional(enabled = false)
 	public SamlSpMessage createSamlSpMessage(long samlSpMessageId);
 
 	public void deleteExpiredSamlSpMessages();

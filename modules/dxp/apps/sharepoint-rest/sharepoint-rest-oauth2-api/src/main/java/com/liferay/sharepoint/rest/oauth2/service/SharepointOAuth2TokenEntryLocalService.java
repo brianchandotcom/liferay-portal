@@ -82,6 +82,7 @@ public interface SharepointOAuth2TokenEntryLocalService extends BaseLocalService
 	* @param sharepointOAuth2TokenEntryId the primary key for the new sharepoint o auth2 token entry
 	* @return the new sharepoint o auth2 token entry
 	*/
+	@Transactional(enabled = false)
 	public SharepointOAuth2TokenEntry createSharepointOAuth2TokenEntry(
 		long sharepointOAuth2TokenEntryId);
 

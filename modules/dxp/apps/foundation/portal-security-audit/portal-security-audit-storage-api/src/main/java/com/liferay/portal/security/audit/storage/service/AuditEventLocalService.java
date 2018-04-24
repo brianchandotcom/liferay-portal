@@ -79,6 +79,7 @@ public interface AuditEventLocalService extends BaseLocalService,
 	* @param auditEventId the primary key for the new audit event
 	* @return the new audit event
 	*/
+	@Transactional(enabled = false)
 	public AuditEvent createAuditEvent(long auditEventId);
 
 	/**

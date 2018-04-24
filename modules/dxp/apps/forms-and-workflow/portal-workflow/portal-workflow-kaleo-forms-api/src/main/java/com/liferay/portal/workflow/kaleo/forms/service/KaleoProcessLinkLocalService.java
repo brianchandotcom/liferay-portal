@@ -89,6 +89,7 @@ public interface KaleoProcessLinkLocalService extends BaseLocalService,
 	* @param kaleoProcessLinkId the primary key for the new kaleo process link
 	* @return the new kaleo process link
 	*/
+	@Transactional(enabled = false)
 	public KaleoProcessLink createKaleoProcessLink(long kaleoProcessLinkId);
 
 	/**

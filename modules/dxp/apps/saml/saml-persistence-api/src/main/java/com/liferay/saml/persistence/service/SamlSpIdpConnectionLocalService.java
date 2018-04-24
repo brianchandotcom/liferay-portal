@@ -88,6 +88,7 @@ public interface SamlSpIdpConnectionLocalService extends BaseLocalService,
 	* @param samlSpIdpConnectionId the primary key for the new saml sp idp connection
 	* @return the new saml sp idp connection
 	*/
+	@Transactional(enabled = false)
 	public SamlSpIdpConnection createSamlSpIdpConnection(
 		long samlSpIdpConnectionId);
 

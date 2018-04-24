@@ -85,6 +85,7 @@ public interface OAuthApplicationLocalService extends BaseLocalService,
 	* @param oAuthApplicationId the primary key for the new o auth application
 	* @return the new o auth application
 	*/
+	@Transactional(enabled = false)
 	public OAuthApplication createOAuthApplication(long oAuthApplicationId);
 
 	public void deleteLogo(long oAuthApplicationId) throws PortalException;

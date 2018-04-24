@@ -84,6 +84,7 @@ public interface SPIDefinitionLocalService extends BaseLocalService,
 	* @param spiDefinitionId the primary key for the new spi definition
 	* @return the new spi definition
 	*/
+	@Transactional(enabled = false)
 	public SPIDefinition createSPIDefinition(long spiDefinitionId);
 
 	/**

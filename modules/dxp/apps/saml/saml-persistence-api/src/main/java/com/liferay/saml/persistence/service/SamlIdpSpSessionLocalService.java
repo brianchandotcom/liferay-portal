@@ -82,6 +82,7 @@ public interface SamlIdpSpSessionLocalService extends BaseLocalService,
 	* @param samlIdpSpSessionId the primary key for the new saml idp sp session
 	* @return the new saml idp sp session
 	*/
+	@Transactional(enabled = false)
 	public SamlIdpSpSession createSamlIdpSpSession(long samlIdpSpSessionId);
 
 	/**

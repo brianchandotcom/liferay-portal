@@ -112,6 +112,7 @@ public interface KaleoProcessLocalService extends BaseLocalService,
 	* @param kaleoProcessId the primary key for the new kaleo process
 	* @return the new kaleo process
 	*/
+	@Transactional(enabled = false)
 	public KaleoProcess createKaleoProcess(long kaleoProcessId);
 
 	/**

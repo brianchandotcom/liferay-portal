@@ -80,6 +80,7 @@ public interface OAuthUserLocalService extends BaseLocalService,
 	* @param oAuthUserId the primary key for the new o auth user
 	* @return the new o auth user
 	*/
+	@Transactional(enabled = false)
 	public OAuthUser createOAuthUser(long oAuthUserId);
 
 	/**

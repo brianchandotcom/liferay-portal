@@ -99,6 +99,12 @@ public class CheckstyleUtil {
 			"com.liferay.source.formatter.checkstyle.checks." +
 				"GetterMethodCallCheck");
 		configuration = _addAttribute(
+			configuration, "runOutsidePortalExcludes",
+			SourceFormatterUtil.getPropertyValue(
+				"run.outside.portal.excludes", propertiesMap),
+			"com.liferay.source.formatter.checkstyle.checks." +
+				"ParsePrimitiveTypeCheck");
+		configuration = _addAttribute(
 			configuration, "showDebugInformation",
 			String.valueOf(sourceFormatterArgs.isShowDebugInformation()),
 			"com.liferay.*");

@@ -42,10 +42,10 @@ public class CommerceUserSegmentServiceVerifyProcess extends VerifyProcess {
 
 	@Override
 	protected void doVerify() throws Exception {
-		verifyCommerceUserSegmentEntrie();
+		verifyCommerceUserSegmentEntries();
 	}
 
-	protected void verifyCommerceUserSegmentEntrie() throws Exception {
+	protected void verifyCommerceUserSegmentEntries() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
 			List<Company> companies = _companyLocalService.getCompanies();
 

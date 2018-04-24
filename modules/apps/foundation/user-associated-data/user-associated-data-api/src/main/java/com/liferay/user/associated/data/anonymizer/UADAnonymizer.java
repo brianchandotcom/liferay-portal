@@ -17,6 +17,7 @@ package com.liferay.user.associated.data.anonymizer;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.User;
 
 import java.util.List;
 
@@ -26,9 +27,11 @@ import java.util.List;
 @ProviderType
 public interface UADAnonymizer<T> {
 
-	public void autoAnonymize(T t, long userId) throws PortalException;
+	public void autoAnonymize(T t, long userId, User anonymousUser)
+		throws PortalException;
 
-	public void autoAnonymizeAll(long userId) throws PortalException;
+	public void autoAnonymizeAll(long userId, User anonymousUser)
+		throws PortalException;
 
 	public void delete(T t) throws PortalException;
 

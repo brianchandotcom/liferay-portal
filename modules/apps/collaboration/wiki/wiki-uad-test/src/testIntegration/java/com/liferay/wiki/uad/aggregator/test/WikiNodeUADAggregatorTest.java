@@ -16,7 +16,6 @@ package com.liferay.wiki.uad.aggregator.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 
-import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.test.rule.Inject;
@@ -44,14 +43,14 @@ import java.util.List;
  * @generated
  */
 @RunWith(Arquillian.class)
-public class WikiNodeUADAggregatorTest extends BaseUADAggregatorTestCase
-	implements WhenHasStatusByUserIdField {
+public class WikiNodeUADAggregatorTest extends BaseUADAggregatorTestCase<WikiNode>
+	implements WhenHasStatusByUserIdField<WikiNode> {
 	@ClassRule
 	@Rule
 	public static final AggregateTestRule aggregateTestRule = new LiferayIntegrationTestRule();
 
 	@Override
-	public BaseModel<?> addBaseModelWithStatusByUserId(long userId,
+	public WikiNode addBaseModelWithStatusByUserId(long userId,
 		long statusByUserId) throws Exception {
 		WikiNode wikiNode = _wikiNodeUADEntityTestHelper.addWikiNodeWithStatusByUserId(userId,
 				statusByUserId);
@@ -61,8 +60,13 @@ public class WikiNodeUADAggregatorTest extends BaseUADAggregatorTestCase
 		return wikiNode;
 	}
 
+	@After
+	public void tearDown() throws Exception {
+		_wikiNodeUADEntityTestHelper.cleanUpDependencies(_wikiNodes);
+	}
+
 	@Override
-	protected BaseModel<?> addBaseModel(long userId) throws Exception {
+	protected WikiNode addBaseModel(long userId) throws Exception {
 		WikiNode wikiNode = _wikiNodeUADEntityTestHelper.addWikiNode(userId);
 
 		_wikiNodes.add(wikiNode);
@@ -73,11 +77,6 @@ public class WikiNodeUADAggregatorTest extends BaseUADAggregatorTestCase
 	@Override
 	protected UADAggregator getUADAggregator() {
 		return _uadAggregator;
-	}
-
-	@After
-	public void tearDown() throws Exception {
-		_wikiNodeUADEntityTestHelper.cleanUpDependencies(_wikiNodes);
 	}
 
 	@DeleteAfterTestRun

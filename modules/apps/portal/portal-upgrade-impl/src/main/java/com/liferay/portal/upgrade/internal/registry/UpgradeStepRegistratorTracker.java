@@ -52,13 +52,11 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
 @Component(immediate = true)
 public class UpgradeStepRegistratorTracker {
 
-	public static List<ServiceRegistration<UpgradeStep>> register(
+	public static void register(
+		List<ServiceRegistration<UpgradeStep>> serviceRegistrations,
 		BundleContext bundleContext, String bundleSymbolicName,
 		String fromSchemaVersionString, String toSchemaVersionString,
 		int buildNumber, UpgradeStep... upgradeSteps) {
-
-		List<ServiceRegistration<UpgradeStep>> serviceRegistrations =
-			new ArrayList<>();
 
 		List<UpgradeInfo> upgradeInfos = createUpgradeInfos(
 			fromSchemaVersionString, toSchemaVersionString, buildNumber,
@@ -84,8 +82,6 @@ public class UpgradeStepRegistratorTracker {
 
 			serviceRegistrations.add(serviceRegistration);
 		}
-
-		return serviceRegistrations;
 	}
 
 	protected static List<UpgradeInfo> createUpgradeInfos(
@@ -166,7 +162,7 @@ public class UpgradeStepRegistratorTracker {
 				return null;
 			}
 
-			Collection<ServiceRegistration<UpgradeStep>> serviceRegistrations =
+			List<ServiceRegistration<UpgradeStep>> serviceRegistrations =
 				new ArrayList<>();
 
 			Class<? extends UpgradeStepRegistrator> clazz =
@@ -243,16 +239,15 @@ public class UpgradeStepRegistratorTracker {
 			String fromSchemaVersionString, String toSchemaVersionString,
 			UpgradeStep... upgradeSteps) {
 
-			_serviceRegistrations.addAll(
-				UpgradeStepRegistratorTracker.register(
-					_bundleContext, _bundleSymbolicName,
-					fromSchemaVersionString, toSchemaVersionString,
-					_buildNumber, upgradeSteps));
+			UpgradeStepRegistratorTracker.register(
+				_serviceRegistrations, _bundleContext, _bundleSymbolicName,
+				fromSchemaVersionString, toSchemaVersionString, _buildNumber,
+				upgradeSteps);
 		}
 
 		private UpgradeStepRegistry(
 			String bundleSymbolicName, int buildNumber,
-			Collection<ServiceRegistration<UpgradeStep>> serviceRegistrations) {
+			List<ServiceRegistration<UpgradeStep>> serviceRegistrations) {
 
 			_bundleSymbolicName = bundleSymbolicName;
 			_buildNumber = buildNumber;
@@ -261,7 +256,7 @@ public class UpgradeStepRegistratorTracker {
 
 		private final int _buildNumber;
 		private final String _bundleSymbolicName;
-		private final Collection<ServiceRegistration<UpgradeStep>>
+		private final List<ServiceRegistration<UpgradeStep>>
 			_serviceRegistrations;
 
 	}

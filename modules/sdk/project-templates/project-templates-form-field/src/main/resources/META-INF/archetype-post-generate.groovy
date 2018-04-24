@@ -20,4 +20,4 @@ Path projectPath = Paths.get(request.outputDirectory, request.artifactId)
 
 Path buildGradlePath = projectPath.resolve("build.gradle")
 
-Files.deleteIfExists(buildGradlePath)
+Files.deleteIfExists buildGradlePath

@@ -46,16 +46,6 @@ import org.osgi.service.component.annotations.Reference;
 @Component(immediate = true, service = ImportUtil.class)
 public class ImportUtil {
 
-	public boolean hasFragmentCollection(ZipReader zipReader) {
-		for (String entry : zipReader.getEntries()) {
-			if (entry.endsWith("collection.json")) {
-				return true;
-			}
-		}
-
-		return false;
-	}
-
 	public void importFragmentCollections(
 			ActionRequest actionRequest, ZipReader zipReader, boolean overwrite)
 		throws Exception {
@@ -189,6 +179,16 @@ public class ImportUtil {
 				throw new DuplicateFragmentEntryKeyException(fragmentEntryKey);
 			}
 		}
+	}
+
+	public boolean isValidFragmentCollectionsFile(ZipReader zipReader) {
+		for (String entry : zipReader.getEntries()) {
+			if (entry.endsWith("collection.json")) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	private boolean _isFragmentCollection(String entry) {

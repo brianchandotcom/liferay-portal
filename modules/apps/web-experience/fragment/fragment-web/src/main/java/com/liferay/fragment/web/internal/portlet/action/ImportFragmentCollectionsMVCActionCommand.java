@@ -133,7 +133,7 @@ public class ImportFragmentCollectionsMVCActionCommand
 				ZipReader zipReader = ZipReaderFactoryUtil.getZipReader(
 					tempFileEntry.getContentStream());
 
-				if (!_importUtil.hasFragmentCollection(zipReader)) {
+				if (!_importUtil.isValidFragmentCollectionsFile(zipReader)) {
 					throw new InvalidFragmentCollectionFileException();
 				}
 

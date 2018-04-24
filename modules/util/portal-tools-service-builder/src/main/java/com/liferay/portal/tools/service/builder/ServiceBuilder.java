@@ -5618,8 +5618,8 @@ public class ServiceBuilder {
 				uadNonanonymizable);
 
 			if (primary) {
-				if (!(columnType.equals("int") || columnType.equals("long") ||
-					columnType.equals("String"))) {
+				if (!columnType.equals("int") && !columnType.equals("long") &&
+					!columnType.equals("String")) {
 
 					throw new IllegalArgumentException(
 						StringBundler.concat(

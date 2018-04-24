@@ -353,10 +353,14 @@
 		<field name="userName" type="String" />
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
-		<field name="name" type="String" />
+		<field name="name" type="String">
+			<validator name="required" />
+		</field>
 		<field name="active" type="boolean" />
 		<field name="type" type="String" />
-		<field name="typeSettings" type="String" />
+		<field name="typeSettings" type="String">
+			<hint-collection name="CLOB" />
+		</field>
 	</model>
 	<model name="com.liferay.commerce.product.model.CPRuleUserSegmentRel">
 		<field name="CPRuleUserSegmentRelId" type="long" />

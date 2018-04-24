@@ -104,14 +104,13 @@ public class PortletFragmentEntryProcessor implements FragmentEntryProcessor {
 
 			String portletPreferences = StringPool.BLANK;
 
-			String id = element.attr("id");
-
 			String instanceId = _getInstanceId(
-				fragmentEntryLink.getNamespace(), id);
+				fragmentEntryLink.getNamespace(), element.attr("id"));
 
 			if (originalFragmentEntryLink != null) {
 				String originalInstanceId = _getInstanceId(
-					originalFragmentEntryLink.getNamespace(), id);
+					originalFragmentEntryLink.getNamespace(),
+					element.attr("id"));
 
 				String defaultPreferences = _getPreferences(
 					portletName, originalFragmentEntryLink, originalInstanceId,
@@ -239,7 +238,7 @@ public class PortletFragmentEntryProcessor implements FragmentEntryProcessor {
 	}
 
 	private String _getInstanceId(String namespace, String id) {
-		return namespace + "_" + id;
+		return namespace + StringPool.UNDERLINE + id;
 	}
 
 	private Element _getPortletMenuElement(

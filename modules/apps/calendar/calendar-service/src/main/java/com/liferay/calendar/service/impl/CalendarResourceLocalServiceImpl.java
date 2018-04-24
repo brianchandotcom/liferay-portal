@@ -28,6 +28,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.search.Indexer;
+import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.ContentTypes;
@@ -297,6 +299,19 @@ public class CalendarResourceLocalServiceImpl
 		calendarResource.setActive(active);
 
 		calendarResourcePersistence.update(calendarResource);
+
+		// Calendars
+
+		List<Calendar> calendars = calendarPersistence.findByG_C(
+			calendarResource.getGroupId(),
+			calendarResource.getCalendarResourceId());
+
+		Indexer indexer = IndexerRegistryUtil.getIndexer(
+			Calendar.class.getName());
+
+		for (Calendar calendar : calendars) {
+			indexer.reindex(calendar);
+		}
 
 		// Asset
 

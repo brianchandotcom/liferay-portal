@@ -875,12 +875,16 @@ AUI.add(
 
 												instance.syncInputValues();
 
+												var responseData = this.get('responseData');
+
 												if (newPublishedValue) {
 													instance._handlePublishAction();
 												}
 												else {
 													instance._handleUnpublishAction();
 												}
+
+												instance._updateAutosaveBar(false, responseData.modifiedDate);
 											}
 										},
 										data: payload,

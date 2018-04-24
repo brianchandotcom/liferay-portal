@@ -47,7 +47,7 @@ import java.util.List;
  *
  * @author Brian Wing Shun Chan
  * @see EntryLocalServiceUtil
- * @see com.liferay.contacts.service.base.EntryLocalServiceBaseImpl
+ * @see EntryLocalServiceBaseImpl
  * @see com.liferay.contacts.service.impl.EntryLocalServiceImpl
  * @generated
  */

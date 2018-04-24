@@ -1063,6 +1063,8 @@ public class KaleoProcessLinkPersistenceImpl extends BasePersistenceImpl<KaleoPr
 
 	@Override
 	protected KaleoProcessLink removeImpl(KaleoProcessLink kaleoProcessLink) {
+		kaleoProcessLink = toUnwrappedModel(kaleoProcessLink);
+
 		Session session = null;
 
 		try {
@@ -1093,6 +1095,8 @@ public class KaleoProcessLinkPersistenceImpl extends BasePersistenceImpl<KaleoPr
 
 	@Override
 	public KaleoProcessLink updateImpl(KaleoProcessLink kaleoProcessLink) {
+		kaleoProcessLink = toUnwrappedModel(kaleoProcessLink);
+
 		boolean isNew = kaleoProcessLink.isNew();
 
 		KaleoProcessLinkModelImpl kaleoProcessLinkModelImpl = (KaleoProcessLinkModelImpl)kaleoProcessLink;
@@ -1171,6 +1175,25 @@ public class KaleoProcessLinkPersistenceImpl extends BasePersistenceImpl<KaleoPr
 		kaleoProcessLink.resetOriginalValues();
 
 		return kaleoProcessLink;
+	}
+
+	protected KaleoProcessLink toUnwrappedModel(
+		KaleoProcessLink kaleoProcessLink) {
+		if (kaleoProcessLink instanceof KaleoProcessLinkImpl) {
+			return kaleoProcessLink;
+		}
+
+		KaleoProcessLinkImpl kaleoProcessLinkImpl = new KaleoProcessLinkImpl();
+
+		kaleoProcessLinkImpl.setNew(kaleoProcessLink.isNew());
+		kaleoProcessLinkImpl.setPrimaryKey(kaleoProcessLink.getPrimaryKey());
+
+		kaleoProcessLinkImpl.setKaleoProcessLinkId(kaleoProcessLink.getKaleoProcessLinkId());
+		kaleoProcessLinkImpl.setKaleoProcessId(kaleoProcessLink.getKaleoProcessId());
+		kaleoProcessLinkImpl.setWorkflowTaskName(kaleoProcessLink.getWorkflowTaskName());
+		kaleoProcessLinkImpl.setDDMTemplateId(kaleoProcessLink.getDDMTemplateId());
+
+		return kaleoProcessLinkImpl;
 	}
 
 	/**

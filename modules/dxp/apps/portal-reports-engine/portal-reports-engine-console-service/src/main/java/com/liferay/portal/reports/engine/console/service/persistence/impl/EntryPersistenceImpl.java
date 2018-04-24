@@ -232,6 +232,8 @@ public class EntryPersistenceImpl extends BasePersistenceImpl<Entry>
 
 	@Override
 	protected Entry removeImpl(Entry entry) {
+		entry = toUnwrappedModel(entry);
+
 		Session session = null;
 
 		try {
@@ -262,6 +264,8 @@ public class EntryPersistenceImpl extends BasePersistenceImpl<Entry>
 
 	@Override
 	public Entry updateImpl(Entry entry) {
+		entry = toUnwrappedModel(entry);
+
 		boolean isNew = entry.isNew();
 
 		EntryModelImpl entryModelImpl = (EntryModelImpl)entry;
@@ -323,6 +327,41 @@ public class EntryPersistenceImpl extends BasePersistenceImpl<Entry>
 		entry.resetOriginalValues();
 
 		return entry;
+	}
+
+	protected Entry toUnwrappedModel(Entry entry) {
+		if (entry instanceof EntryImpl) {
+			return entry;
+		}
+
+		EntryImpl entryImpl = new EntryImpl();
+
+		entryImpl.setNew(entry.isNew());
+		entryImpl.setPrimaryKey(entry.getPrimaryKey());
+
+		entryImpl.setEntryId(entry.getEntryId());
+		entryImpl.setGroupId(entry.getGroupId());
+		entryImpl.setCompanyId(entry.getCompanyId());
+		entryImpl.setUserId(entry.getUserId());
+		entryImpl.setUserName(entry.getUserName());
+		entryImpl.setCreateDate(entry.getCreateDate());
+		entryImpl.setModifiedDate(entry.getModifiedDate());
+		entryImpl.setDefinitionId(entry.getDefinitionId());
+		entryImpl.setFormat(entry.getFormat());
+		entryImpl.setScheduleRequest(entry.isScheduleRequest());
+		entryImpl.setStartDate(entry.getStartDate());
+		entryImpl.setEndDate(entry.getEndDate());
+		entryImpl.setRepeating(entry.isRepeating());
+		entryImpl.setRecurrence(entry.getRecurrence());
+		entryImpl.setEmailNotifications(entry.getEmailNotifications());
+		entryImpl.setEmailDelivery(entry.getEmailDelivery());
+		entryImpl.setPortletId(entry.getPortletId());
+		entryImpl.setPageURL(entry.getPageURL());
+		entryImpl.setReportParameters(entry.getReportParameters());
+		entryImpl.setStatus(entry.getStatus());
+		entryImpl.setErrorMessage(entry.getErrorMessage());
+
+		return entryImpl;
 	}
 
 	/**

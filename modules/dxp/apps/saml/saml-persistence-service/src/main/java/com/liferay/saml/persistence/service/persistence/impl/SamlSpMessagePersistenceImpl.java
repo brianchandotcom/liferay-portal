@@ -1127,6 +1127,8 @@ public class SamlSpMessagePersistenceImpl extends BasePersistenceImpl<SamlSpMess
 
 	@Override
 	protected SamlSpMessage removeImpl(SamlSpMessage samlSpMessage) {
+		samlSpMessage = toUnwrappedModel(samlSpMessage);
+
 		Session session = null;
 
 		try {
@@ -1157,6 +1159,8 @@ public class SamlSpMessagePersistenceImpl extends BasePersistenceImpl<SamlSpMess
 
 	@Override
 	public SamlSpMessage updateImpl(SamlSpMessage samlSpMessage) {
+		samlSpMessage = toUnwrappedModel(samlSpMessage);
+
 		boolean isNew = samlSpMessage.isNew();
 
 		SamlSpMessageModelImpl samlSpMessageModelImpl = (SamlSpMessageModelImpl)samlSpMessage;
@@ -1204,6 +1208,26 @@ public class SamlSpMessagePersistenceImpl extends BasePersistenceImpl<SamlSpMess
 		samlSpMessage.resetOriginalValues();
 
 		return samlSpMessage;
+	}
+
+	protected SamlSpMessage toUnwrappedModel(SamlSpMessage samlSpMessage) {
+		if (samlSpMessage instanceof SamlSpMessageImpl) {
+			return samlSpMessage;
+		}
+
+		SamlSpMessageImpl samlSpMessageImpl = new SamlSpMessageImpl();
+
+		samlSpMessageImpl.setNew(samlSpMessage.isNew());
+		samlSpMessageImpl.setPrimaryKey(samlSpMessage.getPrimaryKey());
+
+		samlSpMessageImpl.setSamlSpMessageId(samlSpMessage.getSamlSpMessageId());
+		samlSpMessageImpl.setCompanyId(samlSpMessage.getCompanyId());
+		samlSpMessageImpl.setCreateDate(samlSpMessage.getCreateDate());
+		samlSpMessageImpl.setSamlIdpEntityId(samlSpMessage.getSamlIdpEntityId());
+		samlSpMessageImpl.setSamlIdpResponseKey(samlSpMessage.getSamlIdpResponseKey());
+		samlSpMessageImpl.setExpirationDate(samlSpMessage.getExpirationDate());
+
+		return samlSpMessageImpl;
 	}
 
 	/**

@@ -19,6 +19,16 @@ AUI.add(
 			return defaultAcceptFiles(val, node, ruleValue);
 		};
 
+		var maxFileSize = function(val, node, ruleValue) {
+			var nodeType = node.get('type').toLowerCase();
+
+			if (nodeType === 'file') {
+				return (node._node.files[0].size <= ruleValue);
+			}
+
+			return true;
+		};
+
 		var number = function(val, node, ruleValue) {
 			var regex = /^[+\-]?(\d+)([.|,]\d+)*([eE][+-]?\d+)?$/;
 
@@ -29,6 +39,7 @@ AUI.add(
 			DEFAULTS_FORM_VALIDATOR.RULES,
 			{
 				acceptFiles: acceptFiles,
+				maxFileSize: maxFileSize,
 				number: number
 			},
 			true
@@ -47,6 +58,7 @@ AUI.add(
 				equalTo: Liferay.Language.get('please-enter-the-same-value-again'),
 				max: Liferay.Language.get('please-enter-a-value-less-than-or-equal-to-x'),
 				maxLength: Liferay.Language.get('please-enter-no-more-than-x-characters'),
+				maxFileSize: Liferay.Language.get('please-enter-valid-content-with-valid-content-size-no-larger-than-x'),
 				min: Liferay.Language.get('please-enter-a-value-greater-than-or-equal-to-x'),
 				minLength: Liferay.Language.get('please-enter-at-list-x-characters'),
 				number: Liferay.Language.get('please-enter-a-valid-number'),

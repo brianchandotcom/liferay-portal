@@ -96,6 +96,7 @@ public interface MDRActionLocalService extends BaseLocalService,
 	* @param actionId the primary key for the new mdr action
 	* @return the new mdr action
 	*/
+	@Transactional(enabled = false)
 	public MDRAction createMDRAction(long actionId);
 
 	public void deleteAction(long actionId);

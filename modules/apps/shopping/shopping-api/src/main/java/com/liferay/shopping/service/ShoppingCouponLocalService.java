@@ -86,6 +86,7 @@ public interface ShoppingCouponLocalService extends BaseLocalService,
 	* @param couponId the primary key for the new shopping coupon
 	* @return the new shopping coupon
 	*/
+	@Transactional(enabled = false)
 	public ShoppingCoupon createShoppingCoupon(long couponId);
 
 	public void deleteCoupon(long couponId) throws PortalException;

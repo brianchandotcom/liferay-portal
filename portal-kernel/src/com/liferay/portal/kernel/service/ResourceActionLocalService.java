@@ -86,6 +86,7 @@ public interface ResourceActionLocalService extends BaseLocalService,
 	* @param resourceActionId the primary key for the new resource action
 	* @return the new resource action
 	*/
+	@Transactional(enabled = false)
 	public ResourceAction createResourceAction(long resourceActionId);
 
 	/**

@@ -83,6 +83,7 @@ public interface RatingsEntryLocalService extends BaseLocalService,
 	* @param entryId the primary key for the new ratings entry
 	* @return the new ratings entry
 	*/
+	@Transactional(enabled = false)
 	public RatingsEntry createRatingsEntry(long entryId);
 
 	public void deleteEntry(long userId, java.lang.String className,

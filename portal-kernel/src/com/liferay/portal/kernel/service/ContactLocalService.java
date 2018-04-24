@@ -84,6 +84,7 @@ public interface ContactLocalService extends BaseLocalService,
 	* @param contactId the primary key for the new contact
 	* @return the new contact
 	*/
+	@Transactional(enabled = false)
 	public Contact createContact(long contactId);
 
 	/**

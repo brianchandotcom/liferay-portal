@@ -79,6 +79,7 @@ public interface ClassNameLocalService extends BaseLocalService,
 	* @param classNameId the primary key for the new class name
 	* @return the new class name
 	*/
+	@Transactional(enabled = false)
 	public ClassName createClassName(long classNameId);
 
 	/**

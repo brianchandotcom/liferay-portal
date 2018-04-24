@@ -98,6 +98,7 @@ public interface AssetLinkLocalService extends BaseLocalService,
 	* @param linkId the primary key for the new asset link
 	* @return the new asset link
 	*/
+	@Transactional(enabled = false)
 	public AssetLink createAssetLink(long linkId);
 
 	/**

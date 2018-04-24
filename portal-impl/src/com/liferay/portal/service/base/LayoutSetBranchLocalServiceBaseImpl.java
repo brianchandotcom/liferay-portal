@@ -47,6 +47,7 @@ import com.liferay.portal.kernel.service.persistence.LayoutSetPersistence;
 import com.liferay.portal.kernel.service.persistence.RecentLayoutSetBranchPersistence;
 import com.liferay.portal.kernel.service.persistence.UserFinder;
 import com.liferay.portal.kernel.service.persistence.UserPersistence;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 
@@ -99,6 +100,7 @@ public abstract class LayoutSetBranchLocalServiceBaseImpl
 	 * @return the new layout set branch
 	 */
 	@Override
+	@Transactional(enabled = false)
 	public LayoutSetBranch createLayoutSetBranch(long layoutSetBranchId) {
 		return layoutSetBranchPersistence.create(layoutSetBranchId);
 	}

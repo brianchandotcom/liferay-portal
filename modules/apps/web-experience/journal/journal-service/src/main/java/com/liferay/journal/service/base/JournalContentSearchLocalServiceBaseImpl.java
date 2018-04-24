@@ -42,6 +42,7 @@ import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.kernel.service.persistence.GroupPersistence;
 import com.liferay.portal.kernel.service.persistence.LayoutPersistence;
 import com.liferay.portal.kernel.service.persistence.PortletPreferencesPersistence;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
@@ -96,6 +97,7 @@ public abstract class JournalContentSearchLocalServiceBaseImpl
 	 * @return the new journal content search
 	 */
 	@Override
+	@Transactional(enabled = false)
 	public JournalContentSearch createJournalContentSearch(long contentSearchId) {
 		return journalContentSearchPersistence.create(contentSearchId);
 	}

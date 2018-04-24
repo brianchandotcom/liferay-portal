@@ -81,6 +81,7 @@ public interface WebsiteLocalService extends BaseLocalService,
 	* @param websiteId the primary key for the new website
 	* @return the new website
 	*/
+	@Transactional(enabled = false)
 	public Website createWebsite(long websiteId);
 
 	/**

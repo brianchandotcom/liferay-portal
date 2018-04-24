@@ -43,6 +43,7 @@ import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
 import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistryUtil;
 import com.liferay.portal.kernel.service.persistence.ClassNamePersistence;
 import com.liferay.portal.kernel.service.persistence.UserPersistence;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 
@@ -95,6 +96,7 @@ public abstract class OAuthConsumerLocalServiceBaseImpl
 	 * @return the new o auth consumer
 	 */
 	@Override
+	@Transactional(enabled = false)
 	public OAuthConsumer createOAuthConsumer(long oAuthConsumerId) {
 		return oAuthConsumerPersistence.create(oAuthConsumerId);
 	}

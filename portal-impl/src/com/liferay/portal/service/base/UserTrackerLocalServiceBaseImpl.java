@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.kernel.service.UserTrackerLocalService;
 import com.liferay.portal.kernel.service.persistence.UserTrackerPathPersistence;
 import com.liferay.portal.kernel.service.persistence.UserTrackerPersistence;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 
@@ -91,6 +92,7 @@ public abstract class UserTrackerLocalServiceBaseImpl
 	 * @return the new user tracker
 	 */
 	@Override
+	@Transactional(enabled = false)
 	public UserTracker createUserTracker(long userTrackerId) {
 		return userTrackerPersistence.create(userTrackerId);
 	}

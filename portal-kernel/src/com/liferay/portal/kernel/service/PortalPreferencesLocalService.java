@@ -78,6 +78,7 @@ public interface PortalPreferencesLocalService extends BaseLocalService,
 	* @param portalPreferencesId the primary key for the new portal preferences
 	* @return the new portal preferences
 	*/
+	@Transactional(enabled = false)
 	public PortalPreferences createPortalPreferences(long portalPreferencesId);
 
 	/**

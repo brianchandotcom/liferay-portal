@@ -76,6 +76,7 @@ public interface PluginSettingLocalService extends BaseLocalService,
 	* @param pluginSettingId the primary key for the new plugin setting
 	* @return the new plugin setting
 	*/
+	@Transactional(enabled = false)
 	public PluginSetting createPluginSetting(long pluginSettingId);
 
 	/**

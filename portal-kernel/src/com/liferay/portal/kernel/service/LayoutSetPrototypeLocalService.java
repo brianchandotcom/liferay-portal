@@ -98,6 +98,7 @@ public interface LayoutSetPrototypeLocalService extends BaseLocalService,
 	* @param layoutSetPrototypeId the primary key for the new layout set prototype
 	* @return the new layout set prototype
 	*/
+	@Transactional(enabled = false)
 	public LayoutSetPrototype createLayoutSetPrototype(
 		long layoutSetPrototypeId);
 

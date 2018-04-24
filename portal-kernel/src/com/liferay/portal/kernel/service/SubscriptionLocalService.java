@@ -125,6 +125,7 @@ public interface SubscriptionLocalService extends BaseLocalService,
 	* @param subscriptionId the primary key for the new subscription
 	* @return the new subscription
 	*/
+	@Transactional(enabled = false)
 	public Subscription createSubscription(long subscriptionId);
 
 	/**

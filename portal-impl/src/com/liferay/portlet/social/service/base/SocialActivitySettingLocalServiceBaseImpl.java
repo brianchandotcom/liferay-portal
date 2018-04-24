@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.kernel.service.persistence.ClassNamePersistence;
 import com.liferay.portal.kernel.service.persistence.GroupFinder;
 import com.liferay.portal.kernel.service.persistence.GroupPersistence;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 
@@ -95,6 +96,7 @@ public abstract class SocialActivitySettingLocalServiceBaseImpl
 	 * @return the new social activity setting
 	 */
 	@Override
+	@Transactional(enabled = false)
 	public SocialActivitySetting createSocialActivitySetting(
 		long activitySettingId) {
 		return socialActivitySettingPersistence.create(activitySettingId);

@@ -191,6 +191,7 @@ public interface UserGroupLocalService extends BaseLocalService,
 	* @param userGroupId the primary key for the new user group
 	* @return the new user group
 	*/
+	@Transactional(enabled = false)
 	public UserGroup createUserGroup(long userGroupId);
 
 	public void deleteGroupUserGroup(long groupId, long userGroupId);

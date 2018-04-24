@@ -109,6 +109,7 @@ public interface TeamLocalService extends BaseLocalService,
 	* @param teamId the primary key for the new team
 	* @return the new team
 	*/
+	@Transactional(enabled = false)
 	public Team createTeam(long teamId);
 
 	/**

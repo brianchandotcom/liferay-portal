@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
 import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.kernel.service.UserIdMapperLocalService;
 import com.liferay.portal.kernel.service.persistence.UserIdMapperPersistence;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 
@@ -90,6 +91,7 @@ public abstract class UserIdMapperLocalServiceBaseImpl
 	 * @return the new user ID mapper
 	 */
 	@Override
+	@Transactional(enabled = false)
 	public UserIdMapper createUserIdMapper(long userIdMapperId) {
 		return userIdMapperPersistence.create(userIdMapperId);
 	}

@@ -50,6 +50,7 @@ import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.kernel.service.persistence.ClassNamePersistence;
 import com.liferay.portal.kernel.service.persistence.UserFinder;
 import com.liferay.portal.kernel.service.persistence.UserPersistence;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 
@@ -109,6 +110,7 @@ public abstract class RatingsEntryLocalServiceBaseImpl
 	 * @return the new ratings entry
 	 */
 	@Override
+	@Transactional(enabled = false)
 	public RatingsEntry createRatingsEntry(long entryId) {
 		return ratingsEntryPersistence.create(entryId);
 	}

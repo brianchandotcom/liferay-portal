@@ -82,6 +82,7 @@ public interface SyncDeviceLocalService extends BaseLocalService,
 	* @param syncDeviceId the primary key for the new sync device
 	* @return the new sync device
 	*/
+	@Transactional(enabled = false)
 	public SyncDevice createSyncDevice(long syncDeviceId);
 
 	/**

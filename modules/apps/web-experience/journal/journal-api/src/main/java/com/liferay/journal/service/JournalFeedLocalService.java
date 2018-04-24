@@ -106,6 +106,7 @@ public interface JournalFeedLocalService extends BaseLocalService,
 	* @param id the primary key for the new journal feed
 	* @return the new journal feed
 	*/
+	@Transactional(enabled = false)
 	public JournalFeed createJournalFeed(long id);
 
 	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)

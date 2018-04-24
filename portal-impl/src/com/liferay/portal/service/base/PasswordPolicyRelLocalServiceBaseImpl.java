@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.service.PasswordPolicyRelLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.kernel.service.persistence.ClassNamePersistence;
 import com.liferay.portal.kernel.service.persistence.PasswordPolicyRelPersistence;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 
@@ -92,6 +93,7 @@ public abstract class PasswordPolicyRelLocalServiceBaseImpl
 	 * @return the new password policy rel
 	 */
 	@Override
+	@Transactional(enabled = false)
 	public PasswordPolicyRel createPasswordPolicyRel(long passwordPolicyRelId) {
 		return passwordPolicyRelPersistence.create(passwordPolicyRelId);
 	}

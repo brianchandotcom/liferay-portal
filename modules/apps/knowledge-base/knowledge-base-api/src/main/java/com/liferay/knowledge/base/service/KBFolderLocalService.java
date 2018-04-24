@@ -85,6 +85,7 @@ public interface KBFolderLocalService extends BaseLocalService,
 	* @param kbFolderId the primary key for the new kb folder
 	* @return the new kb folder
 	*/
+	@Transactional(enabled = false)
 	public KBFolder createKBFolder(long kbFolderId);
 
 	/**

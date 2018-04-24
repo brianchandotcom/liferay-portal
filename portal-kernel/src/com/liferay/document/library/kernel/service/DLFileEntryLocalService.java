@@ -140,6 +140,7 @@ public interface DLFileEntryLocalService extends BaseLocalService,
 	* @param fileEntryId the primary key for the new document library file entry
 	* @return the new document library file entry
 	*/
+	@Transactional(enabled = false)
 	public DLFileEntry createDLFileEntry(long fileEntryId);
 
 	/**

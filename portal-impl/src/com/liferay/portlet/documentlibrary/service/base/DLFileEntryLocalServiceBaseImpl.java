@@ -77,6 +77,7 @@ import com.liferay.portal.kernel.service.persistence.UserFinder;
 import com.liferay.portal.kernel.service.persistence.UserPersistence;
 import com.liferay.portal.kernel.service.persistence.WebDAVPropsPersistence;
 import com.liferay.portal.kernel.service.persistence.WorkflowInstanceLinkPersistence;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 
@@ -134,6 +135,7 @@ public abstract class DLFileEntryLocalServiceBaseImpl
 	 * @return the new document library file entry
 	 */
 	@Override
+	@Transactional(enabled = false)
 	public DLFileEntry createDLFileEntry(long fileEntryId) {
 		return dlFileEntryPersistence.create(fileEntryId);
 	}

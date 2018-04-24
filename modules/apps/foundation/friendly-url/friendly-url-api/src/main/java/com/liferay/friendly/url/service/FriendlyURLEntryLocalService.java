@@ -100,6 +100,7 @@ public interface FriendlyURLEntryLocalService extends BaseLocalService,
 	* @param friendlyURLEntryId the primary key for the new friendly url entry
 	* @return the new friendly url entry
 	*/
+	@Transactional(enabled = false)
 	public FriendlyURLEntry createFriendlyURLEntry(long friendlyURLEntryId);
 
 	/**
@@ -356,6 +357,15 @@ public interface FriendlyURLEntryLocalService extends BaseLocalService,
 
 	public FriendlyURLEntry updateFriendlyURLEntry(long friendlyURLEntryId,
 		long classNameId, long classPK, java.lang.String defaultLanguageId,
+		Map<java.lang.String, java.lang.String> urlTitleMap)
+		throws PortalException;
+
+	public FriendlyURLEntryLocalization updateFriendlyURLEntryLocalization(
+		FriendlyURLEntry friendlyURLEntry, java.lang.String languageId,
+		java.lang.String urlTitle) throws PortalException;
+
+	public List<FriendlyURLEntryLocalization> updateFriendlyURLEntryLocalizations(
+		FriendlyURLEntry friendlyURLEntry,
 		Map<java.lang.String, java.lang.String> urlTitleMap)
 		throws PortalException;
 

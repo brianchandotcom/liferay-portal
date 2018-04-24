@@ -75,6 +75,7 @@ public interface ImageLocalService extends BaseLocalService,
 	* @param imageId the primary key for the new image
 	* @return the new image
 	*/
+	@Transactional(enabled = false)
 	public Image createImage(long imageId);
 
 	/**

@@ -17,6 +17,7 @@ package com.liferay.portal.spring.aop;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.spring.aop.AdvisedSupport;
+import com.liferay.portal.kernel.spring.aop.AopProxy;
 import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.lang.annotation.Annotation;
@@ -29,9 +30,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.aopalliance.intercept.MethodInterceptor;
-
-import org.springframework.aop.framework.AopProxy;
-import org.springframework.util.ClassUtils;
 
 /**
  * @author Shuyang Zhou
@@ -122,11 +120,6 @@ public class ServiceBeanAopProxy
 	@Override
 	public AdvisedSupport getAdvisedSupport() {
 		return _advisedSupport;
-	}
-
-	@Override
-	public Object getProxy() {
-		return getProxy(ClassUtils.getDefaultClassLoader());
 	}
 
 	@Override

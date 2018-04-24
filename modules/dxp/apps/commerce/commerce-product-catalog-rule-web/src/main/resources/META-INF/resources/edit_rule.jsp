@@ -18,33 +18,11 @@
 
 <%
 CPCatalogRuleDisplayContext cpCatalogRuleDisplayContext = (CPCatalogRuleDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
-
-CPRule cpRule = cpCatalogRuleDisplayContext.getCPRule();
-PortletURL portletURL = cpCatalogRuleDisplayContext.getPortletURL();
-
-portletURL.setParameter("mvcRenderCommandName", "editCPRule");
-
-String cpRuleName = "rule";
-
-if (cpRule != null) {
-	cpRuleName = cpRule.getName();
-}
-
-String title = LanguageUtil.format(request, "edit-x", cpRuleName, false);
-
-Map<String, Object> data = new HashMap<>();
-
-data.put("direction-right", StringPool.TRUE);
-
-PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "catalog-rules"), String.valueOf(renderResponse.createRenderURL()), data);
-PortalUtil.addPortletBreadcrumbEntry(request, title, StringPool.BLANK, data);
 %>
-
-<%@ include file="/breadcrumb.jspf" %>
 
 <liferay-frontend:screen-navigation
 	containerCssClass="col-md-10"
-	context="<%= cpRule %>"
+	context="<%= cpCatalogRuleDisplayContext.getCPRule() %>"
 	key="<%= CPRuleScreenNavigationConstants.SCREEN_NAVIGATION_KEY_COMMERCE_PRODUCT_RULE_GENERAL %>"
 	navCssClass="col-md-2"
 	portletURL="<%= currentURLObj %>"

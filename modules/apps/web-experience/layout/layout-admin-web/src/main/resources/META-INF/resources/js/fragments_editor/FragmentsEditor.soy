@@ -69,7 +69,15 @@
 		{/call}
 
 		<div class="container-fluid-1280 contextual-sidebar-content">
-			<div class="fragments-editor__fragment-entry-links {$languageId != $defaultLanguageId ? 'translating' : ''}" ref="fragmentEntryLinks">
+			{let $entryLinksClasses kind="text"}
+				fragments-editor__fragment-entry-links
+
+				{if $languageId != $defaultLanguageId}
+					{sp}translating
+				{/if}
+			{/let}
+
+			<div class="{$entryLinksClasses}" ref="fragmentEntryLinks">
 				{if $fragmentEntryLinks and (length($fragmentEntryLinks) > 0)}
 					{foreach $fragmentEntryLink in $fragmentEntryLinks}
 						<div data-position="{index($fragmentEntryLink)}" key="{$fragmentEntryLink.fragmentEntryLinkId}">

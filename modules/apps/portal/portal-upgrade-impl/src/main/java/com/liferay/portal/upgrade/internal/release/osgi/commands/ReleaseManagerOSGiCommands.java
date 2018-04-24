@@ -243,10 +243,18 @@ public class ReleaseManagerOSGiCommands {
 	protected void doExecute(
 		String bundleSymbolicName, List<UpgradeInfo> upgradeInfos) {
 
-		String schemaVersionString = getSchemaVersionString(bundleSymbolicName);
-
 		ReleaseGraphManager releaseGraphManager = new ReleaseGraphManager(
 			upgradeInfos);
+
+		String schemaVersionString = "0.0.0";
+
+		Release release = _releaseLocalService.fetchRelease(bundleSymbolicName);
+
+		if ((release != null) &&
+			Validator.isNotNull(release.getSchemaVersion())) {
+
+			schemaVersionString = release.getSchemaVersion();
+		}
 
 		List<List<UpgradeInfo>> upgradeInfosList =
 			releaseGraphManager.getUpgradeInfosList(schemaVersionString);

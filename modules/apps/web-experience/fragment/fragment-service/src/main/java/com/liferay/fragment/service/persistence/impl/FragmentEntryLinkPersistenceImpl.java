@@ -4277,6 +4277,7 @@ public class FragmentEntryLinkPersistenceImpl extends BasePersistenceImpl<Fragme
 		fragmentEntryLinkImpl.setEditableValues(fragmentEntryLink.getEditableValues());
 		fragmentEntryLinkImpl.setPosition(fragmentEntryLink.getPosition());
 		fragmentEntryLinkImpl.setLastPropagationDate(fragmentEntryLink.getLastPropagationDate());
+		fragmentEntryLinkImpl.setNamespace(fragmentEntryLink.getNamespace());
 
 		return fragmentEntryLinkImpl;
 	}

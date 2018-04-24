@@ -51,6 +51,7 @@ public class FragmentEntryLinkSoap implements Serializable {
 		soapModel.setEditableValues(model.getEditableValues());
 		soapModel.setPosition(model.getPosition());
 		soapModel.setLastPropagationDate(model.getLastPropagationDate());
+		soapModel.setNamespace(model.getNamespace());
 
 		return soapModel;
 	}
@@ -250,6 +251,14 @@ public class FragmentEntryLinkSoap implements Serializable {
 		_lastPropagationDate = lastPropagationDate;
 	}
 
+	public String getNamespace() {
+		return _namespace;
+	}
+
+	public void setNamespace(String namespace) {
+		_namespace = namespace;
+	}
+
 	private String _uuid;
 	private long _fragmentEntryLinkId;
 	private long _groupId;
@@ -268,4 +277,5 @@ public class FragmentEntryLinkSoap implements Serializable {
 	private String _editableValues;
 	private int _position;
 	private Date _lastPropagationDate;
+	private String _namespace;
 }

@@ -369,6 +369,21 @@ public interface FragmentEntryLinkModel extends AttachedModel,
 	 */
 	public void setLastPropagationDate(Date lastPropagationDate);
 
+	/**
+	 * Returns the namespace of this fragment entry link.
+	 *
+	 * @return the namespace of this fragment entry link
+	 */
+	@AutoEscape
+	public String getNamespace();
+
+	/**
+	 * Sets the namespace of this fragment entry link.
+	 *
+	 * @param namespace the namespace of this fragment entry link
+	 */
+	public void setNamespace(String namespace);
+
 	@Override
 	public boolean isNew();
 

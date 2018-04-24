@@ -79,6 +79,7 @@ public class FragmentEntryLinkWrapper implements FragmentEntryLink,
 		attributes.put("editableValues", getEditableValues());
 		attributes.put("position", getPosition());
 		attributes.put("lastPropagationDate", getLastPropagationDate());
+		attributes.put("namespace", getNamespace());
 
 		return attributes;
 	}
@@ -192,6 +193,12 @@ public class FragmentEntryLinkWrapper implements FragmentEntryLink,
 
 		if (lastPropagationDate != null) {
 			setLastPropagationDate(lastPropagationDate);
+		}
+
+		String namespace = (String)attributes.get("namespace");
+
+		if (namespace != null) {
+			setNamespace(namespace);
 		}
 	}
 
@@ -348,6 +355,16 @@ public class FragmentEntryLinkWrapper implements FragmentEntryLink,
 	@Override
 	public Date getModifiedDate() {
 		return _fragmentEntryLink.getModifiedDate();
+	}
+
+	/**
+	* Returns the namespace of this fragment entry link.
+	*
+	* @return the namespace of this fragment entry link
+	*/
+	@Override
+	public java.lang.String getNamespace() {
+		return _fragmentEntryLink.getNamespace();
 	}
 
 	/**
@@ -610,6 +627,16 @@ public class FragmentEntryLinkWrapper implements FragmentEntryLink,
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
 		_fragmentEntryLink.setModifiedDate(modifiedDate);
+	}
+
+	/**
+	* Sets the namespace of this fragment entry link.
+	*
+	* @param namespace the namespace of this fragment entry link
+	*/
+	@Override
+	public void setNamespace(java.lang.String namespace) {
+		_fragmentEntryLink.setNamespace(namespace);
 	}
 
 	@Override

@@ -65,7 +65,7 @@ public class FragmentEntryLinkCacheModel implements CacheModel<FragmentEntryLink
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(37);
+		StringBundler sb = new StringBundler(39);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -103,6 +103,8 @@ public class FragmentEntryLinkCacheModel implements CacheModel<FragmentEntryLink
 		sb.append(position);
 		sb.append(", lastPropagationDate=");
 		sb.append(lastPropagationDate);
+		sb.append(", namespace=");
+		sb.append(namespace);
 		sb.append("}");
 
 		return sb.toString();
@@ -188,6 +190,13 @@ public class FragmentEntryLinkCacheModel implements CacheModel<FragmentEntryLink
 					lastPropagationDate));
 		}
 
+		if (namespace == null) {
+			fragmentEntryLinkImpl.setNamespace("");
+		}
+		else {
+			fragmentEntryLinkImpl.setNamespace(namespace);
+		}
+
 		fragmentEntryLinkImpl.resetOriginalValues();
 
 		return fragmentEntryLinkImpl;
@@ -222,6 +231,7 @@ public class FragmentEntryLinkCacheModel implements CacheModel<FragmentEntryLink
 
 		position = objectInput.readInt();
 		lastPropagationDate = objectInput.readLong();
+		namespace = objectInput.readUTF();
 	}
 
 	@Override
@@ -290,6 +300,13 @@ public class FragmentEntryLinkCacheModel implements CacheModel<FragmentEntryLink
 
 		objectOutput.writeInt(position);
 		objectOutput.writeLong(lastPropagationDate);
+
+		if (namespace == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(namespace);
+		}
 	}
 
 	public String uuid;
@@ -310,4 +327,5 @@ public class FragmentEntryLinkCacheModel implements CacheModel<FragmentEntryLink
 	public String editableValues;
 	public int position;
 	public long lastPropagationDate;
+	public String namespace;
 }

@@ -34,67 +34,69 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
  * @author Tina Tian
  */
 @Component(immediate = true)
-public class SystemCheckerTracker
-	implements ServiceTrackerCustomizer<SystemChecker, SystemChecker> {
+public class SystemCheckerTracker {
 
 	@Activate
-	public void activate(BundleContext bundleContext) {
-		_bundleContext = bundleContext;
-
+	public void activate(final BundleContext bundleContext) {
 		_serviceTracker = new ServiceTracker<>(
-			_bundleContext, SystemChecker.class, this);
+			bundleContext, SystemChecker.class,
+			new ServiceTrackerCustomizer<SystemChecker, SystemChecker>() {
+
+				@Override
+				public SystemChecker addingService(
+					ServiceReference<SystemChecker> serviceReference) {
+
+					SystemChecker systemChecker = bundleContext.getService(
+						serviceReference);
+
+					StringBundler sb = new StringBundler(4);
+
+					sb.append(systemChecker.getName());
+					sb.append(" is ready for use. You can run \"");
+					sb.append(systemChecker.getOSGiCommand());
+					sb.append("\" in gogoshell to check result.");
+
+					if (_log.isInfoEnabled()) {
+						_log.info(sb.toString());
+					}
+
+					String result = systemChecker.check();
+
+					if (Validator.isNull(result)) {
+						if (_log.isInfoEnabled()) {
+							_log.info(
+								systemChecker.getName() +
+									" check result: No issue is found.");
+						}
+					}
+					else {
+						if (_log.isWarnEnabled()) {
+							_log.warn(
+								systemChecker.getName() + " check result: " +
+									result);
+						}
+					}
+
+					return systemChecker;
+				}
+
+				@Override
+				public void modifiedService(
+					ServiceReference<SystemChecker> serviceReference,
+					SystemChecker systemChecker) {
+				}
+
+				@Override
+				public void removedService(
+					ServiceReference<SystemChecker> serviceReference,
+					SystemChecker systemChecker) {
+
+					bundleContext.ungetService(serviceReference);
+				}
+
+			});
 
 		_serviceTracker.open();
-	}
-
-	@Override
-	public SystemChecker addingService(
-		ServiceReference<SystemChecker> serviceReference) {
-
-		SystemChecker systemChecker = _bundleContext.getService(
-			serviceReference);
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(systemChecker.getName());
-		sb.append(" is ready for use. You can run \"");
-		sb.append(systemChecker.getOSGiCommand());
-		sb.append("\" in gogoshell to check result.");
-
-		if (_log.isInfoEnabled()) {
-			_log.info(sb.toString());
-		}
-
-		String result = systemChecker.check();
-
-		if (Validator.isNull(result)) {
-			if (_log.isInfoEnabled()) {
-				_log.info(
-					systemChecker.getName() +
-						" check result: No issue is found.");
-			}
-		}
-		else {
-			if (_log.isWarnEnabled()) {
-				_log.warn(systemChecker.getName() + " check result: " + result);
-			}
-		}
-
-		return systemChecker;
-	}
-
-	@Override
-	public void modifiedService(
-		ServiceReference<SystemChecker> serviceReference,
-		SystemChecker systemChecker) {
-	}
-
-	@Override
-	public void removedService(
-		ServiceReference<SystemChecker> serviceReference,
-		SystemChecker systemChecker) {
-
-		_bundleContext.ungetService(serviceReference);
 	}
 
 	@Deactivate
@@ -110,7 +112,6 @@ public class SystemCheckerTracker
 	private static final Log _log = LogFactoryUtil.getLog(
 		SystemCheckerTracker.class);
 
-	private BundleContext _bundleContext;
 	private ServiceTracker<SystemChecker, SystemChecker> _serviceTracker;
 
 }

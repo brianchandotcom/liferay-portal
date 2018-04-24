@@ -33,12 +33,6 @@ public class UADAnonymizerHelper {
 			CompanyThreadLocal.getCompanyId());
 	}
 
-	public long getAnonymousUserId() throws PortalException {
-		User anonymousUser = getAnonymousUser();
-
-		return anonymousUser.getUserId();
-	}
-
 	@Reference
 	private UserLocalService _userLocalService;
 

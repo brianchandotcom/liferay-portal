@@ -39,7 +39,7 @@ import org.junit.runner.RunWith;
 
 /**
  * @author Michael C. Han
- * @deprecated As of 2.0.0, with no direct replacement
+ * @deprecated As of 1.0.0, with no direct replacement
  */
 @Deprecated
 @RunWith(Arquillian.class)

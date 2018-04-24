@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.model.User;
 
 import com.liferay.user.associated.data.anonymizer.DynamicQueryUADAnonymizer;
 import com.liferay.user.associated.data.anonymizer.UADAnonymizer;
-import com.liferay.user.associated.data.util.UADAnonymizerHelper;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -40,10 +39,8 @@ import java.util.List;
 	"model.class.name=" + MBUADConstants.CLASS_NAME_MB_CATEGORY}, service = UADAnonymizer.class)
 public class MBCategoryUADAnonymizer extends DynamicQueryUADAnonymizer<MBCategory> {
 	@Override
-	public void autoAnonymize(MBCategory mbCategory, long userId)
-		throws PortalException {
-		User anonymousUser = _uadAnonymizerHelper.getAnonymousUser();
-
+	public void autoAnonymize(MBCategory mbCategory, long userId,
+		User anonymousUser) throws PortalException {
 		if (mbCategory.getUserId() == userId) {
 			mbCategory.setUserId(anonymousUser.getUserId());
 			mbCategory.setUserName(anonymousUser.getFullName());
@@ -79,6 +76,4 @@ public class MBCategoryUADAnonymizer extends DynamicQueryUADAnonymizer<MBCategor
 
 	@Reference
 	private MBCategoryLocalService _mbCategoryLocalService;
-	@Reference
-	private UADAnonymizerHelper _uadAnonymizerHelper;
 }

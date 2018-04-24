@@ -485,6 +485,7 @@ AUI.add(
 					_afterAutosave: function(event) {
 						var instance = this;
 
+						instance._updateAutosaveBar(event.saveAsDraft, event.modifiedDate);
 
 						A.one('.publish-icon').removeClass('hide');
 					},
@@ -557,6 +558,7 @@ AUI.add(
 												instance.fire(
 													'autosave',
 													{
+														saveAsDraft: saveAsDraft,
 														modifiedDate: responseData.modifiedDate
 													}
 												);

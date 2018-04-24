@@ -39,7 +39,7 @@
 			</then>
 		</if>
 
-		<execute function="AssertClick" locator1="ApplicationDisplayTemplatesConfiguration#MANAGE_DISPLAY_TEMPLATES_LINK" value1="Manage Display Templates for ${siteName}" />
+		<execute function="AssertClick" locator1="ApplicationDisplayTemplatesConfiguration#MANAGE_DISPLAY_TEMPLATES_LINK" value1="Manage Templates" />
 
 		<var name="key_adtType" value="RSS" />
 
@@ -94,7 +94,7 @@
 			</elseif>
 		</if>
 
-		<execute function="AssertClick" locator1="ApplicationDisplayTemplatesConfiguration#MANAGE_DISPLAY_TEMPLATES_LINK" value1="Manage Display Templates for ${siteName}" />
+		<execute function="AssertClick" locator1="ApplicationDisplayTemplatesConfiguration#MANAGE_DISPLAY_TEMPLATES_LINK" value1="Manage Templates" />
 
 		<var name="key_adtType" value="${adtType}" />
 
@@ -132,7 +132,7 @@
 
 		<execute function="Pause" locator1="3000" />
 
-		<execute function="AssertClick#assertPartialTextClickAt" locator1="ApplicationDisplayTemplatesConfiguration#MANAGE_DISPLAY_TEMPLATES_LINK" value1="Manage Display Templates for ${siteName}" />
+		<execute function="AssertClick#assertPartialTextClickAt" locator1="ApplicationDisplayTemplatesConfiguration#MANAGE_DISPLAY_TEMPLATES_LINK" value1="Manage Templates" />
 
 		<execute function="SelectFrameTop" />
 

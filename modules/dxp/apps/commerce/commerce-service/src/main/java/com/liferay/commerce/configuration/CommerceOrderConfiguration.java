@@ -24,8 +24,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 @ExtendedObjectClassDefinition(category = "commerce")
 @Meta.OCD(
 	id = "com.liferay.commerce.configuration.CommerceOrderConfiguration",
-	localization = "content/Language",
-	name = "orders-configuration-name"
+	localization = "content/Language", name = "orders-configuration-name"
 )
 public interface CommerceOrderConfiguration {
 

@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.model.User;
 
 import com.liferay.user.associated.data.anonymizer.DynamicQueryUADAnonymizer;
 import com.liferay.user.associated.data.anonymizer.UADAnonymizer;
-import com.liferay.user.associated.data.util.UADAnonymizerHelper;
 
 import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.service.WikiNodeLocalService;
@@ -40,10 +39,8 @@ import java.util.List;
 	"model.class.name=" + WikiUADConstants.CLASS_NAME_WIKI_NODE}, service = UADAnonymizer.class)
 public class WikiNodeUADAnonymizer extends DynamicQueryUADAnonymizer<WikiNode> {
 	@Override
-	public void autoAnonymize(WikiNode wikiNode, long userId)
+	public void autoAnonymize(WikiNode wikiNode, long userId, User anonymousUser)
 		throws PortalException {
-		User anonymousUser = _uadAnonymizerHelper.getAnonymousUser();
-
 		if (wikiNode.getUserId() == userId) {
 			wikiNode.setUserId(anonymousUser.getUserId());
 			wikiNode.setUserName(anonymousUser.getFullName());
@@ -79,6 +76,4 @@ public class WikiNodeUADAnonymizer extends DynamicQueryUADAnonymizer<WikiNode> {
 
 	@Reference
 	private WikiNodeLocalService _wikiNodeLocalService;
-	@Reference
-	private UADAnonymizerHelper _uadAnonymizerHelper;
 }

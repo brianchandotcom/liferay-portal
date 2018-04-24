@@ -48,7 +48,7 @@ public abstract class DynamicQueryUADExporter<T extends BaseModel>
 
 	@Override
 	public byte[] export(T baseModel) throws PortalException {
-		String xml = baseModel.toXmlString();
+		String xml = toXmlString(baseModel);
 
 		xml = formatXML(xml);
 
@@ -129,6 +129,10 @@ public abstract class DynamicQueryUADExporter<T extends BaseModel>
 		sb.append(".zip");
 
 		return ZipWriterFactoryUtil.getZipWriter(new File(sb.toString()));
+	}
+
+	protected String toXmlString(T baseModel) {
+		return baseModel.toXmlString();
 	}
 
 	private ActionableDynamicQuery _getActionableDynamicQuery(long userId) {

@@ -619,6 +619,25 @@ public class Entity implements Comparable<Entity> {
 		return uadAnonymizableEntityColumnsMap;
 	}
 
+	public List<EntityColumn> getUADEntityColumns() {
+		List<EntityColumn> uadEntityColumns = new ArrayList<>();
+
+		uadEntityColumns.add(_getPKEntityColumn());
+
+		Map<String, List<EntityColumn>> uadAnonymizableEntityColumnsMap =
+			getUADAnonymizableEntityColumnsMap();
+
+		for (Map.Entry<String, List<EntityColumn>> entry :
+				uadAnonymizableEntityColumnsMap.entrySet()) {
+
+			uadEntityColumns.addAll(entry.getValue());
+		}
+
+		uadEntityColumns.addAll(getUADNonanonymizableEntityColumns());
+
+		return uadEntityColumns;
+	}
+
 	public List<EntityColumn> getUADNonanonymizableEntityColumns() {
 		List<EntityColumn> uadNonanonymizableEntityColumns = new ArrayList<>();
 

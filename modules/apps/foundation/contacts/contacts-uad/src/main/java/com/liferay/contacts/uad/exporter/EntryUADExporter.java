@@ -19,6 +19,7 @@ import com.liferay.contacts.service.EntryLocalService;
 import com.liferay.contacts.uad.constants.ContactsUADConstants;
 
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
+import com.liferay.portal.kernel.util.StringBundler;
 
 import com.liferay.user.associated.data.exporter.DynamicQueryUADExporter;
 import com.liferay.user.associated.data.exporter.UADExporter;
@@ -41,6 +42,44 @@ public class EntryUADExporter extends DynamicQueryUADExporter<Entry> {
 	@Override
 	protected String[] doGetUserIdFieldNames() {
 		return ContactsUADConstants.USER_ID_FIELD_NAMES_ENTRY;
+	}
+
+	@Override
+	protected String toXmlString(Entry entry) {
+		StringBundler sb = new StringBundler(22);
+
+		sb.append("<model><model-name>");
+		sb.append("com.liferay.contacts.model.Entry");
+		sb.append("</model-name>");
+
+		sb.append(
+			"<column><column-name>entryId</column-name><column-value><![CDATA[");
+		sb.append(entry.getEntryId());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>userId</column-name><column-value><![CDATA[");
+		sb.append(entry.getUserId());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>userName</column-name><column-value><![CDATA[");
+		sb.append(entry.getUserName());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>fullName</column-name><column-value><![CDATA[");
+		sb.append(entry.getFullName());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>emailAddress</column-name><column-value><![CDATA[");
+		sb.append(entry.getEmailAddress());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>comments</column-name><column-value><![CDATA[");
+		sb.append(entry.getComments());
+		sb.append("]]></column-value></column>");
+
+		sb.append("</model>");
+
+		return sb.toString();
 	}
 
 	@Reference

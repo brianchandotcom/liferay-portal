@@ -38,6 +38,20 @@ public class UpgradeLayout extends UpgradeProcess {
 	@Override
 	protected void doUpgrade() throws Exception {
 		deleteLinkedOrphanedLayouts();
+		updateUnlinkedOrphanedLayouts();
+	}
+
+	protected void updateUnlinkedOrphanedLayouts() throws Exception {
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			StringBundler sb = new StringBundler(4);
+
+			sb.append("update Layout set layoutPrototypeUuid = null where ");
+			sb.append("layoutPrototypeUuid != '' and layoutPrototypeUuid not ");
+			sb.append("in (select uuid_ from LayoutPrototype) and ");
+			sb.append("layoutPrototypeLinkEnabled = FALSE");
+
+			runSQL(sb.toString());
+		}
 	}
 
 }

@@ -22,9 +22,12 @@ import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.model.ReleaseConstants;
 import com.liferay.portal.kernel.service.ReleaseLocalService;
 import com.liferay.portal.kernel.upgrade.UpgradeStep;
+import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.output.stream.container.OutputStreamContainer;
 import com.liferay.portal.output.stream.container.OutputStreamContainerFactory;
 import com.liferay.portal.output.stream.container.OutputStreamContainerFactoryTracker;
+import com.liferay.portal.upgrade.internal.graph.ReleaseGraphManager;
 import com.liferay.portal.upgrade.internal.registry.UpgradeInfo;
 import com.liferay.portal.upgrade.internal.release.ReleasePublisher;
 
@@ -41,6 +44,41 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(immediate = true, service = UpgradeExecutor.class)
 public class UpgradeExecutor {
+
+	public void doExecute(
+		String bundleSymbolicName, List<UpgradeInfo> upgradeInfos) {
+
+		ReleaseGraphManager releaseGraphManager = new ReleaseGraphManager(
+			upgradeInfos);
+
+		String schemaVersionString = "0.0.0";
+
+		Release release = _releaseLocalService.fetchRelease(bundleSymbolicName);
+
+		if ((release != null) &&
+			Validator.isNotNull(release.getSchemaVersion())) {
+
+			schemaVersionString = release.getSchemaVersion();
+		}
+
+		List<List<UpgradeInfo>> upgradeInfosList =
+			releaseGraphManager.getUpgradeInfosList(schemaVersionString);
+
+		int size = upgradeInfosList.size();
+
+		if (size > 1) {
+			throw new IllegalStateException(
+				StringBundler.concat(
+					"There are ", String.valueOf(size),
+					" possible end nodes for ", schemaVersionString));
+		}
+
+		if (size == 0) {
+			return;
+		}
+
+		executeUpgradeInfos(bundleSymbolicName, upgradeInfosList.get(0));
+	}
 
 	public void executeUpgradeInfos(
 		String bundleSymbolicName, List<UpgradeInfo> upgradeInfos) {

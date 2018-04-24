@@ -129,7 +129,7 @@ public class ReleaseManagerOSGiCommands {
 			List<UpgradeInfo> upgradeInfos = _serviceTrackerMap.getService(
 				bundleSymbolicName);
 
-			doExecute(bundleSymbolicName, upgradeInfos);
+			_upgradeExecutor.doExecute(bundleSymbolicName, upgradeInfos);
 		}
 		catch (Throwable t) {
 			t.printStackTrace(System.out);
@@ -240,42 +240,6 @@ public class ReleaseManagerOSGiCommands {
 		_serviceTrackerMap.close();
 	}
 
-	protected void doExecute(
-		String bundleSymbolicName, List<UpgradeInfo> upgradeInfos) {
-
-		ReleaseGraphManager releaseGraphManager = new ReleaseGraphManager(
-			upgradeInfos);
-
-		String schemaVersionString = "0.0.0";
-
-		Release release = _releaseLocalService.fetchRelease(bundleSymbolicName);
-
-		if ((release != null) &&
-			Validator.isNotNull(release.getSchemaVersion())) {
-
-			schemaVersionString = release.getSchemaVersion();
-		}
-
-		List<List<UpgradeInfo>> upgradeInfosList =
-			releaseGraphManager.getUpgradeInfosList(schemaVersionString);
-
-		int size = upgradeInfosList.size();
-
-		if (size > 1) {
-			throw new IllegalStateException(
-				StringBundler.concat(
-					"There are ", String.valueOf(size),
-					" possible end nodes for ", schemaVersionString));
-		}
-
-		if (size == 0) {
-			return;
-		}
-
-		_upgradeExecutor.executeUpgradeInfos(
-			bundleSymbolicName, upgradeInfosList.get(0));
-	}
-
 	protected void executeAll(
 		Set<String> upgradeThrewExceptionBundleSymbolicNames) {
 
@@ -296,7 +260,8 @@ public class ReleaseManagerOSGiCommands {
 				List<UpgradeInfo> upgradeInfos = _serviceTrackerMap.getService(
 					upgradableBundleSymbolicName);
 
-				doExecute(upgradableBundleSymbolicName, upgradeInfos);
+				_upgradeExecutor.doExecute(
+					upgradableBundleSymbolicName, upgradeInfos);
 			}
 			catch (Throwable t) {
 				System.out.println(
@@ -455,7 +420,7 @@ public class ReleaseManagerOSGiCommands {
 			final String key, UpgradeInfo upgradeInfo,
 			List<UpgradeInfo> upgradeInfos) {
 
-			doExecute(key, upgradeInfos);
+			_upgradeExecutor.doExecute(key, upgradeInfos);
 		}
 
 		@Override

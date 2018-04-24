@@ -1231,11 +1231,8 @@ public class TopLevelBuild extends BaseBuild {
 		String ciTestSuite = getParameterValue("CI_TEST_SUITE");
 
 		if (Objects.equals(ciTestSuite, "default")) {
-
 			testSuiteName = JenkinsResultsParserUtil.combine(
-				testSuiteName,
-				":",
-				ciTestSuite);
+				testSuiteName, ":", ciTestSuite);
 		}
 
 		return testSuiteName;

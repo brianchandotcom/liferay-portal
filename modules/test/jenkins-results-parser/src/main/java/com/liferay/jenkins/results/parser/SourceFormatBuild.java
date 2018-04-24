@@ -46,21 +46,20 @@ public class SourceFormatBuild extends TopLevelBuild {
 		return new Element[] {getFailureMessageElement()};
 	}
 
+	public PullRequest getPullRequest() {
+		return _pullRequest;
+	}
+
 	@Override
-	public Element getTopGithubMessageElement() {
+	public Element getTopGitHubMessageElement() {
 		update();
 
 		Element rootElement = Dom4JUtil.getNewElement(
 			"html", null, getResultElement());
 
-		Element detailsElement = Dom4JUtil.getNewElement(
-			"details", rootElement,
-			Dom4JUtil.getNewElement(
-				"summary", null, "Click here for more details."),
-			Dom4JUtil.getNewElement("h4", null, "Base Branch:"),
-			getBaseBranchDetailsElement(),
-			Dom4JUtil.getNewElement("h4", null, "Sender Branch:"),
-			getSenderBranchDetailsElement());
+		Element detailsElement = getDetailsElement();
+
+		Dom4JUtil.addToElement(rootElement, detailsElement);
 
 		String result = getResult();
 
@@ -71,7 +70,9 @@ public class SourceFormatBuild extends TopLevelBuild {
 		}
 
 		Dom4JUtil.addToElement(
-			detailsElement, successCount, " out of 1 jobs PASSED");
+			detailsElement, String.valueOf(successCount), " out of ",
+			String.valueOf(getDownstreamBuildCountByResult(null) + 1),
+			"jobs PASSED");
 
 		if (!result.equals("SUCCESS")) {
 			Dom4JUtil.addToElement(
@@ -92,10 +93,6 @@ public class SourceFormatBuild extends TopLevelBuild {
 		return rootElement;
 	}
 
-	public PullRequest getPullRequest() {
-		return _pullRequest;
-	}
-
 	protected SourceFormatBuild(String url) {
 		this(url, null);
 	}
@@ -104,6 +101,26 @@ public class SourceFormatBuild extends TopLevelBuild {
 		super(url, topLevelBuild);
 
 		_pullRequest = new PullRequest(getParameterValue("PULL_REQUEST_URL"));
+	}
+
+	protected Element getDetailsElement() {
+		Element detailsElement = Dom4JUtil.getNewElement(
+			"details", null,
+			Dom4JUtil.getNewElement(
+				"summary", null, "Click here for more details."),
+			Dom4JUtil.getNewElement("h4", null, "Base Branch:"),
+			getBaseBranchDetailsElement(),
+			Dom4JUtil.getNewElement("h4", null, "Sender Branch:"),
+			getSenderBranchDetailsElement());
+
+		if (_pullRequest.getUpstreamBranchName().contains("-private")) {
+			Dom4JUtil.addToElement(
+				detailsElement,
+				Dom4JUtil.getNewElement("h4", null, "Companion Branch:"),
+				getCompanionBranchDetailsElement());
+		}
+
+		return detailsElement;
 	}
 
 	@Override
@@ -122,22 +139,14 @@ public class SourceFormatBuild extends TopLevelBuild {
 		String senderUsername = _pullRequest.getSenderUsername();
 
 		String senderBranchURL = JenkinsResultsParserUtil.combine(
-			"https://github.com/",
-			senderUsername,
-			"/",
-			repositoryName,
-			"/tree/",
-			senderBranchName);
+			"https://github.com/", senderUsername, "/", repositoryName,
+			"/tree/", senderBranchName);
 
 		String senderSHA = _pullRequest.getSenderSHA();
 
 		String senderCommitURL = JenkinsResultsParserUtil.combine(
-			"https://github.com/",
-			senderUsername,
-			"/",
-			repositoryName,
-			"/commit/",
-			senderSHA);
+			"https://github.com/", senderUsername, "/", repositoryName,
+			"/commit/", senderSHA);
 
 		Element senderBranchDetailsElement = Dom4JUtil.getNewElement(
 			"p", null, "Branch Name: ",
@@ -150,10 +159,11 @@ public class SourceFormatBuild extends TopLevelBuild {
 
 	@Override
 	protected String getTestSuiteName() {
-		return TEST_SUITE_NAME;
+		return _TEST_SUITE_NAME;
 	}
 
+	private static final String _TEST_SUITE_NAME = "ci:test:sf";
+
 	private PullRequest _pullRequest;
-	private static final String TEST_SUITE_NAME = "ci:test:sf";
 
 }

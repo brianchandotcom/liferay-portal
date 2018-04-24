@@ -1,0 +1,3 @@
+Bundle-Name: Liferay Portal Model Relationship Dynamic Data Mapping Implementation
+Bundle-SymbolicName: com.liferay.portal.model.relationship.dynamic.data.mapping.impl
+Bundle-Version: 1.0.0

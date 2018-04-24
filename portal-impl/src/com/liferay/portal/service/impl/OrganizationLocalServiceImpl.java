@@ -149,8 +149,8 @@ public class OrganizationLocalServiceImpl
 	 * @param groupId the primary key of the group
 	 */
 	@Override
-	public void addGroupOrganizations(long groupId,
-		List<Organization> organizations) {
+	public void addGroupOrganizations(
+		long groupId, List<Organization> organizations) {
 
 		super.addGroupOrganizations(groupId, organizations);
 

@@ -25,6 +25,20 @@ import com.liferay.portal.kernel.util.ReferenceRegistry;
  */
 @ProviderType
 public class AnnouncementsEntryFinderUtil {
+	public static int countByScope(long companyId, long userId,
+		long classNameId, long[] classPKs, int displayDateMonth,
+		int displayDateDay, int displayDateYear, int displayDateHour,
+		int displayDateMinute, int expirationDateMonth, int expirationDateDay,
+		int expirationDateYear, int expirationDateHour,
+		int expirationDateMinute, boolean alert, int flagValue) {
+		return getFinder()
+				   .countByScope(companyId, userId, classNameId, classPKs,
+			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
+			displayDateMinute, expirationDateMonth, expirationDateDay,
+			expirationDateYear, expirationDateHour, expirationDateMinute,
+			alert, flagValue);
+	}
+
 	public static int countByScope(long userId, long classNameId,
 		long[] classPKs, int displayDateMonth, int displayDateDay,
 		int displayDateYear, int displayDateHour, int displayDateMinute,
@@ -53,9 +67,38 @@ public class AnnouncementsEntryFinderUtil {
 			alert, flagValue);
 	}
 
+	public static int countByScopes(long companyId, long userId,
+		java.util.LinkedHashMap<java.lang.Long, long[]> scopes,
+		int displayDateMonth, int displayDateDay, int displayDateYear,
+		int displayDateHour, int displayDateMinute, int expirationDateMonth,
+		int expirationDateDay, int expirationDateYear, int expirationDateHour,
+		int expirationDateMinute, boolean alert, int flagValue) {
+		return getFinder()
+				   .countByScopes(companyId, userId, scopes, displayDateMonth,
+			displayDateDay, displayDateYear, displayDateHour,
+			displayDateMinute, expirationDateMonth, expirationDateDay,
+			expirationDateYear, expirationDateHour, expirationDateMinute,
+			alert, flagValue);
+	}
+
 	public static java.util.List<com.liferay.announcements.kernel.model.AnnouncementsEntry> findByDisplayDate(
 		java.util.Date displayDateLT, java.util.Date displayDateGT) {
 		return getFinder().findByDisplayDate(displayDateLT, displayDateGT);
+	}
+
+	public static java.util.List<com.liferay.announcements.kernel.model.AnnouncementsEntry> findByScope(
+		long companyId, long userId, long classNameId, long[] classPKs,
+		int displayDateMonth, int displayDateDay, int displayDateYear,
+		int displayDateHour, int displayDateMinute, int expirationDateMonth,
+		int expirationDateDay, int expirationDateYear, int expirationDateHour,
+		int expirationDateMinute, boolean alert, int flagValue, int start,
+		int end) {
+		return getFinder()
+				   .findByScope(companyId, userId, classNameId, classPKs,
+			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
+			displayDateMinute, expirationDateMonth, expirationDateDay,
+			expirationDateYear, expirationDateHour, expirationDateMinute,
+			alert, flagValue, start, end);
 	}
 
 	public static java.util.List<com.liferay.announcements.kernel.model.AnnouncementsEntry> findByScope(
@@ -82,6 +125,22 @@ public class AnnouncementsEntryFinderUtil {
 		int end) {
 		return getFinder()
 				   .findByScopes(userId, scopes, displayDateMonth,
+			displayDateDay, displayDateYear, displayDateHour,
+			displayDateMinute, expirationDateMonth, expirationDateDay,
+			expirationDateYear, expirationDateHour, expirationDateMinute,
+			alert, flagValue, start, end);
+	}
+
+	public static java.util.List<com.liferay.announcements.kernel.model.AnnouncementsEntry> findByScopes(
+		long companyId, long userId,
+		java.util.LinkedHashMap<java.lang.Long, long[]> scopes,
+		int displayDateMonth, int displayDateDay, int displayDateYear,
+		int displayDateHour, int displayDateMinute, int expirationDateMonth,
+		int expirationDateDay, int expirationDateYear, int expirationDateHour,
+		int expirationDateMinute, boolean alert, int flagValue, int start,
+		int end) {
+		return getFinder()
+				   .findByScopes(companyId, userId, scopes, displayDateMonth,
 			displayDateDay, displayDateYear, displayDateHour,
 			displayDateMinute, expirationDateMonth, expirationDateDay,
 			expirationDateYear, expirationDateHour, expirationDateMinute,

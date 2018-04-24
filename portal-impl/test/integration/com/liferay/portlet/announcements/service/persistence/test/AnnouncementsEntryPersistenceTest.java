@@ -234,6 +234,15 @@ public class AnnouncementsEntryPersistenceTest {
 	}
 
 	@Test
+	public void testCountByC_C_C_A() throws Exception {
+		_persistence.countByC_C_C_A(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
+			RandomTestUtil.randomBoolean());
+
+		_persistence.countByC_C_C_A(0L, 0L, 0L, RandomTestUtil.randomBoolean());
+	}
+
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		AnnouncementsEntry newAnnouncementsEntry = addAnnouncementsEntry();
 

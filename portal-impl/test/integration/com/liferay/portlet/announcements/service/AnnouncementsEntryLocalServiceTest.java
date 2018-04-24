@@ -21,6 +21,7 @@ import com.liferay.announcements.kernel.model.AnnouncementsFlagConstants;
 import com.liferay.announcements.kernel.service.AnnouncementsEntryLocalServiceUtil;
 import com.liferay.announcements.kernel.service.AnnouncementsFlagLocalServiceUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.Role;
@@ -33,6 +34,7 @@ import com.liferay.portal.kernel.service.OrganizationLocalServiceUtil;
 import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserGroupLocalServiceUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.OrganizationTestUtil;
 import com.liferay.portal.kernel.test.util.RoleTestUtil;
@@ -195,6 +197,56 @@ public class AnnouncementsEntryLocalServiceTest {
 		AnnouncementsEntry entry = notHiddenEntries.get(0);
 
 		Assert.assertEquals(entry.getEntryId(), entry3.getEntryId());
+	}
+
+	@Test
+	public void testGetEntriesCountInDifferentCompany() throws Exception {
+		addEntry(0, 0);
+
+		Company company = CompanyTestUtil.addCompany();
+
+		int entriesCount = AnnouncementsEntryLocalServiceUtil.getEntriesCount(
+			company.getCompanyId(), 0, 0, false);
+
+		Assert.assertEquals(0, entriesCount);
+	}
+
+	@Test
+	public void testGetEntriesCountInSameCompany() throws Exception {
+		addEntry(0, 0);
+
+		int entriesCount = AnnouncementsEntryLocalServiceUtil.getEntriesCount(
+			TestPropsValues.getCompanyId(), 0, 0, false);
+
+		Assert.assertEquals(0, entriesCount);
+	}
+
+	@Test
+	public void testGetEntriesInDifferentCompany() throws Exception {
+		addEntry(0, 0);
+
+		Company company = CompanyTestUtil.addCompany();
+
+		List<AnnouncementsEntry> entries =
+			AnnouncementsEntryLocalServiceUtil.getEntries(
+				company.getCompanyId(), 0, 0, false, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS);
+
+		Assert.assertEquals(entries.toString(), 0, entries.size());
+	}
+
+	@Test
+	public void testGetEntriesInSameCompany() throws Exception {
+		AnnouncementsEntry entry = addEntry(0, 0);
+
+		List<AnnouncementsEntry> entries =
+			AnnouncementsEntryLocalServiceUtil.getEntries(
+				TestPropsValues.getCompanyId(), 0, 0, false, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS);
+
+		Assert.assertEquals(entries.toString(), 1, entries.size());
+
+		Assert.assertEquals(entry, entries.get(0));
 	}
 
 	protected AnnouncementsEntry addEntry(long classNameId, long classPK)

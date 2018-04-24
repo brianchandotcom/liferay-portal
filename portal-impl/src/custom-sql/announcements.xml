@@ -15,6 +15,7 @@
 				(AnnouncementsEntry.displayDate <= ? [$AND_OR_NULL_CHECK$]) AND
 				(AnnouncementsEntry.expirationDate >= ? [$AND_OR_NULL_CHECK$]) AND
 				(AnnouncementsEntry.alert = ?) AND
+				(AnnouncementsEntry.companyId = ?) AND
 				(AnnouncementsFlag.userId = ?) AND
 				(AnnouncementsFlag.value = ?)
 		]]>
@@ -35,6 +36,7 @@
 				(AnnouncementsEntry.displayDate <= ? [$AND_OR_NULL_CHECK$]) AND
 				(AnnouncementsEntry.expirationDate >= ? [$AND_OR_NULL_CHECK$]) AND
 				(AnnouncementsEntry.alert = ?) AND
+				(AnnouncementsEntry.companyId = ?) AND
 				(AnnouncementsFlag.entryId IS NULL)
 		]]>
 	</sql>
@@ -63,6 +65,7 @@
 				(AnnouncementsEntry.displayDate <= ? [$AND_OR_NULL_CHECK$]) AND
 				(AnnouncementsEntry.expirationDate >= ? [$AND_OR_NULL_CHECK$]) AND
 				(AnnouncementsEntry.alert = ?) AND
+				(AnnouncementsEntry.companyId = ?) AND
 				(AnnouncementsFlag.userId = ?) AND
 				(AnnouncementsFlag.value = ?)
 			ORDER BY
@@ -86,6 +89,7 @@
 				(AnnouncementsEntry.displayDate <= ? [$AND_OR_NULL_CHECK$]) AND
 				(AnnouncementsEntry.expirationDate >= ? [$AND_OR_NULL_CHECK$]) AND
 				(AnnouncementsEntry.alert = ?) AND
+				(AnnouncementsEntry.companyId = ?) AND
 				(AnnouncementsFlag.entryId IS NULL)
 			ORDER BY
 				AnnouncementsEntry.priority DESC,

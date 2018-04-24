@@ -2690,6 +2690,8 @@ public class MBDiscussionPersistenceImpl extends BasePersistenceImpl<MBDiscussio
 
 	@Override
 	protected MBDiscussion removeImpl(MBDiscussion mbDiscussion) {
+		mbDiscussion = toUnwrappedModel(mbDiscussion);
+
 		Session session = null;
 
 		try {
@@ -2720,6 +2722,8 @@ public class MBDiscussionPersistenceImpl extends BasePersistenceImpl<MBDiscussio
 
 	@Override
 	public MBDiscussion updateImpl(MBDiscussion mbDiscussion) {
+		mbDiscussion = toUnwrappedModel(mbDiscussion);
+
 		boolean isNew = mbDiscussion.isNew();
 
 		MBDiscussionModelImpl mbDiscussionModelImpl = (MBDiscussionModelImpl)mbDiscussion;
@@ -2873,6 +2877,32 @@ public class MBDiscussionPersistenceImpl extends BasePersistenceImpl<MBDiscussio
 		mbDiscussion.resetOriginalValues();
 
 		return mbDiscussion;
+	}
+
+	protected MBDiscussion toUnwrappedModel(MBDiscussion mbDiscussion) {
+		if (mbDiscussion instanceof MBDiscussionImpl) {
+			return mbDiscussion;
+		}
+
+		MBDiscussionImpl mbDiscussionImpl = new MBDiscussionImpl();
+
+		mbDiscussionImpl.setNew(mbDiscussion.isNew());
+		mbDiscussionImpl.setPrimaryKey(mbDiscussion.getPrimaryKey());
+
+		mbDiscussionImpl.setUuid(mbDiscussion.getUuid());
+		mbDiscussionImpl.setDiscussionId(mbDiscussion.getDiscussionId());
+		mbDiscussionImpl.setGroupId(mbDiscussion.getGroupId());
+		mbDiscussionImpl.setCompanyId(mbDiscussion.getCompanyId());
+		mbDiscussionImpl.setUserId(mbDiscussion.getUserId());
+		mbDiscussionImpl.setUserName(mbDiscussion.getUserName());
+		mbDiscussionImpl.setCreateDate(mbDiscussion.getCreateDate());
+		mbDiscussionImpl.setModifiedDate(mbDiscussion.getModifiedDate());
+		mbDiscussionImpl.setClassNameId(mbDiscussion.getClassNameId());
+		mbDiscussionImpl.setClassPK(mbDiscussion.getClassPK());
+		mbDiscussionImpl.setThreadId(mbDiscussion.getThreadId());
+		mbDiscussionImpl.setLastPublishDate(mbDiscussion.getLastPublishDate());
+
+		return mbDiscussionImpl;
 	}
 
 	/**

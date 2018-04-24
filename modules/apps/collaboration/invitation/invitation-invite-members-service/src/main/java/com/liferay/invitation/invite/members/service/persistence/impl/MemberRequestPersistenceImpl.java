@@ -1905,6 +1905,8 @@ public class MemberRequestPersistenceImpl extends BasePersistenceImpl<MemberRequ
 
 	@Override
 	protected MemberRequest removeImpl(MemberRequest memberRequest) {
+		memberRequest = toUnwrappedModel(memberRequest);
+
 		Session session = null;
 
 		try {
@@ -1935,6 +1937,8 @@ public class MemberRequestPersistenceImpl extends BasePersistenceImpl<MemberRequ
 
 	@Override
 	public MemberRequest updateImpl(MemberRequest memberRequest) {
+		memberRequest = toUnwrappedModel(memberRequest);
+
 		boolean isNew = memberRequest.isNew();
 
 		MemberRequestModelImpl memberRequestModelImpl = (MemberRequestModelImpl)memberRequest;
@@ -2064,6 +2068,32 @@ public class MemberRequestPersistenceImpl extends BasePersistenceImpl<MemberRequ
 		memberRequest.resetOriginalValues();
 
 		return memberRequest;
+	}
+
+	protected MemberRequest toUnwrappedModel(MemberRequest memberRequest) {
+		if (memberRequest instanceof MemberRequestImpl) {
+			return memberRequest;
+		}
+
+		MemberRequestImpl memberRequestImpl = new MemberRequestImpl();
+
+		memberRequestImpl.setNew(memberRequest.isNew());
+		memberRequestImpl.setPrimaryKey(memberRequest.getPrimaryKey());
+
+		memberRequestImpl.setMemberRequestId(memberRequest.getMemberRequestId());
+		memberRequestImpl.setGroupId(memberRequest.getGroupId());
+		memberRequestImpl.setCompanyId(memberRequest.getCompanyId());
+		memberRequestImpl.setUserId(memberRequest.getUserId());
+		memberRequestImpl.setUserName(memberRequest.getUserName());
+		memberRequestImpl.setCreateDate(memberRequest.getCreateDate());
+		memberRequestImpl.setModifiedDate(memberRequest.getModifiedDate());
+		memberRequestImpl.setKey(memberRequest.getKey());
+		memberRequestImpl.setReceiverUserId(memberRequest.getReceiverUserId());
+		memberRequestImpl.setInvitedRoleId(memberRequest.getInvitedRoleId());
+		memberRequestImpl.setInvitedTeamId(memberRequest.getInvitedTeamId());
+		memberRequestImpl.setStatus(memberRequest.getStatus());
+
+		return memberRequestImpl;
 	}
 
 	/**

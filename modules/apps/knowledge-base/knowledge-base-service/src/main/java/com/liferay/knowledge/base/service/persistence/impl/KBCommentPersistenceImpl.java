@@ -5294,6 +5294,8 @@ public class KBCommentPersistenceImpl extends BasePersistenceImpl<KBComment>
 
 	@Override
 	protected KBComment removeImpl(KBComment kbComment) {
+		kbComment = toUnwrappedModel(kbComment);
+
 		Session session = null;
 
 		try {
@@ -5324,6 +5326,8 @@ public class KBCommentPersistenceImpl extends BasePersistenceImpl<KBComment>
 
 	@Override
 	public KBComment updateImpl(KBComment kbComment) {
+		kbComment = toUnwrappedModel(kbComment);
+
 		boolean isNew = kbComment.isNew();
 
 		KBCommentModelImpl kbCommentModelImpl = (KBCommentModelImpl)kbComment;
@@ -5632,6 +5636,34 @@ public class KBCommentPersistenceImpl extends BasePersistenceImpl<KBComment>
 		kbComment.resetOriginalValues();
 
 		return kbComment;
+	}
+
+	protected KBComment toUnwrappedModel(KBComment kbComment) {
+		if (kbComment instanceof KBCommentImpl) {
+			return kbComment;
+		}
+
+		KBCommentImpl kbCommentImpl = new KBCommentImpl();
+
+		kbCommentImpl.setNew(kbComment.isNew());
+		kbCommentImpl.setPrimaryKey(kbComment.getPrimaryKey());
+
+		kbCommentImpl.setUuid(kbComment.getUuid());
+		kbCommentImpl.setKbCommentId(kbComment.getKbCommentId());
+		kbCommentImpl.setGroupId(kbComment.getGroupId());
+		kbCommentImpl.setCompanyId(kbComment.getCompanyId());
+		kbCommentImpl.setUserId(kbComment.getUserId());
+		kbCommentImpl.setUserName(kbComment.getUserName());
+		kbCommentImpl.setCreateDate(kbComment.getCreateDate());
+		kbCommentImpl.setModifiedDate(kbComment.getModifiedDate());
+		kbCommentImpl.setClassNameId(kbComment.getClassNameId());
+		kbCommentImpl.setClassPK(kbComment.getClassPK());
+		kbCommentImpl.setContent(kbComment.getContent());
+		kbCommentImpl.setUserRating(kbComment.getUserRating());
+		kbCommentImpl.setLastPublishDate(kbComment.getLastPublishDate());
+		kbCommentImpl.setStatus(kbComment.getStatus());
+
+		return kbCommentImpl;
 	}
 
 	/**

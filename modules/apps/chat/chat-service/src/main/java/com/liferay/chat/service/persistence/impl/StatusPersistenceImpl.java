@@ -2029,6 +2029,8 @@ public class StatusPersistenceImpl extends BasePersistenceImpl<Status>
 
 	@Override
 	protected Status removeImpl(Status status) {
+		status = toUnwrappedModel(status);
+
 		Session session = null;
 
 		try {
@@ -2059,6 +2061,8 @@ public class StatusPersistenceImpl extends BasePersistenceImpl<Status>
 
 	@Override
 	public Status updateImpl(Status status) {
+		status = toUnwrappedModel(status);
+
 		boolean isNew = status.isNew();
 
 		StatusModelImpl statusModelImpl = (StatusModelImpl)status;
@@ -2181,6 +2185,28 @@ public class StatusPersistenceImpl extends BasePersistenceImpl<Status>
 		status.resetOriginalValues();
 
 		return status;
+	}
+
+	protected Status toUnwrappedModel(Status status) {
+		if (status instanceof StatusImpl) {
+			return status;
+		}
+
+		StatusImpl statusImpl = new StatusImpl();
+
+		statusImpl.setNew(status.isNew());
+		statusImpl.setPrimaryKey(status.getPrimaryKey());
+
+		statusImpl.setStatusId(status.getStatusId());
+		statusImpl.setUserId(status.getUserId());
+		statusImpl.setModifiedDate(status.getModifiedDate());
+		statusImpl.setOnline(status.isOnline());
+		statusImpl.setAwake(status.isAwake());
+		statusImpl.setActivePanelIds(status.getActivePanelIds());
+		statusImpl.setMessage(status.getMessage());
+		statusImpl.setPlaySound(status.isPlaySound());
+
+		return statusImpl;
 	}
 
 	/**

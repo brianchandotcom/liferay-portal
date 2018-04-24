@@ -1879,6 +1879,8 @@ public class BigDecimalEntryPersistenceImpl extends BasePersistenceImpl<BigDecim
 
 	@Override
 	protected BigDecimalEntry removeImpl(BigDecimalEntry bigDecimalEntry) {
+		bigDecimalEntry = toUnwrappedModel(bigDecimalEntry);
+
 		Session session = null;
 
 		try {
@@ -1909,6 +1911,8 @@ public class BigDecimalEntryPersistenceImpl extends BasePersistenceImpl<BigDecim
 
 	@Override
 	public BigDecimalEntry updateImpl(BigDecimalEntry bigDecimalEntry) {
+		bigDecimalEntry = toUnwrappedModel(bigDecimalEntry);
+
 		boolean isNew = bigDecimalEntry.isNew();
 
 		BigDecimalEntryModelImpl bigDecimalEntryModelImpl = (BigDecimalEntryModelImpl)bigDecimalEntry;
@@ -1984,6 +1988,22 @@ public class BigDecimalEntryPersistenceImpl extends BasePersistenceImpl<BigDecim
 		bigDecimalEntry.resetOriginalValues();
 
 		return bigDecimalEntry;
+	}
+
+	protected BigDecimalEntry toUnwrappedModel(BigDecimalEntry bigDecimalEntry) {
+		if (bigDecimalEntry instanceof BigDecimalEntryImpl) {
+			return bigDecimalEntry;
+		}
+
+		BigDecimalEntryImpl bigDecimalEntryImpl = new BigDecimalEntryImpl();
+
+		bigDecimalEntryImpl.setNew(bigDecimalEntry.isNew());
+		bigDecimalEntryImpl.setPrimaryKey(bigDecimalEntry.getPrimaryKey());
+
+		bigDecimalEntryImpl.setBigDecimalEntryId(bigDecimalEntry.getBigDecimalEntryId());
+		bigDecimalEntryImpl.setBigDecimalValue(bigDecimalEntry.getBigDecimalValue());
+
+		return bigDecimalEntryImpl;
 	}
 
 	/**

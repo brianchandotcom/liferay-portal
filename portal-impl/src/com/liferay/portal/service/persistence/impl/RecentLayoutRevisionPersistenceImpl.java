@@ -2091,6 +2091,8 @@ public class RecentLayoutRevisionPersistenceImpl extends BasePersistenceImpl<Rec
 	@Override
 	protected RecentLayoutRevision removeImpl(
 		RecentLayoutRevision recentLayoutRevision) {
+		recentLayoutRevision = toUnwrappedModel(recentLayoutRevision);
+
 		Session session = null;
 
 		try {
@@ -2122,6 +2124,8 @@ public class RecentLayoutRevisionPersistenceImpl extends BasePersistenceImpl<Rec
 	@Override
 	public RecentLayoutRevision updateImpl(
 		RecentLayoutRevision recentLayoutRevision) {
+		recentLayoutRevision = toUnwrappedModel(recentLayoutRevision);
+
 		boolean isNew = recentLayoutRevision.isNew();
 
 		RecentLayoutRevisionModelImpl recentLayoutRevisionModelImpl = (RecentLayoutRevisionModelImpl)recentLayoutRevision;
@@ -2248,6 +2252,29 @@ public class RecentLayoutRevisionPersistenceImpl extends BasePersistenceImpl<Rec
 		recentLayoutRevision.resetOriginalValues();
 
 		return recentLayoutRevision;
+	}
+
+	protected RecentLayoutRevision toUnwrappedModel(
+		RecentLayoutRevision recentLayoutRevision) {
+		if (recentLayoutRevision instanceof RecentLayoutRevisionImpl) {
+			return recentLayoutRevision;
+		}
+
+		RecentLayoutRevisionImpl recentLayoutRevisionImpl = new RecentLayoutRevisionImpl();
+
+		recentLayoutRevisionImpl.setNew(recentLayoutRevision.isNew());
+		recentLayoutRevisionImpl.setPrimaryKey(recentLayoutRevision.getPrimaryKey());
+
+		recentLayoutRevisionImpl.setMvccVersion(recentLayoutRevision.getMvccVersion());
+		recentLayoutRevisionImpl.setRecentLayoutRevisionId(recentLayoutRevision.getRecentLayoutRevisionId());
+		recentLayoutRevisionImpl.setGroupId(recentLayoutRevision.getGroupId());
+		recentLayoutRevisionImpl.setCompanyId(recentLayoutRevision.getCompanyId());
+		recentLayoutRevisionImpl.setUserId(recentLayoutRevision.getUserId());
+		recentLayoutRevisionImpl.setLayoutRevisionId(recentLayoutRevision.getLayoutRevisionId());
+		recentLayoutRevisionImpl.setLayoutSetBranchId(recentLayoutRevision.getLayoutSetBranchId());
+		recentLayoutRevisionImpl.setPlid(recentLayoutRevision.getPlid());
+
+		return recentLayoutRevisionImpl;
 	}
 
 	/**

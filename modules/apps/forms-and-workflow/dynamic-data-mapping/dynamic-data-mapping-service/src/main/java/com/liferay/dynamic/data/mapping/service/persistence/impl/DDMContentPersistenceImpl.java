@@ -2697,6 +2697,8 @@ public class DDMContentPersistenceImpl extends BasePersistenceImpl<DDMContent>
 
 	@Override
 	protected DDMContent removeImpl(DDMContent ddmContent) {
+		ddmContent = toUnwrappedModel(ddmContent);
+
 		Session session = null;
 
 		try {
@@ -2727,6 +2729,8 @@ public class DDMContentPersistenceImpl extends BasePersistenceImpl<DDMContent>
 
 	@Override
 	public DDMContent updateImpl(DDMContent ddmContent) {
+		ddmContent = toUnwrappedModel(ddmContent);
+
 		boolean isNew = ddmContent.isNew();
 
 		DDMContentModelImpl ddmContentModelImpl = (DDMContentModelImpl)ddmContent;
@@ -2902,6 +2906,31 @@ public class DDMContentPersistenceImpl extends BasePersistenceImpl<DDMContent>
 		ddmContent.resetOriginalValues();
 
 		return ddmContent;
+	}
+
+	protected DDMContent toUnwrappedModel(DDMContent ddmContent) {
+		if (ddmContent instanceof DDMContentImpl) {
+			return ddmContent;
+		}
+
+		DDMContentImpl ddmContentImpl = new DDMContentImpl();
+
+		ddmContentImpl.setNew(ddmContent.isNew());
+		ddmContentImpl.setPrimaryKey(ddmContent.getPrimaryKey());
+
+		ddmContentImpl.setUuid(ddmContent.getUuid());
+		ddmContentImpl.setContentId(ddmContent.getContentId());
+		ddmContentImpl.setGroupId(ddmContent.getGroupId());
+		ddmContentImpl.setCompanyId(ddmContent.getCompanyId());
+		ddmContentImpl.setUserId(ddmContent.getUserId());
+		ddmContentImpl.setUserName(ddmContent.getUserName());
+		ddmContentImpl.setCreateDate(ddmContent.getCreateDate());
+		ddmContentImpl.setModifiedDate(ddmContent.getModifiedDate());
+		ddmContentImpl.setName(ddmContent.getName());
+		ddmContentImpl.setDescription(ddmContent.getDescription());
+		ddmContentImpl.setData(ddmContent.getData());
+
+		return ddmContentImpl;
 	}
 
 	/**

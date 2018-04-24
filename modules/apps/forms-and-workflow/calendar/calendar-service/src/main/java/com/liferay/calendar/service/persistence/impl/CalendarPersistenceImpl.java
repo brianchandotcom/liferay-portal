@@ -3603,6 +3603,8 @@ public class CalendarPersistenceImpl extends BasePersistenceImpl<Calendar>
 
 	@Override
 	protected Calendar removeImpl(Calendar calendar) {
+		calendar = toUnwrappedModel(calendar);
+
 		Session session = null;
 
 		try {
@@ -3633,6 +3635,8 @@ public class CalendarPersistenceImpl extends BasePersistenceImpl<Calendar>
 
 	@Override
 	public Calendar updateImpl(Calendar calendar) {
+		calendar = toUnwrappedModel(calendar);
+
 		boolean isNew = calendar.isNew();
 
 		CalendarModelImpl calendarModelImpl = (CalendarModelImpl)calendar;
@@ -3823,6 +3827,37 @@ public class CalendarPersistenceImpl extends BasePersistenceImpl<Calendar>
 		calendar.resetOriginalValues();
 
 		return calendar;
+	}
+
+	protected Calendar toUnwrappedModel(Calendar calendar) {
+		if (calendar instanceof CalendarImpl) {
+			return calendar;
+		}
+
+		CalendarImpl calendarImpl = new CalendarImpl();
+
+		calendarImpl.setNew(calendar.isNew());
+		calendarImpl.setPrimaryKey(calendar.getPrimaryKey());
+
+		calendarImpl.setUuid(calendar.getUuid());
+		calendarImpl.setCalendarId(calendar.getCalendarId());
+		calendarImpl.setGroupId(calendar.getGroupId());
+		calendarImpl.setCompanyId(calendar.getCompanyId());
+		calendarImpl.setUserId(calendar.getUserId());
+		calendarImpl.setUserName(calendar.getUserName());
+		calendarImpl.setCreateDate(calendar.getCreateDate());
+		calendarImpl.setModifiedDate(calendar.getModifiedDate());
+		calendarImpl.setCalendarResourceId(calendar.getCalendarResourceId());
+		calendarImpl.setName(calendar.getName());
+		calendarImpl.setDescription(calendar.getDescription());
+		calendarImpl.setTimeZoneId(calendar.getTimeZoneId());
+		calendarImpl.setColor(calendar.getColor());
+		calendarImpl.setDefaultCalendar(calendar.isDefaultCalendar());
+		calendarImpl.setEnableComments(calendar.isEnableComments());
+		calendarImpl.setEnableRatings(calendar.isEnableRatings());
+		calendarImpl.setLastPublishDate(calendar.getLastPublishDate());
+
+		return calendarImpl;
 	}
 
 	/**

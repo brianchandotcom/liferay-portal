@@ -1631,6 +1631,8 @@ public class SyncDLFileVersionDiffPersistenceImpl extends BasePersistenceImpl<Sy
 	@Override
 	protected SyncDLFileVersionDiff removeImpl(
 		SyncDLFileVersionDiff syncDLFileVersionDiff) {
+		syncDLFileVersionDiff = toUnwrappedModel(syncDLFileVersionDiff);
+
 		Session session = null;
 
 		try {
@@ -1662,6 +1664,8 @@ public class SyncDLFileVersionDiffPersistenceImpl extends BasePersistenceImpl<Sy
 	@Override
 	public SyncDLFileVersionDiff updateImpl(
 		SyncDLFileVersionDiff syncDLFileVersionDiff) {
+		syncDLFileVersionDiff = toUnwrappedModel(syncDLFileVersionDiff);
+
 		boolean isNew = syncDLFileVersionDiff.isNew();
 
 		SyncDLFileVersionDiffModelImpl syncDLFileVersionDiffModelImpl = (SyncDLFileVersionDiffModelImpl)syncDLFileVersionDiff;
@@ -1738,6 +1742,28 @@ public class SyncDLFileVersionDiffPersistenceImpl extends BasePersistenceImpl<Sy
 		syncDLFileVersionDiff.resetOriginalValues();
 
 		return syncDLFileVersionDiff;
+	}
+
+	protected SyncDLFileVersionDiff toUnwrappedModel(
+		SyncDLFileVersionDiff syncDLFileVersionDiff) {
+		if (syncDLFileVersionDiff instanceof SyncDLFileVersionDiffImpl) {
+			return syncDLFileVersionDiff;
+		}
+
+		SyncDLFileVersionDiffImpl syncDLFileVersionDiffImpl = new SyncDLFileVersionDiffImpl();
+
+		syncDLFileVersionDiffImpl.setNew(syncDLFileVersionDiff.isNew());
+		syncDLFileVersionDiffImpl.setPrimaryKey(syncDLFileVersionDiff.getPrimaryKey());
+
+		syncDLFileVersionDiffImpl.setSyncDLFileVersionDiffId(syncDLFileVersionDiff.getSyncDLFileVersionDiffId());
+		syncDLFileVersionDiffImpl.setFileEntryId(syncDLFileVersionDiff.getFileEntryId());
+		syncDLFileVersionDiffImpl.setSourceFileVersionId(syncDLFileVersionDiff.getSourceFileVersionId());
+		syncDLFileVersionDiffImpl.setTargetFileVersionId(syncDLFileVersionDiff.getTargetFileVersionId());
+		syncDLFileVersionDiffImpl.setDataFileEntryId(syncDLFileVersionDiff.getDataFileEntryId());
+		syncDLFileVersionDiffImpl.setSize(syncDLFileVersionDiff.getSize());
+		syncDLFileVersionDiffImpl.setExpirationDate(syncDLFileVersionDiff.getExpirationDate());
+
+		return syncDLFileVersionDiffImpl;
 	}
 
 	/**

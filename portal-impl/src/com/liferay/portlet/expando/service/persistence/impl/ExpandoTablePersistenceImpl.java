@@ -1110,6 +1110,8 @@ public class ExpandoTablePersistenceImpl extends BasePersistenceImpl<ExpandoTabl
 
 	@Override
 	protected ExpandoTable removeImpl(ExpandoTable expandoTable) {
+		expandoTable = toUnwrappedModel(expandoTable);
+
 		Session session = null;
 
 		try {
@@ -1140,6 +1142,8 @@ public class ExpandoTablePersistenceImpl extends BasePersistenceImpl<ExpandoTabl
 
 	@Override
 	public ExpandoTable updateImpl(ExpandoTable expandoTable) {
+		expandoTable = toUnwrappedModel(expandoTable);
+
 		boolean isNew = expandoTable.isNew();
 
 		ExpandoTableModelImpl expandoTableModelImpl = (ExpandoTableModelImpl)expandoTable;
@@ -1219,6 +1223,24 @@ public class ExpandoTablePersistenceImpl extends BasePersistenceImpl<ExpandoTabl
 		expandoTable.resetOriginalValues();
 
 		return expandoTable;
+	}
+
+	protected ExpandoTable toUnwrappedModel(ExpandoTable expandoTable) {
+		if (expandoTable instanceof ExpandoTableImpl) {
+			return expandoTable;
+		}
+
+		ExpandoTableImpl expandoTableImpl = new ExpandoTableImpl();
+
+		expandoTableImpl.setNew(expandoTable.isNew());
+		expandoTableImpl.setPrimaryKey(expandoTable.getPrimaryKey());
+
+		expandoTableImpl.setTableId(expandoTable.getTableId());
+		expandoTableImpl.setCompanyId(expandoTable.getCompanyId());
+		expandoTableImpl.setClassNameId(expandoTable.getClassNameId());
+		expandoTableImpl.setName(expandoTable.getName());
+
+		return expandoTableImpl;
 	}
 
 	/**

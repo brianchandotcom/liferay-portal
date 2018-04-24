@@ -3163,6 +3163,8 @@ public class BlogsStatsUserPersistenceImpl extends BasePersistenceImpl<BlogsStat
 
 	@Override
 	protected BlogsStatsUser removeImpl(BlogsStatsUser blogsStatsUser) {
+		blogsStatsUser = toUnwrappedModel(blogsStatsUser);
+
 		Session session = null;
 
 		try {
@@ -3193,6 +3195,8 @@ public class BlogsStatsUserPersistenceImpl extends BasePersistenceImpl<BlogsStat
 
 	@Override
 	public BlogsStatsUser updateImpl(BlogsStatsUser blogsStatsUser) {
+		blogsStatsUser = toUnwrappedModel(blogsStatsUser);
+
 		boolean isNew = blogsStatsUser.isNew();
 
 		BlogsStatsUserModelImpl blogsStatsUserModelImpl = (BlogsStatsUserModelImpl)blogsStatsUser;
@@ -3318,6 +3322,29 @@ public class BlogsStatsUserPersistenceImpl extends BasePersistenceImpl<BlogsStat
 		blogsStatsUser.resetOriginalValues();
 
 		return blogsStatsUser;
+	}
+
+	protected BlogsStatsUser toUnwrappedModel(BlogsStatsUser blogsStatsUser) {
+		if (blogsStatsUser instanceof BlogsStatsUserImpl) {
+			return blogsStatsUser;
+		}
+
+		BlogsStatsUserImpl blogsStatsUserImpl = new BlogsStatsUserImpl();
+
+		blogsStatsUserImpl.setNew(blogsStatsUser.isNew());
+		blogsStatsUserImpl.setPrimaryKey(blogsStatsUser.getPrimaryKey());
+
+		blogsStatsUserImpl.setStatsUserId(blogsStatsUser.getStatsUserId());
+		blogsStatsUserImpl.setGroupId(blogsStatsUser.getGroupId());
+		blogsStatsUserImpl.setCompanyId(blogsStatsUser.getCompanyId());
+		blogsStatsUserImpl.setUserId(blogsStatsUser.getUserId());
+		blogsStatsUserImpl.setEntryCount(blogsStatsUser.getEntryCount());
+		blogsStatsUserImpl.setLastPostDate(blogsStatsUser.getLastPostDate());
+		blogsStatsUserImpl.setRatingsTotalEntries(blogsStatsUser.getRatingsTotalEntries());
+		blogsStatsUserImpl.setRatingsTotalScore(blogsStatsUser.getRatingsTotalScore());
+		blogsStatsUserImpl.setRatingsAverageScore(blogsStatsUser.getRatingsAverageScore());
+
+		return blogsStatsUserImpl;
 	}
 
 	/**

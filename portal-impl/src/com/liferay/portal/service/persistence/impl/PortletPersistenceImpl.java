@@ -1054,6 +1054,8 @@ public class PortletPersistenceImpl extends BasePersistenceImpl<Portlet>
 
 	@Override
 	protected Portlet removeImpl(Portlet portlet) {
+		portlet = toUnwrappedModel(portlet);
+
 		Session session = null;
 
 		try {
@@ -1084,6 +1086,8 @@ public class PortletPersistenceImpl extends BasePersistenceImpl<Portlet>
 
 	@Override
 	public Portlet updateImpl(Portlet portlet) {
+		portlet = toUnwrappedModel(portlet);
+
 		boolean isNew = portlet.isNew();
 
 		PortletModelImpl portletModelImpl = (PortletModelImpl)portlet;
@@ -1155,6 +1159,26 @@ public class PortletPersistenceImpl extends BasePersistenceImpl<Portlet>
 		portlet.resetOriginalValues();
 
 		return portlet;
+	}
+
+	protected Portlet toUnwrappedModel(Portlet portlet) {
+		if (portlet instanceof PortletImpl) {
+			return portlet;
+		}
+
+		PortletImpl portletImpl = new PortletImpl();
+
+		portletImpl.setNew(portlet.isNew());
+		portletImpl.setPrimaryKey(portlet.getPrimaryKey());
+
+		portletImpl.setMvccVersion(portlet.getMvccVersion());
+		portletImpl.setId(portlet.getId());
+		portletImpl.setCompanyId(portlet.getCompanyId());
+		portletImpl.setPortletId(portlet.getPortletId());
+		portletImpl.setRoles(portlet.getRoles());
+		portletImpl.setActive(portlet.isActive());
+
+		return portletImpl;
 	}
 
 	/**

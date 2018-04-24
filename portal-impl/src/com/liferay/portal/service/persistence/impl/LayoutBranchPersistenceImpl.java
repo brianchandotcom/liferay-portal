@@ -2207,6 +2207,8 @@ public class LayoutBranchPersistenceImpl extends BasePersistenceImpl<LayoutBranc
 
 	@Override
 	protected LayoutBranch removeImpl(LayoutBranch layoutBranch) {
+		layoutBranch = toUnwrappedModel(layoutBranch);
+
 		Session session = null;
 
 		try {
@@ -2237,6 +2239,8 @@ public class LayoutBranchPersistenceImpl extends BasePersistenceImpl<LayoutBranc
 
 	@Override
 	public LayoutBranch updateImpl(LayoutBranch layoutBranch) {
+		layoutBranch = toUnwrappedModel(layoutBranch);
+
 		boolean isNew = layoutBranch.isNew();
 
 		LayoutBranchModelImpl layoutBranchModelImpl = (LayoutBranchModelImpl)layoutBranch;
@@ -2377,6 +2381,31 @@ public class LayoutBranchPersistenceImpl extends BasePersistenceImpl<LayoutBranc
 		layoutBranch.resetOriginalValues();
 
 		return layoutBranch;
+	}
+
+	protected LayoutBranch toUnwrappedModel(LayoutBranch layoutBranch) {
+		if (layoutBranch instanceof LayoutBranchImpl) {
+			return layoutBranch;
+		}
+
+		LayoutBranchImpl layoutBranchImpl = new LayoutBranchImpl();
+
+		layoutBranchImpl.setNew(layoutBranch.isNew());
+		layoutBranchImpl.setPrimaryKey(layoutBranch.getPrimaryKey());
+
+		layoutBranchImpl.setMvccVersion(layoutBranch.getMvccVersion());
+		layoutBranchImpl.setLayoutBranchId(layoutBranch.getLayoutBranchId());
+		layoutBranchImpl.setGroupId(layoutBranch.getGroupId());
+		layoutBranchImpl.setCompanyId(layoutBranch.getCompanyId());
+		layoutBranchImpl.setUserId(layoutBranch.getUserId());
+		layoutBranchImpl.setUserName(layoutBranch.getUserName());
+		layoutBranchImpl.setLayoutSetBranchId(layoutBranch.getLayoutSetBranchId());
+		layoutBranchImpl.setPlid(layoutBranch.getPlid());
+		layoutBranchImpl.setName(layoutBranch.getName());
+		layoutBranchImpl.setDescription(layoutBranch.getDescription());
+		layoutBranchImpl.setMaster(layoutBranch.isMaster());
+
+		return layoutBranchImpl;
 	}
 
 	/**

@@ -1045,6 +1045,8 @@ public class FolderPersistenceImpl extends BasePersistenceImpl<Folder>
 
 	@Override
 	protected Folder removeImpl(Folder folder) {
+		folder = toUnwrappedModel(folder);
+
 		Session session = null;
 
 		try {
@@ -1075,6 +1077,8 @@ public class FolderPersistenceImpl extends BasePersistenceImpl<Folder>
 
 	@Override
 	public Folder updateImpl(Folder folder) {
+		folder = toUnwrappedModel(folder);
+
 		boolean isNew = folder.isNew();
 
 		FolderModelImpl folderModelImpl = (FolderModelImpl)folder;
@@ -1168,6 +1172,30 @@ public class FolderPersistenceImpl extends BasePersistenceImpl<Folder>
 		folder.resetOriginalValues();
 
 		return folder;
+	}
+
+	protected Folder toUnwrappedModel(Folder folder) {
+		if (folder instanceof FolderImpl) {
+			return folder;
+		}
+
+		FolderImpl folderImpl = new FolderImpl();
+
+		folderImpl.setNew(folder.isNew());
+		folderImpl.setPrimaryKey(folder.getPrimaryKey());
+
+		folderImpl.setFolderId(folder.getFolderId());
+		folderImpl.setCompanyId(folder.getCompanyId());
+		folderImpl.setUserId(folder.getUserId());
+		folderImpl.setUserName(folder.getUserName());
+		folderImpl.setCreateDate(folder.getCreateDate());
+		folderImpl.setModifiedDate(folder.getModifiedDate());
+		folderImpl.setAccountId(folder.getAccountId());
+		folderImpl.setFullName(folder.getFullName());
+		folderImpl.setDisplayName(folder.getDisplayName());
+		folderImpl.setRemoteMessageCount(folder.getRemoteMessageCount());
+
+		return folderImpl;
 	}
 
 	/**

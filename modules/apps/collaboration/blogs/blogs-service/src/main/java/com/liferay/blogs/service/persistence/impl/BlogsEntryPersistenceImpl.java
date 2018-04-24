@@ -21078,6 +21078,8 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 
 	@Override
 	protected BlogsEntry removeImpl(BlogsEntry blogsEntry) {
+		blogsEntry = toUnwrappedModel(blogsEntry);
+
 		Session session = null;
 
 		try {
@@ -21108,6 +21110,8 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 
 	@Override
 	public BlogsEntry updateImpl(BlogsEntry blogsEntry) {
+		blogsEntry = toUnwrappedModel(blogsEntry);
+
 		boolean isNew = blogsEntry.isNew();
 
 		BlogsEntryModelImpl blogsEntryModelImpl = (BlogsEntryModelImpl)blogsEntry;
@@ -21506,6 +21510,49 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 		blogsEntry.resetOriginalValues();
 
 		return blogsEntry;
+	}
+
+	protected BlogsEntry toUnwrappedModel(BlogsEntry blogsEntry) {
+		if (blogsEntry instanceof BlogsEntryImpl) {
+			return blogsEntry;
+		}
+
+		BlogsEntryImpl blogsEntryImpl = new BlogsEntryImpl();
+
+		blogsEntryImpl.setNew(blogsEntry.isNew());
+		blogsEntryImpl.setPrimaryKey(blogsEntry.getPrimaryKey());
+
+		blogsEntryImpl.setUuid(blogsEntry.getUuid());
+		blogsEntryImpl.setEntryId(blogsEntry.getEntryId());
+		blogsEntryImpl.setGroupId(blogsEntry.getGroupId());
+		blogsEntryImpl.setCompanyId(blogsEntry.getCompanyId());
+		blogsEntryImpl.setUserId(blogsEntry.getUserId());
+		blogsEntryImpl.setUserName(blogsEntry.getUserName());
+		blogsEntryImpl.setCreateDate(blogsEntry.getCreateDate());
+		blogsEntryImpl.setModifiedDate(blogsEntry.getModifiedDate());
+		blogsEntryImpl.setTitle(blogsEntry.getTitle());
+		blogsEntryImpl.setSubtitle(blogsEntry.getSubtitle());
+		blogsEntryImpl.setUrlTitle(blogsEntry.getUrlTitle());
+		blogsEntryImpl.setDescription(blogsEntry.getDescription());
+		blogsEntryImpl.setContent(blogsEntry.getContent());
+		blogsEntryImpl.setDisplayDate(blogsEntry.getDisplayDate());
+		blogsEntryImpl.setAllowPingbacks(blogsEntry.isAllowPingbacks());
+		blogsEntryImpl.setAllowTrackbacks(blogsEntry.isAllowTrackbacks());
+		blogsEntryImpl.setTrackbacks(blogsEntry.getTrackbacks());
+		blogsEntryImpl.setCoverImageCaption(blogsEntry.getCoverImageCaption());
+		blogsEntryImpl.setCoverImageFileEntryId(blogsEntry.getCoverImageFileEntryId());
+		blogsEntryImpl.setCoverImageURL(blogsEntry.getCoverImageURL());
+		blogsEntryImpl.setSmallImage(blogsEntry.isSmallImage());
+		blogsEntryImpl.setSmallImageFileEntryId(blogsEntry.getSmallImageFileEntryId());
+		blogsEntryImpl.setSmallImageId(blogsEntry.getSmallImageId());
+		blogsEntryImpl.setSmallImageURL(blogsEntry.getSmallImageURL());
+		blogsEntryImpl.setLastPublishDate(blogsEntry.getLastPublishDate());
+		blogsEntryImpl.setStatus(blogsEntry.getStatus());
+		blogsEntryImpl.setStatusByUserId(blogsEntry.getStatusByUserId());
+		blogsEntryImpl.setStatusByUserName(blogsEntry.getStatusByUserName());
+		blogsEntryImpl.setStatusDate(blogsEntry.getStatusDate());
+
+		return blogsEntryImpl;
 	}
 
 	/**

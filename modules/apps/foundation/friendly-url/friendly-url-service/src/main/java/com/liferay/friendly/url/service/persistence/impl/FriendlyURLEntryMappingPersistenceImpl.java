@@ -516,6 +516,8 @@ public class FriendlyURLEntryMappingPersistenceImpl extends BasePersistenceImpl<
 	@Override
 	protected FriendlyURLEntryMapping removeImpl(
 		FriendlyURLEntryMapping friendlyURLEntryMapping) {
+		friendlyURLEntryMapping = toUnwrappedModel(friendlyURLEntryMapping);
+
 		Session session = null;
 
 		try {
@@ -547,6 +549,8 @@ public class FriendlyURLEntryMappingPersistenceImpl extends BasePersistenceImpl<
 	@Override
 	public FriendlyURLEntryMapping updateImpl(
 		FriendlyURLEntryMapping friendlyURLEntryMapping) {
+		friendlyURLEntryMapping = toUnwrappedModel(friendlyURLEntryMapping);
+
 		boolean isNew = friendlyURLEntryMapping.isNew();
 
 		FriendlyURLEntryMappingModelImpl friendlyURLEntryMappingModelImpl = (FriendlyURLEntryMappingModelImpl)friendlyURLEntryMapping;
@@ -595,6 +599,26 @@ public class FriendlyURLEntryMappingPersistenceImpl extends BasePersistenceImpl<
 		friendlyURLEntryMapping.resetOriginalValues();
 
 		return friendlyURLEntryMapping;
+	}
+
+	protected FriendlyURLEntryMapping toUnwrappedModel(
+		FriendlyURLEntryMapping friendlyURLEntryMapping) {
+		if (friendlyURLEntryMapping instanceof FriendlyURLEntryMappingImpl) {
+			return friendlyURLEntryMapping;
+		}
+
+		FriendlyURLEntryMappingImpl friendlyURLEntryMappingImpl = new FriendlyURLEntryMappingImpl();
+
+		friendlyURLEntryMappingImpl.setNew(friendlyURLEntryMapping.isNew());
+		friendlyURLEntryMappingImpl.setPrimaryKey(friendlyURLEntryMapping.getPrimaryKey());
+
+		friendlyURLEntryMappingImpl.setMvccVersion(friendlyURLEntryMapping.getMvccVersion());
+		friendlyURLEntryMappingImpl.setFriendlyURLEntryMappingId(friendlyURLEntryMapping.getFriendlyURLEntryMappingId());
+		friendlyURLEntryMappingImpl.setClassNameId(friendlyURLEntryMapping.getClassNameId());
+		friendlyURLEntryMappingImpl.setClassPK(friendlyURLEntryMapping.getClassPK());
+		friendlyURLEntryMappingImpl.setFriendlyURLEntryId(friendlyURLEntryMapping.getFriendlyURLEntryId());
+
+		return friendlyURLEntryMappingImpl;
 	}
 
 	/**

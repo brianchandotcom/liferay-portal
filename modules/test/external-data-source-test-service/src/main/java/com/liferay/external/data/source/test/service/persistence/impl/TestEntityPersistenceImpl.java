@@ -251,6 +251,8 @@ public class TestEntityPersistenceImpl extends BasePersistenceImpl<TestEntity>
 
 	@Override
 	protected TestEntity removeImpl(TestEntity testEntity) {
+		testEntity = toUnwrappedModel(testEntity);
+
 		Session session = null;
 
 		try {
@@ -281,6 +283,8 @@ public class TestEntityPersistenceImpl extends BasePersistenceImpl<TestEntity>
 
 	@Override
 	public TestEntity updateImpl(TestEntity testEntity) {
+		testEntity = toUnwrappedModel(testEntity);
+
 		boolean isNew = testEntity.isNew();
 
 		Session session = null;
@@ -318,6 +322,22 @@ public class TestEntityPersistenceImpl extends BasePersistenceImpl<TestEntity>
 		testEntity.resetOriginalValues();
 
 		return testEntity;
+	}
+
+	protected TestEntity toUnwrappedModel(TestEntity testEntity) {
+		if (testEntity instanceof TestEntityImpl) {
+			return testEntity;
+		}
+
+		TestEntityImpl testEntityImpl = new TestEntityImpl();
+
+		testEntityImpl.setNew(testEntity.isNew());
+		testEntityImpl.setPrimaryKey(testEntity.getPrimaryKey());
+
+		testEntityImpl.setId(testEntity.getId());
+		testEntityImpl.setData(testEntity.getData());
+
+		return testEntityImpl;
 	}
 
 	/**

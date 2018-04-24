@@ -10422,6 +10422,8 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 
 	@Override
 	protected Group removeImpl(Group group) {
+		group = toUnwrappedModel(group);
+
 		groupToOrganizationTableMapper.deleteLeftPrimaryKeyTableMappings(group.getPrimaryKey());
 
 		groupToRoleTableMapper.deleteLeftPrimaryKeyTableMappings(group.getPrimaryKey());
@@ -10460,6 +10462,8 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 
 	@Override
 	public Group updateImpl(Group group) {
+		group = toUnwrappedModel(group);
+
 		boolean isNew = group.isNew();
 
 		GroupModelImpl groupModelImpl = (GroupModelImpl)group;
@@ -10860,6 +10864,42 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 		group.resetOriginalValues();
 
 		return group;
+	}
+
+	protected Group toUnwrappedModel(Group group) {
+		if (group instanceof GroupImpl) {
+			return group;
+		}
+
+		GroupImpl groupImpl = new GroupImpl();
+
+		groupImpl.setNew(group.isNew());
+		groupImpl.setPrimaryKey(group.getPrimaryKey());
+
+		groupImpl.setMvccVersion(group.getMvccVersion());
+		groupImpl.setUuid(group.getUuid());
+		groupImpl.setGroupId(group.getGroupId());
+		groupImpl.setCompanyId(group.getCompanyId());
+		groupImpl.setCreatorUserId(group.getCreatorUserId());
+		groupImpl.setClassNameId(group.getClassNameId());
+		groupImpl.setClassPK(group.getClassPK());
+		groupImpl.setParentGroupId(group.getParentGroupId());
+		groupImpl.setLiveGroupId(group.getLiveGroupId());
+		groupImpl.setTreePath(group.getTreePath());
+		groupImpl.setGroupKey(group.getGroupKey());
+		groupImpl.setName(group.getName());
+		groupImpl.setDescription(group.getDescription());
+		groupImpl.setType(group.getType());
+		groupImpl.setTypeSettings(group.getTypeSettings());
+		groupImpl.setManualMembership(group.isManualMembership());
+		groupImpl.setMembershipRestriction(group.getMembershipRestriction());
+		groupImpl.setFriendlyURL(group.getFriendlyURL());
+		groupImpl.setSite(group.isSite());
+		groupImpl.setRemoteStagingGroupCount(group.getRemoteStagingGroupCount());
+		groupImpl.setInheritContent(group.isInheritContent());
+		groupImpl.setActive(group.isActive());
+
+		return groupImpl;
 	}
 
 	/**

@@ -4486,6 +4486,8 @@ public class FragmentEntryPersistenceImpl extends BasePersistenceImpl<FragmentEn
 
 	@Override
 	protected FragmentEntry removeImpl(FragmentEntry fragmentEntry) {
+		fragmentEntry = toUnwrappedModel(fragmentEntry);
+
 		Session session = null;
 
 		try {
@@ -4516,6 +4518,8 @@ public class FragmentEntryPersistenceImpl extends BasePersistenceImpl<FragmentEn
 
 	@Override
 	public FragmentEntry updateImpl(FragmentEntry fragmentEntry) {
+		fragmentEntry = toUnwrappedModel(fragmentEntry);
+
 		boolean isNew = fragmentEntry.isNew();
 
 		FragmentEntryModelImpl fragmentEntryModelImpl = (FragmentEntryModelImpl)fragmentEntry;
@@ -4699,6 +4703,38 @@ public class FragmentEntryPersistenceImpl extends BasePersistenceImpl<FragmentEn
 		fragmentEntry.resetOriginalValues();
 
 		return fragmentEntry;
+	}
+
+	protected FragmentEntry toUnwrappedModel(FragmentEntry fragmentEntry) {
+		if (fragmentEntry instanceof FragmentEntryImpl) {
+			return fragmentEntry;
+		}
+
+		FragmentEntryImpl fragmentEntryImpl = new FragmentEntryImpl();
+
+		fragmentEntryImpl.setNew(fragmentEntry.isNew());
+		fragmentEntryImpl.setPrimaryKey(fragmentEntry.getPrimaryKey());
+
+		fragmentEntryImpl.setFragmentEntryId(fragmentEntry.getFragmentEntryId());
+		fragmentEntryImpl.setGroupId(fragmentEntry.getGroupId());
+		fragmentEntryImpl.setCompanyId(fragmentEntry.getCompanyId());
+		fragmentEntryImpl.setUserId(fragmentEntry.getUserId());
+		fragmentEntryImpl.setUserName(fragmentEntry.getUserName());
+		fragmentEntryImpl.setCreateDate(fragmentEntry.getCreateDate());
+		fragmentEntryImpl.setModifiedDate(fragmentEntry.getModifiedDate());
+		fragmentEntryImpl.setFragmentCollectionId(fragmentEntry.getFragmentCollectionId());
+		fragmentEntryImpl.setFragmentEntryKey(fragmentEntry.getFragmentEntryKey());
+		fragmentEntryImpl.setName(fragmentEntry.getName());
+		fragmentEntryImpl.setCss(fragmentEntry.getCss());
+		fragmentEntryImpl.setHtml(fragmentEntry.getHtml());
+		fragmentEntryImpl.setJs(fragmentEntry.getJs());
+		fragmentEntryImpl.setHtmlPreviewEntryId(fragmentEntry.getHtmlPreviewEntryId());
+		fragmentEntryImpl.setStatus(fragmentEntry.getStatus());
+		fragmentEntryImpl.setStatusByUserId(fragmentEntry.getStatusByUserId());
+		fragmentEntryImpl.setStatusByUserName(fragmentEntry.getStatusByUserName());
+		fragmentEntryImpl.setStatusDate(fragmentEntry.getStatusDate());
+
+		return fragmentEntryImpl;
 	}
 
 	/**

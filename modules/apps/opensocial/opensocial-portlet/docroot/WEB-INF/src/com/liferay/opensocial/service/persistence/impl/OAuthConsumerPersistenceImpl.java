@@ -1139,6 +1139,8 @@ public class OAuthConsumerPersistenceImpl extends BasePersistenceImpl<OAuthConsu
 
 	@Override
 	protected OAuthConsumer removeImpl(OAuthConsumer oAuthConsumer) {
+		oAuthConsumer = toUnwrappedModel(oAuthConsumer);
+
 		Session session = null;
 
 		try {
@@ -1169,6 +1171,8 @@ public class OAuthConsumerPersistenceImpl extends BasePersistenceImpl<OAuthConsu
 
 	@Override
 	public OAuthConsumer updateImpl(OAuthConsumer oAuthConsumer) {
+		oAuthConsumer = toUnwrappedModel(oAuthConsumer);
+
 		boolean isNew = oAuthConsumer.isNew();
 
 		OAuthConsumerModelImpl oAuthConsumerModelImpl = (OAuthConsumerModelImpl)oAuthConsumer;
@@ -1264,6 +1268,29 @@ public class OAuthConsumerPersistenceImpl extends BasePersistenceImpl<OAuthConsu
 		oAuthConsumer.resetOriginalValues();
 
 		return oAuthConsumer;
+	}
+
+	protected OAuthConsumer toUnwrappedModel(OAuthConsumer oAuthConsumer) {
+		if (oAuthConsumer instanceof OAuthConsumerImpl) {
+			return oAuthConsumer;
+		}
+
+		OAuthConsumerImpl oAuthConsumerImpl = new OAuthConsumerImpl();
+
+		oAuthConsumerImpl.setNew(oAuthConsumer.isNew());
+		oAuthConsumerImpl.setPrimaryKey(oAuthConsumer.getPrimaryKey());
+
+		oAuthConsumerImpl.setOAuthConsumerId(oAuthConsumer.getOAuthConsumerId());
+		oAuthConsumerImpl.setCompanyId(oAuthConsumer.getCompanyId());
+		oAuthConsumerImpl.setCreateDate(oAuthConsumer.getCreateDate());
+		oAuthConsumerImpl.setModifiedDate(oAuthConsumer.getModifiedDate());
+		oAuthConsumerImpl.setGadgetKey(oAuthConsumer.getGadgetKey());
+		oAuthConsumerImpl.setServiceName(oAuthConsumer.getServiceName());
+		oAuthConsumerImpl.setConsumerKey(oAuthConsumer.getConsumerKey());
+		oAuthConsumerImpl.setConsumerSecret(oAuthConsumer.getConsumerSecret());
+		oAuthConsumerImpl.setKeyType(oAuthConsumer.getKeyType());
+
+		return oAuthConsumerImpl;
 	}
 
 	/**

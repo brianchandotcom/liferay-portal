@@ -31800,6 +31800,8 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 
 	@Override
 	protected JournalArticle removeImpl(JournalArticle journalArticle) {
+		journalArticle = toUnwrappedModel(journalArticle);
+
 		Session session = null;
 
 		try {
@@ -31830,6 +31832,8 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 
 	@Override
 	public JournalArticle updateImpl(JournalArticle journalArticle) {
+		journalArticle = toUnwrappedModel(journalArticle);
+
 		boolean isNew = journalArticle.isNew();
 
 		JournalArticleModelImpl journalArticleModelImpl = (JournalArticleModelImpl)journalArticle;
@@ -32817,6 +32821,53 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 		journalArticle.resetOriginalValues();
 
 		return journalArticle;
+	}
+
+	protected JournalArticle toUnwrappedModel(JournalArticle journalArticle) {
+		if (journalArticle instanceof JournalArticleImpl) {
+			return journalArticle;
+		}
+
+		JournalArticleImpl journalArticleImpl = new JournalArticleImpl();
+
+		journalArticleImpl.setNew(journalArticle.isNew());
+		journalArticleImpl.setPrimaryKey(journalArticle.getPrimaryKey());
+
+		journalArticleImpl.setUuid(journalArticle.getUuid());
+		journalArticleImpl.setId(journalArticle.getId());
+		journalArticleImpl.setResourcePrimKey(journalArticle.getResourcePrimKey());
+		journalArticleImpl.setGroupId(journalArticle.getGroupId());
+		journalArticleImpl.setCompanyId(journalArticle.getCompanyId());
+		journalArticleImpl.setUserId(journalArticle.getUserId());
+		journalArticleImpl.setUserName(journalArticle.getUserName());
+		journalArticleImpl.setCreateDate(journalArticle.getCreateDate());
+		journalArticleImpl.setModifiedDate(journalArticle.getModifiedDate());
+		journalArticleImpl.setFolderId(journalArticle.getFolderId());
+		journalArticleImpl.setClassNameId(journalArticle.getClassNameId());
+		journalArticleImpl.setClassPK(journalArticle.getClassPK());
+		journalArticleImpl.setTreePath(journalArticle.getTreePath());
+		journalArticleImpl.setArticleId(journalArticle.getArticleId());
+		journalArticleImpl.setVersion(journalArticle.getVersion());
+		journalArticleImpl.setUrlTitle(journalArticle.getUrlTitle());
+		journalArticleImpl.setContent(journalArticle.getContent());
+		journalArticleImpl.setDDMStructureKey(journalArticle.getDDMStructureKey());
+		journalArticleImpl.setDDMTemplateKey(journalArticle.getDDMTemplateKey());
+		journalArticleImpl.setDefaultLanguageId(journalArticle.getDefaultLanguageId());
+		journalArticleImpl.setLayoutUuid(journalArticle.getLayoutUuid());
+		journalArticleImpl.setDisplayDate(journalArticle.getDisplayDate());
+		journalArticleImpl.setExpirationDate(journalArticle.getExpirationDate());
+		journalArticleImpl.setReviewDate(journalArticle.getReviewDate());
+		journalArticleImpl.setIndexable(journalArticle.isIndexable());
+		journalArticleImpl.setSmallImage(journalArticle.isSmallImage());
+		journalArticleImpl.setSmallImageId(journalArticle.getSmallImageId());
+		journalArticleImpl.setSmallImageURL(journalArticle.getSmallImageURL());
+		journalArticleImpl.setLastPublishDate(journalArticle.getLastPublishDate());
+		journalArticleImpl.setStatus(journalArticle.getStatus());
+		journalArticleImpl.setStatusByUserId(journalArticle.getStatusByUserId());
+		journalArticleImpl.setStatusByUserName(journalArticle.getStatusByUserName());
+		journalArticleImpl.setStatusDate(journalArticle.getStatusDate());
+
+		return journalArticleImpl;
 	}
 
 	/**

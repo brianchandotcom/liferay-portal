@@ -10879,6 +10879,8 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 
 	@Override
 	protected DDMStructure removeImpl(DDMStructure ddmStructure) {
+		ddmStructure = toUnwrappedModel(ddmStructure);
+
 		Session session = null;
 
 		try {
@@ -10909,6 +10911,8 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 
 	@Override
 	public DDMStructure updateImpl(DDMStructure ddmStructure) {
+		ddmStructure = toUnwrappedModel(ddmStructure);
+
 		boolean isNew = ddmStructure.isNew();
 
 		DDMStructureModelImpl ddmStructureModelImpl = (DDMStructureModelImpl)ddmStructure;
@@ -11293,6 +11297,40 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 		ddmStructure.resetOriginalValues();
 
 		return ddmStructure;
+	}
+
+	protected DDMStructure toUnwrappedModel(DDMStructure ddmStructure) {
+		if (ddmStructure instanceof DDMStructureImpl) {
+			return ddmStructure;
+		}
+
+		DDMStructureImpl ddmStructureImpl = new DDMStructureImpl();
+
+		ddmStructureImpl.setNew(ddmStructure.isNew());
+		ddmStructureImpl.setPrimaryKey(ddmStructure.getPrimaryKey());
+
+		ddmStructureImpl.setUuid(ddmStructure.getUuid());
+		ddmStructureImpl.setStructureId(ddmStructure.getStructureId());
+		ddmStructureImpl.setGroupId(ddmStructure.getGroupId());
+		ddmStructureImpl.setCompanyId(ddmStructure.getCompanyId());
+		ddmStructureImpl.setUserId(ddmStructure.getUserId());
+		ddmStructureImpl.setUserName(ddmStructure.getUserName());
+		ddmStructureImpl.setVersionUserId(ddmStructure.getVersionUserId());
+		ddmStructureImpl.setVersionUserName(ddmStructure.getVersionUserName());
+		ddmStructureImpl.setCreateDate(ddmStructure.getCreateDate());
+		ddmStructureImpl.setModifiedDate(ddmStructure.getModifiedDate());
+		ddmStructureImpl.setParentStructureId(ddmStructure.getParentStructureId());
+		ddmStructureImpl.setClassNameId(ddmStructure.getClassNameId());
+		ddmStructureImpl.setStructureKey(ddmStructure.getStructureKey());
+		ddmStructureImpl.setVersion(ddmStructure.getVersion());
+		ddmStructureImpl.setName(ddmStructure.getName());
+		ddmStructureImpl.setDescription(ddmStructure.getDescription());
+		ddmStructureImpl.setDefinition(ddmStructure.getDefinition());
+		ddmStructureImpl.setStorageType(ddmStructure.getStorageType());
+		ddmStructureImpl.setType(ddmStructure.getType());
+		ddmStructureImpl.setLastPublishDate(ddmStructure.getLastPublishDate());
+
+		return ddmStructureImpl;
 	}
 
 	/**

@@ -10893,6 +10893,8 @@ public class AssetCategoryPersistenceImpl extends BasePersistenceImpl<AssetCateg
 
 	@Override
 	protected AssetCategory removeImpl(AssetCategory assetCategory) {
+		assetCategory = toUnwrappedModel(assetCategory);
+
 		assetCategoryToAssetEntryTableMapper.deleteLeftPrimaryKeyTableMappings(assetCategory.getPrimaryKey());
 
 		Session session = null;
@@ -10937,6 +10939,8 @@ public class AssetCategoryPersistenceImpl extends BasePersistenceImpl<AssetCateg
 
 	@Override
 	public AssetCategory updateImpl(AssetCategory assetCategory) {
+		assetCategory = toUnwrappedModel(assetCategory);
+
 		boolean isNew = assetCategory.isNew();
 
 		AssetCategoryModelImpl assetCategoryModelImpl = (AssetCategoryModelImpl)assetCategory;
@@ -11349,6 +11353,36 @@ public class AssetCategoryPersistenceImpl extends BasePersistenceImpl<AssetCateg
 		assetCategory.resetOriginalValues();
 
 		return assetCategory;
+	}
+
+	protected AssetCategory toUnwrappedModel(AssetCategory assetCategory) {
+		if (assetCategory instanceof AssetCategoryImpl) {
+			return assetCategory;
+		}
+
+		AssetCategoryImpl assetCategoryImpl = new AssetCategoryImpl();
+
+		assetCategoryImpl.setNew(assetCategory.isNew());
+		assetCategoryImpl.setPrimaryKey(assetCategory.getPrimaryKey());
+
+		assetCategoryImpl.setUuid(assetCategory.getUuid());
+		assetCategoryImpl.setCategoryId(assetCategory.getCategoryId());
+		assetCategoryImpl.setGroupId(assetCategory.getGroupId());
+		assetCategoryImpl.setCompanyId(assetCategory.getCompanyId());
+		assetCategoryImpl.setUserId(assetCategory.getUserId());
+		assetCategoryImpl.setUserName(assetCategory.getUserName());
+		assetCategoryImpl.setCreateDate(assetCategory.getCreateDate());
+		assetCategoryImpl.setModifiedDate(assetCategory.getModifiedDate());
+		assetCategoryImpl.setParentCategoryId(assetCategory.getParentCategoryId());
+		assetCategoryImpl.setLeftCategoryId(assetCategory.getLeftCategoryId());
+		assetCategoryImpl.setRightCategoryId(assetCategory.getRightCategoryId());
+		assetCategoryImpl.setName(assetCategory.getName());
+		assetCategoryImpl.setTitle(assetCategory.getTitle());
+		assetCategoryImpl.setDescription(assetCategory.getDescription());
+		assetCategoryImpl.setVocabularyId(assetCategory.getVocabularyId());
+		assetCategoryImpl.setLastPublishDate(assetCategory.getLastPublishDate());
+
+		return assetCategoryImpl;
 	}
 
 	/**

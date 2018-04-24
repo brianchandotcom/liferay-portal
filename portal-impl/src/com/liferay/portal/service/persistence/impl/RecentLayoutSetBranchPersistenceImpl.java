@@ -2061,6 +2061,8 @@ public class RecentLayoutSetBranchPersistenceImpl extends BasePersistenceImpl<Re
 	@Override
 	protected RecentLayoutSetBranch removeImpl(
 		RecentLayoutSetBranch recentLayoutSetBranch) {
+		recentLayoutSetBranch = toUnwrappedModel(recentLayoutSetBranch);
+
 		Session session = null;
 
 		try {
@@ -2092,6 +2094,8 @@ public class RecentLayoutSetBranchPersistenceImpl extends BasePersistenceImpl<Re
 	@Override
 	public RecentLayoutSetBranch updateImpl(
 		RecentLayoutSetBranch recentLayoutSetBranch) {
+		recentLayoutSetBranch = toUnwrappedModel(recentLayoutSetBranch);
+
 		boolean isNew = recentLayoutSetBranch.isNew();
 
 		RecentLayoutSetBranchModelImpl recentLayoutSetBranchModelImpl = (RecentLayoutSetBranchModelImpl)recentLayoutSetBranch;
@@ -2219,6 +2223,28 @@ public class RecentLayoutSetBranchPersistenceImpl extends BasePersistenceImpl<Re
 		recentLayoutSetBranch.resetOriginalValues();
 
 		return recentLayoutSetBranch;
+	}
+
+	protected RecentLayoutSetBranch toUnwrappedModel(
+		RecentLayoutSetBranch recentLayoutSetBranch) {
+		if (recentLayoutSetBranch instanceof RecentLayoutSetBranchImpl) {
+			return recentLayoutSetBranch;
+		}
+
+		RecentLayoutSetBranchImpl recentLayoutSetBranchImpl = new RecentLayoutSetBranchImpl();
+
+		recentLayoutSetBranchImpl.setNew(recentLayoutSetBranch.isNew());
+		recentLayoutSetBranchImpl.setPrimaryKey(recentLayoutSetBranch.getPrimaryKey());
+
+		recentLayoutSetBranchImpl.setMvccVersion(recentLayoutSetBranch.getMvccVersion());
+		recentLayoutSetBranchImpl.setRecentLayoutSetBranchId(recentLayoutSetBranch.getRecentLayoutSetBranchId());
+		recentLayoutSetBranchImpl.setGroupId(recentLayoutSetBranch.getGroupId());
+		recentLayoutSetBranchImpl.setCompanyId(recentLayoutSetBranch.getCompanyId());
+		recentLayoutSetBranchImpl.setUserId(recentLayoutSetBranch.getUserId());
+		recentLayoutSetBranchImpl.setLayoutSetBranchId(recentLayoutSetBranch.getLayoutSetBranchId());
+		recentLayoutSetBranchImpl.setLayoutSetId(recentLayoutSetBranch.getLayoutSetId());
+
+		return recentLayoutSetBranchImpl;
 	}
 
 	/**

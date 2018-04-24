@@ -1534,6 +1534,8 @@ public class KaleoConditionPersistenceImpl extends BasePersistenceImpl<KaleoCond
 
 	@Override
 	protected KaleoCondition removeImpl(KaleoCondition kaleoCondition) {
+		kaleoCondition = toUnwrappedModel(kaleoCondition);
+
 		Session session = null;
 
 		try {
@@ -1564,6 +1566,8 @@ public class KaleoConditionPersistenceImpl extends BasePersistenceImpl<KaleoCond
 
 	@Override
 	public KaleoCondition updateImpl(KaleoCondition kaleoCondition) {
+		kaleoCondition = toUnwrappedModel(kaleoCondition);
+
 		boolean isNew = kaleoCondition.isNew();
 
 		KaleoConditionModelImpl kaleoConditionModelImpl = (KaleoConditionModelImpl)kaleoCondition;
@@ -1689,6 +1693,32 @@ public class KaleoConditionPersistenceImpl extends BasePersistenceImpl<KaleoCond
 		kaleoCondition.resetOriginalValues();
 
 		return kaleoCondition;
+	}
+
+	protected KaleoCondition toUnwrappedModel(KaleoCondition kaleoCondition) {
+		if (kaleoCondition instanceof KaleoConditionImpl) {
+			return kaleoCondition;
+		}
+
+		KaleoConditionImpl kaleoConditionImpl = new KaleoConditionImpl();
+
+		kaleoConditionImpl.setNew(kaleoCondition.isNew());
+		kaleoConditionImpl.setPrimaryKey(kaleoCondition.getPrimaryKey());
+
+		kaleoConditionImpl.setKaleoConditionId(kaleoCondition.getKaleoConditionId());
+		kaleoConditionImpl.setGroupId(kaleoCondition.getGroupId());
+		kaleoConditionImpl.setCompanyId(kaleoCondition.getCompanyId());
+		kaleoConditionImpl.setUserId(kaleoCondition.getUserId());
+		kaleoConditionImpl.setUserName(kaleoCondition.getUserName());
+		kaleoConditionImpl.setCreateDate(kaleoCondition.getCreateDate());
+		kaleoConditionImpl.setModifiedDate(kaleoCondition.getModifiedDate());
+		kaleoConditionImpl.setKaleoDefinitionVersionId(kaleoCondition.getKaleoDefinitionVersionId());
+		kaleoConditionImpl.setKaleoNodeId(kaleoCondition.getKaleoNodeId());
+		kaleoConditionImpl.setScript(kaleoCondition.getScript());
+		kaleoConditionImpl.setScriptLanguage(kaleoCondition.getScriptLanguage());
+		kaleoConditionImpl.setScriptRequiredContexts(kaleoCondition.getScriptRequiredContexts());
+
+		return kaleoConditionImpl;
 	}
 
 	/**

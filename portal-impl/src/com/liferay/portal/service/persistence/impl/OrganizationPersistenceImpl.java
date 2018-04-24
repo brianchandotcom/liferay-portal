@@ -6804,6 +6804,8 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 
 	@Override
 	protected Organization removeImpl(Organization organization) {
+		organization = toUnwrappedModel(organization);
+
 		organizationToGroupTableMapper.deleteLeftPrimaryKeyTableMappings(organization.getPrimaryKey());
 
 		organizationToUserTableMapper.deleteLeftPrimaryKeyTableMappings(organization.getPrimaryKey());
@@ -6838,6 +6840,8 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 
 	@Override
 	public Organization updateImpl(Organization organization) {
+		organization = toUnwrappedModel(organization);
+
 		boolean isNew = organization.isNew();
 
 		OrganizationModelImpl organizationModelImpl = (OrganizationModelImpl)organization;
@@ -7044,6 +7048,38 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 		organization.resetOriginalValues();
 
 		return organization;
+	}
+
+	protected Organization toUnwrappedModel(Organization organization) {
+		if (organization instanceof OrganizationImpl) {
+			return organization;
+		}
+
+		OrganizationImpl organizationImpl = new OrganizationImpl();
+
+		organizationImpl.setNew(organization.isNew());
+		organizationImpl.setPrimaryKey(organization.getPrimaryKey());
+
+		organizationImpl.setMvccVersion(organization.getMvccVersion());
+		organizationImpl.setUuid(organization.getUuid());
+		organizationImpl.setOrganizationId(organization.getOrganizationId());
+		organizationImpl.setCompanyId(organization.getCompanyId());
+		organizationImpl.setUserId(organization.getUserId());
+		organizationImpl.setUserName(organization.getUserName());
+		organizationImpl.setCreateDate(organization.getCreateDate());
+		organizationImpl.setModifiedDate(organization.getModifiedDate());
+		organizationImpl.setParentOrganizationId(organization.getParentOrganizationId());
+		organizationImpl.setTreePath(organization.getTreePath());
+		organizationImpl.setName(organization.getName());
+		organizationImpl.setType(organization.getType());
+		organizationImpl.setRecursable(organization.isRecursable());
+		organizationImpl.setRegionId(organization.getRegionId());
+		organizationImpl.setCountryId(organization.getCountryId());
+		organizationImpl.setStatusId(organization.getStatusId());
+		organizationImpl.setComments(organization.getComments());
+		organizationImpl.setLogoId(organization.getLogoId());
+
+		return organizationImpl;
 	}
 
 	/**

@@ -1053,6 +1053,8 @@ public class AnnouncementsFlagPersistenceImpl extends BasePersistenceImpl<Announ
 
 	@Override
 	protected AnnouncementsFlag removeImpl(AnnouncementsFlag announcementsFlag) {
+		announcementsFlag = toUnwrappedModel(announcementsFlag);
+
 		Session session = null;
 
 		try {
@@ -1083,6 +1085,8 @@ public class AnnouncementsFlagPersistenceImpl extends BasePersistenceImpl<Announ
 
 	@Override
 	public AnnouncementsFlag updateImpl(AnnouncementsFlag announcementsFlag) {
+		announcementsFlag = toUnwrappedModel(announcementsFlag);
+
 		boolean isNew = announcementsFlag.isNew();
 
 		AnnouncementsFlagModelImpl announcementsFlagModelImpl = (AnnouncementsFlagModelImpl)announcementsFlag;
@@ -1155,6 +1159,27 @@ public class AnnouncementsFlagPersistenceImpl extends BasePersistenceImpl<Announ
 		announcementsFlag.resetOriginalValues();
 
 		return announcementsFlag;
+	}
+
+	protected AnnouncementsFlag toUnwrappedModel(
+		AnnouncementsFlag announcementsFlag) {
+		if (announcementsFlag instanceof AnnouncementsFlagImpl) {
+			return announcementsFlag;
+		}
+
+		AnnouncementsFlagImpl announcementsFlagImpl = new AnnouncementsFlagImpl();
+
+		announcementsFlagImpl.setNew(announcementsFlag.isNew());
+		announcementsFlagImpl.setPrimaryKey(announcementsFlag.getPrimaryKey());
+
+		announcementsFlagImpl.setFlagId(announcementsFlag.getFlagId());
+		announcementsFlagImpl.setCompanyId(announcementsFlag.getCompanyId());
+		announcementsFlagImpl.setUserId(announcementsFlag.getUserId());
+		announcementsFlagImpl.setCreateDate(announcementsFlag.getCreateDate());
+		announcementsFlagImpl.setEntryId(announcementsFlag.getEntryId());
+		announcementsFlagImpl.setValue(announcementsFlag.getValue());
+
+		return announcementsFlagImpl;
 	}
 
 	/**

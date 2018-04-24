@@ -2160,6 +2160,8 @@ public class FooPersistenceImpl extends BasePersistenceImpl<Foo>
 
 	@Override
 	protected Foo removeImpl(Foo foo) {
+		foo = toUnwrappedModel(foo);
+
 		Session session = null;
 
 		try {
@@ -2189,6 +2191,8 @@ public class FooPersistenceImpl extends BasePersistenceImpl<Foo>
 
 	@Override
 	public Foo updateImpl(Foo foo) {
+		foo = toUnwrappedModel(foo);
+
 		boolean isNew = foo.isNew();
 
 		FooModelImpl fooModelImpl = (FooModelImpl)foo;
@@ -2309,6 +2313,33 @@ public class FooPersistenceImpl extends BasePersistenceImpl<Foo>
 		foo.resetOriginalValues();
 
 		return foo;
+	}
+
+	protected Foo toUnwrappedModel(Foo foo) {
+		if (foo instanceof FooImpl) {
+			return foo;
+		}
+
+		FooImpl fooImpl = new FooImpl();
+
+		fooImpl.setNew(foo.isNew());
+		fooImpl.setPrimaryKey(foo.getPrimaryKey());
+
+		fooImpl.setUuid(foo.getUuid());
+		fooImpl.setFooId(foo.getFooId());
+		fooImpl.setGroupId(foo.getGroupId());
+		fooImpl.setCompanyId(foo.getCompanyId());
+		fooImpl.setUserId(foo.getUserId());
+		fooImpl.setUserName(foo.getUserName());
+		fooImpl.setCreateDate(foo.getCreateDate());
+		fooImpl.setModifiedDate(foo.getModifiedDate());
+		fooImpl.setField1(foo.getField1());
+		fooImpl.setField2(foo.isField2());
+		fooImpl.setField3(foo.getField3());
+		fooImpl.setField4(foo.getField4());
+		fooImpl.setField5(foo.getField5());
+
+		return fooImpl;
 	}
 
 	/**

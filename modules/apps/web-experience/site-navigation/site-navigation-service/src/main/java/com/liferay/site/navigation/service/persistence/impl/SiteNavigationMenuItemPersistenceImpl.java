@@ -1897,6 +1897,8 @@ public class SiteNavigationMenuItemPersistenceImpl extends BasePersistenceImpl<S
 	@Override
 	protected SiteNavigationMenuItem removeImpl(
 		SiteNavigationMenuItem siteNavigationMenuItem) {
+		siteNavigationMenuItem = toUnwrappedModel(siteNavigationMenuItem);
+
 		Session session = null;
 
 		try {
@@ -1928,6 +1930,8 @@ public class SiteNavigationMenuItemPersistenceImpl extends BasePersistenceImpl<S
 	@Override
 	public SiteNavigationMenuItem updateImpl(
 		SiteNavigationMenuItem siteNavigationMenuItem) {
+		siteNavigationMenuItem = toUnwrappedModel(siteNavigationMenuItem);
+
 		boolean isNew = siteNavigationMenuItem.isNew();
 
 		SiteNavigationMenuItemModelImpl siteNavigationMenuItemModelImpl = (SiteNavigationMenuItemModelImpl)siteNavigationMenuItem;
@@ -2089,6 +2093,33 @@ public class SiteNavigationMenuItemPersistenceImpl extends BasePersistenceImpl<S
 		siteNavigationMenuItem.resetOriginalValues();
 
 		return siteNavigationMenuItem;
+	}
+
+	protected SiteNavigationMenuItem toUnwrappedModel(
+		SiteNavigationMenuItem siteNavigationMenuItem) {
+		if (siteNavigationMenuItem instanceof SiteNavigationMenuItemImpl) {
+			return siteNavigationMenuItem;
+		}
+
+		SiteNavigationMenuItemImpl siteNavigationMenuItemImpl = new SiteNavigationMenuItemImpl();
+
+		siteNavigationMenuItemImpl.setNew(siteNavigationMenuItem.isNew());
+		siteNavigationMenuItemImpl.setPrimaryKey(siteNavigationMenuItem.getPrimaryKey());
+
+		siteNavigationMenuItemImpl.setSiteNavigationMenuItemId(siteNavigationMenuItem.getSiteNavigationMenuItemId());
+		siteNavigationMenuItemImpl.setGroupId(siteNavigationMenuItem.getGroupId());
+		siteNavigationMenuItemImpl.setCompanyId(siteNavigationMenuItem.getCompanyId());
+		siteNavigationMenuItemImpl.setUserId(siteNavigationMenuItem.getUserId());
+		siteNavigationMenuItemImpl.setUserName(siteNavigationMenuItem.getUserName());
+		siteNavigationMenuItemImpl.setCreateDate(siteNavigationMenuItem.getCreateDate());
+		siteNavigationMenuItemImpl.setModifiedDate(siteNavigationMenuItem.getModifiedDate());
+		siteNavigationMenuItemImpl.setSiteNavigationMenuId(siteNavigationMenuItem.getSiteNavigationMenuId());
+		siteNavigationMenuItemImpl.setParentSiteNavigationMenuItemId(siteNavigationMenuItem.getParentSiteNavigationMenuItemId());
+		siteNavigationMenuItemImpl.setType(siteNavigationMenuItem.getType());
+		siteNavigationMenuItemImpl.setTypeSettings(siteNavigationMenuItem.getTypeSettings());
+		siteNavigationMenuItemImpl.setOrder(siteNavigationMenuItem.getOrder());
+
+		return siteNavigationMenuItemImpl;
 	}
 
 	/**

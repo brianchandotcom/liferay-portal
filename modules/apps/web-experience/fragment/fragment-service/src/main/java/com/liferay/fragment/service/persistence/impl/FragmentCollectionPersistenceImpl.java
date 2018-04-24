@@ -2423,6 +2423,8 @@ public class FragmentCollectionPersistenceImpl extends BasePersistenceImpl<Fragm
 	@Override
 	protected FragmentCollection removeImpl(
 		FragmentCollection fragmentCollection) {
+		fragmentCollection = toUnwrappedModel(fragmentCollection);
+
 		Session session = null;
 
 		try {
@@ -2453,6 +2455,8 @@ public class FragmentCollectionPersistenceImpl extends BasePersistenceImpl<Fragm
 
 	@Override
 	public FragmentCollection updateImpl(FragmentCollection fragmentCollection) {
+		fragmentCollection = toUnwrappedModel(fragmentCollection);
+
 		boolean isNew = fragmentCollection.isNew();
 
 		FragmentCollectionModelImpl fragmentCollectionModelImpl = (FragmentCollectionModelImpl)fragmentCollection;
@@ -2551,6 +2555,31 @@ public class FragmentCollectionPersistenceImpl extends BasePersistenceImpl<Fragm
 		fragmentCollection.resetOriginalValues();
 
 		return fragmentCollection;
+	}
+
+	protected FragmentCollection toUnwrappedModel(
+		FragmentCollection fragmentCollection) {
+		if (fragmentCollection instanceof FragmentCollectionImpl) {
+			return fragmentCollection;
+		}
+
+		FragmentCollectionImpl fragmentCollectionImpl = new FragmentCollectionImpl();
+
+		fragmentCollectionImpl.setNew(fragmentCollection.isNew());
+		fragmentCollectionImpl.setPrimaryKey(fragmentCollection.getPrimaryKey());
+
+		fragmentCollectionImpl.setFragmentCollectionId(fragmentCollection.getFragmentCollectionId());
+		fragmentCollectionImpl.setGroupId(fragmentCollection.getGroupId());
+		fragmentCollectionImpl.setCompanyId(fragmentCollection.getCompanyId());
+		fragmentCollectionImpl.setUserId(fragmentCollection.getUserId());
+		fragmentCollectionImpl.setUserName(fragmentCollection.getUserName());
+		fragmentCollectionImpl.setCreateDate(fragmentCollection.getCreateDate());
+		fragmentCollectionImpl.setModifiedDate(fragmentCollection.getModifiedDate());
+		fragmentCollectionImpl.setFragmentCollectionKey(fragmentCollection.getFragmentCollectionKey());
+		fragmentCollectionImpl.setName(fragmentCollection.getName());
+		fragmentCollectionImpl.setDescription(fragmentCollection.getDescription());
+
+		return fragmentCollectionImpl;
 	}
 
 	/**

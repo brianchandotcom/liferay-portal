@@ -767,6 +767,8 @@ public class PasswordTrackerPersistenceImpl extends BasePersistenceImpl<Password
 
 	@Override
 	protected PasswordTracker removeImpl(PasswordTracker passwordTracker) {
+		passwordTracker = toUnwrappedModel(passwordTracker);
+
 		Session session = null;
 
 		try {
@@ -797,6 +799,8 @@ public class PasswordTrackerPersistenceImpl extends BasePersistenceImpl<Password
 
 	@Override
 	public PasswordTracker updateImpl(PasswordTracker passwordTracker) {
+		passwordTracker = toUnwrappedModel(passwordTracker);
+
 		boolean isNew = passwordTracker.isNew();
 
 		PasswordTrackerModelImpl passwordTrackerModelImpl = (PasswordTrackerModelImpl)passwordTracker;
@@ -866,6 +870,26 @@ public class PasswordTrackerPersistenceImpl extends BasePersistenceImpl<Password
 		passwordTracker.resetOriginalValues();
 
 		return passwordTracker;
+	}
+
+	protected PasswordTracker toUnwrappedModel(PasswordTracker passwordTracker) {
+		if (passwordTracker instanceof PasswordTrackerImpl) {
+			return passwordTracker;
+		}
+
+		PasswordTrackerImpl passwordTrackerImpl = new PasswordTrackerImpl();
+
+		passwordTrackerImpl.setNew(passwordTracker.isNew());
+		passwordTrackerImpl.setPrimaryKey(passwordTracker.getPrimaryKey());
+
+		passwordTrackerImpl.setMvccVersion(passwordTracker.getMvccVersion());
+		passwordTrackerImpl.setPasswordTrackerId(passwordTracker.getPasswordTrackerId());
+		passwordTrackerImpl.setCompanyId(passwordTracker.getCompanyId());
+		passwordTrackerImpl.setUserId(passwordTracker.getUserId());
+		passwordTrackerImpl.setCreateDate(passwordTracker.getCreateDate());
+		passwordTrackerImpl.setPassword(passwordTracker.getPassword());
+
+		return passwordTrackerImpl;
 	}
 
 	/**

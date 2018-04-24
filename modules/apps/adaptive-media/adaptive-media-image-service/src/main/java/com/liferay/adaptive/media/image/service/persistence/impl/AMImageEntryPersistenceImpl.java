@@ -4661,6 +4661,8 @@ public class AMImageEntryPersistenceImpl extends BasePersistenceImpl<AMImageEntr
 
 	@Override
 	protected AMImageEntry removeImpl(AMImageEntry amImageEntry) {
+		amImageEntry = toUnwrappedModel(amImageEntry);
+
 		Session session = null;
 
 		try {
@@ -4691,6 +4693,8 @@ public class AMImageEntryPersistenceImpl extends BasePersistenceImpl<AMImageEntr
 
 	@Override
 	public AMImageEntry updateImpl(AMImageEntry amImageEntry) {
+		amImageEntry = toUnwrappedModel(amImageEntry);
+
 		boolean isNew = amImageEntry.isNew();
 
 		AMImageEntryModelImpl amImageEntryModelImpl = (AMImageEntryModelImpl)amImageEntry;
@@ -4926,6 +4930,31 @@ public class AMImageEntryPersistenceImpl extends BasePersistenceImpl<AMImageEntr
 		amImageEntry.resetOriginalValues();
 
 		return amImageEntry;
+	}
+
+	protected AMImageEntry toUnwrappedModel(AMImageEntry amImageEntry) {
+		if (amImageEntry instanceof AMImageEntryImpl) {
+			return amImageEntry;
+		}
+
+		AMImageEntryImpl amImageEntryImpl = new AMImageEntryImpl();
+
+		amImageEntryImpl.setNew(amImageEntry.isNew());
+		amImageEntryImpl.setPrimaryKey(amImageEntry.getPrimaryKey());
+
+		amImageEntryImpl.setUuid(amImageEntry.getUuid());
+		amImageEntryImpl.setAmImageEntryId(amImageEntry.getAmImageEntryId());
+		amImageEntryImpl.setGroupId(amImageEntry.getGroupId());
+		amImageEntryImpl.setCompanyId(amImageEntry.getCompanyId());
+		amImageEntryImpl.setCreateDate(amImageEntry.getCreateDate());
+		amImageEntryImpl.setConfigurationUuid(amImageEntry.getConfigurationUuid());
+		amImageEntryImpl.setFileVersionId(amImageEntry.getFileVersionId());
+		amImageEntryImpl.setMimeType(amImageEntry.getMimeType());
+		amImageEntryImpl.setHeight(amImageEntry.getHeight());
+		amImageEntryImpl.setWidth(amImageEntry.getWidth());
+		amImageEntryImpl.setSize(amImageEntry.getSize());
+
+		return amImageEntryImpl;
 	}
 
 	/**

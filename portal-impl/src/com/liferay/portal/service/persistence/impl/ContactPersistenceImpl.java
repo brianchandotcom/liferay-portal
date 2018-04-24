@@ -1779,6 +1779,8 @@ public class ContactPersistenceImpl extends BasePersistenceImpl<Contact>
 
 	@Override
 	protected Contact removeImpl(Contact contact) {
+		contact = toUnwrappedModel(contact);
+
 		Session session = null;
 
 		try {
@@ -1809,6 +1811,8 @@ public class ContactPersistenceImpl extends BasePersistenceImpl<Contact>
 
 	@Override
 	public Contact updateImpl(Contact contact) {
+		contact = toUnwrappedModel(contact);
+
 		boolean isNew = contact.isNew();
 
 		ContactModelImpl contactModelImpl = (ContactModelImpl)contact;
@@ -1952,6 +1956,49 @@ public class ContactPersistenceImpl extends BasePersistenceImpl<Contact>
 		contact.resetOriginalValues();
 
 		return contact;
+	}
+
+	protected Contact toUnwrappedModel(Contact contact) {
+		if (contact instanceof ContactImpl) {
+			return contact;
+		}
+
+		ContactImpl contactImpl = new ContactImpl();
+
+		contactImpl.setNew(contact.isNew());
+		contactImpl.setPrimaryKey(contact.getPrimaryKey());
+
+		contactImpl.setMvccVersion(contact.getMvccVersion());
+		contactImpl.setContactId(contact.getContactId());
+		contactImpl.setCompanyId(contact.getCompanyId());
+		contactImpl.setUserId(contact.getUserId());
+		contactImpl.setUserName(contact.getUserName());
+		contactImpl.setCreateDate(contact.getCreateDate());
+		contactImpl.setModifiedDate(contact.getModifiedDate());
+		contactImpl.setClassNameId(contact.getClassNameId());
+		contactImpl.setClassPK(contact.getClassPK());
+		contactImpl.setAccountId(contact.getAccountId());
+		contactImpl.setParentContactId(contact.getParentContactId());
+		contactImpl.setEmailAddress(contact.getEmailAddress());
+		contactImpl.setFirstName(contact.getFirstName());
+		contactImpl.setMiddleName(contact.getMiddleName());
+		contactImpl.setLastName(contact.getLastName());
+		contactImpl.setPrefixId(contact.getPrefixId());
+		contactImpl.setSuffixId(contact.getSuffixId());
+		contactImpl.setMale(contact.isMale());
+		contactImpl.setBirthday(contact.getBirthday());
+		contactImpl.setSmsSn(contact.getSmsSn());
+		contactImpl.setFacebookSn(contact.getFacebookSn());
+		contactImpl.setJabberSn(contact.getJabberSn());
+		contactImpl.setSkypeSn(contact.getSkypeSn());
+		contactImpl.setTwitterSn(contact.getTwitterSn());
+		contactImpl.setEmployeeStatusId(contact.getEmployeeStatusId());
+		contactImpl.setEmployeeNumber(contact.getEmployeeNumber());
+		contactImpl.setJobTitle(contact.getJobTitle());
+		contactImpl.setJobClass(contact.getJobClass());
+		contactImpl.setHoursOfOperation(contact.getHoursOfOperation());
+
+		return contactImpl;
 	}
 
 	/**

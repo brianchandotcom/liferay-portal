@@ -1079,6 +1079,8 @@ public class AnnouncementsDeliveryPersistenceImpl extends BasePersistenceImpl<An
 	@Override
 	protected AnnouncementsDelivery removeImpl(
 		AnnouncementsDelivery announcementsDelivery) {
+		announcementsDelivery = toUnwrappedModel(announcementsDelivery);
+
 		Session session = null;
 
 		try {
@@ -1110,6 +1112,8 @@ public class AnnouncementsDeliveryPersistenceImpl extends BasePersistenceImpl<An
 	@Override
 	public AnnouncementsDelivery updateImpl(
 		AnnouncementsDelivery announcementsDelivery) {
+		announcementsDelivery = toUnwrappedModel(announcementsDelivery);
+
 		boolean isNew = announcementsDelivery.isNew();
 
 		AnnouncementsDeliveryModelImpl announcementsDeliveryModelImpl = (AnnouncementsDeliveryModelImpl)announcementsDelivery;
@@ -1184,6 +1188,28 @@ public class AnnouncementsDeliveryPersistenceImpl extends BasePersistenceImpl<An
 		announcementsDelivery.resetOriginalValues();
 
 		return announcementsDelivery;
+	}
+
+	protected AnnouncementsDelivery toUnwrappedModel(
+		AnnouncementsDelivery announcementsDelivery) {
+		if (announcementsDelivery instanceof AnnouncementsDeliveryImpl) {
+			return announcementsDelivery;
+		}
+
+		AnnouncementsDeliveryImpl announcementsDeliveryImpl = new AnnouncementsDeliveryImpl();
+
+		announcementsDeliveryImpl.setNew(announcementsDelivery.isNew());
+		announcementsDeliveryImpl.setPrimaryKey(announcementsDelivery.getPrimaryKey());
+
+		announcementsDeliveryImpl.setDeliveryId(announcementsDelivery.getDeliveryId());
+		announcementsDeliveryImpl.setCompanyId(announcementsDelivery.getCompanyId());
+		announcementsDeliveryImpl.setUserId(announcementsDelivery.getUserId());
+		announcementsDeliveryImpl.setType(announcementsDelivery.getType());
+		announcementsDeliveryImpl.setEmail(announcementsDelivery.isEmail());
+		announcementsDeliveryImpl.setSms(announcementsDelivery.isSms());
+		announcementsDeliveryImpl.setWebsite(announcementsDelivery.isWebsite());
+
+		return announcementsDeliveryImpl;
 	}
 
 	/**

@@ -776,6 +776,8 @@ public class UserTrackerPathPersistenceImpl extends BasePersistenceImpl<UserTrac
 
 	@Override
 	protected UserTrackerPath removeImpl(UserTrackerPath userTrackerPath) {
+		userTrackerPath = toUnwrappedModel(userTrackerPath);
+
 		Session session = null;
 
 		try {
@@ -806,6 +808,8 @@ public class UserTrackerPathPersistenceImpl extends BasePersistenceImpl<UserTrac
 
 	@Override
 	public UserTrackerPath updateImpl(UserTrackerPath userTrackerPath) {
+		userTrackerPath = toUnwrappedModel(userTrackerPath);
+
 		boolean isNew = userTrackerPath.isNew();
 
 		UserTrackerPathModelImpl userTrackerPathModelImpl = (UserTrackerPathModelImpl)userTrackerPath;
@@ -879,6 +883,26 @@ public class UserTrackerPathPersistenceImpl extends BasePersistenceImpl<UserTrac
 		userTrackerPath.resetOriginalValues();
 
 		return userTrackerPath;
+	}
+
+	protected UserTrackerPath toUnwrappedModel(UserTrackerPath userTrackerPath) {
+		if (userTrackerPath instanceof UserTrackerPathImpl) {
+			return userTrackerPath;
+		}
+
+		UserTrackerPathImpl userTrackerPathImpl = new UserTrackerPathImpl();
+
+		userTrackerPathImpl.setNew(userTrackerPath.isNew());
+		userTrackerPathImpl.setPrimaryKey(userTrackerPath.getPrimaryKey());
+
+		userTrackerPathImpl.setMvccVersion(userTrackerPath.getMvccVersion());
+		userTrackerPathImpl.setUserTrackerPathId(userTrackerPath.getUserTrackerPathId());
+		userTrackerPathImpl.setCompanyId(userTrackerPath.getCompanyId());
+		userTrackerPathImpl.setUserTrackerId(userTrackerPath.getUserTrackerId());
+		userTrackerPathImpl.setPath(userTrackerPath.getPath());
+		userTrackerPathImpl.setPathDate(userTrackerPath.getPathDate());
+
+		return userTrackerPathImpl;
 	}
 
 	/**

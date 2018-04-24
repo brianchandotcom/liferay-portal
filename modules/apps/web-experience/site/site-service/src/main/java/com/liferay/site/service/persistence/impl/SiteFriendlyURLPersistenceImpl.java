@@ -3223,6 +3223,8 @@ public class SiteFriendlyURLPersistenceImpl extends BasePersistenceImpl<SiteFrie
 
 	@Override
 	protected SiteFriendlyURL removeImpl(SiteFriendlyURL siteFriendlyURL) {
+		siteFriendlyURL = toUnwrappedModel(siteFriendlyURL);
+
 		Session session = null;
 
 		try {
@@ -3253,6 +3255,8 @@ public class SiteFriendlyURLPersistenceImpl extends BasePersistenceImpl<SiteFrie
 
 	@Override
 	public SiteFriendlyURL updateImpl(SiteFriendlyURL siteFriendlyURL) {
+		siteFriendlyURL = toUnwrappedModel(siteFriendlyURL);
+
 		boolean isNew = siteFriendlyURL.isNew();
 
 		SiteFriendlyURLModelImpl siteFriendlyURLModelImpl = (SiteFriendlyURLModelImpl)siteFriendlyURL;
@@ -3414,6 +3418,31 @@ public class SiteFriendlyURLPersistenceImpl extends BasePersistenceImpl<SiteFrie
 		siteFriendlyURL.resetOriginalValues();
 
 		return siteFriendlyURL;
+	}
+
+	protected SiteFriendlyURL toUnwrappedModel(SiteFriendlyURL siteFriendlyURL) {
+		if (siteFriendlyURL instanceof SiteFriendlyURLImpl) {
+			return siteFriendlyURL;
+		}
+
+		SiteFriendlyURLImpl siteFriendlyURLImpl = new SiteFriendlyURLImpl();
+
+		siteFriendlyURLImpl.setNew(siteFriendlyURL.isNew());
+		siteFriendlyURLImpl.setPrimaryKey(siteFriendlyURL.getPrimaryKey());
+
+		siteFriendlyURLImpl.setUuid(siteFriendlyURL.getUuid());
+		siteFriendlyURLImpl.setSiteFriendlyURLId(siteFriendlyURL.getSiteFriendlyURLId());
+		siteFriendlyURLImpl.setCompanyId(siteFriendlyURL.getCompanyId());
+		siteFriendlyURLImpl.setUserId(siteFriendlyURL.getUserId());
+		siteFriendlyURLImpl.setUserName(siteFriendlyURL.getUserName());
+		siteFriendlyURLImpl.setCreateDate(siteFriendlyURL.getCreateDate());
+		siteFriendlyURLImpl.setModifiedDate(siteFriendlyURL.getModifiedDate());
+		siteFriendlyURLImpl.setGroupId(siteFriendlyURL.getGroupId());
+		siteFriendlyURLImpl.setFriendlyURL(siteFriendlyURL.getFriendlyURL());
+		siteFriendlyURLImpl.setLanguageId(siteFriendlyURL.getLanguageId());
+		siteFriendlyURLImpl.setLastPublishDate(siteFriendlyURL.getLastPublishDate());
+
+		return siteFriendlyURLImpl;
 	}
 
 	/**

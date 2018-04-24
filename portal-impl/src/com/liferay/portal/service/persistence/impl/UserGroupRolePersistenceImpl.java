@@ -2838,6 +2838,8 @@ public class UserGroupRolePersistenceImpl extends BasePersistenceImpl<UserGroupR
 
 	@Override
 	protected UserGroupRole removeImpl(UserGroupRole userGroupRole) {
+		userGroupRole = toUnwrappedModel(userGroupRole);
+
 		Session session = null;
 
 		try {
@@ -2868,6 +2870,8 @@ public class UserGroupRolePersistenceImpl extends BasePersistenceImpl<UserGroupR
 
 	@Override
 	public UserGroupRole updateImpl(UserGroupRole userGroupRole) {
+		userGroupRole = toUnwrappedModel(userGroupRole);
+
 		boolean isNew = userGroupRole.isNew();
 
 		UserGroupRoleModelImpl userGroupRoleModelImpl = (UserGroupRoleModelImpl)userGroupRole;
@@ -3043,6 +3047,25 @@ public class UserGroupRolePersistenceImpl extends BasePersistenceImpl<UserGroupR
 		userGroupRole.resetOriginalValues();
 
 		return userGroupRole;
+	}
+
+	protected UserGroupRole toUnwrappedModel(UserGroupRole userGroupRole) {
+		if (userGroupRole instanceof UserGroupRoleImpl) {
+			return userGroupRole;
+		}
+
+		UserGroupRoleImpl userGroupRoleImpl = new UserGroupRoleImpl();
+
+		userGroupRoleImpl.setNew(userGroupRole.isNew());
+		userGroupRoleImpl.setPrimaryKey(userGroupRole.getPrimaryKey());
+
+		userGroupRoleImpl.setMvccVersion(userGroupRole.getMvccVersion());
+		userGroupRoleImpl.setUserId(userGroupRole.getUserId());
+		userGroupRoleImpl.setGroupId(userGroupRole.getGroupId());
+		userGroupRoleImpl.setRoleId(userGroupRole.getRoleId());
+		userGroupRoleImpl.setCompanyId(userGroupRole.getCompanyId());
+
+		return userGroupRoleImpl;
 	}
 
 	/**

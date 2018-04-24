@@ -2356,6 +2356,8 @@ public class ShoppingCategoryPersistenceImpl extends BasePersistenceImpl<Shoppin
 
 	@Override
 	protected ShoppingCategory removeImpl(ShoppingCategory shoppingCategory) {
+		shoppingCategory = toUnwrappedModel(shoppingCategory);
+
 		Session session = null;
 
 		try {
@@ -2386,6 +2388,8 @@ public class ShoppingCategoryPersistenceImpl extends BasePersistenceImpl<Shoppin
 
 	@Override
 	public ShoppingCategory updateImpl(ShoppingCategory shoppingCategory) {
+		shoppingCategory = toUnwrappedModel(shoppingCategory);
+
 		boolean isNew = shoppingCategory.isNew();
 
 		ShoppingCategoryModelImpl shoppingCategoryModelImpl = (ShoppingCategoryModelImpl)shoppingCategory;
@@ -2511,6 +2515,31 @@ public class ShoppingCategoryPersistenceImpl extends BasePersistenceImpl<Shoppin
 		shoppingCategory.resetOriginalValues();
 
 		return shoppingCategory;
+	}
+
+	protected ShoppingCategory toUnwrappedModel(
+		ShoppingCategory shoppingCategory) {
+		if (shoppingCategory instanceof ShoppingCategoryImpl) {
+			return shoppingCategory;
+		}
+
+		ShoppingCategoryImpl shoppingCategoryImpl = new ShoppingCategoryImpl();
+
+		shoppingCategoryImpl.setNew(shoppingCategory.isNew());
+		shoppingCategoryImpl.setPrimaryKey(shoppingCategory.getPrimaryKey());
+
+		shoppingCategoryImpl.setCategoryId(shoppingCategory.getCategoryId());
+		shoppingCategoryImpl.setGroupId(shoppingCategory.getGroupId());
+		shoppingCategoryImpl.setCompanyId(shoppingCategory.getCompanyId());
+		shoppingCategoryImpl.setUserId(shoppingCategory.getUserId());
+		shoppingCategoryImpl.setUserName(shoppingCategory.getUserName());
+		shoppingCategoryImpl.setCreateDate(shoppingCategory.getCreateDate());
+		shoppingCategoryImpl.setModifiedDate(shoppingCategory.getModifiedDate());
+		shoppingCategoryImpl.setParentCategoryId(shoppingCategory.getParentCategoryId());
+		shoppingCategoryImpl.setName(shoppingCategory.getName());
+		shoppingCategoryImpl.setDescription(shoppingCategory.getDescription());
+
+		return shoppingCategoryImpl;
 	}
 
 	/**

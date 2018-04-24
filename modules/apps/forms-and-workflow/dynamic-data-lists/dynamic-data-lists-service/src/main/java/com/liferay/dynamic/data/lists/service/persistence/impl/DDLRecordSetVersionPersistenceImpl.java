@@ -1631,6 +1631,8 @@ public class DDLRecordSetVersionPersistenceImpl extends BasePersistenceImpl<DDLR
 	@Override
 	protected DDLRecordSetVersion removeImpl(
 		DDLRecordSetVersion ddlRecordSetVersion) {
+		ddlRecordSetVersion = toUnwrappedModel(ddlRecordSetVersion);
+
 		Session session = null;
 
 		try {
@@ -1662,6 +1664,8 @@ public class DDLRecordSetVersionPersistenceImpl extends BasePersistenceImpl<DDLR
 	@Override
 	public DDLRecordSetVersion updateImpl(
 		DDLRecordSetVersion ddlRecordSetVersion) {
+		ddlRecordSetVersion = toUnwrappedModel(ddlRecordSetVersion);
+
 		boolean isNew = ddlRecordSetVersion.isNew();
 
 		DDLRecordSetVersionModelImpl ddlRecordSetVersionModelImpl = (DDLRecordSetVersionModelImpl)ddlRecordSetVersion;
@@ -1768,6 +1772,37 @@ public class DDLRecordSetVersionPersistenceImpl extends BasePersistenceImpl<DDLR
 		ddlRecordSetVersion.resetOriginalValues();
 
 		return ddlRecordSetVersion;
+	}
+
+	protected DDLRecordSetVersion toUnwrappedModel(
+		DDLRecordSetVersion ddlRecordSetVersion) {
+		if (ddlRecordSetVersion instanceof DDLRecordSetVersionImpl) {
+			return ddlRecordSetVersion;
+		}
+
+		DDLRecordSetVersionImpl ddlRecordSetVersionImpl = new DDLRecordSetVersionImpl();
+
+		ddlRecordSetVersionImpl.setNew(ddlRecordSetVersion.isNew());
+		ddlRecordSetVersionImpl.setPrimaryKey(ddlRecordSetVersion.getPrimaryKey());
+
+		ddlRecordSetVersionImpl.setRecordSetVersionId(ddlRecordSetVersion.getRecordSetVersionId());
+		ddlRecordSetVersionImpl.setGroupId(ddlRecordSetVersion.getGroupId());
+		ddlRecordSetVersionImpl.setCompanyId(ddlRecordSetVersion.getCompanyId());
+		ddlRecordSetVersionImpl.setUserId(ddlRecordSetVersion.getUserId());
+		ddlRecordSetVersionImpl.setUserName(ddlRecordSetVersion.getUserName());
+		ddlRecordSetVersionImpl.setCreateDate(ddlRecordSetVersion.getCreateDate());
+		ddlRecordSetVersionImpl.setRecordSetId(ddlRecordSetVersion.getRecordSetId());
+		ddlRecordSetVersionImpl.setDDMStructureVersionId(ddlRecordSetVersion.getDDMStructureVersionId());
+		ddlRecordSetVersionImpl.setName(ddlRecordSetVersion.getName());
+		ddlRecordSetVersionImpl.setDescription(ddlRecordSetVersion.getDescription());
+		ddlRecordSetVersionImpl.setSettings(ddlRecordSetVersion.getSettings());
+		ddlRecordSetVersionImpl.setVersion(ddlRecordSetVersion.getVersion());
+		ddlRecordSetVersionImpl.setStatus(ddlRecordSetVersion.getStatus());
+		ddlRecordSetVersionImpl.setStatusByUserId(ddlRecordSetVersion.getStatusByUserId());
+		ddlRecordSetVersionImpl.setStatusByUserName(ddlRecordSetVersion.getStatusByUserName());
+		ddlRecordSetVersionImpl.setStatusDate(ddlRecordSetVersion.getStatusDate());
+
+		return ddlRecordSetVersionImpl;
 	}
 
 	/**

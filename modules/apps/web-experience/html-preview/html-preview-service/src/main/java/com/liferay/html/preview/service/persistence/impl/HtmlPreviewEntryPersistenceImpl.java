@@ -558,6 +558,8 @@ public class HtmlPreviewEntryPersistenceImpl extends BasePersistenceImpl<HtmlPre
 
 	@Override
 	protected HtmlPreviewEntry removeImpl(HtmlPreviewEntry htmlPreviewEntry) {
+		htmlPreviewEntry = toUnwrappedModel(htmlPreviewEntry);
+
 		Session session = null;
 
 		try {
@@ -588,6 +590,8 @@ public class HtmlPreviewEntryPersistenceImpl extends BasePersistenceImpl<HtmlPre
 
 	@Override
 	public HtmlPreviewEntry updateImpl(HtmlPreviewEntry htmlPreviewEntry) {
+		htmlPreviewEntry = toUnwrappedModel(htmlPreviewEntry);
+
 		boolean isNew = htmlPreviewEntry.isNew();
 
 		HtmlPreviewEntryModelImpl htmlPreviewEntryModelImpl = (HtmlPreviewEntryModelImpl)htmlPreviewEntry;
@@ -658,6 +662,31 @@ public class HtmlPreviewEntryPersistenceImpl extends BasePersistenceImpl<HtmlPre
 		htmlPreviewEntry.resetOriginalValues();
 
 		return htmlPreviewEntry;
+	}
+
+	protected HtmlPreviewEntry toUnwrappedModel(
+		HtmlPreviewEntry htmlPreviewEntry) {
+		if (htmlPreviewEntry instanceof HtmlPreviewEntryImpl) {
+			return htmlPreviewEntry;
+		}
+
+		HtmlPreviewEntryImpl htmlPreviewEntryImpl = new HtmlPreviewEntryImpl();
+
+		htmlPreviewEntryImpl.setNew(htmlPreviewEntry.isNew());
+		htmlPreviewEntryImpl.setPrimaryKey(htmlPreviewEntry.getPrimaryKey());
+
+		htmlPreviewEntryImpl.setHtmlPreviewEntryId(htmlPreviewEntry.getHtmlPreviewEntryId());
+		htmlPreviewEntryImpl.setGroupId(htmlPreviewEntry.getGroupId());
+		htmlPreviewEntryImpl.setCompanyId(htmlPreviewEntry.getCompanyId());
+		htmlPreviewEntryImpl.setUserId(htmlPreviewEntry.getUserId());
+		htmlPreviewEntryImpl.setUserName(htmlPreviewEntry.getUserName());
+		htmlPreviewEntryImpl.setCreateDate(htmlPreviewEntry.getCreateDate());
+		htmlPreviewEntryImpl.setModifiedDate(htmlPreviewEntry.getModifiedDate());
+		htmlPreviewEntryImpl.setClassNameId(htmlPreviewEntry.getClassNameId());
+		htmlPreviewEntryImpl.setClassPK(htmlPreviewEntry.getClassPK());
+		htmlPreviewEntryImpl.setFileEntryId(htmlPreviewEntry.getFileEntryId());
+
+		return htmlPreviewEntryImpl;
 	}
 
 	/**

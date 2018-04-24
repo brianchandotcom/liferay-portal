@@ -1156,6 +1156,8 @@ public class UserNotificationDeliveryPersistenceImpl extends BasePersistenceImpl
 	@Override
 	protected UserNotificationDelivery removeImpl(
 		UserNotificationDelivery userNotificationDelivery) {
+		userNotificationDelivery = toUnwrappedModel(userNotificationDelivery);
+
 		Session session = null;
 
 		try {
@@ -1187,6 +1189,8 @@ public class UserNotificationDeliveryPersistenceImpl extends BasePersistenceImpl
 	@Override
 	public UserNotificationDelivery updateImpl(
 		UserNotificationDelivery userNotificationDelivery) {
+		userNotificationDelivery = toUnwrappedModel(userNotificationDelivery);
+
 		boolean isNew = userNotificationDelivery.isNew();
 
 		UserNotificationDeliveryModelImpl userNotificationDeliveryModelImpl = (UserNotificationDeliveryModelImpl)userNotificationDelivery;
@@ -1264,6 +1268,30 @@ public class UserNotificationDeliveryPersistenceImpl extends BasePersistenceImpl
 		userNotificationDelivery.resetOriginalValues();
 
 		return userNotificationDelivery;
+	}
+
+	protected UserNotificationDelivery toUnwrappedModel(
+		UserNotificationDelivery userNotificationDelivery) {
+		if (userNotificationDelivery instanceof UserNotificationDeliveryImpl) {
+			return userNotificationDelivery;
+		}
+
+		UserNotificationDeliveryImpl userNotificationDeliveryImpl = new UserNotificationDeliveryImpl();
+
+		userNotificationDeliveryImpl.setNew(userNotificationDelivery.isNew());
+		userNotificationDeliveryImpl.setPrimaryKey(userNotificationDelivery.getPrimaryKey());
+
+		userNotificationDeliveryImpl.setMvccVersion(userNotificationDelivery.getMvccVersion());
+		userNotificationDeliveryImpl.setUserNotificationDeliveryId(userNotificationDelivery.getUserNotificationDeliveryId());
+		userNotificationDeliveryImpl.setCompanyId(userNotificationDelivery.getCompanyId());
+		userNotificationDeliveryImpl.setUserId(userNotificationDelivery.getUserId());
+		userNotificationDeliveryImpl.setPortletId(userNotificationDelivery.getPortletId());
+		userNotificationDeliveryImpl.setClassNameId(userNotificationDelivery.getClassNameId());
+		userNotificationDeliveryImpl.setNotificationType(userNotificationDelivery.getNotificationType());
+		userNotificationDeliveryImpl.setDeliveryType(userNotificationDelivery.getDeliveryType());
+		userNotificationDeliveryImpl.setDeliver(userNotificationDelivery.isDeliver());
+
+		return userNotificationDeliveryImpl;
 	}
 
 	/**

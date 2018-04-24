@@ -2561,6 +2561,8 @@ public class KBTemplatePersistenceImpl extends BasePersistenceImpl<KBTemplate>
 
 	@Override
 	protected KBTemplate removeImpl(KBTemplate kbTemplate) {
+		kbTemplate = toUnwrappedModel(kbTemplate);
+
 		Session session = null;
 
 		try {
@@ -2591,6 +2593,8 @@ public class KBTemplatePersistenceImpl extends BasePersistenceImpl<KBTemplate>
 
 	@Override
 	public KBTemplate updateImpl(KBTemplate kbTemplate) {
+		kbTemplate = toUnwrappedModel(kbTemplate);
+
 		boolean isNew = kbTemplate.isNew();
 
 		KBTemplateModelImpl kbTemplateModelImpl = (KBTemplateModelImpl)kbTemplate;
@@ -2767,6 +2771,31 @@ public class KBTemplatePersistenceImpl extends BasePersistenceImpl<KBTemplate>
 		kbTemplate.resetOriginalValues();
 
 		return kbTemplate;
+	}
+
+	protected KBTemplate toUnwrappedModel(KBTemplate kbTemplate) {
+		if (kbTemplate instanceof KBTemplateImpl) {
+			return kbTemplate;
+		}
+
+		KBTemplateImpl kbTemplateImpl = new KBTemplateImpl();
+
+		kbTemplateImpl.setNew(kbTemplate.isNew());
+		kbTemplateImpl.setPrimaryKey(kbTemplate.getPrimaryKey());
+
+		kbTemplateImpl.setUuid(kbTemplate.getUuid());
+		kbTemplateImpl.setKbTemplateId(kbTemplate.getKbTemplateId());
+		kbTemplateImpl.setGroupId(kbTemplate.getGroupId());
+		kbTemplateImpl.setCompanyId(kbTemplate.getCompanyId());
+		kbTemplateImpl.setUserId(kbTemplate.getUserId());
+		kbTemplateImpl.setUserName(kbTemplate.getUserName());
+		kbTemplateImpl.setCreateDate(kbTemplate.getCreateDate());
+		kbTemplateImpl.setModifiedDate(kbTemplate.getModifiedDate());
+		kbTemplateImpl.setTitle(kbTemplate.getTitle());
+		kbTemplateImpl.setContent(kbTemplate.getContent());
+		kbTemplateImpl.setLastPublishDate(kbTemplate.getLastPublishDate());
+
+		return kbTemplateImpl;
 	}
 
 	/**

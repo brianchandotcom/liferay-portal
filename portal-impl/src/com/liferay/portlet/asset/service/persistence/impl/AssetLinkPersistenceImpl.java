@@ -3175,6 +3175,8 @@ public class AssetLinkPersistenceImpl extends BasePersistenceImpl<AssetLink>
 
 	@Override
 	protected AssetLink removeImpl(AssetLink assetLink) {
+		assetLink = toUnwrappedModel(assetLink);
+
 		Session session = null;
 
 		try {
@@ -3205,6 +3207,8 @@ public class AssetLinkPersistenceImpl extends BasePersistenceImpl<AssetLink>
 
 	@Override
 	public AssetLink updateImpl(AssetLink assetLink) {
+		assetLink = toUnwrappedModel(assetLink);
+
 		boolean isNew = assetLink.isNew();
 
 		AssetLinkModelImpl assetLinkModelImpl = (AssetLinkModelImpl)assetLink;
@@ -3389,6 +3393,29 @@ public class AssetLinkPersistenceImpl extends BasePersistenceImpl<AssetLink>
 		assetLink.resetOriginalValues();
 
 		return assetLink;
+	}
+
+	protected AssetLink toUnwrappedModel(AssetLink assetLink) {
+		if (assetLink instanceof AssetLinkImpl) {
+			return assetLink;
+		}
+
+		AssetLinkImpl assetLinkImpl = new AssetLinkImpl();
+
+		assetLinkImpl.setNew(assetLink.isNew());
+		assetLinkImpl.setPrimaryKey(assetLink.getPrimaryKey());
+
+		assetLinkImpl.setLinkId(assetLink.getLinkId());
+		assetLinkImpl.setCompanyId(assetLink.getCompanyId());
+		assetLinkImpl.setUserId(assetLink.getUserId());
+		assetLinkImpl.setUserName(assetLink.getUserName());
+		assetLinkImpl.setCreateDate(assetLink.getCreateDate());
+		assetLinkImpl.setEntryId1(assetLink.getEntryId1());
+		assetLinkImpl.setEntryId2(assetLink.getEntryId2());
+		assetLinkImpl.setType(assetLink.getType());
+		assetLinkImpl.setWeight(assetLink.getWeight());
+
+		return assetLinkImpl;
 	}
 
 	/**

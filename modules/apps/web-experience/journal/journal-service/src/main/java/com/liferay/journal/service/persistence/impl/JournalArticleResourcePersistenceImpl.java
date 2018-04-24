@@ -2529,6 +2529,8 @@ public class JournalArticleResourcePersistenceImpl extends BasePersistenceImpl<J
 	@Override
 	protected JournalArticleResource removeImpl(
 		JournalArticleResource journalArticleResource) {
+		journalArticleResource = toUnwrappedModel(journalArticleResource);
+
 		Session session = null;
 
 		try {
@@ -2560,6 +2562,8 @@ public class JournalArticleResourcePersistenceImpl extends BasePersistenceImpl<J
 	@Override
 	public JournalArticleResource updateImpl(
 		JournalArticleResource journalArticleResource) {
+		journalArticleResource = toUnwrappedModel(journalArticleResource);
+
 		boolean isNew = journalArticleResource.isNew();
 
 		JournalArticleResourceModelImpl journalArticleResourceModelImpl = (JournalArticleResourceModelImpl)journalArticleResource;
@@ -2694,6 +2698,26 @@ public class JournalArticleResourcePersistenceImpl extends BasePersistenceImpl<J
 		journalArticleResource.resetOriginalValues();
 
 		return journalArticleResource;
+	}
+
+	protected JournalArticleResource toUnwrappedModel(
+		JournalArticleResource journalArticleResource) {
+		if (journalArticleResource instanceof JournalArticleResourceImpl) {
+			return journalArticleResource;
+		}
+
+		JournalArticleResourceImpl journalArticleResourceImpl = new JournalArticleResourceImpl();
+
+		journalArticleResourceImpl.setNew(journalArticleResource.isNew());
+		journalArticleResourceImpl.setPrimaryKey(journalArticleResource.getPrimaryKey());
+
+		journalArticleResourceImpl.setUuid(journalArticleResource.getUuid());
+		journalArticleResourceImpl.setResourcePrimKey(journalArticleResource.getResourcePrimKey());
+		journalArticleResourceImpl.setGroupId(journalArticleResource.getGroupId());
+		journalArticleResourceImpl.setCompanyId(journalArticleResource.getCompanyId());
+		journalArticleResourceImpl.setArticleId(journalArticleResource.getArticleId());
+
+		return journalArticleResourceImpl;
 	}
 
 	/**

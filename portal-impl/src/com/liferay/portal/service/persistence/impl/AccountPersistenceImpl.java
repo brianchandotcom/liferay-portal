@@ -257,6 +257,8 @@ public class AccountPersistenceImpl extends BasePersistenceImpl<Account>
 
 	@Override
 	protected Account removeImpl(Account account) {
+		account = toUnwrappedModel(account);
+
 		Session session = null;
 
 		try {
@@ -287,6 +289,8 @@ public class AccountPersistenceImpl extends BasePersistenceImpl<Account>
 
 	@Override
 	public Account updateImpl(Account account) {
+		account = toUnwrappedModel(account);
+
 		boolean isNew = account.isNew();
 
 		AccountModelImpl accountModelImpl = (AccountModelImpl)account;
@@ -348,6 +352,37 @@ public class AccountPersistenceImpl extends BasePersistenceImpl<Account>
 		account.resetOriginalValues();
 
 		return account;
+	}
+
+	protected Account toUnwrappedModel(Account account) {
+		if (account instanceof AccountImpl) {
+			return account;
+		}
+
+		AccountImpl accountImpl = new AccountImpl();
+
+		accountImpl.setNew(account.isNew());
+		accountImpl.setPrimaryKey(account.getPrimaryKey());
+
+		accountImpl.setMvccVersion(account.getMvccVersion());
+		accountImpl.setAccountId(account.getAccountId());
+		accountImpl.setCompanyId(account.getCompanyId());
+		accountImpl.setUserId(account.getUserId());
+		accountImpl.setUserName(account.getUserName());
+		accountImpl.setCreateDate(account.getCreateDate());
+		accountImpl.setModifiedDate(account.getModifiedDate());
+		accountImpl.setParentAccountId(account.getParentAccountId());
+		accountImpl.setName(account.getName());
+		accountImpl.setLegalName(account.getLegalName());
+		accountImpl.setLegalId(account.getLegalId());
+		accountImpl.setLegalType(account.getLegalType());
+		accountImpl.setSicCode(account.getSicCode());
+		accountImpl.setTickerSymbol(account.getTickerSymbol());
+		accountImpl.setIndustry(account.getIndustry());
+		accountImpl.setType(account.getType());
+		accountImpl.setSize(account.getSize());
+
+		return accountImpl;
 	}
 
 	/**

@@ -6638,6 +6638,8 @@ public class ResourcePermissionPersistenceImpl extends BasePersistenceImpl<Resou
 	@Override
 	protected ResourcePermission removeImpl(
 		ResourcePermission resourcePermission) {
+		resourcePermission = toUnwrappedModel(resourcePermission);
+
 		Session session = null;
 
 		try {
@@ -6668,6 +6670,8 @@ public class ResourcePermissionPersistenceImpl extends BasePersistenceImpl<Resou
 
 	@Override
 	public ResourcePermission updateImpl(ResourcePermission resourcePermission) {
+		resourcePermission = toUnwrappedModel(resourcePermission);
+
 		boolean isNew = resourcePermission.isNew();
 
 		ResourcePermissionModelImpl resourcePermissionModelImpl = (ResourcePermissionModelImpl)resourcePermission;
@@ -6969,6 +6973,32 @@ public class ResourcePermissionPersistenceImpl extends BasePersistenceImpl<Resou
 		resourcePermission.resetOriginalValues();
 
 		return resourcePermission;
+	}
+
+	protected ResourcePermission toUnwrappedModel(
+		ResourcePermission resourcePermission) {
+		if (resourcePermission instanceof ResourcePermissionImpl) {
+			return resourcePermission;
+		}
+
+		ResourcePermissionImpl resourcePermissionImpl = new ResourcePermissionImpl();
+
+		resourcePermissionImpl.setNew(resourcePermission.isNew());
+		resourcePermissionImpl.setPrimaryKey(resourcePermission.getPrimaryKey());
+
+		resourcePermissionImpl.setMvccVersion(resourcePermission.getMvccVersion());
+		resourcePermissionImpl.setResourcePermissionId(resourcePermission.getResourcePermissionId());
+		resourcePermissionImpl.setCompanyId(resourcePermission.getCompanyId());
+		resourcePermissionImpl.setName(resourcePermission.getName());
+		resourcePermissionImpl.setScope(resourcePermission.getScope());
+		resourcePermissionImpl.setPrimKey(resourcePermission.getPrimKey());
+		resourcePermissionImpl.setPrimKeyId(resourcePermission.getPrimKeyId());
+		resourcePermissionImpl.setRoleId(resourcePermission.getRoleId());
+		resourcePermissionImpl.setOwnerId(resourcePermission.getOwnerId());
+		resourcePermissionImpl.setActionIds(resourcePermission.getActionIds());
+		resourcePermissionImpl.setViewActionId(resourcePermission.isViewActionId());
+
+		return resourcePermissionImpl;
 	}
 
 	/**

@@ -3710,6 +3710,8 @@ public class SocialActivitySetPersistenceImpl extends BasePersistenceImpl<Social
 
 	@Override
 	protected SocialActivitySet removeImpl(SocialActivitySet socialActivitySet) {
+		socialActivitySet = toUnwrappedModel(socialActivitySet);
+
 		Session session = null;
 
 		try {
@@ -3740,6 +3742,8 @@ public class SocialActivitySetPersistenceImpl extends BasePersistenceImpl<Social
 
 	@Override
 	public SocialActivitySet updateImpl(SocialActivitySet socialActivitySet) {
+		socialActivitySet = toUnwrappedModel(socialActivitySet);
+
 		boolean isNew = socialActivitySet.isNew();
 
 		SocialActivitySetModelImpl socialActivitySetModelImpl = (SocialActivitySetModelImpl)socialActivitySet;
@@ -3970,6 +3974,32 @@ public class SocialActivitySetPersistenceImpl extends BasePersistenceImpl<Social
 		socialActivitySet.resetOriginalValues();
 
 		return socialActivitySet;
+	}
+
+	protected SocialActivitySet toUnwrappedModel(
+		SocialActivitySet socialActivitySet) {
+		if (socialActivitySet instanceof SocialActivitySetImpl) {
+			return socialActivitySet;
+		}
+
+		SocialActivitySetImpl socialActivitySetImpl = new SocialActivitySetImpl();
+
+		socialActivitySetImpl.setNew(socialActivitySet.isNew());
+		socialActivitySetImpl.setPrimaryKey(socialActivitySet.getPrimaryKey());
+
+		socialActivitySetImpl.setActivitySetId(socialActivitySet.getActivitySetId());
+		socialActivitySetImpl.setGroupId(socialActivitySet.getGroupId());
+		socialActivitySetImpl.setCompanyId(socialActivitySet.getCompanyId());
+		socialActivitySetImpl.setUserId(socialActivitySet.getUserId());
+		socialActivitySetImpl.setCreateDate(socialActivitySet.getCreateDate());
+		socialActivitySetImpl.setModifiedDate(socialActivitySet.getModifiedDate());
+		socialActivitySetImpl.setClassNameId(socialActivitySet.getClassNameId());
+		socialActivitySetImpl.setClassPK(socialActivitySet.getClassPK());
+		socialActivitySetImpl.setType(socialActivitySet.getType());
+		socialActivitySetImpl.setExtraData(socialActivitySet.getExtraData());
+		socialActivitySetImpl.setActivityCount(socialActivitySet.getActivityCount());
+
+		return socialActivitySetImpl;
 	}
 
 	/**

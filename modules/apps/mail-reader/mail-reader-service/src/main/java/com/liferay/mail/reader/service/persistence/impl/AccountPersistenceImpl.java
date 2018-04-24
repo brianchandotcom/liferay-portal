@@ -1064,6 +1064,8 @@ public class AccountPersistenceImpl extends BasePersistenceImpl<Account>
 
 	@Override
 	protected Account removeImpl(Account account) {
+		account = toUnwrappedModel(account);
+
 		Session session = null;
 
 		try {
@@ -1094,6 +1096,8 @@ public class AccountPersistenceImpl extends BasePersistenceImpl<Account>
 
 	@Override
 	public Account updateImpl(Account account) {
+		account = toUnwrappedModel(account);
+
 		boolean isNew = account.isNew();
 
 		AccountModelImpl accountModelImpl = (AccountModelImpl)account;
@@ -1187,6 +1191,46 @@ public class AccountPersistenceImpl extends BasePersistenceImpl<Account>
 		account.resetOriginalValues();
 
 		return account;
+	}
+
+	protected Account toUnwrappedModel(Account account) {
+		if (account instanceof AccountImpl) {
+			return account;
+		}
+
+		AccountImpl accountImpl = new AccountImpl();
+
+		accountImpl.setNew(account.isNew());
+		accountImpl.setPrimaryKey(account.getPrimaryKey());
+
+		accountImpl.setAccountId(account.getAccountId());
+		accountImpl.setCompanyId(account.getCompanyId());
+		accountImpl.setUserId(account.getUserId());
+		accountImpl.setUserName(account.getUserName());
+		accountImpl.setCreateDate(account.getCreateDate());
+		accountImpl.setModifiedDate(account.getModifiedDate());
+		accountImpl.setAddress(account.getAddress());
+		accountImpl.setPersonalName(account.getPersonalName());
+		accountImpl.setProtocol(account.getProtocol());
+		accountImpl.setIncomingHostName(account.getIncomingHostName());
+		accountImpl.setIncomingPort(account.getIncomingPort());
+		accountImpl.setIncomingSecure(account.isIncomingSecure());
+		accountImpl.setOutgoingHostName(account.getOutgoingHostName());
+		accountImpl.setOutgoingPort(account.getOutgoingPort());
+		accountImpl.setOutgoingSecure(account.isOutgoingSecure());
+		accountImpl.setLogin(account.getLogin());
+		accountImpl.setPassword(account.getPassword());
+		accountImpl.setSavePassword(account.isSavePassword());
+		accountImpl.setSignature(account.getSignature());
+		accountImpl.setUseSignature(account.isUseSignature());
+		accountImpl.setFolderPrefix(account.getFolderPrefix());
+		accountImpl.setInboxFolderId(account.getInboxFolderId());
+		accountImpl.setDraftFolderId(account.getDraftFolderId());
+		accountImpl.setSentFolderId(account.getSentFolderId());
+		accountImpl.setTrashFolderId(account.getTrashFolderId());
+		accountImpl.setDefaultSender(account.isDefaultSender());
+
+		return accountImpl;
 	}
 
 	/**

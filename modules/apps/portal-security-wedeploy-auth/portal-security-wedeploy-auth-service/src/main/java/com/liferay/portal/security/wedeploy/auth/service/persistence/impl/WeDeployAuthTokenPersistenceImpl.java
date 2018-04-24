@@ -944,6 +944,8 @@ public class WeDeployAuthTokenPersistenceImpl extends BasePersistenceImpl<WeDepl
 
 	@Override
 	protected WeDeployAuthToken removeImpl(WeDeployAuthToken weDeployAuthToken) {
+		weDeployAuthToken = toUnwrappedModel(weDeployAuthToken);
+
 		Session session = null;
 
 		try {
@@ -974,6 +976,8 @@ public class WeDeployAuthTokenPersistenceImpl extends BasePersistenceImpl<WeDepl
 
 	@Override
 	public WeDeployAuthToken updateImpl(WeDeployAuthToken weDeployAuthToken) {
+		weDeployAuthToken = toUnwrappedModel(weDeployAuthToken);
+
 		boolean isNew = weDeployAuthToken.isNew();
 
 		WeDeployAuthTokenModelImpl weDeployAuthTokenModelImpl = (WeDeployAuthTokenModelImpl)weDeployAuthToken;
@@ -1045,6 +1049,30 @@ public class WeDeployAuthTokenPersistenceImpl extends BasePersistenceImpl<WeDepl
 		weDeployAuthToken.resetOriginalValues();
 
 		return weDeployAuthToken;
+	}
+
+	protected WeDeployAuthToken toUnwrappedModel(
+		WeDeployAuthToken weDeployAuthToken) {
+		if (weDeployAuthToken instanceof WeDeployAuthTokenImpl) {
+			return weDeployAuthToken;
+		}
+
+		WeDeployAuthTokenImpl weDeployAuthTokenImpl = new WeDeployAuthTokenImpl();
+
+		weDeployAuthTokenImpl.setNew(weDeployAuthToken.isNew());
+		weDeployAuthTokenImpl.setPrimaryKey(weDeployAuthToken.getPrimaryKey());
+
+		weDeployAuthTokenImpl.setWeDeployAuthTokenId(weDeployAuthToken.getWeDeployAuthTokenId());
+		weDeployAuthTokenImpl.setCompanyId(weDeployAuthToken.getCompanyId());
+		weDeployAuthTokenImpl.setUserId(weDeployAuthToken.getUserId());
+		weDeployAuthTokenImpl.setUserName(weDeployAuthToken.getUserName());
+		weDeployAuthTokenImpl.setCreateDate(weDeployAuthToken.getCreateDate());
+		weDeployAuthTokenImpl.setModifiedDate(weDeployAuthToken.getModifiedDate());
+		weDeployAuthTokenImpl.setClientId(weDeployAuthToken.getClientId());
+		weDeployAuthTokenImpl.setToken(weDeployAuthToken.getToken());
+		weDeployAuthTokenImpl.setType(weDeployAuthToken.getType());
+
+		return weDeployAuthTokenImpl;
 	}
 
 	/**

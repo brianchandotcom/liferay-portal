@@ -3667,6 +3667,8 @@ public class ModulePersistenceImpl extends BasePersistenceImpl<Module>
 
 	@Override
 	protected Module removeImpl(Module module) {
+		module = toUnwrappedModel(module);
+
 		Session session = null;
 
 		try {
@@ -3697,6 +3699,8 @@ public class ModulePersistenceImpl extends BasePersistenceImpl<Module>
 
 	@Override
 	public Module updateImpl(Module module) {
+		module = toUnwrappedModel(module);
+
 		boolean isNew = module.isNew();
 
 		ModuleModelImpl moduleModelImpl = (ModuleModelImpl)module;
@@ -3871,6 +3875,27 @@ public class ModulePersistenceImpl extends BasePersistenceImpl<Module>
 		module.resetOriginalValues();
 
 		return module;
+	}
+
+	protected Module toUnwrappedModel(Module module) {
+		if (module instanceof ModuleImpl) {
+			return module;
+		}
+
+		ModuleImpl moduleImpl = new ModuleImpl();
+
+		moduleImpl.setNew(module.isNew());
+		moduleImpl.setPrimaryKey(module.getPrimaryKey());
+
+		moduleImpl.setUuid(module.getUuid());
+		moduleImpl.setModuleId(module.getModuleId());
+		moduleImpl.setCompanyId(module.getCompanyId());
+		moduleImpl.setAppId(module.getAppId());
+		moduleImpl.setBundleSymbolicName(module.getBundleSymbolicName());
+		moduleImpl.setBundleVersion(module.getBundleVersion());
+		moduleImpl.setContextName(module.getContextName());
+
+		return moduleImpl;
 	}
 
 	/**

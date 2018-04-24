@@ -1647,6 +1647,8 @@ public class DDMFormInstanceVersionPersistenceImpl extends BasePersistenceImpl<D
 	@Override
 	protected DDMFormInstanceVersion removeImpl(
 		DDMFormInstanceVersion ddmFormInstanceVersion) {
+		ddmFormInstanceVersion = toUnwrappedModel(ddmFormInstanceVersion);
+
 		Session session = null;
 
 		try {
@@ -1678,6 +1680,8 @@ public class DDMFormInstanceVersionPersistenceImpl extends BasePersistenceImpl<D
 	@Override
 	public DDMFormInstanceVersion updateImpl(
 		DDMFormInstanceVersion ddmFormInstanceVersion) {
+		ddmFormInstanceVersion = toUnwrappedModel(ddmFormInstanceVersion);
+
 		boolean isNew = ddmFormInstanceVersion.isNew();
 
 		DDMFormInstanceVersionModelImpl ddmFormInstanceVersionModelImpl = (DDMFormInstanceVersionModelImpl)ddmFormInstanceVersion;
@@ -1787,6 +1791,37 @@ public class DDMFormInstanceVersionPersistenceImpl extends BasePersistenceImpl<D
 		ddmFormInstanceVersion.resetOriginalValues();
 
 		return ddmFormInstanceVersion;
+	}
+
+	protected DDMFormInstanceVersion toUnwrappedModel(
+		DDMFormInstanceVersion ddmFormInstanceVersion) {
+		if (ddmFormInstanceVersion instanceof DDMFormInstanceVersionImpl) {
+			return ddmFormInstanceVersion;
+		}
+
+		DDMFormInstanceVersionImpl ddmFormInstanceVersionImpl = new DDMFormInstanceVersionImpl();
+
+		ddmFormInstanceVersionImpl.setNew(ddmFormInstanceVersion.isNew());
+		ddmFormInstanceVersionImpl.setPrimaryKey(ddmFormInstanceVersion.getPrimaryKey());
+
+		ddmFormInstanceVersionImpl.setFormInstanceVersionId(ddmFormInstanceVersion.getFormInstanceVersionId());
+		ddmFormInstanceVersionImpl.setGroupId(ddmFormInstanceVersion.getGroupId());
+		ddmFormInstanceVersionImpl.setCompanyId(ddmFormInstanceVersion.getCompanyId());
+		ddmFormInstanceVersionImpl.setUserId(ddmFormInstanceVersion.getUserId());
+		ddmFormInstanceVersionImpl.setUserName(ddmFormInstanceVersion.getUserName());
+		ddmFormInstanceVersionImpl.setCreateDate(ddmFormInstanceVersion.getCreateDate());
+		ddmFormInstanceVersionImpl.setFormInstanceId(ddmFormInstanceVersion.getFormInstanceId());
+		ddmFormInstanceVersionImpl.setStructureVersionId(ddmFormInstanceVersion.getStructureVersionId());
+		ddmFormInstanceVersionImpl.setName(ddmFormInstanceVersion.getName());
+		ddmFormInstanceVersionImpl.setDescription(ddmFormInstanceVersion.getDescription());
+		ddmFormInstanceVersionImpl.setSettings(ddmFormInstanceVersion.getSettings());
+		ddmFormInstanceVersionImpl.setVersion(ddmFormInstanceVersion.getVersion());
+		ddmFormInstanceVersionImpl.setStatus(ddmFormInstanceVersion.getStatus());
+		ddmFormInstanceVersionImpl.setStatusByUserId(ddmFormInstanceVersion.getStatusByUserId());
+		ddmFormInstanceVersionImpl.setStatusByUserName(ddmFormInstanceVersion.getStatusByUserName());
+		ddmFormInstanceVersionImpl.setStatusDate(ddmFormInstanceVersion.getStatusDate());
+
+		return ddmFormInstanceVersionImpl;
 	}
 
 	/**

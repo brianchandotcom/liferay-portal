@@ -3357,6 +3357,8 @@ public class GadgetPersistenceImpl extends BasePersistenceImpl<Gadget>
 
 	@Override
 	protected Gadget removeImpl(Gadget gadget) {
+		gadget = toUnwrappedModel(gadget);
+
 		Session session = null;
 
 		try {
@@ -3387,6 +3389,8 @@ public class GadgetPersistenceImpl extends BasePersistenceImpl<Gadget>
 
 	@Override
 	public Gadget updateImpl(Gadget gadget) {
+		gadget = toUnwrappedModel(gadget);
+
 		boolean isNew = gadget.isNew();
 
 		GadgetModelImpl gadgetModelImpl = (GadgetModelImpl)gadget;
@@ -3536,6 +3540,29 @@ public class GadgetPersistenceImpl extends BasePersistenceImpl<Gadget>
 		gadget.resetOriginalValues();
 
 		return gadget;
+	}
+
+	protected Gadget toUnwrappedModel(Gadget gadget) {
+		if (gadget instanceof GadgetImpl) {
+			return gadget;
+		}
+
+		GadgetImpl gadgetImpl = new GadgetImpl();
+
+		gadgetImpl.setNew(gadget.isNew());
+		gadgetImpl.setPrimaryKey(gadget.getPrimaryKey());
+
+		gadgetImpl.setUuid(gadget.getUuid());
+		gadgetImpl.setGadgetId(gadget.getGadgetId());
+		gadgetImpl.setCompanyId(gadget.getCompanyId());
+		gadgetImpl.setCreateDate(gadget.getCreateDate());
+		gadgetImpl.setModifiedDate(gadget.getModifiedDate());
+		gadgetImpl.setName(gadget.getName());
+		gadgetImpl.setUrl(gadget.getUrl());
+		gadgetImpl.setPortletCategoryNames(gadget.getPortletCategoryNames());
+		gadgetImpl.setLastPublishDate(gadget.getLastPublishDate());
+
+		return gadgetImpl;
 	}
 
 	/**

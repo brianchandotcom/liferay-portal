@@ -2957,6 +2957,8 @@ public class MBThreadFlagPersistenceImpl extends BasePersistenceImpl<MBThreadFla
 
 	@Override
 	protected MBThreadFlag removeImpl(MBThreadFlag mbThreadFlag) {
+		mbThreadFlag = toUnwrappedModel(mbThreadFlag);
+
 		Session session = null;
 
 		try {
@@ -2987,6 +2989,8 @@ public class MBThreadFlagPersistenceImpl extends BasePersistenceImpl<MBThreadFla
 
 	@Override
 	public MBThreadFlag updateImpl(MBThreadFlag mbThreadFlag) {
+		mbThreadFlag = toUnwrappedModel(mbThreadFlag);
+
 		boolean isNew = mbThreadFlag.isNew();
 
 		MBThreadFlagModelImpl mbThreadFlagModelImpl = (MBThreadFlagModelImpl)mbThreadFlag;
@@ -3163,6 +3167,30 @@ public class MBThreadFlagPersistenceImpl extends BasePersistenceImpl<MBThreadFla
 		mbThreadFlag.resetOriginalValues();
 
 		return mbThreadFlag;
+	}
+
+	protected MBThreadFlag toUnwrappedModel(MBThreadFlag mbThreadFlag) {
+		if (mbThreadFlag instanceof MBThreadFlagImpl) {
+			return mbThreadFlag;
+		}
+
+		MBThreadFlagImpl mbThreadFlagImpl = new MBThreadFlagImpl();
+
+		mbThreadFlagImpl.setNew(mbThreadFlag.isNew());
+		mbThreadFlagImpl.setPrimaryKey(mbThreadFlag.getPrimaryKey());
+
+		mbThreadFlagImpl.setUuid(mbThreadFlag.getUuid());
+		mbThreadFlagImpl.setThreadFlagId(mbThreadFlag.getThreadFlagId());
+		mbThreadFlagImpl.setGroupId(mbThreadFlag.getGroupId());
+		mbThreadFlagImpl.setCompanyId(mbThreadFlag.getCompanyId());
+		mbThreadFlagImpl.setUserId(mbThreadFlag.getUserId());
+		mbThreadFlagImpl.setUserName(mbThreadFlag.getUserName());
+		mbThreadFlagImpl.setCreateDate(mbThreadFlag.getCreateDate());
+		mbThreadFlagImpl.setModifiedDate(mbThreadFlag.getModifiedDate());
+		mbThreadFlagImpl.setThreadId(mbThreadFlag.getThreadId());
+		mbThreadFlagImpl.setLastPublishDate(mbThreadFlag.getLastPublishDate());
+
+		return mbThreadFlagImpl;
 	}
 
 	/**

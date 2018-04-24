@@ -747,6 +747,8 @@ public class ShoppingOrderItemPersistenceImpl extends BasePersistenceImpl<Shoppi
 
 	@Override
 	protected ShoppingOrderItem removeImpl(ShoppingOrderItem shoppingOrderItem) {
+		shoppingOrderItem = toUnwrappedModel(shoppingOrderItem);
+
 		Session session = null;
 
 		try {
@@ -777,6 +779,8 @@ public class ShoppingOrderItemPersistenceImpl extends BasePersistenceImpl<Shoppi
 
 	@Override
 	public ShoppingOrderItem updateImpl(ShoppingOrderItem shoppingOrderItem) {
+		shoppingOrderItem = toUnwrappedModel(shoppingOrderItem);
+
 		boolean isNew = shoppingOrderItem.isNew();
 
 		ShoppingOrderItemModelImpl shoppingOrderItemModelImpl = (ShoppingOrderItemModelImpl)shoppingOrderItem;
@@ -846,6 +850,32 @@ public class ShoppingOrderItemPersistenceImpl extends BasePersistenceImpl<Shoppi
 		shoppingOrderItem.resetOriginalValues();
 
 		return shoppingOrderItem;
+	}
+
+	protected ShoppingOrderItem toUnwrappedModel(
+		ShoppingOrderItem shoppingOrderItem) {
+		if (shoppingOrderItem instanceof ShoppingOrderItemImpl) {
+			return shoppingOrderItem;
+		}
+
+		ShoppingOrderItemImpl shoppingOrderItemImpl = new ShoppingOrderItemImpl();
+
+		shoppingOrderItemImpl.setNew(shoppingOrderItem.isNew());
+		shoppingOrderItemImpl.setPrimaryKey(shoppingOrderItem.getPrimaryKey());
+
+		shoppingOrderItemImpl.setOrderItemId(shoppingOrderItem.getOrderItemId());
+		shoppingOrderItemImpl.setCompanyId(shoppingOrderItem.getCompanyId());
+		shoppingOrderItemImpl.setOrderId(shoppingOrderItem.getOrderId());
+		shoppingOrderItemImpl.setItemId(shoppingOrderItem.getItemId());
+		shoppingOrderItemImpl.setSku(shoppingOrderItem.getSku());
+		shoppingOrderItemImpl.setName(shoppingOrderItem.getName());
+		shoppingOrderItemImpl.setDescription(shoppingOrderItem.getDescription());
+		shoppingOrderItemImpl.setProperties(shoppingOrderItem.getProperties());
+		shoppingOrderItemImpl.setPrice(shoppingOrderItem.getPrice());
+		shoppingOrderItemImpl.setQuantity(shoppingOrderItem.getQuantity());
+		shoppingOrderItemImpl.setShippedDate(shoppingOrderItem.getShippedDate());
+
+		return shoppingOrderItemImpl;
 	}
 
 	/**

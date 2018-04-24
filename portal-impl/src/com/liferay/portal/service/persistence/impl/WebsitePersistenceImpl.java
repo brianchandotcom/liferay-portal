@@ -4144,6 +4144,8 @@ public class WebsitePersistenceImpl extends BasePersistenceImpl<Website>
 
 	@Override
 	protected Website removeImpl(Website website) {
+		website = toUnwrappedModel(website);
+
 		Session session = null;
 
 		try {
@@ -4174,6 +4176,8 @@ public class WebsitePersistenceImpl extends BasePersistenceImpl<Website>
 
 	@Override
 	public Website updateImpl(Website website) {
+		website = toUnwrappedModel(website);
+
 		boolean isNew = website.isNew();
 
 		WebsiteModelImpl websiteModelImpl = (WebsiteModelImpl)website;
@@ -4441,6 +4445,34 @@ public class WebsitePersistenceImpl extends BasePersistenceImpl<Website>
 		website.resetOriginalValues();
 
 		return website;
+	}
+
+	protected Website toUnwrappedModel(Website website) {
+		if (website instanceof WebsiteImpl) {
+			return website;
+		}
+
+		WebsiteImpl websiteImpl = new WebsiteImpl();
+
+		websiteImpl.setNew(website.isNew());
+		websiteImpl.setPrimaryKey(website.getPrimaryKey());
+
+		websiteImpl.setMvccVersion(website.getMvccVersion());
+		websiteImpl.setUuid(website.getUuid());
+		websiteImpl.setWebsiteId(website.getWebsiteId());
+		websiteImpl.setCompanyId(website.getCompanyId());
+		websiteImpl.setUserId(website.getUserId());
+		websiteImpl.setUserName(website.getUserName());
+		websiteImpl.setCreateDate(website.getCreateDate());
+		websiteImpl.setModifiedDate(website.getModifiedDate());
+		websiteImpl.setClassNameId(website.getClassNameId());
+		websiteImpl.setClassPK(website.getClassPK());
+		websiteImpl.setUrl(website.getUrl());
+		websiteImpl.setTypeId(website.getTypeId());
+		websiteImpl.setPrimary(website.isPrimary());
+		websiteImpl.setLastPublishDate(website.getLastPublishDate());
+
+		return websiteImpl;
 	}
 
 	/**

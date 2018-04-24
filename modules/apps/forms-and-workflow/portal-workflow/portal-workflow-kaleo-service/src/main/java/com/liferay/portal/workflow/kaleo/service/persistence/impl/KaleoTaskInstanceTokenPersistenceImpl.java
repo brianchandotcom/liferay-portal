@@ -2706,6 +2706,8 @@ public class KaleoTaskInstanceTokenPersistenceImpl extends BasePersistenceImpl<K
 	@Override
 	protected KaleoTaskInstanceToken removeImpl(
 		KaleoTaskInstanceToken kaleoTaskInstanceToken) {
+		kaleoTaskInstanceToken = toUnwrappedModel(kaleoTaskInstanceToken);
+
 		Session session = null;
 
 		try {
@@ -2737,6 +2739,8 @@ public class KaleoTaskInstanceTokenPersistenceImpl extends BasePersistenceImpl<K
 	@Override
 	public KaleoTaskInstanceToken updateImpl(
 		KaleoTaskInstanceToken kaleoTaskInstanceToken) {
+		kaleoTaskInstanceToken = toUnwrappedModel(kaleoTaskInstanceToken);
+
 		boolean isNew = kaleoTaskInstanceToken.isNew();
 
 		KaleoTaskInstanceTokenModelImpl kaleoTaskInstanceTokenModelImpl = (KaleoTaskInstanceTokenModelImpl)kaleoTaskInstanceToken;
@@ -2927,6 +2931,40 @@ public class KaleoTaskInstanceTokenPersistenceImpl extends BasePersistenceImpl<K
 		kaleoTaskInstanceToken.resetOriginalValues();
 
 		return kaleoTaskInstanceToken;
+	}
+
+	protected KaleoTaskInstanceToken toUnwrappedModel(
+		KaleoTaskInstanceToken kaleoTaskInstanceToken) {
+		if (kaleoTaskInstanceToken instanceof KaleoTaskInstanceTokenImpl) {
+			return kaleoTaskInstanceToken;
+		}
+
+		KaleoTaskInstanceTokenImpl kaleoTaskInstanceTokenImpl = new KaleoTaskInstanceTokenImpl();
+
+		kaleoTaskInstanceTokenImpl.setNew(kaleoTaskInstanceToken.isNew());
+		kaleoTaskInstanceTokenImpl.setPrimaryKey(kaleoTaskInstanceToken.getPrimaryKey());
+
+		kaleoTaskInstanceTokenImpl.setKaleoTaskInstanceTokenId(kaleoTaskInstanceToken.getKaleoTaskInstanceTokenId());
+		kaleoTaskInstanceTokenImpl.setGroupId(kaleoTaskInstanceToken.getGroupId());
+		kaleoTaskInstanceTokenImpl.setCompanyId(kaleoTaskInstanceToken.getCompanyId());
+		kaleoTaskInstanceTokenImpl.setUserId(kaleoTaskInstanceToken.getUserId());
+		kaleoTaskInstanceTokenImpl.setUserName(kaleoTaskInstanceToken.getUserName());
+		kaleoTaskInstanceTokenImpl.setCreateDate(kaleoTaskInstanceToken.getCreateDate());
+		kaleoTaskInstanceTokenImpl.setModifiedDate(kaleoTaskInstanceToken.getModifiedDate());
+		kaleoTaskInstanceTokenImpl.setKaleoDefinitionVersionId(kaleoTaskInstanceToken.getKaleoDefinitionVersionId());
+		kaleoTaskInstanceTokenImpl.setKaleoInstanceId(kaleoTaskInstanceToken.getKaleoInstanceId());
+		kaleoTaskInstanceTokenImpl.setKaleoInstanceTokenId(kaleoTaskInstanceToken.getKaleoInstanceTokenId());
+		kaleoTaskInstanceTokenImpl.setKaleoTaskId(kaleoTaskInstanceToken.getKaleoTaskId());
+		kaleoTaskInstanceTokenImpl.setKaleoTaskName(kaleoTaskInstanceToken.getKaleoTaskName());
+		kaleoTaskInstanceTokenImpl.setClassName(kaleoTaskInstanceToken.getClassName());
+		kaleoTaskInstanceTokenImpl.setClassPK(kaleoTaskInstanceToken.getClassPK());
+		kaleoTaskInstanceTokenImpl.setCompletionUserId(kaleoTaskInstanceToken.getCompletionUserId());
+		kaleoTaskInstanceTokenImpl.setCompleted(kaleoTaskInstanceToken.isCompleted());
+		kaleoTaskInstanceTokenImpl.setCompletionDate(kaleoTaskInstanceToken.getCompletionDate());
+		kaleoTaskInstanceTokenImpl.setDueDate(kaleoTaskInstanceToken.getDueDate());
+		kaleoTaskInstanceTokenImpl.setWorkflowContext(kaleoTaskInstanceToken.getWorkflowContext());
+
+		return kaleoTaskInstanceTokenImpl;
 	}
 
 	/**

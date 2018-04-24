@@ -1778,6 +1778,8 @@ public class WallEntryPersistenceImpl extends BasePersistenceImpl<WallEntry>
 
 	@Override
 	protected WallEntry removeImpl(WallEntry wallEntry) {
+		wallEntry = toUnwrappedModel(wallEntry);
+
 		Session session = null;
 
 		try {
@@ -1808,6 +1810,8 @@ public class WallEntryPersistenceImpl extends BasePersistenceImpl<WallEntry>
 
 	@Override
 	public WallEntry updateImpl(WallEntry wallEntry) {
+		wallEntry = toUnwrappedModel(wallEntry);
+
 		boolean isNew = wallEntry.isNew();
 
 		WallEntryModelImpl wallEntryModelImpl = (WallEntryModelImpl)wallEntry;
@@ -1951,6 +1955,28 @@ public class WallEntryPersistenceImpl extends BasePersistenceImpl<WallEntry>
 		wallEntry.resetOriginalValues();
 
 		return wallEntry;
+	}
+
+	protected WallEntry toUnwrappedModel(WallEntry wallEntry) {
+		if (wallEntry instanceof WallEntryImpl) {
+			return wallEntry;
+		}
+
+		WallEntryImpl wallEntryImpl = new WallEntryImpl();
+
+		wallEntryImpl.setNew(wallEntry.isNew());
+		wallEntryImpl.setPrimaryKey(wallEntry.getPrimaryKey());
+
+		wallEntryImpl.setWallEntryId(wallEntry.getWallEntryId());
+		wallEntryImpl.setGroupId(wallEntry.getGroupId());
+		wallEntryImpl.setCompanyId(wallEntry.getCompanyId());
+		wallEntryImpl.setUserId(wallEntry.getUserId());
+		wallEntryImpl.setUserName(wallEntry.getUserName());
+		wallEntryImpl.setCreateDate(wallEntry.getCreateDate());
+		wallEntryImpl.setModifiedDate(wallEntry.getModifiedDate());
+		wallEntryImpl.setComments(wallEntry.getComments());
+
+		return wallEntryImpl;
 	}
 
 	/**

@@ -1131,6 +1131,8 @@ public class ServiceComponentPersistenceImpl extends BasePersistenceImpl<Service
 
 	@Override
 	protected ServiceComponent removeImpl(ServiceComponent serviceComponent) {
+		serviceComponent = toUnwrappedModel(serviceComponent);
+
 		Session session = null;
 
 		try {
@@ -1161,6 +1163,8 @@ public class ServiceComponentPersistenceImpl extends BasePersistenceImpl<Service
 
 	@Override
 	public ServiceComponent updateImpl(ServiceComponent serviceComponent) {
+		serviceComponent = toUnwrappedModel(serviceComponent);
+
 		boolean isNew = serviceComponent.isNew();
 
 		ServiceComponentModelImpl serviceComponentModelImpl = (ServiceComponentModelImpl)serviceComponent;
@@ -1239,6 +1243,27 @@ public class ServiceComponentPersistenceImpl extends BasePersistenceImpl<Service
 		serviceComponent.resetOriginalValues();
 
 		return serviceComponent;
+	}
+
+	protected ServiceComponent toUnwrappedModel(
+		ServiceComponent serviceComponent) {
+		if (serviceComponent instanceof ServiceComponentImpl) {
+			return serviceComponent;
+		}
+
+		ServiceComponentImpl serviceComponentImpl = new ServiceComponentImpl();
+
+		serviceComponentImpl.setNew(serviceComponent.isNew());
+		serviceComponentImpl.setPrimaryKey(serviceComponent.getPrimaryKey());
+
+		serviceComponentImpl.setMvccVersion(serviceComponent.getMvccVersion());
+		serviceComponentImpl.setServiceComponentId(serviceComponent.getServiceComponentId());
+		serviceComponentImpl.setBuildNamespace(serviceComponent.getBuildNamespace());
+		serviceComponentImpl.setBuildNumber(serviceComponent.getBuildNumber());
+		serviceComponentImpl.setBuildDate(serviceComponent.getBuildDate());
+		serviceComponentImpl.setData(serviceComponent.getData());
+
+		return serviceComponentImpl;
 	}
 
 	/**

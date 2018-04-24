@@ -4541,6 +4541,8 @@ public class EntryPersistenceImpl extends BasePersistenceImpl<Entry>
 
 	@Override
 	protected Entry removeImpl(Entry entry) {
+		entry = toUnwrappedModel(entry);
+
 		Session session = null;
 
 		try {
@@ -4571,6 +4573,8 @@ public class EntryPersistenceImpl extends BasePersistenceImpl<Entry>
 
 	@Override
 	public Entry updateImpl(Entry entry) {
+		entry = toUnwrappedModel(entry);
+
 		boolean isNew = entry.isNew();
 
 		EntryModelImpl entryModelImpl = (EntryModelImpl)entry;
@@ -4837,6 +4841,26 @@ public class EntryPersistenceImpl extends BasePersistenceImpl<Entry>
 		entry.resetOriginalValues();
 
 		return entry;
+	}
+
+	protected Entry toUnwrappedModel(Entry entry) {
+		if (entry instanceof EntryImpl) {
+			return entry;
+		}
+
+		EntryImpl entryImpl = new EntryImpl();
+
+		entryImpl.setNew(entry.isNew());
+		entryImpl.setPrimaryKey(entry.getPrimaryKey());
+
+		entryImpl.setEntryId(entry.getEntryId());
+		entryImpl.setCreateDate(entry.getCreateDate());
+		entryImpl.setFromUserId(entry.getFromUserId());
+		entryImpl.setToUserId(entry.getToUserId());
+		entryImpl.setContent(entry.getContent());
+		entryImpl.setFlag(entry.getFlag());
+
+		return entryImpl;
 	}
 
 	/**

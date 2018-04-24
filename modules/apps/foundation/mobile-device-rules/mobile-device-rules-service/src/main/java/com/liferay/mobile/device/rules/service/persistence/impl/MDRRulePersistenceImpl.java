@@ -2191,6 +2191,8 @@ public class MDRRulePersistenceImpl extends BasePersistenceImpl<MDRRule>
 
 	@Override
 	protected MDRRule removeImpl(MDRRule mdrRule) {
+		mdrRule = toUnwrappedModel(mdrRule);
+
 		Session session = null;
 
 		try {
@@ -2221,6 +2223,8 @@ public class MDRRulePersistenceImpl extends BasePersistenceImpl<MDRRule>
 
 	@Override
 	public MDRRule updateImpl(MDRRule mdrRule) {
+		mdrRule = toUnwrappedModel(mdrRule);
+
 		boolean isNew = mdrRule.isNew();
 
 		MDRRuleModelImpl mdrRuleModelImpl = (MDRRuleModelImpl)mdrRule;
@@ -2370,6 +2374,34 @@ public class MDRRulePersistenceImpl extends BasePersistenceImpl<MDRRule>
 		mdrRule.resetOriginalValues();
 
 		return mdrRule;
+	}
+
+	protected MDRRule toUnwrappedModel(MDRRule mdrRule) {
+		if (mdrRule instanceof MDRRuleImpl) {
+			return mdrRule;
+		}
+
+		MDRRuleImpl mdrRuleImpl = new MDRRuleImpl();
+
+		mdrRuleImpl.setNew(mdrRule.isNew());
+		mdrRuleImpl.setPrimaryKey(mdrRule.getPrimaryKey());
+
+		mdrRuleImpl.setUuid(mdrRule.getUuid());
+		mdrRuleImpl.setRuleId(mdrRule.getRuleId());
+		mdrRuleImpl.setGroupId(mdrRule.getGroupId());
+		mdrRuleImpl.setCompanyId(mdrRule.getCompanyId());
+		mdrRuleImpl.setUserId(mdrRule.getUserId());
+		mdrRuleImpl.setUserName(mdrRule.getUserName());
+		mdrRuleImpl.setCreateDate(mdrRule.getCreateDate());
+		mdrRuleImpl.setModifiedDate(mdrRule.getModifiedDate());
+		mdrRuleImpl.setRuleGroupId(mdrRule.getRuleGroupId());
+		mdrRuleImpl.setName(mdrRule.getName());
+		mdrRuleImpl.setDescription(mdrRule.getDescription());
+		mdrRuleImpl.setType(mdrRule.getType());
+		mdrRuleImpl.setTypeSettings(mdrRule.getTypeSettings());
+		mdrRuleImpl.setLastPublishDate(mdrRule.getLastPublishDate());
+
+		return mdrRuleImpl;
 	}
 
 	/**

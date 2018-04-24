@@ -10089,6 +10089,8 @@ public class TasksEntryPersistenceImpl extends BasePersistenceImpl<TasksEntry>
 
 	@Override
 	protected TasksEntry removeImpl(TasksEntry tasksEntry) {
+		tasksEntry = toUnwrappedModel(tasksEntry);
+
 		Session session = null;
 
 		try {
@@ -10119,6 +10121,8 @@ public class TasksEntryPersistenceImpl extends BasePersistenceImpl<TasksEntry>
 
 	@Override
 	public TasksEntry updateImpl(TasksEntry tasksEntry) {
+		tasksEntry = toUnwrappedModel(tasksEntry);
+
 		boolean isNew = tasksEntry.isNew();
 
 		TasksEntryModelImpl tasksEntryModelImpl = (TasksEntryModelImpl)tasksEntry;
@@ -10498,6 +10502,34 @@ public class TasksEntryPersistenceImpl extends BasePersistenceImpl<TasksEntry>
 		tasksEntry.resetOriginalValues();
 
 		return tasksEntry;
+	}
+
+	protected TasksEntry toUnwrappedModel(TasksEntry tasksEntry) {
+		if (tasksEntry instanceof TasksEntryImpl) {
+			return tasksEntry;
+		}
+
+		TasksEntryImpl tasksEntryImpl = new TasksEntryImpl();
+
+		tasksEntryImpl.setNew(tasksEntry.isNew());
+		tasksEntryImpl.setPrimaryKey(tasksEntry.getPrimaryKey());
+
+		tasksEntryImpl.setTasksEntryId(tasksEntry.getTasksEntryId());
+		tasksEntryImpl.setGroupId(tasksEntry.getGroupId());
+		tasksEntryImpl.setCompanyId(tasksEntry.getCompanyId());
+		tasksEntryImpl.setUserId(tasksEntry.getUserId());
+		tasksEntryImpl.setUserName(tasksEntry.getUserName());
+		tasksEntryImpl.setCreateDate(tasksEntry.getCreateDate());
+		tasksEntryImpl.setModifiedDate(tasksEntry.getModifiedDate());
+		tasksEntryImpl.setTitle(tasksEntry.getTitle());
+		tasksEntryImpl.setPriority(tasksEntry.getPriority());
+		tasksEntryImpl.setAssigneeUserId(tasksEntry.getAssigneeUserId());
+		tasksEntryImpl.setResolverUserId(tasksEntry.getResolverUserId());
+		tasksEntryImpl.setDueDate(tasksEntry.getDueDate());
+		tasksEntryImpl.setFinishDate(tasksEntry.getFinishDate());
+		tasksEntryImpl.setStatus(tasksEntry.getStatus());
+
+		return tasksEntryImpl;
 	}
 
 	/**

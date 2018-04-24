@@ -1508,6 +1508,8 @@ public class ShoppingCartPersistenceImpl extends BasePersistenceImpl<ShoppingCar
 
 	@Override
 	protected ShoppingCart removeImpl(ShoppingCart shoppingCart) {
+		shoppingCart = toUnwrappedModel(shoppingCart);
+
 		Session session = null;
 
 		try {
@@ -1538,6 +1540,8 @@ public class ShoppingCartPersistenceImpl extends BasePersistenceImpl<ShoppingCar
 
 	@Override
 	public ShoppingCart updateImpl(ShoppingCart shoppingCart) {
+		shoppingCart = toUnwrappedModel(shoppingCart);
+
 		boolean isNew = shoppingCart.isNew();
 
 		ShoppingCartModelImpl shoppingCartModelImpl = (ShoppingCartModelImpl)shoppingCart;
@@ -1655,6 +1659,31 @@ public class ShoppingCartPersistenceImpl extends BasePersistenceImpl<ShoppingCar
 		shoppingCart.resetOriginalValues();
 
 		return shoppingCart;
+	}
+
+	protected ShoppingCart toUnwrappedModel(ShoppingCart shoppingCart) {
+		if (shoppingCart instanceof ShoppingCartImpl) {
+			return shoppingCart;
+		}
+
+		ShoppingCartImpl shoppingCartImpl = new ShoppingCartImpl();
+
+		shoppingCartImpl.setNew(shoppingCart.isNew());
+		shoppingCartImpl.setPrimaryKey(shoppingCart.getPrimaryKey());
+
+		shoppingCartImpl.setCartId(shoppingCart.getCartId());
+		shoppingCartImpl.setGroupId(shoppingCart.getGroupId());
+		shoppingCartImpl.setCompanyId(shoppingCart.getCompanyId());
+		shoppingCartImpl.setUserId(shoppingCart.getUserId());
+		shoppingCartImpl.setUserName(shoppingCart.getUserName());
+		shoppingCartImpl.setCreateDate(shoppingCart.getCreateDate());
+		shoppingCartImpl.setModifiedDate(shoppingCart.getModifiedDate());
+		shoppingCartImpl.setItemIds(shoppingCart.getItemIds());
+		shoppingCartImpl.setCouponCodes(shoppingCart.getCouponCodes());
+		shoppingCartImpl.setAltShipping(shoppingCart.getAltShipping());
+		shoppingCartImpl.setInsure(shoppingCart.isInsure());
+
+		return shoppingCartImpl;
 	}
 
 	/**

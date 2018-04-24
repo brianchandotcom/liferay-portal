@@ -2234,6 +2234,8 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 
 	@Override
 	protected Lock removeImpl(Lock lock) {
+		lock = toUnwrappedModel(lock);
+
 		Session session = null;
 
 		try {
@@ -2263,6 +2265,8 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 
 	@Override
 	public Lock updateImpl(Lock lock) {
+		lock = toUnwrappedModel(lock);
+
 		boolean isNew = lock.isNew();
 
 		LockModelImpl lockModelImpl = (LockModelImpl)lock;
@@ -2366,6 +2370,32 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 		lock.resetOriginalValues();
 
 		return lock;
+	}
+
+	protected Lock toUnwrappedModel(Lock lock) {
+		if (lock instanceof LockImpl) {
+			return lock;
+		}
+
+		LockImpl lockImpl = new LockImpl();
+
+		lockImpl.setNew(lock.isNew());
+		lockImpl.setPrimaryKey(lock.getPrimaryKey());
+
+		lockImpl.setMvccVersion(lock.getMvccVersion());
+		lockImpl.setUuid(lock.getUuid());
+		lockImpl.setLockId(lock.getLockId());
+		lockImpl.setCompanyId(lock.getCompanyId());
+		lockImpl.setUserId(lock.getUserId());
+		lockImpl.setUserName(lock.getUserName());
+		lockImpl.setCreateDate(lock.getCreateDate());
+		lockImpl.setClassName(lock.getClassName());
+		lockImpl.setKey(lock.getKey());
+		lockImpl.setOwner(lock.getOwner());
+		lockImpl.setInheritable(lock.isInheritable());
+		lockImpl.setExpirationDate(lock.getExpirationDate());
+
+		return lockImpl;
 	}
 
 	/**

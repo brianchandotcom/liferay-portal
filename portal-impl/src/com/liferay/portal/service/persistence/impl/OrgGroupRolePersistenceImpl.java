@@ -1241,6 +1241,8 @@ public class OrgGroupRolePersistenceImpl extends BasePersistenceImpl<OrgGroupRol
 
 	@Override
 	protected OrgGroupRole removeImpl(OrgGroupRole orgGroupRole) {
+		orgGroupRole = toUnwrappedModel(orgGroupRole);
+
 		Session session = null;
 
 		try {
@@ -1271,6 +1273,8 @@ public class OrgGroupRolePersistenceImpl extends BasePersistenceImpl<OrgGroupRol
 
 	@Override
 	public OrgGroupRole updateImpl(OrgGroupRole orgGroupRole) {
+		orgGroupRole = toUnwrappedModel(orgGroupRole);
+
 		boolean isNew = orgGroupRole.isNew();
 
 		OrgGroupRoleModelImpl orgGroupRoleModelImpl = (OrgGroupRoleModelImpl)orgGroupRole;
@@ -1363,6 +1367,25 @@ public class OrgGroupRolePersistenceImpl extends BasePersistenceImpl<OrgGroupRol
 		orgGroupRole.resetOriginalValues();
 
 		return orgGroupRole;
+	}
+
+	protected OrgGroupRole toUnwrappedModel(OrgGroupRole orgGroupRole) {
+		if (orgGroupRole instanceof OrgGroupRoleImpl) {
+			return orgGroupRole;
+		}
+
+		OrgGroupRoleImpl orgGroupRoleImpl = new OrgGroupRoleImpl();
+
+		orgGroupRoleImpl.setNew(orgGroupRole.isNew());
+		orgGroupRoleImpl.setPrimaryKey(orgGroupRole.getPrimaryKey());
+
+		orgGroupRoleImpl.setMvccVersion(orgGroupRole.getMvccVersion());
+		orgGroupRoleImpl.setOrganizationId(orgGroupRole.getOrganizationId());
+		orgGroupRoleImpl.setGroupId(orgGroupRole.getGroupId());
+		orgGroupRoleImpl.setRoleId(orgGroupRole.getRoleId());
+		orgGroupRoleImpl.setCompanyId(orgGroupRole.getCompanyId());
+
+		return orgGroupRoleImpl;
 	}
 
 	/**

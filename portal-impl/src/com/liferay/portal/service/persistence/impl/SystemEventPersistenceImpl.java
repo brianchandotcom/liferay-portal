@@ -2506,6 +2506,8 @@ public class SystemEventPersistenceImpl extends BasePersistenceImpl<SystemEvent>
 
 	@Override
 	protected SystemEvent removeImpl(SystemEvent systemEvent) {
+		systemEvent = toUnwrappedModel(systemEvent);
+
 		Session session = null;
 
 		try {
@@ -2536,6 +2538,8 @@ public class SystemEventPersistenceImpl extends BasePersistenceImpl<SystemEvent>
 
 	@Override
 	public SystemEvent updateImpl(SystemEvent systemEvent) {
+		systemEvent = toUnwrappedModel(systemEvent);
+
 		boolean isNew = systemEvent.isNew();
 
 		SystemEventModelImpl systemEventModelImpl = (SystemEventModelImpl)systemEvent;
@@ -2704,6 +2708,35 @@ public class SystemEventPersistenceImpl extends BasePersistenceImpl<SystemEvent>
 		systemEvent.resetOriginalValues();
 
 		return systemEvent;
+	}
+
+	protected SystemEvent toUnwrappedModel(SystemEvent systemEvent) {
+		if (systemEvent instanceof SystemEventImpl) {
+			return systemEvent;
+		}
+
+		SystemEventImpl systemEventImpl = new SystemEventImpl();
+
+		systemEventImpl.setNew(systemEvent.isNew());
+		systemEventImpl.setPrimaryKey(systemEvent.getPrimaryKey());
+
+		systemEventImpl.setMvccVersion(systemEvent.getMvccVersion());
+		systemEventImpl.setSystemEventId(systemEvent.getSystemEventId());
+		systemEventImpl.setGroupId(systemEvent.getGroupId());
+		systemEventImpl.setCompanyId(systemEvent.getCompanyId());
+		systemEventImpl.setUserId(systemEvent.getUserId());
+		systemEventImpl.setUserName(systemEvent.getUserName());
+		systemEventImpl.setCreateDate(systemEvent.getCreateDate());
+		systemEventImpl.setClassNameId(systemEvent.getClassNameId());
+		systemEventImpl.setClassPK(systemEvent.getClassPK());
+		systemEventImpl.setClassUuid(systemEvent.getClassUuid());
+		systemEventImpl.setReferrerClassNameId(systemEvent.getReferrerClassNameId());
+		systemEventImpl.setParentSystemEventId(systemEvent.getParentSystemEventId());
+		systemEventImpl.setSystemEventSetKey(systemEvent.getSystemEventSetKey());
+		systemEventImpl.setType(systemEvent.getType());
+		systemEventImpl.setExtraData(systemEvent.getExtraData());
+
+		return systemEventImpl;
 	}
 
 	/**

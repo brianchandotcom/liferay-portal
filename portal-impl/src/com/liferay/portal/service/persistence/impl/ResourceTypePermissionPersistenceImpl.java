@@ -1756,6 +1756,8 @@ public class ResourceTypePermissionPersistenceImpl extends BasePersistenceImpl<R
 	@Override
 	protected ResourceTypePermission removeImpl(
 		ResourceTypePermission resourceTypePermission) {
+		resourceTypePermission = toUnwrappedModel(resourceTypePermission);
+
 		Session session = null;
 
 		try {
@@ -1787,6 +1789,8 @@ public class ResourceTypePermissionPersistenceImpl extends BasePersistenceImpl<R
 	@Override
 	public ResourceTypePermission updateImpl(
 		ResourceTypePermission resourceTypePermission) {
+		resourceTypePermission = toUnwrappedModel(resourceTypePermission);
+
 		boolean isNew = resourceTypePermission.isNew();
 
 		ResourceTypePermissionModelImpl resourceTypePermissionModelImpl = (ResourceTypePermissionModelImpl)resourceTypePermission;
@@ -1895,6 +1899,28 @@ public class ResourceTypePermissionPersistenceImpl extends BasePersistenceImpl<R
 		resourceTypePermission.resetOriginalValues();
 
 		return resourceTypePermission;
+	}
+
+	protected ResourceTypePermission toUnwrappedModel(
+		ResourceTypePermission resourceTypePermission) {
+		if (resourceTypePermission instanceof ResourceTypePermissionImpl) {
+			return resourceTypePermission;
+		}
+
+		ResourceTypePermissionImpl resourceTypePermissionImpl = new ResourceTypePermissionImpl();
+
+		resourceTypePermissionImpl.setNew(resourceTypePermission.isNew());
+		resourceTypePermissionImpl.setPrimaryKey(resourceTypePermission.getPrimaryKey());
+
+		resourceTypePermissionImpl.setMvccVersion(resourceTypePermission.getMvccVersion());
+		resourceTypePermissionImpl.setResourceTypePermissionId(resourceTypePermission.getResourceTypePermissionId());
+		resourceTypePermissionImpl.setCompanyId(resourceTypePermission.getCompanyId());
+		resourceTypePermissionImpl.setGroupId(resourceTypePermission.getGroupId());
+		resourceTypePermissionImpl.setName(resourceTypePermission.getName());
+		resourceTypePermissionImpl.setRoleId(resourceTypePermission.getRoleId());
+		resourceTypePermissionImpl.setActionIds(resourceTypePermission.getActionIds());
+
+		return resourceTypePermissionImpl;
 	}
 
 	/**

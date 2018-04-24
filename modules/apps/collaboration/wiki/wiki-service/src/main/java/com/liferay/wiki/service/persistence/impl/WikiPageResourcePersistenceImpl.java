@@ -1998,6 +1998,8 @@ public class WikiPageResourcePersistenceImpl extends BasePersistenceImpl<WikiPag
 
 	@Override
 	protected WikiPageResource removeImpl(WikiPageResource wikiPageResource) {
+		wikiPageResource = toUnwrappedModel(wikiPageResource);
+
 		Session session = null;
 
 		try {
@@ -2028,6 +2030,8 @@ public class WikiPageResourcePersistenceImpl extends BasePersistenceImpl<WikiPag
 
 	@Override
 	public WikiPageResource updateImpl(WikiPageResource wikiPageResource) {
+		wikiPageResource = toUnwrappedModel(wikiPageResource);
+
 		boolean isNew = wikiPageResource.isNew();
 
 		WikiPageResourceModelImpl wikiPageResourceModelImpl = (WikiPageResourceModelImpl)wikiPageResource;
@@ -2136,6 +2140,27 @@ public class WikiPageResourcePersistenceImpl extends BasePersistenceImpl<WikiPag
 		wikiPageResource.resetOriginalValues();
 
 		return wikiPageResource;
+	}
+
+	protected WikiPageResource toUnwrappedModel(
+		WikiPageResource wikiPageResource) {
+		if (wikiPageResource instanceof WikiPageResourceImpl) {
+			return wikiPageResource;
+		}
+
+		WikiPageResourceImpl wikiPageResourceImpl = new WikiPageResourceImpl();
+
+		wikiPageResourceImpl.setNew(wikiPageResource.isNew());
+		wikiPageResourceImpl.setPrimaryKey(wikiPageResource.getPrimaryKey());
+
+		wikiPageResourceImpl.setUuid(wikiPageResource.getUuid());
+		wikiPageResourceImpl.setResourcePrimKey(wikiPageResource.getResourcePrimKey());
+		wikiPageResourceImpl.setGroupId(wikiPageResource.getGroupId());
+		wikiPageResourceImpl.setCompanyId(wikiPageResource.getCompanyId());
+		wikiPageResourceImpl.setNodeId(wikiPageResource.getNodeId());
+		wikiPageResourceImpl.setTitle(wikiPageResource.getTitle());
+
+		return wikiPageResourceImpl;
 	}
 
 	/**

@@ -4936,6 +4936,8 @@ public class MDRRuleGroupInstancePersistenceImpl extends BasePersistenceImpl<MDR
 	@Override
 	protected MDRRuleGroupInstance removeImpl(
 		MDRRuleGroupInstance mdrRuleGroupInstance) {
+		mdrRuleGroupInstance = toUnwrappedModel(mdrRuleGroupInstance);
+
 		Session session = null;
 
 		try {
@@ -4967,6 +4969,8 @@ public class MDRRuleGroupInstancePersistenceImpl extends BasePersistenceImpl<MDR
 	@Override
 	public MDRRuleGroupInstance updateImpl(
 		MDRRuleGroupInstance mdrRuleGroupInstance) {
+		mdrRuleGroupInstance = toUnwrappedModel(mdrRuleGroupInstance);
+
 		boolean isNew = mdrRuleGroupInstance.isNew();
 
 		MDRRuleGroupInstanceModelImpl mdrRuleGroupInstanceModelImpl = (MDRRuleGroupInstanceModelImpl)mdrRuleGroupInstance;
@@ -5210,6 +5214,34 @@ public class MDRRuleGroupInstancePersistenceImpl extends BasePersistenceImpl<MDR
 		mdrRuleGroupInstance.resetOriginalValues();
 
 		return mdrRuleGroupInstance;
+	}
+
+	protected MDRRuleGroupInstance toUnwrappedModel(
+		MDRRuleGroupInstance mdrRuleGroupInstance) {
+		if (mdrRuleGroupInstance instanceof MDRRuleGroupInstanceImpl) {
+			return mdrRuleGroupInstance;
+		}
+
+		MDRRuleGroupInstanceImpl mdrRuleGroupInstanceImpl = new MDRRuleGroupInstanceImpl();
+
+		mdrRuleGroupInstanceImpl.setNew(mdrRuleGroupInstance.isNew());
+		mdrRuleGroupInstanceImpl.setPrimaryKey(mdrRuleGroupInstance.getPrimaryKey());
+
+		mdrRuleGroupInstanceImpl.setUuid(mdrRuleGroupInstance.getUuid());
+		mdrRuleGroupInstanceImpl.setRuleGroupInstanceId(mdrRuleGroupInstance.getRuleGroupInstanceId());
+		mdrRuleGroupInstanceImpl.setGroupId(mdrRuleGroupInstance.getGroupId());
+		mdrRuleGroupInstanceImpl.setCompanyId(mdrRuleGroupInstance.getCompanyId());
+		mdrRuleGroupInstanceImpl.setUserId(mdrRuleGroupInstance.getUserId());
+		mdrRuleGroupInstanceImpl.setUserName(mdrRuleGroupInstance.getUserName());
+		mdrRuleGroupInstanceImpl.setCreateDate(mdrRuleGroupInstance.getCreateDate());
+		mdrRuleGroupInstanceImpl.setModifiedDate(mdrRuleGroupInstance.getModifiedDate());
+		mdrRuleGroupInstanceImpl.setClassNameId(mdrRuleGroupInstance.getClassNameId());
+		mdrRuleGroupInstanceImpl.setClassPK(mdrRuleGroupInstance.getClassPK());
+		mdrRuleGroupInstanceImpl.setRuleGroupId(mdrRuleGroupInstance.getRuleGroupId());
+		mdrRuleGroupInstanceImpl.setPriority(mdrRuleGroupInstance.getPriority());
+		mdrRuleGroupInstanceImpl.setLastPublishDate(mdrRuleGroupInstance.getLastPublishDate());
+
+		return mdrRuleGroupInstanceImpl;
 	}
 
 	/**

@@ -5946,6 +5946,8 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 
 	@Override
 	protected DLFileVersion removeImpl(DLFileVersion dlFileVersion) {
+		dlFileVersion = toUnwrappedModel(dlFileVersion);
+
 		Session session = null;
 
 		try {
@@ -5976,6 +5978,8 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 
 	@Override
 	public DLFileVersion updateImpl(DLFileVersion dlFileVersion) {
+		dlFileVersion = toUnwrappedModel(dlFileVersion);
+
 		boolean isNew = dlFileVersion.isNew();
 
 		DLFileVersionModelImpl dlFileVersionModelImpl = (DLFileVersionModelImpl)dlFileVersion;
@@ -6275,6 +6279,48 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 		dlFileVersion.resetOriginalValues();
 
 		return dlFileVersion;
+	}
+
+	protected DLFileVersion toUnwrappedModel(DLFileVersion dlFileVersion) {
+		if (dlFileVersion instanceof DLFileVersionImpl) {
+			return dlFileVersion;
+		}
+
+		DLFileVersionImpl dlFileVersionImpl = new DLFileVersionImpl();
+
+		dlFileVersionImpl.setNew(dlFileVersion.isNew());
+		dlFileVersionImpl.setPrimaryKey(dlFileVersion.getPrimaryKey());
+
+		dlFileVersionImpl.setUuid(dlFileVersion.getUuid());
+		dlFileVersionImpl.setFileVersionId(dlFileVersion.getFileVersionId());
+		dlFileVersionImpl.setGroupId(dlFileVersion.getGroupId());
+		dlFileVersionImpl.setCompanyId(dlFileVersion.getCompanyId());
+		dlFileVersionImpl.setUserId(dlFileVersion.getUserId());
+		dlFileVersionImpl.setUserName(dlFileVersion.getUserName());
+		dlFileVersionImpl.setCreateDate(dlFileVersion.getCreateDate());
+		dlFileVersionImpl.setModifiedDate(dlFileVersion.getModifiedDate());
+		dlFileVersionImpl.setRepositoryId(dlFileVersion.getRepositoryId());
+		dlFileVersionImpl.setFolderId(dlFileVersion.getFolderId());
+		dlFileVersionImpl.setFileEntryId(dlFileVersion.getFileEntryId());
+		dlFileVersionImpl.setTreePath(dlFileVersion.getTreePath());
+		dlFileVersionImpl.setFileName(dlFileVersion.getFileName());
+		dlFileVersionImpl.setExtension(dlFileVersion.getExtension());
+		dlFileVersionImpl.setMimeType(dlFileVersion.getMimeType());
+		dlFileVersionImpl.setTitle(dlFileVersion.getTitle());
+		dlFileVersionImpl.setDescription(dlFileVersion.getDescription());
+		dlFileVersionImpl.setChangeLog(dlFileVersion.getChangeLog());
+		dlFileVersionImpl.setExtraSettings(dlFileVersion.getExtraSettings());
+		dlFileVersionImpl.setFileEntryTypeId(dlFileVersion.getFileEntryTypeId());
+		dlFileVersionImpl.setVersion(dlFileVersion.getVersion());
+		dlFileVersionImpl.setSize(dlFileVersion.getSize());
+		dlFileVersionImpl.setChecksum(dlFileVersion.getChecksum());
+		dlFileVersionImpl.setLastPublishDate(dlFileVersion.getLastPublishDate());
+		dlFileVersionImpl.setStatus(dlFileVersion.getStatus());
+		dlFileVersionImpl.setStatusByUserId(dlFileVersion.getStatusByUserId());
+		dlFileVersionImpl.setStatusByUserName(dlFileVersion.getStatusByUserName());
+		dlFileVersionImpl.setStatusDate(dlFileVersion.getStatusDate());
+
+		return dlFileVersionImpl;
 	}
 
 	/**

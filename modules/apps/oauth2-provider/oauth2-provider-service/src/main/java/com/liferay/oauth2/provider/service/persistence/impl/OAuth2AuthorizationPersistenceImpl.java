@@ -1898,6 +1898,8 @@ public class OAuth2AuthorizationPersistenceImpl extends BasePersistenceImpl<OAut
 	@Override
 	protected OAuth2Authorization removeImpl(
 		OAuth2Authorization oAuth2Authorization) {
+		oAuth2Authorization = toUnwrappedModel(oAuth2Authorization);
+
 		oAuth2AuthorizationToOAuth2ScopeGrantTableMapper.deleteLeftPrimaryKeyTableMappings(oAuth2Authorization.getPrimaryKey());
 
 		Session session = null;
@@ -1931,6 +1933,8 @@ public class OAuth2AuthorizationPersistenceImpl extends BasePersistenceImpl<OAut
 	@Override
 	public OAuth2Authorization updateImpl(
 		OAuth2Authorization oAuth2Authorization) {
+		oAuth2Authorization = toUnwrappedModel(oAuth2Authorization);
+
 		boolean isNew = oAuth2Authorization.isNew();
 
 		OAuth2AuthorizationModelImpl oAuth2AuthorizationModelImpl = (OAuth2AuthorizationModelImpl)oAuth2Authorization;
@@ -2035,6 +2039,35 @@ public class OAuth2AuthorizationPersistenceImpl extends BasePersistenceImpl<OAut
 		oAuth2Authorization.resetOriginalValues();
 
 		return oAuth2Authorization;
+	}
+
+	protected OAuth2Authorization toUnwrappedModel(
+		OAuth2Authorization oAuth2Authorization) {
+		if (oAuth2Authorization instanceof OAuth2AuthorizationImpl) {
+			return oAuth2Authorization;
+		}
+
+		OAuth2AuthorizationImpl oAuth2AuthorizationImpl = new OAuth2AuthorizationImpl();
+
+		oAuth2AuthorizationImpl.setNew(oAuth2Authorization.isNew());
+		oAuth2AuthorizationImpl.setPrimaryKey(oAuth2Authorization.getPrimaryKey());
+
+		oAuth2AuthorizationImpl.setOAuth2AuthorizationId(oAuth2Authorization.getOAuth2AuthorizationId());
+		oAuth2AuthorizationImpl.setCompanyId(oAuth2Authorization.getCompanyId());
+		oAuth2AuthorizationImpl.setUserId(oAuth2Authorization.getUserId());
+		oAuth2AuthorizationImpl.setUserName(oAuth2Authorization.getUserName());
+		oAuth2AuthorizationImpl.setCreateDate(oAuth2Authorization.getCreateDate());
+		oAuth2AuthorizationImpl.setOAuth2ApplicationId(oAuth2Authorization.getOAuth2ApplicationId());
+		oAuth2AuthorizationImpl.setOAuth2ApplicationScopeAliasesId(oAuth2Authorization.getOAuth2ApplicationScopeAliasesId());
+		oAuth2AuthorizationImpl.setAccessTokenContent(oAuth2Authorization.getAccessTokenContent());
+		oAuth2AuthorizationImpl.setAccessTokenCreateDate(oAuth2Authorization.getAccessTokenCreateDate());
+		oAuth2AuthorizationImpl.setAccessTokenExpirationDate(oAuth2Authorization.getAccessTokenExpirationDate());
+		oAuth2AuthorizationImpl.setRemoteIPInfo(oAuth2Authorization.getRemoteIPInfo());
+		oAuth2AuthorizationImpl.setRefreshTokenContent(oAuth2Authorization.getRefreshTokenContent());
+		oAuth2AuthorizationImpl.setRefreshTokenCreateDate(oAuth2Authorization.getRefreshTokenCreateDate());
+		oAuth2AuthorizationImpl.setRefreshTokenExpirationDate(oAuth2Authorization.getRefreshTokenExpirationDate());
+
+		return oAuth2AuthorizationImpl;
 	}
 
 	/**

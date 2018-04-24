@@ -1557,6 +1557,8 @@ public class ResourceBlockPermissionPersistenceImpl extends BasePersistenceImpl<
 	@Override
 	protected ResourceBlockPermission removeImpl(
 		ResourceBlockPermission resourceBlockPermission) {
+		resourceBlockPermission = toUnwrappedModel(resourceBlockPermission);
+
 		Session session = null;
 
 		try {
@@ -1588,6 +1590,8 @@ public class ResourceBlockPermissionPersistenceImpl extends BasePersistenceImpl<
 	@Override
 	public ResourceBlockPermission updateImpl(
 		ResourceBlockPermission resourceBlockPermission) {
+		resourceBlockPermission = toUnwrappedModel(resourceBlockPermission);
+
 		boolean isNew = resourceBlockPermission.isNew();
 
 		ResourceBlockPermissionModelImpl resourceBlockPermissionModelImpl = (ResourceBlockPermissionModelImpl)resourceBlockPermission;
@@ -1690,6 +1694,27 @@ public class ResourceBlockPermissionPersistenceImpl extends BasePersistenceImpl<
 		resourceBlockPermission.resetOriginalValues();
 
 		return resourceBlockPermission;
+	}
+
+	protected ResourceBlockPermission toUnwrappedModel(
+		ResourceBlockPermission resourceBlockPermission) {
+		if (resourceBlockPermission instanceof ResourceBlockPermissionImpl) {
+			return resourceBlockPermission;
+		}
+
+		ResourceBlockPermissionImpl resourceBlockPermissionImpl = new ResourceBlockPermissionImpl();
+
+		resourceBlockPermissionImpl.setNew(resourceBlockPermission.isNew());
+		resourceBlockPermissionImpl.setPrimaryKey(resourceBlockPermission.getPrimaryKey());
+
+		resourceBlockPermissionImpl.setMvccVersion(resourceBlockPermission.getMvccVersion());
+		resourceBlockPermissionImpl.setResourceBlockPermissionId(resourceBlockPermission.getResourceBlockPermissionId());
+		resourceBlockPermissionImpl.setCompanyId(resourceBlockPermission.getCompanyId());
+		resourceBlockPermissionImpl.setResourceBlockId(resourceBlockPermission.getResourceBlockId());
+		resourceBlockPermissionImpl.setRoleId(resourceBlockPermission.getRoleId());
+		resourceBlockPermissionImpl.setActionIds(resourceBlockPermission.getActionIds());
+
+		return resourceBlockPermissionImpl;
 	}
 
 	/**

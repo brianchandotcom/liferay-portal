@@ -1338,6 +1338,8 @@ public class OAuthTokenPersistenceImpl extends BasePersistenceImpl<OAuthToken>
 
 	@Override
 	protected OAuthToken removeImpl(OAuthToken oAuthToken) {
+		oAuthToken = toUnwrappedModel(oAuthToken);
+
 		Session session = null;
 
 		try {
@@ -1368,6 +1370,8 @@ public class OAuthTokenPersistenceImpl extends BasePersistenceImpl<OAuthToken>
 
 	@Override
 	public OAuthToken updateImpl(OAuthToken oAuthToken) {
+		oAuthToken = toUnwrappedModel(oAuthToken);
+
 		boolean isNew = oAuthToken.isNew();
 
 		OAuthTokenModelImpl oAuthTokenModelImpl = (OAuthTokenModelImpl)oAuthToken;
@@ -1468,6 +1472,34 @@ public class OAuthTokenPersistenceImpl extends BasePersistenceImpl<OAuthToken>
 		oAuthToken.resetOriginalValues();
 
 		return oAuthToken;
+	}
+
+	protected OAuthToken toUnwrappedModel(OAuthToken oAuthToken) {
+		if (oAuthToken instanceof OAuthTokenImpl) {
+			return oAuthToken;
+		}
+
+		OAuthTokenImpl oAuthTokenImpl = new OAuthTokenImpl();
+
+		oAuthTokenImpl.setNew(oAuthToken.isNew());
+		oAuthTokenImpl.setPrimaryKey(oAuthToken.getPrimaryKey());
+
+		oAuthTokenImpl.setOAuthTokenId(oAuthToken.getOAuthTokenId());
+		oAuthTokenImpl.setCompanyId(oAuthToken.getCompanyId());
+		oAuthTokenImpl.setUserId(oAuthToken.getUserId());
+		oAuthTokenImpl.setUserName(oAuthToken.getUserName());
+		oAuthTokenImpl.setCreateDate(oAuthToken.getCreateDate());
+		oAuthTokenImpl.setModifiedDate(oAuthToken.getModifiedDate());
+		oAuthTokenImpl.setGadgetKey(oAuthToken.getGadgetKey());
+		oAuthTokenImpl.setServiceName(oAuthToken.getServiceName());
+		oAuthTokenImpl.setModuleId(oAuthToken.getModuleId());
+		oAuthTokenImpl.setAccessToken(oAuthToken.getAccessToken());
+		oAuthTokenImpl.setTokenName(oAuthToken.getTokenName());
+		oAuthTokenImpl.setTokenSecret(oAuthToken.getTokenSecret());
+		oAuthTokenImpl.setSessionHandle(oAuthToken.getSessionHandle());
+		oAuthTokenImpl.setExpiration(oAuthToken.getExpiration());
+
+		return oAuthTokenImpl;
 	}
 
 	/**

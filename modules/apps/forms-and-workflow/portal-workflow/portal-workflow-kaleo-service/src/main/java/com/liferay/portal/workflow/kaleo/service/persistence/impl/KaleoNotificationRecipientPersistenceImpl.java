@@ -1825,6 +1825,8 @@ public class KaleoNotificationRecipientPersistenceImpl
 	@Override
 	protected KaleoNotificationRecipient removeImpl(
 		KaleoNotificationRecipient kaleoNotificationRecipient) {
+		kaleoNotificationRecipient = toUnwrappedModel(kaleoNotificationRecipient);
+
 		Session session = null;
 
 		try {
@@ -1856,6 +1858,8 @@ public class KaleoNotificationRecipientPersistenceImpl
 	@Override
 	public KaleoNotificationRecipient updateImpl(
 		KaleoNotificationRecipient kaleoNotificationRecipient) {
+		kaleoNotificationRecipient = toUnwrappedModel(kaleoNotificationRecipient);
+
 		boolean isNew = kaleoNotificationRecipient.isNew();
 
 		KaleoNotificationRecipientModelImpl kaleoNotificationRecipientModelImpl = (KaleoNotificationRecipientModelImpl)kaleoNotificationRecipient;
@@ -2014,6 +2018,38 @@ public class KaleoNotificationRecipientPersistenceImpl
 		kaleoNotificationRecipient.resetOriginalValues();
 
 		return kaleoNotificationRecipient;
+	}
+
+	protected KaleoNotificationRecipient toUnwrappedModel(
+		KaleoNotificationRecipient kaleoNotificationRecipient) {
+		if (kaleoNotificationRecipient instanceof KaleoNotificationRecipientImpl) {
+			return kaleoNotificationRecipient;
+		}
+
+		KaleoNotificationRecipientImpl kaleoNotificationRecipientImpl = new KaleoNotificationRecipientImpl();
+
+		kaleoNotificationRecipientImpl.setNew(kaleoNotificationRecipient.isNew());
+		kaleoNotificationRecipientImpl.setPrimaryKey(kaleoNotificationRecipient.getPrimaryKey());
+
+		kaleoNotificationRecipientImpl.setKaleoNotificationRecipientId(kaleoNotificationRecipient.getKaleoNotificationRecipientId());
+		kaleoNotificationRecipientImpl.setGroupId(kaleoNotificationRecipient.getGroupId());
+		kaleoNotificationRecipientImpl.setCompanyId(kaleoNotificationRecipient.getCompanyId());
+		kaleoNotificationRecipientImpl.setUserId(kaleoNotificationRecipient.getUserId());
+		kaleoNotificationRecipientImpl.setUserName(kaleoNotificationRecipient.getUserName());
+		kaleoNotificationRecipientImpl.setCreateDate(kaleoNotificationRecipient.getCreateDate());
+		kaleoNotificationRecipientImpl.setModifiedDate(kaleoNotificationRecipient.getModifiedDate());
+		kaleoNotificationRecipientImpl.setKaleoDefinitionVersionId(kaleoNotificationRecipient.getKaleoDefinitionVersionId());
+		kaleoNotificationRecipientImpl.setKaleoNotificationId(kaleoNotificationRecipient.getKaleoNotificationId());
+		kaleoNotificationRecipientImpl.setRecipientClassName(kaleoNotificationRecipient.getRecipientClassName());
+		kaleoNotificationRecipientImpl.setRecipientClassPK(kaleoNotificationRecipient.getRecipientClassPK());
+		kaleoNotificationRecipientImpl.setRecipientRoleType(kaleoNotificationRecipient.getRecipientRoleType());
+		kaleoNotificationRecipientImpl.setRecipientScript(kaleoNotificationRecipient.getRecipientScript());
+		kaleoNotificationRecipientImpl.setRecipientScriptLanguage(kaleoNotificationRecipient.getRecipientScriptLanguage());
+		kaleoNotificationRecipientImpl.setRecipientScriptContexts(kaleoNotificationRecipient.getRecipientScriptContexts());
+		kaleoNotificationRecipientImpl.setAddress(kaleoNotificationRecipient.getAddress());
+		kaleoNotificationRecipientImpl.setNotificationReceptionType(kaleoNotificationRecipient.getNotificationReceptionType());
+
+		return kaleoNotificationRecipientImpl;
 	}
 
 	/**

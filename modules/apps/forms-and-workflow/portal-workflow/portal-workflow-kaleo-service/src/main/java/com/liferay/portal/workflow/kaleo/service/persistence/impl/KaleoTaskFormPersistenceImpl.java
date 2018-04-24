@@ -2611,6 +2611,8 @@ public class KaleoTaskFormPersistenceImpl extends BasePersistenceImpl<KaleoTaskF
 
 	@Override
 	protected KaleoTaskForm removeImpl(KaleoTaskForm kaleoTaskForm) {
+		kaleoTaskForm = toUnwrappedModel(kaleoTaskForm);
+
 		Session session = null;
 
 		try {
@@ -2641,6 +2643,8 @@ public class KaleoTaskFormPersistenceImpl extends BasePersistenceImpl<KaleoTaskF
 
 	@Override
 	public KaleoTaskForm updateImpl(KaleoTaskForm kaleoTaskForm) {
+		kaleoTaskForm = toUnwrappedModel(kaleoTaskForm);
+
 		boolean isNew = kaleoTaskForm.isNew();
 
 		KaleoTaskFormModelImpl kaleoTaskFormModelImpl = (KaleoTaskFormModelImpl)kaleoTaskForm;
@@ -2812,6 +2816,40 @@ public class KaleoTaskFormPersistenceImpl extends BasePersistenceImpl<KaleoTaskF
 		kaleoTaskForm.resetOriginalValues();
 
 		return kaleoTaskForm;
+	}
+
+	protected KaleoTaskForm toUnwrappedModel(KaleoTaskForm kaleoTaskForm) {
+		if (kaleoTaskForm instanceof KaleoTaskFormImpl) {
+			return kaleoTaskForm;
+		}
+
+		KaleoTaskFormImpl kaleoTaskFormImpl = new KaleoTaskFormImpl();
+
+		kaleoTaskFormImpl.setNew(kaleoTaskForm.isNew());
+		kaleoTaskFormImpl.setPrimaryKey(kaleoTaskForm.getPrimaryKey());
+
+		kaleoTaskFormImpl.setKaleoTaskFormId(kaleoTaskForm.getKaleoTaskFormId());
+		kaleoTaskFormImpl.setGroupId(kaleoTaskForm.getGroupId());
+		kaleoTaskFormImpl.setCompanyId(kaleoTaskForm.getCompanyId());
+		kaleoTaskFormImpl.setUserId(kaleoTaskForm.getUserId());
+		kaleoTaskFormImpl.setUserName(kaleoTaskForm.getUserName());
+		kaleoTaskFormImpl.setCreateDate(kaleoTaskForm.getCreateDate());
+		kaleoTaskFormImpl.setModifiedDate(kaleoTaskForm.getModifiedDate());
+		kaleoTaskFormImpl.setKaleoDefinitionVersionId(kaleoTaskForm.getKaleoDefinitionVersionId());
+		kaleoTaskFormImpl.setKaleoNodeId(kaleoTaskForm.getKaleoNodeId());
+		kaleoTaskFormImpl.setKaleoTaskId(kaleoTaskForm.getKaleoTaskId());
+		kaleoTaskFormImpl.setKaleoTaskName(kaleoTaskForm.getKaleoTaskName());
+		kaleoTaskFormImpl.setName(kaleoTaskForm.getName());
+		kaleoTaskFormImpl.setDescription(kaleoTaskForm.getDescription());
+		kaleoTaskFormImpl.setFormCompanyId(kaleoTaskForm.getFormCompanyId());
+		kaleoTaskFormImpl.setFormDefinition(kaleoTaskForm.getFormDefinition());
+		kaleoTaskFormImpl.setFormGroupId(kaleoTaskForm.getFormGroupId());
+		kaleoTaskFormImpl.setFormId(kaleoTaskForm.getFormId());
+		kaleoTaskFormImpl.setFormUuid(kaleoTaskForm.getFormUuid());
+		kaleoTaskFormImpl.setMetadata(kaleoTaskForm.getMetadata());
+		kaleoTaskFormImpl.setPriority(kaleoTaskForm.getPriority());
+
+		return kaleoTaskFormImpl;
 	}
 
 	/**

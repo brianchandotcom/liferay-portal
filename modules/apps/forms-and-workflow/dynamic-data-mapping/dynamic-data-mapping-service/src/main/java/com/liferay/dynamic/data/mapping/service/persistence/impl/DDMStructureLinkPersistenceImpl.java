@@ -2113,6 +2113,8 @@ public class DDMStructureLinkPersistenceImpl extends BasePersistenceImpl<DDMStru
 
 	@Override
 	protected DDMStructureLink removeImpl(DDMStructureLink ddmStructureLink) {
+		ddmStructureLink = toUnwrappedModel(ddmStructureLink);
+
 		Session session = null;
 
 		try {
@@ -2143,6 +2145,8 @@ public class DDMStructureLinkPersistenceImpl extends BasePersistenceImpl<DDMStru
 
 	@Override
 	public DDMStructureLink updateImpl(DDMStructureLink ddmStructureLink) {
+		ddmStructureLink = toUnwrappedModel(ddmStructureLink);
+
 		boolean isNew = ddmStructureLink.isNew();
 
 		DDMStructureLinkModelImpl ddmStructureLinkModelImpl = (DDMStructureLinkModelImpl)ddmStructureLink;
@@ -2270,6 +2274,26 @@ public class DDMStructureLinkPersistenceImpl extends BasePersistenceImpl<DDMStru
 		ddmStructureLink.resetOriginalValues();
 
 		return ddmStructureLink;
+	}
+
+	protected DDMStructureLink toUnwrappedModel(
+		DDMStructureLink ddmStructureLink) {
+		if (ddmStructureLink instanceof DDMStructureLinkImpl) {
+			return ddmStructureLink;
+		}
+
+		DDMStructureLinkImpl ddmStructureLinkImpl = new DDMStructureLinkImpl();
+
+		ddmStructureLinkImpl.setNew(ddmStructureLink.isNew());
+		ddmStructureLinkImpl.setPrimaryKey(ddmStructureLink.getPrimaryKey());
+
+		ddmStructureLinkImpl.setStructureLinkId(ddmStructureLink.getStructureLinkId());
+		ddmStructureLinkImpl.setCompanyId(ddmStructureLink.getCompanyId());
+		ddmStructureLinkImpl.setClassNameId(ddmStructureLink.getClassNameId());
+		ddmStructureLinkImpl.setClassPK(ddmStructureLink.getClassPK());
+		ddmStructureLinkImpl.setStructureId(ddmStructureLink.getStructureId());
+
+		return ddmStructureLinkImpl;
 	}
 
 	/**

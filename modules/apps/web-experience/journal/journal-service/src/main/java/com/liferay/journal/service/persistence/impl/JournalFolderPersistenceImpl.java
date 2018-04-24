@@ -7561,6 +7561,8 @@ public class JournalFolderPersistenceImpl extends BasePersistenceImpl<JournalFol
 
 	@Override
 	protected JournalFolder removeImpl(JournalFolder journalFolder) {
+		journalFolder = toUnwrappedModel(journalFolder);
+
 		Session session = null;
 
 		try {
@@ -7591,6 +7593,8 @@ public class JournalFolderPersistenceImpl extends BasePersistenceImpl<JournalFol
 
 	@Override
 	public JournalFolder updateImpl(JournalFolder journalFolder) {
+		journalFolder = toUnwrappedModel(journalFolder);
+
 		boolean isNew = journalFolder.isNew();
 
 		JournalFolderModelImpl journalFolderModelImpl = (JournalFolderModelImpl)journalFolder;
@@ -7831,6 +7835,38 @@ public class JournalFolderPersistenceImpl extends BasePersistenceImpl<JournalFol
 		journalFolder.resetOriginalValues();
 
 		return journalFolder;
+	}
+
+	protected JournalFolder toUnwrappedModel(JournalFolder journalFolder) {
+		if (journalFolder instanceof JournalFolderImpl) {
+			return journalFolder;
+		}
+
+		JournalFolderImpl journalFolderImpl = new JournalFolderImpl();
+
+		journalFolderImpl.setNew(journalFolder.isNew());
+		journalFolderImpl.setPrimaryKey(journalFolder.getPrimaryKey());
+
+		journalFolderImpl.setUuid(journalFolder.getUuid());
+		journalFolderImpl.setFolderId(journalFolder.getFolderId());
+		journalFolderImpl.setGroupId(journalFolder.getGroupId());
+		journalFolderImpl.setCompanyId(journalFolder.getCompanyId());
+		journalFolderImpl.setUserId(journalFolder.getUserId());
+		journalFolderImpl.setUserName(journalFolder.getUserName());
+		journalFolderImpl.setCreateDate(journalFolder.getCreateDate());
+		journalFolderImpl.setModifiedDate(journalFolder.getModifiedDate());
+		journalFolderImpl.setParentFolderId(journalFolder.getParentFolderId());
+		journalFolderImpl.setTreePath(journalFolder.getTreePath());
+		journalFolderImpl.setName(journalFolder.getName());
+		journalFolderImpl.setDescription(journalFolder.getDescription());
+		journalFolderImpl.setRestrictionType(journalFolder.getRestrictionType());
+		journalFolderImpl.setLastPublishDate(journalFolder.getLastPublishDate());
+		journalFolderImpl.setStatus(journalFolder.getStatus());
+		journalFolderImpl.setStatusByUserId(journalFolder.getStatusByUserId());
+		journalFolderImpl.setStatusByUserName(journalFolder.getStatusByUserName());
+		journalFolderImpl.setStatusDate(journalFolder.getStatusDate());
+
+		return journalFolderImpl;
 	}
 
 	/**

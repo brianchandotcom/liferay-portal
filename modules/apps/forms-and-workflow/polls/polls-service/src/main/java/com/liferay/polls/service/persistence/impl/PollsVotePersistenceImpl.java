@@ -3235,6 +3235,8 @@ public class PollsVotePersistenceImpl extends BasePersistenceImpl<PollsVote>
 
 	@Override
 	protected PollsVote removeImpl(PollsVote pollsVote) {
+		pollsVote = toUnwrappedModel(pollsVote);
+
 		Session session = null;
 
 		try {
@@ -3265,6 +3267,8 @@ public class PollsVotePersistenceImpl extends BasePersistenceImpl<PollsVote>
 
 	@Override
 	public PollsVote updateImpl(PollsVote pollsVote) {
+		pollsVote = toUnwrappedModel(pollsVote);
+
 		boolean isNew = pollsVote.isNew();
 
 		PollsVoteModelImpl pollsVoteModelImpl = (PollsVoteModelImpl)pollsVote;
@@ -3470,6 +3474,32 @@ public class PollsVotePersistenceImpl extends BasePersistenceImpl<PollsVote>
 		pollsVote.resetOriginalValues();
 
 		return pollsVote;
+	}
+
+	protected PollsVote toUnwrappedModel(PollsVote pollsVote) {
+		if (pollsVote instanceof PollsVoteImpl) {
+			return pollsVote;
+		}
+
+		PollsVoteImpl pollsVoteImpl = new PollsVoteImpl();
+
+		pollsVoteImpl.setNew(pollsVote.isNew());
+		pollsVoteImpl.setPrimaryKey(pollsVote.getPrimaryKey());
+
+		pollsVoteImpl.setUuid(pollsVote.getUuid());
+		pollsVoteImpl.setVoteId(pollsVote.getVoteId());
+		pollsVoteImpl.setGroupId(pollsVote.getGroupId());
+		pollsVoteImpl.setCompanyId(pollsVote.getCompanyId());
+		pollsVoteImpl.setUserId(pollsVote.getUserId());
+		pollsVoteImpl.setUserName(pollsVote.getUserName());
+		pollsVoteImpl.setCreateDate(pollsVote.getCreateDate());
+		pollsVoteImpl.setModifiedDate(pollsVote.getModifiedDate());
+		pollsVoteImpl.setQuestionId(pollsVote.getQuestionId());
+		pollsVoteImpl.setChoiceId(pollsVote.getChoiceId());
+		pollsVoteImpl.setLastPublishDate(pollsVote.getLastPublishDate());
+		pollsVoteImpl.setVoteDate(pollsVote.getVoteDate());
+
+		return pollsVoteImpl;
 	}
 
 	/**

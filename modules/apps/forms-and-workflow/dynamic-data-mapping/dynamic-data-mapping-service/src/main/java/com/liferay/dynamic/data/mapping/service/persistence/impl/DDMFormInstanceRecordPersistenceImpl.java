@@ -3916,6 +3916,8 @@ public class DDMFormInstanceRecordPersistenceImpl extends BasePersistenceImpl<DD
 	@Override
 	protected DDMFormInstanceRecord removeImpl(
 		DDMFormInstanceRecord ddmFormInstanceRecord) {
+		ddmFormInstanceRecord = toUnwrappedModel(ddmFormInstanceRecord);
+
 		Session session = null;
 
 		try {
@@ -3947,6 +3949,8 @@ public class DDMFormInstanceRecordPersistenceImpl extends BasePersistenceImpl<DD
 	@Override
 	public DDMFormInstanceRecord updateImpl(
 		DDMFormInstanceRecord ddmFormInstanceRecord) {
+		ddmFormInstanceRecord = toUnwrappedModel(ddmFormInstanceRecord);
+
 		boolean isNew = ddmFormInstanceRecord.isNew();
 
 		DDMFormInstanceRecordModelImpl ddmFormInstanceRecordModelImpl = (DDMFormInstanceRecordModelImpl)ddmFormInstanceRecord;
@@ -4195,6 +4199,36 @@ public class DDMFormInstanceRecordPersistenceImpl extends BasePersistenceImpl<DD
 		ddmFormInstanceRecord.resetOriginalValues();
 
 		return ddmFormInstanceRecord;
+	}
+
+	protected DDMFormInstanceRecord toUnwrappedModel(
+		DDMFormInstanceRecord ddmFormInstanceRecord) {
+		if (ddmFormInstanceRecord instanceof DDMFormInstanceRecordImpl) {
+			return ddmFormInstanceRecord;
+		}
+
+		DDMFormInstanceRecordImpl ddmFormInstanceRecordImpl = new DDMFormInstanceRecordImpl();
+
+		ddmFormInstanceRecordImpl.setNew(ddmFormInstanceRecord.isNew());
+		ddmFormInstanceRecordImpl.setPrimaryKey(ddmFormInstanceRecord.getPrimaryKey());
+
+		ddmFormInstanceRecordImpl.setUuid(ddmFormInstanceRecord.getUuid());
+		ddmFormInstanceRecordImpl.setFormInstanceRecordId(ddmFormInstanceRecord.getFormInstanceRecordId());
+		ddmFormInstanceRecordImpl.setGroupId(ddmFormInstanceRecord.getGroupId());
+		ddmFormInstanceRecordImpl.setCompanyId(ddmFormInstanceRecord.getCompanyId());
+		ddmFormInstanceRecordImpl.setUserId(ddmFormInstanceRecord.getUserId());
+		ddmFormInstanceRecordImpl.setUserName(ddmFormInstanceRecord.getUserName());
+		ddmFormInstanceRecordImpl.setVersionUserId(ddmFormInstanceRecord.getVersionUserId());
+		ddmFormInstanceRecordImpl.setVersionUserName(ddmFormInstanceRecord.getVersionUserName());
+		ddmFormInstanceRecordImpl.setCreateDate(ddmFormInstanceRecord.getCreateDate());
+		ddmFormInstanceRecordImpl.setModifiedDate(ddmFormInstanceRecord.getModifiedDate());
+		ddmFormInstanceRecordImpl.setFormInstanceId(ddmFormInstanceRecord.getFormInstanceId());
+		ddmFormInstanceRecordImpl.setFormInstanceVersion(ddmFormInstanceRecord.getFormInstanceVersion());
+		ddmFormInstanceRecordImpl.setStorageId(ddmFormInstanceRecord.getStorageId());
+		ddmFormInstanceRecordImpl.setVersion(ddmFormInstanceRecord.getVersion());
+		ddmFormInstanceRecordImpl.setLastPublishDate(ddmFormInstanceRecord.getLastPublishDate());
+
+		return ddmFormInstanceRecordImpl;
 	}
 
 	/**

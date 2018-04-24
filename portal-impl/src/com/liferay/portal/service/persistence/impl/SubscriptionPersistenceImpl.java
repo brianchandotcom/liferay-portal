@@ -3098,6 +3098,8 @@ public class SubscriptionPersistenceImpl extends BasePersistenceImpl<Subscriptio
 
 	@Override
 	protected Subscription removeImpl(Subscription subscription) {
+		subscription = toUnwrappedModel(subscription);
+
 		Session session = null;
 
 		try {
@@ -3128,6 +3130,8 @@ public class SubscriptionPersistenceImpl extends BasePersistenceImpl<Subscriptio
 
 	@Override
 	public Subscription updateImpl(Subscription subscription) {
+		subscription = toUnwrappedModel(subscription);
+
 		boolean isNew = subscription.isNew();
 
 		SubscriptionModelImpl subscriptionModelImpl = (SubscriptionModelImpl)subscription;
@@ -3351,6 +3355,31 @@ public class SubscriptionPersistenceImpl extends BasePersistenceImpl<Subscriptio
 		subscription.resetOriginalValues();
 
 		return subscription;
+	}
+
+	protected Subscription toUnwrappedModel(Subscription subscription) {
+		if (subscription instanceof SubscriptionImpl) {
+			return subscription;
+		}
+
+		SubscriptionImpl subscriptionImpl = new SubscriptionImpl();
+
+		subscriptionImpl.setNew(subscription.isNew());
+		subscriptionImpl.setPrimaryKey(subscription.getPrimaryKey());
+
+		subscriptionImpl.setMvccVersion(subscription.getMvccVersion());
+		subscriptionImpl.setSubscriptionId(subscription.getSubscriptionId());
+		subscriptionImpl.setGroupId(subscription.getGroupId());
+		subscriptionImpl.setCompanyId(subscription.getCompanyId());
+		subscriptionImpl.setUserId(subscription.getUserId());
+		subscriptionImpl.setUserName(subscription.getUserName());
+		subscriptionImpl.setCreateDate(subscription.getCreateDate());
+		subscriptionImpl.setModifiedDate(subscription.getModifiedDate());
+		subscriptionImpl.setClassNameId(subscription.getClassNameId());
+		subscriptionImpl.setClassPK(subscription.getClassPK());
+		subscriptionImpl.setFrequency(subscription.getFrequency());
+
+		return subscriptionImpl;
 	}
 
 	/**

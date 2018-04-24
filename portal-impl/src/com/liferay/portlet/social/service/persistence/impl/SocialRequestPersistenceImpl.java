@@ -6537,6 +6537,8 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 
 	@Override
 	protected SocialRequest removeImpl(SocialRequest socialRequest) {
+		socialRequest = toUnwrappedModel(socialRequest);
+
 		Session session = null;
 
 		try {
@@ -6567,6 +6569,8 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 
 	@Override
 	public SocialRequest updateImpl(SocialRequest socialRequest) {
+		socialRequest = toUnwrappedModel(socialRequest);
+
 		boolean isNew = socialRequest.isNew();
 
 		SocialRequestModelImpl socialRequestModelImpl = (SocialRequestModelImpl)socialRequest;
@@ -6914,6 +6918,33 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 		socialRequest.resetOriginalValues();
 
 		return socialRequest;
+	}
+
+	protected SocialRequest toUnwrappedModel(SocialRequest socialRequest) {
+		if (socialRequest instanceof SocialRequestImpl) {
+			return socialRequest;
+		}
+
+		SocialRequestImpl socialRequestImpl = new SocialRequestImpl();
+
+		socialRequestImpl.setNew(socialRequest.isNew());
+		socialRequestImpl.setPrimaryKey(socialRequest.getPrimaryKey());
+
+		socialRequestImpl.setUuid(socialRequest.getUuid());
+		socialRequestImpl.setRequestId(socialRequest.getRequestId());
+		socialRequestImpl.setGroupId(socialRequest.getGroupId());
+		socialRequestImpl.setCompanyId(socialRequest.getCompanyId());
+		socialRequestImpl.setUserId(socialRequest.getUserId());
+		socialRequestImpl.setCreateDate(socialRequest.getCreateDate());
+		socialRequestImpl.setModifiedDate(socialRequest.getModifiedDate());
+		socialRequestImpl.setClassNameId(socialRequest.getClassNameId());
+		socialRequestImpl.setClassPK(socialRequest.getClassPK());
+		socialRequestImpl.setType(socialRequest.getType());
+		socialRequestImpl.setExtraData(socialRequest.getExtraData());
+		socialRequestImpl.setReceiverUserId(socialRequest.getReceiverUserId());
+		socialRequestImpl.setStatus(socialRequest.getStatus());
+
+		return socialRequestImpl;
 	}
 
 	/**

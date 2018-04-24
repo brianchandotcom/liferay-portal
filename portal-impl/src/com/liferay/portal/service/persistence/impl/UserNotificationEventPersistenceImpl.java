@@ -8475,6 +8475,8 @@ public class UserNotificationEventPersistenceImpl extends BasePersistenceImpl<Us
 	@Override
 	protected UserNotificationEvent removeImpl(
 		UserNotificationEvent userNotificationEvent) {
+		userNotificationEvent = toUnwrappedModel(userNotificationEvent);
+
 		Session session = null;
 
 		try {
@@ -8506,6 +8508,8 @@ public class UserNotificationEventPersistenceImpl extends BasePersistenceImpl<Us
 	@Override
 	public UserNotificationEvent updateImpl(
 		UserNotificationEvent userNotificationEvent) {
+		userNotificationEvent = toUnwrappedModel(userNotificationEvent);
+
 		boolean isNew = userNotificationEvent.isNew();
 
 		UserNotificationEventModelImpl userNotificationEventModelImpl = (UserNotificationEventModelImpl)userNotificationEvent;
@@ -8989,6 +8993,34 @@ public class UserNotificationEventPersistenceImpl extends BasePersistenceImpl<Us
 		userNotificationEvent.resetOriginalValues();
 
 		return userNotificationEvent;
+	}
+
+	protected UserNotificationEvent toUnwrappedModel(
+		UserNotificationEvent userNotificationEvent) {
+		if (userNotificationEvent instanceof UserNotificationEventImpl) {
+			return userNotificationEvent;
+		}
+
+		UserNotificationEventImpl userNotificationEventImpl = new UserNotificationEventImpl();
+
+		userNotificationEventImpl.setNew(userNotificationEvent.isNew());
+		userNotificationEventImpl.setPrimaryKey(userNotificationEvent.getPrimaryKey());
+
+		userNotificationEventImpl.setMvccVersion(userNotificationEvent.getMvccVersion());
+		userNotificationEventImpl.setUuid(userNotificationEvent.getUuid());
+		userNotificationEventImpl.setUserNotificationEventId(userNotificationEvent.getUserNotificationEventId());
+		userNotificationEventImpl.setCompanyId(userNotificationEvent.getCompanyId());
+		userNotificationEventImpl.setUserId(userNotificationEvent.getUserId());
+		userNotificationEventImpl.setType(userNotificationEvent.getType());
+		userNotificationEventImpl.setTimestamp(userNotificationEvent.getTimestamp());
+		userNotificationEventImpl.setDeliveryType(userNotificationEvent.getDeliveryType());
+		userNotificationEventImpl.setDeliverBy(userNotificationEvent.getDeliverBy());
+		userNotificationEventImpl.setDelivered(userNotificationEvent.isDelivered());
+		userNotificationEventImpl.setPayload(userNotificationEvent.getPayload());
+		userNotificationEventImpl.setActionRequired(userNotificationEvent.isActionRequired());
+		userNotificationEventImpl.setArchived(userNotificationEvent.isArchived());
+
+		return userNotificationEventImpl;
 	}
 
 	/**

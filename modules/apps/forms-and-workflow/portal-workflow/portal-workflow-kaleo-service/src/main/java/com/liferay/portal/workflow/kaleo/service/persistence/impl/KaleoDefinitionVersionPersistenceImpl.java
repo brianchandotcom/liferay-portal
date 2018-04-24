@@ -1720,6 +1720,8 @@ public class KaleoDefinitionVersionPersistenceImpl extends BasePersistenceImpl<K
 	@Override
 	protected KaleoDefinitionVersion removeImpl(
 		KaleoDefinitionVersion kaleoDefinitionVersion) {
+		kaleoDefinitionVersion = toUnwrappedModel(kaleoDefinitionVersion);
+
 		Session session = null;
 
 		try {
@@ -1751,6 +1753,8 @@ public class KaleoDefinitionVersionPersistenceImpl extends BasePersistenceImpl<K
 	@Override
 	public KaleoDefinitionVersion updateImpl(
 		KaleoDefinitionVersion kaleoDefinitionVersion) {
+		kaleoDefinitionVersion = toUnwrappedModel(kaleoDefinitionVersion);
+
 		boolean isNew = kaleoDefinitionVersion.isNew();
 
 		KaleoDefinitionVersionModelImpl kaleoDefinitionVersionModelImpl = (KaleoDefinitionVersionModelImpl)kaleoDefinitionVersion;
@@ -1882,6 +1886,38 @@ public class KaleoDefinitionVersionPersistenceImpl extends BasePersistenceImpl<K
 		kaleoDefinitionVersion.resetOriginalValues();
 
 		return kaleoDefinitionVersion;
+	}
+
+	protected KaleoDefinitionVersion toUnwrappedModel(
+		KaleoDefinitionVersion kaleoDefinitionVersion) {
+		if (kaleoDefinitionVersion instanceof KaleoDefinitionVersionImpl) {
+			return kaleoDefinitionVersion;
+		}
+
+		KaleoDefinitionVersionImpl kaleoDefinitionVersionImpl = new KaleoDefinitionVersionImpl();
+
+		kaleoDefinitionVersionImpl.setNew(kaleoDefinitionVersion.isNew());
+		kaleoDefinitionVersionImpl.setPrimaryKey(kaleoDefinitionVersion.getPrimaryKey());
+
+		kaleoDefinitionVersionImpl.setKaleoDefinitionVersionId(kaleoDefinitionVersion.getKaleoDefinitionVersionId());
+		kaleoDefinitionVersionImpl.setGroupId(kaleoDefinitionVersion.getGroupId());
+		kaleoDefinitionVersionImpl.setCompanyId(kaleoDefinitionVersion.getCompanyId());
+		kaleoDefinitionVersionImpl.setUserId(kaleoDefinitionVersion.getUserId());
+		kaleoDefinitionVersionImpl.setUserName(kaleoDefinitionVersion.getUserName());
+		kaleoDefinitionVersionImpl.setStatusByUserId(kaleoDefinitionVersion.getStatusByUserId());
+		kaleoDefinitionVersionImpl.setStatusByUserName(kaleoDefinitionVersion.getStatusByUserName());
+		kaleoDefinitionVersionImpl.setStatusDate(kaleoDefinitionVersion.getStatusDate());
+		kaleoDefinitionVersionImpl.setCreateDate(kaleoDefinitionVersion.getCreateDate());
+		kaleoDefinitionVersionImpl.setModifiedDate(kaleoDefinitionVersion.getModifiedDate());
+		kaleoDefinitionVersionImpl.setName(kaleoDefinitionVersion.getName());
+		kaleoDefinitionVersionImpl.setTitle(kaleoDefinitionVersion.getTitle());
+		kaleoDefinitionVersionImpl.setDescription(kaleoDefinitionVersion.getDescription());
+		kaleoDefinitionVersionImpl.setContent(kaleoDefinitionVersion.getContent());
+		kaleoDefinitionVersionImpl.setVersion(kaleoDefinitionVersion.getVersion());
+		kaleoDefinitionVersionImpl.setStartKaleoNodeId(kaleoDefinitionVersion.getStartKaleoNodeId());
+		kaleoDefinitionVersionImpl.setStatus(kaleoDefinitionVersion.getStatus());
+
+		return kaleoDefinitionVersionImpl;
 	}
 
 	/**

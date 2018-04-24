@@ -2386,6 +2386,8 @@ public class MembershipRequestPersistenceImpl extends BasePersistenceImpl<Member
 
 	@Override
 	protected MembershipRequest removeImpl(MembershipRequest membershipRequest) {
+		membershipRequest = toUnwrappedModel(membershipRequest);
+
 		Session session = null;
 
 		try {
@@ -2416,6 +2418,8 @@ public class MembershipRequestPersistenceImpl extends BasePersistenceImpl<Member
 
 	@Override
 	public MembershipRequest updateImpl(MembershipRequest membershipRequest) {
+		membershipRequest = toUnwrappedModel(membershipRequest);
+
 		boolean isNew = membershipRequest.isNew();
 
 		MembershipRequestModelImpl membershipRequestModelImpl = (MembershipRequestModelImpl)membershipRequest;
@@ -2571,6 +2575,32 @@ public class MembershipRequestPersistenceImpl extends BasePersistenceImpl<Member
 		membershipRequest.resetOriginalValues();
 
 		return membershipRequest;
+	}
+
+	protected MembershipRequest toUnwrappedModel(
+		MembershipRequest membershipRequest) {
+		if (membershipRequest instanceof MembershipRequestImpl) {
+			return membershipRequest;
+		}
+
+		MembershipRequestImpl membershipRequestImpl = new MembershipRequestImpl();
+
+		membershipRequestImpl.setNew(membershipRequest.isNew());
+		membershipRequestImpl.setPrimaryKey(membershipRequest.getPrimaryKey());
+
+		membershipRequestImpl.setMvccVersion(membershipRequest.getMvccVersion());
+		membershipRequestImpl.setMembershipRequestId(membershipRequest.getMembershipRequestId());
+		membershipRequestImpl.setGroupId(membershipRequest.getGroupId());
+		membershipRequestImpl.setCompanyId(membershipRequest.getCompanyId());
+		membershipRequestImpl.setUserId(membershipRequest.getUserId());
+		membershipRequestImpl.setCreateDate(membershipRequest.getCreateDate());
+		membershipRequestImpl.setComments(membershipRequest.getComments());
+		membershipRequestImpl.setReplyComments(membershipRequest.getReplyComments());
+		membershipRequestImpl.setReplyDate(membershipRequest.getReplyDate());
+		membershipRequestImpl.setReplierUserId(membershipRequest.getReplierUserId());
+		membershipRequestImpl.setStatusId(membershipRequest.getStatusId());
+
+		return membershipRequestImpl;
 	}
 
 	/**

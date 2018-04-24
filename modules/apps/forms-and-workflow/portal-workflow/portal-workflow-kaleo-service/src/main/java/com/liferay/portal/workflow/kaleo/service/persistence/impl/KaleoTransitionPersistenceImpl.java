@@ -2380,6 +2380,8 @@ public class KaleoTransitionPersistenceImpl extends BasePersistenceImpl<KaleoTra
 
 	@Override
 	protected KaleoTransition removeImpl(KaleoTransition kaleoTransition) {
+		kaleoTransition = toUnwrappedModel(kaleoTransition);
+
 		Session session = null;
 
 		try {
@@ -2410,6 +2412,8 @@ public class KaleoTransitionPersistenceImpl extends BasePersistenceImpl<KaleoTra
 
 	@Override
 	public KaleoTransition updateImpl(KaleoTransition kaleoTransition) {
+		kaleoTransition = toUnwrappedModel(kaleoTransition);
+
 		boolean isNew = kaleoTransition.isNew();
 
 		KaleoTransitionModelImpl kaleoTransitionModelImpl = (KaleoTransitionModelImpl)kaleoTransition;
@@ -2558,6 +2562,36 @@ public class KaleoTransitionPersistenceImpl extends BasePersistenceImpl<KaleoTra
 		kaleoTransition.resetOriginalValues();
 
 		return kaleoTransition;
+	}
+
+	protected KaleoTransition toUnwrappedModel(KaleoTransition kaleoTransition) {
+		if (kaleoTransition instanceof KaleoTransitionImpl) {
+			return kaleoTransition;
+		}
+
+		KaleoTransitionImpl kaleoTransitionImpl = new KaleoTransitionImpl();
+
+		kaleoTransitionImpl.setNew(kaleoTransition.isNew());
+		kaleoTransitionImpl.setPrimaryKey(kaleoTransition.getPrimaryKey());
+
+		kaleoTransitionImpl.setKaleoTransitionId(kaleoTransition.getKaleoTransitionId());
+		kaleoTransitionImpl.setGroupId(kaleoTransition.getGroupId());
+		kaleoTransitionImpl.setCompanyId(kaleoTransition.getCompanyId());
+		kaleoTransitionImpl.setUserId(kaleoTransition.getUserId());
+		kaleoTransitionImpl.setUserName(kaleoTransition.getUserName());
+		kaleoTransitionImpl.setCreateDate(kaleoTransition.getCreateDate());
+		kaleoTransitionImpl.setModifiedDate(kaleoTransition.getModifiedDate());
+		kaleoTransitionImpl.setKaleoDefinitionVersionId(kaleoTransition.getKaleoDefinitionVersionId());
+		kaleoTransitionImpl.setKaleoNodeId(kaleoTransition.getKaleoNodeId());
+		kaleoTransitionImpl.setName(kaleoTransition.getName());
+		kaleoTransitionImpl.setDescription(kaleoTransition.getDescription());
+		kaleoTransitionImpl.setSourceKaleoNodeId(kaleoTransition.getSourceKaleoNodeId());
+		kaleoTransitionImpl.setSourceKaleoNodeName(kaleoTransition.getSourceKaleoNodeName());
+		kaleoTransitionImpl.setTargetKaleoNodeId(kaleoTransition.getTargetKaleoNodeId());
+		kaleoTransitionImpl.setTargetKaleoNodeName(kaleoTransition.getTargetKaleoNodeName());
+		kaleoTransitionImpl.setDefaultTransition(kaleoTransition.isDefaultTransition());
+
+		return kaleoTransitionImpl;
 	}
 
 	/**

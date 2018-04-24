@@ -1529,6 +1529,8 @@ public class CountryPersistenceImpl extends BasePersistenceImpl<Country>
 
 	@Override
 	protected Country removeImpl(Country country) {
+		country = toUnwrappedModel(country);
+
 		Session session = null;
 
 		try {
@@ -1559,6 +1561,8 @@ public class CountryPersistenceImpl extends BasePersistenceImpl<Country>
 
 	@Override
 	public Country updateImpl(Country country) {
+		country = toUnwrappedModel(country);
+
 		boolean isNew = country.isNew();
 
 		CountryModelImpl countryModelImpl = (CountryModelImpl)country;
@@ -1630,6 +1634,29 @@ public class CountryPersistenceImpl extends BasePersistenceImpl<Country>
 		country.resetOriginalValues();
 
 		return country;
+	}
+
+	protected Country toUnwrappedModel(Country country) {
+		if (country instanceof CountryImpl) {
+			return country;
+		}
+
+		CountryImpl countryImpl = new CountryImpl();
+
+		countryImpl.setNew(country.isNew());
+		countryImpl.setPrimaryKey(country.getPrimaryKey());
+
+		countryImpl.setMvccVersion(country.getMvccVersion());
+		countryImpl.setCountryId(country.getCountryId());
+		countryImpl.setName(country.getName());
+		countryImpl.setA2(country.getA2());
+		countryImpl.setA3(country.getA3());
+		countryImpl.setNumber(country.getNumber());
+		countryImpl.setIdd(country.getIdd());
+		countryImpl.setZipRequired(country.isZipRequired());
+		countryImpl.setActive(country.isActive());
+
+		return countryImpl;
 	}
 
 	/**

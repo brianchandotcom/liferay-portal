@@ -1478,6 +1478,8 @@ public class KaleoTimerPersistenceImpl extends BasePersistenceImpl<KaleoTimer>
 
 	@Override
 	protected KaleoTimer removeImpl(KaleoTimer kaleoTimer) {
+		kaleoTimer = toUnwrappedModel(kaleoTimer);
+
 		Session session = null;
 
 		try {
@@ -1508,6 +1510,8 @@ public class KaleoTimerPersistenceImpl extends BasePersistenceImpl<KaleoTimer>
 
 	@Override
 	public KaleoTimer updateImpl(KaleoTimer kaleoTimer) {
+		kaleoTimer = toUnwrappedModel(kaleoTimer);
+
 		boolean isNew = kaleoTimer.isNew();
 
 		KaleoTimerModelImpl kaleoTimerModelImpl = (KaleoTimerModelImpl)kaleoTimer;
@@ -1641,6 +1645,37 @@ public class KaleoTimerPersistenceImpl extends BasePersistenceImpl<KaleoTimer>
 		kaleoTimer.resetOriginalValues();
 
 		return kaleoTimer;
+	}
+
+	protected KaleoTimer toUnwrappedModel(KaleoTimer kaleoTimer) {
+		if (kaleoTimer instanceof KaleoTimerImpl) {
+			return kaleoTimer;
+		}
+
+		KaleoTimerImpl kaleoTimerImpl = new KaleoTimerImpl();
+
+		kaleoTimerImpl.setNew(kaleoTimer.isNew());
+		kaleoTimerImpl.setPrimaryKey(kaleoTimer.getPrimaryKey());
+
+		kaleoTimerImpl.setKaleoTimerId(kaleoTimer.getKaleoTimerId());
+		kaleoTimerImpl.setGroupId(kaleoTimer.getGroupId());
+		kaleoTimerImpl.setCompanyId(kaleoTimer.getCompanyId());
+		kaleoTimerImpl.setUserId(kaleoTimer.getUserId());
+		kaleoTimerImpl.setUserName(kaleoTimer.getUserName());
+		kaleoTimerImpl.setCreateDate(kaleoTimer.getCreateDate());
+		kaleoTimerImpl.setModifiedDate(kaleoTimer.getModifiedDate());
+		kaleoTimerImpl.setKaleoClassName(kaleoTimer.getKaleoClassName());
+		kaleoTimerImpl.setKaleoClassPK(kaleoTimer.getKaleoClassPK());
+		kaleoTimerImpl.setKaleoDefinitionVersionId(kaleoTimer.getKaleoDefinitionVersionId());
+		kaleoTimerImpl.setName(kaleoTimer.getName());
+		kaleoTimerImpl.setBlocking(kaleoTimer.isBlocking());
+		kaleoTimerImpl.setDescription(kaleoTimer.getDescription());
+		kaleoTimerImpl.setDuration(kaleoTimer.getDuration());
+		kaleoTimerImpl.setScale(kaleoTimer.getScale());
+		kaleoTimerImpl.setRecurrenceDuration(kaleoTimer.getRecurrenceDuration());
+		kaleoTimerImpl.setRecurrenceScale(kaleoTimer.getRecurrenceScale());
+
+		return kaleoTimerImpl;
 	}
 
 	/**

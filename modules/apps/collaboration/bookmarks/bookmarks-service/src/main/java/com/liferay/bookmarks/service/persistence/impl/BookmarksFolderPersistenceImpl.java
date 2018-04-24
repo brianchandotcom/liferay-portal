@@ -6958,6 +6958,8 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 
 	@Override
 	protected BookmarksFolder removeImpl(BookmarksFolder bookmarksFolder) {
+		bookmarksFolder = toUnwrappedModel(bookmarksFolder);
+
 		Session session = null;
 
 		try {
@@ -6988,6 +6990,8 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 
 	@Override
 	public BookmarksFolder updateImpl(BookmarksFolder bookmarksFolder) {
+		bookmarksFolder = toUnwrappedModel(bookmarksFolder);
+
 		boolean isNew = bookmarksFolder.isNew();
 
 		BookmarksFolderModelImpl bookmarksFolderModelImpl = (BookmarksFolderModelImpl)bookmarksFolder;
@@ -7228,6 +7232,37 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 		bookmarksFolder.resetOriginalValues();
 
 		return bookmarksFolder;
+	}
+
+	protected BookmarksFolder toUnwrappedModel(BookmarksFolder bookmarksFolder) {
+		if (bookmarksFolder instanceof BookmarksFolderImpl) {
+			return bookmarksFolder;
+		}
+
+		BookmarksFolderImpl bookmarksFolderImpl = new BookmarksFolderImpl();
+
+		bookmarksFolderImpl.setNew(bookmarksFolder.isNew());
+		bookmarksFolderImpl.setPrimaryKey(bookmarksFolder.getPrimaryKey());
+
+		bookmarksFolderImpl.setUuid(bookmarksFolder.getUuid());
+		bookmarksFolderImpl.setFolderId(bookmarksFolder.getFolderId());
+		bookmarksFolderImpl.setGroupId(bookmarksFolder.getGroupId());
+		bookmarksFolderImpl.setCompanyId(bookmarksFolder.getCompanyId());
+		bookmarksFolderImpl.setUserId(bookmarksFolder.getUserId());
+		bookmarksFolderImpl.setUserName(bookmarksFolder.getUserName());
+		bookmarksFolderImpl.setCreateDate(bookmarksFolder.getCreateDate());
+		bookmarksFolderImpl.setModifiedDate(bookmarksFolder.getModifiedDate());
+		bookmarksFolderImpl.setParentFolderId(bookmarksFolder.getParentFolderId());
+		bookmarksFolderImpl.setTreePath(bookmarksFolder.getTreePath());
+		bookmarksFolderImpl.setName(bookmarksFolder.getName());
+		bookmarksFolderImpl.setDescription(bookmarksFolder.getDescription());
+		bookmarksFolderImpl.setLastPublishDate(bookmarksFolder.getLastPublishDate());
+		bookmarksFolderImpl.setStatus(bookmarksFolder.getStatus());
+		bookmarksFolderImpl.setStatusByUserId(bookmarksFolder.getStatusByUserId());
+		bookmarksFolderImpl.setStatusByUserName(bookmarksFolder.getStatusByUserName());
+		bookmarksFolderImpl.setStatusDate(bookmarksFolder.getStatusDate());
+
+		return bookmarksFolderImpl;
 	}
 
 	/**

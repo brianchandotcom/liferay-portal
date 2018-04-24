@@ -2997,6 +2997,8 @@ public class ExportImportConfigurationPersistenceImpl
 	@Override
 	protected ExportImportConfiguration removeImpl(
 		ExportImportConfiguration exportImportConfiguration) {
+		exportImportConfiguration = toUnwrappedModel(exportImportConfiguration);
+
 		Session session = null;
 
 		try {
@@ -3028,6 +3030,8 @@ public class ExportImportConfigurationPersistenceImpl
 	@Override
 	public ExportImportConfiguration updateImpl(
 		ExportImportConfiguration exportImportConfiguration) {
+		exportImportConfiguration = toUnwrappedModel(exportImportConfiguration);
+
 		boolean isNew = exportImportConfiguration.isNew();
 
 		ExportImportConfigurationModelImpl exportImportConfigurationModelImpl = (ExportImportConfigurationModelImpl)exportImportConfiguration;
@@ -3246,6 +3250,37 @@ public class ExportImportConfigurationPersistenceImpl
 		exportImportConfiguration.resetOriginalValues();
 
 		return exportImportConfiguration;
+	}
+
+	protected ExportImportConfiguration toUnwrappedModel(
+		ExportImportConfiguration exportImportConfiguration) {
+		if (exportImportConfiguration instanceof ExportImportConfigurationImpl) {
+			return exportImportConfiguration;
+		}
+
+		ExportImportConfigurationImpl exportImportConfigurationImpl = new ExportImportConfigurationImpl();
+
+		exportImportConfigurationImpl.setNew(exportImportConfiguration.isNew());
+		exportImportConfigurationImpl.setPrimaryKey(exportImportConfiguration.getPrimaryKey());
+
+		exportImportConfigurationImpl.setMvccVersion(exportImportConfiguration.getMvccVersion());
+		exportImportConfigurationImpl.setExportImportConfigurationId(exportImportConfiguration.getExportImportConfigurationId());
+		exportImportConfigurationImpl.setGroupId(exportImportConfiguration.getGroupId());
+		exportImportConfigurationImpl.setCompanyId(exportImportConfiguration.getCompanyId());
+		exportImportConfigurationImpl.setUserId(exportImportConfiguration.getUserId());
+		exportImportConfigurationImpl.setUserName(exportImportConfiguration.getUserName());
+		exportImportConfigurationImpl.setCreateDate(exportImportConfiguration.getCreateDate());
+		exportImportConfigurationImpl.setModifiedDate(exportImportConfiguration.getModifiedDate());
+		exportImportConfigurationImpl.setName(exportImportConfiguration.getName());
+		exportImportConfigurationImpl.setDescription(exportImportConfiguration.getDescription());
+		exportImportConfigurationImpl.setType(exportImportConfiguration.getType());
+		exportImportConfigurationImpl.setSettings(exportImportConfiguration.getSettings());
+		exportImportConfigurationImpl.setStatus(exportImportConfiguration.getStatus());
+		exportImportConfigurationImpl.setStatusByUserId(exportImportConfiguration.getStatusByUserId());
+		exportImportConfigurationImpl.setStatusByUserName(exportImportConfiguration.getStatusByUserName());
+		exportImportConfigurationImpl.setStatusDate(exportImportConfiguration.getStatusDate());
+
+		return exportImportConfigurationImpl;
 	}
 
 	/**

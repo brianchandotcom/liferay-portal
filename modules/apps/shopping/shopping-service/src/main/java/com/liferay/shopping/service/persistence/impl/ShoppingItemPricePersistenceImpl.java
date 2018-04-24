@@ -744,6 +744,8 @@ public class ShoppingItemPricePersistenceImpl extends BasePersistenceImpl<Shoppi
 
 	@Override
 	protected ShoppingItemPrice removeImpl(ShoppingItemPrice shoppingItemPrice) {
+		shoppingItemPrice = toUnwrappedModel(shoppingItemPrice);
+
 		Session session = null;
 
 		try {
@@ -774,6 +776,8 @@ public class ShoppingItemPricePersistenceImpl extends BasePersistenceImpl<Shoppi
 
 	@Override
 	public ShoppingItemPrice updateImpl(ShoppingItemPrice shoppingItemPrice) {
+		shoppingItemPrice = toUnwrappedModel(shoppingItemPrice);
+
 		boolean isNew = shoppingItemPrice.isNew();
 
 		ShoppingItemPriceModelImpl shoppingItemPriceModelImpl = (ShoppingItemPriceModelImpl)shoppingItemPrice;
@@ -843,6 +847,32 @@ public class ShoppingItemPricePersistenceImpl extends BasePersistenceImpl<Shoppi
 		shoppingItemPrice.resetOriginalValues();
 
 		return shoppingItemPrice;
+	}
+
+	protected ShoppingItemPrice toUnwrappedModel(
+		ShoppingItemPrice shoppingItemPrice) {
+		if (shoppingItemPrice instanceof ShoppingItemPriceImpl) {
+			return shoppingItemPrice;
+		}
+
+		ShoppingItemPriceImpl shoppingItemPriceImpl = new ShoppingItemPriceImpl();
+
+		shoppingItemPriceImpl.setNew(shoppingItemPrice.isNew());
+		shoppingItemPriceImpl.setPrimaryKey(shoppingItemPrice.getPrimaryKey());
+
+		shoppingItemPriceImpl.setItemPriceId(shoppingItemPrice.getItemPriceId());
+		shoppingItemPriceImpl.setCompanyId(shoppingItemPrice.getCompanyId());
+		shoppingItemPriceImpl.setItemId(shoppingItemPrice.getItemId());
+		shoppingItemPriceImpl.setMinQuantity(shoppingItemPrice.getMinQuantity());
+		shoppingItemPriceImpl.setMaxQuantity(shoppingItemPrice.getMaxQuantity());
+		shoppingItemPriceImpl.setPrice(shoppingItemPrice.getPrice());
+		shoppingItemPriceImpl.setDiscount(shoppingItemPrice.getDiscount());
+		shoppingItemPriceImpl.setTaxable(shoppingItemPrice.isTaxable());
+		shoppingItemPriceImpl.setShipping(shoppingItemPrice.getShipping());
+		shoppingItemPriceImpl.setUseShippingFormula(shoppingItemPrice.isUseShippingFormula());
+		shoppingItemPriceImpl.setStatus(shoppingItemPrice.getStatus());
+
+		return shoppingItemPriceImpl;
 	}
 
 	/**

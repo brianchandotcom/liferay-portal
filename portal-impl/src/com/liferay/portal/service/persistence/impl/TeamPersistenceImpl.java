@@ -2819,6 +2819,8 @@ public class TeamPersistenceImpl extends BasePersistenceImpl<Team>
 
 	@Override
 	protected Team removeImpl(Team team) {
+		team = toUnwrappedModel(team);
+
 		teamToUserTableMapper.deleteLeftPrimaryKeyTableMappings(team.getPrimaryKey());
 
 		teamToUserGroupTableMapper.deleteLeftPrimaryKeyTableMappings(team.getPrimaryKey());
@@ -2852,6 +2854,8 @@ public class TeamPersistenceImpl extends BasePersistenceImpl<Team>
 
 	@Override
 	public Team updateImpl(Team team) {
+		team = toUnwrappedModel(team);
+
 		boolean isNew = team.isNew();
 
 		TeamModelImpl teamModelImpl = (TeamModelImpl)team;
@@ -2998,6 +3002,32 @@ public class TeamPersistenceImpl extends BasePersistenceImpl<Team>
 		team.resetOriginalValues();
 
 		return team;
+	}
+
+	protected Team toUnwrappedModel(Team team) {
+		if (team instanceof TeamImpl) {
+			return team;
+		}
+
+		TeamImpl teamImpl = new TeamImpl();
+
+		teamImpl.setNew(team.isNew());
+		teamImpl.setPrimaryKey(team.getPrimaryKey());
+
+		teamImpl.setMvccVersion(team.getMvccVersion());
+		teamImpl.setUuid(team.getUuid());
+		teamImpl.setTeamId(team.getTeamId());
+		teamImpl.setCompanyId(team.getCompanyId());
+		teamImpl.setUserId(team.getUserId());
+		teamImpl.setUserName(team.getUserName());
+		teamImpl.setCreateDate(team.getCreateDate());
+		teamImpl.setModifiedDate(team.getModifiedDate());
+		teamImpl.setGroupId(team.getGroupId());
+		teamImpl.setName(team.getName());
+		teamImpl.setDescription(team.getDescription());
+		teamImpl.setLastPublishDate(team.getLastPublishDate());
+
+		return teamImpl;
 	}
 
 	/**

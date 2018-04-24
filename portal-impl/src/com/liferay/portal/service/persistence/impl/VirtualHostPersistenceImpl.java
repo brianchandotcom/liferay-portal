@@ -768,6 +768,8 @@ public class VirtualHostPersistenceImpl extends BasePersistenceImpl<VirtualHost>
 
 	@Override
 	protected VirtualHost removeImpl(VirtualHost virtualHost) {
+		virtualHost = toUnwrappedModel(virtualHost);
+
 		Session session = null;
 
 		try {
@@ -798,6 +800,8 @@ public class VirtualHostPersistenceImpl extends BasePersistenceImpl<VirtualHost>
 
 	@Override
 	public VirtualHost updateImpl(VirtualHost virtualHost) {
+		virtualHost = toUnwrappedModel(virtualHost);
+
 		boolean isNew = virtualHost.isNew();
 
 		VirtualHostModelImpl virtualHostModelImpl = (VirtualHostModelImpl)virtualHost;
@@ -845,6 +849,25 @@ public class VirtualHostPersistenceImpl extends BasePersistenceImpl<VirtualHost>
 		virtualHost.resetOriginalValues();
 
 		return virtualHost;
+	}
+
+	protected VirtualHost toUnwrappedModel(VirtualHost virtualHost) {
+		if (virtualHost instanceof VirtualHostImpl) {
+			return virtualHost;
+		}
+
+		VirtualHostImpl virtualHostImpl = new VirtualHostImpl();
+
+		virtualHostImpl.setNew(virtualHost.isNew());
+		virtualHostImpl.setPrimaryKey(virtualHost.getPrimaryKey());
+
+		virtualHostImpl.setMvccVersion(virtualHost.getMvccVersion());
+		virtualHostImpl.setVirtualHostId(virtualHost.getVirtualHostId());
+		virtualHostImpl.setCompanyId(virtualHost.getCompanyId());
+		virtualHostImpl.setLayoutSetId(virtualHost.getLayoutSetId());
+		virtualHostImpl.setHostname(virtualHost.getHostname());
+
+		return virtualHostImpl;
 	}
 
 	/**

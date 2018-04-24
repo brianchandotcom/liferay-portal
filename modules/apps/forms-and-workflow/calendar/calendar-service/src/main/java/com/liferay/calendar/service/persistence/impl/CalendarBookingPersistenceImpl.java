@@ -5752,6 +5752,8 @@ public class CalendarBookingPersistenceImpl extends BasePersistenceImpl<Calendar
 
 	@Override
 	protected CalendarBooking removeImpl(CalendarBooking calendarBooking) {
+		calendarBooking = toUnwrappedModel(calendarBooking);
+
 		Session session = null;
 
 		try {
@@ -5782,6 +5784,8 @@ public class CalendarBookingPersistenceImpl extends BasePersistenceImpl<Calendar
 
 	@Override
 	public CalendarBooking updateImpl(CalendarBooking calendarBooking) {
+		calendarBooking = toUnwrappedModel(calendarBooking);
+
 		boolean isNew = calendarBooking.isNew();
 
 		CalendarBookingModelImpl calendarBookingModelImpl = (CalendarBookingModelImpl)calendarBooking;
@@ -6084,6 +6088,49 @@ public class CalendarBookingPersistenceImpl extends BasePersistenceImpl<Calendar
 		calendarBooking.resetOriginalValues();
 
 		return calendarBooking;
+	}
+
+	protected CalendarBooking toUnwrappedModel(CalendarBooking calendarBooking) {
+		if (calendarBooking instanceof CalendarBookingImpl) {
+			return calendarBooking;
+		}
+
+		CalendarBookingImpl calendarBookingImpl = new CalendarBookingImpl();
+
+		calendarBookingImpl.setNew(calendarBooking.isNew());
+		calendarBookingImpl.setPrimaryKey(calendarBooking.getPrimaryKey());
+
+		calendarBookingImpl.setUuid(calendarBooking.getUuid());
+		calendarBookingImpl.setCalendarBookingId(calendarBooking.getCalendarBookingId());
+		calendarBookingImpl.setGroupId(calendarBooking.getGroupId());
+		calendarBookingImpl.setCompanyId(calendarBooking.getCompanyId());
+		calendarBookingImpl.setUserId(calendarBooking.getUserId());
+		calendarBookingImpl.setUserName(calendarBooking.getUserName());
+		calendarBookingImpl.setCreateDate(calendarBooking.getCreateDate());
+		calendarBookingImpl.setModifiedDate(calendarBooking.getModifiedDate());
+		calendarBookingImpl.setCalendarId(calendarBooking.getCalendarId());
+		calendarBookingImpl.setCalendarResourceId(calendarBooking.getCalendarResourceId());
+		calendarBookingImpl.setParentCalendarBookingId(calendarBooking.getParentCalendarBookingId());
+		calendarBookingImpl.setRecurringCalendarBookingId(calendarBooking.getRecurringCalendarBookingId());
+		calendarBookingImpl.setVEventUid(calendarBooking.getVEventUid());
+		calendarBookingImpl.setTitle(calendarBooking.getTitle());
+		calendarBookingImpl.setDescription(calendarBooking.getDescription());
+		calendarBookingImpl.setLocation(calendarBooking.getLocation());
+		calendarBookingImpl.setStartTime(calendarBooking.getStartTime());
+		calendarBookingImpl.setEndTime(calendarBooking.getEndTime());
+		calendarBookingImpl.setAllDay(calendarBooking.isAllDay());
+		calendarBookingImpl.setRecurrence(calendarBooking.getRecurrence());
+		calendarBookingImpl.setFirstReminder(calendarBooking.getFirstReminder());
+		calendarBookingImpl.setFirstReminderType(calendarBooking.getFirstReminderType());
+		calendarBookingImpl.setSecondReminder(calendarBooking.getSecondReminder());
+		calendarBookingImpl.setSecondReminderType(calendarBooking.getSecondReminderType());
+		calendarBookingImpl.setLastPublishDate(calendarBooking.getLastPublishDate());
+		calendarBookingImpl.setStatus(calendarBooking.getStatus());
+		calendarBookingImpl.setStatusByUserId(calendarBooking.getStatusByUserId());
+		calendarBookingImpl.setStatusByUserName(calendarBooking.getStatusByUserName());
+		calendarBookingImpl.setStatusDate(calendarBooking.getStatusDate());
+
+		return calendarBookingImpl;
 	}
 
 	/**

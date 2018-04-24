@@ -5900,6 +5900,8 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 
 	@Override
 	protected SocialRelation removeImpl(SocialRelation socialRelation) {
+		socialRelation = toUnwrappedModel(socialRelation);
+
 		Session session = null;
 
 		try {
@@ -5930,6 +5932,8 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 
 	@Override
 	public SocialRelation updateImpl(SocialRelation socialRelation) {
+		socialRelation = toUnwrappedModel(socialRelation);
+
 		boolean isNew = socialRelation.isNew();
 
 		SocialRelationModelImpl socialRelationModelImpl = (SocialRelationModelImpl)socialRelation;
@@ -6250,6 +6254,27 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 		socialRelation.resetOriginalValues();
 
 		return socialRelation;
+	}
+
+	protected SocialRelation toUnwrappedModel(SocialRelation socialRelation) {
+		if (socialRelation instanceof SocialRelationImpl) {
+			return socialRelation;
+		}
+
+		SocialRelationImpl socialRelationImpl = new SocialRelationImpl();
+
+		socialRelationImpl.setNew(socialRelation.isNew());
+		socialRelationImpl.setPrimaryKey(socialRelation.getPrimaryKey());
+
+		socialRelationImpl.setUuid(socialRelation.getUuid());
+		socialRelationImpl.setRelationId(socialRelation.getRelationId());
+		socialRelationImpl.setCompanyId(socialRelation.getCompanyId());
+		socialRelationImpl.setCreateDate(socialRelation.getCreateDate());
+		socialRelationImpl.setUserId1(socialRelation.getUserId1());
+		socialRelationImpl.setUserId2(socialRelation.getUserId2());
+		socialRelationImpl.setType(socialRelation.getType());
+
+		return socialRelationImpl;
 	}
 
 	/**

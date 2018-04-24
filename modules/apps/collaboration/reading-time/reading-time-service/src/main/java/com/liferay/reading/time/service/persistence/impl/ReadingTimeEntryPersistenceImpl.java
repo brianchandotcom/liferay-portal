@@ -2004,6 +2004,8 @@ public class ReadingTimeEntryPersistenceImpl extends BasePersistenceImpl<Reading
 
 	@Override
 	protected ReadingTimeEntry removeImpl(ReadingTimeEntry readingTimeEntry) {
+		readingTimeEntry = toUnwrappedModel(readingTimeEntry);
+
 		Session session = null;
 
 		try {
@@ -2034,6 +2036,8 @@ public class ReadingTimeEntryPersistenceImpl extends BasePersistenceImpl<Reading
 
 	@Override
 	public ReadingTimeEntry updateImpl(ReadingTimeEntry readingTimeEntry) {
+		readingTimeEntry = toUnwrappedModel(readingTimeEntry);
+
 		boolean isNew = readingTimeEntry.isNew();
 
 		ReadingTimeEntryModelImpl readingTimeEntryModelImpl = (ReadingTimeEntryModelImpl)readingTimeEntry;
@@ -2165,6 +2169,30 @@ public class ReadingTimeEntryPersistenceImpl extends BasePersistenceImpl<Reading
 		readingTimeEntry.resetOriginalValues();
 
 		return readingTimeEntry;
+	}
+
+	protected ReadingTimeEntry toUnwrappedModel(
+		ReadingTimeEntry readingTimeEntry) {
+		if (readingTimeEntry instanceof ReadingTimeEntryImpl) {
+			return readingTimeEntry;
+		}
+
+		ReadingTimeEntryImpl readingTimeEntryImpl = new ReadingTimeEntryImpl();
+
+		readingTimeEntryImpl.setNew(readingTimeEntry.isNew());
+		readingTimeEntryImpl.setPrimaryKey(readingTimeEntry.getPrimaryKey());
+
+		readingTimeEntryImpl.setUuid(readingTimeEntry.getUuid());
+		readingTimeEntryImpl.setReadingTimeEntryId(readingTimeEntry.getReadingTimeEntryId());
+		readingTimeEntryImpl.setGroupId(readingTimeEntry.getGroupId());
+		readingTimeEntryImpl.setCompanyId(readingTimeEntry.getCompanyId());
+		readingTimeEntryImpl.setCreateDate(readingTimeEntry.getCreateDate());
+		readingTimeEntryImpl.setModifiedDate(readingTimeEntry.getModifiedDate());
+		readingTimeEntryImpl.setClassNameId(readingTimeEntry.getClassNameId());
+		readingTimeEntryImpl.setClassPK(readingTimeEntry.getClassPK());
+		readingTimeEntryImpl.setReadingTime(readingTimeEntry.getReadingTime());
+
+		return readingTimeEntryImpl;
 	}
 
 	/**

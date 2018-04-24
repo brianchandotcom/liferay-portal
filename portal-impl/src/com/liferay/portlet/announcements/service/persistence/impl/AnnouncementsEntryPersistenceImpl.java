@@ -5042,6 +5042,8 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 	@Override
 	protected AnnouncementsEntry removeImpl(
 		AnnouncementsEntry announcementsEntry) {
+		announcementsEntry = toUnwrappedModel(announcementsEntry);
+
 		Session session = null;
 
 		try {
@@ -5072,6 +5074,8 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 
 	@Override
 	public AnnouncementsEntry updateImpl(AnnouncementsEntry announcementsEntry) {
+		announcementsEntry = toUnwrappedModel(announcementsEntry);
+
 		boolean isNew = announcementsEntry.isNew();
 
 		AnnouncementsEntryModelImpl announcementsEntryModelImpl = (AnnouncementsEntryModelImpl)announcementsEntry;
@@ -5312,6 +5316,38 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 		announcementsEntry.resetOriginalValues();
 
 		return announcementsEntry;
+	}
+
+	protected AnnouncementsEntry toUnwrappedModel(
+		AnnouncementsEntry announcementsEntry) {
+		if (announcementsEntry instanceof AnnouncementsEntryImpl) {
+			return announcementsEntry;
+		}
+
+		AnnouncementsEntryImpl announcementsEntryImpl = new AnnouncementsEntryImpl();
+
+		announcementsEntryImpl.setNew(announcementsEntry.isNew());
+		announcementsEntryImpl.setPrimaryKey(announcementsEntry.getPrimaryKey());
+
+		announcementsEntryImpl.setUuid(announcementsEntry.getUuid());
+		announcementsEntryImpl.setEntryId(announcementsEntry.getEntryId());
+		announcementsEntryImpl.setCompanyId(announcementsEntry.getCompanyId());
+		announcementsEntryImpl.setUserId(announcementsEntry.getUserId());
+		announcementsEntryImpl.setUserName(announcementsEntry.getUserName());
+		announcementsEntryImpl.setCreateDate(announcementsEntry.getCreateDate());
+		announcementsEntryImpl.setModifiedDate(announcementsEntry.getModifiedDate());
+		announcementsEntryImpl.setClassNameId(announcementsEntry.getClassNameId());
+		announcementsEntryImpl.setClassPK(announcementsEntry.getClassPK());
+		announcementsEntryImpl.setTitle(announcementsEntry.getTitle());
+		announcementsEntryImpl.setContent(announcementsEntry.getContent());
+		announcementsEntryImpl.setUrl(announcementsEntry.getUrl());
+		announcementsEntryImpl.setType(announcementsEntry.getType());
+		announcementsEntryImpl.setDisplayDate(announcementsEntry.getDisplayDate());
+		announcementsEntryImpl.setExpirationDate(announcementsEntry.getExpirationDate());
+		announcementsEntryImpl.setPriority(announcementsEntry.getPriority());
+		announcementsEntryImpl.setAlert(announcementsEntry.isAlert());
+
+		return announcementsEntryImpl;
 	}
 
 	/**

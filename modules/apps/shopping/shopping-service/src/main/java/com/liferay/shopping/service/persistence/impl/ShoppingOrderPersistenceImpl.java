@@ -2752,6 +2752,8 @@ public class ShoppingOrderPersistenceImpl extends BasePersistenceImpl<ShoppingOr
 
 	@Override
 	protected ShoppingOrder removeImpl(ShoppingOrder shoppingOrder) {
+		shoppingOrder = toUnwrappedModel(shoppingOrder);
+
 		Session session = null;
 
 		try {
@@ -2782,6 +2784,8 @@ public class ShoppingOrderPersistenceImpl extends BasePersistenceImpl<ShoppingOr
 
 	@Override
 	public ShoppingOrder updateImpl(ShoppingOrder shoppingOrder) {
+		shoppingOrder = toUnwrappedModel(shoppingOrder);
+
 		boolean isNew = shoppingOrder.isNew();
 
 		ShoppingOrderModelImpl shoppingOrderModelImpl = (ShoppingOrderModelImpl)shoppingOrder;
@@ -2910,6 +2914,71 @@ public class ShoppingOrderPersistenceImpl extends BasePersistenceImpl<ShoppingOr
 		shoppingOrder.resetOriginalValues();
 
 		return shoppingOrder;
+	}
+
+	protected ShoppingOrder toUnwrappedModel(ShoppingOrder shoppingOrder) {
+		if (shoppingOrder instanceof ShoppingOrderImpl) {
+			return shoppingOrder;
+		}
+
+		ShoppingOrderImpl shoppingOrderImpl = new ShoppingOrderImpl();
+
+		shoppingOrderImpl.setNew(shoppingOrder.isNew());
+		shoppingOrderImpl.setPrimaryKey(shoppingOrder.getPrimaryKey());
+
+		shoppingOrderImpl.setOrderId(shoppingOrder.getOrderId());
+		shoppingOrderImpl.setGroupId(shoppingOrder.getGroupId());
+		shoppingOrderImpl.setCompanyId(shoppingOrder.getCompanyId());
+		shoppingOrderImpl.setUserId(shoppingOrder.getUserId());
+		shoppingOrderImpl.setUserName(shoppingOrder.getUserName());
+		shoppingOrderImpl.setCreateDate(shoppingOrder.getCreateDate());
+		shoppingOrderImpl.setModifiedDate(shoppingOrder.getModifiedDate());
+		shoppingOrderImpl.setNumber(shoppingOrder.getNumber());
+		shoppingOrderImpl.setTax(shoppingOrder.getTax());
+		shoppingOrderImpl.setShipping(shoppingOrder.getShipping());
+		shoppingOrderImpl.setAltShipping(shoppingOrder.getAltShipping());
+		shoppingOrderImpl.setRequiresShipping(shoppingOrder.isRequiresShipping());
+		shoppingOrderImpl.setInsure(shoppingOrder.isInsure());
+		shoppingOrderImpl.setInsurance(shoppingOrder.getInsurance());
+		shoppingOrderImpl.setCouponCodes(shoppingOrder.getCouponCodes());
+		shoppingOrderImpl.setCouponDiscount(shoppingOrder.getCouponDiscount());
+		shoppingOrderImpl.setBillingFirstName(shoppingOrder.getBillingFirstName());
+		shoppingOrderImpl.setBillingLastName(shoppingOrder.getBillingLastName());
+		shoppingOrderImpl.setBillingEmailAddress(shoppingOrder.getBillingEmailAddress());
+		shoppingOrderImpl.setBillingCompany(shoppingOrder.getBillingCompany());
+		shoppingOrderImpl.setBillingStreet(shoppingOrder.getBillingStreet());
+		shoppingOrderImpl.setBillingCity(shoppingOrder.getBillingCity());
+		shoppingOrderImpl.setBillingState(shoppingOrder.getBillingState());
+		shoppingOrderImpl.setBillingZip(shoppingOrder.getBillingZip());
+		shoppingOrderImpl.setBillingCountry(shoppingOrder.getBillingCountry());
+		shoppingOrderImpl.setBillingPhone(shoppingOrder.getBillingPhone());
+		shoppingOrderImpl.setShipToBilling(shoppingOrder.isShipToBilling());
+		shoppingOrderImpl.setShippingFirstName(shoppingOrder.getShippingFirstName());
+		shoppingOrderImpl.setShippingLastName(shoppingOrder.getShippingLastName());
+		shoppingOrderImpl.setShippingEmailAddress(shoppingOrder.getShippingEmailAddress());
+		shoppingOrderImpl.setShippingCompany(shoppingOrder.getShippingCompany());
+		shoppingOrderImpl.setShippingStreet(shoppingOrder.getShippingStreet());
+		shoppingOrderImpl.setShippingCity(shoppingOrder.getShippingCity());
+		shoppingOrderImpl.setShippingState(shoppingOrder.getShippingState());
+		shoppingOrderImpl.setShippingZip(shoppingOrder.getShippingZip());
+		shoppingOrderImpl.setShippingCountry(shoppingOrder.getShippingCountry());
+		shoppingOrderImpl.setShippingPhone(shoppingOrder.getShippingPhone());
+		shoppingOrderImpl.setCcName(shoppingOrder.getCcName());
+		shoppingOrderImpl.setCcType(shoppingOrder.getCcType());
+		shoppingOrderImpl.setCcNumber(shoppingOrder.getCcNumber());
+		shoppingOrderImpl.setCcExpMonth(shoppingOrder.getCcExpMonth());
+		shoppingOrderImpl.setCcExpYear(shoppingOrder.getCcExpYear());
+		shoppingOrderImpl.setCcVerNumber(shoppingOrder.getCcVerNumber());
+		shoppingOrderImpl.setComments(shoppingOrder.getComments());
+		shoppingOrderImpl.setPpTxnId(shoppingOrder.getPpTxnId());
+		shoppingOrderImpl.setPpPaymentStatus(shoppingOrder.getPpPaymentStatus());
+		shoppingOrderImpl.setPpPaymentGross(shoppingOrder.getPpPaymentGross());
+		shoppingOrderImpl.setPpReceiverEmail(shoppingOrder.getPpReceiverEmail());
+		shoppingOrderImpl.setPpPayerEmail(shoppingOrder.getPpPayerEmail());
+		shoppingOrderImpl.setSendOrderEmail(shoppingOrder.isSendOrderEmail());
+		shoppingOrderImpl.setSendShippingEmail(shoppingOrder.isSendShippingEmail());
+
+		return shoppingOrderImpl;
 	}
 
 	/**

@@ -2238,6 +2238,8 @@ public class SocialActivityLimitPersistenceImpl extends BasePersistenceImpl<Soci
 	@Override
 	protected SocialActivityLimit removeImpl(
 		SocialActivityLimit socialActivityLimit) {
+		socialActivityLimit = toUnwrappedModel(socialActivityLimit);
+
 		Session session = null;
 
 		try {
@@ -2269,6 +2271,8 @@ public class SocialActivityLimitPersistenceImpl extends BasePersistenceImpl<Soci
 	@Override
 	public SocialActivityLimit updateImpl(
 		SocialActivityLimit socialActivityLimit) {
+		socialActivityLimit = toUnwrappedModel(socialActivityLimit);
+
 		boolean isNew = socialActivityLimit.isNew();
 
 		SocialActivityLimitModelImpl socialActivityLimitModelImpl = (SocialActivityLimitModelImpl)socialActivityLimit;
@@ -2396,6 +2400,30 @@ public class SocialActivityLimitPersistenceImpl extends BasePersistenceImpl<Soci
 		socialActivityLimit.resetOriginalValues();
 
 		return socialActivityLimit;
+	}
+
+	protected SocialActivityLimit toUnwrappedModel(
+		SocialActivityLimit socialActivityLimit) {
+		if (socialActivityLimit instanceof SocialActivityLimitImpl) {
+			return socialActivityLimit;
+		}
+
+		SocialActivityLimitImpl socialActivityLimitImpl = new SocialActivityLimitImpl();
+
+		socialActivityLimitImpl.setNew(socialActivityLimit.isNew());
+		socialActivityLimitImpl.setPrimaryKey(socialActivityLimit.getPrimaryKey());
+
+		socialActivityLimitImpl.setActivityLimitId(socialActivityLimit.getActivityLimitId());
+		socialActivityLimitImpl.setGroupId(socialActivityLimit.getGroupId());
+		socialActivityLimitImpl.setCompanyId(socialActivityLimit.getCompanyId());
+		socialActivityLimitImpl.setUserId(socialActivityLimit.getUserId());
+		socialActivityLimitImpl.setClassNameId(socialActivityLimit.getClassNameId());
+		socialActivityLimitImpl.setClassPK(socialActivityLimit.getClassPK());
+		socialActivityLimitImpl.setActivityType(socialActivityLimit.getActivityType());
+		socialActivityLimitImpl.setActivityCounterName(socialActivityLimit.getActivityCounterName());
+		socialActivityLimitImpl.setValue(socialActivityLimit.getValue());
+
+		return socialActivityLimitImpl;
 	}
 
 	/**

@@ -1932,6 +1932,8 @@ public class ExpandoColumnPersistenceImpl extends BasePersistenceImpl<ExpandoCol
 
 	@Override
 	protected ExpandoColumn removeImpl(ExpandoColumn expandoColumn) {
+		expandoColumn = toUnwrappedModel(expandoColumn);
+
 		Session session = null;
 
 		try {
@@ -1962,6 +1964,8 @@ public class ExpandoColumnPersistenceImpl extends BasePersistenceImpl<ExpandoCol
 
 	@Override
 	public ExpandoColumn updateImpl(ExpandoColumn expandoColumn) {
+		expandoColumn = toUnwrappedModel(expandoColumn);
+
 		boolean isNew = expandoColumn.isNew();
 
 		ExpandoColumnModelImpl expandoColumnModelImpl = (ExpandoColumnModelImpl)expandoColumn;
@@ -2064,6 +2068,27 @@ public class ExpandoColumnPersistenceImpl extends BasePersistenceImpl<ExpandoCol
 		expandoColumn.resetOriginalValues();
 
 		return expandoColumn;
+	}
+
+	protected ExpandoColumn toUnwrappedModel(ExpandoColumn expandoColumn) {
+		if (expandoColumn instanceof ExpandoColumnImpl) {
+			return expandoColumn;
+		}
+
+		ExpandoColumnImpl expandoColumnImpl = new ExpandoColumnImpl();
+
+		expandoColumnImpl.setNew(expandoColumn.isNew());
+		expandoColumnImpl.setPrimaryKey(expandoColumn.getPrimaryKey());
+
+		expandoColumnImpl.setColumnId(expandoColumn.getColumnId());
+		expandoColumnImpl.setCompanyId(expandoColumn.getCompanyId());
+		expandoColumnImpl.setTableId(expandoColumn.getTableId());
+		expandoColumnImpl.setName(expandoColumn.getName());
+		expandoColumnImpl.setType(expandoColumn.getType());
+		expandoColumnImpl.setDefaultData(expandoColumn.getDefaultData());
+		expandoColumnImpl.setTypeSettings(expandoColumn.getTypeSettings());
+
+		return expandoColumnImpl;
 	}
 
 	/**

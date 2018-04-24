@@ -3636,6 +3636,8 @@ public class KaleoLogPersistenceImpl extends BasePersistenceImpl<KaleoLog>
 
 	@Override
 	protected KaleoLog removeImpl(KaleoLog kaleoLog) {
+		kaleoLog = toUnwrappedModel(kaleoLog);
+
 		Session session = null;
 
 		try {
@@ -3666,6 +3668,8 @@ public class KaleoLogPersistenceImpl extends BasePersistenceImpl<KaleoLog>
 
 	@Override
 	public KaleoLog updateImpl(KaleoLog kaleoLog) {
+		kaleoLog = toUnwrappedModel(kaleoLog);
+
 		boolean isNew = kaleoLog.isNew();
 
 		KaleoLogModelImpl kaleoLogModelImpl = (KaleoLogModelImpl)kaleoLog;
@@ -3905,6 +3909,50 @@ public class KaleoLogPersistenceImpl extends BasePersistenceImpl<KaleoLog>
 		kaleoLog.resetOriginalValues();
 
 		return kaleoLog;
+	}
+
+	protected KaleoLog toUnwrappedModel(KaleoLog kaleoLog) {
+		if (kaleoLog instanceof KaleoLogImpl) {
+			return kaleoLog;
+		}
+
+		KaleoLogImpl kaleoLogImpl = new KaleoLogImpl();
+
+		kaleoLogImpl.setNew(kaleoLog.isNew());
+		kaleoLogImpl.setPrimaryKey(kaleoLog.getPrimaryKey());
+
+		kaleoLogImpl.setKaleoLogId(kaleoLog.getKaleoLogId());
+		kaleoLogImpl.setGroupId(kaleoLog.getGroupId());
+		kaleoLogImpl.setCompanyId(kaleoLog.getCompanyId());
+		kaleoLogImpl.setUserId(kaleoLog.getUserId());
+		kaleoLogImpl.setUserName(kaleoLog.getUserName());
+		kaleoLogImpl.setCreateDate(kaleoLog.getCreateDate());
+		kaleoLogImpl.setModifiedDate(kaleoLog.getModifiedDate());
+		kaleoLogImpl.setKaleoClassName(kaleoLog.getKaleoClassName());
+		kaleoLogImpl.setKaleoClassPK(kaleoLog.getKaleoClassPK());
+		kaleoLogImpl.setKaleoDefinitionVersionId(kaleoLog.getKaleoDefinitionVersionId());
+		kaleoLogImpl.setKaleoInstanceId(kaleoLog.getKaleoInstanceId());
+		kaleoLogImpl.setKaleoInstanceTokenId(kaleoLog.getKaleoInstanceTokenId());
+		kaleoLogImpl.setKaleoTaskInstanceTokenId(kaleoLog.getKaleoTaskInstanceTokenId());
+		kaleoLogImpl.setKaleoNodeName(kaleoLog.getKaleoNodeName());
+		kaleoLogImpl.setTerminalKaleoNode(kaleoLog.isTerminalKaleoNode());
+		kaleoLogImpl.setKaleoActionId(kaleoLog.getKaleoActionId());
+		kaleoLogImpl.setKaleoActionName(kaleoLog.getKaleoActionName());
+		kaleoLogImpl.setKaleoActionDescription(kaleoLog.getKaleoActionDescription());
+		kaleoLogImpl.setPreviousKaleoNodeId(kaleoLog.getPreviousKaleoNodeId());
+		kaleoLogImpl.setPreviousKaleoNodeName(kaleoLog.getPreviousKaleoNodeName());
+		kaleoLogImpl.setPreviousAssigneeClassName(kaleoLog.getPreviousAssigneeClassName());
+		kaleoLogImpl.setPreviousAssigneeClassPK(kaleoLog.getPreviousAssigneeClassPK());
+		kaleoLogImpl.setCurrentAssigneeClassName(kaleoLog.getCurrentAssigneeClassName());
+		kaleoLogImpl.setCurrentAssigneeClassPK(kaleoLog.getCurrentAssigneeClassPK());
+		kaleoLogImpl.setType(kaleoLog.getType());
+		kaleoLogImpl.setComment(kaleoLog.getComment());
+		kaleoLogImpl.setStartDate(kaleoLog.getStartDate());
+		kaleoLogImpl.setEndDate(kaleoLog.getEndDate());
+		kaleoLogImpl.setDuration(kaleoLog.getDuration());
+		kaleoLogImpl.setWorkflowContext(kaleoLog.getWorkflowContext());
+
+		return kaleoLogImpl;
 	}
 
 	/**

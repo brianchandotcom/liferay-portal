@@ -520,6 +520,8 @@ public class PortalPreferencesPersistenceImpl extends BasePersistenceImpl<Portal
 
 	@Override
 	protected PortalPreferences removeImpl(PortalPreferences portalPreferences) {
+		portalPreferences = toUnwrappedModel(portalPreferences);
+
 		Session session = null;
 
 		try {
@@ -550,6 +552,8 @@ public class PortalPreferencesPersistenceImpl extends BasePersistenceImpl<Portal
 
 	@Override
 	public PortalPreferences updateImpl(PortalPreferences portalPreferences) {
+		portalPreferences = toUnwrappedModel(portalPreferences);
+
 		boolean isNew = portalPreferences.isNew();
 
 		PortalPreferencesModelImpl portalPreferencesModelImpl = (PortalPreferencesModelImpl)portalPreferences;
@@ -597,6 +601,26 @@ public class PortalPreferencesPersistenceImpl extends BasePersistenceImpl<Portal
 		portalPreferences.resetOriginalValues();
 
 		return portalPreferences;
+	}
+
+	protected PortalPreferences toUnwrappedModel(
+		PortalPreferences portalPreferences) {
+		if (portalPreferences instanceof PortalPreferencesImpl) {
+			return portalPreferences;
+		}
+
+		PortalPreferencesImpl portalPreferencesImpl = new PortalPreferencesImpl();
+
+		portalPreferencesImpl.setNew(portalPreferences.isNew());
+		portalPreferencesImpl.setPrimaryKey(portalPreferences.getPrimaryKey());
+
+		portalPreferencesImpl.setMvccVersion(portalPreferences.getMvccVersion());
+		portalPreferencesImpl.setPortalPreferencesId(portalPreferences.getPortalPreferencesId());
+		portalPreferencesImpl.setOwnerId(portalPreferences.getOwnerId());
+		portalPreferencesImpl.setOwnerType(portalPreferences.getOwnerType());
+		portalPreferencesImpl.setPreferences(portalPreferences.getPreferences());
+
+		return portalPreferencesImpl;
 	}
 
 	/**

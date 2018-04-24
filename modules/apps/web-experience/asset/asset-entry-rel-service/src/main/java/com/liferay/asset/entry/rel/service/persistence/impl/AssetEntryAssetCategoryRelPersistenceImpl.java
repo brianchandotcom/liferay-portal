@@ -1296,6 +1296,8 @@ public class AssetEntryAssetCategoryRelPersistenceImpl
 	@Override
 	protected AssetEntryAssetCategoryRel removeImpl(
 		AssetEntryAssetCategoryRel assetEntryAssetCategoryRel) {
+		assetEntryAssetCategoryRel = toUnwrappedModel(assetEntryAssetCategoryRel);
+
 		Session session = null;
 
 		try {
@@ -1327,6 +1329,8 @@ public class AssetEntryAssetCategoryRelPersistenceImpl
 	@Override
 	public AssetEntryAssetCategoryRel updateImpl(
 		AssetEntryAssetCategoryRel assetEntryAssetCategoryRel) {
+		assetEntryAssetCategoryRel = toUnwrappedModel(assetEntryAssetCategoryRel);
+
 		boolean isNew = assetEntryAssetCategoryRel.isNew();
 
 		AssetEntryAssetCategoryRelModelImpl assetEntryAssetCategoryRelModelImpl = (AssetEntryAssetCategoryRelModelImpl)assetEntryAssetCategoryRel;
@@ -1430,6 +1434,25 @@ public class AssetEntryAssetCategoryRelPersistenceImpl
 		assetEntryAssetCategoryRel.resetOriginalValues();
 
 		return assetEntryAssetCategoryRel;
+	}
+
+	protected AssetEntryAssetCategoryRel toUnwrappedModel(
+		AssetEntryAssetCategoryRel assetEntryAssetCategoryRel) {
+		if (assetEntryAssetCategoryRel instanceof AssetEntryAssetCategoryRelImpl) {
+			return assetEntryAssetCategoryRel;
+		}
+
+		AssetEntryAssetCategoryRelImpl assetEntryAssetCategoryRelImpl = new AssetEntryAssetCategoryRelImpl();
+
+		assetEntryAssetCategoryRelImpl.setNew(assetEntryAssetCategoryRel.isNew());
+		assetEntryAssetCategoryRelImpl.setPrimaryKey(assetEntryAssetCategoryRel.getPrimaryKey());
+
+		assetEntryAssetCategoryRelImpl.setAssetEntryAssetCategoryRelId(assetEntryAssetCategoryRel.getAssetEntryAssetCategoryRelId());
+		assetEntryAssetCategoryRelImpl.setAssetEntryId(assetEntryAssetCategoryRel.getAssetEntryId());
+		assetEntryAssetCategoryRelImpl.setAssetCategoryId(assetEntryAssetCategoryRel.getAssetCategoryId());
+		assetEntryAssetCategoryRelImpl.setPriority(assetEntryAssetCategoryRel.getPriority());
+
+		return assetEntryAssetCategoryRelImpl;
 	}
 
 	/**

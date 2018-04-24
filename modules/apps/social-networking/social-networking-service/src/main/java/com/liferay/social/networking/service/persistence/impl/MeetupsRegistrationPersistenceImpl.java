@@ -1602,6 +1602,8 @@ public class MeetupsRegistrationPersistenceImpl extends BasePersistenceImpl<Meet
 	@Override
 	protected MeetupsRegistration removeImpl(
 		MeetupsRegistration meetupsRegistration) {
+		meetupsRegistration = toUnwrappedModel(meetupsRegistration);
+
 		Session session = null;
 
 		try {
@@ -1633,6 +1635,8 @@ public class MeetupsRegistrationPersistenceImpl extends BasePersistenceImpl<Meet
 	@Override
 	public MeetupsRegistration updateImpl(
 		MeetupsRegistration meetupsRegistration) {
+		meetupsRegistration = toUnwrappedModel(meetupsRegistration);
+
 		boolean isNew = meetupsRegistration.isNew();
 
 		MeetupsRegistrationModelImpl meetupsRegistrationModelImpl = (MeetupsRegistrationModelImpl)meetupsRegistration;
@@ -1765,6 +1769,30 @@ public class MeetupsRegistrationPersistenceImpl extends BasePersistenceImpl<Meet
 		meetupsRegistration.resetOriginalValues();
 
 		return meetupsRegistration;
+	}
+
+	protected MeetupsRegistration toUnwrappedModel(
+		MeetupsRegistration meetupsRegistration) {
+		if (meetupsRegistration instanceof MeetupsRegistrationImpl) {
+			return meetupsRegistration;
+		}
+
+		MeetupsRegistrationImpl meetupsRegistrationImpl = new MeetupsRegistrationImpl();
+
+		meetupsRegistrationImpl.setNew(meetupsRegistration.isNew());
+		meetupsRegistrationImpl.setPrimaryKey(meetupsRegistration.getPrimaryKey());
+
+		meetupsRegistrationImpl.setMeetupsRegistrationId(meetupsRegistration.getMeetupsRegistrationId());
+		meetupsRegistrationImpl.setCompanyId(meetupsRegistration.getCompanyId());
+		meetupsRegistrationImpl.setUserId(meetupsRegistration.getUserId());
+		meetupsRegistrationImpl.setUserName(meetupsRegistration.getUserName());
+		meetupsRegistrationImpl.setCreateDate(meetupsRegistration.getCreateDate());
+		meetupsRegistrationImpl.setModifiedDate(meetupsRegistration.getModifiedDate());
+		meetupsRegistrationImpl.setMeetupsEntryId(meetupsRegistration.getMeetupsEntryId());
+		meetupsRegistrationImpl.setStatus(meetupsRegistration.getStatus());
+		meetupsRegistrationImpl.setComments(meetupsRegistration.getComments());
+
+		return meetupsRegistrationImpl;
 	}
 
 	/**

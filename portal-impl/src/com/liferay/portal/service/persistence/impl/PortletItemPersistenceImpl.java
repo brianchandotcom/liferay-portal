@@ -1813,6 +1813,8 @@ public class PortletItemPersistenceImpl extends BasePersistenceImpl<PortletItem>
 
 	@Override
 	protected PortletItem removeImpl(PortletItem portletItem) {
+		portletItem = toUnwrappedModel(portletItem);
+
 		Session session = null;
 
 		try {
@@ -1843,6 +1845,8 @@ public class PortletItemPersistenceImpl extends BasePersistenceImpl<PortletItem>
 
 	@Override
 	public PortletItem updateImpl(PortletItem portletItem) {
+		portletItem = toUnwrappedModel(portletItem);
+
 		boolean isNew = portletItem.isNew();
 
 		PortletItemModelImpl portletItemModelImpl = (PortletItemModelImpl)portletItem;
@@ -1977,6 +1981,31 @@ public class PortletItemPersistenceImpl extends BasePersistenceImpl<PortletItem>
 		portletItem.resetOriginalValues();
 
 		return portletItem;
+	}
+
+	protected PortletItem toUnwrappedModel(PortletItem portletItem) {
+		if (portletItem instanceof PortletItemImpl) {
+			return portletItem;
+		}
+
+		PortletItemImpl portletItemImpl = new PortletItemImpl();
+
+		portletItemImpl.setNew(portletItem.isNew());
+		portletItemImpl.setPrimaryKey(portletItem.getPrimaryKey());
+
+		portletItemImpl.setMvccVersion(portletItem.getMvccVersion());
+		portletItemImpl.setPortletItemId(portletItem.getPortletItemId());
+		portletItemImpl.setGroupId(portletItem.getGroupId());
+		portletItemImpl.setCompanyId(portletItem.getCompanyId());
+		portletItemImpl.setUserId(portletItem.getUserId());
+		portletItemImpl.setUserName(portletItem.getUserName());
+		portletItemImpl.setCreateDate(portletItem.getCreateDate());
+		portletItemImpl.setModifiedDate(portletItem.getModifiedDate());
+		portletItemImpl.setName(portletItem.getName());
+		portletItemImpl.setPortletId(portletItem.getPortletId());
+		portletItemImpl.setClassNameId(portletItem.getClassNameId());
+
+		return portletItemImpl;
 	}
 
 	/**

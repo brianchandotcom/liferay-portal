@@ -2464,6 +2464,8 @@ public class LayoutPageTemplateCollectionPersistenceImpl
 	@Override
 	protected LayoutPageTemplateCollection removeImpl(
 		LayoutPageTemplateCollection layoutPageTemplateCollection) {
+		layoutPageTemplateCollection = toUnwrappedModel(layoutPageTemplateCollection);
+
 		Session session = null;
 
 		try {
@@ -2495,6 +2497,8 @@ public class LayoutPageTemplateCollectionPersistenceImpl
 	@Override
 	public LayoutPageTemplateCollection updateImpl(
 		LayoutPageTemplateCollection layoutPageTemplateCollection) {
+		layoutPageTemplateCollection = toUnwrappedModel(layoutPageTemplateCollection);
+
 		boolean isNew = layoutPageTemplateCollection.isNew();
 
 		LayoutPageTemplateCollectionModelImpl layoutPageTemplateCollectionModelImpl =
@@ -2597,6 +2601,30 @@ public class LayoutPageTemplateCollectionPersistenceImpl
 		layoutPageTemplateCollection.resetOriginalValues();
 
 		return layoutPageTemplateCollection;
+	}
+
+	protected LayoutPageTemplateCollection toUnwrappedModel(
+		LayoutPageTemplateCollection layoutPageTemplateCollection) {
+		if (layoutPageTemplateCollection instanceof LayoutPageTemplateCollectionImpl) {
+			return layoutPageTemplateCollection;
+		}
+
+		LayoutPageTemplateCollectionImpl layoutPageTemplateCollectionImpl = new LayoutPageTemplateCollectionImpl();
+
+		layoutPageTemplateCollectionImpl.setNew(layoutPageTemplateCollection.isNew());
+		layoutPageTemplateCollectionImpl.setPrimaryKey(layoutPageTemplateCollection.getPrimaryKey());
+
+		layoutPageTemplateCollectionImpl.setLayoutPageTemplateCollectionId(layoutPageTemplateCollection.getLayoutPageTemplateCollectionId());
+		layoutPageTemplateCollectionImpl.setGroupId(layoutPageTemplateCollection.getGroupId());
+		layoutPageTemplateCollectionImpl.setCompanyId(layoutPageTemplateCollection.getCompanyId());
+		layoutPageTemplateCollectionImpl.setUserId(layoutPageTemplateCollection.getUserId());
+		layoutPageTemplateCollectionImpl.setUserName(layoutPageTemplateCollection.getUserName());
+		layoutPageTemplateCollectionImpl.setCreateDate(layoutPageTemplateCollection.getCreateDate());
+		layoutPageTemplateCollectionImpl.setModifiedDate(layoutPageTemplateCollection.getModifiedDate());
+		layoutPageTemplateCollectionImpl.setName(layoutPageTemplateCollection.getName());
+		layoutPageTemplateCollectionImpl.setDescription(layoutPageTemplateCollection.getDescription());
+
+		return layoutPageTemplateCollectionImpl;
 	}
 
 	/**

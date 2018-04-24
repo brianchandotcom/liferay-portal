@@ -2513,6 +2513,8 @@ public class RepositoryEntryPersistenceImpl extends BasePersistenceImpl<Reposito
 
 	@Override
 	protected RepositoryEntry removeImpl(RepositoryEntry repositoryEntry) {
+		repositoryEntry = toUnwrappedModel(repositoryEntry);
+
 		Session session = null;
 
 		try {
@@ -2543,6 +2545,8 @@ public class RepositoryEntryPersistenceImpl extends BasePersistenceImpl<Reposito
 
 	@Override
 	public RepositoryEntry updateImpl(RepositoryEntry repositoryEntry) {
+		repositoryEntry = toUnwrappedModel(repositoryEntry);
+
 		boolean isNew = repositoryEntry.isNew();
 
 		RepositoryEntryModelImpl repositoryEntryModelImpl = (RepositoryEntryModelImpl)repositoryEntry;
@@ -2697,6 +2701,33 @@ public class RepositoryEntryPersistenceImpl extends BasePersistenceImpl<Reposito
 		repositoryEntry.resetOriginalValues();
 
 		return repositoryEntry;
+	}
+
+	protected RepositoryEntry toUnwrappedModel(RepositoryEntry repositoryEntry) {
+		if (repositoryEntry instanceof RepositoryEntryImpl) {
+			return repositoryEntry;
+		}
+
+		RepositoryEntryImpl repositoryEntryImpl = new RepositoryEntryImpl();
+
+		repositoryEntryImpl.setNew(repositoryEntry.isNew());
+		repositoryEntryImpl.setPrimaryKey(repositoryEntry.getPrimaryKey());
+
+		repositoryEntryImpl.setMvccVersion(repositoryEntry.getMvccVersion());
+		repositoryEntryImpl.setUuid(repositoryEntry.getUuid());
+		repositoryEntryImpl.setRepositoryEntryId(repositoryEntry.getRepositoryEntryId());
+		repositoryEntryImpl.setGroupId(repositoryEntry.getGroupId());
+		repositoryEntryImpl.setCompanyId(repositoryEntry.getCompanyId());
+		repositoryEntryImpl.setUserId(repositoryEntry.getUserId());
+		repositoryEntryImpl.setUserName(repositoryEntry.getUserName());
+		repositoryEntryImpl.setCreateDate(repositoryEntry.getCreateDate());
+		repositoryEntryImpl.setModifiedDate(repositoryEntry.getModifiedDate());
+		repositoryEntryImpl.setRepositoryId(repositoryEntry.getRepositoryId());
+		repositoryEntryImpl.setMappedId(repositoryEntry.getMappedId());
+		repositoryEntryImpl.setManualCheckInRequired(repositoryEntry.isManualCheckInRequired());
+		repositoryEntryImpl.setLastPublishDate(repositoryEntry.getLastPublishDate());
+
+		return repositoryEntryImpl;
 	}
 
 	/**

@@ -1539,6 +1539,8 @@ public class MessagePersistenceImpl extends BasePersistenceImpl<Message>
 
 	@Override
 	protected Message removeImpl(Message message) {
+		message = toUnwrappedModel(message);
+
 		Session session = null;
 
 		try {
@@ -1569,6 +1571,8 @@ public class MessagePersistenceImpl extends BasePersistenceImpl<Message>
 
 	@Override
 	public Message updateImpl(Message message) {
+		message = toUnwrappedModel(message);
+
 		boolean isNew = message.isNew();
 
 		MessageModelImpl messageModelImpl = (MessageModelImpl)message;
@@ -1685,6 +1689,40 @@ public class MessagePersistenceImpl extends BasePersistenceImpl<Message>
 		message.resetOriginalValues();
 
 		return message;
+	}
+
+	protected Message toUnwrappedModel(Message message) {
+		if (message instanceof MessageImpl) {
+			return message;
+		}
+
+		MessageImpl messageImpl = new MessageImpl();
+
+		messageImpl.setNew(message.isNew());
+		messageImpl.setPrimaryKey(message.getPrimaryKey());
+
+		messageImpl.setMessageId(message.getMessageId());
+		messageImpl.setCompanyId(message.getCompanyId());
+		messageImpl.setUserId(message.getUserId());
+		messageImpl.setUserName(message.getUserName());
+		messageImpl.setCreateDate(message.getCreateDate());
+		messageImpl.setModifiedDate(message.getModifiedDate());
+		messageImpl.setAccountId(message.getAccountId());
+		messageImpl.setFolderId(message.getFolderId());
+		messageImpl.setSender(message.getSender());
+		messageImpl.setTo(message.getTo());
+		messageImpl.setCc(message.getCc());
+		messageImpl.setBcc(message.getBcc());
+		messageImpl.setSentDate(message.getSentDate());
+		messageImpl.setSubject(message.getSubject());
+		messageImpl.setPreview(message.getPreview());
+		messageImpl.setBody(message.getBody());
+		messageImpl.setFlags(message.getFlags());
+		messageImpl.setSize(message.getSize());
+		messageImpl.setRemoteMessageId(message.getRemoteMessageId());
+		messageImpl.setContentType(message.getContentType());
+
+		return messageImpl;
 	}
 
 	/**

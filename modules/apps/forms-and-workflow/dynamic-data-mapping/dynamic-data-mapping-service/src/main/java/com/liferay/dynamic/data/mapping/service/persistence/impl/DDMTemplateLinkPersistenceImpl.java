@@ -1527,6 +1527,8 @@ public class DDMTemplateLinkPersistenceImpl extends BasePersistenceImpl<DDMTempl
 
 	@Override
 	protected DDMTemplateLink removeImpl(DDMTemplateLink ddmTemplateLink) {
+		ddmTemplateLink = toUnwrappedModel(ddmTemplateLink);
+
 		Session session = null;
 
 		try {
@@ -1557,6 +1559,8 @@ public class DDMTemplateLinkPersistenceImpl extends BasePersistenceImpl<DDMTempl
 
 	@Override
 	public DDMTemplateLink updateImpl(DDMTemplateLink ddmTemplateLink) {
+		ddmTemplateLink = toUnwrappedModel(ddmTemplateLink);
+
 		boolean isNew = ddmTemplateLink.isNew();
 
 		DDMTemplateLinkModelImpl ddmTemplateLinkModelImpl = (DDMTemplateLinkModelImpl)ddmTemplateLink;
@@ -1654,6 +1658,25 @@ public class DDMTemplateLinkPersistenceImpl extends BasePersistenceImpl<DDMTempl
 		ddmTemplateLink.resetOriginalValues();
 
 		return ddmTemplateLink;
+	}
+
+	protected DDMTemplateLink toUnwrappedModel(DDMTemplateLink ddmTemplateLink) {
+		if (ddmTemplateLink instanceof DDMTemplateLinkImpl) {
+			return ddmTemplateLink;
+		}
+
+		DDMTemplateLinkImpl ddmTemplateLinkImpl = new DDMTemplateLinkImpl();
+
+		ddmTemplateLinkImpl.setNew(ddmTemplateLink.isNew());
+		ddmTemplateLinkImpl.setPrimaryKey(ddmTemplateLink.getPrimaryKey());
+
+		ddmTemplateLinkImpl.setTemplateLinkId(ddmTemplateLink.getTemplateLinkId());
+		ddmTemplateLinkImpl.setCompanyId(ddmTemplateLink.getCompanyId());
+		ddmTemplateLinkImpl.setClassNameId(ddmTemplateLink.getClassNameId());
+		ddmTemplateLinkImpl.setClassPK(ddmTemplateLink.getClassPK());
+		ddmTemplateLinkImpl.setTemplateId(ddmTemplateLink.getTemplateId());
+
+		return ddmTemplateLinkImpl;
 	}
 
 	/**

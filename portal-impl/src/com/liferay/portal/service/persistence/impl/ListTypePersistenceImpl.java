@@ -1132,6 +1132,8 @@ public class ListTypePersistenceImpl extends BasePersistenceImpl<ListType>
 
 	@Override
 	protected ListType removeImpl(ListType listType) {
+		listType = toUnwrappedModel(listType);
+
 		Session session = null;
 
 		try {
@@ -1162,6 +1164,8 @@ public class ListTypePersistenceImpl extends BasePersistenceImpl<ListType>
 
 	@Override
 	public ListType updateImpl(ListType listType) {
+		listType = toUnwrappedModel(listType);
+
 		boolean isNew = listType.isNew();
 
 		ListTypeModelImpl listTypeModelImpl = (ListTypeModelImpl)listType;
@@ -1231,6 +1235,24 @@ public class ListTypePersistenceImpl extends BasePersistenceImpl<ListType>
 		listType.resetOriginalValues();
 
 		return listType;
+	}
+
+	protected ListType toUnwrappedModel(ListType listType) {
+		if (listType instanceof ListTypeImpl) {
+			return listType;
+		}
+
+		ListTypeImpl listTypeImpl = new ListTypeImpl();
+
+		listTypeImpl.setNew(listType.isNew());
+		listTypeImpl.setPrimaryKey(listType.getPrimaryKey());
+
+		listTypeImpl.setMvccVersion(listType.getMvccVersion());
+		listTypeImpl.setListTypeId(listType.getListTypeId());
+		listTypeImpl.setName(listType.getName());
+		listTypeImpl.setType(listType.getType());
+
+		return listTypeImpl;
 	}
 
 	/**

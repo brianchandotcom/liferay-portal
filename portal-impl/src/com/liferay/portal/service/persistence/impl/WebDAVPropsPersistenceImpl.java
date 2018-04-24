@@ -507,6 +507,8 @@ public class WebDAVPropsPersistenceImpl extends BasePersistenceImpl<WebDAVProps>
 
 	@Override
 	protected WebDAVProps removeImpl(WebDAVProps webDAVProps) {
+		webDAVProps = toUnwrappedModel(webDAVProps);
+
 		Session session = null;
 
 		try {
@@ -537,6 +539,8 @@ public class WebDAVPropsPersistenceImpl extends BasePersistenceImpl<WebDAVProps>
 
 	@Override
 	public WebDAVProps updateImpl(WebDAVProps webDAVProps) {
+		webDAVProps = toUnwrappedModel(webDAVProps);
+
 		boolean isNew = webDAVProps.isNew();
 
 		WebDAVPropsModelImpl webDAVPropsModelImpl = (WebDAVPropsModelImpl)webDAVProps;
@@ -606,6 +610,28 @@ public class WebDAVPropsPersistenceImpl extends BasePersistenceImpl<WebDAVProps>
 		webDAVProps.resetOriginalValues();
 
 		return webDAVProps;
+	}
+
+	protected WebDAVProps toUnwrappedModel(WebDAVProps webDAVProps) {
+		if (webDAVProps instanceof WebDAVPropsImpl) {
+			return webDAVProps;
+		}
+
+		WebDAVPropsImpl webDAVPropsImpl = new WebDAVPropsImpl();
+
+		webDAVPropsImpl.setNew(webDAVProps.isNew());
+		webDAVPropsImpl.setPrimaryKey(webDAVProps.getPrimaryKey());
+
+		webDAVPropsImpl.setMvccVersion(webDAVProps.getMvccVersion());
+		webDAVPropsImpl.setWebDavPropsId(webDAVProps.getWebDavPropsId());
+		webDAVPropsImpl.setCompanyId(webDAVProps.getCompanyId());
+		webDAVPropsImpl.setCreateDate(webDAVProps.getCreateDate());
+		webDAVPropsImpl.setModifiedDate(webDAVProps.getModifiedDate());
+		webDAVPropsImpl.setClassNameId(webDAVProps.getClassNameId());
+		webDAVPropsImpl.setClassPK(webDAVProps.getClassPK());
+		webDAVPropsImpl.setProps(webDAVProps.getProps());
+
+		return webDAVPropsImpl;
 	}
 
 	/**

@@ -5682,6 +5682,8 @@ public class AssetTagPersistenceImpl extends BasePersistenceImpl<AssetTag>
 
 	@Override
 	protected AssetTag removeImpl(AssetTag assetTag) {
+		assetTag = toUnwrappedModel(assetTag);
+
 		assetTagToAssetEntryTableMapper.deleteLeftPrimaryKeyTableMappings(assetTag.getPrimaryKey());
 
 		Session session = null;
@@ -5714,6 +5716,8 @@ public class AssetTagPersistenceImpl extends BasePersistenceImpl<AssetTag>
 
 	@Override
 	public AssetTag updateImpl(AssetTag assetTag) {
+		assetTag = toUnwrappedModel(assetTag);
+
 		boolean isNew = assetTag.isNew();
 
 		AssetTagModelImpl assetTagModelImpl = (AssetTagModelImpl)assetTag;
@@ -5885,6 +5889,31 @@ public class AssetTagPersistenceImpl extends BasePersistenceImpl<AssetTag>
 		assetTag.resetOriginalValues();
 
 		return assetTag;
+	}
+
+	protected AssetTag toUnwrappedModel(AssetTag assetTag) {
+		if (assetTag instanceof AssetTagImpl) {
+			return assetTag;
+		}
+
+		AssetTagImpl assetTagImpl = new AssetTagImpl();
+
+		assetTagImpl.setNew(assetTag.isNew());
+		assetTagImpl.setPrimaryKey(assetTag.getPrimaryKey());
+
+		assetTagImpl.setUuid(assetTag.getUuid());
+		assetTagImpl.setTagId(assetTag.getTagId());
+		assetTagImpl.setGroupId(assetTag.getGroupId());
+		assetTagImpl.setCompanyId(assetTag.getCompanyId());
+		assetTagImpl.setUserId(assetTag.getUserId());
+		assetTagImpl.setUserName(assetTag.getUserName());
+		assetTagImpl.setCreateDate(assetTag.getCreateDate());
+		assetTagImpl.setModifiedDate(assetTag.getModifiedDate());
+		assetTagImpl.setName(assetTag.getName());
+		assetTagImpl.setAssetCount(assetTag.getAssetCount());
+		assetTagImpl.setLastPublishDate(assetTag.getLastPublishDate());
+
+		return assetTagImpl;
 	}
 
 	/**

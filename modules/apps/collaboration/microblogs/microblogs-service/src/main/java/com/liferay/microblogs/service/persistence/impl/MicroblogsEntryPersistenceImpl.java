@@ -7852,6 +7852,8 @@ public class MicroblogsEntryPersistenceImpl extends BasePersistenceImpl<Microblo
 
 	@Override
 	protected MicroblogsEntry removeImpl(MicroblogsEntry microblogsEntry) {
+		microblogsEntry = toUnwrappedModel(microblogsEntry);
+
 		Session session = null;
 
 		try {
@@ -7882,6 +7884,8 @@ public class MicroblogsEntryPersistenceImpl extends BasePersistenceImpl<Microblo
 
 	@Override
 	public MicroblogsEntry updateImpl(MicroblogsEntry microblogsEntry) {
+		microblogsEntry = toUnwrappedModel(microblogsEntry);
+
 		boolean isNew = microblogsEntry.isNew();
 
 		MicroblogsEntryModelImpl microblogsEntryModelImpl = (MicroblogsEntryModelImpl)microblogsEntry;
@@ -8290,6 +8294,32 @@ public class MicroblogsEntryPersistenceImpl extends BasePersistenceImpl<Microblo
 		microblogsEntry.resetOriginalValues();
 
 		return microblogsEntry;
+	}
+
+	protected MicroblogsEntry toUnwrappedModel(MicroblogsEntry microblogsEntry) {
+		if (microblogsEntry instanceof MicroblogsEntryImpl) {
+			return microblogsEntry;
+		}
+
+		MicroblogsEntryImpl microblogsEntryImpl = new MicroblogsEntryImpl();
+
+		microblogsEntryImpl.setNew(microblogsEntry.isNew());
+		microblogsEntryImpl.setPrimaryKey(microblogsEntry.getPrimaryKey());
+
+		microblogsEntryImpl.setMicroblogsEntryId(microblogsEntry.getMicroblogsEntryId());
+		microblogsEntryImpl.setCompanyId(microblogsEntry.getCompanyId());
+		microblogsEntryImpl.setUserId(microblogsEntry.getUserId());
+		microblogsEntryImpl.setUserName(microblogsEntry.getUserName());
+		microblogsEntryImpl.setCreateDate(microblogsEntry.getCreateDate());
+		microblogsEntryImpl.setModifiedDate(microblogsEntry.getModifiedDate());
+		microblogsEntryImpl.setCreatorClassNameId(microblogsEntry.getCreatorClassNameId());
+		microblogsEntryImpl.setCreatorClassPK(microblogsEntry.getCreatorClassPK());
+		microblogsEntryImpl.setContent(microblogsEntry.getContent());
+		microblogsEntryImpl.setType(microblogsEntry.getType());
+		microblogsEntryImpl.setParentMicroblogsEntryId(microblogsEntry.getParentMicroblogsEntryId());
+		microblogsEntryImpl.setSocialRelationType(microblogsEntry.getSocialRelationType());
+
+		return microblogsEntryImpl;
 	}
 
 	/**

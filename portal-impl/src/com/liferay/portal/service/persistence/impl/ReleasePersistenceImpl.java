@@ -536,6 +536,8 @@ public class ReleasePersistenceImpl extends BasePersistenceImpl<Release>
 
 	@Override
 	protected Release removeImpl(Release release) {
+		release = toUnwrappedModel(release);
+
 		Session session = null;
 
 		try {
@@ -566,6 +568,8 @@ public class ReleasePersistenceImpl extends BasePersistenceImpl<Release>
 
 	@Override
 	public Release updateImpl(Release release) {
+		release = toUnwrappedModel(release);
+
 		boolean isNew = release.isNew();
 
 		ReleaseModelImpl releaseModelImpl = (ReleaseModelImpl)release;
@@ -634,6 +638,31 @@ public class ReleasePersistenceImpl extends BasePersistenceImpl<Release>
 		release.resetOriginalValues();
 
 		return release;
+	}
+
+	protected Release toUnwrappedModel(Release release) {
+		if (release instanceof ReleaseImpl) {
+			return release;
+		}
+
+		ReleaseImpl releaseImpl = new ReleaseImpl();
+
+		releaseImpl.setNew(release.isNew());
+		releaseImpl.setPrimaryKey(release.getPrimaryKey());
+
+		releaseImpl.setMvccVersion(release.getMvccVersion());
+		releaseImpl.setReleaseId(release.getReleaseId());
+		releaseImpl.setCreateDate(release.getCreateDate());
+		releaseImpl.setModifiedDate(release.getModifiedDate());
+		releaseImpl.setServletContextName(release.getServletContextName());
+		releaseImpl.setSchemaVersion(release.getSchemaVersion());
+		releaseImpl.setBuildNumber(release.getBuildNumber());
+		releaseImpl.setBuildDate(release.getBuildDate());
+		releaseImpl.setVerified(release.isVerified());
+		releaseImpl.setState(release.getState());
+		releaseImpl.setTestString(release.getTestString());
+
+		return releaseImpl;
 	}
 
 	/**

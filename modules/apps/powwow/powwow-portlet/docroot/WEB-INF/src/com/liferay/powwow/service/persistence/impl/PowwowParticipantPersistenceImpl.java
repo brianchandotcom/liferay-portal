@@ -1919,6 +1919,8 @@ public class PowwowParticipantPersistenceImpl extends BasePersistenceImpl<Powwow
 
 	@Override
 	protected PowwowParticipant removeImpl(PowwowParticipant powwowParticipant) {
+		powwowParticipant = toUnwrappedModel(powwowParticipant);
+
 		Session session = null;
 
 		try {
@@ -1949,6 +1951,8 @@ public class PowwowParticipantPersistenceImpl extends BasePersistenceImpl<Powwow
 
 	@Override
 	public PowwowParticipant updateImpl(PowwowParticipant powwowParticipant) {
+		powwowParticipant = toUnwrappedModel(powwowParticipant);
+
 		boolean isNew = powwowParticipant.isNew();
 
 		PowwowParticipantModelImpl powwowParticipantModelImpl = (PowwowParticipantModelImpl)powwowParticipant;
@@ -2081,6 +2085,34 @@ public class PowwowParticipantPersistenceImpl extends BasePersistenceImpl<Powwow
 		powwowParticipant.resetOriginalValues();
 
 		return powwowParticipant;
+	}
+
+	protected PowwowParticipant toUnwrappedModel(
+		PowwowParticipant powwowParticipant) {
+		if (powwowParticipant instanceof PowwowParticipantImpl) {
+			return powwowParticipant;
+		}
+
+		PowwowParticipantImpl powwowParticipantImpl = new PowwowParticipantImpl();
+
+		powwowParticipantImpl.setNew(powwowParticipant.isNew());
+		powwowParticipantImpl.setPrimaryKey(powwowParticipant.getPrimaryKey());
+
+		powwowParticipantImpl.setPowwowParticipantId(powwowParticipant.getPowwowParticipantId());
+		powwowParticipantImpl.setGroupId(powwowParticipant.getGroupId());
+		powwowParticipantImpl.setCompanyId(powwowParticipant.getCompanyId());
+		powwowParticipantImpl.setUserId(powwowParticipant.getUserId());
+		powwowParticipantImpl.setUserName(powwowParticipant.getUserName());
+		powwowParticipantImpl.setCreateDate(powwowParticipant.getCreateDate());
+		powwowParticipantImpl.setModifiedDate(powwowParticipant.getModifiedDate());
+		powwowParticipantImpl.setPowwowMeetingId(powwowParticipant.getPowwowMeetingId());
+		powwowParticipantImpl.setName(powwowParticipant.getName());
+		powwowParticipantImpl.setParticipantUserId(powwowParticipant.getParticipantUserId());
+		powwowParticipantImpl.setEmailAddress(powwowParticipant.getEmailAddress());
+		powwowParticipantImpl.setType(powwowParticipant.getType());
+		powwowParticipantImpl.setStatus(powwowParticipant.getStatus());
+
+		return powwowParticipantImpl;
 	}
 
 	/**

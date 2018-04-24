@@ -330,7 +330,7 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 
 	@Override
 	public T update(T model) {
-		while (model instanceof ModelWrapper) {
+		if (model instanceof ModelWrapper) {
 			ModelWrapper<T> modelWrapper = (ModelWrapper<T>)model;
 
 			model = modelWrapper.getWrappedModel();

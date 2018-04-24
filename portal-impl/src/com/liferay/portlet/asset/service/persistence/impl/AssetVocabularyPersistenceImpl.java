@@ -4836,6 +4836,8 @@ public class AssetVocabularyPersistenceImpl extends BasePersistenceImpl<AssetVoc
 
 	@Override
 	protected AssetVocabulary removeImpl(AssetVocabulary assetVocabulary) {
+		assetVocabulary = toUnwrappedModel(assetVocabulary);
+
 		Session session = null;
 
 		try {
@@ -4866,6 +4868,8 @@ public class AssetVocabularyPersistenceImpl extends BasePersistenceImpl<AssetVoc
 
 	@Override
 	public AssetVocabulary updateImpl(AssetVocabulary assetVocabulary) {
+		assetVocabulary = toUnwrappedModel(assetVocabulary);
+
 		boolean isNew = assetVocabulary.isNew();
 
 		AssetVocabularyModelImpl assetVocabularyModelImpl = (AssetVocabularyModelImpl)assetVocabulary;
@@ -5043,6 +5047,33 @@ public class AssetVocabularyPersistenceImpl extends BasePersistenceImpl<AssetVoc
 		assetVocabulary.resetOriginalValues();
 
 		return assetVocabulary;
+	}
+
+	protected AssetVocabulary toUnwrappedModel(AssetVocabulary assetVocabulary) {
+		if (assetVocabulary instanceof AssetVocabularyImpl) {
+			return assetVocabulary;
+		}
+
+		AssetVocabularyImpl assetVocabularyImpl = new AssetVocabularyImpl();
+
+		assetVocabularyImpl.setNew(assetVocabulary.isNew());
+		assetVocabularyImpl.setPrimaryKey(assetVocabulary.getPrimaryKey());
+
+		assetVocabularyImpl.setUuid(assetVocabulary.getUuid());
+		assetVocabularyImpl.setVocabularyId(assetVocabulary.getVocabularyId());
+		assetVocabularyImpl.setGroupId(assetVocabulary.getGroupId());
+		assetVocabularyImpl.setCompanyId(assetVocabulary.getCompanyId());
+		assetVocabularyImpl.setUserId(assetVocabulary.getUserId());
+		assetVocabularyImpl.setUserName(assetVocabulary.getUserName());
+		assetVocabularyImpl.setCreateDate(assetVocabulary.getCreateDate());
+		assetVocabularyImpl.setModifiedDate(assetVocabulary.getModifiedDate());
+		assetVocabularyImpl.setName(assetVocabulary.getName());
+		assetVocabularyImpl.setTitle(assetVocabulary.getTitle());
+		assetVocabularyImpl.setDescription(assetVocabulary.getDescription());
+		assetVocabularyImpl.setSettings(assetVocabulary.getSettings());
+		assetVocabularyImpl.setLastPublishDate(assetVocabulary.getLastPublishDate());
+
+		return assetVocabularyImpl;
 	}
 
 	/**

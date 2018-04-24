@@ -761,6 +761,8 @@ public class AttachmentPersistenceImpl extends BasePersistenceImpl<Attachment>
 
 	@Override
 	protected Attachment removeImpl(Attachment attachment) {
+		attachment = toUnwrappedModel(attachment);
+
 		Session session = null;
 
 		try {
@@ -791,6 +793,8 @@ public class AttachmentPersistenceImpl extends BasePersistenceImpl<Attachment>
 
 	@Override
 	public Attachment updateImpl(Attachment attachment) {
+		attachment = toUnwrappedModel(attachment);
+
 		boolean isNew = attachment.isNew();
 
 		AttachmentModelImpl attachmentModelImpl = (AttachmentModelImpl)attachment;
@@ -859,6 +863,29 @@ public class AttachmentPersistenceImpl extends BasePersistenceImpl<Attachment>
 		attachment.resetOriginalValues();
 
 		return attachment;
+	}
+
+	protected Attachment toUnwrappedModel(Attachment attachment) {
+		if (attachment instanceof AttachmentImpl) {
+			return attachment;
+		}
+
+		AttachmentImpl attachmentImpl = new AttachmentImpl();
+
+		attachmentImpl.setNew(attachment.isNew());
+		attachmentImpl.setPrimaryKey(attachment.getPrimaryKey());
+
+		attachmentImpl.setAttachmentId(attachment.getAttachmentId());
+		attachmentImpl.setCompanyId(attachment.getCompanyId());
+		attachmentImpl.setUserId(attachment.getUserId());
+		attachmentImpl.setAccountId(attachment.getAccountId());
+		attachmentImpl.setFolderId(attachment.getFolderId());
+		attachmentImpl.setMessageId(attachment.getMessageId());
+		attachmentImpl.setContentPath(attachment.getContentPath());
+		attachmentImpl.setFileName(attachment.getFileName());
+		attachmentImpl.setSize(attachment.getSize());
+
+		return attachmentImpl;
 	}
 
 	/**

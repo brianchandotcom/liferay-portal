@@ -5248,6 +5248,8 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 
 	@Override
 	protected AssetEntry removeImpl(AssetEntry assetEntry) {
+		assetEntry = toUnwrappedModel(assetEntry);
+
 		assetEntryToAssetCategoryTableMapper.deleteLeftPrimaryKeyTableMappings(assetEntry.getPrimaryKey());
 
 		assetEntryToAssetTagTableMapper.deleteLeftPrimaryKeyTableMappings(assetEntry.getPrimaryKey());
@@ -5282,6 +5284,8 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 
 	@Override
 	public AssetEntry updateImpl(AssetEntry assetEntry) {
+		assetEntry = toUnwrappedModel(assetEntry);
+
 		boolean isNew = assetEntry.isNew();
 
 		AssetEntryModelImpl assetEntryModelImpl = (AssetEntryModelImpl)assetEntry;
@@ -5561,6 +5565,47 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 		assetEntry.resetOriginalValues();
 
 		return assetEntry;
+	}
+
+	protected AssetEntry toUnwrappedModel(AssetEntry assetEntry) {
+		if (assetEntry instanceof AssetEntryImpl) {
+			return assetEntry;
+		}
+
+		AssetEntryImpl assetEntryImpl = new AssetEntryImpl();
+
+		assetEntryImpl.setNew(assetEntry.isNew());
+		assetEntryImpl.setPrimaryKey(assetEntry.getPrimaryKey());
+
+		assetEntryImpl.setEntryId(assetEntry.getEntryId());
+		assetEntryImpl.setGroupId(assetEntry.getGroupId());
+		assetEntryImpl.setCompanyId(assetEntry.getCompanyId());
+		assetEntryImpl.setUserId(assetEntry.getUserId());
+		assetEntryImpl.setUserName(assetEntry.getUserName());
+		assetEntryImpl.setCreateDate(assetEntry.getCreateDate());
+		assetEntryImpl.setModifiedDate(assetEntry.getModifiedDate());
+		assetEntryImpl.setClassNameId(assetEntry.getClassNameId());
+		assetEntryImpl.setClassPK(assetEntry.getClassPK());
+		assetEntryImpl.setClassUuid(assetEntry.getClassUuid());
+		assetEntryImpl.setClassTypeId(assetEntry.getClassTypeId());
+		assetEntryImpl.setListable(assetEntry.isListable());
+		assetEntryImpl.setVisible(assetEntry.isVisible());
+		assetEntryImpl.setStartDate(assetEntry.getStartDate());
+		assetEntryImpl.setEndDate(assetEntry.getEndDate());
+		assetEntryImpl.setPublishDate(assetEntry.getPublishDate());
+		assetEntryImpl.setExpirationDate(assetEntry.getExpirationDate());
+		assetEntryImpl.setMimeType(assetEntry.getMimeType());
+		assetEntryImpl.setTitle(assetEntry.getTitle());
+		assetEntryImpl.setDescription(assetEntry.getDescription());
+		assetEntryImpl.setSummary(assetEntry.getSummary());
+		assetEntryImpl.setUrl(assetEntry.getUrl());
+		assetEntryImpl.setLayoutUuid(assetEntry.getLayoutUuid());
+		assetEntryImpl.setHeight(assetEntry.getHeight());
+		assetEntryImpl.setWidth(assetEntry.getWidth());
+		assetEntryImpl.setPriority(assetEntry.getPriority());
+		assetEntryImpl.setViewCount(assetEntry.getViewCount());
+
+		return assetEntryImpl;
 	}
 
 	/**

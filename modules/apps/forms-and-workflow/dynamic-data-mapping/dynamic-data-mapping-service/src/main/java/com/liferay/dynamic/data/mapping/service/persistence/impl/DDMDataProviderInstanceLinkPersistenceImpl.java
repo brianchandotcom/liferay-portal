@@ -1581,6 +1581,8 @@ public class DDMDataProviderInstanceLinkPersistenceImpl
 	@Override
 	protected DDMDataProviderInstanceLink removeImpl(
 		DDMDataProviderInstanceLink ddmDataProviderInstanceLink) {
+		ddmDataProviderInstanceLink = toUnwrappedModel(ddmDataProviderInstanceLink);
+
 		Session session = null;
 
 		try {
@@ -1612,6 +1614,8 @@ public class DDMDataProviderInstanceLinkPersistenceImpl
 	@Override
 	public DDMDataProviderInstanceLink updateImpl(
 		DDMDataProviderInstanceLink ddmDataProviderInstanceLink) {
+		ddmDataProviderInstanceLink = toUnwrappedModel(ddmDataProviderInstanceLink);
+
 		boolean isNew = ddmDataProviderInstanceLink.isNew();
 
 		DDMDataProviderInstanceLinkModelImpl ddmDataProviderInstanceLinkModelImpl =
@@ -1720,6 +1724,25 @@ public class DDMDataProviderInstanceLinkPersistenceImpl
 		ddmDataProviderInstanceLink.resetOriginalValues();
 
 		return ddmDataProviderInstanceLink;
+	}
+
+	protected DDMDataProviderInstanceLink toUnwrappedModel(
+		DDMDataProviderInstanceLink ddmDataProviderInstanceLink) {
+		if (ddmDataProviderInstanceLink instanceof DDMDataProviderInstanceLinkImpl) {
+			return ddmDataProviderInstanceLink;
+		}
+
+		DDMDataProviderInstanceLinkImpl ddmDataProviderInstanceLinkImpl = new DDMDataProviderInstanceLinkImpl();
+
+		ddmDataProviderInstanceLinkImpl.setNew(ddmDataProviderInstanceLink.isNew());
+		ddmDataProviderInstanceLinkImpl.setPrimaryKey(ddmDataProviderInstanceLink.getPrimaryKey());
+
+		ddmDataProviderInstanceLinkImpl.setDataProviderInstanceLinkId(ddmDataProviderInstanceLink.getDataProviderInstanceLinkId());
+		ddmDataProviderInstanceLinkImpl.setCompanyId(ddmDataProviderInstanceLink.getCompanyId());
+		ddmDataProviderInstanceLinkImpl.setDataProviderInstanceId(ddmDataProviderInstanceLink.getDataProviderInstanceId());
+		ddmDataProviderInstanceLinkImpl.setStructureId(ddmDataProviderInstanceLink.getStructureId());
+
+		return ddmDataProviderInstanceLinkImpl;
 	}
 
 	/**

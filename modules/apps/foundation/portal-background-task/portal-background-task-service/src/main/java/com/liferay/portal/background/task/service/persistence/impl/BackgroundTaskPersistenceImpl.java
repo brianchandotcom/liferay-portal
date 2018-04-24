@@ -8983,6 +8983,8 @@ public class BackgroundTaskPersistenceImpl extends BasePersistenceImpl<Backgroun
 
 	@Override
 	protected BackgroundTask removeImpl(BackgroundTask backgroundTask) {
+		backgroundTask = toUnwrappedModel(backgroundTask);
+
 		Session session = null;
 
 		try {
@@ -9013,6 +9015,8 @@ public class BackgroundTaskPersistenceImpl extends BasePersistenceImpl<Backgroun
 
 	@Override
 	public BackgroundTask updateImpl(BackgroundTask backgroundTask) {
+		backgroundTask = toUnwrappedModel(backgroundTask);
+
 		boolean isNew = backgroundTask.isNew();
 
 		BackgroundTaskModelImpl backgroundTaskModelImpl = (BackgroundTaskModelImpl)backgroundTask;
@@ -9399,6 +9403,36 @@ public class BackgroundTaskPersistenceImpl extends BasePersistenceImpl<Backgroun
 		backgroundTask.resetOriginalValues();
 
 		return backgroundTask;
+	}
+
+	protected BackgroundTask toUnwrappedModel(BackgroundTask backgroundTask) {
+		if (backgroundTask instanceof BackgroundTaskImpl) {
+			return backgroundTask;
+		}
+
+		BackgroundTaskImpl backgroundTaskImpl = new BackgroundTaskImpl();
+
+		backgroundTaskImpl.setNew(backgroundTask.isNew());
+		backgroundTaskImpl.setPrimaryKey(backgroundTask.getPrimaryKey());
+
+		backgroundTaskImpl.setMvccVersion(backgroundTask.getMvccVersion());
+		backgroundTaskImpl.setBackgroundTaskId(backgroundTask.getBackgroundTaskId());
+		backgroundTaskImpl.setGroupId(backgroundTask.getGroupId());
+		backgroundTaskImpl.setCompanyId(backgroundTask.getCompanyId());
+		backgroundTaskImpl.setUserId(backgroundTask.getUserId());
+		backgroundTaskImpl.setUserName(backgroundTask.getUserName());
+		backgroundTaskImpl.setCreateDate(backgroundTask.getCreateDate());
+		backgroundTaskImpl.setModifiedDate(backgroundTask.getModifiedDate());
+		backgroundTaskImpl.setName(backgroundTask.getName());
+		backgroundTaskImpl.setServletContextNames(backgroundTask.getServletContextNames());
+		backgroundTaskImpl.setTaskExecutorClassName(backgroundTask.getTaskExecutorClassName());
+		backgroundTaskImpl.setTaskContextMap(backgroundTask.getTaskContextMap());
+		backgroundTaskImpl.setCompleted(backgroundTask.isCompleted());
+		backgroundTaskImpl.setCompletionDate(backgroundTask.getCompletionDate());
+		backgroundTaskImpl.setStatus(backgroundTask.getStatus());
+		backgroundTaskImpl.setStatusMessage(backgroundTask.getStatusMessage());
+
+		return backgroundTaskImpl;
 	}
 
 	/**

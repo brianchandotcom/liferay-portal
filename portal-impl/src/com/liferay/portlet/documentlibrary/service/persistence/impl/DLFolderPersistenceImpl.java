@@ -12483,6 +12483,8 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 
 	@Override
 	protected DLFolder removeImpl(DLFolder dlFolder) {
+		dlFolder = toUnwrappedModel(dlFolder);
+
 		dlFolderToDLFileEntryTypeTableMapper.deleteLeftPrimaryKeyTableMappings(dlFolder.getPrimaryKey());
 
 		Session session = null;
@@ -12515,6 +12517,8 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 
 	@Override
 	public DLFolder updateImpl(DLFolder dlFolder) {
+		dlFolder = toUnwrappedModel(dlFolder);
+
 		boolean isNew = dlFolder.isNew();
 
 		DLFolderModelImpl dlFolderModelImpl = (DLFolderModelImpl)dlFolder;
@@ -12943,6 +12947,43 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 		dlFolder.resetOriginalValues();
 
 		return dlFolder;
+	}
+
+	protected DLFolder toUnwrappedModel(DLFolder dlFolder) {
+		if (dlFolder instanceof DLFolderImpl) {
+			return dlFolder;
+		}
+
+		DLFolderImpl dlFolderImpl = new DLFolderImpl();
+
+		dlFolderImpl.setNew(dlFolder.isNew());
+		dlFolderImpl.setPrimaryKey(dlFolder.getPrimaryKey());
+
+		dlFolderImpl.setUuid(dlFolder.getUuid());
+		dlFolderImpl.setFolderId(dlFolder.getFolderId());
+		dlFolderImpl.setGroupId(dlFolder.getGroupId());
+		dlFolderImpl.setCompanyId(dlFolder.getCompanyId());
+		dlFolderImpl.setUserId(dlFolder.getUserId());
+		dlFolderImpl.setUserName(dlFolder.getUserName());
+		dlFolderImpl.setCreateDate(dlFolder.getCreateDate());
+		dlFolderImpl.setModifiedDate(dlFolder.getModifiedDate());
+		dlFolderImpl.setRepositoryId(dlFolder.getRepositoryId());
+		dlFolderImpl.setMountPoint(dlFolder.isMountPoint());
+		dlFolderImpl.setParentFolderId(dlFolder.getParentFolderId());
+		dlFolderImpl.setTreePath(dlFolder.getTreePath());
+		dlFolderImpl.setName(dlFolder.getName());
+		dlFolderImpl.setDescription(dlFolder.getDescription());
+		dlFolderImpl.setLastPostDate(dlFolder.getLastPostDate());
+		dlFolderImpl.setDefaultFileEntryTypeId(dlFolder.getDefaultFileEntryTypeId());
+		dlFolderImpl.setHidden(dlFolder.isHidden());
+		dlFolderImpl.setRestrictionType(dlFolder.getRestrictionType());
+		dlFolderImpl.setLastPublishDate(dlFolder.getLastPublishDate());
+		dlFolderImpl.setStatus(dlFolder.getStatus());
+		dlFolderImpl.setStatusByUserId(dlFolder.getStatusByUserId());
+		dlFolderImpl.setStatusByUserName(dlFolder.getStatusByUserName());
+		dlFolderImpl.setStatusDate(dlFolder.getStatusDate());
+
+		return dlFolderImpl;
 	}
 
 	/**

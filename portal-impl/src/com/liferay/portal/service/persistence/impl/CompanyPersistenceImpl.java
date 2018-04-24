@@ -1519,6 +1519,8 @@ public class CompanyPersistenceImpl extends BasePersistenceImpl<Company>
 
 	@Override
 	protected Company removeImpl(Company company) {
+		company = toUnwrappedModel(company);
+
 		Session session = null;
 
 		try {
@@ -1549,6 +1551,8 @@ public class CompanyPersistenceImpl extends BasePersistenceImpl<Company>
 
 	@Override
 	public Company updateImpl(Company company) {
+		company = toUnwrappedModel(company);
+
 		boolean isNew = company.isNew();
 
 		CompanyModelImpl companyModelImpl = (CompanyModelImpl)company;
@@ -1620,6 +1624,31 @@ public class CompanyPersistenceImpl extends BasePersistenceImpl<Company>
 		company.resetOriginalValues();
 
 		return company;
+	}
+
+	protected Company toUnwrappedModel(Company company) {
+		if (company instanceof CompanyImpl) {
+			return company;
+		}
+
+		CompanyImpl companyImpl = new CompanyImpl();
+
+		companyImpl.setNew(company.isNew());
+		companyImpl.setPrimaryKey(company.getPrimaryKey());
+
+		companyImpl.setMvccVersion(company.getMvccVersion());
+		companyImpl.setCompanyId(company.getCompanyId());
+		companyImpl.setAccountId(company.getAccountId());
+		companyImpl.setWebId(company.getWebId());
+		companyImpl.setKey(company.getKey());
+		companyImpl.setMx(company.getMx());
+		companyImpl.setHomeURL(company.getHomeURL());
+		companyImpl.setLogoId(company.getLogoId());
+		companyImpl.setSystem(company.isSystem());
+		companyImpl.setMaxUsers(company.getMaxUsers());
+		companyImpl.setActive(company.isActive());
+
+		return companyImpl;
 	}
 
 	/**

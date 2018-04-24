@@ -880,6 +880,8 @@ public class WorkflowInstanceLinkPersistenceImpl extends BasePersistenceImpl<Wor
 	@Override
 	protected WorkflowInstanceLink removeImpl(
 		WorkflowInstanceLink workflowInstanceLink) {
+		workflowInstanceLink = toUnwrappedModel(workflowInstanceLink);
+
 		Session session = null;
 
 		try {
@@ -911,6 +913,8 @@ public class WorkflowInstanceLinkPersistenceImpl extends BasePersistenceImpl<Wor
 	@Override
 	public WorkflowInstanceLink updateImpl(
 		WorkflowInstanceLink workflowInstanceLink) {
+		workflowInstanceLink = toUnwrappedModel(workflowInstanceLink);
+
 		boolean isNew = workflowInstanceLink.isNew();
 
 		WorkflowInstanceLinkModelImpl workflowInstanceLinkModelImpl = (WorkflowInstanceLinkModelImpl)workflowInstanceLink;
@@ -1017,6 +1021,32 @@ public class WorkflowInstanceLinkPersistenceImpl extends BasePersistenceImpl<Wor
 		workflowInstanceLink.resetOriginalValues();
 
 		return workflowInstanceLink;
+	}
+
+	protected WorkflowInstanceLink toUnwrappedModel(
+		WorkflowInstanceLink workflowInstanceLink) {
+		if (workflowInstanceLink instanceof WorkflowInstanceLinkImpl) {
+			return workflowInstanceLink;
+		}
+
+		WorkflowInstanceLinkImpl workflowInstanceLinkImpl = new WorkflowInstanceLinkImpl();
+
+		workflowInstanceLinkImpl.setNew(workflowInstanceLink.isNew());
+		workflowInstanceLinkImpl.setPrimaryKey(workflowInstanceLink.getPrimaryKey());
+
+		workflowInstanceLinkImpl.setMvccVersion(workflowInstanceLink.getMvccVersion());
+		workflowInstanceLinkImpl.setWorkflowInstanceLinkId(workflowInstanceLink.getWorkflowInstanceLinkId());
+		workflowInstanceLinkImpl.setGroupId(workflowInstanceLink.getGroupId());
+		workflowInstanceLinkImpl.setCompanyId(workflowInstanceLink.getCompanyId());
+		workflowInstanceLinkImpl.setUserId(workflowInstanceLink.getUserId());
+		workflowInstanceLinkImpl.setUserName(workflowInstanceLink.getUserName());
+		workflowInstanceLinkImpl.setCreateDate(workflowInstanceLink.getCreateDate());
+		workflowInstanceLinkImpl.setModifiedDate(workflowInstanceLink.getModifiedDate());
+		workflowInstanceLinkImpl.setClassNameId(workflowInstanceLink.getClassNameId());
+		workflowInstanceLinkImpl.setClassPK(workflowInstanceLink.getClassPK());
+		workflowInstanceLinkImpl.setWorkflowInstanceId(workflowInstanceLink.getWorkflowInstanceId());
+
+		return workflowInstanceLinkImpl;
 	}
 
 	/**

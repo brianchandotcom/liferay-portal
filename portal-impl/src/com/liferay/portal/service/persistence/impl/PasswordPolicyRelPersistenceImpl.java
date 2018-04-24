@@ -1037,6 +1037,8 @@ public class PasswordPolicyRelPersistenceImpl extends BasePersistenceImpl<Passwo
 
 	@Override
 	protected PasswordPolicyRel removeImpl(PasswordPolicyRel passwordPolicyRel) {
+		passwordPolicyRel = toUnwrappedModel(passwordPolicyRel);
+
 		Session session = null;
 
 		try {
@@ -1067,6 +1069,8 @@ public class PasswordPolicyRelPersistenceImpl extends BasePersistenceImpl<Passwo
 
 	@Override
 	public PasswordPolicyRel updateImpl(PasswordPolicyRel passwordPolicyRel) {
+		passwordPolicyRel = toUnwrappedModel(passwordPolicyRel);
+
 		boolean isNew = passwordPolicyRel.isNew();
 
 		PasswordPolicyRelModelImpl passwordPolicyRelModelImpl = (PasswordPolicyRelModelImpl)passwordPolicyRel;
@@ -1145,6 +1149,27 @@ public class PasswordPolicyRelPersistenceImpl extends BasePersistenceImpl<Passwo
 		passwordPolicyRel.resetOriginalValues();
 
 		return passwordPolicyRel;
+	}
+
+	protected PasswordPolicyRel toUnwrappedModel(
+		PasswordPolicyRel passwordPolicyRel) {
+		if (passwordPolicyRel instanceof PasswordPolicyRelImpl) {
+			return passwordPolicyRel;
+		}
+
+		PasswordPolicyRelImpl passwordPolicyRelImpl = new PasswordPolicyRelImpl();
+
+		passwordPolicyRelImpl.setNew(passwordPolicyRel.isNew());
+		passwordPolicyRelImpl.setPrimaryKey(passwordPolicyRel.getPrimaryKey());
+
+		passwordPolicyRelImpl.setMvccVersion(passwordPolicyRel.getMvccVersion());
+		passwordPolicyRelImpl.setPasswordPolicyRelId(passwordPolicyRel.getPasswordPolicyRelId());
+		passwordPolicyRelImpl.setCompanyId(passwordPolicyRel.getCompanyId());
+		passwordPolicyRelImpl.setPasswordPolicyId(passwordPolicyRel.getPasswordPolicyId());
+		passwordPolicyRelImpl.setClassNameId(passwordPolicyRel.getClassNameId());
+		passwordPolicyRelImpl.setClassPK(passwordPolicyRel.getClassPK());
+
+		return passwordPolicyRelImpl;
 	}
 
 	/**

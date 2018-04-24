@@ -14806,6 +14806,8 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 
 	@Override
 	protected DLFileEntry removeImpl(DLFileEntry dlFileEntry) {
+		dlFileEntry = toUnwrappedModel(dlFileEntry);
+
 		Session session = null;
 
 		try {
@@ -14836,6 +14838,8 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 
 	@Override
 	public DLFileEntry updateImpl(DLFileEntry dlFileEntry) {
+		dlFileEntry = toUnwrappedModel(dlFileEntry);
+
 		boolean isNew = dlFileEntry.isNew();
 
 		DLFileEntryModelImpl dlFileEntryModelImpl = (DLFileEntryModelImpl)dlFileEntry;
@@ -15401,6 +15405,50 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 		dlFileEntry.resetOriginalValues();
 
 		return dlFileEntry;
+	}
+
+	protected DLFileEntry toUnwrappedModel(DLFileEntry dlFileEntry) {
+		if (dlFileEntry instanceof DLFileEntryImpl) {
+			return dlFileEntry;
+		}
+
+		DLFileEntryImpl dlFileEntryImpl = new DLFileEntryImpl();
+
+		dlFileEntryImpl.setNew(dlFileEntry.isNew());
+		dlFileEntryImpl.setPrimaryKey(dlFileEntry.getPrimaryKey());
+
+		dlFileEntryImpl.setUuid(dlFileEntry.getUuid());
+		dlFileEntryImpl.setFileEntryId(dlFileEntry.getFileEntryId());
+		dlFileEntryImpl.setGroupId(dlFileEntry.getGroupId());
+		dlFileEntryImpl.setCompanyId(dlFileEntry.getCompanyId());
+		dlFileEntryImpl.setUserId(dlFileEntry.getUserId());
+		dlFileEntryImpl.setUserName(dlFileEntry.getUserName());
+		dlFileEntryImpl.setCreateDate(dlFileEntry.getCreateDate());
+		dlFileEntryImpl.setModifiedDate(dlFileEntry.getModifiedDate());
+		dlFileEntryImpl.setClassNameId(dlFileEntry.getClassNameId());
+		dlFileEntryImpl.setClassPK(dlFileEntry.getClassPK());
+		dlFileEntryImpl.setRepositoryId(dlFileEntry.getRepositoryId());
+		dlFileEntryImpl.setFolderId(dlFileEntry.getFolderId());
+		dlFileEntryImpl.setTreePath(dlFileEntry.getTreePath());
+		dlFileEntryImpl.setName(dlFileEntry.getName());
+		dlFileEntryImpl.setFileName(dlFileEntry.getFileName());
+		dlFileEntryImpl.setExtension(dlFileEntry.getExtension());
+		dlFileEntryImpl.setMimeType(dlFileEntry.getMimeType());
+		dlFileEntryImpl.setTitle(dlFileEntry.getTitle());
+		dlFileEntryImpl.setDescription(dlFileEntry.getDescription());
+		dlFileEntryImpl.setExtraSettings(dlFileEntry.getExtraSettings());
+		dlFileEntryImpl.setFileEntryTypeId(dlFileEntry.getFileEntryTypeId());
+		dlFileEntryImpl.setVersion(dlFileEntry.getVersion());
+		dlFileEntryImpl.setSize(dlFileEntry.getSize());
+		dlFileEntryImpl.setReadCount(dlFileEntry.getReadCount());
+		dlFileEntryImpl.setSmallImageId(dlFileEntry.getSmallImageId());
+		dlFileEntryImpl.setLargeImageId(dlFileEntry.getLargeImageId());
+		dlFileEntryImpl.setCustom1ImageId(dlFileEntry.getCustom1ImageId());
+		dlFileEntryImpl.setCustom2ImageId(dlFileEntry.getCustom2ImageId());
+		dlFileEntryImpl.setManualCheckInRequired(dlFileEntry.isManualCheckInRequired());
+		dlFileEntryImpl.setLastPublishDate(dlFileEntry.getLastPublishDate());
+
+		return dlFileEntryImpl;
 	}
 
 	/**

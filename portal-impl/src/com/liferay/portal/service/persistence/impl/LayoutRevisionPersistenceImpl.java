@@ -7006,6 +7006,8 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 
 	@Override
 	protected LayoutRevision removeImpl(LayoutRevision layoutRevision) {
+		layoutRevision = toUnwrappedModel(layoutRevision);
+
 		Session session = null;
 
 		try {
@@ -7036,6 +7038,8 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 
 	@Override
 	public LayoutRevision updateImpl(LayoutRevision layoutRevision) {
+		layoutRevision = toUnwrappedModel(layoutRevision);
+
 		boolean isNew = layoutRevision.isNew();
 
 		LayoutRevisionModelImpl layoutRevisionModelImpl = (LayoutRevisionModelImpl)layoutRevision;
@@ -7415,6 +7419,49 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 		layoutRevision.resetOriginalValues();
 
 		return layoutRevision;
+	}
+
+	protected LayoutRevision toUnwrappedModel(LayoutRevision layoutRevision) {
+		if (layoutRevision instanceof LayoutRevisionImpl) {
+			return layoutRevision;
+		}
+
+		LayoutRevisionImpl layoutRevisionImpl = new LayoutRevisionImpl();
+
+		layoutRevisionImpl.setNew(layoutRevision.isNew());
+		layoutRevisionImpl.setPrimaryKey(layoutRevision.getPrimaryKey());
+
+		layoutRevisionImpl.setMvccVersion(layoutRevision.getMvccVersion());
+		layoutRevisionImpl.setLayoutRevisionId(layoutRevision.getLayoutRevisionId());
+		layoutRevisionImpl.setGroupId(layoutRevision.getGroupId());
+		layoutRevisionImpl.setCompanyId(layoutRevision.getCompanyId());
+		layoutRevisionImpl.setUserId(layoutRevision.getUserId());
+		layoutRevisionImpl.setUserName(layoutRevision.getUserName());
+		layoutRevisionImpl.setCreateDate(layoutRevision.getCreateDate());
+		layoutRevisionImpl.setModifiedDate(layoutRevision.getModifiedDate());
+		layoutRevisionImpl.setLayoutSetBranchId(layoutRevision.getLayoutSetBranchId());
+		layoutRevisionImpl.setLayoutBranchId(layoutRevision.getLayoutBranchId());
+		layoutRevisionImpl.setParentLayoutRevisionId(layoutRevision.getParentLayoutRevisionId());
+		layoutRevisionImpl.setHead(layoutRevision.isHead());
+		layoutRevisionImpl.setMajor(layoutRevision.isMajor());
+		layoutRevisionImpl.setPlid(layoutRevision.getPlid());
+		layoutRevisionImpl.setPrivateLayout(layoutRevision.isPrivateLayout());
+		layoutRevisionImpl.setName(layoutRevision.getName());
+		layoutRevisionImpl.setTitle(layoutRevision.getTitle());
+		layoutRevisionImpl.setDescription(layoutRevision.getDescription());
+		layoutRevisionImpl.setKeywords(layoutRevision.getKeywords());
+		layoutRevisionImpl.setRobots(layoutRevision.getRobots());
+		layoutRevisionImpl.setTypeSettings(layoutRevision.getTypeSettings());
+		layoutRevisionImpl.setIconImageId(layoutRevision.getIconImageId());
+		layoutRevisionImpl.setThemeId(layoutRevision.getThemeId());
+		layoutRevisionImpl.setColorSchemeId(layoutRevision.getColorSchemeId());
+		layoutRevisionImpl.setCss(layoutRevision.getCss());
+		layoutRevisionImpl.setStatus(layoutRevision.getStatus());
+		layoutRevisionImpl.setStatusByUserId(layoutRevision.getStatusByUserId());
+		layoutRevisionImpl.setStatusByUserName(layoutRevision.getStatusByUserName());
+		layoutRevisionImpl.setStatusDate(layoutRevision.getStatusDate());
+
+		return layoutRevisionImpl;
 	}
 
 	/**

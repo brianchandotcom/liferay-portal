@@ -1437,6 +1437,8 @@ public class PushNotificationsDevicePersistenceImpl extends BasePersistenceImpl<
 	@Override
 	protected PushNotificationsDevice removeImpl(
 		PushNotificationsDevice pushNotificationsDevice) {
+		pushNotificationsDevice = toUnwrappedModel(pushNotificationsDevice);
+
 		Session session = null;
 
 		try {
@@ -1468,6 +1470,8 @@ public class PushNotificationsDevicePersistenceImpl extends BasePersistenceImpl<
 	@Override
 	public PushNotificationsDevice updateImpl(
 		PushNotificationsDevice pushNotificationsDevice) {
+		pushNotificationsDevice = toUnwrappedModel(pushNotificationsDevice);
+
 		boolean isNew = pushNotificationsDevice.isNew();
 
 		PushNotificationsDeviceModelImpl pushNotificationsDeviceModelImpl = (PushNotificationsDeviceModelImpl)pushNotificationsDevice;
@@ -1548,6 +1552,27 @@ public class PushNotificationsDevicePersistenceImpl extends BasePersistenceImpl<
 		pushNotificationsDevice.resetOriginalValues();
 
 		return pushNotificationsDevice;
+	}
+
+	protected PushNotificationsDevice toUnwrappedModel(
+		PushNotificationsDevice pushNotificationsDevice) {
+		if (pushNotificationsDevice instanceof PushNotificationsDeviceImpl) {
+			return pushNotificationsDevice;
+		}
+
+		PushNotificationsDeviceImpl pushNotificationsDeviceImpl = new PushNotificationsDeviceImpl();
+
+		pushNotificationsDeviceImpl.setNew(pushNotificationsDevice.isNew());
+		pushNotificationsDeviceImpl.setPrimaryKey(pushNotificationsDevice.getPrimaryKey());
+
+		pushNotificationsDeviceImpl.setPushNotificationsDeviceId(pushNotificationsDevice.getPushNotificationsDeviceId());
+		pushNotificationsDeviceImpl.setCompanyId(pushNotificationsDevice.getCompanyId());
+		pushNotificationsDeviceImpl.setUserId(pushNotificationsDevice.getUserId());
+		pushNotificationsDeviceImpl.setCreateDate(pushNotificationsDevice.getCreateDate());
+		pushNotificationsDeviceImpl.setPlatform(pushNotificationsDevice.getPlatform());
+		pushNotificationsDeviceImpl.setToken(pushNotificationsDevice.getToken());
+
+		return pushNotificationsDeviceImpl;
 	}
 
 	/**

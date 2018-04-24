@@ -3984,6 +3984,8 @@ public class SiteNavigationMenuPersistenceImpl extends BasePersistenceImpl<SiteN
 	@Override
 	protected SiteNavigationMenu removeImpl(
 		SiteNavigationMenu siteNavigationMenu) {
+		siteNavigationMenu = toUnwrappedModel(siteNavigationMenu);
+
 		Session session = null;
 
 		try {
@@ -4014,6 +4016,8 @@ public class SiteNavigationMenuPersistenceImpl extends BasePersistenceImpl<SiteN
 
 	@Override
 	public SiteNavigationMenu updateImpl(SiteNavigationMenu siteNavigationMenu) {
+		siteNavigationMenu = toUnwrappedModel(siteNavigationMenu);
+
 		boolean isNew = siteNavigationMenu.isNew();
 
 		SiteNavigationMenuModelImpl siteNavigationMenuModelImpl = (SiteNavigationMenuModelImpl)siteNavigationMenu;
@@ -4169,6 +4173,31 @@ public class SiteNavigationMenuPersistenceImpl extends BasePersistenceImpl<SiteN
 		siteNavigationMenu.resetOriginalValues();
 
 		return siteNavigationMenu;
+	}
+
+	protected SiteNavigationMenu toUnwrappedModel(
+		SiteNavigationMenu siteNavigationMenu) {
+		if (siteNavigationMenu instanceof SiteNavigationMenuImpl) {
+			return siteNavigationMenu;
+		}
+
+		SiteNavigationMenuImpl siteNavigationMenuImpl = new SiteNavigationMenuImpl();
+
+		siteNavigationMenuImpl.setNew(siteNavigationMenu.isNew());
+		siteNavigationMenuImpl.setPrimaryKey(siteNavigationMenu.getPrimaryKey());
+
+		siteNavigationMenuImpl.setSiteNavigationMenuId(siteNavigationMenu.getSiteNavigationMenuId());
+		siteNavigationMenuImpl.setGroupId(siteNavigationMenu.getGroupId());
+		siteNavigationMenuImpl.setCompanyId(siteNavigationMenu.getCompanyId());
+		siteNavigationMenuImpl.setUserId(siteNavigationMenu.getUserId());
+		siteNavigationMenuImpl.setUserName(siteNavigationMenu.getUserName());
+		siteNavigationMenuImpl.setCreateDate(siteNavigationMenu.getCreateDate());
+		siteNavigationMenuImpl.setModifiedDate(siteNavigationMenu.getModifiedDate());
+		siteNavigationMenuImpl.setName(siteNavigationMenu.getName());
+		siteNavigationMenuImpl.setType(siteNavigationMenu.getType());
+		siteNavigationMenuImpl.setAuto(siteNavigationMenu.isAuto());
+
+		return siteNavigationMenuImpl;
 	}
 
 	/**

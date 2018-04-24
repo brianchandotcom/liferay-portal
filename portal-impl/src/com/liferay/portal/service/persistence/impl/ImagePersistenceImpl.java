@@ -735,6 +735,8 @@ public class ImagePersistenceImpl extends BasePersistenceImpl<Image>
 
 	@Override
 	protected Image removeImpl(Image image) {
+		image = toUnwrappedModel(image);
+
 		Session session = null;
 
 		try {
@@ -765,6 +767,8 @@ public class ImagePersistenceImpl extends BasePersistenceImpl<Image>
 
 	@Override
 	public Image updateImpl(Image image) {
+		image = toUnwrappedModel(image);
+
 		boolean isNew = image.isNew();
 
 		Session session = null;
@@ -806,6 +810,28 @@ public class ImagePersistenceImpl extends BasePersistenceImpl<Image>
 		image.resetOriginalValues();
 
 		return image;
+	}
+
+	protected Image toUnwrappedModel(Image image) {
+		if (image instanceof ImageImpl) {
+			return image;
+		}
+
+		ImageImpl imageImpl = new ImageImpl();
+
+		imageImpl.setNew(image.isNew());
+		imageImpl.setPrimaryKey(image.getPrimaryKey());
+
+		imageImpl.setMvccVersion(image.getMvccVersion());
+		imageImpl.setImageId(image.getImageId());
+		imageImpl.setCompanyId(image.getCompanyId());
+		imageImpl.setModifiedDate(image.getModifiedDate());
+		imageImpl.setType(image.getType());
+		imageImpl.setHeight(image.getHeight());
+		imageImpl.setWidth(image.getWidth());
+		imageImpl.setSize(image.getSize());
+
+		return imageImpl;
 	}
 
 	/**

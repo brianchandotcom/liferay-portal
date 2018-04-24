@@ -11534,6 +11534,8 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 
 	@Override
 	protected MBCategory removeImpl(MBCategory mbCategory) {
+		mbCategory = toUnwrappedModel(mbCategory);
+
 		Session session = null;
 
 		try {
@@ -11564,6 +11566,8 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 
 	@Override
 	public MBCategory updateImpl(MBCategory mbCategory) {
+		mbCategory = toUnwrappedModel(mbCategory);
+
 		boolean isNew = mbCategory.isNew();
 
 		MBCategoryModelImpl mbCategoryModelImpl = (MBCategoryModelImpl)mbCategory;
@@ -11862,6 +11866,40 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 		mbCategory.resetOriginalValues();
 
 		return mbCategory;
+	}
+
+	protected MBCategory toUnwrappedModel(MBCategory mbCategory) {
+		if (mbCategory instanceof MBCategoryImpl) {
+			return mbCategory;
+		}
+
+		MBCategoryImpl mbCategoryImpl = new MBCategoryImpl();
+
+		mbCategoryImpl.setNew(mbCategory.isNew());
+		mbCategoryImpl.setPrimaryKey(mbCategory.getPrimaryKey());
+
+		mbCategoryImpl.setUuid(mbCategory.getUuid());
+		mbCategoryImpl.setCategoryId(mbCategory.getCategoryId());
+		mbCategoryImpl.setGroupId(mbCategory.getGroupId());
+		mbCategoryImpl.setCompanyId(mbCategory.getCompanyId());
+		mbCategoryImpl.setUserId(mbCategory.getUserId());
+		mbCategoryImpl.setUserName(mbCategory.getUserName());
+		mbCategoryImpl.setCreateDate(mbCategory.getCreateDate());
+		mbCategoryImpl.setModifiedDate(mbCategory.getModifiedDate());
+		mbCategoryImpl.setParentCategoryId(mbCategory.getParentCategoryId());
+		mbCategoryImpl.setName(mbCategory.getName());
+		mbCategoryImpl.setDescription(mbCategory.getDescription());
+		mbCategoryImpl.setDisplayStyle(mbCategory.getDisplayStyle());
+		mbCategoryImpl.setThreadCount(mbCategory.getThreadCount());
+		mbCategoryImpl.setMessageCount(mbCategory.getMessageCount());
+		mbCategoryImpl.setLastPostDate(mbCategory.getLastPostDate());
+		mbCategoryImpl.setLastPublishDate(mbCategory.getLastPublishDate());
+		mbCategoryImpl.setStatus(mbCategory.getStatus());
+		mbCategoryImpl.setStatusByUserId(mbCategory.getStatusByUserId());
+		mbCategoryImpl.setStatusByUserName(mbCategory.getStatusByUserName());
+		mbCategoryImpl.setStatusDate(mbCategory.getStatusDate());
+
+		return mbCategoryImpl;
 	}
 
 	/**

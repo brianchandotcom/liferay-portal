@@ -746,6 +746,8 @@ public class OrgLaborPersistenceImpl extends BasePersistenceImpl<OrgLabor>
 
 	@Override
 	protected OrgLabor removeImpl(OrgLabor orgLabor) {
+		orgLabor = toUnwrappedModel(orgLabor);
+
 		Session session = null;
 
 		try {
@@ -776,6 +778,8 @@ public class OrgLaborPersistenceImpl extends BasePersistenceImpl<OrgLabor>
 
 	@Override
 	public OrgLabor updateImpl(OrgLabor orgLabor) {
+		orgLabor = toUnwrappedModel(orgLabor);
+
 		boolean isNew = orgLabor.isNew();
 
 		OrgLaborModelImpl orgLaborModelImpl = (OrgLaborModelImpl)orgLabor;
@@ -846,6 +850,39 @@ public class OrgLaborPersistenceImpl extends BasePersistenceImpl<OrgLabor>
 		orgLabor.resetOriginalValues();
 
 		return orgLabor;
+	}
+
+	protected OrgLabor toUnwrappedModel(OrgLabor orgLabor) {
+		if (orgLabor instanceof OrgLaborImpl) {
+			return orgLabor;
+		}
+
+		OrgLaborImpl orgLaborImpl = new OrgLaborImpl();
+
+		orgLaborImpl.setNew(orgLabor.isNew());
+		orgLaborImpl.setPrimaryKey(orgLabor.getPrimaryKey());
+
+		orgLaborImpl.setMvccVersion(orgLabor.getMvccVersion());
+		orgLaborImpl.setOrgLaborId(orgLabor.getOrgLaborId());
+		orgLaborImpl.setCompanyId(orgLabor.getCompanyId());
+		orgLaborImpl.setOrganizationId(orgLabor.getOrganizationId());
+		orgLaborImpl.setTypeId(orgLabor.getTypeId());
+		orgLaborImpl.setSunOpen(orgLabor.getSunOpen());
+		orgLaborImpl.setSunClose(orgLabor.getSunClose());
+		orgLaborImpl.setMonOpen(orgLabor.getMonOpen());
+		orgLaborImpl.setMonClose(orgLabor.getMonClose());
+		orgLaborImpl.setTueOpen(orgLabor.getTueOpen());
+		orgLaborImpl.setTueClose(orgLabor.getTueClose());
+		orgLaborImpl.setWedOpen(orgLabor.getWedOpen());
+		orgLaborImpl.setWedClose(orgLabor.getWedClose());
+		orgLaborImpl.setThuOpen(orgLabor.getThuOpen());
+		orgLaborImpl.setThuClose(orgLabor.getThuClose());
+		orgLaborImpl.setFriOpen(orgLabor.getFriOpen());
+		orgLaborImpl.setFriClose(orgLabor.getFriClose());
+		orgLaborImpl.setSatOpen(orgLabor.getSatOpen());
+		orgLaborImpl.setSatClose(orgLabor.getSatClose());
+
+		return orgLaborImpl;
 	}
 
 	/**

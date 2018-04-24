@@ -4288,6 +4288,8 @@ public class SAPEntryPersistenceImpl extends BasePersistenceImpl<SAPEntry>
 
 	@Override
 	protected SAPEntry removeImpl(SAPEntry sapEntry) {
+		sapEntry = toUnwrappedModel(sapEntry);
+
 		Session session = null;
 
 		try {
@@ -4318,6 +4320,8 @@ public class SAPEntryPersistenceImpl extends BasePersistenceImpl<SAPEntry>
 
 	@Override
 	public SAPEntry updateImpl(SAPEntry sapEntry) {
+		sapEntry = toUnwrappedModel(sapEntry);
+
 		boolean isNew = sapEntry.isNew();
 
 		SAPEntryModelImpl sapEntryModelImpl = (SAPEntryModelImpl)sapEntry;
@@ -4498,6 +4502,32 @@ public class SAPEntryPersistenceImpl extends BasePersistenceImpl<SAPEntry>
 		sapEntry.resetOriginalValues();
 
 		return sapEntry;
+	}
+
+	protected SAPEntry toUnwrappedModel(SAPEntry sapEntry) {
+		if (sapEntry instanceof SAPEntryImpl) {
+			return sapEntry;
+		}
+
+		SAPEntryImpl sapEntryImpl = new SAPEntryImpl();
+
+		sapEntryImpl.setNew(sapEntry.isNew());
+		sapEntryImpl.setPrimaryKey(sapEntry.getPrimaryKey());
+
+		sapEntryImpl.setUuid(sapEntry.getUuid());
+		sapEntryImpl.setSapEntryId(sapEntry.getSapEntryId());
+		sapEntryImpl.setCompanyId(sapEntry.getCompanyId());
+		sapEntryImpl.setUserId(sapEntry.getUserId());
+		sapEntryImpl.setUserName(sapEntry.getUserName());
+		sapEntryImpl.setCreateDate(sapEntry.getCreateDate());
+		sapEntryImpl.setModifiedDate(sapEntry.getModifiedDate());
+		sapEntryImpl.setAllowedServiceSignatures(sapEntry.getAllowedServiceSignatures());
+		sapEntryImpl.setDefaultSAPEntry(sapEntry.isDefaultSAPEntry());
+		sapEntryImpl.setEnabled(sapEntry.isEnabled());
+		sapEntryImpl.setName(sapEntry.getName());
+		sapEntryImpl.setTitle(sapEntry.getTitle());
+
+		return sapEntryImpl;
 	}
 
 	/**

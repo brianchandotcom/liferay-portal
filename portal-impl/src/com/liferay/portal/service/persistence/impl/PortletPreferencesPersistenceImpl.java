@@ -5375,6 +5375,8 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 	@Override
 	protected PortletPreferences removeImpl(
 		PortletPreferences portletPreferences) {
+		portletPreferences = toUnwrappedModel(portletPreferences);
+
 		Session session = null;
 
 		try {
@@ -5405,6 +5407,8 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 
 	@Override
 	public PortletPreferences updateImpl(PortletPreferences portletPreferences) {
+		portletPreferences = toUnwrappedModel(portletPreferences);
+
 		boolean isNew = portletPreferences.isNew();
 
 		PortletPreferencesModelImpl portletPreferencesModelImpl = (PortletPreferencesModelImpl)portletPreferences;
@@ -5659,6 +5663,29 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 		portletPreferences.resetOriginalValues();
 
 		return portletPreferences;
+	}
+
+	protected PortletPreferences toUnwrappedModel(
+		PortletPreferences portletPreferences) {
+		if (portletPreferences instanceof PortletPreferencesImpl) {
+			return portletPreferences;
+		}
+
+		PortletPreferencesImpl portletPreferencesImpl = new PortletPreferencesImpl();
+
+		portletPreferencesImpl.setNew(portletPreferences.isNew());
+		portletPreferencesImpl.setPrimaryKey(portletPreferences.getPrimaryKey());
+
+		portletPreferencesImpl.setMvccVersion(portletPreferences.getMvccVersion());
+		portletPreferencesImpl.setPortletPreferencesId(portletPreferences.getPortletPreferencesId());
+		portletPreferencesImpl.setCompanyId(portletPreferences.getCompanyId());
+		portletPreferencesImpl.setOwnerId(portletPreferences.getOwnerId());
+		portletPreferencesImpl.setOwnerType(portletPreferences.getOwnerType());
+		portletPreferencesImpl.setPlid(portletPreferences.getPlid());
+		portletPreferencesImpl.setPortletId(portletPreferences.getPortletId());
+		portletPreferencesImpl.setPreferences(portletPreferences.getPreferences());
+
+		return portletPreferencesImpl;
 	}
 
 	/**

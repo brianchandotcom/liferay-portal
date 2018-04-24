@@ -12162,6 +12162,8 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 
 	@Override
 	protected DDMTemplate removeImpl(DDMTemplate ddmTemplate) {
+		ddmTemplate = toUnwrappedModel(ddmTemplate);
+
 		Session session = null;
 
 		try {
@@ -12192,6 +12194,8 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 
 	@Override
 	public DDMTemplate updateImpl(DDMTemplate ddmTemplate) {
+		ddmTemplate = toUnwrappedModel(ddmTemplate);
+
 		boolean isNew = ddmTemplate.isNew();
 
 		DDMTemplateModelImpl ddmTemplateModelImpl = (DDMTemplateModelImpl)ddmTemplate;
@@ -12638,6 +12642,46 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 		ddmTemplate.resetOriginalValues();
 
 		return ddmTemplate;
+	}
+
+	protected DDMTemplate toUnwrappedModel(DDMTemplate ddmTemplate) {
+		if (ddmTemplate instanceof DDMTemplateImpl) {
+			return ddmTemplate;
+		}
+
+		DDMTemplateImpl ddmTemplateImpl = new DDMTemplateImpl();
+
+		ddmTemplateImpl.setNew(ddmTemplate.isNew());
+		ddmTemplateImpl.setPrimaryKey(ddmTemplate.getPrimaryKey());
+
+		ddmTemplateImpl.setUuid(ddmTemplate.getUuid());
+		ddmTemplateImpl.setTemplateId(ddmTemplate.getTemplateId());
+		ddmTemplateImpl.setGroupId(ddmTemplate.getGroupId());
+		ddmTemplateImpl.setCompanyId(ddmTemplate.getCompanyId());
+		ddmTemplateImpl.setUserId(ddmTemplate.getUserId());
+		ddmTemplateImpl.setUserName(ddmTemplate.getUserName());
+		ddmTemplateImpl.setVersionUserId(ddmTemplate.getVersionUserId());
+		ddmTemplateImpl.setVersionUserName(ddmTemplate.getVersionUserName());
+		ddmTemplateImpl.setCreateDate(ddmTemplate.getCreateDate());
+		ddmTemplateImpl.setModifiedDate(ddmTemplate.getModifiedDate());
+		ddmTemplateImpl.setClassNameId(ddmTemplate.getClassNameId());
+		ddmTemplateImpl.setClassPK(ddmTemplate.getClassPK());
+		ddmTemplateImpl.setResourceClassNameId(ddmTemplate.getResourceClassNameId());
+		ddmTemplateImpl.setTemplateKey(ddmTemplate.getTemplateKey());
+		ddmTemplateImpl.setVersion(ddmTemplate.getVersion());
+		ddmTemplateImpl.setName(ddmTemplate.getName());
+		ddmTemplateImpl.setDescription(ddmTemplate.getDescription());
+		ddmTemplateImpl.setType(ddmTemplate.getType());
+		ddmTemplateImpl.setMode(ddmTemplate.getMode());
+		ddmTemplateImpl.setLanguage(ddmTemplate.getLanguage());
+		ddmTemplateImpl.setScript(ddmTemplate.getScript());
+		ddmTemplateImpl.setCacheable(ddmTemplate.isCacheable());
+		ddmTemplateImpl.setSmallImage(ddmTemplate.isSmallImage());
+		ddmTemplateImpl.setSmallImageId(ddmTemplate.getSmallImageId());
+		ddmTemplateImpl.setSmallImageURL(ddmTemplate.getSmallImageURL());
+		ddmTemplateImpl.setLastPublishDate(ddmTemplate.getLastPublishDate());
+
+		return ddmTemplateImpl;
 	}
 
 	/**

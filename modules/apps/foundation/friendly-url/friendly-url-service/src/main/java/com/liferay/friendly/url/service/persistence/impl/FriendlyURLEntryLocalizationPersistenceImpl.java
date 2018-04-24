@@ -1435,6 +1435,8 @@ public class FriendlyURLEntryLocalizationPersistenceImpl
 	@Override
 	protected FriendlyURLEntryLocalization removeImpl(
 		FriendlyURLEntryLocalization friendlyURLEntryLocalization) {
+		friendlyURLEntryLocalization = toUnwrappedModel(friendlyURLEntryLocalization);
+
 		Session session = null;
 
 		try {
@@ -1466,6 +1468,8 @@ public class FriendlyURLEntryLocalizationPersistenceImpl
 	@Override
 	public FriendlyURLEntryLocalization updateImpl(
 		FriendlyURLEntryLocalization friendlyURLEntryLocalization) {
+		friendlyURLEntryLocalization = toUnwrappedModel(friendlyURLEntryLocalization);
+
 		boolean isNew = friendlyURLEntryLocalization.isNew();
 
 		FriendlyURLEntryLocalizationModelImpl friendlyURLEntryLocalizationModelImpl =
@@ -1547,6 +1551,30 @@ public class FriendlyURLEntryLocalizationPersistenceImpl
 		friendlyURLEntryLocalization.resetOriginalValues();
 
 		return friendlyURLEntryLocalization;
+	}
+
+	protected FriendlyURLEntryLocalization toUnwrappedModel(
+		FriendlyURLEntryLocalization friendlyURLEntryLocalization) {
+		if (friendlyURLEntryLocalization instanceof FriendlyURLEntryLocalizationImpl) {
+			return friendlyURLEntryLocalization;
+		}
+
+		FriendlyURLEntryLocalizationImpl friendlyURLEntryLocalizationImpl = new FriendlyURLEntryLocalizationImpl();
+
+		friendlyURLEntryLocalizationImpl.setNew(friendlyURLEntryLocalization.isNew());
+		friendlyURLEntryLocalizationImpl.setPrimaryKey(friendlyURLEntryLocalization.getPrimaryKey());
+
+		friendlyURLEntryLocalizationImpl.setMvccVersion(friendlyURLEntryLocalization.getMvccVersion());
+		friendlyURLEntryLocalizationImpl.setFriendlyURLEntryLocalizationId(friendlyURLEntryLocalization.getFriendlyURLEntryLocalizationId());
+		friendlyURLEntryLocalizationImpl.setCompanyId(friendlyURLEntryLocalization.getCompanyId());
+		friendlyURLEntryLocalizationImpl.setFriendlyURLEntryId(friendlyURLEntryLocalization.getFriendlyURLEntryId());
+		friendlyURLEntryLocalizationImpl.setLanguageId(friendlyURLEntryLocalization.getLanguageId());
+		friendlyURLEntryLocalizationImpl.setUrlTitle(friendlyURLEntryLocalization.getUrlTitle());
+		friendlyURLEntryLocalizationImpl.setGroupId(friendlyURLEntryLocalization.getGroupId());
+		friendlyURLEntryLocalizationImpl.setClassNameId(friendlyURLEntryLocalization.getClassNameId());
+		friendlyURLEntryLocalizationImpl.setClassPK(friendlyURLEntryLocalization.getClassPK());
+
+		return friendlyURLEntryLocalizationImpl;
 	}
 
 	/**

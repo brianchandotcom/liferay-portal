@@ -1113,6 +1113,8 @@ public class ResourceActionPersistenceImpl extends BasePersistenceImpl<ResourceA
 
 	@Override
 	protected ResourceAction removeImpl(ResourceAction resourceAction) {
+		resourceAction = toUnwrappedModel(resourceAction);
+
 		Session session = null;
 
 		try {
@@ -1143,6 +1145,8 @@ public class ResourceActionPersistenceImpl extends BasePersistenceImpl<ResourceA
 
 	@Override
 	public ResourceAction updateImpl(ResourceAction resourceAction) {
+		resourceAction = toUnwrappedModel(resourceAction);
+
 		boolean isNew = resourceAction.isNew();
 
 		ResourceActionModelImpl resourceActionModelImpl = (ResourceActionModelImpl)resourceAction;
@@ -1215,6 +1219,25 @@ public class ResourceActionPersistenceImpl extends BasePersistenceImpl<ResourceA
 		resourceAction.resetOriginalValues();
 
 		return resourceAction;
+	}
+
+	protected ResourceAction toUnwrappedModel(ResourceAction resourceAction) {
+		if (resourceAction instanceof ResourceActionImpl) {
+			return resourceAction;
+		}
+
+		ResourceActionImpl resourceActionImpl = new ResourceActionImpl();
+
+		resourceActionImpl.setNew(resourceAction.isNew());
+		resourceActionImpl.setPrimaryKey(resourceAction.getPrimaryKey());
+
+		resourceActionImpl.setMvccVersion(resourceAction.getMvccVersion());
+		resourceActionImpl.setResourceActionId(resourceAction.getResourceActionId());
+		resourceActionImpl.setName(resourceAction.getName());
+		resourceActionImpl.setActionId(resourceAction.getActionId());
+		resourceActionImpl.setBitwiseValue(resourceAction.getBitwiseValue());
+
+		return resourceActionImpl;
 	}
 
 	/**

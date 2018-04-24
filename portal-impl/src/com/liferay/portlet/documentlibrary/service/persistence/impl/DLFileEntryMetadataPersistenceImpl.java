@@ -2722,6 +2722,8 @@ public class DLFileEntryMetadataPersistenceImpl extends BasePersistenceImpl<DLFi
 	@Override
 	protected DLFileEntryMetadata removeImpl(
 		DLFileEntryMetadata dlFileEntryMetadata) {
+		dlFileEntryMetadata = toUnwrappedModel(dlFileEntryMetadata);
+
 		Session session = null;
 
 		try {
@@ -2753,6 +2755,8 @@ public class DLFileEntryMetadataPersistenceImpl extends BasePersistenceImpl<DLFi
 	@Override
 	public DLFileEntryMetadata updateImpl(
 		DLFileEntryMetadata dlFileEntryMetadata) {
+		dlFileEntryMetadata = toUnwrappedModel(dlFileEntryMetadata);
+
 		boolean isNew = dlFileEntryMetadata.isNew();
 
 		DLFileEntryMetadataModelImpl dlFileEntryMetadataModelImpl = (DLFileEntryMetadataModelImpl)dlFileEntryMetadata;
@@ -2913,6 +2917,28 @@ public class DLFileEntryMetadataPersistenceImpl extends BasePersistenceImpl<DLFi
 		dlFileEntryMetadata.resetOriginalValues();
 
 		return dlFileEntryMetadata;
+	}
+
+	protected DLFileEntryMetadata toUnwrappedModel(
+		DLFileEntryMetadata dlFileEntryMetadata) {
+		if (dlFileEntryMetadata instanceof DLFileEntryMetadataImpl) {
+			return dlFileEntryMetadata;
+		}
+
+		DLFileEntryMetadataImpl dlFileEntryMetadataImpl = new DLFileEntryMetadataImpl();
+
+		dlFileEntryMetadataImpl.setNew(dlFileEntryMetadata.isNew());
+		dlFileEntryMetadataImpl.setPrimaryKey(dlFileEntryMetadata.getPrimaryKey());
+
+		dlFileEntryMetadataImpl.setUuid(dlFileEntryMetadata.getUuid());
+		dlFileEntryMetadataImpl.setFileEntryMetadataId(dlFileEntryMetadata.getFileEntryMetadataId());
+		dlFileEntryMetadataImpl.setCompanyId(dlFileEntryMetadata.getCompanyId());
+		dlFileEntryMetadataImpl.setDDMStorageId(dlFileEntryMetadata.getDDMStorageId());
+		dlFileEntryMetadataImpl.setDDMStructureId(dlFileEntryMetadata.getDDMStructureId());
+		dlFileEntryMetadataImpl.setFileEntryId(dlFileEntryMetadata.getFileEntryId());
+		dlFileEntryMetadataImpl.setFileVersionId(dlFileEntryMetadata.getFileVersionId());
+
+		return dlFileEntryMetadataImpl;
 	}
 
 	/**

@@ -3313,6 +3313,8 @@ public class DDLRecordSetPersistenceImpl extends BasePersistenceImpl<DDLRecordSe
 
 	@Override
 	protected DDLRecordSet removeImpl(DDLRecordSet ddlRecordSet) {
+		ddlRecordSet = toUnwrappedModel(ddlRecordSet);
+
 		Session session = null;
 
 		try {
@@ -3343,6 +3345,8 @@ public class DDLRecordSetPersistenceImpl extends BasePersistenceImpl<DDLRecordSe
 
 	@Override
 	public DDLRecordSet updateImpl(DDLRecordSet ddlRecordSet) {
+		ddlRecordSet = toUnwrappedModel(ddlRecordSet);
+
 		boolean isNew = ddlRecordSet.isNew();
 
 		DDLRecordSetModelImpl ddlRecordSetModelImpl = (DDLRecordSetModelImpl)ddlRecordSet;
@@ -3496,6 +3500,39 @@ public class DDLRecordSetPersistenceImpl extends BasePersistenceImpl<DDLRecordSe
 		ddlRecordSet.resetOriginalValues();
 
 		return ddlRecordSet;
+	}
+
+	protected DDLRecordSet toUnwrappedModel(DDLRecordSet ddlRecordSet) {
+		if (ddlRecordSet instanceof DDLRecordSetImpl) {
+			return ddlRecordSet;
+		}
+
+		DDLRecordSetImpl ddlRecordSetImpl = new DDLRecordSetImpl();
+
+		ddlRecordSetImpl.setNew(ddlRecordSet.isNew());
+		ddlRecordSetImpl.setPrimaryKey(ddlRecordSet.getPrimaryKey());
+
+		ddlRecordSetImpl.setUuid(ddlRecordSet.getUuid());
+		ddlRecordSetImpl.setRecordSetId(ddlRecordSet.getRecordSetId());
+		ddlRecordSetImpl.setGroupId(ddlRecordSet.getGroupId());
+		ddlRecordSetImpl.setCompanyId(ddlRecordSet.getCompanyId());
+		ddlRecordSetImpl.setUserId(ddlRecordSet.getUserId());
+		ddlRecordSetImpl.setUserName(ddlRecordSet.getUserName());
+		ddlRecordSetImpl.setVersionUserId(ddlRecordSet.getVersionUserId());
+		ddlRecordSetImpl.setVersionUserName(ddlRecordSet.getVersionUserName());
+		ddlRecordSetImpl.setCreateDate(ddlRecordSet.getCreateDate());
+		ddlRecordSetImpl.setModifiedDate(ddlRecordSet.getModifiedDate());
+		ddlRecordSetImpl.setDDMStructureId(ddlRecordSet.getDDMStructureId());
+		ddlRecordSetImpl.setRecordSetKey(ddlRecordSet.getRecordSetKey());
+		ddlRecordSetImpl.setVersion(ddlRecordSet.getVersion());
+		ddlRecordSetImpl.setName(ddlRecordSet.getName());
+		ddlRecordSetImpl.setDescription(ddlRecordSet.getDescription());
+		ddlRecordSetImpl.setMinDisplayRows(ddlRecordSet.getMinDisplayRows());
+		ddlRecordSetImpl.setScope(ddlRecordSet.getScope());
+		ddlRecordSetImpl.setSettings(ddlRecordSet.getSettings());
+		ddlRecordSetImpl.setLastPublishDate(ddlRecordSet.getLastPublishDate());
+
+		return ddlRecordSetImpl;
 	}
 
 	/**

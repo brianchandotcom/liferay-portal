@@ -2191,6 +2191,8 @@ public class AssetCategoryPropertyPersistenceImpl extends BasePersistenceImpl<As
 	@Override
 	protected AssetCategoryProperty removeImpl(
 		AssetCategoryProperty assetCategoryProperty) {
+		assetCategoryProperty = toUnwrappedModel(assetCategoryProperty);
+
 		Session session = null;
 
 		try {
@@ -2222,6 +2224,8 @@ public class AssetCategoryPropertyPersistenceImpl extends BasePersistenceImpl<As
 	@Override
 	public AssetCategoryProperty updateImpl(
 		AssetCategoryProperty assetCategoryProperty) {
+		assetCategoryProperty = toUnwrappedModel(assetCategoryProperty);
+
 		boolean isNew = assetCategoryProperty.isNew();
 
 		AssetCategoryPropertyModelImpl assetCategoryPropertyModelImpl = (AssetCategoryPropertyModelImpl)assetCategoryProperty;
@@ -2377,6 +2381,30 @@ public class AssetCategoryPropertyPersistenceImpl extends BasePersistenceImpl<As
 		assetCategoryProperty.resetOriginalValues();
 
 		return assetCategoryProperty;
+	}
+
+	protected AssetCategoryProperty toUnwrappedModel(
+		AssetCategoryProperty assetCategoryProperty) {
+		if (assetCategoryProperty instanceof AssetCategoryPropertyImpl) {
+			return assetCategoryProperty;
+		}
+
+		AssetCategoryPropertyImpl assetCategoryPropertyImpl = new AssetCategoryPropertyImpl();
+
+		assetCategoryPropertyImpl.setNew(assetCategoryProperty.isNew());
+		assetCategoryPropertyImpl.setPrimaryKey(assetCategoryProperty.getPrimaryKey());
+
+		assetCategoryPropertyImpl.setCategoryPropertyId(assetCategoryProperty.getCategoryPropertyId());
+		assetCategoryPropertyImpl.setCompanyId(assetCategoryProperty.getCompanyId());
+		assetCategoryPropertyImpl.setUserId(assetCategoryProperty.getUserId());
+		assetCategoryPropertyImpl.setUserName(assetCategoryProperty.getUserName());
+		assetCategoryPropertyImpl.setCreateDate(assetCategoryProperty.getCreateDate());
+		assetCategoryPropertyImpl.setModifiedDate(assetCategoryProperty.getModifiedDate());
+		assetCategoryPropertyImpl.setCategoryId(assetCategoryProperty.getCategoryId());
+		assetCategoryPropertyImpl.setKey(assetCategoryProperty.getKey());
+		assetCategoryPropertyImpl.setValue(assetCategoryProperty.getValue());
+
+		return assetCategoryPropertyImpl;
 	}
 
 	/**

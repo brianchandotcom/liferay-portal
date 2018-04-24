@@ -766,6 +766,8 @@ public class ShoppingItemFieldPersistenceImpl extends BasePersistenceImpl<Shoppi
 
 	@Override
 	protected ShoppingItemField removeImpl(ShoppingItemField shoppingItemField) {
+		shoppingItemField = toUnwrappedModel(shoppingItemField);
+
 		Session session = null;
 
 		try {
@@ -796,6 +798,8 @@ public class ShoppingItemFieldPersistenceImpl extends BasePersistenceImpl<Shoppi
 
 	@Override
 	public ShoppingItemField updateImpl(ShoppingItemField shoppingItemField) {
+		shoppingItemField = toUnwrappedModel(shoppingItemField);
+
 		boolean isNew = shoppingItemField.isNew();
 
 		ShoppingItemFieldModelImpl shoppingItemFieldModelImpl = (ShoppingItemFieldModelImpl)shoppingItemField;
@@ -865,6 +869,27 @@ public class ShoppingItemFieldPersistenceImpl extends BasePersistenceImpl<Shoppi
 		shoppingItemField.resetOriginalValues();
 
 		return shoppingItemField;
+	}
+
+	protected ShoppingItemField toUnwrappedModel(
+		ShoppingItemField shoppingItemField) {
+		if (shoppingItemField instanceof ShoppingItemFieldImpl) {
+			return shoppingItemField;
+		}
+
+		ShoppingItemFieldImpl shoppingItemFieldImpl = new ShoppingItemFieldImpl();
+
+		shoppingItemFieldImpl.setNew(shoppingItemField.isNew());
+		shoppingItemFieldImpl.setPrimaryKey(shoppingItemField.getPrimaryKey());
+
+		shoppingItemFieldImpl.setItemFieldId(shoppingItemField.getItemFieldId());
+		shoppingItemFieldImpl.setCompanyId(shoppingItemField.getCompanyId());
+		shoppingItemFieldImpl.setItemId(shoppingItemField.getItemId());
+		shoppingItemFieldImpl.setName(shoppingItemField.getName());
+		shoppingItemFieldImpl.setValues(shoppingItemField.getValues());
+		shoppingItemFieldImpl.setDescription(shoppingItemField.getDescription());
+
+		return shoppingItemFieldImpl;
 	}
 
 	/**

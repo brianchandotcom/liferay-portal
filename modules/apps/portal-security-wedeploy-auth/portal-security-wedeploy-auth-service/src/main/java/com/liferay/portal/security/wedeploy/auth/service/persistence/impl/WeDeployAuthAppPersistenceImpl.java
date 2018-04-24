@@ -922,6 +922,8 @@ public class WeDeployAuthAppPersistenceImpl extends BasePersistenceImpl<WeDeploy
 
 	@Override
 	protected WeDeployAuthApp removeImpl(WeDeployAuthApp weDeployAuthApp) {
+		weDeployAuthApp = toUnwrappedModel(weDeployAuthApp);
+
 		Session session = null;
 
 		try {
@@ -952,6 +954,8 @@ public class WeDeployAuthAppPersistenceImpl extends BasePersistenceImpl<WeDeploy
 
 	@Override
 	public WeDeployAuthApp updateImpl(WeDeployAuthApp weDeployAuthApp) {
+		weDeployAuthApp = toUnwrappedModel(weDeployAuthApp);
+
 		boolean isNew = weDeployAuthApp.isNew();
 
 		WeDeployAuthAppModelImpl weDeployAuthAppModelImpl = (WeDeployAuthAppModelImpl)weDeployAuthApp;
@@ -1022,6 +1026,30 @@ public class WeDeployAuthAppPersistenceImpl extends BasePersistenceImpl<WeDeploy
 		weDeployAuthApp.resetOriginalValues();
 
 		return weDeployAuthApp;
+	}
+
+	protected WeDeployAuthApp toUnwrappedModel(WeDeployAuthApp weDeployAuthApp) {
+		if (weDeployAuthApp instanceof WeDeployAuthAppImpl) {
+			return weDeployAuthApp;
+		}
+
+		WeDeployAuthAppImpl weDeployAuthAppImpl = new WeDeployAuthAppImpl();
+
+		weDeployAuthAppImpl.setNew(weDeployAuthApp.isNew());
+		weDeployAuthAppImpl.setPrimaryKey(weDeployAuthApp.getPrimaryKey());
+
+		weDeployAuthAppImpl.setWeDeployAuthAppId(weDeployAuthApp.getWeDeployAuthAppId());
+		weDeployAuthAppImpl.setCompanyId(weDeployAuthApp.getCompanyId());
+		weDeployAuthAppImpl.setUserId(weDeployAuthApp.getUserId());
+		weDeployAuthAppImpl.setUserName(weDeployAuthApp.getUserName());
+		weDeployAuthAppImpl.setCreateDate(weDeployAuthApp.getCreateDate());
+		weDeployAuthAppImpl.setModifiedDate(weDeployAuthApp.getModifiedDate());
+		weDeployAuthAppImpl.setName(weDeployAuthApp.getName());
+		weDeployAuthAppImpl.setRedirectURI(weDeployAuthApp.getRedirectURI());
+		weDeployAuthAppImpl.setClientId(weDeployAuthApp.getClientId());
+		weDeployAuthAppImpl.setClientSecret(weDeployAuthApp.getClientSecret());
+
+		return weDeployAuthAppImpl;
 	}
 
 	/**

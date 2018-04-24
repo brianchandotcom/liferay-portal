@@ -3217,6 +3217,8 @@ public class PowwowMeetingPersistenceImpl extends BasePersistenceImpl<PowwowMeet
 
 	@Override
 	protected PowwowMeeting removeImpl(PowwowMeeting powwowMeeting) {
+		powwowMeeting = toUnwrappedModel(powwowMeeting);
+
 		Session session = null;
 
 		try {
@@ -3247,6 +3249,8 @@ public class PowwowMeetingPersistenceImpl extends BasePersistenceImpl<PowwowMeet
 
 	@Override
 	public PowwowMeeting updateImpl(PowwowMeeting powwowMeeting) {
+		powwowMeeting = toUnwrappedModel(powwowMeeting);
+
 		boolean isNew = powwowMeeting.isNew();
 
 		PowwowMeetingModelImpl powwowMeetingModelImpl = (PowwowMeetingModelImpl)powwowMeeting;
@@ -3447,6 +3451,35 @@ public class PowwowMeetingPersistenceImpl extends BasePersistenceImpl<PowwowMeet
 		powwowMeeting.resetOriginalValues();
 
 		return powwowMeeting;
+	}
+
+	protected PowwowMeeting toUnwrappedModel(PowwowMeeting powwowMeeting) {
+		if (powwowMeeting instanceof PowwowMeetingImpl) {
+			return powwowMeeting;
+		}
+
+		PowwowMeetingImpl powwowMeetingImpl = new PowwowMeetingImpl();
+
+		powwowMeetingImpl.setNew(powwowMeeting.isNew());
+		powwowMeetingImpl.setPrimaryKey(powwowMeeting.getPrimaryKey());
+
+		powwowMeetingImpl.setPowwowMeetingId(powwowMeeting.getPowwowMeetingId());
+		powwowMeetingImpl.setGroupId(powwowMeeting.getGroupId());
+		powwowMeetingImpl.setCompanyId(powwowMeeting.getCompanyId());
+		powwowMeetingImpl.setUserId(powwowMeeting.getUserId());
+		powwowMeetingImpl.setUserName(powwowMeeting.getUserName());
+		powwowMeetingImpl.setCreateDate(powwowMeeting.getCreateDate());
+		powwowMeetingImpl.setModifiedDate(powwowMeeting.getModifiedDate());
+		powwowMeetingImpl.setPowwowServerId(powwowMeeting.getPowwowServerId());
+		powwowMeetingImpl.setName(powwowMeeting.getName());
+		powwowMeetingImpl.setDescription(powwowMeeting.getDescription());
+		powwowMeetingImpl.setProviderType(powwowMeeting.getProviderType());
+		powwowMeetingImpl.setProviderTypeMetadata(powwowMeeting.getProviderTypeMetadata());
+		powwowMeetingImpl.setLanguageId(powwowMeeting.getLanguageId());
+		powwowMeetingImpl.setCalendarBookingId(powwowMeeting.getCalendarBookingId());
+		powwowMeetingImpl.setStatus(powwowMeeting.getStatus());
+
+		return powwowMeetingImpl;
 	}
 
 	/**

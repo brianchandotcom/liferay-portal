@@ -3341,6 +3341,8 @@ public class DLFileEntryTypePersistenceImpl extends BasePersistenceImpl<DLFileEn
 
 	@Override
 	protected DLFileEntryType removeImpl(DLFileEntryType dlFileEntryType) {
+		dlFileEntryType = toUnwrappedModel(dlFileEntryType);
+
 		dlFileEntryTypeToDLFolderTableMapper.deleteLeftPrimaryKeyTableMappings(dlFileEntryType.getPrimaryKey());
 
 		Session session = null;
@@ -3373,6 +3375,8 @@ public class DLFileEntryTypePersistenceImpl extends BasePersistenceImpl<DLFileEn
 
 	@Override
 	public DLFileEntryType updateImpl(DLFileEntryType dlFileEntryType) {
+		dlFileEntryType = toUnwrappedModel(dlFileEntryType);
+
 		boolean isNew = dlFileEntryType.isNew();
 
 		DLFileEntryTypeModelImpl dlFileEntryTypeModelImpl = (DLFileEntryTypeModelImpl)dlFileEntryType;
@@ -3527,6 +3531,32 @@ public class DLFileEntryTypePersistenceImpl extends BasePersistenceImpl<DLFileEn
 		dlFileEntryType.resetOriginalValues();
 
 		return dlFileEntryType;
+	}
+
+	protected DLFileEntryType toUnwrappedModel(DLFileEntryType dlFileEntryType) {
+		if (dlFileEntryType instanceof DLFileEntryTypeImpl) {
+			return dlFileEntryType;
+		}
+
+		DLFileEntryTypeImpl dlFileEntryTypeImpl = new DLFileEntryTypeImpl();
+
+		dlFileEntryTypeImpl.setNew(dlFileEntryType.isNew());
+		dlFileEntryTypeImpl.setPrimaryKey(dlFileEntryType.getPrimaryKey());
+
+		dlFileEntryTypeImpl.setUuid(dlFileEntryType.getUuid());
+		dlFileEntryTypeImpl.setFileEntryTypeId(dlFileEntryType.getFileEntryTypeId());
+		dlFileEntryTypeImpl.setGroupId(dlFileEntryType.getGroupId());
+		dlFileEntryTypeImpl.setCompanyId(dlFileEntryType.getCompanyId());
+		dlFileEntryTypeImpl.setUserId(dlFileEntryType.getUserId());
+		dlFileEntryTypeImpl.setUserName(dlFileEntryType.getUserName());
+		dlFileEntryTypeImpl.setCreateDate(dlFileEntryType.getCreateDate());
+		dlFileEntryTypeImpl.setModifiedDate(dlFileEntryType.getModifiedDate());
+		dlFileEntryTypeImpl.setFileEntryTypeKey(dlFileEntryType.getFileEntryTypeKey());
+		dlFileEntryTypeImpl.setName(dlFileEntryType.getName());
+		dlFileEntryTypeImpl.setDescription(dlFileEntryType.getDescription());
+		dlFileEntryTypeImpl.setLastPublishDate(dlFileEntryType.getLastPublishDate());
+
+		return dlFileEntryTypeImpl;
 	}
 
 	/**

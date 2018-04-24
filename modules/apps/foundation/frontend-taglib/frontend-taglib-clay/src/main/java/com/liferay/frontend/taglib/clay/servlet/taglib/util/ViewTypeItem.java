@@ -14,20 +14,10 @@
 
 package com.liferay.frontend.taglib.clay.servlet.taglib.util;
 
-import javax.servlet.http.HttpServletRequest;
-
 /**
  * @author Carlos Lancha
  */
 public class ViewTypeItem extends NavigationItem {
-
-	public ViewTypeItem() {
-		this(null);
-	}
-
-	public ViewTypeItem(HttpServletRequest request) {
-		super(request);
-	}
 
 	public void setIcon(String icon) {
 		put("icon", icon);

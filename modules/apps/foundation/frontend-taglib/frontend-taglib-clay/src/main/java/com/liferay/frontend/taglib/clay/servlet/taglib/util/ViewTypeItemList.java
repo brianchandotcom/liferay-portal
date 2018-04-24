@@ -22,30 +22,23 @@ import java.util.function.Consumer;
 
 import javax.portlet.PortletURL;
 
-import javax.servlet.http.HttpServletRequest;
-
 /**
  * @author Carlos Lancha
  */
 public class ViewTypeItemList extends ArrayList<ViewTypeItem> {
 
 	public ViewTypeItemList() {
-		_request = null;
 		_portletURL = null;
 		_selectedType = null;
 	}
 
-	public ViewTypeItemList(
-		HttpServletRequest request, PortletURL portletURL,
-		String selectedType) {
-
-		_request = request;
+	public ViewTypeItemList(PortletURL portletURL, String selectedType) {
 		_portletURL = portletURL;
 		_selectedType = selectedType;
 	}
 
 	public void add(Consumer<ViewTypeItem> consumer) {
-		ViewTypeItem viewTypeItem = new ViewTypeItem(_request);
+		ViewTypeItem viewTypeItem = new ViewTypeItem();
 
 		consumer.accept(viewTypeItem);
 
@@ -53,7 +46,7 @@ public class ViewTypeItemList extends ArrayList<ViewTypeItem> {
 	}
 
 	public ViewTypeItem addCardViewTypeItem() {
-		ViewTypeItem viewTypeItem = new ViewTypeItem(_request);
+		ViewTypeItem viewTypeItem = new ViewTypeItem();
 
 		if (Validator.isNotNull(_selectedType)) {
 			viewTypeItem.setActive(Objects.equals(_selectedType, "icon"));
@@ -76,7 +69,7 @@ public class ViewTypeItemList extends ArrayList<ViewTypeItem> {
 	}
 
 	public ViewTypeItem addListViewTypeItem() {
-		ViewTypeItem viewTypeItem = new ViewTypeItem(_request);
+		ViewTypeItem viewTypeItem = new ViewTypeItem();
 
 		if (Validator.isNotNull(_selectedType)) {
 			viewTypeItem.setActive(
@@ -100,7 +93,7 @@ public class ViewTypeItemList extends ArrayList<ViewTypeItem> {
 	}
 
 	public ViewTypeItem addTableViewTypeItem() {
-		ViewTypeItem viewTypeItem = new ViewTypeItem(_request);
+		ViewTypeItem viewTypeItem = new ViewTypeItem();
 
 		if (Validator.isNotNull(_selectedType)) {
 			viewTypeItem.setActive(Objects.equals(_selectedType, "list"));
@@ -123,7 +116,6 @@ public class ViewTypeItemList extends ArrayList<ViewTypeItem> {
 	}
 
 	private final PortletURL _portletURL;
-	private final HttpServletRequest _request;
 	private final String _selectedType;
 
 }

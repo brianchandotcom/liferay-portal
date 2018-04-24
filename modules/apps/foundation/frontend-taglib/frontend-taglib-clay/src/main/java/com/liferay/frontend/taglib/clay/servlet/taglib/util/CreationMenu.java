@@ -14,14 +14,9 @@
 
 package com.liferay.frontend.taglib.clay.servlet.taglib.util;
 
-import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.util.Validator;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.function.Consumer;
-
-import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Carlos Lancha
@@ -29,16 +24,6 @@ import javax.servlet.http.HttpServletRequest;
 public class CreationMenu extends HashMap {
 
 	public CreationMenu() {
-		this(null);
-	}
-
-	public CreationMenu(HttpServletRequest request) {
-		_request = request;
-
-		_favoriteDropdownItems = new DropdownItemList(_request);
-		_primaryDropdownItems = new DropdownItemList(_request);
-		_restDropdownItems = new DropdownItemList(_request);
-
 		put("primaryItems", _primaryDropdownItems);
 	}
 
@@ -47,7 +32,7 @@ public class CreationMenu extends HashMap {
 	}
 
 	public void addFavoriteDropdownItem(Consumer<DropdownItem> consumer) {
-		DropdownItem dropdownItem = new DropdownItem(_request);
+		DropdownItem dropdownItem = new DropdownItem();
 
 		consumer.accept(dropdownItem);
 
@@ -57,7 +42,7 @@ public class CreationMenu extends HashMap {
 	}
 
 	public void addPrimaryDropdownItem(Consumer<DropdownItem> consumer) {
-		DropdownItem dropdownItem = new DropdownItem(_request);
+		DropdownItem dropdownItem = new DropdownItem();
 
 		consumer.accept(dropdownItem);
 
@@ -65,7 +50,7 @@ public class CreationMenu extends HashMap {
 	}
 
 	public void addRestDropdownItem(Consumer<DropdownItem> consumer) {
-		DropdownItem dropdownItem = new DropdownItem(_request);
+		DropdownItem dropdownItem = new DropdownItem();
 
 		consumer.accept(dropdownItem);
 
@@ -75,18 +60,10 @@ public class CreationMenu extends HashMap {
 	}
 
 	public void setCaption(String caption) {
-		if (Validator.isNotNull(_request)) {
-			caption = LanguageUtil.get(_request, caption);
-		}
-
 		put("caption", caption);
 	}
 
 	public void setHelpText(String helpText) {
-		if (Validator.isNotNull(_request)) {
-			helpText = LanguageUtil.get(_request, helpText);
-		}
-
 		put("helpText", helpText);
 	}
 
@@ -95,15 +72,13 @@ public class CreationMenu extends HashMap {
 	}
 
 	private List<DropdownItem> _buildSecondaryDropdownItems() {
-		DropdownItemList secondaryDropdownItemList = new DropdownItemList(
-			_request);
+		DropdownItemList secondaryDropdownItemList = new DropdownItemList();
 
 		if (!_favoriteDropdownItems.isEmpty()) {
 			secondaryDropdownItemList.addGroup(
 				dropdownGroupItem -> {
 					dropdownGroupItem.setDropdownItems(_favoriteDropdownItems);
-					dropdownGroupItem.setLabel(
-						LanguageUtil.get(_request, "favorites"));
+					dropdownGroupItem.setLabel("favorites");
 
 					if (!_restDropdownItems.isEmpty()) {
 						dropdownGroupItem.setSeparator(true);
@@ -121,9 +96,11 @@ public class CreationMenu extends HashMap {
 		return secondaryDropdownItemList;
 	}
 
-	private final List<DropdownItem> _favoriteDropdownItems;
-	private final List<DropdownItem> _primaryDropdownItems;
-	private final HttpServletRequest _request;
-	private final List<DropdownItem> _restDropdownItems;
+	private final List<DropdownItem> _favoriteDropdownItems =
+		new DropdownItemList();
+	private final List<DropdownItem> _primaryDropdownItems =
+		new DropdownItemList();
+	private final List<DropdownItem> _restDropdownItems =
+		new DropdownItemList();
 
 }

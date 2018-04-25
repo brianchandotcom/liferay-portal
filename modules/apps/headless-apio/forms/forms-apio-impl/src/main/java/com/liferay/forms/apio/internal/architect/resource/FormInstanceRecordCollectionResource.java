@@ -27,7 +27,6 @@ import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceRecordService;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceService;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
-import com.liferay.dynamic.data.mapping.validator.DDMFormValuesValidationException;
 import com.liferay.forms.apio.architect.identifier.FormInstanceIdentifier;
 import com.liferay.forms.apio.architect.identifier.FormInstanceRecordIdentifier;
 import com.liferay.forms.apio.internal.architect.FormInstanceRecordServiceContext;
@@ -39,7 +38,6 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.List;
 
-import javax.ws.rs.BadRequestException;
 import javax.ws.rs.InternalServerErrorException;
 
 import org.osgi.service.component.annotations.Component;
@@ -125,38 +123,31 @@ public class FormInstanceRecordCollectionResource
 	}
 
 	private DDMFormInstanceRecord _addFormInstanceRecord(
-		Long formInstanceId, FormInstanceRecordForm formInstanceRecordForm,
-		Language language,
-		FormInstanceRecordServiceContext formInstanceRecordServiceContext) {
+			Long formInstanceId, FormInstanceRecordForm formInstanceRecordForm,
+			Language language,
+			FormInstanceRecordServiceContext formInstanceRecordServiceContext)
+		throws PortalException {
 
-		try {
-			DDMFormInstance ddmFormInstance =
-				_ddmFormInstanceService.getFormInstance(formInstanceId);
+		DDMFormInstance ddmFormInstance =
+			_ddmFormInstanceService.getFormInstance(formInstanceId);
 
-			DDMStructure ddmStructure = ddmFormInstance.getStructure();
+		DDMStructure ddmStructure = ddmFormInstance.getStructure();
 
-			DDMFormValues ddmFormValues =
-				FormInstanceRecordResourceHelper.getDDMFormValues(
-					formInstanceRecordForm.getFieldValues(),
-					ddmStructure.getDDMForm(), language.getPreferredLocale());
+		DDMFormValues ddmFormValues =
+			FormInstanceRecordResourceHelper.getDDMFormValues(
+				formInstanceRecordForm.getFieldValues(),
+				ddmStructure.getDDMForm(), language.getPreferredLocale());
 
-			ServiceContext serviceContext =
-				formInstanceRecordServiceContext.getServiceContext();
+		ServiceContext serviceContext =
+			formInstanceRecordServiceContext.getServiceContext();
 
-			_setServiceContextAttributes(
-				serviceContext, formInstanceRecordForm.isDraft());
+		_setServiceContextAttributes(
+			serviceContext, formInstanceRecordForm.isDraft());
 
-			return _ddmFormInstanceRecordService.addFormInstanceRecord(
-				ddmFormInstance.getGroupId(),
-				ddmFormInstance.getFormInstanceId(), ddmFormValues,
-				formInstanceRecordServiceContext.getServiceContext());
-		}
-		catch (DDMFormValuesValidationException ddmfvve) {
-			throw new BadRequestException(ddmfvve.getMessage(), ddmfvve);
-		}
-		catch (PortalException pe) {
-			throw new InternalServerErrorException(pe.getMessage(), pe);
-		}
+		return _ddmFormInstanceRecordService.addFormInstanceRecord(
+			ddmFormInstance.getGroupId(), ddmFormInstance.getFormInstanceId(),
+			ddmFormValues,
+			formInstanceRecordServiceContext.getServiceContext());
 	}
 
 	private PageItems<DDMFormInstanceRecord> _getPageItems(
@@ -196,40 +187,33 @@ public class FormInstanceRecordCollectionResource
 	}
 
 	private DDMFormInstanceRecord _updateFormInstanceRecord(
-		Long formInstanceRecordId,
-		FormInstanceRecordForm formInstanceRecordForm, Language language,
-		FormInstanceRecordServiceContext formInstanceRecordServiceContext) {
+			Long formInstanceRecordId,
+			FormInstanceRecordForm formInstanceRecordForm, Language language,
+			FormInstanceRecordServiceContext formInstanceRecordServiceContext)
+		throws PortalException {
 
-		try {
-			DDMFormInstanceRecord ddmFormInstanceRecord =
-				_ddmFormInstanceRecordService.getFormInstanceRecord(
-					formInstanceRecordId);
+		DDMFormInstanceRecord ddmFormInstanceRecord =
+			_ddmFormInstanceRecordService.getFormInstanceRecord(
+				formInstanceRecordId);
 
-			DDMFormInstance ddmFormInstance =
-				ddmFormInstanceRecord.getFormInstance();
+		DDMFormInstance ddmFormInstance =
+			ddmFormInstanceRecord.getFormInstance();
 
-			DDMStructure ddmStructure = ddmFormInstance.getStructure();
+		DDMStructure ddmStructure = ddmFormInstance.getStructure();
 
-			DDMFormValues ddmFormValues =
-				FormInstanceRecordResourceHelper.getDDMFormValues(
-					formInstanceRecordForm.getFieldValues(),
-					ddmStructure.getDDMForm(), language.getPreferredLocale());
+		DDMFormValues ddmFormValues =
+			FormInstanceRecordResourceHelper.getDDMFormValues(
+				formInstanceRecordForm.getFieldValues(),
+				ddmStructure.getDDMForm(), language.getPreferredLocale());
 
-			ServiceContext serviceContext =
-				formInstanceRecordServiceContext.getServiceContext();
+		ServiceContext serviceContext =
+			formInstanceRecordServiceContext.getServiceContext();
 
-			_setServiceContextAttributes(
-				serviceContext, formInstanceRecordForm.isDraft());
+		_setServiceContextAttributes(
+			serviceContext, formInstanceRecordForm.isDraft());
 
-			return _ddmFormInstanceRecordService.updateFormInstanceRecord(
-				formInstanceRecordId, false, ddmFormValues, serviceContext);
-		}
-		catch (DDMFormValuesValidationException ddmfvve) {
-			throw new BadRequestException(ddmfvve.getMessage(), ddmfvve);
-		}
-		catch (PortalException pe) {
-			throw new InternalServerErrorException(pe.getMessage(), pe);
-		}
+		return _ddmFormInstanceRecordService.updateFormInstanceRecord(
+			formInstanceRecordId, false, ddmFormValues, serviceContext);
 	}
 
 	@Reference

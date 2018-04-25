@@ -139,8 +139,12 @@ public class EventUtil
 				sb.append("\" has the same Web-ContextPath as the following ");
 				sb.append("bundles: ");
 				sb.append(collidedBundleNames);
-				sb.append(". This can lead to unexpected behavior when the ");
-				sb.append("bundles are deployed to the same layout");
+				sb.append(
+					". This can lead to unexpected behavior when multiple ");
+				sb.append("bundles provide the same context path. See ");
+				sb.append("https://osgi.org/specification/osgi.cmpn");
+				sb.append("/7.0.0/service.http.whiteboard.html");
+				sb.append("#service.http.whiteboard.servletcontext");
 
 				_logger.log(Logger.LOG_ERROR, sb.toString());
 			}

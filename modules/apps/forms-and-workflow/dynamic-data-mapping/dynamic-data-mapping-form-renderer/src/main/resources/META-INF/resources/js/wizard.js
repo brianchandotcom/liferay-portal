@@ -234,7 +234,11 @@ AUI.add(
 
 						var contentBox = instance.get('contentBox');
 
-						contentBox.one('li:last-child').removeClass('multi-step-item-expand');
+						var lastChild = contentBox.one('li:last-child');
+
+						if (lastChild) {
+							lastChild.removeClass('multi-step-item-expand');
+						}
 					},
 
 					_valueItemsNodeList: function() {

@@ -76,17 +76,19 @@ AUI.add(
 
 						var items = instance.get('items');
 
-						if (items[index]) {
-							items[index].state = state;
+						if (items.length > 0) {
+							if (items[index]) {
+								items[index].state = state;
 
-							instance._activeSuccessPage = false;
+								instance._activeSuccessPage = false;
 
-							instance.set('items', items);
-						}
-						else {
-							instance._activeSuccessPage = true;
+								instance.set('items', items);
+							}
+							else {
+								instance._activeSuccessPage = true;
 
-							instance.set('items', items);
+								instance.set('items', items);
+							}
 						}
 					}
 				}

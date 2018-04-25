@@ -14,7 +14,6 @@
 
 package com.liferay.layout.admin.web.internal.display.context;
 
-import com.liferay.exportimport.kernel.staging.LayoutStagingUtil;
 import com.liferay.exportimport.kernel.staging.StagingUtil;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemList;
@@ -38,7 +37,6 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
-import com.liferay.portal.kernel.model.LayoutRevision;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -175,25 +173,6 @@ public class LayoutsAdminDisplayContext {
 		return configureLayoutURL.toString();
 	}
 
-	public String getCopyApplicationsURL(Layout layout) {
-		PortletURL copyApplicationsURL =
-			_liferayPortletResponse.createRenderURL();
-
-		copyApplicationsURL.setParameter("mvcPath", "/copy_applications.jsp");
-		copyApplicationsURL.setParameter(
-			"redirect", _themeDisplay.getURLCurrent());
-		copyApplicationsURL.setParameter(
-			"backURL", _themeDisplay.getURLCurrent());
-		copyApplicationsURL.setParameter(
-			"groupId", String.valueOf(layout.getGroupId()));
-		copyApplicationsURL.setParameter(
-			"selPlid", String.valueOf(layout.getPlid()));
-		copyApplicationsURL.setParameter(
-			"privateLayout", String.valueOf(layout.isPrivateLayout()));
-
-		return copyApplicationsURL.toString();
-	}
-
 	public String getCopyLayoutURL(Layout layout) {
 		PortletURL copyLayoutURL = _liferayPortletResponse.createActionURL();
 
@@ -237,27 +216,6 @@ public class LayoutsAdminDisplayContext {
 			LayoutAdminPortletKeys.GROUP_PAGES, "display-style", "list");
 
 		return _displayStyle;
-	}
-
-	public String getViewLayoutURL(Layout layout) throws PortalException {
-		if (!Objects.equals(layout.getType(), "content")) {
-			return PortalUtil.getLayoutFullURL(layout, _themeDisplay);
-		}
-
-		PortletURL editLayoutURL = _liferayPortletResponse.createRenderURL();
-
-		editLayoutURL.setParameter("mvcPath", "/edit_content_layout.jsp");
-		editLayoutURL.setParameter("backURL", _themeDisplay.getURLCurrent());
-
-		PortletDisplay portletDisplay = _themeDisplay.getPortletDisplay();
-
-		editLayoutURL.setParameter("portletResource", portletDisplay.getId());
-
-		editLayoutURL.setParameter(
-			"groupId", String.valueOf(layout.getGroupId()));
-		editLayoutURL.setParameter("selPlid", String.valueOf(layout.getPlid()));
-
-		return editLayoutURL.toString();
 	}
 
 	public long getFirstLayoutPageTemplateCollectionId()
@@ -712,6 +670,27 @@ public class LayoutsAdminDisplayContext {
 		return _tabs1;
 	}
 
+	public String getViewLayoutURL(Layout layout) throws PortalException {
+		if (!Objects.equals(layout.getType(), "content")) {
+			return PortalUtil.getLayoutFullURL(layout, _themeDisplay);
+		}
+
+		PortletURL editLayoutURL = _liferayPortletResponse.createRenderURL();
+
+		editLayoutURL.setParameter("mvcPath", "/edit_content_layout.jsp");
+		editLayoutURL.setParameter("backURL", _themeDisplay.getURLCurrent());
+
+		PortletDisplay portletDisplay = _themeDisplay.getPortletDisplay();
+
+		editLayoutURL.setParameter("portletResource", portletDisplay.getId());
+
+		editLayoutURL.setParameter(
+			"groupId", String.valueOf(layout.getGroupId()));
+		editLayoutURL.setParameter("selPlid", String.valueOf(layout.getPlid()));
+
+		return editLayoutURL.toString();
+	}
+
 	public boolean isMillerColumnsEnabled() {
 		if (_millerColumnsEnabled != null) {
 			return _millerColumnsEnabled;
@@ -823,38 +802,6 @@ public class LayoutsAdminDisplayContext {
 			_themeDisplay.getPermissionChecker(), layout, ActionKeys.UPDATE);
 	}
 
-	public boolean showCopyApplicationsAction(Layout layout)
-		throws PortalException {
-
-		// Check if layout is incomplete
-
-		LayoutRevision layoutRevision = LayoutStagingUtil.getLayoutRevision(
-			layout);
-
-		boolean incomplete = false;
-
-		if (layoutRevision != null) {
-			long layoutSetBranchId = layoutRevision.getLayoutSetBranchId();
-
-			incomplete = StagingUtil.isIncomplete(layout, layoutSetBranchId);
-		}
-
-		if (incomplete) {
-			return false;
-		}
-
-		// Check if layout is a layout prototype
-
-		Group group = layout.getGroup();
-
-		if (group.isLayoutPrototype()) {
-			return false;
-		}
-
-		return LayoutPermissionUtil.contains(
-			_themeDisplay.getPermissionChecker(), layout, ActionKeys.UPDATE);
-	}
-
 	public boolean showCopyLayoutAction(Layout layout) throws PortalException {
 		if (!isShowAddRootLayoutButton()) {
 			return false;
@@ -950,11 +897,6 @@ public class LayoutsAdminDisplayContext {
 
 		if (showCopyLayoutAction(layout)) {
 			jsonObject.put("copyLayoutURL", getCopyLayoutURL(layout));
-		}
-
-		if (showCopyApplicationsAction(layout)) {
-			jsonObject.put(
-				"copyApplicationsURL", getCopyApplicationsURL(layout));
 		}
 
 		if (showDeleteAction(layout)) {

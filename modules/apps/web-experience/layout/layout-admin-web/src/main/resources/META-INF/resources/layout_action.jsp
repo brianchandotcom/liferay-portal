@@ -65,13 +65,6 @@ Layout curLayout = (Layout)row.getObject();
 		/>
 	</c:if>
 
-	<c:if test="<%= layoutsAdminDisplayContext.showCopyApplicationsAction(curLayout) %>">
-		<liferay-ui:icon
-			message="copy-applications"
-			url="<%= layoutsAdminDisplayContext.getCopyApplicationsURL(curLayout) %>"
-		/>
-	</c:if>
-
 	<c:if test="<%= layoutsAdminDisplayContext.showOrphanPortletsAction(curLayout) %>">
 		<liferay-ui:icon
 			message="orphan-portlets"

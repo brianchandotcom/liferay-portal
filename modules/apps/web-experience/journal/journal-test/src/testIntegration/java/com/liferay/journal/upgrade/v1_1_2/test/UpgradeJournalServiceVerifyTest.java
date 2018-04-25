@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.journal.verify.test;
+package com.liferay.journal.upgrade.v1_1_2.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.journal.model.JournalArticle;
@@ -40,7 +40,7 @@ import org.junit.runner.RunWith;
  * @author Manuel de la Peña
  */
 @RunWith(Arquillian.class)
-public class JournalServiceVerifyProcessTest {
+public class UpgradeJournalServiceVerifyTest {
 
 	@ClassRule
 	@Rule

@@ -1333,13 +1333,6 @@ this task.
 		<replace
 			file="${app.server.jboss.dir}/standalone/configuration/standalone.xml"
 		>
-			<replacetoken><![CDATA[enable-welcome-root="true"]]></replacetoken>
-			<replacevalue><![CDATA[enable-welcome-root="false"]]></replacevalue>
-		</replace>
-
-		<replace
-			file="${app.server.jboss.dir}/standalone/configuration/standalone.xml"
-		>
 			<replacetoken><![CDATA[</extensions>]]></replacetoken>
 			<replacevalue>
 				<![CDATA[
@@ -1357,22 +1350,6 @@ this task.
 		>
 			<replacetoken><![CDATA[<deployment-scanner ]]></replacetoken>
 			<replacevalue><![CDATA[<deployment-scanner deployment-timeout="360" ]]></replacevalue>
-		</replace>
-
-		<replace
-			file="${app.server.jboss.dir}/standalone/configuration/standalone.xml"
-		>
-			<replacetoken><![CDATA[<security-domains>]]></replacetoken>
-			<replacevalue>
-				<![CDATA[
-					<security-domains>
-						<security-domain name="PortalRealm">
-							<authentication>
-								<login-module code="com.liferay.portal.security.jaas.PortalLoginModule" flag="required" />
-							</authentication>
-						</security-domain>
-				]]>
-			</replacevalue>
 		</replace>
 
 		<replace-multilines
@@ -1414,9 +1391,32 @@ this task.
 				</replace>
 
 				<echo append="true" file="${app.server.jboss.bin.dir}/standalone.conf">${line.separator}<![CDATA[JAVA_OPTS="$JAVA_OPTS -Dfile.encoding=UTF-8 -Djava.net.preferIPv4Stack=true ${java.security.config} -Djboss.as.management.blocking.timeout=480 -Duser.timezone=GMT -Xmx1024m -XX:MaxMetaspaceSize=512m"]]></echo>
+
+				<replace
+					file="${app.server.jboss.dir}/standalone/configuration/standalone.xml"
+				>
+					<replacetoken><![CDATA[<security-domains>]]></replacetoken>
+					<replacevalue>
+						<![CDATA[
+							<security-domains>
+								<security-domain name="PortalRealm">
+									<authentication>
+										<login-module code="com.liferay.portal.security.jaas.PortalLoginModule" flag="required" />
+									</authentication>
+								</security-domain>
+						]]>
+					</replacevalue>
+				</replace>
+
+				<replace
+					file="${app.server.jboss.dir}/standalone/configuration/standalone.xml"
+				>
+					<replacetoken><![CDATA[enable-welcome-root="true"]]></replacetoken>
+					<replacevalue><![CDATA[enable-welcome-root="false"]]></replacevalue>
+				</replace>
 			</then>
 			<elseif>
-				<equals arg1="${app.server.jboss.version}" arg2="7.0.0" />
+				<equals arg1="${app.server.jboss.version}" arg2="7.1.0" />
 				<then>
 					<replace
 						file="${app.server.jboss.bin.dir}/standalone.conf"
@@ -1426,6 +1426,35 @@ this task.
 					</replace>
 
 					<echo append="true" file="${app.server.jboss.bin.dir}/standalone.conf">${line.separator}<![CDATA[JAVA_OPTS="$JAVA_OPTS -Dfile.encoding=UTF-8 -Djava.net.preferIPv4Stack=true ${java.security.config} -Djboss.as.management.blocking.timeout=480 -Duser.timezone=GMT -Xmx1024m -XX:MaxMetaspaceSize=512m"]]></echo>
+
+					<replace
+						file="${app.server.jboss.dir}/standalone/configuration/standalone.xml"
+					>
+						<replacetoken><![CDATA[ <subsystem xmlns="urn:jboss:domain:security:2.0">
+			            <security-domains>]]></replacetoken>
+						<replacevalue><![CDATA[ <subsystem xmlns="urn:jboss:domain:security:2.0">
+			            <security-domains>
+							<security-domain name="PortalRealm">
+								<authentication>
+									<login-module code="com.liferay.portal.security.jaas.PortalLoginModule" flag="required" />
+								</authentication>
+							</security-domain>]]>
+						</replacevalue>
+					</replace>
+
+					<replace
+						file="${app.server.jboss.dir}/standalone/configuration/standalone.xml"
+					>
+						<replacetoken><![CDATA[<location name="/" handler="welcome-content"/>]]></replacetoken>
+						<replacevalue><![CDATA[<!--<location name="/" handler="welcome-content"/>-->]]></replacevalue>
+					</replace>
+
+					<replace
+						file="${app.server.jboss.dir}/standalone/configuration/standalone.xml"
+					>
+						<replacetoken><![CDATA[<file name="welcome-content" path="${jboss.home.dir}/welcome-content"/>]]></replacetoken>
+						<replacevalue><![CDATA[<!--<file name="welcome-content" path="${jboss.home.dir}/welcome-content"/>-->]]></replacevalue>
+					</replace>
 				</then>
 			</elseif>
 		</if>

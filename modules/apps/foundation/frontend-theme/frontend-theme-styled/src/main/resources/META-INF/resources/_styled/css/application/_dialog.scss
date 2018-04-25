@@ -138,6 +138,12 @@
 }
 
 .dialog-with-footer {
+	#main-content, #wrapper {
+		@include md {
+			height: calc(100% - #{$dialog-footer-height});
+		}
+	}
+
 	.button-holder, .sheet-footer {
 		&.dialog-footer {
 			background-color: $dialog-footer-bg;

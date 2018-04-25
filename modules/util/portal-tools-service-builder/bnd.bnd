@@ -23,7 +23,6 @@ Main-Class: com.liferay.portal.tools.service.builder.ServiceBuilder
 	@com.liferay.petra.xml-[0-9]*.jar!/com/liferay/petra/xml/XMLUtil.class,\
 	@com.liferay.portal.impl-[0-9]*.jar!/com/liferay/counter/service.xml,\
 	@com.liferay.portal.impl-[0-9]*.jar!/com/liferay/mail/service.xml,\
-	@com.liferay.portal.impl-[0-9]*.jar!/com/liferay/portal/freemarker/FreeMarkerUtil.class,\
 	@com.liferay.portal.impl-[0-9]*.jar!/com/liferay/portal/model/BaseModelHintsImpl.class,\
 	@com.liferay.portal.impl-[0-9]*.jar!/com/liferay/portal/service.xml,\
 	@com.liferay.portal.impl-[0-9]*.jar!/com/liferay/portal/tools/ArgumentsMap.class,\

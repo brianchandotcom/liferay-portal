@@ -13,8 +13,8 @@
 ##
 
     build.namespace=${portletShortName}
-    build.number=${buildNumber?c}
-    build.date=${currentTimeMillis?c}<#if !osgiModule>
+    build.number=${buildNumber}
+    build.date=${currentTimeMillis}<#if !osgiModule>
 
 ##
 ## Spring

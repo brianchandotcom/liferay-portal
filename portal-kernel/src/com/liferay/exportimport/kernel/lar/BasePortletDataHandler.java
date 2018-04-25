@@ -867,11 +867,9 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 			pde.setPortletId(portletId);
 		}
 
-		if (pde.getType() != PortletDataException.DEFAULT) {
-			return pde;
+		if (pde.getType() == PortletDataException.DEFAULT) {
+			pde.setType(type);
 		}
-
-		pde.setType(type);
 
 		return pde;
 	}

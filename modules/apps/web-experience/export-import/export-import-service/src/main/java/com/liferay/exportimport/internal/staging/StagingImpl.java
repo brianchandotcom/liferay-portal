@@ -31,6 +31,7 @@ import com.liferay.document.library.kernel.util.DLValidator;
 import com.liferay.exportimport.kernel.background.task.BackgroundTaskExecutorNames;
 import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationParameterMapFactory;
 import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationSettingsMapFactory;
+import com.liferay.exportimport.kernel.exception.ExportImportContentProcessorException;
 import com.liferay.exportimport.kernel.exception.ExportImportContentValidationException;
 import com.liferay.exportimport.kernel.exception.ExportImportDocumentException;
 import com.liferay.exportimport.kernel.exception.ExportImportIOException;
@@ -691,13 +692,52 @@ public class StagingImpl implements Staging {
 				locale, "please-enter-a-unique-document-name");
 			errorType = ServletResponseConstants.SC_DUPLICATE_FILE_EXCEPTION;
 		}
+		else if (e instanceof ExportImportContentProcessorException) {
+			ExportImportContentProcessorException eicpe =
+				(ExportImportContentProcessorException)e;
+
+			if (eicpe.getType() ==
+					ExportImportContentProcessorException.ARTICLE_NOT_FOUND) {
+
+				if (Validator.isNotNull(eicpe.getStagedModelClassName())) {
+					errorMessage = LanguageUtil.format(
+						resourceBundle,
+						"unable-to-process-referenced-article-because-it-" +
+							"cannot-be-found-with-key-x",
+						String.valueOf(eicpe.getStagedModelClassPK()));
+				}
+				else {
+					errorMessage = LanguageUtil.get(
+						resourceBundle,
+						"unable-to-process-referenced-article-because-it-" +
+							"cannot-be-found");
+				}
+			}
+
+			errorType = ServletResponseConstants.SC_FILE_CUSTOM_EXCEPTION;
+		}
 		else if (e instanceof ExportImportContentValidationException) {
 			ExportImportContentValidationException eicve =
 				(ExportImportContentValidationException)e;
 
 			if (eicve.getType() ==
-					ExportImportContentValidationException.
-						FILE_ENTRY_NOT_FOUND) {
+					ExportImportContentValidationException.ARTICLE_NOT_FOUND) {
+
+				if ((cause != null) && (cause.getLocalizedMessage() != null)) {
+					errorMessage = LanguageUtil.format(
+						resourceBundle,
+						"unable-to-validate-referenced-journal-article-x",
+						cause.getLocalizedMessage());
+				}
+				else {
+					errorMessage = LanguageUtil.get(
+						resourceBundle,
+						"unable-to-validate-referenced-journal-article");
+				}
+			}
+			else if (eicve.getType() ==
+						ExportImportContentValidationException.
+							FILE_ENTRY_NOT_FOUND) {
 
 				if (Validator.isNotNull(eicve.getStagedModelClassName())) {
 					errorMessage = LanguageUtil.format(
@@ -1337,6 +1377,48 @@ public class StagingImpl implements Staging {
 				}
 			}
 			else if (pde.getType() ==
+						PortletDataException.EXPORT_PORTLET_PERMISSIONS) {
+
+				errorMessage = LanguageUtil.format(
+					resourceBundle,
+					"unable-to-export-portlet-permissions-for-x-while-" +
+						"processing-portlet-preferences-during-export",
+					pde.getPortletId());
+			}
+			else if (pde.getType() ==
+						PortletDataException.EXPORT_REFERENCED_TEMPLATE) {
+
+				errorMessage = LanguageUtil.format(
+					resourceBundle,
+					"unable-to-export-referenced-article-template-for-x-" +
+						"while-processing-portlet-preferences-during-export",
+					pde.getPortletId());
+			}
+			else if (pde.getType() ==
+						PortletDataException.EXPORT_STAGED_MODEL) {
+
+				String localizedMessage = pde.getLocalizedMessage();
+
+				if ((pde.getCause() instanceof ExportImportRuntimeException) &&
+					Validator.isNull(pde.getMessage())) {
+
+					ExportImportRuntimeException eire =
+						(ExportImportRuntimeException)pde.getCause();
+
+					localizedMessage = LanguageUtil.format(
+						resourceBundle, eire.getMessageKey(), eire.getData());
+				}
+
+				errorMessage = LanguageUtil.format(
+					resourceBundle,
+					"the-x-x-could-not-be-exported-because-of-the-following-" +
+						"error-x",
+					new String[] {
+						modelResource, referrerDisplayName, localizedMessage
+					},
+					false);
+			}
+			else if (pde.getType() ==
 						PortletDataException.IMPORT_DATA_GROUP_ELEMENT) {
 
 				errorMessage = LanguageUtil.format(
@@ -1370,6 +1452,28 @@ public class StagingImpl implements Staging {
 						},
 						false);
 				}
+			}
+			else if (pde.getType() ==
+						PortletDataException.IMPORT_PORTLET_PERMISSIONS) {
+
+				errorMessage = LanguageUtil.format(
+					resourceBundle,
+					"unable-to-import-portlet-permissions-for-x-while-" +
+						"processing-portlet-preferences-during-import",
+					pde.getPortletId());
+			}
+			else if (pde.getType() ==
+						PortletDataException.IMPORT_STAGED_MODEL) {
+
+				errorMessage = LanguageUtil.format(
+					resourceBundle,
+					"the-x-x-could-not-be-imported-because-of-the-following-" +
+						"error-x",
+					new String[] {
+						modelResource, referrerDisplayName,
+						pde.getLocalizedMessage()
+					},
+					false);
 			}
 			else if (pde.getType() == PortletDataException.INVALID_GROUP) {
 				errorMessage = LanguageUtil.format(
@@ -1423,6 +1527,24 @@ public class StagingImpl implements Staging {
 					"the-x-x-could-not-be-exported-because-its-workflow-" +
 						"status-is-not-exportable",
 					new String[] {modelResource, referrerDisplayName}, false);
+			}
+			else if (pde.getType() ==
+						PortletDataException.
+							UPDATE_JOURNAL_CONTENT_SEARCH_DATA) {
+
+				errorMessage = LanguageUtil.format(
+					resourceBundle,
+					"unable-to-update-journal-content-search-data-for-x-" +
+						"while-processing-portlet-preferences-during-import",
+					pde.getPortletId());
+			}
+			else if (pde.getType() ==
+						PortletDataException.UPDATE_PORTLET_PREFERENCES) {
+
+				errorMessage = LanguageUtil.format(
+					resourceBundle,
+					"unable-to-update-portlet-preferences-for-x-during-import",
+					pde.getPortletId());
 			}
 			else if (Validator.isNotNull(referrerDisplayName)) {
 				errorMessage = LanguageUtil.format(

@@ -20,6 +20,7 @@ import com.liferay.exportimport.kernel.lar.ExportImportPathUtil;
 import com.liferay.exportimport.kernel.lar.ExportImportProcessCallbackRegistry;
 import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
+import com.liferay.exportimport.kernel.lar.PortletDataException;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
@@ -345,8 +346,9 @@ public class StagedLayoutSetStagedModelDataHandler
 	}
 
 	protected void exportLayouts(
-		PortletDataContext portletDataContext,
-		StagedLayoutSet stagedLayoutSet) {
+			PortletDataContext portletDataContext,
+			StagedLayoutSet stagedLayoutSet)
+		throws PortletDataException {
 
 		// Force to always export layout deletions
 
@@ -389,6 +391,8 @@ public class StagedLayoutSetStagedModelDataHandler
 				if (_log.isWarnEnabled()) {
 					_log.warn("Unable to export layout " + layout.getName(), e);
 				}
+
+				throw e;
 			}
 		}
 	}

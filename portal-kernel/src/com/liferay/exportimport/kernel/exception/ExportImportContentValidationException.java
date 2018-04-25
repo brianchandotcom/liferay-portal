@@ -26,6 +26,8 @@ import java.util.Map;
 @ProviderType
 public class ExportImportContentValidationException extends PortalException {
 
+	public static final int ARTICLE_NOT_FOUND = 6;
+
 	public static final int DEFAULT = 1;
 
 	public static final int FILE_ENTRY_NOT_FOUND = 5;

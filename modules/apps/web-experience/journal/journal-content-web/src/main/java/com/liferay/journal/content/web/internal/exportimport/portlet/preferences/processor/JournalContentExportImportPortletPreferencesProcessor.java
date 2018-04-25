@@ -100,8 +100,12 @@ public class JournalContentExportImportPortletPreferencesProcessor
 				JournalConstants.RESOURCE_NAME);
 		}
 		catch (PortalException pe) {
-			throw new PortletDataException(
-				"Unable to export portlet permissions", pe);
+			PortletDataException pde = new PortletDataException(pe);
+
+			pde.setPortletId(JournalContentPortletKeys.JOURNAL_CONTENT);
+			pde.setType(PortletDataException.EXPORT_PORTLET_PERMISSIONS);
+
+			throw pde;
 		}
 
 		String articleId = portletPreferences.getValue("articleId", null);
@@ -227,8 +231,12 @@ public class JournalContentExportImportPortletPreferencesProcessor
 					PortletDataContext.REFERENCE_TYPE_STRONG);
 			}
 			catch (PortalException | ReadOnlyException e) {
-				throw new PortletDataException(
-					"Unable to export referenced article template", e);
+				PortletDataException pde = new PortletDataException(e);
+
+				pde.setPortletId(JournalContentPortletKeys.JOURNAL_CONTENT);
+				pde.setType(PortletDataException.EXPORT_REFERENCED_TEMPLATE);
+
+				throw pde;
 			}
 		}
 
@@ -248,8 +256,12 @@ public class JournalContentExportImportPortletPreferencesProcessor
 				JournalConstants.RESOURCE_NAME);
 		}
 		catch (PortalException pe) {
-			throw new PortletDataException(
-				"Unable to import portlet permissions", pe);
+			PortletDataException pde = new PortletDataException(pe);
+
+			pde.setPortletId(JournalContentPortletKeys.JOURNAL_CONTENT);
+			pde.setType(PortletDataException.IMPORT_PORTLET_PERMISSIONS);
+
+			throw pde;
 		}
 
 		long previousScopeGroupId = portletDataContext.getScopeGroupId();
@@ -339,13 +351,21 @@ public class JournalContentExportImportPortletPreferencesProcessor
 			}
 		}
 		catch (PortalException pe) {
-			throw new PortletDataException(
-				"Unable to update journal content search data during import",
-				pe);
+			PortletDataException pde = new PortletDataException(pe);
+
+			pde.setPortletId(JournalContentPortletKeys.JOURNAL_CONTENT);
+			pde.setType(
+				PortletDataException.UPDATE_JOURNAL_CONTENT_SEARCH_DATA);
+
+			throw pde;
 		}
 		catch (ReadOnlyException roe) {
-			throw new PortletDataException(
-				"Unable to update portlet preferences during import", roe);
+			PortletDataException pde = new PortletDataException(roe);
+
+			pde.setPortletId(JournalContentPortletKeys.JOURNAL_CONTENT);
+			pde.setType(PortletDataException.UPDATE_PORTLET_PREFERENCES);
+
+			throw pde;
 		}
 
 		portletDataContext.setScopeGroupId(previousScopeGroupId);

@@ -32,11 +32,17 @@ public class PortletDataException extends PortalException {
 
 	public static final int DELETE_PORTLET_DATA = 10;
 
-	public static final int END_DATE_IS_MISSING_START_DATE = 1;
+	public static final int END_DATE_IS_MISSING_START_DATE = 17;
 
 	public static final int EXPORT_DATA_GROUP_ELEMENT = 15;
 
 	public static final int EXPORT_PORTLET_DATA = 11;
+
+	public static final int EXPORT_PORTLET_PERMISSIONS = 18;
+
+	public static final int EXPORT_REFERENCED_TEMPLATE = 19;
+
+	public static final int EXPORT_STAGED_MODEL = 23;
 
 	public static final int FUTURE_END_DATE = 2;
 
@@ -45,6 +51,10 @@ public class PortletDataException extends PortalException {
 	public static final int IMPORT_DATA_GROUP_ELEMENT = 16;
 
 	public static final int IMPORT_PORTLET_DATA = 12;
+
+	public static final int IMPORT_PORTLET_PERMISSIONS = 20;
+
+	public static final int IMPORT_STAGED_MODEL = 24;
 
 	public static final int INVALID_GROUP = 4;
 
@@ -59,6 +69,10 @@ public class PortletDataException extends PortalException {
 	public static final int STATUS_IN_TRASH = 8;
 
 	public static final int STATUS_UNAVAILABLE = 9;
+
+	public static final int UPDATE_JOURNAL_CONTENT_SEARCH_DATA = 21;
+
+	public static final int UPDATE_PORTLET_PREFERENCES = 22;
 
 	public PortletDataException() {
 	}

@@ -48,14 +48,14 @@ public class LiferayTokenIntrospectionServiceRegistrator {
 			properties, "oauth2.allow.token.introspection.endpoint", true);
 
 		if (enabled) {
-			boolean publicClientsEnabled = MapUtil.getBoolean(
+			boolean canSupportPublicClients = MapUtil.getBoolean(
 				properties,
 				"oauth2.allow.token.introspection.endpoint.public.clients",
 				true);
 
 			LiferayTokenIntrospectionService liferayTokenIntrospectionService =
 				new LiferayTokenIntrospectionService(
-					_liferayOAuthDataProvider, publicClientsEnabled);
+					_liferayOAuthDataProvider, canSupportPublicClients);
 
 			Hashtable<String, Object> endpointProperties = new Hashtable<>();
 

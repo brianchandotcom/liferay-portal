@@ -49,11 +49,11 @@ public class LiferayTokenIntrospectionService extends AbstractTokenService {
 
 	public LiferayTokenIntrospectionService(
 		LiferayOAuthDataProvider liferayOAuthDataProvider,
-		boolean publicClientsEnabled) {
+		boolean canSupportPublicClients) {
 
 		_liferayOAuthDataProvider = liferayOAuthDataProvider;
 
-		setCanSupportPublicClients(publicClientsEnabled);
+		setCanSupportPublicClients(canSupportPublicClients);
 		setDataProvider(liferayOAuthDataProvider);
 	}
 

@@ -30,15 +30,15 @@
 				/>
 
 				<c:if test="<%= Validator.isNotNull(description) %>">
-					<span class="staging-checkbox-description"><%= HtmlUtil.escape(description) %></span>
+					<span class="staging-taglib-checkbox-description"><%= HtmlUtil.escape(description) %></span>
 				</c:if>
 
 				<c:if test="<%= Validator.isNotNull(warning) %>">
-					<span class="staging-checkbox-warning"><%= HtmlUtil.escape(warning) %></span>
+					<span class="staging-taglib-checkbox-warning"><%= HtmlUtil.escape(warning) %></span>
 				</c:if>
 
 				<c:if test="<%= Validator.isNotNull(warning) %>">
-					<span class="staging-checkbox-suggestion"><%= HtmlUtil.escape(suggestion) %></span>
+					<span class="staging-taglib-checkbox-suggestion"><%= HtmlUtil.escape(suggestion) %></span>
 				</c:if>
 			</span>
 		</span>

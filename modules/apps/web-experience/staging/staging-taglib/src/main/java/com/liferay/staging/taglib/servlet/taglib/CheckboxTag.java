@@ -18,7 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.staging.taglib.internal.servlet.ServletContextUtil;
-import com.liferay.taglib.util.IncludeTag;
+import com.liferay.staging.taglib.servlet.taglib.base.BaseCssTag;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.PageContext;
@@ -27,7 +27,12 @@ import javax.servlet.jsp.PageContext;
  * @author Peter Borkuti
  */
 @ProviderType
-public class CheckboxTag extends IncludeTag {
+public class CheckboxTag extends BaseCssTag {
+
+	@Override
+	public String getTagNameForCssPath() {
+		return "checkbox";
+	}
 
 	public void setChecked(boolean checked) {
 		_checked = checked;

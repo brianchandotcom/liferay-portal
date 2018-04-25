@@ -1,0 +1,15 @@
+.staging-taglib-popover {
+	.staging-taglib-popover-icon-holder {
+		&:hover + .popover {
+			visibility: visible;
+		}
+
+		+ .popover {
+			visibility: hidden;
+		}
+
+		+ .popover:hover {
+			visibility:visible;
+		}
+	}
+}

@@ -18,7 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.staging.taglib.internal.servlet.ServletContextUtil;
-import com.liferay.taglib.util.IncludeTag;
+import com.liferay.staging.taglib.servlet.taglib.base.BaseCssTag;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.PageContext;
@@ -27,7 +27,12 @@ import javax.servlet.jsp.PageContext;
  * @author Peter Borkuti
  */
 @ProviderType
-public class PopoverTag extends IncludeTag {
+public class PopoverTag extends BaseCssTag {
+
+	@Override
+	public String getTagNameForCssPath() {
+		return "popover";
+	}
 
 	public void setId(String id) {
 		_id = id;

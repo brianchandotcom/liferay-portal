@@ -53,15 +53,13 @@ public class LiferayAuthorizationAccessTokenCodeGrantHandler
 	@Activate
 	protected void activate(Map<String, Object> properties) {
 		_authorizationCodeGrantHandler = new AuthorizationCodeGrantHandler();
+		_oAuth2ProviderConfiguration = ConfigurableUtil.createConfigurable(
+			OAuth2ProviderConfiguration.class, properties);
 
 		_authorizationCodeGrantHandler.setCodeVerifierTransformer(
 			new DigestCodeVerifier());
 		_authorizationCodeGrantHandler.setDataProvider(
 			_liferayOAuthDataProvider);
-
-		_oAuth2ProviderConfiguration = ConfigurableUtil.createConfigurable(
-			OAuth2ProviderConfiguration.class, properties);
-
 		_authorizationCodeGrantHandler.setExpectCodeVerifierForPublicClients(
 			_oAuth2ProviderConfiguration.allowAuthorizationCodePKCEGrant());
 	}

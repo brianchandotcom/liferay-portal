@@ -14,15 +14,15 @@
 
 package com.liferay.commerce.price.list.web.internal.portlet.action;
 
-import com.liferay.commerce.constants.CommercePortletKeys;
-import com.liferay.commerce.exception.DuplicateCommercePriceEntryException;
-import com.liferay.commerce.exception.NoSuchPriceEntryException;
-import com.liferay.commerce.exception.NoSuchPriceListException;
-import com.liferay.commerce.model.CommercePriceEntry;
+import com.liferay.commerce.price.list.constants.CommercePriceListPortletKeys;
+import com.liferay.commerce.price.list.exception.DuplicateCommercePriceEntryException;
+import com.liferay.commerce.price.list.exception.NoSuchPriceEntryException;
+import com.liferay.commerce.price.list.exception.NoSuchPriceListException;
+import com.liferay.commerce.price.list.model.CommercePriceEntry;
+import com.liferay.commerce.price.list.service.CommercePriceEntryService;
 import com.liferay.commerce.product.exception.NoSuchCPInstanceException;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.service.CPInstanceService;
-import com.liferay.commerce.service.CommercePriceEntryService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
@@ -47,7 +47,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
-		"javax.portlet.name=" + CommercePortletKeys.COMMERCE_PRICE_LIST,
+		"javax.portlet.name=" + CommercePriceListPortletKeys.COMMERCE_PRICE_LIST,
 		"mvc.command.name=editCommercePriceEntry"
 	},
 	service = MVCActionCommand.class

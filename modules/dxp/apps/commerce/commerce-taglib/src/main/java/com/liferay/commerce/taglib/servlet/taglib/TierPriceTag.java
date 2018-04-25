@@ -16,19 +16,18 @@ package com.liferay.commerce.taglib.servlet.taglib;
 
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.service.CommerceCurrencyLocalServiceUtil;
-import com.liferay.commerce.model.CommercePriceEntry;
-import com.liferay.commerce.model.CommercePriceList;
-import com.liferay.commerce.model.CommerceTierPriceEntry;
-import com.liferay.commerce.service.CommercePriceEntryLocalServiceUtil;
-import com.liferay.commerce.service.CommercePriceListLocalServiceUtil;
-import com.liferay.commerce.service.CommerceTierPriceEntryLocalServiceUtil;
+import com.liferay.commerce.price.list.model.CommercePriceEntry;
+import com.liferay.commerce.price.list.model.CommercePriceList;
+import com.liferay.commerce.price.list.model.CommerceTierPriceEntry;
+import com.liferay.commerce.price.list.service.CommercePriceEntryLocalServiceUtil;
+import com.liferay.commerce.price.list.service.CommercePriceListLocalServiceUtil;
+import com.liferay.commerce.price.list.service.CommerceTierPriceEntryLocalServiceUtil;
+import com.liferay.commerce.price.list.util.comparator.CommerceTierPriceEntryMinQuantityComparator;
 import com.liferay.commerce.taglib.servlet.taglib.internal.servlet.ServletContextUtil;
-import com.liferay.commerce.util.CommerceUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.taglib.util.IncludeTag;
 
@@ -63,22 +62,16 @@ public class TierPriceTag extends IncludeTag {
 						_cpInstanceId,
 						commercePriceList.getCommercePriceListId());
 
-				if (commercePriceEntry != null) {
-					if (commercePriceEntry.getHasTierPrice()) {
-						OrderByComparator<CommerceTierPriceEntry>
-							orderByComparator =
-								CommerceUtil.
-									getCommerceTierPriceEntryOrderByComparator(
-										"minQuantity", "asc");
+				if ((commercePriceEntry != null) &&
+					commercePriceEntry.getHasTierPrice()) {
 
-						_commerceTierPriceEntries =
-							CommerceTierPriceEntryLocalServiceUtil.
-								getCommerceTierPriceEntries(
-									commercePriceEntry.
-										getCommercePriceEntryId(),
-									QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-									orderByComparator);
-					}
+					_commerceTierPriceEntries =
+						CommerceTierPriceEntryLocalServiceUtil.
+							getCommerceTierPriceEntries(
+								commercePriceEntry.getCommercePriceEntryId(),
+								QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+								new CommerceTierPriceEntryMinQuantityComparator(
+									true));
 				}
 			}
 

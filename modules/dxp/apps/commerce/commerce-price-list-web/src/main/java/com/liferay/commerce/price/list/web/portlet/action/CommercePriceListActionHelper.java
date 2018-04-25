@@ -14,13 +14,13 @@
 
 package com.liferay.commerce.price.list.web.portlet.action;
 
-import com.liferay.commerce.constants.CommerceWebKeys;
-import com.liferay.commerce.model.CommercePriceEntry;
-import com.liferay.commerce.model.CommercePriceList;
-import com.liferay.commerce.model.CommerceTierPriceEntry;
-import com.liferay.commerce.service.CommercePriceEntryService;
-import com.liferay.commerce.service.CommercePriceListService;
-import com.liferay.commerce.service.CommerceTierPriceEntryService;
+import com.liferay.commerce.price.list.constants.CommercePriceListWebKeys;
+import com.liferay.commerce.price.list.model.CommercePriceEntry;
+import com.liferay.commerce.price.list.model.CommercePriceList;
+import com.liferay.commerce.price.list.model.CommerceTierPriceEntry;
+import com.liferay.commerce.price.list.service.CommercePriceEntryService;
+import com.liferay.commerce.price.list.service.CommercePriceListService;
+import com.liferay.commerce.price.list.service.CommerceTierPriceEntryService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.ParamUtil;
 
@@ -66,7 +66,7 @@ public class CommercePriceListActionHelper {
 
 		CommercePriceEntry commercePriceEntry =
 			(CommercePriceEntry)renderRequest.getAttribute(
-				CommerceWebKeys.COMMERCE_PRICE_ENTRY);
+				CommercePriceListWebKeys.COMMERCE_PRICE_ENTRY);
 
 		if (commercePriceEntry != null) {
 			return commercePriceEntry;
@@ -83,7 +83,8 @@ public class CommercePriceListActionHelper {
 
 		if (commercePriceEntry != null) {
 			renderRequest.setAttribute(
-				CommerceWebKeys.COMMERCE_PRICE_ENTRY, commercePriceEntry);
+				CommercePriceListWebKeys.COMMERCE_PRICE_ENTRY,
+				commercePriceEntry);
 		}
 
 		return commercePriceEntry;
@@ -94,7 +95,7 @@ public class CommercePriceListActionHelper {
 
 		CommercePriceList commercePriceList =
 			(CommercePriceList)portletRequest.getAttribute(
-				CommerceWebKeys.COMMERCE_PRICE_LIST);
+				CommercePriceListWebKeys.COMMERCE_PRICE_LIST);
 
 		if (commercePriceList != null) {
 			return commercePriceList;
@@ -111,7 +112,8 @@ public class CommercePriceListActionHelper {
 
 		if (commercePriceList != null) {
 			portletRequest.setAttribute(
-				CommerceWebKeys.COMMERCE_PRICE_LIST, commercePriceList);
+				CommercePriceListWebKeys.COMMERCE_PRICE_LIST,
+				commercePriceList);
 		}
 
 		return commercePriceList;

@@ -14,7 +14,7 @@
 
 package com.liferay.commerce.item.selector.web.internal.search;
 
-import com.liferay.commerce.model.CommercePriceList;
+import com.liferay.commerce.price.list.model.CommercePriceList;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.util.SetUtil;
 

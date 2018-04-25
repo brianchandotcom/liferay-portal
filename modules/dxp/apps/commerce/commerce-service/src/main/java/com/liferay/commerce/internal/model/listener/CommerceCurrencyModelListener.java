@@ -15,7 +15,7 @@
 package com.liferay.commerce.internal.model.listener;
 
 import com.liferay.commerce.currency.model.CommerceCurrency;
-import com.liferay.commerce.service.CommercePriceListLocalService;
+import com.liferay.commerce.price.list.service.CommercePriceListLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;

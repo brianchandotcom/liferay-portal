@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-List<CommercePriceList> commercePriceLists = (List<CommercePriceList>)request.getAttribute(CommerceWebKeys.COMMERCE_PRICE_LISTS);
+List<CommercePriceList> commercePriceLists = (List<CommercePriceList>)request.getAttribute(CommercePriceListWebKeys.COMMERCE_PRICE_LISTS);
 
 if (commercePriceLists == null) {
 	commercePriceLists = Collections.emptyList();

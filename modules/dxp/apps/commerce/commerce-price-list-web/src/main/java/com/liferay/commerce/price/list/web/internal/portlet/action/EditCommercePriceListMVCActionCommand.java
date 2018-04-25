@@ -14,12 +14,12 @@
 
 package com.liferay.commerce.price.list.web.internal.portlet.action;
 
-import com.liferay.commerce.constants.CommercePortletKeys;
-import com.liferay.commerce.exception.NoSuchPriceListException;
-import com.liferay.commerce.model.CommercePriceList;
-import com.liferay.commerce.model.CommercePriceListUserSegmentEntryRel;
-import com.liferay.commerce.service.CommercePriceListService;
-import com.liferay.commerce.service.CommercePriceListUserSegmentEntryRelService;
+import com.liferay.commerce.price.list.constants.CommercePriceListPortletKeys;
+import com.liferay.commerce.price.list.exception.NoSuchPriceListException;
+import com.liferay.commerce.price.list.model.CommercePriceList;
+import com.liferay.commerce.price.list.model.CommercePriceListUserSegmentEntryRel;
+import com.liferay.commerce.price.list.service.CommercePriceListService;
+import com.liferay.commerce.price.list.service.CommercePriceListUserSegmentEntryRelService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
@@ -51,7 +51,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
-		"javax.portlet.name=" + CommercePortletKeys.COMMERCE_PRICE_LIST,
+		"javax.portlet.name=" + CommercePriceListPortletKeys.COMMERCE_PRICE_LIST,
 		"mvc.command.name=editCommercePriceList"
 	},
 	service = MVCActionCommand.class

@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-CommercePriceEntry commercePriceEntry = (CommercePriceEntry)request.getAttribute(CommerceWebKeys.COMMERCE_PRICE_ENTRY);
+CommercePriceEntry commercePriceEntry = (CommercePriceEntry)request.getAttribute(CommercePriceListWebKeys.COMMERCE_PRICE_ENTRY);
 
 String currencyCode = StringPool.BLANK;
 

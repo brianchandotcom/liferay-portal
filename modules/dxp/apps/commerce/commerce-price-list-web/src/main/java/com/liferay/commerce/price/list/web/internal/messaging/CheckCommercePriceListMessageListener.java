@@ -14,8 +14,8 @@
 
 package com.liferay.commerce.price.list.web.internal.messaging;
 
+import com.liferay.commerce.price.list.service.CommercePriceListLocalService;
 import com.liferay.commerce.price.list.web.internal.configuration.CommercePriceListConfiguration;
-import com.liferay.commerce.service.CommercePriceListLocalService;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.messaging.BaseMessageListener;
 import com.liferay.portal.kernel.messaging.DestinationNames;

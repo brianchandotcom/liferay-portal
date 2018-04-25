@@ -77,7 +77,7 @@ List<CommercePriceListUserSegmentEntryRel> commercePriceListUserSegmentEntryRels
 	/>
 
 	<liferay-ui:search-container-row
-		className="com.liferay.commerce.model.CommercePriceListUserSegmentEntryRel"
+		className="com.liferay.commerce.price.list.model.CommercePriceListUserSegmentEntryRel"
 		keyProperty="commercePriceListUserSegmentEntryRelId"
 		modelVar="commercePriceListUserSegmentEntryRel"
 	>

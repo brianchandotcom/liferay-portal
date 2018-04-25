@@ -14,7 +14,7 @@
 
 package com.liferay.commerce.price.list.web.internal.servlet.taglib.ui;
 
-import com.liferay.commerce.model.CommercePriceEntry;
+import com.liferay.commerce.price.list.model.CommercePriceEntry;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;

@@ -15,17 +15,17 @@
 package com.liferay.commerce.price.list.web.internal.display.context;
 
 import com.liferay.commerce.item.selector.criterion.CommercePriceListItemSelectorCriterion;
-import com.liferay.commerce.model.CommercePriceEntry;
-import com.liferay.commerce.model.CommercePriceList;
 import com.liferay.commerce.price.CommercePriceFormatter;
+import com.liferay.commerce.price.list.model.CommercePriceEntry;
+import com.liferay.commerce.price.list.model.CommercePriceList;
+import com.liferay.commerce.price.list.service.CommercePriceEntryService;
+import com.liferay.commerce.price.list.web.internal.util.CommercePriceListPortletUtil;
 import com.liferay.commerce.price.list.web.portlet.action.CommercePriceListActionHelper;
 import com.liferay.commerce.product.definitions.web.display.context.BaseCPDefinitionsSearchContainerDisplayContext;
 import com.liferay.commerce.product.definitions.web.portlet.action.ActionHelper;
 import com.liferay.commerce.product.definitions.web.servlet.taglib.ui.CPDefinitionScreenNavigationConstants;
 import com.liferay.commerce.product.definitions.web.servlet.taglib.ui.CPInstanceScreenNavigationConstants;
 import com.liferay.commerce.product.model.CPInstance;
-import com.liferay.commerce.service.CommercePriceEntryService;
-import com.liferay.commerce.util.CommerceUtil;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.criteria.UUIDItemSelectorReturnType;
@@ -217,7 +217,7 @@ public class CPInstanceCommercePriceEntryDisplayContext
 			"there-are-no-price-entries");
 
 		OrderByComparator<CommercePriceEntry> orderByComparator =
-			CommerceUtil.getCommercePriceEntryOrderByComparator(
+			CommercePriceListPortletUtil.getCommercePriceEntryOrderByComparator(
 				getOrderByCol(), getOrderByType());
 
 		searchContainer.setOrderByCol(getOrderByCol());

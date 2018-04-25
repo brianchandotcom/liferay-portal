@@ -132,7 +132,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, title, StringPool.BLANK, data);
 				searchContainer="<%= commerceTierPriceEntriesSearchContainer %>"
 			>
 				<liferay-ui:search-container-row
-					className="com.liferay.commerce.model.CommerceTierPriceEntry"
+					className="com.liferay.commerce.price.list.model.CommerceTierPriceEntry"
 					cssClass="entry-display-style"
 					keyProperty="commerceTierPriceEntryId"
 					modelVar="commerceTierPriceEntry"

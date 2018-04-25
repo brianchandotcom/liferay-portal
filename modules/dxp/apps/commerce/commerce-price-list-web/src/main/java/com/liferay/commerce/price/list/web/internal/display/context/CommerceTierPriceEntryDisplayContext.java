@@ -15,17 +15,17 @@
 package com.liferay.commerce.price.list.web.internal.display.context;
 
 import com.liferay.commerce.currency.model.CommerceCurrency;
-import com.liferay.commerce.model.CommercePriceEntry;
-import com.liferay.commerce.model.CommercePriceList;
-import com.liferay.commerce.model.CommerceTierPriceEntry;
 import com.liferay.commerce.price.CommercePriceFormatter;
+import com.liferay.commerce.price.list.model.CommercePriceEntry;
+import com.liferay.commerce.price.list.model.CommercePriceList;
+import com.liferay.commerce.price.list.model.CommerceTierPriceEntry;
+import com.liferay.commerce.price.list.service.CommerceTierPriceEntryService;
 import com.liferay.commerce.price.list.web.display.context.BaseCommercePriceListDisplayContext;
+import com.liferay.commerce.price.list.web.internal.util.CommercePriceListPortletUtil;
 import com.liferay.commerce.price.list.web.portlet.action.CommercePriceListActionHelper;
 import com.liferay.commerce.product.display.context.util.CPRequestHelper;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPInstance;
-import com.liferay.commerce.service.CommerceTierPriceEntryService;
-import com.liferay.commerce.util.CommerceUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -202,8 +202,9 @@ public class CommerceTierPriceEntryDisplayContext
 			"there-are-no-tier-price-entries");
 
 		OrderByComparator<CommerceTierPriceEntry> orderByComparator =
-			CommerceUtil.getCommerceTierPriceEntryOrderByComparator(
-				getOrderByCol(), getOrderByType());
+			CommercePriceListPortletUtil.
+				getCommerceTierPriceEntryOrderByComparator(
+					getOrderByCol(), getOrderByType());
 
 		searchContainer.setOrderByCol(getOrderByCol());
 		searchContainer.setOrderByComparator(orderByComparator);
@@ -211,7 +212,7 @@ public class CommerceTierPriceEntryDisplayContext
 		searchContainer.setRowChecker(getRowChecker());
 
 		if (isSearch()) {
-			Sort sort = CommerceUtil.getCommercePriceEntrySort(
+			Sort sort = CommercePriceListPortletUtil.getCommercePriceEntrySort(
 				getOrderByCol(), getOrderByType());
 
 			BaseModelSearchResult<CommerceTierPriceEntry>

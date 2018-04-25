@@ -14,7 +14,7 @@
 
 package com.liferay.commerce.price.list.web.internal.portlet;
 
-import com.liferay.commerce.constants.CommercePortletKeys;
+import com.liferay.commerce.price.list.constants.CommercePriceListPortletKeys;
 import com.liferay.portal.kernel.portlet.BasePortletProvider;
 import com.liferay.portal.kernel.portlet.EditPortletProvider;
 import com.liferay.portal.kernel.portlet.ManagePortletProvider;
@@ -39,7 +39,7 @@ public class CommercePriceListPortletProvider
 
 	@Override
 	public String getPortletName() {
-		return CommercePortletKeys.COMMERCE_PRICE_LIST;
+		return CommercePriceListPortletKeys.COMMERCE_PRICE_LIST;
 	}
 
 }

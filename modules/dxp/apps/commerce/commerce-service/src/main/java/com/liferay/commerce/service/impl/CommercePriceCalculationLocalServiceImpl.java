@@ -18,10 +18,13 @@ import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.service.CommerceCurrencyService;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderItem;
-import com.liferay.commerce.model.CommercePriceEntry;
-import com.liferay.commerce.model.CommercePriceList;
-import com.liferay.commerce.model.CommerceTierPriceEntry;
 import com.liferay.commerce.price.CommercePriceFormatter;
+import com.liferay.commerce.price.list.model.CommercePriceEntry;
+import com.liferay.commerce.price.list.model.CommercePriceList;
+import com.liferay.commerce.price.list.model.CommerceTierPriceEntry;
+import com.liferay.commerce.price.list.service.CommercePriceEntryLocalService;
+import com.liferay.commerce.price.list.service.CommercePriceListLocalService;
+import com.liferay.commerce.price.list.service.CommerceTierPriceEntryLocalService;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.service.CPInstanceLocalService;
 import com.liferay.commerce.service.base.CommercePriceCalculationLocalServiceBaseImpl;
@@ -177,7 +180,7 @@ public class CommercePriceCalculationLocalServiceImpl
 		BigDecimal price = cpInstance.getPrice();
 
 		Optional<CommercePriceList> commercePriceListOptional =
-			commercePriceListLocalService.getUserCommercePriceList(
+			_commercePriceListLocalService.getUserCommercePriceList(
 				groupId, userId);
 
 		if (commercePriceListOptional.isPresent()) {
@@ -185,7 +188,7 @@ public class CommercePriceCalculationLocalServiceImpl
 				commercePriceListOptional.get();
 
 			CommercePriceEntry commercePriceEntry =
-				commercePriceEntryLocalService.fetchCommercePriceEntry(
+				_commercePriceEntryLocalService.fetchCommercePriceEntry(
 					cpInstanceId, commercePriceList.getCommercePriceListId());
 
 			if (commercePriceEntry != null) {
@@ -193,7 +196,7 @@ public class CommercePriceCalculationLocalServiceImpl
 
 				if (commercePriceEntry.getHasTierPrice()) {
 					CommerceTierPriceEntry commerceTierPriceEntry =
-						commerceTierPriceEntryLocalService.
+						_commerceTierPriceEntryLocalService.
 							findClosestCommerceTierPriceEntry(
 								commercePriceEntry.getCommercePriceEntryId(),
 								quantity);
@@ -226,8 +229,18 @@ public class CommercePriceCalculationLocalServiceImpl
 	@ServiceReference(type = CommerceCurrencyService.class)
 	private CommerceCurrencyService _commerceCurrencyService;
 
+	@ServiceReference(type = CommercePriceEntryLocalService.class)
+	private CommercePriceEntryLocalService _commercePriceEntryLocalService;
+
 	@ServiceReference(type = CommercePriceFormatter.class)
 	private CommercePriceFormatter _commercePriceFormatter;
+
+	@ServiceReference(type = CommercePriceListLocalService.class)
+	private CommercePriceListLocalService _commercePriceListLocalService;
+
+	@ServiceReference(type = CommerceTierPriceEntryLocalService.class)
+	private CommerceTierPriceEntryLocalService
+		_commerceTierPriceEntryLocalService;
 
 	@ServiceReference(type = CPInstanceLocalService.class)
 	private CPInstanceLocalService _cpInstanceService;

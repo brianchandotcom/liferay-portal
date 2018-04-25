@@ -57,7 +57,7 @@ PortletURL portletURL = commercePriceListItemSelectorViewDisplayContext.getPortl
 		searchContainer="<%= commercePriceListItemSelectorViewDisplayContext.getSearchContainer() %>"
 	>
 		<liferay-ui:search-container-row
-			className="com.liferay.commerce.model.CommercePriceList"
+			className="com.liferay.commerce.price.list.model.CommercePriceList"
 			cssClass="commerce-price-list-row"
 			keyProperty="commercePriceListId"
 			modelVar="commercePriceList"

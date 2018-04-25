@@ -26,18 +26,18 @@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %><%@
 taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
-<%@ page import="com.liferay.commerce.constants.CommercePortletKeys" %><%@
-page import="com.liferay.commerce.constants.CommerceWebKeys" %><%@
-page import="com.liferay.commerce.currency.model.CommerceCurrency" %><%@
-page import="com.liferay.commerce.exception.CommercePriceListExpirationDateException" %><%@
-page import="com.liferay.commerce.exception.DuplicateCommercePriceEntryException" %><%@
-page import="com.liferay.commerce.exception.NoSuchPriceEntryException" %><%@
-page import="com.liferay.commerce.exception.NoSuchPriceListException" %><%@
-page import="com.liferay.commerce.exception.NoSuchTierPriceEntryException" %><%@
-page import="com.liferay.commerce.model.CommercePriceEntry" %><%@
-page import="com.liferay.commerce.model.CommercePriceList" %><%@
-page import="com.liferay.commerce.model.CommercePriceListUserSegmentEntryRel" %><%@
-page import="com.liferay.commerce.model.CommerceTierPriceEntry" %><%@
+<%@ page import="com.liferay.commerce.currency.model.CommerceCurrency" %><%@
+page import="com.liferay.commerce.price.list.constants.CommercePriceListPortletKeys" %><%@
+page import="com.liferay.commerce.price.list.constants.CommercePriceListWebKeys" %><%@
+page import="com.liferay.commerce.price.list.exception.CommercePriceListExpirationDateException" %><%@
+page import="com.liferay.commerce.price.list.exception.DuplicateCommercePriceEntryException" %><%@
+page import="com.liferay.commerce.price.list.exception.NoSuchPriceEntryException" %><%@
+page import="com.liferay.commerce.price.list.exception.NoSuchPriceListException" %><%@
+page import="com.liferay.commerce.price.list.exception.NoSuchTierPriceEntryException" %><%@
+page import="com.liferay.commerce.price.list.model.CommercePriceEntry" %><%@
+page import="com.liferay.commerce.price.list.model.CommercePriceList" %><%@
+page import="com.liferay.commerce.price.list.model.CommercePriceListUserSegmentEntryRel" %><%@
+page import="com.liferay.commerce.price.list.model.CommerceTierPriceEntry" %><%@
 page import="com.liferay.commerce.price.list.web.internal.display.context.CPInstanceCommercePriceEntryDisplayContext" %><%@
 page import="com.liferay.commerce.price.list.web.internal.display.context.CPInstanceCommerceTierPriceEntryDisplayContext" %><%@
 page import="com.liferay.commerce.price.list.web.internal.display.context.CommercePriceEntryDisplayContext" %><%@
@@ -84,7 +84,7 @@ page import="java.util.Map" %>
 String lifecycle = (String)request.getAttribute(liferayPortletRequest.LIFECYCLE_PHASE);
 
 PortletURL catalogURLObj = PortalUtil.getControlPanelPortletURL(request, CPPortletKeys.CP_DEFINITIONS, lifecycle);
-PortletURL priceListsURLObj = PortalUtil.getControlPanelPortletURL(request, CommercePortletKeys.COMMERCE_PRICE_LIST, lifecycle);
+PortletURL priceListsURLObj = PortalUtil.getControlPanelPortletURL(request, CommercePriceListPortletKeys.COMMERCE_PRICE_LIST, lifecycle);
 
 String catalogURL = catalogURLObj.toString();
 String priceListsURL = priceListsURLObj.toString();

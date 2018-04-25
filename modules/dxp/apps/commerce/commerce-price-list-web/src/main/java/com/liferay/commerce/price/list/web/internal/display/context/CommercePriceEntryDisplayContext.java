@@ -14,16 +14,16 @@
 
 package com.liferay.commerce.price.list.web.internal.display.context;
 
-import com.liferay.commerce.model.CommercePriceEntry;
-import com.liferay.commerce.model.CommercePriceList;
 import com.liferay.commerce.price.CommercePriceFormatter;
+import com.liferay.commerce.price.list.model.CommercePriceEntry;
+import com.liferay.commerce.price.list.model.CommercePriceList;
+import com.liferay.commerce.price.list.service.CommercePriceEntryService;
 import com.liferay.commerce.price.list.web.display.context.BaseCommercePriceListDisplayContext;
 import com.liferay.commerce.price.list.web.internal.servlet.taglib.ui.CommercePriceListScreenNavigationConstants;
+import com.liferay.commerce.price.list.web.internal.util.CommercePriceListPortletUtil;
 import com.liferay.commerce.price.list.web.portlet.action.CommercePriceListActionHelper;
 import com.liferay.commerce.product.display.context.util.CPRequestHelper;
 import com.liferay.commerce.product.item.selector.criterion.CPInstanceItemSelectorCriterion;
-import com.liferay.commerce.service.CommercePriceEntryService;
-import com.liferay.commerce.util.CommerceUtil;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.criteria.UUIDItemSelectorReturnType;
@@ -162,7 +162,7 @@ public class CommercePriceEntryDisplayContext
 			"there-are-no-price-entries");
 
 		OrderByComparator<CommercePriceEntry> orderByComparator =
-			CommerceUtil.getCommercePriceEntryOrderByComparator(
+			CommercePriceListPortletUtil.getCommercePriceEntryOrderByComparator(
 				getOrderByCol(), getOrderByType());
 
 		searchContainer.setOrderByCol(getOrderByCol());
@@ -171,7 +171,7 @@ public class CommercePriceEntryDisplayContext
 		searchContainer.setRowChecker(getRowChecker());
 
 		if (isSearch()) {
-			Sort sort = CommerceUtil.getCommercePriceEntrySort(
+			Sort sort = CommercePriceListPortletUtil.getCommercePriceEntrySort(
 				getOrderByCol(), getOrderByType());
 
 			BaseModelSearchResult<CommercePriceEntry>

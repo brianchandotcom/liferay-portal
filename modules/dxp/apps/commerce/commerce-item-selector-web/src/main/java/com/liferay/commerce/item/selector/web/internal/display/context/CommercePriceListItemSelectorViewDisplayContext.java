@@ -15,14 +15,18 @@
 package com.liferay.commerce.item.selector.web.internal.display.context;
 
 import com.liferay.commerce.item.selector.web.internal.search.CommercePriceListItemSelectorChecker;
-import com.liferay.commerce.model.CommercePriceList;
-import com.liferay.commerce.service.CommercePriceListService;
-import com.liferay.commerce.util.CommerceUtil;
+import com.liferay.commerce.price.list.model.CommercePriceList;
+import com.liferay.commerce.price.list.service.CommercePriceListService;
+import com.liferay.commerce.price.list.util.comparator.CommercePriceListCreateDateComparator;
+import com.liferay.commerce.price.list.util.comparator.CommercePriceListDisplayDateComparator;
+import com.liferay.commerce.price.list.util.comparator.CommercePriceListPriorityComparator;
 import com.liferay.portal.kernel.dao.search.RowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
+import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.search.SortFactoryUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -71,7 +75,7 @@ public class CommercePriceListItemSelectorViewDisplayContext
 		searchContainer.setEmptyResultsMessage("there-are-no-price-lists");
 
 		OrderByComparator<CommercePriceList> orderByComparator =
-			CommerceUtil.getCommercePriceListOrderByComparator(
+			getCommercePriceListOrderByComparator(
 				getOrderByCol(), getOrderByType());
 
 		RowChecker rowChecker = new CommercePriceListItemSelectorChecker(
@@ -84,7 +88,7 @@ public class CommercePriceListItemSelectorViewDisplayContext
 		searchContainer.setRowChecker(rowChecker);
 
 		if (searchContainer.isSearch()) {
-			Sort sort = CommerceUtil.getCommercePriceListSort(
+			Sort sort = getCommercePriceListSort(
 				getOrderByCol(), getOrderByType());
 
 			BaseModelSearchResult<CommercePriceList>
@@ -119,6 +123,58 @@ public class CommercePriceListItemSelectorViewDisplayContext
 		}
 
 		return searchContainer;
+	}
+
+	protected static OrderByComparator<CommercePriceList>
+		getCommercePriceListOrderByComparator(
+			String orderByCol, String orderByType) {
+
+		boolean orderByAsc = false;
+
+		if (orderByType.equals("asc")) {
+			orderByAsc = true;
+		}
+
+		OrderByComparator<CommercePriceList> orderByComparator = null;
+
+		if (orderByCol.equals("create-date")) {
+			orderByComparator = new CommercePriceListCreateDateComparator(
+				orderByAsc);
+		}
+		else if (orderByCol.equals("display-date")) {
+			orderByComparator = new CommercePriceListDisplayDateComparator(
+				orderByAsc);
+		}
+		else if (orderByCol.equals("priority")) {
+			orderByComparator = new CommercePriceListPriorityComparator(
+				orderByAsc);
+		}
+
+		return orderByComparator;
+	}
+
+	protected static Sort getCommercePriceListSort(
+		String orderByCol, String orderByType) {
+
+		boolean reverse = true;
+
+		if (orderByType.equals("asc")) {
+			reverse = false;
+		}
+
+		Sort sort = null;
+
+		if (orderByCol.equals("create-date")) {
+			sort = SortFactoryUtil.create(Field.CREATE_DATE, reverse);
+		}
+		else if (orderByCol.equals("display-date")) {
+			sort = SortFactoryUtil.create("display-date", reverse);
+		}
+		else if (orderByCol.equals("priority")) {
+			sort = SortFactoryUtil.create(Field.PRIORITY, reverse);
+		}
+
+		return sort;
 	}
 
 	protected long[] getCheckedCommercePriceListIds() {

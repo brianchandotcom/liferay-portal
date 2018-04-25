@@ -14,10 +14,10 @@
 
 package com.liferay.commerce.price.list.web.internal.portlet.action;
 
-import com.liferay.commerce.exception.NoSuchTierPriceEntryException;
-import com.liferay.commerce.model.CommerceTierPriceEntry;
+import com.liferay.commerce.price.list.exception.NoSuchTierPriceEntryException;
+import com.liferay.commerce.price.list.model.CommerceTierPriceEntry;
+import com.liferay.commerce.price.list.service.CommerceTierPriceEntryService;
 import com.liferay.commerce.product.constants.CPPortletKeys;
-import com.liferay.commerce.service.CommerceTierPriceEntryService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;

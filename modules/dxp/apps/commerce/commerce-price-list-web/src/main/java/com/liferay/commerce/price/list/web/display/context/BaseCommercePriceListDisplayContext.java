@@ -14,7 +14,7 @@
 
 package com.liferay.commerce.price.list.web.display.context;
 
-import com.liferay.commerce.model.CommercePriceList;
+import com.liferay.commerce.price.list.model.CommercePriceList;
 import com.liferay.commerce.price.list.web.internal.servlet.taglib.ui.CommercePriceListScreenNavigationConstants;
 import com.liferay.commerce.price.list.web.portlet.action.CommercePriceListActionHelper;
 import com.liferay.commerce.product.display.context.util.CPRequestHelper;

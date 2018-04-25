@@ -155,7 +155,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "price-lists"));
 						searchContainer="<%= commerceTierPriceEntriesSearchContainer %>"
 					>
 						<liferay-ui:search-container-row
-							className="com.liferay.commerce.model.CommerceTierPriceEntry"
+							className="com.liferay.commerce.price.list.model.CommerceTierPriceEntry"
 							cssClass="entry-display-style"
 							keyProperty="commerceTierPriceEntryId"
 							modelVar="commerceTierPriceEntry"

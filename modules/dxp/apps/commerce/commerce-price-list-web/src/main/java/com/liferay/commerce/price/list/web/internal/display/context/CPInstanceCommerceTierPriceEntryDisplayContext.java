@@ -14,10 +14,12 @@
 
 package com.liferay.commerce.price.list.web.internal.display.context;
 
-import com.liferay.commerce.model.CommercePriceEntry;
-import com.liferay.commerce.model.CommercePriceList;
-import com.liferay.commerce.model.CommerceTierPriceEntry;
 import com.liferay.commerce.price.CommercePriceFormatter;
+import com.liferay.commerce.price.list.model.CommercePriceEntry;
+import com.liferay.commerce.price.list.model.CommercePriceList;
+import com.liferay.commerce.price.list.model.CommerceTierPriceEntry;
+import com.liferay.commerce.price.list.service.CommerceTierPriceEntryService;
+import com.liferay.commerce.price.list.web.internal.util.CommercePriceListPortletUtil;
 import com.liferay.commerce.price.list.web.portlet.action.CommercePriceListActionHelper;
 import com.liferay.commerce.product.definitions.web.display.context.BaseCPDefinitionsSearchContainerDisplayContext;
 import com.liferay.commerce.product.definitions.web.portlet.action.ActionHelper;
@@ -25,8 +27,6 @@ import com.liferay.commerce.product.definitions.web.servlet.taglib.ui.CPDefiniti
 import com.liferay.commerce.product.definitions.web.servlet.taglib.ui.CPInstanceScreenNavigationConstants;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPInstance;
-import com.liferay.commerce.service.CommerceTierPriceEntryService;
-import com.liferay.commerce.util.CommerceUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -281,8 +281,9 @@ public class CPInstanceCommerceTierPriceEntryDisplayContext
 			"there-are-no-tier-price-entries");
 
 		OrderByComparator<CommerceTierPriceEntry> orderByComparator =
-			CommerceUtil.getCommerceTierPriceEntryOrderByComparator(
-				getOrderByCol(), getOrderByType());
+			CommercePriceListPortletUtil.
+				getCommerceTierPriceEntryOrderByComparator(
+					getOrderByCol(), getOrderByType());
 
 		searchContainer.setOrderByCol(getOrderByCol());
 		searchContainer.setOrderByComparator(orderByComparator);

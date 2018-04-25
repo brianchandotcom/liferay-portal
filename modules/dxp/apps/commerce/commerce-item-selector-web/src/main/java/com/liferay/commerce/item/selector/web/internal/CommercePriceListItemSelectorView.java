@@ -16,7 +16,7 @@ package com.liferay.commerce.item.selector.web.internal;
 
 import com.liferay.commerce.item.selector.criterion.CommercePriceListItemSelectorCriterion;
 import com.liferay.commerce.item.selector.web.internal.display.context.CommercePriceListItemSelectorViewDisplayContext;
-import com.liferay.commerce.service.CommercePriceListService;
+import com.liferay.commerce.price.list.service.CommercePriceListService;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorView;
 import com.liferay.item.selector.criteria.UUIDItemSelectorReturnType;

@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-CommercePriceList commercePriceList = (CommercePriceList)request.getAttribute(CommerceWebKeys.COMMERCE_PRICE_LIST);
+CommercePriceList commercePriceList = (CommercePriceList)request.getAttribute(CommercePriceListWebKeys.COMMERCE_PRICE_LIST);
 %>
 
 <liferay-ui:error-marker

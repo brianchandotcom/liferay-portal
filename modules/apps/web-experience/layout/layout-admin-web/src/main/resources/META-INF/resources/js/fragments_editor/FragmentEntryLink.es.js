@@ -103,6 +103,16 @@ class FragmentEntryLink extends Component {
 	}
 
 	/**
+	 * Returns the editable values property content
+	 * @return {object}
+	 * @review
+	 */
+
+	getEditableValues() {
+		return this.editableValues[EDITABLE_FRAGMENT_ENTRY_PROCESSOR];
+	}
+
+	/**
 	 * Updates the editable values for a given langaugeId.
 	 * @param {string} languageId The current language id
 	 * @param {string} defaultLanguageId The default language id
@@ -224,7 +234,7 @@ class FragmentEntryLink extends Component {
 	 */
 
 	_update(languageId, defaultLanguageId, updateFunctions) {
-		const editableValues = this.editableValues[EDITABLE_FRAGMENT_ENTRY_PROCESSOR];
+		const editableValues = this.getEditableValues() || {};
 
 		Object.keys(editableValues).forEach(
 			editableId => {

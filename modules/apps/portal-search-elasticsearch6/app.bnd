@@ -1,5 +1,6 @@
 Liferay-Releng-App-Description: ${liferay.releng.app.title.prefix} to Elasticsearch 6 connects Liferay Portal or Liferay DXP to the Elasticsearch 6.1.x search engine. This client application is a drop-in replacement for the default Elasticsearch 2.x connector that ships with the Foundation app suite.
 Liferay-Releng-App-Title: ${liferay.releng.app.title.prefix} Connector to Elasticsearch 6
+Liferay-Releng-Bundle: true
 Liferay-Releng-Category: Utility
 Liferay-Releng-Demo-Url:
 Liferay-Releng-Deprecated: false

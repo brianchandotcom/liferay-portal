@@ -89,6 +89,8 @@ request.setAttribute("view.jsp-repositoryId", String.valueOf(repositoryId));
 request.setAttribute("view.jsp-displayStyle", displayStyle);
 request.setAttribute("view.jsp-orderByCol", orderByCol);
 request.setAttribute("view.jsp-orderByType", orderByType);
+
+DLAdminDisplayContext dlAdminDisplayContext = dlDisplayContextProvider.getDLAdminDisplayContext(liferayPortletRequest, liferayPortletResponse, currentURLObj, request);
 %>
 
 <liferay-util:buffer var="uploadURL"><liferay-portlet:actionURL name="/document_library/edit_file_entry"><portlet:param name="<%= Constants.CMD %>" value="<%= Constants.ADD_DYNAMIC %>" /><portlet:param name="folderId" value="{folderId}" /><portlet:param name="repositoryId" value="<%= String.valueOf(repositoryId) %>" /></liferay-portlet:actionURL></liferay-util:buffer>
@@ -105,7 +107,7 @@ request.setAttribute("view.jsp-orderByType", orderByType);
 
 <clay:management-toolbar
 	clearResultsURL="<%= String.valueOf(renderResponse.createRenderURL()) %>"
-	creationMenu="<%= null %>"
+	creationMenu="<%= dlAdminDisplayContext.getCreationMenu() %>"
 	disabled="<%= DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcutsCount(repositoryId, folderId, WorkflowConstants.STATUS_ANY, true) <= 0 %>"
 	searchActionURL="<%= String.valueOf(renderResponse.createRenderURL()) %>"
 	searchFormName="fm"

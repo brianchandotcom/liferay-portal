@@ -33,6 +33,37 @@ public class CommerceDiscountServiceWrapper implements CommerceDiscountService,
 		_commerceDiscountService = commerceDiscountService;
 	}
 
+	@Override
+	public com.liferay.commerce.discount.model.CommerceDiscount addCommerceDiscount(
+		java.lang.String title, java.lang.String target, java.lang.String type,
+		java.lang.String typeSettings, boolean useCouponCode,
+		java.lang.String couponCode, java.lang.String limitationType,
+		int limitationTimes, int numberOfUse, boolean cumulative,
+		boolean usePercentage, java.math.BigDecimal level1,
+		java.math.BigDecimal level2, java.math.BigDecimal level3,
+		java.math.BigDecimal maximumDiscountAmount, boolean active,
+		int displayDateMonth, int displayDateDay, int displayDateYear,
+		int displayDateHour, int displayDateMinute, int expirationDateMonth,
+		int expirationDateDay, int expirationDateYear, int expirationDateHour,
+		int expirationDateMinute, boolean neverExpire,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceDiscountService.addCommerceDiscount(title, target,
+			type, typeSettings, useCouponCode, couponCode, limitationType,
+			limitationTimes, numberOfUse, cumulative, usePercentage, level1,
+			level2, level3, maximumDiscountAmount, active, displayDateMonth,
+			displayDateDay, displayDateYear, displayDateHour,
+			displayDateMinute, expirationDateMonth, expirationDateDay,
+			expirationDateYear, expirationDateHour, expirationDateMinute,
+			neverExpire, serviceContext);
+	}
+
+	@Override
+	public void deleteCommerceDiscount(long commerceDiscountId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_commerceDiscountService.deleteCommerceDiscount(commerceDiscountId);
+	}
+
 	/**
 	* Returns the OSGi service identifier.
 	*
@@ -41,6 +72,32 @@ public class CommerceDiscountServiceWrapper implements CommerceDiscountService,
 	@Override
 	public java.lang.String getOSGiServiceIdentifier() {
 		return _commerceDiscountService.getOSGiServiceIdentifier();
+	}
+
+	@Override
+	public com.liferay.commerce.discount.model.CommerceDiscount updateCommerceDiscount(
+		long commerceDiscountId, java.lang.String title,
+		java.lang.String target, java.lang.String type,
+		java.lang.String typeSettings, boolean useCouponCode,
+		java.lang.String couponCode, java.lang.String limitationType,
+		int limitationTimes, int numberOfUse, boolean cumulative,
+		boolean usePercentage, java.math.BigDecimal level1,
+		java.math.BigDecimal level2, java.math.BigDecimal level3,
+		java.math.BigDecimal maximumDiscountAmount, boolean active,
+		int displayDateMonth, int displayDateDay, int displayDateYear,
+		int displayDateHour, int displayDateMinute, int expirationDateMonth,
+		int expirationDateDay, int expirationDateYear, int expirationDateHour,
+		int expirationDateMinute, boolean neverExpire,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceDiscountService.updateCommerceDiscount(commerceDiscountId,
+			title, target, type, typeSettings, useCouponCode, couponCode,
+			limitationType, limitationTimes, numberOfUse, cumulative,
+			usePercentage, level1, level2, level3, maximumDiscountAmount,
+			active, displayDateMonth, displayDateDay, displayDateYear,
+			displayDateHour, displayDateMinute, expirationDateMonth,
+			expirationDateDay, expirationDateYear, expirationDateHour,
+			expirationDateMinute, neverExpire, serviceContext);
 	}
 
 	@Override

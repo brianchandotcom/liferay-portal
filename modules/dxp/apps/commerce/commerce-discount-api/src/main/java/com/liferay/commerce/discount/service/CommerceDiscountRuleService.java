@@ -16,11 +16,14 @@ package com.liferay.commerce.discount.service;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.commerce.discount.model.CommerceDiscountRule;
+
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
 import com.liferay.portal.kernel.security.access.control.AccessControlled;
 import com.liferay.portal.kernel.service.BaseService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -49,6 +52,13 @@ public interface CommerceDiscountRuleService extends BaseService {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CommerceDiscountRuleServiceUtil} to access the commerce discount rule remote service. Add custom service methods to {@link com.liferay.commerce.discount.service.impl.CommerceDiscountRuleServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public CommerceDiscountRule addCommerceDiscountRule(
+		long commerceDiscountId, java.lang.String type,
+		java.lang.String typeSettings, ServiceContext serviceContext)
+		throws PortalException;
+
+	public void deleteCommerceDiscountRule(long commerceDiscountRuleId)
+		throws PortalException;
 
 	/**
 	* Returns the OSGi service identifier.
@@ -56,4 +66,8 @@ public interface CommerceDiscountRuleService extends BaseService {
 	* @return the OSGi service identifier
 	*/
 	public java.lang.String getOSGiServiceIdentifier();
+
+	public CommerceDiscountRule updateCommerceDiscountRule(
+		long commerceDiscountRuleId, java.lang.String type,
+		java.lang.String typeSettings) throws PortalException;
 }

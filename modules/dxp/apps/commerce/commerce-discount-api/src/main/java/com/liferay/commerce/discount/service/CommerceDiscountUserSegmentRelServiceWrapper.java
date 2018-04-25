@@ -34,6 +34,22 @@ public class CommerceDiscountUserSegmentRelServiceWrapper
 		_commerceDiscountUserSegmentRelService = commerceDiscountUserSegmentRelService;
 	}
 
+	@Override
+	public com.liferay.commerce.discount.model.CommerceDiscountUserSegmentRel addCommerceDiscountUserSegmentRel(
+		long commerceDiscountId, long commerceUserSegmentEntryId,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceDiscountUserSegmentRelService.addCommerceDiscountUserSegmentRel(commerceDiscountId,
+			commerceUserSegmentEntryId, serviceContext);
+	}
+
+	@Override
+	public void deleteCommerceDiscountUserSegmentRel(
+		long commerceDiscountUserSegmentRelId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_commerceDiscountUserSegmentRelService.deleteCommerceDiscountUserSegmentRel(commerceDiscountUserSegmentRelId);
+	}
+
 	/**
 	* Returns the OSGi service identifier.
 	*

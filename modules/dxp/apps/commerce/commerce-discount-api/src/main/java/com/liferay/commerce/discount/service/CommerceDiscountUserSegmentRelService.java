@@ -16,11 +16,14 @@ package com.liferay.commerce.discount.service;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.commerce.discount.model.CommerceDiscountUserSegmentRel;
+
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
 import com.liferay.portal.kernel.security.access.control.AccessControlled;
 import com.liferay.portal.kernel.service.BaseService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -49,6 +52,12 @@ public interface CommerceDiscountUserSegmentRelService extends BaseService {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CommerceDiscountUserSegmentRelServiceUtil} to access the commerce discount user segment rel remote service. Add custom service methods to {@link com.liferay.commerce.discount.service.impl.CommerceDiscountUserSegmentRelServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public CommerceDiscountUserSegmentRel addCommerceDiscountUserSegmentRel(
+		long commerceDiscountId, long commerceUserSegmentEntryId,
+		ServiceContext serviceContext) throws PortalException;
+
+	public void deleteCommerceDiscountUserSegmentRel(
+		long commerceDiscountUserSegmentRelId) throws PortalException;
 
 	/**
 	* Returns the OSGi service identifier.

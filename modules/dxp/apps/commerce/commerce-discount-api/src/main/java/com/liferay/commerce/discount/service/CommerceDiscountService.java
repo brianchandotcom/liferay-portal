@@ -16,14 +16,19 @@ package com.liferay.commerce.discount.service;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.commerce.discount.model.CommerceDiscount;
+
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
 import com.liferay.portal.kernel.security.access.control.AccessControlled;
 import com.liferay.portal.kernel.service.BaseService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Transactional;
+
+import java.math.BigDecimal;
 
 /**
  * Provides the remote service interface for CommerceDiscount. Methods of this
@@ -49,6 +54,21 @@ public interface CommerceDiscountService extends BaseService {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CommerceDiscountServiceUtil} to access the commerce discount remote service. Add custom service methods to {@link com.liferay.commerce.discount.service.impl.CommerceDiscountServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public CommerceDiscount addCommerceDiscount(java.lang.String title,
+		java.lang.String target, java.lang.String type,
+		java.lang.String typeSettings, boolean useCouponCode,
+		java.lang.String couponCode, java.lang.String limitationType,
+		int limitationTimes, int numberOfUse, boolean cumulative,
+		boolean usePercentage, BigDecimal level1, BigDecimal level2,
+		BigDecimal level3, BigDecimal maximumDiscountAmount, boolean active,
+		int displayDateMonth, int displayDateDay, int displayDateYear,
+		int displayDateHour, int displayDateMinute, int expirationDateMonth,
+		int expirationDateDay, int expirationDateYear, int expirationDateHour,
+		int expirationDateMinute, boolean neverExpire,
+		ServiceContext serviceContext) throws PortalException;
+
+	public void deleteCommerceDiscount(long commerceDiscountId)
+		throws PortalException;
 
 	/**
 	* Returns the OSGi service identifier.
@@ -56,4 +76,17 @@ public interface CommerceDiscountService extends BaseService {
 	* @return the OSGi service identifier
 	*/
 	public java.lang.String getOSGiServiceIdentifier();
+
+	public CommerceDiscount updateCommerceDiscount(long commerceDiscountId,
+		java.lang.String title, java.lang.String target, java.lang.String type,
+		java.lang.String typeSettings, boolean useCouponCode,
+		java.lang.String couponCode, java.lang.String limitationType,
+		int limitationTimes, int numberOfUse, boolean cumulative,
+		boolean usePercentage, BigDecimal level1, BigDecimal level2,
+		BigDecimal level3, BigDecimal maximumDiscountAmount, boolean active,
+		int displayDateMonth, int displayDateDay, int displayDateYear,
+		int displayDateHour, int displayDateMinute, int expirationDateMonth,
+		int expirationDateDay, int expirationDateYear, int expirationDateHour,
+		int expirationDateMinute, boolean neverExpire,
+		ServiceContext serviceContext) throws PortalException;
 }

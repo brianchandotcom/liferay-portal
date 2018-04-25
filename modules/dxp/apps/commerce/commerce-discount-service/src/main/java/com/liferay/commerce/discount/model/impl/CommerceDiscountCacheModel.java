@@ -67,7 +67,7 @@ public class CommerceDiscountCacheModel implements CacheModel<CommerceDiscount>,
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(59);
+		StringBundler sb = new StringBundler(63);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -85,14 +85,14 @@ public class CommerceDiscountCacheModel implements CacheModel<CommerceDiscount>,
 		sb.append(createDate);
 		sb.append(", modifiedDate=");
 		sb.append(modifiedDate);
+		sb.append(", title=");
+		sb.append(title);
 		sb.append(", target=");
 		sb.append(target);
 		sb.append(", type=");
 		sb.append(type);
 		sb.append(", typeSettings=");
 		sb.append(typeSettings);
-		sb.append(", title=");
-		sb.append(title);
 		sb.append(", useCouponCode=");
 		sb.append(useCouponCode);
 		sb.append(", couponCode=");
@@ -117,6 +117,10 @@ public class CommerceDiscountCacheModel implements CacheModel<CommerceDiscount>,
 		sb.append(maximumDiscountAmount);
 		sb.append(", active=");
 		sb.append(active);
+		sb.append(", displayDate=");
+		sb.append(displayDate);
+		sb.append(", expirationDate=");
+		sb.append(expirationDate);
 		sb.append(", lastPublishDate=");
 		sb.append(lastPublishDate);
 		sb.append(", status=");
@@ -169,6 +173,13 @@ public class CommerceDiscountCacheModel implements CacheModel<CommerceDiscount>,
 			commerceDiscountImpl.setModifiedDate(new Date(modifiedDate));
 		}
 
+		if (title == null) {
+			commerceDiscountImpl.setTitle("");
+		}
+		else {
+			commerceDiscountImpl.setTitle(title);
+		}
+
 		if (target == null) {
 			commerceDiscountImpl.setTarget("");
 		}
@@ -188,13 +199,6 @@ public class CommerceDiscountCacheModel implements CacheModel<CommerceDiscount>,
 		}
 		else {
 			commerceDiscountImpl.setTypeSettings(typeSettings);
-		}
-
-		if (title == null) {
-			commerceDiscountImpl.setTitle("");
-		}
-		else {
-			commerceDiscountImpl.setTitle(title);
 		}
 
 		commerceDiscountImpl.setUseCouponCode(useCouponCode);
@@ -222,6 +226,20 @@ public class CommerceDiscountCacheModel implements CacheModel<CommerceDiscount>,
 		commerceDiscountImpl.setLevel3(level3);
 		commerceDiscountImpl.setMaximumDiscountAmount(maximumDiscountAmount);
 		commerceDiscountImpl.setActive(active);
+
+		if (displayDate == Long.MIN_VALUE) {
+			commerceDiscountImpl.setDisplayDate(null);
+		}
+		else {
+			commerceDiscountImpl.setDisplayDate(new Date(displayDate));
+		}
+
+		if (expirationDate == Long.MIN_VALUE) {
+			commerceDiscountImpl.setExpirationDate(null);
+		}
+		else {
+			commerceDiscountImpl.setExpirationDate(new Date(expirationDate));
+		}
 
 		if (lastPublishDate == Long.MIN_VALUE) {
 			commerceDiscountImpl.setLastPublishDate(null);
@@ -267,10 +285,10 @@ public class CommerceDiscountCacheModel implements CacheModel<CommerceDiscount>,
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
+		title = objectInput.readUTF();
 		target = objectInput.readUTF();
 		type = objectInput.readUTF();
 		typeSettings = objectInput.readUTF();
-		title = objectInput.readUTF();
 
 		useCouponCode = objectInput.readBoolean();
 		couponCode = objectInput.readUTF();
@@ -289,6 +307,8 @@ public class CommerceDiscountCacheModel implements CacheModel<CommerceDiscount>,
 		maximumDiscountAmount = (BigDecimal)objectInput.readObject();
 
 		active = objectInput.readBoolean();
+		displayDate = objectInput.readLong();
+		expirationDate = objectInput.readLong();
 		lastPublishDate = objectInput.readLong();
 
 		status = objectInput.readInt();
@@ -326,6 +346,13 @@ public class CommerceDiscountCacheModel implements CacheModel<CommerceDiscount>,
 		objectOutput.writeLong(createDate);
 		objectOutput.writeLong(modifiedDate);
 
+		if (title == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(title);
+		}
+
 		if (target == null) {
 			objectOutput.writeUTF("");
 		}
@@ -345,13 +372,6 @@ public class CommerceDiscountCacheModel implements CacheModel<CommerceDiscount>,
 		}
 		else {
 			objectOutput.writeUTF(typeSettings);
-		}
-
-		if (title == null) {
-			objectOutput.writeUTF("");
-		}
-		else {
-			objectOutput.writeUTF(title);
 		}
 
 		objectOutput.writeBoolean(useCouponCode);
@@ -383,6 +403,8 @@ public class CommerceDiscountCacheModel implements CacheModel<CommerceDiscount>,
 		objectOutput.writeObject(maximumDiscountAmount);
 
 		objectOutput.writeBoolean(active);
+		objectOutput.writeLong(displayDate);
+		objectOutput.writeLong(expirationDate);
 		objectOutput.writeLong(lastPublishDate);
 
 		objectOutput.writeInt(status);
@@ -407,10 +429,10 @@ public class CommerceDiscountCacheModel implements CacheModel<CommerceDiscount>,
 	public String userName;
 	public long createDate;
 	public long modifiedDate;
+	public String title;
 	public String target;
 	public String type;
 	public String typeSettings;
-	public String title;
 	public boolean useCouponCode;
 	public String couponCode;
 	public String limitationType;
@@ -423,6 +445,8 @@ public class CommerceDiscountCacheModel implements CacheModel<CommerceDiscount>,
 	public BigDecimal level3;
 	public BigDecimal maximumDiscountAmount;
 	public boolean active;
+	public long displayDate;
+	public long expirationDate;
 	public long lastPublishDate;
 	public int status;
 	public long statusByUserId;

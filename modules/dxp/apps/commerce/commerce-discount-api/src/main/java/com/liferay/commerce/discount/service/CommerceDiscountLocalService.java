@@ -28,10 +28,15 @@ import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.PersistedModel;
+import com.liferay.portal.kernel.model.SystemEventConstants;
+import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
+import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.service.BaseLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -39,7 +44,10 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.io.Serializable;
 
+import java.math.BigDecimal;
+
 import java.util.List;
+import java.util.Map;
 
 /**
  * Provides the local service interface for CommerceDiscount. Methods of this
@@ -74,6 +82,22 @@ public interface CommerceDiscountLocalService extends BaseLocalService,
 	public CommerceDiscount addCommerceDiscount(
 		CommerceDiscount commerceDiscount);
 
+	@Indexable(type = IndexableType.REINDEX)
+	public CommerceDiscount addCommerceDiscount(java.lang.String title,
+		java.lang.String target, java.lang.String type,
+		java.lang.String typeSettings, boolean useCouponCode,
+		java.lang.String couponCode, java.lang.String limitationType,
+		int limitationTimes, int numberOfUse, boolean cumulative,
+		boolean usePercentage, BigDecimal level1, BigDecimal level2,
+		BigDecimal level3, BigDecimal maximumDiscountAmount, boolean active,
+		int displayDateMonth, int displayDateDay, int displayDateYear,
+		int displayDateHour, int displayDateMinute, int expirationDateMonth,
+		int expirationDateDay, int expirationDateYear, int expirationDateHour,
+		int expirationDateMinute, boolean neverExpire,
+		ServiceContext serviceContext) throws PortalException;
+
+	public void checkCommerceDiscounts() throws PortalException;
+
 	/**
 	* Creates a new commerce discount with the primary key. Does not add the commerce discount to the database.
 	*
@@ -88,10 +112,12 @@ public interface CommerceDiscountLocalService extends BaseLocalService,
 	*
 	* @param commerceDiscount the commerce discount
 	* @return the commerce discount that was removed
+	* @throws PortalException
 	*/
 	@Indexable(type = IndexableType.DELETE)
+	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
 	public CommerceDiscount deleteCommerceDiscount(
-		CommerceDiscount commerceDiscount);
+		CommerceDiscount commerceDiscount) throws PortalException;
 
 	/**
 	* Deletes the commerce discount with the primary key from the database. Also notifies the appropriate model listeners.
@@ -103,6 +129,8 @@ public interface CommerceDiscountLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.DELETE)
 	public CommerceDiscount deleteCommerceDiscount(long commerceDiscountId)
 		throws PortalException;
+
+	public void deleteCommerceDiscounts(long groupId) throws PortalException;
 
 	/**
 	* @throws PortalException
@@ -277,6 +305,11 @@ public interface CommerceDiscountLocalService extends BaseLocalService,
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public BaseModelSearchResult<CommerceDiscount> searchCommerceDiscounts(
+		long companyId, long groupId, java.lang.String keywords, int status,
+		int start, int end, Sort sort) throws PortalException;
+
 	/**
 	* Updates the commerce discount in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
@@ -286,4 +319,24 @@ public interface CommerceDiscountLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.REINDEX)
 	public CommerceDiscount updateCommerceDiscount(
 		CommerceDiscount commerceDiscount);
+
+	@Indexable(type = IndexableType.REINDEX)
+	public CommerceDiscount updateCommerceDiscount(long commerceDiscountId,
+		java.lang.String title, java.lang.String target, java.lang.String type,
+		java.lang.String typeSettings, boolean useCouponCode,
+		java.lang.String couponCode, java.lang.String limitationType,
+		int limitationTimes, int numberOfUse, boolean cumulative,
+		boolean usePercentage, BigDecimal level1, BigDecimal level2,
+		BigDecimal level3, BigDecimal maximumDiscountAmount, boolean active,
+		int displayDateMonth, int displayDateDay, int displayDateYear,
+		int displayDateHour, int displayDateMinute, int expirationDateMonth,
+		int expirationDateDay, int expirationDateYear, int expirationDateHour,
+		int expirationDateMinute, boolean neverExpire,
+		ServiceContext serviceContext) throws PortalException;
+
+	@Indexable(type = IndexableType.REINDEX)
+	public CommerceDiscount updateStatus(long userId, long commerceDiscountId,
+		int status, ServiceContext serviceContext,
+		Map<java.lang.String, Serializable> workflowContext)
+		throws PortalException;
 }

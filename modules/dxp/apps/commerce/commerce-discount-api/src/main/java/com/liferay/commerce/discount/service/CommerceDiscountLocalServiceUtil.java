@@ -54,6 +54,36 @@ public class CommerceDiscountLocalServiceUtil {
 		return getService().addCommerceDiscount(commerceDiscount);
 	}
 
+	public static com.liferay.commerce.discount.model.CommerceDiscount addCommerceDiscount(
+		java.lang.String title, java.lang.String target, java.lang.String type,
+		java.lang.String typeSettings, boolean useCouponCode,
+		java.lang.String couponCode, java.lang.String limitationType,
+		int limitationTimes, int numberOfUse, boolean cumulative,
+		boolean usePercentage, java.math.BigDecimal level1,
+		java.math.BigDecimal level2, java.math.BigDecimal level3,
+		java.math.BigDecimal maximumDiscountAmount, boolean active,
+		int displayDateMonth, int displayDateDay, int displayDateYear,
+		int displayDateHour, int displayDateMinute, int expirationDateMonth,
+		int expirationDateDay, int expirationDateYear, int expirationDateHour,
+		int expirationDateMinute, boolean neverExpire,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .addCommerceDiscount(title, target, type, typeSettings,
+			useCouponCode, couponCode, limitationType, limitationTimes,
+			numberOfUse, cumulative, usePercentage, level1, level2, level3,
+			maximumDiscountAmount, active, displayDateMonth, displayDateDay,
+			displayDateYear, displayDateHour, displayDateMinute,
+			expirationDateMonth, expirationDateDay, expirationDateYear,
+			expirationDateHour, expirationDateMinute, neverExpire,
+			serviceContext);
+	}
+
+	public static void checkCommerceDiscounts()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().checkCommerceDiscounts();
+	}
+
 	/**
 	* Creates a new commerce discount with the primary key. Does not add the commerce discount to the database.
 	*
@@ -70,9 +100,11 @@ public class CommerceDiscountLocalServiceUtil {
 	*
 	* @param commerceDiscount the commerce discount
 	* @return the commerce discount that was removed
+	* @throws PortalException
 	*/
 	public static com.liferay.commerce.discount.model.CommerceDiscount deleteCommerceDiscount(
-		com.liferay.commerce.discount.model.CommerceDiscount commerceDiscount) {
+		com.liferay.commerce.discount.model.CommerceDiscount commerceDiscount)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().deleteCommerceDiscount(commerceDiscount);
 	}
 
@@ -87,6 +119,11 @@ public class CommerceDiscountLocalServiceUtil {
 		long commerceDiscountId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().deleteCommerceDiscount(commerceDiscountId);
+	}
+
+	public static void deleteCommerceDiscounts(long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().deleteCommerceDiscounts(groupId);
 	}
 
 	/**
@@ -304,6 +341,15 @@ public class CommerceDiscountLocalServiceUtil {
 		return getService().getPersistedModel(primaryKeyObj);
 	}
 
+	public static com.liferay.portal.kernel.search.BaseModelSearchResult<com.liferay.commerce.discount.model.CommerceDiscount> searchCommerceDiscounts(
+		long companyId, long groupId, java.lang.String keywords, int status,
+		int start, int end, com.liferay.portal.kernel.search.Sort sort)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .searchCommerceDiscounts(companyId, groupId, keywords,
+			status, start, end, sort);
+	}
+
 	/**
 	* Updates the commerce discount in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
@@ -313,6 +359,42 @@ public class CommerceDiscountLocalServiceUtil {
 	public static com.liferay.commerce.discount.model.CommerceDiscount updateCommerceDiscount(
 		com.liferay.commerce.discount.model.CommerceDiscount commerceDiscount) {
 		return getService().updateCommerceDiscount(commerceDiscount);
+	}
+
+	public static com.liferay.commerce.discount.model.CommerceDiscount updateCommerceDiscount(
+		long commerceDiscountId, java.lang.String title,
+		java.lang.String target, java.lang.String type,
+		java.lang.String typeSettings, boolean useCouponCode,
+		java.lang.String couponCode, java.lang.String limitationType,
+		int limitationTimes, int numberOfUse, boolean cumulative,
+		boolean usePercentage, java.math.BigDecimal level1,
+		java.math.BigDecimal level2, java.math.BigDecimal level3,
+		java.math.BigDecimal maximumDiscountAmount, boolean active,
+		int displayDateMonth, int displayDateDay, int displayDateYear,
+		int displayDateHour, int displayDateMinute, int expirationDateMonth,
+		int expirationDateDay, int expirationDateYear, int expirationDateHour,
+		int expirationDateMinute, boolean neverExpire,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .updateCommerceDiscount(commerceDiscountId, title, target,
+			type, typeSettings, useCouponCode, couponCode, limitationType,
+			limitationTimes, numberOfUse, cumulative, usePercentage, level1,
+			level2, level3, maximumDiscountAmount, active, displayDateMonth,
+			displayDateDay, displayDateYear, displayDateHour,
+			displayDateMinute, expirationDateMonth, expirationDateDay,
+			expirationDateYear, expirationDateHour, expirationDateMinute,
+			neverExpire, serviceContext);
+	}
+
+	public static com.liferay.commerce.discount.model.CommerceDiscount updateStatus(
+		long userId, long commerceDiscountId, int status,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext,
+		java.util.Map<java.lang.String, java.io.Serializable> workflowContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .updateStatus(userId, commerceDiscountId, status,
+			serviceContext, workflowContext);
 	}
 
 	public static CommerceDiscountLocalService getService() {

@@ -44,10 +44,10 @@ public class CommerceDiscountSoap implements Serializable {
 		soapModel.setUserName(model.getUserName());
 		soapModel.setCreateDate(model.getCreateDate());
 		soapModel.setModifiedDate(model.getModifiedDate());
+		soapModel.setTitle(model.getTitle());
 		soapModel.setTarget(model.getTarget());
 		soapModel.setType(model.getType());
 		soapModel.setTypeSettings(model.getTypeSettings());
-		soapModel.setTitle(model.getTitle());
 		soapModel.setUseCouponCode(model.isUseCouponCode());
 		soapModel.setCouponCode(model.getCouponCode());
 		soapModel.setLimitationType(model.getLimitationType());
@@ -60,6 +60,8 @@ public class CommerceDiscountSoap implements Serializable {
 		soapModel.setLevel3(model.getLevel3());
 		soapModel.setMaximumDiscountAmount(model.getMaximumDiscountAmount());
 		soapModel.setActive(model.isActive());
+		soapModel.setDisplayDate(model.getDisplayDate());
+		soapModel.setExpirationDate(model.getExpirationDate());
 		soapModel.setLastPublishDate(model.getLastPublishDate());
 		soapModel.setStatus(model.getStatus());
 		soapModel.setStatusByUserId(model.getStatusByUserId());
@@ -183,6 +185,14 @@ public class CommerceDiscountSoap implements Serializable {
 		_modifiedDate = modifiedDate;
 	}
 
+	public String getTitle() {
+		return _title;
+	}
+
+	public void setTitle(String title) {
+		_title = title;
+	}
+
 	public String getTarget() {
 		return _target;
 	}
@@ -205,14 +215,6 @@ public class CommerceDiscountSoap implements Serializable {
 
 	public void setTypeSettings(String typeSettings) {
 		_typeSettings = typeSettings;
-	}
-
-	public String getTitle() {
-		return _title;
-	}
-
-	public void setTitle(String title) {
-		_title = title;
 	}
 
 	public boolean getUseCouponCode() {
@@ -327,6 +329,22 @@ public class CommerceDiscountSoap implements Serializable {
 		_active = active;
 	}
 
+	public Date getDisplayDate() {
+		return _displayDate;
+	}
+
+	public void setDisplayDate(Date displayDate) {
+		_displayDate = displayDate;
+	}
+
+	public Date getExpirationDate() {
+		return _expirationDate;
+	}
+
+	public void setExpirationDate(Date expirationDate) {
+		_expirationDate = expirationDate;
+	}
+
 	public Date getLastPublishDate() {
 		return _lastPublishDate;
 	}
@@ -375,10 +393,10 @@ public class CommerceDiscountSoap implements Serializable {
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
+	private String _title;
 	private String _target;
 	private String _type;
 	private String _typeSettings;
-	private String _title;
 	private boolean _useCouponCode;
 	private String _couponCode;
 	private String _limitationType;
@@ -391,6 +409,8 @@ public class CommerceDiscountSoap implements Serializable {
 	private BigDecimal _level3;
 	private BigDecimal _maximumDiscountAmount;
 	private boolean _active;
+	private Date _displayDate;
+	private Date _expirationDate;
 	private Date _lastPublishDate;
 	private int _status;
 	private long _statusByUserId;

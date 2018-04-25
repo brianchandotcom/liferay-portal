@@ -55,6 +55,15 @@ public class CommerceDiscountUserSegmentRelLocalServiceUtil {
 				   .addCommerceDiscountUserSegmentRel(commerceDiscountUserSegmentRel);
 	}
 
+	public static com.liferay.commerce.discount.model.CommerceDiscountUserSegmentRel addCommerceDiscountUserSegmentRel(
+		long commerceDiscountId, long commerceUserSegmentEntryId,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .addCommerceDiscountUserSegmentRel(commerceDiscountId,
+			commerceUserSegmentEntryId, serviceContext);
+	}
+
 	/**
 	* Creates a new commerce discount user segment rel with the primary key. Does not add the commerce discount user segment rel to the database.
 	*
@@ -91,6 +100,18 @@ public class CommerceDiscountUserSegmentRelLocalServiceUtil {
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .deleteCommerceDiscountUserSegmentRel(commerceDiscountUserSegmentRelId);
+	}
+
+	public static void deleteCommerceDiscountUserSegmentRelsByCommerceDiscountId(
+		long commerceDiscountId) {
+		getService()
+			.deleteCommerceDiscountUserSegmentRelsByCommerceDiscountId(commerceDiscountId);
+	}
+
+	public static void deleteCommerceDiscountUserSegmentRelsByCommerceUserSegmentEntryId(
+		long commerceUserSegmentEntryId) {
+		getService()
+			.deleteCommerceDiscountUserSegmentRelsByCommerceUserSegmentEntryId(commerceUserSegmentEntryId);
 	}
 
 	/**

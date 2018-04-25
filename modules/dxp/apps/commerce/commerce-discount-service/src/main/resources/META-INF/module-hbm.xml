@@ -16,10 +16,10 @@
 		<property name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="createDate" type="org.hibernate.type.TimestampType" />
 		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
+		<property name="title" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="target" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property column="type_" name="type" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="typeSettings" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="title" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="useCouponCode" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
 		<property name="couponCode" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="limitationType" type="com.liferay.portal.dao.orm.hibernate.StringType" />
@@ -32,6 +32,8 @@
 		<property name="level3" type="org.hibernate.type.BigDecimalType" />
 		<property name="maximumDiscountAmount" type="org.hibernate.type.BigDecimalType" />
 		<property column="active_" name="active" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="displayDate" type="org.hibernate.type.TimestampType" />
+		<property name="expirationDate" type="org.hibernate.type.TimestampType" />
 		<property name="lastPublishDate" type="org.hibernate.type.TimestampType" />
 		<property name="status" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 		<property name="statusByUserId" type="com.liferay.portal.dao.orm.hibernate.LongType" />

@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -71,6 +72,11 @@ public interface CommerceDiscountRuleLocalService extends BaseLocalService,
 	public CommerceDiscountRule addCommerceDiscountRule(
 		CommerceDiscountRule commerceDiscountRule);
 
+	public CommerceDiscountRule addCommerceDiscountRule(
+		long commerceDiscountId, java.lang.String type,
+		java.lang.String typeSettings, ServiceContext serviceContext)
+		throws PortalException;
+
 	/**
 	* Creates a new commerce discount rule with the primary key. Does not add the commerce discount rule to the database.
 	*
@@ -101,6 +107,8 @@ public interface CommerceDiscountRuleLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.DELETE)
 	public CommerceDiscountRule deleteCommerceDiscountRule(
 		long commerceDiscountRuleId) throws PortalException;
+
+	public void deleteCommerceDiscountRules(long commerceDiscountId);
 
 	/**
 	* @throws PortalException
@@ -233,4 +241,8 @@ public interface CommerceDiscountRuleLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.REINDEX)
 	public CommerceDiscountRule updateCommerceDiscountRule(
 		CommerceDiscountRule commerceDiscountRule);
+
+	public CommerceDiscountRule updateCommerceDiscountRule(
+		long commerceDiscountRuleId, java.lang.String type,
+		java.lang.String typeSettings) throws PortalException;
 }

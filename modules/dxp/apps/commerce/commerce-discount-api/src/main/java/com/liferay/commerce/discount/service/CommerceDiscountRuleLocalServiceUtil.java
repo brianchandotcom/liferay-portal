@@ -54,6 +54,16 @@ public class CommerceDiscountRuleLocalServiceUtil {
 		return getService().addCommerceDiscountRule(commerceDiscountRule);
 	}
 
+	public static com.liferay.commerce.discount.model.CommerceDiscountRule addCommerceDiscountRule(
+		long commerceDiscountId, java.lang.String type,
+		java.lang.String typeSettings,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .addCommerceDiscountRule(commerceDiscountId, type,
+			typeSettings, serviceContext);
+	}
+
 	/**
 	* Creates a new commerce discount rule with the primary key. Does not add the commerce discount rule to the database.
 	*
@@ -87,6 +97,10 @@ public class CommerceDiscountRuleLocalServiceUtil {
 		long commerceDiscountRuleId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().deleteCommerceDiscountRule(commerceDiscountRuleId);
+	}
+
+	public static void deleteCommerceDiscountRules(long commerceDiscountId) {
+		getService().deleteCommerceDiscountRules(commerceDiscountId);
 	}
 
 	/**
@@ -251,6 +265,15 @@ public class CommerceDiscountRuleLocalServiceUtil {
 	public static com.liferay.commerce.discount.model.CommerceDiscountRule updateCommerceDiscountRule(
 		com.liferay.commerce.discount.model.CommerceDiscountRule commerceDiscountRule) {
 		return getService().updateCommerceDiscountRule(commerceDiscountRule);
+	}
+
+	public static com.liferay.commerce.discount.model.CommerceDiscountRule updateCommerceDiscountRule(
+		long commerceDiscountRuleId, java.lang.String type,
+		java.lang.String typeSettings)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .updateCommerceDiscountRule(commerceDiscountRuleId, type,
+			typeSettings);
 	}
 
 	public static CommerceDiscountRuleLocalService getService() {

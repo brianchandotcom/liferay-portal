@@ -16,12 +16,21 @@ package com.liferay.commerce.discount.service.http;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.commerce.discount.service.CommerceDiscountRuleServiceUtil;
+
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.security.auth.HttpPrincipal;
+import com.liferay.portal.kernel.service.http.TunnelUtil;
+import com.liferay.portal.kernel.util.MethodHandler;
+import com.liferay.portal.kernel.util.MethodKey;
+
 /**
  * Provides the HTTP utility for the
- * {@link com.liferay.commerce.discount.service.CommerceDiscountRuleServiceUtil} service utility. The
+ * {@link CommerceDiscountRuleServiceUtil} service utility. The
  * static methods of this class calls the same methods of the service utility.
  * However, the signatures are different because it requires an additional
- * {@link com.liferay.portal.kernel.security.auth.HttpPrincipal} parameter.
+ * {@link HttpPrincipal} parameter.
  *
  * <p>
  * The benefits of using the HTTP utility is that it is fast and allows for
@@ -40,10 +49,119 @@ import aQute.bnd.annotation.ProviderType;
  *
  * @author Marco Leo
  * @see CommerceDiscountRuleServiceSoap
- * @see com.liferay.portal.kernel.security.auth.HttpPrincipal
- * @see com.liferay.commerce.discount.service.CommerceDiscountRuleServiceUtil
+ * @see HttpPrincipal
+ * @see CommerceDiscountRuleServiceUtil
  * @generated
  */
 @ProviderType
 public class CommerceDiscountRuleServiceHttp {
+	public static com.liferay.commerce.discount.model.CommerceDiscountRule addCommerceDiscountRule(
+		HttpPrincipal httpPrincipal, long commerceDiscountId,
+		java.lang.String type, java.lang.String typeSettings,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		try {
+			MethodKey methodKey = new MethodKey(CommerceDiscountRuleServiceUtil.class,
+					"addCommerceDiscountRule",
+					_addCommerceDiscountRuleParameterTypes0);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey,
+					commerceDiscountId, type, typeSettings, serviceContext);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return (com.liferay.commerce.discount.model.CommerceDiscountRule)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
+	public static void deleteCommerceDiscountRule(HttpPrincipal httpPrincipal,
+		long commerceDiscountRuleId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		try {
+			MethodKey methodKey = new MethodKey(CommerceDiscountRuleServiceUtil.class,
+					"deleteCommerceDiscountRule",
+					_deleteCommerceDiscountRuleParameterTypes1);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey,
+					commerceDiscountRuleId);
+
+			try {
+				TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
+	public static com.liferay.commerce.discount.model.CommerceDiscountRule updateCommerceDiscountRule(
+		HttpPrincipal httpPrincipal, long commerceDiscountRuleId,
+		java.lang.String type, java.lang.String typeSettings)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		try {
+			MethodKey methodKey = new MethodKey(CommerceDiscountRuleServiceUtil.class,
+					"updateCommerceDiscountRule",
+					_updateCommerceDiscountRuleParameterTypes2);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey,
+					commerceDiscountRuleId, type, typeSettings);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return (com.liferay.commerce.discount.model.CommerceDiscountRule)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
+	private static Log _log = LogFactoryUtil.getLog(CommerceDiscountRuleServiceHttp.class);
+	private static final Class<?>[] _addCommerceDiscountRuleParameterTypes0 = new Class[] {
+			long.class, java.lang.String.class, java.lang.String.class,
+			com.liferay.portal.kernel.service.ServiceContext.class
+		};
+	private static final Class<?>[] _deleteCommerceDiscountRuleParameterTypes1 = new Class[] {
+			long.class
+		};
+	private static final Class<?>[] _updateCommerceDiscountRuleParameterTypes2 = new Class[] {
+			long.class, java.lang.String.class, java.lang.String.class
+		};
 }

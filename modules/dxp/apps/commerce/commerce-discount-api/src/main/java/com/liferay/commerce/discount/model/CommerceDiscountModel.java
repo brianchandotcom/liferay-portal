@@ -213,6 +213,21 @@ public interface CommerceDiscountModel extends BaseModel<CommerceDiscount>,
 	public void setModifiedDate(Date modifiedDate);
 
 	/**
+	 * Returns the title of this commerce discount.
+	 *
+	 * @return the title of this commerce discount
+	 */
+	@AutoEscape
+	public String getTitle();
+
+	/**
+	 * Sets the title of this commerce discount.
+	 *
+	 * @param title the title of this commerce discount
+	 */
+	public void setTitle(String title);
+
+	/**
 	 * Returns the target of this commerce discount.
 	 *
 	 * @return the target of this commerce discount
@@ -256,21 +271,6 @@ public interface CommerceDiscountModel extends BaseModel<CommerceDiscount>,
 	 * @param typeSettings the type settings of this commerce discount
 	 */
 	public void setTypeSettings(String typeSettings);
-
-	/**
-	 * Returns the title of this commerce discount.
-	 *
-	 * @return the title of this commerce discount
-	 */
-	@AutoEscape
-	public String getTitle();
-
-	/**
-	 * Sets the title of this commerce discount.
-	 *
-	 * @param title the title of this commerce discount
-	 */
-	public void setTitle(String title);
 
 	/**
 	 * Returns the use coupon code of this commerce discount.
@@ -469,6 +469,34 @@ public interface CommerceDiscountModel extends BaseModel<CommerceDiscount>,
 	 * @param active the active of this commerce discount
 	 */
 	public void setActive(boolean active);
+
+	/**
+	 * Returns the display date of this commerce discount.
+	 *
+	 * @return the display date of this commerce discount
+	 */
+	public Date getDisplayDate();
+
+	/**
+	 * Sets the display date of this commerce discount.
+	 *
+	 * @param displayDate the display date of this commerce discount
+	 */
+	public void setDisplayDate(Date displayDate);
+
+	/**
+	 * Returns the expiration date of this commerce discount.
+	 *
+	 * @return the expiration date of this commerce discount
+	 */
+	public Date getExpirationDate();
+
+	/**
+	 * Sets the expiration date of this commerce discount.
+	 *
+	 * @param expirationDate the expiration date of this commerce discount
+	 */
+	public void setExpirationDate(Date expirationDate);
 
 	/**
 	 * Returns the last publish date of this commerce discount.

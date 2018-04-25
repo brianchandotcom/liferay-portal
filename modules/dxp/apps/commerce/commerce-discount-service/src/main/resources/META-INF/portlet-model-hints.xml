@@ -10,10 +10,10 @@
 		<field name="userName" type="String" />
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
+		<field name="title" type="String" />
 		<field name="target" type="String" />
 		<field name="type" type="String" />
 		<field name="typeSettings" type="String" />
-		<field name="title" type="String" />
 		<field name="useCouponCode" type="boolean" />
 		<field name="couponCode" type="String" />
 		<field name="limitationType" type="String" />
@@ -26,6 +26,8 @@
 		<field name="level3" type="BigDecimal" />
 		<field name="maximumDiscountAmount" type="BigDecimal" />
 		<field name="active" type="boolean" />
+		<field name="displayDate" type="Date" />
+		<field name="expirationDate" type="Date" />
 		<field name="lastPublishDate" type="Date" />
 		<field name="status" type="int" />
 		<field name="statusByUserId" type="long" />

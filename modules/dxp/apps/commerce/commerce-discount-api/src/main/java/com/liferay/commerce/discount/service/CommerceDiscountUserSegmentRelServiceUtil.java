@@ -42,6 +42,21 @@ public class CommerceDiscountUserSegmentRelServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.commerce.discount.service.impl.CommerceDiscountUserSegmentRelServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static com.liferay.commerce.discount.model.CommerceDiscountUserSegmentRel addCommerceDiscountUserSegmentRel(
+		long commerceDiscountId, long commerceUserSegmentEntryId,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .addCommerceDiscountUserSegmentRel(commerceDiscountId,
+			commerceUserSegmentEntryId, serviceContext);
+	}
+
+	public static void deleteCommerceDiscountUserSegmentRel(
+		long commerceDiscountUserSegmentRelId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService()
+			.deleteCommerceDiscountUserSegmentRel(commerceDiscountUserSegmentRelId);
+	}
 
 	/**
 	* Returns the OSGi service identifier.

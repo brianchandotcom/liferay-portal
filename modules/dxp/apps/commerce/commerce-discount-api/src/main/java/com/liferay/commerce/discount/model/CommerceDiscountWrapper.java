@@ -70,10 +70,10 @@ public class CommerceDiscountWrapper implements CommerceDiscount,
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
+		attributes.put("title", getTitle());
 		attributes.put("target", getTarget());
 		attributes.put("type", getType());
 		attributes.put("typeSettings", getTypeSettings());
-		attributes.put("title", getTitle());
 		attributes.put("useCouponCode", isUseCouponCode());
 		attributes.put("couponCode", getCouponCode());
 		attributes.put("limitationType", getLimitationType());
@@ -86,6 +86,8 @@ public class CommerceDiscountWrapper implements CommerceDiscount,
 		attributes.put("level3", getLevel3());
 		attributes.put("maximumDiscountAmount", getMaximumDiscountAmount());
 		attributes.put("active", isActive());
+		attributes.put("displayDate", getDisplayDate());
+		attributes.put("expirationDate", getExpirationDate());
 		attributes.put("lastPublishDate", getLastPublishDate());
 		attributes.put("status", getStatus());
 		attributes.put("statusByUserId", getStatusByUserId());
@@ -145,6 +147,12 @@ public class CommerceDiscountWrapper implements CommerceDiscount,
 			setModifiedDate(modifiedDate);
 		}
 
+		String title = (String)attributes.get("title");
+
+		if (title != null) {
+			setTitle(title);
+		}
+
 		String target = (String)attributes.get("target");
 
 		if (target != null) {
@@ -161,12 +169,6 @@ public class CommerceDiscountWrapper implements CommerceDiscount,
 
 		if (typeSettings != null) {
 			setTypeSettings(typeSettings);
-		}
-
-		String title = (String)attributes.get("title");
-
-		if (title != null) {
-			setTitle(title);
 		}
 
 		Boolean useCouponCode = (Boolean)attributes.get("useCouponCode");
@@ -240,6 +242,18 @@ public class CommerceDiscountWrapper implements CommerceDiscount,
 
 		if (active != null) {
 			setActive(active);
+		}
+
+		Date displayDate = (Date)attributes.get("displayDate");
+
+		if (displayDate != null) {
+			setDisplayDate(displayDate);
+		}
+
+		Date expirationDate = (Date)attributes.get("expirationDate");
+
+		if (expirationDate != null) {
+			setExpirationDate(expirationDate);
 		}
 
 		Date lastPublishDate = (Date)attributes.get("lastPublishDate");
@@ -343,9 +357,29 @@ public class CommerceDiscountWrapper implements CommerceDiscount,
 		return _commerceDiscount.getCumulative();
 	}
 
+	/**
+	* Returns the display date of this commerce discount.
+	*
+	* @return the display date of this commerce discount
+	*/
+	@Override
+	public Date getDisplayDate() {
+		return _commerceDiscount.getDisplayDate();
+	}
+
 	@Override
 	public ExpandoBridge getExpandoBridge() {
 		return _commerceDiscount.getExpandoBridge();
+	}
+
+	/**
+	* Returns the expiration date of this commerce discount.
+	*
+	* @return the expiration date of this commerce discount
+	*/
+	@Override
+	public Date getExpirationDate() {
+		return _commerceDiscount.getExpirationDate();
 	}
 
 	/**
@@ -823,6 +857,16 @@ public class CommerceDiscountWrapper implements CommerceDiscount,
 		_commerceDiscount.setCumulative(cumulative);
 	}
 
+	/**
+	* Sets the display date of this commerce discount.
+	*
+	* @param displayDate the display date of this commerce discount
+	*/
+	@Override
+	public void setDisplayDate(Date displayDate) {
+		_commerceDiscount.setDisplayDate(displayDate);
+	}
+
 	@Override
 	public void setExpandoBridgeAttributes(
 		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
@@ -837,6 +881,16 @@ public class CommerceDiscountWrapper implements CommerceDiscount,
 	@Override
 	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
 		_commerceDiscount.setExpandoBridgeAttributes(serviceContext);
+	}
+
+	/**
+	* Sets the expiration date of this commerce discount.
+	*
+	* @param expirationDate the expiration date of this commerce discount
+	*/
+	@Override
+	public void setExpirationDate(Date expirationDate) {
+		_commerceDiscount.setExpirationDate(expirationDate);
 	}
 
 	/**

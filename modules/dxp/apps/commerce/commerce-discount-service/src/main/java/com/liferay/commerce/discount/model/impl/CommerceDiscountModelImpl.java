@@ -84,10 +84,10 @@ public class CommerceDiscountModelImpl extends BaseModelImpl<CommerceDiscount>
 			{ "userName", Types.VARCHAR },
 			{ "createDate", Types.TIMESTAMP },
 			{ "modifiedDate", Types.TIMESTAMP },
+			{ "title", Types.VARCHAR },
 			{ "target", Types.VARCHAR },
 			{ "type_", Types.VARCHAR },
 			{ "typeSettings", Types.VARCHAR },
-			{ "title", Types.VARCHAR },
 			{ "useCouponCode", Types.BOOLEAN },
 			{ "couponCode", Types.VARCHAR },
 			{ "limitationType", Types.VARCHAR },
@@ -100,6 +100,8 @@ public class CommerceDiscountModelImpl extends BaseModelImpl<CommerceDiscount>
 			{ "level3", Types.DECIMAL },
 			{ "maximumDiscountAmount", Types.DECIMAL },
 			{ "active_", Types.BOOLEAN },
+			{ "displayDate", Types.TIMESTAMP },
+			{ "expirationDate", Types.TIMESTAMP },
 			{ "lastPublishDate", Types.TIMESTAMP },
 			{ "status", Types.INTEGER },
 			{ "statusByUserId", Types.BIGINT },
@@ -117,10 +119,10 @@ public class CommerceDiscountModelImpl extends BaseModelImpl<CommerceDiscount>
 		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
+		TABLE_COLUMNS_MAP.put("title", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("target", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("type_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("typeSettings", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("title", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("useCouponCode", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("couponCode", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("limitationType", Types.VARCHAR);
@@ -133,6 +135,8 @@ public class CommerceDiscountModelImpl extends BaseModelImpl<CommerceDiscount>
 		TABLE_COLUMNS_MAP.put("level3", Types.DECIMAL);
 		TABLE_COLUMNS_MAP.put("maximumDiscountAmount", Types.DECIMAL);
 		TABLE_COLUMNS_MAP.put("active_", Types.BOOLEAN);
+		TABLE_COLUMNS_MAP.put("displayDate", Types.TIMESTAMP);
+		TABLE_COLUMNS_MAP.put("expirationDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("lastPublishDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("status", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("statusByUserId", Types.BIGINT);
@@ -140,10 +144,10 @@ public class CommerceDiscountModelImpl extends BaseModelImpl<CommerceDiscount>
 		TABLE_COLUMNS_MAP.put("statusDate", Types.TIMESTAMP);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table CommerceDiscount (uuid_ VARCHAR(75) null,commerceDiscountId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,target VARCHAR(75) null,type_ VARCHAR(75) null,typeSettings VARCHAR(75) null,title VARCHAR(75) null,useCouponCode BOOLEAN,couponCode VARCHAR(75) null,limitationType VARCHAR(75) null,limitationTimes INTEGER,numberOfUse INTEGER,cumulative BOOLEAN,usePercentage BOOLEAN,level1 DECIMAL(30, 16) null,level2 DECIMAL(30, 16) null,level3 DECIMAL(30, 16) null,maximumDiscountAmount DECIMAL(30, 16) null,active_ BOOLEAN,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table CommerceDiscount (uuid_ VARCHAR(75) null,commerceDiscountId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,title VARCHAR(75) null,target VARCHAR(75) null,type_ VARCHAR(75) null,typeSettings VARCHAR(75) null,useCouponCode BOOLEAN,couponCode VARCHAR(75) null,limitationType VARCHAR(75) null,limitationTimes INTEGER,numberOfUse INTEGER,cumulative BOOLEAN,usePercentage BOOLEAN,level1 DECIMAL(30, 16) null,level2 DECIMAL(30, 16) null,level3 DECIMAL(30, 16) null,maximumDiscountAmount DECIMAL(30, 16) null,active_ BOOLEAN,displayDate DATE null,expirationDate DATE null,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table CommerceDiscount";
-	public static final String ORDER_BY_JPQL = " ORDER BY commerceDiscount.createDate ASC";
-	public static final String ORDER_BY_SQL = " ORDER BY CommerceDiscount.createDate ASC";
+	public static final String ORDER_BY_JPQL = " ORDER BY commerceDiscount.createDate DESC";
+	public static final String ORDER_BY_SQL = " ORDER BY CommerceDiscount.createDate DESC";
 	public static final String DATA_SOURCE = "liferayDataSource";
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
 	public static final String TX_MANAGER = "liferayTransactionManager";
@@ -157,9 +161,12 @@ public class CommerceDiscountModelImpl extends BaseModelImpl<CommerceDiscount>
 				"value.object.column.bitmask.enabled.com.liferay.commerce.discount.model.CommerceDiscount"),
 			true);
 	public static final long COMPANYID_COLUMN_BITMASK = 1L;
-	public static final long GROUPID_COLUMN_BITMASK = 2L;
-	public static final long UUID_COLUMN_BITMASK = 4L;
-	public static final long CREATEDATE_COLUMN_BITMASK = 8L;
+	public static final long DISPLAYDATE_COLUMN_BITMASK = 2L;
+	public static final long EXPIRATIONDATE_COLUMN_BITMASK = 4L;
+	public static final long GROUPID_COLUMN_BITMASK = 8L;
+	public static final long STATUS_COLUMN_BITMASK = 16L;
+	public static final long UUID_COLUMN_BITMASK = 32L;
+	public static final long CREATEDATE_COLUMN_BITMASK = 64L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -182,10 +189,10 @@ public class CommerceDiscountModelImpl extends BaseModelImpl<CommerceDiscount>
 		model.setUserName(soapModel.getUserName());
 		model.setCreateDate(soapModel.getCreateDate());
 		model.setModifiedDate(soapModel.getModifiedDate());
+		model.setTitle(soapModel.getTitle());
 		model.setTarget(soapModel.getTarget());
 		model.setType(soapModel.getType());
 		model.setTypeSettings(soapModel.getTypeSettings());
-		model.setTitle(soapModel.getTitle());
 		model.setUseCouponCode(soapModel.isUseCouponCode());
 		model.setCouponCode(soapModel.getCouponCode());
 		model.setLimitationType(soapModel.getLimitationType());
@@ -198,6 +205,8 @@ public class CommerceDiscountModelImpl extends BaseModelImpl<CommerceDiscount>
 		model.setLevel3(soapModel.getLevel3());
 		model.setMaximumDiscountAmount(soapModel.getMaximumDiscountAmount());
 		model.setActive(soapModel.isActive());
+		model.setDisplayDate(soapModel.getDisplayDate());
+		model.setExpirationDate(soapModel.getExpirationDate());
 		model.setLastPublishDate(soapModel.getLastPublishDate());
 		model.setStatus(soapModel.getStatus());
 		model.setStatusByUserId(soapModel.getStatusByUserId());
@@ -276,10 +285,10 @@ public class CommerceDiscountModelImpl extends BaseModelImpl<CommerceDiscount>
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
+		attributes.put("title", getTitle());
 		attributes.put("target", getTarget());
 		attributes.put("type", getType());
 		attributes.put("typeSettings", getTypeSettings());
-		attributes.put("title", getTitle());
 		attributes.put("useCouponCode", isUseCouponCode());
 		attributes.put("couponCode", getCouponCode());
 		attributes.put("limitationType", getLimitationType());
@@ -292,6 +301,8 @@ public class CommerceDiscountModelImpl extends BaseModelImpl<CommerceDiscount>
 		attributes.put("level3", getLevel3());
 		attributes.put("maximumDiscountAmount", getMaximumDiscountAmount());
 		attributes.put("active", isActive());
+		attributes.put("displayDate", getDisplayDate());
+		attributes.put("expirationDate", getExpirationDate());
 		attributes.put("lastPublishDate", getLastPublishDate());
 		attributes.put("status", getStatus());
 		attributes.put("statusByUserId", getStatusByUserId());
@@ -354,6 +365,12 @@ public class CommerceDiscountModelImpl extends BaseModelImpl<CommerceDiscount>
 			setModifiedDate(modifiedDate);
 		}
 
+		String title = (String)attributes.get("title");
+
+		if (title != null) {
+			setTitle(title);
+		}
+
 		String target = (String)attributes.get("target");
 
 		if (target != null) {
@@ -370,12 +387,6 @@ public class CommerceDiscountModelImpl extends BaseModelImpl<CommerceDiscount>
 
 		if (typeSettings != null) {
 			setTypeSettings(typeSettings);
-		}
-
-		String title = (String)attributes.get("title");
-
-		if (title != null) {
-			setTitle(title);
 		}
 
 		Boolean useCouponCode = (Boolean)attributes.get("useCouponCode");
@@ -449,6 +460,18 @@ public class CommerceDiscountModelImpl extends BaseModelImpl<CommerceDiscount>
 
 		if (active != null) {
 			setActive(active);
+		}
+
+		Date displayDate = (Date)attributes.get("displayDate");
+
+		if (displayDate != null) {
+			setDisplayDate(displayDate);
+		}
+
+		Date expirationDate = (Date)attributes.get("expirationDate");
+
+		if (expirationDate != null) {
+			setExpirationDate(expirationDate);
 		}
 
 		Date lastPublishDate = (Date)attributes.get("lastPublishDate");
@@ -638,6 +661,22 @@ public class CommerceDiscountModelImpl extends BaseModelImpl<CommerceDiscount>
 
 	@JSON
 	@Override
+	public String getTitle() {
+		if (_title == null) {
+			return "";
+		}
+		else {
+			return _title;
+		}
+	}
+
+	@Override
+	public void setTitle(String title) {
+		_title = title;
+	}
+
+	@JSON
+	@Override
 	public String getTarget() {
 		if (_target == null) {
 			return "";
@@ -682,22 +721,6 @@ public class CommerceDiscountModelImpl extends BaseModelImpl<CommerceDiscount>
 	@Override
 	public void setTypeSettings(String typeSettings) {
 		_typeSettings = typeSettings;
-	}
-
-	@JSON
-	@Override
-	public String getTitle() {
-		if (_title == null) {
-			return "";
-		}
-		else {
-			return _title;
-		}
-	}
-
-	@Override
-	public void setTitle(String title) {
-		_title = title;
 	}
 
 	@JSON
@@ -868,6 +891,48 @@ public class CommerceDiscountModelImpl extends BaseModelImpl<CommerceDiscount>
 
 	@JSON
 	@Override
+	public Date getDisplayDate() {
+		return _displayDate;
+	}
+
+	@Override
+	public void setDisplayDate(Date displayDate) {
+		_columnBitmask |= DISPLAYDATE_COLUMN_BITMASK;
+
+		if (_originalDisplayDate == null) {
+			_originalDisplayDate = _displayDate;
+		}
+
+		_displayDate = displayDate;
+	}
+
+	public Date getOriginalDisplayDate() {
+		return _originalDisplayDate;
+	}
+
+	@JSON
+	@Override
+	public Date getExpirationDate() {
+		return _expirationDate;
+	}
+
+	@Override
+	public void setExpirationDate(Date expirationDate) {
+		_columnBitmask |= EXPIRATIONDATE_COLUMN_BITMASK;
+
+		if (_originalExpirationDate == null) {
+			_originalExpirationDate = _expirationDate;
+		}
+
+		_expirationDate = expirationDate;
+	}
+
+	public Date getOriginalExpirationDate() {
+		return _originalExpirationDate;
+	}
+
+	@JSON
+	@Override
 	public Date getLastPublishDate() {
 		return _lastPublishDate;
 	}
@@ -885,7 +950,19 @@ public class CommerceDiscountModelImpl extends BaseModelImpl<CommerceDiscount>
 
 	@Override
 	public void setStatus(int status) {
+		_columnBitmask |= STATUS_COLUMN_BITMASK;
+
+		if (!_setOriginalStatus) {
+			_setOriginalStatus = true;
+
+			_originalStatus = _status;
+		}
+
 		_status = status;
+	}
+
+	public int getOriginalStatus() {
+		return _originalStatus;
 	}
 
 	@JSON
@@ -1067,10 +1144,10 @@ public class CommerceDiscountModelImpl extends BaseModelImpl<CommerceDiscount>
 		commerceDiscountImpl.setUserName(getUserName());
 		commerceDiscountImpl.setCreateDate(getCreateDate());
 		commerceDiscountImpl.setModifiedDate(getModifiedDate());
+		commerceDiscountImpl.setTitle(getTitle());
 		commerceDiscountImpl.setTarget(getTarget());
 		commerceDiscountImpl.setType(getType());
 		commerceDiscountImpl.setTypeSettings(getTypeSettings());
-		commerceDiscountImpl.setTitle(getTitle());
 		commerceDiscountImpl.setUseCouponCode(isUseCouponCode());
 		commerceDiscountImpl.setCouponCode(getCouponCode());
 		commerceDiscountImpl.setLimitationType(getLimitationType());
@@ -1083,6 +1160,8 @@ public class CommerceDiscountModelImpl extends BaseModelImpl<CommerceDiscount>
 		commerceDiscountImpl.setLevel3(getLevel3());
 		commerceDiscountImpl.setMaximumDiscountAmount(getMaximumDiscountAmount());
 		commerceDiscountImpl.setActive(isActive());
+		commerceDiscountImpl.setDisplayDate(getDisplayDate());
+		commerceDiscountImpl.setExpirationDate(getExpirationDate());
 		commerceDiscountImpl.setLastPublishDate(getLastPublishDate());
 		commerceDiscountImpl.setStatus(getStatus());
 		commerceDiscountImpl.setStatusByUserId(getStatusByUserId());
@@ -1100,6 +1179,8 @@ public class CommerceDiscountModelImpl extends BaseModelImpl<CommerceDiscount>
 
 		value = DateUtil.compareTo(getCreateDate(),
 				commerceDiscount.getCreateDate());
+
+		value = value * -1;
 
 		if (value != 0) {
 			return value;
@@ -1161,6 +1242,14 @@ public class CommerceDiscountModelImpl extends BaseModelImpl<CommerceDiscount>
 
 		commerceDiscountModelImpl._setModifiedDate = false;
 
+		commerceDiscountModelImpl._originalDisplayDate = commerceDiscountModelImpl._displayDate;
+
+		commerceDiscountModelImpl._originalExpirationDate = commerceDiscountModelImpl._expirationDate;
+
+		commerceDiscountModelImpl._originalStatus = commerceDiscountModelImpl._status;
+
+		commerceDiscountModelImpl._setOriginalStatus = false;
+
 		commerceDiscountModelImpl._columnBitmask = 0;
 	}
 
@@ -1210,6 +1299,14 @@ public class CommerceDiscountModelImpl extends BaseModelImpl<CommerceDiscount>
 			commerceDiscountCacheModel.modifiedDate = Long.MIN_VALUE;
 		}
 
+		commerceDiscountCacheModel.title = getTitle();
+
+		String title = commerceDiscountCacheModel.title;
+
+		if ((title != null) && (title.length() == 0)) {
+			commerceDiscountCacheModel.title = null;
+		}
+
 		commerceDiscountCacheModel.target = getTarget();
 
 		String target = commerceDiscountCacheModel.target;
@@ -1232,14 +1329,6 @@ public class CommerceDiscountModelImpl extends BaseModelImpl<CommerceDiscount>
 
 		if ((typeSettings != null) && (typeSettings.length() == 0)) {
 			commerceDiscountCacheModel.typeSettings = null;
-		}
-
-		commerceDiscountCacheModel.title = getTitle();
-
-		String title = commerceDiscountCacheModel.title;
-
-		if ((title != null) && (title.length() == 0)) {
-			commerceDiscountCacheModel.title = null;
 		}
 
 		commerceDiscountCacheModel.useCouponCode = isUseCouponCode();
@@ -1278,6 +1367,24 @@ public class CommerceDiscountModelImpl extends BaseModelImpl<CommerceDiscount>
 
 		commerceDiscountCacheModel.active = isActive();
 
+		Date displayDate = getDisplayDate();
+
+		if (displayDate != null) {
+			commerceDiscountCacheModel.displayDate = displayDate.getTime();
+		}
+		else {
+			commerceDiscountCacheModel.displayDate = Long.MIN_VALUE;
+		}
+
+		Date expirationDate = getExpirationDate();
+
+		if (expirationDate != null) {
+			commerceDiscountCacheModel.expirationDate = expirationDate.getTime();
+		}
+		else {
+			commerceDiscountCacheModel.expirationDate = Long.MIN_VALUE;
+		}
+
 		Date lastPublishDate = getLastPublishDate();
 
 		if (lastPublishDate != null) {
@@ -1313,7 +1420,7 @@ public class CommerceDiscountModelImpl extends BaseModelImpl<CommerceDiscount>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(59);
+		StringBundler sb = new StringBundler(63);
 
 		sb.append("{uuid=");
 		sb.append(getUuid());
@@ -1331,14 +1438,14 @@ public class CommerceDiscountModelImpl extends BaseModelImpl<CommerceDiscount>
 		sb.append(getCreateDate());
 		sb.append(", modifiedDate=");
 		sb.append(getModifiedDate());
+		sb.append(", title=");
+		sb.append(getTitle());
 		sb.append(", target=");
 		sb.append(getTarget());
 		sb.append(", type=");
 		sb.append(getType());
 		sb.append(", typeSettings=");
 		sb.append(getTypeSettings());
-		sb.append(", title=");
-		sb.append(getTitle());
 		sb.append(", useCouponCode=");
 		sb.append(isUseCouponCode());
 		sb.append(", couponCode=");
@@ -1363,6 +1470,10 @@ public class CommerceDiscountModelImpl extends BaseModelImpl<CommerceDiscount>
 		sb.append(getMaximumDiscountAmount());
 		sb.append(", active=");
 		sb.append(isActive());
+		sb.append(", displayDate=");
+		sb.append(getDisplayDate());
+		sb.append(", expirationDate=");
+		sb.append(getExpirationDate());
 		sb.append(", lastPublishDate=");
 		sb.append(getLastPublishDate());
 		sb.append(", status=");
@@ -1380,7 +1491,7 @@ public class CommerceDiscountModelImpl extends BaseModelImpl<CommerceDiscount>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(91);
+		StringBundler sb = new StringBundler(97);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.commerce.discount.model.CommerceDiscount");
@@ -1419,6 +1530,10 @@ public class CommerceDiscountModelImpl extends BaseModelImpl<CommerceDiscount>
 		sb.append(getModifiedDate());
 		sb.append("]]></column-value></column>");
 		sb.append(
+			"<column><column-name>title</column-name><column-value><![CDATA[");
+		sb.append(getTitle());
+		sb.append("]]></column-value></column>");
+		sb.append(
 			"<column><column-name>target</column-name><column-value><![CDATA[");
 		sb.append(getTarget());
 		sb.append("]]></column-value></column>");
@@ -1429,10 +1544,6 @@ public class CommerceDiscountModelImpl extends BaseModelImpl<CommerceDiscount>
 		sb.append(
 			"<column><column-name>typeSettings</column-name><column-value><![CDATA[");
 		sb.append(getTypeSettings());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>title</column-name><column-value><![CDATA[");
-		sb.append(getTitle());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>useCouponCode</column-name><column-value><![CDATA[");
@@ -1483,6 +1594,14 @@ public class CommerceDiscountModelImpl extends BaseModelImpl<CommerceDiscount>
 		sb.append(isActive());
 		sb.append("]]></column-value></column>");
 		sb.append(
+			"<column><column-name>displayDate</column-name><column-value><![CDATA[");
+		sb.append(getDisplayDate());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>expirationDate</column-name><column-value><![CDATA[");
+		sb.append(getExpirationDate());
+		sb.append("]]></column-value></column>");
+		sb.append(
 			"<column><column-name>lastPublishDate</column-name><column-value><![CDATA[");
 		sb.append(getLastPublishDate());
 		sb.append("]]></column-value></column>");
@@ -1526,10 +1645,10 @@ public class CommerceDiscountModelImpl extends BaseModelImpl<CommerceDiscount>
 	private Date _createDate;
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
+	private String _title;
 	private String _target;
 	private String _type;
 	private String _typeSettings;
-	private String _title;
 	private boolean _useCouponCode;
 	private String _couponCode;
 	private String _limitationType;
@@ -1542,8 +1661,14 @@ public class CommerceDiscountModelImpl extends BaseModelImpl<CommerceDiscount>
 	private BigDecimal _level3;
 	private BigDecimal _maximumDiscountAmount;
 	private boolean _active;
+	private Date _displayDate;
+	private Date _originalDisplayDate;
+	private Date _expirationDate;
+	private Date _originalExpirationDate;
 	private Date _lastPublishDate;
 	private int _status;
+	private int _originalStatus;
+	private boolean _setOriginalStatus;
 	private long _statusByUserId;
 	private String _statusByUserName;
 	private Date _statusDate;

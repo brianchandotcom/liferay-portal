@@ -14,7 +14,7 @@
 
 	<command name="ViewLocalizedChinese" priority="4">
 		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Navigation" />
+			<var name="category" value="Build" />
 			<var name="panel" value="Site Administration" />
 			<var name="portlet" value="Site Pages" />
 		</execute>
@@ -39,7 +39,7 @@
 
 	<command name="ViewLocalizedEnglish" priority="4">
 		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Navigation" />
+			<var name="category" value="Build" />
 			<var name="panel" value="Site Administration" />
 			<var name="portlet" value="Site Pages" />
 		</execute>
@@ -66,7 +66,7 @@
 
 	<command name="ViewLocalizedFrench" priority="4">
 		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Navigation" />
+			<var name="category" value="Build" />
 			<var name="panel" value="Site Administration" />
 			<var name="portlet" value="Site Pages" />
 		</execute>
@@ -91,7 +91,7 @@
 
 	<command name="ViewLocalizedSpanish" priority="4">
 		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Navigation" />
+			<var name="category" value="Build" />
 			<var name="panel" value="Site Administration" />
 			<var name="portlet" value="Site Pages" />
 		</execute>

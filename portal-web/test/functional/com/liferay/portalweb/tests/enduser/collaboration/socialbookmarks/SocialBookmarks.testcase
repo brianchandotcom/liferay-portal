@@ -37,7 +37,7 @@
 		<property name="osgi.app.includes" value="social-bookmarks, knowledge-base" />
 
 		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Navigation" />
+			<var name="category" value="Build" />
 			<var name="panel" value="Site Administration" />
 			<var name="portlet" value="Site Pages" />
 		</execute>
@@ -123,7 +123,7 @@
 		<property name="test.assert.warning.exceptions" value="true" />
 
 		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Navigation" />
+			<var name="category" value="Build" />
 			<var name="panel" value="Site Administration" />
 			<var name="portlet" value="Site Pages" />
 		</execute>
@@ -201,7 +201,7 @@
 		<property name="osgi.app.includes" value="social-bookmarks, knowledge-base" />
 
 		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Navigation" />
+			<var name="category" value="Build" />
 			<var name="panel" value="Site Administration" />
 			<var name="portlet" value="Site Pages" />
 		</execute>

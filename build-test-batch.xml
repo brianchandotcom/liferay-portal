@@ -2292,7 +2292,7 @@ app.server.type=@{app.server.type}]]></echo>
 		<run-functional-test app.server.type="tcserver" database.type="mysql" test.portal.log.assert="false" />
 	</target>
 
-	<target name="functional-smoke-tcserver32-mysql57-jdk8">
+	<target name="functional-smoke-tcserver40-mysql57-jdk8">
 		<run-functional-test app.server.type="tcserver" database.type="mysql" database.version="5.7" test.portal.log.assert="false" />
 	</target>
 
@@ -2452,7 +2452,7 @@ app.server.type=@{app.server.type}]]></echo>
 		<run-functional-test app.server.type="tcserver" database.type="mysql" />
 	</target>
 
-	<target name="functional-upgrade-tcserver32-mysql57-jdk8">
+	<target name="functional-upgrade-tcserver40-mysql57-jdk8">
 		<run-functional-test app.server.type="tcserver" database.type="mysql" database.version="5.7" />
 	</target>
 

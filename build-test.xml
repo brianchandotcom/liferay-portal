@@ -3711,7 +3711,12 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 					</if>
 
 					<if>
-						<isset property="app.server.stopping.timeout" />
+						<and>
+							<isset property="app.server.stopping.timeout" />
+							<not>
+								<equals arg1="${app.server.type}" arg2="tcserver" />
+							</not>
+						</and>
 						<then>
 							<get-jstack-output process.name="Bootstrap" />
 

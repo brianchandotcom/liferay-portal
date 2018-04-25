@@ -1939,11 +1939,16 @@ this task.
 			src="${app.server.parent.dir}/${app.server.tcserver.zip.name}"
 		>
 			<mapper
-				from="pivotal-tc-server-developer-${app.server.tcserver.version}.RELEASE/*"
+				from="pivotal-tc-server/*"
 				to="tc-server-${app.server.tcserver.version}/*"
 				type="glob"
 			/>
 		</unzip>
+
+		<move
+			file="${app.server.tcserver.developer.dir}/tcserver"
+			tofile="${app.server.tcserver.developer.dir}/tcserver.sh"
+		/>
 
 		<chmod
 			perm="a+x"
@@ -1958,12 +1963,12 @@ this task.
 		<if>
 			<os family="windows" />
 			<then>
-				<exec dir="${app.server.tcserver.dir}" executable="cmd">
-					<arg line="/c set JAVA_OPTS= &amp; tcruntime-instance.bat create liferay -v ${app.server.tcserver.tomcat.version}" />
+				<exec dir="${app.server.tcserver.developer.dir}" executable="cmd">
+					<arg line="/c set JAVA_OPTS= &amp; tcserver.bat create liferay -v ${app.server.tcserver.tomcat.version}" />
 				</exec>
 			</then>
 			<else>
-				<exec dir="${app.server.tcserver.dir}" executable="${app.server.tcserver.dir}/tcruntime-instance.sh">
+				<exec dir="${app.server.tcserver.developer.dir}" executable="${app.server.tcserver.developer.dir}/tcserver.sh">
 					<arg line="create liferay -v ${app.server.tcserver.tomcat.version}" />
 				</exec>
 			</else>
@@ -1984,27 +1989,27 @@ this task.
 					file="${app.server.tcserver.bin.dir}/setenv.sh"
 				>
 					<replacetoken><![CDATA[JVM_OPTS="-Xmx512M -Xss256K"]]></replacetoken>
-					<replacevalue><![CDATA[JVM_OPTS="-Dfile.encoding=UTF-8 -Duser.timezone=GMT -Xmx1024M -Xss512K -XX:MaxPermSize=512m"]]></replacevalue>
+					<replacevalue><![CDATA[JVM_OPTS="-Dfile.encoding=UTF-8 -Duser.timezone=GMT -Xmx1024M -Xss512K -XX:MaxMetaspaceSize=512m"]]></replacevalue>
 				</replace>
 			</else>
 		</if>
 
 		<replace
-			file="${app.server.tcserver.dir}/liferay/conf/catalina.properties"
+			file="${app.server.tcserver.conf.dir}/catalina.properties"
 		>
 			<replacetoken><![CDATA[common.loader=${catalina.base}/lib,${catalina.base}/lib/*.jar,${catalina.home}/lib,${catalina.home}/lib/*.jar]]></replacetoken>
 			<replacevalue><![CDATA[common.loader=${catalina.base}/lib,${catalina.base}/lib/*.jar,${catalina.home}/lib,${catalina.home}/lib/*.jar,${catalina.home}/lib/ext/global,${catalina.home}/lib/ext/global/*.jar,${catalina.home}/lib/ext,${catalina.home}/lib/ext/*.jar]]></replacevalue>
 		</replace>
 
 		<replace
-			file="${app.server.tcserver.dir}/liferay/conf/server.xml"
+			file="${app.server.tcserver.conf.dir}/server.xml"
 		>
-			<replacetoken><![CDATA[redirectPort="${bio.https.port}"/>]]></replacetoken>
-			<replacevalue><![CDATA[redirectPort="${bio.https.port}" URIEncoding="UTF-8"/>]]></replacevalue>
+			<replacetoken><![CDATA[redirectPort="${nio.https.port}"/>]]></replacetoken>
+			<replacevalue><![CDATA[redirectPort="${nio.https.port}" URIEncoding="UTF-8"/>]]></replacevalue>
 		</replace>
 
 		<replace
-			file="${app.server.tcserver.dir}/liferay/conf/web.xml"
+			file="${app.server.tcserver.conf.dir}/web.xml"
 		>
 			<replacetoken><![CDATA[<load-on-startup>3</load-on-startup>]]></replacetoken>
 			<replacevalue>
@@ -2026,18 +2031,18 @@ this task.
 			<os family="windows" />
 			<then>
 				<replace
-					file="${app.server.tcserver.dir}/liferay/conf/wrapper.conf"
+					file="${app.server.tcserver.conf.dir}/wrapper.conf"
 				>
 					<replacetoken><![CDATA[wrapper.java.additional.8=-Xmx512M]]></replacetoken>
 					<replacevalue><![CDATA[wrapper.java.additional.8="-Xmx1024M"]]></replacevalue>
 				</replace>
 
 				<replace
-					file="${app.server.tcserver.dir}/liferay/conf/wrapper.conf"
+					file="${app.server.tcserver.conf.dir}/wrapper.conf"
 				>
 					<replacetoken><![CDATA[wrapper.java.additional.9=-Xss256K]]></replacetoken>
 					<replacevalue><![CDATA[wrapper.java.additional.9="-Xss512K"
-wrapper.java.additional.10="-XX:MaxPermSize=256M"
+wrapper.java.additional.10="-XX:MaxMetaspaceSize=256M"
 wrapper.java.additional.11="-Dfile.encoding=UTF-8"]]></replacevalue>
 				</replace>
 			</then>

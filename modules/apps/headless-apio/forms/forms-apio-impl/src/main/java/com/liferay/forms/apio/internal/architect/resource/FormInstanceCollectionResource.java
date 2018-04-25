@@ -21,7 +21,6 @@ import com.liferay.apio.architect.representor.Representor;
 import com.liferay.apio.architect.resource.NestedCollectionResource;
 import com.liferay.apio.architect.routes.ItemRoutes;
 import com.liferay.apio.architect.routes.NestedCollectionRoutes;
-import com.liferay.dynamic.data.mapping.exception.NoSuchFormInstanceException;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderingContext;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormTemplateContextFactory;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
@@ -34,7 +33,6 @@ import com.liferay.forms.apio.architect.identifier.FormInstanceIdentifier;
 import com.liferay.forms.apio.architect.identifier.StructureIdentifier;
 import com.liferay.forms.apio.internal.architect.form.FormContextForm;
 import com.liferay.forms.apio.internal.architect.helper.FormInstanceRecordResourceHelper;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONSerializer;
 import com.liferay.portal.kernel.model.Company;
@@ -47,7 +45,6 @@ import java.util.Locale;
 import java.util.Map;
 
 import javax.ws.rs.InternalServerErrorException;
-import javax.ws.rs.NotFoundException;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -82,7 +79,7 @@ public class FormInstanceCollectionResource
 		ItemRoutes.Builder<DDMFormInstance, Long> builder) {
 
 		return builder.addGetter(
-			this::_getFormInstance
+			_ddmFormInstanceService::getFormInstance
 		).addUpdater(
 			this::_evaluateContext, Language.class,
 			DDMFormRenderingContext.class, (credentials, aLong) -> true,
@@ -163,18 +160,6 @@ public class FormInstanceCollectionResource
 			return formInstance;
 		}
 		catch (Exception pe) {
-			throw new InternalServerErrorException(pe.getMessage(), pe);
-		}
-	}
-
-	private DDMFormInstance _getFormInstance(Long formInstanceId) {
-		try {
-			return _ddmFormInstanceService.getFormInstance(formInstanceId);
-		}
-		catch (NoSuchFormInstanceException nsfie) {
-			throw new NotFoundException(nsfie);
-		}
-		catch (PortalException pe) {
 			throw new InternalServerErrorException(pe.getMessage(), pe);
 		}
 	}

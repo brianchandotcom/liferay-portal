@@ -17,14 +17,9 @@ package com.liferay.forms.apio.internal.architect.resource;
 import com.liferay.apio.architect.representor.Representor;
 import com.liferay.apio.architect.resource.ItemResource;
 import com.liferay.apio.architect.routes.ItemRoutes;
-import com.liferay.dynamic.data.mapping.exception.NoSuchStructureException;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.forms.apio.architect.identifier.StructureIdentifier;
-import com.liferay.portal.kernel.exception.PortalException;
-
-import javax.ws.rs.InternalServerErrorException;
-import javax.ws.rs.NotFoundException;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -49,7 +44,7 @@ public class StructureCollectionResource
 		ItemRoutes.Builder<DDMStructure, Long> builder) {
 
 		return builder.addGetter(
-			this::_getStructure
+			_ddmStructureLocalService::getStructure
 		).build();
 	}
 
@@ -88,18 +83,6 @@ public class StructureCollectionResource
 		).addString(
 			"definition", DDMStructure::getDefinition
 		).build();
-	}
-
-	private DDMStructure _getStructure(Long structureId) {
-		try {
-			return _ddmStructureLocalService.getStructure(structureId);
-		}
-		catch (NoSuchStructureException nse) {
-			throw new NotFoundException(nse);
-		}
-		catch (PortalException pe) {
-			throw new InternalServerErrorException(pe.getMessage(), pe);
-		}
 	}
 
 	@Reference

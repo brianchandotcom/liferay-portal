@@ -675,17 +675,17 @@ public abstract class BaseBuild implements Build {
 
 	@Override
 	public String getJobVariant() {
-		String batchName = getParameterValue("JOB_VARIANT");
+		String jobVariant = getParameterValue("JOB_VARIANT");
 
-		if ((batchName == null) || batchName.isEmpty()) {
-			batchName = getParameterValue("JENKINS_JOB_VARIANT");
+		if ((jobVariant == null) || jobVariant.isEmpty()) {
+			jobVariant = getParameterValue("JENKINS_JOB_VARIANT");
 		}
 
-		if ((batchName == null) || batchName.isEmpty()) {
-			batchName = getJobName();
+		if ((jobVariant == null) || jobVariant.isEmpty()) {
+			jobVariant = getJobName();
 		}
 
-		return batchName;
+		return jobVariant;
 	}
 
 	@Override

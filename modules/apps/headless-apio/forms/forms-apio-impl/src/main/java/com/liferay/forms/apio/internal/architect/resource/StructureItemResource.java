@@ -70,6 +70,9 @@ public class StructureItemResource
 		).addLinkedModel(
 			"author", PersonIdentifier.class, DDMStructure::getUserId
 		).addLinkedModel(
+			"structure", StructureIdentifier.class,
+			DDMStructure::getParentStructureId
+		).addLinkedModel(
 			"version", StructureVersionIdentifier.class, this::_getVersionId
 		).addLocalizedStringByLocale(
 			"description", DDMStructure::getDescription
@@ -77,8 +80,6 @@ public class StructureItemResource
 			"name", DDMStructure::getName
 		).addNumber(
 			"additionalType", DDMStructure::getType
-		).addNumber(
-			"parentStructureId", DDMStructure::getParentStructureId
 		).addString(
 			"definition", DDMStructure::getDefinition
 		).addString(

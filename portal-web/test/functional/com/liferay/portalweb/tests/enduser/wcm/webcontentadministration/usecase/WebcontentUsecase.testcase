@@ -698,7 +698,7 @@
 			<var name="structureName" value="WC Structure Name" />
 		</execute>
 
-		<var name="templateScript"><![CDATA[<@liferay_portlet["runtime"] portletName="com_liferay_currency_converter_web_portlet_CurrencyConverterPortlet" />]]></var>
+		<var name="templateScript"><![CDATA[<@liferay_portlet["runtime"] portletName="com_liferay_hello_world_web_portlet_HelloWorldPortlet" />]]></var>
 
 		<execute function="Type#typeAceEditor" locator1="DDMEditTemplate#SCRIPT_CONTENT_FIELD_TEXT_AREA" value1="${templateScript}" />
 
@@ -723,7 +723,10 @@
 			<var name="webContentTitle" value="WC Title" />
 		</execute>
 
-		<execute function="AssertElementPresent" locator1="Button#CONVERT" />
+		<execute macro="Portlet#viewBody">
+			<var name="portletBody" value="Welcome to Liferay" />
+			<var name="portletName" value="Hello World" />
+		</execute>
 	</command>
 
 	<command name="AddEmbeddedPortletVelocityTemplate" priority="3">
@@ -802,7 +805,7 @@
 			<var name="structureName" value="WC Structure Name" />
 		</execute>
 
-		<var name="templateScript"><![CDATA[$theme.runtime("com_liferay_currency_converter_web_portlet_CurrencyConverterPortlet")]]></var>
+		<var name="templateScript"><![CDATA[$theme.runtime("com_liferay_hello_world_web_portlet_HelloWorldPortlet")]]></var>
 
 		<execute function="Type#typeAceEditor" locator1="DDMEditTemplate#SCRIPT_CONTENT_FIELD_TEXT_AREA" value1="${templateScript}" />
 
@@ -827,7 +830,10 @@
 			<var name="webContentTitle" value="WC Title" />
 		</execute>
 
-		<execute function="AssertElementPresent" locator1="Button#CONVERT" />
+		<execute macro="Portlet#viewBody">
+			<var name="portletBody" value="Welcome to Liferay" />
+			<var name="portletName" value="Hello World" />
+		</execute>
 	</command>
 
 	<command name="AddExistingPageAsDisplayPageInSiteCP" priority="5">

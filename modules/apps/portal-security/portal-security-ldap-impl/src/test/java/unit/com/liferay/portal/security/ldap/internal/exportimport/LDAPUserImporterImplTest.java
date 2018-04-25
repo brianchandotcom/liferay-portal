@@ -38,26 +38,8 @@ public class LDAPUserImporterImplTest {
 					"cn=User\\2cwith\\2ccommas,ou=users,dc=example,dc=com")));
 	}
 
-	@Test
-	public void testEscapeValue() {
-		Assert.assertEquals("test\\\\ test", escapeValue("test\\ test"));
-		Assert.assertEquals("test\\\\\"test", escapeValue("test\\\"test"));
-		Assert.assertEquals("test\\\\#test", escapeValue("test\\#test"));
-		Assert.assertEquals("test\\\\+test", escapeValue("test\\+test"));
-		Assert.assertEquals("test\\\\,test", escapeValue("test\\,test"));
-		Assert.assertEquals("test\\\\;test", escapeValue("test\\;test"));
-		Assert.assertEquals("test\\\\<test", escapeValue("test\\<test"));
-		Assert.assertEquals("test\\\\=test", escapeValue("test\\=test"));
-		Assert.assertEquals("test\\\\>test", escapeValue("test\\>test"));
-		Assert.assertEquals("test\\\\\\\\test", escapeValue("test\\\\test"));
-	}
-
 	protected String escapeLDAPName(String query) {
 		return _ldapUserImporterImpl.escapeLDAPName(query);
-	}
-
-	protected String escapeValue(String query) {
-		return _ldapUserImporterImpl.escapeValue(query);
 	}
 
 	protected String normalizeLdapName(String name)

@@ -58,6 +58,7 @@ import com.liferay.portal.verify.VerifyUUID;
 import com.liferay.portal.verify.model.AssetTagVerifiableModel;
 import com.liferay.portal.verify.model.RatingsEntryVerifiableModel;
 import com.liferay.portal.verify.model.TeamVerifiableModel;
+import com.liferay.portal.upgrade.v7_0_0.UpgradeWorkflow;
 
 /**
  * @author Julio Camarero
@@ -110,6 +111,7 @@ public class UpgradeProcess_7_0_0 extends UpgradeProcess {
 		upgrade(new UpgradeSocial());
 		upgrade(new UpgradeSubscription());
 		upgrade(new UpgradeWebsite());
+		upgrade(new UpgradeWorkflow());
 
 		upgrade(new UpgradeMobileDeviceRules());
 

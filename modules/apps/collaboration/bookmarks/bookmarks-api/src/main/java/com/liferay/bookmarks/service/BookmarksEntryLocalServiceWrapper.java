@@ -418,6 +418,10 @@ public class BookmarksEntryLocalServiceWrapper
 		return _bookmarksEntryLocalService.getIndexableActionableDynamicQuery();
 	}
 
+	/**
+	* @deprecated As of 2.0.0, with no direct replacement
+	*/
+	@Deprecated
 	@Override
 	public java.util.List<com.liferay.bookmarks.model.BookmarksEntry> getNoAssetEntries() {
 		return _bookmarksEntryLocalService.getNoAssetEntries();

@@ -14,9 +14,7 @@
 
 package com.liferay.bookmarks.internal.verify;
 
-import com.liferay.bookmarks.model.BookmarksEntry;
 import com.liferay.bookmarks.model.BookmarksFolder;
-import com.liferay.bookmarks.service.BookmarksEntryLocalService;
 import com.liferay.bookmarks.service.BookmarksFolderLocalService;
 import com.liferay.portal.instances.service.PortalInstancesLocalService;
 import com.liferay.portal.kernel.log.Log;
@@ -43,16 +41,8 @@ public class BookmarksServiceVerifyProcess extends VerifyProcess {
 
 	@Override
 	protected void doVerify() throws Exception {
-		updateEntryAssets();
 		updateFolderAssets();
 		verifyTree();
-	}
-
-	@Reference(unbind = "-")
-	protected void setBookmarksEntryLocalService(
-		BookmarksEntryLocalService bookmarksEntryLocalService) {
-
-		_bookmarksEntryLocalService = bookmarksEntryLocalService;
 	}
 
 	@Reference(unbind = "-")
@@ -60,38 +50,6 @@ public class BookmarksServiceVerifyProcess extends VerifyProcess {
 		BookmarksFolderLocalService bookmarksFolderLocalService) {
 
 		_bookmarksFolderLocalService = bookmarksFolderLocalService;
-	}
-
-	protected void updateEntryAssets() throws Exception {
-		try (LoggingTimer loggingTimer = new LoggingTimer()) {
-			List<BookmarksEntry> entries =
-				_bookmarksEntryLocalService.getNoAssetEntries();
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(
-					"Processing " + entries.size() + " entries with no asset");
-			}
-
-			for (BookmarksEntry entry : entries) {
-				try {
-					_bookmarksEntryLocalService.updateAsset(
-						entry.getUserId(), entry, null, null, null, null);
-				}
-				catch (Exception e) {
-					if (_log.isWarnEnabled()) {
-						_log.warn(
-							StringBundler.concat(
-								"Unable to update asset for entry ",
-								String.valueOf(entry.getEntryId()), ": ",
-								e.getMessage()));
-					}
-				}
-			}
-
-			if (_log.isDebugEnabled()) {
-				_log.debug("Assets verified for entries");
-			}
-		}
 	}
 
 	protected void updateFolderAssets() throws Exception {
@@ -140,7 +98,6 @@ public class BookmarksServiceVerifyProcess extends VerifyProcess {
 	private static final Log _log = LogFactoryUtil.getLog(
 		BookmarksServiceVerifyProcess.class);
 
-	private BookmarksEntryLocalService _bookmarksEntryLocalService;
 	private BookmarksFolderLocalService _bookmarksFolderLocalService;
 
 	@Reference

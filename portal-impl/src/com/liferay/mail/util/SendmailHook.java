@@ -275,9 +275,12 @@ public class SendmailHook implements Hook {
 		// Replace userId and password
 
 		for (int i = 0; i < arguments.length; i++) {
-			arguments[i] = StringUtil.replace(
-				arguments[i], new String[] {"%1%, %2%"},
-				new String[] {String.valueOf(userId), password});
+			if (arguments[i].equals("%1%")) {
+				arguments[i] = String.valueOf(userId);
+			}
+			else if (arguments[i].equals("%2%")) {
+				arguments[i] = password;
+			}
 		}
 
 		try {

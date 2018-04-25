@@ -42,7 +42,7 @@ public class LiferayAccessTokenService extends AccessTokenService {
 
 		Client client = super.authenticateClientIfNeeded(params);
 
-		Map<String, String> clientProperties = client.getProperties();
+		Map<String, String> properties = client.getProperties();
 
 		MessageContext messageContext = getMessageContext();
 
@@ -61,10 +61,10 @@ public class LiferayAccessTokenService extends AccessTokenService {
 		catch (UnknownHostException uhe) {
 		}
 
-		clientProperties.put(
+		properties.put(
 			OAuth2ProviderRestEndpointConstants.PROPERTY_KEY_CLIENT_REMOTE_ADDR,
 			remoteAddr);
-		clientProperties.put(
+		properties.put(
 			OAuth2ProviderRestEndpointConstants.PROPERTY_KEY_CLIENT_REMOTE_HOST,
 			remoteHost);
 

@@ -27,7 +27,7 @@ public class AppServer {
 
 	public static AppServer getJBossEAPAppServer() {
 		return new AppServer(
-			"../../jboss-eap-6.4.0", _getJBossExtraLibDirNames(),
+			"../../jboss-eap-7.1.0", _getJBossExtraLibDirNames(),
 			"/modules/com/liferay/portal/main",
 			"/standalone/deployments/ROOT.war", "jboss");
 	}

@@ -41,9 +41,9 @@ public class FormContextForm {
 		).constructor(
 			FormContextForm::new
 		).addRequiredString(
-			"inLanguage", FormContextForm::_setLanguageId
-		).addRequiredString(
 			"fieldValues", FormContextForm::_setFieldValues
+		).addRequiredString(
+			"inLanguage", FormContextForm::_setLanguageId
 		).build();
 	}
 

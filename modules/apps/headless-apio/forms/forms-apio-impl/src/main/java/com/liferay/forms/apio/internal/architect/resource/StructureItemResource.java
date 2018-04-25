@@ -66,24 +66,24 @@ public class StructureItemResource
 			"datePublished", DDMStructure::getLastPublishDate
 		).addLinkedModel(
 			"author", PersonIdentifier.class, DDMStructure::getUserId
-		).addString(
-			"versionUserName", DDMStructure::getVersionUserName
-		).addString(
-			"version", DDMStructure::getVersion
-		).addNumber(
-			"parentStructureId", DDMStructure::getParentStructureId
-		).addString(
-			"structureKey", DDMStructure::getStructureKey
-		).addString(
-			"storageType", DDMStructure::getStorageType
-		).addNumber(
-			"additionalType", DDMStructure::getType
 		).addLocalizedStringByLocale(
 			"description", DDMStructure::getDescription
 		).addLocalizedStringByLocale(
 			"name", DDMStructure::getName
+		).addNumber(
+			"additionalType", DDMStructure::getType
+		).addNumber(
+			"parentStructureId", DDMStructure::getParentStructureId
 		).addString(
 			"definition", DDMStructure::getDefinition
+		).addString(
+			"storageType", DDMStructure::getStorageType
+		).addString(
+			"structureKey", DDMStructure::getStructureKey
+		).addString(
+			"version", DDMStructure::getVersion
+		).addString(
+			"versionUserName", DDMStructure::getVersionUserName
 		).build();
 	}
 

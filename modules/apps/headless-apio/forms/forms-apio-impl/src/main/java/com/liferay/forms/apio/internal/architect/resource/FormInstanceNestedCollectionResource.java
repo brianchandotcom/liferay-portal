@@ -105,6 +105,9 @@ public class FormInstanceNestedCollectionResource
 			"datePublished", DDMFormInstance::getLastPublishDate
 		).addLinkedModel(
 			"author", PersonIdentifier.class, DDMFormInstance::getUserId
+		).addLinkedModel(
+			"structure", StructureIdentifier.class,
+			DDMFormInstance::getStructureId
 		).addLocalizedStringByLocale(
 			"description", DDMFormInstance::getDescription
 		).addLocalizedStringByLocale(
@@ -112,12 +115,9 @@ public class FormInstanceNestedCollectionResource
 		).addString(
 			"settings", DDMFormInstance::getSettings
 		).addString(
-			"versionUserName", DDMFormInstance::getVersionUserName
-		).addString(
 			"version", DDMFormInstance::getVersion
-		).addLinkedModel(
-			"structure", StructureIdentifier.class,
-			DDMFormInstance::getStructureId
+		).addString(
+			"versionUserName", DDMFormInstance::getVersionUserName
 		).build();
 	}
 

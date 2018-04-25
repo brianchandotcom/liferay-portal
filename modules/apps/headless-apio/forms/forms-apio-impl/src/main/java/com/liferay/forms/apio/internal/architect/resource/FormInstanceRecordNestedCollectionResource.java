@@ -105,18 +105,18 @@ public class FormInstanceRecordNestedCollectionResource
 			"datePublished", DDMFormInstanceRecord::getLastPublishDate
 		).addLinkedModel(
 			"author", PersonIdentifier.class, DDMFormInstanceRecord::getUserId
-		).addNumber(
-			"companyId", DDMFormInstanceRecord::getCompanyId
+		).addLocalizedStringByLocale(
+			"fieldValues", FormInstanceRecordResourceHelper::getFieldValuesJSON
 		).addNumber(
 			"groupId", DDMFormInstanceRecord::getGroupId
 		).addNumber(
+			"companyId", DDMFormInstanceRecord::getCompanyId
+		).addNumber(
 			"versionUserId", DDMFormInstanceRecord::getVersionUserId
 		).addString(
-			"versionUserName", DDMFormInstanceRecord::getVersionUserName
-		).addString(
 			"version", DDMFormInstanceRecord::getVersion
-		).addLocalizedStringByLocale(
-			"fieldValues", FormInstanceRecordResourceHelper::getFieldValuesJSON
+		).addString(
+			"versionUserName", DDMFormInstanceRecord::getVersionUserName
 		).build();
 	}
 

@@ -95,9 +95,9 @@ public class DataProviderInstanceNestedCollectionResource
 		).addNumber(
 			"groupId", DDMDataProviderInstance::getGroupId
 		).addString(
-			"definition", DDMDataProviderInstance::getDefinition
-		).addString(
 			"additionalType", DDMDataProviderInstance::getType
+		).addString(
+			"definition", DDMDataProviderInstance::getDefinition
 		).build();
 	}
 

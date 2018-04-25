@@ -16,8 +16,11 @@ package com.liferay.document.library.web.internal.display.context;
 
 import com.liferay.document.library.constants.DLPortletKeys;
 import com.liferay.document.library.display.context.DLAdminDisplayContext;
+import com.liferay.document.library.web.internal.constants.DLWebKeys;
 import com.liferay.document.library.web.internal.display.context.util.DLRequestHelper;
+import com.liferay.document.library.web.internal.portlet.toolbar.contributor.DLPortletToolbarContributor;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemList;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -29,6 +32,8 @@ import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
+import com.liferay.portal.kernel.servlet.taglib.ui.Menu;
+import com.liferay.portal.kernel.servlet.taglib.ui.URLMenuItem;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -50,12 +55,46 @@ public class DefaultDLAdminDisplayContext implements DLAdminDisplayContext {
 
 	public DefaultDLAdminDisplayContext(
 		LiferayPortletRequest liferayPortletRequest,
-		LiferayPortletResponse liferayPortletResponse,
-		PortletURL currentURLObj) {
+		LiferayPortletResponse liferayPortletResponse, PortletURL currentURLObj,
+		HttpServletRequest request) {
 
 		_liferayPortletRequest = liferayPortletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
 		_currentURLObj = currentURLObj;
+		_request = request;
+	}
+
+	@Override
+	public CreationMenu getCreationMenu() {
+		String portletName = _liferayPortletRequest.getPortletName();
+
+		if (!portletName.equals(DLPortletKeys.DOCUMENT_LIBRARY_ADMIN)) {
+			return null;
+		}
+
+		DLPortletToolbarContributor dlPortletToolbarContributor =
+			(DLPortletToolbarContributor)_request.getAttribute(
+				DLWebKeys.DOCUMENT_LIBRARY_PORTLET_TOOLBAR_CONTRIBUTOR);
+
+		List<Menu> menus = dlPortletToolbarContributor.getPortletTitleMenus(
+			_liferayPortletRequest, _liferayPortletResponse);
+
+		CreationMenu creationMenu = new CreationMenu(_request);
+
+		for (Menu menu : menus) {
+			List<URLMenuItem> urlMenuItems =
+				(List<URLMenuItem>)(List<?>)menu.getMenuItems();
+
+			for (URLMenuItem urlMenuItem : urlMenuItems) {
+				creationMenu.addDropdownItem(
+					dropdownItem -> {
+						dropdownItem.setHref(urlMenuItem.getURL());
+						dropdownItem.setLabel(urlMenuItem.getLabel());
+					});
+			}
+		}
+
+		return creationMenu;
 	}
 
 	@Override
@@ -197,5 +236,6 @@ public class DefaultDLAdminDisplayContext implements DLAdminDisplayContext {
 	private final PortletURL _currentURLObj;
 	private final LiferayPortletRequest _liferayPortletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;
+	private final HttpServletRequest _request;
 
 }

@@ -20,18 +20,13 @@ import com.liferay.apio.architect.representor.Representor;
 import com.liferay.apio.architect.resource.NestedCollectionResource;
 import com.liferay.apio.architect.routes.ItemRoutes;
 import com.liferay.apio.architect.routes.NestedCollectionRoutes;
-import com.liferay.dynamic.data.mapping.exception.NoSuchDataProviderInstanceException;
 import com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance;
 import com.liferay.dynamic.data.mapping.service.DDMDataProviderInstanceService;
 import com.liferay.forms.apio.architect.identifier.DataProviderInstanceIdentifier;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.site.apio.identifier.WebSiteIdentifier;
 
 import java.util.List;
-
-import javax.ws.rs.InternalServerErrorException;
-import javax.ws.rs.NotFoundException;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -50,8 +45,8 @@ public class DataProviderInstanceCollectionResource
 	@Override
 	public NestedCollectionRoutes<DDMDataProviderInstance, Long>
 		collectionRoutes(
-			NestedCollectionRoutes.Builder<DDMDataProviderInstance,
-				Long> builder) {
+			NestedCollectionRoutes.Builder<DDMDataProviderInstance, Long>
+				builder) {
 
 		return builder.addGetter(
 			this::_getPageItems, Company.class
@@ -68,7 +63,7 @@ public class DataProviderInstanceCollectionResource
 		ItemRoutes.Builder<DDMDataProviderInstance, Long> builder) {
 
 		return builder.addGetter(
-			this::_getDataProviderInstance
+			_ddmDataProviderInstanceService::getDataProviderInstance
 		).build();
 	}
 
@@ -104,21 +99,6 @@ public class DataProviderInstanceCollectionResource
 		).addString(
 			"type", DDMDataProviderInstance::getType
 		).build();
-	}
-
-	private DDMDataProviderInstance _getDataProviderInstance(
-		Long dataProviderInstanceId) {
-
-		try {
-			return _ddmDataProviderInstanceService.getDataProviderInstance(
-				dataProviderInstanceId);
-		}
-		catch (NoSuchDataProviderInstanceException nsdpie) {
-			throw new NotFoundException(nsdpie);
-		}
-		catch (PortalException pe) {
-			throw new InternalServerErrorException(pe.getMessage(), pe);
-		}
 	}
 
 	private PageItems<DDMDataProviderInstance> _getPageItems(

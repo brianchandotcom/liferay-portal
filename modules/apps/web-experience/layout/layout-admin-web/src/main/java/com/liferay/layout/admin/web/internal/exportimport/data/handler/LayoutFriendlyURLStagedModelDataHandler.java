@@ -177,11 +177,16 @@ public class LayoutFriendlyURLStagedModelDataHandler
 
 		String friendlyURL = layoutFriendlyURL.getFriendlyURL();
 
+		boolean privateLayout = layoutFriendlyURL.isPrivateLayout();
+
+		if (existingLayoutFriendlyURL != null) {
+			privateLayout = existingLayoutFriendlyURL.isPrivateLayout();
+		}
+
 		for (int i = 1;; i++) {
 			LayoutFriendlyURL duplicateLayoutFriendlyURL =
 				_layoutFriendlyURLLocalService.fetchLayoutFriendlyURL(
-					portletDataContext.getScopeGroupId(),
-					layoutFriendlyURL.isPrivateLayout(),
+					portletDataContext.getScopeGroupId(), privateLayout,
 					layoutFriendlyURL.getFriendlyURL(),
 					layoutFriendlyURL.getLanguageId());
 

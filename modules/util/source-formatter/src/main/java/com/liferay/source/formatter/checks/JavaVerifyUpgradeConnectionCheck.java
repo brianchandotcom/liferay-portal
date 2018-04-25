@@ -41,14 +41,22 @@ public class JavaVerifyUpgradeConnectionCheck extends BaseFileCheck {
 
 		String className = JavaSourceUtil.getClassName(fileName);
 
-		if (!className.contains("Upgrade") && !className.contains("Verify")) {
-			return content;
+		if (className.contains("Upgrade") || className.contains("Verify")) {
+			_checkConnectionField(fileName, content, "getConnection");
+			_checkConnectionField(
+				fileName, content, "getUpgradeOptimizedConnection");
 		}
+
+		return content;
+	}
+
+	private void _checkConnectionField(
+		String fileName, String content, String methodName) {
 
 		int x = -1;
 
 		while (true) {
-			x = content.indexOf("DataAccess.getConnection", x + 1);
+			x = content.indexOf("DataAccess." + methodName, x + 1);
 
 			if (x == -1) {
 				break;
@@ -56,12 +64,10 @@ public class JavaVerifyUpgradeConnectionCheck extends BaseFileCheck {
 
 			addMessage(
 				fileName,
-				"Use existing connection field instead of " +
-					"DataAccess.getConnection",
+				"Use existing connection field instead of DataAccess." +
+					methodName,
 				getLineCount(content, x));
 		}
-
-		return content;
 	}
 
 }

@@ -181,6 +181,16 @@ public class ImportUtil {
 		}
 	}
 
+	public boolean isValidFragmentCollectionsFile(ZipReader zipReader) {
+		for (String entry : zipReader.getEntries()) {
+			if (entry.endsWith("collection.json")) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
 	private boolean _isFragmentCollection(String entry) {
 		if (entry.endsWith("collection.json")) {
 			return true;

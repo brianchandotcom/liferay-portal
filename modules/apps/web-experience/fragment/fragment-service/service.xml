@@ -199,6 +199,8 @@
 		<exception>FragmentCollectionName</exception>
 		<exception>FragmentEntryContent</exception>
 		<exception>FragmentEntryName</exception>
+		<exception>InvalidFragmentCollectionFile</exception>
+		<exception>InvalidFragmentEntryFile</exception>
 		<exception>RequiredFragmentEntry</exception>
 	</exceptions>
 </service-builder>

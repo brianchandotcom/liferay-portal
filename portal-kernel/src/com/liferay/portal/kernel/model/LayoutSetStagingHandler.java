@@ -14,13 +14,9 @@
 
 package com.liferay.portal.kernel.model;
 
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.service.LayoutSetBranchLocalServiceUtil;
-import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
-import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.model.staging.LayoutSetBranchStagingUtil;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 
@@ -43,14 +39,8 @@ public class LayoutSetStagingHandler
 	public LayoutSetStagingHandler(LayoutSet layoutSet) {
 		_layoutSet = layoutSet;
 
-		try {
-			_layoutSetBranch = _getLayoutSetBranch(layoutSet);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-
-			throw new IllegalStateException(e);
-		}
+		_layoutSetBranch = LayoutSetBranchStagingUtil.getLayoutSetBranch(
+			layoutSet);
 	}
 
 	public LayoutSet getLayoutSet() {
@@ -116,35 +106,6 @@ public class LayoutSetStagingHandler
 			PortalClassLoaderUtil.getClassLoader(),
 			new Class<?>[] {LayoutSet.class},
 			new LayoutSetStagingHandler(_layoutSet));
-	}
-
-	private LayoutSetBranch _getLayoutSetBranch(LayoutSet layoutSet)
-		throws PortalException {
-
-		ServiceContext serviceContext =
-			ServiceContextThreadLocal.getServiceContext();
-
-		if (serviceContext == null) {
-			return null;
-		}
-
-		long layoutSetBranchId = ParamUtil.getLong(
-			serviceContext, "layoutSetBranchId");
-
-		if (layoutSetBranchId > 0) {
-			return LayoutSetBranchLocalServiceUtil.getLayoutSetBranch(
-				layoutSetBranchId);
-		}
-
-		if (serviceContext.isSignedIn()) {
-			return LayoutSetBranchLocalServiceUtil.getUserLayoutSetBranch(
-				serviceContext.getUserId(), layoutSet.getGroupId(),
-				layoutSet.isPrivateLayout(), layoutSet.getLayoutSetId(),
-				layoutSetBranchId);
-		}
-
-		return LayoutSetBranchLocalServiceUtil.getMasterLayoutSetBranch(
-			layoutSet.getGroupId(), layoutSet.isPrivateLayout());
 	}
 
 	private Object _toEscapedModel() {

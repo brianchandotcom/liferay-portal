@@ -199,7 +199,8 @@ public class ReportsEngineDisplayContext {
 	}
 
 	public PortletURL getPortletURL() {
-		PortletURL portletURL = _liferayPortletResponse.createRenderURL();
+		PortletURL portletURL =
+			(PortletURL)_liferayPortletResponse.createRenderURL();
 
 		portletURL.setParameter("tabs1", getTabs1());
 

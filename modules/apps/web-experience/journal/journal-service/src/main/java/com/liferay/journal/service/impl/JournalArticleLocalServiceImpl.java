@@ -22,10 +22,7 @@ import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.util.DLUtil;
-import com.liferay.dynamic.data.mapping.exception.NoSuchStructureException;
 import com.liferay.dynamic.data.mapping.exception.NoSuchTemplateException;
-import com.liferay.dynamic.data.mapping.exception.StorageFieldNameException;
-import com.liferay.dynamic.data.mapping.exception.StorageFieldRequiredException;
 import com.liferay.dynamic.data.mapping.exception.StructureDefinitionException;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
@@ -39,8 +36,6 @@ import com.liferay.dynamic.data.mapping.service.DDMTemplateLinkLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
 import com.liferay.dynamic.data.mapping.storage.Fields;
 import com.liferay.expando.kernel.util.ExpandoBridgeUtil;
-import com.liferay.exportimport.content.processor.ExportImportContentProcessor;
-import com.liferay.exportimport.content.processor.ExportImportContentProcessorRegistryUtil;
 import com.liferay.exportimport.kernel.exception.ExportImportContentValidationException;
 import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.friendly.url.model.FriendlyURLEntry;
@@ -50,19 +45,14 @@ import com.liferay.journal.configuration.JournalGroupServiceConfiguration;
 import com.liferay.journal.configuration.JournalServiceConfiguration;
 import com.liferay.journal.constants.JournalActivityKeys;
 import com.liferay.journal.constants.JournalConstants;
-import com.liferay.journal.exception.ArticleContentException;
 import com.liferay.journal.exception.ArticleExpirationDateException;
 import com.liferay.journal.exception.ArticleFriendlyURLException;
-import com.liferay.journal.exception.ArticleIdException;
 import com.liferay.journal.exception.ArticleReviewDateException;
-import com.liferay.journal.exception.ArticleSmallImageNameException;
-import com.liferay.journal.exception.ArticleSmallImageSizeException;
-import com.liferay.journal.exception.ArticleTitleException;
 import com.liferay.journal.exception.ArticleVersionException;
 import com.liferay.journal.exception.DuplicateArticleIdException;
-import com.liferay.journal.exception.InvalidDDMStructureException;
 import com.liferay.journal.exception.NoSuchArticleException;
 import com.liferay.journal.exception.RequiredArticleLocalizationException;
+import com.liferay.journal.internal.validator.JournalArticleModelValidator;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalArticleConstants;
 import com.liferay.journal.model.JournalArticleDisplay;
@@ -76,7 +66,6 @@ import com.liferay.journal.util.JournalHelper;
 import com.liferay.journal.util.comparator.ArticleIDComparator;
 import com.liferay.journal.util.comparator.ArticleVersionComparator;
 import com.liferay.journal.util.impl.JournalUtil;
-import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.petra.xml.XMLUtil;
 import com.liferay.portal.kernel.bean.BeanReference;
@@ -90,9 +79,6 @@ import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.diff.DiffHtmlUtil;
-import com.liferay.portal.kernel.exception.LocaleException;
-import com.liferay.portal.kernel.exception.NoSuchImageException;
-import com.liferay.portal.kernel.exception.NoSuchLayoutException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -103,8 +89,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Image;
-import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.model.ModelHintsUtil;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
@@ -141,7 +125,6 @@ import com.liferay.portal.kernel.systemevent.SystemEventHierarchyEntryThreadLoca
 import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ContentTypes;
@@ -175,6 +158,8 @@ import com.liferay.portal.kernel.xml.Node;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.kernel.xml.XPath;
 import com.liferay.portal.spring.extender.service.ServiceReference;
+import com.liferay.portal.validation.ModelValidator;
+import com.liferay.portal.validation.ModelValidatorRegistryUtil;
 import com.liferay.social.kernel.model.SocialActivityConstants;
 import com.liferay.subscription.service.SubscriptionLocalService;
 import com.liferay.trash.TrashHelper;
@@ -190,7 +175,6 @@ import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -8402,121 +8386,10 @@ public class JournalArticleLocalServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		Locale articleDefaultLocale = LocaleUtil.fromLanguageId(
-			LocalizationUtil.getDefaultLanguageId(content));
-
-		if (!ExportImportThreadLocal.isImportInProcess()) {
-			if (!LanguageUtil.isAvailableLocale(
-					groupId, articleDefaultLocale)) {
-
-				LocaleException le = new LocaleException(
-					LocaleException.TYPE_CONTENT,
-					StringBundler.concat(
-						"The locale ", articleDefaultLocale.getLanguage(),
-						" is not available in site with groupId",
-						String.valueOf(groupId)));
-
-				le.setSourceAvailableLocales(
-					Collections.singleton(articleDefaultLocale));
-				le.setTargetAvailableLocales(
-					LanguageUtil.getAvailableLocales(groupId));
-
-				throw le;
-			}
-
-			if ((expirationDate != null) &&
-				(expirationDate.before(new Date()) ||
-				 ((displayDate != null) &&
-				  expirationDate.before(displayDate)))) {
-
-				throw new ArticleExpirationDateException(
-					"Expiration date " + expirationDate + " is in the past");
-			}
-		}
-
-		if ((classNameId == JournalArticleConstants.CLASSNAME_ID_DEFAULT) &&
-			(titleMap.isEmpty() ||
-			 Validator.isNull(titleMap.get(articleDefaultLocale)))) {
-
-			throw new ArticleTitleException("Title is null");
-		}
-
-		int titleMaxLength = ModelHintsUtil.getMaxLength(
-			JournalArticleLocalization.class.getName(), "title");
-
-		for (Map.Entry<Locale, String> entry : titleMap.entrySet()) {
-			String title = entry.getValue();
-
-			if (Validator.isNull(title) || (title.length() <= titleMaxLength)) {
-				continue;
-			}
-
-			throw new ArticleTitleException.MustNotExceedMaximumLength(
-				title, titleMaxLength);
-		}
-
-		validateContent(content);
-
-		DDMStructure ddmStructure = ddmStructureLocalService.getStructure(
-			PortalUtil.getSiteGroupId(groupId),
-			classNameLocalService.getClassNameId(JournalArticle.class),
-			ddmStructureKey, true);
-
-		if (!ExportImportThreadLocal.isImportInProcess()) {
-			validateDDMStructureFields(
-				ddmStructure, classNameId, content, articleDefaultLocale);
-		}
-
-		if (Validator.isNotNull(ddmTemplateKey)) {
-			DDMTemplate ddmTemplate = ddmTemplateLocalService.getTemplate(
-				PortalUtil.getSiteGroupId(groupId),
-				classNameLocalService.getClassNameId(DDMStructure.class),
-				ddmTemplateKey, true);
-
-			if (ddmTemplate.getClassPK() != ddmStructure.getStructureId()) {
-				throw new NoSuchTemplateException(
-					"{templateKey=" + ddmTemplateKey + "}");
-			}
-		}
-		else if (classNameId == JournalArticleConstants.CLASSNAME_ID_DEFAULT) {
-			throw new NoSuchTemplateException("DDM template key is null");
-		}
-
-		if (!smallImage || Validator.isNotNull(smallImageURL) ||
-			(smallImageFile == null) || (smallImageBytes == null)) {
-
-			return;
-		}
-
-		String smallImageName = smallImageFile.getName();
-
-		boolean validSmallImageExtension = false;
-
-		for (String imageExtension :
-				_journalFileUploadsConfiguration.imageExtensions()) {
-
-			if (StringPool.STAR.equals(imageExtension) ||
-				StringUtil.endsWith(smallImageName, imageExtension)) {
-
-				validSmallImageExtension = true;
-
-				break;
-			}
-		}
-
-		if (!validSmallImageExtension) {
-			throw new ArticleSmallImageNameException(smallImageName);
-		}
-
-		long smallImageMaxSize =
-			_journalFileUploadsConfiguration.smallImageMaxSize();
-
-		if ((smallImageMaxSize > 0) &&
-			(smallImageBytes.length > smallImageMaxSize)) {
-
-			throw new ArticleSmallImageSizeException(
-				smallImageBytes.length + " exceeds " + smallImageMaxSize);
-		}
+		_getModelValidator().validate(
+			companyId, groupId, classNameId, titleMap, content, ddmStructureKey,
+			ddmTemplateKey, displayDate, expirationDate, smallImage,
+			smallImageURL, smallImageFile, smallImageBytes, serviceContext);
 	}
 
 	protected void validate(
@@ -8528,60 +8401,19 @@ public class JournalArticleLocalServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		if (!autoArticleId) {
-			validate(articleId);
-		}
-
-		if (!ExportImportThreadLocal.isImportInProcess() || autoArticleId) {
-			List<JournalArticle> articles = journalArticlePersistence.findByG_A(
-				groupId, articleId);
-
-			if (!articles.isEmpty()) {
-				StringBundler sb = new StringBundler(7);
-
-				sb.append("{groupId=");
-				sb.append(groupId);
-				sb.append(", articleId=");
-				sb.append(articleId);
-				sb.append(", version=");
-				sb.append(version);
-				sb.append("}");
-
-				throw new DuplicateArticleIdException(sb.toString());
-			}
-		}
-
-		validate(
-			companyId, groupId, classNameId, titleMap, content, ddmStructureKey,
-			ddmTemplateKey, displayDate, expirationDate, smallImage,
-			smallImageURL, smallImageFile, smallImageBytes, serviceContext);
+		_getModelValidator().validate(
+			companyId, groupId, classNameId, articleId, autoArticleId, version,
+			titleMap, content, ddmStructureKey, ddmTemplateKey, displayDate,
+			expirationDate, smallImage, smallImageURL, smallImageFile,
+			smallImageBytes, serviceContext);
 	}
 
 	protected void validate(String articleId) throws PortalException {
-		if (Validator.isNull(articleId) ||
-			(articleId.indexOf(CharPool.COMMA) != -1) ||
-			(articleId.indexOf(CharPool.SPACE) != -1)) {
-
-			throw new ArticleIdException("Invalid article ID: " + articleId);
-		}
+		_getModelValidator().validate(articleId);
 	}
 
 	protected void validateContent(String content) throws PortalException {
-		if (Validator.isNull(content)) {
-			throw new ArticleContentException("Content is null");
-		}
-
-		try {
-			SAXReaderUtil.read(content);
-		}
-		catch (DocumentException de) {
-			if (_log.isDebugEnabled()) {
-				_log.debug("Invalid content:\n" + content);
-			}
-
-			throw new ArticleContentException(
-				"Unable to read content with an XML parser", de);
-		}
+		_getModelValidator().validateContent(content);
 	}
 
 	protected void validateDDMStructureFields(
@@ -8589,28 +8421,8 @@ public class JournalArticleLocalServiceImpl
 			Locale defaultlocale)
 		throws PortalException {
 
-		for (com.liferay.dynamic.data.mapping.storage.Field field : fields) {
-			if (!ddmStructure.hasField(field.getName())) {
-				throw new StorageFieldNameException(
-					"No field exists for {name=" + field.getName() + "}");
-			}
-
-			if (ddmStructure.getFieldRequired(field.getName()) &&
-				Validator.isNull(field.getValue(defaultlocale)) &&
-				(classNameId == JournalArticleConstants.CLASSNAME_ID_DEFAULT)) {
-
-				StringBundler sb = new StringBundler(6);
-
-				sb.append("Required field ");
-				sb.append(field.getName());
-				sb.append(" is not present for structure ");
-				sb.append(ddmStructure.getNameCurrentValue());
-				sb.append(" for locale ");
-				sb.append(defaultlocale);
-
-				throw new StorageFieldRequiredException(sb.toString());
-			}
-		}
+		_getModelValidator().validateDDMStructureFields(
+			ddmStructure, classNameId, fields, defaultlocale);
 	}
 
 	protected void validateDDMStructureFields(
@@ -8618,41 +8430,16 @@ public class JournalArticleLocalServiceImpl
 			Locale defaultlocale)
 		throws PortalException {
 
-		Fields fields = journalConverter.getDDMFields(ddmStructure, content);
-
-		validateDDMStructureFields(
-			ddmStructure, classNameId, fields, defaultlocale);
+		_getModelValidator().validateDDMStructureFields(
+			ddmStructure, classNameId, content, defaultlocale);
 	}
 
 	protected void validateDDMStructureId(
 			long groupId, long folderId, String ddmStructureKey)
 		throws PortalException {
 
-		int restrictionType = _journalHelper.getRestrictionType(folderId);
-
-		DDMStructure ddmStructure = ddmStructureLocalService.getStructure(
-			PortalUtil.getSiteGroupId(groupId),
-			classNameLocalService.getClassNameId(JournalArticle.class),
-			ddmStructureKey, true);
-
-		List<DDMStructure> folderDDMStructures =
-			journalFolderLocalService.getDDMStructures(
-				PortalUtil.getCurrentAndAncestorSiteGroupIds(groupId), folderId,
-				restrictionType);
-
-		for (DDMStructure folderDDMStructure : folderDDMStructures) {
-			if (folderDDMStructure.getStructureId() ==
-					ddmStructure.getStructureId()) {
-
-				return;
-			}
-		}
-
-		throw new InvalidDDMStructureException(
-			StringBundler.concat(
-				"Invalid structure ",
-				String.valueOf(ddmStructure.getStructureId()), " for folder ",
-				String.valueOf(folderId)));
+		_getModelValidator().validateDDMStructureId(
+			groupId, folderId, ddmStructureKey);
 	}
 
 	protected void validateReferences(
@@ -8661,56 +8448,9 @@ public class JournalArticleLocalServiceImpl
 			byte[] smallImageBytes, long smallImageId, String content)
 		throws PortalException {
 
-		long classNameId = classNameLocalService.getClassNameId(
-			JournalArticle.class.getName());
-
-		if (Validator.isNotNull(ddmStructureKey)) {
-			DDMStructure ddmStructure = ddmStructureLocalService.fetchStructure(
-				groupId, classNameId, ddmStructureKey, true);
-
-			if (ddmStructure == null) {
-				throw new NoSuchStructureException();
-			}
-		}
-
-		classNameId = classNameLocalService.getClassNameId(
-			DDMStructure.class.getName());
-
-		if (Validator.isNotNull(ddmTemplateKey)) {
-			DDMTemplate ddmTemplate = ddmTemplateLocalService.fetchTemplate(
-				groupId, classNameId, ddmTemplateKey, true);
-
-			if (ddmTemplate == null) {
-				throw new NoSuchTemplateException();
-			}
-		}
-
-		if (Validator.isNotNull(layoutUuid)) {
-			Layout layout = _journalHelper.getArticleLayout(
-				layoutUuid, groupId);
-
-			if (layout == null) {
-				throw new NoSuchLayoutException(
-					JournalArticleConstants.DISPLAY_PAGE);
-			}
-		}
-
-		if (smallImage && Validator.isNull(smallImageURL) &&
-			ArrayUtil.isEmpty(smallImageBytes)) {
-
-			Image image = imageLocalService.fetchImage(smallImageId);
-
-			if (image == null) {
-				throw new NoSuchImageException();
-			}
-		}
-
-		ExportImportContentProcessor exportImportContentProcessor =
-			ExportImportContentProcessorRegistryUtil.
-				getExportImportContentProcessor(JournalArticle.class.getName());
-
-		exportImportContentProcessor.validateContentReferences(
-			groupId, content);
+		_getModelValidator().validateReferences(
+			groupId, ddmStructureKey, ddmTemplateKey, layoutUuid, smallImage,
+			smallImageURL, smallImageBytes, smallImageId, content);
 	}
 
 	/**
@@ -8864,6 +8604,13 @@ public class JournalArticleLocalServiceImpl
 		defaultFriendlyURLMap.put(defaultLocale, titleMap.get(defaultLocale));
 
 		return defaultFriendlyURLMap;
+	}
+
+	private JournalArticleModelValidator _getModelValidator() {
+		ModelValidator<JournalArticle> modelValidator =
+			ModelValidatorRegistryUtil.getModelValidator(JournalArticle.class);
+
+		return (JournalArticleModelValidator)modelValidator;
 	}
 
 	private int _getUniqueUrlTitleCount(

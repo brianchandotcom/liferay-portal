@@ -108,10 +108,6 @@ public class FormInstanceRecordNestedCollectionResource
 		).addLocalizedStringByLocale(
 			"fieldValues", FormInstanceRecordResourceHelper::getFieldValuesJSON
 		).addNumber(
-			"groupId", DDMFormInstanceRecord::getGroupId
-		).addNumber(
-			"companyId", DDMFormInstanceRecord::getCompanyId
-		).addNumber(
 			"versionUserId", DDMFormInstanceRecord::getVersionUserId
 		).addString(
 			"version", DDMFormInstanceRecord::getVersion

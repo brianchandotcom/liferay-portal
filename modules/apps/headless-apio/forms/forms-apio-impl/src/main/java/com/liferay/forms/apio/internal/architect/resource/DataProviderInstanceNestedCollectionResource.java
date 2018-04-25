@@ -90,10 +90,6 @@ public class DataProviderInstanceNestedCollectionResource
 			"description", DDMDataProviderInstance::getDescription
 		).addLocalizedStringByLocale(
 			"name", DDMDataProviderInstance::getName
-		).addNumber(
-			"companyId", DDMDataProviderInstance::getCompanyId
-		).addNumber(
-			"groupId", DDMDataProviderInstance::getGroupId
 		).addString(
 			"additionalType", DDMDataProviderInstance::getType
 		).addString(

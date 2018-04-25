@@ -18,15 +18,7 @@
 
 <%
 DDMFormViewFormInstanceRecordsDisplayContext ddmFormViewFormInstanceRecordsDisplayContext = ddmFormAdminDisplayContext.getFormViewRecordsDisplayContext();
-
-DDMFormInstance ddmFormInstance = ddmFormViewFormInstanceRecordsDisplayContext.getDDMFormInstance();
-
-PortletURL searchURL = renderResponse.createRenderURL();
-
-searchURL.setParameter("mvcPath", "/admin/view_form_instance_records.jsp");
-searchURL.setParameter("redirect", ParamUtil.getString(request, "redirect"));
-searchURL.setParameter("formInstanceId", String.valueOf(ddmFormInstance.getFormInstanceId()));
-
+PortletURL portletURL = ddmFormViewFormInstanceRecordsDisplayContext.getPortletURL();
 renderResponse.setTitle(LanguageUtil.get(request, "form-entries"));
 %>
 
@@ -35,50 +27,28 @@ renderResponse.setTitle(LanguageUtil.get(request, "form-entries"));
 	items="<%= ddmFormViewFormInstanceRecordsDisplayContext.getNavigationItems() %>"
 />
 
-<liferay-frontend:management-bar
-	includeCheckBox="<%= true %>"
-	searchContainerId="ddmFormInstanceRecord"
->
-	<liferay-frontend:management-bar-filters>
-		<liferay-frontend:management-bar-navigation
-			navigationKeys='<%= new String[] {"all"} %>'
-			portletURL="<%= searchURL %>"
-		/>
-
-		<liferay-frontend:management-bar-sort
-			orderByCol="<%= ddmFormViewFormInstanceRecordsDisplayContext.getOrderByCol() %>"
-			orderByType="<%= ddmFormViewFormInstanceRecordsDisplayContext.getOrderByType() %>"
-			orderColumns='<%= new String[] {"modified-date"} %>'
-			portletURL="<%= searchURL %>"
-		/>
-
-		<li>
-			<aui:form action="<%= searchURL %>" method="post" name="fm">
-				<liferay-ui:input-search
-					autoFocus="<%= true %>"
-					markupView="lexicon"
-				/>
-			</aui:form>
-		</li>
-	</liferay-frontend:management-bar-filters>
-
-	<liferay-frontend:management-bar-action-buttons>
-		<liferay-frontend:management-bar-button
-			href='<%= "javascript:" + renderResponse.getNamespace() + "deleteRecords();" %>'
-			icon="trash"
-			label="delete"
-		/>
-	</liferay-frontend:management-bar-action-buttons>
-</liferay-frontend:management-bar>
+<clay:management-toolbar
+	actionItems="<%= ddmFormViewFormInstanceRecordsDisplayContext.getActionItemsDropdownItemList() %>"
+	clearResultsURL="<%= ddmFormViewFormInstanceRecordsDisplayContext.getClearResultsURL() %>"
+	disabled="<%= ddmFormViewFormInstanceRecordsDisplayContext.isDisabledManagementBar() %>"
+	filterItems="<%= ddmFormViewFormInstanceRecordsDisplayContext.getFilterItemsDropdownItemList() %>"
+	namespace="<%= renderResponse.getNamespace() %>"
+	searchActionURL="<%= ddmFormViewFormInstanceRecordsDisplayContext.getSearchActionURL() %>"
+	searchContainerId="<%= ddmFormViewFormInstanceRecordsDisplayContext.getSearchContainerId() %>"
+	searchFormName="fm"
+	sortingOrder="<%= ddmFormViewFormInstanceRecordsDisplayContext.getOrderByType() %>"
+	sortingURL="<%= ddmFormViewFormInstanceRecordsDisplayContext.getSortingURL() %>"
+	totalItems="<%= ddmFormViewFormInstanceRecordsDisplayContext.getTotalItems() %>"
+/>
 
 <div class="container-fluid-1280" id="<portlet:namespace />viewEntriesContainer">
-	<aui:form action="<%= searchURL.toString() %>" method="post" name="searchContainerForm">
+	<aui:form action="<%= portletURL.toString() %>" method="post" name="searchContainerForm">
 		<aui:input name="deleteFormInstanceRecordIds" type="hidden" />
 
 		<liferay-ui:search-container
 			id="ddmFormInstanceRecord"
 			rowChecker="<%= new EmptyOnClickRowChecker(renderResponse) %>"
-			searchContainer="<%= ddmFormViewFormInstanceRecordsDisplayContext.getDDMFormInstanceRecordSearchContainer() %>"
+			searchContainer="<%= ddmFormViewFormInstanceRecordsDisplayContext.getSearch() %>"
 		>
 			<liferay-ui:search-container-row
 				className="com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecord"
@@ -133,7 +103,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "form-entries"));
 				displayStyle="<%= ddmFormViewFormInstanceRecordsDisplayContext.getDisplayStyle() %>"
 				markupView="lexicon"
 				paginate="<%= false %>"
-				searchContainer="<%= ddmFormViewFormInstanceRecordsDisplayContext.getDDMFormInstanceRecordSearchContainer() %>"
+				searchContainer="<%= ddmFormViewFormInstanceRecordsDisplayContext.getSearch() %>"
 			/>
 		</liferay-ui:search-container>
 	</aui:form>
@@ -141,7 +111,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "form-entries"));
 
 <div class="container-fluid-1280">
 	<liferay-ui:search-paginator
-		searchContainer="<%= ddmFormViewFormInstanceRecordsDisplayContext.getDDMFormInstanceRecordSearchContainer() %>"
+		searchContainer="<%= ddmFormViewFormInstanceRecordsDisplayContext.getSearch() %>"
 	/>
 </div>
 

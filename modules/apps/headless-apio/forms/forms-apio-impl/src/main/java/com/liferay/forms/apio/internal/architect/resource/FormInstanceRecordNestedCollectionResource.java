@@ -32,6 +32,7 @@ import com.liferay.forms.apio.architect.identifier.FormInstanceRecordIdentifier;
 import com.liferay.forms.apio.internal.architect.FormInstanceRecordServiceContext;
 import com.liferay.forms.apio.internal.architect.form.FormInstanceRecordForm;
 import com.liferay.forms.apio.internal.architect.helper.FormInstanceRecordResourceHelper;
+import com.liferay.person.apio.identifier.PersonIdentifier;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -97,21 +98,19 @@ public class FormInstanceRecordNestedCollectionResource
 			FormInstanceIdentifier.class,
 			DDMFormInstanceRecord::getFormInstanceId
 		).addDate(
-			"createDate", DDMFormInstanceRecord::getCreateDate
+			"dateCreated", DDMFormInstanceRecord::getCreateDate
 		).addDate(
-			"modifiedDate", DDMFormInstanceRecord::getModifiedDate
+			"dateModified", DDMFormInstanceRecord::getModifiedDate
 		).addDate(
-			"lastPublishDate", DDMFormInstanceRecord::getLastPublishDate
+			"datePublished", DDMFormInstanceRecord::getLastPublishDate
+		).addLinkedModel(
+			"author", PersonIdentifier.class, DDMFormInstanceRecord::getUserId
 		).addNumber(
 			"companyId", DDMFormInstanceRecord::getCompanyId
 		).addNumber(
 			"groupId", DDMFormInstanceRecord::getGroupId
 		).addNumber(
-			"userId", DDMFormInstanceRecord::getUserId
-		).addNumber(
 			"versionUserId", DDMFormInstanceRecord::getVersionUserId
-		).addString(
-			"userName", DDMFormInstanceRecord::getUserName
 		).addString(
 			"versionUserName", DDMFormInstanceRecord::getVersionUserName
 		).addString(

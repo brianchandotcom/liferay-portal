@@ -32,6 +32,7 @@ import com.liferay.forms.apio.architect.identifier.FormInstanceIdentifier;
 import com.liferay.forms.apio.architect.identifier.StructureIdentifier;
 import com.liferay.forms.apio.internal.architect.form.FormContextForm;
 import com.liferay.forms.apio.internal.architect.helper.FormInstanceRecordResourceHelper;
+import com.liferay.person.apio.identifier.PersonIdentifier;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONSerializer;
@@ -94,20 +95,20 @@ public class FormInstanceNestedCollectionResource
 		).identifier(
 			DDMFormInstance::getFormInstanceId
 		).addBidirectionalModel(
-			"webSite", "form-instance", WebSiteIdentifier.class,
+			"interactionService", "form-instance", WebSiteIdentifier.class,
 			DDMFormInstance::getGroupId
 		).addDate(
-			"createDate", DDMFormInstance::getCreateDate
+			"dateCreated", DDMFormInstance::getCreateDate
 		).addDate(
-			"modifiedDate", DDMFormInstance::getModifiedDate
+			"dateModified", DDMFormInstance::getModifiedDate
 		).addDate(
-			"lastPublishDate", DDMFormInstance::getLastPublishDate
+			"datePublished", DDMFormInstance::getLastPublishDate
+		).addLinkedModel(
+			"author", PersonIdentifier.class, DDMFormInstance::getUserId
 		).addLocalizedStringByLocale(
 			"description", DDMFormInstance::getDescription
 		).addLocalizedStringByLocale(
 			"name", DDMFormInstance::getName
-		).addString(
-			"userName", DDMFormInstance::getUserName
 		).addString(
 			"settings", DDMFormInstance::getSettings
 		).addString(

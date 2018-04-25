@@ -16,6 +16,10 @@ package com.liferay.document.library.web.internal.display.context;
 
 import com.liferay.document.library.constants.DLPortletKeys;
 import com.liferay.document.library.display.context.DLAdminDisplayContext;
+import com.liferay.document.library.kernel.model.DLFileEntry;
+import com.liferay.document.library.kernel.model.DLFolder;
+import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
+import com.liferay.document.library.kernel.service.DLAppServiceUtil;
 import com.liferay.document.library.web.internal.constants.DLWebKeys;
 import com.liferay.document.library.web.internal.display.context.util.DLRequestHelper;
 import com.liferay.document.library.web.internal.portlet.toolbar.contributor.DLPortletToolbarContributor;
@@ -23,6 +27,7 @@ import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemList;
+import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
@@ -31,15 +36,25 @@ import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
+import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.repository.model.Folder;
+import com.liferay.portal.kernel.search.Hits;
+import com.liferay.portal.kernel.search.QueryConfig;
+import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.search.SearchContextFactory;
+import com.liferay.portal.kernel.search.SearchResult;
+import com.liferay.portal.kernel.search.SearchResultUtil;
 import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
 import com.liferay.portal.kernel.servlet.taglib.ui.Menu;
 import com.liferay.portal.kernel.servlet.taglib.ui.URLMenuItem;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.webdav.WebDAVUtil;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.portlet.PortletException;
@@ -62,6 +77,16 @@ public class DefaultDLAdminDisplayContext implements DLAdminDisplayContext {
 		_liferayPortletResponse = liferayPortletResponse;
 		_currentURLObj = currentURLObj;
 		_request = request;
+	}
+
+	@Override
+	public String getClearResultsURL() throws Exception {
+		PortletURL clearResultsURL = _liferayPortletResponse.createRenderURL();
+
+		clearResultsURL.setParameter(
+			"mvcRenderCommandName", "/document_library/view");
+
+		return clearResultsURL.toString();
 	}
 
 	@Override
@@ -131,6 +156,86 @@ public class DefaultDLAdminDisplayContext implements DLAdminDisplayContext {
 		};
 	}
 
+	@Override
+	public PortletURL getPortletURL() throws Exception {
+		PortletURL portletURL = _liferayPortletResponse.createRenderURL();
+
+		portletURL.setParameter(
+			"mvcRenderCommandName", "/document_library/search");
+
+		String redirect = ParamUtil.getString(_request, "redirect");
+
+		portletURL.setParameter("redirect", redirect);
+
+		long searchFolderId = ParamUtil.getLong(_request, "searchFolderId");
+
+		portletURL.setParameter(
+			"searchFolderId", String.valueOf(searchFolderId));
+
+		String keywords = ParamUtil.getString(_request, "keywords");
+
+		portletURL.setParameter("keywords", keywords);
+
+		return portletURL;
+	}
+
+	@Override
+	public SearchContainer getSearchContainer() throws Exception {
+		SearchContainer searchContainer = new SearchContainer(
+			_liferayPortletRequest, getPortletURL(), null, null);
+
+		String mvcRenderCommandName = ParamUtil.getString(
+			_request, "mvcRenderCommandName");
+
+		if (mvcRenderCommandName.equals("/document_library/search")) {
+			searchContainer.setResults(_getSearchResults(searchContainer));
+		}
+		else {
+
+			// meter el de /document_library/view_entries.jsp
+
+		}
+
+		return searchContainer;
+	}
+
+	@Override
+	public PortletURL getSearchURL() {
+
+		// TODO cuidado con el redirect
+
+		PortletURL searchURL = _liferayPortletResponse.createRenderURL();
+
+		searchURL.setParameter(
+			"mvcRenderCommandName", "/document_library/search");
+
+		long repositoryId = GetterUtil.getLong(
+			(String)_request.getAttribute("view.jsp-repositoryId"));
+
+		searchURL.setParameter("repositoryId", String.valueOf(repositoryId));
+		searchURL.setParameter(
+			"searchRepositoryId", String.valueOf(repositoryId));
+
+		long folderId = GetterUtil.getLong(
+			(String)_request.getAttribute("view.jsp-folderId"));
+
+		searchURL.setParameter("folderId", String.valueOf(folderId));
+		searchURL.setParameter("searchFolderId", String.valueOf(folderId));
+		searchURL.setParameter(
+			"showRepositoryTabs", Boolean.toString(folderId == 0));
+
+		searchURL.setParameter("showSearchInfo", Boolean.TRUE.toString());
+
+		return searchURL;
+	}
+
+	@Override
+	public int getTotalItems() throws Exception {
+		SearchContainer searchContainer = getSearchContainer();
+
+		return searchContainer.getTotal();
+	}
+
 	private PortletURL _clonePortletURL() {
 		try {
 			return PortletURLUtil.clone(
@@ -145,6 +250,74 @@ public class DefaultDLAdminDisplayContext implements DLAdminDisplayContext {
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
 		return PortletLocalServiceUtil.getPortletById(portletDisplay.getId());
+	}
+
+	private List _getSearchResults(SearchContainer searchContainer)
+		throws Exception {
+
+		SearchContext searchContext = SearchContextFactory.getInstance(
+			_request);
+
+		searchContext.setAttribute("paginationType", "regular");
+
+		long searchRepositoryId = ParamUtil.getLong(
+			_request, "searchRepositoryId");
+
+		if (searchRepositoryId == 0) {
+			ThemeDisplay themeDisplay = _getThemeDisplay(_request);
+
+			searchRepositoryId = themeDisplay.getScopeGroupId();
+		}
+
+		searchContext.setAttribute("searchRepositoryId", searchRepositoryId);
+		searchContext.setEnd(searchContainer.getEnd());
+
+		long searchFolderId = ParamUtil.getLong(_request, "searchFolderId");
+
+		searchContext.setFolderIds(new long[] {searchFolderId});
+
+		searchContext.setIncludeDiscussions(true);
+
+		String keywords = ParamUtil.getString(_request, "keywords");
+
+		searchContext.setKeywords(keywords);
+
+		QueryConfig queryConfig = searchContext.getQueryConfig();
+
+		queryConfig.setSearchSubfolders(true);
+
+		searchContext.setStart(searchContainer.getStart());
+
+		Hits hits = DLAppServiceUtil.search(searchRepositoryId, searchContext);
+
+		List<SearchResult> searchResults = SearchResultUtil.getSearchResults(
+			hits, _request.getLocale());
+
+		List dlSearchResults = new ArrayList<>();
+
+		for (SearchResult searchResult : searchResults) {
+			FileEntry fileEntry = null;
+			Folder curFolder = null;
+
+			String className = searchResult.getClassName();
+
+			if (className.equals(DLFileEntry.class.getName()) ||
+				FileEntry.class.isAssignableFrom(Class.forName(className))) {
+
+				fileEntry = DLAppLocalServiceUtil.getFileEntry(
+					searchResult.getClassPK());
+
+				dlSearchResults.add(fileEntry);
+			}
+			else if (className.equals(DLFolder.class.getName())) {
+				curFolder = DLAppLocalServiceUtil.getFolder(
+					searchResult.getClassPK());
+
+				dlSearchResults.add(curFolder);
+			}
+		}
+
+		return dlSearchResults;
 	}
 
 	private ThemeDisplay _getThemeDisplay(HttpServletRequest request) {

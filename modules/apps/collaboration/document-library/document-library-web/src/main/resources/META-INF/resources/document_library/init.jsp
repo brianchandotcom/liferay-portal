@@ -58,6 +58,8 @@ DLConfiguration dlConfiguration = ConfigurationProviderUtil.getSystemConfigurati
 
 boolean showComments = ParamUtil.getBoolean(request, "showComments", true);
 boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
+
+DLAdminDisplayContext dlAdminDisplayContext = dlDisplayContextProvider.getDLAdminDisplayContext(liferayPortletRequest, liferayPortletResponse, currentURLObj, request);
 %>
 
 <%@ include file="/document_library/init-ext.jsp" %>

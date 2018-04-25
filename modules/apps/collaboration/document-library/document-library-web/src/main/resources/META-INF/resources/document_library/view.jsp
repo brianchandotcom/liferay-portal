@@ -89,8 +89,6 @@ request.setAttribute("view.jsp-repositoryId", String.valueOf(repositoryId));
 request.setAttribute("view.jsp-displayStyle", displayStyle);
 request.setAttribute("view.jsp-orderByCol", orderByCol);
 request.setAttribute("view.jsp-orderByType", orderByType);
-
-DLAdminDisplayContext dlAdminDisplayContext = dlDisplayContextProvider.getDLAdminDisplayContext(liferayPortletRequest, liferayPortletResponse, currentURLObj, request);
 %>
 
 <liferay-util:buffer var="uploadURL"><liferay-portlet:actionURL name="/document_library/edit_file_entry"><portlet:param name="<%= Constants.CMD %>" value="<%= Constants.ADD_DYNAMIC %>" /><portlet:param name="folderId" value="{folderId}" /><portlet:param name="repositoryId" value="<%= String.valueOf(repositoryId) %>" /></liferay-portlet:actionURL></liferay-util:buffer>
@@ -106,14 +104,19 @@ DLAdminDisplayContext dlAdminDisplayContext = dlDisplayContextProvider.getDLAdmi
 <liferay-util:include page="/document_library/navigation.jsp" servletContext="<%= application %>" />
 
 <clay:management-toolbar
-	clearResultsURL="<%= String.valueOf(renderResponse.createRenderURL()) %>"
+	clearResultsURL="<%= dlAdminDisplayContext.getClearResultsURL() %>"
 	creationMenu="<%= dlAdminDisplayContext.getCreationMenu() %>"
 	disabled="<%= DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcutsCount(repositoryId, folderId, WorkflowConstants.STATUS_ANY, true) <= 0 %>"
-	searchActionURL="<%= String.valueOf(renderResponse.createRenderURL()) %>"
-	searchFormName="fm"
+	searchActionURL="<%= String.valueOf(dlAdminDisplayContext.getSearchURL()) %>"
+	searchContainerId="entries"
 	selectable="<%= dlPortletInstanceSettingsHelper.isShowActions() %>"
-	totalItems="<%= 0 %>"
+	showSearch="<%= dlPortletInstanceSettingsHelper.isShowSearch() %>"
+	totalItems="<%= dlAdminDisplayContext.getTotalItems() %>"
 />
+
+<c:if test='<%= ParamUtil.getBoolean(request, "showSearchInfo") %>'>
+	<liferay-util:include page="/document_library/search_info.jsp" servletContext="<%= application %>" />
+</c:if>
 
 <div id="<portlet:namespace />documentLibraryContainer">
 
@@ -161,9 +164,7 @@ DLAdminDisplayContext dlAdminDisplayContext = dlDisplayContextProvider.getDLAdmi
 				<div class="document-container">
 					<c:choose>
 						<c:when test='<%= mvcRenderCommandName.equals("/document_library/search") %>'>
-							<liferay-util:include page="/document_library/search_resources.jsp" servletContext="<%= application %>">
-								<liferay-util:param name="searchContainerId" value="entries" />
-							</liferay-util:include>
+							<liferay-util:include page="/document_library/search_resources.jsp" servletContext="<%= application %>" />
 						</c:when>
 						<c:otherwise>
 							<liferay-util:include page="/document_library/view_entries.jsp" servletContext="<%= application %>">

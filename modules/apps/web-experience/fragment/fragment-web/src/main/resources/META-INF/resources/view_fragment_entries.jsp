@@ -100,7 +100,9 @@ PortalUtil.addPortletBreadcrumbEntry(request, fragmentDisplayContext.getFragment
 							</liferay-frontend:vertical-card-header>
 
 							<liferay-frontend:vertical-card-footer>
-								<aui:workflow-status markupView="lexicon" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= fragmentEntry.getStatus() %>" />
+								<span class="label <%= (fragmentEntry.getStatus() == WorkflowConstants.STATUS_APPROVED) ? "label-success" : "label-secondary" %>">
+									<liferay-ui:message key="<%= WorkflowConstants.getStatusLabel(fragmentEntry.getStatus()) %>" />
+								</span>
 							</liferay-frontend:vertical-card-footer>
 						</liferay-frontend:vertical-card>
 					</c:when>
@@ -125,7 +127,9 @@ PortalUtil.addPortletBreadcrumbEntry(request, fragmentDisplayContext.getFragment
 							</liferay-frontend:vertical-card-header>
 
 							<liferay-frontend:vertical-card-footer>
-								<aui:workflow-status markupView="lexicon" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= fragmentEntry.getStatus() %>" />
+								<span class="label <%= (fragmentEntry.getStatus() == WorkflowConstants.STATUS_APPROVED) ? "label-success" : "label-secondary" %>">
+									<liferay-ui:message key="<%= WorkflowConstants.getStatusLabel(fragmentEntry.getStatus()) %>" />
+								</span>
 							</liferay-frontend:vertical-card-footer>
 						</liferay-frontend:icon-vertical-card>
 					</c:otherwise>

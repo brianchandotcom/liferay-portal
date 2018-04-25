@@ -16,16 +16,29 @@ package com.liferay.document.library.display.context;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
+import com.liferay.portal.kernel.dao.search.SearchContainer;
 
 import java.util.List;
+
+import javax.portlet.PortletURL;
 
 /**
  * @author Alejandro Tardín
  */
 public interface DLAdminDisplayContext {
 
+	public String getClearResultsURL() throws Exception;
+
 	public CreationMenu getCreationMenu();
 
 	public List<NavigationItem> getNavigationItems();
+
+	public PortletURL getPortletURL() throws Exception;
+
+	public SearchContainer getSearchContainer() throws Exception;
+
+	public PortletURL getSearchURL();
+
+	public int getTotalItems() throws Exception;
 
 }

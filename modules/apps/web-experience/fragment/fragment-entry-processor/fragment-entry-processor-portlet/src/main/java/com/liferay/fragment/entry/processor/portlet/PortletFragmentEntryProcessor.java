@@ -104,21 +104,25 @@ public class PortletFragmentEntryProcessor implements FragmentEntryProcessor {
 
 			String portletPreferences = StringPool.BLANK;
 
+			String instanceId = _getInstanceId(
+				fragmentEntryLink.getNamespace(), element.attr("id"));
+
 			if (originalFragmentEntryLink != null) {
+				String originalInstanceId = _getInstanceId(
+					originalFragmentEntryLink.getNamespace(),
+					element.attr("id"));
+
 				String defaultPreferences = _getPreferences(
-					portletName, originalFragmentEntryLink, StringPool.BLANK);
+					portletName, originalFragmentEntryLink, originalInstanceId,
+					StringPool.BLANK);
 
 				portletPreferences = _getPreferences(
-					portletName, fragmentEntryLink, defaultPreferences);
+					portletName, fragmentEntryLink, instanceId,
+					defaultPreferences);
 			}
 
 			runtimeTagElement.attr("defaultPreferences", portletPreferences);
-
-			String instanceId = String.valueOf(
-				fragmentEntryLink.getFragmentEntryLinkId());
-
 			runtimeTagElement.attr("instanceId", instanceId);
-
 			runtimeTagElement.attr("persistSettings=false", true);
 			runtimeTagElement.attr("portletName", portletName);
 
@@ -233,6 +237,10 @@ public class PortletFragmentEntryProcessor implements FragmentEntryProcessor {
 		return document;
 	}
 
+	private String _getInstanceId(String namespace, String id) {
+		return namespace + StringPool.UNDERLINE + id;
+	}
+
 	private Element _getPortletMenuElement(
 			String portletName, String instanceId)
 		throws PortalException {
@@ -304,7 +312,7 @@ public class PortletFragmentEntryProcessor implements FragmentEntryProcessor {
 
 	private String _getPreferences(
 			String portletName, FragmentEntryLink fragmentEntryLink,
-			String defaultPreferences)
+			String instanceId, String defaultPreferences)
 		throws PortalException {
 
 		Group group = _groupLocalService.getGroup(
@@ -314,8 +322,7 @@ public class PortletFragmentEntryProcessor implements FragmentEntryProcessor {
 
 		String portletId = PortletIdCodec.encode(
 			PortletIdCodec.decodePortletName(portletName),
-			PortletIdCodec.decodeUserId(portletName),
-			String.valueOf(fragmentEntryLink.getFragmentEntryLinkId()));
+			PortletIdCodec.decodeUserId(portletName), instanceId);
 
 		PortletPreferences portletPreferences =
 			PortletPreferencesFactoryUtil.getLayoutPortletSetup(

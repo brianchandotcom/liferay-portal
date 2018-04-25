@@ -12,23 +12,14 @@
  * details.
  */
 
-package com.liferay.commerce.constants;
+package com.liferay.commerce.price.list.constants;
 
 /**
- * @author Marco Leo
  * @author Alessio Antonio Rendina
  */
-public class CommerceWebKeys {
+public class CommercePriceListConstants {
 
-	public static final String COMMERCE_ADDRESS = "COMMERCE_ADDRESS";
-
-	public static final String COMMERCE_ORDER = "COMMERCE_ORDER";
-
-	public static final String COMMERCE_ORDER_ITEM = "COMMERCE_ORDER_ITEM";
-
-	public static final String COMMERCE_SHIPMENT = "COMMERCE_SHIPMENT";
-
-	public static final String COMMERCE_SHIPMENT_ITEM =
-		"COMMERCE_SHIPMENT_ITEM";
+	public static final String RESOURCE_NAME =
+		"com.liferay.commerce.price.list";
 
 }

@@ -12,23 +12,27 @@
  * details.
  */
 
-package com.liferay.commerce.constants;
+package com.liferay.commerce.price.list.model.impl;
+
+import aQute.bnd.annotation.ProviderType;
+
+import com.liferay.commerce.price.list.model.CommercePriceEntry;
+import com.liferay.commerce.price.list.service.CommercePriceEntryLocalServiceUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 
 /**
- * @author Marco Leo
  * @author Alessio Antonio Rendina
  */
-public class CommerceWebKeys {
+@ProviderType
+public class CommerceTierPriceEntryImpl extends CommerceTierPriceEntryBaseImpl {
 
-	public static final String COMMERCE_ADDRESS = "COMMERCE_ADDRESS";
+	public CommerceTierPriceEntryImpl() {
+	}
 
-	public static final String COMMERCE_ORDER = "COMMERCE_ORDER";
-
-	public static final String COMMERCE_ORDER_ITEM = "COMMERCE_ORDER_ITEM";
-
-	public static final String COMMERCE_SHIPMENT = "COMMERCE_SHIPMENT";
-
-	public static final String COMMERCE_SHIPMENT_ITEM =
-		"COMMERCE_SHIPMENT_ITEM";
+	@Override
+	public CommercePriceEntry getCommercePriceEntry() throws PortalException {
+		return CommercePriceEntryLocalServiceUtil.getCommercePriceEntry(
+			getCommercePriceEntryId());
+	}
 
 }

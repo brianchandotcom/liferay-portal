@@ -12,11 +12,11 @@
  * details.
  */
 
-package com.liferay.commerce.internal.search;
+package com.liferay.commerce.price.list.internal.search;
 
-import com.liferay.commerce.model.CommerceAddress;
-import com.liferay.commerce.model.CommerceCountry;
-import com.liferay.commerce.model.CommerceShipment;
+import com.liferay.commerce.price.list.model.CommercePriceEntry;
+import com.liferay.commerce.price.list.model.CommercePriceList;
+import com.liferay.commerce.price.list.model.CommerceTierPriceEntry;
 import com.liferay.portal.kernel.search.BaseSearcher;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Indexer;
@@ -24,18 +24,18 @@ import com.liferay.portal.kernel.search.Indexer;
 /**
  * @author Alessio Antonio Rendina
  */
-public class CommerceSearcher extends BaseSearcher {
+public class CommercePriceListSearcher extends BaseSearcher {
 
 	public static final String[] CLASS_NAMES = {
-		CommerceAddress.class.getName(), CommerceCountry.class.getName(),
-		CommerceShipment.class.getName()
+		CommercePriceEntry.class.getName(), CommercePriceList.class.getName(),
+		CommerceTierPriceEntry.class.getName()
 	};
 
 	public static Indexer<?> getInstance() {
-		return new CommerceSearcher();
+		return new CommercePriceListSearcher();
 	}
 
-	public CommerceSearcher() {
+	public CommercePriceListSearcher() {
 		setDefaultSelectedFieldNames(
 			Field.ENTRY_CLASS_NAME, Field.ENTRY_CLASS_PK, Field.UID);
 		setFilterSearch(true);

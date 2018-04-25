@@ -272,6 +272,7 @@ public class LibraryReferenceTest {
 	}
 
 	protected static final String LIB_DIR_NAME = "lib";
+
 	protected static final String LIB_PRE_DIR_NAME = "tmp/lib-pre";
 
 	private static void _initEclipse(DocumentBuilder documentBuilder)

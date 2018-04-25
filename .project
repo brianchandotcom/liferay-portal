@@ -38,10 +38,6 @@
 						<arguments>1.0-name-matches-false-false-node_modules</arguments>
 						<id>org.eclipse.ui.ide.multiFilter</id>
 					</matcher>
-					<matcher>
-						<arguments>1.0-name-matches-false-false-tmp</arguments>
-						<id>org.eclipse.ui.ide.multiFilter</id>
-					</matcher>
 				</arguments>
 			</matcher>
 		</filter>

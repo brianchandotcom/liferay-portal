@@ -43,7 +43,7 @@ import org.osgi.service.component.annotations.Reference;
 	configurationPid = "com.liferay.oauth2.provider.configuration.OAuth2ProviderConfiguration",
 	immediate = true, service = AccessTokenGrantHandler.class
 )
-public class LiferayResourceOwnerGrantHandlerRegistrator
+public class LiferayResourceOwnerAccessTokenGrantHandler
 	extends BaseAccessTokenGrantHandler {
 
 	@Activate
@@ -103,7 +103,7 @@ public class LiferayResourceOwnerGrantHandlerRegistrator
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		LiferayResourceOwnerGrantHandlerRegistrator.class);
+		LiferayResourceOwnerAccessTokenGrantHandler.class);
 
 	@Reference
 	private LiferayOAuthDataProvider _liferayOAuthDataProvider;

@@ -134,6 +134,8 @@ public class TokenIntrospection {
 		_username = username;
 	}
 
+	/* Field names correspond to RFC */
+
 	private boolean _active;
 	private List<String> _aud;
 	private String _clientId;

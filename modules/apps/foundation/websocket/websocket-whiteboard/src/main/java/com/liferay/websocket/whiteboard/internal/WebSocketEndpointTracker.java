@@ -14,6 +14,8 @@
 
 package com.liferay.websocket.whiteboard.internal;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 
 import java.util.List;
@@ -171,6 +173,17 @@ public class WebSocketEndpointTracker
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
+		Object serverContainer = _servletContext.getAttribute(
+			"javax.websocket.server.ServerContainer");
+
+		if (serverContainer == null) {
+			if (_log.isInfoEnabled()) {
+				_log.info("A WebSocket server container is not registered");
+			}
+
+			return;
+		}
+
 		_bundleContext = bundleContext;
 
 		_serverEndpointConfigWrapperServiceTracker = new ServiceTracker<>(
@@ -184,6 +197,9 @@ public class WebSocketEndpointTracker
 		_serverEndpointConfigWrapperServiceTracker.close();
 	}
 
+	private static final Log _log = LogFactoryUtil.getLog(
+		WebSocketEndpointTracker.class);
+
 	private BundleContext _bundleContext;
 
 	@Reference
@@ -194,7 +210,7 @@ public class WebSocketEndpointTracker
 	private ServiceTracker<Endpoint, ServerEndpointConfigWrapper>
 		_serverEndpointConfigWrapperServiceTracker;
 
-	@Reference(target = "(websocket.active=true)")
+	@Reference(target = "(original.bean=true)")
 	private ServletContext _servletContext;
 
 }

@@ -14,6 +14,7 @@
 
 package com.liferay.forms.apio.internal.architect.resource;
 
+import com.liferay.apio.architect.functional.Try;
 import com.liferay.apio.architect.language.Language;
 import com.liferay.apio.architect.pagination.PageItems;
 import com.liferay.apio.architect.pagination.Pagination;
@@ -23,12 +24,14 @@ import com.liferay.apio.architect.routes.ItemRoutes;
 import com.liferay.apio.architect.routes.NestedCollectionRoutes;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecord;
+import com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecordVersion;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceRecordService;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceService;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.forms.apio.architect.identifier.FormInstanceIdentifier;
 import com.liferay.forms.apio.architect.identifier.FormInstanceRecordIdentifier;
+import com.liferay.forms.apio.architect.identifier.FormInstanceRecordVersionIdentifier;
 import com.liferay.forms.apio.internal.architect.FormInstanceRecordServiceContext;
 import com.liferay.forms.apio.internal.architect.form.FormInstanceRecordForm;
 import com.liferay.forms.apio.internal.architect.helper.FormInstanceRecordResourceHelper;
@@ -105,14 +108,11 @@ public class FormInstanceRecordNestedCollectionResource
 			"datePublished", DDMFormInstanceRecord::getLastPublishDate
 		).addLinkedModel(
 			"author", PersonIdentifier.class, DDMFormInstanceRecord::getUserId
+		).addLinkedModel(
+			"version", FormInstanceRecordVersionIdentifier.class,
+			this::_getVersionId
 		).addLocalizedStringByLocale(
 			"fieldValues", FormInstanceRecordResourceHelper::getFieldValuesJSON
-		).addNumber(
-			"versionUserId", DDMFormInstanceRecord::getVersionUserId
-		).addString(
-			"version", DDMFormInstanceRecord::getVersion
-		).addString(
-			"versionUserName", DDMFormInstanceRecord::getVersionUserName
 		).build();
 	}
 
@@ -158,6 +158,18 @@ public class FormInstanceRecordNestedCollectionResource
 			formInstanceId);
 
 		return new PageItems<>(ddmFormInstances, count);
+	}
+
+	private Long _getVersionId(DDMFormInstanceRecord ddmFormInstanceRecord) {
+		return Try.fromFallible(
+			ddmFormInstanceRecord::getVersion
+		).map(
+			ddmFormInstanceRecord::getFormInstanceRecordVersion
+		).map(
+			DDMFormInstanceRecordVersion::getFormInstanceRecordVersionId
+		).orElse(
+			null
+		);
 	}
 
 	private void _setServiceContextAttributes(

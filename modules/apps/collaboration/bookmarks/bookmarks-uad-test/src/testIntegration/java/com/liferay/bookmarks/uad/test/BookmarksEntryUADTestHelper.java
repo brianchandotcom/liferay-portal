@@ -29,8 +29,8 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Noah Sherrill
  */
-@Component(immediate = true, service = BookmarksEntryUADEntityTestHelper.class)
-public class BookmarksEntryUADEntityTestHelper {
+@Component(immediate = true, service = BookmarksEntryUADTestHelper.class)
+public class BookmarksEntryUADTestHelper {
 
 	public BookmarksEntry addBookmarksEntry(long userId) throws Exception {
 		ServiceContext serviceContext =

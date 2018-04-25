@@ -17,7 +17,7 @@ package com.liferay.bookmarks.uad.display.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.bookmarks.model.BookmarksEntry;
 import com.liferay.bookmarks.uad.constants.BookmarksUADConstants;
-import com.liferay.bookmarks.uad.test.BookmarksEntryUADEntityTestHelper;
+import com.liferay.bookmarks.uad.test.BookmarksEntryUADTestHelper;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -48,7 +48,7 @@ public class BookmarksEntryUADDisplayTest extends BaseUADDisplayTestCase {
 	@Override
 	protected BaseModel<?> addBaseModel(long userId) throws Exception {
 		BookmarksEntry bookmarksEntry =
-			_bookmarksEntryUADEntityTestHelper.addBookmarksEntry(userId);
+			_bookmarksEntryUADTestHelper.addBookmarksEntry(userId);
 
 		_bookmarksEntries.add(bookmarksEntry);
 
@@ -79,8 +79,7 @@ public class BookmarksEntryUADDisplayTest extends BaseUADDisplayTestCase {
 	private final List<BookmarksEntry> _bookmarksEntries = new ArrayList<>();
 
 	@Inject
-	private BookmarksEntryUADEntityTestHelper
-		_bookmarksEntryUADEntityTestHelper;
+	private BookmarksEntryUADTestHelper _bookmarksEntryUADTestHelper;
 
 	@Inject(
 		filter = "model.class.name=" + BookmarksUADConstants.CLASS_NAME_BOOKMARKS_ENTRY

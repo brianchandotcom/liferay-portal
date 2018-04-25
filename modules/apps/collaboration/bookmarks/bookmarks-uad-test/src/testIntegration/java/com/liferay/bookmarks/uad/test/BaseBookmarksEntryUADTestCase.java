@@ -33,7 +33,7 @@ import org.junit.Before;
 /**
  * @author Noah Sherrill
  */
-public abstract class BaseBookmarksEntryUADEntityTestCase {
+public abstract class BaseBookmarksEntryUADTestCase {
 
 	@Before
 	public void setUp() throws Exception {

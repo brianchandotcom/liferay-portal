@@ -20,6 +20,7 @@ import com.liferay.apio.architect.representor.Representor;
 import com.liferay.apio.architect.resource.NestedCollectionResource;
 import com.liferay.apio.architect.routes.ItemRoutes;
 import com.liferay.apio.architect.routes.NestedCollectionRoutes;
+import com.liferay.dynamic.data.mapping.exception.NoSuchDataProviderInstanceException;
 import com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance;
 import com.liferay.dynamic.data.mapping.service.DDMDataProviderInstanceService;
 import com.liferay.forms.apio.architect.identifier.DataProviderInstanceIdentifier;
@@ -30,6 +31,7 @@ import com.liferay.site.apio.identifier.WebSiteIdentifier;
 import java.util.List;
 
 import javax.ws.rs.InternalServerErrorException;
+import javax.ws.rs.NotFoundException;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -110,6 +112,9 @@ public class DataProviderInstanceCollectionResource
 		try {
 			return _ddmDataProviderInstanceService.getDataProviderInstance(
 				dataProviderInstanceId);
+		}
+		catch (NoSuchDataProviderInstanceException nsdpie) {
+			throw new NotFoundException(nsdpie);
 		}
 		catch (PortalException pe) {
 			throw new InternalServerErrorException(pe.getMessage(), pe);

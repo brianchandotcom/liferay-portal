@@ -21,6 +21,7 @@ import com.liferay.apio.architect.representor.Representor;
 import com.liferay.apio.architect.resource.NestedCollectionResource;
 import com.liferay.apio.architect.routes.ItemRoutes;
 import com.liferay.apio.architect.routes.NestedCollectionRoutes;
+import com.liferay.dynamic.data.mapping.exception.NoSuchFormInstanceException;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderingContext;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormTemplateContextFactory;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
@@ -46,6 +47,7 @@ import java.util.Locale;
 import java.util.Map;
 
 import javax.ws.rs.InternalServerErrorException;
+import javax.ws.rs.NotFoundException;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -168,6 +170,9 @@ public class FormInstanceCollectionResource
 	private DDMFormInstance _getFormInstance(Long formInstanceId) {
 		try {
 			return _ddmFormInstanceService.getFormInstance(formInstanceId);
+		}
+		catch (NoSuchFormInstanceException nsfie) {
+			throw new NotFoundException(nsfie);
 		}
 		catch (PortalException pe) {
 			throw new InternalServerErrorException(pe.getMessage(), pe);

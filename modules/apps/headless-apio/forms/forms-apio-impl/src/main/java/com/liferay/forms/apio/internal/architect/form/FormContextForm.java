@@ -17,6 +17,9 @@ package com.liferay.forms.apio.internal.architect.form;
 import com.liferay.apio.architect.form.Form;
 
 /**
+ * Instances of this class represent the values extracted from a form instance
+ * context evaluator form.
+ *
  * @author Victor Oliveira
  */
 public class FormContextForm {
@@ -31,15 +34,10 @@ public class FormContextForm {
 	public static Form<FormContextForm> buildForm(
 		Form.Builder<FormContextForm> formBuilder) {
 
-		String title = "The form instance context form";
-
-		String description =
-			"This form context can be used to evaluate a form instance";
-
 		return formBuilder.title(
-			__ -> title
+			__ -> "The form instance context form"
 		).description(
-			__ -> description
+			__ -> "This form context can be used to evaluate a form instance"
 		).constructor(
 			FormContextForm::new
 		).addRequiredString(

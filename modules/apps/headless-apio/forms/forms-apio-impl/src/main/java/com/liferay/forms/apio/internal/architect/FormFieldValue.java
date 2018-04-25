@@ -20,37 +20,13 @@ package com.liferay.forms.apio.internal.architect;
 public class FormFieldValue {
 
 	public FormFieldValue(String instanceId, String name, String value) {
-		_instanceId = instanceId;
-		_name = name;
-		_value = value;
+		this.instanceId = instanceId;
+		this.name = name;
+		this.value = value;
 	}
 
-	public String getInstanceId() {
-		return _instanceId;
-	}
-
-	public String getName() {
-		return _name;
-	}
-
-	public String getValue() {
-		return _value;
-	}
-
-	public void setInstanceId(String instanceId) {
-		_instanceId = instanceId;
-	}
-
-	public void setName(String name) {
-		_name = name;
-	}
-
-	public void setValue(String value) {
-		_value = value;
-	}
-
-	private String _instanceId;
-	private String _name;
-	private String _value;
+	public final String instanceId;
+	public final String name;
+	public final String value;
 
 }

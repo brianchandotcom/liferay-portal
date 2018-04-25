@@ -17,6 +17,9 @@ package com.liferay.forms.apio.internal.architect.form;
 import com.liferay.apio.architect.form.Form;
 
 /**
+ * Instances of this class represent the values extracted from a form instance
+ * record updater form.
+ *
  * @author Paulo Cruz
  */
 public class FormInstanceRecordForm {
@@ -31,15 +34,10 @@ public class FormInstanceRecordForm {
 	public static Form<FormInstanceRecordForm> buildForm(
 		Form.Builder<FormInstanceRecordForm> formBuilder) {
 
-		String title = "The form instance record form";
-
-		String description =
-			"This form can be used to update a form instance record";
-
 		return formBuilder.title(
-			__ -> title
+			__ -> "The form instance record form"
 		).description(
-			__ -> description
+			__ -> "This form can be used to update a form instance record"
 		).constructor(
 			FormInstanceRecordForm::new
 		).addRequiredString(

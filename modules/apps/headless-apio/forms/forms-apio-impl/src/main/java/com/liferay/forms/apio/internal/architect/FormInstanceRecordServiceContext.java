@@ -29,10 +29,6 @@ public class FormInstanceRecordServiceContext {
 		return _serviceContext;
 	}
 
-	public void setServiceContext(ServiceContext serviceContext) {
-		_serviceContext = serviceContext;
-	}
-
-	private ServiceContext _serviceContext;
+	private final ServiceContext _serviceContext;
 
 }

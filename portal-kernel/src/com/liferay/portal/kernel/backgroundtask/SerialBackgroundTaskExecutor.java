@@ -19,7 +19,10 @@ import com.liferay.portal.kernel.lock.Lock;
 
 /**
  * @author Michael C. Han
+ * @deprecated As of 7.0.0, moved to {@link
+ *             com.liferay.portal.background.task.internal.SerialBackgroundTaskExecutor}
  */
+@Deprecated
 public class SerialBackgroundTaskExecutor
 	extends DelegatingBackgroundTaskExecutor {
 

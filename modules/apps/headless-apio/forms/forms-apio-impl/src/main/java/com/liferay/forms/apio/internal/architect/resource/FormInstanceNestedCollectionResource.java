@@ -54,7 +54,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Victor Oliveira
  */
 @Component(immediate = true)
-public class FormInstanceCollectionResource
+public class FormInstanceNestedCollectionResource
 	implements NestedCollectionResource<DDMFormInstance, Long,
 		FormInstanceIdentifier, Long, WebSiteIdentifier> {
 

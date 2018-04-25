@@ -38,8 +38,6 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.List;
 
-import javax.ws.rs.InternalServerErrorException;
-
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -50,7 +48,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Paulo Cruz
  */
 @Component(immediate = true)
-public class FormInstanceRecordCollectionResource
+public class FormInstanceRecordNestedCollectionResource
 	implements NestedCollectionResource<DDMFormInstanceRecord, Long,
 		FormInstanceRecordIdentifier, Long, FormInstanceIdentifier> {
 
@@ -151,24 +149,18 @@ public class FormInstanceRecordCollectionResource
 	}
 
 	private PageItems<DDMFormInstanceRecord> _getPageItems(
-		Pagination pagination, Long formInstanceId) {
+		Pagination pagination, Long formInstanceId) throws PortalException {
 
-		try {
-			List<DDMFormInstanceRecord> ddmFormInstances =
-				_ddmFormInstanceRecordService.getFormInstanceRecords(
-					formInstanceId, WorkflowConstants.STATUS_ANY,
-					pagination.getStartPosition(), pagination.getEndPosition(),
-					null);
+		List<DDMFormInstanceRecord> ddmFormInstances =
+			_ddmFormInstanceRecordService.getFormInstanceRecords(
+				formInstanceId, WorkflowConstants.STATUS_ANY,
+				pagination.getStartPosition(), pagination.getEndPosition(),
+				null);
 
-			int count =
-				_ddmFormInstanceRecordService.getFormInstanceRecordsCount(
-					formInstanceId);
+		int count = _ddmFormInstanceRecordService.getFormInstanceRecordsCount(
+			formInstanceId);
 
-			return new PageItems<>(ddmFormInstances, count);
-		}
-		catch (PortalException pe) {
-			throw new InternalServerErrorException(pe.getMessage(), pe);
-		}
+		return new PageItems<>(ddmFormInstances, count);
 	}
 
 	private void _setServiceContextAttributes(

@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+
+<custom-sql>
+	<sql id="com.liferay.fragment.service.persistence.FragmentEntryLinkFinder.countByG_F_C_L">
+		<![CDATA[
+			SELECT
+				COUNT(DISTINCT FragmentEntryLink.fragmentEntryLinkId) AS COUNT_VALUE
+			FROM
+				FragmentEntryLink
+			LEFT JOIN
+				LayoutPageTemplateEntry ON
+					(FragmentEntryLink.groupId = LayoutPageTemplateEntry.groupId) AND
+					(FragmentEntryLink.classPK = LayoutPageTemplateEntry.layoutPageTemplateEntryId)
+			WHERE
+				(FragmentEntryLink.groupId = ?) AND
+				(FragmentEntryLink.fragmentEntryId = ?) AND
+				(FragmentEntryLink.classNameId = ?) AND
+				(FragmentEntryLink.position = 1) AND
+				(LayoutPageTemplateEntry.type_ = ?)
+		]]>
+	</sql>
+	<sql id="com.liferay.fragment.service.persistence.FragmentEntryLinkFinder.findByG_F_C_L">
+		<![CDATA[
+			SELECT
+				FragmentEntryLink.*
+			FROM
+				FragmentEntryLink
+			LEFT JOIN
+				LayoutPageTemplateEntry ON
+					(FragmentEntryLink.groupId = LayoutPageTemplateEntry.groupId) AND
+					(FragmentEntryLink.classPK = LayoutPageTemplateEntry.layoutPageTemplateEntryId)
+			WHERE
+				(FragmentEntryLink.groupId = ?) AND
+				(FragmentEntryLink.fragmentEntryId = ?) AND
+				(FragmentEntryLink.classNameId = ?) AND
+				(FragmentEntryLink.position = 1) AND
+				(LayoutPageTemplateEntry.type_ = ?)
+			ORDER BY
+				FragmentEntryLink.fragmentEntryLinkId
+		]]>
+	</sql>
+</custom-sql>

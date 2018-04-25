@@ -158,6 +158,17 @@ public class FragmentEntryLinkLocalServiceImpl
 
 	@Override
 	public List<FragmentEntryLink> getFragmentEntryLinks(
+		long groupId, long fragmentEntryId, long classNameId,
+		int layoutPageTemplateType, int start, int end,
+		OrderByComparator<FragmentEntryLink> orderByComparator) {
+
+		return fragmentEntryLinkFinder.findByG_F_C_L(
+			groupId, fragmentEntryId, classNameId, layoutPageTemplateType,
+			start, end, orderByComparator);
+	}
+
+	@Override
+	public List<FragmentEntryLink> getFragmentEntryLinks(
 		long groupId, long fragmentEntryId, long classNameId, int start,
 		int end, OrderByComparator<FragmentEntryLink> orderByComparator) {
 
@@ -178,6 +189,15 @@ public class FragmentEntryLinkLocalServiceImpl
 
 		return fragmentEntryLinkPersistence.countByG_F_C(
 			groupId, fragmentEntryId, classNameId);
+	}
+
+	@Override
+	public int getFragmentEntryLinksCount(
+		long groupId, long fragmentEntryId, long classNameId,
+		int layoutPageTemplateType) {
+
+		return fragmentEntryLinkFinder.countByG_F_C_L(
+			groupId, fragmentEntryId, classNameId, layoutPageTemplateType);
 	}
 
 	@Override
@@ -270,6 +290,27 @@ public class FragmentEntryLinkLocalServiceImpl
 				jsonObject.getString(String.valueOf(position)), position++,
 				serviceContext);
 		}
+	}
+
+	@Override
+	public FragmentEntryLink updateLatestChanges(long fragmentEntryLinkId)
+		throws PortalException {
+
+		FragmentEntryLink fragmentEntryLink =
+			fragmentEntryLinkPersistence.findByPrimaryKey(fragmentEntryLinkId);
+
+		FragmentEntry fragmentEntry = fragmentEntryPersistence.findByPrimaryKey(
+			fragmentEntryLink.getFragmentEntryId());
+
+		fragmentEntryLink.setCss(fragmentEntry.getCss());
+		fragmentEntryLink.setHtml(fragmentEntry.getHtml());
+		fragmentEntryLink.setJs(fragmentEntry.getJs());
+
+		fragmentEntryLink.setLastPropagationDate(new Date());
+
+		fragmentEntryLinkPersistence.update(fragmentEntryLink);
+
+		return fragmentEntryLink;
 	}
 
 	@ServiceReference(type = JSONFactory.class)

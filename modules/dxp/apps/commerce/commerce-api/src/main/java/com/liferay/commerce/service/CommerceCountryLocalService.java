@@ -94,6 +94,7 @@ public interface CommerceCountryLocalService extends BaseLocalService,
 	* @param commerceCountryId the primary key for the new commerce country
 	* @return the new commerce country
 	*/
+	@Transactional(enabled = false)
 	public CommerceCountry createCommerceCountry(long commerceCountryId);
 
 	public void deleteCommerceCountries(long groupId) throws PortalException;

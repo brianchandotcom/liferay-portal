@@ -2624,7 +2624,7 @@ public class CommerceWarehousePersistenceImpl extends BasePersistenceImpl<Commer
 
 				args = new Object[] {
 						commerceWarehouseModelImpl.getGroupId(),
-						commerceWarehouseModelImpl.getActive()
+						commerceWarehouseModelImpl.isActive()
 					};
 
 				finderCache.removeResult(FINDER_PATH_COUNT_BY_G_A, args);
@@ -2667,7 +2667,7 @@ public class CommerceWarehousePersistenceImpl extends BasePersistenceImpl<Commer
 
 				args = new Object[] {
 						commerceWarehouseModelImpl.getGroupId(),
-						commerceWarehouseModelImpl.getActive(),
+						commerceWarehouseModelImpl.isActive(),
 						commerceWarehouseModelImpl.getCommerceCountryId()
 					};
 

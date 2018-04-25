@@ -87,6 +87,7 @@ public interface CommerceShippingMethodLocalService extends BaseLocalService,
 	* @param commerceShippingMethodId the primary key for the new commerce shipping method
 	* @return the new commerce shipping method
 	*/
+	@Transactional(enabled = false)
 	public CommerceShippingMethod createCommerceShippingMethod(
 		long commerceShippingMethodId);
 

@@ -4429,7 +4429,7 @@ public class CommerceCountryPersistenceImpl extends BasePersistenceImpl<Commerce
 
 				args = new Object[] {
 						commerceCountryModelImpl.getGroupId(),
-						commerceCountryModelImpl.getActive()
+						commerceCountryModelImpl.isActive()
 					};
 
 				finderCache.removeResult(FINDER_PATH_COUNT_BY_G_A, args);
@@ -4451,8 +4451,8 @@ public class CommerceCountryPersistenceImpl extends BasePersistenceImpl<Commerce
 
 				args = new Object[] {
 						commerceCountryModelImpl.getGroupId(),
-						commerceCountryModelImpl.getBillingAllowed(),
-						commerceCountryModelImpl.getActive()
+						commerceCountryModelImpl.isBillingAllowed(),
+						commerceCountryModelImpl.isActive()
 					};
 
 				finderCache.removeResult(FINDER_PATH_COUNT_BY_G_B_A, args);
@@ -4474,8 +4474,8 @@ public class CommerceCountryPersistenceImpl extends BasePersistenceImpl<Commerce
 
 				args = new Object[] {
 						commerceCountryModelImpl.getGroupId(),
-						commerceCountryModelImpl.getShippingAllowed(),
-						commerceCountryModelImpl.getActive()
+						commerceCountryModelImpl.isShippingAllowed(),
+						commerceCountryModelImpl.isActive()
 					};
 
 				finderCache.removeResult(FINDER_PATH_COUNT_BY_G_S_A, args);

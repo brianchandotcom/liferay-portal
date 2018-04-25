@@ -93,6 +93,7 @@ public interface CommerceAddressLocalService extends BaseLocalService,
 	* @param commerceAddressId the primary key for the new commerce address
 	* @return the new commerce address
 	*/
+	@Transactional(enabled = false)
 	public CommerceAddress createCommerceAddress(long commerceAddressId);
 
 	/**

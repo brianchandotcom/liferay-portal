@@ -85,6 +85,7 @@ public interface CommerceWarehouseLocalService extends BaseLocalService,
 	* @param commerceWarehouseId the primary key for the new commerce warehouse
 	* @return the new commerce warehouse
 	*/
+	@Transactional(enabled = false)
 	public CommerceWarehouse createCommerceWarehouse(long commerceWarehouseId);
 
 	/**

@@ -3943,7 +3943,7 @@ public class CommerceAddressPersistenceImpl extends BasePersistenceImpl<Commerce
 						commerceAddressModelImpl.getGroupId(),
 						commerceAddressModelImpl.getClassNameId(),
 						commerceAddressModelImpl.getClassPK(),
-						commerceAddressModelImpl.getDefaultBilling()
+						commerceAddressModelImpl.isDefaultBilling()
 					};
 
 				finderCache.removeResult(FINDER_PATH_COUNT_BY_G_C_C_DB, args);
@@ -3968,7 +3968,7 @@ public class CommerceAddressPersistenceImpl extends BasePersistenceImpl<Commerce
 						commerceAddressModelImpl.getGroupId(),
 						commerceAddressModelImpl.getClassNameId(),
 						commerceAddressModelImpl.getClassPK(),
-						commerceAddressModelImpl.getDefaultShipping()
+						commerceAddressModelImpl.isDefaultShipping()
 					};
 
 				finderCache.removeResult(FINDER_PATH_COUNT_BY_G_C_C_DS, args);

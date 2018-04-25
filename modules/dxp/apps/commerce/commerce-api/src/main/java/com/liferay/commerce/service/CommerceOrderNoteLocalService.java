@@ -82,6 +82,7 @@ public interface CommerceOrderNoteLocalService extends BaseLocalService,
 	* @param commerceOrderNoteId the primary key for the new commerce order note
 	* @return the new commerce order note
 	*/
+	@Transactional(enabled = false)
 	public CommerceOrderNote createCommerceOrderNote(long commerceOrderNoteId);
 
 	/**

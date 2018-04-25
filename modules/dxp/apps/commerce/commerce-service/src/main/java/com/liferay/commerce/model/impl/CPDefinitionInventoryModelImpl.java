@@ -163,10 +163,10 @@ public class CPDefinitionInventoryModelImpl extends BaseModelImpl<CPDefinitionIn
 		model.setCPDefinitionId(soapModel.getCPDefinitionId());
 		model.setCPDefinitionInventoryEngine(soapModel.getCPDefinitionInventoryEngine());
 		model.setLowStockActivity(soapModel.getLowStockActivity());
-		model.setDisplayAvailability(soapModel.getDisplayAvailability());
-		model.setDisplayStockQuantity(soapModel.getDisplayStockQuantity());
+		model.setDisplayAvailability(soapModel.isDisplayAvailability());
+		model.setDisplayStockQuantity(soapModel.isDisplayStockQuantity());
 		model.setMinStockQuantity(soapModel.getMinStockQuantity());
-		model.setBackOrders(soapModel.getBackOrders());
+		model.setBackOrders(soapModel.isBackOrders());
 		model.setMinOrderQuantity(soapModel.getMinOrderQuantity());
 		model.setMaxOrderQuantity(soapModel.getMaxOrderQuantity());
 		model.setAllowedOrderQuantities(soapModel.getAllowedOrderQuantities());

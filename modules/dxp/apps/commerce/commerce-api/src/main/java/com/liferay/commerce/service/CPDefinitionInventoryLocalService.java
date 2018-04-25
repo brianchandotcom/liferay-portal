@@ -91,6 +91,7 @@ public interface CPDefinitionInventoryLocalService extends BaseLocalService,
 	* @param CPDefinitionInventoryId the primary key for the new cp definition inventory
 	* @return the new cp definition inventory
 	*/
+	@Transactional(enabled = false)
 	public CPDefinitionInventory createCPDefinitionInventory(
 		long CPDefinitionInventoryId);
 

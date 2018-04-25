@@ -88,6 +88,7 @@ public interface CommerceOrderItemLocalService extends BaseLocalService,
 	* @param commerceOrderItemId the primary key for the new commerce order item
 	* @return the new commerce order item
 	*/
+	@Transactional(enabled = false)
 	public CommerceOrderItem createCommerceOrderItem(long commerceOrderItemId);
 
 	/**

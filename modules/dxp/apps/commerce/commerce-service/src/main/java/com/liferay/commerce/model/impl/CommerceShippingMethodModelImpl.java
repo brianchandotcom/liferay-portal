@@ -155,7 +155,7 @@ public class CommerceShippingMethodModelImpl extends BaseModelImpl<CommerceShipp
 		model.setImageId(soapModel.getImageId());
 		model.setEngineKey(soapModel.getEngineKey());
 		model.setPriority(soapModel.getPriority());
-		model.setActive(soapModel.getActive());
+		model.setActive(soapModel.isActive());
 
 		return model;
 	}

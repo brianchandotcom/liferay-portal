@@ -154,7 +154,7 @@ public class CommerceRegionModelImpl extends BaseModelImpl<CommerceRegion>
 		model.setName(soapModel.getName());
 		model.setCode(soapModel.getCode());
 		model.setPriority(soapModel.getPriority());
-		model.setActive(soapModel.getActive());
+		model.setActive(soapModel.isActive());
 		model.setLastPublishDate(soapModel.getLastPublishDate());
 
 		return model;

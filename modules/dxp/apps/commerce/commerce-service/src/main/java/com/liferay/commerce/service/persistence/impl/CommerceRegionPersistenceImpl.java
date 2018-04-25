@@ -2981,7 +2981,7 @@ public class CommerceRegionPersistenceImpl extends BasePersistenceImpl<CommerceR
 
 				args = new Object[] {
 						commerceRegionModelImpl.getCommerceCountryId(),
-						commerceRegionModelImpl.getActive()
+						commerceRegionModelImpl.isActive()
 					};
 
 				finderCache.removeResult(FINDER_PATH_COUNT_BY_C_A, args);

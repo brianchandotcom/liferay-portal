@@ -86,6 +86,7 @@ public interface CommerceTaxMethodLocalService extends BaseLocalService,
 	* @param commerceTaxMethodId the primary key for the new commerce tax method
 	* @return the new commerce tax method
 	*/
+	@Transactional(enabled = false)
 	public CommerceTaxMethod createCommerceTaxMethod(long commerceTaxMethodId);
 
 	/**

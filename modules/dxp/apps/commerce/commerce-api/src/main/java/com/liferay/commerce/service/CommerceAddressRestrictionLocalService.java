@@ -82,6 +82,7 @@ public interface CommerceAddressRestrictionLocalService extends BaseLocalService
 	* @param commerceAddressRestrictionId the primary key for the new commerce address restriction
 	* @return the new commerce address restriction
 	*/
+	@Transactional(enabled = false)
 	public CommerceAddressRestriction createCommerceAddressRestriction(
 		long commerceAddressRestrictionId);
 

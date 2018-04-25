@@ -138,7 +138,7 @@ public class CommerceOrderNoteModelImpl extends BaseModelImpl<CommerceOrderNote>
 		model.setModifiedDate(soapModel.getModifiedDate());
 		model.setCommerceOrderId(soapModel.getCommerceOrderId());
 		model.setContent(soapModel.getContent());
-		model.setRestricted(soapModel.getRestricted());
+		model.setRestricted(soapModel.isRestricted());
 
 		return model;
 	}

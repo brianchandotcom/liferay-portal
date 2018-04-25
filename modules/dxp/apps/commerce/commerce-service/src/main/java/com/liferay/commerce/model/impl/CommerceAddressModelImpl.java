@@ -183,8 +183,8 @@ public class CommerceAddressModelImpl extends BaseModelImpl<CommerceAddress>
 		model.setLatitude(soapModel.getLatitude());
 		model.setLongitude(soapModel.getLongitude());
 		model.setPhoneNumber(soapModel.getPhoneNumber());
-		model.setDefaultBilling(soapModel.getDefaultBilling());
-		model.setDefaultShipping(soapModel.getDefaultShipping());
+		model.setDefaultBilling(soapModel.isDefaultBilling());
+		model.setDefaultShipping(soapModel.isDefaultShipping());
 
 		return model;
 	}

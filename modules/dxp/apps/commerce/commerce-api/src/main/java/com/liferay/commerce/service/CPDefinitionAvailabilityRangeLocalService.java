@@ -83,6 +83,7 @@ public interface CPDefinitionAvailabilityRangeLocalService
 	* @param CPDefinitionAvailabilityRangeId the primary key for the new cp definition availability range
 	* @return the new cp definition availability range
 	*/
+	@Transactional(enabled = false)
 	public CPDefinitionAvailabilityRange createCPDefinitionAvailabilityRange(
 		long CPDefinitionAvailabilityRangeId);
 

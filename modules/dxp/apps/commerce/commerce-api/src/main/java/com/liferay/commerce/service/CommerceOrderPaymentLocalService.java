@@ -82,6 +82,7 @@ public interface CommerceOrderPaymentLocalService extends BaseLocalService,
 	* @param commerceOrderPaymentId the primary key for the new commerce order payment
 	* @return the new commerce order payment
 	*/
+	@Transactional(enabled = false)
 	public CommerceOrderPayment createCommerceOrderPayment(
 		long commerceOrderPaymentId);
 

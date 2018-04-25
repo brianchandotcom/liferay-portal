@@ -151,8 +151,8 @@ public class CommerceTaxMethodModelImpl extends BaseModelImpl<CommerceTaxMethod>
 		model.setName(soapModel.getName());
 		model.setDescription(soapModel.getDescription());
 		model.setEngineKey(soapModel.getEngineKey());
-		model.setPercentage(soapModel.getPercentage());
-		model.setActive(soapModel.getActive());
+		model.setPercentage(soapModel.isPercentage());
+		model.setActive(soapModel.isActive());
 
 		return model;
 	}

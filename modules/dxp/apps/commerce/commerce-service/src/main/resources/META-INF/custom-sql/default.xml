@@ -67,18 +67,6 @@
 				(CommerceOrder.status <> ?)
 		]]>
 	</sql>
-	<sql id="com.liferay.commerce.service.persistence.CommercePriceListFinder.findByExpirationDate">
-		<![CDATA[
-			SELECT
-				CommercePriceList.*
-			FROM
-				CommercePriceList
-			WHERE
-				(CommercePriceList.expirationDate < ?)  AND
-				(CommercePriceList.expirationDate is not null) AND
-				([$OWNER_USER_ID$] [$OWNER_USER_ID_AND_OR_CONNECTOR$] ([$STATUS$]))
-		]]>
-	</sql>
 	<sql id="com.liferay.commerce.service.persistence.CommerceWarehouseFinder.countByG_N_D_S_C_Z_C">
 		<![CDATA[
 			SELECT

@@ -85,6 +85,7 @@ public interface CommerceShipmentItemLocalService extends BaseLocalService,
 	* @param commerceShipmentItemId the primary key for the new commerce shipment item
 	* @return the new commerce shipment item
 	*/
+	@Transactional(enabled = false)
 	public CommerceShipmentItem createCommerceShipmentItem(
 		long commerceShipmentItemId);
 

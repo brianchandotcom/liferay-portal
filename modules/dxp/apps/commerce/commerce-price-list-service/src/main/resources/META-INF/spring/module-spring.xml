@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+
+<beans
+	default-destroy-method="destroy"
+	default-init-method="afterPropertiesSet"
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd"
+>
+	<bean class="com.liferay.commerce.price.list.service.impl.CommercePriceEntryLocalServiceImpl" id="com.liferay.commerce.price.list.service.CommercePriceEntryLocalService" />
+	<bean class="com.liferay.commerce.price.list.service.impl.CommercePriceEntryServiceImpl" id="com.liferay.commerce.price.list.service.CommercePriceEntryService" />
+	<bean class="com.liferay.commerce.price.list.service.persistence.impl.CommercePriceEntryPersistenceImpl" id="com.liferay.commerce.price.list.service.persistence.CommercePriceEntryPersistence" parent="basePersistence" />
+	<bean class="com.liferay.commerce.price.list.service.impl.CommercePriceListLocalServiceImpl" id="com.liferay.commerce.price.list.service.CommercePriceListLocalService" />
+	<bean class="com.liferay.commerce.price.list.service.impl.CommercePriceListServiceImpl" id="com.liferay.commerce.price.list.service.CommercePriceListService" />
+	<bean class="com.liferay.commerce.price.list.service.persistence.impl.CommercePriceListPersistenceImpl" id="com.liferay.commerce.price.list.service.persistence.CommercePriceListPersistence" parent="basePersistence" />
+	<bean class="com.liferay.commerce.price.list.service.persistence.impl.CommercePriceListFinderImpl" id="com.liferay.commerce.price.list.service.persistence.CommercePriceListFinder" parent="basePersistence" />
+	<bean class="com.liferay.commerce.price.list.service.impl.CommercePriceListUserSegmentEntryRelLocalServiceImpl" id="com.liferay.commerce.price.list.service.CommercePriceListUserSegmentEntryRelLocalService" />
+	<bean class="com.liferay.commerce.price.list.service.impl.CommercePriceListUserSegmentEntryRelServiceImpl" id="com.liferay.commerce.price.list.service.CommercePriceListUserSegmentEntryRelService" />
+	<bean class="com.liferay.commerce.price.list.service.persistence.impl.CommercePriceListUserSegmentEntryRelPersistenceImpl" id="com.liferay.commerce.price.list.service.persistence.CommercePriceListUserSegmentEntryRelPersistence" parent="basePersistence" />
+	<bean class="com.liferay.commerce.price.list.service.impl.CommerceTierPriceEntryLocalServiceImpl" id="com.liferay.commerce.price.list.service.CommerceTierPriceEntryLocalService" />
+	<bean class="com.liferay.commerce.price.list.service.impl.CommerceTierPriceEntryServiceImpl" id="com.liferay.commerce.price.list.service.CommerceTierPriceEntryService" />
+	<bean class="com.liferay.commerce.price.list.service.persistence.impl.CommerceTierPriceEntryPersistenceImpl" id="com.liferay.commerce.price.list.service.persistence.CommerceTierPriceEntryPersistence" parent="basePersistence" />
+</beans>

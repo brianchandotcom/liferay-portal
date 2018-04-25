@@ -89,6 +89,7 @@ public interface CommercePaymentMethodLocalService extends BaseLocalService,
 	* @param commercePaymentMethodId the primary key for the new commerce payment method
 	* @return the new commerce payment method
 	*/
+	@Transactional(enabled = false)
 	public CommercePaymentMethod createCommercePaymentMethod(
 		long commercePaymentMethodId);
 

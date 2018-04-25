@@ -89,6 +89,7 @@ public interface CommerceAvailabilityRangeLocalService extends BaseLocalService,
 	* @param commerceAvailabilityRangeId the primary key for the new commerce availability range
 	* @return the new commerce availability range
 	*/
+	@Transactional(enabled = false)
 	public CommerceAvailabilityRange createCommerceAvailabilityRange(
 		long commerceAvailabilityRangeId);
 

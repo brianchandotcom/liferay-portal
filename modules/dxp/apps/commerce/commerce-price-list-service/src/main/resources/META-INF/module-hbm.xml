@@ -1,0 +1,83 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping auto-import="false" default-lazy="false">
+	<import class="com.liferay.commerce.price.list.model.CommercePriceEntry" />
+	<import class="com.liferay.commerce.price.list.model.CommercePriceList" />
+	<import class="com.liferay.commerce.price.list.model.CommercePriceListUserSegmentEntryRel" />
+	<import class="com.liferay.commerce.price.list.model.CommerceTierPriceEntry" />
+	<class name="com.liferay.commerce.price.list.model.impl.CommercePriceEntryImpl" table="CommercePriceEntry">
+		<id name="commercePriceEntryId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property column="uuid_" name="uuid" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="createDate" type="org.hibernate.type.TimestampType" />
+		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
+		<property name="CPInstanceId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="commercePriceListId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="price" type="org.hibernate.type.BigDecimalType" />
+		<property name="promoPrice" type="org.hibernate.type.BigDecimalType" />
+		<property name="hasTierPrice" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="lastPublishDate" type="org.hibernate.type.TimestampType" />
+	</class>
+	<class name="com.liferay.commerce.price.list.model.impl.CommercePriceListImpl" table="CommercePriceList">
+		<id name="commercePriceListId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property column="uuid_" name="uuid" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="createDate" type="org.hibernate.type.TimestampType" />
+		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
+		<property name="parentCommercePriceListId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="commerceCurrencyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="priority" type="com.liferay.portal.dao.orm.hibernate.DoubleType" />
+		<property name="displayDate" type="org.hibernate.type.TimestampType" />
+		<property name="expirationDate" type="org.hibernate.type.TimestampType" />
+		<property name="lastPublishDate" type="org.hibernate.type.TimestampType" />
+		<property name="status" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="statusByUserId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="statusByUserName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="statusDate" type="org.hibernate.type.TimestampType" />
+	</class>
+	<class name="com.liferay.commerce.price.list.model.impl.CommercePriceListUserSegmentEntryRelImpl" table="CPLUserSegmentEntryRel">
+		<id column="CPLUserSegmentEntryRelId" name="commercePriceListUserSegmentEntryRelId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property column="uuid_" name="uuid" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="createDate" type="org.hibernate.type.TimestampType" />
+		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
+		<property name="commercePriceListId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="commerceUserSegmentEntryId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property column="order_" name="order" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="lastPublishDate" type="org.hibernate.type.TimestampType" />
+	</class>
+	<class name="com.liferay.commerce.price.list.model.impl.CommerceTierPriceEntryImpl" table="CommerceTierPriceEntry">
+		<id name="commerceTierPriceEntryId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property column="uuid_" name="uuid" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="createDate" type="org.hibernate.type.TimestampType" />
+		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
+		<property name="commercePriceEntryId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="price" type="org.hibernate.type.BigDecimalType" />
+		<property name="promoPrice" type="org.hibernate.type.BigDecimalType" />
+		<property name="minQuantity" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="lastPublishDate" type="org.hibernate.type.TimestampType" />
+	</class>
+</hibernate-mapping>

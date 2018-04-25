@@ -16,10 +16,10 @@ package com.liferay.commerce.model.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.commerce.constants.CommerceOrderConstants;
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.service.CommerceCurrencyLocalServiceUtil;
 import com.liferay.commerce.model.CommerceAddress;
-import com.liferay.commerce.model.CommerceOrderConstants;
 import com.liferay.commerce.model.CommerceOrderItem;
 import com.liferay.commerce.model.CommercePaymentMethod;
 import com.liferay.commerce.model.CommerceShippingMethod;

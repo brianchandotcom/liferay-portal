@@ -168,14 +168,14 @@ public class CommerceCountryModelImpl extends BaseModelImpl<CommerceCountry>
 		model.setCreateDate(soapModel.getCreateDate());
 		model.setModifiedDate(soapModel.getModifiedDate());
 		model.setName(soapModel.getName());
-		model.setBillingAllowed(soapModel.getBillingAllowed());
-		model.setShippingAllowed(soapModel.getShippingAllowed());
+		model.setBillingAllowed(soapModel.isBillingAllowed());
+		model.setShippingAllowed(soapModel.isShippingAllowed());
 		model.setTwoLettersISOCode(soapModel.getTwoLettersISOCode());
 		model.setThreeLettersISOCode(soapModel.getThreeLettersISOCode());
 		model.setNumericISOCode(soapModel.getNumericISOCode());
-		model.setSubjectToVAT(soapModel.getSubjectToVAT());
+		model.setSubjectToVAT(soapModel.isSubjectToVAT());
 		model.setPriority(soapModel.getPriority());
-		model.setActive(soapModel.getActive());
+		model.setActive(soapModel.isActive());
 		model.setLastPublishDate(soapModel.getLastPublishDate());
 
 		return model;

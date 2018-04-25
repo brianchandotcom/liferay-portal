@@ -87,6 +87,7 @@ public interface CommerceRegionLocalService extends BaseLocalService,
 	* @param commerceRegionId the primary key for the new commerce region
 	* @return the new commerce region
 	*/
+	@Transactional(enabled = false)
 	public CommerceRegion createCommerceRegion(long commerceRegionId);
 
 	/**

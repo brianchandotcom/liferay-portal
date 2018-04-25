@@ -156,7 +156,7 @@ public class CommerceWarehouseModelImpl extends BaseModelImpl<CommerceWarehouse>
 		model.setModifiedDate(soapModel.getModifiedDate());
 		model.setName(soapModel.getName());
 		model.setDescription(soapModel.getDescription());
-		model.setActive(soapModel.getActive());
+		model.setActive(soapModel.isActive());
 		model.setStreet1(soapModel.getStreet1());
 		model.setStreet2(soapModel.getStreet2());
 		model.setStreet3(soapModel.getStreet3());

@@ -36,16 +36,6 @@
 	<bean class="com.liferay.commerce.service.impl.CommercePaymentMethodServiceImpl" id="com.liferay.commerce.service.CommercePaymentMethodService" />
 	<bean class="com.liferay.commerce.service.persistence.impl.CommercePaymentMethodPersistenceImpl" id="com.liferay.commerce.service.persistence.CommercePaymentMethodPersistence" parent="basePersistence" />
 	<bean class="com.liferay.commerce.service.impl.CommercePriceCalculationLocalServiceImpl" id="com.liferay.commerce.service.CommercePriceCalculationLocalService" />
-	<bean class="com.liferay.commerce.service.impl.CommercePriceEntryLocalServiceImpl" id="com.liferay.commerce.service.CommercePriceEntryLocalService" />
-	<bean class="com.liferay.commerce.service.impl.CommercePriceEntryServiceImpl" id="com.liferay.commerce.service.CommercePriceEntryService" />
-	<bean class="com.liferay.commerce.service.persistence.impl.CommercePriceEntryPersistenceImpl" id="com.liferay.commerce.service.persistence.CommercePriceEntryPersistence" parent="basePersistence" />
-	<bean class="com.liferay.commerce.service.impl.CommercePriceListLocalServiceImpl" id="com.liferay.commerce.service.CommercePriceListLocalService" />
-	<bean class="com.liferay.commerce.service.impl.CommercePriceListServiceImpl" id="com.liferay.commerce.service.CommercePriceListService" />
-	<bean class="com.liferay.commerce.service.persistence.impl.CommercePriceListPersistenceImpl" id="com.liferay.commerce.service.persistence.CommercePriceListPersistence" parent="basePersistence" />
-	<bean class="com.liferay.commerce.service.persistence.impl.CommercePriceListFinderImpl" id="com.liferay.commerce.service.persistence.CommercePriceListFinder" parent="basePersistence" />
-	<bean class="com.liferay.commerce.service.impl.CommercePriceListUserSegmentEntryRelLocalServiceImpl" id="com.liferay.commerce.service.CommercePriceListUserSegmentEntryRelLocalService" />
-	<bean class="com.liferay.commerce.service.impl.CommercePriceListUserSegmentEntryRelServiceImpl" id="com.liferay.commerce.service.CommercePriceListUserSegmentEntryRelService" />
-	<bean class="com.liferay.commerce.service.persistence.impl.CommercePriceListUserSegmentEntryRelPersistenceImpl" id="com.liferay.commerce.service.persistence.CommercePriceListUserSegmentEntryRelPersistence" parent="basePersistence" />
 	<bean class="com.liferay.commerce.service.impl.CommerceRegionLocalServiceImpl" id="com.liferay.commerce.service.CommerceRegionLocalService" />
 	<bean class="com.liferay.commerce.service.impl.CommerceRegionServiceImpl" id="com.liferay.commerce.service.CommerceRegionService" />
 	<bean class="com.liferay.commerce.service.persistence.impl.CommerceRegionPersistenceImpl" id="com.liferay.commerce.service.persistence.CommerceRegionPersistence" parent="basePersistence" />
@@ -62,9 +52,6 @@
 	<bean class="com.liferay.commerce.service.impl.CommerceTaxMethodLocalServiceImpl" id="com.liferay.commerce.service.CommerceTaxMethodLocalService" />
 	<bean class="com.liferay.commerce.service.impl.CommerceTaxMethodServiceImpl" id="com.liferay.commerce.service.CommerceTaxMethodService" />
 	<bean class="com.liferay.commerce.service.persistence.impl.CommerceTaxMethodPersistenceImpl" id="com.liferay.commerce.service.persistence.CommerceTaxMethodPersistence" parent="basePersistence" />
-	<bean class="com.liferay.commerce.service.impl.CommerceTierPriceEntryLocalServiceImpl" id="com.liferay.commerce.service.CommerceTierPriceEntryLocalService" />
-	<bean class="com.liferay.commerce.service.impl.CommerceTierPriceEntryServiceImpl" id="com.liferay.commerce.service.CommerceTierPriceEntryService" />
-	<bean class="com.liferay.commerce.service.persistence.impl.CommerceTierPriceEntryPersistenceImpl" id="com.liferay.commerce.service.persistence.CommerceTierPriceEntryPersistence" parent="basePersistence" />
 	<bean class="com.liferay.commerce.service.impl.CommerceWarehouseLocalServiceImpl" id="com.liferay.commerce.service.CommerceWarehouseLocalService" />
 	<bean class="com.liferay.commerce.service.impl.CommerceWarehouseServiceImpl" id="com.liferay.commerce.service.CommerceWarehouseService" />
 	<bean class="com.liferay.commerce.service.persistence.impl.CommerceWarehousePersistenceImpl" id="com.liferay.commerce.service.persistence.CommerceWarehousePersistence" parent="basePersistence" />

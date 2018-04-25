@@ -14,8 +14,8 @@
 
 package com.liferay.commerce.internal.test.util;
 
+import com.liferay.commerce.constants.CommerceOrderConstants;
 import com.liferay.commerce.model.CommerceOrder;
-import com.liferay.commerce.model.CommerceOrderConstants;
 import com.liferay.commerce.model.CommerceOrderItem;
 import com.liferay.commerce.model.CommerceWarehouse;
 import com.liferay.commerce.model.CommerceWarehouseItem;

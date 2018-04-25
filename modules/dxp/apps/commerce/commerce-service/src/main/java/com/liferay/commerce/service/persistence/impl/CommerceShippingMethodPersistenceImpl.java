@@ -1779,7 +1779,7 @@ public class CommerceShippingMethodPersistenceImpl extends BasePersistenceImpl<C
 
 				args = new Object[] {
 						commerceShippingMethodModelImpl.getGroupId(),
-						commerceShippingMethodModelImpl.getActive()
+						commerceShippingMethodModelImpl.isActive()
 					};
 
 				finderCache.removeResult(FINDER_PATH_COUNT_BY_G_A, args);

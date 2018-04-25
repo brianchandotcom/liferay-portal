@@ -32,9 +32,11 @@ import com.liferay.commerce.discount.service.base.CommerceDiscountUserSegmentRel
  */
 public class CommerceDiscountUserSegmentRelLocalServiceImpl
 	extends CommerceDiscountUserSegmentRelLocalServiceBaseImpl {
-	/*
+
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never reference this class directly. Always use {@link com.liferay.commerce.discount.service.CommerceDiscountUserSegmentRelLocalServiceUtil} to access the commerce discount user segment rel local service.
 	 */
+
 }

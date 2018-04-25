@@ -27,11 +27,13 @@ import aQute.bnd.annotation.ProviderType;
  */
 @ProviderType
 public class CommerceDiscountRuleImpl extends CommerceDiscountRuleBaseImpl {
-	/*
+
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never reference this class directly. All methods that expect a commerce discount rule model instance should use the {@link com.liferay.commerce.discount.model.CommerceDiscountRule} interface instead.
 	 */
 	public CommerceDiscountRuleImpl() {
 	}
+
 }

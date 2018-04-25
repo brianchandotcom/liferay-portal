@@ -30,10 +30,13 @@ import com.liferay.commerce.discount.service.base.CommerceDiscountServiceBaseImp
  * @see CommerceDiscountServiceBaseImpl
  * @see com.liferay.commerce.discount.service.CommerceDiscountServiceUtil
  */
-public class CommerceDiscountServiceImpl extends CommerceDiscountServiceBaseImpl {
-	/*
+public class CommerceDiscountServiceImpl
+	extends CommerceDiscountServiceBaseImpl {
+
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never reference this class directly. Always use {@link com.liferay.commerce.discount.service.CommerceDiscountServiceUtil} to access the commerce discount remote service.
 	 */
+
 }

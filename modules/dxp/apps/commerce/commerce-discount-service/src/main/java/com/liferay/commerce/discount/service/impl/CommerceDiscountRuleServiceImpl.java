@@ -32,9 +32,11 @@ import com.liferay.commerce.discount.service.base.CommerceDiscountRuleServiceBas
  */
 public class CommerceDiscountRuleServiceImpl
 	extends CommerceDiscountRuleServiceBaseImpl {
-	/*
+
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never reference this class directly. Always use {@link com.liferay.commerce.discount.service.CommerceDiscountRuleServiceUtil} to access the commerce discount rule remote service.
 	 */
+
 }

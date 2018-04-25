@@ -1051,6 +1051,18 @@ app.server.type=@{app.server.type}]]></echo>
 							<delete failonerror="false" file=".testable.portal.started" />
 						</then>
 					</if>
+
+					<if>
+						<and>
+							<isset property="env.CI_TEST_SUITE" />
+							<not>
+								<contains string="${osgi.app.includes}" substring="portal-search-solr" />
+							</not>
+						</and>
+						<then>
+							<stop-search-engine />
+						</then>
+					</if>
 				</test-tear-down>
 			</run-batch-test>
 		</sequential>

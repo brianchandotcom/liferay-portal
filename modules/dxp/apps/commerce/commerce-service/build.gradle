@@ -29,6 +29,7 @@ dependencies {
 	compileOnly project(":private:apps:commerce:commerce-currency-api")
 	compileOnly project(":private:apps:commerce:commerce-currency-service")
 	compileOnly project(":private:apps:commerce:commerce-organization-api")
+	compileOnly project(":private:apps:commerce:commerce-price-list-api")
 	compileOnly project(":private:apps:commerce:commerce-product-api")
 	compileOnly project(":private:apps:commerce:commerce-product-service")
 }

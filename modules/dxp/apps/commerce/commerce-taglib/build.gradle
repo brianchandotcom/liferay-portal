@@ -14,6 +14,7 @@ dependencies {
 	compileOnly group: "org.osgi", name: "org.osgi.service.component.annotations", version: "1.3.0"
 	compileOnly project(":private:apps:commerce:commerce-api")
 	compileOnly project(":private:apps:commerce:commerce-currency-api")
+	compileOnly project(":private:apps:commerce:commerce-price-list-api")
 	compileOnly project(":private:apps:commerce:commerce-product-api")
 	compileOnly project(":private:apps:commerce:commerce-product-service")
 	compileOnly project(":private:apps:commerce:commerce-service")

@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.service.RoleLocalService;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.roles.item.selector.RoleItemSelectorCriterion;
@@ -102,7 +103,7 @@ public class RoleCommerceUserSegmentCriterionTypeDisplayContext
 			commerceUserSegmentCriterion.getTypeSettings());
 
 		for (String roleId : roleIds) {
-			Role role = _roleLocalService.fetchRole(Long.parseLong(roleId));
+			Role role = _roleLocalService.fetchRole(GetterUtil.getLong(roleId));
 
 			if (role != null) {
 				roles.add(role);

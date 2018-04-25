@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.users.admin.item.selector.UserItemSelectorCriterion;
@@ -102,7 +103,7 @@ public class UserCommerceUserSegmentCriterionTypeDisplayContext
 			commerceUserSegmentCriterion.getTypeSettings());
 
 		for (String userId : userIds) {
-			User user = _userLocalService.fetchUser(Long.parseLong(userId));
+			User user = _userLocalService.fetchUser(GetterUtil.getLong(userId));
 
 			if (user != null) {
 				users.add(user);

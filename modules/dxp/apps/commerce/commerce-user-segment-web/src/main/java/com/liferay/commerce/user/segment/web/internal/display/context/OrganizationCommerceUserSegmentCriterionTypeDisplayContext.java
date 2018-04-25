@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.service.OrganizationLocalService;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
@@ -106,7 +107,7 @@ public class OrganizationCommerceUserSegmentCriterionTypeDisplayContext
 		for (String organizationId : organizationIds) {
 			Organization organization =
 				_organizationLocalService.fetchOrganization(
-					Long.parseLong(organizationId));
+					GetterUtil.getLong(organizationId));
 
 			if (organization != null) {
 				organizations.add(organization);

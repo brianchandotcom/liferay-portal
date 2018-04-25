@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.service.UserGroupLocalService;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.user.groups.admin.item.selector.UserGroupItemSelectorCriterion;
@@ -104,7 +105,7 @@ public class UserGroupCommerceUserSegmentCriterionTypeDisplayContext
 
 		for (String userGroupId : userGroupIds) {
 			UserGroup userGroup = _userGroupLocalService.fetchUserGroup(
-				Long.parseLong(userGroupId));
+				GetterUtil.getLong(userGroupId));
 
 			if (userGroup != null) {
 				userGroups.add(userGroup);

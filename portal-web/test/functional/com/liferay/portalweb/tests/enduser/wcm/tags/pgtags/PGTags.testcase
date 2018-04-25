@@ -54,7 +54,7 @@
 			</execute>
 
 			<execute macro="ProductMenu#gotoPortlet">
-				<var name="category" value="Content" />
+				<var name="category" value="Categorization" />
 				<var name="panel" value="Site Administration" />
 				<var name="portlet" value="Tags" />
 			</execute>
@@ -222,7 +222,7 @@
 			</execute>
 
 			<execute macro="ProductMenu#gotoPortlet">
-				<var name="category" value="Content" />
+				<var name="category" value="Categorization" />
 				<var name="panel" value="Site Administration" />
 				<var name="portlet" value="Tags" />
 			</execute>
@@ -372,7 +372,7 @@
 			<execute macro="Navigator#openURL" />
 
 			<execute macro="ProductMenu#gotoPortlet">
-				<var name="category" value="Content" />
+				<var name="category" value="Categorization" />
 				<var name="panel" value="Site Administration" />
 				<var name="portlet" value="Tags" />
 			</execute>
@@ -478,7 +478,7 @@
 			<execute macro="Navigator#openURL" />
 
 			<execute macro="ProductMenu#gotoPortlet">
-				<var name="category" value="Content" />
+				<var name="category" value="Categorization" />
 				<var name="panel" value="Site Administration" />
 				<var name="portlet" value="Tags" />
 			</execute>
@@ -563,7 +563,7 @@
 			<execute macro="Navigator#openURL" />
 
 			<execute macro="ProductMenu#gotoPortlet">
-				<var name="category" value="Content" />
+				<var name="category" value="Categorization" />
 				<var name="panel" value="Site Administration" />
 				<var name="portlet" value="Tags" />
 			</execute>
@@ -970,7 +970,7 @@
 			<execute macro="Navigator#openURL" />
 
 			<execute macro="ProductMenu#gotoPortlet">
-				<var name="category" value="Content" />
+				<var name="category" value="Categorization" />
 				<var name="panel" value="Site Administration" />
 				<var name="portlet" value="Tags" />
 			</execute>

@@ -33,7 +33,6 @@ import org.apache.cxf.rs.security.oauth2.grants.refresh.RefreshTokenGrantHandler
 import org.apache.cxf.rs.security.oauth2.provider.AccessTokenGrantHandler;
 import org.apache.cxf.rs.security.oauth2.tokens.refresh.RefreshToken;
 
-import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -49,9 +48,7 @@ public class LiferayRefreshTokenAccessTokenGrantHandler
 	extends BaseAccessTokenGrantHandler {
 
 	@Activate
-	protected void activate(
-		BundleContext bundleContext, Map<String, Object> properties) {
-
+	protected void activate(Map<String, Object> properties) {
 		_refreshTokenGrantHandler = new RefreshTokenGrantHandler();
 
 		_refreshTokenGrantHandler.setDataProvider(_liferayOAuthDataProvider);

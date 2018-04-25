@@ -14,6 +14,8 @@
 
 package com.liferay.websocket.whiteboard.internal;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 
 import java.util.List;
@@ -45,136 +47,159 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
  * @author Manuel de la Peña
  */
 @Component(immediate = true)
-public class WebSocketEndpointTracker
-	implements ServiceTrackerCustomizer<Endpoint, ServerEndpointConfigWrapper> {
-
-	@Override
-	public ServerEndpointConfigWrapper addingService(
-		ServiceReference<Endpoint> serviceReference) {
-
-		String path = (String)serviceReference.getProperty(
-			"org.osgi.http.websocket.endpoint.path");
-
-		if ((path == null) || path.isEmpty()) {
-			return null;
-		}
-
-		List<Class<? extends Decoder>> decoders =
-			(List<Class<? extends Decoder>>)serviceReference.getProperty(
-				"org.osgi.http.websocket.endpoint.decoders");
-		List<Class<? extends Encoder>> encoders =
-			(List<Class<? extends Encoder>>)serviceReference.getProperty(
-				"org.osgi.http.websocket.endpoint.encoders");
-		List<String> subprotocol = (List<String>)serviceReference.getProperty(
-			"org.osgi.http.websocket.endpoint.subprotocol");
-
-		final ServiceObjects<Endpoint> serviceObjects =
-			_bundleContext.getServiceObjects(serviceReference);
-
-		ServerEndpointConfigWrapper serverEndpointConfigWrapper =
-			_serverEndpointConfigWrappers.get(path);
-
-		boolean isNew = false;
-
-		if (serverEndpointConfigWrapper == null) {
-			serverEndpointConfigWrapper = new ServerEndpointConfigWrapper(
-				path, decoders, encoders, subprotocol, _logService);
-
-			isNew = true;
-		}
-		else {
-			Class<?> endpointClass =
-				serverEndpointConfigWrapper.getEndpointClass();
-
-			ServerEndpointConfig.Configurator configurator =
-				serverEndpointConfigWrapper.getConfigurator();
-
-			try {
-				Object endpointInstance = configurator.getEndpointInstance(
-					endpointClass);
-
-				Class<?> endpointInstanceClass = endpointInstance.getClass();
-
-				if (endpointInstanceClass.equals(
-						ServerEndpointConfigWrapper.NullEndpoint.class)) {
-
-					serverEndpointConfigWrapper.override(
-						decoders, encoders, subprotocol);
-				}
-			}
-			catch (InstantiationException ie) {
-				Endpoint endpoint = serviceObjects.getService();
-
-				_logService.log(
-					LogService.LOG_ERROR,
-					StringBundler.concat(
-						"Unable to register WebSocket endpoint ",
-						String.valueOf(endpoint.getClass()), " for path ",
-						path),
-					ie);
-			}
-		}
-
-		serverEndpointConfigWrapper.setConfigurator(
-			serviceReference,
-			new ServiceObjectsConfigurator(serviceObjects, _logService));
-
-		if (isNew) {
-			ServerContainer serverContainer =
-				(ServerContainer)_servletContext.getAttribute(
-					ServerContainer.class.getName());
-
-			try {
-				serverContainer.addEndpoint(serverEndpointConfigWrapper);
-			}
-			catch (DeploymentException de) {
-				Endpoint endpoint = serviceObjects.getService();
-
-				_logService.log(
-					LogService.LOG_ERROR,
-					StringBundler.concat(
-						"Unable to register WebSocket endpoint ",
-						String.valueOf(endpoint.getClass()), " for path ",
-						path),
-					de);
-
-				return null;
-			}
-
-			_serverEndpointConfigWrappers.put(
-				path, serverEndpointConfigWrapper);
-		}
-
-		return serverEndpointConfigWrapper;
-	}
-
-	@Override
-	public void modifiedService(
-		ServiceReference<Endpoint> serviceReference,
-		ServerEndpointConfigWrapper serverEndpointConfigWrapper) {
-
-		removedService(serviceReference, serverEndpointConfigWrapper);
-
-		addingService(serviceReference);
-	}
-
-	@Override
-	public void removedService(
-		ServiceReference<Endpoint> serviceReference,
-		ServerEndpointConfigWrapper serverEndpointConfigWrapper) {
-
-		ServiceObjectsConfigurator serviceObjectsConfigurator =
-			serverEndpointConfigWrapper.removeConfigurator(serviceReference);
-
-		serviceObjectsConfigurator.close();
-	}
+public class WebSocketEndpointTracker {
 
 	@Activate
-	protected void activate(BundleContext bundleContext) {
-		_bundleContext = bundleContext;
+	protected void activate(final BundleContext bundleContext) {
+		Object serverContainer = _servletContext.getAttribute(
+			"javax.websocket.server.ServerContainer");
+
+		if (serverContainer == null) {
+			if (_log.isInfoEnabled()) {
+				_log.info("A WebSocket server container is not registered");
+			}
+
+			return;
+		}
 
 		_serverEndpointConfigWrapperServiceTracker = new ServiceTracker<>(
-			bundleContext, Endpoint.class, this);
+			bundleContext, Endpoint.class,
+			new ServiceTrackerCustomizer
+				<Endpoint, ServerEndpointConfigWrapper>() {
+
+				@Override
+				public ServerEndpointConfigWrapper addingService(
+					ServiceReference<Endpoint> serviceReference) {
+
+					String path = (String)serviceReference.getProperty(
+						"org.osgi.http.websocket.endpoint.path");
+
+					if ((path == null) || path.isEmpty()) {
+						return null;
+					}
+
+					List<Class<? extends Decoder>> decoders =
+						(List<Class<? extends Decoder>>)
+							serviceReference.getProperty(
+								"org.osgi.http.websocket.endpoint.decoders");
+					List<Class<? extends Encoder>> encoders =
+						(List<Class<? extends Encoder>>)
+							serviceReference.getProperty(
+								"org.osgi.http.websocket.endpoint.encoders");
+					List<String> subprotocol =
+						(List<String>)serviceReference.getProperty(
+							"org.osgi.http.websocket.endpoint.subprotocol");
+
+					final ServiceObjects<Endpoint> serviceObjects =
+						bundleContext.getServiceObjects(serviceReference);
+
+					ServerEndpointConfigWrapper serverEndpointConfigWrapper =
+						_serverEndpointConfigWrappers.get(path);
+
+					boolean isNew = false;
+
+					if (serverEndpointConfigWrapper == null) {
+						serverEndpointConfigWrapper =
+							new ServerEndpointConfigWrapper(
+								path, decoders, encoders, subprotocol,
+								_logService);
+
+						isNew = true;
+					}
+					else {
+						Class<?> endpointClass =
+							serverEndpointConfigWrapper.getEndpointClass();
+
+						ServerEndpointConfig.Configurator configurator =
+							serverEndpointConfigWrapper.getConfigurator();
+
+						try {
+							Object endpointInstance =
+								configurator.getEndpointInstance(endpointClass);
+
+							Class<?> endpointInstanceClass =
+								endpointInstance.getClass();
+
+							if (endpointInstanceClass.equals(
+									ServerEndpointConfigWrapper.
+										NullEndpoint.class)) {
+
+								serverEndpointConfigWrapper.override(
+									decoders, encoders, subprotocol);
+							}
+						}
+						catch (InstantiationException ie) {
+							Endpoint endpoint = serviceObjects.getService();
+
+							_logService.log(
+								LogService.LOG_ERROR,
+								StringBundler.concat(
+									"Unable to register WebSocket endpoint ",
+									String.valueOf(endpoint.getClass()),
+									" for path ", path),
+								ie);
+						}
+					}
+
+					serverEndpointConfigWrapper.setConfigurator(
+						serviceReference,
+						new ServiceObjectsConfigurator(
+							serviceObjects, _logService));
+
+					if (isNew) {
+						ServerContainer serverContainer =
+							(ServerContainer)_servletContext.getAttribute(
+								ServerContainer.class.getName());
+
+						try {
+							serverContainer.addEndpoint(
+								serverEndpointConfigWrapper);
+						}
+						catch (DeploymentException de) {
+							Endpoint endpoint = serviceObjects.getService();
+
+							_logService.log(
+								LogService.LOG_ERROR,
+								StringBundler.concat(
+									"Unable to register WebSocket endpoint ",
+									String.valueOf(endpoint.getClass()),
+									" for path ", path),
+								de);
+
+							return null;
+						}
+
+						_serverEndpointConfigWrappers.put(
+							path, serverEndpointConfigWrapper);
+					}
+
+					return serverEndpointConfigWrapper;
+				}
+
+				@Override
+				public void modifiedService(
+					ServiceReference<Endpoint> serviceReference,
+					ServerEndpointConfigWrapper serverEndpointConfigWrapper) {
+
+					removedService(
+						serviceReference, serverEndpointConfigWrapper);
+
+					addingService(serviceReference);
+				}
+
+				@Override
+				public void removedService(
+					ServiceReference<Endpoint> serviceReference,
+					ServerEndpointConfigWrapper serverEndpointConfigWrapper) {
+
+					ServiceObjectsConfigurator serviceObjectsConfigurator =
+						serverEndpointConfigWrapper.removeConfigurator(
+							serviceReference);
+
+					serviceObjectsConfigurator.close();
+				}
+
+			});
 
 		_serverEndpointConfigWrapperServiceTracker.open();
 	}
@@ -184,7 +209,8 @@ public class WebSocketEndpointTracker
 		_serverEndpointConfigWrapperServiceTracker.close();
 	}
 
-	private BundleContext _bundleContext;
+	private static final Log _log = LogFactoryUtil.getLog(
+		WebSocketEndpointTracker.class);
 
 	@Reference
 	private LogService _logService;
@@ -194,7 +220,7 @@ public class WebSocketEndpointTracker
 	private ServiceTracker<Endpoint, ServerEndpointConfigWrapper>
 		_serverEndpointConfigWrapperServiceTracker;
 
-	@Reference(target = "(websocket.active=true)")
+	@Reference(target = "(original.bean=true)")
 	private ServletContext _servletContext;
 
 }

@@ -407,6 +407,10 @@ public class MBThreadLocalServiceWrapper implements MBThreadLocalService,
 		return _mbThreadLocalService.getMBThreadsCount();
 	}
 
+	/**
+	* @deprecated As of 2.0.0, with no direct replacement
+	*/
+	@Deprecated
 	@Override
 	public java.util.List<com.liferay.message.boards.model.MBThread> getNoAssetThreads() {
 		return _mbThreadLocalService.getNoAssetThreads();

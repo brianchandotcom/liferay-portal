@@ -465,6 +465,10 @@ public interface MBMessageLocalService extends BaseLocalService,
 	public List<MBMessage> getMessages(java.lang.String className,
 		long classPK, int status);
 
+	/**
+	* @deprecated As of 2.0.0, with no direct replacement
+	*/
+	@java.lang.Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<MBMessage> getNoAssetMessages();
 

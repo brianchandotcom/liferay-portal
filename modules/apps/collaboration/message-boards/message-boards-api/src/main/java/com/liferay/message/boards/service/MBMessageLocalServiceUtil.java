@@ -615,6 +615,10 @@ public class MBMessageLocalServiceUtil {
 		return getService().getMessages(className, classPK, status);
 	}
 
+	/**
+	* @deprecated As of 2.0.0, with no direct replacement
+	*/
+	@Deprecated
 	public static java.util.List<com.liferay.message.boards.model.MBMessage> getNoAssetMessages() {
 		return getService().getNoAssetMessages();
 	}

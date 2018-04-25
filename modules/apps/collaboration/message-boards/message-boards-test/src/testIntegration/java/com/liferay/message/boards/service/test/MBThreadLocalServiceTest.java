@@ -15,8 +15,6 @@
 package com.liferay.message.boards.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.asset.kernel.model.AssetEntry;
-import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
 import com.liferay.message.boards.constants.MBCategoryConstants;
 import com.liferay.message.boards.constants.MBMessageConstants;
 import com.liferay.message.boards.model.MBMessage;
@@ -116,27 +114,6 @@ public class MBThreadLocalServiceTest {
 		Assert.assertEquals(1, rootMessage.getAttachmentsFileEntriesCount());
 		Assert.assertEquals(1, splitMessage.getAttachmentsFileEntriesCount());
 		Assert.assertEquals(1, childMessage.getAttachmentsFileEntriesCount());
-	}
-
-	@Test
-	public void testGetNoAssetThreads() throws Exception {
-		addMessage(null, false);
-
-		MBMessage message = addMessage(null, false);
-
-		MBThread thread = message.getThread();
-
-		AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(
-			MBThread.class.getName(), thread.getThreadId());
-
-		Assert.assertNotNull(assetEntry);
-
-		AssetEntryLocalServiceUtil.deleteAssetEntry(assetEntry);
-
-		List<MBThread> threads = MBThreadLocalServiceUtil.getNoAssetThreads();
-
-		Assert.assertEquals(threads.toString(), 1, threads.size());
-		Assert.assertEquals(thread, threads.get(0));
 	}
 
 	@Test

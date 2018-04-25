@@ -15,8 +15,6 @@
 package com.liferay.message.boards.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.asset.kernel.model.AssetEntry;
-import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
 import com.liferay.message.boards.constants.MBCategoryConstants;
 import com.liferay.message.boards.constants.MBMessageConstants;
 import com.liferay.message.boards.model.MBMessage;
@@ -234,26 +232,6 @@ public class MBMessageLocalServiceTest {
 			message.getMessageId(), "test");
 
 		Assert.assertEquals(0, message.getAttachmentsFileEntriesCount());
-	}
-
-	@Test
-	public void testGetNoAssetMessages() throws Exception {
-		addMessage(null, false);
-
-		MBMessage message = addMessage(null, false);
-
-		AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(
-			MBMessage.class.getName(), message.getMessageId());
-
-		Assert.assertNotNull(assetEntry);
-
-		AssetEntryLocalServiceUtil.deleteAssetEntry(assetEntry);
-
-		List<MBMessage> messages =
-			MBMessageLocalServiceUtil.getNoAssetMessages();
-
-		Assert.assertEquals(messages.toString(), 1, messages.size());
-		Assert.assertEquals(message, messages.get(0));
 	}
 
 	@Test

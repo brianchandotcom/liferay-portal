@@ -1280,6 +1280,10 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		}
 	}
 
+	/**
+	* @deprecated As of 2.0.0, with no direct replacement
+	*/
+	@Deprecated
 	@Override
 	public List<MBMessage> getNoAssetMessages() {
 		return mbMessageFinder.findByNoAssets();

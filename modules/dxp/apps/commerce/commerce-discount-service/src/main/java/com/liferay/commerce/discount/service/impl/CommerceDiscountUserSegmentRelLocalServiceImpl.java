@@ -14,29 +14,64 @@
 
 package com.liferay.commerce.discount.service.impl;
 
+import com.liferay.commerce.discount.model.CommerceDiscountUserSegmentRel;
 import com.liferay.commerce.discount.service.base.CommerceDiscountUserSegmentRelLocalServiceBaseImpl;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.ServiceContext;
 
 /**
- * The implementation of the commerce discount user segment rel local service.
- *
- * <p>
- * All custom service methods should be put in this class. Whenever methods are added, rerun ServiceBuilder to copy their definitions into the {@link com.liferay.commerce.discount.service.CommerceDiscountUserSegmentRelLocalService} interface.
- *
- * <p>
- * This is a local service. Methods of this service will not have security checks based on the propagated JAAS credentials because this service can only be accessed from within the same VM.
- * </p>
- *
  * @author Marco Leo
- * @see CommerceDiscountUserSegmentRelLocalServiceBaseImpl
- * @see com.liferay.commerce.discount.service.CommerceDiscountUserSegmentRelLocalServiceUtil
+ * @author Alessio Antonio Rendina
  */
 public class CommerceDiscountUserSegmentRelLocalServiceImpl
 	extends CommerceDiscountUserSegmentRelLocalServiceBaseImpl {
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this class directly. Always use {@link com.liferay.commerce.discount.service.CommerceDiscountUserSegmentRelLocalServiceUtil} to access the commerce discount user segment rel local service.
-	 */
+	@Override
+	public CommerceDiscountUserSegmentRel addCommerceDiscountUserSegmentRel(
+			long commerceDiscountId, long commerceUserSegmentEntryId,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		User user = userLocalService.getUser(serviceContext.getUserId());
+		long groupId = serviceContext.getScopeGroupId();
+
+		long commerceDiscountUserSegmentRelId = counterLocalService.increment();
+
+		CommerceDiscountUserSegmentRel commerceDiscountUserSegmentRel =
+			commerceDiscountUserSegmentRelPersistence.create(
+				commerceDiscountUserSegmentRelId);
+
+		commerceDiscountUserSegmentRel.setGroupId(groupId);
+		commerceDiscountUserSegmentRel.setCompanyId(user.getCompanyId());
+		commerceDiscountUserSegmentRel.setUserId(user.getUserId());
+		commerceDiscountUserSegmentRel.setUserName(user.getFullName());
+		commerceDiscountUserSegmentRel.setCommerceDiscountId(
+			commerceDiscountId);
+		commerceDiscountUserSegmentRel.setCommerceUserSegmentEntryId(
+			commerceUserSegmentEntryId);
+
+		commerceDiscountUserSegmentRelPersistence.update(
+			commerceDiscountUserSegmentRel);
+
+		return commerceDiscountUserSegmentRel;
+	}
+
+	@Override
+	public void deleteCommerceDiscountUserSegmentRelsByCommerceDiscountId(
+		long commerceDiscountId) {
+
+		commerceDiscountUserSegmentRelPersistence.removeBycommerceDiscountId(
+			commerceDiscountId);
+	}
+
+	@Override
+	public void
+		deleteCommerceDiscountUserSegmentRelsByCommerceUserSegmentEntryId(
+			long commerceUserSegmentEntryId) {
+
+		commerceDiscountUserSegmentRelPersistence.
+			removeByCommerceUserSegmentEntryId(commerceUserSegmentEntryId);
+	}
 
 }

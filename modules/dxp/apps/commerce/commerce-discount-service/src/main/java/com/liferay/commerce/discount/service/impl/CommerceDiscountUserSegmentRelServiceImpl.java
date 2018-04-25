@@ -14,29 +14,61 @@
 
 package com.liferay.commerce.discount.service.impl;
 
+import com.liferay.commerce.discount.constants.CommerceDiscountActionKeys;
+import com.liferay.commerce.discount.model.CommerceDiscount;
+import com.liferay.commerce.discount.model.CommerceDiscountUserSegmentRel;
 import com.liferay.commerce.discount.service.base.CommerceDiscountUserSegmentRelServiceBaseImpl;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
+import com.liferay.portal.kernel.service.ServiceContext;
 
 /**
- * The implementation of the commerce discount user segment rel remote service.
- *
- * <p>
- * All custom service methods should be put in this class. Whenever methods are added, rerun ServiceBuilder to copy their definitions into the {@link com.liferay.commerce.discount.service.CommerceDiscountUserSegmentRelService} interface.
- *
- * <p>
- * This is a remote service. Methods of this service are expected to have security checks based on the propagated JAAS credentials because this service can be accessed remotely.
- * </p>
- *
  * @author Marco Leo
- * @see CommerceDiscountUserSegmentRelServiceBaseImpl
- * @see com.liferay.commerce.discount.service.CommerceDiscountUserSegmentRelServiceUtil
+ * @author Alessio Antonio Rendina
  */
 public class CommerceDiscountUserSegmentRelServiceImpl
 	extends CommerceDiscountUserSegmentRelServiceBaseImpl {
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this class directly. Always use {@link com.liferay.commerce.discount.service.CommerceDiscountUserSegmentRelServiceUtil} to access the commerce discount user segment rel remote service.
-	 */
+	@Override
+	public CommerceDiscountUserSegmentRel addCommerceDiscountUserSegmentRel(
+			long commerceDiscountId, long commerceUserSegmentEntryId,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		_commerceDiscountResourcePermission.check(
+			getPermissionChecker(), commerceDiscountId,
+			CommerceDiscountActionKeys.MANAGE_COMMERCE_DISCOUNT_USER_SEGMENTS);
+
+		return commerceDiscountUserSegmentRelLocalService.
+			addCommerceDiscountUserSegmentRel(
+				commerceDiscountId, commerceUserSegmentEntryId, serviceContext);
+	}
+
+	@Override
+	public void deleteCommerceDiscountUserSegmentRel(
+			long commerceDiscountUserSegmentRelId)
+		throws PortalException {
+
+		CommerceDiscountUserSegmentRel commerceDiscountUserSegmentRel =
+			commerceDiscountUserSegmentRelLocalService.
+				getCommerceDiscountUserSegmentRel(
+					commerceDiscountUserSegmentRelId);
+
+		_commerceDiscountResourcePermission.check(
+			getPermissionChecker(),
+			commerceDiscountUserSegmentRel.getCommerceDiscountId(),
+			CommerceDiscountActionKeys.MANAGE_COMMERCE_DISCOUNT_USER_SEGMENTS);
+
+		commerceDiscountUserSegmentRelLocalService.
+			deleteCommerceDiscountUserSegmentRel(
+				commerceDiscountUserSegmentRel);
+	}
+
+	private static volatile ModelResourcePermission<CommerceDiscount>
+		_commerceDiscountResourcePermission =
+			ModelResourcePermissionFactory.getInstance(
+				CommerceDiscountUserSegmentRelServiceImpl.class,
+				"_commerceDiscountResourcePermission", CommerceDiscount.class);
 
 }

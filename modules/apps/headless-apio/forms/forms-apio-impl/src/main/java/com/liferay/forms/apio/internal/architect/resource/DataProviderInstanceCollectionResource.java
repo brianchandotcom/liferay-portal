@@ -85,15 +85,10 @@ public class DataProviderInstanceCollectionResource
 			"createDate", DDMDataProviderInstance::getCreateDate
 		).addDate(
 			"modifiedDate", DDMDataProviderInstance::getModifiedDate
-		).addLocalizedString(
-			"description",
-			(ddmDataProviderInstance, language) ->
-				ddmDataProviderInstance.getDescription(
-					language.getPreferredLocale())
-		).addLocalizedString(
-			"name",
-			(ddmDataProviderInstance, language) ->
-				ddmDataProviderInstance.getName(language.getPreferredLocale())
+		).addLocalizedStringByLocale(
+			"description", DDMDataProviderInstance::getDescription
+		).addLocalizedStringByLocale(
+			"name", DDMDataProviderInstance::getName
 		).addNumber(
 			"companyId", DDMDataProviderInstance::getCompanyId
 		).addNumber(

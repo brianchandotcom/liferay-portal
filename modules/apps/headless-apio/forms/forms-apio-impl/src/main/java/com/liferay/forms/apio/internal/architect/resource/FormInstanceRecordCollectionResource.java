@@ -119,7 +119,7 @@ public class FormInstanceRecordCollectionResource
 			"versionUserName", DDMFormInstanceRecord::getVersionUserName
 		).addString(
 			"version", DDMFormInstanceRecord::getVersion
-		).addLocalizedString(
+		).addLocalizedStringByLocale(
 			"fieldValues", FormInstanceRecordResourceHelper::getFieldValuesJSON
 		).build();
 	}

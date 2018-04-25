@@ -105,14 +105,10 @@ public class FormInstanceCollectionResource
 			"modifiedDate", DDMFormInstance::getModifiedDate
 		).addDate(
 			"lastPublishDate", DDMFormInstance::getLastPublishDate
-		).addLocalizedString(
-			"description",
-			(ddmFormInstance, language) -> ddmFormInstance.getDescription(
-				language.getPreferredLocale())
-		).addLocalizedString(
-			"name",
-			(ddmFormInstance, language) -> ddmFormInstance.getName(
-				language.getPreferredLocale())
+		).addLocalizedStringByLocale(
+			"description", DDMFormInstance::getDescription
+		).addLocalizedStringByLocale(
+			"name", DDMFormInstance::getName
 		).addString(
 			"userName", DDMFormInstance::getUserName
 		).addString(

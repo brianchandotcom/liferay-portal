@@ -79,14 +79,10 @@ public class StructureCollectionResource
 			"storageType", DDMStructure::getStorageType
 		).addNumber(
 			"type", DDMStructure::getType
-		).addLocalizedString(
-			"description",
-			(ddmStructure, language) -> ddmStructure.getDescription(
-				language.getPreferredLocale())
-		).addLocalizedString(
-			"name",
-			(ddmStructure, language) -> ddmStructure.getName(
-				language.getPreferredLocale())
+		).addLocalizedStringByLocale(
+			"description", DDMStructure::getDescription
+		).addLocalizedStringByLocale(
+			"name", DDMStructure::getName
 		).addString(
 			"definition", DDMStructure::getDefinition
 		).build();

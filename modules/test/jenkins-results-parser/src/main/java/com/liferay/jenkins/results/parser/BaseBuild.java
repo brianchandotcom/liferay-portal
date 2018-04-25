@@ -681,6 +681,10 @@ public abstract class BaseBuild implements Build {
 			batchName = getParameterValue("JENKINS_JOB_VARIANT");
 		}
 
+		if ((batchName == null) || batchName.isEmpty()) {
+			batchName = getJobName();
+		}
+
 		return batchName;
 	}
 

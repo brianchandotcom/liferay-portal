@@ -60,6 +60,12 @@ public class AutoCloseUtil {
 			List<Build> downstreamBuilds = topLevelBuild.getDownstreamBuilds(
 				null);
 
+			if (downstreamBuilds.isEmpty()) {
+				downstreamBuilds = new ArrayList<>();
+
+				downstreamBuilds.add(topLevelBuild);
+			}
+
 			List<Build> failedDownstreamBuilds = autoCloseRule.evaluate(
 				downstreamBuilds);
 
@@ -334,7 +340,7 @@ public class AutoCloseUtil {
 
 		String propertyNameTemplate =
 			"test.batch.names.auto.close[" + project.getProperty("repository") +
-				project.getProperty("repository") + "?]";
+				"?]";
 
 		String repositoryBranchAutoClosePropertyName =
 			propertyNameTemplate.replace(
@@ -375,7 +381,7 @@ public class AutoCloseUtil {
 				parameters.get("JENKINS_JOB_VARIANT");
 		}
 
-		return null;
+		return downstreamBuild.getJobName();
 	}
 
 	public static boolean isAutoCloseBranch(Project project) {

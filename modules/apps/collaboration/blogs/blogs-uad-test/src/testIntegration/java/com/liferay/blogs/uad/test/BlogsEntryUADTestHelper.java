@@ -35,8 +35,8 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author William Newbury
  */
-@Component(immediate = true, service = BlogsEntryUADEntityTestHelper.class)
-public class BlogsEntryUADEntityTestHelper {
+@Component(immediate = true, service = BlogsEntryUADTestHelper.class)
+public class BlogsEntryUADTestHelper {
 
 	public BlogsEntry addBlogsEntry(long userId) throws Exception {
 		Calendar calendar = CalendarFactoryUtil.getCalendar();

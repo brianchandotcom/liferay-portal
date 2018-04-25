@@ -18,7 +18,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.blogs.uad.constants.BlogsUADConstants;
-import com.liferay.blogs.uad.test.BlogsEntryUADEntityTestHelper;
+import com.liferay.blogs.uad.test.BlogsEntryUADTestHelper;
 
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -51,7 +51,7 @@ public class BlogsEntryUADDisplayTest extends BaseUADDisplayTestCase {
 
 	@Override
 	protected BaseModel<?> addBaseModel(long userId) throws Exception {
-		BlogsEntry blogsEntry = _blogsEntryUADEntityTestHelper.addBlogsEntry(userId);
+		BlogsEntry blogsEntry = _blogsEntryUADTestHelper.addBlogsEntry(userId);
 
 		_blogsEntries.add(blogsEntry);
 
@@ -80,13 +80,13 @@ public class BlogsEntryUADDisplayTest extends BaseUADDisplayTestCase {
 
 	@After
 	public void tearDown() throws Exception {
-		_blogsEntryUADEntityTestHelper.cleanUpDependencies(_blogsEntries);
+		_blogsEntryUADTestHelper.cleanUpDependencies(_blogsEntries);
 	}
 
 	@DeleteAfterTestRun
 	private final List<BlogsEntry> _blogsEntries = new ArrayList<BlogsEntry>();
 	@Inject
-	private BlogsEntryUADEntityTestHelper _blogsEntryUADEntityTestHelper;
+	private BlogsEntryUADTestHelper _blogsEntryUADTestHelper;
 	@Inject(filter = "model.class.name=" +
 	BlogsUADConstants.CLASS_NAME_BLOGS_ENTRY)
 	private UADAggregator _uadAggregator;

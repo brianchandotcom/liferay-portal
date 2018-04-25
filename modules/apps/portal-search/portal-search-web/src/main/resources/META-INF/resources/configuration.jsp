@@ -24,12 +24,16 @@ String tabs2 = ParamUtil.getString(request, "tabs2");
 
 <liferay-portlet:renderURL portletConfiguration="<%= true %>" var="configurationRenderURL" />
 
-<aui:form action="<%= configurationActionURL %>" method="post" name="fm">
+<liferay-frontend:edit-form
+	action="<%= configurationActionURL %>"
+	method="post"
+	name="fm"
+>
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
 	<aui:input name="tabs2" type="hidden" value="<%= tabs2 %>" />
 	<aui:input name="redirect" type="hidden" value="<%= configurationRenderURL %>" />
 
-	<div class="portlet-configuration-body-content">
+	<liferay-frontend:edit-form-body>
 		<liferay-ui:tabs
 			formName="fm"
 			names="display-settings,spell-check-settings,other-settings"
@@ -37,26 +41,28 @@ String tabs2 = ParamUtil.getString(request, "tabs2");
 			refresh="<%= false %>"
 		>
 			<liferay-ui:section>
-				<div class="container-fluid-1280">
+				<liferay-frontend:fieldset-group>
 					<%@ include file="/display_settings.jspf" %>
-				</div>
+				</liferay-frontend:fieldset-group>
 			</liferay-ui:section>
 
 			<liferay-ui:section>
-				<div class="container-fluid-1280">
+				<liferay-frontend:fieldset-group>
 					<%@ include file="/spell_check_settings.jspf" %>
-				</div>
+				</liferay-frontend:fieldset-group>
 			</liferay-ui:section>
 
 			<liferay-ui:section>
-				<div class="container-fluid-1280">
+				<liferay-frontend:fieldset-group>
 					<%@ include file="/other_settings.jspf" %>
-				</div>
+				</liferay-frontend:fieldset-group>
 			</liferay-ui:section>
 		</liferay-ui:tabs>
-	</div>
+	</liferay-frontend:edit-form-body>
 
-	<aui:button-row>
+	<liferay-frontend:edit-form-footer>
 		<aui:button type="submit" />
-	</aui:button-row>
-</aui:form>
+
+		<aui:button type="cancel" />
+	</liferay-frontend:edit-form-footer>
+</liferay-frontend:edit-form>

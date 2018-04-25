@@ -25,6 +25,20 @@ import org.junit.Test;
 public class LDAPUserImporterImplTest {
 
 	@Test
+	public void testBindingInNamespaceEscape() throws InvalidNameException {
+		Assert.assertEquals(
+			"cn=User\\\\,with\\\\,commas,ou=users,dc=example,dc=com",
+			escapeValue(
+				normalizeLdapName(
+					"cn=User\\,with\\,commas,ou=users,dc=example,dc=com")));
+		Assert.assertEquals(
+			"cn=User\\\\,with\\\\,commas,ou=users,dc=example,dc=com",
+			escapeValue(
+				normalizeLdapName(
+					"cn=User\\2cwith\\2ccommas,ou=users,dc=example,dc=com")));
+	}
+
+	@Test
 	public void testEscapeValue() {
 		Assert.assertEquals("test\\\\ test", escapeValue("test\\ test"));
 		Assert.assertEquals("test\\\\\"test", escapeValue("test\\\"test"));

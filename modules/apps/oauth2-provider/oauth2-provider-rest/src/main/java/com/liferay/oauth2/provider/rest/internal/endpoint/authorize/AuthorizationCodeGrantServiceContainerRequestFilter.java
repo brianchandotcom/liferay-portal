@@ -75,7 +75,7 @@ public class AuthorizationCodeGrantServiceContainerRequestFilter
 		}
 
 		try {
-			User user = _portal.getUser(_request);
+			User user = _portal.getUser(_httpServletRequest);
 
 			if ((user != null) && !user.isDefaultUser()) {
 				SecurityContext securityContext =
@@ -135,7 +135,7 @@ public class AuthorizationCodeGrantServiceContainerRequestFilter
 	}
 
 	protected String getLoginURL() throws ConfigurationException {
-		long companyId = _portal.getCompanyId(_request);
+		long companyId = _portal.getCompanyId(_httpServletRequest);
 
 		AuthorizeScreenConfiguration authorizeScreenRedirectConfiguration =
 			_configurationProvider.getConfiguration(
@@ -148,7 +148,7 @@ public class AuthorizationCodeGrantServiceContainerRequestFilter
 		if (Validator.isBlank(loginURL)) {
 			StringBundler sb = new StringBundler(4);
 
-			sb.append(_portal.getPortalURL(_request));
+			sb.append(_portal.getPortalURL(_httpServletRequest));
 			sb.append(_portal.getPathContext());
 			sb.append(_portal.getPathMain());
 			sb.append("/portal/login");
@@ -156,7 +156,7 @@ public class AuthorizationCodeGrantServiceContainerRequestFilter
 			loginURL = sb.toString();
 		}
 		else if (!_http.hasDomain(loginURL)) {
-			String portalURL = _portal.getPortalURL(_request);
+			String portalURL = _portal.getPortalURL(_httpServletRequest);
 
 			loginURL = portalURL + loginURL;
 		}
@@ -173,11 +173,11 @@ public class AuthorizationCodeGrantServiceContainerRequestFilter
 	@Reference
 	private Http _http;
 
+	@Context
+	private HttpServletRequest _httpServletRequest;
+
 	@Reference
 	private Portal _portal;
-
-	@Context
-	private HttpServletRequest _request;
 
 	private abstract class PortalCXFSecurityContext
 		implements SecurityContext, org.apache.cxf.security.SecurityContext {

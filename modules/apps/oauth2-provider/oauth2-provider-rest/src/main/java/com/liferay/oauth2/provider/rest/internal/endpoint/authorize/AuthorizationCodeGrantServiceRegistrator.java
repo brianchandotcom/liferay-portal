@@ -18,9 +18,9 @@ import com.liferay.oauth2.provider.configuration.OAuth2ProviderConfiguration;
 import com.liferay.oauth2.provider.rest.internal.endpoint.constants.OAuth2ProviderRestEndpointConstants;
 import com.liferay.oauth2.provider.rest.internal.endpoint.liferay.LiferayOAuthDataProvider;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
+import com.liferay.portal.kernel.util.HashMapDictionary;
 
 import java.util.Dictionary;
-import java.util.Hashtable;
 import java.util.Map;
 
 import org.apache.cxf.rs.security.oauth2.provider.SubjectCreator;
@@ -65,7 +65,8 @@ public class AuthorizationCodeGrantServiceRegistrator {
 			_liferayOAuthDataProvider);
 		authorizationCodeGrantService.setSubjectCreator(_subjectCreator);
 
-		Dictionary<String, Object> endpointProperties = new Hashtable<>();
+		Dictionary<String, Object> endpointProperties =
+			new HashMapDictionary<>();
 
 		endpointProperties.put(
 			OAuth2ProviderRestEndpointConstants.

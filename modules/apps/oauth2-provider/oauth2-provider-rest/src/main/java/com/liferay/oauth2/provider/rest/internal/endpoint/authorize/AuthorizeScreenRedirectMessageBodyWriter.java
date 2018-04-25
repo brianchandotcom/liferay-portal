@@ -99,13 +99,13 @@ public class AuthorizeScreenRedirectMessageBodyWriter
 			OutputStream entityStream)
 		throws WebApplicationException {
 
-		String authorizeScreenURL = null;
-
 		HttpServletRequest httpServletRequest =
 			_messageContext.getHttpServletRequest();
 
+		String authorizeScreenURLString = null;
+
 		try {
-			authorizeScreenURL = getAuthorizeScreenURL(
+			authorizeScreenURLString = getAuthorizeScreenURL(
 				_portal.getCompanyId(httpServletRequest));
 		}
 		catch (ConfigurationException ce) {
@@ -115,53 +115,55 @@ public class AuthorizeScreenRedirectMessageBodyWriter
 				Response.status(Response.Status.INTERNAL_SERVER_ERROR).build());
 		}
 
-		if (!_http.hasDomain(authorizeScreenURL)) {
-			String portalURL = _portal.getPortalURL(httpServletRequest);
+		if (!_http.hasDomain(authorizeScreenURLString)) {
+			String portalURLString = _portal.getPortalURL(httpServletRequest);
 
-			authorizeScreenURL = portalURL + authorizeScreenURL;
+			authorizeScreenURLString =
+				portalURLString + authorizeScreenURLString;
 		}
 
-		authorizeScreenURL = setParameter(
-			authorizeScreenURL, OAuthConstants.AUTHORIZATION_CODE_CHALLENGE,
+		authorizeScreenURLString = setParameter(
+			authorizeScreenURLString,
+			OAuthConstants.AUTHORIZATION_CODE_CHALLENGE,
 			oAuthAuthorizationData.getClientCodeChallenge());
-		authorizeScreenURL = setParameter(
-			authorizeScreenURL, OAuthConstants.CLIENT_AUDIENCE,
+		authorizeScreenURLString = setParameter(
+			authorizeScreenURLString, OAuthConstants.CLIENT_AUDIENCE,
 			oAuthAuthorizationData.getAudience());
-		authorizeScreenURL = setParameter(
-			authorizeScreenURL, OAuthConstants.CLIENT_ID,
+		authorizeScreenURLString = setParameter(
+			authorizeScreenURLString, OAuthConstants.CLIENT_ID,
 			oAuthAuthorizationData.getClientId());
-		authorizeScreenURL = setParameter(
-			authorizeScreenURL, OAuthConstants.NONCE,
+		authorizeScreenURLString = setParameter(
+			authorizeScreenURLString, OAuthConstants.NONCE,
 			oAuthAuthorizationData.getNonce());
-		authorizeScreenURL = setParameter(
-			authorizeScreenURL, OAuthConstants.REDIRECT_URI,
+		authorizeScreenURLString = setParameter(
+			authorizeScreenURLString, OAuthConstants.REDIRECT_URI,
 			oAuthAuthorizationData.getRedirectUri());
-		authorizeScreenURL = setParameter(
-			authorizeScreenURL, OAuthConstants.RESPONSE_TYPE,
+		authorizeScreenURLString = setParameter(
+			authorizeScreenURLString, OAuthConstants.RESPONSE_TYPE,
 			oAuthAuthorizationData.getResponseType());
-		authorizeScreenURL = setParameter(
-			authorizeScreenURL, OAuthConstants.SCOPE,
+		authorizeScreenURLString = setParameter(
+			authorizeScreenURLString, OAuthConstants.SCOPE,
 			oAuthAuthorizationData.getProposedScope());
-		authorizeScreenURL = setParameter(
-			authorizeScreenURL, OAuthConstants.SESSION_AUTHENTICITY_TOKEN,
+		authorizeScreenURLString = setParameter(
+			authorizeScreenURLString, OAuthConstants.SESSION_AUTHENTICITY_TOKEN,
 			oAuthAuthorizationData.getAuthenticityToken());
-		authorizeScreenURL = setParameter(
-			authorizeScreenURL, OAuthConstants.STATE,
+		authorizeScreenURLString = setParameter(
+			authorizeScreenURLString, OAuthConstants.STATE,
 			oAuthAuthorizationData.getState());
-		authorizeScreenURL = setParameter(
-			authorizeScreenURL, "reply_to",
+		authorizeScreenURLString = setParameter(
+			authorizeScreenURLString, "reply_to",
 			oAuthAuthorizationData.getReplyTo());
 
-		if (authorizeScreenURL.length() > _invokerFilterURIMaxLength) {
-			authorizeScreenURL = removeParameter(
-				authorizeScreenURL, OAuthConstants.SCOPE);
+		if (authorizeScreenURLString.length() > _invokerFilterURIMaxLength) {
+			authorizeScreenURLString = removeParameter(
+				authorizeScreenURLString, OAuthConstants.SCOPE);
 		}
 
 		throw new WebApplicationException(
 			Response.status(
 				Response.Status.FOUND
 			).location(
-				URI.create(authorizeScreenURL)
+				URI.create(authorizeScreenURLString)
 			).build());
 	}
 

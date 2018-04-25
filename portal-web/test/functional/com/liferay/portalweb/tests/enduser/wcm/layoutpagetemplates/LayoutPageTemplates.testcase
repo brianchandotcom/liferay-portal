@@ -104,6 +104,30 @@
 		</execute>
 	</command>
 
+	<command name="DeleteCollection" priority="4">
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Navigation" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Site Pages" />
+		</execute>
+
+		<execute macro="Navigator#gotoNavItem">
+			<var name="navItem" value="Page Templates" />
+		</execute>
+
+		<execute macro="Collection#addCollection">
+			<var name="collectionName" value="Collection Name" />
+		</execute>
+
+		<execute macro="LexiconEntry#delete">
+			<var name="rowEntry" value="Collection Name" />
+		</execute>
+
+		<execute macro="LexiconEntry#viewNoEntry">
+			<var name="rowEntry" value="Collection Name" />
+		</execute>
+	</command>
+
 	<command name="RenameCollection" priority="4">
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Navigation" />

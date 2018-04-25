@@ -26,7 +26,7 @@ Properties properties = request.properties
 
 String liferayVersion = properties.get("liferayVersion")
 
-if (liferayVersion != "7.1") {
+if (!liferayVersion.startsWith("7.1")) {
 	String className = properties.get("className")
 	String packageName = properties.get("package")
 

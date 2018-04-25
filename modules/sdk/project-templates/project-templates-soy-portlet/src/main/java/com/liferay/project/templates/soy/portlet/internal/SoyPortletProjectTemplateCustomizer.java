@@ -56,7 +56,7 @@ public class SoyPortletProjectTemplateCustomizer
 		Path projectDirPath = destinationDirPath.resolve(
 			projectTemplatesArgs.getName());
 
-		if (liferayVersion.equals("7.1")) {
+		if (liferayVersion.startsWith("7.1")) {
 			ProjectTemplateCustomizer.deleteFileInPath(
 				className + "Portlet.java", projectDirPath);
 		}

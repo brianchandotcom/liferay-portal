@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.forms.apio.internal.architect;
+package com.liferay.forms.apio.internal;
 
 import com.liferay.portal.kernel.service.ServiceContext;
 

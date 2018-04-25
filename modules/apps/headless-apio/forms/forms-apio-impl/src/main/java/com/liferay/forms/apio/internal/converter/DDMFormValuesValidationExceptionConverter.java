@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.forms.apio.internal.architect.converter;
+package com.liferay.forms.apio.internal.converter;
 
 import static javax.ws.rs.core.Response.Status.BAD_REQUEST;
 

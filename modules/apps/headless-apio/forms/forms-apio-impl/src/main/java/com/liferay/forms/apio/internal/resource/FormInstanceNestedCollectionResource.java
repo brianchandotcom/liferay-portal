@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.forms.apio.internal.architect.resource;
+package com.liferay.forms.apio.internal.resource;
 
 import com.liferay.apio.architect.functional.Try;
 import com.liferay.apio.architect.pagination.PageItems;
@@ -33,8 +33,8 @@ import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.forms.apio.architect.identifier.FormInstanceIdentifier;
 import com.liferay.forms.apio.architect.identifier.FormInstanceVersionIdentifier;
 import com.liferay.forms.apio.architect.identifier.StructureIdentifier;
-import com.liferay.forms.apio.internal.architect.form.FormContextForm;
-import com.liferay.forms.apio.internal.architect.helper.FormInstanceRecordResourceHelper;
+import com.liferay.forms.apio.internal.form.FormContextForm;
+import com.liferay.forms.apio.internal.helper.FormInstanceRecordResourceHelper;
 import com.liferay.person.apio.identifier.PersonIdentifier;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactory;

@@ -12,38 +12,38 @@
  * details.
  */
 
-package com.liferay.forms.apio.internal.architect.form;
+package com.liferay.forms.apio.internal.form;
 
 import com.liferay.apio.architect.form.Form;
 
 /**
  * Instances of this class represent the values extracted from a form instance
- * context evaluator form.
+ * record updater form.
  *
- * @author Victor Oliveira
+ * @author Paulo Cruz
  */
-public class FormContextForm {
+public class FormInstanceRecordForm {
 
 	/**
-	 * Builds a {@code Form} that generates {@code FormContextForm} depending on
-	 * the HTTP body.
+	 * Builds a {@code Form} that generates {@code FormInstanceRecordForm}
+	 * depending on the HTTP body.
 	 *
 	 * @param  formBuilder the {@code Form} builder
-	 * @return a context form instance
+	 * @return a form instance record form
 	 */
-	public static Form<FormContextForm> buildForm(
-		Form.Builder<FormContextForm> formBuilder) {
+	public static Form<FormInstanceRecordForm> buildForm(
+		Form.Builder<FormInstanceRecordForm> formBuilder) {
 
 		return formBuilder.title(
-			__ -> "The form instance context form"
+			__ -> "The form instance record form"
 		).description(
-			__ -> "This form context can be used to evaluate a form instance"
+			__ -> "This form can be used to update a form instance record"
 		).constructor(
-			FormContextForm::new
+			FormInstanceRecordForm::new
 		).addRequiredString(
-			"fieldValues", FormContextForm::_setFieldValues
-		).addRequiredString(
-			"inLanguage", FormContextForm::_setLanguageId
+			"fieldValues", FormInstanceRecordForm::_setFieldValues
+		).addRequiredBoolean(
+			"isDraft", FormInstanceRecordForm::_setDraft
 		).build();
 	}
 
@@ -51,19 +51,19 @@ public class FormContextForm {
 		return _fieldValues;
 	}
 
-	public String getLanguageId() {
-		return _languageId;
+	public boolean isDraft() {
+		return _draft;
 	}
 
-	private void _setFieldValues(String fieldValues) {
-		_fieldValues = fieldValues;
+	private void _setDraft(boolean draft) {
+		_draft = draft;
 	}
 
-	private void _setLanguageId(String languageId) {
-		_languageId = languageId;
+	private void _setFieldValues(String formValues) {
+		_fieldValues = formValues;
 	}
 
+	private boolean _draft;
 	private String _fieldValues;
-	private String _languageId;
 
 }

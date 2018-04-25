@@ -1,6 +1,0 @@
-Bundle-Name: Liferay Invitation Web
-Bundle-SymbolicName: com.liferay.invitation.web
-Bundle-Version: 2.0.0
-Liferay-Releng-Module-Group-Description:
-Liferay-Releng-Module-Group-Title:
-Web-ContextPath: /invitation-web

@@ -1,0 +1,14 @@
+Bundle-Name: Liferay Commerce Price List API
+Bundle-SymbolicName: com.liferay.commerce.price.list.api
+Bundle-Version: 1.0.0
+Export-Package:\
+	com.liferay.commerce.price.list.constants,\
+	com.liferay.commerce.price.list.exception,\
+	com.liferay.commerce.price.list.model,\
+	com.liferay.commerce.price.list.service,\
+	com.liferay.commerce.price.list.service.persistence,\
+	com.liferay.commerce.price.list.util.comparator
+Import-Package:\
+	com.liferay.portal.kernel.model;version="[1.0.0,1.2.0)",\
+	\
+	*

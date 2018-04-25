@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.test.JDKLoggerTestUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.SyncThrowableThread;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ThreadUtil;
 
 import java.io.IOException;
@@ -406,7 +405,7 @@ public class ProcessUtilTest {
 
 		@SuppressWarnings("unused")
 		public static void main(String[] arguments) {
-			int times = GetterUtil.getInteger(arguments[0]);
+			int times = Integer.parseInt(arguments[0]);
 
 			for (int i = 0; i < times; i++) {
 				System.err.println(buildMessage(false, i));

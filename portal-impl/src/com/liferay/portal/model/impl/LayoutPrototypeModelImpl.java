@@ -153,7 +153,7 @@ public class LayoutPrototypeModelImpl extends BaseModelImpl<LayoutPrototype>
 		model.setName(soapModel.getName());
 		model.setDescription(soapModel.getDescription());
 		model.setSettings(soapModel.getSettings());
-		model.setActive(soapModel.getActive());
+		model.setActive(soapModel.isActive());
 
 		return model;
 	}

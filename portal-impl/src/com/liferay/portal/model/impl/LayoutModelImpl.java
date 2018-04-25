@@ -195,7 +195,7 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 		model.setUserName(soapModel.getUserName());
 		model.setCreateDate(soapModel.getCreateDate());
 		model.setModifiedDate(soapModel.getModifiedDate());
-		model.setPrivateLayout(soapModel.getPrivateLayout());
+		model.setPrivateLayout(soapModel.isPrivateLayout());
 		model.setLayoutId(soapModel.getLayoutId());
 		model.setParentLayoutId(soapModel.getParentLayoutId());
 		model.setName(soapModel.getName());
@@ -205,7 +205,7 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 		model.setRobots(soapModel.getRobots());
 		model.setType(soapModel.getType());
 		model.setTypeSettings(soapModel.getTypeSettings());
-		model.setHidden(soapModel.getHidden());
+		model.setHidden(soapModel.isHidden());
 		model.setFriendlyURL(soapModel.getFriendlyURL());
 		model.setIconImageId(soapModel.getIconImageId());
 		model.setThemeId(soapModel.getThemeId());
@@ -213,7 +213,7 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 		model.setCss(soapModel.getCss());
 		model.setPriority(soapModel.getPriority());
 		model.setLayoutPrototypeUuid(soapModel.getLayoutPrototypeUuid());
-		model.setLayoutPrototypeLinkEnabled(soapModel.getLayoutPrototypeLinkEnabled());
+		model.setLayoutPrototypeLinkEnabled(soapModel.isLayoutPrototypeLinkEnabled());
 		model.setSourcePrototypeLayoutUuid(soapModel.getSourcePrototypeLayoutUuid());
 		model.setLastPublishDate(soapModel.getLastPublishDate());
 

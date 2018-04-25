@@ -168,7 +168,7 @@ public class CalendarResourceModelImpl extends BaseModelImpl<CalendarResource>
 		model.setCode(soapModel.getCode());
 		model.setName(soapModel.getName());
 		model.setDescription(soapModel.getDescription());
-		model.setActive(soapModel.getActive());
+		model.setActive(soapModel.isActive());
 		model.setLastPublishDate(soapModel.getLastPublishDate());
 
 		return model;

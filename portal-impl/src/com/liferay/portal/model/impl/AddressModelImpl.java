@@ -175,8 +175,8 @@ public class AddressModelImpl extends BaseModelImpl<Address>
 		model.setRegionId(soapModel.getRegionId());
 		model.setCountryId(soapModel.getCountryId());
 		model.setTypeId(soapModel.getTypeId());
-		model.setMailing(soapModel.getMailing());
-		model.setPrimary(soapModel.getPrimary());
+		model.setMailing(soapModel.isMailing());
+		model.setPrimary(soapModel.isPrimary());
 
 		return model;
 	}

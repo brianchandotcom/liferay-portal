@@ -216,7 +216,7 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 		model.setLargeImageId(soapModel.getLargeImageId());
 		model.setCustom1ImageId(soapModel.getCustom1ImageId());
 		model.setCustom2ImageId(soapModel.getCustom2ImageId());
-		model.setManualCheckInRequired(soapModel.getManualCheckInRequired());
+		model.setManualCheckInRequired(soapModel.isManualCheckInRequired());
 		model.setLastPublishDate(soapModel.getLastPublishDate());
 
 		return model;

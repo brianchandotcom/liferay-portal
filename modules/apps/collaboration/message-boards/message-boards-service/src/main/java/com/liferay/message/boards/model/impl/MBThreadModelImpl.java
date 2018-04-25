@@ -185,7 +185,7 @@ public class MBThreadModelImpl extends BaseModelImpl<MBThread>
 		model.setLastPostByUserId(soapModel.getLastPostByUserId());
 		model.setLastPostDate(soapModel.getLastPostDate());
 		model.setPriority(soapModel.getPriority());
-		model.setQuestion(soapModel.getQuestion());
+		model.setQuestion(soapModel.isQuestion());
 		model.setLastPublishDate(soapModel.getLastPublishDate());
 		model.setStatus(soapModel.getStatus());
 		model.setStatusByUserId(soapModel.getStatusByUserId());

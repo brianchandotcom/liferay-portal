@@ -199,8 +199,8 @@ public class DDMTemplateModelImpl extends BaseModelImpl<DDMTemplate>
 		model.setMode(soapModel.getMode());
 		model.setLanguage(soapModel.getLanguage());
 		model.setScript(soapModel.getScript());
-		model.setCacheable(soapModel.getCacheable());
-		model.setSmallImage(soapModel.getSmallImage());
+		model.setCacheable(soapModel.isCacheable());
+		model.setSmallImage(soapModel.isSmallImage());
 		model.setSmallImageId(soapModel.getSmallImageId());
 		model.setSmallImageURL(soapModel.getSmallImageURL());
 		model.setLastPublishDate(soapModel.getLastPublishDate());

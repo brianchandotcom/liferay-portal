@@ -202,8 +202,8 @@ public class KBArticleModelImpl extends BaseModelImpl<KBArticle>
 		model.setPriority(soapModel.getPriority());
 		model.setSections(soapModel.getSections());
 		model.setViewCount(soapModel.getViewCount());
-		model.setLatest(soapModel.getLatest());
-		model.setMain(soapModel.getMain());
+		model.setLatest(soapModel.isLatest());
+		model.setMain(soapModel.isMain());
 		model.setSourceURL(soapModel.getSourceURL());
 		model.setLastPublishDate(soapModel.getLastPublishDate());
 		model.setStatus(soapModel.getStatus());

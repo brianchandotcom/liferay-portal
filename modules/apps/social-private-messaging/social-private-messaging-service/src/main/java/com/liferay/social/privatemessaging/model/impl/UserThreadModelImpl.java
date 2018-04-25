@@ -139,8 +139,8 @@ public class UserThreadModelImpl extends BaseModelImpl<UserThread>
 		model.setModifiedDate(soapModel.getModifiedDate());
 		model.setMbThreadId(soapModel.getMbThreadId());
 		model.setTopMBMessageId(soapModel.getTopMBMessageId());
-		model.setRead(soapModel.getRead());
-		model.setDeleted(soapModel.getDeleted());
+		model.setRead(soapModel.isRead());
+		model.setDeleted(soapModel.isDeleted());
 
 		return model;
 	}

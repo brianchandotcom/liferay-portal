@@ -6774,7 +6774,7 @@ public class LayoutPageTemplateEntryPersistenceImpl extends BasePersistenceImpl<
 						layoutPageTemplateEntryModelImpl.getGroupId(),
 						layoutPageTemplateEntryModelImpl.getClassNameId(),
 						layoutPageTemplateEntryModelImpl.getClassTypeId(),
-						layoutPageTemplateEntryModelImpl.getDefaultTemplate()
+						layoutPageTemplateEntryModelImpl.isDefaultTemplate()
 					};
 
 				finderCache.removeResult(FINDER_PATH_COUNT_BY_G_C_C_D, args);

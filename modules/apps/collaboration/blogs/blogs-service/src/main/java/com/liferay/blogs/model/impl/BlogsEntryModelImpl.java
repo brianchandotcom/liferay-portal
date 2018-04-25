@@ -194,13 +194,13 @@ public class BlogsEntryModelImpl extends BaseModelImpl<BlogsEntry>
 		model.setDescription(soapModel.getDescription());
 		model.setContent(soapModel.getContent());
 		model.setDisplayDate(soapModel.getDisplayDate());
-		model.setAllowPingbacks(soapModel.getAllowPingbacks());
-		model.setAllowTrackbacks(soapModel.getAllowTrackbacks());
+		model.setAllowPingbacks(soapModel.isAllowPingbacks());
+		model.setAllowTrackbacks(soapModel.isAllowTrackbacks());
 		model.setTrackbacks(soapModel.getTrackbacks());
 		model.setCoverImageCaption(soapModel.getCoverImageCaption());
 		model.setCoverImageFileEntryId(soapModel.getCoverImageFileEntryId());
 		model.setCoverImageURL(soapModel.getCoverImageURL());
-		model.setSmallImage(soapModel.getSmallImage());
+		model.setSmallImage(soapModel.isSmallImage());
 		model.setSmallImageFileEntryId(soapModel.getSmallImageFileEntryId());
 		model.setSmallImageId(soapModel.getSmallImageId());
 		model.setSmallImageURL(soapModel.getSmallImageURL());

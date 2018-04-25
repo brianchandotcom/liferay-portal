@@ -2872,7 +2872,7 @@ public class DLFileRankPersistenceImpl extends BasePersistenceImpl<DLFileRank>
 				args = new Object[] {
 						dlFileRankModelImpl.getGroupId(),
 						dlFileRankModelImpl.getUserId(),
-						dlFileRankModelImpl.getActive()
+						dlFileRankModelImpl.isActive()
 					};
 
 				finderCache.removeResult(FINDER_PATH_COUNT_BY_G_U_A, args);

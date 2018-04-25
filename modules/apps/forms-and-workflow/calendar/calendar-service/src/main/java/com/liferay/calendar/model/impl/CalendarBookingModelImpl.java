@@ -206,7 +206,7 @@ public class CalendarBookingModelImpl extends BaseModelImpl<CalendarBooking>
 		model.setLocation(soapModel.getLocation());
 		model.setStartTime(soapModel.getStartTime());
 		model.setEndTime(soapModel.getEndTime());
-		model.setAllDay(soapModel.getAllDay());
+		model.setAllDay(soapModel.isAllDay());
 		model.setRecurrence(soapModel.getRecurrence());
 		model.setFirstReminder(soapModel.getFirstReminder());
 		model.setFirstReminderType(soapModel.getFirstReminderType());

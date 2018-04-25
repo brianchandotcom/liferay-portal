@@ -3008,7 +3008,7 @@ public class PasswordPolicyPersistenceImpl extends BasePersistenceImpl<PasswordP
 			PasswordPolicy passwordPolicy = (PasswordPolicy)result;
 
 			if ((companyId != passwordPolicy.getCompanyId()) ||
-					(defaultPolicy != passwordPolicy.getDefaultPolicy())) {
+					(defaultPolicy != passwordPolicy.isDefaultPolicy())) {
 				result = null;
 			}
 		}
@@ -3062,7 +3062,7 @@ public class PasswordPolicyPersistenceImpl extends BasePersistenceImpl<PasswordP
 					cacheResult(passwordPolicy);
 
 					if ((passwordPolicy.getCompanyId() != companyId) ||
-							(passwordPolicy.getDefaultPolicy() != defaultPolicy)) {
+							(passwordPolicy.isDefaultPolicy() != defaultPolicy)) {
 						finderCache.putResult(FINDER_PATH_FETCH_BY_C_DP,
 							finderArgs, passwordPolicy);
 					}
@@ -3449,7 +3449,7 @@ public class PasswordPolicyPersistenceImpl extends BasePersistenceImpl<PasswordP
 
 		finderCache.putResult(FINDER_PATH_FETCH_BY_C_DP,
 			new Object[] {
-				passwordPolicy.getCompanyId(), passwordPolicy.getDefaultPolicy()
+				passwordPolicy.getCompanyId(), passwordPolicy.isDefaultPolicy()
 			}, passwordPolicy);
 
 		finderCache.putResult(FINDER_PATH_FETCH_BY_C_N,
@@ -3530,7 +3530,7 @@ public class PasswordPolicyPersistenceImpl extends BasePersistenceImpl<PasswordP
 		PasswordPolicyModelImpl passwordPolicyModelImpl) {
 		Object[] args = new Object[] {
 				passwordPolicyModelImpl.getCompanyId(),
-				passwordPolicyModelImpl.getDefaultPolicy()
+				passwordPolicyModelImpl.isDefaultPolicy()
 			};
 
 		finderCache.putResult(FINDER_PATH_COUNT_BY_C_DP, args, Long.valueOf(1),
@@ -3554,7 +3554,7 @@ public class PasswordPolicyPersistenceImpl extends BasePersistenceImpl<PasswordP
 		if (clearCurrent) {
 			Object[] args = new Object[] {
 					passwordPolicyModelImpl.getCompanyId(),
-					passwordPolicyModelImpl.getDefaultPolicy()
+					passwordPolicyModelImpl.isDefaultPolicy()
 				};
 
 			finderCache.removeResult(FINDER_PATH_COUNT_BY_C_DP, args);

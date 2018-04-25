@@ -10713,7 +10713,7 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 					args);
 
 				args = new Object[] {
-						groupModelImpl.getCompanyId(), groupModelImpl.getSite()
+						groupModelImpl.getCompanyId(), groupModelImpl.isSite()
 					};
 
 				finderCache.removeResult(FINDER_PATH_COUNT_BY_C_S, args);
@@ -10733,8 +10733,7 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 					args);
 
 				args = new Object[] {
-						groupModelImpl.getCompanyId(),
-						groupModelImpl.getActive()
+						groupModelImpl.getCompanyId(), groupModelImpl.isActive()
 					};
 
 				finderCache.removeResult(FINDER_PATH_COUNT_BY_C_A, args);
@@ -10775,7 +10774,7 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 					args);
 
 				args = new Object[] {
-						groupModelImpl.getType(), groupModelImpl.getActive()
+						groupModelImpl.getType(), groupModelImpl.isActive()
 					};
 
 				finderCache.removeResult(FINDER_PATH_COUNT_BY_T_A, args);
@@ -10821,7 +10820,7 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 				args = new Object[] {
 						groupModelImpl.getCompanyId(),
 						groupModelImpl.getParentGroupId(),
-						groupModelImpl.getSite()
+						groupModelImpl.isSite()
 					};
 
 				finderCache.removeResult(FINDER_PATH_COUNT_BY_C_P_S, args);
@@ -10845,8 +10844,8 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 				args = new Object[] {
 						groupModelImpl.getCompanyId(),
 						groupModelImpl.getParentGroupId(),
-						groupModelImpl.getSite(),
-						groupModelImpl.getInheritContent()
+						groupModelImpl.isSite(),
+						groupModelImpl.isInheritContent()
 					};
 
 				finderCache.removeResult(FINDER_PATH_COUNT_BY_C_P_S_I, args);

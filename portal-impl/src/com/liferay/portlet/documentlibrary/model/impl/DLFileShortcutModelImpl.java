@@ -169,7 +169,7 @@ public class DLFileShortcutModelImpl extends BaseModelImpl<DLFileShortcut>
 		model.setFolderId(soapModel.getFolderId());
 		model.setToFileEntryId(soapModel.getToFileEntryId());
 		model.setTreePath(soapModel.getTreePath());
-		model.setActive(soapModel.getActive());
+		model.setActive(soapModel.isActive());
 		model.setLastPublishDate(soapModel.getLastPublishDate());
 		model.setStatus(soapModel.getStatus());
 		model.setStatusByUserId(soapModel.getStatusByUserId());

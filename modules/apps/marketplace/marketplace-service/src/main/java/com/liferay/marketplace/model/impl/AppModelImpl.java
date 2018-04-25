@@ -153,7 +153,7 @@ public class AppModelImpl extends BaseModelImpl<App> implements AppModel {
 		model.setCategory(soapModel.getCategory());
 		model.setIconURL(soapModel.getIconURL());
 		model.setVersion(soapModel.getVersion());
-		model.setRequired(soapModel.getRequired());
+		model.setRequired(soapModel.isRequired());
 
 		return model;
 	}

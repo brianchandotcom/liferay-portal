@@ -188,8 +188,8 @@ public class AssetEntryModelImpl extends BaseModelImpl<AssetEntry>
 		model.setClassPK(soapModel.getClassPK());
 		model.setClassUuid(soapModel.getClassUuid());
 		model.setClassTypeId(soapModel.getClassTypeId());
-		model.setListable(soapModel.getListable());
-		model.setVisible(soapModel.getVisible());
+		model.setListable(soapModel.isListable());
+		model.setVisible(soapModel.isVisible());
 		model.setStartDate(soapModel.getStartDate());
 		model.setEndDate(soapModel.getEndDate());
 		model.setPublishDate(soapModel.getPublishDate());

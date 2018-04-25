@@ -32343,7 +32343,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 
 				args = new Object[] {
 						journalArticleModelImpl.getResourcePrimKey(),
-						journalArticleModelImpl.getIndexable()
+						journalArticleModelImpl.isIndexable()
 					};
 
 				finderCache.removeResult(FINDER_PATH_COUNT_BY_R_I, args);
@@ -32617,7 +32617,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 
 				args = new Object[] {
 						journalArticleModelImpl.getResourcePrimKey(),
-						journalArticleModelImpl.getIndexable(),
+						journalArticleModelImpl.isIndexable(),
 						journalArticleModelImpl.getStatus()
 					};
 

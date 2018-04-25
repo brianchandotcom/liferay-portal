@@ -153,7 +153,7 @@ public class KaleoDefinitionModelImpl extends BaseModelImpl<KaleoDefinition>
 		model.setDescription(soapModel.getDescription());
 		model.setContent(soapModel.getContent());
 		model.setVersion(soapModel.getVersion());
-		model.setActive(soapModel.getActive());
+		model.setActive(soapModel.isActive());
 
 		return model;
 	}

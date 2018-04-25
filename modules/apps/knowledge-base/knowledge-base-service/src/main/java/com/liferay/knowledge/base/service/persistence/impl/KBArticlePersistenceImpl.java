@@ -32547,7 +32547,7 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 
 				args = new Object[] {
 						kbArticleModelImpl.getResourcePrimKey(),
-						kbArticleModelImpl.getLatest()
+						kbArticleModelImpl.isLatest()
 					};
 
 				finderCache.removeResult(FINDER_PATH_COUNT_BY_R_L, args);
@@ -32568,7 +32568,7 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 
 				args = new Object[] {
 						kbArticleModelImpl.getResourcePrimKey(),
-						kbArticleModelImpl.getMain()
+						kbArticleModelImpl.isMain()
 					};
 
 				finderCache.removeResult(FINDER_PATH_COUNT_BY_R_M, args);
@@ -32610,7 +32610,7 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 
 				args = new Object[] {
 						kbArticleModelImpl.getGroupId(),
-						kbArticleModelImpl.getLatest()
+						kbArticleModelImpl.isLatest()
 					};
 
 				finderCache.removeResult(FINDER_PATH_COUNT_BY_G_L, args);
@@ -32631,7 +32631,7 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 
 				args = new Object[] {
 						kbArticleModelImpl.getGroupId(),
-						kbArticleModelImpl.getMain()
+						kbArticleModelImpl.isMain()
 					};
 
 				finderCache.removeResult(FINDER_PATH_COUNT_BY_G_M, args);
@@ -32673,7 +32673,7 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 
 				args = new Object[] {
 						kbArticleModelImpl.getCompanyId(),
-						kbArticleModelImpl.getLatest()
+						kbArticleModelImpl.isLatest()
 					};
 
 				finderCache.removeResult(FINDER_PATH_COUNT_BY_C_L, args);
@@ -32694,7 +32694,7 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 
 				args = new Object[] {
 						kbArticleModelImpl.getCompanyId(),
-						kbArticleModelImpl.getMain()
+						kbArticleModelImpl.isMain()
 					};
 
 				finderCache.removeResult(FINDER_PATH_COUNT_BY_C_M, args);
@@ -32736,7 +32736,7 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 
 				args = new Object[] {
 						kbArticleModelImpl.getParentResourcePrimKey(),
-						kbArticleModelImpl.getLatest()
+						kbArticleModelImpl.isLatest()
 					};
 
 				finderCache.removeResult(FINDER_PATH_COUNT_BY_P_L, args);
@@ -32757,7 +32757,7 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 
 				args = new Object[] {
 						kbArticleModelImpl.getParentResourcePrimKey(),
-						kbArticleModelImpl.getMain()
+						kbArticleModelImpl.isMain()
 					};
 
 				finderCache.removeResult(FINDER_PATH_COUNT_BY_P_M, args);
@@ -32801,7 +32801,7 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 				args = new Object[] {
 						kbArticleModelImpl.getResourcePrimKey(),
 						kbArticleModelImpl.getGroupId(),
-						kbArticleModelImpl.getLatest()
+						kbArticleModelImpl.isLatest()
 					};
 
 				finderCache.removeResult(FINDER_PATH_COUNT_BY_R_G_L, args);
@@ -32824,7 +32824,7 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 				args = new Object[] {
 						kbArticleModelImpl.getResourcePrimKey(),
 						kbArticleModelImpl.getGroupId(),
-						kbArticleModelImpl.getMain()
+						kbArticleModelImpl.isMain()
 					};
 
 				finderCache.removeResult(FINDER_PATH_COUNT_BY_R_G_M, args);
@@ -32870,7 +32870,7 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 				args = new Object[] {
 						kbArticleModelImpl.getGroupId(),
 						kbArticleModelImpl.getParentResourcePrimKey(),
-						kbArticleModelImpl.getLatest()
+						kbArticleModelImpl.isLatest()
 					};
 
 				finderCache.removeResult(FINDER_PATH_COUNT_BY_G_P_L, args);
@@ -32893,7 +32893,7 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 				args = new Object[] {
 						kbArticleModelImpl.getGroupId(),
 						kbArticleModelImpl.getParentResourcePrimKey(),
-						kbArticleModelImpl.getMain()
+						kbArticleModelImpl.isMain()
 					};
 
 				finderCache.removeResult(FINDER_PATH_COUNT_BY_G_P_M, args);
@@ -32962,7 +32962,7 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 				args = new Object[] {
 						kbArticleModelImpl.getGroupId(),
 						kbArticleModelImpl.getKbFolderId(),
-						kbArticleModelImpl.getLatest()
+						kbArticleModelImpl.isLatest()
 					};
 
 				finderCache.removeResult(FINDER_PATH_COUNT_BY_G_KBFI_L, args);

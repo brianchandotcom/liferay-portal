@@ -221,8 +221,8 @@ public class JournalArticleModelImpl extends BaseModelImpl<JournalArticle>
 		model.setDisplayDate(soapModel.getDisplayDate());
 		model.setExpirationDate(soapModel.getExpirationDate());
 		model.setReviewDate(soapModel.getReviewDate());
-		model.setIndexable(soapModel.getIndexable());
-		model.setSmallImage(soapModel.getSmallImage());
+		model.setIndexable(soapModel.isIndexable());
+		model.setSmallImage(soapModel.isSmallImage());
 		model.setSmallImageId(soapModel.getSmallImageId());
 		model.setSmallImageURL(soapModel.getSmallImageURL());
 		model.setLastPublishDate(soapModel.getLastPublishDate());

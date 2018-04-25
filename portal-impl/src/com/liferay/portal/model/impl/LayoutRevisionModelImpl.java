@@ -189,10 +189,10 @@ public class LayoutRevisionModelImpl extends BaseModelImpl<LayoutRevision>
 		model.setLayoutSetBranchId(soapModel.getLayoutSetBranchId());
 		model.setLayoutBranchId(soapModel.getLayoutBranchId());
 		model.setParentLayoutRevisionId(soapModel.getParentLayoutRevisionId());
-		model.setHead(soapModel.getHead());
-		model.setMajor(soapModel.getMajor());
+		model.setHead(soapModel.isHead());
+		model.setMajor(soapModel.isMajor());
 		model.setPlid(soapModel.getPlid());
-		model.setPrivateLayout(soapModel.getPrivateLayout());
+		model.setPrivateLayout(soapModel.isPrivateLayout());
 		model.setName(soapModel.getName());
 		model.setTitle(soapModel.getTitle());
 		model.setDescription(soapModel.getDescription());

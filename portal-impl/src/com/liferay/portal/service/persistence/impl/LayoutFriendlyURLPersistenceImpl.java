@@ -4953,7 +4953,7 @@ public class LayoutFriendlyURLPersistenceImpl extends BasePersistenceImpl<Layout
 			LayoutFriendlyURL layoutFriendlyURL = (LayoutFriendlyURL)result;
 
 			if ((groupId != layoutFriendlyURL.getGroupId()) ||
-					(privateLayout != layoutFriendlyURL.getPrivateLayout()) ||
+					(privateLayout != layoutFriendlyURL.isPrivateLayout()) ||
 					!Objects.equals(friendlyURL,
 						layoutFriendlyURL.getFriendlyURL()) ||
 					!Objects.equals(languageId,
@@ -5036,7 +5036,7 @@ public class LayoutFriendlyURLPersistenceImpl extends BasePersistenceImpl<Layout
 					cacheResult(layoutFriendlyURL);
 
 					if ((layoutFriendlyURL.getGroupId() != groupId) ||
-							(layoutFriendlyURL.getPrivateLayout() != privateLayout) ||
+							(layoutFriendlyURL.isPrivateLayout() != privateLayout) ||
 							(layoutFriendlyURL.getFriendlyURL() == null) ||
 							!layoutFriendlyURL.getFriendlyURL()
 												  .equals(friendlyURL) ||
@@ -5237,7 +5237,7 @@ public class LayoutFriendlyURLPersistenceImpl extends BasePersistenceImpl<Layout
 		finderCache.putResult(FINDER_PATH_FETCH_BY_G_P_F_L,
 			new Object[] {
 				layoutFriendlyURL.getGroupId(),
-				layoutFriendlyURL.getPrivateLayout(),
+				layoutFriendlyURL.isPrivateLayout(),
 				layoutFriendlyURL.getFriendlyURL(),
 				layoutFriendlyURL.getLanguageId()
 			}, layoutFriendlyURL);
@@ -5338,7 +5338,7 @@ public class LayoutFriendlyURLPersistenceImpl extends BasePersistenceImpl<Layout
 
 		args = new Object[] {
 				layoutFriendlyURLModelImpl.getGroupId(),
-				layoutFriendlyURLModelImpl.getPrivateLayout(),
+				layoutFriendlyURLModelImpl.isPrivateLayout(),
 				layoutFriendlyURLModelImpl.getFriendlyURL(),
 				layoutFriendlyURLModelImpl.getLanguageId()
 			};
@@ -5397,7 +5397,7 @@ public class LayoutFriendlyURLPersistenceImpl extends BasePersistenceImpl<Layout
 		if (clearCurrent) {
 			Object[] args = new Object[] {
 					layoutFriendlyURLModelImpl.getGroupId(),
-					layoutFriendlyURLModelImpl.getPrivateLayout(),
+					layoutFriendlyURLModelImpl.isPrivateLayout(),
 					layoutFriendlyURLModelImpl.getFriendlyURL(),
 					layoutFriendlyURLModelImpl.getLanguageId()
 				};
@@ -5805,7 +5805,7 @@ public class LayoutFriendlyURLPersistenceImpl extends BasePersistenceImpl<Layout
 
 				args = new Object[] {
 						layoutFriendlyURLModelImpl.getGroupId(),
-						layoutFriendlyURLModelImpl.getPrivateLayout(),
+						layoutFriendlyURLModelImpl.isPrivateLayout(),
 						layoutFriendlyURLModelImpl.getFriendlyURL()
 					};
 

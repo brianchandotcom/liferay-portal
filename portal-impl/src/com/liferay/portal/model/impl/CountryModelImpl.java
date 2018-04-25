@@ -129,8 +129,8 @@ public class CountryModelImpl extends BaseModelImpl<Country>
 		model.setA3(soapModel.getA3());
 		model.setNumber(soapModel.getNumber());
 		model.setIdd(soapModel.getIdd());
-		model.setZipRequired(soapModel.getZipRequired());
-		model.setActive(soapModel.getActive());
+		model.setZipRequired(soapModel.isZipRequired());
+		model.setActive(soapModel.isActive());
 
 		return model;
 	}

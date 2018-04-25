@@ -5067,7 +5067,7 @@ public class AddressPersistenceImpl extends BasePersistenceImpl<Address>
 						addressModelImpl.getCompanyId(),
 						addressModelImpl.getClassNameId(),
 						addressModelImpl.getClassPK(),
-						addressModelImpl.getMailing()
+						addressModelImpl.isMailing()
 					};
 
 				finderCache.removeResult(FINDER_PATH_COUNT_BY_C_C_C_M, args);
@@ -5092,7 +5092,7 @@ public class AddressPersistenceImpl extends BasePersistenceImpl<Address>
 						addressModelImpl.getCompanyId(),
 						addressModelImpl.getClassNameId(),
 						addressModelImpl.getClassPK(),
-						addressModelImpl.getPrimary()
+						addressModelImpl.isPrimary()
 					};
 
 				finderCache.removeResult(FINDER_PATH_COUNT_BY_C_C_C_P, args);

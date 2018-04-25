@@ -161,7 +161,7 @@ public class OrganizationModelImpl extends BaseModelImpl<Organization>
 		model.setTreePath(soapModel.getTreePath());
 		model.setName(soapModel.getName());
 		model.setType(soapModel.getType());
-		model.setRecursable(soapModel.getRecursable());
+		model.setRecursable(soapModel.isRecursable());
 		model.setRegionId(soapModel.getRegionId());
 		model.setCountryId(soapModel.getCountryId());
 		model.setStatusId(soapModel.getStatusId());

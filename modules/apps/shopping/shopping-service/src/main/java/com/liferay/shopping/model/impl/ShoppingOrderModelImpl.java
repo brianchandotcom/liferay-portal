@@ -225,8 +225,8 @@ public class ShoppingOrderModelImpl extends BaseModelImpl<ShoppingOrder>
 		model.setTax(soapModel.getTax());
 		model.setShipping(soapModel.getShipping());
 		model.setAltShipping(soapModel.getAltShipping());
-		model.setRequiresShipping(soapModel.getRequiresShipping());
-		model.setInsure(soapModel.getInsure());
+		model.setRequiresShipping(soapModel.isRequiresShipping());
+		model.setInsure(soapModel.isInsure());
 		model.setInsurance(soapModel.getInsurance());
 		model.setCouponCodes(soapModel.getCouponCodes());
 		model.setCouponDiscount(soapModel.getCouponDiscount());
@@ -240,7 +240,7 @@ public class ShoppingOrderModelImpl extends BaseModelImpl<ShoppingOrder>
 		model.setBillingZip(soapModel.getBillingZip());
 		model.setBillingCountry(soapModel.getBillingCountry());
 		model.setBillingPhone(soapModel.getBillingPhone());
-		model.setShipToBilling(soapModel.getShipToBilling());
+		model.setShipToBilling(soapModel.isShipToBilling());
 		model.setShippingFirstName(soapModel.getShippingFirstName());
 		model.setShippingLastName(soapModel.getShippingLastName());
 		model.setShippingEmailAddress(soapModel.getShippingEmailAddress());
@@ -263,8 +263,8 @@ public class ShoppingOrderModelImpl extends BaseModelImpl<ShoppingOrder>
 		model.setPpPaymentGross(soapModel.getPpPaymentGross());
 		model.setPpReceiverEmail(soapModel.getPpReceiverEmail());
 		model.setPpPayerEmail(soapModel.getPpPayerEmail());
-		model.setSendOrderEmail(soapModel.getSendOrderEmail());
-		model.setSendShippingEmail(soapModel.getSendShippingEmail());
+		model.setSendOrderEmail(soapModel.isSendOrderEmail());
+		model.setSendShippingEmail(soapModel.isSendShippingEmail());
 
 		return model;
 	}

@@ -186,7 +186,7 @@ public class ContactModelImpl extends BaseModelImpl<Contact>
 		model.setLastName(soapModel.getLastName());
 		model.setPrefixId(soapModel.getPrefixId());
 		model.setSuffixId(soapModel.getSuffixId());
-		model.setMale(soapModel.getMale());
+		model.setMale(soapModel.isMale());
 		model.setBirthday(soapModel.getBirthday());
 		model.setSmsSn(soapModel.getSmsSn());
 		model.setFacebookSn(soapModel.getFacebookSn());

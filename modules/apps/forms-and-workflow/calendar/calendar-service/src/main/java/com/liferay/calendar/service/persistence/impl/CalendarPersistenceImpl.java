@@ -3809,7 +3809,7 @@ public class CalendarPersistenceImpl extends BasePersistenceImpl<Calendar>
 				args = new Object[] {
 						calendarModelImpl.getGroupId(),
 						calendarModelImpl.getCalendarResourceId(),
-						calendarModelImpl.getDefaultCalendar()
+						calendarModelImpl.isDefaultCalendar()
 					};
 
 				finderCache.removeResult(FINDER_PATH_COUNT_BY_G_C_D, args);

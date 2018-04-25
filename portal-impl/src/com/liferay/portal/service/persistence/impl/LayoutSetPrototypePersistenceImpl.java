@@ -4247,7 +4247,7 @@ public class LayoutSetPrototypePersistenceImpl extends BasePersistenceImpl<Layou
 
 				args = new Object[] {
 						layoutSetPrototypeModelImpl.getCompanyId(),
-						layoutSetPrototypeModelImpl.getActive()
+						layoutSetPrototypeModelImpl.isActive()
 					};
 
 				finderCache.removeResult(FINDER_PATH_COUNT_BY_C_A, args);

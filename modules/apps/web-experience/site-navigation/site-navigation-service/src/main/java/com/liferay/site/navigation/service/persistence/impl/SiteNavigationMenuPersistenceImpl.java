@@ -4157,7 +4157,7 @@ public class SiteNavigationMenuPersistenceImpl extends BasePersistenceImpl<SiteN
 
 				args = new Object[] {
 						siteNavigationMenuModelImpl.getGroupId(),
-						siteNavigationMenuModelImpl.getAuto()
+						siteNavigationMenuModelImpl.isAuto()
 					};
 
 				finderCache.removeResult(FINDER_PATH_COUNT_BY_G_A, args);

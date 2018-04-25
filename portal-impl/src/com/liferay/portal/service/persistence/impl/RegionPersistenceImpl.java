@@ -2203,7 +2203,7 @@ public class RegionPersistenceImpl extends BasePersistenceImpl<Region>
 				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_ACTIVE,
 					args);
 
-				args = new Object[] { regionModelImpl.getActive() };
+				args = new Object[] { regionModelImpl.isActive() };
 
 				finderCache.removeResult(FINDER_PATH_COUNT_BY_ACTIVE, args);
 				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_ACTIVE,
@@ -2223,7 +2223,7 @@ public class RegionPersistenceImpl extends BasePersistenceImpl<Region>
 
 				args = new Object[] {
 						regionModelImpl.getCountryId(),
-						regionModelImpl.getActive()
+						regionModelImpl.isActive()
 					};
 
 				finderCache.removeResult(FINDER_PATH_COUNT_BY_C_A, args);

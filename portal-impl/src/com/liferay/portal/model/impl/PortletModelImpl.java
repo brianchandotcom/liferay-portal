@@ -120,7 +120,7 @@ public class PortletModelImpl extends BaseModelImpl<Portlet>
 		model.setCompanyId(soapModel.getCompanyId());
 		model.setPortletId(soapModel.getPortletId());
 		model.setRoles(soapModel.getRoles());
-		model.setActive(soapModel.getActive());
+		model.setActive(soapModel.isActive());
 
 		return model;
 	}

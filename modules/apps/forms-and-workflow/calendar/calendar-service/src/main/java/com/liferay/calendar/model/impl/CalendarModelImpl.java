@@ -168,9 +168,9 @@ public class CalendarModelImpl extends BaseModelImpl<Calendar>
 		model.setDescription(soapModel.getDescription());
 		model.setTimeZoneId(soapModel.getTimeZoneId());
 		model.setColor(soapModel.getColor());
-		model.setDefaultCalendar(soapModel.getDefaultCalendar());
-		model.setEnableComments(soapModel.getEnableComments());
-		model.setEnableRatings(soapModel.getEnableRatings());
+		model.setDefaultCalendar(soapModel.isDefaultCalendar());
+		model.setEnableComments(soapModel.isEnableComments());
+		model.setEnableRatings(soapModel.isEnableRatings());
 		model.setLastPublishDate(soapModel.getLastPublishDate());
 
 		return model;

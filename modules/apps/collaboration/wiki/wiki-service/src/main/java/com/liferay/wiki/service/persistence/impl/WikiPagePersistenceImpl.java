@@ -22709,7 +22709,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 
 				args = new Object[] {
 						wikiPageModelImpl.getNodeId(),
-						wikiPageModelImpl.getHead()
+						wikiPageModelImpl.isHead()
 					};
 
 				finderCache.removeResult(FINDER_PATH_COUNT_BY_N_H, args);
@@ -22795,7 +22795,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 				args = new Object[] {
 						wikiPageModelImpl.getResourcePrimKey(),
 						wikiPageModelImpl.getNodeId(),
-						wikiPageModelImpl.getHead()
+						wikiPageModelImpl.isHead()
 					};
 
 				finderCache.removeResult(FINDER_PATH_COUNT_BY_R_N_H, args);
@@ -22841,7 +22841,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 				args = new Object[] {
 						wikiPageModelImpl.getGroupId(),
 						wikiPageModelImpl.getNodeId(),
-						wikiPageModelImpl.getHead()
+						wikiPageModelImpl.isHead()
 					};
 
 				finderCache.removeResult(FINDER_PATH_COUNT_BY_G_N_H, args);
@@ -22909,8 +22909,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 
 				args = new Object[] {
 						wikiPageModelImpl.getNodeId(),
-						wikiPageModelImpl.getTitle(),
-						wikiPageModelImpl.getHead()
+						wikiPageModelImpl.getTitle(), wikiPageModelImpl.isHead()
 					};
 
 				finderCache.removeResult(FINDER_PATH_COUNT_BY_N_T_H, args);
@@ -22955,7 +22954,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 
 				args = new Object[] {
 						wikiPageModelImpl.getNodeId(),
-						wikiPageModelImpl.getHead(),
+						wikiPageModelImpl.isHead(),
 						wikiPageModelImpl.getParentTitle()
 					};
 
@@ -22978,7 +22977,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 
 				args = new Object[] {
 						wikiPageModelImpl.getNodeId(),
-						wikiPageModelImpl.getHead(),
+						wikiPageModelImpl.isHead(),
 						wikiPageModelImpl.getRedirectTitle()
 					};
 
@@ -23001,7 +23000,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 
 				args = new Object[] {
 						wikiPageModelImpl.getNodeId(),
-						wikiPageModelImpl.getHead(),
+						wikiPageModelImpl.isHead(),
 						wikiPageModelImpl.getStatus()
 					};
 
@@ -23051,8 +23050,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 				args = new Object[] {
 						wikiPageModelImpl.getGroupId(),
 						wikiPageModelImpl.getNodeId(),
-						wikiPageModelImpl.getTitle(),
-						wikiPageModelImpl.getHead()
+						wikiPageModelImpl.getTitle(), wikiPageModelImpl.isHead()
 					};
 
 				finderCache.removeResult(FINDER_PATH_COUNT_BY_G_N_T_H, args);
@@ -23076,7 +23074,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 				args = new Object[] {
 						wikiPageModelImpl.getGroupId(),
 						wikiPageModelImpl.getNodeId(),
-						wikiPageModelImpl.getHead(),
+						wikiPageModelImpl.isHead(),
 						wikiPageModelImpl.getStatus()
 					};
 
@@ -23100,7 +23098,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 
 				args = new Object[] {
 						wikiPageModelImpl.getNodeId(),
-						wikiPageModelImpl.getHead(),
+						wikiPageModelImpl.isHead(),
 						wikiPageModelImpl.getParentTitle(),
 						wikiPageModelImpl.getStatus()
 					};
@@ -23125,7 +23123,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 
 				args = new Object[] {
 						wikiPageModelImpl.getNodeId(),
-						wikiPageModelImpl.getHead(),
+						wikiPageModelImpl.isHead(),
 						wikiPageModelImpl.getRedirectTitle(),
 						wikiPageModelImpl.getStatus()
 					};
@@ -23152,7 +23150,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 				args = new Object[] {
 						wikiPageModelImpl.getGroupId(),
 						wikiPageModelImpl.getNodeId(),
-						wikiPageModelImpl.getHead(),
+						wikiPageModelImpl.isHead(),
 						wikiPageModelImpl.getParentTitle(),
 						wikiPageModelImpl.getStatus()
 					};

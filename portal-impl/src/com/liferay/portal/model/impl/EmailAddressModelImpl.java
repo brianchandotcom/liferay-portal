@@ -154,7 +154,7 @@ public class EmailAddressModelImpl extends BaseModelImpl<EmailAddress>
 		model.setClassPK(soapModel.getClassPK());
 		model.setAddress(soapModel.getAddress());
 		model.setTypeId(soapModel.getTypeId());
-		model.setPrimary(soapModel.getPrimary());
+		model.setPrimary(soapModel.isPrimary());
 
 		return model;
 	}

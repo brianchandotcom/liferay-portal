@@ -2844,7 +2844,7 @@ public class UserThreadPersistenceImpl extends BasePersistenceImpl<UserThread>
 
 				args = new Object[] {
 						userThreadModelImpl.getUserId(),
-						userThreadModelImpl.getDeleted()
+						userThreadModelImpl.isDeleted()
 					};
 
 				finderCache.removeResult(FINDER_PATH_COUNT_BY_U_D, args);
@@ -2866,8 +2866,8 @@ public class UserThreadPersistenceImpl extends BasePersistenceImpl<UserThread>
 
 				args = new Object[] {
 						userThreadModelImpl.getUserId(),
-						userThreadModelImpl.getRead(),
-						userThreadModelImpl.getDeleted()
+						userThreadModelImpl.isRead(),
+						userThreadModelImpl.isDeleted()
 					};
 
 				finderCache.removeResult(FINDER_PATH_COUNT_BY_U_R_D, args);

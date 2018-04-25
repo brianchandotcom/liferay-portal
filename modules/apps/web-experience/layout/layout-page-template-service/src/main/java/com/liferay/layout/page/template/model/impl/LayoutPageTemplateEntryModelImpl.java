@@ -156,7 +156,7 @@ public class LayoutPageTemplateEntryModelImpl extends BaseModelImpl<LayoutPageTe
 		model.setName(soapModel.getName());
 		model.setType(soapModel.getType());
 		model.setHtmlPreviewEntryId(soapModel.getHtmlPreviewEntryId());
-		model.setDefaultTemplate(soapModel.getDefaultTemplate());
+		model.setDefaultTemplate(soapModel.isDefaultTemplate());
 
 		return model;
 	}

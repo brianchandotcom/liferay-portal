@@ -196,10 +196,10 @@ public class MBMessageModelImpl extends BaseModelImpl<MBMessage>
 		model.setSubject(soapModel.getSubject());
 		model.setBody(soapModel.getBody());
 		model.setFormat(soapModel.getFormat());
-		model.setAnonymous(soapModel.getAnonymous());
+		model.setAnonymous(soapModel.isAnonymous());
 		model.setPriority(soapModel.getPriority());
-		model.setAllowPingbacks(soapModel.getAllowPingbacks());
-		model.setAnswer(soapModel.getAnswer());
+		model.setAllowPingbacks(soapModel.isAllowPingbacks());
+		model.setAnswer(soapModel.isAnswer());
 		model.setLastPublishDate(soapModel.getLastPublishDate());
 		model.setStatus(soapModel.getStatus());
 		model.setStatusByUserId(soapModel.getStatusByUserId());

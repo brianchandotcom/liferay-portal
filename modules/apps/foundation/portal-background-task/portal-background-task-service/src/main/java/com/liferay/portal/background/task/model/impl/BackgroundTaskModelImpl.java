@@ -156,7 +156,7 @@ public class BackgroundTaskModelImpl extends BaseModelImpl<BackgroundTask>
 		model.setServletContextNames(soapModel.getServletContextNames());
 		model.setTaskExecutorClassName(soapModel.getTaskExecutorClassName());
 		model.setTaskContextMap(soapModel.getTaskContextMap());
-		model.setCompleted(soapModel.getCompleted());
+		model.setCompleted(soapModel.isCompleted());
 		model.setCompletionDate(soapModel.getCompletionDate());
 		model.setStatus(soapModel.getStatus());
 		model.setStatusMessage(soapModel.getStatusMessage());

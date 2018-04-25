@@ -135,9 +135,9 @@ public class CompanyModelImpl extends BaseModelImpl<Company>
 		model.setMx(soapModel.getMx());
 		model.setHomeURL(soapModel.getHomeURL());
 		model.setLogoId(soapModel.getLogoId());
-		model.setSystem(soapModel.getSystem());
+		model.setSystem(soapModel.isSystem());
 		model.setMaxUsers(soapModel.getMaxUsers());
-		model.setActive(soapModel.getActive());
+		model.setActive(soapModel.isActive());
 
 		return model;
 	}

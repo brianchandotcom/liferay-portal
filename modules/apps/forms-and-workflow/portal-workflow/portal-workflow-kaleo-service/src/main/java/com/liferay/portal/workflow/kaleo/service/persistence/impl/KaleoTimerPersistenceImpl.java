@@ -1629,7 +1629,7 @@ public class KaleoTimerPersistenceImpl extends BasePersistenceImpl<KaleoTimer>
 				args = new Object[] {
 						kaleoTimerModelImpl.getKaleoClassName(),
 						kaleoTimerModelImpl.getKaleoClassPK(),
-						kaleoTimerModelImpl.getBlocking()
+						kaleoTimerModelImpl.isBlocking()
 					};
 
 				finderCache.removeResult(FINDER_PATH_COUNT_BY_KCN_KCPK_BLOCKING,

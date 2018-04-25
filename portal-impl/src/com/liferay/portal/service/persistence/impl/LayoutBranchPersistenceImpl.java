@@ -2362,7 +2362,7 @@ public class LayoutBranchPersistenceImpl extends BasePersistenceImpl<LayoutBranc
 				args = new Object[] {
 						layoutBranchModelImpl.getLayoutSetBranchId(),
 						layoutBranchModelImpl.getPlid(),
-						layoutBranchModelImpl.getMaster()
+						layoutBranchModelImpl.isMaster()
 					};
 
 				finderCache.removeResult(FINDER_PATH_COUNT_BY_L_P_M, args);

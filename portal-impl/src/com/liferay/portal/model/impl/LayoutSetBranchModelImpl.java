@@ -154,17 +154,17 @@ public class LayoutSetBranchModelImpl extends BaseModelImpl<LayoutSetBranch>
 		model.setUserName(soapModel.getUserName());
 		model.setCreateDate(soapModel.getCreateDate());
 		model.setModifiedDate(soapModel.getModifiedDate());
-		model.setPrivateLayout(soapModel.getPrivateLayout());
+		model.setPrivateLayout(soapModel.isPrivateLayout());
 		model.setName(soapModel.getName());
 		model.setDescription(soapModel.getDescription());
-		model.setMaster(soapModel.getMaster());
+		model.setMaster(soapModel.isMaster());
 		model.setLogoId(soapModel.getLogoId());
 		model.setThemeId(soapModel.getThemeId());
 		model.setColorSchemeId(soapModel.getColorSchemeId());
 		model.setCss(soapModel.getCss());
 		model.setSettings(soapModel.getSettings());
 		model.setLayoutSetPrototypeUuid(soapModel.getLayoutSetPrototypeUuid());
-		model.setLayoutSetPrototypeLinkEnabled(soapModel.getLayoutSetPrototypeLinkEnabled());
+		model.setLayoutSetPrototypeLinkEnabled(soapModel.isLayoutSetPrototypeLinkEnabled());
 
 		return model;
 	}

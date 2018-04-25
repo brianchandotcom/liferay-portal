@@ -4453,7 +4453,7 @@ public class EmailAddressPersistenceImpl extends BasePersistenceImpl<EmailAddres
 						emailAddressModelImpl.getCompanyId(),
 						emailAddressModelImpl.getClassNameId(),
 						emailAddressModelImpl.getClassPK(),
-						emailAddressModelImpl.getPrimary()
+						emailAddressModelImpl.isPrimary()
 					};
 
 				finderCache.removeResult(FINDER_PATH_COUNT_BY_C_C_C_P, args);

@@ -151,8 +151,8 @@ public class SAPEntryModelImpl extends BaseModelImpl<SAPEntry>
 		model.setCreateDate(soapModel.getCreateDate());
 		model.setModifiedDate(soapModel.getModifiedDate());
 		model.setAllowedServiceSignatures(soapModel.getAllowedServiceSignatures());
-		model.setDefaultSAPEntry(soapModel.getDefaultSAPEntry());
-		model.setEnabled(soapModel.getEnabled());
+		model.setDefaultSAPEntry(soapModel.isDefaultSAPEntry());
+		model.setEnabled(soapModel.isEnabled());
 		model.setName(soapModel.getName());
 		model.setTitle(soapModel.getTitle());
 

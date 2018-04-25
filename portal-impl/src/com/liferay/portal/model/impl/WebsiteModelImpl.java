@@ -156,7 +156,7 @@ public class WebsiteModelImpl extends BaseModelImpl<Website>
 		model.setClassPK(soapModel.getClassPK());
 		model.setUrl(soapModel.getUrl());
 		model.setTypeId(soapModel.getTypeId());
-		model.setPrimary(soapModel.getPrimary());
+		model.setPrimary(soapModel.isPrimary());
 		model.setLastPublishDate(soapModel.getLastPublishDate());
 
 		return model;

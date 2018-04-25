@@ -139,7 +139,7 @@ public class SiteNavigationMenuModelImpl extends BaseModelImpl<SiteNavigationMen
 		model.setModifiedDate(soapModel.getModifiedDate());
 		model.setName(soapModel.getName());
 		model.setType(soapModel.getType());
-		model.setAuto(soapModel.getAuto());
+		model.setAuto(soapModel.isAuto());
 
 		return model;
 	}

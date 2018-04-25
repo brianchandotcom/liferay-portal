@@ -16,14 +16,6 @@
 
 <%@ include file="/init.jsp" %>
 
-<%
-long[] categorizableGroupIds = (long[])request.getAttribute("configuration.jsp-categorizableGroupIds");
-
-if (categorizableGroupIds == null) {
-	categorizableGroupIds = StringUtil.split(ParamUtil.getString(request, "categorizableGroupIds"), 0L);
-}
-%>
-
 <aui:fieldset label="displayed-assets-must-match-these-rules" markupView="lexicon">
 	<liferay-asset:asset-tags-error />
 
@@ -60,7 +52,7 @@ Map<String, Object> context = new HashMap<>();
 
 context.put("categorySelectorURL", assetPublisherDisplayContext.getCategorySelectorURL());
 context.put("id", "autofield");
-context.put("groupIds", StringUtil.merge(categorizableGroupIds));
+context.put("groupIds", StringUtil.merge(assetPublisherDisplayContext.getReferencedModelsGroupIds()));
 context.put("namespace", liferayPortletResponse.getNamespace());
 context.put("pathThemeImages", themeDisplay.getPathThemeImages());
 context.put("rules", assetPublisherDisplayContext.getAutoFieldRulesJSONArray());

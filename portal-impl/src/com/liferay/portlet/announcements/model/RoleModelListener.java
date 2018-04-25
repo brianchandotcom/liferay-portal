@@ -28,7 +28,7 @@ public class RoleModelListener extends BaseModelListener<Role> {
 	public void onBeforeRemove(Role role) throws ModelListenerException {
 		try {
 			AnnouncementsEntryLocalServiceUtil.deleteEntries(
-				role.getClassNameId(), role.getRoleId());
+				role.getCompanyId(), role.getClassNameId(), role.getRoleId());
 		}
 		catch (Exception e) {
 			throw new ModelListenerException(e);

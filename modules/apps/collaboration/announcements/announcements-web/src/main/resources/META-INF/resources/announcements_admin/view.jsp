@@ -39,8 +39,8 @@ SearchContainer<AnnouncementsEntry> announcementsEntriesSearchContainer = new Se
 
 announcementsEntriesSearchContainer.setRowChecker(new AnnouncementsEntryChecker(liferayPortletRequest, liferayPortletResponse));
 
-announcementsEntriesSearchContainer.setTotal(AnnouncementsEntryLocalServiceUtil.getEntriesCount(classNameId, classPK, navigation.equals("alerts")));
-announcementsEntriesSearchContainer.setResults(AnnouncementsEntryLocalServiceUtil.getEntries(classNameId, classPK, navigation.equals("alerts"), announcementsEntriesSearchContainer.getStart(), announcementsEntriesSearchContainer.getEnd()));
+announcementsEntriesSearchContainer.setTotal(AnnouncementsEntryLocalServiceUtil.getEntriesCount(themeDisplay.getCompanyId(), classNameId, classPK, navigation.equals("alerts")));
+announcementsEntriesSearchContainer.setResults(AnnouncementsEntryLocalServiceUtil.getEntries(themeDisplay.getCompanyId(), classNameId, classPK, navigation.equals("alerts"), announcementsEntriesSearchContainer.getStart(), announcementsEntriesSearchContainer.getEnd()));
 
 List<AnnouncementsEntry> announcementsEntries = announcementsEntriesSearchContainer.getResults();
 %>

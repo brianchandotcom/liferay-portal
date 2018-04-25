@@ -30,18 +30,20 @@ public class GroupModelListener extends BaseModelListener<Group> {
 		try {
 			if (group.isSite()) {
 				AnnouncementsEntryLocalServiceUtil.deleteEntries(
-					group.getClassNameId(), group.getGroupId());
+					group.getCompanyId(), group.getClassNameId(),
+					group.getGroupId());
 			}
 			else {
 				AnnouncementsEntryLocalServiceUtil.deleteEntries(
-					group.getClassNameId(), group.getClassPK());
+					group.getCompanyId(), group.getClassNameId(),
+					group.getClassPK());
 
 				if (group.isOrganization()) {
 					long classNameId = ClassNameLocalServiceUtil.getClassNameId(
 						Group.class);
 
 					AnnouncementsEntryLocalServiceUtil.deleteEntries(
-						classNameId, group.getGroupId());
+						group.getCompanyId(), classNameId, group.getGroupId());
 				}
 			}
 		}

@@ -51,6 +51,7 @@ AUI.add(
 						var instance = this;
 
 						instance._eventHandlers = [
+							instance.on('close', instance._hideSidebarContent),
 							instance.after('open', instance._afterSidebarOpen),
 							instance.before('open', instance._beforeSidebarOpen),
 							instance.after('open:start', instance._afterOpenStart),
@@ -268,6 +269,8 @@ AUI.add(
 
 						instance._removeLoading();
 
+						instance._showSidebarContent();
+
 						instance._enableSidebarHeader();
 
 						settingsForm.render();
@@ -316,6 +319,18 @@ AUI.add(
 						var instance = this;
 
 						return '<div>' + Liferay.Util.getLexiconIconTpl(fieldType.get('icon')) + '</div><span>' + fieldType.get('label') + '</span>' + Liferay.Util.getLexiconIconTpl('caret-bottom');
+					},
+
+					_hideSidebarContent: function() {
+						var instance = this;
+
+						var contentBox = instance.get('contentBox');
+
+						var content = contentBox.one('.tabbable-content');
+
+						if (content) {
+							content.hide();
+						}
 					},
 
 					_isFieldNode: function(node) {
@@ -474,6 +489,18 @@ AUI.add(
 
 						if (!contentBox.one('.loading-animation')) {
 							contentBox.append(TPL_LOADING);
+						}
+					},
+
+					_showSidebarContent: function() {
+						var instance = this;
+
+						var contentBox = instance.get('contentBox');
+
+						var content = contentBox.one('.tabbable-content');
+
+						if (content) {
+							content.show();
 						}
 					},
 

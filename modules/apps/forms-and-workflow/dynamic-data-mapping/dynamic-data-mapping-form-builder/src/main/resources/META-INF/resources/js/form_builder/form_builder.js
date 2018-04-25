@@ -436,6 +436,14 @@ AUI.add(
 					editField: function(field) {
 						var instance = this;
 
+						var contentBox = instance.get('fieldSettingsPanel').get('contentBox');
+
+						var content = contentBox.one('.tabbable-content');
+
+						if (content) {
+							content.hide();
+						}
+
 						instance.showFieldSettingsPanel(field);
 					},
 

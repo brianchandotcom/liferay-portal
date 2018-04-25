@@ -1,0 +1,68 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping auto-import="false" default-lazy="false">
+	<import class="com.liferay.commerce.discount.model.CommerceDiscount" />
+	<import class="com.liferay.commerce.discount.model.CommerceDiscountRule" />
+	<import class="com.liferay.commerce.discount.model.CommerceDiscountUserSegmentRel" />
+	<class name="com.liferay.commerce.discount.model.impl.CommerceDiscountImpl" table="CommerceDiscount">
+		<id name="commerceDiscountId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property column="uuid_" name="uuid" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="createDate" type="org.hibernate.type.TimestampType" />
+		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
+		<property name="target" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property column="type_" name="type" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="typeSettings" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="title" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="useCouponCode" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="couponCode" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="limitationType" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="limitationTimes" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="numberOfUse" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="cumulative" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="usePercentage" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="level1" type="org.hibernate.type.BigDecimalType" />
+		<property name="level2" type="org.hibernate.type.BigDecimalType" />
+		<property name="level3" type="org.hibernate.type.BigDecimalType" />
+		<property name="maximumDiscountAmount" type="org.hibernate.type.BigDecimalType" />
+		<property column="active_" name="active" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="lastPublishDate" type="org.hibernate.type.TimestampType" />
+		<property name="status" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="statusByUserId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="statusByUserName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="statusDate" type="org.hibernate.type.TimestampType" />
+	</class>
+	<class name="com.liferay.commerce.discount.model.impl.CommerceDiscountRuleImpl" table="CommerceDiscountRule">
+		<id name="commerceDiscountRuleId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="createDate" type="org.hibernate.type.TimestampType" />
+		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
+		<property name="commerceDiscountId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property column="type_" name="type" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="typeSettings" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+	</class>
+	<class name="com.liferay.commerce.discount.model.impl.CommerceDiscountUserSegmentRelImpl" table="CommerceDiscountUserSegmentRel">
+		<id column="CDiscountUserSegmentRelId" name="commerceDiscountUserSegmentRelId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="createDate" type="org.hibernate.type.TimestampType" />
+		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
+		<property name="commerceDiscountId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="commerceUserSegmentEntryId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+	</class>
+</hibernate-mapping>

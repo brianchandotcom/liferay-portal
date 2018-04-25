@@ -49,7 +49,7 @@
 		<!-- Order -->
 
 		<order by="asc">
-			<order-column name="priority" />
+			<order-column name="createDate" />
 		</order>
 
 		<!-- Finder methods -->

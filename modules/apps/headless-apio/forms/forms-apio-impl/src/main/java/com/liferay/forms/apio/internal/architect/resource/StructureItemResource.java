@@ -14,12 +14,15 @@
 
 package com.liferay.forms.apio.internal.architect.resource;
 
+import com.liferay.apio.architect.functional.Try;
 import com.liferay.apio.architect.representor.Representor;
 import com.liferay.apio.architect.resource.ItemResource;
 import com.liferay.apio.architect.routes.ItemRoutes;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.dynamic.data.mapping.model.DDMStructureVersion;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.forms.apio.architect.identifier.StructureIdentifier;
+import com.liferay.forms.apio.architect.identifier.StructureVersionIdentifier;
 import com.liferay.person.apio.identifier.PersonIdentifier;
 
 import org.osgi.service.component.annotations.Component;
@@ -66,6 +69,8 @@ public class StructureItemResource
 			"datePublished", DDMStructure::getLastPublishDate
 		).addLinkedModel(
 			"author", PersonIdentifier.class, DDMStructure::getUserId
+		).addLinkedModel(
+			"version", StructureVersionIdentifier.class, this::_getVersionId
 		).addLocalizedStringByLocale(
 			"description", DDMStructure::getDescription
 		).addLocalizedStringByLocale(
@@ -80,11 +85,17 @@ public class StructureItemResource
 			"storageType", DDMStructure::getStorageType
 		).addString(
 			"structureKey", DDMStructure::getStructureKey
-		).addString(
-			"version", DDMStructure::getVersion
-		).addString(
-			"versionUserName", DDMStructure::getVersionUserName
 		).build();
+	}
+
+	private Long _getVersionId(DDMStructure ddmStructure) {
+		return Try.fromFallible(
+			ddmStructure::getStructureVersion
+		).map(
+			DDMStructureVersion::getStructureVersionId
+		).orElse(
+			null
+		);
 	}
 
 	@Reference

@@ -14,6 +14,7 @@
 
 package com.liferay.forms.apio.internal.architect.resource;
 
+import com.liferay.apio.architect.functional.Try;
 import com.liferay.apio.architect.pagination.PageItems;
 import com.liferay.apio.architect.pagination.Pagination;
 import com.liferay.apio.architect.representor.Representor;
@@ -24,11 +25,13 @@ import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderingContext;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormTemplateContextFactory;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
+import com.liferay.dynamic.data.mapping.model.DDMFormInstanceVersion;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceService;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.forms.apio.architect.identifier.FormInstanceIdentifier;
+import com.liferay.forms.apio.architect.identifier.FormInstanceVersionIdentifier;
 import com.liferay.forms.apio.architect.identifier.StructureIdentifier;
 import com.liferay.forms.apio.internal.architect.form.FormContextForm;
 import com.liferay.forms.apio.internal.architect.helper.FormInstanceRecordResourceHelper;
@@ -108,16 +111,14 @@ public class FormInstanceNestedCollectionResource
 		).addLinkedModel(
 			"structure", StructureIdentifier.class,
 			DDMFormInstance::getStructureId
+		).addLinkedModel(
+			"version", FormInstanceVersionIdentifier.class, this::_getVersionId
 		).addLocalizedStringByLocale(
 			"description", DDMFormInstance::getDescription
 		).addLocalizedStringByLocale(
 			"name", DDMFormInstance::getName
 		).addString(
 			"settings", DDMFormInstance::getSettings
-		).addString(
-			"version", DDMFormInstance::getVersion
-		).addString(
-			"versionUserName", DDMFormInstance::getVersionUserName
 		).build();
 	}
 
@@ -171,6 +172,18 @@ public class FormInstanceNestedCollectionResource
 			company.getCompanyId(), groupId);
 
 		return new PageItems<>(ddmFormInstances, count);
+	}
+
+	private Long _getVersionId(DDMFormInstance ddmFormInstance) {
+		return Try.fromFallible(
+			ddmFormInstance::getVersion
+		).map(
+			ddmFormInstance::getFormInstanceVersion
+		).map(
+			DDMFormInstanceVersion::getFormInstanceVersionId
+		).orElse(
+			null
+		);
 	}
 
 	@Reference

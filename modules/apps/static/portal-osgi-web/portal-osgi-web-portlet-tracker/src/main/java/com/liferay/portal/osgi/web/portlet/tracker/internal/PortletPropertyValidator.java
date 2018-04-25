@@ -90,7 +90,6 @@ public class PortletPropertyValidator {
 			"com.liferay.portlet.preferences-unique-per-layout",
 			"com.liferay.portlet.private-request-attributes",
 			"com.liferay.portlet.private-session-attributes",
-			"com.liferay.portlet.remoteable",
 			"com.liferay.portlet.render-timeout",
 			"com.liferay.portlet.render-weight",
 			"com.liferay.portlet.requires-namespaced-parameters",

@@ -57,7 +57,6 @@ import org.osgi.service.component.annotations.Reference;
 		"com.liferay.portlet.icon=/icons/translator.png",
 		"com.liferay.portlet.private-request-attributes=false",
 		"com.liferay.portlet.private-session-attributes=false",
-		"com.liferay.portlet.remoteable=true",
 		"com.liferay.portlet.render-weight=50",
 		"com.liferay.portlet.use-default-template=true",
 		"javax.portlet.display-name=Translator",

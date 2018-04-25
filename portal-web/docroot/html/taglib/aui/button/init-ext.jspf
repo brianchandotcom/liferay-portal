@@ -39,11 +39,6 @@ else if (onClick.startsWith(Http.HTTP_WITH_SLASH) || onClick.startsWith(Http.HTT
 
 	escapedHREF = HtmlUtil.escapeAttribute(PortalUtil.escapeRedirect(href));
 }
-else if (onClick.startsWith("wsrp_rewrite?")) {
-	href = onClick;
-
-	escapedHREF = HtmlUtil.escapeAttribute(href);
-}
 
 if (useDialog && Validator.isNotNull(escapedHREF)) {
 	if (data == null) {

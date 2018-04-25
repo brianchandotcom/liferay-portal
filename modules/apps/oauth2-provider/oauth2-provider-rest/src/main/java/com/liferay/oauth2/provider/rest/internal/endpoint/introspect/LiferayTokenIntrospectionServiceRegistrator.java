@@ -57,16 +57,17 @@ public class LiferayTokenIntrospectionServiceRegistrator {
 				new LiferayTokenIntrospectionService(
 					_liferayOAuthDataProvider, canSupportPublicClients);
 
-			Hashtable<String, Object> endpointProperties = new Hashtable<>();
+			Hashtable<String, Object> liferayTokenIntrospectionProperties =
+				new Hashtable<>();
 
-			endpointProperties.put(
+			liferayTokenIntrospectionProperties.put(
 				OAuth2ProviderRestEndpointConstants.
 					PROPERTY_KEY_OAUTH2_ENDPOINT_JAXRS_RESOURCE,
 				true);
 
 			_serviceRegistration = bundleContext.registerService(
 				Object.class, liferayTokenIntrospectionService,
-				endpointProperties);
+				liferayTokenIntrospectionProperties);
 		}
 	}
 

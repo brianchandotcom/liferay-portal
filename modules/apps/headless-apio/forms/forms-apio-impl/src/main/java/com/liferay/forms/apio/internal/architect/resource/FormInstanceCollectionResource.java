@@ -33,14 +33,13 @@ import com.liferay.forms.apio.architect.identifier.FormInstanceIdentifier;
 import com.liferay.forms.apio.architect.identifier.StructureIdentifier;
 import com.liferay.forms.apio.internal.architect.form.FormContextForm;
 import com.liferay.forms.apio.internal.architect.helper.FormInstanceRecordResourceHelper;
-import com.liferay.portal.apio.architect.context.auth.MockPermissions;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONSerializer;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.site.apio.architect.identifier.WebSiteIdentifier;
+import com.liferay.site.apio.identifier.WebSiteIdentifier;
 
 import java.util.List;
 import java.util.Locale;
@@ -84,7 +83,7 @@ public class FormInstanceCollectionResource
 			this::_getFormInstance
 		).addUpdater(
 			this::_evaluateContext, Language.class,
-			DDMFormRenderingContext.class, MockPermissions::validPermission,
+			DDMFormRenderingContext.class, (credentials, aLong) -> true,
 			FormContextForm::buildForm
 		).build();
 	}

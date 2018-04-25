@@ -25,7 +25,7 @@ import com.liferay.dynamic.data.mapping.service.DDMDataProviderInstanceService;
 import com.liferay.forms.apio.architect.identifier.DataProviderInstanceIdentifier;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Company;
-import com.liferay.site.apio.architect.identifier.WebSiteIdentifier;
+import com.liferay.site.apio.identifier.WebSiteIdentifier;
 
 import java.util.List;
 

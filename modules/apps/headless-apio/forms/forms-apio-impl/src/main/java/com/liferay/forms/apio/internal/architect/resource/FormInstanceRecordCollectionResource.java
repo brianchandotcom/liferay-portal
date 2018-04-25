@@ -33,7 +33,6 @@ import com.liferay.forms.apio.architect.identifier.FormInstanceRecordIdentifier;
 import com.liferay.forms.apio.internal.architect.FormInstanceRecordServiceContext;
 import com.liferay.forms.apio.internal.architect.form.FormInstanceRecordForm;
 import com.liferay.forms.apio.internal.architect.helper.FormInstanceRecordResourceHelper;
-import com.liferay.portal.apio.architect.context.auth.MockPermissions;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -66,7 +65,7 @@ public class FormInstanceRecordCollectionResource
 		).addCreator(
 			this::_addFormInstanceRecord, Language.class,
 			FormInstanceRecordServiceContext.class,
-			MockPermissions::validPermission, FormInstanceRecordForm::buildForm
+			(credentials, aLong) -> true, FormInstanceRecordForm::buildForm
 		).build();
 	}
 
@@ -84,7 +83,7 @@ public class FormInstanceRecordCollectionResource
 		).addUpdater(
 			this::_updateFormInstanceRecord, Language.class,
 			FormInstanceRecordServiceContext.class,
-			MockPermissions::validPermission, FormInstanceRecordForm::buildForm
+			(credentials, aLong) -> true, FormInstanceRecordForm::buildForm
 		).build();
 	}
 

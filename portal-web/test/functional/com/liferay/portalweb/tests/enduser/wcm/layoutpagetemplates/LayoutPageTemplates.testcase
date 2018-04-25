@@ -53,11 +53,9 @@
 
 	<command name="AddLayoutPageTemplateRemoveFragment" priority="5">
 		<var name="htmlSnippet"><![CDATA[
-<html>${line.separator}
 <div>${line.separator}
 <span class="test">This is a test.</span>${line.separator}
-</div>${line.separator}
-</html>]]></var>
+</div>${line.separator}]]></var>
 
 		<execute macro="Fragment#typeFragmentEditor">
 			<var name="editor" value="html" />

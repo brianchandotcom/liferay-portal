@@ -18,6 +18,8 @@ import com.liferay.oauth2.provider.model.OAuth2Application;
 import com.liferay.oauth2.provider.rest.internal.endpoint.constants.OAuth2ProviderRestEndpointConstants;
 import com.liferay.oauth2.provider.rest.internal.endpoint.liferay.LiferayOAuthDataProvider;
 import com.liferay.oauth2.provider.rest.spi.bearer.token.provider.BearerTokenProvider;
+import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 
 import java.util.List;
 import java.util.Map;
@@ -63,32 +65,32 @@ public class LiferayTokenIntrospectionService extends AbstractTokenService {
 	public Response getTokenIntrospection(
 		@Encoded MultivaluedMap<String, String> params) {
 
-		Client authenticatedClient = authenticateClientIfNeeded(params);
+		Client client = authenticateClientIfNeeded(params);
 
 		String tokenId = params.getFirst(OAuthConstants.TOKEN_ID);
 		String tokenTypeHint = params.getFirst(OAuthConstants.TOKEN_TYPE_HINT);
 
 		if (tokenTypeHint == null) {
-			ServerAccessToken accessToken =
+			ServerAccessToken serverAccessToken =
 				_liferayOAuthDataProvider.getAccessToken(tokenId);
 
-			if (accessToken != null) {
-				return handleAccessToken(authenticatedClient, accessToken);
+			if (serverAccessToken != null) {
+				return handleAccessToken(client, serverAccessToken);
 			}
 
 			RefreshToken refreshToken =
 				_liferayOAuthDataProvider.getRefreshToken(tokenId);
 
 			if (refreshToken != null) {
-				return handleRefreshToken(authenticatedClient, refreshToken);
+				return handleRefreshToken(client, refreshToken);
 			}
 		}
 		else if (OAuthConstants.ACCESS_TOKEN.equals(tokenTypeHint)) {
-			ServerAccessToken accessToken =
+			ServerAccessToken serverAccessToken =
 				_liferayOAuthDataProvider.getAccessToken(tokenId);
 
-			if (accessToken != null) {
-				return handleAccessToken(authenticatedClient, accessToken);
+			if (serverAccessToken != null) {
+				return handleAccessToken(client, serverAccessToken);
 			}
 		}
 		else if (OAuthConstants.REFRESH_TOKEN.equals(tokenTypeHint)) {
@@ -96,7 +98,7 @@ public class LiferayTokenIntrospectionService extends AbstractTokenService {
 				_liferayOAuthDataProvider.getRefreshToken(tokenId);
 
 			if (refreshToken != null) {
-				return handleRefreshToken(authenticatedClient, refreshToken);
+				return handleRefreshToken(client, refreshToken);
 			}
 		}
 		else {
@@ -104,71 +106,154 @@ public class LiferayTokenIntrospectionService extends AbstractTokenService {
 				OAuthConstants.UNSUPPORTED_TOKEN_TYPE);
 		}
 
-		return Response.ok(new TokenIntrospection(false)).build();
+		return Response.ok(
+			new TokenIntrospection(false)
+		).build();
+	}
+
+	protected TokenIntrospection buildTokenIntrospection(
+		ServerAccessToken serverAccessToken) {
+
+		TokenIntrospection tokenIntrospection = new TokenIntrospection(true);
+
+		List<String> audiences = serverAccessToken.getAudiences();
+
+		if (ListUtil.isNotEmpty(audiences)) {
+			tokenIntrospection.setAud(audiences);
+		}
+
+		Client client = serverAccessToken.getClient();
+
+		tokenIntrospection.setClientId(client.getClientId());
+
+		tokenIntrospection.setExp(
+			serverAccessToken.getIssuedAt() + serverAccessToken.getExpiresIn());
+
+		Map<String, String> extraProperties =
+			serverAccessToken.getExtraProperties();
+
+		if (extraProperties != null) {
+			Map<String, String> extensions = tokenIntrospection.getExtensions();
+
+			extensions.putAll(extraProperties);
+		}
+
+		String issuer = serverAccessToken.getIssuer();
+
+		if (issuer != null) {
+			tokenIntrospection.setIss(issuer);
+		}
+
+		tokenIntrospection.setIat(serverAccessToken.getIssuedAt());
+
+		List<OAuthPermission> oAuthPermissions = serverAccessToken.getScopes();
+
+		if (ListUtil.isNotEmpty(oAuthPermissions)) {
+			tokenIntrospection.setScope(
+				OAuthUtils.convertPermissionsToScope(oAuthPermissions));
+		}
+
+		UserSubject userSubject = serverAccessToken.getSubject();
+
+		if (userSubject != null) {
+			tokenIntrospection.setUsername(userSubject.getLogin());
+			tokenIntrospection.setSub(userSubject.getId());
+		}
+
+		tokenIntrospection.setTokenType(serverAccessToken.getTokenType());
+
+		return tokenIntrospection;
+	}
+
+	protected boolean clientsMatch(Client client1, Client client2) {
+		if (!Objects.equals(client1.getClientId(), client2.getClientId())) {
+			return false;
+		}
+
+		String companyId1 = MapUtil.getString(
+			client1.getProperties(),
+			OAuth2ProviderRestEndpointConstants.PROPERTY_KEY_COMPANY_ID);
+		String companyId2 = MapUtil.getString(
+			client2.getProperties(),
+			OAuth2ProviderRestEndpointConstants.PROPERTY_KEY_COMPANY_ID);
+
+		if (Objects.equals(companyId1, companyId2)) {
+			return true;
+		}
+
+		return false;
 	}
 
 	protected Response handleAccessToken(
-		Client authenticatedClient, ServerAccessToken cxfAccessToken) {
+		Client client, ServerAccessToken serverAccessToken) {
 
-		if (!verifyClient(authenticatedClient, cxfAccessToken)) {
+		if (!verifyClient(client, serverAccessToken)) {
 			return createErrorResponseFromErrorCode(
 				OAuthConstants.UNAUTHORIZED_CLIENT);
 		}
 
-		if (!verifyCXFToken(cxfAccessToken)) {
-			return Response.ok(new TokenIntrospection(false)).build();
+		if (!verifyCXFToken(serverAccessToken)) {
+			return Response.ok(
+				new TokenIntrospection(false)
+			).build();
 		}
 
-		BearerTokenProvider.AccessToken accessToken =
-			_liferayOAuthDataProvider.fromCXFAccessToken(cxfAccessToken);
+		BearerTokenProvider.AccessToken bearerAccessToken =
+			_liferayOAuthDataProvider.fromCXFAccessToken(serverAccessToken);
 
 		OAuth2Application oAuth2Application =
-			accessToken.getOAuth2Application();
+			bearerAccessToken.getOAuth2Application();
 
 		BearerTokenProvider bearerTokenProvider =
 			_liferayOAuthDataProvider.getBearerTokenProvider(
 				oAuth2Application.getCompanyId(),
 				oAuth2Application.getClientId());
 
-		if (!bearerTokenProvider.isValid(accessToken)) {
-			return Response.ok(new TokenIntrospection(false)).build();
+		if (!bearerTokenProvider.isValid(bearerAccessToken)) {
+			return Response.ok(
+				new TokenIntrospection(false)
+			).build();
 		}
 
-		TokenIntrospection tokenIntrospection = _buildTokenIntrospection(
-			cxfAccessToken);
+		TokenIntrospection tokenIntrospection = buildTokenIntrospection(
+			serverAccessToken);
 
-		return Response.ok(tokenIntrospection).build();
+		return Response.ok(
+			tokenIntrospection
+		).build();
 	}
 
 	protected Response handleRefreshToken(
-		Client authenticatedClient, RefreshToken cxfRefreshToken) {
+		Client client, RefreshToken refreshToken) {
 
-		if (!verifyClient(authenticatedClient, cxfRefreshToken)) {
+		if (!verifyClient(client, refreshToken)) {
 			return createErrorResponseFromErrorCode(
 				OAuthConstants.UNAUTHORIZED_CLIENT);
 		}
 
-		if (!verifyCXFToken(cxfRefreshToken)) {
+		if (!verifyCXFToken(refreshToken)) {
 			return Response.ok(new TokenIntrospection(false)).build();
 		}
 
-		BearerTokenProvider.RefreshToken refreshToken =
-			_liferayOAuthDataProvider.fromCXFRefreshToken(cxfRefreshToken);
+		BearerTokenProvider.RefreshToken bearerRefreshToken =
+			_liferayOAuthDataProvider.fromCXFRefreshToken(refreshToken);
 
 		OAuth2Application oAuth2Application =
-			refreshToken.getOAuth2Application();
+			bearerRefreshToken.getOAuth2Application();
 
 		BearerTokenProvider bearerTokenProvider =
 			_liferayOAuthDataProvider.getBearerTokenProvider(
 				oAuth2Application.getCompanyId(),
 				oAuth2Application.getClientId());
 
-		if (!bearerTokenProvider.isValid(refreshToken)) {
-			return Response.ok(new TokenIntrospection(false)).build();
+		if (!bearerTokenProvider.isValid(bearerRefreshToken)) {
+			return Response.ok(
+				new TokenIntrospection(false)
+			).build();
 		}
 
-		TokenIntrospection tokenIntrospection = _buildTokenIntrospection(
-			cxfRefreshToken);
+		TokenIntrospection tokenIntrospection = buildTokenIntrospection(
+			refreshToken);
 
 		return Response.status(
 			Response.Status.OK
@@ -178,15 +263,13 @@ public class LiferayTokenIntrospectionService extends AbstractTokenService {
 	}
 
 	protected boolean verifyClient(
-		Client authenticatedClient, ServerAccessToken serverAccessToken) {
+		Client client, ServerAccessToken serverAccessToken) {
 
-		if (!_clientsMatch(
-				authenticatedClient, serverAccessToken.getClient())) {
-
+		if (!clientsMatch(client, serverAccessToken.getClient())) {
 			return false;
 		}
 
-		Map<String, String> properties = authenticatedClient.getProperties();
+		Map<String, String> properties = client.getProperties();
 
 		if (!properties.containsKey(
 				OAuth2ProviderRestEndpointConstants.
@@ -205,80 +288,6 @@ public class LiferayTokenIntrospectionService extends AbstractTokenService {
 				serverAccessToken.getIssuedAt(),
 				serverAccessToken.getExpiresIn())) {
 
-			return false;
-		}
-
-		return true;
-	}
-
-	private TokenIntrospection _buildTokenIntrospection(
-		ServerAccessToken serverAccessToken) {
-
-		TokenIntrospection tokenIntrospection = new TokenIntrospection(true);
-
-		List<String> audiences = serverAccessToken.getAudiences();
-
-		if ((audiences != null) && !audiences.isEmpty()) {
-			tokenIntrospection.setAud(audiences);
-		}
-
-		Client client = serverAccessToken.getClient();
-
-		tokenIntrospection.setClientId(client.getClientId());
-
-		tokenIntrospection.setExp(
-			serverAccessToken.getIssuedAt() + serverAccessToken.getExpiresIn());
-
-		if (serverAccessToken.getExtraProperties() != null) {
-			Map<String, String> extensions = tokenIntrospection.getExtensions();
-
-			extensions.putAll(serverAccessToken.getExtraProperties());
-		}
-
-		if (serverAccessToken.getIssuer() != null) {
-			tokenIntrospection.setIss(serverAccessToken.getIssuer());
-		}
-
-		tokenIntrospection.setIat(serverAccessToken.getIssuedAt());
-
-		List<OAuthPermission> oAuthPermissions = serverAccessToken.getScopes();
-
-		if ((oAuthPermissions != null) && !oAuthPermissions.isEmpty()) {
-			tokenIntrospection.setScope(
-				OAuthUtils.convertPermissionsToScope(oAuthPermissions));
-		}
-
-		UserSubject userSubject = serverAccessToken.getSubject();
-
-		if (userSubject != null) {
-			tokenIntrospection.setUsername(userSubject.getLogin());
-			tokenIntrospection.setSub(userSubject.getId());
-		}
-
-		tokenIntrospection.setTokenType(serverAccessToken.getTokenType());
-
-		return tokenIntrospection;
-	}
-
-	private boolean _clientsMatch(Client client1, Client client2) {
-		String client1Id = client1.getClientId();
-		String client2Id = client2.getClientId();
-
-		if (!Objects.equals(client1Id, client2Id)) {
-			return false;
-		}
-
-		Map<String, String> properties = client1.getProperties();
-
-		String companyId1 = properties.get(
-			OAuth2ProviderRestEndpointConstants.PROPERTY_KEY_COMPANY_ID);
-
-		properties = client2.getProperties();
-
-		String companyId2 = properties.get(
-			OAuth2ProviderRestEndpointConstants.PROPERTY_KEY_COMPANY_ID);
-
-		if (!Objects.equals(companyId1, companyId2)) {
 			return false;
 		}
 

@@ -26,6 +26,7 @@ import com.liferay.dynamic.data.mapping.storage.Field;
 import com.liferay.dynamic.data.mapping.storage.Fields;
 import com.liferay.exportimport.content.processor.ExportImportContentProcessor;
 import com.liferay.exportimport.content.processor.ExportImportContentProcessorRegistryUtil;
+import com.liferay.exportimport.kernel.exception.ExportImportContentValidationException;
 import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.journal.configuration.JournalFileUploadsConfiguration;
 import com.liferay.journal.exception.ArticleContentException;
@@ -58,7 +59,9 @@ import com.liferay.portal.kernel.model.ModelHintsUtil;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.ImageLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -71,6 +74,7 @@ import com.liferay.portal.validation.ModelValidationResults;
 import com.liferay.portal.validation.ModelValidator;
 
 import java.io.File;
+import java.io.IOException;
 
 import java.util.Collections;
 import java.util.Date;
@@ -355,7 +359,84 @@ public class JournalArticleModelValidator
 	}
 
 	@Override
-	public ModelValidationResults validateModel(JournalArticle model) {
+	public ModelValidationResults validateModel(JournalArticle article) {
+		long groupId = article.getGroupId();
+		String content = article.getContent();
+		String ddmStructureKey = article.getDDMStructureKey();
+		String ddmTemplateKey = article.getDDMTemplateKey();
+		boolean smallImage = article.isSmallImage();
+		String smallImageURL = article.getSmallImageURL();
+
+		byte[] smallImageBytes = null;
+		File smallImageFile = null;
+
+		if (smallImage) {
+			Image image = _imageLocalService.fetchImage(
+				article.getSmallImageId());
+
+			if (image != null) {
+				smallImageBytes = image.getTextObj();
+
+				try {
+					smallImageFile = FileUtil.createTempFile(smallImageBytes);
+				}
+				catch (IOException ioe) {
+					smallImageBytes = null;
+				}
+			}
+		}
+
+		ServiceContext serviceContext =
+			ServiceContextThreadLocal.getServiceContext();
+
+		if (serviceContext == null) {
+			serviceContext = new ServiceContext();
+		}
+
+		try {
+			validate(
+				article.getCompanyId(), article.getGroupId(),
+				article.getClassNameId(), article.getTitleMap(),
+				article.getContent(), ddmStructureKey, ddmTemplateKey,
+				article.getDisplayDate(), article.getExpirationDate(),
+				smallImage, smallImageURL, smallImageFile, smallImageBytes,
+				serviceContext);
+		}
+		catch (PortalException pe) {
+			ModelValidationResults.FailureBuilder failureBuilder =
+				ModelValidationResults.failure();
+
+			return failureBuilder.exceptionFailure(
+				pe.getMessage(), pe
+			).getResults();
+		}
+
+		try {
+			validateReferences(
+				groupId, ddmStructureKey, ddmTemplateKey,
+				article.getLayoutUuid(), smallImage, smallImageURL,
+				smallImageBytes, article.getSmallImageId(), content);
+		}
+		catch (ExportImportContentValidationException eicve) {
+			eicve.setStagedModelClassName(JournalArticle.class.getName());
+			eicve.setStagedModelClassPK(Long.valueOf(article.getArticleId()));
+
+			ModelValidationResults.FailureBuilder failureBuilder =
+				ModelValidationResults.failure();
+
+			return failureBuilder.exceptionFailure(
+				eicve.getMessage(), eicve
+			).getResults();
+		}
+		catch (PortalException pe) {
+			ModelValidationResults.FailureBuilder failureBuilder =
+				ModelValidationResults.failure();
+
+			return failureBuilder.exceptionFailure(
+				pe.getMessage(), pe
+			).getResults();
+		}
+
 		return ModelValidationResults.success();
 	}
 

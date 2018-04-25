@@ -105,15 +105,8 @@
 				</button>
 
 				<div class="dropdown-menu">
-					<a class="dropdown-item" href="{$layoutColumnItem.actionURLs['editLayoutURL']}" rel="noopener" target="_blank">
-						{msg desc=""}edit{/msg}
-
-						<span class="inline-item inline-item-after">
-							{call .lexiconIcon}
-								{param name: 'shortcut' /}
-								{param pathThemeImages: $pathThemeImages /}
-							{/call}
-						</span>
+					<a class="dropdown-item" href="{$layoutColumnItem.actionURLs['viewLayoutURL']}">
+						{msg desc=""}view{/msg}
 					</a>
 
 					{if $layoutColumnItem.actionURLs['configureURL']}
@@ -138,12 +131,6 @@
 					{if $layoutColumnItem.actionURLs['permissionsURL']}
 						<a {$permissionLinkAttributes}>
 							{msg desc=""}permissions{/msg}
-						</a>
-					{/if}
-
-					{if $layoutColumnItem.actionURLs['copyApplicationsURL']}
-						<a class="dropdown-item" href="{$layoutColumnItem.actionURLs['copyApplicationsURL']}">
-							{msg desc=""}copy-applications{/msg}
 						</a>
 					{/if}
 

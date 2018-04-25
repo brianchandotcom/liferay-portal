@@ -30,9 +30,8 @@ Layout curLayout = (Layout)row.getObject();
 	showWhenSingleIcon="<%= true %>"
 >
 	<liferay-ui:icon
-		message="edit"
-		target="_blank"
-		url="<%= layoutsAdminDisplayContext.getEditLayoutURL(curLayout) %>"
+		message="view"
+		url="<%= layoutsAdminDisplayContext.getViewLayoutURL(curLayout) %>"
 	/>
 
 	<c:if test="<%= layoutsAdminDisplayContext.showConfigureAction(curLayout) %>">
@@ -63,13 +62,6 @@ Layout curLayout = (Layout)row.getObject();
 			method="get"
 			url="<%= layoutsAdminDisplayContext.getPermissionsURL(curLayout) %>"
 			useDialog="<%= true %>"
-		/>
-	</c:if>
-
-	<c:if test="<%= layoutsAdminDisplayContext.showCopyApplicationsAction(curLayout) %>">
-		<liferay-ui:icon
-			message="copy-applications"
-			url="<%= layoutsAdminDisplayContext.getCopyApplicationsURL(curLayout) %>"
 		/>
 	</c:if>
 

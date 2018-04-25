@@ -104,7 +104,7 @@ buildClay {
 
 	eachFile new StripPathSegmentsAction(3)
 	from npmInstall.nodeModulesDir
-	include "clay/src/scss/"
+	include "clay-css/src/scss/"
 	includeEmptyDirs = false
 	into clayDestinationDir
 }
@@ -136,7 +136,7 @@ buildClayIcons {
 
 	eachFile new StripPathSegmentsAction(4)
 	from npmInstall.nodeModulesDir
-	include "clay/lib/images/icons/"
+	include "clay-css/lib/images/icons/"
 	includeEmptyDirs = false
 	into clayIconsDestinationDir
 }
@@ -172,7 +172,7 @@ buildLexiconIcons {
 
 	eachFile new StripPathSegmentsAction(4)
 	from npmInstall.nodeModulesDir
-	include "clay/lib/images/icons/"
+	include "clay-css/lib/images/icons/"
 	includeEmptyDirs = false
 	into lexiconIconsDestinationDir
 }

@@ -31,7 +31,7 @@ preferences-company-wide?, preferences-unique-per-layout?,
 preferences-owned-by-group?, use-default-template?, show-portlet-access-denied?,
 show-portlet-inactive?, action-url-redirect?, restore-current-view?,
 maximize-edit?, maximize-help?, pop-up-print?, layout-cacheable?, instanceable?,
-remoteable?, scopeable?, single-page-application?, user-principal-strategy?,
+scopeable?, single-page-application?, user-principal-strategy?,
 private-request-attributes?, private-session-attributes?,
 autopropagated-parameters?, requires-namespaced-parameters?, action-timeout?,
 render-timeout?, render-weight?, ajaxable?, header-portal-css*,
@@ -598,13 +598,6 @@ page. If set to false, the portlet can only appear once on a page. The default
 value is false.
 -->
 <!ELEMENT instanceable (#PCDATA)>
-
-<!--
-Set the remoteable value to true if the portlet can be used remotely like in
-WSRP. If set to false, the portlet will not be available remotely. The default
-value is false.
--->
-<!ELEMENT remoteable (#PCDATA)>
 
 <!--
 If the scopeable value is set to true, an administrator will be able to

@@ -576,10 +576,6 @@ public class PortletTracker
 			GetterUtil.getBoolean(
 				get(serviceReference, "private-session-attributes"),
 				portletModel.isPrivateSessionAttributes()));
-		portletModel.setRemoteable(
-			GetterUtil.getBoolean(
-				get(serviceReference, "remoteable"),
-				portletModel.isRemoteable()));
 		portletModel.setRenderTimeout(
 			GetterUtil.getInteger(
 				get(serviceReference, "render-timeout"),

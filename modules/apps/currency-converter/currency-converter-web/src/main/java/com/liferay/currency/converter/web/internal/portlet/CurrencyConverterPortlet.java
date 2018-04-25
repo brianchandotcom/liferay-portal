@@ -50,7 +50,6 @@ import org.osgi.service.component.annotations.Reference;
 		"com.liferay.portlet.preferences-owned-by-group=false",
 		"com.liferay.portlet.private-request-attributes=false",
 		"com.liferay.portlet.private-session-attributes=false",
-		"com.liferay.portlet.remoteable=true",
 		"com.liferay.portlet.render-weight=0",
 		"com.liferay.portlet.use-default-template=true",
 		"javax.portlet.display-name=Currency Converter",

@@ -21,10 +21,12 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.taglib.util.LexiconUtil;
+import com.liferay.users.admin.configuration.UserFileUploadsConfiguration;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -70,11 +72,7 @@ public class UserVerticalCardTag extends VerticalCardTag {
 
 		if (user != null) {
 			if ((user.getPortraitId() > 0) ||
-				LanguageConstants.VALUE_IMAGE.equals(
-					LanguageUtil.get(
-						user.getLocale(),
-						LanguageConstants.KEY_USER_DEFAULT_PORTRAIT,
-						LanguageConstants.VALUE_INITIALS))) {
+				!_isImageDefaultUseInitials(user)) {
 
 				ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 					WebKeys.THEME_DISPLAY);
@@ -102,6 +100,33 @@ public class UserVerticalCardTag extends VerticalCardTag {
 		}
 
 		request.setAttribute("liferay-frontend:card:userInitials", initials);
+	}
+
+	private boolean _isImageDefaultUseInitials(User user) {
+		boolean imageDefaultUseInitials = true;
+
+		try {
+			UserFileUploadsConfiguration userFileUploadsConfiguration =
+				ConfigurationProviderUtil.getSystemConfiguration(
+					UserFileUploadsConfiguration.class);
+
+			imageDefaultUseInitials =
+				userFileUploadsConfiguration.imageDefaultUseInitials();
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+		}
+
+		if (LanguageConstants.VALUE_IMAGE.equals(
+				LanguageUtil.get(
+					user.getLocale(),
+					LanguageConstants.KEY_USER_DEFAULT_PORTRAIT,
+					LanguageConstants.VALUE_INITIALS))) {
+
+			imageDefaultUseInitials = false;
+		}
+
+		return imageDefaultUseInitials;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

@@ -1172,6 +1172,86 @@ public class ProjectTemplatesTest {
 	}
 
 	@Test
+	public void testBuildTemplateSoyPortlet71() throws Exception {
+		Assume.assumeFalse(Validator.isNotNull(System.getenv("JENKINS_HOME")));
+
+		File gradleProjectDir = _buildTemplateWithGradle(
+			"soy-portlet", "foo", "--package-name", "com.liferay.test",
+			"--liferayVersion", "7.1");
+
+		_testExists(gradleProjectDir, "bnd.bnd");
+		_testExists(
+			gradleProjectDir,
+			"src/main/resources/META-INF/resources/Footer.soy");
+		_testExists(
+			gradleProjectDir,
+			"src/main/resources/META-INF/resources/Footer.es.js");
+		_testExists(
+			gradleProjectDir,
+			"src/main/resources/META-INF/resources/Header.soy");
+		_testExists(
+			gradleProjectDir,
+			"src/main/resources/META-INF/resources/Header.es.js");
+		_testExists(
+			gradleProjectDir,
+			"src/main/resources/META-INF/resources/Navigation.soy");
+		_testExists(
+			gradleProjectDir,
+			"src/main/resources/META-INF/resources/Navigation.es.js");
+		_testExists(
+			gradleProjectDir, "src/main/resources/META-INF/resources/View.soy");
+		_testExists(
+			gradleProjectDir,
+			"src/main/resources/META-INF/resources/View.es.js");
+
+		_testNotExists(gradleProjectDir, "gulpfile.js");
+
+		_testContains(
+			gradleProjectDir, "build.gradle",
+			"apply plugin: \"com.liferay.plugin\"");
+		_testContains(
+			gradleProjectDir,
+			"src/main/java/com/liferay/test/constants/FooPortletKeys.java",
+			"public static final String Foo = \"Foo\"");
+		_testContains(
+			gradleProjectDir,
+			"src/main/java/com/liferay/test/portlet/FooSoyPortletRegister.java",
+			"import com.liferay.portal.portlet.bridge.soy.SoyPortletRegister;",
+			"public class FooSoyPortletRegister implements " +
+				"SoyPortletRegister {");
+		_testContains(
+			gradleProjectDir,
+			"src/main/java/com/liferay/test/portlet/action" +
+				"/FooViewMVCRenderCommand.java",
+			"public class FooViewMVCRenderCommand");
+
+		File mavenProjectDir = _buildTemplateWithMaven(
+			"soy-portlet", "foo", "com.test", "-DclassName=Foo",
+			"-Dpackage=com.liferay.test", "-DliferayVersion=7.1");
+
+		_testExists(mavenProjectDir, "gulpfile.js");
+
+		File mavenPackageJsonFile = new File(mavenProjectDir, "package.json");
+
+		Path mavenPackageJsonPath = mavenPackageJsonFile.toPath();
+
+		String mavenPackageJSON = FileUtil.read(mavenPackageJsonPath) + "\n";
+
+		Files.write(
+			mavenPackageJsonPath,
+			mavenPackageJSON.getBytes(StandardCharsets.UTF_8));
+
+		_buildProjects(gradleProjectDir, mavenProjectDir);
+
+		File gradleJarFile = new File(
+			gradleProjectDir, "build/libs/com.liferay.test-1.0.0.jar");
+		File mavenJarFile = new File(mavenProjectDir, "target/foo-1.0.0.jar");
+
+		_testContainsJarEntry(gradleJarFile, "package.json");
+		_testContainsJarEntry(mavenJarFile, "package.json");
+	}
+
+	@Test
 	public void testBuildTemplateSoyPortletCustomClass() throws Exception {
 		File gradleProjectDir = _buildTemplateWithGradle(
 			"soy-portlet", "foo", "--class-name", "MySoyPortlet");
@@ -1180,6 +1260,19 @@ public class ProjectTemplatesTest {
 			gradleProjectDir,
 			"src/main/java/foo/portlet/MySoyPortletPortlet.java",
 			"public class MySoyPortletPortlet extends SoyPortlet {");
+	}
+
+	@Test
+	public void testBuildTemplateSoyPortletCustomClass71() throws Exception {
+		File gradleProjectDir = _buildTemplateWithGradle(
+			"soy-portlet", "foo", "--class-name", "MySPR", "--liferayVersion",
+			"7.1");
+
+		_testContains(
+			gradleProjectDir,
+			"src/main/java/foo/portlet/MySPRSoyPortletRegister.java",
+			"public class MySPRSoyPortletRegister implements " +
+				"SoyPortletRegister {");
 	}
 
 	@Test
@@ -2259,6 +2352,8 @@ public class ProjectTemplatesTest {
 			projectTemplatesArgs, archetyperDestinationDir);
 
 		File archetyperProjectDir = new File(archetyperDestinationDir, name);
+
+		FileUtil.deleteFiles(archetyperDestinationDir.toPath(), "build.gradle");
 
 		DirectoryComparator directoryComparator = new DirectoryComparator(
 			projectDir, archetyperProjectDir);

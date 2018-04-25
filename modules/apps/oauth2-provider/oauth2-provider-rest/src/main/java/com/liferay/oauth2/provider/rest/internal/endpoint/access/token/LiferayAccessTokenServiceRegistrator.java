@@ -48,7 +48,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 public class LiferayAccessTokenServiceRegistrator {
 
 	@Activate
-	public void activate(
+	protected void activate(
 		BundleContext bundleContext, Map<String, Object> properties) {
 
 		if (!MapUtil.getBoolean(properties, "enabled", true)) {
@@ -65,15 +65,17 @@ public class LiferayAccessTokenServiceRegistrator {
 		liferayAccessTokenService.setDataProvider(_liferayOAuthDataProvider);
 		liferayAccessTokenService.setGrantHandlers(_accessTokenGrantHandlers);
 
-		Dictionary<String, Object> endpointProperties = new Hashtable<>();
+		Dictionary<String, Object> liferayAccessTokenServiceProperties =
+			new Hashtable<>();
 
-		endpointProperties.put(
+		liferayAccessTokenServiceProperties.put(
 			OAuth2ProviderRestEndpointConstants.
 				PROPERTY_KEY_OAUTH2_ENDPOINT_JAXRS_RESOURCE,
 			true);
 
 		_serviceRegistration = bundleContext.registerService(
-			Object.class, liferayAccessTokenService, endpointProperties);
+			Object.class, liferayAccessTokenService,
+			liferayAccessTokenServiceProperties);
 	}
 
 	@Reference(
@@ -81,20 +83,20 @@ public class LiferayAccessTokenServiceRegistrator {
 		policyOption = ReferencePolicyOption.GREEDY,
 		unbind = "removeAccessTokenGrantHandler"
 	)
-	public void addAccessTokenGrantHandler(
+	protected void addAccessTokenGrantHandler(
 		AccessTokenGrantHandler accessTokenGrantHandler) {
 
 		_accessTokenGrantHandlers.add(accessTokenGrantHandler);
 	}
 
 	@Deactivate
-	public void deactivate() {
+	protected void deactivate() {
 		if (_serviceRegistration != null) {
 			_serviceRegistration.unregister();
 		}
 	}
 
-	public void removeAccessTokenGrantHandler(
+	protected void removeAccessTokenGrantHandler(
 		AccessTokenGrantHandler accessTokenGrantHandler) {
 
 		_accessTokenGrantHandlers.remove(accessTokenGrantHandler);

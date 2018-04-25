@@ -54,12 +54,12 @@ public class FormInstanceRecordResourceHelper {
 		for (FormFieldValue formFieldValue : formFieldValues) {
 			DDMFormFieldValue ddmFormFieldValue = new DDMFormFieldValue();
 
-			ddmFormFieldValue.setInstanceId(formFieldValue.getInstanceId());
-			ddmFormFieldValue.setName(formFieldValue.getName());
+			ddmFormFieldValue.setInstanceId(formFieldValue.instanceId);
+			ddmFormFieldValue.setName(formFieldValue.name);
 
 			LocalizedValue localizedValue = new LocalizedValue();
 
-			localizedValue.addString(locale, formFieldValue.getValue());
+			localizedValue.addString(locale, formFieldValue.value);
 			ddmFormFieldValue.setValue(localizedValue);
 			ddmFormValues.addDDMFormFieldValue(ddmFormFieldValue);
 		}

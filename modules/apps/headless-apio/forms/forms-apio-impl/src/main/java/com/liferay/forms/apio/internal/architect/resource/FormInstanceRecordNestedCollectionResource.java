@@ -149,7 +149,8 @@ public class FormInstanceRecordNestedCollectionResource
 	}
 
 	private PageItems<DDMFormInstanceRecord> _getPageItems(
-		Pagination pagination, Long formInstanceId) throws PortalException {
+			Pagination pagination, Long formInstanceId)
+		throws PortalException {
 
 		List<DDMFormInstanceRecord> ddmFormInstances =
 			_ddmFormInstanceRecordService.getFormInstanceRecords(

@@ -17,26 +17,8 @@ package com.liferay.commerce.discount.service.impl;
 import com.liferay.commerce.discount.service.base.CommerceDiscountRuleServiceBaseImpl;
 
 /**
- * The implementation of the commerce discount rule remote service.
- *
- * <p>
- * All custom service methods should be put in this class. Whenever methods are added, rerun ServiceBuilder to copy their definitions into the {@link com.liferay.commerce.discount.service.CommerceDiscountRuleService} interface.
- *
- * <p>
- * This is a remote service. Methods of this service are expected to have security checks based on the propagated JAAS credentials because this service can be accessed remotely.
- * </p>
- *
  * @author Marco Leo
- * @see CommerceDiscountRuleServiceBaseImpl
- * @see com.liferay.commerce.discount.service.CommerceDiscountRuleServiceUtil
  */
 public class CommerceDiscountRuleServiceImpl
 	extends CommerceDiscountRuleServiceBaseImpl {
-
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this class directly. Always use {@link com.liferay.commerce.discount.service.CommerceDiscountRuleServiceUtil} to access the commerce discount rule remote service.
-	 */
-
 }

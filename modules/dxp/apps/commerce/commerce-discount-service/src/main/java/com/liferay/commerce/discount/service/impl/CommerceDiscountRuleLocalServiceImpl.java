@@ -17,26 +17,8 @@ package com.liferay.commerce.discount.service.impl;
 import com.liferay.commerce.discount.service.base.CommerceDiscountRuleLocalServiceBaseImpl;
 
 /**
- * The implementation of the commerce discount rule local service.
- *
- * <p>
- * All custom service methods should be put in this class. Whenever methods are added, rerun ServiceBuilder to copy their definitions into the {@link com.liferay.commerce.discount.service.CommerceDiscountRuleLocalService} interface.
- *
- * <p>
- * This is a local service. Methods of this service will not have security checks based on the propagated JAAS credentials because this service can only be accessed from within the same VM.
- * </p>
- *
  * @author Marco Leo
- * @see CommerceDiscountRuleLocalServiceBaseImpl
- * @see com.liferay.commerce.discount.service.CommerceDiscountRuleLocalServiceUtil
  */
 public class CommerceDiscountRuleLocalServiceImpl
 	extends CommerceDiscountRuleLocalServiceBaseImpl {
-
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this class directly. Always use {@link com.liferay.commerce.discount.service.CommerceDiscountRuleLocalServiceUtil} to access the commerce discount rule local service.
-	 */
-
 }

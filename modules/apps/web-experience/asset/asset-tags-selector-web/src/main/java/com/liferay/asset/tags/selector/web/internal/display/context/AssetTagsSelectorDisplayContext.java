@@ -90,20 +90,22 @@ public class AssetTagsSelectorDisplayContext {
 	}
 
 	public List<DropdownItem> getFilterItemsDropdownItems() {
-		return new DropdownItemList(_request) {
+		return new DropdownItemList() {
 			{
 				addGroup(
 					dropdownGroupItem -> {
 						dropdownGroupItem.setDropdownItems(
 							_getFilterNavigationDropdownItems());
-						dropdownGroupItem.setLabel("filter-by-navigation");
+						dropdownGroupItem.setLabel(
+							LanguageUtil.get(_request, "filter-by-navigation"));
 					});
 
 				addGroup(
 					dropdownGroupItem -> {
 						dropdownGroupItem.setDropdownItems(
 							_getOrderByDropdownItems());
-						dropdownGroupItem.setLabel("order-by");
+						dropdownGroupItem.setLabel(
+							LanguageUtil.get(_request, "order-by"));
 					});
 			}
 		};
@@ -228,7 +230,7 @@ public class AssetTagsSelectorDisplayContext {
 			ActionRequest.ACTION_NAME, "changeDisplayStyle");
 		portletURL.setParameter("redirect", PortalUtil.getCurrentURL(_request));
 
-		return new ViewTypeItemList(_request, portletURL, getDisplayStyle()) {
+		return new ViewTypeItemList(portletURL, getDisplayStyle()) {
 			{
 				addTableViewTypeItem();
 			}
@@ -260,13 +262,14 @@ public class AssetTagsSelectorDisplayContext {
 	}
 
 	private List<DropdownItem> _getFilterNavigationDropdownItems() {
-		return new DropdownItemList(_request) {
+		return new DropdownItemList() {
 			{
 				add(
 					dropdownItem -> {
 						dropdownItem.setActive(true);
 						dropdownItem.setHref(_getPortletURL());
-						dropdownItem.setLabel("all");
+						dropdownItem.setLabel(
+							LanguageUtil.get(_request, "all"));
 					});
 			}
 		};
@@ -311,14 +314,15 @@ public class AssetTagsSelectorDisplayContext {
 	}
 
 	private List<DropdownItem> _getOrderByDropdownItems() {
-		return new DropdownItemList(_request) {
+		return new DropdownItemList() {
 			{
 				add(
 					dropdownItem -> {
 						dropdownItem.setActive(true);
 						dropdownItem.setHref(
 							_getPortletURL(), "orderByCol", "name");
-						dropdownItem.setLabel("name");
+						dropdownItem.setLabel(
+							LanguageUtil.get(_request, "name"));
 					});
 			}
 		};

@@ -76,7 +76,7 @@ public class AssetTagsDisplayContext {
 	}
 
 	public List<DropdownItem> getActionDropdownItems() {
-		return new DropdownItemList(_request) {
+		return new DropdownItemList() {
 			{
 				add(
 					dropdownItem -> {
@@ -84,7 +84,8 @@ public class AssetTagsDisplayContext {
 							"javascript:" + _renderResponse.getNamespace() +
 								"mergeTags();");
 						dropdownItem.setIcon("change");
-						dropdownItem.setLabel("merge");
+						dropdownItem.setLabel(
+							LanguageUtil.get(_request, "merge"));
 						dropdownItem.setQuickAction(true);
 					});
 
@@ -94,7 +95,8 @@ public class AssetTagsDisplayContext {
 							"javascript:" + _renderResponse.getNamespace() +
 								"deleteTags();");
 						dropdownItem.setIcon("trash");
-						dropdownItem.setLabel("delete");
+						dropdownItem.setLabel(
+							LanguageUtil.get(_request, "delete"));
 						dropdownItem.setQuickAction(true);
 					});
 			}
@@ -121,14 +123,15 @@ public class AssetTagsDisplayContext {
 	}
 
 	public CreationMenu getCreationMenu() {
-		return new CreationMenu(_request) {
+		return new CreationMenu() {
 			{
 				addPrimaryDropdownItem(
 					dropdownItem -> {
 						dropdownItem.setHref(
 							_renderResponse.createRenderURL(), "mvcPath",
 							"/edit_tag.jsp");
-						dropdownItem.setLabel("add-tag");
+						dropdownItem.setLabel(
+							LanguageUtil.get(_request, "add-tag"));
 					});
 			}
 		};
@@ -150,20 +153,22 @@ public class AssetTagsDisplayContext {
 	}
 
 	public List<DropdownItem> getFilterDropdownItems() {
-		return new DropdownItemList(_request) {
+		return new DropdownItemList() {
 			{
 				addGroup(
 					dropdownGroupItem -> {
 						dropdownGroupItem.setDropdownItems(
 							_getFilterNavigationDropdownItems());
-						dropdownGroupItem.setLabel("filter-by-navigation");
+						dropdownGroupItem.setLabel(
+							LanguageUtil.get(_request, "filter-by-navigation"));
 					});
 
 				addGroup(
 					dropdownGroupItem -> {
 						dropdownGroupItem.setDropdownItems(
 							_getOrderByDropdownItems());
-						dropdownGroupItem.setLabel("order-by");
+						dropdownGroupItem.setLabel(
+							LanguageUtil.get(_request, "order-by"));
 					});
 			}
 		};
@@ -220,14 +225,15 @@ public class AssetTagsDisplayContext {
 	}
 
 	public List<NavigationItem> getNavigationItems() {
-		return new NavigationItemList(_request) {
+		return new NavigationItemList() {
 			{
 				add(
 					navigationItem -> {
 						navigationItem.setActive(true);
 						navigationItem.setHref(
 							_renderResponse.createRenderURL());
-						navigationItem.setLabel("tags");
+						navigationItem.setLabel(
+							LanguageUtil.get(_request, "tags"));
 					});
 			}
 		};
@@ -409,7 +415,7 @@ public class AssetTagsDisplayContext {
 			ActionRequest.ACTION_NAME, "changeDisplayStyle");
 		portletURL.setParameter("redirect", PortalUtil.getCurrentURL(_request));
 
-		return new ViewTypeItemList(_request, portletURL, getDisplayStyle()) {
+		return new ViewTypeItemList(portletURL, getDisplayStyle()) {
 			{
 				addCardViewTypeItem();
 				addListViewTypeItem();
@@ -449,20 +455,21 @@ public class AssetTagsDisplayContext {
 	}
 
 	private List<DropdownItem> _getFilterNavigationDropdownItems() {
-		return new DropdownItemList(_request) {
+		return new DropdownItemList() {
 			{
 				add(
 					dropdownItem -> {
 						dropdownItem.setActive(true);
 						dropdownItem.setHref(_renderResponse.createRenderURL());
-						dropdownItem.setLabel("all");
+						dropdownItem.setLabel(
+							LanguageUtil.get(_request, "all"));
 					});
 			}
 		};
 	}
 
 	private List<DropdownItem> _getOrderByDropdownItems() {
-		return new DropdownItemList(_request) {
+		return new DropdownItemList() {
 			{
 				add(
 					dropdownItem -> {
@@ -470,7 +477,8 @@ public class AssetTagsDisplayContext {
 							_renderResponse.createRenderURL(), "keywords",
 							getKeywords(), "orderByCol", "name", "orderByType",
 							getOrderByType());
-						dropdownItem.setLabel("name");
+						dropdownItem.setLabel(
+							LanguageUtil.get(_request, "name"));
 					});
 				add(
 					dropdownItem -> {
@@ -478,7 +486,8 @@ public class AssetTagsDisplayContext {
 							_renderResponse.createRenderURL(), "keywords",
 							getKeywords(), "orderByCol", "usages",
 							"orderByType", getOrderByType());
-						dropdownItem.setLabel("usages");
+						dropdownItem.setLabel(
+							LanguageUtil.get(_request, "usages"));
 					});
 			}
 		};

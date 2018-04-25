@@ -14,20 +14,12 @@
 
 package com.liferay.frontend.taglib.clay.servlet.taglib.util;
 
-import javax.servlet.http.HttpServletRequest;
-
 /**
  * @author Carlos Lancha
  */
 public class DropdownRadioItem extends DropdownItem {
 
 	public DropdownRadioItem() {
-		this(null);
-	}
-
-	public DropdownRadioItem(HttpServletRequest request) {
-		super(request);
-
 		put("type", "radio");
 	}
 

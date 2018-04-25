@@ -148,7 +148,7 @@ public class JournalDisplayContext {
 	}
 
 	public List<DropdownItem> getActionDropdownItems() {
-		return new DropdownItemList(_request) {
+		return new DropdownItemList() {
 			{
 				ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
 					WebKeys.THEME_DISPLAY);
@@ -166,8 +166,15 @@ public class JournalDisplayContext {
 
 							dropdownItem.setIcon(
 								trashEnabled ? "trash" : "times");
+
+							String label = "delete";
+
+							if (trashEnabled) {
+								label = "recycle-bin";
+							}
+
 							dropdownItem.setLabel(
-								trashEnabled ? "recycle-bin" : "delete");
+								LanguageUtil.get(_request, label));
 
 							dropdownItem.setQuickAction(true);
 						}));
@@ -181,7 +188,8 @@ public class JournalDisplayContext {
 								"editEntry', {action: 'expireEntries'});",
 								"void(0);"));
 						dropdownItem.setIcon("time");
-						dropdownItem.setLabel("expire");
+						dropdownItem.setLabel(
+							LanguageUtil.get(_request, "expire"));
 						dropdownItem.setQuickAction(true);
 					});
 
@@ -194,7 +202,8 @@ public class JournalDisplayContext {
 								"editEntry', {action: 'moveEntries'});",
 								"void(0);"));
 						dropdownItem.setIcon("change");
-						dropdownItem.setLabel("move");
+						dropdownItem.setLabel(
+							LanguageUtil.get(_request, "move"));
 						dropdownItem.setQuickAction(true);
 					});
 			}
@@ -345,7 +354,7 @@ public class JournalDisplayContext {
 	}
 
 	public CreationMenu getCreationMenu() throws PortalException {
-		return new CreationMenu(_request) {
+		return new CreationMenu() {
 			{
 				ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
 					WebKeys.THEME_DISPLAY);
@@ -372,8 +381,14 @@ public class JournalDisplayContext {
 								"parentFolderId",
 								String.valueOf(getFolderId()));
 
+							String label = "folder";
+
+							if (getFolder() == null) {
+								label = "subfolder";
+							}
+
 							dropdownItem.setLabel(
-								(getFolder() == null) ? "folder" : "subfolder");
+								LanguageUtil.get(_request, label));
 						});
 				}
 
@@ -605,20 +620,22 @@ public class JournalDisplayContext {
 	}
 
 	public List<DropdownItem> getFilterDropdownItems() {
-		return new DropdownItemList(_request) {
+		return new DropdownItemList() {
 			{
 				addGroup(
 					dropdownGroupItem -> {
 						dropdownGroupItem.setDropdownItems(
 							_getFilterNavigationDropdownItems());
-						dropdownGroupItem.setLabel("filter-by-navigation");
+						dropdownGroupItem.setLabel(
+							LanguageUtil.get(_request, "filter-by-navigation"));
 					});
 
 				addGroup(
 					dropdownGroupItem -> {
 						dropdownGroupItem.setDropdownItems(
 							_getFilterStatusDropdownItems());
-						dropdownGroupItem.setLabel("filter-by-status");
+						dropdownGroupItem.setLabel(
+							LanguageUtil.get(_request, "filter-by-status"));
 					});
 
 				if (!isNavigationRecent()) {
@@ -626,7 +643,8 @@ public class JournalDisplayContext {
 						dropdownGroupItem -> {
 							dropdownGroupItem.setDropdownItems(
 								_getOrderByDropdownItems());
-							dropdownGroupItem.setLabel("order-by");
+							dropdownGroupItem.setLabel(
+								LanguageUtil.get(_request, "order-by"));
 						});
 				}
 			}
@@ -717,13 +735,14 @@ public class JournalDisplayContext {
 	}
 
 	public List<NavigationItem> getInfoPanelNavigationItems() {
-		return new NavigationItemList(_request) {
+		return new NavigationItemList() {
 			{
 				add(
 					navigationItem -> {
 						navigationItem.setActive(true);
 						navigationItem.setHref(StringPool.BLANK);
-						navigationItem.setLabel("details");
+						navigationItem.setLabel(
+							LanguageUtil.get(_request, "details"));
 					});
 			}
 		};
@@ -800,7 +819,7 @@ public class JournalDisplayContext {
 	}
 
 	public List<NavigationItem> getNavigationBarItems(String currentItem) {
-		return new NavigationItemList(_request) {
+		return new NavigationItemList() {
 			{
 				add(
 					navigationItem -> {
@@ -808,19 +827,22 @@ public class JournalDisplayContext {
 							currentItem.equals("web-content"));
 						navigationItem.setHref(
 							_liferayPortletResponse.createRenderURL());
-						navigationItem.setLabel("web-content");
+						navigationItem.setLabel(
+							LanguageUtil.get(_request, "web-content"));
 					});
 
 				add(
 					navigationItem -> {
 						navigationItem.setHref(_getStructuresURL());
-						navigationItem.setLabel("structures");
+						navigationItem.setLabel(
+							LanguageUtil.get(_request, "structures"));
 					});
 
 				add(
 					navigationItem -> {
 						navigationItem.setHref(_getTemplatesURL());
-						navigationItem.setLabel("templates");
+						navigationItem.setLabel(
+							LanguageUtil.get(_request, "templates"));
 					});
 
 				if (PortalUtil.isRSSFeedsEnabled()) {
@@ -829,7 +851,8 @@ public class JournalDisplayContext {
 							navigationItem.setActive(
 								currentItem.equals("feeds"));
 							navigationItem.setHref(_getFeedsURL());
-							navigationItem.setLabel("feeds");
+							navigationItem.setLabel(
+								LanguageUtil.get(_request, "feeds"));
 						});
 				}
 			}
@@ -1333,9 +1356,7 @@ public class JournalDisplayContext {
 	}
 
 	public List<ViewTypeItem> getViewTypeItems() {
-		return new ViewTypeItemList(
-			_request, getPortletURL(), getDisplayStyle()) {
-
+		return new ViewTypeItemList(getPortletURL(), getDisplayStyle()) {
 			{
 				if (ArrayUtil.contains(getDisplayViews(), "icon")) {
 					addCardViewTypeItem();
@@ -1612,12 +1633,12 @@ public class JournalDisplayContext {
 				String.valueOf(JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID),
 				"showEditActions", String.valueOf(isShowEditActions()));
 
-			dropdownItem.setLabel(navigation);
+			dropdownItem.setLabel(LanguageUtil.get(_request, navigation));
 		};
 	}
 
 	private List<DropdownItem> _getFilterNavigationDropdownItems() {
-		return new DropdownItemList(_request) {
+		return new DropdownItemList() {
 			{
 				add(
 					_getFilterNavigationDropdownItem(
@@ -1637,14 +1658,15 @@ public class JournalDisplayContext {
 								_liferayPortletResponse.getNamespace() +
 									"openStructuresSelector();");
 
-						dropdownItem.setLabel("structures");
+						dropdownItem.setLabel(
+							LanguageUtil.get(_request, "structures"));
 					});
 			}
 		};
 	}
 
 	private List<DropdownItem> _getFilterStatusDropdownItems() {
-		return new DropdownItemList(_request) {
+		return new DropdownItemList() {
 			{
 				for (int status : _getStatuses()) {
 					add(
@@ -1654,7 +1676,9 @@ public class JournalDisplayContext {
 								getPortletURL(), "status",
 								String.valueOf(status));
 							dropdownItem.setLabel(
-								WorkflowConstants.getStatusLabel(status));
+								LanguageUtil.get(
+									_request,
+									WorkflowConstants.getStatusLabel(status)));
 						});
 				}
 			}
@@ -1697,12 +1721,12 @@ public class JournalDisplayContext {
 		return dropdownItem -> {
 			dropdownItem.setActive(orderByCol.equals(getOrderByCol()));
 			dropdownItem.setHref(getPortletURL(), "orderByCol", orderByCol);
-			dropdownItem.setLabel(orderByCol);
+			dropdownItem.setLabel(LanguageUtil.get(_request, orderByCol));
 		};
 	}
 
 	private List<DropdownItem> _getOrderByDropdownItems() {
-		return new DropdownItemList(_request) {
+		return new DropdownItemList() {
 			{
 				for (String orderColumn : getOrderColumns()) {
 					add(_getOrderByDropdownItem(orderColumn));

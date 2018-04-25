@@ -389,6 +389,8 @@ AUI.add(
 					columnNode.get('parentNode').all('.layout-builder-add-col-draggable').remove();
 					columnNode.addClass('lfr-initial-col');
 					columnNode.append(columnMessageNode);
+
+					instance.openSidebarByButton();
 				}
 			},
 

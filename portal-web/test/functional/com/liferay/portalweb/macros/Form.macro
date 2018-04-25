@@ -4,6 +4,17 @@
 	<var name="formName" value="Created Form Name" />
 	<var name="rowNumber" value="1" />
 
+	<command name="_addField">
+		<if>
+			<condition function="IsElementNotPresent" locator1="Form#SIDEBAR_ELEMENTS_TAB" />
+			<then>
+				<execute function="MouseOver#mouseOverNotVisible" locator1="Form#ADD_FIELD" />
+
+				<execute function="Click" locator1="Form#ADD_FIELD" />
+			</then>
+		</if>
+	</command>
+
 	<command name="addColumn">
 		<var name="key_columnLineNumber" value="${columnLineNumber}" />
 		<var name="key_rowNumber" value="${rowNumber}" />
@@ -219,11 +230,7 @@
 	</command>
 
 	<command name="gotoAddElementSet">
-		<var name="key_columnSize" value="${columnSize}" />
-
-		<execute function="MouseOver#mouseOverNotVisible" locator1="Form#ADD_FIELD" />
-
-		<execute function="Click" locator1="Form#ADD_FIELD" />
+		<execute macro="Form#_addField" />
 
 		<execute macro="Form#gotoElementSetsTab" />
 
@@ -233,11 +240,7 @@
 	</command>
 
 	<command name="gotoAddField">
-		<var name="key_columnSize" value="${columnSize}" />
-
-		<execute function="MouseOver#mouseOverNotVisible" locator1="Form#ADD_FIELD" />
-
-		<execute function="Click" locator1="Form#ADD_FIELD" />
+		<execute macro="Form#_addField" />
 
 		<execute macro="Form#gotoElementsTab" />
 

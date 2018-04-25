@@ -4,6 +4,7 @@
  * FragmentsEditor
  */
 {template .render}
+	{@param availableLanguages: ?}
 	{@param defaultEditorConfiguration: ?}
 	{@param defaultLanguageId: string}
 	{@param classPK: ?}
@@ -58,6 +59,7 @@
 
 	<div id="{$id}">
 		{call .managementBar}
+			{param availableLanguages: $availableLanguages /}
 			{param defaultLanguageId: $defaultLanguageId /}
 			{param languageId: $languageId /}
 			{param spritemap: $spritemap /}
@@ -214,6 +216,7 @@
  * Management bar
  */
 {template .managementBar}
+	{@param availableLanguages: ?}
 	{@param defaultLanguageId: string}
 	{@param languageId: string}
 	{@param spritemap: string}
@@ -231,6 +234,7 @@
 			<ul class="navbar-nav">
 				<li class="nav-item">
 					{call com.liferay.layout.admin.web.TranslationStatus.render}
+						{param availableLanguages: $availableLanguages /}
 						{param defaultLanguageId: $defaultLanguageId /}
 						{param events: ['languageChange': $handleTranslationLanguageChange] /}
 						{param languageId: $languageId /}

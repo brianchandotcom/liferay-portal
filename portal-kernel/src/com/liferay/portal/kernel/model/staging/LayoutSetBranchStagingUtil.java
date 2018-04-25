@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.LayoutSetBranch;
+import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.service.LayoutSetBranchLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
@@ -60,6 +61,24 @@ public class LayoutSetBranchStagingUtil {
 
 			throw new IllegalStateException(e);
 		}
+	}
+
+	public static LayoutSetStagingModelWrapper
+		unwrapLayoutSetStagingModelWrapper(LayoutSet layoutSet) {
+
+		Object layoutSetWrapper = layoutSet;
+
+		while (layoutSetWrapper instanceof ModelWrapper<?>) {
+			ModelWrapper<?> modelWrapper = (ModelWrapper<?>)layoutSetWrapper;
+
+			if (modelWrapper instanceof LayoutSetStagingModelWrapper) {
+				return (LayoutSetStagingModelWrapper)layoutSet;
+			}
+
+			layoutSetWrapper = modelWrapper.getWrappedModel();
+		}
+
+		return null;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

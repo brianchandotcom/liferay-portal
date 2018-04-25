@@ -29,6 +29,8 @@ import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.LayoutSetBranch;
 import com.liferay.portal.kernel.model.LayoutSetStagingHandler;
 import com.liferay.portal.kernel.model.LayoutStagingHandler;
+import com.liferay.portal.kernel.model.staging.LayoutSetBranchStagingUtil;
+import com.liferay.portal.kernel.model.staging.LayoutSetStagingModelWrapper;
 import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.service.LayoutRevisionLocalService;
 import com.liferay.portal.kernel.service.LayoutSetBranchLocalService;
@@ -66,16 +68,21 @@ public class LayoutStagingImpl implements LayoutStaging {
 
 	@Override
 	public LayoutSetBranch getLayoutSetBranch(LayoutSet layoutSet) {
-		LayoutSetStagingHandler layoutSetStagingHandler =
-			getLayoutSetStagingHandler(layoutSet);
+		LayoutSetStagingModelWrapper layoutSetStagingModelWrapper =
+			LayoutSetBranchStagingUtil.unwrapLayoutSetStagingModelWrapper(
+				layoutSet);
 
-		if (layoutSetStagingHandler == null) {
+		if (layoutSetStagingModelWrapper == null) {
 			return null;
 		}
 
-		return layoutSetStagingHandler.getLayoutSetBranch();
+		return layoutSetStagingModelWrapper.getLayoutSetBranch();
 	}
 
+	/**
+	 * @deprecated As of 5.0.0, with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public LayoutSetStagingHandler getLayoutSetStagingHandler(
 		LayoutSet layoutSet) {
@@ -209,18 +216,19 @@ public class LayoutStagingImpl implements LayoutStaging {
 
 	@Override
 	public LayoutSet mergeLayoutSetRevisionIntoLayoutSet(LayoutSet layoutSet) {
-		LayoutSetStagingHandler layoutSetStagingHandler =
-			getLayoutSetStagingHandler(layoutSet);
+		LayoutSetStagingModelWrapper layoutSetStagingModelWrapper =
+			LayoutSetBranchStagingUtil.unwrapLayoutSetStagingModelWrapper(
+				layoutSet);
 
-		if (layoutSetStagingHandler == null) {
+		if (layoutSetStagingModelWrapper == null) {
 			return (LayoutSet)layoutSet.clone();
 		}
 
-		layoutSet = layoutSetStagingHandler.getLayoutSet();
+		layoutSet = layoutSetStagingModelWrapper.getLayoutSet();
 		layoutSet = (LayoutSet)layoutSet.clone();
 
 		LayoutSetBranch layoutSetBranch =
-			layoutSetStagingHandler.getLayoutSetBranch();
+			layoutSetStagingModelWrapper.getLayoutSetBranch();
 
 		layoutSet.setLogoId(layoutSetBranch.getLogoId());
 		layoutSet.setThemeId(layoutSetBranch.getThemeId());

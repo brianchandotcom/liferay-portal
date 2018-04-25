@@ -40,6 +40,10 @@ public class LayoutStagingUtil {
 		return _layoutStaging.getLayoutSetBranch(layoutSet);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	public static LayoutSetStagingHandler getLayoutSetStagingHandler(
 		LayoutSet layoutSet) {
 

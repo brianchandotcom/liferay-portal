@@ -28,8 +28,9 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Image;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.LayoutSetBranch;
-import com.liferay.portal.kernel.model.LayoutSetStagingHandler;
 import com.liferay.portal.kernel.model.VirtualHost;
+import com.liferay.portal.kernel.model.staging.LayoutSetBranchStagingUtil;
+import com.liferay.portal.kernel.model.staging.LayoutSetStagingModelWrapper;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
 import com.liferay.portal.kernel.util.ColorSchemeFactoryUtil;
@@ -578,19 +579,18 @@ public class LayoutSetLocalServiceImpl extends LayoutSetLocalServiceBaseImpl {
 	private LayoutSetBranch _getLayoutSetBranch(LayoutSet layoutSet)
 		throws PortalException {
 
-		LayoutSetStagingHandler layoutSetStagingHandler =
-			LayoutStagingUtil.getLayoutSetStagingHandler(layoutSet);
+		LayoutSetStagingModelWrapper layoutSetStagingModelWrapper =
+			LayoutSetBranchStagingUtil.unwrapLayoutSetStagingModelWrapper(
+				layoutSet);
 
-		if (layoutSetStagingHandler != null) {
-			return layoutSetStagingHandler.getLayoutSetBranch();
+		if (layoutSetStagingModelWrapper != null) {
+			return layoutSetStagingModelWrapper.getLayoutSetBranch();
 		}
 
 		if (LayoutStagingUtil.isBranchingLayoutSet(
 				layoutSet.getGroup(), layoutSet.isPrivateLayout())) {
 
-			layoutSetStagingHandler = new LayoutSetStagingHandler(layoutSet);
-
-			return layoutSetStagingHandler.getLayoutSetBranch();
+			return LayoutSetBranchStagingUtil.getLayoutSetBranch(layoutSet);
 		}
 
 		return null;

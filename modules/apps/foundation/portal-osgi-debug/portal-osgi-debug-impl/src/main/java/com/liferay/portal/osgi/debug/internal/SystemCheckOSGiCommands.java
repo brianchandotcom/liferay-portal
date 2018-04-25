@@ -1,0 +1,123 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
+package com.liferay.portal.osgi.debug.internal;
+
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.osgi.debug.SystemChecker;
+
+import java.util.Collection;
+import java.util.Map;
+
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceReference;
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
+import org.osgi.util.tracker.ServiceTracker;
+
+/**
+ * @author Tina Tian
+ */
+@Component(
+	immediate = true,
+	property = {"osgi.command.function=check", "osgi.command.scope=system"},
+	service = SystemCheckOSGiCommands.class
+)
+public class SystemCheckOSGiCommands {
+
+	@Activate
+	public void activate(final BundleContext bundleContext) {
+		_serviceTracker = new ServiceTracker<>(
+			bundleContext, SystemChecker.class, null);
+
+		_serviceTracker.open();
+
+		if (GetterUtil.getBoolean(
+				bundleContext.getProperty("initial.system.check.enabled"),
+				true)) {
+
+			if (_log.isInfoEnabled()) {
+				_log.info(
+					"Running system check. You can run this with command " +
+						"\"system:check\" in gogo shell");
+			}
+
+			check();
+		}
+	}
+
+	public void check() {
+		Map<ServiceReference<SystemChecker>, SystemChecker> systemCheckerMap =
+			_serviceTracker.getTracked();
+
+		Collection<SystemChecker> systemCheckers = systemCheckerMap.values();
+
+		if (_log.isInfoEnabled()) {
+			_log.info("Available checkers :" + systemCheckers);
+		}
+
+		for (SystemChecker systemChecker : systemCheckers) {
+			StringBundler sb = new StringBundler(5);
+
+			sb.append("Running \"");
+			sb.append(systemChecker.getName());
+			sb.append("\". You can run this by itself with command \"");
+			sb.append(systemChecker.getOSGiCommand());
+			sb.append("\" in gogo shell.");
+
+			if (_log.isInfoEnabled()) {
+				_log.info(sb.toString());
+			}
+
+			String result = systemChecker.check();
+
+			if (Validator.isNull(result)) {
+				if (_log.isInfoEnabled()) {
+					_log.info(
+						systemChecker.getName() +
+							" check result: No issue is found.");
+				}
+			}
+			else {
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						systemChecker.getName() + " check result: " + result);
+				}
+			}
+		}
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		_serviceTracker.close();
+	}
+
+	@Reference(target = ModuleServiceLifecycle.SYSTEM_CHECK, unbind = "-")
+	protected void setModuleServiceLifecycle(
+		ModuleServiceLifecycle moduleServiceLifecycle) {
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		SystemCheckOSGiCommands.class);
+
+	private ServiceTracker<SystemChecker, SystemChecker> _serviceTracker;
+
+}

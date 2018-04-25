@@ -26,10 +26,9 @@ import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.upgrade.UpgradeStep;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.verify.VerifyProcess;
-import com.liferay.portal.verify.test.BaseVerifyProcessTestCase;
 
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -41,7 +40,7 @@ import org.junit.runner.RunWith;
  * @author Manuel de la Peña
  */
 @RunWith(Arquillian.class)
-public class JournalServiceVerifyProcessTest extends BaseVerifyProcessTestCase {
+public class JournalServiceVerifyProcessTest {
 
 	@ClassRule
 	@Rule
@@ -49,10 +48,7 @@ public class JournalServiceVerifyProcessTest extends BaseVerifyProcessTestCase {
 		new LiferayIntegrationTestRule();
 
 	@Before
-	@Override
 	public void setUp() throws Exception {
-		super.setUp();
-
 		_group = GroupTestUtil.addGroup();
 	}
 
@@ -74,7 +70,7 @@ public class JournalServiceVerifyProcessTest extends BaseVerifyProcessTestCase {
 		JournalFolderLocalServiceUtil.deleteFolder(
 			parentFolder.getFolderId(), false);
 
-		doVerify();
+		_upgradeStep.upgrade(null);
 	}
 
 	@Test
@@ -98,7 +94,7 @@ public class JournalServiceVerifyProcessTest extends BaseVerifyProcessTestCase {
 		JournalFolderLocalServiceUtil.deleteFolder(
 			grandparentFolder.getFolderId(), false);
 
-		doVerify();
+		_upgradeStep.upgrade(null);
 	}
 
 	@Test
@@ -118,7 +114,7 @@ public class JournalServiceVerifyProcessTest extends BaseVerifyProcessTestCase {
 		JournalFolderLocalServiceUtil.deleteFolder(
 			parentFolder.getFolderId(), false);
 
-		doVerify();
+		_upgradeStep.upgrade(null);
 	}
 
 	@Test
@@ -142,16 +138,13 @@ public class JournalServiceVerifyProcessTest extends BaseVerifyProcessTestCase {
 		JournalFolderLocalServiceUtil.deleteFolder(
 			grandparentFolder.getFolderId(), false);
 
-		doVerify();
+		_upgradeStep.upgrade(null);
 	}
 
-	@Override
-	protected VerifyProcess getVerifyProcess() {
-		return _journalServiceVerifyProcess;
-	}
-
-	@Inject (filter = "verify.process.name=com.liferay.journal.service")
-	private static VerifyProcess _journalServiceVerifyProcess;
+	@Inject(
+		filter = "(&(upgrade.bundle.symbolic.name=com.liferay.journal.service)(upgrade.from.schema.version=1.1.2-step-1))"
+	)
+	private static UpgradeStep _upgradeStep;
 
 	@DeleteAfterTestRun
 	private Group _group;

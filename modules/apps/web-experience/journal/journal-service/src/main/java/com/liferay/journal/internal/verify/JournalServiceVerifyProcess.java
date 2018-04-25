@@ -44,6 +44,7 @@ import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.service.SystemEventLocalService;
+import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -52,7 +53,6 @@ import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.Node;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
-import com.liferay.portal.verify.VerifyProcess;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -62,22 +62,34 @@ import java.util.List;
 
 import javax.portlet.PortletPreferences;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Alexander Chow
  * @author Shinn Lok
  */
-@Component(
-	immediate = true,
-	property = "verify.process.name=com.liferay.journal.service",
-	service = VerifyProcess.class
-)
-public class JournalServiceVerifyProcess extends VerifyProcess {
+public class JournalServiceVerifyProcess extends UpgradeProcess {
+
+	public JournalServiceVerifyProcess(
+		AssetEntryLocalService assetEntryLocalService,
+		JournalArticleLocalService journalArticleLocalService,
+		JournalArticleResourceLocalService journalArticleResourceLocalService,
+		JournalContentSearchLocalService journalContentSearchLocalService,
+		JournalFolderLocalService journalFolderLocalService, Portal portal,
+		ResourceLocalService resourceLocalService,
+		SystemEventLocalService systemEventLocalService) {
+
+		_assetEntryLocalService = assetEntryLocalService;
+		_journalArticleLocalService = journalArticleLocalService;
+		_journalArticleResourceLocalService =
+			journalArticleResourceLocalService;
+		_journalContentSearchLocalService = journalContentSearchLocalService;
+		_journalFolderLocalService = journalFolderLocalService;
+		_portal = portal;
+		_resourceLocalService = resourceLocalService;
+		_systemEventLocalService = systemEventLocalService;
+	}
 
 	@Override
-	protected void doVerify() throws Exception {
+	protected void doUpgrade() throws Exception {
 		verifyArticleAssets();
 		verifyArticleContents();
 		verifyArticleExpirationDate();
@@ -87,56 +99,6 @@ public class JournalServiceVerifyProcess extends VerifyProcess {
 		verifyPermissions();
 
 		verifyJournalArticleDeleteSystemEvents();
-	}
-
-	@Reference(unbind = "-")
-	protected void setAssetEntryLocalService(
-		AssetEntryLocalService assetEntryLocalService) {
-
-		_assetEntryLocalService = assetEntryLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setJournalArticleLocalService(
-		JournalArticleLocalService journalArticleLocalService) {
-
-		_journalArticleLocalService = journalArticleLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setJournalArticleResourceLocalService(
-		JournalArticleResourceLocalService journalArticleResourceLocalService) {
-
-		_journalArticleResourceLocalService =
-			journalArticleResourceLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setJournalContentSearchLocalService(
-		JournalContentSearchLocalService journalContentSearchLocalService) {
-
-		_journalContentSearchLocalService = journalContentSearchLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setJournalFolderLocalService(
-		JournalFolderLocalService journalFolderLocalService) {
-
-		_journalFolderLocalService = journalFolderLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setResourceLocalService(
-		ResourceLocalService resourceLocalService) {
-
-		_resourceLocalService = resourceLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setSystemEventLocalService(
-		SystemEventLocalService systemEventLocalService) {
-
-		_systemEventLocalService = systemEventLocalService;
 	}
 
 	protected void updateContentSearch(long groupId, String portletId)
@@ -637,17 +599,15 @@ public class JournalServiceVerifyProcess extends VerifyProcess {
 	private static final Log _log = LogFactoryUtil.getLog(
 		JournalServiceVerifyProcess.class);
 
-	private AssetEntryLocalService _assetEntryLocalService;
-	private JournalArticleLocalService _journalArticleLocalService;
-	private JournalArticleResourceLocalService
+	private final AssetEntryLocalService _assetEntryLocalService;
+	private final JournalArticleLocalService _journalArticleLocalService;
+	private final JournalArticleResourceLocalService
 		_journalArticleResourceLocalService;
-	private JournalContentSearchLocalService _journalContentSearchLocalService;
-	private JournalFolderLocalService _journalFolderLocalService;
-
-	@Reference
-	private Portal _portal;
-
-	private ResourceLocalService _resourceLocalService;
-	private SystemEventLocalService _systemEventLocalService;
+	private final JournalContentSearchLocalService
+		_journalContentSearchLocalService;
+	private final JournalFolderLocalService _journalFolderLocalService;
+	private final Portal _portal;
+	private final ResourceLocalService _resourceLocalService;
+	private final SystemEventLocalService _systemEventLocalService;
 
 }

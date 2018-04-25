@@ -65,16 +65,17 @@ public class AuthorizationCodeGrantServiceRegistrator {
 			_liferayOAuthDataProvider);
 		authorizationCodeGrantService.setSubjectCreator(_subjectCreator);
 
-		Dictionary<String, Object> endpointProperties =
+		Dictionary<String, Object> authorizationCodeGrantProperties =
 			new HashMapDictionary<>();
 
-		endpointProperties.put(
+		authorizationCodeGrantProperties.put(
 			OAuth2ProviderRestEndpointConstants.
 				PROPERTY_KEY_OAUTH2_ENDPOINT_JAXRS_RESOURCE,
 			true);
 
 		_serviceRegistration = bundleContext.registerService(
-			Object.class, authorizationCodeGrantService, endpointProperties);
+			Object.class, authorizationCodeGrantService,
+			authorizationCodeGrantProperties);
 	}
 
 	@Deactivate

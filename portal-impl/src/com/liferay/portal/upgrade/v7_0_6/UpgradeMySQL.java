@@ -12,13 +12,14 @@
  * details.
  */
 
-package com.liferay.portal.verify;
+package com.liferay.portal.upgrade.v7_0_6;
 
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -32,20 +33,20 @@ import java.sql.Statement;
  * @author Brian Wing Shun Chan
  * @author Shuyang Zhou
  */
-public class VerifyMySQL extends VerifyProcess {
+public class UpgradeMySQL extends UpgradeProcess {
 
 	@Override
-	protected void doVerify() throws Exception {
+	protected void doUpgrade() throws Exception {
 		DB db = DBManagerUtil.getDB();
 
 		if ((db.getDBType() == DBType.MARIADB) ||
 			(db.getDBType() == DBType.MYSQL)) {
 
-			verifyTableEngine();
+			upgradeTableEngine();
 		}
 	}
 
-	protected void verifyTableEngine() throws Exception {
+	protected void upgradeTableEngine() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer();
 			Statement statement = connection.createStatement();
 			ResultSet rs = statement.executeQuery("show table status")) {
@@ -53,7 +54,7 @@ public class VerifyMySQL extends VerifyProcess {
 			while (rs.next()) {
 				String tableName = rs.getString("Name");
 
-				if (!isPortalTableName(tableName)) {
+				if (!isPortal62TableName(tableName)) {
 					continue;
 				}
 
@@ -85,6 +86,6 @@ public class VerifyMySQL extends VerifyProcess {
 		}
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(VerifyMySQL.class);
+	private static final Log _log = LogFactoryUtil.getLog(UpgradeMySQL.class);
 
 }

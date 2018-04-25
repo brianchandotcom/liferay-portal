@@ -28,9 +28,8 @@ import javax.ws.rs.InternalServerErrorException;
 import org.osgi.service.component.annotations.Component;
 
 /**
- * Lets resources provide the service context {@code
- * ServiceContext} as a parameter in the
- * methods of the different routes builders.
+ * Lets resources provide the service context {@code ServiceContext} as a
+ * parameter in the methods of the different routes builders.
  *
  * @author Paulo Cruz
  */

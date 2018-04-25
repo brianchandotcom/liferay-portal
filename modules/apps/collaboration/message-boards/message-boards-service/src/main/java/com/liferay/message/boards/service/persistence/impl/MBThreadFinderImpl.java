@@ -521,6 +521,10 @@ public class MBThreadFinderImpl
 			groupId, userId, categoryIds, queryDefinition, true);
 	}
 
+	/**
+	* @deprecated As of 2.0.0, with no direct replacement
+	*/
+	@Deprecated
 	@Override
 	public List<MBThread> findByNoAssets() {
 		Session session = null;

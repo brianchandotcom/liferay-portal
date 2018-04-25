@@ -1984,7 +1984,7 @@
 
 		<execute function="Pause" locator1="5000" />
 
-		<execute macro="ServerAdministration#executeServerResourcesActions">
+		<execute macro="SearchAdministration#executeSearchActions">
 			<var name="actionsDescription" value="Reindex all search indexes." />
 		</execute>
 

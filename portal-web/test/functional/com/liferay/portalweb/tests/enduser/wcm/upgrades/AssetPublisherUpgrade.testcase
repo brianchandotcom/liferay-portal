@@ -10,7 +10,15 @@
 
 		<execute macro="Smoke#viewWelcomePage" />
 
-		<execute macro="Upgrade#reindexSearches" />
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Configuration" />
+			<var name="panel" value="Control Panel" />
+			<var name="portlet" value="Search" />
+		</execute>
+
+		<execute macro="SearchAdministration#executeSearchActions">
+			<var name="actionsDescription" value="Reindex all search indexes." />
+		</execute>
 	</set-up>
 
 	<command name="ViewAssetPublisherArchive6012" priority="5">

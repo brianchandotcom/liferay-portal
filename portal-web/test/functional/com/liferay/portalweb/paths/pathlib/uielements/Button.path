@@ -369,6 +369,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>EXECUTE_ACTION</td>
+	<td>//li[contains(.,'${key_actionsDescription}')]//button[contains(.,'Execute')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>EDITOR_SWITCH</td>
 	<td>//div[@class='alloy-editor-switch']/button[contains(@id,'EditorSwitch') and contains(@class,'editor-view')]</td>
 	<td></td>

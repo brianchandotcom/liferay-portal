@@ -22,9 +22,6 @@ import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.convert.ConvertException;
 import com.liferay.portal.convert.ConvertProcess;
-import com.liferay.portal.instances.service.PortalInstancesLocalService;
-import com.liferay.portal.kernel.backgroundtask.BackgroundTaskConstants;
-import com.liferay.portal.kernel.backgroundtask.BackgroundTaskManager;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.cache.MultiVMPool;
 import com.liferay.portal.kernel.cache.SingleVMPool;
@@ -36,17 +33,12 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.log.SanitizerLogWrapper;
 import com.liferay.portal.kernel.messaging.DestinationNames;
-import com.liferay.portal.kernel.messaging.Message;
-import com.liferay.portal.kernel.messaging.MessageBus;
 import com.liferay.portal.kernel.messaging.MessageBusUtil;
-import com.liferay.portal.kernel.messaging.MessageListener;
-import com.liferay.portal.kernel.messaging.MessageListenerException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.scripting.Scripting;
 import com.liferay.portal.kernel.scripting.ScriptingException;
 import com.liferay.portal.kernel.scripting.ScriptingHelperUtil;
-import com.liferay.portal.kernel.search.IndexWriterHelper;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.membershippolicy.OrganizationMembershipPolicy;
 import com.liferay.portal.kernel.security.membershippolicy.OrganizationMembershipPolicyFactory;
@@ -73,7 +65,6 @@ import com.liferay.portal.kernel.util.ThreadUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.UnsyncPrintWriterPool;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.kernel.uuid.PortalUUID;
 import com.liferay.portal.kernel.xuggler.XugglerInstallException;
 import com.liferay.portal.kernel.xuggler.XugglerUtil;
 import com.liferay.portal.util.MaintenanceUtil;
@@ -83,13 +74,8 @@ import com.liferay.portlet.ActionResponseImpl;
 import com.liferay.portlet.admin.util.CleanUpPermissionsUtil;
 import com.liferay.portlet.admin.util.CleanUpPortletPreferencesUtil;
 
-import java.io.Serializable;
-
 import java.util.Enumeration;
-import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.TimeUnit;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -186,12 +172,6 @@ public class EditServerMVCActionCommand extends BaseMVCActionCommand {
 					actionRequest, XugglerInstallException.class.getName(),
 					xie);
 			}
-		}
-		else if (cmd.equals("reindex")) {
-			reindex(actionRequest);
-		}
-		else if (cmd.equals("reindexDictionaries")) {
-			reindexDictionaries(actionRequest);
 		}
 		else if (cmd.equals("runScript")) {
 			runScript(actionRequest, actionResponse);
@@ -331,95 +311,6 @@ public class EditServerMVCActionCommand extends BaseMVCActionCommand {
 		String jarName = ParamUtil.getString(actionRequest, "jarName");
 
 		XugglerUtil.installNativeLibraries(jarName);
-	}
-
-	protected void reindex(final ActionRequest actionRequest) throws Exception {
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		Map<String, Serializable> taskContextMap = new HashMap<>();
-
-		String className = ParamUtil.getString(actionRequest, "className");
-
-		if (!ParamUtil.getBoolean(actionRequest, "blocking")) {
-			_indexWriterHelper.reindex(
-				themeDisplay.getUserId(), "reindex",
-				_portalInstancesLocalService.getCompanyIds(), className,
-				taskContextMap);
-
-			return;
-		}
-
-		final String jobName = "reindex-".concat(_portalUUID.generate());
-
-		final CountDownLatch countDownLatch = new CountDownLatch(1);
-
-		MessageListener messageListener = new MessageListener() {
-
-			@Override
-			public void receive(Message message)
-				throws MessageListenerException {
-
-				int status = message.getInteger("status");
-
-				if ((status != BackgroundTaskConstants.STATUS_CANCELLED) &&
-					(status != BackgroundTaskConstants.STATUS_FAILED) &&
-					(status != BackgroundTaskConstants.STATUS_SUCCESSFUL)) {
-
-					return;
-				}
-
-				if (!jobName.equals(message.getString("name"))) {
-					return;
-				}
-
-				PortletSession portletSession =
-					actionRequest.getPortletSession();
-
-				long lastAccessedTime = portletSession.getLastAccessedTime();
-				int maxInactiveInterval =
-					portletSession.getMaxInactiveInterval();
-
-				int extendedMaxInactiveIntervalTime =
-					(int)(System.currentTimeMillis() - lastAccessedTime +
-						maxInactiveInterval);
-
-				portletSession.setMaxInactiveInterval(
-					extendedMaxInactiveIntervalTime);
-
-				countDownLatch.countDown();
-			}
-
-		};
-
-		_messageBus.registerMessageListener(
-			DestinationNames.BACKGROUND_TASK_STATUS, messageListener);
-
-		try {
-			_indexWriterHelper.reindex(
-				themeDisplay.getUserId(), jobName,
-				_portalInstancesLocalService.getCompanyIds(), className,
-				taskContextMap);
-
-			countDownLatch.await(
-				ParamUtil.getLong(actionRequest, "timeout", Time.HOUR),
-				TimeUnit.MILLISECONDS);
-		}
-		finally {
-			_messageBus.unregisterMessageListener(
-				DestinationNames.BACKGROUND_TASK_STATUS, messageListener);
-		}
-	}
-
-	protected void reindexDictionaries(ActionRequest actionRequest)
-		throws Exception {
-
-		long[] companyIds = _portalInstancesLocalService.getCompanyIds();
-
-		for (long companyId : companyIds) {
-			_indexWriterHelper.indexQuerySuggestionDictionaries(companyId);
-			_indexWriterHelper.indexSpellCheckerDictionaries(companyId);
-		}
 	}
 
 	protected void runScript(
@@ -658,19 +549,10 @@ public class EditServerMVCActionCommand extends BaseMVCActionCommand {
 		EditServerMVCActionCommand.class);
 
 	@Reference
-	private BackgroundTaskManager _backgroundTaskManager;
-
-	@Reference
 	private DirectServletRegistry _directServletRegistry;
 
 	@Reference
-	private IndexWriterHelper _indexWriterHelper;
-
-	@Reference
 	private MailService _mailService;
-
-	@Reference
-	private MessageBus _messageBus;
 
 	@Reference
 	private MultiVMPool _multiVMPool;
@@ -678,12 +560,6 @@ public class EditServerMVCActionCommand extends BaseMVCActionCommand {
 	@Reference
 	private OrganizationMembershipPolicyFactory
 		_organizationMembershipPolicyFactory;
-
-	@Reference
-	private PortalInstancesLocalService _portalInstancesLocalService;
-
-	@Reference
-	private PortalUUID _portalUUID;
 
 	@Reference
 	private RoleMembershipPolicyFactory _roleMembershipPolicyFactory;

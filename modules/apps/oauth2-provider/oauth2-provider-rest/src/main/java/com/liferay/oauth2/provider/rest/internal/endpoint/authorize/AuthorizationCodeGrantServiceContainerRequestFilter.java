@@ -56,7 +56,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Tomas Polesovsky
  */
 @Component(
-	immediate = true,
 	property = OAuth2ProviderRestEndpointConstants.PROPERTY_KEY_OAUTH2_ENDPOINT_JAXRS_PROVIDER + "=true",
 	service = Object.class
 )
@@ -104,12 +103,14 @@ public class AuthorizationCodeGrantServiceContainerRequestFilter
 			_log.error("Unable to resolve authenticated user", e);
 
 			requestContext.abortWith(
-				Response.status(Response.Status.INTERNAL_SERVER_ERROR).build());
+				Response.status(
+					Response.Status.INTERNAL_SERVER_ERROR
+				).build());
 
 			return;
 		}
 
-		String loginURL = null;
+		String loginURL;
 
 		try {
 			loginURL = getLoginURL();
@@ -118,7 +119,9 @@ public class AuthorizationCodeGrantServiceContainerRequestFilter
 			_log.error("Unable to locate configuration", ce);
 
 			throw new WebApplicationException(
-				Response.status(Response.Status.INTERNAL_SERVER_ERROR).build());
+				Response.status(
+					Response.Status.INTERNAL_SERVER_ERROR
+				).build());
 		}
 
 		URI requestURI = uriInfo.getRequestUri();
@@ -137,13 +140,13 @@ public class AuthorizationCodeGrantServiceContainerRequestFilter
 	protected String getLoginURL() throws ConfigurationException {
 		long companyId = _portal.getCompanyId(_httpServletRequest);
 
-		AuthorizeScreenConfiguration authorizeScreenRedirectConfiguration =
+		AuthorizeScreenConfiguration authorizeScreenConfiguration =
 			_configurationProvider.getConfiguration(
 				AuthorizeScreenConfiguration.class,
 				new CompanyServiceSettingsLocator(
 					companyId, AuthorizeScreenConfiguration.class.getName()));
 
-		String loginURL = authorizeScreenRedirectConfiguration.loginURL();
+		String loginURL = authorizeScreenConfiguration.loginURL();
 
 		if (Validator.isBlank(loginURL)) {
 			StringBundler sb = new StringBundler(4);

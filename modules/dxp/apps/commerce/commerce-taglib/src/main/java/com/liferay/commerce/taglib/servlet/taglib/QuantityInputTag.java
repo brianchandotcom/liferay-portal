@@ -14,8 +14,8 @@
 
 package com.liferay.commerce.taglib.servlet.taglib;
 
+import com.liferay.commerce.constants.CPDefinitionInventoryConstants;
 import com.liferay.commerce.model.CPDefinitionInventory;
-import com.liferay.commerce.model.CPDefinitionInventoryConstants;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.service.CPDefinitionServiceUtil;
 import com.liferay.commerce.service.CPDefinitionInventoryServiceUtil;

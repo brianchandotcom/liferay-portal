@@ -14,12 +14,12 @@
 
 package com.liferay.commerce.inventory.web.internal.display.context;
 
+import com.liferay.commerce.constants.CPDefinitionInventoryConstants;
 import com.liferay.commerce.inventory.CPDefinitionInventoryEngine;
 import com.liferay.commerce.inventory.CPDefinitionInventoryEngineRegistry;
 import com.liferay.commerce.inventory.web.internal.portlet.action.CPDefinitionInventoryActionHelper;
 import com.liferay.commerce.model.CPDefinitionAvailabilityRange;
 import com.liferay.commerce.model.CPDefinitionInventory;
-import com.liferay.commerce.model.CPDefinitionInventoryConstants;
 import com.liferay.commerce.model.CommerceAvailabilityRange;
 import com.liferay.commerce.model.impl.CPDefinitionInventoryImpl;
 import com.liferay.commerce.product.definitions.web.display.context.BaseCPDefinitionsDisplayContext;

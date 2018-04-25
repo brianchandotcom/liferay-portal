@@ -14,7 +14,7 @@
 
 package com.liferay.commerce.product.demo.data.creator.internal.util;
 
-import com.liferay.commerce.model.CPDefinitionInventoryConstants;
+import com.liferay.commerce.constants.CPDefinitionInventoryConstants;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.service.CPDefinitionLinkLocalService;

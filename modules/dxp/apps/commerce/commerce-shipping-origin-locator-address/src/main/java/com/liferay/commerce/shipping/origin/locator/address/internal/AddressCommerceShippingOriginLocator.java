@@ -14,12 +14,12 @@
 
 package com.liferay.commerce.shipping.origin.locator.address.internal;
 
+import com.liferay.commerce.constants.CommerceWarehouseConstants;
 import com.liferay.commerce.model.CommerceAddress;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderItem;
 import com.liferay.commerce.model.CommerceShippingOriginLocator;
 import com.liferay.commerce.model.CommerceWarehouse;
-import com.liferay.commerce.model.CommerceWarehouseConstants;
 import com.liferay.commerce.service.CommerceAddressLocalService;
 import com.liferay.commerce.service.CommerceWarehouseLocalService;
 import com.liferay.commerce.shipping.origin.locator.address.internal.configuration.AddressCommerceShippingOriginLocatorGroupServiceConfiguration;

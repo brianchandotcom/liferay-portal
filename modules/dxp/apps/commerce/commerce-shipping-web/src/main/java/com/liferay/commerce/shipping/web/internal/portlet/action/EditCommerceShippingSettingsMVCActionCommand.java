@@ -16,10 +16,10 @@ package com.liferay.commerce.shipping.web.internal.portlet.action;
 
 import com.liferay.commerce.admin.constants.CommerceAdminPortletKeys;
 import com.liferay.commerce.constants.CommerceConstants;
+import com.liferay.commerce.constants.CommerceWarehouseConstants;
 import com.liferay.commerce.exception.CommerceWarehouseActiveException;
 import com.liferay.commerce.exception.CommerceWarehouseNameException;
 import com.liferay.commerce.model.CommerceShippingOriginLocator;
-import com.liferay.commerce.model.CommerceWarehouseConstants;
 import com.liferay.commerce.service.CommerceWarehouseService;
 import com.liferay.commerce.util.CommerceShippingOriginLocatorRegistry;
 import com.liferay.portal.kernel.exception.PortalException;

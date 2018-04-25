@@ -14,9 +14,9 @@
 
 package com.liferay.commerce.cart.taglib.servlet.taglib;
 
+import com.liferay.commerce.constants.CPDefinitionInventoryConstants;
 import com.liferay.commerce.constants.CommercePortletKeys;
 import com.liferay.commerce.model.CPDefinitionInventory;
-import com.liferay.commerce.model.CPDefinitionInventoryConstants;
 import com.liferay.commerce.service.CPDefinitionInventoryServiceUtil;
 import com.liferay.frontend.taglib.soy.servlet.taglib.TemplateRendererTag;
 import com.liferay.petra.string.StringPool;

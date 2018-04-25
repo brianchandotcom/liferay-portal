@@ -15,7 +15,7 @@
 package com.liferay.commerce.internal.messaging;
 
 import com.liferay.commerce.configuration.CommerceOrderConfiguration;
-import com.liferay.commerce.model.CommerceOrderConstants;
+import com.liferay.commerce.constants.CommerceOrderConstants;
 import com.liferay.commerce.service.CommerceOrderLocalService;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.messaging.BaseMessageListener;

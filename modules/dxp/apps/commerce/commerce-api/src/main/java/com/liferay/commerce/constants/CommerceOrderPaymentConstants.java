@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.commerce.model;
+package com.liferay.commerce.constants;
 
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 

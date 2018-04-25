@@ -14,10 +14,10 @@
 
 package com.liferay.commerce.taglib.servlet.taglib;
 
+import com.liferay.commerce.constants.CPDefinitionInventoryConstants;
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.service.CommerceCurrencyLocalServiceUtil;
 import com.liferay.commerce.model.CPDefinitionInventory;
-import com.liferay.commerce.model.CPDefinitionInventoryConstants;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.service.CPInstanceServiceUtil;
 import com.liferay.commerce.service.CPDefinitionInventoryServiceUtil;

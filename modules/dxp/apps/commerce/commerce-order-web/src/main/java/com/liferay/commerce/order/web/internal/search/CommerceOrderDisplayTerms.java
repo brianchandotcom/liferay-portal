@@ -14,7 +14,7 @@
 
 package com.liferay.commerce.order.web.internal.search;
 
-import com.liferay.commerce.model.CommerceOrderConstants;
+import com.liferay.commerce.constants.CommerceOrderConstants;
 import com.liferay.portal.kernel.dao.search.DisplayTerms;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.ParamUtil;

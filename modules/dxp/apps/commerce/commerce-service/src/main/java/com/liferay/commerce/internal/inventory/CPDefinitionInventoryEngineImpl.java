@@ -14,12 +14,12 @@
 
 package com.liferay.commerce.internal.inventory;
 
+import com.liferay.commerce.constants.CPDefinitionInventoryConstants;
+import com.liferay.commerce.constants.CommerceOrderConstants;
 import com.liferay.commerce.inventory.CPDefinitionInventoryEngine;
 import com.liferay.commerce.model.CPDefinitionAvailabilityRange;
 import com.liferay.commerce.model.CPDefinitionInventory;
-import com.liferay.commerce.model.CPDefinitionInventoryConstants;
 import com.liferay.commerce.model.CommerceAvailabilityRange;
-import com.liferay.commerce.model.CommerceOrderConstants;
 import com.liferay.commerce.model.CommerceWarehouseItem;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.service.CPDefinitionAvailabilityRangeLocalService;

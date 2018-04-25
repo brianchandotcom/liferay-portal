@@ -18,6 +18,7 @@ import com.liferay.mail.kernel.model.Filter;
 import com.liferay.mail.kernel.util.Hook;
 import com.liferay.petra.process.LoggingOutputProcessor;
 import com.liferay.petra.process.ProcessUtil;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -88,6 +89,8 @@ public class SendmailHook implements Hook {
 		addUserCmd = StringUtil.replace(
 			addUserCmd, "%1%", String.valueOf(userId));
 
+		String[] arguments = StringUtil.split(addUserCmd, StringPool.SPACE);
+
 		try {
 			Future<?> future = ProcessUtil.execute(
 				new LoggingOutputProcessor(
@@ -99,7 +102,7 @@ public class SendmailHook implements Hook {
 							_log.info(line);
 						}
 					}),
-				addUserCmd);
+				arguments);
 
 			future.get();
 		}
@@ -136,6 +139,8 @@ public class SendmailHook implements Hook {
 		deleteUserCmd = StringUtil.replace(
 			deleteUserCmd, "%1%", String.valueOf(userId));
 
+		String[] arguments = StringUtil.split(deleteUserCmd, StringPool.SPACE);
+
 		try {
 			Future<?> future = ProcessUtil.execute(
 				new LoggingOutputProcessor(
@@ -147,7 +152,7 @@ public class SendmailHook implements Hook {
 							_log.info(line);
 						}
 					}),
-				deleteUserCmd);
+				arguments);
 
 			future.get();
 		}
@@ -234,6 +239,9 @@ public class SendmailHook implements Hook {
 			String virtusertableRefreshCmd = PropsUtil.get(
 				PropsKeys.MAIL_HOOK_SENDMAIL_VIRTUSERTABLE_REFRESH);
 
+			String[] arguments = StringUtil.split(
+				virtusertableRefreshCmd, StringPool.SPACE);
+
 			Future<?> future = ProcessUtil.execute(
 				new LoggingOutputProcessor(
 					(stdErr, line) -> {
@@ -244,7 +252,7 @@ public class SendmailHook implements Hook {
 							_log.info(line);
 						}
 					}),
-				virtusertableRefreshCmd);
+				arguments);
 
 			future.get();
 		}
@@ -261,15 +269,19 @@ public class SendmailHook implements Hook {
 		String changePasswordCmd = PropsUtil.get(
 			PropsKeys.MAIL_HOOK_SENDMAIL_CHANGE_PASSWORD);
 
-		// Replace userId
+		String[] arguments = StringUtil.split(
+			changePasswordCmd, StringPool.SPACE);
 
-		changePasswordCmd = StringUtil.replace(
-			changePasswordCmd, "%1%", String.valueOf(userId));
+		// Replace userId and password
 
-		// Replace password
-
-		changePasswordCmd = StringUtil.replace(
-			changePasswordCmd, "%2%", password);
+		for (int i = 0; i < arguments.length; i++) {
+			if (arguments[i].equals("%1%")) {
+				arguments[i] = String.valueOf(userId);
+			}
+			else if (arguments[i].equals("%2%")) {
+				arguments[i] = password;
+			}
+		}
 
 		try {
 			Future<?> future = ProcessUtil.execute(
@@ -282,7 +294,7 @@ public class SendmailHook implements Hook {
 							_log.info(line);
 						}
 					}),
-				changePasswordCmd);
+				arguments);
 
 			future.get();
 		}

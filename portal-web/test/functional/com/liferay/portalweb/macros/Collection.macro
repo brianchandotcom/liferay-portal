@@ -26,4 +26,18 @@
 			</then>
 		</if>
 	</command>
+
+	<command name="renameCollection">
+		<execute macro="LexiconEntry#gotoEntryMenuItem">
+			<var name="menuItem" value="Edit" />
+			<var name="rowEntry" value="${rowEntry}" />
+		</execute>
+
+		<execute macro="Collection#editCollection">
+			<var name="collectionDescription" value="${collectionDescription}" />
+			<var name="collectionName" value="${collectionName}" />
+		</execute>
+
+		<execute macro="PortletEntry#save" />
+	</command>
 </definition>

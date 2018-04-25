@@ -490,10 +490,6 @@
 			<var name="dmDocumentTitle" value="Document_1.png" />
 		</execute>
 
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Tasks" />
-		</execute>
-
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Users" />
 			<var name="panel" value="Control Panel" />
@@ -540,13 +536,6 @@
 			<var name="dmDocumentDescription" value="DM Document Description" />
 			<var name="dmDocumentFile" value="Document_1.png" />
 			<var name="dmDocumentTitle" value="Document_1.png" />
-		</execute>
-
-		<execute macro="Tasks#addTask">
-			<var name="dueDate" value="true" />
-			<var name="taskAssignee" value="userfn userln" />
-			<var name="taskDescription" value="Review Tests" />
-			<var name="taskReporter" value="userfn userln" />
 		</execute>
 
 		<execute macro="User#firstLoginPG">

@@ -31,7 +31,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Paulo Cruz
  */
 @Component(immediate = true)
-public class StructureCollectionResource
+public class StructureItemResource
 	implements ItemResource<DDMStructure, Long, StructureIdentifier> {
 
 	@Override

@@ -38,7 +38,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Victor Oliveira
  */
 @Component(immediate = true)
-public class DataProviderInstanceCollectionResource
+public class DataProviderInstanceNestedCollectionResource
 	implements NestedCollectionResource<DDMDataProviderInstance, Long,
 		DataProviderInstanceIdentifier, Long, WebSiteIdentifier> {
 

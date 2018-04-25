@@ -20,6 +20,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemList;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -45,6 +46,8 @@ import javax.portlet.PortletException;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -147,9 +150,10 @@ public class ViewUADEntitiesMVCRenderCommand implements MVCRenderCommand {
 	private DropdownItemList _getActionDropdownItems(
 		RenderRequest renderRequest, RenderResponse renderResponse) {
 
-		return new DropdownItemList(
-			_portal.getHttpServletRequest(renderRequest)) {
+		HttpServletRequest request = _portal.getHttpServletRequest(
+			renderRequest);
 
+		return new DropdownItemList() {
 			{
 				add(
 					dropdownItem -> {
@@ -157,7 +161,8 @@ public class ViewUADEntitiesMVCRenderCommand implements MVCRenderCommand {
 							StringBundler.concat(
 								"javascript:", renderResponse.getNamespace(),
 								"doAnonymizeMultiple();"));
-						dropdownItem.setLabel("anonymize");
+						dropdownItem.setLabel(
+							LanguageUtil.get(request, "anonymize"));
 					});
 				add(
 					dropdownItem -> {
@@ -165,7 +170,8 @@ public class ViewUADEntitiesMVCRenderCommand implements MVCRenderCommand {
 							StringBundler.concat(
 								"javascript:", renderResponse.getNamespace(),
 								"doDeleteMultiple();"));
-						dropdownItem.setLabel("delete");
+						dropdownItem.setLabel(
+							LanguageUtil.get(request, "delete"));
 					});
 			}
 

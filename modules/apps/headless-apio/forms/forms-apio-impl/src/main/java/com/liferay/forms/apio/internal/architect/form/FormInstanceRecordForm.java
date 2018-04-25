@@ -25,8 +25,8 @@ import com.liferay.apio.architect.form.Form;
 public class FormInstanceRecordForm {
 
 	/**
-	 * Builds a {@code Form} that generates
-	 * {@code FormInstanceRecordForm} depending on the HTTP body.
+	 * Builds a {@code Form} that generates {@code FormInstanceRecordForm}
+	 * depending on the HTTP body.
 	 *
 	 * @param  formBuilder the {@code Form} builder
 	 * @return a form instance record form

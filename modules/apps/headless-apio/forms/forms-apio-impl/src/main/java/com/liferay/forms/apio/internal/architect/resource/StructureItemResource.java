@@ -25,9 +25,10 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * Provides the information necessary to expose Structure resources through
- * a web API. The resources are mapped from the internal model {@code
+ * Provides the information necessary to expose Structure resources through a
+ * web API. The resources are mapped from the internal model {@code
  * DDMStructure}.
+ *
  * @author Paulo Cruz
  */
 @Component(immediate = true)

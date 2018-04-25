@@ -45,6 +45,7 @@ import org.osgi.service.component.annotations.Reference;
  * Provides the information necessary to expose FormInstanceRecord resources
  * through a web API. The resources are mapped from the internal model {@code
  * DDMFormInstanceRecord}.
+ *
  * @author Paulo Cruz
  */
 @Component(immediate = true)

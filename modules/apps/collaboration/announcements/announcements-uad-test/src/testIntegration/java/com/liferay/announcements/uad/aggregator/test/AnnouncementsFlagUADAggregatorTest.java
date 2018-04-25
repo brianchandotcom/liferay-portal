@@ -16,7 +16,7 @@ package com.liferay.announcements.uad.aggregator.test;
 
 import com.liferay.announcements.kernel.model.AnnouncementsFlag;
 import com.liferay.announcements.uad.constants.AnnouncementsUADConstants;
-import com.liferay.announcements.uad.test.AnnouncementsFlagUADEntityTestHelper;
+import com.liferay.announcements.uad.test.AnnouncementsFlagUADTestHelper;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -47,7 +47,7 @@ public class AnnouncementsFlagUADAggregatorTest
 	@Override
 	protected AnnouncementsFlag addBaseModel(long userId) throws Exception {
 		AnnouncementsFlag announcementsFlag =
-			_announcementsFlagUADEntityTestHelper.addAnnouncementsFlag(userId);
+			_announcementsFlagUADTestHelper.addAnnouncementsFlag(userId);
 
 		_announcementsFlags.add(announcementsFlag);
 
@@ -64,8 +64,7 @@ public class AnnouncementsFlagUADAggregatorTest
 		new ArrayList<>();
 
 	@Inject
-	private AnnouncementsFlagUADEntityTestHelper
-		_announcementsFlagUADEntityTestHelper;
+	private AnnouncementsFlagUADTestHelper _announcementsFlagUADTestHelper;
 
 	@Inject(
 		filter = "model.class.name=" + AnnouncementsUADConstants.CLASS_NAME_ANNOUNCEMENTS_FLAG

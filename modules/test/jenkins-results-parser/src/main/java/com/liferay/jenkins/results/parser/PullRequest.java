@@ -141,6 +141,38 @@ public class PullRequest {
 		return baseJSONObject.getString("ref");
 	}
 
+	public boolean isAutoCloseCommentAvailable() {
+		String url = JenkinsResultsParserUtil.combine(
+			"https://api.github.com/repos/", getOwnerUsername(), "/",
+			getRepositoryName(), "/issues/", getNumber(), "/comments?page=");
+
+		try {
+			int i = 1;
+
+			while (true) {
+				String content = JenkinsResultsParserUtil.toString(
+					url + i, false);
+
+				if (content.contains("auto-close=\\\"false\\\"")) {
+					return true;
+				}
+
+				if (content.matches("\\s*\\[\\s*\\]\\s*")) {
+					break;
+				}
+
+				i++;
+			}
+
+			return false;
+		}
+		catch (IOException ioe) {
+			throw new RuntimeException(
+				"Unable to check for auto-close property in GitHub comments",
+				ioe);
+		}
+	}
+
 	public void refresh() {
 		try {
 			_jsonObject = JenkinsResultsParserUtil.toJSONObject(getURL());

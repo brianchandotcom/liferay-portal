@@ -24,10 +24,10 @@
 
 		<!-- Other fields -->
 
+		<column name="title" type="String" />
 		<column name="target" type="String" />
 		<column name="type" type="String" />
 		<column name="typeSettings" type="String" />
-		<column name="title" type="String" />
 		<column name="useCouponCode" type="boolean" />
 		<column name="couponCode" type="String" />
 		<column name="limitationType" type="String" />
@@ -40,6 +40,8 @@
 		<column name="level3" type="BigDecimal" />
 		<column name="maximumDiscountAmount" type="BigDecimal" />
 		<column name="active" type="boolean" />
+		<column name="displayDate" type="Date" />
+		<column name="expirationDate" type="Date" />
 		<column name="lastPublishDate" type="Date" />
 		<column name="status" type="int" />
 		<column name="statusByUserId" type="long" />
@@ -48,7 +50,7 @@
 
 		<!-- Order -->
 
-		<order by="asc">
+		<order by="desc">
 			<order-column name="createDate" />
 		</order>
 
@@ -57,9 +59,18 @@
 		<finder name="GroupId" return-type="Collection">
 			<finder-column name="groupId" />
 		</finder>
+		<finder name="LtD_S" return-type="Collection">
+			<finder-column comparator="&lt;" name="displayDate" />
+			<finder-column name="status" />
+		</finder>
+		<finder name="LtE_S" return-type="Collection">
+			<finder-column comparator="&lt;" name="expirationDate" />
+			<finder-column name="status" />
+		</finder>
 
 		<!-- References -->
 
+		<reference entity="WorkflowInstanceLink" package-path="com.liferay.portal" />
 		<reference entity="ExpandoRow" package-path="com.liferay.portlet.expando" />
 	</entity>
 	<entity local-service="true" name="CommerceDiscountRule" remote-service="true">
@@ -136,4 +147,8 @@
 			<finder-column name="commerceUserSegmentEntryId" />
 		</finder>
 	</entity>
+	<exceptions>
+		<exception>CommerceDiscountDisplayDate</exception>
+		<exception>CommerceDiscountExpirationDate</exception>
+	</exceptions>
 </service-builder>

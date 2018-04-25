@@ -27,14 +27,6 @@
 			<var name="collectionDescription" value="Collection Description" />
 			<var name="collectionName" value="Collection Name" />
 		</execute>
-
-		<execute macro="LexiconEntry#gotoEntry">
-			<var name="rowEntry" value="Collection Name" />
-		</execute>
-
-		<execute macro="Fragment#addFragment">
-			<var name="fragmentName" value="Fragment Name" />
-		</execute>
 	</set-up>
 
 	<tear-down>
@@ -52,6 +44,14 @@
 	</tear-down>
 
 	<command name="AddLayoutPageTemplateRemoveFragment" priority="5">
+		<execute macro="LexiconEntry#gotoEntry">
+			<var name="rowEntry" value="Collection Name" />
+		</execute>
+
+		<execute macro="Fragment#addFragment">
+			<var name="fragmentName" value="Fragment Name" />
+		</execute>
+
 		<var name="htmlSnippet"><![CDATA[
 <div>${line.separator}
 <span class="test">This is a test.</span>${line.separator}
@@ -105,6 +105,14 @@
 	</command>
 
 	<command name="ViewDraftFragmentDoesNotDisplayInSidebar" priority="4">
+		<execute macro="LexiconEntry#gotoEntry">
+			<var name="rowEntry" value="Collection Name" />
+		</execute>
+
+		<execute macro="Fragment#addFragment">
+			<var name="fragmentName" value="Fragment Name" />
+		</execute>
+
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Build" />
 			<var name="panel" value="Site Administration" />

@@ -15,6 +15,7 @@
 		<suppress checks="MissingModifierCheck" files="modules/core/petra/petra-process/src/main/java/com/liferay/petra/process/local/ResponseProcessCallable\.java" />
 		<suppress checks="MissingModifierCheck" files="modules/core/petra/petra-process/src/main/java/com/liferay/petra/process/local/ResultProcessCallable\.java" />
 		<suppress checks="MissingModifierCheck" files="modules/core/petra/petra-reflect/src/test/java/com/liferay/petra/reflect/AnnotationLocatorTest\.java" />
+		<suppress checks="ParsePrimitiveTypeCheck" files="modules/core/petra/petra-process/src/test/java/com/liferay/petra/process/ProcessUtilTest\.java" />
 		<suppress checks="PlusStatementCheck" files="modules/core/petra/petra-io/src/main/java/com/liferay/petra/io/BigEndianCodec\.java" />
 		<suppress checks="StringBundlerNamingCheck" files="modules/core/petra/petra-io/src/main/java/com/liferay/petra/io/unsync/UnsyncStringWriter\.java" />
 		<suppress checks="StringBundlerNamingCheck" files="modules/core/petra/petra-io/src/test/java/com/liferay/petra/io/unsync/UnsyncStringWriterTest\.java" />

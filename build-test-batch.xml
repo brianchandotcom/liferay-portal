@@ -2284,7 +2284,7 @@ app.server.type=@{app.server.type}]]></echo>
 		<run-functional-test app.server.type="jboss" database.type="mysql" test.portal.log.assert="true" />
 	</target>
 
-	<target name="functional-smoke-jboss70-mysql57-jdk8">
+	<target name="functional-smoke-jboss71-mysql57-jdk8">
 		<run-functional-test app.server.type="jboss" database.type="mysql" database.version="5.7" test.portal.log.assert="true" />
 	</target>
 
@@ -2444,7 +2444,7 @@ app.server.type=@{app.server.type}]]></echo>
 		<run-functional-test app.server.type="jboss" database.type="mysql" />
 	</target>
 
-	<target name="functional-upgrade-jboss70-mysql57-jdk8">
+	<target name="functional-upgrade-jboss71-mysql57-jdk8">
 		<run-functional-test app.server.type="jboss" database.type="mysql" database.version="5.7" />
 	</target>
 

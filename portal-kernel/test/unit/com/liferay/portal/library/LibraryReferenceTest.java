@@ -69,7 +69,8 @@ public class LibraryReferenceTest {
 		_portalPath = Paths.get(System.getProperty("user.dir"));
 
 		_initGitIgnoreJars();
-		_initLibJars();
+		_initLibJars(LIB_DIR_NAME);
+		_initLibJars(LIB_PRE_DIR_NAME);
 		_initModuleSourceDirs();
 
 		DocumentBuilderFactory documentBuilderFactory =
@@ -271,6 +272,7 @@ public class LibraryReferenceTest {
 	}
 
 	protected static final String LIB_DIR_NAME = "lib";
+	protected static final String LIB_PRE_DIR_NAME = "tmp/lib-pre";
 
 	private static void _initEclipse(DocumentBuilder documentBuilder)
 		throws Exception {
@@ -338,8 +340,8 @@ public class LibraryReferenceTest {
 		}
 	}
 
-	private static void _initLibJars() throws IOException {
-		Path libDirPath = Paths.get(LIB_DIR_NAME);
+	private static void _initLibJars(String lib) throws IOException {
+		Path libDirPath = Paths.get(lib);
 
 		_readLines(_excludeJars, libDirPath.resolve("versions-ignore.txt"));
 		_readLines(_ideExcludeJars, libDirPath.resolve("ide-ignore.txt"));

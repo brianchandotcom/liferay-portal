@@ -1814,7 +1814,11 @@ that may or may not be enforced with a unique index at the database level. Case
 			if (
 				<#list entityColumns as entityColumn>
 					<#if entityColumn.isPrimitiveType(false)>
-						(${entityColumn.name} != ${entity.varName}.get${entityColumn.methodName}())
+						<#if stringUtil.equals(entityColumn.type, "boolean")>
+							(${entityColumn.name} != ${entity.varName}.is${entityColumn.methodName}())
+						<#else>
+							(${entityColumn.name} != ${entity.varName}.get${entityColumn.methodName}())
+						</#if>
 					<#else>
 						!Objects.equals(${entityColumn.name}, ${entity.varName}.get${entityColumn.methodName}())
 					</#if>
@@ -1873,7 +1877,11 @@ that may or may not be enforced with a unique index at the database level. Case
 					if (
 						<#list entityColumns as entityColumn>
 							<#if entityColumn.isPrimitiveType()>
-								(${entity.varName}.get${entityColumn.methodName}() != ${entityColumn.name})
+								<#if stringUtil.equals(entityColumn.type, "boolean")>
+									(${entity.varName}.is${entityColumn.methodName}() != ${entityColumn.name})
+								<#else>
+									(${entity.varName}.get${entityColumn.methodName}() != ${entityColumn.name})
+								</#if>
 							<#else>
 								(${entity.varName}.get${entityColumn.methodName}() == null) || !${entity.varName}.get${entityColumn.methodName}().equals(${entityColumn.name})
 							</#if>

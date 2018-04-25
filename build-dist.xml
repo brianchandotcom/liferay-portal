@@ -1352,22 +1352,6 @@ this task.
 			<replacevalue><![CDATA[<deployment-scanner deployment-timeout="360" ]]></replacevalue>
 		</replace>
 
-		<replace
-			file="${app.server.jboss.dir}/standalone/configuration/standalone.xml"
-		>
-			<replacetoken><![CDATA[<security-domains>]]></replacetoken>
-			<replacevalue>
-				<![CDATA[
-					<security-domains>
-						<security-domain name="PortalRealm">
-							<authentication>
-								<login-module code="com.liferay.portal.security.jaas.PortalLoginModule" flag="required" />
-							</authentication>
-						</security-domain>
-				]]>
-			</replacevalue>
-		</replace>
-
 		<replace-multilines
 			file="${app.server.jboss.dir}/standalone/configuration/standalone.xml"
 		>
@@ -1411,6 +1395,22 @@ this task.
 				<replace
 					file="${app.server.jboss.dir}/standalone/configuration/standalone.xml"
 				>
+					<replacetoken><![CDATA[<security-domains>]]></replacetoken>
+					<replacevalue>
+						<![CDATA[
+							<security-domains>
+								<security-domain name="PortalRealm">
+									<authentication>
+										<login-module code="com.liferay.portal.security.jaas.PortalLoginModule" flag="required" />
+									</authentication>
+								</security-domain>
+						]]>
+					</replacevalue>
+				</replace>
+
+				<replace
+					file="${app.server.jboss.dir}/standalone/configuration/standalone.xml"
+				>
 					<replacetoken><![CDATA[enable-welcome-root="true"]]></replacetoken>
 					<replacevalue><![CDATA[enable-welcome-root="false"]]></replacevalue>
 				</replace>
@@ -1426,6 +1426,21 @@ this task.
 					</replace>
 
 					<echo append="true" file="${app.server.jboss.bin.dir}/standalone.conf">${line.separator}<![CDATA[JAVA_OPTS="$JAVA_OPTS -Dfile.encoding=UTF-8 -Djava.net.preferIPv4Stack=true ${java.security.config} -Djboss.as.management.blocking.timeout=480 -Duser.timezone=GMT -Xmx1024m -XX:MaxMetaspaceSize=512m"]]></echo>
+
+					<replace
+						file="${app.server.jboss.dir}/standalone/configuration/standalone.xml"
+					>
+						<replacetoken><![CDATA[<subsystem xmlns="urn:jboss:domain:security:2.0">
+            <security-domains>]]></replacetoken>
+						<replacevalue><![CDATA[<subsystem xmlns="urn:jboss:domain:security:2.0">
+            <security-domains>
+							<security-domain name="PortalRealm">
+								<authentication>
+									<login-module code="com.liferay.portal.security.jaas.PortalLoginModule" flag="required" />
+								</authentication>
+							</security-domain>]]>
+						</replacevalue>
+					</replace>
 
 					<replace
 						file="${app.server.jboss.dir}/standalone/configuration/standalone.xml"

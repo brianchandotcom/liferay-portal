@@ -6566,20 +6566,6 @@ public class ServiceBuilder {
 				entity.getName(), "UADDisplayTest.java"));
 	}
 
-	private void _removeUADEntity(Entity entity) {
-		_deleteFile(
-			StringBundler.concat(
-				_uadOutputPath, "/uad/entity/", entity.getName(),
-				"UADEntity.java"));
-	}
-
-	private void _removeUADEntityTest(Entity entity) {
-		_deleteFile(
-			StringBundler.concat(
-				_uadTestUnitOutputPath, "/uad/entity/", entity.getName(),
-				"UADEntityTest.java"));
-	}
-
 	private void _removeUADExporter(Entity entity) {
 		_deleteFile(
 			StringBundler.concat(

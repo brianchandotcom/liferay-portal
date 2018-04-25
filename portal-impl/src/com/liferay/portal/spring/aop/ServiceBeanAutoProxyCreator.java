@@ -14,19 +14,14 @@
 
 package com.liferay.portal.spring.aop;
 
-import java.util.List;
-import java.util.Map;
-
-import org.aopalliance.intercept.MethodInterceptor;
+import com.liferay.portal.kernel.spring.aop.AopProxyFactory;
 
 import org.springframework.aop.TargetSource;
 import org.springframework.aop.framework.AdvisedSupport;
 import org.springframework.aop.framework.AopConfigException;
 import org.springframework.aop.framework.AopProxy;
-import org.springframework.aop.framework.AopProxyFactory;
 import org.springframework.aop.framework.ProxyFactory;
 import org.springframework.aop.framework.autoproxy.AbstractAdvisorAutoProxyCreator;
-import org.springframework.beans.factory.ListableBeanFactory;
 
 /**
  * @author Shuyang Zhou
@@ -34,85 +29,35 @@ import org.springframework.beans.factory.ListableBeanFactory;
 public class ServiceBeanAutoProxyCreator
 	extends AbstractAdvisorAutoProxyCreator {
 
-	public ServiceBeanAutoProxyCreator() {
-		_serviceBeanAopCacheManager = new ServiceBeanAopCacheManager();
-	}
-
 	public void afterPropertiesSet() {
-		ServiceBeanAopCacheManagerUtil.registerServiceBeanAopCacheManager(
-			_serviceBeanAopCacheManager);
 
 		// Backwards compatibility
 
 		if (_beanMatcher == null) {
 			_beanMatcher = new ServiceBeanMatcher();
 		}
-
-		ListableBeanFactory listableBeanFactory =
-			(ListableBeanFactory)getBeanFactory();
-
-		Map<String, ChainableMethodAdviceInjector>
-			chainableMethodAdviceInjectors = listableBeanFactory.getBeansOfType(
-				ChainableMethodAdviceInjector.class);
-
-		for (ChainableMethodAdviceInjector chainableMethodAdviceInjector :
-				chainableMethodAdviceInjectors.values()) {
-
-			chainableMethodAdviceInjector.inject();
-		}
-
-		if (!listableBeanFactory.containsBean(
-				ChainableMethodAdviceInjectorCollector.BEAN_NAME)) {
-
-			return;
-		}
-
-		ChainableMethodAdviceInjectorCollector
-			chainableMethodAdviceInjectorCollector =
-				(ChainableMethodAdviceInjectorCollector)
-					listableBeanFactory.getBean(
-						ChainableMethodAdviceInjectorCollector.BEAN_NAME);
-
-		List<String> beanNames =
-			chainableMethodAdviceInjectorCollector.getBeanNames();
-
-		for (String beanName : beanNames) {
-			Object bean = listableBeanFactory.getBean(beanName);
-
-			if (bean instanceof ChainableMethodAdviceInjector) {
-				ChainableMethodAdviceInjector chainableMethodAdviceInjector =
-					(ChainableMethodAdviceInjector)bean;
-
-				chainableMethodAdviceInjector.inject();
-			}
-		}
 	}
 
-	public void destroy() {
-		ServiceBeanAopCacheManagerUtil.unregisterServiceBeanAopCacheManager(
-			_serviceBeanAopCacheManager);
+	public void setAopProxyFactory(AopProxyFactory aopProxyFactory) {
+		_aopProxyFactory = aopProxyFactory;
 	}
 
 	public void setBeanMatcher(BeanMatcher beanMatcher) {
 		_beanMatcher = beanMatcher;
 	}
 
-	public void setMethodInterceptor(MethodInterceptor methodInterceptor) {
-		_methodInterceptor = methodInterceptor;
-	}
-
 	@Override
 	protected void customizeProxyFactory(ProxyFactory proxyFactory) {
 		proxyFactory.setAopProxyFactory(
-			new AopProxyFactory() {
+			new org.springframework.aop.framework.AopProxyFactory() {
 
 				@Override
 				public AopProxy createAopProxy(AdvisedSupport advisedSupport)
 					throws AopConfigException {
 
-					return new ServiceBeanAopProxy(
-						advisedSupport, _methodInterceptor,
-						_serviceBeanAopCacheManager);
+					return new AopProxyAdapter(
+						_aopProxyFactory.getAopProxy(
+							new AdvisedSupportAdapter(advisedSupport)));
 				}
 
 			});
@@ -137,8 +82,7 @@ public class ServiceBeanAutoProxyCreator
 		return advices;
 	}
 
+	private AopProxyFactory _aopProxyFactory;
 	private BeanMatcher _beanMatcher;
-	private MethodInterceptor _methodInterceptor;
-	private final ServiceBeanAopCacheManager _serviceBeanAopCacheManager;
 
 }

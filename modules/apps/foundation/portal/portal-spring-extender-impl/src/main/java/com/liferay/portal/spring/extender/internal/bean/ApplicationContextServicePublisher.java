@@ -16,6 +16,7 @@ package com.liferay.portal.spring.extender.internal.bean;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.spring.aop.AdvisedSupport;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.ProxyUtil;
@@ -31,8 +32,6 @@ import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceRegistration;
 
-import org.springframework.aop.TargetSource;
-import org.springframework.aop.framework.AdvisedSupport;
 import org.springframework.beans.factory.BeanIsAbstractException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.core.annotation.AnnotationUtils;
@@ -101,10 +100,7 @@ public class ApplicationContextServicePublisher {
 					ServiceBeanAopProxy.getAdvisedSupport(bean);
 
 				if (advisedSupport != null) {
-					TargetSource targetSource =
-						advisedSupport.getTargetSource();
-
-					Object target = targetSource.getTarget();
+					Object target = advisedSupport.getTarget();
 
 					clazz = target.getClass();
 				}

@@ -17,6 +17,7 @@ package com.liferay.portal.remote.json.web.service.extender.internal;
 import com.liferay.portal.kernel.bean.ClassLoaderBeanHandler;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceScannerStrategy;
 import com.liferay.portal.kernel.service.ServiceWrapper;
+import com.liferay.portal.kernel.spring.aop.AdvisedSupport;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.spring.aop.AdvisedSupportProxy;
 import com.liferay.portal.spring.aop.ServiceBeanAopProxy;
@@ -26,9 +27,6 @@ import java.lang.reflect.Method;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import org.springframework.aop.TargetSource;
-import org.springframework.aop.framework.AdvisedSupport;
 
 /**
  * @author Miguel Pastor
@@ -79,9 +77,7 @@ public class ServiceJSONWebServiceScannerStrategy
 				AdvisedSupport advisedSupport =
 					ServiceBeanAopProxy.getAdvisedSupport(service);
 
-				TargetSource targetSource = advisedSupport.getTargetSource();
-
-				service = targetSource.getTarget();
+				service = advisedSupport.getTarget();
 			}
 			else if (invocationHandler instanceof ClassLoaderBeanHandler) {
 				ClassLoaderBeanHandler classLoaderBeanHandler =

@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.service.ResourceActionLocalServiceUtil;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalServiceUtil;
 import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
 import com.liferay.portal.kernel.service.persistence.ResourcePermissionPersistence;
+import com.liferay.portal.kernel.spring.aop.AdvisedSupport;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.randomizerbumpers.UniqueStringRandomizerBumper;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -60,9 +61,6 @@ import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
-
-import org.springframework.aop.TargetSource;
-import org.springframework.aop.framework.AdvisedSupport;
 
 /**
  * @author Matthew Tambara
@@ -101,11 +99,9 @@ public class ResourcePermissionLocalServiceConcurrentTest {
 		AdvisedSupport advisedSupport = ServiceBeanAopProxy.getAdvisedSupport(
 			ResourcePermissionLocalServiceUtil.getService());
 
-		TargetSource targetSource = advisedSupport.getTargetSource();
-
 		final ResourcePermissionLocalServiceImpl
 			resourcePermissionLocalServiceImpl =
-				(ResourcePermissionLocalServiceImpl)targetSource.getTarget();
+				(ResourcePermissionLocalServiceImpl)advisedSupport.getTarget();
 
 		final ResourcePermissionPersistence resourcePermissionPersistence =
 			resourcePermissionLocalServiceImpl.

@@ -15,6 +15,7 @@
 package com.liferay.portal.spring.aop;
 
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.spring.aop.AdvisedSupport;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 
@@ -29,9 +30,6 @@ import java.util.Objects;
 
 import org.aopalliance.intercept.MethodInterceptor;
 import org.aopalliance.intercept.MethodInvocation;
-
-import org.springframework.aop.TargetSource;
-import org.springframework.aop.framework.AdvisedSupport;
 
 /**
  * @author Shuyang Zhou
@@ -149,10 +147,7 @@ public class ServiceBeanMethodInvocation
 					ServiceBeanAopProxy.getAdvisedSupport(argument);
 
 				if (advisedSupport != null) {
-					TargetSource targetSource =
-						advisedSupport.getTargetSource();
-
-					argument = targetSource.getTarget();
+					argument = advisedSupport.getTarget();
 				}
 			}
 

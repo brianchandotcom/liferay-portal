@@ -12,15 +12,13 @@
  * details.
  */
 
-package com.liferay.portal.spring.aop;
-
-import com.liferay.portal.kernel.spring.aop.AdvisedSupport;
+package com.liferay.portal.kernel.spring.aop;
 
 /**
- * @author Miguel Pastor
+ * @author Tina Tian
  */
-public interface AdvisedSupportProxy {
+public interface AopProxy {
 
-	public AdvisedSupport getAdvisedSupport();
+	public Object getProxy(ClassLoader classLoader);
 
 }

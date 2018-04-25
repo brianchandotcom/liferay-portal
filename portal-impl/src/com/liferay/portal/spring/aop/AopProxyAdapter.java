@@ -14,13 +14,30 @@
 
 package com.liferay.portal.spring.aop;
 
-import com.liferay.portal.kernel.spring.aop.AdvisedSupport;
+import com.liferay.portal.kernel.spring.aop.AopProxy;
+
+import org.springframework.util.ClassUtils;
 
 /**
- * @author Miguel Pastor
+ * @author Tina Tian
  */
-public interface AdvisedSupportProxy {
+public class AopProxyAdapter
+	implements org.springframework.aop.framework.AopProxy {
 
-	public AdvisedSupport getAdvisedSupport();
+	public AopProxyAdapter(AopProxy aopProxy) {
+		_aopProxy = aopProxy;
+	}
+
+	@Override
+	public Object getProxy() {
+		return _aopProxy.getProxy(ClassUtils.getDefaultClassLoader());
+	}
+
+	@Override
+	public Object getProxy(ClassLoader classLoader) {
+		return _aopProxy.getProxy(classLoader);
+	}
+
+	private final AopProxy _aopProxy;
 
 }

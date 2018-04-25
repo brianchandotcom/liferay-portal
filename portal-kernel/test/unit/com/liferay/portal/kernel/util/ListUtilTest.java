@@ -512,7 +512,7 @@ public class ListUtilTest {
 
 				@Override
 				public Long get(String string) {
-					return Long.parseLong(string);
+					return GetterUtil.getLong(string);
 				}
 
 				@Override
@@ -540,7 +540,7 @@ public class ListUtilTest {
 
 				@Override
 				public Long get(String string) {
-					return Long.parseLong(string);
+					return GetterUtil.getLong(string);
 				}
 
 				@Override

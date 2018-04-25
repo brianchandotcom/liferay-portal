@@ -86,24 +86,24 @@ public class CheckstyleUtil {
 			"com.liferay.source.formatter.checkstyle.checks." +
 				"GetterMethodCallCheck");
 		configuration = _addAttribute(
+			configuration, "maxLineLength",
+			String.valueOf(sourceFormatterArgs.getMaxLineLength()),
+			"com.liferay.source.formatter.checkstyle.checks.AppendCheck",
+			"com.liferay.source.formatter.checkstyle.checks.ConcatCheck",
+			"com.liferay.source.formatter.checkstyle.checks." +
+				"PlusStatementCheck");
+		configuration = _addAttribute(
 			configuration, "portalBranchName",
 			SourceFormatterUtil.getPropertyValue(
 				SourceFormatterUtil.GIT_LIFERAY_PORTAL_BRANCH, propertiesMap),
 			"com.liferay.source.formatter.checkstyle.checks." +
 				"GetterMethodCallCheck");
 		configuration = _addAttribute(
-			configuration, "maxLineLength",
-			String.valueOf(sourceFormatterArgs.getMaxLineLength()),
-			"com.liferay.source.formatter.checkstyle.checks.AppendCheck");
-		configuration = _addAttribute(
-			configuration, "maxLineLength",
-			String.valueOf(sourceFormatterArgs.getMaxLineLength()),
-			"com.liferay.source.formatter.checkstyle.checks.ConcatCheck");
-		configuration = _addAttribute(
-			configuration, "maxLineLength",
-			String.valueOf(sourceFormatterArgs.getMaxLineLength()),
+			configuration, "runOutsidePortalExcludes",
+			SourceFormatterUtil.getPropertyValue(
+				"run.outside.portal.excludes", propertiesMap),
 			"com.liferay.source.formatter.checkstyle.checks." +
-				"PlusStatementCheck");
+				"ParsePrimitiveTypeCheck");
 		configuration = _addAttribute(
 			configuration, "showDebugInformation",
 			String.valueOf(sourceFormatterArgs.isShowDebugInformation()),

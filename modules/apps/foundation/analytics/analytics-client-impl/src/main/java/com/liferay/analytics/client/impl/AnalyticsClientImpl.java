@@ -20,6 +20,7 @@ import com.liferay.analytics.data.binding.internal.AnalyticsEventsMessageJSONObj
 import com.liferay.analytics.model.AnalyticsEventsMessage;
 import com.liferay.petra.json.web.service.client.JSONWebServiceClient;
 import com.liferay.petra.json.web.service.client.internal.JSONWebServiceClientImpl;
+import com.liferay.portal.kernel.util.GetterUtil;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -49,7 +50,8 @@ public class AnalyticsClientImpl implements AnalyticsClient {
 		_jsonWebServiceClient.setHostName(
 			_SYSTEM_PROPERTY_VALUE_ANALYTICS_GATEWAY_HOST);
 		_jsonWebServiceClient.setHostPort(
-			Integer.parseInt(_SYSTEM_PROPERTY_VALUE_ANALYTICS_GATEWAY_PORT));
+			GetterUtil.getInteger(
+				_SYSTEM_PROPERTY_VALUE_ANALYTICS_GATEWAY_PORT));
 		_jsonWebServiceClient.setProtocol(
 			_SYSTEM_PROPERTY_VALUE_ANALYTICS_GATEWAY_PROTOCOL);
 

@@ -19,6 +19,7 @@ import com.liferay.announcements.kernel.service.AnnouncementsFlagLocalService;
 import com.liferay.announcements.uad.constants.AnnouncementsUADConstants;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.user.associated.data.aggregator.UADAggregator;
 
 import java.io.Serializable;
@@ -44,7 +45,7 @@ public class AnnouncementsFlagUADAggregator
 		throws PortalException {
 
 		return _announcementsFlagLocalService.getAnnouncementsFlag(
-			Long.parseLong(primaryKey.toString()));
+			GetterUtil.getLong(primaryKey.toString()));
 	}
 
 	@Override

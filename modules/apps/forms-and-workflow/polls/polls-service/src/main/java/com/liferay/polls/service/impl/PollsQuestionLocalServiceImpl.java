@@ -40,6 +40,7 @@ import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -265,7 +266,7 @@ public class PollsQuestionLocalServiceImpl
 				hits.getLength());
 
 			for (Document document : hits.getDocs()) {
-				Long questionId = Long.parseLong(
+				Long questionId = GetterUtil.getLong(
 					document.get(Field.ENTRY_CLASS_PK));
 
 				pollsQuestions.add(

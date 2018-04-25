@@ -14,6 +14,7 @@
 
 package com.liferay.portal.lpkg.deployer.internal.wrapper.bundle;
 
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 
 import java.net.URL;
@@ -59,7 +60,7 @@ public class WARBundleWrapperBundleActivator implements BundleActivator {
 				"The header \"Liferay-WAB-Start-Level\" is null");
 		}
 
-		int startLevel = Integer.parseInt(startLevelString);
+		int startLevel = GetterUtil.getInteger(startLevelString);
 
 		// Defer WAR bundle installation until WAB protocol handler is ready
 

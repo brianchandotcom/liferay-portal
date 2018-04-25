@@ -206,6 +206,9 @@
 		<module name="com.liferay.source.formatter.checkstyle.checks.OperatorOrderCheck">
 			<message key="left.argument.literal.or.num" value="''{0}'' should be on the right hand side of the operator" />
 		</module>
+		<module name="com.liferay.source.formatter.checkstyle.checks.ParsePrimitiveTypeCheck">
+			<message key="getter.util.method.use" value="Use ''GetterUtil.{0}'' or properly catch ''NumberFormatException'' when calling ''{1}.{2}''" />
+		</module>
 		<module name="com.liferay.source.formatter.checkstyle.checks.PlusStatementCheck">
 			<message key="end.character.invalid" value="When concatenating multiple literal strings using '+', only the last literal string can end with ''{0}''" />
 			<message key="literal.string.combine" value="Combine the literal strings ''{0}'' and ''{1}''" />

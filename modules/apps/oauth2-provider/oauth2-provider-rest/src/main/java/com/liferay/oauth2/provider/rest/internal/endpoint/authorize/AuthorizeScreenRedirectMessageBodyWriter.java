@@ -59,7 +59,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Carlos Sierra Andrés
  */
 @Component(
-	immediate = true,
 	property = OAuth2ProviderRestEndpointConstants.PROPERTY_KEY_OAUTH2_ENDPOINT_JAXRS_PROVIDER + "=true",
 	service = Object.class
 )
@@ -102,7 +101,7 @@ public class AuthorizeScreenRedirectMessageBodyWriter
 		HttpServletRequest httpServletRequest =
 			_messageContext.getHttpServletRequest();
 
-		String authorizeScreenURLString = null;
+		String authorizeScreenURLString;
 
 		try {
 			authorizeScreenURLString = getAuthorizeScreenURL(

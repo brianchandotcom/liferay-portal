@@ -239,7 +239,7 @@ public class LayoutsAdminDisplayContext {
 		return _displayStyle;
 	}
 
-	public String getEditLayoutURL(Layout layout) throws PortalException {
+	public String getViewLayoutURL(Layout layout) throws PortalException {
 		if (!Objects.equals(layout.getType(), "content")) {
 			return PortalUtil.getLayoutFullURL(layout, _themeDisplay);
 		}
@@ -961,7 +961,7 @@ public class LayoutsAdminDisplayContext {
 			jsonObject.put("deleteURL", getDeleteLayoutURL(layout));
 		}
 
-		jsonObject.put("editLayoutURL", getEditLayoutURL(layout));
+		jsonObject.put("viewLayoutURL", getViewLayoutURL(layout));
 
 		if (showOrphanPortletsAction(layout)) {
 			jsonObject.put("orphanPortletsURL", getOrphanPortletsURL(layout));

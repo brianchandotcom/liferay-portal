@@ -30,9 +30,8 @@ Layout curLayout = (Layout)row.getObject();
 	showWhenSingleIcon="<%= true %>"
 >
 	<liferay-ui:icon
-		message="edit"
-		target="_blank"
-		url="<%= layoutsAdminDisplayContext.getEditLayoutURL(curLayout) %>"
+		message="view"
+		url="<%= layoutsAdminDisplayContext.getViewLayoutURL(curLayout) %>"
 	/>
 
 	<c:if test="<%= layoutsAdminDisplayContext.showConfigureAction(curLayout) %>">

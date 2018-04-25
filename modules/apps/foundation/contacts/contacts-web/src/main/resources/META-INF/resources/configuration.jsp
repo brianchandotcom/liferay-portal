@@ -19,16 +19,19 @@
 <div class="contacts-portlet">
 	<liferay-portlet:actionURL portletConfiguration="<%= true %>" var="configurationActionURL" />
 
-	<aui:form action="<%= configurationActionURL %>" method="post" name="fm">
+	<liferay-frontend:edit-form
+		action="<%= configurationActionURL %>"
+		method="post"
+		name="fm"
+	>
 		<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
 
-		<div class="portlet-configuration-body-content">
-			<div class="container-fluid-1280">
-				<liferay-ui:panel
+		<liferay-frontend:edit-form-body>
+			<liferay-frontend:fieldset-group>
+				<liferay-frontend:fieldset
 					collapsible="<%= true %>"
 					extended="<%= true %>"
-					persistState="<%= true %>"
-					title="user-profile"
+					label="user-profile"
 				>
 					<aui:select label="display-style" name="preferences--displayStyle--" value="<%= displayStyle %>">
 						<aui:option label="<%= ContactsConstants.DISPLAY_STYLE_FULL_LABEL %>" value="<%= ContactsConstants.DISPLAY_STYLE_FULL %>" />
@@ -69,12 +72,12 @@
 							<aui:input name="preferences--showWebsites--" type="checkbox" value="<%= showWebsites %>" />
 						</aui:col>
 					</aui:field-wrapper>
-				</liferay-ui:panel>
-			</div>
-		</div>
+				</liferay-frontend:fieldset>
+			</liferay-frontend:fieldset-group>
+		</liferay-frontend:edit-form-body>
 
-		<aui:button-row>
+		<liferay-frontend:edit-form-footer>
 			<aui:button type="submit" />
-		</aui:button-row>
-	</aui:form>
+		</liferay-frontend:edit-form-footer>
+	</liferay-frontend:edit-form>
 </div>

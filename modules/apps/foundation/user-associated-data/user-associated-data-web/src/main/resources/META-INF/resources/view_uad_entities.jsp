@@ -19,6 +19,8 @@
 <%
 ViewUADEntitiesDisplay viewUADEntitiesDisplay = (ViewUADEntitiesDisplay)request.getAttribute(UADWebKeys.VIEW_UAD_ENTITIES_DISPLAY);
 
+SearchContainer<UADEntity> uadEntitySearchContainer = viewUADEntitiesDisplay.getSearchContainer();
+
 portletDisplay.setShowBackIcon(true);
 
 PortletURL backURL = renderResponse.createRenderURL();
@@ -35,36 +37,16 @@ renderResponse.setTitle(StringBundler.concat(selectedUser.getFullName(), " - ", 
 	items="<%= viewUADEntitiesDisplay.getNavigationItems() %>"
 />
 
-<liferay-frontend:management-bar
-	includeCheckBox="<%= true %>"
+<clay:management-toolbar
+	actionItems="<%= viewUADEntitiesDisplay.getActionDropdownItems() %>"
+	infoPanelId="infoPanelId"
+	namespace="<%= renderResponse.getNamespace() %>"
 	searchContainerId="UADEntities"
->
-	<liferay-frontend:management-bar-buttons>
-		<liferay-frontend:management-bar-sidenav-toggler-button
-			icon="info-circle"
-			label="info"
-		/>
-
-		<liferay-frontend:management-bar-action-buttons>
-			<liferay-frontend:management-bar-sidenav-toggler-button
-				icon="info-circle"
-				label="info"
-			/>
-
-			<liferay-frontend:management-bar-button
-				href='<%= "javascript:" + renderResponse.getNamespace() + "doAnonymizeMultiple();" %>'
-				icon="magic"
-				label="anonymize"
-			/>
-
-			<liferay-frontend:management-bar-button
-				href='<%= "javascript:" + renderResponse.getNamespace() + "doDeleteMultiple();" %>'
-				icon="trash"
-				label="delete"
-			/>
-		</liferay-frontend:management-bar-action-buttons>
-	</liferay-frontend:management-bar-buttons>
-</liferay-frontend:management-bar>
+	selectable="<%= true %>"
+	showInfoButton="<%= true %>"
+	showSearch="<%= false %>"
+	totalItems="<%= uadEntitySearchContainer.getTotal() %>"
+/>
 
 <aui:form method="post" name="viewUADEntitiesFm">
 	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
@@ -86,7 +68,7 @@ renderResponse.setTitle(StringBundler.concat(selectedUser.getFullName(), " - ", 
 			<liferay-ui:search-container
 				emptyResultsMessage="no-entities-remain-of-this-type"
 				id="UADEntities"
-				searchContainer="<%= viewUADEntitiesDisplay.getSearchContainer() %>"
+				searchContainer="<%= uadEntitySearchContainer %>"
 			>
 				<liferay-ui:search-container-row
 					className="com.liferay.user.associated.data.web.internal.display.UADEntity"

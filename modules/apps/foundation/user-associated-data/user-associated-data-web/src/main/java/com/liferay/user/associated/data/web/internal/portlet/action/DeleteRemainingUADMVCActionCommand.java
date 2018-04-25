@@ -14,11 +14,13 @@
 
 package com.liferay.user.associated.data.web.internal.portlet.action;
 
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.user.associated.data.anonymizer.UADAnonymizer;
 import com.liferay.user.associated.data.constants.UserAssociatedDataPortletKeys;
 import com.liferay.user.associated.data.web.internal.registry.UADRegistry;
+import com.liferay.user.associated.data.web.internal.util.UADAnonymizerHelper;
 
 import java.util.Collection;
 
@@ -52,14 +54,19 @@ public class DeleteRemainingUADMVCActionCommand
 		Collection<UADAnonymizer> uadAnonymizers =
 			_uadRegistry.getUADAnonymizers();
 
+		User anonymousUser = _uadAnonymizerHelper.getAnonymousUser();
+
 		for (UADAnonymizer uadAnonymizer : uadAnonymizers) {
-			uadAnonymizer.autoAnonymizeAll(selectedUserId);
+			uadAnonymizer.autoAnonymizeAll(selectedUserId, anonymousUser);
 		}
 
 		String redirect = ParamUtil.getString(actionRequest, "redirect");
 
 		sendRedirect(actionRequest, actionResponse, redirect);
 	}
+
+	@Reference
+	private UADAnonymizerHelper _uadAnonymizerHelper;
 
 	@Reference
 	private UADRegistry _uadRegistry;

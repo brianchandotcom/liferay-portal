@@ -15,7 +15,7 @@
 </tr>
 <tr>
 	<td>MANAGE_DISPLAY_TEMPLATES_LINK</td>
-	<td>//a[contains(@id,'selectDDMTemplate') and contains(.,'Manage Display Templates')]</td>
+	<td>//a[contains(@id,'selectDDMTemplate') and contains(.,'Manage Templates')]</td>
 	<td></td>
 </tr>
 <tr>

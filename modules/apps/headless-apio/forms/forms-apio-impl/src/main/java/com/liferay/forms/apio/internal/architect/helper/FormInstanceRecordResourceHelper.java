@@ -17,7 +17,6 @@ package com.liferay.forms.apio.internal.architect.helper;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
-import com.liferay.apio.architect.language.Language;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecord;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
@@ -69,7 +68,7 @@ public class FormInstanceRecordResourceHelper {
 	}
 
 	public static String getFieldValuesJSON(
-		DDMFormInstanceRecord ddmFormInstanceRecord, Language language) {
+		DDMFormInstanceRecord ddmFormInstanceRecord, Locale locale) {
 
 		try {
 			Gson gson = new Gson();
@@ -87,8 +86,7 @@ public class FormInstanceRecordResourceHelper {
 				String name = ddmFormFieldValue.getName();
 				Value value = ddmFormFieldValue.getValue();
 
-				String valueString = value.getString(
-					language.getPreferredLocale());
+				String valueString = value.getString(locale);
 
 				formFieldValues.add(
 					new FormFieldValue(instanceId, name, valueString));

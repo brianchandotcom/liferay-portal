@@ -23,6 +23,7 @@ import com.liferay.apio.architect.routes.NestedCollectionRoutes;
 import com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance;
 import com.liferay.dynamic.data.mapping.service.DDMDataProviderInstanceService;
 import com.liferay.forms.apio.architect.identifier.DataProviderInstanceIdentifier;
+import com.liferay.person.apio.identifier.PersonIdentifier;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.site.apio.identifier.WebSiteIdentifier;
 
@@ -77,12 +78,14 @@ public class DataProviderInstanceNestedCollectionResource
 		).identifier(
 			DDMDataProviderInstance::getDataProviderInstanceId
 		).addBidirectionalModel(
-			"webSite", "data-provider-instance", WebSiteIdentifier.class,
-			DDMDataProviderInstance::getGroupId
+			"interactionService", "data-provider-instance",
+			WebSiteIdentifier.class, DDMDataProviderInstance::getGroupId
 		).addDate(
-			"createDate", DDMDataProviderInstance::getCreateDate
+			"dateCreated", DDMDataProviderInstance::getCreateDate
 		).addDate(
-			"modifiedDate", DDMDataProviderInstance::getModifiedDate
+			"dateModified", DDMDataProviderInstance::getModifiedDate
+		).addLinkedModel(
+			"author", PersonIdentifier.class, DDMDataProviderInstance::getUserId
 		).addLocalizedStringByLocale(
 			"description", DDMDataProviderInstance::getDescription
 		).addLocalizedStringByLocale(
@@ -91,14 +94,10 @@ public class DataProviderInstanceNestedCollectionResource
 			"companyId", DDMDataProviderInstance::getCompanyId
 		).addNumber(
 			"groupId", DDMDataProviderInstance::getGroupId
-		).addNumber(
-			"userId", DDMDataProviderInstance::getUserId
-		).addString(
-			"userName", DDMDataProviderInstance::getUserName
 		).addString(
 			"definition", DDMDataProviderInstance::getDefinition
 		).addString(
-			"type", DDMDataProviderInstance::getType
+			"additionalType", DDMDataProviderInstance::getType
 		).build();
 	}
 

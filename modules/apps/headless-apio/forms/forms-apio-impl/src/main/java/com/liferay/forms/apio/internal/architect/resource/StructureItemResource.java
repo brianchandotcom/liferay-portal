@@ -20,6 +20,7 @@ import com.liferay.apio.architect.routes.ItemRoutes;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.forms.apio.architect.identifier.StructureIdentifier;
+import com.liferay.person.apio.identifier.PersonIdentifier;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -58,13 +59,13 @@ public class StructureItemResource
 		).identifier(
 			DDMStructure::getStructureId
 		).addDate(
-			"createDate", DDMStructure::getCreateDate
+			"dateCreated", DDMStructure::getCreateDate
 		).addDate(
-			"modifiedDate", DDMStructure::getCreateDate
+			"dateModified", DDMStructure::getCreateDate
 		).addDate(
-			"lastPublishDate", DDMStructure::getLastPublishDate
-		).addString(
-			"userName", DDMStructure::getUserName
+			"datePublished", DDMStructure::getLastPublishDate
+		).addLinkedModel(
+			"author", PersonIdentifier.class, DDMStructure::getUserId
 		).addString(
 			"versionUserName", DDMStructure::getVersionUserName
 		).addString(
@@ -76,7 +77,7 @@ public class StructureItemResource
 		).addString(
 			"storageType", DDMStructure::getStorageType
 		).addNumber(
-			"type", DDMStructure::getType
+			"additionalType", DDMStructure::getType
 		).addLocalizedStringByLocale(
 			"description", DDMStructure::getDescription
 		).addLocalizedStringByLocale(

@@ -12,29 +12,46 @@
  * details.
  */
 
-package com.liferay.apio.architect.sample.liferay.portal.internal.converter;
+package com.liferay.apio.architect.error.internal.converter;
 
-import static javax.ws.rs.core.Response.Status.NOT_FOUND;
+import static javax.ws.rs.core.Response.Status.FORBIDDEN;
 
-import com.liferay.apio.architect.converter.ExceptionConverter;
+import com.liferay.apio.architect.converter.ExceptionMapper;
 import com.liferay.apio.architect.error.APIError;
-import com.liferay.portal.kernel.security.auth.PrincipalException;
+
+import javax.ws.rs.ForbiddenException;
+import javax.ws.rs.core.Response;
 
 import org.osgi.service.component.annotations.Component;
 
 /**
- * Converts a {@code PrincipalException} to its {@link APIError} representation.
+ * Converts a {@code ForbiddenException} to its {@link APIError} representation.
  *
  * @author Alejandro Hernández
  */
 @Component(immediate = true)
-public class PrincipalExceptionExceptionConverter
-	implements ExceptionConverter<PrincipalException> {
+public class ForbiddenExceptionMapper
+	extends WebApplicationExceptionConverter
+	implements ExceptionMapper<ForbiddenException> {
 
 	@Override
-	public APIError convert(PrincipalException pe) {
-		return new APIError(
-			pe, "Resource not found", "not-found", NOT_FOUND.getStatusCode());
+	public APIError map(ForbiddenException exception) {
+		return super.convert(exception);
+	}
+
+	@Override
+	protected Response.StatusType getStatusType() {
+		return FORBIDDEN;
+	}
+
+	@Override
+	protected String getTitle() {
+		return "Not permitted to access";
+	}
+
+	@Override
+	protected String getType() {
+		return "forbidden";
 	}
 
 }

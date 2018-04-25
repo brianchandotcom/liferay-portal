@@ -36,10 +36,11 @@ public class PathLongIdentifierMapper implements PathIdentifierMapper<Long> {
 
 	@Override
 	public Long map(Path path) {
-		Try<Long> longTry = Try.fromFallible(
-			() -> Long.parseLong(path.getId()));
-
-		return longTry.orElseThrow(BadRequestException::new);
+		return Try.fromFallible(
+			() -> Long.parseLong(path.getId())
+		).orElseThrow(
+			BadRequestException::new
+		);
 	}
 
 	@Override

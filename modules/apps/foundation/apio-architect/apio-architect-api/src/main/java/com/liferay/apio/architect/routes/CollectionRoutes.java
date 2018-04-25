@@ -469,9 +469,9 @@ public class CollectionRoutes<T> {
 		}
 
 		private List<Operation> _getOperations(Credentials credentials) {
-			Optional<Form> optional = Optional.ofNullable(_form);
-
-			return optional.filter(
+			return Optional.ofNullable(
+				_form
+			).filter(
 				__ -> _collectionPermissionFunction.apply(credentials)
 			).map(
 				form -> new Operation(form, POST, _name + "/create")

@@ -46,9 +46,9 @@ public class PaginationProvider implements Provider<Pagination> {
 	}
 
 	private int _getAsInt(String parameterValue, int defaultValue) {
-		Try<String> stringTry = Try.success(parameterValue);
-
-		return stringTry.map(
+		return Try.success(
+			parameterValue
+		).map(
 			Integer::parseInt
 		).filter(
 			integer -> integer > 0

@@ -92,9 +92,11 @@ public class MediaObjectUpdaterForm {
 	 * @review
 	 */
 	public Boolean getMajorVersion() {
-		Optional<Boolean> optional = Optional.ofNullable(_majorVersion);
-
-		return optional.orElse(true);
+		return Optional.ofNullable(
+			_majorVersion
+		).orElse(
+			true
+		);
 	}
 
 	/**

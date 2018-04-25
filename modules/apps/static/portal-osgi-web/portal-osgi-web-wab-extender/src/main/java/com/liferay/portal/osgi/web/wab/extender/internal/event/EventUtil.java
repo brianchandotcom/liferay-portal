@@ -23,6 +23,8 @@ import java.util.ArrayList;
 import java.util.Dictionary;
 import java.util.List;
 
+import org.apache.felix.utils.log.Logger;
+
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
@@ -50,6 +52,8 @@ public class EventUtil
 
 	public EventUtil(BundleContext bundleContext) {
 		_bundleContext = bundleContext;
+
+		_logger = new Logger(bundleContext);
 
 		_webExtenderBundle = _bundleContext.getBundle();
 
@@ -99,9 +103,9 @@ public class EventUtil
 			WabUtil.getWebContextPath(bundle));
 
 		if (collision) {
-			properties.put("collision", contextPath);
-
 			List<Long> collidedBundleIds = new ArrayList<>();
+
+			List<String> collidedBundleNames = new ArrayList<>();
 
 			BundleContext bundleContext = bundle.getBundleContext();
 
@@ -118,10 +122,31 @@ public class EventUtil
 					curContextPath.equals(contextPath)) {
 
 					collidedBundleIds.add(curBundle.getBundleId());
+
+					collidedBundleNames.add(curBundle.getSymbolicName());
 				}
 			}
 
-			properties.put("collision.bundles", collidedBundleIds);
+			if (!collidedBundleIds.isEmpty()) {
+				properties.put("collision", contextPath);
+
+				properties.put("collision.bundles", collidedBundleIds);
+
+				StringBuilder sb = new StringBuilder(7);
+
+				sb.append("Newly added bundle: \"");
+				sb.append(bundle.getSymbolicName());
+				sb.append("\" has the same Web-ContextPath as the following ");
+				sb.append("bundles: ");
+				sb.append(collidedBundleNames);
+				sb.append(". This can lead to unexpected behavior when multiple ");
+				sb.append("bundles provide the same context path. See ");
+				sb.append("https://osgi.org/specification/osgi.cmpn");
+				sb.append("/7.0.0/service.http.whiteboard.html");
+				sb.append("#service.http.whiteboard.servletcontext");
+
+				_logger.log(Logger.LOG_ERROR, sb.toString());
+			}
 		}
 
 		properties.put("context.path", contextPath);
@@ -159,6 +184,7 @@ public class EventUtil
 	private EventAdmin _eventAdmin;
 	private final ServiceTracker<EventAdmin, EventAdmin>
 		_eventAdminServiceTracker;
+	private final Logger _logger;
 	private final Bundle _webExtenderBundle;
 
 }

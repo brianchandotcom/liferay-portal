@@ -354,10 +354,9 @@ public class JSONObjectBuilder {
 		 * @return the builder's array value step
 		 */
 		public ArrayValueStep arrayValue() {
-			Optional<JsonElement> optional = Optional.ofNullable(
-				_jsonObject.get(_name));
-
-			JsonArray jsonArray = optional.filter(
+			JsonArray jsonArray = Optional.ofNullable(
+				_jsonObject.get(_name)
+			).filter(
 				JsonElement::isJsonArray
 			).map(
 				JsonArray.class::cast
@@ -386,10 +385,9 @@ public class JSONObjectBuilder {
 		 * @return the builder's field step
 		 */
 		public FieldStep field(String name) {
-			Optional<JsonElement> optional = Optional.ofNullable(
-				_jsonObject.get(_name));
-
-			JsonObject jsonObject = optional.filter(
+			JsonObject jsonObject = Optional.ofNullable(
+				_jsonObject.get(_name)
+			).filter(
 				JsonElement::isJsonObject
 			).map(
 				JsonObject.class::cast

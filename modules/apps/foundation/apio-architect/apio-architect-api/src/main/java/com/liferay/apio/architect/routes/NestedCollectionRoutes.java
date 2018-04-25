@@ -505,9 +505,9 @@ public class NestedCollectionRoutes<T, S> {
 		private List<Operation> _getOperations(
 			Credentials credentials, S identifier) {
 
-			Optional<Form> optional = Optional.ofNullable(_form);
-
-			return optional.filter(
+			return Optional.ofNullable(
+				_form
+			).filter(
 				__ -> _nestedCollectionPermissionFunction.apply(
 					credentials, identifier)
 			).map(

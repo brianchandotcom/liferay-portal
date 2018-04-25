@@ -16,7 +16,7 @@ package com.liferay.apio.architect.error.internal.converter;
 
 import static javax.ws.rs.core.Response.Status.INTERNAL_SERVER_ERROR;
 
-import com.liferay.apio.architect.converter.ExceptionConverter;
+import com.liferay.apio.architect.converter.ExceptionMapper;
 import com.liferay.apio.architect.error.APIError;
 
 import javax.ws.rs.InternalServerErrorException;
@@ -31,12 +31,12 @@ import org.osgi.service.component.annotations.Component;
  * @author Alejandro Hernández
  */
 @Component(immediate = true)
-public class InternalServerErrorExceptionConverter
+public class InternalServerErrorExceptionMapper
 	extends WebApplicationExceptionConverter
-	implements ExceptionConverter<InternalServerErrorException> {
+	implements ExceptionMapper<InternalServerErrorException> {
 
 	@Override
-	public APIError convert(InternalServerErrorException exception) {
+	public APIError map(InternalServerErrorException exception) {
 		return super.convert(exception);
 	}
 

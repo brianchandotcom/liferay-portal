@@ -617,21 +617,19 @@ public class FormUtil {
 
 		_getValueField(
 			body, key, required,
-			value -> {
-				Try<String> stringTry = Try.success(value);
-
-				stringTry.map(
-					NumberFormat.getInstance()::parse
-				).map(
-					function::apply
-				).voidFold(
-					__ -> {
-						throw new BadRequestException(
-							"Field \"" + key + "\" should be a number");
-					},
-					consumer::accept
-				);
-			});
+			value -> Try.success(
+				value
+			).map(
+				NumberFormat.getInstance()::parse
+			).map(
+				function::apply
+			).voidFold(
+				__ -> {
+					throw new BadRequestException(
+						"Field \"" + key + "\" should be a number");
+				},
+				consumer::accept
+			));
 	}
 
 	private static <T extends Number> void _getNumberList(

@@ -122,9 +122,7 @@ public class PersonModel {
 	 * @return the person, if present; {@code Optional#empty()} otherwise
 	 */
 	public static Optional<PersonModel> get(long id) {
-		PersonModel personModel = _personModels.get(id);
-
-		return Optional.ofNullable(personModel);
+		return Optional.ofNullable(_personModels.get(id));
 	}
 
 	/**

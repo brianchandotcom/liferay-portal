@@ -223,10 +223,9 @@ public class PageEndpointImpl<T, S> implements PageEndpoint<T> {
 
 			String className = relatedIdentifierClass.getName();
 
-			Optional<Class<Identifier>> optional =
-				_identifierClassFunction.apply(nestedName);
-
-			return optional.map(
+			return _identifierClassFunction.apply(
+				nestedName
+			).map(
 				Class::getName
 			).map(
 				className::equals
@@ -239,22 +238,19 @@ public class PageEndpointImpl<T, S> implements PageEndpoint<T> {
 	private ThrowableFunction<SingleModel<T>, Optional<Object>>
 		_getIdentifierFunction(String nestedName) {
 
-		return parentSingleModel -> {
-			Optional<Representor<T, Object>> optional =
-				_representorSupplier.get();
+		Optional<Representor<T, Object>> optional = _representorSupplier.get();
 
-			return optional.map(
-				Representor::getRelatedCollections
-			).filter(
-				stream -> stream.anyMatch(
-					_getFilterRelatedCollectionPredicate(nestedName))
-			).flatMap(
-				__ -> _representorSupplier.get()
-			).map(
-				representor -> representor.getIdentifier(
-					parentSingleModel.getModel())
-			);
-		};
+		return parentSingleModel -> optional.map(
+			Representor::getRelatedCollections
+		).filter(
+			stream -> stream.anyMatch(
+				_getFilterRelatedCollectionPredicate(nestedName))
+		).flatMap(
+			__ -> _representorSupplier.get()
+		).map(
+			representor -> representor.getIdentifier(
+				parentSingleModel.getModel())
+		);
 	}
 
 	private final Supplier<Optional<CollectionRoutes<T>>>

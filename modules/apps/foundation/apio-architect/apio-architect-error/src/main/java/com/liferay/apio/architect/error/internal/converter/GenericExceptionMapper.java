@@ -14,45 +14,26 @@
 
 package com.liferay.apio.architect.error.internal.converter;
 
-import static javax.ws.rs.core.Response.Status.UNAUTHORIZED;
+import static javax.ws.rs.core.Response.Status.INTERNAL_SERVER_ERROR;
 
-import com.liferay.apio.architect.converter.ExceptionConverter;
+import com.liferay.apio.architect.converter.ExceptionMapper;
 import com.liferay.apio.architect.error.APIError;
-
-import javax.ws.rs.NotAuthorizedException;
-import javax.ws.rs.core.Response;
 
 import org.osgi.service.component.annotations.Component;
 
 /**
- * Converts a {@code NotAuthorizedException} to its {@link APIError}
- * representation.
+ * Converts any exception to its {@link APIError} representation.
  *
  * @author Alejandro Hernández
  */
 @Component(immediate = true)
-public class NotAuthorizedExceptionConverter
-	extends WebApplicationExceptionConverter
-	implements ExceptionConverter<NotAuthorizedException> {
+public class GenericExceptionMapper implements ExceptionMapper<Exception> {
 
 	@Override
-	public APIError convert(NotAuthorizedException exception) {
-		return super.convert(exception);
-	}
-
-	@Override
-	protected Response.StatusType getStatusType() {
-		return UNAUTHORIZED;
-	}
-
-	@Override
-	protected String getTitle() {
-		return "Authentication failure";
-	}
-
-	@Override
-	protected String getType() {
-		return "not-authorized";
+	public APIError map(Exception exception) {
+		return new APIError(
+			exception, "General server error", "server-error",
+			INTERNAL_SERVER_ERROR.getStatusCode());
 	}
 
 }

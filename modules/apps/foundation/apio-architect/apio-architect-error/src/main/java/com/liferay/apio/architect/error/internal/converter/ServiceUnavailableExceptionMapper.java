@@ -16,7 +16,7 @@ package com.liferay.apio.architect.error.internal.converter;
 
 import static javax.ws.rs.core.Response.Status.SERVICE_UNAVAILABLE;
 
-import com.liferay.apio.architect.converter.ExceptionConverter;
+import com.liferay.apio.architect.converter.ExceptionMapper;
 import com.liferay.apio.architect.error.APIError;
 
 import javax.ws.rs.ServiceUnavailableException;
@@ -31,12 +31,12 @@ import org.osgi.service.component.annotations.Component;
  * @author Alejandro Hernández
  */
 @Component(immediate = true)
-public class ServiceUnavailableExceptionConverter
+public class ServiceUnavailableExceptionMapper
 	extends WebApplicationExceptionConverter
-	implements ExceptionConverter<ServiceUnavailableException> {
+	implements ExceptionMapper<ServiceUnavailableException> {
 
 	@Override
-	public APIError convert(ServiceUnavailableException exception) {
+	public APIError map(ServiceUnavailableException exception) {
 		return super.convert(exception);
 	}
 

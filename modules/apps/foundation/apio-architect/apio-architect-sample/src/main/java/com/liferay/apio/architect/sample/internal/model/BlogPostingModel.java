@@ -101,9 +101,7 @@ public class BlogPostingModel {
 	 * @return the blog posting, if present; {@code Optional#empty()} otherwise
 	 */
 	public static Optional<BlogPostingModel> get(long id) {
-		BlogPostingModel blogPostingModel = _blogPostings.get(id);
-
-		return Optional.ofNullable(blogPostingModel);
+		return Optional.ofNullable(_blogPostings.get(id));
 	}
 
 	/**

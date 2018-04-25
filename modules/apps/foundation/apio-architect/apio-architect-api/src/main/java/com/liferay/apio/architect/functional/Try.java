@@ -132,9 +132,9 @@ public abstract class Try<T> {
 		Objects.requireNonNull(throwableSupplier);
 		Objects.requireNonNull(supplier);
 
-		Try<Optional<T>> optionalTry = fromFallible(throwableSupplier);
-
-		return optionalTry.map(
+		return Try.fromFallible(
+			throwableSupplier
+		).map(
 			Optional::get
 		).mapFailMatching(
 			NoSuchElementException.class, supplier

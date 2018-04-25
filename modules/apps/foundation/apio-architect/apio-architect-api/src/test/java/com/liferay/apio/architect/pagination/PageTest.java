@@ -64,6 +64,18 @@ public class PageTest {
 	}
 
 	@Test
+	public void testGetLastPageNumberIsOneWithEmptyList() {
+		Pagination pagination = new Pagination(30, 1);
+
+		PageItems<String> pageItems = new PageItems<>(emptyList(), 0);
+
+		Page<String> page = new Page<>(
+			"", pageItems, pagination, _path, emptyList());
+
+		assertThat(page.getLastPageNumber(), is(1));
+	}
+
+	@Test
 	public void testGetLastPageNumberReturnsLastPageNumber() {
 		assertThat(_page.getLastPageNumber(), is(10));
 	}
@@ -105,8 +117,6 @@ public class PageTest {
 	public void testHasNextReturnsFalseWhenIsLast() {
 		Pagination pagination = new Pagination(1, 10);
 
-		_path = new Path("name", "id");
-
 		Page<String> page = new Page<>(
 			"", _pageItems, pagination, _path, emptyList());
 
@@ -122,8 +132,6 @@ public class PageTest {
 	@Test
 	public void testHasPreviousReturnsFalseWhenIsFirst() {
 		Pagination pagination = new Pagination(1, 1);
-
-		_path = new Path("name", "id");
 
 		Page<String> page = new Page<>(
 			"", _pageItems, pagination, _path, emptyList());

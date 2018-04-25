@@ -2,6 +2,7 @@
 
 <suppressions>
 	<checkstyle>
+		<suppress checks="SelfReferenceCheck" files="apio-architect-api/src/main/java/com/liferay/apio/architect/functional/Try\.java" />
 		<suppress checks="VariableNameCheck" files="apio-architect-api/src/main/java/com/liferay/apio/architect/routes/.*" />
 	</checkstyle>
 	<source-check>

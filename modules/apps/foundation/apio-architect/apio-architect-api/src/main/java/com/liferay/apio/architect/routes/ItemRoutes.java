@@ -629,19 +629,17 @@ public class ItemRoutes<T, S> {
 
 			List<Operation> operations = new ArrayList<>();
 
-			Optional<BiFunction<Credentials, S, Boolean>> optional1 =
-				Optional.ofNullable(_deleteItemPermissionFunction);
-
-			optional1.filter(
+			Optional.ofNullable(
+				_deleteItemPermissionFunction
+			).filter(
 				function -> function.apply(credentials, identifier)
 			).ifPresent(
 				__ -> operations.add(new Operation(DELETE, _name + "/delete"))
 			);
 
-			Optional<BiFunction<Credentials, S, Boolean>> optional2 =
-				Optional.ofNullable(_updateItemPermissionFunction);
-
-			optional2.filter(
+			Optional.ofNullable(
+				_updateItemPermissionFunction
+			).filter(
 				function -> function.apply(credentials, identifier)
 			).ifPresent(
 				__ -> operations.add(

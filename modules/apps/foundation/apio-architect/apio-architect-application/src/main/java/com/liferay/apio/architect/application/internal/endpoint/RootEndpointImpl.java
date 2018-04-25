@@ -159,9 +159,9 @@ public class RootEndpointImpl implements RootEndpoint {
 	private <T, S> Try<SingleModel<T>> _getSingleModelTry(
 		String name, String id) {
 
-		Try<String> stringTry = Try.success(name);
-
-		return stringTry.<ItemRoutes<T, S>>mapOptional(
+		return Try.success(
+			name
+		).<ItemRoutes<T, S>>mapOptional(
 			_itemRouterManager::getItemRoutesOptional
 		).mapOptional(
 			ItemRoutes::getItemFunctionOptional, notFound(name, id)

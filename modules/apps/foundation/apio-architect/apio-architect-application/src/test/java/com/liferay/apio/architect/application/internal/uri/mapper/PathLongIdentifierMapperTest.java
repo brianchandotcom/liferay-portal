@@ -46,10 +46,7 @@ public class PathLongIdentifierMapperTest {
 
 	@Test(expected = BadRequestException.class)
 	public void testMapThrowsExceptionIfNoLongPathId() {
-		PathLongIdentifierMapper pathLongIdentifierMapper =
-			new PathLongIdentifierMapper();
-
-		pathLongIdentifierMapper.map(new Path("name", "wrong"));
+		_pathIdentifierMapper.map(new Path("name", "wrong"));
 	}
 
 	private final PathIdentifierMapper<Long> _pathIdentifierMapper =

@@ -53,9 +53,9 @@ public class GenericUtil {
 	public static <S> Try<Class<S>> getGenericTypeArgumentFromTypeTry(
 		Type type, Class<?> interfaceClass, int position) {
 
-		Try<Type> typeTry = Try.success(type);
-
-		return typeTry.filter(
+		return Try.success(
+			type
+		).filter(
 			ParameterizedType.class::isInstance
 		).map(
 			ParameterizedType.class::cast

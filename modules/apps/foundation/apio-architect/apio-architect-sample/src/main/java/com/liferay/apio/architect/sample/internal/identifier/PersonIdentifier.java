@@ -17,9 +17,9 @@ package com.liferay.apio.architect.sample.internal.identifier;
 import com.liferay.apio.architect.identifier.Identifier;
 
 /**
- * Represent the identifier for a {@code BlogPosting} resource.
+ * Represent the identifier for a {@code Person} resource.
  *
  * @author Alejandro Hernández
  */
-public interface BlogPostingId extends Identifier<Long> {
+public interface PersonIdentifier extends Identifier<Long> {
 }

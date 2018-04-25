@@ -27,6 +27,12 @@ buildscript {
 apply plugin: AppDockerPlugin
 apply plugin: CoverallsPlugin
 
+configurations.all {
+	resolutionStrategy {
+		force 'xml-apis:xml-apis:1.4.01'
+	}
+}
+
 allprojects {
 	apply plugin: JacocoPlugin
 

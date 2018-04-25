@@ -21,5 +21,5 @@ import com.liferay.apio.architect.identifier.Identifier;
  *
  * @author Alejandro Hernández
  */
-public interface BlogPostingCommentId extends Identifier<Long> {
+public interface BlogPostingCommentIdentifier extends Identifier<Long> {
 }

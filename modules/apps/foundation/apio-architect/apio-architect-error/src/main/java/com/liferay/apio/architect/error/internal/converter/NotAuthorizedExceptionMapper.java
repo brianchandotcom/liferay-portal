@@ -14,44 +14,45 @@
 
 package com.liferay.apio.architect.error.internal.converter;
 
-import static javax.ws.rs.core.Response.Status.FORBIDDEN;
+import static javax.ws.rs.core.Response.Status.UNAUTHORIZED;
 
-import com.liferay.apio.architect.converter.ExceptionConverter;
+import com.liferay.apio.architect.converter.ExceptionMapper;
 import com.liferay.apio.architect.error.APIError;
 
-import javax.ws.rs.ForbiddenException;
+import javax.ws.rs.NotAuthorizedException;
 import javax.ws.rs.core.Response;
 
 import org.osgi.service.component.annotations.Component;
 
 /**
- * Converts a {@code ForbiddenException} to its {@link APIError} representation.
+ * Converts a {@code NotAuthorizedException} to its {@link APIError}
+ * representation.
  *
  * @author Alejandro Hernández
  */
 @Component(immediate = true)
-public class ForbiddenExceptionConverter
+public class NotAuthorizedExceptionMapper
 	extends WebApplicationExceptionConverter
-	implements ExceptionConverter<ForbiddenException> {
+	implements ExceptionMapper<NotAuthorizedException> {
 
 	@Override
-	public APIError convert(ForbiddenException exception) {
+	public APIError map(NotAuthorizedException exception) {
 		return super.convert(exception);
 	}
 
 	@Override
 	protected Response.StatusType getStatusType() {
-		return FORBIDDEN;
+		return UNAUTHORIZED;
 	}
 
 	@Override
 	protected String getTitle() {
-		return "Not permitted to access";
+		return "Authentication failure";
 	}
 
 	@Override
 	protected String getType() {
-		return "forbidden";
+		return "not-authorized";
 	}
 
 }

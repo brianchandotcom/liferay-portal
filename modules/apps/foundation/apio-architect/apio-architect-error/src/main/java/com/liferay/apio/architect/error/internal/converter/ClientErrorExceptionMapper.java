@@ -12,29 +12,34 @@
  * details.
  */
 
-package com.liferay.apio.architect.sample.liferay.portal.internal.converter;
+package com.liferay.apio.architect.error.internal.converter;
 
-import static javax.ws.rs.core.Response.Status.FORBIDDEN;
-
-import com.liferay.apio.architect.converter.ExceptionConverter;
+import com.liferay.apio.architect.converter.ExceptionMapper;
 import com.liferay.apio.architect.error.APIError;
+
+import javax.ws.rs.ClientErrorException;
+import javax.ws.rs.core.Response;
 
 import org.osgi.service.component.annotations.Component;
 
 /**
- * Converts a {@code SecurityException} to its {@link APIError} representation.
+ * Converts a {@code ClientErrorException} to its {@link APIError}
+ * representation.
  *
  * @author Alejandro Hernández
  */
 @Component(immediate = true)
-public class SecurityExceptionConverter
-	implements ExceptionConverter<SecurityException> {
+public class ClientErrorExceptionMapper
+	implements ExceptionMapper<ClientErrorException> {
 
 	@Override
-	public APIError convert(SecurityException se) {
+	public APIError map(ClientErrorException exception) {
+		Response response = exception.getResponse();
+
+		int status = response.getStatus();
+
 		return new APIError(
-			se, "Not permitted to access", "forbidden",
-			FORBIDDEN.getStatusCode());
+			exception, "General server error", "client-error", status);
 	}
 
 }

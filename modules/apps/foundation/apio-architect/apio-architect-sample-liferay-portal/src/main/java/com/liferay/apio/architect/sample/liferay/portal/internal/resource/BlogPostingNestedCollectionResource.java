@@ -94,13 +94,11 @@ public class BlogPostingNestedCollectionResource
 			"interactionService", "blogPosts", WebSiteIdentifier.class,
 			BlogsEntryModel::getGroupId
 		).addDate(
-			"createDate", BlogsEntry::getCreateDate
+			"dateCreated", BlogsEntry::getCreateDate
 		).addDate(
-			"displayDate", BlogsEntry::getDisplayDate
+			"dateModified", BlogsEntry::getModifiedDate
 		).addDate(
-			"modifiedDate", BlogsEntry::getModifiedDate
-		).addDate(
-			"publishedDate", BlogsEntry::getLastPublishDate
+			"datePublished", BlogsEntry::getLastPublishDate
 		).addLink(
 			"license", "https://creativecommons.org/licenses/by/4.0"
 		).addString(

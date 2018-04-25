@@ -132,9 +132,9 @@ public class MediaObjectNestedCollectionResource
 	}
 
 	private BinaryFile _getBinaryFile(FileEntry fileEntry) {
-		Try<FileEntry> fileEntryTry = Try.success(fileEntry);
-
-		return fileEntryTry.map(
+		return Try.success(
+			fileEntry
+		).map(
 			file -> new BinaryFile(
 				file.getContentStream(), fileEntry.getSize(),
 				file.getMimeType())

@@ -19,7 +19,7 @@ import aQute.bnd.annotation.ConsumerType;
 import com.liferay.apio.architect.error.APIError;
 
 /**
- * Defines an interface whose instances convert between an exception and its
+ * Defines an interface whose instances map between an exception and its
  * {@link APIError} representation. Use the exception's message to provide
  * meaningful information about the error.
  *
@@ -27,14 +27,14 @@ import com.liferay.apio.architect.error.APIError;
  * @param  <T> the exception's type
  */
 @ConsumerType
-public interface ExceptionConverter<T extends Exception> {
+public interface ExceptionMapper<T extends Exception> {
 
 	/**
 	 * Converts an exception to its {@link APIError} representation.
 	 *
-	 * @param  exception the exception to convert
+	 * @param  exception the exception to map
 	 * @return the exception's {@link APIError} representation
 	 */
-	public APIError convert(T exception);
+	public APIError map(T exception);
 
 }

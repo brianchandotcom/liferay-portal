@@ -73,9 +73,9 @@ public class PathIdentifierMapperManagerImpl
 	private <T> Try<PathIdentifierMapper<T>> _getPathIdentifierMapperTry(
 		String name) {
 
-		Try<String> stringTry = Try.success(name);
-
-		return stringTry.mapOptional(
+		return Try.success(
+			name
+		).mapOptional(
 			_identifierClassManager::getIdentifierClassOptional
 		).flatMap(
 			clazz -> getGenericTypeArgumentTry(clazz, Identifier.class, 0)

@@ -48,6 +48,16 @@ public class EmbeddedProviderTest {
 		assertThat(predicate.test("randomThing"), is(false));
 	}
 
+	@Test
+	public void testEmbeddedProviderReturnValidEmbeddedIfNested() {
+		Predicate<String> predicate = _getPredicate("embedded.inner.other");
+
+		assertThat(predicate.test("embedded"), is(true));
+		assertThat(predicate.test("embedded.inner"), is(true));
+		assertThat(predicate.test("embedded.inner.other"), is(true));
+		assertThat(predicate.test("embedded.other"), is(false));
+	}
+
 	private Predicate<String> _getPredicate(String embedded) {
 		EmbeddedProvider embeddedProvider = new EmbeddedProvider();
 

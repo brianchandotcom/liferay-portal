@@ -19,6 +19,7 @@ import static com.liferay.apio.architect.unsafe.Unsafe.unsafeCast;
 import static org.osgi.service.component.annotations.ReferenceCardinality.OPTIONAL;
 import static org.osgi.service.component.annotations.ReferencePolicyOption.GREEDY;
 
+import com.liferay.apio.architect.credentials.Credentials;
 import com.liferay.apio.architect.logger.ApioLogger;
 import com.liferay.apio.architect.provider.Provider;
 import com.liferay.apio.architect.wiring.osgi.internal.manager.base.ClassNameBaseManager;
@@ -68,6 +69,10 @@ public class ProviderManagerImpl
 		HttpServletRequest httpServletRequest, Class<T> clazz) {
 
 		Optional<T> optional = provideOptional(httpServletRequest, clazz);
+
+		if (clazz.equals(Credentials.class) && !optional.isPresent()) {
+			return unsafeCast((Credentials)() -> "");
+		}
 
 		return optional.orElseGet(
 			() -> {

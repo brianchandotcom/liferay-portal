@@ -21,29 +21,29 @@ import com.liferay.apio.architect.error.APIError;
 import java.util.Optional;
 
 /**
- * Provides methods to convert exceptions to generic {@link APIError}
+ * Provides methods to map exceptions to generic {@link APIError}
  * representations.
  *
  * @author Alejandro Hernández
  */
 @ProviderType
-public interface ExceptionConverterManager {
+public interface ExceptionMapperManager {
 
 	/**
 	 * Converts an exception to its generic {@link APIError} representation, if
-	 * a valid {@link com.liferay.apio.architect.converter.ExceptionConverter}
+	 * a valid {@link ExceptionMapper}
 	 * exists. Returns {@code Optional#empty()} otherwise.
 	 *
 	 * <p>
-	 * If no {@code ExceptionConverter} can be found for the exception class,
-	 * this method tries to use the superclass of {@code ExceptionConverter}.
+	 * If no {@code ExceptionMapper} can be found for the exception class,
+	 * this method tries to use the superclass of {@code ExceptionMapper}.
 	 * </p>
 	 *
-	 * @param  exception the exception to convert
+	 * @param  exception the exception to map
 	 * @return the exception's {@code APIError} representation, if a valid
-	 *         {@code ExceptionConverter} is present; {@code Optional#empty()}
+	 *         {@code ExceptionMapper} is present; {@code Optional#empty()}
 	 *         otherwise
 	 */
-	public <T extends Exception> Optional<APIError> convert(T exception);
+	public <T extends Exception> Optional<APIError> map(T exception);
 
 }

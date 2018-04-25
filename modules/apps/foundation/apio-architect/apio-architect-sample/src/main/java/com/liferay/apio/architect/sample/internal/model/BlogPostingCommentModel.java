@@ -138,9 +138,9 @@ public class BlogPostingCommentModel {
 	 * @return the total number of comments
 	 */
 	public static int getCount(long blogPostingModelId) {
-		Optional<Long> optional = Optional.of(blogPostingModelId);
-
-		return optional.map(
+		return Optional.of(
+			blogPostingModelId
+		).map(
 			_blogPostingCommentModels::get
 		).map(
 			Map::size
@@ -161,9 +161,9 @@ public class BlogPostingCommentModel {
 	public static List<BlogPostingCommentModel> getPage(
 		long blogPostingModelId, int start, int end) {
 
-		Optional<Long> optional = Optional.of(blogPostingModelId);
-
-		return optional.map(
+		return Optional.of(
+			blogPostingModelId
+		).map(
 			_blogPostingCommentModels::get
 		).map(
 			Map::values

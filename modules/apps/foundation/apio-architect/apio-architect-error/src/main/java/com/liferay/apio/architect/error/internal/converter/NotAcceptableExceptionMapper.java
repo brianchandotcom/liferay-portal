@@ -14,45 +14,45 @@
 
 package com.liferay.apio.architect.error.internal.converter;
 
-import static javax.ws.rs.core.Response.Status.UNSUPPORTED_MEDIA_TYPE;
+import static javax.ws.rs.core.Response.Status.NOT_ACCEPTABLE;
 
-import com.liferay.apio.architect.converter.ExceptionConverter;
+import com.liferay.apio.architect.converter.ExceptionMapper;
 import com.liferay.apio.architect.error.APIError;
 
-import javax.ws.rs.NotSupportedException;
+import javax.ws.rs.NotAcceptableException;
 import javax.ws.rs.core.Response;
 
 import org.osgi.service.component.annotations.Component;
 
 /**
- * Converts a {@code NotSupportedException} to its {@link APIError}
+ * Converts a {@code NotAcceptableException} to its {@link APIError}
  * representation.
  *
  * @author Alejandro Hernández
  */
 @Component(immediate = true)
-public class NotSupportedExceptionConverter
+public class NotAcceptableExceptionMapper
 	extends WebApplicationExceptionConverter
-	implements ExceptionConverter<NotSupportedException> {
+	implements ExceptionMapper<NotAcceptableException> {
 
 	@Override
-	public APIError convert(NotSupportedException exception) {
+	public APIError map(NotAcceptableException exception) {
 		return super.convert(exception);
 	}
 
 	@Override
 	protected Response.StatusType getStatusType() {
-		return UNSUPPORTED_MEDIA_TYPE;
+		return NOT_ACCEPTABLE;
 	}
 
 	@Override
 	protected String getTitle() {
-		return "Client posted media type not supported";
+		return "Client media type requested not supported";
 	}
 
 	@Override
 	protected String getType() {
-		return "not-supported";
+		return "not-acceptable";
 	}
 
 }

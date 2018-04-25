@@ -68,7 +68,7 @@ public class WebBundleDeployer {
 	}
 
 	public ServiceRegistration<PortalProfile> doStart(Bundle bundle) {
-		_eventUtil.sendEvent(bundle, EventUtil.DEPLOYING, null, false);
+		_eventUtil.sendEvent(bundle, EventUtil.DEPLOYING, null, true);
 
 		String contextPath = WabUtil.getWebContextPath(bundle);
 

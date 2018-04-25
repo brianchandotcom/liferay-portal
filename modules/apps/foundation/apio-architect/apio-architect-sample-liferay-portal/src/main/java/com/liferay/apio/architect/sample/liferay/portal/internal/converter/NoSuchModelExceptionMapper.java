@@ -12,29 +12,30 @@
  * details.
  */
 
-package com.liferay.apio.architect.error.internal.converter;
+package com.liferay.apio.architect.sample.liferay.portal.internal.converter;
 
-import static javax.ws.rs.core.Response.Status.INTERNAL_SERVER_ERROR;
+import static javax.ws.rs.core.Response.Status.NOT_FOUND;
 
-import com.liferay.apio.architect.converter.ExceptionConverter;
+import com.liferay.apio.architect.converter.ExceptionMapper;
 import com.liferay.apio.architect.error.APIError;
+import com.liferay.portal.kernel.exception.NoSuchModelException;
 
 import org.osgi.service.component.annotations.Component;
 
 /**
- * Converts any exception to its {@link APIError} representation.
+ * Converts a {@code NoSuchModelException} to its {@link APIError}
+ * representation.
  *
  * @author Alejandro Hernández
  */
 @Component(immediate = true)
-public class GenericExceptionConverter
-	implements ExceptionConverter<Exception> {
+public class NoSuchModelExceptionMapper
+	implements ExceptionMapper<NoSuchModelException> {
 
 	@Override
-	public APIError convert(Exception exception) {
+	public APIError map(NoSuchModelException nsme) {
 		return new APIError(
-			exception, "General server error", "server-error",
-			INTERNAL_SERVER_ERROR.getStatusCode());
+			nsme, "Resource not found", "not-found", NOT_FOUND.getStatusCode());
 	}
 
 }

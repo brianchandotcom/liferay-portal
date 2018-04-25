@@ -7,12 +7,12 @@ dependencies {
 	compileInclude group: "dk.brics.automaton", name: "automaton", version: "1.11-8"
 	compileInclude group: "org.apache.commons", name: "commons-lang3", version: "3.5"
 
-	provided group: "javax.servlet", name: "javax.servlet-api", version: "3.0.1"
-	provided group: "javax.ws.rs", name: "javax.ws.rs-api", version: "2.0.1"
-	provided group: "org.osgi", name: "org.osgi.core", version: "6.0.0"
-	provided group: "org.osgi", name: "org.osgi.service.component.annotations", version: "1.3.0"
-	provided group: "org.slf4j", name: "slf4j-api", version: "1.7.25"
-	provided project(":apps:foundation:apio-architect:apio-architect-api")
+	compileOnly group: "javax.servlet", name: "javax.servlet-api", version: "3.0.1"
+	compileOnly group: "javax.ws.rs", name: "javax.ws.rs-api", version: "2.0.1"
+	compileOnly group: "org.osgi", name: "org.osgi.core", version: "6.0.0"
+	compileOnly group: "org.osgi", name: "org.osgi.service.component.annotations", version: "1.3.0"
+	compileOnly group: "org.slf4j", name: "slf4j-api", version: "1.7.25"
+	compileOnly project(":apps:foundation:apio-architect:apio-architect-api")
 
 	testCompile group: "com.github.stefanbirkner", name: "system-rules", version: "1.17.0"
 	testCompile group: "org.hamcrest", name: "java-hamcrest", version: "2.0.0.0"

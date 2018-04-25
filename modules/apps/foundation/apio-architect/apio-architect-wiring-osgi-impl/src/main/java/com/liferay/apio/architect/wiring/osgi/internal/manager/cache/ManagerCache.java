@@ -94,10 +94,9 @@ public class ManagerCache {
 			computeEmptyFunction.invoke();
 		}
 
-		Optional<Map<String, CollectionRoutes>> optional = Optional.ofNullable(
-			_collectionRoutes);
-
-		return optional.map(
+		return Optional.ofNullable(
+			_collectionRoutes
+		).map(
 			map -> map.get(name)
 		).map(
 			Unsafe::unsafeCast
@@ -189,10 +188,9 @@ public class ManagerCache {
 			computeEmptyFunction.invoke();
 		}
 
-		Optional<Map<String, Class<Identifier>>> optional = Optional.ofNullable(
-			_identifierClasses);
-
-		return optional.map(
+		return Optional.ofNullable(
+			_identifierClasses
+		).map(
 			map -> map.get(name)
 		).map(
 			Unsafe::unsafeCast
@@ -214,10 +212,9 @@ public class ManagerCache {
 			computeEmptyFunction.invoke();
 		}
 
-		Optional<Map<String, ItemRoutes>> optional = Optional.ofNullable(
-			_itemRoutes);
-
-		return optional.map(
+		return Optional.ofNullable(
+			_itemRoutes
+		).map(
 			map -> map.get(name)
 		).map(
 			Unsafe::unsafeCast
@@ -277,10 +274,9 @@ public class ManagerCache {
 			computeEmptyFunction.invoke();
 		}
 
-		Optional<Map<String, NestedCollectionRoutes>> optional =
-			Optional.ofNullable(_nestedCollectionRoutes);
-
-		return optional.map(
+		return Optional.ofNullable(
+			_nestedCollectionRoutes
+		).map(
 			map -> map.get(name + "-" + nestedName)
 		).map(
 			Unsafe::unsafeCast
@@ -326,10 +322,9 @@ public class ManagerCache {
 			computeEmptyFunction.invoke();
 		}
 
-		Optional<Map<String, Representor>> optional = Optional.ofNullable(
-			_representors);
-
-		return optional.map(
+		return Optional.ofNullable(
+			_representors
+		).map(
 			map -> map.get(name)
 		).map(
 			Unsafe::unsafeCast
@@ -353,10 +348,9 @@ public class ManagerCache {
 			computeEmptyFunction.invoke();
 		}
 
-		Optional<Map<String, NestedCollectionRoutes>> optional =
-			Optional.ofNullable(_reusableNestedCollectionRoutes);
-
-		return optional.map(
+		return Optional.ofNullable(
+			_reusableNestedCollectionRoutes
+		).map(
 			map -> map.get(name)
 		).map(
 			Unsafe::unsafeCast
@@ -377,10 +371,11 @@ public class ManagerCache {
 			computeEmptyFunction.invoke();
 		}
 
-		Optional<List<String>> optional = Optional.ofNullable(
-			_rootResourceNames);
-
-		return optional.orElseGet(Collections::emptyList);
+		return Optional.ofNullable(
+			_rootResourceNames
+		).orElseGet(
+			Collections::emptyList
+		);
 	}
 
 	/**
@@ -616,10 +611,9 @@ public class ManagerCache {
 	private <T> Optional<T> _getMessageMapperOptional(
 		Request request, Map<MediaType, T> messageMappers) {
 
-		Optional<Map<MediaType, T>> optional = Optional.ofNullable(
-			messageMappers);
-
-		return optional.map(
+		return Optional.ofNullable(
+			messageMappers
+		).map(
 			Map::keySet
 		).map(
 			Set::stream
@@ -634,7 +628,11 @@ public class ManagerCache {
 		).map(
 			Variant::getMediaType
 		).flatMap(
-			mediaType -> optional.map(map -> map.get(mediaType))
+			mediaType -> Optional.ofNullable(
+				messageMappers
+			).map(
+				map -> map.get(mediaType)
+			)
 		);
 	}
 

@@ -20,7 +20,7 @@ import static org.osgi.service.component.annotations.ReferencePolicyOption.GREED
 import com.liferay.apio.architect.error.APIError;
 import com.liferay.apio.architect.logger.ApioLogger;
 import com.liferay.apio.architect.message.json.ErrorMessageMapper;
-import com.liferay.apio.architect.wiring.osgi.manager.ExceptionConverterManager;
+import com.liferay.apio.architect.wiring.osgi.manager.ExceptionMapperManager;
 import com.liferay.apio.architect.wiring.osgi.manager.message.json.ErrorMessageMapperManager;
 import com.liferay.apio.architect.writer.ErrorWriter;
 
@@ -53,15 +53,15 @@ public class ErrorUtil {
 	public Response getErrorResponse(
 		Exception exception, Request request, HttpHeaders httpHeaders) {
 
-		Optional<APIError> apiErrorOptional =
-			_exceptionConverterManager.convert(exception);
+		Optional<APIError> apiErrorOptional = _exceptionMapperManager.map(
+			exception);
 
 		if (!apiErrorOptional.isPresent()) {
 			Class<? extends Exception> exceptionClass = exception.getClass();
 
 			if (_apioLogger != null) {
 				_apioLogger.warning(
-					"No exception converter found for " + exceptionClass);
+					"No exception mapper found for " + exceptionClass);
 			}
 
 			if (exceptionClass.isAssignableFrom(
@@ -114,6 +114,6 @@ public class ErrorUtil {
 	private ErrorMessageMapperManager _errorMessageMapperManager;
 
 	@Reference
-	private ExceptionConverterManager _exceptionConverterManager;
+	private ExceptionMapperManager _exceptionMapperManager;
 
 }

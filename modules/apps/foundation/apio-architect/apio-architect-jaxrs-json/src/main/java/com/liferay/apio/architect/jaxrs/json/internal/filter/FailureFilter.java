@@ -52,10 +52,9 @@ public class FailureFilter implements ContainerResponseFilter {
 			ContainerResponseContext containerResponseContext)
 		throws IOException {
 
-		Try<Object> objectTry = Try.fromFallible(
-			containerResponseContext::getEntity);
-
-		objectTry.map(
+		Try.fromFallible(
+			containerResponseContext::getEntity
+		).map(
 			Failure.class::cast
 		).map(
 			Failure::getException

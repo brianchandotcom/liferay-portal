@@ -14,28 +14,29 @@
 
 package com.liferay.apio.architect.sample.liferay.portal.internal.converter;
 
-import static javax.ws.rs.core.Response.Status.NOT_FOUND;
+import static javax.ws.rs.core.Response.Status.BAD_REQUEST;
 
-import com.liferay.apio.architect.converter.ExceptionConverter;
+import com.liferay.apio.architect.converter.ExceptionMapper;
 import com.liferay.apio.architect.error.APIError;
-import com.liferay.portal.kernel.exception.NoSuchModelException;
+import com.liferay.document.library.kernel.exception.DuplicateFileEntryException;
 
 import org.osgi.service.component.annotations.Component;
 
 /**
- * Converts a {@code NoSuchModelException} to its {@link APIError}
+ * Converts a {@code DuplicateFileEntryException} to its {@link APIError}
  * representation.
  *
  * @author Alejandro Hernández
  */
 @Component(immediate = true)
-public class NoSuchModelExceptionConverter
-	implements ExceptionConverter<NoSuchModelException> {
+public class DuplicateFileEntryExceptionMapper
+	implements ExceptionMapper<DuplicateFileEntryException> {
 
 	@Override
-	public APIError convert(NoSuchModelException nsme) {
+	public APIError map(DuplicateFileEntryException dfee) {
 		return new APIError(
-			nsme, "Resource not found", "not-found", NOT_FOUND.getStatusCode());
+			dfee, "Duplicate entry", "bad-request",
+			BAD_REQUEST.getStatusCode());
 	}
 
 }

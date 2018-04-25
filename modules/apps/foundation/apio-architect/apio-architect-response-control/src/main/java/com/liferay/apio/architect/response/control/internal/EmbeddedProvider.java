@@ -18,6 +18,9 @@ import com.liferay.apio.architect.provider.Provider;
 import com.liferay.apio.architect.response.control.Embedded;
 
 import java.util.Arrays;
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServletRequest;
@@ -36,13 +39,33 @@ import org.osgi.service.component.annotations.Component;
 public class EmbeddedProvider implements Provider<Embedded> {
 
 	public Embedded createContext(HttpServletRequest httpServletRequest) {
-		String embedded = httpServletRequest.getParameter("embedded");
+		return Optional.ofNullable(
+			httpServletRequest.getParameter("embedded")
+		).map(
+			_pattern::split
+		).map(
+			Arrays::asList
+		).map(
+			EmbeddedProvider::_isEmbedded
+		).orElse(
+			__ -> false
+		);
+	}
 
-		if (embedded != null) {
-			return Arrays.asList(_pattern.split(embedded))::contains;
-		}
+	private static Embedded _isEmbedded(List<String> strings) {
+		return field -> {
+			for (String string : strings) {
+				if (Objects.equals(string, field)) {
+					return true;
+				}
 
-		return __ -> false;
+				if (string.startsWith(field + ".")) {
+					return true;
+				}
+			}
+
+			return false;
+		};
 	}
 
 	private static final Pattern _pattern = Pattern.compile("\\s*,\\s*");

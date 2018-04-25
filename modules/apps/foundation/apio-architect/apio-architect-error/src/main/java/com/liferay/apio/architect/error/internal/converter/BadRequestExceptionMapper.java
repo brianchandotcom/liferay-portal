@@ -16,7 +16,7 @@ package com.liferay.apio.architect.error.internal.converter;
 
 import static javax.ws.rs.core.Response.Status.BAD_REQUEST;
 
-import com.liferay.apio.architect.converter.ExceptionConverter;
+import com.liferay.apio.architect.converter.ExceptionMapper;
 import com.liferay.apio.architect.error.APIError;
 
 import javax.ws.rs.BadRequestException;
@@ -31,12 +31,12 @@ import org.osgi.service.component.annotations.Component;
  * @author Alejandro Hernández
  */
 @Component(immediate = true)
-public class BadRequestExceptionConverter
+public class BadRequestExceptionMapper
 	extends WebApplicationExceptionConverter
-	implements ExceptionConverter<BadRequestException> {
+	implements ExceptionMapper<BadRequestException> {
 
 	@Override
-	public APIError convert(BadRequestException exception) {
+	public APIError map(BadRequestException exception) {
 		return super.convert(exception);
 	}
 

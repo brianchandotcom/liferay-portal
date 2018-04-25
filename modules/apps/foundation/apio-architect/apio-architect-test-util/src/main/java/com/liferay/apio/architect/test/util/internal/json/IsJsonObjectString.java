@@ -44,10 +44,9 @@ public class IsJsonObjectString extends TypeSafeDiagnosingMatcher<String> {
 
 	@Override
 	protected boolean matchesSafely(String item, Description description) {
-		Try<JsonObject> jsonObjectTry = Try.fromFallible(
-			() -> new Gson().fromJson(item, JsonObject.class));
-
-		return jsonObjectTry.filter(
+		return Try.fromFallible(
+			() -> new Gson().fromJson(item, JsonObject.class)
+		).filter(
 			Objects::nonNull
 		).fold(
 			__ -> {

@@ -94,17 +94,17 @@ public class ManagerUtil {
 		ServiceReference serviceReference, String typeArgumentProperty,
 		Supplier<Class<T>> supplier) {
 
-		Try<String> propertyTry = Try.success(typeArgumentProperty);
-
-		Try<Class<T>> classTry = propertyTry.map(
+		return Try.success(
+			typeArgumentProperty
+		).map(
 			serviceReference::getProperty
 		).filter(
 			Objects::nonNull
-		).map(
+		).<Class<T>>map(
 			Unsafe::unsafeCast
+		).orElseGet(
+			supplier
 		);
-
-		return classTry.orElseGet(supplier);
 	}
 
 	/**

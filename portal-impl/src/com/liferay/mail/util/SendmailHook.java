@@ -18,6 +18,7 @@ import com.liferay.mail.kernel.model.Filter;
 import com.liferay.mail.kernel.util.Hook;
 import com.liferay.petra.process.LoggingOutputProcessor;
 import com.liferay.petra.process.ProcessUtil;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -25,7 +26,6 @@ import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.util.PropsUtil;
 
@@ -239,7 +239,8 @@ public class SendmailHook implements Hook {
 			String virtusertableRefreshCmd = PropsUtil.get(
 				PropsKeys.MAIL_HOOK_SENDMAIL_VIRTUSERTABLE_REFRESH);
 
-			String[] arguments = StringUtil.split(virtusertableRefreshCmd, StringPool.SPACE);
+			String[] arguments = StringUtil.split(
+				virtusertableRefreshCmd, StringPool.SPACE);
 
 			Future<?> future = ProcessUtil.execute(
 				new LoggingOutputProcessor(
@@ -268,15 +269,15 @@ public class SendmailHook implements Hook {
 		String changePasswordCmd = PropsUtil.get(
 			PropsKeys.MAIL_HOOK_SENDMAIL_CHANGE_PASSWORD);
 
-		String[] arguments = StringUtil.split(changePasswordCmd, StringPool.SPACE);
+		String[] arguments = StringUtil.split(
+			changePasswordCmd, StringPool.SPACE);
 
 		// Replace userId and password
 
 		for (int i = 0; i < arguments.length; i++) {
-
 			arguments[i] = StringUtil.replace(
-					arguments[i], new String[] {"%1%, %2%"},
-					new String[] {String.valueOf(userId), password});
+				arguments[i], new String[] {"%1%, %2%"},
+				new String[] {String.valueOf(userId), password});
 		}
 
 		try {

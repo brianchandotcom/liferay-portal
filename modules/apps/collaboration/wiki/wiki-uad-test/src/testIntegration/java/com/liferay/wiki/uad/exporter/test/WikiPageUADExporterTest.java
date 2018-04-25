@@ -27,7 +27,7 @@ import com.liferay.user.associated.data.test.util.WhenHasStatusByUserIdField;
 
 import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.uad.constants.WikiUADConstants;
-import com.liferay.wiki.uad.test.WikiPageUADEntityTestHelper;
+import com.liferay.wiki.uad.test.WikiPageUADTestHelper;
 
 import org.junit.After;
 import org.junit.ClassRule;
@@ -52,7 +52,7 @@ public class WikiPageUADExporterTest extends BaseUADExporterTestCase<WikiPage>
 	@Override
 	public WikiPage addBaseModelWithStatusByUserId(long userId,
 		long statusByUserId) throws Exception {
-		WikiPage wikiPage = _wikiPageUADEntityTestHelper.addWikiPageWithStatusByUserId(userId,
+		WikiPage wikiPage = _wikiPageUADTestHelper.addWikiPageWithStatusByUserId(userId,
 				statusByUserId);
 
 		_wikiPages.add(wikiPage);
@@ -62,12 +62,12 @@ public class WikiPageUADExporterTest extends BaseUADExporterTestCase<WikiPage>
 
 	@After
 	public void tearDown() throws Exception {
-		_wikiPageUADEntityTestHelper.cleanUpDependencies(_wikiPages);
+		_wikiPageUADTestHelper.cleanUpDependencies(_wikiPages);
 	}
 
 	@Override
 	protected WikiPage addBaseModel(long userId) throws Exception {
-		WikiPage wikiPage = _wikiPageUADEntityTestHelper.addWikiPage(userId);
+		WikiPage wikiPage = _wikiPageUADTestHelper.addWikiPage(userId);
 
 		_wikiPages.add(wikiPage);
 
@@ -87,7 +87,7 @@ public class WikiPageUADExporterTest extends BaseUADExporterTestCase<WikiPage>
 	@DeleteAfterTestRun
 	private final List<WikiPage> _wikiPages = new ArrayList<WikiPage>();
 	@Inject
-	private WikiPageUADEntityTestHelper _wikiPageUADEntityTestHelper;
+	private WikiPageUADTestHelper _wikiPageUADTestHelper;
 	@Inject(filter = "model.class.name=" +
 	WikiUADConstants.CLASS_NAME_WIKI_PAGE)
 	private UADExporter _uadExporter;

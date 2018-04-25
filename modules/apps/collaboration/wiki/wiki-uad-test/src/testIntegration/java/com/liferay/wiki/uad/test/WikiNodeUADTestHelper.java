@@ -20,15 +20,9 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.wiki.model.WikiNode;
-import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.service.WikiNodeLocalService;
-import com.liferay.wiki.service.WikiPageLocalService;
 
-import java.io.Serializable;
-
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -36,55 +30,40 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author William Newbury
  */
-@Component(immediate = true, service = WikiPageUADEntityTestHelper.class)
-public class WikiPageUADEntityTestHelper {
+@Component(immediate = true, service = WikiNodeUADTestHelper.class)
+public class WikiNodeUADTestHelper {
 
-	public WikiPage addWikiPage(long userId) throws Exception {
+	public WikiNode addWikiNode(long userId) throws Exception {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
 				TestPropsValues.getGroupId());
 
-		WikiNode wikiNode = _wikiNodeLocalService.addNode(
+		return _wikiNodeLocalService.addNode(
 			userId, RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), serviceContext);
-
-		return _wikiPageLocalService.addPage(
-			userId, wikiNode.getNodeId(), RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(), RandomTestUtil.randomString(), false,
-			serviceContext);
 	}
 
-	public WikiPage addWikiPageWithStatusByUserId(
+	public WikiNode addWikiNodeWithStatusByUserId(
 			long userId, long statusByUserId)
 		throws Exception {
 
-		WikiPage wikiPage = addWikiPage(userId);
+		WikiNode wikiNode = addWikiNode(userId);
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
 				TestPropsValues.getGroupId());
 
-		Map<String, Serializable> workflowContext = new HashMap<>();
+		_wikiNodeLocalService.updateStatus(
+			statusByUserId, wikiNode, WorkflowConstants.STATUS_APPROVED,
+			serviceContext);
 
-		workflowContext.put(WorkflowConstants.CONTEXT_URL, "http://localhost");
-
-		_wikiPageLocalService.updateStatus(
-			statusByUserId, wikiPage, WorkflowConstants.STATUS_APPROVED,
-			serviceContext, workflowContext);
-
-		return wikiPage;
+		return wikiNode;
 	}
 
-	public void cleanUpDependencies(List<WikiPage> wikiPages) throws Exception {
-		for (WikiPage wikiPage : wikiPages) {
-			_wikiNodeLocalService.deleteNode(wikiPage.getNodeId());
-		}
+	public void cleanUpDependencies(List<WikiNode> wikiNodes) throws Exception {
 	}
 
 	@Reference
 	private WikiNodeLocalService _wikiNodeLocalService;
-
-	@Reference
-	private WikiPageLocalService _wikiPageLocalService;
 
 }

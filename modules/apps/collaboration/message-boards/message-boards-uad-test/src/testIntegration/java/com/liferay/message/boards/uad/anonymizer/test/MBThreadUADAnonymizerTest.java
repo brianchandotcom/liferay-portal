@@ -19,7 +19,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.message.boards.model.MBThread;
 import com.liferay.message.boards.service.MBThreadLocalService;
 import com.liferay.message.boards.uad.constants.MBUADConstants;
-import com.liferay.message.boards.uad.test.MBThreadUADEntityTestHelper;
+import com.liferay.message.boards.uad.test.MBThreadUADTestHelper;
 
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -55,7 +55,7 @@ public class MBThreadUADAnonymizerTest extends BaseUADAnonymizerTestCase<MBThrea
 	@Override
 	public MBThread addBaseModelWithStatusByUserId(long userId,
 		long statusByUserId) throws Exception {
-		MBThread mbThread = _mbThreadUADEntityTestHelper.addMBThreadWithStatusByUserId(userId,
+		MBThread mbThread = _mbThreadUADTestHelper.addMBThreadWithStatusByUserId(userId,
 				statusByUserId);
 
 		_mbThreads.add(mbThread);
@@ -65,7 +65,7 @@ public class MBThreadUADAnonymizerTest extends BaseUADAnonymizerTestCase<MBThrea
 
 	@After
 	public void tearDown() throws Exception {
-		_mbThreadUADEntityTestHelper.cleanUpDependencies(_mbThreads);
+		_mbThreadUADTestHelper.cleanUpDependencies(_mbThreads);
 	}
 
 	@Override
@@ -76,7 +76,7 @@ public class MBThreadUADAnonymizerTest extends BaseUADAnonymizerTestCase<MBThrea
 	@Override
 	protected MBThread addBaseModel(long userId, boolean deleteAfterTestRun)
 		throws Exception {
-		MBThread mbThread = _mbThreadUADEntityTestHelper.addMBThread(userId);
+		MBThread mbThread = _mbThreadUADTestHelper.addMBThread(userId);
 
 		if (deleteAfterTestRun) {
 			_mbThreads.add(mbThread);
@@ -88,7 +88,7 @@ public class MBThreadUADAnonymizerTest extends BaseUADAnonymizerTestCase<MBThrea
 	@Override
 	protected void deleteBaseModels(List<MBThread> baseModels)
 		throws Exception {
-		_mbThreadUADEntityTestHelper.cleanUpDependencies(baseModels);
+		_mbThreadUADTestHelper.cleanUpDependencies(baseModels);
 	}
 
 	@Override
@@ -135,7 +135,7 @@ public class MBThreadUADAnonymizerTest extends BaseUADAnonymizerTestCase<MBThrea
 	@Inject
 	private MBThreadLocalService _mbThreadLocalService;
 	@Inject
-	private MBThreadUADEntityTestHelper _mbThreadUADEntityTestHelper;
+	private MBThreadUADTestHelper _mbThreadUADTestHelper;
 	@Inject(filter = "model.class.name=" + MBUADConstants.CLASS_NAME_MB_THREAD)
 	private UADAggregator _uadAggregator;
 	@Inject(filter = "model.class.name=" + MBUADConstants.CLASS_NAME_MB_THREAD)

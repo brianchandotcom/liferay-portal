@@ -30,8 +30,8 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Brian Wing Shun Chan
  */
-@Component(immediate = true, service = MBCategoryUADEntityTestHelper.class)
-public class MBCategoryUADEntityTestHelper {
+@Component(immediate = true, service = MBCategoryUADTestHelper.class)
+public class MBCategoryUADTestHelper {
 
 	public MBCategory addMBCategory(long userId) throws Exception {
 		ServiceContext serviceContext =

@@ -16,17 +16,19 @@ package com.liferay.message.boards.uad.test;
 
 import com.liferay.message.boards.model.MBCategory;
 import com.liferay.message.boards.model.MBMessage;
-import com.liferay.message.boards.model.MBThread;
 import com.liferay.message.boards.service.MBCategoryLocalService;
 import com.liferay.message.boards.service.MBMessageLocalService;
-import com.liferay.message.boards.service.MBThreadLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
+import java.io.Serializable;
+
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -34,10 +36,10 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Brian Wing Shun Chan
  */
-@Component(immediate = true, service = MBThreadUADEntityTestHelper.class)
-public class MBThreadUADEntityTestHelper {
+@Component(immediate = true, service = MBMessageUADTestHelper.class)
+public class MBMessageUADTestHelper {
 
-	public MBThread addMBThread(long userId) throws Exception {
+	public MBMessage addMBMessage(long userId) throws Exception {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
 				TestPropsValues.getGroupId());
@@ -46,28 +48,36 @@ public class MBThreadUADEntityTestHelper {
 			userId, 0, RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), serviceContext);
 
-		MBMessage mbMessage = _mbMessageLocalService.addMessage(
+		return _mbMessageLocalService.addMessage(
 			userId, RandomTestUtil.randomString(), TestPropsValues.getGroupId(),
 			mbCategory.getCategoryId(), RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), serviceContext);
-
-		return _mbThreadLocalService.getMBThread(mbMessage.getThreadId());
 	}
 
-	public MBThread addMBThreadWithStatusByUserId(
+	public MBMessage addMBMessageWithStatusByUserId(
 			long userId, long statusByUserId)
 		throws Exception {
 
-		MBThread mbThread = addMBThread(userId);
+		MBMessage mbMessage = addMBMessage(userId);
 
-		return _mbThreadLocalService.updateStatus(
-			statusByUserId, mbThread.getThreadId(),
-			WorkflowConstants.STATUS_APPROVED);
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				TestPropsValues.getGroupId());
+
+		Map<String, Serializable> workflowContext = new HashMap<>();
+
+		workflowContext.put(WorkflowConstants.CONTEXT_URL, "http://localhost");
+
+		return _mbMessageLocalService.updateStatus(
+			statusByUserId, mbMessage.getMessageId(),
+			WorkflowConstants.STATUS_APPROVED, serviceContext, workflowContext);
 	}
 
-	public void cleanUpDependencies(List<MBThread> mbThreads) throws Exception {
-		for (MBThread mbThread : mbThreads) {
-			_mbCategoryLocalService.deleteCategory(mbThread.getCategoryId());
+	public void cleanUpDependencies(List<MBMessage> mbMessages)
+		throws Exception {
+
+		for (MBMessage mbMessage : mbMessages) {
+			_mbCategoryLocalService.deleteCategory(mbMessage.getCategoryId());
 		}
 	}
 
@@ -76,8 +86,5 @@ public class MBThreadUADEntityTestHelper {
 
 	@Reference
 	private MBMessageLocalService _mbMessageLocalService;
-
-	@Reference
-	private MBThreadLocalService _mbThreadLocalService;
 
 }

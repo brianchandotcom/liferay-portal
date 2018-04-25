@@ -19,7 +19,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.message.boards.model.MBCategory;
 import com.liferay.message.boards.service.MBCategoryLocalService;
 import com.liferay.message.boards.uad.constants.MBUADConstants;
-import com.liferay.message.boards.uad.test.MBCategoryUADEntityTestHelper;
+import com.liferay.message.boards.uad.test.MBCategoryUADTestHelper;
 
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -55,7 +55,7 @@ public class MBCategoryUADAnonymizerTest extends BaseUADAnonymizerTestCase<MBCat
 	@Override
 	public MBCategory addBaseModelWithStatusByUserId(long userId,
 		long statusByUserId) throws Exception {
-		MBCategory mbCategory = _mbCategoryUADEntityTestHelper.addMBCategoryWithStatusByUserId(userId,
+		MBCategory mbCategory = _mbCategoryUADTestHelper.addMBCategoryWithStatusByUserId(userId,
 				statusByUserId);
 
 		_mbCategories.add(mbCategory);
@@ -65,7 +65,7 @@ public class MBCategoryUADAnonymizerTest extends BaseUADAnonymizerTestCase<MBCat
 
 	@After
 	public void tearDown() throws Exception {
-		_mbCategoryUADEntityTestHelper.cleanUpDependencies(_mbCategories);
+		_mbCategoryUADTestHelper.cleanUpDependencies(_mbCategories);
 	}
 
 	@Override
@@ -76,7 +76,7 @@ public class MBCategoryUADAnonymizerTest extends BaseUADAnonymizerTestCase<MBCat
 	@Override
 	protected MBCategory addBaseModel(long userId, boolean deleteAfterTestRun)
 		throws Exception {
-		MBCategory mbCategory = _mbCategoryUADEntityTestHelper.addMBCategory(userId);
+		MBCategory mbCategory = _mbCategoryUADTestHelper.addMBCategory(userId);
 
 		if (deleteAfterTestRun) {
 			_mbCategories.add(mbCategory);
@@ -88,7 +88,7 @@ public class MBCategoryUADAnonymizerTest extends BaseUADAnonymizerTestCase<MBCat
 	@Override
 	protected void deleteBaseModels(List<MBCategory> baseModels)
 		throws Exception {
-		_mbCategoryUADEntityTestHelper.cleanUpDependencies(baseModels);
+		_mbCategoryUADTestHelper.cleanUpDependencies(baseModels);
 	}
 
 	@Override
@@ -133,7 +133,7 @@ public class MBCategoryUADAnonymizerTest extends BaseUADAnonymizerTestCase<MBCat
 	@Inject
 	private MBCategoryLocalService _mbCategoryLocalService;
 	@Inject
-	private MBCategoryUADEntityTestHelper _mbCategoryUADEntityTestHelper;
+	private MBCategoryUADTestHelper _mbCategoryUADTestHelper;
 	@Inject(filter = "model.class.name=" +
 	MBUADConstants.CLASS_NAME_MB_CATEGORY)
 	private UADAggregator _uadAggregator;

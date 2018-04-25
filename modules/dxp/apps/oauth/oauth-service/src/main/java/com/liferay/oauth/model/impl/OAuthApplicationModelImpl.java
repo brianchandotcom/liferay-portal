@@ -152,7 +152,7 @@ public class OAuthApplicationModelImpl extends BaseModelImpl<OAuthApplication>
 		model.setConsumerSecret(soapModel.getConsumerSecret());
 		model.setAccessLevel(soapModel.getAccessLevel());
 		model.setLogoId(soapModel.getLogoId());
-		model.setShareableAccessToken(soapModel.getShareableAccessToken());
+		model.setShareableAccessToken(soapModel.isShareableAccessToken());
 		model.setCallbackURI(soapModel.getCallbackURI());
 		model.setWebsiteURL(soapModel.getWebsiteURL());
 

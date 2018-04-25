@@ -153,10 +153,10 @@ public class EntryModelImpl extends BaseModelImpl<Entry> implements EntryModel {
 		model.setModifiedDate(soapModel.getModifiedDate());
 		model.setDefinitionId(soapModel.getDefinitionId());
 		model.setFormat(soapModel.getFormat());
-		model.setScheduleRequest(soapModel.getScheduleRequest());
+		model.setScheduleRequest(soapModel.isScheduleRequest());
 		model.setStartDate(soapModel.getStartDate());
 		model.setEndDate(soapModel.getEndDate());
-		model.setRepeating(soapModel.getRepeating());
+		model.setRepeating(soapModel.isRepeating());
 		model.setRecurrence(soapModel.getRecurrence());
 		model.setEmailNotifications(soapModel.getEmailNotifications());
 		model.setEmailDelivery(soapModel.getEmailDelivery());

@@ -2,7 +2,7 @@ package ${packagePath}.uad.display.test;
 
 import ${apiPackagePath}.model.${entity.name};
 import ${packagePath}.uad.constants.${portletShortName}UADConstants;
-import ${packagePath}.uad.test.${entity.name}UADEntityTestHelper;
+import ${packagePath}.uad.test.${entity.name}UADTestHelper;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.model.BaseModel;
@@ -35,7 +35,7 @@ public class ${entity.name}UADDisplayTest extends BaseUADDisplayTestCase {
 
 	@Override
 	protected BaseModel<?> addBaseModel(long userId) throws Exception {
-		${entity.name} ${entity.varName} = _${entity.varName}UADEntityTestHelper.add${entity.name}(userId);
+		${entity.name} ${entity.varName} = _${entity.varName}UADTestHelper.add${entity.name}(userId);
 
 		_${entity.varNames}.add(${entity.varName});
 
@@ -64,14 +64,14 @@ public class ${entity.name}UADDisplayTest extends BaseUADDisplayTestCase {
 
 	@After
 	public void tearDown() throws Exception {
-		_${entity.varName}UADEntityTestHelper.cleanUpDependencies(_${entity.varNames});
+		_${entity.varName}UADTestHelper.cleanUpDependencies(_${entity.varNames});
 	}
 
 	@DeleteAfterTestRun
 	private final List<${entity.name}> _${entity.varNames} = new ArrayList<${entity.name}>();
 
 	@Inject
-	private ${entity.name}UADEntityTestHelper _${entity.varName}UADEntityTestHelper;
+	private ${entity.name}UADTestHelper _${entity.varName}UADTestHelper;
 
 	@Inject(
 		filter = "model.class.name=" + ${portletShortName}UADConstants.CLASS_NAME_${entity.constantName}

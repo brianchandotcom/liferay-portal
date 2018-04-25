@@ -13,9 +13,9 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	immediate = true,
-	service = ${entity.name}UADEntityTestHelper.class
+	service = ${entity.name}UADTestHelper.class
 )
-public class ${entity.name}UADEntityTestHelper {
+public class ${entity.name}UADTestHelper {
 
 	/**
 	 * Implement add${entity.name}() to enable some UAD tests.

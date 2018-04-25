@@ -339,8 +339,7 @@ public class AutoCloseUtil {
 		List<AutoCloseRule> list = new ArrayList<>();
 
 		String propertyNameTemplate = JenkinsResultsParserUtil.combine(
-			"test.batch.names.auto.close[",
-			project.getProperty("repository"),
+			"test.batch.names.auto.close[", project.getProperty("repository"),
 			"?]");
 
 		String repositoryBranchAutoClosePropertyName =

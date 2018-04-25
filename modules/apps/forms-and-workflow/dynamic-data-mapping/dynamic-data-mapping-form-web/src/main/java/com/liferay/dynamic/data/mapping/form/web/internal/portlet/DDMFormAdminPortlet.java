@@ -51,7 +51,6 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.kernel.workflow.WorkflowEngineManager;
 
 import java.io.IOException;
 
@@ -208,7 +207,7 @@ public class DDMFormAdminPortlet extends MVCPortlet {
 					_ddmFormFieldTypesJSONSerializer, _ddmFormRenderer,
 					_ddmFormValuesFactory, _ddmFormValuesMerger,
 					_ddmStructureLocalService, _ddmStructureService,
-					_jsonFactory, _storageEngine, _workflowEngineManager));
+					_jsonFactory, _storageEngine));
 		}
 		else {
 			ThemeDisplay themeDisplay =
@@ -250,7 +249,7 @@ public class DDMFormAdminPortlet extends MVCPortlet {
 					_ddmFormFieldTypesJSONSerializer, _ddmFormRenderer,
 					_ddmFormValuesFactory, _ddmFormValuesMerger,
 					_ddmStructureLocalService, _ddmStructureService,
-					_jsonFactory, _storageEngine, _workflowEngineManager));
+					_jsonFactory, _storageEngine));
 		}
 	}
 
@@ -318,8 +317,5 @@ public class DDMFormAdminPortlet extends MVCPortlet {
 
 	@Reference
 	private StorageEngine _storageEngine;
-
-	@Reference
-	private WorkflowEngineManager _workflowEngineManager;
 
 }

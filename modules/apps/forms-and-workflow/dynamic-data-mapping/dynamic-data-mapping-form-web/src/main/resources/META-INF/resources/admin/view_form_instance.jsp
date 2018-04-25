@@ -19,7 +19,6 @@
 <%
 String displayStyle = ddmFormAdminDisplayContext.getDisplayStyle();
 PortletURL portletURL = ddmFormAdminDisplayContext.getPortletURL();
-portletURL.setParameter("displayStyle", displayStyle);
 %>
 
 <div class="container-fluid-1280" id="<portlet:namespace />formContainer">

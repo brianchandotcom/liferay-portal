@@ -44,7 +44,7 @@ public class RSSAction extends BaseRSSStrutsAction {
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		long plid = ParamUtil.getLong(request, "p_l_id");
+		long plid = ParamUtil.getLong(request, "plid");
 
 		if (plid == LayoutConstants.DEFAULT_PLID) {
 			plid = themeDisplay.getPlid();

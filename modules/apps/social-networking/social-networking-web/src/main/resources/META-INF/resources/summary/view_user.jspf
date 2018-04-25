@@ -179,7 +179,7 @@
 												delta="<%= rssDelta %>"
 												displayStyle="<%= rssDisplayStyle %>"
 												feedType="<%= rssFeedType %>"
-												url='<%= themeDisplay.getPathMain() + "/message_boards/rss?p_l_id=" + mbPlid + "&groupId=" + guestGroup.getGroupId() + "&userId=" + user2.getUserId() %>'
+												url='<%= themeDisplay.getPathMain() + "/message_boards/rss?plid=" + mbPlid + "&groupId=" + guestGroup.getGroupId() + "&userId=" + user2.getUserId() %>'
 											/>
 										</span>
 									</c:if>

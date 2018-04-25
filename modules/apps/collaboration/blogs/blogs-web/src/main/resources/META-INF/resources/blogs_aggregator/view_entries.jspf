@@ -64,7 +64,7 @@
 		delta="<%= rssDelta %>"
 		displayStyle="<%= rssDisplayStyle %>"
 		feedType="<%= rssFeedType %>"
-		url='<%= themeDisplay.getPathMain() + "/blogs/rss?p_l_id=" + plid + rssURLParams %>'
+		url='<%= themeDisplay.getPathMain() + "/blogs/rss?plid=" + plid + rssURLParams %>'
 	/>
 </c:if>
 

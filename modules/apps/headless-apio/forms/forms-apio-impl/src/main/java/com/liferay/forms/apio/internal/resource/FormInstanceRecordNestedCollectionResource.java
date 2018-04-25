@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.forms.apio.internal.architect.resource;
+package com.liferay.forms.apio.internal.resource;
 
 import com.liferay.apio.architect.functional.Try;
 import com.liferay.apio.architect.language.Language;
@@ -32,9 +32,9 @@ import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.forms.apio.architect.identifier.FormInstanceIdentifier;
 import com.liferay.forms.apio.architect.identifier.FormInstanceRecordIdentifier;
 import com.liferay.forms.apio.architect.identifier.FormInstanceRecordVersionIdentifier;
-import com.liferay.forms.apio.internal.architect.FormInstanceRecordServiceContext;
-import com.liferay.forms.apio.internal.architect.form.FormInstanceRecordForm;
-import com.liferay.forms.apio.internal.architect.helper.FormInstanceRecordResourceHelper;
+import com.liferay.forms.apio.internal.FormInstanceRecordServiceContext;
+import com.liferay.forms.apio.internal.form.FormInstanceRecordForm;
+import com.liferay.forms.apio.internal.helper.FormInstanceRecordResourceHelper;
 import com.liferay.person.apio.identifier.PersonIdentifier;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.ServiceContext;

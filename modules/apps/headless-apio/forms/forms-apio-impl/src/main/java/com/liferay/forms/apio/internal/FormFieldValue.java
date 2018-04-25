@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.forms.apio.internal.architect;
+package com.liferay.forms.apio.internal;
 
 /**
  * @author Paulo Cruz

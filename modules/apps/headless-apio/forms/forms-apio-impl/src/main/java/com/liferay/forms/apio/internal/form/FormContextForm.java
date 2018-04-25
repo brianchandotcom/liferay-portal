@@ -12,38 +12,38 @@
  * details.
  */
 
-package com.liferay.forms.apio.internal.architect.form;
+package com.liferay.forms.apio.internal.form;
 
 import com.liferay.apio.architect.form.Form;
 
 /**
  * Instances of this class represent the values extracted from a form instance
- * record updater form.
+ * context evaluator form.
  *
- * @author Paulo Cruz
+ * @author Victor Oliveira
  */
-public class FormInstanceRecordForm {
+public class FormContextForm {
 
 	/**
-	 * Builds a {@code Form} that generates {@code FormInstanceRecordForm}
-	 * depending on the HTTP body.
+	 * Builds a {@code Form} that generates {@code FormContextForm} depending on
+	 * the HTTP body.
 	 *
 	 * @param  formBuilder the {@code Form} builder
-	 * @return a form instance record form
+	 * @return a context form instance
 	 */
-	public static Form<FormInstanceRecordForm> buildForm(
-		Form.Builder<FormInstanceRecordForm> formBuilder) {
+	public static Form<FormContextForm> buildForm(
+		Form.Builder<FormContextForm> formBuilder) {
 
 		return formBuilder.title(
-			__ -> "The form instance record form"
+			__ -> "The form instance context form"
 		).description(
-			__ -> "This form can be used to update a form instance record"
+			__ -> "This form context can be used to evaluate a form instance"
 		).constructor(
-			FormInstanceRecordForm::new
+			FormContextForm::new
 		).addRequiredString(
-			"fieldValues", FormInstanceRecordForm::_setFieldValues
-		).addRequiredBoolean(
-			"isDraft", FormInstanceRecordForm::_setDraft
+			"fieldValues", FormContextForm::_setFieldValues
+		).addRequiredString(
+			"inLanguage", FormContextForm::_setLanguageId
 		).build();
 	}
 
@@ -51,19 +51,19 @@ public class FormInstanceRecordForm {
 		return _fieldValues;
 	}
 
-	public boolean isDraft() {
-		return _draft;
+	public String getLanguageId() {
+		return _languageId;
 	}
 
-	private void _setDraft(boolean draft) {
-		_draft = draft;
+	private void _setFieldValues(String fieldValues) {
+		_fieldValues = fieldValues;
 	}
 
-	private void _setFieldValues(String formValues) {
-		_fieldValues = formValues;
+	private void _setLanguageId(String languageId) {
+		_languageId = languageId;
 	}
 
-	private boolean _draft;
 	private String _fieldValues;
+	private String _languageId;
 
 }

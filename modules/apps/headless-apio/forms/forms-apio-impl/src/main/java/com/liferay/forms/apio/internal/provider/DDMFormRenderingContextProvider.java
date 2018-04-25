@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.forms.apio.internal.architect.provider;
+package com.liferay.forms.apio.internal.provider;
 
 import com.liferay.apio.architect.provider.Provider;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderingContext;

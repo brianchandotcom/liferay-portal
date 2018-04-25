@@ -17,6 +17,7 @@ package com.liferay.forms.apio.internal.architect.helper;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
+import com.liferay.apio.architect.functional.Try;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecord;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
@@ -24,15 +25,16 @@ import com.liferay.dynamic.data.mapping.model.Value;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.forms.apio.internal.architect.FormFieldValue;
-import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 
 import java.lang.reflect.Type;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-
-import javax.ws.rs.ServerErrorException;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 /**
  * @author Paulo Cruz
@@ -70,34 +72,46 @@ public class FormInstanceRecordResourceHelper {
 	public static String getFieldValuesJSON(
 		DDMFormInstanceRecord ddmFormInstanceRecord, Locale locale) {
 
-		try {
-			Gson gson = new Gson();
+		Gson gson = new Gson();
 
-			DDMFormValues ddmFormValues =
-				ddmFormInstanceRecord.getDDMFormValues();
+		return Try.fromFallible(
+			ddmFormInstanceRecord::getDDMFormValues
+		).map(
+			DDMFormValues::getDDMFormFieldValues
+		).map(
+			List::stream
+		).map(
+			stream -> stream.map(_toFormFieldValue(locale))
+		).map(
+			stream -> stream.collect(Collectors.toList())
+		).map(
+			gson::toJson
+		).fold(
+			e -> {
+				_log.error(e);
 
-			List<DDMFormFieldValue> ddmFormFieldValues =
-				ddmFormValues.getDDMFormFieldValues();
-
-			List<FormFieldValue> formFieldValues = new ArrayList<>();
-
-			for (DDMFormFieldValue ddmFormFieldValue : ddmFormFieldValues) {
-				String instanceId = ddmFormFieldValue.getInstanceId();
-				String name = ddmFormFieldValue.getName();
-				Value value = ddmFormFieldValue.getValue();
-
-				String valueString = value.getString(locale);
-
-				formFieldValues.add(
-					new FormFieldValue(instanceId, name, valueString));
-			}
-
-			return gson.toJson(formFieldValues);
-		}
-		catch (PortalException pe) {
-			throw new ServerErrorException(500, pe);
-		}
+				return null;
+			},
+			json -> json
+		);
 	}
+
+	private static Function<DDMFormFieldValue, FormFieldValue>
+		_toFormFieldValue(Locale locale) {
+
+		return ddmFormFieldValue -> {
+			String instanceId = ddmFormFieldValue.getInstanceId();
+			String name = ddmFormFieldValue.getName();
+			Value value = ddmFormFieldValue.getValue();
+
+			String valueString = value.getString(locale);
+
+			return new FormFieldValue(instanceId, name, valueString);
+		};
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		FormInstanceRecordResourceHelper.class);
 
 	private static class FormFieldValueListToken
 		extends TypeToken<ArrayList<FormFieldValue>> {

@@ -48,10 +48,6 @@ DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletI
 		<c:if test="<%= !search %>">
 			<liferay-util:include page="/document_library/display_style_buttons.jsp" servletContext="<%= application %>" />
 		</c:if>
-
-		<c:if test="<%= portletName.equals(DLPortletKeys.DOCUMENT_LIBRARY_ADMIN) %>">
-			<liferay-util:include page="/document_library/add_button.jsp" servletContext="<%= application %>" />
-		</c:if>
 	</liferay-frontend:management-bar-buttons>
 
 	<%

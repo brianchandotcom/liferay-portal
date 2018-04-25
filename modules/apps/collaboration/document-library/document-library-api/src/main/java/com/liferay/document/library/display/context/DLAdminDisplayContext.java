@@ -14,6 +14,7 @@
 
 package com.liferay.document.library.display.context;
 
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
 
 import java.util.List;
@@ -22,6 +23,8 @@ import java.util.List;
  * @author Alejandro Tardín
  */
 public interface DLAdminDisplayContext {
+
+	public CreationMenu getCreationMenu();
 
 	public List<NavigationItem> getNavigationItems();
 

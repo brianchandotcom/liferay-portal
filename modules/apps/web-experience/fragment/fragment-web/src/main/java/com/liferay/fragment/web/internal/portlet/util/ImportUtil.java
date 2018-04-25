@@ -97,7 +97,7 @@ public class ImportUtil {
 						fragmentCollectionName, fragmentCollectionDescription,
 						serviceContext);
 			}
-			else if (overwrite && (fragmentCollection != null)) {
+			else if (overwrite) {
 				_fragmentCollectionService.updateFragmentCollection(
 					fragmentCollection.getFragmentCollectionId(),
 					fragmentCollectionName, fragmentCollectionDescription);
@@ -167,7 +167,7 @@ public class ImportUtil {
 					zipReader.getEntryAsString(fragmentJsPath),
 					WorkflowConstants.STATUS_DRAFT, serviceContext);
 			}
-			else if (overwrite && (fragmentEntry != null)) {
+			else if (overwrite) {
 				_fragmentEntryService.updateFragmentEntry(
 					fragmentEntry.getFragmentEntryId(), fragmentEntryName,
 					zipReader.getEntryAsString(fragmentCssPath),

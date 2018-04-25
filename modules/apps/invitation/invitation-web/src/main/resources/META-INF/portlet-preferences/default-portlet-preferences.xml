@@ -1,8 +1,0 @@
-<?xml version="1.0"?>
-
-<portlet-preferences>
-	<preference>
-		<name>emailMaxRecipients</name>
-		<value>20</value>
-	</preference>
-</portlet-preferences>

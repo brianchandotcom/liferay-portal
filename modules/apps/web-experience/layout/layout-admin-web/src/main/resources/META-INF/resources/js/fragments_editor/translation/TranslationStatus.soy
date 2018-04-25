@@ -4,11 +4,15 @@
  * TranslationStatus
  */
 {template .render}
+	{@param availableLanguages: ?}
 	{@param defaultLanguageId: string}
 	{@param languageId: string}
 	{@param spritemap: string}
 	{@param? translationStatus: [
-		languageValues: list<[languageId: string, values: list<string>]>,
+		languageValues: list<[
+			languageId: string,
+			values: list<string>
+		]>,
 		translationKeys: list<string>
 	]}
 
@@ -16,18 +20,20 @@
 		<button class="btn btn-link p-1" data-toggle="dropdown" type="button">
 			<span class="inline-item">
 				{call .lexiconIcon}
-					{param name: $languageId /}
+					{param name: $availableLanguages[$languageId].languageIcon /}
 					{param spritemap: $spritemap /}
 				{/call}
 			</span>
-			<span class="btn-section">{$languageId}</span>
+			<span class="btn-section">{$availableLanguages[$languageId].languageLabel}</span>
 		</button>
 
 		{if isNonnull($translationStatus)}
 			<div class="dropdown-menu dropdown-menu-indicator-end">
 				{call .translationStatusItem}
 					{param isDefault: true /}
+					{param languageIcon: $availableLanguages[$defaultLanguageId].languageIcon /}
 					{param languageId: $defaultLanguageId /}
+					{param languageLabel: $availableLanguages[$defaultLanguageId].languageLabel /}
 					{param spritemap: $spritemap /}
 				{/call}
 
@@ -35,7 +41,9 @@
 					{if $languageTranslationStatus.languageId != $defaultLanguageId}
 						{call .translationStatusItem}
 							{param isDefault: false /}
+							{param languageIcon: $availableLanguages[$languageTranslationStatus.languageId].languageIcon /}
 							{param languageId: $languageTranslationStatus.languageId /}
+							{param languageLabel: $availableLanguages[$languageTranslationStatus.languageId].languageLabel /}
 							{param spritemap: $spritemap /}
 							{param translatedValues: length($languageTranslationStatus.values) /}
 							{param translationKeys: length($translationStatus.translationKeys) /}
@@ -54,18 +62,20 @@
 	{@param isDefault: bool}
 	{@param languageId: string}
 	{@param spritemap: string}
+	{@param? languageIcon: string}
+	{@param? languageLabel: string}
 	{@param? translatedValues: int}
 	{@param? translationKeys: int}
 
 	<a class="dropdown-item" data-languageid="{$languageId}" data-onclick="_handleLanguageChange">
 		<span class="inline-item inline-item-before">
 			{call .lexiconIcon}
-				{param name: $languageId /}
+				{param name: $languageIcon ?: '' /}
 				{param spritemap: $spritemap /}
 			{/call}
 		</span>
 		<span>
-			{$languageId}
+			{$languageLabel}
 		</span>
 		<span class="dropdown-item-indicator">
 			{if $isDefault}

@@ -25,6 +25,7 @@ class TranslationStatus extends Component {
 			{languageId: event.delegateTarget.getAttribute('data-languageid')}
 		);
 	}
+
 }
 
 Soy.register(TranslationStatus, templates);

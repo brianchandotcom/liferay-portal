@@ -485,14 +485,8 @@ AUI.add(
 					_afterAutosave: function(event) {
 						var instance = this;
 
-						var autosaveMessage = A.Lang.sub(
-							Liferay.Language.get('draft-saved-on-x'),
-							[
-								event.modifiedDate
-							]
-						);
+						instance._updateAutosaveBar(event.saveAsDraft, event.modifiedDate);
 
-						instance.one('#autosaveMessage').set('innerHTML', autosaveMessage);
 						A.one('.publish-icon').removeClass('hide');
 					},
 
@@ -564,6 +558,7 @@ AUI.add(
 												instance.fire(
 													'autosave',
 													{
+														saveAsDraft: saveAsDraft,
 														modifiedDate: responseData.modifiedDate
 													}
 												);
@@ -880,12 +875,16 @@ AUI.add(
 
 												instance.syncInputValues();
 
+												var responseData = this.get('responseData');
+
 												if (newPublishedValue) {
 													instance._handlePublishAction();
 												}
 												else {
 													instance._handleUnpublishAction();
 												}
+
+												instance._updateAutosaveBar(false, responseData.modifiedDate);
 											}
 										},
 										data: payload,
@@ -1091,6 +1090,28 @@ AUI.add(
 						localizedName[editingLanguageId] = name;
 
 						instance._setName(name);
+					},
+
+					_updateAutosaveBar: function(savedAsDraft, modifiedDate) {
+						var instance = this;
+
+						var message = '';
+
+						if (savedAsDraft) {
+							message = Liferay.Language.get('draft-saved-on-x');
+						}
+						else {
+							message = Liferay.Language.get('saved-on-x');
+						}
+
+						var autosaveMessage = A.Lang.sub(
+							message,
+							[
+								modifiedDate
+							]
+						);
+
+						instance.one('#autosaveMessage').set('innerHTML', autosaveMessage);
 					}
 				}
 			}

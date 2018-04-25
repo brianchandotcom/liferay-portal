@@ -4403,7 +4403,7 @@ public class PhonePersistenceImpl extends BasePersistenceImpl<Phone>
 				args = new Object[] {
 						phoneModelImpl.getCompanyId(),
 						phoneModelImpl.getClassNameId(),
-						phoneModelImpl.getClassPK(), phoneModelImpl.getPrimary()
+						phoneModelImpl.getClassPK(), phoneModelImpl.isPrimary()
 					};
 
 				finderCache.removeResult(FINDER_PATH_COUNT_BY_C_C_C_P, args);

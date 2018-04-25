@@ -179,14 +179,14 @@ public class DLFolderModelImpl extends BaseModelImpl<DLFolder>
 		model.setCreateDate(soapModel.getCreateDate());
 		model.setModifiedDate(soapModel.getModifiedDate());
 		model.setRepositoryId(soapModel.getRepositoryId());
-		model.setMountPoint(soapModel.getMountPoint());
+		model.setMountPoint(soapModel.isMountPoint());
 		model.setParentFolderId(soapModel.getParentFolderId());
 		model.setTreePath(soapModel.getTreePath());
 		model.setName(soapModel.getName());
 		model.setDescription(soapModel.getDescription());
 		model.setLastPostDate(soapModel.getLastPostDate());
 		model.setDefaultFileEntryTypeId(soapModel.getDefaultFileEntryTypeId());
-		model.setHidden(soapModel.getHidden());
+		model.setHidden(soapModel.isHidden());
 		model.setRestrictionType(soapModel.getRestrictionType());
 		model.setLastPublishDate(soapModel.getLastPublishDate());
 		model.setStatus(soapModel.getStatus());

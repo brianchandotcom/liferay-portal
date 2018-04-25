@@ -157,7 +157,7 @@ public class ShoppingCouponModelImpl extends BaseModelImpl<ShoppingCoupon>
 		model.setDescription(soapModel.getDescription());
 		model.setStartDate(soapModel.getStartDate());
 		model.setEndDate(soapModel.getEndDate());
-		model.setActive(soapModel.getActive());
+		model.setActive(soapModel.isActive());
 		model.setLimitCategories(soapModel.getLimitCategories());
 		model.setLimitSkus(soapModel.getLimitSkus());
 		model.setMinOrder(soapModel.getMinOrder());

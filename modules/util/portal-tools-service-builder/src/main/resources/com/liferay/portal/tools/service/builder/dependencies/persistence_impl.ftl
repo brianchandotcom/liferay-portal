@@ -247,7 +247,11 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 				FINDER_PATH_FETCH_BY_${uniqueEntityFinder.name?upper_case},
 				new Object[] {
 					<#list entityColumns as entityColumn>
-						${entity.varName}.get${entityColumn.methodName}()
+						<#if stringUtil.equals(entityColumn.type, "boolean")>
+							${entity.varName}.is${entityColumn.methodName}()
+						<#else>
+							${entity.varName}.get${entityColumn.methodName}()
+						</#if>
 
 						<#if entityColumn_has_next>
 							,
@@ -336,7 +340,11 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 				</#if>
 				args = new Object[] {
 					<#list entityColumns as entityColumn>
-						${entity.varName}ModelImpl.get${entityColumn.methodName}()
+						<#if stringUtil.equals(entityColumn.type, "boolean")>
+							${entity.varName}ModelImpl.is${entityColumn.methodName}()
+						<#else>
+							${entity.varName}ModelImpl.get${entityColumn.methodName}()
+						</#if>
 
 						<#if entityColumn_has_next>
 							,
@@ -356,7 +364,11 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 				if (clearCurrent) {
 					Object[] args = new Object[] {
 						<#list entityColumns as entityColumn>
-							${entity.varName}ModelImpl.get${entityColumn.methodName}()
+							<#if stringUtil.equals(entityColumn.type, "boolean")>
+								${entity.varName}ModelImpl.is${entityColumn.methodName}()
+							<#else>
+								${entity.varName}ModelImpl.get${entityColumn.methodName}()
+							</#if>
 
 							<#if entityColumn_has_next>
 								,
@@ -722,7 +734,11 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 						<#else>
 							<#list entityColumns as entityColumn>
 								<#if entityColumn.isPrimitiveType()>
-									(${entity.varName}.get${entityColumn.methodName}() != ${entity.varName}ModelImpl.getOriginal${entityColumn.methodName}())
+									<#if stringUtil.equals(entityColumn.type, "boolean")>
+										(${entity.varName}.is${entityColumn.methodName}() != ${entity.varName}ModelImpl.getOriginal${entityColumn.methodName}())
+									<#else>
+										(${entity.varName}.get${entityColumn.methodName}() != ${entity.varName}ModelImpl.getOriginal${entityColumn.methodName}())
+									</#if>
 								<#else>
 									!Objects.equals(${entity.varName}.get${entityColumn.methodName}(), ${entity.varName}ModelImpl.getOriginal${entityColumn.methodName}())
 								</#if>
@@ -749,7 +765,11 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 
 						args = new Object[] {
 							<#list entityColumns as entityColumn>
-								${entity.varName}ModelImpl.get${entityColumn.methodName}()
+								<#if stringUtil.equals(entityColumn.type, "boolean")>
+									${entity.varName}ModelImpl.is${entityColumn.methodName}()
+								<#else>
+									${entity.varName}ModelImpl.get${entityColumn.methodName}()
+								</#if>
 
 								<#if entityColumn_has_next>
 									,

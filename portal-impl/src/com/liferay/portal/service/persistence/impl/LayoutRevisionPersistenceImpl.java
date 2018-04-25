@@ -5108,7 +5108,7 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 			LayoutRevision layoutRevision = (LayoutRevision)result;
 
 			if ((layoutSetBranchId != layoutRevision.getLayoutSetBranchId()) ||
-					(head != layoutRevision.getHead()) ||
+					(head != layoutRevision.isHead()) ||
 					(plid != layoutRevision.getPlid())) {
 				result = null;
 			}
@@ -5167,7 +5167,7 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 					cacheResult(layoutRevision);
 
 					if ((layoutRevision.getLayoutSetBranchId() != layoutSetBranchId) ||
-							(layoutRevision.getHead() != head) ||
+							(layoutRevision.isHead() != head) ||
 							(layoutRevision.getPlid() != plid)) {
 						finderCache.putResult(FINDER_PATH_FETCH_BY_L_H_P,
 							finderArgs, layoutRevision);
@@ -6575,7 +6575,7 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 
 			if ((layoutSetBranchId != layoutRevision.getLayoutSetBranchId()) ||
 					(layoutBranchId != layoutRevision.getLayoutBranchId()) ||
-					(head != layoutRevision.getHead()) ||
+					(head != layoutRevision.isHead()) ||
 					(plid != layoutRevision.getPlid())) {
 				result = null;
 			}
@@ -6639,7 +6639,7 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 
 					if ((layoutRevision.getLayoutSetBranchId() != layoutSetBranchId) ||
 							(layoutRevision.getLayoutBranchId() != layoutBranchId) ||
-							(layoutRevision.getHead() != head) ||
+							(layoutRevision.isHead() != head) ||
 							(layoutRevision.getPlid() != plid)) {
 						finderCache.putResult(FINDER_PATH_FETCH_BY_L_L_H_P,
 							finderArgs, layoutRevision);
@@ -6775,14 +6775,14 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 
 		finderCache.putResult(FINDER_PATH_FETCH_BY_L_H_P,
 			new Object[] {
-				layoutRevision.getLayoutSetBranchId(), layoutRevision.getHead(),
+				layoutRevision.getLayoutSetBranchId(), layoutRevision.isHead(),
 				layoutRevision.getPlid()
 			}, layoutRevision);
 
 		finderCache.putResult(FINDER_PATH_FETCH_BY_L_L_H_P,
 			new Object[] {
 				layoutRevision.getLayoutSetBranchId(),
-				layoutRevision.getLayoutBranchId(), layoutRevision.getHead(),
+				layoutRevision.getLayoutBranchId(), layoutRevision.isHead(),
 				layoutRevision.getPlid()
 			}, layoutRevision);
 
@@ -6860,7 +6860,7 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 		LayoutRevisionModelImpl layoutRevisionModelImpl) {
 		Object[] args = new Object[] {
 				layoutRevisionModelImpl.getLayoutSetBranchId(),
-				layoutRevisionModelImpl.getHead(),
+				layoutRevisionModelImpl.isHead(),
 				layoutRevisionModelImpl.getPlid()
 			};
 
@@ -6872,7 +6872,7 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 		args = new Object[] {
 				layoutRevisionModelImpl.getLayoutSetBranchId(),
 				layoutRevisionModelImpl.getLayoutBranchId(),
-				layoutRevisionModelImpl.getHead(),
+				layoutRevisionModelImpl.isHead(),
 				layoutRevisionModelImpl.getPlid()
 			};
 
@@ -6887,7 +6887,7 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 		if (clearCurrent) {
 			Object[] args = new Object[] {
 					layoutRevisionModelImpl.getLayoutSetBranchId(),
-					layoutRevisionModelImpl.getHead(),
+					layoutRevisionModelImpl.isHead(),
 					layoutRevisionModelImpl.getPlid()
 				};
 
@@ -6911,7 +6911,7 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 			Object[] args = new Object[] {
 					layoutRevisionModelImpl.getLayoutSetBranchId(),
 					layoutRevisionModelImpl.getLayoutBranchId(),
-					layoutRevisionModelImpl.getHead(),
+					layoutRevisionModelImpl.isHead(),
 					layoutRevisionModelImpl.getPlid()
 				};
 
@@ -7243,7 +7243,7 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 
 				args = new Object[] {
 						layoutRevisionModelImpl.getLayoutSetBranchId(),
-						layoutRevisionModelImpl.getHead()
+						layoutRevisionModelImpl.isHead()
 					};
 
 				finderCache.removeResult(FINDER_PATH_COUNT_BY_L_H, args);
@@ -7305,7 +7305,7 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 					args);
 
 				args = new Object[] {
-						layoutRevisionModelImpl.getHead(),
+						layoutRevisionModelImpl.isHead(),
 						layoutRevisionModelImpl.getPlid()
 					};
 
@@ -7375,7 +7375,7 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 
 				args = new Object[] {
 						layoutRevisionModelImpl.getLayoutSetBranchId(),
-						layoutRevisionModelImpl.getHead(),
+						layoutRevisionModelImpl.isHead(),
 						layoutRevisionModelImpl.getPlid()
 					};
 

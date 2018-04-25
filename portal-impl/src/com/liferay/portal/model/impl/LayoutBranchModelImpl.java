@@ -140,7 +140,7 @@ public class LayoutBranchModelImpl extends BaseModelImpl<LayoutBranch>
 		model.setPlid(soapModel.getPlid());
 		model.setName(soapModel.getName());
 		model.setDescription(soapModel.getDescription());
-		model.setMaster(soapModel.getMaster());
+		model.setMaster(soapModel.isMaster());
 
 		return model;
 	}

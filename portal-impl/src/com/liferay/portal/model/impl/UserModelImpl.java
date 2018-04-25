@@ -209,11 +209,11 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 		model.setCompanyId(soapModel.getCompanyId());
 		model.setCreateDate(soapModel.getCreateDate());
 		model.setModifiedDate(soapModel.getModifiedDate());
-		model.setDefaultUser(soapModel.getDefaultUser());
+		model.setDefaultUser(soapModel.isDefaultUser());
 		model.setContactId(soapModel.getContactId());
 		model.setPassword(soapModel.getPassword());
-		model.setPasswordEncrypted(soapModel.getPasswordEncrypted());
-		model.setPasswordReset(soapModel.getPasswordReset());
+		model.setPasswordEncrypted(soapModel.isPasswordEncrypted());
+		model.setPasswordReset(soapModel.isPasswordReset());
 		model.setPasswordModifiedDate(soapModel.getPasswordModifiedDate());
 		model.setDigest(soapModel.getDigest());
 		model.setReminderQueryQuestion(soapModel.getReminderQueryQuestion());
@@ -240,10 +240,10 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 		model.setLastLoginIP(soapModel.getLastLoginIP());
 		model.setLastFailedLoginDate(soapModel.getLastFailedLoginDate());
 		model.setFailedLoginAttempts(soapModel.getFailedLoginAttempts());
-		model.setLockout(soapModel.getLockout());
+		model.setLockout(soapModel.isLockout());
 		model.setLockoutDate(soapModel.getLockoutDate());
-		model.setAgreedToTermsOfUse(soapModel.getAgreedToTermsOfUse());
-		model.setEmailAddressVerified(soapModel.getEmailAddressVerified());
+		model.setAgreedToTermsOfUse(soapModel.isAgreedToTermsOfUse());
+		model.setEmailAddressVerified(soapModel.isEmailAddressVerified());
 		model.setStatus(soapModel.getStatus());
 
 		return model;

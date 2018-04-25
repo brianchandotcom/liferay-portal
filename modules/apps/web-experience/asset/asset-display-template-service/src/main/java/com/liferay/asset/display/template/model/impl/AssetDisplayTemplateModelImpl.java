@@ -143,7 +143,7 @@ public class AssetDisplayTemplateModelImpl extends BaseModelImpl<AssetDisplayTem
 		model.setName(soapModel.getName());
 		model.setClassNameId(soapModel.getClassNameId());
 		model.setDDMTemplateId(soapModel.getDDMTemplateId());
-		model.setMain(soapModel.getMain());
+		model.setMain(soapModel.isMain());
 
 		return model;
 	}

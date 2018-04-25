@@ -146,7 +146,7 @@ public class UserGroupModelImpl extends BaseModelImpl<UserGroup>
 		model.setParentUserGroupId(soapModel.getParentUserGroupId());
 		model.setName(soapModel.getName());
 		model.setDescription(soapModel.getDescription());
-		model.setAddedByLDAPImport(soapModel.getAddedByLDAPImport());
+		model.setAddedByLDAPImport(soapModel.isAddedByLDAPImport());
 
 		return model;
 	}

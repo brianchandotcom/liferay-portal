@@ -3587,7 +3587,7 @@ public class SocialActivityAchievementPersistenceImpl
 
 				args = new Object[] {
 						socialActivityAchievementModelImpl.getGroupId(),
-						socialActivityAchievementModelImpl.getFirstInGroup()
+						socialActivityAchievementModelImpl.isFirstInGroup()
 					};
 
 				finderCache.removeResult(FINDER_PATH_COUNT_BY_G_F, args);
@@ -3610,7 +3610,7 @@ public class SocialActivityAchievementPersistenceImpl
 				args = new Object[] {
 						socialActivityAchievementModelImpl.getGroupId(),
 						socialActivityAchievementModelImpl.getUserId(),
-						socialActivityAchievementModelImpl.getFirstInGroup()
+						socialActivityAchievementModelImpl.isFirstInGroup()
 					};
 
 				finderCache.removeResult(FINDER_PATH_COUNT_BY_G_U_F, args);

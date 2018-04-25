@@ -140,7 +140,7 @@ public class ResourcePermissionModelImpl extends BaseModelImpl<ResourcePermissio
 		model.setRoleId(soapModel.getRoleId());
 		model.setOwnerId(soapModel.getOwnerId());
 		model.setActionIds(soapModel.getActionIds());
-		model.setViewActionId(soapModel.getViewActionId());
+		model.setViewActionId(soapModel.isViewActionId());
 
 		return model;
 	}

@@ -121,7 +121,7 @@ public class RegionModelImpl extends BaseModelImpl<Region>
 		model.setCountryId(soapModel.getCountryId());
 		model.setRegionCode(soapModel.getRegionCode());
 		model.setName(soapModel.getName());
-		model.setActive(soapModel.getActive());
+		model.setActive(soapModel.isActive());
 
 		return model;
 	}

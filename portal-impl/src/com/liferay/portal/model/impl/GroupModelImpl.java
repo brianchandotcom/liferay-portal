@@ -184,13 +184,13 @@ public class GroupModelImpl extends BaseModelImpl<Group> implements GroupModel {
 		model.setDescription(soapModel.getDescription());
 		model.setType(soapModel.getType());
 		model.setTypeSettings(soapModel.getTypeSettings());
-		model.setManualMembership(soapModel.getManualMembership());
+		model.setManualMembership(soapModel.isManualMembership());
 		model.setMembershipRestriction(soapModel.getMembershipRestriction());
 		model.setFriendlyURL(soapModel.getFriendlyURL());
-		model.setSite(soapModel.getSite());
+		model.setSite(soapModel.isSite());
 		model.setRemoteStagingGroupCount(soapModel.getRemoteStagingGroupCount());
-		model.setInheritContent(soapModel.getInheritContent());
-		model.setActive(soapModel.getActive());
+		model.setInheritContent(soapModel.isInheritContent());
+		model.setActive(soapModel.isActive());
 
 		return model;
 	}

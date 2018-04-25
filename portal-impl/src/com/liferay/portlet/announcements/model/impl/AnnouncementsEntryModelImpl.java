@@ -168,7 +168,7 @@ public class AnnouncementsEntryModelImpl extends BaseModelImpl<AnnouncementsEntr
 		model.setDisplayDate(soapModel.getDisplayDate());
 		model.setExpirationDate(soapModel.getExpirationDate());
 		model.setPriority(soapModel.getPriority());
-		model.setAlert(soapModel.getAlert());
+		model.setAlert(soapModel.isAlert());
 
 		return model;
 	}

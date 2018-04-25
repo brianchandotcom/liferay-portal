@@ -156,7 +156,7 @@ public class PhoneModelImpl extends BaseModelImpl<Phone> implements PhoneModel {
 		model.setNumber(soapModel.getNumber());
 		model.setExtension(soapModel.getExtension());
 		model.setTypeId(soapModel.getTypeId());
-		model.setPrimary(soapModel.getPrimary());
+		model.setPrimary(soapModel.isPrimary());
 
 		return model;
 	}

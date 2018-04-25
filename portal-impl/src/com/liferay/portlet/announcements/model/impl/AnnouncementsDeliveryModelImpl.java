@@ -126,9 +126,9 @@ public class AnnouncementsDeliveryModelImpl extends BaseModelImpl<AnnouncementsD
 		model.setCompanyId(soapModel.getCompanyId());
 		model.setUserId(soapModel.getUserId());
 		model.setType(soapModel.getType());
-		model.setEmail(soapModel.getEmail());
-		model.setSms(soapModel.getSms());
-		model.setWebsite(soapModel.getWebsite());
+		model.setEmail(soapModel.isEmail());
+		model.setSms(soapModel.isSms());
+		model.setWebsite(soapModel.isWebsite());
 
 		return model;
 	}

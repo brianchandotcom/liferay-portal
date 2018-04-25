@@ -1802,7 +1802,7 @@ public class KaleoDefinitionPersistenceImpl extends BasePersistenceImpl<KaleoDef
 
 			if ((companyId != kaleoDefinition.getCompanyId()) ||
 					!Objects.equals(name, kaleoDefinition.getName()) ||
-					(active != kaleoDefinition.getActive())) {
+					(active != kaleoDefinition.isActive())) {
 				result = null;
 			}
 		}
@@ -1876,7 +1876,7 @@ public class KaleoDefinitionPersistenceImpl extends BasePersistenceImpl<KaleoDef
 					if ((kaleoDefinition.getCompanyId() != companyId) ||
 							(kaleoDefinition.getName() == null) ||
 							!kaleoDefinition.getName().equals(name) ||
-							(kaleoDefinition.getActive() != active)) {
+							(kaleoDefinition.isActive() != active)) {
 						finderCache.putResult(FINDER_PATH_FETCH_BY_C_N_A,
 							finderArgs, kaleoDefinition);
 					}
@@ -2044,7 +2044,7 @@ public class KaleoDefinitionPersistenceImpl extends BasePersistenceImpl<KaleoDef
 		finderCache.putResult(FINDER_PATH_FETCH_BY_C_N_A,
 			new Object[] {
 				kaleoDefinition.getCompanyId(), kaleoDefinition.getName(),
-				kaleoDefinition.getActive()
+				kaleoDefinition.isActive()
 			}, kaleoDefinition);
 
 		kaleoDefinition.resetOriginalValues();
@@ -2144,7 +2144,7 @@ public class KaleoDefinitionPersistenceImpl extends BasePersistenceImpl<KaleoDef
 		args = new Object[] {
 				kaleoDefinitionModelImpl.getCompanyId(),
 				kaleoDefinitionModelImpl.getName(),
-				kaleoDefinitionModelImpl.getActive()
+				kaleoDefinitionModelImpl.isActive()
 			};
 
 		finderCache.putResult(FINDER_PATH_COUNT_BY_C_N_A, args,
@@ -2203,7 +2203,7 @@ public class KaleoDefinitionPersistenceImpl extends BasePersistenceImpl<KaleoDef
 			Object[] args = new Object[] {
 					kaleoDefinitionModelImpl.getCompanyId(),
 					kaleoDefinitionModelImpl.getName(),
-					kaleoDefinitionModelImpl.getActive()
+					kaleoDefinitionModelImpl.isActive()
 				};
 
 			finderCache.removeResult(FINDER_PATH_COUNT_BY_C_N_A, args);
@@ -2436,7 +2436,7 @@ public class KaleoDefinitionPersistenceImpl extends BasePersistenceImpl<KaleoDef
 
 				args = new Object[] {
 						kaleoDefinitionModelImpl.getCompanyId(),
-						kaleoDefinitionModelImpl.getActive()
+						kaleoDefinitionModelImpl.isActive()
 					};
 
 				finderCache.removeResult(FINDER_PATH_COUNT_BY_C_A, args);

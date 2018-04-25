@@ -186,11 +186,11 @@ public class WikiPageModelImpl extends BaseModelImpl<WikiPage>
 		model.setNodeId(soapModel.getNodeId());
 		model.setTitle(soapModel.getTitle());
 		model.setVersion(soapModel.getVersion());
-		model.setMinorEdit(soapModel.getMinorEdit());
+		model.setMinorEdit(soapModel.isMinorEdit());
 		model.setContent(soapModel.getContent());
 		model.setSummary(soapModel.getSummary());
 		model.setFormat(soapModel.getFormat());
-		model.setHead(soapModel.getHead());
+		model.setHead(soapModel.isHead());
 		model.setParentTitle(soapModel.getParentTitle());
 		model.setRedirectTitle(soapModel.getRedirectTitle());
 		model.setLastPublishDate(soapModel.getLastPublishDate());

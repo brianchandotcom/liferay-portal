@@ -124,7 +124,7 @@ public class PluginSettingModelImpl extends BaseModelImpl<PluginSetting>
 		model.setPluginId(soapModel.getPluginId());
 		model.setPluginType(soapModel.getPluginType());
 		model.setRoles(soapModel.getRoles());
-		model.setActive(soapModel.getActive());
+		model.setActive(soapModel.isActive());
 
 		return model;
 	}

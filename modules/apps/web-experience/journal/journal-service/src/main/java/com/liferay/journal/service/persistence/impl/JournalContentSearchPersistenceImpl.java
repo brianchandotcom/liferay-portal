@@ -4381,7 +4381,7 @@ public class JournalContentSearchPersistenceImpl extends BasePersistenceImpl<Jou
 			JournalContentSearch journalContentSearch = (JournalContentSearch)result;
 
 			if ((groupId != journalContentSearch.getGroupId()) ||
-					(privateLayout != journalContentSearch.getPrivateLayout()) ||
+					(privateLayout != journalContentSearch.isPrivateLayout()) ||
 					(layoutId != journalContentSearch.getLayoutId()) ||
 					!Objects.equals(portletId,
 						journalContentSearch.getPortletId()) ||
@@ -4469,7 +4469,7 @@ public class JournalContentSearchPersistenceImpl extends BasePersistenceImpl<Jou
 					cacheResult(journalContentSearch);
 
 					if ((journalContentSearch.getGroupId() != groupId) ||
-							(journalContentSearch.getPrivateLayout() != privateLayout) ||
+							(journalContentSearch.isPrivateLayout() != privateLayout) ||
 							(journalContentSearch.getLayoutId() != layoutId) ||
 							(journalContentSearch.getPortletId() == null) ||
 							!journalContentSearch.getPortletId()
@@ -4651,7 +4651,7 @@ public class JournalContentSearchPersistenceImpl extends BasePersistenceImpl<Jou
 		finderCache.putResult(FINDER_PATH_FETCH_BY_G_P_L_P_A,
 			new Object[] {
 				journalContentSearch.getGroupId(),
-				journalContentSearch.getPrivateLayout(),
+				journalContentSearch.isPrivateLayout(),
 				journalContentSearch.getLayoutId(),
 				journalContentSearch.getPortletId(),
 				journalContentSearch.getArticleId()
@@ -4734,7 +4734,7 @@ public class JournalContentSearchPersistenceImpl extends BasePersistenceImpl<Jou
 		JournalContentSearchModelImpl journalContentSearchModelImpl) {
 		Object[] args = new Object[] {
 				journalContentSearchModelImpl.getGroupId(),
-				journalContentSearchModelImpl.getPrivateLayout(),
+				journalContentSearchModelImpl.isPrivateLayout(),
 				journalContentSearchModelImpl.getLayoutId(),
 				journalContentSearchModelImpl.getPortletId(),
 				journalContentSearchModelImpl.getArticleId()
@@ -4752,7 +4752,7 @@ public class JournalContentSearchPersistenceImpl extends BasePersistenceImpl<Jou
 		if (clearCurrent) {
 			Object[] args = new Object[] {
 					journalContentSearchModelImpl.getGroupId(),
-					journalContentSearchModelImpl.getPrivateLayout(),
+					journalContentSearchModelImpl.isPrivateLayout(),
 					journalContentSearchModelImpl.getLayoutId(),
 					journalContentSearchModelImpl.getPortletId(),
 					journalContentSearchModelImpl.getArticleId()
@@ -5034,7 +5034,7 @@ public class JournalContentSearchPersistenceImpl extends BasePersistenceImpl<Jou
 
 				args = new Object[] {
 						journalContentSearchModelImpl.getGroupId(),
-						journalContentSearchModelImpl.getPrivateLayout()
+						journalContentSearchModelImpl.isPrivateLayout()
 					};
 
 				finderCache.removeResult(FINDER_PATH_COUNT_BY_G_P, args);
@@ -5077,7 +5077,7 @@ public class JournalContentSearchPersistenceImpl extends BasePersistenceImpl<Jou
 
 				args = new Object[] {
 						journalContentSearchModelImpl.getGroupId(),
-						journalContentSearchModelImpl.getPrivateLayout(),
+						journalContentSearchModelImpl.isPrivateLayout(),
 						journalContentSearchModelImpl.getLayoutId()
 					};
 
@@ -5100,7 +5100,7 @@ public class JournalContentSearchPersistenceImpl extends BasePersistenceImpl<Jou
 
 				args = new Object[] {
 						journalContentSearchModelImpl.getGroupId(),
-						journalContentSearchModelImpl.getPrivateLayout(),
+						journalContentSearchModelImpl.isPrivateLayout(),
 						journalContentSearchModelImpl.getArticleId()
 					};
 
@@ -5124,7 +5124,7 @@ public class JournalContentSearchPersistenceImpl extends BasePersistenceImpl<Jou
 
 				args = new Object[] {
 						journalContentSearchModelImpl.getGroupId(),
-						journalContentSearchModelImpl.getPrivateLayout(),
+						journalContentSearchModelImpl.isPrivateLayout(),
 						journalContentSearchModelImpl.getLayoutId(),
 						journalContentSearchModelImpl.getPortletId()
 					};

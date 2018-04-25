@@ -142,7 +142,7 @@ public class LayoutSetModelImpl extends BaseModelImpl<LayoutSet>
 		model.setCompanyId(soapModel.getCompanyId());
 		model.setCreateDate(soapModel.getCreateDate());
 		model.setModifiedDate(soapModel.getModifiedDate());
-		model.setPrivateLayout(soapModel.getPrivateLayout());
+		model.setPrivateLayout(soapModel.isPrivateLayout());
 		model.setLogoId(soapModel.getLogoId());
 		model.setThemeId(soapModel.getThemeId());
 		model.setColorSchemeId(soapModel.getColorSchemeId());
@@ -150,7 +150,7 @@ public class LayoutSetModelImpl extends BaseModelImpl<LayoutSet>
 		model.setPageCount(soapModel.getPageCount());
 		model.setSettings(soapModel.getSettings());
 		model.setLayoutSetPrototypeUuid(soapModel.getLayoutSetPrototypeUuid());
-		model.setLayoutSetPrototypeLinkEnabled(soapModel.getLayoutSetPrototypeLinkEnabled());
+		model.setLayoutSetPrototypeLinkEnabled(soapModel.isLayoutSetPrototypeLinkEnabled());
 
 		return model;
 	}

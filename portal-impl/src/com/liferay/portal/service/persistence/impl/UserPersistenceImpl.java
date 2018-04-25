@@ -4130,7 +4130,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 			User user = (User)result;
 
 			if ((companyId != user.getCompanyId()) ||
-					(defaultUser != user.getDefaultUser())) {
+					(defaultUser != user.isDefaultUser())) {
 				result = null;
 			}
 		}
@@ -4184,7 +4184,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 					cacheResult(user);
 
 					if ((user.getCompanyId() != companyId) ||
-							(user.getDefaultUser() != defaultUser)) {
+							(user.isDefaultUser() != defaultUser)) {
 						finderCache.putResult(FINDER_PATH_FETCH_BY_C_DU,
 							finderArgs, user);
 					}
@@ -7363,7 +7363,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 			new Object[] { user.getCompanyId(), user.getUserId() }, user);
 
 		finderCache.putResult(FINDER_PATH_FETCH_BY_C_DU,
-			new Object[] { user.getCompanyId(), user.getDefaultUser() }, user);
+			new Object[] { user.getCompanyId(), user.isDefaultUser() }, user);
 
 		finderCache.putResult(FINDER_PATH_FETCH_BY_C_SN,
 			new Object[] { user.getCompanyId(), user.getScreenName() }, user);
@@ -7473,7 +7473,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 			false);
 
 		args = new Object[] {
-				userModelImpl.getCompanyId(), userModelImpl.getDefaultUser()
+				userModelImpl.getCompanyId(), userModelImpl.isDefaultUser()
 			};
 
 		finderCache.putResult(FINDER_PATH_COUNT_BY_C_DU, args, Long.valueOf(1),
@@ -7581,7 +7581,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 
 		if (clearCurrent) {
 			Object[] args = new Object[] {
-					userModelImpl.getCompanyId(), userModelImpl.getDefaultUser()
+					userModelImpl.getCompanyId(), userModelImpl.isDefaultUser()
 				};
 
 			finderCache.removeResult(FINDER_PATH_COUNT_BY_C_DU, args);
@@ -8122,8 +8122,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 
 				args = new Object[] {
 						userModelImpl.getCompanyId(),
-						userModelImpl.getDefaultUser(),
-						userModelImpl.getStatus()
+						userModelImpl.isDefaultUser(), userModelImpl.getStatus()
 					};
 
 				finderCache.removeResult(FINDER_PATH_COUNT_BY_C_DU_S, args);

@@ -4430,7 +4430,7 @@ public class WebsitePersistenceImpl extends BasePersistenceImpl<Website>
 						websiteModelImpl.getCompanyId(),
 						websiteModelImpl.getClassNameId(),
 						websiteModelImpl.getClassPK(),
-						websiteModelImpl.getPrimary()
+						websiteModelImpl.isPrimary()
 					};
 
 				finderCache.removeResult(FINDER_PATH_COUNT_BY_C_C_C_P, args);

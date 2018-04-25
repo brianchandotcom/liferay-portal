@@ -5447,7 +5447,7 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_VISIBLE,
 					args);
 
-				args = new Object[] { assetEntryModelImpl.getVisible() };
+				args = new Object[] { assetEntryModelImpl.isVisible() };
 
 				finderCache.removeResult(FINDER_PATH_COUNT_BY_VISIBLE, args);
 				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_VISIBLE,
@@ -5522,7 +5522,7 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 				args = new Object[] {
 						assetEntryModelImpl.getGroupId(),
 						assetEntryModelImpl.getClassNameId(),
-						assetEntryModelImpl.getVisible()
+						assetEntryModelImpl.isVisible()
 					};
 
 				finderCache.removeResult(FINDER_PATH_COUNT_BY_G_C_V, args);

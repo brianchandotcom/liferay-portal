@@ -269,7 +269,11 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 			${entity.name} model = new ${entity.name}Impl();
 
 			<#list entity.regularEntityColumns as entityColumn>
-				model.set${entityColumn.methodName}(soapModel.get${entityColumn.methodName}());
+				<#if stringUtil.equals(entityColumn.type, "boolean")>
+					model.set${entityColumn.methodName}(soapModel.is${entityColumn.methodName}());
+				<#else>
+					model.set${entityColumn.methodName}(soapModel.get${entityColumn.methodName}());
+				</#if>
 			</#list>
 
 			return model;
@@ -1268,7 +1272,7 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 			<#list entity.entityOrder.entityColumns as entityColumn>
 				<#if entityColumn.isPrimitiveType()>
 					<#if stringUtil.equals(entityColumn.type, "boolean")>
-						value = Boolean.compare(get${entityColumn.methodName}(), ${entity.varName}.get${entityColumn.methodName}());
+						value = Boolean.compare(is${entityColumn.methodName}(), ${entity.varName}.is${entityColumn.methodName}());
 					<#else>
 						if (get${entityColumn.methodName}() < ${entity.varName}.get${entityColumn.methodName}()) {
 							value = -1;

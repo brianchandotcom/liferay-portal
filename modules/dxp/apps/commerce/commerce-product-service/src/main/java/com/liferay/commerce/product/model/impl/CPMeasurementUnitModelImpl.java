@@ -163,7 +163,7 @@ public class CPMeasurementUnitModelImpl extends BaseModelImpl<CPMeasurementUnit>
 		model.setName(soapModel.getName());
 		model.setKey(soapModel.getKey());
 		model.setRate(soapModel.getRate());
-		model.setPrimary(soapModel.getPrimary());
+		model.setPrimary(soapModel.isPrimary());
 		model.setPriority(soapModel.getPriority());
 		model.setType(soapModel.getType());
 		model.setLastPublishDate(soapModel.getLastPublishDate());

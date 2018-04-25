@@ -88,6 +88,7 @@ public interface CommerceShippingFixedOptionLocalService
 	* @param commerceShippingFixedOptionId the primary key for the new commerce shipping fixed option
 	* @return the new commerce shipping fixed option
 	*/
+	@Transactional(enabled = false)
 	public CommerceShippingFixedOption createCommerceShippingFixedOption(
 		long commerceShippingFixedOptionId);
 

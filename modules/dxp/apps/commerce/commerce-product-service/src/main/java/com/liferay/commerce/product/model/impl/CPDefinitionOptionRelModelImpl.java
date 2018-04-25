@@ -170,9 +170,9 @@ public class CPDefinitionOptionRelModelImpl extends BaseModelImpl<CPDefinitionOp
 		model.setDescription(soapModel.getDescription());
 		model.setDDMFormFieldTypeName(soapModel.getDDMFormFieldTypeName());
 		model.setPriority(soapModel.getPriority());
-		model.setFacetable(soapModel.getFacetable());
-		model.setRequired(soapModel.getRequired());
-		model.setSkuContributor(soapModel.getSkuContributor());
+		model.setFacetable(soapModel.isFacetable());
+		model.setRequired(soapModel.isRequired());
+		model.setSkuContributor(soapModel.isSkuContributor());
 
 		return model;
 	}

@@ -194,7 +194,7 @@ public class CPInstanceModelImpl extends BaseModelImpl<CPInstance>
 		model.setSku(soapModel.getSku());
 		model.setGtin(soapModel.getGtin());
 		model.setManufacturerPartNumber(soapModel.getManufacturerPartNumber());
-		model.setPurchasable(soapModel.getPurchasable());
+		model.setPurchasable(soapModel.isPurchasable());
 		model.setDDMContent(soapModel.getDDMContent());
 		model.setWidth(soapModel.getWidth());
 		model.setHeight(soapModel.getHeight());
@@ -203,7 +203,7 @@ public class CPInstanceModelImpl extends BaseModelImpl<CPInstance>
 		model.setCost(soapModel.getCost());
 		model.setPrice(soapModel.getPrice());
 		model.setPromoPrice(soapModel.getPromoPrice());
-		model.setPublished(soapModel.getPublished());
+		model.setPublished(soapModel.isPublished());
 		model.setDisplayDate(soapModel.getDisplayDate());
 		model.setExpirationDate(soapModel.getExpirationDate());
 		model.setLastPublishDate(soapModel.getLastPublishDate());

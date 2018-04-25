@@ -150,8 +150,8 @@ public class CommerceUserSegmentEntryModelImpl extends BaseModelImpl<CommerceUse
 		model.setModifiedDate(soapModel.getModifiedDate());
 		model.setName(soapModel.getName());
 		model.setKey(soapModel.getKey());
-		model.setActive(soapModel.getActive());
-		model.setSystem(soapModel.getSystem());
+		model.setActive(soapModel.isActive());
+		model.setSystem(soapModel.isSystem());
 		model.setPriority(soapModel.getPriority());
 
 		return model;

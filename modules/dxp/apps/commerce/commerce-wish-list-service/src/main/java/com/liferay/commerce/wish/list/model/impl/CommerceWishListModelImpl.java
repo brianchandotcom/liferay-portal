@@ -144,7 +144,7 @@ public class CommerceWishListModelImpl extends BaseModelImpl<CommerceWishList>
 		model.setCreateDate(soapModel.getCreateDate());
 		model.setModifiedDate(soapModel.getModifiedDate());
 		model.setName(soapModel.getName());
-		model.setDefaultWishList(soapModel.getDefaultWishList());
+		model.setDefaultWishList(soapModel.isDefaultWishList());
 
 		return model;
 	}

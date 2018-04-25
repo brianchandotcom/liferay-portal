@@ -2540,7 +2540,7 @@ public class CommerceUserSegmentEntryPersistenceImpl extends BasePersistenceImpl
 
 				args = new Object[] {
 						commerceUserSegmentEntryModelImpl.getGroupId(),
-						commerceUserSegmentEntryModelImpl.getActive()
+						commerceUserSegmentEntryModelImpl.isActive()
 					};
 
 				finderCache.removeResult(FINDER_PATH_COUNT_BY_G_A, args);

@@ -4121,7 +4121,7 @@ public class CommerceCurrencyPersistenceImpl extends BasePersistenceImpl<Commerc
 
 				args = new Object[] {
 						commerceCurrencyModelImpl.getGroupId(),
-						commerceCurrencyModelImpl.getPrimary()
+						commerceCurrencyModelImpl.isPrimary()
 					};
 
 				finderCache.removeResult(FINDER_PATH_COUNT_BY_G_P, args);
@@ -4142,7 +4142,7 @@ public class CommerceCurrencyPersistenceImpl extends BasePersistenceImpl<Commerc
 
 				args = new Object[] {
 						commerceCurrencyModelImpl.getGroupId(),
-						commerceCurrencyModelImpl.getActive()
+						commerceCurrencyModelImpl.isActive()
 					};
 
 				finderCache.removeResult(FINDER_PATH_COUNT_BY_G_A, args);
@@ -4164,8 +4164,8 @@ public class CommerceCurrencyPersistenceImpl extends BasePersistenceImpl<Commerc
 
 				args = new Object[] {
 						commerceCurrencyModelImpl.getGroupId(),
-						commerceCurrencyModelImpl.getPrimary(),
-						commerceCurrencyModelImpl.getActive()
+						commerceCurrencyModelImpl.isPrimary(),
+						commerceCurrencyModelImpl.isActive()
 					};
 
 				finderCache.removeResult(FINDER_PATH_COUNT_BY_G_P_A, args);

@@ -88,6 +88,7 @@ public interface CommerceShippingFixedOptionRelLocalService
 	* @param commerceShippingFixedOptionRelId the primary key for the new commerce shipping fixed option rel
 	* @return the new commerce shipping fixed option rel
 	*/
+	@Transactional(enabled = false)
 	public CommerceShippingFixedOptionRel createCommerceShippingFixedOptionRel(
 		long commerceShippingFixedOptionRelId);
 

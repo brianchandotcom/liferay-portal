@@ -319,7 +319,7 @@
 		<property name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property column="active_" name="active" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
 		<property column="type_" name="type" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="typeSettings" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="typeSettings" type="com.liferay.portal.dao.orm.hibernate.StringClobType" />
 	</class>
 	<class name="com.liferay.commerce.product.model.impl.CPRuleUserSegmentRelImpl" table="CPRuleUserSegmentRel">
 		<id name="CPRuleUserSegmentRelId" type="long">

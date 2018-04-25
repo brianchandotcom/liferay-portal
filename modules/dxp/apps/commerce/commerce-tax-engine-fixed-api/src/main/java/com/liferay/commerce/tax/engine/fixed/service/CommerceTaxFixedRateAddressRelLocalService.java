@@ -83,6 +83,7 @@ public interface CommerceTaxFixedRateAddressRelLocalService
 	* @param commerceTaxFixedRateAddressRelId the primary key for the new commerce tax fixed rate address rel
 	* @return the new commerce tax fixed rate address rel
 	*/
+	@Transactional(enabled = false)
 	public CommerceTaxFixedRateAddressRel createCommerceTaxFixedRateAddressRel(
 		long commerceTaxFixedRateAddressRelId);
 

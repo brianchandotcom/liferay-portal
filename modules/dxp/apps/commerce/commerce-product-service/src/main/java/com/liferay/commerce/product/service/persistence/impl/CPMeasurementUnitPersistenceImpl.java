@@ -3911,7 +3911,7 @@ public class CPMeasurementUnitPersistenceImpl extends BasePersistenceImpl<CPMeas
 
 				args = new Object[] {
 						cpMeasurementUnitModelImpl.getGroupId(),
-						cpMeasurementUnitModelImpl.getPrimary(),
+						cpMeasurementUnitModelImpl.isPrimary(),
 						cpMeasurementUnitModelImpl.getType()
 					};
 

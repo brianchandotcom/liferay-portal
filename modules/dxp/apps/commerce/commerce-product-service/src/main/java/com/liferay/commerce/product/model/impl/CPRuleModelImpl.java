@@ -80,7 +80,7 @@ public class CPRuleModelImpl extends BaseModelImpl<CPRule>
 			{ "name", Types.VARCHAR },
 			{ "active_", Types.BOOLEAN },
 			{ "type_", Types.VARCHAR },
-			{ "typeSettings", Types.VARCHAR }
+			{ "typeSettings", Types.CLOB }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
@@ -95,10 +95,10 @@ public class CPRuleModelImpl extends BaseModelImpl<CPRule>
 		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("active_", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("type_", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("typeSettings", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("typeSettings", Types.CLOB);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table CPRule (CPRuleId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name VARCHAR(75) null,active_ BOOLEAN,type_ VARCHAR(75) null,typeSettings VARCHAR(75) null)";
+	public static final String TABLE_SQL_CREATE = "create table CPRule (CPRuleId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name VARCHAR(75) null,active_ BOOLEAN,type_ VARCHAR(75) null,typeSettings TEXT null)";
 	public static final String TABLE_SQL_DROP = "drop table CPRule";
 	public static final String ORDER_BY_JPQL = " ORDER BY cpRule.createDate DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY CPRule.createDate DESC";
@@ -138,7 +138,7 @@ public class CPRuleModelImpl extends BaseModelImpl<CPRule>
 		model.setCreateDate(soapModel.getCreateDate());
 		model.setModifiedDate(soapModel.getModifiedDate());
 		model.setName(soapModel.getName());
-		model.setActive(soapModel.getActive());
+		model.setActive(soapModel.isActive());
 		model.setType(soapModel.getType());
 		model.setTypeSettings(soapModel.getTypeSettings());
 

@@ -85,6 +85,7 @@ public interface CommerceUserSegmentCriterionLocalService
 	* @param commerceUserSegmentCriterionId the primary key for the new commerce user segment criterion
 	* @return the new commerce user segment criterion
 	*/
+	@Transactional(enabled = false)
 	public CommerceUserSegmentCriterion createCommerceUserSegmentCriterion(
 		long commerceUserSegmentCriterionId);
 

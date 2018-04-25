@@ -93,6 +93,7 @@ public interface CommerceCurrencyLocalService extends BaseLocalService,
 	* @param commerceCurrencyId the primary key for the new commerce currency
 	* @return the new commerce currency
 	*/
+	@Transactional(enabled = false)
 	public CommerceCurrency createCommerceCurrency(long commerceCurrencyId);
 
 	public void deleteCommerceCurrencies(long groupId);

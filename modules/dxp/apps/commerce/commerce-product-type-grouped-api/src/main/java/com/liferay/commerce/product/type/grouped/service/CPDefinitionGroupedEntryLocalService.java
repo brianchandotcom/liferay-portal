@@ -88,6 +88,7 @@ public interface CPDefinitionGroupedEntryLocalService extends BaseLocalService,
 	* @param CPDefinitionGroupedEntryId the primary key for the new cp definition grouped entry
 	* @return the new cp definition grouped entry
 	*/
+	@Transactional(enabled = false)
 	public CPDefinitionGroupedEntry createCPDefinitionGroupedEntry(
 		long CPDefinitionGroupedEntryId);
 

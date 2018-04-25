@@ -155,7 +155,7 @@ public class CPFriendlyURLEntryModelImpl extends BaseModelImpl<CPFriendlyURLEntr
 		model.setClassPK(soapModel.getClassPK());
 		model.setLanguageId(soapModel.getLanguageId());
 		model.setUrlTitle(soapModel.getUrlTitle());
-		model.setMain(soapModel.getMain());
+		model.setMain(soapModel.isMain());
 
 		return model;
 	}

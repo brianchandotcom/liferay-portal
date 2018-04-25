@@ -163,9 +163,9 @@ public class CPOptionModelImpl extends BaseModelImpl<CPOption>
 		model.setTitle(soapModel.getTitle());
 		model.setDescription(soapModel.getDescription());
 		model.setDDMFormFieldTypeName(soapModel.getDDMFormFieldTypeName());
-		model.setFacetable(soapModel.getFacetable());
-		model.setRequired(soapModel.getRequired());
-		model.setSkuContributor(soapModel.getSkuContributor());
+		model.setFacetable(soapModel.isFacetable());
+		model.setRequired(soapModel.isRequired());
+		model.setSkuContributor(soapModel.isSkuContributor());
 		model.setKey(soapModel.getKey());
 		model.setLastPublishDate(soapModel.getLastPublishDate());
 

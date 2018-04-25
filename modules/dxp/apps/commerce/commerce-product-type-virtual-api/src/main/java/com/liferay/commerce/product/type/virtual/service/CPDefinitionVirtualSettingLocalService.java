@@ -92,6 +92,7 @@ public interface CPDefinitionVirtualSettingLocalService extends BaseLocalService
 	* @param CPDefinitionVirtualSettingId the primary key for the new cp definition virtual setting
 	* @return the new cp definition virtual setting
 	*/
+	@Transactional(enabled = false)
 	public CPDefinitionVirtualSetting createCPDefinitionVirtualSetting(
 		long CPDefinitionVirtualSettingId);
 

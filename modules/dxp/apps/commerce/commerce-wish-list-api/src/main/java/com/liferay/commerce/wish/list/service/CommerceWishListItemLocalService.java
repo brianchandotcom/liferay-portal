@@ -83,6 +83,7 @@ public interface CommerceWishListItemLocalService extends BaseLocalService,
 	* @param commerceWishListItemId the primary key for the new commerce wish list item
 	* @return the new commerce wish list item
 	*/
+	@Transactional(enabled = false)
 	public CommerceWishListItem createCommerceWishListItem(
 		long commerceWishListItemId);
 

@@ -4088,7 +4088,7 @@ public class CPDefinitionOptionRelPersistenceImpl extends BasePersistenceImpl<CP
 
 				args = new Object[] {
 						cpDefinitionOptionRelModelImpl.getCPDefinitionId(),
-						cpDefinitionOptionRelModelImpl.getSkuContributor()
+						cpDefinitionOptionRelModelImpl.isSkuContributor()
 					};
 
 				finderCache.removeResult(FINDER_PATH_COUNT_BY_C_SC, args);

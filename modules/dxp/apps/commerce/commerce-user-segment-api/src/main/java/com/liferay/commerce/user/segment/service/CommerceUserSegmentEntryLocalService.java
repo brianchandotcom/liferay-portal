@@ -92,6 +92,7 @@ public interface CommerceUserSegmentEntryLocalService extends BaseLocalService,
 	* @param commerceUserSegmentEntryId the primary key for the new commerce user segment entry
 	* @return the new commerce user segment entry
 	*/
+	@Transactional(enabled = false)
 	public CommerceUserSegmentEntry createCommerceUserSegmentEntry(
 		long commerceUserSegmentEntryId);
 

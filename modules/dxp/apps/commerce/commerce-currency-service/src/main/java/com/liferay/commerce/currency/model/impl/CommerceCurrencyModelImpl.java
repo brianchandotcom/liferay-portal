@@ -167,9 +167,9 @@ public class CommerceCurrencyModelImpl extends BaseModelImpl<CommerceCurrency>
 		model.setName(soapModel.getName());
 		model.setRate(soapModel.getRate());
 		model.setRoundingType(soapModel.getRoundingType());
-		model.setPrimary(soapModel.getPrimary());
+		model.setPrimary(soapModel.isPrimary());
 		model.setPriority(soapModel.getPriority());
-		model.setActive(soapModel.getActive());
+		model.setActive(soapModel.isActive());
 		model.setLastPublishDate(soapModel.getLastPublishDate());
 
 		return model;

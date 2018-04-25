@@ -206,7 +206,7 @@ public class CPRulePersistenceTest {
 		return OrderByComparatorFactoryUtil.create("CPRule", "CPRuleId", true,
 			"groupId", true, "companyId", true, "userId", true, "userName",
 			true, "createDate", true, "modifiedDate", true, "name", true,
-			"active", true, "type", true, "typeSettings", true);
+			"active", true, "type", true);
 	}
 
 	@Test

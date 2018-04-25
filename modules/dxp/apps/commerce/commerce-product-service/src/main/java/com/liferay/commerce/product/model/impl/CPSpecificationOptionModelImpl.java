@@ -161,7 +161,7 @@ public class CPSpecificationOptionModelImpl extends BaseModelImpl<CPSpecificatio
 		model.setCPOptionCategoryId(soapModel.getCPOptionCategoryId());
 		model.setTitle(soapModel.getTitle());
 		model.setDescription(soapModel.getDescription());
-		model.setFacetable(soapModel.getFacetable());
+		model.setFacetable(soapModel.isFacetable());
 		model.setKey(soapModel.getKey());
 		model.setLastPublishDate(soapModel.getLastPublishDate());
 

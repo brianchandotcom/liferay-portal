@@ -82,6 +82,7 @@ public interface CommerceTaxFixedRateLocalService extends BaseLocalService,
 	* @param commerceTaxFixedRateId the primary key for the new commerce tax fixed rate
 	* @return the new commerce tax fixed rate
 	*/
+	@Transactional(enabled = false)
 	public CommerceTaxFixedRate createCommerceTaxFixedRate(
 		long commerceTaxFixedRateId);
 

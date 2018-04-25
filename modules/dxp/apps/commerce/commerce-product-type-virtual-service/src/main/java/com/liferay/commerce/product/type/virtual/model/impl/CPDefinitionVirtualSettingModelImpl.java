@@ -177,10 +177,10 @@ public class CPDefinitionVirtualSettingModelImpl extends BaseModelImpl<CPDefinit
 		model.setActivationStatus(soapModel.getActivationStatus());
 		model.setDuration(soapModel.getDuration());
 		model.setMaxUsages(soapModel.getMaxUsages());
-		model.setUseSample(soapModel.getUseSample());
+		model.setUseSample(soapModel.isUseSample());
 		model.setSampleFileEntryId(soapModel.getSampleFileEntryId());
 		model.setSampleUrl(soapModel.getSampleUrl());
-		model.setTermsOfUseRequired(soapModel.getTermsOfUseRequired());
+		model.setTermsOfUseRequired(soapModel.isTermsOfUseRequired());
 		model.setTermsOfUseContent(soapModel.getTermsOfUseContent());
 		model.setTermsOfUseJournalArticleResourcePrimKey(soapModel.getTermsOfUseJournalArticleResourcePrimKey());
 		model.setLastPublishDate(soapModel.getLastPublishDate());

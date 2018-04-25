@@ -1,1 +1,17 @@
 lib/development/biz.aQute.bnd.jar
+tmp/lib-pre/com.liferay.petra.concurrent.jar
+tmp/lib-pre/com.liferay.petra.content.jar
+tmp/lib-pre/com.liferay.petra.encryptor.jar
+tmp/lib-pre/com.liferay.petra.executor.jar
+tmp/lib-pre/com.liferay.petra.function.jar
+tmp/lib-pre/com.liferay.petra.io.jar
+tmp/lib-pre/com.liferay.petra.lang.jar
+tmp/lib-pre/com.liferay.petra.log4j.jar
+tmp/lib-pre/com.liferay.petra.mail.jar
+tmp/lib-pre/com.liferay.petra.memory.jar
+tmp/lib-pre/com.liferay.petra.nio.jar
+tmp/lib-pre/com.liferay.petra.process.jar
+tmp/lib-pre/com.liferay.petra.reflect.jar
+tmp/lib-pre/com.liferay.petra.string.jar
+tmp/lib-pre/com.liferay.petra.xml.jar
+tmp/lib-pre/com.liferay.registry.api.jar

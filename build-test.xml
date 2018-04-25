@@ -6962,7 +6962,10 @@ auto.deploy.dest.dir=C:/WINDOWS/system32/config/systemprofile/liferay/websphere-
 		</if>
 
 		<if>
-			<equals arg1="${test.batch.run.type}" arg2="sequential" />
+			<and>
+				<contains string="${test.class}" substring="," />
+				<equals arg1="${test.batch.run.type}" arg2="sequential" />
+			</and>
 			<then>
 				<echo append="true" file="${test.ext.properties.file}">
 					test.skip.tear.down=false

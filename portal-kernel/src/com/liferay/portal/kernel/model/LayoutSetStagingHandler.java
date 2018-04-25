@@ -169,10 +169,8 @@ public class LayoutSetStagingHandler
 		_layoutSetBranchMethodNames.add("getLogo");
 		_layoutSetBranchMethodNames.add("getLogoId");
 		_layoutSetBranchMethodNames.add("getSettings");
-		_layoutSetBranchMethodNames.add("getSettings");
 		_layoutSetBranchMethodNames.add("getSettingsProperties");
 		_layoutSetBranchMethodNames.add("getSettingsProperty");
-		_layoutSetBranchMethodNames.add("getStagingLogoId");
 		_layoutSetBranchMethodNames.add("getTheme");
 		_layoutSetBranchMethodNames.add("getThemeId");
 		_layoutSetBranchMethodNames.add("getThemeSetting");
@@ -181,10 +179,8 @@ public class LayoutSetStagingHandler
 		_layoutSetBranchMethodNames.add("isLogo");
 		_layoutSetBranchMethodNames.add("setColorSchemeId");
 		_layoutSetBranchMethodNames.add("setCss");
-		_layoutSetBranchMethodNames.add("setEscapedModel");
 		_layoutSetBranchMethodNames.add("setLayoutSetPrototypeLinkEnabled");
 		_layoutSetBranchMethodNames.add("setLayoutSetPrototypeUuid");
-		_layoutSetBranchMethodNames.add("setLogo");
 		_layoutSetBranchMethodNames.add("setLogoId");
 		_layoutSetBranchMethodNames.add("setSettings");
 		_layoutSetBranchMethodNames.add("setSettingsProperties");

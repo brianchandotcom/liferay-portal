@@ -45,7 +45,7 @@ public class AppServer {
 
 	public static AppServer getTCServerAppServer() {
 		return new AppServer(
-			"../../tc-server-2.9.11", "/tomcat-7.0.64.B.RELEASE/lib",
+			"../../tc-server-4.0.0", "/tomcat-9.0.6.B.RELEASE/lib",
 			"/liferay/lib", "/liferay/webapps/ROOT", "tomcat");
 	}
 

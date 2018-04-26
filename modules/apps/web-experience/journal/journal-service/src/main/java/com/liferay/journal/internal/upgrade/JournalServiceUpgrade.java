@@ -44,7 +44,6 @@ import com.liferay.journal.internal.upgrade.v1_1_2.UpgradeCheckIntervalConfigura
 import com.liferay.journal.internal.upgrade.v1_1_2.UpgradeJournalServiceVerify;
 import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.journal.service.JournalArticleResourceLocalService;
-import com.liferay.journal.service.JournalContentSearchLocalService;
 import com.liferay.journal.service.JournalFolderLocalService;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -154,8 +153,7 @@ public class JournalServiceUpgrade implements UpgradeStepRegistrator {
 			new UpgradeCheckIntervalConfiguration(_configurationAdmin),
 			new UpgradeJournalServiceVerify(
 				_assetEntryLocalService, _journalArticleLocalService,
-				_journalArticleResourceLocalService,
-				_journalContentSearchLocalService, _journalFolderLocalService,
+				_journalArticleResourceLocalService, _journalFolderLocalService,
 				_portal, _resourceLocalService, _systemEventLocalService));
 	}
 
@@ -314,9 +312,6 @@ public class JournalServiceUpgrade implements UpgradeStepRegistrator {
 	@Reference
 	private JournalArticleResourceLocalService
 		_journalArticleResourceLocalService;
-
-	@Reference
-	private JournalContentSearchLocalService _journalContentSearchLocalService;
 
 	@Reference
 	private JournalFolderLocalService _journalFolderLocalService;

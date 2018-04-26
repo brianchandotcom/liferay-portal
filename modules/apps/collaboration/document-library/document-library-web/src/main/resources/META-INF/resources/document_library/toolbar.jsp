@@ -19,11 +19,7 @@
 <%
 long repositoryId = GetterUtil.getLong((String)request.getAttribute("view.jsp-repositoryId"));
 
-long folderId = GetterUtil.getLong((String)request.getAttribute("view.jsp-folderId"));
-
 long fileEntryTypeId = ParamUtil.getLong(request, "fileEntryTypeId", -1);
-
-DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletInstanceSettingsHelper(dlRequestHelper);
 %>
 
 <clay:management-toolbar
@@ -35,9 +31,9 @@ DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletI
 	infoPanelId="infoPanelId"
 	searchActionURL="<%= String.valueOf(dlAdminDisplayContext.getSearchURL()) %>"
 	searchContainerId="entries"
-	selectable="<%= dlPortletInstanceSettingsHelper.isShowActions() %>"
+	selectable="<%= dlAdminDisplayContext.isSelectable() %>"
 	showInfoButton="<%= true %>"
-	showSearch="<%= dlPortletInstanceSettingsHelper.isShowSearch() %>"
+	showSearch="<%= dlAdminDisplayContext.isShowSearch() %>"
 	sortingOrder="<%= dlAdminDisplayContext.getOrderByType() %>"
 	sortingURL="<%= String.valueOf(dlAdminDisplayContext.getSortingURL()) %>"
 	totalItems="<%= dlAdminDisplayContext.getTotalItems() %>"

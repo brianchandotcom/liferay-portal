@@ -662,6 +662,16 @@ public class DefaultDLAdminDisplayContext implements DLAdminDisplayContext {
 	}
 
 	@Override
+	public boolean isSelectable() {
+		return _dlPortletInstanceSettingsHelper.isShowActions();
+	}
+
+	@Override
+	public boolean isShowSearch() {
+		return _dlPortletInstanceSettingsHelper.isShowSearch();
+	}
+
+	@Override
 	public boolean isShowSearchInfo() {
 		if (_isSearch() && ParamUtil.getBoolean(_request, "showSearchInfo")) {
 			return true;

@@ -14,6 +14,7 @@
 
 package com.liferay.portal.minifier;
 
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 
@@ -22,15 +23,16 @@ import java.io.Reader;
 import java.io.Writer;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
  * @author Iván Zaera Avellón
  */
-public class CssCompressor {
+public class CSSCompressor {
 
-	public CssCompressor(Reader in) throws IOException {
+	public CSSCompressor(Reader in) throws IOException {
 		int c;
 
 		while ((c = in.read()) != -1) {
@@ -38,12 +40,13 @@ public class CssCompressor {
 		}
 	}
 
-	public void compress(Writer out, int linebreakpos) throws IOException {
+	public void compress(Writer out, int lineBreakPosition) throws IOException {
 		String css = _sb.toString();
-		ArrayList comments = new ArrayList(0);
-		ArrayList preservedTokens = new ArrayList(0);
+		List comments = new ArrayList();
 
 		css = _preserveCandidateCommments(css, comments);
+
+		List preservedTokens = new ArrayList();
 
 		css = _preserveParensToken(css, "url", preservedTokens);
 
@@ -108,7 +111,7 @@ public class CssCompressor {
 
 		css = _removeEmptyRules(css);
 
-		css = _applyLineBreak(css, linebreakpos);
+		css = _applyLineBreak(css, lineBreakPosition);
 
 		css = _removeMultipleSemicolons(css);
 
@@ -119,20 +122,20 @@ public class CssCompressor {
 		out.write(css);
 	}
 
-	private String _applyLineBreak(String css, int linebreakpos) {
-		if (linebreakpos >= 0) {
+	private String _applyLineBreak(String css, int lineBreakPosition) {
+		if (lineBreakPosition >= 0) {
 			int i = 0;
-
-			int linestartpos = 0;
-
 			StringBuffer sb = new StringBuffer(css);
+			int lineStartPosition = 0;
 
 			while (i < sb.length()) {
 				char c = sb.charAt(i++);
 
-				if ((c == '}') && ((i - linestartpos) > linebreakpos)) {
+				if ((c == '}') &&
+					((i - lineStartPosition) > lineBreakPosition)) {
+
 					sb.insert(i, '\n');
-					linestartpos = i;
+					lineStartPosition = i;
 				}
 			}
 
@@ -249,7 +252,9 @@ public class CssCompressor {
 		return sb.toString();
 	}
 
-	private String _preserveCandidateCommments(String css, ArrayList comments) {
+	private String _preserveCandidateCommments(
+		String css, List<String> comments) {
+
 		int startIndex = 0;
 		StringBuffer sb = new StringBuffer(css);
 		int cssLength = css.length();
@@ -261,9 +266,7 @@ public class CssCompressor {
 				endIndex = cssLength;
 			}
 
-			String token = sb.substring(startIndex + 2, endIndex);
-
-			comments.add(token);
+			comments.add(sb.substring(startIndex + 2, endIndex));
 
 			sb.replace(
 				startIndex + 2, endIndex,
@@ -276,14 +279,12 @@ public class CssCompressor {
 		return sb.toString();
 	}
 
-	private String _preserveIE9Hack(String css, ArrayList preservedTokens) {
-		String backslash9 = "\\9";
-
-		while (css.indexOf(backslash9) > -1) {
-			preservedTokens.add(backslash9);
+	private String _preserveIE9Hack(String css, List<String> preservedTokens) {
+		while (css.indexOf(_BACKSLASH_9) > -1) {
+			preservedTokens.add(_BACKSLASH_9);
 
 			css = css.replace(
-				backslash9,
+				_BACKSLASH_9,
 				"___YUICSSMIN_PRESERVED_TOKEN_" + (preservedTokens.size() - 1) +
 					"___");
 		}
@@ -292,7 +293,7 @@ public class CssCompressor {
 	}
 
 	private String _preserveParensToken(
-		String css, String preservedToken, ArrayList preservedTokens) {
+		String css, String preservedToken, List<String> preservedTokens) {
 
 		int startIndex;
 		int fromIndex = 0;
@@ -303,14 +304,14 @@ public class CssCompressor {
 
 			int index = startIndex + preservedToken.length() + 1;
 
-			int parensLevel = 1;
+			int nestingLevel = 1;
 
-			while (parensLevel > 0) {
+			while (nestingLevel > 0) {
 				if (css.charAt(index) == '(') {
-					parensLevel++;
+					nestingLevel++;
 				}
 				else if (css.charAt(index) == ')') {
-					parensLevel--;
+					nestingLevel--;
 				}
 
 				index++;
@@ -335,10 +336,8 @@ public class CssCompressor {
 	}
 
 	private String _preserveStrings(
-		String css, ArrayList comments, ArrayList preservedTokens) {
+		String css, List<String> comments, List<String> preservedTokens) {
 
-		int i = 0;
-		int max = 0;
 		StringBuffer sb = new StringBuffer();
 
 		Matcher m = _preserveStringsPattern.matcher(css);
@@ -347,17 +346,18 @@ public class CssCompressor {
 			String token = m.group();
 
 			char quote = token.charAt(0);
+
 			token = token.substring(1, token.length() - 1);
 
 			if (token.indexOf("___YUICSSMIN_PRESERVE_CANDIDATE_COMMENT_") >=
 					0) {
 
-				Object comment = comments.get(i);
+				String comment = comments.get(i);
 
-				for (i = 0, max = comments.size(); i < max; i += 1) {
+				for (int i = 0, max = comments.size(); i < max; i += 1) {
 					token = token.replace(
 						"___YUICSSMIN_PRESERVE_CANDIDATE_COMMENT_" + i + "___",
-						comment.toString());
+						comment);
 				}
 			}
 
@@ -382,16 +382,15 @@ public class CssCompressor {
 
 	private String _preserveToken(
 		String css, String preservedToken, String tokenRegex,
-		boolean removeWhiteSpace, ArrayList preservedTokens) {
-
-		int maxIndex = css.length() - 1;
-		int appendIndex = 0;
-
-		StringBuffer sb = new StringBuffer();
+		boolean removeWhiteSpace, List<String> preservedTokens) {
 
 		Pattern p = Pattern.compile(tokenRegex);
 
 		Matcher m = p.matcher(css);
+
+		int appendIndex = 0;
+		int maxIndex = css.length() - 1;
+		StringBuffer sb = new StringBuffer();
 
 		while (m.find()) {
 			int startIndex = m.start() + (preservedToken.length() + 1);
@@ -460,21 +459,16 @@ public class CssCompressor {
 	}
 
 	private String _removeComments(
-		String css, ArrayList comments, ArrayList preservedTokens) {
+		String css, List<String> comments, List<String> preservedTokens) {
 
-		int i = 0;
-		int max = 0;
-
-		for (i = 0, max = comments.size(); i < max; i += 1) {
-			Object comment = comments.get(i);
-
-			String token = comment.toString();
+		for (int i = 0, max = comments.size(); i < max; i += 1) {
+			String comment = comments.get(i);
 
 			String placeholder =
 				"___YUICSSMIN_PRESERVE_CANDIDATE_COMMENT_" + i + "___";
 
-			if (token.startsWith("!")) {
-				preservedTokens.add(token);
+			if (comment.startsWith("!")) {
+				preservedTokens.add(comment);
 
 				css = css.replace(
 					placeholder,
@@ -484,7 +478,7 @@ public class CssCompressor {
 				continue;
 			}
 
-			if (token.endsWith("\\")) {
+			if (comment.endsWith("\\")) {
 				preservedTokens.add("\\");
 
 				css = css.replace(
@@ -504,7 +498,7 @@ public class CssCompressor {
 				continue;
 			}
 
-			if (token.length() == 0) {
+			if (comment.length() == 0) {
 				int startIndex = css.indexOf(placeholder);
 
 				if ((startIndex > 2) && (css.charAt(startIndex - 3) == '>')) {
@@ -627,14 +621,13 @@ public class CssCompressor {
 	}
 
 	private String _restorePreservedTokens(
-		String css, ArrayList preservedTokens) {
+		String css, List<String> preservedTokens) {
 
 		for (int i = 0, max = preservedTokens.size(); i < max; i++) {
-			Object preservedToken = preservedTokens.get(i);
+			String preservedToken = preservedTokens.get(i);
 
 			css = css.replace(
-				"___YUICSSMIN_PRESERVED_TOKEN_" + i + "___",
-				preservedToken.toString());
+				"___YUICSSMIN_PRESERVED_TOKEN_" + i + "___", preservedToken);
 		}
 
 		return css;
@@ -687,25 +680,25 @@ public class CssCompressor {
 		while (m.find()) {
 			String group = m.group(1);
 
-			String[] rgbcolors = group.split(",");
+			String[] rgbColors = group.split(",");
 
-			StringBuffer hexcolor = new StringBuffer("#");
+			StringBuffer hexColor = new StringBuffer("#");
 
-			for (int i = 0; i < rgbcolors.length; i++) {
-				int val = Integer.parseInt(rgbcolors[i]);
+			for (int i = 0; i < rgbColors.length; i++) {
+				int val = GetterUtil.getInteger(rgbColors[i]);
 
 				if (val < 16) {
-					hexcolor.append("0");
+					hexColor.append("0");
 				}
 
 				if (val > 255) {
 					val = 255;
 				}
 
-				hexcolor.append(Integer.toHexString(val));
+				hexColor.append(Integer.toHexString(val));
 			}
 
-			m.appendReplacement(sb, hexcolor.toString());
+			m.appendReplacement(sb, hexColor.toString());
 		}
 
 		m.appendTail(sb);
@@ -805,6 +798,8 @@ public class CssCompressor {
 
 		return sb.toString();
 	}
+
+	private static final String _BACKSLASH_9 = "\\9";
 
 	private static final Pattern _collapseCharsetDirectivesPattern =
 		Pattern.compile("(?i)^((\\s*)(@charset)( [^;]+;\\s*))+");

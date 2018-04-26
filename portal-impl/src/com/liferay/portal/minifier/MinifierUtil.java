@@ -59,7 +59,7 @@ public class MinifierUtil {
 		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
 
 		try {
-			CssCompressor cssCompressor = new CssCompressor(
+			CSSCompressor cssCompressor = new CSSCompressor(
 				new UnsyncStringReader(content));
 
 			cssCompressor.compress(

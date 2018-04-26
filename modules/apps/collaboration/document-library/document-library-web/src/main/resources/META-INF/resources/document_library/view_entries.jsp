@@ -26,21 +26,6 @@ long folderId = GetterUtil.getLong((String)request.getAttribute("view.jsp-folder
 
 long repositoryId = GetterUtil.getLong((String)request.getAttribute("view.jsp-repositoryId"));
 
-long fileEntryTypeId = ParamUtil.getLong(request, "fileEntryTypeId", -1);
-
-String dlFileEntryTypeName = LanguageUtil.get(request, "basic-document");
-
-int status = WorkflowConstants.STATUS_APPROVED;
-
-if (permissionChecker.isContentReviewer(user.getCompanyId(), scopeGroupId)) {
-	status = WorkflowConstants.STATUS_ANY;
-}
-
-long categoryId = ParamUtil.getLong(request, "categoryId");
-String tagName = ParamUtil.getString(request, "tag");
-
-boolean useAssetEntryQuery = (categoryId > 0) || Validator.isNotNull(tagName);
-
 DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletInstanceSettingsHelper(dlRequestHelper);
 
 String displayStyle = GetterUtil.getString((String)request.getAttribute("view.jsp-displayStyle"));
@@ -53,8 +38,6 @@ portletURL.setParameter("curFolder", currentFolder);
 portletURL.setParameter("deltaFolder", deltaFolder);
 portletURL.setParameter("folderId", String.valueOf(folderId));
 
-SearchContainer dlSearchContainer = new SearchContainer(liferayPortletRequest, null, null, "curEntry", dlPortletInstanceSettings.getEntriesPerPage(), portletURL, null, null);
-
 EntriesChecker entriesChecker = new EntriesChecker(liferayPortletRequest, liferayPortletResponse);
 
 entriesChecker.setCssClass("entry-selector");
@@ -63,130 +46,6 @@ entriesChecker.setRememberCheckBoxStateURLRegex("^(?!.*" + liferayPortletRespons
 EntriesMover entriesMover = new EntriesMover(dlTrashUtil.isTrashEnabled(scopeGroupId, repositoryId));
 
 String[] entryColumns = dlPortletInstanceSettingsHelper.getEntryColumns();
-
-dlSearchContainer.setHeaderNames(ListUtil.fromArray(entryColumns));
-
-String orderByCol = GetterUtil.getString((String)request.getAttribute("view.jsp-orderByCol"));
-String orderByType = GetterUtil.getString((String)request.getAttribute("view.jsp-orderByType"));
-
-boolean orderByModel = false;
-
-if (navigation.equals("home")) {
-	orderByModel = true;
-}
-
-OrderByComparator<?> orderByComparator = DLUtil.getRepositoryModelOrderByComparator(orderByCol, orderByType, orderByModel);
-
-if (navigation.equals("recent")) {
-	orderByComparator = new RepositoryModelModifiedDateComparator();
-}
-
-dlSearchContainer.setOrderByCol(orderByCol);
-dlSearchContainer.setOrderByComparator(orderByComparator);
-dlSearchContainer.setOrderByType(orderByType);
-
-List results = new ArrayList();
-int total = 0;
-
-if (fileEntryTypeId >= 0) {
-	Indexer indexer = IndexerRegistryUtil.getIndexer(DLFileEntryConstants.getClassName());
-
-	if (fileEntryTypeId > 0) {
-		DLFileEntryType dlFileEntryType = DLFileEntryTypeLocalServiceUtil.getFileEntryType(fileEntryTypeId);
-
-		dlFileEntryTypeName = dlFileEntryType.getName(locale);
-	}
-
-	SearchContext searchContext = SearchContextFactory.getInstance(request);
-
-	searchContext.setAttribute("paginationType", "none");
-	searchContext.setEnd(dlSearchContainer.getEnd());
-
-	if (orderByCol.equals("creationDate")) {
-		orderByCol = "createDate";
-	}
-	else if (orderByCol.equals("readCount")) {
-		orderByCol = "downloads";
-	}
-	else if (orderByCol.equals("modifiedDate")) {
-		orderByCol = "modified";
-	}
-
-	Sort sort = new Sort(orderByCol, !StringUtil.equalsIgnoreCase(orderByType, "asc"));
-
-	searchContext.setSorts(sort);
-
-	searchContext.setStart(dlSearchContainer.getStart());
-
-	Hits hits = indexer.search(searchContext);
-
-	total = hits.getLength();
-
-	dlSearchContainer.setTotal(total);
-
-	for (Document doc : hits.getDocs()) {
-		long fileEntryId = GetterUtil.getLong(doc.get(Field.ENTRY_CLASS_PK));
-
-		FileEntry fileEntry = null;
-
-		try {
-			fileEntry = DLAppLocalServiceUtil.getFileEntry(fileEntryId);
-		}
-		catch (Exception e) {
-			if (_log.isWarnEnabled()) {
-				_log.warn("Documents and Media search index is stale and contains file entry {" + fileEntryId + "}");
-			}
-
-			continue;
-		}
-
-		results.add(fileEntry);
-	}
-}
-else {
-	if (navigation.equals("home")) {
-		if (useAssetEntryQuery) {
-			long[] classNameIds = {PortalUtil.getClassNameId(DLFileEntryConstants.getClassName()), PortalUtil.getClassNameId(DLFileShortcutConstants.getClassName())};
-
-			AssetEntryQuery assetEntryQuery = new AssetEntryQuery(classNameIds, dlSearchContainer);
-
-			assetEntryQuery.setEnablePermissions(true);
-			assetEntryQuery.setExcludeZeroViewCount(false);
-
-			total = AssetEntryServiceUtil.getEntriesCount(assetEntryQuery);
-
-			dlSearchContainer.setTotal(total);
-
-			results = AssetEntryServiceUtil.getEntries(assetEntryQuery);
-		}
-		else {
-			total = DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcutsCount(repositoryId, folderId, status, true);
-
-			dlSearchContainer.setTotal(total);
-
-			results = DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcuts(repositoryId, folderId, status, true, dlSearchContainer.getStart(), dlSearchContainer.getEnd(), dlSearchContainer.getOrderByComparator());
-		}
-	}
-	else if (navigation.equals("mine") || navigation.equals("recent")) {
-		long groupFileEntriesUserId = 0;
-
-		if (navigation.equals("mine") && themeDisplay.isSignedIn()) {
-			groupFileEntriesUserId = user.getUserId();
-
-			status = WorkflowConstants.STATUS_ANY;
-		}
-
-		total = DLAppServiceUtil.getGroupFileEntriesCount(repositoryId, groupFileEntriesUserId, folderId, null, status);
-
-		dlSearchContainer.setTotal(total);
-
-		results = DLAppServiceUtil.getGroupFileEntries(repositoryId, groupFileEntriesUserId, folderId, null, status, dlSearchContainer.getStart(), dlSearchContainer.getEnd(), dlSearchContainer.getOrderByComparator());
-	}
-}
-
-dlSearchContainer.setResults(results);
-
-dlSearchContainer.setEmptyResultsMessage(fileEntryTypeId >= 0 ? LanguageUtil.format(request, "there-are-no-documents-or-media-files-of-type-x", HtmlUtil.escape(dlFileEntryTypeName)) : "there-are-no-documents-or-media-files-in-this-folder");
 
 boolean portletTitleBasedNavigation = GetterUtil.getBoolean(portletConfig.getInitParameter("portlet-title-based-navigation"));
 
@@ -207,20 +66,14 @@ if (portletTitleBasedNavigation && (folderId != DLFolderConstants.DEFAULT_PARENT
 <div class="document-container" id="<portlet:namespace />entriesContainer">
 
 	<%
-	String searchContainerId = ParamUtil.getString(request, "searchContainerId");
+	SearchContainer dlSearchContainer = dlAdminDisplayContext.getSearchContainer();
 	%>
 
 	<liferay-ui:search-container
-		id="<%= searchContainerId %>"
+		id="entries"
 		searchContainer="<%= dlSearchContainer %>"
-		total="<%= total %>"
-		totalVar="dlSearchContainerTotal"
+		total="<%= dlSearchContainer.getTotal() %>"
 	>
-		<liferay-ui:search-container-results
-			results="<%= results %>"
-			resultsVar="dlSearchContainerResults"
-		/>
-
 		<liferay-ui:search-container-row
 			className="Object"
 			modelVar="result"
@@ -640,5 +493,4 @@ request.setAttribute("edit_file_entry.jsp-checkedOut", true);
 <liferay-util:include page="/document_library/version_details.jsp" servletContext="<%= application %>" />
 
 <%!
-private static Log _log = LogFactoryUtil.getLog("com_liferay_document_library_web.document_library.view_entries_jsp");
 %>

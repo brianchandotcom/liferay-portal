@@ -18,6 +18,7 @@ import com.liferay.asset.kernel.service.AssetEntryServiceUtil;
 import com.liferay.asset.kernel.service.persistence.AssetEntryQuery;
 import com.liferay.document.library.constants.DLPortletKeys;
 import com.liferay.document.library.display.context.DLAdminDisplayContext;
+import com.liferay.document.library.kernel.exception.NoSuchFolderException;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryConstants;
 import com.liferay.document.library.kernel.model.DLFileEntryType;
@@ -36,8 +37,11 @@ import com.liferay.document.library.web.internal.portlet.toolbar.contributor.DLP
 import com.liferay.document.library.web.internal.settings.DLPortletInstanceSettings;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemList;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.SafeConsumer;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItemList;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
@@ -67,6 +71,7 @@ import com.liferay.portal.kernel.search.SearchContextFactory;
 import com.liferay.portal.kernel.search.SearchResult;
 import com.liferay.portal.kernel.search.SearchResultUtil;
 import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
 import com.liferay.portal.kernel.servlet.taglib.ui.Menu;
@@ -188,6 +193,23 @@ public class DefaultDLAdminDisplayContext implements DLAdminDisplayContext {
 			_dlRequestHelper.getDLPortletInstanceSettings();
 
 		return dlPortletInstanceSettings.getDisplayViews();
+	}
+
+	@Override
+	public List<DropdownItem> getFilterDropdownItems() {
+		return new DropdownItemList() {
+			{
+				addGroup(
+					SafeConsumer.ignore(
+						dropdownGroupItem -> {
+							dropdownGroupItem.setDropdownItems(
+								_getFilterNavigationDropdownItems());
+							dropdownGroupItem.setLabel(
+								LanguageUtil.get(
+									_request, "filter-by-navigation"));
+						}));
+			}
+		};
 	}
 
 	@Override
@@ -617,10 +639,105 @@ public class DefaultDLAdminDisplayContext implements DLAdminDisplayContext {
 		}
 	}
 
+	private List<DropdownItem> _getFilterNavigationDropdownItems()
+		throws Exception {
+
+		long fileEntryTypeId = ParamUtil.getLong(
+			_request, "fileEntryTypeId", -1);
+		long folderId = GetterUtil.getLong(
+			(String)_request.getAttribute("view.jsp-folderId"));
+		final String navigation = ParamUtil.getString(
+			_request, "navigation", "home");
+		final long rootFolderId = _getRootFolderId();
+
+		return new DropdownItemList() {
+			{
+				add(
+					dropdownItem -> {
+						PortletURL viewDocumentsHomeURL =
+							_liferayPortletResponse.createRenderURL();
+
+						viewDocumentsHomeURL.setParameter(
+							"mvcRenderCommandName", "/document_library/view");
+						viewDocumentsHomeURL.setParameter(
+							"folderId", String.valueOf(rootFolderId));
+
+						dropdownItem.setHref(viewDocumentsHomeURL);
+						dropdownItem.setActive(
+							(navigation.equals("home")) &&
+							(folderId == rootFolderId) &&
+							(fileEntryTypeId == -1));
+						dropdownItem.setLabel(
+							LanguageUtil.get(_request, "all"));
+					});
+				add(
+					dropdownItem -> {
+						PortletURL viewRecentDocumentsURL =
+							_liferayPortletResponse.createRenderURL();
+
+						viewRecentDocumentsURL.setParameter(
+							"mvcRenderCommandName", "/document_library/view");
+						viewRecentDocumentsURL.setParameter(
+							"navigation", "recent");
+						viewRecentDocumentsURL.setParameter(
+							"folderId", String.valueOf(rootFolderId));
+
+						dropdownItem.setHref(viewRecentDocumentsURL);
+						dropdownItem.setActive(navigation.equals("recent"));
+						dropdownItem.setLabel(
+							LanguageUtil.get(_request, "recent"));
+					});
+
+				if (_themeDisplay.isSignedIn()) {
+					add(
+						dropdownItem -> {
+							PortletURL viewMyDocumentsURL =
+								_liferayPortletResponse.createRenderURL();
+
+							viewMyDocumentsURL.setParameter(
+								"mvcRenderCommandName",
+								"/document_library/view");
+							viewMyDocumentsURL.setParameter(
+								"navigation", "mine");
+							viewMyDocumentsURL.setParameter(
+								"folderId", String.valueOf(rootFolderId));
+
+							dropdownItem.setHref(viewMyDocumentsURL);
+							dropdownItem.setActive(navigation.equals("mine"));
+							dropdownItem.setLabel(
+								LanguageUtil.get(_request, "mine"));
+						});
+				}
+			}
+		};
+	}
+
 	private Portlet _getPortlet(ThemeDisplay themeDisplay) {
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
 		return PortletLocalServiceUtil.getPortletById(portletDisplay.getId());
+	}
+
+	private long _getRootFolderId() throws Exception {
+		long rootFolderId = _dlPortletInstanceSettings.getRootFolderId();
+
+		if (rootFolderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+			try {
+				Folder rootFolder = DLAppLocalServiceUtil.getFolder(
+					rootFolderId);
+
+				if (rootFolder.getGroupId() !=
+						_themeDisplay.getScopeGroupId()) {
+
+					rootFolderId = DLFolderConstants.DEFAULT_PARENT_FOLDER_ID;
+				}
+			}
+			catch (NoSuchFolderException | PrincipalException e) {
+				rootFolderId = DLFolderConstants.DEFAULT_PARENT_FOLDER_ID;
+			}
+		}
+
+		return rootFolderId;
 	}
 
 	private List _getSearchResults(SearchContainer searchContainer)

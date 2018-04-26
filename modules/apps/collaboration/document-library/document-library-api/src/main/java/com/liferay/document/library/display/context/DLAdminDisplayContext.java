@@ -68,6 +68,10 @@ public interface DLAdminDisplayContext {
 
 	public boolean isDisabled();
 
+	public boolean isSelectable();
+
+	public boolean isShowSearch();
+
 	public boolean isShowSearchInfo();
 
 }

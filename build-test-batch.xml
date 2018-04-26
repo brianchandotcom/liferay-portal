@@ -1018,9 +1018,6 @@ app.server.type=@{app.server.type}]]></echo>
 						<and>
 							<isset property="env.CI_TEST_SUITE" />
 							<not>
-								<contains string="${osgi.app.includes}" substring="portal-search-elasticsearch6" />
-							</not>
-							<not>
 								<contains string="${osgi.app.includes}" substring="portal-search-solr" />
 							</not>
 						</and>
@@ -1028,10 +1025,7 @@ app.server.type=@{app.server.type}]]></echo>
 							<propertycopy from="search.engine[${env.CI_TEST_SUITE}]" name="search.engine" silent="true" />
 
 							<if>
-								<or>
-									<equals arg1="${search.engine}" arg2="elasticsearch6" />
-									<equals arg1="${search.engine}" arg2="solr" />
-								</or>
+								<equals arg1="${search.engine}" arg2="solr" />
 								<then>
 									<prepare-search-engine search.engine="${search.engine}" />
 								</then>

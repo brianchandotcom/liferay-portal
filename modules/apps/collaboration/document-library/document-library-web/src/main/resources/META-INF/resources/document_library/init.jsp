@@ -63,7 +63,7 @@ boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
 
 StagingGroupHelper stagingGroupHelper = StagingGroupHelperUtil.getStagingGroupHelper();
 
-DLAdminDisplayContext dlAdminDisplayContext = dlDisplayContextProvider.getDLAdminDisplayContext(liferayPortletRequest, liferayPortletResponse, currentURLObj, request);
+DLAdminDisplayContext dlAdminDisplayContext = dlDisplayContextProvider.getDLAdminDisplayContext(liferayPortletRequest, liferayPortletResponse, currentURLObj, request, permissionChecker);
 %>
 
 <%@ include file="/document_library/init-ext.jsp" %>

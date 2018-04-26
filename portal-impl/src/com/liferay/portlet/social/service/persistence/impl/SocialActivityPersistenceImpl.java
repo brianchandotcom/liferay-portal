@@ -6425,8 +6425,6 @@ public class SocialActivityPersistenceImpl extends BasePersistenceImpl<SocialAct
 
 	@Override
 	protected SocialActivity removeImpl(SocialActivity socialActivity) {
-		socialActivity = toUnwrappedModel(socialActivity);
-
 		Session session = null;
 
 		try {
@@ -6457,8 +6455,6 @@ public class SocialActivityPersistenceImpl extends BasePersistenceImpl<SocialAct
 
 	@Override
 	public SocialActivity updateImpl(SocialActivity socialActivity) {
-		socialActivity = toUnwrappedModel(socialActivity);
-
 		boolean isNew = socialActivity.isNew();
 
 		SocialActivityModelImpl socialActivityModelImpl = (SocialActivityModelImpl)socialActivity;
@@ -6788,34 +6784,6 @@ public class SocialActivityPersistenceImpl extends BasePersistenceImpl<SocialAct
 		socialActivity.resetOriginalValues();
 
 		return socialActivity;
-	}
-
-	protected SocialActivity toUnwrappedModel(SocialActivity socialActivity) {
-		if (socialActivity instanceof SocialActivityImpl) {
-			return socialActivity;
-		}
-
-		SocialActivityImpl socialActivityImpl = new SocialActivityImpl();
-
-		socialActivityImpl.setNew(socialActivity.isNew());
-		socialActivityImpl.setPrimaryKey(socialActivity.getPrimaryKey());
-
-		socialActivityImpl.setActivityId(socialActivity.getActivityId());
-		socialActivityImpl.setGroupId(socialActivity.getGroupId());
-		socialActivityImpl.setCompanyId(socialActivity.getCompanyId());
-		socialActivityImpl.setUserId(socialActivity.getUserId());
-		socialActivityImpl.setCreateDate(socialActivity.getCreateDate());
-		socialActivityImpl.setActivitySetId(socialActivity.getActivitySetId());
-		socialActivityImpl.setMirrorActivityId(socialActivity.getMirrorActivityId());
-		socialActivityImpl.setClassNameId(socialActivity.getClassNameId());
-		socialActivityImpl.setClassPK(socialActivity.getClassPK());
-		socialActivityImpl.setParentClassNameId(socialActivity.getParentClassNameId());
-		socialActivityImpl.setParentClassPK(socialActivity.getParentClassPK());
-		socialActivityImpl.setType(socialActivity.getType());
-		socialActivityImpl.setExtraData(socialActivity.getExtraData());
-		socialActivityImpl.setReceiverUserId(socialActivity.getReceiverUserId());
-
-		return socialActivityImpl;
 	}
 
 	/**

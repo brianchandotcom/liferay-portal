@@ -1731,8 +1731,6 @@ public class TicketPersistenceImpl extends BasePersistenceImpl<Ticket>
 
 	@Override
 	protected Ticket removeImpl(Ticket ticket) {
-		ticket = toUnwrappedModel(ticket);
-
 		Session session = null;
 
 		try {
@@ -1763,8 +1761,6 @@ public class TicketPersistenceImpl extends BasePersistenceImpl<Ticket>
 
 	@Override
 	public Ticket updateImpl(Ticket ticket) {
-		ticket = toUnwrappedModel(ticket);
-
 		boolean isNew = ticket.isNew();
 
 		TicketModelImpl ticketModelImpl = (TicketModelImpl)ticket;
@@ -1878,30 +1874,6 @@ public class TicketPersistenceImpl extends BasePersistenceImpl<Ticket>
 		ticket.resetOriginalValues();
 
 		return ticket;
-	}
-
-	protected Ticket toUnwrappedModel(Ticket ticket) {
-		if (ticket instanceof TicketImpl) {
-			return ticket;
-		}
-
-		TicketImpl ticketImpl = new TicketImpl();
-
-		ticketImpl.setNew(ticket.isNew());
-		ticketImpl.setPrimaryKey(ticket.getPrimaryKey());
-
-		ticketImpl.setMvccVersion(ticket.getMvccVersion());
-		ticketImpl.setTicketId(ticket.getTicketId());
-		ticketImpl.setCompanyId(ticket.getCompanyId());
-		ticketImpl.setCreateDate(ticket.getCreateDate());
-		ticketImpl.setClassNameId(ticket.getClassNameId());
-		ticketImpl.setClassPK(ticket.getClassPK());
-		ticketImpl.setKey(ticket.getKey());
-		ticketImpl.setType(ticket.getType());
-		ticketImpl.setExtraInfo(ticket.getExtraInfo());
-		ticketImpl.setExpirationDate(ticket.getExpirationDate());
-
-		return ticketImpl;
 	}
 
 	/**

@@ -1525,8 +1525,6 @@ public class ExpandoRowPersistenceImpl extends BasePersistenceImpl<ExpandoRow>
 
 	@Override
 	protected ExpandoRow removeImpl(ExpandoRow expandoRow) {
-		expandoRow = toUnwrappedModel(expandoRow);
-
 		Session session = null;
 
 		try {
@@ -1557,8 +1555,6 @@ public class ExpandoRowPersistenceImpl extends BasePersistenceImpl<ExpandoRow>
 
 	@Override
 	public ExpandoRow updateImpl(ExpandoRow expandoRow) {
-		expandoRow = toUnwrappedModel(expandoRow);
-
 		boolean isNew = expandoRow.isNew();
 
 		ExpandoRowModelImpl expandoRowModelImpl = (ExpandoRowModelImpl)expandoRow;
@@ -1653,25 +1649,6 @@ public class ExpandoRowPersistenceImpl extends BasePersistenceImpl<ExpandoRow>
 		expandoRow.resetOriginalValues();
 
 		return expandoRow;
-	}
-
-	protected ExpandoRow toUnwrappedModel(ExpandoRow expandoRow) {
-		if (expandoRow instanceof ExpandoRowImpl) {
-			return expandoRow;
-		}
-
-		ExpandoRowImpl expandoRowImpl = new ExpandoRowImpl();
-
-		expandoRowImpl.setNew(expandoRow.isNew());
-		expandoRowImpl.setPrimaryKey(expandoRow.getPrimaryKey());
-
-		expandoRowImpl.setRowId(expandoRow.getRowId());
-		expandoRowImpl.setCompanyId(expandoRow.getCompanyId());
-		expandoRowImpl.setModifiedDate(expandoRow.getModifiedDate());
-		expandoRowImpl.setTableId(expandoRow.getTableId());
-		expandoRowImpl.setClassPK(expandoRow.getClassPK());
-
-		return expandoRowImpl;
 	}
 
 	/**

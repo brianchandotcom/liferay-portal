@@ -13160,8 +13160,6 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 
 	@Override
 	protected MBThread removeImpl(MBThread mbThread) {
-		mbThread = toUnwrappedModel(mbThread);
-
 		Session session = null;
 
 		try {
@@ -13192,8 +13190,6 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 
 	@Override
 	public MBThread updateImpl(MBThread mbThread) {
-		mbThread = toUnwrappedModel(mbThread);
-
 		boolean isNew = mbThread.isNew();
 
 		MBThreadModelImpl mbThreadModelImpl = (MBThreadModelImpl)mbThread;
@@ -13554,43 +13550,6 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 		mbThread.resetOriginalValues();
 
 		return mbThread;
-	}
-
-	protected MBThread toUnwrappedModel(MBThread mbThread) {
-		if (mbThread instanceof MBThreadImpl) {
-			return mbThread;
-		}
-
-		MBThreadImpl mbThreadImpl = new MBThreadImpl();
-
-		mbThreadImpl.setNew(mbThread.isNew());
-		mbThreadImpl.setPrimaryKey(mbThread.getPrimaryKey());
-
-		mbThreadImpl.setUuid(mbThread.getUuid());
-		mbThreadImpl.setThreadId(mbThread.getThreadId());
-		mbThreadImpl.setGroupId(mbThread.getGroupId());
-		mbThreadImpl.setCompanyId(mbThread.getCompanyId());
-		mbThreadImpl.setUserId(mbThread.getUserId());
-		mbThreadImpl.setUserName(mbThread.getUserName());
-		mbThreadImpl.setCreateDate(mbThread.getCreateDate());
-		mbThreadImpl.setModifiedDate(mbThread.getModifiedDate());
-		mbThreadImpl.setCategoryId(mbThread.getCategoryId());
-		mbThreadImpl.setRootMessageId(mbThread.getRootMessageId());
-		mbThreadImpl.setRootMessageUserId(mbThread.getRootMessageUserId());
-		mbThreadImpl.setTitle(mbThread.getTitle());
-		mbThreadImpl.setMessageCount(mbThread.getMessageCount());
-		mbThreadImpl.setViewCount(mbThread.getViewCount());
-		mbThreadImpl.setLastPostByUserId(mbThread.getLastPostByUserId());
-		mbThreadImpl.setLastPostDate(mbThread.getLastPostDate());
-		mbThreadImpl.setPriority(mbThread.getPriority());
-		mbThreadImpl.setQuestion(mbThread.isQuestion());
-		mbThreadImpl.setLastPublishDate(mbThread.getLastPublishDate());
-		mbThreadImpl.setStatus(mbThread.getStatus());
-		mbThreadImpl.setStatusByUserId(mbThread.getStatusByUserId());
-		mbThreadImpl.setStatusByUserName(mbThread.getStatusByUserName());
-		mbThreadImpl.setStatusDate(mbThread.getStatusDate());
-
-		return mbThreadImpl;
 	}
 
 	/**

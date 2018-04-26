@@ -2652,8 +2652,6 @@ public class CalendarNotificationTemplatePersistenceImpl
 	@Override
 	protected CalendarNotificationTemplate removeImpl(
 		CalendarNotificationTemplate calendarNotificationTemplate) {
-		calendarNotificationTemplate = toUnwrappedModel(calendarNotificationTemplate);
-
 		Session session = null;
 
 		try {
@@ -2685,8 +2683,6 @@ public class CalendarNotificationTemplatePersistenceImpl
 	@Override
 	public CalendarNotificationTemplate updateImpl(
 		CalendarNotificationTemplate calendarNotificationTemplate) {
-		calendarNotificationTemplate = toUnwrappedModel(calendarNotificationTemplate);
-
 		boolean isNew = calendarNotificationTemplate.isNew();
 
 		CalendarNotificationTemplateModelImpl calendarNotificationTemplateModelImpl =
@@ -2852,36 +2848,6 @@ public class CalendarNotificationTemplatePersistenceImpl
 		calendarNotificationTemplate.resetOriginalValues();
 
 		return calendarNotificationTemplate;
-	}
-
-	protected CalendarNotificationTemplate toUnwrappedModel(
-		CalendarNotificationTemplate calendarNotificationTemplate) {
-		if (calendarNotificationTemplate instanceof CalendarNotificationTemplateImpl) {
-			return calendarNotificationTemplate;
-		}
-
-		CalendarNotificationTemplateImpl calendarNotificationTemplateImpl = new CalendarNotificationTemplateImpl();
-
-		calendarNotificationTemplateImpl.setNew(calendarNotificationTemplate.isNew());
-		calendarNotificationTemplateImpl.setPrimaryKey(calendarNotificationTemplate.getPrimaryKey());
-
-		calendarNotificationTemplateImpl.setUuid(calendarNotificationTemplate.getUuid());
-		calendarNotificationTemplateImpl.setCalendarNotificationTemplateId(calendarNotificationTemplate.getCalendarNotificationTemplateId());
-		calendarNotificationTemplateImpl.setGroupId(calendarNotificationTemplate.getGroupId());
-		calendarNotificationTemplateImpl.setCompanyId(calendarNotificationTemplate.getCompanyId());
-		calendarNotificationTemplateImpl.setUserId(calendarNotificationTemplate.getUserId());
-		calendarNotificationTemplateImpl.setUserName(calendarNotificationTemplate.getUserName());
-		calendarNotificationTemplateImpl.setCreateDate(calendarNotificationTemplate.getCreateDate());
-		calendarNotificationTemplateImpl.setModifiedDate(calendarNotificationTemplate.getModifiedDate());
-		calendarNotificationTemplateImpl.setCalendarId(calendarNotificationTemplate.getCalendarId());
-		calendarNotificationTemplateImpl.setNotificationType(calendarNotificationTemplate.getNotificationType());
-		calendarNotificationTemplateImpl.setNotificationTypeSettings(calendarNotificationTemplate.getNotificationTypeSettings());
-		calendarNotificationTemplateImpl.setNotificationTemplateType(calendarNotificationTemplate.getNotificationTemplateType());
-		calendarNotificationTemplateImpl.setSubject(calendarNotificationTemplate.getSubject());
-		calendarNotificationTemplateImpl.setBody(calendarNotificationTemplate.getBody());
-		calendarNotificationTemplateImpl.setLastPublishDate(calendarNotificationTemplate.getLastPublishDate());
-
-		return calendarNotificationTemplateImpl;
 	}
 
 	/**

@@ -48,6 +48,24 @@ public class ModelAdapterUtil {
 			return null;
 		}
 
+		Object object = delegateObject;
+
+		while (ProxyUtil.isProxyClass(object.getClass())) {
+			InvocationHandler invocationHandler =
+				ProxyUtil.getInvocationHandler(object);
+
+			if (invocationHandler instanceof DelegateInvocationHandler) {
+				DelegateInvocationHandler delegateInvocationHandler =
+					(DelegateInvocationHandler)invocationHandler;
+
+				object = delegateInvocationHandler._delegateObject;
+
+				if (clazz.isInstance(object)) {
+					return clazz.cast(object);
+				}
+			}
+		}
+
 		return (T)ProxyUtil.newProxyInstance(
 			clazz.getClassLoader(), new Class<?>[] {clazz},
 			new DelegateInvocationHandler(delegateObject));

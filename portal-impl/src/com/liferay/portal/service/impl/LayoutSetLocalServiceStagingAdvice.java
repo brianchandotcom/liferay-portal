@@ -19,10 +19,11 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.LayoutSet;
-import com.liferay.portal.kernel.model.LayoutSetStagingHandler;
+import com.liferay.portal.kernel.model.LayoutSetBranch;
+import com.liferay.portal.kernel.model.staging.LayoutSetBranchStagingUtil;
+import com.liferay.portal.kernel.model.staging.LayoutSetStagingModelWrapper;
 import com.liferay.portal.kernel.service.LayoutSetLocalService;
 import com.liferay.portal.kernel.spring.aop.AdvisedSupport;
-import com.liferay.portal.kernel.util.ClassLoaderUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.spring.aop.ServiceBeanAopProxy;
 import com.liferay.portlet.exportimport.staging.StagingAdvicesThreadLocal;
@@ -81,10 +82,14 @@ public class LayoutSetLocalServiceStagingAdvice implements BeanFactoryAware {
 			return layoutSet;
 		}
 
-		return (LayoutSet)ProxyUtil.newProxyInstance(
-			ClassLoaderUtil.getPortalClassLoader(),
-			new Class<?>[] {LayoutSet.class},
-			new LayoutSetStagingHandler(layoutSet));
+		LayoutSetBranch layoutSetBranch =
+			LayoutSetBranchStagingUtil.getLayoutSetBranch(layoutSet);
+
+		if (layoutSetBranch == null) {
+			return layoutSet;
+		}
+
+		return new LayoutSetStagingModelWrapper(layoutSet, layoutSetBranch);
 	}
 
 	protected List<LayoutSet> wrapLayoutSets(List<LayoutSet> layoutSets) {

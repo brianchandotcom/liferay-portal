@@ -1604,8 +1604,6 @@ public class DDMTemplateVersionPersistenceImpl extends BasePersistenceImpl<DDMTe
 	@Override
 	protected DDMTemplateVersion removeImpl(
 		DDMTemplateVersion ddmTemplateVersion) {
-		ddmTemplateVersion = toUnwrappedModel(ddmTemplateVersion);
-
 		Session session = null;
 
 		try {
@@ -1636,8 +1634,6 @@ public class DDMTemplateVersionPersistenceImpl extends BasePersistenceImpl<DDMTe
 
 	@Override
 	public DDMTemplateVersion updateImpl(DDMTemplateVersion ddmTemplateVersion) {
-		ddmTemplateVersion = toUnwrappedModel(ddmTemplateVersion);
-
 		boolean isNew = ddmTemplateVersion.isNew();
 
 		DDMTemplateVersionModelImpl ddmTemplateVersionModelImpl = (DDMTemplateVersionModelImpl)ddmTemplateVersion;
@@ -1742,39 +1738,6 @@ public class DDMTemplateVersionPersistenceImpl extends BasePersistenceImpl<DDMTe
 		ddmTemplateVersion.resetOriginalValues();
 
 		return ddmTemplateVersion;
-	}
-
-	protected DDMTemplateVersion toUnwrappedModel(
-		DDMTemplateVersion ddmTemplateVersion) {
-		if (ddmTemplateVersion instanceof DDMTemplateVersionImpl) {
-			return ddmTemplateVersion;
-		}
-
-		DDMTemplateVersionImpl ddmTemplateVersionImpl = new DDMTemplateVersionImpl();
-
-		ddmTemplateVersionImpl.setNew(ddmTemplateVersion.isNew());
-		ddmTemplateVersionImpl.setPrimaryKey(ddmTemplateVersion.getPrimaryKey());
-
-		ddmTemplateVersionImpl.setTemplateVersionId(ddmTemplateVersion.getTemplateVersionId());
-		ddmTemplateVersionImpl.setGroupId(ddmTemplateVersion.getGroupId());
-		ddmTemplateVersionImpl.setCompanyId(ddmTemplateVersion.getCompanyId());
-		ddmTemplateVersionImpl.setUserId(ddmTemplateVersion.getUserId());
-		ddmTemplateVersionImpl.setUserName(ddmTemplateVersion.getUserName());
-		ddmTemplateVersionImpl.setCreateDate(ddmTemplateVersion.getCreateDate());
-		ddmTemplateVersionImpl.setClassNameId(ddmTemplateVersion.getClassNameId());
-		ddmTemplateVersionImpl.setClassPK(ddmTemplateVersion.getClassPK());
-		ddmTemplateVersionImpl.setTemplateId(ddmTemplateVersion.getTemplateId());
-		ddmTemplateVersionImpl.setVersion(ddmTemplateVersion.getVersion());
-		ddmTemplateVersionImpl.setName(ddmTemplateVersion.getName());
-		ddmTemplateVersionImpl.setDescription(ddmTemplateVersion.getDescription());
-		ddmTemplateVersionImpl.setLanguage(ddmTemplateVersion.getLanguage());
-		ddmTemplateVersionImpl.setScript(ddmTemplateVersion.getScript());
-		ddmTemplateVersionImpl.setStatus(ddmTemplateVersion.getStatus());
-		ddmTemplateVersionImpl.setStatusByUserId(ddmTemplateVersion.getStatusByUserId());
-		ddmTemplateVersionImpl.setStatusByUserName(ddmTemplateVersion.getStatusByUserName());
-		ddmTemplateVersionImpl.setStatusDate(ddmTemplateVersion.getStatusDate());
-
-		return ddmTemplateVersionImpl;
 	}
 
 	/**

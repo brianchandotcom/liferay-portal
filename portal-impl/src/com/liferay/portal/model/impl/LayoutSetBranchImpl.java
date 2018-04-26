@@ -14,7 +14,6 @@
 
 package com.liferay.portal.model.impl;
 
-import com.liferay.exportimport.kernel.staging.LayoutStagingUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
@@ -22,8 +21,9 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.ColorScheme;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.LayoutSet;
-import com.liferay.portal.kernel.model.LayoutSetStagingHandler;
 import com.liferay.portal.kernel.model.Theme;
+import com.liferay.portal.kernel.model.staging.LayoutSetBranchStagingUtil;
+import com.liferay.portal.kernel.model.staging.LayoutSetStagingModelWrapper;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutSetLocalServiceUtil;
 import com.liferay.portal.kernel.service.ThemeLocalServiceUtil;
@@ -61,14 +61,15 @@ public class LayoutSetBranchImpl extends LayoutSetBranchBaseImpl {
 			_layoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
 				getGroupId(), getPrivateLayout());
 
-			LayoutSetStagingHandler layoutSetStagingHandler =
-				LayoutStagingUtil.getLayoutSetStagingHandler(_layoutSet);
+			LayoutSetStagingModelWrapper layoutSetStagingModelWrapper =
+				LayoutSetBranchStagingUtil.unwrapLayoutSetStagingModelWrapper(
+					_layoutSet);
 
-			if (layoutSetStagingHandler == null) {
+			if (layoutSetStagingModelWrapper == null) {
 				return _layoutSet;
 			}
 
-			_layoutSet = layoutSetStagingHandler.getLayoutSet();
+			_layoutSet = layoutSetStagingModelWrapper.getLayoutSet();
 
 			return _layoutSet;
 		}

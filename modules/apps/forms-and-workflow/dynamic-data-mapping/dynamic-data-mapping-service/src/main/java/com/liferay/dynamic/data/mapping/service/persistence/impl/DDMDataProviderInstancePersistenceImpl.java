@@ -3594,8 +3594,6 @@ public class DDMDataProviderInstancePersistenceImpl extends BasePersistenceImpl<
 	@Override
 	protected DDMDataProviderInstance removeImpl(
 		DDMDataProviderInstance ddmDataProviderInstance) {
-		ddmDataProviderInstance = toUnwrappedModel(ddmDataProviderInstance);
-
 		Session session = null;
 
 		try {
@@ -3627,8 +3625,6 @@ public class DDMDataProviderInstancePersistenceImpl extends BasePersistenceImpl<
 	@Override
 	public DDMDataProviderInstance updateImpl(
 		DDMDataProviderInstance ddmDataProviderInstance) {
-		ddmDataProviderInstance = toUnwrappedModel(ddmDataProviderInstance);
-
 		boolean isNew = ddmDataProviderInstance.isNew();
 
 		DDMDataProviderInstanceModelImpl ddmDataProviderInstanceModelImpl = (DDMDataProviderInstanceModelImpl)ddmDataProviderInstance;
@@ -3814,33 +3810,6 @@ public class DDMDataProviderInstancePersistenceImpl extends BasePersistenceImpl<
 		ddmDataProviderInstance.resetOriginalValues();
 
 		return ddmDataProviderInstance;
-	}
-
-	protected DDMDataProviderInstance toUnwrappedModel(
-		DDMDataProviderInstance ddmDataProviderInstance) {
-		if (ddmDataProviderInstance instanceof DDMDataProviderInstanceImpl) {
-			return ddmDataProviderInstance;
-		}
-
-		DDMDataProviderInstanceImpl ddmDataProviderInstanceImpl = new DDMDataProviderInstanceImpl();
-
-		ddmDataProviderInstanceImpl.setNew(ddmDataProviderInstance.isNew());
-		ddmDataProviderInstanceImpl.setPrimaryKey(ddmDataProviderInstance.getPrimaryKey());
-
-		ddmDataProviderInstanceImpl.setUuid(ddmDataProviderInstance.getUuid());
-		ddmDataProviderInstanceImpl.setDataProviderInstanceId(ddmDataProviderInstance.getDataProviderInstanceId());
-		ddmDataProviderInstanceImpl.setGroupId(ddmDataProviderInstance.getGroupId());
-		ddmDataProviderInstanceImpl.setCompanyId(ddmDataProviderInstance.getCompanyId());
-		ddmDataProviderInstanceImpl.setUserId(ddmDataProviderInstance.getUserId());
-		ddmDataProviderInstanceImpl.setUserName(ddmDataProviderInstance.getUserName());
-		ddmDataProviderInstanceImpl.setCreateDate(ddmDataProviderInstance.getCreateDate());
-		ddmDataProviderInstanceImpl.setModifiedDate(ddmDataProviderInstance.getModifiedDate());
-		ddmDataProviderInstanceImpl.setName(ddmDataProviderInstance.getName());
-		ddmDataProviderInstanceImpl.setDescription(ddmDataProviderInstance.getDescription());
-		ddmDataProviderInstanceImpl.setDefinition(ddmDataProviderInstance.getDefinition());
-		ddmDataProviderInstanceImpl.setType(ddmDataProviderInstance.getType());
-
-		return ddmDataProviderInstanceImpl;
 	}
 
 	/**

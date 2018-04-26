@@ -2470,8 +2470,6 @@ public class SyncDevicePersistenceImpl extends BasePersistenceImpl<SyncDevice>
 
 	@Override
 	protected SyncDevice removeImpl(SyncDevice syncDevice) {
-		syncDevice = toUnwrappedModel(syncDevice);
-
 		Session session = null;
 
 		try {
@@ -2502,8 +2500,6 @@ public class SyncDevicePersistenceImpl extends BasePersistenceImpl<SyncDevice>
 
 	@Override
 	public SyncDevice updateImpl(SyncDevice syncDevice) {
-		syncDevice = toUnwrappedModel(syncDevice);
-
 		boolean isNew = syncDevice.isNew();
 
 		SyncDeviceModelImpl syncDeviceModelImpl = (SyncDeviceModelImpl)syncDevice;
@@ -2653,32 +2649,6 @@ public class SyncDevicePersistenceImpl extends BasePersistenceImpl<SyncDevice>
 		syncDevice.resetOriginalValues();
 
 		return syncDevice;
-	}
-
-	protected SyncDevice toUnwrappedModel(SyncDevice syncDevice) {
-		if (syncDevice instanceof SyncDeviceImpl) {
-			return syncDevice;
-		}
-
-		SyncDeviceImpl syncDeviceImpl = new SyncDeviceImpl();
-
-		syncDeviceImpl.setNew(syncDevice.isNew());
-		syncDeviceImpl.setPrimaryKey(syncDevice.getPrimaryKey());
-
-		syncDeviceImpl.setUuid(syncDevice.getUuid());
-		syncDeviceImpl.setSyncDeviceId(syncDevice.getSyncDeviceId());
-		syncDeviceImpl.setCompanyId(syncDevice.getCompanyId());
-		syncDeviceImpl.setUserId(syncDevice.getUserId());
-		syncDeviceImpl.setUserName(syncDevice.getUserName());
-		syncDeviceImpl.setCreateDate(syncDevice.getCreateDate());
-		syncDeviceImpl.setModifiedDate(syncDevice.getModifiedDate());
-		syncDeviceImpl.setType(syncDevice.getType());
-		syncDeviceImpl.setBuildNumber(syncDevice.getBuildNumber());
-		syncDeviceImpl.setFeatureSet(syncDevice.getFeatureSet());
-		syncDeviceImpl.setHostname(syncDevice.getHostname());
-		syncDeviceImpl.setStatus(syncDevice.getStatus());
-
-		return syncDeviceImpl;
 	}
 
 	/**

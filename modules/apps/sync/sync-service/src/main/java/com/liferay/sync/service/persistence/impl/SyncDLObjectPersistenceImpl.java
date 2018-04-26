@@ -6502,8 +6502,6 @@ public class SyncDLObjectPersistenceImpl extends BasePersistenceImpl<SyncDLObjec
 
 	@Override
 	protected SyncDLObject removeImpl(SyncDLObject syncDLObject) {
-		syncDLObject = toUnwrappedModel(syncDLObject);
-
 		Session session = null;
 
 		try {
@@ -6534,8 +6532,6 @@ public class SyncDLObjectPersistenceImpl extends BasePersistenceImpl<SyncDLObjec
 
 	@Override
 	public SyncDLObject updateImpl(SyncDLObject syncDLObject) {
-		syncDLObject = toUnwrappedModel(syncDLObject);
-
 		boolean isNew = syncDLObject.isNew();
 
 		SyncDLObjectModelImpl syncDLObjectModelImpl = (SyncDLObjectModelImpl)syncDLObject;
@@ -6708,48 +6704,6 @@ public class SyncDLObjectPersistenceImpl extends BasePersistenceImpl<SyncDLObjec
 		syncDLObject.resetOriginalValues();
 
 		return syncDLObject;
-	}
-
-	protected SyncDLObject toUnwrappedModel(SyncDLObject syncDLObject) {
-		if (syncDLObject instanceof SyncDLObjectImpl) {
-			return syncDLObject;
-		}
-
-		SyncDLObjectImpl syncDLObjectImpl = new SyncDLObjectImpl();
-
-		syncDLObjectImpl.setNew(syncDLObject.isNew());
-		syncDLObjectImpl.setPrimaryKey(syncDLObject.getPrimaryKey());
-
-		syncDLObjectImpl.setSyncDLObjectId(syncDLObject.getSyncDLObjectId());
-		syncDLObjectImpl.setCompanyId(syncDLObject.getCompanyId());
-		syncDLObjectImpl.setUserId(syncDLObject.getUserId());
-		syncDLObjectImpl.setUserName(syncDLObject.getUserName());
-		syncDLObjectImpl.setCreateTime(syncDLObject.getCreateTime());
-		syncDLObjectImpl.setModifiedTime(syncDLObject.getModifiedTime());
-		syncDLObjectImpl.setRepositoryId(syncDLObject.getRepositoryId());
-		syncDLObjectImpl.setParentFolderId(syncDLObject.getParentFolderId());
-		syncDLObjectImpl.setTreePath(syncDLObject.getTreePath());
-		syncDLObjectImpl.setName(syncDLObject.getName());
-		syncDLObjectImpl.setExtension(syncDLObject.getExtension());
-		syncDLObjectImpl.setMimeType(syncDLObject.getMimeType());
-		syncDLObjectImpl.setDescription(syncDLObject.getDescription());
-		syncDLObjectImpl.setChangeLog(syncDLObject.getChangeLog());
-		syncDLObjectImpl.setExtraSettings(syncDLObject.getExtraSettings());
-		syncDLObjectImpl.setVersion(syncDLObject.getVersion());
-		syncDLObjectImpl.setVersionId(syncDLObject.getVersionId());
-		syncDLObjectImpl.setSize(syncDLObject.getSize());
-		syncDLObjectImpl.setChecksum(syncDLObject.getChecksum());
-		syncDLObjectImpl.setEvent(syncDLObject.getEvent());
-		syncDLObjectImpl.setLanTokenKey(syncDLObject.getLanTokenKey());
-		syncDLObjectImpl.setLastPermissionChangeDate(syncDLObject.getLastPermissionChangeDate());
-		syncDLObjectImpl.setLockExpirationDate(syncDLObject.getLockExpirationDate());
-		syncDLObjectImpl.setLockUserId(syncDLObject.getLockUserId());
-		syncDLObjectImpl.setLockUserName(syncDLObject.getLockUserName());
-		syncDLObjectImpl.setType(syncDLObject.getType());
-		syncDLObjectImpl.setTypePK(syncDLObject.getTypePK());
-		syncDLObjectImpl.setTypeUuid(syncDLObject.getTypeUuid());
-
-		return syncDLObjectImpl;
 	}
 
 	/**

@@ -15,6 +15,7 @@
 package com.liferay.document.library.display.context;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItemList;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
@@ -32,6 +33,8 @@ public interface DLAdminDisplayContext {
 
 	public CreationMenu getCreationMenu();
 
+	public List<DropdownItem> getFilterDropdownItems();
+
 	public List<NavigationItem> getNavigationItems();
 
 	public PortletURL getPortletURL() throws Exception;
@@ -42,5 +45,6 @@ public interface DLAdminDisplayContext {
 
 	public int getTotalItems() throws Exception;
 
-	ViewTypeItemList getViewTypes() throws Exception;
+	public ViewTypeItemList getViewTypes() throws Exception;
+
 }

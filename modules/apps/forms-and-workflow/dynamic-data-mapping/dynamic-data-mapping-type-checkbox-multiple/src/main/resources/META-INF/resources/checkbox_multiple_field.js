@@ -80,16 +80,25 @@ AUI.add(
 						var instance = this;
 
 						var container = instance.get('container');
+						var data = [];
 
 						var checkboxNodeList = container.all('input[type="checkbox"]');
 
-						for (var i = 0; i < checkboxNodeList.length; i++) {
-							if (value.includes(checkboxNodeList[i].val())) {
-								var node = checkboxNodeList[i];
+						for (var i = 0; i < checkboxNodeList.size(); i++) {
+							var node = checkboxNodeList.item(i);
 
-								node.attr('checked', true);
+							if (value.includes(checkboxNodeList.item(i).val())) {
+								node.setAttribute('checked', true);
+
+								data = value;
+							}
+							else {
+								node.removeAttribute('checked');
 							}
 						}
+
+						instance.set('value', data);
+						instance.set('predefinedValue', data);
 					},
 
 					showErrorMessage: function() {
@@ -102,7 +111,18 @@ AUI.add(
 						var instance = this;
 
 						return options || [];
+					},
+
+					_onValueChange: function(event) {
+						var instance = this;
+
+						var value = instance.getValue();
+
+						instance.setValue(value);
+
+						instance._fireStartedFillingEvent();
 					}
+
 				}
 			}
 		);

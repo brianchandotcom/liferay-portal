@@ -110,11 +110,10 @@
  */
 {template .hidden_input}
 	{@param name: string}
-	{@param value: bool}
 
 	<input id="{$name}"
 		name="{$name}"
 		type="hidden"
-		value="{$value ? 'true' : 'false'}"
+		value="false"
 	/>
 {/template}

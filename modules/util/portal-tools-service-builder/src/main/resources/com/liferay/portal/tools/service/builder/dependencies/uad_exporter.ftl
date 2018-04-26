@@ -35,9 +35,7 @@ public class ${entity.name}UADExporter extends DynamicQueryUADExporter<${entity.
 
 	@Override
 	protected String toXmlString(${entity.name} ${entity.varName}) {
-		<#assign initialCapacity = entity.UADEntityColumns?size * 3 + 4 />
-
-		StringBundler sb = new StringBundler(${initialCapacity?c});
+		StringBundler sb = new StringBundler(${entity.UADEntityColumns?size * 3 + 4});
 
 		sb.append("<model><model-name>");
 		sb.append("${apiPackagePath}.model.${entity.name}");

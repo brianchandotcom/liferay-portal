@@ -17,12 +17,15 @@
 		"senna": "2.5.4"
 	},
 	"devDependencies": {
+		"babel-cli": "6.26.0",
+		"babel-preset-env": "^1.6.1",
 		"check-source-formatting": "^2.0.6",
-		"liferay-module-config-generator": "1.3.3",
-		"metal-cli": "4.4.0"
+		"liferay-npm-bridge-generator": "2.0.0-rc.2",
+		"liferay-npm-bundler": "2.0.0-rc.2"
 	},
 	"name": "frontend-js-spa-web",
 	"scripts": {
+		"build": "babel -d classes/META-INF/resources src/main/resources/META-INF/resources && liferay-npm-bundler && liferay-npm-bridge-generator",
 		"checkFormat": "npm run csf",
 		"csf": "csf src/**/*.es*.js",
 		"format": "npm run csf -- -i"

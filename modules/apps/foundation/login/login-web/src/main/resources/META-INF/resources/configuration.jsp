@@ -96,5 +96,7 @@ String emailFromAddress = ParamUtil.getString(request, "preferences--emailFromAd
 
 	<liferay-frontend:edit-form-footer>
 		<aui:button type="submit" />
+
+		<aui:button type="cancel" />
 	</liferay-frontend:edit-form-footer>
 </liferay-frontend:edit-form>

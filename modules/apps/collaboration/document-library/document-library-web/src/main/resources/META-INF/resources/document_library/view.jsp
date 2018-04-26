@@ -107,9 +107,11 @@ request.setAttribute("view.jsp-orderByType", orderByType);
 	clearResultsURL="<%= dlAdminDisplayContext.getClearResultsURL() %>"
 	creationMenu="<%= dlAdminDisplayContext.getCreationMenu() %>"
 	disabled="<%= DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcutsCount(repositoryId, folderId, WorkflowConstants.STATUS_ANY, true) <= 0 %>"
+	infoPanelId="infoPanelId"
 	searchActionURL="<%= String.valueOf(dlAdminDisplayContext.getSearchURL()) %>"
 	searchContainerId="entries"
 	selectable="<%= dlPortletInstanceSettingsHelper.isShowActions() %>"
+	showInfoButton="<%= true %>"
 	showSearch="<%= dlPortletInstanceSettingsHelper.isShowSearch() %>"
 	totalItems="<%= dlAdminDisplayContext.getTotalItems() %>"
 />

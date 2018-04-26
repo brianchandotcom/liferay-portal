@@ -151,17 +151,6 @@ SOLR_SSL_WANT_CLIENT_AUTH=true</echo>
 		</sequential>
 	</macrodef>
 
-	<macrodef name="delete-elasticseach-osgi-bundle">
-		<sequential>
-			<delete failonerror="false">
-				<fileset
-					dir="${liferay.home}/osgi/portal"
-					includes="com.liferay.portal.search.elasticsearch*.jar"
-				/>
-			</delete>
-		</sequential>
-	</macrodef>
-
 	<macrodef name="prepare-solr-configurations">
 		<sequential>
 			<copy
@@ -293,6 +282,7 @@ schema=schema.xml</echo>
 				<then>
 					<mirrors-get
 						dest="${app.server.parent.dir}/${solr.zip.name}"
+						skipChecksum="true"
 						src="${solr.zip.url}"
 						verbose="true"
 					/>
@@ -306,28 +296,18 @@ schema=schema.xml</echo>
 		</sequential>
 	</macrodef>
 
+	<target name="deploy-solr">
+		<gradle-execute dir="modules/apps/portal-search-solr/portal-search-solr" task="deploy">
+			<arg value="clean" />
+		</gradle-execute>
+
+		<echo file="${liferay.home}/osgi/configs/com.liferay.portal.bundle.blacklist.internal.BundleBlacklistConfiguration.config">blacklistBundleSymbolicNames=&quot;com.liferay.portal.mobile.device.detection.fiftyonedegrees.api,com.liferay.portal.mobile.device.detection.fiftyonedegrees.enterprise,com.liferay.portal.mobile.device.detection.fiftyonedegrees.enterprise.test.data,com.liferay.portal.mobile.device.detection.fiftyonedegrees,com.liferay.portal.search.elasticsearch,com.liferay.portal.search.elasticsearch.shield,com.liferay.portal.search.elasticsearch.shield.fragment,com.liferay.portal.search.elasticsearch.marvel.web&quot;</echo>
+	</target>
+
 	<target name="start-solr">
 		<unzip-solr />
 
 		<prepare-solr-configurations />
-
-		<delete-elasticseach-osgi-bundle />
-
-		<local name="Liferay-Releng-App-Title" />
-
-		<property file="${project.dir}/modules/apps/portal-search-solr/app.bnd" />
-
-		<if>
-			<available file="${project.dir}/plugins/dist/${Liferay-Releng-App-Title}.lpkg" />
-			<then>
-				<antcall target="deploy-osgi-apps" />
-			</then>
-			<else>
-				<gradle-execute dir="modules/apps/portal-search-solr/portal-search-solr" task="deploy">
-					<arg value="clean" />
-				</gradle-execute>
-			</else>
-		</if>
 
 		<configure-liferay-solr-adapter-osgi-configs />
 

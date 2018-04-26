@@ -14,27 +14,56 @@
 
 package com.liferay.asset.entry.rel.service.impl;
 
+import com.liferay.asset.entry.rel.exception.NoSuchEntryDisplayPageRelException;
+import com.liferay.asset.entry.rel.model.AssetEntryDisplayPageRel;
 import com.liferay.asset.entry.rel.service.base.AssetEntryDisplayPageRelLocalServiceBaseImpl;
 
 /**
- * The implementation of the asset entry display page rel local service.
- *
- * <p>
- * All custom service methods should be put in this class. Whenever methods are added, rerun ServiceBuilder to copy their definitions into the {@link com.liferay.asset.entry.rel.service.AssetEntryDisplayPageRelLocalService} interface.
- *
- * <p>
- * This is a local service. Methods of this service will not have security checks based on the propagated JAAS credentials because this service can only be accessed from within the same VM.
- * </p>
- *
- * @author Brian Wing Shun Chan
- * @see AssetEntryDisplayPageRelLocalServiceBaseImpl
- * @see com.liferay.asset.entry.rel.service.AssetEntryDisplayPageRelLocalServiceUtil
+ * @author Jürgen Kappler
  */
 public class AssetEntryDisplayPageRelLocalServiceImpl
 	extends AssetEntryDisplayPageRelLocalServiceBaseImpl {
-	/*
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this class directly. Always use {@link com.liferay.asset.entry.rel.service.AssetEntryDisplayPageRelLocalServiceUtil} to access the asset entry display page rel local service.
-	 */
+
+	@Override
+	public AssetEntryDisplayPageRel addAssetEntryDisplayPageRel(
+		long assetEntryId, long displayPageId) {
+
+		long assetEntryDisplayPageRelId = counterLocalService.increment();
+
+		AssetEntryDisplayPageRel assetEntryDisplayPageRel =
+			assetEntryDisplayPageRelPersistence.create(
+				assetEntryDisplayPageRelId);
+
+		assetEntryDisplayPageRel.setAssetEntryId(assetEntryId);
+		assetEntryDisplayPageRel.setDisplayPageId(displayPageId);
+
+		assetEntryDisplayPageRelPersistence.update(assetEntryDisplayPageRel);
+
+		return assetEntryDisplayPageRel;
+	}
+
+	@Override
+	public void deleteAssetEntryDisplayPageRel(
+			long assetEntryId, long displayPageId)
+		throws NoSuchEntryDisplayPageRelException {
+
+		assetEntryDisplayPageRelPersistence.removeByA_D(
+			assetEntryId, displayPageId);
+	}
+
+	@Override
+	public void deleteAssetEntryDisplayPageRelByAssetEntryId(
+		long assetEntryId) {
+
+		assetEntryDisplayPageRelPersistence.removeByAssetEntryId(assetEntryId);
+	}
+
+	@Override
+	public AssetEntryDisplayPageRel fetchAssetEntryDisplayPageRel(
+		long assetEntryId, long displayPageId) {
+
+		return assetEntryDisplayPageRelPersistence.fetchByA_D(
+			assetEntryId, displayPageId);
+	}
+
 }

@@ -16,6 +16,7 @@ package com.liferay.document.library.display.context;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItemList;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 
 import java.util.List;
@@ -41,4 +42,5 @@ public interface DLAdminDisplayContext {
 
 	public int getTotalItems() throws Exception;
 
+	ViewTypeItemList getViewTypes() throws Exception;
 }

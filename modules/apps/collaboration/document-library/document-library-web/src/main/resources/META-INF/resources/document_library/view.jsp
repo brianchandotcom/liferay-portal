@@ -114,6 +114,7 @@ request.setAttribute("view.jsp-orderByType", orderByType);
 	showInfoButton="<%= true %>"
 	showSearch="<%= dlPortletInstanceSettingsHelper.isShowSearch() %>"
 	totalItems="<%= dlAdminDisplayContext.getTotalItems() %>"
+	viewTypes="<%= dlAdminDisplayContext.getViewTypes() %>"
 />
 
 <c:if test='<%= ParamUtil.getBoolean(request, "showSearchInfo") %>'>

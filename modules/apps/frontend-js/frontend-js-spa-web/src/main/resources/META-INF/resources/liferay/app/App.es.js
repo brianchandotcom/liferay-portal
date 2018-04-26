@@ -1,11 +1,11 @@
 'use strict';
 
-import App from 'senna/src/app/App';
-import core from 'metal/src/core';
-import dom from 'metal-dom/src/dom';
+import App from 'senna/lib/app/App';
+import core from 'metal/lib/core';
+import dom from 'metal-dom/lib/dom';
 import LiferaySurface from '../surface/Surface.es';
 import Utils from '../util/Utils.es';
-import {CancellablePromise} from 'metal-promise/src/promise/Promise';
+import {CancellablePromise} from 'metal-promise/lib/promise/Promise';
 
 /**
  * LiferayApp

@@ -37,6 +37,19 @@
 		</execute>
 	</command>
 
+	<command name="rename">
+		<execute macro="LexiconEntry#gotoEntryMenuItem">
+			<var name="menuItem" value="Rename" />
+			<var name="rowEntry" value="${rowEntry}" />
+		</execute>
+
+		<execute macro="PortletEntry#inputName">
+			<var name="name" value="${pageTemplateName}" />
+		</execute>
+
+		<execute macro="Modal#submit" />
+	</command>
+
 	<command name="selectFragment">
 		<execute macro="LayoutPageTemplates#expandFragmentCollection">
 			<var name="collectionName" value="${collectionName}" />

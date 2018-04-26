@@ -163,7 +163,7 @@ public class ProductNestedCollectionResource
 	private Document _getCPDefinition(Long cpDefinitionId) {
 		try {
 			ServiceContext serviceContext =
-				_productDefinitionHelper.getServiceContext(0, new long[0]);
+				_productDefinitionHelper.getServiceContext();
 
 			SearchContext searchContext =
 				_productDefinitionHelper.buildSearchContext(
@@ -171,6 +171,11 @@ public class ProductNestedCollectionResource
 					QueryUtil.ALL_POS, null, serviceContext);
 
 			Hits hits = _indexer.search(searchContext);
+
+			if (hits.getLength() == 0) {
+				throw new NotFoundException(
+					"Unable to find Product with Id: " + cpDefinitionId);
+			}
 
 			List<Document> documents = hits.toList();
 

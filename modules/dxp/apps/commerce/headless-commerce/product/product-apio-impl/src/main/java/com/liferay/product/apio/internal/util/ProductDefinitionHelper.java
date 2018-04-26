@@ -83,8 +83,12 @@ public class ProductDefinitionHelper {
 		searchContext.setStart(start);
 		searchContext.setEnd(end);
 		searchContext.setCompanyId(serviceContext.getCompanyId());
-		searchContext.setGroupIds(
-			new long[] {serviceContext.getScopeGroupId()});
+
+		long groupId = serviceContext.getScopeGroupId();
+
+		if (groupId != 0) {
+			searchContext.setGroupIds(new long[] {groupId});
+		}
 
 		QueryConfig queryConfig = searchContext.getQueryConfig();
 
@@ -190,7 +194,7 @@ public class ProductDefinitionHelper {
 		serviceContext.setAssetCategoryIds(assetCategoryIds);
 		serviceContext.setCompanyId(user.getCompanyId());
 
-		if (groupId > 0) {
+		if (groupId != 0) {
 			serviceContext.setScopeGroupId(groupId);
 		}
 

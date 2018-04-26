@@ -531,7 +531,15 @@ public class AssetPublisherDisplayContext {
 	}
 
 	public Integer getDelta() {
-		return _assetPublisherCustomizer.getDelta(_request);
+		if (_delta != null) {
+			return _delta;
+		}
+
+		_delta = GetterUtil.getInteger(
+			_portletPreferences.getValue("delta", StringPool.BLANK),
+			_assetPublisherCustomizer.getDelta(_request));
+
+		return _delta;
 	}
 
 	public String getDisplayStyle() {
@@ -1573,6 +1581,7 @@ public class AssetPublisherDisplayContext {
 	private String _ddmStructureFieldName;
 	private String _ddmStructureFieldValue;
 	private Boolean _defaultAssetPublisher;
+	private Integer _delta;
 	private String _displayStyle;
 	private Long _displayStyleGroupId;
 	private Boolean _enableCommentRatings;

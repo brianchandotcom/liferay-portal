@@ -836,8 +836,8 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	 * <p>
 	 * The group is unstaged and its assets and resources including layouts,
 	 * membership requests, subscriptions, teams, blogs, bookmarks, events,
-	 * image gallery, journals, message boards, polls, shopping related
-	 * entities, and wikis are also deleted.
+	 * image gallery, journals, message boards, polls, and wikis are also
+	 * deleted.
 	 * </p>
 	 *
 	 * @param  group the group
@@ -1117,8 +1117,8 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	 * <p>
 	 * The group is unstaged and its assets and resources including layouts,
 	 * membership requests, subscriptions, teams, blogs, bookmarks, events,
-	 * image gallery, journals, message boards, polls, shopping related
-	 * entities, and wikis are also deleted.
+	 * image gallery, journals, message boards, polls, and wikis are also
+	 * deleted.
 	 * </p>
 	 *
 	 * @param  groupId the primary key of the group

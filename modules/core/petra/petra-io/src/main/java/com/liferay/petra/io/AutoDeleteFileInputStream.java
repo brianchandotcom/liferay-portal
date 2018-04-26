@@ -34,7 +34,7 @@ public class AutoDeleteFileInputStream extends FileInputStream {
 	public void close() throws IOException {
 		super.close();
 
-		if (!_file.delete()) {
+		if (_file.exists() && !_file.delete()) {
 			_file.deleteOnExit();
 		}
 	}

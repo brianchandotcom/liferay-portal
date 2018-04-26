@@ -21,6 +21,8 @@ import java.io.IOException;
 
 /**
  * @author Shuyang Zhou
+ * @deprecated As of 7.0.0, replaced by {@link com.liferay.petra.io.
+ * 		   AutoDeleteFileInputStream}
  */
 public class AutoDeleteFileInputStream extends FileInputStream {
 
@@ -32,6 +34,8 @@ public class AutoDeleteFileInputStream extends FileInputStream {
 
 	@Override
 	public void close() throws IOException {
+		super.close();
+
 		if (_file.exists() && !_file.delete()) {
 			_file.deleteOnExit();
 		}

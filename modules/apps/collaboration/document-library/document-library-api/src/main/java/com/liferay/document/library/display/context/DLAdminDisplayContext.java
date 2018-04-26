@@ -37,11 +37,17 @@ public interface DLAdminDisplayContext {
 
 	public List<NavigationItem> getNavigationItems();
 
+	public String getOrderByCol();
+
+	public String getOrderByType();
+
 	public PortletURL getPortletURL() throws Exception;
 
 	public SearchContainer getSearchContainer() throws Exception;
 
 	public PortletURL getSearchURL();
+
+	public PortletURL getSortingURL();
 
 	public int getTotalItems() throws Exception;
 

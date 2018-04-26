@@ -16,6 +16,7 @@ package com.liferay.jenkins.results.parser;
 
 import com.liferay.jenkins.results.parser.failure.message.generator.FailureMessageGenerator;
 import com.liferay.jenkins.results.parser.failure.message.generator.GenericFailureMessageGenerator;
+import com.liferay.jenkins.results.parser.failure.message.generator.RebaseFailureMessageGenerator;
 import com.liferay.jenkins.results.parser.failure.message.generator.SourceFormatFailureMessageGenerator;
 
 import org.dom4j.Element;
@@ -35,6 +36,10 @@ public class SourceFormatBuild extends TopLevelBuild {
 		return new Element[] {getFailureMessageElement()};
 	}
 
+	public PullRequest getPullRequest() {
+		return _pullRequest;
+	}
+
 	protected SourceFormatBuild(String url) {
 		this(url, null);
 	}
@@ -47,15 +52,13 @@ public class SourceFormatBuild extends TopLevelBuild {
 
 	@Override
 	protected FailureMessageGenerator[] getFailureMessageGenerators() {
-		return _FAILURE_MESSAGE_GENERATORS;
-	}
-
-	private static final FailureMessageGenerator[] _FAILURE_MESSAGE_GENERATORS =
-		{
+		return new FailureMessageGenerator[] {
+			new RebaseFailureMessageGenerator(),
 			new SourceFormatFailureMessageGenerator(),
 
 			new GenericFailureMessageGenerator()
 		};
+	}
 
 	private PullRequest _pullRequest;
 

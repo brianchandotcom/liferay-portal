@@ -16,6 +16,7 @@ package com.liferay.jenkins.results.parser.failure.message.generator;
 
 import com.liferay.jenkins.results.parser.Build;
 import com.liferay.jenkins.results.parser.Dom4JUtil;
+import com.liferay.jenkins.results.parser.SourceFormatBuild;
 
 import org.dom4j.Element;
 
@@ -51,7 +52,7 @@ public class RebaseFailureMessageGenerator extends BaseFailureMessageGenerator {
 				Dom4JUtil.getNewElement(
 					"strong", null,
 					getBaseBranchAnchorElement(build.getTopLevelBuild())),
-				getConsoleTextSnippetElement(consoleText, true, start, end)));
+				getConsoleTextSnippetElement(consoleText, false, start, end)));
 	}
 
 	private static final String _TOKEN_REBASE_END = "git rebase --abort";

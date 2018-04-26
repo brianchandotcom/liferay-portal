@@ -22,7 +22,6 @@ import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalArticleConstants;
 import com.liferay.journal.model.JournalFolder;
 import com.liferay.journal.service.JournalArticleLocalService;
-import com.liferay.journal.service.JournalFolderLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
@@ -41,6 +40,7 @@ import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.service.SystemEventLocalService;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -55,6 +55,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Timestamp;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.portlet.PortletPreferences;
@@ -68,13 +69,11 @@ public class UpgradeJournalServiceVerify extends UpgradeProcess {
 	public UpgradeJournalServiceVerify(
 		AssetEntryLocalService assetEntryLocalService,
 		JournalArticleLocalService journalArticleLocalService,
-		JournalFolderLocalService journalFolderLocalService, Portal portal,
-		ResourceLocalService resourceLocalService,
+		Portal portal, ResourceLocalService resourceLocalService,
 		SystemEventLocalService systemEventLocalService) {
 
 		_assetEntryLocalService = assetEntryLocalService;
 		_journalArticleLocalService = journalArticleLocalService;
-		_journalFolderLocalService = journalFolderLocalService;
 		_portal = portal;
 		_resourceLocalService = resourceLocalService;
 		_systemEventLocalService = systemEventLocalService;
@@ -503,26 +502,45 @@ public class UpgradeJournalServiceVerify extends UpgradeProcess {
 	}
 
 	protected void verifyFolderAssets() throws Exception {
-		try (LoggingTimer loggingTimer = new LoggingTimer()) {
-			List<JournalFolder> folders =
-				_journalFolderLocalService.getNoAssetFolders();
+		long classNameId = _portal.getClassNameId(JournalFolder.class);
 
-			if (_log.isDebugEnabled()) {
-				_log.debug(
-					"Processing " + folders.size() + " folders with no asset");
-			}
+		try (LoggingTimer loggingTimer = new LoggingTimer();
+			PreparedStatement ps = connection.prepareStatement(
+				StringBundler.concat(
+					"select JournalFolder.userId, JournalFolder.groupId, ",
+					"JournalFolder.createDate, JournalFolder.modifiedDate, ",
+					"JournalFolder.folderId, JournalFolder.uuid_, ",
+					"JournalFolder.name, JournalFolder.description from ",
+					"JournalFolder left join AssetEntry on ",
+					"(AssetEntry.classNameId = ", String.valueOf(classNameId),
+					") AND (AssetEntry.classPK = JournalFolder.folderId) ",
+					"where AssetEntry.classPK IS NULL"));
+			ResultSet rs = ps.executeQuery()) {
 
-			for (JournalFolder folder : folders) {
+			while (rs.next()) {
+				long userId = rs.getLong("userId");
+				long groupId = rs.getLong("groupId");
+				Date createDate = rs.getTimestamp("createDate");
+				Date modifiedDate = rs.getTimestamp("modifiedDate");
+				long folderId = rs.getLong("folderId");
+				String uuid = rs.getString("uuid_");
+				String name = rs.getString("name");
+				String description = rs.getString("description");
+
 				try {
-					_journalFolderLocalService.updateAsset(
-						folder.getUserId(), folder, null, null, null, null);
+					_assetEntryLocalService.updateEntry(
+						userId, groupId, createDate, modifiedDate,
+						JournalFolder.class.getName(), folderId, uuid, 0, null,
+						null, true, true, null, null, createDate, null,
+						ContentTypes.TEXT_PLAIN, name, description, null, null,
+						null, 0, 0, null);
 				}
 				catch (Exception e) {
 					if (_log.isWarnEnabled()) {
 						_log.warn(
 							StringBundler.concat(
 								"Unable to update asset for folder ",
-								String.valueOf(folder.getFolderId()), ": ",
+								String.valueOf(folderId), ": ",
 								e.getMessage()));
 					}
 				}
@@ -629,7 +647,6 @@ public class UpgradeJournalServiceVerify extends UpgradeProcess {
 
 	private final AssetEntryLocalService _assetEntryLocalService;
 	private final JournalArticleLocalService _journalArticleLocalService;
-	private final JournalFolderLocalService _journalFolderLocalService;
 	private final Portal _portal;
 	private final ResourceLocalService _resourceLocalService;
 	private final SystemEventLocalService _systemEventLocalService;

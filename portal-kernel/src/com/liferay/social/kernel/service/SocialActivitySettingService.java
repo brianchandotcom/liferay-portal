@@ -56,37 +56,37 @@ public interface SocialActivitySettingService extends BaseService {
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public SocialActivityDefinition getActivityDefinition(long groupId,
-		java.lang.String className, int activityType) throws PortalException;
+		String className, int activityType) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<SocialActivityDefinition> getActivityDefinitions(long groupId,
-		java.lang.String className) throws PortalException;
+		String className) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<SocialActivitySetting> getActivitySettings(long groupId)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public JSONArray getJSONActivityDefinitions(long groupId,
-		java.lang.String className) throws PortalException;
+	public JSONArray getJSONActivityDefinitions(long groupId, String className)
+		throws PortalException;
 
 	/**
 	* Returns the OSGi service identifier.
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
-	public void updateActivitySetting(long groupId, java.lang.String className,
+	public void updateActivitySetting(long groupId, String className,
 		boolean enabled) throws PortalException;
 
-	public void updateActivitySetting(long groupId, java.lang.String className,
+	public void updateActivitySetting(long groupId, String className,
 		int activityType,
 		SocialActivityCounterDefinition activityCounterDefinition)
 		throws PortalException;
 
-	public void updateActivitySettings(long groupId,
-		java.lang.String className, int activityType,
+	public void updateActivitySettings(long groupId, String className,
+		int activityType,
 		List<SocialActivityCounterDefinition> activityCounterDefinitions)
 		throws PortalException;
 }

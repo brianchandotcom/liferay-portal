@@ -215,8 +215,8 @@ public class LayoutSetCacheModel implements CacheModel<LayoutSet>,
 
 		layoutSetPrototypeLinkEnabled = objectInput.readBoolean();
 
-		_companyFallbackVirtualHostname = (java.lang.String)objectInput.readObject();
-		_virtualHostname = (java.lang.String)objectInput.readObject();
+		_companyFallbackVirtualHostname = (String)objectInput.readObject();
+		_virtualHostname = (String)objectInput.readObject();
 	}
 
 	@Override
@@ -294,6 +294,6 @@ public class LayoutSetCacheModel implements CacheModel<LayoutSet>,
 	public String settings;
 	public String layoutSetPrototypeUuid;
 	public boolean layoutSetPrototypeLinkEnabled;
-	public java.lang.String _companyFallbackVirtualHostname;
-	public java.lang.String _virtualHostname;
+	public String _companyFallbackVirtualHostname;
+	public String _virtualHostname;
 }

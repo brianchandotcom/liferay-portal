@@ -128,7 +128,7 @@ public class AssetLinkWrapper implements AssetLink, ModelWrapper<AssetLink> {
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new AssetLinkWrapper((AssetLink)_assetLink.clone());
 	}
 
@@ -233,7 +233,7 @@ public class AssetLinkWrapper implements AssetLink, ModelWrapper<AssetLink> {
 	* @return the user name of this asset link
 	*/
 	@Override
-	public java.lang.String getUserName() {
+	public String getUserName() {
 		return _assetLink.getUserName();
 	}
 
@@ -243,7 +243,7 @@ public class AssetLinkWrapper implements AssetLink, ModelWrapper<AssetLink> {
 	* @return the user uuid of this asset link
 	*/
 	@Override
-	public java.lang.String getUserUuid() {
+	public String getUserUuid() {
 		return _assetLink.getUserUuid();
 	}
 
@@ -399,7 +399,7 @@ public class AssetLinkWrapper implements AssetLink, ModelWrapper<AssetLink> {
 	* @param userName the user name of this asset link
 	*/
 	@Override
-	public void setUserName(java.lang.String userName) {
+	public void setUserName(String userName) {
 		_assetLink.setUserName(userName);
 	}
 
@@ -409,7 +409,7 @@ public class AssetLinkWrapper implements AssetLink, ModelWrapper<AssetLink> {
 	* @param userUuid the user uuid of this asset link
 	*/
 	@Override
-	public void setUserUuid(java.lang.String userUuid) {
+	public void setUserUuid(String userUuid) {
 		_assetLink.setUserUuid(userUuid);
 	}
 
@@ -434,7 +434,7 @@ public class AssetLinkWrapper implements AssetLink, ModelWrapper<AssetLink> {
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _assetLink.toString();
 	}
 
@@ -444,7 +444,7 @@ public class AssetLinkWrapper implements AssetLink, ModelWrapper<AssetLink> {
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _assetLink.toXmlString();
 	}
 

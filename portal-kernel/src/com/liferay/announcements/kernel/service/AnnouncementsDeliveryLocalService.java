@@ -71,8 +71,8 @@ public interface AnnouncementsDeliveryLocalService extends BaseLocalService,
 	public AnnouncementsDelivery addAnnouncementsDelivery(
 		AnnouncementsDelivery announcementsDelivery);
 
-	public AnnouncementsDelivery addUserDelivery(long userId,
-		java.lang.String type) throws PortalException;
+	public AnnouncementsDelivery addUserDelivery(long userId, String type)
+		throws PortalException;
 
 	/**
 	* Creates a new announcements delivery with the primary key. Does not add the announcements delivery to the database.
@@ -110,7 +110,7 @@ public interface AnnouncementsDeliveryLocalService extends BaseLocalService,
 
 	public void deleteDelivery(long deliveryId) throws PortalException;
 
-	public void deleteDelivery(long userId, java.lang.String type);
+	public void deleteDelivery(long userId, String type);
 
 	/**
 	* @throws PortalException
@@ -230,7 +230,7 @@ public interface AnnouncementsDeliveryLocalService extends BaseLocalService,
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -242,8 +242,8 @@ public interface AnnouncementsDeliveryLocalService extends BaseLocalService,
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public AnnouncementsDelivery getUserDelivery(long userId,
-		java.lang.String type) throws PortalException;
+	public AnnouncementsDelivery getUserDelivery(long userId, String type)
+		throws PortalException;
 
 	/**
 	* Updates the announcements delivery in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
@@ -255,16 +255,14 @@ public interface AnnouncementsDeliveryLocalService extends BaseLocalService,
 	public AnnouncementsDelivery updateAnnouncementsDelivery(
 		AnnouncementsDelivery announcementsDelivery);
 
-	public AnnouncementsDelivery updateDelivery(long userId,
-		java.lang.String type, boolean email, boolean sms)
-		throws PortalException;
+	public AnnouncementsDelivery updateDelivery(long userId, String type,
+		boolean email, boolean sms) throws PortalException;
 
 	/**
 	* @deprecated As of 7.0.0, replaced by {@link
 	#updateDelivery(long, String, boolean, boolean)}
 	*/
-	@java.lang.Deprecated
-	public AnnouncementsDelivery updateDelivery(long userId,
-		java.lang.String type, boolean email, boolean sms, boolean website)
-		throws PortalException;
+	@Deprecated
+	public AnnouncementsDelivery updateDelivery(long userId, String type,
+		boolean email, boolean sms, boolean website) throws PortalException;
 }

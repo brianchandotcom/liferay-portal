@@ -120,7 +120,7 @@ public class StatusWrapper implements Status, ModelWrapper<Status> {
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new StatusWrapper((Status)_status.clone());
 	}
 
@@ -135,7 +135,7 @@ public class StatusWrapper implements Status, ModelWrapper<Status> {
 	* @return the active panel IDs of this status
 	*/
 	@Override
-	public java.lang.String getActivePanelIds() {
+	public String getActivePanelIds() {
 		return _status.getActivePanelIds();
 	}
 
@@ -160,7 +160,7 @@ public class StatusWrapper implements Status, ModelWrapper<Status> {
 	* @return the message of this status
 	*/
 	@Override
-	public java.lang.String getMessage() {
+	public String getMessage() {
 		return _status.getMessage();
 	}
 
@@ -235,7 +235,7 @@ public class StatusWrapper implements Status, ModelWrapper<Status> {
 	* @return the user uuid of this status
 	*/
 	@Override
-	public java.lang.String getUserUuid() {
+	public String getUserUuid() {
 		return _status.getUserUuid();
 	}
 
@@ -300,7 +300,7 @@ public class StatusWrapper implements Status, ModelWrapper<Status> {
 	* @param activePanelIds the active panel IDs of this status
 	*/
 	@Override
-	public void setActivePanelIds(java.lang.String activePanelIds) {
+	public void setActivePanelIds(String activePanelIds) {
 		_status.setActivePanelIds(activePanelIds);
 	}
 
@@ -341,7 +341,7 @@ public class StatusWrapper implements Status, ModelWrapper<Status> {
 	* @param message the message of this status
 	*/
 	@Override
-	public void setMessage(java.lang.String message) {
+	public void setMessage(String message) {
 		_status.setMessage(message);
 	}
 
@@ -421,7 +421,7 @@ public class StatusWrapper implements Status, ModelWrapper<Status> {
 	* @param userUuid the user uuid of this status
 	*/
 	@Override
-	public void setUserUuid(java.lang.String userUuid) {
+	public void setUserUuid(String userUuid) {
 		_status.setUserUuid(userUuid);
 	}
 
@@ -436,7 +436,7 @@ public class StatusWrapper implements Status, ModelWrapper<Status> {
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _status.toString();
 	}
 
@@ -446,7 +446,7 @@ public class StatusWrapper implements Status, ModelWrapper<Status> {
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _status.toXmlString();
 	}
 

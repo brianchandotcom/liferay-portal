@@ -24,8 +24,7 @@ import aQute.bnd.annotation.ProviderType;
 public interface BlogsStatsUserFinder {
 	public int countByOrganizationId(long organizationId);
 
-	public int countByOrganizationIds(
-		java.util.List<java.lang.Long> organizationIds);
+	public int countByOrganizationIds(java.util.List<Long> organizationIds);
 
 	public java.util.List<com.liferay.blogs.model.BlogsStatsUser> findByGroupIds(
 		long companyId, long groupId, int start, int end);
@@ -35,6 +34,6 @@ public interface BlogsStatsUserFinder {
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.blogs.model.BlogsStatsUser> obc);
 
 	public java.util.List<com.liferay.blogs.model.BlogsStatsUser> findByOrganizationIds(
-		java.util.List<java.lang.Long> organizationIds, int start, int end,
+		java.util.List<Long> organizationIds, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.blogs.model.BlogsStatsUser> obc);
 }

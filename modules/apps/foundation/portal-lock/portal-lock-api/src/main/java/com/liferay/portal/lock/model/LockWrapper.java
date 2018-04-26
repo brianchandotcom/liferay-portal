@@ -149,7 +149,7 @@ public class LockWrapper implements Lock, ModelWrapper<Lock> {
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new LockWrapper((Lock)_lock.clone());
 	}
 
@@ -164,7 +164,7 @@ public class LockWrapper implements Lock, ModelWrapper<Lock> {
 	* @return the class name of this lock
 	*/
 	@Override
-	public java.lang.String getClassName() {
+	public String getClassName() {
 		return _lock.getClassName();
 	}
 
@@ -224,7 +224,7 @@ public class LockWrapper implements Lock, ModelWrapper<Lock> {
 	* @return the key of this lock
 	*/
 	@Override
-	public java.lang.String getKey() {
+	public String getKey() {
 		return _lock.getKey();
 	}
 
@@ -254,7 +254,7 @@ public class LockWrapper implements Lock, ModelWrapper<Lock> {
 	* @return the owner of this lock
 	*/
 	@Override
-	public java.lang.String getOwner() {
+	public String getOwner() {
 		return _lock.getOwner();
 	}
 
@@ -289,7 +289,7 @@ public class LockWrapper implements Lock, ModelWrapper<Lock> {
 	* @return the user name of this lock
 	*/
 	@Override
-	public java.lang.String getUserName() {
+	public String getUserName() {
 		return _lock.getUserName();
 	}
 
@@ -299,7 +299,7 @@ public class LockWrapper implements Lock, ModelWrapper<Lock> {
 	* @return the user uuid of this lock
 	*/
 	@Override
-	public java.lang.String getUserUuid() {
+	public String getUserUuid() {
 		return _lock.getUserUuid();
 	}
 
@@ -309,7 +309,7 @@ public class LockWrapper implements Lock, ModelWrapper<Lock> {
 	* @return the uuid of this lock
 	*/
 	@Override
-	public java.lang.String getUuid() {
+	public String getUuid() {
 		return _lock.getUuid();
 	}
 
@@ -369,7 +369,7 @@ public class LockWrapper implements Lock, ModelWrapper<Lock> {
 	* @param className the class name of this lock
 	*/
 	@Override
-	public void setClassName(java.lang.String className) {
+	public void setClassName(String className) {
 		_lock.setClassName(className);
 	}
 
@@ -435,7 +435,7 @@ public class LockWrapper implements Lock, ModelWrapper<Lock> {
 	* @param key the key of this lock
 	*/
 	@Override
-	public void setKey(java.lang.String key) {
+	public void setKey(String key) {
 		_lock.setKey(key);
 	}
 
@@ -470,7 +470,7 @@ public class LockWrapper implements Lock, ModelWrapper<Lock> {
 	* @param owner the owner of this lock
 	*/
 	@Override
-	public void setOwner(java.lang.String owner) {
+	public void setOwner(String owner) {
 		_lock.setOwner(owner);
 	}
 
@@ -505,7 +505,7 @@ public class LockWrapper implements Lock, ModelWrapper<Lock> {
 	* @param userName the user name of this lock
 	*/
 	@Override
-	public void setUserName(java.lang.String userName) {
+	public void setUserName(String userName) {
 		_lock.setUserName(userName);
 	}
 
@@ -515,7 +515,7 @@ public class LockWrapper implements Lock, ModelWrapper<Lock> {
 	* @param userUuid the user uuid of this lock
 	*/
 	@Override
-	public void setUserUuid(java.lang.String userUuid) {
+	public void setUserUuid(String userUuid) {
 		_lock.setUserUuid(userUuid);
 	}
 
@@ -525,7 +525,7 @@ public class LockWrapper implements Lock, ModelWrapper<Lock> {
 	* @param uuid the uuid of this lock
 	*/
 	@Override
-	public void setUuid(java.lang.String uuid) {
+	public void setUuid(String uuid) {
 		_lock.setUuid(uuid);
 	}
 
@@ -540,7 +540,7 @@ public class LockWrapper implements Lock, ModelWrapper<Lock> {
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _lock.toString();
 	}
 
@@ -550,7 +550,7 @@ public class LockWrapper implements Lock, ModelWrapper<Lock> {
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _lock.toXmlString();
 	}
 

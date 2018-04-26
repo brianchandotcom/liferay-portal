@@ -106,10 +106,10 @@ public class RepositoryServiceSoap {
 	* @deprecated As of 7.0.0, with no direct replacement
 	*/
 	@Deprecated
-	public static java.lang.String[] getSupportedConfigurations(
-		long classNameId) throws RemoteException {
+	public static String[] getSupportedConfigurations(long classNameId)
+		throws RemoteException {
 		try {
-			java.lang.String[] returnValue = RepositoryServiceUtil.getSupportedConfigurations(classNameId);
+			String[] returnValue = RepositoryServiceUtil.getSupportedConfigurations(classNameId);
 
 			return returnValue;
 		}
@@ -124,10 +124,10 @@ public class RepositoryServiceSoap {
 	* @deprecated As of 7.0.0, with no direct replacement
 	*/
 	@Deprecated
-	public static java.lang.String[] getSupportedParameters(long classNameId,
-		java.lang.String configuration) throws RemoteException {
+	public static String[] getSupportedParameters(long classNameId,
+		String configuration) throws RemoteException {
 		try {
-			java.lang.String[] returnValue = RepositoryServiceUtil.getSupportedParameters(classNameId,
+			String[] returnValue = RepositoryServiceUtil.getSupportedParameters(classNameId,
 					configuration);
 
 			return returnValue;
@@ -143,11 +143,10 @@ public class RepositoryServiceSoap {
 	* @deprecated As of 7.0.0, with no direct replacement
 	*/
 	@Deprecated
-	public static java.lang.String[] getSupportedParameters(
-		java.lang.String className, java.lang.String configuration)
-		throws RemoteException {
+	public static String[] getSupportedParameters(String className,
+		String configuration) throws RemoteException {
 		try {
-			java.lang.String[] returnValue = RepositoryServiceUtil.getSupportedParameters(className,
+			String[] returnValue = RepositoryServiceUtil.getSupportedParameters(className,
 					configuration);
 
 			return returnValue;
@@ -173,9 +172,8 @@ public class RepositoryServiceSoap {
 		}
 	}
 
-	public static void updateRepository(long repositoryId,
-		java.lang.String name, java.lang.String description)
-		throws RemoteException {
+	public static void updateRepository(long repositoryId, String name,
+		String description) throws RemoteException {
 		try {
 			RepositoryServiceUtil.updateRepository(repositoryId, name,
 				description);

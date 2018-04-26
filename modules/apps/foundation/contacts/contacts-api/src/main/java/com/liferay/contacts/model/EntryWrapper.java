@@ -135,7 +135,7 @@ public class EntryWrapper implements Entry, ModelWrapper<Entry> {
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new EntryWrapper((Entry)_entry.clone());
 	}
 
@@ -150,7 +150,7 @@ public class EntryWrapper implements Entry, ModelWrapper<Entry> {
 	* @return the comments of this entry
 	*/
 	@Override
-	public java.lang.String getComments() {
+	public String getComments() {
 		return _entry.getComments();
 	}
 
@@ -180,7 +180,7 @@ public class EntryWrapper implements Entry, ModelWrapper<Entry> {
 	* @return the email address of this entry
 	*/
 	@Override
-	public java.lang.String getEmailAddress() {
+	public String getEmailAddress() {
 		return _entry.getEmailAddress();
 	}
 
@@ -205,7 +205,7 @@ public class EntryWrapper implements Entry, ModelWrapper<Entry> {
 	* @return the full name of this entry
 	*/
 	@Override
-	public java.lang.String getFullName() {
+	public String getFullName() {
 		return _entry.getFullName();
 	}
 
@@ -260,7 +260,7 @@ public class EntryWrapper implements Entry, ModelWrapper<Entry> {
 	* @return the user name of this entry
 	*/
 	@Override
-	public java.lang.String getUserName() {
+	public String getUserName() {
 		return _entry.getUserName();
 	}
 
@@ -270,7 +270,7 @@ public class EntryWrapper implements Entry, ModelWrapper<Entry> {
 	* @return the user uuid of this entry
 	*/
 	@Override
-	public java.lang.String getUserUuid() {
+	public String getUserUuid() {
 		return _entry.getUserUuid();
 	}
 
@@ -310,7 +310,7 @@ public class EntryWrapper implements Entry, ModelWrapper<Entry> {
 	* @param comments the comments of this entry
 	*/
 	@Override
-	public void setComments(java.lang.String comments) {
+	public void setComments(String comments) {
 		_entry.setComments(comments);
 	}
 
@@ -340,7 +340,7 @@ public class EntryWrapper implements Entry, ModelWrapper<Entry> {
 	* @param emailAddress the email address of this entry
 	*/
 	@Override
-	public void setEmailAddress(java.lang.String emailAddress) {
+	public void setEmailAddress(String emailAddress) {
 		_entry.setEmailAddress(emailAddress);
 	}
 
@@ -376,7 +376,7 @@ public class EntryWrapper implements Entry, ModelWrapper<Entry> {
 	* @param fullName the full name of this entry
 	*/
 	@Override
-	public void setFullName(java.lang.String fullName) {
+	public void setFullName(String fullName) {
 		_entry.setFullName(fullName);
 	}
 
@@ -436,7 +436,7 @@ public class EntryWrapper implements Entry, ModelWrapper<Entry> {
 	* @param userName the user name of this entry
 	*/
 	@Override
-	public void setUserName(java.lang.String userName) {
+	public void setUserName(String userName) {
 		_entry.setUserName(userName);
 	}
 
@@ -446,7 +446,7 @@ public class EntryWrapper implements Entry, ModelWrapper<Entry> {
 	* @param userUuid the user uuid of this entry
 	*/
 	@Override
-	public void setUserUuid(java.lang.String userUuid) {
+	public void setUserUuid(String userUuid) {
 		_entry.setUserUuid(userUuid);
 	}
 
@@ -461,7 +461,7 @@ public class EntryWrapper implements Entry, ModelWrapper<Entry> {
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _entry.toString();
 	}
 
@@ -471,7 +471,7 @@ public class EntryWrapper implements Entry, ModelWrapper<Entry> {
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _entry.toXmlString();
 	}
 

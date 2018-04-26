@@ -65,8 +65,7 @@ public class JournalArticleResourceLocalServiceUtil {
 		return getService().createJournalArticleResource(resourcePrimKey);
 	}
 
-	public static void deleteArticleResource(long groupId,
-		java.lang.String articleId)
+	public static void deleteArticleResource(long groupId, String articleId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().deleteArticleResource(groupId, articleId);
 	}
@@ -183,12 +182,12 @@ public class JournalArticleResourceLocalServiceUtil {
 	}
 
 	public static com.liferay.journal.model.JournalArticleResource fetchArticleResource(
-		long groupId, java.lang.String articleId) {
+		long groupId, String articleId) {
 		return getService().fetchArticleResource(groupId, articleId);
 	}
 
 	public static com.liferay.journal.model.JournalArticleResource fetchArticleResource(
-		java.lang.String uuid, long groupId) {
+		String uuid, long groupId) {
 		return getService().fetchArticleResource(uuid, groupId);
 	}
 
@@ -205,7 +204,7 @@ public class JournalArticleResourceLocalServiceUtil {
 	* @return the matching journal article resource, or <code>null</code> if a matching journal article resource could not be found
 	*/
 	public static com.liferay.journal.model.JournalArticleResource fetchJournalArticleResourceByUuidAndGroupId(
-		java.lang.String uuid, long groupId) {
+		String uuid, long groupId) {
 		return getService()
 				   .fetchJournalArticleResourceByUuidAndGroupId(uuid, groupId);
 	}
@@ -220,13 +219,12 @@ public class JournalArticleResourceLocalServiceUtil {
 		return getService().getArticleResource(articleResourcePrimKey);
 	}
 
-	public static long getArticleResourcePrimKey(long groupId,
-		java.lang.String articleId) {
+	public static long getArticleResourcePrimKey(long groupId, String articleId) {
 		return getService().getArticleResourcePrimKey(groupId, articleId);
 	}
 
-	public static long getArticleResourcePrimKey(java.lang.String uuid,
-		long groupId, java.lang.String articleId) {
+	public static long getArticleResourcePrimKey(String uuid, long groupId,
+		String articleId) {
 		return getService().getArticleResourcePrimKey(uuid, groupId, articleId);
 	}
 
@@ -261,7 +259,7 @@ public class JournalArticleResourceLocalServiceUtil {
 	* @throws PortalException if a matching journal article resource could not be found
 	*/
 	public static com.liferay.journal.model.JournalArticleResource getJournalArticleResourceByUuidAndGroupId(
-		java.lang.String uuid, long groupId)
+		String uuid, long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .getJournalArticleResourceByUuidAndGroupId(uuid, groupId);
@@ -291,7 +289,7 @@ public class JournalArticleResourceLocalServiceUtil {
 	* @return the matching journal article resources, or an empty list if no matches were found
 	*/
 	public static java.util.List<com.liferay.journal.model.JournalArticleResource> getJournalArticleResourcesByUuidAndCompanyId(
-		java.lang.String uuid, long companyId) {
+		String uuid, long companyId) {
 		return getService()
 				   .getJournalArticleResourcesByUuidAndCompanyId(uuid, companyId);
 	}
@@ -307,7 +305,7 @@ public class JournalArticleResourceLocalServiceUtil {
 	* @return the range of matching journal article resources, or an empty list if no matches were found
 	*/
 	public static java.util.List<com.liferay.journal.model.JournalArticleResource> getJournalArticleResourcesByUuidAndCompanyId(
-		java.lang.String uuid, long companyId, int start, int end,
+		String uuid, long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.journal.model.JournalArticleResource> orderByComparator) {
 		return getService()
 				   .getJournalArticleResourcesByUuidAndCompanyId(uuid,
@@ -328,7 +326,7 @@ public class JournalArticleResourceLocalServiceUtil {
 	*
 	* @return the OSGi service identifier
 	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
+	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 

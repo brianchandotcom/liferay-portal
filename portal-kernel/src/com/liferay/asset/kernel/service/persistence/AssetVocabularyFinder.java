@@ -22,15 +22,15 @@ import aQute.bnd.annotation.ProviderType;
  */
 @ProviderType
 public interface AssetVocabularyFinder {
-	public int countByG_N(long groupId, java.lang.String name);
+	public int countByG_N(long groupId, String name);
 
-	public int filterCountByG_N(long groupId, java.lang.String name);
+	public int filterCountByG_N(long groupId, String name);
 
 	public java.util.List<com.liferay.asset.kernel.model.AssetVocabulary> filterFindByG_N(
-		long groupId, java.lang.String name, int start, int end,
+		long groupId, String name, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.asset.kernel.model.AssetVocabulary> obc);
 
 	public java.util.List<com.liferay.asset.kernel.model.AssetVocabulary> findByG_N(
-		long groupId, java.lang.String name, int start, int end,
+		long groupId, String name, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.asset.kernel.model.AssetVocabulary> obc);
 }

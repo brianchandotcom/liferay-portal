@@ -49,11 +49,11 @@ public interface ExpandoColumnService extends BaseService {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link ExpandoColumnServiceUtil} to access the expando column remote service. Add custom service methods to {@link com.liferay.portlet.expando.service.impl.ExpandoColumnServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public ExpandoColumn addColumn(long tableId, java.lang.String name, int type)
+	public ExpandoColumn addColumn(long tableId, String name, int type)
 		throws PortalException;
 
-	public ExpandoColumn addColumn(long tableId, java.lang.String name,
-		int type, java.lang.Object defaultData) throws PortalException;
+	public ExpandoColumn addColumn(long tableId, String name, int type,
+		Object defaultData) throws PortalException;
 
 	public void deleteColumn(long columnId) throws PortalException;
 
@@ -66,14 +66,14 @@ public interface ExpandoColumnService extends BaseService {
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
-	public ExpandoColumn updateColumn(long columnId, java.lang.String name,
-		int type) throws PortalException;
+	public ExpandoColumn updateColumn(long columnId, String name, int type)
+		throws PortalException;
 
-	public ExpandoColumn updateColumn(long columnId, java.lang.String name,
-		int type, java.lang.Object defaultData) throws PortalException;
+	public ExpandoColumn updateColumn(long columnId, String name, int type,
+		Object defaultData) throws PortalException;
 
-	public ExpandoColumn updateTypeSettings(long columnId,
-		java.lang.String typeSettings) throws PortalException;
+	public ExpandoColumn updateTypeSettings(long columnId, String typeSettings)
+		throws PortalException;
 }

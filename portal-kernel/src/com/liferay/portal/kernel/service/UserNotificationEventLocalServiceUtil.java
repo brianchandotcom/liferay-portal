@@ -57,8 +57,8 @@ public class UserNotificationEventLocalServiceUtil {
 	}
 
 	public static com.liferay.portal.kernel.model.UserNotificationEvent addUserNotificationEvent(
-		long userId, java.lang.String type, long timestamp, int deliveryType,
-		long deliverBy, java.lang.String payload, boolean actionRequired,
+		long userId, String type, long timestamp, int deliveryType,
+		long deliverBy, String payload, boolean actionRequired,
 		boolean archived, ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
@@ -68,8 +68,8 @@ public class UserNotificationEventLocalServiceUtil {
 	}
 
 	public static com.liferay.portal.kernel.model.UserNotificationEvent addUserNotificationEvent(
-		long userId, java.lang.String type, long timestamp, int deliveryType,
-		long deliverBy, java.lang.String payload, boolean archived,
+		long userId, String type, long timestamp, int deliveryType,
+		long deliverBy, String payload, boolean archived,
 		ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
@@ -83,9 +83,8 @@ public class UserNotificationEventLocalServiceUtil {
 	*/
 	@Deprecated
 	public static com.liferay.portal.kernel.model.UserNotificationEvent addUserNotificationEvent(
-		long userId, java.lang.String type, long timestamp, long deliverBy,
-		java.lang.String payload, boolean archived,
-		ServiceContext serviceContext)
+		long userId, String type, long timestamp, long deliverBy,
+		String payload, boolean archived, ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addUserNotificationEvent(userId, type, timestamp,
@@ -150,8 +149,7 @@ public class UserNotificationEventLocalServiceUtil {
 		return getService().deleteUserNotificationEvent(userNotificationEventId);
 	}
 
-	public static void deleteUserNotificationEvent(java.lang.String uuid,
-		long companyId) {
+	public static void deleteUserNotificationEvent(String uuid, long companyId) {
 		getService().deleteUserNotificationEvent(uuid, companyId);
 	}
 
@@ -167,7 +165,7 @@ public class UserNotificationEventLocalServiceUtil {
 	}
 
 	public static void deleteUserNotificationEvents(
-		java.util.Collection<java.lang.String> uuids, long companyId) {
+		java.util.Collection<String> uuids, long companyId) {
 		getService().deleteUserNotificationEvents(uuids, companyId);
 	}
 
@@ -266,7 +264,7 @@ public class UserNotificationEventLocalServiceUtil {
 	* @return the matching user notification event, or <code>null</code> if a matching user notification event could not be found
 	*/
 	public static com.liferay.portal.kernel.model.UserNotificationEvent fetchUserNotificationEventByUuidAndCompanyId(
-		java.lang.String uuid, long companyId) {
+		String uuid, long companyId) {
 		return getService()
 				   .fetchUserNotificationEventByUuidAndCompanyId(uuid, companyId);
 	}
@@ -468,7 +466,7 @@ public class UserNotificationEventLocalServiceUtil {
 	*
 	* @return the OSGi service identifier
 	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
+	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 
@@ -479,7 +477,7 @@ public class UserNotificationEventLocalServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.portal.kernel.model.UserNotificationEvent> getTypeNotificationEvents(
-		java.lang.String type) {
+		String type) {
 		return getService().getTypeNotificationEvents(type);
 	}
 
@@ -505,7 +503,7 @@ public class UserNotificationEventLocalServiceUtil {
 	* @throws PortalException if a matching user notification event could not be found
 	*/
 	public static com.liferay.portal.kernel.model.UserNotificationEvent getUserNotificationEventByUuidAndCompanyId(
-		java.lang.String uuid, long companyId)
+		String uuid, long companyId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .getUserNotificationEventByUuidAndCompanyId(uuid, companyId);
@@ -566,15 +564,15 @@ public class UserNotificationEventLocalServiceUtil {
 		return getService().getUserNotificationEventsCount(userId, deliveryType);
 	}
 
-	public static int getUserNotificationEventsCount(long userId,
-		java.lang.String type, int deliveryType, boolean archived) {
+	public static int getUserNotificationEventsCount(long userId, String type,
+		int deliveryType, boolean archived) {
 		return getService()
 				   .getUserNotificationEventsCount(userId, type, deliveryType,
 			archived);
 	}
 
 	public static com.liferay.portal.kernel.model.UserNotificationEvent sendUserNotificationEvents(
-		long userId, java.lang.String portletId, int deliveryType,
+		long userId, String portletId, int deliveryType,
 		boolean actionRequired,
 		com.liferay.portal.kernel.json.JSONObject notificationEventJSONObject)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -584,7 +582,7 @@ public class UserNotificationEventLocalServiceUtil {
 	}
 
 	public static com.liferay.portal.kernel.model.UserNotificationEvent sendUserNotificationEvents(
-		long userId, java.lang.String portletId, int deliveryType,
+		long userId, String portletId, int deliveryType,
 		com.liferay.portal.kernel.json.JSONObject notificationEventJSONObject)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
@@ -593,7 +591,7 @@ public class UserNotificationEventLocalServiceUtil {
 	}
 
 	public static com.liferay.portal.kernel.model.UserNotificationEvent updateUserNotificationEvent(
-		java.lang.String uuid, long companyId, boolean archive) {
+		String uuid, long companyId, boolean archive) {
 		return getService().updateUserNotificationEvent(uuid, companyId, archive);
 	}
 
@@ -609,8 +607,7 @@ public class UserNotificationEventLocalServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.portal.kernel.model.UserNotificationEvent> updateUserNotificationEvents(
-		java.util.Collection<java.lang.String> uuids, long companyId,
-		boolean archive) {
+		java.util.Collection<String> uuids, long companyId, boolean archive) {
 		return getService()
 				   .updateUserNotificationEvents(uuids, companyId, archive);
 	}

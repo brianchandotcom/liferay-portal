@@ -250,7 +250,7 @@ public class MBMailingListWrapper implements MBMailingList,
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new MBMailingListWrapper((MBMailingList)_mbMailingList.clone());
 	}
 
@@ -315,7 +315,7 @@ public class MBMailingListWrapper implements MBMailingList,
 	* @return the email address of this message boards mailing list
 	*/
 	@Override
-	public java.lang.String getEmailAddress() {
+	public String getEmailAddress() {
 		return _mbMailingList.getEmailAddress();
 	}
 
@@ -340,7 +340,7 @@ public class MBMailingListWrapper implements MBMailingList,
 	* @return the in password of this message boards mailing list
 	*/
 	@Override
-	public java.lang.String getInPassword() {
+	public String getInPassword() {
 		return _mbMailingList.getInPassword();
 	}
 
@@ -350,7 +350,7 @@ public class MBMailingListWrapper implements MBMailingList,
 	* @return the in protocol of this message boards mailing list
 	*/
 	@Override
-	public java.lang.String getInProtocol() {
+	public String getInProtocol() {
 		return _mbMailingList.getInProtocol();
 	}
 
@@ -370,7 +370,7 @@ public class MBMailingListWrapper implements MBMailingList,
 	* @return the in server name of this message boards mailing list
 	*/
 	@Override
-	public java.lang.String getInServerName() {
+	public String getInServerName() {
 		return _mbMailingList.getInServerName();
 	}
 
@@ -390,7 +390,7 @@ public class MBMailingListWrapper implements MBMailingList,
 	* @return the in user name of this message boards mailing list
 	*/
 	@Override
-	public java.lang.String getInUserName() {
+	public String getInUserName() {
 		return _mbMailingList.getInUserName();
 	}
 
@@ -440,7 +440,7 @@ public class MBMailingListWrapper implements MBMailingList,
 	* @return the out email address of this message boards mailing list
 	*/
 	@Override
-	public java.lang.String getOutEmailAddress() {
+	public String getOutEmailAddress() {
 		return _mbMailingList.getOutEmailAddress();
 	}
 
@@ -450,7 +450,7 @@ public class MBMailingListWrapper implements MBMailingList,
 	* @return the out password of this message boards mailing list
 	*/
 	@Override
-	public java.lang.String getOutPassword() {
+	public String getOutPassword() {
 		return _mbMailingList.getOutPassword();
 	}
 
@@ -460,7 +460,7 @@ public class MBMailingListWrapper implements MBMailingList,
 	* @return the out server name of this message boards mailing list
 	*/
 	@Override
-	public java.lang.String getOutServerName() {
+	public String getOutServerName() {
 		return _mbMailingList.getOutServerName();
 	}
 
@@ -480,7 +480,7 @@ public class MBMailingListWrapper implements MBMailingList,
 	* @return the out user name of this message boards mailing list
 	*/
 	@Override
-	public java.lang.String getOutUserName() {
+	public String getOutUserName() {
 		return _mbMailingList.getOutUserName();
 	}
 
@@ -525,7 +525,7 @@ public class MBMailingListWrapper implements MBMailingList,
 	* @return the user name of this message boards mailing list
 	*/
 	@Override
-	public java.lang.String getUserName() {
+	public String getUserName() {
 		return _mbMailingList.getUserName();
 	}
 
@@ -535,7 +535,7 @@ public class MBMailingListWrapper implements MBMailingList,
 	* @return the user uuid of this message boards mailing list
 	*/
 	@Override
-	public java.lang.String getUserUuid() {
+	public String getUserUuid() {
 		return _mbMailingList.getUserUuid();
 	}
 
@@ -545,7 +545,7 @@ public class MBMailingListWrapper implements MBMailingList,
 	* @return the uuid of this message boards mailing list
 	*/
 	@Override
-	public java.lang.String getUuid() {
+	public String getUuid() {
 		return _mbMailingList.getUuid();
 	}
 
@@ -685,7 +685,7 @@ public class MBMailingListWrapper implements MBMailingList,
 	* @param emailAddress the email address of this message boards mailing list
 	*/
 	@Override
-	public void setEmailAddress(java.lang.String emailAddress) {
+	public void setEmailAddress(String emailAddress) {
 		_mbMailingList.setEmailAddress(emailAddress);
 	}
 
@@ -721,7 +721,7 @@ public class MBMailingListWrapper implements MBMailingList,
 	* @param inPassword the in password of this message boards mailing list
 	*/
 	@Override
-	public void setInPassword(java.lang.String inPassword) {
+	public void setInPassword(String inPassword) {
 		_mbMailingList.setInPassword(inPassword);
 	}
 
@@ -731,7 +731,7 @@ public class MBMailingListWrapper implements MBMailingList,
 	* @param inProtocol the in protocol of this message boards mailing list
 	*/
 	@Override
-	public void setInProtocol(java.lang.String inProtocol) {
+	public void setInProtocol(String inProtocol) {
 		_mbMailingList.setInProtocol(inProtocol);
 	}
 
@@ -751,7 +751,7 @@ public class MBMailingListWrapper implements MBMailingList,
 	* @param inServerName the in server name of this message boards mailing list
 	*/
 	@Override
-	public void setInServerName(java.lang.String inServerName) {
+	public void setInServerName(String inServerName) {
 		_mbMailingList.setInServerName(inServerName);
 	}
 
@@ -771,7 +771,7 @@ public class MBMailingListWrapper implements MBMailingList,
 	* @param inUserName the in user name of this message boards mailing list
 	*/
 	@Override
-	public void setInUserName(java.lang.String inUserName) {
+	public void setInUserName(String inUserName) {
 		_mbMailingList.setInUserName(inUserName);
 	}
 
@@ -826,7 +826,7 @@ public class MBMailingListWrapper implements MBMailingList,
 	* @param outEmailAddress the out email address of this message boards mailing list
 	*/
 	@Override
-	public void setOutEmailAddress(java.lang.String outEmailAddress) {
+	public void setOutEmailAddress(String outEmailAddress) {
 		_mbMailingList.setOutEmailAddress(outEmailAddress);
 	}
 
@@ -836,7 +836,7 @@ public class MBMailingListWrapper implements MBMailingList,
 	* @param outPassword the out password of this message boards mailing list
 	*/
 	@Override
-	public void setOutPassword(java.lang.String outPassword) {
+	public void setOutPassword(String outPassword) {
 		_mbMailingList.setOutPassword(outPassword);
 	}
 
@@ -846,7 +846,7 @@ public class MBMailingListWrapper implements MBMailingList,
 	* @param outServerName the out server name of this message boards mailing list
 	*/
 	@Override
-	public void setOutServerName(java.lang.String outServerName) {
+	public void setOutServerName(String outServerName) {
 		_mbMailingList.setOutServerName(outServerName);
 	}
 
@@ -866,7 +866,7 @@ public class MBMailingListWrapper implements MBMailingList,
 	* @param outUserName the out user name of this message boards mailing list
 	*/
 	@Override
-	public void setOutUserName(java.lang.String outUserName) {
+	public void setOutUserName(String outUserName) {
 		_mbMailingList.setOutUserName(outUserName);
 	}
 
@@ -911,7 +911,7 @@ public class MBMailingListWrapper implements MBMailingList,
 	* @param userName the user name of this message boards mailing list
 	*/
 	@Override
-	public void setUserName(java.lang.String userName) {
+	public void setUserName(String userName) {
 		_mbMailingList.setUserName(userName);
 	}
 
@@ -921,7 +921,7 @@ public class MBMailingListWrapper implements MBMailingList,
 	* @param userUuid the user uuid of this message boards mailing list
 	*/
 	@Override
-	public void setUserUuid(java.lang.String userUuid) {
+	public void setUserUuid(String userUuid) {
 		_mbMailingList.setUserUuid(userUuid);
 	}
 
@@ -931,7 +931,7 @@ public class MBMailingListWrapper implements MBMailingList,
 	* @param uuid the uuid of this message boards mailing list
 	*/
 	@Override
-	public void setUuid(java.lang.String uuid) {
+	public void setUuid(String uuid) {
 		_mbMailingList.setUuid(uuid);
 	}
 
@@ -946,7 +946,7 @@ public class MBMailingListWrapper implements MBMailingList,
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _mbMailingList.toString();
 	}
 
@@ -956,7 +956,7 @@ public class MBMailingListWrapper implements MBMailingList,
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _mbMailingList.toXmlString();
 	}
 

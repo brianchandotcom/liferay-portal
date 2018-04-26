@@ -35,7 +35,7 @@ public class WallEntryLocalServiceWrapper implements WallEntryLocalService,
 
 	@Override
 	public com.liferay.social.networking.model.WallEntry addWallEntry(
-		long groupId, long userId, java.lang.String comments,
+		long groupId, long userId, String comments,
 		com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _wallEntryLocalService.addWallEntry(groupId, userId, comments,
@@ -216,7 +216,7 @@ public class WallEntryLocalServiceWrapper implements WallEntryLocalService,
 	* @return the OSGi service identifier
 	*/
 	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
+	public String getOSGiServiceIdentifier() {
 		return _wallEntryLocalService.getOSGiServiceIdentifier();
 	}
 
@@ -296,7 +296,7 @@ public class WallEntryLocalServiceWrapper implements WallEntryLocalService,
 
 	@Override
 	public com.liferay.social.networking.model.WallEntry updateWallEntry(
-		long wallEntryId, java.lang.String comments)
+		long wallEntryId, String comments)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _wallEntryLocalService.updateWallEntry(wallEntryId, comments);
 	}

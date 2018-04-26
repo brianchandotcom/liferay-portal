@@ -78,8 +78,7 @@ public class ResourcePermissionServiceUtil {
 	* @param actionId the action ID
 	*/
 	public static void addResourcePermission(long groupId, long companyId,
-		java.lang.String name, int scope, java.lang.String primKey,
-		long roleId, java.lang.String actionId)
+		String name, int scope, String primKey, long roleId, String actionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService()
 			.addResourcePermission(groupId, companyId, name, scope, primKey,
@@ -91,7 +90,7 @@ public class ResourcePermissionServiceUtil {
 	*
 	* @return the OSGi service identifier
 	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
+	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 
@@ -116,8 +115,7 @@ public class ResourcePermissionServiceUtil {
 	* @param actionId the action ID
 	*/
 	public static void removeResourcePermission(long groupId, long companyId,
-		java.lang.String name, int scope, java.lang.String primKey,
-		long roleId, java.lang.String actionId)
+		String name, int scope, String primKey, long roleId, String actionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService()
 			.removeResourcePermission(groupId, companyId, name, scope, primKey,
@@ -139,7 +137,7 @@ public class ResourcePermissionServiceUtil {
 	* @param actionId the action ID
 	*/
 	public static void removeResourcePermissions(long groupId, long companyId,
-		java.lang.String name, int scope, long roleId, java.lang.String actionId)
+		String name, int scope, long roleId, String actionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService()
 			.removeResourcePermissions(groupId, companyId, name, scope, roleId,
@@ -171,8 +169,8 @@ public class ResourcePermissionServiceUtil {
 	* @param actionIds the action IDs of the actions
 	*/
 	public static void setIndividualResourcePermissions(long groupId,
-		long companyId, java.lang.String name, java.lang.String primKey,
-		long roleId, java.lang.String[] actionIds)
+		long companyId, String name, String primKey, long roleId,
+		String[] actionIds)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService()
 			.setIndividualResourcePermissions(groupId, companyId, name,
@@ -203,8 +201,8 @@ public class ResourcePermissionServiceUtil {
 	* @param roleIdsToActionIds a map of role IDs to action IDs of the actions
 	*/
 	public static void setIndividualResourcePermissions(long groupId,
-		long companyId, java.lang.String name, java.lang.String primKey,
-		java.util.Map<java.lang.Long, java.lang.String[]> roleIdsToActionIds)
+		long companyId, String name, String primKey,
+		java.util.Map<Long, String[]> roleIdsToActionIds)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService()
 			.setIndividualResourcePermissions(groupId, companyId, name,

@@ -39,8 +39,8 @@ public class ModuleLocalServiceWrapper implements ModuleLocalService,
 	@Deprecated
 	@Override
 	public com.liferay.marketplace.model.Module addModule(long userId,
-		long appId, java.lang.String bundleSymbolicName,
-		java.lang.String bundleVersion, java.lang.String contextName)
+		long appId, String bundleSymbolicName, String bundleVersion,
+		String contextName)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _moduleLocalService.addModule(userId, appId, bundleSymbolicName,
 			bundleVersion, contextName);
@@ -48,8 +48,7 @@ public class ModuleLocalServiceWrapper implements ModuleLocalService,
 
 	@Override
 	public com.liferay.marketplace.model.Module addModule(long appId,
-		java.lang.String bundleSymbolicName, java.lang.String bundleVersion,
-		java.lang.String contextName)
+		String bundleSymbolicName, String bundleVersion, String contextName)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _moduleLocalService.addModule(appId, bundleSymbolicName,
 			bundleVersion, contextName);
@@ -209,8 +208,7 @@ public class ModuleLocalServiceWrapper implements ModuleLocalService,
 
 	@Override
 	public com.liferay.marketplace.model.Module fetchModule(long appId,
-		java.lang.String bundleSymbolicName, java.lang.String bundleVersion,
-		java.lang.String contextName) {
+		String bundleSymbolicName, String bundleVersion, String contextName) {
 		return _moduleLocalService.fetchModule(appId, bundleSymbolicName,
 			bundleVersion, contextName);
 	}
@@ -224,7 +222,7 @@ public class ModuleLocalServiceWrapper implements ModuleLocalService,
 	*/
 	@Override
 	public com.liferay.marketplace.model.Module fetchModuleByUuidAndCompanyId(
-		java.lang.String uuid, long companyId) {
+		String uuid, long companyId) {
 		return _moduleLocalService.fetchModuleByUuidAndCompanyId(uuid, companyId);
 	}
 
@@ -261,7 +259,7 @@ public class ModuleLocalServiceWrapper implements ModuleLocalService,
 	*/
 	@Override
 	public com.liferay.marketplace.model.Module getModuleByUuidAndCompanyId(
-		java.lang.String uuid, long companyId)
+		String uuid, long companyId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _moduleLocalService.getModuleByUuidAndCompanyId(uuid, companyId);
 	}
@@ -305,7 +303,7 @@ public class ModuleLocalServiceWrapper implements ModuleLocalService,
 	* @return the OSGi service identifier
 	*/
 	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
+	public String getOSGiServiceIdentifier() {
 		return _moduleLocalService.getOSGiServiceIdentifier();
 	}
 

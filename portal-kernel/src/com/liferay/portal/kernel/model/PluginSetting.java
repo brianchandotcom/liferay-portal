@@ -57,14 +57,14 @@ public interface PluginSetting extends PluginSettingModel, PersistedModel {
 	/**
 	* Adds a role to the list of roles.
 	*/
-	public void addRole(java.lang.String role);
+	public void addRole(String role);
 
 	/**
 	* Returns an array of required roles of the plugin.
 	*
 	* @return an array of required roles of the plugin
 	*/
-	public java.lang.String[] getRolesArray();
+	public String[] getRolesArray();
 
 	/**
 	* Returns <code>true</code> if the user has permission to use this plugin
@@ -82,10 +82,10 @@ public interface PluginSetting extends PluginSettingModel, PersistedModel {
 	* @return <code>true</code> if the plugin has a role with the specified
 	name
 	*/
-	public boolean hasRoleWithName(java.lang.String roleName);
+	public boolean hasRoleWithName(String roleName);
 
 	/**
 	* Sets an array of required roles of the plugin.
 	*/
-	public void setRolesArray(java.lang.String[] rolesArray);
+	public void setRolesArray(String[] rolesArray);
 }

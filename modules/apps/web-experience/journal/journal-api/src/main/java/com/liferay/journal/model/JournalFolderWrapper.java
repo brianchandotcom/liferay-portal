@@ -194,13 +194,13 @@ public class JournalFolderWrapper implements JournalFolder,
 	}
 
 	@Override
-	public java.lang.String buildTreePath()
+	public String buildTreePath()
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _journalFolder.buildTreePath();
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new JournalFolderWrapper((JournalFolder)_journalFolder.clone());
 	}
 
@@ -210,7 +210,7 @@ public class JournalFolderWrapper implements JournalFolder,
 	}
 
 	@Override
-	public java.util.List<java.lang.Long> getAncestorFolderIds()
+	public java.util.List<Long> getAncestorFolderIds()
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _journalFolder.getAncestorFolderIds();
 	}
@@ -247,7 +247,7 @@ public class JournalFolderWrapper implements JournalFolder,
 	* @return the container name of this journal folder
 	*/
 	@Override
-	public java.lang.String getContainerModelName() {
+	public String getContainerModelName() {
 		return _journalFolder.getContainerModelName();
 	}
 
@@ -267,7 +267,7 @@ public class JournalFolderWrapper implements JournalFolder,
 	* @return the description of this journal folder
 	*/
 	@Override
-	public java.lang.String getDescription() {
+	public String getDescription() {
 		return _journalFolder.getDescription();
 	}
 
@@ -322,7 +322,7 @@ public class JournalFolderWrapper implements JournalFolder,
 	* @return the name of this journal folder
 	*/
 	@Override
-	public java.lang.String getName() {
+	public String getName() {
 		return _journalFolder.getName();
 	}
 
@@ -403,7 +403,7 @@ public class JournalFolderWrapper implements JournalFolder,
 	* @return the status by user name of this journal folder
 	*/
 	@Override
-	public java.lang.String getStatusByUserName() {
+	public String getStatusByUserName() {
 		return _journalFolder.getStatusByUserName();
 	}
 
@@ -413,7 +413,7 @@ public class JournalFolderWrapper implements JournalFolder,
 	* @return the status by user uuid of this journal folder
 	*/
 	@Override
-	public java.lang.String getStatusByUserUuid() {
+	public String getStatusByUserUuid() {
 		return _journalFolder.getStatusByUserUuid();
 	}
 
@@ -466,7 +466,7 @@ public class JournalFolderWrapper implements JournalFolder,
 	* @return the tree path of this journal folder
 	*/
 	@Override
-	public java.lang.String getTreePath() {
+	public String getTreePath() {
 		return _journalFolder.getTreePath();
 	}
 
@@ -486,7 +486,7 @@ public class JournalFolderWrapper implements JournalFolder,
 	* @return the user name of this journal folder
 	*/
 	@Override
-	public java.lang.String getUserName() {
+	public String getUserName() {
 		return _journalFolder.getUserName();
 	}
 
@@ -496,7 +496,7 @@ public class JournalFolderWrapper implements JournalFolder,
 	* @return the user uuid of this journal folder
 	*/
 	@Override
-	public java.lang.String getUserUuid() {
+	public String getUserUuid() {
 		return _journalFolder.getUserUuid();
 	}
 
@@ -506,7 +506,7 @@ public class JournalFolderWrapper implements JournalFolder,
 	* @return the uuid of this journal folder
 	*/
 	@Override
-	public java.lang.String getUuid() {
+	public String getUuid() {
 		return _journalFolder.getUuid();
 	}
 
@@ -691,7 +691,7 @@ public class JournalFolderWrapper implements JournalFolder,
 	* @param description the description of this journal folder
 	*/
 	@Override
-	public void setDescription(java.lang.String description) {
+	public void setDescription(String description) {
 		_journalFolder.setDescription(description);
 	}
 
@@ -757,7 +757,7 @@ public class JournalFolderWrapper implements JournalFolder,
 	* @param name the name of this journal folder
 	*/
 	@Override
-	public void setName(java.lang.String name) {
+	public void setName(String name) {
 		_journalFolder.setName(name);
 	}
 
@@ -837,7 +837,7 @@ public class JournalFolderWrapper implements JournalFolder,
 	* @param statusByUserName the status by user name of this journal folder
 	*/
 	@Override
-	public void setStatusByUserName(java.lang.String statusByUserName) {
+	public void setStatusByUserName(String statusByUserName) {
 		_journalFolder.setStatusByUserName(statusByUserName);
 	}
 
@@ -847,7 +847,7 @@ public class JournalFolderWrapper implements JournalFolder,
 	* @param statusByUserUuid the status by user uuid of this journal folder
 	*/
 	@Override
-	public void setStatusByUserUuid(java.lang.String statusByUserUuid) {
+	public void setStatusByUserUuid(String statusByUserUuid) {
 		_journalFolder.setStatusByUserUuid(statusByUserUuid);
 	}
 
@@ -867,7 +867,7 @@ public class JournalFolderWrapper implements JournalFolder,
 	* @param treePath the tree path of this journal folder
 	*/
 	@Override
-	public void setTreePath(java.lang.String treePath) {
+	public void setTreePath(String treePath) {
 		_journalFolder.setTreePath(treePath);
 	}
 
@@ -887,7 +887,7 @@ public class JournalFolderWrapper implements JournalFolder,
 	* @param userName the user name of this journal folder
 	*/
 	@Override
-	public void setUserName(java.lang.String userName) {
+	public void setUserName(String userName) {
 		_journalFolder.setUserName(userName);
 	}
 
@@ -897,7 +897,7 @@ public class JournalFolderWrapper implements JournalFolder,
 	* @param userUuid the user uuid of this journal folder
 	*/
 	@Override
-	public void setUserUuid(java.lang.String userUuid) {
+	public void setUserUuid(String userUuid) {
 		_journalFolder.setUserUuid(userUuid);
 	}
 
@@ -907,7 +907,7 @@ public class JournalFolderWrapper implements JournalFolder,
 	* @param uuid the uuid of this journal folder
 	*/
 	@Override
-	public void setUuid(java.lang.String uuid) {
+	public void setUuid(String uuid) {
 		_journalFolder.setUuid(uuid);
 	}
 
@@ -922,7 +922,7 @@ public class JournalFolderWrapper implements JournalFolder,
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _journalFolder.toString();
 	}
 
@@ -932,12 +932,12 @@ public class JournalFolderWrapper implements JournalFolder,
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _journalFolder.toXmlString();
 	}
 
 	@Override
-	public void updateTreePath(java.lang.String treePath) {
+	public void updateTreePath(String treePath) {
 		_journalFolder.updateTreePath(treePath);
 	}
 

@@ -299,7 +299,7 @@ public class FriendlyURLEntryLocalizationUtil {
 	* @throws NoSuchFriendlyURLEntryLocalizationException if a matching friendly url entry localization could not be found
 	*/
 	public static FriendlyURLEntryLocalization findByFriendlyURLEntryId_LanguageId(
-		long friendlyURLEntryId, java.lang.String languageId)
+		long friendlyURLEntryId, String languageId)
 		throws com.liferay.friendly.url.exception.NoSuchFriendlyURLEntryLocalizationException {
 		return getPersistence()
 				   .findByFriendlyURLEntryId_LanguageId(friendlyURLEntryId,
@@ -314,7 +314,7 @@ public class FriendlyURLEntryLocalizationUtil {
 	* @return the matching friendly url entry localization, or <code>null</code> if a matching friendly url entry localization could not be found
 	*/
 	public static FriendlyURLEntryLocalization fetchByFriendlyURLEntryId_LanguageId(
-		long friendlyURLEntryId, java.lang.String languageId) {
+		long friendlyURLEntryId, String languageId) {
 		return getPersistence()
 				   .fetchByFriendlyURLEntryId_LanguageId(friendlyURLEntryId,
 			languageId);
@@ -329,8 +329,7 @@ public class FriendlyURLEntryLocalizationUtil {
 	* @return the matching friendly url entry localization, or <code>null</code> if a matching friendly url entry localization could not be found
 	*/
 	public static FriendlyURLEntryLocalization fetchByFriendlyURLEntryId_LanguageId(
-		long friendlyURLEntryId, java.lang.String languageId,
-		boolean retrieveFromCache) {
+		long friendlyURLEntryId, String languageId, boolean retrieveFromCache) {
 		return getPersistence()
 				   .fetchByFriendlyURLEntryId_LanguageId(friendlyURLEntryId,
 			languageId, retrieveFromCache);
@@ -344,7 +343,7 @@ public class FriendlyURLEntryLocalizationUtil {
 	* @return the friendly url entry localization that was removed
 	*/
 	public static FriendlyURLEntryLocalization removeByFriendlyURLEntryId_LanguageId(
-		long friendlyURLEntryId, java.lang.String languageId)
+		long friendlyURLEntryId, String languageId)
 		throws com.liferay.friendly.url.exception.NoSuchFriendlyURLEntryLocalizationException {
 		return getPersistence()
 				   .removeByFriendlyURLEntryId_LanguageId(friendlyURLEntryId,
@@ -359,7 +358,7 @@ public class FriendlyURLEntryLocalizationUtil {
 	* @return the number of matching friendly url entry localizations
 	*/
 	public static int countByFriendlyURLEntryId_LanguageId(
-		long friendlyURLEntryId, java.lang.String languageId) {
+		long friendlyURLEntryId, String languageId) {
 		return getPersistence()
 				   .countByFriendlyURLEntryId_LanguageId(friendlyURLEntryId,
 			languageId);
@@ -375,7 +374,7 @@ public class FriendlyURLEntryLocalizationUtil {
 	* @throws NoSuchFriendlyURLEntryLocalizationException if a matching friendly url entry localization could not be found
 	*/
 	public static FriendlyURLEntryLocalization findByG_C_U(long groupId,
-		long classNameId, java.lang.String urlTitle)
+		long classNameId, String urlTitle)
 		throws com.liferay.friendly.url.exception.NoSuchFriendlyURLEntryLocalizationException {
 		return getPersistence().findByG_C_U(groupId, classNameId, urlTitle);
 	}
@@ -389,7 +388,7 @@ public class FriendlyURLEntryLocalizationUtil {
 	* @return the matching friendly url entry localization, or <code>null</code> if a matching friendly url entry localization could not be found
 	*/
 	public static FriendlyURLEntryLocalization fetchByG_C_U(long groupId,
-		long classNameId, java.lang.String urlTitle) {
+		long classNameId, String urlTitle) {
 		return getPersistence().fetchByG_C_U(groupId, classNameId, urlTitle);
 	}
 
@@ -403,7 +402,7 @@ public class FriendlyURLEntryLocalizationUtil {
 	* @return the matching friendly url entry localization, or <code>null</code> if a matching friendly url entry localization could not be found
 	*/
 	public static FriendlyURLEntryLocalization fetchByG_C_U(long groupId,
-		long classNameId, java.lang.String urlTitle, boolean retrieveFromCache) {
+		long classNameId, String urlTitle, boolean retrieveFromCache) {
 		return getPersistence()
 				   .fetchByG_C_U(groupId, classNameId, urlTitle,
 			retrieveFromCache);
@@ -418,7 +417,7 @@ public class FriendlyURLEntryLocalizationUtil {
 	* @return the friendly url entry localization that was removed
 	*/
 	public static FriendlyURLEntryLocalization removeByG_C_U(long groupId,
-		long classNameId, java.lang.String urlTitle)
+		long classNameId, String urlTitle)
 		throws com.liferay.friendly.url.exception.NoSuchFriendlyURLEntryLocalizationException {
 		return getPersistence().removeByG_C_U(groupId, classNameId, urlTitle);
 	}
@@ -432,7 +431,7 @@ public class FriendlyURLEntryLocalizationUtil {
 	* @return the number of matching friendly url entry localizations
 	*/
 	public static int countByG_C_U(long groupId, long classNameId,
-		java.lang.String urlTitle) {
+		String urlTitle) {
 		return getPersistence().countByG_C_U(groupId, classNameId, urlTitle);
 	}
 

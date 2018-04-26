@@ -270,7 +270,7 @@ public class EntryUtil {
 	* @return the matching entry
 	* @throws NoSuchEntryException if a matching entry could not be found
 	*/
-	public static Entry findByU_EA(long userId, java.lang.String emailAddress)
+	public static Entry findByU_EA(long userId, String emailAddress)
 		throws com.liferay.contacts.exception.NoSuchEntryException {
 		return getPersistence().findByU_EA(userId, emailAddress);
 	}
@@ -282,7 +282,7 @@ public class EntryUtil {
 	* @param emailAddress the email address
 	* @return the matching entry, or <code>null</code> if a matching entry could not be found
 	*/
-	public static Entry fetchByU_EA(long userId, java.lang.String emailAddress) {
+	public static Entry fetchByU_EA(long userId, String emailAddress) {
 		return getPersistence().fetchByU_EA(userId, emailAddress);
 	}
 
@@ -294,7 +294,7 @@ public class EntryUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching entry, or <code>null</code> if a matching entry could not be found
 	*/
-	public static Entry fetchByU_EA(long userId, java.lang.String emailAddress,
+	public static Entry fetchByU_EA(long userId, String emailAddress,
 		boolean retrieveFromCache) {
 		return getPersistence()
 				   .fetchByU_EA(userId, emailAddress, retrieveFromCache);
@@ -307,7 +307,7 @@ public class EntryUtil {
 	* @param emailAddress the email address
 	* @return the entry that was removed
 	*/
-	public static Entry removeByU_EA(long userId, java.lang.String emailAddress)
+	public static Entry removeByU_EA(long userId, String emailAddress)
 		throws com.liferay.contacts.exception.NoSuchEntryException {
 		return getPersistence().removeByU_EA(userId, emailAddress);
 	}
@@ -319,7 +319,7 @@ public class EntryUtil {
 	* @param emailAddress the email address
 	* @return the number of matching entries
 	*/
-	public static int countByU_EA(long userId, java.lang.String emailAddress) {
+	public static int countByU_EA(long userId, String emailAddress) {
 		return getPersistence().countByU_EA(userId, emailAddress);
 	}
 

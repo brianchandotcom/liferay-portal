@@ -355,7 +355,7 @@ public class AssetDisplayTemplateUtil {
 	* @return the matching asset display templates
 	*/
 	public static List<AssetDisplayTemplate> findByG_LikeN(long groupId,
-		java.lang.String name) {
+		String name) {
 		return getPersistence().findByG_LikeN(groupId, name);
 	}
 
@@ -373,7 +373,7 @@ public class AssetDisplayTemplateUtil {
 	* @return the range of matching asset display templates
 	*/
 	public static List<AssetDisplayTemplate> findByG_LikeN(long groupId,
-		java.lang.String name, int start, int end) {
+		String name, int start, int end) {
 		return getPersistence().findByG_LikeN(groupId, name, start, end);
 	}
 
@@ -392,7 +392,7 @@ public class AssetDisplayTemplateUtil {
 	* @return the ordered range of matching asset display templates
 	*/
 	public static List<AssetDisplayTemplate> findByG_LikeN(long groupId,
-		java.lang.String name, int start, int end,
+		String name, int start, int end,
 		OrderByComparator<AssetDisplayTemplate> orderByComparator) {
 		return getPersistence()
 				   .findByG_LikeN(groupId, name, start, end, orderByComparator);
@@ -414,7 +414,7 @@ public class AssetDisplayTemplateUtil {
 	* @return the ordered range of matching asset display templates
 	*/
 	public static List<AssetDisplayTemplate> findByG_LikeN(long groupId,
-		java.lang.String name, int start, int end,
+		String name, int start, int end,
 		OrderByComparator<AssetDisplayTemplate> orderByComparator,
 		boolean retrieveFromCache) {
 		return getPersistence()
@@ -432,8 +432,7 @@ public class AssetDisplayTemplateUtil {
 	* @throws NoSuchDisplayTemplateException if a matching asset display template could not be found
 	*/
 	public static AssetDisplayTemplate findByG_LikeN_First(long groupId,
-		java.lang.String name,
-		OrderByComparator<AssetDisplayTemplate> orderByComparator)
+		String name, OrderByComparator<AssetDisplayTemplate> orderByComparator)
 		throws com.liferay.asset.display.template.exception.NoSuchDisplayTemplateException {
 		return getPersistence()
 				   .findByG_LikeN_First(groupId, name, orderByComparator);
@@ -448,8 +447,7 @@ public class AssetDisplayTemplateUtil {
 	* @return the first matching asset display template, or <code>null</code> if a matching asset display template could not be found
 	*/
 	public static AssetDisplayTemplate fetchByG_LikeN_First(long groupId,
-		java.lang.String name,
-		OrderByComparator<AssetDisplayTemplate> orderByComparator) {
+		String name, OrderByComparator<AssetDisplayTemplate> orderByComparator) {
 		return getPersistence()
 				   .fetchByG_LikeN_First(groupId, name, orderByComparator);
 	}
@@ -464,8 +462,7 @@ public class AssetDisplayTemplateUtil {
 	* @throws NoSuchDisplayTemplateException if a matching asset display template could not be found
 	*/
 	public static AssetDisplayTemplate findByG_LikeN_Last(long groupId,
-		java.lang.String name,
-		OrderByComparator<AssetDisplayTemplate> orderByComparator)
+		String name, OrderByComparator<AssetDisplayTemplate> orderByComparator)
 		throws com.liferay.asset.display.template.exception.NoSuchDisplayTemplateException {
 		return getPersistence()
 				   .findByG_LikeN_Last(groupId, name, orderByComparator);
@@ -480,8 +477,7 @@ public class AssetDisplayTemplateUtil {
 	* @return the last matching asset display template, or <code>null</code> if a matching asset display template could not be found
 	*/
 	public static AssetDisplayTemplate fetchByG_LikeN_Last(long groupId,
-		java.lang.String name,
-		OrderByComparator<AssetDisplayTemplate> orderByComparator) {
+		String name, OrderByComparator<AssetDisplayTemplate> orderByComparator) {
 		return getPersistence()
 				   .fetchByG_LikeN_Last(groupId, name, orderByComparator);
 	}
@@ -497,7 +493,7 @@ public class AssetDisplayTemplateUtil {
 	* @throws NoSuchDisplayTemplateException if a asset display template with the primary key could not be found
 	*/
 	public static AssetDisplayTemplate[] findByG_LikeN_PrevAndNext(
-		long assetDisplayTemplateId, long groupId, java.lang.String name,
+		long assetDisplayTemplateId, long groupId, String name,
 		OrderByComparator<AssetDisplayTemplate> orderByComparator)
 		throws com.liferay.asset.display.template.exception.NoSuchDisplayTemplateException {
 		return getPersistence()
@@ -513,7 +509,7 @@ public class AssetDisplayTemplateUtil {
 	* @return the matching asset display templates that the user has permission to view
 	*/
 	public static List<AssetDisplayTemplate> filterFindByG_LikeN(long groupId,
-		java.lang.String name) {
+		String name) {
 		return getPersistence().filterFindByG_LikeN(groupId, name);
 	}
 
@@ -531,7 +527,7 @@ public class AssetDisplayTemplateUtil {
 	* @return the range of matching asset display templates that the user has permission to view
 	*/
 	public static List<AssetDisplayTemplate> filterFindByG_LikeN(long groupId,
-		java.lang.String name, int start, int end) {
+		String name, int start, int end) {
 		return getPersistence().filterFindByG_LikeN(groupId, name, start, end);
 	}
 
@@ -550,7 +546,7 @@ public class AssetDisplayTemplateUtil {
 	* @return the ordered range of matching asset display templates that the user has permission to view
 	*/
 	public static List<AssetDisplayTemplate> filterFindByG_LikeN(long groupId,
-		java.lang.String name, int start, int end,
+		String name, int start, int end,
 		OrderByComparator<AssetDisplayTemplate> orderByComparator) {
 		return getPersistence()
 				   .filterFindByG_LikeN(groupId, name, start, end,
@@ -568,7 +564,7 @@ public class AssetDisplayTemplateUtil {
 	* @throws NoSuchDisplayTemplateException if a asset display template with the primary key could not be found
 	*/
 	public static AssetDisplayTemplate[] filterFindByG_LikeN_PrevAndNext(
-		long assetDisplayTemplateId, long groupId, java.lang.String name,
+		long assetDisplayTemplateId, long groupId, String name,
 		OrderByComparator<AssetDisplayTemplate> orderByComparator)
 		throws com.liferay.asset.display.template.exception.NoSuchDisplayTemplateException {
 		return getPersistence()
@@ -582,7 +578,7 @@ public class AssetDisplayTemplateUtil {
 	* @param groupId the group ID
 	* @param name the name
 	*/
-	public static void removeByG_LikeN(long groupId, java.lang.String name) {
+	public static void removeByG_LikeN(long groupId, String name) {
 		getPersistence().removeByG_LikeN(groupId, name);
 	}
 
@@ -593,7 +589,7 @@ public class AssetDisplayTemplateUtil {
 	* @param name the name
 	* @return the number of matching asset display templates
 	*/
-	public static int countByG_LikeN(long groupId, java.lang.String name) {
+	public static int countByG_LikeN(long groupId, String name) {
 		return getPersistence().countByG_LikeN(groupId, name);
 	}
 
@@ -604,7 +600,7 @@ public class AssetDisplayTemplateUtil {
 	* @param name the name
 	* @return the number of matching asset display templates that the user has permission to view
 	*/
-	public static int filterCountByG_LikeN(long groupId, java.lang.String name) {
+	public static int filterCountByG_LikeN(long groupId, String name) {
 		return getPersistence().filterCountByG_LikeN(groupId, name);
 	}
 

@@ -41,9 +41,8 @@ public class SystemEventLocalServiceUtil {
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.portal.service.impl.SystemEventLocalServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static com.liferay.portal.kernel.model.SystemEvent addSystemEvent(
-		long userId, long groupId, java.lang.String className, long classPK,
-		java.lang.String classUuid, java.lang.String referrerClassName,
-		int type, java.lang.String extraData)
+		long userId, long groupId, String className, long classPK,
+		String classUuid, String referrerClassName, int type, String extraData)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addSystemEvent(userId, groupId, className, classPK,
@@ -51,9 +50,8 @@ public class SystemEventLocalServiceUtil {
 	}
 
 	public static com.liferay.portal.kernel.model.SystemEvent addSystemEvent(
-		long companyId, java.lang.String className, long classPK,
-		java.lang.String classUuid, java.lang.String referrerClassName,
-		int type, java.lang.String extraData)
+		long companyId, String className, long classPK, String classUuid,
+		String referrerClassName, int type, String extraData)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addSystemEvent(companyId, className, classPK, classUuid,
@@ -229,7 +227,7 @@ public class SystemEventLocalServiceUtil {
 	*
 	* @return the OSGi service identifier
 	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
+	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 

@@ -42,7 +42,7 @@ public class ImageServiceWrapper implements ImageService,
 	* @return the OSGi service identifier
 	*/
 	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
+	public String getOSGiServiceIdentifier() {
 		return _imageService.getOSGiServiceIdentifier();
 	}
 

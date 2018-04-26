@@ -108,7 +108,7 @@ public interface ServiceComponentLocalService extends BaseLocalService,
 
 	public void destroyServiceComponent(
 		ServiceComponentConfiguration serviceComponentConfiguration,
-		java.lang.ClassLoader classLoader);
+		ClassLoader classLoader);
 
 	public DynamicQuery dynamicQuery();
 
@@ -186,7 +186,7 @@ public interface ServiceComponentLocalService extends BaseLocalService,
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -228,20 +228,19 @@ public interface ServiceComponentLocalService extends BaseLocalService,
 
 	public ServiceComponent initServiceComponent(
 		ServiceComponentConfiguration serviceComponentConfiguration,
-		java.lang.ClassLoader classLoader, java.lang.String buildNamespace,
-		long buildNumber, long buildDate) throws PortalException;
+		ClassLoader classLoader, String buildNamespace, long buildNumber,
+		long buildDate) throws PortalException;
 
 	/**
 	* @deprecated As of 7.0.0, replaced by {@link
 	#initServiceComponent(ServiceComponentConfiguration,
 	ClassLoader, String, long, long)}
 	*/
-	@java.lang.Deprecated
+	@Deprecated
 	public ServiceComponent initServiceComponent(
 		ServiceComponentConfiguration serviceComponentConfiguration,
-		java.lang.ClassLoader classLoader, java.lang.String buildNamespace,
-		long buildNumber, long buildDate, boolean buildAutoUpgrade)
-		throws PortalException;
+		ClassLoader classLoader, String buildNamespace, long buildNumber,
+		long buildDate, boolean buildAutoUpgrade) throws PortalException;
 
 	/**
 	* Updates the service component in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
@@ -257,18 +256,16 @@ public interface ServiceComponentLocalService extends BaseLocalService,
 	* @deprecated As of 7.0.0, replaced by {@link #upgradeDB(ClassLoader,
 	String, long, ServiceComponent, String, String, String)}
 	*/
-	@java.lang.Deprecated
-	public void upgradeDB(java.lang.ClassLoader classLoader,
-		java.lang.String buildNamespace, long buildNumber,
-		boolean buildAutoUpgrade, ServiceComponent previousServiceComponent,
-		java.lang.String tablesSQL, java.lang.String sequencesSQL,
-		java.lang.String indexesSQL) throws java.lang.Exception;
+	@Deprecated
+	public void upgradeDB(ClassLoader classLoader, String buildNamespace,
+		long buildNumber, boolean buildAutoUpgrade,
+		ServiceComponent previousServiceComponent, String tablesSQL,
+		String sequencesSQL, String indexesSQL) throws Exception;
 
-	public void upgradeDB(java.lang.ClassLoader classLoader,
-		java.lang.String buildNamespace, long buildNumber,
-		ServiceComponent previousServiceComponent, java.lang.String tablesSQL,
-		java.lang.String sequencesSQL, java.lang.String indexesSQL)
-		throws java.lang.Exception;
+	public void upgradeDB(ClassLoader classLoader, String buildNamespace,
+		long buildNumber, ServiceComponent previousServiceComponent,
+		String tablesSQL, String sequencesSQL, String indexesSQL)
+		throws Exception;
 
 	public void verifyDB();
 }

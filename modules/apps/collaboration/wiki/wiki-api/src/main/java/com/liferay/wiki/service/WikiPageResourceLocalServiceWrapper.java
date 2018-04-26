@@ -36,7 +36,7 @@ public class WikiPageResourceLocalServiceWrapper
 
 	@Override
 	public com.liferay.wiki.model.WikiPageResource addPageResource(
-		long groupId, long nodeId, java.lang.String title) {
+		long groupId, long nodeId, String title) {
 		return _wikiPageResourceLocalService.addPageResource(groupId, nodeId,
 			title);
 	}
@@ -48,7 +48,7 @@ public class WikiPageResourceLocalServiceWrapper
 	@Deprecated
 	@Override
 	public com.liferay.wiki.model.WikiPageResource addPageResource(
-		long nodeId, java.lang.String title) {
+		long nodeId, String title) {
 		return _wikiPageResourceLocalService.addPageResource(nodeId, title);
 	}
 
@@ -77,7 +77,7 @@ public class WikiPageResourceLocalServiceWrapper
 	}
 
 	@Override
-	public void deletePageResource(long nodeId, java.lang.String title)
+	public void deletePageResource(long nodeId, String title)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_wikiPageResourceLocalService.deletePageResource(nodeId, title);
 	}
@@ -206,13 +206,13 @@ public class WikiPageResourceLocalServiceWrapper
 
 	@Override
 	public com.liferay.wiki.model.WikiPageResource fetchPageResource(
-		long nodeId, java.lang.String title) {
+		long nodeId, String title) {
 		return _wikiPageResourceLocalService.fetchPageResource(nodeId, title);
 	}
 
 	@Override
 	public com.liferay.wiki.model.WikiPageResource fetchPageResource(
-		java.lang.String uuid) {
+		String uuid) {
 		return _wikiPageResourceLocalService.fetchPageResource(uuid);
 	}
 
@@ -231,7 +231,7 @@ public class WikiPageResourceLocalServiceWrapper
 	*/
 	@Override
 	public com.liferay.wiki.model.WikiPageResource fetchWikiPageResourceByUuidAndGroupId(
-		java.lang.String uuid, long groupId) {
+		String uuid, long groupId) {
 		return _wikiPageResourceLocalService.fetchWikiPageResourceByUuidAndGroupId(uuid,
 			groupId);
 	}
@@ -252,7 +252,7 @@ public class WikiPageResourceLocalServiceWrapper
 	* @return the OSGi service identifier
 	*/
 	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
+	public String getOSGiServiceIdentifier() {
 		return _wikiPageResourceLocalService.getOSGiServiceIdentifier();
 	}
 
@@ -265,14 +265,13 @@ public class WikiPageResourceLocalServiceWrapper
 
 	@Override
 	public com.liferay.wiki.model.WikiPageResource getPageResource(
-		long nodeId, java.lang.String title)
+		long nodeId, String title)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _wikiPageResourceLocalService.getPageResource(nodeId, title);
 	}
 
 	@Override
-	public long getPageResourcePrimKey(long groupId, long nodeId,
-		java.lang.String title) {
+	public long getPageResourcePrimKey(long groupId, long nodeId, String title) {
 		return _wikiPageResourceLocalService.getPageResourcePrimKey(groupId,
 			nodeId, title);
 	}
@@ -283,7 +282,7 @@ public class WikiPageResourceLocalServiceWrapper
 	*/
 	@Deprecated
 	@Override
-	public long getPageResourcePrimKey(long nodeId, java.lang.String title) {
+	public long getPageResourcePrimKey(long nodeId, String title) {
 		return _wikiPageResourceLocalService.getPageResourcePrimKey(nodeId,
 			title);
 	}
@@ -319,7 +318,7 @@ public class WikiPageResourceLocalServiceWrapper
 	*/
 	@Override
 	public com.liferay.wiki.model.WikiPageResource getWikiPageResourceByUuidAndGroupId(
-		java.lang.String uuid, long groupId)
+		String uuid, long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _wikiPageResourceLocalService.getWikiPageResourceByUuidAndGroupId(uuid,
 			groupId);
@@ -351,7 +350,7 @@ public class WikiPageResourceLocalServiceWrapper
 	*/
 	@Override
 	public java.util.List<com.liferay.wiki.model.WikiPageResource> getWikiPageResourcesByUuidAndCompanyId(
-		java.lang.String uuid, long companyId) {
+		String uuid, long companyId) {
 		return _wikiPageResourceLocalService.getWikiPageResourcesByUuidAndCompanyId(uuid,
 			companyId);
 	}
@@ -368,7 +367,7 @@ public class WikiPageResourceLocalServiceWrapper
 	*/
 	@Override
 	public java.util.List<com.liferay.wiki.model.WikiPageResource> getWikiPageResourcesByUuidAndCompanyId(
-		java.lang.String uuid, long companyId, int start, int end,
+		String uuid, long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiPageResource> orderByComparator) {
 		return _wikiPageResourceLocalService.getWikiPageResourcesByUuidAndCompanyId(uuid,
 			companyId, start, end, orderByComparator);

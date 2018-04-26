@@ -37,8 +37,7 @@ public class MemberRequestLocalServiceWrapper
 	@Override
 	public com.liferay.invitation.invite.members.model.MemberRequest addMemberRequest(
 		long userId, long groupId, long receiverUserId,
-		java.lang.String receiverEmailAddress, long invitedRoleId,
-		long invitedTeamId,
+		String receiverEmailAddress, long invitedRoleId, long invitedTeamId,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _memberRequestLocalService.addMemberRequest(userId, groupId,
@@ -69,8 +68,7 @@ public class MemberRequestLocalServiceWrapper
 
 	@Override
 	public void addMemberRequests(long userId, long groupId,
-		java.lang.String[] emailAddresses, long invitedRoleId,
-		long invitedTeamId,
+		String[] emailAddresses, long invitedRoleId, long invitedTeamId,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_memberRequestLocalService.addMemberRequests(userId, groupId,
@@ -281,7 +279,7 @@ public class MemberRequestLocalServiceWrapper
 	* @return the OSGi service identifier
 	*/
 	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
+	public String getOSGiServiceIdentifier() {
 		return _memberRequestLocalService.getOSGiServiceIdentifier();
 	}
 
@@ -327,7 +325,7 @@ public class MemberRequestLocalServiceWrapper
 	@Override
 	public com.liferay.invitation.invite.members.model.MemberRequest updateMemberRequest(
 		long userId, long memberRequestId, int status)
-		throws java.lang.Exception {
+		throws Exception {
 		return _memberRequestLocalService.updateMemberRequest(userId,
 			memberRequestId, status);
 	}
@@ -346,7 +344,7 @@ public class MemberRequestLocalServiceWrapper
 
 	@Override
 	public com.liferay.invitation.invite.members.model.MemberRequest updateMemberRequest(
-		java.lang.String key, long receiverUserId)
+		String key, long receiverUserId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _memberRequestLocalService.updateMemberRequest(key,
 			receiverUserId);

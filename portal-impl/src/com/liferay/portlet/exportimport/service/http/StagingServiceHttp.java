@@ -85,7 +85,7 @@ public class StagingServiceHttp {
 	}
 
 	public static long createStagingRequest(HttpPrincipal httpPrincipal,
-		long groupId, java.lang.String checksum)
+		long groupId, String checksum)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(StagingServiceUtil.class,
@@ -117,7 +117,7 @@ public class StagingServiceHttp {
 	}
 
 	public static boolean hasRemoteLayout(HttpPrincipal httpPrincipal,
-		java.lang.String uuid, long groupId, boolean privateLayout)
+		String uuid, long groupId, boolean privateLayout)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(StagingServiceUtil.class,
@@ -150,8 +150,7 @@ public class StagingServiceHttp {
 
 	public static void propagateExportImportLifecycleEvent(
 		HttpPrincipal httpPrincipal, int code, int processFlag,
-		java.lang.String processId,
-		java.util.List<java.io.Serializable> arguments)
+		String processId, java.util.List<java.io.Serializable> arguments)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(StagingServiceUtil.class,
@@ -181,8 +180,7 @@ public class StagingServiceHttp {
 
 	public static com.liferay.exportimport.kernel.lar.MissingReferences publishStagingRequest(
 		HttpPrincipal httpPrincipal, long stagingRequestId,
-		boolean privateLayout,
-		java.util.Map<java.lang.String, java.lang.String[]> parameterMap)
+		boolean privateLayout, java.util.Map<String, String[]> parameterMap)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(StagingServiceUtil.class,
@@ -249,7 +247,7 @@ public class StagingServiceHttp {
 	}
 
 	public static void updateStagingRequest(HttpPrincipal httpPrincipal,
-		long stagingRequestId, java.lang.String fileName, byte[] bytes)
+		long stagingRequestId, String fileName, byte[] bytes)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(StagingServiceUtil.class,
@@ -278,8 +276,7 @@ public class StagingServiceHttp {
 
 	public static com.liferay.exportimport.kernel.lar.MissingReferences validateStagingRequest(
 		HttpPrincipal httpPrincipal, long stagingRequestId,
-		boolean privateLayout,
-		java.util.Map<java.lang.String, java.lang.String[]> parameterMap)
+		boolean privateLayout, java.util.Map<String, String[]> parameterMap)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(StagingServiceUtil.class,
@@ -316,15 +313,13 @@ public class StagingServiceHttp {
 			long.class
 		};
 	private static final Class<?>[] _createStagingRequestParameterTypes1 = new Class[] {
-			long.class, java.lang.String.class
+			long.class, String.class
 		};
 	private static final Class<?>[] _hasRemoteLayoutParameterTypes2 = new Class[] {
-			java.lang.String.class, long.class, boolean.class
+			String.class, long.class, boolean.class
 		};
 	private static final Class<?>[] _propagateExportImportLifecycleEventParameterTypes3 =
-		new Class[] {
-			int.class, int.class, java.lang.String.class, java.util.List.class
-		};
+		new Class[] { int.class, int.class, String.class, java.util.List.class };
 	private static final Class<?>[] _publishStagingRequestParameterTypes4 = new Class[] {
 			long.class, boolean.class, java.util.Map.class
 		};
@@ -333,7 +328,7 @@ public class StagingServiceHttp {
 			com.liferay.exportimport.kernel.model.ExportImportConfiguration.class
 		};
 	private static final Class<?>[] _updateStagingRequestParameterTypes6 = new Class[] {
-			long.class, java.lang.String.class, byte[].class
+			long.class, String.class, byte[].class
 		};
 	private static final Class<?>[] _validateStagingRequestParameterTypes7 = new Class[] {
 			long.class, boolean.class, java.util.Map.class

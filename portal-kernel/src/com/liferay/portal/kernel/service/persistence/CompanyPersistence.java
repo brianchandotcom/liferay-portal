@@ -46,8 +46,7 @@ public interface CompanyPersistence extends BasePersistence<Company> {
 	* @return the matching company
 	* @throws NoSuchCompanyException if a matching company could not be found
 	*/
-	public Company findByWebId(java.lang.String webId)
-		throws NoSuchCompanyException;
+	public Company findByWebId(String webId) throws NoSuchCompanyException;
 
 	/**
 	* Returns the company where webId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
@@ -55,7 +54,7 @@ public interface CompanyPersistence extends BasePersistence<Company> {
 	* @param webId the web ID
 	* @return the matching company, or <code>null</code> if a matching company could not be found
 	*/
-	public Company fetchByWebId(java.lang.String webId);
+	public Company fetchByWebId(String webId);
 
 	/**
 	* Returns the company where webId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -64,8 +63,7 @@ public interface CompanyPersistence extends BasePersistence<Company> {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching company, or <code>null</code> if a matching company could not be found
 	*/
-	public Company fetchByWebId(java.lang.String webId,
-		boolean retrieveFromCache);
+	public Company fetchByWebId(String webId, boolean retrieveFromCache);
 
 	/**
 	* Removes the company where webId = &#63; from the database.
@@ -73,8 +71,7 @@ public interface CompanyPersistence extends BasePersistence<Company> {
 	* @param webId the web ID
 	* @return the company that was removed
 	*/
-	public Company removeByWebId(java.lang.String webId)
-		throws NoSuchCompanyException;
+	public Company removeByWebId(String webId) throws NoSuchCompanyException;
 
 	/**
 	* Returns the number of companies where webId = &#63;.
@@ -82,7 +79,7 @@ public interface CompanyPersistence extends BasePersistence<Company> {
 	* @param webId the web ID
 	* @return the number of matching companies
 	*/
-	public int countByWebId(java.lang.String webId);
+	public int countByWebId(String webId);
 
 	/**
 	* Returns the company where mx = &#63; or throws a {@link NoSuchCompanyException} if it could not be found.
@@ -91,7 +88,7 @@ public interface CompanyPersistence extends BasePersistence<Company> {
 	* @return the matching company
 	* @throws NoSuchCompanyException if a matching company could not be found
 	*/
-	public Company findByMx(java.lang.String mx) throws NoSuchCompanyException;
+	public Company findByMx(String mx) throws NoSuchCompanyException;
 
 	/**
 	* Returns the company where mx = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
@@ -99,7 +96,7 @@ public interface CompanyPersistence extends BasePersistence<Company> {
 	* @param mx the mx
 	* @return the matching company, or <code>null</code> if a matching company could not be found
 	*/
-	public Company fetchByMx(java.lang.String mx);
+	public Company fetchByMx(String mx);
 
 	/**
 	* Returns the company where mx = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -108,7 +105,7 @@ public interface CompanyPersistence extends BasePersistence<Company> {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching company, or <code>null</code> if a matching company could not be found
 	*/
-	public Company fetchByMx(java.lang.String mx, boolean retrieveFromCache);
+	public Company fetchByMx(String mx, boolean retrieveFromCache);
 
 	/**
 	* Removes the company where mx = &#63; from the database.
@@ -116,8 +113,7 @@ public interface CompanyPersistence extends BasePersistence<Company> {
 	* @param mx the mx
 	* @return the company that was removed
 	*/
-	public Company removeByMx(java.lang.String mx)
-		throws NoSuchCompanyException;
+	public Company removeByMx(String mx) throws NoSuchCompanyException;
 
 	/**
 	* Returns the number of companies where mx = &#63;.
@@ -125,7 +121,7 @@ public interface CompanyPersistence extends BasePersistence<Company> {
 	* @param mx the mx
 	* @return the number of matching companies
 	*/
-	public int countByMx(java.lang.String mx);
+	public int countByMx(String mx);
 
 	/**
 	* Returns the company where logoId = &#63; or throws a {@link NoSuchCompanyException} if it could not be found.
@@ -420,5 +416,5 @@ public interface CompanyPersistence extends BasePersistence<Company> {
 	public int countAll();
 
 	@Override
-	public java.util.Set<java.lang.String> getBadColumnNames();
+	public java.util.Set<String> getBadColumnNames();
 }

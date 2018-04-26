@@ -81,7 +81,7 @@ public interface JournalArticleResourceLocalService extends BaseLocalService,
 	public JournalArticleResource createJournalArticleResource(
 		long resourcePrimKey);
 
-	public void deleteArticleResource(long groupId, java.lang.String articleId)
+	public void deleteArticleResource(long groupId, String articleId)
 		throws PortalException;
 
 	/**
@@ -173,11 +173,10 @@ public interface JournalArticleResourceLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public JournalArticleResource fetchArticleResource(long groupId,
-		java.lang.String articleId);
+		String articleId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public JournalArticleResource fetchArticleResource(java.lang.String uuid,
-		long groupId);
+	public JournalArticleResource fetchArticleResource(String uuid, long groupId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public JournalArticleResource fetchJournalArticleResource(
@@ -192,7 +191,7 @@ public interface JournalArticleResourceLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public JournalArticleResource fetchJournalArticleResourceByUuidAndGroupId(
-		java.lang.String uuid, long groupId);
+		String uuid, long groupId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
@@ -202,12 +201,11 @@ public interface JournalArticleResourceLocalService extends BaseLocalService,
 		long articleResourcePrimKey) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public long getArticleResourcePrimKey(long groupId,
-		java.lang.String articleId);
+	public long getArticleResourcePrimKey(long groupId, String articleId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public long getArticleResourcePrimKey(java.lang.String uuid, long groupId,
-		java.lang.String articleId);
+	public long getArticleResourcePrimKey(String uuid, long groupId,
+		String articleId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<JournalArticleResource> getArticleResources(long groupId);
@@ -236,7 +234,7 @@ public interface JournalArticleResourceLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public JournalArticleResource getJournalArticleResourceByUuidAndGroupId(
-		java.lang.String uuid, long groupId) throws PortalException;
+		String uuid, long groupId) throws PortalException;
 
 	/**
 	* Returns a range of all the journal article resources.
@@ -262,7 +260,7 @@ public interface JournalArticleResourceLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<JournalArticleResource> getJournalArticleResourcesByUuidAndCompanyId(
-		java.lang.String uuid, long companyId);
+		String uuid, long companyId);
 
 	/**
 	* Returns a range of journal article resources matching the UUID and company.
@@ -276,7 +274,7 @@ public interface JournalArticleResourceLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<JournalArticleResource> getJournalArticleResourcesByUuidAndCompanyId(
-		java.lang.String uuid, long companyId, int start, int end,
+		String uuid, long companyId, int start, int end,
 		OrderByComparator<JournalArticleResource> orderByComparator);
 
 	/**
@@ -292,7 +290,7 @@ public interface JournalArticleResourceLocalService extends BaseLocalService,
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

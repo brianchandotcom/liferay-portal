@@ -57,9 +57,9 @@ import com.liferay.portal.kernel.util.MethodKey;
 public class AssetCategoryServiceHttp {
 	public static com.liferay.asset.kernel.model.AssetCategory addCategory(
 		HttpPrincipal httpPrincipal, long groupId, long parentCategoryId,
-		java.util.Map<java.util.Locale, java.lang.String> titleMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		long vocabularyId, java.lang.String[] categoryProperties,
+		java.util.Map<java.util.Locale, String> titleMap,
+		java.util.Map<java.util.Locale, String> descriptionMap,
+		long vocabularyId, String[] categoryProperties,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -93,7 +93,7 @@ public class AssetCategoryServiceHttp {
 	}
 
 	public static com.liferay.asset.kernel.model.AssetCategory addCategory(
-		HttpPrincipal httpPrincipal, long groupId, java.lang.String title,
+		HttpPrincipal httpPrincipal, long groupId, String title,
 		long vocabularyId,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -248,7 +248,7 @@ public class AssetCategoryServiceHttp {
 	}
 
 	public static java.util.List<com.liferay.asset.kernel.model.AssetCategory> getCategories(
-		HttpPrincipal httpPrincipal, java.lang.String className, long classPK)
+		HttpPrincipal httpPrincipal, String className, long classPK)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(AssetCategoryServiceUtil.class,
@@ -311,8 +311,8 @@ public class AssetCategoryServiceHttp {
 		}
 	}
 
-	public static java.lang.String getCategoryPath(
-		HttpPrincipal httpPrincipal, long categoryId)
+	public static String getCategoryPath(HttpPrincipal httpPrincipal,
+		long categoryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(AssetCategoryServiceUtil.class,
@@ -334,7 +334,7 @@ public class AssetCategoryServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (java.lang.String)returnObj;
+			return (String)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -508,7 +508,7 @@ public class AssetCategoryServiceHttp {
 	}
 
 	public static java.util.List<com.liferay.asset.kernel.model.AssetCategory> getVocabularyCategories(
-		HttpPrincipal httpPrincipal, long groupId, java.lang.String name,
+		HttpPrincipal httpPrincipal, long groupId, String name,
 		long vocabularyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.asset.kernel.model.AssetCategory> obc) {
 		try {
@@ -595,7 +595,7 @@ public class AssetCategoryServiceHttp {
 	}
 
 	public static int getVocabularyCategoriesCount(
-		HttpPrincipal httpPrincipal, long groupId, java.lang.String name,
+		HttpPrincipal httpPrincipal, long groupId, String name,
 		long vocabularyId) {
 		try {
 			MethodKey methodKey = new MethodKey(AssetCategoryServiceUtil.class,
@@ -658,7 +658,7 @@ public class AssetCategoryServiceHttp {
 	}
 
 	public static com.liferay.asset.kernel.model.AssetCategoryDisplay getVocabularyCategoriesDisplay(
-		HttpPrincipal httpPrincipal, long groupId, java.lang.String name,
+		HttpPrincipal httpPrincipal, long groupId, String name,
 		long vocabularyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.asset.kernel.model.AssetCategory> obc)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -785,7 +785,7 @@ public class AssetCategoryServiceHttp {
 	}
 
 	public static java.util.List<com.liferay.asset.kernel.model.AssetCategory> search(
-		HttpPrincipal httpPrincipal, long groupId, java.lang.String keywords,
+		HttpPrincipal httpPrincipal, long groupId, String keywords,
 		long vocabularyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.asset.kernel.model.AssetCategory> obc) {
 		try {
@@ -814,8 +814,8 @@ public class AssetCategoryServiceHttp {
 	}
 
 	public static com.liferay.portal.kernel.json.JSONArray search(
-		HttpPrincipal httpPrincipal, long groupId, java.lang.String name,
-		java.lang.String[] categoryProperties, int start, int end)
+		HttpPrincipal httpPrincipal, long groupId, String name,
+		String[] categoryProperties, int start, int end)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(AssetCategoryServiceUtil.class,
@@ -847,7 +847,7 @@ public class AssetCategoryServiceHttp {
 	}
 
 	public static com.liferay.portal.kernel.json.JSONArray search(
-		HttpPrincipal httpPrincipal, long[] groupIds, java.lang.String name,
+		HttpPrincipal httpPrincipal, long[] groupIds, String name,
 		long[] vocabularyIds, int start, int end)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -880,7 +880,7 @@ public class AssetCategoryServiceHttp {
 	}
 
 	public static com.liferay.asset.kernel.model.AssetCategoryDisplay searchCategoriesDisplay(
-		HttpPrincipal httpPrincipal, long groupId, java.lang.String title,
+		HttpPrincipal httpPrincipal, long groupId, String title,
 		long vocabularyId, int start, int end)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -914,7 +914,7 @@ public class AssetCategoryServiceHttp {
 	}
 
 	public static com.liferay.asset.kernel.model.AssetCategoryDisplay searchCategoriesDisplay(
-		HttpPrincipal httpPrincipal, long groupId, java.lang.String title,
+		HttpPrincipal httpPrincipal, long groupId, String title,
 		long parentCategoryId, long vocabularyId, int start, int end)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -948,7 +948,7 @@ public class AssetCategoryServiceHttp {
 	}
 
 	public static com.liferay.asset.kernel.model.AssetCategoryDisplay searchCategoriesDisplay(
-		HttpPrincipal httpPrincipal, long groupId, java.lang.String title,
+		HttpPrincipal httpPrincipal, long groupId, String title,
 		long vocabularyId, long parentCategoryId, int start, int end,
 		com.liferay.portal.kernel.search.Sort sort)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -983,7 +983,7 @@ public class AssetCategoryServiceHttp {
 	}
 
 	public static com.liferay.asset.kernel.model.AssetCategoryDisplay searchCategoriesDisplay(
-		HttpPrincipal httpPrincipal, long[] groupIds, java.lang.String title,
+		HttpPrincipal httpPrincipal, long[] groupIds, String title,
 		long[] vocabularyIds, int start, int end)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -1017,7 +1017,7 @@ public class AssetCategoryServiceHttp {
 	}
 
 	public static com.liferay.asset.kernel.model.AssetCategoryDisplay searchCategoriesDisplay(
-		HttpPrincipal httpPrincipal, long[] groupIds, java.lang.String title,
+		HttpPrincipal httpPrincipal, long[] groupIds, String title,
 		long[] parentCategoryIds, long[] vocabularyIds, int start, int end)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -1052,7 +1052,7 @@ public class AssetCategoryServiceHttp {
 	}
 
 	public static com.liferay.asset.kernel.model.AssetCategoryDisplay searchCategoriesDisplay(
-		HttpPrincipal httpPrincipal, long[] groupIds, java.lang.String title,
+		HttpPrincipal httpPrincipal, long[] groupIds, String title,
 		long[] vocabularyIds, long[] parentCategoryIds, int start, int end,
 		com.liferay.portal.kernel.search.Sort sort)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -1089,9 +1089,9 @@ public class AssetCategoryServiceHttp {
 
 	public static com.liferay.asset.kernel.model.AssetCategory updateCategory(
 		HttpPrincipal httpPrincipal, long categoryId, long parentCategoryId,
-		java.util.Map<java.util.Locale, java.lang.String> titleMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		long vocabularyId, java.lang.String[] categoryProperties,
+		java.util.Map<java.util.Locale, String> titleMap,
+		java.util.Map<java.util.Locale, String> descriptionMap,
+		long vocabularyId, String[] categoryProperties,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -1127,11 +1127,11 @@ public class AssetCategoryServiceHttp {
 	private static Log _log = LogFactoryUtil.getLog(AssetCategoryServiceHttp.class);
 	private static final Class<?>[] _addCategoryParameterTypes0 = new Class[] {
 			long.class, long.class, java.util.Map.class, java.util.Map.class,
-			long.class, java.lang.String[].class,
+			long.class, String[].class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _addCategoryParameterTypes1 = new Class[] {
-			long.class, java.lang.String.class, long.class,
+			long.class, String.class, long.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _deleteCategoriesParameterTypes2 = new Class[] {
@@ -1147,7 +1147,7 @@ public class AssetCategoryServiceHttp {
 			long.class
 		};
 	private static final Class<?>[] _getCategoriesParameterTypes6 = new Class[] {
-			java.lang.String.class, long.class
+			String.class, long.class
 		};
 	private static final Class<?>[] _getCategoryParameterTypes7 = new Class[] {
 			long.class
@@ -1175,7 +1175,7 @@ public class AssetCategoryServiceHttp {
 			com.liferay.portal.kernel.util.OrderByComparator.class
 		};
 	private static final Class<?>[] _getVocabularyCategoriesParameterTypes14 = new Class[] {
-			long.class, java.lang.String.class, long.class, int.class, int.class,
+			long.class, String.class, long.class, int.class, int.class,
 			com.liferay.portal.kernel.util.OrderByComparator.class
 		};
 	private static final Class<?>[] _getVocabularyCategoriesCountParameterTypes15 =
@@ -1183,7 +1183,7 @@ public class AssetCategoryServiceHttp {
 	private static final Class<?>[] _getVocabularyCategoriesCountParameterTypes16 =
 		new Class[] { long.class, long.class, long.class };
 	private static final Class<?>[] _getVocabularyCategoriesCountParameterTypes17 =
-		new Class[] { long.class, java.lang.String.class, long.class };
+		new Class[] { long.class, String.class, long.class };
 	private static final Class<?>[] _getVocabularyCategoriesDisplayParameterTypes18 =
 		new Class[] {
 			long.class, int.class, int.class,
@@ -1191,7 +1191,7 @@ public class AssetCategoryServiceHttp {
 		};
 	private static final Class<?>[] _getVocabularyCategoriesDisplayParameterTypes19 =
 		new Class[] {
-			long.class, java.lang.String.class, long.class, int.class, int.class,
+			long.class, String.class, long.class, int.class, int.class,
 			com.liferay.portal.kernel.util.OrderByComparator.class
 		};
 	private static final Class<?>[] _getVocabularyRootCategoriesParameterTypes20 =
@@ -1206,43 +1206,40 @@ public class AssetCategoryServiceHttp {
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _searchParameterTypes23 = new Class[] {
-			long.class, java.lang.String.class, long.class, int.class, int.class,
+			long.class, String.class, long.class, int.class, int.class,
 			com.liferay.portal.kernel.util.OrderByComparator.class
 		};
 	private static final Class<?>[] _searchParameterTypes24 = new Class[] {
-			long.class, java.lang.String.class, java.lang.String[].class,
-			int.class, int.class
+			long.class, String.class, String[].class, int.class, int.class
 		};
 	private static final Class<?>[] _searchParameterTypes25 = new Class[] {
-			long[].class, java.lang.String.class, long[].class, int.class,
-			int.class
+			long[].class, String.class, long[].class, int.class, int.class
 		};
 	private static final Class<?>[] _searchCategoriesDisplayParameterTypes26 = new Class[] {
-			long.class, java.lang.String.class, long.class, int.class, int.class
+			long.class, String.class, long.class, int.class, int.class
 		};
 	private static final Class<?>[] _searchCategoriesDisplayParameterTypes27 = new Class[] {
-			long.class, java.lang.String.class, long.class, long.class,
-			int.class, int.class
-		};
-	private static final Class<?>[] _searchCategoriesDisplayParameterTypes28 = new Class[] {
-			long.class, java.lang.String.class, long.class, long.class,
-			int.class, int.class, com.liferay.portal.kernel.search.Sort.class
-		};
-	private static final Class<?>[] _searchCategoriesDisplayParameterTypes29 = new Class[] {
-			long[].class, java.lang.String.class, long[].class, int.class,
+			long.class, String.class, long.class, long.class, int.class,
 			int.class
 		};
+	private static final Class<?>[] _searchCategoriesDisplayParameterTypes28 = new Class[] {
+			long.class, String.class, long.class, long.class, int.class,
+			int.class, com.liferay.portal.kernel.search.Sort.class
+		};
+	private static final Class<?>[] _searchCategoriesDisplayParameterTypes29 = new Class[] {
+			long[].class, String.class, long[].class, int.class, int.class
+		};
 	private static final Class<?>[] _searchCategoriesDisplayParameterTypes30 = new Class[] {
-			long[].class, java.lang.String.class, long[].class, long[].class,
-			int.class, int.class
+			long[].class, String.class, long[].class, long[].class, int.class,
+			int.class
 		};
 	private static final Class<?>[] _searchCategoriesDisplayParameterTypes31 = new Class[] {
-			long[].class, java.lang.String.class, long[].class, long[].class,
-			int.class, int.class, com.liferay.portal.kernel.search.Sort.class
+			long[].class, String.class, long[].class, long[].class, int.class,
+			int.class, com.liferay.portal.kernel.search.Sort.class
 		};
 	private static final Class<?>[] _updateCategoryParameterTypes32 = new Class[] {
 			long.class, long.class, java.util.Map.class, java.util.Map.class,
-			long.class, java.lang.String[].class,
+			long.class, String[].class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 }

@@ -56,9 +56,8 @@ import com.liferay.portal.kernel.util.MethodKey;
 @ProviderType
 public class AnnouncementsDeliveryServiceHttp {
 	public static com.liferay.announcements.kernel.model.AnnouncementsDelivery updateDelivery(
-		HttpPrincipal httpPrincipal, long userId, java.lang.String type,
-		boolean email, boolean sms)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		HttpPrincipal httpPrincipal, long userId, String type, boolean email,
+		boolean sms) throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(AnnouncementsDeliveryServiceUtil.class,
 					"updateDelivery", _updateDeliveryParameterTypes0);
@@ -89,8 +88,8 @@ public class AnnouncementsDeliveryServiceHttp {
 	}
 
 	public static com.liferay.announcements.kernel.model.AnnouncementsDelivery updateDelivery(
-		HttpPrincipal httpPrincipal, long userId, java.lang.String type,
-		boolean email, boolean sms, boolean website)
+		HttpPrincipal httpPrincipal, long userId, String type, boolean email,
+		boolean sms, boolean website)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(AnnouncementsDeliveryServiceUtil.class,
@@ -123,10 +122,10 @@ public class AnnouncementsDeliveryServiceHttp {
 
 	private static Log _log = LogFactoryUtil.getLog(AnnouncementsDeliveryServiceHttp.class);
 	private static final Class<?>[] _updateDeliveryParameterTypes0 = new Class[] {
-			long.class, java.lang.String.class, boolean.class, boolean.class
+			long.class, String.class, boolean.class, boolean.class
 		};
 	private static final Class<?>[] _updateDeliveryParameterTypes1 = new Class[] {
-			long.class, java.lang.String.class, boolean.class, boolean.class,
+			long.class, String.class, boolean.class, boolean.class,
 			boolean.class
 		};
 }

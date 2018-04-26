@@ -85,7 +85,7 @@ public class PortletPreferencesServiceHttp {
 
 	public static void restoreArchivedPreferences(HttpPrincipal httpPrincipal,
 		long groupId, com.liferay.portal.kernel.model.Layout layout,
-		java.lang.String portletId, long portletItemId,
+		String portletId, long portletItemId,
 		javax.portlet.PortletPreferences preferences)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -116,7 +116,7 @@ public class PortletPreferencesServiceHttp {
 
 	public static void restoreArchivedPreferences(HttpPrincipal httpPrincipal,
 		long groupId, com.liferay.portal.kernel.model.Layout layout,
-		java.lang.String portletId,
+		String portletId,
 		com.liferay.portal.kernel.model.PortletItem portletItem,
 		javax.portlet.PortletPreferences preferences)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -147,9 +147,9 @@ public class PortletPreferencesServiceHttp {
 	}
 
 	public static void restoreArchivedPreferences(HttpPrincipal httpPrincipal,
-		long groupId, java.lang.String name,
-		com.liferay.portal.kernel.model.Layout layout,
-		java.lang.String portletId, javax.portlet.PortletPreferences preferences)
+		long groupId, String name,
+		com.liferay.portal.kernel.model.Layout layout, String portletId,
+		javax.portlet.PortletPreferences preferences)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(PortletPreferencesServiceUtil.class,
@@ -178,8 +178,8 @@ public class PortletPreferencesServiceHttp {
 	}
 
 	public static void updateArchivePreferences(HttpPrincipal httpPrincipal,
-		long userId, long groupId, java.lang.String name,
-		java.lang.String portletId, javax.portlet.PortletPreferences preferences)
+		long userId, long groupId, String name, String portletId,
+		javax.portlet.PortletPreferences preferences)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(PortletPreferencesServiceUtil.class,
@@ -213,22 +213,20 @@ public class PortletPreferencesServiceHttp {
 		};
 	private static final Class<?>[] _restoreArchivedPreferencesParameterTypes1 = new Class[] {
 			long.class, com.liferay.portal.kernel.model.Layout.class,
-			java.lang.String.class, long.class,
-			javax.portlet.PortletPreferences.class
+			String.class, long.class, javax.portlet.PortletPreferences.class
 		};
 	private static final Class<?>[] _restoreArchivedPreferencesParameterTypes2 = new Class[] {
 			long.class, com.liferay.portal.kernel.model.Layout.class,
-			java.lang.String.class,
-			com.liferay.portal.kernel.model.PortletItem.class,
+			String.class, com.liferay.portal.kernel.model.PortletItem.class,
 			javax.portlet.PortletPreferences.class
 		};
 	private static final Class<?>[] _restoreArchivedPreferencesParameterTypes3 = new Class[] {
-			long.class, java.lang.String.class,
-			com.liferay.portal.kernel.model.Layout.class, java.lang.String.class,
+			long.class, String.class,
+			com.liferay.portal.kernel.model.Layout.class, String.class,
 			javax.portlet.PortletPreferences.class
 		};
 	private static final Class<?>[] _updateArchivePreferencesParameterTypes4 = new Class[] {
-			long.class, long.class, java.lang.String.class,
-			java.lang.String.class, javax.portlet.PortletPreferences.class
+			long.class, long.class, String.class, String.class,
+			javax.portlet.PortletPreferences.class
 		};
 }

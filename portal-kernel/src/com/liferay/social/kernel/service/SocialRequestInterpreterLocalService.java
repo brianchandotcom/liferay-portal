@@ -72,7 +72,7 @@ public interface SocialRequestInterpreterLocalService extends BaseLocalService {
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	/**
 	* Creates a human readable request feed entry for the social request using

@@ -33,7 +33,7 @@ public class RatingsEntryFinderUtil {
 	}
 
 	public static java.util.List<com.liferay.ratings.kernel.model.RatingsEntry> findByU_C_C(
-		long userId, long classNameId, java.util.List<java.lang.Long> classPKs) {
+		long userId, long classNameId, java.util.List<Long> classPKs) {
 		return getFinder().findByU_C_C(userId, classNameId, classPKs);
 	}
 

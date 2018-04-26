@@ -316,7 +316,7 @@ public interface AssetCategoryPropertyPersistence extends BasePersistence<AssetC
 	* @return the matching asset category properties
 	*/
 	public java.util.List<AssetCategoryProperty> findByC_K(long companyId,
-		java.lang.String key);
+		String key);
 
 	/**
 	* Returns a range of all the asset category properties where companyId = &#63; and key = &#63;.
@@ -332,7 +332,7 @@ public interface AssetCategoryPropertyPersistence extends BasePersistence<AssetC
 	* @return the range of matching asset category properties
 	*/
 	public java.util.List<AssetCategoryProperty> findByC_K(long companyId,
-		java.lang.String key, int start, int end);
+		String key, int start, int end);
 
 	/**
 	* Returns an ordered range of all the asset category properties where companyId = &#63; and key = &#63;.
@@ -349,7 +349,7 @@ public interface AssetCategoryPropertyPersistence extends BasePersistence<AssetC
 	* @return the ordered range of matching asset category properties
 	*/
 	public java.util.List<AssetCategoryProperty> findByC_K(long companyId,
-		java.lang.String key, int start, int end,
+		String key, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<AssetCategoryProperty> orderByComparator);
 
 	/**
@@ -368,7 +368,7 @@ public interface AssetCategoryPropertyPersistence extends BasePersistence<AssetC
 	* @return the ordered range of matching asset category properties
 	*/
 	public java.util.List<AssetCategoryProperty> findByC_K(long companyId,
-		java.lang.String key, int start, int end,
+		String key, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<AssetCategoryProperty> orderByComparator,
 		boolean retrieveFromCache);
 
@@ -381,8 +381,7 @@ public interface AssetCategoryPropertyPersistence extends BasePersistence<AssetC
 	* @return the first matching asset category property
 	* @throws NoSuchCategoryPropertyException if a matching asset category property could not be found
 	*/
-	public AssetCategoryProperty findByC_K_First(long companyId,
-		java.lang.String key,
+	public AssetCategoryProperty findByC_K_First(long companyId, String key,
 		com.liferay.portal.kernel.util.OrderByComparator<AssetCategoryProperty> orderByComparator)
 		throws NoSuchCategoryPropertyException;
 
@@ -394,8 +393,7 @@ public interface AssetCategoryPropertyPersistence extends BasePersistence<AssetC
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching asset category property, or <code>null</code> if a matching asset category property could not be found
 	*/
-	public AssetCategoryProperty fetchByC_K_First(long companyId,
-		java.lang.String key,
+	public AssetCategoryProperty fetchByC_K_First(long companyId, String key,
 		com.liferay.portal.kernel.util.OrderByComparator<AssetCategoryProperty> orderByComparator);
 
 	/**
@@ -407,8 +405,7 @@ public interface AssetCategoryPropertyPersistence extends BasePersistence<AssetC
 	* @return the last matching asset category property
 	* @throws NoSuchCategoryPropertyException if a matching asset category property could not be found
 	*/
-	public AssetCategoryProperty findByC_K_Last(long companyId,
-		java.lang.String key,
+	public AssetCategoryProperty findByC_K_Last(long companyId, String key,
 		com.liferay.portal.kernel.util.OrderByComparator<AssetCategoryProperty> orderByComparator)
 		throws NoSuchCategoryPropertyException;
 
@@ -420,8 +417,7 @@ public interface AssetCategoryPropertyPersistence extends BasePersistence<AssetC
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching asset category property, or <code>null</code> if a matching asset category property could not be found
 	*/
-	public AssetCategoryProperty fetchByC_K_Last(long companyId,
-		java.lang.String key,
+	public AssetCategoryProperty fetchByC_K_Last(long companyId, String key,
 		com.liferay.portal.kernel.util.OrderByComparator<AssetCategoryProperty> orderByComparator);
 
 	/**
@@ -435,7 +431,7 @@ public interface AssetCategoryPropertyPersistence extends BasePersistence<AssetC
 	* @throws NoSuchCategoryPropertyException if a asset category property with the primary key could not be found
 	*/
 	public AssetCategoryProperty[] findByC_K_PrevAndNext(
-		long categoryPropertyId, long companyId, java.lang.String key,
+		long categoryPropertyId, long companyId, String key,
 		com.liferay.portal.kernel.util.OrderByComparator<AssetCategoryProperty> orderByComparator)
 		throws NoSuchCategoryPropertyException;
 
@@ -445,7 +441,7 @@ public interface AssetCategoryPropertyPersistence extends BasePersistence<AssetC
 	* @param companyId the company ID
 	* @param key the key
 	*/
-	public void removeByC_K(long companyId, java.lang.String key);
+	public void removeByC_K(long companyId, String key);
 
 	/**
 	* Returns the number of asset category properties where companyId = &#63; and key = &#63;.
@@ -454,7 +450,7 @@ public interface AssetCategoryPropertyPersistence extends BasePersistence<AssetC
 	* @param key the key
 	* @return the number of matching asset category properties
 	*/
-	public int countByC_K(long companyId, java.lang.String key);
+	public int countByC_K(long companyId, String key);
 
 	/**
 	* Returns the asset category property where categoryId = &#63; and key = &#63; or throws a {@link NoSuchCategoryPropertyException} if it could not be found.
@@ -464,8 +460,8 @@ public interface AssetCategoryPropertyPersistence extends BasePersistence<AssetC
 	* @return the matching asset category property
 	* @throws NoSuchCategoryPropertyException if a matching asset category property could not be found
 	*/
-	public AssetCategoryProperty findByCA_K(long categoryId,
-		java.lang.String key) throws NoSuchCategoryPropertyException;
+	public AssetCategoryProperty findByCA_K(long categoryId, String key)
+		throws NoSuchCategoryPropertyException;
 
 	/**
 	* Returns the asset category property where categoryId = &#63; and key = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
@@ -474,8 +470,7 @@ public interface AssetCategoryPropertyPersistence extends BasePersistence<AssetC
 	* @param key the key
 	* @return the matching asset category property, or <code>null</code> if a matching asset category property could not be found
 	*/
-	public AssetCategoryProperty fetchByCA_K(long categoryId,
-		java.lang.String key);
+	public AssetCategoryProperty fetchByCA_K(long categoryId, String key);
 
 	/**
 	* Returns the asset category property where categoryId = &#63; and key = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -485,8 +480,8 @@ public interface AssetCategoryPropertyPersistence extends BasePersistence<AssetC
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching asset category property, or <code>null</code> if a matching asset category property could not be found
 	*/
-	public AssetCategoryProperty fetchByCA_K(long categoryId,
-		java.lang.String key, boolean retrieveFromCache);
+	public AssetCategoryProperty fetchByCA_K(long categoryId, String key,
+		boolean retrieveFromCache);
 
 	/**
 	* Removes the asset category property where categoryId = &#63; and key = &#63; from the database.
@@ -495,8 +490,8 @@ public interface AssetCategoryPropertyPersistence extends BasePersistence<AssetC
 	* @param key the key
 	* @return the asset category property that was removed
 	*/
-	public AssetCategoryProperty removeByCA_K(long categoryId,
-		java.lang.String key) throws NoSuchCategoryPropertyException;
+	public AssetCategoryProperty removeByCA_K(long categoryId, String key)
+		throws NoSuchCategoryPropertyException;
 
 	/**
 	* Returns the number of asset category properties where categoryId = &#63; and key = &#63;.
@@ -505,7 +500,7 @@ public interface AssetCategoryPropertyPersistence extends BasePersistence<AssetC
 	* @param key the key
 	* @return the number of matching asset category properties
 	*/
-	public int countByCA_K(long categoryId, java.lang.String key);
+	public int countByCA_K(long categoryId, String key);
 
 	/**
 	* Caches the asset category property in the entity cache if it is enabled.
@@ -630,5 +625,5 @@ public interface AssetCategoryPropertyPersistence extends BasePersistence<AssetC
 	public int countAll();
 
 	@Override
-	public java.util.Set<java.lang.String> getBadColumnNames();
+	public java.util.Set<String> getBadColumnNames();
 }

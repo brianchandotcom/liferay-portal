@@ -22,42 +22,35 @@ import aQute.bnd.annotation.ProviderType;
  */
 @ProviderType
 public interface UserFinder {
-	public java.util.Map<java.lang.Long, java.lang.Integer> countByGroups(
-		long companyId, int status, long[] groupIds);
+	public java.util.Map<Long, Integer> countByGroups(long companyId,
+		int status, long[] groupIds);
 
-	public int countByKeywords(long companyId, java.lang.String keywords,
-		int status,
-		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params);
+	public int countByKeywords(long companyId, String keywords, int status,
+		java.util.LinkedHashMap<String, Object> params);
 
 	public int countBySocialUsers(long companyId, long userId,
-		int socialRelationType, java.lang.String socialRelationTypeComparator,
-		int status);
+		int socialRelationType, String socialRelationTypeComparator, int status);
 
 	public int countByUser(long userId,
-		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params);
+		java.util.LinkedHashMap<String, Object> params);
 
-	public int countByC_FN_MN_LN_SN_EA_S(long companyId,
-		java.lang.String firstName, java.lang.String middleName,
-		java.lang.String lastName, java.lang.String screenName,
-		java.lang.String emailAddress, int status,
-		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
-		boolean andOperator);
+	public int countByC_FN_MN_LN_SN_EA_S(long companyId, String firstName,
+		String middleName, String lastName, String screenName,
+		String emailAddress, int status,
+		java.util.LinkedHashMap<String, Object> params, boolean andOperator);
 
-	public int countByC_FN_MN_LN_SN_EA_S(long companyId,
-		java.lang.String[] firstNames, java.lang.String[] middleNames,
-		java.lang.String[] lastNames, java.lang.String[] screenNames,
-		java.lang.String[] emailAddresses, int status,
-		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
-		boolean andOperator);
+	public int countByC_FN_MN_LN_SN_EA_S(long companyId, String[] firstNames,
+		String[] middleNames, String[] lastNames, String[] screenNames,
+		String[] emailAddresses, int status,
+		java.util.LinkedHashMap<String, Object> params, boolean andOperator);
 
 	public java.util.List<com.liferay.portal.kernel.model.User> findByKeywords(
-		long companyId, java.lang.String keywords, int status,
-		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
-		int start, int end,
+		long companyId, String keywords, int status,
+		java.util.LinkedHashMap<String, Object> params, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.kernel.model.User> obc);
 
 	public java.util.List<com.liferay.portal.kernel.model.User> findByNoAnnouncementsDeliveries(
-		java.lang.String type);
+		String type);
 
 	public java.util.List<com.liferay.portal.kernel.model.User> findByNoContacts();
 
@@ -65,24 +58,20 @@ public interface UserFinder {
 
 	public java.util.List<com.liferay.portal.kernel.model.User> findBySocialUsers(
 		long companyId, long userId, int socialRelationType,
-		java.lang.String socialRelationTypeComparator, int status, int start,
-		int end,
+		String socialRelationTypeComparator, int status, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.kernel.model.User> obc);
 
 	public java.util.List<com.liferay.portal.kernel.model.User> findByC_FN_MN_LN_SN_EA_S(
-		long companyId, java.lang.String firstName,
-		java.lang.String middleName, java.lang.String lastName,
-		java.lang.String screenName, java.lang.String emailAddress, int status,
-		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
-		boolean andOperator, int start, int end,
+		long companyId, String firstName, String middleName, String lastName,
+		String screenName, String emailAddress, int status,
+		java.util.LinkedHashMap<String, Object> params, boolean andOperator,
+		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.kernel.model.User> obc);
 
 	public java.util.List<com.liferay.portal.kernel.model.User> findByC_FN_MN_LN_SN_EA_S(
-		long companyId, java.lang.String[] firstNames,
-		java.lang.String[] middleNames, java.lang.String[] lastNames,
-		java.lang.String[] screenNames, java.lang.String[] emailAddresses,
-		int status,
-		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
+		long companyId, String[] firstNames, String[] middleNames,
+		String[] lastNames, String[] screenNames, String[] emailAddresses,
+		int status, java.util.LinkedHashMap<String, Object> params,
 		boolean andOperator, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.kernel.model.User> obc);
 }

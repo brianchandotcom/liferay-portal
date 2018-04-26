@@ -66,8 +66,7 @@ import java.rmi.RemoteException;
 @ProviderType
 public class PushNotificationsDeviceServiceSoap {
 	public static com.liferay.push.notifications.model.PushNotificationsDeviceSoap addPushNotificationsDevice(
-		java.lang.String token, java.lang.String platform)
-		throws RemoteException {
+		String token, String platform) throws RemoteException {
 		try {
 			com.liferay.push.notifications.model.PushNotificationsDevice returnValue =
 				PushNotificationsDeviceServiceUtil.addPushNotificationsDevice(token,
@@ -98,7 +97,7 @@ public class PushNotificationsDeviceServiceSoap {
 	}
 
 	public static com.liferay.push.notifications.model.PushNotificationsDeviceSoap deletePushNotificationsDevice(
-		java.lang.String token) throws RemoteException {
+		String token) throws RemoteException {
 		try {
 			com.liferay.push.notifications.model.PushNotificationsDevice returnValue =
 				PushNotificationsDeviceServiceUtil.deletePushNotificationsDevice(token);
@@ -112,8 +111,8 @@ public class PushNotificationsDeviceServiceSoap {
 		}
 	}
 
-	public static void sendPushNotification(long[] toUserIds,
-		java.lang.String payload) throws RemoteException {
+	public static void sendPushNotification(long[] toUserIds, String payload)
+		throws RemoteException {
 		try {
 			PushNotificationsDeviceServiceUtil.sendPushNotification(toUserIds,
 				payload);
@@ -125,8 +124,8 @@ public class PushNotificationsDeviceServiceSoap {
 		}
 	}
 
-	public static void sendPushNotification(java.lang.String platform,
-		java.util.List<java.lang.String> tokens, java.lang.String payload)
+	public static void sendPushNotification(String platform,
+		java.util.List<String> tokens, String payload)
 		throws RemoteException {
 		try {
 			PushNotificationsDeviceServiceUtil.sendPushNotification(platform,

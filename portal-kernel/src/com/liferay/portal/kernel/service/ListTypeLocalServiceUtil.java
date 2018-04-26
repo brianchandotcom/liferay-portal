@@ -53,7 +53,7 @@ public class ListTypeLocalServiceUtil {
 	}
 
 	public static com.liferay.portal.kernel.model.ListType addListType(
-		java.lang.String name, java.lang.String type) {
+		String name, String type) {
 		return getService().addListType(name, type);
 	}
 
@@ -222,7 +222,7 @@ public class ListTypeLocalServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.portal.kernel.model.ListType> getListTypes(
-		java.lang.String type) {
+		String type) {
 		return getService().getListTypes(type);
 	}
 
@@ -240,7 +240,7 @@ public class ListTypeLocalServiceUtil {
 	*
 	* @return the OSGi service identifier
 	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
+	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 
@@ -261,13 +261,12 @@ public class ListTypeLocalServiceUtil {
 		return getService().updateListType(listType);
 	}
 
-	public static void validate(long listTypeId, long classNameId,
-		java.lang.String type)
+	public static void validate(long listTypeId, long classNameId, String type)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().validate(listTypeId, classNameId, type);
 	}
 
-	public static void validate(long listTypeId, java.lang.String type)
+	public static void validate(long listTypeId, String type)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().validate(listTypeId, type);
 	}

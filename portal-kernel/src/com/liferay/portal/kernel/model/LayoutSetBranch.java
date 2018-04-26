@@ -67,12 +67,11 @@ public interface LayoutSetBranch extends LayoutSetBranchModel, PersistedModel {
 
 	public com.liferay.portal.kernel.util.UnicodeProperties getSettingsProperties();
 
-	public java.lang.String getSettingsProperty(java.lang.String key);
+	public String getSettingsProperty(String key);
 
 	public Theme getTheme();
 
-	public java.lang.String getThemeSetting(java.lang.String key,
-		java.lang.String device);
+	public String getThemeSetting(String key, String device);
 
 	public boolean isLayoutSetPrototypeLinkActive();
 

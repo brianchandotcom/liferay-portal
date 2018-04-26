@@ -137,7 +137,7 @@ public class MBBanWrapper implements MBBan, ModelWrapper<MBBan> {
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new MBBanWrapper((MBBan)_mbBan.clone());
 	}
 
@@ -172,7 +172,7 @@ public class MBBanWrapper implements MBBan, ModelWrapper<MBBan> {
 	* @return the ban user uuid of this message boards ban
 	*/
 	@Override
-	public java.lang.String getBanUserUuid() {
+	public String getBanUserUuid() {
 		return _mbBan.getBanUserUuid();
 	}
 
@@ -262,7 +262,7 @@ public class MBBanWrapper implements MBBan, ModelWrapper<MBBan> {
 	* @return the user name of this message boards ban
 	*/
 	@Override
-	public java.lang.String getUserName() {
+	public String getUserName() {
 		return _mbBan.getUserName();
 	}
 
@@ -272,7 +272,7 @@ public class MBBanWrapper implements MBBan, ModelWrapper<MBBan> {
 	* @return the user uuid of this message boards ban
 	*/
 	@Override
-	public java.lang.String getUserUuid() {
+	public String getUserUuid() {
 		return _mbBan.getUserUuid();
 	}
 
@@ -282,7 +282,7 @@ public class MBBanWrapper implements MBBan, ModelWrapper<MBBan> {
 	* @return the uuid of this message boards ban
 	*/
 	@Override
-	public java.lang.String getUuid() {
+	public String getUuid() {
 		return _mbBan.getUuid();
 	}
 
@@ -337,7 +337,7 @@ public class MBBanWrapper implements MBBan, ModelWrapper<MBBan> {
 	* @param banUserUuid the ban user uuid of this message boards ban
 	*/
 	@Override
-	public void setBanUserUuid(java.lang.String banUserUuid) {
+	public void setBanUserUuid(String banUserUuid) {
 		_mbBan.setBanUserUuid(banUserUuid);
 	}
 
@@ -448,7 +448,7 @@ public class MBBanWrapper implements MBBan, ModelWrapper<MBBan> {
 	* @param userName the user name of this message boards ban
 	*/
 	@Override
-	public void setUserName(java.lang.String userName) {
+	public void setUserName(String userName) {
 		_mbBan.setUserName(userName);
 	}
 
@@ -458,7 +458,7 @@ public class MBBanWrapper implements MBBan, ModelWrapper<MBBan> {
 	* @param userUuid the user uuid of this message boards ban
 	*/
 	@Override
-	public void setUserUuid(java.lang.String userUuid) {
+	public void setUserUuid(String userUuid) {
 		_mbBan.setUserUuid(userUuid);
 	}
 
@@ -468,7 +468,7 @@ public class MBBanWrapper implements MBBan, ModelWrapper<MBBan> {
 	* @param uuid the uuid of this message boards ban
 	*/
 	@Override
-	public void setUuid(java.lang.String uuid) {
+	public void setUuid(String uuid) {
 		_mbBan.setUuid(uuid);
 	}
 
@@ -483,7 +483,7 @@ public class MBBanWrapper implements MBBan, ModelWrapper<MBBan> {
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _mbBan.toString();
 	}
 
@@ -493,7 +493,7 @@ public class MBBanWrapper implements MBBan, ModelWrapper<MBBan> {
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _mbBan.toXmlString();
 	}
 

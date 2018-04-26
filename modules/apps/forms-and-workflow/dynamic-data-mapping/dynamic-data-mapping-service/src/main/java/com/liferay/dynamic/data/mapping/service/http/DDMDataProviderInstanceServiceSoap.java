@@ -70,12 +70,10 @@ import java.util.Map;
 @ProviderType
 public class DDMDataProviderInstanceServiceSoap {
 	public static com.liferay.dynamic.data.mapping.model.DDMDataProviderInstanceSoap addDataProviderInstance(
-		long groupId, java.lang.String[] nameMapLanguageIds,
-		java.lang.String[] nameMapValues,
-		java.lang.String[] descriptionMapLanguageIds,
-		java.lang.String[] descriptionMapValues,
+		long groupId, String[] nameMapLanguageIds, String[] nameMapValues,
+		String[] descriptionMapLanguageIds, String[] descriptionMapValues,
 		com.liferay.dynamic.data.mapping.storage.DDMFormValues ddmFormValues,
-		java.lang.String type,
+		String type,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
@@ -125,7 +123,7 @@ public class DDMDataProviderInstanceServiceSoap {
 	}
 
 	public static com.liferay.dynamic.data.mapping.model.DDMDataProviderInstanceSoap fetchDataProviderInstanceByUuid(
-		java.lang.String uuid) throws RemoteException {
+		String uuid) throws RemoteException {
 		try {
 			com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance returnValue =
 				DDMDataProviderInstanceServiceUtil.fetchDataProviderInstanceByUuid(uuid);
@@ -155,7 +153,7 @@ public class DDMDataProviderInstanceServiceSoap {
 	}
 
 	public static com.liferay.dynamic.data.mapping.model.DDMDataProviderInstanceSoap getDataProviderInstanceByUuid(
-		java.lang.String uuid) throws RemoteException {
+		String uuid) throws RemoteException {
 		try {
 			com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance returnValue =
 				DDMDataProviderInstanceServiceUtil.getDataProviderInstanceByUuid(uuid);
@@ -202,8 +200,7 @@ public class DDMDataProviderInstanceServiceSoap {
 	}
 
 	public static com.liferay.dynamic.data.mapping.model.DDMDataProviderInstanceSoap[] search(
-		long companyId, long[] groupIds, java.lang.String keywords, int start,
-		int end,
+		long companyId, long[] groupIds, String keywords, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance> orderByComparator)
 		throws RemoteException {
 		try {
@@ -221,8 +218,8 @@ public class DDMDataProviderInstanceServiceSoap {
 	}
 
 	public static com.liferay.dynamic.data.mapping.model.DDMDataProviderInstanceSoap[] search(
-		long companyId, long[] groupIds, java.lang.String name,
-		java.lang.String description, boolean andOperator, int start, int end,
+		long companyId, long[] groupIds, String name, String description,
+		boolean andOperator, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance> orderByComparator)
 		throws RemoteException {
 		try {
@@ -241,7 +238,7 @@ public class DDMDataProviderInstanceServiceSoap {
 	}
 
 	public static int searchCount(long companyId, long[] groupIds,
-		java.lang.String keywords) throws RemoteException {
+		String keywords) throws RemoteException {
 		try {
 			int returnValue = DDMDataProviderInstanceServiceUtil.searchCount(companyId,
 					groupIds, keywords);
@@ -255,9 +252,8 @@ public class DDMDataProviderInstanceServiceSoap {
 		}
 	}
 
-	public static int searchCount(long companyId, long[] groupIds,
-		java.lang.String name, java.lang.String description, boolean andOperator)
-		throws RemoteException {
+	public static int searchCount(long companyId, long[] groupIds, String name,
+		String description, boolean andOperator) throws RemoteException {
 		try {
 			int returnValue = DDMDataProviderInstanceServiceUtil.searchCount(companyId,
 					groupIds, name, description, andOperator);
@@ -272,10 +268,9 @@ public class DDMDataProviderInstanceServiceSoap {
 	}
 
 	public static com.liferay.dynamic.data.mapping.model.DDMDataProviderInstanceSoap updateDataProviderInstance(
-		long dataProviderInstanceId, java.lang.String[] nameMapLanguageIds,
-		java.lang.String[] nameMapValues,
-		java.lang.String[] descriptionMapLanguageIds,
-		java.lang.String[] descriptionMapValues,
+		long dataProviderInstanceId, String[] nameMapLanguageIds,
+		String[] nameMapValues, String[] descriptionMapLanguageIds,
+		String[] descriptionMapValues,
 		com.liferay.dynamic.data.mapping.storage.DDMFormValues ddmFormValues,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {

@@ -246,8 +246,7 @@ public interface ExpandoColumnPersistence extends BasePersistence<ExpandoColumn>
 	* @param names the names
 	* @return the matching expando columns
 	*/
-	public java.util.List<ExpandoColumn> findByT_N(long tableId,
-		java.lang.String[] names);
+	public java.util.List<ExpandoColumn> findByT_N(long tableId, String[] names);
 
 	/**
 	* Returns a range of all the expando columns where tableId = &#63; and name = any &#63;.
@@ -263,7 +262,7 @@ public interface ExpandoColumnPersistence extends BasePersistence<ExpandoColumn>
 	* @return the range of matching expando columns
 	*/
 	public java.util.List<ExpandoColumn> findByT_N(long tableId,
-		java.lang.String[] names, int start, int end);
+		String[] names, int start, int end);
 
 	/**
 	* Returns an ordered range of all the expando columns where tableId = &#63; and name = any &#63;.
@@ -280,7 +279,7 @@ public interface ExpandoColumnPersistence extends BasePersistence<ExpandoColumn>
 	* @return the ordered range of matching expando columns
 	*/
 	public java.util.List<ExpandoColumn> findByT_N(long tableId,
-		java.lang.String[] names, int start, int end,
+		String[] names, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<ExpandoColumn> orderByComparator);
 
 	/**
@@ -299,7 +298,7 @@ public interface ExpandoColumnPersistence extends BasePersistence<ExpandoColumn>
 	* @return the ordered range of matching expando columns
 	*/
 	public java.util.List<ExpandoColumn> findByT_N(long tableId,
-		java.lang.String[] names, int start, int end,
+		String[] names, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<ExpandoColumn> orderByComparator,
 		boolean retrieveFromCache);
 
@@ -311,7 +310,7 @@ public interface ExpandoColumnPersistence extends BasePersistence<ExpandoColumn>
 	* @return the matching expando column
 	* @throws NoSuchColumnException if a matching expando column could not be found
 	*/
-	public ExpandoColumn findByT_N(long tableId, java.lang.String name)
+	public ExpandoColumn findByT_N(long tableId, String name)
 		throws NoSuchColumnException;
 
 	/**
@@ -321,7 +320,7 @@ public interface ExpandoColumnPersistence extends BasePersistence<ExpandoColumn>
 	* @param name the name
 	* @return the matching expando column, or <code>null</code> if a matching expando column could not be found
 	*/
-	public ExpandoColumn fetchByT_N(long tableId, java.lang.String name);
+	public ExpandoColumn fetchByT_N(long tableId, String name);
 
 	/**
 	* Returns the expando column where tableId = &#63; and name = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -331,7 +330,7 @@ public interface ExpandoColumnPersistence extends BasePersistence<ExpandoColumn>
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching expando column, or <code>null</code> if a matching expando column could not be found
 	*/
-	public ExpandoColumn fetchByT_N(long tableId, java.lang.String name,
+	public ExpandoColumn fetchByT_N(long tableId, String name,
 		boolean retrieveFromCache);
 
 	/**
@@ -341,7 +340,7 @@ public interface ExpandoColumnPersistence extends BasePersistence<ExpandoColumn>
 	* @param name the name
 	* @return the expando column that was removed
 	*/
-	public ExpandoColumn removeByT_N(long tableId, java.lang.String name)
+	public ExpandoColumn removeByT_N(long tableId, String name)
 		throws NoSuchColumnException;
 
 	/**
@@ -351,7 +350,7 @@ public interface ExpandoColumnPersistence extends BasePersistence<ExpandoColumn>
 	* @param name the name
 	* @return the number of matching expando columns
 	*/
-	public int countByT_N(long tableId, java.lang.String name);
+	public int countByT_N(long tableId, String name);
 
 	/**
 	* Returns the number of expando columns where tableId = &#63; and name = any &#63;.
@@ -360,7 +359,7 @@ public interface ExpandoColumnPersistence extends BasePersistence<ExpandoColumn>
 	* @param names the names
 	* @return the number of matching expando columns
 	*/
-	public int countByT_N(long tableId, java.lang.String[] names);
+	public int countByT_N(long tableId, String[] names);
 
 	/**
 	* Returns the number of expando columns that the user has permission to view where tableId = &#63; and name = &#63;.
@@ -369,7 +368,7 @@ public interface ExpandoColumnPersistence extends BasePersistence<ExpandoColumn>
 	* @param name the name
 	* @return the number of matching expando columns that the user has permission to view
 	*/
-	public int filterCountByT_N(long tableId, java.lang.String name);
+	public int filterCountByT_N(long tableId, String name);
 
 	/**
 	* Returns the number of expando columns that the user has permission to view where tableId = &#63; and name = any &#63;.
@@ -378,7 +377,7 @@ public interface ExpandoColumnPersistence extends BasePersistence<ExpandoColumn>
 	* @param names the names
 	* @return the number of matching expando columns that the user has permission to view
 	*/
-	public int filterCountByT_N(long tableId, java.lang.String[] names);
+	public int filterCountByT_N(long tableId, String[] names);
 
 	/**
 	* Caches the expando column in the entity cache if it is enabled.
@@ -500,5 +499,5 @@ public interface ExpandoColumnPersistence extends BasePersistence<ExpandoColumn>
 	public int countAll();
 
 	@Override
-	public java.util.Set<java.lang.String> getBadColumnNames();
+	public java.util.Set<String> getBadColumnNames();
 }

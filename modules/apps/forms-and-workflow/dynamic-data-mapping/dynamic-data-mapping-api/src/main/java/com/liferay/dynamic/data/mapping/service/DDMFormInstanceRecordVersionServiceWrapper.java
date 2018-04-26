@@ -43,7 +43,7 @@ public class DDMFormInstanceRecordVersionServiceWrapper
 
 	@Override
 	public com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecordVersion getFormInstanceRecordVersion(
-		long ddmFormInstanceRecordId, java.lang.String version)
+		long ddmFormInstanceRecordId, String version)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _ddmFormInstanceRecordVersionService.getFormInstanceRecordVersion(ddmFormInstanceRecordId,
 			version);
@@ -77,7 +77,7 @@ public class DDMFormInstanceRecordVersionServiceWrapper
 	* @return the OSGi service identifier
 	*/
 	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
+	public String getOSGiServiceIdentifier() {
 		return _ddmFormInstanceRecordVersionService.getOSGiServiceIdentifier();
 	}
 

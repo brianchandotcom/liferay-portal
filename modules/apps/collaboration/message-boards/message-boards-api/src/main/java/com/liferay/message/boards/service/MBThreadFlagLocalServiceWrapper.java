@@ -224,7 +224,7 @@ public class MBThreadFlagLocalServiceWrapper implements MBThreadFlagLocalService
 	*/
 	@Override
 	public com.liferay.message.boards.model.MBThreadFlag fetchMBThreadFlagByUuidAndGroupId(
-		java.lang.String uuid, long groupId) {
+		String uuid, long groupId) {
 		return _mbThreadFlagLocalService.fetchMBThreadFlagByUuidAndGroupId(uuid,
 			groupId);
 	}
@@ -269,7 +269,7 @@ public class MBThreadFlagLocalServiceWrapper implements MBThreadFlagLocalService
 	*/
 	@Override
 	public com.liferay.message.boards.model.MBThreadFlag getMBThreadFlagByUuidAndGroupId(
-		java.lang.String uuid, long groupId)
+		String uuid, long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _mbThreadFlagLocalService.getMBThreadFlagByUuidAndGroupId(uuid,
 			groupId);
@@ -301,7 +301,7 @@ public class MBThreadFlagLocalServiceWrapper implements MBThreadFlagLocalService
 	*/
 	@Override
 	public java.util.List<com.liferay.message.boards.model.MBThreadFlag> getMBThreadFlagsByUuidAndCompanyId(
-		java.lang.String uuid, long companyId) {
+		String uuid, long companyId) {
 		return _mbThreadFlagLocalService.getMBThreadFlagsByUuidAndCompanyId(uuid,
 			companyId);
 	}
@@ -318,7 +318,7 @@ public class MBThreadFlagLocalServiceWrapper implements MBThreadFlagLocalService
 	*/
 	@Override
 	public java.util.List<com.liferay.message.boards.model.MBThreadFlag> getMBThreadFlagsByUuidAndCompanyId(
-		java.lang.String uuid, long companyId, int start, int end,
+		String uuid, long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.message.boards.model.MBThreadFlag> orderByComparator) {
 		return _mbThreadFlagLocalService.getMBThreadFlagsByUuidAndCompanyId(uuid,
 			companyId, start, end, orderByComparator);
@@ -340,7 +340,7 @@ public class MBThreadFlagLocalServiceWrapper implements MBThreadFlagLocalService
 	* @return the OSGi service identifier
 	*/
 	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
+	public String getOSGiServiceIdentifier() {
 		return _mbThreadFlagLocalService.getOSGiServiceIdentifier();
 	}
 

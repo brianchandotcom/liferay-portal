@@ -22,46 +22,41 @@ import aQute.bnd.annotation.ProviderType;
  */
 @ProviderType
 public interface MDRRuleGroupFinder {
-	public int countByKeywords(long groupId, java.lang.String keywords,
-		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params);
+	public int countByKeywords(long groupId, String keywords,
+		java.util.LinkedHashMap<String, Object> params);
 
-	public int countByG_N(long groupId, java.lang.String name,
-		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
-		boolean andOperator);
+	public int countByG_N(long groupId, String name,
+		java.util.LinkedHashMap<String, Object> params, boolean andOperator);
 
-	public int countByG_N(long groupId, java.lang.String[] names,
-		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
-		boolean andOperator);
+	public int countByG_N(long groupId, String[] names,
+		java.util.LinkedHashMap<String, Object> params, boolean andOperator);
 
 	public java.util.List<com.liferay.mobile.device.rules.model.MDRRuleGroup> findByKeywords(
-		long groupId, java.lang.String keywords,
-		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
-		int start, int end);
+		long groupId, String keywords,
+		java.util.LinkedHashMap<String, Object> params, int start, int end);
 
 	public java.util.List<com.liferay.mobile.device.rules.model.MDRRuleGroup> findByKeywords(
-		long groupId, java.lang.String keywords,
-		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
-		int start, int end,
+		long groupId, String keywords,
+		java.util.LinkedHashMap<String, Object> params, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.mobile.device.rules.model.MDRRuleGroup> obc);
 
 	public java.util.List<com.liferay.mobile.device.rules.model.MDRRuleGroup> findByG_N(
-		long groupId, java.lang.String name,
-		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
-		boolean andOperator);
+		long groupId, String name,
+		java.util.LinkedHashMap<String, Object> params, boolean andOperator);
 
 	public java.util.List<com.liferay.mobile.device.rules.model.MDRRuleGroup> findByG_N(
-		long groupId, java.lang.String name,
-		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
-		boolean andOperator, int start, int end);
+		long groupId, String name,
+		java.util.LinkedHashMap<String, Object> params, boolean andOperator,
+		int start, int end);
 
 	public java.util.List<com.liferay.mobile.device.rules.model.MDRRuleGroup> findByG_N(
-		long groupId, java.lang.String[] names,
-		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
-		boolean andOperator, int start, int end);
+		long groupId, String[] names,
+		java.util.LinkedHashMap<String, Object> params, boolean andOperator,
+		int start, int end);
 
 	public java.util.List<com.liferay.mobile.device.rules.model.MDRRuleGroup> findByG_N(
-		long groupId, java.lang.String[] names,
-		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
-		boolean andOperator, int start, int end,
+		long groupId, String[] names,
+		java.util.LinkedHashMap<String, Object> params, boolean andOperator,
+		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.mobile.device.rules.model.MDRRuleGroup> obc);
 }

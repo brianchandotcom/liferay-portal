@@ -115,7 +115,7 @@ public class SocialRelationUtil {
 	* @param uuid the uuid
 	* @return the matching social relations
 	*/
-	public static List<SocialRelation> findByUuid(java.lang.String uuid) {
+	public static List<SocialRelation> findByUuid(String uuid) {
 		return getPersistence().findByUuid(uuid);
 	}
 
@@ -131,8 +131,8 @@ public class SocialRelationUtil {
 	* @param end the upper bound of the range of social relations (not inclusive)
 	* @return the range of matching social relations
 	*/
-	public static List<SocialRelation> findByUuid(java.lang.String uuid,
-		int start, int end) {
+	public static List<SocialRelation> findByUuid(String uuid, int start,
+		int end) {
 		return getPersistence().findByUuid(uuid, start, end);
 	}
 
@@ -149,8 +149,8 @@ public class SocialRelationUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching social relations
 	*/
-	public static List<SocialRelation> findByUuid(java.lang.String uuid,
-		int start, int end, OrderByComparator<SocialRelation> orderByComparator) {
+	public static List<SocialRelation> findByUuid(String uuid, int start,
+		int end, OrderByComparator<SocialRelation> orderByComparator) {
 		return getPersistence().findByUuid(uuid, start, end, orderByComparator);
 	}
 
@@ -168,9 +168,8 @@ public class SocialRelationUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching social relations
 	*/
-	public static List<SocialRelation> findByUuid(java.lang.String uuid,
-		int start, int end,
-		OrderByComparator<SocialRelation> orderByComparator,
+	public static List<SocialRelation> findByUuid(String uuid, int start,
+		int end, OrderByComparator<SocialRelation> orderByComparator,
 		boolean retrieveFromCache) {
 		return getPersistence()
 				   .findByUuid(uuid, start, end, orderByComparator,
@@ -185,7 +184,7 @@ public class SocialRelationUtil {
 	* @return the first matching social relation
 	* @throws NoSuchRelationException if a matching social relation could not be found
 	*/
-	public static SocialRelation findByUuid_First(java.lang.String uuid,
+	public static SocialRelation findByUuid_First(String uuid,
 		OrderByComparator<SocialRelation> orderByComparator)
 		throws com.liferay.social.kernel.exception.NoSuchRelationException {
 		return getPersistence().findByUuid_First(uuid, orderByComparator);
@@ -198,7 +197,7 @@ public class SocialRelationUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching social relation, or <code>null</code> if a matching social relation could not be found
 	*/
-	public static SocialRelation fetchByUuid_First(java.lang.String uuid,
+	public static SocialRelation fetchByUuid_First(String uuid,
 		OrderByComparator<SocialRelation> orderByComparator) {
 		return getPersistence().fetchByUuid_First(uuid, orderByComparator);
 	}
@@ -211,7 +210,7 @@ public class SocialRelationUtil {
 	* @return the last matching social relation
 	* @throws NoSuchRelationException if a matching social relation could not be found
 	*/
-	public static SocialRelation findByUuid_Last(java.lang.String uuid,
+	public static SocialRelation findByUuid_Last(String uuid,
 		OrderByComparator<SocialRelation> orderByComparator)
 		throws com.liferay.social.kernel.exception.NoSuchRelationException {
 		return getPersistence().findByUuid_Last(uuid, orderByComparator);
@@ -224,7 +223,7 @@ public class SocialRelationUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching social relation, or <code>null</code> if a matching social relation could not be found
 	*/
-	public static SocialRelation fetchByUuid_Last(java.lang.String uuid,
+	public static SocialRelation fetchByUuid_Last(String uuid,
 		OrderByComparator<SocialRelation> orderByComparator) {
 		return getPersistence().fetchByUuid_Last(uuid, orderByComparator);
 	}
@@ -239,8 +238,7 @@ public class SocialRelationUtil {
 	* @throws NoSuchRelationException if a social relation with the primary key could not be found
 	*/
 	public static SocialRelation[] findByUuid_PrevAndNext(long relationId,
-		java.lang.String uuid,
-		OrderByComparator<SocialRelation> orderByComparator)
+		String uuid, OrderByComparator<SocialRelation> orderByComparator)
 		throws com.liferay.social.kernel.exception.NoSuchRelationException {
 		return getPersistence()
 				   .findByUuid_PrevAndNext(relationId, uuid, orderByComparator);
@@ -251,7 +249,7 @@ public class SocialRelationUtil {
 	*
 	* @param uuid the uuid
 	*/
-	public static void removeByUuid(java.lang.String uuid) {
+	public static void removeByUuid(String uuid) {
 		getPersistence().removeByUuid(uuid);
 	}
 
@@ -261,7 +259,7 @@ public class SocialRelationUtil {
 	* @param uuid the uuid
 	* @return the number of matching social relations
 	*/
-	public static int countByUuid(java.lang.String uuid) {
+	public static int countByUuid(String uuid) {
 		return getPersistence().countByUuid(uuid);
 	}
 
@@ -272,8 +270,7 @@ public class SocialRelationUtil {
 	* @param companyId the company ID
 	* @return the matching social relations
 	*/
-	public static List<SocialRelation> findByUuid_C(java.lang.String uuid,
-		long companyId) {
+	public static List<SocialRelation> findByUuid_C(String uuid, long companyId) {
 		return getPersistence().findByUuid_C(uuid, companyId);
 	}
 
@@ -290,7 +287,7 @@ public class SocialRelationUtil {
 	* @param end the upper bound of the range of social relations (not inclusive)
 	* @return the range of matching social relations
 	*/
-	public static List<SocialRelation> findByUuid_C(java.lang.String uuid,
+	public static List<SocialRelation> findByUuid_C(String uuid,
 		long companyId, int start, int end) {
 		return getPersistence().findByUuid_C(uuid, companyId, start, end);
 	}
@@ -309,7 +306,7 @@ public class SocialRelationUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching social relations
 	*/
-	public static List<SocialRelation> findByUuid_C(java.lang.String uuid,
+	public static List<SocialRelation> findByUuid_C(String uuid,
 		long companyId, int start, int end,
 		OrderByComparator<SocialRelation> orderByComparator) {
 		return getPersistence()
@@ -331,7 +328,7 @@ public class SocialRelationUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching social relations
 	*/
-	public static List<SocialRelation> findByUuid_C(java.lang.String uuid,
+	public static List<SocialRelation> findByUuid_C(String uuid,
 		long companyId, int start, int end,
 		OrderByComparator<SocialRelation> orderByComparator,
 		boolean retrieveFromCache) {
@@ -349,7 +346,7 @@ public class SocialRelationUtil {
 	* @return the first matching social relation
 	* @throws NoSuchRelationException if a matching social relation could not be found
 	*/
-	public static SocialRelation findByUuid_C_First(java.lang.String uuid,
+	public static SocialRelation findByUuid_C_First(String uuid,
 		long companyId, OrderByComparator<SocialRelation> orderByComparator)
 		throws com.liferay.social.kernel.exception.NoSuchRelationException {
 		return getPersistence()
@@ -364,7 +361,7 @@ public class SocialRelationUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching social relation, or <code>null</code> if a matching social relation could not be found
 	*/
-	public static SocialRelation fetchByUuid_C_First(java.lang.String uuid,
+	public static SocialRelation fetchByUuid_C_First(String uuid,
 		long companyId, OrderByComparator<SocialRelation> orderByComparator) {
 		return getPersistence()
 				   .fetchByUuid_C_First(uuid, companyId, orderByComparator);
@@ -379,8 +376,8 @@ public class SocialRelationUtil {
 	* @return the last matching social relation
 	* @throws NoSuchRelationException if a matching social relation could not be found
 	*/
-	public static SocialRelation findByUuid_C_Last(java.lang.String uuid,
-		long companyId, OrderByComparator<SocialRelation> orderByComparator)
+	public static SocialRelation findByUuid_C_Last(String uuid, long companyId,
+		OrderByComparator<SocialRelation> orderByComparator)
 		throws com.liferay.social.kernel.exception.NoSuchRelationException {
 		return getPersistence()
 				   .findByUuid_C_Last(uuid, companyId, orderByComparator);
@@ -394,7 +391,7 @@ public class SocialRelationUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching social relation, or <code>null</code> if a matching social relation could not be found
 	*/
-	public static SocialRelation fetchByUuid_C_Last(java.lang.String uuid,
+	public static SocialRelation fetchByUuid_C_Last(String uuid,
 		long companyId, OrderByComparator<SocialRelation> orderByComparator) {
 		return getPersistence()
 				   .fetchByUuid_C_Last(uuid, companyId, orderByComparator);
@@ -411,7 +408,7 @@ public class SocialRelationUtil {
 	* @throws NoSuchRelationException if a social relation with the primary key could not be found
 	*/
 	public static SocialRelation[] findByUuid_C_PrevAndNext(long relationId,
-		java.lang.String uuid, long companyId,
+		String uuid, long companyId,
 		OrderByComparator<SocialRelation> orderByComparator)
 		throws com.liferay.social.kernel.exception.NoSuchRelationException {
 		return getPersistence()
@@ -425,7 +422,7 @@ public class SocialRelationUtil {
 	* @param uuid the uuid
 	* @param companyId the company ID
 	*/
-	public static void removeByUuid_C(java.lang.String uuid, long companyId) {
+	public static void removeByUuid_C(String uuid, long companyId) {
 		getPersistence().removeByUuid_C(uuid, companyId);
 	}
 
@@ -436,7 +433,7 @@ public class SocialRelationUtil {
 	* @param companyId the company ID
 	* @return the number of matching social relations
 	*/
-	public static int countByUuid_C(java.lang.String uuid, long companyId) {
+	public static int countByUuid_C(String uuid, long companyId) {
 		return getPersistence().countByUuid_C(uuid, companyId);
 	}
 
@@ -1974,7 +1971,7 @@ public class SocialRelationUtil {
 		return getPersistence().countAll();
 	}
 
-	public static java.util.Set<java.lang.String> getBadColumnNames() {
+	public static java.util.Set<String> getBadColumnNames() {
 		return getPersistence().getBadColumnNames();
 	}
 

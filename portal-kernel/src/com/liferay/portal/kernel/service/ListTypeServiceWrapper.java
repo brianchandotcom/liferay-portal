@@ -38,7 +38,7 @@ public class ListTypeServiceWrapper implements ListTypeService,
 
 	@Override
 	public java.util.List<com.liferay.portal.kernel.model.ListType> getListTypes(
-		java.lang.String type) {
+		String type) {
 		return _listTypeService.getListTypes(type);
 	}
 
@@ -48,19 +48,18 @@ public class ListTypeServiceWrapper implements ListTypeService,
 	* @return the OSGi service identifier
 	*/
 	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
+	public String getOSGiServiceIdentifier() {
 		return _listTypeService.getOSGiServiceIdentifier();
 	}
 
 	@Override
-	public void validate(long listTypeId, long classNameId,
-		java.lang.String type)
+	public void validate(long listTypeId, long classNameId, String type)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_listTypeService.validate(listTypeId, classNameId, type);
 	}
 
 	@Override
-	public void validate(long listTypeId, java.lang.String type)
+	public void validate(long listTypeId, String type)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_listTypeService.validate(listTypeId, type);
 	}

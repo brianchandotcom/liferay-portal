@@ -45,8 +45,8 @@ public class LayoutFinderUtil {
 	}
 
 	public static java.util.List<com.liferay.portal.kernel.model.LayoutReference> findByC_P_P(
-		long companyId, java.lang.String portletId,
-		java.lang.String preferencesKey, java.lang.String preferencesValue) {
+		long companyId, String portletId, String preferencesKey,
+		String preferencesValue) {
 		return getFinder()
 				   .findByC_P_P(companyId, portletId, preferencesKey,
 			preferencesValue);

@@ -58,8 +58,8 @@ public interface PollsQuestionService extends BaseService {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link PollsQuestionServiceUtil} to access the polls question remote service. Add custom service methods to {@link com.liferay.polls.service.impl.PollsQuestionServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public PollsQuestion addQuestion(Map<Locale, java.lang.String> titleMap,
-		Map<Locale, java.lang.String> descriptionMap, int expirationDateMonth,
+	public PollsQuestion addQuestion(Map<Locale, String> titleMap,
+		Map<Locale, String> descriptionMap, int expirationDateMonth,
 		int expirationDateDay, int expirationDateYear, int expirationDateHour,
 		int expirationDateMinute, boolean neverExpire,
 		List<PollsChoice> choices, ServiceContext serviceContext)
@@ -72,16 +72,15 @@ public interface PollsQuestionService extends BaseService {
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public PollsQuestion getQuestion(long questionId) throws PortalException;
 
 	public PollsQuestion updateQuestion(long questionId,
-		Map<Locale, java.lang.String> titleMap,
-		Map<Locale, java.lang.String> descriptionMap, int expirationDateMonth,
-		int expirationDateDay, int expirationDateYear, int expirationDateHour,
-		int expirationDateMinute, boolean neverExpire,
+		Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
+		int expirationDateMonth, int expirationDateDay, int expirationDateYear,
+		int expirationDateHour, int expirationDateMinute, boolean neverExpire,
 		List<PollsChoice> choices, ServiceContext serviceContext)
 		throws PortalException;
 }

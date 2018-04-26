@@ -673,7 +673,7 @@ public class SocialActivityCounterUtil {
 	* @throws NoSuchActivityCounterException if a matching social activity counter could not be found
 	*/
 	public static SocialActivityCounter findByG_C_C_N_O_S(long groupId,
-		long classNameId, long classPK, java.lang.String name, int ownerType,
+		long classNameId, long classPK, String name, int ownerType,
 		int startPeriod)
 		throws com.liferay.social.kernel.exception.NoSuchActivityCounterException {
 		return getPersistence()
@@ -693,7 +693,7 @@ public class SocialActivityCounterUtil {
 	* @return the matching social activity counter, or <code>null</code> if a matching social activity counter could not be found
 	*/
 	public static SocialActivityCounter fetchByG_C_C_N_O_S(long groupId,
-		long classNameId, long classPK, java.lang.String name, int ownerType,
+		long classNameId, long classPK, String name, int ownerType,
 		int startPeriod) {
 		return getPersistence()
 				   .fetchByG_C_C_N_O_S(groupId, classNameId, classPK, name,
@@ -713,7 +713,7 @@ public class SocialActivityCounterUtil {
 	* @return the matching social activity counter, or <code>null</code> if a matching social activity counter could not be found
 	*/
 	public static SocialActivityCounter fetchByG_C_C_N_O_S(long groupId,
-		long classNameId, long classPK, java.lang.String name, int ownerType,
+		long classNameId, long classPK, String name, int ownerType,
 		int startPeriod, boolean retrieveFromCache) {
 		return getPersistence()
 				   .fetchByG_C_C_N_O_S(groupId, classNameId, classPK, name,
@@ -732,7 +732,7 @@ public class SocialActivityCounterUtil {
 	* @return the social activity counter that was removed
 	*/
 	public static SocialActivityCounter removeByG_C_C_N_O_S(long groupId,
-		long classNameId, long classPK, java.lang.String name, int ownerType,
+		long classNameId, long classPK, String name, int ownerType,
 		int startPeriod)
 		throws com.liferay.social.kernel.exception.NoSuchActivityCounterException {
 		return getPersistence()
@@ -752,7 +752,7 @@ public class SocialActivityCounterUtil {
 	* @return the number of matching social activity counters
 	*/
 	public static int countByG_C_C_N_O_S(long groupId, long classNameId,
-		long classPK, java.lang.String name, int ownerType, int startPeriod) {
+		long classPK, String name, int ownerType, int startPeriod) {
 		return getPersistence()
 				   .countByG_C_C_N_O_S(groupId, classNameId, classPK, name,
 			ownerType, startPeriod);
@@ -771,7 +771,7 @@ public class SocialActivityCounterUtil {
 	* @throws NoSuchActivityCounterException if a matching social activity counter could not be found
 	*/
 	public static SocialActivityCounter findByG_C_C_N_O_E(long groupId,
-		long classNameId, long classPK, java.lang.String name, int ownerType,
+		long classNameId, long classPK, String name, int ownerType,
 		int endPeriod)
 		throws com.liferay.social.kernel.exception.NoSuchActivityCounterException {
 		return getPersistence()
@@ -791,7 +791,7 @@ public class SocialActivityCounterUtil {
 	* @return the matching social activity counter, or <code>null</code> if a matching social activity counter could not be found
 	*/
 	public static SocialActivityCounter fetchByG_C_C_N_O_E(long groupId,
-		long classNameId, long classPK, java.lang.String name, int ownerType,
+		long classNameId, long classPK, String name, int ownerType,
 		int endPeriod) {
 		return getPersistence()
 				   .fetchByG_C_C_N_O_E(groupId, classNameId, classPK, name,
@@ -811,7 +811,7 @@ public class SocialActivityCounterUtil {
 	* @return the matching social activity counter, or <code>null</code> if a matching social activity counter could not be found
 	*/
 	public static SocialActivityCounter fetchByG_C_C_N_O_E(long groupId,
-		long classNameId, long classPK, java.lang.String name, int ownerType,
+		long classNameId, long classPK, String name, int ownerType,
 		int endPeriod, boolean retrieveFromCache) {
 		return getPersistence()
 				   .fetchByG_C_C_N_O_E(groupId, classNameId, classPK, name,
@@ -830,7 +830,7 @@ public class SocialActivityCounterUtil {
 	* @return the social activity counter that was removed
 	*/
 	public static SocialActivityCounter removeByG_C_C_N_O_E(long groupId,
-		long classNameId, long classPK, java.lang.String name, int ownerType,
+		long classNameId, long classPK, String name, int ownerType,
 		int endPeriod)
 		throws com.liferay.social.kernel.exception.NoSuchActivityCounterException {
 		return getPersistence()
@@ -850,7 +850,7 @@ public class SocialActivityCounterUtil {
 	* @return the number of matching social activity counters
 	*/
 	public static int countByG_C_C_N_O_E(long groupId, long classNameId,
-		long classPK, java.lang.String name, int ownerType, int endPeriod) {
+		long classPK, String name, int ownerType, int endPeriod) {
 		return getPersistence()
 				   .countByG_C_C_N_O_E(groupId, classNameId, classPK, name,
 			ownerType, endPeriod);
@@ -1007,7 +1007,7 @@ public class SocialActivityCounterUtil {
 		return getPersistence().countAll();
 	}
 
-	public static java.util.Set<java.lang.String> getBadColumnNames() {
+	public static java.util.Set<String> getBadColumnNames() {
 		return getPersistence().getBadColumnNames();
 	}
 

@@ -458,7 +458,7 @@ public class SocialActivityAchievementUtil {
 	* @return the matching social activity achievements
 	*/
 	public static List<SocialActivityAchievement> findByG_N(long groupId,
-		java.lang.String name) {
+		String name) {
 		return getPersistence().findByG_N(groupId, name);
 	}
 
@@ -476,7 +476,7 @@ public class SocialActivityAchievementUtil {
 	* @return the range of matching social activity achievements
 	*/
 	public static List<SocialActivityAchievement> findByG_N(long groupId,
-		java.lang.String name, int start, int end) {
+		String name, int start, int end) {
 		return getPersistence().findByG_N(groupId, name, start, end);
 	}
 
@@ -495,7 +495,7 @@ public class SocialActivityAchievementUtil {
 	* @return the ordered range of matching social activity achievements
 	*/
 	public static List<SocialActivityAchievement> findByG_N(long groupId,
-		java.lang.String name, int start, int end,
+		String name, int start, int end,
 		OrderByComparator<SocialActivityAchievement> orderByComparator) {
 		return getPersistence()
 				   .findByG_N(groupId, name, start, end, orderByComparator);
@@ -517,7 +517,7 @@ public class SocialActivityAchievementUtil {
 	* @return the ordered range of matching social activity achievements
 	*/
 	public static List<SocialActivityAchievement> findByG_N(long groupId,
-		java.lang.String name, int start, int end,
+		String name, int start, int end,
 		OrderByComparator<SocialActivityAchievement> orderByComparator,
 		boolean retrieveFromCache) {
 		return getPersistence()
@@ -535,7 +535,7 @@ public class SocialActivityAchievementUtil {
 	* @throws NoSuchActivityAchievementException if a matching social activity achievement could not be found
 	*/
 	public static SocialActivityAchievement findByG_N_First(long groupId,
-		java.lang.String name,
+		String name,
 		OrderByComparator<SocialActivityAchievement> orderByComparator)
 		throws com.liferay.social.kernel.exception.NoSuchActivityAchievementException {
 		return getPersistence().findByG_N_First(groupId, name, orderByComparator);
@@ -550,7 +550,7 @@ public class SocialActivityAchievementUtil {
 	* @return the first matching social activity achievement, or <code>null</code> if a matching social activity achievement could not be found
 	*/
 	public static SocialActivityAchievement fetchByG_N_First(long groupId,
-		java.lang.String name,
+		String name,
 		OrderByComparator<SocialActivityAchievement> orderByComparator) {
 		return getPersistence()
 				   .fetchByG_N_First(groupId, name, orderByComparator);
@@ -566,7 +566,7 @@ public class SocialActivityAchievementUtil {
 	* @throws NoSuchActivityAchievementException if a matching social activity achievement could not be found
 	*/
 	public static SocialActivityAchievement findByG_N_Last(long groupId,
-		java.lang.String name,
+		String name,
 		OrderByComparator<SocialActivityAchievement> orderByComparator)
 		throws com.liferay.social.kernel.exception.NoSuchActivityAchievementException {
 		return getPersistence().findByG_N_Last(groupId, name, orderByComparator);
@@ -581,7 +581,7 @@ public class SocialActivityAchievementUtil {
 	* @return the last matching social activity achievement, or <code>null</code> if a matching social activity achievement could not be found
 	*/
 	public static SocialActivityAchievement fetchByG_N_Last(long groupId,
-		java.lang.String name,
+		String name,
 		OrderByComparator<SocialActivityAchievement> orderByComparator) {
 		return getPersistence().fetchByG_N_Last(groupId, name, orderByComparator);
 	}
@@ -597,7 +597,7 @@ public class SocialActivityAchievementUtil {
 	* @throws NoSuchActivityAchievementException if a social activity achievement with the primary key could not be found
 	*/
 	public static SocialActivityAchievement[] findByG_N_PrevAndNext(
-		long activityAchievementId, long groupId, java.lang.String name,
+		long activityAchievementId, long groupId, String name,
 		OrderByComparator<SocialActivityAchievement> orderByComparator)
 		throws com.liferay.social.kernel.exception.NoSuchActivityAchievementException {
 		return getPersistence()
@@ -611,7 +611,7 @@ public class SocialActivityAchievementUtil {
 	* @param groupId the group ID
 	* @param name the name
 	*/
-	public static void removeByG_N(long groupId, java.lang.String name) {
+	public static void removeByG_N(long groupId, String name) {
 		getPersistence().removeByG_N(groupId, name);
 	}
 
@@ -622,7 +622,7 @@ public class SocialActivityAchievementUtil {
 	* @param name the name
 	* @return the number of matching social activity achievements
 	*/
-	public static int countByG_N(long groupId, java.lang.String name) {
+	public static int countByG_N(long groupId, String name) {
 		return getPersistence().countByG_N(groupId, name);
 	}
 
@@ -816,7 +816,7 @@ public class SocialActivityAchievementUtil {
 	* @throws NoSuchActivityAchievementException if a matching social activity achievement could not be found
 	*/
 	public static SocialActivityAchievement findByG_U_N(long groupId,
-		long userId, java.lang.String name)
+		long userId, String name)
 		throws com.liferay.social.kernel.exception.NoSuchActivityAchievementException {
 		return getPersistence().findByG_U_N(groupId, userId, name);
 	}
@@ -830,7 +830,7 @@ public class SocialActivityAchievementUtil {
 	* @return the matching social activity achievement, or <code>null</code> if a matching social activity achievement could not be found
 	*/
 	public static SocialActivityAchievement fetchByG_U_N(long groupId,
-		long userId, java.lang.String name) {
+		long userId, String name) {
 		return getPersistence().fetchByG_U_N(groupId, userId, name);
 	}
 
@@ -844,7 +844,7 @@ public class SocialActivityAchievementUtil {
 	* @return the matching social activity achievement, or <code>null</code> if a matching social activity achievement could not be found
 	*/
 	public static SocialActivityAchievement fetchByG_U_N(long groupId,
-		long userId, java.lang.String name, boolean retrieveFromCache) {
+		long userId, String name, boolean retrieveFromCache) {
 		return getPersistence()
 				   .fetchByG_U_N(groupId, userId, name, retrieveFromCache);
 	}
@@ -858,7 +858,7 @@ public class SocialActivityAchievementUtil {
 	* @return the social activity achievement that was removed
 	*/
 	public static SocialActivityAchievement removeByG_U_N(long groupId,
-		long userId, java.lang.String name)
+		long userId, String name)
 		throws com.liferay.social.kernel.exception.NoSuchActivityAchievementException {
 		return getPersistence().removeByG_U_N(groupId, userId, name);
 	}
@@ -871,8 +871,7 @@ public class SocialActivityAchievementUtil {
 	* @param name the name
 	* @return the number of matching social activity achievements
 	*/
-	public static int countByG_U_N(long groupId, long userId,
-		java.lang.String name) {
+	public static int countByG_U_N(long groupId, long userId, String name) {
 		return getPersistence().countByG_U_N(groupId, userId, name);
 	}
 

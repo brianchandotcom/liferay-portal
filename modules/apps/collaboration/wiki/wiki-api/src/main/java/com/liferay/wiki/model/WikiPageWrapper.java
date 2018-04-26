@@ -241,7 +241,7 @@ public class WikiPageWrapper implements WikiPage, ModelWrapper<WikiPage> {
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new WikiPageWrapper((WikiPage)_wikiPage.clone());
 	}
 
@@ -282,7 +282,7 @@ public class WikiPageWrapper implements WikiPage, ModelWrapper<WikiPage> {
 
 	@Override
 	public java.util.List<com.liferay.portal.kernel.repository.model.FileEntry> getAttachmentsFileEntries(
-		java.lang.String[] mimeTypes, int start, int end,
+		String[] mimeTypes, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.kernel.repository.model.FileEntry> obc)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _wikiPage.getAttachmentsFileEntries(mimeTypes, start, end, obc);
@@ -295,7 +295,7 @@ public class WikiPageWrapper implements WikiPage, ModelWrapper<WikiPage> {
 	}
 
 	@Override
-	public int getAttachmentsFileEntriesCount(java.lang.String[] mimeTypes)
+	public int getAttachmentsFileEntriesCount(String[] mimeTypes)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _wikiPage.getAttachmentsFileEntriesCount(mimeTypes);
 	}
@@ -336,7 +336,7 @@ public class WikiPageWrapper implements WikiPage, ModelWrapper<WikiPage> {
 	* @return the container name of this wiki page
 	*/
 	@Override
-	public java.lang.String getContainerModelName() {
+	public String getContainerModelName() {
 		return _wikiPage.getContainerModelName();
 	}
 
@@ -346,7 +346,7 @@ public class WikiPageWrapper implements WikiPage, ModelWrapper<WikiPage> {
 	* @return the content of this wiki page
 	*/
 	@Override
-	public java.lang.String getContent() {
+	public String getContent() {
 		return _wikiPage.getContent();
 	}
 
@@ -390,7 +390,7 @@ public class WikiPageWrapper implements WikiPage, ModelWrapper<WikiPage> {
 	* @return the format of this wiki page
 	*/
 	@Override
-	public java.lang.String getFormat() {
+	public String getFormat() {
 		return _wikiPage.getFormat();
 	}
 
@@ -501,7 +501,7 @@ public class WikiPageWrapper implements WikiPage, ModelWrapper<WikiPage> {
 	* @return the parent title of this wiki page
 	*/
 	@Override
-	public java.lang.String getParentTitle() {
+	public String getParentTitle() {
 		return _wikiPage.getParentTitle();
 	}
 
@@ -532,7 +532,7 @@ public class WikiPageWrapper implements WikiPage, ModelWrapper<WikiPage> {
 	* @return the redirect title of this wiki page
 	*/
 	@Override
-	public java.lang.String getRedirectTitle() {
+	public String getRedirectTitle() {
 		return _wikiPage.getRedirectTitle();
 	}
 
@@ -572,7 +572,7 @@ public class WikiPageWrapper implements WikiPage, ModelWrapper<WikiPage> {
 	* @return the status by user name of this wiki page
 	*/
 	@Override
-	public java.lang.String getStatusByUserName() {
+	public String getStatusByUserName() {
 		return _wikiPage.getStatusByUserName();
 	}
 
@@ -582,7 +582,7 @@ public class WikiPageWrapper implements WikiPage, ModelWrapper<WikiPage> {
 	* @return the status by user uuid of this wiki page
 	*/
 	@Override
-	public java.lang.String getStatusByUserUuid() {
+	public String getStatusByUserUuid() {
 		return _wikiPage.getStatusByUserUuid();
 	}
 
@@ -602,7 +602,7 @@ public class WikiPageWrapper implements WikiPage, ModelWrapper<WikiPage> {
 	* @return the summary of this wiki page
 	*/
 	@Override
-	public java.lang.String getSummary() {
+	public String getSummary() {
 		return _wikiPage.getSummary();
 	}
 
@@ -612,7 +612,7 @@ public class WikiPageWrapper implements WikiPage, ModelWrapper<WikiPage> {
 	* @return the title of this wiki page
 	*/
 	@Override
-	public java.lang.String getTitle() {
+	public String getTitle() {
 		return _wikiPage.getTitle();
 	}
 
@@ -665,7 +665,7 @@ public class WikiPageWrapper implements WikiPage, ModelWrapper<WikiPage> {
 	* @return the user name of this wiki page
 	*/
 	@Override
-	public java.lang.String getUserName() {
+	public String getUserName() {
 		return _wikiPage.getUserName();
 	}
 
@@ -675,7 +675,7 @@ public class WikiPageWrapper implements WikiPage, ModelWrapper<WikiPage> {
 	* @return the user uuid of this wiki page
 	*/
 	@Override
-	public java.lang.String getUserUuid() {
+	public String getUserUuid() {
 		return _wikiPage.getUserUuid();
 	}
 
@@ -685,7 +685,7 @@ public class WikiPageWrapper implements WikiPage, ModelWrapper<WikiPage> {
 	* @return the uuid of this wiki page
 	*/
 	@Override
-	public java.lang.String getUuid() {
+	public String getUuid() {
 		return _wikiPage.getUuid();
 	}
 
@@ -910,7 +910,7 @@ public class WikiPageWrapper implements WikiPage, ModelWrapper<WikiPage> {
 	* @param content the content of this wiki page
 	*/
 	@Override
-	public void setContent(java.lang.String content) {
+	public void setContent(String content) {
 		_wikiPage.setContent(content);
 	}
 
@@ -946,7 +946,7 @@ public class WikiPageWrapper implements WikiPage, ModelWrapper<WikiPage> {
 	* @param format the format of this wiki page
 	*/
 	@Override
-	public void setFormat(java.lang.String format) {
+	public void setFormat(String format) {
 		_wikiPage.setFormat(format);
 	}
 
@@ -1041,7 +1041,7 @@ public class WikiPageWrapper implements WikiPage, ModelWrapper<WikiPage> {
 	* @param parentTitle the parent title of this wiki page
 	*/
 	@Override
-	public void setParentTitle(java.lang.String parentTitle) {
+	public void setParentTitle(String parentTitle) {
 		_wikiPage.setParentTitle(parentTitle);
 	}
 
@@ -1066,7 +1066,7 @@ public class WikiPageWrapper implements WikiPage, ModelWrapper<WikiPage> {
 	* @param redirectTitle the redirect title of this wiki page
 	*/
 	@Override
-	public void setRedirectTitle(java.lang.String redirectTitle) {
+	public void setRedirectTitle(String redirectTitle) {
 		_wikiPage.setRedirectTitle(redirectTitle);
 	}
 
@@ -1106,7 +1106,7 @@ public class WikiPageWrapper implements WikiPage, ModelWrapper<WikiPage> {
 	* @param statusByUserName the status by user name of this wiki page
 	*/
 	@Override
-	public void setStatusByUserName(java.lang.String statusByUserName) {
+	public void setStatusByUserName(String statusByUserName) {
 		_wikiPage.setStatusByUserName(statusByUserName);
 	}
 
@@ -1116,7 +1116,7 @@ public class WikiPageWrapper implements WikiPage, ModelWrapper<WikiPage> {
 	* @param statusByUserUuid the status by user uuid of this wiki page
 	*/
 	@Override
-	public void setStatusByUserUuid(java.lang.String statusByUserUuid) {
+	public void setStatusByUserUuid(String statusByUserUuid) {
 		_wikiPage.setStatusByUserUuid(statusByUserUuid);
 	}
 
@@ -1136,7 +1136,7 @@ public class WikiPageWrapper implements WikiPage, ModelWrapper<WikiPage> {
 	* @param summary the summary of this wiki page
 	*/
 	@Override
-	public void setSummary(java.lang.String summary) {
+	public void setSummary(String summary) {
 		_wikiPage.setSummary(summary);
 	}
 
@@ -1146,7 +1146,7 @@ public class WikiPageWrapper implements WikiPage, ModelWrapper<WikiPage> {
 	* @param title the title of this wiki page
 	*/
 	@Override
-	public void setTitle(java.lang.String title) {
+	public void setTitle(String title) {
 		_wikiPage.setTitle(title);
 	}
 
@@ -1166,7 +1166,7 @@ public class WikiPageWrapper implements WikiPage, ModelWrapper<WikiPage> {
 	* @param userName the user name of this wiki page
 	*/
 	@Override
-	public void setUserName(java.lang.String userName) {
+	public void setUserName(String userName) {
 		_wikiPage.setUserName(userName);
 	}
 
@@ -1176,7 +1176,7 @@ public class WikiPageWrapper implements WikiPage, ModelWrapper<WikiPage> {
 	* @param userUuid the user uuid of this wiki page
 	*/
 	@Override
-	public void setUserUuid(java.lang.String userUuid) {
+	public void setUserUuid(String userUuid) {
 		_wikiPage.setUserUuid(userUuid);
 	}
 
@@ -1186,7 +1186,7 @@ public class WikiPageWrapper implements WikiPage, ModelWrapper<WikiPage> {
 	* @param uuid the uuid of this wiki page
 	*/
 	@Override
-	public void setUuid(java.lang.String uuid) {
+	public void setUuid(String uuid) {
 		_wikiPage.setUuid(uuid);
 	}
 
@@ -1211,7 +1211,7 @@ public class WikiPageWrapper implements WikiPage, ModelWrapper<WikiPage> {
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _wikiPage.toString();
 	}
 
@@ -1221,7 +1221,7 @@ public class WikiPageWrapper implements WikiPage, ModelWrapper<WikiPage> {
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _wikiPage.toXmlString();
 	}
 

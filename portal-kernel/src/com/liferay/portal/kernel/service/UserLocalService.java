@@ -83,10 +83,9 @@ public interface UserLocalService extends BaseLocalService,
 	* @param lastName the user's last name
 	* @return the new default admin user
 	*/
-	public User addDefaultAdminUser(long companyId,
-		java.lang.String screenName, java.lang.String emailAddress,
-		Locale locale, java.lang.String firstName, java.lang.String middleName,
-		java.lang.String lastName) throws PortalException;
+	public User addDefaultAdminUser(long companyId, String screenName,
+		String emailAddress, Locale locale, String firstName,
+		String middleName, String lastName) throws PortalException;
 
 	/**
 	* Adds the user to the default groups, unless the user is already in these
@@ -238,14 +237,12 @@ public interface UserLocalService extends BaseLocalService,
 	* @return the new user
 	*/
 	public User addUser(long creatorUserId, long companyId,
-		boolean autoPassword, java.lang.String password1,
-		java.lang.String password2, boolean autoScreenName,
-		java.lang.String screenName, java.lang.String emailAddress,
-		long facebookId, java.lang.String openId, Locale locale,
-		java.lang.String firstName, java.lang.String middleName,
-		java.lang.String lastName, long prefixId, long suffixId, boolean male,
-		int birthdayMonth, int birthdayDay, int birthdayYear,
-		java.lang.String jobTitle, long[] groupIds, long[] organizationIds,
+		boolean autoPassword, String password1, String password2,
+		boolean autoScreenName, String screenName, String emailAddress,
+		long facebookId, String openId, Locale locale, String firstName,
+		String middleName, String lastName, long prefixId, long suffixId,
+		boolean male, int birthdayMonth, int birthdayDay, int birthdayYear,
+		String jobTitle, long[] groupIds, long[] organizationIds,
 		long[] roleIds, long[] userGroupIds, boolean sendEmail,
 		ServiceContext serviceContext) throws PortalException;
 
@@ -321,14 +318,12 @@ public interface UserLocalService extends BaseLocalService,
 	* @return the new user
 	*/
 	public User addUserWithWorkflow(long creatorUserId, long companyId,
-		boolean autoPassword, java.lang.String password1,
-		java.lang.String password2, boolean autoScreenName,
-		java.lang.String screenName, java.lang.String emailAddress,
-		long facebookId, java.lang.String openId, Locale locale,
-		java.lang.String firstName, java.lang.String middleName,
-		java.lang.String lastName, long prefixId, long suffixId, boolean male,
-		int birthdayMonth, int birthdayDay, int birthdayYear,
-		java.lang.String jobTitle, long[] groupIds, long[] organizationIds,
+		boolean autoPassword, String password1, String password2,
+		boolean autoScreenName, String screenName, String emailAddress,
+		long facebookId, String openId, Locale locale, String firstName,
+		String middleName, String lastName, long prefixId, long suffixId,
+		boolean male, int birthdayMonth, int birthdayDay, int birthdayYear,
+		String jobTitle, long[] groupIds, long[] organizationIds,
 		long[] roleIds, long[] userGroupIds, boolean sendEmail,
 		ServiceContext serviceContext) throws PortalException;
 
@@ -352,11 +347,9 @@ public interface UserLocalService extends BaseLocalService,
 	* @see AuthPipeline
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS)
-	public int authenticateByEmailAddress(long companyId,
-		java.lang.String emailAddress, java.lang.String password,
-		Map<java.lang.String, java.lang.String[]> headerMap,
-		Map<java.lang.String, java.lang.String[]> parameterMap,
-		Map<java.lang.String, java.lang.Object> resultsMap)
+	public int authenticateByEmailAddress(long companyId, String emailAddress,
+		String password, Map<String, String[]> headerMap,
+		Map<String, String[]> parameterMap, Map<String, Object> resultsMap)
 		throws PortalException;
 
 	/**
@@ -379,11 +372,9 @@ public interface UserLocalService extends BaseLocalService,
 	* @see AuthPipeline
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS)
-	public int authenticateByScreenName(long companyId,
-		java.lang.String screenName, java.lang.String password,
-		Map<java.lang.String, java.lang.String[]> headerMap,
-		Map<java.lang.String, java.lang.String[]> parameterMap,
-		Map<java.lang.String, java.lang.Object> resultsMap)
+	public int authenticateByScreenName(long companyId, String screenName,
+		String password, Map<String, String[]> headerMap,
+		Map<String, String[]> parameterMap, Map<String, Object> resultsMap)
 		throws PortalException;
 
 	/**
@@ -407,10 +398,8 @@ public interface UserLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS)
 	public int authenticateByUserId(long companyId, long userId,
-		java.lang.String password,
-		Map<java.lang.String, java.lang.String[]> headerMap,
-		Map<java.lang.String, java.lang.String[]> parameterMap,
-		Map<java.lang.String, java.lang.Object> resultsMap)
+		String password, Map<String, String[]> headerMap,
+		Map<String, String[]> parameterMap, Map<String, Object> resultsMap)
 		throws PortalException;
 
 	/**
@@ -447,9 +436,8 @@ public interface UserLocalService extends BaseLocalService,
 	<code>0</code> otherwise
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS)
-	public long authenticateForBasic(long companyId, java.lang.String authType,
-		java.lang.String login, java.lang.String password)
-		throws PortalException;
+	public long authenticateForBasic(long companyId, String authType,
+		String login, String password) throws PortalException;
 
 	/**
 	* Attempts to authenticate the user using HTTP digest access
@@ -468,10 +456,9 @@ public interface UserLocalService extends BaseLocalService,
 	<code>0</code> otherwise
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS)
-	public long authenticateForDigest(long companyId,
-		java.lang.String username, java.lang.String realm,
-		java.lang.String nonce, java.lang.String method, java.lang.String uri,
-		java.lang.String response) throws PortalException;
+	public long authenticateForDigest(long companyId, String username,
+		String realm, String nonce, String method, String uri, String response)
+		throws PortalException;
 
 	/**
 	* Attempts to authenticate the user using JAAS credentials, without using
@@ -483,7 +470,7 @@ public interface UserLocalService extends BaseLocalService,
 	<code>false</code> otherwise
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public boolean authenticateForJAAS(long userId, java.lang.String encPassword);
+	public boolean authenticateForJAAS(long userId, String encPassword);
 
 	/**
 	* Checks if the user is currently locked out based on the password policy,
@@ -509,7 +496,7 @@ public interface UserLocalService extends BaseLocalService,
 	* @param emailAddress the user's email address
 	*/
 	public void checkLoginFailureByEmailAddress(long companyId,
-		java.lang.String emailAddress) throws PortalException;
+		String emailAddress) throws PortalException;
 
 	/**
 	* Adds a failed login attempt to the user and updates the user's last
@@ -526,8 +513,8 @@ public interface UserLocalService extends BaseLocalService,
 	* @param companyId the primary key of the user's company
 	* @param screenName the user's screen name
 	*/
-	public void checkLoginFailureByScreenName(long companyId,
-		java.lang.String screenName) throws PortalException;
+	public void checkLoginFailureByScreenName(long companyId, String screenName)
+		throws PortalException;
 
 	/**
 	* Checks if the user's password is expired based on the password policy,
@@ -583,8 +570,8 @@ public interface UserLocalService extends BaseLocalService,
 	* @param password the encrypted password of the user
 	* @return the user's primary key and password
 	*/
-	public KeyValuePair decryptUserId(long companyId, java.lang.String name,
-		java.lang.String password) throws PortalException;
+	public KeyValuePair decryptUserId(long companyId, String name,
+		String password) throws PortalException;
 
 	public void deleteGroupUser(long groupId, long userId);
 
@@ -743,8 +730,7 @@ public interface UserLocalService extends BaseLocalService,
 	* @return the user's encrypted primary key
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.lang.String encryptUserId(java.lang.String name)
-		throws PortalException;
+	public String encryptUserId(String name) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public User fetchUser(long userId);
@@ -768,8 +754,7 @@ public interface UserLocalService extends BaseLocalService,
 	with the email address could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public User fetchUserByEmailAddress(long companyId,
-		java.lang.String emailAddress);
+	public User fetchUserByEmailAddress(long companyId, String emailAddress);
 
 	/**
 	* Returns the user with the Facebook ID.
@@ -791,8 +776,7 @@ public interface UserLocalService extends BaseLocalService,
 	with the Google user ID could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public User fetchUserByGoogleUserId(long companyId,
-		java.lang.String googleUserId);
+	public User fetchUserByGoogleUserId(long companyId, String googleUserId);
 
 	/**
 	* Returns the user with the primary key.
@@ -813,7 +797,7 @@ public interface UserLocalService extends BaseLocalService,
 	OpenID could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public User fetchUserByOpenId(long companyId, java.lang.String openId);
+	public User fetchUserByOpenId(long companyId, String openId);
 
 	/**
 	* Returns the user with the portrait ID.
@@ -834,8 +818,7 @@ public interface UserLocalService extends BaseLocalService,
 	with the screen name could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public User fetchUserByScreenName(long companyId,
-		java.lang.String screenName);
+	public User fetchUserByScreenName(long companyId, String screenName);
 
 	/**
 	* Returns the user with the matching UUID and company.
@@ -845,8 +828,7 @@ public interface UserLocalService extends BaseLocalService,
 	* @return the matching user, or <code>null</code> if a matching user could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public User fetchUserByUuidAndCompanyId(java.lang.String uuid,
-		long companyId);
+	public User fetchUserByUuidAndCompanyId(String uuid, long companyId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
@@ -961,7 +943,7 @@ public interface UserLocalService extends BaseLocalService,
 	* @return the users who have not had any annoucements of the type delivered
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<User> getNoAnnouncementsDeliveries(java.lang.String type);
+	public List<User> getNoAnnouncementsDeliveries(String type);
 
 	/**
 	* Returns all the users who do not have any contacts.
@@ -1029,7 +1011,7 @@ public interface UserLocalService extends BaseLocalService,
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -1103,7 +1085,7 @@ public interface UserLocalService extends BaseLocalService,
 	* @deprecated As of 7.0.0, replaced by {@link #getSocialUsers(long, int,
 	String, int, int, OrderByComparator)}
 	*/
-	@java.lang.Deprecated
+	@Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<User> getSocialUsers(long userId, int socialRelationType,
 		int start, int end, OrderByComparator<User> obc)
@@ -1132,14 +1114,14 @@ public interface UserLocalService extends BaseLocalService,
 	* @deprecated As of 7.0.0, replaced by {@link #getSocialUsers(long, int,
 	String, int, int, OrderByComparator)}
 	*/
-	@java.lang.Deprecated
+	@Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<User> getSocialUsers(long userId, int start, int end,
 		OrderByComparator<User> obc) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<User> getSocialUsers(long userId, int socialRelationType,
-		java.lang.String socialRelationTypeComparator, int start, int end,
+		String socialRelationTypeComparator, int start, int end,
 		OrderByComparator<User> obc) throws PortalException;
 
 	/**
@@ -1205,7 +1187,7 @@ public interface UserLocalService extends BaseLocalService,
 	* @deprecated As of 7.0.0, replaced by {@link #getSocialUsersCount(long,
 	int, String)}
 	*/
-	@java.lang.Deprecated
+	@Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getSocialUsersCount(long userId) throws PortalException;
 
@@ -1221,7 +1203,7 @@ public interface UserLocalService extends BaseLocalService,
 	* @deprecated As of 7.0.0, replaced by {@link #getSocialUsersCount(long,
 	int, String)}
 	*/
-	@java.lang.Deprecated
+	@Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getSocialUsersCount(long userId, int socialRelationType)
 		throws PortalException;
@@ -1236,8 +1218,7 @@ public interface UserLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getSocialUsersCount(long userId, int socialRelationType,
-		java.lang.String socialRelationTypeComparator)
-		throws PortalException;
+		String socialRelationTypeComparator) throws PortalException;
 
 	/**
 	* Returns the number of users with a mutual social relation with both of
@@ -1315,8 +1296,8 @@ public interface UserLocalService extends BaseLocalService,
 	* @return the user with the email address
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public User getUserByEmailAddress(long companyId,
-		java.lang.String emailAddress) throws PortalException;
+	public User getUserByEmailAddress(long companyId, String emailAddress)
+		throws PortalException;
 
 	/**
 	* Returns the user with the Facebook ID.
@@ -1337,8 +1318,8 @@ public interface UserLocalService extends BaseLocalService,
 	* @return the user with the Google user ID
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public User getUserByGoogleUserId(long companyId,
-		java.lang.String googleUserId) throws PortalException;
+	public User getUserByGoogleUserId(long companyId, String googleUserId)
+		throws PortalException;
 
 	/**
 	* Returns the user with the primary key.
@@ -1368,7 +1349,7 @@ public interface UserLocalService extends BaseLocalService,
 	* @return the user with the OpenID
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public User getUserByOpenId(long companyId, java.lang.String openId)
+	public User getUserByOpenId(long companyId, String openId)
 		throws PortalException;
 
 	/**
@@ -1388,7 +1369,7 @@ public interface UserLocalService extends BaseLocalService,
 	* @return the user with the screen name
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public User getUserByScreenName(long companyId, java.lang.String screenName)
+	public User getUserByScreenName(long companyId, String screenName)
 		throws PortalException;
 
 	/**
@@ -1400,7 +1381,7 @@ public interface UserLocalService extends BaseLocalService,
 	* @throws PortalException if a matching user could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public User getUserByUuidAndCompanyId(java.lang.String uuid, long companyId)
+	public User getUserByUuidAndCompanyId(String uuid, long companyId)
 		throws PortalException;
 
 	/**
@@ -1444,8 +1425,8 @@ public interface UserLocalService extends BaseLocalService,
 	* @return the primary key of the user with the email address
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public long getUserIdByEmailAddress(long companyId,
-		java.lang.String emailAddress) throws PortalException;
+	public long getUserIdByEmailAddress(long companyId, String emailAddress)
+		throws PortalException;
 
 	/**
 	* Returns the primary key of the user with the screen name.
@@ -1455,8 +1436,8 @@ public interface UserLocalService extends BaseLocalService,
 	* @return the primary key of the user with the screen name
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public long getUserIdByScreenName(long companyId,
-		java.lang.String screenName) throws PortalException;
+	public long getUserIdByScreenName(long companyId, String screenName)
+		throws PortalException;
 
 	/**
 	* Returns a range of all the users.
@@ -1528,8 +1509,8 @@ public interface UserLocalService extends BaseLocalService,
 	otherwise
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public boolean hasRoleUser(long companyId, java.lang.String name,
-		long userId, boolean inherited) throws PortalException;
+	public boolean hasRoleUser(long companyId, String name, long userId,
+		boolean inherited) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public boolean hasRoleUsers(long roleId);
@@ -1566,7 +1547,7 @@ public interface UserLocalService extends BaseLocalService,
 	<code>false</code> otherwise
 	* @deprecated As of 7.0.0
 	*/
-	@java.lang.Deprecated
+	@Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public boolean isPasswordExpiringSoon(User user) throws PortalException;
 
@@ -1610,9 +1591,9 @@ public interface UserLocalService extends BaseLocalService,
 	* @see com.liferay.portal.kernel.service.persistence.UserFinder
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<User> search(long companyId, java.lang.String keywords,
-		int status, LinkedHashMap<java.lang.String, java.lang.Object> params,
-		int start, int end, OrderByComparator<User> obc);
+	public List<User> search(long companyId, String keywords, int status,
+		LinkedHashMap<String, Object> params, int start, int end,
+		OrderByComparator<User> obc);
 
 	/**
 	* Returns an ordered range of all the users who match the keywords and
@@ -1644,14 +1625,12 @@ public interface UserLocalService extends BaseLocalService,
 	* @see com.liferay.portlet.usersadmin.util.UserIndexer
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Hits search(long companyId, java.lang.String keywords, int status,
-		LinkedHashMap<java.lang.String, java.lang.Object> params, int start,
-		int end, Sort sort);
+	public Hits search(long companyId, String keywords, int status,
+		LinkedHashMap<String, Object> params, int start, int end, Sort sort);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Hits search(long companyId, java.lang.String keywords, int status,
-		LinkedHashMap<java.lang.String, java.lang.Object> params, int start,
-		int end, Sort[] sorts);
+	public Hits search(long companyId, String keywords, int status,
+		LinkedHashMap<String, Object> params, int start, int end, Sort[] sorts);
 
 	/**
 	* Returns an ordered range of all the users with the status, and whose
@@ -1692,10 +1671,9 @@ public interface UserLocalService extends BaseLocalService,
 	* @see com.liferay.portal.kernel.service.persistence.UserFinder
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<User> search(long companyId, java.lang.String firstName,
-		java.lang.String middleName, java.lang.String lastName,
-		java.lang.String screenName, java.lang.String emailAddress, int status,
-		LinkedHashMap<java.lang.String, java.lang.Object> params,
+	public List<User> search(long companyId, String firstName,
+		String middleName, String lastName, String screenName,
+		String emailAddress, int status, LinkedHashMap<String, Object> params,
 		boolean andSearch, int start, int end, OrderByComparator<User> obc);
 
 	/**
@@ -1736,18 +1714,16 @@ public interface UserLocalService extends BaseLocalService,
 	* @see com.liferay.portlet.usersadmin.util.UserIndexer
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Hits search(long companyId, java.lang.String firstName,
-		java.lang.String middleName, java.lang.String lastName,
-		java.lang.String screenName, java.lang.String emailAddress, int status,
-		LinkedHashMap<java.lang.String, java.lang.Object> params,
-		boolean andSearch, int start, int end, Sort sort);
+	public Hits search(long companyId, String firstName, String middleName,
+		String lastName, String screenName, String emailAddress, int status,
+		LinkedHashMap<String, Object> params, boolean andSearch, int start,
+		int end, Sort sort);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Hits search(long companyId, java.lang.String firstName,
-		java.lang.String middleName, java.lang.String lastName,
-		java.lang.String screenName, java.lang.String emailAddress, int status,
-		LinkedHashMap<java.lang.String, java.lang.Object> params,
-		boolean andSearch, int start, int end, Sort[] sorts);
+	public Hits search(long companyId, String firstName, String middleName,
+		String lastName, String screenName, String emailAddress, int status,
+		LinkedHashMap<String, Object> params, boolean andSearch, int start,
+		int end, Sort[] sorts);
 
 	/**
 	* Returns the number of users who match the keywords and status.
@@ -1763,8 +1739,8 @@ public interface UserLocalService extends BaseLocalService,
 	* @return the number matching users
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int searchCount(long companyId, java.lang.String keywords,
-		int status, LinkedHashMap<java.lang.String, java.lang.Object> params);
+	public int searchCount(long companyId, String keywords, int status,
+		LinkedHashMap<String, Object> params);
 
 	/**
 	* Returns the number of users with the status, and whose first name, middle
@@ -1788,59 +1764,50 @@ public interface UserLocalService extends BaseLocalService,
 	* @return the number of matching users
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int searchCount(long companyId, java.lang.String firstName,
-		java.lang.String middleName, java.lang.String lastName,
-		java.lang.String screenName, java.lang.String emailAddress, int status,
-		LinkedHashMap<java.lang.String, java.lang.Object> params,
-		boolean andSearch);
+	public int searchCount(long companyId, String firstName, String middleName,
+		String lastName, String screenName, String emailAddress, int status,
+		LinkedHashMap<String, Object> params, boolean andSearch);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Map<java.lang.Long, java.lang.Integer> searchCounts(long companyId,
-		int status, long[] groupIds);
+	public Map<Long, Integer> searchCounts(long companyId, int status,
+		long[] groupIds);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<User> searchSocial(long userId, int[] socialRelationTypes,
-		java.lang.String keywords, int start, int end)
-		throws PortalException;
+		String keywords, int start, int end) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<User> searchSocial(long companyId, long[] groupIds,
-		java.lang.String keywords, int start, int end);
+		String keywords, int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<User> searchSocial(long[] groupIds, long userId,
-		int[] socialRelationTypes, java.lang.String keywords, int start, int end)
+		int[] socialRelationTypes, String keywords, int start, int end)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public BaseModelSearchResult<User> searchUsers(long companyId,
-		java.lang.String keywords, int status,
-		LinkedHashMap<java.lang.String, java.lang.Object> params, int start,
+		String keywords, int status, LinkedHashMap<String, Object> params,
+		int start, int end, Sort sort) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public BaseModelSearchResult<User> searchUsers(long companyId,
+		String keywords, int status, LinkedHashMap<String, Object> params,
+		int start, int end, Sort[] sorts) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public BaseModelSearchResult<User> searchUsers(long companyId,
+		String firstName, String middleName, String lastName,
+		String screenName, String emailAddress, int status,
+		LinkedHashMap<String, Object> params, boolean andSearch, int start,
 		int end, Sort sort) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public BaseModelSearchResult<User> searchUsers(long companyId,
-		java.lang.String keywords, int status,
-		LinkedHashMap<java.lang.String, java.lang.Object> params, int start,
+		String firstName, String middleName, String lastName,
+		String screenName, String emailAddress, int status,
+		LinkedHashMap<String, Object> params, boolean andSearch, int start,
 		int end, Sort[] sorts) throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public BaseModelSearchResult<User> searchUsers(long companyId,
-		java.lang.String firstName, java.lang.String middleName,
-		java.lang.String lastName, java.lang.String screenName,
-		java.lang.String emailAddress, int status,
-		LinkedHashMap<java.lang.String, java.lang.Object> params,
-		boolean andSearch, int start, int end, Sort sort)
-		throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public BaseModelSearchResult<User> searchUsers(long companyId,
-		java.lang.String firstName, java.lang.String middleName,
-		java.lang.String lastName, java.lang.String screenName,
-		java.lang.String emailAddress, int status,
-		LinkedHashMap<java.lang.String, java.lang.Object> params,
-		boolean andSearch, int start, int end, Sort[] sorts)
-		throws PortalException;
 
 	/**
 	* Sends an email address verification to the user.
@@ -1851,9 +1818,8 @@ public interface UserLocalService extends BaseLocalService,
 	portal URL, main path, primary key of the layout, remote address,
 	remote host, and agent for the user.
 	*/
-	public void sendEmailAddressVerification(User user,
-		java.lang.String emailAddress, ServiceContext serviceContext)
-		throws PortalException;
+	public void sendEmailAddressVerification(User user, String emailAddress,
+		ServiceContext serviceContext) throws PortalException;
 
 	/**
 	* Sends the password email to the user with the email address. The content
@@ -1871,9 +1837,8 @@ public interface UserLocalService extends BaseLocalService,
 	<code>portal.properties</code> will be used.
 	* @param serviceContext the service context to be applied
 	*/
-	public boolean sendPassword(long companyId, java.lang.String emailAddress,
-		java.lang.String fromName, java.lang.String fromAddress,
-		java.lang.String subject, java.lang.String body,
+	public boolean sendPassword(long companyId, String emailAddress,
+		String fromName, String fromAddress, String subject, String body,
 		ServiceContext serviceContext) throws PortalException;
 
 	/**
@@ -1897,7 +1862,7 @@ public interface UserLocalService extends BaseLocalService,
 	contains a reset link
 	*/
 	public boolean sendPasswordByEmailAddress(long companyId,
-		java.lang.String emailAddress) throws PortalException;
+		String emailAddress) throws PortalException;
 
 	/**
 	* Sends a password notification email to the user matching the screen name.
@@ -1918,8 +1883,8 @@ public interface UserLocalService extends BaseLocalService,
 	password; <code>false</code> if the notification email only
 	contains a reset link
 	*/
-	public boolean sendPasswordByScreenName(long companyId,
-		java.lang.String screenName) throws PortalException;
+	public boolean sendPasswordByScreenName(long companyId, String screenName)
+		throws PortalException;
 
 	/**
 	* Sends a password notification email to the user matching the ID. The
@@ -2053,7 +2018,7 @@ public interface UserLocalService extends BaseLocalService,
 	* @param assetTagNames the new asset tag names
 	*/
 	public void updateAsset(long userId, User user, long[] assetCategoryIds,
-		java.lang.String[] assetTagNames) throws PortalException;
+		String[] assetTagNames) throws PortalException;
 
 	/**
 	* Updates the user's creation date.
@@ -2074,9 +2039,8 @@ public interface UserLocalService extends BaseLocalService,
 	* @param emailAddress2 the user's new email address confirmation
 	* @return the user
 	*/
-	public User updateEmailAddress(long userId, java.lang.String password,
-		java.lang.String emailAddress1, java.lang.String emailAddress2)
-		throws PortalException;
+	public User updateEmailAddress(long userId, String password,
+		String emailAddress1, String emailAddress2) throws PortalException;
 
 	/**
 	* Updates the user's email address or sends verification email.
@@ -2090,8 +2054,8 @@ public interface UserLocalService extends BaseLocalService,
 	remote host, and agent for the user.
 	* @return the user
 	*/
-	public User updateEmailAddress(long userId, java.lang.String password,
-		java.lang.String emailAddress1, java.lang.String emailAddress2,
+	public User updateEmailAddress(long userId, String password,
+		String emailAddress1, String emailAddress2,
 		ServiceContext serviceContext) throws PortalException;
 
 	/**
@@ -2121,7 +2085,7 @@ public interface UserLocalService extends BaseLocalService,
 	* @param googleUserId the new Google user ID
 	* @return the user
 	*/
-	public User updateGoogleUserId(long userId, java.lang.String googleUserId)
+	public User updateGoogleUserId(long userId, String googleUserId)
 		throws PortalException;
 
 	/**
@@ -2173,16 +2137,13 @@ public interface UserLocalService extends BaseLocalService,
 	* @return the user
 	*/
 	public User updateIncompleteUser(long creatorUserId, long companyId,
-		boolean autoPassword, java.lang.String password1,
-		java.lang.String password2, boolean autoScreenName,
-		java.lang.String screenName, java.lang.String emailAddress,
-		long facebookId, java.lang.String openId, Locale locale,
-		java.lang.String firstName, java.lang.String middleName,
-		java.lang.String lastName, long prefixId, long suffixId, boolean male,
-		int birthdayMonth, int birthdayDay, int birthdayYear,
-		java.lang.String jobTitle, boolean updateUserInformation,
-		boolean sendEmail, ServiceContext serviceContext)
-		throws PortalException;
+		boolean autoPassword, String password1, String password2,
+		boolean autoScreenName, String screenName, String emailAddress,
+		long facebookId, String openId, Locale locale, String firstName,
+		String middleName, String lastName, long prefixId, long suffixId,
+		boolean male, int birthdayMonth, int birthdayDay, int birthdayYear,
+		String jobTitle, boolean updateUserInformation, boolean sendEmail,
+		ServiceContext serviceContext) throws PortalException;
 
 	/**
 	* Updates the user's job title.
@@ -2191,7 +2152,7 @@ public interface UserLocalService extends BaseLocalService,
 	* @param jobTitle the user's job title
 	* @return the user
 	*/
-	public User updateJobTitle(long userId, java.lang.String jobTitle)
+	public User updateJobTitle(long userId, String jobTitle)
 		throws PortalException;
 
 	/**
@@ -2201,7 +2162,7 @@ public interface UserLocalService extends BaseLocalService,
 	* @param loginIP the IP address the user logged in from
 	* @return the user
 	*/
-	public User updateLastLogin(long userId, java.lang.String loginIP)
+	public User updateLastLogin(long userId, String loginIP)
 		throws PortalException;
 
 	/**
@@ -2223,8 +2184,7 @@ public interface UserLocalService extends BaseLocalService,
 	* @return the user
 	*/
 	public User updateLockoutByEmailAddress(long companyId,
-		java.lang.String emailAddress, boolean lockout)
-		throws PortalException;
+		String emailAddress, boolean lockout) throws PortalException;
 
 	/**
 	* Updates whether the user is locked out from logging in.
@@ -2244,8 +2204,8 @@ public interface UserLocalService extends BaseLocalService,
 	* @param lockout whether the user is locked out
 	* @return the user
 	*/
-	public User updateLockoutByScreenName(long companyId,
-		java.lang.String screenName, boolean lockout) throws PortalException;
+	public User updateLockoutByScreenName(long companyId, String screenName,
+		boolean lockout) throws PortalException;
 
 	/**
 	* Updates the user's modified date.
@@ -2264,7 +2224,7 @@ public interface UserLocalService extends BaseLocalService,
 	* @param openId the new OpenID
 	* @return the user
 	*/
-	public User updateOpenId(long userId, java.lang.String openId)
+	public User updateOpenId(long userId, String openId)
 		throws PortalException;
 
 	/**
@@ -2289,9 +2249,8 @@ public interface UserLocalService extends BaseLocalService,
 	password the next time they log in
 	* @return the user
 	*/
-	public User updatePassword(long userId, java.lang.String password1,
-		java.lang.String password2, boolean passwordReset)
-		throws PortalException;
+	public User updatePassword(long userId, String password1, String password2,
+		boolean passwordReset) throws PortalException;
 
 	/**
 	* Updates the user's password, optionally with tracking and validation of
@@ -2306,9 +2265,8 @@ public interface UserLocalService extends BaseLocalService,
 	tracked, or validated. Primarily used for password imports.
 	* @return the user
 	*/
-	public User updatePassword(long userId, java.lang.String password1,
-		java.lang.String password2, boolean passwordReset, boolean silentUpdate)
-		throws PortalException;
+	public User updatePassword(long userId, String password1, String password2,
+		boolean passwordReset, boolean silentUpdate) throws PortalException;
 
 	/**
 	* Updates the user's password with manually input information. This method
@@ -2322,7 +2280,7 @@ public interface UserLocalService extends BaseLocalService,
 	* @param passwordModifiedDate the new password modified date
 	* @return the user
 	*/
-	public User updatePasswordManually(long userId, java.lang.String password,
+	public User updatePasswordManually(long userId, String password,
 		boolean passwordEncrypted, boolean passwordReset,
 		Date passwordModifiedDate) throws PortalException;
 
@@ -2356,8 +2314,8 @@ public interface UserLocalService extends BaseLocalService,
 	* @param answer the user's new password reset answer
 	* @return the user
 	*/
-	public User updateReminderQuery(long userId, java.lang.String question,
-		java.lang.String answer) throws PortalException;
+	public User updateReminderQuery(long userId, String question, String answer)
+		throws PortalException;
 
 	/**
 	* Updates the user's screen name.
@@ -2366,7 +2324,7 @@ public interface UserLocalService extends BaseLocalService,
 	* @param screenName the user's new screen name
 	* @return the user
 	*/
-	public User updateScreenName(long userId, java.lang.String screenName)
+	public User updateScreenName(long userId, String screenName)
 		throws PortalException;
 
 	/**
@@ -2378,7 +2336,7 @@ public interface UserLocalService extends BaseLocalService,
 	* @deprecated As of 7.0.0, replaced by {@link #updateStatus(long, int,
 	ServiceContext)}
 	*/
-	@java.lang.Deprecated
+	@Deprecated
 	public User updateStatus(long userId, int status) throws PortalException;
 
 	/**
@@ -2444,20 +2402,16 @@ public interface UserLocalService extends BaseLocalService,
 	bridge attributes for the user.
 	* @return the user
 	*/
-	public User updateUser(long userId, java.lang.String oldPassword,
-		java.lang.String newPassword1, java.lang.String newPassword2,
-		boolean passwordReset, java.lang.String reminderQueryQuestion,
-		java.lang.String reminderQueryAnswer, java.lang.String screenName,
-		java.lang.String emailAddress, long facebookId,
-		java.lang.String openId, boolean portrait, byte[] portraitBytes,
-		java.lang.String languageId, java.lang.String timeZoneId,
-		java.lang.String greeting, java.lang.String comments,
-		java.lang.String firstName, java.lang.String middleName,
-		java.lang.String lastName, long prefixId, long suffixId, boolean male,
-		int birthdayMonth, int birthdayDay, int birthdayYear,
-		java.lang.String smsSn, java.lang.String facebookSn,
-		java.lang.String jabberSn, java.lang.String skypeSn,
-		java.lang.String twitterSn, java.lang.String jobTitle, long[] groupIds,
+	public User updateUser(long userId, String oldPassword,
+		String newPassword1, String newPassword2, boolean passwordReset,
+		String reminderQueryQuestion, String reminderQueryAnswer,
+		String screenName, String emailAddress, long facebookId, String openId,
+		boolean portrait, byte[] portraitBytes, String languageId,
+		String timeZoneId, String greeting, String comments, String firstName,
+		String middleName, String lastName, long prefixId, long suffixId,
+		boolean male, int birthdayMonth, int birthdayDay, int birthdayYear,
+		String smsSn, String facebookSn, String jabberSn, String skypeSn,
+		String twitterSn, String jobTitle, long[] groupIds,
 		long[] organizationIds, long[] roleIds,
 		List<UserGroupRole> userGroupRoles, long[] userGroupIds,
 		ServiceContext serviceContext) throws PortalException;
@@ -2516,20 +2470,16 @@ public interface UserLocalService extends BaseLocalService,
 	int, int, String, String, String, String, String, String,
 	long[], long[], long[], List, long[], ServiceContext)}
 	*/
-	@java.lang.Deprecated
-	public User updateUser(long userId, java.lang.String oldPassword,
-		java.lang.String newPassword1, java.lang.String newPassword2,
-		boolean passwordReset, java.lang.String reminderQueryQuestion,
-		java.lang.String reminderQueryAnswer, java.lang.String screenName,
-		java.lang.String emailAddress, long facebookId,
-		java.lang.String openId, java.lang.String languageId,
-		java.lang.String timeZoneId, java.lang.String greeting,
-		java.lang.String comments, java.lang.String firstName,
-		java.lang.String middleName, java.lang.String lastName, long prefixId,
+	@Deprecated
+	public User updateUser(long userId, String oldPassword,
+		String newPassword1, String newPassword2, boolean passwordReset,
+		String reminderQueryQuestion, String reminderQueryAnswer,
+		String screenName, String emailAddress, long facebookId, String openId,
+		String languageId, String timeZoneId, String greeting, String comments,
+		String firstName, String middleName, String lastName, long prefixId,
 		long suffixId, boolean male, int birthdayMonth, int birthdayDay,
-		int birthdayYear, java.lang.String smsSn, java.lang.String facebookSn,
-		java.lang.String jabberSn, java.lang.String skypeSn,
-		java.lang.String twitterSn, java.lang.String jobTitle, long[] groupIds,
+		int birthdayYear, String smsSn, String facebookSn, String jabberSn,
+		String skypeSn, String twitterSn, String jobTitle, long[] groupIds,
 		long[] organizationIds, long[] roleIds,
 		List<UserGroupRole> userGroupRoles, long[] userGroupIds,
 		ServiceContext serviceContext) throws PortalException;
@@ -2548,6 +2498,5 @@ public interface UserLocalService extends BaseLocalService,
 	*
 	* @param ticketKey the ticket key
 	*/
-	public void verifyEmailAddress(java.lang.String ticketKey)
-		throws PortalException;
+	public void verifyEmailAddress(String ticketKey) throws PortalException;
 }

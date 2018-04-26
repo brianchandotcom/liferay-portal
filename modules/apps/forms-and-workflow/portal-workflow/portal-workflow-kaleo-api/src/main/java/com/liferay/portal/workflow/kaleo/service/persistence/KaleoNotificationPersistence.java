@@ -317,7 +317,7 @@ public interface KaleoNotificationPersistence extends BasePersistence<KaleoNotif
 	* @return the matching kaleo notifications
 	*/
 	public java.util.List<KaleoNotification> findByKCN_KCPK(
-		java.lang.String kaleoClassName, long kaleoClassPK);
+		String kaleoClassName, long kaleoClassPK);
 
 	/**
 	* Returns a range of all the kaleo notifications where kaleoClassName = &#63; and kaleoClassPK = &#63;.
@@ -333,7 +333,7 @@ public interface KaleoNotificationPersistence extends BasePersistence<KaleoNotif
 	* @return the range of matching kaleo notifications
 	*/
 	public java.util.List<KaleoNotification> findByKCN_KCPK(
-		java.lang.String kaleoClassName, long kaleoClassPK, int start, int end);
+		String kaleoClassName, long kaleoClassPK, int start, int end);
 
 	/**
 	* Returns an ordered range of all the kaleo notifications where kaleoClassName = &#63; and kaleoClassPK = &#63;.
@@ -350,7 +350,7 @@ public interface KaleoNotificationPersistence extends BasePersistence<KaleoNotif
 	* @return the ordered range of matching kaleo notifications
 	*/
 	public java.util.List<KaleoNotification> findByKCN_KCPK(
-		java.lang.String kaleoClassName, long kaleoClassPK, int start, int end,
+		String kaleoClassName, long kaleoClassPK, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<KaleoNotification> orderByComparator);
 
 	/**
@@ -369,7 +369,7 @@ public interface KaleoNotificationPersistence extends BasePersistence<KaleoNotif
 	* @return the ordered range of matching kaleo notifications
 	*/
 	public java.util.List<KaleoNotification> findByKCN_KCPK(
-		java.lang.String kaleoClassName, long kaleoClassPK, int start, int end,
+		String kaleoClassName, long kaleoClassPK, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<KaleoNotification> orderByComparator,
 		boolean retrieveFromCache);
 
@@ -382,8 +382,8 @@ public interface KaleoNotificationPersistence extends BasePersistence<KaleoNotif
 	* @return the first matching kaleo notification
 	* @throws NoSuchNotificationException if a matching kaleo notification could not be found
 	*/
-	public KaleoNotification findByKCN_KCPK_First(
-		java.lang.String kaleoClassName, long kaleoClassPK,
+	public KaleoNotification findByKCN_KCPK_First(String kaleoClassName,
+		long kaleoClassPK,
 		com.liferay.portal.kernel.util.OrderByComparator<KaleoNotification> orderByComparator)
 		throws NoSuchNotificationException;
 
@@ -395,8 +395,8 @@ public interface KaleoNotificationPersistence extends BasePersistence<KaleoNotif
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching kaleo notification, or <code>null</code> if a matching kaleo notification could not be found
 	*/
-	public KaleoNotification fetchByKCN_KCPK_First(
-		java.lang.String kaleoClassName, long kaleoClassPK,
+	public KaleoNotification fetchByKCN_KCPK_First(String kaleoClassName,
+		long kaleoClassPK,
 		com.liferay.portal.kernel.util.OrderByComparator<KaleoNotification> orderByComparator);
 
 	/**
@@ -408,8 +408,8 @@ public interface KaleoNotificationPersistence extends BasePersistence<KaleoNotif
 	* @return the last matching kaleo notification
 	* @throws NoSuchNotificationException if a matching kaleo notification could not be found
 	*/
-	public KaleoNotification findByKCN_KCPK_Last(
-		java.lang.String kaleoClassName, long kaleoClassPK,
+	public KaleoNotification findByKCN_KCPK_Last(String kaleoClassName,
+		long kaleoClassPK,
 		com.liferay.portal.kernel.util.OrderByComparator<KaleoNotification> orderByComparator)
 		throws NoSuchNotificationException;
 
@@ -421,8 +421,8 @@ public interface KaleoNotificationPersistence extends BasePersistence<KaleoNotif
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching kaleo notification, or <code>null</code> if a matching kaleo notification could not be found
 	*/
-	public KaleoNotification fetchByKCN_KCPK_Last(
-		java.lang.String kaleoClassName, long kaleoClassPK,
+	public KaleoNotification fetchByKCN_KCPK_Last(String kaleoClassName,
+		long kaleoClassPK,
 		com.liferay.portal.kernel.util.OrderByComparator<KaleoNotification> orderByComparator);
 
 	/**
@@ -436,8 +436,7 @@ public interface KaleoNotificationPersistence extends BasePersistence<KaleoNotif
 	* @throws NoSuchNotificationException if a kaleo notification with the primary key could not be found
 	*/
 	public KaleoNotification[] findByKCN_KCPK_PrevAndNext(
-		long kaleoNotificationId, java.lang.String kaleoClassName,
-		long kaleoClassPK,
+		long kaleoNotificationId, String kaleoClassName, long kaleoClassPK,
 		com.liferay.portal.kernel.util.OrderByComparator<KaleoNotification> orderByComparator)
 		throws NoSuchNotificationException;
 
@@ -447,8 +446,7 @@ public interface KaleoNotificationPersistence extends BasePersistence<KaleoNotif
 	* @param kaleoClassName the kaleo class name
 	* @param kaleoClassPK the kaleo class pk
 	*/
-	public void removeByKCN_KCPK(java.lang.String kaleoClassName,
-		long kaleoClassPK);
+	public void removeByKCN_KCPK(String kaleoClassName, long kaleoClassPK);
 
 	/**
 	* Returns the number of kaleo notifications where kaleoClassName = &#63; and kaleoClassPK = &#63;.
@@ -457,8 +455,7 @@ public interface KaleoNotificationPersistence extends BasePersistence<KaleoNotif
 	* @param kaleoClassPK the kaleo class pk
 	* @return the number of matching kaleo notifications
 	*/
-	public int countByKCN_KCPK(java.lang.String kaleoClassName,
-		long kaleoClassPK);
+	public int countByKCN_KCPK(String kaleoClassName, long kaleoClassPK);
 
 	/**
 	* Returns all the kaleo notifications where kaleoClassName = &#63; and kaleoClassPK = &#63; and executionType = &#63;.
@@ -469,8 +466,7 @@ public interface KaleoNotificationPersistence extends BasePersistence<KaleoNotif
 	* @return the matching kaleo notifications
 	*/
 	public java.util.List<KaleoNotification> findByKCN_KCPK_ET(
-		java.lang.String kaleoClassName, long kaleoClassPK,
-		java.lang.String executionType);
+		String kaleoClassName, long kaleoClassPK, String executionType);
 
 	/**
 	* Returns a range of all the kaleo notifications where kaleoClassName = &#63; and kaleoClassPK = &#63; and executionType = &#63;.
@@ -487,8 +483,8 @@ public interface KaleoNotificationPersistence extends BasePersistence<KaleoNotif
 	* @return the range of matching kaleo notifications
 	*/
 	public java.util.List<KaleoNotification> findByKCN_KCPK_ET(
-		java.lang.String kaleoClassName, long kaleoClassPK,
-		java.lang.String executionType, int start, int end);
+		String kaleoClassName, long kaleoClassPK, String executionType,
+		int start, int end);
 
 	/**
 	* Returns an ordered range of all the kaleo notifications where kaleoClassName = &#63; and kaleoClassPK = &#63; and executionType = &#63;.
@@ -506,8 +502,8 @@ public interface KaleoNotificationPersistence extends BasePersistence<KaleoNotif
 	* @return the ordered range of matching kaleo notifications
 	*/
 	public java.util.List<KaleoNotification> findByKCN_KCPK_ET(
-		java.lang.String kaleoClassName, long kaleoClassPK,
-		java.lang.String executionType, int start, int end,
+		String kaleoClassName, long kaleoClassPK, String executionType,
+		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<KaleoNotification> orderByComparator);
 
 	/**
@@ -527,8 +523,8 @@ public interface KaleoNotificationPersistence extends BasePersistence<KaleoNotif
 	* @return the ordered range of matching kaleo notifications
 	*/
 	public java.util.List<KaleoNotification> findByKCN_KCPK_ET(
-		java.lang.String kaleoClassName, long kaleoClassPK,
-		java.lang.String executionType, int start, int end,
+		String kaleoClassName, long kaleoClassPK, String executionType,
+		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<KaleoNotification> orderByComparator,
 		boolean retrieveFromCache);
 
@@ -542,9 +538,8 @@ public interface KaleoNotificationPersistence extends BasePersistence<KaleoNotif
 	* @return the first matching kaleo notification
 	* @throws NoSuchNotificationException if a matching kaleo notification could not be found
 	*/
-	public KaleoNotification findByKCN_KCPK_ET_First(
-		java.lang.String kaleoClassName, long kaleoClassPK,
-		java.lang.String executionType,
+	public KaleoNotification findByKCN_KCPK_ET_First(String kaleoClassName,
+		long kaleoClassPK, String executionType,
 		com.liferay.portal.kernel.util.OrderByComparator<KaleoNotification> orderByComparator)
 		throws NoSuchNotificationException;
 
@@ -557,9 +552,8 @@ public interface KaleoNotificationPersistence extends BasePersistence<KaleoNotif
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching kaleo notification, or <code>null</code> if a matching kaleo notification could not be found
 	*/
-	public KaleoNotification fetchByKCN_KCPK_ET_First(
-		java.lang.String kaleoClassName, long kaleoClassPK,
-		java.lang.String executionType,
+	public KaleoNotification fetchByKCN_KCPK_ET_First(String kaleoClassName,
+		long kaleoClassPK, String executionType,
 		com.liferay.portal.kernel.util.OrderByComparator<KaleoNotification> orderByComparator);
 
 	/**
@@ -572,9 +566,8 @@ public interface KaleoNotificationPersistence extends BasePersistence<KaleoNotif
 	* @return the last matching kaleo notification
 	* @throws NoSuchNotificationException if a matching kaleo notification could not be found
 	*/
-	public KaleoNotification findByKCN_KCPK_ET_Last(
-		java.lang.String kaleoClassName, long kaleoClassPK,
-		java.lang.String executionType,
+	public KaleoNotification findByKCN_KCPK_ET_Last(String kaleoClassName,
+		long kaleoClassPK, String executionType,
 		com.liferay.portal.kernel.util.OrderByComparator<KaleoNotification> orderByComparator)
 		throws NoSuchNotificationException;
 
@@ -587,9 +580,8 @@ public interface KaleoNotificationPersistence extends BasePersistence<KaleoNotif
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching kaleo notification, or <code>null</code> if a matching kaleo notification could not be found
 	*/
-	public KaleoNotification fetchByKCN_KCPK_ET_Last(
-		java.lang.String kaleoClassName, long kaleoClassPK,
-		java.lang.String executionType,
+	public KaleoNotification fetchByKCN_KCPK_ET_Last(String kaleoClassName,
+		long kaleoClassPK, String executionType,
 		com.liferay.portal.kernel.util.OrderByComparator<KaleoNotification> orderByComparator);
 
 	/**
@@ -604,8 +596,8 @@ public interface KaleoNotificationPersistence extends BasePersistence<KaleoNotif
 	* @throws NoSuchNotificationException if a kaleo notification with the primary key could not be found
 	*/
 	public KaleoNotification[] findByKCN_KCPK_ET_PrevAndNext(
-		long kaleoNotificationId, java.lang.String kaleoClassName,
-		long kaleoClassPK, java.lang.String executionType,
+		long kaleoNotificationId, String kaleoClassName, long kaleoClassPK,
+		String executionType,
 		com.liferay.portal.kernel.util.OrderByComparator<KaleoNotification> orderByComparator)
 		throws NoSuchNotificationException;
 
@@ -616,8 +608,8 @@ public interface KaleoNotificationPersistence extends BasePersistence<KaleoNotif
 	* @param kaleoClassPK the kaleo class pk
 	* @param executionType the execution type
 	*/
-	public void removeByKCN_KCPK_ET(java.lang.String kaleoClassName,
-		long kaleoClassPK, java.lang.String executionType);
+	public void removeByKCN_KCPK_ET(String kaleoClassName, long kaleoClassPK,
+		String executionType);
 
 	/**
 	* Returns the number of kaleo notifications where kaleoClassName = &#63; and kaleoClassPK = &#63; and executionType = &#63;.
@@ -627,8 +619,8 @@ public interface KaleoNotificationPersistence extends BasePersistence<KaleoNotif
 	* @param executionType the execution type
 	* @return the number of matching kaleo notifications
 	*/
-	public int countByKCN_KCPK_ET(java.lang.String kaleoClassName,
-		long kaleoClassPK, java.lang.String executionType);
+	public int countByKCN_KCPK_ET(String kaleoClassName, long kaleoClassPK,
+		String executionType);
 
 	/**
 	* Caches the kaleo notification in the entity cache if it is enabled.

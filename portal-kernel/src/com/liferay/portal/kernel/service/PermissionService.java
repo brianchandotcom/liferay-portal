@@ -55,8 +55,8 @@ public interface PermissionService extends BaseService {
 	* @param primKey the primary key of the service
 	*/
 	@JSONWebService(mode = JSONWebServiceMode.IGNORE)
-	public void checkPermission(long groupId, java.lang.String name,
-		long primKey) throws PortalException;
+	public void checkPermission(long groupId, String name, long primKey)
+		throws PortalException;
 
 	/**
 	* Checks to see if the group has permission to the service.
@@ -65,13 +65,13 @@ public interface PermissionService extends BaseService {
 	* @param name the service name
 	* @param primKey the primary key of the service
 	*/
-	public void checkPermission(long groupId, java.lang.String name,
-		java.lang.String primKey) throws PortalException;
+	public void checkPermission(long groupId, String name, String primKey)
+		throws PortalException;
 
 	/**
 	* Returns the OSGi service identifier.
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 }

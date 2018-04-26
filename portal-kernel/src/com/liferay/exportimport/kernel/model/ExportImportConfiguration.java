@@ -56,5 +56,5 @@ public interface ExportImportConfiguration
 			}
 		};
 
-	public java.util.Map<java.lang.String, java.io.Serializable> getSettingsMap();
+	public java.util.Map<String, java.io.Serializable> getSettingsMap();
 }

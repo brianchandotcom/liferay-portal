@@ -91,7 +91,7 @@ public class ScreensAssetEntryServiceHttp {
 
 	public static com.liferay.portal.kernel.json.JSONArray getAssetEntries(
 		HttpPrincipal httpPrincipal, long companyId, long groupId,
-		java.lang.String portletItemName, java.util.Locale locale, int max)
+		String portletItemName, java.util.Locale locale, int max)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(ScreensAssetEntryServiceUtil.class,
@@ -155,7 +155,7 @@ public class ScreensAssetEntryServiceHttp {
 	}
 
 	public static com.liferay.portal.kernel.json.JSONObject getAssetEntry(
-		HttpPrincipal httpPrincipal, java.lang.String className, long classPK,
+		HttpPrincipal httpPrincipal, String className, long classPK,
 		java.util.Locale locale)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -193,13 +193,13 @@ public class ScreensAssetEntryServiceHttp {
 			java.util.Locale.class
 		};
 	private static final Class<?>[] _getAssetEntriesParameterTypes1 = new Class[] {
-			long.class, long.class, java.lang.String.class,
-			java.util.Locale.class, int.class
+			long.class, long.class, String.class, java.util.Locale.class,
+			int.class
 		};
 	private static final Class<?>[] _getAssetEntryParameterTypes2 = new Class[] {
 			long.class, java.util.Locale.class
 		};
 	private static final Class<?>[] _getAssetEntryParameterTypes3 = new Class[] {
-			java.lang.String.class, long.class, java.util.Locale.class
+			String.class, long.class, java.util.Locale.class
 		};
 }

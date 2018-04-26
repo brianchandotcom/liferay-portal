@@ -56,9 +56,8 @@ import com.liferay.portal.kernel.util.MethodKey;
 @ProviderType
 public class BookmarksEntryServiceHttp {
 	public static com.liferay.bookmarks.model.BookmarksEntry addEntry(
-		HttpPrincipal httpPrincipal, long groupId, long folderId,
-		java.lang.String name, java.lang.String url,
-		java.lang.String description,
+		HttpPrincipal httpPrincipal, long groupId, long folderId, String name,
+		String url, String description,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -259,7 +258,7 @@ public class BookmarksEntryServiceHttp {
 	}
 
 	public static int getFoldersEntriesCount(HttpPrincipal httpPrincipal,
-		long groupId, java.util.List<java.lang.Long> folderIds) {
+		long groupId, java.util.List<Long> folderIds) {
 		try {
 			MethodKey methodKey = new MethodKey(BookmarksEntryServiceUtil.class,
 					"getFoldersEntriesCount",
@@ -755,8 +754,7 @@ public class BookmarksEntryServiceHttp {
 
 	public static com.liferay.bookmarks.model.BookmarksEntry updateEntry(
 		HttpPrincipal httpPrincipal, long entryId, long groupId, long folderId,
-		java.lang.String name, java.lang.String url,
-		java.lang.String description,
+		String name, String url, String description,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -790,8 +788,7 @@ public class BookmarksEntryServiceHttp {
 
 	private static Log _log = LogFactoryUtil.getLog(BookmarksEntryServiceHttp.class);
 	private static final Class<?>[] _addEntryParameterTypes0 = new Class[] {
-			long.class, long.class, java.lang.String.class,
-			java.lang.String.class, java.lang.String.class,
+			long.class, long.class, String.class, String.class, String.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _deleteEntryParameterTypes1 = new Class[] {
@@ -862,8 +859,7 @@ public class BookmarksEntryServiceHttp {
 			long.class
 		};
 	private static final Class<?>[] _updateEntryParameterTypes23 = new Class[] {
-			long.class, long.class, long.class, java.lang.String.class,
-			java.lang.String.class, java.lang.String.class,
-			com.liferay.portal.kernel.service.ServiceContext.class
+			long.class, long.class, long.class, String.class, String.class,
+			String.class, com.liferay.portal.kernel.service.ServiceContext.class
 		};
 }

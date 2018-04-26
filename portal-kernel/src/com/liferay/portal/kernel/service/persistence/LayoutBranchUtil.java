@@ -467,7 +467,7 @@ public class LayoutBranchUtil {
 	* @throws NoSuchLayoutBranchException if a matching layout branch could not be found
 	*/
 	public static LayoutBranch findByL_P_N(long layoutSetBranchId, long plid,
-		java.lang.String name)
+		String name)
 		throws com.liferay.portal.kernel.exception.NoSuchLayoutBranchException {
 		return getPersistence().findByL_P_N(layoutSetBranchId, plid, name);
 	}
@@ -481,7 +481,7 @@ public class LayoutBranchUtil {
 	* @return the matching layout branch, or <code>null</code> if a matching layout branch could not be found
 	*/
 	public static LayoutBranch fetchByL_P_N(long layoutSetBranchId, long plid,
-		java.lang.String name) {
+		String name) {
 		return getPersistence().fetchByL_P_N(layoutSetBranchId, plid, name);
 	}
 
@@ -495,7 +495,7 @@ public class LayoutBranchUtil {
 	* @return the matching layout branch, or <code>null</code> if a matching layout branch could not be found
 	*/
 	public static LayoutBranch fetchByL_P_N(long layoutSetBranchId, long plid,
-		java.lang.String name, boolean retrieveFromCache) {
+		String name, boolean retrieveFromCache) {
 		return getPersistence()
 				   .fetchByL_P_N(layoutSetBranchId, plid, name,
 			retrieveFromCache);
@@ -510,7 +510,7 @@ public class LayoutBranchUtil {
 	* @return the layout branch that was removed
 	*/
 	public static LayoutBranch removeByL_P_N(long layoutSetBranchId, long plid,
-		java.lang.String name)
+		String name)
 		throws com.liferay.portal.kernel.exception.NoSuchLayoutBranchException {
 		return getPersistence().removeByL_P_N(layoutSetBranchId, plid, name);
 	}
@@ -524,7 +524,7 @@ public class LayoutBranchUtil {
 	* @return the number of matching layout branchs
 	*/
 	public static int countByL_P_N(long layoutSetBranchId, long plid,
-		java.lang.String name) {
+		String name) {
 		return getPersistence().countByL_P_N(layoutSetBranchId, plid, name);
 	}
 

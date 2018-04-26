@@ -115,7 +115,7 @@ public class SocialActivitySettingWrapper implements SocialActivitySetting,
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new SocialActivitySettingWrapper((SocialActivitySetting)_socialActivitySetting.clone());
 	}
 
@@ -150,7 +150,7 @@ public class SocialActivitySettingWrapper implements SocialActivitySetting,
 	* @return the fully qualified class name of this social activity setting
 	*/
 	@Override
-	public java.lang.String getClassName() {
+	public String getClassName() {
 		return _socialActivitySetting.getClassName();
 	}
 
@@ -195,7 +195,7 @@ public class SocialActivitySettingWrapper implements SocialActivitySetting,
 	* @return the name of this social activity setting
 	*/
 	@Override
-	public java.lang.String getName() {
+	public String getName() {
 		return _socialActivitySetting.getName();
 	}
 
@@ -220,7 +220,7 @@ public class SocialActivitySettingWrapper implements SocialActivitySetting,
 	* @return the value of this social activity setting
 	*/
 	@Override
-	public java.lang.String getValue() {
+	public String getValue() {
 		return _socialActivitySetting.getValue();
 	}
 
@@ -275,7 +275,7 @@ public class SocialActivitySettingWrapper implements SocialActivitySetting,
 	}
 
 	@Override
-	public void setClassName(java.lang.String className) {
+	public void setClassName(String className) {
 		_socialActivitySetting.setClassName(className);
 	}
 
@@ -331,7 +331,7 @@ public class SocialActivitySettingWrapper implements SocialActivitySetting,
 	* @param name the name of this social activity setting
 	*/
 	@Override
-	public void setName(java.lang.String name) {
+	public void setName(String name) {
 		_socialActivitySetting.setName(name);
 	}
 
@@ -361,7 +361,7 @@ public class SocialActivitySettingWrapper implements SocialActivitySetting,
 	* @param value the value of this social activity setting
 	*/
 	@Override
-	public void setValue(java.lang.String value) {
+	public void setValue(String value) {
 		_socialActivitySetting.setValue(value);
 	}
 
@@ -376,7 +376,7 @@ public class SocialActivitySettingWrapper implements SocialActivitySetting,
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _socialActivitySetting.toString();
 	}
 
@@ -386,7 +386,7 @@ public class SocialActivitySettingWrapper implements SocialActivitySetting,
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _socialActivitySetting.toXmlString();
 	}
 

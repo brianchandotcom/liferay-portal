@@ -87,10 +87,10 @@ public interface DDMFormInstanceRecordService extends BaseService {
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	public void revertFormInstanceRecord(long ddmFormInstanceRecordId,
-		java.lang.String version, ServiceContext serviceContext)
+		String version, ServiceContext serviceContext)
 		throws PortalException;
 
 	public DDMFormInstanceRecord updateFormInstanceRecord(

@@ -317,7 +317,7 @@ public interface KaleoTaskAssignmentPersistence extends BasePersistence<KaleoTas
 	* @return the matching kaleo task assignments
 	*/
 	public java.util.List<KaleoTaskAssignment> findByKCN_KCPK(
-		java.lang.String kaleoClassName, long kaleoClassPK);
+		String kaleoClassName, long kaleoClassPK);
 
 	/**
 	* Returns a range of all the kaleo task assignments where kaleoClassName = &#63; and kaleoClassPK = &#63;.
@@ -333,7 +333,7 @@ public interface KaleoTaskAssignmentPersistence extends BasePersistence<KaleoTas
 	* @return the range of matching kaleo task assignments
 	*/
 	public java.util.List<KaleoTaskAssignment> findByKCN_KCPK(
-		java.lang.String kaleoClassName, long kaleoClassPK, int start, int end);
+		String kaleoClassName, long kaleoClassPK, int start, int end);
 
 	/**
 	* Returns an ordered range of all the kaleo task assignments where kaleoClassName = &#63; and kaleoClassPK = &#63;.
@@ -350,7 +350,7 @@ public interface KaleoTaskAssignmentPersistence extends BasePersistence<KaleoTas
 	* @return the ordered range of matching kaleo task assignments
 	*/
 	public java.util.List<KaleoTaskAssignment> findByKCN_KCPK(
-		java.lang.String kaleoClassName, long kaleoClassPK, int start, int end,
+		String kaleoClassName, long kaleoClassPK, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<KaleoTaskAssignment> orderByComparator);
 
 	/**
@@ -369,7 +369,7 @@ public interface KaleoTaskAssignmentPersistence extends BasePersistence<KaleoTas
 	* @return the ordered range of matching kaleo task assignments
 	*/
 	public java.util.List<KaleoTaskAssignment> findByKCN_KCPK(
-		java.lang.String kaleoClassName, long kaleoClassPK, int start, int end,
+		String kaleoClassName, long kaleoClassPK, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<KaleoTaskAssignment> orderByComparator,
 		boolean retrieveFromCache);
 
@@ -382,8 +382,8 @@ public interface KaleoTaskAssignmentPersistence extends BasePersistence<KaleoTas
 	* @return the first matching kaleo task assignment
 	* @throws NoSuchTaskAssignmentException if a matching kaleo task assignment could not be found
 	*/
-	public KaleoTaskAssignment findByKCN_KCPK_First(
-		java.lang.String kaleoClassName, long kaleoClassPK,
+	public KaleoTaskAssignment findByKCN_KCPK_First(String kaleoClassName,
+		long kaleoClassPK,
 		com.liferay.portal.kernel.util.OrderByComparator<KaleoTaskAssignment> orderByComparator)
 		throws NoSuchTaskAssignmentException;
 
@@ -395,8 +395,8 @@ public interface KaleoTaskAssignmentPersistence extends BasePersistence<KaleoTas
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching kaleo task assignment, or <code>null</code> if a matching kaleo task assignment could not be found
 	*/
-	public KaleoTaskAssignment fetchByKCN_KCPK_First(
-		java.lang.String kaleoClassName, long kaleoClassPK,
+	public KaleoTaskAssignment fetchByKCN_KCPK_First(String kaleoClassName,
+		long kaleoClassPK,
 		com.liferay.portal.kernel.util.OrderByComparator<KaleoTaskAssignment> orderByComparator);
 
 	/**
@@ -408,8 +408,8 @@ public interface KaleoTaskAssignmentPersistence extends BasePersistence<KaleoTas
 	* @return the last matching kaleo task assignment
 	* @throws NoSuchTaskAssignmentException if a matching kaleo task assignment could not be found
 	*/
-	public KaleoTaskAssignment findByKCN_KCPK_Last(
-		java.lang.String kaleoClassName, long kaleoClassPK,
+	public KaleoTaskAssignment findByKCN_KCPK_Last(String kaleoClassName,
+		long kaleoClassPK,
 		com.liferay.portal.kernel.util.OrderByComparator<KaleoTaskAssignment> orderByComparator)
 		throws NoSuchTaskAssignmentException;
 
@@ -421,8 +421,8 @@ public interface KaleoTaskAssignmentPersistence extends BasePersistence<KaleoTas
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching kaleo task assignment, or <code>null</code> if a matching kaleo task assignment could not be found
 	*/
-	public KaleoTaskAssignment fetchByKCN_KCPK_Last(
-		java.lang.String kaleoClassName, long kaleoClassPK,
+	public KaleoTaskAssignment fetchByKCN_KCPK_Last(String kaleoClassName,
+		long kaleoClassPK,
 		com.liferay.portal.kernel.util.OrderByComparator<KaleoTaskAssignment> orderByComparator);
 
 	/**
@@ -436,8 +436,7 @@ public interface KaleoTaskAssignmentPersistence extends BasePersistence<KaleoTas
 	* @throws NoSuchTaskAssignmentException if a kaleo task assignment with the primary key could not be found
 	*/
 	public KaleoTaskAssignment[] findByKCN_KCPK_PrevAndNext(
-		long kaleoTaskAssignmentId, java.lang.String kaleoClassName,
-		long kaleoClassPK,
+		long kaleoTaskAssignmentId, String kaleoClassName, long kaleoClassPK,
 		com.liferay.portal.kernel.util.OrderByComparator<KaleoTaskAssignment> orderByComparator)
 		throws NoSuchTaskAssignmentException;
 
@@ -447,8 +446,7 @@ public interface KaleoTaskAssignmentPersistence extends BasePersistence<KaleoTas
 	* @param kaleoClassName the kaleo class name
 	* @param kaleoClassPK the kaleo class pk
 	*/
-	public void removeByKCN_KCPK(java.lang.String kaleoClassName,
-		long kaleoClassPK);
+	public void removeByKCN_KCPK(String kaleoClassName, long kaleoClassPK);
 
 	/**
 	* Returns the number of kaleo task assignments where kaleoClassName = &#63; and kaleoClassPK = &#63;.
@@ -457,8 +455,7 @@ public interface KaleoTaskAssignmentPersistence extends BasePersistence<KaleoTas
 	* @param kaleoClassPK the kaleo class pk
 	* @return the number of matching kaleo task assignments
 	*/
-	public int countByKCN_KCPK(java.lang.String kaleoClassName,
-		long kaleoClassPK);
+	public int countByKCN_KCPK(String kaleoClassName, long kaleoClassPK);
 
 	/**
 	* Returns all the kaleo task assignments where kaleoClassName = &#63; and kaleoClassPK = &#63; and assigneeClassName = &#63;.
@@ -469,8 +466,7 @@ public interface KaleoTaskAssignmentPersistence extends BasePersistence<KaleoTas
 	* @return the matching kaleo task assignments
 	*/
 	public java.util.List<KaleoTaskAssignment> findByKCN_KCPK_ACN(
-		java.lang.String kaleoClassName, long kaleoClassPK,
-		java.lang.String assigneeClassName);
+		String kaleoClassName, long kaleoClassPK, String assigneeClassName);
 
 	/**
 	* Returns a range of all the kaleo task assignments where kaleoClassName = &#63; and kaleoClassPK = &#63; and assigneeClassName = &#63;.
@@ -487,8 +483,8 @@ public interface KaleoTaskAssignmentPersistence extends BasePersistence<KaleoTas
 	* @return the range of matching kaleo task assignments
 	*/
 	public java.util.List<KaleoTaskAssignment> findByKCN_KCPK_ACN(
-		java.lang.String kaleoClassName, long kaleoClassPK,
-		java.lang.String assigneeClassName, int start, int end);
+		String kaleoClassName, long kaleoClassPK, String assigneeClassName,
+		int start, int end);
 
 	/**
 	* Returns an ordered range of all the kaleo task assignments where kaleoClassName = &#63; and kaleoClassPK = &#63; and assigneeClassName = &#63;.
@@ -506,8 +502,8 @@ public interface KaleoTaskAssignmentPersistence extends BasePersistence<KaleoTas
 	* @return the ordered range of matching kaleo task assignments
 	*/
 	public java.util.List<KaleoTaskAssignment> findByKCN_KCPK_ACN(
-		java.lang.String kaleoClassName, long kaleoClassPK,
-		java.lang.String assigneeClassName, int start, int end,
+		String kaleoClassName, long kaleoClassPK, String assigneeClassName,
+		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<KaleoTaskAssignment> orderByComparator);
 
 	/**
@@ -527,8 +523,8 @@ public interface KaleoTaskAssignmentPersistence extends BasePersistence<KaleoTas
 	* @return the ordered range of matching kaleo task assignments
 	*/
 	public java.util.List<KaleoTaskAssignment> findByKCN_KCPK_ACN(
-		java.lang.String kaleoClassName, long kaleoClassPK,
-		java.lang.String assigneeClassName, int start, int end,
+		String kaleoClassName, long kaleoClassPK, String assigneeClassName,
+		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<KaleoTaskAssignment> orderByComparator,
 		boolean retrieveFromCache);
 
@@ -542,9 +538,8 @@ public interface KaleoTaskAssignmentPersistence extends BasePersistence<KaleoTas
 	* @return the first matching kaleo task assignment
 	* @throws NoSuchTaskAssignmentException if a matching kaleo task assignment could not be found
 	*/
-	public KaleoTaskAssignment findByKCN_KCPK_ACN_First(
-		java.lang.String kaleoClassName, long kaleoClassPK,
-		java.lang.String assigneeClassName,
+	public KaleoTaskAssignment findByKCN_KCPK_ACN_First(String kaleoClassName,
+		long kaleoClassPK, String assigneeClassName,
 		com.liferay.portal.kernel.util.OrderByComparator<KaleoTaskAssignment> orderByComparator)
 		throws NoSuchTaskAssignmentException;
 
@@ -558,8 +553,7 @@ public interface KaleoTaskAssignmentPersistence extends BasePersistence<KaleoTas
 	* @return the first matching kaleo task assignment, or <code>null</code> if a matching kaleo task assignment could not be found
 	*/
 	public KaleoTaskAssignment fetchByKCN_KCPK_ACN_First(
-		java.lang.String kaleoClassName, long kaleoClassPK,
-		java.lang.String assigneeClassName,
+		String kaleoClassName, long kaleoClassPK, String assigneeClassName,
 		com.liferay.portal.kernel.util.OrderByComparator<KaleoTaskAssignment> orderByComparator);
 
 	/**
@@ -572,9 +566,8 @@ public interface KaleoTaskAssignmentPersistence extends BasePersistence<KaleoTas
 	* @return the last matching kaleo task assignment
 	* @throws NoSuchTaskAssignmentException if a matching kaleo task assignment could not be found
 	*/
-	public KaleoTaskAssignment findByKCN_KCPK_ACN_Last(
-		java.lang.String kaleoClassName, long kaleoClassPK,
-		java.lang.String assigneeClassName,
+	public KaleoTaskAssignment findByKCN_KCPK_ACN_Last(String kaleoClassName,
+		long kaleoClassPK, String assigneeClassName,
 		com.liferay.portal.kernel.util.OrderByComparator<KaleoTaskAssignment> orderByComparator)
 		throws NoSuchTaskAssignmentException;
 
@@ -587,9 +580,8 @@ public interface KaleoTaskAssignmentPersistence extends BasePersistence<KaleoTas
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching kaleo task assignment, or <code>null</code> if a matching kaleo task assignment could not be found
 	*/
-	public KaleoTaskAssignment fetchByKCN_KCPK_ACN_Last(
-		java.lang.String kaleoClassName, long kaleoClassPK,
-		java.lang.String assigneeClassName,
+	public KaleoTaskAssignment fetchByKCN_KCPK_ACN_Last(String kaleoClassName,
+		long kaleoClassPK, String assigneeClassName,
 		com.liferay.portal.kernel.util.OrderByComparator<KaleoTaskAssignment> orderByComparator);
 
 	/**
@@ -604,8 +596,8 @@ public interface KaleoTaskAssignmentPersistence extends BasePersistence<KaleoTas
 	* @throws NoSuchTaskAssignmentException if a kaleo task assignment with the primary key could not be found
 	*/
 	public KaleoTaskAssignment[] findByKCN_KCPK_ACN_PrevAndNext(
-		long kaleoTaskAssignmentId, java.lang.String kaleoClassName,
-		long kaleoClassPK, java.lang.String assigneeClassName,
+		long kaleoTaskAssignmentId, String kaleoClassName, long kaleoClassPK,
+		String assigneeClassName,
 		com.liferay.portal.kernel.util.OrderByComparator<KaleoTaskAssignment> orderByComparator)
 		throws NoSuchTaskAssignmentException;
 
@@ -616,8 +608,8 @@ public interface KaleoTaskAssignmentPersistence extends BasePersistence<KaleoTas
 	* @param kaleoClassPK the kaleo class pk
 	* @param assigneeClassName the assignee class name
 	*/
-	public void removeByKCN_KCPK_ACN(java.lang.String kaleoClassName,
-		long kaleoClassPK, java.lang.String assigneeClassName);
+	public void removeByKCN_KCPK_ACN(String kaleoClassName, long kaleoClassPK,
+		String assigneeClassName);
 
 	/**
 	* Returns the number of kaleo task assignments where kaleoClassName = &#63; and kaleoClassPK = &#63; and assigneeClassName = &#63;.
@@ -627,8 +619,8 @@ public interface KaleoTaskAssignmentPersistence extends BasePersistence<KaleoTas
 	* @param assigneeClassName the assignee class name
 	* @return the number of matching kaleo task assignments
 	*/
-	public int countByKCN_KCPK_ACN(java.lang.String kaleoClassName,
-		long kaleoClassPK, java.lang.String assigneeClassName);
+	public int countByKCN_KCPK_ACN(String kaleoClassName, long kaleoClassPK,
+		String assigneeClassName);
 
 	/**
 	* Caches the kaleo task assignment in the entity cache if it is enabled.

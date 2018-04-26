@@ -71,22 +71,21 @@ public class JournalContentSearchLocalServiceUtil {
 	}
 
 	public static void deleteArticleContentSearch(long groupId,
-		boolean privateLayout, long layoutId, java.lang.String portletId) {
+		boolean privateLayout, long layoutId, String portletId) {
 		getService()
 			.deleteArticleContentSearch(groupId, privateLayout, layoutId,
 			portletId);
 	}
 
 	public static void deleteArticleContentSearch(long groupId,
-		boolean privateLayout, long layoutId, java.lang.String portletId,
-		java.lang.String articleId) {
+		boolean privateLayout, long layoutId, String portletId, String articleId) {
 		getService()
 			.deleteArticleContentSearch(groupId, privateLayout, layoutId,
 			portletId, articleId);
 	}
 
 	public static void deleteArticleContentSearches(long groupId,
-		java.lang.String articleId) {
+		String articleId) {
 		getService().deleteArticleContentSearches(groupId, articleId);
 	}
 
@@ -226,12 +225,12 @@ public class JournalContentSearchLocalServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.journal.model.JournalContentSearch> getArticleContentSearches(
-		long groupId, java.lang.String articleId) {
+		long groupId, String articleId) {
 		return getService().getArticleContentSearches(groupId, articleId);
 	}
 
 	public static java.util.List<com.liferay.journal.model.JournalContentSearch> getArticleContentSearches(
-		java.lang.String articleId) {
+		String articleId) {
 		return getService().getArticleContentSearches(articleId);
 	}
 
@@ -277,17 +276,17 @@ public class JournalContentSearchLocalServiceUtil {
 		return getService().getJournalContentSearchsCount();
 	}
 
-	public static java.util.List<java.lang.Long> getLayoutIds(long groupId,
-		boolean privateLayout, java.lang.String articleId) {
+	public static java.util.List<Long> getLayoutIds(long groupId,
+		boolean privateLayout, String articleId) {
 		return getService().getLayoutIds(groupId, privateLayout, articleId);
 	}
 
 	public static int getLayoutIdsCount(long groupId, boolean privateLayout,
-		java.lang.String articleId) {
+		String articleId) {
 		return getService().getLayoutIdsCount(groupId, privateLayout, articleId);
 	}
 
-	public static int getLayoutIdsCount(java.lang.String articleId) {
+	public static int getLayoutIdsCount(String articleId) {
 		return getService().getLayoutIdsCount(articleId);
 	}
 
@@ -296,7 +295,7 @@ public class JournalContentSearchLocalServiceUtil {
 	*
 	* @return the OSGi service identifier
 	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
+	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 
@@ -307,13 +306,13 @@ public class JournalContentSearchLocalServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.journal.model.JournalContentSearch> getPortletContentSearches(
-		java.lang.String portletId) {
+		String portletId) {
 		return getService().getPortletContentSearches(portletId);
 	}
 
 	public static com.liferay.journal.model.JournalContentSearch updateContentSearch(
-		long groupId, boolean privateLayout, long layoutId,
-		java.lang.String portletId, java.lang.String articleId)
+		long groupId, boolean privateLayout, long layoutId, String portletId,
+		String articleId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .updateContentSearch(groupId, privateLayout, layoutId,
@@ -321,8 +320,8 @@ public class JournalContentSearchLocalServiceUtil {
 	}
 
 	public static com.liferay.journal.model.JournalContentSearch updateContentSearch(
-		long groupId, boolean privateLayout, long layoutId,
-		java.lang.String portletId, java.lang.String articleId, boolean purge)
+		long groupId, boolean privateLayout, long layoutId, String portletId,
+		String articleId, boolean purge)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .updateContentSearch(groupId, privateLayout, layoutId,
@@ -330,8 +329,8 @@ public class JournalContentSearchLocalServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.journal.model.JournalContentSearch> updateContentSearch(
-		long groupId, boolean privateLayout, long layoutId,
-		java.lang.String portletId, java.lang.String[] articleIds)
+		long groupId, boolean privateLayout, long layoutId, String portletId,
+		String[] articleIds)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .updateContentSearch(groupId, privateLayout, layoutId,

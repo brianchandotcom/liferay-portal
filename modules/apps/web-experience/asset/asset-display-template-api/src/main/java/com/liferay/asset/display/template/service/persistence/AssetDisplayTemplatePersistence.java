@@ -244,7 +244,7 @@ public interface AssetDisplayTemplatePersistence extends BasePersistence<AssetDi
 	* @return the matching asset display templates
 	*/
 	public java.util.List<AssetDisplayTemplate> findByG_LikeN(long groupId,
-		java.lang.String name);
+		String name);
 
 	/**
 	* Returns a range of all the asset display templates where groupId = &#63; and name LIKE &#63;.
@@ -260,7 +260,7 @@ public interface AssetDisplayTemplatePersistence extends BasePersistence<AssetDi
 	* @return the range of matching asset display templates
 	*/
 	public java.util.List<AssetDisplayTemplate> findByG_LikeN(long groupId,
-		java.lang.String name, int start, int end);
+		String name, int start, int end);
 
 	/**
 	* Returns an ordered range of all the asset display templates where groupId = &#63; and name LIKE &#63;.
@@ -277,7 +277,7 @@ public interface AssetDisplayTemplatePersistence extends BasePersistence<AssetDi
 	* @return the ordered range of matching asset display templates
 	*/
 	public java.util.List<AssetDisplayTemplate> findByG_LikeN(long groupId,
-		java.lang.String name, int start, int end,
+		String name, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<AssetDisplayTemplate> orderByComparator);
 
 	/**
@@ -296,7 +296,7 @@ public interface AssetDisplayTemplatePersistence extends BasePersistence<AssetDi
 	* @return the ordered range of matching asset display templates
 	*/
 	public java.util.List<AssetDisplayTemplate> findByG_LikeN(long groupId,
-		java.lang.String name, int start, int end,
+		String name, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<AssetDisplayTemplate> orderByComparator,
 		boolean retrieveFromCache);
 
@@ -309,8 +309,7 @@ public interface AssetDisplayTemplatePersistence extends BasePersistence<AssetDi
 	* @return the first matching asset display template
 	* @throws NoSuchDisplayTemplateException if a matching asset display template could not be found
 	*/
-	public AssetDisplayTemplate findByG_LikeN_First(long groupId,
-		java.lang.String name,
+	public AssetDisplayTemplate findByG_LikeN_First(long groupId, String name,
 		com.liferay.portal.kernel.util.OrderByComparator<AssetDisplayTemplate> orderByComparator)
 		throws NoSuchDisplayTemplateException;
 
@@ -322,8 +321,7 @@ public interface AssetDisplayTemplatePersistence extends BasePersistence<AssetDi
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching asset display template, or <code>null</code> if a matching asset display template could not be found
 	*/
-	public AssetDisplayTemplate fetchByG_LikeN_First(long groupId,
-		java.lang.String name,
+	public AssetDisplayTemplate fetchByG_LikeN_First(long groupId, String name,
 		com.liferay.portal.kernel.util.OrderByComparator<AssetDisplayTemplate> orderByComparator);
 
 	/**
@@ -335,8 +333,7 @@ public interface AssetDisplayTemplatePersistence extends BasePersistence<AssetDi
 	* @return the last matching asset display template
 	* @throws NoSuchDisplayTemplateException if a matching asset display template could not be found
 	*/
-	public AssetDisplayTemplate findByG_LikeN_Last(long groupId,
-		java.lang.String name,
+	public AssetDisplayTemplate findByG_LikeN_Last(long groupId, String name,
 		com.liferay.portal.kernel.util.OrderByComparator<AssetDisplayTemplate> orderByComparator)
 		throws NoSuchDisplayTemplateException;
 
@@ -348,8 +345,7 @@ public interface AssetDisplayTemplatePersistence extends BasePersistence<AssetDi
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching asset display template, or <code>null</code> if a matching asset display template could not be found
 	*/
-	public AssetDisplayTemplate fetchByG_LikeN_Last(long groupId,
-		java.lang.String name,
+	public AssetDisplayTemplate fetchByG_LikeN_Last(long groupId, String name,
 		com.liferay.portal.kernel.util.OrderByComparator<AssetDisplayTemplate> orderByComparator);
 
 	/**
@@ -363,7 +359,7 @@ public interface AssetDisplayTemplatePersistence extends BasePersistence<AssetDi
 	* @throws NoSuchDisplayTemplateException if a asset display template with the primary key could not be found
 	*/
 	public AssetDisplayTemplate[] findByG_LikeN_PrevAndNext(
-		long assetDisplayTemplateId, long groupId, java.lang.String name,
+		long assetDisplayTemplateId, long groupId, String name,
 		com.liferay.portal.kernel.util.OrderByComparator<AssetDisplayTemplate> orderByComparator)
 		throws NoSuchDisplayTemplateException;
 
@@ -375,7 +371,7 @@ public interface AssetDisplayTemplatePersistence extends BasePersistence<AssetDi
 	* @return the matching asset display templates that the user has permission to view
 	*/
 	public java.util.List<AssetDisplayTemplate> filterFindByG_LikeN(
-		long groupId, java.lang.String name);
+		long groupId, String name);
 
 	/**
 	* Returns a range of all the asset display templates that the user has permission to view where groupId = &#63; and name LIKE &#63;.
@@ -391,7 +387,7 @@ public interface AssetDisplayTemplatePersistence extends BasePersistence<AssetDi
 	* @return the range of matching asset display templates that the user has permission to view
 	*/
 	public java.util.List<AssetDisplayTemplate> filterFindByG_LikeN(
-		long groupId, java.lang.String name, int start, int end);
+		long groupId, String name, int start, int end);
 
 	/**
 	* Returns an ordered range of all the asset display templates that the user has permissions to view where groupId = &#63; and name LIKE &#63;.
@@ -408,7 +404,7 @@ public interface AssetDisplayTemplatePersistence extends BasePersistence<AssetDi
 	* @return the ordered range of matching asset display templates that the user has permission to view
 	*/
 	public java.util.List<AssetDisplayTemplate> filterFindByG_LikeN(
-		long groupId, java.lang.String name, int start, int end,
+		long groupId, String name, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<AssetDisplayTemplate> orderByComparator);
 
 	/**
@@ -422,7 +418,7 @@ public interface AssetDisplayTemplatePersistence extends BasePersistence<AssetDi
 	* @throws NoSuchDisplayTemplateException if a asset display template with the primary key could not be found
 	*/
 	public AssetDisplayTemplate[] filterFindByG_LikeN_PrevAndNext(
-		long assetDisplayTemplateId, long groupId, java.lang.String name,
+		long assetDisplayTemplateId, long groupId, String name,
 		com.liferay.portal.kernel.util.OrderByComparator<AssetDisplayTemplate> orderByComparator)
 		throws NoSuchDisplayTemplateException;
 
@@ -432,7 +428,7 @@ public interface AssetDisplayTemplatePersistence extends BasePersistence<AssetDi
 	* @param groupId the group ID
 	* @param name the name
 	*/
-	public void removeByG_LikeN(long groupId, java.lang.String name);
+	public void removeByG_LikeN(long groupId, String name);
 
 	/**
 	* Returns the number of asset display templates where groupId = &#63; and name LIKE &#63;.
@@ -441,7 +437,7 @@ public interface AssetDisplayTemplatePersistence extends BasePersistence<AssetDi
 	* @param name the name
 	* @return the number of matching asset display templates
 	*/
-	public int countByG_LikeN(long groupId, java.lang.String name);
+	public int countByG_LikeN(long groupId, String name);
 
 	/**
 	* Returns the number of asset display templates that the user has permission to view where groupId = &#63; and name LIKE &#63;.
@@ -450,7 +446,7 @@ public interface AssetDisplayTemplatePersistence extends BasePersistence<AssetDi
 	* @param name the name
 	* @return the number of matching asset display templates that the user has permission to view
 	*/
-	public int filterCountByG_LikeN(long groupId, java.lang.String name);
+	public int filterCountByG_LikeN(long groupId, String name);
 
 	/**
 	* Returns all the asset display templates where groupId = &#63; and classNameId = &#63;.

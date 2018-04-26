@@ -376,7 +376,7 @@ public class MBThreadServiceSoap {
 	}
 
 	public static com.liferay.message.boards.model.MBThreadSoap splitThread(
-		long messageId, java.lang.String subject,
+		long messageId, String subject,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {

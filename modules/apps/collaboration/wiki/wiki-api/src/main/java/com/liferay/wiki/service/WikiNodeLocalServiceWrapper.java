@@ -41,8 +41,8 @@ public class WikiNodeLocalServiceWrapper implements WikiNodeLocalService,
 	}
 
 	@Override
-	public com.liferay.wiki.model.WikiNode addNode(long userId,
-		java.lang.String name, java.lang.String description,
+	public com.liferay.wiki.model.WikiNode addNode(long userId, String name,
+		String description,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _wikiNodeLocalService.addNode(userId, name, description,
@@ -58,8 +58,8 @@ public class WikiNodeLocalServiceWrapper implements WikiNodeLocalService,
 	}
 
 	@Override
-	public void addNodeResources(long nodeId,
-		java.lang.String[] groupPermissions, java.lang.String[] guestPermissions)
+	public void addNodeResources(long nodeId, String[] groupPermissions,
+		String[] guestPermissions)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_wikiNodeLocalService.addNodeResources(nodeId, groupPermissions,
 			guestPermissions);
@@ -75,7 +75,7 @@ public class WikiNodeLocalServiceWrapper implements WikiNodeLocalService,
 
 	@Override
 	public void addNodeResources(com.liferay.wiki.model.WikiNode node,
-		java.lang.String[] groupPermissions, java.lang.String[] guestPermissions)
+		String[] groupPermissions, String[] guestPermissions)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_wikiNodeLocalService.addNodeResources(node, groupPermissions,
 			guestPermissions);
@@ -242,14 +242,13 @@ public class WikiNodeLocalServiceWrapper implements WikiNodeLocalService,
 	}
 
 	@Override
-	public com.liferay.wiki.model.WikiNode fetchNode(long groupId,
-		java.lang.String name) {
+	public com.liferay.wiki.model.WikiNode fetchNode(long groupId, String name) {
 		return _wikiNodeLocalService.fetchNode(groupId, name);
 	}
 
 	@Override
 	public com.liferay.wiki.model.WikiNode fetchNodeByUuidAndGroupId(
-		java.lang.String uuid, long groupId) {
+		String uuid, long groupId) {
 		return _wikiNodeLocalService.fetchNodeByUuidAndGroupId(uuid, groupId);
 	}
 
@@ -267,7 +266,7 @@ public class WikiNodeLocalServiceWrapper implements WikiNodeLocalService,
 	*/
 	@Override
 	public com.liferay.wiki.model.WikiNode fetchWikiNodeByUuidAndGroupId(
-		java.lang.String uuid, long groupId) {
+		String uuid, long groupId) {
 		return _wikiNodeLocalService.fetchWikiNodeByUuidAndGroupId(uuid, groupId);
 	}
 
@@ -317,8 +316,7 @@ public class WikiNodeLocalServiceWrapper implements WikiNodeLocalService,
 	}
 
 	@Override
-	public com.liferay.wiki.model.WikiNode getNode(long groupId,
-		java.lang.String nodeName)
+	public com.liferay.wiki.model.WikiNode getNode(long groupId, String nodeName)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _wikiNodeLocalService.getNode(groupId, nodeName);
 	}
@@ -367,7 +365,7 @@ public class WikiNodeLocalServiceWrapper implements WikiNodeLocalService,
 	* @return the OSGi service identifier
 	*/
 	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
+	public String getOSGiServiceIdentifier() {
 		return _wikiNodeLocalService.getOSGiServiceIdentifier();
 	}
 
@@ -401,7 +399,7 @@ public class WikiNodeLocalServiceWrapper implements WikiNodeLocalService,
 	*/
 	@Override
 	public com.liferay.wiki.model.WikiNode getWikiNodeByUuidAndGroupId(
-		java.lang.String uuid, long groupId)
+		String uuid, long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _wikiNodeLocalService.getWikiNodeByUuidAndGroupId(uuid, groupId);
 	}
@@ -432,7 +430,7 @@ public class WikiNodeLocalServiceWrapper implements WikiNodeLocalService,
 	*/
 	@Override
 	public java.util.List<com.liferay.wiki.model.WikiNode> getWikiNodesByUuidAndCompanyId(
-		java.lang.String uuid, long companyId) {
+		String uuid, long companyId) {
 		return _wikiNodeLocalService.getWikiNodesByUuidAndCompanyId(uuid,
 			companyId);
 	}
@@ -449,7 +447,7 @@ public class WikiNodeLocalServiceWrapper implements WikiNodeLocalService,
 	*/
 	@Override
 	public java.util.List<com.liferay.wiki.model.WikiNode> getWikiNodesByUuidAndCompanyId(
-		java.lang.String uuid, long companyId, int start, int end,
+		String uuid, long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiNode> orderByComparator) {
 		return _wikiNodeLocalService.getWikiNodesByUuidAndCompanyId(uuid,
 			companyId, start, end, orderByComparator);
@@ -466,9 +464,9 @@ public class WikiNodeLocalServiceWrapper implements WikiNodeLocalService,
 	}
 
 	@Override
-	public void importPages(long userId, long nodeId,
-		java.lang.String importer, java.io.InputStream[] inputStreams,
-		java.util.Map<java.lang.String, java.lang.String[]> options)
+	public void importPages(long userId, long nodeId, String importer,
+		java.io.InputStream[] inputStreams,
+		java.util.Map<String, String[]> options)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_wikiNodeLocalService.importPages(userId, nodeId, importer,
 			inputStreams, options);
@@ -507,8 +505,8 @@ public class WikiNodeLocalServiceWrapper implements WikiNodeLocalService,
 	}
 
 	@Override
-	public com.liferay.wiki.model.WikiNode updateNode(long nodeId,
-		java.lang.String name, java.lang.String description,
+	public com.liferay.wiki.model.WikiNode updateNode(long nodeId, String name,
+		String description,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _wikiNodeLocalService.updateNode(nodeId, name, description,

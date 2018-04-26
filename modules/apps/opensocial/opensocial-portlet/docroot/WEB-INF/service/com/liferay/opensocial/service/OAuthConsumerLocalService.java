@@ -60,10 +60,9 @@ public interface OAuthConsumerLocalService extends BaseLocalService,
 	 *
 	 * Never modify or reference this interface directly. Always use {@link OAuthConsumerLocalServiceUtil} to access the o auth consumer local service. Add custom service methods to {@link com.liferay.opensocial.service.impl.OAuthConsumerLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public OAuthConsumer addOAuthConsumer(long companyId,
-		java.lang.String gadgetKey, java.lang.String serviceName,
-		java.lang.String consumerKey, java.lang.String consumerSecret,
-		java.lang.String keyType);
+	public OAuthConsumer addOAuthConsumer(long companyId, String gadgetKey,
+		String serviceName, String consumerKey, String consumerSecret,
+		String keyType);
 
 	/**
 	* Adds the o auth consumer to the database. Also notifies the appropriate model listeners.
@@ -103,7 +102,7 @@ public interface OAuthConsumerLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.DELETE)
 	public OAuthConsumer deleteOAuthConsumer(OAuthConsumer oAuthConsumer);
 
-	public void deleteOAuthConsumers(java.lang.String gadgetKey);
+	public void deleteOAuthConsumers(String gadgetKey);
 
 	/**
 	* @throws PortalException
@@ -175,8 +174,7 @@ public interface OAuthConsumerLocalService extends BaseLocalService,
 	public OAuthConsumer fetchOAuthConsumer(long oAuthConsumerId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public OAuthConsumer fetchOAuthConsumer(java.lang.String gadgetKey,
-		java.lang.String serviceName);
+	public OAuthConsumer fetchOAuthConsumer(String gadgetKey, String serviceName);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
@@ -196,8 +194,8 @@ public interface OAuthConsumerLocalService extends BaseLocalService,
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public OAuthConsumer getOAuthConsumer(java.lang.String gadgetKey,
-		java.lang.String serviceName) throws PortalException;
+	public OAuthConsumer getOAuthConsumer(String gadgetKey, String serviceName)
+		throws PortalException;
 
 	/**
 	* Returns a range of all the o auth consumers.
@@ -214,11 +212,11 @@ public interface OAuthConsumerLocalService extends BaseLocalService,
 	public List<OAuthConsumer> getOAuthConsumers(int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<OAuthConsumer> getOAuthConsumers(java.lang.String gadgetKey);
+	public List<OAuthConsumer> getOAuthConsumers(String gadgetKey);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<OAuthConsumer> getOAuthConsumers(java.lang.String gadgetKey,
-		int start, int end);
+	public List<OAuthConsumer> getOAuthConsumers(String gadgetKey, int start,
+		int end);
 
 	/**
 	* Returns the number of o auth consumers.
@@ -229,14 +227,14 @@ public interface OAuthConsumerLocalService extends BaseLocalService,
 	public int getOAuthConsumersCount();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getOAuthConsumersCount(java.lang.String gadgetKey);
+	public int getOAuthConsumersCount(String gadgetKey);
 
 	/**
 	* Returns the OSGi service identifier.
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -244,9 +242,8 @@ public interface OAuthConsumerLocalService extends BaseLocalService,
 		throws PortalException;
 
 	public OAuthConsumer updateOAuthConsumer(long oAuthConsumerId,
-		java.lang.String consumerKey, java.lang.String consumerSecret,
-		java.lang.String keyType, java.lang.String keyName,
-		java.lang.String callbackURL) throws PortalException;
+		String consumerKey, String consumerSecret, String keyType,
+		String keyName, String callbackURL) throws PortalException;
 
 	/**
 	* Updates the o auth consumer in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.

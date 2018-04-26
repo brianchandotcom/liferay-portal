@@ -309,7 +309,7 @@ public interface RegionPersistence extends BasePersistence<Region> {
 	* @return the matching region
 	* @throws NoSuchRegionException if a matching region could not be found
 	*/
-	public Region findByC_R(long countryId, java.lang.String regionCode)
+	public Region findByC_R(long countryId, String regionCode)
 		throws NoSuchRegionException;
 
 	/**
@@ -319,7 +319,7 @@ public interface RegionPersistence extends BasePersistence<Region> {
 	* @param regionCode the region code
 	* @return the matching region, or <code>null</code> if a matching region could not be found
 	*/
-	public Region fetchByC_R(long countryId, java.lang.String regionCode);
+	public Region fetchByC_R(long countryId, String regionCode);
 
 	/**
 	* Returns the region where countryId = &#63; and regionCode = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -329,7 +329,7 @@ public interface RegionPersistence extends BasePersistence<Region> {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching region, or <code>null</code> if a matching region could not be found
 	*/
-	public Region fetchByC_R(long countryId, java.lang.String regionCode,
+	public Region fetchByC_R(long countryId, String regionCode,
 		boolean retrieveFromCache);
 
 	/**
@@ -339,7 +339,7 @@ public interface RegionPersistence extends BasePersistence<Region> {
 	* @param regionCode the region code
 	* @return the region that was removed
 	*/
-	public Region removeByC_R(long countryId, java.lang.String regionCode)
+	public Region removeByC_R(long countryId, String regionCode)
 		throws NoSuchRegionException;
 
 	/**
@@ -349,7 +349,7 @@ public interface RegionPersistence extends BasePersistence<Region> {
 	* @param regionCode the region code
 	* @return the number of matching regions
 	*/
-	public int countByC_R(long countryId, java.lang.String regionCode);
+	public int countByC_R(long countryId, String regionCode);
 
 	/**
 	* Returns all the regions where countryId = &#63; and active = &#63;.
@@ -613,5 +613,5 @@ public interface RegionPersistence extends BasePersistence<Region> {
 	public int countAll();
 
 	@Override
-	public java.util.Set<java.lang.String> getBadColumnNames();
+	public java.util.Set<String> getBadColumnNames();
 }

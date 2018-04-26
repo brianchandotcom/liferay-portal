@@ -59,8 +59,8 @@ public interface StagingLocalService extends BaseLocalService {
 	public void cleanUpStagingRequest(long stagingRequestId)
 		throws PortalException;
 
-	public long createStagingRequest(long userId, long groupId,
-		java.lang.String checksum) throws PortalException;
+	public long createStagingRequest(long userId, long groupId, String checksum)
+		throws PortalException;
 
 	public void disableStaging(Group liveGroup, ServiceContext serviceContext)
 		throws PortalException;
@@ -74,26 +74,24 @@ public interface StagingLocalService extends BaseLocalService {
 
 	public void enableRemoteStaging(long userId, Group stagingGroup,
 		boolean branchingPublic, boolean branchingPrivate,
-		java.lang.String remoteAddress, int remotePort,
-		java.lang.String remotePathContext, boolean secureConnection,
-		long remoteGroupId, ServiceContext serviceContext)
-		throws PortalException;
+		String remoteAddress, int remotePort, String remotePathContext,
+		boolean secureConnection, long remoteGroupId,
+		ServiceContext serviceContext) throws PortalException;
 
 	/**
 	* Returns the OSGi service identifier.
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	/**
 	* @deprecated As of 7.0.0, with no direct replacement
 	*/
-	@java.lang.Deprecated
+	@Deprecated
 	public MissingReferences publishStagingRequest(long userId,
 		long stagingRequestId, boolean privateLayout,
-		Map<java.lang.String, java.lang.String[]> parameterMap)
-		throws PortalException;
+		Map<String, String[]> parameterMap) throws PortalException;
 
 	public MissingReferences publishStagingRequest(long userId,
 		long stagingRequestId,
@@ -101,14 +99,14 @@ public interface StagingLocalService extends BaseLocalService {
 		throws PortalException;
 
 	public void updateStagingRequest(long userId, long stagingRequestId,
-		java.lang.String fileName, byte[] bytes) throws PortalException;
+		String fileName, byte[] bytes) throws PortalException;
 
 	/**
 	* @deprecated As of 7.0.0, replaced by {@link #publishStagingRequest(long,
 	long, boolean, Map)}
 	*/
-	@java.lang.Deprecated
+	@Deprecated
 	public MissingReferences validateStagingRequest(long userId,
 		long stagingRequestId, boolean privateLayout,
-		Map<java.lang.String, java.lang.String[]> parameterMap);
+		Map<String, String[]> parameterMap);
 }

@@ -37,7 +37,7 @@ public class KaleoLogLocalServiceWrapper implements KaleoLogLocalService,
 	public com.liferay.portal.workflow.kaleo.model.KaleoLog addActionExecutionKaleoLog(
 		com.liferay.portal.workflow.kaleo.model.KaleoInstanceToken kaleoInstanceToken,
 		com.liferay.portal.workflow.kaleo.model.KaleoAction kaleoAction,
-		long startTime, long endTime, java.lang.String comment,
+		long startTime, long endTime, String comment,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _kaleoLogLocalService.addActionExecutionKaleoLog(kaleoInstanceToken,
@@ -81,8 +81,8 @@ public class KaleoLogLocalServiceWrapper implements KaleoLogLocalService,
 	public com.liferay.portal.workflow.kaleo.model.KaleoLog addTaskAssignmentKaleoLog(
 		java.util.List<com.liferay.portal.workflow.kaleo.model.KaleoTaskAssignmentInstance> previousKaleoTaskAssignmentInstances,
 		com.liferay.portal.workflow.kaleo.model.KaleoTaskInstanceToken kaleoTaskInstanceToken,
-		java.lang.String comment,
-		java.util.Map<java.lang.String, java.io.Serializable> workflowContext,
+		String comment,
+		java.util.Map<String, java.io.Serializable> workflowContext,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _kaleoLogLocalService.addTaskAssignmentKaleoLog(previousKaleoTaskAssignmentInstances,
@@ -92,8 +92,8 @@ public class KaleoLogLocalServiceWrapper implements KaleoLogLocalService,
 	@Override
 	public com.liferay.portal.workflow.kaleo.model.KaleoLog addTaskCompletionKaleoLog(
 		com.liferay.portal.workflow.kaleo.model.KaleoTaskInstanceToken kaleoTaskInstanceToken,
-		java.lang.String comment,
-		java.util.Map<java.lang.String, java.io.Serializable> workflowContext,
+		String comment,
+		java.util.Map<String, java.io.Serializable> workflowContext,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _kaleoLogLocalService.addTaskCompletionKaleoLog(kaleoTaskInstanceToken,
@@ -103,8 +103,8 @@ public class KaleoLogLocalServiceWrapper implements KaleoLogLocalService,
 	@Override
 	public com.liferay.portal.workflow.kaleo.model.KaleoLog addTaskUpdateKaleoLog(
 		com.liferay.portal.workflow.kaleo.model.KaleoTaskInstanceToken kaleoTaskInstanceToken,
-		java.lang.String comment,
-		java.util.Map<java.lang.String, java.io.Serializable> workflowContext,
+		String comment,
+		java.util.Map<String, java.io.Serializable> workflowContext,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _kaleoLogLocalService.addTaskUpdateKaleoLog(kaleoTaskInstanceToken,
@@ -295,8 +295,8 @@ public class KaleoLogLocalServiceWrapper implements KaleoLogLocalService,
 
 	@Override
 	public java.util.List<com.liferay.portal.workflow.kaleo.model.KaleoLog> getKaleoInstanceKaleoLogs(
-		long kaleoInstanceId, java.util.List<java.lang.Integer> logTypes,
-		int start, int end,
+		long kaleoInstanceId, java.util.List<Integer> logTypes, int start,
+		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.workflow.kaleo.model.KaleoLog> orderByComparator) {
 		return _kaleoLogLocalService.getKaleoInstanceKaleoLogs(kaleoInstanceId,
 			logTypes, start, end, orderByComparator);
@@ -304,7 +304,7 @@ public class KaleoLogLocalServiceWrapper implements KaleoLogLocalService,
 
 	@Override
 	public int getKaleoInstanceKaleoLogsCount(long kaleoInstanceId,
-		java.util.List<java.lang.Integer> logTypes) {
+		java.util.List<Integer> logTypes) {
 		return _kaleoLogLocalService.getKaleoInstanceKaleoLogsCount(kaleoInstanceId,
 			logTypes);
 	}
@@ -352,8 +352,8 @@ public class KaleoLogLocalServiceWrapper implements KaleoLogLocalService,
 
 	@Override
 	public java.util.List<com.liferay.portal.workflow.kaleo.model.KaleoLog> getKaleoTaskInstanceTokenKaleoLogs(
-		long kaleoTaskInstanceTokenId,
-		java.util.List<java.lang.Integer> logTypes, int start, int end,
+		long kaleoTaskInstanceTokenId, java.util.List<Integer> logTypes,
+		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.workflow.kaleo.model.KaleoLog> orderByComparator) {
 		return _kaleoLogLocalService.getKaleoTaskInstanceTokenKaleoLogs(kaleoTaskInstanceTokenId,
 			logTypes, start, end, orderByComparator);
@@ -361,8 +361,7 @@ public class KaleoLogLocalServiceWrapper implements KaleoLogLocalService,
 
 	@Override
 	public int getKaleoTaskInstanceTokenKaleoLogsCount(
-		long kaleoTaskInstanceTokenId,
-		java.util.List<java.lang.Integer> logTypes) {
+		long kaleoTaskInstanceTokenId, java.util.List<Integer> logTypes) {
 		return _kaleoLogLocalService.getKaleoTaskInstanceTokenKaleoLogsCount(kaleoTaskInstanceTokenId,
 			logTypes);
 	}
@@ -373,7 +372,7 @@ public class KaleoLogLocalServiceWrapper implements KaleoLogLocalService,
 	* @return the OSGi service identifier
 	*/
 	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
+	public String getOSGiServiceIdentifier() {
 		return _kaleoLogLocalService.getOSGiServiceIdentifier();
 	}
 

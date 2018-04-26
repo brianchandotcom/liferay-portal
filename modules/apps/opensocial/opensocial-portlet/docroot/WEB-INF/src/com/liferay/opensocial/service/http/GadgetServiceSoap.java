@@ -66,8 +66,7 @@ import java.rmi.RemoteException;
 @ProviderType
 public class GadgetServiceSoap {
 	public static com.liferay.opensocial.model.GadgetSoap addGadget(
-		long companyId, java.lang.String url,
-		java.lang.String portletCategoryNames,
+		long companyId, String url, String portletCategoryNames,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
@@ -96,8 +95,7 @@ public class GadgetServiceSoap {
 		}
 	}
 
-	public static void updateGadget(long gadgetId,
-		java.lang.String portletCategoryNames,
+	public static void updateGadget(long gadgetId, String portletCategoryNames,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {

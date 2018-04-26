@@ -63,8 +63,8 @@ public class SocialActivitySettingLocalServiceUtil {
 		return getService().createSocialActivitySetting(activitySettingId);
 	}
 
-	public static void deleteActivitySetting(long groupId,
-		java.lang.String className, long classPK) {
+	public static void deleteActivitySetting(long groupId, String className,
+		long classPK) {
 		getService().deleteActivitySetting(groupId, className, classPK);
 	}
 
@@ -193,13 +193,13 @@ public class SocialActivitySettingLocalServiceUtil {
 	}
 
 	public static com.liferay.social.kernel.model.SocialActivityDefinition getActivityDefinition(
-		long groupId, java.lang.String className, int activityType) {
+		long groupId, String className, int activityType) {
 		return getService()
 				   .getActivityDefinition(groupId, className, activityType);
 	}
 
 	public static java.util.List<com.liferay.social.kernel.model.SocialActivityDefinition> getActivityDefinitions(
-		long groupId, java.lang.String className) {
+		long groupId, String className) {
 		return getService().getActivityDefinitions(groupId, className);
 	}
 
@@ -217,7 +217,7 @@ public class SocialActivitySettingLocalServiceUtil {
 	*
 	* @return the OSGi service identifier
 	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
+	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 
@@ -273,14 +273,14 @@ public class SocialActivitySettingLocalServiceUtil {
 		return getService().isEnabled(groupId, classNameId, classPK);
 	}
 
-	public static void updateActivitySetting(long groupId,
-		java.lang.String className, boolean enabled)
+	public static void updateActivitySetting(long groupId, String className,
+		boolean enabled)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().updateActivitySetting(groupId, className, enabled);
 	}
 
-	public static void updateActivitySetting(long groupId,
-		java.lang.String className, int activityType,
+	public static void updateActivitySetting(long groupId, String className,
+		int activityType,
 		com.liferay.social.kernel.model.SocialActivityCounterDefinition activityCounterDefinition)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService()
@@ -288,14 +288,14 @@ public class SocialActivitySettingLocalServiceUtil {
 			activityCounterDefinition);
 	}
 
-	public static void updateActivitySetting(long groupId,
-		java.lang.String className, long classPK, boolean enabled)
+	public static void updateActivitySetting(long groupId, String className,
+		long classPK, boolean enabled)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().updateActivitySetting(groupId, className, classPK, enabled);
 	}
 
-	public static void updateActivitySettings(long groupId,
-		java.lang.String className, int activityType,
+	public static void updateActivitySettings(long groupId, String className,
+		int activityType,
 		java.util.List<com.liferay.social.kernel.model.SocialActivityCounterDefinition> activityCounterDefinitions)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService()

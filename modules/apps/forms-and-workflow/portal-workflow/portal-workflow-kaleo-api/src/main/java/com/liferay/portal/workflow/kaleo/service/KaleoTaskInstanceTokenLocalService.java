@@ -76,16 +76,14 @@ public interface KaleoTaskInstanceTokenLocalService extends BaseLocalService,
 		KaleoTaskInstanceToken kaleoTaskInstanceToken);
 
 	public KaleoTaskInstanceToken addKaleoTaskInstanceToken(
-		long kaleoInstanceTokenId, long kaleoTaskId,
-		java.lang.String kaleoTaskName,
+		long kaleoInstanceTokenId, long kaleoTaskId, String kaleoTaskName,
 		Collection<KaleoTaskAssignment> kaleoTaskAssignments, Date dueDate,
-		Map<java.lang.String, Serializable> workflowContext,
-		ServiceContext serviceContext) throws PortalException;
+		Map<String, Serializable> workflowContext, ServiceContext serviceContext)
+		throws PortalException;
 
 	public KaleoTaskInstanceToken assignKaleoTaskInstanceToken(
-		long kaleoTaskInstanceTokenId, java.lang.String assigneeClassName,
-		long assigneeClassPK,
-		Map<java.lang.String, Serializable> workflowContext,
+		long kaleoTaskInstanceTokenId, String assigneeClassName,
+		long assigneeClassPK, Map<String, Serializable> workflowContext,
 		ServiceContext serviceContext) throws PortalException;
 
 	public KaleoTaskInstanceToken completeKaleoTaskInstanceToken(
@@ -226,7 +224,7 @@ public interface KaleoTaskInstanceTokenLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<KaleoTaskInstanceToken> getKaleoTaskInstanceTokens(
-		java.lang.Boolean completed, int start, int end,
+		Boolean completed, int start, int end,
 		OrderByComparator<KaleoTaskInstanceToken> orderByComparator,
 		ServiceContext serviceContext);
 
@@ -247,13 +245,13 @@ public interface KaleoTaskInstanceTokenLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<KaleoTaskInstanceToken> getKaleoTaskInstanceTokens(
-		List<java.lang.Long> roleIds, java.lang.Boolean completed, int start,
-		int end, OrderByComparator<KaleoTaskInstanceToken> orderByComparator,
+		List<Long> roleIds, Boolean completed, int start, int end,
+		OrderByComparator<KaleoTaskInstanceToken> orderByComparator,
 		ServiceContext serviceContext);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<KaleoTaskInstanceToken> getKaleoTaskInstanceTokens(
-		long kaleoInstanceId, java.lang.Boolean completed, int start, int end,
+		long kaleoInstanceId, Boolean completed, int start, int end,
 		OrderByComparator<KaleoTaskInstanceToken> orderByComparator,
 		ServiceContext serviceContext);
 
@@ -263,8 +261,8 @@ public interface KaleoTaskInstanceTokenLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<KaleoTaskInstanceToken> getKaleoTaskInstanceTokens(
-		java.lang.String assigneeClassName, long assigneeClassPK,
-		java.lang.Boolean completed, int start, int end,
+		String assigneeClassName, long assigneeClassPK, Boolean completed,
+		int start, int end,
 		OrderByComparator<KaleoTaskInstanceToken> orderByComparator,
 		ServiceContext serviceContext);
 
@@ -277,28 +275,27 @@ public interface KaleoTaskInstanceTokenLocalService extends BaseLocalService,
 	public int getKaleoTaskInstanceTokensCount();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getKaleoTaskInstanceTokensCount(java.lang.Boolean completed,
+	public int getKaleoTaskInstanceTokensCount(Boolean completed,
 		ServiceContext serviceContext);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getKaleoTaskInstanceTokensCount(List<java.lang.Long> roleIds,
-		java.lang.Boolean completed, ServiceContext serviceContext);
+	public int getKaleoTaskInstanceTokensCount(List<Long> roleIds,
+		Boolean completed, ServiceContext serviceContext);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getKaleoTaskInstanceTokensCount(long kaleoInstanceId,
-		java.lang.Boolean completed, ServiceContext serviceContext);
+		Boolean completed, ServiceContext serviceContext);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getKaleoTaskInstanceTokensCount(
-		java.lang.String assigneeClassName, long assigneeClassPK,
-		java.lang.Boolean completed, ServiceContext serviceContext);
+	public int getKaleoTaskInstanceTokensCount(String assigneeClassName,
+		long assigneeClassPK, Boolean completed, ServiceContext serviceContext);
 
 	/**
 	* Returns the OSGi service identifier.
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -307,72 +304,67 @@ public interface KaleoTaskInstanceTokenLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<KaleoTaskInstanceToken> getSubmittingUserKaleoTaskInstanceTokens(
-		long userId, java.lang.Boolean completed, int start, int end,
+		long userId, Boolean completed, int start, int end,
 		OrderByComparator<KaleoTaskInstanceToken> orderByComparator,
 		ServiceContext serviceContext);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getSubmittingUserKaleoTaskInstanceTokensCount(long userId,
-		java.lang.Boolean completed, ServiceContext serviceContext);
+		Boolean completed, ServiceContext serviceContext);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public boolean hasPendingKaleoTaskForms(long kaleoTaskInstanceTokenId)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<KaleoTaskInstanceToken> search(java.lang.String keywords,
-		java.lang.Boolean completed, java.lang.Boolean searchByUserRoles,
-		int start, int end,
+	public List<KaleoTaskInstanceToken> search(String keywords,
+		Boolean completed, Boolean searchByUserRoles, int start, int end,
 		OrderByComparator<KaleoTaskInstanceToken> orderByComparator,
 		ServiceContext serviceContext);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<KaleoTaskInstanceToken> search(java.lang.String taskName,
-		java.lang.String assetType, java.lang.Long[] assetPrimaryKeys,
-		Date dueDateGT, Date dueDateLT, java.lang.Boolean completed,
-		java.lang.Boolean searchByUserRoles, boolean andOperator, int start,
-		int end, OrderByComparator<KaleoTaskInstanceToken> orderByComparator,
-		ServiceContext serviceContext);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<KaleoTaskInstanceToken> search(java.lang.String assetTitle,
-		java.lang.String taskName, java.lang.String[] assetTypes,
-		java.lang.Long[] assetPrimaryKeys, Date dueDateGT, Date dueDateLT,
-		java.lang.Boolean completed, java.lang.Boolean searchByUserRoles,
+	public List<KaleoTaskInstanceToken> search(String taskName,
+		String assetType, Long[] assetPrimaryKeys, Date dueDateGT,
+		Date dueDateLT, Boolean completed, Boolean searchByUserRoles,
 		boolean andOperator, int start, int end,
 		OrderByComparator<KaleoTaskInstanceToken> orderByComparator,
 		ServiceContext serviceContext);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<KaleoTaskInstanceToken> search(java.lang.String keywords,
-		java.lang.String[] assetTypes, java.lang.Boolean completed,
-		java.lang.Boolean searchByUserRoles, int start, int end,
+	public List<KaleoTaskInstanceToken> search(String assetTitle,
+		String taskName, String[] assetTypes, Long[] assetPrimaryKeys,
+		Date dueDateGT, Date dueDateLT, Boolean completed,
+		Boolean searchByUserRoles, boolean andOperator, int start, int end,
 		OrderByComparator<KaleoTaskInstanceToken> orderByComparator,
 		ServiceContext serviceContext);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int searchCount(java.lang.String keywords,
-		java.lang.Boolean completed, java.lang.Boolean searchByUserRoles,
+	public List<KaleoTaskInstanceToken> search(String keywords,
+		String[] assetTypes, Boolean completed, Boolean searchByUserRoles,
+		int start, int end,
+		OrderByComparator<KaleoTaskInstanceToken> orderByComparator,
 		ServiceContext serviceContext);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int searchCount(java.lang.String taskName,
-		java.lang.String assetType, java.lang.Long[] assetPrimaryKeys,
-		Date dueDateGT, Date dueDateLT, java.lang.Boolean completed,
-		java.lang.Boolean searchByUserRoles, boolean andOperator,
+	public int searchCount(String keywords, Boolean completed,
+		Boolean searchByUserRoles, ServiceContext serviceContext);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int searchCount(String taskName, String assetType,
+		Long[] assetPrimaryKeys, Date dueDateGT, Date dueDateLT,
+		Boolean completed, Boolean searchByUserRoles, boolean andOperator,
 		ServiceContext serviceContext);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int searchCount(java.lang.String assetTitle,
-		java.lang.String taskName, java.lang.String[] assetTypes,
-		java.lang.Long[] assetPrimaryKeys, Date dueDateGT, Date dueDateLT,
-		java.lang.Boolean completed, java.lang.Boolean searchByUserRoles,
+	public int searchCount(String assetTitle, String taskName,
+		String[] assetTypes, Long[] assetPrimaryKeys, Date dueDateGT,
+		Date dueDateLT, Boolean completed, Boolean searchByUserRoles,
 		boolean andOperator, ServiceContext serviceContext);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int searchCount(java.lang.String keywords,
-		java.lang.String[] assetTypes, java.lang.Boolean completed,
-		java.lang.Boolean searchByUserRoles, ServiceContext serviceContext);
+	public int searchCount(String keywords, String[] assetTypes,
+		Boolean completed, Boolean searchByUserRoles,
+		ServiceContext serviceContext);
 
 	public KaleoTaskInstanceToken updateDueDate(long kaleoTaskInstanceTokenId,
 		Date dueDate, ServiceContext serviceContext) throws PortalException;

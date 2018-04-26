@@ -57,9 +57,8 @@ public interface KBFolderService extends BaseService {
 	 * Never modify or reference this interface directly. Always use {@link KBFolderServiceUtil} to access the kb folder remote service. Add custom service methods to {@link com.liferay.knowledge.base.service.impl.KBFolderServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	public KBFolder addKBFolder(long groupId, long parentResourceClassNameId,
-		long parentResourcePrimKey, java.lang.String name,
-		java.lang.String description, ServiceContext serviceContext)
-		throws PortalException;
+		long parentResourcePrimKey, String name, String description,
+		ServiceContext serviceContext) throws PortalException;
 
 	public KBFolder deleteKBFolder(long kbFolderId) throws PortalException;
 
@@ -76,22 +75,21 @@ public interface KBFolderService extends BaseService {
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public KBFolder fetchKBFolderByUrlTitle(long groupId,
-		long parentKbFolderId, java.lang.String urlTitle)
-		throws PortalException;
+		long parentKbFolderId, String urlTitle) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public KBFolder getKBFolder(long kbFolderId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public KBFolder getKBFolderByUrlTitle(long groupId, long parentKbFolderId,
-		java.lang.String urlTitle) throws PortalException;
+		String urlTitle) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<KBFolder> getKBFolders(long groupId, long parentKBFolderId,
 		int start, int end) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<java.lang.Object> getKBFoldersAndKBArticles(long groupId,
+	public List<Object> getKBFoldersAndKBArticles(long groupId,
 		long parentResourcePrimKey, int status, int start, int end,
 		OrderByComparator<?> orderByComparator);
 
@@ -108,7 +106,7 @@ public interface KBFolderService extends BaseService {
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	public void moveKBFolder(long kbFolderId, long parentKBFolderId)
 		throws PortalException;
@@ -117,13 +115,13 @@ public interface KBFolderService extends BaseService {
 	* @deprecated As of 1.1.0, replaced by {@link #updateKBFolder(long, long,
 	long, String, String, ServiceContext)}
 	*/
-	@java.lang.Deprecated
+	@Deprecated
 	public KBFolder updateKBFolder(long parentResourceClassNameId,
-		long parentResourcePrimKey, long kbFolderId, java.lang.String name,
-		java.lang.String description) throws PortalException;
+		long parentResourcePrimKey, long kbFolderId, String name,
+		String description) throws PortalException;
 
 	public KBFolder updateKBFolder(long parentResourceClassNameId,
-		long parentResourcePrimKey, long kbFolderId, java.lang.String name,
-		java.lang.String description, ServiceContext serviceContext)
+		long parentResourcePrimKey, long kbFolderId, String name,
+		String description, ServiceContext serviceContext)
 		throws PortalException;
 }

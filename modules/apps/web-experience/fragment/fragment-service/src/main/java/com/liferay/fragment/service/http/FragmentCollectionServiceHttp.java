@@ -56,8 +56,8 @@ import com.liferay.portal.kernel.util.MethodKey;
 @ProviderType
 public class FragmentCollectionServiceHttp {
 	public static com.liferay.fragment.model.FragmentCollection addFragmentCollection(
-		HttpPrincipal httpPrincipal, long groupId, java.lang.String name,
-		java.lang.String description,
+		HttpPrincipal httpPrincipal, long groupId, String name,
+		String description,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -92,8 +92,7 @@ public class FragmentCollectionServiceHttp {
 
 	public static com.liferay.fragment.model.FragmentCollection addFragmentCollection(
 		HttpPrincipal httpPrincipal, long groupId,
-		java.lang.String fragmentCollectionKey, java.lang.String name,
-		java.lang.String description,
+		String fragmentCollectionKey, String name, String description,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -306,8 +305,8 @@ public class FragmentCollectionServiceHttp {
 	}
 
 	public static java.util.List<com.liferay.fragment.model.FragmentCollection> getFragmentCollections(
-		HttpPrincipal httpPrincipal, long groupId, java.lang.String name,
-		int start, int end,
+		HttpPrincipal httpPrincipal, long groupId, String name, int start,
+		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.fragment.model.FragmentCollection> orderByComparator) {
 		try {
 			MethodKey methodKey = new MethodKey(FragmentCollectionServiceUtil.class,
@@ -363,7 +362,7 @@ public class FragmentCollectionServiceHttp {
 	}
 
 	public static int getFragmentCollectionsCount(HttpPrincipal httpPrincipal,
-		long groupId, java.lang.String name) {
+		long groupId, String name) {
 		try {
 			MethodKey methodKey = new MethodKey(FragmentCollectionServiceUtil.class,
 					"getFragmentCollectionsCount",
@@ -390,8 +389,8 @@ public class FragmentCollectionServiceHttp {
 		}
 	}
 
-	public static java.lang.String[] getTempFileNames(
-		HttpPrincipal httpPrincipal, long groupId, java.lang.String folderName)
+	public static String[] getTempFileNames(HttpPrincipal httpPrincipal,
+		long groupId, String folderName)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(FragmentCollectionServiceUtil.class,
@@ -413,7 +412,7 @@ public class FragmentCollectionServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (java.lang.String[])returnObj;
+			return (String[])returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -423,8 +422,8 @@ public class FragmentCollectionServiceHttp {
 	}
 
 	public static com.liferay.fragment.model.FragmentCollection updateFragmentCollection(
-		HttpPrincipal httpPrincipal, long fragmentCollectionId,
-		java.lang.String name, java.lang.String description)
+		HttpPrincipal httpPrincipal, long fragmentCollectionId, String name,
+		String description)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(FragmentCollectionServiceUtil.class,
@@ -458,12 +457,11 @@ public class FragmentCollectionServiceHttp {
 
 	private static Log _log = LogFactoryUtil.getLog(FragmentCollectionServiceHttp.class);
 	private static final Class<?>[] _addFragmentCollectionParameterTypes0 = new Class[] {
-			long.class, java.lang.String.class, java.lang.String.class,
+			long.class, String.class, String.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _addFragmentCollectionParameterTypes1 = new Class[] {
-			long.class, java.lang.String.class, java.lang.String.class,
-			java.lang.String.class,
+			long.class, String.class, String.class, String.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _deleteFragmentCollectionParameterTypes2 = new Class[] {
@@ -486,18 +484,18 @@ public class FragmentCollectionServiceHttp {
 			com.liferay.portal.kernel.util.OrderByComparator.class
 		};
 	private static final Class<?>[] _getFragmentCollectionsParameterTypes8 = new Class[] {
-			long.class, java.lang.String.class, int.class, int.class,
+			long.class, String.class, int.class, int.class,
 			com.liferay.portal.kernel.util.OrderByComparator.class
 		};
 	private static final Class<?>[] _getFragmentCollectionsCountParameterTypes9 = new Class[] {
 			long.class
 		};
 	private static final Class<?>[] _getFragmentCollectionsCountParameterTypes10 =
-		new Class[] { long.class, java.lang.String.class };
+		new Class[] { long.class, String.class };
 	private static final Class<?>[] _getTempFileNamesParameterTypes11 = new Class[] {
-			long.class, java.lang.String.class
+			long.class, String.class
 		};
 	private static final Class<?>[] _updateFragmentCollectionParameterTypes12 = new Class[] {
-			long.class, java.lang.String.class, java.lang.String.class
+			long.class, String.class, String.class
 		};
 }

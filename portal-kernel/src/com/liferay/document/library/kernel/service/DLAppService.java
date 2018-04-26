@@ -95,10 +95,9 @@ public interface DLAppService extends BaseService {
 	* @return the file entry
 	*/
 	public FileEntry addFileEntry(long repositoryId, long folderId,
-		java.lang.String sourceFileName, java.lang.String mimeType,
-		java.lang.String title, java.lang.String description,
-		java.lang.String changeLog, byte[] bytes, ServiceContext serviceContext)
-		throws PortalException;
+		String sourceFileName, String mimeType, String title,
+		String description, String changeLog, byte[] bytes,
+		ServiceContext serviceContext) throws PortalException;
 
 	/**
 	* Adds a file entry and associated metadata. It is created based on a
@@ -131,10 +130,9 @@ public interface DLAppService extends BaseService {
 	* @return the file entry
 	*/
 	public FileEntry addFileEntry(long repositoryId, long folderId,
-		java.lang.String sourceFileName, java.lang.String mimeType,
-		java.lang.String title, java.lang.String description,
-		java.lang.String changeLog, File file, ServiceContext serviceContext)
-		throws PortalException;
+		String sourceFileName, String mimeType, String title,
+		String description, String changeLog, File file,
+		ServiceContext serviceContext) throws PortalException;
 
 	/**
 	* Adds a file entry and associated metadata. It is created based on a
@@ -168,9 +166,8 @@ public interface DLAppService extends BaseService {
 	* @return the file entry
 	*/
 	public FileEntry addFileEntry(long repositoryId, long folderId,
-		java.lang.String sourceFileName, java.lang.String mimeType,
-		java.lang.String title, java.lang.String description,
-		java.lang.String changeLog, InputStream is, long size,
+		String sourceFileName, String mimeType, String title,
+		String description, String changeLog, InputStream is, long size,
 		ServiceContext serviceContext) throws PortalException;
 
 	/**
@@ -202,8 +199,8 @@ public interface DLAppService extends BaseService {
 	* @return the folder
 	*/
 	public Folder addFolder(long repositoryId, long parentFolderId,
-		java.lang.String name, java.lang.String description,
-		ServiceContext serviceContext) throws PortalException;
+		String name, String description, ServiceContext serviceContext)
+		throws PortalException;
 
 	/**
 	* Adds a temporary file entry.
@@ -225,8 +222,8 @@ public interface DLAppService extends BaseService {
 	* @see TempFileEntryUtil
 	*/
 	public FileEntry addTempFileEntry(long groupId, long folderId,
-		java.lang.String folderName, java.lang.String fileName, File file,
-		java.lang.String mimeType) throws PortalException;
+		String folderName, String fileName, File file, String mimeType)
+		throws PortalException;
 
 	/**
 	* Adds a temporary file entry. It is created based on the {@link
@@ -249,9 +246,8 @@ public interface DLAppService extends BaseService {
 	* @see TempFileEntryUtil
 	*/
 	public FileEntry addTempFileEntry(long groupId, long folderId,
-		java.lang.String folderName, java.lang.String fileName,
-		InputStream inputStream, java.lang.String mimeType)
-		throws PortalException;
+		String folderName, String fileName, InputStream inputStream,
+		String mimeType) throws PortalException;
 
 	/**
 	* Cancels the check out of the file entry. If a user has not checked out
@@ -298,7 +294,7 @@ public interface DLAppService extends BaseService {
 	* @see #checkOutFileEntry(long, ServiceContext)
 	*/
 	public void checkInFileEntry(long fileEntryId, boolean majorVersion,
-		java.lang.String changeLog, ServiceContext serviceContext)
+		String changeLog, ServiceContext serviceContext)
 		throws PortalException;
 
 	/**
@@ -323,7 +319,7 @@ public interface DLAppService extends BaseService {
 	* @see #cancelCheckOut(long)
 	* @see #checkOutFileEntry(long, String, long, ServiceContext)
 	*/
-	public void checkInFileEntry(long fileEntryId, java.lang.String lockUuid,
+	public void checkInFileEntry(long fileEntryId, String lockUuid,
 		ServiceContext serviceContext) throws PortalException;
 
 	/**
@@ -373,9 +369,9 @@ public interface DLAppService extends BaseService {
 	* @see #cancelCheckOut(long)
 	* @see #checkInFileEntry(long, String)
 	*/
-	public FileEntry checkOutFileEntry(long fileEntryId,
-		java.lang.String owner, long expirationTime,
-		ServiceContext serviceContext) throws PortalException;
+	public FileEntry checkOutFileEntry(long fileEntryId, String owner,
+		long expirationTime, ServiceContext serviceContext)
+		throws PortalException;
 
 	/**
 	* Performs a deep copy of the folder.
@@ -389,9 +385,8 @@ public interface DLAppService extends BaseService {
 	* @return the folder
 	*/
 	public Folder copyFolder(long repositoryId, long sourceFolderId,
-		long parentFolderId, java.lang.String name,
-		java.lang.String description, ServiceContext serviceContext)
-		throws PortalException;
+		long parentFolderId, String name, String description,
+		ServiceContext serviceContext) throws PortalException;
 
 	/**
 	* Deletes the file entry with the primary key.
@@ -408,7 +403,7 @@ public interface DLAppService extends BaseService {
 	* @param title the file entry's title
 	*/
 	public void deleteFileEntryByTitle(long repositoryId, long folderId,
-		java.lang.String title) throws PortalException;
+		String title) throws PortalException;
 
 	/**
 	* Deletes the file shortcut with the primary key. This method is only
@@ -427,7 +422,7 @@ public interface DLAppService extends BaseService {
 	* @param fileEntryId the primary key of the file entry
 	* @param version the version label of the file version
 	*/
-	public void deleteFileVersion(long fileEntryId, java.lang.String version)
+	public void deleteFileVersion(long fileEntryId, String version)
 		throws PortalException;
 
 	/**
@@ -446,8 +441,8 @@ public interface DLAppService extends BaseService {
 	* @param parentFolderId the primary key of the folder's parent folder
 	* @param name the folder's name
 	*/
-	public void deleteFolder(long repositoryId, long parentFolderId,
-		java.lang.String name) throws PortalException;
+	public void deleteFolder(long repositoryId, long parentFolderId, String name)
+		throws PortalException;
 
 	/**
 	* Deletes the temporary file entry.
@@ -460,8 +455,7 @@ public interface DLAppService extends BaseService {
 	* @see TempFileEntryUtil
 	*/
 	public void deleteTempFileEntry(long groupId, long folderId,
-		java.lang.String folderName, java.lang.String fileName)
-		throws PortalException;
+		String folderName, String fileName) throws PortalException;
 
 	/**
 	* Returns all the file entries in the folder.
@@ -570,12 +564,12 @@ public interface DLAppService extends BaseService {
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<FileEntry> getFileEntries(long repositoryId, long folderId,
-		java.lang.String[] mimeTypes) throws PortalException;
+		String[] mimeTypes) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<FileEntry> getFileEntries(long repositoryId, long folderId,
-		java.lang.String[] mimeTypes, int start, int end,
-		OrderByComparator<FileEntry> obc) throws PortalException;
+		String[] mimeTypes, int start, int end, OrderByComparator<FileEntry> obc)
+		throws PortalException;
 
 	/**
 	* Returns a range of all the file entries and shortcuts in the folder.
@@ -597,8 +591,8 @@ public interface DLAppService extends BaseService {
 	* @return the range of file entries and shortcuts in the folder
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<java.lang.Object> getFileEntriesAndFileShortcuts(
-		long repositoryId, long folderId, int status, int start, int end)
+	public List<Object> getFileEntriesAndFileShortcuts(long repositoryId,
+		long folderId, int status, int start, int end)
 		throws PortalException;
 
 	/**
@@ -624,7 +618,7 @@ public interface DLAppService extends BaseService {
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getFileEntriesAndFileShortcutsCount(long repositoryId,
-		long folderId, int status, java.lang.String[] mimeTypes)
+		long folderId, int status, String[] mimeTypes)
 		throws PortalException;
 
 	/**
@@ -653,7 +647,7 @@ public interface DLAppService extends BaseService {
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getFileEntriesCount(long repositoryId, long folderId,
-		java.lang.String[] mimeTypes) throws PortalException;
+		String[] mimeTypes) throws PortalException;
 
 	/**
 	* Returns the file entry with the primary key.
@@ -673,8 +667,8 @@ public interface DLAppService extends BaseService {
 	* @return the file entry with the title in the folder
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public FileEntry getFileEntry(long groupId, long folderId,
-		java.lang.String title) throws PortalException;
+	public FileEntry getFileEntry(long groupId, long folderId, String title)
+		throws PortalException;
 
 	/**
 	* Returns the file entry with the UUID and group.
@@ -684,8 +678,8 @@ public interface DLAppService extends BaseService {
 	* @return the file entry with the UUID and group
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public FileEntry getFileEntryByUuidAndGroupId(java.lang.String uuid,
-		long groupId) throws PortalException;
+	public FileEntry getFileEntryByUuidAndGroupId(String uuid, long groupId)
+		throws PortalException;
 
 	/**
 	* Returns the file shortcut with the primary key. This method is only
@@ -726,8 +720,8 @@ public interface DLAppService extends BaseService {
 	* @return the folder with the name in the parent folder
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Folder getFolder(long repositoryId, long parentFolderId,
-		java.lang.String name) throws PortalException;
+	public Folder getFolder(long repositoryId, long parentFolderId, String name)
+		throws PortalException;
 
 	/**
 	* Returns all immediate subfolders of the parent folder.
@@ -916,7 +910,7 @@ public interface DLAppService extends BaseService {
 	file shortcuts in the parent folder
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<java.lang.Object> getFoldersAndFileEntriesAndFileShortcuts(
+	public List<Object> getFoldersAndFileEntriesAndFileShortcuts(
 		long repositoryId, long folderId, int status,
 		boolean includeMountFolders, int start, int end)
 		throws PortalException;
@@ -948,23 +942,22 @@ public interface DLAppService extends BaseService {
 	<code>obc</code>
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<java.lang.Object> getFoldersAndFileEntriesAndFileShortcuts(
+	public List<Object> getFoldersAndFileEntriesAndFileShortcuts(
 		long repositoryId, long folderId, int status,
 		boolean includeMountFolders, int start, int end,
 		OrderByComparator<?> obc) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<java.lang.Object> getFoldersAndFileEntriesAndFileShortcuts(
-		long repositoryId, long folderId, int status,
-		java.lang.String[] mimeTypes, boolean includeMountFolders,
-		boolean includeOwner, int start, int end, OrderByComparator<?> obc)
-		throws PortalException;
+	public List<Object> getFoldersAndFileEntriesAndFileShortcuts(
+		long repositoryId, long folderId, int status, String[] mimeTypes,
+		boolean includeMountFolders, boolean includeOwner, int start, int end,
+		OrderByComparator<?> obc) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<java.lang.Object> getFoldersAndFileEntriesAndFileShortcuts(
-		long repositoryId, long folderId, int status,
-		java.lang.String[] mimeTypes, boolean includeMountFolders, int start,
-		int end, OrderByComparator<?> obc) throws PortalException;
+	public List<Object> getFoldersAndFileEntriesAndFileShortcuts(
+		long repositoryId, long folderId, int status, String[] mimeTypes,
+		boolean includeMountFolders, int start, int end,
+		OrderByComparator<?> obc) throws PortalException;
 
 	/**
 	* Returns the number of immediate subfolders, file entries, and file
@@ -985,15 +978,14 @@ public interface DLAppService extends BaseService {
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getFoldersAndFileEntriesAndFileShortcutsCount(
-		long repositoryId, long folderId, int status,
-		java.lang.String[] mimeTypes, boolean includeMountFolders)
-		throws PortalException;
+		long repositoryId, long folderId, int status, String[] mimeTypes,
+		boolean includeMountFolders) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getFoldersAndFileEntriesAndFileShortcutsCount(
-		long repositoryId, long folderId, int status,
-		java.lang.String[] mimeTypes, boolean includeMountFolders,
-		boolean includeOwner) throws PortalException;
+		long repositoryId, long folderId, int status, String[] mimeTypes,
+		boolean includeMountFolders, boolean includeOwner)
+		throws PortalException;
 
 	/**
 	* Returns the number of immediate subfolders of the parent folder.
@@ -1048,7 +1040,7 @@ public interface DLAppService extends BaseService {
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getFoldersFileEntriesCount(long repositoryId,
-		List<java.lang.Long> folderIds, int status) throws PortalException;
+		List<Long> folderIds, int status) throws PortalException;
 
 	/**
 	* Returns an ordered range of all the file entries in the group starting at
@@ -1169,8 +1161,8 @@ public interface DLAppService extends BaseService {
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<FileEntry> getGroupFileEntries(long groupId, long userId,
-		long rootFolderId, java.lang.String[] mimeTypes, int status, int start,
-		int end, OrderByComparator<FileEntry> obc) throws PortalException;
+		long rootFolderId, String[] mimeTypes, int status, int start, int end,
+		OrderByComparator<FileEntry> obc) throws PortalException;
 
 	/**
 	* Returns the number of file entries in a group starting at the repository
@@ -1206,7 +1198,7 @@ public interface DLAppService extends BaseService {
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getGroupFileEntriesCount(long groupId, long userId,
-		long rootFolderId, java.lang.String[] mimeTypes, int status)
+		long rootFolderId, String[] mimeTypes, int status)
 		throws PortalException;
 
 	/**
@@ -1296,12 +1288,11 @@ public interface DLAppService extends BaseService {
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public void getSubfolderIds(long repositoryId,
-		List<java.lang.Long> folderIds, long folderId)
-		throws PortalException;
+	public void getSubfolderIds(long repositoryId, List<Long> folderIds,
+		long folderId) throws PortalException;
 
 	/**
 	* Returns all the descendant folders of the folder with the primary key.
@@ -1311,7 +1302,7 @@ public interface DLAppService extends BaseService {
 	* @return the descendant folders of the folder with the primary key
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<java.lang.Long> getSubfolderIds(long repositoryId, long folderId)
+	public List<Long> getSubfolderIds(long repositoryId, long folderId)
 		throws PortalException;
 
 	/**
@@ -1324,8 +1315,8 @@ public interface DLAppService extends BaseService {
 	* @return the descendant folders of the folder with the primary key
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<java.lang.Long> getSubfolderIds(long repositoryId,
-		long folderId, boolean recurse) throws PortalException;
+	public List<Long> getSubfolderIds(long repositoryId, long folderId,
+		boolean recurse) throws PortalException;
 
 	/**
 	* Returns all the temporary file entry names.
@@ -1339,8 +1330,8 @@ public interface DLAppService extends BaseService {
 	* @see TempFileEntryUtil
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.lang.String[] getTempFileNames(long groupId, long folderId,
-		java.lang.String folderName) throws PortalException;
+	public String[] getTempFileNames(long groupId, long folderId,
+		String folderName) throws PortalException;
 
 	/**
 	* Locks the folder. This method is primarily used by WebDAV.
@@ -1365,9 +1356,8 @@ public interface DLAppService extends BaseService {
 	be used from <code>portal.properties</code>.
 	* @return the lock object
 	*/
-	public Lock lockFolder(long repositoryId, long folderId,
-		java.lang.String owner, boolean inheritable, long expirationTime)
-		throws PortalException;
+	public Lock lockFolder(long repositoryId, long folderId, String owner,
+		boolean inheritable, long expirationTime) throws PortalException;
 
 	/**
 	* Moves the file entry to the new folder.
@@ -1402,7 +1392,7 @@ public interface DLAppService extends BaseService {
 	be used from <code>portal.properties</code>.
 	* @return the lock object
 	*/
-	public Lock refreshFileEntryLock(java.lang.String lockUuid, long companyId,
+	public Lock refreshFileEntryLock(String lockUuid, long companyId,
 		long expirationTime) throws PortalException;
 
 	/**
@@ -1416,7 +1406,7 @@ public interface DLAppService extends BaseService {
 	be used from <code>portal.properties</code>.
 	* @return the lock object
 	*/
-	public Lock refreshFolderLock(java.lang.String lockUuid, long companyId,
+	public Lock refreshFolderLock(String lockUuid, long companyId,
 		long expirationTime) throws PortalException;
 
 	/**
@@ -1427,7 +1417,7 @@ public interface DLAppService extends BaseService {
 	* @param version the version to revert back to
 	* @param serviceContext the service context to be applied
 	*/
-	public void revertFileEntry(long fileEntryId, java.lang.String version,
+	public void revertFileEntry(long fileEntryId, String version,
 		ServiceContext serviceContext) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -1436,7 +1426,7 @@ public interface DLAppService extends BaseService {
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public Hits search(long repositoryId, long creatorUserId, long folderId,
-		java.lang.String[] mimeTypes, int status, int start, int end)
+		String[] mimeTypes, int status, int start, int end)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -1474,8 +1464,8 @@ public interface DLAppService extends BaseService {
 	* @param folderId the primary key of the folder
 	* @param lockUuid the lock's UUID
 	*/
-	public void unlockFolder(long repositoryId, long folderId,
-		java.lang.String lockUuid) throws PortalException;
+	public void unlockFolder(long repositoryId, long folderId, String lockUuid)
+		throws PortalException;
 
 	/**
 	* Unlocks the folder. This method is primarily used by WebDAV.
@@ -1486,8 +1476,7 @@ public interface DLAppService extends BaseService {
 	* @param lockUuid the lock's UUID
 	*/
 	public void unlockFolder(long repositoryId, long parentFolderId,
-		java.lang.String name, java.lang.String lockUuid)
-		throws PortalException;
+		String name, String lockUuid) throws PortalException;
 
 	/**
 	* Unsubscribe the user from changes in documents of the file entry type.
@@ -1542,11 +1531,10 @@ public interface DLAppService extends BaseService {
 	custom file entry type </li> </ul>
 	* @return the file entry
 	*/
-	public FileEntry updateFileEntry(long fileEntryId,
-		java.lang.String sourceFileName, java.lang.String mimeType,
-		java.lang.String title, java.lang.String description,
-		java.lang.String changeLog, boolean majorVersion, byte[] bytes,
-		ServiceContext serviceContext) throws PortalException;
+	public FileEntry updateFileEntry(long fileEntryId, String sourceFileName,
+		String mimeType, String title, String description, String changeLog,
+		boolean majorVersion, byte[] bytes, ServiceContext serviceContext)
+		throws PortalException;
 
 	/**
 	* Updates a file entry and associated metadata based on a {@link File}
@@ -1581,11 +1569,10 @@ public interface DLAppService extends BaseService {
 	custom file entry type </li> </ul>
 	* @return the file entry
 	*/
-	public FileEntry updateFileEntry(long fileEntryId,
-		java.lang.String sourceFileName, java.lang.String mimeType,
-		java.lang.String title, java.lang.String description,
-		java.lang.String changeLog, boolean majorVersion, File file,
-		ServiceContext serviceContext) throws PortalException;
+	public FileEntry updateFileEntry(long fileEntryId, String sourceFileName,
+		String mimeType, String title, String description, String changeLog,
+		boolean majorVersion, File file, ServiceContext serviceContext)
+		throws PortalException;
 
 	/**
 	* Updates a file entry and associated metadata based on an {@link
@@ -1621,23 +1608,21 @@ public interface DLAppService extends BaseService {
 	custom file entry type </li> </ul>
 	* @return the file entry
 	*/
-	public FileEntry updateFileEntry(long fileEntryId,
-		java.lang.String sourceFileName, java.lang.String mimeType,
-		java.lang.String title, java.lang.String description,
-		java.lang.String changeLog, boolean majorVersion, InputStream is,
-		long size, ServiceContext serviceContext) throws PortalException;
-
-	public FileEntry updateFileEntryAndCheckIn(long fileEntryId,
-		java.lang.String sourceFileName, java.lang.String mimeType,
-		java.lang.String title, java.lang.String description,
-		java.lang.String changeLog, boolean majorVersion, File file,
+	public FileEntry updateFileEntry(long fileEntryId, String sourceFileName,
+		String mimeType, String title, String description, String changeLog,
+		boolean majorVersion, InputStream is, long size,
 		ServiceContext serviceContext) throws PortalException;
 
 	public FileEntry updateFileEntryAndCheckIn(long fileEntryId,
-		java.lang.String sourceFileName, java.lang.String mimeType,
-		java.lang.String title, java.lang.String description,
-		java.lang.String changeLog, boolean majorVersion, InputStream is,
-		long size, ServiceContext serviceContext) throws PortalException;
+		String sourceFileName, String mimeType, String title,
+		String description, String changeLog, boolean majorVersion, File file,
+		ServiceContext serviceContext) throws PortalException;
+
+	public FileEntry updateFileEntryAndCheckIn(long fileEntryId,
+		String sourceFileName, String mimeType, String title,
+		String description, String changeLog, boolean majorVersion,
+		InputStream is, long size, ServiceContext serviceContext)
+		throws PortalException;
 
 	/**
 	* Updates a file shortcut to the existing file entry. This method is only
@@ -1675,9 +1660,8 @@ public interface DLAppService extends BaseService {
 	</ul>
 	* @return the folder
 	*/
-	public Folder updateFolder(long folderId, java.lang.String name,
-		java.lang.String description, ServiceContext serviceContext)
-		throws PortalException;
+	public Folder updateFolder(long folderId, String name, String description,
+		ServiceContext serviceContext) throws PortalException;
 
 	/**
 	* Returns <code>true</code> if the file entry is checked out. This method
@@ -1690,10 +1674,10 @@ public interface DLAppService extends BaseService {
 	<code>false</code> otherwise
 	*/
 	public boolean verifyFileEntryCheckOut(long repositoryId, long fileEntryId,
-		java.lang.String lockUuid) throws PortalException;
+		String lockUuid) throws PortalException;
 
 	public boolean verifyFileEntryLock(long repositoryId, long fileEntryId,
-		java.lang.String lockUuid) throws PortalException;
+		String lockUuid) throws PortalException;
 
 	/**
 	* Returns <code>true</code> if the inheritable lock exists. This method is
@@ -1706,5 +1690,5 @@ public interface DLAppService extends BaseService {
 	<code>false</code> otherwise
 	*/
 	public boolean verifyInheritableLock(long repositoryId, long folderId,
-		java.lang.String lockUuid) throws PortalException;
+		String lockUuid) throws PortalException;
 }

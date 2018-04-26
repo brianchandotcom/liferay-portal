@@ -175,7 +175,7 @@ public interface DDMFormInstanceRecordVersionLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public DDMFormInstanceRecordVersion fetchLatestFormInstanceRecordVersion(
 		long userId, long ddmFormInstanceRecordId,
-		java.lang.String ddmFormInstanceRecordVersion, int status);
+		String ddmFormInstanceRecordVersion, int status);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
@@ -220,8 +220,7 @@ public interface DDMFormInstanceRecordVersionLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public DDMFormInstanceRecordVersion getFormInstanceRecordVersion(
-		long ddmFormInstanceId, java.lang.String version)
-		throws PortalException;
+		long ddmFormInstanceId, String version) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<DDMFormInstanceRecordVersion> getFormInstanceRecordVersions(
@@ -243,7 +242,7 @@ public interface DDMFormInstanceRecordVersionLocalService
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

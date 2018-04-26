@@ -67,8 +67,7 @@ import java.rmi.RemoteException;
 public class SiteNavigationMenuItemServiceSoap {
 	public static com.liferay.site.navigation.model.SiteNavigationMenuItemSoap addSiteNavigationMenuItem(
 		long groupId, long siteNavigationMenuId,
-		long parentSiteNavigationMenuItemId, java.lang.String type,
-		java.lang.String typeSettings,
+		long parentSiteNavigationMenuItemId, String type, String typeSettings,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
@@ -146,7 +145,7 @@ public class SiteNavigationMenuItemServiceSoap {
 	}
 
 	public static com.liferay.site.navigation.model.SiteNavigationMenuItemSoap updateSiteNavigationMenuItem(
-		long siteNavigationMenuId, java.lang.String typeSettings,
+		long siteNavigationMenuId, String typeSettings,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {

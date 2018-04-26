@@ -106,7 +106,7 @@ public class EntryWrapper implements Entry, ModelWrapper<Entry> {
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new EntryWrapper((Entry)_entry.clone());
 	}
 
@@ -121,7 +121,7 @@ public class EntryWrapper implements Entry, ModelWrapper<Entry> {
 	* @return the content of this entry
 	*/
 	@Override
-	public java.lang.String getContent() {
+	public String getContent() {
 		return _entry.getContent();
 	}
 
@@ -176,7 +176,7 @@ public class EntryWrapper implements Entry, ModelWrapper<Entry> {
 	* @return the from user uuid of this entry
 	*/
 	@Override
-	public java.lang.String getFromUserUuid() {
+	public String getFromUserUuid() {
 		return _entry.getFromUserUuid();
 	}
 
@@ -211,7 +211,7 @@ public class EntryWrapper implements Entry, ModelWrapper<Entry> {
 	* @return the to user uuid of this entry
 	*/
 	@Override
-	public java.lang.String getToUserUuid() {
+	public String getToUserUuid() {
 		return _entry.getToUserUuid();
 	}
 
@@ -251,7 +251,7 @@ public class EntryWrapper implements Entry, ModelWrapper<Entry> {
 	* @param content the content of this entry
 	*/
 	@Override
-	public void setContent(java.lang.String content) {
+	public void setContent(String content) {
 		_entry.setContent(content);
 	}
 
@@ -317,7 +317,7 @@ public class EntryWrapper implements Entry, ModelWrapper<Entry> {
 	* @param fromUserUuid the from user uuid of this entry
 	*/
 	@Override
-	public void setFromUserUuid(java.lang.String fromUserUuid) {
+	public void setFromUserUuid(String fromUserUuid) {
 		_entry.setFromUserUuid(fromUserUuid);
 	}
 
@@ -357,7 +357,7 @@ public class EntryWrapper implements Entry, ModelWrapper<Entry> {
 	* @param toUserUuid the to user uuid of this entry
 	*/
 	@Override
-	public void setToUserUuid(java.lang.String toUserUuid) {
+	public void setToUserUuid(String toUserUuid) {
 		_entry.setToUserUuid(toUserUuid);
 	}
 
@@ -372,7 +372,7 @@ public class EntryWrapper implements Entry, ModelWrapper<Entry> {
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _entry.toString();
 	}
 
@@ -382,7 +382,7 @@ public class EntryWrapper implements Entry, ModelWrapper<Entry> {
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _entry.toXmlString();
 	}
 

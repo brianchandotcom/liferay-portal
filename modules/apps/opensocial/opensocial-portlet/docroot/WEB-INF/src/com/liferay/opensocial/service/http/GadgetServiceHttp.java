@@ -56,8 +56,8 @@ import com.liferay.portal.kernel.util.MethodKey;
 @ProviderType
 public class GadgetServiceHttp {
 	public static com.liferay.opensocial.model.Gadget addGadget(
-		HttpPrincipal httpPrincipal, long companyId, java.lang.String url,
-		java.lang.String portletCategoryNames,
+		HttpPrincipal httpPrincipal, long companyId, String url,
+		String portletCategoryNames,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -118,7 +118,7 @@ public class GadgetServiceHttp {
 	}
 
 	public static void updateGadget(HttpPrincipal httpPrincipal, long gadgetId,
-		java.lang.String portletCategoryNames,
+		String portletCategoryNames,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -148,14 +148,14 @@ public class GadgetServiceHttp {
 
 	private static Log _log = LogFactoryUtil.getLog(GadgetServiceHttp.class);
 	private static final Class<?>[] _addGadgetParameterTypes0 = new Class[] {
-			long.class, java.lang.String.class, java.lang.String.class,
+			long.class, String.class, String.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _deleteGadgetParameterTypes1 = new Class[] {
 			long.class, com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _updateGadgetParameterTypes2 = new Class[] {
-			long.class, java.lang.String.class,
+			long.class, String.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 }

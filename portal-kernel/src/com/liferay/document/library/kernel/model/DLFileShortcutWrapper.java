@@ -194,13 +194,13 @@ public class DLFileShortcutWrapper implements DLFileShortcut,
 	}
 
 	@Override
-	public java.lang.String buildTreePath()
+	public String buildTreePath()
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _dlFileShortcut.buildTreePath();
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new DLFileShortcutWrapper((DLFileShortcut)_dlFileShortcut.clone());
 	}
 
@@ -363,7 +363,7 @@ public class DLFileShortcutWrapper implements DLFileShortcut,
 	* @return the status by user name of this document library file shortcut
 	*/
 	@Override
-	public java.lang.String getStatusByUserName() {
+	public String getStatusByUserName() {
 		return _dlFileShortcut.getStatusByUserName();
 	}
 
@@ -373,7 +373,7 @@ public class DLFileShortcutWrapper implements DLFileShortcut,
 	* @return the status by user uuid of this document library file shortcut
 	*/
 	@Override
-	public java.lang.String getStatusByUserUuid() {
+	public String getStatusByUserUuid() {
 		return _dlFileShortcut.getStatusByUserUuid();
 	}
 
@@ -398,7 +398,7 @@ public class DLFileShortcutWrapper implements DLFileShortcut,
 	}
 
 	@Override
-	public java.lang.String getToTitle() {
+	public String getToTitle() {
 		return _dlFileShortcut.getToTitle();
 	}
 
@@ -441,7 +441,7 @@ public class DLFileShortcutWrapper implements DLFileShortcut,
 	* @return the tree path of this document library file shortcut
 	*/
 	@Override
-	public java.lang.String getTreePath() {
+	public String getTreePath() {
 		return _dlFileShortcut.getTreePath();
 	}
 
@@ -461,7 +461,7 @@ public class DLFileShortcutWrapper implements DLFileShortcut,
 	* @return the user name of this document library file shortcut
 	*/
 	@Override
-	public java.lang.String getUserName() {
+	public String getUserName() {
 		return _dlFileShortcut.getUserName();
 	}
 
@@ -471,7 +471,7 @@ public class DLFileShortcutWrapper implements DLFileShortcut,
 	* @return the user uuid of this document library file shortcut
 	*/
 	@Override
-	public java.lang.String getUserUuid() {
+	public String getUserUuid() {
 		return _dlFileShortcut.getUserUuid();
 	}
 
@@ -481,7 +481,7 @@ public class DLFileShortcutWrapper implements DLFileShortcut,
 	* @return the uuid of this document library file shortcut
 	*/
 	@Override
-	public java.lang.String getUuid() {
+	public String getUuid() {
 		return _dlFileShortcut.getUuid();
 	}
 
@@ -792,7 +792,7 @@ public class DLFileShortcutWrapper implements DLFileShortcut,
 	* @param statusByUserName the status by user name of this document library file shortcut
 	*/
 	@Override
-	public void setStatusByUserName(java.lang.String statusByUserName) {
+	public void setStatusByUserName(String statusByUserName) {
 		_dlFileShortcut.setStatusByUserName(statusByUserName);
 	}
 
@@ -802,7 +802,7 @@ public class DLFileShortcutWrapper implements DLFileShortcut,
 	* @param statusByUserUuid the status by user uuid of this document library file shortcut
 	*/
 	@Override
-	public void setStatusByUserUuid(java.lang.String statusByUserUuid) {
+	public void setStatusByUserUuid(String statusByUserUuid) {
 		_dlFileShortcut.setStatusByUserUuid(statusByUserUuid);
 	}
 
@@ -832,7 +832,7 @@ public class DLFileShortcutWrapper implements DLFileShortcut,
 	* @param treePath the tree path of this document library file shortcut
 	*/
 	@Override
-	public void setTreePath(java.lang.String treePath) {
+	public void setTreePath(String treePath) {
 		_dlFileShortcut.setTreePath(treePath);
 	}
 
@@ -852,7 +852,7 @@ public class DLFileShortcutWrapper implements DLFileShortcut,
 	* @param userName the user name of this document library file shortcut
 	*/
 	@Override
-	public void setUserName(java.lang.String userName) {
+	public void setUserName(String userName) {
 		_dlFileShortcut.setUserName(userName);
 	}
 
@@ -862,7 +862,7 @@ public class DLFileShortcutWrapper implements DLFileShortcut,
 	* @param userUuid the user uuid of this document library file shortcut
 	*/
 	@Override
-	public void setUserUuid(java.lang.String userUuid) {
+	public void setUserUuid(String userUuid) {
 		_dlFileShortcut.setUserUuid(userUuid);
 	}
 
@@ -872,7 +872,7 @@ public class DLFileShortcutWrapper implements DLFileShortcut,
 	* @param uuid the uuid of this document library file shortcut
 	*/
 	@Override
-	public void setUuid(java.lang.String uuid) {
+	public void setUuid(String uuid) {
 		_dlFileShortcut.setUuid(uuid);
 	}
 
@@ -887,7 +887,7 @@ public class DLFileShortcutWrapper implements DLFileShortcut,
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _dlFileShortcut.toString();
 	}
 
@@ -897,12 +897,12 @@ public class DLFileShortcutWrapper implements DLFileShortcut,
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _dlFileShortcut.toXmlString();
 	}
 
 	@Override
-	public void updateTreePath(java.lang.String treePath) {
+	public void updateTreePath(String treePath) {
 		_dlFileShortcut.updateTreePath(treePath);
 	}
 

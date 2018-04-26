@@ -47,7 +47,7 @@ public interface FriendlyURLEntryPersistence extends BasePersistence<FriendlyURL
 	* @param uuid the uuid
 	* @return the matching friendly url entries
 	*/
-	public java.util.List<FriendlyURLEntry> findByUuid(java.lang.String uuid);
+	public java.util.List<FriendlyURLEntry> findByUuid(String uuid);
 
 	/**
 	* Returns a range of all the friendly url entries where uuid = &#63;.
@@ -61,8 +61,8 @@ public interface FriendlyURLEntryPersistence extends BasePersistence<FriendlyURL
 	* @param end the upper bound of the range of friendly url entries (not inclusive)
 	* @return the range of matching friendly url entries
 	*/
-	public java.util.List<FriendlyURLEntry> findByUuid(java.lang.String uuid,
-		int start, int end);
+	public java.util.List<FriendlyURLEntry> findByUuid(String uuid, int start,
+		int end);
 
 	/**
 	* Returns an ordered range of all the friendly url entries where uuid = &#63;.
@@ -77,8 +77,8 @@ public interface FriendlyURLEntryPersistence extends BasePersistence<FriendlyURL
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching friendly url entries
 	*/
-	public java.util.List<FriendlyURLEntry> findByUuid(java.lang.String uuid,
-		int start, int end,
+	public java.util.List<FriendlyURLEntry> findByUuid(String uuid, int start,
+		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<FriendlyURLEntry> orderByComparator);
 
 	/**
@@ -95,8 +95,8 @@ public interface FriendlyURLEntryPersistence extends BasePersistence<FriendlyURL
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching friendly url entries
 	*/
-	public java.util.List<FriendlyURLEntry> findByUuid(java.lang.String uuid,
-		int start, int end,
+	public java.util.List<FriendlyURLEntry> findByUuid(String uuid, int start,
+		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<FriendlyURLEntry> orderByComparator,
 		boolean retrieveFromCache);
 
@@ -108,7 +108,7 @@ public interface FriendlyURLEntryPersistence extends BasePersistence<FriendlyURL
 	* @return the first matching friendly url entry
 	* @throws NoSuchFriendlyURLEntryException if a matching friendly url entry could not be found
 	*/
-	public FriendlyURLEntry findByUuid_First(java.lang.String uuid,
+	public FriendlyURLEntry findByUuid_First(String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<FriendlyURLEntry> orderByComparator)
 		throws NoSuchFriendlyURLEntryException;
 
@@ -119,7 +119,7 @@ public interface FriendlyURLEntryPersistence extends BasePersistence<FriendlyURL
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching friendly url entry, or <code>null</code> if a matching friendly url entry could not be found
 	*/
-	public FriendlyURLEntry fetchByUuid_First(java.lang.String uuid,
+	public FriendlyURLEntry fetchByUuid_First(String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<FriendlyURLEntry> orderByComparator);
 
 	/**
@@ -130,7 +130,7 @@ public interface FriendlyURLEntryPersistence extends BasePersistence<FriendlyURL
 	* @return the last matching friendly url entry
 	* @throws NoSuchFriendlyURLEntryException if a matching friendly url entry could not be found
 	*/
-	public FriendlyURLEntry findByUuid_Last(java.lang.String uuid,
+	public FriendlyURLEntry findByUuid_Last(String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<FriendlyURLEntry> orderByComparator)
 		throws NoSuchFriendlyURLEntryException;
 
@@ -141,7 +141,7 @@ public interface FriendlyURLEntryPersistence extends BasePersistence<FriendlyURL
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching friendly url entry, or <code>null</code> if a matching friendly url entry could not be found
 	*/
-	public FriendlyURLEntry fetchByUuid_Last(java.lang.String uuid,
+	public FriendlyURLEntry fetchByUuid_Last(String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<FriendlyURLEntry> orderByComparator);
 
 	/**
@@ -154,7 +154,7 @@ public interface FriendlyURLEntryPersistence extends BasePersistence<FriendlyURL
 	* @throws NoSuchFriendlyURLEntryException if a friendly url entry with the primary key could not be found
 	*/
 	public FriendlyURLEntry[] findByUuid_PrevAndNext(long friendlyURLEntryId,
-		java.lang.String uuid,
+		String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<FriendlyURLEntry> orderByComparator)
 		throws NoSuchFriendlyURLEntryException;
 
@@ -163,7 +163,7 @@ public interface FriendlyURLEntryPersistence extends BasePersistence<FriendlyURL
 	*
 	* @param uuid the uuid
 	*/
-	public void removeByUuid(java.lang.String uuid);
+	public void removeByUuid(String uuid);
 
 	/**
 	* Returns the number of friendly url entries where uuid = &#63;.
@@ -171,7 +171,7 @@ public interface FriendlyURLEntryPersistence extends BasePersistence<FriendlyURL
 	* @param uuid the uuid
 	* @return the number of matching friendly url entries
 	*/
-	public int countByUuid(java.lang.String uuid);
+	public int countByUuid(String uuid);
 
 	/**
 	* Returns the friendly url entry where uuid = &#63; and groupId = &#63; or throws a {@link NoSuchFriendlyURLEntryException} if it could not be found.
@@ -181,7 +181,7 @@ public interface FriendlyURLEntryPersistence extends BasePersistence<FriendlyURL
 	* @return the matching friendly url entry
 	* @throws NoSuchFriendlyURLEntryException if a matching friendly url entry could not be found
 	*/
-	public FriendlyURLEntry findByUUID_G(java.lang.String uuid, long groupId)
+	public FriendlyURLEntry findByUUID_G(String uuid, long groupId)
 		throws NoSuchFriendlyURLEntryException;
 
 	/**
@@ -191,7 +191,7 @@ public interface FriendlyURLEntryPersistence extends BasePersistence<FriendlyURL
 	* @param groupId the group ID
 	* @return the matching friendly url entry, or <code>null</code> if a matching friendly url entry could not be found
 	*/
-	public FriendlyURLEntry fetchByUUID_G(java.lang.String uuid, long groupId);
+	public FriendlyURLEntry fetchByUUID_G(String uuid, long groupId);
 
 	/**
 	* Returns the friendly url entry where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -201,7 +201,7 @@ public interface FriendlyURLEntryPersistence extends BasePersistence<FriendlyURL
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching friendly url entry, or <code>null</code> if a matching friendly url entry could not be found
 	*/
-	public FriendlyURLEntry fetchByUUID_G(java.lang.String uuid, long groupId,
+	public FriendlyURLEntry fetchByUUID_G(String uuid, long groupId,
 		boolean retrieveFromCache);
 
 	/**
@@ -211,7 +211,7 @@ public interface FriendlyURLEntryPersistence extends BasePersistence<FriendlyURL
 	* @param groupId the group ID
 	* @return the friendly url entry that was removed
 	*/
-	public FriendlyURLEntry removeByUUID_G(java.lang.String uuid, long groupId)
+	public FriendlyURLEntry removeByUUID_G(String uuid, long groupId)
 		throws NoSuchFriendlyURLEntryException;
 
 	/**
@@ -221,7 +221,7 @@ public interface FriendlyURLEntryPersistence extends BasePersistence<FriendlyURL
 	* @param groupId the group ID
 	* @return the number of matching friendly url entries
 	*/
-	public int countByUUID_G(java.lang.String uuid, long groupId);
+	public int countByUUID_G(String uuid, long groupId);
 
 	/**
 	* Returns all the friendly url entries where uuid = &#63; and companyId = &#63;.
@@ -230,8 +230,8 @@ public interface FriendlyURLEntryPersistence extends BasePersistence<FriendlyURL
 	* @param companyId the company ID
 	* @return the matching friendly url entries
 	*/
-	public java.util.List<FriendlyURLEntry> findByUuid_C(
-		java.lang.String uuid, long companyId);
+	public java.util.List<FriendlyURLEntry> findByUuid_C(String uuid,
+		long companyId);
 
 	/**
 	* Returns a range of all the friendly url entries where uuid = &#63; and companyId = &#63;.
@@ -246,8 +246,8 @@ public interface FriendlyURLEntryPersistence extends BasePersistence<FriendlyURL
 	* @param end the upper bound of the range of friendly url entries (not inclusive)
 	* @return the range of matching friendly url entries
 	*/
-	public java.util.List<FriendlyURLEntry> findByUuid_C(
-		java.lang.String uuid, long companyId, int start, int end);
+	public java.util.List<FriendlyURLEntry> findByUuid_C(String uuid,
+		long companyId, int start, int end);
 
 	/**
 	* Returns an ordered range of all the friendly url entries where uuid = &#63; and companyId = &#63;.
@@ -263,8 +263,8 @@ public interface FriendlyURLEntryPersistence extends BasePersistence<FriendlyURL
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching friendly url entries
 	*/
-	public java.util.List<FriendlyURLEntry> findByUuid_C(
-		java.lang.String uuid, long companyId, int start, int end,
+	public java.util.List<FriendlyURLEntry> findByUuid_C(String uuid,
+		long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<FriendlyURLEntry> orderByComparator);
 
 	/**
@@ -282,8 +282,8 @@ public interface FriendlyURLEntryPersistence extends BasePersistence<FriendlyURL
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching friendly url entries
 	*/
-	public java.util.List<FriendlyURLEntry> findByUuid_C(
-		java.lang.String uuid, long companyId, int start, int end,
+	public java.util.List<FriendlyURLEntry> findByUuid_C(String uuid,
+		long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<FriendlyURLEntry> orderByComparator,
 		boolean retrieveFromCache);
 
@@ -296,8 +296,7 @@ public interface FriendlyURLEntryPersistence extends BasePersistence<FriendlyURL
 	* @return the first matching friendly url entry
 	* @throws NoSuchFriendlyURLEntryException if a matching friendly url entry could not be found
 	*/
-	public FriendlyURLEntry findByUuid_C_First(java.lang.String uuid,
-		long companyId,
+	public FriendlyURLEntry findByUuid_C_First(String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<FriendlyURLEntry> orderByComparator)
 		throws NoSuchFriendlyURLEntryException;
 
@@ -309,8 +308,7 @@ public interface FriendlyURLEntryPersistence extends BasePersistence<FriendlyURL
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching friendly url entry, or <code>null</code> if a matching friendly url entry could not be found
 	*/
-	public FriendlyURLEntry fetchByUuid_C_First(java.lang.String uuid,
-		long companyId,
+	public FriendlyURLEntry fetchByUuid_C_First(String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<FriendlyURLEntry> orderByComparator);
 
 	/**
@@ -322,8 +320,7 @@ public interface FriendlyURLEntryPersistence extends BasePersistence<FriendlyURL
 	* @return the last matching friendly url entry
 	* @throws NoSuchFriendlyURLEntryException if a matching friendly url entry could not be found
 	*/
-	public FriendlyURLEntry findByUuid_C_Last(java.lang.String uuid,
-		long companyId,
+	public FriendlyURLEntry findByUuid_C_Last(String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<FriendlyURLEntry> orderByComparator)
 		throws NoSuchFriendlyURLEntryException;
 
@@ -335,8 +332,7 @@ public interface FriendlyURLEntryPersistence extends BasePersistence<FriendlyURL
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching friendly url entry, or <code>null</code> if a matching friendly url entry could not be found
 	*/
-	public FriendlyURLEntry fetchByUuid_C_Last(java.lang.String uuid,
-		long companyId,
+	public FriendlyURLEntry fetchByUuid_C_Last(String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<FriendlyURLEntry> orderByComparator);
 
 	/**
@@ -350,7 +346,7 @@ public interface FriendlyURLEntryPersistence extends BasePersistence<FriendlyURL
 	* @throws NoSuchFriendlyURLEntryException if a friendly url entry with the primary key could not be found
 	*/
 	public FriendlyURLEntry[] findByUuid_C_PrevAndNext(
-		long friendlyURLEntryId, java.lang.String uuid, long companyId,
+		long friendlyURLEntryId, String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<FriendlyURLEntry> orderByComparator)
 		throws NoSuchFriendlyURLEntryException;
 
@@ -360,7 +356,7 @@ public interface FriendlyURLEntryPersistence extends BasePersistence<FriendlyURL
 	* @param uuid the uuid
 	* @param companyId the company ID
 	*/
-	public void removeByUuid_C(java.lang.String uuid, long companyId);
+	public void removeByUuid_C(String uuid, long companyId);
 
 	/**
 	* Returns the number of friendly url entries where uuid = &#63; and companyId = &#63;.
@@ -369,7 +365,7 @@ public interface FriendlyURLEntryPersistence extends BasePersistence<FriendlyURL
 	* @param companyId the company ID
 	* @return the number of matching friendly url entries
 	*/
-	public int countByUuid_C(java.lang.String uuid, long companyId);
+	public int countByUuid_C(String uuid, long companyId);
 
 	/**
 	* Returns all the friendly url entries where groupId = &#63; and classNameId = &#63; and classPK = &#63;.
@@ -651,5 +647,5 @@ public interface FriendlyURLEntryPersistence extends BasePersistence<FriendlyURL
 	public int countAll();
 
 	@Override
-	public java.util.Set<java.lang.String> getBadColumnNames();
+	public java.util.Set<String> getBadColumnNames();
 }

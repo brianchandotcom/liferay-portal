@@ -47,7 +47,7 @@ public interface DDMStructureLayoutPersistence extends BasePersistence<DDMStruct
 	* @param uuid the uuid
 	* @return the matching ddm structure layouts
 	*/
-	public java.util.List<DDMStructureLayout> findByUuid(java.lang.String uuid);
+	public java.util.List<DDMStructureLayout> findByUuid(String uuid);
 
 	/**
 	* Returns a range of all the ddm structure layouts where uuid = &#63;.
@@ -61,8 +61,8 @@ public interface DDMStructureLayoutPersistence extends BasePersistence<DDMStruct
 	* @param end the upper bound of the range of ddm structure layouts (not inclusive)
 	* @return the range of matching ddm structure layouts
 	*/
-	public java.util.List<DDMStructureLayout> findByUuid(
-		java.lang.String uuid, int start, int end);
+	public java.util.List<DDMStructureLayout> findByUuid(String uuid,
+		int start, int end);
 
 	/**
 	* Returns an ordered range of all the ddm structure layouts where uuid = &#63;.
@@ -77,8 +77,8 @@ public interface DDMStructureLayoutPersistence extends BasePersistence<DDMStruct
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching ddm structure layouts
 	*/
-	public java.util.List<DDMStructureLayout> findByUuid(
-		java.lang.String uuid, int start, int end,
+	public java.util.List<DDMStructureLayout> findByUuid(String uuid,
+		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<DDMStructureLayout> orderByComparator);
 
 	/**
@@ -95,8 +95,8 @@ public interface DDMStructureLayoutPersistence extends BasePersistence<DDMStruct
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching ddm structure layouts
 	*/
-	public java.util.List<DDMStructureLayout> findByUuid(
-		java.lang.String uuid, int start, int end,
+	public java.util.List<DDMStructureLayout> findByUuid(String uuid,
+		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<DDMStructureLayout> orderByComparator,
 		boolean retrieveFromCache);
 
@@ -108,7 +108,7 @@ public interface DDMStructureLayoutPersistence extends BasePersistence<DDMStruct
 	* @return the first matching ddm structure layout
 	* @throws NoSuchStructureLayoutException if a matching ddm structure layout could not be found
 	*/
-	public DDMStructureLayout findByUuid_First(java.lang.String uuid,
+	public DDMStructureLayout findByUuid_First(String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<DDMStructureLayout> orderByComparator)
 		throws NoSuchStructureLayoutException;
 
@@ -119,7 +119,7 @@ public interface DDMStructureLayoutPersistence extends BasePersistence<DDMStruct
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching ddm structure layout, or <code>null</code> if a matching ddm structure layout could not be found
 	*/
-	public DDMStructureLayout fetchByUuid_First(java.lang.String uuid,
+	public DDMStructureLayout fetchByUuid_First(String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<DDMStructureLayout> orderByComparator);
 
 	/**
@@ -130,7 +130,7 @@ public interface DDMStructureLayoutPersistence extends BasePersistence<DDMStruct
 	* @return the last matching ddm structure layout
 	* @throws NoSuchStructureLayoutException if a matching ddm structure layout could not be found
 	*/
-	public DDMStructureLayout findByUuid_Last(java.lang.String uuid,
+	public DDMStructureLayout findByUuid_Last(String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<DDMStructureLayout> orderByComparator)
 		throws NoSuchStructureLayoutException;
 
@@ -141,7 +141,7 @@ public interface DDMStructureLayoutPersistence extends BasePersistence<DDMStruct
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching ddm structure layout, or <code>null</code> if a matching ddm structure layout could not be found
 	*/
-	public DDMStructureLayout fetchByUuid_Last(java.lang.String uuid,
+	public DDMStructureLayout fetchByUuid_Last(String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<DDMStructureLayout> orderByComparator);
 
 	/**
@@ -154,7 +154,7 @@ public interface DDMStructureLayoutPersistence extends BasePersistence<DDMStruct
 	* @throws NoSuchStructureLayoutException if a ddm structure layout with the primary key could not be found
 	*/
 	public DDMStructureLayout[] findByUuid_PrevAndNext(long structureLayoutId,
-		java.lang.String uuid,
+		String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<DDMStructureLayout> orderByComparator)
 		throws NoSuchStructureLayoutException;
 
@@ -163,7 +163,7 @@ public interface DDMStructureLayoutPersistence extends BasePersistence<DDMStruct
 	*
 	* @param uuid the uuid
 	*/
-	public void removeByUuid(java.lang.String uuid);
+	public void removeByUuid(String uuid);
 
 	/**
 	* Returns the number of ddm structure layouts where uuid = &#63;.
@@ -171,7 +171,7 @@ public interface DDMStructureLayoutPersistence extends BasePersistence<DDMStruct
 	* @param uuid the uuid
 	* @return the number of matching ddm structure layouts
 	*/
-	public int countByUuid(java.lang.String uuid);
+	public int countByUuid(String uuid);
 
 	/**
 	* Returns the ddm structure layout where uuid = &#63; and groupId = &#63; or throws a {@link NoSuchStructureLayoutException} if it could not be found.
@@ -181,7 +181,7 @@ public interface DDMStructureLayoutPersistence extends BasePersistence<DDMStruct
 	* @return the matching ddm structure layout
 	* @throws NoSuchStructureLayoutException if a matching ddm structure layout could not be found
 	*/
-	public DDMStructureLayout findByUUID_G(java.lang.String uuid, long groupId)
+	public DDMStructureLayout findByUUID_G(String uuid, long groupId)
 		throws NoSuchStructureLayoutException;
 
 	/**
@@ -191,7 +191,7 @@ public interface DDMStructureLayoutPersistence extends BasePersistence<DDMStruct
 	* @param groupId the group ID
 	* @return the matching ddm structure layout, or <code>null</code> if a matching ddm structure layout could not be found
 	*/
-	public DDMStructureLayout fetchByUUID_G(java.lang.String uuid, long groupId);
+	public DDMStructureLayout fetchByUUID_G(String uuid, long groupId);
 
 	/**
 	* Returns the ddm structure layout where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -201,8 +201,8 @@ public interface DDMStructureLayoutPersistence extends BasePersistence<DDMStruct
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching ddm structure layout, or <code>null</code> if a matching ddm structure layout could not be found
 	*/
-	public DDMStructureLayout fetchByUUID_G(java.lang.String uuid,
-		long groupId, boolean retrieveFromCache);
+	public DDMStructureLayout fetchByUUID_G(String uuid, long groupId,
+		boolean retrieveFromCache);
 
 	/**
 	* Removes the ddm structure layout where uuid = &#63; and groupId = &#63; from the database.
@@ -211,7 +211,7 @@ public interface DDMStructureLayoutPersistence extends BasePersistence<DDMStruct
 	* @param groupId the group ID
 	* @return the ddm structure layout that was removed
 	*/
-	public DDMStructureLayout removeByUUID_G(java.lang.String uuid, long groupId)
+	public DDMStructureLayout removeByUUID_G(String uuid, long groupId)
 		throws NoSuchStructureLayoutException;
 
 	/**
@@ -221,7 +221,7 @@ public interface DDMStructureLayoutPersistence extends BasePersistence<DDMStruct
 	* @param groupId the group ID
 	* @return the number of matching ddm structure layouts
 	*/
-	public int countByUUID_G(java.lang.String uuid, long groupId);
+	public int countByUUID_G(String uuid, long groupId);
 
 	/**
 	* Returns all the ddm structure layouts where uuid = &#63; and companyId = &#63;.
@@ -230,8 +230,8 @@ public interface DDMStructureLayoutPersistence extends BasePersistence<DDMStruct
 	* @param companyId the company ID
 	* @return the matching ddm structure layouts
 	*/
-	public java.util.List<DDMStructureLayout> findByUuid_C(
-		java.lang.String uuid, long companyId);
+	public java.util.List<DDMStructureLayout> findByUuid_C(String uuid,
+		long companyId);
 
 	/**
 	* Returns a range of all the ddm structure layouts where uuid = &#63; and companyId = &#63;.
@@ -246,8 +246,8 @@ public interface DDMStructureLayoutPersistence extends BasePersistence<DDMStruct
 	* @param end the upper bound of the range of ddm structure layouts (not inclusive)
 	* @return the range of matching ddm structure layouts
 	*/
-	public java.util.List<DDMStructureLayout> findByUuid_C(
-		java.lang.String uuid, long companyId, int start, int end);
+	public java.util.List<DDMStructureLayout> findByUuid_C(String uuid,
+		long companyId, int start, int end);
 
 	/**
 	* Returns an ordered range of all the ddm structure layouts where uuid = &#63; and companyId = &#63;.
@@ -263,8 +263,8 @@ public interface DDMStructureLayoutPersistence extends BasePersistence<DDMStruct
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching ddm structure layouts
 	*/
-	public java.util.List<DDMStructureLayout> findByUuid_C(
-		java.lang.String uuid, long companyId, int start, int end,
+	public java.util.List<DDMStructureLayout> findByUuid_C(String uuid,
+		long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<DDMStructureLayout> orderByComparator);
 
 	/**
@@ -282,8 +282,8 @@ public interface DDMStructureLayoutPersistence extends BasePersistence<DDMStruct
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching ddm structure layouts
 	*/
-	public java.util.List<DDMStructureLayout> findByUuid_C(
-		java.lang.String uuid, long companyId, int start, int end,
+	public java.util.List<DDMStructureLayout> findByUuid_C(String uuid,
+		long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<DDMStructureLayout> orderByComparator,
 		boolean retrieveFromCache);
 
@@ -296,8 +296,7 @@ public interface DDMStructureLayoutPersistence extends BasePersistence<DDMStruct
 	* @return the first matching ddm structure layout
 	* @throws NoSuchStructureLayoutException if a matching ddm structure layout could not be found
 	*/
-	public DDMStructureLayout findByUuid_C_First(java.lang.String uuid,
-		long companyId,
+	public DDMStructureLayout findByUuid_C_First(String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<DDMStructureLayout> orderByComparator)
 		throws NoSuchStructureLayoutException;
 
@@ -309,8 +308,7 @@ public interface DDMStructureLayoutPersistence extends BasePersistence<DDMStruct
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching ddm structure layout, or <code>null</code> if a matching ddm structure layout could not be found
 	*/
-	public DDMStructureLayout fetchByUuid_C_First(java.lang.String uuid,
-		long companyId,
+	public DDMStructureLayout fetchByUuid_C_First(String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<DDMStructureLayout> orderByComparator);
 
 	/**
@@ -322,8 +320,7 @@ public interface DDMStructureLayoutPersistence extends BasePersistence<DDMStruct
 	* @return the last matching ddm structure layout
 	* @throws NoSuchStructureLayoutException if a matching ddm structure layout could not be found
 	*/
-	public DDMStructureLayout findByUuid_C_Last(java.lang.String uuid,
-		long companyId,
+	public DDMStructureLayout findByUuid_C_Last(String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<DDMStructureLayout> orderByComparator)
 		throws NoSuchStructureLayoutException;
 
@@ -335,8 +332,7 @@ public interface DDMStructureLayoutPersistence extends BasePersistence<DDMStruct
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching ddm structure layout, or <code>null</code> if a matching ddm structure layout could not be found
 	*/
-	public DDMStructureLayout fetchByUuid_C_Last(java.lang.String uuid,
-		long companyId,
+	public DDMStructureLayout fetchByUuid_C_Last(String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<DDMStructureLayout> orderByComparator);
 
 	/**
@@ -350,7 +346,7 @@ public interface DDMStructureLayoutPersistence extends BasePersistence<DDMStruct
 	* @throws NoSuchStructureLayoutException if a ddm structure layout with the primary key could not be found
 	*/
 	public DDMStructureLayout[] findByUuid_C_PrevAndNext(
-		long structureLayoutId, java.lang.String uuid, long companyId,
+		long structureLayoutId, String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<DDMStructureLayout> orderByComparator)
 		throws NoSuchStructureLayoutException;
 
@@ -360,7 +356,7 @@ public interface DDMStructureLayoutPersistence extends BasePersistence<DDMStruct
 	* @param uuid the uuid
 	* @param companyId the company ID
 	*/
-	public void removeByUuid_C(java.lang.String uuid, long companyId);
+	public void removeByUuid_C(String uuid, long companyId);
 
 	/**
 	* Returns the number of ddm structure layouts where uuid = &#63; and companyId = &#63;.
@@ -369,7 +365,7 @@ public interface DDMStructureLayoutPersistence extends BasePersistence<DDMStruct
 	* @param companyId the company ID
 	* @return the number of matching ddm structure layouts
 	*/
-	public int countByUuid_C(java.lang.String uuid, long companyId);
+	public int countByUuid_C(String uuid, long companyId);
 
 	/**
 	* Returns the ddm structure layout where structureVersionId = &#63; or throws a {@link NoSuchStructureLayoutException} if it could not be found.
@@ -538,5 +534,5 @@ public interface DDMStructureLayoutPersistence extends BasePersistence<DDMStruct
 	public int countAll();
 
 	@Override
-	public java.util.Set<java.lang.String> getBadColumnNames();
+	public java.util.Set<String> getBadColumnNames();
 }

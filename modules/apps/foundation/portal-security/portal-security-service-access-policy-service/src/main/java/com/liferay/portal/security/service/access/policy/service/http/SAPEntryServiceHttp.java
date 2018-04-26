@@ -55,9 +55,9 @@ import com.liferay.portal.security.service.access.policy.service.SAPEntryService
 @ProviderType
 public class SAPEntryServiceHttp {
 	public static com.liferay.portal.security.service.access.policy.model.SAPEntry addSAPEntry(
-		HttpPrincipal httpPrincipal, java.lang.String allowedServiceSignatures,
-		boolean defaultSAPEntry, boolean enabled, java.lang.String name,
-		java.util.Map<java.util.Locale, java.lang.String> titleMap,
+		HttpPrincipal httpPrincipal, String allowedServiceSignatures,
+		boolean defaultSAPEntry, boolean enabled, String name,
+		java.util.Map<java.util.Locale, String> titleMap,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -155,7 +155,7 @@ public class SAPEntryServiceHttp {
 	}
 
 	public static com.liferay.portal.security.service.access.policy.model.SAPEntry fetchSAPEntry(
-		HttpPrincipal httpPrincipal, long companyId, java.lang.String name)
+		HttpPrincipal httpPrincipal, long companyId, String name)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(SAPEntryServiceUtil.class,
@@ -301,7 +301,7 @@ public class SAPEntryServiceHttp {
 	}
 
 	public static com.liferay.portal.security.service.access.policy.model.SAPEntry getSAPEntry(
-		HttpPrincipal httpPrincipal, long companyId, java.lang.String name)
+		HttpPrincipal httpPrincipal, long companyId, String name)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(SAPEntryServiceUtil.class,
@@ -334,9 +334,9 @@ public class SAPEntryServiceHttp {
 
 	public static com.liferay.portal.security.service.access.policy.model.SAPEntry updateSAPEntry(
 		HttpPrincipal httpPrincipal, long sapEntryId,
-		java.lang.String allowedServiceSignatures, boolean defaultSAPEntry,
-		boolean enabled, java.lang.String name,
-		java.util.Map<java.util.Locale, java.lang.String> titleMap,
+		String allowedServiceSignatures, boolean defaultSAPEntry,
+		boolean enabled, String name,
+		java.util.Map<java.util.Locale, String> titleMap,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -371,8 +371,8 @@ public class SAPEntryServiceHttp {
 
 	private static Log _log = LogFactoryUtil.getLog(SAPEntryServiceHttp.class);
 	private static final Class<?>[] _addSAPEntryParameterTypes0 = new Class[] {
-			java.lang.String.class, boolean.class, boolean.class,
-			java.lang.String.class, java.util.Map.class,
+			String.class, boolean.class, boolean.class, String.class,
+			java.util.Map.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _deleteSAPEntryParameterTypes1 = new Class[] {
@@ -382,7 +382,7 @@ public class SAPEntryServiceHttp {
 			com.liferay.portal.security.service.access.policy.model.SAPEntry.class
 		};
 	private static final Class<?>[] _fetchSAPEntryParameterTypes3 = new Class[] {
-			long.class, java.lang.String.class
+			long.class, String.class
 		};
 	private static final Class<?>[] _getCompanySAPEntriesParameterTypes4 = new Class[] {
 			long.class, int.class, int.class
@@ -398,11 +398,11 @@ public class SAPEntryServiceHttp {
 			long.class
 		};
 	private static final Class<?>[] _getSAPEntryParameterTypes8 = new Class[] {
-			long.class, java.lang.String.class
+			long.class, String.class
 		};
 	private static final Class<?>[] _updateSAPEntryParameterTypes9 = new Class[] {
-			long.class, java.lang.String.class, boolean.class, boolean.class,
-			java.lang.String.class, java.util.Map.class,
+			long.class, String.class, boolean.class, boolean.class, String.class,
+			java.util.Map.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 }

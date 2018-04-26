@@ -113,7 +113,7 @@ public class ModuleWrapper implements Module, ModelWrapper<Module> {
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new ModuleWrapper((Module)_module.clone());
 	}
 
@@ -138,7 +138,7 @@ public class ModuleWrapper implements Module, ModelWrapper<Module> {
 	* @return the bundle symbolic name of this module
 	*/
 	@Override
-	public java.lang.String getBundleSymbolicName() {
+	public String getBundleSymbolicName() {
 		return _module.getBundleSymbolicName();
 	}
 
@@ -148,7 +148,7 @@ public class ModuleWrapper implements Module, ModelWrapper<Module> {
 	* @return the bundle version of this module
 	*/
 	@Override
-	public java.lang.String getBundleVersion() {
+	public String getBundleVersion() {
 		return _module.getBundleVersion();
 	}
 
@@ -168,7 +168,7 @@ public class ModuleWrapper implements Module, ModelWrapper<Module> {
 	* @return the context name of this module
 	*/
 	@Override
-	public java.lang.String getContextName() {
+	public String getContextName() {
 		return _module.getContextName();
 	}
 
@@ -208,7 +208,7 @@ public class ModuleWrapper implements Module, ModelWrapper<Module> {
 	* @return the uuid of this module
 	*/
 	@Override
-	public java.lang.String getUuid() {
+	public String getUuid() {
 		return _module.getUuid();
 	}
 
@@ -258,7 +258,7 @@ public class ModuleWrapper implements Module, ModelWrapper<Module> {
 	* @param bundleSymbolicName the bundle symbolic name of this module
 	*/
 	@Override
-	public void setBundleSymbolicName(java.lang.String bundleSymbolicName) {
+	public void setBundleSymbolicName(String bundleSymbolicName) {
 		_module.setBundleSymbolicName(bundleSymbolicName);
 	}
 
@@ -268,7 +268,7 @@ public class ModuleWrapper implements Module, ModelWrapper<Module> {
 	* @param bundleVersion the bundle version of this module
 	*/
 	@Override
-	public void setBundleVersion(java.lang.String bundleVersion) {
+	public void setBundleVersion(String bundleVersion) {
 		_module.setBundleVersion(bundleVersion);
 	}
 
@@ -293,7 +293,7 @@ public class ModuleWrapper implements Module, ModelWrapper<Module> {
 	* @param contextName the context name of this module
 	*/
 	@Override
-	public void setContextName(java.lang.String contextName) {
+	public void setContextName(String contextName) {
 		_module.setContextName(contextName);
 	}
 
@@ -349,7 +349,7 @@ public class ModuleWrapper implements Module, ModelWrapper<Module> {
 	* @param uuid the uuid of this module
 	*/
 	@Override
-	public void setUuid(java.lang.String uuid) {
+	public void setUuid(String uuid) {
 		_module.setUuid(uuid);
 	}
 
@@ -364,7 +364,7 @@ public class ModuleWrapper implements Module, ModelWrapper<Module> {
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _module.toString();
 	}
 
@@ -374,7 +374,7 @@ public class ModuleWrapper implements Module, ModelWrapper<Module> {
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _module.toXmlString();
 	}
 

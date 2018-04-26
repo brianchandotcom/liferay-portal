@@ -56,8 +56,8 @@ import com.liferay.sync.service.SyncDeviceServiceUtil;
 @ProviderType
 public class SyncDeviceServiceHttp {
 	public static com.liferay.sync.model.SyncDevice registerSyncDevice(
-		HttpPrincipal httpPrincipal, java.lang.String type, long buildNumber,
-		int featureSet, java.lang.String uuid)
+		HttpPrincipal httpPrincipal, String type, long buildNumber,
+		int featureSet, String uuid)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(SyncDeviceServiceUtil.class,
@@ -89,8 +89,7 @@ public class SyncDeviceServiceHttp {
 	}
 
 	public static void unregisterSyncDevice(HttpPrincipal httpPrincipal,
-		java.lang.String uuid)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		String uuid) throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(SyncDeviceServiceUtil.class,
 					"unregisterSyncDevice", _unregisterSyncDeviceParameterTypes1);
@@ -117,10 +116,9 @@ public class SyncDeviceServiceHttp {
 
 	private static Log _log = LogFactoryUtil.getLog(SyncDeviceServiceHttp.class);
 	private static final Class<?>[] _registerSyncDeviceParameterTypes0 = new Class[] {
-			java.lang.String.class, long.class, int.class,
-			java.lang.String.class
+			String.class, long.class, int.class, String.class
 		};
 	private static final Class<?>[] _unregisterSyncDeviceParameterTypes1 = new Class[] {
-			java.lang.String.class
+			String.class
 		};
 }

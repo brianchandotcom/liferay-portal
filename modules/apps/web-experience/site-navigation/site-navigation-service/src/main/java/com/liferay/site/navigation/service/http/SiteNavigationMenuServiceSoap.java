@@ -66,7 +66,7 @@ import java.rmi.RemoteException;
 @ProviderType
 public class SiteNavigationMenuServiceSoap {
 	public static com.liferay.site.navigation.model.SiteNavigationMenuSoap addSiteNavigationMenu(
-		long groupId, java.lang.String name, int type,
+		long groupId, String name, int type,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
@@ -83,7 +83,7 @@ public class SiteNavigationMenuServiceSoap {
 	}
 
 	public static com.liferay.site.navigation.model.SiteNavigationMenuSoap addSiteNavigationMenu(
-		long groupId, java.lang.String name,
+		long groupId, String name,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
@@ -161,7 +161,7 @@ public class SiteNavigationMenuServiceSoap {
 	}
 
 	public static com.liferay.site.navigation.model.SiteNavigationMenuSoap[] getSiteNavigationMenus(
-		long groupId, java.lang.String keywords, int start, int end,
+		long groupId, String keywords, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws RemoteException {
 		try {
@@ -192,8 +192,8 @@ public class SiteNavigationMenuServiceSoap {
 		}
 	}
 
-	public static int getSiteNavigationMenusCount(long groupId,
-		java.lang.String keywords) throws RemoteException {
+	public static int getSiteNavigationMenusCount(long groupId, String keywords)
+		throws RemoteException {
 		try {
 			int returnValue = SiteNavigationMenuServiceUtil.getSiteNavigationMenusCount(groupId,
 					keywords);
@@ -225,7 +225,7 @@ public class SiteNavigationMenuServiceSoap {
 	}
 
 	public static com.liferay.site.navigation.model.SiteNavigationMenuSoap updateSiteNavigationMenu(
-		long siteNavigationMenuId, java.lang.String name,
+		long siteNavigationMenuId, String name,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {

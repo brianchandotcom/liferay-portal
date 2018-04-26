@@ -142,7 +142,7 @@ public class PortletItemWrapper implements PortletItem,
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new PortletItemWrapper((PortletItem)_portletItem.clone());
 	}
 
@@ -157,7 +157,7 @@ public class PortletItemWrapper implements PortletItem,
 	* @return the fully qualified class name of this portlet item
 	*/
 	@Override
-	public java.lang.String getClassName() {
+	public String getClassName() {
 		return _portletItem.getClassName();
 	}
 
@@ -232,7 +232,7 @@ public class PortletItemWrapper implements PortletItem,
 	* @return the name of this portlet item
 	*/
 	@Override
-	public java.lang.String getName() {
+	public String getName() {
 		return _portletItem.getName();
 	}
 
@@ -242,7 +242,7 @@ public class PortletItemWrapper implements PortletItem,
 	* @return the portlet ID of this portlet item
 	*/
 	@Override
-	public java.lang.String getPortletId() {
+	public String getPortletId() {
 		return _portletItem.getPortletId();
 	}
 
@@ -287,7 +287,7 @@ public class PortletItemWrapper implements PortletItem,
 	* @return the user name of this portlet item
 	*/
 	@Override
-	public java.lang.String getUserName() {
+	public String getUserName() {
 		return _portletItem.getUserName();
 	}
 
@@ -297,7 +297,7 @@ public class PortletItemWrapper implements PortletItem,
 	* @return the user uuid of this portlet item
 	*/
 	@Override
-	public java.lang.String getUserUuid() {
+	public String getUserUuid() {
 		return _portletItem.getUserUuid();
 	}
 
@@ -332,7 +332,7 @@ public class PortletItemWrapper implements PortletItem,
 	}
 
 	@Override
-	public void setClassName(java.lang.String className) {
+	public void setClassName(String className) {
 		_portletItem.setClassName(className);
 	}
 
@@ -417,7 +417,7 @@ public class PortletItemWrapper implements PortletItem,
 	* @param name the name of this portlet item
 	*/
 	@Override
-	public void setName(java.lang.String name) {
+	public void setName(String name) {
 		_portletItem.setName(name);
 	}
 
@@ -432,7 +432,7 @@ public class PortletItemWrapper implements PortletItem,
 	* @param portletId the portlet ID of this portlet item
 	*/
 	@Override
-	public void setPortletId(java.lang.String portletId) {
+	public void setPortletId(String portletId) {
 		_portletItem.setPortletId(portletId);
 	}
 
@@ -477,7 +477,7 @@ public class PortletItemWrapper implements PortletItem,
 	* @param userName the user name of this portlet item
 	*/
 	@Override
-	public void setUserName(java.lang.String userName) {
+	public void setUserName(String userName) {
 		_portletItem.setUserName(userName);
 	}
 
@@ -487,7 +487,7 @@ public class PortletItemWrapper implements PortletItem,
 	* @param userUuid the user uuid of this portlet item
 	*/
 	@Override
-	public void setUserUuid(java.lang.String userUuid) {
+	public void setUserUuid(String userUuid) {
 		_portletItem.setUserUuid(userUuid);
 	}
 
@@ -502,7 +502,7 @@ public class PortletItemWrapper implements PortletItem,
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _portletItem.toString();
 	}
 
@@ -512,7 +512,7 @@ public class PortletItemWrapper implements PortletItem,
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _portletItem.toXmlString();
 	}
 

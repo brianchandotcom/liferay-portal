@@ -180,7 +180,7 @@ public class DDMFormInstanceWrapper implements DDMFormInstance,
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new DDMFormInstanceWrapper((DDMFormInstance)_ddmFormInstance.clone());
 	}
 
@@ -190,7 +190,7 @@ public class DDMFormInstanceWrapper implements DDMFormInstance,
 	}
 
 	@Override
-	public java.lang.String[] getAvailableLanguageIds() {
+	public String[] getAvailableLanguageIds() {
 		return _ddmFormInstance.getAvailableLanguageIds();
 	}
 
@@ -215,7 +215,7 @@ public class DDMFormInstanceWrapper implements DDMFormInstance,
 	}
 
 	@Override
-	public java.lang.String getDefaultLanguageId() {
+	public String getDefaultLanguageId() {
 		return _ddmFormInstance.getDefaultLanguageId();
 	}
 
@@ -225,7 +225,7 @@ public class DDMFormInstanceWrapper implements DDMFormInstance,
 	* @return the description of this ddm form instance
 	*/
 	@Override
-	public java.lang.String getDescription() {
+	public String getDescription() {
 		return _ddmFormInstance.getDescription();
 	}
 
@@ -236,7 +236,7 @@ public class DDMFormInstanceWrapper implements DDMFormInstance,
 	* @return the localized description of this ddm form instance
 	*/
 	@Override
-	public java.lang.String getDescription(java.util.Locale locale) {
+	public String getDescription(java.util.Locale locale) {
 		return _ddmFormInstance.getDescription(locale);
 	}
 
@@ -248,8 +248,7 @@ public class DDMFormInstanceWrapper implements DDMFormInstance,
 	* @return the localized description of this ddm form instance. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
 	*/
 	@Override
-	public java.lang.String getDescription(java.util.Locale locale,
-		boolean useDefault) {
+	public String getDescription(java.util.Locale locale, boolean useDefault) {
 		return _ddmFormInstance.getDescription(locale, useDefault);
 	}
 
@@ -260,7 +259,7 @@ public class DDMFormInstanceWrapper implements DDMFormInstance,
 	* @return the localized description of this ddm form instance
 	*/
 	@Override
-	public java.lang.String getDescription(java.lang.String languageId) {
+	public String getDescription(String languageId) {
 		return _ddmFormInstance.getDescription(languageId);
 	}
 
@@ -272,18 +271,17 @@ public class DDMFormInstanceWrapper implements DDMFormInstance,
 	* @return the localized description of this ddm form instance
 	*/
 	@Override
-	public java.lang.String getDescription(java.lang.String languageId,
-		boolean useDefault) {
+	public String getDescription(String languageId, boolean useDefault) {
 		return _ddmFormInstance.getDescription(languageId, useDefault);
 	}
 
 	@Override
-	public java.lang.String getDescriptionCurrentLanguageId() {
+	public String getDescriptionCurrentLanguageId() {
 		return _ddmFormInstance.getDescriptionCurrentLanguageId();
 	}
 
 	@Override
-	public java.lang.String getDescriptionCurrentValue() {
+	public String getDescriptionCurrentValue() {
 		return _ddmFormInstance.getDescriptionCurrentValue();
 	}
 
@@ -293,7 +291,7 @@ public class DDMFormInstanceWrapper implements DDMFormInstance,
 	* @return the locales and localized descriptions of this ddm form instance
 	*/
 	@Override
-	public Map<java.util.Locale, java.lang.String> getDescriptionMap() {
+	public Map<java.util.Locale, String> getDescriptionMap() {
 		return _ddmFormInstance.getDescriptionMap();
 	}
 
@@ -318,8 +316,7 @@ public class DDMFormInstanceWrapper implements DDMFormInstance,
 	}
 
 	@Override
-	public DDMFormInstanceVersion getFormInstanceVersion(
-		java.lang.String version)
+	public DDMFormInstanceVersion getFormInstanceVersion(String version)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _ddmFormInstance.getFormInstanceVersion(version);
 	}
@@ -360,7 +357,7 @@ public class DDMFormInstanceWrapper implements DDMFormInstance,
 	* @return the name of this ddm form instance
 	*/
 	@Override
-	public java.lang.String getName() {
+	public String getName() {
 		return _ddmFormInstance.getName();
 	}
 
@@ -371,7 +368,7 @@ public class DDMFormInstanceWrapper implements DDMFormInstance,
 	* @return the localized name of this ddm form instance
 	*/
 	@Override
-	public java.lang.String getName(java.util.Locale locale) {
+	public String getName(java.util.Locale locale) {
 		return _ddmFormInstance.getName(locale);
 	}
 
@@ -383,7 +380,7 @@ public class DDMFormInstanceWrapper implements DDMFormInstance,
 	* @return the localized name of this ddm form instance. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
 	*/
 	@Override
-	public java.lang.String getName(java.util.Locale locale, boolean useDefault) {
+	public String getName(java.util.Locale locale, boolean useDefault) {
 		return _ddmFormInstance.getName(locale, useDefault);
 	}
 
@@ -394,7 +391,7 @@ public class DDMFormInstanceWrapper implements DDMFormInstance,
 	* @return the localized name of this ddm form instance
 	*/
 	@Override
-	public java.lang.String getName(java.lang.String languageId) {
+	public String getName(String languageId) {
 		return _ddmFormInstance.getName(languageId);
 	}
 
@@ -406,18 +403,17 @@ public class DDMFormInstanceWrapper implements DDMFormInstance,
 	* @return the localized name of this ddm form instance
 	*/
 	@Override
-	public java.lang.String getName(java.lang.String languageId,
-		boolean useDefault) {
+	public String getName(String languageId, boolean useDefault) {
 		return _ddmFormInstance.getName(languageId, useDefault);
 	}
 
 	@Override
-	public java.lang.String getNameCurrentLanguageId() {
+	public String getNameCurrentLanguageId() {
 		return _ddmFormInstance.getNameCurrentLanguageId();
 	}
 
 	@Override
-	public java.lang.String getNameCurrentValue() {
+	public String getNameCurrentValue() {
 		return _ddmFormInstance.getNameCurrentValue();
 	}
 
@@ -427,7 +423,7 @@ public class DDMFormInstanceWrapper implements DDMFormInstance,
 	* @return the locales and localized names of this ddm form instance
 	*/
 	@Override
-	public Map<java.util.Locale, java.lang.String> getNameMap() {
+	public Map<java.util.Locale, String> getNameMap() {
 		return _ddmFormInstance.getNameMap();
 	}
 
@@ -452,7 +448,7 @@ public class DDMFormInstanceWrapper implements DDMFormInstance,
 	* @return the settings of this ddm form instance
 	*/
 	@Override
-	public java.lang.String getSettings() {
+	public String getSettings() {
 		return _ddmFormInstance.getSettings();
 	}
 
@@ -500,7 +496,7 @@ public class DDMFormInstanceWrapper implements DDMFormInstance,
 	* @return the user name of this ddm form instance
 	*/
 	@Override
-	public java.lang.String getUserName() {
+	public String getUserName() {
 		return _ddmFormInstance.getUserName();
 	}
 
@@ -510,7 +506,7 @@ public class DDMFormInstanceWrapper implements DDMFormInstance,
 	* @return the user uuid of this ddm form instance
 	*/
 	@Override
-	public java.lang.String getUserUuid() {
+	public String getUserUuid() {
 		return _ddmFormInstance.getUserUuid();
 	}
 
@@ -520,7 +516,7 @@ public class DDMFormInstanceWrapper implements DDMFormInstance,
 	* @return the uuid of this ddm form instance
 	*/
 	@Override
-	public java.lang.String getUuid() {
+	public String getUuid() {
 		return _ddmFormInstance.getUuid();
 	}
 
@@ -530,7 +526,7 @@ public class DDMFormInstanceWrapper implements DDMFormInstance,
 	* @return the version of this ddm form instance
 	*/
 	@Override
-	public java.lang.String getVersion() {
+	public String getVersion() {
 		return _ddmFormInstance.getVersion();
 	}
 
@@ -550,7 +546,7 @@ public class DDMFormInstanceWrapper implements DDMFormInstance,
 	* @return the version user name of this ddm form instance
 	*/
 	@Override
-	public java.lang.String getVersionUserName() {
+	public String getVersionUserName() {
 		return _ddmFormInstance.getVersionUserName();
 	}
 
@@ -560,7 +556,7 @@ public class DDMFormInstanceWrapper implements DDMFormInstance,
 	* @return the version user uuid of this ddm form instance
 	*/
 	@Override
-	public java.lang.String getVersionUserUuid() {
+	public String getVersionUserUuid() {
 		return _ddmFormInstance.getVersionUserUuid();
 	}
 
@@ -633,7 +629,7 @@ public class DDMFormInstanceWrapper implements DDMFormInstance,
 	* @param description the description of this ddm form instance
 	*/
 	@Override
-	public void setDescription(java.lang.String description) {
+	public void setDescription(String description) {
 		_ddmFormInstance.setDescription(description);
 	}
 
@@ -644,8 +640,7 @@ public class DDMFormInstanceWrapper implements DDMFormInstance,
 	* @param locale the locale of the language
 	*/
 	@Override
-	public void setDescription(java.lang.String description,
-		java.util.Locale locale) {
+	public void setDescription(String description, java.util.Locale locale) {
 		_ddmFormInstance.setDescription(description, locale);
 	}
 
@@ -657,13 +652,13 @@ public class DDMFormInstanceWrapper implements DDMFormInstance,
 	* @param defaultLocale the default locale
 	*/
 	@Override
-	public void setDescription(java.lang.String description,
-		java.util.Locale locale, java.util.Locale defaultLocale) {
+	public void setDescription(String description, java.util.Locale locale,
+		java.util.Locale defaultLocale) {
 		_ddmFormInstance.setDescription(description, locale, defaultLocale);
 	}
 
 	@Override
-	public void setDescriptionCurrentLanguageId(java.lang.String languageId) {
+	public void setDescriptionCurrentLanguageId(String languageId) {
 		_ddmFormInstance.setDescriptionCurrentLanguageId(languageId);
 	}
 
@@ -673,8 +668,7 @@ public class DDMFormInstanceWrapper implements DDMFormInstance,
 	* @param descriptionMap the locales and localized descriptions of this ddm form instance
 	*/
 	@Override
-	public void setDescriptionMap(
-		Map<java.util.Locale, java.lang.String> descriptionMap) {
+	public void setDescriptionMap(Map<java.util.Locale, String> descriptionMap) {
 		_ddmFormInstance.setDescriptionMap(descriptionMap);
 	}
 
@@ -686,7 +680,7 @@ public class DDMFormInstanceWrapper implements DDMFormInstance,
 	*/
 	@Override
 	public void setDescriptionMap(
-		Map<java.util.Locale, java.lang.String> descriptionMap,
+		Map<java.util.Locale, String> descriptionMap,
 		java.util.Locale defaultLocale) {
 		_ddmFormInstance.setDescriptionMap(descriptionMap, defaultLocale);
 	}
@@ -753,7 +747,7 @@ public class DDMFormInstanceWrapper implements DDMFormInstance,
 	* @param name the name of this ddm form instance
 	*/
 	@Override
-	public void setName(java.lang.String name) {
+	public void setName(String name) {
 		_ddmFormInstance.setName(name);
 	}
 
@@ -764,7 +758,7 @@ public class DDMFormInstanceWrapper implements DDMFormInstance,
 	* @param locale the locale of the language
 	*/
 	@Override
-	public void setName(java.lang.String name, java.util.Locale locale) {
+	public void setName(String name, java.util.Locale locale) {
 		_ddmFormInstance.setName(name, locale);
 	}
 
@@ -776,13 +770,13 @@ public class DDMFormInstanceWrapper implements DDMFormInstance,
 	* @param defaultLocale the default locale
 	*/
 	@Override
-	public void setName(java.lang.String name, java.util.Locale locale,
+	public void setName(String name, java.util.Locale locale,
 		java.util.Locale defaultLocale) {
 		_ddmFormInstance.setName(name, locale, defaultLocale);
 	}
 
 	@Override
-	public void setNameCurrentLanguageId(java.lang.String languageId) {
+	public void setNameCurrentLanguageId(String languageId) {
 		_ddmFormInstance.setNameCurrentLanguageId(languageId);
 	}
 
@@ -792,7 +786,7 @@ public class DDMFormInstanceWrapper implements DDMFormInstance,
 	* @param nameMap the locales and localized names of this ddm form instance
 	*/
 	@Override
-	public void setNameMap(Map<java.util.Locale, java.lang.String> nameMap) {
+	public void setNameMap(Map<java.util.Locale, String> nameMap) {
 		_ddmFormInstance.setNameMap(nameMap);
 	}
 
@@ -803,7 +797,7 @@ public class DDMFormInstanceWrapper implements DDMFormInstance,
 	* @param defaultLocale the default locale
 	*/
 	@Override
-	public void setNameMap(Map<java.util.Locale, java.lang.String> nameMap,
+	public void setNameMap(Map<java.util.Locale, String> nameMap,
 		java.util.Locale defaultLocale) {
 		_ddmFormInstance.setNameMap(nameMap, defaultLocale);
 	}
@@ -834,7 +828,7 @@ public class DDMFormInstanceWrapper implements DDMFormInstance,
 	* @param settings the settings of this ddm form instance
 	*/
 	@Override
-	public void setSettings(java.lang.String settings) {
+	public void setSettings(String settings) {
 		_ddmFormInstance.setSettings(settings);
 	}
 
@@ -864,7 +858,7 @@ public class DDMFormInstanceWrapper implements DDMFormInstance,
 	* @param userName the user name of this ddm form instance
 	*/
 	@Override
-	public void setUserName(java.lang.String userName) {
+	public void setUserName(String userName) {
 		_ddmFormInstance.setUserName(userName);
 	}
 
@@ -874,7 +868,7 @@ public class DDMFormInstanceWrapper implements DDMFormInstance,
 	* @param userUuid the user uuid of this ddm form instance
 	*/
 	@Override
-	public void setUserUuid(java.lang.String userUuid) {
+	public void setUserUuid(String userUuid) {
 		_ddmFormInstance.setUserUuid(userUuid);
 	}
 
@@ -884,7 +878,7 @@ public class DDMFormInstanceWrapper implements DDMFormInstance,
 	* @param uuid the uuid of this ddm form instance
 	*/
 	@Override
-	public void setUuid(java.lang.String uuid) {
+	public void setUuid(String uuid) {
 		_ddmFormInstance.setUuid(uuid);
 	}
 
@@ -894,7 +888,7 @@ public class DDMFormInstanceWrapper implements DDMFormInstance,
 	* @param version the version of this ddm form instance
 	*/
 	@Override
-	public void setVersion(java.lang.String version) {
+	public void setVersion(String version) {
 		_ddmFormInstance.setVersion(version);
 	}
 
@@ -914,7 +908,7 @@ public class DDMFormInstanceWrapper implements DDMFormInstance,
 	* @param versionUserName the version user name of this ddm form instance
 	*/
 	@Override
-	public void setVersionUserName(java.lang.String versionUserName) {
+	public void setVersionUserName(String versionUserName) {
 		_ddmFormInstance.setVersionUserName(versionUserName);
 	}
 
@@ -924,7 +918,7 @@ public class DDMFormInstanceWrapper implements DDMFormInstance,
 	* @param versionUserUuid the version user uuid of this ddm form instance
 	*/
 	@Override
-	public void setVersionUserUuid(java.lang.String versionUserUuid) {
+	public void setVersionUserUuid(String versionUserUuid) {
 		_ddmFormInstance.setVersionUserUuid(versionUserUuid);
 	}
 
@@ -939,7 +933,7 @@ public class DDMFormInstanceWrapper implements DDMFormInstance,
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _ddmFormInstance.toString();
 	}
 
@@ -949,7 +943,7 @@ public class DDMFormInstanceWrapper implements DDMFormInstance,
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _ddmFormInstance.toXmlString();
 	}
 

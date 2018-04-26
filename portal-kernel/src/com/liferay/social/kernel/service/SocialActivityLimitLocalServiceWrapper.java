@@ -37,7 +37,7 @@ public class SocialActivityLimitLocalServiceWrapper
 	@Override
 	public com.liferay.social.kernel.model.SocialActivityLimit addActivityLimit(
 		long userId, long groupId, long classNameId, long classPK,
-		int activityType, java.lang.String activityCounterName, int limitPeriod)
+		int activityType, String activityCounterName, int limitPeriod)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _socialActivityLimitLocalService.addActivityLimit(userId,
 			groupId, classNameId, classPK, activityType, activityCounterName,
@@ -193,7 +193,7 @@ public class SocialActivityLimitLocalServiceWrapper
 	@Override
 	public com.liferay.social.kernel.model.SocialActivityLimit fetchActivityLimit(
 		long groupId, long userId, long classNameId, long classPK,
-		int activityType, java.lang.String activityCounterName) {
+		int activityType, String activityCounterName) {
 		return _socialActivityLimitLocalService.fetchActivityLimit(groupId,
 			userId, classNameId, classPK, activityType, activityCounterName);
 	}
@@ -220,7 +220,7 @@ public class SocialActivityLimitLocalServiceWrapper
 	* @return the OSGi service identifier
 	*/
 	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
+	public String getOSGiServiceIdentifier() {
 		return _socialActivityLimitLocalService.getOSGiServiceIdentifier();
 	}
 

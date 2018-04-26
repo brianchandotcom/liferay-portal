@@ -49,27 +49,27 @@ public interface RegionService extends BaseService {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link RegionServiceUtil} to access the region remote service. Add custom service methods to {@link com.liferay.portal.service.impl.RegionServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public Region addRegion(long countryId, java.lang.String regionCode,
-		java.lang.String name, boolean active) throws PortalException;
+	public Region addRegion(long countryId, String regionCode, String name,
+		boolean active) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public Region fetchRegion(long regionId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Region fetchRegion(long countryId, java.lang.String regionCode);
+	public Region fetchRegion(long countryId, String regionCode);
 
 	/**
 	* Returns the OSGi service identifier.
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public Region getRegion(long regionId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Region getRegion(long countryId, java.lang.String regionCode)
+	public Region getRegion(long countryId, String regionCode)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

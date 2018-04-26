@@ -152,7 +152,7 @@ public class MicroblogsEntryWrapper implements MicroblogsEntry,
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new MicroblogsEntryWrapper((MicroblogsEntry)_microblogsEntry.clone());
 	}
 
@@ -182,7 +182,7 @@ public class MicroblogsEntryWrapper implements MicroblogsEntry,
 	* @return the content of this microblogs entry
 	*/
 	@Override
-	public java.lang.String getContent() {
+	public String getContent() {
 		return _microblogsEntry.getContent();
 	}
 
@@ -308,7 +308,7 @@ public class MicroblogsEntryWrapper implements MicroblogsEntry,
 	* @return the user name of this microblogs entry
 	*/
 	@Override
-	public java.lang.String getUserName() {
+	public String getUserName() {
 		return _microblogsEntry.getUserName();
 	}
 
@@ -318,7 +318,7 @@ public class MicroblogsEntryWrapper implements MicroblogsEntry,
 	* @return the user uuid of this microblogs entry
 	*/
 	@Override
-	public java.lang.String getUserUuid() {
+	public String getUserUuid() {
 		return _microblogsEntry.getUserUuid();
 	}
 
@@ -368,7 +368,7 @@ public class MicroblogsEntryWrapper implements MicroblogsEntry,
 	* @param content the content of this microblogs entry
 	*/
 	@Override
-	public void setContent(java.lang.String content) {
+	public void setContent(String content) {
 		_microblogsEntry.setContent(content);
 	}
 
@@ -504,7 +504,7 @@ public class MicroblogsEntryWrapper implements MicroblogsEntry,
 	* @param userName the user name of this microblogs entry
 	*/
 	@Override
-	public void setUserName(java.lang.String userName) {
+	public void setUserName(String userName) {
 		_microblogsEntry.setUserName(userName);
 	}
 
@@ -514,7 +514,7 @@ public class MicroblogsEntryWrapper implements MicroblogsEntry,
 	* @param userUuid the user uuid of this microblogs entry
 	*/
 	@Override
-	public void setUserUuid(java.lang.String userUuid) {
+	public void setUserUuid(String userUuid) {
 		_microblogsEntry.setUserUuid(userUuid);
 	}
 
@@ -529,7 +529,7 @@ public class MicroblogsEntryWrapper implements MicroblogsEntry,
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _microblogsEntry.toString();
 	}
 
@@ -539,7 +539,7 @@ public class MicroblogsEntryWrapper implements MicroblogsEntry,
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _microblogsEntry.toXmlString();
 	}
 

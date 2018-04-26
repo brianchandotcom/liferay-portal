@@ -54,7 +54,7 @@ public interface Account extends AccountModel, PersistedModel {
 			}
 		};
 
-	public java.lang.String getPasswordDecrypted();
+	public String getPasswordDecrypted();
 
-	public void setPasswordDecrypted(java.lang.String unencryptedPassword);
+	public void setPasswordDecrypted(String unencryptedPassword);
 }

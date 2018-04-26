@@ -43,15 +43,13 @@ public class OAuth2ApplicationLocalServiceUtil {
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.oauth2.provider.service.impl.OAuth2ApplicationLocalServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static com.liferay.oauth2.provider.model.OAuth2Application addOAuth2Application(
-		long companyId, long userId, java.lang.String userName,
+		long companyId, long userId, String userName,
 		java.util.List<com.liferay.oauth2.provider.constants.GrantType> allowedGrantTypesList,
-		java.lang.String clientId, int clientProfile,
-		java.lang.String clientSecret, java.lang.String description,
-		java.util.List<java.lang.String> featuresList,
-		java.lang.String homePageURL, long iconFileEntryId,
-		java.lang.String name, java.lang.String privacyPolicyURL,
-		java.util.List<java.lang.String> redirectURIsList,
-		java.util.List<java.lang.String> scopeAliasesList,
+		String clientId, int clientProfile, String clientSecret,
+		String description, java.util.List<String> featuresList,
+		String homePageURL, long iconFileEntryId, String name,
+		String privacyPolicyURL, java.util.List<String> redirectURIsList,
+		java.util.List<String> scopeAliasesList,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
@@ -200,7 +198,7 @@ public class OAuth2ApplicationLocalServiceUtil {
 	}
 
 	public static com.liferay.oauth2.provider.model.OAuth2Application fetchOAuth2Application(
-		long companyId, java.lang.String clientId) {
+		long companyId, String clientId) {
 		return getService().fetchOAuth2Application(companyId, clientId);
 	}
 
@@ -226,7 +224,7 @@ public class OAuth2ApplicationLocalServiceUtil {
 	}
 
 	public static com.liferay.oauth2.provider.model.OAuth2Application getOAuth2Application(
-		long companyId, java.lang.String clientId)
+		long companyId, String clientId)
 		throws com.liferay.oauth2.provider.exception.NoSuchOAuth2ApplicationException {
 		return getService().getOAuth2Application(companyId, clientId);
 	}
@@ -261,7 +259,7 @@ public class OAuth2ApplicationLocalServiceUtil {
 	*
 	* @return the OSGi service identifier
 	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
+	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 
@@ -280,12 +278,10 @@ public class OAuth2ApplicationLocalServiceUtil {
 	public static com.liferay.oauth2.provider.model.OAuth2Application updateOAuth2Application(
 		long oAuth2ApplicationId,
 		java.util.List<com.liferay.oauth2.provider.constants.GrantType> allowedGrantTypesList,
-		java.lang.String clientId, int clientProfile,
-		java.lang.String clientSecret, java.lang.String description,
-		java.util.List<java.lang.String> featuresList,
-		java.lang.String homePageURL, long iconFileEntryId,
-		java.lang.String name, java.lang.String privacyPolicyURL,
-		java.util.List<java.lang.String> redirectURIsList,
+		String clientId, int clientProfile, String clientSecret,
+		String description, java.util.List<String> featuresList,
+		String homePageURL, long iconFileEntryId, String name,
+		String privacyPolicyURL, java.util.List<String> redirectURIsList,
 		long auth2ApplicationScopeAliasesId,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -309,8 +305,8 @@ public class OAuth2ApplicationLocalServiceUtil {
 	}
 
 	public static com.liferay.oauth2.provider.model.OAuth2Application updateScopeAliases(
-		long userId, java.lang.String userName, long oAuth2ApplicationId,
-		java.util.List<java.lang.String> scopeAliasesList)
+		long userId, String userName, long oAuth2ApplicationId,
+		java.util.List<String> scopeAliasesList)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .updateScopeAliases(userId, userName, oAuth2ApplicationId,

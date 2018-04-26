@@ -54,11 +54,11 @@ public interface TasksEntry extends TasksEntryModel, PersistedModel {
 			}
 		};
 
-	public java.lang.String getAssigneeFullName();
+	public String getAssigneeFullName();
 
-	public java.lang.String getPriorityLabel();
+	public String getPriorityLabel();
 
-	public java.lang.String getReporterFullName();
+	public String getReporterFullName();
 
-	public java.lang.String getStatusLabel();
+	public String getStatusLabel();
 }

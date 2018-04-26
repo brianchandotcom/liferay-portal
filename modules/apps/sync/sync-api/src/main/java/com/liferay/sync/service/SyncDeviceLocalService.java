@@ -63,9 +63,8 @@ public interface SyncDeviceLocalService extends BaseLocalService,
 	 *
 	 * Never modify or reference this interface directly. Always use {@link SyncDeviceLocalServiceUtil} to access the sync device local service. Add custom service methods to {@link com.liferay.sync.service.impl.SyncDeviceLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public SyncDevice addSyncDevice(long userId, java.lang.String type,
-		long buildNumber, java.lang.String hostname, int featureSet)
-		throws PortalException;
+	public SyncDevice addSyncDevice(long userId, String type, long buildNumber,
+		String hostname, int featureSet) throws PortalException;
 
 	/**
 	* Adds the sync device to the database. Also notifies the appropriate model listeners.
@@ -182,7 +181,7 @@ public interface SyncDeviceLocalService extends BaseLocalService,
 	* @return the matching sync device, or <code>null</code> if a matching sync device could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public SyncDevice fetchSyncDeviceByUuidAndCompanyId(java.lang.String uuid,
+	public SyncDevice fetchSyncDeviceByUuidAndCompanyId(String uuid,
 		long companyId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -200,7 +199,7 @@ public interface SyncDeviceLocalService extends BaseLocalService,
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -227,7 +226,7 @@ public interface SyncDeviceLocalService extends BaseLocalService,
 	* @throws PortalException if a matching sync device could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public SyncDevice getSyncDeviceByUuidAndCompanyId(java.lang.String uuid,
+	public SyncDevice getSyncDeviceByUuidAndCompanyId(String uuid,
 		long companyId) throws PortalException;
 
 	/**
@@ -257,15 +256,15 @@ public interface SyncDeviceLocalService extends BaseLocalService,
 	public int getSyncDevicesCount();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<SyncDevice> search(long companyId, java.lang.String keywords,
-		int start, int end, OrderByComparator<SyncDevice> orderByComparator);
+	public List<SyncDevice> search(long companyId, String keywords, int start,
+		int end, OrderByComparator<SyncDevice> orderByComparator);
 
 	public void updateStatus(long syncDeviceId, int status)
 		throws PortalException;
 
-	public SyncDevice updateSyncDevice(long syncDeviceId,
-		java.lang.String type, long buildNumber, int featureSet,
-		java.lang.String hostname, int status) throws PortalException;
+	public SyncDevice updateSyncDevice(long syncDeviceId, String type,
+		long buildNumber, int featureSet, String hostname, int status)
+		throws PortalException;
 
 	/**
 	* Updates the sync device in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.

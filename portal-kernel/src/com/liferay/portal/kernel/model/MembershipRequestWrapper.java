@@ -142,7 +142,7 @@ public class MembershipRequestWrapper implements MembershipRequest,
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new MembershipRequestWrapper((MembershipRequest)_membershipRequest.clone());
 	}
 
@@ -157,7 +157,7 @@ public class MembershipRequestWrapper implements MembershipRequest,
 	* @return the comments of this membership request
 	*/
 	@Override
-	public java.lang.String getComments() {
+	public String getComments() {
 		return _membershipRequest.getComments();
 	}
 
@@ -247,7 +247,7 @@ public class MembershipRequestWrapper implements MembershipRequest,
 	* @return the replier user uuid of this membership request
 	*/
 	@Override
-	public java.lang.String getReplierUserUuid() {
+	public String getReplierUserUuid() {
 		return _membershipRequest.getReplierUserUuid();
 	}
 
@@ -257,7 +257,7 @@ public class MembershipRequestWrapper implements MembershipRequest,
 	* @return the reply comments of this membership request
 	*/
 	@Override
-	public java.lang.String getReplyComments() {
+	public String getReplyComments() {
 		return _membershipRequest.getReplyComments();
 	}
 
@@ -297,7 +297,7 @@ public class MembershipRequestWrapper implements MembershipRequest,
 	* @return the user uuid of this membership request
 	*/
 	@Override
-	public java.lang.String getUserUuid() {
+	public String getUserUuid() {
 		return _membershipRequest.getUserUuid();
 	}
 
@@ -337,7 +337,7 @@ public class MembershipRequestWrapper implements MembershipRequest,
 	* @param comments the comments of this membership request
 	*/
 	@Override
-	public void setComments(java.lang.String comments) {
+	public void setComments(String comments) {
 		_membershipRequest.setComments(comments);
 	}
 
@@ -442,7 +442,7 @@ public class MembershipRequestWrapper implements MembershipRequest,
 	* @param replierUserUuid the replier user uuid of this membership request
 	*/
 	@Override
-	public void setReplierUserUuid(java.lang.String replierUserUuid) {
+	public void setReplierUserUuid(String replierUserUuid) {
 		_membershipRequest.setReplierUserUuid(replierUserUuid);
 	}
 
@@ -452,7 +452,7 @@ public class MembershipRequestWrapper implements MembershipRequest,
 	* @param replyComments the reply comments of this membership request
 	*/
 	@Override
-	public void setReplyComments(java.lang.String replyComments) {
+	public void setReplyComments(String replyComments) {
 		_membershipRequest.setReplyComments(replyComments);
 	}
 
@@ -492,7 +492,7 @@ public class MembershipRequestWrapper implements MembershipRequest,
 	* @param userUuid the user uuid of this membership request
 	*/
 	@Override
-	public void setUserUuid(java.lang.String userUuid) {
+	public void setUserUuid(String userUuid) {
 		_membershipRequest.setUserUuid(userUuid);
 	}
 
@@ -507,7 +507,7 @@ public class MembershipRequestWrapper implements MembershipRequest,
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _membershipRequest.toString();
 	}
 
@@ -517,7 +517,7 @@ public class MembershipRequestWrapper implements MembershipRequest,
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _membershipRequest.toXmlString();
 	}
 

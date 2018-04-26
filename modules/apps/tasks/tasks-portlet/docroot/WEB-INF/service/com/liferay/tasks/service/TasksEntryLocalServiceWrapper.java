@@ -35,9 +35,9 @@ public class TasksEntryLocalServiceWrapper implements TasksEntryLocalService,
 
 	@Override
 	public com.liferay.tasks.model.TasksEntry addTasksEntry(long userId,
-		java.lang.String title, int priority, long assigneeUserId,
-		int dueDateMonth, int dueDateDay, int dueDateYear, int dueDateHour,
-		int dueDateMinute, boolean addDueDate,
+		String title, int priority, long assigneeUserId, int dueDateMonth,
+		int dueDateDay, int dueDateYear, int dueDateHour, int dueDateMinute,
+		boolean addDueDate,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _tasksEntryLocalService.addTasksEntry(userId, title, priority,
@@ -266,7 +266,7 @@ public class TasksEntryLocalServiceWrapper implements TasksEntryLocalService,
 	* @return the OSGi service identifier
 	*/
 	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
+	public String getOSGiServiceIdentifier() {
 		return _tasksEntryLocalService.getOSGiServiceIdentifier();
 	}
 
@@ -372,7 +372,7 @@ public class TasksEntryLocalServiceWrapper implements TasksEntryLocalService,
 	@Override
 	public void updateAsset(long userId,
 		com.liferay.tasks.model.TasksEntry tasksEntry, long[] assetCategoryIds,
-		java.lang.String[] assetTagNames)
+		String[] assetTagNames)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_tasksEntryLocalService.updateAsset(userId, tasksEntry,
 			assetCategoryIds, assetTagNames);
@@ -380,10 +380,9 @@ public class TasksEntryLocalServiceWrapper implements TasksEntryLocalService,
 
 	@Override
 	public com.liferay.tasks.model.TasksEntry updateTasksEntry(
-		long tasksEntryId, java.lang.String title, int priority,
-		long assigneeUserId, long resolverUserId, int dueDateMonth,
-		int dueDateDay, int dueDateYear, int dueDateHour, int dueDateMinute,
-		boolean addDueDate, int status,
+		long tasksEntryId, String title, int priority, long assigneeUserId,
+		long resolverUserId, int dueDateMonth, int dueDateDay, int dueDateYear,
+		int dueDateHour, int dueDateMinute, boolean addDueDate, int status,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _tasksEntryLocalService.updateTasksEntry(tasksEntryId, title,

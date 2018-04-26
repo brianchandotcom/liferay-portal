@@ -73,10 +73,9 @@ public interface RoleService extends BaseService {
 	role.
 	* @return the role
 	*/
-	public Role addRole(java.lang.String className, long classPK,
-		java.lang.String name, Map<Locale, java.lang.String> titleMap,
-		Map<Locale, java.lang.String> descriptionMap, int type,
-		java.lang.String subtype, ServiceContext serviceContext)
+	public Role addRole(String className, long classPK, String name,
+		Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
+		int type, String subtype, ServiceContext serviceContext)
 		throws PortalException;
 
 	/**
@@ -110,21 +109,20 @@ public interface RoleService extends BaseService {
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<Role> getGroupRolesAndTeamRoles(long companyId,
-		java.lang.String keywords, List<java.lang.String> excludedNames,
-		int[] types, long excludedTeamRoleId, long teamGroupId, int start,
-		int end);
+		String keywords, List<String> excludedNames, int[] types,
+		long excludedTeamRoleId, long teamGroupId, int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getGroupRolesAndTeamRolesCount(long companyId,
-		java.lang.String keywords, List<java.lang.String> excludedNames,
-		int[] types, long excludedTeamRoleId, long teamGroupId);
+	public int getGroupRolesAndTeamRolesCount(long companyId, String keywords,
+		List<String> excludedNames, int[] types, long excludedTeamRoleId,
+		long teamGroupId);
 
 	/**
 	* Returns the OSGi service identifier.
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	/**
 	* Returns the role with the primary key.
@@ -148,11 +146,10 @@ public interface RoleService extends BaseService {
 	* @return the role with the name
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Role getRole(long companyId, java.lang.String name)
-		throws PortalException;
+	public Role getRole(long companyId, String name) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<Role> getRoles(int type, java.lang.String subtype)
+	public List<Role> getRoles(int type, String subtype)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -214,8 +211,8 @@ public interface RoleService extends BaseService {
 	role; <code>false</code> otherwise
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public boolean hasUserRole(long userId, long companyId,
-		java.lang.String name, boolean inherited) throws PortalException;
+	public boolean hasUserRole(long userId, long companyId, String name,
+		boolean inherited) throws PortalException;
 
 	/**
 	* Returns <code>true</code> if the user has any one of the named regular
@@ -230,19 +227,17 @@ public interface RoleService extends BaseService {
 	<code>false</code> otherwise
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public boolean hasUserRoles(long userId, long companyId,
-		java.lang.String[] names, boolean inherited) throws PortalException;
+	public boolean hasUserRoles(long userId, long companyId, String[] names,
+		boolean inherited) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<Role> search(long companyId, java.lang.String keywords,
-		java.lang.Integer[] types,
-		LinkedHashMap<java.lang.String, java.lang.Object> params, int start,
-		int end, OrderByComparator<Role> obc);
+	public List<Role> search(long companyId, String keywords, Integer[] types,
+		LinkedHashMap<String, Object> params, int start, int end,
+		OrderByComparator<Role> obc);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int searchCount(long companyId, java.lang.String keywords,
-		java.lang.Integer[] types,
-		LinkedHashMap<java.lang.String, java.lang.Object> params);
+	public int searchCount(long companyId, String keywords, Integer[] types,
+		LinkedHashMap<String, Object> params);
 
 	/**
 	* Removes the matching roles associated with the user. The user is
@@ -269,8 +264,8 @@ public interface RoleService extends BaseService {
 	role.
 	* @return the role with the primary key
 	*/
-	public Role updateRole(long roleId, java.lang.String name,
-		Map<Locale, java.lang.String> titleMap,
-		Map<Locale, java.lang.String> descriptionMap, java.lang.String subtype,
-		ServiceContext serviceContext) throws PortalException;
+	public Role updateRole(long roleId, String name,
+		Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
+		String subtype, ServiceContext serviceContext)
+		throws PortalException;
 }

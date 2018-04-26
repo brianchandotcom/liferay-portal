@@ -238,7 +238,7 @@ public class DDMStructureVersionLocalServiceUtil {
 	*
 	* @return the OSGi service identifier
 	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
+	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 
@@ -255,7 +255,7 @@ public class DDMStructureVersionLocalServiceUtil {
 	}
 
 	public static com.liferay.dynamic.data.mapping.model.DDMStructureVersion getStructureVersion(
-		long structureId, java.lang.String version)
+		long structureId, String version)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getStructureVersion(structureId, version);
 	}

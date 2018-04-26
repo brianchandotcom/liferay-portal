@@ -67,8 +67,7 @@ import java.rmi.RemoteException;
 public class KBFolderServiceSoap {
 	public static com.liferay.knowledge.base.model.KBFolderSoap addKBFolder(
 		long groupId, long parentResourceClassNameId,
-		long parentResourcePrimKey, java.lang.String name,
-		java.lang.String description,
+		long parentResourcePrimKey, String name, String description,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
@@ -146,7 +145,7 @@ public class KBFolderServiceSoap {
 	}
 
 	public static com.liferay.knowledge.base.model.KBFolderSoap fetchKBFolderByUrlTitle(
-		long groupId, long parentKbFolderId, java.lang.String urlTitle)
+		long groupId, long parentKbFolderId, String urlTitle)
 		throws RemoteException {
 		try {
 			com.liferay.knowledge.base.model.KBFolder returnValue = KBFolderServiceUtil.fetchKBFolderByUrlTitle(groupId,
@@ -176,7 +175,7 @@ public class KBFolderServiceSoap {
 	}
 
 	public static com.liferay.knowledge.base.model.KBFolderSoap getKBFolderByUrlTitle(
-		long groupId, long parentKbFolderId, java.lang.String urlTitle)
+		long groupId, long parentKbFolderId, String urlTitle)
 		throws RemoteException {
 		try {
 			com.liferay.knowledge.base.model.KBFolder returnValue = KBFolderServiceUtil.getKBFolderByUrlTitle(groupId,
@@ -257,7 +256,7 @@ public class KBFolderServiceSoap {
 	@Deprecated
 	public static com.liferay.knowledge.base.model.KBFolderSoap updateKBFolder(
 		long parentResourceClassNameId, long parentResourcePrimKey,
-		long kbFolderId, java.lang.String name, java.lang.String description)
+		long kbFolderId, String name, String description)
 		throws RemoteException {
 		try {
 			com.liferay.knowledge.base.model.KBFolder returnValue = KBFolderServiceUtil.updateKBFolder(parentResourceClassNameId,
@@ -274,7 +273,7 @@ public class KBFolderServiceSoap {
 
 	public static com.liferay.knowledge.base.model.KBFolderSoap updateKBFolder(
 		long parentResourceClassNameId, long parentResourcePrimKey,
-		long kbFolderId, java.lang.String name, java.lang.String description,
+		long kbFolderId, String name, String description,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {

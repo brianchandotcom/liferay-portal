@@ -37,7 +37,7 @@ public class ExportImportConfigurationLocalServiceWrapper
 	@Override
 	public com.liferay.exportimport.kernel.model.ExportImportConfiguration addDraftExportImportConfiguration(
 		long userId, int type,
-		java.util.Map<java.lang.String, java.io.Serializable> settingsMap)
+		java.util.Map<String, java.io.Serializable> settingsMap)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _exportImportConfigurationLocalService.addDraftExportImportConfiguration(userId,
 			type, settingsMap);
@@ -45,8 +45,8 @@ public class ExportImportConfigurationLocalServiceWrapper
 
 	@Override
 	public com.liferay.exportimport.kernel.model.ExportImportConfiguration addDraftExportImportConfiguration(
-		long userId, java.lang.String name, int type,
-		java.util.Map<java.lang.String, java.io.Serializable> settingsMap)
+		long userId, String name, int type,
+		java.util.Map<String, java.io.Serializable> settingsMap)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _exportImportConfigurationLocalService.addDraftExportImportConfiguration(userId,
 			name, type, settingsMap);
@@ -66,10 +66,8 @@ public class ExportImportConfigurationLocalServiceWrapper
 
 	@Override
 	public com.liferay.exportimport.kernel.model.ExportImportConfiguration addExportImportConfiguration(
-		long userId, long groupId, java.lang.String name,
-		java.lang.String description, int type,
-		java.util.Map<java.lang.String, java.io.Serializable> settingsMap,
-		int status,
+		long userId, long groupId, String name, String description, int type,
+		java.util.Map<String, java.io.Serializable> settingsMap, int status,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _exportImportConfigurationLocalService.addExportImportConfiguration(userId,
@@ -79,9 +77,8 @@ public class ExportImportConfigurationLocalServiceWrapper
 
 	@Override
 	public com.liferay.exportimport.kernel.model.ExportImportConfiguration addExportImportConfiguration(
-		long userId, long groupId, java.lang.String name,
-		java.lang.String description, int type,
-		java.util.Map<java.lang.String, java.io.Serializable> settingsMap,
+		long userId, long groupId, String name, String description, int type,
+		java.util.Map<String, java.io.Serializable> settingsMap,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _exportImportConfigurationLocalService.addExportImportConfiguration(userId,
@@ -294,8 +291,8 @@ public class ExportImportConfigurationLocalServiceWrapper
 
 	@Override
 	public java.util.List<com.liferay.exportimport.kernel.model.ExportImportConfiguration> getExportImportConfigurations(
-		long companyId, long groupId, java.lang.String keywords, int type,
-		int start, int end,
+		long companyId, long groupId, String keywords, int type, int start,
+		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.exportimport.kernel.model.ExportImportConfiguration> orderByComparator) {
 		return _exportImportConfigurationLocalService.getExportImportConfigurations(companyId,
 			groupId, keywords, type, start, end, orderByComparator);
@@ -303,9 +300,8 @@ public class ExportImportConfigurationLocalServiceWrapper
 
 	@Override
 	public java.util.List<com.liferay.exportimport.kernel.model.ExportImportConfiguration> getExportImportConfigurations(
-		long companyId, long groupId, java.lang.String name,
-		java.lang.String description, int type, boolean andSearch, int start,
-		int end,
+		long companyId, long groupId, String name, String description,
+		int type, boolean andSearch, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.exportimport.kernel.model.ExportImportConfiguration> orderByComparator) {
 		return _exportImportConfigurationLocalService.getExportImportConfigurations(companyId,
 			groupId, name, description, type, andSearch, start, end,
@@ -335,15 +331,14 @@ public class ExportImportConfigurationLocalServiceWrapper
 
 	@Override
 	public int getExportImportConfigurationsCount(long companyId, long groupId,
-		java.lang.String keywords, int type) {
+		String keywords, int type) {
 		return _exportImportConfigurationLocalService.getExportImportConfigurationsCount(companyId,
 			groupId, keywords, type);
 	}
 
 	@Override
 	public int getExportImportConfigurationsCount(long companyId, long groupId,
-		java.lang.String name, java.lang.String description, int type,
-		boolean andSearch) {
+		String name, String description, int type, boolean andSearch) {
 		return _exportImportConfigurationLocalService.getExportImportConfigurationsCount(companyId,
 			groupId, name, description, type, andSearch);
 	}
@@ -359,7 +354,7 @@ public class ExportImportConfigurationLocalServiceWrapper
 	* @return the OSGi service identifier
 	*/
 	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
+	public String getOSGiServiceIdentifier() {
 		return _exportImportConfigurationLocalService.getOSGiServiceIdentifier();
 	}
 
@@ -388,8 +383,8 @@ public class ExportImportConfigurationLocalServiceWrapper
 
 	@Override
 	public com.liferay.portal.kernel.search.BaseModelSearchResult<com.liferay.exportimport.kernel.model.ExportImportConfiguration> searchExportImportConfigurations(
-		long companyId, long groupId, int type, java.lang.String keywords,
-		int start, int end, com.liferay.portal.kernel.search.Sort sort)
+		long companyId, long groupId, int type, String keywords, int start,
+		int end, com.liferay.portal.kernel.search.Sort sort)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _exportImportConfigurationLocalService.searchExportImportConfigurations(companyId,
 			groupId, type, keywords, start, end, sort);
@@ -397,8 +392,8 @@ public class ExportImportConfigurationLocalServiceWrapper
 
 	@Override
 	public com.liferay.portal.kernel.search.BaseModelSearchResult<com.liferay.exportimport.kernel.model.ExportImportConfiguration> searchExportImportConfigurations(
-		long companyId, long groupId, int type, java.lang.String name,
-		java.lang.String description, boolean andSearch, int start, int end,
+		long companyId, long groupId, int type, String name,
+		String description, boolean andSearch, int start, int end,
 		com.liferay.portal.kernel.search.Sort sort)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _exportImportConfigurationLocalService.searchExportImportConfigurations(companyId,
@@ -419,9 +414,9 @@ public class ExportImportConfigurationLocalServiceWrapper
 
 	@Override
 	public com.liferay.exportimport.kernel.model.ExportImportConfiguration updateExportImportConfiguration(
-		long userId, long exportImportConfigurationId, java.lang.String name,
-		java.lang.String description,
-		java.util.Map<java.lang.String, java.io.Serializable> settingsMap,
+		long userId, long exportImportConfigurationId, String name,
+		String description,
+		java.util.Map<String, java.io.Serializable> settingsMap,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _exportImportConfigurationLocalService.updateExportImportConfiguration(userId,

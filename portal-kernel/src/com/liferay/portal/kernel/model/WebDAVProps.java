@@ -53,21 +53,20 @@ public interface WebDAVProps extends WebDAVPropsModel, PersistedModel {
 			}
 		};
 
-	public void addProp(java.lang.String name, java.lang.String prefix,
-		java.lang.String uri) throws java.lang.Exception;
+	public void addProp(String name, String prefix, String uri)
+		throws Exception;
 
-	public void addProp(java.lang.String name, java.lang.String prefix,
-		java.lang.String uri, java.lang.String text) throws java.lang.Exception;
+	public void addProp(String name, String prefix, String uri, String text)
+		throws Exception;
 
 	public java.util.Set<com.liferay.portal.kernel.xml.QName> getPropsSet()
-		throws java.lang.Exception;
+		throws Exception;
 
-	public java.lang.String getText(java.lang.String name,
-		java.lang.String prefix, java.lang.String uri)
-		throws java.lang.Exception;
+	public String getText(String name, String prefix, String uri)
+		throws Exception;
 
-	public void removeProp(java.lang.String name, java.lang.String prefix,
-		java.lang.String uri) throws java.lang.Exception;
+	public void removeProp(String name, String prefix, String uri)
+		throws Exception;
 
-	public void store() throws java.lang.Exception;
+	public void store() throws Exception;
 }

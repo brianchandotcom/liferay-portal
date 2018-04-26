@@ -55,9 +55,8 @@ public class MDRRuleGroupLocalServiceUtil {
 	}
 
 	public static com.liferay.mobile.device.rules.model.MDRRuleGroup addRuleGroup(
-		long groupId,
-		java.util.Map<java.util.Locale, java.lang.String> nameMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		long groupId, java.util.Map<java.util.Locale, String> nameMap,
+		java.util.Map<java.util.Locale, String> descriptionMap,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
@@ -228,7 +227,7 @@ public class MDRRuleGroupLocalServiceUtil {
 	* @return the matching mdr rule group, or <code>null</code> if a matching mdr rule group could not be found
 	*/
 	public static com.liferay.mobile.device.rules.model.MDRRuleGroup fetchMDRRuleGroupByUuidAndGroupId(
-		java.lang.String uuid, long groupId) {
+		String uuid, long groupId) {
 		return getService().fetchMDRRuleGroupByUuidAndGroupId(uuid, groupId);
 	}
 
@@ -272,7 +271,7 @@ public class MDRRuleGroupLocalServiceUtil {
 	* @throws PortalException if a matching mdr rule group could not be found
 	*/
 	public static com.liferay.mobile.device.rules.model.MDRRuleGroup getMDRRuleGroupByUuidAndGroupId(
-		java.lang.String uuid, long groupId)
+		String uuid, long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getMDRRuleGroupByUuidAndGroupId(uuid, groupId);
 	}
@@ -301,7 +300,7 @@ public class MDRRuleGroupLocalServiceUtil {
 	* @return the matching mdr rule groups, or an empty list if no matches were found
 	*/
 	public static java.util.List<com.liferay.mobile.device.rules.model.MDRRuleGroup> getMDRRuleGroupsByUuidAndCompanyId(
-		java.lang.String uuid, long companyId) {
+		String uuid, long companyId) {
 		return getService().getMDRRuleGroupsByUuidAndCompanyId(uuid, companyId);
 	}
 
@@ -316,7 +315,7 @@ public class MDRRuleGroupLocalServiceUtil {
 	* @return the range of matching mdr rule groups, or an empty list if no matches were found
 	*/
 	public static java.util.List<com.liferay.mobile.device.rules.model.MDRRuleGroup> getMDRRuleGroupsByUuidAndCompanyId(
-		java.lang.String uuid, long companyId, int start, int end,
+		String uuid, long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.mobile.device.rules.model.MDRRuleGroup> orderByComparator) {
 		return getService()
 				   .getMDRRuleGroupsByUuidAndCompanyId(uuid, companyId, start,
@@ -337,7 +336,7 @@ public class MDRRuleGroupLocalServiceUtil {
 	*
 	* @return the OSGi service identifier
 	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
+	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 
@@ -377,43 +376,40 @@ public class MDRRuleGroupLocalServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.mobile.device.rules.model.MDRRuleGroup> search(
-		long groupId, java.lang.String name,
-		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
-		boolean andOperator, int start, int end) {
+		long groupId, String name,
+		java.util.LinkedHashMap<String, Object> params, boolean andOperator,
+		int start, int end) {
 		return getService()
 				   .search(groupId, name, params, andOperator, start, end);
 	}
 
 	public static java.util.List<com.liferay.mobile.device.rules.model.MDRRuleGroup> searchByKeywords(
-		long groupId, java.lang.String keywords,
-		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
-		boolean andOperator, int start, int end) {
+		long groupId, String keywords,
+		java.util.LinkedHashMap<String, Object> params, boolean andOperator,
+		int start, int end) {
 		return getService()
 				   .searchByKeywords(groupId, keywords, params, andOperator,
 			start, end);
 	}
 
 	public static java.util.List<com.liferay.mobile.device.rules.model.MDRRuleGroup> searchByKeywords(
-		long groupId, java.lang.String keywords,
-		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
-		boolean andOperator, int start, int end,
+		long groupId, String keywords,
+		java.util.LinkedHashMap<String, Object> params, boolean andOperator,
+		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.mobile.device.rules.model.MDRRuleGroup> obc) {
 		return getService()
 				   .searchByKeywords(groupId, keywords, params, andOperator,
 			start, end, obc);
 	}
 
-	public static int searchByKeywordsCount(long groupId,
-		java.lang.String keywords,
-		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
-		boolean andOperator) {
+	public static int searchByKeywordsCount(long groupId, String keywords,
+		java.util.LinkedHashMap<String, Object> params, boolean andOperator) {
 		return getService()
 				   .searchByKeywordsCount(groupId, keywords, params, andOperator);
 	}
 
-	public static int searchCount(long groupId, java.lang.String name,
-		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
-		boolean andOperator) {
+	public static int searchCount(long groupId, String name,
+		java.util.LinkedHashMap<String, Object> params, boolean andOperator) {
 		return getService().searchCount(groupId, name, params, andOperator);
 	}
 
@@ -429,9 +425,8 @@ public class MDRRuleGroupLocalServiceUtil {
 	}
 
 	public static com.liferay.mobile.device.rules.model.MDRRuleGroup updateRuleGroup(
-		long ruleGroupId,
-		java.util.Map<java.util.Locale, java.lang.String> nameMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		long ruleGroupId, java.util.Map<java.util.Locale, String> nameMap,
+		java.util.Map<java.util.Locale, String> descriptionMap,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()

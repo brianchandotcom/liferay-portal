@@ -56,11 +56,11 @@ import com.liferay.powwow.service.PowwowMeetingServiceUtil;
 @ProviderType
 public class PowwowMeetingServiceHttp {
 	public static com.liferay.powwow.model.PowwowMeeting addPowwowMeeting(
-		HttpPrincipal httpPrincipal, long groupId, java.lang.String portletId,
-		long powwowServerId, java.lang.String name,
-		java.lang.String description, java.lang.String providerType,
-		java.util.Map<java.lang.String, java.io.Serializable> providerTypeMetadataMap,
-		java.lang.String languageId, long calendarBookingId, int status,
+		HttpPrincipal httpPrincipal, long groupId, String portletId,
+		long powwowServerId, String name, String description,
+		String providerType,
+		java.util.Map<String, java.io.Serializable> providerTypeMetadataMap,
+		String languageId, long calendarBookingId, int status,
 		java.util.List<com.liferay.powwow.model.PowwowParticipant> powwowParticipants,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -216,10 +216,9 @@ public class PowwowMeetingServiceHttp {
 
 	public static com.liferay.powwow.model.PowwowMeeting updatePowwowMeeting(
 		HttpPrincipal httpPrincipal, long powwowMeetingId, long powwowServerId,
-		java.lang.String name, java.lang.String description,
-		java.lang.String providerType,
-		java.util.Map<java.lang.String, java.io.Serializable> providerTypeMetadataMap,
-		java.lang.String languageId, long calendarBookingId, int status,
+		String name, String description, String providerType,
+		java.util.Map<String, java.io.Serializable> providerTypeMetadataMap,
+		String languageId, long calendarBookingId, int status,
 		java.util.List<com.liferay.powwow.model.PowwowParticipant> powwowParticipants,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -257,10 +256,9 @@ public class PowwowMeetingServiceHttp {
 
 	private static Log _log = LogFactoryUtil.getLog(PowwowMeetingServiceHttp.class);
 	private static final Class<?>[] _addPowwowMeetingParameterTypes0 = new Class[] {
-			long.class, java.lang.String.class, long.class,
-			java.lang.String.class, java.lang.String.class,
-			java.lang.String.class, java.util.Map.class, java.lang.String.class,
-			long.class, int.class, java.util.List.class,
+			long.class, String.class, long.class, String.class, String.class,
+			String.class, java.util.Map.class, String.class, long.class,
+			int.class, java.util.List.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _deletePowwowMeetingParameterTypes1 = new Class[] {
@@ -277,9 +275,9 @@ public class PowwowMeetingServiceHttp {
 			long.class
 		};
 	private static final Class<?>[] _updatePowwowMeetingParameterTypes5 = new Class[] {
-			long.class, long.class, java.lang.String.class,
-			java.lang.String.class, java.lang.String.class, java.util.Map.class,
-			java.lang.String.class, long.class, int.class, java.util.List.class,
+			long.class, long.class, String.class, String.class, String.class,
+			java.util.Map.class, String.class, long.class, int.class,
+			java.util.List.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 }

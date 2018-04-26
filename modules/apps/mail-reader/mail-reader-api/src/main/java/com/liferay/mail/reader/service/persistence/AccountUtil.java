@@ -272,7 +272,7 @@ public class AccountUtil {
 	* @return the matching account
 	* @throws NoSuchAccountException if a matching account could not be found
 	*/
-	public static Account findByU_A(long userId, java.lang.String address)
+	public static Account findByU_A(long userId, String address)
 		throws com.liferay.mail.reader.exception.NoSuchAccountException {
 		return getPersistence().findByU_A(userId, address);
 	}
@@ -284,7 +284,7 @@ public class AccountUtil {
 	* @param address the address
 	* @return the matching account, or <code>null</code> if a matching account could not be found
 	*/
-	public static Account fetchByU_A(long userId, java.lang.String address) {
+	public static Account fetchByU_A(long userId, String address) {
 		return getPersistence().fetchByU_A(userId, address);
 	}
 
@@ -296,7 +296,7 @@ public class AccountUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching account, or <code>null</code> if a matching account could not be found
 	*/
-	public static Account fetchByU_A(long userId, java.lang.String address,
+	public static Account fetchByU_A(long userId, String address,
 		boolean retrieveFromCache) {
 		return getPersistence().fetchByU_A(userId, address, retrieveFromCache);
 	}
@@ -308,7 +308,7 @@ public class AccountUtil {
 	* @param address the address
 	* @return the account that was removed
 	*/
-	public static Account removeByU_A(long userId, java.lang.String address)
+	public static Account removeByU_A(long userId, String address)
 		throws com.liferay.mail.reader.exception.NoSuchAccountException {
 		return getPersistence().removeByU_A(userId, address);
 	}
@@ -320,7 +320,7 @@ public class AccountUtil {
 	* @param address the address
 	* @return the number of matching accounts
 	*/
-	public static int countByU_A(long userId, java.lang.String address) {
+	public static int countByU_A(long userId, String address) {
 		return getPersistence().countByU_A(userId, address);
 	}
 
@@ -471,7 +471,7 @@ public class AccountUtil {
 		return getPersistence().countAll();
 	}
 
-	public static java.util.Set<java.lang.String> getBadColumnNames() {
+	public static java.util.Set<String> getBadColumnNames() {
 		return getPersistence().getBadColumnNames();
 	}
 

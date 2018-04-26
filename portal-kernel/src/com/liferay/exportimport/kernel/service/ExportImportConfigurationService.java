@@ -56,7 +56,7 @@ public interface ExportImportConfigurationService extends BaseService {
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	public ExportImportConfiguration moveExportImportConfigurationToTrash(
 		long exportImportConfigurationId) throws PortalException;

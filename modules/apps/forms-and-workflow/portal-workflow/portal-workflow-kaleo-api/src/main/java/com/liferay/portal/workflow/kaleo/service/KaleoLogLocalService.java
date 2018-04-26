@@ -68,7 +68,7 @@ public interface KaleoLogLocalService extends BaseLocalService,
 	 */
 	public KaleoLog addActionExecutionKaleoLog(
 		KaleoInstanceToken kaleoInstanceToken, KaleoAction kaleoAction,
-		long startTime, long endTime, java.lang.String comment,
+		long startTime, long endTime, String comment,
 		ServiceContext serviceContext) throws PortalException;
 
 	/**
@@ -91,22 +91,19 @@ public interface KaleoLogLocalService extends BaseLocalService,
 
 	public KaleoLog addTaskAssignmentKaleoLog(
 		List<KaleoTaskAssignmentInstance> previousKaleoTaskAssignmentInstances,
-		KaleoTaskInstanceToken kaleoTaskInstanceToken,
-		java.lang.String comment,
-		Map<java.lang.String, Serializable> workflowContext,
-		ServiceContext serviceContext) throws PortalException;
+		KaleoTaskInstanceToken kaleoTaskInstanceToken, String comment,
+		Map<String, Serializable> workflowContext, ServiceContext serviceContext)
+		throws PortalException;
 
 	public KaleoLog addTaskCompletionKaleoLog(
-		KaleoTaskInstanceToken kaleoTaskInstanceToken,
-		java.lang.String comment,
-		Map<java.lang.String, Serializable> workflowContext,
-		ServiceContext serviceContext) throws PortalException;
+		KaleoTaskInstanceToken kaleoTaskInstanceToken, String comment,
+		Map<String, Serializable> workflowContext, ServiceContext serviceContext)
+		throws PortalException;
 
 	public KaleoLog addTaskUpdateKaleoLog(
-		KaleoTaskInstanceToken kaleoTaskInstanceToken,
-		java.lang.String comment,
-		Map<java.lang.String, Serializable> workflowContext,
-		ServiceContext serviceContext) throws PortalException;
+		KaleoTaskInstanceToken kaleoTaskInstanceToken, String comment,
+		Map<String, Serializable> workflowContext, ServiceContext serviceContext)
+		throws PortalException;
 
 	public KaleoLog addWorkflowInstanceEndKaleoLog(
 		KaleoInstanceToken kaleoInstanceToken, ServiceContext serviceContext)
@@ -228,12 +225,12 @@ public interface KaleoLogLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<KaleoLog> getKaleoInstanceKaleoLogs(long kaleoInstanceId,
-		List<java.lang.Integer> logTypes, int start, int end,
+		List<Integer> logTypes, int start, int end,
 		OrderByComparator<KaleoLog> orderByComparator);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getKaleoInstanceKaleoLogsCount(long kaleoInstanceId,
-		List<java.lang.Integer> logTypes);
+		List<Integer> logTypes);
 
 	/**
 	* Returns the kaleo log with the primary key.
@@ -269,19 +266,19 @@ public interface KaleoLogLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<KaleoLog> getKaleoTaskInstanceTokenKaleoLogs(
-		long kaleoTaskInstanceTokenId, List<java.lang.Integer> logTypes,
-		int start, int end, OrderByComparator<KaleoLog> orderByComparator);
+		long kaleoTaskInstanceTokenId, List<Integer> logTypes, int start,
+		int end, OrderByComparator<KaleoLog> orderByComparator);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getKaleoTaskInstanceTokenKaleoLogsCount(
-		long kaleoTaskInstanceTokenId, List<java.lang.Integer> logTypes);
+		long kaleoTaskInstanceTokenId, List<Integer> logTypes);
 
 	/**
 	* Returns the OSGi service identifier.
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

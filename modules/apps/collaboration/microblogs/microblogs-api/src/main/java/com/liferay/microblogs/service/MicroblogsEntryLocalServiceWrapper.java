@@ -37,7 +37,7 @@ public class MicroblogsEntryLocalServiceWrapper
 	@Override
 	public com.liferay.microblogs.model.MicroblogsEntry addMicroblogsEntry(
 		long userId, long creatorClassNameId, long creatorClassPK,
-		java.lang.String content, int type, long parentMicroblogsEntryId,
+		String content, int type, long parentMicroblogsEntryId,
 		int socialRelationType,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -48,8 +48,8 @@ public class MicroblogsEntryLocalServiceWrapper
 
 	@Override
 	public com.liferay.microblogs.model.MicroblogsEntry addMicroblogsEntry(
-		long userId, java.lang.String content, int type,
-		long parentMicroblogsEntryId, int socialRelationType,
+		long userId, String content, int type, long parentMicroblogsEntryId,
+		int socialRelationType,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _microblogsEntryLocalService.addMicroblogsEntry(userId, content,
@@ -325,7 +325,7 @@ public class MicroblogsEntryLocalServiceWrapper
 	@Override
 	public java.util.List<com.liferay.microblogs.model.MicroblogsEntry> getMicroblogsEntries(
 		long companyId, long creatorClassNameId, long creatorClassPK,
-		java.lang.String assetTagName, boolean andOperator, int start, int end) {
+		String assetTagName, boolean andOperator, int start, int end) {
 		return _microblogsEntryLocalService.getMicroblogsEntries(companyId,
 			creatorClassNameId, creatorClassPK, assetTagName, andOperator,
 			start, end);
@@ -337,15 +337,15 @@ public class MicroblogsEntryLocalServiceWrapper
 	@Deprecated
 	@Override
 	public java.util.List<com.liferay.microblogs.model.MicroblogsEntry> getMicroblogsEntries(
-		long creatorClassNameId, long creatorClassPK,
-		java.lang.String assetTagName, boolean andOperator, int start, int end) {
+		long creatorClassNameId, long creatorClassPK, String assetTagName,
+		boolean andOperator, int start, int end) {
 		return _microblogsEntryLocalService.getMicroblogsEntries(creatorClassNameId,
 			creatorClassPK, assetTagName, andOperator, start, end);
 	}
 
 	@Override
 	public java.util.List<com.liferay.microblogs.model.MicroblogsEntry> getMicroblogsEntries(
-		long companyId, long creatorClassNameId, java.lang.String assetTagName,
+		long companyId, long creatorClassNameId, String assetTagName,
 		int start, int end) {
 		return _microblogsEntryLocalService.getMicroblogsEntries(companyId,
 			creatorClassNameId, assetTagName, start, end);
@@ -357,8 +357,7 @@ public class MicroblogsEntryLocalServiceWrapper
 	@Deprecated
 	@Override
 	public java.util.List<com.liferay.microblogs.model.MicroblogsEntry> getMicroblogsEntries(
-		long creatorClassNameId, java.lang.String assetTagName, int start,
-		int end) {
+		long creatorClassNameId, String assetTagName, int start, int end) {
 		return _microblogsEntryLocalService.getMicroblogsEntries(creatorClassNameId,
 			assetTagName, start, end);
 	}
@@ -411,15 +410,15 @@ public class MicroblogsEntryLocalServiceWrapper
 
 	@Override
 	public int getMicroblogsEntriesCount(long companyId,
-		long creatorClassNameId, long creatorClassPK,
-		java.lang.String assetTagName, boolean andOperator) {
+		long creatorClassNameId, long creatorClassPK, String assetTagName,
+		boolean andOperator) {
 		return _microblogsEntryLocalService.getMicroblogsEntriesCount(companyId,
 			creatorClassNameId, creatorClassPK, assetTagName, andOperator);
 	}
 
 	@Override
 	public int getMicroblogsEntriesCount(long companyId,
-		long creatorClassNameId, java.lang.String assetTagName) {
+		long creatorClassNameId, String assetTagName) {
 		return _microblogsEntryLocalService.getMicroblogsEntriesCount(companyId,
 			creatorClassNameId, assetTagName);
 	}
@@ -430,7 +429,7 @@ public class MicroblogsEntryLocalServiceWrapper
 	@Deprecated
 	@Override
 	public int getMicroblogsEntriesCount(long creatorClassNameId,
-		long creatorClassPK, java.lang.String assetTagName, boolean andOperator) {
+		long creatorClassPK, String assetTagName, boolean andOperator) {
 		return _microblogsEntryLocalService.getMicroblogsEntriesCount(creatorClassNameId,
 			creatorClassPK, assetTagName, andOperator);
 	}
@@ -441,7 +440,7 @@ public class MicroblogsEntryLocalServiceWrapper
 	@Deprecated
 	@Override
 	public int getMicroblogsEntriesCount(long creatorClassNameId,
-		java.lang.String assetTagName) {
+		String assetTagName) {
 		return _microblogsEntryLocalService.getMicroblogsEntriesCount(creatorClassNameId,
 			assetTagName);
 	}
@@ -466,7 +465,7 @@ public class MicroblogsEntryLocalServiceWrapper
 	* @return the OSGi service identifier
 	*/
 	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
+	public String getOSGiServiceIdentifier() {
 		return _microblogsEntryLocalService.getOSGiServiceIdentifier();
 	}
 
@@ -527,7 +526,7 @@ public class MicroblogsEntryLocalServiceWrapper
 	@Override
 	public void updateAsset(
 		com.liferay.microblogs.model.MicroblogsEntry microblogsEntry,
-		long[] assetCategoryIds, java.lang.String[] assetTagNames)
+		long[] assetCategoryIds, String[] assetTagNames)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_microblogsEntryLocalService.updateAsset(microblogsEntry,
 			assetCategoryIds, assetTagNames);
@@ -535,8 +534,7 @@ public class MicroblogsEntryLocalServiceWrapper
 
 	@Override
 	public com.liferay.microblogs.model.MicroblogsEntry updateMicroblogsEntry(
-		long microblogsEntryId, java.lang.String content,
-		int socialRelationType,
+		long microblogsEntryId, String content, int socialRelationType,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _microblogsEntryLocalService.updateMicroblogsEntry(microblogsEntryId,

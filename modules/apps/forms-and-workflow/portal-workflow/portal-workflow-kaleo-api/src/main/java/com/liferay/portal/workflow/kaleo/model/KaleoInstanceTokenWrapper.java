@@ -182,7 +182,7 @@ public class KaleoInstanceTokenWrapper implements KaleoInstanceToken,
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new KaleoInstanceTokenWrapper((KaleoInstanceToken)_kaleoInstanceToken.clone());
 	}
 
@@ -202,7 +202,7 @@ public class KaleoInstanceTokenWrapper implements KaleoInstanceToken,
 	* @return the class name of this kaleo instance token
 	*/
 	@Override
-	public java.lang.String getClassName() {
+	public String getClassName() {
 		return _kaleoInstanceToken.getClassName();
 	}
 
@@ -278,7 +278,7 @@ public class KaleoInstanceTokenWrapper implements KaleoInstanceToken,
 	* @return the current kaleo node name of this kaleo instance token
 	*/
 	@Override
-	public java.lang.String getCurrentKaleoNodeName() {
+	public String getCurrentKaleoNodeName() {
 		return _kaleoInstanceToken.getCurrentKaleoNodeName();
 	}
 
@@ -395,7 +395,7 @@ public class KaleoInstanceTokenWrapper implements KaleoInstanceToken,
 	* @return the user name of this kaleo instance token
 	*/
 	@Override
-	public java.lang.String getUserName() {
+	public String getUserName() {
 		return _kaleoInstanceToken.getUserName();
 	}
 
@@ -405,7 +405,7 @@ public class KaleoInstanceTokenWrapper implements KaleoInstanceToken,
 	* @return the user uuid of this kaleo instance token
 	*/
 	@Override
-	public java.lang.String getUserUuid() {
+	public String getUserUuid() {
 		return _kaleoInstanceToken.getUserUuid();
 	}
 
@@ -460,7 +460,7 @@ public class KaleoInstanceTokenWrapper implements KaleoInstanceToken,
 	* @param className the class name of this kaleo instance token
 	*/
 	@Override
-	public void setClassName(java.lang.String className) {
+	public void setClassName(String className) {
 		_kaleoInstanceToken.setClassName(className);
 	}
 
@@ -536,7 +536,7 @@ public class KaleoInstanceTokenWrapper implements KaleoInstanceToken,
 	* @param currentKaleoNodeName the current kaleo node name of this kaleo instance token
 	*/
 	@Override
-	public void setCurrentKaleoNodeName(java.lang.String currentKaleoNodeName) {
+	public void setCurrentKaleoNodeName(String currentKaleoNodeName) {
 		_kaleoInstanceToken.setCurrentKaleoNodeName(currentKaleoNodeName);
 	}
 
@@ -652,7 +652,7 @@ public class KaleoInstanceTokenWrapper implements KaleoInstanceToken,
 	* @param userName the user name of this kaleo instance token
 	*/
 	@Override
-	public void setUserName(java.lang.String userName) {
+	public void setUserName(String userName) {
 		_kaleoInstanceToken.setUserName(userName);
 	}
 
@@ -662,7 +662,7 @@ public class KaleoInstanceTokenWrapper implements KaleoInstanceToken,
 	* @param userUuid the user uuid of this kaleo instance token
 	*/
 	@Override
-	public void setUserUuid(java.lang.String userUuid) {
+	public void setUserUuid(String userUuid) {
 		_kaleoInstanceToken.setUserUuid(userUuid);
 	}
 
@@ -677,7 +677,7 @@ public class KaleoInstanceTokenWrapper implements KaleoInstanceToken,
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _kaleoInstanceToken.toString();
 	}
 
@@ -687,7 +687,7 @@ public class KaleoInstanceTokenWrapper implements KaleoInstanceToken,
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _kaleoInstanceToken.toXmlString();
 	}
 

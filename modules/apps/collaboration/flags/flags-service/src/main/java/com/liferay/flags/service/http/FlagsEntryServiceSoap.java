@@ -54,10 +54,9 @@ import java.rmi.RemoteException;
  */
 @ProviderType
 public class FlagsEntryServiceSoap {
-	public static void addEntry(java.lang.String className, long classPK,
-		java.lang.String reporterEmailAddress, long reportedUserId,
-		java.lang.String contentTitle, java.lang.String contentURL,
-		java.lang.String reason,
+	public static void addEntry(String className, long classPK,
+		String reporterEmailAddress, long reportedUserId, String contentTitle,
+		String contentURL, String reason,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {

@@ -49,8 +49,8 @@ public interface GadgetService extends BaseService {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link GadgetServiceUtil} to access the gadget remote service. Add custom service methods to {@link com.liferay.opensocial.service.impl.GadgetServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public Gadget addGadget(long companyId, java.lang.String url,
-		java.lang.String portletCategoryNames, ServiceContext serviceContext)
+	public Gadget addGadget(long companyId, String url,
+		String portletCategoryNames, ServiceContext serviceContext)
 		throws PortalException;
 
 	public void deleteGadget(long gadgetId, ServiceContext serviceContext)
@@ -61,9 +61,8 @@ public interface GadgetService extends BaseService {
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
-	public void updateGadget(long gadgetId,
-		java.lang.String portletCategoryNames, ServiceContext serviceContext)
-		throws PortalException;
+	public void updateGadget(long gadgetId, String portletCategoryNames,
+		ServiceContext serviceContext) throws PortalException;
 }

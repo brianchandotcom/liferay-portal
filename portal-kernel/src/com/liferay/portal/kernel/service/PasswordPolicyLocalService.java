@@ -65,15 +65,15 @@ public interface PasswordPolicyLocalService extends BaseLocalService,
 	 * Never modify or reference this interface directly. Always use {@link PasswordPolicyLocalServiceUtil} to access the password policy local service. Add custom service methods to {@link com.liferay.portal.service.impl.PasswordPolicyLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	public PasswordPolicy addPasswordPolicy(long userId, boolean defaultPolicy,
-		java.lang.String name, java.lang.String description,
-		boolean changeable, boolean changeRequired, long minAge,
-		boolean checkSyntax, boolean allowDictionaryWords, int minAlphanumeric,
-		int minLength, int minLowerCase, int minNumbers, int minSymbols,
-		int minUpperCase, java.lang.String regex, boolean history,
-		int historyCount, boolean expireable, long maxAge, long warningTime,
-		int graceLimit, boolean lockout, int maxFailure, long lockoutDuration,
-		long resetFailureCount, long resetTicketMaxAge,
-		ServiceContext serviceContext) throws PortalException;
+		String name, String description, boolean changeable,
+		boolean changeRequired, long minAge, boolean checkSyntax,
+		boolean allowDictionaryWords, int minAlphanumeric, int minLength,
+		int minLowerCase, int minNumbers, int minSymbols, int minUpperCase,
+		String regex, boolean history, int historyCount, boolean expireable,
+		long maxAge, long warningTime, int graceLimit, boolean lockout,
+		int maxFailure, long lockoutDuration, long resetFailureCount,
+		long resetTicketMaxAge, ServiceContext serviceContext)
+		throws PortalException;
 
 	/**
 	* Adds the password policy to the database. Also notifies the appropriate model listeners.
@@ -192,8 +192,7 @@ public interface PasswordPolicyLocalService extends BaseLocalService,
 	public PasswordPolicy fetchPasswordPolicy(long passwordPolicyId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public PasswordPolicy fetchPasswordPolicy(long companyId,
-		java.lang.String name);
+	public PasswordPolicy fetchPasswordPolicy(long companyId, String name);
 
 	/**
 	* Returns the password policy with the matching UUID and company.
@@ -203,8 +202,8 @@ public interface PasswordPolicyLocalService extends BaseLocalService,
 	* @return the matching password policy, or <code>null</code> if a matching password policy could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public PasswordPolicy fetchPasswordPolicyByUuidAndCompanyId(
-		java.lang.String uuid, long companyId);
+	public PasswordPolicy fetchPasswordPolicyByUuidAndCompanyId(String uuid,
+		long companyId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
@@ -225,7 +224,7 @@ public interface PasswordPolicyLocalService extends BaseLocalService,
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	/**
 	* Returns a range of all the password policies.
@@ -286,8 +285,8 @@ public interface PasswordPolicyLocalService extends BaseLocalService,
 	* @throws PortalException if a matching password policy could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public PasswordPolicy getPasswordPolicyByUuidAndCompanyId(
-		java.lang.String uuid, long companyId) throws PortalException;
+	public PasswordPolicy getPasswordPolicyByUuidAndCompanyId(String uuid,
+		long companyId) throws PortalException;
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -295,22 +294,22 @@ public interface PasswordPolicyLocalService extends BaseLocalService,
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<PasswordPolicy> search(long companyId, java.lang.String name,
-		int start, int end, OrderByComparator<PasswordPolicy> obc);
+	public List<PasswordPolicy> search(long companyId, String name, int start,
+		int end, OrderByComparator<PasswordPolicy> obc);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int searchCount(long companyId, java.lang.String name);
+	public int searchCount(long companyId, String name);
 
 	public PasswordPolicy updatePasswordPolicy(long passwordPolicyId,
-		java.lang.String name, java.lang.String description,
-		boolean changeable, boolean changeRequired, long minAge,
-		boolean checkSyntax, boolean allowDictionaryWords, int minAlphanumeric,
-		int minLength, int minLowerCase, int minNumbers, int minSymbols,
-		int minUpperCase, java.lang.String regex, boolean history,
-		int historyCount, boolean expireable, long maxAge, long warningTime,
-		int graceLimit, boolean lockout, int maxFailure, long lockoutDuration,
-		long resetFailureCount, long resetTicketMaxAge,
-		ServiceContext serviceContext) throws PortalException;
+		String name, String description, boolean changeable,
+		boolean changeRequired, long minAge, boolean checkSyntax,
+		boolean allowDictionaryWords, int minAlphanumeric, int minLength,
+		int minLowerCase, int minNumbers, int minSymbols, int minUpperCase,
+		String regex, boolean history, int historyCount, boolean expireable,
+		long maxAge, long warningTime, int graceLimit, boolean lockout,
+		int maxFailure, long lockoutDuration, long resetFailureCount,
+		long resetTicketMaxAge, ServiceContext serviceContext)
+		throws PortalException;
 
 	/**
 	* Updates the password policy in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.

@@ -60,9 +60,9 @@ public interface WeDeployAuthAppLocalService extends BaseLocalService,
 	 *
 	 * Never modify or reference this interface directly. Always use {@link WeDeployAuthAppLocalServiceUtil} to access the we deploy auth app local service. Add custom service methods to {@link com.liferay.portal.security.wedeploy.auth.service.impl.WeDeployAuthAppLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public WeDeployAuthApp addWeDeployAuthApp(long userId,
-		java.lang.String name, java.lang.String redirectURI,
-		ServiceContext serviceContext) throws PortalException;
+	public WeDeployAuthApp addWeDeployAuthApp(long userId, String name,
+		String redirectURI, ServiceContext serviceContext)
+		throws PortalException;
 
 	/**
 	* Adds the we deploy auth app to the database. Also notifies the appropriate model listeners.
@@ -173,8 +173,8 @@ public interface WeDeployAuthAppLocalService extends BaseLocalService,
 	public WeDeployAuthApp fetchWeDeployAuthApp(long weDeployAuthAppId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public WeDeployAuthApp fetchWeDeployAuthApp(java.lang.String redirectURI,
-		java.lang.String clientId);
+	public WeDeployAuthApp fetchWeDeployAuthApp(String redirectURI,
+		String clientId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
@@ -187,7 +187,7 @@ public interface WeDeployAuthAppLocalService extends BaseLocalService,
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

@@ -272,7 +272,7 @@ public class BlogsEntryWrapper implements BlogsEntry, ModelWrapper<BlogsEntry> {
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new BlogsEntryWrapper((BlogsEntry)_blogsEntry.clone());
 	}
 
@@ -317,7 +317,7 @@ public class BlogsEntryWrapper implements BlogsEntry, ModelWrapper<BlogsEntry> {
 	* @return the content of this blogs entry
 	*/
 	@Override
-	public java.lang.String getContent() {
+	public String getContent() {
 		return _blogsEntry.getContent();
 	}
 
@@ -327,7 +327,7 @@ public class BlogsEntryWrapper implements BlogsEntry, ModelWrapper<BlogsEntry> {
 	* @return the cover image caption of this blogs entry
 	*/
 	@Override
-	public java.lang.String getCoverImageCaption() {
+	public String getCoverImageCaption() {
 		return _blogsEntry.getCoverImageCaption();
 	}
 
@@ -347,12 +347,12 @@ public class BlogsEntryWrapper implements BlogsEntry, ModelWrapper<BlogsEntry> {
 	* @return the cover image url of this blogs entry
 	*/
 	@Override
-	public java.lang.String getCoverImageURL() {
+	public String getCoverImageURL() {
 		return _blogsEntry.getCoverImageURL();
 	}
 
 	@Override
-	public java.lang.String getCoverImageURL(
+	public String getCoverImageURL(
 		com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _blogsEntry.getCoverImageURL(themeDisplay);
@@ -374,7 +374,7 @@ public class BlogsEntryWrapper implements BlogsEntry, ModelWrapper<BlogsEntry> {
 	* @return the description of this blogs entry
 	*/
 	@Override
-	public java.lang.String getDescription() {
+	public String getDescription() {
 		return _blogsEntry.getDescription();
 	}
 
@@ -404,7 +404,7 @@ public class BlogsEntryWrapper implements BlogsEntry, ModelWrapper<BlogsEntry> {
 	*/
 	@Deprecated
 	@Override
-	public java.lang.String getEntryImageURL(
+	public String getEntryImageURL(
 		com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay) {
 		return _blogsEntry.getEntryImageURL(themeDisplay);
 	}
@@ -490,7 +490,7 @@ public class BlogsEntryWrapper implements BlogsEntry, ModelWrapper<BlogsEntry> {
 	}
 
 	@Override
-	public java.lang.String getSmallImageType()
+	public String getSmallImageType()
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _blogsEntry.getSmallImageType();
 	}
@@ -501,12 +501,12 @@ public class BlogsEntryWrapper implements BlogsEntry, ModelWrapper<BlogsEntry> {
 	* @return the small image url of this blogs entry
 	*/
 	@Override
-	public java.lang.String getSmallImageURL() {
+	public String getSmallImageURL() {
 		return _blogsEntry.getSmallImageURL();
 	}
 
 	@Override
-	public java.lang.String getSmallImageURL(
+	public String getSmallImageURL(
 		com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _blogsEntry.getSmallImageURL(themeDisplay);
@@ -538,7 +538,7 @@ public class BlogsEntryWrapper implements BlogsEntry, ModelWrapper<BlogsEntry> {
 	* @return the status by user name of this blogs entry
 	*/
 	@Override
-	public java.lang.String getStatusByUserName() {
+	public String getStatusByUserName() {
 		return _blogsEntry.getStatusByUserName();
 	}
 
@@ -548,7 +548,7 @@ public class BlogsEntryWrapper implements BlogsEntry, ModelWrapper<BlogsEntry> {
 	* @return the status by user uuid of this blogs entry
 	*/
 	@Override
-	public java.lang.String getStatusByUserUuid() {
+	public String getStatusByUserUuid() {
 		return _blogsEntry.getStatusByUserUuid();
 	}
 
@@ -568,7 +568,7 @@ public class BlogsEntryWrapper implements BlogsEntry, ModelWrapper<BlogsEntry> {
 	* @return the subtitle of this blogs entry
 	*/
 	@Override
-	public java.lang.String getSubtitle() {
+	public String getSubtitle() {
 		return _blogsEntry.getSubtitle();
 	}
 
@@ -578,7 +578,7 @@ public class BlogsEntryWrapper implements BlogsEntry, ModelWrapper<BlogsEntry> {
 	* @return the title of this blogs entry
 	*/
 	@Override
-	public java.lang.String getTitle() {
+	public String getTitle() {
 		return _blogsEntry.getTitle();
 	}
 
@@ -588,7 +588,7 @@ public class BlogsEntryWrapper implements BlogsEntry, ModelWrapper<BlogsEntry> {
 	* @return the trackbacks of this blogs entry
 	*/
 	@Override
-	public java.lang.String getTrackbacks() {
+	public String getTrackbacks() {
 		return _blogsEntry.getTrackbacks();
 	}
 
@@ -631,7 +631,7 @@ public class BlogsEntryWrapper implements BlogsEntry, ModelWrapper<BlogsEntry> {
 	* @return the url title of this blogs entry
 	*/
 	@Override
-	public java.lang.String getUrlTitle() {
+	public String getUrlTitle() {
 		return _blogsEntry.getUrlTitle();
 	}
 
@@ -651,7 +651,7 @@ public class BlogsEntryWrapper implements BlogsEntry, ModelWrapper<BlogsEntry> {
 	* @return the user name of this blogs entry
 	*/
 	@Override
-	public java.lang.String getUserName() {
+	public String getUserName() {
 		return _blogsEntry.getUserName();
 	}
 
@@ -661,7 +661,7 @@ public class BlogsEntryWrapper implements BlogsEntry, ModelWrapper<BlogsEntry> {
 	* @return the user uuid of this blogs entry
 	*/
 	@Override
-	public java.lang.String getUserUuid() {
+	public String getUserUuid() {
 		return _blogsEntry.getUserUuid();
 	}
 
@@ -671,7 +671,7 @@ public class BlogsEntryWrapper implements BlogsEntry, ModelWrapper<BlogsEntry> {
 	* @return the uuid of this blogs entry
 	*/
 	@Override
-	public java.lang.String getUuid() {
+	public String getUuid() {
 		return _blogsEntry.getUuid();
 	}
 
@@ -886,7 +886,7 @@ public class BlogsEntryWrapper implements BlogsEntry, ModelWrapper<BlogsEntry> {
 	* @param content the content of this blogs entry
 	*/
 	@Override
-	public void setContent(java.lang.String content) {
+	public void setContent(String content) {
 		_blogsEntry.setContent(content);
 	}
 
@@ -896,7 +896,7 @@ public class BlogsEntryWrapper implements BlogsEntry, ModelWrapper<BlogsEntry> {
 	* @param coverImageCaption the cover image caption of this blogs entry
 	*/
 	@Override
-	public void setCoverImageCaption(java.lang.String coverImageCaption) {
+	public void setCoverImageCaption(String coverImageCaption) {
 		_blogsEntry.setCoverImageCaption(coverImageCaption);
 	}
 
@@ -916,7 +916,7 @@ public class BlogsEntryWrapper implements BlogsEntry, ModelWrapper<BlogsEntry> {
 	* @param coverImageURL the cover image url of this blogs entry
 	*/
 	@Override
-	public void setCoverImageURL(java.lang.String coverImageURL) {
+	public void setCoverImageURL(String coverImageURL) {
 		_blogsEntry.setCoverImageURL(coverImageURL);
 	}
 
@@ -936,7 +936,7 @@ public class BlogsEntryWrapper implements BlogsEntry, ModelWrapper<BlogsEntry> {
 	* @param description the description of this blogs entry
 	*/
 	@Override
-	public void setDescription(java.lang.String description) {
+	public void setDescription(String description) {
 		_blogsEntry.setDescription(description);
 	}
 
@@ -1057,7 +1057,7 @@ public class BlogsEntryWrapper implements BlogsEntry, ModelWrapper<BlogsEntry> {
 	}
 
 	@Override
-	public void setSmallImageType(java.lang.String smallImageType) {
+	public void setSmallImageType(String smallImageType) {
 		_blogsEntry.setSmallImageType(smallImageType);
 	}
 
@@ -1067,7 +1067,7 @@ public class BlogsEntryWrapper implements BlogsEntry, ModelWrapper<BlogsEntry> {
 	* @param smallImageURL the small image url of this blogs entry
 	*/
 	@Override
-	public void setSmallImageURL(java.lang.String smallImageURL) {
+	public void setSmallImageURL(String smallImageURL) {
 		_blogsEntry.setSmallImageURL(smallImageURL);
 	}
 
@@ -1097,7 +1097,7 @@ public class BlogsEntryWrapper implements BlogsEntry, ModelWrapper<BlogsEntry> {
 	* @param statusByUserName the status by user name of this blogs entry
 	*/
 	@Override
-	public void setStatusByUserName(java.lang.String statusByUserName) {
+	public void setStatusByUserName(String statusByUserName) {
 		_blogsEntry.setStatusByUserName(statusByUserName);
 	}
 
@@ -1107,7 +1107,7 @@ public class BlogsEntryWrapper implements BlogsEntry, ModelWrapper<BlogsEntry> {
 	* @param statusByUserUuid the status by user uuid of this blogs entry
 	*/
 	@Override
-	public void setStatusByUserUuid(java.lang.String statusByUserUuid) {
+	public void setStatusByUserUuid(String statusByUserUuid) {
 		_blogsEntry.setStatusByUserUuid(statusByUserUuid);
 	}
 
@@ -1127,7 +1127,7 @@ public class BlogsEntryWrapper implements BlogsEntry, ModelWrapper<BlogsEntry> {
 	* @param subtitle the subtitle of this blogs entry
 	*/
 	@Override
-	public void setSubtitle(java.lang.String subtitle) {
+	public void setSubtitle(String subtitle) {
 		_blogsEntry.setSubtitle(subtitle);
 	}
 
@@ -1137,7 +1137,7 @@ public class BlogsEntryWrapper implements BlogsEntry, ModelWrapper<BlogsEntry> {
 	* @param title the title of this blogs entry
 	*/
 	@Override
-	public void setTitle(java.lang.String title) {
+	public void setTitle(String title) {
 		_blogsEntry.setTitle(title);
 	}
 
@@ -1147,7 +1147,7 @@ public class BlogsEntryWrapper implements BlogsEntry, ModelWrapper<BlogsEntry> {
 	* @param trackbacks the trackbacks of this blogs entry
 	*/
 	@Override
-	public void setTrackbacks(java.lang.String trackbacks) {
+	public void setTrackbacks(String trackbacks) {
 		_blogsEntry.setTrackbacks(trackbacks);
 	}
 
@@ -1157,7 +1157,7 @@ public class BlogsEntryWrapper implements BlogsEntry, ModelWrapper<BlogsEntry> {
 	* @param urlTitle the url title of this blogs entry
 	*/
 	@Override
-	public void setUrlTitle(java.lang.String urlTitle) {
+	public void setUrlTitle(String urlTitle) {
 		_blogsEntry.setUrlTitle(urlTitle);
 	}
 
@@ -1177,7 +1177,7 @@ public class BlogsEntryWrapper implements BlogsEntry, ModelWrapper<BlogsEntry> {
 	* @param userName the user name of this blogs entry
 	*/
 	@Override
-	public void setUserName(java.lang.String userName) {
+	public void setUserName(String userName) {
 		_blogsEntry.setUserName(userName);
 	}
 
@@ -1187,7 +1187,7 @@ public class BlogsEntryWrapper implements BlogsEntry, ModelWrapper<BlogsEntry> {
 	* @param userUuid the user uuid of this blogs entry
 	*/
 	@Override
-	public void setUserUuid(java.lang.String userUuid) {
+	public void setUserUuid(String userUuid) {
 		_blogsEntry.setUserUuid(userUuid);
 	}
 
@@ -1197,7 +1197,7 @@ public class BlogsEntryWrapper implements BlogsEntry, ModelWrapper<BlogsEntry> {
 	* @param uuid the uuid of this blogs entry
 	*/
 	@Override
-	public void setUuid(java.lang.String uuid) {
+	public void setUuid(String uuid) {
 		_blogsEntry.setUuid(uuid);
 	}
 
@@ -1212,7 +1212,7 @@ public class BlogsEntryWrapper implements BlogsEntry, ModelWrapper<BlogsEntry> {
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _blogsEntry.toString();
 	}
 
@@ -1222,7 +1222,7 @@ public class BlogsEntryWrapper implements BlogsEntry, ModelWrapper<BlogsEntry> {
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _blogsEntry.toXmlString();
 	}
 

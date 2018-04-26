@@ -118,7 +118,7 @@ public class MBThreadFlagUtil {
 	* @param uuid the uuid
 	* @return the matching message boards thread flags
 	*/
-	public static List<MBThreadFlag> findByUuid(java.lang.String uuid) {
+	public static List<MBThreadFlag> findByUuid(String uuid) {
 		return getPersistence().findByUuid(uuid);
 	}
 
@@ -134,8 +134,7 @@ public class MBThreadFlagUtil {
 	* @param end the upper bound of the range of message boards thread flags (not inclusive)
 	* @return the range of matching message boards thread flags
 	*/
-	public static List<MBThreadFlag> findByUuid(java.lang.String uuid,
-		int start, int end) {
+	public static List<MBThreadFlag> findByUuid(String uuid, int start, int end) {
 		return getPersistence().findByUuid(uuid, start, end);
 	}
 
@@ -152,8 +151,8 @@ public class MBThreadFlagUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching message boards thread flags
 	*/
-	public static List<MBThreadFlag> findByUuid(java.lang.String uuid,
-		int start, int end, OrderByComparator<MBThreadFlag> orderByComparator) {
+	public static List<MBThreadFlag> findByUuid(String uuid, int start,
+		int end, OrderByComparator<MBThreadFlag> orderByComparator) {
 		return getPersistence().findByUuid(uuid, start, end, orderByComparator);
 	}
 
@@ -171,8 +170,8 @@ public class MBThreadFlagUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching message boards thread flags
 	*/
-	public static List<MBThreadFlag> findByUuid(java.lang.String uuid,
-		int start, int end, OrderByComparator<MBThreadFlag> orderByComparator,
+	public static List<MBThreadFlag> findByUuid(String uuid, int start,
+		int end, OrderByComparator<MBThreadFlag> orderByComparator,
 		boolean retrieveFromCache) {
 		return getPersistence()
 				   .findByUuid(uuid, start, end, orderByComparator,
@@ -187,7 +186,7 @@ public class MBThreadFlagUtil {
 	* @return the first matching message boards thread flag
 	* @throws NoSuchThreadFlagException if a matching message boards thread flag could not be found
 	*/
-	public static MBThreadFlag findByUuid_First(java.lang.String uuid,
+	public static MBThreadFlag findByUuid_First(String uuid,
 		OrderByComparator<MBThreadFlag> orderByComparator)
 		throws com.liferay.message.boards.exception.NoSuchThreadFlagException {
 		return getPersistence().findByUuid_First(uuid, orderByComparator);
@@ -200,7 +199,7 @@ public class MBThreadFlagUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching message boards thread flag, or <code>null</code> if a matching message boards thread flag could not be found
 	*/
-	public static MBThreadFlag fetchByUuid_First(java.lang.String uuid,
+	public static MBThreadFlag fetchByUuid_First(String uuid,
 		OrderByComparator<MBThreadFlag> orderByComparator) {
 		return getPersistence().fetchByUuid_First(uuid, orderByComparator);
 	}
@@ -213,7 +212,7 @@ public class MBThreadFlagUtil {
 	* @return the last matching message boards thread flag
 	* @throws NoSuchThreadFlagException if a matching message boards thread flag could not be found
 	*/
-	public static MBThreadFlag findByUuid_Last(java.lang.String uuid,
+	public static MBThreadFlag findByUuid_Last(String uuid,
 		OrderByComparator<MBThreadFlag> orderByComparator)
 		throws com.liferay.message.boards.exception.NoSuchThreadFlagException {
 		return getPersistence().findByUuid_Last(uuid, orderByComparator);
@@ -226,7 +225,7 @@ public class MBThreadFlagUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching message boards thread flag, or <code>null</code> if a matching message boards thread flag could not be found
 	*/
-	public static MBThreadFlag fetchByUuid_Last(java.lang.String uuid,
+	public static MBThreadFlag fetchByUuid_Last(String uuid,
 		OrderByComparator<MBThreadFlag> orderByComparator) {
 		return getPersistence().fetchByUuid_Last(uuid, orderByComparator);
 	}
@@ -241,7 +240,7 @@ public class MBThreadFlagUtil {
 	* @throws NoSuchThreadFlagException if a message boards thread flag with the primary key could not be found
 	*/
 	public static MBThreadFlag[] findByUuid_PrevAndNext(long threadFlagId,
-		java.lang.String uuid, OrderByComparator<MBThreadFlag> orderByComparator)
+		String uuid, OrderByComparator<MBThreadFlag> orderByComparator)
 		throws com.liferay.message.boards.exception.NoSuchThreadFlagException {
 		return getPersistence()
 				   .findByUuid_PrevAndNext(threadFlagId, uuid, orderByComparator);
@@ -252,7 +251,7 @@ public class MBThreadFlagUtil {
 	*
 	* @param uuid the uuid
 	*/
-	public static void removeByUuid(java.lang.String uuid) {
+	public static void removeByUuid(String uuid) {
 		getPersistence().removeByUuid(uuid);
 	}
 
@@ -262,7 +261,7 @@ public class MBThreadFlagUtil {
 	* @param uuid the uuid
 	* @return the number of matching message boards thread flags
 	*/
-	public static int countByUuid(java.lang.String uuid) {
+	public static int countByUuid(String uuid) {
 		return getPersistence().countByUuid(uuid);
 	}
 
@@ -274,7 +273,7 @@ public class MBThreadFlagUtil {
 	* @return the matching message boards thread flag
 	* @throws NoSuchThreadFlagException if a matching message boards thread flag could not be found
 	*/
-	public static MBThreadFlag findByUUID_G(java.lang.String uuid, long groupId)
+	public static MBThreadFlag findByUUID_G(String uuid, long groupId)
 		throws com.liferay.message.boards.exception.NoSuchThreadFlagException {
 		return getPersistence().findByUUID_G(uuid, groupId);
 	}
@@ -286,7 +285,7 @@ public class MBThreadFlagUtil {
 	* @param groupId the group ID
 	* @return the matching message boards thread flag, or <code>null</code> if a matching message boards thread flag could not be found
 	*/
-	public static MBThreadFlag fetchByUUID_G(java.lang.String uuid, long groupId) {
+	public static MBThreadFlag fetchByUUID_G(String uuid, long groupId) {
 		return getPersistence().fetchByUUID_G(uuid, groupId);
 	}
 
@@ -298,8 +297,8 @@ public class MBThreadFlagUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching message boards thread flag, or <code>null</code> if a matching message boards thread flag could not be found
 	*/
-	public static MBThreadFlag fetchByUUID_G(java.lang.String uuid,
-		long groupId, boolean retrieveFromCache) {
+	public static MBThreadFlag fetchByUUID_G(String uuid, long groupId,
+		boolean retrieveFromCache) {
 		return getPersistence().fetchByUUID_G(uuid, groupId, retrieveFromCache);
 	}
 
@@ -310,8 +309,7 @@ public class MBThreadFlagUtil {
 	* @param groupId the group ID
 	* @return the message boards thread flag that was removed
 	*/
-	public static MBThreadFlag removeByUUID_G(java.lang.String uuid,
-		long groupId)
+	public static MBThreadFlag removeByUUID_G(String uuid, long groupId)
 		throws com.liferay.message.boards.exception.NoSuchThreadFlagException {
 		return getPersistence().removeByUUID_G(uuid, groupId);
 	}
@@ -323,7 +321,7 @@ public class MBThreadFlagUtil {
 	* @param groupId the group ID
 	* @return the number of matching message boards thread flags
 	*/
-	public static int countByUUID_G(java.lang.String uuid, long groupId) {
+	public static int countByUUID_G(String uuid, long groupId) {
 		return getPersistence().countByUUID_G(uuid, groupId);
 	}
 
@@ -334,8 +332,7 @@ public class MBThreadFlagUtil {
 	* @param companyId the company ID
 	* @return the matching message boards thread flags
 	*/
-	public static List<MBThreadFlag> findByUuid_C(java.lang.String uuid,
-		long companyId) {
+	public static List<MBThreadFlag> findByUuid_C(String uuid, long companyId) {
 		return getPersistence().findByUuid_C(uuid, companyId);
 	}
 
@@ -352,8 +349,8 @@ public class MBThreadFlagUtil {
 	* @param end the upper bound of the range of message boards thread flags (not inclusive)
 	* @return the range of matching message boards thread flags
 	*/
-	public static List<MBThreadFlag> findByUuid_C(java.lang.String uuid,
-		long companyId, int start, int end) {
+	public static List<MBThreadFlag> findByUuid_C(String uuid, long companyId,
+		int start, int end) {
 		return getPersistence().findByUuid_C(uuid, companyId, start, end);
 	}
 
@@ -371,9 +368,8 @@ public class MBThreadFlagUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching message boards thread flags
 	*/
-	public static List<MBThreadFlag> findByUuid_C(java.lang.String uuid,
-		long companyId, int start, int end,
-		OrderByComparator<MBThreadFlag> orderByComparator) {
+	public static List<MBThreadFlag> findByUuid_C(String uuid, long companyId,
+		int start, int end, OrderByComparator<MBThreadFlag> orderByComparator) {
 		return getPersistence()
 				   .findByUuid_C(uuid, companyId, start, end, orderByComparator);
 	}
@@ -393,9 +389,8 @@ public class MBThreadFlagUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching message boards thread flags
 	*/
-	public static List<MBThreadFlag> findByUuid_C(java.lang.String uuid,
-		long companyId, int start, int end,
-		OrderByComparator<MBThreadFlag> orderByComparator,
+	public static List<MBThreadFlag> findByUuid_C(String uuid, long companyId,
+		int start, int end, OrderByComparator<MBThreadFlag> orderByComparator,
 		boolean retrieveFromCache) {
 		return getPersistence()
 				   .findByUuid_C(uuid, companyId, start, end,
@@ -411,8 +406,8 @@ public class MBThreadFlagUtil {
 	* @return the first matching message boards thread flag
 	* @throws NoSuchThreadFlagException if a matching message boards thread flag could not be found
 	*/
-	public static MBThreadFlag findByUuid_C_First(java.lang.String uuid,
-		long companyId, OrderByComparator<MBThreadFlag> orderByComparator)
+	public static MBThreadFlag findByUuid_C_First(String uuid, long companyId,
+		OrderByComparator<MBThreadFlag> orderByComparator)
 		throws com.liferay.message.boards.exception.NoSuchThreadFlagException {
 		return getPersistence()
 				   .findByUuid_C_First(uuid, companyId, orderByComparator);
@@ -426,8 +421,8 @@ public class MBThreadFlagUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching message boards thread flag, or <code>null</code> if a matching message boards thread flag could not be found
 	*/
-	public static MBThreadFlag fetchByUuid_C_First(java.lang.String uuid,
-		long companyId, OrderByComparator<MBThreadFlag> orderByComparator) {
+	public static MBThreadFlag fetchByUuid_C_First(String uuid, long companyId,
+		OrderByComparator<MBThreadFlag> orderByComparator) {
 		return getPersistence()
 				   .fetchByUuid_C_First(uuid, companyId, orderByComparator);
 	}
@@ -441,8 +436,8 @@ public class MBThreadFlagUtil {
 	* @return the last matching message boards thread flag
 	* @throws NoSuchThreadFlagException if a matching message boards thread flag could not be found
 	*/
-	public static MBThreadFlag findByUuid_C_Last(java.lang.String uuid,
-		long companyId, OrderByComparator<MBThreadFlag> orderByComparator)
+	public static MBThreadFlag findByUuid_C_Last(String uuid, long companyId,
+		OrderByComparator<MBThreadFlag> orderByComparator)
 		throws com.liferay.message.boards.exception.NoSuchThreadFlagException {
 		return getPersistence()
 				   .findByUuid_C_Last(uuid, companyId, orderByComparator);
@@ -456,8 +451,8 @@ public class MBThreadFlagUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching message boards thread flag, or <code>null</code> if a matching message boards thread flag could not be found
 	*/
-	public static MBThreadFlag fetchByUuid_C_Last(java.lang.String uuid,
-		long companyId, OrderByComparator<MBThreadFlag> orderByComparator) {
+	public static MBThreadFlag fetchByUuid_C_Last(String uuid, long companyId,
+		OrderByComparator<MBThreadFlag> orderByComparator) {
 		return getPersistence()
 				   .fetchByUuid_C_Last(uuid, companyId, orderByComparator);
 	}
@@ -473,7 +468,7 @@ public class MBThreadFlagUtil {
 	* @throws NoSuchThreadFlagException if a message boards thread flag with the primary key could not be found
 	*/
 	public static MBThreadFlag[] findByUuid_C_PrevAndNext(long threadFlagId,
-		java.lang.String uuid, long companyId,
+		String uuid, long companyId,
 		OrderByComparator<MBThreadFlag> orderByComparator)
 		throws com.liferay.message.boards.exception.NoSuchThreadFlagException {
 		return getPersistence()
@@ -487,7 +482,7 @@ public class MBThreadFlagUtil {
 	* @param uuid the uuid
 	* @param companyId the company ID
 	*/
-	public static void removeByUuid_C(java.lang.String uuid, long companyId) {
+	public static void removeByUuid_C(String uuid, long companyId) {
 		getPersistence().removeByUuid_C(uuid, companyId);
 	}
 
@@ -498,7 +493,7 @@ public class MBThreadFlagUtil {
 	* @param companyId the company ID
 	* @return the number of matching message boards thread flags
 	*/
-	public static int countByUuid_C(java.lang.String uuid, long companyId) {
+	public static int countByUuid_C(String uuid, long companyId) {
 		return getPersistence().countByUuid_C(uuid, companyId);
 	}
 
@@ -1023,7 +1018,7 @@ public class MBThreadFlagUtil {
 		return getPersistence().countAll();
 	}
 
-	public static java.util.Set<java.lang.String> getBadColumnNames() {
+	public static java.util.Set<String> getBadColumnNames() {
 		return getPersistence().getBadColumnNames();
 	}
 

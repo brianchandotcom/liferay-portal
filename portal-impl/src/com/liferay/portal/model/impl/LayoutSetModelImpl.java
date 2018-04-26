@@ -588,19 +588,19 @@ public class LayoutSetModelImpl extends BaseModelImpl<LayoutSet>
 		_layoutSetPrototypeLinkEnabled = layoutSetPrototypeLinkEnabled;
 	}
 
-	public java.lang.String getCompanyFallbackVirtualHostname() {
+	public String getCompanyFallbackVirtualHostname() {
 		return null;
 	}
 
 	public void setCompanyFallbackVirtualHostname(
-		java.lang.String companyFallbackVirtualHostname) {
+		String companyFallbackVirtualHostname) {
 	}
 
-	public java.lang.String getVirtualHostname() {
+	public String getVirtualHostname() {
 		return null;
 	}
 
-	public void setVirtualHostname(java.lang.String virtualHostname) {
+	public void setVirtualHostname(String virtualHostname) {
 	}
 
 	public long getColumnBitmask() {

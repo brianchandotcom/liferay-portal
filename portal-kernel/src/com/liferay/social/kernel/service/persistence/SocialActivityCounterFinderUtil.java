@@ -25,12 +25,12 @@ import com.liferay.portal.kernel.util.ReferenceRegistry;
  */
 @ProviderType
 public class SocialActivityCounterFinderUtil {
-	public static int countU_ByG_N(long groupId, java.lang.String[] names) {
+	public static int countU_ByG_N(long groupId, String[] names) {
 		return getFinder().countU_ByG_N(groupId, names);
 	}
 
 	public static java.util.List<com.liferay.social.kernel.model.SocialActivityCounter> findAC_ByG_N_S_E_1(
-		long groupId, java.lang.String name, int startPeriod, int endPeriod,
+		long groupId, String name, int startPeriod, int endPeriod,
 		int periodLength) {
 		return getFinder()
 				   .findAC_ByG_N_S_E_1(groupId, name, startPeriod, endPeriod,
@@ -38,22 +38,22 @@ public class SocialActivityCounterFinderUtil {
 	}
 
 	public static java.util.List<com.liferay.social.kernel.model.SocialActivityCounter> findAC_ByG_N_S_E_2(
-		long groupId, java.lang.String counterName, int startPeriod,
-		int endPeriod, int periodLength) {
+		long groupId, String counterName, int startPeriod, int endPeriod,
+		int periodLength) {
 		return getFinder()
 				   .findAC_ByG_N_S_E_2(groupId, counterName, startPeriod,
 			endPeriod, periodLength);
 	}
 
 	public static java.util.List<com.liferay.social.kernel.model.SocialActivityCounter> findAC_By_G_C_C_N_S_E(
-		long groupId, java.util.List<java.lang.Long> userIds,
-		java.lang.String[] names, int start, int end) {
+		long groupId, java.util.List<Long> userIds, String[] names, int start,
+		int end) {
 		return getFinder()
 				   .findAC_By_G_C_C_N_S_E(groupId, userIds, names, start, end);
 	}
 
-	public static java.util.List<java.lang.Long> findU_ByG_N(long groupId,
-		java.lang.String[] names, int start, int end) {
+	public static java.util.List<Long> findU_ByG_N(long groupId,
+		String[] names, int start, int end) {
 		return getFinder().findU_ByG_N(groupId, names, start, end);
 	}
 

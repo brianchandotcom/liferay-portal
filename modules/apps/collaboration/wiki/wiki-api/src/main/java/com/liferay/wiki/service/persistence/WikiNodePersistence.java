@@ -47,7 +47,7 @@ public interface WikiNodePersistence extends BasePersistence<WikiNode> {
 	* @param uuid the uuid
 	* @return the matching wiki nodes
 	*/
-	public java.util.List<WikiNode> findByUuid(java.lang.String uuid);
+	public java.util.List<WikiNode> findByUuid(String uuid);
 
 	/**
 	* Returns a range of all the wiki nodes where uuid = &#63;.
@@ -61,8 +61,7 @@ public interface WikiNodePersistence extends BasePersistence<WikiNode> {
 	* @param end the upper bound of the range of wiki nodes (not inclusive)
 	* @return the range of matching wiki nodes
 	*/
-	public java.util.List<WikiNode> findByUuid(java.lang.String uuid,
-		int start, int end);
+	public java.util.List<WikiNode> findByUuid(String uuid, int start, int end);
 
 	/**
 	* Returns an ordered range of all the wiki nodes where uuid = &#63;.
@@ -77,8 +76,7 @@ public interface WikiNodePersistence extends BasePersistence<WikiNode> {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching wiki nodes
 	*/
-	public java.util.List<WikiNode> findByUuid(java.lang.String uuid,
-		int start, int end,
+	public java.util.List<WikiNode> findByUuid(String uuid, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<WikiNode> orderByComparator);
 
 	/**
@@ -95,8 +93,7 @@ public interface WikiNodePersistence extends BasePersistence<WikiNode> {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching wiki nodes
 	*/
-	public java.util.List<WikiNode> findByUuid(java.lang.String uuid,
-		int start, int end,
+	public java.util.List<WikiNode> findByUuid(String uuid, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<WikiNode> orderByComparator,
 		boolean retrieveFromCache);
 
@@ -108,7 +105,7 @@ public interface WikiNodePersistence extends BasePersistence<WikiNode> {
 	* @return the first matching wiki node
 	* @throws NoSuchNodeException if a matching wiki node could not be found
 	*/
-	public WikiNode findByUuid_First(java.lang.String uuid,
+	public WikiNode findByUuid_First(String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<WikiNode> orderByComparator)
 		throws NoSuchNodeException;
 
@@ -119,7 +116,7 @@ public interface WikiNodePersistence extends BasePersistence<WikiNode> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching wiki node, or <code>null</code> if a matching wiki node could not be found
 	*/
-	public WikiNode fetchByUuid_First(java.lang.String uuid,
+	public WikiNode fetchByUuid_First(String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<WikiNode> orderByComparator);
 
 	/**
@@ -130,7 +127,7 @@ public interface WikiNodePersistence extends BasePersistence<WikiNode> {
 	* @return the last matching wiki node
 	* @throws NoSuchNodeException if a matching wiki node could not be found
 	*/
-	public WikiNode findByUuid_Last(java.lang.String uuid,
+	public WikiNode findByUuid_Last(String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<WikiNode> orderByComparator)
 		throws NoSuchNodeException;
 
@@ -141,7 +138,7 @@ public interface WikiNodePersistence extends BasePersistence<WikiNode> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching wiki node, or <code>null</code> if a matching wiki node could not be found
 	*/
-	public WikiNode fetchByUuid_Last(java.lang.String uuid,
+	public WikiNode fetchByUuid_Last(String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<WikiNode> orderByComparator);
 
 	/**
@@ -153,8 +150,7 @@ public interface WikiNodePersistence extends BasePersistence<WikiNode> {
 	* @return the previous, current, and next wiki node
 	* @throws NoSuchNodeException if a wiki node with the primary key could not be found
 	*/
-	public WikiNode[] findByUuid_PrevAndNext(long nodeId,
-		java.lang.String uuid,
+	public WikiNode[] findByUuid_PrevAndNext(long nodeId, String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<WikiNode> orderByComparator)
 		throws NoSuchNodeException;
 
@@ -163,7 +159,7 @@ public interface WikiNodePersistence extends BasePersistence<WikiNode> {
 	*
 	* @param uuid the uuid
 	*/
-	public void removeByUuid(java.lang.String uuid);
+	public void removeByUuid(String uuid);
 
 	/**
 	* Returns the number of wiki nodes where uuid = &#63;.
@@ -171,7 +167,7 @@ public interface WikiNodePersistence extends BasePersistence<WikiNode> {
 	* @param uuid the uuid
 	* @return the number of matching wiki nodes
 	*/
-	public int countByUuid(java.lang.String uuid);
+	public int countByUuid(String uuid);
 
 	/**
 	* Returns the wiki node where uuid = &#63; and groupId = &#63; or throws a {@link NoSuchNodeException} if it could not be found.
@@ -181,7 +177,7 @@ public interface WikiNodePersistence extends BasePersistence<WikiNode> {
 	* @return the matching wiki node
 	* @throws NoSuchNodeException if a matching wiki node could not be found
 	*/
-	public WikiNode findByUUID_G(java.lang.String uuid, long groupId)
+	public WikiNode findByUUID_G(String uuid, long groupId)
 		throws NoSuchNodeException;
 
 	/**
@@ -191,7 +187,7 @@ public interface WikiNodePersistence extends BasePersistence<WikiNode> {
 	* @param groupId the group ID
 	* @return the matching wiki node, or <code>null</code> if a matching wiki node could not be found
 	*/
-	public WikiNode fetchByUUID_G(java.lang.String uuid, long groupId);
+	public WikiNode fetchByUUID_G(String uuid, long groupId);
 
 	/**
 	* Returns the wiki node where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -201,7 +197,7 @@ public interface WikiNodePersistence extends BasePersistence<WikiNode> {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching wiki node, or <code>null</code> if a matching wiki node could not be found
 	*/
-	public WikiNode fetchByUUID_G(java.lang.String uuid, long groupId,
+	public WikiNode fetchByUUID_G(String uuid, long groupId,
 		boolean retrieveFromCache);
 
 	/**
@@ -211,7 +207,7 @@ public interface WikiNodePersistence extends BasePersistence<WikiNode> {
 	* @param groupId the group ID
 	* @return the wiki node that was removed
 	*/
-	public WikiNode removeByUUID_G(java.lang.String uuid, long groupId)
+	public WikiNode removeByUUID_G(String uuid, long groupId)
 		throws NoSuchNodeException;
 
 	/**
@@ -221,7 +217,7 @@ public interface WikiNodePersistence extends BasePersistence<WikiNode> {
 	* @param groupId the group ID
 	* @return the number of matching wiki nodes
 	*/
-	public int countByUUID_G(java.lang.String uuid, long groupId);
+	public int countByUUID_G(String uuid, long groupId);
 
 	/**
 	* Returns all the wiki nodes where uuid = &#63; and companyId = &#63;.
@@ -230,8 +226,7 @@ public interface WikiNodePersistence extends BasePersistence<WikiNode> {
 	* @param companyId the company ID
 	* @return the matching wiki nodes
 	*/
-	public java.util.List<WikiNode> findByUuid_C(java.lang.String uuid,
-		long companyId);
+	public java.util.List<WikiNode> findByUuid_C(String uuid, long companyId);
 
 	/**
 	* Returns a range of all the wiki nodes where uuid = &#63; and companyId = &#63;.
@@ -246,8 +241,8 @@ public interface WikiNodePersistence extends BasePersistence<WikiNode> {
 	* @param end the upper bound of the range of wiki nodes (not inclusive)
 	* @return the range of matching wiki nodes
 	*/
-	public java.util.List<WikiNode> findByUuid_C(java.lang.String uuid,
-		long companyId, int start, int end);
+	public java.util.List<WikiNode> findByUuid_C(String uuid, long companyId,
+		int start, int end);
 
 	/**
 	* Returns an ordered range of all the wiki nodes where uuid = &#63; and companyId = &#63;.
@@ -263,8 +258,8 @@ public interface WikiNodePersistence extends BasePersistence<WikiNode> {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching wiki nodes
 	*/
-	public java.util.List<WikiNode> findByUuid_C(java.lang.String uuid,
-		long companyId, int start, int end,
+	public java.util.List<WikiNode> findByUuid_C(String uuid, long companyId,
+		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<WikiNode> orderByComparator);
 
 	/**
@@ -282,8 +277,8 @@ public interface WikiNodePersistence extends BasePersistence<WikiNode> {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching wiki nodes
 	*/
-	public java.util.List<WikiNode> findByUuid_C(java.lang.String uuid,
-		long companyId, int start, int end,
+	public java.util.List<WikiNode> findByUuid_C(String uuid, long companyId,
+		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<WikiNode> orderByComparator,
 		boolean retrieveFromCache);
 
@@ -296,7 +291,7 @@ public interface WikiNodePersistence extends BasePersistence<WikiNode> {
 	* @return the first matching wiki node
 	* @throws NoSuchNodeException if a matching wiki node could not be found
 	*/
-	public WikiNode findByUuid_C_First(java.lang.String uuid, long companyId,
+	public WikiNode findByUuid_C_First(String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<WikiNode> orderByComparator)
 		throws NoSuchNodeException;
 
@@ -308,7 +303,7 @@ public interface WikiNodePersistence extends BasePersistence<WikiNode> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching wiki node, or <code>null</code> if a matching wiki node could not be found
 	*/
-	public WikiNode fetchByUuid_C_First(java.lang.String uuid, long companyId,
+	public WikiNode fetchByUuid_C_First(String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<WikiNode> orderByComparator);
 
 	/**
@@ -320,7 +315,7 @@ public interface WikiNodePersistence extends BasePersistence<WikiNode> {
 	* @return the last matching wiki node
 	* @throws NoSuchNodeException if a matching wiki node could not be found
 	*/
-	public WikiNode findByUuid_C_Last(java.lang.String uuid, long companyId,
+	public WikiNode findByUuid_C_Last(String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<WikiNode> orderByComparator)
 		throws NoSuchNodeException;
 
@@ -332,7 +327,7 @@ public interface WikiNodePersistence extends BasePersistence<WikiNode> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching wiki node, or <code>null</code> if a matching wiki node could not be found
 	*/
-	public WikiNode fetchByUuid_C_Last(java.lang.String uuid, long companyId,
+	public WikiNode fetchByUuid_C_Last(String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<WikiNode> orderByComparator);
 
 	/**
@@ -345,8 +340,8 @@ public interface WikiNodePersistence extends BasePersistence<WikiNode> {
 	* @return the previous, current, and next wiki node
 	* @throws NoSuchNodeException if a wiki node with the primary key could not be found
 	*/
-	public WikiNode[] findByUuid_C_PrevAndNext(long nodeId,
-		java.lang.String uuid, long companyId,
+	public WikiNode[] findByUuid_C_PrevAndNext(long nodeId, String uuid,
+		long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<WikiNode> orderByComparator)
 		throws NoSuchNodeException;
 
@@ -356,7 +351,7 @@ public interface WikiNodePersistence extends BasePersistence<WikiNode> {
 	* @param uuid the uuid
 	* @param companyId the company ID
 	*/
-	public void removeByUuid_C(java.lang.String uuid, long companyId);
+	public void removeByUuid_C(String uuid, long companyId);
 
 	/**
 	* Returns the number of wiki nodes where uuid = &#63; and companyId = &#63;.
@@ -365,7 +360,7 @@ public interface WikiNodePersistence extends BasePersistence<WikiNode> {
 	* @param companyId the company ID
 	* @return the number of matching wiki nodes
 	*/
-	public int countByUuid_C(java.lang.String uuid, long companyId);
+	public int countByUuid_C(String uuid, long companyId);
 
 	/**
 	* Returns all the wiki nodes where groupId = &#63;.
@@ -699,7 +694,7 @@ public interface WikiNodePersistence extends BasePersistence<WikiNode> {
 	* @return the matching wiki node
 	* @throws NoSuchNodeException if a matching wiki node could not be found
 	*/
-	public WikiNode findByG_N(long groupId, java.lang.String name)
+	public WikiNode findByG_N(long groupId, String name)
 		throws NoSuchNodeException;
 
 	/**
@@ -709,7 +704,7 @@ public interface WikiNodePersistence extends BasePersistence<WikiNode> {
 	* @param name the name
 	* @return the matching wiki node, or <code>null</code> if a matching wiki node could not be found
 	*/
-	public WikiNode fetchByG_N(long groupId, java.lang.String name);
+	public WikiNode fetchByG_N(long groupId, String name);
 
 	/**
 	* Returns the wiki node where groupId = &#63; and name = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -719,7 +714,7 @@ public interface WikiNodePersistence extends BasePersistence<WikiNode> {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching wiki node, or <code>null</code> if a matching wiki node could not be found
 	*/
-	public WikiNode fetchByG_N(long groupId, java.lang.String name,
+	public WikiNode fetchByG_N(long groupId, String name,
 		boolean retrieveFromCache);
 
 	/**
@@ -729,7 +724,7 @@ public interface WikiNodePersistence extends BasePersistence<WikiNode> {
 	* @param name the name
 	* @return the wiki node that was removed
 	*/
-	public WikiNode removeByG_N(long groupId, java.lang.String name)
+	public WikiNode removeByG_N(long groupId, String name)
 		throws NoSuchNodeException;
 
 	/**
@@ -739,7 +734,7 @@ public interface WikiNodePersistence extends BasePersistence<WikiNode> {
 	* @param name the name
 	* @return the number of matching wiki nodes
 	*/
-	public int countByG_N(long groupId, java.lang.String name);
+	public int countByG_N(long groupId, String name);
 
 	/**
 	* Returns all the wiki nodes where groupId = &#63; and status = &#63;.
@@ -1213,5 +1208,5 @@ public interface WikiNodePersistence extends BasePersistence<WikiNode> {
 	public int countAll();
 
 	@Override
-	public java.util.Set<java.lang.String> getBadColumnNames();
+	public java.util.Set<String> getBadColumnNames();
 }

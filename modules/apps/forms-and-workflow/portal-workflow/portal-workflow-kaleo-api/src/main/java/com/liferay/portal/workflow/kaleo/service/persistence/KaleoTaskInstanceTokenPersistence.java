@@ -506,7 +506,7 @@ public interface KaleoTaskInstanceTokenPersistence extends BasePersistence<Kaleo
 	* @return the matching kaleo task instance tokens
 	*/
 	public java.util.List<KaleoTaskInstanceToken> findByCN_CPK(
-		java.lang.String className, long classPK);
+		String className, long classPK);
 
 	/**
 	* Returns a range of all the kaleo task instance tokens where className = &#63; and classPK = &#63;.
@@ -522,7 +522,7 @@ public interface KaleoTaskInstanceTokenPersistence extends BasePersistence<Kaleo
 	* @return the range of matching kaleo task instance tokens
 	*/
 	public java.util.List<KaleoTaskInstanceToken> findByCN_CPK(
-		java.lang.String className, long classPK, int start, int end);
+		String className, long classPK, int start, int end);
 
 	/**
 	* Returns an ordered range of all the kaleo task instance tokens where className = &#63; and classPK = &#63;.
@@ -539,7 +539,7 @@ public interface KaleoTaskInstanceTokenPersistence extends BasePersistence<Kaleo
 	* @return the ordered range of matching kaleo task instance tokens
 	*/
 	public java.util.List<KaleoTaskInstanceToken> findByCN_CPK(
-		java.lang.String className, long classPK, int start, int end,
+		String className, long classPK, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<KaleoTaskInstanceToken> orderByComparator);
 
 	/**
@@ -558,7 +558,7 @@ public interface KaleoTaskInstanceTokenPersistence extends BasePersistence<Kaleo
 	* @return the ordered range of matching kaleo task instance tokens
 	*/
 	public java.util.List<KaleoTaskInstanceToken> findByCN_CPK(
-		java.lang.String className, long classPK, int start, int end,
+		String className, long classPK, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<KaleoTaskInstanceToken> orderByComparator,
 		boolean retrieveFromCache);
 
@@ -571,8 +571,8 @@ public interface KaleoTaskInstanceTokenPersistence extends BasePersistence<Kaleo
 	* @return the first matching kaleo task instance token
 	* @throws NoSuchTaskInstanceTokenException if a matching kaleo task instance token could not be found
 	*/
-	public KaleoTaskInstanceToken findByCN_CPK_First(
-		java.lang.String className, long classPK,
+	public KaleoTaskInstanceToken findByCN_CPK_First(String className,
+		long classPK,
 		com.liferay.portal.kernel.util.OrderByComparator<KaleoTaskInstanceToken> orderByComparator)
 		throws NoSuchTaskInstanceTokenException;
 
@@ -584,8 +584,8 @@ public interface KaleoTaskInstanceTokenPersistence extends BasePersistence<Kaleo
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching kaleo task instance token, or <code>null</code> if a matching kaleo task instance token could not be found
 	*/
-	public KaleoTaskInstanceToken fetchByCN_CPK_First(
-		java.lang.String className, long classPK,
+	public KaleoTaskInstanceToken fetchByCN_CPK_First(String className,
+		long classPK,
 		com.liferay.portal.kernel.util.OrderByComparator<KaleoTaskInstanceToken> orderByComparator);
 
 	/**
@@ -597,8 +597,8 @@ public interface KaleoTaskInstanceTokenPersistence extends BasePersistence<Kaleo
 	* @return the last matching kaleo task instance token
 	* @throws NoSuchTaskInstanceTokenException if a matching kaleo task instance token could not be found
 	*/
-	public KaleoTaskInstanceToken findByCN_CPK_Last(
-		java.lang.String className, long classPK,
+	public KaleoTaskInstanceToken findByCN_CPK_Last(String className,
+		long classPK,
 		com.liferay.portal.kernel.util.OrderByComparator<KaleoTaskInstanceToken> orderByComparator)
 		throws NoSuchTaskInstanceTokenException;
 
@@ -610,8 +610,8 @@ public interface KaleoTaskInstanceTokenPersistence extends BasePersistence<Kaleo
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching kaleo task instance token, or <code>null</code> if a matching kaleo task instance token could not be found
 	*/
-	public KaleoTaskInstanceToken fetchByCN_CPK_Last(
-		java.lang.String className, long classPK,
+	public KaleoTaskInstanceToken fetchByCN_CPK_Last(String className,
+		long classPK,
 		com.liferay.portal.kernel.util.OrderByComparator<KaleoTaskInstanceToken> orderByComparator);
 
 	/**
@@ -625,8 +625,7 @@ public interface KaleoTaskInstanceTokenPersistence extends BasePersistence<Kaleo
 	* @throws NoSuchTaskInstanceTokenException if a kaleo task instance token with the primary key could not be found
 	*/
 	public KaleoTaskInstanceToken[] findByCN_CPK_PrevAndNext(
-		long kaleoTaskInstanceTokenId, java.lang.String className,
-		long classPK,
+		long kaleoTaskInstanceTokenId, String className, long classPK,
 		com.liferay.portal.kernel.util.OrderByComparator<KaleoTaskInstanceToken> orderByComparator)
 		throws NoSuchTaskInstanceTokenException;
 
@@ -636,7 +635,7 @@ public interface KaleoTaskInstanceTokenPersistence extends BasePersistence<Kaleo
 	* @param className the class name
 	* @param classPK the class pk
 	*/
-	public void removeByCN_CPK(java.lang.String className, long classPK);
+	public void removeByCN_CPK(String className, long classPK);
 
 	/**
 	* Returns the number of kaleo task instance tokens where className = &#63; and classPK = &#63;.
@@ -645,7 +644,7 @@ public interface KaleoTaskInstanceTokenPersistence extends BasePersistence<Kaleo
 	* @param classPK the class pk
 	* @return the number of matching kaleo task instance tokens
 	*/
-	public int countByCN_CPK(java.lang.String className, long classPK);
+	public int countByCN_CPK(String className, long classPK);
 
 	/**
 	* Caches the kaleo task instance token in the entity cache if it is enabled.

@@ -163,7 +163,7 @@ public class SocialActivityWrapper implements SocialActivity,
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new SocialActivityWrapper((SocialActivity)_socialActivity.clone());
 	}
 
@@ -203,7 +203,7 @@ public class SocialActivityWrapper implements SocialActivity,
 	* @return the fully qualified class name of this social activity
 	*/
 	@Override
-	public java.lang.String getClassName() {
+	public String getClassName() {
 		return _socialActivity.getClassName();
 	}
 
@@ -258,19 +258,18 @@ public class SocialActivityWrapper implements SocialActivity,
 	* @return the extra data of this social activity
 	*/
 	@Override
-	public java.lang.String getExtraData() {
+	public String getExtraData() {
 		return _socialActivity.getExtraData();
 	}
 
 	@Override
-	public java.lang.String getExtraDataValue(java.lang.String key)
+	public String getExtraDataValue(String key)
 		throws com.liferay.portal.kernel.json.JSONException {
 		return _socialActivity.getExtraDataValue(key);
 	}
 
 	@Override
-	public java.lang.String getExtraDataValue(java.lang.String key,
-		java.util.Locale locale)
+	public String getExtraDataValue(String key, java.util.Locale locale)
 		throws com.liferay.portal.kernel.json.JSONException {
 		return _socialActivity.getExtraDataValue(key, locale);
 	}
@@ -346,7 +345,7 @@ public class SocialActivityWrapper implements SocialActivity,
 	* @return the receiver user uuid of this social activity
 	*/
 	@Override
-	public java.lang.String getReceiverUserUuid() {
+	public String getReceiverUserUuid() {
 		return _socialActivity.getReceiverUserUuid();
 	}
 
@@ -376,7 +375,7 @@ public class SocialActivityWrapper implements SocialActivity,
 	* @return the user uuid of this social activity
 	*/
 	@Override
-	public java.lang.String getUserUuid() {
+	public String getUserUuid() {
 		return _socialActivity.getUserUuid();
 	}
 
@@ -391,7 +390,7 @@ public class SocialActivityWrapper implements SocialActivity,
 	}
 
 	@Override
-	public boolean isClassName(java.lang.String className) {
+	public boolean isClassName(String className) {
 		return _socialActivity.isClassName(className);
 	}
 
@@ -442,7 +441,7 @@ public class SocialActivityWrapper implements SocialActivity,
 	}
 
 	@Override
-	public void setClassName(java.lang.String className) {
+	public void setClassName(String className) {
 		_socialActivity.setClassName(className);
 	}
 
@@ -508,12 +507,12 @@ public class SocialActivityWrapper implements SocialActivity,
 	* @param extraData the extra data of this social activity
 	*/
 	@Override
-	public void setExtraData(java.lang.String extraData) {
+	public void setExtraData(String extraData) {
 		_socialActivity.setExtraData(extraData);
 	}
 
 	@Override
-	public void setExtraDataValue(java.lang.String key, java.lang.String value)
+	public void setExtraDataValue(String key, String value)
 		throws com.liferay.portal.kernel.json.JSONException {
 		_socialActivity.setExtraDataValue(key, value);
 	}
@@ -594,7 +593,7 @@ public class SocialActivityWrapper implements SocialActivity,
 	* @param receiverUserUuid the receiver user uuid of this social activity
 	*/
 	@Override
-	public void setReceiverUserUuid(java.lang.String receiverUserUuid) {
+	public void setReceiverUserUuid(String receiverUserUuid) {
 		_socialActivity.setReceiverUserUuid(receiverUserUuid);
 	}
 
@@ -624,7 +623,7 @@ public class SocialActivityWrapper implements SocialActivity,
 	* @param userUuid the user uuid of this social activity
 	*/
 	@Override
-	public void setUserUuid(java.lang.String userUuid) {
+	public void setUserUuid(String userUuid) {
 		_socialActivity.setUserUuid(userUuid);
 	}
 
@@ -639,7 +638,7 @@ public class SocialActivityWrapper implements SocialActivity,
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _socialActivity.toString();
 	}
 
@@ -649,7 +648,7 @@ public class SocialActivityWrapper implements SocialActivity,
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _socialActivity.toXmlString();
 	}
 

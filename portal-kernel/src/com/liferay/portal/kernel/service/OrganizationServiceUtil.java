@@ -82,9 +82,8 @@ public class OrganizationServiceUtil {
 	* @return the organization
 	*/
 	public static com.liferay.portal.kernel.model.Organization addOrganization(
-		long parentOrganizationId, java.lang.String name,
-		java.lang.String type, long regionId, long countryId, long statusId,
-		java.lang.String comments, boolean site,
+		long parentOrganizationId, String name, String type, long regionId,
+		long countryId, long statusId, String comments, boolean site,
 		java.util.List<com.liferay.portal.kernel.model.Address> addresses,
 		java.util.List<com.liferay.portal.kernel.model.EmailAddress> emailAddresses,
 		java.util.List<com.liferay.portal.kernel.model.OrgLabor> orgLabors,
@@ -122,9 +121,9 @@ public class OrganizationServiceUtil {
 	* @return the organization
 	*/
 	public static com.liferay.portal.kernel.model.Organization addOrganization(
-		long parentOrganizationId, java.lang.String name,
-		java.lang.String type, long regionId, long countryId, long statusId,
-		java.lang.String comments, boolean site, ServiceContext serviceContext)
+		long parentOrganizationId, String name, String type, long regionId,
+		long countryId, long statusId, String comments, boolean site,
+		ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addOrganization(parentOrganizationId, name, type, regionId,
@@ -200,7 +199,7 @@ public class OrganizationServiceUtil {
 	* @return the primary key of the organization with the name, or
 	<code>0</code> if the organization could not be found
 	*/
-	public static long getOrganizationId(long companyId, java.lang.String name)
+	public static long getOrganizationId(long companyId, String name)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getOrganizationId(companyId, name);
 	}
@@ -265,7 +264,7 @@ public class OrganizationServiceUtil {
 	*
 	* @return the OSGi service identifier
 	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
+	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 
@@ -353,10 +352,9 @@ public class OrganizationServiceUtil {
 	* @return the organization
 	*/
 	public static com.liferay.portal.kernel.model.Organization updateOrganization(
-		long organizationId, long parentOrganizationId, java.lang.String name,
-		java.lang.String type, long regionId, long countryId, long statusId,
-		java.lang.String comments, boolean logo, byte[] logoBytes,
-		boolean site,
+		long organizationId, long parentOrganizationId, String name,
+		String type, long regionId, long countryId, long statusId,
+		String comments, boolean logo, byte[] logoBytes, boolean site,
 		java.util.List<com.liferay.portal.kernel.model.Address> addresses,
 		java.util.List<com.liferay.portal.kernel.model.EmailAddress> emailAddresses,
 		java.util.List<com.liferay.portal.kernel.model.OrgLabor> orgLabors,
@@ -402,9 +400,9 @@ public class OrganizationServiceUtil {
 	*/
 	@Deprecated
 	public static com.liferay.portal.kernel.model.Organization updateOrganization(
-		long organizationId, long parentOrganizationId, java.lang.String name,
-		java.lang.String type, long regionId, long countryId, long statusId,
-		java.lang.String comments, boolean site,
+		long organizationId, long parentOrganizationId, String name,
+		String type, long regionId, long countryId, long statusId,
+		String comments, boolean site,
 		java.util.List<com.liferay.portal.kernel.model.Address> addresses,
 		java.util.List<com.liferay.portal.kernel.model.EmailAddress> emailAddresses,
 		java.util.List<com.liferay.portal.kernel.model.OrgLabor> orgLabors,
@@ -440,9 +438,9 @@ public class OrganizationServiceUtil {
 	* @return the organization
 	*/
 	public static com.liferay.portal.kernel.model.Organization updateOrganization(
-		long organizationId, long parentOrganizationId, java.lang.String name,
-		java.lang.String type, long regionId, long countryId, long statusId,
-		java.lang.String comments, boolean site, ServiceContext serviceContext)
+		long organizationId, long parentOrganizationId, String name,
+		String type, long regionId, long countryId, long statusId,
+		String comments, boolean site, ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .updateOrganization(organizationId, parentOrganizationId,

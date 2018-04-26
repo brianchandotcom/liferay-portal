@@ -41,9 +41,8 @@ public class OAuthConsumerLocalServiceUtil {
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.opensocial.service.impl.OAuthConsumerLocalServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static com.liferay.opensocial.model.OAuthConsumer addOAuthConsumer(
-		long companyId, java.lang.String gadgetKey,
-		java.lang.String serviceName, java.lang.String consumerKey,
-		java.lang.String consumerSecret, java.lang.String keyType) {
+		long companyId, String gadgetKey, String serviceName,
+		String consumerKey, String consumerSecret, String keyType) {
 		return getService()
 				   .addOAuthConsumer(companyId, gadgetKey, serviceName,
 			consumerKey, consumerSecret, keyType);
@@ -95,7 +94,7 @@ public class OAuthConsumerLocalServiceUtil {
 		return getService().deleteOAuthConsumer(oAuthConsumer);
 	}
 
-	public static void deleteOAuthConsumers(java.lang.String gadgetKey) {
+	public static void deleteOAuthConsumers(String gadgetKey) {
 		getService().deleteOAuthConsumers(gadgetKey);
 	}
 
@@ -192,7 +191,7 @@ public class OAuthConsumerLocalServiceUtil {
 	}
 
 	public static com.liferay.opensocial.model.OAuthConsumer fetchOAuthConsumer(
-		java.lang.String gadgetKey, java.lang.String serviceName) {
+		String gadgetKey, String serviceName) {
 		return getService().fetchOAuthConsumer(gadgetKey, serviceName);
 	}
 
@@ -218,7 +217,7 @@ public class OAuthConsumerLocalServiceUtil {
 	}
 
 	public static com.liferay.opensocial.model.OAuthConsumer getOAuthConsumer(
-		java.lang.String gadgetKey, java.lang.String serviceName)
+		String gadgetKey, String serviceName)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getOAuthConsumer(gadgetKey, serviceName);
 	}
@@ -240,12 +239,12 @@ public class OAuthConsumerLocalServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.opensocial.model.OAuthConsumer> getOAuthConsumers(
-		java.lang.String gadgetKey) {
+		String gadgetKey) {
 		return getService().getOAuthConsumers(gadgetKey);
 	}
 
 	public static java.util.List<com.liferay.opensocial.model.OAuthConsumer> getOAuthConsumers(
-		java.lang.String gadgetKey, int start, int end) {
+		String gadgetKey, int start, int end) {
 		return getService().getOAuthConsumers(gadgetKey, start, end);
 	}
 
@@ -258,7 +257,7 @@ public class OAuthConsumerLocalServiceUtil {
 		return getService().getOAuthConsumersCount();
 	}
 
-	public static int getOAuthConsumersCount(java.lang.String gadgetKey) {
+	public static int getOAuthConsumersCount(String gadgetKey) {
 		return getService().getOAuthConsumersCount(gadgetKey);
 	}
 
@@ -267,7 +266,7 @@ public class OAuthConsumerLocalServiceUtil {
 	*
 	* @return the OSGi service identifier
 	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
+	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 
@@ -278,9 +277,8 @@ public class OAuthConsumerLocalServiceUtil {
 	}
 
 	public static com.liferay.opensocial.model.OAuthConsumer updateOAuthConsumer(
-		long oAuthConsumerId, java.lang.String consumerKey,
-		java.lang.String consumerSecret, java.lang.String keyType,
-		java.lang.String keyName, java.lang.String callbackURL)
+		long oAuthConsumerId, String consumerKey, String consumerSecret,
+		String keyType, String keyName, String callbackURL)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .updateOAuthConsumer(oAuthConsumerId, consumerKey,

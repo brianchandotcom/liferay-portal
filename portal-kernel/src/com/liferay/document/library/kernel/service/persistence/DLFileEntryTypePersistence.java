@@ -47,7 +47,7 @@ public interface DLFileEntryTypePersistence extends BasePersistence<DLFileEntryT
 	* @param uuid the uuid
 	* @return the matching document library file entry types
 	*/
-	public java.util.List<DLFileEntryType> findByUuid(java.lang.String uuid);
+	public java.util.List<DLFileEntryType> findByUuid(String uuid);
 
 	/**
 	* Returns a range of all the document library file entry types where uuid = &#63;.
@@ -61,8 +61,8 @@ public interface DLFileEntryTypePersistence extends BasePersistence<DLFileEntryT
 	* @param end the upper bound of the range of document library file entry types (not inclusive)
 	* @return the range of matching document library file entry types
 	*/
-	public java.util.List<DLFileEntryType> findByUuid(java.lang.String uuid,
-		int start, int end);
+	public java.util.List<DLFileEntryType> findByUuid(String uuid, int start,
+		int end);
 
 	/**
 	* Returns an ordered range of all the document library file entry types where uuid = &#63;.
@@ -77,8 +77,8 @@ public interface DLFileEntryTypePersistence extends BasePersistence<DLFileEntryT
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching document library file entry types
 	*/
-	public java.util.List<DLFileEntryType> findByUuid(java.lang.String uuid,
-		int start, int end,
+	public java.util.List<DLFileEntryType> findByUuid(String uuid, int start,
+		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<DLFileEntryType> orderByComparator);
 
 	/**
@@ -95,8 +95,8 @@ public interface DLFileEntryTypePersistence extends BasePersistence<DLFileEntryT
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching document library file entry types
 	*/
-	public java.util.List<DLFileEntryType> findByUuid(java.lang.String uuid,
-		int start, int end,
+	public java.util.List<DLFileEntryType> findByUuid(String uuid, int start,
+		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<DLFileEntryType> orderByComparator,
 		boolean retrieveFromCache);
 
@@ -108,7 +108,7 @@ public interface DLFileEntryTypePersistence extends BasePersistence<DLFileEntryT
 	* @return the first matching document library file entry type
 	* @throws NoSuchFileEntryTypeException if a matching document library file entry type could not be found
 	*/
-	public DLFileEntryType findByUuid_First(java.lang.String uuid,
+	public DLFileEntryType findByUuid_First(String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<DLFileEntryType> orderByComparator)
 		throws NoSuchFileEntryTypeException;
 
@@ -119,7 +119,7 @@ public interface DLFileEntryTypePersistence extends BasePersistence<DLFileEntryT
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching document library file entry type, or <code>null</code> if a matching document library file entry type could not be found
 	*/
-	public DLFileEntryType fetchByUuid_First(java.lang.String uuid,
+	public DLFileEntryType fetchByUuid_First(String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<DLFileEntryType> orderByComparator);
 
 	/**
@@ -130,7 +130,7 @@ public interface DLFileEntryTypePersistence extends BasePersistence<DLFileEntryT
 	* @return the last matching document library file entry type
 	* @throws NoSuchFileEntryTypeException if a matching document library file entry type could not be found
 	*/
-	public DLFileEntryType findByUuid_Last(java.lang.String uuid,
+	public DLFileEntryType findByUuid_Last(String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<DLFileEntryType> orderByComparator)
 		throws NoSuchFileEntryTypeException;
 
@@ -141,7 +141,7 @@ public interface DLFileEntryTypePersistence extends BasePersistence<DLFileEntryT
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching document library file entry type, or <code>null</code> if a matching document library file entry type could not be found
 	*/
-	public DLFileEntryType fetchByUuid_Last(java.lang.String uuid,
+	public DLFileEntryType fetchByUuid_Last(String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<DLFileEntryType> orderByComparator);
 
 	/**
@@ -154,7 +154,7 @@ public interface DLFileEntryTypePersistence extends BasePersistence<DLFileEntryT
 	* @throws NoSuchFileEntryTypeException if a document library file entry type with the primary key could not be found
 	*/
 	public DLFileEntryType[] findByUuid_PrevAndNext(long fileEntryTypeId,
-		java.lang.String uuid,
+		String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<DLFileEntryType> orderByComparator)
 		throws NoSuchFileEntryTypeException;
 
@@ -163,7 +163,7 @@ public interface DLFileEntryTypePersistence extends BasePersistence<DLFileEntryT
 	*
 	* @param uuid the uuid
 	*/
-	public void removeByUuid(java.lang.String uuid);
+	public void removeByUuid(String uuid);
 
 	/**
 	* Returns the number of document library file entry types where uuid = &#63;.
@@ -171,7 +171,7 @@ public interface DLFileEntryTypePersistence extends BasePersistence<DLFileEntryT
 	* @param uuid the uuid
 	* @return the number of matching document library file entry types
 	*/
-	public int countByUuid(java.lang.String uuid);
+	public int countByUuid(String uuid);
 
 	/**
 	* Returns the document library file entry type where uuid = &#63; and groupId = &#63; or throws a {@link NoSuchFileEntryTypeException} if it could not be found.
@@ -181,7 +181,7 @@ public interface DLFileEntryTypePersistence extends BasePersistence<DLFileEntryT
 	* @return the matching document library file entry type
 	* @throws NoSuchFileEntryTypeException if a matching document library file entry type could not be found
 	*/
-	public DLFileEntryType findByUUID_G(java.lang.String uuid, long groupId)
+	public DLFileEntryType findByUUID_G(String uuid, long groupId)
 		throws NoSuchFileEntryTypeException;
 
 	/**
@@ -191,7 +191,7 @@ public interface DLFileEntryTypePersistence extends BasePersistence<DLFileEntryT
 	* @param groupId the group ID
 	* @return the matching document library file entry type, or <code>null</code> if a matching document library file entry type could not be found
 	*/
-	public DLFileEntryType fetchByUUID_G(java.lang.String uuid, long groupId);
+	public DLFileEntryType fetchByUUID_G(String uuid, long groupId);
 
 	/**
 	* Returns the document library file entry type where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -201,7 +201,7 @@ public interface DLFileEntryTypePersistence extends BasePersistence<DLFileEntryT
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching document library file entry type, or <code>null</code> if a matching document library file entry type could not be found
 	*/
-	public DLFileEntryType fetchByUUID_G(java.lang.String uuid, long groupId,
+	public DLFileEntryType fetchByUUID_G(String uuid, long groupId,
 		boolean retrieveFromCache);
 
 	/**
@@ -211,7 +211,7 @@ public interface DLFileEntryTypePersistence extends BasePersistence<DLFileEntryT
 	* @param groupId the group ID
 	* @return the document library file entry type that was removed
 	*/
-	public DLFileEntryType removeByUUID_G(java.lang.String uuid, long groupId)
+	public DLFileEntryType removeByUUID_G(String uuid, long groupId)
 		throws NoSuchFileEntryTypeException;
 
 	/**
@@ -221,7 +221,7 @@ public interface DLFileEntryTypePersistence extends BasePersistence<DLFileEntryT
 	* @param groupId the group ID
 	* @return the number of matching document library file entry types
 	*/
-	public int countByUUID_G(java.lang.String uuid, long groupId);
+	public int countByUUID_G(String uuid, long groupId);
 
 	/**
 	* Returns all the document library file entry types where uuid = &#63; and companyId = &#63;.
@@ -230,7 +230,7 @@ public interface DLFileEntryTypePersistence extends BasePersistence<DLFileEntryT
 	* @param companyId the company ID
 	* @return the matching document library file entry types
 	*/
-	public java.util.List<DLFileEntryType> findByUuid_C(java.lang.String uuid,
+	public java.util.List<DLFileEntryType> findByUuid_C(String uuid,
 		long companyId);
 
 	/**
@@ -246,7 +246,7 @@ public interface DLFileEntryTypePersistence extends BasePersistence<DLFileEntryT
 	* @param end the upper bound of the range of document library file entry types (not inclusive)
 	* @return the range of matching document library file entry types
 	*/
-	public java.util.List<DLFileEntryType> findByUuid_C(java.lang.String uuid,
+	public java.util.List<DLFileEntryType> findByUuid_C(String uuid,
 		long companyId, int start, int end);
 
 	/**
@@ -263,7 +263,7 @@ public interface DLFileEntryTypePersistence extends BasePersistence<DLFileEntryT
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching document library file entry types
 	*/
-	public java.util.List<DLFileEntryType> findByUuid_C(java.lang.String uuid,
+	public java.util.List<DLFileEntryType> findByUuid_C(String uuid,
 		long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<DLFileEntryType> orderByComparator);
 
@@ -282,7 +282,7 @@ public interface DLFileEntryTypePersistence extends BasePersistence<DLFileEntryT
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching document library file entry types
 	*/
-	public java.util.List<DLFileEntryType> findByUuid_C(java.lang.String uuid,
+	public java.util.List<DLFileEntryType> findByUuid_C(String uuid,
 		long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<DLFileEntryType> orderByComparator,
 		boolean retrieveFromCache);
@@ -296,8 +296,7 @@ public interface DLFileEntryTypePersistence extends BasePersistence<DLFileEntryT
 	* @return the first matching document library file entry type
 	* @throws NoSuchFileEntryTypeException if a matching document library file entry type could not be found
 	*/
-	public DLFileEntryType findByUuid_C_First(java.lang.String uuid,
-		long companyId,
+	public DLFileEntryType findByUuid_C_First(String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<DLFileEntryType> orderByComparator)
 		throws NoSuchFileEntryTypeException;
 
@@ -309,8 +308,7 @@ public interface DLFileEntryTypePersistence extends BasePersistence<DLFileEntryT
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching document library file entry type, or <code>null</code> if a matching document library file entry type could not be found
 	*/
-	public DLFileEntryType fetchByUuid_C_First(java.lang.String uuid,
-		long companyId,
+	public DLFileEntryType fetchByUuid_C_First(String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<DLFileEntryType> orderByComparator);
 
 	/**
@@ -322,8 +320,7 @@ public interface DLFileEntryTypePersistence extends BasePersistence<DLFileEntryT
 	* @return the last matching document library file entry type
 	* @throws NoSuchFileEntryTypeException if a matching document library file entry type could not be found
 	*/
-	public DLFileEntryType findByUuid_C_Last(java.lang.String uuid,
-		long companyId,
+	public DLFileEntryType findByUuid_C_Last(String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<DLFileEntryType> orderByComparator)
 		throws NoSuchFileEntryTypeException;
 
@@ -335,8 +332,7 @@ public interface DLFileEntryTypePersistence extends BasePersistence<DLFileEntryT
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching document library file entry type, or <code>null</code> if a matching document library file entry type could not be found
 	*/
-	public DLFileEntryType fetchByUuid_C_Last(java.lang.String uuid,
-		long companyId,
+	public DLFileEntryType fetchByUuid_C_Last(String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<DLFileEntryType> orderByComparator);
 
 	/**
@@ -350,7 +346,7 @@ public interface DLFileEntryTypePersistence extends BasePersistence<DLFileEntryT
 	* @throws NoSuchFileEntryTypeException if a document library file entry type with the primary key could not be found
 	*/
 	public DLFileEntryType[] findByUuid_C_PrevAndNext(long fileEntryTypeId,
-		java.lang.String uuid, long companyId,
+		String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<DLFileEntryType> orderByComparator)
 		throws NoSuchFileEntryTypeException;
 
@@ -360,7 +356,7 @@ public interface DLFileEntryTypePersistence extends BasePersistence<DLFileEntryT
 	* @param uuid the uuid
 	* @param companyId the company ID
 	*/
-	public void removeByUuid_C(java.lang.String uuid, long companyId);
+	public void removeByUuid_C(String uuid, long companyId);
 
 	/**
 	* Returns the number of document library file entry types where uuid = &#63; and companyId = &#63;.
@@ -369,7 +365,7 @@ public interface DLFileEntryTypePersistence extends BasePersistence<DLFileEntryT
 	* @param companyId the company ID
 	* @return the number of matching document library file entry types
 	*/
-	public int countByUuid_C(java.lang.String uuid, long companyId);
+	public int countByUuid_C(String uuid, long companyId);
 
 	/**
 	* Returns all the document library file entry types where groupId = &#63;.
@@ -692,8 +688,8 @@ public interface DLFileEntryTypePersistence extends BasePersistence<DLFileEntryT
 	* @return the matching document library file entry type
 	* @throws NoSuchFileEntryTypeException if a matching document library file entry type could not be found
 	*/
-	public DLFileEntryType findByG_F(long groupId,
-		java.lang.String fileEntryTypeKey) throws NoSuchFileEntryTypeException;
+	public DLFileEntryType findByG_F(long groupId, String fileEntryTypeKey)
+		throws NoSuchFileEntryTypeException;
 
 	/**
 	* Returns the document library file entry type where groupId = &#63; and fileEntryTypeKey = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
@@ -702,8 +698,7 @@ public interface DLFileEntryTypePersistence extends BasePersistence<DLFileEntryT
 	* @param fileEntryTypeKey the file entry type key
 	* @return the matching document library file entry type, or <code>null</code> if a matching document library file entry type could not be found
 	*/
-	public DLFileEntryType fetchByG_F(long groupId,
-		java.lang.String fileEntryTypeKey);
+	public DLFileEntryType fetchByG_F(long groupId, String fileEntryTypeKey);
 
 	/**
 	* Returns the document library file entry type where groupId = &#63; and fileEntryTypeKey = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -713,8 +708,8 @@ public interface DLFileEntryTypePersistence extends BasePersistence<DLFileEntryT
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching document library file entry type, or <code>null</code> if a matching document library file entry type could not be found
 	*/
-	public DLFileEntryType fetchByG_F(long groupId,
-		java.lang.String fileEntryTypeKey, boolean retrieveFromCache);
+	public DLFileEntryType fetchByG_F(long groupId, String fileEntryTypeKey,
+		boolean retrieveFromCache);
 
 	/**
 	* Removes the document library file entry type where groupId = &#63; and fileEntryTypeKey = &#63; from the database.
@@ -723,8 +718,8 @@ public interface DLFileEntryTypePersistence extends BasePersistence<DLFileEntryT
 	* @param fileEntryTypeKey the file entry type key
 	* @return the document library file entry type that was removed
 	*/
-	public DLFileEntryType removeByG_F(long groupId,
-		java.lang.String fileEntryTypeKey) throws NoSuchFileEntryTypeException;
+	public DLFileEntryType removeByG_F(long groupId, String fileEntryTypeKey)
+		throws NoSuchFileEntryTypeException;
 
 	/**
 	* Returns the number of document library file entry types where groupId = &#63; and fileEntryTypeKey = &#63;.
@@ -733,7 +728,7 @@ public interface DLFileEntryTypePersistence extends BasePersistence<DLFileEntryT
 	* @param fileEntryTypeKey the file entry type key
 	* @return the number of matching document library file entry types
 	*/
-	public int countByG_F(long groupId, java.lang.String fileEntryTypeKey);
+	public int countByG_F(long groupId, String fileEntryTypeKey);
 
 	/**
 	* Caches the document library file entry type in the entity cache if it is enabled.
@@ -1022,5 +1017,5 @@ public interface DLFileEntryTypePersistence extends BasePersistence<DLFileEntryT
 		java.util.List<com.liferay.document.library.kernel.model.DLFolder> dlFolders);
 
 	@Override
-	public java.util.Set<java.lang.String> getBadColumnNames();
+	public java.util.Set<String> getBadColumnNames();
 }

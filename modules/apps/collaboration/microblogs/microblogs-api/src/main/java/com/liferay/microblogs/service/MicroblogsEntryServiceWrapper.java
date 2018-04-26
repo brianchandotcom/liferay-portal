@@ -35,8 +35,8 @@ public class MicroblogsEntryServiceWrapper implements MicroblogsEntryService,
 
 	@Override
 	public com.liferay.microblogs.model.MicroblogsEntry addMicroblogsEntry(
-		long userId, java.lang.String content, int type,
-		long parentMicroblogsEntryId, int socialRelationType,
+		long userId, String content, int type, long parentMicroblogsEntryId,
+		int socialRelationType,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _microblogsEntryService.addMicroblogsEntry(userId, content,
@@ -59,7 +59,7 @@ public class MicroblogsEntryServiceWrapper implements MicroblogsEntryService,
 
 	@Override
 	public java.util.List<com.liferay.microblogs.model.MicroblogsEntry> getMicroblogsEntries(
-		java.lang.String assetTagName, int start, int end)
+		String assetTagName, int start, int end)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _microblogsEntryService.getMicroblogsEntries(assetTagName,
 			start, end);
@@ -72,7 +72,7 @@ public class MicroblogsEntryServiceWrapper implements MicroblogsEntryService,
 	}
 
 	@Override
-	public int getMicroblogsEntriesCount(java.lang.String assetTagName)
+	public int getMicroblogsEntriesCount(String assetTagName)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _microblogsEntryService.getMicroblogsEntriesCount(assetTagName);
 	}
@@ -90,7 +90,7 @@ public class MicroblogsEntryServiceWrapper implements MicroblogsEntryService,
 	* @return the OSGi service identifier
 	*/
 	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
+	public String getOSGiServiceIdentifier() {
 		return _microblogsEntryService.getOSGiServiceIdentifier();
 	}
 
@@ -125,8 +125,7 @@ public class MicroblogsEntryServiceWrapper implements MicroblogsEntryService,
 
 	@Override
 	public com.liferay.microblogs.model.MicroblogsEntry updateMicroblogsEntry(
-		long microblogsEntryId, java.lang.String content,
-		int socialRelationType,
+		long microblogsEntryId, String content, int socialRelationType,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _microblogsEntryService.updateMicroblogsEntry(microblogsEntryId,

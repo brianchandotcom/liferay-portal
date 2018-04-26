@@ -85,13 +85,13 @@ public class DDMFormInstanceRecordServiceWrapper
 	* @return the OSGi service identifier
 	*/
 	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
+	public String getOSGiServiceIdentifier() {
 		return _ddmFormInstanceRecordService.getOSGiServiceIdentifier();
 	}
 
 	@Override
 	public void revertFormInstanceRecord(long ddmFormInstanceRecordId,
-		java.lang.String version,
+		String version,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_ddmFormInstanceRecordService.revertFormInstanceRecord(ddmFormInstanceRecordId,

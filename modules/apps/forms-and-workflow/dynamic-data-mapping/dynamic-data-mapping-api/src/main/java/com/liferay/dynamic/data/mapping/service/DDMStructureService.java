@@ -61,9 +61,9 @@ public interface DDMStructureService extends BaseService {
 	 * Never modify or reference this interface directly. Always use {@link DDMStructureServiceUtil} to access the ddm structure remote service. Add custom service methods to {@link com.liferay.dynamic.data.mapping.service.impl.DDMStructureServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	public DDMStructure addStructure(long userId, long groupId,
-		long classNameId, Map<Locale, java.lang.String> nameMap,
-		Map<Locale, java.lang.String> descriptionMap, DDMForm ddmForm,
-		DDMFormLayout ddmFormLayout, java.lang.String storageType,
+		long classNameId, Map<Locale, String> nameMap,
+		Map<Locale, String> descriptionMap, DDMForm ddmForm,
+		DDMFormLayout ddmFormLayout, String storageType,
 		ServiceContext serviceContext) throws PortalException;
 
 	/**
@@ -86,17 +86,16 @@ public interface DDMStructureService extends BaseService {
 	* @deprecated As of 2.1.0, replaced by {@link #addStructure(long, long,
 	long, Map, Map, DDMForm, DDMFormLayout, ServiceContext)}
 	*/
-	@java.lang.Deprecated
+	@Deprecated
 	public DDMStructure addStructure(long userId, long groupId,
-		long classNameId, Map<Locale, java.lang.String> nameMap,
-		Map<Locale, java.lang.String> descriptionMap, java.lang.String xsd,
+		long classNameId, Map<Locale, String> nameMap,
+		Map<Locale, String> descriptionMap, String xsd,
 		ServiceContext serviceContext) throws PortalException;
 
 	public DDMStructure addStructure(long groupId, long parentStructureId,
-		long classNameId, java.lang.String structureKey,
-		Map<Locale, java.lang.String> nameMap,
-		Map<Locale, java.lang.String> descriptionMap, DDMForm ddmForm,
-		DDMFormLayout ddmFormLayout, java.lang.String storageType, int type,
+		long classNameId, String structureKey, Map<Locale, String> nameMap,
+		Map<Locale, String> descriptionMap, DDMForm ddmForm,
+		DDMFormLayout ddmFormLayout, String storageType, int type,
 		ServiceContext serviceContext) throws PortalException;
 
 	/**
@@ -127,20 +126,17 @@ public interface DDMStructureService extends BaseService {
 	long, String, Map, Map, DDMForm, DDMFormLayout, String, int,
 	ServiceContext)}
 	*/
-	@java.lang.Deprecated
+	@Deprecated
 	public DDMStructure addStructure(long groupId, long parentStructureId,
-		long classNameId, java.lang.String structureKey,
-		Map<Locale, java.lang.String> nameMap,
-		Map<Locale, java.lang.String> descriptionMap, java.lang.String xsd,
-		java.lang.String storageType, int type, ServiceContext serviceContext)
-		throws PortalException;
+		long classNameId, String structureKey, Map<Locale, String> nameMap,
+		Map<Locale, String> descriptionMap, String xsd, String storageType,
+		int type, ServiceContext serviceContext) throws PortalException;
 
 	public DDMStructure addStructure(long userId, long groupId,
-		java.lang.String parentStructureKey, long classNameId,
-		java.lang.String structureKey, Map<Locale, java.lang.String> nameMap,
-		Map<Locale, java.lang.String> descriptionMap, DDMForm ddmForm,
-		DDMFormLayout ddmFormLayout, java.lang.String storageType, int type,
-		ServiceContext serviceContext) throws PortalException;
+		String parentStructureKey, long classNameId, String structureKey,
+		Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
+		DDMForm ddmForm, DDMFormLayout ddmFormLayout, String storageType,
+		int type, ServiceContext serviceContext) throws PortalException;
 
 	/**
 	* Adds a structure referencing the parent structure by its structure key.
@@ -173,12 +169,11 @@ public interface DDMStructureService extends BaseService {
 	String, long, String, Map, Map, DDMForm, DDMFormLayout,
 	String, int, ServiceContext)}
 	*/
-	@java.lang.Deprecated
+	@Deprecated
 	public DDMStructure addStructure(long userId, long groupId,
-		java.lang.String parentStructureKey, long classNameId,
-		java.lang.String structureKey, Map<Locale, java.lang.String> nameMap,
-		Map<Locale, java.lang.String> descriptionMap, java.lang.String xsd,
-		java.lang.String storageType, int type, ServiceContext serviceContext)
+		String parentStructureKey, long classNameId, String structureKey,
+		Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
+		String xsd, String storageType, int type, ServiceContext serviceContext)
 		throws PortalException;
 
 	/**
@@ -196,8 +191,7 @@ public interface DDMStructureService extends BaseService {
 	* @return the new structure
 	*/
 	public DDMStructure copyStructure(long structureId,
-		Map<Locale, java.lang.String> nameMap,
-		Map<Locale, java.lang.String> descriptionMap,
+		Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
 		ServiceContext serviceContext) throws PortalException;
 
 	public DDMStructure copyStructure(long structureId,
@@ -228,11 +222,11 @@ public interface DDMStructureService extends BaseService {
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public DDMStructure fetchStructure(long groupId, long classNameId,
-		java.lang.String structureKey) throws PortalException;
+		String structureKey) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public DDMStructure fetchStructure(long groupId, long classNameId,
-		java.lang.String structureKey, boolean includeAncestorStructures)
+		String structureKey, boolean includeAncestorStructures)
 		throws PortalException;
 
 	/**
@@ -240,7 +234,7 @@ public interface DDMStructureService extends BaseService {
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	/**
 	* Returns the structure with the ID.
@@ -264,7 +258,7 @@ public interface DDMStructureService extends BaseService {
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public DDMStructure getStructure(long groupId, long classNameId,
-		java.lang.String structureKey) throws PortalException;
+		String structureKey) throws PortalException;
 
 	/**
 	* Returns the structure matching the class name ID, structure key, and
@@ -289,7 +283,7 @@ public interface DDMStructureService extends BaseService {
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public DDMStructure getStructure(long groupId, long classNameId,
-		java.lang.String structureKey, boolean includeAncestorStructures)
+		String structureKey, boolean includeAncestorStructures)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -301,7 +295,7 @@ public interface DDMStructureService extends BaseService {
 		long classNameId, int status, int start, int end,
 		OrderByComparator<DDMStructure> orderByComparator);
 
-	public void revertStructure(long structureId, java.lang.String version,
+	public void revertStructure(long structureId, String version,
 		ServiceContext serviceContext) throws PortalException;
 
 	/**
@@ -336,8 +330,8 @@ public interface DDMStructureService extends BaseService {
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<DDMStructure> search(long companyId, long[] groupIds,
-		long classNameId, java.lang.String keywords, int type, int status,
-		int start, int end, OrderByComparator<DDMStructure> orderByComparator);
+		long classNameId, String keywords, int type, int status, int start,
+		int end, OrderByComparator<DDMStructure> orderByComparator);
 
 	/**
 	* Returns an ordered range of all the structures matching the groups and
@@ -369,8 +363,8 @@ public interface DDMStructureService extends BaseService {
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<DDMStructure> search(long companyId, long[] groupIds,
-		long classNameId, java.lang.String keywords, int status, int start,
-		int end, OrderByComparator<DDMStructure> orderByComparator);
+		long classNameId, String keywords, int status, int start, int end,
+		OrderByComparator<DDMStructure> orderByComparator);
 
 	/**
 	* Returns an ordered range of all the structures matching the groups, class
@@ -408,9 +402,8 @@ public interface DDMStructureService extends BaseService {
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<DDMStructure> search(long companyId, long[] groupIds,
-		long classNameId, java.lang.String name, java.lang.String description,
-		java.lang.String storageType, int type, int status,
-		boolean andOperator, int start, int end,
+		long classNameId, String name, String description, String storageType,
+		int type, int status, boolean andOperator, int start, int end,
 		OrderByComparator<DDMStructure> orderByComparator);
 
 	/**
@@ -428,7 +421,7 @@ public interface DDMStructureService extends BaseService {
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int searchCount(long companyId, long[] groupIds, long classNameId,
-		java.lang.String keywords, int status);
+		String keywords, int status);
 
 	/**
 	* Returns the number of structures matching the groups and class name IDs,
@@ -447,7 +440,7 @@ public interface DDMStructureService extends BaseService {
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int searchCount(long companyId, long[] groupIds, long classNameId,
-		java.lang.String keywords, int type, int status);
+		String keywords, int type, int status);
 
 	/**
 	* Returns the number of structures matching the groups, class name IDs,
@@ -470,13 +463,12 @@ public interface DDMStructureService extends BaseService {
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int searchCount(long companyId, long[] groupIds, long classNameId,
-		java.lang.String name, java.lang.String description,
-		java.lang.String storageType, int type, int status, boolean andOperator);
+		String name, String description, String storageType, int type,
+		int status, boolean andOperator);
 
 	public DDMStructure updateStructure(long groupId, long parentStructureId,
-		long classNameId, java.lang.String structureKey,
-		Map<Locale, java.lang.String> nameMap,
-		Map<Locale, java.lang.String> descriptionMap, DDMForm ddmForm,
+		long classNameId, String structureKey, Map<Locale, String> nameMap,
+		Map<Locale, String> descriptionMap, DDMForm ddmForm,
 		DDMFormLayout ddmFormLayout, ServiceContext serviceContext)
 		throws PortalException;
 
@@ -501,17 +493,15 @@ public interface DDMStructureService extends BaseService {
 	long, String, Map, Map, DDMForm, DDMFormLayout,
 	ServiceContext)}
 	*/
-	@java.lang.Deprecated
+	@Deprecated
 	public DDMStructure updateStructure(long groupId, long parentStructureId,
-		long classNameId, java.lang.String structureKey,
-		Map<Locale, java.lang.String> nameMap,
-		Map<Locale, java.lang.String> descriptionMap,
-		java.lang.String definition, ServiceContext serviceContext)
-		throws PortalException;
+		long classNameId, String structureKey, Map<Locale, String> nameMap,
+		Map<Locale, String> descriptionMap, String definition,
+		ServiceContext serviceContext) throws PortalException;
 
 	public DDMStructure updateStructure(long structureId,
-		long parentStructureId, Map<Locale, java.lang.String> nameMap,
-		Map<Locale, java.lang.String> descriptionMap, DDMForm ddmForm,
+		long parentStructureId, Map<Locale, String> nameMap,
+		Map<Locale, String> descriptionMap, DDMForm ddmForm,
 		DDMFormLayout ddmFormLayout, ServiceContext serviceContext)
 		throws PortalException;
 
@@ -531,10 +521,9 @@ public interface DDMStructureService extends BaseService {
 	* @deprecated As of 2.1.0, replaced by {@link #updateStructure(long, long,
 	Map, Map, DDMForm, DDMFormLayout, ServiceContext)}
 	*/
-	@java.lang.Deprecated
+	@Deprecated
 	public DDMStructure updateStructure(long structureId,
-		long parentStructureId, Map<Locale, java.lang.String> nameMap,
-		Map<Locale, java.lang.String> descriptionMap,
-		java.lang.String definition, ServiceContext serviceContext)
-		throws PortalException;
+		long parentStructureId, Map<Locale, String> nameMap,
+		Map<Locale, String> descriptionMap, String definition,
+		ServiceContext serviceContext) throws PortalException;
 }

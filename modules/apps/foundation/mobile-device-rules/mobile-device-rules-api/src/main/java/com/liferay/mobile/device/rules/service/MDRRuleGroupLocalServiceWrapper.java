@@ -47,9 +47,8 @@ public class MDRRuleGroupLocalServiceWrapper implements MDRRuleGroupLocalService
 
 	@Override
 	public com.liferay.mobile.device.rules.model.MDRRuleGroup addRuleGroup(
-		long groupId,
-		java.util.Map<java.util.Locale, java.lang.String> nameMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		long groupId, java.util.Map<java.util.Locale, String> nameMap,
+		java.util.Map<java.util.Locale, String> descriptionMap,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _mdrRuleGroupLocalService.addRuleGroup(groupId, nameMap,
@@ -239,7 +238,7 @@ public class MDRRuleGroupLocalServiceWrapper implements MDRRuleGroupLocalService
 	*/
 	@Override
 	public com.liferay.mobile.device.rules.model.MDRRuleGroup fetchMDRRuleGroupByUuidAndGroupId(
-		java.lang.String uuid, long groupId) {
+		String uuid, long groupId) {
 		return _mdrRuleGroupLocalService.fetchMDRRuleGroupByUuidAndGroupId(uuid,
 			groupId);
 	}
@@ -290,7 +289,7 @@ public class MDRRuleGroupLocalServiceWrapper implements MDRRuleGroupLocalService
 	*/
 	@Override
 	public com.liferay.mobile.device.rules.model.MDRRuleGroup getMDRRuleGroupByUuidAndGroupId(
-		java.lang.String uuid, long groupId)
+		String uuid, long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _mdrRuleGroupLocalService.getMDRRuleGroupByUuidAndGroupId(uuid,
 			groupId);
@@ -322,7 +321,7 @@ public class MDRRuleGroupLocalServiceWrapper implements MDRRuleGroupLocalService
 	*/
 	@Override
 	public java.util.List<com.liferay.mobile.device.rules.model.MDRRuleGroup> getMDRRuleGroupsByUuidAndCompanyId(
-		java.lang.String uuid, long companyId) {
+		String uuid, long companyId) {
 		return _mdrRuleGroupLocalService.getMDRRuleGroupsByUuidAndCompanyId(uuid,
 			companyId);
 	}
@@ -339,7 +338,7 @@ public class MDRRuleGroupLocalServiceWrapper implements MDRRuleGroupLocalService
 	*/
 	@Override
 	public java.util.List<com.liferay.mobile.device.rules.model.MDRRuleGroup> getMDRRuleGroupsByUuidAndCompanyId(
-		java.lang.String uuid, long companyId, int start, int end,
+		String uuid, long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.mobile.device.rules.model.MDRRuleGroup> orderByComparator) {
 		return _mdrRuleGroupLocalService.getMDRRuleGroupsByUuidAndCompanyId(uuid,
 			companyId, start, end, orderByComparator);
@@ -361,7 +360,7 @@ public class MDRRuleGroupLocalServiceWrapper implements MDRRuleGroupLocalService
 	* @return the OSGi service identifier
 	*/
 	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
+	public String getOSGiServiceIdentifier() {
 		return _mdrRuleGroupLocalService.getOSGiServiceIdentifier();
 	}
 
@@ -409,44 +408,42 @@ public class MDRRuleGroupLocalServiceWrapper implements MDRRuleGroupLocalService
 
 	@Override
 	public java.util.List<com.liferay.mobile.device.rules.model.MDRRuleGroup> search(
-		long groupId, java.lang.String name,
-		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
-		boolean andOperator, int start, int end) {
+		long groupId, String name,
+		java.util.LinkedHashMap<String, Object> params, boolean andOperator,
+		int start, int end) {
 		return _mdrRuleGroupLocalService.search(groupId, name, params,
 			andOperator, start, end);
 	}
 
 	@Override
 	public java.util.List<com.liferay.mobile.device.rules.model.MDRRuleGroup> searchByKeywords(
-		long groupId, java.lang.String keywords,
-		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
-		boolean andOperator, int start, int end) {
+		long groupId, String keywords,
+		java.util.LinkedHashMap<String, Object> params, boolean andOperator,
+		int start, int end) {
 		return _mdrRuleGroupLocalService.searchByKeywords(groupId, keywords,
 			params, andOperator, start, end);
 	}
 
 	@Override
 	public java.util.List<com.liferay.mobile.device.rules.model.MDRRuleGroup> searchByKeywords(
-		long groupId, java.lang.String keywords,
-		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
-		boolean andOperator, int start, int end,
+		long groupId, String keywords,
+		java.util.LinkedHashMap<String, Object> params, boolean andOperator,
+		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.mobile.device.rules.model.MDRRuleGroup> obc) {
 		return _mdrRuleGroupLocalService.searchByKeywords(groupId, keywords,
 			params, andOperator, start, end, obc);
 	}
 
 	@Override
-	public int searchByKeywordsCount(long groupId, java.lang.String keywords,
-		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
-		boolean andOperator) {
+	public int searchByKeywordsCount(long groupId, String keywords,
+		java.util.LinkedHashMap<String, Object> params, boolean andOperator) {
 		return _mdrRuleGroupLocalService.searchByKeywordsCount(groupId,
 			keywords, params, andOperator);
 	}
 
 	@Override
-	public int searchCount(long groupId, java.lang.String name,
-		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
-		boolean andOperator) {
+	public int searchCount(long groupId, String name,
+		java.util.LinkedHashMap<String, Object> params, boolean andOperator) {
 		return _mdrRuleGroupLocalService.searchCount(groupId, name, params,
 			andOperator);
 	}
@@ -465,9 +462,8 @@ public class MDRRuleGroupLocalServiceWrapper implements MDRRuleGroupLocalService
 
 	@Override
 	public com.liferay.mobile.device.rules.model.MDRRuleGroup updateRuleGroup(
-		long ruleGroupId,
-		java.util.Map<java.util.Locale, java.lang.String> nameMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		long ruleGroupId, java.util.Map<java.util.Locale, String> nameMap,
+		java.util.Map<java.util.Locale, String> descriptionMap,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _mdrRuleGroupLocalService.updateRuleGroup(ruleGroupId, nameMap,

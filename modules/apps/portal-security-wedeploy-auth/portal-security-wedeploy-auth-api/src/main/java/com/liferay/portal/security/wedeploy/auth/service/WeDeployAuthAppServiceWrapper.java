@@ -35,7 +35,7 @@ public class WeDeployAuthAppServiceWrapper implements WeDeployAuthAppService,
 
 	@Override
 	public com.liferay.portal.security.wedeploy.auth.model.WeDeployAuthApp addWeDeployAuthApp(
-		java.lang.String name, java.lang.String redirectURI,
+		String name, String redirectURI,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _weDeployAuthAppService.addWeDeployAuthApp(name, redirectURI,
@@ -55,7 +55,7 @@ public class WeDeployAuthAppServiceWrapper implements WeDeployAuthAppService,
 	* @return the OSGi service identifier
 	*/
 	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
+	public String getOSGiServiceIdentifier() {
 		return _weDeployAuthAppService.getOSGiServiceIdentifier();
 	}
 

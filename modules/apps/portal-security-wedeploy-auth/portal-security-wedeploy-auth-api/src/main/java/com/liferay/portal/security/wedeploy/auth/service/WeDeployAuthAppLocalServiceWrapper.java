@@ -36,7 +36,7 @@ public class WeDeployAuthAppLocalServiceWrapper
 
 	@Override
 	public com.liferay.portal.security.wedeploy.auth.model.WeDeployAuthApp addWeDeployAuthApp(
-		long userId, java.lang.String name, java.lang.String redirectURI,
+		long userId, String name, String redirectURI,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _weDeployAuthAppLocalService.addWeDeployAuthApp(userId, name,
@@ -197,7 +197,7 @@ public class WeDeployAuthAppLocalServiceWrapper
 
 	@Override
 	public com.liferay.portal.security.wedeploy.auth.model.WeDeployAuthApp fetchWeDeployAuthApp(
-		java.lang.String redirectURI, java.lang.String clientId) {
+		String redirectURI, String clientId) {
 		return _weDeployAuthAppLocalService.fetchWeDeployAuthApp(redirectURI,
 			clientId);
 	}
@@ -218,7 +218,7 @@ public class WeDeployAuthAppLocalServiceWrapper
 	* @return the OSGi service identifier
 	*/
 	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
+	public String getOSGiServiceIdentifier() {
 		return _weDeployAuthAppLocalService.getOSGiServiceIdentifier();
 	}
 

@@ -55,5 +55,5 @@ public interface PowwowMeeting extends PowwowMeetingModel, PersistedModel {
 			}
 		};
 
-	public java.util.Map<java.lang.String, java.io.Serializable> getProviderTypeMetadataMap();
+	public java.util.Map<String, java.io.Serializable> getProviderTypeMetadataMap();
 }

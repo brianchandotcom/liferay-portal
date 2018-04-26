@@ -270,7 +270,7 @@ public class SocialRelationLocalServiceWrapper
 	*/
 	@Override
 	public com.liferay.social.kernel.model.SocialRelation fetchSocialRelationByUuidAndCompanyId(
-		java.lang.String uuid, long companyId) {
+		String uuid, long companyId) {
 		return _socialRelationLocalService.fetchSocialRelationByUuidAndCompanyId(uuid,
 			companyId);
 	}
@@ -331,7 +331,7 @@ public class SocialRelationLocalServiceWrapper
 	* @return the OSGi service identifier
 	*/
 	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
+	public String getOSGiServiceIdentifier() {
 		return _socialRelationLocalService.getOSGiServiceIdentifier();
 	}
 
@@ -471,7 +471,7 @@ public class SocialRelationLocalServiceWrapper
 	*/
 	@Override
 	public com.liferay.social.kernel.model.SocialRelation getSocialRelationByUuidAndCompanyId(
-		java.lang.String uuid, long companyId)
+		String uuid, long companyId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _socialRelationLocalService.getSocialRelationByUuidAndCompanyId(uuid,
 			companyId);

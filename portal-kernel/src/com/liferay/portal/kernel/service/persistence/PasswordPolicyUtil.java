@@ -114,7 +114,7 @@ public class PasswordPolicyUtil {
 	* @param uuid the uuid
 	* @return the matching password policies
 	*/
-	public static List<PasswordPolicy> findByUuid(java.lang.String uuid) {
+	public static List<PasswordPolicy> findByUuid(String uuid) {
 		return getPersistence().findByUuid(uuid);
 	}
 
@@ -130,8 +130,8 @@ public class PasswordPolicyUtil {
 	* @param end the upper bound of the range of password policies (not inclusive)
 	* @return the range of matching password policies
 	*/
-	public static List<PasswordPolicy> findByUuid(java.lang.String uuid,
-		int start, int end) {
+	public static List<PasswordPolicy> findByUuid(String uuid, int start,
+		int end) {
 		return getPersistence().findByUuid(uuid, start, end);
 	}
 
@@ -148,8 +148,8 @@ public class PasswordPolicyUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching password policies
 	*/
-	public static List<PasswordPolicy> findByUuid(java.lang.String uuid,
-		int start, int end, OrderByComparator<PasswordPolicy> orderByComparator) {
+	public static List<PasswordPolicy> findByUuid(String uuid, int start,
+		int end, OrderByComparator<PasswordPolicy> orderByComparator) {
 		return getPersistence().findByUuid(uuid, start, end, orderByComparator);
 	}
 
@@ -167,9 +167,8 @@ public class PasswordPolicyUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching password policies
 	*/
-	public static List<PasswordPolicy> findByUuid(java.lang.String uuid,
-		int start, int end,
-		OrderByComparator<PasswordPolicy> orderByComparator,
+	public static List<PasswordPolicy> findByUuid(String uuid, int start,
+		int end, OrderByComparator<PasswordPolicy> orderByComparator,
 		boolean retrieveFromCache) {
 		return getPersistence()
 				   .findByUuid(uuid, start, end, orderByComparator,
@@ -184,7 +183,7 @@ public class PasswordPolicyUtil {
 	* @return the first matching password policy
 	* @throws NoSuchPasswordPolicyException if a matching password policy could not be found
 	*/
-	public static PasswordPolicy findByUuid_First(java.lang.String uuid,
+	public static PasswordPolicy findByUuid_First(String uuid,
 		OrderByComparator<PasswordPolicy> orderByComparator)
 		throws com.liferay.portal.kernel.exception.NoSuchPasswordPolicyException {
 		return getPersistence().findByUuid_First(uuid, orderByComparator);
@@ -197,7 +196,7 @@ public class PasswordPolicyUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching password policy, or <code>null</code> if a matching password policy could not be found
 	*/
-	public static PasswordPolicy fetchByUuid_First(java.lang.String uuid,
+	public static PasswordPolicy fetchByUuid_First(String uuid,
 		OrderByComparator<PasswordPolicy> orderByComparator) {
 		return getPersistence().fetchByUuid_First(uuid, orderByComparator);
 	}
@@ -210,7 +209,7 @@ public class PasswordPolicyUtil {
 	* @return the last matching password policy
 	* @throws NoSuchPasswordPolicyException if a matching password policy could not be found
 	*/
-	public static PasswordPolicy findByUuid_Last(java.lang.String uuid,
+	public static PasswordPolicy findByUuid_Last(String uuid,
 		OrderByComparator<PasswordPolicy> orderByComparator)
 		throws com.liferay.portal.kernel.exception.NoSuchPasswordPolicyException {
 		return getPersistence().findByUuid_Last(uuid, orderByComparator);
@@ -223,7 +222,7 @@ public class PasswordPolicyUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching password policy, or <code>null</code> if a matching password policy could not be found
 	*/
-	public static PasswordPolicy fetchByUuid_Last(java.lang.String uuid,
+	public static PasswordPolicy fetchByUuid_Last(String uuid,
 		OrderByComparator<PasswordPolicy> orderByComparator) {
 		return getPersistence().fetchByUuid_Last(uuid, orderByComparator);
 	}
@@ -238,7 +237,7 @@ public class PasswordPolicyUtil {
 	* @throws NoSuchPasswordPolicyException if a password policy with the primary key could not be found
 	*/
 	public static PasswordPolicy[] findByUuid_PrevAndNext(
-		long passwordPolicyId, java.lang.String uuid,
+		long passwordPolicyId, String uuid,
 		OrderByComparator<PasswordPolicy> orderByComparator)
 		throws com.liferay.portal.kernel.exception.NoSuchPasswordPolicyException {
 		return getPersistence()
@@ -252,7 +251,7 @@ public class PasswordPolicyUtil {
 	* @param uuid the uuid
 	* @return the matching password policies that the user has permission to view
 	*/
-	public static List<PasswordPolicy> filterFindByUuid(java.lang.String uuid) {
+	public static List<PasswordPolicy> filterFindByUuid(String uuid) {
 		return getPersistence().filterFindByUuid(uuid);
 	}
 
@@ -268,8 +267,8 @@ public class PasswordPolicyUtil {
 	* @param end the upper bound of the range of password policies (not inclusive)
 	* @return the range of matching password policies that the user has permission to view
 	*/
-	public static List<PasswordPolicy> filterFindByUuid(java.lang.String uuid,
-		int start, int end) {
+	public static List<PasswordPolicy> filterFindByUuid(String uuid, int start,
+		int end) {
 		return getPersistence().filterFindByUuid(uuid, start, end);
 	}
 
@@ -286,8 +285,8 @@ public class PasswordPolicyUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching password policies that the user has permission to view
 	*/
-	public static List<PasswordPolicy> filterFindByUuid(java.lang.String uuid,
-		int start, int end, OrderByComparator<PasswordPolicy> orderByComparator) {
+	public static List<PasswordPolicy> filterFindByUuid(String uuid, int start,
+		int end, OrderByComparator<PasswordPolicy> orderByComparator) {
 		return getPersistence()
 				   .filterFindByUuid(uuid, start, end, orderByComparator);
 	}
@@ -302,7 +301,7 @@ public class PasswordPolicyUtil {
 	* @throws NoSuchPasswordPolicyException if a password policy with the primary key could not be found
 	*/
 	public static PasswordPolicy[] filterFindByUuid_PrevAndNext(
-		long passwordPolicyId, java.lang.String uuid,
+		long passwordPolicyId, String uuid,
 		OrderByComparator<PasswordPolicy> orderByComparator)
 		throws com.liferay.portal.kernel.exception.NoSuchPasswordPolicyException {
 		return getPersistence()
@@ -315,7 +314,7 @@ public class PasswordPolicyUtil {
 	*
 	* @param uuid the uuid
 	*/
-	public static void removeByUuid(java.lang.String uuid) {
+	public static void removeByUuid(String uuid) {
 		getPersistence().removeByUuid(uuid);
 	}
 
@@ -325,7 +324,7 @@ public class PasswordPolicyUtil {
 	* @param uuid the uuid
 	* @return the number of matching password policies
 	*/
-	public static int countByUuid(java.lang.String uuid) {
+	public static int countByUuid(String uuid) {
 		return getPersistence().countByUuid(uuid);
 	}
 
@@ -335,7 +334,7 @@ public class PasswordPolicyUtil {
 	* @param uuid the uuid
 	* @return the number of matching password policies that the user has permission to view
 	*/
-	public static int filterCountByUuid(java.lang.String uuid) {
+	public static int filterCountByUuid(String uuid) {
 		return getPersistence().filterCountByUuid(uuid);
 	}
 
@@ -346,8 +345,7 @@ public class PasswordPolicyUtil {
 	* @param companyId the company ID
 	* @return the matching password policies
 	*/
-	public static List<PasswordPolicy> findByUuid_C(java.lang.String uuid,
-		long companyId) {
+	public static List<PasswordPolicy> findByUuid_C(String uuid, long companyId) {
 		return getPersistence().findByUuid_C(uuid, companyId);
 	}
 
@@ -364,7 +362,7 @@ public class PasswordPolicyUtil {
 	* @param end the upper bound of the range of password policies (not inclusive)
 	* @return the range of matching password policies
 	*/
-	public static List<PasswordPolicy> findByUuid_C(java.lang.String uuid,
+	public static List<PasswordPolicy> findByUuid_C(String uuid,
 		long companyId, int start, int end) {
 		return getPersistence().findByUuid_C(uuid, companyId, start, end);
 	}
@@ -383,7 +381,7 @@ public class PasswordPolicyUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching password policies
 	*/
-	public static List<PasswordPolicy> findByUuid_C(java.lang.String uuid,
+	public static List<PasswordPolicy> findByUuid_C(String uuid,
 		long companyId, int start, int end,
 		OrderByComparator<PasswordPolicy> orderByComparator) {
 		return getPersistence()
@@ -405,7 +403,7 @@ public class PasswordPolicyUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching password policies
 	*/
-	public static List<PasswordPolicy> findByUuid_C(java.lang.String uuid,
+	public static List<PasswordPolicy> findByUuid_C(String uuid,
 		long companyId, int start, int end,
 		OrderByComparator<PasswordPolicy> orderByComparator,
 		boolean retrieveFromCache) {
@@ -423,7 +421,7 @@ public class PasswordPolicyUtil {
 	* @return the first matching password policy
 	* @throws NoSuchPasswordPolicyException if a matching password policy could not be found
 	*/
-	public static PasswordPolicy findByUuid_C_First(java.lang.String uuid,
+	public static PasswordPolicy findByUuid_C_First(String uuid,
 		long companyId, OrderByComparator<PasswordPolicy> orderByComparator)
 		throws com.liferay.portal.kernel.exception.NoSuchPasswordPolicyException {
 		return getPersistence()
@@ -438,7 +436,7 @@ public class PasswordPolicyUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching password policy, or <code>null</code> if a matching password policy could not be found
 	*/
-	public static PasswordPolicy fetchByUuid_C_First(java.lang.String uuid,
+	public static PasswordPolicy fetchByUuid_C_First(String uuid,
 		long companyId, OrderByComparator<PasswordPolicy> orderByComparator) {
 		return getPersistence()
 				   .fetchByUuid_C_First(uuid, companyId, orderByComparator);
@@ -453,8 +451,8 @@ public class PasswordPolicyUtil {
 	* @return the last matching password policy
 	* @throws NoSuchPasswordPolicyException if a matching password policy could not be found
 	*/
-	public static PasswordPolicy findByUuid_C_Last(java.lang.String uuid,
-		long companyId, OrderByComparator<PasswordPolicy> orderByComparator)
+	public static PasswordPolicy findByUuid_C_Last(String uuid, long companyId,
+		OrderByComparator<PasswordPolicy> orderByComparator)
 		throws com.liferay.portal.kernel.exception.NoSuchPasswordPolicyException {
 		return getPersistence()
 				   .findByUuid_C_Last(uuid, companyId, orderByComparator);
@@ -468,7 +466,7 @@ public class PasswordPolicyUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching password policy, or <code>null</code> if a matching password policy could not be found
 	*/
-	public static PasswordPolicy fetchByUuid_C_Last(java.lang.String uuid,
+	public static PasswordPolicy fetchByUuid_C_Last(String uuid,
 		long companyId, OrderByComparator<PasswordPolicy> orderByComparator) {
 		return getPersistence()
 				   .fetchByUuid_C_Last(uuid, companyId, orderByComparator);
@@ -485,7 +483,7 @@ public class PasswordPolicyUtil {
 	* @throws NoSuchPasswordPolicyException if a password policy with the primary key could not be found
 	*/
 	public static PasswordPolicy[] findByUuid_C_PrevAndNext(
-		long passwordPolicyId, java.lang.String uuid, long companyId,
+		long passwordPolicyId, String uuid, long companyId,
 		OrderByComparator<PasswordPolicy> orderByComparator)
 		throws com.liferay.portal.kernel.exception.NoSuchPasswordPolicyException {
 		return getPersistence()
@@ -500,8 +498,8 @@ public class PasswordPolicyUtil {
 	* @param companyId the company ID
 	* @return the matching password policies that the user has permission to view
 	*/
-	public static List<PasswordPolicy> filterFindByUuid_C(
-		java.lang.String uuid, long companyId) {
+	public static List<PasswordPolicy> filterFindByUuid_C(String uuid,
+		long companyId) {
 		return getPersistence().filterFindByUuid_C(uuid, companyId);
 	}
 
@@ -518,8 +516,8 @@ public class PasswordPolicyUtil {
 	* @param end the upper bound of the range of password policies (not inclusive)
 	* @return the range of matching password policies that the user has permission to view
 	*/
-	public static List<PasswordPolicy> filterFindByUuid_C(
-		java.lang.String uuid, long companyId, int start, int end) {
+	public static List<PasswordPolicy> filterFindByUuid_C(String uuid,
+		long companyId, int start, int end) {
 		return getPersistence().filterFindByUuid_C(uuid, companyId, start, end);
 	}
 
@@ -537,8 +535,8 @@ public class PasswordPolicyUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching password policies that the user has permission to view
 	*/
-	public static List<PasswordPolicy> filterFindByUuid_C(
-		java.lang.String uuid, long companyId, int start, int end,
+	public static List<PasswordPolicy> filterFindByUuid_C(String uuid,
+		long companyId, int start, int end,
 		OrderByComparator<PasswordPolicy> orderByComparator) {
 		return getPersistence()
 				   .filterFindByUuid_C(uuid, companyId, start, end,
@@ -556,7 +554,7 @@ public class PasswordPolicyUtil {
 	* @throws NoSuchPasswordPolicyException if a password policy with the primary key could not be found
 	*/
 	public static PasswordPolicy[] filterFindByUuid_C_PrevAndNext(
-		long passwordPolicyId, java.lang.String uuid, long companyId,
+		long passwordPolicyId, String uuid, long companyId,
 		OrderByComparator<PasswordPolicy> orderByComparator)
 		throws com.liferay.portal.kernel.exception.NoSuchPasswordPolicyException {
 		return getPersistence()
@@ -570,7 +568,7 @@ public class PasswordPolicyUtil {
 	* @param uuid the uuid
 	* @param companyId the company ID
 	*/
-	public static void removeByUuid_C(java.lang.String uuid, long companyId) {
+	public static void removeByUuid_C(String uuid, long companyId) {
 		getPersistence().removeByUuid_C(uuid, companyId);
 	}
 
@@ -581,7 +579,7 @@ public class PasswordPolicyUtil {
 	* @param companyId the company ID
 	* @return the number of matching password policies
 	*/
-	public static int countByUuid_C(java.lang.String uuid, long companyId) {
+	public static int countByUuid_C(String uuid, long companyId) {
 		return getPersistence().countByUuid_C(uuid, companyId);
 	}
 
@@ -592,7 +590,7 @@ public class PasswordPolicyUtil {
 	* @param companyId the company ID
 	* @return the number of matching password policies that the user has permission to view
 	*/
-	public static int filterCountByUuid_C(java.lang.String uuid, long companyId) {
+	public static int filterCountByUuid_C(String uuid, long companyId) {
 		return getPersistence().filterCountByUuid_C(uuid, companyId);
 	}
 
@@ -905,7 +903,7 @@ public class PasswordPolicyUtil {
 	* @return the matching password policy
 	* @throws NoSuchPasswordPolicyException if a matching password policy could not be found
 	*/
-	public static PasswordPolicy findByC_N(long companyId, java.lang.String name)
+	public static PasswordPolicy findByC_N(long companyId, String name)
 		throws com.liferay.portal.kernel.exception.NoSuchPasswordPolicyException {
 		return getPersistence().findByC_N(companyId, name);
 	}
@@ -917,8 +915,7 @@ public class PasswordPolicyUtil {
 	* @param name the name
 	* @return the matching password policy, or <code>null</code> if a matching password policy could not be found
 	*/
-	public static PasswordPolicy fetchByC_N(long companyId,
-		java.lang.String name) {
+	public static PasswordPolicy fetchByC_N(long companyId, String name) {
 		return getPersistence().fetchByC_N(companyId, name);
 	}
 
@@ -930,8 +927,8 @@ public class PasswordPolicyUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching password policy, or <code>null</code> if a matching password policy could not be found
 	*/
-	public static PasswordPolicy fetchByC_N(long companyId,
-		java.lang.String name, boolean retrieveFromCache) {
+	public static PasswordPolicy fetchByC_N(long companyId, String name,
+		boolean retrieveFromCache) {
 		return getPersistence().fetchByC_N(companyId, name, retrieveFromCache);
 	}
 
@@ -942,8 +939,7 @@ public class PasswordPolicyUtil {
 	* @param name the name
 	* @return the password policy that was removed
 	*/
-	public static PasswordPolicy removeByC_N(long companyId,
-		java.lang.String name)
+	public static PasswordPolicy removeByC_N(long companyId, String name)
 		throws com.liferay.portal.kernel.exception.NoSuchPasswordPolicyException {
 		return getPersistence().removeByC_N(companyId, name);
 	}
@@ -955,7 +951,7 @@ public class PasswordPolicyUtil {
 	* @param name the name
 	* @return the number of matching password policies
 	*/
-	public static int countByC_N(long companyId, java.lang.String name) {
+	public static int countByC_N(long companyId, String name) {
 		return getPersistence().countByC_N(companyId, name);
 	}
 
@@ -1107,7 +1103,7 @@ public class PasswordPolicyUtil {
 		return getPersistence().countAll();
 	}
 
-	public static java.util.Set<java.lang.String> getBadColumnNames() {
+	public static java.util.Set<String> getBadColumnNames() {
 		return getPersistence().getBadColumnNames();
 	}
 

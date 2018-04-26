@@ -57,7 +57,7 @@ public interface SyncDLObject extends SyncDLObjectModel, PersistedModel,
 		};
 
 	@Override
-	public java.lang.String buildTreePath();
+	public String buildTreePath();
 
 	public void setCreateDate(java.util.Date createDate);
 

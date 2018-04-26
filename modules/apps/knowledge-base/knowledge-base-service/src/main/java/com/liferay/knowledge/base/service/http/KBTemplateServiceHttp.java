@@ -56,8 +56,8 @@ import com.liferay.portal.kernel.util.MethodKey;
 @ProviderType
 public class KBTemplateServiceHttp {
 	public static com.liferay.knowledge.base.model.KBTemplate addKBTemplate(
-		HttpPrincipal httpPrincipal, java.lang.String portletId,
-		java.lang.String title, java.lang.String content,
+		HttpPrincipal httpPrincipal, String portletId, String title,
+		String content,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -237,10 +237,9 @@ public class KBTemplateServiceHttp {
 	}
 
 	public static com.liferay.knowledge.base.model.KBTemplateSearchDisplay getKBTemplateSearchDisplay(
-		HttpPrincipal httpPrincipal, long groupId, java.lang.String title,
-		java.lang.String content, java.util.Date startDate,
-		java.util.Date endDate, boolean andOperator, int[] curStartValues,
-		int cur, int delta,
+		HttpPrincipal httpPrincipal, long groupId, String title,
+		String content, java.util.Date startDate, java.util.Date endDate,
+		boolean andOperator, int[] curStartValues, int cur, int delta,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.knowledge.base.model.KBTemplate> orderByComparator)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -275,8 +274,8 @@ public class KBTemplateServiceHttp {
 	}
 
 	public static com.liferay.knowledge.base.model.KBTemplate updateKBTemplate(
-		HttpPrincipal httpPrincipal, long kbTemplateId, java.lang.String title,
-		java.lang.String content,
+		HttpPrincipal httpPrincipal, long kbTemplateId, String title,
+		String content,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -310,8 +309,7 @@ public class KBTemplateServiceHttp {
 
 	private static Log _log = LogFactoryUtil.getLog(KBTemplateServiceHttp.class);
 	private static final Class<?>[] _addKBTemplateParameterTypes0 = new Class[] {
-			java.lang.String.class, java.lang.String.class,
-			java.lang.String.class,
+			String.class, String.class, String.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _deleteKBTemplateParameterTypes1 = new Class[] {
@@ -331,13 +329,12 @@ public class KBTemplateServiceHttp {
 			long.class
 		};
 	private static final Class<?>[] _getKBTemplateSearchDisplayParameterTypes6 = new Class[] {
-			long.class, java.lang.String.class, java.lang.String.class,
-			java.util.Date.class, java.util.Date.class, boolean.class,
-			int[].class, int.class, int.class,
-			com.liferay.portal.kernel.util.OrderByComparator.class
+			long.class, String.class, String.class, java.util.Date.class,
+			java.util.Date.class, boolean.class, int[].class, int.class,
+			int.class, com.liferay.portal.kernel.util.OrderByComparator.class
 		};
 	private static final Class<?>[] _updateKBTemplateParameterTypes7 = new Class[] {
-			long.class, java.lang.String.class, java.lang.String.class,
+			long.class, String.class, String.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 }

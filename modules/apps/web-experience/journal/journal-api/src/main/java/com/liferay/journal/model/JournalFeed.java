@@ -57,37 +57,37 @@ public interface JournalFeed extends JournalFeedModel, PersistedModel {
 	/**
 	* @deprecated As of 4.0.0, replaced by {@link #getDDMRendererTemplateKey()}
 	*/
-	@java.lang.Deprecated()
-	public java.lang.String getRendererTemplateId();
+	@Deprecated()
+	public String getRendererTemplateId();
 
 	/**
 	* @deprecated As of 4.0.0, replaced by {@link #getDDMStructureKey()}
 	*/
-	@java.lang.Deprecated()
-	public java.lang.String getStructureId();
+	@Deprecated()
+	public String getStructureId();
 
 	/**
 	* @deprecated As of 4.0.0, replaced by {@link #getDDMTemplateKey()}
 	*/
-	@java.lang.Deprecated()
-	public java.lang.String getTemplateId();
+	@Deprecated()
+	public String getTemplateId();
 
 	/**
 	* @deprecated As of 4.0.0, replaced by {@link
 	#setDDMRendererTemplateKey(String)}
 	*/
-	@java.lang.Deprecated()
-	public void setRendererTemplateId(java.lang.String rendererTemplateKey);
+	@Deprecated()
+	public void setRendererTemplateId(String rendererTemplateKey);
 
 	/**
 	* @deprecated As of 4.0.0, replaced by {@link #setDDMStructureKey(String)}
 	*/
-	@java.lang.Deprecated()
-	public void setStructureId(java.lang.String structureKey);
+	@Deprecated()
+	public void setStructureId(String structureKey);
 
 	/**
 	* @deprecated As of 4.0.0, replaced by {@link #setDDMTemplateKey(String)}
 	*/
-	@java.lang.Deprecated()
-	public void setTemplateId(java.lang.String templateKey);
+	@Deprecated()
+	public void setTemplateId(String templateKey);
 }

@@ -41,9 +41,9 @@ public class LayoutSetBranchServiceUtil {
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.portal.service.impl.LayoutSetBranchServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static com.liferay.portal.kernel.model.LayoutSetBranch addLayoutSetBranch(
-		long groupId, boolean privateLayout, java.lang.String name,
-		java.lang.String description, boolean master,
-		long copyLayoutSetBranchId, ServiceContext serviceContext)
+		long groupId, boolean privateLayout, String name, String description,
+		boolean master, long copyLayoutSetBranchId,
+		ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addLayoutSetBranch(groupId, privateLayout, name,
@@ -65,7 +65,7 @@ public class LayoutSetBranchServiceUtil {
 	*
 	* @return the OSGi service identifier
 	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
+	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 
@@ -79,8 +79,8 @@ public class LayoutSetBranchServiceUtil {
 	}
 
 	public static com.liferay.portal.kernel.model.LayoutSetBranch updateLayoutSetBranch(
-		long groupId, long layoutSetBranchId, java.lang.String name,
-		java.lang.String description, ServiceContext serviceContext)
+		long groupId, long layoutSetBranchId, String name, String description,
+		ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .updateLayoutSetBranch(groupId, layoutSetBranchId, name,

@@ -426,7 +426,7 @@ public class RegionUtil {
 	* @return the matching region
 	* @throws NoSuchRegionException if a matching region could not be found
 	*/
-	public static Region findByC_R(long countryId, java.lang.String regionCode)
+	public static Region findByC_R(long countryId, String regionCode)
 		throws com.liferay.portal.kernel.exception.NoSuchRegionException {
 		return getPersistence().findByC_R(countryId, regionCode);
 	}
@@ -438,7 +438,7 @@ public class RegionUtil {
 	* @param regionCode the region code
 	* @return the matching region, or <code>null</code> if a matching region could not be found
 	*/
-	public static Region fetchByC_R(long countryId, java.lang.String regionCode) {
+	public static Region fetchByC_R(long countryId, String regionCode) {
 		return getPersistence().fetchByC_R(countryId, regionCode);
 	}
 
@@ -450,8 +450,8 @@ public class RegionUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching region, or <code>null</code> if a matching region could not be found
 	*/
-	public static Region fetchByC_R(long countryId,
-		java.lang.String regionCode, boolean retrieveFromCache) {
+	public static Region fetchByC_R(long countryId, String regionCode,
+		boolean retrieveFromCache) {
 		return getPersistence()
 				   .fetchByC_R(countryId, regionCode, retrieveFromCache);
 	}
@@ -463,7 +463,7 @@ public class RegionUtil {
 	* @param regionCode the region code
 	* @return the region that was removed
 	*/
-	public static Region removeByC_R(long countryId, java.lang.String regionCode)
+	public static Region removeByC_R(long countryId, String regionCode)
 		throws com.liferay.portal.kernel.exception.NoSuchRegionException {
 		return getPersistence().removeByC_R(countryId, regionCode);
 	}
@@ -475,7 +475,7 @@ public class RegionUtil {
 	* @param regionCode the region code
 	* @return the number of matching regions
 	*/
-	public static int countByC_R(long countryId, java.lang.String regionCode) {
+	public static int countByC_R(long countryId, String regionCode) {
 		return getPersistence().countByC_R(countryId, regionCode);
 	}
 
@@ -797,7 +797,7 @@ public class RegionUtil {
 		return getPersistence().countAll();
 	}
 
-	public static java.util.Set<java.lang.String> getBadColumnNames() {
+	public static java.util.Set<String> getBadColumnNames() {
 		return getPersistence().getBadColumnNames();
 	}
 

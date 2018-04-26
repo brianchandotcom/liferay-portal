@@ -86,11 +86,9 @@ public interface DDMTemplateService extends BaseService {
 	* @return the template
 	*/
 	public DDMTemplate addTemplate(long groupId, long classNameId,
-		long classPK, long resourceClassNameId,
-		Map<Locale, java.lang.String> nameMap,
-		Map<Locale, java.lang.String> descriptionMap, java.lang.String type,
-		java.lang.String mode, java.lang.String language,
-		java.lang.String script, ServiceContext serviceContext)
+		long classPK, long resourceClassNameId, Map<Locale, String> nameMap,
+		Map<Locale, String> descriptionMap, String type, String mode,
+		String language, String script, ServiceContext serviceContext)
 		throws PortalException;
 
 	/**
@@ -126,13 +124,12 @@ public interface DDMTemplateService extends BaseService {
 	* @return the template
 	*/
 	public DDMTemplate addTemplate(long groupId, long classNameId,
-		long classPK, long resourceClassNameId, java.lang.String templateKey,
-		Map<Locale, java.lang.String> nameMap,
-		Map<Locale, java.lang.String> descriptionMap, java.lang.String type,
-		java.lang.String mode, java.lang.String language,
-		java.lang.String script, boolean cacheable, boolean smallImage,
-		java.lang.String smallImageURL, File smallImageFile,
-		ServiceContext serviceContext) throws PortalException;
+		long classPK, long resourceClassNameId, String templateKey,
+		Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
+		String type, String mode, String language, String script,
+		boolean cacheable, boolean smallImage, String smallImageURL,
+		File smallImageFile, ServiceContext serviceContext)
+		throws PortalException;
 
 	/**
 	* Copies the template, creating a new template with all the values
@@ -150,8 +147,7 @@ public interface DDMTemplateService extends BaseService {
 	* @return the new template
 	*/
 	public DDMTemplate copyTemplate(long templateId,
-		Map<Locale, java.lang.String> nameMap,
-		Map<Locale, java.lang.String> descriptionMap,
+		Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
 		ServiceContext serviceContext) throws PortalException;
 
 	public DDMTemplate copyTemplate(long templateId,
@@ -177,7 +173,7 @@ public interface DDMTemplateService extends BaseService {
 	* @return the new template
 	*/
 	public List<DDMTemplate> copyTemplates(long classNameId, long oldClassPK,
-		long resourceClassNameId, long newClassPK, java.lang.String type,
+		long resourceClassNameId, long newClassPK, String type,
 		ServiceContext serviceContext) throws PortalException;
 
 	/**
@@ -199,14 +195,14 @@ public interface DDMTemplateService extends BaseService {
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public DDMTemplate fetchTemplate(long groupId, long classNameId,
-		java.lang.String templateKey) throws PortalException;
+		String templateKey) throws PortalException;
 
 	/**
 	* Returns the OSGi service identifier.
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	/**
 	* Returns the template with the ID.
@@ -228,7 +224,7 @@ public interface DDMTemplateService extends BaseService {
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public DDMTemplate getTemplate(long groupId, long classNameId,
-		java.lang.String templateKey) throws PortalException;
+		String templateKey) throws PortalException;
 
 	/**
 	* Returns the template matching the group and template key, optionally
@@ -253,7 +249,7 @@ public interface DDMTemplateService extends BaseService {
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public DDMTemplate getTemplate(long groupId, long classNameId,
-		java.lang.String templateKey, boolean includeAncestorTemplates)
+		String templateKey, boolean includeAncestorTemplates)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -286,13 +282,13 @@ public interface DDMTemplateService extends BaseService {
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<DDMTemplate> getTemplates(long companyId, long groupId,
-		long classNameId, long classPK, long resourceClassNameId,
-		java.lang.String type, int status);
+		long classNameId, long classPK, long resourceClassNameId, String type,
+		int status);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<DDMTemplate> getTemplates(long companyId, long groupId,
-		long classNameId, long classPK, long resourceClassNameId,
-		java.lang.String type, java.lang.String mode, int status);
+		long classNameId, long classPK, long resourceClassNameId, String type,
+		String mode, int status);
 
 	/**
 	* Returns all the templates matching the group, class PK, and resource
@@ -353,7 +349,7 @@ public interface DDMTemplateService extends BaseService {
 	public int getTemplatesByStructureClassNameIdCount(long groupId,
 		long structureClassNameId, int status);
 
-	public void revertTemplate(long templateId, java.lang.String version,
+	public void revertTemplate(long templateId, String version,
 		ServiceContext serviceContext) throws PortalException;
 
 	/**
@@ -395,9 +391,8 @@ public interface DDMTemplateService extends BaseService {
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<DDMTemplate> search(long companyId, long groupId,
 		long classNameId, long classPK, long resourceClassNameId,
-		java.lang.String keywords, java.lang.String type,
-		java.lang.String mode, int status, int start, int end,
-		OrderByComparator<DDMTemplate> orderByComparator);
+		String keywords, String type, String mode, int status, int start,
+		int end, OrderByComparator<DDMTemplate> orderByComparator);
 
 	/**
 	* Returns an ordered range of all the templates matching the group, class
@@ -443,11 +438,10 @@ public interface DDMTemplateService extends BaseService {
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<DDMTemplate> search(long companyId, long groupId,
-		long classNameId, long classPK, long resourceClassNameId,
-		java.lang.String name, java.lang.String description,
-		java.lang.String type, java.lang.String mode,
-		java.lang.String language, int status, boolean andOperator, int start,
-		int end, OrderByComparator<DDMTemplate> orderByComparator);
+		long classNameId, long classPK, long resourceClassNameId, String name,
+		String description, String type, String mode, String language,
+		int status, boolean andOperator, int start, int end,
+		OrderByComparator<DDMTemplate> orderByComparator);
 
 	/**
 	* Returns an ordered range of all the templates matching the group IDs,
@@ -488,9 +482,8 @@ public interface DDMTemplateService extends BaseService {
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<DDMTemplate> search(long companyId, long[] groupIds,
 		long[] classNameIds, long[] classPKs, long resourceClassNameId,
-		java.lang.String keywords, java.lang.String type,
-		java.lang.String mode, int status, int start, int end,
-		OrderByComparator<DDMTemplate> orderByComparator);
+		String keywords, String type, String mode, int status, int start,
+		int end, OrderByComparator<DDMTemplate> orderByComparator);
 
 	/**
 	* Returns an ordered range of all the templates matching the group IDs,
@@ -537,10 +530,9 @@ public interface DDMTemplateService extends BaseService {
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<DDMTemplate> search(long companyId, long[] groupIds,
 		long[] classNameIds, long[] classPKs, long resourceClassNameId,
-		java.lang.String name, java.lang.String description,
-		java.lang.String type, java.lang.String mode,
-		java.lang.String language, int status, boolean andOperator, int start,
-		int end, OrderByComparator<DDMTemplate> orderByComparator);
+		String name, String description, String type, String mode,
+		String language, int status, boolean andOperator, int start, int end,
+		OrderByComparator<DDMTemplate> orderByComparator);
 
 	/**
 	* Returns the number of templates matching the group, class name ID, class
@@ -566,8 +558,8 @@ public interface DDMTemplateService extends BaseService {
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int searchCount(long companyId, long groupId, long classNameId,
-		long classPK, long resourceClassNameId, java.lang.String keywords,
-		java.lang.String type, java.lang.String mode, int status);
+		long classPK, long resourceClassNameId, String keywords, String type,
+		String mode, int status);
 
 	/**
 	* Returns the number of templates matching the group, class name ID, class
@@ -598,10 +590,9 @@ public interface DDMTemplateService extends BaseService {
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int searchCount(long companyId, long groupId, long classNameId,
-		long classPK, long resourceClassNameId, java.lang.String name,
-		java.lang.String description, java.lang.String type,
-		java.lang.String mode, java.lang.String language, int status,
-		boolean andOperator);
+		long classPK, long resourceClassNameId, String name,
+		String description, String type, String mode, String language,
+		int status, boolean andOperator);
 
 	/**
 	* Returns the number of templates matching the group IDs, class name IDs,
@@ -628,8 +619,7 @@ public interface DDMTemplateService extends BaseService {
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int searchCount(long companyId, long[] groupIds,
 		long[] classNameIds, long[] classPKs, long resourceClassNameId,
-		java.lang.String keywords, java.lang.String type,
-		java.lang.String mode, int status);
+		String keywords, String type, String mode, int status);
 
 	/**
 	* Returns the number of templates matching the group IDs, class name IDs,
@@ -661,9 +651,8 @@ public interface DDMTemplateService extends BaseService {
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int searchCount(long companyId, long[] groupIds,
 		long[] classNameIds, long[] classPKs, long resourceClassNameId,
-		java.lang.String name, java.lang.String description,
-		java.lang.String type, java.lang.String mode,
-		java.lang.String language, int status, boolean andOperator);
+		String name, String description, String type, String mode,
+		String language, int status, boolean andOperator);
 
 	/**
 	* Updates the template matching the ID.
@@ -691,12 +680,11 @@ public interface DDMTemplateService extends BaseService {
 	* @return the updated template
 	*/
 	public DDMTemplate updateTemplate(long templateId, long classPK,
-		Map<Locale, java.lang.String> nameMap,
-		Map<Locale, java.lang.String> descriptionMap, java.lang.String type,
-		java.lang.String mode, java.lang.String language,
-		java.lang.String script, boolean cacheable, boolean smallImage,
-		java.lang.String smallImageURL, File smallImageFile,
-		ServiceContext serviceContext) throws PortalException;
+		Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
+		String type, String mode, String language, String script,
+		boolean cacheable, boolean smallImage, String smallImageURL,
+		File smallImageFile, ServiceContext serviceContext)
+		throws PortalException;
 
 	/**
 	* Updates the template matching the ID.
@@ -719,9 +707,8 @@ public interface DDMTemplateService extends BaseService {
 	* @return the updated template
 	*/
 	public DDMTemplate updateTemplate(long templateId, long classPK,
-		Map<Locale, java.lang.String> nameMap,
-		Map<Locale, java.lang.String> descriptionMap, java.lang.String type,
-		java.lang.String mode, java.lang.String language,
-		java.lang.String script, boolean cacheable,
-		ServiceContext serviceContext) throws PortalException;
+		Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
+		String type, String mode, String language, String script,
+		boolean cacheable, ServiceContext serviceContext)
+		throws PortalException;
 }

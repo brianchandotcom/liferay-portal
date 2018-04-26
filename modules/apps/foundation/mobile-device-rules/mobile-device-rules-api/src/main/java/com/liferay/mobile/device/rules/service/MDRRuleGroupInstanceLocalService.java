@@ -78,11 +78,11 @@ public interface MDRRuleGroupInstanceLocalService extends BaseLocalService,
 		MDRRuleGroupInstance mdrRuleGroupInstance);
 
 	public MDRRuleGroupInstance addRuleGroupInstance(long groupId,
-		java.lang.String className, long classPK, long ruleGroupId,
-		int priority, ServiceContext serviceContext) throws PortalException;
+		String className, long classPK, long ruleGroupId, int priority,
+		ServiceContext serviceContext) throws PortalException;
 
 	public MDRRuleGroupInstance addRuleGroupInstance(long groupId,
-		java.lang.String className, long classPK, long ruleGroupId,
+		String className, long classPK, long ruleGroupId,
 		ServiceContext serviceContext) throws PortalException;
 
 	/**
@@ -204,14 +204,14 @@ public interface MDRRuleGroupInstanceLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public MDRRuleGroupInstance fetchMDRRuleGroupInstanceByUuidAndGroupId(
-		java.lang.String uuid, long groupId);
+		String uuid, long groupId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public MDRRuleGroupInstance fetchRuleGroupInstance(long ruleGroupInstanceId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public MDRRuleGroupInstance fetchRuleGroupInstance(
-		java.lang.String className, long classPK, long ruleGroupId);
+	public MDRRuleGroupInstance fetchRuleGroupInstance(String className,
+		long classPK, long ruleGroupId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
@@ -244,7 +244,7 @@ public interface MDRRuleGroupInstanceLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public MDRRuleGroupInstance getMDRRuleGroupInstanceByUuidAndGroupId(
-		java.lang.String uuid, long groupId) throws PortalException;
+		String uuid, long groupId) throws PortalException;
 
 	/**
 	* Returns a range of all the mdr rule group instances.
@@ -270,7 +270,7 @@ public interface MDRRuleGroupInstanceLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<MDRRuleGroupInstance> getMDRRuleGroupInstancesByUuidAndCompanyId(
-		java.lang.String uuid, long companyId);
+		String uuid, long companyId);
 
 	/**
 	* Returns a range of mdr rule group instances matching the UUID and company.
@@ -284,7 +284,7 @@ public interface MDRRuleGroupInstanceLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<MDRRuleGroupInstance> getMDRRuleGroupInstancesByUuidAndCompanyId(
-		java.lang.String uuid, long companyId, int start, int end,
+		String uuid, long companyId, int start, int end,
 		OrderByComparator<MDRRuleGroupInstance> orderByComparator);
 
 	/**
@@ -300,7 +300,7 @@ public interface MDRRuleGroupInstanceLocalService extends BaseLocalService,
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -312,9 +312,8 @@ public interface MDRRuleGroupInstanceLocalService extends BaseLocalService,
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public MDRRuleGroupInstance getRuleGroupInstance(
-		java.lang.String className, long classPK, long ruleGroupId)
-		throws PortalException;
+	public MDRRuleGroupInstance getRuleGroupInstance(String className,
+		long classPK, long ruleGroupId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<MDRRuleGroupInstance> getRuleGroupInstances(long ruleGroupId);
@@ -324,20 +323,19 @@ public interface MDRRuleGroupInstanceLocalService extends BaseLocalService,
 		int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<MDRRuleGroupInstance> getRuleGroupInstances(
-		java.lang.String className, long classPK);
+	public List<MDRRuleGroupInstance> getRuleGroupInstances(String className,
+		long classPK);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<MDRRuleGroupInstance> getRuleGroupInstances(
-		java.lang.String className, long classPK, int start, int end,
+	public List<MDRRuleGroupInstance> getRuleGroupInstances(String className,
+		long classPK, int start, int end,
 		OrderByComparator<MDRRuleGroupInstance> orderByComparator);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getRuleGroupInstancesCount(long ruleGroupId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getRuleGroupInstancesCount(java.lang.String className,
-		long classPK);
+	public int getRuleGroupInstancesCount(String className, long classPK);
 
 	/**
 	* Updates the mdr rule group instance in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.

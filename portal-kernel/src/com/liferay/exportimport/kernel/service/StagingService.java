@@ -58,7 +58,7 @@ public interface StagingService extends BaseService {
 	public void cleanUpStagingRequest(long stagingRequestId)
 		throws PortalException;
 
-	public long createStagingRequest(long groupId, java.lang.String checksum)
+	public long createStagingRequest(long groupId, String checksum)
 		throws PortalException;
 
 	/**
@@ -66,39 +66,37 @@ public interface StagingService extends BaseService {
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public boolean hasRemoteLayout(java.lang.String uuid, long groupId,
+	public boolean hasRemoteLayout(String uuid, long groupId,
 		boolean privateLayout) throws PortalException;
 
 	public void propagateExportImportLifecycleEvent(int code, int processFlag,
-		java.lang.String processId, List<Serializable> arguments)
+		String processId, List<Serializable> arguments)
 		throws PortalException;
 
 	/**
 	* @deprecated As of 7.0.0, with no direct replacement
 	*/
-	@java.lang.Deprecated
+	@Deprecated
 	public MissingReferences publishStagingRequest(long stagingRequestId,
-		boolean privateLayout,
-		Map<java.lang.String, java.lang.String[]> parameterMap)
+		boolean privateLayout, Map<String, String[]> parameterMap)
 		throws PortalException;
 
 	public MissingReferences publishStagingRequest(long stagingRequestId,
 		ExportImportConfiguration exportImportConfiguration)
 		throws PortalException;
 
-	public void updateStagingRequest(long stagingRequestId,
-		java.lang.String fileName, byte[] bytes) throws PortalException;
+	public void updateStagingRequest(long stagingRequestId, String fileName,
+		byte[] bytes) throws PortalException;
 
 	/**
 	* @deprecated As of 7.0.0, replaced by {@link #publishStagingRequest(long,
 	boolean, Map)}
 	*/
-	@java.lang.Deprecated
+	@Deprecated
 	public MissingReferences validateStagingRequest(long stagingRequestId,
-		boolean privateLayout,
-		Map<java.lang.String, java.lang.String[]> parameterMap)
+		boolean privateLayout, Map<String, String[]> parameterMap)
 		throws PortalException;
 }

@@ -36,7 +36,7 @@ public class FragmentCollectionServiceWrapper
 
 	@Override
 	public com.liferay.fragment.model.FragmentCollection addFragmentCollection(
-		long groupId, java.lang.String name, java.lang.String description,
+		long groupId, String name, String description,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _fragmentCollectionService.addFragmentCollection(groupId, name,
@@ -45,8 +45,8 @@ public class FragmentCollectionServiceWrapper
 
 	@Override
 	public com.liferay.fragment.model.FragmentCollection addFragmentCollection(
-		long groupId, java.lang.String fragmentCollectionKey,
-		java.lang.String name, java.lang.String description,
+		long groupId, String fragmentCollectionKey, String name,
+		String description,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _fragmentCollectionService.addFragmentCollection(groupId,
@@ -96,7 +96,7 @@ public class FragmentCollectionServiceWrapper
 
 	@Override
 	public java.util.List<com.liferay.fragment.model.FragmentCollection> getFragmentCollections(
-		long groupId, java.lang.String name, int start, int end,
+		long groupId, String name, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.fragment.model.FragmentCollection> orderByComparator) {
 		return _fragmentCollectionService.getFragmentCollections(groupId, name,
 			start, end, orderByComparator);
@@ -108,7 +108,7 @@ public class FragmentCollectionServiceWrapper
 	}
 
 	@Override
-	public int getFragmentCollectionsCount(long groupId, java.lang.String name) {
+	public int getFragmentCollectionsCount(long groupId, String name) {
 		return _fragmentCollectionService.getFragmentCollectionsCount(groupId,
 			name);
 	}
@@ -119,21 +119,19 @@ public class FragmentCollectionServiceWrapper
 	* @return the OSGi service identifier
 	*/
 	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
+	public String getOSGiServiceIdentifier() {
 		return _fragmentCollectionService.getOSGiServiceIdentifier();
 	}
 
 	@Override
-	public java.lang.String[] getTempFileNames(long groupId,
-		java.lang.String folderName)
+	public String[] getTempFileNames(long groupId, String folderName)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _fragmentCollectionService.getTempFileNames(groupId, folderName);
 	}
 
 	@Override
 	public com.liferay.fragment.model.FragmentCollection updateFragmentCollection(
-		long fragmentCollectionId, java.lang.String name,
-		java.lang.String description)
+		long fragmentCollectionId, String name, String description)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _fragmentCollectionService.updateFragmentCollection(fragmentCollectionId,
 			name, description);

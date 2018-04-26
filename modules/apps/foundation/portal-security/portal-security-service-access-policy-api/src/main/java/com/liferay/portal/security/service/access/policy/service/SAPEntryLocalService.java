@@ -65,10 +65,9 @@ public interface SAPEntryLocalService extends BaseLocalService,
 	 *
 	 * Never modify or reference this interface directly. Always use {@link SAPEntryLocalServiceUtil} to access the sap entry local service. Add custom service methods to {@link com.liferay.portal.security.service.access.policy.service.impl.SAPEntryLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public SAPEntry addSAPEntry(long userId,
-		java.lang.String allowedServiceSignatures, boolean defaultSAPEntry,
-		boolean enabled, java.lang.String name,
-		Map<Locale, java.lang.String> titleMap, ServiceContext serviceContext)
+	public SAPEntry addSAPEntry(long userId, String allowedServiceSignatures,
+		boolean defaultSAPEntry, boolean enabled, String name,
+		Map<Locale, String> titleMap, ServiceContext serviceContext)
 		throws PortalException;
 
 	/**
@@ -181,7 +180,7 @@ public interface SAPEntryLocalService extends BaseLocalService,
 	public SAPEntry fetchSAPEntry(long sapEntryId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public SAPEntry fetchSAPEntry(long companyId, java.lang.String name)
+	public SAPEntry fetchSAPEntry(long companyId, String name)
 		throws PortalException;
 
 	/**
@@ -192,8 +191,7 @@ public interface SAPEntryLocalService extends BaseLocalService,
 	* @return the matching sap entry, or <code>null</code> if a matching sap entry could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public SAPEntry fetchSAPEntryByUuidAndCompanyId(java.lang.String uuid,
-		long companyId);
+	public SAPEntry fetchSAPEntryByUuidAndCompanyId(String uuid, long companyId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
@@ -225,7 +223,7 @@ public interface SAPEntryLocalService extends BaseLocalService,
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -265,7 +263,7 @@ public interface SAPEntryLocalService extends BaseLocalService,
 	public SAPEntry getSAPEntry(long sapEntryId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public SAPEntry getSAPEntry(long companyId, java.lang.String name)
+	public SAPEntry getSAPEntry(long companyId, String name)
 		throws PortalException;
 
 	/**
@@ -277,14 +275,13 @@ public interface SAPEntryLocalService extends BaseLocalService,
 	* @throws PortalException if a matching sap entry could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public SAPEntry getSAPEntryByUuidAndCompanyId(java.lang.String uuid,
-		long companyId) throws PortalException;
+	public SAPEntry getSAPEntryByUuidAndCompanyId(String uuid, long companyId)
+		throws PortalException;
 
 	public SAPEntry updateSAPEntry(long sapEntryId,
-		java.lang.String allowedServiceSignatures, boolean defaultSAPEntry,
-		boolean enabled, java.lang.String name,
-		Map<Locale, java.lang.String> titleMap, ServiceContext serviceContext)
-		throws PortalException;
+		String allowedServiceSignatures, boolean defaultSAPEntry,
+		boolean enabled, String name, Map<Locale, String> titleMap,
+		ServiceContext serviceContext) throws PortalException;
 
 	/**
 	* Updates the sap entry in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.

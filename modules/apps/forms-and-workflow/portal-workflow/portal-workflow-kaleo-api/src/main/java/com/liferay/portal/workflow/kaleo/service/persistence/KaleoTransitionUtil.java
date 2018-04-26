@@ -623,8 +623,7 @@ public class KaleoTransitionUtil {
 	* @return the matching kaleo transition
 	* @throws NoSuchTransitionException if a matching kaleo transition could not be found
 	*/
-	public static KaleoTransition findByKNI_N(long kaleoNodeId,
-		java.lang.String name)
+	public static KaleoTransition findByKNI_N(long kaleoNodeId, String name)
 		throws com.liferay.portal.workflow.kaleo.exception.NoSuchTransitionException {
 		return getPersistence().findByKNI_N(kaleoNodeId, name);
 	}
@@ -636,8 +635,7 @@ public class KaleoTransitionUtil {
 	* @param name the name
 	* @return the matching kaleo transition, or <code>null</code> if a matching kaleo transition could not be found
 	*/
-	public static KaleoTransition fetchByKNI_N(long kaleoNodeId,
-		java.lang.String name) {
+	public static KaleoTransition fetchByKNI_N(long kaleoNodeId, String name) {
 		return getPersistence().fetchByKNI_N(kaleoNodeId, name);
 	}
 
@@ -649,8 +647,8 @@ public class KaleoTransitionUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching kaleo transition, or <code>null</code> if a matching kaleo transition could not be found
 	*/
-	public static KaleoTransition fetchByKNI_N(long kaleoNodeId,
-		java.lang.String name, boolean retrieveFromCache) {
+	public static KaleoTransition fetchByKNI_N(long kaleoNodeId, String name,
+		boolean retrieveFromCache) {
 		return getPersistence()
 				   .fetchByKNI_N(kaleoNodeId, name, retrieveFromCache);
 	}
@@ -662,8 +660,7 @@ public class KaleoTransitionUtil {
 	* @param name the name
 	* @return the kaleo transition that was removed
 	*/
-	public static KaleoTransition removeByKNI_N(long kaleoNodeId,
-		java.lang.String name)
+	public static KaleoTransition removeByKNI_N(long kaleoNodeId, String name)
 		throws com.liferay.portal.workflow.kaleo.exception.NoSuchTransitionException {
 		return getPersistence().removeByKNI_N(kaleoNodeId, name);
 	}
@@ -675,7 +672,7 @@ public class KaleoTransitionUtil {
 	* @param name the name
 	* @return the number of matching kaleo transitions
 	*/
-	public static int countByKNI_N(long kaleoNodeId, java.lang.String name) {
+	public static int countByKNI_N(long kaleoNodeId, String name) {
 		return getPersistence().countByKNI_N(kaleoNodeId, name);
 	}
 

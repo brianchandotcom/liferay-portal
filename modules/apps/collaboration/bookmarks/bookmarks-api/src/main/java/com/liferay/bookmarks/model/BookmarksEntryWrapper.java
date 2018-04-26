@@ -208,13 +208,13 @@ public class BookmarksEntryWrapper implements BookmarksEntry,
 	}
 
 	@Override
-	public java.lang.String buildTreePath()
+	public String buildTreePath()
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _bookmarksEntry.buildTreePath();
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new BookmarksEntryWrapper((BookmarksEntry)_bookmarksEntry.clone());
 	}
 
@@ -249,7 +249,7 @@ public class BookmarksEntryWrapper implements BookmarksEntry,
 	* @return the description of this bookmarks entry
 	*/
 	@Override
-	public java.lang.String getDescription() {
+	public String getDescription() {
 		return _bookmarksEntry.getDescription();
 	}
 
@@ -320,7 +320,7 @@ public class BookmarksEntryWrapper implements BookmarksEntry,
 	* @return the name of this bookmarks entry
 	*/
 	@Override
-	public java.lang.String getName() {
+	public String getName() {
 		return _bookmarksEntry.getName();
 	}
 
@@ -375,7 +375,7 @@ public class BookmarksEntryWrapper implements BookmarksEntry,
 	* @return the status by user name of this bookmarks entry
 	*/
 	@Override
-	public java.lang.String getStatusByUserName() {
+	public String getStatusByUserName() {
 		return _bookmarksEntry.getStatusByUserName();
 	}
 
@@ -385,7 +385,7 @@ public class BookmarksEntryWrapper implements BookmarksEntry,
 	* @return the status by user uuid of this bookmarks entry
 	*/
 	@Override
-	public java.lang.String getStatusByUserUuid() {
+	public String getStatusByUserUuid() {
 		return _bookmarksEntry.getStatusByUserUuid();
 	}
 
@@ -438,7 +438,7 @@ public class BookmarksEntryWrapper implements BookmarksEntry,
 	* @return the tree path of this bookmarks entry
 	*/
 	@Override
-	public java.lang.String getTreePath() {
+	public String getTreePath() {
 		return _bookmarksEntry.getTreePath();
 	}
 
@@ -448,7 +448,7 @@ public class BookmarksEntryWrapper implements BookmarksEntry,
 	* @return the url of this bookmarks entry
 	*/
 	@Override
-	public java.lang.String getUrl() {
+	public String getUrl() {
 		return _bookmarksEntry.getUrl();
 	}
 
@@ -468,7 +468,7 @@ public class BookmarksEntryWrapper implements BookmarksEntry,
 	* @return the user name of this bookmarks entry
 	*/
 	@Override
-	public java.lang.String getUserName() {
+	public String getUserName() {
 		return _bookmarksEntry.getUserName();
 	}
 
@@ -478,7 +478,7 @@ public class BookmarksEntryWrapper implements BookmarksEntry,
 	* @return the user uuid of this bookmarks entry
 	*/
 	@Override
-	public java.lang.String getUserUuid() {
+	public String getUserUuid() {
 		return _bookmarksEntry.getUserUuid();
 	}
 
@@ -488,7 +488,7 @@ public class BookmarksEntryWrapper implements BookmarksEntry,
 	* @return the uuid of this bookmarks entry
 	*/
 	@Override
-	public java.lang.String getUuid() {
+	public String getUuid() {
 		return _bookmarksEntry.getUuid();
 	}
 
@@ -668,7 +668,7 @@ public class BookmarksEntryWrapper implements BookmarksEntry,
 	* @param description the description of this bookmarks entry
 	*/
 	@Override
-	public void setDescription(java.lang.String description) {
+	public void setDescription(String description) {
 		_bookmarksEntry.setDescription(description);
 	}
 
@@ -744,7 +744,7 @@ public class BookmarksEntryWrapper implements BookmarksEntry,
 	* @param name the name of this bookmarks entry
 	*/
 	@Override
-	public void setName(java.lang.String name) {
+	public void setName(String name) {
 		_bookmarksEntry.setName(name);
 	}
 
@@ -804,7 +804,7 @@ public class BookmarksEntryWrapper implements BookmarksEntry,
 	* @param statusByUserName the status by user name of this bookmarks entry
 	*/
 	@Override
-	public void setStatusByUserName(java.lang.String statusByUserName) {
+	public void setStatusByUserName(String statusByUserName) {
 		_bookmarksEntry.setStatusByUserName(statusByUserName);
 	}
 
@@ -814,7 +814,7 @@ public class BookmarksEntryWrapper implements BookmarksEntry,
 	* @param statusByUserUuid the status by user uuid of this bookmarks entry
 	*/
 	@Override
-	public void setStatusByUserUuid(java.lang.String statusByUserUuid) {
+	public void setStatusByUserUuid(String statusByUserUuid) {
 		_bookmarksEntry.setStatusByUserUuid(statusByUserUuid);
 	}
 
@@ -834,7 +834,7 @@ public class BookmarksEntryWrapper implements BookmarksEntry,
 	* @param treePath the tree path of this bookmarks entry
 	*/
 	@Override
-	public void setTreePath(java.lang.String treePath) {
+	public void setTreePath(String treePath) {
 		_bookmarksEntry.setTreePath(treePath);
 	}
 
@@ -844,7 +844,7 @@ public class BookmarksEntryWrapper implements BookmarksEntry,
 	* @param url the url of this bookmarks entry
 	*/
 	@Override
-	public void setUrl(java.lang.String url) {
+	public void setUrl(String url) {
 		_bookmarksEntry.setUrl(url);
 	}
 
@@ -864,7 +864,7 @@ public class BookmarksEntryWrapper implements BookmarksEntry,
 	* @param userName the user name of this bookmarks entry
 	*/
 	@Override
-	public void setUserName(java.lang.String userName) {
+	public void setUserName(String userName) {
 		_bookmarksEntry.setUserName(userName);
 	}
 
@@ -874,7 +874,7 @@ public class BookmarksEntryWrapper implements BookmarksEntry,
 	* @param userUuid the user uuid of this bookmarks entry
 	*/
 	@Override
-	public void setUserUuid(java.lang.String userUuid) {
+	public void setUserUuid(String userUuid) {
 		_bookmarksEntry.setUserUuid(userUuid);
 	}
 
@@ -884,7 +884,7 @@ public class BookmarksEntryWrapper implements BookmarksEntry,
 	* @param uuid the uuid of this bookmarks entry
 	*/
 	@Override
-	public void setUuid(java.lang.String uuid) {
+	public void setUuid(String uuid) {
 		_bookmarksEntry.setUuid(uuid);
 	}
 
@@ -909,7 +909,7 @@ public class BookmarksEntryWrapper implements BookmarksEntry,
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _bookmarksEntry.toString();
 	}
 
@@ -919,12 +919,12 @@ public class BookmarksEntryWrapper implements BookmarksEntry,
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _bookmarksEntry.toXmlString();
 	}
 
 	@Override
-	public void updateTreePath(java.lang.String treePath) {
+	public void updateTreePath(String treePath) {
 		_bookmarksEntry.updateTreePath(treePath);
 	}
 

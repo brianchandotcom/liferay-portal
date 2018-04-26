@@ -279,13 +279,13 @@ public class DLFileEntryWrapper implements DLFileEntry,
 	}
 
 	@Override
-	public java.lang.String buildTreePath()
+	public String buildTreePath()
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _dlFileEntry.buildTreePath();
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new DLFileEntryWrapper((DLFileEntry)_dlFileEntry.clone());
 	}
 
@@ -300,7 +300,7 @@ public class DLFileEntryWrapper implements DLFileEntry,
 	* @return the fully qualified class name of this document library file entry
 	*/
 	@Override
-	public java.lang.String getClassName() {
+	public String getClassName() {
 		return _dlFileEntry.getClassName();
 	}
 
@@ -341,7 +341,7 @@ public class DLFileEntryWrapper implements DLFileEntry,
 	}
 
 	@Override
-	public java.io.InputStream getContentStream(java.lang.String version)
+	public java.io.InputStream getContentStream(String version)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _dlFileEntry.getContentStream(version);
 	}
@@ -382,7 +382,7 @@ public class DLFileEntryWrapper implements DLFileEntry,
 	}
 
 	@Override
-	public Map<java.lang.String, com.liferay.dynamic.data.mapping.kernel.DDMFormValues> getDDMFormValuesMap(
+	public Map<String, com.liferay.dynamic.data.mapping.kernel.DDMFormValues> getDDMFormValuesMap(
 		long fileVersionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _dlFileEntry.getDDMFormValuesMap(fileVersionId);
@@ -394,7 +394,7 @@ public class DLFileEntryWrapper implements DLFileEntry,
 	* @return the description of this document library file entry
 	*/
 	@Override
-	public java.lang.String getDescription() {
+	public String getDescription() {
 		return _dlFileEntry.getDescription();
 	}
 
@@ -415,7 +415,7 @@ public class DLFileEntryWrapper implements DLFileEntry,
 	* @return the extension of this document library file entry
 	*/
 	@Override
-	public java.lang.String getExtension() {
+	public String getExtension() {
 		return _dlFileEntry.getExtension();
 	}
 
@@ -425,7 +425,7 @@ public class DLFileEntryWrapper implements DLFileEntry,
 	* @return the extra settings of this document library file entry
 	*/
 	@Override
-	public java.lang.String getExtraSettings() {
+	public String getExtraSettings() {
 		return _dlFileEntry.getExtraSettings();
 	}
 
@@ -460,7 +460,7 @@ public class DLFileEntryWrapper implements DLFileEntry,
 	* @return the file name of this document library file entry
 	*/
 	@Override
-	public java.lang.String getFileName() {
+	public String getFileName() {
 		return _dlFileEntry.getFileName();
 	}
 
@@ -476,7 +476,7 @@ public class DLFileEntryWrapper implements DLFileEntry,
 	}
 
 	@Override
-	public DLFileVersion getFileVersion(java.lang.String version)
+	public DLFileVersion getFileVersion(String version)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _dlFileEntry.getFileVersion(version);
 	}
@@ -518,12 +518,12 @@ public class DLFileEntryWrapper implements DLFileEntry,
 	}
 
 	@Override
-	public java.lang.String getIcon() {
+	public String getIcon() {
 		return _dlFileEntry.getIcon();
 	}
 
 	@Override
-	public java.lang.String getIconCssClass() {
+	public String getIconCssClass() {
 		return _dlFileEntry.getIconCssClass();
 	}
 
@@ -559,7 +559,7 @@ public class DLFileEntryWrapper implements DLFileEntry,
 	}
 
 	@Override
-	public java.lang.String getLuceneProperties() {
+	public String getLuceneProperties() {
 		return _dlFileEntry.getLuceneProperties();
 	}
 
@@ -579,7 +579,7 @@ public class DLFileEntryWrapper implements DLFileEntry,
 	* @return the mime type of this document library file entry
 	*/
 	@Override
-	public java.lang.String getMimeType() {
+	public String getMimeType() {
 		return _dlFileEntry.getMimeType();
 	}
 
@@ -599,7 +599,7 @@ public class DLFileEntryWrapper implements DLFileEntry,
 	* @return the name of this document library file entry
 	*/
 	@Override
-	public java.lang.String getName() {
+	public String getName() {
 		return _dlFileEntry.getName();
 	}
 
@@ -674,7 +674,7 @@ public class DLFileEntryWrapper implements DLFileEntry,
 	* @return the title of this document library file entry
 	*/
 	@Override
-	public java.lang.String getTitle() {
+	public String getTitle() {
 		return _dlFileEntry.getTitle();
 	}
 
@@ -717,7 +717,7 @@ public class DLFileEntryWrapper implements DLFileEntry,
 	* @return the tree path of this document library file entry
 	*/
 	@Override
-	public java.lang.String getTreePath() {
+	public String getTreePath() {
 		return _dlFileEntry.getTreePath();
 	}
 
@@ -737,7 +737,7 @@ public class DLFileEntryWrapper implements DLFileEntry,
 	* @return the user name of this document library file entry
 	*/
 	@Override
-	public java.lang.String getUserName() {
+	public String getUserName() {
 		return _dlFileEntry.getUserName();
 	}
 
@@ -747,7 +747,7 @@ public class DLFileEntryWrapper implements DLFileEntry,
 	* @return the user uuid of this document library file entry
 	*/
 	@Override
-	public java.lang.String getUserUuid() {
+	public String getUserUuid() {
 		return _dlFileEntry.getUserUuid();
 	}
 
@@ -757,7 +757,7 @@ public class DLFileEntryWrapper implements DLFileEntry,
 	* @return the uuid of this document library file entry
 	*/
 	@Override
-	public java.lang.String getUuid() {
+	public String getUuid() {
 		return _dlFileEntry.getUuid();
 	}
 
@@ -767,7 +767,7 @@ public class DLFileEntryWrapper implements DLFileEntry,
 	* @return the version of this document library file entry
 	*/
 	@Override
-	public java.lang.String getVersion() {
+	public String getVersion() {
 		return _dlFileEntry.getVersion();
 	}
 
@@ -857,7 +857,7 @@ public class DLFileEntryWrapper implements DLFileEntry,
 	}
 
 	@Override
-	public void setClassName(java.lang.String className) {
+	public void setClassName(String className) {
 		_dlFileEntry.setClassName(className);
 	}
 
@@ -927,7 +927,7 @@ public class DLFileEntryWrapper implements DLFileEntry,
 	* @param description the description of this document library file entry
 	*/
 	@Override
-	public void setDescription(java.lang.String description) {
+	public void setDescription(String description) {
 		_dlFileEntry.setDescription(description);
 	}
 
@@ -953,7 +953,7 @@ public class DLFileEntryWrapper implements DLFileEntry,
 	* @param extension the extension of this document library file entry
 	*/
 	@Override
-	public void setExtension(java.lang.String extension) {
+	public void setExtension(String extension) {
 		_dlFileEntry.setExtension(extension);
 	}
 
@@ -963,7 +963,7 @@ public class DLFileEntryWrapper implements DLFileEntry,
 	* @param extraSettings the extra settings of this document library file entry
 	*/
 	@Override
-	public void setExtraSettings(java.lang.String extraSettings) {
+	public void setExtraSettings(String extraSettings) {
 		_dlFileEntry.setExtraSettings(extraSettings);
 	}
 
@@ -999,7 +999,7 @@ public class DLFileEntryWrapper implements DLFileEntry,
 	* @param fileName the file name of this document library file entry
 	*/
 	@Override
-	public void setFileName(java.lang.String fileName) {
+	public void setFileName(String fileName) {
 		_dlFileEntry.setFileName(fileName);
 	}
 
@@ -1059,7 +1059,7 @@ public class DLFileEntryWrapper implements DLFileEntry,
 	* @param mimeType the mime type of this document library file entry
 	*/
 	@Override
-	public void setMimeType(java.lang.String mimeType) {
+	public void setMimeType(String mimeType) {
 		_dlFileEntry.setMimeType(mimeType);
 	}
 
@@ -1079,7 +1079,7 @@ public class DLFileEntryWrapper implements DLFileEntry,
 	* @param name the name of this document library file entry
 	*/
 	@Override
-	public void setName(java.lang.String name) {
+	public void setName(String name) {
 		_dlFileEntry.setName(name);
 	}
 
@@ -1149,7 +1149,7 @@ public class DLFileEntryWrapper implements DLFileEntry,
 	* @param title the title of this document library file entry
 	*/
 	@Override
-	public void setTitle(java.lang.String title) {
+	public void setTitle(String title) {
 		_dlFileEntry.setTitle(title);
 	}
 
@@ -1159,7 +1159,7 @@ public class DLFileEntryWrapper implements DLFileEntry,
 	* @param treePath the tree path of this document library file entry
 	*/
 	@Override
-	public void setTreePath(java.lang.String treePath) {
+	public void setTreePath(String treePath) {
 		_dlFileEntry.setTreePath(treePath);
 	}
 
@@ -1179,7 +1179,7 @@ public class DLFileEntryWrapper implements DLFileEntry,
 	* @param userName the user name of this document library file entry
 	*/
 	@Override
-	public void setUserName(java.lang.String userName) {
+	public void setUserName(String userName) {
 		_dlFileEntry.setUserName(userName);
 	}
 
@@ -1189,7 +1189,7 @@ public class DLFileEntryWrapper implements DLFileEntry,
 	* @param userUuid the user uuid of this document library file entry
 	*/
 	@Override
-	public void setUserUuid(java.lang.String userUuid) {
+	public void setUserUuid(String userUuid) {
 		_dlFileEntry.setUserUuid(userUuid);
 	}
 
@@ -1199,7 +1199,7 @@ public class DLFileEntryWrapper implements DLFileEntry,
 	* @param uuid the uuid of this document library file entry
 	*/
 	@Override
-	public void setUuid(java.lang.String uuid) {
+	public void setUuid(String uuid) {
 		_dlFileEntry.setUuid(uuid);
 	}
 
@@ -1209,7 +1209,7 @@ public class DLFileEntryWrapper implements DLFileEntry,
 	* @param version the version of this document library file entry
 	*/
 	@Override
-	public void setVersion(java.lang.String version) {
+	public void setVersion(String version) {
 		_dlFileEntry.setVersion(version);
 	}
 
@@ -1224,7 +1224,7 @@ public class DLFileEntryWrapper implements DLFileEntry,
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _dlFileEntry.toString();
 	}
 
@@ -1234,12 +1234,12 @@ public class DLFileEntryWrapper implements DLFileEntry,
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _dlFileEntry.toXmlString();
 	}
 
 	@Override
-	public void updateTreePath(java.lang.String treePath) {
+	public void updateTreePath(String treePath) {
 		_dlFileEntry.updateTreePath(treePath);
 	}
 

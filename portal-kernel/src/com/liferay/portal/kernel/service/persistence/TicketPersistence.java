@@ -46,7 +46,7 @@ public interface TicketPersistence extends BasePersistence<Ticket> {
 	* @return the matching ticket
 	* @throws NoSuchTicketException if a matching ticket could not be found
 	*/
-	public Ticket findByKey(java.lang.String key) throws NoSuchTicketException;
+	public Ticket findByKey(String key) throws NoSuchTicketException;
 
 	/**
 	* Returns the ticket where key = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
@@ -54,7 +54,7 @@ public interface TicketPersistence extends BasePersistence<Ticket> {
 	* @param key the key
 	* @return the matching ticket, or <code>null</code> if a matching ticket could not be found
 	*/
-	public Ticket fetchByKey(java.lang.String key);
+	public Ticket fetchByKey(String key);
 
 	/**
 	* Returns the ticket where key = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -63,7 +63,7 @@ public interface TicketPersistence extends BasePersistence<Ticket> {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching ticket, or <code>null</code> if a matching ticket could not be found
 	*/
-	public Ticket fetchByKey(java.lang.String key, boolean retrieveFromCache);
+	public Ticket fetchByKey(String key, boolean retrieveFromCache);
 
 	/**
 	* Removes the ticket where key = &#63; from the database.
@@ -71,8 +71,7 @@ public interface TicketPersistence extends BasePersistence<Ticket> {
 	* @param key the key
 	* @return the ticket that was removed
 	*/
-	public Ticket removeByKey(java.lang.String key)
-		throws NoSuchTicketException;
+	public Ticket removeByKey(String key) throws NoSuchTicketException;
 
 	/**
 	* Returns the number of tickets where key = &#63;.
@@ -80,7 +79,7 @@ public interface TicketPersistence extends BasePersistence<Ticket> {
 	* @param key the key
 	* @return the number of matching tickets
 	*/
-	public int countByKey(java.lang.String key);
+	public int countByKey(String key);
 
 	/**
 	* Returns all the tickets where classNameId = &#63; and classPK = &#63; and type = &#63;.
@@ -528,5 +527,5 @@ public interface TicketPersistence extends BasePersistence<Ticket> {
 	public int countAll();
 
 	@Override
-	public java.util.Set<java.lang.String> getBadColumnNames();
+	public java.util.Set<String> getBadColumnNames();
 }

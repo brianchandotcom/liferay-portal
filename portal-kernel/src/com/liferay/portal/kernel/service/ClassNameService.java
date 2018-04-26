@@ -51,12 +51,12 @@ public interface ClassNameService extends BaseService {
 	public ClassName fetchByClassNameId(long classNameId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ClassName fetchClassName(java.lang.String value);
+	public ClassName fetchClassName(String value);
 
 	/**
 	* Returns the OSGi service identifier.
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 }

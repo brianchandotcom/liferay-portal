@@ -46,8 +46,7 @@ public class ExportImportLocalServiceWrapper implements ExportImportLocalService
 	@Deprecated
 	@Override
 	public java.io.File exportLayoutsAsFile(long userId, long groupId,
-		boolean privateLayout,
-		java.util.Map<java.lang.String, java.lang.String[]> parameterMap)
+		boolean privateLayout, java.util.Map<String, String[]> parameterMap)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _exportImportLocalService.exportLayoutsAsFile(userId, groupId,
 			privateLayout, parameterMap);
@@ -98,7 +97,7 @@ public class ExportImportLocalServiceWrapper implements ExportImportLocalService
 	* @return the OSGi service identifier
 	*/
 	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
+	public String getOSGiServiceIdentifier() {
 		return _exportImportLocalService.getOSGiServiceIdentifier();
 	}
 
@@ -125,8 +124,7 @@ public class ExportImportLocalServiceWrapper implements ExportImportLocalService
 	@Deprecated
 	@Override
 	public void importLayouts(long userId, long groupId, boolean privateLayout,
-		java.util.Map<java.lang.String, java.lang.String[]> parameterMap,
-		java.io.File file)
+		java.util.Map<String, String[]> parameterMap, java.io.File file)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_exportImportLocalService.importLayouts(userId, groupId, privateLayout,
 			parameterMap, file);

@@ -68,18 +68,16 @@ public interface MBCategoryLocalService extends BaseLocalService,
 	 * Never modify or reference this interface directly. Always use {@link MBCategoryLocalServiceUtil} to access the message boards category local service. Add custom service methods to {@link com.liferay.message.boards.service.impl.MBCategoryLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	public MBCategory addCategory(long userId, long parentCategoryId,
-		java.lang.String name, java.lang.String description,
-		ServiceContext serviceContext) throws PortalException;
+		String name, String description, ServiceContext serviceContext)
+		throws PortalException;
 
 	public MBCategory addCategory(long userId, long parentCategoryId,
-		java.lang.String name, java.lang.String description,
-		java.lang.String displayStyle, java.lang.String emailAddress,
-		java.lang.String inProtocol, java.lang.String inServerName,
-		int inServerPort, boolean inUseSSL, java.lang.String inUserName,
-		java.lang.String inPassword, int inReadInterval,
-		java.lang.String outEmailAddress, boolean outCustom,
-		java.lang.String outServerName, int outServerPort, boolean outUseSSL,
-		java.lang.String outUserName, java.lang.String outPassword,
+		String name, String description, String displayStyle,
+		String emailAddress, String inProtocol, String inServerName,
+		int inServerPort, boolean inUseSSL, String inUserName,
+		String inPassword, int inReadInterval, String outEmailAddress,
+		boolean outCustom, String outServerName, int outServerPort,
+		boolean outUseSSL, String outUserName, String outPassword,
 		boolean allowAnonymous, boolean mailingListActive,
 		ServiceContext serviceContext) throws PortalException;
 
@@ -222,8 +220,7 @@ public interface MBCategoryLocalService extends BaseLocalService,
 	* @return the matching message boards category, or <code>null</code> if a matching message boards category could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public MBCategory fetchMBCategoryByUuidAndGroupId(java.lang.String uuid,
-		long groupId);
+	public MBCategory fetchMBCategoryByUuidAndGroupId(String uuid, long groupId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
@@ -261,16 +258,15 @@ public interface MBCategoryLocalService extends BaseLocalService,
 		int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<java.lang.Object> getCategoriesAndThreads(long groupId,
-		long categoryId);
+	public List<Object> getCategoriesAndThreads(long groupId, long categoryId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<java.lang.Object> getCategoriesAndThreads(long groupId,
-		long categoryId, int status);
+	public List<Object> getCategoriesAndThreads(long groupId, long categoryId,
+		int status);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<java.lang.Object> getCategoriesAndThreads(long groupId,
-		long categoryId, int status, int start, int end);
+	public List<Object> getCategoriesAndThreads(long groupId, long categoryId,
+		int status, int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getCategoriesAndThreadsCount(long groupId, long categoryId);
@@ -346,8 +342,8 @@ public interface MBCategoryLocalService extends BaseLocalService,
 	* @return the matching message boards categories, or an empty list if no matches were found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<MBCategory> getMBCategoriesByUuidAndCompanyId(
-		java.lang.String uuid, long companyId);
+	public List<MBCategory> getMBCategoriesByUuidAndCompanyId(String uuid,
+		long companyId);
 
 	/**
 	* Returns a range of message boards categories matching the UUID and company.
@@ -360,8 +356,8 @@ public interface MBCategoryLocalService extends BaseLocalService,
 	* @return the range of matching message boards categories, or an empty list if no matches were found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<MBCategory> getMBCategoriesByUuidAndCompanyId(
-		java.lang.String uuid, long companyId, int start, int end,
+	public List<MBCategory> getMBCategoriesByUuidAndCompanyId(String uuid,
+		long companyId, int start, int end,
 		OrderByComparator<MBCategory> orderByComparator);
 
 	/**
@@ -391,15 +387,15 @@ public interface MBCategoryLocalService extends BaseLocalService,
 	* @throws PortalException if a matching message boards category could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public MBCategory getMBCategoryByUuidAndGroupId(java.lang.String uuid,
-		long groupId) throws PortalException;
+	public MBCategory getMBCategoryByUuidAndGroupId(String uuid, long groupId)
+		throws PortalException;
 
 	/**
 	* Returns the OSGi service identifier.
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -407,8 +403,8 @@ public interface MBCategoryLocalService extends BaseLocalService,
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<java.lang.Long> getSubcategoryIds(
-		List<java.lang.Long> categoryIds, long groupId, long categoryId);
+	public List<Long> getSubcategoryIds(List<Long> categoryIds, long groupId,
+		long categoryId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<MBCategory> getSubscribedCategories(long groupId, long userId,
@@ -439,14 +435,12 @@ public interface MBCategoryLocalService extends BaseLocalService,
 		throws PortalException;
 
 	public MBCategory updateCategory(long categoryId, long parentCategoryId,
-		java.lang.String name, java.lang.String description,
-		java.lang.String displayStyle, java.lang.String emailAddress,
-		java.lang.String inProtocol, java.lang.String inServerName,
-		int inServerPort, boolean inUseSSL, java.lang.String inUserName,
-		java.lang.String inPassword, int inReadInterval,
-		java.lang.String outEmailAddress, boolean outCustom,
-		java.lang.String outServerName, int outServerPort, boolean outUseSSL,
-		java.lang.String outUserName, java.lang.String outPassword,
+		String name, String description, String displayStyle,
+		String emailAddress, String inProtocol, String inServerName,
+		int inServerPort, boolean inUseSSL, String inUserName,
+		String inPassword, int inReadInterval, String outEmailAddress,
+		boolean outCustom, String outServerName, int outServerPort,
+		boolean outUseSSL, String outUserName, String outPassword,
 		boolean allowAnonymous, boolean mailingListActive,
 		boolean mergeWithParentCategory, ServiceContext serviceContext)
 		throws PortalException;

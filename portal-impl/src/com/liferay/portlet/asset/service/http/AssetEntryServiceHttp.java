@@ -265,7 +265,7 @@ public class AssetEntryServiceHttp {
 	}
 
 	public static com.liferay.asset.kernel.model.AssetEntry incrementViewCounter(
-		HttpPrincipal httpPrincipal, java.lang.String className, long classPK)
+		HttpPrincipal httpPrincipal, String className, long classPK)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(AssetEntryServiceUtil.class,
@@ -298,15 +298,13 @@ public class AssetEntryServiceHttp {
 
 	public static com.liferay.asset.kernel.model.AssetEntry updateEntry(
 		HttpPrincipal httpPrincipal, long groupId, java.util.Date createDate,
-		java.util.Date modifiedDate, java.lang.String className, long classPK,
-		java.lang.String classUuid, long classTypeId, long[] categoryIds,
-		java.lang.String[] tagNames, boolean listable, boolean visible,
+		java.util.Date modifiedDate, String className, long classPK,
+		String classUuid, long classTypeId, long[] categoryIds,
+		String[] tagNames, boolean listable, boolean visible,
 		java.util.Date startDate, java.util.Date endDate,
 		java.util.Date publishDate, java.util.Date expirationDate,
-		java.lang.String mimeType, java.lang.String title,
-		java.lang.String description, java.lang.String summary,
-		java.lang.String url, java.lang.String layoutUuid, int height,
-		int width, java.lang.Double priority)
+		String mimeType, String title, String description, String summary,
+		String url, String layoutUuid, int height, int width, Double priority)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(AssetEntryServiceUtil.class,
@@ -343,15 +341,13 @@ public class AssetEntryServiceHttp {
 
 	public static com.liferay.asset.kernel.model.AssetEntry updateEntry(
 		HttpPrincipal httpPrincipal, long groupId, java.util.Date createDate,
-		java.util.Date modifiedDate, java.lang.String className, long classPK,
-		java.lang.String classUuid, long classTypeId, long[] categoryIds,
-		java.lang.String[] tagNames, boolean listable, boolean visible,
+		java.util.Date modifiedDate, String className, long classPK,
+		String classUuid, long classTypeId, long[] categoryIds,
+		String[] tagNames, boolean listable, boolean visible,
 		java.util.Date startDate, java.util.Date endDate,
-		java.util.Date expirationDate, java.lang.String mimeType,
-		java.lang.String title, java.lang.String description,
-		java.lang.String summary, java.lang.String url,
-		java.lang.String layoutUuid, int height, int width,
-		java.lang.Double priority)
+		java.util.Date expirationDate, String mimeType, String title,
+		String description, String summary, String url, String layoutUuid,
+		int height, int width, Double priority)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(AssetEntryServiceUtil.class,
@@ -388,14 +384,12 @@ public class AssetEntryServiceHttp {
 
 	public static com.liferay.asset.kernel.model.AssetEntry updateEntry(
 		HttpPrincipal httpPrincipal, long groupId, java.util.Date createDate,
-		java.util.Date modifiedDate, java.lang.String className, long classPK,
-		java.lang.String classUuid, long classTypeId, long[] categoryIds,
-		java.lang.String[] tagNames, boolean visible, java.util.Date startDate,
-		java.util.Date endDate, java.util.Date expirationDate,
-		java.lang.String mimeType, java.lang.String title,
-		java.lang.String description, java.lang.String summary,
-		java.lang.String url, java.lang.String layoutUuid, int height,
-		int width, java.lang.Integer priority, boolean sync)
+		java.util.Date modifiedDate, String className, long classPK,
+		String classUuid, long classTypeId, long[] categoryIds,
+		String[] tagNames, boolean visible, java.util.Date startDate,
+		java.util.Date endDate, java.util.Date expirationDate, String mimeType,
+		String title, String description, String summary, String url,
+		String layoutUuid, int height, int width, Integer priority, boolean sync)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(AssetEntryServiceUtil.class,
@@ -452,36 +446,30 @@ public class AssetEntryServiceHttp {
 			com.liferay.asset.kernel.model.AssetEntry.class
 		};
 	private static final Class<?>[] _incrementViewCounterParameterTypes7 = new Class[] {
-			java.lang.String.class, long.class
+			String.class, long.class
 		};
 	private static final Class<?>[] _updateEntryParameterTypes8 = new Class[] {
-			long.class, java.util.Date.class, java.util.Date.class,
-			java.lang.String.class, long.class, java.lang.String.class,
-			long.class, long[].class, java.lang.String[].class, boolean.class,
-			boolean.class, java.util.Date.class, java.util.Date.class,
-			java.util.Date.class, java.util.Date.class, java.lang.String.class,
-			java.lang.String.class, java.lang.String.class,
-			java.lang.String.class, java.lang.String.class,
-			java.lang.String.class, int.class, int.class, java.lang.Double.class
+			long.class, java.util.Date.class, java.util.Date.class, String.class,
+			long.class, String.class, long.class, long[].class, String[].class,
+			boolean.class, boolean.class, java.util.Date.class,
+			java.util.Date.class, java.util.Date.class, java.util.Date.class,
+			String.class, String.class, String.class, String.class, String.class,
+			String.class, int.class, int.class, Double.class
 		};
 	private static final Class<?>[] _updateEntryParameterTypes9 = new Class[] {
-			long.class, java.util.Date.class, java.util.Date.class,
-			java.lang.String.class, long.class, java.lang.String.class,
-			long.class, long[].class, java.lang.String[].class, boolean.class,
-			boolean.class, java.util.Date.class, java.util.Date.class,
-			java.util.Date.class, java.lang.String.class, java.lang.String.class,
-			java.lang.String.class, java.lang.String.class,
-			java.lang.String.class, java.lang.String.class, int.class, int.class,
-			java.lang.Double.class
+			long.class, java.util.Date.class, java.util.Date.class, String.class,
+			long.class, String.class, long.class, long[].class, String[].class,
+			boolean.class, boolean.class, java.util.Date.class,
+			java.util.Date.class, java.util.Date.class, String.class,
+			String.class, String.class, String.class, String.class, String.class,
+			int.class, int.class, Double.class
 		};
 	private static final Class<?>[] _updateEntryParameterTypes10 = new Class[] {
-			long.class, java.util.Date.class, java.util.Date.class,
-			java.lang.String.class, long.class, java.lang.String.class,
-			long.class, long[].class, java.lang.String[].class, boolean.class,
-			java.util.Date.class, java.util.Date.class, java.util.Date.class,
-			java.lang.String.class, java.lang.String.class,
-			java.lang.String.class, java.lang.String.class,
-			java.lang.String.class, java.lang.String.class, int.class, int.class,
-			java.lang.Integer.class, boolean.class
+			long.class, java.util.Date.class, java.util.Date.class, String.class,
+			long.class, String.class, long.class, long[].class, String[].class,
+			boolean.class, java.util.Date.class, java.util.Date.class,
+			java.util.Date.class, String.class, String.class, String.class,
+			String.class, String.class, String.class, int.class, int.class,
+			Integer.class, boolean.class
 		};
 }

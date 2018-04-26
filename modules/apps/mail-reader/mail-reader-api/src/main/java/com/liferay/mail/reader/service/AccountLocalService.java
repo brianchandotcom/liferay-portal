@@ -70,14 +70,12 @@ public interface AccountLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.REINDEX)
 	public Account addAccount(Account account);
 
-	public Account addAccount(long userId, java.lang.String address,
-		java.lang.String personalName, java.lang.String protocol,
-		java.lang.String incomingHostName, int incomingPort,
-		boolean incomingSecure, java.lang.String outgoingHostName,
-		int outgoingPort, boolean outgoingSecure, java.lang.String login,
-		java.lang.String password, boolean savePassword,
-		java.lang.String signature, boolean useSignature,
-		java.lang.String folderPrefix, long inboxFolderId, long draftFolderId,
+	public Account addAccount(long userId, String address, String personalName,
+		String protocol, String incomingHostName, int incomingPort,
+		boolean incomingSecure, String outgoingHostName, int outgoingPort,
+		boolean outgoingSecure, String login, String password,
+		boolean savePassword, String signature, boolean useSignature,
+		String folderPrefix, long inboxFolderId, long draftFolderId,
 		long sentFolderId, long trashFolderId, boolean defaultSender)
 		throws PortalException;
 
@@ -192,7 +190,7 @@ public interface AccountLocalService extends BaseLocalService,
 	public Account getAccount(long accountId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Account getAccount(long userId, java.lang.String address)
+	public Account getAccount(long userId, String address)
 		throws PortalException;
 
 	/**
@@ -231,7 +229,7 @@ public interface AccountLocalService extends BaseLocalService,
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -247,10 +245,9 @@ public interface AccountLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.REINDEX)
 	public Account updateAccount(Account account);
 
-	public Account updateAccount(long accountId, java.lang.String personalName,
-		java.lang.String password, boolean savePassword,
-		java.lang.String signature, boolean useSignature,
-		java.lang.String folderPrefix, boolean defaultSender)
+	public Account updateAccount(long accountId, String personalName,
+		String password, boolean savePassword, String signature,
+		boolean useSignature, String folderPrefix, boolean defaultSender)
 		throws PortalException;
 
 	public Account updateFolders(long accountId, long inboxFolderId,

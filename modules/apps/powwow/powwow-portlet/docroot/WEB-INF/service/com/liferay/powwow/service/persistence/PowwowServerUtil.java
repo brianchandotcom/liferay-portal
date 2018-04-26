@@ -116,7 +116,7 @@ public class PowwowServerUtil {
 	* @param active the active
 	* @return the matching powwow servers
 	*/
-	public static List<PowwowServer> findByPT_A(java.lang.String providerType,
+	public static List<PowwowServer> findByPT_A(String providerType,
 		boolean active) {
 		return getPersistence().findByPT_A(providerType, active);
 	}
@@ -134,7 +134,7 @@ public class PowwowServerUtil {
 	* @param end the upper bound of the range of powwow servers (not inclusive)
 	* @return the range of matching powwow servers
 	*/
-	public static List<PowwowServer> findByPT_A(java.lang.String providerType,
+	public static List<PowwowServer> findByPT_A(String providerType,
 		boolean active, int start, int end) {
 		return getPersistence().findByPT_A(providerType, active, start, end);
 	}
@@ -153,7 +153,7 @@ public class PowwowServerUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching powwow servers
 	*/
-	public static List<PowwowServer> findByPT_A(java.lang.String providerType,
+	public static List<PowwowServer> findByPT_A(String providerType,
 		boolean active, int start, int end,
 		OrderByComparator<PowwowServer> orderByComparator) {
 		return getPersistence()
@@ -176,7 +176,7 @@ public class PowwowServerUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching powwow servers
 	*/
-	public static List<PowwowServer> findByPT_A(java.lang.String providerType,
+	public static List<PowwowServer> findByPT_A(String providerType,
 		boolean active, int start, int end,
 		OrderByComparator<PowwowServer> orderByComparator,
 		boolean retrieveFromCache) {
@@ -194,7 +194,7 @@ public class PowwowServerUtil {
 	* @return the first matching powwow server
 	* @throws NoSuchServerException if a matching powwow server could not be found
 	*/
-	public static PowwowServer findByPT_A_First(java.lang.String providerType,
+	public static PowwowServer findByPT_A_First(String providerType,
 		boolean active, OrderByComparator<PowwowServer> orderByComparator)
 		throws com.liferay.powwow.exception.NoSuchServerException {
 		return getPersistence()
@@ -209,9 +209,8 @@ public class PowwowServerUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching powwow server, or <code>null</code> if a matching powwow server could not be found
 	*/
-	public static PowwowServer fetchByPT_A_First(
-		java.lang.String providerType, boolean active,
-		OrderByComparator<PowwowServer> orderByComparator) {
+	public static PowwowServer fetchByPT_A_First(String providerType,
+		boolean active, OrderByComparator<PowwowServer> orderByComparator) {
 		return getPersistence()
 				   .fetchByPT_A_First(providerType, active, orderByComparator);
 	}
@@ -225,7 +224,7 @@ public class PowwowServerUtil {
 	* @return the last matching powwow server
 	* @throws NoSuchServerException if a matching powwow server could not be found
 	*/
-	public static PowwowServer findByPT_A_Last(java.lang.String providerType,
+	public static PowwowServer findByPT_A_Last(String providerType,
 		boolean active, OrderByComparator<PowwowServer> orderByComparator)
 		throws com.liferay.powwow.exception.NoSuchServerException {
 		return getPersistence()
@@ -240,7 +239,7 @@ public class PowwowServerUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching powwow server, or <code>null</code> if a matching powwow server could not be found
 	*/
-	public static PowwowServer fetchByPT_A_Last(java.lang.String providerType,
+	public static PowwowServer fetchByPT_A_Last(String providerType,
 		boolean active, OrderByComparator<PowwowServer> orderByComparator) {
 		return getPersistence()
 				   .fetchByPT_A_Last(providerType, active, orderByComparator);
@@ -257,7 +256,7 @@ public class PowwowServerUtil {
 	* @throws NoSuchServerException if a powwow server with the primary key could not be found
 	*/
 	public static PowwowServer[] findByPT_A_PrevAndNext(long powwowServerId,
-		java.lang.String providerType, boolean active,
+		String providerType, boolean active,
 		OrderByComparator<PowwowServer> orderByComparator)
 		throws com.liferay.powwow.exception.NoSuchServerException {
 		return getPersistence()
@@ -271,8 +270,7 @@ public class PowwowServerUtil {
 	* @param providerType the provider type
 	* @param active the active
 	*/
-	public static void removeByPT_A(java.lang.String providerType,
-		boolean active) {
+	public static void removeByPT_A(String providerType, boolean active) {
 		getPersistence().removeByPT_A(providerType, active);
 	}
 
@@ -283,7 +281,7 @@ public class PowwowServerUtil {
 	* @param active the active
 	* @return the number of matching powwow servers
 	*/
-	public static int countByPT_A(java.lang.String providerType, boolean active) {
+	public static int countByPT_A(String providerType, boolean active) {
 		return getPersistence().countByPT_A(providerType, active);
 	}
 
@@ -435,7 +433,7 @@ public class PowwowServerUtil {
 		return getPersistence().countAll();
 	}
 
-	public static java.util.Set<java.lang.String> getBadColumnNames() {
+	public static java.util.Set<String> getBadColumnNames() {
 		return getPersistence().getBadColumnNames();
 	}
 

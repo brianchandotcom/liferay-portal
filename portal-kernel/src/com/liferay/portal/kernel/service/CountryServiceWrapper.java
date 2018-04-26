@@ -31,9 +31,8 @@ public class CountryServiceWrapper implements CountryService,
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.Country addCountry(
-		java.lang.String name, java.lang.String a2, java.lang.String a3,
-		java.lang.String number, java.lang.String idd, boolean active)
+	public com.liferay.portal.kernel.model.Country addCountry(String name,
+		String a2, String a3, String number, String idd, boolean active)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _countryService.addCountry(name, a2, a3, number, idd, active);
 	}
@@ -44,14 +43,12 @@ public class CountryServiceWrapper implements CountryService,
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.Country fetchCountryByA2(
-		java.lang.String a2) {
+	public com.liferay.portal.kernel.model.Country fetchCountryByA2(String a2) {
 		return _countryService.fetchCountryByA2(a2);
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.Country fetchCountryByA3(
-		java.lang.String a3) {
+	public com.liferay.portal.kernel.model.Country fetchCountryByA3(String a3) {
 		return _countryService.fetchCountryByA3(a3);
 	}
 
@@ -73,22 +70,19 @@ public class CountryServiceWrapper implements CountryService,
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.Country getCountryByA2(
-		java.lang.String a2)
+	public com.liferay.portal.kernel.model.Country getCountryByA2(String a2)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _countryService.getCountryByA2(a2);
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.Country getCountryByA3(
-		java.lang.String a3)
+	public com.liferay.portal.kernel.model.Country getCountryByA3(String a3)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _countryService.getCountryByA3(a3);
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.Country getCountryByName(
-		java.lang.String name)
+	public com.liferay.portal.kernel.model.Country getCountryByName(String name)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _countryService.getCountryByName(name);
 	}
@@ -99,7 +93,7 @@ public class CountryServiceWrapper implements CountryService,
 	* @return the OSGi service identifier
 	*/
 	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
+	public String getOSGiServiceIdentifier() {
 		return _countryService.getOSGiServiceIdentifier();
 	}
 

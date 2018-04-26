@@ -326,7 +326,7 @@ public interface LayoutBranchPersistence extends BasePersistence<LayoutBranch> {
 	* @throws NoSuchLayoutBranchException if a matching layout branch could not be found
 	*/
 	public LayoutBranch findByL_P_N(long layoutSetBranchId, long plid,
-		java.lang.String name) throws NoSuchLayoutBranchException;
+		String name) throws NoSuchLayoutBranchException;
 
 	/**
 	* Returns the layout branch where layoutSetBranchId = &#63; and plid = &#63; and name = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
@@ -337,7 +337,7 @@ public interface LayoutBranchPersistence extends BasePersistence<LayoutBranch> {
 	* @return the matching layout branch, or <code>null</code> if a matching layout branch could not be found
 	*/
 	public LayoutBranch fetchByL_P_N(long layoutSetBranchId, long plid,
-		java.lang.String name);
+		String name);
 
 	/**
 	* Returns the layout branch where layoutSetBranchId = &#63; and plid = &#63; and name = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -349,7 +349,7 @@ public interface LayoutBranchPersistence extends BasePersistence<LayoutBranch> {
 	* @return the matching layout branch, or <code>null</code> if a matching layout branch could not be found
 	*/
 	public LayoutBranch fetchByL_P_N(long layoutSetBranchId, long plid,
-		java.lang.String name, boolean retrieveFromCache);
+		String name, boolean retrieveFromCache);
 
 	/**
 	* Removes the layout branch where layoutSetBranchId = &#63; and plid = &#63; and name = &#63; from the database.
@@ -360,7 +360,7 @@ public interface LayoutBranchPersistence extends BasePersistence<LayoutBranch> {
 	* @return the layout branch that was removed
 	*/
 	public LayoutBranch removeByL_P_N(long layoutSetBranchId, long plid,
-		java.lang.String name) throws NoSuchLayoutBranchException;
+		String name) throws NoSuchLayoutBranchException;
 
 	/**
 	* Returns the number of layout branchs where layoutSetBranchId = &#63; and plid = &#63; and name = &#63;.
@@ -370,8 +370,7 @@ public interface LayoutBranchPersistence extends BasePersistence<LayoutBranch> {
 	* @param name the name
 	* @return the number of matching layout branchs
 	*/
-	public int countByL_P_N(long layoutSetBranchId, long plid,
-		java.lang.String name);
+	public int countByL_P_N(long layoutSetBranchId, long plid, String name);
 
 	/**
 	* Returns all the layout branchs where layoutSetBranchId = &#63; and plid = &#63; and master = &#63;.

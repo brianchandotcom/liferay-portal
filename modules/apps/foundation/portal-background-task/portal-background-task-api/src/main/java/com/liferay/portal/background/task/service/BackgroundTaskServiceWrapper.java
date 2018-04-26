@@ -35,13 +35,13 @@ public class BackgroundTaskServiceWrapper implements BackgroundTaskService,
 
 	@Override
 	public int getBackgroundTasksCount(long groupId,
-		java.lang.String taskExecutorClassName, java.lang.String completed) {
+		String taskExecutorClassName, String completed) {
 		return _backgroundTaskService.getBackgroundTasksCount(groupId,
 			taskExecutorClassName, completed);
 	}
 
 	@Override
-	public java.lang.String getBackgroundTaskStatusJSON(long backgroundTaskId) {
+	public String getBackgroundTaskStatusJSON(long backgroundTaskId) {
 		return _backgroundTaskService.getBackgroundTaskStatusJSON(backgroundTaskId);
 	}
 
@@ -51,7 +51,7 @@ public class BackgroundTaskServiceWrapper implements BackgroundTaskService,
 	* @return the OSGi service identifier
 	*/
 	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
+	public String getOSGiServiceIdentifier() {
 		return _backgroundTaskService.getOSGiServiceIdentifier();
 	}
 

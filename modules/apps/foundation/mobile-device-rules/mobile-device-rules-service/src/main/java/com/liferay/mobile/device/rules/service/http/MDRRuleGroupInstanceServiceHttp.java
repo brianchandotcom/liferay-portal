@@ -56,7 +56,7 @@ import com.liferay.portal.kernel.util.MethodKey;
 @ProviderType
 public class MDRRuleGroupInstanceServiceHttp {
 	public static com.liferay.mobile.device.rules.model.MDRRuleGroupInstance addRuleGroupInstance(
-		HttpPrincipal httpPrincipal, long groupId, java.lang.String className,
+		HttpPrincipal httpPrincipal, long groupId, String className,
 		long classPK, long ruleGroupId, int priority,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -90,7 +90,7 @@ public class MDRRuleGroupInstanceServiceHttp {
 	}
 
 	public static com.liferay.mobile.device.rules.model.MDRRuleGroupInstance addRuleGroupInstance(
-		HttpPrincipal httpPrincipal, long groupId, java.lang.String className,
+		HttpPrincipal httpPrincipal, long groupId, String className,
 		long classPK, long ruleGroupId,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -153,8 +153,8 @@ public class MDRRuleGroupInstanceServiceHttp {
 	}
 
 	public static java.util.List<com.liferay.mobile.device.rules.model.MDRRuleGroupInstance> getRuleGroupInstances(
-		HttpPrincipal httpPrincipal, java.lang.String className, long classPK,
-		int start, int end,
+		HttpPrincipal httpPrincipal, String className, long classPK, int start,
+		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.mobile.device.rules.model.MDRRuleGroupInstance> orderByComparator) {
 		try {
 			MethodKey methodKey = new MethodKey(MDRRuleGroupInstanceServiceUtil.class,
@@ -183,7 +183,7 @@ public class MDRRuleGroupInstanceServiceHttp {
 	}
 
 	public static int getRuleGroupInstancesCount(HttpPrincipal httpPrincipal,
-		java.lang.String className, long classPK) {
+		String className, long classPK) {
 		try {
 			MethodKey methodKey = new MethodKey(MDRRuleGroupInstanceServiceUtil.class,
 					"getRuleGroupInstancesCount",
@@ -245,22 +245,22 @@ public class MDRRuleGroupInstanceServiceHttp {
 
 	private static Log _log = LogFactoryUtil.getLog(MDRRuleGroupInstanceServiceHttp.class);
 	private static final Class<?>[] _addRuleGroupInstanceParameterTypes0 = new Class[] {
-			long.class, java.lang.String.class, long.class, long.class,
-			int.class, com.liferay.portal.kernel.service.ServiceContext.class
+			long.class, String.class, long.class, long.class, int.class,
+			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _addRuleGroupInstanceParameterTypes1 = new Class[] {
-			long.class, java.lang.String.class, long.class, long.class,
+			long.class, String.class, long.class, long.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _deleteRuleGroupInstanceParameterTypes2 = new Class[] {
 			long.class
 		};
 	private static final Class<?>[] _getRuleGroupInstancesParameterTypes3 = new Class[] {
-			java.lang.String.class, long.class, int.class, int.class,
+			String.class, long.class, int.class, int.class,
 			com.liferay.portal.kernel.util.OrderByComparator.class
 		};
 	private static final Class<?>[] _getRuleGroupInstancesCountParameterTypes4 = new Class[] {
-			java.lang.String.class, long.class
+			String.class, long.class
 		};
 	private static final Class<?>[] _updateRuleGroupInstanceParameterTypes5 = new Class[] {
 			long.class, int.class

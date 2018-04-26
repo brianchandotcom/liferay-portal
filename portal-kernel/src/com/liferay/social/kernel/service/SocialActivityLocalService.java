@@ -103,9 +103,8 @@ public interface SocialActivityLocalService extends BaseLocalService,
 	* @param receiverUserId the primary key of the receiving user
 	*/
 	public void addActivity(long userId, long groupId, Date createDate,
-		java.lang.String className, long classPK, int type,
-		java.lang.String extraData, long receiverUserId)
-		throws PortalException;
+		String className, long classPK, int type, String extraData,
+		long receiverUserId) throws PortalException;
 
 	/**
 	* Records an activity in the database, using a time based on the current
@@ -119,9 +118,8 @@ public interface SocialActivityLocalService extends BaseLocalService,
 	* @param extraData any extra data regarding the activity
 	* @param receiverUserId the primary key of the receiving user
 	*/
-	public void addActivity(long userId, long groupId,
-		java.lang.String className, long classPK, int type,
-		java.lang.String extraData, long receiverUserId)
+	public void addActivity(long userId, long groupId, String className,
+		long classPK, int type, String extraData, long receiverUserId)
 		throws PortalException;
 
 	@Async
@@ -156,9 +154,8 @@ public interface SocialActivityLocalService extends BaseLocalService,
 	* @param receiverUserId the primary key of the receiving user
 	*/
 	public void addUniqueActivity(long userId, long groupId, Date createDate,
-		java.lang.String className, long classPK, int type,
-		java.lang.String extraData, long receiverUserId)
-		throws PortalException;
+		String className, long classPK, int type, String extraData,
+		long receiverUserId) throws PortalException;
 
 	/**
 	* Records an activity with the current time in the database, but only if
@@ -177,9 +174,8 @@ public interface SocialActivityLocalService extends BaseLocalService,
 	* @param extraData any extra data regarding the activity
 	* @param receiverUserId the primary key of the receiving user
 	*/
-	public void addUniqueActivity(long userId, long groupId,
-		java.lang.String className, long classPK, int type,
-		java.lang.String extraData, long receiverUserId)
+	public void addUniqueActivity(long userId, long groupId, String className,
+		long classPK, int type, String extraData, long receiverUserId)
 		throws PortalException;
 
 	/**
@@ -208,7 +204,7 @@ public interface SocialActivityLocalService extends BaseLocalService,
 	* @param className the target asset's class name
 	* @param classPK the primary key of the target asset
 	*/
-	public void deleteActivities(java.lang.String className, long classPK)
+	public void deleteActivities(String className, long classPK)
 		throws PortalException;
 
 	/**
@@ -325,8 +321,8 @@ public interface SocialActivityLocalService extends BaseLocalService,
 		Projection projection);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public SocialActivity fetchFirstActivity(java.lang.String className,
-		long classPK, int type);
+	public SocialActivity fetchFirstActivity(String className, long classPK,
+		int type);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public SocialActivity fetchSocialActivity(long activityId);
@@ -404,7 +400,7 @@ public interface SocialActivityLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<SocialActivity> getActivities(long mirrorActivityId,
-		java.lang.String className, long classPK, int start, int end);
+		String className, long classPK, int start, int end);
 
 	/**
 	* Returns a range of all the activities done on assets identified by the
@@ -425,8 +421,8 @@ public interface SocialActivityLocalService extends BaseLocalService,
 	* @return the range of matching activities
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<SocialActivity> getActivities(java.lang.String className,
-		int start, int end);
+	public List<SocialActivity> getActivities(String className, int start,
+		int end);
 
 	/**
 	* Returns the number of activities done on assets identified by the class
@@ -440,7 +436,7 @@ public interface SocialActivityLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getActivitiesCount(long userId, long groupId, Date createDate,
-		java.lang.String className, long classPK, int type, long receiverUserId);
+		String className, long classPK, int type, long receiverUserId);
 
 	/**
 	* Returns the number of activities done on the asset identified by the
@@ -467,8 +463,8 @@ public interface SocialActivityLocalService extends BaseLocalService,
 	* @return the number of matching activities
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getActivitiesCount(long mirrorActivityId,
-		java.lang.String className, long classPK);
+	public int getActivitiesCount(long mirrorActivityId, String className,
+		long classPK);
 
 	/**
 	* Returns the number of activities done on assets identified by class name.
@@ -477,7 +473,7 @@ public interface SocialActivityLocalService extends BaseLocalService,
 	* @return the number of matching activities
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getActivitiesCount(java.lang.String className);
+	public int getActivitiesCount(String className);
 
 	/**
 	* Returns the activity identified by its primary key.
@@ -653,7 +649,7 @@ public interface SocialActivityLocalService extends BaseLocalService,
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

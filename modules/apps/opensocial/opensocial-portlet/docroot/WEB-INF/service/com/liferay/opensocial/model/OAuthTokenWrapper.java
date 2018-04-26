@@ -163,7 +163,7 @@ public class OAuthTokenWrapper implements OAuthToken, ModelWrapper<OAuthToken> {
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new OAuthTokenWrapper((OAuthToken)_oAuthToken.clone());
 	}
 
@@ -178,7 +178,7 @@ public class OAuthTokenWrapper implements OAuthToken, ModelWrapper<OAuthToken> {
 	* @return the access token of this o auth token
 	*/
 	@Override
-	public java.lang.String getAccessToken() {
+	public String getAccessToken() {
 		return _oAuthToken.getAccessToken();
 	}
 
@@ -223,7 +223,7 @@ public class OAuthTokenWrapper implements OAuthToken, ModelWrapper<OAuthToken> {
 	* @return the gadget key of this o auth token
 	*/
 	@Override
-	public java.lang.String getGadgetKey() {
+	public String getGadgetKey() {
 		return _oAuthToken.getGadgetKey();
 	}
 
@@ -278,7 +278,7 @@ public class OAuthTokenWrapper implements OAuthToken, ModelWrapper<OAuthToken> {
 	* @return the service name of this o auth token
 	*/
 	@Override
-	public java.lang.String getServiceName() {
+	public String getServiceName() {
 		return _oAuthToken.getServiceName();
 	}
 
@@ -288,7 +288,7 @@ public class OAuthTokenWrapper implements OAuthToken, ModelWrapper<OAuthToken> {
 	* @return the session handle of this o auth token
 	*/
 	@Override
-	public java.lang.String getSessionHandle() {
+	public String getSessionHandle() {
 		return _oAuthToken.getSessionHandle();
 	}
 
@@ -298,7 +298,7 @@ public class OAuthTokenWrapper implements OAuthToken, ModelWrapper<OAuthToken> {
 	* @return the token name of this o auth token
 	*/
 	@Override
-	public java.lang.String getTokenName() {
+	public String getTokenName() {
 		return _oAuthToken.getTokenName();
 	}
 
@@ -308,7 +308,7 @@ public class OAuthTokenWrapper implements OAuthToken, ModelWrapper<OAuthToken> {
 	* @return the token secret of this o auth token
 	*/
 	@Override
-	public java.lang.String getTokenSecret() {
+	public String getTokenSecret() {
 		return _oAuthToken.getTokenSecret();
 	}
 
@@ -328,7 +328,7 @@ public class OAuthTokenWrapper implements OAuthToken, ModelWrapper<OAuthToken> {
 	* @return the user name of this o auth token
 	*/
 	@Override
-	public java.lang.String getUserName() {
+	public String getUserName() {
 		return _oAuthToken.getUserName();
 	}
 
@@ -338,7 +338,7 @@ public class OAuthTokenWrapper implements OAuthToken, ModelWrapper<OAuthToken> {
 	* @return the user uuid of this o auth token
 	*/
 	@Override
-	public java.lang.String getUserUuid() {
+	public String getUserUuid() {
 		return _oAuthToken.getUserUuid();
 	}
 
@@ -373,7 +373,7 @@ public class OAuthTokenWrapper implements OAuthToken, ModelWrapper<OAuthToken> {
 	* @param accessToken the access token of this o auth token
 	*/
 	@Override
-	public void setAccessToken(java.lang.String accessToken) {
+	public void setAccessToken(String accessToken) {
 		_oAuthToken.setAccessToken(accessToken);
 	}
 
@@ -434,7 +434,7 @@ public class OAuthTokenWrapper implements OAuthToken, ModelWrapper<OAuthToken> {
 	* @param gadgetKey the gadget key of this o auth token
 	*/
 	@Override
-	public void setGadgetKey(java.lang.String gadgetKey) {
+	public void setGadgetKey(String gadgetKey) {
 		_oAuthToken.setGadgetKey(gadgetKey);
 	}
 
@@ -494,7 +494,7 @@ public class OAuthTokenWrapper implements OAuthToken, ModelWrapper<OAuthToken> {
 	* @param serviceName the service name of this o auth token
 	*/
 	@Override
-	public void setServiceName(java.lang.String serviceName) {
+	public void setServiceName(String serviceName) {
 		_oAuthToken.setServiceName(serviceName);
 	}
 
@@ -504,7 +504,7 @@ public class OAuthTokenWrapper implements OAuthToken, ModelWrapper<OAuthToken> {
 	* @param sessionHandle the session handle of this o auth token
 	*/
 	@Override
-	public void setSessionHandle(java.lang.String sessionHandle) {
+	public void setSessionHandle(String sessionHandle) {
 		_oAuthToken.setSessionHandle(sessionHandle);
 	}
 
@@ -514,7 +514,7 @@ public class OAuthTokenWrapper implements OAuthToken, ModelWrapper<OAuthToken> {
 	* @param tokenName the token name of this o auth token
 	*/
 	@Override
-	public void setTokenName(java.lang.String tokenName) {
+	public void setTokenName(String tokenName) {
 		_oAuthToken.setTokenName(tokenName);
 	}
 
@@ -524,7 +524,7 @@ public class OAuthTokenWrapper implements OAuthToken, ModelWrapper<OAuthToken> {
 	* @param tokenSecret the token secret of this o auth token
 	*/
 	@Override
-	public void setTokenSecret(java.lang.String tokenSecret) {
+	public void setTokenSecret(String tokenSecret) {
 		_oAuthToken.setTokenSecret(tokenSecret);
 	}
 
@@ -544,7 +544,7 @@ public class OAuthTokenWrapper implements OAuthToken, ModelWrapper<OAuthToken> {
 	* @param userName the user name of this o auth token
 	*/
 	@Override
-	public void setUserName(java.lang.String userName) {
+	public void setUserName(String userName) {
 		_oAuthToken.setUserName(userName);
 	}
 
@@ -554,7 +554,7 @@ public class OAuthTokenWrapper implements OAuthToken, ModelWrapper<OAuthToken> {
 	* @param userUuid the user uuid of this o auth token
 	*/
 	@Override
-	public void setUserUuid(java.lang.String userUuid) {
+	public void setUserUuid(String userUuid) {
 		_oAuthToken.setUserUuid(userUuid);
 	}
 
@@ -569,7 +569,7 @@ public class OAuthTokenWrapper implements OAuthToken, ModelWrapper<OAuthToken> {
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _oAuthToken.toString();
 	}
 
@@ -579,7 +579,7 @@ public class OAuthTokenWrapper implements OAuthToken, ModelWrapper<OAuthToken> {
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _oAuthToken.toXmlString();
 	}
 

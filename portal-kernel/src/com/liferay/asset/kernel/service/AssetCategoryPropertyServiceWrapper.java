@@ -39,7 +39,7 @@ public class AssetCategoryPropertyServiceWrapper
 
 	@Override
 	public com.liferay.asset.kernel.model.AssetCategoryProperty addCategoryProperty(
-		long entryId, java.lang.String key, java.lang.String value)
+		long entryId, String key, String value)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _assetCategoryPropertyService.addCategoryProperty(entryId, key,
 			value);
@@ -59,7 +59,7 @@ public class AssetCategoryPropertyServiceWrapper
 
 	@Override
 	public java.util.List<com.liferay.asset.kernel.model.AssetCategoryProperty> getCategoryPropertyValues(
-		long companyId, java.lang.String key) {
+		long companyId, String key) {
 		return _assetCategoryPropertyService.getCategoryPropertyValues(companyId,
 			key);
 	}
@@ -70,14 +70,13 @@ public class AssetCategoryPropertyServiceWrapper
 	* @return the OSGi service identifier
 	*/
 	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
+	public String getOSGiServiceIdentifier() {
 		return _assetCategoryPropertyService.getOSGiServiceIdentifier();
 	}
 
 	@Override
 	public com.liferay.asset.kernel.model.AssetCategoryProperty updateCategoryProperty(
-		long userId, long categoryPropertyId, java.lang.String key,
-		java.lang.String value)
+		long userId, long categoryPropertyId, String key, String value)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _assetCategoryPropertyService.updateCategoryProperty(userId,
 			categoryPropertyId, key, value);
@@ -85,7 +84,7 @@ public class AssetCategoryPropertyServiceWrapper
 
 	@Override
 	public com.liferay.asset.kernel.model.AssetCategoryProperty updateCategoryProperty(
-		long categoryPropertyId, java.lang.String key, java.lang.String value)
+		long categoryPropertyId, String key, String value)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _assetCategoryPropertyService.updateCategoryProperty(categoryPropertyId,
 			key, value);

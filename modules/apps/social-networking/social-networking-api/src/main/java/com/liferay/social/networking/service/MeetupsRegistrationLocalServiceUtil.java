@@ -249,7 +249,7 @@ public class MeetupsRegistrationLocalServiceUtil {
 	*
 	* @return the OSGi service identifier
 	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
+	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 
@@ -260,7 +260,7 @@ public class MeetupsRegistrationLocalServiceUtil {
 	}
 
 	public static com.liferay.social.networking.model.MeetupsRegistration updateMeetupsRegistration(
-		long userId, long meetupsEntryId, int status, java.lang.String comments)
+		long userId, long meetupsEntryId, int status, String comments)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .updateMeetupsRegistration(userId, meetupsEntryId, status,

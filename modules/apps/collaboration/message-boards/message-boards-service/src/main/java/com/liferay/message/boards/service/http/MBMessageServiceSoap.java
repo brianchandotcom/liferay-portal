@@ -66,8 +66,8 @@ import java.rmi.RemoteException;
 @ProviderType
 public class MBMessageServiceSoap {
 	public static com.liferay.message.boards.model.MBMessageSoap addDiscussionMessage(
-		long groupId, java.lang.String className, long classPK, long threadId,
-		long parentMessageId, java.lang.String subject, java.lang.String body,
+		long groupId, String className, long classPK, long threadId,
+		long parentMessageId, String subject, String body,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
@@ -85,9 +85,9 @@ public class MBMessageServiceSoap {
 	}
 
 	public static com.liferay.message.boards.model.MBMessageSoap addMessage(
-		long groupId, long categoryId, java.lang.String subject,
-		java.lang.String body, java.lang.String format,
-		java.util.List<com.liferay.portal.kernel.util.ObjectValuePair<java.lang.String, java.io.InputStream>> inputStreamOVPs,
+		long groupId, long categoryId, String subject, String body,
+		String format,
+		java.util.List<com.liferay.portal.kernel.util.ObjectValuePair<String, java.io.InputStream>> inputStreamOVPs,
 		boolean anonymous, double priority, boolean allowPingbacks,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
@@ -106,7 +106,7 @@ public class MBMessageServiceSoap {
 	}
 
 	public static com.liferay.message.boards.model.MBMessageSoap addMessage(
-		long categoryId, java.lang.String subject, java.lang.String body,
+		long categoryId, String subject, String body,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
@@ -123,9 +123,8 @@ public class MBMessageServiceSoap {
 	}
 
 	public static com.liferay.message.boards.model.MBMessageSoap addMessage(
-		long parentMessageId, java.lang.String subject, java.lang.String body,
-		java.lang.String format,
-		java.util.List<com.liferay.portal.kernel.util.ObjectValuePair<java.lang.String, java.io.InputStream>> inputStreamOVPs,
+		long parentMessageId, String subject, String body, String format,
+		java.util.List<com.liferay.portal.kernel.util.ObjectValuePair<String, java.io.InputStream>> inputStreamOVPs,
 		boolean anonymous, double priority, boolean allowPingbacks,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
@@ -166,8 +165,8 @@ public class MBMessageServiceSoap {
 		}
 	}
 
-	public static void deleteMessageAttachment(long messageId,
-		java.lang.String fileName) throws RemoteException {
+	public static void deleteMessageAttachment(long messageId, String fileName)
+		throws RemoteException {
 		try {
 			MBMessageServiceUtil.deleteMessageAttachment(messageId, fileName);
 		}
@@ -191,8 +190,7 @@ public class MBMessageServiceSoap {
 	}
 
 	public static void deleteTempAttachment(long groupId, long categoryId,
-		java.lang.String folderName, java.lang.String fileName)
-		throws RemoteException {
+		String folderName, String fileName) throws RemoteException {
 		try {
 			MBMessageServiceUtil.deleteTempAttachment(groupId, categoryId,
 				folderName, fileName);
@@ -277,25 +275,10 @@ public class MBMessageServiceSoap {
 		}
 	}
 
-	public static com.liferay.message.boards.model.MBMessageDisplay getMessageDisplay(
-		long messageId, int status) throws RemoteException {
+	public static String[] getTempAttachmentNames(long groupId,
+		String folderName) throws RemoteException {
 		try {
-			com.liferay.message.boards.model.MBMessageDisplay returnValue = MBMessageServiceUtil.getMessageDisplay(messageId,
-					status);
-
-			return returnValue;
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-
-			throw new RemoteException(e.getMessage());
-		}
-	}
-
-	public static java.lang.String[] getTempAttachmentNames(long groupId,
-		java.lang.String folderName) throws RemoteException {
-		try {
-			java.lang.String[] returnValue = MBMessageServiceUtil.getTempAttachmentNames(groupId,
+			String[] returnValue = MBMessageServiceUtil.getTempAttachmentNames(groupId,
 					folderName);
 
 			return returnValue;
@@ -355,7 +338,7 @@ public class MBMessageServiceSoap {
 	}
 
 	public static void moveMessageAttachmentToTrash(long messageId,
-		java.lang.String fileName) throws RemoteException {
+		String fileName) throws RemoteException {
 		try {
 			MBMessageServiceUtil.moveMessageAttachmentToTrash(messageId,
 				fileName);
@@ -368,7 +351,7 @@ public class MBMessageServiceSoap {
 	}
 
 	public static void restoreMessageAttachmentFromTrash(long messageId,
-		java.lang.String fileName) throws RemoteException {
+		String fileName) throws RemoteException {
 		try {
 			MBMessageServiceUtil.restoreMessageAttachmentFromTrash(messageId,
 				fileName);
@@ -417,8 +400,8 @@ public class MBMessageServiceSoap {
 	}
 
 	public static com.liferay.message.boards.model.MBMessageSoap updateDiscussionMessage(
-		java.lang.String className, long classPK, long messageId,
-		java.lang.String subject, java.lang.String body,
+		String className, long classPK, long messageId, String subject,
+		String body,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
@@ -435,9 +418,9 @@ public class MBMessageServiceSoap {
 	}
 
 	public static com.liferay.message.boards.model.MBMessageSoap updateMessage(
-		long messageId, java.lang.String subject, java.lang.String body,
-		java.util.List<com.liferay.portal.kernel.util.ObjectValuePair<java.lang.String, java.io.InputStream>> inputStreamOVPs,
-		java.util.List<java.lang.String> existingFiles, double priority,
+		long messageId, String subject, String body,
+		java.util.List<com.liferay.portal.kernel.util.ObjectValuePair<String, java.io.InputStream>> inputStreamOVPs,
+		java.util.List<String> existingFiles, double priority,
 		boolean allowPingbacks,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {

@@ -48,19 +48,18 @@ public class SyncDeviceServiceUtil {
 	*
 	* @return the OSGi service identifier
 	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
+	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 
 	public static com.liferay.sync.model.SyncDevice registerSyncDevice(
-		java.lang.String type, long buildNumber, int featureSet,
-		java.lang.String uuid)
+		String type, long buildNumber, int featureSet, String uuid)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .registerSyncDevice(type, buildNumber, featureSet, uuid);
 	}
 
-	public static void unregisterSyncDevice(java.lang.String uuid)
+	public static void unregisterSyncDevice(String uuid)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().unregisterSyncDevice(uuid);
 	}

@@ -77,52 +77,50 @@ public interface JournalArticle extends JournalArticleModel, PersistedModel,
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	@Override
-	public java.lang.String buildTreePath()
+	public String buildTreePath()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
-	public java.lang.String getArticleImageURL(
+	public String getArticleImageURL(
 		com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay);
 
 	public JournalArticleResource getArticleResource()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
-	public java.lang.String getArticleResourceUuid()
+	public String getArticleResourceUuid()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
-	public java.lang.String[] getAvailableLanguageIds();
+	public String[] getAvailableLanguageIds();
 
-	public java.lang.String getContentByLocale(java.lang.String languageId);
+	public String getContentByLocale(String languageId);
 
 	public com.liferay.dynamic.data.mapping.model.DDMStructure getDDMStructure();
 
 	public com.liferay.dynamic.data.mapping.model.DDMTemplate getDDMTemplate();
 
 	@com.liferay.portal.kernel.json.JSON()
-	public java.lang.String getDescription();
+	public String getDescription();
 
-	public java.lang.String getDescription(java.util.Locale locale);
+	public String getDescription(java.util.Locale locale);
 
-	public java.lang.String getDescription(java.util.Locale locale,
-		boolean useDefault);
+	public String getDescription(java.util.Locale locale, boolean useDefault);
 
-	public java.lang.String getDescription(java.lang.String languageId);
+	public String getDescription(String languageId);
 
-	public java.lang.String getDescription(java.lang.String languageId,
-		boolean useDefault);
+	public String getDescription(String languageId, boolean useDefault);
 
-	public java.util.Map<java.util.Locale, java.lang.String> getDescriptionMap();
+	public java.util.Map<java.util.Locale, String> getDescriptionMap();
 
-	public java.lang.String getDescriptionMapAsXML();
+	public String getDescriptionMapAsXML();
 
 	public com.liferay.portal.kernel.xml.Document getDocument();
 
 	public JournalFolder getFolder()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
-	public java.util.Map<java.util.Locale, java.lang.String> getFriendlyURLMap()
+	public java.util.Map<java.util.Locale, String> getFriendlyURLMap()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
-	public java.lang.String getFriendlyURLsXML()
+	public String getFriendlyURLsXML()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public java.util.List<com.liferay.portal.kernel.repository.model.FileEntry> getImagesFileEntries()
@@ -146,50 +144,49 @@ public interface JournalArticle extends JournalArticleModel, PersistedModel,
 	/**
 	* @deprecated As of 4.0.0
 	*/
-	@java.lang.Deprecated()
-	public java.lang.String getLegacyDescription();
+	@Deprecated()
+	public String getLegacyDescription();
 
 	/**
 	* @deprecated As of 4.0.0
 	*/
-	@java.lang.Deprecated()
-	public java.lang.String getLegacyTitle();
+	@Deprecated()
+	public String getLegacyTitle();
 
-	public java.lang.String getSmallImageType()
+	public String getSmallImageType()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* @deprecated As of 4.0.0, replaced by {@link #getDDMStructureKey()}
 	*/
-	@java.lang.Deprecated()
-	public java.lang.String getStructureId();
+	@Deprecated()
+	public String getStructureId();
 
 	/**
 	* @deprecated As of 4.0.0, replaced by {@link #getDDMTemplateKey()}
 	*/
-	@java.lang.Deprecated()
-	public java.lang.String getTemplateId();
+	@Deprecated()
+	public String getTemplateId();
 
 	@com.liferay.portal.kernel.json.JSON()
-	public java.lang.String getTitle();
+	public String getTitle();
 
-	public java.lang.String getTitle(java.util.Locale locale);
+	public String getTitle(java.util.Locale locale);
 
-	public java.lang.String getTitle(java.util.Locale locale, boolean useDefault);
+	public String getTitle(java.util.Locale locale, boolean useDefault);
 
-	public java.lang.String getTitle(java.lang.String languageId);
+	public String getTitle(String languageId);
 
-	public java.lang.String getTitle(java.lang.String languageId,
-		boolean useDefault);
+	public String getTitle(String languageId, boolean useDefault);
 
 	@com.liferay.portal.kernel.json.JSON()
-	public java.lang.String getTitleCurrentValue();
+	public String getTitleCurrentValue();
 
-	public java.util.Map<java.util.Locale, java.lang.String> getTitleMap();
+	public java.util.Map<java.util.Locale, String> getTitleMap();
 
-	public java.lang.String getTitleMapAsXML();
+	public String getTitleMapAsXML();
 
-	public java.lang.String getUrlTitle(java.util.Locale locale)
+	public String getUrlTitle(java.util.Locale locale)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public boolean hasApprovedVersion();
@@ -197,42 +194,41 @@ public interface JournalArticle extends JournalArticleModel, PersistedModel,
 	/**
 	* @deprecated As of 4.0.0, with no direct replacement
 	*/
-	@java.lang.Deprecated()
+	@Deprecated()
 	public boolean isTemplateDriven();
 
 	/**
 	* @deprecated As of 4.0.0
 	*/
-	@java.lang.Deprecated()
-	public void setDescription(java.lang.String description);
+	@Deprecated()
+	public void setDescription(String description);
 
 	public void setDescriptionMap(
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap);
+		java.util.Map<java.util.Locale, String> descriptionMap);
 
 	public void setDocument(com.liferay.portal.kernel.xml.Document document);
 
 	public void setImagesFolderId(long imagesFolderId);
 
-	public void setSmallImageType(java.lang.String smallImageType);
+	public void setSmallImageType(String smallImageType);
 
 	/**
 	* @deprecated As of 4.0.0, replaced by {@link #setDDMStructureKey(String)}
 	*/
-	@java.lang.Deprecated()
-	public void setStructureId(java.lang.String ddmStructureKey);
+	@Deprecated()
+	public void setStructureId(String ddmStructureKey);
 
 	/**
 	* @deprecated As of 4.0.0, replaced by {@link #setDDMTemplateKey(String)}
 	*/
-	@java.lang.Deprecated()
-	public void setTemplateId(java.lang.String ddmTemplateKey);
+	@Deprecated()
+	public void setTemplateId(String ddmTemplateKey);
 
 	/**
 	* @deprecated As of 4.0.0
 	*/
-	@java.lang.Deprecated()
-	public void setTitle(java.lang.String title);
+	@Deprecated()
+	public void setTitle(String title);
 
-	public void setTitleMap(
-		java.util.Map<java.util.Locale, java.lang.String> titleMap);
+	public void setTitleMap(java.util.Map<java.util.Locale, String> titleMap);
 }

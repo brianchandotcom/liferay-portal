@@ -56,8 +56,7 @@ import com.liferay.portal.kernel.util.MethodKey;
 public class LayoutSetServiceHttp {
 	public static void updateLayoutSetPrototypeLinkEnabled(
 		HttpPrincipal httpPrincipal, long groupId, boolean privateLayout,
-		boolean layoutSetPrototypeLinkEnabled,
-		java.lang.String layoutSetPrototypeUuid)
+		boolean layoutSetPrototypeLinkEnabled, String layoutSetPrototypeUuid)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(LayoutSetServiceUtil.class,
@@ -201,8 +200,7 @@ public class LayoutSetServiceHttp {
 
 	public static com.liferay.portal.kernel.model.LayoutSet updateLookAndFeel(
 		HttpPrincipal httpPrincipal, long groupId, boolean privateLayout,
-		java.lang.String themeId, java.lang.String colorSchemeId,
-		java.lang.String css)
+		String themeId, String colorSchemeId, String css)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(LayoutSetServiceUtil.class,
@@ -235,7 +233,7 @@ public class LayoutSetServiceHttp {
 
 	public static com.liferay.portal.kernel.model.LayoutSet updateSettings(
 		HttpPrincipal httpPrincipal, long groupId, boolean privateLayout,
-		java.lang.String settings)
+		String settings)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(LayoutSetServiceUtil.class,
@@ -268,7 +266,7 @@ public class LayoutSetServiceHttp {
 
 	public static com.liferay.portal.kernel.model.LayoutSet updateVirtualHost(
 		HttpPrincipal httpPrincipal, long groupId, boolean privateLayout,
-		java.lang.String virtualHost)
+		String virtualHost)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(LayoutSetServiceUtil.class,
@@ -301,9 +299,7 @@ public class LayoutSetServiceHttp {
 
 	private static Log _log = LogFactoryUtil.getLog(LayoutSetServiceHttp.class);
 	private static final Class<?>[] _updateLayoutSetPrototypeLinkEnabledParameterTypes0 =
-		new Class[] {
-			long.class, boolean.class, boolean.class, java.lang.String.class
-		};
+		new Class[] { long.class, boolean.class, boolean.class, String.class };
 	private static final Class<?>[] _updateLogoParameterTypes1 = new Class[] {
 			long.class, boolean.class, boolean.class, byte[].class
 		};
@@ -318,13 +314,12 @@ public class LayoutSetServiceHttp {
 			boolean.class
 		};
 	private static final Class<?>[] _updateLookAndFeelParameterTypes5 = new Class[] {
-			long.class, boolean.class, java.lang.String.class,
-			java.lang.String.class, java.lang.String.class
+			long.class, boolean.class, String.class, String.class, String.class
 		};
 	private static final Class<?>[] _updateSettingsParameterTypes6 = new Class[] {
-			long.class, boolean.class, java.lang.String.class
+			long.class, boolean.class, String.class
 		};
 	private static final Class<?>[] _updateVirtualHostParameterTypes7 = new Class[] {
-			long.class, boolean.class, java.lang.String.class
+			long.class, boolean.class, String.class
 		};
 }

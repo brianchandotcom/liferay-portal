@@ -60,7 +60,7 @@ public interface PowwowParticipantService extends BaseService {
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<PowwowParticipant> getPowwowParticipants(long powwowMeetingId)
@@ -71,7 +71,7 @@ public interface PowwowParticipantService extends BaseService {
 		throws PortalException;
 
 	public PowwowParticipant updatePowwowParticipant(long powwowParticipantId,
-		long powwowMeetingId, java.lang.String name, long participantUserId,
-		java.lang.String emailAddress, int type, int status,
-		ServiceContext serviceContext) throws PortalException;
+		long powwowMeetingId, String name, long participantUserId,
+		String emailAddress, int type, int status, ServiceContext serviceContext)
+		throws PortalException;
 }

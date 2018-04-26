@@ -53,22 +53,21 @@ public interface ScreensJournalArticleService extends BaseService {
 	 * Never modify or reference this interface directly. Always use {@link ScreensJournalArticleServiceUtil} to access the screens journal article remote service. Add custom service methods to {@link com.liferay.screens.service.impl.ScreensJournalArticleServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.lang.String getJournalArticleContent(long classPK, Locale locale)
+	public String getJournalArticleContent(long classPK, Locale locale)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.lang.String getJournalArticleContent(long classPK,
+	public String getJournalArticleContent(long classPK, long ddmTemplateId,
+		Locale locale) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public String getJournalArticleContent(long groupId, String articleId,
 		long ddmTemplateId, Locale locale) throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.lang.String getJournalArticleContent(long groupId,
-		java.lang.String articleId, long ddmTemplateId, Locale locale)
-		throws PortalException;
 
 	/**
 	* Returns the OSGi service identifier.
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 }

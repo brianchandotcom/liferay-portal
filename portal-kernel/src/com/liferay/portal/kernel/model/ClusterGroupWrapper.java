@@ -99,7 +99,7 @@ public class ClusterGroupWrapper implements ClusterGroup,
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new ClusterGroupWrapper((ClusterGroup)_clusterGroup.clone());
 	}
 
@@ -124,12 +124,12 @@ public class ClusterGroupWrapper implements ClusterGroup,
 	* @return the cluster node IDs of this cluster group
 	*/
 	@Override
-	public java.lang.String getClusterNodeIds() {
+	public String getClusterNodeIds() {
 		return _clusterGroup.getClusterNodeIds();
 	}
 
 	@Override
-	public java.lang.String[] getClusterNodeIdsArray() {
+	public String[] getClusterNodeIdsArray() {
 		return _clusterGroup.getClusterNodeIdsArray();
 	}
 
@@ -154,7 +154,7 @@ public class ClusterGroupWrapper implements ClusterGroup,
 	* @return the name of this cluster group
 	*/
 	@Override
-	public java.lang.String getName() {
+	public String getName() {
 		return _clusterGroup.getName();
 	}
 
@@ -239,7 +239,7 @@ public class ClusterGroupWrapper implements ClusterGroup,
 	* @param clusterNodeIds the cluster node IDs of this cluster group
 	*/
 	@Override
-	public void setClusterNodeIds(java.lang.String clusterNodeIds) {
+	public void setClusterNodeIds(String clusterNodeIds) {
 		_clusterGroup.setClusterNodeIds(clusterNodeIds);
 	}
 
@@ -274,7 +274,7 @@ public class ClusterGroupWrapper implements ClusterGroup,
 	* @param name the name of this cluster group
 	*/
 	@Override
-	public void setName(java.lang.String name) {
+	public void setName(String name) {
 		_clusterGroup.setName(name);
 	}
 
@@ -319,7 +319,7 @@ public class ClusterGroupWrapper implements ClusterGroup,
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _clusterGroup.toString();
 	}
 
@@ -329,7 +329,7 @@ public class ClusterGroupWrapper implements ClusterGroup,
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _clusterGroup.toXmlString();
 	}
 

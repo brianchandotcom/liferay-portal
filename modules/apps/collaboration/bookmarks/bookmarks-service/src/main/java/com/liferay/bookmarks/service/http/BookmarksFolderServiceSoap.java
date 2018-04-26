@@ -67,8 +67,7 @@ import java.rmi.RemoteException;
 @ProviderType
 public class BookmarksFolderServiceSoap {
 	public static com.liferay.bookmarks.model.BookmarksFolderSoap addFolder(
-		long parentFolderId, java.lang.String name,
-		java.lang.String description,
+		long parentFolderId, String name, String description,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
@@ -122,13 +121,13 @@ public class BookmarksFolderServiceSoap {
 		}
 	}
 
-	public static java.lang.Long[] getFolderIds(long groupId, long folderId)
+	public static Long[] getFolderIds(long groupId, long folderId)
 		throws RemoteException {
 		try {
-			java.util.List<java.lang.Long> returnValue = BookmarksFolderServiceUtil.getFolderIds(groupId,
+			java.util.List<Long> returnValue = BookmarksFolderServiceUtil.getFolderIds(groupId,
 					folderId);
 
-			return returnValue.toArray(new java.lang.Long[returnValue.size()]);
+			return returnValue.toArray(new Long[returnValue.size()]);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -292,13 +291,13 @@ public class BookmarksFolderServiceSoap {
 		}
 	}
 
-	public static java.lang.Long[] getSubfolderIds(long groupId, long folderId,
+	public static Long[] getSubfolderIds(long groupId, long folderId,
 		boolean recurse) throws RemoteException {
 		try {
-			java.util.List<java.lang.Long> returnValue = BookmarksFolderServiceUtil.getSubfolderIds(groupId,
+			java.util.List<Long> returnValue = BookmarksFolderServiceUtil.getSubfolderIds(groupId,
 					folderId, recurse);
 
-			return returnValue.toArray(new java.lang.Long[returnValue.size()]);
+			return returnValue.toArray(new Long[returnValue.size()]);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -406,8 +405,8 @@ public class BookmarksFolderServiceSoap {
 	*/
 	@Deprecated
 	public static com.liferay.bookmarks.model.BookmarksFolderSoap updateFolder(
-		long folderId, long parentFolderId, java.lang.String name,
-		java.lang.String description, boolean mergeWithParentFolder,
+		long folderId, long parentFolderId, String name, String description,
+		boolean mergeWithParentFolder,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
@@ -425,8 +424,7 @@ public class BookmarksFolderServiceSoap {
 	}
 
 	public static com.liferay.bookmarks.model.BookmarksFolderSoap updateFolder(
-		long folderId, long parentFolderId, java.lang.String name,
-		java.lang.String description,
+		long folderId, long parentFolderId, String name, String description,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {

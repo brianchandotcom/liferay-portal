@@ -103,7 +103,7 @@ public class AssetTagStatsWrapper implements AssetTagStats,
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new AssetTagStatsWrapper((AssetTagStats)_assetTagStats.clone());
 	}
 
@@ -128,7 +128,7 @@ public class AssetTagStatsWrapper implements AssetTagStats,
 	* @return the fully qualified class name of this asset tag stats
 	*/
 	@Override
-	public java.lang.String getClassName() {
+	public String getClassName() {
 		return _assetTagStats.getClassName();
 	}
 
@@ -233,7 +233,7 @@ public class AssetTagStatsWrapper implements AssetTagStats,
 	}
 
 	@Override
-	public void setClassName(java.lang.String className) {
+	public void setClassName(String className) {
 		_assetTagStats.setClassName(className);
 	}
 
@@ -324,7 +324,7 @@ public class AssetTagStatsWrapper implements AssetTagStats,
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _assetTagStats.toString();
 	}
 
@@ -334,7 +334,7 @@ public class AssetTagStatsWrapper implements AssetTagStats,
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _assetTagStats.toXmlString();
 	}
 

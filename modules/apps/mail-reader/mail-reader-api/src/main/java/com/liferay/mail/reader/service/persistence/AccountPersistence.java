@@ -179,7 +179,7 @@ public interface AccountPersistence extends BasePersistence<Account> {
 	* @return the matching account
 	* @throws NoSuchAccountException if a matching account could not be found
 	*/
-	public Account findByU_A(long userId, java.lang.String address)
+	public Account findByU_A(long userId, String address)
 		throws NoSuchAccountException;
 
 	/**
@@ -189,7 +189,7 @@ public interface AccountPersistence extends BasePersistence<Account> {
 	* @param address the address
 	* @return the matching account, or <code>null</code> if a matching account could not be found
 	*/
-	public Account fetchByU_A(long userId, java.lang.String address);
+	public Account fetchByU_A(long userId, String address);
 
 	/**
 	* Returns the account where userId = &#63; and address = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -199,7 +199,7 @@ public interface AccountPersistence extends BasePersistence<Account> {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching account, or <code>null</code> if a matching account could not be found
 	*/
-	public Account fetchByU_A(long userId, java.lang.String address,
+	public Account fetchByU_A(long userId, String address,
 		boolean retrieveFromCache);
 
 	/**
@@ -209,7 +209,7 @@ public interface AccountPersistence extends BasePersistence<Account> {
 	* @param address the address
 	* @return the account that was removed
 	*/
-	public Account removeByU_A(long userId, java.lang.String address)
+	public Account removeByU_A(long userId, String address)
 		throws NoSuchAccountException;
 
 	/**
@@ -219,7 +219,7 @@ public interface AccountPersistence extends BasePersistence<Account> {
 	* @param address the address
 	* @return the number of matching accounts
 	*/
-	public int countByU_A(long userId, java.lang.String address);
+	public int countByU_A(long userId, String address);
 
 	/**
 	* Caches the account in the entity cache if it is enabled.
@@ -341,5 +341,5 @@ public interface AccountPersistence extends BasePersistence<Account> {
 	public int countAll();
 
 	@Override
-	public java.util.Set<java.lang.String> getBadColumnNames();
+	public java.util.Set<String> getBadColumnNames();
 }

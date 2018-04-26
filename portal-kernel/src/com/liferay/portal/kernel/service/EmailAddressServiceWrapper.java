@@ -32,8 +32,8 @@ public class EmailAddressServiceWrapper implements EmailAddressService,
 
 	@Override
 	public com.liferay.portal.kernel.model.EmailAddress addEmailAddress(
-		java.lang.String className, long classPK, java.lang.String address,
-		long typeId, boolean primary, ServiceContext serviceContext)
+		String className, long classPK, String address, long typeId,
+		boolean primary, ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _emailAddressService.addEmailAddress(className, classPK,
 			address, typeId, primary, serviceContext);
@@ -69,7 +69,7 @@ public class EmailAddressServiceWrapper implements EmailAddressService,
 
 	@Override
 	public java.util.List<com.liferay.portal.kernel.model.EmailAddress> getEmailAddresses(
-		java.lang.String className, long classPK)
+		String className, long classPK)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _emailAddressService.getEmailAddresses(className, classPK);
 	}
@@ -80,14 +80,13 @@ public class EmailAddressServiceWrapper implements EmailAddressService,
 	* @return the OSGi service identifier
 	*/
 	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
+	public String getOSGiServiceIdentifier() {
 		return _emailAddressService.getOSGiServiceIdentifier();
 	}
 
 	@Override
 	public com.liferay.portal.kernel.model.EmailAddress updateEmailAddress(
-		long emailAddressId, java.lang.String address, long typeId,
-		boolean primary)
+		long emailAddressId, String address, long typeId, boolean primary)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _emailAddressService.updateEmailAddress(emailAddressId, address,
 			typeId, primary);

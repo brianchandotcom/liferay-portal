@@ -77,21 +77,19 @@ public interface AnnouncementsEntryLocalService extends BaseLocalService,
 		AnnouncementsEntry announcementsEntry);
 
 	public AnnouncementsEntry addEntry(long userId, long classNameId,
-		long classPK, java.lang.String title, java.lang.String content,
-		java.lang.String url, java.lang.String type, Date displayDate,
-		Date expirationDate, int priority, boolean alert)
+		long classPK, String title, String content, String url, String type,
+		Date displayDate, Date expirationDate, int priority, boolean alert)
 		throws PortalException;
 
 	/**
 	* @deprecated As of 7.0.0, replaced by {@link #addEntry(long, long, long,
 	String, String, String, String, Date, Date, int, boolean)}
 	*/
-	@java.lang.Deprecated
+	@Deprecated
 	public AnnouncementsEntry addEntry(long userId, long classNameId,
-		long classPK, java.lang.String title, java.lang.String content,
-		java.lang.String url, java.lang.String type, int displayDateMonth,
-		int displayDateDay, int displayDateYear, int displayDateHour,
-		int displayDateMinute, boolean displayImmediately,
+		long classPK, String title, String content, String url, String type,
+		int displayDateMonth, int displayDateDay, int displayDateYear,
+		int displayDateHour, int displayDateMinute, boolean displayImmediately,
 		int expirationDateMonth, int expirationDateDay, int expirationDateYear,
 		int expirationDateHour, int expirationDateMinute, int priority,
 		boolean alert) throws PortalException;
@@ -213,7 +211,7 @@ public interface AnnouncementsEntryLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public AnnouncementsEntry fetchAnnouncementsEntryByUuidAndCompanyId(
-		java.lang.String uuid, long companyId);
+		String uuid, long companyId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
@@ -261,16 +259,16 @@ public interface AnnouncementsEntryLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public AnnouncementsEntry getAnnouncementsEntryByUuidAndCompanyId(
-		java.lang.String uuid, long companyId) throws PortalException;
+		String uuid, long companyId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<AnnouncementsEntry> getEntries(long userId,
-		LinkedHashMap<java.lang.Long, long[]> scopes, boolean alert,
-		int flagValue, int start, int end);
+		LinkedHashMap<Long, long[]> scopes, boolean alert, int flagValue,
+		int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<AnnouncementsEntry> getEntries(long userId,
-		LinkedHashMap<java.lang.Long, long[]> scopes, int displayDateMonth,
+		LinkedHashMap<Long, long[]> scopes, int displayDateMonth,
 		int displayDateDay, int displayDateYear, int displayDateHour,
 		int displayDateMinute, int expirationDateMonth, int expirationDateDay,
 		int expirationDateYear, int expirationDateHour,
@@ -290,16 +288,14 @@ public interface AnnouncementsEntryLocalService extends BaseLocalService,
 		int flagValue, int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getEntriesCount(long userId,
-		LinkedHashMap<java.lang.Long, long[]> scopes, boolean alert,
-		int flagValue);
+	public int getEntriesCount(long userId, LinkedHashMap<Long, long[]> scopes,
+		boolean alert, int flagValue);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getEntriesCount(long userId,
-		LinkedHashMap<java.lang.Long, long[]> scopes, int displayDateMonth,
-		int displayDateDay, int displayDateYear, int displayDateHour,
-		int displayDateMinute, int expirationDateMonth, int expirationDateDay,
-		int expirationDateYear, int expirationDateHour,
+	public int getEntriesCount(long userId, LinkedHashMap<Long, long[]> scopes,
+		int displayDateMonth, int displayDateDay, int displayDateYear,
+		int displayDateHour, int displayDateMinute, int expirationDateMonth,
+		int expirationDateDay, int expirationDateYear, int expirationDateHour,
 		int expirationDateMinute, boolean alert, int flagValue);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -331,7 +327,7 @@ public interface AnnouncementsEntryLocalService extends BaseLocalService,
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -359,17 +355,16 @@ public interface AnnouncementsEntryLocalService extends BaseLocalService,
 	* @deprecated As of 7.0.0, replaced by {@link #updateEntry(long, String,
 	String, String, String, Date, Date, int)}
 	*/
-	@java.lang.Deprecated
+	@Deprecated
 	public AnnouncementsEntry updateEntry(long userId, long entryId,
-		java.lang.String title, java.lang.String content, java.lang.String url,
-		java.lang.String type, int displayDateMonth, int displayDateDay,
-		int displayDateYear, int displayDateHour, int displayDateMinute,
-		boolean displayImmediately, int expirationDateMonth,
-		int expirationDateDay, int expirationDateYear, int expirationDateHour,
-		int expirationDateMinute, int priority) throws PortalException;
-
-	public AnnouncementsEntry updateEntry(long entryId, java.lang.String title,
-		java.lang.String content, java.lang.String url, java.lang.String type,
-		Date displayDate, Date expirationDate, int priority)
+		String title, String content, String url, String type,
+		int displayDateMonth, int displayDateDay, int displayDateYear,
+		int displayDateHour, int displayDateMinute, boolean displayImmediately,
+		int expirationDateMonth, int expirationDateDay, int expirationDateYear,
+		int expirationDateHour, int expirationDateMinute, int priority)
 		throws PortalException;
+
+	public AnnouncementsEntry updateEntry(long entryId, String title,
+		String content, String url, String type, Date displayDate,
+		Date expirationDate, int priority) throws PortalException;
 }

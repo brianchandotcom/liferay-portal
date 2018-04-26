@@ -100,7 +100,7 @@ public class DDMStructureLinkWrapper implements DDMStructureLink,
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new DDMStructureLinkWrapper((DDMStructureLink)_ddmStructureLink.clone());
 	}
 
@@ -115,7 +115,7 @@ public class DDMStructureLinkWrapper implements DDMStructureLink,
 	* @return the fully qualified class name of this ddm structure link
 	*/
 	@Override
-	public java.lang.String getClassName() {
+	public String getClassName() {
 		return _ddmStructureLink.getClassName();
 	}
 
@@ -226,7 +226,7 @@ public class DDMStructureLinkWrapper implements DDMStructureLink,
 	}
 
 	@Override
-	public void setClassName(java.lang.String className) {
+	public void setClassName(String className) {
 		_ddmStructureLink.setClassName(className);
 	}
 
@@ -327,7 +327,7 @@ public class DDMStructureLinkWrapper implements DDMStructureLink,
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _ddmStructureLink.toString();
 	}
 
@@ -337,7 +337,7 @@ public class DDMStructureLinkWrapper implements DDMStructureLink,
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _ddmStructureLink.toXmlString();
 	}
 

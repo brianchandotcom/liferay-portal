@@ -43,8 +43,8 @@ public class MicroblogsEntryServiceUtil {
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.microblogs.service.impl.MicroblogsEntryServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static com.liferay.microblogs.model.MicroblogsEntry addMicroblogsEntry(
-		long userId, java.lang.String content, int type,
-		long parentMicroblogsEntryId, int socialRelationType,
+		long userId, String content, int type, long parentMicroblogsEntryId,
+		int socialRelationType,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
@@ -65,7 +65,7 @@ public class MicroblogsEntryServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.microblogs.model.MicroblogsEntry> getMicroblogsEntries(
-		java.lang.String assetTagName, int start, int end)
+		String assetTagName, int start, int end)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getMicroblogsEntries(assetTagName, start, end);
 	}
@@ -75,7 +75,7 @@ public class MicroblogsEntryServiceUtil {
 		return getService().getMicroblogsEntriesCount();
 	}
 
-	public static int getMicroblogsEntriesCount(java.lang.String assetTagName)
+	public static int getMicroblogsEntriesCount(String assetTagName)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getMicroblogsEntriesCount(assetTagName);
 	}
@@ -91,7 +91,7 @@ public class MicroblogsEntryServiceUtil {
 	*
 	* @return the OSGi service identifier
 	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
+	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 
@@ -123,8 +123,7 @@ public class MicroblogsEntryServiceUtil {
 	}
 
 	public static com.liferay.microblogs.model.MicroblogsEntry updateMicroblogsEntry(
-		long microblogsEntryId, java.lang.String content,
-		int socialRelationType,
+		long microblogsEntryId, String content, int socialRelationType,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()

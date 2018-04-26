@@ -103,7 +103,7 @@ public class FriendlyURLEntryMappingWrapper implements FriendlyURLEntryMapping,
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new FriendlyURLEntryMappingWrapper((FriendlyURLEntryMapping)_friendlyURLEntryMapping.clone());
 	}
 
@@ -118,7 +118,7 @@ public class FriendlyURLEntryMappingWrapper implements FriendlyURLEntryMapping,
 	* @return the fully qualified class name of this friendly url entry mapping
 	*/
 	@Override
-	public java.lang.String getClassName() {
+	public String getClassName() {
 		return _friendlyURLEntryMapping.getClassName();
 	}
 
@@ -218,7 +218,7 @@ public class FriendlyURLEntryMappingWrapper implements FriendlyURLEntryMapping,
 	}
 
 	@Override
-	public void setClassName(java.lang.String className) {
+	public void setClassName(String className) {
 		_friendlyURLEntryMapping.setClassName(className);
 	}
 
@@ -319,7 +319,7 @@ public class FriendlyURLEntryMappingWrapper implements FriendlyURLEntryMapping,
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _friendlyURLEntryMapping.toString();
 	}
 
@@ -329,7 +329,7 @@ public class FriendlyURLEntryMappingWrapper implements FriendlyURLEntryMapping,
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _friendlyURLEntryMapping.toXmlString();
 	}
 

@@ -41,8 +41,8 @@ public class TicketLocalServiceUtil {
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.portal.service.impl.TicketLocalServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static com.liferay.portal.kernel.model.Ticket addDistinctTicket(
-		long companyId, java.lang.String className, long classPK, int type,
-		java.lang.String extraInfo, java.util.Date expirationDate,
+		long companyId, String className, long classPK, int type,
+		String extraInfo, java.util.Date expirationDate,
 		ServiceContext serviceContext) {
 		return getService()
 				   .addDistinctTicket(companyId, className, classPK, type,
@@ -50,8 +50,8 @@ public class TicketLocalServiceUtil {
 	}
 
 	public static com.liferay.portal.kernel.model.Ticket addTicket(
-		long companyId, java.lang.String className, long classPK, int type,
-		java.lang.String extraInfo, java.util.Date expirationDate,
+		long companyId, String className, long classPK, int type,
+		String extraInfo, java.util.Date expirationDate,
 		ServiceContext serviceContext) {
 		return getService()
 				   .addTicket(companyId, className, classPK, type, extraInfo,
@@ -196,8 +196,7 @@ public class TicketLocalServiceUtil {
 		return getService().fetchTicket(ticketId);
 	}
 
-	public static com.liferay.portal.kernel.model.Ticket fetchTicket(
-		java.lang.String key) {
+	public static com.liferay.portal.kernel.model.Ticket fetchTicket(String key) {
 		return getService().fetchTicket(key);
 	}
 
@@ -214,7 +213,7 @@ public class TicketLocalServiceUtil {
 	*
 	* @return the OSGi service identifier
 	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
+	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 
@@ -237,8 +236,7 @@ public class TicketLocalServiceUtil {
 		return getService().getTicket(ticketId);
 	}
 
-	public static com.liferay.portal.kernel.model.Ticket getTicket(
-		java.lang.String key)
+	public static com.liferay.portal.kernel.model.Ticket getTicket(String key)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getTicket(key);
 	}
@@ -260,7 +258,7 @@ public class TicketLocalServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.portal.kernel.model.Ticket> getTickets(
-		long companyId, java.lang.String className, long classPK, int type) {
+		long companyId, String className, long classPK, int type) {
 		return getService().getTickets(companyId, className, classPK, type);
 	}
 
@@ -274,8 +272,8 @@ public class TicketLocalServiceUtil {
 	}
 
 	public static com.liferay.portal.kernel.model.Ticket updateTicket(
-		long ticketId, java.lang.String className, long classPK, int type,
-		java.lang.String extraInfo, java.util.Date expirationDate)
+		long ticketId, String className, long classPK, int type,
+		String extraInfo, java.util.Date expirationDate)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .updateTicket(ticketId, className, classPK, type, extraInfo,

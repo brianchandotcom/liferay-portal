@@ -52,7 +52,7 @@ public class MBBanServiceWrapper implements MBBanService,
 	* @return the OSGi service identifier
 	*/
 	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
+	public String getOSGiServiceIdentifier() {
 		return _mbBanService.getOSGiServiceIdentifier();
 	}
 

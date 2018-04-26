@@ -60,8 +60,8 @@ public interface JournalFolderService extends BaseService {
 	 * Never modify or reference this interface directly. Always use {@link JournalFolderServiceUtil} to access the journal folder remote service. Add custom service methods to {@link com.liferay.journal.service.impl.JournalFolderServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	public JournalFolder addFolder(long groupId, long parentFolderId,
-		java.lang.String name, java.lang.String description,
-		ServiceContext serviceContext) throws PortalException;
+		String name, String description, ServiceContext serviceContext)
+		throws PortalException;
 
 	public void deleteFolder(long folderId) throws PortalException;
 
@@ -79,7 +79,7 @@ public interface JournalFolderService extends BaseService {
 	public JournalFolder getFolder(long folderId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<java.lang.Long> getFolderIds(long groupId, long folderId)
+	public List<Long> getFolderIds(long groupId, long folderId)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -101,26 +101,25 @@ public interface JournalFolderService extends BaseService {
 		int status, int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<java.lang.Object> getFoldersAndArticles(long groupId,
+	public List<Object> getFoldersAndArticles(long groupId, long folderId,
+		int status, int start, int end, OrderByComparator<?> obc);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<Object> getFoldersAndArticles(long groupId, long folderId,
+		int start, int end, OrderByComparator<?> obc);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<Object> getFoldersAndArticles(long groupId, long userId,
 		long folderId, int status, int start, int end, OrderByComparator<?> obc);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<java.lang.Object> getFoldersAndArticles(long groupId,
-		long folderId, int start, int end, OrderByComparator<?> obc);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<java.lang.Object> getFoldersAndArticles(long groupId,
-		long userId, long folderId, int status, int start, int end,
+	public List<Object> getFoldersAndArticles(long groupId, long userId,
+		long folderId, int status, Locale locale, int start, int end,
 		OrderByComparator<?> obc);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<java.lang.Object> getFoldersAndArticles(long groupId,
-		long userId, long folderId, int status, Locale locale, int start,
-		int end, OrderByComparator<?> obc);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getFoldersAndArticlesCount(long groupId,
-		List<java.lang.Long> folderIds, int status);
+	public int getFoldersAndArticlesCount(long groupId, List<Long> folderIds,
+		int status);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getFoldersAndArticlesCount(long groupId, long folderId);
@@ -144,23 +143,23 @@ public interface JournalFolderService extends BaseService {
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	/**
 	* @deprecated As of 4.0.0, replaced by {@link #getSubfolderIds(List, long,
 	long, boolean)}
 	*/
-	@java.lang.Deprecated
+	@Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public void getSubfolderIds(List<java.lang.Long> folderIds, long groupId,
+	public void getSubfolderIds(List<Long> folderIds, long groupId,
 		long folderId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public void getSubfolderIds(List<java.lang.Long> folderIds, long groupId,
+	public void getSubfolderIds(List<Long> folderIds, long groupId,
 		long folderId, boolean recurse);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<java.lang.Long> getSubfolderIds(long groupId, long folderId,
+	public List<Long> getSubfolderIds(long groupId, long folderId,
 		boolean recurse);
 
 	public JournalFolder moveFolder(long folderId, long parentFolderId,
@@ -177,9 +176,9 @@ public interface JournalFolderService extends BaseService {
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<DDMStructure> searchDDMStructures(long companyId,
-		long[] groupIds, long folderId, int restrictionType,
-		java.lang.String keywords, int start, int end,
-		OrderByComparator<DDMStructure> obc) throws PortalException;
+		long[] groupIds, long folderId, int restrictionType, String keywords,
+		int start, int end, OrderByComparator<DDMStructure> obc)
+		throws PortalException;
 
 	public void subscribe(long groupId, long folderId)
 		throws PortalException;
@@ -188,13 +187,13 @@ public interface JournalFolderService extends BaseService {
 		throws PortalException;
 
 	public JournalFolder updateFolder(long groupId, long folderId,
-		long parentFolderId, java.lang.String name,
-		java.lang.String description, boolean mergeWithParentFolder,
-		ServiceContext serviceContext) throws PortalException;
+		long parentFolderId, String name, String description,
+		boolean mergeWithParentFolder, ServiceContext serviceContext)
+		throws PortalException;
 
 	public JournalFolder updateFolder(long groupId, long folderId,
-		long parentFolderId, java.lang.String name,
-		java.lang.String description, long[] ddmStructureIds,
-		int restrictionType, boolean mergeWithParentFolder,
-		ServiceContext serviceContext) throws PortalException;
+		long parentFolderId, String name, String description,
+		long[] ddmStructureIds, int restrictionType,
+		boolean mergeWithParentFolder, ServiceContext serviceContext)
+		throws PortalException;
 }

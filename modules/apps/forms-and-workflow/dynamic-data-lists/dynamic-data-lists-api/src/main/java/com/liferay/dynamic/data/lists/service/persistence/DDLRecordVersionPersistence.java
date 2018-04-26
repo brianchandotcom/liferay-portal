@@ -181,7 +181,7 @@ public interface DDLRecordVersionPersistence extends BasePersistence<DDLRecordVe
 	* @return the matching ddl record versions
 	*/
 	public java.util.List<DDLRecordVersion> findByR_R(long recordSetId,
-		java.lang.String recordSetVersion);
+		String recordSetVersion);
 
 	/**
 	* Returns a range of all the ddl record versions where recordSetId = &#63; and recordSetVersion = &#63;.
@@ -197,7 +197,7 @@ public interface DDLRecordVersionPersistence extends BasePersistence<DDLRecordVe
 	* @return the range of matching ddl record versions
 	*/
 	public java.util.List<DDLRecordVersion> findByR_R(long recordSetId,
-		java.lang.String recordSetVersion, int start, int end);
+		String recordSetVersion, int start, int end);
 
 	/**
 	* Returns an ordered range of all the ddl record versions where recordSetId = &#63; and recordSetVersion = &#63;.
@@ -214,7 +214,7 @@ public interface DDLRecordVersionPersistence extends BasePersistence<DDLRecordVe
 	* @return the ordered range of matching ddl record versions
 	*/
 	public java.util.List<DDLRecordVersion> findByR_R(long recordSetId,
-		java.lang.String recordSetVersion, int start, int end,
+		String recordSetVersion, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<DDLRecordVersion> orderByComparator);
 
 	/**
@@ -233,7 +233,7 @@ public interface DDLRecordVersionPersistence extends BasePersistence<DDLRecordVe
 	* @return the ordered range of matching ddl record versions
 	*/
 	public java.util.List<DDLRecordVersion> findByR_R(long recordSetId,
-		java.lang.String recordSetVersion, int start, int end,
+		String recordSetVersion, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<DDLRecordVersion> orderByComparator,
 		boolean retrieveFromCache);
 
@@ -247,7 +247,7 @@ public interface DDLRecordVersionPersistence extends BasePersistence<DDLRecordVe
 	* @throws NoSuchRecordVersionException if a matching ddl record version could not be found
 	*/
 	public DDLRecordVersion findByR_R_First(long recordSetId,
-		java.lang.String recordSetVersion,
+		String recordSetVersion,
 		com.liferay.portal.kernel.util.OrderByComparator<DDLRecordVersion> orderByComparator)
 		throws NoSuchRecordVersionException;
 
@@ -260,7 +260,7 @@ public interface DDLRecordVersionPersistence extends BasePersistence<DDLRecordVe
 	* @return the first matching ddl record version, or <code>null</code> if a matching ddl record version could not be found
 	*/
 	public DDLRecordVersion fetchByR_R_First(long recordSetId,
-		java.lang.String recordSetVersion,
+		String recordSetVersion,
 		com.liferay.portal.kernel.util.OrderByComparator<DDLRecordVersion> orderByComparator);
 
 	/**
@@ -273,7 +273,7 @@ public interface DDLRecordVersionPersistence extends BasePersistence<DDLRecordVe
 	* @throws NoSuchRecordVersionException if a matching ddl record version could not be found
 	*/
 	public DDLRecordVersion findByR_R_Last(long recordSetId,
-		java.lang.String recordSetVersion,
+		String recordSetVersion,
 		com.liferay.portal.kernel.util.OrderByComparator<DDLRecordVersion> orderByComparator)
 		throws NoSuchRecordVersionException;
 
@@ -286,7 +286,7 @@ public interface DDLRecordVersionPersistence extends BasePersistence<DDLRecordVe
 	* @return the last matching ddl record version, or <code>null</code> if a matching ddl record version could not be found
 	*/
 	public DDLRecordVersion fetchByR_R_Last(long recordSetId,
-		java.lang.String recordSetVersion,
+		String recordSetVersion,
 		com.liferay.portal.kernel.util.OrderByComparator<DDLRecordVersion> orderByComparator);
 
 	/**
@@ -300,7 +300,7 @@ public interface DDLRecordVersionPersistence extends BasePersistence<DDLRecordVe
 	* @throws NoSuchRecordVersionException if a ddl record version with the primary key could not be found
 	*/
 	public DDLRecordVersion[] findByR_R_PrevAndNext(long recordVersionId,
-		long recordSetId, java.lang.String recordSetVersion,
+		long recordSetId, String recordSetVersion,
 		com.liferay.portal.kernel.util.OrderByComparator<DDLRecordVersion> orderByComparator)
 		throws NoSuchRecordVersionException;
 
@@ -310,7 +310,7 @@ public interface DDLRecordVersionPersistence extends BasePersistence<DDLRecordVe
 	* @param recordSetId the record set ID
 	* @param recordSetVersion the record set version
 	*/
-	public void removeByR_R(long recordSetId, java.lang.String recordSetVersion);
+	public void removeByR_R(long recordSetId, String recordSetVersion);
 
 	/**
 	* Returns the number of ddl record versions where recordSetId = &#63; and recordSetVersion = &#63;.
@@ -319,7 +319,7 @@ public interface DDLRecordVersionPersistence extends BasePersistence<DDLRecordVe
 	* @param recordSetVersion the record set version
 	* @return the number of matching ddl record versions
 	*/
-	public int countByR_R(long recordSetId, java.lang.String recordSetVersion);
+	public int countByR_R(long recordSetId, String recordSetVersion);
 
 	/**
 	* Returns the ddl record version where recordId = &#63; and version = &#63; or throws a {@link NoSuchRecordVersionException} if it could not be found.
@@ -329,7 +329,7 @@ public interface DDLRecordVersionPersistence extends BasePersistence<DDLRecordVe
 	* @return the matching ddl record version
 	* @throws NoSuchRecordVersionException if a matching ddl record version could not be found
 	*/
-	public DDLRecordVersion findByR_V(long recordId, java.lang.String version)
+	public DDLRecordVersion findByR_V(long recordId, String version)
 		throws NoSuchRecordVersionException;
 
 	/**
@@ -339,7 +339,7 @@ public interface DDLRecordVersionPersistence extends BasePersistence<DDLRecordVe
 	* @param version the version
 	* @return the matching ddl record version, or <code>null</code> if a matching ddl record version could not be found
 	*/
-	public DDLRecordVersion fetchByR_V(long recordId, java.lang.String version);
+	public DDLRecordVersion fetchByR_V(long recordId, String version);
 
 	/**
 	* Returns the ddl record version where recordId = &#63; and version = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -349,7 +349,7 @@ public interface DDLRecordVersionPersistence extends BasePersistence<DDLRecordVe
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching ddl record version, or <code>null</code> if a matching ddl record version could not be found
 	*/
-	public DDLRecordVersion fetchByR_V(long recordId, java.lang.String version,
+	public DDLRecordVersion fetchByR_V(long recordId, String version,
 		boolean retrieveFromCache);
 
 	/**
@@ -359,7 +359,7 @@ public interface DDLRecordVersionPersistence extends BasePersistence<DDLRecordVe
 	* @param version the version
 	* @return the ddl record version that was removed
 	*/
-	public DDLRecordVersion removeByR_V(long recordId, java.lang.String version)
+	public DDLRecordVersion removeByR_V(long recordId, String version)
 		throws NoSuchRecordVersionException;
 
 	/**
@@ -369,7 +369,7 @@ public interface DDLRecordVersionPersistence extends BasePersistence<DDLRecordVe
 	* @param version the version
 	* @return the number of matching ddl record versions
 	*/
-	public int countByR_V(long recordId, java.lang.String version);
+	public int countByR_V(long recordId, String version);
 
 	/**
 	* Returns all the ddl record versions where recordId = &#63; and status = &#63;.
@@ -524,7 +524,7 @@ public interface DDLRecordVersionPersistence extends BasePersistence<DDLRecordVe
 	* @return the matching ddl record versions
 	*/
 	public java.util.List<DDLRecordVersion> findByU_R_R_S(long userId,
-		long recordSetId, java.lang.String recordSetVersion, int status);
+		long recordSetId, String recordSetVersion, int status);
 
 	/**
 	* Returns a range of all the ddl record versions where userId = &#63; and recordSetId = &#63; and recordSetVersion = &#63; and status = &#63;.
@@ -542,8 +542,8 @@ public interface DDLRecordVersionPersistence extends BasePersistence<DDLRecordVe
 	* @return the range of matching ddl record versions
 	*/
 	public java.util.List<DDLRecordVersion> findByU_R_R_S(long userId,
-		long recordSetId, java.lang.String recordSetVersion, int status,
-		int start, int end);
+		long recordSetId, String recordSetVersion, int status, int start,
+		int end);
 
 	/**
 	* Returns an ordered range of all the ddl record versions where userId = &#63; and recordSetId = &#63; and recordSetVersion = &#63; and status = &#63;.
@@ -562,8 +562,8 @@ public interface DDLRecordVersionPersistence extends BasePersistence<DDLRecordVe
 	* @return the ordered range of matching ddl record versions
 	*/
 	public java.util.List<DDLRecordVersion> findByU_R_R_S(long userId,
-		long recordSetId, java.lang.String recordSetVersion, int status,
-		int start, int end,
+		long recordSetId, String recordSetVersion, int status, int start,
+		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<DDLRecordVersion> orderByComparator);
 
 	/**
@@ -584,8 +584,8 @@ public interface DDLRecordVersionPersistence extends BasePersistence<DDLRecordVe
 	* @return the ordered range of matching ddl record versions
 	*/
 	public java.util.List<DDLRecordVersion> findByU_R_R_S(long userId,
-		long recordSetId, java.lang.String recordSetVersion, int status,
-		int start, int end,
+		long recordSetId, String recordSetVersion, int status, int start,
+		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<DDLRecordVersion> orderByComparator,
 		boolean retrieveFromCache);
 
@@ -601,7 +601,7 @@ public interface DDLRecordVersionPersistence extends BasePersistence<DDLRecordVe
 	* @throws NoSuchRecordVersionException if a matching ddl record version could not be found
 	*/
 	public DDLRecordVersion findByU_R_R_S_First(long userId, long recordSetId,
-		java.lang.String recordSetVersion, int status,
+		String recordSetVersion, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<DDLRecordVersion> orderByComparator)
 		throws NoSuchRecordVersionException;
 
@@ -616,7 +616,7 @@ public interface DDLRecordVersionPersistence extends BasePersistence<DDLRecordVe
 	* @return the first matching ddl record version, or <code>null</code> if a matching ddl record version could not be found
 	*/
 	public DDLRecordVersion fetchByU_R_R_S_First(long userId, long recordSetId,
-		java.lang.String recordSetVersion, int status,
+		String recordSetVersion, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<DDLRecordVersion> orderByComparator);
 
 	/**
@@ -631,7 +631,7 @@ public interface DDLRecordVersionPersistence extends BasePersistence<DDLRecordVe
 	* @throws NoSuchRecordVersionException if a matching ddl record version could not be found
 	*/
 	public DDLRecordVersion findByU_R_R_S_Last(long userId, long recordSetId,
-		java.lang.String recordSetVersion, int status,
+		String recordSetVersion, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<DDLRecordVersion> orderByComparator)
 		throws NoSuchRecordVersionException;
 
@@ -646,7 +646,7 @@ public interface DDLRecordVersionPersistence extends BasePersistence<DDLRecordVe
 	* @return the last matching ddl record version, or <code>null</code> if a matching ddl record version could not be found
 	*/
 	public DDLRecordVersion fetchByU_R_R_S_Last(long userId, long recordSetId,
-		java.lang.String recordSetVersion, int status,
+		String recordSetVersion, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<DDLRecordVersion> orderByComparator);
 
 	/**
@@ -662,8 +662,7 @@ public interface DDLRecordVersionPersistence extends BasePersistence<DDLRecordVe
 	* @throws NoSuchRecordVersionException if a ddl record version with the primary key could not be found
 	*/
 	public DDLRecordVersion[] findByU_R_R_S_PrevAndNext(long recordVersionId,
-		long userId, long recordSetId, java.lang.String recordSetVersion,
-		int status,
+		long userId, long recordSetId, String recordSetVersion, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<DDLRecordVersion> orderByComparator)
 		throws NoSuchRecordVersionException;
 
@@ -676,7 +675,7 @@ public interface DDLRecordVersionPersistence extends BasePersistence<DDLRecordVe
 	* @param status the status
 	*/
 	public void removeByU_R_R_S(long userId, long recordSetId,
-		java.lang.String recordSetVersion, int status);
+		String recordSetVersion, int status);
 
 	/**
 	* Returns the number of ddl record versions where userId = &#63; and recordSetId = &#63; and recordSetVersion = &#63; and status = &#63;.
@@ -688,7 +687,7 @@ public interface DDLRecordVersionPersistence extends BasePersistence<DDLRecordVe
 	* @return the number of matching ddl record versions
 	*/
 	public int countByU_R_R_S(long userId, long recordSetId,
-		java.lang.String recordSetVersion, int status);
+		String recordSetVersion, int status);
 
 	/**
 	* Caches the ddl record version in the entity cache if it is enabled.

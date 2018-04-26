@@ -47,7 +47,7 @@ public class ExpandoTableLocalServiceUtil {
 	}
 
 	public static com.liferay.expando.kernel.model.ExpandoTable addDefaultTable(
-		long companyId, java.lang.String className)
+		long companyId, String className)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().addDefaultTable(companyId, className);
 	}
@@ -64,13 +64,13 @@ public class ExpandoTableLocalServiceUtil {
 	}
 
 	public static com.liferay.expando.kernel.model.ExpandoTable addTable(
-		long companyId, long classNameId, java.lang.String name)
+		long companyId, long classNameId, String name)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().addTable(companyId, classNameId, name);
 	}
 
 	public static com.liferay.expando.kernel.model.ExpandoTable addTable(
-		long companyId, java.lang.String className, java.lang.String name)
+		long companyId, String className, String name)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().addTable(companyId, className, name);
 	}
@@ -129,14 +129,12 @@ public class ExpandoTableLocalServiceUtil {
 		getService().deleteTable(tableId);
 	}
 
-	public static void deleteTable(long companyId, long classNameId,
-		java.lang.String name)
+	public static void deleteTable(long companyId, long classNameId, String name)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().deleteTable(companyId, classNameId, name);
 	}
 
-	public static void deleteTable(long companyId, java.lang.String className,
-		java.lang.String name)
+	public static void deleteTable(long companyId, String className, String name)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().deleteTable(companyId, className, name);
 	}
@@ -145,7 +143,7 @@ public class ExpandoTableLocalServiceUtil {
 		getService().deleteTables(companyId, classNameId);
 	}
 
-	public static void deleteTables(long companyId, java.lang.String className) {
+	public static void deleteTables(long companyId, String className) {
 		getService().deleteTables(companyId, className);
 	}
 
@@ -233,7 +231,7 @@ public class ExpandoTableLocalServiceUtil {
 	}
 
 	public static com.liferay.expando.kernel.model.ExpandoTable fetchDefaultTable(
-		long companyId, java.lang.String className) {
+		long companyId, String className) {
 		return getService().fetchDefaultTable(companyId, className);
 	}
 
@@ -243,7 +241,7 @@ public class ExpandoTableLocalServiceUtil {
 	}
 
 	public static com.liferay.expando.kernel.model.ExpandoTable fetchTable(
-		long companyId, long classNameId, java.lang.String name) {
+		long companyId, long classNameId, String name) {
 		return getService().fetchTable(companyId, classNameId, name);
 	}
 
@@ -258,7 +256,7 @@ public class ExpandoTableLocalServiceUtil {
 	}
 
 	public static com.liferay.expando.kernel.model.ExpandoTable getDefaultTable(
-		long companyId, java.lang.String className)
+		long companyId, String className)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getDefaultTable(companyId, className);
 	}
@@ -310,7 +308,7 @@ public class ExpandoTableLocalServiceUtil {
 	*
 	* @return the OSGi service identifier
 	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
+	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 
@@ -327,13 +325,13 @@ public class ExpandoTableLocalServiceUtil {
 	}
 
 	public static com.liferay.expando.kernel.model.ExpandoTable getTable(
-		long companyId, long classNameId, java.lang.String name)
+		long companyId, long classNameId, String name)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getTable(companyId, classNameId, name);
 	}
 
 	public static com.liferay.expando.kernel.model.ExpandoTable getTable(
-		long companyId, java.lang.String className, java.lang.String name)
+		long companyId, String className, String name)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getTable(companyId, className, name);
 	}
@@ -344,7 +342,7 @@ public class ExpandoTableLocalServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.expando.kernel.model.ExpandoTable> getTables(
-		long companyId, java.lang.String className) {
+		long companyId, String className) {
 		return getService().getTables(companyId, className);
 	}
 
@@ -360,7 +358,7 @@ public class ExpandoTableLocalServiceUtil {
 	}
 
 	public static com.liferay.expando.kernel.model.ExpandoTable updateTable(
-		long tableId, java.lang.String name)
+		long tableId, String name)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().updateTable(tableId, name);
 	}

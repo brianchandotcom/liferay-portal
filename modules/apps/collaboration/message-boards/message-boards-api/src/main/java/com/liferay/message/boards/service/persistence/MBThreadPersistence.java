@@ -49,7 +49,7 @@ public interface MBThreadPersistence extends BasePersistence<MBThread> {
 	* @param uuid the uuid
 	* @return the matching message boards threads
 	*/
-	public java.util.List<MBThread> findByUuid(java.lang.String uuid);
+	public java.util.List<MBThread> findByUuid(String uuid);
 
 	/**
 	* Returns a range of all the message boards threads where uuid = &#63;.
@@ -63,8 +63,7 @@ public interface MBThreadPersistence extends BasePersistence<MBThread> {
 	* @param end the upper bound of the range of message boards threads (not inclusive)
 	* @return the range of matching message boards threads
 	*/
-	public java.util.List<MBThread> findByUuid(java.lang.String uuid,
-		int start, int end);
+	public java.util.List<MBThread> findByUuid(String uuid, int start, int end);
 
 	/**
 	* Returns an ordered range of all the message boards threads where uuid = &#63;.
@@ -79,8 +78,7 @@ public interface MBThreadPersistence extends BasePersistence<MBThread> {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching message boards threads
 	*/
-	public java.util.List<MBThread> findByUuid(java.lang.String uuid,
-		int start, int end,
+	public java.util.List<MBThread> findByUuid(String uuid, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<MBThread> orderByComparator);
 
 	/**
@@ -97,8 +95,7 @@ public interface MBThreadPersistence extends BasePersistence<MBThread> {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching message boards threads
 	*/
-	public java.util.List<MBThread> findByUuid(java.lang.String uuid,
-		int start, int end,
+	public java.util.List<MBThread> findByUuid(String uuid, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<MBThread> orderByComparator,
 		boolean retrieveFromCache);
 
@@ -110,7 +107,7 @@ public interface MBThreadPersistence extends BasePersistence<MBThread> {
 	* @return the first matching message boards thread
 	* @throws NoSuchThreadException if a matching message boards thread could not be found
 	*/
-	public MBThread findByUuid_First(java.lang.String uuid,
+	public MBThread findByUuid_First(String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<MBThread> orderByComparator)
 		throws NoSuchThreadException;
 
@@ -121,7 +118,7 @@ public interface MBThreadPersistence extends BasePersistence<MBThread> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching message boards thread, or <code>null</code> if a matching message boards thread could not be found
 	*/
-	public MBThread fetchByUuid_First(java.lang.String uuid,
+	public MBThread fetchByUuid_First(String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<MBThread> orderByComparator);
 
 	/**
@@ -132,7 +129,7 @@ public interface MBThreadPersistence extends BasePersistence<MBThread> {
 	* @return the last matching message boards thread
 	* @throws NoSuchThreadException if a matching message boards thread could not be found
 	*/
-	public MBThread findByUuid_Last(java.lang.String uuid,
+	public MBThread findByUuid_Last(String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<MBThread> orderByComparator)
 		throws NoSuchThreadException;
 
@@ -143,7 +140,7 @@ public interface MBThreadPersistence extends BasePersistence<MBThread> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching message boards thread, or <code>null</code> if a matching message boards thread could not be found
 	*/
-	public MBThread fetchByUuid_Last(java.lang.String uuid,
+	public MBThread fetchByUuid_Last(String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<MBThread> orderByComparator);
 
 	/**
@@ -155,8 +152,7 @@ public interface MBThreadPersistence extends BasePersistence<MBThread> {
 	* @return the previous, current, and next message boards thread
 	* @throws NoSuchThreadException if a message boards thread with the primary key could not be found
 	*/
-	public MBThread[] findByUuid_PrevAndNext(long threadId,
-		java.lang.String uuid,
+	public MBThread[] findByUuid_PrevAndNext(long threadId, String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<MBThread> orderByComparator)
 		throws NoSuchThreadException;
 
@@ -165,7 +161,7 @@ public interface MBThreadPersistence extends BasePersistence<MBThread> {
 	*
 	* @param uuid the uuid
 	*/
-	public void removeByUuid(java.lang.String uuid);
+	public void removeByUuid(String uuid);
 
 	/**
 	* Returns the number of message boards threads where uuid = &#63;.
@@ -173,7 +169,7 @@ public interface MBThreadPersistence extends BasePersistence<MBThread> {
 	* @param uuid the uuid
 	* @return the number of matching message boards threads
 	*/
-	public int countByUuid(java.lang.String uuid);
+	public int countByUuid(String uuid);
 
 	/**
 	* Returns the message boards thread where uuid = &#63; and groupId = &#63; or throws a {@link NoSuchThreadException} if it could not be found.
@@ -183,7 +179,7 @@ public interface MBThreadPersistence extends BasePersistence<MBThread> {
 	* @return the matching message boards thread
 	* @throws NoSuchThreadException if a matching message boards thread could not be found
 	*/
-	public MBThread findByUUID_G(java.lang.String uuid, long groupId)
+	public MBThread findByUUID_G(String uuid, long groupId)
 		throws NoSuchThreadException;
 
 	/**
@@ -193,7 +189,7 @@ public interface MBThreadPersistence extends BasePersistence<MBThread> {
 	* @param groupId the group ID
 	* @return the matching message boards thread, or <code>null</code> if a matching message boards thread could not be found
 	*/
-	public MBThread fetchByUUID_G(java.lang.String uuid, long groupId);
+	public MBThread fetchByUUID_G(String uuid, long groupId);
 
 	/**
 	* Returns the message boards thread where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -203,7 +199,7 @@ public interface MBThreadPersistence extends BasePersistence<MBThread> {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching message boards thread, or <code>null</code> if a matching message boards thread could not be found
 	*/
-	public MBThread fetchByUUID_G(java.lang.String uuid, long groupId,
+	public MBThread fetchByUUID_G(String uuid, long groupId,
 		boolean retrieveFromCache);
 
 	/**
@@ -213,7 +209,7 @@ public interface MBThreadPersistence extends BasePersistence<MBThread> {
 	* @param groupId the group ID
 	* @return the message boards thread that was removed
 	*/
-	public MBThread removeByUUID_G(java.lang.String uuid, long groupId)
+	public MBThread removeByUUID_G(String uuid, long groupId)
 		throws NoSuchThreadException;
 
 	/**
@@ -223,7 +219,7 @@ public interface MBThreadPersistence extends BasePersistence<MBThread> {
 	* @param groupId the group ID
 	* @return the number of matching message boards threads
 	*/
-	public int countByUUID_G(java.lang.String uuid, long groupId);
+	public int countByUUID_G(String uuid, long groupId);
 
 	/**
 	* Returns all the message boards threads where uuid = &#63; and companyId = &#63;.
@@ -232,8 +228,7 @@ public interface MBThreadPersistence extends BasePersistence<MBThread> {
 	* @param companyId the company ID
 	* @return the matching message boards threads
 	*/
-	public java.util.List<MBThread> findByUuid_C(java.lang.String uuid,
-		long companyId);
+	public java.util.List<MBThread> findByUuid_C(String uuid, long companyId);
 
 	/**
 	* Returns a range of all the message boards threads where uuid = &#63; and companyId = &#63;.
@@ -248,8 +243,8 @@ public interface MBThreadPersistence extends BasePersistence<MBThread> {
 	* @param end the upper bound of the range of message boards threads (not inclusive)
 	* @return the range of matching message boards threads
 	*/
-	public java.util.List<MBThread> findByUuid_C(java.lang.String uuid,
-		long companyId, int start, int end);
+	public java.util.List<MBThread> findByUuid_C(String uuid, long companyId,
+		int start, int end);
 
 	/**
 	* Returns an ordered range of all the message boards threads where uuid = &#63; and companyId = &#63;.
@@ -265,8 +260,8 @@ public interface MBThreadPersistence extends BasePersistence<MBThread> {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching message boards threads
 	*/
-	public java.util.List<MBThread> findByUuid_C(java.lang.String uuid,
-		long companyId, int start, int end,
+	public java.util.List<MBThread> findByUuid_C(String uuid, long companyId,
+		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<MBThread> orderByComparator);
 
 	/**
@@ -284,8 +279,8 @@ public interface MBThreadPersistence extends BasePersistence<MBThread> {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching message boards threads
 	*/
-	public java.util.List<MBThread> findByUuid_C(java.lang.String uuid,
-		long companyId, int start, int end,
+	public java.util.List<MBThread> findByUuid_C(String uuid, long companyId,
+		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<MBThread> orderByComparator,
 		boolean retrieveFromCache);
 
@@ -298,7 +293,7 @@ public interface MBThreadPersistence extends BasePersistence<MBThread> {
 	* @return the first matching message boards thread
 	* @throws NoSuchThreadException if a matching message boards thread could not be found
 	*/
-	public MBThread findByUuid_C_First(java.lang.String uuid, long companyId,
+	public MBThread findByUuid_C_First(String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<MBThread> orderByComparator)
 		throws NoSuchThreadException;
 
@@ -310,7 +305,7 @@ public interface MBThreadPersistence extends BasePersistence<MBThread> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching message boards thread, or <code>null</code> if a matching message boards thread could not be found
 	*/
-	public MBThread fetchByUuid_C_First(java.lang.String uuid, long companyId,
+	public MBThread fetchByUuid_C_First(String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<MBThread> orderByComparator);
 
 	/**
@@ -322,7 +317,7 @@ public interface MBThreadPersistence extends BasePersistence<MBThread> {
 	* @return the last matching message boards thread
 	* @throws NoSuchThreadException if a matching message boards thread could not be found
 	*/
-	public MBThread findByUuid_C_Last(java.lang.String uuid, long companyId,
+	public MBThread findByUuid_C_Last(String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<MBThread> orderByComparator)
 		throws NoSuchThreadException;
 
@@ -334,7 +329,7 @@ public interface MBThreadPersistence extends BasePersistence<MBThread> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching message boards thread, or <code>null</code> if a matching message boards thread could not be found
 	*/
-	public MBThread fetchByUuid_C_Last(java.lang.String uuid, long companyId,
+	public MBThread fetchByUuid_C_Last(String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<MBThread> orderByComparator);
 
 	/**
@@ -347,8 +342,8 @@ public interface MBThreadPersistence extends BasePersistence<MBThread> {
 	* @return the previous, current, and next message boards thread
 	* @throws NoSuchThreadException if a message boards thread with the primary key could not be found
 	*/
-	public MBThread[] findByUuid_C_PrevAndNext(long threadId,
-		java.lang.String uuid, long companyId,
+	public MBThread[] findByUuid_C_PrevAndNext(long threadId, String uuid,
+		long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<MBThread> orderByComparator)
 		throws NoSuchThreadException;
 
@@ -358,7 +353,7 @@ public interface MBThreadPersistence extends BasePersistence<MBThread> {
 	* @param uuid the uuid
 	* @param companyId the company ID
 	*/
-	public void removeByUuid_C(java.lang.String uuid, long companyId);
+	public void removeByUuid_C(String uuid, long companyId);
 
 	/**
 	* Returns the number of message boards threads where uuid = &#63; and companyId = &#63;.
@@ -367,7 +362,7 @@ public interface MBThreadPersistence extends BasePersistence<MBThread> {
 	* @param companyId the company ID
 	* @return the number of matching message boards threads
 	*/
-	public int countByUuid_C(java.lang.String uuid, long companyId);
+	public int countByUuid_C(String uuid, long companyId);
 
 	/**
 	* Returns all the message boards threads where groupId = &#63;.
@@ -3214,5 +3209,5 @@ public interface MBThreadPersistence extends BasePersistence<MBThread> {
 	public int countAll();
 
 	@Override
-	public java.util.Set<java.lang.String> getBadColumnNames();
+	public java.util.Set<String> getBadColumnNames();
 }

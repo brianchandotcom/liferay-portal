@@ -136,7 +136,7 @@ public class SiteNavigationMenuWrapper implements SiteNavigationMenu,
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new SiteNavigationMenuWrapper((SiteNavigationMenu)_siteNavigationMenu.clone());
 	}
 
@@ -206,7 +206,7 @@ public class SiteNavigationMenuWrapper implements SiteNavigationMenu,
 	* @return the name of this site navigation menu
 	*/
 	@Override
-	public java.lang.String getName() {
+	public String getName() {
 		return _siteNavigationMenu.getName();
 	}
 
@@ -246,7 +246,7 @@ public class SiteNavigationMenuWrapper implements SiteNavigationMenu,
 	}
 
 	@Override
-	public java.lang.String getTypeKey() {
+	public String getTypeKey() {
 		return _siteNavigationMenu.getTypeKey();
 	}
 
@@ -266,7 +266,7 @@ public class SiteNavigationMenuWrapper implements SiteNavigationMenu,
 	* @return the user name of this site navigation menu
 	*/
 	@Override
-	public java.lang.String getUserName() {
+	public String getUserName() {
 		return _siteNavigationMenu.getUserName();
 	}
 
@@ -276,7 +276,7 @@ public class SiteNavigationMenuWrapper implements SiteNavigationMenu,
 	* @return the user uuid of this site navigation menu
 	*/
 	@Override
-	public java.lang.String getUserUuid() {
+	public String getUserUuid() {
 		return _siteNavigationMenu.getUserUuid();
 	}
 
@@ -397,7 +397,7 @@ public class SiteNavigationMenuWrapper implements SiteNavigationMenu,
 	* @param name the name of this site navigation menu
 	*/
 	@Override
-	public void setName(java.lang.String name) {
+	public void setName(String name) {
 		_siteNavigationMenu.setName(name);
 	}
 
@@ -457,7 +457,7 @@ public class SiteNavigationMenuWrapper implements SiteNavigationMenu,
 	* @param userName the user name of this site navigation menu
 	*/
 	@Override
-	public void setUserName(java.lang.String userName) {
+	public void setUserName(String userName) {
 		_siteNavigationMenu.setUserName(userName);
 	}
 
@@ -467,7 +467,7 @@ public class SiteNavigationMenuWrapper implements SiteNavigationMenu,
 	* @param userUuid the user uuid of this site navigation menu
 	*/
 	@Override
-	public void setUserUuid(java.lang.String userUuid) {
+	public void setUserUuid(String userUuid) {
 		_siteNavigationMenu.setUserUuid(userUuid);
 	}
 
@@ -482,7 +482,7 @@ public class SiteNavigationMenuWrapper implements SiteNavigationMenu,
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _siteNavigationMenu.toString();
 	}
 
@@ -492,7 +492,7 @@ public class SiteNavigationMenuWrapper implements SiteNavigationMenu,
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _siteNavigationMenu.toXmlString();
 	}
 

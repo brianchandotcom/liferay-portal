@@ -43,7 +43,7 @@ public class PushNotificationsDeviceLocalServiceUtil {
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.push.notifications.service.impl.PushNotificationsDeviceLocalServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static com.liferay.push.notifications.model.PushNotificationsDevice addPushNotificationsDevice(
-		long userId, java.lang.String platform, java.lang.String token)
+		long userId, String platform, String token)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().addPushNotificationsDevice(userId, platform, token);
 	}
@@ -107,7 +107,7 @@ public class PushNotificationsDeviceLocalServiceUtil {
 	}
 
 	public static com.liferay.push.notifications.model.PushNotificationsDevice deletePushNotificationsDevice(
-		java.lang.String token)
+		String token)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().deletePushNotificationsDevice(token);
 	}
@@ -209,7 +209,7 @@ public class PushNotificationsDeviceLocalServiceUtil {
 	*
 	* @return the OSGi service identifier
 	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
+	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 
@@ -270,8 +270,8 @@ public class PushNotificationsDeviceLocalServiceUtil {
 		getService().sendPushNotification(toUserIds, payloadJSONObject);
 	}
 
-	public static void sendPushNotification(java.lang.String platform,
-		java.util.List<java.lang.String> tokens,
+	public static void sendPushNotification(String platform,
+		java.util.List<String> tokens,
 		com.liferay.portal.kernel.json.JSONObject payloadJSONObject)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().sendPushNotification(platform, tokens, payloadJSONObject);
@@ -289,8 +289,7 @@ public class PushNotificationsDeviceLocalServiceUtil {
 				   .updatePushNotificationsDevice(pushNotificationsDevice);
 	}
 
-	public static void updateToken(java.lang.String oldToken,
-		java.lang.String newToken)
+	public static void updateToken(String oldToken, String newToken)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().updateToken(oldToken, newToken);
 	}

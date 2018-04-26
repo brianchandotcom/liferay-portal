@@ -138,7 +138,7 @@ public class RatingsEntryWrapper implements RatingsEntry,
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new RatingsEntryWrapper((RatingsEntry)_ratingsEntry.clone());
 	}
 
@@ -153,7 +153,7 @@ public class RatingsEntryWrapper implements RatingsEntry,
 	* @return the fully qualified class name of this ratings entry
 	*/
 	@Override
-	public java.lang.String getClassName() {
+	public String getClassName() {
 		return _ratingsEntry.getClassName();
 	}
 
@@ -263,7 +263,7 @@ public class RatingsEntryWrapper implements RatingsEntry,
 	* @return the user name of this ratings entry
 	*/
 	@Override
-	public java.lang.String getUserName() {
+	public String getUserName() {
 		return _ratingsEntry.getUserName();
 	}
 
@@ -273,7 +273,7 @@ public class RatingsEntryWrapper implements RatingsEntry,
 	* @return the user uuid of this ratings entry
 	*/
 	@Override
-	public java.lang.String getUserUuid() {
+	public String getUserUuid() {
 		return _ratingsEntry.getUserUuid();
 	}
 
@@ -283,7 +283,7 @@ public class RatingsEntryWrapper implements RatingsEntry,
 	* @return the uuid of this ratings entry
 	*/
 	@Override
-	public java.lang.String getUuid() {
+	public String getUuid() {
 		return _ratingsEntry.getUuid();
 	}
 
@@ -318,7 +318,7 @@ public class RatingsEntryWrapper implements RatingsEntry,
 	}
 
 	@Override
-	public void setClassName(java.lang.String className) {
+	public void setClassName(String className) {
 		_ratingsEntry.setClassName(className);
 	}
 
@@ -444,7 +444,7 @@ public class RatingsEntryWrapper implements RatingsEntry,
 	* @param userName the user name of this ratings entry
 	*/
 	@Override
-	public void setUserName(java.lang.String userName) {
+	public void setUserName(String userName) {
 		_ratingsEntry.setUserName(userName);
 	}
 
@@ -454,7 +454,7 @@ public class RatingsEntryWrapper implements RatingsEntry,
 	* @param userUuid the user uuid of this ratings entry
 	*/
 	@Override
-	public void setUserUuid(java.lang.String userUuid) {
+	public void setUserUuid(String userUuid) {
 		_ratingsEntry.setUserUuid(userUuid);
 	}
 
@@ -464,7 +464,7 @@ public class RatingsEntryWrapper implements RatingsEntry,
 	* @param uuid the uuid of this ratings entry
 	*/
 	@Override
-	public void setUuid(java.lang.String uuid) {
+	public void setUuid(String uuid) {
 		_ratingsEntry.setUuid(uuid);
 	}
 
@@ -479,7 +479,7 @@ public class RatingsEntryWrapper implements RatingsEntry,
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _ratingsEntry.toString();
 	}
 
@@ -489,7 +489,7 @@ public class RatingsEntryWrapper implements RatingsEntry,
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _ratingsEntry.toXmlString();
 	}
 

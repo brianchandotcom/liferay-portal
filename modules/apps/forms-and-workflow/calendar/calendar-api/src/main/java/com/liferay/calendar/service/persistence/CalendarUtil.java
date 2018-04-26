@@ -117,7 +117,7 @@ public class CalendarUtil {
 	* @param uuid the uuid
 	* @return the matching calendars
 	*/
-	public static List<Calendar> findByUuid(java.lang.String uuid) {
+	public static List<Calendar> findByUuid(String uuid) {
 		return getPersistence().findByUuid(uuid);
 	}
 
@@ -133,8 +133,7 @@ public class CalendarUtil {
 	* @param end the upper bound of the range of calendars (not inclusive)
 	* @return the range of matching calendars
 	*/
-	public static List<Calendar> findByUuid(java.lang.String uuid, int start,
-		int end) {
+	public static List<Calendar> findByUuid(String uuid, int start, int end) {
 		return getPersistence().findByUuid(uuid, start, end);
 	}
 
@@ -151,8 +150,8 @@ public class CalendarUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching calendars
 	*/
-	public static List<Calendar> findByUuid(java.lang.String uuid, int start,
-		int end, OrderByComparator<Calendar> orderByComparator) {
+	public static List<Calendar> findByUuid(String uuid, int start, int end,
+		OrderByComparator<Calendar> orderByComparator) {
 		return getPersistence().findByUuid(uuid, start, end, orderByComparator);
 	}
 
@@ -170,9 +169,8 @@ public class CalendarUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching calendars
 	*/
-	public static List<Calendar> findByUuid(java.lang.String uuid, int start,
-		int end, OrderByComparator<Calendar> orderByComparator,
-		boolean retrieveFromCache) {
+	public static List<Calendar> findByUuid(String uuid, int start, int end,
+		OrderByComparator<Calendar> orderByComparator, boolean retrieveFromCache) {
 		return getPersistence()
 				   .findByUuid(uuid, start, end, orderByComparator,
 			retrieveFromCache);
@@ -186,7 +184,7 @@ public class CalendarUtil {
 	* @return the first matching calendar
 	* @throws NoSuchCalendarException if a matching calendar could not be found
 	*/
-	public static Calendar findByUuid_First(java.lang.String uuid,
+	public static Calendar findByUuid_First(String uuid,
 		OrderByComparator<Calendar> orderByComparator)
 		throws com.liferay.calendar.exception.NoSuchCalendarException {
 		return getPersistence().findByUuid_First(uuid, orderByComparator);
@@ -199,7 +197,7 @@ public class CalendarUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching calendar, or <code>null</code> if a matching calendar could not be found
 	*/
-	public static Calendar fetchByUuid_First(java.lang.String uuid,
+	public static Calendar fetchByUuid_First(String uuid,
 		OrderByComparator<Calendar> orderByComparator) {
 		return getPersistence().fetchByUuid_First(uuid, orderByComparator);
 	}
@@ -212,7 +210,7 @@ public class CalendarUtil {
 	* @return the last matching calendar
 	* @throws NoSuchCalendarException if a matching calendar could not be found
 	*/
-	public static Calendar findByUuid_Last(java.lang.String uuid,
+	public static Calendar findByUuid_Last(String uuid,
 		OrderByComparator<Calendar> orderByComparator)
 		throws com.liferay.calendar.exception.NoSuchCalendarException {
 		return getPersistence().findByUuid_Last(uuid, orderByComparator);
@@ -225,7 +223,7 @@ public class CalendarUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching calendar, or <code>null</code> if a matching calendar could not be found
 	*/
-	public static Calendar fetchByUuid_Last(java.lang.String uuid,
+	public static Calendar fetchByUuid_Last(String uuid,
 		OrderByComparator<Calendar> orderByComparator) {
 		return getPersistence().fetchByUuid_Last(uuid, orderByComparator);
 	}
@@ -240,7 +238,7 @@ public class CalendarUtil {
 	* @throws NoSuchCalendarException if a calendar with the primary key could not be found
 	*/
 	public static Calendar[] findByUuid_PrevAndNext(long calendarId,
-		java.lang.String uuid, OrderByComparator<Calendar> orderByComparator)
+		String uuid, OrderByComparator<Calendar> orderByComparator)
 		throws com.liferay.calendar.exception.NoSuchCalendarException {
 		return getPersistence()
 				   .findByUuid_PrevAndNext(calendarId, uuid, orderByComparator);
@@ -251,7 +249,7 @@ public class CalendarUtil {
 	*
 	* @param uuid the uuid
 	*/
-	public static void removeByUuid(java.lang.String uuid) {
+	public static void removeByUuid(String uuid) {
 		getPersistence().removeByUuid(uuid);
 	}
 
@@ -261,7 +259,7 @@ public class CalendarUtil {
 	* @param uuid the uuid
 	* @return the number of matching calendars
 	*/
-	public static int countByUuid(java.lang.String uuid) {
+	public static int countByUuid(String uuid) {
 		return getPersistence().countByUuid(uuid);
 	}
 
@@ -273,7 +271,7 @@ public class CalendarUtil {
 	* @return the matching calendar
 	* @throws NoSuchCalendarException if a matching calendar could not be found
 	*/
-	public static Calendar findByUUID_G(java.lang.String uuid, long groupId)
+	public static Calendar findByUUID_G(String uuid, long groupId)
 		throws com.liferay.calendar.exception.NoSuchCalendarException {
 		return getPersistence().findByUUID_G(uuid, groupId);
 	}
@@ -285,7 +283,7 @@ public class CalendarUtil {
 	* @param groupId the group ID
 	* @return the matching calendar, or <code>null</code> if a matching calendar could not be found
 	*/
-	public static Calendar fetchByUUID_G(java.lang.String uuid, long groupId) {
+	public static Calendar fetchByUUID_G(String uuid, long groupId) {
 		return getPersistence().fetchByUUID_G(uuid, groupId);
 	}
 
@@ -297,7 +295,7 @@ public class CalendarUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching calendar, or <code>null</code> if a matching calendar could not be found
 	*/
-	public static Calendar fetchByUUID_G(java.lang.String uuid, long groupId,
+	public static Calendar fetchByUUID_G(String uuid, long groupId,
 		boolean retrieveFromCache) {
 		return getPersistence().fetchByUUID_G(uuid, groupId, retrieveFromCache);
 	}
@@ -309,7 +307,7 @@ public class CalendarUtil {
 	* @param groupId the group ID
 	* @return the calendar that was removed
 	*/
-	public static Calendar removeByUUID_G(java.lang.String uuid, long groupId)
+	public static Calendar removeByUUID_G(String uuid, long groupId)
 		throws com.liferay.calendar.exception.NoSuchCalendarException {
 		return getPersistence().removeByUUID_G(uuid, groupId);
 	}
@@ -321,7 +319,7 @@ public class CalendarUtil {
 	* @param groupId the group ID
 	* @return the number of matching calendars
 	*/
-	public static int countByUUID_G(java.lang.String uuid, long groupId) {
+	public static int countByUUID_G(String uuid, long groupId) {
 		return getPersistence().countByUUID_G(uuid, groupId);
 	}
 
@@ -332,8 +330,7 @@ public class CalendarUtil {
 	* @param companyId the company ID
 	* @return the matching calendars
 	*/
-	public static List<Calendar> findByUuid_C(java.lang.String uuid,
-		long companyId) {
+	public static List<Calendar> findByUuid_C(String uuid, long companyId) {
 		return getPersistence().findByUuid_C(uuid, companyId);
 	}
 
@@ -350,8 +347,8 @@ public class CalendarUtil {
 	* @param end the upper bound of the range of calendars (not inclusive)
 	* @return the range of matching calendars
 	*/
-	public static List<Calendar> findByUuid_C(java.lang.String uuid,
-		long companyId, int start, int end) {
+	public static List<Calendar> findByUuid_C(String uuid, long companyId,
+		int start, int end) {
 		return getPersistence().findByUuid_C(uuid, companyId, start, end);
 	}
 
@@ -369,9 +366,8 @@ public class CalendarUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching calendars
 	*/
-	public static List<Calendar> findByUuid_C(java.lang.String uuid,
-		long companyId, int start, int end,
-		OrderByComparator<Calendar> orderByComparator) {
+	public static List<Calendar> findByUuid_C(String uuid, long companyId,
+		int start, int end, OrderByComparator<Calendar> orderByComparator) {
 		return getPersistence()
 				   .findByUuid_C(uuid, companyId, start, end, orderByComparator);
 	}
@@ -391,9 +387,9 @@ public class CalendarUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching calendars
 	*/
-	public static List<Calendar> findByUuid_C(java.lang.String uuid,
-		long companyId, int start, int end,
-		OrderByComparator<Calendar> orderByComparator, boolean retrieveFromCache) {
+	public static List<Calendar> findByUuid_C(String uuid, long companyId,
+		int start, int end, OrderByComparator<Calendar> orderByComparator,
+		boolean retrieveFromCache) {
 		return getPersistence()
 				   .findByUuid_C(uuid, companyId, start, end,
 			orderByComparator, retrieveFromCache);
@@ -408,8 +404,8 @@ public class CalendarUtil {
 	* @return the first matching calendar
 	* @throws NoSuchCalendarException if a matching calendar could not be found
 	*/
-	public static Calendar findByUuid_C_First(java.lang.String uuid,
-		long companyId, OrderByComparator<Calendar> orderByComparator)
+	public static Calendar findByUuid_C_First(String uuid, long companyId,
+		OrderByComparator<Calendar> orderByComparator)
 		throws com.liferay.calendar.exception.NoSuchCalendarException {
 		return getPersistence()
 				   .findByUuid_C_First(uuid, companyId, orderByComparator);
@@ -423,8 +419,8 @@ public class CalendarUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching calendar, or <code>null</code> if a matching calendar could not be found
 	*/
-	public static Calendar fetchByUuid_C_First(java.lang.String uuid,
-		long companyId, OrderByComparator<Calendar> orderByComparator) {
+	public static Calendar fetchByUuid_C_First(String uuid, long companyId,
+		OrderByComparator<Calendar> orderByComparator) {
 		return getPersistence()
 				   .fetchByUuid_C_First(uuid, companyId, orderByComparator);
 	}
@@ -438,8 +434,8 @@ public class CalendarUtil {
 	* @return the last matching calendar
 	* @throws NoSuchCalendarException if a matching calendar could not be found
 	*/
-	public static Calendar findByUuid_C_Last(java.lang.String uuid,
-		long companyId, OrderByComparator<Calendar> orderByComparator)
+	public static Calendar findByUuid_C_Last(String uuid, long companyId,
+		OrderByComparator<Calendar> orderByComparator)
 		throws com.liferay.calendar.exception.NoSuchCalendarException {
 		return getPersistence()
 				   .findByUuid_C_Last(uuid, companyId, orderByComparator);
@@ -453,8 +449,8 @@ public class CalendarUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching calendar, or <code>null</code> if a matching calendar could not be found
 	*/
-	public static Calendar fetchByUuid_C_Last(java.lang.String uuid,
-		long companyId, OrderByComparator<Calendar> orderByComparator) {
+	public static Calendar fetchByUuid_C_Last(String uuid, long companyId,
+		OrderByComparator<Calendar> orderByComparator) {
 		return getPersistence()
 				   .fetchByUuid_C_Last(uuid, companyId, orderByComparator);
 	}
@@ -470,7 +466,7 @@ public class CalendarUtil {
 	* @throws NoSuchCalendarException if a calendar with the primary key could not be found
 	*/
 	public static Calendar[] findByUuid_C_PrevAndNext(long calendarId,
-		java.lang.String uuid, long companyId,
+		String uuid, long companyId,
 		OrderByComparator<Calendar> orderByComparator)
 		throws com.liferay.calendar.exception.NoSuchCalendarException {
 		return getPersistence()
@@ -484,7 +480,7 @@ public class CalendarUtil {
 	* @param uuid the uuid
 	* @param companyId the company ID
 	*/
-	public static void removeByUuid_C(java.lang.String uuid, long companyId) {
+	public static void removeByUuid_C(String uuid, long companyId) {
 		getPersistence().removeByUuid_C(uuid, companyId);
 	}
 
@@ -495,7 +491,7 @@ public class CalendarUtil {
 	* @param companyId the company ID
 	* @return the number of matching calendars
 	*/
-	public static int countByUuid_C(java.lang.String uuid, long companyId) {
+	public static int countByUuid_C(String uuid, long companyId) {
 		return getPersistence().countByUuid_C(uuid, companyId);
 	}
 
@@ -1203,7 +1199,7 @@ public class CalendarUtil {
 		return getPersistence().countAll();
 	}
 
-	public static java.util.Set<java.lang.String> getBadColumnNames() {
+	public static java.util.Set<String> getBadColumnNames() {
 		return getPersistence().getBadColumnNames();
 	}
 

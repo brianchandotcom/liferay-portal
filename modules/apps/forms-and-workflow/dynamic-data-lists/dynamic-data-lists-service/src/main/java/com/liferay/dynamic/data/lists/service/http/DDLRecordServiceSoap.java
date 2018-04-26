@@ -234,7 +234,7 @@ public class DDLRecordServiceSoap {
 	the record modified date.
 	* @throws PortalException if a portal exception occurred
 	*/
-	public static void revertRecord(long recordId, java.lang.String version,
+	public static void revertRecord(long recordId, String version,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
@@ -252,8 +252,7 @@ public class DDLRecordServiceSoap {
 	ServiceContext)}
 	*/
 	@Deprecated
-	public static void revertRecordVersion(long recordId,
-		java.lang.String version,
+	public static void revertRecordVersion(long recordId, String version,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {

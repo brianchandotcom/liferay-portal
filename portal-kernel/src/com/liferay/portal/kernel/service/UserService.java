@@ -151,14 +151,12 @@ public interface UserService extends BaseService {
 	bridge attributes for the user.
 	* @return the new user
 	*/
-	public User addUser(long companyId, boolean autoPassword,
-		java.lang.String password1, java.lang.String password2,
-		boolean autoScreenName, java.lang.String screenName,
-		java.lang.String emailAddress, long facebookId,
-		java.lang.String openId, Locale locale, java.lang.String firstName,
-		java.lang.String middleName, java.lang.String lastName, long prefixId,
+	public User addUser(long companyId, boolean autoPassword, String password1,
+		String password2, boolean autoScreenName, String screenName,
+		String emailAddress, long facebookId, String openId, Locale locale,
+		String firstName, String middleName, String lastName, long prefixId,
 		long suffixId, boolean male, int birthdayMonth, int birthdayDay,
-		int birthdayYear, java.lang.String jobTitle, long[] groupIds,
+		int birthdayYear, String jobTitle, long[] groupIds,
 		long[] organizationIds, long[] roleIds, long[] userGroupIds,
 		boolean sendEmail, ServiceContext serviceContext)
 		throws PortalException;
@@ -213,14 +211,12 @@ public interface UserService extends BaseService {
 	bridge attributes for the user.
 	* @return the new user
 	*/
-	public User addUser(long companyId, boolean autoPassword,
-		java.lang.String password1, java.lang.String password2,
-		boolean autoScreenName, java.lang.String screenName,
-		java.lang.String emailAddress, long facebookId,
-		java.lang.String openId, Locale locale, java.lang.String firstName,
-		java.lang.String middleName, java.lang.String lastName, long prefixId,
+	public User addUser(long companyId, boolean autoPassword, String password1,
+		String password2, boolean autoScreenName, String screenName,
+		String emailAddress, long facebookId, String openId, Locale locale,
+		String firstName, String middleName, String lastName, long prefixId,
 		long suffixId, boolean male, int birthdayMonth, int birthdayDay,
-		int birthdayYear, java.lang.String jobTitle, long[] groupIds,
+		int birthdayYear, String jobTitle, long[] groupIds,
 		long[] organizationIds, long[] roleIds, long[] userGroupIds,
 		List<Address> addresses, List<EmailAddress> emailAddresses,
 		List<Phone> phones, List<Website> websites,
@@ -282,13 +278,11 @@ public interface UserService extends BaseService {
 	* @return the new user
 	*/
 	public User addUserWithWorkflow(long companyId, boolean autoPassword,
-		java.lang.String password1, java.lang.String password2,
-		boolean autoScreenName, java.lang.String screenName,
-		java.lang.String emailAddress, long facebookId,
-		java.lang.String openId, Locale locale, java.lang.String firstName,
-		java.lang.String middleName, java.lang.String lastName, long prefixId,
-		long suffixId, boolean male, int birthdayMonth, int birthdayDay,
-		int birthdayYear, java.lang.String jobTitle, long[] groupIds,
+		String password1, String password2, boolean autoScreenName,
+		String screenName, String emailAddress, long facebookId, String openId,
+		Locale locale, String firstName, String middleName, String lastName,
+		long prefixId, long suffixId, boolean male, int birthdayMonth,
+		int birthdayDay, int birthdayYear, String jobTitle, long[] groupIds,
 		long[] organizationIds, long[] roleIds, long[] userGroupIds,
 		boolean sendEmail, ServiceContext serviceContext)
 		throws PortalException;
@@ -344,13 +338,11 @@ public interface UserService extends BaseService {
 	* @return the new user
 	*/
 	public User addUserWithWorkflow(long companyId, boolean autoPassword,
-		java.lang.String password1, java.lang.String password2,
-		boolean autoScreenName, java.lang.String screenName,
-		java.lang.String emailAddress, long facebookId,
-		java.lang.String openId, Locale locale, java.lang.String firstName,
-		java.lang.String middleName, java.lang.String lastName, long prefixId,
-		long suffixId, boolean male, int birthdayMonth, int birthdayDay,
-		int birthdayYear, java.lang.String jobTitle, long[] groupIds,
+		String password1, String password2, boolean autoScreenName,
+		String screenName, String emailAddress, long facebookId, String openId,
+		Locale locale, String firstName, String middleName, String lastName,
+		long prefixId, long suffixId, boolean male, int birthdayMonth,
+		int birthdayDay, int birthdayYear, String jobTitle, long[] groupIds,
 		long[] organizationIds, long[] roleIds, long[] userGroupIds,
 		List<Address> addresses, List<EmailAddress> emailAddresses,
 		List<Phone> phones, List<Website> websites,
@@ -433,7 +425,7 @@ public interface UserService extends BaseService {
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	/**
 	* Returns the primary keys of all the users belonging to the role.
@@ -452,8 +444,8 @@ public interface UserService extends BaseService {
 	* @return the user with the email address
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public User getUserByEmailAddress(long companyId,
-		java.lang.String emailAddress) throws PortalException;
+	public User getUserByEmailAddress(long companyId, String emailAddress)
+		throws PortalException;
 
 	/**
 	* Returns the user with the primary key.
@@ -472,7 +464,7 @@ public interface UserService extends BaseService {
 	* @return the user with the screen name
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public User getUserByScreenName(long companyId, java.lang.String screenName)
+	public User getUserByScreenName(long companyId, String screenName)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -487,8 +479,8 @@ public interface UserService extends BaseService {
 	* @return the primary key of the user with the email address
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public long getUserIdByEmailAddress(long companyId,
-		java.lang.String emailAddress) throws PortalException;
+	public long getUserIdByEmailAddress(long companyId, String emailAddress)
+		throws PortalException;
 
 	/**
 	* Returns the primary key of the user with the screen name.
@@ -498,8 +490,8 @@ public interface UserService extends BaseService {
 	* @return the primary key of the user with the screen name
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public long getUserIdByScreenName(long companyId,
-		java.lang.String screenName) throws PortalException;
+	public long getUserIdByScreenName(long companyId, String screenName)
+		throws PortalException;
 
 	/**
 	* Returns <code>true</code> if the user is a member of the group.
@@ -539,8 +531,8 @@ public interface UserService extends BaseService {
 	otherwise
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public boolean hasRoleUser(long companyId, java.lang.String name,
-		long userId, boolean inherited) throws PortalException;
+	public boolean hasRoleUser(long companyId, String name, long userId,
+		boolean inherited) throws PortalException;
 
 	/**
 	* Sends a password notification email to the user matching the email
@@ -563,7 +555,7 @@ public interface UserService extends BaseService {
 	contains a reset link
 	*/
 	public boolean sendPasswordByEmailAddress(long companyId,
-		java.lang.String emailAddress) throws PortalException;
+		String emailAddress) throws PortalException;
 
 	/**
 	* Sends a password notification email to the user matching the screen name.
@@ -584,8 +576,8 @@ public interface UserService extends BaseService {
 	password; <code>false</code> if the notification email only
 	contains a reset link
 	*/
-	public boolean sendPasswordByScreenName(long companyId,
-		java.lang.String screenName) throws PortalException;
+	public boolean sendPasswordByScreenName(long companyId, String screenName)
+		throws PortalException;
 
 	/**
 	* Sends a password notification email to the user matching the ID. The
@@ -714,8 +706,8 @@ public interface UserService extends BaseService {
 	remote host, and agent for the user.
 	* @return the user
 	*/
-	public User updateEmailAddress(long userId, java.lang.String password,
-		java.lang.String emailAddress1, java.lang.String emailAddress2,
+	public User updateEmailAddress(long userId, String password,
+		String emailAddress1, String emailAddress2,
 		ServiceContext serviceContext) throws PortalException;
 
 	/**
@@ -755,13 +747,11 @@ public interface UserService extends BaseService {
 	* @return the user
 	*/
 	public User updateIncompleteUser(long companyId, boolean autoPassword,
-		java.lang.String password1, java.lang.String password2,
-		boolean autoScreenName, java.lang.String screenName,
-		java.lang.String emailAddress, long facebookId,
-		java.lang.String openId, Locale locale, java.lang.String firstName,
-		java.lang.String middleName, java.lang.String lastName, long prefixId,
-		long suffixId, boolean male, int birthdayMonth, int birthdayDay,
-		int birthdayYear, java.lang.String jobTitle,
+		String password1, String password2, boolean autoScreenName,
+		String screenName, String emailAddress, long facebookId, String openId,
+		Locale locale, String firstName, String middleName, String lastName,
+		long prefixId, long suffixId, boolean male, int birthdayMonth,
+		int birthdayDay, int birthdayYear, String jobTitle,
 		boolean updateUserInformation, boolean sendEmail,
 		ServiceContext serviceContext) throws PortalException;
 
@@ -782,7 +772,7 @@ public interface UserService extends BaseService {
 	* @param openId the new OpenID
 	* @return the user
 	*/
-	public User updateOpenId(long userId, java.lang.String openId)
+	public User updateOpenId(long userId, String openId)
 		throws PortalException;
 
 	/**
@@ -807,9 +797,8 @@ public interface UserService extends BaseService {
 	password the next time they log in
 	* @return the user
 	*/
-	public User updatePassword(long userId, java.lang.String password1,
-		java.lang.String password2, boolean passwordReset)
-		throws PortalException;
+	public User updatePassword(long userId, String password1, String password2,
+		boolean passwordReset) throws PortalException;
 
 	/**
 	* Updates the user's portrait image.
@@ -829,8 +818,8 @@ public interface UserService extends BaseService {
 	* @param answer the user's new password reset answer
 	* @return the user
 	*/
-	public User updateReminderQuery(long userId, java.lang.String question,
-		java.lang.String answer) throws PortalException;
+	public User updateReminderQuery(long userId, String question, String answer)
+		throws PortalException;
 
 	/**
 	* Updates the user's screen name.
@@ -839,7 +828,7 @@ public interface UserService extends BaseService {
 	* @param screenName the user's new screen name
 	* @return the user
 	*/
-	public User updateScreenName(long userId, java.lang.String screenName)
+	public User updateScreenName(long userId, String screenName)
 		throws PortalException;
 
 	/**
@@ -851,7 +840,7 @@ public interface UserService extends BaseService {
 	* @deprecated As of 7.0.0, replaced by {@link #updateStatus(long, int,
 	ServiceContext)}
 	*/
-	@java.lang.Deprecated
+	@Deprecated
 	public User updateStatus(long userId, int status) throws PortalException;
 
 	/**
@@ -922,20 +911,16 @@ public interface UserService extends BaseService {
 	bridge attributes for the user.
 	* @return the user
 	*/
-	public User updateUser(long userId, java.lang.String oldPassword,
-		java.lang.String newPassword1, java.lang.String newPassword2,
-		boolean passwordReset, java.lang.String reminderQueryQuestion,
-		java.lang.String reminderQueryAnswer, java.lang.String screenName,
-		java.lang.String emailAddress, long facebookId,
-		java.lang.String openId, boolean portrait, byte[] portraitBytes,
-		java.lang.String languageId, java.lang.String timeZoneId,
-		java.lang.String greeting, java.lang.String comments,
-		java.lang.String firstName, java.lang.String middleName,
-		java.lang.String lastName, long prefixId, long suffixId, boolean male,
-		int birthdayMonth, int birthdayDay, int birthdayYear,
-		java.lang.String smsSn, java.lang.String facebookSn,
-		java.lang.String jabberSn, java.lang.String skypeSn,
-		java.lang.String twitterSn, java.lang.String jobTitle, long[] groupIds,
+	public User updateUser(long userId, String oldPassword,
+		String newPassword1, String newPassword2, boolean passwordReset,
+		String reminderQueryQuestion, String reminderQueryAnswer,
+		String screenName, String emailAddress, long facebookId, String openId,
+		boolean portrait, byte[] portraitBytes, String languageId,
+		String timeZoneId, String greeting, String comments, String firstName,
+		String middleName, String lastName, long prefixId, long suffixId,
+		boolean male, int birthdayMonth, int birthdayDay, int birthdayYear,
+		String smsSn, String facebookSn, String jabberSn, String skypeSn,
+		String twitterSn, String jobTitle, long[] groupIds,
 		long[] organizationIds, long[] roleIds,
 		List<UserGroupRole> userGroupRoles, long[] userGroupIds,
 		List<Address> addresses, List<EmailAddress> emailAddresses,
@@ -1003,20 +988,16 @@ public interface UserService extends BaseService {
 	long[], long[], long[], List, long[], List, List, List, List,
 	List, ServiceContext)}
 	*/
-	@java.lang.Deprecated
-	public User updateUser(long userId, java.lang.String oldPassword,
-		java.lang.String newPassword1, java.lang.String newPassword2,
-		boolean passwordReset, java.lang.String reminderQueryQuestion,
-		java.lang.String reminderQueryAnswer, java.lang.String screenName,
-		java.lang.String emailAddress, long facebookId,
-		java.lang.String openId, java.lang.String languageId,
-		java.lang.String timeZoneId, java.lang.String greeting,
-		java.lang.String comments, java.lang.String firstName,
-		java.lang.String middleName, java.lang.String lastName, long prefixId,
+	@Deprecated
+	public User updateUser(long userId, String oldPassword,
+		String newPassword1, String newPassword2, boolean passwordReset,
+		String reminderQueryQuestion, String reminderQueryAnswer,
+		String screenName, String emailAddress, long facebookId, String openId,
+		String languageId, String timeZoneId, String greeting, String comments,
+		String firstName, String middleName, String lastName, long prefixId,
 		long suffixId, boolean male, int birthdayMonth, int birthdayDay,
-		int birthdayYear, java.lang.String smsSn, java.lang.String facebookSn,
-		java.lang.String jabberSn, java.lang.String skypeSn,
-		java.lang.String twitterSn, java.lang.String jobTitle, long[] groupIds,
+		int birthdayYear, String smsSn, String facebookSn, String jabberSn,
+		String skypeSn, String twitterSn, String jobTitle, long[] groupIds,
 		long[] organizationIds, long[] roleIds,
 		List<UserGroupRole> userGroupRoles, long[] userGroupIds,
 		List<Address> addresses, List<EmailAddress> emailAddresses,
@@ -1072,19 +1053,15 @@ public interface UserService extends BaseService {
 	bridge attributes for the user.
 	* @return the user
 	*/
-	public User updateUser(long userId, java.lang.String oldPassword,
-		java.lang.String newPassword1, java.lang.String newPassword2,
-		boolean passwordReset, java.lang.String reminderQueryQuestion,
-		java.lang.String reminderQueryAnswer, java.lang.String screenName,
-		java.lang.String emailAddress, long facebookId,
-		java.lang.String openId, java.lang.String languageId,
-		java.lang.String timeZoneId, java.lang.String greeting,
-		java.lang.String comments, java.lang.String firstName,
-		java.lang.String middleName, java.lang.String lastName, long prefixId,
+	public User updateUser(long userId, String oldPassword,
+		String newPassword1, String newPassword2, boolean passwordReset,
+		String reminderQueryQuestion, String reminderQueryAnswer,
+		String screenName, String emailAddress, long facebookId, String openId,
+		String languageId, String timeZoneId, String greeting, String comments,
+		String firstName, String middleName, String lastName, long prefixId,
 		long suffixId, boolean male, int birthdayMonth, int birthdayDay,
-		int birthdayYear, java.lang.String smsSn, java.lang.String facebookSn,
-		java.lang.String jabberSn, java.lang.String skypeSn,
-		java.lang.String twitterSn, java.lang.String jobTitle, long[] groupIds,
+		int birthdayYear, String smsSn, String facebookSn, String jabberSn,
+		String skypeSn, String twitterSn, String jobTitle, long[] groupIds,
 		long[] organizationIds, long[] roleIds,
 		List<UserGroupRole> userGroupRoles, long[] userGroupIds,
 		ServiceContext serviceContext) throws PortalException;

@@ -117,8 +117,7 @@ public class FeedUtil {
 	* @return the matching feed
 	* @throws NoSuchFeedException if a matching feed could not be found
 	*/
-	public static Feed findByU_TSN(long userId,
-		java.lang.String twitterScreenName)
+	public static Feed findByU_TSN(long userId, String twitterScreenName)
 		throws com.liferay.twitter.exception.NoSuchFeedException {
 		return getPersistence().findByU_TSN(userId, twitterScreenName);
 	}
@@ -130,8 +129,7 @@ public class FeedUtil {
 	* @param twitterScreenName the twitter screen name
 	* @return the matching feed, or <code>null</code> if a matching feed could not be found
 	*/
-	public static Feed fetchByU_TSN(long userId,
-		java.lang.String twitterScreenName) {
+	public static Feed fetchByU_TSN(long userId, String twitterScreenName) {
 		return getPersistence().fetchByU_TSN(userId, twitterScreenName);
 	}
 
@@ -143,8 +141,8 @@ public class FeedUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching feed, or <code>null</code> if a matching feed could not be found
 	*/
-	public static Feed fetchByU_TSN(long userId,
-		java.lang.String twitterScreenName, boolean retrieveFromCache) {
+	public static Feed fetchByU_TSN(long userId, String twitterScreenName,
+		boolean retrieveFromCache) {
 		return getPersistence()
 				   .fetchByU_TSN(userId, twitterScreenName, retrieveFromCache);
 	}
@@ -156,8 +154,7 @@ public class FeedUtil {
 	* @param twitterScreenName the twitter screen name
 	* @return the feed that was removed
 	*/
-	public static Feed removeByU_TSN(long userId,
-		java.lang.String twitterScreenName)
+	public static Feed removeByU_TSN(long userId, String twitterScreenName)
 		throws com.liferay.twitter.exception.NoSuchFeedException {
 		return getPersistence().removeByU_TSN(userId, twitterScreenName);
 	}
@@ -169,8 +166,7 @@ public class FeedUtil {
 	* @param twitterScreenName the twitter screen name
 	* @return the number of matching feeds
 	*/
-	public static int countByU_TSN(long userId,
-		java.lang.String twitterScreenName) {
+	public static int countByU_TSN(long userId, String twitterScreenName) {
 		return getPersistence().countByU_TSN(userId, twitterScreenName);
 	}
 

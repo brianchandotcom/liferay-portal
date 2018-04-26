@@ -229,13 +229,13 @@ public class DLFolderWrapper implements DLFolder, ModelWrapper<DLFolder> {
 	}
 
 	@Override
-	public java.lang.String buildTreePath()
+	public String buildTreePath()
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _dlFolder.buildTreePath();
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new DLFolderWrapper((DLFolder)_dlFolder.clone());
 	}
 
@@ -245,7 +245,7 @@ public class DLFolderWrapper implements DLFolder, ModelWrapper<DLFolder> {
 	}
 
 	@Override
-	public java.util.List<java.lang.Long> getAncestorFolderIds()
+	public java.util.List<Long> getAncestorFolderIds()
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _dlFolder.getAncestorFolderIds();
 	}
@@ -282,7 +282,7 @@ public class DLFolderWrapper implements DLFolder, ModelWrapper<DLFolder> {
 	* @return the container name of this document library folder
 	*/
 	@Override
-	public java.lang.String getContainerModelName() {
+	public String getContainerModelName() {
 		return _dlFolder.getContainerModelName();
 	}
 
@@ -312,7 +312,7 @@ public class DLFolderWrapper implements DLFolder, ModelWrapper<DLFolder> {
 	* @return the description of this document library folder
 	*/
 	@Override
-	public java.lang.String getDescription() {
+	public String getDescription() {
 		return _dlFolder.getDescription();
 	}
 
@@ -397,7 +397,7 @@ public class DLFolderWrapper implements DLFolder, ModelWrapper<DLFolder> {
 	* @return the name of this document library folder
 	*/
 	@Override
-	public java.lang.String getName() {
+	public String getName() {
 		return _dlFolder.getName();
 	}
 
@@ -428,13 +428,13 @@ public class DLFolderWrapper implements DLFolder, ModelWrapper<DLFolder> {
 	}
 
 	@Override
-	public java.lang.String getPath()
+	public String getPath()
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _dlFolder.getPath();
 	}
 
 	@Override
-	public java.lang.String[] getPathArray()
+	public String[] getPathArray()
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _dlFolder.getPathArray();
 	}
@@ -500,7 +500,7 @@ public class DLFolderWrapper implements DLFolder, ModelWrapper<DLFolder> {
 	* @return the status by user name of this document library folder
 	*/
 	@Override
-	public java.lang.String getStatusByUserName() {
+	public String getStatusByUserName() {
 		return _dlFolder.getStatusByUserName();
 	}
 
@@ -510,7 +510,7 @@ public class DLFolderWrapper implements DLFolder, ModelWrapper<DLFolder> {
 	* @return the status by user uuid of this document library folder
 	*/
 	@Override
-	public java.lang.String getStatusByUserUuid() {
+	public String getStatusByUserUuid() {
 		return _dlFolder.getStatusByUserUuid();
 	}
 
@@ -563,7 +563,7 @@ public class DLFolderWrapper implements DLFolder, ModelWrapper<DLFolder> {
 	* @return the tree path of this document library folder
 	*/
 	@Override
-	public java.lang.String getTreePath() {
+	public String getTreePath() {
 		return _dlFolder.getTreePath();
 	}
 
@@ -583,7 +583,7 @@ public class DLFolderWrapper implements DLFolder, ModelWrapper<DLFolder> {
 	* @return the user name of this document library folder
 	*/
 	@Override
-	public java.lang.String getUserName() {
+	public String getUserName() {
 		return _dlFolder.getUserName();
 	}
 
@@ -593,7 +593,7 @@ public class DLFolderWrapper implements DLFolder, ModelWrapper<DLFolder> {
 	* @return the user uuid of this document library folder
 	*/
 	@Override
-	public java.lang.String getUserUuid() {
+	public String getUserUuid() {
 		return _dlFolder.getUserUuid();
 	}
 
@@ -603,7 +603,7 @@ public class DLFolderWrapper implements DLFolder, ModelWrapper<DLFolder> {
 	* @return the uuid of this document library folder
 	*/
 	@Override
-	public java.lang.String getUuid() {
+	public String getUuid() {
 		return _dlFolder.getUuid();
 	}
 
@@ -838,7 +838,7 @@ public class DLFolderWrapper implements DLFolder, ModelWrapper<DLFolder> {
 	* @param description the description of this document library folder
 	*/
 	@Override
-	public void setDescription(java.lang.String description) {
+	public void setDescription(String description) {
 		_dlFolder.setDescription(description);
 	}
 
@@ -934,7 +934,7 @@ public class DLFolderWrapper implements DLFolder, ModelWrapper<DLFolder> {
 	* @param name the name of this document library folder
 	*/
 	@Override
-	public void setName(java.lang.String name) {
+	public void setName(String name) {
 		_dlFolder.setName(name);
 	}
 
@@ -1024,7 +1024,7 @@ public class DLFolderWrapper implements DLFolder, ModelWrapper<DLFolder> {
 	* @param statusByUserName the status by user name of this document library folder
 	*/
 	@Override
-	public void setStatusByUserName(java.lang.String statusByUserName) {
+	public void setStatusByUserName(String statusByUserName) {
 		_dlFolder.setStatusByUserName(statusByUserName);
 	}
 
@@ -1034,7 +1034,7 @@ public class DLFolderWrapper implements DLFolder, ModelWrapper<DLFolder> {
 	* @param statusByUserUuid the status by user uuid of this document library folder
 	*/
 	@Override
-	public void setStatusByUserUuid(java.lang.String statusByUserUuid) {
+	public void setStatusByUserUuid(String statusByUserUuid) {
 		_dlFolder.setStatusByUserUuid(statusByUserUuid);
 	}
 
@@ -1054,7 +1054,7 @@ public class DLFolderWrapper implements DLFolder, ModelWrapper<DLFolder> {
 	* @param treePath the tree path of this document library folder
 	*/
 	@Override
-	public void setTreePath(java.lang.String treePath) {
+	public void setTreePath(String treePath) {
 		_dlFolder.setTreePath(treePath);
 	}
 
@@ -1074,7 +1074,7 @@ public class DLFolderWrapper implements DLFolder, ModelWrapper<DLFolder> {
 	* @param userName the user name of this document library folder
 	*/
 	@Override
-	public void setUserName(java.lang.String userName) {
+	public void setUserName(String userName) {
 		_dlFolder.setUserName(userName);
 	}
 
@@ -1084,7 +1084,7 @@ public class DLFolderWrapper implements DLFolder, ModelWrapper<DLFolder> {
 	* @param userUuid the user uuid of this document library folder
 	*/
 	@Override
-	public void setUserUuid(java.lang.String userUuid) {
+	public void setUserUuid(String userUuid) {
 		_dlFolder.setUserUuid(userUuid);
 	}
 
@@ -1094,7 +1094,7 @@ public class DLFolderWrapper implements DLFolder, ModelWrapper<DLFolder> {
 	* @param uuid the uuid of this document library folder
 	*/
 	@Override
-	public void setUuid(java.lang.String uuid) {
+	public void setUuid(String uuid) {
 		_dlFolder.setUuid(uuid);
 	}
 
@@ -1109,7 +1109,7 @@ public class DLFolderWrapper implements DLFolder, ModelWrapper<DLFolder> {
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _dlFolder.toString();
 	}
 
@@ -1119,12 +1119,12 @@ public class DLFolderWrapper implements DLFolder, ModelWrapper<DLFolder> {
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _dlFolder.toXmlString();
 	}
 
 	@Override
-	public void updateTreePath(java.lang.String treePath) {
+	public void updateTreePath(String treePath) {
 		_dlFolder.updateTreePath(treePath);
 	}
 

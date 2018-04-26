@@ -456,7 +456,7 @@ public interface LayoutSetBranchPersistence extends BasePersistence<LayoutSetBra
 	* @throws NoSuchLayoutSetBranchException if a matching layout set branch could not be found
 	*/
 	public LayoutSetBranch findByG_P_N(long groupId, boolean privateLayout,
-		java.lang.String name) throws NoSuchLayoutSetBranchException;
+		String name) throws NoSuchLayoutSetBranchException;
 
 	/**
 	* Returns the layout set branch where groupId = &#63; and privateLayout = &#63; and name = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
@@ -467,7 +467,7 @@ public interface LayoutSetBranchPersistence extends BasePersistence<LayoutSetBra
 	* @return the matching layout set branch, or <code>null</code> if a matching layout set branch could not be found
 	*/
 	public LayoutSetBranch fetchByG_P_N(long groupId, boolean privateLayout,
-		java.lang.String name);
+		String name);
 
 	/**
 	* Returns the layout set branch where groupId = &#63; and privateLayout = &#63; and name = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -479,7 +479,7 @@ public interface LayoutSetBranchPersistence extends BasePersistence<LayoutSetBra
 	* @return the matching layout set branch, or <code>null</code> if a matching layout set branch could not be found
 	*/
 	public LayoutSetBranch fetchByG_P_N(long groupId, boolean privateLayout,
-		java.lang.String name, boolean retrieveFromCache);
+		String name, boolean retrieveFromCache);
 
 	/**
 	* Removes the layout set branch where groupId = &#63; and privateLayout = &#63; and name = &#63; from the database.
@@ -490,7 +490,7 @@ public interface LayoutSetBranchPersistence extends BasePersistence<LayoutSetBra
 	* @return the layout set branch that was removed
 	*/
 	public LayoutSetBranch removeByG_P_N(long groupId, boolean privateLayout,
-		java.lang.String name) throws NoSuchLayoutSetBranchException;
+		String name) throws NoSuchLayoutSetBranchException;
 
 	/**
 	* Returns the number of layout set branchs where groupId = &#63; and privateLayout = &#63; and name = &#63;.
@@ -500,8 +500,7 @@ public interface LayoutSetBranchPersistence extends BasePersistence<LayoutSetBra
 	* @param name the name
 	* @return the number of matching layout set branchs
 	*/
-	public int countByG_P_N(long groupId, boolean privateLayout,
-		java.lang.String name);
+	public int countByG_P_N(long groupId, boolean privateLayout, String name);
 
 	/**
 	* Returns all the layout set branchs where groupId = &#63; and privateLayout = &#63; and master = &#63;.
@@ -859,5 +858,5 @@ public interface LayoutSetBranchPersistence extends BasePersistence<LayoutSetBra
 	public int countAll();
 
 	@Override
-	public java.util.Set<java.lang.String> getBadColumnNames();
+	public java.util.Set<String> getBadColumnNames();
 }

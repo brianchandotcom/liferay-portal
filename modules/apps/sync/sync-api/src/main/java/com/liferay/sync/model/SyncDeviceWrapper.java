@@ -157,7 +157,7 @@ public class SyncDeviceWrapper implements SyncDevice, ModelWrapper<SyncDevice> {
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new SyncDeviceWrapper((SyncDevice)_syncDevice.clone());
 	}
 
@@ -217,7 +217,7 @@ public class SyncDeviceWrapper implements SyncDevice, ModelWrapper<SyncDevice> {
 	* @return the hostname of this sync device
 	*/
 	@Override
-	public java.lang.String getHostname() {
+	public String getHostname() {
 		return _syncDevice.getHostname();
 	}
 
@@ -272,7 +272,7 @@ public class SyncDeviceWrapper implements SyncDevice, ModelWrapper<SyncDevice> {
 	* @return the type of this sync device
 	*/
 	@Override
-	public java.lang.String getType() {
+	public String getType() {
 		return _syncDevice.getType();
 	}
 
@@ -292,7 +292,7 @@ public class SyncDeviceWrapper implements SyncDevice, ModelWrapper<SyncDevice> {
 	* @return the user name of this sync device
 	*/
 	@Override
-	public java.lang.String getUserName() {
+	public String getUserName() {
 		return _syncDevice.getUserName();
 	}
 
@@ -302,7 +302,7 @@ public class SyncDeviceWrapper implements SyncDevice, ModelWrapper<SyncDevice> {
 	* @return the user uuid of this sync device
 	*/
 	@Override
-	public java.lang.String getUserUuid() {
+	public String getUserUuid() {
 		return _syncDevice.getUserUuid();
 	}
 
@@ -312,7 +312,7 @@ public class SyncDeviceWrapper implements SyncDevice, ModelWrapper<SyncDevice> {
 	* @return the uuid of this sync device
 	*/
 	@Override
-	public java.lang.String getUuid() {
+	public String getUuid() {
 		return _syncDevice.getUuid();
 	}
 
@@ -418,7 +418,7 @@ public class SyncDeviceWrapper implements SyncDevice, ModelWrapper<SyncDevice> {
 	* @param hostname the hostname of this sync device
 	*/
 	@Override
-	public void setHostname(java.lang.String hostname) {
+	public void setHostname(String hostname) {
 		_syncDevice.setHostname(hostname);
 	}
 
@@ -478,7 +478,7 @@ public class SyncDeviceWrapper implements SyncDevice, ModelWrapper<SyncDevice> {
 	* @param type the type of this sync device
 	*/
 	@Override
-	public void setType(java.lang.String type) {
+	public void setType(String type) {
 		_syncDevice.setType(type);
 	}
 
@@ -498,7 +498,7 @@ public class SyncDeviceWrapper implements SyncDevice, ModelWrapper<SyncDevice> {
 	* @param userName the user name of this sync device
 	*/
 	@Override
-	public void setUserName(java.lang.String userName) {
+	public void setUserName(String userName) {
 		_syncDevice.setUserName(userName);
 	}
 
@@ -508,7 +508,7 @@ public class SyncDeviceWrapper implements SyncDevice, ModelWrapper<SyncDevice> {
 	* @param userUuid the user uuid of this sync device
 	*/
 	@Override
-	public void setUserUuid(java.lang.String userUuid) {
+	public void setUserUuid(String userUuid) {
 		_syncDevice.setUserUuid(userUuid);
 	}
 
@@ -518,7 +518,7 @@ public class SyncDeviceWrapper implements SyncDevice, ModelWrapper<SyncDevice> {
 	* @param uuid the uuid of this sync device
 	*/
 	@Override
-	public void setUuid(java.lang.String uuid) {
+	public void setUuid(String uuid) {
 		_syncDevice.setUuid(uuid);
 	}
 
@@ -538,7 +538,7 @@ public class SyncDeviceWrapper implements SyncDevice, ModelWrapper<SyncDevice> {
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _syncDevice.toString();
 	}
 
@@ -548,7 +548,7 @@ public class SyncDeviceWrapper implements SyncDevice, ModelWrapper<SyncDevice> {
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _syncDevice.toXmlString();
 	}
 

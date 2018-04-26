@@ -152,7 +152,7 @@ public class SAPEntryWrapper implements SAPEntry, ModelWrapper<SAPEntry> {
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new SAPEntryWrapper((SAPEntry)_sapEntry.clone());
 	}
 
@@ -167,17 +167,17 @@ public class SAPEntryWrapper implements SAPEntry, ModelWrapper<SAPEntry> {
 	* @return the allowed service signatures of this sap entry
 	*/
 	@Override
-	public java.lang.String getAllowedServiceSignatures() {
+	public String getAllowedServiceSignatures() {
 		return _sapEntry.getAllowedServiceSignatures();
 	}
 
 	@Override
-	public java.util.List<java.lang.String> getAllowedServiceSignaturesList() {
+	public java.util.List<String> getAllowedServiceSignaturesList() {
 		return _sapEntry.getAllowedServiceSignaturesList();
 	}
 
 	@Override
-	public java.lang.String[] getAvailableLanguageIds() {
+	public String[] getAvailableLanguageIds() {
 		return _sapEntry.getAvailableLanguageIds();
 	}
 
@@ -202,7 +202,7 @@ public class SAPEntryWrapper implements SAPEntry, ModelWrapper<SAPEntry> {
 	}
 
 	@Override
-	public java.lang.String getDefaultLanguageId() {
+	public String getDefaultLanguageId() {
 		return _sapEntry.getDefaultLanguageId();
 	}
 
@@ -247,7 +247,7 @@ public class SAPEntryWrapper implements SAPEntry, ModelWrapper<SAPEntry> {
 	* @return the name of this sap entry
 	*/
 	@Override
-	public java.lang.String getName() {
+	public String getName() {
 		return _sapEntry.getName();
 	}
 
@@ -282,7 +282,7 @@ public class SAPEntryWrapper implements SAPEntry, ModelWrapper<SAPEntry> {
 	* @return the title of this sap entry
 	*/
 	@Override
-	public java.lang.String getTitle() {
+	public String getTitle() {
 		return _sapEntry.getTitle();
 	}
 
@@ -293,7 +293,7 @@ public class SAPEntryWrapper implements SAPEntry, ModelWrapper<SAPEntry> {
 	* @return the localized title of this sap entry
 	*/
 	@Override
-	public java.lang.String getTitle(java.util.Locale locale) {
+	public String getTitle(java.util.Locale locale) {
 		return _sapEntry.getTitle(locale);
 	}
 
@@ -305,7 +305,7 @@ public class SAPEntryWrapper implements SAPEntry, ModelWrapper<SAPEntry> {
 	* @return the localized title of this sap entry. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
 	*/
 	@Override
-	public java.lang.String getTitle(java.util.Locale locale, boolean useDefault) {
+	public String getTitle(java.util.Locale locale, boolean useDefault) {
 		return _sapEntry.getTitle(locale, useDefault);
 	}
 
@@ -316,7 +316,7 @@ public class SAPEntryWrapper implements SAPEntry, ModelWrapper<SAPEntry> {
 	* @return the localized title of this sap entry
 	*/
 	@Override
-	public java.lang.String getTitle(java.lang.String languageId) {
+	public String getTitle(String languageId) {
 		return _sapEntry.getTitle(languageId);
 	}
 
@@ -328,18 +328,17 @@ public class SAPEntryWrapper implements SAPEntry, ModelWrapper<SAPEntry> {
 	* @return the localized title of this sap entry
 	*/
 	@Override
-	public java.lang.String getTitle(java.lang.String languageId,
-		boolean useDefault) {
+	public String getTitle(String languageId, boolean useDefault) {
 		return _sapEntry.getTitle(languageId, useDefault);
 	}
 
 	@Override
-	public java.lang.String getTitleCurrentLanguageId() {
+	public String getTitleCurrentLanguageId() {
 		return _sapEntry.getTitleCurrentLanguageId();
 	}
 
 	@Override
-	public java.lang.String getTitleCurrentValue() {
+	public String getTitleCurrentValue() {
 		return _sapEntry.getTitleCurrentValue();
 	}
 
@@ -349,7 +348,7 @@ public class SAPEntryWrapper implements SAPEntry, ModelWrapper<SAPEntry> {
 	* @return the locales and localized titles of this sap entry
 	*/
 	@Override
-	public Map<java.util.Locale, java.lang.String> getTitleMap() {
+	public Map<java.util.Locale, String> getTitleMap() {
 		return _sapEntry.getTitleMap();
 	}
 
@@ -369,7 +368,7 @@ public class SAPEntryWrapper implements SAPEntry, ModelWrapper<SAPEntry> {
 	* @return the user name of this sap entry
 	*/
 	@Override
-	public java.lang.String getUserName() {
+	public String getUserName() {
 		return _sapEntry.getUserName();
 	}
 
@@ -379,7 +378,7 @@ public class SAPEntryWrapper implements SAPEntry, ModelWrapper<SAPEntry> {
 	* @return the user uuid of this sap entry
 	*/
 	@Override
-	public java.lang.String getUserUuid() {
+	public String getUserUuid() {
 		return _sapEntry.getUserUuid();
 	}
 
@@ -389,7 +388,7 @@ public class SAPEntryWrapper implements SAPEntry, ModelWrapper<SAPEntry> {
 	* @return the uuid of this sap entry
 	*/
 	@Override
-	public java.lang.String getUuid() {
+	public String getUuid() {
 		return _sapEntry.getUuid();
 	}
 
@@ -463,8 +462,7 @@ public class SAPEntryWrapper implements SAPEntry, ModelWrapper<SAPEntry> {
 	* @param allowedServiceSignatures the allowed service signatures of this sap entry
 	*/
 	@Override
-	public void setAllowedServiceSignatures(
-		java.lang.String allowedServiceSignatures) {
+	public void setAllowedServiceSignatures(String allowedServiceSignatures) {
 		_sapEntry.setAllowedServiceSignatures(allowedServiceSignatures);
 	}
 
@@ -545,7 +543,7 @@ public class SAPEntryWrapper implements SAPEntry, ModelWrapper<SAPEntry> {
 	* @param name the name of this sap entry
 	*/
 	@Override
-	public void setName(java.lang.String name) {
+	public void setName(String name) {
 		_sapEntry.setName(name);
 	}
 
@@ -585,7 +583,7 @@ public class SAPEntryWrapper implements SAPEntry, ModelWrapper<SAPEntry> {
 	* @param title the title of this sap entry
 	*/
 	@Override
-	public void setTitle(java.lang.String title) {
+	public void setTitle(String title) {
 		_sapEntry.setTitle(title);
 	}
 
@@ -596,7 +594,7 @@ public class SAPEntryWrapper implements SAPEntry, ModelWrapper<SAPEntry> {
 	* @param locale the locale of the language
 	*/
 	@Override
-	public void setTitle(java.lang.String title, java.util.Locale locale) {
+	public void setTitle(String title, java.util.Locale locale) {
 		_sapEntry.setTitle(title, locale);
 	}
 
@@ -608,13 +606,13 @@ public class SAPEntryWrapper implements SAPEntry, ModelWrapper<SAPEntry> {
 	* @param defaultLocale the default locale
 	*/
 	@Override
-	public void setTitle(java.lang.String title, java.util.Locale locale,
+	public void setTitle(String title, java.util.Locale locale,
 		java.util.Locale defaultLocale) {
 		_sapEntry.setTitle(title, locale, defaultLocale);
 	}
 
 	@Override
-	public void setTitleCurrentLanguageId(java.lang.String languageId) {
+	public void setTitleCurrentLanguageId(String languageId) {
 		_sapEntry.setTitleCurrentLanguageId(languageId);
 	}
 
@@ -624,7 +622,7 @@ public class SAPEntryWrapper implements SAPEntry, ModelWrapper<SAPEntry> {
 	* @param titleMap the locales and localized titles of this sap entry
 	*/
 	@Override
-	public void setTitleMap(Map<java.util.Locale, java.lang.String> titleMap) {
+	public void setTitleMap(Map<java.util.Locale, String> titleMap) {
 		_sapEntry.setTitleMap(titleMap);
 	}
 
@@ -635,7 +633,7 @@ public class SAPEntryWrapper implements SAPEntry, ModelWrapper<SAPEntry> {
 	* @param defaultLocale the default locale
 	*/
 	@Override
-	public void setTitleMap(Map<java.util.Locale, java.lang.String> titleMap,
+	public void setTitleMap(Map<java.util.Locale, String> titleMap,
 		java.util.Locale defaultLocale) {
 		_sapEntry.setTitleMap(titleMap, defaultLocale);
 	}
@@ -656,7 +654,7 @@ public class SAPEntryWrapper implements SAPEntry, ModelWrapper<SAPEntry> {
 	* @param userName the user name of this sap entry
 	*/
 	@Override
-	public void setUserName(java.lang.String userName) {
+	public void setUserName(String userName) {
 		_sapEntry.setUserName(userName);
 	}
 
@@ -666,7 +664,7 @@ public class SAPEntryWrapper implements SAPEntry, ModelWrapper<SAPEntry> {
 	* @param userUuid the user uuid of this sap entry
 	*/
 	@Override
-	public void setUserUuid(java.lang.String userUuid) {
+	public void setUserUuid(String userUuid) {
 		_sapEntry.setUserUuid(userUuid);
 	}
 
@@ -676,7 +674,7 @@ public class SAPEntryWrapper implements SAPEntry, ModelWrapper<SAPEntry> {
 	* @param uuid the uuid of this sap entry
 	*/
 	@Override
-	public void setUuid(java.lang.String uuid) {
+	public void setUuid(String uuid) {
 		_sapEntry.setUuid(uuid);
 	}
 
@@ -691,7 +689,7 @@ public class SAPEntryWrapper implements SAPEntry, ModelWrapper<SAPEntry> {
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _sapEntry.toString();
 	}
 
@@ -701,7 +699,7 @@ public class SAPEntryWrapper implements SAPEntry, ModelWrapper<SAPEntry> {
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _sapEntry.toXmlString();
 	}
 

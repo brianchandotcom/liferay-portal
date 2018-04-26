@@ -43,7 +43,7 @@ public class PollsChoiceLocalServiceUtil {
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.polls.service.impl.PollsChoiceLocalServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static com.liferay.polls.model.PollsChoice addChoice(long userId,
-		long questionId, java.lang.String name, java.lang.String description,
+		long questionId, String name, String description,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
@@ -197,7 +197,7 @@ public class PollsChoiceLocalServiceUtil {
 	* @return the matching polls choice, or <code>null</code> if a matching polls choice could not be found
 	*/
 	public static com.liferay.polls.model.PollsChoice fetchPollsChoiceByUuidAndGroupId(
-		java.lang.String uuid, long groupId) {
+		String uuid, long groupId) {
 		return getService().fetchPollsChoiceByUuidAndGroupId(uuid, groupId);
 	}
 
@@ -233,7 +233,7 @@ public class PollsChoiceLocalServiceUtil {
 	*
 	* @return the OSGi service identifier
 	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
+	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 
@@ -265,7 +265,7 @@ public class PollsChoiceLocalServiceUtil {
 	* @throws PortalException if a matching polls choice could not be found
 	*/
 	public static com.liferay.polls.model.PollsChoice getPollsChoiceByUuidAndGroupId(
-		java.lang.String uuid, long groupId)
+		String uuid, long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getPollsChoiceByUuidAndGroupId(uuid, groupId);
 	}
@@ -294,7 +294,7 @@ public class PollsChoiceLocalServiceUtil {
 	* @return the matching polls choices, or an empty list if no matches were found
 	*/
 	public static java.util.List<com.liferay.polls.model.PollsChoice> getPollsChoicesByUuidAndCompanyId(
-		java.lang.String uuid, long companyId) {
+		String uuid, long companyId) {
 		return getService().getPollsChoicesByUuidAndCompanyId(uuid, companyId);
 	}
 
@@ -309,7 +309,7 @@ public class PollsChoiceLocalServiceUtil {
 	* @return the range of matching polls choices, or an empty list if no matches were found
 	*/
 	public static java.util.List<com.liferay.polls.model.PollsChoice> getPollsChoicesByUuidAndCompanyId(
-		java.lang.String uuid, long companyId, int start, int end,
+		String uuid, long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.polls.model.PollsChoice> orderByComparator) {
 		return getService()
 				   .getPollsChoicesByUuidAndCompanyId(uuid, companyId, start,
@@ -326,8 +326,7 @@ public class PollsChoiceLocalServiceUtil {
 	}
 
 	public static com.liferay.polls.model.PollsChoice updateChoice(
-		long choiceId, long questionId, java.lang.String name,
-		java.lang.String description,
+		long choiceId, long questionId, String name, String description,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()

@@ -66,8 +66,7 @@ import java.rmi.RemoteException;
 @ProviderType
 public class KBTemplateServiceSoap {
 	public static com.liferay.knowledge.base.model.KBTemplateSoap addKBTemplate(
-		java.lang.String portletId, java.lang.String title,
-		java.lang.String content,
+		String portletId, String title, String content,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
@@ -156,9 +155,9 @@ public class KBTemplateServiceSoap {
 	}
 
 	public static com.liferay.knowledge.base.model.KBTemplateSearchDisplay getKBTemplateSearchDisplay(
-		long groupId, java.lang.String title, java.lang.String content,
-		java.util.Date startDate, java.util.Date endDate, boolean andOperator,
-		int[] curStartValues, int cur, int delta,
+		long groupId, String title, String content, java.util.Date startDate,
+		java.util.Date endDate, boolean andOperator, int[] curStartValues,
+		int cur, int delta,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.knowledge.base.model.KBTemplate> orderByComparator)
 		throws RemoteException {
 		try {
@@ -177,7 +176,7 @@ public class KBTemplateServiceSoap {
 	}
 
 	public static com.liferay.knowledge.base.model.KBTemplateSoap updateKBTemplate(
-		long kbTemplateId, java.lang.String title, java.lang.String content,
+		long kbTemplateId, String title, String content,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {

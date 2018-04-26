@@ -72,24 +72,22 @@ public interface FragmentEntryLocalService extends BaseLocalService,
 	public FragmentEntry addFragmentEntry(FragmentEntry fragmentEntry);
 
 	public FragmentEntry addFragmentEntry(long userId, long groupId,
-		long fragmentCollectionId, java.lang.String name, int status,
+		long fragmentCollectionId, String name, int status,
 		ServiceContext serviceContext) throws PortalException;
 
 	public FragmentEntry addFragmentEntry(long userId, long groupId,
-		long fragmentCollectionId, java.lang.String fragmentEntryKey,
-		java.lang.String name, int status, ServiceContext serviceContext)
+		long fragmentCollectionId, String fragmentEntryKey, String name,
+		int status, ServiceContext serviceContext) throws PortalException;
+
+	public FragmentEntry addFragmentEntry(long userId, long groupId,
+		long fragmentCollectionId, String name, String css, String html,
+		String js, int status, ServiceContext serviceContext)
 		throws PortalException;
 
 	public FragmentEntry addFragmentEntry(long userId, long groupId,
-		long fragmentCollectionId, java.lang.String name, java.lang.String css,
-		java.lang.String html, java.lang.String js, int status,
+		long fragmentCollectionId, String fragmentEntryKey, String name,
+		String css, String html, String js, int status,
 		ServiceContext serviceContext) throws PortalException;
-
-	public FragmentEntry addFragmentEntry(long userId, long groupId,
-		long fragmentCollectionId, java.lang.String fragmentEntryKey,
-		java.lang.String name, java.lang.String css, java.lang.String html,
-		java.lang.String js, int status, ServiceContext serviceContext)
-		throws PortalException;
 
 	/**
 	* Creates a new fragment entry with the primary key. Does not add the fragment entry to the database.
@@ -193,7 +191,7 @@ public interface FragmentEntryLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public FragmentEntry fetchFragmentEntry(long groupId,
-		java.lang.String fragmentEntryKey);
+		String fragmentEntryKey);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
@@ -230,7 +228,7 @@ public interface FragmentEntryLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<FragmentEntry> getFragmentEntries(long groupId,
-		long fragmentCollectionId, java.lang.String name, int start, int end,
+		long fragmentCollectionId, String name, int start, int end,
 		OrderByComparator<FragmentEntry> orderByComparator);
 
 	/**
@@ -263,7 +261,7 @@ public interface FragmentEntryLocalService extends BaseLocalService,
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -271,8 +269,8 @@ public interface FragmentEntryLocalService extends BaseLocalService,
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.lang.String[] getTempFileNames(long userId, long groupId,
-		java.lang.String folderName) throws PortalException;
+	public String[] getTempFileNames(long userId, long groupId,
+		String folderName) throws PortalException;
 
 	/**
 	* Updates the fragment entry in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
@@ -284,10 +282,9 @@ public interface FragmentEntryLocalService extends BaseLocalService,
 	public FragmentEntry updateFragmentEntry(FragmentEntry fragmentEntry);
 
 	public FragmentEntry updateFragmentEntry(long userId, long fragmentEntryId,
-		java.lang.String name, java.lang.String css, java.lang.String html,
-		java.lang.String js, int status, ServiceContext serviceContext)
-		throws PortalException;
+		String name, String css, String html, String js, int status,
+		ServiceContext serviceContext) throws PortalException;
 
-	public FragmentEntry updateFragmentEntry(long fragmentEntryId,
-		java.lang.String name) throws PortalException;
+	public FragmentEntry updateFragmentEntry(long fragmentEntryId, String name)
+		throws PortalException;
 }

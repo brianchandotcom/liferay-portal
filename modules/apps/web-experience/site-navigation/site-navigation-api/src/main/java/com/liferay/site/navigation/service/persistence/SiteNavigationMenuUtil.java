@@ -354,8 +354,7 @@ public class SiteNavigationMenuUtil {
 	* @param name the name
 	* @return the matching site navigation menus
 	*/
-	public static List<SiteNavigationMenu> findByG_N(long groupId,
-		java.lang.String name) {
+	public static List<SiteNavigationMenu> findByG_N(long groupId, String name) {
 		return getPersistence().findByG_N(groupId, name);
 	}
 
@@ -372,8 +371,8 @@ public class SiteNavigationMenuUtil {
 	* @param end the upper bound of the range of site navigation menus (not inclusive)
 	* @return the range of matching site navigation menus
 	*/
-	public static List<SiteNavigationMenu> findByG_N(long groupId,
-		java.lang.String name, int start, int end) {
+	public static List<SiteNavigationMenu> findByG_N(long groupId, String name,
+		int start, int end) {
 		return getPersistence().findByG_N(groupId, name, start, end);
 	}
 
@@ -391,8 +390,8 @@ public class SiteNavigationMenuUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching site navigation menus
 	*/
-	public static List<SiteNavigationMenu> findByG_N(long groupId,
-		java.lang.String name, int start, int end,
+	public static List<SiteNavigationMenu> findByG_N(long groupId, String name,
+		int start, int end,
 		OrderByComparator<SiteNavigationMenu> orderByComparator) {
 		return getPersistence()
 				   .findByG_N(groupId, name, start, end, orderByComparator);
@@ -413,8 +412,8 @@ public class SiteNavigationMenuUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching site navigation menus
 	*/
-	public static List<SiteNavigationMenu> findByG_N(long groupId,
-		java.lang.String name, int start, int end,
+	public static List<SiteNavigationMenu> findByG_N(long groupId, String name,
+		int start, int end,
 		OrderByComparator<SiteNavigationMenu> orderByComparator,
 		boolean retrieveFromCache) {
 		return getPersistence()
@@ -431,8 +430,7 @@ public class SiteNavigationMenuUtil {
 	* @return the first matching site navigation menu
 	* @throws NoSuchMenuException if a matching site navigation menu could not be found
 	*/
-	public static SiteNavigationMenu findByG_N_First(long groupId,
-		java.lang.String name,
+	public static SiteNavigationMenu findByG_N_First(long groupId, String name,
 		OrderByComparator<SiteNavigationMenu> orderByComparator)
 		throws com.liferay.site.navigation.exception.NoSuchMenuException {
 		return getPersistence().findByG_N_First(groupId, name, orderByComparator);
@@ -447,8 +445,7 @@ public class SiteNavigationMenuUtil {
 	* @return the first matching site navigation menu, or <code>null</code> if a matching site navigation menu could not be found
 	*/
 	public static SiteNavigationMenu fetchByG_N_First(long groupId,
-		java.lang.String name,
-		OrderByComparator<SiteNavigationMenu> orderByComparator) {
+		String name, OrderByComparator<SiteNavigationMenu> orderByComparator) {
 		return getPersistence()
 				   .fetchByG_N_First(groupId, name, orderByComparator);
 	}
@@ -462,8 +459,7 @@ public class SiteNavigationMenuUtil {
 	* @return the last matching site navigation menu
 	* @throws NoSuchMenuException if a matching site navigation menu could not be found
 	*/
-	public static SiteNavigationMenu findByG_N_Last(long groupId,
-		java.lang.String name,
+	public static SiteNavigationMenu findByG_N_Last(long groupId, String name,
 		OrderByComparator<SiteNavigationMenu> orderByComparator)
 		throws com.liferay.site.navigation.exception.NoSuchMenuException {
 		return getPersistence().findByG_N_Last(groupId, name, orderByComparator);
@@ -477,8 +473,7 @@ public class SiteNavigationMenuUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching site navigation menu, or <code>null</code> if a matching site navigation menu could not be found
 	*/
-	public static SiteNavigationMenu fetchByG_N_Last(long groupId,
-		java.lang.String name,
+	public static SiteNavigationMenu fetchByG_N_Last(long groupId, String name,
 		OrderByComparator<SiteNavigationMenu> orderByComparator) {
 		return getPersistence().fetchByG_N_Last(groupId, name, orderByComparator);
 	}
@@ -494,7 +489,7 @@ public class SiteNavigationMenuUtil {
 	* @throws NoSuchMenuException if a site navigation menu with the primary key could not be found
 	*/
 	public static SiteNavigationMenu[] findByG_N_PrevAndNext(
-		long siteNavigationMenuId, long groupId, java.lang.String name,
+		long siteNavigationMenuId, long groupId, String name,
 		OrderByComparator<SiteNavigationMenu> orderByComparator)
 		throws com.liferay.site.navigation.exception.NoSuchMenuException {
 		return getPersistence()
@@ -510,7 +505,7 @@ public class SiteNavigationMenuUtil {
 	* @return the matching site navigation menus that the user has permission to view
 	*/
 	public static List<SiteNavigationMenu> filterFindByG_N(long groupId,
-		java.lang.String name) {
+		String name) {
 		return getPersistence().filterFindByG_N(groupId, name);
 	}
 
@@ -528,7 +523,7 @@ public class SiteNavigationMenuUtil {
 	* @return the range of matching site navigation menus that the user has permission to view
 	*/
 	public static List<SiteNavigationMenu> filterFindByG_N(long groupId,
-		java.lang.String name, int start, int end) {
+		String name, int start, int end) {
 		return getPersistence().filterFindByG_N(groupId, name, start, end);
 	}
 
@@ -547,7 +542,7 @@ public class SiteNavigationMenuUtil {
 	* @return the ordered range of matching site navigation menus that the user has permission to view
 	*/
 	public static List<SiteNavigationMenu> filterFindByG_N(long groupId,
-		java.lang.String name, int start, int end,
+		String name, int start, int end,
 		OrderByComparator<SiteNavigationMenu> orderByComparator) {
 		return getPersistence()
 				   .filterFindByG_N(groupId, name, start, end, orderByComparator);
@@ -564,7 +559,7 @@ public class SiteNavigationMenuUtil {
 	* @throws NoSuchMenuException if a site navigation menu with the primary key could not be found
 	*/
 	public static SiteNavigationMenu[] filterFindByG_N_PrevAndNext(
-		long siteNavigationMenuId, long groupId, java.lang.String name,
+		long siteNavigationMenuId, long groupId, String name,
 		OrderByComparator<SiteNavigationMenu> orderByComparator)
 		throws com.liferay.site.navigation.exception.NoSuchMenuException {
 		return getPersistence()
@@ -578,7 +573,7 @@ public class SiteNavigationMenuUtil {
 	* @param groupId the group ID
 	* @param name the name
 	*/
-	public static void removeByG_N(long groupId, java.lang.String name) {
+	public static void removeByG_N(long groupId, String name) {
 		getPersistence().removeByG_N(groupId, name);
 	}
 
@@ -589,7 +584,7 @@ public class SiteNavigationMenuUtil {
 	* @param name the name
 	* @return the number of matching site navigation menus
 	*/
-	public static int countByG_N(long groupId, java.lang.String name) {
+	public static int countByG_N(long groupId, String name) {
 		return getPersistence().countByG_N(groupId, name);
 	}
 
@@ -600,7 +595,7 @@ public class SiteNavigationMenuUtil {
 	* @param name the name
 	* @return the number of matching site navigation menus that the user has permission to view
 	*/
-	public static int filterCountByG_N(long groupId, java.lang.String name) {
+	public static int filterCountByG_N(long groupId, String name) {
 		return getPersistence().filterCountByG_N(groupId, name);
 	}
 
@@ -1258,7 +1253,7 @@ public class SiteNavigationMenuUtil {
 		return getPersistence().countAll();
 	}
 
-	public static java.util.Set<java.lang.String> getBadColumnNames() {
+	public static java.util.Set<String> getBadColumnNames() {
 		return getPersistence().getBadColumnNames();
 	}
 

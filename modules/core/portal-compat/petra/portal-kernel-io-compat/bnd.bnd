@@ -1,0 +1,4 @@
+Bundle-Name: Liferay Portal Kernel IO Compat
+Bundle-SymbolicName: com.liferay.portal.kernel.io.compat
+Bundle-Version: 1.0.0
+Export-Package: com.liferay.portal.kernel.io

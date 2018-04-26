@@ -656,6 +656,4 @@ public class ToolsUtil {
 		Files.write(path, s.getBytes(StandardCharsets.UTF_8));
 	}
 
-	private static final String _TMP_DIR = System.getProperty("java.io.tmpdir");
-
 }

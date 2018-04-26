@@ -72,6 +72,10 @@ public class LayoutSetStagingHandler
 
 			String methodName = method.getName();
 
+			if (methodName.equals("getWrappedModel")) {
+				return _layoutSet;
+			}
+
 			if (methodName.equals("toEscapedModel")) {
 				if (_layoutSet.isEscapedModel()) {
 					return this;
@@ -114,7 +118,7 @@ public class LayoutSetStagingHandler
 	private Object _clone() {
 		return ProxyUtil.newProxyInstance(
 			PortalClassLoaderUtil.getClassLoader(),
-			new Class<?>[] {LayoutSet.class},
+			new Class<?>[] {LayoutSet.class, ModelWrapper.class},
 			new LayoutSetStagingHandler(_layoutSet));
 	}
 
@@ -150,7 +154,7 @@ public class LayoutSetStagingHandler
 	private Object _toEscapedModel() {
 		return ProxyUtil.newProxyInstance(
 			PortalClassLoaderUtil.getClassLoader(),
-			new Class<?>[] {Layout.class},
+			new Class<?>[] {Layout.class, ModelWrapper.class},
 			new LayoutSetStagingHandler(_layoutSet.toEscapedModel()));
 	}
 

@@ -185,7 +185,10 @@ Locale displayLocale = LocaleUtil.fromLanguageId(languageId);
 							}
 
 							function <portlet:namespace />fireFormView() {
-								Liferay.fire('ddmFormView', {formId: <%= formInstanceId %>});
+								Liferay.fire('ddmFormView', {
+									formId: <%= formInstanceId %>,
+									title: '<%= HtmlUtil.escape(formInstance.getName(displayLocale)) %>'
+								});
 
 								Liferay.fire("ddmFormPageShow", {
 									formId: <%= formInstanceId %>,

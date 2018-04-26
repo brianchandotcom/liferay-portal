@@ -14,8 +14,11 @@
 
 package com.liferay.commerce.price;
 
+import aQute.bnd.annotation.ProviderType;
+
 /**
  * @author Marco Leo
  */
+@ProviderType
 public interface CommerceDiscountCalculation {
 }

@@ -14,6 +14,7 @@
 
 package com.liferay.commerce.price;
 
+import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -23,5 +24,6 @@ import java.math.BigDecimal;
 /**
  * @author Marco Leo
  */
+@ProviderType
 public interface CommercePriceCalculation {
 }

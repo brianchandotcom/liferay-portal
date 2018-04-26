@@ -18,8 +18,11 @@ import com.liferay.portal.configuration.persistence.listener.ConfigurationModelL
 import com.liferay.portal.configuration.persistence.listener.ConfigurationModelListenerException;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.util.LocaleThreadLocal;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
 import java.util.Dictionary;
+import java.util.ResourceBundle;
 
 import org.osgi.service.cm.Configuration;
 import org.osgi.service.cm.ConfigurationAdmin;
@@ -78,9 +81,16 @@ public class AnonymousUserConfigurationModelListener
 				configuration.getProperties();
 
 			if (companyId == (long)properties.get("companyId")) {
-				throw new Exception(
-					"An anonymous user is already defined for the company: " +
-						companyId);
+				ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+					"content.Language",
+					LocaleThreadLocal.getThemeDisplayLocale(), getClass());
+
+				String message = ResourceBundleUtil.getString(
+					resourceBundle,
+					"an-anonymous-user-is-already-defined-for-the-company-x",
+					String.valueOf(companyId));
+
+				throw new Exception(message);
 			}
 		}
 	}

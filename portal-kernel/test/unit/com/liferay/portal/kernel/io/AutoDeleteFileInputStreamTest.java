@@ -142,6 +142,26 @@ public class AutoDeleteFileInputStreamTest {
 		Assert.assertTrue(tempFile.delete());
 		Assert.assertEquals(1, checkDeleteCount.get());
 		Assert.assertTrue(files.toString(), files.contains(tempFile.getPath()));
+
+		// Close with FileChannel
+
+		Assert.assertTrue(tempFile.createNewFile());
+
+		autoRemoveFileInputStream = new AutoDeleteFileInputStream(tempFile);
+
+		Assert.assertNotNull(autoRemoveFileInputStream.getChannel());
+
+		try (SwappableSecurityManager autoCloseSwappableSecurityManager =
+				swappableSecurityManager) {
+
+			autoCloseSwappableSecurityManager.install();
+
+			autoRemoveFileInputStream.close();
+		}
+
+		Assert.assertFalse(tempFile.exists());
+		Assert.assertEquals(2, checkDeleteCount.get());
+		Assert.assertFalse(files.toString(), files.contains(tempFile));
 	}
 
 }

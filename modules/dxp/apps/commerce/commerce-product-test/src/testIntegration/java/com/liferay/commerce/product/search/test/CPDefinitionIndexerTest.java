@@ -21,13 +21,13 @@ import com.liferay.commerce.product.test.util.CPTestUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistry;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
-import com.liferay.portal.search.test.util.HitsAssert;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
@@ -68,25 +68,41 @@ public class CPDefinitionIndexerTest {
 
 		CPDefinition cpDefinition = cpInstance.getCPDefinition();
 
-		Document document = _assertSearchOneCPDefinition(
-			cpDefinition.getCompanyId(), groupId, cpDefinition.getTitle());
+		Class<?> cpDefinitionClass = cpDefinition.getModelClass();
 
-		String title = document.get(Field.TITLE);
+		String cpDefinitionClassName = cpDefinitionClass.getName();
 
-		Assert.assertEquals(cpDefinition.getTitle(), title);
+		Hits hits = _searchCPDefinitions(
+			cpDefinition.getCompanyId(), groupId, cpDefinitionClassName);
+
+		int check = 0;
+
+		for (Document document : hits.getDocs()) {
+			if (cpDefinitionClassName.equals(
+					document.getField(Field.ENTRY_CLASS_NAME).getValue())) {
+
+				if (cpDefinition.getTitle().equals(
+						document.getField(Field.TITLE).getValue())) {
+
+					check++;
+				}
+			}
+		}
+
+		Assert.assertEquals(1, check);
 	}
 
-	private Document _assertSearchOneCPDefinition(
-			long companyId, long groupId, String title)
+	private Hits _searchCPDefinitions(
+			long companyId, long groupId, String className)
 		throws Exception {
 
 		SearchContext searchContext = new SearchContext();
 
-		searchContext.setAttribute(Field.TITLE, title);
 		searchContext.setCompanyId(companyId);
+		searchContext.setEntryClassNames(new String[] {className});
 		searchContext.setGroupIds(new long[] {groupId});
 
-		return HitsAssert.assertOnlyOne(_indexer.search(searchContext));
+		return _indexer.search(searchContext);
 	}
 
 	private static Indexer<CPDefinition> _indexer;

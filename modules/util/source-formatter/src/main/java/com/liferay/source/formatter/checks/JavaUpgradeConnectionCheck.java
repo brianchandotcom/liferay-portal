@@ -75,15 +75,11 @@ public class JavaUpgradeConnectionCheck extends BaseJavaTermCheck {
 
 		String className = javaClass.getName();
 
-		if (!className.contains("Upgrade") && !className.contains("Verify")) {
-			return javaTerm.getContent();
-		}
+		if ((className.contains("Upgrade") || className.contains("Verify")) &&
+			_extendsPortalKernelUpgradeProcess(absolutePath, fileContent)) {
 
-		if (!_extendsPortalKernelUpgradeProcess(absolutePath, fileContent)) {
-			return javaTerm.getContent();
+			_checkDataAccessGetConnection(fileName, fileContent, javaClass);
 		}
-
-		_checkDataAccessGetConnection(fileName, fileContent, javaClass);
 
 		return javaTerm.getContent();
 	}
@@ -105,8 +101,8 @@ public class JavaUpgradeConnectionCheck extends BaseJavaTermCheck {
 
 			String methodName = javaMethod.getName();
 
-			if (javaMethod.hasAnnotation("Override") &&
-				methodName.equals("upgrade")) {
+			if (methodName.equals("upgrade") &&
+				javaMethod.hasAnnotation("Override")) {
 
 				continue;
 			}

@@ -24,61 +24,15 @@ String mvcRenderCommandName = ParamUtil.getString(request, "mvcRenderCommandName
 String navigation = ParamUtil.getString(request, "navigation");
 String browseBy = ParamUtil.getString(request, "browseBy");
 
-Folder folder = (com.liferay.portal.kernel.repository.model.Folder)request.getAttribute(WebKeys.DOCUMENT_LIBRARY_FOLDER);
+boolean defaultFolderView = dlAdminDisplayContext.isDefaultFolderView();
 
-long folderId = BeanPropertiesUtil.getLong(folder, "folderId", rootFolderId);
+String displayStyle = dlAdminDisplayContext.getDisplayStyle();
 
-boolean defaultFolderView = false;
+Folder folder = dlAdminDisplayContext.getFolder();
 
-if ((folder == null) && (folderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID)) {
-	defaultFolderView = true;
-}
+long folderId = dlAdminDisplayContext.getFolderId();
 
-if (defaultFolderView) {
-	try {
-		folder = DLAppLocalServiceUtil.getFolder(folderId);
-	}
-	catch (NoSuchFolderException nsfe) {
-		folderId = DLFolderConstants.DEFAULT_PARENT_FOLDER_ID;
-	}
-}
-
-long repositoryId = scopeGroupId;
-
-if (folder != null) {
-	repositoryId = folder.getRepositoryId();
-}
-
-String displayStyle = ParamUtil.getString(request, "displayStyle");
-
-String[] displayViews = dlPortletInstanceSettings.getDisplayViews();
-
-if (Validator.isNull(displayStyle)) {
-	displayStyle = portalPreferences.getValue(DLPortletKeys.DOCUMENT_LIBRARY, "display-style", PropsValues.DL_DEFAULT_DISPLAY_VIEW);
-}
-else {
-	if (ArrayUtil.contains(displayViews, displayStyle)) {
-		portalPreferences.setValue(DLPortletKeys.DOCUMENT_LIBRARY, "display-style", displayStyle);
-
-		request.setAttribute(WebKeys.SINGLE_PAGE_APPLICATION_CLEAR_CACHE, Boolean.TRUE);
-	}
-}
-
-if (!ArrayUtil.contains(displayViews, displayStyle)) {
-	displayStyle = displayViews[0];
-}
-
-String orderByCol = ParamUtil.getString(request, "orderByCol");
-String orderByType = ParamUtil.getString(request, "orderByType");
-
-if (Validator.isNotNull(orderByCol) && Validator.isNotNull(orderByType)) {
-	portalPreferences.setValue(DLPortletKeys.DOCUMENT_LIBRARY, "order-by-col", orderByCol);
-	portalPreferences.setValue(DLPortletKeys.DOCUMENT_LIBRARY, "order-by-type", orderByType);
-}
-else {
-	orderByCol = portalPreferences.getValue(DLPortletKeys.DOCUMENT_LIBRARY, "order-by-col", "modifiedDate");
-	orderByType = portalPreferences.getValue(DLPortletKeys.DOCUMENT_LIBRARY, "order-by-type", "asc");
-}
+long repositoryId = dlAdminDisplayContext.getRepositoryId();
 
 request.setAttribute("view.jsp-folder", folder);
 
@@ -87,8 +41,6 @@ request.setAttribute("view.jsp-folderId", String.valueOf(folderId));
 request.setAttribute("view.jsp-repositoryId", String.valueOf(repositoryId));
 
 request.setAttribute("view.jsp-displayStyle", displayStyle);
-request.setAttribute("view.jsp-orderByCol", orderByCol);
-request.setAttribute("view.jsp-orderByType", orderByType);
 %>
 
 <liferay-util:buffer var="uploadURL"><liferay-portlet:actionURL name="/document_library/edit_file_entry"><portlet:param name="<%= Constants.CMD %>" value="<%= Constants.ADD_DYNAMIC %>" /><portlet:param name="folderId" value="{folderId}" /><portlet:param name="repositoryId" value="<%= String.valueOf(repositoryId) %>" /></liferay-portlet:actionURL></liferay-util:buffer>
@@ -217,12 +169,6 @@ else {
 
 	for (int i = 0; i < entryColumns.length; i++) {
 		escapedEntryColumns[i] = HtmlUtil.escapeJS(entryColumns[i]);
-	}
-
-	String[] escapedDisplayViews = new String[displayViews.length];
-
-	for (int i = 0; i < displayViews.length; i++) {
-		escapedDisplayViews[i] = HtmlUtil.escapeJS(displayViews[i]);
 	}
 	%>
 

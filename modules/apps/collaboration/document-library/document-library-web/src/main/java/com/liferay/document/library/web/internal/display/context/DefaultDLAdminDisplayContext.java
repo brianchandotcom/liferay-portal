@@ -48,6 +48,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItemList;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -115,9 +116,11 @@ import javax.servlet.http.HttpServletRequest;
 public class DefaultDLAdminDisplayContext implements DLAdminDisplayContext {
 
 	public DefaultDLAdminDisplayContext(
-		LiferayPortletRequest liferayPortletRequest,
-		LiferayPortletResponse liferayPortletResponse, PortletURL currentURLObj,
-		HttpServletRequest request, PermissionChecker permissionChecker) {
+			LiferayPortletRequest liferayPortletRequest,
+			LiferayPortletResponse liferayPortletResponse,
+			PortletURL currentURLObj, HttpServletRequest request,
+			PermissionChecker permissionChecker)
+		throws PortalException {
 
 		_liferayPortletRequest = liferayPortletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
@@ -141,6 +144,8 @@ public class DefaultDLAdminDisplayContext implements DLAdminDisplayContext {
 
 		_dlTrashUtil = (DLTrashUtil)_request.getAttribute(
 			DLWebKeys.DOCUMENT_LIBRARY_TRASH_UTIL);
+
+		_computeFolder();
 	}
 
 	@Override
@@ -238,7 +243,7 @@ public class DefaultDLAdminDisplayContext implements DLAdminDisplayContext {
 
 								if (_dlTrashUtil.isTrashEnabled(
 										scopeGroup.getGroupId(),
-										_getRepositoryId())) {
+										getRepositoryId())) {
 
 									dropdownItem.setIcon("trash");
 									dropdownItem.setLabel(
@@ -259,7 +264,7 @@ public class DefaultDLAdminDisplayContext implements DLAdminDisplayContext {
 	}
 
 	@Override
-	public String getClearResultsURL() throws Exception {
+	public String getClearResultsURL() throws PortalException {
 		PortletURL clearResultsURL = _liferayPortletResponse.createRenderURL();
 
 		clearResultsURL.setParameter(
@@ -301,6 +306,7 @@ public class DefaultDLAdminDisplayContext implements DLAdminDisplayContext {
 		return creationMenu;
 	}
 
+	@Override
 	public String getDisplayStyle() {
 		String displayStyle = ParamUtil.getString(_request, "displayStyle");
 
@@ -361,6 +367,16 @@ public class DefaultDLAdminDisplayContext implements DLAdminDisplayContext {
 				}
 			}
 		};
+	}
+
+	@Override
+	public Folder getFolder() throws PortalException {
+		return _folder;
+	}
+
+	@Override
+	public long getFolderId() {
+		return _folderId;
 	}
 
 	public String getNavigation() {
@@ -431,7 +447,7 @@ public class DefaultDLAdminDisplayContext implements DLAdminDisplayContext {
 	}
 
 	@Override
-	public PortletURL getPortletURL() throws Exception {
+	public PortletURL getPortletURL() throws PortalException {
 		PortletURL portletURL = _liferayPortletResponse.createRenderURL();
 
 		portletURL.setParameter(
@@ -454,7 +470,18 @@ public class DefaultDLAdminDisplayContext implements DLAdminDisplayContext {
 	}
 
 	@Override
-	public SearchContainer getSearchContainer() throws Exception {
+	public long getRepositoryId() throws PortalException {
+		Folder folder = getFolder();
+
+		if (folder != null) {
+			return folder.getRepositoryId();
+		}
+
+		return _themeDisplay.getScopeGroupId();
+	}
+
+	@Override
+	public SearchContainer getSearchContainer() throws PortalException {
 		if (_isSearch()) {
 			SearchContainer searchContainer = new SearchContainer(
 				_liferayPortletRequest, getPortletURL(), null, null);
@@ -497,7 +524,7 @@ public class DefaultDLAdminDisplayContext implements DLAdminDisplayContext {
 
 			PortletURL portletURL = _liferayPortletResponse.createRenderURL();
 
-			long folderId = _getFolderId();
+			long folderId = getFolderId();
 
 			if (folderId == DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 				portletURL.setParameter(
@@ -640,7 +667,7 @@ public class DefaultDLAdminDisplayContext implements DLAdminDisplayContext {
 							assetEntryQuery);
 					}
 					else {
-						long repositoryId = _getRepositoryId();
+						long repositoryId = getRepositoryId();
 
 						total =
 							DLAppServiceUtil.
@@ -671,7 +698,7 @@ public class DefaultDLAdminDisplayContext implements DLAdminDisplayContext {
 						status = WorkflowConstants.STATUS_ANY;
 					}
 
-					long repositoryId = _getRepositoryId();
+					long repositoryId = getRepositoryId();
 
 					total = DLAppServiceUtil.getGroupFileEntriesCount(
 						repositoryId, groupFileEntriesUserId, folderId, null,
@@ -706,19 +733,19 @@ public class DefaultDLAdminDisplayContext implements DLAdminDisplayContext {
 	}
 
 	@Override
-	public PortletURL getSearchURL() throws Exception {
+	public PortletURL getSearchURL() throws PortalException {
 		PortletURL searchURL = _liferayPortletResponse.createRenderURL();
 
 		searchURL.setParameter(
 			"mvcRenderCommandName", "/document_library/search");
 
-		long repositoryId = _getRepositoryId();
+		long repositoryId = getRepositoryId();
 
 		searchURL.setParameter("repositoryId", String.valueOf(repositoryId));
 		searchURL.setParameter(
 			"searchRepositoryId", String.valueOf(repositoryId));
 
-		long folderId = _getFolderId();
+		long folderId = getFolderId();
 
 		searchURL.setParameter("folderId", String.valueOf(folderId));
 		searchURL.setParameter("searchFolderId", String.valueOf(folderId));
@@ -731,12 +758,12 @@ public class DefaultDLAdminDisplayContext implements DLAdminDisplayContext {
 	}
 
 	@Override
-	public PortletURL getSortingURL() throws Exception {
+	public PortletURL getSortingURL() throws PortalException {
 		int deltaEntry = ParamUtil.getInteger(_request, "deltaEntry");
 
 		PortletURL sortingURL = _liferayPortletResponse.createRenderURL();
 
-		long folderId = _getFolderId();
+		long folderId = getFolderId();
 
 		if (folderId == DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 			sortingURL.setParameter(
@@ -769,14 +796,14 @@ public class DefaultDLAdminDisplayContext implements DLAdminDisplayContext {
 	}
 
 	@Override
-	public int getTotalItems() throws Exception {
+	public int getTotalItems() throws PortalException {
 		SearchContainer searchContainer = getSearchContainer();
 
 		return searchContainer.getTotal();
 	}
 
 	@Override
-	public ViewTypeItemList getViewTypes() throws Exception {
+	public ViewTypeItemList getViewTypes() throws PortalException {
 		if (_isSearch()) {
 			return null;
 		}
@@ -786,7 +813,7 @@ public class DefaultDLAdminDisplayContext implements DLAdminDisplayContext {
 		int curEntry = ParamUtil.getInteger(_request, "curEntry");
 		int deltaEntry = ParamUtil.getInteger(_request, "deltaEntry");
 
-		long folderId = _getFolderId();
+		long folderId = getFolderId();
 
 		long fileEntryTypeId = ParamUtil.getLong(
 			_request, "fileEntryTypeId", -1);
@@ -846,6 +873,11 @@ public class DefaultDLAdminDisplayContext implements DLAdminDisplayContext {
 		};
 	}
 
+	@Override
+	public boolean isDefaultFolderView() {
+		return _defaultFolderView;
+	}
+
 	private PortletURL _clonePortletURL() {
 		try {
 			return PortletURLUtil.clone(
@@ -856,12 +888,37 @@ public class DefaultDLAdminDisplayContext implements DLAdminDisplayContext {
 		}
 	}
 
+	private void _computeFolder() throws PortalException {
+		_folder = (Folder)_request.getAttribute(
+			WebKeys.DOCUMENT_LIBRARY_FOLDER);
+
+		_folderId = BeanPropertiesUtil.getLong(
+			_folder, "folderId", _getRootFolderId());
+
+		_defaultFolderView = false;
+
+		if ((_folder == null) &&
+			(_folderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID)) {
+
+			_defaultFolderView = true;
+		}
+
+		if (_defaultFolderView) {
+			try {
+				_folder = DLAppLocalServiceUtil.getFolder(_folderId);
+			}
+			catch (NoSuchFolderException nsfe) {
+				_folderId = DLFolderConstants.DEFAULT_PARENT_FOLDER_ID;
+			}
+		}
+	}
+
 	private List<DropdownItem> _getFilterNavigationDropdownItems()
-		throws Exception {
+		throws PortalException {
 
 		long fileEntryTypeId = ParamUtil.getLong(
 			_request, "fileEntryTypeId", -1);
-		long folderId = _getFolderId();
+		long folderId = getFolderId();
 		final String navigation = ParamUtil.getString(
 			_request, "navigation", "home");
 		final long rootFolderId = _getRootFolderId();
@@ -963,59 +1020,6 @@ public class DefaultDLAdminDisplayContext implements DLAdminDisplayContext {
 		};
 	}
 
-	private Folder _getFolder() throws Exception {
-		Folder folder = (Folder)_request.getAttribute(
-			WebKeys.DOCUMENT_LIBRARY_FOLDER);
-
-		long folderId = BeanPropertiesUtil.getLong(
-			folder, "folderId", _getRootFolderId());
-
-		boolean defaultFolderView = false;
-
-		if ((folder == null) &&
-			(folderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID)) {
-
-			defaultFolderView = true;
-		}
-
-		if (defaultFolderView) {
-			try {
-				folder = DLAppLocalServiceUtil.getFolder(folderId);
-			}
-			catch (NoSuchFolderException nsfe) {
-			}
-		}
-
-		return folder;
-	}
-
-	private long _getFolderId() throws Exception {
-		Folder folder = (Folder)_request.getAttribute(
-			WebKeys.DOCUMENT_LIBRARY_FOLDER);
-
-		long folderId = BeanPropertiesUtil.getLong(
-			folder, "folderId", _getRootFolderId());
-
-		boolean defaultFolderView = false;
-
-		if ((folder == null) &&
-			(folderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID)) {
-
-			defaultFolderView = true;
-		}
-
-		if (defaultFolderView) {
-			try {
-				DLAppLocalServiceUtil.getFolder(folderId);
-			}
-			catch (NoSuchFolderException nsfe) {
-				folderId = DLFolderConstants.DEFAULT_PARENT_FOLDER_ID;
-			}
-		}
-
-		return folderId;
-	}
-
 	private List<DropdownItem> _getOrderByDropdownItems() {
 		final Map<String, String> orderColumns = new HashMap<>();
 
@@ -1054,17 +1058,7 @@ public class DefaultDLAdminDisplayContext implements DLAdminDisplayContext {
 		return PortletLocalServiceUtil.getPortletById(portletDisplay.getId());
 	}
 
-	private long _getRepositoryId() throws Exception {
-		Folder folder = _getFolder();
-
-		if (folder != null) {
-			return folder.getRepositoryId();
-		}
-
-		return _themeDisplay.getScopeGroupId();
-	}
-
-	private long _getRootFolderId() throws Exception {
+	private long _getRootFolderId() throws PortalException {
 		long rootFolderId = _dlPortletInstanceSettings.getRootFolderId();
 
 		if (rootFolderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
@@ -1087,7 +1081,7 @@ public class DefaultDLAdminDisplayContext implements DLAdminDisplayContext {
 	}
 
 	private List _getSearchResults(SearchContainer searchContainer)
-		throws Exception {
+		throws PortalException {
 
 		SearchContext searchContext = SearchContextFactory.getInstance(
 			_request);
@@ -1133,19 +1127,25 @@ public class DefaultDLAdminDisplayContext implements DLAdminDisplayContext {
 
 			String className = searchResult.getClassName();
 
-			if (className.equals(DLFileEntry.class.getName()) ||
-				FileEntry.class.isAssignableFrom(Class.forName(className))) {
+			try {
+				if (className.equals(DLFileEntry.class.getName()) ||
+					FileEntry.class.isAssignableFrom(
+						Class.forName(className))) {
 
-				fileEntry = DLAppLocalServiceUtil.getFileEntry(
-					searchResult.getClassPK());
+					fileEntry = DLAppLocalServiceUtil.getFileEntry(
+						searchResult.getClassPK());
 
-				dlSearchResults.add(fileEntry);
+					dlSearchResults.add(fileEntry);
+				}
+				else if (className.equals(DLFolder.class.getName())) {
+					curFolder = DLAppLocalServiceUtil.getFolder(
+						searchResult.getClassPK());
+
+					dlSearchResults.add(curFolder);
+				}
 			}
-			else if (className.equals(DLFolder.class.getName())) {
-				curFolder = DLAppLocalServiceUtil.getFolder(
-					searchResult.getClassPK());
-
-				dlSearchResults.add(curFolder);
+			catch (ClassNotFoundException cnfe) {
+				throw new PortalException(cnfe);
 			}
 		}
 
@@ -1250,11 +1250,14 @@ public class DefaultDLAdminDisplayContext implements DLAdminDisplayContext {
 		DefaultDLAdminDisplayContext.class);
 
 	private final PortletURL _currentURLObj;
+	private boolean _defaultFolderView;
 	private final DLPortletInstanceSettings _dlPortletInstanceSettings;
 	private final DLPortletInstanceSettingsHelper
 		_dlPortletInstanceSettingsHelper;
 	private final DLRequestHelper _dlRequestHelper;
 	private final DLTrashUtil _dlTrashUtil;
+	private Folder _folder;
+	private long _folderId;
 	private final LiferayPortletRequest _liferayPortletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;
 	private final PermissionChecker _permissionChecker;

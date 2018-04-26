@@ -52,12 +52,27 @@
 </tr>
 <tr>
 	<td>PAGE_TEMPLATE_FRAGMENT_HEADER</td>
-	<td>//div[@class='container'][normalize-space()='${key_fragmentName}']</td>
+	<td>//div[contains(@class,'fragment-entry-links')]/div[contains(.,'${key_fragmentName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PAGE_TEMPLATE_FRAGMENT_HEADER_POSITION</td>
+	<td>xpath=(//div[contains(@class,'fragment-entry-links')])/div[${key_position}]//*[contains(.,'${key_fragmentName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PAGE_TEMPLATE_FRAGMENT_UP_ARROW_BUTTON</td>
+	<td>//div[contains(@class,'fragment-entry-links')]/div[contains(.,'${key_fragmentName}')]//li[contains(@class,'tbar-item')][2]/button</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PAGE_TEMPLATE_FRAGMENT_DOWN_ARROW_BUTTON</td>
+	<td>//div[contains(@class,'fragment-entry-links')]/div[contains(.,'${key_fragmentName}')]//li[contains(@class,'tbar-item')][3]/button</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PAGE_TEMPLATE_FRAGMENT_DELETE_BUTTON</td>
-	<td>//div[@class='container'][normalize-space()='${key_fragmentName}']//button</td>
+	<td>//div[contains(@class,'fragment-entry-links')]/div[contains(.,'${key_fragmentName}')]//li[contains(@class,'tbar-item')][4]/button</td>
 	<td></td>
 </tr>
 </tbody>

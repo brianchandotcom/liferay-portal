@@ -170,9 +170,7 @@ request.setAttribute("view.jsp-orderByType", orderByType);
 							<liferay-util:include page="/document_library/search_resources.jsp" servletContext="<%= application %>" />
 						</c:when>
 						<c:otherwise>
-							<liferay-util:include page="/document_library/view_entries.jsp" servletContext="<%= application %>">
-								<liferay-util:param name="searchContainerId" value="entries" />
-							</liferay-util:include>
+							<liferay-util:include page="/document_library/view_entries.jsp" servletContext="<%= application %>" />
 						</c:otherwise>
 					</c:choose>
 

@@ -4175,8 +4175,10 @@ public class ServiceBuilder {
 				_uadOutputPath, "/uad/exporter/", entity.getName(),
 				"UADExporter.java"));
 
-		ToolsUtil.writeFile(
-			file, content, _author, _jalopySettings, _modifiedFileNames);
+		if (!file.exists()) {
+			ToolsUtil.writeFile(
+				file, content, _author, _jalopySettings, _modifiedFileNames);
+		}
 	}
 
 	private void _createUADExporterTest(Entity entity) throws Exception {

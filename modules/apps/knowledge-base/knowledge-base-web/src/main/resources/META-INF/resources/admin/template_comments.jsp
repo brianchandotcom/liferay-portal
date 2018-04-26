@@ -134,13 +134,23 @@ boolean helpful = BeanParamUtil.getBoolean(kbComment, request, "helpful", true);
 
 	<aui:script>
 		function <portlet:namespace />deleteKBComment(kbCommentId) {
-			document.<portlet:namespace />fm.<portlet:namespace />kbCommentId.value = kbCommentId;
-			submitForm(document.<portlet:namespace />fm, '<liferay-portlet:actionURL name="deleteKBComment"><portlet:param name="mvcPath" value='<%= templatePath + "view_template.jsp" %>' /><portlet:param name="redirect" value="<%= redirect %>" /><portlet:param name="kbTemplateId" value="<%= String.valueOf(kbTemplate.getKbTemplateId()) %>" /></liferay-portlet:actionURL>');
+			var form = document.querySelector('#<portlet:namespace />fm');
+
+			if (form) {
+				form.querySelector('#<portlet:namespace />kbCommentId').value = kbCommentId;
+
+				submitForm(form, '<liferay-portlet:actionURL name="deleteKBComment"><portlet:param name="mvcPath" value='<%= templatePath + "view_template.jsp" %>' /><portlet:param name="redirect" value="<%= redirect %>" /><portlet:param name="kbTemplateId" value="<%= String.valueOf(kbTemplate.getKbTemplateId()) %>" /></liferay-portlet:actionURL>');
+			}
 		}
 
 		function <portlet:namespace />updateKBComment() {
-			document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = '<%= (kbComment == null) ? Constants.ADD : Constants.UPDATE %>';
-			submitForm(document.<portlet:namespace />fm, '<liferay-portlet:actionURL name="updateKBComment"><portlet:param name="mvcPath" value='<%= templatePath + "view_template.jsp" %>' /><portlet:param name="redirect" value="<%= redirect %>" /><portlet:param name="kbTemplateId" value="<%= String.valueOf(kbTemplate.getKbTemplateId()) %>" /></liferay-portlet:actionURL>');
+			var form = document.querySelector('#<portlet:namespace />fm');
+
+			if (form) {
+				form.querySelector('#<portlet:namespace /><%= Constants.CMD %>').value = '<%= (kbComment == null) ? Constants.ADD : Constants.UPDATE %>';
+
+				submitForm(form, '<liferay-portlet:actionURL name="updateKBComment"><portlet:param name="mvcPath" value='<%= templatePath + "view_template.jsp" %>' /><portlet:param name="redirect" value="<%= redirect %>" /><portlet:param name="kbTemplateId" value="<%= String.valueOf(kbTemplate.getKbTemplateId()) %>" /></liferay-portlet:actionURL>');
+			}
 		}
 	</aui:script>
 </c:if>

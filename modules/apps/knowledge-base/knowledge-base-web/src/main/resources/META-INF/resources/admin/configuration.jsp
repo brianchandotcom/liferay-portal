@@ -240,20 +240,22 @@ kbGroupServiceConfiguration = ParameterMapUtil.setParameterMap(KBGroupServiceCon
 
 <aui:script>
 	function <portlet:namespace />save() {
-		var form = AUI.$(document.<portlet:namespace />fm);
+		var form = document.querySelector('#<portlet:namespace />fm');
 
-		var emailKBArticleAddedEditor = window.<portlet:namespace />emailKBArticleAdded;
-		var emailKBArticleSuggestionInProgressEditor = window.<portlet:namespace />emailKBArticleSuggestionInProgress;
-		var emailKBArticleSuggestionReceivedEditor = window.<portlet:namespace />emailKBArticleSuggestionReceived;
-		var emailKBArticleSuggestionResolvedEditor = window.<portlet:namespace />emailKBArticleSuggestionResolved;
-		var emailKBArticleUpdatedEditor = window.<portlet:namespace />emailKBArticleUpdated;
+		if (form) {
+			var emailKBArticleAddedEditor = window.<portlet:namespace />emailKBArticleAdded.getHTML();
+			var emailKBArticleSuggestionInProgressEditor = window.<portlet:namespace />emailKBArticleSuggestionInProgress.getHTML();
+			var emailKBArticleSuggestionReceivedEditor = window.<portlet:namespace />emailKBArticleSuggestionReceived.getHTML();
+			var emailKBArticleSuggestionResolvedEditor = window.<portlet:namespace />emailKBArticleSuggestionResolved.getHTML();
+			var emailKBArticleUpdatedEditor = window.<portlet:namespace />emailKBArticleUpdated.getHTML();
 
-		form.fm('preferences--emailKBArticleAddedBody--').val(emailKBArticleAddedEditor.getHTML());
-		form.fm('preferences--emailKBArticleUpdatedBody--').val(emailKBArticleUpdatedEditor.getHTML());
-		form.fm('preferences--emailKBArticleSuggestionReceivedBody--').val(emailKBArticleSuggestionReceivedEditor.getHTML());
-		form.fm('preferences--emailKBArticleSuggestionInProgressBody--').val(emailKBArticleSuggestionInProgressEditor.getHTML());
-		form.fm('preferences--emailKBArticleSuggestionResolvedBody--').val(emailKBArticleSuggestionResolvedEditor.getHTML());
+			form.querySelector('#<portlet:namespace />emailKBArticleAddedBody').value = emailKBArticleAddedEditor;
+			form.querySelector('#<portlet:namespace />emailKBArticleUpdatedBody').value = emailKBArticleUpdatedEditor;
+			form.querySelector('#<portlet:namespace />emailKBArticleSuggestionReceivedBody').value = emailKBArticleSuggestionReceivedEditor;
+			form.querySelector('#<portlet:namespace />emailKBArticleSuggestionInProgressBody').value = emailKBArticleSuggestionInProgressEditor;
+			form.querySelector('#<portlet:namespace />emailKBArticleSuggestionResolvedBody').value = emailKBArticleSuggestionResolvedEditor;
 
-		submitForm(form);
+			submitForm(form);
+		}
 	}
 </aui:script>

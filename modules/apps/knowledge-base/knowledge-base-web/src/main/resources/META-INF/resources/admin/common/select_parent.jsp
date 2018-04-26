@@ -262,6 +262,6 @@ else {
 	</aui:form>
 </div>
 
-<aui:script use="aui-base">
+<aui:script>
 	Liferay.Util.selectEntityHandler('#<portlet:namespace />fm', '<%= HtmlUtil.escape(eventName) %>');
 </aui:script>

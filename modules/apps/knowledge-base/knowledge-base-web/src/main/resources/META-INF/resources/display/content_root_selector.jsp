@@ -53,15 +53,16 @@ List<KBFolder> kbFolders = KBUtil.getAlternateRootKBFolders(scopeGroupId, kbDisp
 		</aui:form>
 	</div>
 
-	<aui:script use="aui-base">
-		var updateRootKBFolderIdFm = A.one('#<portlet:namespace />updateRootKBFolderIdFm');
-		var rootKBFolderIdSelect = A.one('#<portlet:namespace />rootKBFolderId');
+	<aui:script>
+		var <portlet:namespace />form = document.querySelector('#<portlet:namespace />updateRootKBFolderIdFm');
 
-		rootKBFolderIdSelect.on(
-			'change',
-			function() {
-				updateRootKBFolderIdFm.submit();
-			}
-		);
+		if (<portlet:namespace />form) {
+			<portlet:namespace />form.querySelector('#<portlet:namespace />rootKBFolderId').addEventListener(
+				'change',
+				function() {
+					<portlet:namespace />form.submit();
+				}
+			);
+		}
 	</aui:script>
 </c:if>

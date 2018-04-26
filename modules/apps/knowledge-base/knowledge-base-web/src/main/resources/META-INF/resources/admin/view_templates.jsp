@@ -192,11 +192,16 @@ String keywords = ParamUtil.getString(request, "keywords");
 
 <aui:script>
 	function <portlet:namespace />deleteKBTemplates() {
-		if (confirm('<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-the-selected-templates") %>')) {
-			document.<portlet:namespace />fm.method = 'post';
-			document.<portlet:namespace />fm.<portlet:namespace />kbTemplateIds.value = Liferay.Util.listCheckedExcept(document.<portlet:namespace />fm, '<portlet:namespace />allRowIds');
+		if (confirm('<liferay-ui:message key="are-you-sure-you-want-to-delete-the-selected-templates" />')) {
+			var form = document.querySelector('#<portlet:namespace />fm');
 
-			submitForm(document.<portlet:namespace />fm, '<liferay-portlet:actionURL name="deleteKBTemplates"><portlet:param name="mvcPath" value="/admin/view_templates.jsp" /><portlet:param name="redirect" value="<%= currentURL %>" /></liferay-portlet:actionURL>');
+			if (form) {
+				form.setAttribute('method', 'post');
+
+				form.querySelector('#<portlet:namespace />kbTemplateIds').value = Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds');
+
+				submitForm(form, '<liferay-portlet:actionURL name="deleteKBTemplates"><portlet:param name="mvcPath" value="/admin/view_templates.jsp" /><portlet:param name="redirect" value="<%= currentURL %>" /></liferay-portlet:actionURL>');
+			}
 		}
 	}
 </aui:script>

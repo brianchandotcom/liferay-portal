@@ -360,8 +360,12 @@ if (parentResourcePrimKey != KBFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 
 <aui:script>
 	function <portlet:namespace />deleteEntries() {
-		if (confirm('<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-the-selected-entries") %>')) {
-			submitForm($(document.<portlet:namespace />fm));
+		if (confirm('<liferay-ui:message key="are-you-sure-you-want-to-delete-the-selected-entries" />')) {
+			var form = document.querySelector('#<portlet:namespace />fm');
+
+			if (form) {
+				submitForm(form);
+			}
 		}
 	}
 </aui:script>

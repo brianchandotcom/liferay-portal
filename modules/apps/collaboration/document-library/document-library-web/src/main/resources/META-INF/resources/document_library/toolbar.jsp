@@ -30,7 +30,7 @@ DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletI
 	actionItems="<%= dlAdminDisplayContext.getActionDropdownItems() %>"
 	clearResultsURL="<%= dlAdminDisplayContext.getClearResultsURL() %>"
 	creationMenu="<%= dlAdminDisplayContext.getCreationMenu() %>"
-	disabled="<%= DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcutsCount(repositoryId, folderId, WorkflowConstants.STATUS_ANY, true) <= 0 %>"
+	disabled="<%= dlAdminDisplayContext.isDisabled() %>"
 	filterItems="<%= dlAdminDisplayContext.getFilterDropdownItems() %>"
 	infoPanelId="infoPanelId"
 	searchActionURL="<%= String.valueOf(dlAdminDisplayContext.getSearchURL()) %>"

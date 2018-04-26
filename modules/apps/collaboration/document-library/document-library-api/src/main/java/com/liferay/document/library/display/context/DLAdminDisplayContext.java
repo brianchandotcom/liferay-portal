@@ -19,6 +19,8 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItemList;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.repository.model.Folder;
 
 import java.util.List;
 
@@ -31,11 +33,17 @@ public interface DLAdminDisplayContext {
 
 	public List<DropdownItem> getActionDropdownItems();
 
-	public String getClearResultsURL() throws Exception;
+	public String getClearResultsURL() throws PortalException;
 
 	public CreationMenu getCreationMenu();
 
+	public String getDisplayStyle();
+
 	public List<DropdownItem> getFilterDropdownItems();
+
+	public Folder getFolder() throws PortalException;
+
+	public long getFolderId() throws PortalException;
 
 	public List<NavigationItem> getNavigationItems();
 
@@ -43,16 +51,20 @@ public interface DLAdminDisplayContext {
 
 	public String getOrderByType();
 
-	public PortletURL getPortletURL() throws Exception;
+	public PortletURL getPortletURL() throws PortalException;
 
-	public SearchContainer getSearchContainer() throws Exception;
+	public long getRepositoryId() throws PortalException;
 
-	public PortletURL getSearchURL() throws Exception;
+	public SearchContainer getSearchContainer() throws PortalException;
 
-	public PortletURL getSortingURL() throws Exception;
+	public PortletURL getSearchURL() throws PortalException;
 
-	public int getTotalItems() throws Exception;
+	public PortletURL getSortingURL() throws PortalException;
 
-	public ViewTypeItemList getViewTypes() throws Exception;
+	public int getTotalItems() throws PortalException;
+
+	public ViewTypeItemList getViewTypes() throws PortalException;
+
+	public boolean isDefaultFolderView();
 
 }

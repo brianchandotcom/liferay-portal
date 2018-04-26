@@ -24,8 +24,6 @@ page import="com.liferay.staging.StagingGroupHelper" %><%@
 page import="com.liferay.staging.StagingGroupHelperUtil" %>
 
 <%
-PortalPreferences portalPreferences = PortletPreferencesFactoryUtil.getPortalPreferences(liferayPortletRequest);
-
 DLRequestHelper dlRequestHelper = new DLRequestHelper(request);
 
 String portletId = dlRequestHelper.getResourcePortletId();

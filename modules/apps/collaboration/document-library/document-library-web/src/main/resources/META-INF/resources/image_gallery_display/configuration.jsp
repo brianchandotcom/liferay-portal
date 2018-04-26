@@ -24,66 +24,79 @@ DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletI
 
 <liferay-portlet:renderURL portletConfiguration="<%= true %>" var="configurationRenderURL" />
 
-<aui:form action="<%= configurationActionURL %>" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveConfiguration();" %>'>
+<liferay-frontend:edit-form
+	action="<%= configurationActionURL %>"
+	method="post"
+	name="fm"
+	onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveConfiguration();" %>'
+>
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
 	<aui:input name="redirect" type="hidden" value="<%= configurationRenderURL %>" />
 	<aui:input name="preferences--mimeTypes--" type="hidden" />
 	<aui:input name="preferences--rootFolderId--" type="hidden" value="<%= rootFolderId %>" />
 
-	<div class="portlet-configuration-body-content">
-		<div class="container-fluid-1280">
-			<liferay-ui:error key="rootFolderIdInvalid" message="please-enter-a-valid-root-folder" />
+	<liferay-frontend:edit-form-body>
+		<liferay-ui:error key="rootFolderIdInvalid" message="please-enter-a-valid-root-folder" />
 
-			<aui:fieldset-group markupView="lexicon">
-				<aui:fieldset collapsible="<%= true %>" id="imageGalleryDisplayDisplay" label="display-settings">
-					<aui:input label="show-actions" name="preferences--showActions--" type="checkbox" value="<%= dlPortletInstanceSettings.isShowActions() %>" />
+		<liferay-frontend:fieldset-group>
+			<liferay-frontend:fieldset
+				collapsible="<%= true %>"
+				id="imageGalleryDisplayDisplay"
+				label="display-settings"
+			>
+				<aui:input label="show-actions" name="preferences--showActions--" type="checkbox" value="<%= dlPortletInstanceSettings.isShowActions() %>" />
 
-					<aui:field-wrapper label="show-media-type">
-						<liferay-ui:input-move-boxes
-							leftBoxName="currentMimeTypes"
-							leftList="<%= dlPortletInstanceSettingsHelper.getCurrentMimeTypes() %>"
-							leftReorder="<%= Boolean.TRUE.toString() %>"
-							leftTitle="current"
-							rightBoxName="availableMimeTypes"
-							rightList="<%= dlPortletInstanceSettingsHelper.getAvailableMimeTypes() %>"
-							rightTitle="available"
-						/>
-					</aui:field-wrapper>
+				<aui:field-wrapper label="show-media-type">
+					<liferay-ui:input-move-boxes
+						leftBoxName="currentMimeTypes"
+						leftList="<%= dlPortletInstanceSettingsHelper.getCurrentMimeTypes() %>"
+						leftReorder="<%= Boolean.TRUE.toString() %>"
+						leftTitle="current"
+						rightBoxName="availableMimeTypes"
+						rightList="<%= dlPortletInstanceSettingsHelper.getAvailableMimeTypes() %>"
+						rightTitle="available"
+					/>
+				</aui:field-wrapper>
 
-					<div class="display-template">
-						<liferay-ddm:template-selector
-							className="<%= FileEntry.class.getName() %>"
-							displayStyle="<%= displayStyle %>"
-							displayStyleGroupId="<%= displayStyleGroupId %>"
-							refreshURL="<%= configurationRenderURL %>"
-							showEmptyOption="<%= true %>"
-						/>
+				<div class="display-template">
+					<liferay-ddm:template-selector
+						className="<%= FileEntry.class.getName() %>"
+						displayStyle="<%= displayStyle %>"
+						displayStyleGroupId="<%= displayStyleGroupId %>"
+						refreshURL="<%= configurationRenderURL %>"
+						showEmptyOption="<%= true %>"
+					/>
+				</div>
+			</liferay-frontend:fieldset>
+
+			<liferay-frontend:fieldset
+				collapsible="<%= true %>"
+				id="imageGalleryDisplayFoldersListingPanel"
+				label="folders-listing"
+			>
+				<aui:field-wrapper>
+					<div class="form-group">
+						<aui:input label="root-folder" name="rootFolderName" type="resource" value="<%= rootFolderName %>" />
+
+						<aui:button name="openFolderSelectorButton" value="select" />
+
+						<%
+						String taglibRemoveFolder = "Liferay.Util.removeEntitySelection('rootFolderId', 'rootFolderName', this, '" + renderResponse.getNamespace() + "');";
+						%>
+
+						<aui:button disabled="<%= rootFolderId <= 0 %>" name="removeFolderButton" onClick="<%= taglibRemoveFolder %>" value="remove" />
 					</div>
-				</aui:fieldset>
+				</aui:field-wrapper>
+			</liferay-frontend:fieldset>
+		</liferay-frontend:fieldset-group>
+	</liferay-frontend:edit-form-body>
 
-				<aui:fieldset collapsible="<%= true %>" id="imageGalleryDisplayFoldersListingPanel" label="folders-listing">
-					<aui:field-wrapper>
-						<div class="form-group">
-							<aui:input label="root-folder" name="rootFolderName" type="resource" value="<%= rootFolderName %>" />
-
-							<aui:button name="openFolderSelectorButton" value="select" />
-
-							<%
-							String taglibRemoveFolder = "Liferay.Util.removeEntitySelection('rootFolderId', 'rootFolderName', this, '" + renderResponse.getNamespace() + "');";
-							%>
-
-							<aui:button disabled="<%= rootFolderId <= 0 %>" name="removeFolderButton" onClick="<%= taglibRemoveFolder %>" value="remove" />
-						</div>
-					</aui:field-wrapper>
-				</aui:fieldset>
-			</aui:fieldset-group>
-		</div>
-	</div>
-
-	<aui:button-row>
+	<liferay-frontend:edit-form-footer>
 		<aui:button type="submit" />
-	</aui:button-row>
-</aui:form>
+
+		<aui:button type="cancel" />
+	</liferay-frontend:edit-form-footer>
+</liferay-frontend:edit-form>
 
 <aui:script>
 	AUI.$('#<portlet:namespace />openFolderSelectorButton').on(

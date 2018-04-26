@@ -5097,6 +5097,8 @@ go]]></replacevalue>
 														<include name="${module.war.name}*" />
 													</fileset>
 												</delete>
+
+												<echo file="@{module.dir.path}/.lfrbuild-portal" />
 											</sequential>
 										</for>
 
@@ -5108,6 +5110,19 @@ go]]></replacevalue>
 											<property name="app.name" value="${osgi.app.name}" />
 											<property name="osgi.dir" value="${liferay.home}/osgi" />
 										</ant>
+
+										<for param="module.dir.path">
+											<path>
+												<dirset
+													dir="@{app.dir}"
+												>
+													<include name="*" />
+												</dirset>
+											</path>
+											<sequential>
+												<delete file="@{module.dir.path}/.lfrbuild-portal" />
+											</sequential>
+										</for>
 
 										<gradle-execute dir="@{app.dir}" task="clean" />
 									</else>

@@ -35,8 +35,8 @@
 						<aui:option label="<%= ContactsConstants.DISPLAY_STYLE_DETAIL_LABEL %>" value="<%= ContactsConstants.DISPLAY_STYLE_DETAIL %>" />
 					</aui:select>
 
-					<aui:field-wrapper cssClass="lfr-user-profile-preferences">
-						<aui:col>
+					<aui:row>
+						<aui:col width="<%= 50 %>">
 							<aui:input name="preferences--showAdditionalEmailAddresses--" type="checkbox" value="<%= showAdditionalEmailAddresses %>" />
 
 							<aui:input name="preferences--showAddresses--" type="checkbox" value="<%= showAddresses %>" />
@@ -52,7 +52,7 @@
 							<aui:input label="show-sms" name="preferences--showSMS--" type="checkbox" value="<%= showSMS %>" />
 						</aui:col>
 
-						<aui:col>
+						<aui:col width="<%= 50 %>">
 							<aui:input name="preferences--showSocialNetwork--" type="checkbox" value="<%= showSocialNetwork %>" />
 
 							<aui:input label="show-icon" name="preferences--showIcon--" type="checkbox" value="<%= showIcon %>" />
@@ -67,7 +67,7 @@
 
 							<aui:input name="preferences--showWebsites--" type="checkbox" value="<%= showWebsites %>" />
 						</aui:col>
-					</aui:field-wrapper>
+					</aui:row>
 				</liferay-frontend:fieldset>
 			</liferay-frontend:fieldset-group>
 		</liferay-frontend:edit-form-body>

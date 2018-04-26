@@ -103,20 +103,7 @@ request.setAttribute("view.jsp-orderByType", orderByType);
 
 <liferay-util:include page="/document_library/navigation.jsp" servletContext="<%= application %>" />
 
-<clay:management-toolbar
-	clearResultsURL="<%= dlAdminDisplayContext.getClearResultsURL() %>"
-	creationMenu="<%= dlAdminDisplayContext.getCreationMenu() %>"
-	disabled="<%= DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcutsCount(repositoryId, folderId, WorkflowConstants.STATUS_ANY, true) <= 0 %>"
-	filterItems="<%= dlAdminDisplayContext.getFilterDropdownItems() %>"
-	infoPanelId="infoPanelId"
-	searchActionURL="<%= String.valueOf(dlAdminDisplayContext.getSearchURL()) %>"
-	searchContainerId="entries"
-	selectable="<%= dlPortletInstanceSettingsHelper.isShowActions() %>"
-	showInfoButton="<%= true %>"
-	showSearch="<%= dlPortletInstanceSettingsHelper.isShowSearch() %>"
-	totalItems="<%= dlAdminDisplayContext.getTotalItems() %>"
-	viewTypes="<%= dlAdminDisplayContext.getViewTypes() %>"
-/>
+<liferay-util:include page="/document_library/toolbar.jsp" servletContext="<%= application %>" />
 
 <c:if test='<%= ParamUtil.getBoolean(request, "showSearchInfo") %>'>
 	<liferay-util:include page="/document_library/search_info.jsp" servletContext="<%= application %>" />

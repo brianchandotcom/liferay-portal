@@ -48,8 +48,7 @@ public class KBFolderLocalServiceWrapper implements KBFolderLocalService,
 	@Override
 	public com.liferay.knowledge.base.model.KBFolder addKBFolder(long userId,
 		long groupId, long parentResourceClassNameId,
-		long parentResourcePrimKey, java.lang.String name,
-		java.lang.String description,
+		long parentResourcePrimKey, String name, String description,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _kbFolderLocalService.addKBFolder(userId, groupId,
@@ -219,13 +218,13 @@ public class KBFolderLocalServiceWrapper implements KBFolderLocalService,
 
 	@Override
 	public com.liferay.knowledge.base.model.KBFolder fetchKBFolder(
-		java.lang.String uuid, long groupId) {
+		String uuid, long groupId) {
 		return _kbFolderLocalService.fetchKBFolder(uuid, groupId);
 	}
 
 	@Override
 	public com.liferay.knowledge.base.model.KBFolder fetchKBFolderByUrlTitle(
-		long groupId, long parentKbFolderId, java.lang.String urlTitle)
+		long groupId, long parentKbFolderId, String urlTitle)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _kbFolderLocalService.fetchKBFolderByUrlTitle(groupId,
 			parentKbFolderId, urlTitle);
@@ -240,7 +239,7 @@ public class KBFolderLocalServiceWrapper implements KBFolderLocalService,
 	*/
 	@Override
 	public com.liferay.knowledge.base.model.KBFolder fetchKBFolderByUuidAndGroupId(
-		java.lang.String uuid, long groupId) {
+		String uuid, long groupId) {
 		return _kbFolderLocalService.fetchKBFolderByUuidAndGroupId(uuid, groupId);
 	}
 
@@ -276,7 +275,7 @@ public class KBFolderLocalServiceWrapper implements KBFolderLocalService,
 
 	@Override
 	public com.liferay.knowledge.base.model.KBFolder getKBFolderByUrlTitle(
-		long groupId, long parentKbFolderId, java.lang.String urlTitle)
+		long groupId, long parentKbFolderId, String urlTitle)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _kbFolderLocalService.getKBFolderByUrlTitle(groupId,
 			parentKbFolderId, urlTitle);
@@ -292,7 +291,7 @@ public class KBFolderLocalServiceWrapper implements KBFolderLocalService,
 	*/
 	@Override
 	public com.liferay.knowledge.base.model.KBFolder getKBFolderByUuidAndGroupId(
-		java.lang.String uuid, long groupId)
+		String uuid, long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _kbFolderLocalService.getKBFolderByUuidAndGroupId(uuid, groupId);
 	}
@@ -323,9 +322,8 @@ public class KBFolderLocalServiceWrapper implements KBFolderLocalService,
 	}
 
 	@Override
-	public java.util.List<java.lang.Object> getKBFoldersAndKBArticles(
-		long groupId, long parentResourcePrimKey, int status, int start,
-		int end,
+	public java.util.List<Object> getKBFoldersAndKBArticles(long groupId,
+		long parentResourcePrimKey, int status, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<?> orderByComparator) {
 		return _kbFolderLocalService.getKBFoldersAndKBArticles(groupId,
 			parentResourcePrimKey, status, start, end, orderByComparator);
@@ -347,7 +345,7 @@ public class KBFolderLocalServiceWrapper implements KBFolderLocalService,
 	*/
 	@Override
 	public java.util.List<com.liferay.knowledge.base.model.KBFolder> getKBFoldersByUuidAndCompanyId(
-		java.lang.String uuid, long companyId) {
+		String uuid, long companyId) {
 		return _kbFolderLocalService.getKBFoldersByUuidAndCompanyId(uuid,
 			companyId);
 	}
@@ -364,7 +362,7 @@ public class KBFolderLocalServiceWrapper implements KBFolderLocalService,
 	*/
 	@Override
 	public java.util.List<com.liferay.knowledge.base.model.KBFolder> getKBFoldersByUuidAndCompanyId(
-		java.lang.String uuid, long companyId, int start, int end,
+		String uuid, long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.knowledge.base.model.KBFolder> orderByComparator) {
 		return _kbFolderLocalService.getKBFoldersByUuidAndCompanyId(uuid,
 			companyId, start, end, orderByComparator);
@@ -392,7 +390,7 @@ public class KBFolderLocalServiceWrapper implements KBFolderLocalService,
 	* @return the OSGi service identifier
 	*/
 	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
+	public String getOSGiServiceIdentifier() {
 		return _kbFolderLocalService.getOSGiServiceIdentifier();
 	}
 
@@ -429,7 +427,7 @@ public class KBFolderLocalServiceWrapper implements KBFolderLocalService,
 	@Override
 	public com.liferay.knowledge.base.model.KBFolder updateKBFolder(
 		long parentResourceClassNameId, long parentResourcePrimKey,
-		long kbFolderId, java.lang.String name, java.lang.String description)
+		long kbFolderId, String name, String description)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _kbFolderLocalService.updateKBFolder(parentResourceClassNameId,
 			parentResourcePrimKey, kbFolderId, name, description);
@@ -438,7 +436,7 @@ public class KBFolderLocalServiceWrapper implements KBFolderLocalService,
 	@Override
 	public com.liferay.knowledge.base.model.KBFolder updateKBFolder(
 		long parentResourceClassNameId, long parentResourcePrimKey,
-		long kbFolderId, java.lang.String name, java.lang.String description,
+		long kbFolderId, String name, String description,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _kbFolderLocalService.updateKBFolder(parentResourceClassNameId,

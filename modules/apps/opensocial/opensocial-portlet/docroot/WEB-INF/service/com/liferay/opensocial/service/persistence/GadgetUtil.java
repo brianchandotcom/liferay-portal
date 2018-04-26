@@ -112,7 +112,7 @@ public class GadgetUtil {
 	* @param uuid the uuid
 	* @return the matching gadgets
 	*/
-	public static List<Gadget> findByUuid(java.lang.String uuid) {
+	public static List<Gadget> findByUuid(String uuid) {
 		return getPersistence().findByUuid(uuid);
 	}
 
@@ -128,8 +128,7 @@ public class GadgetUtil {
 	* @param end the upper bound of the range of gadgets (not inclusive)
 	* @return the range of matching gadgets
 	*/
-	public static List<Gadget> findByUuid(java.lang.String uuid, int start,
-		int end) {
+	public static List<Gadget> findByUuid(String uuid, int start, int end) {
 		return getPersistence().findByUuid(uuid, start, end);
 	}
 
@@ -146,8 +145,8 @@ public class GadgetUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching gadgets
 	*/
-	public static List<Gadget> findByUuid(java.lang.String uuid, int start,
-		int end, OrderByComparator<Gadget> orderByComparator) {
+	public static List<Gadget> findByUuid(String uuid, int start, int end,
+		OrderByComparator<Gadget> orderByComparator) {
 		return getPersistence().findByUuid(uuid, start, end, orderByComparator);
 	}
 
@@ -165,9 +164,8 @@ public class GadgetUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching gadgets
 	*/
-	public static List<Gadget> findByUuid(java.lang.String uuid, int start,
-		int end, OrderByComparator<Gadget> orderByComparator,
-		boolean retrieveFromCache) {
+	public static List<Gadget> findByUuid(String uuid, int start, int end,
+		OrderByComparator<Gadget> orderByComparator, boolean retrieveFromCache) {
 		return getPersistence()
 				   .findByUuid(uuid, start, end, orderByComparator,
 			retrieveFromCache);
@@ -181,7 +179,7 @@ public class GadgetUtil {
 	* @return the first matching gadget
 	* @throws NoSuchGadgetException if a matching gadget could not be found
 	*/
-	public static Gadget findByUuid_First(java.lang.String uuid,
+	public static Gadget findByUuid_First(String uuid,
 		OrderByComparator<Gadget> orderByComparator)
 		throws com.liferay.opensocial.exception.NoSuchGadgetException {
 		return getPersistence().findByUuid_First(uuid, orderByComparator);
@@ -194,7 +192,7 @@ public class GadgetUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching gadget, or <code>null</code> if a matching gadget could not be found
 	*/
-	public static Gadget fetchByUuid_First(java.lang.String uuid,
+	public static Gadget fetchByUuid_First(String uuid,
 		OrderByComparator<Gadget> orderByComparator) {
 		return getPersistence().fetchByUuid_First(uuid, orderByComparator);
 	}
@@ -207,7 +205,7 @@ public class GadgetUtil {
 	* @return the last matching gadget
 	* @throws NoSuchGadgetException if a matching gadget could not be found
 	*/
-	public static Gadget findByUuid_Last(java.lang.String uuid,
+	public static Gadget findByUuid_Last(String uuid,
 		OrderByComparator<Gadget> orderByComparator)
 		throws com.liferay.opensocial.exception.NoSuchGadgetException {
 		return getPersistence().findByUuid_Last(uuid, orderByComparator);
@@ -220,7 +218,7 @@ public class GadgetUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching gadget, or <code>null</code> if a matching gadget could not be found
 	*/
-	public static Gadget fetchByUuid_Last(java.lang.String uuid,
+	public static Gadget fetchByUuid_Last(String uuid,
 		OrderByComparator<Gadget> orderByComparator) {
 		return getPersistence().fetchByUuid_Last(uuid, orderByComparator);
 	}
@@ -234,8 +232,8 @@ public class GadgetUtil {
 	* @return the previous, current, and next gadget
 	* @throws NoSuchGadgetException if a gadget with the primary key could not be found
 	*/
-	public static Gadget[] findByUuid_PrevAndNext(long gadgetId,
-		java.lang.String uuid, OrderByComparator<Gadget> orderByComparator)
+	public static Gadget[] findByUuid_PrevAndNext(long gadgetId, String uuid,
+		OrderByComparator<Gadget> orderByComparator)
 		throws com.liferay.opensocial.exception.NoSuchGadgetException {
 		return getPersistence()
 				   .findByUuid_PrevAndNext(gadgetId, uuid, orderByComparator);
@@ -247,7 +245,7 @@ public class GadgetUtil {
 	* @param uuid the uuid
 	* @return the matching gadgets that the user has permission to view
 	*/
-	public static List<Gadget> filterFindByUuid(java.lang.String uuid) {
+	public static List<Gadget> filterFindByUuid(String uuid) {
 		return getPersistence().filterFindByUuid(uuid);
 	}
 
@@ -263,8 +261,7 @@ public class GadgetUtil {
 	* @param end the upper bound of the range of gadgets (not inclusive)
 	* @return the range of matching gadgets that the user has permission to view
 	*/
-	public static List<Gadget> filterFindByUuid(java.lang.String uuid,
-		int start, int end) {
+	public static List<Gadget> filterFindByUuid(String uuid, int start, int end) {
 		return getPersistence().filterFindByUuid(uuid, start, end);
 	}
 
@@ -281,8 +278,8 @@ public class GadgetUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching gadgets that the user has permission to view
 	*/
-	public static List<Gadget> filterFindByUuid(java.lang.String uuid,
-		int start, int end, OrderByComparator<Gadget> orderByComparator) {
+	public static List<Gadget> filterFindByUuid(String uuid, int start,
+		int end, OrderByComparator<Gadget> orderByComparator) {
 		return getPersistence()
 				   .filterFindByUuid(uuid, start, end, orderByComparator);
 	}
@@ -297,7 +294,7 @@ public class GadgetUtil {
 	* @throws NoSuchGadgetException if a gadget with the primary key could not be found
 	*/
 	public static Gadget[] filterFindByUuid_PrevAndNext(long gadgetId,
-		java.lang.String uuid, OrderByComparator<Gadget> orderByComparator)
+		String uuid, OrderByComparator<Gadget> orderByComparator)
 		throws com.liferay.opensocial.exception.NoSuchGadgetException {
 		return getPersistence()
 				   .filterFindByUuid_PrevAndNext(gadgetId, uuid,
@@ -309,7 +306,7 @@ public class GadgetUtil {
 	*
 	* @param uuid the uuid
 	*/
-	public static void removeByUuid(java.lang.String uuid) {
+	public static void removeByUuid(String uuid) {
 		getPersistence().removeByUuid(uuid);
 	}
 
@@ -319,7 +316,7 @@ public class GadgetUtil {
 	* @param uuid the uuid
 	* @return the number of matching gadgets
 	*/
-	public static int countByUuid(java.lang.String uuid) {
+	public static int countByUuid(String uuid) {
 		return getPersistence().countByUuid(uuid);
 	}
 
@@ -329,7 +326,7 @@ public class GadgetUtil {
 	* @param uuid the uuid
 	* @return the number of matching gadgets that the user has permission to view
 	*/
-	public static int filterCountByUuid(java.lang.String uuid) {
+	public static int filterCountByUuid(String uuid) {
 		return getPersistence().filterCountByUuid(uuid);
 	}
 
@@ -340,8 +337,7 @@ public class GadgetUtil {
 	* @param companyId the company ID
 	* @return the matching gadgets
 	*/
-	public static List<Gadget> findByUuid_C(java.lang.String uuid,
-		long companyId) {
+	public static List<Gadget> findByUuid_C(String uuid, long companyId) {
 		return getPersistence().findByUuid_C(uuid, companyId);
 	}
 
@@ -358,8 +354,8 @@ public class GadgetUtil {
 	* @param end the upper bound of the range of gadgets (not inclusive)
 	* @return the range of matching gadgets
 	*/
-	public static List<Gadget> findByUuid_C(java.lang.String uuid,
-		long companyId, int start, int end) {
+	public static List<Gadget> findByUuid_C(String uuid, long companyId,
+		int start, int end) {
 		return getPersistence().findByUuid_C(uuid, companyId, start, end);
 	}
 
@@ -377,9 +373,8 @@ public class GadgetUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching gadgets
 	*/
-	public static List<Gadget> findByUuid_C(java.lang.String uuid,
-		long companyId, int start, int end,
-		OrderByComparator<Gadget> orderByComparator) {
+	public static List<Gadget> findByUuid_C(String uuid, long companyId,
+		int start, int end, OrderByComparator<Gadget> orderByComparator) {
 		return getPersistence()
 				   .findByUuid_C(uuid, companyId, start, end, orderByComparator);
 	}
@@ -399,9 +394,9 @@ public class GadgetUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching gadgets
 	*/
-	public static List<Gadget> findByUuid_C(java.lang.String uuid,
-		long companyId, int start, int end,
-		OrderByComparator<Gadget> orderByComparator, boolean retrieveFromCache) {
+	public static List<Gadget> findByUuid_C(String uuid, long companyId,
+		int start, int end, OrderByComparator<Gadget> orderByComparator,
+		boolean retrieveFromCache) {
 		return getPersistence()
 				   .findByUuid_C(uuid, companyId, start, end,
 			orderByComparator, retrieveFromCache);
@@ -416,8 +411,8 @@ public class GadgetUtil {
 	* @return the first matching gadget
 	* @throws NoSuchGadgetException if a matching gadget could not be found
 	*/
-	public static Gadget findByUuid_C_First(java.lang.String uuid,
-		long companyId, OrderByComparator<Gadget> orderByComparator)
+	public static Gadget findByUuid_C_First(String uuid, long companyId,
+		OrderByComparator<Gadget> orderByComparator)
 		throws com.liferay.opensocial.exception.NoSuchGadgetException {
 		return getPersistence()
 				   .findByUuid_C_First(uuid, companyId, orderByComparator);
@@ -431,8 +426,8 @@ public class GadgetUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching gadget, or <code>null</code> if a matching gadget could not be found
 	*/
-	public static Gadget fetchByUuid_C_First(java.lang.String uuid,
-		long companyId, OrderByComparator<Gadget> orderByComparator) {
+	public static Gadget fetchByUuid_C_First(String uuid, long companyId,
+		OrderByComparator<Gadget> orderByComparator) {
 		return getPersistence()
 				   .fetchByUuid_C_First(uuid, companyId, orderByComparator);
 	}
@@ -446,8 +441,8 @@ public class GadgetUtil {
 	* @return the last matching gadget
 	* @throws NoSuchGadgetException if a matching gadget could not be found
 	*/
-	public static Gadget findByUuid_C_Last(java.lang.String uuid,
-		long companyId, OrderByComparator<Gadget> orderByComparator)
+	public static Gadget findByUuid_C_Last(String uuid, long companyId,
+		OrderByComparator<Gadget> orderByComparator)
 		throws com.liferay.opensocial.exception.NoSuchGadgetException {
 		return getPersistence()
 				   .findByUuid_C_Last(uuid, companyId, orderByComparator);
@@ -461,8 +456,8 @@ public class GadgetUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching gadget, or <code>null</code> if a matching gadget could not be found
 	*/
-	public static Gadget fetchByUuid_C_Last(java.lang.String uuid,
-		long companyId, OrderByComparator<Gadget> orderByComparator) {
+	public static Gadget fetchByUuid_C_Last(String uuid, long companyId,
+		OrderByComparator<Gadget> orderByComparator) {
 		return getPersistence()
 				   .fetchByUuid_C_Last(uuid, companyId, orderByComparator);
 	}
@@ -477,9 +472,8 @@ public class GadgetUtil {
 	* @return the previous, current, and next gadget
 	* @throws NoSuchGadgetException if a gadget with the primary key could not be found
 	*/
-	public static Gadget[] findByUuid_C_PrevAndNext(long gadgetId,
-		java.lang.String uuid, long companyId,
-		OrderByComparator<Gadget> orderByComparator)
+	public static Gadget[] findByUuid_C_PrevAndNext(long gadgetId, String uuid,
+		long companyId, OrderByComparator<Gadget> orderByComparator)
 		throws com.liferay.opensocial.exception.NoSuchGadgetException {
 		return getPersistence()
 				   .findByUuid_C_PrevAndNext(gadgetId, uuid, companyId,
@@ -493,8 +487,7 @@ public class GadgetUtil {
 	* @param companyId the company ID
 	* @return the matching gadgets that the user has permission to view
 	*/
-	public static List<Gadget> filterFindByUuid_C(java.lang.String uuid,
-		long companyId) {
+	public static List<Gadget> filterFindByUuid_C(String uuid, long companyId) {
 		return getPersistence().filterFindByUuid_C(uuid, companyId);
 	}
 
@@ -511,8 +504,8 @@ public class GadgetUtil {
 	* @param end the upper bound of the range of gadgets (not inclusive)
 	* @return the range of matching gadgets that the user has permission to view
 	*/
-	public static List<Gadget> filterFindByUuid_C(java.lang.String uuid,
-		long companyId, int start, int end) {
+	public static List<Gadget> filterFindByUuid_C(String uuid, long companyId,
+		int start, int end) {
 		return getPersistence().filterFindByUuid_C(uuid, companyId, start, end);
 	}
 
@@ -530,9 +523,8 @@ public class GadgetUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching gadgets that the user has permission to view
 	*/
-	public static List<Gadget> filterFindByUuid_C(java.lang.String uuid,
-		long companyId, int start, int end,
-		OrderByComparator<Gadget> orderByComparator) {
+	public static List<Gadget> filterFindByUuid_C(String uuid, long companyId,
+		int start, int end, OrderByComparator<Gadget> orderByComparator) {
 		return getPersistence()
 				   .filterFindByUuid_C(uuid, companyId, start, end,
 			orderByComparator);
@@ -549,8 +541,7 @@ public class GadgetUtil {
 	* @throws NoSuchGadgetException if a gadget with the primary key could not be found
 	*/
 	public static Gadget[] filterFindByUuid_C_PrevAndNext(long gadgetId,
-		java.lang.String uuid, long companyId,
-		OrderByComparator<Gadget> orderByComparator)
+		String uuid, long companyId, OrderByComparator<Gadget> orderByComparator)
 		throws com.liferay.opensocial.exception.NoSuchGadgetException {
 		return getPersistence()
 				   .filterFindByUuid_C_PrevAndNext(gadgetId, uuid, companyId,
@@ -563,7 +554,7 @@ public class GadgetUtil {
 	* @param uuid the uuid
 	* @param companyId the company ID
 	*/
-	public static void removeByUuid_C(java.lang.String uuid, long companyId) {
+	public static void removeByUuid_C(String uuid, long companyId) {
 		getPersistence().removeByUuid_C(uuid, companyId);
 	}
 
@@ -574,7 +565,7 @@ public class GadgetUtil {
 	* @param companyId the company ID
 	* @return the number of matching gadgets
 	*/
-	public static int countByUuid_C(java.lang.String uuid, long companyId) {
+	public static int countByUuid_C(String uuid, long companyId) {
 		return getPersistence().countByUuid_C(uuid, companyId);
 	}
 
@@ -585,7 +576,7 @@ public class GadgetUtil {
 	* @param companyId the company ID
 	* @return the number of matching gadgets that the user has permission to view
 	*/
-	public static int filterCountByUuid_C(java.lang.String uuid, long companyId) {
+	public static int filterCountByUuid_C(String uuid, long companyId) {
 		return getPersistence().filterCountByUuid_C(uuid, companyId);
 	}
 
@@ -831,7 +822,7 @@ public class GadgetUtil {
 	* @return the matching gadget
 	* @throws NoSuchGadgetException if a matching gadget could not be found
 	*/
-	public static Gadget findByC_U(long companyId, java.lang.String url)
+	public static Gadget findByC_U(long companyId, String url)
 		throws com.liferay.opensocial.exception.NoSuchGadgetException {
 		return getPersistence().findByC_U(companyId, url);
 	}
@@ -843,7 +834,7 @@ public class GadgetUtil {
 	* @param url the url
 	* @return the matching gadget, or <code>null</code> if a matching gadget could not be found
 	*/
-	public static Gadget fetchByC_U(long companyId, java.lang.String url) {
+	public static Gadget fetchByC_U(long companyId, String url) {
 		return getPersistence().fetchByC_U(companyId, url);
 	}
 
@@ -855,7 +846,7 @@ public class GadgetUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching gadget, or <code>null</code> if a matching gadget could not be found
 	*/
-	public static Gadget fetchByC_U(long companyId, java.lang.String url,
+	public static Gadget fetchByC_U(long companyId, String url,
 		boolean retrieveFromCache) {
 		return getPersistence().fetchByC_U(companyId, url, retrieveFromCache);
 	}
@@ -867,7 +858,7 @@ public class GadgetUtil {
 	* @param url the url
 	* @return the gadget that was removed
 	*/
-	public static Gadget removeByC_U(long companyId, java.lang.String url)
+	public static Gadget removeByC_U(long companyId, String url)
 		throws com.liferay.opensocial.exception.NoSuchGadgetException {
 		return getPersistence().removeByC_U(companyId, url);
 	}
@@ -879,7 +870,7 @@ public class GadgetUtil {
 	* @param url the url
 	* @return the number of matching gadgets
 	*/
-	public static int countByC_U(long companyId, java.lang.String url) {
+	public static int countByC_U(long companyId, String url) {
 		return getPersistence().countByC_U(companyId, url);
 	}
 
@@ -1030,7 +1021,7 @@ public class GadgetUtil {
 		return getPersistence().countAll();
 	}
 
-	public static java.util.Set<java.lang.String> getBadColumnNames() {
+	public static java.util.Set<String> getBadColumnNames() {
 		return getPersistence().getBadColumnNames();
 	}
 

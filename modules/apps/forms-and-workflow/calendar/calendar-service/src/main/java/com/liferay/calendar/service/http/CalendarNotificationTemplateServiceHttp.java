@@ -58,9 +58,9 @@ public class CalendarNotificationTemplateServiceHttp {
 	public static com.liferay.calendar.model.CalendarNotificationTemplate addCalendarNotificationTemplate(
 		HttpPrincipal httpPrincipal, long calendarId,
 		com.liferay.calendar.notification.NotificationType notificationType,
-		java.lang.String notificationTypeSettings,
+		String notificationTypeSettings,
 		com.liferay.calendar.notification.NotificationTemplateType notificationTemplateType,
-		java.lang.String subject, java.lang.String body,
+		String subject, String body,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -96,8 +96,7 @@ public class CalendarNotificationTemplateServiceHttp {
 
 	public static com.liferay.calendar.model.CalendarNotificationTemplate updateCalendarNotificationTemplate(
 		HttpPrincipal httpPrincipal, long calendarNotificationTemplateId,
-		java.lang.String notificationTypeSettings, java.lang.String subject,
-		java.lang.String body,
+		String notificationTypeSettings, String subject, String body,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -135,15 +134,14 @@ public class CalendarNotificationTemplateServiceHttp {
 	private static final Class<?>[] _addCalendarNotificationTemplateParameterTypes0 =
 		new Class[] {
 			long.class, com.liferay.calendar.notification.NotificationType.class,
-			java.lang.String.class,
+			String.class,
 			com.liferay.calendar.notification.NotificationTemplateType.class,
-			java.lang.String.class, java.lang.String.class,
+			String.class, String.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _updateCalendarNotificationTemplateParameterTypes1 =
 		new Class[] {
-			long.class, java.lang.String.class, java.lang.String.class,
-			java.lang.String.class,
+			long.class, String.class, String.class, String.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 }

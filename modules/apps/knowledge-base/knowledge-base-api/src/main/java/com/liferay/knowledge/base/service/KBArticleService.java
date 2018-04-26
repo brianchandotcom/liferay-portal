@@ -62,23 +62,20 @@ public interface KBArticleService extends BaseService {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link KBArticleServiceUtil} to access the kb article remote service. Add custom service methods to {@link com.liferay.knowledge.base.service.impl.KBArticleServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public KBArticle addKBArticle(java.lang.String portletId,
+	public KBArticle addKBArticle(String portletId,
 		long parentResourceClassNameId, long parentResourcePrimKey,
-		java.lang.String title, java.lang.String urlTitle,
-		java.lang.String content, java.lang.String description,
-		java.lang.String sourceURL, java.lang.String[] sections,
-		java.lang.String[] selectedFileNames, ServiceContext serviceContext)
-		throws PortalException;
+		String title, String urlTitle, String content, String description,
+		String sourceURL, String[] sections, String[] selectedFileNames,
+		ServiceContext serviceContext) throws PortalException;
 
 	public int addKBArticlesMarkdown(long groupId, long parentKBFolderId,
-		java.lang.String fileName, boolean prioritizeByNumericalPrefix,
+		String fileName, boolean prioritizeByNumericalPrefix,
 		InputStream inputStream, ServiceContext serviceContext)
 		throws PortalException;
 
 	public void addTempAttachment(long groupId, long resourcePrimKey,
-		java.lang.String fileName, java.lang.String tempFolderName,
-		InputStream inputStream, java.lang.String mimeType)
-		throws PortalException;
+		String fileName, String tempFolderName, InputStream inputStream,
+		String mimeType) throws PortalException;
 
 	public KBArticle deleteKBArticle(long resourcePrimKey)
 		throws PortalException;
@@ -87,8 +84,7 @@ public interface KBArticleService extends BaseService {
 		throws PortalException;
 
 	public void deleteTempAttachment(long groupId, long resourcePrimKey,
-		java.lang.String fileName, java.lang.String tempFolderName)
-		throws PortalException;
+		String fileName, String tempFolderName) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public KBArticle fetchFirstChildKBArticle(long groupId,
@@ -96,7 +92,7 @@ public interface KBArticleService extends BaseService {
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public KBArticle fetchKBArticleByUrlTitle(long groupId, long kbFolderId,
-		java.lang.String urlTitle) throws PortalException;
+		String urlTitle) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public KBArticle fetchLatestKBArticle(long resourcePrimKey, int status)
@@ -104,15 +100,14 @@ public interface KBArticleService extends BaseService {
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public KBArticle fetchLatestKBArticleByUrlTitle(long groupId,
-		long kbFolderId, java.lang.String urlTitle, int status)
-		throws PortalException;
+		long kbFolderId, String urlTitle, int status) throws PortalException;
 
 	/**
 	* @deprecated As of 1.1.0, replaced by {@link
 	#getAllDescendantKBArticles(long, long, int,
 	OrderByComparator)}
 	*/
-	@java.lang.Deprecated
+	@Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<KBArticle> getAllDescendantKBArticles(long resourcePrimKey,
 		int status, OrderByComparator<KBArticle> orderByComparator)
@@ -132,9 +127,9 @@ public interface KBArticleService extends BaseService {
 	public int getGroupKBArticlesCount(long groupId, int status);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.lang.String getGroupKBArticlesRSS(int status, int rssDelta,
-		java.lang.String rssDisplayStyle, java.lang.String rssFormat,
-		ThemeDisplay themeDisplay) throws PortalException;
+	public String getGroupKBArticlesRSS(int status, int rssDelta,
+		String rssDisplayStyle, String rssFormat, ThemeDisplay themeDisplay)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public KBArticle getKBArticle(long resourcePrimKey, int version)
@@ -151,17 +146,16 @@ public interface KBArticleService extends BaseService {
 	#getKBArticleAndAllDescendantKBArticles(long, int,
 	OrderByComparator)}
 	*/
-	@java.lang.Deprecated
+	@Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<KBArticle> getKBArticleAndAllDescendants(long groupId,
 		long resourcePrimKey, int status,
 		OrderByComparator<KBArticle> orderByComparator);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.lang.String getKBArticleRSS(long resourcePrimKey, int status,
-		int rssDelta, java.lang.String rssDisplayStyle,
-		java.lang.String rssFormat, ThemeDisplay themeDisplay)
-		throws PortalException;
+	public String getKBArticleRSS(long resourcePrimKey, int status,
+		int rssDelta, String rssDisplayStyle, String rssFormat,
+		ThemeDisplay themeDisplay) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<KBArticle> getKBArticles(long groupId,
@@ -187,9 +181,8 @@ public interface KBArticleService extends BaseService {
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public KBArticleSearchDisplay getKBArticleSearchDisplay(long groupId,
-		java.lang.String title, java.lang.String content, int status,
-		Date startDate, Date endDate, boolean andOperator,
-		int[] curStartValues, int cur, int delta,
+		String title, String content, int status, Date startDate, Date endDate,
+		boolean andOperator, int[] curStartValues, int cur, int delta,
 		OrderByComparator<KBArticle> orderByComparator)
 		throws PortalException;
 
@@ -211,7 +204,7 @@ public interface KBArticleService extends BaseService {
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public KBArticle[] getPreviousAndNextKBArticles(long kbArticleId)
@@ -219,18 +212,18 @@ public interface KBArticleService extends BaseService {
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<KBArticle> getSectionsKBArticles(long groupId,
-		java.lang.String[] sections, int status, int start, int end,
+		String[] sections, int status, int start, int end,
 		OrderByComparator<KBArticle> orderByComparator);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getSectionsKBArticlesCount(long groupId,
-		java.lang.String[] sections, int status);
+	public int getSectionsKBArticlesCount(long groupId, String[] sections,
+		int status);
 
 	/**
 	* @deprecated As of 1.1.0, replaced by {@link #getKBArticles(long, long,
 	int, int, int, OrderByComparator)}
 	*/
-	@java.lang.Deprecated
+	@Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<KBArticle> getSiblingKBArticles(long groupId,
 		long parentResourcePrimKey, int status, int start, int end,
@@ -240,14 +233,14 @@ public interface KBArticleService extends BaseService {
 	* @deprecated As of 1.1.0, replaced by {@link #getKBArticlesCount(long,
 	long, int)}
 	*/
-	@java.lang.Deprecated
+	@Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getSiblingKBArticlesCount(long groupId,
 		long parentResourcePrimKey, int status);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.lang.String[] getTempAttachmentNames(long groupId,
-		java.lang.String tempFolderName) throws PortalException;
+	public String[] getTempAttachmentNames(long groupId, String tempFolderName)
+		throws PortalException;
 
 	public void moveKBArticle(long resourcePrimKey,
 		long parentResourceClassNameId, long parentResourcePrimKey,
@@ -256,26 +249,25 @@ public interface KBArticleService extends BaseService {
 	public KBArticle revertKBArticle(long resourcePrimKey, int version,
 		ServiceContext serviceContext) throws PortalException;
 
-	public void subscribeGroupKBArticles(long groupId,
-		java.lang.String portletId) throws PortalException;
+	public void subscribeGroupKBArticles(long groupId, String portletId)
+		throws PortalException;
 
 	public void subscribeKBArticle(long groupId, long resourcePrimKey)
 		throws PortalException;
 
-	public void unsubscribeGroupKBArticles(long groupId,
-		java.lang.String portletId) throws PortalException;
+	public void unsubscribeGroupKBArticles(long groupId, String portletId)
+		throws PortalException;
 
 	public void unsubscribeKBArticle(long resourcePrimKey)
 		throws PortalException;
 
-	public KBArticle updateKBArticle(long resourcePrimKey,
-		java.lang.String title, java.lang.String content,
-		java.lang.String description, java.lang.String sourceURL,
-		java.lang.String[] sections, java.lang.String[] selectedFileNames,
+	public KBArticle updateKBArticle(long resourcePrimKey, String title,
+		String content, String description, String sourceURL,
+		String[] sections, String[] selectedFileNames,
 		long[] removeFileEntryIds, ServiceContext serviceContext)
 		throws PortalException;
 
 	public void updateKBArticlesPriorities(long groupId,
-		Map<java.lang.Long, java.lang.Double> resourcePrimKeyToPriorityMap)
+		Map<Long, Double> resourcePrimKeyToPriorityMap)
 		throws PortalException;
 }

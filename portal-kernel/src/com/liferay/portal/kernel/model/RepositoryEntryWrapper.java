@@ -159,7 +159,7 @@ public class RepositoryEntryWrapper implements RepositoryEntry,
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new RepositoryEntryWrapper((RepositoryEntry)_repositoryEntry.clone());
 	}
 
@@ -229,7 +229,7 @@ public class RepositoryEntryWrapper implements RepositoryEntry,
 	* @return the mapped ID of this repository entry
 	*/
 	@Override
-	public java.lang.String getMappedId() {
+	public String getMappedId() {
 		return _repositoryEntry.getMappedId();
 	}
 
@@ -304,7 +304,7 @@ public class RepositoryEntryWrapper implements RepositoryEntry,
 	* @return the user name of this repository entry
 	*/
 	@Override
-	public java.lang.String getUserName() {
+	public String getUserName() {
 		return _repositoryEntry.getUserName();
 	}
 
@@ -314,7 +314,7 @@ public class RepositoryEntryWrapper implements RepositoryEntry,
 	* @return the user uuid of this repository entry
 	*/
 	@Override
-	public java.lang.String getUserUuid() {
+	public String getUserUuid() {
 		return _repositoryEntry.getUserUuid();
 	}
 
@@ -324,7 +324,7 @@ public class RepositoryEntryWrapper implements RepositoryEntry,
 	* @return the uuid of this repository entry
 	*/
 	@Override
-	public java.lang.String getUuid() {
+	public String getUuid() {
 		return _repositoryEntry.getUuid();
 	}
 
@@ -439,7 +439,7 @@ public class RepositoryEntryWrapper implements RepositoryEntry,
 	* @param mappedId the mapped ID of this repository entry
 	*/
 	@Override
-	public void setMappedId(java.lang.String mappedId) {
+	public void setMappedId(String mappedId) {
 		_repositoryEntry.setMappedId(mappedId);
 	}
 
@@ -519,7 +519,7 @@ public class RepositoryEntryWrapper implements RepositoryEntry,
 	* @param userName the user name of this repository entry
 	*/
 	@Override
-	public void setUserName(java.lang.String userName) {
+	public void setUserName(String userName) {
 		_repositoryEntry.setUserName(userName);
 	}
 
@@ -529,7 +529,7 @@ public class RepositoryEntryWrapper implements RepositoryEntry,
 	* @param userUuid the user uuid of this repository entry
 	*/
 	@Override
-	public void setUserUuid(java.lang.String userUuid) {
+	public void setUserUuid(String userUuid) {
 		_repositoryEntry.setUserUuid(userUuid);
 	}
 
@@ -539,7 +539,7 @@ public class RepositoryEntryWrapper implements RepositoryEntry,
 	* @param uuid the uuid of this repository entry
 	*/
 	@Override
-	public void setUuid(java.lang.String uuid) {
+	public void setUuid(String uuid) {
 		_repositoryEntry.setUuid(uuid);
 	}
 
@@ -554,7 +554,7 @@ public class RepositoryEntryWrapper implements RepositoryEntry,
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _repositoryEntry.toString();
 	}
 
@@ -564,7 +564,7 @@ public class RepositoryEntryWrapper implements RepositoryEntry,
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _repositoryEntry.toXmlString();
 	}
 

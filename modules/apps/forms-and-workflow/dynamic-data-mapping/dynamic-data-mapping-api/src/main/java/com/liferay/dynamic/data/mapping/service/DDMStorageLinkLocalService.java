@@ -188,8 +188,8 @@ public interface DDMStorageLinkLocalService extends BaseLocalService,
 	* @return the matching ddm storage link, or <code>null</code> if a matching ddm storage link could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public DDMStorageLink fetchDDMStorageLinkByUuidAndCompanyId(
-		java.lang.String uuid, long companyId);
+	public DDMStorageLink fetchDDMStorageLinkByUuidAndCompanyId(String uuid,
+		long companyId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
@@ -218,8 +218,8 @@ public interface DDMStorageLinkLocalService extends BaseLocalService,
 	* @throws PortalException if a matching ddm storage link could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public DDMStorageLink getDDMStorageLinkByUuidAndCompanyId(
-		java.lang.String uuid, long companyId) throws PortalException;
+	public DDMStorageLink getDDMStorageLinkByUuidAndCompanyId(String uuid,
+		long companyId) throws PortalException;
 
 	/**
 	* Returns a range of all the ddm storage links.
@@ -251,7 +251,7 @@ public interface DDMStorageLinkLocalService extends BaseLocalService,
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

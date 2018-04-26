@@ -41,8 +41,8 @@ public class WebsiteServiceUtil {
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.portal.service.impl.WebsiteServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static com.liferay.portal.kernel.model.Website addWebsite(
-		java.lang.String className, long classPK, java.lang.String url,
-		long typeId, boolean primary, ServiceContext serviceContext)
+		String className, long classPK, String url, long typeId,
+		boolean primary, ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addWebsite(className, classPK, url, typeId, primary,
@@ -59,7 +59,7 @@ public class WebsiteServiceUtil {
 	*
 	* @return the OSGi service identifier
 	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
+	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 
@@ -70,13 +70,13 @@ public class WebsiteServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.portal.kernel.model.Website> getWebsites(
-		java.lang.String className, long classPK)
+		String className, long classPK)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getWebsites(className, classPK);
 	}
 
 	public static com.liferay.portal.kernel.model.Website updateWebsite(
-		long websiteId, java.lang.String url, long typeId, boolean primary)
+		long websiteId, String url, long typeId, boolean primary)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().updateWebsite(websiteId, url, typeId, primary);
 	}

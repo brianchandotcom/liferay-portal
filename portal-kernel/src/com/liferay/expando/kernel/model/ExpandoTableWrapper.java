@@ -91,7 +91,7 @@ public class ExpandoTableWrapper implements ExpandoTable,
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new ExpandoTableWrapper((ExpandoTable)_expandoTable.clone());
 	}
 
@@ -106,7 +106,7 @@ public class ExpandoTableWrapper implements ExpandoTable,
 	* @return the fully qualified class name of this expando table
 	*/
 	@Override
-	public java.lang.String getClassName() {
+	public String getClassName() {
 		return _expandoTable.getClassName();
 	}
 
@@ -141,7 +141,7 @@ public class ExpandoTableWrapper implements ExpandoTable,
 	* @return the name of this expando table
 	*/
 	@Override
-	public java.lang.String getName() {
+	public String getName() {
 		return _expandoTable.getName();
 	}
 
@@ -206,7 +206,7 @@ public class ExpandoTableWrapper implements ExpandoTable,
 	}
 
 	@Override
-	public void setClassName(java.lang.String className) {
+	public void setClassName(String className) {
 		_expandoTable.setClassName(className);
 	}
 
@@ -252,7 +252,7 @@ public class ExpandoTableWrapper implements ExpandoTable,
 	* @param name the name of this expando table
 	*/
 	@Override
-	public void setName(java.lang.String name) {
+	public void setName(String name) {
 		_expandoTable.setName(name);
 	}
 
@@ -297,7 +297,7 @@ public class ExpandoTableWrapper implements ExpandoTable,
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _expandoTable.toString();
 	}
 
@@ -307,7 +307,7 @@ public class ExpandoTableWrapper implements ExpandoTable,
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _expandoTable.toXmlString();
 	}
 

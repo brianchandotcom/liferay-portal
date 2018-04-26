@@ -65,7 +65,7 @@ public class SubscriptionLocalServiceUtil {
 	* @return the subscription
 	*/
 	public static com.liferay.subscription.model.Subscription addSubscription(
-		long userId, long groupId, java.lang.String className, long classPK)
+		long userId, long groupId, String className, long classPK)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().addSubscription(userId, groupId, className, classPK);
 	}
@@ -92,8 +92,8 @@ public class SubscriptionLocalServiceUtil {
 	* @return the subscription
 	*/
 	public static com.liferay.subscription.model.Subscription addSubscription(
-		long userId, long groupId, java.lang.String className, long classPK,
-		java.lang.String frequency)
+		long userId, long groupId, String className, long classPK,
+		String frequency)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addSubscription(userId, groupId, className, classPK,
@@ -156,8 +156,8 @@ public class SubscriptionLocalServiceUtil {
 	* @param className the entity's class name
 	* @param classPK the primary key of the entity's instance
 	*/
-	public static void deleteSubscription(long userId,
-		java.lang.String className, long classPK)
+	public static void deleteSubscription(long userId, String className,
+		long classPK)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().deleteSubscription(userId, className, classPK);
 	}
@@ -197,8 +197,8 @@ public class SubscriptionLocalServiceUtil {
 	* @param className the entity's class name
 	* @param classPK the primary key of the entity's instance
 	*/
-	public static void deleteSubscriptions(long companyId,
-		java.lang.String className, long classPK)
+	public static void deleteSubscriptions(long companyId, String className,
+		long classPK)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().deleteSubscriptions(companyId, className, classPK);
 	}
@@ -287,7 +287,7 @@ public class SubscriptionLocalServiceUtil {
 	}
 
 	public static com.liferay.subscription.model.Subscription fetchSubscription(
-		long companyId, long userId, java.lang.String className, long classPK) {
+		long companyId, long userId, String className, long classPK) {
 		return getService()
 				   .fetchSubscription(companyId, userId, className, classPK);
 	}
@@ -305,7 +305,7 @@ public class SubscriptionLocalServiceUtil {
 	*
 	* @return the OSGi service identifier
 	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
+	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 
@@ -338,7 +338,7 @@ public class SubscriptionLocalServiceUtil {
 	* @return the subscription of the user to the entity
 	*/
 	public static com.liferay.subscription.model.Subscription getSubscription(
-		long companyId, long userId, java.lang.String className, long classPK)
+		long companyId, long userId, String className, long classPK)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .getSubscription(companyId, userId, className, classPK);
@@ -370,7 +370,7 @@ public class SubscriptionLocalServiceUtil {
 	* @return the subscriptions of the user to the entities
 	*/
 	public static java.util.List<com.liferay.subscription.model.Subscription> getSubscriptions(
-		long companyId, long userId, java.lang.String className, long[] classPKs) {
+		long companyId, long userId, String className, long[] classPKs) {
 		return getService()
 				   .getSubscriptions(companyId, userId, className, classPKs);
 	}
@@ -384,7 +384,7 @@ public class SubscriptionLocalServiceUtil {
 	* @return the subscriptions to the entity
 	*/
 	public static java.util.List<com.liferay.subscription.model.Subscription> getSubscriptions(
-		long companyId, java.lang.String className, long classPK) {
+		long companyId, String className, long classPK) {
 		return getService().getSubscriptions(companyId, className, classPK);
 	}
 
@@ -422,7 +422,7 @@ public class SubscriptionLocalServiceUtil {
 	* @return the subscriptions of the user to the entities with the class name
 	*/
 	public static java.util.List<com.liferay.subscription.model.Subscription> getUserSubscriptions(
-		long userId, java.lang.String className) {
+		long userId, String className) {
 		return getService().getUserSubscriptions(userId, className);
 	}
 
@@ -447,7 +447,7 @@ public class SubscriptionLocalServiceUtil {
 	<code>false</code> otherwise
 	*/
 	public static boolean isSubscribed(long companyId, long userId,
-		java.lang.String className, long classPK) {
+		String className, long classPK) {
 		return getService().isSubscribed(companyId, userId, className, classPK);
 	}
 
@@ -463,7 +463,7 @@ public class SubscriptionLocalServiceUtil {
 	entities; <code>false</code> otherwise
 	*/
 	public static boolean isSubscribed(long companyId, long userId,
-		java.lang.String className, long[] classPKs) {
+		String className, long[] classPKs) {
 		return getService().isSubscribed(companyId, userId, className, classPKs);
 	}
 

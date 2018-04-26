@@ -54,15 +54,15 @@ public interface App extends AppModel, PersistedModel {
 			}
 		};
 
-	public java.lang.String[] addContextName(java.lang.String contextName);
+	public String[] addContextName(String contextName);
 
-	public java.lang.String[] getContextNames();
+	public String[] getContextNames();
 
-	public java.lang.String getFileDir();
+	public String getFileDir();
 
-	public java.lang.String getFileName();
+	public String getFileName();
 
-	public java.lang.String getFilePath();
+	public String getFilePath();
 
 	public boolean isDownloaded()
 		throws com.liferay.portal.kernel.exception.PortalException;

@@ -356,7 +356,7 @@ public class FragmentCollectionUtil {
 	* @throws NoSuchCollectionException if a matching fragment collection could not be found
 	*/
 	public static FragmentCollection findByG_FCK(long groupId,
-		java.lang.String fragmentCollectionKey)
+		String fragmentCollectionKey)
 		throws com.liferay.fragment.exception.NoSuchCollectionException {
 		return getPersistence().findByG_FCK(groupId, fragmentCollectionKey);
 	}
@@ -369,7 +369,7 @@ public class FragmentCollectionUtil {
 	* @return the matching fragment collection, or <code>null</code> if a matching fragment collection could not be found
 	*/
 	public static FragmentCollection fetchByG_FCK(long groupId,
-		java.lang.String fragmentCollectionKey) {
+		String fragmentCollectionKey) {
 		return getPersistence().fetchByG_FCK(groupId, fragmentCollectionKey);
 	}
 
@@ -382,7 +382,7 @@ public class FragmentCollectionUtil {
 	* @return the matching fragment collection, or <code>null</code> if a matching fragment collection could not be found
 	*/
 	public static FragmentCollection fetchByG_FCK(long groupId,
-		java.lang.String fragmentCollectionKey, boolean retrieveFromCache) {
+		String fragmentCollectionKey, boolean retrieveFromCache) {
 		return getPersistence()
 				   .fetchByG_FCK(groupId, fragmentCollectionKey,
 			retrieveFromCache);
@@ -396,7 +396,7 @@ public class FragmentCollectionUtil {
 	* @return the fragment collection that was removed
 	*/
 	public static FragmentCollection removeByG_FCK(long groupId,
-		java.lang.String fragmentCollectionKey)
+		String fragmentCollectionKey)
 		throws com.liferay.fragment.exception.NoSuchCollectionException {
 		return getPersistence().removeByG_FCK(groupId, fragmentCollectionKey);
 	}
@@ -408,8 +408,7 @@ public class FragmentCollectionUtil {
 	* @param fragmentCollectionKey the fragment collection key
 	* @return the number of matching fragment collections
 	*/
-	public static int countByG_FCK(long groupId,
-		java.lang.String fragmentCollectionKey) {
+	public static int countByG_FCK(long groupId, String fragmentCollectionKey) {
 		return getPersistence().countByG_FCK(groupId, fragmentCollectionKey);
 	}
 
@@ -421,7 +420,7 @@ public class FragmentCollectionUtil {
 	* @return the matching fragment collections
 	*/
 	public static List<FragmentCollection> findByG_LikeN(long groupId,
-		java.lang.String name) {
+		String name) {
 		return getPersistence().findByG_LikeN(groupId, name);
 	}
 
@@ -439,7 +438,7 @@ public class FragmentCollectionUtil {
 	* @return the range of matching fragment collections
 	*/
 	public static List<FragmentCollection> findByG_LikeN(long groupId,
-		java.lang.String name, int start, int end) {
+		String name, int start, int end) {
 		return getPersistence().findByG_LikeN(groupId, name, start, end);
 	}
 
@@ -458,7 +457,7 @@ public class FragmentCollectionUtil {
 	* @return the ordered range of matching fragment collections
 	*/
 	public static List<FragmentCollection> findByG_LikeN(long groupId,
-		java.lang.String name, int start, int end,
+		String name, int start, int end,
 		OrderByComparator<FragmentCollection> orderByComparator) {
 		return getPersistence()
 				   .findByG_LikeN(groupId, name, start, end, orderByComparator);
@@ -480,7 +479,7 @@ public class FragmentCollectionUtil {
 	* @return the ordered range of matching fragment collections
 	*/
 	public static List<FragmentCollection> findByG_LikeN(long groupId,
-		java.lang.String name, int start, int end,
+		String name, int start, int end,
 		OrderByComparator<FragmentCollection> orderByComparator,
 		boolean retrieveFromCache) {
 		return getPersistence()
@@ -498,8 +497,7 @@ public class FragmentCollectionUtil {
 	* @throws NoSuchCollectionException if a matching fragment collection could not be found
 	*/
 	public static FragmentCollection findByG_LikeN_First(long groupId,
-		java.lang.String name,
-		OrderByComparator<FragmentCollection> orderByComparator)
+		String name, OrderByComparator<FragmentCollection> orderByComparator)
 		throws com.liferay.fragment.exception.NoSuchCollectionException {
 		return getPersistence()
 				   .findByG_LikeN_First(groupId, name, orderByComparator);
@@ -514,8 +512,7 @@ public class FragmentCollectionUtil {
 	* @return the first matching fragment collection, or <code>null</code> if a matching fragment collection could not be found
 	*/
 	public static FragmentCollection fetchByG_LikeN_First(long groupId,
-		java.lang.String name,
-		OrderByComparator<FragmentCollection> orderByComparator) {
+		String name, OrderByComparator<FragmentCollection> orderByComparator) {
 		return getPersistence()
 				   .fetchByG_LikeN_First(groupId, name, orderByComparator);
 	}
@@ -530,8 +527,7 @@ public class FragmentCollectionUtil {
 	* @throws NoSuchCollectionException if a matching fragment collection could not be found
 	*/
 	public static FragmentCollection findByG_LikeN_Last(long groupId,
-		java.lang.String name,
-		OrderByComparator<FragmentCollection> orderByComparator)
+		String name, OrderByComparator<FragmentCollection> orderByComparator)
 		throws com.liferay.fragment.exception.NoSuchCollectionException {
 		return getPersistence()
 				   .findByG_LikeN_Last(groupId, name, orderByComparator);
@@ -546,8 +542,7 @@ public class FragmentCollectionUtil {
 	* @return the last matching fragment collection, or <code>null</code> if a matching fragment collection could not be found
 	*/
 	public static FragmentCollection fetchByG_LikeN_Last(long groupId,
-		java.lang.String name,
-		OrderByComparator<FragmentCollection> orderByComparator) {
+		String name, OrderByComparator<FragmentCollection> orderByComparator) {
 		return getPersistence()
 				   .fetchByG_LikeN_Last(groupId, name, orderByComparator);
 	}
@@ -563,7 +558,7 @@ public class FragmentCollectionUtil {
 	* @throws NoSuchCollectionException if a fragment collection with the primary key could not be found
 	*/
 	public static FragmentCollection[] findByG_LikeN_PrevAndNext(
-		long fragmentCollectionId, long groupId, java.lang.String name,
+		long fragmentCollectionId, long groupId, String name,
 		OrderByComparator<FragmentCollection> orderByComparator)
 		throws com.liferay.fragment.exception.NoSuchCollectionException {
 		return getPersistence()
@@ -579,7 +574,7 @@ public class FragmentCollectionUtil {
 	* @return the matching fragment collections that the user has permission to view
 	*/
 	public static List<FragmentCollection> filterFindByG_LikeN(long groupId,
-		java.lang.String name) {
+		String name) {
 		return getPersistence().filterFindByG_LikeN(groupId, name);
 	}
 
@@ -597,7 +592,7 @@ public class FragmentCollectionUtil {
 	* @return the range of matching fragment collections that the user has permission to view
 	*/
 	public static List<FragmentCollection> filterFindByG_LikeN(long groupId,
-		java.lang.String name, int start, int end) {
+		String name, int start, int end) {
 		return getPersistence().filterFindByG_LikeN(groupId, name, start, end);
 	}
 
@@ -616,7 +611,7 @@ public class FragmentCollectionUtil {
 	* @return the ordered range of matching fragment collections that the user has permission to view
 	*/
 	public static List<FragmentCollection> filterFindByG_LikeN(long groupId,
-		java.lang.String name, int start, int end,
+		String name, int start, int end,
 		OrderByComparator<FragmentCollection> orderByComparator) {
 		return getPersistence()
 				   .filterFindByG_LikeN(groupId, name, start, end,
@@ -634,7 +629,7 @@ public class FragmentCollectionUtil {
 	* @throws NoSuchCollectionException if a fragment collection with the primary key could not be found
 	*/
 	public static FragmentCollection[] filterFindByG_LikeN_PrevAndNext(
-		long fragmentCollectionId, long groupId, java.lang.String name,
+		long fragmentCollectionId, long groupId, String name,
 		OrderByComparator<FragmentCollection> orderByComparator)
 		throws com.liferay.fragment.exception.NoSuchCollectionException {
 		return getPersistence()
@@ -648,7 +643,7 @@ public class FragmentCollectionUtil {
 	* @param groupId the group ID
 	* @param name the name
 	*/
-	public static void removeByG_LikeN(long groupId, java.lang.String name) {
+	public static void removeByG_LikeN(long groupId, String name) {
 		getPersistence().removeByG_LikeN(groupId, name);
 	}
 
@@ -659,7 +654,7 @@ public class FragmentCollectionUtil {
 	* @param name the name
 	* @return the number of matching fragment collections
 	*/
-	public static int countByG_LikeN(long groupId, java.lang.String name) {
+	public static int countByG_LikeN(long groupId, String name) {
 		return getPersistence().countByG_LikeN(groupId, name);
 	}
 
@@ -670,7 +665,7 @@ public class FragmentCollectionUtil {
 	* @param name the name
 	* @return the number of matching fragment collections that the user has permission to view
 	*/
-	public static int filterCountByG_LikeN(long groupId, java.lang.String name) {
+	public static int filterCountByG_LikeN(long groupId, String name) {
 		return getPersistence().filterCountByG_LikeN(groupId, name);
 	}
 

@@ -165,12 +165,12 @@ public class AppWrapper implements App, ModelWrapper<App> {
 	}
 
 	@Override
-	public java.lang.String[] addContextName(java.lang.String contextName) {
+	public String[] addContextName(String contextName) {
 		return _app.addContextName(contextName);
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new AppWrapper((App)_app.clone());
 	}
 
@@ -195,7 +195,7 @@ public class AppWrapper implements App, ModelWrapper<App> {
 	* @return the category of this app
 	*/
 	@Override
-	public java.lang.String getCategory() {
+	public String getCategory() {
 		return _app.getCategory();
 	}
 
@@ -210,7 +210,7 @@ public class AppWrapper implements App, ModelWrapper<App> {
 	}
 
 	@Override
-	public java.lang.String[] getContextNames() {
+	public String[] getContextNames() {
 		return _app.getContextNames();
 	}
 
@@ -230,7 +230,7 @@ public class AppWrapper implements App, ModelWrapper<App> {
 	* @return the description of this app
 	*/
 	@Override
-	public java.lang.String getDescription() {
+	public String getDescription() {
 		return _app.getDescription();
 	}
 
@@ -240,17 +240,17 @@ public class AppWrapper implements App, ModelWrapper<App> {
 	}
 
 	@Override
-	public java.lang.String getFileDir() {
+	public String getFileDir() {
 		return _app.getFileDir();
 	}
 
 	@Override
-	public java.lang.String getFileName() {
+	public String getFileName() {
 		return _app.getFileName();
 	}
 
 	@Override
-	public java.lang.String getFilePath() {
+	public String getFilePath() {
 		return _app.getFilePath();
 	}
 
@@ -260,7 +260,7 @@ public class AppWrapper implements App, ModelWrapper<App> {
 	* @return the icon url of this app
 	*/
 	@Override
-	public java.lang.String getIconURL() {
+	public String getIconURL() {
 		return _app.getIconURL();
 	}
 
@@ -315,7 +315,7 @@ public class AppWrapper implements App, ModelWrapper<App> {
 	* @return the title of this app
 	*/
 	@Override
-	public java.lang.String getTitle() {
+	public String getTitle() {
 		return _app.getTitle();
 	}
 
@@ -335,7 +335,7 @@ public class AppWrapper implements App, ModelWrapper<App> {
 	* @return the user name of this app
 	*/
 	@Override
-	public java.lang.String getUserName() {
+	public String getUserName() {
 		return _app.getUserName();
 	}
 
@@ -345,7 +345,7 @@ public class AppWrapper implements App, ModelWrapper<App> {
 	* @return the user uuid of this app
 	*/
 	@Override
-	public java.lang.String getUserUuid() {
+	public String getUserUuid() {
 		return _app.getUserUuid();
 	}
 
@@ -355,7 +355,7 @@ public class AppWrapper implements App, ModelWrapper<App> {
 	* @return the uuid of this app
 	*/
 	@Override
-	public java.lang.String getUuid() {
+	public String getUuid() {
 		return _app.getUuid();
 	}
 
@@ -365,7 +365,7 @@ public class AppWrapper implements App, ModelWrapper<App> {
 	* @return the version of this app
 	*/
 	@Override
-	public java.lang.String getVersion() {
+	public String getVersion() {
 		return _app.getVersion();
 	}
 
@@ -436,7 +436,7 @@ public class AppWrapper implements App, ModelWrapper<App> {
 	* @param category the category of this app
 	*/
 	@Override
-	public void setCategory(java.lang.String category) {
+	public void setCategory(String category) {
 		_app.setCategory(category);
 	}
 
@@ -466,7 +466,7 @@ public class AppWrapper implements App, ModelWrapper<App> {
 	* @param description the description of this app
 	*/
 	@Override
-	public void setDescription(java.lang.String description) {
+	public void setDescription(String description) {
 		_app.setDescription(description);
 	}
 
@@ -492,7 +492,7 @@ public class AppWrapper implements App, ModelWrapper<App> {
 	* @param iconURL the icon url of this app
 	*/
 	@Override
-	public void setIconURL(java.lang.String iconURL) {
+	public void setIconURL(String iconURL) {
 		_app.setIconURL(iconURL);
 	}
 
@@ -552,7 +552,7 @@ public class AppWrapper implements App, ModelWrapper<App> {
 	* @param title the title of this app
 	*/
 	@Override
-	public void setTitle(java.lang.String title) {
+	public void setTitle(String title) {
 		_app.setTitle(title);
 	}
 
@@ -572,7 +572,7 @@ public class AppWrapper implements App, ModelWrapper<App> {
 	* @param userName the user name of this app
 	*/
 	@Override
-	public void setUserName(java.lang.String userName) {
+	public void setUserName(String userName) {
 		_app.setUserName(userName);
 	}
 
@@ -582,7 +582,7 @@ public class AppWrapper implements App, ModelWrapper<App> {
 	* @param userUuid the user uuid of this app
 	*/
 	@Override
-	public void setUserUuid(java.lang.String userUuid) {
+	public void setUserUuid(String userUuid) {
 		_app.setUserUuid(userUuid);
 	}
 
@@ -592,7 +592,7 @@ public class AppWrapper implements App, ModelWrapper<App> {
 	* @param uuid the uuid of this app
 	*/
 	@Override
-	public void setUuid(java.lang.String uuid) {
+	public void setUuid(String uuid) {
 		_app.setUuid(uuid);
 	}
 
@@ -602,7 +602,7 @@ public class AppWrapper implements App, ModelWrapper<App> {
 	* @param version the version of this app
 	*/
 	@Override
-	public void setVersion(java.lang.String version) {
+	public void setVersion(String version) {
 		_app.setVersion(version);
 	}
 
@@ -617,7 +617,7 @@ public class AppWrapper implements App, ModelWrapper<App> {
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _app.toString();
 	}
 
@@ -627,7 +627,7 @@ public class AppWrapper implements App, ModelWrapper<App> {
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _app.toXmlString();
 	}
 

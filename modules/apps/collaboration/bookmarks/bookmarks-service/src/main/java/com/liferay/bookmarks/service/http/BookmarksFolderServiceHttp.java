@@ -56,8 +56,8 @@ import com.liferay.portal.kernel.util.MethodKey;
 @ProviderType
 public class BookmarksFolderServiceHttp {
 	public static com.liferay.bookmarks.model.BookmarksFolder addFolder(
-		HttpPrincipal httpPrincipal, long parentFolderId,
-		java.lang.String name, java.lang.String description,
+		HttpPrincipal httpPrincipal, long parentFolderId, String name,
+		String description,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -174,7 +174,7 @@ public class BookmarksFolderServiceHttp {
 		}
 	}
 
-	public static java.util.List<java.lang.Long> getFolderIds(
+	public static java.util.List<Long> getFolderIds(
 		HttpPrincipal httpPrincipal, long groupId, long folderId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -197,7 +197,7 @@ public class BookmarksFolderServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (java.util.List<java.lang.Long>)returnObj;
+			return (java.util.List<Long>)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -315,7 +315,7 @@ public class BookmarksFolderServiceHttp {
 		}
 	}
 
-	public static java.util.List<java.lang.Object> getFoldersAndEntries(
+	public static java.util.List<Object> getFoldersAndEntries(
 		HttpPrincipal httpPrincipal, long groupId, long folderId) {
 		try {
 			MethodKey methodKey = new MethodKey(BookmarksFolderServiceUtil.class,
@@ -333,7 +333,7 @@ public class BookmarksFolderServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (java.util.List<java.lang.Object>)returnObj;
+			return (java.util.List<Object>)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -342,7 +342,7 @@ public class BookmarksFolderServiceHttp {
 		}
 	}
 
-	public static java.util.List<java.lang.Object> getFoldersAndEntries(
+	public static java.util.List<Object> getFoldersAndEntries(
 		HttpPrincipal httpPrincipal, long groupId, long folderId, int status) {
 		try {
 			MethodKey methodKey = new MethodKey(BookmarksFolderServiceUtil.class,
@@ -361,7 +361,7 @@ public class BookmarksFolderServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (java.util.List<java.lang.Object>)returnObj;
+			return (java.util.List<Object>)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -370,7 +370,7 @@ public class BookmarksFolderServiceHttp {
 		}
 	}
 
-	public static java.util.List<java.lang.Object> getFoldersAndEntries(
+	public static java.util.List<Object> getFoldersAndEntries(
 		HttpPrincipal httpPrincipal, long groupId, long folderId, int status,
 		int start, int end) {
 		try {
@@ -390,7 +390,7 @@ public class BookmarksFolderServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (java.util.List<java.lang.Object>)returnObj;
+			return (java.util.List<Object>)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -510,7 +510,7 @@ public class BookmarksFolderServiceHttp {
 	}
 
 	public static void getSubfolderIds(HttpPrincipal httpPrincipal,
-		java.util.List<java.lang.Long> folderIds, long groupId, long folderId) {
+		java.util.List<Long> folderIds, long groupId, long folderId) {
 		try {
 			MethodKey methodKey = new MethodKey(BookmarksFolderServiceUtil.class,
 					"getSubfolderIds", _getSubfolderIdsParameterTypes16);
@@ -533,7 +533,7 @@ public class BookmarksFolderServiceHttp {
 	}
 
 	public static void getSubfolderIds(HttpPrincipal httpPrincipal,
-		java.util.List<java.lang.Long> folderIds, long groupId, long folderId,
+		java.util.List<Long> folderIds, long groupId, long folderId,
 		boolean recurse) {
 		try {
 			MethodKey methodKey = new MethodKey(BookmarksFolderServiceUtil.class,
@@ -556,7 +556,7 @@ public class BookmarksFolderServiceHttp {
 		}
 	}
 
-	public static java.util.List<java.lang.Long> getSubfolderIds(
+	public static java.util.List<Long> getSubfolderIds(
 		HttpPrincipal httpPrincipal, long groupId, long folderId,
 		boolean recurse) {
 		try {
@@ -575,7 +575,7 @@ public class BookmarksFolderServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (java.util.List<java.lang.Long>)returnObj;
+			return (java.util.List<Long>)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -793,8 +793,7 @@ public class BookmarksFolderServiceHttp {
 
 	public static com.liferay.bookmarks.model.BookmarksFolder updateFolder(
 		HttpPrincipal httpPrincipal, long folderId, long parentFolderId,
-		java.lang.String name, java.lang.String description,
-		boolean mergeWithParentFolder,
+		String name, String description, boolean mergeWithParentFolder,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -829,7 +828,7 @@ public class BookmarksFolderServiceHttp {
 
 	public static com.liferay.bookmarks.model.BookmarksFolder updateFolder(
 		HttpPrincipal httpPrincipal, long folderId, long parentFolderId,
-		java.lang.String name, java.lang.String description,
+		String name, String description,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -863,7 +862,7 @@ public class BookmarksFolderServiceHttp {
 
 	private static Log _log = LogFactoryUtil.getLog(BookmarksFolderServiceHttp.class);
 	private static final Class<?>[] _addFolderParameterTypes0 = new Class[] {
-			long.class, java.lang.String.class, java.lang.String.class,
+			long.class, String.class, String.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _deleteFolderParameterTypes1 = new Class[] {
@@ -942,13 +941,11 @@ public class BookmarksFolderServiceHttp {
 			long.class, long.class
 		};
 	private static final Class<?>[] _updateFolderParameterTypes26 = new Class[] {
-			long.class, long.class, java.lang.String.class,
-			java.lang.String.class, boolean.class,
+			long.class, long.class, String.class, String.class, boolean.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _updateFolderParameterTypes27 = new Class[] {
-			long.class, long.class, java.lang.String.class,
-			java.lang.String.class,
+			long.class, long.class, String.class, String.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 }

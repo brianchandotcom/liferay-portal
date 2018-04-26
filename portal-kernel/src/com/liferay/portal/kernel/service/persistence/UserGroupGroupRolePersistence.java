@@ -848,5 +848,5 @@ public interface UserGroupGroupRolePersistence extends BasePersistence<UserGroup
 	*/
 	public int countAll();
 
-	public java.util.Set<java.lang.String> getCompoundPKColumnNames();
+	public java.util.Set<String> getCompoundPKColumnNames();
 }

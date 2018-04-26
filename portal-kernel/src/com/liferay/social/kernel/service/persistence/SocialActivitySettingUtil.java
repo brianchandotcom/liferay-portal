@@ -840,7 +840,7 @@ public class SocialActivitySettingUtil {
 	* @throws NoSuchActivitySettingException if a matching social activity setting could not be found
 	*/
 	public static SocialActivitySetting findByG_C_A_N(long groupId,
-		long classNameId, int activityType, java.lang.String name)
+		long classNameId, int activityType, String name)
 		throws com.liferay.social.kernel.exception.NoSuchActivitySettingException {
 		return getPersistence()
 				   .findByG_C_A_N(groupId, classNameId, activityType, name);
@@ -856,7 +856,7 @@ public class SocialActivitySettingUtil {
 	* @return the matching social activity setting, or <code>null</code> if a matching social activity setting could not be found
 	*/
 	public static SocialActivitySetting fetchByG_C_A_N(long groupId,
-		long classNameId, int activityType, java.lang.String name) {
+		long classNameId, int activityType, String name) {
 		return getPersistence()
 				   .fetchByG_C_A_N(groupId, classNameId, activityType, name);
 	}
@@ -872,7 +872,7 @@ public class SocialActivitySettingUtil {
 	* @return the matching social activity setting, or <code>null</code> if a matching social activity setting could not be found
 	*/
 	public static SocialActivitySetting fetchByG_C_A_N(long groupId,
-		long classNameId, int activityType, java.lang.String name,
+		long classNameId, int activityType, String name,
 		boolean retrieveFromCache) {
 		return getPersistence()
 				   .fetchByG_C_A_N(groupId, classNameId, activityType, name,
@@ -889,7 +889,7 @@ public class SocialActivitySettingUtil {
 	* @return the social activity setting that was removed
 	*/
 	public static SocialActivitySetting removeByG_C_A_N(long groupId,
-		long classNameId, int activityType, java.lang.String name)
+		long classNameId, int activityType, String name)
 		throws com.liferay.social.kernel.exception.NoSuchActivitySettingException {
 		return getPersistence()
 				   .removeByG_C_A_N(groupId, classNameId, activityType, name);
@@ -905,7 +905,7 @@ public class SocialActivitySettingUtil {
 	* @return the number of matching social activity settings
 	*/
 	public static int countByG_C_A_N(long groupId, long classNameId,
-		int activityType, java.lang.String name) {
+		int activityType, String name) {
 		return getPersistence()
 				   .countByG_C_A_N(groupId, classNameId, activityType, name);
 	}

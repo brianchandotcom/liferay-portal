@@ -33,7 +33,7 @@ public class RatingsEntryServiceWrapper implements RatingsEntryService,
 	}
 
 	@Override
-	public void deleteEntry(java.lang.String className, long classPK)
+	public void deleteEntry(String className, long classPK)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_ratingsEntryService.deleteEntry(className, classPK);
 	}
@@ -44,13 +44,13 @@ public class RatingsEntryServiceWrapper implements RatingsEntryService,
 	* @return the OSGi service identifier
 	*/
 	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
+	public String getOSGiServiceIdentifier() {
 		return _ratingsEntryService.getOSGiServiceIdentifier();
 	}
 
 	@Override
 	public com.liferay.ratings.kernel.model.RatingsEntry updateEntry(
-		java.lang.String className, long classPK, double score)
+		String className, long classPK, double score)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _ratingsEntryService.updateEntry(className, classPK, score);
 	}

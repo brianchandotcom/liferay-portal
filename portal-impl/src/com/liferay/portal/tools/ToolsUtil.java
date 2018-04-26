@@ -30,6 +30,7 @@ import de.hunsicker.jalopy.storage.Convention;
 import de.hunsicker.jalopy.storage.ConventionKeys;
 import de.hunsicker.jalopy.storage.Environment;
 
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
 
@@ -391,10 +392,6 @@ public class ToolsUtil {
 
 		content = importsFormatter.format(content, packagePath, className);
 
-		File tempFile = new File(_TMP_DIR, "ServiceBuilder.temp");
-
-		_write(tempFile, content);
-
 		// Beautify
 
 		StringBuffer sb = new StringBuffer();
@@ -402,7 +399,8 @@ public class ToolsUtil {
 		Jalopy jalopy = new Jalopy();
 
 		jalopy.setFileFormat(FileFormat.UNIX);
-		jalopy.setInput(tempFile);
+		jalopy.setInput(
+			new ByteArrayInputStream(content.getBytes()), file.getPath());
 		jalopy.setOutput(sb);
 
 		File jalopyXmlFile = new File("tools/jalopy.xml");
@@ -494,8 +492,6 @@ public class ToolsUtil {
 			newContent.substring(0, newContent.length() - 2) + "\n\n}";*/
 
 		writeFileRaw(file, newContent, modifiedFileNames);
-
-		tempFile.deleteOnExit();
 
 		if (failOnFormatError && !formatSuccess) {
 			throw new IOException("Unable to beautify " + file);
@@ -659,7 +655,5 @@ public class ToolsUtil {
 
 		Files.write(path, s.getBytes(StandardCharsets.UTF_8));
 	}
-
-	private static final String _TMP_DIR = System.getProperty("java.io.tmpdir");
 
 }

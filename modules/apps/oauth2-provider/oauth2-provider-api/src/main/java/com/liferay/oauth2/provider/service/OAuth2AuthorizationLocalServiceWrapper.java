@@ -36,13 +36,11 @@ public class OAuth2AuthorizationLocalServiceWrapper
 
 	@Override
 	public com.liferay.oauth2.provider.model.OAuth2Authorization addOAuth2Authorization(
-		long companyId, long userId, java.lang.String userName,
-		long oAuth2ApplicationId, long oAuth2ApplicationScopeAliasesId,
-		java.lang.String accessTokenContent,
+		long companyId, long userId, String userName, long oAuth2ApplicationId,
+		long oAuth2ApplicationScopeAliasesId, String accessTokenContent,
 		java.util.Date accessTokenCreateDate,
-		java.util.Date accessTokenExpirationDate,
-		java.lang.String remoteIPInfo, java.lang.String refreshTokenContent,
-		java.util.Date refreshTokenCreateDate,
+		java.util.Date accessTokenExpirationDate, String remoteIPInfo,
+		String refreshTokenContent, java.util.Date refreshTokenCreateDate,
 		java.util.Date refreshTokenExpirationDate) {
 		return _oAuth2AuthorizationLocalService.addOAuth2Authorization(companyId,
 			userId, userName, oAuth2ApplicationId,
@@ -272,13 +270,13 @@ public class OAuth2AuthorizationLocalServiceWrapper
 
 	@Override
 	public com.liferay.oauth2.provider.model.OAuth2Authorization fetchOAuth2AuthorizationByAccessTokenContent(
-		java.lang.String accessTokenContent) {
+		String accessTokenContent) {
 		return _oAuth2AuthorizationLocalService.fetchOAuth2AuthorizationByAccessTokenContent(accessTokenContent);
 	}
 
 	@Override
 	public com.liferay.oauth2.provider.model.OAuth2Authorization fetchOAuth2AuthorizationByRefreshTokenContent(
-		java.lang.String refreshTokenContent) {
+		String refreshTokenContent) {
 		return _oAuth2AuthorizationLocalService.fetchOAuth2AuthorizationByRefreshTokenContent(refreshTokenContent);
 	}
 
@@ -308,14 +306,14 @@ public class OAuth2AuthorizationLocalServiceWrapper
 
 	@Override
 	public com.liferay.oauth2.provider.model.OAuth2Authorization getOAuth2AuthorizationByAccessTokenContent(
-		java.lang.String accessTokenContent)
+		String accessTokenContent)
 		throws com.liferay.oauth2.provider.exception.NoSuchOAuth2AuthorizationException {
 		return _oAuth2AuthorizationLocalService.getOAuth2AuthorizationByAccessTokenContent(accessTokenContent);
 	}
 
 	@Override
 	public com.liferay.oauth2.provider.model.OAuth2Authorization getOAuth2AuthorizationByRefreshTokenContent(
-		java.lang.String refreshTokenContent)
+		String refreshTokenContent)
 		throws com.liferay.oauth2.provider.exception.NoSuchOAuth2AuthorizationException {
 		return _oAuth2AuthorizationLocalService.getOAuth2AuthorizationByRefreshTokenContent(refreshTokenContent);
 	}
@@ -411,7 +409,7 @@ public class OAuth2AuthorizationLocalServiceWrapper
 	* @return the OSGi service identifier
 	*/
 	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
+	public String getOSGiServiceIdentifier() {
 		return _oAuth2AuthorizationLocalService.getOSGiServiceIdentifier();
 	}
 

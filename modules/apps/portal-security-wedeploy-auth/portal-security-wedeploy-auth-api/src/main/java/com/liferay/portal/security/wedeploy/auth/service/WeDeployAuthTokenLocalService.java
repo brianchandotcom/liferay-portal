@@ -60,18 +60,17 @@ public interface WeDeployAuthTokenLocalService extends BaseLocalService,
 	 *
 	 * Never modify or reference this interface directly. Always use {@link WeDeployAuthTokenLocalServiceUtil} to access the we deploy auth token local service. Add custom service methods to {@link com.liferay.portal.security.wedeploy.auth.service.impl.WeDeployAuthTokenLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public WeDeployAuthToken addAccessWeDeployAuthToken(
-		java.lang.String redirectURI, java.lang.String clientId,
-		java.lang.String clientSecret, java.lang.String authorizationToken,
+	public WeDeployAuthToken addAccessWeDeployAuthToken(String redirectURI,
+		String clientId, String clientSecret, String authorizationToken,
 		int type, ServiceContext serviceContext) throws PortalException;
 
 	public WeDeployAuthToken addAuthorizationWeDeployAuthToken(long userId,
-		java.lang.String redirectURI, java.lang.String clientId,
-		ServiceContext serviceContext) throws PortalException;
+		String redirectURI, String clientId, ServiceContext serviceContext)
+		throws PortalException;
 
-	public WeDeployAuthToken addWeDeployAuthToken(long userId,
-		java.lang.String clientId, java.lang.String token, int type,
-		ServiceContext serviceContext) throws PortalException;
+	public WeDeployAuthToken addWeDeployAuthToken(long userId, String clientId,
+		String token, int type, ServiceContext serviceContext)
+		throws PortalException;
 
 	/**
 	* Adds the we deploy auth token to the database. Also notifies the appropriate model listeners.
@@ -193,7 +192,7 @@ public interface WeDeployAuthTokenLocalService extends BaseLocalService,
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -212,8 +211,8 @@ public interface WeDeployAuthTokenLocalService extends BaseLocalService,
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public WeDeployAuthToken getWeDeployAuthToken(java.lang.String token,
-		int type) throws PortalException;
+	public WeDeployAuthToken getWeDeployAuthToken(String token, int type)
+		throws PortalException;
 
 	/**
 	* Returns a range of all the we deploy auth tokens.

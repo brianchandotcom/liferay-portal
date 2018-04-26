@@ -72,7 +72,7 @@ public interface DLFileEntryTypeLocalService extends BaseLocalService,
 	 * Never modify or reference this interface directly. Always use {@link DLFileEntryTypeLocalServiceUtil} to access the document library file entry type local service. Add custom service methods to {@link com.liferay.portlet.documentlibrary.service.impl.DLFileEntryTypeLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	public void addDDMStructureLinks(long fileEntryTypeId,
-		Set<java.lang.Long> ddmStructureIds);
+		Set<Long> ddmStructureIds);
 
 	/**
 	* Adds the document library file entry type to the database. Also notifies the appropriate model listeners.
@@ -95,15 +95,13 @@ public interface DLFileEntryTypeLocalService extends BaseLocalService,
 		long[] fileEntryTypeIds);
 
 	public DLFileEntryType addFileEntryType(long userId, long groupId,
-		java.lang.String fileEntryTypeKey,
-		Map<Locale, java.lang.String> nameMap,
-		Map<Locale, java.lang.String> descriptionMap, long[] ddmStructureIds,
+		String fileEntryTypeKey, Map<Locale, String> nameMap,
+		Map<Locale, String> descriptionMap, long[] ddmStructureIds,
 		ServiceContext serviceContext) throws PortalException;
 
 	public DLFileEntryType addFileEntryType(long userId, long groupId,
-		java.lang.String name, java.lang.String description,
-		long[] ddmStructureIds, ServiceContext serviceContext)
-		throws PortalException;
+		String name, String description, long[] ddmStructureIds,
+		ServiceContext serviceContext) throws PortalException;
 
 	public void cascadeFileEntryTypes(long userId, DLFolder dlFolder)
 		throws PortalException;
@@ -238,15 +236,15 @@ public interface DLFileEntryTypeLocalService extends BaseLocalService,
 	* @return the matching document library file entry type, or <code>null</code> if a matching document library file entry type could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public DLFileEntryType fetchDLFileEntryTypeByUuidAndGroupId(
-		java.lang.String uuid, long groupId);
+	public DLFileEntryType fetchDLFileEntryTypeByUuidAndGroupId(String uuid,
+		long groupId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public DLFileEntryType fetchFileEntryType(long fileEntryTypeId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public DLFileEntryType fetchFileEntryType(long groupId,
-		java.lang.String fileEntryTypeKey);
+		String fileEntryTypeKey);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
@@ -275,8 +273,8 @@ public interface DLFileEntryTypeLocalService extends BaseLocalService,
 	* @throws PortalException if a matching document library file entry type could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public DLFileEntryType getDLFileEntryTypeByUuidAndGroupId(
-		java.lang.String uuid, long groupId) throws PortalException;
+	public DLFileEntryType getDLFileEntryTypeByUuidAndGroupId(String uuid,
+		long groupId) throws PortalException;
 
 	/**
 	* Returns a range of all the document library file entry types.
@@ -301,7 +299,7 @@ public interface DLFileEntryTypeLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<DLFileEntryType> getDLFileEntryTypesByUuidAndCompanyId(
-		java.lang.String uuid, long companyId);
+		String uuid, long companyId);
 
 	/**
 	* Returns a range of document library file entry types matching the UUID and company.
@@ -315,7 +313,7 @@ public interface DLFileEntryTypeLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<DLFileEntryType> getDLFileEntryTypesByUuidAndCompanyId(
-		java.lang.String uuid, long companyId, int start, int end,
+		String uuid, long companyId, int start, int end,
 		OrderByComparator<DLFileEntryType> orderByComparator);
 
 	/**
@@ -359,7 +357,7 @@ public interface DLFileEntryTypeLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public DLFileEntryType getFileEntryType(long groupId,
-		java.lang.String fileEntryTypeKey) throws PortalException;
+		String fileEntryTypeKey) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<DLFileEntryType> getFileEntryTypes(long ddmStructureId)
@@ -380,7 +378,7 @@ public interface DLFileEntryTypeLocalService extends BaseLocalService,
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -396,12 +394,12 @@ public interface DLFileEntryTypeLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<DLFileEntryType> search(long companyId, long[] groupIds,
-		java.lang.String keywords, boolean includeBasicFileEntryType,
-		int start, int end, OrderByComparator<DLFileEntryType> orderByComparator);
+		String keywords, boolean includeBasicFileEntryType, int start, int end,
+		OrderByComparator<DLFileEntryType> orderByComparator);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int searchCount(long companyId, long[] groupIds,
-		java.lang.String keywords, boolean includeBasicFileEntryType);
+	public int searchCount(long companyId, long[] groupIds, String keywords,
+		boolean includeBasicFileEntryType);
 
 	public void setDLFolderDLFileEntryTypes(long folderId,
 		long[] fileEntryTypeIds);
@@ -409,7 +407,7 @@ public interface DLFileEntryTypeLocalService extends BaseLocalService,
 	public void unsetFolderFileEntryTypes(long folderId);
 
 	public void updateDDMStructureLinks(long fileEntryTypeId,
-		Set<java.lang.Long> ddmStructureIds) throws PortalException;
+		Set<Long> ddmStructureIds) throws PortalException;
 
 	/**
 	* Updates the document library file entry type in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
@@ -425,16 +423,15 @@ public interface DLFileEntryTypeLocalService extends BaseLocalService,
 		ServiceContext serviceContext) throws PortalException;
 
 	public void updateFileEntryType(long userId, long fileEntryTypeId,
-		Map<Locale, java.lang.String> nameMap,
-		Map<Locale, java.lang.String> descriptionMap, long[] ddmStructureIds,
-		ServiceContext serviceContext) throws PortalException;
-
-	public void updateFileEntryType(long userId, long fileEntryTypeId,
-		java.lang.String name, java.lang.String description,
+		Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
 		long[] ddmStructureIds, ServiceContext serviceContext)
 		throws PortalException;
 
+	public void updateFileEntryType(long userId, long fileEntryTypeId,
+		String name, String description, long[] ddmStructureIds,
+		ServiceContext serviceContext) throws PortalException;
+
 	public void updateFolderFileEntryTypes(DLFolder dlFolder,
-		List<java.lang.Long> fileEntryTypeIds, long defaultFileEntryTypeId,
+		List<Long> fileEntryTypeIds, long defaultFileEntryTypeId,
 		ServiceContext serviceContext);
 }

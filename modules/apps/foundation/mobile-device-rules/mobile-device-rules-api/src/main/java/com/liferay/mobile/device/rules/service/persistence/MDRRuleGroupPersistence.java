@@ -47,7 +47,7 @@ public interface MDRRuleGroupPersistence extends BasePersistence<MDRRuleGroup> {
 	* @param uuid the uuid
 	* @return the matching mdr rule groups
 	*/
-	public java.util.List<MDRRuleGroup> findByUuid(java.lang.String uuid);
+	public java.util.List<MDRRuleGroup> findByUuid(String uuid);
 
 	/**
 	* Returns a range of all the mdr rule groups where uuid = &#63;.
@@ -61,8 +61,8 @@ public interface MDRRuleGroupPersistence extends BasePersistence<MDRRuleGroup> {
 	* @param end the upper bound of the range of mdr rule groups (not inclusive)
 	* @return the range of matching mdr rule groups
 	*/
-	public java.util.List<MDRRuleGroup> findByUuid(java.lang.String uuid,
-		int start, int end);
+	public java.util.List<MDRRuleGroup> findByUuid(String uuid, int start,
+		int end);
 
 	/**
 	* Returns an ordered range of all the mdr rule groups where uuid = &#63;.
@@ -77,8 +77,8 @@ public interface MDRRuleGroupPersistence extends BasePersistence<MDRRuleGroup> {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching mdr rule groups
 	*/
-	public java.util.List<MDRRuleGroup> findByUuid(java.lang.String uuid,
-		int start, int end,
+	public java.util.List<MDRRuleGroup> findByUuid(String uuid, int start,
+		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<MDRRuleGroup> orderByComparator);
 
 	/**
@@ -95,8 +95,8 @@ public interface MDRRuleGroupPersistence extends BasePersistence<MDRRuleGroup> {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching mdr rule groups
 	*/
-	public java.util.List<MDRRuleGroup> findByUuid(java.lang.String uuid,
-		int start, int end,
+	public java.util.List<MDRRuleGroup> findByUuid(String uuid, int start,
+		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<MDRRuleGroup> orderByComparator,
 		boolean retrieveFromCache);
 
@@ -108,7 +108,7 @@ public interface MDRRuleGroupPersistence extends BasePersistence<MDRRuleGroup> {
 	* @return the first matching mdr rule group
 	* @throws NoSuchRuleGroupException if a matching mdr rule group could not be found
 	*/
-	public MDRRuleGroup findByUuid_First(java.lang.String uuid,
+	public MDRRuleGroup findByUuid_First(String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<MDRRuleGroup> orderByComparator)
 		throws NoSuchRuleGroupException;
 
@@ -119,7 +119,7 @@ public interface MDRRuleGroupPersistence extends BasePersistence<MDRRuleGroup> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching mdr rule group, or <code>null</code> if a matching mdr rule group could not be found
 	*/
-	public MDRRuleGroup fetchByUuid_First(java.lang.String uuid,
+	public MDRRuleGroup fetchByUuid_First(String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<MDRRuleGroup> orderByComparator);
 
 	/**
@@ -130,7 +130,7 @@ public interface MDRRuleGroupPersistence extends BasePersistence<MDRRuleGroup> {
 	* @return the last matching mdr rule group
 	* @throws NoSuchRuleGroupException if a matching mdr rule group could not be found
 	*/
-	public MDRRuleGroup findByUuid_Last(java.lang.String uuid,
+	public MDRRuleGroup findByUuid_Last(String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<MDRRuleGroup> orderByComparator)
 		throws NoSuchRuleGroupException;
 
@@ -141,7 +141,7 @@ public interface MDRRuleGroupPersistence extends BasePersistence<MDRRuleGroup> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching mdr rule group, or <code>null</code> if a matching mdr rule group could not be found
 	*/
-	public MDRRuleGroup fetchByUuid_Last(java.lang.String uuid,
+	public MDRRuleGroup fetchByUuid_Last(String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<MDRRuleGroup> orderByComparator);
 
 	/**
@@ -153,8 +153,7 @@ public interface MDRRuleGroupPersistence extends BasePersistence<MDRRuleGroup> {
 	* @return the previous, current, and next mdr rule group
 	* @throws NoSuchRuleGroupException if a mdr rule group with the primary key could not be found
 	*/
-	public MDRRuleGroup[] findByUuid_PrevAndNext(long ruleGroupId,
-		java.lang.String uuid,
+	public MDRRuleGroup[] findByUuid_PrevAndNext(long ruleGroupId, String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<MDRRuleGroup> orderByComparator)
 		throws NoSuchRuleGroupException;
 
@@ -163,7 +162,7 @@ public interface MDRRuleGroupPersistence extends BasePersistence<MDRRuleGroup> {
 	*
 	* @param uuid the uuid
 	*/
-	public void removeByUuid(java.lang.String uuid);
+	public void removeByUuid(String uuid);
 
 	/**
 	* Returns the number of mdr rule groups where uuid = &#63;.
@@ -171,7 +170,7 @@ public interface MDRRuleGroupPersistence extends BasePersistence<MDRRuleGroup> {
 	* @param uuid the uuid
 	* @return the number of matching mdr rule groups
 	*/
-	public int countByUuid(java.lang.String uuid);
+	public int countByUuid(String uuid);
 
 	/**
 	* Returns the mdr rule group where uuid = &#63; and groupId = &#63; or throws a {@link NoSuchRuleGroupException} if it could not be found.
@@ -181,7 +180,7 @@ public interface MDRRuleGroupPersistence extends BasePersistence<MDRRuleGroup> {
 	* @return the matching mdr rule group
 	* @throws NoSuchRuleGroupException if a matching mdr rule group could not be found
 	*/
-	public MDRRuleGroup findByUUID_G(java.lang.String uuid, long groupId)
+	public MDRRuleGroup findByUUID_G(String uuid, long groupId)
 		throws NoSuchRuleGroupException;
 
 	/**
@@ -191,7 +190,7 @@ public interface MDRRuleGroupPersistence extends BasePersistence<MDRRuleGroup> {
 	* @param groupId the group ID
 	* @return the matching mdr rule group, or <code>null</code> if a matching mdr rule group could not be found
 	*/
-	public MDRRuleGroup fetchByUUID_G(java.lang.String uuid, long groupId);
+	public MDRRuleGroup fetchByUUID_G(String uuid, long groupId);
 
 	/**
 	* Returns the mdr rule group where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -201,7 +200,7 @@ public interface MDRRuleGroupPersistence extends BasePersistence<MDRRuleGroup> {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching mdr rule group, or <code>null</code> if a matching mdr rule group could not be found
 	*/
-	public MDRRuleGroup fetchByUUID_G(java.lang.String uuid, long groupId,
+	public MDRRuleGroup fetchByUUID_G(String uuid, long groupId,
 		boolean retrieveFromCache);
 
 	/**
@@ -211,7 +210,7 @@ public interface MDRRuleGroupPersistence extends BasePersistence<MDRRuleGroup> {
 	* @param groupId the group ID
 	* @return the mdr rule group that was removed
 	*/
-	public MDRRuleGroup removeByUUID_G(java.lang.String uuid, long groupId)
+	public MDRRuleGroup removeByUUID_G(String uuid, long groupId)
 		throws NoSuchRuleGroupException;
 
 	/**
@@ -221,7 +220,7 @@ public interface MDRRuleGroupPersistence extends BasePersistence<MDRRuleGroup> {
 	* @param groupId the group ID
 	* @return the number of matching mdr rule groups
 	*/
-	public int countByUUID_G(java.lang.String uuid, long groupId);
+	public int countByUUID_G(String uuid, long groupId);
 
 	/**
 	* Returns all the mdr rule groups where uuid = &#63; and companyId = &#63;.
@@ -230,8 +229,7 @@ public interface MDRRuleGroupPersistence extends BasePersistence<MDRRuleGroup> {
 	* @param companyId the company ID
 	* @return the matching mdr rule groups
 	*/
-	public java.util.List<MDRRuleGroup> findByUuid_C(java.lang.String uuid,
-		long companyId);
+	public java.util.List<MDRRuleGroup> findByUuid_C(String uuid, long companyId);
 
 	/**
 	* Returns a range of all the mdr rule groups where uuid = &#63; and companyId = &#63;.
@@ -246,7 +244,7 @@ public interface MDRRuleGroupPersistence extends BasePersistence<MDRRuleGroup> {
 	* @param end the upper bound of the range of mdr rule groups (not inclusive)
 	* @return the range of matching mdr rule groups
 	*/
-	public java.util.List<MDRRuleGroup> findByUuid_C(java.lang.String uuid,
+	public java.util.List<MDRRuleGroup> findByUuid_C(String uuid,
 		long companyId, int start, int end);
 
 	/**
@@ -263,7 +261,7 @@ public interface MDRRuleGroupPersistence extends BasePersistence<MDRRuleGroup> {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching mdr rule groups
 	*/
-	public java.util.List<MDRRuleGroup> findByUuid_C(java.lang.String uuid,
+	public java.util.List<MDRRuleGroup> findByUuid_C(String uuid,
 		long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<MDRRuleGroup> orderByComparator);
 
@@ -282,7 +280,7 @@ public interface MDRRuleGroupPersistence extends BasePersistence<MDRRuleGroup> {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching mdr rule groups
 	*/
-	public java.util.List<MDRRuleGroup> findByUuid_C(java.lang.String uuid,
+	public java.util.List<MDRRuleGroup> findByUuid_C(String uuid,
 		long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<MDRRuleGroup> orderByComparator,
 		boolean retrieveFromCache);
@@ -296,8 +294,7 @@ public interface MDRRuleGroupPersistence extends BasePersistence<MDRRuleGroup> {
 	* @return the first matching mdr rule group
 	* @throws NoSuchRuleGroupException if a matching mdr rule group could not be found
 	*/
-	public MDRRuleGroup findByUuid_C_First(java.lang.String uuid,
-		long companyId,
+	public MDRRuleGroup findByUuid_C_First(String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<MDRRuleGroup> orderByComparator)
 		throws NoSuchRuleGroupException;
 
@@ -309,8 +306,7 @@ public interface MDRRuleGroupPersistence extends BasePersistence<MDRRuleGroup> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching mdr rule group, or <code>null</code> if a matching mdr rule group could not be found
 	*/
-	public MDRRuleGroup fetchByUuid_C_First(java.lang.String uuid,
-		long companyId,
+	public MDRRuleGroup fetchByUuid_C_First(String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<MDRRuleGroup> orderByComparator);
 
 	/**
@@ -322,8 +318,7 @@ public interface MDRRuleGroupPersistence extends BasePersistence<MDRRuleGroup> {
 	* @return the last matching mdr rule group
 	* @throws NoSuchRuleGroupException if a matching mdr rule group could not be found
 	*/
-	public MDRRuleGroup findByUuid_C_Last(java.lang.String uuid,
-		long companyId,
+	public MDRRuleGroup findByUuid_C_Last(String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<MDRRuleGroup> orderByComparator)
 		throws NoSuchRuleGroupException;
 
@@ -335,8 +330,7 @@ public interface MDRRuleGroupPersistence extends BasePersistence<MDRRuleGroup> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching mdr rule group, or <code>null</code> if a matching mdr rule group could not be found
 	*/
-	public MDRRuleGroup fetchByUuid_C_Last(java.lang.String uuid,
-		long companyId,
+	public MDRRuleGroup fetchByUuid_C_Last(String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<MDRRuleGroup> orderByComparator);
 
 	/**
@@ -350,7 +344,7 @@ public interface MDRRuleGroupPersistence extends BasePersistence<MDRRuleGroup> {
 	* @throws NoSuchRuleGroupException if a mdr rule group with the primary key could not be found
 	*/
 	public MDRRuleGroup[] findByUuid_C_PrevAndNext(long ruleGroupId,
-		java.lang.String uuid, long companyId,
+		String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<MDRRuleGroup> orderByComparator)
 		throws NoSuchRuleGroupException;
 
@@ -360,7 +354,7 @@ public interface MDRRuleGroupPersistence extends BasePersistence<MDRRuleGroup> {
 	* @param uuid the uuid
 	* @param companyId the company ID
 	*/
-	public void removeByUuid_C(java.lang.String uuid, long companyId);
+	public void removeByUuid_C(String uuid, long companyId);
 
 	/**
 	* Returns the number of mdr rule groups where uuid = &#63; and companyId = &#63;.
@@ -369,7 +363,7 @@ public interface MDRRuleGroupPersistence extends BasePersistence<MDRRuleGroup> {
 	* @param companyId the company ID
 	* @return the number of matching mdr rule groups
 	*/
-	public int countByUuid_C(java.lang.String uuid, long companyId);
+	public int countByUuid_C(String uuid, long companyId);
 
 	/**
 	* Returns all the mdr rule groups where groupId = &#63;.
@@ -805,5 +799,5 @@ public interface MDRRuleGroupPersistence extends BasePersistence<MDRRuleGroup> {
 	public int countAll();
 
 	@Override
-	public java.util.Set<java.lang.String> getBadColumnNames();
+	public java.util.Set<String> getBadColumnNames();
 }

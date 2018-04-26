@@ -165,7 +165,7 @@ public class MDRRuleWrapper implements MDRRule, ModelWrapper<MDRRule> {
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new MDRRuleWrapper((MDRRule)_mdrRule.clone());
 	}
 
@@ -175,7 +175,7 @@ public class MDRRuleWrapper implements MDRRule, ModelWrapper<MDRRule> {
 	}
 
 	@Override
-	public java.lang.String[] getAvailableLanguageIds() {
+	public String[] getAvailableLanguageIds() {
 		return _mdrRule.getAvailableLanguageIds();
 	}
 
@@ -200,7 +200,7 @@ public class MDRRuleWrapper implements MDRRule, ModelWrapper<MDRRule> {
 	}
 
 	@Override
-	public java.lang.String getDefaultLanguageId() {
+	public String getDefaultLanguageId() {
 		return _mdrRule.getDefaultLanguageId();
 	}
 
@@ -210,7 +210,7 @@ public class MDRRuleWrapper implements MDRRule, ModelWrapper<MDRRule> {
 	* @return the description of this mdr rule
 	*/
 	@Override
-	public java.lang.String getDescription() {
+	public String getDescription() {
 		return _mdrRule.getDescription();
 	}
 
@@ -221,7 +221,7 @@ public class MDRRuleWrapper implements MDRRule, ModelWrapper<MDRRule> {
 	* @return the localized description of this mdr rule
 	*/
 	@Override
-	public java.lang.String getDescription(java.util.Locale locale) {
+	public String getDescription(java.util.Locale locale) {
 		return _mdrRule.getDescription(locale);
 	}
 
@@ -233,8 +233,7 @@ public class MDRRuleWrapper implements MDRRule, ModelWrapper<MDRRule> {
 	* @return the localized description of this mdr rule. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
 	*/
 	@Override
-	public java.lang.String getDescription(java.util.Locale locale,
-		boolean useDefault) {
+	public String getDescription(java.util.Locale locale, boolean useDefault) {
 		return _mdrRule.getDescription(locale, useDefault);
 	}
 
@@ -245,7 +244,7 @@ public class MDRRuleWrapper implements MDRRule, ModelWrapper<MDRRule> {
 	* @return the localized description of this mdr rule
 	*/
 	@Override
-	public java.lang.String getDescription(java.lang.String languageId) {
+	public String getDescription(String languageId) {
 		return _mdrRule.getDescription(languageId);
 	}
 
@@ -257,18 +256,17 @@ public class MDRRuleWrapper implements MDRRule, ModelWrapper<MDRRule> {
 	* @return the localized description of this mdr rule
 	*/
 	@Override
-	public java.lang.String getDescription(java.lang.String languageId,
-		boolean useDefault) {
+	public String getDescription(String languageId, boolean useDefault) {
 		return _mdrRule.getDescription(languageId, useDefault);
 	}
 
 	@Override
-	public java.lang.String getDescriptionCurrentLanguageId() {
+	public String getDescriptionCurrentLanguageId() {
 		return _mdrRule.getDescriptionCurrentLanguageId();
 	}
 
 	@Override
-	public java.lang.String getDescriptionCurrentValue() {
+	public String getDescriptionCurrentValue() {
 		return _mdrRule.getDescriptionCurrentValue();
 	}
 
@@ -278,7 +276,7 @@ public class MDRRuleWrapper implements MDRRule, ModelWrapper<MDRRule> {
 	* @return the locales and localized descriptions of this mdr rule
 	*/
 	@Override
-	public Map<java.util.Locale, java.lang.String> getDescriptionMap() {
+	public Map<java.util.Locale, String> getDescriptionMap() {
 		return _mdrRule.getDescriptionMap();
 	}
 
@@ -323,7 +321,7 @@ public class MDRRuleWrapper implements MDRRule, ModelWrapper<MDRRule> {
 	* @return the name of this mdr rule
 	*/
 	@Override
-	public java.lang.String getName() {
+	public String getName() {
 		return _mdrRule.getName();
 	}
 
@@ -334,7 +332,7 @@ public class MDRRuleWrapper implements MDRRule, ModelWrapper<MDRRule> {
 	* @return the localized name of this mdr rule
 	*/
 	@Override
-	public java.lang.String getName(java.util.Locale locale) {
+	public String getName(java.util.Locale locale) {
 		return _mdrRule.getName(locale);
 	}
 
@@ -346,7 +344,7 @@ public class MDRRuleWrapper implements MDRRule, ModelWrapper<MDRRule> {
 	* @return the localized name of this mdr rule. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
 	*/
 	@Override
-	public java.lang.String getName(java.util.Locale locale, boolean useDefault) {
+	public String getName(java.util.Locale locale, boolean useDefault) {
 		return _mdrRule.getName(locale, useDefault);
 	}
 
@@ -357,7 +355,7 @@ public class MDRRuleWrapper implements MDRRule, ModelWrapper<MDRRule> {
 	* @return the localized name of this mdr rule
 	*/
 	@Override
-	public java.lang.String getName(java.lang.String languageId) {
+	public String getName(String languageId) {
 		return _mdrRule.getName(languageId);
 	}
 
@@ -369,18 +367,17 @@ public class MDRRuleWrapper implements MDRRule, ModelWrapper<MDRRule> {
 	* @return the localized name of this mdr rule
 	*/
 	@Override
-	public java.lang.String getName(java.lang.String languageId,
-		boolean useDefault) {
+	public String getName(String languageId, boolean useDefault) {
 		return _mdrRule.getName(languageId, useDefault);
 	}
 
 	@Override
-	public java.lang.String getNameCurrentLanguageId() {
+	public String getNameCurrentLanguageId() {
 		return _mdrRule.getNameCurrentLanguageId();
 	}
 
 	@Override
-	public java.lang.String getNameCurrentValue() {
+	public String getNameCurrentValue() {
 		return _mdrRule.getNameCurrentValue();
 	}
 
@@ -390,7 +387,7 @@ public class MDRRuleWrapper implements MDRRule, ModelWrapper<MDRRule> {
 	* @return the locales and localized names of this mdr rule
 	*/
 	@Override
-	public Map<java.util.Locale, java.lang.String> getNameMap() {
+	public Map<java.util.Locale, String> getNameMap() {
 		return _mdrRule.getNameMap();
 	}
 
@@ -435,7 +432,7 @@ public class MDRRuleWrapper implements MDRRule, ModelWrapper<MDRRule> {
 	* @return the type of this mdr rule
 	*/
 	@Override
-	public java.lang.String getType() {
+	public String getType() {
 		return _mdrRule.getType();
 	}
 
@@ -445,7 +442,7 @@ public class MDRRuleWrapper implements MDRRule, ModelWrapper<MDRRule> {
 	* @return the type settings of this mdr rule
 	*/
 	@Override
-	public java.lang.String getTypeSettings() {
+	public String getTypeSettings() {
 		return _mdrRule.getTypeSettings();
 	}
 
@@ -470,7 +467,7 @@ public class MDRRuleWrapper implements MDRRule, ModelWrapper<MDRRule> {
 	* @return the user name of this mdr rule
 	*/
 	@Override
-	public java.lang.String getUserName() {
+	public String getUserName() {
 		return _mdrRule.getUserName();
 	}
 
@@ -480,7 +477,7 @@ public class MDRRuleWrapper implements MDRRule, ModelWrapper<MDRRule> {
 	* @return the user uuid of this mdr rule
 	*/
 	@Override
-	public java.lang.String getUserUuid() {
+	public String getUserUuid() {
 		return _mdrRule.getUserUuid();
 	}
 
@@ -490,7 +487,7 @@ public class MDRRuleWrapper implements MDRRule, ModelWrapper<MDRRule> {
 	* @return the uuid of this mdr rule
 	*/
 	@Override
-	public java.lang.String getUuid() {
+	public String getUuid() {
 		return _mdrRule.getUuid();
 	}
 
@@ -563,7 +560,7 @@ public class MDRRuleWrapper implements MDRRule, ModelWrapper<MDRRule> {
 	* @param description the description of this mdr rule
 	*/
 	@Override
-	public void setDescription(java.lang.String description) {
+	public void setDescription(String description) {
 		_mdrRule.setDescription(description);
 	}
 
@@ -574,8 +571,7 @@ public class MDRRuleWrapper implements MDRRule, ModelWrapper<MDRRule> {
 	* @param locale the locale of the language
 	*/
 	@Override
-	public void setDescription(java.lang.String description,
-		java.util.Locale locale) {
+	public void setDescription(String description, java.util.Locale locale) {
 		_mdrRule.setDescription(description, locale);
 	}
 
@@ -587,13 +583,13 @@ public class MDRRuleWrapper implements MDRRule, ModelWrapper<MDRRule> {
 	* @param defaultLocale the default locale
 	*/
 	@Override
-	public void setDescription(java.lang.String description,
-		java.util.Locale locale, java.util.Locale defaultLocale) {
+	public void setDescription(String description, java.util.Locale locale,
+		java.util.Locale defaultLocale) {
 		_mdrRule.setDescription(description, locale, defaultLocale);
 	}
 
 	@Override
-	public void setDescriptionCurrentLanguageId(java.lang.String languageId) {
+	public void setDescriptionCurrentLanguageId(String languageId) {
 		_mdrRule.setDescriptionCurrentLanguageId(languageId);
 	}
 
@@ -603,8 +599,7 @@ public class MDRRuleWrapper implements MDRRule, ModelWrapper<MDRRule> {
 	* @param descriptionMap the locales and localized descriptions of this mdr rule
 	*/
 	@Override
-	public void setDescriptionMap(
-		Map<java.util.Locale, java.lang.String> descriptionMap) {
+	public void setDescriptionMap(Map<java.util.Locale, String> descriptionMap) {
 		_mdrRule.setDescriptionMap(descriptionMap);
 	}
 
@@ -616,7 +611,7 @@ public class MDRRuleWrapper implements MDRRule, ModelWrapper<MDRRule> {
 	*/
 	@Override
 	public void setDescriptionMap(
-		Map<java.util.Locale, java.lang.String> descriptionMap,
+		Map<java.util.Locale, String> descriptionMap,
 		java.util.Locale defaultLocale) {
 		_mdrRule.setDescriptionMap(descriptionMap, defaultLocale);
 	}
@@ -673,7 +668,7 @@ public class MDRRuleWrapper implements MDRRule, ModelWrapper<MDRRule> {
 	* @param name the name of this mdr rule
 	*/
 	@Override
-	public void setName(java.lang.String name) {
+	public void setName(String name) {
 		_mdrRule.setName(name);
 	}
 
@@ -684,7 +679,7 @@ public class MDRRuleWrapper implements MDRRule, ModelWrapper<MDRRule> {
 	* @param locale the locale of the language
 	*/
 	@Override
-	public void setName(java.lang.String name, java.util.Locale locale) {
+	public void setName(String name, java.util.Locale locale) {
 		_mdrRule.setName(name, locale);
 	}
 
@@ -696,13 +691,13 @@ public class MDRRuleWrapper implements MDRRule, ModelWrapper<MDRRule> {
 	* @param defaultLocale the default locale
 	*/
 	@Override
-	public void setName(java.lang.String name, java.util.Locale locale,
+	public void setName(String name, java.util.Locale locale,
 		java.util.Locale defaultLocale) {
 		_mdrRule.setName(name, locale, defaultLocale);
 	}
 
 	@Override
-	public void setNameCurrentLanguageId(java.lang.String languageId) {
+	public void setNameCurrentLanguageId(String languageId) {
 		_mdrRule.setNameCurrentLanguageId(languageId);
 	}
 
@@ -712,7 +707,7 @@ public class MDRRuleWrapper implements MDRRule, ModelWrapper<MDRRule> {
 	* @param nameMap the locales and localized names of this mdr rule
 	*/
 	@Override
-	public void setNameMap(Map<java.util.Locale, java.lang.String> nameMap) {
+	public void setNameMap(Map<java.util.Locale, String> nameMap) {
 		_mdrRule.setNameMap(nameMap);
 	}
 
@@ -723,7 +718,7 @@ public class MDRRuleWrapper implements MDRRule, ModelWrapper<MDRRule> {
 	* @param defaultLocale the default locale
 	*/
 	@Override
-	public void setNameMap(Map<java.util.Locale, java.lang.String> nameMap,
+	public void setNameMap(Map<java.util.Locale, String> nameMap,
 		java.util.Locale defaultLocale) {
 		_mdrRule.setNameMap(nameMap, defaultLocale);
 	}
@@ -774,7 +769,7 @@ public class MDRRuleWrapper implements MDRRule, ModelWrapper<MDRRule> {
 	* @param type the type of this mdr rule
 	*/
 	@Override
-	public void setType(java.lang.String type) {
+	public void setType(String type) {
 		_mdrRule.setType(type);
 	}
 
@@ -784,7 +779,7 @@ public class MDRRuleWrapper implements MDRRule, ModelWrapper<MDRRule> {
 	* @param typeSettings the type settings of this mdr rule
 	*/
 	@Override
-	public void setTypeSettings(java.lang.String typeSettings) {
+	public void setTypeSettings(String typeSettings) {
 		_mdrRule.setTypeSettings(typeSettings);
 	}
 
@@ -810,7 +805,7 @@ public class MDRRuleWrapper implements MDRRule, ModelWrapper<MDRRule> {
 	* @param userName the user name of this mdr rule
 	*/
 	@Override
-	public void setUserName(java.lang.String userName) {
+	public void setUserName(String userName) {
 		_mdrRule.setUserName(userName);
 	}
 
@@ -820,7 +815,7 @@ public class MDRRuleWrapper implements MDRRule, ModelWrapper<MDRRule> {
 	* @param userUuid the user uuid of this mdr rule
 	*/
 	@Override
-	public void setUserUuid(java.lang.String userUuid) {
+	public void setUserUuid(String userUuid) {
 		_mdrRule.setUserUuid(userUuid);
 	}
 
@@ -830,7 +825,7 @@ public class MDRRuleWrapper implements MDRRule, ModelWrapper<MDRRule> {
 	* @param uuid the uuid of this mdr rule
 	*/
 	@Override
-	public void setUuid(java.lang.String uuid) {
+	public void setUuid(String uuid) {
 		_mdrRule.setUuid(uuid);
 	}
 
@@ -845,7 +840,7 @@ public class MDRRuleWrapper implements MDRRule, ModelWrapper<MDRRule> {
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _mdrRule.toString();
 	}
 
@@ -855,7 +850,7 @@ public class MDRRuleWrapper implements MDRRule, ModelWrapper<MDRRule> {
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _mdrRule.toXmlString();
 	}
 

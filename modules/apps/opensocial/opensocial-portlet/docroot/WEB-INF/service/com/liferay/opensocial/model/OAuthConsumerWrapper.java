@@ -129,7 +129,7 @@ public class OAuthConsumerWrapper implements OAuthConsumer,
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new OAuthConsumerWrapper((OAuthConsumer)_oAuthConsumer.clone());
 	}
 
@@ -154,7 +154,7 @@ public class OAuthConsumerWrapper implements OAuthConsumer,
 	* @return the consumer key of this o auth consumer
 	*/
 	@Override
-	public java.lang.String getConsumerKey() {
+	public String getConsumerKey() {
 		return _oAuthConsumer.getConsumerKey();
 	}
 
@@ -164,7 +164,7 @@ public class OAuthConsumerWrapper implements OAuthConsumer,
 	* @return the consumer secret of this o auth consumer
 	*/
 	@Override
-	public java.lang.String getConsumerSecret() {
+	public String getConsumerSecret() {
 		return _oAuthConsumer.getConsumerSecret();
 	}
 
@@ -189,12 +189,12 @@ public class OAuthConsumerWrapper implements OAuthConsumer,
 	* @return the gadget key of this o auth consumer
 	*/
 	@Override
-	public java.lang.String getGadgetKey() {
+	public String getGadgetKey() {
 		return _oAuthConsumer.getGadgetKey();
 	}
 
 	@Override
-	public java.lang.String getKeyName() {
+	public String getKeyName() {
 		return _oAuthConsumer.getKeyName();
 	}
 
@@ -204,7 +204,7 @@ public class OAuthConsumerWrapper implements OAuthConsumer,
 	* @return the key type of this o auth consumer
 	*/
 	@Override
-	public java.lang.String getKeyType() {
+	public String getKeyType() {
 		return _oAuthConsumer.getKeyType();
 	}
 
@@ -249,7 +249,7 @@ public class OAuthConsumerWrapper implements OAuthConsumer,
 	* @return the service name of this o auth consumer
 	*/
 	@Override
-	public java.lang.String getServiceName() {
+	public String getServiceName() {
 		return _oAuthConsumer.getServiceName();
 	}
 
@@ -299,7 +299,7 @@ public class OAuthConsumerWrapper implements OAuthConsumer,
 	* @param consumerKey the consumer key of this o auth consumer
 	*/
 	@Override
-	public void setConsumerKey(java.lang.String consumerKey) {
+	public void setConsumerKey(String consumerKey) {
 		_oAuthConsumer.setConsumerKey(consumerKey);
 	}
 
@@ -309,7 +309,7 @@ public class OAuthConsumerWrapper implements OAuthConsumer,
 	* @param consumerSecret the consumer secret of this o auth consumer
 	*/
 	@Override
-	public void setConsumerSecret(java.lang.String consumerSecret) {
+	public void setConsumerSecret(String consumerSecret) {
 		_oAuthConsumer.setConsumerSecret(consumerSecret);
 	}
 
@@ -345,12 +345,12 @@ public class OAuthConsumerWrapper implements OAuthConsumer,
 	* @param gadgetKey the gadget key of this o auth consumer
 	*/
 	@Override
-	public void setGadgetKey(java.lang.String gadgetKey) {
+	public void setGadgetKey(String gadgetKey) {
 		_oAuthConsumer.setGadgetKey(gadgetKey);
 	}
 
 	@Override
-	public void setKeyName(java.lang.String keyName) {
+	public void setKeyName(String keyName) {
 		_oAuthConsumer.setKeyName(keyName);
 	}
 
@@ -360,7 +360,7 @@ public class OAuthConsumerWrapper implements OAuthConsumer,
 	* @param keyType the key type of this o auth consumer
 	*/
 	@Override
-	public void setKeyType(java.lang.String keyType) {
+	public void setKeyType(String keyType) {
 		_oAuthConsumer.setKeyType(keyType);
 	}
 
@@ -410,7 +410,7 @@ public class OAuthConsumerWrapper implements OAuthConsumer,
 	* @param serviceName the service name of this o auth consumer
 	*/
 	@Override
-	public void setServiceName(java.lang.String serviceName) {
+	public void setServiceName(String serviceName) {
 		_oAuthConsumer.setServiceName(serviceName);
 	}
 
@@ -425,7 +425,7 @@ public class OAuthConsumerWrapper implements OAuthConsumer,
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _oAuthConsumer.toString();
 	}
 
@@ -435,7 +435,7 @@ public class OAuthConsumerWrapper implements OAuthConsumer,
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _oAuthConsumer.toXmlString();
 	}
 

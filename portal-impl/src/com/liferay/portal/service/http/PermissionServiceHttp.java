@@ -55,7 +55,7 @@ import com.liferay.portal.kernel.util.MethodKey;
 @ProviderType
 public class PermissionServiceHttp {
 	public static void checkPermission(HttpPrincipal httpPrincipal,
-		long groupId, java.lang.String name, long primKey)
+		long groupId, String name, long primKey)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(PermissionServiceUtil.class,
@@ -83,7 +83,7 @@ public class PermissionServiceHttp {
 	}
 
 	public static void checkPermission(HttpPrincipal httpPrincipal,
-		long groupId, java.lang.String name, java.lang.String primKey)
+		long groupId, String name, String primKey)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(PermissionServiceUtil.class,
@@ -112,9 +112,9 @@ public class PermissionServiceHttp {
 
 	private static Log _log = LogFactoryUtil.getLog(PermissionServiceHttp.class);
 	private static final Class<?>[] _checkPermissionParameterTypes0 = new Class[] {
-			long.class, java.lang.String.class, long.class
+			long.class, String.class, long.class
 		};
 	private static final Class<?>[] _checkPermissionParameterTypes1 = new Class[] {
-			long.class, java.lang.String.class, java.lang.String.class
+			long.class, String.class, String.class
 		};
 }

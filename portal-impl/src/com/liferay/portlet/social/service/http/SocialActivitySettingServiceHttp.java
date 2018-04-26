@@ -56,7 +56,7 @@ import com.liferay.social.kernel.service.SocialActivitySettingServiceUtil;
 @ProviderType
 public class SocialActivitySettingServiceHttp {
 	public static com.liferay.social.kernel.model.SocialActivityDefinition getActivityDefinition(
-		HttpPrincipal httpPrincipal, long groupId, java.lang.String className,
+		HttpPrincipal httpPrincipal, long groupId, String className,
 		int activityType)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -90,7 +90,7 @@ public class SocialActivitySettingServiceHttp {
 	}
 
 	public static java.util.List<com.liferay.social.kernel.model.SocialActivityDefinition> getActivityDefinitions(
-		HttpPrincipal httpPrincipal, long groupId, java.lang.String className)
+		HttpPrincipal httpPrincipal, long groupId, String className)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(SocialActivitySettingServiceUtil.class,
@@ -154,7 +154,7 @@ public class SocialActivitySettingServiceHttp {
 	}
 
 	public static com.liferay.portal.kernel.json.JSONArray getJSONActivityDefinitions(
-		HttpPrincipal httpPrincipal, long groupId, java.lang.String className)
+		HttpPrincipal httpPrincipal, long groupId, String className)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(SocialActivitySettingServiceUtil.class,
@@ -187,7 +187,7 @@ public class SocialActivitySettingServiceHttp {
 	}
 
 	public static void updateActivitySetting(HttpPrincipal httpPrincipal,
-		long groupId, java.lang.String className, boolean enabled)
+		long groupId, String className, boolean enabled)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(SocialActivitySettingServiceUtil.class,
@@ -216,7 +216,7 @@ public class SocialActivitySettingServiceHttp {
 	}
 
 	public static void updateActivitySetting(HttpPrincipal httpPrincipal,
-		long groupId, java.lang.String className, int activityType,
+		long groupId, String className, int activityType,
 		com.liferay.social.kernel.model.SocialActivityCounterDefinition activityCounterDefinition)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -246,7 +246,7 @@ public class SocialActivitySettingServiceHttp {
 	}
 
 	public static void updateActivitySettings(HttpPrincipal httpPrincipal,
-		long groupId, java.lang.String className, int activityType,
+		long groupId, String className, int activityType,
 		java.util.List<com.liferay.social.kernel.model.SocialActivityCounterDefinition> activityCounterDefinitions)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -277,25 +277,25 @@ public class SocialActivitySettingServiceHttp {
 
 	private static Log _log = LogFactoryUtil.getLog(SocialActivitySettingServiceHttp.class);
 	private static final Class<?>[] _getActivityDefinitionParameterTypes0 = new Class[] {
-			long.class, java.lang.String.class, int.class
+			long.class, String.class, int.class
 		};
 	private static final Class<?>[] _getActivityDefinitionsParameterTypes1 = new Class[] {
-			long.class, java.lang.String.class
+			long.class, String.class
 		};
 	private static final Class<?>[] _getActivitySettingsParameterTypes2 = new Class[] {
 			long.class
 		};
 	private static final Class<?>[] _getJSONActivityDefinitionsParameterTypes3 = new Class[] {
-			long.class, java.lang.String.class
+			long.class, String.class
 		};
 	private static final Class<?>[] _updateActivitySettingParameterTypes4 = new Class[] {
-			long.class, java.lang.String.class, boolean.class
+			long.class, String.class, boolean.class
 		};
 	private static final Class<?>[] _updateActivitySettingParameterTypes5 = new Class[] {
-			long.class, java.lang.String.class, int.class,
+			long.class, String.class, int.class,
 			com.liferay.social.kernel.model.SocialActivityCounterDefinition.class
 		};
 	private static final Class<?>[] _updateActivitySettingsParameterTypes6 = new Class[] {
-			long.class, java.lang.String.class, int.class, java.util.List.class
+			long.class, String.class, int.class, java.util.List.class
 		};
 }

@@ -56,9 +56,8 @@ public class FragmentEntryLinkLocalServiceUtil {
 
 	public static com.liferay.fragment.model.FragmentEntryLink addFragmentEntryLink(
 		long userId, long groupId, long originalFragmentEntryLinkId,
-		long fragmentEntryId, long classNameId, long classPK,
-		java.lang.String css, java.lang.String html, java.lang.String js,
-		java.lang.String editableValues, int position,
+		long fragmentEntryId, long classNameId, long classPK, String css,
+		String html, String js, String editableValues, int position,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
@@ -69,8 +68,8 @@ public class FragmentEntryLinkLocalServiceUtil {
 
 	public static com.liferay.fragment.model.FragmentEntryLink addFragmentEntryLink(
 		long userId, long groupId, long fragmentEntryId, long classNameId,
-		long classPK, java.lang.String css, java.lang.String html,
-		java.lang.String js, java.lang.String editableValues, int position,
+		long classPK, String css, String html, String js,
+		String editableValues, int position,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
@@ -225,7 +224,7 @@ public class FragmentEntryLinkLocalServiceUtil {
 	* @return the matching fragment entry link, or <code>null</code> if a matching fragment entry link could not be found
 	*/
 	public static com.liferay.fragment.model.FragmentEntryLink fetchFragmentEntryLinkByUuidAndGroupId(
-		java.lang.String uuid, long groupId) {
+		String uuid, long groupId) {
 		return getService().fetchFragmentEntryLinkByUuidAndGroupId(uuid, groupId);
 	}
 
@@ -260,7 +259,7 @@ public class FragmentEntryLinkLocalServiceUtil {
 	* @throws PortalException if a matching fragment entry link could not be found
 	*/
 	public static com.liferay.fragment.model.FragmentEntryLink getFragmentEntryLinkByUuidAndGroupId(
-		java.lang.String uuid, long groupId)
+		String uuid, long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getFragmentEntryLinkByUuidAndGroupId(uuid, groupId);
 	}
@@ -320,7 +319,7 @@ public class FragmentEntryLinkLocalServiceUtil {
 	* @return the matching fragment entry links, or an empty list if no matches were found
 	*/
 	public static java.util.List<com.liferay.fragment.model.FragmentEntryLink> getFragmentEntryLinksByUuidAndCompanyId(
-		java.lang.String uuid, long companyId) {
+		String uuid, long companyId) {
 		return getService()
 				   .getFragmentEntryLinksByUuidAndCompanyId(uuid, companyId);
 	}
@@ -336,7 +335,7 @@ public class FragmentEntryLinkLocalServiceUtil {
 	* @return the range of matching fragment entry links, or an empty list if no matches were found
 	*/
 	public static java.util.List<com.liferay.fragment.model.FragmentEntryLink> getFragmentEntryLinksByUuidAndCompanyId(
-		java.lang.String uuid, long companyId, int start, int end,
+		String uuid, long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.fragment.model.FragmentEntryLink> orderByComparator) {
 		return getService()
 				   .getFragmentEntryLinksByUuidAndCompanyId(uuid, companyId,
@@ -380,7 +379,7 @@ public class FragmentEntryLinkLocalServiceUtil {
 	*
 	* @return the OSGi service identifier
 	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
+	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 
@@ -410,9 +409,8 @@ public class FragmentEntryLinkLocalServiceUtil {
 	public static com.liferay.fragment.model.FragmentEntryLink updateFragmentEntryLink(
 		long userId, long fragmentEntryLinkId,
 		long originalFragmentEntryLinkId, long fragmentEntryId,
-		long classNameId, long classPK, java.lang.String css,
-		java.lang.String html, java.lang.String js,
-		java.lang.String editableValues, int position,
+		long classNameId, long classPK, String css, String html, String js,
+		String editableValues, int position,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
@@ -422,14 +420,14 @@ public class FragmentEntryLinkLocalServiceUtil {
 	}
 
 	public static com.liferay.fragment.model.FragmentEntryLink updateFragmentEntryLink(
-		long fragmentEntryLinkId, java.lang.String editableValues) {
+		long fragmentEntryLinkId, String editableValues) {
 		return getService()
 				   .updateFragmentEntryLink(fragmentEntryLinkId, editableValues);
 	}
 
 	public static void updateFragmentEntryLinks(long userId, long groupId,
 		long classNameId, long classPK, long[] fragmentEntryIds,
-		java.lang.String editableValues,
+		String editableValues,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService()

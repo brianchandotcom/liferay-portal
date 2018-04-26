@@ -51,8 +51,7 @@ public class SiteNavigationMenuLocalServiceUtil {
 	}
 
 	public static com.liferay.site.navigation.model.SiteNavigationMenu addSiteNavigationMenu(
-		long userId, long groupId, java.lang.String name, int type,
-		boolean auto,
+		long userId, long groupId, String name, int type, boolean auto,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
@@ -61,7 +60,7 @@ public class SiteNavigationMenuLocalServiceUtil {
 	}
 
 	public static com.liferay.site.navigation.model.SiteNavigationMenu addSiteNavigationMenu(
-		long userId, long groupId, java.lang.String name, int type,
+		long userId, long groupId, String name, int type,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
@@ -70,7 +69,7 @@ public class SiteNavigationMenuLocalServiceUtil {
 	}
 
 	public static com.liferay.site.navigation.model.SiteNavigationMenu addSiteNavigationMenu(
-		long userId, long groupId, java.lang.String name,
+		long userId, long groupId, String name,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
@@ -245,7 +244,7 @@ public class SiteNavigationMenuLocalServiceUtil {
 	*
 	* @return the OSGi service identifier
 	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
+	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 
@@ -298,7 +297,7 @@ public class SiteNavigationMenuLocalServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.site.navigation.model.SiteNavigationMenu> getSiteNavigationMenus(
-		long groupId, java.lang.String keywords, int start, int end,
+		long groupId, String keywords, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getService()
 				   .getSiteNavigationMenus(groupId, keywords, start, end,
@@ -318,8 +317,7 @@ public class SiteNavigationMenuLocalServiceUtil {
 		return getService().getSiteNavigationMenusCount(groupId);
 	}
 
-	public static int getSiteNavigationMenusCount(long groupId,
-		java.lang.String keywords) {
+	public static int getSiteNavigationMenusCount(long groupId, String keywords) {
 		return getService().getSiteNavigationMenusCount(groupId, keywords);
 	}
 
@@ -333,7 +331,7 @@ public class SiteNavigationMenuLocalServiceUtil {
 	}
 
 	public static com.liferay.site.navigation.model.SiteNavigationMenu updateSiteNavigationMenu(
-		long userId, long siteNavigationMenuId, java.lang.String name,
+		long userId, long siteNavigationMenuId, String name,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()

@@ -43,8 +43,7 @@ public class WikiPageServiceUtil {
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.wiki.service.impl.WikiPageServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static com.liferay.wiki.model.WikiPage addPage(long nodeId,
-		java.lang.String title, java.lang.String content,
-		java.lang.String summary, boolean minorEdit,
+		String title, String content, String summary, boolean minorEdit,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
@@ -53,9 +52,8 @@ public class WikiPageServiceUtil {
 	}
 
 	public static com.liferay.wiki.model.WikiPage addPage(long nodeId,
-		java.lang.String title, java.lang.String content,
-		java.lang.String summary, boolean minorEdit, java.lang.String format,
-		java.lang.String parentTitle, java.lang.String redirectTitle,
+		String title, String content, String summary, boolean minorEdit,
+		String format, String parentTitle, String redirectTitle,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
@@ -64,16 +62,16 @@ public class WikiPageServiceUtil {
 	}
 
 	public static com.liferay.portal.kernel.repository.model.FileEntry addPageAttachment(
-		long nodeId, java.lang.String title, java.lang.String fileName,
-		java.io.File file, java.lang.String mimeType)
+		long nodeId, String title, String fileName, java.io.File file,
+		String mimeType)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addPageAttachment(nodeId, title, fileName, file, mimeType);
 	}
 
 	public static com.liferay.portal.kernel.repository.model.FileEntry addPageAttachment(
-		long nodeId, java.lang.String title, java.lang.String fileName,
-		java.io.InputStream inputStream, java.lang.String mimeType)
+		long nodeId, String title, String fileName,
+		java.io.InputStream inputStream, String mimeType)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addPageAttachment(nodeId, title, fileName, inputStream,
@@ -81,15 +79,15 @@ public class WikiPageServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.portal.kernel.repository.model.FileEntry> addPageAttachments(
-		long nodeId, java.lang.String title,
-		java.util.List<com.liferay.portal.kernel.util.ObjectValuePair<java.lang.String, java.io.InputStream>> inputStreamOVPs)
+		long nodeId, String title,
+		java.util.List<com.liferay.portal.kernel.util.ObjectValuePair<String, java.io.InputStream>> inputStreamOVPs)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().addPageAttachments(nodeId, title, inputStreamOVPs);
 	}
 
 	public static com.liferay.portal.kernel.repository.model.FileEntry addTempFileEntry(
-		long nodeId, java.lang.String folderName, java.lang.String fileName,
-		java.io.InputStream inputStream, java.lang.String mimeType)
+		long nodeId, String folderName, String fileName,
+		java.io.InputStream inputStream, String mimeType)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addTempFileEntry(nodeId, folderName, fileName, inputStream,
@@ -101,77 +99,74 @@ public class WikiPageServiceUtil {
 	String, String, InputStream, String)}
 	*/
 	@Deprecated
-	public static void addTempPageAttachment(long nodeId,
-		java.lang.String fileName, java.lang.String tempFolderName,
-		java.io.InputStream inputStream, java.lang.String mimeType)
+	public static void addTempPageAttachment(long nodeId, String fileName,
+		String tempFolderName, java.io.InputStream inputStream, String mimeType)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService()
 			.addTempPageAttachment(nodeId, fileName, tempFolderName,
 			inputStream, mimeType);
 	}
 
-	public static void changeParent(long nodeId, java.lang.String title,
-		java.lang.String newParentTitle,
+	public static void changeParent(long nodeId, String title,
+		String newParentTitle,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().changeParent(nodeId, title, newParentTitle, serviceContext);
 	}
 
 	public static void copyPageAttachments(long templateNodeId,
-		java.lang.String templateTitle, long nodeId, java.lang.String title)
+		String templateTitle, long nodeId, String title)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService()
 			.copyPageAttachments(templateNodeId, templateTitle, nodeId, title);
 	}
 
-	public static void deletePage(long nodeId, java.lang.String title)
+	public static void deletePage(long nodeId, String title)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().deletePage(nodeId, title);
 	}
 
-	public static void deletePageAttachment(long nodeId,
-		java.lang.String title, java.lang.String fileName)
+	public static void deletePageAttachment(long nodeId, String title,
+		String fileName)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().deletePageAttachment(nodeId, title, fileName);
 	}
 
-	public static void deletePageAttachments(long nodeId, java.lang.String title)
+	public static void deletePageAttachments(long nodeId, String title)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().deletePageAttachments(nodeId, title);
 	}
 
-	public static void deleteTempFileEntry(long nodeId,
-		java.lang.String folderName, java.lang.String fileName)
+	public static void deleteTempFileEntry(long nodeId, String folderName,
+		String fileName)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().deleteTempFileEntry(nodeId, folderName, fileName);
 	}
 
-	public static void deleteTrashPageAttachments(long nodeId,
-		java.lang.String title)
+	public static void deleteTrashPageAttachments(long nodeId, String title)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().deleteTrashPageAttachments(nodeId, title);
 	}
 
-	public static void discardDraft(long nodeId, java.lang.String title,
-		double version)
+	public static void discardDraft(long nodeId, String title, double version)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().discardDraft(nodeId, title, version);
 	}
 
 	public static com.liferay.wiki.model.WikiPage fetchPage(long nodeId,
-		java.lang.String title, double version)
+		String title, double version)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().fetchPage(nodeId, title, version);
 	}
 
 	public static java.util.List<com.liferay.wiki.model.WikiPage> getChildren(
-		long groupId, long nodeId, boolean head, java.lang.String parentTitle)
+		long groupId, long nodeId, boolean head, String parentTitle)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getChildren(groupId, nodeId, head, parentTitle);
 	}
 
 	public static com.liferay.wiki.model.WikiPage getDraftPage(long nodeId,
-		java.lang.String title)
+		String title)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getDraftPage(nodeId, title);
 	}
@@ -182,10 +177,9 @@ public class WikiPageServiceUtil {
 		return getService().getNodePages(nodeId, max);
 	}
 
-	public static java.lang.String getNodePagesRSS(long nodeId, int max,
-		java.lang.String type, double version, java.lang.String displayStyle,
-		java.lang.String feedURL, java.lang.String entryURL,
-		java.lang.String attachmentURLPrefix)
+	public static String getNodePagesRSS(long nodeId, int max, String type,
+		double version, String displayStyle, String feedURL, String entryURL,
+		String attachmentURLPrefix)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .getNodePagesRSS(nodeId, max, type, version, displayStyle,
@@ -213,7 +207,7 @@ public class WikiPageServiceUtil {
 	*
 	* @return the OSGi service identifier
 	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
+	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 
@@ -223,25 +217,25 @@ public class WikiPageServiceUtil {
 	}
 
 	public static com.liferay.wiki.model.WikiPage getPage(long groupId,
-		long nodeId, java.lang.String title)
+		long nodeId, String title)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getPage(groupId, nodeId, title);
 	}
 
 	public static com.liferay.wiki.model.WikiPage getPage(long nodeId,
-		java.lang.String title)
+		String title)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getPage(nodeId, title);
 	}
 
 	public static com.liferay.wiki.model.WikiPage getPage(long nodeId,
-		java.lang.String title, java.lang.Boolean head)
+		String title, Boolean head)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getPage(nodeId, title, head);
 	}
 
 	public static com.liferay.wiki.model.WikiPage getPage(long nodeId,
-		java.lang.String title, double version)
+		String title, double version)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getPage(nodeId, title, version);
 	}
@@ -289,11 +283,9 @@ public class WikiPageServiceUtil {
 		return getService().getPagesCount(groupId, userId, nodeId, status);
 	}
 
-	public static java.lang.String getPagesRSS(long nodeId,
-		java.lang.String title, int max, java.lang.String type, double version,
-		java.lang.String displayStyle, java.lang.String feedURL,
-		java.lang.String entryURL, java.lang.String attachmentURLPrefix,
-		java.util.Locale locale)
+	public static String getPagesRSS(long nodeId, String title, int max,
+		String type, double version, String displayStyle, String feedURL,
+		String entryURL, String attachmentURLPrefix, java.util.Locale locale)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .getPagesRSS(nodeId, title, max, type, version,
@@ -311,39 +303,37 @@ public class WikiPageServiceUtil {
 		return getService().getRecentChangesCount(groupId, nodeId);
 	}
 
-	public static java.lang.String[] getTempFileNames(long nodeId,
-		java.lang.String folderName)
+	public static String[] getTempFileNames(long nodeId, String folderName)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getTempFileNames(nodeId, folderName);
 	}
 
 	public static com.liferay.portal.kernel.repository.model.FileEntry movePageAttachmentToTrash(
-		long nodeId, java.lang.String title, java.lang.String fileName)
+		long nodeId, String title, String fileName)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().movePageAttachmentToTrash(nodeId, title, fileName);
 	}
 
 	public static com.liferay.wiki.model.WikiPage movePageToTrash(long nodeId,
-		java.lang.String title)
+		String title)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().movePageToTrash(nodeId, title);
 	}
 
 	public static com.liferay.wiki.model.WikiPage movePageToTrash(long nodeId,
-		java.lang.String title, double version)
+		String title, double version)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().movePageToTrash(nodeId, title, version);
 	}
 
-	public static void renamePage(long nodeId, java.lang.String title,
-		java.lang.String newTitle,
+	public static void renamePage(long nodeId, String title, String newTitle,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().renamePage(nodeId, title, newTitle, serviceContext);
 	}
 
 	public static void restorePageAttachmentFromTrash(long nodeId,
-		java.lang.String title, java.lang.String fileName)
+		String title, String fileName)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().restorePageAttachmentFromTrash(nodeId, title, fileName);
 	}
@@ -354,26 +344,26 @@ public class WikiPageServiceUtil {
 	}
 
 	public static com.liferay.wiki.model.WikiPage revertPage(long nodeId,
-		java.lang.String title, double version,
+		String title, double version,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().revertPage(nodeId, title, version, serviceContext);
 	}
 
-	public static void subscribePage(long nodeId, java.lang.String title)
+	public static void subscribePage(long nodeId, String title)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().subscribePage(nodeId, title);
 	}
 
-	public static void unsubscribePage(long nodeId, java.lang.String title)
+	public static void unsubscribePage(long nodeId, String title)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().unsubscribePage(nodeId, title);
 	}
 
 	public static com.liferay.wiki.model.WikiPage updatePage(long nodeId,
-		java.lang.String title, double version, java.lang.String content,
-		java.lang.String summary, boolean minorEdit, java.lang.String format,
-		java.lang.String parentTitle, java.lang.String redirectTitle,
+		String title, double version, String content, String summary,
+		boolean minorEdit, String format, String parentTitle,
+		String redirectTitle,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()

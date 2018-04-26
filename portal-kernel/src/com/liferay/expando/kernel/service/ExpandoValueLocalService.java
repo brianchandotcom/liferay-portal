@@ -77,104 +77,102 @@ public interface ExpandoValueLocalService extends BaseLocalService,
 	public ExpandoValue addExpandoValue(ExpandoValue expandoValue);
 
 	public ExpandoValue addValue(long classNameId, long tableId, long columnId,
-		long classPK, java.lang.String data) throws PortalException;
+		long classPK, String data) throws PortalException;
 
-	public ExpandoValue addValue(long companyId, java.lang.String className,
-		java.lang.String tableName, java.lang.String columnName, long classPK,
-		boolean data) throws PortalException;
-
-	public ExpandoValue addValue(long companyId, java.lang.String className,
-		java.lang.String tableName, java.lang.String columnName, long classPK,
-		boolean[] data) throws PortalException;
-
-	public ExpandoValue addValue(long companyId, java.lang.String className,
-		java.lang.String tableName, java.lang.String columnName, long classPK,
-		Date data) throws PortalException;
-
-	public ExpandoValue addValue(long companyId, java.lang.String className,
-		java.lang.String tableName, java.lang.String columnName, long classPK,
-		Date[] data) throws PortalException;
-
-	public ExpandoValue addValue(long companyId, java.lang.String className,
-		java.lang.String tableName, java.lang.String columnName, long classPK,
-		double data) throws PortalException;
-
-	public ExpandoValue addValue(long companyId, java.lang.String className,
-		java.lang.String tableName, java.lang.String columnName, long classPK,
-		double[] data) throws PortalException;
-
-	public ExpandoValue addValue(long companyId, java.lang.String className,
-		java.lang.String tableName, java.lang.String columnName, long classPK,
-		float data) throws PortalException;
-
-	public ExpandoValue addValue(long companyId, java.lang.String className,
-		java.lang.String tableName, java.lang.String columnName, long classPK,
-		float[] data) throws PortalException;
-
-	public ExpandoValue addValue(long companyId, java.lang.String className,
-		java.lang.String tableName, java.lang.String columnName, long classPK,
-		int data) throws PortalException;
-
-	public ExpandoValue addValue(long companyId, java.lang.String className,
-		java.lang.String tableName, java.lang.String columnName, long classPK,
-		int[] data) throws PortalException;
-
-	public ExpandoValue addValue(long companyId, java.lang.String className,
-		java.lang.String tableName, java.lang.String columnName, long classPK,
-		JSONObject data) throws PortalException;
-
-	public ExpandoValue addValue(long companyId, java.lang.String className,
-		java.lang.String tableName, java.lang.String columnName, long classPK,
-		long data) throws PortalException;
-
-	public ExpandoValue addValue(long companyId, java.lang.String className,
-		java.lang.String tableName, java.lang.String columnName, long classPK,
-		long[] data) throws PortalException;
-
-	public ExpandoValue addValue(long companyId, java.lang.String className,
-		java.lang.String tableName, java.lang.String columnName, long classPK,
-		Map<Locale, ?> dataMap, Locale defautlLocale) throws PortalException;
-
-	public ExpandoValue addValue(long companyId, java.lang.String className,
-		java.lang.String tableName, java.lang.String columnName, long classPK,
-		java.lang.Number data) throws PortalException;
-
-	public ExpandoValue addValue(long companyId, java.lang.String className,
-		java.lang.String tableName, java.lang.String columnName, long classPK,
-		java.lang.Number[] data) throws PortalException;
-
-	public ExpandoValue addValue(long companyId, java.lang.String className,
-		java.lang.String tableName, java.lang.String columnName, long classPK,
-		java.lang.Object data) throws PortalException;
-
-	public ExpandoValue addValue(long companyId, java.lang.String className,
-		java.lang.String tableName, java.lang.String columnName, long classPK,
-		short data) throws PortalException;
-
-	public ExpandoValue addValue(long companyId, java.lang.String className,
-		java.lang.String tableName, java.lang.String columnName, long classPK,
-		short[] data) throws PortalException;
-
-	public ExpandoValue addValue(long companyId, java.lang.String className,
-		java.lang.String tableName, java.lang.String columnName, long classPK,
-		java.lang.String data) throws PortalException;
-
-	public ExpandoValue addValue(long companyId, java.lang.String className,
-		java.lang.String tableName, java.lang.String columnName, long classPK,
-		java.lang.String[] data) throws PortalException;
-
-	public void addValues(long classNameId, long tableId,
-		List<ExpandoColumn> columns, long classPK,
-		Map<java.lang.String, java.lang.String> data) throws PortalException;
-
-	public void addValues(long companyId, long classNameId,
-		java.lang.String tableName, long classPK,
-		Map<java.lang.String, Serializable> attributes)
+	public ExpandoValue addValue(long companyId, String className,
+		String tableName, String columnName, long classPK, boolean data)
 		throws PortalException;
 
-	public void addValues(long companyId, java.lang.String className,
-		java.lang.String tableName, long classPK,
-		Map<java.lang.String, Serializable> attributes)
+	public ExpandoValue addValue(long companyId, String className,
+		String tableName, String columnName, long classPK, boolean[] data)
+		throws PortalException;
+
+	public ExpandoValue addValue(long companyId, String className,
+		String tableName, String columnName, long classPK, Date data)
+		throws PortalException;
+
+	public ExpandoValue addValue(long companyId, String className,
+		String tableName, String columnName, long classPK, Date[] data)
+		throws PortalException;
+
+	public ExpandoValue addValue(long companyId, String className,
+		String tableName, String columnName, long classPK, double data)
+		throws PortalException;
+
+	public ExpandoValue addValue(long companyId, String className,
+		String tableName, String columnName, long classPK, double[] data)
+		throws PortalException;
+
+	public ExpandoValue addValue(long companyId, String className,
+		String tableName, String columnName, long classPK, float data)
+		throws PortalException;
+
+	public ExpandoValue addValue(long companyId, String className,
+		String tableName, String columnName, long classPK, float[] data)
+		throws PortalException;
+
+	public ExpandoValue addValue(long companyId, String className,
+		String tableName, String columnName, long classPK, int data)
+		throws PortalException;
+
+	public ExpandoValue addValue(long companyId, String className,
+		String tableName, String columnName, long classPK, int[] data)
+		throws PortalException;
+
+	public ExpandoValue addValue(long companyId, String className,
+		String tableName, String columnName, long classPK, JSONObject data)
+		throws PortalException;
+
+	public ExpandoValue addValue(long companyId, String className,
+		String tableName, String columnName, long classPK, long data)
+		throws PortalException;
+
+	public ExpandoValue addValue(long companyId, String className,
+		String tableName, String columnName, long classPK, long[] data)
+		throws PortalException;
+
+	public ExpandoValue addValue(long companyId, String className,
+		String tableName, String columnName, long classPK,
+		Map<Locale, ?> dataMap, Locale defautlLocale) throws PortalException;
+
+	public ExpandoValue addValue(long companyId, String className,
+		String tableName, String columnName, long classPK, Number data)
+		throws PortalException;
+
+	public ExpandoValue addValue(long companyId, String className,
+		String tableName, String columnName, long classPK, Number[] data)
+		throws PortalException;
+
+	public ExpandoValue addValue(long companyId, String className,
+		String tableName, String columnName, long classPK, Object data)
+		throws PortalException;
+
+	public ExpandoValue addValue(long companyId, String className,
+		String tableName, String columnName, long classPK, short data)
+		throws PortalException;
+
+	public ExpandoValue addValue(long companyId, String className,
+		String tableName, String columnName, long classPK, short[] data)
+		throws PortalException;
+
+	public ExpandoValue addValue(long companyId, String className,
+		String tableName, String columnName, long classPK, String data)
+		throws PortalException;
+
+	public ExpandoValue addValue(long companyId, String className,
+		String tableName, String columnName, long classPK, String[] data)
+		throws PortalException;
+
+	public void addValues(long classNameId, long tableId,
+		List<ExpandoColumn> columns, long classPK, Map<String, String> data)
+		throws PortalException;
+
+	public void addValues(long companyId, long classNameId, String tableName,
+		long classPK, Map<String, Serializable> attributes)
+		throws PortalException;
+
+	public void addValues(long companyId, String className, String tableName,
+		long classPK, Map<String, Serializable> attributes)
 		throws PortalException;
 
 	/**
@@ -226,17 +224,15 @@ public interface ExpandoValueLocalService extends BaseLocalService,
 	public void deleteValue(long columnId, long rowId)
 		throws PortalException;
 
-	public void deleteValue(long companyId, long classNameId,
-		java.lang.String tableName, java.lang.String columnName, long classPK)
-		throws PortalException;
+	public void deleteValue(long companyId, long classNameId, String tableName,
+		String columnName, long classPK) throws PortalException;
 
-	public void deleteValue(long companyId, java.lang.String className,
-		java.lang.String tableName, java.lang.String columnName, long classPK)
-		throws PortalException;
+	public void deleteValue(long companyId, String className, String tableName,
+		String columnName, long classPK) throws PortalException;
 
 	public void deleteValues(long classNameId, long classPK);
 
-	public void deleteValues(java.lang.String className, long classPK);
+	public void deleteValues(String className, long classPK);
 
 	public DynamicQuery dynamicQuery();
 
@@ -308,174 +304,164 @@ public interface ExpandoValueLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<ExpandoValue> getColumnValues(long companyId, long classNameId,
-		java.lang.String tableName, java.lang.String columnName, int start,
-		int end);
+		String tableName, String columnName, int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<ExpandoValue> getColumnValues(long companyId, long classNameId,
-		java.lang.String tableName, java.lang.String columnName,
-		java.lang.String data, int start, int end);
+		String tableName, String columnName, String data, int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<ExpandoValue> getColumnValues(long companyId,
-		java.lang.String className, java.lang.String tableName,
-		java.lang.String columnName, int start, int end);
+	public List<ExpandoValue> getColumnValues(long companyId, String className,
+		String tableName, String columnName, int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<ExpandoValue> getColumnValues(long companyId,
-		java.lang.String className, java.lang.String tableName,
-		java.lang.String columnName, java.lang.String data, int start, int end);
+	public List<ExpandoValue> getColumnValues(long companyId, String className,
+		String tableName, String columnName, String data, int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getColumnValuesCount(long columnId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getColumnValuesCount(long companyId, long classNameId,
-		java.lang.String tableName, java.lang.String columnName);
+		String tableName, String columnName);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getColumnValuesCount(long companyId, long classNameId,
-		java.lang.String tableName, java.lang.String columnName,
-		java.lang.String data);
+		String tableName, String columnName, String data);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getColumnValuesCount(long companyId, java.lang.String className,
-		java.lang.String tableName, java.lang.String columnName);
+	public int getColumnValuesCount(long companyId, String className,
+		String tableName, String columnName);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getColumnValuesCount(long companyId, java.lang.String className,
-		java.lang.String tableName, java.lang.String columnName,
-		java.lang.String data);
+	public int getColumnValuesCount(long companyId, String className,
+		String tableName, String columnName, String data);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Map<java.lang.String, Serializable> getData(long companyId,
-		java.lang.String className, java.lang.String tableName,
-		Collection<java.lang.String> columnNames, long classPK)
+	public Map<String, Serializable> getData(long companyId, String className,
+		String tableName, Collection<String> columnNames, long classPK)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Serializable getData(long companyId, java.lang.String className,
-		java.lang.String tableName, java.lang.String columnName, long classPK)
+	public Serializable getData(long companyId, String className,
+		String tableName, String columnName, long classPK)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public boolean getData(long companyId, java.lang.String className,
-		java.lang.String tableName, java.lang.String columnName, long classPK,
-		boolean defaultData) throws PortalException;
+	public boolean getData(long companyId, String className, String tableName,
+		String columnName, long classPK, boolean defaultData)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public boolean[] getData(long companyId, java.lang.String className,
-		java.lang.String tableName, java.lang.String columnName, long classPK,
-		boolean[] defaultData) throws PortalException;
+	public boolean[] getData(long companyId, String className,
+		String tableName, String columnName, long classPK, boolean[] defaultData)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Date getData(long companyId, java.lang.String className,
-		java.lang.String tableName, java.lang.String columnName, long classPK,
-		Date defaultData) throws PortalException;
+	public Date getData(long companyId, String className, String tableName,
+		String columnName, long classPK, Date defaultData)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Date[] getData(long companyId, java.lang.String className,
-		java.lang.String tableName, java.lang.String columnName, long classPK,
-		Date[] defaultData) throws PortalException;
+	public Date[] getData(long companyId, String className, String tableName,
+		String columnName, long classPK, Date[] defaultData)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public double getData(long companyId, java.lang.String className,
-		java.lang.String tableName, java.lang.String columnName, long classPK,
-		double defaultData) throws PortalException;
+	public double getData(long companyId, String className, String tableName,
+		String columnName, long classPK, double defaultData)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public double[] getData(long companyId, java.lang.String className,
-		java.lang.String tableName, java.lang.String columnName, long classPK,
-		double[] defaultData) throws PortalException;
+	public double[] getData(long companyId, String className, String tableName,
+		String columnName, long classPK, double[] defaultData)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public float getData(long companyId, java.lang.String className,
-		java.lang.String tableName, java.lang.String columnName, long classPK,
-		float defaultData) throws PortalException;
+	public float getData(long companyId, String className, String tableName,
+		String columnName, long classPK, float defaultData)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public float[] getData(long companyId, java.lang.String className,
-		java.lang.String tableName, java.lang.String columnName, long classPK,
-		float[] defaultData) throws PortalException;
+	public float[] getData(long companyId, String className, String tableName,
+		String columnName, long classPK, float[] defaultData)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getData(long companyId, java.lang.String className,
-		java.lang.String tableName, java.lang.String columnName, long classPK,
-		int defaultData) throws PortalException;
+	public int getData(long companyId, String className, String tableName,
+		String columnName, long classPK, int defaultData)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int[] getData(long companyId, java.lang.String className,
-		java.lang.String tableName, java.lang.String columnName, long classPK,
-		int[] defaultData) throws PortalException;
+	public int[] getData(long companyId, String className, String tableName,
+		String columnName, long classPK, int[] defaultData)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public JSONObject getData(long companyId, java.lang.String className,
-		java.lang.String tableName, java.lang.String columnName, long classPK,
+	public JSONObject getData(long companyId, String className,
+		String tableName, String columnName, long classPK,
 		JSONObject defaultData) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public long getData(long companyId, java.lang.String className,
-		java.lang.String tableName, java.lang.String columnName, long classPK,
-		long defaultData) throws PortalException;
+	public long getData(long companyId, String className, String tableName,
+		String columnName, long classPK, long defaultData)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public long[] getData(long companyId, java.lang.String className,
-		java.lang.String tableName, java.lang.String columnName, long classPK,
-		long[] defaultData) throws PortalException;
+	public long[] getData(long companyId, String className, String tableName,
+		String columnName, long classPK, long[] defaultData)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Map<?, ?> getData(long companyId, java.lang.String className,
-		java.lang.String tableName, java.lang.String columnName, long classPK,
-		Map<?, ?> defaultData) throws PortalException;
+	public Map<?, ?> getData(long companyId, String className,
+		String tableName, String columnName, long classPK, Map<?, ?> defaultData)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.lang.Number getData(long companyId, java.lang.String className,
-		java.lang.String tableName, java.lang.String columnName, long classPK,
-		java.lang.Number defaultData) throws PortalException;
+	public Number getData(long companyId, String className, String tableName,
+		String columnName, long classPK, Number defaultData)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.lang.Number[] getData(long companyId,
-		java.lang.String className, java.lang.String tableName,
-		java.lang.String columnName, long classPK,
-		java.lang.Number[] defaultData) throws PortalException;
+	public Number[] getData(long companyId, String className, String tableName,
+		String columnName, long classPK, Number[] defaultData)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public short getData(long companyId, java.lang.String className,
-		java.lang.String tableName, java.lang.String columnName, long classPK,
-		short defaultData) throws PortalException;
+	public short getData(long companyId, String className, String tableName,
+		String columnName, long classPK, short defaultData)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public short[] getData(long companyId, java.lang.String className,
-		java.lang.String tableName, java.lang.String columnName, long classPK,
-		short[] defaultData) throws PortalException;
+	public short[] getData(long companyId, String className, String tableName,
+		String columnName, long classPK, short[] defaultData)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.lang.String getData(long companyId, java.lang.String className,
-		java.lang.String tableName, java.lang.String columnName, long classPK,
-		java.lang.String defaultData) throws PortalException;
+	public String getData(long companyId, String className, String tableName,
+		String columnName, long classPK, String defaultData)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.lang.String[] getData(long companyId,
-		java.lang.String className, java.lang.String tableName,
-		java.lang.String columnName, long classPK,
-		java.lang.String[] defaultData) throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<ExpandoValue> getDefaultTableColumnValues(long companyId,
-		long classNameId, java.lang.String columnName, int start, int end);
+	public String[] getData(long companyId, String className, String tableName,
+		String columnName, long classPK, String[] defaultData)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<ExpandoValue> getDefaultTableColumnValues(long companyId,
-		java.lang.String className, java.lang.String columnName, int start,
-		int end);
+		long classNameId, String columnName, int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<ExpandoValue> getDefaultTableColumnValues(long companyId,
+		String className, String columnName, int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getDefaultTableColumnValuesCount(long companyId,
-		long classNameId, java.lang.String columnName);
+		long classNameId, String columnName);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getDefaultTableColumnValuesCount(long companyId,
-		java.lang.String className, java.lang.String columnName);
+		String className, String columnName);
 
 	/**
 	* Returns the expando value with the primary key.
@@ -517,7 +503,7 @@ public interface ExpandoValueLocalService extends BaseLocalService,
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -532,23 +518,22 @@ public interface ExpandoValueLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<ExpandoValue> getRowValues(long companyId, long classNameId,
-		java.lang.String tableName, long classPK, int start, int end);
+		String tableName, long classPK, int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<ExpandoValue> getRowValues(long companyId,
-		java.lang.String className, java.lang.String tableName, long classPK,
-		int start, int end);
+	public List<ExpandoValue> getRowValues(long companyId, String className,
+		String tableName, long classPK, int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getRowValuesCount(long rowId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getRowValuesCount(long companyId, long classNameId,
-		java.lang.String tableName, long classPK);
+		String tableName, long classPK);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getRowValuesCount(long companyId, java.lang.String className,
-		java.lang.String tableName, long classPK);
+	public int getRowValuesCount(long companyId, String className,
+		String tableName, long classPK);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ExpandoValue getValue(long valueId) throws PortalException;
@@ -562,11 +547,11 @@ public interface ExpandoValueLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ExpandoValue getValue(long companyId, long classNameId,
-		java.lang.String tableName, java.lang.String columnName, long classPK);
+		String tableName, String columnName, long classPK);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ExpandoValue getValue(long companyId, java.lang.String className,
-		java.lang.String tableName, java.lang.String columnName, long classPK);
+	public ExpandoValue getValue(long companyId, String className,
+		String tableName, String columnName, long classPK);
 
 	/**
 	* Updates the expando value in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.

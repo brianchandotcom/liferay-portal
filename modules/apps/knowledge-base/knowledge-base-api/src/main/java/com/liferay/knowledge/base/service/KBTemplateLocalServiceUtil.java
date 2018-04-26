@@ -55,7 +55,7 @@ public class KBTemplateLocalServiceUtil {
 	}
 
 	public static com.liferay.knowledge.base.model.KBTemplate addKBTemplate(
-		long userId, java.lang.String title, java.lang.String content,
+		long userId, String title, String content,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().addKBTemplate(userId, title, content, serviceContext);
@@ -208,7 +208,7 @@ public class KBTemplateLocalServiceUtil {
 	* @return the matching kb template, or <code>null</code> if a matching kb template could not be found
 	*/
 	public static com.liferay.knowledge.base.model.KBTemplate fetchKBTemplateByUuidAndGroupId(
-		java.lang.String uuid, long groupId) {
+		String uuid, long groupId) {
 		return getService().fetchKBTemplateByUuidAndGroupId(uuid, groupId);
 	}
 
@@ -258,7 +258,7 @@ public class KBTemplateLocalServiceUtil {
 	* @throws PortalException if a matching kb template could not be found
 	*/
 	public static com.liferay.knowledge.base.model.KBTemplate getKBTemplateByUuidAndGroupId(
-		java.lang.String uuid, long groupId)
+		String uuid, long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getKBTemplateByUuidAndGroupId(uuid, groupId);
 	}
@@ -287,7 +287,7 @@ public class KBTemplateLocalServiceUtil {
 	* @return the matching kb templates, or an empty list if no matches were found
 	*/
 	public static java.util.List<com.liferay.knowledge.base.model.KBTemplate> getKBTemplatesByUuidAndCompanyId(
-		java.lang.String uuid, long companyId) {
+		String uuid, long companyId) {
 		return getService().getKBTemplatesByUuidAndCompanyId(uuid, companyId);
 	}
 
@@ -302,7 +302,7 @@ public class KBTemplateLocalServiceUtil {
 	* @return the range of matching kb templates, or an empty list if no matches were found
 	*/
 	public static java.util.List<com.liferay.knowledge.base.model.KBTemplate> getKBTemplatesByUuidAndCompanyId(
-		java.lang.String uuid, long companyId, int start, int end,
+		String uuid, long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.knowledge.base.model.KBTemplate> orderByComparator) {
 		return getService()
 				   .getKBTemplatesByUuidAndCompanyId(uuid, companyId, start,
@@ -323,7 +323,7 @@ public class KBTemplateLocalServiceUtil {
 	*
 	* @return the OSGi service identifier
 	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
+	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 
@@ -334,9 +334,8 @@ public class KBTemplateLocalServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.knowledge.base.model.KBTemplate> search(
-		long groupId, java.lang.String title, java.lang.String content,
-		java.util.Date startDate, java.util.Date endDate, boolean andOperator,
-		int start, int end,
+		long groupId, String title, String content, java.util.Date startDate,
+		java.util.Date endDate, boolean andOperator, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.knowledge.base.model.KBTemplate> orderByComparator) {
 		return getService()
 				   .search(groupId, title, content, startDate, endDate,
@@ -355,7 +354,7 @@ public class KBTemplateLocalServiceUtil {
 	}
 
 	public static com.liferay.knowledge.base.model.KBTemplate updateKBTemplate(
-		long kbTemplateId, java.lang.String title, java.lang.String content,
+		long kbTemplateId, String title, String content,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
@@ -365,7 +364,7 @@ public class KBTemplateLocalServiceUtil {
 
 	public static void updateKBTemplateResources(
 		com.liferay.knowledge.base.model.KBTemplate kbTemplate,
-		java.lang.String[] groupPermissions, java.lang.String[] guestPermissions)
+		String[] groupPermissions, String[] guestPermissions)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService()
 			.updateKBTemplateResources(kbTemplate, groupPermissions,

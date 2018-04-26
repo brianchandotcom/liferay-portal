@@ -115,7 +115,7 @@ public class ServiceComponentUtil {
 	* @return the matching service components
 	*/
 	public static List<ServiceComponent> findByBuildNamespace(
-		java.lang.String buildNamespace) {
+		String buildNamespace) {
 		return getPersistence().findByBuildNamespace(buildNamespace);
 	}
 
@@ -132,7 +132,7 @@ public class ServiceComponentUtil {
 	* @return the range of matching service components
 	*/
 	public static List<ServiceComponent> findByBuildNamespace(
-		java.lang.String buildNamespace, int start, int end) {
+		String buildNamespace, int start, int end) {
 		return getPersistence().findByBuildNamespace(buildNamespace, start, end);
 	}
 
@@ -150,7 +150,7 @@ public class ServiceComponentUtil {
 	* @return the ordered range of matching service components
 	*/
 	public static List<ServiceComponent> findByBuildNamespace(
-		java.lang.String buildNamespace, int start, int end,
+		String buildNamespace, int start, int end,
 		OrderByComparator<ServiceComponent> orderByComparator) {
 		return getPersistence()
 				   .findByBuildNamespace(buildNamespace, start, end,
@@ -172,7 +172,7 @@ public class ServiceComponentUtil {
 	* @return the ordered range of matching service components
 	*/
 	public static List<ServiceComponent> findByBuildNamespace(
-		java.lang.String buildNamespace, int start, int end,
+		String buildNamespace, int start, int end,
 		OrderByComparator<ServiceComponent> orderByComparator,
 		boolean retrieveFromCache) {
 		return getPersistence()
@@ -189,7 +189,7 @@ public class ServiceComponentUtil {
 	* @throws NoSuchServiceComponentException if a matching service component could not be found
 	*/
 	public static ServiceComponent findByBuildNamespace_First(
-		java.lang.String buildNamespace,
+		String buildNamespace,
 		OrderByComparator<ServiceComponent> orderByComparator)
 		throws com.liferay.portal.kernel.exception.NoSuchServiceComponentException {
 		return getPersistence()
@@ -204,7 +204,7 @@ public class ServiceComponentUtil {
 	* @return the first matching service component, or <code>null</code> if a matching service component could not be found
 	*/
 	public static ServiceComponent fetchByBuildNamespace_First(
-		java.lang.String buildNamespace,
+		String buildNamespace,
 		OrderByComparator<ServiceComponent> orderByComparator) {
 		return getPersistence()
 				   .fetchByBuildNamespace_First(buildNamespace,
@@ -220,7 +220,7 @@ public class ServiceComponentUtil {
 	* @throws NoSuchServiceComponentException if a matching service component could not be found
 	*/
 	public static ServiceComponent findByBuildNamespace_Last(
-		java.lang.String buildNamespace,
+		String buildNamespace,
 		OrderByComparator<ServiceComponent> orderByComparator)
 		throws com.liferay.portal.kernel.exception.NoSuchServiceComponentException {
 		return getPersistence()
@@ -235,7 +235,7 @@ public class ServiceComponentUtil {
 	* @return the last matching service component, or <code>null</code> if a matching service component could not be found
 	*/
 	public static ServiceComponent fetchByBuildNamespace_Last(
-		java.lang.String buildNamespace,
+		String buildNamespace,
 		OrderByComparator<ServiceComponent> orderByComparator) {
 		return getPersistence()
 				   .fetchByBuildNamespace_Last(buildNamespace, orderByComparator);
@@ -251,7 +251,7 @@ public class ServiceComponentUtil {
 	* @throws NoSuchServiceComponentException if a service component with the primary key could not be found
 	*/
 	public static ServiceComponent[] findByBuildNamespace_PrevAndNext(
-		long serviceComponentId, java.lang.String buildNamespace,
+		long serviceComponentId, String buildNamespace,
 		OrderByComparator<ServiceComponent> orderByComparator)
 		throws com.liferay.portal.kernel.exception.NoSuchServiceComponentException {
 		return getPersistence()
@@ -264,7 +264,7 @@ public class ServiceComponentUtil {
 	*
 	* @param buildNamespace the build namespace
 	*/
-	public static void removeByBuildNamespace(java.lang.String buildNamespace) {
+	public static void removeByBuildNamespace(String buildNamespace) {
 		getPersistence().removeByBuildNamespace(buildNamespace);
 	}
 
@@ -274,7 +274,7 @@ public class ServiceComponentUtil {
 	* @param buildNamespace the build namespace
 	* @return the number of matching service components
 	*/
-	public static int countByBuildNamespace(java.lang.String buildNamespace) {
+	public static int countByBuildNamespace(String buildNamespace) {
 		return getPersistence().countByBuildNamespace(buildNamespace);
 	}
 
@@ -286,8 +286,8 @@ public class ServiceComponentUtil {
 	* @return the matching service component
 	* @throws NoSuchServiceComponentException if a matching service component could not be found
 	*/
-	public static ServiceComponent findByBNS_BNU(
-		java.lang.String buildNamespace, long buildNumber)
+	public static ServiceComponent findByBNS_BNU(String buildNamespace,
+		long buildNumber)
 		throws com.liferay.portal.kernel.exception.NoSuchServiceComponentException {
 		return getPersistence().findByBNS_BNU(buildNamespace, buildNumber);
 	}
@@ -299,8 +299,8 @@ public class ServiceComponentUtil {
 	* @param buildNumber the build number
 	* @return the matching service component, or <code>null</code> if a matching service component could not be found
 	*/
-	public static ServiceComponent fetchByBNS_BNU(
-		java.lang.String buildNamespace, long buildNumber) {
+	public static ServiceComponent fetchByBNS_BNU(String buildNamespace,
+		long buildNumber) {
 		return getPersistence().fetchByBNS_BNU(buildNamespace, buildNumber);
 	}
 
@@ -312,9 +312,8 @@ public class ServiceComponentUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching service component, or <code>null</code> if a matching service component could not be found
 	*/
-	public static ServiceComponent fetchByBNS_BNU(
-		java.lang.String buildNamespace, long buildNumber,
-		boolean retrieveFromCache) {
+	public static ServiceComponent fetchByBNS_BNU(String buildNamespace,
+		long buildNumber, boolean retrieveFromCache) {
 		return getPersistence()
 				   .fetchByBNS_BNU(buildNamespace, buildNumber,
 			retrieveFromCache);
@@ -327,8 +326,8 @@ public class ServiceComponentUtil {
 	* @param buildNumber the build number
 	* @return the service component that was removed
 	*/
-	public static ServiceComponent removeByBNS_BNU(
-		java.lang.String buildNamespace, long buildNumber)
+	public static ServiceComponent removeByBNS_BNU(String buildNamespace,
+		long buildNumber)
 		throws com.liferay.portal.kernel.exception.NoSuchServiceComponentException {
 		return getPersistence().removeByBNS_BNU(buildNamespace, buildNumber);
 	}
@@ -340,8 +339,7 @@ public class ServiceComponentUtil {
 	* @param buildNumber the build number
 	* @return the number of matching service components
 	*/
-	public static int countByBNS_BNU(java.lang.String buildNamespace,
-		long buildNumber) {
+	public static int countByBNS_BNU(String buildNamespace, long buildNumber) {
 		return getPersistence().countByBNS_BNU(buildNamespace, buildNumber);
 	}
 
@@ -493,7 +491,7 @@ public class ServiceComponentUtil {
 		return getPersistence().countAll();
 	}
 
-	public static java.util.Set<java.lang.String> getBadColumnNames() {
+	public static java.util.Set<String> getBadColumnNames() {
 		return getPersistence().getBadColumnNames();
 	}
 

@@ -47,7 +47,7 @@ public interface SocialRequestPersistence extends BasePersistence<SocialRequest>
 	* @param uuid the uuid
 	* @return the matching social requests
 	*/
-	public java.util.List<SocialRequest> findByUuid(java.lang.String uuid);
+	public java.util.List<SocialRequest> findByUuid(String uuid);
 
 	/**
 	* Returns a range of all the social requests where uuid = &#63;.
@@ -61,8 +61,8 @@ public interface SocialRequestPersistence extends BasePersistence<SocialRequest>
 	* @param end the upper bound of the range of social requests (not inclusive)
 	* @return the range of matching social requests
 	*/
-	public java.util.List<SocialRequest> findByUuid(java.lang.String uuid,
-		int start, int end);
+	public java.util.List<SocialRequest> findByUuid(String uuid, int start,
+		int end);
 
 	/**
 	* Returns an ordered range of all the social requests where uuid = &#63;.
@@ -77,8 +77,8 @@ public interface SocialRequestPersistence extends BasePersistence<SocialRequest>
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching social requests
 	*/
-	public java.util.List<SocialRequest> findByUuid(java.lang.String uuid,
-		int start, int end,
+	public java.util.List<SocialRequest> findByUuid(String uuid, int start,
+		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<SocialRequest> orderByComparator);
 
 	/**
@@ -95,8 +95,8 @@ public interface SocialRequestPersistence extends BasePersistence<SocialRequest>
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching social requests
 	*/
-	public java.util.List<SocialRequest> findByUuid(java.lang.String uuid,
-		int start, int end,
+	public java.util.List<SocialRequest> findByUuid(String uuid, int start,
+		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<SocialRequest> orderByComparator,
 		boolean retrieveFromCache);
 
@@ -108,7 +108,7 @@ public interface SocialRequestPersistence extends BasePersistence<SocialRequest>
 	* @return the first matching social request
 	* @throws NoSuchRequestException if a matching social request could not be found
 	*/
-	public SocialRequest findByUuid_First(java.lang.String uuid,
+	public SocialRequest findByUuid_First(String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<SocialRequest> orderByComparator)
 		throws NoSuchRequestException;
 
@@ -119,7 +119,7 @@ public interface SocialRequestPersistence extends BasePersistence<SocialRequest>
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching social request, or <code>null</code> if a matching social request could not be found
 	*/
-	public SocialRequest fetchByUuid_First(java.lang.String uuid,
+	public SocialRequest fetchByUuid_First(String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<SocialRequest> orderByComparator);
 
 	/**
@@ -130,7 +130,7 @@ public interface SocialRequestPersistence extends BasePersistence<SocialRequest>
 	* @return the last matching social request
 	* @throws NoSuchRequestException if a matching social request could not be found
 	*/
-	public SocialRequest findByUuid_Last(java.lang.String uuid,
+	public SocialRequest findByUuid_Last(String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<SocialRequest> orderByComparator)
 		throws NoSuchRequestException;
 
@@ -141,7 +141,7 @@ public interface SocialRequestPersistence extends BasePersistence<SocialRequest>
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching social request, or <code>null</code> if a matching social request could not be found
 	*/
-	public SocialRequest fetchByUuid_Last(java.lang.String uuid,
+	public SocialRequest fetchByUuid_Last(String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<SocialRequest> orderByComparator);
 
 	/**
@@ -153,8 +153,7 @@ public interface SocialRequestPersistence extends BasePersistence<SocialRequest>
 	* @return the previous, current, and next social request
 	* @throws NoSuchRequestException if a social request with the primary key could not be found
 	*/
-	public SocialRequest[] findByUuid_PrevAndNext(long requestId,
-		java.lang.String uuid,
+	public SocialRequest[] findByUuid_PrevAndNext(long requestId, String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<SocialRequest> orderByComparator)
 		throws NoSuchRequestException;
 
@@ -163,7 +162,7 @@ public interface SocialRequestPersistence extends BasePersistence<SocialRequest>
 	*
 	* @param uuid the uuid
 	*/
-	public void removeByUuid(java.lang.String uuid);
+	public void removeByUuid(String uuid);
 
 	/**
 	* Returns the number of social requests where uuid = &#63;.
@@ -171,7 +170,7 @@ public interface SocialRequestPersistence extends BasePersistence<SocialRequest>
 	* @param uuid the uuid
 	* @return the number of matching social requests
 	*/
-	public int countByUuid(java.lang.String uuid);
+	public int countByUuid(String uuid);
 
 	/**
 	* Returns the social request where uuid = &#63; and groupId = &#63; or throws a {@link NoSuchRequestException} if it could not be found.
@@ -181,7 +180,7 @@ public interface SocialRequestPersistence extends BasePersistence<SocialRequest>
 	* @return the matching social request
 	* @throws NoSuchRequestException if a matching social request could not be found
 	*/
-	public SocialRequest findByUUID_G(java.lang.String uuid, long groupId)
+	public SocialRequest findByUUID_G(String uuid, long groupId)
 		throws NoSuchRequestException;
 
 	/**
@@ -191,7 +190,7 @@ public interface SocialRequestPersistence extends BasePersistence<SocialRequest>
 	* @param groupId the group ID
 	* @return the matching social request, or <code>null</code> if a matching social request could not be found
 	*/
-	public SocialRequest fetchByUUID_G(java.lang.String uuid, long groupId);
+	public SocialRequest fetchByUUID_G(String uuid, long groupId);
 
 	/**
 	* Returns the social request where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -201,7 +200,7 @@ public interface SocialRequestPersistence extends BasePersistence<SocialRequest>
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching social request, or <code>null</code> if a matching social request could not be found
 	*/
-	public SocialRequest fetchByUUID_G(java.lang.String uuid, long groupId,
+	public SocialRequest fetchByUUID_G(String uuid, long groupId,
 		boolean retrieveFromCache);
 
 	/**
@@ -211,7 +210,7 @@ public interface SocialRequestPersistence extends BasePersistence<SocialRequest>
 	* @param groupId the group ID
 	* @return the social request that was removed
 	*/
-	public SocialRequest removeByUUID_G(java.lang.String uuid, long groupId)
+	public SocialRequest removeByUUID_G(String uuid, long groupId)
 		throws NoSuchRequestException;
 
 	/**
@@ -221,7 +220,7 @@ public interface SocialRequestPersistence extends BasePersistence<SocialRequest>
 	* @param groupId the group ID
 	* @return the number of matching social requests
 	*/
-	public int countByUUID_G(java.lang.String uuid, long groupId);
+	public int countByUUID_G(String uuid, long groupId);
 
 	/**
 	* Returns all the social requests where uuid = &#63; and companyId = &#63;.
@@ -230,7 +229,7 @@ public interface SocialRequestPersistence extends BasePersistence<SocialRequest>
 	* @param companyId the company ID
 	* @return the matching social requests
 	*/
-	public java.util.List<SocialRequest> findByUuid_C(java.lang.String uuid,
+	public java.util.List<SocialRequest> findByUuid_C(String uuid,
 		long companyId);
 
 	/**
@@ -246,7 +245,7 @@ public interface SocialRequestPersistence extends BasePersistence<SocialRequest>
 	* @param end the upper bound of the range of social requests (not inclusive)
 	* @return the range of matching social requests
 	*/
-	public java.util.List<SocialRequest> findByUuid_C(java.lang.String uuid,
+	public java.util.List<SocialRequest> findByUuid_C(String uuid,
 		long companyId, int start, int end);
 
 	/**
@@ -263,7 +262,7 @@ public interface SocialRequestPersistence extends BasePersistence<SocialRequest>
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching social requests
 	*/
-	public java.util.List<SocialRequest> findByUuid_C(java.lang.String uuid,
+	public java.util.List<SocialRequest> findByUuid_C(String uuid,
 		long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<SocialRequest> orderByComparator);
 
@@ -282,7 +281,7 @@ public interface SocialRequestPersistence extends BasePersistence<SocialRequest>
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching social requests
 	*/
-	public java.util.List<SocialRequest> findByUuid_C(java.lang.String uuid,
+	public java.util.List<SocialRequest> findByUuid_C(String uuid,
 		long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<SocialRequest> orderByComparator,
 		boolean retrieveFromCache);
@@ -296,8 +295,7 @@ public interface SocialRequestPersistence extends BasePersistence<SocialRequest>
 	* @return the first matching social request
 	* @throws NoSuchRequestException if a matching social request could not be found
 	*/
-	public SocialRequest findByUuid_C_First(java.lang.String uuid,
-		long companyId,
+	public SocialRequest findByUuid_C_First(String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<SocialRequest> orderByComparator)
 		throws NoSuchRequestException;
 
@@ -309,8 +307,7 @@ public interface SocialRequestPersistence extends BasePersistence<SocialRequest>
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching social request, or <code>null</code> if a matching social request could not be found
 	*/
-	public SocialRequest fetchByUuid_C_First(java.lang.String uuid,
-		long companyId,
+	public SocialRequest fetchByUuid_C_First(String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<SocialRequest> orderByComparator);
 
 	/**
@@ -322,8 +319,7 @@ public interface SocialRequestPersistence extends BasePersistence<SocialRequest>
 	* @return the last matching social request
 	* @throws NoSuchRequestException if a matching social request could not be found
 	*/
-	public SocialRequest findByUuid_C_Last(java.lang.String uuid,
-		long companyId,
+	public SocialRequest findByUuid_C_Last(String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<SocialRequest> orderByComparator)
 		throws NoSuchRequestException;
 
@@ -335,8 +331,7 @@ public interface SocialRequestPersistence extends BasePersistence<SocialRequest>
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching social request, or <code>null</code> if a matching social request could not be found
 	*/
-	public SocialRequest fetchByUuid_C_Last(java.lang.String uuid,
-		long companyId,
+	public SocialRequest fetchByUuid_C_Last(String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<SocialRequest> orderByComparator);
 
 	/**
@@ -350,7 +345,7 @@ public interface SocialRequestPersistence extends BasePersistence<SocialRequest>
 	* @throws NoSuchRequestException if a social request with the primary key could not be found
 	*/
 	public SocialRequest[] findByUuid_C_PrevAndNext(long requestId,
-		java.lang.String uuid, long companyId,
+		String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<SocialRequest> orderByComparator)
 		throws NoSuchRequestException;
 
@@ -360,7 +355,7 @@ public interface SocialRequestPersistence extends BasePersistence<SocialRequest>
 	* @param uuid the uuid
 	* @param companyId the company ID
 	*/
-	public void removeByUuid_C(java.lang.String uuid, long companyId);
+	public void removeByUuid_C(String uuid, long companyId);
 
 	/**
 	* Returns the number of social requests where uuid = &#63; and companyId = &#63;.
@@ -369,7 +364,7 @@ public interface SocialRequestPersistence extends BasePersistence<SocialRequest>
 	* @param companyId the company ID
 	* @return the number of matching social requests
 	*/
-	public int countByUuid_C(java.lang.String uuid, long companyId);
+	public int countByUuid_C(String uuid, long companyId);
 
 	/**
 	* Returns all the social requests where companyId = &#63;.
@@ -1760,5 +1755,5 @@ public interface SocialRequestPersistence extends BasePersistence<SocialRequest>
 	public int countAll();
 
 	@Override
-	public java.util.Set<java.lang.String> getBadColumnNames();
+	public java.util.Set<String> getBadColumnNames();
 }

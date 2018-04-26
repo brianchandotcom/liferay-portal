@@ -57,9 +57,9 @@ import com.liferay.portal.kernel.util.MethodKey;
 public class MDRActionServiceHttp {
 	public static com.liferay.mobile.device.rules.model.MDRAction addAction(
 		HttpPrincipal httpPrincipal, long ruleGroupInstanceId,
-		java.util.Map<java.util.Locale, java.lang.String> nameMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		java.lang.String type, java.lang.String typeSettings,
+		java.util.Map<java.util.Locale, String> nameMap,
+		java.util.Map<java.util.Locale, String> descriptionMap, String type,
+		String typeSettings,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -94,9 +94,8 @@ public class MDRActionServiceHttp {
 
 	public static com.liferay.mobile.device.rules.model.MDRAction addAction(
 		HttpPrincipal httpPrincipal, long ruleGroupInstanceId,
-		java.util.Map<java.util.Locale, java.lang.String> nameMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		java.lang.String type,
+		java.util.Map<java.util.Locale, String> nameMap,
+		java.util.Map<java.util.Locale, String> descriptionMap, String type,
 		com.liferay.portal.kernel.util.UnicodeProperties typeSettingsProperties,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -220,9 +219,9 @@ public class MDRActionServiceHttp {
 
 	public static com.liferay.mobile.device.rules.model.MDRAction updateAction(
 		HttpPrincipal httpPrincipal, long actionId,
-		java.util.Map<java.util.Locale, java.lang.String> nameMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		java.lang.String type, java.lang.String typeSettings,
+		java.util.Map<java.util.Locale, String> nameMap,
+		java.util.Map<java.util.Locale, String> descriptionMap, String type,
+		String typeSettings,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -257,9 +256,8 @@ public class MDRActionServiceHttp {
 
 	public static com.liferay.mobile.device.rules.model.MDRAction updateAction(
 		HttpPrincipal httpPrincipal, long actionId,
-		java.util.Map<java.util.Locale, java.lang.String> nameMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		java.lang.String type,
+		java.util.Map<java.util.Locale, String> nameMap,
+		java.util.Map<java.util.Locale, String> descriptionMap, String type,
 		com.liferay.portal.kernel.util.UnicodeProperties typeSettingsProperties,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -295,13 +293,11 @@ public class MDRActionServiceHttp {
 
 	private static Log _log = LogFactoryUtil.getLog(MDRActionServiceHttp.class);
 	private static final Class<?>[] _addActionParameterTypes0 = new Class[] {
-			long.class, java.util.Map.class, java.util.Map.class,
-			java.lang.String.class, java.lang.String.class,
-			com.liferay.portal.kernel.service.ServiceContext.class
+			long.class, java.util.Map.class, java.util.Map.class, String.class,
+			String.class, com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _addActionParameterTypes1 = new Class[] {
-			long.class, java.util.Map.class, java.util.Map.class,
-			java.lang.String.class,
+			long.class, java.util.Map.class, java.util.Map.class, String.class,
 			com.liferay.portal.kernel.util.UnicodeProperties.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
@@ -315,13 +311,11 @@ public class MDRActionServiceHttp {
 			long.class
 		};
 	private static final Class<?>[] _updateActionParameterTypes5 = new Class[] {
-			long.class, java.util.Map.class, java.util.Map.class,
-			java.lang.String.class, java.lang.String.class,
-			com.liferay.portal.kernel.service.ServiceContext.class
+			long.class, java.util.Map.class, java.util.Map.class, String.class,
+			String.class, com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _updateActionParameterTypes6 = new Class[] {
-			long.class, java.util.Map.class, java.util.Map.class,
-			java.lang.String.class,
+			long.class, java.util.Map.class, java.util.Map.class, String.class,
 			com.liferay.portal.kernel.util.UnicodeProperties.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};

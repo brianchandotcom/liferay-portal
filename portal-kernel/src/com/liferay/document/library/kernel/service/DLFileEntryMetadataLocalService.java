@@ -195,7 +195,7 @@ public interface DLFileEntryMetadataLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public DLFileEntryMetadata fetchDLFileEntryMetadataByUuidAndCompanyId(
-		java.lang.String uuid, long companyId);
+		String uuid, long companyId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public DLFileEntryMetadata fetchFileEntryMetadata(long fileEntryMetadataId);
@@ -228,7 +228,7 @@ public interface DLFileEntryMetadataLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public DLFileEntryMetadata getDLFileEntryMetadataByUuidAndCompanyId(
-		java.lang.String uuid, long companyId) throws PortalException;
+		String uuid, long companyId) throws PortalException;
 
 	/**
 	* Returns a range of all the document library file entry metadatas.
@@ -281,7 +281,7 @@ public interface DLFileEntryMetadataLocalService extends BaseLocalService,
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -300,11 +300,10 @@ public interface DLFileEntryMetadataLocalService extends BaseLocalService,
 
 	public void updateFileEntryMetadata(long companyId,
 		List<DDMStructure> ddmStructures, long fileEntryId, long fileVersionId,
-		Map<java.lang.String, DDMFormValues> ddmFormValuesMap,
+		Map<String, DDMFormValues> ddmFormValuesMap,
 		ServiceContext serviceContext) throws PortalException;
 
 	public void updateFileEntryMetadata(long fileEntryTypeId, long fileEntryId,
-		long fileVersionId,
-		Map<java.lang.String, DDMFormValues> ddmFormValuesMap,
+		long fileVersionId, Map<String, DDMFormValues> ddmFormValuesMap,
 		ServiceContext serviceContext) throws PortalException;
 }

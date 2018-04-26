@@ -120,7 +120,7 @@ public class ImageWrapper implements Image, ModelWrapper<Image> {
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new ImageWrapper((Image)_image.clone());
 	}
 
@@ -220,7 +220,7 @@ public class ImageWrapper implements Image, ModelWrapper<Image> {
 	* @return the type of this image
 	*/
 	@Override
-	public java.lang.String getType() {
+	public String getType() {
 		return _image.getType();
 	}
 
@@ -370,7 +370,7 @@ public class ImageWrapper implements Image, ModelWrapper<Image> {
 	* @param type the type of this image
 	*/
 	@Override
-	public void setType(java.lang.String type) {
+	public void setType(String type) {
 		_image.setType(type);
 	}
 
@@ -395,7 +395,7 @@ public class ImageWrapper implements Image, ModelWrapper<Image> {
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _image.toString();
 	}
 
@@ -405,7 +405,7 @@ public class ImageWrapper implements Image, ModelWrapper<Image> {
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _image.toXmlString();
 	}
 

@@ -56,18 +56,18 @@ public interface DLFileEntry extends DLFileEntryModel, PersistedModel, TreeModel
 		};
 
 	@Override
-	public java.lang.String buildTreePath()
+	public String buildTreePath()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public java.io.InputStream getContentStream()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
-	public java.io.InputStream getContentStream(java.lang.String version)
+	public java.io.InputStream getContentStream(String version)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public long getDataRepositoryId();
 
-	public java.util.Map<java.lang.String, com.liferay.dynamic.data.mapping.kernel.DDMFormValues> getDDMFormValuesMap(
+	public java.util.Map<String, com.liferay.dynamic.data.mapping.kernel.DDMFormValues> getDDMFormValuesMap(
 		long fileVersionId)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
@@ -81,7 +81,7 @@ public interface DLFileEntry extends DLFileEntryModel, PersistedModel, TreeModel
 	public DLFileVersion getFileVersion()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
-	public DLFileVersion getFileVersion(java.lang.String version)
+	public DLFileVersion getFileVersion(String version)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public java.util.List<DLFileVersion> getFileVersions(int status);
@@ -91,16 +91,16 @@ public interface DLFileEntry extends DLFileEntryModel, PersistedModel, TreeModel
 	public DLFolder getFolder()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
-	public java.lang.String getIcon();
+	public String getIcon();
 
-	public java.lang.String getIconCssClass();
+	public String getIconCssClass();
 
 	public DLFileVersion getLatestFileVersion(boolean trusted)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public com.liferay.portal.kernel.lock.Lock getLock();
 
-	public java.lang.String getLuceneProperties();
+	public String getLuceneProperties();
 
 	public boolean hasLock();
 

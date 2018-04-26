@@ -151,11 +151,11 @@ public interface Layout extends LayoutModel, PersistedModel {
 	* @return the CSS text for the current layout, or for the layout set if no
 	CSS text is configured in the current layout
 	*/
-	public java.lang.String getCssText()
+	public String getCssText()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
-	public java.lang.String getDefaultThemeSetting(java.lang.String key,
-		java.lang.String device, boolean inheritLookAndFeel);
+	public String getDefaultThemeSetting(String key, String device,
+		boolean inheritLookAndFeel);
 
 	public java.util.List<Portlet> getEmbeddedPortlets();
 
@@ -167,16 +167,16 @@ public interface Layout extends LayoutModel, PersistedModel {
 	* @param locale the locale that the friendly URL should be retrieved for
 	* @return the layout's friendly URL for the given locale
 	*/
-	public java.lang.String getFriendlyURL(java.util.Locale locale);
+	public String getFriendlyURL(java.util.Locale locale);
 
 	/**
 	* Returns the friendly URLs for all configured locales.
 	*
 	* @return the friendly URLs for all configured locales
 	*/
-	public java.util.Map<java.util.Locale, java.lang.String> getFriendlyURLMap();
+	public java.util.Map<java.util.Locale, String> getFriendlyURLMap();
 
-	public java.lang.String getFriendlyURLsXML();
+	public String getFriendlyURLsXML();
 
 	/**
 	* Returns the current layout's group.
@@ -199,7 +199,7 @@ public interface Layout extends LayoutModel, PersistedModel {
 	current layout's name for the given locale if no HTML title is
 	configured
 	*/
-	public java.lang.String getHTMLTitle(java.util.Locale locale);
+	public String getHTMLTitle(java.util.Locale locale);
 
 	/**
 	* Returns the current layout's HTML title for the given locale language ID,
@@ -210,7 +210,7 @@ public interface Layout extends LayoutModel, PersistedModel {
 	* @return the current layout's HTML title for the given locale language ID,
 	or the current layout's name if no HTML title is configured
 	*/
-	public java.lang.String getHTMLTitle(java.lang.String localeLanguageId);
+	public String getHTMLTitle(String localeLanguageId);
 
 	/**
 	* Returns <code>true</code> if the current layout has a configured icon.
@@ -251,22 +251,21 @@ public interface Layout extends LayoutModel, PersistedModel {
 	public long getParentPlid()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
-	public java.lang.String getRegularURL(
+	public String getRegularURL(javax.servlet.http.HttpServletRequest request)
+		throws com.liferay.portal.kernel.exception.PortalException;
+
+	public String getResetLayoutURL(
 		javax.servlet.http.HttpServletRequest request)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
-	public java.lang.String getResetLayoutURL(
-		javax.servlet.http.HttpServletRequest request)
-		throws com.liferay.portal.kernel.exception.PortalException;
-
-	public java.lang.String getResetMaxStateURL(
+	public String getResetMaxStateURL(
 		javax.servlet.http.HttpServletRequest request)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public Group getScopeGroup()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
-	public java.lang.String getTarget();
+	public String getTarget();
 
 	/**
 	* Returns the current layout's theme, or the layout set's theme if no
@@ -278,18 +277,16 @@ public interface Layout extends LayoutModel, PersistedModel {
 	public Theme getTheme()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
-	public java.lang.String getThemeSetting(java.lang.String key,
-		java.lang.String device);
+	public String getThemeSetting(String key, String device);
 
-	public java.lang.String getThemeSetting(java.lang.String key,
-		java.lang.String device, boolean inheritLookAndFeel);
+	public String getThemeSetting(String key, String device,
+		boolean inheritLookAndFeel);
 
 	public com.liferay.portal.kernel.util.UnicodeProperties getTypeSettingsProperties();
 
-	public java.lang.String getTypeSettingsProperty(java.lang.String key);
+	public String getTypeSettingsProperty(String key);
 
-	public java.lang.String getTypeSettingsProperty(java.lang.String key,
-		java.lang.String defaultValue);
+	public String getTypeSettingsProperty(String key, String defaultValue);
 
 	/**
 	* Returns <code>true</code> if the given layout ID matches one of the
@@ -320,7 +317,7 @@ public interface Layout extends LayoutModel, PersistedModel {
 	public boolean includeLayoutContent(
 		javax.servlet.http.HttpServletRequest request,
 		javax.servlet.http.HttpServletResponse response)
-		throws java.lang.Exception;
+		throws Exception;
 
 	public boolean isChildSelected(boolean selectable, Layout layout)
 		throws com.liferay.portal.kernel.exception.PortalException;
@@ -381,7 +378,7 @@ public interface Layout extends LayoutModel, PersistedModel {
 	*/
 	public boolean isLayoutPrototypeLinkActive();
 
-	public boolean isPortletEmbedded(java.lang.String portletId, long groupId);
+	public boolean isPortletEmbedded(String portletId, long groupId);
 
 	/**
 	* Returns <code>true</code> if the current layout is part of the public
@@ -420,7 +417,7 @@ public interface Layout extends LayoutModel, PersistedModel {
 	/**
 	* @deprecated As of 7.0.0, with no direct replacement
 	*/
-	@java.lang.Deprecated()
+	@Deprecated()
 	public boolean isTypeArticle();
 
 	public boolean isTypeControlPanel();
@@ -436,13 +433,13 @@ public interface Layout extends LayoutModel, PersistedModel {
 	/**
 	* @deprecated As of 7.0.0, with no direct replacement
 	*/
-	@java.lang.Deprecated()
+	@Deprecated()
 	public boolean isTypeSharedPortlet();
 
 	public boolean isTypeURL();
 
 	public boolean matches(javax.servlet.http.HttpServletRequest request,
-		java.lang.String friendlyURL);
+		String friendlyURL);
 
 	public void setLayoutSet(LayoutSet layoutSet);
 

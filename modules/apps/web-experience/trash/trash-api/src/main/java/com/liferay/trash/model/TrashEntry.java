@@ -58,14 +58,13 @@ public interface TrashEntry extends TrashEntryModel, PersistedModel {
 
 	public com.liferay.portal.kernel.util.UnicodeProperties getTypeSettingsProperties();
 
-	public java.lang.String getTypeSettingsProperty(java.lang.String key);
+	public String getTypeSettingsProperty(String key);
 
-	public java.lang.String getTypeSettingsProperty(java.lang.String key,
-		java.lang.String defaultValue);
+	public String getTypeSettingsProperty(String key, String defaultValue);
 
-	public boolean isTrashEntry(java.lang.Class<?> clazz, long classPK);
+	public boolean isTrashEntry(Class<?> clazz, long classPK);
 
-	public boolean isTrashEntry(java.lang.String className, long classPK);
+	public boolean isTrashEntry(String className, long classPK);
 
 	public void setRootEntry(TrashEntry rootEntry);
 

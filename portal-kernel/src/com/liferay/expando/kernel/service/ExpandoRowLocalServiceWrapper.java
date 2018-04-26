@@ -117,16 +117,16 @@ public class ExpandoRowLocalServiceWrapper implements ExpandoRowLocalService,
 	}
 
 	@Override
-	public void deleteRow(long companyId, long classNameId,
-		java.lang.String tableName, long classPK)
+	public void deleteRow(long companyId, long classNameId, String tableName,
+		long classPK)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_expandoRowLocalService.deleteRow(companyId, classNameId, tableName,
 			classPK);
 	}
 
 	@Override
-	public void deleteRow(long companyId, java.lang.String className,
-		java.lang.String tableName, long classPK)
+	public void deleteRow(long companyId, String className, String tableName,
+		long classPK)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_expandoRowLocalService.deleteRow(companyId, className, tableName,
 			classPK);
@@ -248,7 +248,7 @@ public class ExpandoRowLocalServiceWrapper implements ExpandoRowLocalService,
 
 	@Override
 	public java.util.List<com.liferay.expando.kernel.model.ExpandoRow> getDefaultTableRows(
-		long companyId, java.lang.String className, int start, int end) {
+		long companyId, String className, int start, int end) {
 		return _expandoRowLocalService.getDefaultTableRows(companyId,
 			className, start, end);
 	}
@@ -260,8 +260,7 @@ public class ExpandoRowLocalServiceWrapper implements ExpandoRowLocalService,
 	}
 
 	@Override
-	public int getDefaultTableRowsCount(long companyId,
-		java.lang.String className) {
+	public int getDefaultTableRowsCount(long companyId, String className) {
 		return _expandoRowLocalService.getDefaultTableRowsCount(companyId,
 			className);
 	}
@@ -317,7 +316,7 @@ public class ExpandoRowLocalServiceWrapper implements ExpandoRowLocalService,
 	* @return the OSGi service identifier
 	*/
 	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
+	public String getOSGiServiceIdentifier() {
 		return _expandoRowLocalService.getOSGiServiceIdentifier();
 	}
 
@@ -343,14 +342,14 @@ public class ExpandoRowLocalServiceWrapper implements ExpandoRowLocalService,
 
 	@Override
 	public com.liferay.expando.kernel.model.ExpandoRow getRow(long companyId,
-		long classNameId, java.lang.String tableName, long classPK) {
+		long classNameId, String tableName, long classPK) {
 		return _expandoRowLocalService.getRow(companyId, classNameId,
 			tableName, classPK);
 	}
 
 	@Override
 	public com.liferay.expando.kernel.model.ExpandoRow getRow(long companyId,
-		java.lang.String className, java.lang.String tableName, long classPK) {
+		String className, String tableName, long classPK) {
 		return _expandoRowLocalService.getRow(companyId, className, tableName,
 			classPK);
 	}
@@ -363,16 +362,14 @@ public class ExpandoRowLocalServiceWrapper implements ExpandoRowLocalService,
 
 	@Override
 	public java.util.List<com.liferay.expando.kernel.model.ExpandoRow> getRows(
-		long companyId, long classNameId, java.lang.String tableName,
-		int start, int end) {
+		long companyId, long classNameId, String tableName, int start, int end) {
 		return _expandoRowLocalService.getRows(companyId, classNameId,
 			tableName, start, end);
 	}
 
 	@Override
 	public java.util.List<com.liferay.expando.kernel.model.ExpandoRow> getRows(
-		long companyId, java.lang.String className, java.lang.String tableName,
-		int start, int end) {
+		long companyId, String className, String tableName, int start, int end) {
 		return _expandoRowLocalService.getRows(companyId, className, tableName,
 			start, end);
 	}
@@ -383,15 +380,13 @@ public class ExpandoRowLocalServiceWrapper implements ExpandoRowLocalService,
 	}
 
 	@Override
-	public int getRowsCount(long companyId, long classNameId,
-		java.lang.String tableName) {
+	public int getRowsCount(long companyId, long classNameId, String tableName) {
 		return _expandoRowLocalService.getRowsCount(companyId, classNameId,
 			tableName);
 	}
 
 	@Override
-	public int getRowsCount(long companyId, java.lang.String className,
-		java.lang.String tableName) {
+	public int getRowsCount(long companyId, String className, String tableName) {
 		return _expandoRowLocalService.getRowsCount(companyId, className,
 			tableName);
 	}

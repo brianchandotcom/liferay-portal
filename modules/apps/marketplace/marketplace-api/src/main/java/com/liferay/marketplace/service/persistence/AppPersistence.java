@@ -47,7 +47,7 @@ public interface AppPersistence extends BasePersistence<App> {
 	* @param uuid the uuid
 	* @return the matching apps
 	*/
-	public java.util.List<App> findByUuid(java.lang.String uuid);
+	public java.util.List<App> findByUuid(String uuid);
 
 	/**
 	* Returns a range of all the apps where uuid = &#63;.
@@ -61,8 +61,7 @@ public interface AppPersistence extends BasePersistence<App> {
 	* @param end the upper bound of the range of apps (not inclusive)
 	* @return the range of matching apps
 	*/
-	public java.util.List<App> findByUuid(java.lang.String uuid, int start,
-		int end);
+	public java.util.List<App> findByUuid(String uuid, int start, int end);
 
 	/**
 	* Returns an ordered range of all the apps where uuid = &#63;.
@@ -77,8 +76,7 @@ public interface AppPersistence extends BasePersistence<App> {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching apps
 	*/
-	public java.util.List<App> findByUuid(java.lang.String uuid, int start,
-		int end,
+	public java.util.List<App> findByUuid(String uuid, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<App> orderByComparator);
 
 	/**
@@ -95,8 +93,7 @@ public interface AppPersistence extends BasePersistence<App> {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching apps
 	*/
-	public java.util.List<App> findByUuid(java.lang.String uuid, int start,
-		int end,
+	public java.util.List<App> findByUuid(String uuid, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<App> orderByComparator,
 		boolean retrieveFromCache);
 
@@ -108,7 +105,7 @@ public interface AppPersistence extends BasePersistence<App> {
 	* @return the first matching app
 	* @throws NoSuchAppException if a matching app could not be found
 	*/
-	public App findByUuid_First(java.lang.String uuid,
+	public App findByUuid_First(String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<App> orderByComparator)
 		throws NoSuchAppException;
 
@@ -119,7 +116,7 @@ public interface AppPersistence extends BasePersistence<App> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching app, or <code>null</code> if a matching app could not be found
 	*/
-	public App fetchByUuid_First(java.lang.String uuid,
+	public App fetchByUuid_First(String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<App> orderByComparator);
 
 	/**
@@ -130,7 +127,7 @@ public interface AppPersistence extends BasePersistence<App> {
 	* @return the last matching app
 	* @throws NoSuchAppException if a matching app could not be found
 	*/
-	public App findByUuid_Last(java.lang.String uuid,
+	public App findByUuid_Last(String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<App> orderByComparator)
 		throws NoSuchAppException;
 
@@ -141,7 +138,7 @@ public interface AppPersistence extends BasePersistence<App> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching app, or <code>null</code> if a matching app could not be found
 	*/
-	public App fetchByUuid_Last(java.lang.String uuid,
+	public App fetchByUuid_Last(String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<App> orderByComparator);
 
 	/**
@@ -153,7 +150,7 @@ public interface AppPersistence extends BasePersistence<App> {
 	* @return the previous, current, and next app
 	* @throws NoSuchAppException if a app with the primary key could not be found
 	*/
-	public App[] findByUuid_PrevAndNext(long appId, java.lang.String uuid,
+	public App[] findByUuid_PrevAndNext(long appId, String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<App> orderByComparator)
 		throws NoSuchAppException;
 
@@ -162,7 +159,7 @@ public interface AppPersistence extends BasePersistence<App> {
 	*
 	* @param uuid the uuid
 	*/
-	public void removeByUuid(java.lang.String uuid);
+	public void removeByUuid(String uuid);
 
 	/**
 	* Returns the number of apps where uuid = &#63;.
@@ -170,7 +167,7 @@ public interface AppPersistence extends BasePersistence<App> {
 	* @param uuid the uuid
 	* @return the number of matching apps
 	*/
-	public int countByUuid(java.lang.String uuid);
+	public int countByUuid(String uuid);
 
 	/**
 	* Returns all the apps where uuid = &#63; and companyId = &#63;.
@@ -179,8 +176,7 @@ public interface AppPersistence extends BasePersistence<App> {
 	* @param companyId the company ID
 	* @return the matching apps
 	*/
-	public java.util.List<App> findByUuid_C(java.lang.String uuid,
-		long companyId);
+	public java.util.List<App> findByUuid_C(String uuid, long companyId);
 
 	/**
 	* Returns a range of all the apps where uuid = &#63; and companyId = &#63;.
@@ -195,8 +191,8 @@ public interface AppPersistence extends BasePersistence<App> {
 	* @param end the upper bound of the range of apps (not inclusive)
 	* @return the range of matching apps
 	*/
-	public java.util.List<App> findByUuid_C(java.lang.String uuid,
-		long companyId, int start, int end);
+	public java.util.List<App> findByUuid_C(String uuid, long companyId,
+		int start, int end);
 
 	/**
 	* Returns an ordered range of all the apps where uuid = &#63; and companyId = &#63;.
@@ -212,8 +208,8 @@ public interface AppPersistence extends BasePersistence<App> {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching apps
 	*/
-	public java.util.List<App> findByUuid_C(java.lang.String uuid,
-		long companyId, int start, int end,
+	public java.util.List<App> findByUuid_C(String uuid, long companyId,
+		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<App> orderByComparator);
 
 	/**
@@ -231,8 +227,8 @@ public interface AppPersistence extends BasePersistence<App> {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching apps
 	*/
-	public java.util.List<App> findByUuid_C(java.lang.String uuid,
-		long companyId, int start, int end,
+	public java.util.List<App> findByUuid_C(String uuid, long companyId,
+		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<App> orderByComparator,
 		boolean retrieveFromCache);
 
@@ -245,7 +241,7 @@ public interface AppPersistence extends BasePersistence<App> {
 	* @return the first matching app
 	* @throws NoSuchAppException if a matching app could not be found
 	*/
-	public App findByUuid_C_First(java.lang.String uuid, long companyId,
+	public App findByUuid_C_First(String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<App> orderByComparator)
 		throws NoSuchAppException;
 
@@ -257,7 +253,7 @@ public interface AppPersistence extends BasePersistence<App> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching app, or <code>null</code> if a matching app could not be found
 	*/
-	public App fetchByUuid_C_First(java.lang.String uuid, long companyId,
+	public App fetchByUuid_C_First(String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<App> orderByComparator);
 
 	/**
@@ -269,7 +265,7 @@ public interface AppPersistence extends BasePersistence<App> {
 	* @return the last matching app
 	* @throws NoSuchAppException if a matching app could not be found
 	*/
-	public App findByUuid_C_Last(java.lang.String uuid, long companyId,
+	public App findByUuid_C_Last(String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<App> orderByComparator)
 		throws NoSuchAppException;
 
@@ -281,7 +277,7 @@ public interface AppPersistence extends BasePersistence<App> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching app, or <code>null</code> if a matching app could not be found
 	*/
-	public App fetchByUuid_C_Last(java.lang.String uuid, long companyId,
+	public App fetchByUuid_C_Last(String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<App> orderByComparator);
 
 	/**
@@ -294,7 +290,7 @@ public interface AppPersistence extends BasePersistence<App> {
 	* @return the previous, current, and next app
 	* @throws NoSuchAppException if a app with the primary key could not be found
 	*/
-	public App[] findByUuid_C_PrevAndNext(long appId, java.lang.String uuid,
+	public App[] findByUuid_C_PrevAndNext(long appId, String uuid,
 		long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<App> orderByComparator)
 		throws NoSuchAppException;
@@ -305,7 +301,7 @@ public interface AppPersistence extends BasePersistence<App> {
 	* @param uuid the uuid
 	* @param companyId the company ID
 	*/
-	public void removeByUuid_C(java.lang.String uuid, long companyId);
+	public void removeByUuid_C(String uuid, long companyId);
 
 	/**
 	* Returns the number of apps where uuid = &#63; and companyId = &#63;.
@@ -314,7 +310,7 @@ public interface AppPersistence extends BasePersistence<App> {
 	* @param companyId the company ID
 	* @return the number of matching apps
 	*/
-	public int countByUuid_C(java.lang.String uuid, long companyId);
+	public int countByUuid_C(String uuid, long companyId);
 
 	/**
 	* Returns all the apps where companyId = &#63;.
@@ -495,7 +491,7 @@ public interface AppPersistence extends BasePersistence<App> {
 	* @param category the category
 	* @return the matching apps
 	*/
-	public java.util.List<App> findByCategory(java.lang.String category);
+	public java.util.List<App> findByCategory(String category);
 
 	/**
 	* Returns a range of all the apps where category = &#63;.
@@ -509,8 +505,8 @@ public interface AppPersistence extends BasePersistence<App> {
 	* @param end the upper bound of the range of apps (not inclusive)
 	* @return the range of matching apps
 	*/
-	public java.util.List<App> findByCategory(java.lang.String category,
-		int start, int end);
+	public java.util.List<App> findByCategory(String category, int start,
+		int end);
 
 	/**
 	* Returns an ordered range of all the apps where category = &#63;.
@@ -525,8 +521,8 @@ public interface AppPersistence extends BasePersistence<App> {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching apps
 	*/
-	public java.util.List<App> findByCategory(java.lang.String category,
-		int start, int end,
+	public java.util.List<App> findByCategory(String category, int start,
+		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<App> orderByComparator);
 
 	/**
@@ -543,8 +539,8 @@ public interface AppPersistence extends BasePersistence<App> {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching apps
 	*/
-	public java.util.List<App> findByCategory(java.lang.String category,
-		int start, int end,
+	public java.util.List<App> findByCategory(String category, int start,
+		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<App> orderByComparator,
 		boolean retrieveFromCache);
 
@@ -556,7 +552,7 @@ public interface AppPersistence extends BasePersistence<App> {
 	* @return the first matching app
 	* @throws NoSuchAppException if a matching app could not be found
 	*/
-	public App findByCategory_First(java.lang.String category,
+	public App findByCategory_First(String category,
 		com.liferay.portal.kernel.util.OrderByComparator<App> orderByComparator)
 		throws NoSuchAppException;
 
@@ -567,7 +563,7 @@ public interface AppPersistence extends BasePersistence<App> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching app, or <code>null</code> if a matching app could not be found
 	*/
-	public App fetchByCategory_First(java.lang.String category,
+	public App fetchByCategory_First(String category,
 		com.liferay.portal.kernel.util.OrderByComparator<App> orderByComparator);
 
 	/**
@@ -578,7 +574,7 @@ public interface AppPersistence extends BasePersistence<App> {
 	* @return the last matching app
 	* @throws NoSuchAppException if a matching app could not be found
 	*/
-	public App findByCategory_Last(java.lang.String category,
+	public App findByCategory_Last(String category,
 		com.liferay.portal.kernel.util.OrderByComparator<App> orderByComparator)
 		throws NoSuchAppException;
 
@@ -589,7 +585,7 @@ public interface AppPersistence extends BasePersistence<App> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching app, or <code>null</code> if a matching app could not be found
 	*/
-	public App fetchByCategory_Last(java.lang.String category,
+	public App fetchByCategory_Last(String category,
 		com.liferay.portal.kernel.util.OrderByComparator<App> orderByComparator);
 
 	/**
@@ -601,8 +597,7 @@ public interface AppPersistence extends BasePersistence<App> {
 	* @return the previous, current, and next app
 	* @throws NoSuchAppException if a app with the primary key could not be found
 	*/
-	public App[] findByCategory_PrevAndNext(long appId,
-		java.lang.String category,
+	public App[] findByCategory_PrevAndNext(long appId, String category,
 		com.liferay.portal.kernel.util.OrderByComparator<App> orderByComparator)
 		throws NoSuchAppException;
 
@@ -611,7 +606,7 @@ public interface AppPersistence extends BasePersistence<App> {
 	*
 	* @param category the category
 	*/
-	public void removeByCategory(java.lang.String category);
+	public void removeByCategory(String category);
 
 	/**
 	* Returns the number of apps where category = &#63;.
@@ -619,7 +614,7 @@ public interface AppPersistence extends BasePersistence<App> {
 	* @param category the category
 	* @return the number of matching apps
 	*/
-	public int countByCategory(java.lang.String category);
+	public int countByCategory(String category);
 
 	/**
 	* Caches the app in the entity cache if it is enabled.
@@ -740,5 +735,5 @@ public interface AppPersistence extends BasePersistence<App> {
 	public int countAll();
 
 	@Override
-	public java.util.Set<java.lang.String> getBadColumnNames();
+	public java.util.Set<String> getBadColumnNames();
 }

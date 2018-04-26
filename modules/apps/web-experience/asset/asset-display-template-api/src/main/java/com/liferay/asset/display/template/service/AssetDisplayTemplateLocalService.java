@@ -73,9 +73,9 @@ public interface AssetDisplayTemplateLocalService extends BaseLocalService,
 		AssetDisplayTemplate assetDisplayTemplate);
 
 	public AssetDisplayTemplate addAssetDisplayTemplate(long groupId,
-		long userId, java.lang.String name, long classNameId,
-		java.lang.String language, java.lang.String scriptContent,
-		boolean main, ServiceContext serviceContext) throws PortalException;
+		long userId, String name, long classNameId, String language,
+		String scriptContent, boolean main, ServiceContext serviceContext)
+		throws PortalException;
 
 	/**
 	* Creates a new asset display template with the primary key. Does not add the asset display template to the database.
@@ -222,11 +222,11 @@ public interface AssetDisplayTemplateLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<AssetDisplayTemplate> getAssetDisplayTemplates(long groupId,
-		java.lang.String name);
+		String name);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<AssetDisplayTemplate> getAssetDisplayTemplates(long groupId,
-		java.lang.String name, int start, int end,
+		String name, int start, int end,
 		OrderByComparator<AssetDisplayTemplate> orderByComparator);
 
 	/**
@@ -241,7 +241,7 @@ public interface AssetDisplayTemplateLocalService extends BaseLocalService,
 	public int getAssetDisplayTemplatesCount(long groupId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getAssetDisplayTemplatesCount(long groupId, java.lang.String name);
+	public int getAssetDisplayTemplatesCount(long groupId, String name);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
@@ -251,7 +251,7 @@ public interface AssetDisplayTemplateLocalService extends BaseLocalService,
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -269,7 +269,7 @@ public interface AssetDisplayTemplateLocalService extends BaseLocalService,
 		AssetDisplayTemplate assetDisplayTemplate);
 
 	public AssetDisplayTemplate updateAssetDisplayTemplate(
-		long assetDisplayTemplateId, java.lang.String name, long classNameId,
-		java.lang.String language, java.lang.String scriptContent,
-		boolean main, ServiceContext serviceContext) throws PortalException;
+		long assetDisplayTemplateId, String name, long classNameId,
+		String language, String scriptContent, boolean main,
+		ServiceContext serviceContext) throws PortalException;
 }

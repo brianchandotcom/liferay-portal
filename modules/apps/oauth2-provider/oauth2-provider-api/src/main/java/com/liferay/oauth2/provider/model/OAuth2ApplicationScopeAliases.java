@@ -57,8 +57,7 @@ public interface OAuth2ApplicationScopeAliases
 			}
 		};
 
-	public java.util.List<java.lang.String> getScopeAliasesList();
+	public java.util.List<String> getScopeAliasesList();
 
-	public void setScopeAliasesList(
-		java.util.List<java.lang.String> scopeAliasesList);
+	public void setScopeAliasesList(java.util.List<String> scopeAliasesList);
 }

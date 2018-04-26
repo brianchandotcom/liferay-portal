@@ -114,7 +114,7 @@ public class DLFileRankWrapper implements DLFileRank, ModelWrapper<DLFileRank> {
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new DLFileRankWrapper((DLFileRank)_dlFileRank.clone());
 	}
 
@@ -219,7 +219,7 @@ public class DLFileRankWrapper implements DLFileRank, ModelWrapper<DLFileRank> {
 	* @return the user uuid of this document library file rank
 	*/
 	@Override
-	public java.lang.String getUserUuid() {
+	public String getUserUuid() {
 		return _dlFileRank.getUserUuid();
 	}
 
@@ -375,7 +375,7 @@ public class DLFileRankWrapper implements DLFileRank, ModelWrapper<DLFileRank> {
 	* @param userUuid the user uuid of this document library file rank
 	*/
 	@Override
-	public void setUserUuid(java.lang.String userUuid) {
+	public void setUserUuid(String userUuid) {
 		_dlFileRank.setUserUuid(userUuid);
 	}
 
@@ -390,7 +390,7 @@ public class DLFileRankWrapper implements DLFileRank, ModelWrapper<DLFileRank> {
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _dlFileRank.toString();
 	}
 
@@ -400,7 +400,7 @@ public class DLFileRankWrapper implements DLFileRank, ModelWrapper<DLFileRank> {
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _dlFileRank.toXmlString();
 	}
 

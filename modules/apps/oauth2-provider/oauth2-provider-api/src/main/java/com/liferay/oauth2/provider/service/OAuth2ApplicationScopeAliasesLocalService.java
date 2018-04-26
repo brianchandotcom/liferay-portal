@@ -61,9 +61,8 @@ public interface OAuth2ApplicationScopeAliasesLocalService
 	 * Never modify or reference this interface directly. Always use {@link OAuth2ApplicationScopeAliasesLocalServiceUtil} to access the o auth2 application scope aliases local service. Add custom service methods to {@link com.liferay.oauth2.provider.service.impl.OAuth2ApplicationScopeAliasesLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	public OAuth2ApplicationScopeAliases addOAuth2ApplicationScopeAliases(
-		long companyId, long userId, java.lang.String userName,
-		long oAuth2ApplicationId, List<java.lang.String> scopeAliasesList)
-		throws PortalException;
+		long companyId, long userId, String userName, long oAuth2ApplicationId,
+		List<String> scopeAliasesList) throws PortalException;
 
 	/**
 	* Adds the o auth2 application scope aliases to the database. Also notifies the appropriate model listeners.
@@ -178,7 +177,7 @@ public interface OAuth2ApplicationScopeAliasesLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public OAuth2ApplicationScopeAliases fetchOAuth2ApplicationScopeAliases(
-		long oAuth2ApplicationId, List<java.lang.String> scopeAliasesList);
+		long oAuth2ApplicationId, List<String> scopeAliasesList);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
@@ -230,7 +229,7 @@ public interface OAuth2ApplicationScopeAliasesLocalService
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

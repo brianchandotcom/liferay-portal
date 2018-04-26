@@ -56,13 +56,11 @@ public interface SiteNavigationMenuService extends BaseService {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link SiteNavigationMenuServiceUtil} to access the site navigation menu remote service. Add custom service methods to {@link com.liferay.site.navigation.service.impl.SiteNavigationMenuServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public SiteNavigationMenu addSiteNavigationMenu(long groupId,
-		java.lang.String name, int type, ServiceContext serviceContext)
-		throws PortalException;
+	public SiteNavigationMenu addSiteNavigationMenu(long groupId, String name,
+		int type, ServiceContext serviceContext) throws PortalException;
 
-	public SiteNavigationMenu addSiteNavigationMenu(long groupId,
-		java.lang.String name, ServiceContext serviceContext)
-		throws PortalException;
+	public SiteNavigationMenu addSiteNavigationMenu(long groupId, String name,
+		ServiceContext serviceContext) throws PortalException;
 
 	public SiteNavigationMenu deleteSiteNavigationMenu(
 		long siteNavigationMenuId) throws PortalException;
@@ -76,7 +74,7 @@ public interface SiteNavigationMenuService extends BaseService {
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<SiteNavigationMenu> getSiteNavigationMenus(long groupId);
@@ -87,21 +85,19 @@ public interface SiteNavigationMenuService extends BaseService {
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<SiteNavigationMenu> getSiteNavigationMenus(long groupId,
-		java.lang.String keywords, int start, int end,
-		OrderByComparator orderByComparator);
+		String keywords, int start, int end, OrderByComparator orderByComparator);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getSiteNavigationMenusCount(long groupId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getSiteNavigationMenusCount(long groupId,
-		java.lang.String keywords);
+	public int getSiteNavigationMenusCount(long groupId, String keywords);
 
 	public SiteNavigationMenu updateSiteNavigationMenu(
 		long siteNavigationMenuId, int type, boolean auto,
 		ServiceContext serviceContext) throws PortalException;
 
 	public SiteNavigationMenu updateSiteNavigationMenu(
-		long siteNavigationMenuId, java.lang.String name,
-		ServiceContext serviceContext) throws PortalException;
+		long siteNavigationMenuId, String name, ServiceContext serviceContext)
+		throws PortalException;
 }

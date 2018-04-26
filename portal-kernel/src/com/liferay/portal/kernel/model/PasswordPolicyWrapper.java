@@ -313,7 +313,7 @@ public class PasswordPolicyWrapper implements PasswordPolicy,
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new PasswordPolicyWrapper((PasswordPolicy)_passwordPolicy.clone());
 	}
 
@@ -398,7 +398,7 @@ public class PasswordPolicyWrapper implements PasswordPolicy,
 	* @return the description of this password policy
 	*/
 	@Override
-	public java.lang.String getDescription() {
+	public String getDescription() {
 		return _passwordPolicy.getDescription();
 	}
 
@@ -583,7 +583,7 @@ public class PasswordPolicyWrapper implements PasswordPolicy,
 	* @return the name of this password policy
 	*/
 	@Override
-	public java.lang.String getName() {
+	public String getName() {
 		return _passwordPolicy.getName();
 	}
 
@@ -618,7 +618,7 @@ public class PasswordPolicyWrapper implements PasswordPolicy,
 	* @return the regex of this password policy
 	*/
 	@Override
-	public java.lang.String getRegex() {
+	public String getRegex() {
 		return _passwordPolicy.getRegex();
 	}
 
@@ -668,7 +668,7 @@ public class PasswordPolicyWrapper implements PasswordPolicy,
 	* @return the user name of this password policy
 	*/
 	@Override
-	public java.lang.String getUserName() {
+	public String getUserName() {
 		return _passwordPolicy.getUserName();
 	}
 
@@ -678,7 +678,7 @@ public class PasswordPolicyWrapper implements PasswordPolicy,
 	* @return the user uuid of this password policy
 	*/
 	@Override
-	public java.lang.String getUserUuid() {
+	public String getUserUuid() {
 		return _passwordPolicy.getUserUuid();
 	}
 
@@ -688,7 +688,7 @@ public class PasswordPolicyWrapper implements PasswordPolicy,
 	* @return the uuid of this password policy
 	*/
 	@Override
-	public java.lang.String getUuid() {
+	public String getUuid() {
 		return _passwordPolicy.getUuid();
 	}
 
@@ -898,7 +898,7 @@ public class PasswordPolicyWrapper implements PasswordPolicy,
 	* @param description the description of this password policy
 	*/
 	@Override
-	public void setDescription(java.lang.String description) {
+	public void setDescription(String description) {
 		_passwordPolicy.setDescription(description);
 	}
 
@@ -1093,7 +1093,7 @@ public class PasswordPolicyWrapper implements PasswordPolicy,
 	* @param name the name of this password policy
 	*/
 	@Override
-	public void setName(java.lang.String name) {
+	public void setName(String name) {
 		_passwordPolicy.setName(name);
 	}
 
@@ -1133,7 +1133,7 @@ public class PasswordPolicyWrapper implements PasswordPolicy,
 	* @param regex the regex of this password policy
 	*/
 	@Override
-	public void setRegex(java.lang.String regex) {
+	public void setRegex(String regex) {
 		_passwordPolicy.setRegex(regex);
 	}
 
@@ -1183,7 +1183,7 @@ public class PasswordPolicyWrapper implements PasswordPolicy,
 	* @param userName the user name of this password policy
 	*/
 	@Override
-	public void setUserName(java.lang.String userName) {
+	public void setUserName(String userName) {
 		_passwordPolicy.setUserName(userName);
 	}
 
@@ -1193,7 +1193,7 @@ public class PasswordPolicyWrapper implements PasswordPolicy,
 	* @param userUuid the user uuid of this password policy
 	*/
 	@Override
-	public void setUserUuid(java.lang.String userUuid) {
+	public void setUserUuid(String userUuid) {
 		_passwordPolicy.setUserUuid(userUuid);
 	}
 
@@ -1203,7 +1203,7 @@ public class PasswordPolicyWrapper implements PasswordPolicy,
 	* @param uuid the uuid of this password policy
 	*/
 	@Override
-	public void setUuid(java.lang.String uuid) {
+	public void setUuid(String uuid) {
 		_passwordPolicy.setUuid(uuid);
 	}
 
@@ -1228,7 +1228,7 @@ public class PasswordPolicyWrapper implements PasswordPolicy,
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _passwordPolicy.toString();
 	}
 
@@ -1238,7 +1238,7 @@ public class PasswordPolicyWrapper implements PasswordPolicy,
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _passwordPolicy.toXmlString();
 	}
 

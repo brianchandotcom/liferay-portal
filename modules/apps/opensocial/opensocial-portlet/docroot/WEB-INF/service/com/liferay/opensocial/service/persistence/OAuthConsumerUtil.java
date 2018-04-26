@@ -115,8 +115,7 @@ public class OAuthConsumerUtil {
 	* @param gadgetKey the gadget key
 	* @return the matching o auth consumers
 	*/
-	public static List<OAuthConsumer> findByGadgetKey(
-		java.lang.String gadgetKey) {
+	public static List<OAuthConsumer> findByGadgetKey(String gadgetKey) {
 		return getPersistence().findByGadgetKey(gadgetKey);
 	}
 
@@ -132,8 +131,8 @@ public class OAuthConsumerUtil {
 	* @param end the upper bound of the range of o auth consumers (not inclusive)
 	* @return the range of matching o auth consumers
 	*/
-	public static List<OAuthConsumer> findByGadgetKey(
-		java.lang.String gadgetKey, int start, int end) {
+	public static List<OAuthConsumer> findByGadgetKey(String gadgetKey,
+		int start, int end) {
 		return getPersistence().findByGadgetKey(gadgetKey, start, end);
 	}
 
@@ -150,9 +149,8 @@ public class OAuthConsumerUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching o auth consumers
 	*/
-	public static List<OAuthConsumer> findByGadgetKey(
-		java.lang.String gadgetKey, int start, int end,
-		OrderByComparator<OAuthConsumer> orderByComparator) {
+	public static List<OAuthConsumer> findByGadgetKey(String gadgetKey,
+		int start, int end, OrderByComparator<OAuthConsumer> orderByComparator) {
 		return getPersistence()
 				   .findByGadgetKey(gadgetKey, start, end, orderByComparator);
 	}
@@ -171,9 +169,8 @@ public class OAuthConsumerUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching o auth consumers
 	*/
-	public static List<OAuthConsumer> findByGadgetKey(
-		java.lang.String gadgetKey, int start, int end,
-		OrderByComparator<OAuthConsumer> orderByComparator,
+	public static List<OAuthConsumer> findByGadgetKey(String gadgetKey,
+		int start, int end, OrderByComparator<OAuthConsumer> orderByComparator,
 		boolean retrieveFromCache) {
 		return getPersistence()
 				   .findByGadgetKey(gadgetKey, start, end, orderByComparator,
@@ -188,8 +185,7 @@ public class OAuthConsumerUtil {
 	* @return the first matching o auth consumer
 	* @throws NoSuchOAuthConsumerException if a matching o auth consumer could not be found
 	*/
-	public static OAuthConsumer findByGadgetKey_First(
-		java.lang.String gadgetKey,
+	public static OAuthConsumer findByGadgetKey_First(String gadgetKey,
 		OrderByComparator<OAuthConsumer> orderByComparator)
 		throws com.liferay.opensocial.exception.NoSuchOAuthConsumerException {
 		return getPersistence()
@@ -203,8 +199,7 @@ public class OAuthConsumerUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching o auth consumer, or <code>null</code> if a matching o auth consumer could not be found
 	*/
-	public static OAuthConsumer fetchByGadgetKey_First(
-		java.lang.String gadgetKey,
+	public static OAuthConsumer fetchByGadgetKey_First(String gadgetKey,
 		OrderByComparator<OAuthConsumer> orderByComparator) {
 		return getPersistence()
 				   .fetchByGadgetKey_First(gadgetKey, orderByComparator);
@@ -218,8 +213,7 @@ public class OAuthConsumerUtil {
 	* @return the last matching o auth consumer
 	* @throws NoSuchOAuthConsumerException if a matching o auth consumer could not be found
 	*/
-	public static OAuthConsumer findByGadgetKey_Last(
-		java.lang.String gadgetKey,
+	public static OAuthConsumer findByGadgetKey_Last(String gadgetKey,
 		OrderByComparator<OAuthConsumer> orderByComparator)
 		throws com.liferay.opensocial.exception.NoSuchOAuthConsumerException {
 		return getPersistence()
@@ -233,8 +227,7 @@ public class OAuthConsumerUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching o auth consumer, or <code>null</code> if a matching o auth consumer could not be found
 	*/
-	public static OAuthConsumer fetchByGadgetKey_Last(
-		java.lang.String gadgetKey,
+	public static OAuthConsumer fetchByGadgetKey_Last(String gadgetKey,
 		OrderByComparator<OAuthConsumer> orderByComparator) {
 		return getPersistence()
 				   .fetchByGadgetKey_Last(gadgetKey, orderByComparator);
@@ -250,7 +243,7 @@ public class OAuthConsumerUtil {
 	* @throws NoSuchOAuthConsumerException if a o auth consumer with the primary key could not be found
 	*/
 	public static OAuthConsumer[] findByGadgetKey_PrevAndNext(
-		long oAuthConsumerId, java.lang.String gadgetKey,
+		long oAuthConsumerId, String gadgetKey,
 		OrderByComparator<OAuthConsumer> orderByComparator)
 		throws com.liferay.opensocial.exception.NoSuchOAuthConsumerException {
 		return getPersistence()
@@ -263,7 +256,7 @@ public class OAuthConsumerUtil {
 	*
 	* @param gadgetKey the gadget key
 	*/
-	public static void removeByGadgetKey(java.lang.String gadgetKey) {
+	public static void removeByGadgetKey(String gadgetKey) {
 		getPersistence().removeByGadgetKey(gadgetKey);
 	}
 
@@ -273,7 +266,7 @@ public class OAuthConsumerUtil {
 	* @param gadgetKey the gadget key
 	* @return the number of matching o auth consumers
 	*/
-	public static int countByGadgetKey(java.lang.String gadgetKey) {
+	public static int countByGadgetKey(String gadgetKey) {
 		return getPersistence().countByGadgetKey(gadgetKey);
 	}
 
@@ -285,8 +278,7 @@ public class OAuthConsumerUtil {
 	* @return the matching o auth consumer
 	* @throws NoSuchOAuthConsumerException if a matching o auth consumer could not be found
 	*/
-	public static OAuthConsumer findByG_S(java.lang.String gadgetKey,
-		java.lang.String serviceName)
+	public static OAuthConsumer findByG_S(String gadgetKey, String serviceName)
 		throws com.liferay.opensocial.exception.NoSuchOAuthConsumerException {
 		return getPersistence().findByG_S(gadgetKey, serviceName);
 	}
@@ -298,8 +290,7 @@ public class OAuthConsumerUtil {
 	* @param serviceName the service name
 	* @return the matching o auth consumer, or <code>null</code> if a matching o auth consumer could not be found
 	*/
-	public static OAuthConsumer fetchByG_S(java.lang.String gadgetKey,
-		java.lang.String serviceName) {
+	public static OAuthConsumer fetchByG_S(String gadgetKey, String serviceName) {
 		return getPersistence().fetchByG_S(gadgetKey, serviceName);
 	}
 
@@ -311,8 +302,8 @@ public class OAuthConsumerUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching o auth consumer, or <code>null</code> if a matching o auth consumer could not be found
 	*/
-	public static OAuthConsumer fetchByG_S(java.lang.String gadgetKey,
-		java.lang.String serviceName, boolean retrieveFromCache) {
+	public static OAuthConsumer fetchByG_S(String gadgetKey,
+		String serviceName, boolean retrieveFromCache) {
 		return getPersistence()
 				   .fetchByG_S(gadgetKey, serviceName, retrieveFromCache);
 	}
@@ -324,8 +315,7 @@ public class OAuthConsumerUtil {
 	* @param serviceName the service name
 	* @return the o auth consumer that was removed
 	*/
-	public static OAuthConsumer removeByG_S(java.lang.String gadgetKey,
-		java.lang.String serviceName)
+	public static OAuthConsumer removeByG_S(String gadgetKey, String serviceName)
 		throws com.liferay.opensocial.exception.NoSuchOAuthConsumerException {
 		return getPersistence().removeByG_S(gadgetKey, serviceName);
 	}
@@ -337,8 +327,7 @@ public class OAuthConsumerUtil {
 	* @param serviceName the service name
 	* @return the number of matching o auth consumers
 	*/
-	public static int countByG_S(java.lang.String gadgetKey,
-		java.lang.String serviceName) {
+	public static int countByG_S(String gadgetKey, String serviceName) {
 		return getPersistence().countByG_S(gadgetKey, serviceName);
 	}
 

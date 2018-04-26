@@ -1031,7 +1031,7 @@ public interface EntryPersistence extends BasePersistence<Entry> {
 	* @return the matching entries
 	*/
 	public java.util.List<Entry> findByF_T_C(long fromUserId, long toUserId,
-		java.lang.String content);
+		String content);
 
 	/**
 	* Returns a range of all the entries where fromUserId = &#63; and toUserId = &#63; and content = &#63;.
@@ -1048,7 +1048,7 @@ public interface EntryPersistence extends BasePersistence<Entry> {
 	* @return the range of matching entries
 	*/
 	public java.util.List<Entry> findByF_T_C(long fromUserId, long toUserId,
-		java.lang.String content, int start, int end);
+		String content, int start, int end);
 
 	/**
 	* Returns an ordered range of all the entries where fromUserId = &#63; and toUserId = &#63; and content = &#63;.
@@ -1066,7 +1066,7 @@ public interface EntryPersistence extends BasePersistence<Entry> {
 	* @return the ordered range of matching entries
 	*/
 	public java.util.List<Entry> findByF_T_C(long fromUserId, long toUserId,
-		java.lang.String content, int start, int end,
+		String content, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<Entry> orderByComparator);
 
 	/**
@@ -1086,7 +1086,7 @@ public interface EntryPersistence extends BasePersistence<Entry> {
 	* @return the ordered range of matching entries
 	*/
 	public java.util.List<Entry> findByF_T_C(long fromUserId, long toUserId,
-		java.lang.String content, int start, int end,
+		String content, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<Entry> orderByComparator,
 		boolean retrieveFromCache);
 
@@ -1101,7 +1101,7 @@ public interface EntryPersistence extends BasePersistence<Entry> {
 	* @throws NoSuchEntryException if a matching entry could not be found
 	*/
 	public Entry findByF_T_C_First(long fromUserId, long toUserId,
-		java.lang.String content,
+		String content,
 		com.liferay.portal.kernel.util.OrderByComparator<Entry> orderByComparator)
 		throws NoSuchEntryException;
 
@@ -1115,7 +1115,7 @@ public interface EntryPersistence extends BasePersistence<Entry> {
 	* @return the first matching entry, or <code>null</code> if a matching entry could not be found
 	*/
 	public Entry fetchByF_T_C_First(long fromUserId, long toUserId,
-		java.lang.String content,
+		String content,
 		com.liferay.portal.kernel.util.OrderByComparator<Entry> orderByComparator);
 
 	/**
@@ -1129,7 +1129,7 @@ public interface EntryPersistence extends BasePersistence<Entry> {
 	* @throws NoSuchEntryException if a matching entry could not be found
 	*/
 	public Entry findByF_T_C_Last(long fromUserId, long toUserId,
-		java.lang.String content,
+		String content,
 		com.liferay.portal.kernel.util.OrderByComparator<Entry> orderByComparator)
 		throws NoSuchEntryException;
 
@@ -1143,7 +1143,7 @@ public interface EntryPersistence extends BasePersistence<Entry> {
 	* @return the last matching entry, or <code>null</code> if a matching entry could not be found
 	*/
 	public Entry fetchByF_T_C_Last(long fromUserId, long toUserId,
-		java.lang.String content,
+		String content,
 		com.liferay.portal.kernel.util.OrderByComparator<Entry> orderByComparator);
 
 	/**
@@ -1158,7 +1158,7 @@ public interface EntryPersistence extends BasePersistence<Entry> {
 	* @throws NoSuchEntryException if a entry with the primary key could not be found
 	*/
 	public Entry[] findByF_T_C_PrevAndNext(long entryId, long fromUserId,
-		long toUserId, java.lang.String content,
+		long toUserId, String content,
 		com.liferay.portal.kernel.util.OrderByComparator<Entry> orderByComparator)
 		throws NoSuchEntryException;
 
@@ -1169,8 +1169,7 @@ public interface EntryPersistence extends BasePersistence<Entry> {
 	* @param toUserId the to user ID
 	* @param content the content
 	*/
-	public void removeByF_T_C(long fromUserId, long toUserId,
-		java.lang.String content);
+	public void removeByF_T_C(long fromUserId, long toUserId, String content);
 
 	/**
 	* Returns the number of entries where fromUserId = &#63; and toUserId = &#63; and content = &#63;.
@@ -1180,8 +1179,7 @@ public interface EntryPersistence extends BasePersistence<Entry> {
 	* @param content the content
 	* @return the number of matching entries
 	*/
-	public int countByF_T_C(long fromUserId, long toUserId,
-		java.lang.String content);
+	public int countByF_T_C(long fromUserId, long toUserId, String content);
 
 	/**
 	* Caches the entry in the entity cache if it is enabled.

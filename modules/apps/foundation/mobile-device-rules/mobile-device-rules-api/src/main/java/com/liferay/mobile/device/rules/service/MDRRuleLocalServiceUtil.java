@@ -55,10 +55,9 @@ public class MDRRuleLocalServiceUtil {
 	}
 
 	public static com.liferay.mobile.device.rules.model.MDRRule addRule(
-		long ruleGroupId,
-		java.util.Map<java.util.Locale, java.lang.String> nameMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		java.lang.String type, java.lang.String typeSettings,
+		long ruleGroupId, java.util.Map<java.util.Locale, String> nameMap,
+		java.util.Map<java.util.Locale, String> descriptionMap, String type,
+		String typeSettings,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
@@ -67,10 +66,8 @@ public class MDRRuleLocalServiceUtil {
 	}
 
 	public static com.liferay.mobile.device.rules.model.MDRRule addRule(
-		long ruleGroupId,
-		java.util.Map<java.util.Locale, java.lang.String> nameMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		java.lang.String type,
+		long ruleGroupId, java.util.Map<java.util.Locale, String> nameMap,
+		java.util.Map<java.util.Locale, String> descriptionMap, String type,
 		com.liferay.portal.kernel.util.UnicodeProperties typeSettingsProperties,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -240,7 +237,7 @@ public class MDRRuleLocalServiceUtil {
 	* @return the matching mdr rule, or <code>null</code> if a matching mdr rule could not be found
 	*/
 	public static com.liferay.mobile.device.rules.model.MDRRule fetchMDRRuleByUuidAndGroupId(
-		java.lang.String uuid, long groupId) {
+		String uuid, long groupId) {
 		return getService().fetchMDRRuleByUuidAndGroupId(uuid, groupId);
 	}
 
@@ -283,7 +280,7 @@ public class MDRRuleLocalServiceUtil {
 	* @throws PortalException if a matching mdr rule could not be found
 	*/
 	public static com.liferay.mobile.device.rules.model.MDRRule getMDRRuleByUuidAndGroupId(
-		java.lang.String uuid, long groupId)
+		String uuid, long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getMDRRuleByUuidAndGroupId(uuid, groupId);
 	}
@@ -312,7 +309,7 @@ public class MDRRuleLocalServiceUtil {
 	* @return the matching mdr rules, or an empty list if no matches were found
 	*/
 	public static java.util.List<com.liferay.mobile.device.rules.model.MDRRule> getMDRRulesByUuidAndCompanyId(
-		java.lang.String uuid, long companyId) {
+		String uuid, long companyId) {
 		return getService().getMDRRulesByUuidAndCompanyId(uuid, companyId);
 	}
 
@@ -327,7 +324,7 @@ public class MDRRuleLocalServiceUtil {
 	* @return the range of matching mdr rules, or an empty list if no matches were found
 	*/
 	public static java.util.List<com.liferay.mobile.device.rules.model.MDRRule> getMDRRulesByUuidAndCompanyId(
-		java.lang.String uuid, long companyId, int start, int end,
+		String uuid, long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.mobile.device.rules.model.MDRRule> orderByComparator) {
 		return getService()
 				   .getMDRRulesByUuidAndCompanyId(uuid, companyId, start, end,
@@ -348,7 +345,7 @@ public class MDRRuleLocalServiceUtil {
 	*
 	* @return the OSGi service identifier
 	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
+	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 
@@ -395,9 +392,9 @@ public class MDRRuleLocalServiceUtil {
 	}
 
 	public static com.liferay.mobile.device.rules.model.MDRRule updateRule(
-		long ruleId, java.util.Map<java.util.Locale, java.lang.String> nameMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		java.lang.String type, java.lang.String typeSettings,
+		long ruleId, java.util.Map<java.util.Locale, String> nameMap,
+		java.util.Map<java.util.Locale, String> descriptionMap, String type,
+		String typeSettings,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
@@ -406,9 +403,8 @@ public class MDRRuleLocalServiceUtil {
 	}
 
 	public static com.liferay.mobile.device.rules.model.MDRRule updateRule(
-		long ruleId, java.util.Map<java.util.Locale, java.lang.String> nameMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		java.lang.String type,
+		long ruleId, java.util.Map<java.util.Locale, String> nameMap,
+		java.util.Map<java.util.Locale, String> descriptionMap, String type,
 		com.liferay.portal.kernel.util.UnicodeProperties typeSettingsProperties,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {

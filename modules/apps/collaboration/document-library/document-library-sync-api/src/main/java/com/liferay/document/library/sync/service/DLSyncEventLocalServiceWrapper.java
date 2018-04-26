@@ -47,7 +47,7 @@ public class DLSyncEventLocalServiceWrapper implements DLSyncEventLocalService,
 
 	@Override
 	public com.liferay.document.library.sync.model.DLSyncEvent addDLSyncEvent(
-		java.lang.String event, java.lang.String type, long typePK) {
+		String event, String type, long typePK) {
 		return _dlSyncEventLocalService.addDLSyncEvent(event, type, typePK);
 	}
 
@@ -263,7 +263,7 @@ public class DLSyncEventLocalServiceWrapper implements DLSyncEventLocalService,
 	* @return the OSGi service identifier
 	*/
 	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
+	public String getOSGiServiceIdentifier() {
 		return _dlSyncEventLocalService.getOSGiServiceIdentifier();
 	}
 

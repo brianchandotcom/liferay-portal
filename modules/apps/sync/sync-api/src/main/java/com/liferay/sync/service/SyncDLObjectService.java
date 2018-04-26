@@ -60,33 +60,31 @@ public interface SyncDLObjectService extends BaseService {
 	 * Never modify or reference this interface directly. Always use {@link SyncDLObjectServiceUtil} to access the sync dl object remote service. Add custom service methods to {@link com.liferay.sync.service.impl.SyncDLObjectServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	public SyncDLObject addFileEntry(long repositoryId, long folderId,
-		java.lang.String sourceFileName, java.lang.String mimeType,
-		java.lang.String title, java.lang.String description,
-		java.lang.String changeLog, File file, java.lang.String checksum,
+		String sourceFileName, String mimeType, String title,
+		String description, String changeLog, File file, String checksum,
 		ServiceContext serviceContext) throws PortalException;
 
 	public SyncDLObject addFolder(long repositoryId, long parentFolderId,
-		java.lang.String name, java.lang.String description,
-		ServiceContext serviceContext) throws PortalException;
+		String name, String description, ServiceContext serviceContext)
+		throws PortalException;
 
 	public SyncDLObject cancelCheckOut(long fileEntryId)
 		throws PortalException;
 
 	public SyncDLObject checkInFileEntry(long fileEntryId,
-		boolean majorVersion, java.lang.String changeLog,
-		ServiceContext serviceContext) throws PortalException;
+		boolean majorVersion, String changeLog, ServiceContext serviceContext)
+		throws PortalException;
 
 	public SyncDLObject checkOutFileEntry(long fileEntryId,
 		ServiceContext serviceContext) throws PortalException;
 
-	public SyncDLObject checkOutFileEntry(long fileEntryId,
-		java.lang.String owner, long expirationTime,
-		ServiceContext serviceContext) throws PortalException;
+	public SyncDLObject checkOutFileEntry(long fileEntryId, String owner,
+		long expirationTime, ServiceContext serviceContext)
+		throws PortalException;
 
 	public SyncDLObject copyFileEntry(long sourceFileEntryId,
-		long repositoryId, long folderId, java.lang.String sourceFileName,
-		java.lang.String title, ServiceContext serviceContext)
-		throws PortalException;
+		long repositoryId, long folderId, String sourceFileName, String title,
+		ServiceContext serviceContext) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<SyncDLObject> getAllFolderSyncDLObjects(long repositoryId)
@@ -94,7 +92,7 @@ public interface SyncDLObjectService extends BaseService {
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public SyncDLObject getFileEntrySyncDLObject(long repositoryId,
-		long folderId, java.lang.String title) throws PortalException;
+		long folderId, String title) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<SyncDLObject> getFileEntrySyncDLObjects(long repositoryId,
@@ -106,7 +104,7 @@ public interface SyncDLObjectService extends BaseService {
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public SyncDLObject getFolderSyncDLObject(long repositoryId,
-		long parentFolderId, java.lang.String name) throws PortalException;
+		long parentFolderId, String name) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<SyncDLObject> getFolderSyncDLObjects(long repositoryId,
@@ -123,24 +121,23 @@ public interface SyncDLObjectService extends BaseService {
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@AccessControlled(guestAccessEnabled = true)
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.lang.Object getSyncContext() throws PortalException;
+	public Object getSyncContext() throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.lang.String getSyncDLObjectUpdate(long repositoryId,
-		long lastAccessTime, int max) throws PortalException;
+	public String getSyncDLObjectUpdate(long repositoryId, long lastAccessTime,
+		int max) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.lang.String getSyncDLObjectUpdate(long repositoryId,
-		long lastAccessTime, int max, boolean retrieveFromCache)
-		throws PortalException;
+	public String getSyncDLObjectUpdate(long repositoryId, long lastAccessTime,
+		int max, boolean retrieveFromCache) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.lang.String getSyncDLObjectUpdate(long repositoryId,
-		long parentFolderId, long lastAccessTime) throws PortalException;
+	public String getSyncDLObjectUpdate(long repositoryId, long parentFolderId,
+		long lastAccessTime) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<Group> getUserSitesGroups() throws PortalException;
@@ -158,10 +155,9 @@ public interface SyncDLObjectService extends BaseService {
 		throws PortalException;
 
 	public SyncDLObject patchFileEntry(long fileEntryId, long sourceVersionId,
-		java.lang.String sourceFileName, java.lang.String mimeType,
-		java.lang.String title, java.lang.String description,
-		java.lang.String changeLog, boolean majorVersion, File deltaFile,
-		java.lang.String checksum, ServiceContext serviceContext)
+		String sourceFileName, String mimeType, String title,
+		String description, String changeLog, boolean majorVersion,
+		File deltaFile, String checksum, ServiceContext serviceContext)
 		throws PortalException;
 
 	public SyncDLObject restoreFileEntryFromTrash(long fileEntryId)
@@ -171,17 +167,16 @@ public interface SyncDLObjectService extends BaseService {
 		throws PortalException;
 
 	@Transactional(enabled = false)
-	public Map<java.lang.String, java.lang.Object> updateFileEntries(
-		File zipFile) throws PortalException;
-
-	public SyncDLObject updateFileEntry(long fileEntryId,
-		java.lang.String sourceFileName, java.lang.String mimeType,
-		java.lang.String title, java.lang.String description,
-		java.lang.String changeLog, boolean majorVersion, File file,
-		java.lang.String checksum, ServiceContext serviceContext)
+	public Map<String, Object> updateFileEntries(File zipFile)
 		throws PortalException;
 
-	public SyncDLObject updateFolder(long folderId, java.lang.String name,
-		java.lang.String description, ServiceContext serviceContext)
+	public SyncDLObject updateFileEntry(long fileEntryId,
+		String sourceFileName, String mimeType, String title,
+		String description, String changeLog, boolean majorVersion, File file,
+		String checksum, ServiceContext serviceContext)
+		throws PortalException;
+
+	public SyncDLObject updateFolder(long folderId, String name,
+		String description, ServiceContext serviceContext)
 		throws PortalException;
 }

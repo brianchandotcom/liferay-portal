@@ -57,12 +57,12 @@ import com.liferay.portal.kernel.util.MethodKey;
 public class AnnouncementsEntryServiceHttp {
 	public static com.liferay.announcements.kernel.model.AnnouncementsEntry addEntry(
 		HttpPrincipal httpPrincipal, long plid, long classNameId, long classPK,
-		java.lang.String title, java.lang.String content, java.lang.String url,
-		java.lang.String type, int displayDateMonth, int displayDateDay,
-		int displayDateYear, int displayDateHour, int displayDateMinute,
-		boolean displayImmediately, int expirationDateMonth,
-		int expirationDateDay, int expirationDateYear, int expirationDateHour,
-		int expirationDateMinute, int priority, boolean alert)
+		String title, String content, String url, String type,
+		int displayDateMonth, int displayDateDay, int displayDateYear,
+		int displayDateHour, int displayDateMinute, boolean displayImmediately,
+		int expirationDateMonth, int expirationDateDay, int expirationDateYear,
+		int expirationDateHour, int expirationDateMinute, int priority,
+		boolean alert)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(AnnouncementsEntryServiceUtil.class,
@@ -99,9 +99,9 @@ public class AnnouncementsEntryServiceHttp {
 
 	public static com.liferay.announcements.kernel.model.AnnouncementsEntry addEntry(
 		HttpPrincipal httpPrincipal, long classNameId, long classPK,
-		java.lang.String title, java.lang.String content, java.lang.String url,
-		java.lang.String type, java.util.Date displayDate,
-		java.util.Date expirationDate, int priority, boolean alert)
+		String title, String content, String url, String type,
+		java.util.Date displayDate, java.util.Date expirationDate,
+		int priority, boolean alert)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(AnnouncementsEntryServiceUtil.class,
@@ -191,9 +191,9 @@ public class AnnouncementsEntryServiceHttp {
 	}
 
 	public static com.liferay.announcements.kernel.model.AnnouncementsEntry updateEntry(
-		HttpPrincipal httpPrincipal, long entryId, java.lang.String title,
-		java.lang.String content, java.lang.String url, java.lang.String type,
-		java.util.Date displayDate, java.util.Date expirationDate, int priority)
+		HttpPrincipal httpPrincipal, long entryId, String title,
+		String content, String url, String type, java.util.Date displayDate,
+		java.util.Date expirationDate, int priority)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(AnnouncementsEntryServiceUtil.class,
@@ -226,10 +226,10 @@ public class AnnouncementsEntryServiceHttp {
 	}
 
 	public static com.liferay.announcements.kernel.model.AnnouncementsEntry updateEntry(
-		HttpPrincipal httpPrincipal, long entryId, java.lang.String title,
-		java.lang.String content, java.lang.String url, java.lang.String type,
-		int displayDateMonth, int displayDateDay, int displayDateYear,
-		int displayDateHour, int displayDateMinute, boolean displayImmediately,
+		HttpPrincipal httpPrincipal, long entryId, String title,
+		String content, String url, String type, int displayDateMonth,
+		int displayDateDay, int displayDateYear, int displayDateHour,
+		int displayDateMinute, boolean displayImmediately,
 		int expirationDateMonth, int expirationDateDay, int expirationDateYear,
 		int expirationDateHour, int expirationDateMinute, int priority)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -268,17 +268,15 @@ public class AnnouncementsEntryServiceHttp {
 
 	private static Log _log = LogFactoryUtil.getLog(AnnouncementsEntryServiceHttp.class);
 	private static final Class<?>[] _addEntryParameterTypes0 = new Class[] {
-			long.class, long.class, long.class, java.lang.String.class,
-			java.lang.String.class, java.lang.String.class,
-			java.lang.String.class, int.class, int.class, int.class, int.class,
-			int.class, boolean.class, int.class, int.class, int.class, int.class,
-			int.class, int.class, boolean.class
+			long.class, long.class, long.class, String.class, String.class,
+			String.class, String.class, int.class, int.class, int.class,
+			int.class, int.class, boolean.class, int.class, int.class, int.class,
+			int.class, int.class, int.class, boolean.class
 		};
 	private static final Class<?>[] _addEntryParameterTypes1 = new Class[] {
-			long.class, long.class, java.lang.String.class,
-			java.lang.String.class, java.lang.String.class,
-			java.lang.String.class, java.util.Date.class, java.util.Date.class,
-			int.class, boolean.class
+			long.class, long.class, String.class, String.class, String.class,
+			String.class, java.util.Date.class, java.util.Date.class, int.class,
+			boolean.class
 		};
 	private static final Class<?>[] _deleteEntryParameterTypes2 = new Class[] {
 			long.class
@@ -287,14 +285,12 @@ public class AnnouncementsEntryServiceHttp {
 			long.class
 		};
 	private static final Class<?>[] _updateEntryParameterTypes4 = new Class[] {
-			long.class, java.lang.String.class, java.lang.String.class,
-			java.lang.String.class, java.lang.String.class, java.util.Date.class,
-			java.util.Date.class, int.class
+			long.class, String.class, String.class, String.class, String.class,
+			java.util.Date.class, java.util.Date.class, int.class
 		};
 	private static final Class<?>[] _updateEntryParameterTypes5 = new Class[] {
-			long.class, java.lang.String.class, java.lang.String.class,
-			java.lang.String.class, java.lang.String.class, int.class, int.class,
-			int.class, int.class, int.class, boolean.class, int.class, int.class,
-			int.class, int.class, int.class, int.class
+			long.class, String.class, String.class, String.class, String.class,
+			int.class, int.class, int.class, int.class, int.class, boolean.class,
+			int.class, int.class, int.class, int.class, int.class, int.class
 		};
 }

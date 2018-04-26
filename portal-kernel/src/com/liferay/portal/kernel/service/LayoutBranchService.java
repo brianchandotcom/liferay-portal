@@ -46,9 +46,9 @@ public interface LayoutBranchService extends BaseService {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link LayoutBranchServiceUtil} to access the layout branch remote service. Add custom service methods to {@link com.liferay.portal.service.impl.LayoutBranchServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public LayoutBranch addLayoutBranch(long layoutRevisionId,
-		java.lang.String name, java.lang.String description, boolean master,
-		ServiceContext serviceContext) throws PortalException;
+	public LayoutBranch addLayoutBranch(long layoutRevisionId, String name,
+		String description, boolean master, ServiceContext serviceContext)
+		throws PortalException;
 
 	public void deleteLayoutBranch(long layoutBranchId)
 		throws PortalException;
@@ -58,9 +58,9 @@ public interface LayoutBranchService extends BaseService {
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
-	public LayoutBranch updateLayoutBranch(long layoutBranchId,
-		java.lang.String name, java.lang.String description,
-		ServiceContext serviceContext) throws PortalException;
+	public LayoutBranch updateLayoutBranch(long layoutBranchId, String name,
+		String description, ServiceContext serviceContext)
+		throws PortalException;
 }

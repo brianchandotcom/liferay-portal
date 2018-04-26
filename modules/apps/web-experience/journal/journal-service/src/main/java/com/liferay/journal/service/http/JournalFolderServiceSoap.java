@@ -67,8 +67,7 @@ import java.rmi.RemoteException;
 @ProviderType
 public class JournalFolderServiceSoap {
 	public static com.liferay.journal.model.JournalFolderSoap addFolder(
-		long groupId, long parentFolderId, java.lang.String name,
-		java.lang.String description,
+		long groupId, long parentFolderId, String name, String description,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
@@ -153,13 +152,13 @@ public class JournalFolderServiceSoap {
 		}
 	}
 
-	public static java.lang.Long[] getFolderIds(long groupId, long folderId)
+	public static Long[] getFolderIds(long groupId, long folderId)
 		throws RemoteException {
 		try {
-			java.util.List<java.lang.Long> returnValue = JournalFolderServiceUtil.getFolderIds(groupId,
+			java.util.List<Long> returnValue = JournalFolderServiceUtil.getFolderIds(groupId,
 					folderId);
 
-			return returnValue.toArray(new java.lang.Long[returnValue.size()]);
+			return returnValue.toArray(new Long[returnValue.size()]);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -366,13 +365,13 @@ public class JournalFolderServiceSoap {
 		}
 	}
 
-	public static java.lang.Long[] getSubfolderIds(long groupId, long folderId,
+	public static Long[] getSubfolderIds(long groupId, long folderId,
 		boolean recurse) throws RemoteException {
 		try {
-			java.util.List<java.lang.Long> returnValue = JournalFolderServiceUtil.getSubfolderIds(groupId,
+			java.util.List<Long> returnValue = JournalFolderServiceUtil.getSubfolderIds(groupId,
 					folderId, recurse);
 
-			return returnValue.toArray(new java.lang.Long[returnValue.size()]);
+			return returnValue.toArray(new Long[returnValue.size()]);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -443,7 +442,7 @@ public class JournalFolderServiceSoap {
 
 	public static com.liferay.dynamic.data.mapping.model.DDMStructureSoap[] searchDDMStructures(
 		long companyId, long[] groupIds, long folderId, int restrictionType,
-		java.lang.String keywords, int start, int end,
+		String keywords, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.mapping.model.DDMStructure> obc)
 		throws RemoteException {
 		try {
@@ -486,9 +485,8 @@ public class JournalFolderServiceSoap {
 	}
 
 	public static com.liferay.journal.model.JournalFolderSoap updateFolder(
-		long groupId, long folderId, long parentFolderId,
-		java.lang.String name, java.lang.String description,
-		boolean mergeWithParentFolder,
+		long groupId, long folderId, long parentFolderId, String name,
+		String description, boolean mergeWithParentFolder,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
@@ -506,9 +504,8 @@ public class JournalFolderServiceSoap {
 	}
 
 	public static com.liferay.journal.model.JournalFolderSoap updateFolder(
-		long groupId, long folderId, long parentFolderId,
-		java.lang.String name, java.lang.String description,
-		long[] ddmStructureIds, int restrictionType,
+		long groupId, long folderId, long parentFolderId, String name,
+		String description, long[] ddmStructureIds, int restrictionType,
 		boolean mergeWithParentFolder,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {

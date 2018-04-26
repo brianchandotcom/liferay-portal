@@ -33,10 +33,9 @@ public class TasksEntryServiceWrapper implements TasksEntryService,
 	}
 
 	@Override
-	public com.liferay.tasks.model.TasksEntry addTasksEntry(
-		java.lang.String title, int priority, long assigneeUserId,
-		int dueDateMonth, int dueDateDay, int dueDateYear, int dueDateHour,
-		int dueDateMinute, boolean neverDue,
+	public com.liferay.tasks.model.TasksEntry addTasksEntry(String title,
+		int priority, long assigneeUserId, int dueDateMonth, int dueDateDay,
+		int dueDateYear, int dueDateHour, int dueDateMinute, boolean neverDue,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _tasksEntryService.addTasksEntry(title, priority,
@@ -57,7 +56,7 @@ public class TasksEntryServiceWrapper implements TasksEntryService,
 	* @return the OSGi service identifier
 	*/
 	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
+	public String getOSGiServiceIdentifier() {
 		return _tasksEntryService.getOSGiServiceIdentifier();
 	}
 
@@ -69,10 +68,9 @@ public class TasksEntryServiceWrapper implements TasksEntryService,
 
 	@Override
 	public com.liferay.tasks.model.TasksEntry updateTasksEntry(
-		long tasksEntryId, java.lang.String title, int priority,
-		long assigneeUserId, long resolverUserId, int dueDateMonth,
-		int dueDateDay, int dueDateYear, int dueDateHour, int dueDateMinute,
-		boolean neverDue, int status,
+		long tasksEntryId, String title, int priority, long assigneeUserId,
+		long resolverUserId, int dueDateMonth, int dueDateDay, int dueDateYear,
+		int dueDateHour, int dueDateMinute, boolean neverDue, int status,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _tasksEntryService.updateTasksEntry(tasksEntryId, title,

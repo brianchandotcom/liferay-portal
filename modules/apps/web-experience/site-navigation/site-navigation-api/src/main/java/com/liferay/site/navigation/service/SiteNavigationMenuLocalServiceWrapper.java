@@ -45,8 +45,7 @@ public class SiteNavigationMenuLocalServiceWrapper
 
 	@Override
 	public com.liferay.site.navigation.model.SiteNavigationMenu addSiteNavigationMenu(
-		long userId, long groupId, java.lang.String name, int type,
-		boolean auto,
+		long userId, long groupId, String name, int type, boolean auto,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _siteNavigationMenuLocalService.addSiteNavigationMenu(userId,
@@ -55,7 +54,7 @@ public class SiteNavigationMenuLocalServiceWrapper
 
 	@Override
 	public com.liferay.site.navigation.model.SiteNavigationMenu addSiteNavigationMenu(
-		long userId, long groupId, java.lang.String name, int type,
+		long userId, long groupId, String name, int type,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _siteNavigationMenuLocalService.addSiteNavigationMenu(userId,
@@ -64,7 +63,7 @@ public class SiteNavigationMenuLocalServiceWrapper
 
 	@Override
 	public com.liferay.site.navigation.model.SiteNavigationMenu addSiteNavigationMenu(
-		long userId, long groupId, java.lang.String name,
+		long userId, long groupId, String name,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _siteNavigationMenuLocalService.addSiteNavigationMenu(userId,
@@ -260,7 +259,7 @@ public class SiteNavigationMenuLocalServiceWrapper
 	* @return the OSGi service identifier
 	*/
 	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
+	public String getOSGiServiceIdentifier() {
 		return _siteNavigationMenuLocalService.getOSGiServiceIdentifier();
 	}
 
@@ -318,7 +317,7 @@ public class SiteNavigationMenuLocalServiceWrapper
 
 	@Override
 	public java.util.List<com.liferay.site.navigation.model.SiteNavigationMenu> getSiteNavigationMenus(
-		long groupId, java.lang.String keywords, int start, int end,
+		long groupId, String keywords, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return _siteNavigationMenuLocalService.getSiteNavigationMenus(groupId,
 			keywords, start, end, orderByComparator);
@@ -340,8 +339,7 @@ public class SiteNavigationMenuLocalServiceWrapper
 	}
 
 	@Override
-	public int getSiteNavigationMenusCount(long groupId,
-		java.lang.String keywords) {
+	public int getSiteNavigationMenusCount(long groupId, String keywords) {
 		return _siteNavigationMenuLocalService.getSiteNavigationMenusCount(groupId,
 			keywords);
 	}
@@ -357,7 +355,7 @@ public class SiteNavigationMenuLocalServiceWrapper
 
 	@Override
 	public com.liferay.site.navigation.model.SiteNavigationMenu updateSiteNavigationMenu(
-		long userId, long siteNavigationMenuId, java.lang.String name,
+		long userId, long siteNavigationMenuId, String name,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _siteNavigationMenuLocalService.updateSiteNavigationMenu(userId,

@@ -52,19 +52,17 @@ public interface LayoutPrototypeService extends BaseService {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link LayoutPrototypeServiceUtil} to access the layout prototype remote service. Add custom service methods to {@link com.liferay.portal.service.impl.LayoutPrototypeServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public LayoutPrototype addLayoutPrototype(
-		Map<Locale, java.lang.String> nameMap,
-		Map<Locale, java.lang.String> descriptionMap, boolean active,
+	public LayoutPrototype addLayoutPrototype(Map<Locale, String> nameMap,
+		Map<Locale, String> descriptionMap, boolean active,
 		ServiceContext serviceContext) throws PortalException;
 
 	/**
 	* @deprecated As of 7.0.0, replaced by {@link #addLayoutPrototype(Map, Map,
 	boolean, ServiceContext)}
 	*/
-	@java.lang.Deprecated
-	public LayoutPrototype addLayoutPrototype(
-		Map<Locale, java.lang.String> nameMap, java.lang.String description,
-		boolean active, ServiceContext serviceContext)
+	@Deprecated
+	public LayoutPrototype addLayoutPrototype(Map<Locale, String> nameMap,
+		String description, boolean active, ServiceContext serviceContext)
 		throws PortalException;
 
 	public void deleteLayoutPrototype(long layoutPrototypeId)
@@ -83,25 +81,23 @@ public interface LayoutPrototypeService extends BaseService {
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<LayoutPrototype> search(long companyId,
-		java.lang.Boolean active, OrderByComparator<LayoutPrototype> obc)
-		throws PortalException;
+	public List<LayoutPrototype> search(long companyId, Boolean active,
+		OrderByComparator<LayoutPrototype> obc) throws PortalException;
 
 	public LayoutPrototype updateLayoutPrototype(long layoutPrototypeId,
-		Map<Locale, java.lang.String> nameMap,
-		Map<Locale, java.lang.String> descriptionMap, boolean active,
-		ServiceContext serviceContext) throws PortalException;
+		Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
+		boolean active, ServiceContext serviceContext)
+		throws PortalException;
 
 	/**
 	* @deprecated As of 7.0.0, replaced by {@link #updateLayoutPrototype(long,
 	Map, Map, boolean, ServiceContext)}
 	*/
-	@java.lang.Deprecated
+	@Deprecated
 	public LayoutPrototype updateLayoutPrototype(long layoutPrototypeId,
-		Map<Locale, java.lang.String> nameMap, java.lang.String description,
-		boolean active, ServiceContext serviceContext)
-		throws PortalException;
+		Map<Locale, String> nameMap, String description, boolean active,
+		ServiceContext serviceContext) throws PortalException;
 }

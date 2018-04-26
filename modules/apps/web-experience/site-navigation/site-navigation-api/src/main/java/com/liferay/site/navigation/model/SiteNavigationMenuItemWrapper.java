@@ -154,7 +154,7 @@ public class SiteNavigationMenuItemWrapper implements SiteNavigationMenuItem,
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new SiteNavigationMenuItemWrapper((SiteNavigationMenuItem)_siteNavigationMenuItem.clone());
 	}
 
@@ -269,7 +269,7 @@ public class SiteNavigationMenuItemWrapper implements SiteNavigationMenuItem,
 	* @return the type of this site navigation menu item
 	*/
 	@Override
-	public java.lang.String getType() {
+	public String getType() {
 		return _siteNavigationMenuItem.getType();
 	}
 
@@ -279,7 +279,7 @@ public class SiteNavigationMenuItemWrapper implements SiteNavigationMenuItem,
 	* @return the type settings of this site navigation menu item
 	*/
 	@Override
-	public java.lang.String getTypeSettings() {
+	public String getTypeSettings() {
 		return _siteNavigationMenuItem.getTypeSettings();
 	}
 
@@ -299,7 +299,7 @@ public class SiteNavigationMenuItemWrapper implements SiteNavigationMenuItem,
 	* @return the user name of this site navigation menu item
 	*/
 	@Override
-	public java.lang.String getUserName() {
+	public String getUserName() {
 		return _siteNavigationMenuItem.getUserName();
 	}
 
@@ -309,7 +309,7 @@ public class SiteNavigationMenuItemWrapper implements SiteNavigationMenuItem,
 	* @return the user uuid of this site navigation menu item
 	*/
 	@Override
-	public java.lang.String getUserUuid() {
+	public String getUserUuid() {
 		return _siteNavigationMenuItem.getUserUuid();
 	}
 
@@ -466,7 +466,7 @@ public class SiteNavigationMenuItemWrapper implements SiteNavigationMenuItem,
 	* @param type the type of this site navigation menu item
 	*/
 	@Override
-	public void setType(java.lang.String type) {
+	public void setType(String type) {
 		_siteNavigationMenuItem.setType(type);
 	}
 
@@ -476,7 +476,7 @@ public class SiteNavigationMenuItemWrapper implements SiteNavigationMenuItem,
 	* @param typeSettings the type settings of this site navigation menu item
 	*/
 	@Override
-	public void setTypeSettings(java.lang.String typeSettings) {
+	public void setTypeSettings(String typeSettings) {
 		_siteNavigationMenuItem.setTypeSettings(typeSettings);
 	}
 
@@ -496,7 +496,7 @@ public class SiteNavigationMenuItemWrapper implements SiteNavigationMenuItem,
 	* @param userName the user name of this site navigation menu item
 	*/
 	@Override
-	public void setUserName(java.lang.String userName) {
+	public void setUserName(String userName) {
 		_siteNavigationMenuItem.setUserName(userName);
 	}
 
@@ -506,7 +506,7 @@ public class SiteNavigationMenuItemWrapper implements SiteNavigationMenuItem,
 	* @param userUuid the user uuid of this site navigation menu item
 	*/
 	@Override
-	public void setUserUuid(java.lang.String userUuid) {
+	public void setUserUuid(String userUuid) {
 		_siteNavigationMenuItem.setUserUuid(userUuid);
 	}
 
@@ -521,7 +521,7 @@ public class SiteNavigationMenuItemWrapper implements SiteNavigationMenuItem,
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _siteNavigationMenuItem.toString();
 	}
 
@@ -531,7 +531,7 @@ public class SiteNavigationMenuItemWrapper implements SiteNavigationMenuItem,
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _siteNavigationMenuItem.toXmlString();
 	}
 

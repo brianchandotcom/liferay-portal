@@ -196,7 +196,7 @@ public class PasswordTrackerLocalServiceUtil {
 	*
 	* @return the OSGi service identifier
 	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
+	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 
@@ -245,18 +245,17 @@ public class PasswordTrackerLocalServiceUtil {
 	}
 
 	public static boolean isSameAsCurrentPassword(long userId,
-		java.lang.String newClearTextPwd)
+		String newClearTextPwd)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().isSameAsCurrentPassword(userId, newClearTextPwd);
 	}
 
-	public static boolean isValidPassword(long userId,
-		java.lang.String newClearTextPwd)
+	public static boolean isValidPassword(long userId, String newClearTextPwd)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().isValidPassword(userId, newClearTextPwd);
 	}
 
-	public static void trackPassword(long userId, java.lang.String encPassword)
+	public static void trackPassword(long userId, String encPassword)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().trackPassword(userId, encPassword);
 	}

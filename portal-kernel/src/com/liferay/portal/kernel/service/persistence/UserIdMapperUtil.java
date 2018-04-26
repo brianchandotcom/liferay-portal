@@ -272,7 +272,7 @@ public class UserIdMapperUtil {
 	* @return the matching user ID mapper
 	* @throws NoSuchUserIdMapperException if a matching user ID mapper could not be found
 	*/
-	public static UserIdMapper findByU_T(long userId, java.lang.String type)
+	public static UserIdMapper findByU_T(long userId, String type)
 		throws com.liferay.portal.kernel.exception.NoSuchUserIdMapperException {
 		return getPersistence().findByU_T(userId, type);
 	}
@@ -284,7 +284,7 @@ public class UserIdMapperUtil {
 	* @param type the type
 	* @return the matching user ID mapper, or <code>null</code> if a matching user ID mapper could not be found
 	*/
-	public static UserIdMapper fetchByU_T(long userId, java.lang.String type) {
+	public static UserIdMapper fetchByU_T(long userId, String type) {
 		return getPersistence().fetchByU_T(userId, type);
 	}
 
@@ -296,7 +296,7 @@ public class UserIdMapperUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching user ID mapper, or <code>null</code> if a matching user ID mapper could not be found
 	*/
-	public static UserIdMapper fetchByU_T(long userId, java.lang.String type,
+	public static UserIdMapper fetchByU_T(long userId, String type,
 		boolean retrieveFromCache) {
 		return getPersistence().fetchByU_T(userId, type, retrieveFromCache);
 	}
@@ -308,7 +308,7 @@ public class UserIdMapperUtil {
 	* @param type the type
 	* @return the user ID mapper that was removed
 	*/
-	public static UserIdMapper removeByU_T(long userId, java.lang.String type)
+	public static UserIdMapper removeByU_T(long userId, String type)
 		throws com.liferay.portal.kernel.exception.NoSuchUserIdMapperException {
 		return getPersistence().removeByU_T(userId, type);
 	}
@@ -320,7 +320,7 @@ public class UserIdMapperUtil {
 	* @param type the type
 	* @return the number of matching user ID mappers
 	*/
-	public static int countByU_T(long userId, java.lang.String type) {
+	public static int countByU_T(long userId, String type) {
 		return getPersistence().countByU_T(userId, type);
 	}
 
@@ -332,8 +332,7 @@ public class UserIdMapperUtil {
 	* @return the matching user ID mapper
 	* @throws NoSuchUserIdMapperException if a matching user ID mapper could not be found
 	*/
-	public static UserIdMapper findByT_E(java.lang.String type,
-		java.lang.String externalUserId)
+	public static UserIdMapper findByT_E(String type, String externalUserId)
 		throws com.liferay.portal.kernel.exception.NoSuchUserIdMapperException {
 		return getPersistence().findByT_E(type, externalUserId);
 	}
@@ -345,8 +344,7 @@ public class UserIdMapperUtil {
 	* @param externalUserId the external user ID
 	* @return the matching user ID mapper, or <code>null</code> if a matching user ID mapper could not be found
 	*/
-	public static UserIdMapper fetchByT_E(java.lang.String type,
-		java.lang.String externalUserId) {
+	public static UserIdMapper fetchByT_E(String type, String externalUserId) {
 		return getPersistence().fetchByT_E(type, externalUserId);
 	}
 
@@ -358,8 +356,8 @@ public class UserIdMapperUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching user ID mapper, or <code>null</code> if a matching user ID mapper could not be found
 	*/
-	public static UserIdMapper fetchByT_E(java.lang.String type,
-		java.lang.String externalUserId, boolean retrieveFromCache) {
+	public static UserIdMapper fetchByT_E(String type, String externalUserId,
+		boolean retrieveFromCache) {
 		return getPersistence()
 				   .fetchByT_E(type, externalUserId, retrieveFromCache);
 	}
@@ -371,8 +369,7 @@ public class UserIdMapperUtil {
 	* @param externalUserId the external user ID
 	* @return the user ID mapper that was removed
 	*/
-	public static UserIdMapper removeByT_E(java.lang.String type,
-		java.lang.String externalUserId)
+	public static UserIdMapper removeByT_E(String type, String externalUserId)
 		throws com.liferay.portal.kernel.exception.NoSuchUserIdMapperException {
 		return getPersistence().removeByT_E(type, externalUserId);
 	}
@@ -384,8 +381,7 @@ public class UserIdMapperUtil {
 	* @param externalUserId the external user ID
 	* @return the number of matching user ID mappers
 	*/
-	public static int countByT_E(java.lang.String type,
-		java.lang.String externalUserId) {
+	public static int countByT_E(String type, String externalUserId) {
 		return getPersistence().countByT_E(type, externalUserId);
 	}
 
@@ -537,7 +533,7 @@ public class UserIdMapperUtil {
 		return getPersistence().countAll();
 	}
 
-	public static java.util.Set<java.lang.String> getBadColumnNames() {
+	public static java.util.Set<String> getBadColumnNames() {
 		return getPersistence().getBadColumnNames();
 	}
 

@@ -56,13 +56,12 @@ public interface TeamService extends BaseService {
 	* @deprecated As of 7.0.0, replaced by {@link #addTeam(long, String,
 	String, ServiceContext)}
 	*/
-	@java.lang.Deprecated
-	public Team addTeam(long groupId, java.lang.String name,
-		java.lang.String description) throws PortalException;
-
-	public Team addTeam(long groupId, java.lang.String name,
-		java.lang.String description, ServiceContext serviceContext)
+	@Deprecated
+	public Team addTeam(long groupId, String name, String description)
 		throws PortalException;
+
+	public Team addTeam(long groupId, String name, String description,
+		ServiceContext serviceContext) throws PortalException;
 
 	public void deleteTeam(long teamId) throws PortalException;
 
@@ -74,14 +73,13 @@ public interface TeamService extends BaseService {
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public Team getTeam(long teamId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Team getTeam(long groupId, java.lang.String name)
-		throws PortalException;
+	public Team getTeam(long groupId, String name) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<Team> getUserTeams(long userId) throws PortalException;
@@ -95,16 +93,14 @@ public interface TeamService extends BaseService {
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<Team> search(long groupId, java.lang.String name,
-		java.lang.String description,
-		LinkedHashMap<java.lang.String, java.lang.Object> params, int start,
-		int end, OrderByComparator<Team> obc);
+	public List<Team> search(long groupId, String name, String description,
+		LinkedHashMap<String, Object> params, int start, int end,
+		OrderByComparator<Team> obc);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int searchCount(long groupId, java.lang.String name,
-		java.lang.String description,
-		LinkedHashMap<java.lang.String, java.lang.Object> params);
+	public int searchCount(long groupId, String name, String description,
+		LinkedHashMap<String, Object> params);
 
-	public Team updateTeam(long teamId, java.lang.String name,
-		java.lang.String description) throws PortalException;
+	public Team updateTeam(long teamId, String name, String description)
+		throws PortalException;
 }

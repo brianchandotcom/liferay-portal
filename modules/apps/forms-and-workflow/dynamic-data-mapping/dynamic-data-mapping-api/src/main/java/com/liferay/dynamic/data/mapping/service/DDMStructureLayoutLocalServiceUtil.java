@@ -209,7 +209,7 @@ public class DDMStructureLayoutLocalServiceUtil {
 	* @return the matching ddm structure layout, or <code>null</code> if a matching ddm structure layout could not be found
 	*/
 	public static com.liferay.dynamic.data.mapping.model.DDMStructureLayout fetchDDMStructureLayoutByUuidAndGroupId(
-		java.lang.String uuid, long groupId) {
+		String uuid, long groupId) {
 		return getService()
 				   .fetchDDMStructureLayoutByUuidAndGroupId(uuid, groupId);
 	}
@@ -240,7 +240,7 @@ public class DDMStructureLayoutLocalServiceUtil {
 	* @throws PortalException if a matching ddm structure layout could not be found
 	*/
 	public static com.liferay.dynamic.data.mapping.model.DDMStructureLayout getDDMStructureLayoutByUuidAndGroupId(
-		java.lang.String uuid, long groupId)
+		String uuid, long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getDDMStructureLayoutByUuidAndGroupId(uuid, groupId);
 	}
@@ -269,7 +269,7 @@ public class DDMStructureLayoutLocalServiceUtil {
 	* @return the matching ddm structure layouts, or an empty list if no matches were found
 	*/
 	public static java.util.List<com.liferay.dynamic.data.mapping.model.DDMStructureLayout> getDDMStructureLayoutsByUuidAndCompanyId(
-		java.lang.String uuid, long companyId) {
+		String uuid, long companyId) {
 		return getService()
 				   .getDDMStructureLayoutsByUuidAndCompanyId(uuid, companyId);
 	}
@@ -285,7 +285,7 @@ public class DDMStructureLayoutLocalServiceUtil {
 	* @return the range of matching ddm structure layouts, or an empty list if no matches were found
 	*/
 	public static java.util.List<com.liferay.dynamic.data.mapping.model.DDMStructureLayout> getDDMStructureLayoutsByUuidAndCompanyId(
-		java.lang.String uuid, long companyId, int start, int end,
+		String uuid, long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.mapping.model.DDMStructureLayout> orderByComparator) {
 		return getService()
 				   .getDDMStructureLayoutsByUuidAndCompanyId(uuid, companyId,
@@ -315,7 +315,7 @@ public class DDMStructureLayoutLocalServiceUtil {
 	*
 	* @return the OSGi service identifier
 	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
+	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 

@@ -82,9 +82,9 @@ public interface UserGroupService extends BaseService {
 	* @deprecated As of 6.2.0, replaced by {@link #addUserGroup(String, String,
 	ServiceContext)}
 	*/
-	@java.lang.Deprecated
-	public UserGroup addUserGroup(java.lang.String name,
-		java.lang.String description) throws PortalException;
+	@Deprecated
+	public UserGroup addUserGroup(String name, String description)
+		throws PortalException;
 
 	/**
 	* Adds a user group.
@@ -101,9 +101,8 @@ public interface UserGroupService extends BaseService {
 	user group.
 	* @return the user group
 	*/
-	public UserGroup addUserGroup(java.lang.String name,
-		java.lang.String description, ServiceContext serviceContext)
-		throws PortalException;
+	public UserGroup addUserGroup(String name, String description,
+		ServiceContext serviceContext) throws PortalException;
 
 	/**
 	* Deletes the user group.
@@ -126,7 +125,7 @@ public interface UserGroupService extends BaseService {
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	/**
 	* Returns the user group with the primary key.
@@ -144,8 +143,7 @@ public interface UserGroupService extends BaseService {
 	* @return the user group with the name
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public UserGroup getUserGroup(java.lang.String name)
-		throws PortalException;
+	public UserGroup getUserGroup(String name) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<UserGroup> getUserGroups(long companyId)
@@ -189,9 +187,9 @@ public interface UserGroupService extends BaseService {
 	* @deprecated As of 6.2.0, replaced by {@link #updateUserGroup(long,
 	String, String, ServiceContext)}
 	*/
-	@java.lang.Deprecated
-	public UserGroup updateUserGroup(long userGroupId, java.lang.String name,
-		java.lang.String description) throws PortalException;
+	@Deprecated
+	public UserGroup updateUserGroup(long userGroupId, String name,
+		String description) throws PortalException;
 
 	/**
 	* Updates the user group.
@@ -204,7 +202,7 @@ public interface UserGroupService extends BaseService {
 	user group.
 	* @return the user group
 	*/
-	public UserGroup updateUserGroup(long userGroupId, java.lang.String name,
-		java.lang.String description, ServiceContext serviceContext)
+	public UserGroup updateUserGroup(long userGroupId, String name,
+		String description, ServiceContext serviceContext)
 		throws PortalException;
 }

@@ -281,8 +281,7 @@ public class KaleoDefinitionUtil {
 	* @return the matching kaleo definition
 	* @throws NoSuchDefinitionException if a matching kaleo definition could not be found
 	*/
-	public static KaleoDefinition findByC_N(long companyId,
-		java.lang.String name)
+	public static KaleoDefinition findByC_N(long companyId, String name)
 		throws com.liferay.portal.workflow.kaleo.exception.NoSuchDefinitionException {
 		return getPersistence().findByC_N(companyId, name);
 	}
@@ -294,8 +293,7 @@ public class KaleoDefinitionUtil {
 	* @param name the name
 	* @return the matching kaleo definition, or <code>null</code> if a matching kaleo definition could not be found
 	*/
-	public static KaleoDefinition fetchByC_N(long companyId,
-		java.lang.String name) {
+	public static KaleoDefinition fetchByC_N(long companyId, String name) {
 		return getPersistence().fetchByC_N(companyId, name);
 	}
 
@@ -307,8 +305,8 @@ public class KaleoDefinitionUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching kaleo definition, or <code>null</code> if a matching kaleo definition could not be found
 	*/
-	public static KaleoDefinition fetchByC_N(long companyId,
-		java.lang.String name, boolean retrieveFromCache) {
+	public static KaleoDefinition fetchByC_N(long companyId, String name,
+		boolean retrieveFromCache) {
 		return getPersistence().fetchByC_N(companyId, name, retrieveFromCache);
 	}
 
@@ -319,8 +317,7 @@ public class KaleoDefinitionUtil {
 	* @param name the name
 	* @return the kaleo definition that was removed
 	*/
-	public static KaleoDefinition removeByC_N(long companyId,
-		java.lang.String name)
+	public static KaleoDefinition removeByC_N(long companyId, String name)
 		throws com.liferay.portal.workflow.kaleo.exception.NoSuchDefinitionException {
 		return getPersistence().removeByC_N(companyId, name);
 	}
@@ -332,7 +329,7 @@ public class KaleoDefinitionUtil {
 	* @param name the name
 	* @return the number of matching kaleo definitions
 	*/
-	public static int countByC_N(long companyId, java.lang.String name) {
+	public static int countByC_N(long companyId, String name) {
 		return getPersistence().countByC_N(companyId, name);
 	}
 
@@ -519,8 +516,8 @@ public class KaleoDefinitionUtil {
 	* @return the matching kaleo definition
 	* @throws NoSuchDefinitionException if a matching kaleo definition could not be found
 	*/
-	public static KaleoDefinition findByC_N_V(long companyId,
-		java.lang.String name, int version)
+	public static KaleoDefinition findByC_N_V(long companyId, String name,
+		int version)
 		throws com.liferay.portal.workflow.kaleo.exception.NoSuchDefinitionException {
 		return getPersistence().findByC_N_V(companyId, name, version);
 	}
@@ -533,8 +530,8 @@ public class KaleoDefinitionUtil {
 	* @param version the version
 	* @return the matching kaleo definition, or <code>null</code> if a matching kaleo definition could not be found
 	*/
-	public static KaleoDefinition fetchByC_N_V(long companyId,
-		java.lang.String name, int version) {
+	public static KaleoDefinition fetchByC_N_V(long companyId, String name,
+		int version) {
 		return getPersistence().fetchByC_N_V(companyId, name, version);
 	}
 
@@ -547,8 +544,8 @@ public class KaleoDefinitionUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching kaleo definition, or <code>null</code> if a matching kaleo definition could not be found
 	*/
-	public static KaleoDefinition fetchByC_N_V(long companyId,
-		java.lang.String name, int version, boolean retrieveFromCache) {
+	public static KaleoDefinition fetchByC_N_V(long companyId, String name,
+		int version, boolean retrieveFromCache) {
 		return getPersistence()
 				   .fetchByC_N_V(companyId, name, version, retrieveFromCache);
 	}
@@ -561,8 +558,8 @@ public class KaleoDefinitionUtil {
 	* @param version the version
 	* @return the kaleo definition that was removed
 	*/
-	public static KaleoDefinition removeByC_N_V(long companyId,
-		java.lang.String name, int version)
+	public static KaleoDefinition removeByC_N_V(long companyId, String name,
+		int version)
 		throws com.liferay.portal.workflow.kaleo.exception.NoSuchDefinitionException {
 		return getPersistence().removeByC_N_V(companyId, name, version);
 	}
@@ -575,8 +572,7 @@ public class KaleoDefinitionUtil {
 	* @param version the version
 	* @return the number of matching kaleo definitions
 	*/
-	public static int countByC_N_V(long companyId, java.lang.String name,
-		int version) {
+	public static int countByC_N_V(long companyId, String name, int version) {
 		return getPersistence().countByC_N_V(companyId, name, version);
 	}
 
@@ -589,8 +585,8 @@ public class KaleoDefinitionUtil {
 	* @return the matching kaleo definition
 	* @throws NoSuchDefinitionException if a matching kaleo definition could not be found
 	*/
-	public static KaleoDefinition findByC_N_A(long companyId,
-		java.lang.String name, boolean active)
+	public static KaleoDefinition findByC_N_A(long companyId, String name,
+		boolean active)
 		throws com.liferay.portal.workflow.kaleo.exception.NoSuchDefinitionException {
 		return getPersistence().findByC_N_A(companyId, name, active);
 	}
@@ -603,8 +599,8 @@ public class KaleoDefinitionUtil {
 	* @param active the active
 	* @return the matching kaleo definition, or <code>null</code> if a matching kaleo definition could not be found
 	*/
-	public static KaleoDefinition fetchByC_N_A(long companyId,
-		java.lang.String name, boolean active) {
+	public static KaleoDefinition fetchByC_N_A(long companyId, String name,
+		boolean active) {
 		return getPersistence().fetchByC_N_A(companyId, name, active);
 	}
 
@@ -617,8 +613,8 @@ public class KaleoDefinitionUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching kaleo definition, or <code>null</code> if a matching kaleo definition could not be found
 	*/
-	public static KaleoDefinition fetchByC_N_A(long companyId,
-		java.lang.String name, boolean active, boolean retrieveFromCache) {
+	public static KaleoDefinition fetchByC_N_A(long companyId, String name,
+		boolean active, boolean retrieveFromCache) {
 		return getPersistence()
 				   .fetchByC_N_A(companyId, name, active, retrieveFromCache);
 	}
@@ -631,8 +627,8 @@ public class KaleoDefinitionUtil {
 	* @param active the active
 	* @return the kaleo definition that was removed
 	*/
-	public static KaleoDefinition removeByC_N_A(long companyId,
-		java.lang.String name, boolean active)
+	public static KaleoDefinition removeByC_N_A(long companyId, String name,
+		boolean active)
 		throws com.liferay.portal.workflow.kaleo.exception.NoSuchDefinitionException {
 		return getPersistence().removeByC_N_A(companyId, name, active);
 	}
@@ -645,8 +641,7 @@ public class KaleoDefinitionUtil {
 	* @param active the active
 	* @return the number of matching kaleo definitions
 	*/
-	public static int countByC_N_A(long companyId, java.lang.String name,
-		boolean active) {
+	public static int countByC_N_A(long companyId, String name, boolean active) {
 		return getPersistence().countByC_N_A(companyId, name, active);
 	}
 
@@ -798,7 +793,7 @@ public class KaleoDefinitionUtil {
 		return getPersistence().countAll();
 	}
 
-	public static java.util.Set<java.lang.String> getBadColumnNames() {
+	public static java.util.Set<String> getBadColumnNames() {
 		return getPersistence().getBadColumnNames();
 	}
 

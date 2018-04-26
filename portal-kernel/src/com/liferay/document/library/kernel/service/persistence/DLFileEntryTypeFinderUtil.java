@@ -26,21 +26,21 @@ import com.liferay.portal.kernel.util.ReferenceRegistry;
 @ProviderType
 public class DLFileEntryTypeFinderUtil {
 	public static int countByKeywords(long companyId, long[] groupIds,
-		java.lang.String keywords, boolean includeBasicFileEntryType) {
+		String keywords, boolean includeBasicFileEntryType) {
 		return getFinder()
 				   .countByKeywords(companyId, groupIds, keywords,
 			includeBasicFileEntryType);
 	}
 
 	public static int filterCountByKeywords(long companyId, long[] groupIds,
-		java.lang.String keywords, boolean includeBasicFileEntryType) {
+		String keywords, boolean includeBasicFileEntryType) {
 		return getFinder()
 				   .filterCountByKeywords(companyId, groupIds, keywords,
 			includeBasicFileEntryType);
 	}
 
 	public static java.util.List<com.liferay.document.library.kernel.model.DLFileEntryType> filterFindByKeywords(
-		long companyId, long[] groupIds, java.lang.String keywords,
+		long companyId, long[] groupIds, String keywords,
 		boolean includeBasicFileEntryType, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.document.library.kernel.model.DLFileEntryType> orderByComparator) {
 		return getFinder()
@@ -49,7 +49,7 @@ public class DLFileEntryTypeFinderUtil {
 	}
 
 	public static java.util.List<com.liferay.document.library.kernel.model.DLFileEntryType> findByKeywords(
-		long companyId, long[] groupIds, java.lang.String keywords,
+		long companyId, long[] groupIds, String keywords,
 		boolean includeBasicFileEntryType, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.document.library.kernel.model.DLFileEntryType> orderByComparator) {
 		return getFinder()

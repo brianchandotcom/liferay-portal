@@ -270,7 +270,7 @@ public class LayoutSetUtil {
 	* @return the matching layout sets
 	*/
 	public static List<LayoutSet> findByLayoutSetPrototypeUuid(
-		java.lang.String layoutSetPrototypeUuid) {
+		String layoutSetPrototypeUuid) {
 		return getPersistence()
 				   .findByLayoutSetPrototypeUuid(layoutSetPrototypeUuid);
 	}
@@ -288,7 +288,7 @@ public class LayoutSetUtil {
 	* @return the range of matching layout sets
 	*/
 	public static List<LayoutSet> findByLayoutSetPrototypeUuid(
-		java.lang.String layoutSetPrototypeUuid, int start, int end) {
+		String layoutSetPrototypeUuid, int start, int end) {
 		return getPersistence()
 				   .findByLayoutSetPrototypeUuid(layoutSetPrototypeUuid, start,
 			end);
@@ -308,7 +308,7 @@ public class LayoutSetUtil {
 	* @return the ordered range of matching layout sets
 	*/
 	public static List<LayoutSet> findByLayoutSetPrototypeUuid(
-		java.lang.String layoutSetPrototypeUuid, int start, int end,
+		String layoutSetPrototypeUuid, int start, int end,
 		OrderByComparator<LayoutSet> orderByComparator) {
 		return getPersistence()
 				   .findByLayoutSetPrototypeUuid(layoutSetPrototypeUuid, start,
@@ -330,7 +330,7 @@ public class LayoutSetUtil {
 	* @return the ordered range of matching layout sets
 	*/
 	public static List<LayoutSet> findByLayoutSetPrototypeUuid(
-		java.lang.String layoutSetPrototypeUuid, int start, int end,
+		String layoutSetPrototypeUuid, int start, int end,
 		OrderByComparator<LayoutSet> orderByComparator,
 		boolean retrieveFromCache) {
 		return getPersistence()
@@ -347,7 +347,7 @@ public class LayoutSetUtil {
 	* @throws NoSuchLayoutSetException if a matching layout set could not be found
 	*/
 	public static LayoutSet findByLayoutSetPrototypeUuid_First(
-		java.lang.String layoutSetPrototypeUuid,
+		String layoutSetPrototypeUuid,
 		OrderByComparator<LayoutSet> orderByComparator)
 		throws com.liferay.portal.kernel.exception.NoSuchLayoutSetException {
 		return getPersistence()
@@ -363,7 +363,7 @@ public class LayoutSetUtil {
 	* @return the first matching layout set, or <code>null</code> if a matching layout set could not be found
 	*/
 	public static LayoutSet fetchByLayoutSetPrototypeUuid_First(
-		java.lang.String layoutSetPrototypeUuid,
+		String layoutSetPrototypeUuid,
 		OrderByComparator<LayoutSet> orderByComparator) {
 		return getPersistence()
 				   .fetchByLayoutSetPrototypeUuid_First(layoutSetPrototypeUuid,
@@ -379,7 +379,7 @@ public class LayoutSetUtil {
 	* @throws NoSuchLayoutSetException if a matching layout set could not be found
 	*/
 	public static LayoutSet findByLayoutSetPrototypeUuid_Last(
-		java.lang.String layoutSetPrototypeUuid,
+		String layoutSetPrototypeUuid,
 		OrderByComparator<LayoutSet> orderByComparator)
 		throws com.liferay.portal.kernel.exception.NoSuchLayoutSetException {
 		return getPersistence()
@@ -395,7 +395,7 @@ public class LayoutSetUtil {
 	* @return the last matching layout set, or <code>null</code> if a matching layout set could not be found
 	*/
 	public static LayoutSet fetchByLayoutSetPrototypeUuid_Last(
-		java.lang.String layoutSetPrototypeUuid,
+		String layoutSetPrototypeUuid,
 		OrderByComparator<LayoutSet> orderByComparator) {
 		return getPersistence()
 				   .fetchByLayoutSetPrototypeUuid_Last(layoutSetPrototypeUuid,
@@ -412,7 +412,7 @@ public class LayoutSetUtil {
 	* @throws NoSuchLayoutSetException if a layout set with the primary key could not be found
 	*/
 	public static LayoutSet[] findByLayoutSetPrototypeUuid_PrevAndNext(
-		long layoutSetId, java.lang.String layoutSetPrototypeUuid,
+		long layoutSetId, String layoutSetPrototypeUuid,
 		OrderByComparator<LayoutSet> orderByComparator)
 		throws com.liferay.portal.kernel.exception.NoSuchLayoutSetException {
 		return getPersistence()
@@ -426,7 +426,7 @@ public class LayoutSetUtil {
 	* @param layoutSetPrototypeUuid the layout set prototype uuid
 	*/
 	public static void removeByLayoutSetPrototypeUuid(
-		java.lang.String layoutSetPrototypeUuid) {
+		String layoutSetPrototypeUuid) {
 		getPersistence().removeByLayoutSetPrototypeUuid(layoutSetPrototypeUuid);
 	}
 
@@ -437,7 +437,7 @@ public class LayoutSetUtil {
 	* @return the number of matching layout sets
 	*/
 	public static int countByLayoutSetPrototypeUuid(
-		java.lang.String layoutSetPrototypeUuid) {
+		String layoutSetPrototypeUuid) {
 		return getPersistence()
 				   .countByLayoutSetPrototypeUuid(layoutSetPrototypeUuid);
 	}
@@ -712,7 +712,7 @@ public class LayoutSetUtil {
 		return getPersistence().countAll();
 	}
 
-	public static java.util.Set<java.lang.String> getBadColumnNames() {
+	public static java.util.Set<String> getBadColumnNames() {
 		return getPersistence().getBadColumnNames();
 	}
 

@@ -68,13 +68,12 @@ public interface ExportImportConfigurationLocalService extends BaseLocalService,
 	 * Never modify or reference this interface directly. Always use {@link ExportImportConfigurationLocalServiceUtil} to access the export import configuration local service. Add custom service methods to {@link com.liferay.portlet.exportimport.service.impl.ExportImportConfigurationLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	public ExportImportConfiguration addDraftExportImportConfiguration(
-		long userId, int type, Map<java.lang.String, Serializable> settingsMap)
+		long userId, int type, Map<String, Serializable> settingsMap)
 		throws PortalException;
 
 	public ExportImportConfiguration addDraftExportImportConfiguration(
-		long userId, java.lang.String name, int type,
-		Map<java.lang.String, Serializable> settingsMap)
-		throws PortalException;
+		long userId, String name, int type,
+		Map<String, Serializable> settingsMap) throws PortalException;
 
 	/**
 	* Adds the export import configuration to the database. Also notifies the appropriate model listeners.
@@ -88,14 +87,14 @@ public interface ExportImportConfigurationLocalService extends BaseLocalService,
 
 	@Indexable(type = IndexableType.REINDEX)
 	public ExportImportConfiguration addExportImportConfiguration(long userId,
-		long groupId, java.lang.String name, java.lang.String description,
-		int type, Map<java.lang.String, Serializable> settingsMap, int status,
+		long groupId, String name, String description, int type,
+		Map<String, Serializable> settingsMap, int status,
 		ServiceContext serviceContext) throws PortalException;
 
 	public ExportImportConfiguration addExportImportConfiguration(long userId,
-		long groupId, java.lang.String name, java.lang.String description,
-		int type, Map<java.lang.String, Serializable> settingsMap,
-		ServiceContext serviceContext) throws PortalException;
+		long groupId, String name, String description, int type,
+		Map<String, Serializable> settingsMap, ServiceContext serviceContext)
+		throws PortalException;
 
 	/**
 	* Creates a new export import configuration with the primary key. Does not add the export import configuration to the database.
@@ -245,15 +244,14 @@ public interface ExportImportConfigurationLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<ExportImportConfiguration> getExportImportConfigurations(
-		long companyId, long groupId, java.lang.String keywords, int type,
-		int start, int end,
-		OrderByComparator<ExportImportConfiguration> orderByComparator);
+		long companyId, long groupId, String keywords, int type, int start,
+		int end, OrderByComparator<ExportImportConfiguration> orderByComparator);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<ExportImportConfiguration> getExportImportConfigurations(
-		long companyId, long groupId, java.lang.String name,
-		java.lang.String description, int type, boolean andSearch, int start,
-		int end, OrderByComparator<ExportImportConfiguration> orderByComparator);
+		long companyId, long groupId, String name, String description,
+		int type, boolean andSearch, int start, int end,
+		OrderByComparator<ExportImportConfiguration> orderByComparator);
 
 	/**
 	* Returns the number of export import configurations.
@@ -271,12 +269,11 @@ public interface ExportImportConfigurationLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getExportImportConfigurationsCount(long companyId, long groupId,
-		java.lang.String keywords, int type);
+		String keywords, int type);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getExportImportConfigurationsCount(long companyId, long groupId,
-		java.lang.String name, java.lang.String description, int type,
-		boolean andSearch);
+		String name, String description, int type, boolean andSearch);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
@@ -286,7 +283,7 @@ public interface ExportImportConfigurationLocalService extends BaseLocalService,
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -305,14 +302,14 @@ public interface ExportImportConfigurationLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public BaseModelSearchResult<ExportImportConfiguration> searchExportImportConfigurations(
-		long companyId, long groupId, int type, java.lang.String keywords,
-		int start, int end, Sort sort) throws PortalException;
+		long companyId, long groupId, int type, String keywords, int start,
+		int end, Sort sort) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public BaseModelSearchResult<ExportImportConfiguration> searchExportImportConfigurations(
-		long companyId, long groupId, int type, java.lang.String name,
-		java.lang.String description, boolean andSearch, int start, int end,
-		Sort sort) throws PortalException;
+		long companyId, long groupId, int type, String name,
+		String description, boolean andSearch, int start, int end, Sort sort)
+		throws PortalException;
 
 	/**
 	* Updates the export import configuration in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
@@ -326,9 +323,8 @@ public interface ExportImportConfigurationLocalService extends BaseLocalService,
 
 	@Indexable(type = IndexableType.REINDEX)
 	public ExportImportConfiguration updateExportImportConfiguration(
-		long userId, long exportImportConfigurationId, java.lang.String name,
-		java.lang.String description,
-		Map<java.lang.String, Serializable> settingsMap,
+		long userId, long exportImportConfigurationId, String name,
+		String description, Map<String, Serializable> settingsMap,
 		ServiceContext serviceContext) throws PortalException;
 
 	@Indexable(type = IndexableType.REINDEX)

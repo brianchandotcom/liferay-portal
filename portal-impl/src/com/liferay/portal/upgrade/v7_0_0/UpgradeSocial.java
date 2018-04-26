@@ -16,6 +16,7 @@ package com.liferay.portal.upgrade.v7_0_0;
 
 import com.liferay.counter.kernel.model.Counter;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 
 import java.sql.PreparedStatement;
@@ -42,6 +43,20 @@ public class UpgradeSocial extends UpgradeProcess {
 		}
 	}
 
+	protected void deleteOrphanedSocialRequests() throws Exception {
+		try (PreparedStatement ps = connection.prepareStatement(
+				"delete from SocialRequest where classNameId = ? and classPk " +
+					"not in (select groupId from Group_)")) {
+
+			ps.setLong(
+				1,
+				PortalUtil.getClassNameId(
+					"com.liferay.portal.kernel.model.Group"));
+
+			ps.execute();
+		}
+	}
+
 	@Override
 	protected void doUpgrade() throws Exception {
 		if (getSocialActivitySetsCount() > 0) {
@@ -53,6 +68,8 @@ public class UpgradeSocial extends UpgradeProcess {
 		long delta = getDelta(increment);
 
 		addSocialActivitySets(delta);
+
+		deleteOrphanedSocialRequests();
 
 		updateSocialActivities(delta);
 

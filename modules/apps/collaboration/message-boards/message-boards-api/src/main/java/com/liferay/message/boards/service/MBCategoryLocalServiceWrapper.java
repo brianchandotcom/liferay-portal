@@ -35,8 +35,7 @@ public class MBCategoryLocalServiceWrapper implements MBCategoryLocalService,
 
 	@Override
 	public com.liferay.message.boards.model.MBCategory addCategory(
-		long userId, long parentCategoryId, java.lang.String name,
-		java.lang.String description,
+		long userId, long parentCategoryId, String name, String description,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _mbCategoryLocalService.addCategory(userId, parentCategoryId,
@@ -45,16 +44,13 @@ public class MBCategoryLocalServiceWrapper implements MBCategoryLocalService,
 
 	@Override
 	public com.liferay.message.boards.model.MBCategory addCategory(
-		long userId, long parentCategoryId, java.lang.String name,
-		java.lang.String description, java.lang.String displayStyle,
-		java.lang.String emailAddress, java.lang.String inProtocol,
-		java.lang.String inServerName, int inServerPort, boolean inUseSSL,
-		java.lang.String inUserName, java.lang.String inPassword,
-		int inReadInterval, java.lang.String outEmailAddress,
-		boolean outCustom, java.lang.String outServerName, int outServerPort,
-		boolean outUseSSL, java.lang.String outUserName,
-		java.lang.String outPassword, boolean allowAnonymous,
-		boolean mailingListActive,
+		long userId, long parentCategoryId, String name, String description,
+		String displayStyle, String emailAddress, String inProtocol,
+		String inServerName, int inServerPort, boolean inUseSSL,
+		String inUserName, String inPassword, int inReadInterval,
+		String outEmailAddress, boolean outCustom, String outServerName,
+		int outServerPort, boolean outUseSSL, String outUserName,
+		String outPassword, boolean allowAnonymous, boolean mailingListActive,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _mbCategoryLocalService.addCategory(userId, parentCategoryId,
@@ -285,7 +281,7 @@ public class MBCategoryLocalServiceWrapper implements MBCategoryLocalService,
 	*/
 	@Override
 	public com.liferay.message.boards.model.MBCategory fetchMBCategoryByUuidAndGroupId(
-		java.lang.String uuid, long groupId) {
+		String uuid, long groupId) {
 		return _mbCategoryLocalService.fetchMBCategoryByUuidAndGroupId(uuid,
 			groupId);
 	}
@@ -352,22 +348,22 @@ public class MBCategoryLocalServiceWrapper implements MBCategoryLocalService,
 	}
 
 	@Override
-	public java.util.List<java.lang.Object> getCategoriesAndThreads(
-		long groupId, long categoryId) {
+	public java.util.List<Object> getCategoriesAndThreads(long groupId,
+		long categoryId) {
 		return _mbCategoryLocalService.getCategoriesAndThreads(groupId,
 			categoryId);
 	}
 
 	@Override
-	public java.util.List<java.lang.Object> getCategoriesAndThreads(
-		long groupId, long categoryId, int status) {
+	public java.util.List<Object> getCategoriesAndThreads(long groupId,
+		long categoryId, int status) {
 		return _mbCategoryLocalService.getCategoriesAndThreads(groupId,
 			categoryId, status);
 	}
 
 	@Override
-	public java.util.List<java.lang.Object> getCategoriesAndThreads(
-		long groupId, long categoryId, int status, int start, int end) {
+	public java.util.List<Object> getCategoriesAndThreads(long groupId,
+		long categoryId, int status, int start, int end) {
 		return _mbCategoryLocalService.getCategoriesAndThreads(groupId,
 			categoryId, status, start, end);
 	}
@@ -491,7 +487,7 @@ public class MBCategoryLocalServiceWrapper implements MBCategoryLocalService,
 	*/
 	@Override
 	public java.util.List<com.liferay.message.boards.model.MBCategory> getMBCategoriesByUuidAndCompanyId(
-		java.lang.String uuid, long companyId) {
+		String uuid, long companyId) {
 		return _mbCategoryLocalService.getMBCategoriesByUuidAndCompanyId(uuid,
 			companyId);
 	}
@@ -508,7 +504,7 @@ public class MBCategoryLocalServiceWrapper implements MBCategoryLocalService,
 	*/
 	@Override
 	public java.util.List<com.liferay.message.boards.model.MBCategory> getMBCategoriesByUuidAndCompanyId(
-		java.lang.String uuid, long companyId, int start, int end,
+		String uuid, long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.message.boards.model.MBCategory> orderByComparator) {
 		return _mbCategoryLocalService.getMBCategoriesByUuidAndCompanyId(uuid,
 			companyId, start, end, orderByComparator);
@@ -548,7 +544,7 @@ public class MBCategoryLocalServiceWrapper implements MBCategoryLocalService,
 	*/
 	@Override
 	public com.liferay.message.boards.model.MBCategory getMBCategoryByUuidAndGroupId(
-		java.lang.String uuid, long groupId)
+		String uuid, long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _mbCategoryLocalService.getMBCategoryByUuidAndGroupId(uuid,
 			groupId);
@@ -560,7 +556,7 @@ public class MBCategoryLocalServiceWrapper implements MBCategoryLocalService,
 	* @return the OSGi service identifier
 	*/
 	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
+	public String getOSGiServiceIdentifier() {
 		return _mbCategoryLocalService.getOSGiServiceIdentifier();
 	}
 
@@ -572,9 +568,8 @@ public class MBCategoryLocalServiceWrapper implements MBCategoryLocalService,
 	}
 
 	@Override
-	public java.util.List<java.lang.Long> getSubcategoryIds(
-		java.util.List<java.lang.Long> categoryIds, long groupId,
-		long categoryId) {
+	public java.util.List<Long> getSubcategoryIds(
+		java.util.List<Long> categoryIds, long groupId, long categoryId) {
 		return _mbCategoryLocalService.getSubcategoryIds(categoryIds, groupId,
 			categoryId);
 	}
@@ -641,15 +636,13 @@ public class MBCategoryLocalServiceWrapper implements MBCategoryLocalService,
 
 	@Override
 	public com.liferay.message.boards.model.MBCategory updateCategory(
-		long categoryId, long parentCategoryId, java.lang.String name,
-		java.lang.String description, java.lang.String displayStyle,
-		java.lang.String emailAddress, java.lang.String inProtocol,
-		java.lang.String inServerName, int inServerPort, boolean inUseSSL,
-		java.lang.String inUserName, java.lang.String inPassword,
-		int inReadInterval, java.lang.String outEmailAddress,
-		boolean outCustom, java.lang.String outServerName, int outServerPort,
-		boolean outUseSSL, java.lang.String outUserName,
-		java.lang.String outPassword, boolean allowAnonymous,
+		long categoryId, long parentCategoryId, String name,
+		String description, String displayStyle, String emailAddress,
+		String inProtocol, String inServerName, int inServerPort,
+		boolean inUseSSL, String inUserName, String inPassword,
+		int inReadInterval, String outEmailAddress, boolean outCustom,
+		String outServerName, int outServerPort, boolean outUseSSL,
+		String outUserName, String outPassword, boolean allowAnonymous,
 		boolean mailingListActive, boolean mergeWithParentCategory,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {

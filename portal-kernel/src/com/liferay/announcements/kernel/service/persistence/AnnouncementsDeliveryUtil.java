@@ -278,8 +278,7 @@ public class AnnouncementsDeliveryUtil {
 	* @return the matching announcements delivery
 	* @throws NoSuchDeliveryException if a matching announcements delivery could not be found
 	*/
-	public static AnnouncementsDelivery findByU_T(long userId,
-		java.lang.String type)
+	public static AnnouncementsDelivery findByU_T(long userId, String type)
 		throws com.liferay.announcements.kernel.exception.NoSuchDeliveryException {
 		return getPersistence().findByU_T(userId, type);
 	}
@@ -291,8 +290,7 @@ public class AnnouncementsDeliveryUtil {
 	* @param type the type
 	* @return the matching announcements delivery, or <code>null</code> if a matching announcements delivery could not be found
 	*/
-	public static AnnouncementsDelivery fetchByU_T(long userId,
-		java.lang.String type) {
+	public static AnnouncementsDelivery fetchByU_T(long userId, String type) {
 		return getPersistence().fetchByU_T(userId, type);
 	}
 
@@ -304,8 +302,8 @@ public class AnnouncementsDeliveryUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching announcements delivery, or <code>null</code> if a matching announcements delivery could not be found
 	*/
-	public static AnnouncementsDelivery fetchByU_T(long userId,
-		java.lang.String type, boolean retrieveFromCache) {
+	public static AnnouncementsDelivery fetchByU_T(long userId, String type,
+		boolean retrieveFromCache) {
 		return getPersistence().fetchByU_T(userId, type, retrieveFromCache);
 	}
 
@@ -316,8 +314,7 @@ public class AnnouncementsDeliveryUtil {
 	* @param type the type
 	* @return the announcements delivery that was removed
 	*/
-	public static AnnouncementsDelivery removeByU_T(long userId,
-		java.lang.String type)
+	public static AnnouncementsDelivery removeByU_T(long userId, String type)
 		throws com.liferay.announcements.kernel.exception.NoSuchDeliveryException {
 		return getPersistence().removeByU_T(userId, type);
 	}
@@ -329,7 +326,7 @@ public class AnnouncementsDeliveryUtil {
 	* @param type the type
 	* @return the number of matching announcements deliveries
 	*/
-	public static int countByU_T(long userId, java.lang.String type) {
+	public static int countByU_T(long userId, String type) {
 		return getPersistence().countByU_T(userId, type);
 	}
 
@@ -483,7 +480,7 @@ public class AnnouncementsDeliveryUtil {
 		return getPersistence().countAll();
 	}
 
-	public static java.util.Set<java.lang.String> getBadColumnNames() {
+	public static java.util.Set<String> getBadColumnNames() {
 		return getPersistence().getBadColumnNames();
 	}
 

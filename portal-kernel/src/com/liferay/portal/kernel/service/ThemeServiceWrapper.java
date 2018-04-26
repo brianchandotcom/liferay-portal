@@ -36,7 +36,7 @@ public class ThemeServiceWrapper implements ThemeService,
 	* @return the OSGi service identifier
 	*/
 	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
+	public String getOSGiServiceIdentifier() {
 		return _themeService.getOSGiServiceIdentifier();
 	}
 

@@ -61,11 +61,10 @@ public interface MessageLocalService extends BaseLocalService,
 	 *
 	 * Never modify or reference this interface directly. Always use {@link MessageLocalServiceUtil} to access the message local service. Add custom service methods to {@link com.liferay.mail.reader.service.impl.MessageLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public Message addMessage(long userId, long folderId,
-		java.lang.String sender, java.lang.String to, java.lang.String cc,
-		java.lang.String bcc, Date sentDate, java.lang.String subject,
-		java.lang.String body, java.lang.String flags, long remoteMessageId,
-		java.lang.String contentType) throws PortalException;
+	public Message addMessage(long userId, long folderId, String sender,
+		String to, String cc, String bcc, Date sentDate, String subject,
+		String body, String flags, long remoteMessageId, String contentType)
+		throws PortalException;
 
 	/**
 	* Adds the message to the database. Also notifies the appropriate model listeners.
@@ -241,7 +240,7 @@ public interface MessageLocalService extends BaseLocalService,
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -253,19 +252,18 @@ public interface MessageLocalService extends BaseLocalService,
 		throws PortalException;
 
 	public int populateMessages(List<Message> messages, long folderId,
-		java.lang.String keywords, int pageNumber, int messagesPerPage,
-		java.lang.String orderByField, java.lang.String orderByType);
+		String keywords, int pageNumber, int messagesPerPage,
+		String orderByField, String orderByType);
 
-	public Message updateContent(long messageId, java.lang.String body,
-		java.lang.String flags) throws PortalException;
+	public Message updateContent(long messageId, String body, String flags)
+		throws PortalException;
 
 	public Message updateFlag(long messageId, int flag, boolean value)
 		throws PortalException;
 
-	public Message updateMessage(long messageId, long folderId,
-		java.lang.String sender, java.lang.String to, java.lang.String cc,
-		java.lang.String bcc, Date sentDate, java.lang.String subject,
-		java.lang.String body, java.lang.String flags, long remoteMessageId)
+	public Message updateMessage(long messageId, long folderId, String sender,
+		String to, String cc, String bcc, Date sentDate, String subject,
+		String body, String flags, long remoteMessageId)
 		throws PortalException;
 
 	/**

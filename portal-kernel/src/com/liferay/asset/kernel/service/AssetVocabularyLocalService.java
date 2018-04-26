@@ -87,14 +87,12 @@ public interface AssetVocabularyLocalService extends BaseLocalService,
 
 	@Indexable(type = IndexableType.REINDEX)
 	public AssetVocabulary addVocabulary(long userId, long groupId,
-		java.lang.String title, Map<Locale, java.lang.String> titleMap,
-		Map<Locale, java.lang.String> descriptionMap,
-		java.lang.String settings, ServiceContext serviceContext)
-		throws PortalException;
+		String title, Map<Locale, String> titleMap,
+		Map<Locale, String> descriptionMap, String settings,
+		ServiceContext serviceContext) throws PortalException;
 
 	public AssetVocabulary addVocabulary(long userId, long groupId,
-		java.lang.String title, ServiceContext serviceContext)
-		throws PortalException;
+		String title, ServiceContext serviceContext) throws PortalException;
 
 	public void addVocabularyResources(AssetVocabulary vocabulary,
 		boolean addGroupPermissions, boolean addGuestPermissions)
@@ -219,12 +217,12 @@ public interface AssetVocabularyLocalService extends BaseLocalService,
 	* @return the matching asset vocabulary, or <code>null</code> if a matching asset vocabulary could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public AssetVocabulary fetchAssetVocabularyByUuidAndGroupId(
-		java.lang.String uuid, long groupId);
+	public AssetVocabulary fetchAssetVocabularyByUuidAndGroupId(String uuid,
+		long groupId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public AssetVocabulary fetchGroupVocabulary(long groupId,
-		java.lang.String name) throws PortalException;
+	public AssetVocabulary fetchGroupVocabulary(long groupId, String name)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
@@ -252,7 +250,7 @@ public interface AssetVocabularyLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<AssetVocabulary> getAssetVocabulariesByUuidAndCompanyId(
-		java.lang.String uuid, long companyId);
+		String uuid, long companyId);
 
 	/**
 	* Returns a range of asset vocabularies matching the UUID and company.
@@ -266,7 +264,7 @@ public interface AssetVocabularyLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<AssetVocabulary> getAssetVocabulariesByUuidAndCompanyId(
-		java.lang.String uuid, long companyId, int start, int end,
+		String uuid, long companyId, int start, int end,
 		OrderByComparator<AssetVocabulary> orderByComparator);
 
 	/**
@@ -297,8 +295,8 @@ public interface AssetVocabularyLocalService extends BaseLocalService,
 	* @throws PortalException if a matching asset vocabulary could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public AssetVocabulary getAssetVocabularyByUuidAndGroupId(
-		java.lang.String uuid, long groupId) throws PortalException;
+	public AssetVocabulary getAssetVocabularyByUuidAndGroupId(String uuid,
+		long groupId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<AssetVocabulary> getCompanyVocabularies(long companyId);
@@ -312,11 +310,11 @@ public interface AssetVocabularyLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<AssetVocabulary> getGroupsVocabularies(long[] groupIds,
-		java.lang.String className);
+		String className);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<AssetVocabulary> getGroupsVocabularies(long[] groupIds,
-		java.lang.String className, long classTypePK);
+		String className, long classTypePK);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<AssetVocabulary> getGroupVocabularies(long groupId)
@@ -328,8 +326,7 @@ public interface AssetVocabularyLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<AssetVocabulary> getGroupVocabularies(long groupId,
-		java.lang.String name, int start, int end,
-		OrderByComparator<AssetVocabulary> obc);
+		String name, int start, int end, OrderByComparator<AssetVocabulary> obc);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<AssetVocabulary> getGroupVocabularies(long[] groupIds);
@@ -338,8 +335,8 @@ public interface AssetVocabularyLocalService extends BaseLocalService,
 	public int getGroupVocabulariesCount(long[] groupIds);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public AssetVocabulary getGroupVocabulary(long groupId,
-		java.lang.String name) throws PortalException;
+	public AssetVocabulary getGroupVocabulary(long groupId, String name)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
@@ -349,7 +346,7 @@ public interface AssetVocabularyLocalService extends BaseLocalService,
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -370,13 +367,13 @@ public interface AssetVocabularyLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public BaseModelSearchResult<AssetVocabulary> searchVocabularies(
-		long companyId, long groupId, java.lang.String title, int start, int end)
+		long companyId, long groupId, String title, int start, int end)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public BaseModelSearchResult<AssetVocabulary> searchVocabularies(
-		long companyId, long groupId, java.lang.String title, int start,
-		int end, Sort sort) throws PortalException;
+		long companyId, long groupId, String title, int start, int end,
+		Sort sort) throws PortalException;
 
 	/**
 	* Updates the asset vocabulary in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
@@ -389,9 +386,8 @@ public interface AssetVocabularyLocalService extends BaseLocalService,
 		AssetVocabulary assetVocabulary);
 
 	@Indexable(type = IndexableType.REINDEX)
-	public AssetVocabulary updateVocabulary(long vocabularyId,
-		java.lang.String title, Map<Locale, java.lang.String> titleMap,
-		Map<Locale, java.lang.String> descriptionMap,
-		java.lang.String settings, ServiceContext serviceContext)
+	public AssetVocabulary updateVocabulary(long vocabularyId, String title,
+		Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
+		String settings, ServiceContext serviceContext)
 		throws PortalException;
 }

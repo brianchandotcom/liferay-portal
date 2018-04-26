@@ -109,7 +109,7 @@ public interface RatingsStatsLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.DELETE)
 	public RatingsStats deleteRatingsStats(RatingsStats ratingsStats);
 
-	public void deleteStats(java.lang.String className, long classPK);
+	public void deleteStats(String className, long classPK);
 
 	public DynamicQuery dynamicQuery();
 
@@ -174,7 +174,7 @@ public interface RatingsStatsLocalService extends BaseLocalService,
 	public RatingsStats fetchRatingsStats(long statsId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public RatingsStats fetchStats(java.lang.String className, long classPK);
+	public RatingsStats fetchStats(String className, long classPK);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
@@ -187,7 +187,7 @@ public interface RatingsStatsLocalService extends BaseLocalService,
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -232,18 +232,16 @@ public interface RatingsStatsLocalService extends BaseLocalService,
 	/**
 	* @deprecated As of 7.0.0, with no direct replacement
 	*/
-	@java.lang.Deprecated
+	@Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<RatingsStats> getStats(java.lang.String className,
-		List<java.lang.Long> classPKs);
+	public List<RatingsStats> getStats(String className, List<Long> classPKs);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public RatingsStats getStats(java.lang.String className, long classPK)
+	public RatingsStats getStats(String className, long classPK)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Map<java.lang.Long, RatingsStats> getStats(
-		java.lang.String className, long[] classPKs);
+	public Map<Long, RatingsStats> getStats(String className, long[] classPKs);
 
 	/**
 	* Updates the ratings stats in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.

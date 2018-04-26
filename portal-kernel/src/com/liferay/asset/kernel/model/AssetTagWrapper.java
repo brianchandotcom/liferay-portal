@@ -144,7 +144,7 @@ public class AssetTagWrapper implements AssetTag, ModelWrapper<AssetTag> {
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new AssetTagWrapper((AssetTag)_assetTag.clone());
 	}
 
@@ -224,7 +224,7 @@ public class AssetTagWrapper implements AssetTag, ModelWrapper<AssetTag> {
 	* @return the name of this asset tag
 	*/
 	@Override
-	public java.lang.String getName() {
+	public String getName() {
 		return _assetTag.getName();
 	}
 
@@ -269,7 +269,7 @@ public class AssetTagWrapper implements AssetTag, ModelWrapper<AssetTag> {
 	* @return the user name of this asset tag
 	*/
 	@Override
-	public java.lang.String getUserName() {
+	public String getUserName() {
 		return _assetTag.getUserName();
 	}
 
@@ -279,7 +279,7 @@ public class AssetTagWrapper implements AssetTag, ModelWrapper<AssetTag> {
 	* @return the user uuid of this asset tag
 	*/
 	@Override
-	public java.lang.String getUserUuid() {
+	public String getUserUuid() {
 		return _assetTag.getUserUuid();
 	}
 
@@ -289,7 +289,7 @@ public class AssetTagWrapper implements AssetTag, ModelWrapper<AssetTag> {
 	* @return the uuid of this asset tag
 	*/
 	@Override
-	public java.lang.String getUuid() {
+	public String getUuid() {
 		return _assetTag.getUuid();
 	}
 
@@ -405,7 +405,7 @@ public class AssetTagWrapper implements AssetTag, ModelWrapper<AssetTag> {
 	* @param name the name of this asset tag
 	*/
 	@Override
-	public void setName(java.lang.String name) {
+	public void setName(String name) {
 		_assetTag.setName(name);
 	}
 
@@ -455,7 +455,7 @@ public class AssetTagWrapper implements AssetTag, ModelWrapper<AssetTag> {
 	* @param userName the user name of this asset tag
 	*/
 	@Override
-	public void setUserName(java.lang.String userName) {
+	public void setUserName(String userName) {
 		_assetTag.setUserName(userName);
 	}
 
@@ -465,7 +465,7 @@ public class AssetTagWrapper implements AssetTag, ModelWrapper<AssetTag> {
 	* @param userUuid the user uuid of this asset tag
 	*/
 	@Override
-	public void setUserUuid(java.lang.String userUuid) {
+	public void setUserUuid(String userUuid) {
 		_assetTag.setUserUuid(userUuid);
 	}
 
@@ -475,7 +475,7 @@ public class AssetTagWrapper implements AssetTag, ModelWrapper<AssetTag> {
 	* @param uuid the uuid of this asset tag
 	*/
 	@Override
-	public void setUuid(java.lang.String uuid) {
+	public void setUuid(String uuid) {
 		_assetTag.setUuid(uuid);
 	}
 
@@ -490,7 +490,7 @@ public class AssetTagWrapper implements AssetTag, ModelWrapper<AssetTag> {
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _assetTag.toString();
 	}
 
@@ -500,7 +500,7 @@ public class AssetTagWrapper implements AssetTag, ModelWrapper<AssetTag> {
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _assetTag.toXmlString();
 	}
 

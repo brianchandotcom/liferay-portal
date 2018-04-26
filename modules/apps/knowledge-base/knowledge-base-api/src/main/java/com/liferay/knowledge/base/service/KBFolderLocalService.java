@@ -76,8 +76,8 @@ public interface KBFolderLocalService extends BaseLocalService,
 
 	public KBFolder addKBFolder(long userId, long groupId,
 		long parentResourceClassNameId, long parentResourcePrimKey,
-		java.lang.String name, java.lang.String description,
-		ServiceContext serviceContext) throws PortalException;
+		String name, String description, ServiceContext serviceContext)
+		throws PortalException;
 
 	/**
 	* Creates a new kb folder with the primary key. Does not add the kb folder to the database.
@@ -187,12 +187,11 @@ public interface KBFolderLocalService extends BaseLocalService,
 	public KBFolder fetchKBFolder(long kbFolderId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public KBFolder fetchKBFolder(java.lang.String uuid, long groupId);
+	public KBFolder fetchKBFolder(String uuid, long groupId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public KBFolder fetchKBFolderByUrlTitle(long groupId,
-		long parentKbFolderId, java.lang.String urlTitle)
-		throws PortalException;
+		long parentKbFolderId, String urlTitle) throws PortalException;
 
 	/**
 	* Returns the kb folder matching the UUID and group.
@@ -202,8 +201,7 @@ public interface KBFolderLocalService extends BaseLocalService,
 	* @return the matching kb folder, or <code>null</code> if a matching kb folder could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public KBFolder fetchKBFolderByUuidAndGroupId(java.lang.String uuid,
-		long groupId);
+	public KBFolder fetchKBFolderByUuidAndGroupId(String uuid, long groupId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
@@ -227,7 +225,7 @@ public interface KBFolderLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public KBFolder getKBFolderByUrlTitle(long groupId, long parentKbFolderId,
-		java.lang.String urlTitle) throws PortalException;
+		String urlTitle) throws PortalException;
 
 	/**
 	* Returns the kb folder matching the UUID and group.
@@ -238,8 +236,8 @@ public interface KBFolderLocalService extends BaseLocalService,
 	* @throws PortalException if a matching kb folder could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public KBFolder getKBFolderByUuidAndGroupId(java.lang.String uuid,
-		long groupId) throws PortalException;
+	public KBFolder getKBFolderByUuidAndGroupId(String uuid, long groupId)
+		throws PortalException;
 
 	/**
 	* Returns a range of all the kb folders.
@@ -260,7 +258,7 @@ public interface KBFolderLocalService extends BaseLocalService,
 		int start, int end) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<java.lang.Object> getKBFoldersAndKBArticles(long groupId,
+	public List<Object> getKBFoldersAndKBArticles(long groupId,
 		long parentResourcePrimKey, int status, int start, int end,
 		OrderByComparator<?> orderByComparator);
 
@@ -276,8 +274,8 @@ public interface KBFolderLocalService extends BaseLocalService,
 	* @return the matching kb folders, or an empty list if no matches were found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<KBFolder> getKBFoldersByUuidAndCompanyId(
-		java.lang.String uuid, long companyId);
+	public List<KBFolder> getKBFoldersByUuidAndCompanyId(String uuid,
+		long companyId);
 
 	/**
 	* Returns a range of kb folders matching the UUID and company.
@@ -290,8 +288,8 @@ public interface KBFolderLocalService extends BaseLocalService,
 	* @return the range of matching kb folders, or an empty list if no matches were found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<KBFolder> getKBFoldersByUuidAndCompanyId(
-		java.lang.String uuid, long companyId, int start, int end,
+	public List<KBFolder> getKBFoldersByUuidAndCompanyId(String uuid,
+		long companyId, int start, int end,
 		OrderByComparator<KBFolder> orderByComparator);
 
 	/**
@@ -311,7 +309,7 @@ public interface KBFolderLocalService extends BaseLocalService,
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -334,13 +332,13 @@ public interface KBFolderLocalService extends BaseLocalService,
 	* @deprecated As of 1.1.0, replaced by {@link #updateKBFolder(long, long,
 	long, String, String, ServiceContext)}
 	*/
-	@java.lang.Deprecated
+	@Deprecated
 	public KBFolder updateKBFolder(long parentResourceClassNameId,
-		long parentResourcePrimKey, long kbFolderId, java.lang.String name,
-		java.lang.String description) throws PortalException;
+		long parentResourcePrimKey, long kbFolderId, String name,
+		String description) throws PortalException;
 
 	public KBFolder updateKBFolder(long parentResourceClassNameId,
-		long parentResourcePrimKey, long kbFolderId, java.lang.String name,
-		java.lang.String description, ServiceContext serviceContext)
+		long parentResourcePrimKey, long kbFolderId, String name,
+		String description, ServiceContext serviceContext)
 		throws PortalException;
 }

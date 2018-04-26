@@ -62,8 +62,7 @@ public interface PushNotificationsDeviceLocalService extends BaseLocalService,
 	 * Never modify or reference this interface directly. Always use {@link PushNotificationsDeviceLocalServiceUtil} to access the push notifications device local service. Add custom service methods to {@link com.liferay.push.notifications.service.impl.PushNotificationsDeviceLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	public PushNotificationsDevice addPushNotificationsDevice(long userId,
-		java.lang.String platform, java.lang.String token)
-		throws PortalException;
+		String platform, String token) throws PortalException;
 
 	/**
 	* Adds the push notifications device to the database. Also notifies the appropriate model listeners.
@@ -113,8 +112,8 @@ public interface PushNotificationsDeviceLocalService extends BaseLocalService,
 	public PushNotificationsDevice deletePushNotificationsDevice(
 		PushNotificationsDevice pushNotificationsDevice);
 
-	public PushNotificationsDevice deletePushNotificationsDevice(
-		java.lang.String token) throws PortalException;
+	public PushNotificationsDevice deletePushNotificationsDevice(String token)
+		throws PortalException;
 
 	public DynamicQuery dynamicQuery();
 
@@ -190,7 +189,7 @@ public interface PushNotificationsDeviceLocalService extends BaseLocalService,
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -239,9 +238,8 @@ public interface PushNotificationsDeviceLocalService extends BaseLocalService,
 	public void sendPushNotification(long[] toUserIds,
 		JSONObject payloadJSONObject) throws PortalException;
 
-	public void sendPushNotification(java.lang.String platform,
-		List<java.lang.String> tokens, JSONObject payloadJSONObject)
-		throws PortalException;
+	public void sendPushNotification(String platform, List<String> tokens,
+		JSONObject payloadJSONObject) throws PortalException;
 
 	/**
 	* Updates the push notifications device in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
@@ -253,6 +251,6 @@ public interface PushNotificationsDeviceLocalService extends BaseLocalService,
 	public PushNotificationsDevice updatePushNotificationsDevice(
 		PushNotificationsDevice pushNotificationsDevice);
 
-	public void updateToken(java.lang.String oldToken, java.lang.String newToken)
+	public void updateToken(String oldToken, String newToken)
 		throws PortalException;
 }

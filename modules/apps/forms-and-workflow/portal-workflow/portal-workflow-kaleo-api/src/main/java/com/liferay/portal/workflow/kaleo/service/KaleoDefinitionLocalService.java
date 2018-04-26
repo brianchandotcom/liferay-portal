@@ -67,7 +67,7 @@ public interface KaleoDefinitionLocalService extends BaseLocalService,
 	public void activateKaleoDefinition(long kaleoDefinitionId,
 		ServiceContext serviceContext) throws PortalException;
 
-	public void activateKaleoDefinition(java.lang.String name, int version,
+	public void activateKaleoDefinition(String name, int version,
 		ServiceContext serviceContext) throws PortalException;
 
 	/**
@@ -79,10 +79,9 @@ public interface KaleoDefinitionLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.REINDEX)
 	public KaleoDefinition addKaleoDefinition(KaleoDefinition kaleoDefinition);
 
-	public KaleoDefinition addKaleoDefinition(java.lang.String name,
-		java.lang.String title, java.lang.String description,
-		java.lang.String content, int version, ServiceContext serviceContext)
-		throws PortalException;
+	public KaleoDefinition addKaleoDefinition(String name, String title,
+		String description, String content, int version,
+		ServiceContext serviceContext) throws PortalException;
 
 	/**
 	* Creates a new kaleo definition with the primary key. Does not add the kaleo definition to the database.
@@ -93,7 +92,7 @@ public interface KaleoDefinitionLocalService extends BaseLocalService,
 	@Transactional(enabled = false)
 	public KaleoDefinition createKaleoDefinition(long kaleoDefinitionId);
 
-	public void deactivateKaleoDefinition(java.lang.String name, int version,
+	public void deactivateKaleoDefinition(String name, int version,
 		ServiceContext serviceContext) throws PortalException;
 
 	public void deleteCompanyKaleoDefinitions(long companyId);
@@ -119,8 +118,8 @@ public interface KaleoDefinitionLocalService extends BaseLocalService,
 	public KaleoDefinition deleteKaleoDefinition(long kaleoDefinitionId)
 		throws PortalException;
 
-	public void deleteKaleoDefinition(java.lang.String name,
-		ServiceContext serviceContext) throws PortalException;
+	public void deleteKaleoDefinition(String name, ServiceContext serviceContext)
+		throws PortalException;
 
 	/**
 	* @throws PortalException
@@ -192,7 +191,7 @@ public interface KaleoDefinitionLocalService extends BaseLocalService,
 	public KaleoDefinition fetchKaleoDefinition(long kaleoDefinitionId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public KaleoDefinition fetchKaleoDefinition(java.lang.String name,
+	public KaleoDefinition fetchKaleoDefinition(String name,
 		ServiceContext serviceContext);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -213,7 +212,7 @@ public interface KaleoDefinitionLocalService extends BaseLocalService,
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public KaleoDefinition getKaleoDefinition(java.lang.String name,
+	public KaleoDefinition getKaleoDefinition(String name,
 		ServiceContext serviceContext) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -256,11 +255,11 @@ public interface KaleoDefinitionLocalService extends BaseLocalService,
 	public int getKaleoDefinitionsCount(ServiceContext serviceContext);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getKaleoDefinitionsCount(java.lang.String name, boolean active,
+	public int getKaleoDefinitionsCount(String name, boolean active,
 		ServiceContext serviceContext);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getKaleoDefinitionsCount(java.lang.String name,
+	public int getKaleoDefinitionsCount(String name,
 		ServiceContext serviceContext);
 
 	/**
@@ -268,7 +267,7 @@ public interface KaleoDefinitionLocalService extends BaseLocalService,
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -276,9 +275,8 @@ public interface KaleoDefinitionLocalService extends BaseLocalService,
 		throws PortalException;
 
 	public KaleoDefinition updatedKaleoDefinition(long kaleoDefinitionId,
-		java.lang.String title, java.lang.String description,
-		java.lang.String content, ServiceContext serviceContext)
-		throws PortalException;
+		String title, String description, String content,
+		ServiceContext serviceContext) throws PortalException;
 
 	/**
 	* Updates the kaleo definition in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.

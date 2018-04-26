@@ -136,7 +136,7 @@ public class FolderWrapper implements Folder, ModelWrapper<Folder> {
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new FolderWrapper((Folder)_folder.clone());
 	}
 
@@ -181,7 +181,7 @@ public class FolderWrapper implements Folder, ModelWrapper<Folder> {
 	* @return the display name of this folder
 	*/
 	@Override
-	public java.lang.String getDisplayName() {
+	public String getDisplayName() {
 		return _folder.getDisplayName();
 	}
 
@@ -206,7 +206,7 @@ public class FolderWrapper implements Folder, ModelWrapper<Folder> {
 	* @return the full name of this folder
 	*/
 	@Override
-	public java.lang.String getFullName() {
+	public String getFullName() {
 		return _folder.getFullName();
 	}
 
@@ -261,7 +261,7 @@ public class FolderWrapper implements Folder, ModelWrapper<Folder> {
 	* @return the user name of this folder
 	*/
 	@Override
-	public java.lang.String getUserName() {
+	public String getUserName() {
 		return _folder.getUserName();
 	}
 
@@ -271,7 +271,7 @@ public class FolderWrapper implements Folder, ModelWrapper<Folder> {
 	* @return the user uuid of this folder
 	*/
 	@Override
-	public java.lang.String getUserUuid() {
+	public String getUserUuid() {
 		return _folder.getUserUuid();
 	}
 
@@ -341,7 +341,7 @@ public class FolderWrapper implements Folder, ModelWrapper<Folder> {
 	* @param displayName the display name of this folder
 	*/
 	@Override
-	public void setDisplayName(java.lang.String displayName) {
+	public void setDisplayName(String displayName) {
 		_folder.setDisplayName(displayName);
 	}
 
@@ -377,7 +377,7 @@ public class FolderWrapper implements Folder, ModelWrapper<Folder> {
 	* @param fullName the full name of this folder
 	*/
 	@Override
-	public void setFullName(java.lang.String fullName) {
+	public void setFullName(String fullName) {
 		_folder.setFullName(fullName);
 	}
 
@@ -437,7 +437,7 @@ public class FolderWrapper implements Folder, ModelWrapper<Folder> {
 	* @param userName the user name of this folder
 	*/
 	@Override
-	public void setUserName(java.lang.String userName) {
+	public void setUserName(String userName) {
 		_folder.setUserName(userName);
 	}
 
@@ -447,7 +447,7 @@ public class FolderWrapper implements Folder, ModelWrapper<Folder> {
 	* @param userUuid the user uuid of this folder
 	*/
 	@Override
-	public void setUserUuid(java.lang.String userUuid) {
+	public void setUserUuid(String userUuid) {
 		_folder.setUserUuid(userUuid);
 	}
 
@@ -462,7 +462,7 @@ public class FolderWrapper implements Folder, ModelWrapper<Folder> {
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _folder.toString();
 	}
 
@@ -472,7 +472,7 @@ public class FolderWrapper implements Folder, ModelWrapper<Folder> {
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _folder.toXmlString();
 	}
 

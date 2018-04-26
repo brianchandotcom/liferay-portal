@@ -60,13 +60,11 @@ public interface OAuth2ApplicationService extends BaseService {
 	 * Never modify or reference this interface directly. Always use {@link OAuth2ApplicationServiceUtil} to access the o auth2 application remote service. Add custom service methods to {@link com.liferay.oauth2.provider.service.impl.OAuth2ApplicationServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	public OAuth2Application addOAuth2Application(
-		List<GrantType> allowedGrantTypesList, java.lang.String clientId,
-		int clientProfile, java.lang.String clientSecret,
-		java.lang.String description, List<java.lang.String> featuresList,
-		java.lang.String homePageURL, long iconFileEntryId,
-		java.lang.String name, java.lang.String privacyPolicyURL,
-		List<java.lang.String> redirectURIsList,
-		List<java.lang.String> scopeAliasesList, ServiceContext serviceContext)
+		List<GrantType> allowedGrantTypesList, String clientId,
+		int clientProfile, String clientSecret, String description,
+		List<String> featuresList, String homePageURL, long iconFileEntryId,
+		String name, String privacyPolicyURL, List<String> redirectURIsList,
+		List<String> scopeAliasesList, ServiceContext serviceContext)
 		throws PortalException;
 
 	public OAuth2Application deleteOAuth2Application(long oAuth2ApplicationId)
@@ -74,7 +72,7 @@ public interface OAuth2ApplicationService extends BaseService {
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public OAuth2Application fetchOAuth2Application(long companyId,
-		java.lang.String clientId) throws PortalException;
+		String clientId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public OAuth2Application getOAuth2Application(long oAuth2ApplicationId)
@@ -82,7 +80,7 @@ public interface OAuth2ApplicationService extends BaseService {
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public OAuth2Application getOAuth2Application(long companyId,
-		java.lang.String clientId) throws PortalException;
+		String clientId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<OAuth2Application> getOAuth2Applications(long companyId,
@@ -97,21 +95,19 @@ public interface OAuth2ApplicationService extends BaseService {
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	public OAuth2Application updateIcon(long oAuth2ApplicationId,
 		InputStream inputStream) throws PortalException;
 
 	public OAuth2Application updateOAuth2Application(long oAuth2ApplicationId,
-		List<GrantType> allowedGrantTypesList, java.lang.String clientId,
-		int clientProfile, java.lang.String clientSecret,
-		java.lang.String description, List<java.lang.String> featuresList,
-		java.lang.String homePageURL, long iconFileEntryId,
-		java.lang.String name, java.lang.String privacyPolicyURL,
-		List<java.lang.String> redirectURIsList,
+		List<GrantType> allowedGrantTypesList, String clientId,
+		int clientProfile, String clientSecret, String description,
+		List<String> featuresList, String homePageURL, long iconFileEntryId,
+		String name, String privacyPolicyURL, List<String> redirectURIsList,
 		long auth2ApplicationScopeAliasesId, ServiceContext serviceContext)
 		throws PortalException;
 
 	public OAuth2Application updateScopeAliases(long oAuth2ApplicationId,
-		List<java.lang.String> scopeAliasesList) throws PortalException;
+		List<String> scopeAliasesList) throws PortalException;
 }

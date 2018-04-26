@@ -101,8 +101,8 @@ public class ResourcePermissionServiceSoap {
 	* @param actionId the action ID
 	*/
 	public static void addResourcePermission(long groupId, long companyId,
-		java.lang.String name, int scope, java.lang.String primKey,
-		long roleId, java.lang.String actionId) throws RemoteException {
+		String name, int scope, String primKey, long roleId, String actionId)
+		throws RemoteException {
 		try {
 			ResourcePermissionServiceUtil.addResourcePermission(groupId,
 				companyId, name, scope, primKey, roleId, actionId);
@@ -135,8 +135,8 @@ public class ResourcePermissionServiceSoap {
 	* @param actionId the action ID
 	*/
 	public static void removeResourcePermission(long groupId, long companyId,
-		java.lang.String name, int scope, java.lang.String primKey,
-		long roleId, java.lang.String actionId) throws RemoteException {
+		String name, int scope, String primKey, long roleId, String actionId)
+		throws RemoteException {
 		try {
 			ResourcePermissionServiceUtil.removeResourcePermission(groupId,
 				companyId, name, scope, primKey, roleId, actionId);
@@ -163,7 +163,7 @@ public class ResourcePermissionServiceSoap {
 	* @param actionId the action ID
 	*/
 	public static void removeResourcePermissions(long groupId, long companyId,
-		java.lang.String name, int scope, long roleId, java.lang.String actionId)
+		String name, int scope, long roleId, String actionId)
 		throws RemoteException {
 		try {
 			ResourcePermissionServiceUtil.removeResourcePermissions(groupId,
@@ -201,8 +201,8 @@ public class ResourcePermissionServiceSoap {
 	* @param actionIds the action IDs of the actions
 	*/
 	public static void setIndividualResourcePermissions(long groupId,
-		long companyId, java.lang.String name, java.lang.String primKey,
-		long roleId, java.lang.String[] actionIds) throws RemoteException {
+		long companyId, String name, String primKey, long roleId,
+		String[] actionIds) throws RemoteException {
 		try {
 			ResourcePermissionServiceUtil.setIndividualResourcePermissions(groupId,
 				companyId, name, primKey, roleId, actionIds);

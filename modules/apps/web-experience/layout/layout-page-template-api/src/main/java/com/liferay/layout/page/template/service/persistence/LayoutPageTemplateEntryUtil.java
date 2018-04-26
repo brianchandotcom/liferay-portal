@@ -637,8 +637,7 @@ public class LayoutPageTemplateEntryUtil {
 	* @return the matching layout page template entry
 	* @throws NoSuchPageTemplateEntryException if a matching layout page template entry could not be found
 	*/
-	public static LayoutPageTemplateEntry findByG_N(long groupId,
-		java.lang.String name)
+	public static LayoutPageTemplateEntry findByG_N(long groupId, String name)
 		throws com.liferay.layout.page.template.exception.NoSuchPageTemplateEntryException {
 		return getPersistence().findByG_N(groupId, name);
 	}
@@ -650,8 +649,7 @@ public class LayoutPageTemplateEntryUtil {
 	* @param name the name
 	* @return the matching layout page template entry, or <code>null</code> if a matching layout page template entry could not be found
 	*/
-	public static LayoutPageTemplateEntry fetchByG_N(long groupId,
-		java.lang.String name) {
+	public static LayoutPageTemplateEntry fetchByG_N(long groupId, String name) {
 		return getPersistence().fetchByG_N(groupId, name);
 	}
 
@@ -663,8 +661,8 @@ public class LayoutPageTemplateEntryUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching layout page template entry, or <code>null</code> if a matching layout page template entry could not be found
 	*/
-	public static LayoutPageTemplateEntry fetchByG_N(long groupId,
-		java.lang.String name, boolean retrieveFromCache) {
+	public static LayoutPageTemplateEntry fetchByG_N(long groupId, String name,
+		boolean retrieveFromCache) {
 		return getPersistence().fetchByG_N(groupId, name, retrieveFromCache);
 	}
 
@@ -675,8 +673,7 @@ public class LayoutPageTemplateEntryUtil {
 	* @param name the name
 	* @return the layout page template entry that was removed
 	*/
-	public static LayoutPageTemplateEntry removeByG_N(long groupId,
-		java.lang.String name)
+	public static LayoutPageTemplateEntry removeByG_N(long groupId, String name)
 		throws com.liferay.layout.page.template.exception.NoSuchPageTemplateEntryException {
 		return getPersistence().removeByG_N(groupId, name);
 	}
@@ -688,7 +685,7 @@ public class LayoutPageTemplateEntryUtil {
 	* @param name the name
 	* @return the number of matching layout page template entries
 	*/
-	public static int countByG_N(long groupId, java.lang.String name) {
+	public static int countByG_N(long groupId, String name) {
 		return getPersistence().countByG_N(groupId, name);
 	}
 
@@ -953,7 +950,7 @@ public class LayoutPageTemplateEntryUtil {
 	* @return the matching layout page template entries
 	*/
 	public static List<LayoutPageTemplateEntry> findByG_L_LikeN(long groupId,
-		long layoutPageTemplateCollectionId, java.lang.String name) {
+		long layoutPageTemplateCollectionId, String name) {
 		return getPersistence()
 				   .findByG_L_LikeN(groupId, layoutPageTemplateCollectionId,
 			name);
@@ -974,8 +971,7 @@ public class LayoutPageTemplateEntryUtil {
 	* @return the range of matching layout page template entries
 	*/
 	public static List<LayoutPageTemplateEntry> findByG_L_LikeN(long groupId,
-		long layoutPageTemplateCollectionId, java.lang.String name, int start,
-		int end) {
+		long layoutPageTemplateCollectionId, String name, int start, int end) {
 		return getPersistence()
 				   .findByG_L_LikeN(groupId, layoutPageTemplateCollectionId,
 			name, start, end);
@@ -997,8 +993,8 @@ public class LayoutPageTemplateEntryUtil {
 	* @return the ordered range of matching layout page template entries
 	*/
 	public static List<LayoutPageTemplateEntry> findByG_L_LikeN(long groupId,
-		long layoutPageTemplateCollectionId, java.lang.String name, int start,
-		int end, OrderByComparator<LayoutPageTemplateEntry> orderByComparator) {
+		long layoutPageTemplateCollectionId, String name, int start, int end,
+		OrderByComparator<LayoutPageTemplateEntry> orderByComparator) {
 		return getPersistence()
 				   .findByG_L_LikeN(groupId, layoutPageTemplateCollectionId,
 			name, start, end, orderByComparator);
@@ -1021,8 +1017,8 @@ public class LayoutPageTemplateEntryUtil {
 	* @return the ordered range of matching layout page template entries
 	*/
 	public static List<LayoutPageTemplateEntry> findByG_L_LikeN(long groupId,
-		long layoutPageTemplateCollectionId, java.lang.String name, int start,
-		int end, OrderByComparator<LayoutPageTemplateEntry> orderByComparator,
+		long layoutPageTemplateCollectionId, String name, int start, int end,
+		OrderByComparator<LayoutPageTemplateEntry> orderByComparator,
 		boolean retrieveFromCache) {
 		return getPersistence()
 				   .findByG_L_LikeN(groupId, layoutPageTemplateCollectionId,
@@ -1040,7 +1036,7 @@ public class LayoutPageTemplateEntryUtil {
 	* @throws NoSuchPageTemplateEntryException if a matching layout page template entry could not be found
 	*/
 	public static LayoutPageTemplateEntry findByG_L_LikeN_First(long groupId,
-		long layoutPageTemplateCollectionId, java.lang.String name,
+		long layoutPageTemplateCollectionId, String name,
 		OrderByComparator<LayoutPageTemplateEntry> orderByComparator)
 		throws com.liferay.layout.page.template.exception.NoSuchPageTemplateEntryException {
 		return getPersistence()
@@ -1058,7 +1054,7 @@ public class LayoutPageTemplateEntryUtil {
 	* @return the first matching layout page template entry, or <code>null</code> if a matching layout page template entry could not be found
 	*/
 	public static LayoutPageTemplateEntry fetchByG_L_LikeN_First(long groupId,
-		long layoutPageTemplateCollectionId, java.lang.String name,
+		long layoutPageTemplateCollectionId, String name,
 		OrderByComparator<LayoutPageTemplateEntry> orderByComparator) {
 		return getPersistence()
 				   .fetchByG_L_LikeN_First(groupId,
@@ -1076,7 +1072,7 @@ public class LayoutPageTemplateEntryUtil {
 	* @throws NoSuchPageTemplateEntryException if a matching layout page template entry could not be found
 	*/
 	public static LayoutPageTemplateEntry findByG_L_LikeN_Last(long groupId,
-		long layoutPageTemplateCollectionId, java.lang.String name,
+		long layoutPageTemplateCollectionId, String name,
 		OrderByComparator<LayoutPageTemplateEntry> orderByComparator)
 		throws com.liferay.layout.page.template.exception.NoSuchPageTemplateEntryException {
 		return getPersistence()
@@ -1094,7 +1090,7 @@ public class LayoutPageTemplateEntryUtil {
 	* @return the last matching layout page template entry, or <code>null</code> if a matching layout page template entry could not be found
 	*/
 	public static LayoutPageTemplateEntry fetchByG_L_LikeN_Last(long groupId,
-		long layoutPageTemplateCollectionId, java.lang.String name,
+		long layoutPageTemplateCollectionId, String name,
 		OrderByComparator<LayoutPageTemplateEntry> orderByComparator) {
 		return getPersistence()
 				   .fetchByG_L_LikeN_Last(groupId,
@@ -1114,7 +1110,7 @@ public class LayoutPageTemplateEntryUtil {
 	*/
 	public static LayoutPageTemplateEntry[] findByG_L_LikeN_PrevAndNext(
 		long layoutPageTemplateEntryId, long groupId,
-		long layoutPageTemplateCollectionId, java.lang.String name,
+		long layoutPageTemplateCollectionId, String name,
 		OrderByComparator<LayoutPageTemplateEntry> orderByComparator)
 		throws com.liferay.layout.page.template.exception.NoSuchPageTemplateEntryException {
 		return getPersistence()
@@ -1131,7 +1127,7 @@ public class LayoutPageTemplateEntryUtil {
 	* @return the matching layout page template entries that the user has permission to view
 	*/
 	public static List<LayoutPageTemplateEntry> filterFindByG_L_LikeN(
-		long groupId, long layoutPageTemplateCollectionId, java.lang.String name) {
+		long groupId, long layoutPageTemplateCollectionId, String name) {
 		return getPersistence()
 				   .filterFindByG_L_LikeN(groupId,
 			layoutPageTemplateCollectionId, name);
@@ -1152,8 +1148,8 @@ public class LayoutPageTemplateEntryUtil {
 	* @return the range of matching layout page template entries that the user has permission to view
 	*/
 	public static List<LayoutPageTemplateEntry> filterFindByG_L_LikeN(
-		long groupId, long layoutPageTemplateCollectionId,
-		java.lang.String name, int start, int end) {
+		long groupId, long layoutPageTemplateCollectionId, String name,
+		int start, int end) {
 		return getPersistence()
 				   .filterFindByG_L_LikeN(groupId,
 			layoutPageTemplateCollectionId, name, start, end);
@@ -1175,8 +1171,8 @@ public class LayoutPageTemplateEntryUtil {
 	* @return the ordered range of matching layout page template entries that the user has permission to view
 	*/
 	public static List<LayoutPageTemplateEntry> filterFindByG_L_LikeN(
-		long groupId, long layoutPageTemplateCollectionId,
-		java.lang.String name, int start, int end,
+		long groupId, long layoutPageTemplateCollectionId, String name,
+		int start, int end,
 		OrderByComparator<LayoutPageTemplateEntry> orderByComparator) {
 		return getPersistence()
 				   .filterFindByG_L_LikeN(groupId,
@@ -1196,7 +1192,7 @@ public class LayoutPageTemplateEntryUtil {
 	*/
 	public static LayoutPageTemplateEntry[] filterFindByG_L_LikeN_PrevAndNext(
 		long layoutPageTemplateEntryId, long groupId,
-		long layoutPageTemplateCollectionId, java.lang.String name,
+		long layoutPageTemplateCollectionId, String name,
 		OrderByComparator<LayoutPageTemplateEntry> orderByComparator)
 		throws com.liferay.layout.page.template.exception.NoSuchPageTemplateEntryException {
 		return getPersistence()
@@ -1212,7 +1208,7 @@ public class LayoutPageTemplateEntryUtil {
 	* @param name the name
 	*/
 	public static void removeByG_L_LikeN(long groupId,
-		long layoutPageTemplateCollectionId, java.lang.String name) {
+		long layoutPageTemplateCollectionId, String name) {
 		getPersistence()
 			.removeByG_L_LikeN(groupId, layoutPageTemplateCollectionId, name);
 	}
@@ -1226,7 +1222,7 @@ public class LayoutPageTemplateEntryUtil {
 	* @return the number of matching layout page template entries
 	*/
 	public static int countByG_L_LikeN(long groupId,
-		long layoutPageTemplateCollectionId, java.lang.String name) {
+		long layoutPageTemplateCollectionId, String name) {
 		return getPersistence()
 				   .countByG_L_LikeN(groupId, layoutPageTemplateCollectionId,
 			name);
@@ -1241,7 +1237,7 @@ public class LayoutPageTemplateEntryUtil {
 	* @return the number of matching layout page template entries that the user has permission to view
 	*/
 	public static int filterCountByG_L_LikeN(long groupId,
-		long layoutPageTemplateCollectionId, java.lang.String name) {
+		long layoutPageTemplateCollectionId, String name) {
 		return getPersistence()
 				   .filterCountByG_L_LikeN(groupId,
 			layoutPageTemplateCollectionId, name);
@@ -1256,7 +1252,7 @@ public class LayoutPageTemplateEntryUtil {
 	* @return the matching layout page template entries
 	*/
 	public static List<LayoutPageTemplateEntry> findByG_T_LikeN(long groupId,
-		java.lang.String name, int type) {
+		String name, int type) {
 		return getPersistence().findByG_T_LikeN(groupId, name, type);
 	}
 
@@ -1275,7 +1271,7 @@ public class LayoutPageTemplateEntryUtil {
 	* @return the range of matching layout page template entries
 	*/
 	public static List<LayoutPageTemplateEntry> findByG_T_LikeN(long groupId,
-		java.lang.String name, int type, int start, int end) {
+		String name, int type, int start, int end) {
 		return getPersistence().findByG_T_LikeN(groupId, name, type, start, end);
 	}
 
@@ -1295,7 +1291,7 @@ public class LayoutPageTemplateEntryUtil {
 	* @return the ordered range of matching layout page template entries
 	*/
 	public static List<LayoutPageTemplateEntry> findByG_T_LikeN(long groupId,
-		java.lang.String name, int type, int start, int end,
+		String name, int type, int start, int end,
 		OrderByComparator<LayoutPageTemplateEntry> orderByComparator) {
 		return getPersistence()
 				   .findByG_T_LikeN(groupId, name, type, start, end,
@@ -1319,7 +1315,7 @@ public class LayoutPageTemplateEntryUtil {
 	* @return the ordered range of matching layout page template entries
 	*/
 	public static List<LayoutPageTemplateEntry> findByG_T_LikeN(long groupId,
-		java.lang.String name, int type, int start, int end,
+		String name, int type, int start, int end,
 		OrderByComparator<LayoutPageTemplateEntry> orderByComparator,
 		boolean retrieveFromCache) {
 		return getPersistence()
@@ -1338,7 +1334,7 @@ public class LayoutPageTemplateEntryUtil {
 	* @throws NoSuchPageTemplateEntryException if a matching layout page template entry could not be found
 	*/
 	public static LayoutPageTemplateEntry findByG_T_LikeN_First(long groupId,
-		java.lang.String name, int type,
+		String name, int type,
 		OrderByComparator<LayoutPageTemplateEntry> orderByComparator)
 		throws com.liferay.layout.page.template.exception.NoSuchPageTemplateEntryException {
 		return getPersistence()
@@ -1355,7 +1351,7 @@ public class LayoutPageTemplateEntryUtil {
 	* @return the first matching layout page template entry, or <code>null</code> if a matching layout page template entry could not be found
 	*/
 	public static LayoutPageTemplateEntry fetchByG_T_LikeN_First(long groupId,
-		java.lang.String name, int type,
+		String name, int type,
 		OrderByComparator<LayoutPageTemplateEntry> orderByComparator) {
 		return getPersistence()
 				   .fetchByG_T_LikeN_First(groupId, name, type,
@@ -1373,7 +1369,7 @@ public class LayoutPageTemplateEntryUtil {
 	* @throws NoSuchPageTemplateEntryException if a matching layout page template entry could not be found
 	*/
 	public static LayoutPageTemplateEntry findByG_T_LikeN_Last(long groupId,
-		java.lang.String name, int type,
+		String name, int type,
 		OrderByComparator<LayoutPageTemplateEntry> orderByComparator)
 		throws com.liferay.layout.page.template.exception.NoSuchPageTemplateEntryException {
 		return getPersistence()
@@ -1390,7 +1386,7 @@ public class LayoutPageTemplateEntryUtil {
 	* @return the last matching layout page template entry, or <code>null</code> if a matching layout page template entry could not be found
 	*/
 	public static LayoutPageTemplateEntry fetchByG_T_LikeN_Last(long groupId,
-		java.lang.String name, int type,
+		String name, int type,
 		OrderByComparator<LayoutPageTemplateEntry> orderByComparator) {
 		return getPersistence()
 				   .fetchByG_T_LikeN_Last(groupId, name, type, orderByComparator);
@@ -1408,8 +1404,8 @@ public class LayoutPageTemplateEntryUtil {
 	* @throws NoSuchPageTemplateEntryException if a layout page template entry with the primary key could not be found
 	*/
 	public static LayoutPageTemplateEntry[] findByG_T_LikeN_PrevAndNext(
-		long layoutPageTemplateEntryId, long groupId, java.lang.String name,
-		int type, OrderByComparator<LayoutPageTemplateEntry> orderByComparator)
+		long layoutPageTemplateEntryId, long groupId, String name, int type,
+		OrderByComparator<LayoutPageTemplateEntry> orderByComparator)
 		throws com.liferay.layout.page.template.exception.NoSuchPageTemplateEntryException {
 		return getPersistence()
 				   .findByG_T_LikeN_PrevAndNext(layoutPageTemplateEntryId,
@@ -1425,7 +1421,7 @@ public class LayoutPageTemplateEntryUtil {
 	* @return the matching layout page template entries that the user has permission to view
 	*/
 	public static List<LayoutPageTemplateEntry> filterFindByG_T_LikeN(
-		long groupId, java.lang.String name, int type) {
+		long groupId, String name, int type) {
 		return getPersistence().filterFindByG_T_LikeN(groupId, name, type);
 	}
 
@@ -1444,7 +1440,7 @@ public class LayoutPageTemplateEntryUtil {
 	* @return the range of matching layout page template entries that the user has permission to view
 	*/
 	public static List<LayoutPageTemplateEntry> filterFindByG_T_LikeN(
-		long groupId, java.lang.String name, int type, int start, int end) {
+		long groupId, String name, int type, int start, int end) {
 		return getPersistence()
 				   .filterFindByG_T_LikeN(groupId, name, type, start, end);
 	}
@@ -1465,7 +1461,7 @@ public class LayoutPageTemplateEntryUtil {
 	* @return the ordered range of matching layout page template entries that the user has permission to view
 	*/
 	public static List<LayoutPageTemplateEntry> filterFindByG_T_LikeN(
-		long groupId, java.lang.String name, int type, int start, int end,
+		long groupId, String name, int type, int start, int end,
 		OrderByComparator<LayoutPageTemplateEntry> orderByComparator) {
 		return getPersistence()
 				   .filterFindByG_T_LikeN(groupId, name, type, start, end,
@@ -1484,8 +1480,8 @@ public class LayoutPageTemplateEntryUtil {
 	* @throws NoSuchPageTemplateEntryException if a layout page template entry with the primary key could not be found
 	*/
 	public static LayoutPageTemplateEntry[] filterFindByG_T_LikeN_PrevAndNext(
-		long layoutPageTemplateEntryId, long groupId, java.lang.String name,
-		int type, OrderByComparator<LayoutPageTemplateEntry> orderByComparator)
+		long layoutPageTemplateEntryId, long groupId, String name, int type,
+		OrderByComparator<LayoutPageTemplateEntry> orderByComparator)
 		throws com.liferay.layout.page.template.exception.NoSuchPageTemplateEntryException {
 		return getPersistence()
 				   .filterFindByG_T_LikeN_PrevAndNext(layoutPageTemplateEntryId,
@@ -1499,8 +1495,7 @@ public class LayoutPageTemplateEntryUtil {
 	* @param name the name
 	* @param type the type
 	*/
-	public static void removeByG_T_LikeN(long groupId, java.lang.String name,
-		int type) {
+	public static void removeByG_T_LikeN(long groupId, String name, int type) {
 		getPersistence().removeByG_T_LikeN(groupId, name, type);
 	}
 
@@ -1512,8 +1507,7 @@ public class LayoutPageTemplateEntryUtil {
 	* @param type the type
 	* @return the number of matching layout page template entries
 	*/
-	public static int countByG_T_LikeN(long groupId, java.lang.String name,
-		int type) {
+	public static int countByG_T_LikeN(long groupId, String name, int type) {
 		return getPersistence().countByG_T_LikeN(groupId, name, type);
 	}
 
@@ -1525,8 +1519,7 @@ public class LayoutPageTemplateEntryUtil {
 	* @param type the type
 	* @return the number of matching layout page template entries that the user has permission to view
 	*/
-	public static int filterCountByG_T_LikeN(long groupId,
-		java.lang.String name, int type) {
+	public static int filterCountByG_T_LikeN(long groupId, String name, int type) {
 		return getPersistence().filterCountByG_T_LikeN(groupId, name, type);
 	}
 
@@ -2005,7 +1998,7 @@ public class LayoutPageTemplateEntryUtil {
 		return getPersistence().countAll();
 	}
 
-	public static java.util.Set<java.lang.String> getBadColumnNames() {
+	public static java.util.Set<String> getBadColumnNames() {
 		return getPersistence().getBadColumnNames();
 	}
 

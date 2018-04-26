@@ -66,7 +66,7 @@ public class SocialActivityCounterLocalServiceWrapper
 	*/
 	@Override
 	public com.liferay.social.kernel.model.SocialActivityCounter addActivityCounter(
-		long groupId, long classNameId, long classPK, java.lang.String name,
+		long groupId, long classNameId, long classPK, String name,
 		int ownerType, int totalValue, long previousActivityCounterId,
 		int periodLength)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -166,7 +166,7 @@ public class SocialActivityCounterLocalServiceWrapper
 	* @param classPK the primary key of the entity
 	*/
 	@Override
-	public void deleteActivityCounters(java.lang.String className, long classPK)
+	public void deleteActivityCounters(String className, long classPK)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_socialActivityCounterLocalService.deleteActivityCounters(className,
 			classPK);
@@ -240,7 +240,7 @@ public class SocialActivityCounterLocalServiceWrapper
 	* @param classPK the primary key of the asset
 	*/
 	@Override
-	public void disableActivityCounters(java.lang.String className, long classPK)
+	public void disableActivityCounters(String className, long classPK)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_socialActivityCounterLocalService.disableActivityCounters(className,
 			classPK);
@@ -364,7 +364,7 @@ public class SocialActivityCounterLocalServiceWrapper
 	* @param classPK the primary key of the asset
 	*/
 	@Override
-	public void enableActivityCounters(java.lang.String className, long classPK)
+	public void enableActivityCounters(String className, long classPK)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_socialActivityCounterLocalService.enableActivityCounters(className,
 			classPK);
@@ -384,7 +384,7 @@ public class SocialActivityCounterLocalServiceWrapper
 	*/
 	@Override
 	public com.liferay.social.kernel.model.SocialActivityCounter fetchActivityCounterByEndPeriod(
-		long groupId, long classNameId, long classPK, java.lang.String name,
+		long groupId, long classNameId, long classPK, String name,
 		int ownerType, int endPeriod) {
 		return _socialActivityCounterLocalService.fetchActivityCounterByEndPeriod(groupId,
 			classNameId, classPK, name, ownerType, endPeriod);
@@ -404,7 +404,7 @@ public class SocialActivityCounterLocalServiceWrapper
 	*/
 	@Override
 	public com.liferay.social.kernel.model.SocialActivityCounter fetchActivityCounterByStartPeriod(
-		long groupId, long classNameId, long classPK, java.lang.String name,
+		long groupId, long classNameId, long classPK, String name,
 		int ownerType, int startPeriod) {
 		return _socialActivityCounterLocalService.fetchActivityCounterByStartPeriod(groupId,
 			classNameId, classPK, name, ownerType, startPeriod);
@@ -423,8 +423,7 @@ public class SocialActivityCounterLocalServiceWrapper
 	*/
 	@Override
 	public com.liferay.social.kernel.model.SocialActivityCounter fetchLatestActivityCounter(
-		long groupId, long classNameId, long classPK, java.lang.String name,
-		int ownerType) {
+		long groupId, long classNameId, long classPK, String name, int ownerType) {
 		return _socialActivityCounterLocalService.fetchLatestActivityCounter(groupId,
 			classNameId, classPK, name, ownerType);
 	}
@@ -461,7 +460,7 @@ public class SocialActivityCounterLocalServiceWrapper
 	*/
 	@Override
 	public java.util.List<com.liferay.social.kernel.model.SocialActivityCounter> getOffsetActivityCounters(
-		long groupId, java.lang.String name, int startOffset, int endOffset) {
+		long groupId, String name, int startOffset, int endOffset) {
 		return _socialActivityCounterLocalService.getOffsetActivityCounters(groupId,
 			name, startOffset, endOffset);
 	}
@@ -485,7 +484,7 @@ public class SocialActivityCounterLocalServiceWrapper
 	*/
 	@Override
 	public java.util.List<com.liferay.social.kernel.model.SocialActivityCounter> getOffsetDistributionActivityCounters(
-		long groupId, java.lang.String name, int startOffset, int endOffset) {
+		long groupId, String name, int startOffset, int endOffset) {
 		return _socialActivityCounterLocalService.getOffsetDistributionActivityCounters(groupId,
 			name, startOffset, endOffset);
 	}
@@ -496,7 +495,7 @@ public class SocialActivityCounterLocalServiceWrapper
 	* @return the OSGi service identifier
 	*/
 	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
+	public String getOSGiServiceIdentifier() {
 		return _socialActivityCounterLocalService.getOSGiServiceIdentifier();
 	}
 
@@ -517,7 +516,7 @@ public class SocialActivityCounterLocalServiceWrapper
 	*/
 	@Override
 	public java.util.List<com.liferay.social.kernel.model.SocialActivityCounter> getPeriodActivityCounters(
-		long groupId, java.lang.String name, int startPeriod, int endPeriod) {
+		long groupId, String name, int startPeriod, int endPeriod) {
 		return _socialActivityCounterLocalService.getPeriodActivityCounters(groupId,
 			name, startPeriod, endPeriod);
 	}
@@ -541,7 +540,7 @@ public class SocialActivityCounterLocalServiceWrapper
 	*/
 	@Override
 	public java.util.List<com.liferay.social.kernel.model.SocialActivityCounter> getPeriodDistributionActivityCounters(
-		long groupId, java.lang.String name, int startPeriod, int endPeriod) {
+		long groupId, String name, int startPeriod, int endPeriod) {
 		return _socialActivityCounterLocalService.getPeriodDistributionActivityCounters(groupId,
 			name, startPeriod, endPeriod);
 	}
@@ -624,8 +623,8 @@ public class SocialActivityCounterLocalServiceWrapper
 	*/
 	@Override
 	public java.util.List<com.liferay.portal.kernel.util.Tuple> getUserActivityCounters(
-		long groupId, java.lang.String[] rankingNames,
-		java.lang.String[] selectedNames, int start, int end) {
+		long groupId, String[] rankingNames, String[] selectedNames, int start,
+		int end) {
 		return _socialActivityCounterLocalService.getUserActivityCounters(groupId,
 			rankingNames, selectedNames, start, end);
 	}
@@ -638,8 +637,7 @@ public class SocialActivityCounterLocalServiceWrapper
 	* @return the number of matching users
 	*/
 	@Override
-	public int getUserActivityCountersCount(long groupId,
-		java.lang.String[] rankingNames) {
+	public int getUserActivityCountersCount(long groupId, String[] rankingNames) {
 		return _socialActivityCounterLocalService.getUserActivityCountersCount(groupId,
 			rankingNames);
 	}

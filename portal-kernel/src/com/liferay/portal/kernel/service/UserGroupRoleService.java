@@ -62,7 +62,7 @@ public interface UserGroupRoleService extends BaseService {
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	public void updateUserGroupRoles(long userId, long groupId,
 		long[] addedRoleIds, long[] deletedRoleIds) throws PortalException;

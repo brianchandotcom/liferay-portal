@@ -164,7 +164,7 @@ public class MeetupsEntryWrapper implements MeetupsEntry,
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new MeetupsEntryWrapper((MeetupsEntry)_meetupsEntry.clone());
 	}
 
@@ -199,7 +199,7 @@ public class MeetupsEntryWrapper implements MeetupsEntry,
 	* @return the description of this meetups entry
 	*/
 	@Override
-	public java.lang.String getDescription() {
+	public String getDescription() {
 		return _meetupsEntry.getDescription();
 	}
 
@@ -299,7 +299,7 @@ public class MeetupsEntryWrapper implements MeetupsEntry,
 	* @return the title of this meetups entry
 	*/
 	@Override
-	public java.lang.String getTitle() {
+	public String getTitle() {
 		return _meetupsEntry.getTitle();
 	}
 
@@ -329,7 +329,7 @@ public class MeetupsEntryWrapper implements MeetupsEntry,
 	* @return the user name of this meetups entry
 	*/
 	@Override
-	public java.lang.String getUserName() {
+	public String getUserName() {
 		return _meetupsEntry.getUserName();
 	}
 
@@ -339,7 +339,7 @@ public class MeetupsEntryWrapper implements MeetupsEntry,
 	* @return the user uuid of this meetups entry
 	*/
 	@Override
-	public java.lang.String getUserUuid() {
+	public String getUserUuid() {
 		return _meetupsEntry.getUserUuid();
 	}
 
@@ -399,7 +399,7 @@ public class MeetupsEntryWrapper implements MeetupsEntry,
 	* @param description the description of this meetups entry
 	*/
 	@Override
-	public void setDescription(java.lang.String description) {
+	public void setDescription(String description) {
 		_meetupsEntry.setDescription(description);
 	}
 
@@ -515,7 +515,7 @@ public class MeetupsEntryWrapper implements MeetupsEntry,
 	* @param title the title of this meetups entry
 	*/
 	@Override
-	public void setTitle(java.lang.String title) {
+	public void setTitle(String title) {
 		_meetupsEntry.setTitle(title);
 	}
 
@@ -545,7 +545,7 @@ public class MeetupsEntryWrapper implements MeetupsEntry,
 	* @param userName the user name of this meetups entry
 	*/
 	@Override
-	public void setUserName(java.lang.String userName) {
+	public void setUserName(String userName) {
 		_meetupsEntry.setUserName(userName);
 	}
 
@@ -555,7 +555,7 @@ public class MeetupsEntryWrapper implements MeetupsEntry,
 	* @param userUuid the user uuid of this meetups entry
 	*/
 	@Override
-	public void setUserUuid(java.lang.String userUuid) {
+	public void setUserUuid(String userUuid) {
 		_meetupsEntry.setUserUuid(userUuid);
 	}
 
@@ -570,7 +570,7 @@ public class MeetupsEntryWrapper implements MeetupsEntry,
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _meetupsEntry.toString();
 	}
 
@@ -580,7 +580,7 @@ public class MeetupsEntryWrapper implements MeetupsEntry,
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _meetupsEntry.toXmlString();
 	}
 

@@ -66,7 +66,7 @@ public interface LayoutSetPrototype extends LayoutSetPrototypeModel,
 
 	public com.liferay.portal.kernel.util.UnicodeProperties getSettingsProperties();
 
-	public java.lang.String getSettingsProperty(java.lang.String key);
+	public String getSettingsProperty(String key);
 
 	public boolean hasSetModifiedDate();
 

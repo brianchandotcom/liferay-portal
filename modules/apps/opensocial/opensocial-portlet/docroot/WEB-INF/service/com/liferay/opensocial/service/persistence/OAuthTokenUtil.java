@@ -116,8 +116,8 @@ public class OAuthTokenUtil {
 	* @param serviceName the service name
 	* @return the matching o auth tokens
 	*/
-	public static List<OAuthToken> findByG_S(java.lang.String gadgetKey,
-		java.lang.String serviceName) {
+	public static List<OAuthToken> findByG_S(String gadgetKey,
+		String serviceName) {
 		return getPersistence().findByG_S(gadgetKey, serviceName);
 	}
 
@@ -134,8 +134,8 @@ public class OAuthTokenUtil {
 	* @param end the upper bound of the range of o auth tokens (not inclusive)
 	* @return the range of matching o auth tokens
 	*/
-	public static List<OAuthToken> findByG_S(java.lang.String gadgetKey,
-		java.lang.String serviceName, int start, int end) {
+	public static List<OAuthToken> findByG_S(String gadgetKey,
+		String serviceName, int start, int end) {
 		return getPersistence().findByG_S(gadgetKey, serviceName, start, end);
 	}
 
@@ -153,8 +153,8 @@ public class OAuthTokenUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching o auth tokens
 	*/
-	public static List<OAuthToken> findByG_S(java.lang.String gadgetKey,
-		java.lang.String serviceName, int start, int end,
+	public static List<OAuthToken> findByG_S(String gadgetKey,
+		String serviceName, int start, int end,
 		OrderByComparator<OAuthToken> orderByComparator) {
 		return getPersistence()
 				   .findByG_S(gadgetKey, serviceName, start, end,
@@ -176,8 +176,8 @@ public class OAuthTokenUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching o auth tokens
 	*/
-	public static List<OAuthToken> findByG_S(java.lang.String gadgetKey,
-		java.lang.String serviceName, int start, int end,
+	public static List<OAuthToken> findByG_S(String gadgetKey,
+		String serviceName, int start, int end,
 		OrderByComparator<OAuthToken> orderByComparator,
 		boolean retrieveFromCache) {
 		return getPersistence()
@@ -194,9 +194,8 @@ public class OAuthTokenUtil {
 	* @return the first matching o auth token
 	* @throws NoSuchOAuthTokenException if a matching o auth token could not be found
 	*/
-	public static OAuthToken findByG_S_First(java.lang.String gadgetKey,
-		java.lang.String serviceName,
-		OrderByComparator<OAuthToken> orderByComparator)
+	public static OAuthToken findByG_S_First(String gadgetKey,
+		String serviceName, OrderByComparator<OAuthToken> orderByComparator)
 		throws com.liferay.opensocial.exception.NoSuchOAuthTokenException {
 		return getPersistence()
 				   .findByG_S_First(gadgetKey, serviceName, orderByComparator);
@@ -210,9 +209,8 @@ public class OAuthTokenUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching o auth token, or <code>null</code> if a matching o auth token could not be found
 	*/
-	public static OAuthToken fetchByG_S_First(java.lang.String gadgetKey,
-		java.lang.String serviceName,
-		OrderByComparator<OAuthToken> orderByComparator) {
+	public static OAuthToken fetchByG_S_First(String gadgetKey,
+		String serviceName, OrderByComparator<OAuthToken> orderByComparator) {
 		return getPersistence()
 				   .fetchByG_S_First(gadgetKey, serviceName, orderByComparator);
 	}
@@ -226,9 +224,8 @@ public class OAuthTokenUtil {
 	* @return the last matching o auth token
 	* @throws NoSuchOAuthTokenException if a matching o auth token could not be found
 	*/
-	public static OAuthToken findByG_S_Last(java.lang.String gadgetKey,
-		java.lang.String serviceName,
-		OrderByComparator<OAuthToken> orderByComparator)
+	public static OAuthToken findByG_S_Last(String gadgetKey,
+		String serviceName, OrderByComparator<OAuthToken> orderByComparator)
 		throws com.liferay.opensocial.exception.NoSuchOAuthTokenException {
 		return getPersistence()
 				   .findByG_S_Last(gadgetKey, serviceName, orderByComparator);
@@ -242,9 +239,8 @@ public class OAuthTokenUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching o auth token, or <code>null</code> if a matching o auth token could not be found
 	*/
-	public static OAuthToken fetchByG_S_Last(java.lang.String gadgetKey,
-		java.lang.String serviceName,
-		OrderByComparator<OAuthToken> orderByComparator) {
+	public static OAuthToken fetchByG_S_Last(String gadgetKey,
+		String serviceName, OrderByComparator<OAuthToken> orderByComparator) {
 		return getPersistence()
 				   .fetchByG_S_Last(gadgetKey, serviceName, orderByComparator);
 	}
@@ -260,7 +256,7 @@ public class OAuthTokenUtil {
 	* @throws NoSuchOAuthTokenException if a o auth token with the primary key could not be found
 	*/
 	public static OAuthToken[] findByG_S_PrevAndNext(long oAuthTokenId,
-		java.lang.String gadgetKey, java.lang.String serviceName,
+		String gadgetKey, String serviceName,
 		OrderByComparator<OAuthToken> orderByComparator)
 		throws com.liferay.opensocial.exception.NoSuchOAuthTokenException {
 		return getPersistence()
@@ -274,8 +270,7 @@ public class OAuthTokenUtil {
 	* @param gadgetKey the gadget key
 	* @param serviceName the service name
 	*/
-	public static void removeByG_S(java.lang.String gadgetKey,
-		java.lang.String serviceName) {
+	public static void removeByG_S(String gadgetKey, String serviceName) {
 		getPersistence().removeByG_S(gadgetKey, serviceName);
 	}
 
@@ -286,8 +281,7 @@ public class OAuthTokenUtil {
 	* @param serviceName the service name
 	* @return the number of matching o auth tokens
 	*/
-	public static int countByG_S(java.lang.String gadgetKey,
-		java.lang.String serviceName) {
+	public static int countByG_S(String gadgetKey, String serviceName) {
 		return getPersistence().countByG_S(gadgetKey, serviceName);
 	}
 
@@ -302,9 +296,8 @@ public class OAuthTokenUtil {
 	* @return the matching o auth token
 	* @throws NoSuchOAuthTokenException if a matching o auth token could not be found
 	*/
-	public static OAuthToken findByU_G_S_M_T(long userId,
-		java.lang.String gadgetKey, java.lang.String serviceName,
-		long moduleId, java.lang.String tokenName)
+	public static OAuthToken findByU_G_S_M_T(long userId, String gadgetKey,
+		String serviceName, long moduleId, String tokenName)
 		throws com.liferay.opensocial.exception.NoSuchOAuthTokenException {
 		return getPersistence()
 				   .findByU_G_S_M_T(userId, gadgetKey, serviceName, moduleId,
@@ -321,9 +314,8 @@ public class OAuthTokenUtil {
 	* @param tokenName the token name
 	* @return the matching o auth token, or <code>null</code> if a matching o auth token could not be found
 	*/
-	public static OAuthToken fetchByU_G_S_M_T(long userId,
-		java.lang.String gadgetKey, java.lang.String serviceName,
-		long moduleId, java.lang.String tokenName) {
+	public static OAuthToken fetchByU_G_S_M_T(long userId, String gadgetKey,
+		String serviceName, long moduleId, String tokenName) {
 		return getPersistence()
 				   .fetchByU_G_S_M_T(userId, gadgetKey, serviceName, moduleId,
 			tokenName);
@@ -340,9 +332,9 @@ public class OAuthTokenUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching o auth token, or <code>null</code> if a matching o auth token could not be found
 	*/
-	public static OAuthToken fetchByU_G_S_M_T(long userId,
-		java.lang.String gadgetKey, java.lang.String serviceName,
-		long moduleId, java.lang.String tokenName, boolean retrieveFromCache) {
+	public static OAuthToken fetchByU_G_S_M_T(long userId, String gadgetKey,
+		String serviceName, long moduleId, String tokenName,
+		boolean retrieveFromCache) {
 		return getPersistence()
 				   .fetchByU_G_S_M_T(userId, gadgetKey, serviceName, moduleId,
 			tokenName, retrieveFromCache);
@@ -358,9 +350,8 @@ public class OAuthTokenUtil {
 	* @param tokenName the token name
 	* @return the o auth token that was removed
 	*/
-	public static OAuthToken removeByU_G_S_M_T(long userId,
-		java.lang.String gadgetKey, java.lang.String serviceName,
-		long moduleId, java.lang.String tokenName)
+	public static OAuthToken removeByU_G_S_M_T(long userId, String gadgetKey,
+		String serviceName, long moduleId, String tokenName)
 		throws com.liferay.opensocial.exception.NoSuchOAuthTokenException {
 		return getPersistence()
 				   .removeByU_G_S_M_T(userId, gadgetKey, serviceName, moduleId,
@@ -377,8 +368,8 @@ public class OAuthTokenUtil {
 	* @param tokenName the token name
 	* @return the number of matching o auth tokens
 	*/
-	public static int countByU_G_S_M_T(long userId, java.lang.String gadgetKey,
-		java.lang.String serviceName, long moduleId, java.lang.String tokenName) {
+	public static int countByU_G_S_M_T(long userId, String gadgetKey,
+		String serviceName, long moduleId, String tokenName) {
 		return getPersistence()
 				   .countByU_G_S_M_T(userId, gadgetKey, serviceName, moduleId,
 			tokenName);

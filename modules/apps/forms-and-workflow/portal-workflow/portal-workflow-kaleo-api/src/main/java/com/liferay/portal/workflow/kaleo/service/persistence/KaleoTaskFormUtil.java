@@ -783,7 +783,7 @@ public class KaleoTaskFormUtil {
 	* @throws NoSuchTaskFormException if a matching kaleo task form could not be found
 	*/
 	public static KaleoTaskForm findByFormUuid_KTI(long kaleoTaskId,
-		java.lang.String formUuid)
+		String formUuid)
 		throws com.liferay.portal.workflow.kaleo.exception.NoSuchTaskFormException {
 		return getPersistence().findByFormUuid_KTI(kaleoTaskId, formUuid);
 	}
@@ -796,7 +796,7 @@ public class KaleoTaskFormUtil {
 	* @return the matching kaleo task form, or <code>null</code> if a matching kaleo task form could not be found
 	*/
 	public static KaleoTaskForm fetchByFormUuid_KTI(long kaleoTaskId,
-		java.lang.String formUuid) {
+		String formUuid) {
 		return getPersistence().fetchByFormUuid_KTI(kaleoTaskId, formUuid);
 	}
 
@@ -809,7 +809,7 @@ public class KaleoTaskFormUtil {
 	* @return the matching kaleo task form, or <code>null</code> if a matching kaleo task form could not be found
 	*/
 	public static KaleoTaskForm fetchByFormUuid_KTI(long kaleoTaskId,
-		java.lang.String formUuid, boolean retrieveFromCache) {
+		String formUuid, boolean retrieveFromCache) {
 		return getPersistence()
 				   .fetchByFormUuid_KTI(kaleoTaskId, formUuid, retrieveFromCache);
 	}
@@ -822,7 +822,7 @@ public class KaleoTaskFormUtil {
 	* @return the kaleo task form that was removed
 	*/
 	public static KaleoTaskForm removeByFormUuid_KTI(long kaleoTaskId,
-		java.lang.String formUuid)
+		String formUuid)
 		throws com.liferay.portal.workflow.kaleo.exception.NoSuchTaskFormException {
 		return getPersistence().removeByFormUuid_KTI(kaleoTaskId, formUuid);
 	}
@@ -834,8 +834,7 @@ public class KaleoTaskFormUtil {
 	* @param formUuid the form uuid
 	* @return the number of matching kaleo task forms
 	*/
-	public static int countByFormUuid_KTI(long kaleoTaskId,
-		java.lang.String formUuid) {
+	public static int countByFormUuid_KTI(long kaleoTaskId, String formUuid) {
 		return getPersistence().countByFormUuid_KTI(kaleoTaskId, formUuid);
 	}
 

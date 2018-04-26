@@ -179,7 +179,7 @@ public class CalendarNotificationTemplateWrapper
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new CalendarNotificationTemplateWrapper((CalendarNotificationTemplate)_calendarNotificationTemplate.clone());
 	}
 
@@ -195,7 +195,7 @@ public class CalendarNotificationTemplateWrapper
 	* @return the body of this calendar notification template
 	*/
 	@Override
-	public java.lang.String getBody() {
+	public String getBody() {
 		return _calendarNotificationTemplate.getBody();
 	}
 
@@ -280,7 +280,7 @@ public class CalendarNotificationTemplateWrapper
 	* @return the notification template type of this calendar notification template
 	*/
 	@Override
-	public java.lang.String getNotificationTemplateType() {
+	public String getNotificationTemplateType() {
 		return _calendarNotificationTemplate.getNotificationTemplateType();
 	}
 
@@ -290,7 +290,7 @@ public class CalendarNotificationTemplateWrapper
 	* @return the notification type of this calendar notification template
 	*/
 	@Override
-	public java.lang.String getNotificationType() {
+	public String getNotificationType() {
 		return _calendarNotificationTemplate.getNotificationType();
 	}
 
@@ -300,7 +300,7 @@ public class CalendarNotificationTemplateWrapper
 	* @return the notification type settings of this calendar notification template
 	*/
 	@Override
-	public java.lang.String getNotificationTypeSettings() {
+	public String getNotificationTypeSettings() {
 		return _calendarNotificationTemplate.getNotificationTypeSettings();
 	}
 
@@ -330,7 +330,7 @@ public class CalendarNotificationTemplateWrapper
 	* @return the subject of this calendar notification template
 	*/
 	@Override
-	public java.lang.String getSubject() {
+	public String getSubject() {
 		return _calendarNotificationTemplate.getSubject();
 	}
 
@@ -350,7 +350,7 @@ public class CalendarNotificationTemplateWrapper
 	* @return the user name of this calendar notification template
 	*/
 	@Override
-	public java.lang.String getUserName() {
+	public String getUserName() {
 		return _calendarNotificationTemplate.getUserName();
 	}
 
@@ -360,7 +360,7 @@ public class CalendarNotificationTemplateWrapper
 	* @return the user uuid of this calendar notification template
 	*/
 	@Override
-	public java.lang.String getUserUuid() {
+	public String getUserUuid() {
 		return _calendarNotificationTemplate.getUserUuid();
 	}
 
@@ -370,7 +370,7 @@ public class CalendarNotificationTemplateWrapper
 	* @return the uuid of this calendar notification template
 	*/
 	@Override
-	public java.lang.String getUuid() {
+	public String getUuid() {
 		return _calendarNotificationTemplate.getUuid();
 	}
 
@@ -405,7 +405,7 @@ public class CalendarNotificationTemplateWrapper
 	* @param body the body of this calendar notification template
 	*/
 	@Override
-	public void setBody(java.lang.String body) {
+	public void setBody(String body) {
 		_calendarNotificationTemplate.setBody(body);
 	}
 
@@ -512,8 +512,7 @@ public class CalendarNotificationTemplateWrapper
 	* @param notificationTemplateType the notification template type of this calendar notification template
 	*/
 	@Override
-	public void setNotificationTemplateType(
-		java.lang.String notificationTemplateType) {
+	public void setNotificationTemplateType(String notificationTemplateType) {
 		_calendarNotificationTemplate.setNotificationTemplateType(notificationTemplateType);
 	}
 
@@ -523,7 +522,7 @@ public class CalendarNotificationTemplateWrapper
 	* @param notificationType the notification type of this calendar notification template
 	*/
 	@Override
-	public void setNotificationType(java.lang.String notificationType) {
+	public void setNotificationType(String notificationType) {
 		_calendarNotificationTemplate.setNotificationType(notificationType);
 	}
 
@@ -533,8 +532,7 @@ public class CalendarNotificationTemplateWrapper
 	* @param notificationTypeSettings the notification type settings of this calendar notification template
 	*/
 	@Override
-	public void setNotificationTypeSettings(
-		java.lang.String notificationTypeSettings) {
+	public void setNotificationTypeSettings(String notificationTypeSettings) {
 		_calendarNotificationTemplate.setNotificationTypeSettings(notificationTypeSettings);
 	}
 
@@ -559,7 +557,7 @@ public class CalendarNotificationTemplateWrapper
 	* @param subject the subject of this calendar notification template
 	*/
 	@Override
-	public void setSubject(java.lang.String subject) {
+	public void setSubject(String subject) {
 		_calendarNotificationTemplate.setSubject(subject);
 	}
 
@@ -585,7 +583,7 @@ public class CalendarNotificationTemplateWrapper
 	* @param userName the user name of this calendar notification template
 	*/
 	@Override
-	public void setUserName(java.lang.String userName) {
+	public void setUserName(String userName) {
 		_calendarNotificationTemplate.setUserName(userName);
 	}
 
@@ -595,7 +593,7 @@ public class CalendarNotificationTemplateWrapper
 	* @param userUuid the user uuid of this calendar notification template
 	*/
 	@Override
-	public void setUserUuid(java.lang.String userUuid) {
+	public void setUserUuid(String userUuid) {
 		_calendarNotificationTemplate.setUserUuid(userUuid);
 	}
 
@@ -605,7 +603,7 @@ public class CalendarNotificationTemplateWrapper
 	* @param uuid the uuid of this calendar notification template
 	*/
 	@Override
-	public void setUuid(java.lang.String uuid) {
+	public void setUuid(String uuid) {
 		_calendarNotificationTemplate.setUuid(uuid);
 	}
 
@@ -620,7 +618,7 @@ public class CalendarNotificationTemplateWrapper
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _calendarNotificationTemplate.toString();
 	}
 
@@ -630,7 +628,7 @@ public class CalendarNotificationTemplateWrapper
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _calendarNotificationTemplate.toXmlString();
 	}
 

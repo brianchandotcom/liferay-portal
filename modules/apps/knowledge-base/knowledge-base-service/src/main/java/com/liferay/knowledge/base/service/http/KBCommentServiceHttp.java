@@ -251,7 +251,7 @@ public class KBCommentServiceHttp {
 	}
 
 	public static java.util.List<com.liferay.knowledge.base.model.KBComment> getKBComments(
-		HttpPrincipal httpPrincipal, long groupId, java.lang.String className,
+		HttpPrincipal httpPrincipal, long groupId, String className,
 		long classPK, int status, int start, int end)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -284,7 +284,7 @@ public class KBCommentServiceHttp {
 	}
 
 	public static java.util.List<com.liferay.knowledge.base.model.KBComment> getKBComments(
-		HttpPrincipal httpPrincipal, long groupId, java.lang.String className,
+		HttpPrincipal httpPrincipal, long groupId, String className,
 		long classPK, int status, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.knowledge.base.model.KBComment> obc)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -318,7 +318,7 @@ public class KBCommentServiceHttp {
 	}
 
 	public static java.util.List<com.liferay.knowledge.base.model.KBComment> getKBComments(
-		HttpPrincipal httpPrincipal, long groupId, java.lang.String className,
+		HttpPrincipal httpPrincipal, long groupId, String className,
 		long classPK, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.knowledge.base.model.KBComment> obc)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -415,7 +415,7 @@ public class KBCommentServiceHttp {
 	}
 
 	public static int getKBCommentsCount(HttpPrincipal httpPrincipal,
-		long groupId, java.lang.String className, long classPK)
+		long groupId, String className, long classPK)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(KBCommentServiceUtil.class,
@@ -447,7 +447,7 @@ public class KBCommentServiceHttp {
 	}
 
 	public static int getKBCommentsCount(HttpPrincipal httpPrincipal,
-		long groupId, java.lang.String className, long classPK, int status)
+		long groupId, String className, long classPK, int status)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(KBCommentServiceUtil.class,
@@ -480,7 +480,7 @@ public class KBCommentServiceHttp {
 
 	public static com.liferay.knowledge.base.model.KBComment updateKBComment(
 		HttpPrincipal httpPrincipal, long kbCommentId, long classNameId,
-		long classPK, java.lang.String content, int status,
+		long classPK, String content, int status,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -515,7 +515,7 @@ public class KBCommentServiceHttp {
 
 	public static com.liferay.knowledge.base.model.KBComment updateKBComment(
 		HttpPrincipal httpPrincipal, long kbCommentId, long classNameId,
-		long classPK, java.lang.String content,
+		long classPK, String content,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -602,15 +602,15 @@ public class KBCommentServiceHttp {
 			com.liferay.portal.kernel.util.OrderByComparator.class
 		};
 	private static final Class<?>[] _getKBCommentsParameterTypes6 = new Class[] {
-			long.class, java.lang.String.class, long.class, int.class, int.class,
+			long.class, String.class, long.class, int.class, int.class,
 			int.class
 		};
 	private static final Class<?>[] _getKBCommentsParameterTypes7 = new Class[] {
-			long.class, java.lang.String.class, long.class, int.class, int.class,
+			long.class, String.class, long.class, int.class, int.class,
 			int.class, com.liferay.portal.kernel.util.OrderByComparator.class
 		};
 	private static final Class<?>[] _getKBCommentsParameterTypes8 = new Class[] {
-			long.class, java.lang.String.class, long.class, int.class, int.class,
+			long.class, String.class, long.class, int.class, int.class,
 			com.liferay.portal.kernel.util.OrderByComparator.class
 		};
 	private static final Class<?>[] _getKBCommentsCountParameterTypes9 = new Class[] {
@@ -620,17 +620,17 @@ public class KBCommentServiceHttp {
 			long.class, int.class
 		};
 	private static final Class<?>[] _getKBCommentsCountParameterTypes11 = new Class[] {
-			long.class, java.lang.String.class, long.class
+			long.class, String.class, long.class
 		};
 	private static final Class<?>[] _getKBCommentsCountParameterTypes12 = new Class[] {
-			long.class, java.lang.String.class, long.class, int.class
+			long.class, String.class, long.class, int.class
 		};
 	private static final Class<?>[] _updateKBCommentParameterTypes13 = new Class[] {
-			long.class, long.class, long.class, java.lang.String.class,
-			int.class, com.liferay.portal.kernel.service.ServiceContext.class
+			long.class, long.class, long.class, String.class, int.class,
+			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _updateKBCommentParameterTypes14 = new Class[] {
-			long.class, long.class, long.class, java.lang.String.class,
+			long.class, long.class, long.class, String.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _updateStatusParameterTypes15 = new Class[] {

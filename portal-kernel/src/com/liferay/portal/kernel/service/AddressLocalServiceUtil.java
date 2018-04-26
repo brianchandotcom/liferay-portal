@@ -53,11 +53,10 @@ public class AddressLocalServiceUtil {
 	}
 
 	public static com.liferay.portal.kernel.model.Address addAddress(
-		long userId, java.lang.String className, long classPK,
-		java.lang.String street1, java.lang.String street2,
-		java.lang.String street3, java.lang.String city, java.lang.String zip,
-		long regionId, long countryId, long typeId, boolean mailing,
-		boolean primary, ServiceContext serviceContext)
+		long userId, String className, long classPK, String street1,
+		String street2, String street3, String city, String zip, long regionId,
+		long countryId, long typeId, boolean mailing, boolean primary,
+		ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addAddress(userId, className, classPK, street1, street2,
@@ -100,8 +99,8 @@ public class AddressLocalServiceUtil {
 		return getService().deleteAddress(addressId);
 	}
 
-	public static void deleteAddresses(long companyId,
-		java.lang.String className, long classPK) {
+	public static void deleteAddresses(long companyId, String className,
+		long classPK) {
 		getService().deleteAddresses(companyId, className, classPK);
 	}
 
@@ -205,7 +204,7 @@ public class AddressLocalServiceUtil {
 	* @return the matching address, or <code>null</code> if a matching address could not be found
 	*/
 	public static com.liferay.portal.kernel.model.Address fetchAddressByUuidAndCompanyId(
-		java.lang.String uuid, long companyId) {
+		String uuid, long companyId) {
 		return getService().fetchAddressByUuidAndCompanyId(uuid, companyId);
 	}
 
@@ -235,7 +234,7 @@ public class AddressLocalServiceUtil {
 	* @throws PortalException if a matching address could not be found
 	*/
 	public static com.liferay.portal.kernel.model.Address getAddressByUuidAndCompanyId(
-		java.lang.String uuid, long companyId)
+		String uuid, long companyId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getAddressByUuidAndCompanyId(uuid, companyId);
 	}
@@ -261,7 +260,7 @@ public class AddressLocalServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.portal.kernel.model.Address> getAddresses(
-		long companyId, java.lang.String className, long classPK) {
+		long companyId, String className, long classPK) {
 		return getService().getAddresses(companyId, className, classPK);
 	}
 
@@ -288,7 +287,7 @@ public class AddressLocalServiceUtil {
 	*
 	* @return the OSGi service identifier
 	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
+	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 
@@ -310,10 +309,9 @@ public class AddressLocalServiceUtil {
 	}
 
 	public static com.liferay.portal.kernel.model.Address updateAddress(
-		long addressId, java.lang.String street1, java.lang.String street2,
-		java.lang.String street3, java.lang.String city, java.lang.String zip,
-		long regionId, long countryId, long typeId, boolean mailing,
-		boolean primary)
+		long addressId, String street1, String street2, String street3,
+		String city, String zip, long regionId, long countryId, long typeId,
+		boolean mailing, boolean primary)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .updateAddress(addressId, street1, street2, street3, city,

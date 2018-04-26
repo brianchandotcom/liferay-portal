@@ -81,8 +81,8 @@ public class PortletServiceHttp {
 	}
 
 	public static com.liferay.portal.kernel.model.Portlet updatePortlet(
-		HttpPrincipal httpPrincipal, long companyId,
-		java.lang.String portletId, java.lang.String roles, boolean active)
+		HttpPrincipal httpPrincipal, long companyId, String portletId,
+		String roles, boolean active)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(PortletServiceUtil.class,
@@ -118,7 +118,6 @@ public class PortletServiceHttp {
 			
 		};
 	private static final Class<?>[] _updatePortletParameterTypes1 = new Class[] {
-			long.class, java.lang.String.class, java.lang.String.class,
-			boolean.class
+			long.class, String.class, String.class, boolean.class
 		};
 }

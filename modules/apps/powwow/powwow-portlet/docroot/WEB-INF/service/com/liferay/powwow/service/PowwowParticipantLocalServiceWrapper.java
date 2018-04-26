@@ -36,9 +36,8 @@ public class PowwowParticipantLocalServiceWrapper
 
 	@Override
 	public com.liferay.powwow.model.PowwowParticipant addPowwowParticipant(
-		long userId, long groupId, long powwowMeetingId, java.lang.String name,
-		long participantUserId, java.lang.String emailAddress, int type,
-		int status,
+		long userId, long groupId, long powwowMeetingId, String name,
+		long participantUserId, String emailAddress, int type, int status,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _powwowParticipantLocalService.addPowwowParticipant(userId,
@@ -207,7 +206,7 @@ public class PowwowParticipantLocalServiceWrapper
 
 	@Override
 	public com.liferay.powwow.model.PowwowParticipant fetchPowwowParticipant(
-		long powwowMeetingId, java.lang.String emailAddress) {
+		long powwowMeetingId, String emailAddress) {
 		return _powwowParticipantLocalService.fetchPowwowParticipant(powwowMeetingId,
 			emailAddress);
 	}
@@ -228,7 +227,7 @@ public class PowwowParticipantLocalServiceWrapper
 	* @return the OSGi service identifier
 	*/
 	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
+	public String getOSGiServiceIdentifier() {
 		return _powwowParticipantLocalService.getOSGiServiceIdentifier();
 	}
 
@@ -306,9 +305,8 @@ public class PowwowParticipantLocalServiceWrapper
 
 	@Override
 	public com.liferay.powwow.model.PowwowParticipant updatePowwowParticipant(
-		long powwowParticipantId, long powwowMeetingId, java.lang.String name,
-		long participantUserId, java.lang.String emailAddress, int type,
-		int status,
+		long powwowParticipantId, long powwowMeetingId, String name,
+		long participantUserId, String emailAddress, int type, int status,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _powwowParticipantLocalService.updatePowwowParticipant(powwowParticipantId,

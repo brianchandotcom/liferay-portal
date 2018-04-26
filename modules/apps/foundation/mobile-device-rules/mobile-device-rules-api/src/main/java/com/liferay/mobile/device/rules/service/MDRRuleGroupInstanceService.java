@@ -57,11 +57,11 @@ public interface MDRRuleGroupInstanceService extends BaseService {
 	 * Never modify or reference this interface directly. Always use {@link MDRRuleGroupInstanceServiceUtil} to access the mdr rule group instance remote service. Add custom service methods to {@link com.liferay.mobile.device.rules.service.impl.MDRRuleGroupInstanceServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	public MDRRuleGroupInstance addRuleGroupInstance(long groupId,
-		java.lang.String className, long classPK, long ruleGroupId,
-		int priority, ServiceContext serviceContext) throws PortalException;
+		String className, long classPK, long ruleGroupId, int priority,
+		ServiceContext serviceContext) throws PortalException;
 
 	public MDRRuleGroupInstance addRuleGroupInstance(long groupId,
-		java.lang.String className, long classPK, long ruleGroupId,
+		String className, long classPK, long ruleGroupId,
 		ServiceContext serviceContext) throws PortalException;
 
 	public void deleteRuleGroupInstance(long ruleGroupInstanceId)
@@ -72,16 +72,15 @@ public interface MDRRuleGroupInstanceService extends BaseService {
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<MDRRuleGroupInstance> getRuleGroupInstances(
-		java.lang.String className, long classPK, int start, int end,
+	public List<MDRRuleGroupInstance> getRuleGroupInstances(String className,
+		long classPK, int start, int end,
 		OrderByComparator<MDRRuleGroupInstance> orderByComparator);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getRuleGroupInstancesCount(java.lang.String className,
-		long classPK);
+	public int getRuleGroupInstancesCount(String className, long classPK);
 
 	public MDRRuleGroupInstance updateRuleGroupInstance(
 		long ruleGroupInstanceId, int priority) throws PortalException;

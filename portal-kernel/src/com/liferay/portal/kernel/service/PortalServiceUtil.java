@@ -40,7 +40,7 @@ public class PortalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.portal.service.impl.PortalServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static java.lang.String getAutoDeployDirectory() {
+	public static String getAutoDeployDirectory() {
 		return getService().getAutoDeployDirectory();
 	}
 
@@ -53,37 +53,36 @@ public class PortalServiceUtil {
 	*
 	* @return the OSGi service identifier
 	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
+	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 
-	public static java.lang.String getVersion() {
+	public static String getVersion() {
 		return getService().getVersion();
 	}
 
-	public static void testAddClassName_Rollback(
-		java.lang.String classNameValue) {
+	public static void testAddClassName_Rollback(String classNameValue) {
 		getService().testAddClassName_Rollback(classNameValue);
 	}
 
-	public static void testAddClassName_Success(java.lang.String classNameValue) {
+	public static void testAddClassName_Success(String classNameValue) {
 		getService().testAddClassName_Success(classNameValue);
 	}
 
 	public static void testAddClassNameAndTestTransactionPortletBar_PortalRollback(
-		java.lang.String transactionPortletBarText) {
+		String transactionPortletBarText) {
 		getService()
 			.testAddClassNameAndTestTransactionPortletBar_PortalRollback(transactionPortletBarText);
 	}
 
 	public static void testAddClassNameAndTestTransactionPortletBar_PortletRollback(
-		java.lang.String transactionPortletBarText) {
+		String transactionPortletBarText) {
 		getService()
 			.testAddClassNameAndTestTransactionPortletBar_PortletRollback(transactionPortletBarText);
 	}
 
 	public static void testAddClassNameAndTestTransactionPortletBar_Success(
-		java.lang.String transactionPortletBarText) {
+		String transactionPortletBarText) {
 		getService()
 			.testAddClassNameAndTestTransactionPortletBar_Success(transactionPortletBarText);
 	}

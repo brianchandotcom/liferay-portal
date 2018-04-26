@@ -114,7 +114,7 @@ public class TrashVersionWrapper implements TrashVersion,
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new TrashVersionWrapper((TrashVersion)_trashVersion.clone());
 	}
 
@@ -129,7 +129,7 @@ public class TrashVersionWrapper implements TrashVersion,
 	* @return the fully qualified class name of this trash version
 	*/
 	@Override
-	public java.lang.String getClassName() {
+	public String getClassName() {
 		return _trashVersion.getClassName();
 	}
 
@@ -209,7 +209,7 @@ public class TrashVersionWrapper implements TrashVersion,
 	* @return the type settings of this trash version
 	*/
 	@Override
-	public java.lang.String getTypeSettings() {
+	public String getTypeSettings() {
 		return _trashVersion.getTypeSettings();
 	}
 
@@ -219,13 +219,12 @@ public class TrashVersionWrapper implements TrashVersion,
 	}
 
 	@Override
-	public java.lang.String getTypeSettingsProperty(java.lang.String key) {
+	public String getTypeSettingsProperty(String key) {
 		return _trashVersion.getTypeSettingsProperty(key);
 	}
 
 	@Override
-	public java.lang.String getTypeSettingsProperty(java.lang.String key,
-		java.lang.String defaultValue) {
+	public String getTypeSettingsProperty(String key, String defaultValue) {
 		return _trashVersion.getTypeSettingsProperty(key, defaultValue);
 	}
 
@@ -270,7 +269,7 @@ public class TrashVersionWrapper implements TrashVersion,
 	}
 
 	@Override
-	public void setClassName(java.lang.String className) {
+	public void setClassName(String className) {
 		_trashVersion.setClassName(className);
 	}
 
@@ -366,7 +365,7 @@ public class TrashVersionWrapper implements TrashVersion,
 	* @param typeSettings the type settings of this trash version
 	*/
 	@Override
-	public void setTypeSettings(java.lang.String typeSettings) {
+	public void setTypeSettings(String typeSettings) {
 		_trashVersion.setTypeSettings(typeSettings);
 	}
 
@@ -397,7 +396,7 @@ public class TrashVersionWrapper implements TrashVersion,
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _trashVersion.toString();
 	}
 
@@ -407,7 +406,7 @@ public class TrashVersionWrapper implements TrashVersion,
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _trashVersion.toXmlString();
 	}
 

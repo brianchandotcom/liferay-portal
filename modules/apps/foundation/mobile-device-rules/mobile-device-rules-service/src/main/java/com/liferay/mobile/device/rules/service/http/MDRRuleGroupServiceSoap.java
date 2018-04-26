@@ -70,10 +70,8 @@ import java.util.Map;
 @ProviderType
 public class MDRRuleGroupServiceSoap {
 	public static com.liferay.mobile.device.rules.model.MDRRuleGroupSoap addRuleGroup(
-		long groupId, java.lang.String[] nameMapLanguageIds,
-		java.lang.String[] nameMapValues,
-		java.lang.String[] descriptionMapLanguageIds,
-		java.lang.String[] descriptionMapValues,
+		long groupId, String[] nameMapLanguageIds, String[] nameMapValues,
+		String[] descriptionMapLanguageIds, String[] descriptionMapValues,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
@@ -181,10 +179,8 @@ public class MDRRuleGroupServiceSoap {
 	}
 
 	public static com.liferay.mobile.device.rules.model.MDRRuleGroupSoap updateRuleGroup(
-		long ruleGroupId, java.lang.String[] nameMapLanguageIds,
-		java.lang.String[] nameMapValues,
-		java.lang.String[] descriptionMapLanguageIds,
-		java.lang.String[] descriptionMapValues,
+		long ruleGroupId, String[] nameMapLanguageIds, String[] nameMapValues,
+		String[] descriptionMapLanguageIds, String[] descriptionMapValues,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {

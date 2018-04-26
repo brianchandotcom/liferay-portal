@@ -163,7 +163,7 @@ public class TasksEntryWrapper implements TasksEntry, ModelWrapper<TasksEntry> {
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new TasksEntryWrapper((TasksEntry)_tasksEntry.clone());
 	}
 
@@ -173,7 +173,7 @@ public class TasksEntryWrapper implements TasksEntry, ModelWrapper<TasksEntry> {
 	}
 
 	@Override
-	public java.lang.String getAssigneeFullName() {
+	public String getAssigneeFullName() {
 		return _tasksEntry.getAssigneeFullName();
 	}
 
@@ -193,7 +193,7 @@ public class TasksEntryWrapper implements TasksEntry, ModelWrapper<TasksEntry> {
 	* @return the assignee user uuid of this tasks entry
 	*/
 	@Override
-	public java.lang.String getAssigneeUserUuid() {
+	public String getAssigneeUserUuid() {
 		return _tasksEntry.getAssigneeUserUuid();
 	}
 
@@ -288,12 +288,12 @@ public class TasksEntryWrapper implements TasksEntry, ModelWrapper<TasksEntry> {
 	}
 
 	@Override
-	public java.lang.String getPriorityLabel() {
+	public String getPriorityLabel() {
 		return _tasksEntry.getPriorityLabel();
 	}
 
 	@Override
-	public java.lang.String getReporterFullName() {
+	public String getReporterFullName() {
 		return _tasksEntry.getReporterFullName();
 	}
 
@@ -313,7 +313,7 @@ public class TasksEntryWrapper implements TasksEntry, ModelWrapper<TasksEntry> {
 	* @return the resolver user uuid of this tasks entry
 	*/
 	@Override
-	public java.lang.String getResolverUserUuid() {
+	public String getResolverUserUuid() {
 		return _tasksEntry.getResolverUserUuid();
 	}
 
@@ -328,7 +328,7 @@ public class TasksEntryWrapper implements TasksEntry, ModelWrapper<TasksEntry> {
 	}
 
 	@Override
-	public java.lang.String getStatusLabel() {
+	public String getStatusLabel() {
 		return _tasksEntry.getStatusLabel();
 	}
 
@@ -348,7 +348,7 @@ public class TasksEntryWrapper implements TasksEntry, ModelWrapper<TasksEntry> {
 	* @return the title of this tasks entry
 	*/
 	@Override
-	public java.lang.String getTitle() {
+	public String getTitle() {
 		return _tasksEntry.getTitle();
 	}
 
@@ -368,7 +368,7 @@ public class TasksEntryWrapper implements TasksEntry, ModelWrapper<TasksEntry> {
 	* @return the user name of this tasks entry
 	*/
 	@Override
-	public java.lang.String getUserName() {
+	public String getUserName() {
 		return _tasksEntry.getUserName();
 	}
 
@@ -378,7 +378,7 @@ public class TasksEntryWrapper implements TasksEntry, ModelWrapper<TasksEntry> {
 	* @return the user uuid of this tasks entry
 	*/
 	@Override
-	public java.lang.String getUserUuid() {
+	public String getUserUuid() {
 		return _tasksEntry.getUserUuid();
 	}
 
@@ -423,7 +423,7 @@ public class TasksEntryWrapper implements TasksEntry, ModelWrapper<TasksEntry> {
 	* @param assigneeUserUuid the assignee user uuid of this tasks entry
 	*/
 	@Override
-	public void setAssigneeUserUuid(java.lang.String assigneeUserUuid) {
+	public void setAssigneeUserUuid(String assigneeUserUuid) {
 		_tasksEntry.setAssigneeUserUuid(assigneeUserUuid);
 	}
 
@@ -554,7 +554,7 @@ public class TasksEntryWrapper implements TasksEntry, ModelWrapper<TasksEntry> {
 	* @param resolverUserUuid the resolver user uuid of this tasks entry
 	*/
 	@Override
-	public void setResolverUserUuid(java.lang.String resolverUserUuid) {
+	public void setResolverUserUuid(String resolverUserUuid) {
 		_tasksEntry.setResolverUserUuid(resolverUserUuid);
 	}
 
@@ -584,7 +584,7 @@ public class TasksEntryWrapper implements TasksEntry, ModelWrapper<TasksEntry> {
 	* @param title the title of this tasks entry
 	*/
 	@Override
-	public void setTitle(java.lang.String title) {
+	public void setTitle(String title) {
 		_tasksEntry.setTitle(title);
 	}
 
@@ -604,7 +604,7 @@ public class TasksEntryWrapper implements TasksEntry, ModelWrapper<TasksEntry> {
 	* @param userName the user name of this tasks entry
 	*/
 	@Override
-	public void setUserName(java.lang.String userName) {
+	public void setUserName(String userName) {
 		_tasksEntry.setUserName(userName);
 	}
 
@@ -614,7 +614,7 @@ public class TasksEntryWrapper implements TasksEntry, ModelWrapper<TasksEntry> {
 	* @param userUuid the user uuid of this tasks entry
 	*/
 	@Override
-	public void setUserUuid(java.lang.String userUuid) {
+	public void setUserUuid(String userUuid) {
 		_tasksEntry.setUserUuid(userUuid);
 	}
 
@@ -629,7 +629,7 @@ public class TasksEntryWrapper implements TasksEntry, ModelWrapper<TasksEntry> {
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _tasksEntry.toString();
 	}
 
@@ -639,7 +639,7 @@ public class TasksEntryWrapper implements TasksEntry, ModelWrapper<TasksEntry> {
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _tasksEntry.toXmlString();
 	}
 

@@ -48,10 +48,9 @@ public class AnnouncementsEntryLocalServiceWrapper
 
 	@Override
 	public com.liferay.announcements.kernel.model.AnnouncementsEntry addEntry(
-		long userId, long classNameId, long classPK, java.lang.String title,
-		java.lang.String content, java.lang.String url, java.lang.String type,
-		java.util.Date displayDate, java.util.Date expirationDate,
-		int priority, boolean alert)
+		long userId, long classNameId, long classPK, String title,
+		String content, String url, String type, java.util.Date displayDate,
+		java.util.Date expirationDate, int priority, boolean alert)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _announcementsEntryLocalService.addEntry(userId, classNameId,
 			classPK, title, content, url, type, displayDate, expirationDate,
@@ -65,10 +64,10 @@ public class AnnouncementsEntryLocalServiceWrapper
 	@Deprecated
 	@Override
 	public com.liferay.announcements.kernel.model.AnnouncementsEntry addEntry(
-		long userId, long classNameId, long classPK, java.lang.String title,
-		java.lang.String content, java.lang.String url, java.lang.String type,
-		int displayDateMonth, int displayDateDay, int displayDateYear,
-		int displayDateHour, int displayDateMinute, boolean displayImmediately,
+		long userId, long classNameId, long classPK, String title,
+		String content, String url, String type, int displayDateMonth,
+		int displayDateDay, int displayDateYear, int displayDateHour,
+		int displayDateMinute, boolean displayImmediately,
 		int expirationDateMonth, int expirationDateDay, int expirationDateYear,
 		int expirationDateHour, int expirationDateMinute, int priority,
 		boolean alert)
@@ -255,7 +254,7 @@ public class AnnouncementsEntryLocalServiceWrapper
 	*/
 	@Override
 	public com.liferay.announcements.kernel.model.AnnouncementsEntry fetchAnnouncementsEntryByUuidAndCompanyId(
-		java.lang.String uuid, long companyId) {
+		String uuid, long companyId) {
 		return _announcementsEntryLocalService.fetchAnnouncementsEntryByUuidAndCompanyId(uuid,
 			companyId);
 	}
@@ -317,7 +316,7 @@ public class AnnouncementsEntryLocalServiceWrapper
 	*/
 	@Override
 	public com.liferay.announcements.kernel.model.AnnouncementsEntry getAnnouncementsEntryByUuidAndCompanyId(
-		java.lang.String uuid, long companyId)
+		String uuid, long companyId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _announcementsEntryLocalService.getAnnouncementsEntryByUuidAndCompanyId(uuid,
 			companyId);
@@ -325,7 +324,7 @@ public class AnnouncementsEntryLocalServiceWrapper
 
 	@Override
 	public java.util.List<com.liferay.announcements.kernel.model.AnnouncementsEntry> getEntries(
-		long userId, java.util.LinkedHashMap<java.lang.Long, long[]> scopes,
+		long userId, java.util.LinkedHashMap<Long, long[]> scopes,
 		boolean alert, int flagValue, int start, int end) {
 		return _announcementsEntryLocalService.getEntries(userId, scopes,
 			alert, flagValue, start, end);
@@ -333,7 +332,7 @@ public class AnnouncementsEntryLocalServiceWrapper
 
 	@Override
 	public java.util.List<com.liferay.announcements.kernel.model.AnnouncementsEntry> getEntries(
-		long userId, java.util.LinkedHashMap<java.lang.Long, long[]> scopes,
+		long userId, java.util.LinkedHashMap<Long, long[]> scopes,
 		int displayDateMonth, int displayDateDay, int displayDateYear,
 		int displayDateHour, int displayDateMinute, int expirationDateMonth,
 		int expirationDateDay, int expirationDateYear, int expirationDateHour,
@@ -370,7 +369,7 @@ public class AnnouncementsEntryLocalServiceWrapper
 
 	@Override
 	public int getEntriesCount(long userId,
-		java.util.LinkedHashMap<java.lang.Long, long[]> scopes, boolean alert,
+		java.util.LinkedHashMap<Long, long[]> scopes, boolean alert,
 		int flagValue) {
 		return _announcementsEntryLocalService.getEntriesCount(userId, scopes,
 			alert, flagValue);
@@ -378,10 +377,10 @@ public class AnnouncementsEntryLocalServiceWrapper
 
 	@Override
 	public int getEntriesCount(long userId,
-		java.util.LinkedHashMap<java.lang.Long, long[]> scopes,
-		int displayDateMonth, int displayDateDay, int displayDateYear,
-		int displayDateHour, int displayDateMinute, int expirationDateMonth,
-		int expirationDateDay, int expirationDateYear, int expirationDateHour,
+		java.util.LinkedHashMap<Long, long[]> scopes, int displayDateMonth,
+		int displayDateDay, int displayDateYear, int displayDateHour,
+		int displayDateMinute, int expirationDateMonth, int expirationDateDay,
+		int expirationDateYear, int expirationDateHour,
 		int expirationDateMinute, boolean alert, int flagValue) {
 		return _announcementsEntryLocalService.getEntriesCount(userId, scopes,
 			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
@@ -440,7 +439,7 @@ public class AnnouncementsEntryLocalServiceWrapper
 	* @return the OSGi service identifier
 	*/
 	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
+	public String getOSGiServiceIdentifier() {
 		return _announcementsEntryLocalService.getOSGiServiceIdentifier();
 	}
 
@@ -481,12 +480,12 @@ public class AnnouncementsEntryLocalServiceWrapper
 	@Deprecated
 	@Override
 	public com.liferay.announcements.kernel.model.AnnouncementsEntry updateEntry(
-		long userId, long entryId, java.lang.String title,
-		java.lang.String content, java.lang.String url, java.lang.String type,
-		int displayDateMonth, int displayDateDay, int displayDateYear,
-		int displayDateHour, int displayDateMinute, boolean displayImmediately,
-		int expirationDateMonth, int expirationDateDay, int expirationDateYear,
-		int expirationDateHour, int expirationDateMinute, int priority)
+		long userId, long entryId, String title, String content, String url,
+		String type, int displayDateMonth, int displayDateDay,
+		int displayDateYear, int displayDateHour, int displayDateMinute,
+		boolean displayImmediately, int expirationDateMonth,
+		int expirationDateDay, int expirationDateYear, int expirationDateHour,
+		int expirationDateMinute, int priority)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _announcementsEntryLocalService.updateEntry(userId, entryId,
 			title, content, url, type, displayDateMonth, displayDateDay,
@@ -498,8 +497,7 @@ public class AnnouncementsEntryLocalServiceWrapper
 
 	@Override
 	public com.liferay.announcements.kernel.model.AnnouncementsEntry updateEntry(
-		long entryId, java.lang.String title, java.lang.String content,
-		java.lang.String url, java.lang.String type,
+		long entryId, String title, String content, String url, String type,
 		java.util.Date displayDate, java.util.Date expirationDate, int priority)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _announcementsEntryLocalService.updateEntry(entryId, title,

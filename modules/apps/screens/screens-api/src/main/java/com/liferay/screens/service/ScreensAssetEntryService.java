@@ -62,7 +62,7 @@ public interface ScreensAssetEntryService extends BaseService {
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public JSONArray getAssetEntries(long companyId, long groupId,
-		java.lang.String portletItemName, Locale locale, int max)
+		String portletItemName, Locale locale, int max)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -70,7 +70,7 @@ public interface ScreensAssetEntryService extends BaseService {
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public JSONObject getAssetEntry(java.lang.String className, long classPK,
+	public JSONObject getAssetEntry(String className, long classPK,
 		Locale locale) throws PortalException;
 
 	/**
@@ -78,5 +78,5 @@ public interface ScreensAssetEntryService extends BaseService {
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 }

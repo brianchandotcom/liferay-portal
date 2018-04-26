@@ -63,8 +63,7 @@ public interface SocialActivityLimitLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.REQUIRES_NEW)
 	public SocialActivityLimit addActivityLimit(long userId, long groupId,
 		long classNameId, long classPK, int activityType,
-		java.lang.String activityCounterName, int limitPeriod)
-		throws PortalException;
+		String activityCounterName, int limitPeriod) throws PortalException;
 
 	/**
 	* Adds the social activity limit to the database. Also notifies the appropriate model listeners.
@@ -175,7 +174,7 @@ public interface SocialActivityLimitLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public SocialActivityLimit fetchActivityLimit(long groupId, long userId,
 		long classNameId, long classPK, int activityType,
-		java.lang.String activityCounterName);
+		String activityCounterName);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public SocialActivityLimit fetchSocialActivityLimit(long activityLimitId);
@@ -191,7 +190,7 @@ public interface SocialActivityLimitLocalService extends BaseLocalService,
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

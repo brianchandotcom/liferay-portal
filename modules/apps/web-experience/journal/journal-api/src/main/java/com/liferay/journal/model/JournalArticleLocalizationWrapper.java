@@ -110,7 +110,7 @@ public class JournalArticleLocalizationWrapper
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new JournalArticleLocalizationWrapper((JournalArticleLocalization)_journalArticleLocalization.clone());
 	}
 
@@ -155,7 +155,7 @@ public class JournalArticleLocalizationWrapper
 	* @return the description of this journal article localization
 	*/
 	@Override
-	public java.lang.String getDescription() {
+	public String getDescription() {
 		return _journalArticleLocalization.getDescription();
 	}
 
@@ -170,7 +170,7 @@ public class JournalArticleLocalizationWrapper
 	* @return the language ID of this journal article localization
 	*/
 	@Override
-	public java.lang.String getLanguageId() {
+	public String getLanguageId() {
 		return _journalArticleLocalization.getLanguageId();
 	}
 
@@ -195,7 +195,7 @@ public class JournalArticleLocalizationWrapper
 	* @return the title of this journal article localization
 	*/
 	@Override
-	public java.lang.String getTitle() {
+	public String getTitle() {
 		return _journalArticleLocalization.getTitle();
 	}
 
@@ -260,7 +260,7 @@ public class JournalArticleLocalizationWrapper
 	* @param description the description of this journal article localization
 	*/
 	@Override
-	public void setDescription(java.lang.String description) {
+	public void setDescription(String description) {
 		_journalArticleLocalization.setDescription(description);
 	}
 
@@ -286,7 +286,7 @@ public class JournalArticleLocalizationWrapper
 	* @param languageId the language ID of this journal article localization
 	*/
 	@Override
-	public void setLanguageId(java.lang.String languageId) {
+	public void setLanguageId(String languageId) {
 		_journalArticleLocalization.setLanguageId(languageId);
 	}
 
@@ -316,7 +316,7 @@ public class JournalArticleLocalizationWrapper
 	* @param title the title of this journal article localization
 	*/
 	@Override
-	public void setTitle(java.lang.String title) {
+	public void setTitle(String title) {
 		_journalArticleLocalization.setTitle(title);
 	}
 
@@ -331,7 +331,7 @@ public class JournalArticleLocalizationWrapper
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _journalArticleLocalization.toString();
 	}
 
@@ -341,7 +341,7 @@ public class JournalArticleLocalizationWrapper
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _journalArticleLocalization.toXmlString();
 	}
 

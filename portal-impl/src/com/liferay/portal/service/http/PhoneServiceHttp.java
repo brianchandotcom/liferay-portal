@@ -55,9 +55,8 @@ import com.liferay.portal.kernel.util.MethodKey;
 @ProviderType
 public class PhoneServiceHttp {
 	public static com.liferay.portal.kernel.model.Phone addPhone(
-		HttpPrincipal httpPrincipal, java.lang.String className, long classPK,
-		java.lang.String number, java.lang.String extension, long typeId,
-		boolean primary,
+		HttpPrincipal httpPrincipal, String className, long classPK,
+		String number, String extension, long typeId, boolean primary,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -148,7 +147,7 @@ public class PhoneServiceHttp {
 	}
 
 	public static java.util.List<com.liferay.portal.kernel.model.Phone> getPhones(
-		HttpPrincipal httpPrincipal, java.lang.String className, long classPK)
+		HttpPrincipal httpPrincipal, String className, long classPK)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(PhoneServiceUtil.class,
@@ -180,8 +179,8 @@ public class PhoneServiceHttp {
 	}
 
 	public static com.liferay.portal.kernel.model.Phone updatePhone(
-		HttpPrincipal httpPrincipal, long phoneId, java.lang.String number,
-		java.lang.String extension, long typeId, boolean primary)
+		HttpPrincipal httpPrincipal, long phoneId, String number,
+		String extension, long typeId, boolean primary)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(PhoneServiceUtil.class,
@@ -214,8 +213,8 @@ public class PhoneServiceHttp {
 
 	private static Log _log = LogFactoryUtil.getLog(PhoneServiceHttp.class);
 	private static final Class<?>[] _addPhoneParameterTypes0 = new Class[] {
-			java.lang.String.class, long.class, java.lang.String.class,
-			java.lang.String.class, long.class, boolean.class,
+			String.class, long.class, String.class, String.class, long.class,
+			boolean.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _deletePhoneParameterTypes1 = new Class[] {
@@ -225,10 +224,9 @@ public class PhoneServiceHttp {
 			long.class
 		};
 	private static final Class<?>[] _getPhonesParameterTypes3 = new Class[] {
-			java.lang.String.class, long.class
+			String.class, long.class
 		};
 	private static final Class<?>[] _updatePhoneParameterTypes4 = new Class[] {
-			long.class, java.lang.String.class, java.lang.String.class,
-			long.class, boolean.class
+			long.class, String.class, String.class, long.class, boolean.class
 		};
 }

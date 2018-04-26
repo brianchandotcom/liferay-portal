@@ -195,7 +195,7 @@ public interface ExpandoTablePersistence extends BasePersistence<ExpandoTable> {
 	* @throws NoSuchTableException if a matching expando table could not be found
 	*/
 	public ExpandoTable findByC_C_N(long companyId, long classNameId,
-		java.lang.String name) throws NoSuchTableException;
+		String name) throws NoSuchTableException;
 
 	/**
 	* Returns the expando table where companyId = &#63; and classNameId = &#63; and name = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
@@ -206,7 +206,7 @@ public interface ExpandoTablePersistence extends BasePersistence<ExpandoTable> {
 	* @return the matching expando table, or <code>null</code> if a matching expando table could not be found
 	*/
 	public ExpandoTable fetchByC_C_N(long companyId, long classNameId,
-		java.lang.String name);
+		String name);
 
 	/**
 	* Returns the expando table where companyId = &#63; and classNameId = &#63; and name = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -218,7 +218,7 @@ public interface ExpandoTablePersistence extends BasePersistence<ExpandoTable> {
 	* @return the matching expando table, or <code>null</code> if a matching expando table could not be found
 	*/
 	public ExpandoTable fetchByC_C_N(long companyId, long classNameId,
-		java.lang.String name, boolean retrieveFromCache);
+		String name, boolean retrieveFromCache);
 
 	/**
 	* Removes the expando table where companyId = &#63; and classNameId = &#63; and name = &#63; from the database.
@@ -229,7 +229,7 @@ public interface ExpandoTablePersistence extends BasePersistence<ExpandoTable> {
 	* @return the expando table that was removed
 	*/
 	public ExpandoTable removeByC_C_N(long companyId, long classNameId,
-		java.lang.String name) throws NoSuchTableException;
+		String name) throws NoSuchTableException;
 
 	/**
 	* Returns the number of expando tables where companyId = &#63; and classNameId = &#63; and name = &#63;.
@@ -239,8 +239,7 @@ public interface ExpandoTablePersistence extends BasePersistence<ExpandoTable> {
 	* @param name the name
 	* @return the number of matching expando tables
 	*/
-	public int countByC_C_N(long companyId, long classNameId,
-		java.lang.String name);
+	public int countByC_C_N(long companyId, long classNameId, String name);
 
 	/**
 	* Caches the expando table in the entity cache if it is enabled.

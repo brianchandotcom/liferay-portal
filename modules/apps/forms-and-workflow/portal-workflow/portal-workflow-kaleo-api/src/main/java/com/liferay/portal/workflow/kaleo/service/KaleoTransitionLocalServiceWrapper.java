@@ -249,7 +249,7 @@ public class KaleoTransitionLocalServiceWrapper
 
 	@Override
 	public com.liferay.portal.workflow.kaleo.model.KaleoTransition getKaleoTransition(
-		long kaleoNodeId, java.lang.String name)
+		long kaleoNodeId, String name)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _kaleoTransitionLocalService.getKaleoTransition(kaleoNodeId, name);
 	}
@@ -298,7 +298,7 @@ public class KaleoTransitionLocalServiceWrapper
 	* @return the OSGi service identifier
 	*/
 	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
+	public String getOSGiServiceIdentifier() {
 		return _kaleoTransitionLocalService.getOSGiServiceIdentifier();
 	}
 

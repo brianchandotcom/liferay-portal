@@ -108,7 +108,7 @@ public class MBStatsUserWrapper implements MBStatsUser,
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new MBStatsUserWrapper((MBStatsUser)_mbStatsUser.clone());
 	}
 
@@ -193,7 +193,7 @@ public class MBStatsUserWrapper implements MBStatsUser,
 	* @return the stats user uuid of this message boards stats user
 	*/
 	@Override
-	public java.lang.String getStatsUserUuid() {
+	public String getStatsUserUuid() {
 		return _mbStatsUser.getStatsUserUuid();
 	}
 
@@ -213,7 +213,7 @@ public class MBStatsUserWrapper implements MBStatsUser,
 	* @return the user uuid of this message boards stats user
 	*/
 	@Override
-	public java.lang.String getUserUuid() {
+	public String getUserUuid() {
 		return _mbStatsUser.getUserUuid();
 	}
 
@@ -339,7 +339,7 @@ public class MBStatsUserWrapper implements MBStatsUser,
 	* @param statsUserUuid the stats user uuid of this message boards stats user
 	*/
 	@Override
-	public void setStatsUserUuid(java.lang.String statsUserUuid) {
+	public void setStatsUserUuid(String statsUserUuid) {
 		_mbStatsUser.setStatsUserUuid(statsUserUuid);
 	}
 
@@ -359,7 +359,7 @@ public class MBStatsUserWrapper implements MBStatsUser,
 	* @param userUuid the user uuid of this message boards stats user
 	*/
 	@Override
-	public void setUserUuid(java.lang.String userUuid) {
+	public void setUserUuid(String userUuid) {
 		_mbStatsUser.setUserUuid(userUuid);
 	}
 
@@ -374,7 +374,7 @@ public class MBStatsUserWrapper implements MBStatsUser,
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _mbStatsUser.toString();
 	}
 
@@ -384,7 +384,7 @@ public class MBStatsUserWrapper implements MBStatsUser,
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _mbStatsUser.toXmlString();
 	}
 

@@ -186,7 +186,7 @@ public interface DDMFormInstanceRecordVersionPersistence extends BasePersistence
 	* @return the matching ddm form instance record versions
 	*/
 	public java.util.List<DDMFormInstanceRecordVersion> findByF_F(
-		long formInstanceId, java.lang.String formInstanceVersion);
+		long formInstanceId, String formInstanceVersion);
 
 	/**
 	* Returns a range of all the ddm form instance record versions where formInstanceId = &#63; and formInstanceVersion = &#63;.
@@ -202,8 +202,7 @@ public interface DDMFormInstanceRecordVersionPersistence extends BasePersistence
 	* @return the range of matching ddm form instance record versions
 	*/
 	public java.util.List<DDMFormInstanceRecordVersion> findByF_F(
-		long formInstanceId, java.lang.String formInstanceVersion, int start,
-		int end);
+		long formInstanceId, String formInstanceVersion, int start, int end);
 
 	/**
 	* Returns an ordered range of all the ddm form instance record versions where formInstanceId = &#63; and formInstanceVersion = &#63;.
@@ -220,8 +219,7 @@ public interface DDMFormInstanceRecordVersionPersistence extends BasePersistence
 	* @return the ordered range of matching ddm form instance record versions
 	*/
 	public java.util.List<DDMFormInstanceRecordVersion> findByF_F(
-		long formInstanceId, java.lang.String formInstanceVersion, int start,
-		int end,
+		long formInstanceId, String formInstanceVersion, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<DDMFormInstanceRecordVersion> orderByComparator);
 
 	/**
@@ -240,8 +238,7 @@ public interface DDMFormInstanceRecordVersionPersistence extends BasePersistence
 	* @return the ordered range of matching ddm form instance record versions
 	*/
 	public java.util.List<DDMFormInstanceRecordVersion> findByF_F(
-		long formInstanceId, java.lang.String formInstanceVersion, int start,
-		int end,
+		long formInstanceId, String formInstanceVersion, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<DDMFormInstanceRecordVersion> orderByComparator,
 		boolean retrieveFromCache);
 
@@ -255,7 +252,7 @@ public interface DDMFormInstanceRecordVersionPersistence extends BasePersistence
 	* @throws NoSuchFormInstanceRecordVersionException if a matching ddm form instance record version could not be found
 	*/
 	public DDMFormInstanceRecordVersion findByF_F_First(long formInstanceId,
-		java.lang.String formInstanceVersion,
+		String formInstanceVersion,
 		com.liferay.portal.kernel.util.OrderByComparator<DDMFormInstanceRecordVersion> orderByComparator)
 		throws NoSuchFormInstanceRecordVersionException;
 
@@ -268,7 +265,7 @@ public interface DDMFormInstanceRecordVersionPersistence extends BasePersistence
 	* @return the first matching ddm form instance record version, or <code>null</code> if a matching ddm form instance record version could not be found
 	*/
 	public DDMFormInstanceRecordVersion fetchByF_F_First(long formInstanceId,
-		java.lang.String formInstanceVersion,
+		String formInstanceVersion,
 		com.liferay.portal.kernel.util.OrderByComparator<DDMFormInstanceRecordVersion> orderByComparator);
 
 	/**
@@ -281,7 +278,7 @@ public interface DDMFormInstanceRecordVersionPersistence extends BasePersistence
 	* @throws NoSuchFormInstanceRecordVersionException if a matching ddm form instance record version could not be found
 	*/
 	public DDMFormInstanceRecordVersion findByF_F_Last(long formInstanceId,
-		java.lang.String formInstanceVersion,
+		String formInstanceVersion,
 		com.liferay.portal.kernel.util.OrderByComparator<DDMFormInstanceRecordVersion> orderByComparator)
 		throws NoSuchFormInstanceRecordVersionException;
 
@@ -294,7 +291,7 @@ public interface DDMFormInstanceRecordVersionPersistence extends BasePersistence
 	* @return the last matching ddm form instance record version, or <code>null</code> if a matching ddm form instance record version could not be found
 	*/
 	public DDMFormInstanceRecordVersion fetchByF_F_Last(long formInstanceId,
-		java.lang.String formInstanceVersion,
+		String formInstanceVersion,
 		com.liferay.portal.kernel.util.OrderByComparator<DDMFormInstanceRecordVersion> orderByComparator);
 
 	/**
@@ -309,7 +306,7 @@ public interface DDMFormInstanceRecordVersionPersistence extends BasePersistence
 	*/
 	public DDMFormInstanceRecordVersion[] findByF_F_PrevAndNext(
 		long formInstanceRecordVersionId, long formInstanceId,
-		java.lang.String formInstanceVersion,
+		String formInstanceVersion,
 		com.liferay.portal.kernel.util.OrderByComparator<DDMFormInstanceRecordVersion> orderByComparator)
 		throws NoSuchFormInstanceRecordVersionException;
 
@@ -319,8 +316,7 @@ public interface DDMFormInstanceRecordVersionPersistence extends BasePersistence
 	* @param formInstanceId the form instance ID
 	* @param formInstanceVersion the form instance version
 	*/
-	public void removeByF_F(long formInstanceId,
-		java.lang.String formInstanceVersion);
+	public void removeByF_F(long formInstanceId, String formInstanceVersion);
 
 	/**
 	* Returns the number of ddm form instance record versions where formInstanceId = &#63; and formInstanceVersion = &#63;.
@@ -329,8 +325,7 @@ public interface DDMFormInstanceRecordVersionPersistence extends BasePersistence
 	* @param formInstanceVersion the form instance version
 	* @return the number of matching ddm form instance record versions
 	*/
-	public int countByF_F(long formInstanceId,
-		java.lang.String formInstanceVersion);
+	public int countByF_F(long formInstanceId, String formInstanceVersion);
 
 	/**
 	* Returns the ddm form instance record version where formInstanceRecordId = &#63; and version = &#63; or throws a {@link NoSuchFormInstanceRecordVersionException} if it could not be found.
@@ -341,8 +336,7 @@ public interface DDMFormInstanceRecordVersionPersistence extends BasePersistence
 	* @throws NoSuchFormInstanceRecordVersionException if a matching ddm form instance record version could not be found
 	*/
 	public DDMFormInstanceRecordVersion findByF_V(long formInstanceRecordId,
-		java.lang.String version)
-		throws NoSuchFormInstanceRecordVersionException;
+		String version) throws NoSuchFormInstanceRecordVersionException;
 
 	/**
 	* Returns the ddm form instance record version where formInstanceRecordId = &#63; and version = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
@@ -352,7 +346,7 @@ public interface DDMFormInstanceRecordVersionPersistence extends BasePersistence
 	* @return the matching ddm form instance record version, or <code>null</code> if a matching ddm form instance record version could not be found
 	*/
 	public DDMFormInstanceRecordVersion fetchByF_V(long formInstanceRecordId,
-		java.lang.String version);
+		String version);
 
 	/**
 	* Returns the ddm form instance record version where formInstanceRecordId = &#63; and version = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -363,7 +357,7 @@ public interface DDMFormInstanceRecordVersionPersistence extends BasePersistence
 	* @return the matching ddm form instance record version, or <code>null</code> if a matching ddm form instance record version could not be found
 	*/
 	public DDMFormInstanceRecordVersion fetchByF_V(long formInstanceRecordId,
-		java.lang.String version, boolean retrieveFromCache);
+		String version, boolean retrieveFromCache);
 
 	/**
 	* Removes the ddm form instance record version where formInstanceRecordId = &#63; and version = &#63; from the database.
@@ -373,8 +367,7 @@ public interface DDMFormInstanceRecordVersionPersistence extends BasePersistence
 	* @return the ddm form instance record version that was removed
 	*/
 	public DDMFormInstanceRecordVersion removeByF_V(long formInstanceRecordId,
-		java.lang.String version)
-		throws NoSuchFormInstanceRecordVersionException;
+		String version) throws NoSuchFormInstanceRecordVersionException;
 
 	/**
 	* Returns the number of ddm form instance record versions where formInstanceRecordId = &#63; and version = &#63;.
@@ -383,7 +376,7 @@ public interface DDMFormInstanceRecordVersionPersistence extends BasePersistence
 	* @param version the version
 	* @return the number of matching ddm form instance record versions
 	*/
-	public int countByF_V(long formInstanceRecordId, java.lang.String version);
+	public int countByF_V(long formInstanceRecordId, String version);
 
 	/**
 	* Returns all the ddm form instance record versions where formInstanceRecordId = &#63; and status = &#63;.
@@ -544,8 +537,7 @@ public interface DDMFormInstanceRecordVersionPersistence extends BasePersistence
 	* @return the matching ddm form instance record versions
 	*/
 	public java.util.List<DDMFormInstanceRecordVersion> findByU_F_F_S(
-		long userId, long formInstanceId, java.lang.String formInstanceVersion,
-		int status);
+		long userId, long formInstanceId, String formInstanceVersion, int status);
 
 	/**
 	* Returns a range of all the ddm form instance record versions where userId = &#63; and formInstanceId = &#63; and formInstanceVersion = &#63; and status = &#63;.
@@ -563,7 +555,7 @@ public interface DDMFormInstanceRecordVersionPersistence extends BasePersistence
 	* @return the range of matching ddm form instance record versions
 	*/
 	public java.util.List<DDMFormInstanceRecordVersion> findByU_F_F_S(
-		long userId, long formInstanceId, java.lang.String formInstanceVersion,
+		long userId, long formInstanceId, String formInstanceVersion,
 		int status, int start, int end);
 
 	/**
@@ -583,7 +575,7 @@ public interface DDMFormInstanceRecordVersionPersistence extends BasePersistence
 	* @return the ordered range of matching ddm form instance record versions
 	*/
 	public java.util.List<DDMFormInstanceRecordVersion> findByU_F_F_S(
-		long userId, long formInstanceId, java.lang.String formInstanceVersion,
+		long userId, long formInstanceId, String formInstanceVersion,
 		int status, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<DDMFormInstanceRecordVersion> orderByComparator);
 
@@ -605,7 +597,7 @@ public interface DDMFormInstanceRecordVersionPersistence extends BasePersistence
 	* @return the ordered range of matching ddm form instance record versions
 	*/
 	public java.util.List<DDMFormInstanceRecordVersion> findByU_F_F_S(
-		long userId, long formInstanceId, java.lang.String formInstanceVersion,
+		long userId, long formInstanceId, String formInstanceVersion,
 		int status, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<DDMFormInstanceRecordVersion> orderByComparator,
 		boolean retrieveFromCache);
@@ -622,7 +614,7 @@ public interface DDMFormInstanceRecordVersionPersistence extends BasePersistence
 	* @throws NoSuchFormInstanceRecordVersionException if a matching ddm form instance record version could not be found
 	*/
 	public DDMFormInstanceRecordVersion findByU_F_F_S_First(long userId,
-		long formInstanceId, java.lang.String formInstanceVersion, int status,
+		long formInstanceId, String formInstanceVersion, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<DDMFormInstanceRecordVersion> orderByComparator)
 		throws NoSuchFormInstanceRecordVersionException;
 
@@ -637,7 +629,7 @@ public interface DDMFormInstanceRecordVersionPersistence extends BasePersistence
 	* @return the first matching ddm form instance record version, or <code>null</code> if a matching ddm form instance record version could not be found
 	*/
 	public DDMFormInstanceRecordVersion fetchByU_F_F_S_First(long userId,
-		long formInstanceId, java.lang.String formInstanceVersion, int status,
+		long formInstanceId, String formInstanceVersion, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<DDMFormInstanceRecordVersion> orderByComparator);
 
 	/**
@@ -652,7 +644,7 @@ public interface DDMFormInstanceRecordVersionPersistence extends BasePersistence
 	* @throws NoSuchFormInstanceRecordVersionException if a matching ddm form instance record version could not be found
 	*/
 	public DDMFormInstanceRecordVersion findByU_F_F_S_Last(long userId,
-		long formInstanceId, java.lang.String formInstanceVersion, int status,
+		long formInstanceId, String formInstanceVersion, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<DDMFormInstanceRecordVersion> orderByComparator)
 		throws NoSuchFormInstanceRecordVersionException;
 
@@ -667,7 +659,7 @@ public interface DDMFormInstanceRecordVersionPersistence extends BasePersistence
 	* @return the last matching ddm form instance record version, or <code>null</code> if a matching ddm form instance record version could not be found
 	*/
 	public DDMFormInstanceRecordVersion fetchByU_F_F_S_Last(long userId,
-		long formInstanceId, java.lang.String formInstanceVersion, int status,
+		long formInstanceId, String formInstanceVersion, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<DDMFormInstanceRecordVersion> orderByComparator);
 
 	/**
@@ -684,7 +676,7 @@ public interface DDMFormInstanceRecordVersionPersistence extends BasePersistence
 	*/
 	public DDMFormInstanceRecordVersion[] findByU_F_F_S_PrevAndNext(
 		long formInstanceRecordVersionId, long userId, long formInstanceId,
-		java.lang.String formInstanceVersion, int status,
+		String formInstanceVersion, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<DDMFormInstanceRecordVersion> orderByComparator)
 		throws NoSuchFormInstanceRecordVersionException;
 
@@ -697,7 +689,7 @@ public interface DDMFormInstanceRecordVersionPersistence extends BasePersistence
 	* @param status the status
 	*/
 	public void removeByU_F_F_S(long userId, long formInstanceId,
-		java.lang.String formInstanceVersion, int status);
+		String formInstanceVersion, int status);
 
 	/**
 	* Returns the number of ddm form instance record versions where userId = &#63; and formInstanceId = &#63; and formInstanceVersion = &#63; and status = &#63;.
@@ -709,7 +701,7 @@ public interface DDMFormInstanceRecordVersionPersistence extends BasePersistence
 	* @return the number of matching ddm form instance record versions
 	*/
 	public int countByU_F_F_S(long userId, long formInstanceId,
-		java.lang.String formInstanceVersion, int status);
+		String formInstanceVersion, int status);
 
 	/**
 	* Caches the ddm form instance record version in the entity cache if it is enabled.

@@ -49,7 +49,7 @@ public interface FeedPersistence extends BasePersistence<Feed> {
 	* @return the matching feed
 	* @throws NoSuchFeedException if a matching feed could not be found
 	*/
-	public Feed findByU_TSN(long userId, java.lang.String twitterScreenName)
+	public Feed findByU_TSN(long userId, String twitterScreenName)
 		throws NoSuchFeedException;
 
 	/**
@@ -59,7 +59,7 @@ public interface FeedPersistence extends BasePersistence<Feed> {
 	* @param twitterScreenName the twitter screen name
 	* @return the matching feed, or <code>null</code> if a matching feed could not be found
 	*/
-	public Feed fetchByU_TSN(long userId, java.lang.String twitterScreenName);
+	public Feed fetchByU_TSN(long userId, String twitterScreenName);
 
 	/**
 	* Returns the feed where userId = &#63; and twitterScreenName = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -69,7 +69,7 @@ public interface FeedPersistence extends BasePersistence<Feed> {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching feed, or <code>null</code> if a matching feed could not be found
 	*/
-	public Feed fetchByU_TSN(long userId, java.lang.String twitterScreenName,
+	public Feed fetchByU_TSN(long userId, String twitterScreenName,
 		boolean retrieveFromCache);
 
 	/**
@@ -79,7 +79,7 @@ public interface FeedPersistence extends BasePersistence<Feed> {
 	* @param twitterScreenName the twitter screen name
 	* @return the feed that was removed
 	*/
-	public Feed removeByU_TSN(long userId, java.lang.String twitterScreenName)
+	public Feed removeByU_TSN(long userId, String twitterScreenName)
 		throws NoSuchFeedException;
 
 	/**
@@ -89,7 +89,7 @@ public interface FeedPersistence extends BasePersistence<Feed> {
 	* @param twitterScreenName the twitter screen name
 	* @return the number of matching feeds
 	*/
-	public int countByU_TSN(long userId, java.lang.String twitterScreenName);
+	public int countByU_TSN(long userId, String twitterScreenName);
 
 	/**
 	* Caches the feed in the entity cache if it is enabled.

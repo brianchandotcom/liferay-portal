@@ -175,7 +175,7 @@ public class DDMFormInstanceRecordWrapper implements DDMFormInstanceRecord,
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new DDMFormInstanceRecordWrapper((DDMFormInstanceRecord)_ddmFormInstanceRecord.clone());
 	}
 
@@ -249,7 +249,7 @@ public class DDMFormInstanceRecordWrapper implements DDMFormInstanceRecord,
 
 	@Override
 	public DDMFormInstanceRecordVersion getFormInstanceRecordVersion(
-		java.lang.String version)
+		String version)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _ddmFormInstanceRecord.getFormInstanceRecordVersion(version);
 	}
@@ -260,7 +260,7 @@ public class DDMFormInstanceRecordWrapper implements DDMFormInstanceRecord,
 	* @return the form instance version of this ddm form instance record
 	*/
 	@Override
-	public java.lang.String getFormInstanceVersion() {
+	public String getFormInstanceVersion() {
 		return _ddmFormInstanceRecord.getFormInstanceVersion();
 	}
 
@@ -347,7 +347,7 @@ public class DDMFormInstanceRecordWrapper implements DDMFormInstanceRecord,
 	* @return the user name of this ddm form instance record
 	*/
 	@Override
-	public java.lang.String getUserName() {
+	public String getUserName() {
 		return _ddmFormInstanceRecord.getUserName();
 	}
 
@@ -357,7 +357,7 @@ public class DDMFormInstanceRecordWrapper implements DDMFormInstanceRecord,
 	* @return the user uuid of this ddm form instance record
 	*/
 	@Override
-	public java.lang.String getUserUuid() {
+	public String getUserUuid() {
 		return _ddmFormInstanceRecord.getUserUuid();
 	}
 
@@ -367,7 +367,7 @@ public class DDMFormInstanceRecordWrapper implements DDMFormInstanceRecord,
 	* @return the uuid of this ddm form instance record
 	*/
 	@Override
-	public java.lang.String getUuid() {
+	public String getUuid() {
 		return _ddmFormInstanceRecord.getUuid();
 	}
 
@@ -377,7 +377,7 @@ public class DDMFormInstanceRecordWrapper implements DDMFormInstanceRecord,
 	* @return the version of this ddm form instance record
 	*/
 	@Override
-	public java.lang.String getVersion() {
+	public String getVersion() {
 		return _ddmFormInstanceRecord.getVersion();
 	}
 
@@ -397,7 +397,7 @@ public class DDMFormInstanceRecordWrapper implements DDMFormInstanceRecord,
 	* @return the version user name of this ddm form instance record
 	*/
 	@Override
-	public java.lang.String getVersionUserName() {
+	public String getVersionUserName() {
 		return _ddmFormInstanceRecord.getVersionUserName();
 	}
 
@@ -407,7 +407,7 @@ public class DDMFormInstanceRecordWrapper implements DDMFormInstanceRecord,
 	* @return the version user uuid of this ddm form instance record
 	*/
 	@Override
-	public java.lang.String getVersionUserUuid() {
+	public String getVersionUserUuid() {
 		return _ddmFormInstanceRecord.getVersionUserUuid();
 	}
 
@@ -503,7 +503,7 @@ public class DDMFormInstanceRecordWrapper implements DDMFormInstanceRecord,
 	* @param formInstanceVersion the form instance version of this ddm form instance record
 	*/
 	@Override
-	public void setFormInstanceVersion(java.lang.String formInstanceVersion) {
+	public void setFormInstanceVersion(String formInstanceVersion) {
 		_ddmFormInstanceRecord.setFormInstanceVersion(formInstanceVersion);
 	}
 
@@ -583,7 +583,7 @@ public class DDMFormInstanceRecordWrapper implements DDMFormInstanceRecord,
 	* @param userName the user name of this ddm form instance record
 	*/
 	@Override
-	public void setUserName(java.lang.String userName) {
+	public void setUserName(String userName) {
 		_ddmFormInstanceRecord.setUserName(userName);
 	}
 
@@ -593,7 +593,7 @@ public class DDMFormInstanceRecordWrapper implements DDMFormInstanceRecord,
 	* @param userUuid the user uuid of this ddm form instance record
 	*/
 	@Override
-	public void setUserUuid(java.lang.String userUuid) {
+	public void setUserUuid(String userUuid) {
 		_ddmFormInstanceRecord.setUserUuid(userUuid);
 	}
 
@@ -603,7 +603,7 @@ public class DDMFormInstanceRecordWrapper implements DDMFormInstanceRecord,
 	* @param uuid the uuid of this ddm form instance record
 	*/
 	@Override
-	public void setUuid(java.lang.String uuid) {
+	public void setUuid(String uuid) {
 		_ddmFormInstanceRecord.setUuid(uuid);
 	}
 
@@ -613,7 +613,7 @@ public class DDMFormInstanceRecordWrapper implements DDMFormInstanceRecord,
 	* @param version the version of this ddm form instance record
 	*/
 	@Override
-	public void setVersion(java.lang.String version) {
+	public void setVersion(String version) {
 		_ddmFormInstanceRecord.setVersion(version);
 	}
 
@@ -633,7 +633,7 @@ public class DDMFormInstanceRecordWrapper implements DDMFormInstanceRecord,
 	* @param versionUserName the version user name of this ddm form instance record
 	*/
 	@Override
-	public void setVersionUserName(java.lang.String versionUserName) {
+	public void setVersionUserName(String versionUserName) {
 		_ddmFormInstanceRecord.setVersionUserName(versionUserName);
 	}
 
@@ -643,7 +643,7 @@ public class DDMFormInstanceRecordWrapper implements DDMFormInstanceRecord,
 	* @param versionUserUuid the version user uuid of this ddm form instance record
 	*/
 	@Override
-	public void setVersionUserUuid(java.lang.String versionUserUuid) {
+	public void setVersionUserUuid(String versionUserUuid) {
 		_ddmFormInstanceRecord.setVersionUserUuid(versionUserUuid);
 	}
 
@@ -658,7 +658,7 @@ public class DDMFormInstanceRecordWrapper implements DDMFormInstanceRecord,
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _ddmFormInstanceRecord.toString();
 	}
 
@@ -668,7 +668,7 @@ public class DDMFormInstanceRecordWrapper implements DDMFormInstanceRecord,
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _ddmFormInstanceRecord.toXmlString();
 	}
 

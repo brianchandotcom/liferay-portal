@@ -192,7 +192,7 @@ public class FragmentEntryWrapper implements FragmentEntry,
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new FragmentEntryWrapper((FragmentEntry)_fragmentEntry.clone());
 	}
 
@@ -212,7 +212,7 @@ public class FragmentEntryWrapper implements FragmentEntry,
 	}
 
 	@Override
-	public java.lang.String getContent() {
+	public String getContent() {
 		return _fragmentEntry.getContent();
 	}
 
@@ -232,7 +232,7 @@ public class FragmentEntryWrapper implements FragmentEntry,
 	* @return the css of this fragment entry
 	*/
 	@Override
-	public java.lang.String getCss() {
+	public String getCss() {
 		return _fragmentEntry.getCss();
 	}
 
@@ -267,7 +267,7 @@ public class FragmentEntryWrapper implements FragmentEntry,
 	* @return the fragment entry key of this fragment entry
 	*/
 	@Override
-	public java.lang.String getFragmentEntryKey() {
+	public String getFragmentEntryKey() {
 		return _fragmentEntry.getFragmentEntryKey();
 	}
 
@@ -287,7 +287,7 @@ public class FragmentEntryWrapper implements FragmentEntry,
 	* @return the html of this fragment entry
 	*/
 	@Override
-	public java.lang.String getHtml() {
+	public String getHtml() {
 		return _fragmentEntry.getHtml();
 	}
 
@@ -302,7 +302,7 @@ public class FragmentEntryWrapper implements FragmentEntry,
 	}
 
 	@Override
-	public java.lang.String getImagePreviewURL(
+	public String getImagePreviewURL(
 		com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay) {
 		return _fragmentEntry.getImagePreviewURL(themeDisplay);
 	}
@@ -313,7 +313,7 @@ public class FragmentEntryWrapper implements FragmentEntry,
 	* @return the js of this fragment entry
 	*/
 	@Override
-	public java.lang.String getJs() {
+	public String getJs() {
 		return _fragmentEntry.getJs();
 	}
 
@@ -333,7 +333,7 @@ public class FragmentEntryWrapper implements FragmentEntry,
 	* @return the name of this fragment entry
 	*/
 	@Override
-	public java.lang.String getName() {
+	public String getName() {
 		return _fragmentEntry.getName();
 	}
 
@@ -378,7 +378,7 @@ public class FragmentEntryWrapper implements FragmentEntry,
 	* @return the status by user name of this fragment entry
 	*/
 	@Override
-	public java.lang.String getStatusByUserName() {
+	public String getStatusByUserName() {
 		return _fragmentEntry.getStatusByUserName();
 	}
 
@@ -388,7 +388,7 @@ public class FragmentEntryWrapper implements FragmentEntry,
 	* @return the status by user uuid of this fragment entry
 	*/
 	@Override
-	public java.lang.String getStatusByUserUuid() {
+	public String getStatusByUserUuid() {
 		return _fragmentEntry.getStatusByUserUuid();
 	}
 
@@ -423,7 +423,7 @@ public class FragmentEntryWrapper implements FragmentEntry,
 	* @return the user name of this fragment entry
 	*/
 	@Override
-	public java.lang.String getUserName() {
+	public String getUserName() {
 		return _fragmentEntry.getUserName();
 	}
 
@@ -433,7 +433,7 @@ public class FragmentEntryWrapper implements FragmentEntry,
 	* @return the user uuid of this fragment entry
 	*/
 	@Override
-	public java.lang.String getUserUuid() {
+	public String getUserUuid() {
 		return _fragmentEntry.getUserUuid();
 	}
 
@@ -544,8 +544,8 @@ public class FragmentEntryWrapper implements FragmentEntry,
 
 	@Override
 	public void populateZipWriter(
-		com.liferay.portal.kernel.zip.ZipWriter zipWriter, java.lang.String path)
-		throws java.lang.Exception {
+		com.liferay.portal.kernel.zip.ZipWriter zipWriter, String path)
+		throws Exception {
 		_fragmentEntry.populateZipWriter(zipWriter, path);
 	}
 
@@ -580,7 +580,7 @@ public class FragmentEntryWrapper implements FragmentEntry,
 	* @param css the css of this fragment entry
 	*/
 	@Override
-	public void setCss(java.lang.String css) {
+	public void setCss(String css) {
 		_fragmentEntry.setCss(css);
 	}
 
@@ -626,7 +626,7 @@ public class FragmentEntryWrapper implements FragmentEntry,
 	* @param fragmentEntryKey the fragment entry key of this fragment entry
 	*/
 	@Override
-	public void setFragmentEntryKey(java.lang.String fragmentEntryKey) {
+	public void setFragmentEntryKey(String fragmentEntryKey) {
 		_fragmentEntry.setFragmentEntryKey(fragmentEntryKey);
 	}
 
@@ -646,7 +646,7 @@ public class FragmentEntryWrapper implements FragmentEntry,
 	* @param html the html of this fragment entry
 	*/
 	@Override
-	public void setHtml(java.lang.String html) {
+	public void setHtml(String html) {
 		_fragmentEntry.setHtml(html);
 	}
 
@@ -666,7 +666,7 @@ public class FragmentEntryWrapper implements FragmentEntry,
 	* @param js the js of this fragment entry
 	*/
 	@Override
-	public void setJs(java.lang.String js) {
+	public void setJs(String js) {
 		_fragmentEntry.setJs(js);
 	}
 
@@ -686,7 +686,7 @@ public class FragmentEntryWrapper implements FragmentEntry,
 	* @param name the name of this fragment entry
 	*/
 	@Override
-	public void setName(java.lang.String name) {
+	public void setName(String name) {
 		_fragmentEntry.setName(name);
 	}
 
@@ -736,7 +736,7 @@ public class FragmentEntryWrapper implements FragmentEntry,
 	* @param statusByUserName the status by user name of this fragment entry
 	*/
 	@Override
-	public void setStatusByUserName(java.lang.String statusByUserName) {
+	public void setStatusByUserName(String statusByUserName) {
 		_fragmentEntry.setStatusByUserName(statusByUserName);
 	}
 
@@ -746,7 +746,7 @@ public class FragmentEntryWrapper implements FragmentEntry,
 	* @param statusByUserUuid the status by user uuid of this fragment entry
 	*/
 	@Override
-	public void setStatusByUserUuid(java.lang.String statusByUserUuid) {
+	public void setStatusByUserUuid(String statusByUserUuid) {
 		_fragmentEntry.setStatusByUserUuid(statusByUserUuid);
 	}
 
@@ -776,7 +776,7 @@ public class FragmentEntryWrapper implements FragmentEntry,
 	* @param userName the user name of this fragment entry
 	*/
 	@Override
-	public void setUserName(java.lang.String userName) {
+	public void setUserName(String userName) {
 		_fragmentEntry.setUserName(userName);
 	}
 
@@ -786,7 +786,7 @@ public class FragmentEntryWrapper implements FragmentEntry,
 	* @param userUuid the user uuid of this fragment entry
 	*/
 	@Override
-	public void setUserUuid(java.lang.String userUuid) {
+	public void setUserUuid(String userUuid) {
 		_fragmentEntry.setUserUuid(userUuid);
 	}
 
@@ -801,7 +801,7 @@ public class FragmentEntryWrapper implements FragmentEntry,
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _fragmentEntry.toString();
 	}
 
@@ -811,7 +811,7 @@ public class FragmentEntryWrapper implements FragmentEntry,
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _fragmentEntry.toXmlString();
 	}
 

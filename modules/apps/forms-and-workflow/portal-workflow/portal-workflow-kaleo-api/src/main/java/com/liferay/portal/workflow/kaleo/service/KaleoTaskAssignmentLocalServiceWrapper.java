@@ -48,7 +48,7 @@ public class KaleoTaskAssignmentLocalServiceWrapper
 
 	@Override
 	public com.liferay.portal.workflow.kaleo.model.KaleoTaskAssignment addKaleoTaskAssignment(
-		java.lang.String kaleoClassName, long kaleoClassPK,
+		String kaleoClassName, long kaleoClassPK,
 		long kaleoDefinitionVersionId,
 		com.liferay.portal.workflow.kaleo.definition.Assignment assignment,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
@@ -258,14 +258,14 @@ public class KaleoTaskAssignmentLocalServiceWrapper
 
 	@Override
 	public java.util.List<com.liferay.portal.workflow.kaleo.model.KaleoTaskAssignment> getKaleoTaskAssignments(
-		long kaleoTaskId, java.lang.String assigneeClassName) {
+		long kaleoTaskId, String assigneeClassName) {
 		return _kaleoTaskAssignmentLocalService.getKaleoTaskAssignments(kaleoTaskId,
 			assigneeClassName);
 	}
 
 	@Override
 	public java.util.List<com.liferay.portal.workflow.kaleo.model.KaleoTaskAssignment> getKaleoTaskAssignments(
-		java.lang.String kaleoClassName, long kaleoClassPK) {
+		String kaleoClassName, long kaleoClassPK) {
 		return _kaleoTaskAssignmentLocalService.getKaleoTaskAssignments(kaleoClassName,
 			kaleoClassPK);
 	}
@@ -287,7 +287,7 @@ public class KaleoTaskAssignmentLocalServiceWrapper
 
 	@Override
 	public int getKaleoTaskAssignmentsCount(long kaleoTaskId,
-		java.lang.String assigneeClassName) {
+		String assigneeClassName) {
 		return _kaleoTaskAssignmentLocalService.getKaleoTaskAssignmentsCount(kaleoTaskId,
 			assigneeClassName);
 	}
@@ -298,7 +298,7 @@ public class KaleoTaskAssignmentLocalServiceWrapper
 	* @return the OSGi service identifier
 	*/
 	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
+	public String getOSGiServiceIdentifier() {
 		return _kaleoTaskAssignmentLocalService.getOSGiServiceIdentifier();
 	}
 

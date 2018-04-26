@@ -51,16 +51,13 @@ public class SyncDLObjectLocalServiceUtil {
 	*/
 	@Deprecated
 	public static com.liferay.sync.model.SyncDLObject addSyncDLObject(
-		long companyId, long userId, java.lang.String userName,
-		long modifiedTime, long repositoryId, long parentFolderId,
-		java.lang.String treePath, java.lang.String name,
-		java.lang.String extension, java.lang.String mimeType,
-		java.lang.String description, java.lang.String changeLog,
-		java.lang.String extraSettings, java.lang.String version,
-		long versionId, long size, java.lang.String checksum,
-		java.lang.String event, java.util.Date lockExpirationDate,
-		long lockUserId, java.lang.String lockUserName, java.lang.String type,
-		long typePK, java.lang.String typeUuid)
+		long companyId, long userId, String userName, long modifiedTime,
+		long repositoryId, long parentFolderId, String treePath, String name,
+		String extension, String mimeType, String description,
+		String changeLog, String extraSettings, String version, long versionId,
+		long size, String checksum, String event,
+		java.util.Date lockExpirationDate, long lockUserId,
+		String lockUserName, String type, long typePK, String typeUuid)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addSyncDLObject(companyId, userId, userName, modifiedTime,
@@ -71,17 +68,13 @@ public class SyncDLObjectLocalServiceUtil {
 	}
 
 	public static com.liferay.sync.model.SyncDLObject addSyncDLObject(
-		long companyId, long userId, java.lang.String userName,
-		long modifiedTime, long repositoryId, long parentFolderId,
-		java.lang.String treePath, java.lang.String name,
-		java.lang.String extension, java.lang.String mimeType,
-		java.lang.String description, java.lang.String changeLog,
-		java.lang.String extraSettings, java.lang.String version,
-		long versionId, long size, java.lang.String checksum,
-		java.lang.String event, java.lang.String lanTokenKey,
+		long companyId, long userId, String userName, long modifiedTime,
+		long repositoryId, long parentFolderId, String treePath, String name,
+		String extension, String mimeType, String description,
+		String changeLog, String extraSettings, String version, long versionId,
+		long size, String checksum, String event, String lanTokenKey,
 		java.util.Date lockExpirationDate, long lockUserId,
-		java.lang.String lockUserName, java.lang.String type, long typePK,
-		java.lang.String typeUuid)
+		String lockUserName, String type, long typePK, String typeUuid)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addSyncDLObject(companyId, userId, userName, modifiedTime,
@@ -146,8 +139,7 @@ public class SyncDLObjectLocalServiceUtil {
 		return getService().deleteSyncDLObject(syncDLObject);
 	}
 
-	public static void deleteSyncDLObjects(java.lang.String version,
-		java.lang.String type) {
+	public static void deleteSyncDLObjects(String version, String type) {
 		getService().deleteSyncDLObjects(version, type);
 	}
 
@@ -235,7 +227,7 @@ public class SyncDLObjectLocalServiceUtil {
 	}
 
 	public static com.liferay.sync.model.SyncDLObject fetchSyncDLObject(
-		java.lang.String type, long typePK) {
+		String type, long typePK) {
 		return getService().fetchSyncDLObject(type, typePK);
 	}
 
@@ -256,7 +248,7 @@ public class SyncDLObjectLocalServiceUtil {
 	*
 	* @return the OSGi service identifier
 	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
+	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 

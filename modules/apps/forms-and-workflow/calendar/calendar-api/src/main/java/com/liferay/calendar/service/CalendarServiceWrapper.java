@@ -35,9 +35,9 @@ public class CalendarServiceWrapper implements CalendarService,
 	@Override
 	public com.liferay.calendar.model.Calendar addCalendar(long groupId,
 		long calendarResourceId,
-		java.util.Map<java.util.Locale, java.lang.String> nameMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		java.lang.String timeZoneId, int color, boolean defaultCalendar,
+		java.util.Map<java.util.Locale, String> nameMap,
+		java.util.Map<java.util.Locale, String> descriptionMap,
+		String timeZoneId, int color, boolean defaultCalendar,
 		boolean enableComments, boolean enableRatings,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -53,8 +53,8 @@ public class CalendarServiceWrapper implements CalendarService,
 	}
 
 	@Override
-	public java.lang.String exportCalendar(long calendarId,
-		java.lang.String type) throws java.lang.Exception {
+	public String exportCalendar(long calendarId, String type)
+		throws Exception {
 		return _calendarService.exportCalendar(calendarId, type);
 	}
 
@@ -92,13 +92,13 @@ public class CalendarServiceWrapper implements CalendarService,
 	* @return the OSGi service identifier
 	*/
 	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
+	public String getOSGiServiceIdentifier() {
 		return _calendarService.getOSGiServiceIdentifier();
 	}
 
 	@Override
-	public void importCalendar(long calendarId, java.lang.String data,
-		java.lang.String type) throws java.lang.Exception {
+	public void importCalendar(long calendarId, String data, String type)
+		throws Exception {
 		_calendarService.importCalendar(calendarId, data, type);
 	}
 
@@ -111,7 +111,7 @@ public class CalendarServiceWrapper implements CalendarService,
 	@Override
 	public java.util.List<com.liferay.calendar.model.Calendar> search(
 		long companyId, long[] groupIds, long[] calendarResourceIds,
-		java.lang.String keywords, boolean andOperator, int start, int end,
+		String keywords, boolean andOperator, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.calendar.model.Calendar> orderByComparator)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _calendarService.search(companyId, groupIds,
@@ -122,9 +122,9 @@ public class CalendarServiceWrapper implements CalendarService,
 	@Override
 	public java.util.List<com.liferay.calendar.model.Calendar> search(
 		long companyId, long[] groupIds, long[] calendarResourceIds,
-		java.lang.String keywords, boolean andOperator, int start, int end,
+		String keywords, boolean andOperator, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.calendar.model.Calendar> orderByComparator,
-		java.lang.String actionId)
+		String actionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _calendarService.search(companyId, groupIds,
 			calendarResourceIds, keywords, andOperator, start, end,
@@ -134,8 +134,8 @@ public class CalendarServiceWrapper implements CalendarService,
 	@Override
 	public java.util.List<com.liferay.calendar.model.Calendar> search(
 		long companyId, long[] groupIds, long[] calendarResourceIds,
-		java.lang.String name, java.lang.String description,
-		boolean andOperator, int start, int end,
+		String name, String description, boolean andOperator, int start,
+		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.calendar.model.Calendar> orderByComparator)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _calendarService.search(companyId, groupIds,
@@ -146,10 +146,10 @@ public class CalendarServiceWrapper implements CalendarService,
 	@Override
 	public java.util.List<com.liferay.calendar.model.Calendar> search(
 		long companyId, long[] groupIds, long[] calendarResourceIds,
-		java.lang.String name, java.lang.String description,
-		boolean andOperator, int start, int end,
+		String name, String description, boolean andOperator, int start,
+		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.calendar.model.Calendar> orderByComparator,
-		java.lang.String actionId)
+		String actionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _calendarService.search(companyId, groupIds,
 			calendarResourceIds, name, description, andOperator, start, end,
@@ -158,8 +158,7 @@ public class CalendarServiceWrapper implements CalendarService,
 
 	@Override
 	public int searchCount(long companyId, long[] groupIds,
-		long[] calendarResourceIds, java.lang.String keywords,
-		boolean andOperator)
+		long[] calendarResourceIds, String keywords, boolean andOperator)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _calendarService.searchCount(companyId, groupIds,
 			calendarResourceIds, keywords, andOperator);
@@ -167,8 +166,8 @@ public class CalendarServiceWrapper implements CalendarService,
 
 	@Override
 	public int searchCount(long companyId, long[] groupIds,
-		long[] calendarResourceIds, java.lang.String keywords,
-		boolean andOperator, java.lang.String actionId)
+		long[] calendarResourceIds, String keywords, boolean andOperator,
+		String actionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _calendarService.searchCount(companyId, groupIds,
 			calendarResourceIds, keywords, andOperator, actionId);
@@ -176,8 +175,8 @@ public class CalendarServiceWrapper implements CalendarService,
 
 	@Override
 	public int searchCount(long companyId, long[] groupIds,
-		long[] calendarResourceIds, java.lang.String name,
-		java.lang.String description, boolean andOperator)
+		long[] calendarResourceIds, String name, String description,
+		boolean andOperator)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _calendarService.searchCount(companyId, groupIds,
 			calendarResourceIds, name, description, andOperator);
@@ -185,9 +184,8 @@ public class CalendarServiceWrapper implements CalendarService,
 
 	@Override
 	public int searchCount(long companyId, long[] groupIds,
-		long[] calendarResourceIds, java.lang.String name,
-		java.lang.String description, boolean andOperator,
-		java.lang.String actionId)
+		long[] calendarResourceIds, String name, String description,
+		boolean andOperator, String actionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _calendarService.searchCount(companyId, groupIds,
 			calendarResourceIds, name, description, andOperator, actionId);
@@ -195,9 +193,8 @@ public class CalendarServiceWrapper implements CalendarService,
 
 	@Override
 	public com.liferay.calendar.model.Calendar updateCalendar(long calendarId,
-		java.util.Map<java.util.Locale, java.lang.String> nameMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		int color,
+		java.util.Map<java.util.Locale, String> nameMap,
+		java.util.Map<java.util.Locale, String> descriptionMap, int color,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _calendarService.updateCalendar(calendarId, nameMap,
@@ -206,9 +203,9 @@ public class CalendarServiceWrapper implements CalendarService,
 
 	@Override
 	public com.liferay.calendar.model.Calendar updateCalendar(long calendarId,
-		java.util.Map<java.util.Locale, java.lang.String> nameMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		java.lang.String timeZoneId, int color, boolean defaultCalendar,
+		java.util.Map<java.util.Locale, String> nameMap,
+		java.util.Map<java.util.Locale, String> descriptionMap,
+		String timeZoneId, int color, boolean defaultCalendar,
 		boolean enableComments, boolean enableRatings,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {

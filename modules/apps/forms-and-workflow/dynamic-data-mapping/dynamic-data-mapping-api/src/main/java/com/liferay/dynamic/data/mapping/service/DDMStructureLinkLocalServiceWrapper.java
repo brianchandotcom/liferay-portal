@@ -286,7 +286,7 @@ public class DDMStructureLinkLocalServiceWrapper
 	* @return the OSGi service identifier
 	*/
 	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
+	public String getOSGiServiceIdentifier() {
 		return _ddmStructureLinkLocalService.getOSGiServiceIdentifier();
 	}
 
@@ -355,7 +355,7 @@ public class DDMStructureLinkLocalServiceWrapper
 
 	@Override
 	public java.util.List<com.liferay.dynamic.data.mapping.model.DDMStructure> getStructureLinkStructures(
-		long classNameId, long classPK, java.lang.String keywords)
+		long classNameId, long classPK, String keywords)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _ddmStructureLinkLocalService.getStructureLinkStructures(classNameId,
 			classPK, keywords);
@@ -363,16 +363,15 @@ public class DDMStructureLinkLocalServiceWrapper
 
 	@Override
 	public java.util.List<com.liferay.dynamic.data.mapping.model.DDMStructure> getStructureLinkStructures(
-		long classNameId, long classPK, java.lang.String keywords, int start,
-		int end) throws com.liferay.portal.kernel.exception.PortalException {
+		long classNameId, long classPK, String keywords, int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _ddmStructureLinkLocalService.getStructureLinkStructures(classNameId,
 			classPK, keywords, start, end);
 	}
 
 	@Override
 	public java.util.List<com.liferay.dynamic.data.mapping.model.DDMStructure> getStructureLinkStructures(
-		long classNameId, long classPK, java.lang.String keywords, int start,
-		int end,
+		long classNameId, long classPK, String keywords, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.mapping.model.DDMStructureLink> orderByComparator)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _ddmStructureLinkLocalService.getStructureLinkStructures(classNameId,
@@ -381,7 +380,7 @@ public class DDMStructureLinkLocalServiceWrapper
 
 	@Override
 	public int getStructureLinkStructuresCount(long classNameId, long classPK,
-		java.lang.String keywords) {
+		String keywords) {
 		return _ddmStructureLinkLocalService.getStructureLinkStructuresCount(classNameId,
 			classPK, keywords);
 	}

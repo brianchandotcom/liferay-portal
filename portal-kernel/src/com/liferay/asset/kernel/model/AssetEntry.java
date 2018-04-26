@@ -62,7 +62,7 @@ public interface AssetEntry extends AssetEntryModel, PersistedModel {
 
 	public long[] getCategoryIds();
 
-	public java.lang.String[] getTagNames();
+	public String[] getTagNames();
 
 	public java.util.List<AssetTag> getTags();
 }

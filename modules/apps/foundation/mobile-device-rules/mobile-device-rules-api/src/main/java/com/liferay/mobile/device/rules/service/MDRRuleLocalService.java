@@ -79,15 +79,12 @@ public interface MDRRuleLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.REINDEX)
 	public MDRRule addMDRRule(MDRRule mdrRule);
 
-	public MDRRule addRule(long ruleGroupId,
-		Map<Locale, java.lang.String> nameMap,
-		Map<Locale, java.lang.String> descriptionMap, java.lang.String type,
-		java.lang.String typeSettings, ServiceContext serviceContext)
-		throws PortalException;
+	public MDRRule addRule(long ruleGroupId, Map<Locale, String> nameMap,
+		Map<Locale, String> descriptionMap, String type, String typeSettings,
+		ServiceContext serviceContext) throws PortalException;
 
-	public MDRRule addRule(long ruleGroupId,
-		Map<Locale, java.lang.String> nameMap,
-		Map<Locale, java.lang.String> descriptionMap, java.lang.String type,
+	public MDRRule addRule(long ruleGroupId, Map<Locale, String> nameMap,
+		Map<Locale, String> descriptionMap, String type,
 		UnicodeProperties typeSettingsProperties, ServiceContext serviceContext)
 		throws PortalException;
 
@@ -209,8 +206,7 @@ public interface MDRRuleLocalService extends BaseLocalService,
 	* @return the matching mdr rule, or <code>null</code> if a matching mdr rule could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public MDRRule fetchMDRRuleByUuidAndGroupId(java.lang.String uuid,
-		long groupId);
+	public MDRRule fetchMDRRuleByUuidAndGroupId(String uuid, long groupId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public MDRRule fetchRule(long ruleId);
@@ -244,8 +240,8 @@ public interface MDRRuleLocalService extends BaseLocalService,
 	* @throws PortalException if a matching mdr rule could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public MDRRule getMDRRuleByUuidAndGroupId(java.lang.String uuid,
-		long groupId) throws PortalException;
+	public MDRRule getMDRRuleByUuidAndGroupId(String uuid, long groupId)
+		throws PortalException;
 
 	/**
 	* Returns a range of all the mdr rules.
@@ -269,7 +265,7 @@ public interface MDRRuleLocalService extends BaseLocalService,
 	* @return the matching mdr rules, or an empty list if no matches were found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<MDRRule> getMDRRulesByUuidAndCompanyId(java.lang.String uuid,
+	public List<MDRRule> getMDRRulesByUuidAndCompanyId(String uuid,
 		long companyId);
 
 	/**
@@ -283,7 +279,7 @@ public interface MDRRuleLocalService extends BaseLocalService,
 	* @return the range of matching mdr rules, or an empty list if no matches were found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<MDRRule> getMDRRulesByUuidAndCompanyId(java.lang.String uuid,
+	public List<MDRRule> getMDRRulesByUuidAndCompanyId(String uuid,
 		long companyId, int start, int end,
 		OrderByComparator<MDRRule> orderByComparator);
 
@@ -300,7 +296,7 @@ public interface MDRRuleLocalService extends BaseLocalService,
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -332,15 +328,12 @@ public interface MDRRuleLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.REINDEX)
 	public MDRRule updateMDRRule(MDRRule mdrRule);
 
-	public MDRRule updateRule(long ruleId,
-		Map<Locale, java.lang.String> nameMap,
-		Map<Locale, java.lang.String> descriptionMap, java.lang.String type,
-		java.lang.String typeSettings, ServiceContext serviceContext)
-		throws PortalException;
+	public MDRRule updateRule(long ruleId, Map<Locale, String> nameMap,
+		Map<Locale, String> descriptionMap, String type, String typeSettings,
+		ServiceContext serviceContext) throws PortalException;
 
-	public MDRRule updateRule(long ruleId,
-		Map<Locale, java.lang.String> nameMap,
-		Map<Locale, java.lang.String> descriptionMap, java.lang.String type,
+	public MDRRule updateRule(long ruleId, Map<Locale, String> nameMap,
+		Map<Locale, String> descriptionMap, String type,
 		UnicodeProperties typeSettingsProperties, ServiceContext serviceContext)
 		throws PortalException;
 }

@@ -56,14 +56,13 @@ public interface FragmentCollectionService extends BaseService {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link FragmentCollectionServiceUtil} to access the fragment collection remote service. Add custom service methods to {@link com.liferay.fragment.service.impl.FragmentCollectionServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public FragmentCollection addFragmentCollection(long groupId,
-		java.lang.String name, java.lang.String description,
-		ServiceContext serviceContext) throws PortalException;
+	public FragmentCollection addFragmentCollection(long groupId, String name,
+		String description, ServiceContext serviceContext)
+		throws PortalException;
 
 	public FragmentCollection addFragmentCollection(long groupId,
-		java.lang.String fragmentCollectionKey, java.lang.String name,
-		java.lang.String description, ServiceContext serviceContext)
-		throws PortalException;
+		String fragmentCollectionKey, String name, String description,
+		ServiceContext serviceContext) throws PortalException;
 
 	public FragmentCollection deleteFragmentCollection(
 		long fragmentCollectionId) throws PortalException;
@@ -89,27 +88,27 @@ public interface FragmentCollectionService extends BaseService {
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<FragmentCollection> getFragmentCollections(long groupId,
-		java.lang.String name, int start, int end,
+		String name, int start, int end,
 		OrderByComparator<FragmentCollection> orderByComparator);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getFragmentCollectionsCount(long groupId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getFragmentCollectionsCount(long groupId, java.lang.String name);
+	public int getFragmentCollectionsCount(long groupId, String name);
 
 	/**
 	* Returns the OSGi service identifier.
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.lang.String[] getTempFileNames(long groupId,
-		java.lang.String folderName) throws PortalException;
+	public String[] getTempFileNames(long groupId, String folderName)
+		throws PortalException;
 
 	public FragmentCollection updateFragmentCollection(
-		long fragmentCollectionId, java.lang.String name,
-		java.lang.String description) throws PortalException;
+		long fragmentCollectionId, String name, String description)
+		throws PortalException;
 }

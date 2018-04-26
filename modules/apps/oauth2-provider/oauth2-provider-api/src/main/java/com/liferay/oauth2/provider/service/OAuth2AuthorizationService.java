@@ -70,7 +70,7 @@ public interface OAuth2AuthorizationService extends BaseService {
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<OAuth2Authorization> getUserOAuth2Authorizations(int start,

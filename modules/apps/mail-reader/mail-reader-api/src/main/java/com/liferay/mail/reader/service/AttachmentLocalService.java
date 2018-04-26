@@ -73,8 +73,8 @@ public interface AttachmentLocalService extends BaseLocalService,
 	public Attachment addAttachment(Attachment attachment);
 
 	public Attachment addAttachment(long userId, long messageId,
-		java.lang.String contentPath, java.lang.String fileName, long size,
-		File file) throws PortalException;
+		String contentPath, String fileName, long size, File file)
+		throws PortalException;
 
 	/**
 	* Creates a new attachment with the primary key. Does not add the attachment to the database.
@@ -231,7 +231,7 @@ public interface AttachmentLocalService extends BaseLocalService,
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

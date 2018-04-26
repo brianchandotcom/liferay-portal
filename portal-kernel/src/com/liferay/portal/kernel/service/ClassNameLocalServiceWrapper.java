@@ -44,8 +44,7 @@ public class ClassNameLocalServiceWrapper implements ClassNameLocalService,
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.ClassName addClassName(
-		java.lang.String value) {
+	public com.liferay.portal.kernel.model.ClassName addClassName(String value) {
 		return _classNameLocalService.addClassName(value);
 	}
 
@@ -200,7 +199,7 @@ public class ClassNameLocalServiceWrapper implements ClassNameLocalService,
 
 	@Override
 	public com.liferay.portal.kernel.model.ClassName fetchClassName(
-		java.lang.String value) {
+		String value) {
 		return _classNameLocalService.fetchClassName(value);
 	}
 
@@ -224,18 +223,17 @@ public class ClassNameLocalServiceWrapper implements ClassNameLocalService,
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.ClassName getClassName(
-		java.lang.String value) {
+	public com.liferay.portal.kernel.model.ClassName getClassName(String value) {
 		return _classNameLocalService.getClassName(value);
 	}
 
 	@Override
-	public long getClassNameId(java.lang.Class<?> clazz) {
+	public long getClassNameId(Class<?> clazz) {
 		return _classNameLocalService.getClassNameId(clazz);
 	}
 
 	@Override
-	public long getClassNameId(java.lang.String value) {
+	public long getClassNameId(String value) {
 		return _classNameLocalService.getClassNameId(value);
 	}
 
@@ -277,7 +275,7 @@ public class ClassNameLocalServiceWrapper implements ClassNameLocalService,
 	* @return the OSGi service identifier
 	*/
 	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
+	public String getOSGiServiceIdentifier() {
 		return _classNameLocalService.getOSGiServiceIdentifier();
 	}
 
@@ -289,7 +287,7 @@ public class ClassNameLocalServiceWrapper implements ClassNameLocalService,
 	}
 
 	@Override
-	public java.lang.String getRegistryName() {
+	public String getRegistryName() {
 		return _classNameLocalService.getRegistryName();
 	}
 

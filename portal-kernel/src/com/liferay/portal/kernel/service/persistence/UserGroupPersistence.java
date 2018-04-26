@@ -45,7 +45,7 @@ public interface UserGroupPersistence extends BasePersistence<UserGroup> {
 	* @param uuid the uuid
 	* @return the matching user groups
 	*/
-	public java.util.List<UserGroup> findByUuid(java.lang.String uuid);
+	public java.util.List<UserGroup> findByUuid(String uuid);
 
 	/**
 	* Returns a range of all the user groups where uuid = &#63;.
@@ -59,8 +59,7 @@ public interface UserGroupPersistence extends BasePersistence<UserGroup> {
 	* @param end the upper bound of the range of user groups (not inclusive)
 	* @return the range of matching user groups
 	*/
-	public java.util.List<UserGroup> findByUuid(java.lang.String uuid,
-		int start, int end);
+	public java.util.List<UserGroup> findByUuid(String uuid, int start, int end);
 
 	/**
 	* Returns an ordered range of all the user groups where uuid = &#63;.
@@ -75,8 +74,8 @@ public interface UserGroupPersistence extends BasePersistence<UserGroup> {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching user groups
 	*/
-	public java.util.List<UserGroup> findByUuid(java.lang.String uuid,
-		int start, int end,
+	public java.util.List<UserGroup> findByUuid(String uuid, int start,
+		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<UserGroup> orderByComparator);
 
 	/**
@@ -93,8 +92,8 @@ public interface UserGroupPersistence extends BasePersistence<UserGroup> {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching user groups
 	*/
-	public java.util.List<UserGroup> findByUuid(java.lang.String uuid,
-		int start, int end,
+	public java.util.List<UserGroup> findByUuid(String uuid, int start,
+		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<UserGroup> orderByComparator,
 		boolean retrieveFromCache);
 
@@ -106,7 +105,7 @@ public interface UserGroupPersistence extends BasePersistence<UserGroup> {
 	* @return the first matching user group
 	* @throws NoSuchUserGroupException if a matching user group could not be found
 	*/
-	public UserGroup findByUuid_First(java.lang.String uuid,
+	public UserGroup findByUuid_First(String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<UserGroup> orderByComparator)
 		throws NoSuchUserGroupException;
 
@@ -117,7 +116,7 @@ public interface UserGroupPersistence extends BasePersistence<UserGroup> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching user group, or <code>null</code> if a matching user group could not be found
 	*/
-	public UserGroup fetchByUuid_First(java.lang.String uuid,
+	public UserGroup fetchByUuid_First(String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<UserGroup> orderByComparator);
 
 	/**
@@ -128,7 +127,7 @@ public interface UserGroupPersistence extends BasePersistence<UserGroup> {
 	* @return the last matching user group
 	* @throws NoSuchUserGroupException if a matching user group could not be found
 	*/
-	public UserGroup findByUuid_Last(java.lang.String uuid,
+	public UserGroup findByUuid_Last(String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<UserGroup> orderByComparator)
 		throws NoSuchUserGroupException;
 
@@ -139,7 +138,7 @@ public interface UserGroupPersistence extends BasePersistence<UserGroup> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching user group, or <code>null</code> if a matching user group could not be found
 	*/
-	public UserGroup fetchByUuid_Last(java.lang.String uuid,
+	public UserGroup fetchByUuid_Last(String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<UserGroup> orderByComparator);
 
 	/**
@@ -151,8 +150,7 @@ public interface UserGroupPersistence extends BasePersistence<UserGroup> {
 	* @return the previous, current, and next user group
 	* @throws NoSuchUserGroupException if a user group with the primary key could not be found
 	*/
-	public UserGroup[] findByUuid_PrevAndNext(long userGroupId,
-		java.lang.String uuid,
+	public UserGroup[] findByUuid_PrevAndNext(long userGroupId, String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<UserGroup> orderByComparator)
 		throws NoSuchUserGroupException;
 
@@ -162,7 +160,7 @@ public interface UserGroupPersistence extends BasePersistence<UserGroup> {
 	* @param uuid the uuid
 	* @return the matching user groups that the user has permission to view
 	*/
-	public java.util.List<UserGroup> filterFindByUuid(java.lang.String uuid);
+	public java.util.List<UserGroup> filterFindByUuid(String uuid);
 
 	/**
 	* Returns a range of all the user groups that the user has permission to view where uuid = &#63;.
@@ -176,8 +174,8 @@ public interface UserGroupPersistence extends BasePersistence<UserGroup> {
 	* @param end the upper bound of the range of user groups (not inclusive)
 	* @return the range of matching user groups that the user has permission to view
 	*/
-	public java.util.List<UserGroup> filterFindByUuid(java.lang.String uuid,
-		int start, int end);
+	public java.util.List<UserGroup> filterFindByUuid(String uuid, int start,
+		int end);
 
 	/**
 	* Returns an ordered range of all the user groups that the user has permissions to view where uuid = &#63;.
@@ -192,8 +190,8 @@ public interface UserGroupPersistence extends BasePersistence<UserGroup> {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching user groups that the user has permission to view
 	*/
-	public java.util.List<UserGroup> filterFindByUuid(java.lang.String uuid,
-		int start, int end,
+	public java.util.List<UserGroup> filterFindByUuid(String uuid, int start,
+		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<UserGroup> orderByComparator);
 
 	/**
@@ -206,7 +204,7 @@ public interface UserGroupPersistence extends BasePersistence<UserGroup> {
 	* @throws NoSuchUserGroupException if a user group with the primary key could not be found
 	*/
 	public UserGroup[] filterFindByUuid_PrevAndNext(long userGroupId,
-		java.lang.String uuid,
+		String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<UserGroup> orderByComparator)
 		throws NoSuchUserGroupException;
 
@@ -215,7 +213,7 @@ public interface UserGroupPersistence extends BasePersistence<UserGroup> {
 	*
 	* @param uuid the uuid
 	*/
-	public void removeByUuid(java.lang.String uuid);
+	public void removeByUuid(String uuid);
 
 	/**
 	* Returns the number of user groups where uuid = &#63;.
@@ -223,7 +221,7 @@ public interface UserGroupPersistence extends BasePersistence<UserGroup> {
 	* @param uuid the uuid
 	* @return the number of matching user groups
 	*/
-	public int countByUuid(java.lang.String uuid);
+	public int countByUuid(String uuid);
 
 	/**
 	* Returns the number of user groups that the user has permission to view where uuid = &#63;.
@@ -231,7 +229,7 @@ public interface UserGroupPersistence extends BasePersistence<UserGroup> {
 	* @param uuid the uuid
 	* @return the number of matching user groups that the user has permission to view
 	*/
-	public int filterCountByUuid(java.lang.String uuid);
+	public int filterCountByUuid(String uuid);
 
 	/**
 	* Returns all the user groups where uuid = &#63; and companyId = &#63;.
@@ -240,8 +238,7 @@ public interface UserGroupPersistence extends BasePersistence<UserGroup> {
 	* @param companyId the company ID
 	* @return the matching user groups
 	*/
-	public java.util.List<UserGroup> findByUuid_C(java.lang.String uuid,
-		long companyId);
+	public java.util.List<UserGroup> findByUuid_C(String uuid, long companyId);
 
 	/**
 	* Returns a range of all the user groups where uuid = &#63; and companyId = &#63;.
@@ -256,8 +253,8 @@ public interface UserGroupPersistence extends BasePersistence<UserGroup> {
 	* @param end the upper bound of the range of user groups (not inclusive)
 	* @return the range of matching user groups
 	*/
-	public java.util.List<UserGroup> findByUuid_C(java.lang.String uuid,
-		long companyId, int start, int end);
+	public java.util.List<UserGroup> findByUuid_C(String uuid, long companyId,
+		int start, int end);
 
 	/**
 	* Returns an ordered range of all the user groups where uuid = &#63; and companyId = &#63;.
@@ -273,8 +270,8 @@ public interface UserGroupPersistence extends BasePersistence<UserGroup> {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching user groups
 	*/
-	public java.util.List<UserGroup> findByUuid_C(java.lang.String uuid,
-		long companyId, int start, int end,
+	public java.util.List<UserGroup> findByUuid_C(String uuid, long companyId,
+		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<UserGroup> orderByComparator);
 
 	/**
@@ -292,8 +289,8 @@ public interface UserGroupPersistence extends BasePersistence<UserGroup> {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching user groups
 	*/
-	public java.util.List<UserGroup> findByUuid_C(java.lang.String uuid,
-		long companyId, int start, int end,
+	public java.util.List<UserGroup> findByUuid_C(String uuid, long companyId,
+		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<UserGroup> orderByComparator,
 		boolean retrieveFromCache);
 
@@ -306,7 +303,7 @@ public interface UserGroupPersistence extends BasePersistence<UserGroup> {
 	* @return the first matching user group
 	* @throws NoSuchUserGroupException if a matching user group could not be found
 	*/
-	public UserGroup findByUuid_C_First(java.lang.String uuid, long companyId,
+	public UserGroup findByUuid_C_First(String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<UserGroup> orderByComparator)
 		throws NoSuchUserGroupException;
 
@@ -318,7 +315,7 @@ public interface UserGroupPersistence extends BasePersistence<UserGroup> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching user group, or <code>null</code> if a matching user group could not be found
 	*/
-	public UserGroup fetchByUuid_C_First(java.lang.String uuid, long companyId,
+	public UserGroup fetchByUuid_C_First(String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<UserGroup> orderByComparator);
 
 	/**
@@ -330,7 +327,7 @@ public interface UserGroupPersistence extends BasePersistence<UserGroup> {
 	* @return the last matching user group
 	* @throws NoSuchUserGroupException if a matching user group could not be found
 	*/
-	public UserGroup findByUuid_C_Last(java.lang.String uuid, long companyId,
+	public UserGroup findByUuid_C_Last(String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<UserGroup> orderByComparator)
 		throws NoSuchUserGroupException;
 
@@ -342,7 +339,7 @@ public interface UserGroupPersistence extends BasePersistence<UserGroup> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching user group, or <code>null</code> if a matching user group could not be found
 	*/
-	public UserGroup fetchByUuid_C_Last(java.lang.String uuid, long companyId,
+	public UserGroup fetchByUuid_C_Last(String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<UserGroup> orderByComparator);
 
 	/**
@@ -355,8 +352,8 @@ public interface UserGroupPersistence extends BasePersistence<UserGroup> {
 	* @return the previous, current, and next user group
 	* @throws NoSuchUserGroupException if a user group with the primary key could not be found
 	*/
-	public UserGroup[] findByUuid_C_PrevAndNext(long userGroupId,
-		java.lang.String uuid, long companyId,
+	public UserGroup[] findByUuid_C_PrevAndNext(long userGroupId, String uuid,
+		long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<UserGroup> orderByComparator)
 		throws NoSuchUserGroupException;
 
@@ -367,7 +364,7 @@ public interface UserGroupPersistence extends BasePersistence<UserGroup> {
 	* @param companyId the company ID
 	* @return the matching user groups that the user has permission to view
 	*/
-	public java.util.List<UserGroup> filterFindByUuid_C(java.lang.String uuid,
+	public java.util.List<UserGroup> filterFindByUuid_C(String uuid,
 		long companyId);
 
 	/**
@@ -383,7 +380,7 @@ public interface UserGroupPersistence extends BasePersistence<UserGroup> {
 	* @param end the upper bound of the range of user groups (not inclusive)
 	* @return the range of matching user groups that the user has permission to view
 	*/
-	public java.util.List<UserGroup> filterFindByUuid_C(java.lang.String uuid,
+	public java.util.List<UserGroup> filterFindByUuid_C(String uuid,
 		long companyId, int start, int end);
 
 	/**
@@ -400,7 +397,7 @@ public interface UserGroupPersistence extends BasePersistence<UserGroup> {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching user groups that the user has permission to view
 	*/
-	public java.util.List<UserGroup> filterFindByUuid_C(java.lang.String uuid,
+	public java.util.List<UserGroup> filterFindByUuid_C(String uuid,
 		long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<UserGroup> orderByComparator);
 
@@ -415,7 +412,7 @@ public interface UserGroupPersistence extends BasePersistence<UserGroup> {
 	* @throws NoSuchUserGroupException if a user group with the primary key could not be found
 	*/
 	public UserGroup[] filterFindByUuid_C_PrevAndNext(long userGroupId,
-		java.lang.String uuid, long companyId,
+		String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<UserGroup> orderByComparator)
 		throws NoSuchUserGroupException;
 
@@ -425,7 +422,7 @@ public interface UserGroupPersistence extends BasePersistence<UserGroup> {
 	* @param uuid the uuid
 	* @param companyId the company ID
 	*/
-	public void removeByUuid_C(java.lang.String uuid, long companyId);
+	public void removeByUuid_C(String uuid, long companyId);
 
 	/**
 	* Returns the number of user groups where uuid = &#63; and companyId = &#63;.
@@ -434,7 +431,7 @@ public interface UserGroupPersistence extends BasePersistence<UserGroup> {
 	* @param companyId the company ID
 	* @return the number of matching user groups
 	*/
-	public int countByUuid_C(java.lang.String uuid, long companyId);
+	public int countByUuid_C(String uuid, long companyId);
 
 	/**
 	* Returns the number of user groups that the user has permission to view where uuid = &#63; and companyId = &#63;.
@@ -443,7 +440,7 @@ public interface UserGroupPersistence extends BasePersistence<UserGroup> {
 	* @param companyId the company ID
 	* @return the number of matching user groups that the user has permission to view
 	*/
-	public int filterCountByUuid_C(java.lang.String uuid, long companyId);
+	public int filterCountByUuid_C(String uuid, long companyId);
 
 	/**
 	* Returns all the user groups where companyId = &#63;.
@@ -859,7 +856,7 @@ public interface UserGroupPersistence extends BasePersistence<UserGroup> {
 	* @return the matching user group
 	* @throws NoSuchUserGroupException if a matching user group could not be found
 	*/
-	public UserGroup findByC_N(long companyId, java.lang.String name)
+	public UserGroup findByC_N(long companyId, String name)
 		throws NoSuchUserGroupException;
 
 	/**
@@ -869,7 +866,7 @@ public interface UserGroupPersistence extends BasePersistence<UserGroup> {
 	* @param name the name
 	* @return the matching user group, or <code>null</code> if a matching user group could not be found
 	*/
-	public UserGroup fetchByC_N(long companyId, java.lang.String name);
+	public UserGroup fetchByC_N(long companyId, String name);
 
 	/**
 	* Returns the user group where companyId = &#63; and name = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -879,7 +876,7 @@ public interface UserGroupPersistence extends BasePersistence<UserGroup> {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching user group, or <code>null</code> if a matching user group could not be found
 	*/
-	public UserGroup fetchByC_N(long companyId, java.lang.String name,
+	public UserGroup fetchByC_N(long companyId, String name,
 		boolean retrieveFromCache);
 
 	/**
@@ -889,7 +886,7 @@ public interface UserGroupPersistence extends BasePersistence<UserGroup> {
 	* @param name the name
 	* @return the user group that was removed
 	*/
-	public UserGroup removeByC_N(long companyId, java.lang.String name)
+	public UserGroup removeByC_N(long companyId, String name)
 		throws NoSuchUserGroupException;
 
 	/**
@@ -899,7 +896,7 @@ public interface UserGroupPersistence extends BasePersistence<UserGroup> {
 	* @param name the name
 	* @return the number of matching user groups
 	*/
-	public int countByC_N(long companyId, java.lang.String name);
+	public int countByC_N(long companyId, String name);
 
 	/**
 	* Caches the user group in the entity cache if it is enabled.
@@ -1513,5 +1510,5 @@ public interface UserGroupPersistence extends BasePersistence<UserGroup> {
 		java.util.List<com.liferay.portal.kernel.model.User> users);
 
 	@Override
-	public java.util.Set<java.lang.String> getBadColumnNames();
+	public java.util.Set<String> getBadColumnNames();
 }

@@ -82,7 +82,7 @@ public class ClassNameServiceHttp {
 	}
 
 	public static com.liferay.portal.kernel.model.ClassName fetchClassName(
-		HttpPrincipal httpPrincipal, java.lang.String value) {
+		HttpPrincipal httpPrincipal, String value) {
 		try {
 			MethodKey methodKey = new MethodKey(ClassNameServiceUtil.class,
 					"fetchClassName", _fetchClassNameParameterTypes1);
@@ -112,6 +112,6 @@ public class ClassNameServiceHttp {
 			long.class
 		};
 	private static final Class<?>[] _fetchClassNameParameterTypes1 = new Class[] {
-			java.lang.String.class
+			String.class
 		};
 }

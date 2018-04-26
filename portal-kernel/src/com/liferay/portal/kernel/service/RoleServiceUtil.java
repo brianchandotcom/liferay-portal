@@ -60,10 +60,10 @@ public class RoleServiceUtil {
 	* @return the role
 	*/
 	public static com.liferay.portal.kernel.model.Role addRole(
-		java.lang.String className, long classPK, java.lang.String name,
-		java.util.Map<java.util.Locale, java.lang.String> titleMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		int type, java.lang.String subtype, ServiceContext serviceContext)
+		String className, long classPK, String name,
+		java.util.Map<java.util.Locale, String> titleMap,
+		java.util.Map<java.util.Locale, String> descriptionMap, int type,
+		String subtype, ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addRole(className, classPK, name, titleMap, descriptionMap,
@@ -110,17 +110,16 @@ public class RoleServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.portal.kernel.model.Role> getGroupRolesAndTeamRoles(
-		long companyId, java.lang.String keywords,
-		java.util.List<java.lang.String> excludedNames, int[] types,
-		long excludedTeamRoleId, long teamGroupId, int start, int end) {
+		long companyId, String keywords, java.util.List<String> excludedNames,
+		int[] types, long excludedTeamRoleId, long teamGroupId, int start,
+		int end) {
 		return getService()
 				   .getGroupRolesAndTeamRoles(companyId, keywords,
 			excludedNames, types, excludedTeamRoleId, teamGroupId, start, end);
 	}
 
 	public static int getGroupRolesAndTeamRolesCount(long companyId,
-		java.lang.String keywords,
-		java.util.List<java.lang.String> excludedNames, int[] types,
+		String keywords, java.util.List<String> excludedNames, int[] types,
 		long excludedTeamRoleId, long teamGroupId) {
 		return getService()
 				   .getGroupRolesAndTeamRolesCount(companyId, keywords,
@@ -132,7 +131,7 @@ public class RoleServiceUtil {
 	*
 	* @return the OSGi service identifier
 	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
+	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 
@@ -160,13 +159,12 @@ public class RoleServiceUtil {
 	* @return the role with the name
 	*/
 	public static com.liferay.portal.kernel.model.Role getRole(long companyId,
-		java.lang.String name)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		String name) throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getRole(companyId, name);
 	}
 
 	public static java.util.List<com.liferay.portal.kernel.model.Role> getRoles(
-		int type, java.lang.String subtype)
+		int type, String subtype)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getRoles(type, subtype);
 	}
@@ -240,8 +238,8 @@ public class RoleServiceUtil {
 	* @return <code>true</code> if the user is associated with the regular
 	role; <code>false</code> otherwise
 	*/
-	public static boolean hasUserRole(long userId, long companyId,
-		java.lang.String name, boolean inherited)
+	public static boolean hasUserRole(long userId, long companyId, String name,
+		boolean inherited)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().hasUserRole(userId, companyId, name, inherited);
 	}
@@ -259,23 +257,21 @@ public class RoleServiceUtil {
 	<code>false</code> otherwise
 	*/
 	public static boolean hasUserRoles(long userId, long companyId,
-		java.lang.String[] names, boolean inherited)
+		String[] names, boolean inherited)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().hasUserRoles(userId, companyId, names, inherited);
 	}
 
 	public static java.util.List<com.liferay.portal.kernel.model.Role> search(
-		long companyId, java.lang.String keywords, java.lang.Integer[] types,
-		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
-		int start, int end,
+		long companyId, String keywords, Integer[] types,
+		java.util.LinkedHashMap<String, Object> params, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.kernel.model.Role> obc) {
 		return getService()
 				   .search(companyId, keywords, types, params, start, end, obc);
 	}
 
-	public static int searchCount(long companyId, java.lang.String keywords,
-		java.lang.Integer[] types,
-		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params) {
+	public static int searchCount(long companyId, String keywords,
+		Integer[] types, java.util.LinkedHashMap<String, Object> params) {
 		return getService().searchCount(companyId, keywords, types, params);
 	}
 
@@ -307,10 +303,9 @@ public class RoleServiceUtil {
 	* @return the role with the primary key
 	*/
 	public static com.liferay.portal.kernel.model.Role updateRole(long roleId,
-		java.lang.String name,
-		java.util.Map<java.util.Locale, java.lang.String> titleMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		java.lang.String subtype, ServiceContext serviceContext)
+		String name, java.util.Map<java.util.Locale, String> titleMap,
+		java.util.Map<java.util.Locale, String> descriptionMap, String subtype,
+		ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .updateRole(roleId, name, titleMap, descriptionMap, subtype,

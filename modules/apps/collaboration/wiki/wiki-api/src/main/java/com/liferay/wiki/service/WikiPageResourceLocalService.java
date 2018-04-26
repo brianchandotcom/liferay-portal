@@ -61,14 +61,14 @@ public interface WikiPageResourceLocalService extends BaseLocalService,
 	 * Never modify or reference this interface directly. Always use {@link WikiPageResourceLocalServiceUtil} to access the wiki page resource local service. Add custom service methods to {@link com.liferay.wiki.service.impl.WikiPageResourceLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	public WikiPageResource addPageResource(long groupId, long nodeId,
-		java.lang.String title);
+		String title);
 
 	/**
 	* @deprecated As of 1.2.0, replaced by {@link #addPageResource(long, long,
 	String)}
 	*/
-	@java.lang.Deprecated
-	public WikiPageResource addPageResource(long nodeId, java.lang.String title);
+	@Deprecated
+	public WikiPageResource addPageResource(long nodeId, String title);
 
 	/**
 	* Adds the wiki page resource to the database. Also notifies the appropriate model listeners.
@@ -89,7 +89,7 @@ public interface WikiPageResourceLocalService extends BaseLocalService,
 	@Transactional(enabled = false)
 	public WikiPageResource createWikiPageResource(long resourcePrimKey);
 
-	public void deletePageResource(long nodeId, java.lang.String title)
+	public void deletePageResource(long nodeId, String title)
 		throws PortalException;
 
 	/**
@@ -180,11 +180,10 @@ public interface WikiPageResourceLocalService extends BaseLocalService,
 		Projection projection);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public WikiPageResource fetchPageResource(long nodeId,
-		java.lang.String title);
+	public WikiPageResource fetchPageResource(long nodeId, String title);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public WikiPageResource fetchPageResource(java.lang.String uuid);
+	public WikiPageResource fetchPageResource(String uuid);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public WikiPageResource fetchWikiPageResource(long resourcePrimKey);
@@ -197,8 +196,8 @@ public interface WikiPageResourceLocalService extends BaseLocalService,
 	* @return the matching wiki page resource, or <code>null</code> if a matching wiki page resource could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public WikiPageResource fetchWikiPageResourceByUuidAndGroupId(
-		java.lang.String uuid, long groupId);
+	public WikiPageResource fetchWikiPageResourceByUuidAndGroupId(String uuid,
+		long groupId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
@@ -211,27 +210,26 @@ public interface WikiPageResourceLocalService extends BaseLocalService,
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public WikiPageResource getPageResource(long pageResourcePrimKey)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public WikiPageResource getPageResource(long nodeId, java.lang.String title)
+	public WikiPageResource getPageResource(long nodeId, String title)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public long getPageResourcePrimKey(long groupId, long nodeId,
-		java.lang.String title);
+	public long getPageResourcePrimKey(long groupId, long nodeId, String title);
 
 	/**
 	* @deprecated As of 1.2.0, replaced by {@link #getPageResourcePrimKey(long,
 	long, String)}
 	*/
-	@java.lang.Deprecated
+	@Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public long getPageResourcePrimKey(long nodeId, java.lang.String title);
+	public long getPageResourcePrimKey(long nodeId, String title);
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -258,8 +256,8 @@ public interface WikiPageResourceLocalService extends BaseLocalService,
 	* @throws PortalException if a matching wiki page resource could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public WikiPageResource getWikiPageResourceByUuidAndGroupId(
-		java.lang.String uuid, long groupId) throws PortalException;
+	public WikiPageResource getWikiPageResourceByUuidAndGroupId(String uuid,
+		long groupId) throws PortalException;
 
 	/**
 	* Returns a range of all the wiki page resources.
@@ -284,7 +282,7 @@ public interface WikiPageResourceLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<WikiPageResource> getWikiPageResourcesByUuidAndCompanyId(
-		java.lang.String uuid, long companyId);
+		String uuid, long companyId);
 
 	/**
 	* Returns a range of wiki page resources matching the UUID and company.
@@ -298,7 +296,7 @@ public interface WikiPageResourceLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<WikiPageResource> getWikiPageResourcesByUuidAndCompanyId(
-		java.lang.String uuid, long companyId, int start, int end,
+		String uuid, long companyId, int start, int end,
 		OrderByComparator<WikiPageResource> orderByComparator);
 
 	/**

@@ -54,8 +54,8 @@ public interface AssetCategoryPropertyService extends BaseService {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link AssetCategoryPropertyServiceUtil} to access the asset category property remote service. Add custom service methods to {@link com.liferay.portlet.asset.service.impl.AssetCategoryPropertyServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public AssetCategoryProperty addCategoryProperty(long entryId,
-		java.lang.String key, java.lang.String value) throws PortalException;
+	public AssetCategoryProperty addCategoryProperty(long entryId, String key,
+		String value) throws PortalException;
 
 	public void deleteCategoryProperty(long categoryPropertyId)
 		throws PortalException;
@@ -65,20 +65,20 @@ public interface AssetCategoryPropertyService extends BaseService {
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<AssetCategoryProperty> getCategoryPropertyValues(
-		long companyId, java.lang.String key);
+		long companyId, String key);
 
 	/**
 	* Returns the OSGi service identifier.
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	public AssetCategoryProperty updateCategoryProperty(long userId,
-		long categoryPropertyId, java.lang.String key, java.lang.String value)
+		long categoryPropertyId, String key, String value)
 		throws PortalException;
 
 	public AssetCategoryProperty updateCategoryProperty(
-		long categoryPropertyId, java.lang.String key, java.lang.String value)
+		long categoryPropertyId, String key, String value)
 		throws PortalException;
 }

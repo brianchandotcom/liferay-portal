@@ -26,8 +26,7 @@ public interface BlogsEntryFinder {
 		java.util.Date displayDate,
 		com.liferay.portal.kernel.dao.orm.QueryDefinition<com.liferay.blogs.model.BlogsEntry> queryDefinition);
 
-	public int countByOrganizationIds(
-		java.util.List<java.lang.Long> organizationIds,
+	public int countByOrganizationIds(java.util.List<Long> organizationIds,
 		java.util.Date displayDate,
 		com.liferay.portal.kernel.dao.orm.QueryDefinition<com.liferay.blogs.model.BlogsEntry> queryDefinition);
 
@@ -40,8 +39,7 @@ public interface BlogsEntryFinder {
 		com.liferay.portal.kernel.dao.orm.QueryDefinition<com.liferay.blogs.model.BlogsEntry> queryDefinition);
 
 	public java.util.List<com.liferay.blogs.model.BlogsEntry> findByOrganizationIds(
-		java.util.List<java.lang.Long> organizationIds,
-		java.util.Date displayDate,
+		java.util.List<Long> organizationIds, java.util.Date displayDate,
 		com.liferay.portal.kernel.dao.orm.QueryDefinition<com.liferay.blogs.model.BlogsEntry> queryDefinition);
 
 	public java.util.List<com.liferay.blogs.model.BlogsEntry> findByNoAssets();

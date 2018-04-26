@@ -134,7 +134,7 @@ public class TicketWrapper implements Ticket, ModelWrapper<Ticket> {
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new TicketWrapper((Ticket)_ticket.clone());
 	}
 
@@ -149,7 +149,7 @@ public class TicketWrapper implements Ticket, ModelWrapper<Ticket> {
 	* @return the fully qualified class name of this ticket
 	*/
 	@Override
-	public java.lang.String getClassName() {
+	public String getClassName() {
 		return _ticket.getClassName();
 	}
 
@@ -214,7 +214,7 @@ public class TicketWrapper implements Ticket, ModelWrapper<Ticket> {
 	* @return the extra info of this ticket
 	*/
 	@Override
-	public java.lang.String getExtraInfo() {
+	public String getExtraInfo() {
 		return _ticket.getExtraInfo();
 	}
 
@@ -224,7 +224,7 @@ public class TicketWrapper implements Ticket, ModelWrapper<Ticket> {
 	* @return the key of this ticket
 	*/
 	@Override
-	public java.lang.String getKey() {
+	public String getKey() {
 		return _ticket.getKey();
 	}
 
@@ -309,7 +309,7 @@ public class TicketWrapper implements Ticket, ModelWrapper<Ticket> {
 	}
 
 	@Override
-	public void setClassName(java.lang.String className) {
+	public void setClassName(String className) {
 		_ticket.setClassName(className);
 	}
 
@@ -384,7 +384,7 @@ public class TicketWrapper implements Ticket, ModelWrapper<Ticket> {
 	* @param extraInfo the extra info of this ticket
 	*/
 	@Override
-	public void setExtraInfo(java.lang.String extraInfo) {
+	public void setExtraInfo(String extraInfo) {
 		_ticket.setExtraInfo(extraInfo);
 	}
 
@@ -394,7 +394,7 @@ public class TicketWrapper implements Ticket, ModelWrapper<Ticket> {
 	* @param key the key of this ticket
 	*/
 	@Override
-	public void setKey(java.lang.String key) {
+	public void setKey(String key) {
 		_ticket.setKey(key);
 	}
 
@@ -459,7 +459,7 @@ public class TicketWrapper implements Ticket, ModelWrapper<Ticket> {
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _ticket.toString();
 	}
 
@@ -469,7 +469,7 @@ public class TicketWrapper implements Ticket, ModelWrapper<Ticket> {
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _ticket.toXmlString();
 	}
 

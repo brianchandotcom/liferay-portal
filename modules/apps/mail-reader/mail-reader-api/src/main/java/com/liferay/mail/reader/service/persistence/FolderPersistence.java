@@ -180,7 +180,7 @@ public interface FolderPersistence extends BasePersistence<Folder> {
 	* @return the matching folder
 	* @throws NoSuchFolderException if a matching folder could not be found
 	*/
-	public Folder findByA_F(long accountId, java.lang.String fullName)
+	public Folder findByA_F(long accountId, String fullName)
 		throws NoSuchFolderException;
 
 	/**
@@ -190,7 +190,7 @@ public interface FolderPersistence extends BasePersistence<Folder> {
 	* @param fullName the full name
 	* @return the matching folder, or <code>null</code> if a matching folder could not be found
 	*/
-	public Folder fetchByA_F(long accountId, java.lang.String fullName);
+	public Folder fetchByA_F(long accountId, String fullName);
 
 	/**
 	* Returns the folder where accountId = &#63; and fullName = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -200,7 +200,7 @@ public interface FolderPersistence extends BasePersistence<Folder> {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching folder, or <code>null</code> if a matching folder could not be found
 	*/
-	public Folder fetchByA_F(long accountId, java.lang.String fullName,
+	public Folder fetchByA_F(long accountId, String fullName,
 		boolean retrieveFromCache);
 
 	/**
@@ -210,7 +210,7 @@ public interface FolderPersistence extends BasePersistence<Folder> {
 	* @param fullName the full name
 	* @return the folder that was removed
 	*/
-	public Folder removeByA_F(long accountId, java.lang.String fullName)
+	public Folder removeByA_F(long accountId, String fullName)
 		throws NoSuchFolderException;
 
 	/**
@@ -220,7 +220,7 @@ public interface FolderPersistence extends BasePersistence<Folder> {
 	* @param fullName the full name
 	* @return the number of matching folders
 	*/
-	public int countByA_F(long accountId, java.lang.String fullName);
+	public int countByA_F(long accountId, String fullName);
 
 	/**
 	* Caches the folder in the entity cache if it is enabled.

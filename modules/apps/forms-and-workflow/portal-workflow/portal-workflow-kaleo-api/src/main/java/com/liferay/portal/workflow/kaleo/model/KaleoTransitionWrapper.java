@@ -181,7 +181,7 @@ public class KaleoTransitionWrapper implements KaleoTransition,
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new KaleoTransitionWrapper((KaleoTransition)_kaleoTransition.clone());
 	}
 
@@ -226,7 +226,7 @@ public class KaleoTransitionWrapper implements KaleoTransition,
 	* @return the description of this kaleo transition
 	*/
 	@Override
-	public java.lang.String getDescription() {
+	public String getDescription() {
 		return _kaleoTransition.getDescription();
 	}
 
@@ -291,7 +291,7 @@ public class KaleoTransitionWrapper implements KaleoTransition,
 	* @return the name of this kaleo transition
 	*/
 	@Override
-	public java.lang.String getName() {
+	public String getName() {
 		return _kaleoTransition.getName();
 	}
 
@@ -332,7 +332,7 @@ public class KaleoTransitionWrapper implements KaleoTransition,
 	* @return the source kaleo node name of this kaleo transition
 	*/
 	@Override
-	public java.lang.String getSourceKaleoNodeName() {
+	public String getSourceKaleoNodeName() {
 		return _kaleoTransition.getSourceKaleoNodeName();
 	}
 
@@ -358,7 +358,7 @@ public class KaleoTransitionWrapper implements KaleoTransition,
 	* @return the target kaleo node name of this kaleo transition
 	*/
 	@Override
-	public java.lang.String getTargetKaleoNodeName() {
+	public String getTargetKaleoNodeName() {
 		return _kaleoTransition.getTargetKaleoNodeName();
 	}
 
@@ -378,7 +378,7 @@ public class KaleoTransitionWrapper implements KaleoTransition,
 	* @return the user name of this kaleo transition
 	*/
 	@Override
-	public java.lang.String getUserName() {
+	public String getUserName() {
 		return _kaleoTransition.getUserName();
 	}
 
@@ -388,7 +388,7 @@ public class KaleoTransitionWrapper implements KaleoTransition,
 	* @return the user uuid of this kaleo transition
 	*/
 	@Override
-	public java.lang.String getUserUuid() {
+	public String getUserUuid() {
 		return _kaleoTransition.getUserUuid();
 	}
 
@@ -468,7 +468,7 @@ public class KaleoTransitionWrapper implements KaleoTransition,
 	* @param description the description of this kaleo transition
 	*/
 	@Override
-	public void setDescription(java.lang.String description) {
+	public void setDescription(String description) {
 		_kaleoTransition.setDescription(description);
 	}
 
@@ -544,7 +544,7 @@ public class KaleoTransitionWrapper implements KaleoTransition,
 	* @param name the name of this kaleo transition
 	*/
 	@Override
-	public void setName(java.lang.String name) {
+	public void setName(String name) {
 		_kaleoTransition.setName(name);
 	}
 
@@ -584,7 +584,7 @@ public class KaleoTransitionWrapper implements KaleoTransition,
 	* @param sourceKaleoNodeName the source kaleo node name of this kaleo transition
 	*/
 	@Override
-	public void setSourceKaleoNodeName(java.lang.String sourceKaleoNodeName) {
+	public void setSourceKaleoNodeName(String sourceKaleoNodeName) {
 		_kaleoTransition.setSourceKaleoNodeName(sourceKaleoNodeName);
 	}
 
@@ -604,7 +604,7 @@ public class KaleoTransitionWrapper implements KaleoTransition,
 	* @param targetKaleoNodeName the target kaleo node name of this kaleo transition
 	*/
 	@Override
-	public void setTargetKaleoNodeName(java.lang.String targetKaleoNodeName) {
+	public void setTargetKaleoNodeName(String targetKaleoNodeName) {
 		_kaleoTransition.setTargetKaleoNodeName(targetKaleoNodeName);
 	}
 
@@ -624,7 +624,7 @@ public class KaleoTransitionWrapper implements KaleoTransition,
 	* @param userName the user name of this kaleo transition
 	*/
 	@Override
-	public void setUserName(java.lang.String userName) {
+	public void setUserName(String userName) {
 		_kaleoTransition.setUserName(userName);
 	}
 
@@ -634,7 +634,7 @@ public class KaleoTransitionWrapper implements KaleoTransition,
 	* @param userUuid the user uuid of this kaleo transition
 	*/
 	@Override
-	public void setUserUuid(java.lang.String userUuid) {
+	public void setUserUuid(String userUuid) {
 		_kaleoTransition.setUserUuid(userUuid);
 	}
 
@@ -649,7 +649,7 @@ public class KaleoTransitionWrapper implements KaleoTransition,
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _kaleoTransition.toString();
 	}
 
@@ -659,7 +659,7 @@ public class KaleoTransitionWrapper implements KaleoTransition,
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _kaleoTransition.toXmlString();
 	}
 

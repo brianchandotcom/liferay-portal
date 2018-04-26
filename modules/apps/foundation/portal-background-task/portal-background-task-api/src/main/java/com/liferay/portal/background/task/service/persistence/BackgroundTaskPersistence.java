@@ -576,7 +576,7 @@ public interface BackgroundTaskPersistence extends BasePersistence<BackgroundTas
 	* @return the matching background tasks
 	*/
 	public java.util.List<BackgroundTask> findByG_T(long groupId,
-		java.lang.String taskExecutorClassName);
+		String taskExecutorClassName);
 
 	/**
 	* Returns a range of all the background tasks where groupId = &#63; and taskExecutorClassName = &#63;.
@@ -592,7 +592,7 @@ public interface BackgroundTaskPersistence extends BasePersistence<BackgroundTas
 	* @return the range of matching background tasks
 	*/
 	public java.util.List<BackgroundTask> findByG_T(long groupId,
-		java.lang.String taskExecutorClassName, int start, int end);
+		String taskExecutorClassName, int start, int end);
 
 	/**
 	* Returns an ordered range of all the background tasks where groupId = &#63; and taskExecutorClassName = &#63;.
@@ -609,7 +609,7 @@ public interface BackgroundTaskPersistence extends BasePersistence<BackgroundTas
 	* @return the ordered range of matching background tasks
 	*/
 	public java.util.List<BackgroundTask> findByG_T(long groupId,
-		java.lang.String taskExecutorClassName, int start, int end,
+		String taskExecutorClassName, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<BackgroundTask> orderByComparator);
 
 	/**
@@ -628,7 +628,7 @@ public interface BackgroundTaskPersistence extends BasePersistence<BackgroundTas
 	* @return the ordered range of matching background tasks
 	*/
 	public java.util.List<BackgroundTask> findByG_T(long groupId,
-		java.lang.String taskExecutorClassName, int start, int end,
+		String taskExecutorClassName, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<BackgroundTask> orderByComparator,
 		boolean retrieveFromCache);
 
@@ -642,7 +642,7 @@ public interface BackgroundTaskPersistence extends BasePersistence<BackgroundTas
 	* @throws NoSuchBackgroundTaskException if a matching background task could not be found
 	*/
 	public BackgroundTask findByG_T_First(long groupId,
-		java.lang.String taskExecutorClassName,
+		String taskExecutorClassName,
 		com.liferay.portal.kernel.util.OrderByComparator<BackgroundTask> orderByComparator)
 		throws NoSuchBackgroundTaskException;
 
@@ -655,7 +655,7 @@ public interface BackgroundTaskPersistence extends BasePersistence<BackgroundTas
 	* @return the first matching background task, or <code>null</code> if a matching background task could not be found
 	*/
 	public BackgroundTask fetchByG_T_First(long groupId,
-		java.lang.String taskExecutorClassName,
+		String taskExecutorClassName,
 		com.liferay.portal.kernel.util.OrderByComparator<BackgroundTask> orderByComparator);
 
 	/**
@@ -668,7 +668,7 @@ public interface BackgroundTaskPersistence extends BasePersistence<BackgroundTas
 	* @throws NoSuchBackgroundTaskException if a matching background task could not be found
 	*/
 	public BackgroundTask findByG_T_Last(long groupId,
-		java.lang.String taskExecutorClassName,
+		String taskExecutorClassName,
 		com.liferay.portal.kernel.util.OrderByComparator<BackgroundTask> orderByComparator)
 		throws NoSuchBackgroundTaskException;
 
@@ -681,7 +681,7 @@ public interface BackgroundTaskPersistence extends BasePersistence<BackgroundTas
 	* @return the last matching background task, or <code>null</code> if a matching background task could not be found
 	*/
 	public BackgroundTask fetchByG_T_Last(long groupId,
-		java.lang.String taskExecutorClassName,
+		String taskExecutorClassName,
 		com.liferay.portal.kernel.util.OrderByComparator<BackgroundTask> orderByComparator);
 
 	/**
@@ -695,7 +695,7 @@ public interface BackgroundTaskPersistence extends BasePersistence<BackgroundTas
 	* @throws NoSuchBackgroundTaskException if a background task with the primary key could not be found
 	*/
 	public BackgroundTask[] findByG_T_PrevAndNext(long backgroundTaskId,
-		long groupId, java.lang.String taskExecutorClassName,
+		long groupId, String taskExecutorClassName,
 		com.liferay.portal.kernel.util.OrderByComparator<BackgroundTask> orderByComparator)
 		throws NoSuchBackgroundTaskException;
 
@@ -711,7 +711,7 @@ public interface BackgroundTaskPersistence extends BasePersistence<BackgroundTas
 	* @return the matching background tasks
 	*/
 	public java.util.List<BackgroundTask> findByG_T(long[] groupIds,
-		java.lang.String[] taskExecutorClassNames);
+		String[] taskExecutorClassNames);
 
 	/**
 	* Returns a range of all the background tasks where groupId = any &#63; and taskExecutorClassName = any &#63;.
@@ -727,7 +727,7 @@ public interface BackgroundTaskPersistence extends BasePersistence<BackgroundTas
 	* @return the range of matching background tasks
 	*/
 	public java.util.List<BackgroundTask> findByG_T(long[] groupIds,
-		java.lang.String[] taskExecutorClassNames, int start, int end);
+		String[] taskExecutorClassNames, int start, int end);
 
 	/**
 	* Returns an ordered range of all the background tasks where groupId = any &#63; and taskExecutorClassName = any &#63;.
@@ -744,7 +744,7 @@ public interface BackgroundTaskPersistence extends BasePersistence<BackgroundTas
 	* @return the ordered range of matching background tasks
 	*/
 	public java.util.List<BackgroundTask> findByG_T(long[] groupIds,
-		java.lang.String[] taskExecutorClassNames, int start, int end,
+		String[] taskExecutorClassNames, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<BackgroundTask> orderByComparator);
 
 	/**
@@ -763,7 +763,7 @@ public interface BackgroundTaskPersistence extends BasePersistence<BackgroundTas
 	* @return the ordered range of matching background tasks
 	*/
 	public java.util.List<BackgroundTask> findByG_T(long[] groupIds,
-		java.lang.String[] taskExecutorClassNames, int start, int end,
+		String[] taskExecutorClassNames, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<BackgroundTask> orderByComparator,
 		boolean retrieveFromCache);
 
@@ -773,7 +773,7 @@ public interface BackgroundTaskPersistence extends BasePersistence<BackgroundTas
 	* @param groupId the group ID
 	* @param taskExecutorClassName the task executor class name
 	*/
-	public void removeByG_T(long groupId, java.lang.String taskExecutorClassName);
+	public void removeByG_T(long groupId, String taskExecutorClassName);
 
 	/**
 	* Returns the number of background tasks where groupId = &#63; and taskExecutorClassName = &#63;.
@@ -782,7 +782,7 @@ public interface BackgroundTaskPersistence extends BasePersistence<BackgroundTas
 	* @param taskExecutorClassName the task executor class name
 	* @return the number of matching background tasks
 	*/
-	public int countByG_T(long groupId, java.lang.String taskExecutorClassName);
+	public int countByG_T(long groupId, String taskExecutorClassName);
 
 	/**
 	* Returns the number of background tasks where groupId = any &#63; and taskExecutorClassName = any &#63;.
@@ -791,8 +791,7 @@ public interface BackgroundTaskPersistence extends BasePersistence<BackgroundTas
 	* @param taskExecutorClassNames the task executor class names
 	* @return the number of matching background tasks
 	*/
-	public int countByG_T(long[] groupIds,
-		java.lang.String[] taskExecutorClassNames);
+	public int countByG_T(long[] groupIds, String[] taskExecutorClassNames);
 
 	/**
 	* Returns all the background tasks where groupId = &#63; and status = &#63;.
@@ -945,7 +944,7 @@ public interface BackgroundTaskPersistence extends BasePersistence<BackgroundTas
 	* @return the matching background tasks
 	*/
 	public java.util.List<BackgroundTask> findByT_S(
-		java.lang.String taskExecutorClassName, int status);
+		String taskExecutorClassName, int status);
 
 	/**
 	* Returns a range of all the background tasks where taskExecutorClassName = &#63; and status = &#63;.
@@ -961,7 +960,7 @@ public interface BackgroundTaskPersistence extends BasePersistence<BackgroundTas
 	* @return the range of matching background tasks
 	*/
 	public java.util.List<BackgroundTask> findByT_S(
-		java.lang.String taskExecutorClassName, int status, int start, int end);
+		String taskExecutorClassName, int status, int start, int end);
 
 	/**
 	* Returns an ordered range of all the background tasks where taskExecutorClassName = &#63; and status = &#63;.
@@ -978,7 +977,7 @@ public interface BackgroundTaskPersistence extends BasePersistence<BackgroundTas
 	* @return the ordered range of matching background tasks
 	*/
 	public java.util.List<BackgroundTask> findByT_S(
-		java.lang.String taskExecutorClassName, int status, int start, int end,
+		String taskExecutorClassName, int status, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<BackgroundTask> orderByComparator);
 
 	/**
@@ -997,7 +996,7 @@ public interface BackgroundTaskPersistence extends BasePersistence<BackgroundTas
 	* @return the ordered range of matching background tasks
 	*/
 	public java.util.List<BackgroundTask> findByT_S(
-		java.lang.String taskExecutorClassName, int status, int start, int end,
+		String taskExecutorClassName, int status, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<BackgroundTask> orderByComparator,
 		boolean retrieveFromCache);
 
@@ -1010,8 +1009,8 @@ public interface BackgroundTaskPersistence extends BasePersistence<BackgroundTas
 	* @return the first matching background task
 	* @throws NoSuchBackgroundTaskException if a matching background task could not be found
 	*/
-	public BackgroundTask findByT_S_First(
-		java.lang.String taskExecutorClassName, int status,
+	public BackgroundTask findByT_S_First(String taskExecutorClassName,
+		int status,
 		com.liferay.portal.kernel.util.OrderByComparator<BackgroundTask> orderByComparator)
 		throws NoSuchBackgroundTaskException;
 
@@ -1023,8 +1022,8 @@ public interface BackgroundTaskPersistence extends BasePersistence<BackgroundTas
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching background task, or <code>null</code> if a matching background task could not be found
 	*/
-	public BackgroundTask fetchByT_S_First(
-		java.lang.String taskExecutorClassName, int status,
+	public BackgroundTask fetchByT_S_First(String taskExecutorClassName,
+		int status,
 		com.liferay.portal.kernel.util.OrderByComparator<BackgroundTask> orderByComparator);
 
 	/**
@@ -1036,8 +1035,8 @@ public interface BackgroundTaskPersistence extends BasePersistence<BackgroundTas
 	* @return the last matching background task
 	* @throws NoSuchBackgroundTaskException if a matching background task could not be found
 	*/
-	public BackgroundTask findByT_S_Last(
-		java.lang.String taskExecutorClassName, int status,
+	public BackgroundTask findByT_S_Last(String taskExecutorClassName,
+		int status,
 		com.liferay.portal.kernel.util.OrderByComparator<BackgroundTask> orderByComparator)
 		throws NoSuchBackgroundTaskException;
 
@@ -1049,8 +1048,8 @@ public interface BackgroundTaskPersistence extends BasePersistence<BackgroundTas
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching background task, or <code>null</code> if a matching background task could not be found
 	*/
-	public BackgroundTask fetchByT_S_Last(
-		java.lang.String taskExecutorClassName, int status,
+	public BackgroundTask fetchByT_S_Last(String taskExecutorClassName,
+		int status,
 		com.liferay.portal.kernel.util.OrderByComparator<BackgroundTask> orderByComparator);
 
 	/**
@@ -1064,7 +1063,7 @@ public interface BackgroundTaskPersistence extends BasePersistence<BackgroundTas
 	* @throws NoSuchBackgroundTaskException if a background task with the primary key could not be found
 	*/
 	public BackgroundTask[] findByT_S_PrevAndNext(long backgroundTaskId,
-		java.lang.String taskExecutorClassName, int status,
+		String taskExecutorClassName, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<BackgroundTask> orderByComparator)
 		throws NoSuchBackgroundTaskException;
 
@@ -1080,7 +1079,7 @@ public interface BackgroundTaskPersistence extends BasePersistence<BackgroundTas
 	* @return the matching background tasks
 	*/
 	public java.util.List<BackgroundTask> findByT_S(
-		java.lang.String[] taskExecutorClassNames, int status);
+		String[] taskExecutorClassNames, int status);
 
 	/**
 	* Returns a range of all the background tasks where taskExecutorClassName = any &#63; and status = &#63;.
@@ -1096,8 +1095,7 @@ public interface BackgroundTaskPersistence extends BasePersistence<BackgroundTas
 	* @return the range of matching background tasks
 	*/
 	public java.util.List<BackgroundTask> findByT_S(
-		java.lang.String[] taskExecutorClassNames, int status, int start,
-		int end);
+		String[] taskExecutorClassNames, int status, int start, int end);
 
 	/**
 	* Returns an ordered range of all the background tasks where taskExecutorClassName = any &#63; and status = &#63;.
@@ -1114,8 +1112,7 @@ public interface BackgroundTaskPersistence extends BasePersistence<BackgroundTas
 	* @return the ordered range of matching background tasks
 	*/
 	public java.util.List<BackgroundTask> findByT_S(
-		java.lang.String[] taskExecutorClassNames, int status, int start,
-		int end,
+		String[] taskExecutorClassNames, int status, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<BackgroundTask> orderByComparator);
 
 	/**
@@ -1134,8 +1131,7 @@ public interface BackgroundTaskPersistence extends BasePersistence<BackgroundTas
 	* @return the ordered range of matching background tasks
 	*/
 	public java.util.List<BackgroundTask> findByT_S(
-		java.lang.String[] taskExecutorClassNames, int status, int start,
-		int end,
+		String[] taskExecutorClassNames, int status, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<BackgroundTask> orderByComparator,
 		boolean retrieveFromCache);
 
@@ -1145,7 +1141,7 @@ public interface BackgroundTaskPersistence extends BasePersistence<BackgroundTas
 	* @param taskExecutorClassName the task executor class name
 	* @param status the status
 	*/
-	public void removeByT_S(java.lang.String taskExecutorClassName, int status);
+	public void removeByT_S(String taskExecutorClassName, int status);
 
 	/**
 	* Returns the number of background tasks where taskExecutorClassName = &#63; and status = &#63;.
@@ -1154,7 +1150,7 @@ public interface BackgroundTaskPersistence extends BasePersistence<BackgroundTas
 	* @param status the status
 	* @return the number of matching background tasks
 	*/
-	public int countByT_S(java.lang.String taskExecutorClassName, int status);
+	public int countByT_S(String taskExecutorClassName, int status);
 
 	/**
 	* Returns the number of background tasks where taskExecutorClassName = any &#63; and status = &#63;.
@@ -1163,7 +1159,7 @@ public interface BackgroundTaskPersistence extends BasePersistence<BackgroundTas
 	* @param status the status
 	* @return the number of matching background tasks
 	*/
-	public int countByT_S(java.lang.String[] taskExecutorClassNames, int status);
+	public int countByT_S(String[] taskExecutorClassNames, int status);
 
 	/**
 	* Returns all the background tasks where groupId = &#63; and name = &#63; and taskExecutorClassName = &#63;.
@@ -1174,7 +1170,7 @@ public interface BackgroundTaskPersistence extends BasePersistence<BackgroundTas
 	* @return the matching background tasks
 	*/
 	public java.util.List<BackgroundTask> findByG_N_T(long groupId,
-		java.lang.String name, java.lang.String taskExecutorClassName);
+		String name, String taskExecutorClassName);
 
 	/**
 	* Returns a range of all the background tasks where groupId = &#63; and name = &#63; and taskExecutorClassName = &#63;.
@@ -1191,8 +1187,7 @@ public interface BackgroundTaskPersistence extends BasePersistence<BackgroundTas
 	* @return the range of matching background tasks
 	*/
 	public java.util.List<BackgroundTask> findByG_N_T(long groupId,
-		java.lang.String name, java.lang.String taskExecutorClassName,
-		int start, int end);
+		String name, String taskExecutorClassName, int start, int end);
 
 	/**
 	* Returns an ordered range of all the background tasks where groupId = &#63; and name = &#63; and taskExecutorClassName = &#63;.
@@ -1210,8 +1205,7 @@ public interface BackgroundTaskPersistence extends BasePersistence<BackgroundTas
 	* @return the ordered range of matching background tasks
 	*/
 	public java.util.List<BackgroundTask> findByG_N_T(long groupId,
-		java.lang.String name, java.lang.String taskExecutorClassName,
-		int start, int end,
+		String name, String taskExecutorClassName, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<BackgroundTask> orderByComparator);
 
 	/**
@@ -1231,8 +1225,7 @@ public interface BackgroundTaskPersistence extends BasePersistence<BackgroundTas
 	* @return the ordered range of matching background tasks
 	*/
 	public java.util.List<BackgroundTask> findByG_N_T(long groupId,
-		java.lang.String name, java.lang.String taskExecutorClassName,
-		int start, int end,
+		String name, String taskExecutorClassName, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<BackgroundTask> orderByComparator,
 		boolean retrieveFromCache);
 
@@ -1246,8 +1239,8 @@ public interface BackgroundTaskPersistence extends BasePersistence<BackgroundTas
 	* @return the first matching background task
 	* @throws NoSuchBackgroundTaskException if a matching background task could not be found
 	*/
-	public BackgroundTask findByG_N_T_First(long groupId,
-		java.lang.String name, java.lang.String taskExecutorClassName,
+	public BackgroundTask findByG_N_T_First(long groupId, String name,
+		String taskExecutorClassName,
 		com.liferay.portal.kernel.util.OrderByComparator<BackgroundTask> orderByComparator)
 		throws NoSuchBackgroundTaskException;
 
@@ -1260,8 +1253,8 @@ public interface BackgroundTaskPersistence extends BasePersistence<BackgroundTas
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching background task, or <code>null</code> if a matching background task could not be found
 	*/
-	public BackgroundTask fetchByG_N_T_First(long groupId,
-		java.lang.String name, java.lang.String taskExecutorClassName,
+	public BackgroundTask fetchByG_N_T_First(long groupId, String name,
+		String taskExecutorClassName,
 		com.liferay.portal.kernel.util.OrderByComparator<BackgroundTask> orderByComparator);
 
 	/**
@@ -1274,8 +1267,8 @@ public interface BackgroundTaskPersistence extends BasePersistence<BackgroundTas
 	* @return the last matching background task
 	* @throws NoSuchBackgroundTaskException if a matching background task could not be found
 	*/
-	public BackgroundTask findByG_N_T_Last(long groupId, java.lang.String name,
-		java.lang.String taskExecutorClassName,
+	public BackgroundTask findByG_N_T_Last(long groupId, String name,
+		String taskExecutorClassName,
 		com.liferay.portal.kernel.util.OrderByComparator<BackgroundTask> orderByComparator)
 		throws NoSuchBackgroundTaskException;
 
@@ -1288,8 +1281,8 @@ public interface BackgroundTaskPersistence extends BasePersistence<BackgroundTas
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching background task, or <code>null</code> if a matching background task could not be found
 	*/
-	public BackgroundTask fetchByG_N_T_Last(long groupId,
-		java.lang.String name, java.lang.String taskExecutorClassName,
+	public BackgroundTask fetchByG_N_T_Last(long groupId, String name,
+		String taskExecutorClassName,
 		com.liferay.portal.kernel.util.OrderByComparator<BackgroundTask> orderByComparator);
 
 	/**
@@ -1304,8 +1297,7 @@ public interface BackgroundTaskPersistence extends BasePersistence<BackgroundTas
 	* @throws NoSuchBackgroundTaskException if a background task with the primary key could not be found
 	*/
 	public BackgroundTask[] findByG_N_T_PrevAndNext(long backgroundTaskId,
-		long groupId, java.lang.String name,
-		java.lang.String taskExecutorClassName,
+		long groupId, String name, String taskExecutorClassName,
 		com.liferay.portal.kernel.util.OrderByComparator<BackgroundTask> orderByComparator)
 		throws NoSuchBackgroundTaskException;
 
@@ -1322,7 +1314,7 @@ public interface BackgroundTaskPersistence extends BasePersistence<BackgroundTas
 	* @return the matching background tasks
 	*/
 	public java.util.List<BackgroundTask> findByG_N_T(long[] groupIds,
-		java.lang.String name, java.lang.String[] taskExecutorClassNames);
+		String name, String[] taskExecutorClassNames);
 
 	/**
 	* Returns a range of all the background tasks where groupId = any &#63; and name = &#63; and taskExecutorClassName = any &#63;.
@@ -1339,8 +1331,7 @@ public interface BackgroundTaskPersistence extends BasePersistence<BackgroundTas
 	* @return the range of matching background tasks
 	*/
 	public java.util.List<BackgroundTask> findByG_N_T(long[] groupIds,
-		java.lang.String name, java.lang.String[] taskExecutorClassNames,
-		int start, int end);
+		String name, String[] taskExecutorClassNames, int start, int end);
 
 	/**
 	* Returns an ordered range of all the background tasks where groupId = any &#63; and name = &#63; and taskExecutorClassName = any &#63;.
@@ -1358,8 +1349,7 @@ public interface BackgroundTaskPersistence extends BasePersistence<BackgroundTas
 	* @return the ordered range of matching background tasks
 	*/
 	public java.util.List<BackgroundTask> findByG_N_T(long[] groupIds,
-		java.lang.String name, java.lang.String[] taskExecutorClassNames,
-		int start, int end,
+		String name, String[] taskExecutorClassNames, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<BackgroundTask> orderByComparator);
 
 	/**
@@ -1379,8 +1369,7 @@ public interface BackgroundTaskPersistence extends BasePersistence<BackgroundTas
 	* @return the ordered range of matching background tasks
 	*/
 	public java.util.List<BackgroundTask> findByG_N_T(long[] groupIds,
-		java.lang.String name, java.lang.String[] taskExecutorClassNames,
-		int start, int end,
+		String name, String[] taskExecutorClassNames, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<BackgroundTask> orderByComparator,
 		boolean retrieveFromCache);
 
@@ -1391,8 +1380,8 @@ public interface BackgroundTaskPersistence extends BasePersistence<BackgroundTas
 	* @param name the name
 	* @param taskExecutorClassName the task executor class name
 	*/
-	public void removeByG_N_T(long groupId, java.lang.String name,
-		java.lang.String taskExecutorClassName);
+	public void removeByG_N_T(long groupId, String name,
+		String taskExecutorClassName);
 
 	/**
 	* Returns the number of background tasks where groupId = &#63; and name = &#63; and taskExecutorClassName = &#63;.
@@ -1402,8 +1391,8 @@ public interface BackgroundTaskPersistence extends BasePersistence<BackgroundTas
 	* @param taskExecutorClassName the task executor class name
 	* @return the number of matching background tasks
 	*/
-	public int countByG_N_T(long groupId, java.lang.String name,
-		java.lang.String taskExecutorClassName);
+	public int countByG_N_T(long groupId, String name,
+		String taskExecutorClassName);
 
 	/**
 	* Returns the number of background tasks where groupId = any &#63; and name = &#63; and taskExecutorClassName = any &#63;.
@@ -1413,8 +1402,8 @@ public interface BackgroundTaskPersistence extends BasePersistence<BackgroundTas
 	* @param taskExecutorClassNames the task executor class names
 	* @return the number of matching background tasks
 	*/
-	public int countByG_N_T(long[] groupIds, java.lang.String name,
-		java.lang.String[] taskExecutorClassNames);
+	public int countByG_N_T(long[] groupIds, String name,
+		String[] taskExecutorClassNames);
 
 	/**
 	* Returns all the background tasks where groupId = &#63; and taskExecutorClassName = &#63; and completed = &#63;.
@@ -1425,7 +1414,7 @@ public interface BackgroundTaskPersistence extends BasePersistence<BackgroundTas
 	* @return the matching background tasks
 	*/
 	public java.util.List<BackgroundTask> findByG_T_C(long groupId,
-		java.lang.String taskExecutorClassName, boolean completed);
+		String taskExecutorClassName, boolean completed);
 
 	/**
 	* Returns a range of all the background tasks where groupId = &#63; and taskExecutorClassName = &#63; and completed = &#63;.
@@ -1442,8 +1431,7 @@ public interface BackgroundTaskPersistence extends BasePersistence<BackgroundTas
 	* @return the range of matching background tasks
 	*/
 	public java.util.List<BackgroundTask> findByG_T_C(long groupId,
-		java.lang.String taskExecutorClassName, boolean completed, int start,
-		int end);
+		String taskExecutorClassName, boolean completed, int start, int end);
 
 	/**
 	* Returns an ordered range of all the background tasks where groupId = &#63; and taskExecutorClassName = &#63; and completed = &#63;.
@@ -1461,8 +1449,7 @@ public interface BackgroundTaskPersistence extends BasePersistence<BackgroundTas
 	* @return the ordered range of matching background tasks
 	*/
 	public java.util.List<BackgroundTask> findByG_T_C(long groupId,
-		java.lang.String taskExecutorClassName, boolean completed, int start,
-		int end,
+		String taskExecutorClassName, boolean completed, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<BackgroundTask> orderByComparator);
 
 	/**
@@ -1482,8 +1469,7 @@ public interface BackgroundTaskPersistence extends BasePersistence<BackgroundTas
 	* @return the ordered range of matching background tasks
 	*/
 	public java.util.List<BackgroundTask> findByG_T_C(long groupId,
-		java.lang.String taskExecutorClassName, boolean completed, int start,
-		int end,
+		String taskExecutorClassName, boolean completed, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<BackgroundTask> orderByComparator,
 		boolean retrieveFromCache);
 
@@ -1498,7 +1484,7 @@ public interface BackgroundTaskPersistence extends BasePersistence<BackgroundTas
 	* @throws NoSuchBackgroundTaskException if a matching background task could not be found
 	*/
 	public BackgroundTask findByG_T_C_First(long groupId,
-		java.lang.String taskExecutorClassName, boolean completed,
+		String taskExecutorClassName, boolean completed,
 		com.liferay.portal.kernel.util.OrderByComparator<BackgroundTask> orderByComparator)
 		throws NoSuchBackgroundTaskException;
 
@@ -1512,7 +1498,7 @@ public interface BackgroundTaskPersistence extends BasePersistence<BackgroundTas
 	* @return the first matching background task, or <code>null</code> if a matching background task could not be found
 	*/
 	public BackgroundTask fetchByG_T_C_First(long groupId,
-		java.lang.String taskExecutorClassName, boolean completed,
+		String taskExecutorClassName, boolean completed,
 		com.liferay.portal.kernel.util.OrderByComparator<BackgroundTask> orderByComparator);
 
 	/**
@@ -1526,7 +1512,7 @@ public interface BackgroundTaskPersistence extends BasePersistence<BackgroundTas
 	* @throws NoSuchBackgroundTaskException if a matching background task could not be found
 	*/
 	public BackgroundTask findByG_T_C_Last(long groupId,
-		java.lang.String taskExecutorClassName, boolean completed,
+		String taskExecutorClassName, boolean completed,
 		com.liferay.portal.kernel.util.OrderByComparator<BackgroundTask> orderByComparator)
 		throws NoSuchBackgroundTaskException;
 
@@ -1540,7 +1526,7 @@ public interface BackgroundTaskPersistence extends BasePersistence<BackgroundTas
 	* @return the last matching background task, or <code>null</code> if a matching background task could not be found
 	*/
 	public BackgroundTask fetchByG_T_C_Last(long groupId,
-		java.lang.String taskExecutorClassName, boolean completed,
+		String taskExecutorClassName, boolean completed,
 		com.liferay.portal.kernel.util.OrderByComparator<BackgroundTask> orderByComparator);
 
 	/**
@@ -1555,8 +1541,7 @@ public interface BackgroundTaskPersistence extends BasePersistence<BackgroundTas
 	* @throws NoSuchBackgroundTaskException if a background task with the primary key could not be found
 	*/
 	public BackgroundTask[] findByG_T_C_PrevAndNext(long backgroundTaskId,
-		long groupId, java.lang.String taskExecutorClassName,
-		boolean completed,
+		long groupId, String taskExecutorClassName, boolean completed,
 		com.liferay.portal.kernel.util.OrderByComparator<BackgroundTask> orderByComparator)
 		throws NoSuchBackgroundTaskException;
 
@@ -1573,7 +1558,7 @@ public interface BackgroundTaskPersistence extends BasePersistence<BackgroundTas
 	* @return the matching background tasks
 	*/
 	public java.util.List<BackgroundTask> findByG_T_C(long[] groupIds,
-		java.lang.String[] taskExecutorClassNames, boolean completed);
+		String[] taskExecutorClassNames, boolean completed);
 
 	/**
 	* Returns a range of all the background tasks where groupId = any &#63; and taskExecutorClassName = any &#63; and completed = &#63;.
@@ -1590,8 +1575,7 @@ public interface BackgroundTaskPersistence extends BasePersistence<BackgroundTas
 	* @return the range of matching background tasks
 	*/
 	public java.util.List<BackgroundTask> findByG_T_C(long[] groupIds,
-		java.lang.String[] taskExecutorClassNames, boolean completed,
-		int start, int end);
+		String[] taskExecutorClassNames, boolean completed, int start, int end);
 
 	/**
 	* Returns an ordered range of all the background tasks where groupId = any &#63; and taskExecutorClassName = any &#63; and completed = &#63;.
@@ -1609,8 +1593,7 @@ public interface BackgroundTaskPersistence extends BasePersistence<BackgroundTas
 	* @return the ordered range of matching background tasks
 	*/
 	public java.util.List<BackgroundTask> findByG_T_C(long[] groupIds,
-		java.lang.String[] taskExecutorClassNames, boolean completed,
-		int start, int end,
+		String[] taskExecutorClassNames, boolean completed, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<BackgroundTask> orderByComparator);
 
 	/**
@@ -1630,8 +1613,7 @@ public interface BackgroundTaskPersistence extends BasePersistence<BackgroundTas
 	* @return the ordered range of matching background tasks
 	*/
 	public java.util.List<BackgroundTask> findByG_T_C(long[] groupIds,
-		java.lang.String[] taskExecutorClassNames, boolean completed,
-		int start, int end,
+		String[] taskExecutorClassNames, boolean completed, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<BackgroundTask> orderByComparator,
 		boolean retrieveFromCache);
 
@@ -1642,8 +1624,8 @@ public interface BackgroundTaskPersistence extends BasePersistence<BackgroundTas
 	* @param taskExecutorClassName the task executor class name
 	* @param completed the completed
 	*/
-	public void removeByG_T_C(long groupId,
-		java.lang.String taskExecutorClassName, boolean completed);
+	public void removeByG_T_C(long groupId, String taskExecutorClassName,
+		boolean completed);
 
 	/**
 	* Returns the number of background tasks where groupId = &#63; and taskExecutorClassName = &#63; and completed = &#63;.
@@ -1653,8 +1635,8 @@ public interface BackgroundTaskPersistence extends BasePersistence<BackgroundTas
 	* @param completed the completed
 	* @return the number of matching background tasks
 	*/
-	public int countByG_T_C(long groupId,
-		java.lang.String taskExecutorClassName, boolean completed);
+	public int countByG_T_C(long groupId, String taskExecutorClassName,
+		boolean completed);
 
 	/**
 	* Returns the number of background tasks where groupId = any &#63; and taskExecutorClassName = any &#63; and completed = &#63;.
@@ -1664,8 +1646,8 @@ public interface BackgroundTaskPersistence extends BasePersistence<BackgroundTas
 	* @param completed the completed
 	* @return the number of matching background tasks
 	*/
-	public int countByG_T_C(long[] groupIds,
-		java.lang.String[] taskExecutorClassNames, boolean completed);
+	public int countByG_T_C(long[] groupIds, String[] taskExecutorClassNames,
+		boolean completed);
 
 	/**
 	* Returns all the background tasks where groupId = &#63; and taskExecutorClassName = &#63; and status = &#63;.
@@ -1676,7 +1658,7 @@ public interface BackgroundTaskPersistence extends BasePersistence<BackgroundTas
 	* @return the matching background tasks
 	*/
 	public java.util.List<BackgroundTask> findByG_T_S(long groupId,
-		java.lang.String taskExecutorClassName, int status);
+		String taskExecutorClassName, int status);
 
 	/**
 	* Returns a range of all the background tasks where groupId = &#63; and taskExecutorClassName = &#63; and status = &#63;.
@@ -1693,7 +1675,7 @@ public interface BackgroundTaskPersistence extends BasePersistence<BackgroundTas
 	* @return the range of matching background tasks
 	*/
 	public java.util.List<BackgroundTask> findByG_T_S(long groupId,
-		java.lang.String taskExecutorClassName, int status, int start, int end);
+		String taskExecutorClassName, int status, int start, int end);
 
 	/**
 	* Returns an ordered range of all the background tasks where groupId = &#63; and taskExecutorClassName = &#63; and status = &#63;.
@@ -1711,7 +1693,7 @@ public interface BackgroundTaskPersistence extends BasePersistence<BackgroundTas
 	* @return the ordered range of matching background tasks
 	*/
 	public java.util.List<BackgroundTask> findByG_T_S(long groupId,
-		java.lang.String taskExecutorClassName, int status, int start, int end,
+		String taskExecutorClassName, int status, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<BackgroundTask> orderByComparator);
 
 	/**
@@ -1731,7 +1713,7 @@ public interface BackgroundTaskPersistence extends BasePersistence<BackgroundTas
 	* @return the ordered range of matching background tasks
 	*/
 	public java.util.List<BackgroundTask> findByG_T_S(long groupId,
-		java.lang.String taskExecutorClassName, int status, int start, int end,
+		String taskExecutorClassName, int status, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<BackgroundTask> orderByComparator,
 		boolean retrieveFromCache);
 
@@ -1746,7 +1728,7 @@ public interface BackgroundTaskPersistence extends BasePersistence<BackgroundTas
 	* @throws NoSuchBackgroundTaskException if a matching background task could not be found
 	*/
 	public BackgroundTask findByG_T_S_First(long groupId,
-		java.lang.String taskExecutorClassName, int status,
+		String taskExecutorClassName, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<BackgroundTask> orderByComparator)
 		throws NoSuchBackgroundTaskException;
 
@@ -1760,7 +1742,7 @@ public interface BackgroundTaskPersistence extends BasePersistence<BackgroundTas
 	* @return the first matching background task, or <code>null</code> if a matching background task could not be found
 	*/
 	public BackgroundTask fetchByG_T_S_First(long groupId,
-		java.lang.String taskExecutorClassName, int status,
+		String taskExecutorClassName, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<BackgroundTask> orderByComparator);
 
 	/**
@@ -1774,7 +1756,7 @@ public interface BackgroundTaskPersistence extends BasePersistence<BackgroundTas
 	* @throws NoSuchBackgroundTaskException if a matching background task could not be found
 	*/
 	public BackgroundTask findByG_T_S_Last(long groupId,
-		java.lang.String taskExecutorClassName, int status,
+		String taskExecutorClassName, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<BackgroundTask> orderByComparator)
 		throws NoSuchBackgroundTaskException;
 
@@ -1788,7 +1770,7 @@ public interface BackgroundTaskPersistence extends BasePersistence<BackgroundTas
 	* @return the last matching background task, or <code>null</code> if a matching background task could not be found
 	*/
 	public BackgroundTask fetchByG_T_S_Last(long groupId,
-		java.lang.String taskExecutorClassName, int status,
+		String taskExecutorClassName, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<BackgroundTask> orderByComparator);
 
 	/**
@@ -1803,7 +1785,7 @@ public interface BackgroundTaskPersistence extends BasePersistence<BackgroundTas
 	* @throws NoSuchBackgroundTaskException if a background task with the primary key could not be found
 	*/
 	public BackgroundTask[] findByG_T_S_PrevAndNext(long backgroundTaskId,
-		long groupId, java.lang.String taskExecutorClassName, int status,
+		long groupId, String taskExecutorClassName, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<BackgroundTask> orderByComparator)
 		throws NoSuchBackgroundTaskException;
 
@@ -1820,7 +1802,7 @@ public interface BackgroundTaskPersistence extends BasePersistence<BackgroundTas
 	* @return the matching background tasks
 	*/
 	public java.util.List<BackgroundTask> findByG_T_S(long groupId,
-		java.lang.String[] taskExecutorClassNames, int status);
+		String[] taskExecutorClassNames, int status);
 
 	/**
 	* Returns a range of all the background tasks where groupId = &#63; and taskExecutorClassName = any &#63; and status = &#63;.
@@ -1837,8 +1819,7 @@ public interface BackgroundTaskPersistence extends BasePersistence<BackgroundTas
 	* @return the range of matching background tasks
 	*/
 	public java.util.List<BackgroundTask> findByG_T_S(long groupId,
-		java.lang.String[] taskExecutorClassNames, int status, int start,
-		int end);
+		String[] taskExecutorClassNames, int status, int start, int end);
 
 	/**
 	* Returns an ordered range of all the background tasks where groupId = &#63; and taskExecutorClassName = any &#63; and status = &#63;.
@@ -1856,8 +1837,7 @@ public interface BackgroundTaskPersistence extends BasePersistence<BackgroundTas
 	* @return the ordered range of matching background tasks
 	*/
 	public java.util.List<BackgroundTask> findByG_T_S(long groupId,
-		java.lang.String[] taskExecutorClassNames, int status, int start,
-		int end,
+		String[] taskExecutorClassNames, int status, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<BackgroundTask> orderByComparator);
 
 	/**
@@ -1877,8 +1857,7 @@ public interface BackgroundTaskPersistence extends BasePersistence<BackgroundTas
 	* @return the ordered range of matching background tasks
 	*/
 	public java.util.List<BackgroundTask> findByG_T_S(long groupId,
-		java.lang.String[] taskExecutorClassNames, int status, int start,
-		int end,
+		String[] taskExecutorClassNames, int status, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<BackgroundTask> orderByComparator,
 		boolean retrieveFromCache);
 
@@ -1889,8 +1868,8 @@ public interface BackgroundTaskPersistence extends BasePersistence<BackgroundTas
 	* @param taskExecutorClassName the task executor class name
 	* @param status the status
 	*/
-	public void removeByG_T_S(long groupId,
-		java.lang.String taskExecutorClassName, int status);
+	public void removeByG_T_S(long groupId, String taskExecutorClassName,
+		int status);
 
 	/**
 	* Returns the number of background tasks where groupId = &#63; and taskExecutorClassName = &#63; and status = &#63;.
@@ -1900,8 +1879,8 @@ public interface BackgroundTaskPersistence extends BasePersistence<BackgroundTas
 	* @param status the status
 	* @return the number of matching background tasks
 	*/
-	public int countByG_T_S(long groupId,
-		java.lang.String taskExecutorClassName, int status);
+	public int countByG_T_S(long groupId, String taskExecutorClassName,
+		int status);
 
 	/**
 	* Returns the number of background tasks where groupId = &#63; and taskExecutorClassName = any &#63; and status = &#63;.
@@ -1911,8 +1890,8 @@ public interface BackgroundTaskPersistence extends BasePersistence<BackgroundTas
 	* @param status the status
 	* @return the number of matching background tasks
 	*/
-	public int countByG_T_S(long groupId,
-		java.lang.String[] taskExecutorClassNames, int status);
+	public int countByG_T_S(long groupId, String[] taskExecutorClassNames,
+		int status);
 
 	/**
 	* Returns all the background tasks where groupId = &#63; and name = &#63; and taskExecutorClassName = &#63; and completed = &#63;.
@@ -1924,8 +1903,7 @@ public interface BackgroundTaskPersistence extends BasePersistence<BackgroundTas
 	* @return the matching background tasks
 	*/
 	public java.util.List<BackgroundTask> findByG_N_T_C(long groupId,
-		java.lang.String name, java.lang.String taskExecutorClassName,
-		boolean completed);
+		String name, String taskExecutorClassName, boolean completed);
 
 	/**
 	* Returns a range of all the background tasks where groupId = &#63; and name = &#63; and taskExecutorClassName = &#63; and completed = &#63;.
@@ -1943,8 +1921,8 @@ public interface BackgroundTaskPersistence extends BasePersistence<BackgroundTas
 	* @return the range of matching background tasks
 	*/
 	public java.util.List<BackgroundTask> findByG_N_T_C(long groupId,
-		java.lang.String name, java.lang.String taskExecutorClassName,
-		boolean completed, int start, int end);
+		String name, String taskExecutorClassName, boolean completed,
+		int start, int end);
 
 	/**
 	* Returns an ordered range of all the background tasks where groupId = &#63; and name = &#63; and taskExecutorClassName = &#63; and completed = &#63;.
@@ -1963,8 +1941,8 @@ public interface BackgroundTaskPersistence extends BasePersistence<BackgroundTas
 	* @return the ordered range of matching background tasks
 	*/
 	public java.util.List<BackgroundTask> findByG_N_T_C(long groupId,
-		java.lang.String name, java.lang.String taskExecutorClassName,
-		boolean completed, int start, int end,
+		String name, String taskExecutorClassName, boolean completed,
+		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<BackgroundTask> orderByComparator);
 
 	/**
@@ -1985,8 +1963,8 @@ public interface BackgroundTaskPersistence extends BasePersistence<BackgroundTas
 	* @return the ordered range of matching background tasks
 	*/
 	public java.util.List<BackgroundTask> findByG_N_T_C(long groupId,
-		java.lang.String name, java.lang.String taskExecutorClassName,
-		boolean completed, int start, int end,
+		String name, String taskExecutorClassName, boolean completed,
+		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<BackgroundTask> orderByComparator,
 		boolean retrieveFromCache);
 
@@ -2001,9 +1979,8 @@ public interface BackgroundTaskPersistence extends BasePersistence<BackgroundTas
 	* @return the first matching background task
 	* @throws NoSuchBackgroundTaskException if a matching background task could not be found
 	*/
-	public BackgroundTask findByG_N_T_C_First(long groupId,
-		java.lang.String name, java.lang.String taskExecutorClassName,
-		boolean completed,
+	public BackgroundTask findByG_N_T_C_First(long groupId, String name,
+		String taskExecutorClassName, boolean completed,
 		com.liferay.portal.kernel.util.OrderByComparator<BackgroundTask> orderByComparator)
 		throws NoSuchBackgroundTaskException;
 
@@ -2017,9 +1994,8 @@ public interface BackgroundTaskPersistence extends BasePersistence<BackgroundTas
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching background task, or <code>null</code> if a matching background task could not be found
 	*/
-	public BackgroundTask fetchByG_N_T_C_First(long groupId,
-		java.lang.String name, java.lang.String taskExecutorClassName,
-		boolean completed,
+	public BackgroundTask fetchByG_N_T_C_First(long groupId, String name,
+		String taskExecutorClassName, boolean completed,
 		com.liferay.portal.kernel.util.OrderByComparator<BackgroundTask> orderByComparator);
 
 	/**
@@ -2033,9 +2009,8 @@ public interface BackgroundTaskPersistence extends BasePersistence<BackgroundTas
 	* @return the last matching background task
 	* @throws NoSuchBackgroundTaskException if a matching background task could not be found
 	*/
-	public BackgroundTask findByG_N_T_C_Last(long groupId,
-		java.lang.String name, java.lang.String taskExecutorClassName,
-		boolean completed,
+	public BackgroundTask findByG_N_T_C_Last(long groupId, String name,
+		String taskExecutorClassName, boolean completed,
 		com.liferay.portal.kernel.util.OrderByComparator<BackgroundTask> orderByComparator)
 		throws NoSuchBackgroundTaskException;
 
@@ -2049,9 +2024,8 @@ public interface BackgroundTaskPersistence extends BasePersistence<BackgroundTas
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching background task, or <code>null</code> if a matching background task could not be found
 	*/
-	public BackgroundTask fetchByG_N_T_C_Last(long groupId,
-		java.lang.String name, java.lang.String taskExecutorClassName,
-		boolean completed,
+	public BackgroundTask fetchByG_N_T_C_Last(long groupId, String name,
+		String taskExecutorClassName, boolean completed,
 		com.liferay.portal.kernel.util.OrderByComparator<BackgroundTask> orderByComparator);
 
 	/**
@@ -2067,8 +2041,8 @@ public interface BackgroundTaskPersistence extends BasePersistence<BackgroundTas
 	* @throws NoSuchBackgroundTaskException if a background task with the primary key could not be found
 	*/
 	public BackgroundTask[] findByG_N_T_C_PrevAndNext(long backgroundTaskId,
-		long groupId, java.lang.String name,
-		java.lang.String taskExecutorClassName, boolean completed,
+		long groupId, String name, String taskExecutorClassName,
+		boolean completed,
 		com.liferay.portal.kernel.util.OrderByComparator<BackgroundTask> orderByComparator)
 		throws NoSuchBackgroundTaskException;
 
@@ -2086,8 +2060,7 @@ public interface BackgroundTaskPersistence extends BasePersistence<BackgroundTas
 	* @return the matching background tasks
 	*/
 	public java.util.List<BackgroundTask> findByG_N_T_C(long[] groupIds,
-		java.lang.String name, java.lang.String taskExecutorClassName,
-		boolean completed);
+		String name, String taskExecutorClassName, boolean completed);
 
 	/**
 	* Returns a range of all the background tasks where groupId = any &#63; and name = &#63; and taskExecutorClassName = &#63; and completed = &#63;.
@@ -2105,8 +2078,8 @@ public interface BackgroundTaskPersistence extends BasePersistence<BackgroundTas
 	* @return the range of matching background tasks
 	*/
 	public java.util.List<BackgroundTask> findByG_N_T_C(long[] groupIds,
-		java.lang.String name, java.lang.String taskExecutorClassName,
-		boolean completed, int start, int end);
+		String name, String taskExecutorClassName, boolean completed,
+		int start, int end);
 
 	/**
 	* Returns an ordered range of all the background tasks where groupId = any &#63; and name = &#63; and taskExecutorClassName = &#63; and completed = &#63;.
@@ -2125,8 +2098,8 @@ public interface BackgroundTaskPersistence extends BasePersistence<BackgroundTas
 	* @return the ordered range of matching background tasks
 	*/
 	public java.util.List<BackgroundTask> findByG_N_T_C(long[] groupIds,
-		java.lang.String name, java.lang.String taskExecutorClassName,
-		boolean completed, int start, int end,
+		String name, String taskExecutorClassName, boolean completed,
+		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<BackgroundTask> orderByComparator);
 
 	/**
@@ -2147,8 +2120,8 @@ public interface BackgroundTaskPersistence extends BasePersistence<BackgroundTas
 	* @return the ordered range of matching background tasks
 	*/
 	public java.util.List<BackgroundTask> findByG_N_T_C(long[] groupIds,
-		java.lang.String name, java.lang.String taskExecutorClassName,
-		boolean completed, int start, int end,
+		String name, String taskExecutorClassName, boolean completed,
+		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<BackgroundTask> orderByComparator,
 		boolean retrieveFromCache);
 
@@ -2160,8 +2133,8 @@ public interface BackgroundTaskPersistence extends BasePersistence<BackgroundTas
 	* @param taskExecutorClassName the task executor class name
 	* @param completed the completed
 	*/
-	public void removeByG_N_T_C(long groupId, java.lang.String name,
-		java.lang.String taskExecutorClassName, boolean completed);
+	public void removeByG_N_T_C(long groupId, String name,
+		String taskExecutorClassName, boolean completed);
 
 	/**
 	* Returns the number of background tasks where groupId = &#63; and name = &#63; and taskExecutorClassName = &#63; and completed = &#63;.
@@ -2172,8 +2145,8 @@ public interface BackgroundTaskPersistence extends BasePersistence<BackgroundTas
 	* @param completed the completed
 	* @return the number of matching background tasks
 	*/
-	public int countByG_N_T_C(long groupId, java.lang.String name,
-		java.lang.String taskExecutorClassName, boolean completed);
+	public int countByG_N_T_C(long groupId, String name,
+		String taskExecutorClassName, boolean completed);
 
 	/**
 	* Returns the number of background tasks where groupId = any &#63; and name = &#63; and taskExecutorClassName = &#63; and completed = &#63;.
@@ -2184,8 +2157,8 @@ public interface BackgroundTaskPersistence extends BasePersistence<BackgroundTas
 	* @param completed the completed
 	* @return the number of matching background tasks
 	*/
-	public int countByG_N_T_C(long[] groupIds, java.lang.String name,
-		java.lang.String taskExecutorClassName, boolean completed);
+	public int countByG_N_T_C(long[] groupIds, String name,
+		String taskExecutorClassName, boolean completed);
 
 	/**
 	* Caches the background task in the entity cache if it is enabled.

@@ -128,7 +128,7 @@ public class FeedWrapper implements Feed, ModelWrapper<Feed> {
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new FeedWrapper((Feed)_feed.clone());
 	}
 
@@ -213,7 +213,7 @@ public class FeedWrapper implements Feed, ModelWrapper<Feed> {
 	* @return the twitter screen name of this feed
 	*/
 	@Override
-	public java.lang.String getTwitterScreenName() {
+	public String getTwitterScreenName() {
 		return _feed.getTwitterScreenName();
 	}
 
@@ -233,7 +233,7 @@ public class FeedWrapper implements Feed, ModelWrapper<Feed> {
 	* @return the twitter user uuid of this feed
 	*/
 	@Override
-	public java.lang.String getTwitterUserUuid() {
+	public String getTwitterUserUuid() {
 		return _feed.getTwitterUserUuid();
 	}
 
@@ -253,7 +253,7 @@ public class FeedWrapper implements Feed, ModelWrapper<Feed> {
 	* @return the user name of this feed
 	*/
 	@Override
-	public java.lang.String getUserName() {
+	public String getUserName() {
 		return _feed.getUserName();
 	}
 
@@ -263,7 +263,7 @@ public class FeedWrapper implements Feed, ModelWrapper<Feed> {
 	* @return the user uuid of this feed
 	*/
 	@Override
-	public java.lang.String getUserUuid() {
+	public String getUserUuid() {
 		return _feed.getUserUuid();
 	}
 
@@ -389,7 +389,7 @@ public class FeedWrapper implements Feed, ModelWrapper<Feed> {
 	* @param twitterScreenName the twitter screen name of this feed
 	*/
 	@Override
-	public void setTwitterScreenName(java.lang.String twitterScreenName) {
+	public void setTwitterScreenName(String twitterScreenName) {
 		_feed.setTwitterScreenName(twitterScreenName);
 	}
 
@@ -409,7 +409,7 @@ public class FeedWrapper implements Feed, ModelWrapper<Feed> {
 	* @param twitterUserUuid the twitter user uuid of this feed
 	*/
 	@Override
-	public void setTwitterUserUuid(java.lang.String twitterUserUuid) {
+	public void setTwitterUserUuid(String twitterUserUuid) {
 		_feed.setTwitterUserUuid(twitterUserUuid);
 	}
 
@@ -429,7 +429,7 @@ public class FeedWrapper implements Feed, ModelWrapper<Feed> {
 	* @param userName the user name of this feed
 	*/
 	@Override
-	public void setUserName(java.lang.String userName) {
+	public void setUserName(String userName) {
 		_feed.setUserName(userName);
 	}
 
@@ -439,7 +439,7 @@ public class FeedWrapper implements Feed, ModelWrapper<Feed> {
 	* @param userUuid the user uuid of this feed
 	*/
 	@Override
-	public void setUserUuid(java.lang.String userUuid) {
+	public void setUserUuid(String userUuid) {
 		_feed.setUserUuid(userUuid);
 	}
 
@@ -454,7 +454,7 @@ public class FeedWrapper implements Feed, ModelWrapper<Feed> {
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _feed.toString();
 	}
 
@@ -464,7 +464,7 @@ public class FeedWrapper implements Feed, ModelWrapper<Feed> {
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _feed.toXmlString();
 	}
 

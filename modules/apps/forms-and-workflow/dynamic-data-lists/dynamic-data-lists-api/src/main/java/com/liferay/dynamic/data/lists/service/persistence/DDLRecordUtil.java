@@ -118,7 +118,7 @@ public class DDLRecordUtil {
 	* @param uuid the uuid
 	* @return the matching ddl records
 	*/
-	public static List<DDLRecord> findByUuid(java.lang.String uuid) {
+	public static List<DDLRecord> findByUuid(String uuid) {
 		return getPersistence().findByUuid(uuid);
 	}
 
@@ -134,8 +134,7 @@ public class DDLRecordUtil {
 	* @param end the upper bound of the range of ddl records (not inclusive)
 	* @return the range of matching ddl records
 	*/
-	public static List<DDLRecord> findByUuid(java.lang.String uuid, int start,
-		int end) {
+	public static List<DDLRecord> findByUuid(String uuid, int start, int end) {
 		return getPersistence().findByUuid(uuid, start, end);
 	}
 
@@ -152,8 +151,8 @@ public class DDLRecordUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching ddl records
 	*/
-	public static List<DDLRecord> findByUuid(java.lang.String uuid, int start,
-		int end, OrderByComparator<DDLRecord> orderByComparator) {
+	public static List<DDLRecord> findByUuid(String uuid, int start, int end,
+		OrderByComparator<DDLRecord> orderByComparator) {
 		return getPersistence().findByUuid(uuid, start, end, orderByComparator);
 	}
 
@@ -171,8 +170,8 @@ public class DDLRecordUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching ddl records
 	*/
-	public static List<DDLRecord> findByUuid(java.lang.String uuid, int start,
-		int end, OrderByComparator<DDLRecord> orderByComparator,
+	public static List<DDLRecord> findByUuid(String uuid, int start, int end,
+		OrderByComparator<DDLRecord> orderByComparator,
 		boolean retrieveFromCache) {
 		return getPersistence()
 				   .findByUuid(uuid, start, end, orderByComparator,
@@ -187,7 +186,7 @@ public class DDLRecordUtil {
 	* @return the first matching ddl record
 	* @throws NoSuchRecordException if a matching ddl record could not be found
 	*/
-	public static DDLRecord findByUuid_First(java.lang.String uuid,
+	public static DDLRecord findByUuid_First(String uuid,
 		OrderByComparator<DDLRecord> orderByComparator)
 		throws com.liferay.dynamic.data.lists.exception.NoSuchRecordException {
 		return getPersistence().findByUuid_First(uuid, orderByComparator);
@@ -200,7 +199,7 @@ public class DDLRecordUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching ddl record, or <code>null</code> if a matching ddl record could not be found
 	*/
-	public static DDLRecord fetchByUuid_First(java.lang.String uuid,
+	public static DDLRecord fetchByUuid_First(String uuid,
 		OrderByComparator<DDLRecord> orderByComparator) {
 		return getPersistence().fetchByUuid_First(uuid, orderByComparator);
 	}
@@ -213,7 +212,7 @@ public class DDLRecordUtil {
 	* @return the last matching ddl record
 	* @throws NoSuchRecordException if a matching ddl record could not be found
 	*/
-	public static DDLRecord findByUuid_Last(java.lang.String uuid,
+	public static DDLRecord findByUuid_Last(String uuid,
 		OrderByComparator<DDLRecord> orderByComparator)
 		throws com.liferay.dynamic.data.lists.exception.NoSuchRecordException {
 		return getPersistence().findByUuid_Last(uuid, orderByComparator);
@@ -226,7 +225,7 @@ public class DDLRecordUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching ddl record, or <code>null</code> if a matching ddl record could not be found
 	*/
-	public static DDLRecord fetchByUuid_Last(java.lang.String uuid,
+	public static DDLRecord fetchByUuid_Last(String uuid,
 		OrderByComparator<DDLRecord> orderByComparator) {
 		return getPersistence().fetchByUuid_Last(uuid, orderByComparator);
 	}
@@ -241,7 +240,7 @@ public class DDLRecordUtil {
 	* @throws NoSuchRecordException if a ddl record with the primary key could not be found
 	*/
 	public static DDLRecord[] findByUuid_PrevAndNext(long recordId,
-		java.lang.String uuid, OrderByComparator<DDLRecord> orderByComparator)
+		String uuid, OrderByComparator<DDLRecord> orderByComparator)
 		throws com.liferay.dynamic.data.lists.exception.NoSuchRecordException {
 		return getPersistence()
 				   .findByUuid_PrevAndNext(recordId, uuid, orderByComparator);
@@ -252,7 +251,7 @@ public class DDLRecordUtil {
 	*
 	* @param uuid the uuid
 	*/
-	public static void removeByUuid(java.lang.String uuid) {
+	public static void removeByUuid(String uuid) {
 		getPersistence().removeByUuid(uuid);
 	}
 
@@ -262,7 +261,7 @@ public class DDLRecordUtil {
 	* @param uuid the uuid
 	* @return the number of matching ddl records
 	*/
-	public static int countByUuid(java.lang.String uuid) {
+	public static int countByUuid(String uuid) {
 		return getPersistence().countByUuid(uuid);
 	}
 
@@ -274,7 +273,7 @@ public class DDLRecordUtil {
 	* @return the matching ddl record
 	* @throws NoSuchRecordException if a matching ddl record could not be found
 	*/
-	public static DDLRecord findByUUID_G(java.lang.String uuid, long groupId)
+	public static DDLRecord findByUUID_G(String uuid, long groupId)
 		throws com.liferay.dynamic.data.lists.exception.NoSuchRecordException {
 		return getPersistence().findByUUID_G(uuid, groupId);
 	}
@@ -286,7 +285,7 @@ public class DDLRecordUtil {
 	* @param groupId the group ID
 	* @return the matching ddl record, or <code>null</code> if a matching ddl record could not be found
 	*/
-	public static DDLRecord fetchByUUID_G(java.lang.String uuid, long groupId) {
+	public static DDLRecord fetchByUUID_G(String uuid, long groupId) {
 		return getPersistence().fetchByUUID_G(uuid, groupId);
 	}
 
@@ -298,7 +297,7 @@ public class DDLRecordUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching ddl record, or <code>null</code> if a matching ddl record could not be found
 	*/
-	public static DDLRecord fetchByUUID_G(java.lang.String uuid, long groupId,
+	public static DDLRecord fetchByUUID_G(String uuid, long groupId,
 		boolean retrieveFromCache) {
 		return getPersistence().fetchByUUID_G(uuid, groupId, retrieveFromCache);
 	}
@@ -310,7 +309,7 @@ public class DDLRecordUtil {
 	* @param groupId the group ID
 	* @return the ddl record that was removed
 	*/
-	public static DDLRecord removeByUUID_G(java.lang.String uuid, long groupId)
+	public static DDLRecord removeByUUID_G(String uuid, long groupId)
 		throws com.liferay.dynamic.data.lists.exception.NoSuchRecordException {
 		return getPersistence().removeByUUID_G(uuid, groupId);
 	}
@@ -322,7 +321,7 @@ public class DDLRecordUtil {
 	* @param groupId the group ID
 	* @return the number of matching ddl records
 	*/
-	public static int countByUUID_G(java.lang.String uuid, long groupId) {
+	public static int countByUUID_G(String uuid, long groupId) {
 		return getPersistence().countByUUID_G(uuid, groupId);
 	}
 
@@ -333,8 +332,7 @@ public class DDLRecordUtil {
 	* @param companyId the company ID
 	* @return the matching ddl records
 	*/
-	public static List<DDLRecord> findByUuid_C(java.lang.String uuid,
-		long companyId) {
+	public static List<DDLRecord> findByUuid_C(String uuid, long companyId) {
 		return getPersistence().findByUuid_C(uuid, companyId);
 	}
 
@@ -351,8 +349,8 @@ public class DDLRecordUtil {
 	* @param end the upper bound of the range of ddl records (not inclusive)
 	* @return the range of matching ddl records
 	*/
-	public static List<DDLRecord> findByUuid_C(java.lang.String uuid,
-		long companyId, int start, int end) {
+	public static List<DDLRecord> findByUuid_C(String uuid, long companyId,
+		int start, int end) {
 		return getPersistence().findByUuid_C(uuid, companyId, start, end);
 	}
 
@@ -370,9 +368,8 @@ public class DDLRecordUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching ddl records
 	*/
-	public static List<DDLRecord> findByUuid_C(java.lang.String uuid,
-		long companyId, int start, int end,
-		OrderByComparator<DDLRecord> orderByComparator) {
+	public static List<DDLRecord> findByUuid_C(String uuid, long companyId,
+		int start, int end, OrderByComparator<DDLRecord> orderByComparator) {
 		return getPersistence()
 				   .findByUuid_C(uuid, companyId, start, end, orderByComparator);
 	}
@@ -392,9 +389,8 @@ public class DDLRecordUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching ddl records
 	*/
-	public static List<DDLRecord> findByUuid_C(java.lang.String uuid,
-		long companyId, int start, int end,
-		OrderByComparator<DDLRecord> orderByComparator,
+	public static List<DDLRecord> findByUuid_C(String uuid, long companyId,
+		int start, int end, OrderByComparator<DDLRecord> orderByComparator,
 		boolean retrieveFromCache) {
 		return getPersistence()
 				   .findByUuid_C(uuid, companyId, start, end,
@@ -410,8 +406,8 @@ public class DDLRecordUtil {
 	* @return the first matching ddl record
 	* @throws NoSuchRecordException if a matching ddl record could not be found
 	*/
-	public static DDLRecord findByUuid_C_First(java.lang.String uuid,
-		long companyId, OrderByComparator<DDLRecord> orderByComparator)
+	public static DDLRecord findByUuid_C_First(String uuid, long companyId,
+		OrderByComparator<DDLRecord> orderByComparator)
 		throws com.liferay.dynamic.data.lists.exception.NoSuchRecordException {
 		return getPersistence()
 				   .findByUuid_C_First(uuid, companyId, orderByComparator);
@@ -425,8 +421,8 @@ public class DDLRecordUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching ddl record, or <code>null</code> if a matching ddl record could not be found
 	*/
-	public static DDLRecord fetchByUuid_C_First(java.lang.String uuid,
-		long companyId, OrderByComparator<DDLRecord> orderByComparator) {
+	public static DDLRecord fetchByUuid_C_First(String uuid, long companyId,
+		OrderByComparator<DDLRecord> orderByComparator) {
 		return getPersistence()
 				   .fetchByUuid_C_First(uuid, companyId, orderByComparator);
 	}
@@ -440,8 +436,8 @@ public class DDLRecordUtil {
 	* @return the last matching ddl record
 	* @throws NoSuchRecordException if a matching ddl record could not be found
 	*/
-	public static DDLRecord findByUuid_C_Last(java.lang.String uuid,
-		long companyId, OrderByComparator<DDLRecord> orderByComparator)
+	public static DDLRecord findByUuid_C_Last(String uuid, long companyId,
+		OrderByComparator<DDLRecord> orderByComparator)
 		throws com.liferay.dynamic.data.lists.exception.NoSuchRecordException {
 		return getPersistence()
 				   .findByUuid_C_Last(uuid, companyId, orderByComparator);
@@ -455,8 +451,8 @@ public class DDLRecordUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching ddl record, or <code>null</code> if a matching ddl record could not be found
 	*/
-	public static DDLRecord fetchByUuid_C_Last(java.lang.String uuid,
-		long companyId, OrderByComparator<DDLRecord> orderByComparator) {
+	public static DDLRecord fetchByUuid_C_Last(String uuid, long companyId,
+		OrderByComparator<DDLRecord> orderByComparator) {
 		return getPersistence()
 				   .fetchByUuid_C_Last(uuid, companyId, orderByComparator);
 	}
@@ -472,7 +468,7 @@ public class DDLRecordUtil {
 	* @throws NoSuchRecordException if a ddl record with the primary key could not be found
 	*/
 	public static DDLRecord[] findByUuid_C_PrevAndNext(long recordId,
-		java.lang.String uuid, long companyId,
+		String uuid, long companyId,
 		OrderByComparator<DDLRecord> orderByComparator)
 		throws com.liferay.dynamic.data.lists.exception.NoSuchRecordException {
 		return getPersistence()
@@ -486,7 +482,7 @@ public class DDLRecordUtil {
 	* @param uuid the uuid
 	* @param companyId the company ID
 	*/
-	public static void removeByUuid_C(java.lang.String uuid, long companyId) {
+	public static void removeByUuid_C(String uuid, long companyId) {
 		getPersistence().removeByUuid_C(uuid, companyId);
 	}
 
@@ -497,7 +493,7 @@ public class DDLRecordUtil {
 	* @param companyId the company ID
 	* @return the number of matching ddl records
 	*/
-	public static int countByUuid_C(java.lang.String uuid, long companyId) {
+	public static int countByUuid_C(String uuid, long companyId) {
 		return getPersistence().countByUuid_C(uuid, companyId);
 	}
 
@@ -1001,7 +997,7 @@ public class DDLRecordUtil {
 	* @return the matching ddl records
 	*/
 	public static List<DDLRecord> findByR_R(long recordSetId,
-		java.lang.String recordSetVersion) {
+		String recordSetVersion) {
 		return getPersistence().findByR_R(recordSetId, recordSetVersion);
 	}
 
@@ -1019,7 +1015,7 @@ public class DDLRecordUtil {
 	* @return the range of matching ddl records
 	*/
 	public static List<DDLRecord> findByR_R(long recordSetId,
-		java.lang.String recordSetVersion, int start, int end) {
+		String recordSetVersion, int start, int end) {
 		return getPersistence()
 				   .findByR_R(recordSetId, recordSetVersion, start, end);
 	}
@@ -1039,7 +1035,7 @@ public class DDLRecordUtil {
 	* @return the ordered range of matching ddl records
 	*/
 	public static List<DDLRecord> findByR_R(long recordSetId,
-		java.lang.String recordSetVersion, int start, int end,
+		String recordSetVersion, int start, int end,
 		OrderByComparator<DDLRecord> orderByComparator) {
 		return getPersistence()
 				   .findByR_R(recordSetId, recordSetVersion, start, end,
@@ -1062,7 +1058,7 @@ public class DDLRecordUtil {
 	* @return the ordered range of matching ddl records
 	*/
 	public static List<DDLRecord> findByR_R(long recordSetId,
-		java.lang.String recordSetVersion, int start, int end,
+		String recordSetVersion, int start, int end,
 		OrderByComparator<DDLRecord> orderByComparator,
 		boolean retrieveFromCache) {
 		return getPersistence()
@@ -1080,8 +1076,7 @@ public class DDLRecordUtil {
 	* @throws NoSuchRecordException if a matching ddl record could not be found
 	*/
 	public static DDLRecord findByR_R_First(long recordSetId,
-		java.lang.String recordSetVersion,
-		OrderByComparator<DDLRecord> orderByComparator)
+		String recordSetVersion, OrderByComparator<DDLRecord> orderByComparator)
 		throws com.liferay.dynamic.data.lists.exception.NoSuchRecordException {
 		return getPersistence()
 				   .findByR_R_First(recordSetId, recordSetVersion,
@@ -1097,8 +1092,7 @@ public class DDLRecordUtil {
 	* @return the first matching ddl record, or <code>null</code> if a matching ddl record could not be found
 	*/
 	public static DDLRecord fetchByR_R_First(long recordSetId,
-		java.lang.String recordSetVersion,
-		OrderByComparator<DDLRecord> orderByComparator) {
+		String recordSetVersion, OrderByComparator<DDLRecord> orderByComparator) {
 		return getPersistence()
 				   .fetchByR_R_First(recordSetId, recordSetVersion,
 			orderByComparator);
@@ -1114,8 +1108,7 @@ public class DDLRecordUtil {
 	* @throws NoSuchRecordException if a matching ddl record could not be found
 	*/
 	public static DDLRecord findByR_R_Last(long recordSetId,
-		java.lang.String recordSetVersion,
-		OrderByComparator<DDLRecord> orderByComparator)
+		String recordSetVersion, OrderByComparator<DDLRecord> orderByComparator)
 		throws com.liferay.dynamic.data.lists.exception.NoSuchRecordException {
 		return getPersistence()
 				   .findByR_R_Last(recordSetId, recordSetVersion,
@@ -1131,8 +1124,7 @@ public class DDLRecordUtil {
 	* @return the last matching ddl record, or <code>null</code> if a matching ddl record could not be found
 	*/
 	public static DDLRecord fetchByR_R_Last(long recordSetId,
-		java.lang.String recordSetVersion,
-		OrderByComparator<DDLRecord> orderByComparator) {
+		String recordSetVersion, OrderByComparator<DDLRecord> orderByComparator) {
 		return getPersistence()
 				   .fetchByR_R_Last(recordSetId, recordSetVersion,
 			orderByComparator);
@@ -1149,7 +1141,7 @@ public class DDLRecordUtil {
 	* @throws NoSuchRecordException if a ddl record with the primary key could not be found
 	*/
 	public static DDLRecord[] findByR_R_PrevAndNext(long recordId,
-		long recordSetId, java.lang.String recordSetVersion,
+		long recordSetId, String recordSetVersion,
 		OrderByComparator<DDLRecord> orderByComparator)
 		throws com.liferay.dynamic.data.lists.exception.NoSuchRecordException {
 		return getPersistence()
@@ -1163,8 +1155,7 @@ public class DDLRecordUtil {
 	* @param recordSetId the record set ID
 	* @param recordSetVersion the record set version
 	*/
-	public static void removeByR_R(long recordSetId,
-		java.lang.String recordSetVersion) {
+	public static void removeByR_R(long recordSetId, String recordSetVersion) {
 		getPersistence().removeByR_R(recordSetId, recordSetVersion);
 	}
 
@@ -1175,8 +1166,7 @@ public class DDLRecordUtil {
 	* @param recordSetVersion the record set version
 	* @return the number of matching ddl records
 	*/
-	public static int countByR_R(long recordSetId,
-		java.lang.String recordSetVersion) {
+	public static int countByR_R(long recordSetId, String recordSetVersion) {
 		return getPersistence().countByR_R(recordSetId, recordSetVersion);
 	}
 
@@ -1328,7 +1318,7 @@ public class DDLRecordUtil {
 		return getPersistence().countAll();
 	}
 
-	public static java.util.Set<java.lang.String> getBadColumnNames() {
+	public static java.util.Set<String> getBadColumnNames() {
 		return getPersistence().getBadColumnNames();
 	}
 

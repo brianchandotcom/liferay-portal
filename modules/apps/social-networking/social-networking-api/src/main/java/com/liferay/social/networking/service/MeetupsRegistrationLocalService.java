@@ -227,7 +227,7 @@ public interface MeetupsRegistrationLocalService extends BaseLocalService,
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -235,7 +235,7 @@ public interface MeetupsRegistrationLocalService extends BaseLocalService,
 		throws PortalException;
 
 	public MeetupsRegistration updateMeetupsRegistration(long userId,
-		long meetupsEntryId, int status, java.lang.String comments)
+		long meetupsEntryId, int status, String comments)
 		throws PortalException;
 
 	/**

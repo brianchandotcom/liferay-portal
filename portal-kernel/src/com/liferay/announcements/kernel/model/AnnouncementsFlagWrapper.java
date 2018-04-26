@@ -108,7 +108,7 @@ public class AnnouncementsFlagWrapper implements AnnouncementsFlag,
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new AnnouncementsFlagWrapper((AnnouncementsFlag)_announcementsFlag.clone());
 	}
 
@@ -193,7 +193,7 @@ public class AnnouncementsFlagWrapper implements AnnouncementsFlag,
 	* @return the user uuid of this announcements flag
 	*/
 	@Override
-	public java.lang.String getUserUuid() {
+	public String getUserUuid() {
 		return _announcementsFlag.getUserUuid();
 	}
 
@@ -329,7 +329,7 @@ public class AnnouncementsFlagWrapper implements AnnouncementsFlag,
 	* @param userUuid the user uuid of this announcements flag
 	*/
 	@Override
-	public void setUserUuid(java.lang.String userUuid) {
+	public void setUserUuid(String userUuid) {
 		_announcementsFlag.setUserUuid(userUuid);
 	}
 
@@ -354,7 +354,7 @@ public class AnnouncementsFlagWrapper implements AnnouncementsFlag,
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _announcementsFlag.toString();
 	}
 
@@ -364,7 +364,7 @@ public class AnnouncementsFlagWrapper implements AnnouncementsFlag,
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _announcementsFlag.toXmlString();
 	}
 

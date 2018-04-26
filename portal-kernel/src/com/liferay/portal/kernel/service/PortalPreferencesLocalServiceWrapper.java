@@ -34,7 +34,7 @@ public class PortalPreferencesLocalServiceWrapper
 
 	@Override
 	public com.liferay.portal.kernel.model.PortalPreferences addPortalPreferences(
-		long ownerId, int ownerType, java.lang.String defaultPreferences) {
+		long ownerId, int ownerType, String defaultPreferences) {
 		return _portalPreferencesLocalService.addPortalPreferences(ownerId,
 			ownerType, defaultPreferences);
 	}
@@ -214,7 +214,7 @@ public class PortalPreferencesLocalServiceWrapper
 	* @return the OSGi service identifier
 	*/
 	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
+	public String getOSGiServiceIdentifier() {
 		return _portalPreferencesLocalService.getOSGiServiceIdentifier();
 	}
 
@@ -274,7 +274,7 @@ public class PortalPreferencesLocalServiceWrapper
 
 	@Override
 	public javax.portlet.PortletPreferences getPreferences(long ownerId,
-		int ownerType, java.lang.String defaultPreferences) {
+		int ownerType, String defaultPreferences) {
 		return _portalPreferencesLocalService.getPreferences(ownerId,
 			ownerType, defaultPreferences);
 	}
@@ -301,7 +301,7 @@ public class PortalPreferencesLocalServiceWrapper
 
 	@Override
 	public com.liferay.portal.kernel.model.PortalPreferences updatePreferences(
-		long ownerId, int ownerType, java.lang.String xml) {
+		long ownerId, int ownerType, String xml) {
 		return _portalPreferencesLocalService.updatePreferences(ownerId,
 			ownerType, xml);
 	}

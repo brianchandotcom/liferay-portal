@@ -320,7 +320,7 @@ public interface OAuth2ApplicationScopeAliasesPersistence
 	* @throws NoSuchOAuth2ApplicationScopeAliasesException if a matching o auth2 application scope aliases could not be found
 	*/
 	public OAuth2ApplicationScopeAliases findByO_S(long oAuth2ApplicationId,
-		java.lang.String scopeAliases)
+		String scopeAliases)
 		throws NoSuchOAuth2ApplicationScopeAliasesException;
 
 	/**
@@ -331,7 +331,7 @@ public interface OAuth2ApplicationScopeAliasesPersistence
 	* @return the matching o auth2 application scope aliases, or <code>null</code> if a matching o auth2 application scope aliases could not be found
 	*/
 	public OAuth2ApplicationScopeAliases fetchByO_S(long oAuth2ApplicationId,
-		java.lang.String scopeAliases);
+		String scopeAliases);
 
 	/**
 	* Returns the o auth2 application scope aliases where oAuth2ApplicationId = &#63; and scopeAliases = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -342,7 +342,7 @@ public interface OAuth2ApplicationScopeAliasesPersistence
 	* @return the matching o auth2 application scope aliases, or <code>null</code> if a matching o auth2 application scope aliases could not be found
 	*/
 	public OAuth2ApplicationScopeAliases fetchByO_S(long oAuth2ApplicationId,
-		java.lang.String scopeAliases, boolean retrieveFromCache);
+		String scopeAliases, boolean retrieveFromCache);
 
 	/**
 	* Removes the o auth2 application scope aliases where oAuth2ApplicationId = &#63; and scopeAliases = &#63; from the database.
@@ -352,7 +352,7 @@ public interface OAuth2ApplicationScopeAliasesPersistence
 	* @return the o auth2 application scope aliases that was removed
 	*/
 	public OAuth2ApplicationScopeAliases removeByO_S(long oAuth2ApplicationId,
-		java.lang.String scopeAliases)
+		String scopeAliases)
 		throws NoSuchOAuth2ApplicationScopeAliasesException;
 
 	/**
@@ -362,8 +362,7 @@ public interface OAuth2ApplicationScopeAliasesPersistence
 	* @param scopeAliases the scope aliases
 	* @return the number of matching o auth2 application scope aliaseses
 	*/
-	public int countByO_S(long oAuth2ApplicationId,
-		java.lang.String scopeAliases);
+	public int countByO_S(long oAuth2ApplicationId, String scopeAliases);
 
 	/**
 	* Caches the o auth2 application scope aliases in the entity cache if it is enabled.
@@ -496,5 +495,5 @@ public interface OAuth2ApplicationScopeAliasesPersistence
 	public int countAll();
 
 	@Override
-	public java.util.Set<java.lang.String> getBadColumnNames();
+	public java.util.Set<String> getBadColumnNames();
 }

@@ -48,7 +48,7 @@ public interface PushNotificationsDevicePersistence extends BasePersistence<Push
 	* @return the matching push notifications device
 	* @throws NoSuchDeviceException if a matching push notifications device could not be found
 	*/
-	public PushNotificationsDevice findByToken(java.lang.String token)
+	public PushNotificationsDevice findByToken(String token)
 		throws NoSuchDeviceException;
 
 	/**
@@ -57,7 +57,7 @@ public interface PushNotificationsDevicePersistence extends BasePersistence<Push
 	* @param token the token
 	* @return the matching push notifications device, or <code>null</code> if a matching push notifications device could not be found
 	*/
-	public PushNotificationsDevice fetchByToken(java.lang.String token);
+	public PushNotificationsDevice fetchByToken(String token);
 
 	/**
 	* Returns the push notifications device where token = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -66,7 +66,7 @@ public interface PushNotificationsDevicePersistence extends BasePersistence<Push
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching push notifications device, or <code>null</code> if a matching push notifications device could not be found
 	*/
-	public PushNotificationsDevice fetchByToken(java.lang.String token,
+	public PushNotificationsDevice fetchByToken(String token,
 		boolean retrieveFromCache);
 
 	/**
@@ -75,7 +75,7 @@ public interface PushNotificationsDevicePersistence extends BasePersistence<Push
 	* @param token the token
 	* @return the push notifications device that was removed
 	*/
-	public PushNotificationsDevice removeByToken(java.lang.String token)
+	public PushNotificationsDevice removeByToken(String token)
 		throws NoSuchDeviceException;
 
 	/**
@@ -84,7 +84,7 @@ public interface PushNotificationsDevicePersistence extends BasePersistence<Push
 	* @param token the token
 	* @return the number of matching push notifications devices
 	*/
-	public int countByToken(java.lang.String token);
+	public int countByToken(String token);
 
 	/**
 	* Returns all the push notifications devices where userId = &#63; and platform = &#63;.
@@ -94,7 +94,7 @@ public interface PushNotificationsDevicePersistence extends BasePersistence<Push
 	* @return the matching push notifications devices
 	*/
 	public java.util.List<PushNotificationsDevice> findByU_P(long userId,
-		java.lang.String platform);
+		String platform);
 
 	/**
 	* Returns a range of all the push notifications devices where userId = &#63; and platform = &#63;.
@@ -110,7 +110,7 @@ public interface PushNotificationsDevicePersistence extends BasePersistence<Push
 	* @return the range of matching push notifications devices
 	*/
 	public java.util.List<PushNotificationsDevice> findByU_P(long userId,
-		java.lang.String platform, int start, int end);
+		String platform, int start, int end);
 
 	/**
 	* Returns an ordered range of all the push notifications devices where userId = &#63; and platform = &#63;.
@@ -127,7 +127,7 @@ public interface PushNotificationsDevicePersistence extends BasePersistence<Push
 	* @return the ordered range of matching push notifications devices
 	*/
 	public java.util.List<PushNotificationsDevice> findByU_P(long userId,
-		java.lang.String platform, int start, int end,
+		String platform, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<PushNotificationsDevice> orderByComparator);
 
 	/**
@@ -146,7 +146,7 @@ public interface PushNotificationsDevicePersistence extends BasePersistence<Push
 	* @return the ordered range of matching push notifications devices
 	*/
 	public java.util.List<PushNotificationsDevice> findByU_P(long userId,
-		java.lang.String platform, int start, int end,
+		String platform, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<PushNotificationsDevice> orderByComparator,
 		boolean retrieveFromCache);
 
@@ -160,7 +160,7 @@ public interface PushNotificationsDevicePersistence extends BasePersistence<Push
 	* @throws NoSuchDeviceException if a matching push notifications device could not be found
 	*/
 	public PushNotificationsDevice findByU_P_First(long userId,
-		java.lang.String platform,
+		String platform,
 		com.liferay.portal.kernel.util.OrderByComparator<PushNotificationsDevice> orderByComparator)
 		throws NoSuchDeviceException;
 
@@ -173,7 +173,7 @@ public interface PushNotificationsDevicePersistence extends BasePersistence<Push
 	* @return the first matching push notifications device, or <code>null</code> if a matching push notifications device could not be found
 	*/
 	public PushNotificationsDevice fetchByU_P_First(long userId,
-		java.lang.String platform,
+		String platform,
 		com.liferay.portal.kernel.util.OrderByComparator<PushNotificationsDevice> orderByComparator);
 
 	/**
@@ -185,8 +185,7 @@ public interface PushNotificationsDevicePersistence extends BasePersistence<Push
 	* @return the last matching push notifications device
 	* @throws NoSuchDeviceException if a matching push notifications device could not be found
 	*/
-	public PushNotificationsDevice findByU_P_Last(long userId,
-		java.lang.String platform,
+	public PushNotificationsDevice findByU_P_Last(long userId, String platform,
 		com.liferay.portal.kernel.util.OrderByComparator<PushNotificationsDevice> orderByComparator)
 		throws NoSuchDeviceException;
 
@@ -199,7 +198,7 @@ public interface PushNotificationsDevicePersistence extends BasePersistence<Push
 	* @return the last matching push notifications device, or <code>null</code> if a matching push notifications device could not be found
 	*/
 	public PushNotificationsDevice fetchByU_P_Last(long userId,
-		java.lang.String platform,
+		String platform,
 		com.liferay.portal.kernel.util.OrderByComparator<PushNotificationsDevice> orderByComparator);
 
 	/**
@@ -213,7 +212,7 @@ public interface PushNotificationsDevicePersistence extends BasePersistence<Push
 	* @throws NoSuchDeviceException if a push notifications device with the primary key could not be found
 	*/
 	public PushNotificationsDevice[] findByU_P_PrevAndNext(
-		long pushNotificationsDeviceId, long userId, java.lang.String platform,
+		long pushNotificationsDeviceId, long userId, String platform,
 		com.liferay.portal.kernel.util.OrderByComparator<PushNotificationsDevice> orderByComparator)
 		throws NoSuchDeviceException;
 
@@ -229,7 +228,7 @@ public interface PushNotificationsDevicePersistence extends BasePersistence<Push
 	* @return the matching push notifications devices
 	*/
 	public java.util.List<PushNotificationsDevice> findByU_P(long[] userIds,
-		java.lang.String platform);
+		String platform);
 
 	/**
 	* Returns a range of all the push notifications devices where userId = any &#63; and platform = &#63;.
@@ -245,7 +244,7 @@ public interface PushNotificationsDevicePersistence extends BasePersistence<Push
 	* @return the range of matching push notifications devices
 	*/
 	public java.util.List<PushNotificationsDevice> findByU_P(long[] userIds,
-		java.lang.String platform, int start, int end);
+		String platform, int start, int end);
 
 	/**
 	* Returns an ordered range of all the push notifications devices where userId = any &#63; and platform = &#63;.
@@ -262,7 +261,7 @@ public interface PushNotificationsDevicePersistence extends BasePersistence<Push
 	* @return the ordered range of matching push notifications devices
 	*/
 	public java.util.List<PushNotificationsDevice> findByU_P(long[] userIds,
-		java.lang.String platform, int start, int end,
+		String platform, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<PushNotificationsDevice> orderByComparator);
 
 	/**
@@ -281,7 +280,7 @@ public interface PushNotificationsDevicePersistence extends BasePersistence<Push
 	* @return the ordered range of matching push notifications devices
 	*/
 	public java.util.List<PushNotificationsDevice> findByU_P(long[] userIds,
-		java.lang.String platform, int start, int end,
+		String platform, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<PushNotificationsDevice> orderByComparator,
 		boolean retrieveFromCache);
 
@@ -291,7 +290,7 @@ public interface PushNotificationsDevicePersistence extends BasePersistence<Push
 	* @param userId the user ID
 	* @param platform the platform
 	*/
-	public void removeByU_P(long userId, java.lang.String platform);
+	public void removeByU_P(long userId, String platform);
 
 	/**
 	* Returns the number of push notifications devices where userId = &#63; and platform = &#63;.
@@ -300,7 +299,7 @@ public interface PushNotificationsDevicePersistence extends BasePersistence<Push
 	* @param platform the platform
 	* @return the number of matching push notifications devices
 	*/
-	public int countByU_P(long userId, java.lang.String platform);
+	public int countByU_P(long userId, String platform);
 
 	/**
 	* Returns the number of push notifications devices where userId = any &#63; and platform = &#63;.
@@ -309,7 +308,7 @@ public interface PushNotificationsDevicePersistence extends BasePersistence<Push
 	* @param platform the platform
 	* @return the number of matching push notifications devices
 	*/
-	public int countByU_P(long[] userIds, java.lang.String platform);
+	public int countByU_P(long[] userIds, String platform);
 
 	/**
 	* Caches the push notifications device in the entity cache if it is enabled.

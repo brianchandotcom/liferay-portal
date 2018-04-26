@@ -102,7 +102,7 @@ public interface TrashEntryService extends BaseService {
 	* @param className the class name of the entity
 	* @param classPK the primary key of the entity
 	*/
-	public void deleteEntry(java.lang.String className, long classPK)
+	public void deleteEntry(String className, long classPK)
 		throws PortalException;
 
 	/**
@@ -131,7 +131,7 @@ public interface TrashEntryService extends BaseService {
 		OrderByComparator<TrashEntry> obc) throws PrincipalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<TrashEntry> getEntries(long groupId, java.lang.String className)
+	public List<TrashEntry> getEntries(long groupId, String className)
 		throws PrincipalException;
 
 	/**
@@ -148,16 +148,15 @@ public interface TrashEntryService extends BaseService {
 	<code>obc</code>
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public TrashEntryList getEntries(long groupId, java.lang.String className,
-		int start, int end, OrderByComparator<TrashEntry> obc)
-		throws PrincipalException;
+	public TrashEntryList getEntries(long groupId, String className, int start,
+		int end, OrderByComparator<TrashEntry> obc) throws PrincipalException;
 
 	/**
 	* Returns the OSGi service identifier.
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	/**
 	* Moves the trash entry with the entity class name and primary key,
@@ -188,7 +187,7 @@ public interface TrashEntryService extends BaseService {
 	* @param serviceContext the service context to be applied (optionally
 	<code>null</code>)
 	*/
-	public void moveEntry(java.lang.String className, long classPK,
+	public void moveEntry(String className, long classPK,
 		long destinationContainerModelId, ServiceContext serviceContext)
 		throws PortalException;
 
@@ -229,11 +228,11 @@ public interface TrashEntryService extends BaseService {
 	* @return the restored trash entry
 	*/
 	public TrashEntry restoreEntry(long entryId, long overrideClassPK,
-		java.lang.String name) throws PortalException;
+		String name) throws PortalException;
 
-	public TrashEntry restoreEntry(java.lang.String className, long classPK)
+	public TrashEntry restoreEntry(String className, long classPK)
 		throws PortalException;
 
-	public TrashEntry restoreEntry(java.lang.String className, long classPK,
-		long overrideClassPK, java.lang.String name) throws PortalException;
+	public TrashEntry restoreEntry(String className, long classPK,
+		long overrideClassPK, String name) throws PortalException;
 }

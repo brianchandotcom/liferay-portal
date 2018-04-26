@@ -36,9 +36,8 @@ public class OAuthConsumerLocalServiceWrapper
 
 	@Override
 	public com.liferay.opensocial.model.OAuthConsumer addOAuthConsumer(
-		long companyId, java.lang.String gadgetKey,
-		java.lang.String serviceName, java.lang.String consumerKey,
-		java.lang.String consumerSecret, java.lang.String keyType) {
+		long companyId, String gadgetKey, String serviceName,
+		String consumerKey, String consumerSecret, String keyType) {
 		return _oAuthConsumerLocalService.addOAuthConsumer(companyId,
 			gadgetKey, serviceName, consumerKey, consumerSecret, keyType);
 	}
@@ -94,7 +93,7 @@ public class OAuthConsumerLocalServiceWrapper
 	}
 
 	@Override
-	public void deleteOAuthConsumers(java.lang.String gadgetKey) {
+	public void deleteOAuthConsumers(String gadgetKey) {
 		_oAuthConsumerLocalService.deleteOAuthConsumers(gadgetKey);
 	}
 
@@ -201,7 +200,7 @@ public class OAuthConsumerLocalServiceWrapper
 
 	@Override
 	public com.liferay.opensocial.model.OAuthConsumer fetchOAuthConsumer(
-		java.lang.String gadgetKey, java.lang.String serviceName) {
+		String gadgetKey, String serviceName) {
 		return _oAuthConsumerLocalService.fetchOAuthConsumer(gadgetKey,
 			serviceName);
 	}
@@ -232,7 +231,7 @@ public class OAuthConsumerLocalServiceWrapper
 
 	@Override
 	public com.liferay.opensocial.model.OAuthConsumer getOAuthConsumer(
-		java.lang.String gadgetKey, java.lang.String serviceName)
+		String gadgetKey, String serviceName)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _oAuthConsumerLocalService.getOAuthConsumer(gadgetKey,
 			serviceName);
@@ -257,13 +256,13 @@ public class OAuthConsumerLocalServiceWrapper
 
 	@Override
 	public java.util.List<com.liferay.opensocial.model.OAuthConsumer> getOAuthConsumers(
-		java.lang.String gadgetKey) {
+		String gadgetKey) {
 		return _oAuthConsumerLocalService.getOAuthConsumers(gadgetKey);
 	}
 
 	@Override
 	public java.util.List<com.liferay.opensocial.model.OAuthConsumer> getOAuthConsumers(
-		java.lang.String gadgetKey, int start, int end) {
+		String gadgetKey, int start, int end) {
 		return _oAuthConsumerLocalService.getOAuthConsumers(gadgetKey, start,
 			end);
 	}
@@ -279,7 +278,7 @@ public class OAuthConsumerLocalServiceWrapper
 	}
 
 	@Override
-	public int getOAuthConsumersCount(java.lang.String gadgetKey) {
+	public int getOAuthConsumersCount(String gadgetKey) {
 		return _oAuthConsumerLocalService.getOAuthConsumersCount(gadgetKey);
 	}
 
@@ -289,7 +288,7 @@ public class OAuthConsumerLocalServiceWrapper
 	* @return the OSGi service identifier
 	*/
 	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
+	public String getOSGiServiceIdentifier() {
 		return _oAuthConsumerLocalService.getOSGiServiceIdentifier();
 	}
 
@@ -302,9 +301,8 @@ public class OAuthConsumerLocalServiceWrapper
 
 	@Override
 	public com.liferay.opensocial.model.OAuthConsumer updateOAuthConsumer(
-		long oAuthConsumerId, java.lang.String consumerKey,
-		java.lang.String consumerSecret, java.lang.String keyType,
-		java.lang.String keyName, java.lang.String callbackURL)
+		long oAuthConsumerId, String consumerKey, String consumerSecret,
+		String keyType, String keyName, String callbackURL)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _oAuthConsumerLocalService.updateOAuthConsumer(oAuthConsumerId,
 			consumerKey, consumerSecret, keyType, keyName, callbackURL);

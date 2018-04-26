@@ -65,10 +65,9 @@ public interface PowwowMeetingLocalService extends BaseLocalService,
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	public PowwowMeeting addPowwowMeeting(long userId, long groupId,
-		long powwowServerId, java.lang.String name,
-		java.lang.String description, java.lang.String providerType,
-		Map<java.lang.String, Serializable> providerTypeMetadataMap,
-		java.lang.String languageId, long calendarBookingId, int status,
+		long powwowServerId, String name, String description,
+		String providerType, Map<String, Serializable> providerTypeMetadataMap,
+		String languageId, long calendarBookingId, int status,
 		List<PowwowParticipant> powwowParticipants,
 		ServiceContext serviceContext) throws PortalException;
 
@@ -194,7 +193,7 @@ public interface PowwowMeetingLocalService extends BaseLocalService,
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<PowwowMeeting> getParticipantPowwowMeetings(long userId,
@@ -242,9 +241,8 @@ public interface PowwowMeetingLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<PowwowMeeting> getPowwowMeetings(long groupId, long userId,
-		java.lang.String name, java.lang.String description, int status,
-		boolean andSearch, int start, int end, java.lang.String orderByField,
-		java.lang.String orderByType);
+		String name, String description, int status, boolean andSearch,
+		int start, int end, String orderByField, String orderByType);
 
 	/**
 	* Returns the number of powwow meetings.
@@ -261,19 +259,17 @@ public interface PowwowMeetingLocalService extends BaseLocalService,
 	public int getPowwowMeetingsCount(long powwowServerId, int status);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getPowwowMeetingsCount(long groupId, long userId,
-		java.lang.String name, java.lang.String description, int status,
-		boolean andSearch);
+	public int getPowwowMeetingsCount(long groupId, long userId, String name,
+		String description, int status, boolean andSearch);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getUserPowwowMeetingsCount(long userId, int status);
 
 	@Indexable(type = IndexableType.REINDEX)
 	public PowwowMeeting updatePowwowMeeting(long powwowMeetingId,
-		long powwowServerId, java.lang.String name,
-		java.lang.String description, java.lang.String providerType,
-		Map<java.lang.String, Serializable> providerTypeMetadataMap,
-		java.lang.String languageId, long calendarBookingId, int status,
+		long powwowServerId, String name, String description,
+		String providerType, Map<String, Serializable> providerTypeMetadataMap,
+		String languageId, long calendarBookingId, int status,
 		List<PowwowParticipant> powwowParticipants,
 		ServiceContext serviceContext) throws PortalException;
 

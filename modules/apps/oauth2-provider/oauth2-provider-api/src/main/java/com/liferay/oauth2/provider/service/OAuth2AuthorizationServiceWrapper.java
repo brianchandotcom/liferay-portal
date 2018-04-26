@@ -55,7 +55,7 @@ public class OAuth2AuthorizationServiceWrapper
 	* @return the OSGi service identifier
 	*/
 	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
+	public String getOSGiServiceIdentifier() {
 		return _oAuth2AuthorizationService.getOSGiServiceIdentifier();
 	}
 

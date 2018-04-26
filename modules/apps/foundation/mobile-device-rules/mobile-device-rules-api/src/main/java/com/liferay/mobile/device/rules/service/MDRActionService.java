@@ -58,16 +58,14 @@ public interface MDRActionService extends BaseService {
 	 * Never modify or reference this interface directly. Always use {@link MDRActionServiceUtil} to access the mdr action remote service. Add custom service methods to {@link com.liferay.mobile.device.rules.service.impl.MDRActionServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	public MDRAction addAction(long ruleGroupInstanceId,
-		Map<Locale, java.lang.String> nameMap,
-		Map<Locale, java.lang.String> descriptionMap, java.lang.String type,
-		java.lang.String typeSettings, ServiceContext serviceContext)
+		Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
+		String type, String typeSettings, ServiceContext serviceContext)
 		throws PortalException;
 
 	public MDRAction addAction(long ruleGroupInstanceId,
-		Map<Locale, java.lang.String> nameMap,
-		Map<Locale, java.lang.String> descriptionMap, java.lang.String type,
-		UnicodeProperties typeSettingsProperties, ServiceContext serviceContext)
-		throws PortalException;
+		Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
+		String type, UnicodeProperties typeSettingsProperties,
+		ServiceContext serviceContext) throws PortalException;
 
 	public void deleteAction(long actionId) throws PortalException;
 
@@ -82,17 +80,14 @@ public interface MDRActionService extends BaseService {
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
-	public MDRAction updateAction(long actionId,
-		Map<Locale, java.lang.String> nameMap,
-		Map<Locale, java.lang.String> descriptionMap, java.lang.String type,
-		java.lang.String typeSettings, ServiceContext serviceContext)
-		throws PortalException;
+	public MDRAction updateAction(long actionId, Map<Locale, String> nameMap,
+		Map<Locale, String> descriptionMap, String type, String typeSettings,
+		ServiceContext serviceContext) throws PortalException;
 
-	public MDRAction updateAction(long actionId,
-		Map<Locale, java.lang.String> nameMap,
-		Map<Locale, java.lang.String> descriptionMap, java.lang.String type,
+	public MDRAction updateAction(long actionId, Map<Locale, String> nameMap,
+		Map<Locale, String> descriptionMap, String type,
 		UnicodeProperties typeSettingsProperties, ServiceContext serviceContext)
 		throws PortalException;
 }

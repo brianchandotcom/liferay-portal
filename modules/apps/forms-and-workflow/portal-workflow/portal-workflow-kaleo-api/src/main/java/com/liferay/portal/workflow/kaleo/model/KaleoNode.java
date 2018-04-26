@@ -57,7 +57,7 @@ public interface KaleoNode extends KaleoNodeModel, PersistedModel {
 	public KaleoTransition getDefaultKaleoTransition()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
-	public KaleoTransition getKaleoTransition(java.lang.String name)
+	public KaleoTransition getKaleoTransition(String name)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public java.util.List<KaleoTransition> getKaleoTransitions();

@@ -35,7 +35,7 @@ public class PollsChoiceLocalServiceWrapper implements PollsChoiceLocalService,
 
 	@Override
 	public com.liferay.polls.model.PollsChoice addChoice(long userId,
-		long questionId, java.lang.String name, java.lang.String description,
+		long questionId, String name, String description,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _pollsChoiceLocalService.addChoice(userId, questionId, name,
@@ -199,7 +199,7 @@ public class PollsChoiceLocalServiceWrapper implements PollsChoiceLocalService,
 	*/
 	@Override
 	public com.liferay.polls.model.PollsChoice fetchPollsChoiceByUuidAndGroupId(
-		java.lang.String uuid, long groupId) {
+		String uuid, long groupId) {
 		return _pollsChoiceLocalService.fetchPollsChoiceByUuidAndGroupId(uuid,
 			groupId);
 	}
@@ -243,7 +243,7 @@ public class PollsChoiceLocalServiceWrapper implements PollsChoiceLocalService,
 	* @return the OSGi service identifier
 	*/
 	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
+	public String getOSGiServiceIdentifier() {
 		return _pollsChoiceLocalService.getOSGiServiceIdentifier();
 	}
 
@@ -277,7 +277,7 @@ public class PollsChoiceLocalServiceWrapper implements PollsChoiceLocalService,
 	*/
 	@Override
 	public com.liferay.polls.model.PollsChoice getPollsChoiceByUuidAndGroupId(
-		java.lang.String uuid, long groupId)
+		String uuid, long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _pollsChoiceLocalService.getPollsChoiceByUuidAndGroupId(uuid,
 			groupId);
@@ -309,7 +309,7 @@ public class PollsChoiceLocalServiceWrapper implements PollsChoiceLocalService,
 	*/
 	@Override
 	public java.util.List<com.liferay.polls.model.PollsChoice> getPollsChoicesByUuidAndCompanyId(
-		java.lang.String uuid, long companyId) {
+		String uuid, long companyId) {
 		return _pollsChoiceLocalService.getPollsChoicesByUuidAndCompanyId(uuid,
 			companyId);
 	}
@@ -326,7 +326,7 @@ public class PollsChoiceLocalServiceWrapper implements PollsChoiceLocalService,
 	*/
 	@Override
 	public java.util.List<com.liferay.polls.model.PollsChoice> getPollsChoicesByUuidAndCompanyId(
-		java.lang.String uuid, long companyId, int start, int end,
+		String uuid, long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.polls.model.PollsChoice> orderByComparator) {
 		return _pollsChoiceLocalService.getPollsChoicesByUuidAndCompanyId(uuid,
 			companyId, start, end, orderByComparator);
@@ -344,7 +344,7 @@ public class PollsChoiceLocalServiceWrapper implements PollsChoiceLocalService,
 
 	@Override
 	public com.liferay.polls.model.PollsChoice updateChoice(long choiceId,
-		long questionId, java.lang.String name, java.lang.String description,
+		long questionId, String name, String description,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _pollsChoiceLocalService.updateChoice(choiceId, questionId,

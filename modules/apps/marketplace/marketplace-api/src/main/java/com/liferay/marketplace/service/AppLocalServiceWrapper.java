@@ -193,7 +193,7 @@ public class AppLocalServiceWrapper implements AppLocalService,
 	*/
 	@Override
 	public com.liferay.marketplace.model.App fetchAppByUuidAndCompanyId(
-		java.lang.String uuid, long companyId) {
+		String uuid, long companyId) {
 		return _appLocalService.fetchAppByUuidAndCompanyId(uuid, companyId);
 	}
 
@@ -230,7 +230,7 @@ public class AppLocalServiceWrapper implements AppLocalService,
 	*/
 	@Override
 	public com.liferay.marketplace.model.App getAppByUuidAndCompanyId(
-		java.lang.String uuid, long companyId)
+		String uuid, long companyId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _appLocalService.getAppByUuidAndCompanyId(uuid, companyId);
 	}
@@ -254,7 +254,7 @@ public class AppLocalServiceWrapper implements AppLocalService,
 
 	@Override
 	public java.util.List<com.liferay.marketplace.model.App> getApps(
-		java.lang.String category) {
+		String category) {
 		return _appLocalService.getApps(category);
 	}
 
@@ -286,7 +286,7 @@ public class AppLocalServiceWrapper implements AppLocalService,
 
 	@Override
 	public java.util.List<com.liferay.marketplace.model.App> getInstalledApps(
-		java.lang.String category) {
+		String category) {
 		return _appLocalService.getInstalledApps(category);
 	}
 
@@ -296,7 +296,7 @@ public class AppLocalServiceWrapper implements AppLocalService,
 	* @return the OSGi service identifier
 	*/
 	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
+	public String getOSGiServiceIdentifier() {
 		return _appLocalService.getOSGiServiceIdentifier();
 	}
 
@@ -308,7 +308,7 @@ public class AppLocalServiceWrapper implements AppLocalService,
 	}
 
 	@Override
-	public java.util.Map<java.lang.String, java.lang.String> getPrepackagedApps() {
+	public java.util.Map<String, String> getPrepackagedApps() {
 		return _appLocalService.getPrepackagedApps();
 	}
 
@@ -345,9 +345,8 @@ public class AppLocalServiceWrapper implements AppLocalService,
 
 	@Override
 	public com.liferay.marketplace.model.App updateApp(long userId,
-		long remoteAppId, java.lang.String title, java.lang.String description,
-		java.lang.String category, java.lang.String iconURL,
-		java.lang.String version, boolean required, java.io.File file)
+		long remoteAppId, String title, String description, String category,
+		String iconURL, String version, boolean required, java.io.File file)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _appLocalService.updateApp(userId, remoteAppId, title,
 			description, category, iconURL, version, required, file);

@@ -48,8 +48,8 @@ public class BookmarksEntryLocalServiceWrapper
 
 	@Override
 	public com.liferay.bookmarks.model.BookmarksEntry addEntry(long userId,
-		long groupId, long folderId, java.lang.String name,
-		java.lang.String url, java.lang.String description,
+		long groupId, long folderId, String name, String url,
+		String description,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _bookmarksEntryLocalService.addEntry(userId, groupId, folderId,
@@ -231,7 +231,7 @@ public class BookmarksEntryLocalServiceWrapper
 	*/
 	@Override
 	public com.liferay.bookmarks.model.BookmarksEntry fetchBookmarksEntryByUuidAndGroupId(
-		java.lang.String uuid, long groupId) {
+		String uuid, long groupId) {
 		return _bookmarksEntryLocalService.fetchBookmarksEntryByUuidAndGroupId(uuid,
 			groupId);
 	}
@@ -267,7 +267,7 @@ public class BookmarksEntryLocalServiceWrapper
 	*/
 	@Override
 	public java.util.List<com.liferay.bookmarks.model.BookmarksEntry> getBookmarksEntriesByUuidAndCompanyId(
-		java.lang.String uuid, long companyId) {
+		String uuid, long companyId) {
 		return _bookmarksEntryLocalService.getBookmarksEntriesByUuidAndCompanyId(uuid,
 			companyId);
 	}
@@ -284,7 +284,7 @@ public class BookmarksEntryLocalServiceWrapper
 	*/
 	@Override
 	public java.util.List<com.liferay.bookmarks.model.BookmarksEntry> getBookmarksEntriesByUuidAndCompanyId(
-		java.lang.String uuid, long companyId, int start, int end,
+		String uuid, long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.bookmarks.model.BookmarksEntry> orderByComparator) {
 		return _bookmarksEntryLocalService.getBookmarksEntriesByUuidAndCompanyId(uuid,
 			companyId, start, end, orderByComparator);
@@ -324,7 +324,7 @@ public class BookmarksEntryLocalServiceWrapper
 	*/
 	@Override
 	public com.liferay.bookmarks.model.BookmarksEntry getBookmarksEntryByUuidAndGroupId(
-		java.lang.String uuid, long groupId)
+		String uuid, long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _bookmarksEntryLocalService.getBookmarksEntryByUuidAndGroupId(uuid,
 			groupId);
@@ -385,7 +385,7 @@ public class BookmarksEntryLocalServiceWrapper
 
 	@Override
 	public int getFoldersEntriesCount(long groupId,
-		java.util.List<java.lang.Long> folderIds) {
+		java.util.List<Long> folderIds) {
 		return _bookmarksEntryLocalService.getFoldersEntriesCount(groupId,
 			folderIds);
 	}
@@ -433,7 +433,7 @@ public class BookmarksEntryLocalServiceWrapper
 	* @return the OSGi service identifier
 	*/
 	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
+	public String getOSGiServiceIdentifier() {
 		return _bookmarksEntryLocalService.getOSGiServiceIdentifier();
 	}
 
@@ -508,8 +508,7 @@ public class BookmarksEntryLocalServiceWrapper
 	}
 
 	@Override
-	public void setTreePaths(long folderId, java.lang.String treePath,
-		boolean reindex)
+	public void setTreePaths(long folderId, String treePath, boolean reindex)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_bookmarksEntryLocalService.setTreePaths(folderId, treePath, reindex);
 	}
@@ -529,8 +528,8 @@ public class BookmarksEntryLocalServiceWrapper
 	@Override
 	public void updateAsset(long userId,
 		com.liferay.bookmarks.model.BookmarksEntry entry,
-		long[] assetCategoryIds, java.lang.String[] assetTagNames,
-		long[] assetLinkEntryIds, java.lang.Double priority)
+		long[] assetCategoryIds, String[] assetTagNames,
+		long[] assetLinkEntryIds, Double priority)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_bookmarksEntryLocalService.updateAsset(userId, entry,
 			assetCategoryIds, assetTagNames, assetLinkEntryIds, priority);
@@ -550,8 +549,8 @@ public class BookmarksEntryLocalServiceWrapper
 
 	@Override
 	public com.liferay.bookmarks.model.BookmarksEntry updateEntry(long userId,
-		long entryId, long groupId, long folderId, java.lang.String name,
-		java.lang.String url, java.lang.String description,
+		long entryId, long groupId, long folderId, String name, String url,
+		String description,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _bookmarksEntryLocalService.updateEntry(userId, entryId,

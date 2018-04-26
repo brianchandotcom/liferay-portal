@@ -34,11 +34,9 @@ public class MessageLocalServiceWrapper implements MessageLocalService,
 
 	@Override
 	public com.liferay.mail.reader.model.Message addMessage(long userId,
-		long folderId, java.lang.String sender, java.lang.String to,
-		java.lang.String cc, java.lang.String bcc, java.util.Date sentDate,
-		java.lang.String subject, java.lang.String body,
-		java.lang.String flags, long remoteMessageId,
-		java.lang.String contentType)
+		long folderId, String sender, String to, String cc, String bcc,
+		java.util.Date sentDate, String subject, String body, String flags,
+		long remoteMessageId, String contentType)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _messageLocalService.addMessage(userId, folderId, sender, to,
 			cc, bcc, sentDate, subject, body, flags, remoteMessageId,
@@ -295,7 +293,7 @@ public class MessageLocalServiceWrapper implements MessageLocalService,
 	* @return the OSGi service identifier
 	*/
 	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
+	public String getOSGiServiceIdentifier() {
 		return _messageLocalService.getOSGiServiceIdentifier();
 	}
 
@@ -316,16 +314,15 @@ public class MessageLocalServiceWrapper implements MessageLocalService,
 	@Override
 	public int populateMessages(
 		java.util.List<com.liferay.mail.reader.model.Message> messages,
-		long folderId, java.lang.String keywords, int pageNumber,
-		int messagesPerPage, java.lang.String orderByField,
-		java.lang.String orderByType) {
+		long folderId, String keywords, int pageNumber, int messagesPerPage,
+		String orderByField, String orderByType) {
 		return _messageLocalService.populateMessages(messages, folderId,
 			keywords, pageNumber, messagesPerPage, orderByField, orderByType);
 	}
 
 	@Override
 	public com.liferay.mail.reader.model.Message updateContent(long messageId,
-		java.lang.String body, java.lang.String flags)
+		String body, String flags)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _messageLocalService.updateContent(messageId, body, flags);
 	}
@@ -339,10 +336,9 @@ public class MessageLocalServiceWrapper implements MessageLocalService,
 
 	@Override
 	public com.liferay.mail.reader.model.Message updateMessage(long messageId,
-		long folderId, java.lang.String sender, java.lang.String to,
-		java.lang.String cc, java.lang.String bcc, java.util.Date sentDate,
-		java.lang.String subject, java.lang.String body,
-		java.lang.String flags, long remoteMessageId)
+		long folderId, String sender, String to, String cc, String bcc,
+		java.util.Date sentDate, String subject, String body, String flags,
+		long remoteMessageId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _messageLocalService.updateMessage(messageId, folderId, sender,
 			to, cc, bcc, sentDate, subject, body, flags, remoteMessageId);

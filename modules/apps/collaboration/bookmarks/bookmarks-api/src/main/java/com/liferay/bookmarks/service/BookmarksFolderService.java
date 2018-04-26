@@ -55,9 +55,9 @@ public interface BookmarksFolderService extends BaseService {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link BookmarksFolderServiceUtil} to access the bookmarks folder remote service. Add custom service methods to {@link com.liferay.bookmarks.service.impl.BookmarksFolderServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public BookmarksFolder addFolder(long parentFolderId,
-		java.lang.String name, java.lang.String description,
-		ServiceContext serviceContext) throws PortalException;
+	public BookmarksFolder addFolder(long parentFolderId, String name,
+		String description, ServiceContext serviceContext)
+		throws PortalException;
 
 	public void deleteFolder(long folderId) throws PortalException;
 
@@ -68,7 +68,7 @@ public interface BookmarksFolderService extends BaseService {
 	public BookmarksFolder getFolder(long folderId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<java.lang.Long> getFolderIds(long groupId, long folderId)
+	public List<Long> getFolderIds(long groupId, long folderId)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -86,16 +86,15 @@ public interface BookmarksFolderService extends BaseService {
 		int status, int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<java.lang.Object> getFoldersAndEntries(long groupId,
-		long folderId);
+	public List<Object> getFoldersAndEntries(long groupId, long folderId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<java.lang.Object> getFoldersAndEntries(long groupId,
-		long folderId, int status);
+	public List<Object> getFoldersAndEntries(long groupId, long folderId,
+		int status);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<java.lang.Object> getFoldersAndEntries(long groupId,
-		long folderId, int status, int start, int end);
+	public List<Object> getFoldersAndEntries(long groupId, long folderId,
+		int status, int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getFoldersAndEntriesCount(long groupId, long folderId);
@@ -114,23 +113,23 @@ public interface BookmarksFolderService extends BaseService {
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	/**
 	* @deprecated As of 1.0.0, replaced by {@link #getSubfolderIds(List, long,
 	long, boolean)}
 	*/
-	@java.lang.Deprecated
+	@Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public void getSubfolderIds(List<java.lang.Long> folderIds, long groupId,
+	public void getSubfolderIds(List<Long> folderIds, long groupId,
 		long folderId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public void getSubfolderIds(List<java.lang.Long> folderIds, long groupId,
+	public void getSubfolderIds(List<Long> folderIds, long groupId,
 		long folderId, boolean recurse);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<java.lang.Long> getSubfolderIds(long groupId, long folderId,
+	public List<Long> getSubfolderIds(long groupId, long folderId,
 		boolean recurse);
 
 	public void mergeFolders(long folderId, long parentFolderId)
@@ -158,13 +157,12 @@ public interface BookmarksFolderService extends BaseService {
 	String, String, ServiceContext)} and {@link
 	#mergeFolders(long, long)}
 	*/
-	@java.lang.Deprecated
+	@Deprecated
 	public BookmarksFolder updateFolder(long folderId, long parentFolderId,
-		java.lang.String name, java.lang.String description,
-		boolean mergeWithParentFolder, ServiceContext serviceContext)
-		throws PortalException;
+		String name, String description, boolean mergeWithParentFolder,
+		ServiceContext serviceContext) throws PortalException;
 
 	public BookmarksFolder updateFolder(long folderId, long parentFolderId,
-		java.lang.String name, java.lang.String description,
-		ServiceContext serviceContext) throws PortalException;
+		String name, String description, ServiceContext serviceContext)
+		throws PortalException;
 }

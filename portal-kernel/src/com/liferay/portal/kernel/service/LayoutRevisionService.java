@@ -49,12 +49,10 @@ public interface LayoutRevisionService extends BaseService {
 	public LayoutRevision addLayoutRevision(long userId,
 		long layoutSetBranchId, long layoutBranchId,
 		long parentLayoutRevisionId, boolean head, long plid,
-		long portletPreferencesPlid, boolean privateLayout,
-		java.lang.String name, java.lang.String title,
-		java.lang.String description, java.lang.String keywords,
-		java.lang.String robots, java.lang.String typeSettings,
-		boolean iconImage, long iconImageId, java.lang.String themeId,
-		java.lang.String colorSchemeId, java.lang.String css,
+		long portletPreferencesPlid, boolean privateLayout, String name,
+		String title, String description, String keywords, String robots,
+		String typeSettings, boolean iconImage, long iconImageId,
+		String themeId, String colorSchemeId, String css,
 		ServiceContext serviceContext) throws PortalException;
 
 	/**
@@ -62,5 +60,5 @@ public interface LayoutRevisionService extends BaseService {
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 }

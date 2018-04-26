@@ -63,15 +63,14 @@ public class RatingsEntryLocalServiceUtil {
 		return getService().createRatingsEntry(entryId);
 	}
 
-	public static void deleteEntry(long userId, java.lang.String className,
-		long classPK)
+	public static void deleteEntry(long userId, String className, long classPK)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().deleteEntry(userId, className, classPK);
 	}
 
 	public static void deleteEntry(
 		com.liferay.ratings.kernel.model.RatingsEntry entry, long userId,
-		java.lang.String className, long classPK)
+		String className, long classPK)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().deleteEntry(entry, userId, className, classPK);
 	}
@@ -188,7 +187,7 @@ public class RatingsEntryLocalServiceUtil {
 	}
 
 	public static com.liferay.ratings.kernel.model.RatingsEntry fetchEntry(
-		long userId, java.lang.String className, long classPK) {
+		long userId, String className, long classPK) {
 		return getService().fetchEntry(userId, className, classPK);
 	}
 
@@ -205,7 +204,7 @@ public class RatingsEntryLocalServiceUtil {
 	* @return the matching ratings entry, or <code>null</code> if a matching ratings entry could not be found
 	*/
 	public static com.liferay.ratings.kernel.model.RatingsEntry fetchRatingsEntryByUuidAndCompanyId(
-		java.lang.String uuid, long companyId) {
+		String uuid, long companyId) {
 		return getService().fetchRatingsEntryByUuidAndCompanyId(uuid, companyId);
 	}
 
@@ -218,33 +217,32 @@ public class RatingsEntryLocalServiceUtil {
 	*/
 	@Deprecated
 	public static java.util.List<com.liferay.ratings.kernel.model.RatingsEntry> getEntries(
-		long userId, java.lang.String className,
-		java.util.List<java.lang.Long> classPKs) {
+		long userId, String className, java.util.List<Long> classPKs) {
 		return getService().getEntries(userId, className, classPKs);
 	}
 
-	public static java.util.Map<java.lang.Long, com.liferay.ratings.kernel.model.RatingsEntry> getEntries(
-		long userId, java.lang.String className, long[] classPKs) {
+	public static java.util.Map<Long, com.liferay.ratings.kernel.model.RatingsEntry> getEntries(
+		long userId, String className, long[] classPKs) {
 		return getService().getEntries(userId, className, classPKs);
 	}
 
 	public static java.util.List<com.liferay.ratings.kernel.model.RatingsEntry> getEntries(
-		java.lang.String className, long classPK) {
+		String className, long classPK) {
 		return getService().getEntries(className, classPK);
 	}
 
 	public static java.util.List<com.liferay.ratings.kernel.model.RatingsEntry> getEntries(
-		java.lang.String className, long classPK, double score) {
+		String className, long classPK, double score) {
 		return getService().getEntries(className, classPK, score);
 	}
 
-	public static int getEntriesCount(java.lang.String className, long classPK,
+	public static int getEntriesCount(String className, long classPK,
 		double score) {
 		return getService().getEntriesCount(className, classPK, score);
 	}
 
 	public static com.liferay.ratings.kernel.model.RatingsEntry getEntry(
-		long userId, java.lang.String className, long classPK)
+		long userId, String className, long classPK)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getEntry(userId, className, classPK);
 	}
@@ -263,7 +261,7 @@ public class RatingsEntryLocalServiceUtil {
 	*
 	* @return the OSGi service identifier
 	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
+	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 
@@ -320,13 +318,13 @@ public class RatingsEntryLocalServiceUtil {
 	* @throws PortalException if a matching ratings entry could not be found
 	*/
 	public static com.liferay.ratings.kernel.model.RatingsEntry getRatingsEntryByUuidAndCompanyId(
-		java.lang.String uuid, long companyId)
+		String uuid, long companyId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getRatingsEntryByUuidAndCompanyId(uuid, companyId);
 	}
 
 	public static com.liferay.ratings.kernel.model.RatingsEntry updateEntry(
-		long userId, java.lang.String className, long classPK, double score,
+		long userId, String className, long classPK, double score,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()

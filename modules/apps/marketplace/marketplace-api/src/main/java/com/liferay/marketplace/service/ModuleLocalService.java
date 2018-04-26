@@ -65,14 +65,12 @@ public interface ModuleLocalService extends BaseLocalService,
 	* @deprecated As of 1.1.0, replaced by {@link #addModule(long, String,
 	String, String)}
 	*/
-	@java.lang.Deprecated
-	public Module addModule(long userId, long appId,
-		java.lang.String bundleSymbolicName, java.lang.String bundleVersion,
-		java.lang.String contextName) throws PortalException;
+	@Deprecated
+	public Module addModule(long userId, long appId, String bundleSymbolicName,
+		String bundleVersion, String contextName) throws PortalException;
 
-	public Module addModule(long appId, java.lang.String bundleSymbolicName,
-		java.lang.String bundleVersion, java.lang.String contextName)
-		throws PortalException;
+	public Module addModule(long appId, String bundleSymbolicName,
+		String bundleVersion, String contextName) throws PortalException;
 
 	/**
 	* Adds the module to the database. Also notifies the appropriate model listeners.
@@ -183,8 +181,8 @@ public interface ModuleLocalService extends BaseLocalService,
 	public Module fetchModule(long moduleId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Module fetchModule(long appId, java.lang.String bundleSymbolicName,
-		java.lang.String bundleVersion, java.lang.String contextName);
+	public Module fetchModule(long appId, String bundleSymbolicName,
+		String bundleVersion, String contextName);
 
 	/**
 	* Returns the module with the matching UUID and company.
@@ -194,8 +192,7 @@ public interface ModuleLocalService extends BaseLocalService,
 	* @return the matching module, or <code>null</code> if a matching module could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Module fetchModuleByUuidAndCompanyId(java.lang.String uuid,
-		long companyId);
+	public Module fetchModuleByUuidAndCompanyId(String uuid, long companyId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
@@ -222,8 +219,8 @@ public interface ModuleLocalService extends BaseLocalService,
 	* @throws PortalException if a matching module could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Module getModuleByUuidAndCompanyId(java.lang.String uuid,
-		long companyId) throws PortalException;
+	public Module getModuleByUuidAndCompanyId(String uuid, long companyId)
+		throws PortalException;
 
 	/**
 	* Returns a range of all the modules.
@@ -255,7 +252,7 @@ public interface ModuleLocalService extends BaseLocalService,
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

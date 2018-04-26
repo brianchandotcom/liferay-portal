@@ -138,7 +138,7 @@ public class MBThreadFlagWrapper implements MBThreadFlag,
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new MBThreadFlagWrapper((MBThreadFlag)_mbThreadFlag.clone());
 	}
 
@@ -253,7 +253,7 @@ public class MBThreadFlagWrapper implements MBThreadFlag,
 	* @return the user name of this message boards thread flag
 	*/
 	@Override
-	public java.lang.String getUserName() {
+	public String getUserName() {
 		return _mbThreadFlag.getUserName();
 	}
 
@@ -263,7 +263,7 @@ public class MBThreadFlagWrapper implements MBThreadFlag,
 	* @return the user uuid of this message boards thread flag
 	*/
 	@Override
-	public java.lang.String getUserUuid() {
+	public String getUserUuid() {
 		return _mbThreadFlag.getUserUuid();
 	}
 
@@ -273,7 +273,7 @@ public class MBThreadFlagWrapper implements MBThreadFlag,
 	* @return the uuid of this message boards thread flag
 	*/
 	@Override
-	public java.lang.String getUuid() {
+	public String getUuid() {
 		return _mbThreadFlag.getUuid();
 	}
 
@@ -429,7 +429,7 @@ public class MBThreadFlagWrapper implements MBThreadFlag,
 	* @param userName the user name of this message boards thread flag
 	*/
 	@Override
-	public void setUserName(java.lang.String userName) {
+	public void setUserName(String userName) {
 		_mbThreadFlag.setUserName(userName);
 	}
 
@@ -439,7 +439,7 @@ public class MBThreadFlagWrapper implements MBThreadFlag,
 	* @param userUuid the user uuid of this message boards thread flag
 	*/
 	@Override
-	public void setUserUuid(java.lang.String userUuid) {
+	public void setUserUuid(String userUuid) {
 		_mbThreadFlag.setUserUuid(userUuid);
 	}
 
@@ -449,7 +449,7 @@ public class MBThreadFlagWrapper implements MBThreadFlag,
 	* @param uuid the uuid of this message boards thread flag
 	*/
 	@Override
-	public void setUuid(java.lang.String uuid) {
+	public void setUuid(String uuid) {
 		_mbThreadFlag.setUuid(uuid);
 	}
 
@@ -464,7 +464,7 @@ public class MBThreadFlagWrapper implements MBThreadFlag,
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _mbThreadFlag.toString();
 	}
 
@@ -474,7 +474,7 @@ public class MBThreadFlagWrapper implements MBThreadFlag,
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _mbThreadFlag.toXmlString();
 	}
 

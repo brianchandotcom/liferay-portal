@@ -34,9 +34,8 @@ public class MDRRuleGroupServiceWrapper implements MDRRuleGroupService,
 
 	@Override
 	public com.liferay.mobile.device.rules.model.MDRRuleGroup addRuleGroup(
-		long groupId,
-		java.util.Map<java.util.Locale, java.lang.String> nameMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		long groupId, java.util.Map<java.util.Locale, String> nameMap,
+		java.util.Map<java.util.Locale, String> descriptionMap,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _mdrRuleGroupService.addRuleGroup(groupId, nameMap,
@@ -71,7 +70,7 @@ public class MDRRuleGroupServiceWrapper implements MDRRuleGroupService,
 	* @return the OSGi service identifier
 	*/
 	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
+	public String getOSGiServiceIdentifier() {
 		return _mdrRuleGroupService.getOSGiServiceIdentifier();
 	}
 
@@ -95,9 +94,8 @@ public class MDRRuleGroupServiceWrapper implements MDRRuleGroupService,
 
 	@Override
 	public com.liferay.mobile.device.rules.model.MDRRuleGroup updateRuleGroup(
-		long ruleGroupId,
-		java.util.Map<java.util.Locale, java.lang.String> nameMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		long ruleGroupId, java.util.Map<java.util.Locale, String> nameMap,
+		java.util.Map<java.util.Locale, String> descriptionMap,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _mdrRuleGroupService.updateRuleGroup(ruleGroupId, nameMap,

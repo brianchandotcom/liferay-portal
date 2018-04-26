@@ -247,7 +247,7 @@ public class ImageLocalServiceUtil {
 	*
 	* @return the OSGi service identifier
 	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
+	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 
@@ -281,8 +281,7 @@ public class ImageLocalServiceUtil {
 	}
 
 	public static com.liferay.portal.kernel.model.Image updateImage(
-		long imageId, byte[] bytes, java.lang.String type, int height,
-		int width, int size)
+		long imageId, byte[] bytes, String type, int height, int width, int size)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .updateImage(imageId, bytes, type, height, width, size);

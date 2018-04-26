@@ -36,9 +36,8 @@ public class OAuth2ApplicationScopeAliasesLocalServiceWrapper
 
 	@Override
 	public com.liferay.oauth2.provider.model.OAuth2ApplicationScopeAliases addOAuth2ApplicationScopeAliases(
-		long companyId, long userId, java.lang.String userName,
-		long oAuth2ApplicationId,
-		java.util.List<java.lang.String> scopeAliasesList)
+		long companyId, long userId, String userName, long oAuth2ApplicationId,
+		java.util.List<String> scopeAliasesList)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _oAuth2ApplicationScopeAliasesLocalService.addOAuth2ApplicationScopeAliases(companyId,
 			userId, userName, oAuth2ApplicationId, scopeAliasesList);
@@ -198,8 +197,7 @@ public class OAuth2ApplicationScopeAliasesLocalServiceWrapper
 
 	@Override
 	public com.liferay.oauth2.provider.model.OAuth2ApplicationScopeAliases fetchOAuth2ApplicationScopeAliases(
-		long oAuth2ApplicationId,
-		java.util.List<java.lang.String> scopeAliasesList) {
+		long oAuth2ApplicationId, java.util.List<String> scopeAliasesList) {
 		return _oAuth2ApplicationScopeAliasesLocalService.fetchOAuth2ApplicationScopeAliases(oAuth2ApplicationId,
 			scopeAliasesList);
 	}
@@ -270,7 +268,7 @@ public class OAuth2ApplicationScopeAliasesLocalServiceWrapper
 	* @return the OSGi service identifier
 	*/
 	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
+	public String getOSGiServiceIdentifier() {
 		return _oAuth2ApplicationScopeAliasesLocalService.getOSGiServiceIdentifier();
 	}
 

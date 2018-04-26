@@ -85,15 +85,15 @@ public interface ResourcePermissionService extends BaseService {
 	* @param actionId the action ID
 	*/
 	public void addResourcePermission(long groupId, long companyId,
-		java.lang.String name, int scope, java.lang.String primKey,
-		long roleId, java.lang.String actionId) throws PortalException;
+		String name, int scope, String primKey, long roleId, String actionId)
+		throws PortalException;
 
 	/**
 	* Returns the OSGi service identifier.
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	/**
 	* Revokes permission at the scope from the role to perform the action on
@@ -116,8 +116,8 @@ public interface ResourcePermissionService extends BaseService {
 	* @param actionId the action ID
 	*/
 	public void removeResourcePermission(long groupId, long companyId,
-		java.lang.String name, int scope, java.lang.String primKey,
-		long roleId, java.lang.String actionId) throws PortalException;
+		String name, int scope, String primKey, long roleId, String actionId)
+		throws PortalException;
 
 	/**
 	* Revokes all permissions at the scope from the role to perform the action
@@ -134,7 +134,7 @@ public interface ResourcePermissionService extends BaseService {
 	* @param actionId the action ID
 	*/
 	public void removeResourcePermissions(long groupId, long companyId,
-		java.lang.String name, int scope, long roleId, java.lang.String actionId)
+		String name, int scope, long roleId, String actionId)
 		throws PortalException;
 
 	/**
@@ -162,8 +162,8 @@ public interface ResourcePermissionService extends BaseService {
 	* @param actionIds the action IDs of the actions
 	*/
 	public void setIndividualResourcePermissions(long groupId, long companyId,
-		java.lang.String name, java.lang.String primKey, long roleId,
-		java.lang.String[] actionIds) throws PortalException;
+		String name, String primKey, long roleId, String[] actionIds)
+		throws PortalException;
 
 	/**
 	* Updates the role's permissions at the scope, setting the actions that can
@@ -189,7 +189,6 @@ public interface ResourcePermissionService extends BaseService {
 	* @param roleIdsToActionIds a map of role IDs to action IDs of the actions
 	*/
 	public void setIndividualResourcePermissions(long groupId, long companyId,
-		java.lang.String name, java.lang.String primKey,
-		Map<java.lang.Long, java.lang.String[]> roleIdsToActionIds)
+		String name, String primKey, Map<Long, String[]> roleIdsToActionIds)
 		throws PortalException;
 }

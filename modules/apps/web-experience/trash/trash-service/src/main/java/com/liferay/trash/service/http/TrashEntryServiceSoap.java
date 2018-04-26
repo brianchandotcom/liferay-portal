@@ -132,7 +132,7 @@ public class TrashEntryServiceSoap {
 	* @param className the class name of the entity
 	* @param classPK the primary key of the entity
 	*/
-	public static void deleteEntry(java.lang.String className, long classPK)
+	public static void deleteEntry(String className, long classPK)
 		throws RemoteException {
 		try {
 			TrashEntryServiceUtil.deleteEntry(className, classPK);
@@ -194,7 +194,7 @@ public class TrashEntryServiceSoap {
 	}
 
 	public static com.liferay.trash.model.TrashEntrySoap[] getEntries(
-		long groupId, java.lang.String className) throws RemoteException {
+		long groupId, String className) throws RemoteException {
 		try {
 			java.util.List<com.liferay.trash.model.TrashEntry> returnValue = TrashEntryServiceUtil.getEntries(groupId,
 					className);
@@ -222,7 +222,7 @@ public class TrashEntryServiceSoap {
 	<code>obc</code>
 	*/
 	public static com.liferay.trash.model.TrashEntryList getEntries(
-		long groupId, java.lang.String className, int start, int end,
+		long groupId, String className, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.trash.model.TrashEntry> obc)
 		throws RemoteException {
 		try {
@@ -267,7 +267,7 @@ public class TrashEntryServiceSoap {
 	* @param serviceContext the service context to be applied (optionally
 	<code>null</code>)
 	*/
-	public static void moveEntry(java.lang.String className, long classPK,
+	public static void moveEntry(String className, long classPK,
 		long destinationContainerModelId,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
@@ -331,7 +331,7 @@ public class TrashEntryServiceSoap {
 	* @return the restored trash entry
 	*/
 	public static com.liferay.trash.model.TrashEntrySoap restoreEntry(
-		long entryId, long overrideClassPK, java.lang.String name)
+		long entryId, long overrideClassPK, String name)
 		throws RemoteException {
 		try {
 			com.liferay.trash.model.TrashEntry returnValue = TrashEntryServiceUtil.restoreEntry(entryId,
@@ -347,7 +347,7 @@ public class TrashEntryServiceSoap {
 	}
 
 	public static com.liferay.trash.model.TrashEntrySoap restoreEntry(
-		java.lang.String className, long classPK) throws RemoteException {
+		String className, long classPK) throws RemoteException {
 		try {
 			com.liferay.trash.model.TrashEntry returnValue = TrashEntryServiceUtil.restoreEntry(className,
 					classPK);
@@ -362,8 +362,8 @@ public class TrashEntryServiceSoap {
 	}
 
 	public static com.liferay.trash.model.TrashEntrySoap restoreEntry(
-		java.lang.String className, long classPK, long overrideClassPK,
-		java.lang.String name) throws RemoteException {
+		String className, long classPK, long overrideClassPK, String name)
+		throws RemoteException {
 		try {
 			com.liferay.trash.model.TrashEntry returnValue = TrashEntryServiceUtil.restoreEntry(className,
 					classPK, overrideClassPK, name);

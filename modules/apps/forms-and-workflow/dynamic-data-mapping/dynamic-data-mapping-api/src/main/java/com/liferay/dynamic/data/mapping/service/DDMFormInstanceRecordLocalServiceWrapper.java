@@ -224,7 +224,7 @@ public class DDMFormInstanceRecordLocalServiceWrapper
 	*/
 	@Override
 	public com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecord fetchDDMFormInstanceRecordByUuidAndGroupId(
-		java.lang.String uuid, long groupId) {
+		String uuid, long groupId) {
 		return _ddmFormInstanceRecordLocalService.fetchDDMFormInstanceRecordByUuidAndGroupId(uuid,
 			groupId);
 	}
@@ -264,7 +264,7 @@ public class DDMFormInstanceRecordLocalServiceWrapper
 	*/
 	@Override
 	public com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecord getDDMFormInstanceRecordByUuidAndGroupId(
-		java.lang.String uuid, long groupId)
+		String uuid, long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _ddmFormInstanceRecordLocalService.getDDMFormInstanceRecordByUuidAndGroupId(uuid,
 			groupId);
@@ -297,7 +297,7 @@ public class DDMFormInstanceRecordLocalServiceWrapper
 	*/
 	@Override
 	public java.util.List<com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecord> getDDMFormInstanceRecordsByUuidAndCompanyId(
-		java.lang.String uuid, long companyId) {
+		String uuid, long companyId) {
 		return _ddmFormInstanceRecordLocalService.getDDMFormInstanceRecordsByUuidAndCompanyId(uuid,
 			companyId);
 	}
@@ -314,7 +314,7 @@ public class DDMFormInstanceRecordLocalServiceWrapper
 	*/
 	@Override
 	public java.util.List<com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecord> getDDMFormInstanceRecordsByUuidAndCompanyId(
-		java.lang.String uuid, long companyId, int start, int end,
+		String uuid, long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecord> orderByComparator) {
 		return _ddmFormInstanceRecordLocalService.getDDMFormInstanceRecordsByUuidAndCompanyId(uuid,
 			companyId, start, end, orderByComparator);
@@ -400,7 +400,7 @@ public class DDMFormInstanceRecordLocalServiceWrapper
 	* @return the OSGi service identifier
 	*/
 	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
+	public String getOSGiServiceIdentifier() {
 		return _ddmFormInstanceRecordLocalService.getOSGiServiceIdentifier();
 	}
 
@@ -413,7 +413,7 @@ public class DDMFormInstanceRecordLocalServiceWrapper
 
 	@Override
 	public void revertFormInstanceRecord(long userId,
-		long ddmFormInstanceRecordId, java.lang.String version,
+		long ddmFormInstanceRecordId, String version,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_ddmFormInstanceRecordLocalService.revertFormInstanceRecord(userId,

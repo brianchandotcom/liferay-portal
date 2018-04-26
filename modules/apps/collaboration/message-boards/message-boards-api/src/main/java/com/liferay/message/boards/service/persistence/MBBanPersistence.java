@@ -47,7 +47,7 @@ public interface MBBanPersistence extends BasePersistence<MBBan> {
 	* @param uuid the uuid
 	* @return the matching message boards bans
 	*/
-	public java.util.List<MBBan> findByUuid(java.lang.String uuid);
+	public java.util.List<MBBan> findByUuid(String uuid);
 
 	/**
 	* Returns a range of all the message boards bans where uuid = &#63;.
@@ -61,8 +61,7 @@ public interface MBBanPersistence extends BasePersistence<MBBan> {
 	* @param end the upper bound of the range of message boards bans (not inclusive)
 	* @return the range of matching message boards bans
 	*/
-	public java.util.List<MBBan> findByUuid(java.lang.String uuid, int start,
-		int end);
+	public java.util.List<MBBan> findByUuid(String uuid, int start, int end);
 
 	/**
 	* Returns an ordered range of all the message boards bans where uuid = &#63;.
@@ -77,8 +76,7 @@ public interface MBBanPersistence extends BasePersistence<MBBan> {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching message boards bans
 	*/
-	public java.util.List<MBBan> findByUuid(java.lang.String uuid, int start,
-		int end,
+	public java.util.List<MBBan> findByUuid(String uuid, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<MBBan> orderByComparator);
 
 	/**
@@ -95,8 +93,7 @@ public interface MBBanPersistence extends BasePersistence<MBBan> {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching message boards bans
 	*/
-	public java.util.List<MBBan> findByUuid(java.lang.String uuid, int start,
-		int end,
+	public java.util.List<MBBan> findByUuid(String uuid, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<MBBan> orderByComparator,
 		boolean retrieveFromCache);
 
@@ -108,7 +105,7 @@ public interface MBBanPersistence extends BasePersistence<MBBan> {
 	* @return the first matching message boards ban
 	* @throws NoSuchBanException if a matching message boards ban could not be found
 	*/
-	public MBBan findByUuid_First(java.lang.String uuid,
+	public MBBan findByUuid_First(String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<MBBan> orderByComparator)
 		throws NoSuchBanException;
 
@@ -119,7 +116,7 @@ public interface MBBanPersistence extends BasePersistence<MBBan> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching message boards ban, or <code>null</code> if a matching message boards ban could not be found
 	*/
-	public MBBan fetchByUuid_First(java.lang.String uuid,
+	public MBBan fetchByUuid_First(String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<MBBan> orderByComparator);
 
 	/**
@@ -130,7 +127,7 @@ public interface MBBanPersistence extends BasePersistence<MBBan> {
 	* @return the last matching message boards ban
 	* @throws NoSuchBanException if a matching message boards ban could not be found
 	*/
-	public MBBan findByUuid_Last(java.lang.String uuid,
+	public MBBan findByUuid_Last(String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<MBBan> orderByComparator)
 		throws NoSuchBanException;
 
@@ -141,7 +138,7 @@ public interface MBBanPersistence extends BasePersistence<MBBan> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching message boards ban, or <code>null</code> if a matching message boards ban could not be found
 	*/
-	public MBBan fetchByUuid_Last(java.lang.String uuid,
+	public MBBan fetchByUuid_Last(String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<MBBan> orderByComparator);
 
 	/**
@@ -153,7 +150,7 @@ public interface MBBanPersistence extends BasePersistence<MBBan> {
 	* @return the previous, current, and next message boards ban
 	* @throws NoSuchBanException if a message boards ban with the primary key could not be found
 	*/
-	public MBBan[] findByUuid_PrevAndNext(long banId, java.lang.String uuid,
+	public MBBan[] findByUuid_PrevAndNext(long banId, String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<MBBan> orderByComparator)
 		throws NoSuchBanException;
 
@@ -162,7 +159,7 @@ public interface MBBanPersistence extends BasePersistence<MBBan> {
 	*
 	* @param uuid the uuid
 	*/
-	public void removeByUuid(java.lang.String uuid);
+	public void removeByUuid(String uuid);
 
 	/**
 	* Returns the number of message boards bans where uuid = &#63;.
@@ -170,7 +167,7 @@ public interface MBBanPersistence extends BasePersistence<MBBan> {
 	* @param uuid the uuid
 	* @return the number of matching message boards bans
 	*/
-	public int countByUuid(java.lang.String uuid);
+	public int countByUuid(String uuid);
 
 	/**
 	* Returns the message boards ban where uuid = &#63; and groupId = &#63; or throws a {@link NoSuchBanException} if it could not be found.
@@ -180,7 +177,7 @@ public interface MBBanPersistence extends BasePersistence<MBBan> {
 	* @return the matching message boards ban
 	* @throws NoSuchBanException if a matching message boards ban could not be found
 	*/
-	public MBBan findByUUID_G(java.lang.String uuid, long groupId)
+	public MBBan findByUUID_G(String uuid, long groupId)
 		throws NoSuchBanException;
 
 	/**
@@ -190,7 +187,7 @@ public interface MBBanPersistence extends BasePersistence<MBBan> {
 	* @param groupId the group ID
 	* @return the matching message boards ban, or <code>null</code> if a matching message boards ban could not be found
 	*/
-	public MBBan fetchByUUID_G(java.lang.String uuid, long groupId);
+	public MBBan fetchByUUID_G(String uuid, long groupId);
 
 	/**
 	* Returns the message boards ban where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -200,7 +197,7 @@ public interface MBBanPersistence extends BasePersistence<MBBan> {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching message boards ban, or <code>null</code> if a matching message boards ban could not be found
 	*/
-	public MBBan fetchByUUID_G(java.lang.String uuid, long groupId,
+	public MBBan fetchByUUID_G(String uuid, long groupId,
 		boolean retrieveFromCache);
 
 	/**
@@ -210,7 +207,7 @@ public interface MBBanPersistence extends BasePersistence<MBBan> {
 	* @param groupId the group ID
 	* @return the message boards ban that was removed
 	*/
-	public MBBan removeByUUID_G(java.lang.String uuid, long groupId)
+	public MBBan removeByUUID_G(String uuid, long groupId)
 		throws NoSuchBanException;
 
 	/**
@@ -220,7 +217,7 @@ public interface MBBanPersistence extends BasePersistence<MBBan> {
 	* @param groupId the group ID
 	* @return the number of matching message boards bans
 	*/
-	public int countByUUID_G(java.lang.String uuid, long groupId);
+	public int countByUUID_G(String uuid, long groupId);
 
 	/**
 	* Returns all the message boards bans where uuid = &#63; and companyId = &#63;.
@@ -229,8 +226,7 @@ public interface MBBanPersistence extends BasePersistence<MBBan> {
 	* @param companyId the company ID
 	* @return the matching message boards bans
 	*/
-	public java.util.List<MBBan> findByUuid_C(java.lang.String uuid,
-		long companyId);
+	public java.util.List<MBBan> findByUuid_C(String uuid, long companyId);
 
 	/**
 	* Returns a range of all the message boards bans where uuid = &#63; and companyId = &#63;.
@@ -245,8 +241,8 @@ public interface MBBanPersistence extends BasePersistence<MBBan> {
 	* @param end the upper bound of the range of message boards bans (not inclusive)
 	* @return the range of matching message boards bans
 	*/
-	public java.util.List<MBBan> findByUuid_C(java.lang.String uuid,
-		long companyId, int start, int end);
+	public java.util.List<MBBan> findByUuid_C(String uuid, long companyId,
+		int start, int end);
 
 	/**
 	* Returns an ordered range of all the message boards bans where uuid = &#63; and companyId = &#63;.
@@ -262,8 +258,8 @@ public interface MBBanPersistence extends BasePersistence<MBBan> {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching message boards bans
 	*/
-	public java.util.List<MBBan> findByUuid_C(java.lang.String uuid,
-		long companyId, int start, int end,
+	public java.util.List<MBBan> findByUuid_C(String uuid, long companyId,
+		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<MBBan> orderByComparator);
 
 	/**
@@ -281,8 +277,8 @@ public interface MBBanPersistence extends BasePersistence<MBBan> {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching message boards bans
 	*/
-	public java.util.List<MBBan> findByUuid_C(java.lang.String uuid,
-		long companyId, int start, int end,
+	public java.util.List<MBBan> findByUuid_C(String uuid, long companyId,
+		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<MBBan> orderByComparator,
 		boolean retrieveFromCache);
 
@@ -295,7 +291,7 @@ public interface MBBanPersistence extends BasePersistence<MBBan> {
 	* @return the first matching message boards ban
 	* @throws NoSuchBanException if a matching message boards ban could not be found
 	*/
-	public MBBan findByUuid_C_First(java.lang.String uuid, long companyId,
+	public MBBan findByUuid_C_First(String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<MBBan> orderByComparator)
 		throws NoSuchBanException;
 
@@ -307,7 +303,7 @@ public interface MBBanPersistence extends BasePersistence<MBBan> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching message boards ban, or <code>null</code> if a matching message boards ban could not be found
 	*/
-	public MBBan fetchByUuid_C_First(java.lang.String uuid, long companyId,
+	public MBBan fetchByUuid_C_First(String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<MBBan> orderByComparator);
 
 	/**
@@ -319,7 +315,7 @@ public interface MBBanPersistence extends BasePersistence<MBBan> {
 	* @return the last matching message boards ban
 	* @throws NoSuchBanException if a matching message boards ban could not be found
 	*/
-	public MBBan findByUuid_C_Last(java.lang.String uuid, long companyId,
+	public MBBan findByUuid_C_Last(String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<MBBan> orderByComparator)
 		throws NoSuchBanException;
 
@@ -331,7 +327,7 @@ public interface MBBanPersistence extends BasePersistence<MBBan> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching message boards ban, or <code>null</code> if a matching message boards ban could not be found
 	*/
-	public MBBan fetchByUuid_C_Last(java.lang.String uuid, long companyId,
+	public MBBan fetchByUuid_C_Last(String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<MBBan> orderByComparator);
 
 	/**
@@ -344,7 +340,7 @@ public interface MBBanPersistence extends BasePersistence<MBBan> {
 	* @return the previous, current, and next message boards ban
 	* @throws NoSuchBanException if a message boards ban with the primary key could not be found
 	*/
-	public MBBan[] findByUuid_C_PrevAndNext(long banId, java.lang.String uuid,
+	public MBBan[] findByUuid_C_PrevAndNext(long banId, String uuid,
 		long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<MBBan> orderByComparator)
 		throws NoSuchBanException;
@@ -355,7 +351,7 @@ public interface MBBanPersistence extends BasePersistence<MBBan> {
 	* @param uuid the uuid
 	* @param companyId the company ID
 	*/
-	public void removeByUuid_C(java.lang.String uuid, long companyId);
+	public void removeByUuid_C(String uuid, long companyId);
 
 	/**
 	* Returns the number of message boards bans where uuid = &#63; and companyId = &#63;.
@@ -364,7 +360,7 @@ public interface MBBanPersistence extends BasePersistence<MBBan> {
 	* @param companyId the company ID
 	* @return the number of matching message boards bans
 	*/
-	public int countByUuid_C(java.lang.String uuid, long companyId);
+	public int countByUuid_C(String uuid, long companyId);
 
 	/**
 	* Returns all the message boards bans where groupId = &#63;.
@@ -924,5 +920,5 @@ public interface MBBanPersistence extends BasePersistence<MBBan> {
 	public int countAll();
 
 	@Override
-	public java.util.Set<java.lang.String> getBadColumnNames();
+	public java.util.Set<String> getBadColumnNames();
 }

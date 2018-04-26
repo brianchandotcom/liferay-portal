@@ -228,7 +228,7 @@ public class ReadingTimeEntryLocalServiceUtil {
 	* @return the matching reading time entry, or <code>null</code> if a matching reading time entry could not be found
 	*/
 	public static com.liferay.reading.time.model.ReadingTimeEntry fetchReadingTimeEntryByUuidAndGroupId(
-		java.lang.String uuid, long groupId) {
+		String uuid, long groupId) {
 		return getService().fetchReadingTimeEntryByUuidAndGroupId(uuid, groupId);
 	}
 
@@ -250,7 +250,7 @@ public class ReadingTimeEntryLocalServiceUtil {
 	*
 	* @return the OSGi service identifier
 	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
+	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 
@@ -284,7 +284,7 @@ public class ReadingTimeEntryLocalServiceUtil {
 	* @return the matching reading time entries, or an empty list if no matches were found
 	*/
 	public static java.util.List<com.liferay.reading.time.model.ReadingTimeEntry> getReadingTimeEntriesByUuidAndCompanyId(
-		java.lang.String uuid, long companyId) {
+		String uuid, long companyId) {
 		return getService()
 				   .getReadingTimeEntriesByUuidAndCompanyId(uuid, companyId);
 	}
@@ -300,7 +300,7 @@ public class ReadingTimeEntryLocalServiceUtil {
 	* @return the range of matching reading time entries, or an empty list if no matches were found
 	*/
 	public static java.util.List<com.liferay.reading.time.model.ReadingTimeEntry> getReadingTimeEntriesByUuidAndCompanyId(
-		java.lang.String uuid, long companyId, int start, int end,
+		String uuid, long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.reading.time.model.ReadingTimeEntry> orderByComparator) {
 		return getService()
 				   .getReadingTimeEntriesByUuidAndCompanyId(uuid, companyId,
@@ -338,7 +338,7 @@ public class ReadingTimeEntryLocalServiceUtil {
 	* @throws PortalException if a matching reading time entry could not be found
 	*/
 	public static com.liferay.reading.time.model.ReadingTimeEntry getReadingTimeEntryByUuidAndGroupId(
-		java.lang.String uuid, long groupId)
+		String uuid, long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getReadingTimeEntryByUuidAndGroupId(uuid, groupId);
 	}

@@ -53,12 +53,12 @@ public class ClusterGroupLocalServiceUtil {
 	}
 
 	public static com.liferay.portal.kernel.model.ClusterGroup addClusterGroup(
-		java.lang.String name, java.util.List<java.lang.String> clusterNodeIds) {
+		String name, java.util.List<String> clusterNodeIds) {
 		return getService().addClusterGroup(name, clusterNodeIds);
 	}
 
 	public static com.liferay.portal.kernel.model.ClusterGroup addWholeClusterGroup(
-		java.lang.String name) {
+		String name) {
 		return getService().addWholeClusterGroup(name);
 	}
 
@@ -240,7 +240,7 @@ public class ClusterGroupLocalServiceUtil {
 	*
 	* @return the OSGi service identifier
 	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
+	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 

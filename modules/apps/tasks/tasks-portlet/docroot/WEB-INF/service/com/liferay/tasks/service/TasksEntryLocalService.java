@@ -61,11 +61,10 @@ public interface TasksEntryLocalService extends BaseLocalService,
 	 *
 	 * Never modify or reference this interface directly. Always use {@link TasksEntryLocalServiceUtil} to access the tasks entry local service. Add custom service methods to {@link com.liferay.tasks.service.impl.TasksEntryLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public TasksEntry addTasksEntry(long userId, java.lang.String title,
-		int priority, long assigneeUserId, int dueDateMonth, int dueDateDay,
-		int dueDateYear, int dueDateHour, int dueDateMinute,
-		boolean addDueDate, ServiceContext serviceContext)
-		throws PortalException;
+	public TasksEntry addTasksEntry(long userId, String title, int priority,
+		long assigneeUserId, int dueDateMonth, int dueDateDay, int dueDateYear,
+		int dueDateHour, int dueDateMinute, boolean addDueDate,
+		ServiceContext serviceContext) throws PortalException;
 
 	/**
 	* Adds the tasks entry to the database. Also notifies the appropriate model listeners.
@@ -217,7 +216,7 @@ public interface TasksEntryLocalService extends BaseLocalService,
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -287,13 +286,13 @@ public interface TasksEntryLocalService extends BaseLocalService,
 	public int getUserTasksEntriesCount(long userId);
 
 	public void updateAsset(long userId, TasksEntry tasksEntry,
-		long[] assetCategoryIds, java.lang.String[] assetTagNames)
+		long[] assetCategoryIds, String[] assetTagNames)
 		throws PortalException;
 
-	public TasksEntry updateTasksEntry(long tasksEntryId,
-		java.lang.String title, int priority, long assigneeUserId,
-		long resolverUserId, int dueDateMonth, int dueDateDay, int dueDateYear,
-		int dueDateHour, int dueDateMinute, boolean addDueDate, int status,
+	public TasksEntry updateTasksEntry(long tasksEntryId, String title,
+		int priority, long assigneeUserId, long resolverUserId,
+		int dueDateMonth, int dueDateDay, int dueDateYear, int dueDateHour,
+		int dueDateMinute, boolean addDueDate, int status,
 		ServiceContext serviceContext) throws PortalException;
 
 	/**

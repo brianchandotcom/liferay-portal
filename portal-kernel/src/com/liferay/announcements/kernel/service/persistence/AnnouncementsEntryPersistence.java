@@ -47,7 +47,7 @@ public interface AnnouncementsEntryPersistence extends BasePersistence<Announcem
 	* @param uuid the uuid
 	* @return the matching announcements entries
 	*/
-	public java.util.List<AnnouncementsEntry> findByUuid(java.lang.String uuid);
+	public java.util.List<AnnouncementsEntry> findByUuid(String uuid);
 
 	/**
 	* Returns a range of all the announcements entries where uuid = &#63;.
@@ -61,8 +61,8 @@ public interface AnnouncementsEntryPersistence extends BasePersistence<Announcem
 	* @param end the upper bound of the range of announcements entries (not inclusive)
 	* @return the range of matching announcements entries
 	*/
-	public java.util.List<AnnouncementsEntry> findByUuid(
-		java.lang.String uuid, int start, int end);
+	public java.util.List<AnnouncementsEntry> findByUuid(String uuid,
+		int start, int end);
 
 	/**
 	* Returns an ordered range of all the announcements entries where uuid = &#63;.
@@ -77,8 +77,8 @@ public interface AnnouncementsEntryPersistence extends BasePersistence<Announcem
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching announcements entries
 	*/
-	public java.util.List<AnnouncementsEntry> findByUuid(
-		java.lang.String uuid, int start, int end,
+	public java.util.List<AnnouncementsEntry> findByUuid(String uuid,
+		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<AnnouncementsEntry> orderByComparator);
 
 	/**
@@ -95,8 +95,8 @@ public interface AnnouncementsEntryPersistence extends BasePersistence<Announcem
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching announcements entries
 	*/
-	public java.util.List<AnnouncementsEntry> findByUuid(
-		java.lang.String uuid, int start, int end,
+	public java.util.List<AnnouncementsEntry> findByUuid(String uuid,
+		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<AnnouncementsEntry> orderByComparator,
 		boolean retrieveFromCache);
 
@@ -108,7 +108,7 @@ public interface AnnouncementsEntryPersistence extends BasePersistence<Announcem
 	* @return the first matching announcements entry
 	* @throws NoSuchEntryException if a matching announcements entry could not be found
 	*/
-	public AnnouncementsEntry findByUuid_First(java.lang.String uuid,
+	public AnnouncementsEntry findByUuid_First(String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<AnnouncementsEntry> orderByComparator)
 		throws NoSuchEntryException;
 
@@ -119,7 +119,7 @@ public interface AnnouncementsEntryPersistence extends BasePersistence<Announcem
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching announcements entry, or <code>null</code> if a matching announcements entry could not be found
 	*/
-	public AnnouncementsEntry fetchByUuid_First(java.lang.String uuid,
+	public AnnouncementsEntry fetchByUuid_First(String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<AnnouncementsEntry> orderByComparator);
 
 	/**
@@ -130,7 +130,7 @@ public interface AnnouncementsEntryPersistence extends BasePersistence<Announcem
 	* @return the last matching announcements entry
 	* @throws NoSuchEntryException if a matching announcements entry could not be found
 	*/
-	public AnnouncementsEntry findByUuid_Last(java.lang.String uuid,
+	public AnnouncementsEntry findByUuid_Last(String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<AnnouncementsEntry> orderByComparator)
 		throws NoSuchEntryException;
 
@@ -141,7 +141,7 @@ public interface AnnouncementsEntryPersistence extends BasePersistence<Announcem
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching announcements entry, or <code>null</code> if a matching announcements entry could not be found
 	*/
-	public AnnouncementsEntry fetchByUuid_Last(java.lang.String uuid,
+	public AnnouncementsEntry fetchByUuid_Last(String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<AnnouncementsEntry> orderByComparator);
 
 	/**
@@ -154,7 +154,7 @@ public interface AnnouncementsEntryPersistence extends BasePersistence<Announcem
 	* @throws NoSuchEntryException if a announcements entry with the primary key could not be found
 	*/
 	public AnnouncementsEntry[] findByUuid_PrevAndNext(long entryId,
-		java.lang.String uuid,
+		String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<AnnouncementsEntry> orderByComparator)
 		throws NoSuchEntryException;
 
@@ -164,8 +164,7 @@ public interface AnnouncementsEntryPersistence extends BasePersistence<Announcem
 	* @param uuid the uuid
 	* @return the matching announcements entries that the user has permission to view
 	*/
-	public java.util.List<AnnouncementsEntry> filterFindByUuid(
-		java.lang.String uuid);
+	public java.util.List<AnnouncementsEntry> filterFindByUuid(String uuid);
 
 	/**
 	* Returns a range of all the announcements entries that the user has permission to view where uuid = &#63;.
@@ -179,8 +178,8 @@ public interface AnnouncementsEntryPersistence extends BasePersistence<Announcem
 	* @param end the upper bound of the range of announcements entries (not inclusive)
 	* @return the range of matching announcements entries that the user has permission to view
 	*/
-	public java.util.List<AnnouncementsEntry> filterFindByUuid(
-		java.lang.String uuid, int start, int end);
+	public java.util.List<AnnouncementsEntry> filterFindByUuid(String uuid,
+		int start, int end);
 
 	/**
 	* Returns an ordered range of all the announcements entries that the user has permissions to view where uuid = &#63;.
@@ -195,8 +194,8 @@ public interface AnnouncementsEntryPersistence extends BasePersistence<Announcem
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching announcements entries that the user has permission to view
 	*/
-	public java.util.List<AnnouncementsEntry> filterFindByUuid(
-		java.lang.String uuid, int start, int end,
+	public java.util.List<AnnouncementsEntry> filterFindByUuid(String uuid,
+		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<AnnouncementsEntry> orderByComparator);
 
 	/**
@@ -209,7 +208,7 @@ public interface AnnouncementsEntryPersistence extends BasePersistence<Announcem
 	* @throws NoSuchEntryException if a announcements entry with the primary key could not be found
 	*/
 	public AnnouncementsEntry[] filterFindByUuid_PrevAndNext(long entryId,
-		java.lang.String uuid,
+		String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<AnnouncementsEntry> orderByComparator)
 		throws NoSuchEntryException;
 
@@ -218,7 +217,7 @@ public interface AnnouncementsEntryPersistence extends BasePersistence<Announcem
 	*
 	* @param uuid the uuid
 	*/
-	public void removeByUuid(java.lang.String uuid);
+	public void removeByUuid(String uuid);
 
 	/**
 	* Returns the number of announcements entries where uuid = &#63;.
@@ -226,7 +225,7 @@ public interface AnnouncementsEntryPersistence extends BasePersistence<Announcem
 	* @param uuid the uuid
 	* @return the number of matching announcements entries
 	*/
-	public int countByUuid(java.lang.String uuid);
+	public int countByUuid(String uuid);
 
 	/**
 	* Returns the number of announcements entries that the user has permission to view where uuid = &#63;.
@@ -234,7 +233,7 @@ public interface AnnouncementsEntryPersistence extends BasePersistence<Announcem
 	* @param uuid the uuid
 	* @return the number of matching announcements entries that the user has permission to view
 	*/
-	public int filterCountByUuid(java.lang.String uuid);
+	public int filterCountByUuid(String uuid);
 
 	/**
 	* Returns all the announcements entries where uuid = &#63; and companyId = &#63;.
@@ -243,8 +242,8 @@ public interface AnnouncementsEntryPersistence extends BasePersistence<Announcem
 	* @param companyId the company ID
 	* @return the matching announcements entries
 	*/
-	public java.util.List<AnnouncementsEntry> findByUuid_C(
-		java.lang.String uuid, long companyId);
+	public java.util.List<AnnouncementsEntry> findByUuid_C(String uuid,
+		long companyId);
 
 	/**
 	* Returns a range of all the announcements entries where uuid = &#63; and companyId = &#63;.
@@ -259,8 +258,8 @@ public interface AnnouncementsEntryPersistence extends BasePersistence<Announcem
 	* @param end the upper bound of the range of announcements entries (not inclusive)
 	* @return the range of matching announcements entries
 	*/
-	public java.util.List<AnnouncementsEntry> findByUuid_C(
-		java.lang.String uuid, long companyId, int start, int end);
+	public java.util.List<AnnouncementsEntry> findByUuid_C(String uuid,
+		long companyId, int start, int end);
 
 	/**
 	* Returns an ordered range of all the announcements entries where uuid = &#63; and companyId = &#63;.
@@ -276,8 +275,8 @@ public interface AnnouncementsEntryPersistence extends BasePersistence<Announcem
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching announcements entries
 	*/
-	public java.util.List<AnnouncementsEntry> findByUuid_C(
-		java.lang.String uuid, long companyId, int start, int end,
+	public java.util.List<AnnouncementsEntry> findByUuid_C(String uuid,
+		long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<AnnouncementsEntry> orderByComparator);
 
 	/**
@@ -295,8 +294,8 @@ public interface AnnouncementsEntryPersistence extends BasePersistence<Announcem
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching announcements entries
 	*/
-	public java.util.List<AnnouncementsEntry> findByUuid_C(
-		java.lang.String uuid, long companyId, int start, int end,
+	public java.util.List<AnnouncementsEntry> findByUuid_C(String uuid,
+		long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<AnnouncementsEntry> orderByComparator,
 		boolean retrieveFromCache);
 
@@ -309,8 +308,7 @@ public interface AnnouncementsEntryPersistence extends BasePersistence<Announcem
 	* @return the first matching announcements entry
 	* @throws NoSuchEntryException if a matching announcements entry could not be found
 	*/
-	public AnnouncementsEntry findByUuid_C_First(java.lang.String uuid,
-		long companyId,
+	public AnnouncementsEntry findByUuid_C_First(String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<AnnouncementsEntry> orderByComparator)
 		throws NoSuchEntryException;
 
@@ -322,8 +320,7 @@ public interface AnnouncementsEntryPersistence extends BasePersistence<Announcem
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching announcements entry, or <code>null</code> if a matching announcements entry could not be found
 	*/
-	public AnnouncementsEntry fetchByUuid_C_First(java.lang.String uuid,
-		long companyId,
+	public AnnouncementsEntry fetchByUuid_C_First(String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<AnnouncementsEntry> orderByComparator);
 
 	/**
@@ -335,8 +332,7 @@ public interface AnnouncementsEntryPersistence extends BasePersistence<Announcem
 	* @return the last matching announcements entry
 	* @throws NoSuchEntryException if a matching announcements entry could not be found
 	*/
-	public AnnouncementsEntry findByUuid_C_Last(java.lang.String uuid,
-		long companyId,
+	public AnnouncementsEntry findByUuid_C_Last(String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<AnnouncementsEntry> orderByComparator)
 		throws NoSuchEntryException;
 
@@ -348,8 +344,7 @@ public interface AnnouncementsEntryPersistence extends BasePersistence<Announcem
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching announcements entry, or <code>null</code> if a matching announcements entry could not be found
 	*/
-	public AnnouncementsEntry fetchByUuid_C_Last(java.lang.String uuid,
-		long companyId,
+	public AnnouncementsEntry fetchByUuid_C_Last(String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<AnnouncementsEntry> orderByComparator);
 
 	/**
@@ -363,7 +358,7 @@ public interface AnnouncementsEntryPersistence extends BasePersistence<Announcem
 	* @throws NoSuchEntryException if a announcements entry with the primary key could not be found
 	*/
 	public AnnouncementsEntry[] findByUuid_C_PrevAndNext(long entryId,
-		java.lang.String uuid, long companyId,
+		String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<AnnouncementsEntry> orderByComparator)
 		throws NoSuchEntryException;
 
@@ -374,8 +369,8 @@ public interface AnnouncementsEntryPersistence extends BasePersistence<Announcem
 	* @param companyId the company ID
 	* @return the matching announcements entries that the user has permission to view
 	*/
-	public java.util.List<AnnouncementsEntry> filterFindByUuid_C(
-		java.lang.String uuid, long companyId);
+	public java.util.List<AnnouncementsEntry> filterFindByUuid_C(String uuid,
+		long companyId);
 
 	/**
 	* Returns a range of all the announcements entries that the user has permission to view where uuid = &#63; and companyId = &#63;.
@@ -390,8 +385,8 @@ public interface AnnouncementsEntryPersistence extends BasePersistence<Announcem
 	* @param end the upper bound of the range of announcements entries (not inclusive)
 	* @return the range of matching announcements entries that the user has permission to view
 	*/
-	public java.util.List<AnnouncementsEntry> filterFindByUuid_C(
-		java.lang.String uuid, long companyId, int start, int end);
+	public java.util.List<AnnouncementsEntry> filterFindByUuid_C(String uuid,
+		long companyId, int start, int end);
 
 	/**
 	* Returns an ordered range of all the announcements entries that the user has permissions to view where uuid = &#63; and companyId = &#63;.
@@ -407,8 +402,8 @@ public interface AnnouncementsEntryPersistence extends BasePersistence<Announcem
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching announcements entries that the user has permission to view
 	*/
-	public java.util.List<AnnouncementsEntry> filterFindByUuid_C(
-		java.lang.String uuid, long companyId, int start, int end,
+	public java.util.List<AnnouncementsEntry> filterFindByUuid_C(String uuid,
+		long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<AnnouncementsEntry> orderByComparator);
 
 	/**
@@ -422,7 +417,7 @@ public interface AnnouncementsEntryPersistence extends BasePersistence<Announcem
 	* @throws NoSuchEntryException if a announcements entry with the primary key could not be found
 	*/
 	public AnnouncementsEntry[] filterFindByUuid_C_PrevAndNext(long entryId,
-		java.lang.String uuid, long companyId,
+		String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<AnnouncementsEntry> orderByComparator)
 		throws NoSuchEntryException;
 
@@ -432,7 +427,7 @@ public interface AnnouncementsEntryPersistence extends BasePersistence<Announcem
 	* @param uuid the uuid
 	* @param companyId the company ID
 	*/
-	public void removeByUuid_C(java.lang.String uuid, long companyId);
+	public void removeByUuid_C(String uuid, long companyId);
 
 	/**
 	* Returns the number of announcements entries where uuid = &#63; and companyId = &#63;.
@@ -441,7 +436,7 @@ public interface AnnouncementsEntryPersistence extends BasePersistence<Announcem
 	* @param companyId the company ID
 	* @return the number of matching announcements entries
 	*/
-	public int countByUuid_C(java.lang.String uuid, long companyId);
+	public int countByUuid_C(String uuid, long companyId);
 
 	/**
 	* Returns the number of announcements entries that the user has permission to view where uuid = &#63; and companyId = &#63;.
@@ -450,7 +445,7 @@ public interface AnnouncementsEntryPersistence extends BasePersistence<Announcem
 	* @param companyId the company ID
 	* @return the number of matching announcements entries that the user has permission to view
 	*/
-	public int filterCountByUuid_C(java.lang.String uuid, long companyId);
+	public int filterCountByUuid_C(String uuid, long companyId);
 
 	/**
 	* Returns all the announcements entries where userId = &#63;.
@@ -1211,5 +1206,5 @@ public interface AnnouncementsEntryPersistence extends BasePersistence<Announcem
 	public int countAll();
 
 	@Override
-	public java.util.Set<java.lang.String> getBadColumnNames();
+	public java.util.Set<String> getBadColumnNames();
 }

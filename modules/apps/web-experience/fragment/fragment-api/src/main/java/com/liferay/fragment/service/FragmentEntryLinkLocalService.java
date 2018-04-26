@@ -79,15 +79,13 @@ public interface FragmentEntryLinkLocalService extends BaseLocalService,
 
 	public FragmentEntryLink addFragmentEntryLink(long userId, long groupId,
 		long originalFragmentEntryLinkId, long fragmentEntryId,
-		long classNameId, long classPK, java.lang.String css,
-		java.lang.String html, java.lang.String js,
-		java.lang.String editableValues, int position,
-		ServiceContext serviceContext) throws PortalException;
+		long classNameId, long classPK, String css, String html, String js,
+		String editableValues, int position, ServiceContext serviceContext)
+		throws PortalException;
 
 	public FragmentEntryLink addFragmentEntryLink(long userId, long groupId,
-		long fragmentEntryId, long classNameId, long classPK,
-		java.lang.String css, java.lang.String html, java.lang.String js,
-		java.lang.String editableValues, int position,
+		long fragmentEntryId, long classNameId, long classPK, String css,
+		String html, String js, String editableValues, int position,
 		ServiceContext serviceContext) throws PortalException;
 
 	/**
@@ -204,7 +202,7 @@ public interface FragmentEntryLinkLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public FragmentEntryLink fetchFragmentEntryLinkByUuidAndGroupId(
-		java.lang.String uuid, long groupId);
+		String uuid, long groupId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
@@ -233,8 +231,8 @@ public interface FragmentEntryLinkLocalService extends BaseLocalService,
 	* @throws PortalException if a matching fragment entry link could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public FragmentEntryLink getFragmentEntryLinkByUuidAndGroupId(
-		java.lang.String uuid, long groupId) throws PortalException;
+	public FragmentEntryLink getFragmentEntryLinkByUuidAndGroupId(String uuid,
+		long groupId) throws PortalException;
 
 	/**
 	* Returns a range of all the fragment entry links.
@@ -279,7 +277,7 @@ public interface FragmentEntryLinkLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<FragmentEntryLink> getFragmentEntryLinksByUuidAndCompanyId(
-		java.lang.String uuid, long companyId);
+		String uuid, long companyId);
 
 	/**
 	* Returns a range of fragment entry links matching the UUID and company.
@@ -293,7 +291,7 @@ public interface FragmentEntryLinkLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<FragmentEntryLink> getFragmentEntryLinksByUuidAndCompanyId(
-		java.lang.String uuid, long companyId, int start, int end,
+		String uuid, long companyId, int start, int end,
 		OrderByComparator<FragmentEntryLink> orderByComparator);
 
 	/**
@@ -323,7 +321,7 @@ public interface FragmentEntryLinkLocalService extends BaseLocalService,
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -345,17 +343,16 @@ public interface FragmentEntryLinkLocalService extends BaseLocalService,
 
 	public FragmentEntryLink updateFragmentEntryLink(long userId,
 		long fragmentEntryLinkId, long originalFragmentEntryLinkId,
-		long fragmentEntryId, long classNameId, long classPK,
-		java.lang.String css, java.lang.String html, java.lang.String js,
-		java.lang.String editableValues, int position,
+		long fragmentEntryId, long classNameId, long classPK, String css,
+		String html, String js, String editableValues, int position,
 		ServiceContext serviceContext) throws PortalException;
 
 	public FragmentEntryLink updateFragmentEntryLink(long fragmentEntryLinkId,
-		java.lang.String editableValues);
+		String editableValues);
 
 	public void updateFragmentEntryLinks(long userId, long groupId,
 		long classNameId, long classPK, long[] fragmentEntryIds,
-		java.lang.String editableValues, ServiceContext serviceContext)
+		String editableValues, ServiceContext serviceContext)
 		throws PortalException;
 
 	public FragmentEntryLink updateLatestChanges(long fragmentEntryLinkId)

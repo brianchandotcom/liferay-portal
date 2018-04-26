@@ -57,7 +57,7 @@ public interface BookmarksEntry extends BookmarksEntryModel, PersistedModel,
 		};
 
 	@Override
-	public java.lang.String buildTreePath()
+	public String buildTreePath()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public BookmarksFolder getFolder()

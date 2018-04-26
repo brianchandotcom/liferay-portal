@@ -50,7 +50,7 @@ public class ScreensAssetEntryServiceUtil {
 	}
 
 	public static com.liferay.portal.kernel.json.JSONArray getAssetEntries(
-		long companyId, long groupId, java.lang.String portletItemName,
+		long companyId, long groupId, String portletItemName,
 		java.util.Locale locale, int max)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
@@ -65,7 +65,7 @@ public class ScreensAssetEntryServiceUtil {
 	}
 
 	public static com.liferay.portal.kernel.json.JSONObject getAssetEntry(
-		java.lang.String className, long classPK, java.util.Locale locale)
+		String className, long classPK, java.util.Locale locale)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getAssetEntry(className, classPK, locale);
 	}
@@ -75,7 +75,7 @@ public class ScreensAssetEntryServiceUtil {
 	*
 	* @return the OSGi service identifier
 	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
+	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 

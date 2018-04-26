@@ -227,7 +227,7 @@ public class MBThreadLocalServiceWrapper implements MBThreadLocalService,
 	*/
 	@Override
 	public com.liferay.message.boards.model.MBThread fetchMBThreadByUuidAndGroupId(
-		java.lang.String uuid, long groupId) {
+		String uuid, long groupId) {
 		return _mbThreadLocalService.fetchMBThreadByUuidAndGroupId(uuid, groupId);
 	}
 
@@ -343,7 +343,7 @@ public class MBThreadLocalServiceWrapper implements MBThreadLocalService,
 	*/
 	@Override
 	public com.liferay.message.boards.model.MBThread getMBThreadByUuidAndGroupId(
-		java.lang.String uuid, long groupId)
+		String uuid, long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _mbThreadLocalService.getMBThreadByUuidAndGroupId(uuid, groupId);
 	}
@@ -374,7 +374,7 @@ public class MBThreadLocalServiceWrapper implements MBThreadLocalService,
 	*/
 	@Override
 	public java.util.List<com.liferay.message.boards.model.MBThread> getMBThreadsByUuidAndCompanyId(
-		java.lang.String uuid, long companyId) {
+		String uuid, long companyId) {
 		return _mbThreadLocalService.getMBThreadsByUuidAndCompanyId(uuid,
 			companyId);
 	}
@@ -391,7 +391,7 @@ public class MBThreadLocalServiceWrapper implements MBThreadLocalService,
 	*/
 	@Override
 	public java.util.List<com.liferay.message.boards.model.MBThread> getMBThreadsByUuidAndCompanyId(
-		java.lang.String uuid, long companyId, int start, int end,
+		String uuid, long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.message.boards.model.MBThread> orderByComparator) {
 		return _mbThreadLocalService.getMBThreadsByUuidAndCompanyId(uuid,
 			companyId, start, end, orderByComparator);
@@ -422,7 +422,7 @@ public class MBThreadLocalServiceWrapper implements MBThreadLocalService,
 	* @return the OSGi service identifier
 	*/
 	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
+	public String getOSGiServiceIdentifier() {
 		return _mbThreadLocalService.getOSGiServiceIdentifier();
 	}
 
@@ -551,7 +551,7 @@ public class MBThreadLocalServiceWrapper implements MBThreadLocalService,
 
 	@Override
 	public com.liferay.message.boards.model.MBThread splitThread(long userId,
-		long messageId, java.lang.String subject,
+		long messageId, String subject,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _mbThreadLocalService.splitThread(userId, messageId, subject,

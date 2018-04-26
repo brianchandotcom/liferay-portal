@@ -22,24 +22,22 @@ import aQute.bnd.annotation.ProviderType;
  */
 @ProviderType
 public interface AssetCategoryFinder {
-	public int countByG_C_N(long groupId, long classNameId,
-		java.lang.String name);
+	public int countByG_C_N(long groupId, long classNameId, String name);
 
-	public int countByG_N_P(long groupId, java.lang.String name,
-		java.lang.String[] categoryProperties);
+	public int countByG_N_P(long groupId, String name,
+		String[] categoryProperties);
 
 	public com.liferay.asset.kernel.model.AssetCategory findByG_N(
-		long groupId, java.lang.String name)
+		long groupId, String name)
 		throws com.liferay.asset.kernel.exception.NoSuchCategoryException;
 
 	public java.util.List<com.liferay.asset.kernel.model.AssetCategory> findByC_C(
 		long classNameId, long classPK);
 
 	public java.util.List<com.liferay.asset.kernel.model.AssetCategory> findByG_N_P(
-		long groupId, java.lang.String name,
-		java.lang.String[] categoryProperties);
+		long groupId, String name, String[] categoryProperties);
 
 	public java.util.List<com.liferay.asset.kernel.model.AssetCategory> findByG_N_P(
-		long groupId, java.lang.String name,
-		java.lang.String[] categoryProperties, int start, int end);
+		long groupId, String name, String[] categoryProperties, int start,
+		int end);
 }

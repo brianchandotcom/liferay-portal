@@ -58,14 +58,13 @@ public interface SystemEventLocalService extends BaseLocalService,
 	 * Never modify or reference this interface directly. Always use {@link SystemEventLocalServiceUtil} to access the system event local service. Add custom service methods to {@link com.liferay.portal.service.impl.SystemEventLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	public SystemEvent addSystemEvent(long userId, long groupId,
-		java.lang.String className, long classPK, java.lang.String classUuid,
-		java.lang.String referrerClassName, int type, java.lang.String extraData)
+		String className, long classPK, String classUuid,
+		String referrerClassName, int type, String extraData)
 		throws PortalException;
 
-	public SystemEvent addSystemEvent(long companyId,
-		java.lang.String className, long classPK, java.lang.String classUuid,
-		java.lang.String referrerClassName, int type, java.lang.String extraData)
-		throws PortalException;
+	public SystemEvent addSystemEvent(long companyId, String className,
+		long classPK, String classUuid, String referrerClassName, int type,
+		String extraData) throws PortalException;
 
 	/**
 	* Adds the system event to the database. Also notifies the appropriate model listeners.
@@ -195,7 +194,7 @@ public interface SystemEventLocalService extends BaseLocalService,
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

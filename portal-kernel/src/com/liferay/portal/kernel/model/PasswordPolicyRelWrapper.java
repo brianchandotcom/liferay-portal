@@ -106,7 +106,7 @@ public class PasswordPolicyRelWrapper implements PasswordPolicyRel,
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new PasswordPolicyRelWrapper((PasswordPolicyRel)_passwordPolicyRel.clone());
 	}
 
@@ -121,7 +121,7 @@ public class PasswordPolicyRelWrapper implements PasswordPolicyRel,
 	* @return the fully qualified class name of this password policy rel
 	*/
 	@Override
-	public java.lang.String getClassName() {
+	public String getClassName() {
 		return _passwordPolicyRel.getClassName();
 	}
 
@@ -236,7 +236,7 @@ public class PasswordPolicyRelWrapper implements PasswordPolicyRel,
 	}
 
 	@Override
-	public void setClassName(java.lang.String className) {
+	public void setClassName(String className) {
 		_passwordPolicyRel.setClassName(className);
 	}
 
@@ -346,7 +346,7 @@ public class PasswordPolicyRelWrapper implements PasswordPolicyRel,
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _passwordPolicyRel.toString();
 	}
 
@@ -356,7 +356,7 @@ public class PasswordPolicyRelWrapper implements PasswordPolicyRel,
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _passwordPolicyRel.toXmlString();
 	}
 

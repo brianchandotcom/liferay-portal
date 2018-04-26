@@ -56,7 +56,7 @@ public class HtmlPreviewEntryLocalServiceUtil {
 
 	public static com.liferay.html.preview.model.HtmlPreviewEntry addHtmlPreviewEntry(
 		long userId, long groupId, long classNameId, long classPK,
-		java.lang.String content, java.lang.String mimeType,
+		String content, String mimeType,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
@@ -244,7 +244,7 @@ public class HtmlPreviewEntryLocalServiceUtil {
 	*
 	* @return the OSGi service identifier
 	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
+	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 
@@ -266,8 +266,7 @@ public class HtmlPreviewEntryLocalServiceUtil {
 	}
 
 	public static com.liferay.html.preview.model.HtmlPreviewEntry updateHtmlPreviewEntry(
-		long htmlPreviewEntryId, java.lang.String content,
-		java.lang.String mimeType,
+		long htmlPreviewEntryId, String content, String mimeType,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()

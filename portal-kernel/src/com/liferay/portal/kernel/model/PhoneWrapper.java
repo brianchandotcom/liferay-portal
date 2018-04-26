@@ -164,7 +164,7 @@ public class PhoneWrapper implements Phone, ModelWrapper<Phone> {
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new PhoneWrapper((Phone)_phone.clone());
 	}
 
@@ -179,7 +179,7 @@ public class PhoneWrapper implements Phone, ModelWrapper<Phone> {
 	* @return the fully qualified class name of this phone
 	*/
 	@Override
-	public java.lang.String getClassName() {
+	public String getClassName() {
 		return _phone.getClassName();
 	}
 
@@ -234,7 +234,7 @@ public class PhoneWrapper implements Phone, ModelWrapper<Phone> {
 	* @return the extension of this phone
 	*/
 	@Override
-	public java.lang.String getExtension() {
+	public String getExtension() {
 		return _phone.getExtension();
 	}
 
@@ -264,7 +264,7 @@ public class PhoneWrapper implements Phone, ModelWrapper<Phone> {
 	* @return the number of this phone
 	*/
 	@Override
-	public java.lang.String getNumber() {
+	public String getNumber() {
 		return _phone.getNumber();
 	}
 
@@ -335,7 +335,7 @@ public class PhoneWrapper implements Phone, ModelWrapper<Phone> {
 	* @return the user name of this phone
 	*/
 	@Override
-	public java.lang.String getUserName() {
+	public String getUserName() {
 		return _phone.getUserName();
 	}
 
@@ -345,7 +345,7 @@ public class PhoneWrapper implements Phone, ModelWrapper<Phone> {
 	* @return the user uuid of this phone
 	*/
 	@Override
-	public java.lang.String getUserUuid() {
+	public String getUserUuid() {
 		return _phone.getUserUuid();
 	}
 
@@ -355,7 +355,7 @@ public class PhoneWrapper implements Phone, ModelWrapper<Phone> {
 	* @return the uuid of this phone
 	*/
 	@Override
-	public java.lang.String getUuid() {
+	public String getUuid() {
 		return _phone.getUuid();
 	}
 
@@ -400,7 +400,7 @@ public class PhoneWrapper implements Phone, ModelWrapper<Phone> {
 	}
 
 	@Override
-	public void setClassName(java.lang.String className) {
+	public void setClassName(String className) {
 		_phone.setClassName(className);
 	}
 
@@ -465,7 +465,7 @@ public class PhoneWrapper implements Phone, ModelWrapper<Phone> {
 	* @param extension the extension of this phone
 	*/
 	@Override
-	public void setExtension(java.lang.String extension) {
+	public void setExtension(String extension) {
 		_phone.setExtension(extension);
 	}
 
@@ -500,7 +500,7 @@ public class PhoneWrapper implements Phone, ModelWrapper<Phone> {
 	* @param number the number of this phone
 	*/
 	@Override
-	public void setNumber(java.lang.String number) {
+	public void setNumber(String number) {
 		_phone.setNumber(number);
 	}
 
@@ -565,7 +565,7 @@ public class PhoneWrapper implements Phone, ModelWrapper<Phone> {
 	* @param userName the user name of this phone
 	*/
 	@Override
-	public void setUserName(java.lang.String userName) {
+	public void setUserName(String userName) {
 		_phone.setUserName(userName);
 	}
 
@@ -575,7 +575,7 @@ public class PhoneWrapper implements Phone, ModelWrapper<Phone> {
 	* @param userUuid the user uuid of this phone
 	*/
 	@Override
-	public void setUserUuid(java.lang.String userUuid) {
+	public void setUserUuid(String userUuid) {
 		_phone.setUserUuid(userUuid);
 	}
 
@@ -585,7 +585,7 @@ public class PhoneWrapper implements Phone, ModelWrapper<Phone> {
 	* @param uuid the uuid of this phone
 	*/
 	@Override
-	public void setUuid(java.lang.String uuid) {
+	public void setUuid(String uuid) {
 		_phone.setUuid(uuid);
 	}
 
@@ -600,7 +600,7 @@ public class PhoneWrapper implements Phone, ModelWrapper<Phone> {
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _phone.toString();
 	}
 
@@ -610,7 +610,7 @@ public class PhoneWrapper implements Phone, ModelWrapper<Phone> {
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _phone.toXmlString();
 	}
 

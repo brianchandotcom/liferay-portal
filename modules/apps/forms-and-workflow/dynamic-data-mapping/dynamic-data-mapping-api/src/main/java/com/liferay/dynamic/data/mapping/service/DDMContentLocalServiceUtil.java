@@ -43,8 +43,8 @@ public class DDMContentLocalServiceUtil {
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.dynamic.data.mapping.service.impl.DDMContentLocalServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static com.liferay.dynamic.data.mapping.model.DDMContent addContent(
-		long userId, long groupId, java.lang.String name,
-		java.lang.String description, java.lang.String data,
+		long userId, long groupId, String name, String description,
+		String data,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
@@ -207,7 +207,7 @@ public class DDMContentLocalServiceUtil {
 	* @return the matching ddm content, or <code>null</code> if a matching ddm content could not be found
 	*/
 	public static com.liferay.dynamic.data.mapping.model.DDMContent fetchDDMContentByUuidAndGroupId(
-		java.lang.String uuid, long groupId) {
+		String uuid, long groupId) {
 		return getService().fetchDDMContentByUuidAndGroupId(uuid, groupId);
 	}
 
@@ -261,7 +261,7 @@ public class DDMContentLocalServiceUtil {
 	* @throws PortalException if a matching ddm content could not be found
 	*/
 	public static com.liferay.dynamic.data.mapping.model.DDMContent getDDMContentByUuidAndGroupId(
-		java.lang.String uuid, long groupId)
+		String uuid, long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getDDMContentByUuidAndGroupId(uuid, groupId);
 	}
@@ -290,7 +290,7 @@ public class DDMContentLocalServiceUtil {
 	* @return the matching ddm contents, or an empty list if no matches were found
 	*/
 	public static java.util.List<com.liferay.dynamic.data.mapping.model.DDMContent> getDDMContentsByUuidAndCompanyId(
-		java.lang.String uuid, long companyId) {
+		String uuid, long companyId) {
 		return getService().getDDMContentsByUuidAndCompanyId(uuid, companyId);
 	}
 
@@ -305,7 +305,7 @@ public class DDMContentLocalServiceUtil {
 	* @return the range of matching ddm contents, or an empty list if no matches were found
 	*/
 	public static java.util.List<com.liferay.dynamic.data.mapping.model.DDMContent> getDDMContentsByUuidAndCompanyId(
-		java.lang.String uuid, long companyId, int start, int end,
+		String uuid, long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.mapping.model.DDMContent> orderByComparator) {
 		return getService()
 				   .getDDMContentsByUuidAndCompanyId(uuid, companyId, start,
@@ -335,7 +335,7 @@ public class DDMContentLocalServiceUtil {
 	*
 	* @return the OSGi service identifier
 	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
+	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 
@@ -346,8 +346,7 @@ public class DDMContentLocalServiceUtil {
 	}
 
 	public static com.liferay.dynamic.data.mapping.model.DDMContent updateContent(
-		long contentId, java.lang.String name, java.lang.String description,
-		java.lang.String data,
+		long contentId, String name, String description, String data,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()

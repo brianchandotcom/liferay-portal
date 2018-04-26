@@ -90,8 +90,7 @@ public class ExportImportServiceHttp {
 
 	public static java.io.File exportLayoutsAsFile(
 		HttpPrincipal httpPrincipal, long userId, long groupId,
-		boolean privateLayout,
-		java.util.Map<java.lang.String, java.lang.String[]> parameterMap)
+		boolean privateLayout, java.util.Map<String, String[]> parameterMap)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(ExportImportServiceUtil.class,
@@ -317,8 +316,7 @@ public class ExportImportServiceHttp {
 
 	public static void importLayouts(HttpPrincipal httpPrincipal, long userId,
 		long groupId, boolean privateLayout,
-		java.util.Map<java.lang.String, java.lang.String[]> parameterMap,
-		java.io.File file)
+		java.util.Map<String, String[]> parameterMap, java.io.File file)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(ExportImportServiceUtil.class,

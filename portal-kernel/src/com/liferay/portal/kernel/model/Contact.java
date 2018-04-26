@@ -53,7 +53,7 @@ public interface Contact extends ContactModel, PersistedModel {
 			}
 		};
 
-	public java.lang.String getFullName();
+	public String getFullName();
 
 	public boolean isUser();
 }

@@ -47,7 +47,7 @@ public interface RatingsEntryPersistence extends BasePersistence<RatingsEntry> {
 	* @param uuid the uuid
 	* @return the matching ratings entries
 	*/
-	public java.util.List<RatingsEntry> findByUuid(java.lang.String uuid);
+	public java.util.List<RatingsEntry> findByUuid(String uuid);
 
 	/**
 	* Returns a range of all the ratings entries where uuid = &#63;.
@@ -61,8 +61,8 @@ public interface RatingsEntryPersistence extends BasePersistence<RatingsEntry> {
 	* @param end the upper bound of the range of ratings entries (not inclusive)
 	* @return the range of matching ratings entries
 	*/
-	public java.util.List<RatingsEntry> findByUuid(java.lang.String uuid,
-		int start, int end);
+	public java.util.List<RatingsEntry> findByUuid(String uuid, int start,
+		int end);
 
 	/**
 	* Returns an ordered range of all the ratings entries where uuid = &#63;.
@@ -77,8 +77,8 @@ public interface RatingsEntryPersistence extends BasePersistence<RatingsEntry> {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching ratings entries
 	*/
-	public java.util.List<RatingsEntry> findByUuid(java.lang.String uuid,
-		int start, int end,
+	public java.util.List<RatingsEntry> findByUuid(String uuid, int start,
+		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<RatingsEntry> orderByComparator);
 
 	/**
@@ -95,8 +95,8 @@ public interface RatingsEntryPersistence extends BasePersistence<RatingsEntry> {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching ratings entries
 	*/
-	public java.util.List<RatingsEntry> findByUuid(java.lang.String uuid,
-		int start, int end,
+	public java.util.List<RatingsEntry> findByUuid(String uuid, int start,
+		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<RatingsEntry> orderByComparator,
 		boolean retrieveFromCache);
 
@@ -108,7 +108,7 @@ public interface RatingsEntryPersistence extends BasePersistence<RatingsEntry> {
 	* @return the first matching ratings entry
 	* @throws NoSuchEntryException if a matching ratings entry could not be found
 	*/
-	public RatingsEntry findByUuid_First(java.lang.String uuid,
+	public RatingsEntry findByUuid_First(String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<RatingsEntry> orderByComparator)
 		throws NoSuchEntryException;
 
@@ -119,7 +119,7 @@ public interface RatingsEntryPersistence extends BasePersistence<RatingsEntry> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching ratings entry, or <code>null</code> if a matching ratings entry could not be found
 	*/
-	public RatingsEntry fetchByUuid_First(java.lang.String uuid,
+	public RatingsEntry fetchByUuid_First(String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<RatingsEntry> orderByComparator);
 
 	/**
@@ -130,7 +130,7 @@ public interface RatingsEntryPersistence extends BasePersistence<RatingsEntry> {
 	* @return the last matching ratings entry
 	* @throws NoSuchEntryException if a matching ratings entry could not be found
 	*/
-	public RatingsEntry findByUuid_Last(java.lang.String uuid,
+	public RatingsEntry findByUuid_Last(String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<RatingsEntry> orderByComparator)
 		throws NoSuchEntryException;
 
@@ -141,7 +141,7 @@ public interface RatingsEntryPersistence extends BasePersistence<RatingsEntry> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching ratings entry, or <code>null</code> if a matching ratings entry could not be found
 	*/
-	public RatingsEntry fetchByUuid_Last(java.lang.String uuid,
+	public RatingsEntry fetchByUuid_Last(String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<RatingsEntry> orderByComparator);
 
 	/**
@@ -153,8 +153,7 @@ public interface RatingsEntryPersistence extends BasePersistence<RatingsEntry> {
 	* @return the previous, current, and next ratings entry
 	* @throws NoSuchEntryException if a ratings entry with the primary key could not be found
 	*/
-	public RatingsEntry[] findByUuid_PrevAndNext(long entryId,
-		java.lang.String uuid,
+	public RatingsEntry[] findByUuid_PrevAndNext(long entryId, String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<RatingsEntry> orderByComparator)
 		throws NoSuchEntryException;
 
@@ -163,7 +162,7 @@ public interface RatingsEntryPersistence extends BasePersistence<RatingsEntry> {
 	*
 	* @param uuid the uuid
 	*/
-	public void removeByUuid(java.lang.String uuid);
+	public void removeByUuid(String uuid);
 
 	/**
 	* Returns the number of ratings entries where uuid = &#63;.
@@ -171,7 +170,7 @@ public interface RatingsEntryPersistence extends BasePersistence<RatingsEntry> {
 	* @param uuid the uuid
 	* @return the number of matching ratings entries
 	*/
-	public int countByUuid(java.lang.String uuid);
+	public int countByUuid(String uuid);
 
 	/**
 	* Returns all the ratings entries where uuid = &#63; and companyId = &#63;.
@@ -180,8 +179,7 @@ public interface RatingsEntryPersistence extends BasePersistence<RatingsEntry> {
 	* @param companyId the company ID
 	* @return the matching ratings entries
 	*/
-	public java.util.List<RatingsEntry> findByUuid_C(java.lang.String uuid,
-		long companyId);
+	public java.util.List<RatingsEntry> findByUuid_C(String uuid, long companyId);
 
 	/**
 	* Returns a range of all the ratings entries where uuid = &#63; and companyId = &#63;.
@@ -196,7 +194,7 @@ public interface RatingsEntryPersistence extends BasePersistence<RatingsEntry> {
 	* @param end the upper bound of the range of ratings entries (not inclusive)
 	* @return the range of matching ratings entries
 	*/
-	public java.util.List<RatingsEntry> findByUuid_C(java.lang.String uuid,
+	public java.util.List<RatingsEntry> findByUuid_C(String uuid,
 		long companyId, int start, int end);
 
 	/**
@@ -213,7 +211,7 @@ public interface RatingsEntryPersistence extends BasePersistence<RatingsEntry> {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching ratings entries
 	*/
-	public java.util.List<RatingsEntry> findByUuid_C(java.lang.String uuid,
+	public java.util.List<RatingsEntry> findByUuid_C(String uuid,
 		long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<RatingsEntry> orderByComparator);
 
@@ -232,7 +230,7 @@ public interface RatingsEntryPersistence extends BasePersistence<RatingsEntry> {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching ratings entries
 	*/
-	public java.util.List<RatingsEntry> findByUuid_C(java.lang.String uuid,
+	public java.util.List<RatingsEntry> findByUuid_C(String uuid,
 		long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<RatingsEntry> orderByComparator,
 		boolean retrieveFromCache);
@@ -246,8 +244,7 @@ public interface RatingsEntryPersistence extends BasePersistence<RatingsEntry> {
 	* @return the first matching ratings entry
 	* @throws NoSuchEntryException if a matching ratings entry could not be found
 	*/
-	public RatingsEntry findByUuid_C_First(java.lang.String uuid,
-		long companyId,
+	public RatingsEntry findByUuid_C_First(String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<RatingsEntry> orderByComparator)
 		throws NoSuchEntryException;
 
@@ -259,8 +256,7 @@ public interface RatingsEntryPersistence extends BasePersistence<RatingsEntry> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching ratings entry, or <code>null</code> if a matching ratings entry could not be found
 	*/
-	public RatingsEntry fetchByUuid_C_First(java.lang.String uuid,
-		long companyId,
+	public RatingsEntry fetchByUuid_C_First(String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<RatingsEntry> orderByComparator);
 
 	/**
@@ -272,8 +268,7 @@ public interface RatingsEntryPersistence extends BasePersistence<RatingsEntry> {
 	* @return the last matching ratings entry
 	* @throws NoSuchEntryException if a matching ratings entry could not be found
 	*/
-	public RatingsEntry findByUuid_C_Last(java.lang.String uuid,
-		long companyId,
+	public RatingsEntry findByUuid_C_Last(String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<RatingsEntry> orderByComparator)
 		throws NoSuchEntryException;
 
@@ -285,8 +280,7 @@ public interface RatingsEntryPersistence extends BasePersistence<RatingsEntry> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching ratings entry, or <code>null</code> if a matching ratings entry could not be found
 	*/
-	public RatingsEntry fetchByUuid_C_Last(java.lang.String uuid,
-		long companyId,
+	public RatingsEntry fetchByUuid_C_Last(String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<RatingsEntry> orderByComparator);
 
 	/**
@@ -299,8 +293,8 @@ public interface RatingsEntryPersistence extends BasePersistence<RatingsEntry> {
 	* @return the previous, current, and next ratings entry
 	* @throws NoSuchEntryException if a ratings entry with the primary key could not be found
 	*/
-	public RatingsEntry[] findByUuid_C_PrevAndNext(long entryId,
-		java.lang.String uuid, long companyId,
+	public RatingsEntry[] findByUuid_C_PrevAndNext(long entryId, String uuid,
+		long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<RatingsEntry> orderByComparator)
 		throws NoSuchEntryException;
 
@@ -310,7 +304,7 @@ public interface RatingsEntryPersistence extends BasePersistence<RatingsEntry> {
 	* @param uuid the uuid
 	* @param companyId the company ID
 	*/
-	public void removeByUuid_C(java.lang.String uuid, long companyId);
+	public void removeByUuid_C(String uuid, long companyId);
 
 	/**
 	* Returns the number of ratings entries where uuid = &#63; and companyId = &#63;.
@@ -319,7 +313,7 @@ public interface RatingsEntryPersistence extends BasePersistence<RatingsEntry> {
 	* @param companyId the company ID
 	* @return the number of matching ratings entries
 	*/
-	public int countByUuid_C(java.lang.String uuid, long companyId);
+	public int countByUuid_C(String uuid, long companyId);
 
 	/**
 	* Returns all the ratings entries where classNameId = &#63; and classPK = &#63;.
@@ -880,5 +874,5 @@ public interface RatingsEntryPersistence extends BasePersistence<RatingsEntry> {
 	public int countAll();
 
 	@Override
-	public java.util.Set<java.lang.String> getBadColumnNames();
+	public java.util.Set<String> getBadColumnNames();
 }

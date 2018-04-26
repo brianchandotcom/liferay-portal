@@ -181,7 +181,7 @@ public interface KaleoDefinitionVersionPersistence extends BasePersistence<Kaleo
 	* @return the matching kaleo definition versions
 	*/
 	public java.util.List<KaleoDefinitionVersion> findByC_N(long companyId,
-		java.lang.String name);
+		String name);
 
 	/**
 	* Returns a range of all the kaleo definition versions where companyId = &#63; and name = &#63;.
@@ -197,7 +197,7 @@ public interface KaleoDefinitionVersionPersistence extends BasePersistence<Kaleo
 	* @return the range of matching kaleo definition versions
 	*/
 	public java.util.List<KaleoDefinitionVersion> findByC_N(long companyId,
-		java.lang.String name, int start, int end);
+		String name, int start, int end);
 
 	/**
 	* Returns an ordered range of all the kaleo definition versions where companyId = &#63; and name = &#63;.
@@ -214,7 +214,7 @@ public interface KaleoDefinitionVersionPersistence extends BasePersistence<Kaleo
 	* @return the ordered range of matching kaleo definition versions
 	*/
 	public java.util.List<KaleoDefinitionVersion> findByC_N(long companyId,
-		java.lang.String name, int start, int end,
+		String name, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<KaleoDefinitionVersion> orderByComparator);
 
 	/**
@@ -233,7 +233,7 @@ public interface KaleoDefinitionVersionPersistence extends BasePersistence<Kaleo
 	* @return the ordered range of matching kaleo definition versions
 	*/
 	public java.util.List<KaleoDefinitionVersion> findByC_N(long companyId,
-		java.lang.String name, int start, int end,
+		String name, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<KaleoDefinitionVersion> orderByComparator,
 		boolean retrieveFromCache);
 
@@ -246,8 +246,7 @@ public interface KaleoDefinitionVersionPersistence extends BasePersistence<Kaleo
 	* @return the first matching kaleo definition version
 	* @throws NoSuchDefinitionVersionException if a matching kaleo definition version could not be found
 	*/
-	public KaleoDefinitionVersion findByC_N_First(long companyId,
-		java.lang.String name,
+	public KaleoDefinitionVersion findByC_N_First(long companyId, String name,
 		com.liferay.portal.kernel.util.OrderByComparator<KaleoDefinitionVersion> orderByComparator)
 		throws NoSuchDefinitionVersionException;
 
@@ -259,8 +258,7 @@ public interface KaleoDefinitionVersionPersistence extends BasePersistence<Kaleo
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching kaleo definition version, or <code>null</code> if a matching kaleo definition version could not be found
 	*/
-	public KaleoDefinitionVersion fetchByC_N_First(long companyId,
-		java.lang.String name,
+	public KaleoDefinitionVersion fetchByC_N_First(long companyId, String name,
 		com.liferay.portal.kernel.util.OrderByComparator<KaleoDefinitionVersion> orderByComparator);
 
 	/**
@@ -272,8 +270,7 @@ public interface KaleoDefinitionVersionPersistence extends BasePersistence<Kaleo
 	* @return the last matching kaleo definition version
 	* @throws NoSuchDefinitionVersionException if a matching kaleo definition version could not be found
 	*/
-	public KaleoDefinitionVersion findByC_N_Last(long companyId,
-		java.lang.String name,
+	public KaleoDefinitionVersion findByC_N_Last(long companyId, String name,
 		com.liferay.portal.kernel.util.OrderByComparator<KaleoDefinitionVersion> orderByComparator)
 		throws NoSuchDefinitionVersionException;
 
@@ -285,8 +282,7 @@ public interface KaleoDefinitionVersionPersistence extends BasePersistence<Kaleo
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching kaleo definition version, or <code>null</code> if a matching kaleo definition version could not be found
 	*/
-	public KaleoDefinitionVersion fetchByC_N_Last(long companyId,
-		java.lang.String name,
+	public KaleoDefinitionVersion fetchByC_N_Last(long companyId, String name,
 		com.liferay.portal.kernel.util.OrderByComparator<KaleoDefinitionVersion> orderByComparator);
 
 	/**
@@ -300,7 +296,7 @@ public interface KaleoDefinitionVersionPersistence extends BasePersistence<Kaleo
 	* @throws NoSuchDefinitionVersionException if a kaleo definition version with the primary key could not be found
 	*/
 	public KaleoDefinitionVersion[] findByC_N_PrevAndNext(
-		long kaleoDefinitionVersionId, long companyId, java.lang.String name,
+		long kaleoDefinitionVersionId, long companyId, String name,
 		com.liferay.portal.kernel.util.OrderByComparator<KaleoDefinitionVersion> orderByComparator)
 		throws NoSuchDefinitionVersionException;
 
@@ -310,7 +306,7 @@ public interface KaleoDefinitionVersionPersistence extends BasePersistence<Kaleo
 	* @param companyId the company ID
 	* @param name the name
 	*/
-	public void removeByC_N(long companyId, java.lang.String name);
+	public void removeByC_N(long companyId, String name);
 
 	/**
 	* Returns the number of kaleo definition versions where companyId = &#63; and name = &#63;.
@@ -319,7 +315,7 @@ public interface KaleoDefinitionVersionPersistence extends BasePersistence<Kaleo
 	* @param name the name
 	* @return the number of matching kaleo definition versions
 	*/
-	public int countByC_N(long companyId, java.lang.String name);
+	public int countByC_N(long companyId, String name);
 
 	/**
 	* Returns the kaleo definition version where companyId = &#63; and name = &#63; and version = &#63; or throws a {@link NoSuchDefinitionVersionException} if it could not be found.
@@ -330,9 +326,8 @@ public interface KaleoDefinitionVersionPersistence extends BasePersistence<Kaleo
 	* @return the matching kaleo definition version
 	* @throws NoSuchDefinitionVersionException if a matching kaleo definition version could not be found
 	*/
-	public KaleoDefinitionVersion findByC_N_V(long companyId,
-		java.lang.String name, java.lang.String version)
-		throws NoSuchDefinitionVersionException;
+	public KaleoDefinitionVersion findByC_N_V(long companyId, String name,
+		String version) throws NoSuchDefinitionVersionException;
 
 	/**
 	* Returns the kaleo definition version where companyId = &#63; and name = &#63; and version = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
@@ -342,8 +337,8 @@ public interface KaleoDefinitionVersionPersistence extends BasePersistence<Kaleo
 	* @param version the version
 	* @return the matching kaleo definition version, or <code>null</code> if a matching kaleo definition version could not be found
 	*/
-	public KaleoDefinitionVersion fetchByC_N_V(long companyId,
-		java.lang.String name, java.lang.String version);
+	public KaleoDefinitionVersion fetchByC_N_V(long companyId, String name,
+		String version);
 
 	/**
 	* Returns the kaleo definition version where companyId = &#63; and name = &#63; and version = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -354,9 +349,8 @@ public interface KaleoDefinitionVersionPersistence extends BasePersistence<Kaleo
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching kaleo definition version, or <code>null</code> if a matching kaleo definition version could not be found
 	*/
-	public KaleoDefinitionVersion fetchByC_N_V(long companyId,
-		java.lang.String name, java.lang.String version,
-		boolean retrieveFromCache);
+	public KaleoDefinitionVersion fetchByC_N_V(long companyId, String name,
+		String version, boolean retrieveFromCache);
 
 	/**
 	* Removes the kaleo definition version where companyId = &#63; and name = &#63; and version = &#63; from the database.
@@ -366,9 +360,8 @@ public interface KaleoDefinitionVersionPersistence extends BasePersistence<Kaleo
 	* @param version the version
 	* @return the kaleo definition version that was removed
 	*/
-	public KaleoDefinitionVersion removeByC_N_V(long companyId,
-		java.lang.String name, java.lang.String version)
-		throws NoSuchDefinitionVersionException;
+	public KaleoDefinitionVersion removeByC_N_V(long companyId, String name,
+		String version) throws NoSuchDefinitionVersionException;
 
 	/**
 	* Returns the number of kaleo definition versions where companyId = &#63; and name = &#63; and version = &#63;.
@@ -378,8 +371,7 @@ public interface KaleoDefinitionVersionPersistence extends BasePersistence<Kaleo
 	* @param version the version
 	* @return the number of matching kaleo definition versions
 	*/
-	public int countByC_N_V(long companyId, java.lang.String name,
-		java.lang.String version);
+	public int countByC_N_V(long companyId, String name, String version);
 
 	/**
 	* Caches the kaleo definition version in the entity cache if it is enabled.

@@ -205,7 +205,7 @@ public interface UserGroupGroupRoleLocalService extends BaseLocalService,
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -269,7 +269,7 @@ public interface UserGroupGroupRoleLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public boolean hasUserGroupGroupRole(long userGroupId, long groupId,
-		java.lang.String roleName) throws PortalException;
+		String roleName) throws PortalException;
 
 	/**
 	* Updates the user group group role in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.

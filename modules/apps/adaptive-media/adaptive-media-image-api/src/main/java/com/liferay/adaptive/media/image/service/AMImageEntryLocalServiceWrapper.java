@@ -151,8 +151,8 @@ public class AMImageEntryLocalServiceWrapper implements AMImageEntryLocalService
 	* @throws PortalException if the file version was not found
 	*/
 	@Override
-	public void deleteAMImageEntryFileVersion(
-		java.lang.String configurationUuid, long fileVersionId)
+	public void deleteAMImageEntryFileVersion(String configurationUuid,
+		long fileVersionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_amImageEntryLocalService.deleteAMImageEntryFileVersion(configurationUuid,
 			fileVersionId);
@@ -271,7 +271,7 @@ public class AMImageEntryLocalServiceWrapper implements AMImageEntryLocalService
 	*/
 	@Override
 	public com.liferay.adaptive.media.image.model.AMImageEntry fetchAMImageEntry(
-		java.lang.String configurationUuid, long fileVersionId) {
+		String configurationUuid, long fileVersionId) {
 		return _amImageEntryLocalService.fetchAMImageEntry(configurationUuid,
 			fileVersionId);
 	}
@@ -285,7 +285,7 @@ public class AMImageEntryLocalServiceWrapper implements AMImageEntryLocalService
 	*/
 	@Override
 	public com.liferay.adaptive.media.image.model.AMImageEntry fetchAMImageEntryByUuidAndGroupId(
-		java.lang.String uuid, long groupId) {
+		String uuid, long groupId) {
 		return _amImageEntryLocalService.fetchAMImageEntryByUuidAndGroupId(uuid,
 			groupId);
 	}
@@ -321,7 +321,7 @@ public class AMImageEntryLocalServiceWrapper implements AMImageEntryLocalService
 	*/
 	@Override
 	public java.util.List<com.liferay.adaptive.media.image.model.AMImageEntry> getAMImageEntriesByUuidAndCompanyId(
-		java.lang.String uuid, long companyId) {
+		String uuid, long companyId) {
 		return _amImageEntryLocalService.getAMImageEntriesByUuidAndCompanyId(uuid,
 			companyId);
 	}
@@ -338,7 +338,7 @@ public class AMImageEntryLocalServiceWrapper implements AMImageEntryLocalService
 	*/
 	@Override
 	public java.util.List<com.liferay.adaptive.media.image.model.AMImageEntry> getAMImageEntriesByUuidAndCompanyId(
-		java.lang.String uuid, long companyId, int start, int end,
+		String uuid, long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.adaptive.media.image.model.AMImageEntry> orderByComparator) {
 		return _amImageEntryLocalService.getAMImageEntriesByUuidAndCompanyId(uuid,
 			companyId, start, end, orderByComparator);
@@ -365,8 +365,7 @@ public class AMImageEntryLocalServiceWrapper implements AMImageEntryLocalService
 	configuration
 	*/
 	@Override
-	public int getAMImageEntriesCount(long companyId,
-		java.lang.String configurationUuid) {
+	public int getAMImageEntriesCount(long companyId, String configurationUuid) {
 		return _amImageEntryLocalService.getAMImageEntriesCount(companyId,
 			configurationUuid);
 	}
@@ -395,7 +394,7 @@ public class AMImageEntryLocalServiceWrapper implements AMImageEntryLocalService
 	*/
 	@Override
 	public com.liferay.adaptive.media.image.model.AMImageEntry getAMImageEntryByUuidAndGroupId(
-		java.lang.String uuid, long groupId)
+		String uuid, long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _amImageEntryLocalService.getAMImageEntryByUuidAndGroupId(uuid,
 			groupId);
@@ -445,7 +444,7 @@ public class AMImageEntryLocalServiceWrapper implements AMImageEntryLocalService
 	* @return the OSGi service identifier
 	*/
 	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
+	public String getOSGiServiceIdentifier() {
 		return _amImageEntryLocalService.getOSGiServiceIdentifier();
 	}
 
@@ -461,7 +460,7 @@ public class AMImageEntryLocalServiceWrapper implements AMImageEntryLocalService
 	the expected adaptive media images
 	*/
 	@Override
-	public int getPercentage(long companyId, java.lang.String configurationUuid) {
+	public int getPercentage(long companyId, String configurationUuid) {
 		return _amImageEntryLocalService.getPercentage(companyId,
 			configurationUuid);
 	}

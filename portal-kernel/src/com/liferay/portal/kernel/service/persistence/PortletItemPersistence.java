@@ -191,7 +191,7 @@ public interface PortletItemPersistence extends BasePersistence<PortletItem> {
 	* @return the matching portlet items
 	*/
 	public java.util.List<PortletItem> findByG_P_C(long groupId,
-		java.lang.String portletId, long classNameId);
+		String portletId, long classNameId);
 
 	/**
 	* Returns a range of all the portlet items where groupId = &#63; and portletId = &#63; and classNameId = &#63;.
@@ -208,7 +208,7 @@ public interface PortletItemPersistence extends BasePersistence<PortletItem> {
 	* @return the range of matching portlet items
 	*/
 	public java.util.List<PortletItem> findByG_P_C(long groupId,
-		java.lang.String portletId, long classNameId, int start, int end);
+		String portletId, long classNameId, int start, int end);
 
 	/**
 	* Returns an ordered range of all the portlet items where groupId = &#63; and portletId = &#63; and classNameId = &#63;.
@@ -226,7 +226,7 @@ public interface PortletItemPersistence extends BasePersistence<PortletItem> {
 	* @return the ordered range of matching portlet items
 	*/
 	public java.util.List<PortletItem> findByG_P_C(long groupId,
-		java.lang.String portletId, long classNameId, int start, int end,
+		String portletId, long classNameId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<PortletItem> orderByComparator);
 
 	/**
@@ -246,7 +246,7 @@ public interface PortletItemPersistence extends BasePersistence<PortletItem> {
 	* @return the ordered range of matching portlet items
 	*/
 	public java.util.List<PortletItem> findByG_P_C(long groupId,
-		java.lang.String portletId, long classNameId, int start, int end,
+		String portletId, long classNameId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<PortletItem> orderByComparator,
 		boolean retrieveFromCache);
 
@@ -260,8 +260,8 @@ public interface PortletItemPersistence extends BasePersistence<PortletItem> {
 	* @return the first matching portlet item
 	* @throws NoSuchPortletItemException if a matching portlet item could not be found
 	*/
-	public PortletItem findByG_P_C_First(long groupId,
-		java.lang.String portletId, long classNameId,
+	public PortletItem findByG_P_C_First(long groupId, String portletId,
+		long classNameId,
 		com.liferay.portal.kernel.util.OrderByComparator<PortletItem> orderByComparator)
 		throws NoSuchPortletItemException;
 
@@ -274,8 +274,8 @@ public interface PortletItemPersistence extends BasePersistence<PortletItem> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching portlet item, or <code>null</code> if a matching portlet item could not be found
 	*/
-	public PortletItem fetchByG_P_C_First(long groupId,
-		java.lang.String portletId, long classNameId,
+	public PortletItem fetchByG_P_C_First(long groupId, String portletId,
+		long classNameId,
 		com.liferay.portal.kernel.util.OrderByComparator<PortletItem> orderByComparator);
 
 	/**
@@ -288,8 +288,8 @@ public interface PortletItemPersistence extends BasePersistence<PortletItem> {
 	* @return the last matching portlet item
 	* @throws NoSuchPortletItemException if a matching portlet item could not be found
 	*/
-	public PortletItem findByG_P_C_Last(long groupId,
-		java.lang.String portletId, long classNameId,
+	public PortletItem findByG_P_C_Last(long groupId, String portletId,
+		long classNameId,
 		com.liferay.portal.kernel.util.OrderByComparator<PortletItem> orderByComparator)
 		throws NoSuchPortletItemException;
 
@@ -302,8 +302,8 @@ public interface PortletItemPersistence extends BasePersistence<PortletItem> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching portlet item, or <code>null</code> if a matching portlet item could not be found
 	*/
-	public PortletItem fetchByG_P_C_Last(long groupId,
-		java.lang.String portletId, long classNameId,
+	public PortletItem fetchByG_P_C_Last(long groupId, String portletId,
+		long classNameId,
 		com.liferay.portal.kernel.util.OrderByComparator<PortletItem> orderByComparator);
 
 	/**
@@ -318,7 +318,7 @@ public interface PortletItemPersistence extends BasePersistence<PortletItem> {
 	* @throws NoSuchPortletItemException if a portlet item with the primary key could not be found
 	*/
 	public PortletItem[] findByG_P_C_PrevAndNext(long portletItemId,
-		long groupId, java.lang.String portletId, long classNameId,
+		long groupId, String portletId, long classNameId,
 		com.liferay.portal.kernel.util.OrderByComparator<PortletItem> orderByComparator)
 		throws NoSuchPortletItemException;
 
@@ -329,8 +329,7 @@ public interface PortletItemPersistence extends BasePersistence<PortletItem> {
 	* @param portletId the portlet ID
 	* @param classNameId the class name ID
 	*/
-	public void removeByG_P_C(long groupId, java.lang.String portletId,
-		long classNameId);
+	public void removeByG_P_C(long groupId, String portletId, long classNameId);
 
 	/**
 	* Returns the number of portlet items where groupId = &#63; and portletId = &#63; and classNameId = &#63;.
@@ -340,8 +339,7 @@ public interface PortletItemPersistence extends BasePersistence<PortletItem> {
 	* @param classNameId the class name ID
 	* @return the number of matching portlet items
 	*/
-	public int countByG_P_C(long groupId, java.lang.String portletId,
-		long classNameId);
+	public int countByG_P_C(long groupId, String portletId, long classNameId);
 
 	/**
 	* Returns the portlet item where groupId = &#63; and name = &#63; and portletId = &#63; and classNameId = &#63; or throws a {@link NoSuchPortletItemException} if it could not be found.
@@ -353,9 +351,8 @@ public interface PortletItemPersistence extends BasePersistence<PortletItem> {
 	* @return the matching portlet item
 	* @throws NoSuchPortletItemException if a matching portlet item could not be found
 	*/
-	public PortletItem findByG_N_P_C(long groupId, java.lang.String name,
-		java.lang.String portletId, long classNameId)
-		throws NoSuchPortletItemException;
+	public PortletItem findByG_N_P_C(long groupId, String name,
+		String portletId, long classNameId) throws NoSuchPortletItemException;
 
 	/**
 	* Returns the portlet item where groupId = &#63; and name = &#63; and portletId = &#63; and classNameId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
@@ -366,8 +363,8 @@ public interface PortletItemPersistence extends BasePersistence<PortletItem> {
 	* @param classNameId the class name ID
 	* @return the matching portlet item, or <code>null</code> if a matching portlet item could not be found
 	*/
-	public PortletItem fetchByG_N_P_C(long groupId, java.lang.String name,
-		java.lang.String portletId, long classNameId);
+	public PortletItem fetchByG_N_P_C(long groupId, String name,
+		String portletId, long classNameId);
 
 	/**
 	* Returns the portlet item where groupId = &#63; and name = &#63; and portletId = &#63; and classNameId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -379,8 +376,8 @@ public interface PortletItemPersistence extends BasePersistence<PortletItem> {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching portlet item, or <code>null</code> if a matching portlet item could not be found
 	*/
-	public PortletItem fetchByG_N_P_C(long groupId, java.lang.String name,
-		java.lang.String portletId, long classNameId, boolean retrieveFromCache);
+	public PortletItem fetchByG_N_P_C(long groupId, String name,
+		String portletId, long classNameId, boolean retrieveFromCache);
 
 	/**
 	* Removes the portlet item where groupId = &#63; and name = &#63; and portletId = &#63; and classNameId = &#63; from the database.
@@ -391,9 +388,8 @@ public interface PortletItemPersistence extends BasePersistence<PortletItem> {
 	* @param classNameId the class name ID
 	* @return the portlet item that was removed
 	*/
-	public PortletItem removeByG_N_P_C(long groupId, java.lang.String name,
-		java.lang.String portletId, long classNameId)
-		throws NoSuchPortletItemException;
+	public PortletItem removeByG_N_P_C(long groupId, String name,
+		String portletId, long classNameId) throws NoSuchPortletItemException;
 
 	/**
 	* Returns the number of portlet items where groupId = &#63; and name = &#63; and portletId = &#63; and classNameId = &#63;.
@@ -404,8 +400,8 @@ public interface PortletItemPersistence extends BasePersistence<PortletItem> {
 	* @param classNameId the class name ID
 	* @return the number of matching portlet items
 	*/
-	public int countByG_N_P_C(long groupId, java.lang.String name,
-		java.lang.String portletId, long classNameId);
+	public int countByG_N_P_C(long groupId, String name, String portletId,
+		long classNameId);
 
 	/**
 	* Caches the portlet item in the entity cache if it is enabled.

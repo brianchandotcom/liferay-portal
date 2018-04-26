@@ -193,7 +193,7 @@ public interface DLContentPersistence extends BasePersistence<DLContent> {
 	* @return the matching document library contents
 	*/
 	public java.util.List<DLContent> findByC_R_P(long companyId,
-		long repositoryId, java.lang.String path);
+		long repositoryId, String path);
 
 	/**
 	* Returns a range of all the document library contents where companyId = &#63; and repositoryId = &#63; and path = &#63;.
@@ -210,7 +210,7 @@ public interface DLContentPersistence extends BasePersistence<DLContent> {
 	* @return the range of matching document library contents
 	*/
 	public java.util.List<DLContent> findByC_R_P(long companyId,
-		long repositoryId, java.lang.String path, int start, int end);
+		long repositoryId, String path, int start, int end);
 
 	/**
 	* Returns an ordered range of all the document library contents where companyId = &#63; and repositoryId = &#63; and path = &#63;.
@@ -228,7 +228,7 @@ public interface DLContentPersistence extends BasePersistence<DLContent> {
 	* @return the ordered range of matching document library contents
 	*/
 	public java.util.List<DLContent> findByC_R_P(long companyId,
-		long repositoryId, java.lang.String path, int start, int end,
+		long repositoryId, String path, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<DLContent> orderByComparator);
 
 	/**
@@ -248,7 +248,7 @@ public interface DLContentPersistence extends BasePersistence<DLContent> {
 	* @return the ordered range of matching document library contents
 	*/
 	public java.util.List<DLContent> findByC_R_P(long companyId,
-		long repositoryId, java.lang.String path, int start, int end,
+		long repositoryId, String path, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<DLContent> orderByComparator,
 		boolean retrieveFromCache);
 
@@ -263,7 +263,7 @@ public interface DLContentPersistence extends BasePersistence<DLContent> {
 	* @throws NoSuchContentException if a matching document library content could not be found
 	*/
 	public DLContent findByC_R_P_First(long companyId, long repositoryId,
-		java.lang.String path,
+		String path,
 		com.liferay.portal.kernel.util.OrderByComparator<DLContent> orderByComparator)
 		throws NoSuchContentException;
 
@@ -277,7 +277,7 @@ public interface DLContentPersistence extends BasePersistence<DLContent> {
 	* @return the first matching document library content, or <code>null</code> if a matching document library content could not be found
 	*/
 	public DLContent fetchByC_R_P_First(long companyId, long repositoryId,
-		java.lang.String path,
+		String path,
 		com.liferay.portal.kernel.util.OrderByComparator<DLContent> orderByComparator);
 
 	/**
@@ -291,7 +291,7 @@ public interface DLContentPersistence extends BasePersistence<DLContent> {
 	* @throws NoSuchContentException if a matching document library content could not be found
 	*/
 	public DLContent findByC_R_P_Last(long companyId, long repositoryId,
-		java.lang.String path,
+		String path,
 		com.liferay.portal.kernel.util.OrderByComparator<DLContent> orderByComparator)
 		throws NoSuchContentException;
 
@@ -305,7 +305,7 @@ public interface DLContentPersistence extends BasePersistence<DLContent> {
 	* @return the last matching document library content, or <code>null</code> if a matching document library content could not be found
 	*/
 	public DLContent fetchByC_R_P_Last(long companyId, long repositoryId,
-		java.lang.String path,
+		String path,
 		com.liferay.portal.kernel.util.OrderByComparator<DLContent> orderByComparator);
 
 	/**
@@ -320,7 +320,7 @@ public interface DLContentPersistence extends BasePersistence<DLContent> {
 	* @throws NoSuchContentException if a document library content with the primary key could not be found
 	*/
 	public DLContent[] findByC_R_P_PrevAndNext(long contentId, long companyId,
-		long repositoryId, java.lang.String path,
+		long repositoryId, String path,
 		com.liferay.portal.kernel.util.OrderByComparator<DLContent> orderByComparator)
 		throws NoSuchContentException;
 
@@ -331,8 +331,7 @@ public interface DLContentPersistence extends BasePersistence<DLContent> {
 	* @param repositoryId the repository ID
 	* @param path the path
 	*/
-	public void removeByC_R_P(long companyId, long repositoryId,
-		java.lang.String path);
+	public void removeByC_R_P(long companyId, long repositoryId, String path);
 
 	/**
 	* Returns the number of document library contents where companyId = &#63; and repositoryId = &#63; and path = &#63;.
@@ -342,8 +341,7 @@ public interface DLContentPersistence extends BasePersistence<DLContent> {
 	* @param path the path
 	* @return the number of matching document library contents
 	*/
-	public int countByC_R_P(long companyId, long repositoryId,
-		java.lang.String path);
+	public int countByC_R_P(long companyId, long repositoryId, String path);
 
 	/**
 	* Returns all the document library contents where companyId = &#63; and repositoryId = &#63; and path LIKE &#63;.
@@ -354,7 +352,7 @@ public interface DLContentPersistence extends BasePersistence<DLContent> {
 	* @return the matching document library contents
 	*/
 	public java.util.List<DLContent> findByC_R_LikeP(long companyId,
-		long repositoryId, java.lang.String path);
+		long repositoryId, String path);
 
 	/**
 	* Returns a range of all the document library contents where companyId = &#63; and repositoryId = &#63; and path LIKE &#63;.
@@ -371,7 +369,7 @@ public interface DLContentPersistence extends BasePersistence<DLContent> {
 	* @return the range of matching document library contents
 	*/
 	public java.util.List<DLContent> findByC_R_LikeP(long companyId,
-		long repositoryId, java.lang.String path, int start, int end);
+		long repositoryId, String path, int start, int end);
 
 	/**
 	* Returns an ordered range of all the document library contents where companyId = &#63; and repositoryId = &#63; and path LIKE &#63;.
@@ -389,7 +387,7 @@ public interface DLContentPersistence extends BasePersistence<DLContent> {
 	* @return the ordered range of matching document library contents
 	*/
 	public java.util.List<DLContent> findByC_R_LikeP(long companyId,
-		long repositoryId, java.lang.String path, int start, int end,
+		long repositoryId, String path, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<DLContent> orderByComparator);
 
 	/**
@@ -409,7 +407,7 @@ public interface DLContentPersistence extends BasePersistence<DLContent> {
 	* @return the ordered range of matching document library contents
 	*/
 	public java.util.List<DLContent> findByC_R_LikeP(long companyId,
-		long repositoryId, java.lang.String path, int start, int end,
+		long repositoryId, String path, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<DLContent> orderByComparator,
 		boolean retrieveFromCache);
 
@@ -424,7 +422,7 @@ public interface DLContentPersistence extends BasePersistence<DLContent> {
 	* @throws NoSuchContentException if a matching document library content could not be found
 	*/
 	public DLContent findByC_R_LikeP_First(long companyId, long repositoryId,
-		java.lang.String path,
+		String path,
 		com.liferay.portal.kernel.util.OrderByComparator<DLContent> orderByComparator)
 		throws NoSuchContentException;
 
@@ -438,7 +436,7 @@ public interface DLContentPersistence extends BasePersistence<DLContent> {
 	* @return the first matching document library content, or <code>null</code> if a matching document library content could not be found
 	*/
 	public DLContent fetchByC_R_LikeP_First(long companyId, long repositoryId,
-		java.lang.String path,
+		String path,
 		com.liferay.portal.kernel.util.OrderByComparator<DLContent> orderByComparator);
 
 	/**
@@ -452,7 +450,7 @@ public interface DLContentPersistence extends BasePersistence<DLContent> {
 	* @throws NoSuchContentException if a matching document library content could not be found
 	*/
 	public DLContent findByC_R_LikeP_Last(long companyId, long repositoryId,
-		java.lang.String path,
+		String path,
 		com.liferay.portal.kernel.util.OrderByComparator<DLContent> orderByComparator)
 		throws NoSuchContentException;
 
@@ -466,7 +464,7 @@ public interface DLContentPersistence extends BasePersistence<DLContent> {
 	* @return the last matching document library content, or <code>null</code> if a matching document library content could not be found
 	*/
 	public DLContent fetchByC_R_LikeP_Last(long companyId, long repositoryId,
-		java.lang.String path,
+		String path,
 		com.liferay.portal.kernel.util.OrderByComparator<DLContent> orderByComparator);
 
 	/**
@@ -481,7 +479,7 @@ public interface DLContentPersistence extends BasePersistence<DLContent> {
 	* @throws NoSuchContentException if a document library content with the primary key could not be found
 	*/
 	public DLContent[] findByC_R_LikeP_PrevAndNext(long contentId,
-		long companyId, long repositoryId, java.lang.String path,
+		long companyId, long repositoryId, String path,
 		com.liferay.portal.kernel.util.OrderByComparator<DLContent> orderByComparator)
 		throws NoSuchContentException;
 
@@ -492,8 +490,7 @@ public interface DLContentPersistence extends BasePersistence<DLContent> {
 	* @param repositoryId the repository ID
 	* @param path the path
 	*/
-	public void removeByC_R_LikeP(long companyId, long repositoryId,
-		java.lang.String path);
+	public void removeByC_R_LikeP(long companyId, long repositoryId, String path);
 
 	/**
 	* Returns the number of document library contents where companyId = &#63; and repositoryId = &#63; and path LIKE &#63;.
@@ -503,8 +500,7 @@ public interface DLContentPersistence extends BasePersistence<DLContent> {
 	* @param path the path
 	* @return the number of matching document library contents
 	*/
-	public int countByC_R_LikeP(long companyId, long repositoryId,
-		java.lang.String path);
+	public int countByC_R_LikeP(long companyId, long repositoryId, String path);
 
 	/**
 	* Returns the document library content where companyId = &#63; and repositoryId = &#63; and path = &#63; and version = &#63; or throws a {@link NoSuchContentException} if it could not be found.
@@ -517,8 +513,7 @@ public interface DLContentPersistence extends BasePersistence<DLContent> {
 	* @throws NoSuchContentException if a matching document library content could not be found
 	*/
 	public DLContent findByC_R_P_V(long companyId, long repositoryId,
-		java.lang.String path, java.lang.String version)
-		throws NoSuchContentException;
+		String path, String version) throws NoSuchContentException;
 
 	/**
 	* Returns the document library content where companyId = &#63; and repositoryId = &#63; and path = &#63; and version = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
@@ -530,7 +525,7 @@ public interface DLContentPersistence extends BasePersistence<DLContent> {
 	* @return the matching document library content, or <code>null</code> if a matching document library content could not be found
 	*/
 	public DLContent fetchByC_R_P_V(long companyId, long repositoryId,
-		java.lang.String path, java.lang.String version);
+		String path, String version);
 
 	/**
 	* Returns the document library content where companyId = &#63; and repositoryId = &#63; and path = &#63; and version = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -543,8 +538,7 @@ public interface DLContentPersistence extends BasePersistence<DLContent> {
 	* @return the matching document library content, or <code>null</code> if a matching document library content could not be found
 	*/
 	public DLContent fetchByC_R_P_V(long companyId, long repositoryId,
-		java.lang.String path, java.lang.String version,
-		boolean retrieveFromCache);
+		String path, String version, boolean retrieveFromCache);
 
 	/**
 	* Removes the document library content where companyId = &#63; and repositoryId = &#63; and path = &#63; and version = &#63; from the database.
@@ -556,8 +550,7 @@ public interface DLContentPersistence extends BasePersistence<DLContent> {
 	* @return the document library content that was removed
 	*/
 	public DLContent removeByC_R_P_V(long companyId, long repositoryId,
-		java.lang.String path, java.lang.String version)
-		throws NoSuchContentException;
+		String path, String version) throws NoSuchContentException;
 
 	/**
 	* Returns the number of document library contents where companyId = &#63; and repositoryId = &#63; and path = &#63; and version = &#63;.
@@ -568,8 +561,8 @@ public interface DLContentPersistence extends BasePersistence<DLContent> {
 	* @param version the version
 	* @return the number of matching document library contents
 	*/
-	public int countByC_R_P_V(long companyId, long repositoryId,
-		java.lang.String path, java.lang.String version);
+	public int countByC_R_P_V(long companyId, long repositoryId, String path,
+		String version);
 
 	/**
 	* Caches the document library content in the entity cache if it is enabled.
@@ -691,5 +684,5 @@ public interface DLContentPersistence extends BasePersistence<DLContent> {
 	public int countAll();
 
 	@Override
-	public java.util.Set<java.lang.String> getBadColumnNames();
+	public java.util.Set<String> getBadColumnNames();
 }

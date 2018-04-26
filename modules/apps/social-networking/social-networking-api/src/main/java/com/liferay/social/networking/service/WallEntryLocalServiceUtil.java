@@ -43,7 +43,7 @@ public class WallEntryLocalServiceUtil {
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.social.networking.service.impl.WallEntryLocalServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static com.liferay.social.networking.model.WallEntry addWallEntry(
-		long groupId, long userId, java.lang.String comments,
+		long groupId, long userId, String comments,
 		com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().addWallEntry(groupId, userId, comments, themeDisplay);
@@ -207,7 +207,7 @@ public class WallEntryLocalServiceUtil {
 	*
 	* @return the OSGi service identifier
 	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
+	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 
@@ -280,7 +280,7 @@ public class WallEntryLocalServiceUtil {
 	}
 
 	public static com.liferay.social.networking.model.WallEntry updateWallEntry(
-		long wallEntryId, java.lang.String comments)
+		long wallEntryId, String comments)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().updateWallEntry(wallEntryId, comments);
 	}

@@ -26,45 +26,45 @@ import com.liferay.portal.kernel.util.ReferenceRegistry;
 @ProviderType
 public class ExportImportConfigurationFinderUtil {
 	public static int countByKeywords(long companyId, long groupId,
-		java.lang.String keywords, int type, int status) {
+		String keywords, int type, int status) {
 		return getFinder()
 				   .countByKeywords(companyId, groupId, keywords, type, status);
 	}
 
 	public static int countByC_G_N_D_T(long companyId, long groupId,
-		java.lang.String name, java.lang.String description, int type,
-		int status, boolean andOperator) {
+		String name, String description, int type, int status,
+		boolean andOperator) {
 		return getFinder()
 				   .countByC_G_N_D_T(companyId, groupId, name, description,
 			type, status, andOperator);
 	}
 
 	public static int filterCountByKeywords(long companyId, long groupId,
-		java.lang.String keywords, int type, int status) {
+		String keywords, int type, int status) {
 		return getFinder()
 				   .filterCountByKeywords(companyId, groupId, keywords, type,
 			status);
 	}
 
 	public static int filterCountByC_G_N_D_T(long companyId, long groupId,
-		java.lang.String name, java.lang.String description, int type,
-		int status, boolean andOperator) {
+		String name, String description, int type, int status,
+		boolean andOperator) {
 		return getFinder()
 				   .filterCountByC_G_N_D_T(companyId, groupId, name,
 			description, type, status, andOperator);
 	}
 
 	public static int filterCountByC_G_N_D_T(long companyId, long groupId,
-		java.lang.String[] names, java.lang.String[] descriptions, int type,
-		int status, boolean andOperator) {
+		String[] names, String[] descriptions, int type, int status,
+		boolean andOperator) {
 		return getFinder()
 				   .filterCountByC_G_N_D_T(companyId, groupId, names,
 			descriptions, type, status, andOperator);
 	}
 
 	public static java.util.List<com.liferay.exportimport.kernel.model.ExportImportConfiguration> filterFindByKeywords(
-		long companyId, long groupId, java.lang.String keywords, int type,
-		int status, int start, int end,
+		long companyId, long groupId, String keywords, int type, int status,
+		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.exportimport.kernel.model.ExportImportConfiguration> orderByComparator) {
 		return getFinder()
 				   .filterFindByKeywords(companyId, groupId, keywords, type,
@@ -72,9 +72,8 @@ public class ExportImportConfigurationFinderUtil {
 	}
 
 	public static java.util.List<com.liferay.exportimport.kernel.model.ExportImportConfiguration> filterFindByC_G_N_D_T(
-		long companyId, long groupId, java.lang.String name,
-		java.lang.String description, int type, int status,
-		boolean andOperator, int start, int end,
+		long companyId, long groupId, String name, String description,
+		int type, int status, boolean andOperator, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.exportimport.kernel.model.ExportImportConfiguration> orderByComparator) {
 		return getFinder()
 				   .filterFindByC_G_N_D_T(companyId, groupId, name,
@@ -83,9 +82,8 @@ public class ExportImportConfigurationFinderUtil {
 	}
 
 	public static java.util.List<com.liferay.exportimport.kernel.model.ExportImportConfiguration> filterFindByC_G_N_D_T(
-		long companyId, long groupId, java.lang.String[] names,
-		java.lang.String[] descriptions, int type, int status,
-		boolean andOperator, int start, int end,
+		long companyId, long groupId, String[] names, String[] descriptions,
+		int type, int status, boolean andOperator, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.exportimport.kernel.model.ExportImportConfiguration> orderByComparator) {
 		return getFinder()
 				   .filterFindByC_G_N_D_T(companyId, groupId, names,
@@ -94,8 +92,8 @@ public class ExportImportConfigurationFinderUtil {
 	}
 
 	public static java.util.List<com.liferay.exportimport.kernel.model.ExportImportConfiguration> findByKeywords(
-		long companyId, long groupId, java.lang.String keywords, int type,
-		int status, int start, int end,
+		long companyId, long groupId, String keywords, int type, int status,
+		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.exportimport.kernel.model.ExportImportConfiguration> orderByComparator) {
 		return getFinder()
 				   .findByKeywords(companyId, groupId, keywords, type, status,
@@ -103,9 +101,8 @@ public class ExportImportConfigurationFinderUtil {
 	}
 
 	public static java.util.List<com.liferay.exportimport.kernel.model.ExportImportConfiguration> findByC_G_N_D_T(
-		long companyId, long groupId, java.lang.String name,
-		java.lang.String description, int type, int status,
-		boolean andOperator, int start, int end,
+		long companyId, long groupId, String name, String description,
+		int type, int status, boolean andOperator, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.exportimport.kernel.model.ExportImportConfiguration> orderByComparator) {
 		return getFinder()
 				   .findByC_G_N_D_T(companyId, groupId, name, description,
@@ -113,9 +110,8 @@ public class ExportImportConfigurationFinderUtil {
 	}
 
 	public static java.util.List<com.liferay.exportimport.kernel.model.ExportImportConfiguration> findByC_G_N_D_T(
-		long companyId, long groupId, java.lang.String[] names,
-		java.lang.String[] descriptions, int type, int status,
-		boolean andOperator, int start, int end,
+		long companyId, long groupId, String[] names, String[] descriptions,
+		int type, int status, boolean andOperator, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.exportimport.kernel.model.ExportImportConfiguration> orderByComparator) {
 		return getFinder()
 				   .findByC_G_N_D_T(companyId, groupId, names, descriptions,

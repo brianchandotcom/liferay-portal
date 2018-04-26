@@ -65,7 +65,7 @@ import java.rmi.RemoteException;
 @ProviderType
 public class MembershipRequestServiceSoap {
 	public static com.liferay.portal.kernel.model.MembershipRequestSoap addMembershipRequest(
-		long groupId, java.lang.String comments,
+		long groupId, String comments,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
@@ -109,7 +109,7 @@ public class MembershipRequestServiceSoap {
 	}
 
 	public static void updateStatus(long membershipRequestId,
-		java.lang.String reviewComments, long statusId,
+		String reviewComments, long statusId,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {

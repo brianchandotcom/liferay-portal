@@ -24,17 +24,20 @@ blogsPortletInstanceConfiguration = ConfigurationProviderUtil.getConfiguration(B
 
 <liferay-portlet:renderURL portletConfiguration="<%= true %>" var="configurationRenderURL" />
 
-<aui:form action="<%= configurationActionURL %>" method="post" name="fm">
+<liferay-frontend:edit-form
+	action="<%= configurationActionURL %>"
+	method="post"
+	name="fm"
+>
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
 	<aui:input name="redirect" type="hidden" value="<%= configurationRenderURL %>" />
 
-	<div class="portlet-configuration-body-content sheet">
-		<div class="container-fluid-1280">
-			<div class="sheet-section">
-				<h4 class="sheet-subtitle">
-					<liferay-ui:message key="general-settings" />
-				</h4>
-
+	<liferay-frontend:edit-form-body>
+		<liferay-frontend:fieldset-group>
+			<liferay-frontend:fieldset
+				collapsible="<%= false %>"
+				label="general-settings"
+			>
 				<aui:input name="preferences--enableRatings--" type="checkbox" value="<%= blogsPortletInstanceConfiguration.enableRatings() %>" />
 
 				<c:if test="<%= PropsValues.BLOGS_ENTRY_COMMENTS_ENABLED %>">
@@ -42,24 +45,26 @@ blogsPortletInstanceConfiguration = ConfigurationProviderUtil.getConfiguration(B
 				</c:if>
 
 				<aui:input label="show-view-count" name="preferences--enableViewCount--" type="checkbox" value="<%= blogsPortletInstanceConfiguration.enableViewCount() %>" />
-			</div>
+			</liferay-frontend:fieldset>
+		</liferay-frontend:fieldset-group>
 
-			<div class="sheet-section">
-				<h4 class="sheet-subtitle">
-					<liferay-ui:message key="social-bookmarks" />
-				</h4>
-
+		<liferay-frontend:fieldset-group>
+			<liferay-frontend:fieldset
+				collapsible="<%= false %>"
+				label="social-bookmarks"
+			>
 				<liferay-social-bookmarks:bookmarks-settings
 					displayStyle="<%= blogsPortletInstanceConfiguration.socialBookmarksDisplayStyle() %>"
 					types="<%= SocialBookmarksUtil.getSocialBookmarksTypes(blogsPortletInstanceConfiguration) %>"
 				/>
-			</div>
+			</liferay-frontend:fieldset>
+		</liferay-frontend:fieldset-group>
 
-			<div class="sheet-section">
-				<h4 class="sheet-subtitle">
-					<liferay-ui:message key="list-view" />
-				</h4>
-
+		<liferay-frontend:fieldset-group>
+			<liferay-frontend:fieldset
+				collapsible="<%= false %>"
+				label="list-view"
+			>
 				<aui:select label="maximum-items-to-display" name="preferences--pageDelta--">
 
 					<%
@@ -92,13 +97,14 @@ blogsPortletInstanceConfiguration = ConfigurationProviderUtil.getConfiguration(B
 						refreshURL="<%= configurationRenderURL %>"
 					/>
 				</div>
-			</div>
+			</liferay-frontend:fieldset>
+		</liferay-frontend:fieldset-group>
 
-			<div class="sheet-section">
-				<h4 class="sheet-subtitle">
-					<liferay-ui:message key="detail-view" />
-				</h4>
-
+		<liferay-frontend:fieldset-group>
+			<liferay-frontend:fieldset
+				collapsible="<%= false %>"
+				label="detail-view"
+			>
 				<aui:input label="enable-report-inappropriate-content" name="preferences--enableFlags--" type="checkbox" value="<%= blogsPortletInstanceConfiguration.enableFlags() %>" />
 
 				<c:if test="<%= PropsValues.BLOGS_ENTRY_COMMENTS_ENABLED %>">
@@ -106,11 +112,13 @@ blogsPortletInstanceConfiguration = ConfigurationProviderUtil.getConfiguration(B
 				</c:if>
 
 				<aui:input label="show-related-assets" name="preferences--enableRelatedAssets--" type="checkbox" value="<%= blogsPortletInstanceConfiguration.enableRelatedAssets() %>" />
-			</div>
-		</div>
-	</div>
+			</liferay-frontend:fieldset>
+		</liferay-frontend:fieldset-group>
+	</liferay-frontend:edit-form-body>
 
-	<aui:button-row>
+	<liferay-frontend:edit-form-footer>
 		<aui:button type="submit" />
-	</aui:button-row>
-</aui:form>
+
+		<aui:button type="cancel" />
+	</liferay-frontend:edit-form-footer>
+</liferay-frontend:edit-form>

@@ -29,7 +29,11 @@ BlogsGroupServiceOverriddenConfiguration blogsGroupServiceOverriddenConfiguratio
 
 <liferay-portlet:renderURL portletConfiguration="<%= true %>" var="configurationRenderURL" />
 
-<aui:form action="<%= configurationActionURL %>" method="post" name="fm">
+<liferay-frontend:edit-form
+	action="<%= configurationActionURL %>"
+	method="post"
+	name="fm"
+>
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
 	<aui:input name="redirect" type="hidden" value="<%= configurationRenderURL %>" />
 
@@ -41,7 +45,7 @@ BlogsGroupServiceOverriddenConfiguration blogsGroupServiceOverriddenConfiguratio
 	}
 	%>
 
-	<div class="portlet-configuration-body-content">
+	<liferay-frontend:edit-form-body>
 		<liferay-ui:tabs
 			names="<%= tabs1Names %>"
 			refresh="<%= false %>"
@@ -55,38 +59,40 @@ BlogsGroupServiceOverriddenConfiguration blogsGroupServiceOverriddenConfiguratio
 			<liferay-ui:error key="emailEntryUpdatedSubject" message="please-enter-a-valid-subject" />
 
 			<liferay-ui:section>
-				<div class="container-fluid-1280">
-					<aui:fieldset-group markupView="lexicon">
-						<aui:fieldset>
-							<aui:input cssClass="lfr-input-text-container" label="name" name="preferences--emailFromName--" value="<%= blogsGroupServiceSettings.getEmailFromName() %>" />
+				<liferay-frontend:fieldset-group>
+					<liferay-frontend:fieldset>
+						<aui:input cssClass="lfr-input-text-container" label="name" name="preferences--emailFromName--" value="<%= blogsGroupServiceSettings.getEmailFromName() %>" />
 
-							<aui:input cssClass="lfr-input-text-container" label="address" name="preferences--emailFromAddress--" value="<%= blogsGroupServiceSettings.getEmailFromAddress() %>" />
-						</aui:fieldset>
+						<aui:input cssClass="lfr-input-text-container" label="address" name="preferences--emailFromAddress--" value="<%= blogsGroupServiceSettings.getEmailFromAddress() %>" />
+					</liferay-frontend:fieldset>
 
-						<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="definition-of-terms">
-							<dl>
+					<liferay-frontend:fieldset
+						collapsed="<%= true %>"
+						collapsible="<%= true %>"
+						label="definition-of-terms"
+					>
+						<dl>
 
-								<%
-								Map<String, String> emailFromDefinitionTerms = BlogsUtil.getEmailFromDefinitionTerms(renderRequest, blogsGroupServiceSettings.getEmailFromAddress(), blogsGroupServiceSettings.getEmailFromName());
+							<%
+							Map<String, String> emailFromDefinitionTerms = BlogsUtil.getEmailFromDefinitionTerms(renderRequest, blogsGroupServiceSettings.getEmailFromAddress(), blogsGroupServiceSettings.getEmailFromName());
 
-								for (Map.Entry<String, String> entry : emailFromDefinitionTerms.entrySet()) {
-								%>
+							for (Map.Entry<String, String> entry : emailFromDefinitionTerms.entrySet()) {
+							%>
 
-									<dt>
-										<%= HtmlUtil.escape(entry.getKey()) %>
-									</dt>
-									<dd>
-										<%= HtmlUtil.escape(entry.getValue()) %>
-									</dd>
+								<dt>
+									<%= HtmlUtil.escape(entry.getKey()) %>
+								</dt>
+								<dd>
+									<%= HtmlUtil.escape(entry.getValue()) %>
+								</dd>
 
-								<%
-								}
-								%>
+							<%
+							}
+							%>
 
-							</dl>
-						</aui:fieldset>
-					</aui:fieldset-group>
-				</div>
+						</dl>
+					</liferay-frontend:fieldset>
+				</liferay-frontend:fieldset-group>
 			</liferay-ui:section>
 
 			<%
@@ -94,51 +100,47 @@ BlogsGroupServiceOverriddenConfiguration blogsGroupServiceOverriddenConfiguratio
 			%>
 
 			<liferay-ui:section>
-				<div class="container-fluid-1280">
-					<aui:fieldset-group markupView="lexicon">
-						<liferay-frontend:email-notification-settings
-							emailBodyLocalizedValuesMap="<%= blogsGroupServiceSettings.getEmailEntryAddedBody() %>"
-							emailDefinitionTerms="<%= emailDefinitionTerms %>"
-							emailEnabled="<%= blogsGroupServiceSettings.isEmailEntryAddedEnabled() %>"
-							emailParam="emailEntryAdded"
-							emailSubjectLocalizedValuesMap="<%= blogsGroupServiceSettings.getEmailEntryAddedSubject() %>"
-						/>
-					</aui:fieldset-group>
-				</div>
+				<liferay-frontend:fieldset-group>
+					<liferay-frontend:email-notification-settings
+						emailBodyLocalizedValuesMap="<%= blogsGroupServiceSettings.getEmailEntryAddedBody() %>"
+						emailDefinitionTerms="<%= emailDefinitionTerms %>"
+						emailEnabled="<%= blogsGroupServiceSettings.isEmailEntryAddedEnabled() %>"
+						emailParam="emailEntryAdded"
+						emailSubjectLocalizedValuesMap="<%= blogsGroupServiceSettings.getEmailEntryAddedSubject() %>"
+					/>
+				</liferay-frontend:fieldset-group>
 			</liferay-ui:section>
 
 			<liferay-ui:section>
-				<div class="container-fluid-1280">
-					<aui:fieldset-group markupView="lexicon">
-						<liferay-frontend:email-notification-settings
-							emailBodyLocalizedValuesMap="<%= blogsGroupServiceSettings.getEmailEntryUpdatedBody() %>"
-							emailDefinitionTerms="<%= emailDefinitionTerms %>"
-							emailEnabled="<%= blogsGroupServiceSettings.isEmailEntryUpdatedEnabled() %>"
-							emailParam="emailEntryUpdated"
-							emailSubjectLocalizedValuesMap="<%= blogsGroupServiceSettings.getEmailEntryUpdatedSubject() %>"
-						/>
-					</aui:fieldset-group>
-				</div>
+				<liferay-frontend:fieldset-group>
+					<liferay-frontend:email-notification-settings
+						emailBodyLocalizedValuesMap="<%= blogsGroupServiceSettings.getEmailEntryUpdatedBody() %>"
+						emailDefinitionTerms="<%= emailDefinitionTerms %>"
+						emailEnabled="<%= blogsGroupServiceSettings.isEmailEntryUpdatedEnabled() %>"
+						emailParam="emailEntryUpdated"
+						emailSubjectLocalizedValuesMap="<%= blogsGroupServiceSettings.getEmailEntryUpdatedSubject() %>"
+					/>
+				</liferay-frontend:fieldset-group>
 			</liferay-ui:section>
 
 			<c:if test="<%= PortalUtil.isRSSFeedsEnabled() %>">
 				<liferay-ui:section>
-					<div class="container-fluid-1280">
-						<aui:fieldset-group markupView="lexicon">
-							<liferay-rss:rss-settings
-								delta="<%= GetterUtil.getInteger(blogsGroupServiceOverriddenConfiguration.rssDelta()) %>"
-								displayStyle="<%= blogsGroupServiceOverriddenConfiguration.rssDisplayStyle() %>"
-								enabled="<%= blogsGroupServiceOverriddenConfiguration.enableRss() %>"
-								feedType="<%= blogsGroupServiceOverriddenConfiguration.rssFeedType() %>"
-							/>
-						</aui:fieldset-group>
-					</div>
+					<liferay-frontend:fieldset-group>
+						<liferay-rss:rss-settings
+							delta="<%= GetterUtil.getInteger(blogsGroupServiceOverriddenConfiguration.rssDelta()) %>"
+							displayStyle="<%= blogsGroupServiceOverriddenConfiguration.rssDisplayStyle() %>"
+							enabled="<%= blogsGroupServiceOverriddenConfiguration.enableRss() %>"
+							feedType="<%= blogsGroupServiceOverriddenConfiguration.rssFeedType() %>"
+						/>
+					</liferay-frontend:fieldset-group>
 				</liferay-ui:section>
 			</c:if>
 		</liferay-ui:tabs>
-	</div>
+	</liferay-frontend:edit-form-body>
 
-	<aui:button-row>
+	<liferay-frontend:edit-form-footer>
 		<aui:button type="submit" />
-	</aui:button-row>
-</aui:form>
+
+		<aui:button type="cancel" />
+	</liferay-frontend:edit-form-footer>
+</liferay-frontend:edit-form>

@@ -19,25 +19,24 @@
 <div class="contacts-portlet">
 	<liferay-portlet:actionURL portletConfiguration="<%= true %>" var="configurationActionURL" />
 
-	<aui:form action="<%= configurationActionURL %>" method="post" name="fm">
+	<liferay-frontend:edit-form
+		action="<%= configurationActionURL %>"
+		method="post"
+		name="fm"
+	>
 		<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
 
-		<div class="portlet-configuration-body-content">
-			<div class="container-fluid-1280">
-				<liferay-ui:panel
-					collapsible="<%= true %>"
-					extended="<%= true %>"
-					persistState="<%= true %>"
-					title="user-profile"
-				>
+		<liferay-frontend:edit-form-body>
+			<liferay-frontend:fieldset-group>
+				<liferay-frontend:fieldset>
 					<aui:select label="display-style" name="preferences--displayStyle--" value="<%= displayStyle %>">
 						<aui:option label="<%= ContactsConstants.DISPLAY_STYLE_FULL_LABEL %>" value="<%= ContactsConstants.DISPLAY_STYLE_FULL %>" />
 						<aui:option label="<%= ContactsConstants.DISPLAY_STYLE_BASIC_LABEL %>" value="<%= ContactsConstants.DISPLAY_STYLE_BASIC %>" />
 						<aui:option label="<%= ContactsConstants.DISPLAY_STYLE_DETAIL_LABEL %>" value="<%= ContactsConstants.DISPLAY_STYLE_DETAIL %>" />
 					</aui:select>
 
-					<aui:field-wrapper cssClass="lfr-user-profile-preferences">
-						<aui:col>
+					<aui:row>
+						<aui:col width="<%= 50 %>">
 							<aui:input name="preferences--showAdditionalEmailAddresses--" type="checkbox" value="<%= showAdditionalEmailAddresses %>" />
 
 							<aui:input name="preferences--showAddresses--" type="checkbox" value="<%= showAddresses %>" />
@@ -53,7 +52,7 @@
 							<aui:input label="show-sms" name="preferences--showSMS--" type="checkbox" value="<%= showSMS %>" />
 						</aui:col>
 
-						<aui:col>
+						<aui:col width="<%= 50 %>">
 							<aui:input name="preferences--showSocialNetwork--" type="checkbox" value="<%= showSocialNetwork %>" />
 
 							<aui:input label="show-icon" name="preferences--showIcon--" type="checkbox" value="<%= showIcon %>" />
@@ -68,13 +67,15 @@
 
 							<aui:input name="preferences--showWebsites--" type="checkbox" value="<%= showWebsites %>" />
 						</aui:col>
-					</aui:field-wrapper>
-				</liferay-ui:panel>
-			</div>
-		</div>
+					</aui:row>
+				</liferay-frontend:fieldset>
+			</liferay-frontend:fieldset-group>
+		</liferay-frontend:edit-form-body>
 
-		<aui:button-row>
+		<liferay-frontend:edit-form-footer>
 			<aui:button type="submit" />
-		</aui:button-row>
-	</aui:form>
+
+			<aui:button type="cancel" />
+		</liferay-frontend:edit-form-footer>
+	</liferay-frontend:edit-form>
 </div>

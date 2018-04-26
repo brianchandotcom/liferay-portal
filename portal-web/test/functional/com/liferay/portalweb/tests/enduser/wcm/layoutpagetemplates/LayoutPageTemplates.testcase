@@ -128,6 +128,52 @@
 		</execute>
 	</command>
 
+	<command name="DeletePageTemplate" priority="5">
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Navigation" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Site Pages" />
+		</execute>
+
+		<execute macro="Navigator#gotoNavItem">
+			<var name="navItem" value="Page Templates" />
+		</execute>
+
+		<execute macro="Collection#addCollection">
+			<var name="collectionName" value="Page Template Collection" />
+		</execute>
+
+		<execute macro="LexiconEntry#gotoEntry">
+			<var name="rowEntry" value="Page Template Collection" />
+		</execute>
+
+		<execute macro="LayoutPageTemplates#add">
+			<var name="pageTemplateName" value="Page Template Name" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Navigation" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Site Pages" />
+		</execute>
+
+		<execute macro="Navigator#gotoNavItem">
+			<var name="navItem" value="Page Templates" />
+		</execute>
+
+		<execute macro="LexiconEntry#gotoEntry">
+			<var name="rowEntry" value="Page Template Collection" />
+		</execute>
+
+		<execute macro="LexiconEntry#delete">
+			<var name="rowEntry" value="Page Template Name" />
+		</execute>
+
+		<execute macro="LexiconEntry#viewNoEntry">
+			<var name="rowEntry" value="Page Template Name" />
+		</execute>
+	</command>
+
 	<command name="RenameCollection" priority="4">
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Navigation" />

@@ -1,3 +1,4 @@
+$gridSize: 6px;
 $translatedColor: #3DC513;
 $untranslatedColor: #A7A9BC;
 
@@ -10,21 +11,24 @@ $untranslatedColor: #A7A9BC;
 	&.translating {
 		.translated,
 		.untranslated {
-			background-size: 6px 6px;
+			background-size: $gridSize $gridSize;
 		}
 
-		.translated {
+		.translated,
+		.translated[type="image"]:after {
 			background-image: linear-gradient(45deg, transparent 0%, transparent calc(50% - 1px), fade_out($translatedColor, 0.75) 50%, transparent calc(50% + 1px), transparent 100%);
 			box-shadow: 0 0 0 1px fade_out($translatedColor, 0.4);
 		}
 
-		.untranslated {
+		.untranslated,
+		.untranslated[type="image"]:after {
 			background-image: linear-gradient(45deg, transparent 0%, transparent calc(50% - 1px), fade_out($untranslatedColor, 0.75) 50%, transparent calc(50% + 1px), transparent 100%);
 			box-shadow: 0 0 0 1px fade_out($untranslatedColor, 0.4);
 		}
 
 		.translated[type="image"]:after,
 		.untranslated[type="image"]:after {
+			background-size: $gridSize $gridSize;
 			content: '';
 			height: 100%;
 			left: 0;

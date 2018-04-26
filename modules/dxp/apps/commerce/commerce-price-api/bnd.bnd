@@ -1,0 +1,8 @@
+Bundle-Name: Liferay Commerce Price API
+Bundle-SymbolicName: com.liferay.commerce.price.api
+Bundle-Version: 1.0.0
+Export-Package: com.liferay.commerce.price.model
+Import-Package:\
+	com.liferay.portal.kernel.model;version="[1.0.0,1.2.0)",\
+	\
+	*

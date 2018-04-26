@@ -196,8 +196,6 @@ public class MirrorsGetTask extends Task {
 					downloadFile(sourceURL, localCacheFile);
 				}
 				catch (IOException ioe) {
-					ioe.printStackTrace();
-
 					sb = new StringBuilder();
 
 					sb.append("http://");
@@ -205,9 +203,13 @@ public class MirrorsGetTask extends Task {
 					sb.append("/");
 					sb.append(_fileName);
 
-					sourceURL = new URL(sb.toString());
+					URL defaultURL = new URL(sb.toString());
 
-					downloadFile(sourceURL, localCacheFile);
+					System.out.println(
+						"Unable to connect to " + sourceURL +
+							" defaulting to " + defaultURL);
+
+					downloadFile(defaultURL, localCacheFile);
 				}
 			}
 			else {

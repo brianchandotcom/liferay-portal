@@ -51,6 +51,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PAGE_TEMPLATE_EMPTY_MESSAGE</td>
+	<td>//div[contains(@class,'empty-result-message')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PAGE_TEMPLATE_FRAGMENT_HEADER</td>
 	<td>//div[contains(@class,'fragment-entry-links')]/div[contains(.,'${key_fragmentName}')]</td>
 	<td></td>

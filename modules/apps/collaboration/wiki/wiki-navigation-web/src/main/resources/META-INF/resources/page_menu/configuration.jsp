@@ -28,53 +28,57 @@ if ((selNodeId == 0) && (wikiNodes.size() == 1)) {
 
 <liferay-portlet:actionURL portletConfiguration="<%= true %>" var="configurationActionURL" />
 
-<aui:form action="<%= configurationActionURL %>" method="post" name="fm">
+<liferay-frontend:edit-form
+	action="<%= configurationActionURL %>"
+	method="post"
+	name="fm"
+>
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
 
-	<div class="portlet-configuration-body-content">
-		<div class="container-fluid-1280">
-			<liferay-ui:error exception="<%= NoSuchNodeException.class %>" message="the-node-could-not-be-found" />
+	<liferay-frontend:edit-form-body>
+		<liferay-ui:error exception="<%= NoSuchNodeException.class %>" message="the-node-could-not-be-found" />
 
-			<aui:fieldset>
-				<aui:select label="node" name="preferences--selNodeId--" showEmptyOption="<%= true %>">
+		<liferay-frontend:fieldset>
+			<aui:select label="node" name="preferences--selNodeId--" showEmptyOption="<%= true %>">
+
+				<%
+				for (WikiNode wikiNode : wikiNodes) {
+				%>
+
+					<aui:option label="<%= wikiNode.getName() %>" selected="<%= selNodeId == wikiNode.getNodeId() %>" value="<%= wikiNode.getNodeId() %>" />
+
+				<%
+				}
+				%>
+
+			</aui:select>
+
+			<c:if test="<%= selNodeId > 0 %>">
+
+				<%
+				List<WikiPage> wikiPages = WikiPageServiceUtil.getNodePages(selNodeId, WikiNavigationConstants.MAX_PAGES);
+				%>
+
+				<aui:select label="page" name="preferences--selTitle--" showEmptyOption="<%= true %>">
 
 					<%
-					for (WikiNode wikiNode : wikiNodes) {
+					for (WikiPage curWikiPage : wikiPages) {
 					%>
 
-						<aui:option label="<%= wikiNode.getName() %>" selected="<%= selNodeId == wikiNode.getNodeId() %>" value="<%= wikiNode.getNodeId() %>" />
+						<aui:option label="<%= curWikiPage.getTitle() %>" selected="<%= selTitle.equals(curWikiPage.getTitle()) %>" />
 
 					<%
 					}
 					%>
 
 				</aui:select>
+			</c:if>
+		</liferay-frontend:fieldset>
+	</liferay-frontend:edit-form-body>
 
-				<c:if test="<%= selNodeId > 0 %>">
-
-					<%
-					List<WikiPage> wikiPages = WikiPageServiceUtil.getNodePages(selNodeId, WikiNavigationConstants.MAX_PAGES);
-					%>
-
-					<aui:select label="page" name="preferences--selTitle--" showEmptyOption="<%= true %>">
-
-						<%
-						for (WikiPage curWikiPage : wikiPages) {
-						%>
-
-							<aui:option label="<%= curWikiPage.getTitle() %>" selected="<%= selTitle.equals(curWikiPage.getTitle()) %>" />
-
-						<%
-						}
-						%>
-
-					</aui:select>
-				</c:if>
-			</aui:fieldset>
-		</div>
-	</div>
-
-	<aui:button-row>
+	<liferay-frontend:edit-form-footer>
 		<aui:button type="submit" />
-	</aui:button-row>
-</aui:form>
+
+		<aui:button type="cancel" />
+	</liferay-frontend:edit-form-footer>
+</liferay-frontend:edit-form>

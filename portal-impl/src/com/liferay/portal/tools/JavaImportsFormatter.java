@@ -72,11 +72,11 @@ public class JavaImportsFormatter extends BaseImportsFormatter {
 			content = StringUtil.replaceFirst(content, imports, newImports);
 		}
 
-		content = content.replaceFirst(
-			"(?m)^[ \t]*(package .*;)\\s*^[ \t]*import", "$1\n\nimport");
-
-		return ToolsUtil.stripFullyQualifiedClassNames(
+		content = ToolsUtil.stripFullyQualifiedClassNames(
 			content, newImports, packagePath);
+
+		return content.replaceFirst(
+			"(?m)^[ \t]*(package .*;)\\s*^[ \t]*import", "$1\n\nimport");
 	}
 
 	private static final Pattern _importsPattern = Pattern.compile(

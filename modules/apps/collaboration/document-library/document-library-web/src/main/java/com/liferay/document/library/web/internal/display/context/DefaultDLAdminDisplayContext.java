@@ -36,6 +36,7 @@ import com.liferay.document.library.web.internal.display.context.logic.DLPortlet
 import com.liferay.document.library.web.internal.display.context.util.DLRequestHelper;
 import com.liferay.document.library.web.internal.portlet.toolbar.contributor.DLPortletToolbarContributor;
 import com.liferay.document.library.web.internal.settings.DLPortletInstanceSettings;
+import com.liferay.document.library.web.internal.util.DLTrashUtil;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
@@ -49,6 +50,7 @@ import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
@@ -80,6 +82,7 @@ import com.liferay.portal.kernel.servlet.taglib.ui.URLMenuItem;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -134,6 +137,128 @@ public class DefaultDLAdminDisplayContext implements DLAdminDisplayContext {
 
 		_portalPreferences = PortletPreferencesFactoryUtil.getPortalPreferences(
 			liferayPortletRequest);
+
+		_dlTrashUtil = (DLTrashUtil)_request.getAttribute(
+			DLWebKeys.DOCUMENT_LIBRARY_TRASH_UTIL);
+	}
+
+	@Override
+	public List<DropdownItem> getActionDropdownItems() {
+		return new DropdownItemList() {
+			{
+				User user = _themeDisplay.getUser();
+				Group scopeGroup = _themeDisplay.getScopeGroup();
+
+				if (!user.isDefaultUser() &&
+					(!scopeGroup.isStaged() || scopeGroup.isStagingGroup() ||
+					 !scopeGroup.isStagedPortlet(
+						 DLPortletKeys.DOCUMENT_LIBRARY))) {
+
+					add(
+						SafeConsumer.ignore(
+							dropdownItem -> {
+								dropdownItem.setHref(
+									StringBundler.concat(
+										"javascript:Liferay.fire('",
+										_liferayPortletResponse.getNamespace(),
+										"editEntry', {action: 'download'});",
+										"void(0);"));
+
+								dropdownItem.setIcon("download");
+
+								dropdownItem.setLabel(
+									LanguageUtil.get(_request, "download"));
+
+								dropdownItem.setQuickAction(true);
+							}));
+
+					add(
+						SafeConsumer.ignore(
+							dropdownItem -> {
+								dropdownItem.setHref(
+									StringBundler.concat(
+										"javascript:Liferay.fire('",
+										_liferayPortletResponse.getNamespace(),
+										"editEntry', {action: '",
+										Constants.CHECKIN, "'}); void(0);"));
+
+								dropdownItem.setIcon("unlock");
+
+								dropdownItem.setLabel(
+									LanguageUtil.get(_request, "unlock"));
+
+								dropdownItem.setQuickAction(true);
+							}));
+					add(
+						SafeConsumer.ignore(
+							dropdownItem -> {
+								dropdownItem.setHref(
+									StringBundler.concat(
+										"javascript:Liferay.fire('",
+										_liferayPortletResponse.getNamespace(),
+										"editEntry', {action: '",
+										Constants.CHECKOUT, "'}); void(0);"));
+
+								dropdownItem.setIcon("lock");
+
+								dropdownItem.setLabel(
+									LanguageUtil.get(_request, "lock"));
+
+								dropdownItem.setQuickAction(true);
+							}));
+					add(
+						SafeConsumer.ignore(
+							dropdownItem -> {
+								dropdownItem.setHref(
+									StringBundler.concat(
+										"javascript:Liferay.fire('",
+										_liferayPortletResponse.getNamespace(),
+										"editEntry', {action: '",
+										Constants.MOVE, "'}); void(0);"));
+
+								dropdownItem.setIcon("change");
+
+								dropdownItem.setLabel(
+									LanguageUtil.get(_request, "move"));
+
+								dropdownItem.setQuickAction(true);
+							}));
+				}
+
+				if (!user.isDefaultUser()) {
+					add(
+						SafeConsumer.ignore(
+							dropdownItem -> {
+								dropdownItem.setHref(
+									StringBundler.concat(
+										"javascript:",
+										_liferayPortletResponse.getNamespace(),
+										"deleteEntries();"));
+
+								long repositoryId = GetterUtil.getLong(
+									(String)_request.getAttribute(
+										"view.jsp-repositoryId"));
+
+								if (_dlTrashUtil.isTrashEnabled(
+										scopeGroup.getGroupId(),
+										repositoryId)) {
+
+									dropdownItem.setIcon("trash");
+									dropdownItem.setLabel(
+										LanguageUtil.get(
+											_request, "recycle-bin"));
+								}
+								else {
+									dropdownItem.setIcon("times");
+									dropdownItem.setLabel(
+										LanguageUtil.get(_request, "delete"));
+								}
+
+								dropdownItem.setQuickAction(true);
+							}));
+				}
+			}
+		};
 	}
 
 	@Override
@@ -1066,6 +1191,7 @@ public class DefaultDLAdminDisplayContext implements DLAdminDisplayContext {
 	private final DLPortletInstanceSettingsHelper
 		_dlPortletInstanceSettingsHelper;
 	private final DLRequestHelper _dlRequestHelper;
+	private final DLTrashUtil _dlTrashUtil;
 	private final LiferayPortletRequest _liferayPortletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;
 	private final PermissionChecker _permissionChecker;

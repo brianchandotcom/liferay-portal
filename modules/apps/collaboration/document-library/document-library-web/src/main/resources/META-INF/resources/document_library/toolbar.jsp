@@ -27,6 +27,7 @@ DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletI
 %>
 
 <clay:management-toolbar
+	actionItems="<%= dlAdminDisplayContext.getActionDropdownItems() %>"
 	clearResultsURL="<%= dlAdminDisplayContext.getClearResultsURL() %>"
 	creationMenu="<%= dlAdminDisplayContext.getCreationMenu() %>"
 	disabled="<%= DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcutsCount(repositoryId, folderId, WorkflowConstants.STATUS_ANY, true) <= 0 %>"
@@ -42,75 +43,6 @@ DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletI
 	totalItems="<%= dlAdminDisplayContext.getTotalItems() %>"
 	viewTypes="<%= dlAdminDisplayContext.getViewTypes() %>"
 />
-
-<liferay-frontend:management-bar
-	disabled="<%= DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcutsCount(repositoryId, folderId, WorkflowConstants.STATUS_ANY, true) <= 0 %>"
-	includeCheckBox="<%= dlPortletInstanceSettingsHelper.isShowActions() %>"
-	searchContainerId="entries"
->
-	<liferay-frontend:management-bar-action-buttons>
-		<liferay-frontend:management-bar-sidenav-toggler-button
-			icon="info-circle"
-			label="info"
-		/>
-
-		<%
-		Group scopeGroup = themeDisplay.getScopeGroup();
-		%>
-
-		<c:if test="<%= !user.isDefaultUser() && (!scopeGroup.isStaged() || scopeGroup.isStagingGroup() || !scopeGroup.isStagedPortlet(DLPortletKeys.DOCUMENT_LIBRARY)) %>">
-
-			<%
-			String taglibURL = "javascript:Liferay.fire('" + renderResponse.getNamespace() + "editEntry', {action: 'download'}); void(0);";
-			%>
-
-			<liferay-frontend:management-bar-button
-				href="<%= taglibURL %>"
-				icon="download"
-				label="download"
-			/>
-
-			<%
-			taglibURL = "javascript:Liferay.fire('" + renderResponse.getNamespace() + "editEntry', {action: '" + Constants.CHECKIN + "'}); void(0);";
-			%>
-
-			<liferay-frontend:management-bar-button
-				href="<%= taglibURL %>"
-				icon="unlock"
-				label="unlock"
-			/>
-
-			<%
-			taglibURL = "javascript:Liferay.fire('" + renderResponse.getNamespace() + "editEntry', {action: '" + Constants.CHECKOUT + "'}); void(0);";
-			%>
-
-			<liferay-frontend:management-bar-button
-				href="<%= taglibURL %>"
-				icon="lock"
-				label="lock"
-			/>
-
-			<%
-			taglibURL = "javascript:Liferay.fire('" + renderResponse.getNamespace() + "editEntry', {action: '" + Constants.MOVE + "'}); void(0);";
-			%>
-
-			<liferay-frontend:management-bar-button
-				href="<%= taglibURL %>"
-				icon="change"
-				label="move"
-			/>
-		</c:if>
-
-		<c:if test="<%= !user.isDefaultUser() %>">
-			<liferay-frontend:management-bar-button
-				href='<%= "javascript:" + renderResponse.getNamespace() + "deleteEntries();" %>'
-				icon='<%= dlTrashUtil.isTrashEnabled(scopeGroupId, repositoryId) ? "trash" : "times" %>'
-				id="deleteAction"
-				label='<%= dlTrashUtil.isTrashEnabled(scopeGroupId, repositoryId) ? "recycle-bin" : "delete" %>'
-			/>
-		</c:if>
-	</liferay-frontend:management-bar-action-buttons>
-</liferay-frontend:management-bar>
 
 <aui:script>
 	function <portlet:namespace />deleteEntries() {

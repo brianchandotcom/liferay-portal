@@ -25,7 +25,7 @@ import javax.portlet.PortletMode;
  */
 public interface FragmentEntryProcessor {
 
-	public default JSONObject getDefaultEditableValues(String html) {
+	public default JSONObject getDefaultEditableValuesJSONObject(String html) {
 		return null;
 	}
 

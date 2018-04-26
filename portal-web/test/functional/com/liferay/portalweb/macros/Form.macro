@@ -1,5 +1,4 @@
 <definition>
-	<var name="columnSize" value="12" />
 	<var name="formDescription" value="Created Form Description" />
 	<var name="formName" value="Created Form Name" />
 	<var name="rowNumber" value="1" />
@@ -175,8 +174,6 @@
 	</command>
 
 	<command name="editName">
-		<var name="key_columnSize" value="${columnSize}" />
-
 		<execute function="AssertVisible" locator1="Form#ADD_FIELD" />
 		<execute function="AssertVisible" locator1="Form#NAME_FIELD" />
 		<execute function="AssertVisible" locator1="Form#DESCRIPTION_FIELD" />
@@ -190,8 +187,6 @@
 	</command>
 
 	<command name="editNameLocalized">
-		<var name="key_columnSize" value="${columnSize}" />
-
 		<execute function="AssertVisible" locator1="Form#ADD_FIELD" />
 		<execute function="AssertVisible" locator1="Form#NAME_FIELD" />
 		<execute function="AssertVisible" locator1="Form#DESCRIPTION_FIELD" />

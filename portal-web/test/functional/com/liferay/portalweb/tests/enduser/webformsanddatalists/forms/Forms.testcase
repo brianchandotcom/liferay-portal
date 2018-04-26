@@ -258,6 +258,12 @@
 
 		<execute macro="Form#closeSidebar" />
 
+		<execute function="AssertNotVisible" locator1="Form#ADD_FIELD" />
+
+		<execute macro="DDLRecord#selectTranslation">
+			<var name="localizedLanguage" value="English (United States)" />
+		</execute>
+
 		<execute macro="Form#gotoAddElementSet">
 			<var name="elementSetTitle" value="Element Set 1" />
 		</execute>

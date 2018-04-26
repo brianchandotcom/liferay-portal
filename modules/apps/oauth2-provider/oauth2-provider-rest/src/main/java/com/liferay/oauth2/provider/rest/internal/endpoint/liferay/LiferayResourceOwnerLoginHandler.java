@@ -47,11 +47,11 @@ public class LiferayResourceOwnerLoginHandler
 
 	public User authenticateUser(String login, String password) {
 		int authResult = Authenticator.FAILURE;
-		String authType = company.getAuthType();
-
 		Long companyId = CompanyThreadLocal.getCompanyId();
 
 		Company company = _companyLocalService.fetchCompany(companyId);
+
+		String authType = company.getAuthType();
 
 		Map<String, Object> resultsMap = new HashMap<>();
 

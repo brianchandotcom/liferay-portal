@@ -14,14 +14,6 @@ module.exports = merge(
 			publicPath: common.publicPath
 		},
 		devtool: 'inline-source-map',
-		plugins: [
-			new webpack.DefinePlugin(
-				{
-					'process.env': {
-						NODE_ENV: '"development"'
-					}
-				}
-			)
-		]
+		mode: 'development'
 	}
 );

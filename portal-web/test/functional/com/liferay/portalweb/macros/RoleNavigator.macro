@@ -10,8 +10,8 @@
 	</command>
 
 	<command name="gotoAssigneeType">
-		<execute macro="Navigator#gotoNavTab">
-			<var name="navTab" value="${assigneeType}" />
+		<execute macro="Navigator#gotoNavItem">
+			<var name="navItem" value="${assigneeType}" />
 		</execute>
 	</command>
 

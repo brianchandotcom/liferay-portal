@@ -89,7 +89,7 @@
 		</execute>
 
 		<execute macro="LexiconEntry#viewEntryName">
-			<var name="rpwEntry" value="${userGroupName}" />
+			<var name="rowEntry" value="${userGroupName}" />
 		</execute>
 
 		<execute macro="LexiconEntry#gotoEllipsisMenuItem">

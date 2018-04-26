@@ -40,7 +40,7 @@ public class NpmIsomorphicPortletProjectTemplateCustomizer
 
 		String liferayVersion = projectTemplatesArgs.getLiferayVersion();
 
-		if (!liferayVersion.equals("7.1")) {
+		if (!liferayVersion.startsWith("7.1")) {
 			String className = projectTemplatesArgs.getClassName();
 
 			Path destinationDirPath = destinationDir.toPath();

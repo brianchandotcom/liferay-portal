@@ -14,10 +14,10 @@ apply plugin: "com.liferay.plugin"
 
 #end
 dependencies {
-#if (${liferayVersion} == "7.0")
+#if (${liferayVersion.startsWith("7.0")})
 	compileOnly group: "com.liferay", name: "com.liferay.portal.portlet.bridge.soy", version: "3.1.0"
 #end
-#if (${liferayVersion} == "7.1")
+#if (${liferayVersion.startsWith("7.1")})
 	compileOnly group: "com.liferay", name: "com.liferay.portal.portlet.bridge.soy.api", version: "1.0.0-SNAPSHOT"
 #end
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.0.0"

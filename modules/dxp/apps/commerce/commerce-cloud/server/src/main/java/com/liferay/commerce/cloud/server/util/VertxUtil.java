@@ -14,7 +14,7 @@
 
 package com.liferay.commerce.cloud.server.util;
 
-import com.liferay.commerce.cloud.server.model.Jsonable;
+import com.liferay.commerce.cloud.server.model.JsonSerializable;
 
 import io.netty.handler.codec.http.HttpResponseStatus;
 
@@ -47,8 +47,8 @@ public class VertxUtil {
 
 		T result = asyncResult.result();
 
-		if (result instanceof Jsonable) {
-			Jsonable jsonable = (Jsonable)result;
+		if (result instanceof JsonSerializable) {
+			JsonSerializable jsonable = (JsonSerializable)result;
 
 			JsonObject jsonObject = jsonable.toJson();
 

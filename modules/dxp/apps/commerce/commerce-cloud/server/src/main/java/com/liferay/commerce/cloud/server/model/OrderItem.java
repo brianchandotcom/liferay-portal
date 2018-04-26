@@ -21,7 +21,7 @@ import io.vertx.core.json.JsonObject;
  * @author Andrea Di Giorgi
  */
 @DataObject(generateConverter = true, publicConverter = false)
-public class OrderItem implements Jsonable {
+public class OrderItem implements JsonSerializable {
 
 	public OrderItem() {
 	}

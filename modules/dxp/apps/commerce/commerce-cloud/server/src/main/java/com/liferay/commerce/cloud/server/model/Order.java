@@ -23,7 +23,7 @@ import java.util.List;
  * @author Andrea Di Giorgi
  */
 @DataObject(generateConverter = true, publicConverter = false)
-public class Order implements Jsonable {
+public class Order implements JsonSerializable {
 
 	public Order() {
 	}

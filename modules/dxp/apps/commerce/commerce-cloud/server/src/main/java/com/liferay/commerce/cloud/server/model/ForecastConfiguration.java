@@ -23,7 +23,7 @@ import java.util.Set;
  * @author Andrea Di Giorgi
  */
 @DataObject(generateConverter = true, publicConverter = false)
-public class ForecastConfiguration implements Jsonable {
+public class ForecastConfiguration implements JsonSerializable {
 
 	public ForecastConfiguration() {
 	}

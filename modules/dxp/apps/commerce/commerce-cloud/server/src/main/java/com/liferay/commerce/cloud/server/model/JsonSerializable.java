@@ -19,7 +19,7 @@ import io.vertx.core.json.JsonObject;
 /**
  * @author Andrea Di Giorgi
  */
-public interface Jsonable {
+public interface JsonSerializable {
 
 	public JsonObject toJson();
 

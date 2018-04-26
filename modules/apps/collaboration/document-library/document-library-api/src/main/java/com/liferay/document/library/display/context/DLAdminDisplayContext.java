@@ -19,7 +19,6 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItemList;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.Folder;
 
 import java.util.List;
@@ -55,13 +54,13 @@ public interface DLAdminDisplayContext {
 
 	public long getRepositoryId();
 
-	public SearchContainer getSearchContainer() throws PortalException;
+	public SearchContainer getSearchContainer();
 
 	public PortletURL getSearchURL();
 
 	public PortletURL getSortingURL();
 
-	public int getTotalItems() throws PortalException;
+	public int getTotalItems();
 
 	public ViewTypeItemList getViewTypes();
 

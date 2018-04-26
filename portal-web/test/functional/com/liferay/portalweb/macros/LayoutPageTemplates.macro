@@ -92,13 +92,17 @@
 	</command>
 
 	<command name="viewAutoSaveMessage">
-		<execute function="AssertTextEquals#assertPartialText" locator1="Fragment#PAGE_TEMPLATE_AUTOSAVE_MESSAGE" value1="Layout page template saved at" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Fragment#PAGE_TEMPLATE_AUTOSAVE_MESSAGE" value1="Changes saved at" />
 	</command>
 
 	<command name="viewCollectionNotPresent">
 		<execute function="AssertElementNotPresent" locator1="Fragment#FRAGMENT_SIDEBAR_COLLECTION_PANEL">
 			<var name="key_collectionName" value="${collectionName}" />
 		</execute>
+	</command>
+
+	<command name="viewEditorEmpty">
+		<execute function="AssertElementPresent" locator1="Fragment#PAGE_TEMPLATE_EMPTY_MESSAGE" />
 	</command>
 
 	<command name="viewFragmentOrder">

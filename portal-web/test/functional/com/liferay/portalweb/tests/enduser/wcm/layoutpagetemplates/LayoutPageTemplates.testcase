@@ -99,9 +99,7 @@
 
 		<execute macro="LayoutPageTemplates#viewAutoSaveMessage" />
 
-		<execute macro="Portlet#viewEmptyMessage">
-			<var name="message" value="This layout page template is empty." />
-		</execute>
+		<execute macro="LayoutPageTemplates#viewEditorEmpty" />
 	</command>
 
 	<command name="DeleteCollection" priority="4">

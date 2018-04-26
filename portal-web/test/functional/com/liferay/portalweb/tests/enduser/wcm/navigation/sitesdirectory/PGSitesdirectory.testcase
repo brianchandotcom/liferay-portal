@@ -25,7 +25,7 @@
 	</tear-down>
 
 	<command name="DisplayStyleOptions" priority="5">
-		<property name="portal.acceptance" value="true" />
+		<property name="portal.acceptance" value="quarantine" />
 
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Sites" />

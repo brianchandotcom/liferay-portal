@@ -448,29 +448,6 @@ public class DefaultDLAdminDisplayContext implements DLAdminDisplayContext {
 	}
 
 	@Override
-	public PortletURL getPortletURL() {
-		PortletURL portletURL = _liferayPortletResponse.createRenderURL();
-
-		portletURL.setParameter(
-			"mvcRenderCommandName", "/document_library/search");
-
-		String redirect = ParamUtil.getString(_request, "redirect");
-
-		portletURL.setParameter("redirect", redirect);
-
-		long searchFolderId = ParamUtil.getLong(_request, "searchFolderId");
-
-		portletURL.setParameter(
-			"searchFolderId", String.valueOf(searchFolderId));
-
-		String keywords = ParamUtil.getString(_request, "keywords");
-
-		portletURL.setParameter("keywords", keywords);
-
-		return portletURL;
-	}
-
-	@Override
 	public long getRepositoryId() {
 		Folder folder = getFolder();
 
@@ -508,6 +485,28 @@ public class DefaultDLAdminDisplayContext implements DLAdminDisplayContext {
 		}
 
 		return _searchContainer;
+	}
+
+	public PortletURL getSearchSearchContainerURL() {
+		PortletURL portletURL = _liferayPortletResponse.createRenderURL();
+
+		portletURL.setParameter(
+			"mvcRenderCommandName", "/document_library/search");
+
+		String redirect = ParamUtil.getString(_request, "redirect");
+
+		portletURL.setParameter("redirect", redirect);
+
+		long searchFolderId = ParamUtil.getLong(_request, "searchFolderId");
+
+		portletURL.setParameter(
+			"searchFolderId", String.valueOf(searchFolderId));
+
+		String keywords = ParamUtil.getString(_request, "keywords");
+
+		portletURL.setParameter("keywords", keywords);
+
+		return portletURL;
 	}
 
 	@Override
@@ -1208,7 +1207,7 @@ public class DefaultDLAdminDisplayContext implements DLAdminDisplayContext {
 
 	private SearchContainer _getSearchSearchContainer() throws PortalException {
 		SearchContainer searchContainer = new SearchContainer(
-			_liferayPortletRequest, getPortletURL(), null, null);
+			_liferayPortletRequest, getSearchSearchContainerURL(), null, null);
 
 		searchContainer.setResults(_getSearchResults(searchContainer));
 

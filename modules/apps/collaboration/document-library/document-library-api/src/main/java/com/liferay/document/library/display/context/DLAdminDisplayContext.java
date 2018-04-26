@@ -47,9 +47,9 @@ public interface DLAdminDisplayContext {
 
 	public SearchContainer getSearchContainer() throws Exception;
 
-	public PortletURL getSearchURL();
+	public PortletURL getSearchURL() throws Exception;
 
-	public PortletURL getSortingURL();
+	public PortletURL getSortingURL() throws Exception;
 
 	public int getTotalItems() throws Exception;
 

@@ -46,6 +46,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.SafeConsumer;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItemList;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -235,13 +236,9 @@ public class DefaultDLAdminDisplayContext implements DLAdminDisplayContext {
 										_liferayPortletResponse.getNamespace(),
 										"deleteEntries();"));
 
-								long repositoryId = GetterUtil.getLong(
-									(String)_request.getAttribute(
-										"view.jsp-repositoryId"));
-
 								if (_dlTrashUtil.isTrashEnabled(
 										scopeGroup.getGroupId(),
-										repositoryId)) {
+										_getRepositoryId())) {
 
 									dropdownItem.setIcon("trash");
 									dropdownItem.setLabel(
@@ -307,14 +304,26 @@ public class DefaultDLAdminDisplayContext implements DLAdminDisplayContext {
 	public String getDisplayStyle() {
 		String displayStyle = ParamUtil.getString(_request, "displayStyle");
 
-		if (Validator.isNull(displayStyle)) {
-			PortalPreferences portalPreferences =
-				PortletPreferencesFactoryUtil.getPortalPreferences(
-					_liferayPortletRequest);
+		String[] displayViews = _dlPortletInstanceSettings.getDisplayViews();
 
-			displayStyle = portalPreferences.getValue(
+		if (Validator.isNull(displayStyle)) {
+			displayStyle = _portalPreferences.getValue(
 				DLPortletKeys.DOCUMENT_LIBRARY, "display-style",
 				PropsValues.DL_DEFAULT_DISPLAY_VIEW);
+		}
+		else {
+			if (ArrayUtil.contains(displayViews, displayStyle)) {
+				_portalPreferences.setValue(
+					DLPortletKeys.DOCUMENT_LIBRARY, "display-style",
+					displayStyle);
+
+				_request.setAttribute(
+					WebKeys.SINGLE_PAGE_APPLICATION_CLEAR_CACHE, Boolean.TRUE);
+			}
+		}
+
+		if (!ArrayUtil.contains(displayViews, displayStyle)) {
+			displayStyle = displayViews[0];
 		}
 
 		return displayStyle;
@@ -461,12 +470,6 @@ public class DefaultDLAdminDisplayContext implements DLAdminDisplayContext {
 			String currentFolder = ParamUtil.getString(_request, "curFolder");
 			String deltaFolder = ParamUtil.getString(_request, "deltaFolder");
 
-			long folderId = GetterUtil.getLong(
-				(String)_request.getAttribute("view.jsp-folderId"));
-
-			long repositoryId = GetterUtil.getLong(
-				(String)_request.getAttribute("view.jsp-repositoryId"));
-
 			long fileEntryTypeId = ParamUtil.getLong(
 				_request, "fileEntryTypeId", -1);
 
@@ -494,6 +497,8 @@ public class DefaultDLAdminDisplayContext implements DLAdminDisplayContext {
 
 			PortletURL portletURL = _liferayPortletResponse.createRenderURL();
 
+			long folderId = _getFolderId();
+
 			if (folderId == DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 				portletURL.setParameter(
 					"mvcRenderCommandName", "/document_library/view");
@@ -518,10 +523,8 @@ public class DefaultDLAdminDisplayContext implements DLAdminDisplayContext {
 
 			dlSearchContainer.setHeaderNames(ListUtil.fromArray(entryColumns));
 
-			String orderByCol = GetterUtil.getString(
-				(String)_request.getAttribute("view.jsp-orderByCol"));
-			String orderByType = GetterUtil.getString(
-				(String)_request.getAttribute("view.jsp-orderByType"));
+			String orderByCol = getOrderByCol();
+			String orderByType = getOrderByType();
 
 			boolean orderByModel = false;
 
@@ -637,6 +640,8 @@ public class DefaultDLAdminDisplayContext implements DLAdminDisplayContext {
 							assetEntryQuery);
 					}
 					else {
+						long repositoryId = _getRepositoryId();
+
 						total =
 							DLAppServiceUtil.
 								getFoldersAndFileEntriesAndFileShortcutsCount(
@@ -665,6 +670,8 @@ public class DefaultDLAdminDisplayContext implements DLAdminDisplayContext {
 
 						status = WorkflowConstants.STATUS_ANY;
 					}
+
+					long repositoryId = _getRepositoryId();
 
 					total = DLAppServiceUtil.getGroupFileEntriesCount(
 						repositoryId, groupFileEntriesUserId, folderId, null,
@@ -699,24 +706,19 @@ public class DefaultDLAdminDisplayContext implements DLAdminDisplayContext {
 	}
 
 	@Override
-	public PortletURL getSearchURL() {
-
-		// TODO cuidado con el redirect
-
+	public PortletURL getSearchURL() throws Exception {
 		PortletURL searchURL = _liferayPortletResponse.createRenderURL();
 
 		searchURL.setParameter(
 			"mvcRenderCommandName", "/document_library/search");
 
-		long repositoryId = GetterUtil.getLong(
-			(String)_request.getAttribute("view.jsp-repositoryId"));
+		long repositoryId = _getRepositoryId();
 
 		searchURL.setParameter("repositoryId", String.valueOf(repositoryId));
 		searchURL.setParameter(
 			"searchRepositoryId", String.valueOf(repositoryId));
 
-		long folderId = GetterUtil.getLong(
-			(String)_request.getAttribute("view.jsp-folderId"));
+		long folderId = _getFolderId();
 
 		searchURL.setParameter("folderId", String.valueOf(folderId));
 		searchURL.setParameter("searchFolderId", String.valueOf(folderId));
@@ -729,13 +731,12 @@ public class DefaultDLAdminDisplayContext implements DLAdminDisplayContext {
 	}
 
 	@Override
-	public PortletURL getSortingURL() {
+	public PortletURL getSortingURL() throws Exception {
 		int deltaEntry = ParamUtil.getInteger(_request, "deltaEntry");
 
 		PortletURL sortingURL = _liferayPortletResponse.createRenderURL();
 
-		long folderId = GetterUtil.getLong(
-			(String)_request.getAttribute("view.jsp-folderId"));
+		long folderId = _getFolderId();
 
 		if (folderId == DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 			sortingURL.setParameter(
@@ -785,8 +786,7 @@ public class DefaultDLAdminDisplayContext implements DLAdminDisplayContext {
 		int curEntry = ParamUtil.getInteger(_request, "curEntry");
 		int deltaEntry = ParamUtil.getInteger(_request, "deltaEntry");
 
-		long folderId = GetterUtil.getLong(
-			(String)_request.getAttribute("view.jsp-folderId"));
+		long folderId = _getFolderId();
 
 		long fileEntryTypeId = ParamUtil.getLong(
 			_request, "fileEntryTypeId", -1);
@@ -861,8 +861,7 @@ public class DefaultDLAdminDisplayContext implements DLAdminDisplayContext {
 
 		long fileEntryTypeId = ParamUtil.getLong(
 			_request, "fileEntryTypeId", -1);
-		long folderId = GetterUtil.getLong(
-			(String)_request.getAttribute("view.jsp-folderId"));
+		long folderId = _getFolderId();
 		final String navigation = ParamUtil.getString(
 			_request, "navigation", "home");
 		final long rootFolderId = _getRootFolderId();
@@ -964,6 +963,59 @@ public class DefaultDLAdminDisplayContext implements DLAdminDisplayContext {
 		};
 	}
 
+	private Folder _getFolder() throws Exception {
+		Folder folder = (Folder)_request.getAttribute(
+			WebKeys.DOCUMENT_LIBRARY_FOLDER);
+
+		long folderId = BeanPropertiesUtil.getLong(
+			folder, "folderId", _getRootFolderId());
+
+		boolean defaultFolderView = false;
+
+		if ((folder == null) &&
+			(folderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID)) {
+
+			defaultFolderView = true;
+		}
+
+		if (defaultFolderView) {
+			try {
+				folder = DLAppLocalServiceUtil.getFolder(folderId);
+			}
+			catch (NoSuchFolderException nsfe) {
+			}
+		}
+
+		return folder;
+	}
+
+	private long _getFolderId() throws Exception {
+		Folder folder = (Folder)_request.getAttribute(
+			WebKeys.DOCUMENT_LIBRARY_FOLDER);
+
+		long folderId = BeanPropertiesUtil.getLong(
+			folder, "folderId", _getRootFolderId());
+
+		boolean defaultFolderView = false;
+
+		if ((folder == null) &&
+			(folderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID)) {
+
+			defaultFolderView = true;
+		}
+
+		if (defaultFolderView) {
+			try {
+				DLAppLocalServiceUtil.getFolder(folderId);
+			}
+			catch (NoSuchFolderException nsfe) {
+				folderId = DLFolderConstants.DEFAULT_PARENT_FOLDER_ID;
+			}
+		}
+
+		return folderId;
+	}
+
 	private List<DropdownItem> _getOrderByDropdownItems() {
 		final Map<String, String> orderColumns = new HashMap<>();
 
@@ -981,15 +1033,16 @@ public class DefaultDLAdminDisplayContext implements DLAdminDisplayContext {
 					String orderByCol = orderByColEntry.getKey();
 
 					add(
-						dropdownItem -> {
-							dropdownItem.setActive(
-								orderByCol.equals(getOrderByCol()));
-							dropdownItem.setHref(
-								getSortingURL(), "orderByCol", orderByCol);
-							dropdownItem.setLabel(
-								LanguageUtil.get(
-									_request, orderByColEntry.getValue()));
-						});
+						SafeConsumer.ignore(
+							dropdownItem -> {
+								dropdownItem.setActive(
+									orderByCol.equals(getOrderByCol()));
+								dropdownItem.setHref(
+									getSortingURL(), "orderByCol", orderByCol);
+								dropdownItem.setLabel(
+									LanguageUtil.get(
+										_request, orderByColEntry.getValue()));
+							}));
 				}
 			}
 		};
@@ -999,6 +1052,16 @@ public class DefaultDLAdminDisplayContext implements DLAdminDisplayContext {
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
 		return PortletLocalServiceUtil.getPortletById(portletDisplay.getId());
+	}
+
+	private long _getRepositoryId() throws Exception {
+		Folder folder = _getFolder();
+
+		if (folder != null) {
+			return folder.getRepositoryId();
+		}
+
+		return _themeDisplay.getScopeGroupId();
 	}
 
 	private long _getRootFolderId() throws Exception {

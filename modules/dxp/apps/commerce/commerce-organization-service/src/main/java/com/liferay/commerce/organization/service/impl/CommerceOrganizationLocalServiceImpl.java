@@ -475,8 +475,8 @@ public class CommerceOrganizationLocalServiceImpl
 
 			addressLocalService.updateAddress(
 				addressId, street1, street2, street3, city, zip, regionId,
-				countryId, address.getTypeId(), address.getMailing(),
-				address.getPrimary());
+				countryId, address.getTypeId(), address.isMailing(),
+				address.isPrimary());
 		}
 
 		addressLocalService.addAddress(
@@ -496,7 +496,7 @@ public class CommerceOrganizationLocalServiceImpl
 
 			emailAddressLocalService.updateEmailAddress(
 				emailAddressId, address, emailAddress.getTypeId(),
-				emailAddress.getPrimary());
+				emailAddress.isPrimary());
 		}
 
 		emailAddressLocalService.addEmailAddress(

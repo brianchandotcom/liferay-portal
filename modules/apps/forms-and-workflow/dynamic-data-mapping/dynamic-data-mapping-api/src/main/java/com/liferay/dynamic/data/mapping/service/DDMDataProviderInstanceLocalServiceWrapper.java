@@ -37,10 +37,10 @@ public class DDMDataProviderInstanceLocalServiceWrapper
 	@Override
 	public com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance addDataProviderInstance(
 		long userId, long groupId,
-		java.util.Map<java.util.Locale, java.lang.String> nameMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		java.util.Map<java.util.Locale, String> nameMap,
+		java.util.Map<java.util.Locale, String> descriptionMap,
 		com.liferay.dynamic.data.mapping.storage.DDMFormValues ddmFormValues,
-		java.lang.String type,
+		String type,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _ddmDataProviderInstanceLocalService.addDataProviderInstance(userId,
@@ -222,7 +222,7 @@ public class DDMDataProviderInstanceLocalServiceWrapper
 
 	@Override
 	public com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance fetchDataProviderInstanceByUuid(
-		java.lang.String uuid) {
+		String uuid) {
 		return _ddmDataProviderInstanceLocalService.fetchDataProviderInstanceByUuid(uuid);
 	}
 
@@ -241,7 +241,7 @@ public class DDMDataProviderInstanceLocalServiceWrapper
 	*/
 	@Override
 	public com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance fetchDDMDataProviderInstanceByUuidAndGroupId(
-		java.lang.String uuid, long groupId) {
+		String uuid, long groupId) {
 		return _ddmDataProviderInstanceLocalService.fetchDDMDataProviderInstanceByUuidAndGroupId(uuid,
 			groupId);
 	}
@@ -260,8 +260,7 @@ public class DDMDataProviderInstanceLocalServiceWrapper
 
 	@Override
 	public com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance getDataProviderInstanceByUuid(
-		java.lang.String uuid)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		String uuid) throws com.liferay.portal.kernel.exception.PortalException {
 		return _ddmDataProviderInstanceLocalService.getDataProviderInstanceByUuid(uuid);
 	}
 
@@ -310,7 +309,7 @@ public class DDMDataProviderInstanceLocalServiceWrapper
 	*/
 	@Override
 	public com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance getDDMDataProviderInstanceByUuidAndGroupId(
-		java.lang.String uuid, long groupId)
+		String uuid, long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _ddmDataProviderInstanceLocalService.getDDMDataProviderInstanceByUuidAndGroupId(uuid,
 			groupId);
@@ -343,7 +342,7 @@ public class DDMDataProviderInstanceLocalServiceWrapper
 	*/
 	@Override
 	public java.util.List<com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance> getDDMDataProviderInstancesByUuidAndCompanyId(
-		java.lang.String uuid, long companyId) {
+		String uuid, long companyId) {
 		return _ddmDataProviderInstanceLocalService.getDDMDataProviderInstancesByUuidAndCompanyId(uuid,
 			companyId);
 	}
@@ -360,7 +359,7 @@ public class DDMDataProviderInstanceLocalServiceWrapper
 	*/
 	@Override
 	public java.util.List<com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance> getDDMDataProviderInstancesByUuidAndCompanyId(
-		java.lang.String uuid, long companyId, int start, int end,
+		String uuid, long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance> orderByComparator) {
 		return _ddmDataProviderInstanceLocalService.getDDMDataProviderInstancesByUuidAndCompanyId(uuid,
 			companyId, start, end, orderByComparator);
@@ -393,7 +392,7 @@ public class DDMDataProviderInstanceLocalServiceWrapper
 	* @return the OSGi service identifier
 	*/
 	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
+	public String getOSGiServiceIdentifier() {
 		return _ddmDataProviderInstanceLocalService.getOSGiServiceIdentifier();
 	}
 
@@ -406,8 +405,7 @@ public class DDMDataProviderInstanceLocalServiceWrapper
 
 	@Override
 	public java.util.List<com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance> search(
-		long companyId, long[] groupIds, java.lang.String keywords, int start,
-		int end,
+		long companyId, long[] groupIds, String keywords, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance> orderByComparator) {
 		return _ddmDataProviderInstanceLocalService.search(companyId, groupIds,
 			keywords, start, end, orderByComparator);
@@ -415,23 +413,22 @@ public class DDMDataProviderInstanceLocalServiceWrapper
 
 	@Override
 	public java.util.List<com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance> search(
-		long companyId, long[] groupIds, java.lang.String name,
-		java.lang.String description, boolean andOperator, int start, int end,
+		long companyId, long[] groupIds, String name, String description,
+		boolean andOperator, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance> orderByComparator) {
 		return _ddmDataProviderInstanceLocalService.search(companyId, groupIds,
 			name, description, andOperator, start, end, orderByComparator);
 	}
 
 	@Override
-	public int searchCount(long companyId, long[] groupIds,
-		java.lang.String keywords) {
+	public int searchCount(long companyId, long[] groupIds, String keywords) {
 		return _ddmDataProviderInstanceLocalService.searchCount(companyId,
 			groupIds, keywords);
 	}
 
 	@Override
-	public int searchCount(long companyId, long[] groupIds,
-		java.lang.String name, java.lang.String description, boolean andOperator) {
+	public int searchCount(long companyId, long[] groupIds, String name,
+		String description, boolean andOperator) {
 		return _ddmDataProviderInstanceLocalService.searchCount(companyId,
 			groupIds, name, description, andOperator);
 	}
@@ -439,8 +436,8 @@ public class DDMDataProviderInstanceLocalServiceWrapper
 	@Override
 	public com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance updateDataProviderInstance(
 		long userId, long dataProviderInstanceId,
-		java.util.Map<java.util.Locale, java.lang.String> nameMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		java.util.Map<java.util.Locale, String> nameMap,
+		java.util.Map<java.util.Locale, String> descriptionMap,
 		com.liferay.dynamic.data.mapping.storage.DDMFormValues ddmFormValues,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {

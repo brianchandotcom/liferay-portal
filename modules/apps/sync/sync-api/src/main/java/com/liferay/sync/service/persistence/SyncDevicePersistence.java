@@ -47,7 +47,7 @@ public interface SyncDevicePersistence extends BasePersistence<SyncDevice> {
 	* @param uuid the uuid
 	* @return the matching sync devices
 	*/
-	public java.util.List<SyncDevice> findByUuid(java.lang.String uuid);
+	public java.util.List<SyncDevice> findByUuid(String uuid);
 
 	/**
 	* Returns a range of all the sync devices where uuid = &#63;.
@@ -61,8 +61,7 @@ public interface SyncDevicePersistence extends BasePersistence<SyncDevice> {
 	* @param end the upper bound of the range of sync devices (not inclusive)
 	* @return the range of matching sync devices
 	*/
-	public java.util.List<SyncDevice> findByUuid(java.lang.String uuid,
-		int start, int end);
+	public java.util.List<SyncDevice> findByUuid(String uuid, int start, int end);
 
 	/**
 	* Returns an ordered range of all the sync devices where uuid = &#63;.
@@ -77,8 +76,8 @@ public interface SyncDevicePersistence extends BasePersistence<SyncDevice> {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching sync devices
 	*/
-	public java.util.List<SyncDevice> findByUuid(java.lang.String uuid,
-		int start, int end,
+	public java.util.List<SyncDevice> findByUuid(String uuid, int start,
+		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<SyncDevice> orderByComparator);
 
 	/**
@@ -95,8 +94,8 @@ public interface SyncDevicePersistence extends BasePersistence<SyncDevice> {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching sync devices
 	*/
-	public java.util.List<SyncDevice> findByUuid(java.lang.String uuid,
-		int start, int end,
+	public java.util.List<SyncDevice> findByUuid(String uuid, int start,
+		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<SyncDevice> orderByComparator,
 		boolean retrieveFromCache);
 
@@ -108,7 +107,7 @@ public interface SyncDevicePersistence extends BasePersistence<SyncDevice> {
 	* @return the first matching sync device
 	* @throws NoSuchDeviceException if a matching sync device could not be found
 	*/
-	public SyncDevice findByUuid_First(java.lang.String uuid,
+	public SyncDevice findByUuid_First(String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<SyncDevice> orderByComparator)
 		throws NoSuchDeviceException;
 
@@ -119,7 +118,7 @@ public interface SyncDevicePersistence extends BasePersistence<SyncDevice> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching sync device, or <code>null</code> if a matching sync device could not be found
 	*/
-	public SyncDevice fetchByUuid_First(java.lang.String uuid,
+	public SyncDevice fetchByUuid_First(String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<SyncDevice> orderByComparator);
 
 	/**
@@ -130,7 +129,7 @@ public interface SyncDevicePersistence extends BasePersistence<SyncDevice> {
 	* @return the last matching sync device
 	* @throws NoSuchDeviceException if a matching sync device could not be found
 	*/
-	public SyncDevice findByUuid_Last(java.lang.String uuid,
+	public SyncDevice findByUuid_Last(String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<SyncDevice> orderByComparator)
 		throws NoSuchDeviceException;
 
@@ -141,7 +140,7 @@ public interface SyncDevicePersistence extends BasePersistence<SyncDevice> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching sync device, or <code>null</code> if a matching sync device could not be found
 	*/
-	public SyncDevice fetchByUuid_Last(java.lang.String uuid,
+	public SyncDevice fetchByUuid_Last(String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<SyncDevice> orderByComparator);
 
 	/**
@@ -153,8 +152,7 @@ public interface SyncDevicePersistence extends BasePersistence<SyncDevice> {
 	* @return the previous, current, and next sync device
 	* @throws NoSuchDeviceException if a sync device with the primary key could not be found
 	*/
-	public SyncDevice[] findByUuid_PrevAndNext(long syncDeviceId,
-		java.lang.String uuid,
+	public SyncDevice[] findByUuid_PrevAndNext(long syncDeviceId, String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<SyncDevice> orderByComparator)
 		throws NoSuchDeviceException;
 
@@ -163,7 +161,7 @@ public interface SyncDevicePersistence extends BasePersistence<SyncDevice> {
 	*
 	* @param uuid the uuid
 	*/
-	public void removeByUuid(java.lang.String uuid);
+	public void removeByUuid(String uuid);
 
 	/**
 	* Returns the number of sync devices where uuid = &#63;.
@@ -171,7 +169,7 @@ public interface SyncDevicePersistence extends BasePersistence<SyncDevice> {
 	* @param uuid the uuid
 	* @return the number of matching sync devices
 	*/
-	public int countByUuid(java.lang.String uuid);
+	public int countByUuid(String uuid);
 
 	/**
 	* Returns all the sync devices where uuid = &#63; and companyId = &#63;.
@@ -180,8 +178,7 @@ public interface SyncDevicePersistence extends BasePersistence<SyncDevice> {
 	* @param companyId the company ID
 	* @return the matching sync devices
 	*/
-	public java.util.List<SyncDevice> findByUuid_C(java.lang.String uuid,
-		long companyId);
+	public java.util.List<SyncDevice> findByUuid_C(String uuid, long companyId);
 
 	/**
 	* Returns a range of all the sync devices where uuid = &#63; and companyId = &#63;.
@@ -196,8 +193,8 @@ public interface SyncDevicePersistence extends BasePersistence<SyncDevice> {
 	* @param end the upper bound of the range of sync devices (not inclusive)
 	* @return the range of matching sync devices
 	*/
-	public java.util.List<SyncDevice> findByUuid_C(java.lang.String uuid,
-		long companyId, int start, int end);
+	public java.util.List<SyncDevice> findByUuid_C(String uuid, long companyId,
+		int start, int end);
 
 	/**
 	* Returns an ordered range of all the sync devices where uuid = &#63; and companyId = &#63;.
@@ -213,8 +210,8 @@ public interface SyncDevicePersistence extends BasePersistence<SyncDevice> {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching sync devices
 	*/
-	public java.util.List<SyncDevice> findByUuid_C(java.lang.String uuid,
-		long companyId, int start, int end,
+	public java.util.List<SyncDevice> findByUuid_C(String uuid, long companyId,
+		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<SyncDevice> orderByComparator);
 
 	/**
@@ -232,8 +229,8 @@ public interface SyncDevicePersistence extends BasePersistence<SyncDevice> {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching sync devices
 	*/
-	public java.util.List<SyncDevice> findByUuid_C(java.lang.String uuid,
-		long companyId, int start, int end,
+	public java.util.List<SyncDevice> findByUuid_C(String uuid, long companyId,
+		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<SyncDevice> orderByComparator,
 		boolean retrieveFromCache);
 
@@ -246,7 +243,7 @@ public interface SyncDevicePersistence extends BasePersistence<SyncDevice> {
 	* @return the first matching sync device
 	* @throws NoSuchDeviceException if a matching sync device could not be found
 	*/
-	public SyncDevice findByUuid_C_First(java.lang.String uuid, long companyId,
+	public SyncDevice findByUuid_C_First(String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<SyncDevice> orderByComparator)
 		throws NoSuchDeviceException;
 
@@ -258,8 +255,7 @@ public interface SyncDevicePersistence extends BasePersistence<SyncDevice> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching sync device, or <code>null</code> if a matching sync device could not be found
 	*/
-	public SyncDevice fetchByUuid_C_First(java.lang.String uuid,
-		long companyId,
+	public SyncDevice fetchByUuid_C_First(String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<SyncDevice> orderByComparator);
 
 	/**
@@ -271,7 +267,7 @@ public interface SyncDevicePersistence extends BasePersistence<SyncDevice> {
 	* @return the last matching sync device
 	* @throws NoSuchDeviceException if a matching sync device could not be found
 	*/
-	public SyncDevice findByUuid_C_Last(java.lang.String uuid, long companyId,
+	public SyncDevice findByUuid_C_Last(String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<SyncDevice> orderByComparator)
 		throws NoSuchDeviceException;
 
@@ -283,7 +279,7 @@ public interface SyncDevicePersistence extends BasePersistence<SyncDevice> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching sync device, or <code>null</code> if a matching sync device could not be found
 	*/
-	public SyncDevice fetchByUuid_C_Last(java.lang.String uuid, long companyId,
+	public SyncDevice fetchByUuid_C_Last(String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<SyncDevice> orderByComparator);
 
 	/**
@@ -297,7 +293,7 @@ public interface SyncDevicePersistence extends BasePersistence<SyncDevice> {
 	* @throws NoSuchDeviceException if a sync device with the primary key could not be found
 	*/
 	public SyncDevice[] findByUuid_C_PrevAndNext(long syncDeviceId,
-		java.lang.String uuid, long companyId,
+		String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<SyncDevice> orderByComparator)
 		throws NoSuchDeviceException;
 
@@ -307,7 +303,7 @@ public interface SyncDevicePersistence extends BasePersistence<SyncDevice> {
 	* @param uuid the uuid
 	* @param companyId the company ID
 	*/
-	public void removeByUuid_C(java.lang.String uuid, long companyId);
+	public void removeByUuid_C(String uuid, long companyId);
 
 	/**
 	* Returns the number of sync devices where uuid = &#63; and companyId = &#63;.
@@ -316,7 +312,7 @@ public interface SyncDevicePersistence extends BasePersistence<SyncDevice> {
 	* @param companyId the company ID
 	* @return the number of matching sync devices
 	*/
-	public int countByUuid_C(java.lang.String uuid, long companyId);
+	public int countByUuid_C(String uuid, long companyId);
 
 	/**
 	* Returns all the sync devices where userId = &#63;.
@@ -457,8 +453,7 @@ public interface SyncDevicePersistence extends BasePersistence<SyncDevice> {
 	* @param userName the user name
 	* @return the matching sync devices
 	*/
-	public java.util.List<SyncDevice> findByC_U(long companyId,
-		java.lang.String userName);
+	public java.util.List<SyncDevice> findByC_U(long companyId, String userName);
 
 	/**
 	* Returns a range of all the sync devices where companyId = &#63; and userName LIKE &#63;.
@@ -474,7 +469,7 @@ public interface SyncDevicePersistence extends BasePersistence<SyncDevice> {
 	* @return the range of matching sync devices
 	*/
 	public java.util.List<SyncDevice> findByC_U(long companyId,
-		java.lang.String userName, int start, int end);
+		String userName, int start, int end);
 
 	/**
 	* Returns an ordered range of all the sync devices where companyId = &#63; and userName LIKE &#63;.
@@ -491,7 +486,7 @@ public interface SyncDevicePersistence extends BasePersistence<SyncDevice> {
 	* @return the ordered range of matching sync devices
 	*/
 	public java.util.List<SyncDevice> findByC_U(long companyId,
-		java.lang.String userName, int start, int end,
+		String userName, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<SyncDevice> orderByComparator);
 
 	/**
@@ -510,7 +505,7 @@ public interface SyncDevicePersistence extends BasePersistence<SyncDevice> {
 	* @return the ordered range of matching sync devices
 	*/
 	public java.util.List<SyncDevice> findByC_U(long companyId,
-		java.lang.String userName, int start, int end,
+		String userName, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<SyncDevice> orderByComparator,
 		boolean retrieveFromCache);
 
@@ -523,8 +518,7 @@ public interface SyncDevicePersistence extends BasePersistence<SyncDevice> {
 	* @return the first matching sync device
 	* @throws NoSuchDeviceException if a matching sync device could not be found
 	*/
-	public SyncDevice findByC_U_First(long companyId,
-		java.lang.String userName,
+	public SyncDevice findByC_U_First(long companyId, String userName,
 		com.liferay.portal.kernel.util.OrderByComparator<SyncDevice> orderByComparator)
 		throws NoSuchDeviceException;
 
@@ -536,8 +530,7 @@ public interface SyncDevicePersistence extends BasePersistence<SyncDevice> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching sync device, or <code>null</code> if a matching sync device could not be found
 	*/
-	public SyncDevice fetchByC_U_First(long companyId,
-		java.lang.String userName,
+	public SyncDevice fetchByC_U_First(long companyId, String userName,
 		com.liferay.portal.kernel.util.OrderByComparator<SyncDevice> orderByComparator);
 
 	/**
@@ -549,7 +542,7 @@ public interface SyncDevicePersistence extends BasePersistence<SyncDevice> {
 	* @return the last matching sync device
 	* @throws NoSuchDeviceException if a matching sync device could not be found
 	*/
-	public SyncDevice findByC_U_Last(long companyId, java.lang.String userName,
+	public SyncDevice findByC_U_Last(long companyId, String userName,
 		com.liferay.portal.kernel.util.OrderByComparator<SyncDevice> orderByComparator)
 		throws NoSuchDeviceException;
 
@@ -561,8 +554,7 @@ public interface SyncDevicePersistence extends BasePersistence<SyncDevice> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching sync device, or <code>null</code> if a matching sync device could not be found
 	*/
-	public SyncDevice fetchByC_U_Last(long companyId,
-		java.lang.String userName,
+	public SyncDevice fetchByC_U_Last(long companyId, String userName,
 		com.liferay.portal.kernel.util.OrderByComparator<SyncDevice> orderByComparator);
 
 	/**
@@ -576,7 +568,7 @@ public interface SyncDevicePersistence extends BasePersistence<SyncDevice> {
 	* @throws NoSuchDeviceException if a sync device with the primary key could not be found
 	*/
 	public SyncDevice[] findByC_U_PrevAndNext(long syncDeviceId,
-		long companyId, java.lang.String userName,
+		long companyId, String userName,
 		com.liferay.portal.kernel.util.OrderByComparator<SyncDevice> orderByComparator)
 		throws NoSuchDeviceException;
 
@@ -586,7 +578,7 @@ public interface SyncDevicePersistence extends BasePersistence<SyncDevice> {
 	* @param companyId the company ID
 	* @param userName the user name
 	*/
-	public void removeByC_U(long companyId, java.lang.String userName);
+	public void removeByC_U(long companyId, String userName);
 
 	/**
 	* Returns the number of sync devices where companyId = &#63; and userName LIKE &#63;.
@@ -595,7 +587,7 @@ public interface SyncDevicePersistence extends BasePersistence<SyncDevice> {
 	* @param userName the user name
 	* @return the number of matching sync devices
 	*/
-	public int countByC_U(long companyId, java.lang.String userName);
+	public int countByC_U(long companyId, String userName);
 
 	/**
 	* Caches the sync device in the entity cache if it is enabled.
@@ -717,5 +709,5 @@ public interface SyncDevicePersistence extends BasePersistence<SyncDevice> {
 	public int countAll();
 
 	@Override
-	public java.util.Set<java.lang.String> getBadColumnNames();
+	public java.util.Set<String> getBadColumnNames();
 }

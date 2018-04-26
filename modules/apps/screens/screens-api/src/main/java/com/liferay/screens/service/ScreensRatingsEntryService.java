@@ -51,27 +51,24 @@ public interface ScreensRatingsEntryService extends BaseService {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link ScreensRatingsEntryServiceUtil} to access the screens ratings entry remote service. Add custom service methods to {@link com.liferay.screens.service.impl.ScreensRatingsEntryServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public JSONObject deleteRatingsEntry(long classPK,
-		java.lang.String className, int ratingsLength)
-		throws PortalException;
+	public JSONObject deleteRatingsEntry(long classPK, String className,
+		int ratingsLength) throws PortalException;
 
 	/**
 	* Returns the OSGi service identifier.
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public JSONObject getRatingsEntries(long assetEntryId, int ratingsLength)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public JSONObject getRatingsEntries(long classPK,
-		java.lang.String className, int ratingsLength)
-		throws PortalException;
+	public JSONObject getRatingsEntries(long classPK, String className,
+		int ratingsLength) throws PortalException;
 
-	public JSONObject updateRatingsEntry(long classPK,
-		java.lang.String className, double score, int ratingsLength)
-		throws PortalException;
+	public JSONObject updateRatingsEntry(long classPK, String className,
+		double score, int ratingsLength) throws PortalException;
 }

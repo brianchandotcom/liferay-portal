@@ -182,8 +182,8 @@ public interface DDLRecordSetVersionPersistence extends BasePersistence<DDLRecor
 	* @return the matching ddl record set version
 	* @throws NoSuchRecordSetVersionException if a matching ddl record set version could not be found
 	*/
-	public DDLRecordSetVersion findByRS_V(long recordSetId,
-		java.lang.String version) throws NoSuchRecordSetVersionException;
+	public DDLRecordSetVersion findByRS_V(long recordSetId, String version)
+		throws NoSuchRecordSetVersionException;
 
 	/**
 	* Returns the ddl record set version where recordSetId = &#63; and version = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
@@ -192,8 +192,7 @@ public interface DDLRecordSetVersionPersistence extends BasePersistence<DDLRecor
 	* @param version the version
 	* @return the matching ddl record set version, or <code>null</code> if a matching ddl record set version could not be found
 	*/
-	public DDLRecordSetVersion fetchByRS_V(long recordSetId,
-		java.lang.String version);
+	public DDLRecordSetVersion fetchByRS_V(long recordSetId, String version);
 
 	/**
 	* Returns the ddl record set version where recordSetId = &#63; and version = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -203,8 +202,8 @@ public interface DDLRecordSetVersionPersistence extends BasePersistence<DDLRecor
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching ddl record set version, or <code>null</code> if a matching ddl record set version could not be found
 	*/
-	public DDLRecordSetVersion fetchByRS_V(long recordSetId,
-		java.lang.String version, boolean retrieveFromCache);
+	public DDLRecordSetVersion fetchByRS_V(long recordSetId, String version,
+		boolean retrieveFromCache);
 
 	/**
 	* Removes the ddl record set version where recordSetId = &#63; and version = &#63; from the database.
@@ -213,8 +212,8 @@ public interface DDLRecordSetVersionPersistence extends BasePersistence<DDLRecor
 	* @param version the version
 	* @return the ddl record set version that was removed
 	*/
-	public DDLRecordSetVersion removeByRS_V(long recordSetId,
-		java.lang.String version) throws NoSuchRecordSetVersionException;
+	public DDLRecordSetVersion removeByRS_V(long recordSetId, String version)
+		throws NoSuchRecordSetVersionException;
 
 	/**
 	* Returns the number of ddl record set versions where recordSetId = &#63; and version = &#63;.
@@ -223,7 +222,7 @@ public interface DDLRecordSetVersionPersistence extends BasePersistence<DDLRecor
 	* @param version the version
 	* @return the number of matching ddl record set versions
 	*/
-	public int countByRS_V(long recordSetId, java.lang.String version);
+	public int countByRS_V(long recordSetId, String version);
 
 	/**
 	* Returns all the ddl record set versions where recordSetId = &#63; and status = &#63;.
@@ -492,5 +491,5 @@ public interface DDLRecordSetVersionPersistence extends BasePersistence<DDLRecor
 	public int countAll();
 
 	@Override
-	public java.util.Set<java.lang.String> getBadColumnNames();
+	public java.util.Set<String> getBadColumnNames();
 }

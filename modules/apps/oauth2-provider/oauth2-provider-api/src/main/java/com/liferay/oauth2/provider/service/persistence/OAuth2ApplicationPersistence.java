@@ -243,7 +243,7 @@ public interface OAuth2ApplicationPersistence extends BasePersistence<OAuth2Appl
 	* @return the matching o auth2 application
 	* @throws NoSuchOAuth2ApplicationException if a matching o auth2 application could not be found
 	*/
-	public OAuth2Application findByC_C(long companyId, java.lang.String clientId)
+	public OAuth2Application findByC_C(long companyId, String clientId)
 		throws NoSuchOAuth2ApplicationException;
 
 	/**
@@ -253,8 +253,7 @@ public interface OAuth2ApplicationPersistence extends BasePersistence<OAuth2Appl
 	* @param clientId the client ID
 	* @return the matching o auth2 application, or <code>null</code> if a matching o auth2 application could not be found
 	*/
-	public OAuth2Application fetchByC_C(long companyId,
-		java.lang.String clientId);
+	public OAuth2Application fetchByC_C(long companyId, String clientId);
 
 	/**
 	* Returns the o auth2 application where companyId = &#63; and clientId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -264,8 +263,8 @@ public interface OAuth2ApplicationPersistence extends BasePersistence<OAuth2Appl
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching o auth2 application, or <code>null</code> if a matching o auth2 application could not be found
 	*/
-	public OAuth2Application fetchByC_C(long companyId,
-		java.lang.String clientId, boolean retrieveFromCache);
+	public OAuth2Application fetchByC_C(long companyId, String clientId,
+		boolean retrieveFromCache);
 
 	/**
 	* Removes the o auth2 application where companyId = &#63; and clientId = &#63; from the database.
@@ -274,8 +273,8 @@ public interface OAuth2ApplicationPersistence extends BasePersistence<OAuth2Appl
 	* @param clientId the client ID
 	* @return the o auth2 application that was removed
 	*/
-	public OAuth2Application removeByC_C(long companyId,
-		java.lang.String clientId) throws NoSuchOAuth2ApplicationException;
+	public OAuth2Application removeByC_C(long companyId, String clientId)
+		throws NoSuchOAuth2ApplicationException;
 
 	/**
 	* Returns the number of o auth2 applications where companyId = &#63; and clientId = &#63;.
@@ -284,7 +283,7 @@ public interface OAuth2ApplicationPersistence extends BasePersistence<OAuth2Appl
 	* @param clientId the client ID
 	* @return the number of matching o auth2 applications
 	*/
-	public int countByC_C(long companyId, java.lang.String clientId);
+	public int countByC_C(long companyId, String clientId);
 
 	/**
 	* Caches the o auth2 application in the entity cache if it is enabled.
@@ -408,5 +407,5 @@ public interface OAuth2ApplicationPersistence extends BasePersistence<OAuth2Appl
 	public int countAll();
 
 	@Override
-	public java.util.Set<java.lang.String> getBadColumnNames();
+	public java.util.Set<String> getBadColumnNames();
 }

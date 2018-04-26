@@ -141,13 +141,13 @@ public class ResourcePermissionWrapper implements ResourcePermission,
 	}
 
 	@Override
-	public void addResourceAction(java.lang.String actionId)
+	public void addResourceAction(String actionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_resourcePermission.addResourceAction(actionId);
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new ResourcePermissionWrapper((ResourcePermission)_resourcePermission.clone());
 	}
 
@@ -197,7 +197,7 @@ public class ResourcePermissionWrapper implements ResourcePermission,
 	* @return the name of this resource permission
 	*/
 	@Override
-	public java.lang.String getName() {
+	public String getName() {
 		return _resourcePermission.getName();
 	}
 
@@ -232,7 +232,7 @@ public class ResourcePermissionWrapper implements ResourcePermission,
 	* @return the prim key of this resource permission
 	*/
 	@Override
-	public java.lang.String getPrimKey() {
+	public String getPrimKey() {
 		return _resourcePermission.getPrimKey();
 	}
 
@@ -292,7 +292,7 @@ public class ResourcePermissionWrapper implements ResourcePermission,
 	}
 
 	@Override
-	public boolean hasActionId(java.lang.String actionId) {
+	public boolean hasActionId(String actionId) {
 		return _resourcePermission.hasActionId(actionId);
 	}
 
@@ -332,7 +332,7 @@ public class ResourcePermissionWrapper implements ResourcePermission,
 	}
 
 	@Override
-	public void removeResourceAction(java.lang.String actionId)
+	public void removeResourceAction(String actionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_resourcePermission.removeResourceAction(actionId);
 	}
@@ -393,7 +393,7 @@ public class ResourcePermissionWrapper implements ResourcePermission,
 	* @param name the name of this resource permission
 	*/
 	@Override
-	public void setName(java.lang.String name) {
+	public void setName(String name) {
 		_resourcePermission.setName(name);
 	}
 
@@ -433,7 +433,7 @@ public class ResourcePermissionWrapper implements ResourcePermission,
 	* @param primKey the prim key of this resource permission
 	*/
 	@Override
-	public void setPrimKey(java.lang.String primKey) {
+	public void setPrimKey(String primKey) {
 		_resourcePermission.setPrimKey(primKey);
 	}
 
@@ -498,7 +498,7 @@ public class ResourcePermissionWrapper implements ResourcePermission,
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _resourcePermission.toString();
 	}
 
@@ -508,7 +508,7 @@ public class ResourcePermissionWrapper implements ResourcePermission,
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _resourcePermission.toXmlString();
 	}
 

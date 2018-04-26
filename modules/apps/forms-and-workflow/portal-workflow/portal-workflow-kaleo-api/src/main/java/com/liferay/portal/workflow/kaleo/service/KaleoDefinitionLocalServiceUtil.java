@@ -57,8 +57,7 @@ public class KaleoDefinitionLocalServiceUtil {
 		getService().activateKaleoDefinition(kaleoDefinitionId, serviceContext);
 	}
 
-	public static void activateKaleoDefinition(java.lang.String name,
-		int version,
+	public static void activateKaleoDefinition(String name, int version,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().activateKaleoDefinition(name, version, serviceContext);
@@ -76,8 +75,8 @@ public class KaleoDefinitionLocalServiceUtil {
 	}
 
 	public static com.liferay.portal.workflow.kaleo.model.KaleoDefinition addKaleoDefinition(
-		java.lang.String name, java.lang.String title,
-		java.lang.String description, java.lang.String content, int version,
+		String name, String title, String description, String content,
+		int version,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
@@ -96,8 +95,7 @@ public class KaleoDefinitionLocalServiceUtil {
 		return getService().createKaleoDefinition(kaleoDefinitionId);
 	}
 
-	public static void deactivateKaleoDefinition(java.lang.String name,
-		int version,
+	public static void deactivateKaleoDefinition(String name, int version,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().deactivateKaleoDefinition(name, version, serviceContext);
@@ -131,7 +129,7 @@ public class KaleoDefinitionLocalServiceUtil {
 		return getService().deleteKaleoDefinition(kaleoDefinitionId);
 	}
 
-	public static void deleteKaleoDefinition(java.lang.String name,
+	public static void deleteKaleoDefinition(String name,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().deleteKaleoDefinition(name, serviceContext);
@@ -230,7 +228,7 @@ public class KaleoDefinitionLocalServiceUtil {
 	}
 
 	public static com.liferay.portal.workflow.kaleo.model.KaleoDefinition fetchKaleoDefinition(
-		java.lang.String name,
+		String name,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext) {
 		return getService().fetchKaleoDefinition(name, serviceContext);
 	}
@@ -257,7 +255,7 @@ public class KaleoDefinitionLocalServiceUtil {
 	}
 
 	public static com.liferay.portal.workflow.kaleo.model.KaleoDefinition getKaleoDefinition(
-		java.lang.String name,
+		String name,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getKaleoDefinition(name, serviceContext);
@@ -316,14 +314,13 @@ public class KaleoDefinitionLocalServiceUtil {
 		return getService().getKaleoDefinitionsCount(serviceContext);
 	}
 
-	public static int getKaleoDefinitionsCount(java.lang.String name,
-		boolean active,
+	public static int getKaleoDefinitionsCount(String name, boolean active,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext) {
 		return getService()
 				   .getKaleoDefinitionsCount(name, active, serviceContext);
 	}
 
-	public static int getKaleoDefinitionsCount(java.lang.String name,
+	public static int getKaleoDefinitionsCount(String name,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext) {
 		return getService().getKaleoDefinitionsCount(name, serviceContext);
 	}
@@ -333,7 +330,7 @@ public class KaleoDefinitionLocalServiceUtil {
 	*
 	* @return the OSGi service identifier
 	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
+	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 
@@ -344,8 +341,8 @@ public class KaleoDefinitionLocalServiceUtil {
 	}
 
 	public static com.liferay.portal.workflow.kaleo.model.KaleoDefinition updatedKaleoDefinition(
-		long kaleoDefinitionId, java.lang.String title,
-		java.lang.String description, java.lang.String content,
+		long kaleoDefinitionId, String title, String description,
+		String content,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()

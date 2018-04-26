@@ -48,7 +48,7 @@ public interface MemberRequestPersistence extends BasePersistence<MemberRequest>
 	* @return the matching member request
 	* @throws NoSuchMemberRequestException if a matching member request could not be found
 	*/
-	public MemberRequest findByKey(java.lang.String key)
+	public MemberRequest findByKey(String key)
 		throws NoSuchMemberRequestException;
 
 	/**
@@ -57,7 +57,7 @@ public interface MemberRequestPersistence extends BasePersistence<MemberRequest>
 	* @param key the key
 	* @return the matching member request, or <code>null</code> if a matching member request could not be found
 	*/
-	public MemberRequest fetchByKey(java.lang.String key);
+	public MemberRequest fetchByKey(String key);
 
 	/**
 	* Returns the member request where key = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -66,8 +66,7 @@ public interface MemberRequestPersistence extends BasePersistence<MemberRequest>
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching member request, or <code>null</code> if a matching member request could not be found
 	*/
-	public MemberRequest fetchByKey(java.lang.String key,
-		boolean retrieveFromCache);
+	public MemberRequest fetchByKey(String key, boolean retrieveFromCache);
 
 	/**
 	* Removes the member request where key = &#63; from the database.
@@ -75,7 +74,7 @@ public interface MemberRequestPersistence extends BasePersistence<MemberRequest>
 	* @param key the key
 	* @return the member request that was removed
 	*/
-	public MemberRequest removeByKey(java.lang.String key)
+	public MemberRequest removeByKey(String key)
 		throws NoSuchMemberRequestException;
 
 	/**
@@ -84,7 +83,7 @@ public interface MemberRequestPersistence extends BasePersistence<MemberRequest>
 	* @param key the key
 	* @return the number of matching member requests
 	*/
-	public int countByKey(java.lang.String key);
+	public int countByKey(String key);
 
 	/**
 	* Returns all the member requests where receiverUserId = &#63;.
@@ -540,5 +539,5 @@ public interface MemberRequestPersistence extends BasePersistence<MemberRequest>
 	public int countAll();
 
 	@Override
-	public java.util.Set<java.lang.String> getBadColumnNames();
+	public java.util.Set<String> getBadColumnNames();
 }

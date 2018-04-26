@@ -43,7 +43,7 @@ public class FragmentCollectionServiceUtil {
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.fragment.service.impl.FragmentCollectionServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static com.liferay.fragment.model.FragmentCollection addFragmentCollection(
-		long groupId, java.lang.String name, java.lang.String description,
+		long groupId, String name, String description,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
@@ -52,8 +52,8 @@ public class FragmentCollectionServiceUtil {
 	}
 
 	public static com.liferay.fragment.model.FragmentCollection addFragmentCollection(
-		long groupId, java.lang.String fragmentCollectionKey,
-		java.lang.String name, java.lang.String description,
+		long groupId, String fragmentCollectionKey, String name,
+		String description,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
@@ -97,7 +97,7 @@ public class FragmentCollectionServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.fragment.model.FragmentCollection> getFragmentCollections(
-		long groupId, java.lang.String name, int start, int end,
+		long groupId, String name, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.fragment.model.FragmentCollection> orderByComparator) {
 		return getService()
 				   .getFragmentCollections(groupId, name, start, end,
@@ -108,8 +108,7 @@ public class FragmentCollectionServiceUtil {
 		return getService().getFragmentCollectionsCount(groupId);
 	}
 
-	public static int getFragmentCollectionsCount(long groupId,
-		java.lang.String name) {
+	public static int getFragmentCollectionsCount(long groupId, String name) {
 		return getService().getFragmentCollectionsCount(groupId, name);
 	}
 
@@ -118,19 +117,17 @@ public class FragmentCollectionServiceUtil {
 	*
 	* @return the OSGi service identifier
 	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
+	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 
-	public static java.lang.String[] getTempFileNames(long groupId,
-		java.lang.String folderName)
+	public static String[] getTempFileNames(long groupId, String folderName)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getTempFileNames(groupId, folderName);
 	}
 
 	public static com.liferay.fragment.model.FragmentCollection updateFragmentCollection(
-		long fragmentCollectionId, java.lang.String name,
-		java.lang.String description)
+		long fragmentCollectionId, String name, String description)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .updateFragmentCollection(fragmentCollectionId, name,

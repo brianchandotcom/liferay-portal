@@ -56,7 +56,7 @@ public interface DLTrashService extends BaseService {
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	/**
 	* Moves the file entry from a trashed folder to the new folder.

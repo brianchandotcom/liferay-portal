@@ -273,7 +273,7 @@ public class PortletUtil {
 	* @return the matching portlet
 	* @throws NoSuchPortletException if a matching portlet could not be found
 	*/
-	public static Portlet findByC_P(long companyId, java.lang.String portletId)
+	public static Portlet findByC_P(long companyId, String portletId)
 		throws com.liferay.portal.kernel.exception.NoSuchPortletException {
 		return getPersistence().findByC_P(companyId, portletId);
 	}
@@ -285,7 +285,7 @@ public class PortletUtil {
 	* @param portletId the portlet ID
 	* @return the matching portlet, or <code>null</code> if a matching portlet could not be found
 	*/
-	public static Portlet fetchByC_P(long companyId, java.lang.String portletId) {
+	public static Portlet fetchByC_P(long companyId, String portletId) {
 		return getPersistence().fetchByC_P(companyId, portletId);
 	}
 
@@ -297,8 +297,8 @@ public class PortletUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching portlet, or <code>null</code> if a matching portlet could not be found
 	*/
-	public static Portlet fetchByC_P(long companyId,
-		java.lang.String portletId, boolean retrieveFromCache) {
+	public static Portlet fetchByC_P(long companyId, String portletId,
+		boolean retrieveFromCache) {
 		return getPersistence()
 				   .fetchByC_P(companyId, portletId, retrieveFromCache);
 	}
@@ -310,7 +310,7 @@ public class PortletUtil {
 	* @param portletId the portlet ID
 	* @return the portlet that was removed
 	*/
-	public static Portlet removeByC_P(long companyId, java.lang.String portletId)
+	public static Portlet removeByC_P(long companyId, String portletId)
 		throws com.liferay.portal.kernel.exception.NoSuchPortletException {
 		return getPersistence().removeByC_P(companyId, portletId);
 	}
@@ -322,7 +322,7 @@ public class PortletUtil {
 	* @param portletId the portlet ID
 	* @return the number of matching portlets
 	*/
-	public static int countByC_P(long companyId, java.lang.String portletId) {
+	public static int countByC_P(long companyId, String portletId) {
 		return getPersistence().countByC_P(companyId, portletId);
 	}
 
@@ -473,7 +473,7 @@ public class PortletUtil {
 		return getPersistence().countAll();
 	}
 
-	public static java.util.Set<java.lang.String> getBadColumnNames() {
+	public static java.util.Set<String> getBadColumnNames() {
 		return getPersistence().getBadColumnNames();
 	}
 

@@ -66,9 +66,8 @@ import java.rmi.RemoteException;
 @ProviderType
 public class ExpandoValueServiceSoap {
 	public static com.liferay.expando.kernel.model.ExpandoValueSoap addValue(
-		long companyId, java.lang.String className, java.lang.String tableName,
-		java.lang.String columnName, long classPK, java.lang.Object data)
-		throws RemoteException {
+		long companyId, String className, String tableName, String columnName,
+		long classPK, Object data) throws RemoteException {
 		try {
 			com.liferay.expando.kernel.model.ExpandoValue returnValue = ExpandoValueServiceUtil.addValue(companyId,
 					className, tableName, columnName, classPK, data);
@@ -83,9 +82,8 @@ public class ExpandoValueServiceSoap {
 	}
 
 	public static com.liferay.expando.kernel.model.ExpandoValueSoap addValue(
-		long companyId, java.lang.String className, java.lang.String tableName,
-		java.lang.String columnName, long classPK, java.lang.String data)
-		throws RemoteException {
+		long companyId, String className, String tableName, String columnName,
+		long classPK, String data) throws RemoteException {
 		try {
 			com.liferay.expando.kernel.model.ExpandoValue returnValue = ExpandoValueServiceUtil.addValue(companyId,
 					className, tableName, columnName, classPK, data);
@@ -99,9 +97,9 @@ public class ExpandoValueServiceSoap {
 		}
 	}
 
-	public static java.lang.String getJSONData(long companyId,
-		java.lang.String className, java.lang.String tableName,
-		java.lang.String columnName, long classPK) throws RemoteException {
+	public static String getJSONData(long companyId, String className,
+		String tableName, String columnName, long classPK)
+		throws RemoteException {
 		try {
 			com.liferay.portal.kernel.json.JSONObject returnValue = ExpandoValueServiceUtil.getJSONData(companyId,
 					className, tableName, columnName, classPK);

@@ -55,8 +55,8 @@ public class AttachmentLocalServiceUtil {
 	}
 
 	public static com.liferay.mail.reader.model.Attachment addAttachment(
-		long userId, long messageId, java.lang.String contentPath,
-		java.lang.String fileName, long size, java.io.File file)
+		long userId, long messageId, String contentPath, String fileName,
+		long size, java.io.File file)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addAttachment(userId, messageId, contentPath, fileName,
@@ -261,7 +261,7 @@ public class AttachmentLocalServiceUtil {
 	*
 	* @return the OSGi service identifier
 	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
+	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 

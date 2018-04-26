@@ -194,7 +194,7 @@ public class OAuth2ApplicationWrapper implements OAuth2Application,
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new OAuth2ApplicationWrapper((OAuth2Application)_oAuth2Application.clone());
 	}
 
@@ -209,7 +209,7 @@ public class OAuth2ApplicationWrapper implements OAuth2Application,
 	* @return the allowed grant types of this o auth2 application
 	*/
 	@Override
-	public java.lang.String getAllowedGrantTypes() {
+	public String getAllowedGrantTypes() {
 		return _oAuth2Application.getAllowedGrantTypes();
 	}
 
@@ -224,7 +224,7 @@ public class OAuth2ApplicationWrapper implements OAuth2Application,
 	* @return the client ID of this o auth2 application
 	*/
 	@Override
-	public java.lang.String getClientId() {
+	public String getClientId() {
 		return _oAuth2Application.getClientId();
 	}
 
@@ -244,7 +244,7 @@ public class OAuth2ApplicationWrapper implements OAuth2Application,
 	* @return the client secret of this o auth2 application
 	*/
 	@Override
-	public java.lang.String getClientSecret() {
+	public String getClientSecret() {
 		return _oAuth2Application.getClientSecret();
 	}
 
@@ -274,7 +274,7 @@ public class OAuth2ApplicationWrapper implements OAuth2Application,
 	* @return the description of this o auth2 application
 	*/
 	@Override
-	public java.lang.String getDescription() {
+	public String getDescription() {
 		return _oAuth2Application.getDescription();
 	}
 
@@ -289,12 +289,12 @@ public class OAuth2ApplicationWrapper implements OAuth2Application,
 	* @return the features of this o auth2 application
 	*/
 	@Override
-	public java.lang.String getFeatures() {
+	public String getFeatures() {
 		return _oAuth2Application.getFeatures();
 	}
 
 	@Override
-	public java.util.List<java.lang.String> getFeaturesList() {
+	public java.util.List<String> getFeaturesList() {
 		return _oAuth2Application.getFeaturesList();
 	}
 
@@ -304,7 +304,7 @@ public class OAuth2ApplicationWrapper implements OAuth2Application,
 	* @return the home page url of this o auth2 application
 	*/
 	@Override
-	public java.lang.String getHomePageURL() {
+	public String getHomePageURL() {
 		return _oAuth2Application.getHomePageURL();
 	}
 
@@ -334,7 +334,7 @@ public class OAuth2ApplicationWrapper implements OAuth2Application,
 	* @return the name of this o auth2 application
 	*/
 	@Override
-	public java.lang.String getName() {
+	public String getName() {
 		return _oAuth2Application.getName();
 	}
 
@@ -379,7 +379,7 @@ public class OAuth2ApplicationWrapper implements OAuth2Application,
 	* @return the privacy policy url of this o auth2 application
 	*/
 	@Override
-	public java.lang.String getPrivacyPolicyURL() {
+	public String getPrivacyPolicyURL() {
 		return _oAuth2Application.getPrivacyPolicyURL();
 	}
 
@@ -389,12 +389,12 @@ public class OAuth2ApplicationWrapper implements OAuth2Application,
 	* @return the redirect ur is of this o auth2 application
 	*/
 	@Override
-	public java.lang.String getRedirectURIs() {
+	public String getRedirectURIs() {
 		return _oAuth2Application.getRedirectURIs();
 	}
 
 	@Override
-	public java.util.List<java.lang.String> getRedirectURIsList() {
+	public java.util.List<String> getRedirectURIsList() {
 		return _oAuth2Application.getRedirectURIsList();
 	}
 
@@ -414,7 +414,7 @@ public class OAuth2ApplicationWrapper implements OAuth2Application,
 	* @return the user name of this o auth2 application
 	*/
 	@Override
-	public java.lang.String getUserName() {
+	public String getUserName() {
 		return _oAuth2Application.getUserName();
 	}
 
@@ -424,7 +424,7 @@ public class OAuth2ApplicationWrapper implements OAuth2Application,
 	* @return the user uuid of this o auth2 application
 	*/
 	@Override
-	public java.lang.String getUserUuid() {
+	public String getUserUuid() {
 		return _oAuth2Application.getUserUuid();
 	}
 
@@ -459,7 +459,7 @@ public class OAuth2ApplicationWrapper implements OAuth2Application,
 	* @param allowedGrantTypes the allowed grant types of this o auth2 application
 	*/
 	@Override
-	public void setAllowedGrantTypes(java.lang.String allowedGrantTypes) {
+	public void setAllowedGrantTypes(String allowedGrantTypes) {
 		_oAuth2Application.setAllowedGrantTypes(allowedGrantTypes);
 	}
 
@@ -480,7 +480,7 @@ public class OAuth2ApplicationWrapper implements OAuth2Application,
 	* @param clientId the client ID of this o auth2 application
 	*/
 	@Override
-	public void setClientId(java.lang.String clientId) {
+	public void setClientId(String clientId) {
 		_oAuth2Application.setClientId(clientId);
 	}
 
@@ -500,7 +500,7 @@ public class OAuth2ApplicationWrapper implements OAuth2Application,
 	* @param clientSecret the client secret of this o auth2 application
 	*/
 	@Override
-	public void setClientSecret(java.lang.String clientSecret) {
+	public void setClientSecret(String clientSecret) {
 		_oAuth2Application.setClientSecret(clientSecret);
 	}
 
@@ -530,7 +530,7 @@ public class OAuth2ApplicationWrapper implements OAuth2Application,
 	* @param description the description of this o auth2 application
 	*/
 	@Override
-	public void setDescription(java.lang.String description) {
+	public void setDescription(String description) {
 		_oAuth2Application.setDescription(description);
 	}
 
@@ -556,12 +556,12 @@ public class OAuth2ApplicationWrapper implements OAuth2Application,
 	* @param features the features of this o auth2 application
 	*/
 	@Override
-	public void setFeatures(java.lang.String features) {
+	public void setFeatures(String features) {
 		_oAuth2Application.setFeatures(features);
 	}
 
 	@Override
-	public void setFeaturesList(java.util.List<java.lang.String> featuresList) {
+	public void setFeaturesList(java.util.List<String> featuresList) {
 		_oAuth2Application.setFeaturesList(featuresList);
 	}
 
@@ -571,7 +571,7 @@ public class OAuth2ApplicationWrapper implements OAuth2Application,
 	* @param homePageURL the home page url of this o auth2 application
 	*/
 	@Override
-	public void setHomePageURL(java.lang.String homePageURL) {
+	public void setHomePageURL(String homePageURL) {
 		_oAuth2Application.setHomePageURL(homePageURL);
 	}
 
@@ -601,7 +601,7 @@ public class OAuth2ApplicationWrapper implements OAuth2Application,
 	* @param name the name of this o auth2 application
 	*/
 	@Override
-	public void setName(java.lang.String name) {
+	public void setName(String name) {
 		_oAuth2Application.setName(name);
 	}
 
@@ -652,7 +652,7 @@ public class OAuth2ApplicationWrapper implements OAuth2Application,
 	* @param privacyPolicyURL the privacy policy url of this o auth2 application
 	*/
 	@Override
-	public void setPrivacyPolicyURL(java.lang.String privacyPolicyURL) {
+	public void setPrivacyPolicyURL(String privacyPolicyURL) {
 		_oAuth2Application.setPrivacyPolicyURL(privacyPolicyURL);
 	}
 
@@ -662,13 +662,12 @@ public class OAuth2ApplicationWrapper implements OAuth2Application,
 	* @param redirectURIs the redirect ur is of this o auth2 application
 	*/
 	@Override
-	public void setRedirectURIs(java.lang.String redirectURIs) {
+	public void setRedirectURIs(String redirectURIs) {
 		_oAuth2Application.setRedirectURIs(redirectURIs);
 	}
 
 	@Override
-	public void setRedirectURIsList(
-		java.util.List<java.lang.String> redirectURIsList) {
+	public void setRedirectURIsList(java.util.List<String> redirectURIsList) {
 		_oAuth2Application.setRedirectURIsList(redirectURIsList);
 	}
 
@@ -688,7 +687,7 @@ public class OAuth2ApplicationWrapper implements OAuth2Application,
 	* @param userName the user name of this o auth2 application
 	*/
 	@Override
-	public void setUserName(java.lang.String userName) {
+	public void setUserName(String userName) {
 		_oAuth2Application.setUserName(userName);
 	}
 
@@ -698,7 +697,7 @@ public class OAuth2ApplicationWrapper implements OAuth2Application,
 	* @param userUuid the user uuid of this o auth2 application
 	*/
 	@Override
-	public void setUserUuid(java.lang.String userUuid) {
+	public void setUserUuid(String userUuid) {
 		_oAuth2Application.setUserUuid(userUuid);
 	}
 
@@ -713,7 +712,7 @@ public class OAuth2ApplicationWrapper implements OAuth2Application,
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _oAuth2Application.toString();
 	}
 
@@ -723,7 +722,7 @@ public class OAuth2ApplicationWrapper implements OAuth2Application,
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _oAuth2Application.toXmlString();
 	}
 

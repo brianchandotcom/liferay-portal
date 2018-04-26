@@ -112,7 +112,7 @@ public class ExpandoColumnWrapper implements ExpandoColumn,
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new ExpandoColumnWrapper((ExpandoColumn)_expandoColumn.clone());
 	}
 
@@ -147,7 +147,7 @@ public class ExpandoColumnWrapper implements ExpandoColumn,
 	* @return the default data of this expando column
 	*/
 	@Override
-	public java.lang.String getDefaultData() {
+	public String getDefaultData() {
 		return _expandoColumn.getDefaultData();
 	}
 
@@ -157,7 +157,7 @@ public class ExpandoColumnWrapper implements ExpandoColumn,
 	}
 
 	@Override
-	public java.lang.String getDisplayName(java.util.Locale locale) {
+	public String getDisplayName(java.util.Locale locale) {
 		return _expandoColumn.getDisplayName(locale);
 	}
 
@@ -172,7 +172,7 @@ public class ExpandoColumnWrapper implements ExpandoColumn,
 	* @return the name of this expando column
 	*/
 	@Override
-	public java.lang.String getName() {
+	public String getName() {
 		return _expandoColumn.getName();
 	}
 
@@ -217,7 +217,7 @@ public class ExpandoColumnWrapper implements ExpandoColumn,
 	* @return the type settings of this expando column
 	*/
 	@Override
-	public java.lang.String getTypeSettings() {
+	public String getTypeSettings() {
 		return _expandoColumn.getTypeSettings();
 	}
 
@@ -282,7 +282,7 @@ public class ExpandoColumnWrapper implements ExpandoColumn,
 	* @param defaultData the default data of this expando column
 	*/
 	@Override
-	public void setDefaultData(java.lang.String defaultData) {
+	public void setDefaultData(String defaultData) {
 		_expandoColumn.setDefaultData(defaultData);
 	}
 
@@ -308,7 +308,7 @@ public class ExpandoColumnWrapper implements ExpandoColumn,
 	* @param name the name of this expando column
 	*/
 	@Override
-	public void setName(java.lang.String name) {
+	public void setName(String name) {
 		_expandoColumn.setName(name);
 	}
 
@@ -358,7 +358,7 @@ public class ExpandoColumnWrapper implements ExpandoColumn,
 	* @param typeSettings the type settings of this expando column
 	*/
 	@Override
-	public void setTypeSettings(java.lang.String typeSettings) {
+	public void setTypeSettings(String typeSettings) {
 		_expandoColumn.setTypeSettings(typeSettings);
 	}
 
@@ -379,7 +379,7 @@ public class ExpandoColumnWrapper implements ExpandoColumn,
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _expandoColumn.toString();
 	}
 
@@ -389,7 +389,7 @@ public class ExpandoColumnWrapper implements ExpandoColumn,
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _expandoColumn.toXmlString();
 	}
 

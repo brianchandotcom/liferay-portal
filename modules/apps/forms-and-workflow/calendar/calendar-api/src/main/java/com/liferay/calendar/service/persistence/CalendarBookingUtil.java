@@ -118,7 +118,7 @@ public class CalendarBookingUtil {
 	* @param uuid the uuid
 	* @return the matching calendar bookings
 	*/
-	public static List<CalendarBooking> findByUuid(java.lang.String uuid) {
+	public static List<CalendarBooking> findByUuid(String uuid) {
 		return getPersistence().findByUuid(uuid);
 	}
 
@@ -134,8 +134,8 @@ public class CalendarBookingUtil {
 	* @param end the upper bound of the range of calendar bookings (not inclusive)
 	* @return the range of matching calendar bookings
 	*/
-	public static List<CalendarBooking> findByUuid(java.lang.String uuid,
-		int start, int end) {
+	public static List<CalendarBooking> findByUuid(String uuid, int start,
+		int end) {
 		return getPersistence().findByUuid(uuid, start, end);
 	}
 
@@ -152,8 +152,8 @@ public class CalendarBookingUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching calendar bookings
 	*/
-	public static List<CalendarBooking> findByUuid(java.lang.String uuid,
-		int start, int end, OrderByComparator<CalendarBooking> orderByComparator) {
+	public static List<CalendarBooking> findByUuid(String uuid, int start,
+		int end, OrderByComparator<CalendarBooking> orderByComparator) {
 		return getPersistence().findByUuid(uuid, start, end, orderByComparator);
 	}
 
@@ -171,9 +171,8 @@ public class CalendarBookingUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching calendar bookings
 	*/
-	public static List<CalendarBooking> findByUuid(java.lang.String uuid,
-		int start, int end,
-		OrderByComparator<CalendarBooking> orderByComparator,
+	public static List<CalendarBooking> findByUuid(String uuid, int start,
+		int end, OrderByComparator<CalendarBooking> orderByComparator,
 		boolean retrieveFromCache) {
 		return getPersistence()
 				   .findByUuid(uuid, start, end, orderByComparator,
@@ -188,7 +187,7 @@ public class CalendarBookingUtil {
 	* @return the first matching calendar booking
 	* @throws NoSuchBookingException if a matching calendar booking could not be found
 	*/
-	public static CalendarBooking findByUuid_First(java.lang.String uuid,
+	public static CalendarBooking findByUuid_First(String uuid,
 		OrderByComparator<CalendarBooking> orderByComparator)
 		throws com.liferay.calendar.exception.NoSuchBookingException {
 		return getPersistence().findByUuid_First(uuid, orderByComparator);
@@ -201,7 +200,7 @@ public class CalendarBookingUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching calendar booking, or <code>null</code> if a matching calendar booking could not be found
 	*/
-	public static CalendarBooking fetchByUuid_First(java.lang.String uuid,
+	public static CalendarBooking fetchByUuid_First(String uuid,
 		OrderByComparator<CalendarBooking> orderByComparator) {
 		return getPersistence().fetchByUuid_First(uuid, orderByComparator);
 	}
@@ -214,7 +213,7 @@ public class CalendarBookingUtil {
 	* @return the last matching calendar booking
 	* @throws NoSuchBookingException if a matching calendar booking could not be found
 	*/
-	public static CalendarBooking findByUuid_Last(java.lang.String uuid,
+	public static CalendarBooking findByUuid_Last(String uuid,
 		OrderByComparator<CalendarBooking> orderByComparator)
 		throws com.liferay.calendar.exception.NoSuchBookingException {
 		return getPersistence().findByUuid_Last(uuid, orderByComparator);
@@ -227,7 +226,7 @@ public class CalendarBookingUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching calendar booking, or <code>null</code> if a matching calendar booking could not be found
 	*/
-	public static CalendarBooking fetchByUuid_Last(java.lang.String uuid,
+	public static CalendarBooking fetchByUuid_Last(String uuid,
 		OrderByComparator<CalendarBooking> orderByComparator) {
 		return getPersistence().fetchByUuid_Last(uuid, orderByComparator);
 	}
@@ -242,7 +241,7 @@ public class CalendarBookingUtil {
 	* @throws NoSuchBookingException if a calendar booking with the primary key could not be found
 	*/
 	public static CalendarBooking[] findByUuid_PrevAndNext(
-		long calendarBookingId, java.lang.String uuid,
+		long calendarBookingId, String uuid,
 		OrderByComparator<CalendarBooking> orderByComparator)
 		throws com.liferay.calendar.exception.NoSuchBookingException {
 		return getPersistence()
@@ -255,7 +254,7 @@ public class CalendarBookingUtil {
 	*
 	* @param uuid the uuid
 	*/
-	public static void removeByUuid(java.lang.String uuid) {
+	public static void removeByUuid(String uuid) {
 		getPersistence().removeByUuid(uuid);
 	}
 
@@ -265,7 +264,7 @@ public class CalendarBookingUtil {
 	* @param uuid the uuid
 	* @return the number of matching calendar bookings
 	*/
-	public static int countByUuid(java.lang.String uuid) {
+	public static int countByUuid(String uuid) {
 		return getPersistence().countByUuid(uuid);
 	}
 
@@ -277,8 +276,7 @@ public class CalendarBookingUtil {
 	* @return the matching calendar booking
 	* @throws NoSuchBookingException if a matching calendar booking could not be found
 	*/
-	public static CalendarBooking findByUUID_G(java.lang.String uuid,
-		long groupId)
+	public static CalendarBooking findByUUID_G(String uuid, long groupId)
 		throws com.liferay.calendar.exception.NoSuchBookingException {
 		return getPersistence().findByUUID_G(uuid, groupId);
 	}
@@ -290,8 +288,7 @@ public class CalendarBookingUtil {
 	* @param groupId the group ID
 	* @return the matching calendar booking, or <code>null</code> if a matching calendar booking could not be found
 	*/
-	public static CalendarBooking fetchByUUID_G(java.lang.String uuid,
-		long groupId) {
+	public static CalendarBooking fetchByUUID_G(String uuid, long groupId) {
 		return getPersistence().fetchByUUID_G(uuid, groupId);
 	}
 
@@ -303,8 +300,8 @@ public class CalendarBookingUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching calendar booking, or <code>null</code> if a matching calendar booking could not be found
 	*/
-	public static CalendarBooking fetchByUUID_G(java.lang.String uuid,
-		long groupId, boolean retrieveFromCache) {
+	public static CalendarBooking fetchByUUID_G(String uuid, long groupId,
+		boolean retrieveFromCache) {
 		return getPersistence().fetchByUUID_G(uuid, groupId, retrieveFromCache);
 	}
 
@@ -315,8 +312,7 @@ public class CalendarBookingUtil {
 	* @param groupId the group ID
 	* @return the calendar booking that was removed
 	*/
-	public static CalendarBooking removeByUUID_G(java.lang.String uuid,
-		long groupId)
+	public static CalendarBooking removeByUUID_G(String uuid, long groupId)
 		throws com.liferay.calendar.exception.NoSuchBookingException {
 		return getPersistence().removeByUUID_G(uuid, groupId);
 	}
@@ -328,7 +324,7 @@ public class CalendarBookingUtil {
 	* @param groupId the group ID
 	* @return the number of matching calendar bookings
 	*/
-	public static int countByUUID_G(java.lang.String uuid, long groupId) {
+	public static int countByUUID_G(String uuid, long groupId) {
 		return getPersistence().countByUUID_G(uuid, groupId);
 	}
 
@@ -339,8 +335,7 @@ public class CalendarBookingUtil {
 	* @param companyId the company ID
 	* @return the matching calendar bookings
 	*/
-	public static List<CalendarBooking> findByUuid_C(java.lang.String uuid,
-		long companyId) {
+	public static List<CalendarBooking> findByUuid_C(String uuid, long companyId) {
 		return getPersistence().findByUuid_C(uuid, companyId);
 	}
 
@@ -357,7 +352,7 @@ public class CalendarBookingUtil {
 	* @param end the upper bound of the range of calendar bookings (not inclusive)
 	* @return the range of matching calendar bookings
 	*/
-	public static List<CalendarBooking> findByUuid_C(java.lang.String uuid,
+	public static List<CalendarBooking> findByUuid_C(String uuid,
 		long companyId, int start, int end) {
 		return getPersistence().findByUuid_C(uuid, companyId, start, end);
 	}
@@ -376,7 +371,7 @@ public class CalendarBookingUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching calendar bookings
 	*/
-	public static List<CalendarBooking> findByUuid_C(java.lang.String uuid,
+	public static List<CalendarBooking> findByUuid_C(String uuid,
 		long companyId, int start, int end,
 		OrderByComparator<CalendarBooking> orderByComparator) {
 		return getPersistence()
@@ -398,7 +393,7 @@ public class CalendarBookingUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching calendar bookings
 	*/
-	public static List<CalendarBooking> findByUuid_C(java.lang.String uuid,
+	public static List<CalendarBooking> findByUuid_C(String uuid,
 		long companyId, int start, int end,
 		OrderByComparator<CalendarBooking> orderByComparator,
 		boolean retrieveFromCache) {
@@ -416,7 +411,7 @@ public class CalendarBookingUtil {
 	* @return the first matching calendar booking
 	* @throws NoSuchBookingException if a matching calendar booking could not be found
 	*/
-	public static CalendarBooking findByUuid_C_First(java.lang.String uuid,
+	public static CalendarBooking findByUuid_C_First(String uuid,
 		long companyId, OrderByComparator<CalendarBooking> orderByComparator)
 		throws com.liferay.calendar.exception.NoSuchBookingException {
 		return getPersistence()
@@ -431,7 +426,7 @@ public class CalendarBookingUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching calendar booking, or <code>null</code> if a matching calendar booking could not be found
 	*/
-	public static CalendarBooking fetchByUuid_C_First(java.lang.String uuid,
+	public static CalendarBooking fetchByUuid_C_First(String uuid,
 		long companyId, OrderByComparator<CalendarBooking> orderByComparator) {
 		return getPersistence()
 				   .fetchByUuid_C_First(uuid, companyId, orderByComparator);
@@ -446,7 +441,7 @@ public class CalendarBookingUtil {
 	* @return the last matching calendar booking
 	* @throws NoSuchBookingException if a matching calendar booking could not be found
 	*/
-	public static CalendarBooking findByUuid_C_Last(java.lang.String uuid,
+	public static CalendarBooking findByUuid_C_Last(String uuid,
 		long companyId, OrderByComparator<CalendarBooking> orderByComparator)
 		throws com.liferay.calendar.exception.NoSuchBookingException {
 		return getPersistence()
@@ -461,7 +456,7 @@ public class CalendarBookingUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching calendar booking, or <code>null</code> if a matching calendar booking could not be found
 	*/
-	public static CalendarBooking fetchByUuid_C_Last(java.lang.String uuid,
+	public static CalendarBooking fetchByUuid_C_Last(String uuid,
 		long companyId, OrderByComparator<CalendarBooking> orderByComparator) {
 		return getPersistence()
 				   .fetchByUuid_C_Last(uuid, companyId, orderByComparator);
@@ -478,7 +473,7 @@ public class CalendarBookingUtil {
 	* @throws NoSuchBookingException if a calendar booking with the primary key could not be found
 	*/
 	public static CalendarBooking[] findByUuid_C_PrevAndNext(
-		long calendarBookingId, java.lang.String uuid, long companyId,
+		long calendarBookingId, String uuid, long companyId,
 		OrderByComparator<CalendarBooking> orderByComparator)
 		throws com.liferay.calendar.exception.NoSuchBookingException {
 		return getPersistence()
@@ -492,7 +487,7 @@ public class CalendarBookingUtil {
 	* @param uuid the uuid
 	* @param companyId the company ID
 	*/
-	public static void removeByUuid_C(java.lang.String uuid, long companyId) {
+	public static void removeByUuid_C(String uuid, long companyId) {
 		getPersistence().removeByUuid_C(uuid, companyId);
 	}
 
@@ -503,7 +498,7 @@ public class CalendarBookingUtil {
 	* @param companyId the company ID
 	* @return the number of matching calendar bookings
 	*/
-	public static int countByUuid_C(java.lang.String uuid, long companyId) {
+	public static int countByUuid_C(String uuid, long companyId) {
 		return getPersistence().countByUuid_C(uuid, companyId);
 	}
 
@@ -1275,8 +1270,7 @@ public class CalendarBookingUtil {
 	* @return the matching calendar booking
 	* @throws NoSuchBookingException if a matching calendar booking could not be found
 	*/
-	public static CalendarBooking findByC_V(long calendarId,
-		java.lang.String vEventUid)
+	public static CalendarBooking findByC_V(long calendarId, String vEventUid)
 		throws com.liferay.calendar.exception.NoSuchBookingException {
 		return getPersistence().findByC_V(calendarId, vEventUid);
 	}
@@ -1288,8 +1282,7 @@ public class CalendarBookingUtil {
 	* @param vEventUid the v event uid
 	* @return the matching calendar booking, or <code>null</code> if a matching calendar booking could not be found
 	*/
-	public static CalendarBooking fetchByC_V(long calendarId,
-		java.lang.String vEventUid) {
+	public static CalendarBooking fetchByC_V(long calendarId, String vEventUid) {
 		return getPersistence().fetchByC_V(calendarId, vEventUid);
 	}
 
@@ -1301,8 +1294,8 @@ public class CalendarBookingUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching calendar booking, or <code>null</code> if a matching calendar booking could not be found
 	*/
-	public static CalendarBooking fetchByC_V(long calendarId,
-		java.lang.String vEventUid, boolean retrieveFromCache) {
+	public static CalendarBooking fetchByC_V(long calendarId, String vEventUid,
+		boolean retrieveFromCache) {
 		return getPersistence()
 				   .fetchByC_V(calendarId, vEventUid, retrieveFromCache);
 	}
@@ -1314,8 +1307,7 @@ public class CalendarBookingUtil {
 	* @param vEventUid the v event uid
 	* @return the calendar booking that was removed
 	*/
-	public static CalendarBooking removeByC_V(long calendarId,
-		java.lang.String vEventUid)
+	public static CalendarBooking removeByC_V(long calendarId, String vEventUid)
 		throws com.liferay.calendar.exception.NoSuchBookingException {
 		return getPersistence().removeByC_V(calendarId, vEventUid);
 	}
@@ -1327,7 +1319,7 @@ public class CalendarBookingUtil {
 	* @param vEventUid the v event uid
 	* @return the number of matching calendar bookings
 	*/
-	public static int countByC_V(long calendarId, java.lang.String vEventUid) {
+	public static int countByC_V(long calendarId, String vEventUid) {
 		return getPersistence().countByC_V(calendarId, vEventUid);
 	}
 
@@ -1927,7 +1919,7 @@ public class CalendarBookingUtil {
 		return getPersistence().countAll();
 	}
 
-	public static java.util.Set<java.lang.String> getBadColumnNames() {
+	public static java.util.Set<String> getBadColumnNames() {
 		return getPersistence().getBadColumnNames();
 	}
 

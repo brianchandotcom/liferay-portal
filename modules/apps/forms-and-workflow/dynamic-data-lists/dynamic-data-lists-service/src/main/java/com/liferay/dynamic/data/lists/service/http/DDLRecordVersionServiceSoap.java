@@ -98,7 +98,7 @@ public class DDLRecordVersionServiceSoap {
 	user do not have the required permission to access the record set
 	*/
 	public static com.liferay.dynamic.data.lists.model.DDLRecordVersionSoap getRecordVersion(
-		long recordId, java.lang.String version) throws RemoteException {
+		long recordId, String version) throws RemoteException {
 		try {
 			com.liferay.dynamic.data.lists.model.DDLRecordVersion returnValue = DDLRecordVersionServiceUtil.getRecordVersion(recordId,
 					version);

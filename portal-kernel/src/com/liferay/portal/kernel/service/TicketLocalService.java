@@ -58,13 +58,13 @@ public interface TicketLocalService extends BaseLocalService,
 	 *
 	 * Never modify or reference this interface directly. Always use {@link TicketLocalServiceUtil} to access the ticket local service. Add custom service methods to {@link com.liferay.portal.service.impl.TicketLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public Ticket addDistinctTicket(long companyId, java.lang.String className,
-		long classPK, int type, java.lang.String extraInfo,
-		Date expirationDate, ServiceContext serviceContext);
+	public Ticket addDistinctTicket(long companyId, String className,
+		long classPK, int type, String extraInfo, Date expirationDate,
+		ServiceContext serviceContext);
 
-	public Ticket addTicket(long companyId, java.lang.String className,
-		long classPK, int type, java.lang.String extraInfo,
-		Date expirationDate, ServiceContext serviceContext);
+	public Ticket addTicket(long companyId, String className, long classPK,
+		int type, String extraInfo, Date expirationDate,
+		ServiceContext serviceContext);
 
 	/**
 	* Adds the ticket to the database. Also notifies the appropriate model listeners.
@@ -173,7 +173,7 @@ public interface TicketLocalService extends BaseLocalService,
 	public Ticket fetchTicket(long ticketId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Ticket fetchTicket(java.lang.String key);
+	public Ticket fetchTicket(String key);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
@@ -186,7 +186,7 @@ public interface TicketLocalService extends BaseLocalService,
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -204,7 +204,7 @@ public interface TicketLocalService extends BaseLocalService,
 	public Ticket getTicket(long ticketId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Ticket getTicket(java.lang.String key) throws PortalException;
+	public Ticket getTicket(String key) throws PortalException;
 
 	/**
 	* Returns a range of all the tickets.
@@ -221,7 +221,7 @@ public interface TicketLocalService extends BaseLocalService,
 	public List<Ticket> getTickets(int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<Ticket> getTickets(long companyId, java.lang.String className,
+	public List<Ticket> getTickets(long companyId, String className,
 		long classPK, int type);
 
 	/**
@@ -232,8 +232,8 @@ public interface TicketLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getTicketsCount();
 
-	public Ticket updateTicket(long ticketId, java.lang.String className,
-		long classPK, int type, java.lang.String extraInfo, Date expirationDate)
+	public Ticket updateTicket(long ticketId, String className, long classPK,
+		int type, String extraInfo, Date expirationDate)
 		throws PortalException;
 
 	/**

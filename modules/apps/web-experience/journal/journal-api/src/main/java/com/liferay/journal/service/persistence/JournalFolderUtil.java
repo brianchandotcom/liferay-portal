@@ -118,7 +118,7 @@ public class JournalFolderUtil {
 	* @param uuid the uuid
 	* @return the matching journal folders
 	*/
-	public static List<JournalFolder> findByUuid(java.lang.String uuid) {
+	public static List<JournalFolder> findByUuid(String uuid) {
 		return getPersistence().findByUuid(uuid);
 	}
 
@@ -134,8 +134,7 @@ public class JournalFolderUtil {
 	* @param end the upper bound of the range of journal folders (not inclusive)
 	* @return the range of matching journal folders
 	*/
-	public static List<JournalFolder> findByUuid(java.lang.String uuid,
-		int start, int end) {
+	public static List<JournalFolder> findByUuid(String uuid, int start, int end) {
 		return getPersistence().findByUuid(uuid, start, end);
 	}
 
@@ -152,8 +151,8 @@ public class JournalFolderUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching journal folders
 	*/
-	public static List<JournalFolder> findByUuid(java.lang.String uuid,
-		int start, int end, OrderByComparator<JournalFolder> orderByComparator) {
+	public static List<JournalFolder> findByUuid(String uuid, int start,
+		int end, OrderByComparator<JournalFolder> orderByComparator) {
 		return getPersistence().findByUuid(uuid, start, end, orderByComparator);
 	}
 
@@ -171,8 +170,8 @@ public class JournalFolderUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching journal folders
 	*/
-	public static List<JournalFolder> findByUuid(java.lang.String uuid,
-		int start, int end, OrderByComparator<JournalFolder> orderByComparator,
+	public static List<JournalFolder> findByUuid(String uuid, int start,
+		int end, OrderByComparator<JournalFolder> orderByComparator,
 		boolean retrieveFromCache) {
 		return getPersistence()
 				   .findByUuid(uuid, start, end, orderByComparator,
@@ -187,7 +186,7 @@ public class JournalFolderUtil {
 	* @return the first matching journal folder
 	* @throws NoSuchFolderException if a matching journal folder could not be found
 	*/
-	public static JournalFolder findByUuid_First(java.lang.String uuid,
+	public static JournalFolder findByUuid_First(String uuid,
 		OrderByComparator<JournalFolder> orderByComparator)
 		throws com.liferay.journal.exception.NoSuchFolderException {
 		return getPersistence().findByUuid_First(uuid, orderByComparator);
@@ -200,7 +199,7 @@ public class JournalFolderUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching journal folder, or <code>null</code> if a matching journal folder could not be found
 	*/
-	public static JournalFolder fetchByUuid_First(java.lang.String uuid,
+	public static JournalFolder fetchByUuid_First(String uuid,
 		OrderByComparator<JournalFolder> orderByComparator) {
 		return getPersistence().fetchByUuid_First(uuid, orderByComparator);
 	}
@@ -213,7 +212,7 @@ public class JournalFolderUtil {
 	* @return the last matching journal folder
 	* @throws NoSuchFolderException if a matching journal folder could not be found
 	*/
-	public static JournalFolder findByUuid_Last(java.lang.String uuid,
+	public static JournalFolder findByUuid_Last(String uuid,
 		OrderByComparator<JournalFolder> orderByComparator)
 		throws com.liferay.journal.exception.NoSuchFolderException {
 		return getPersistence().findByUuid_Last(uuid, orderByComparator);
@@ -226,7 +225,7 @@ public class JournalFolderUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching journal folder, or <code>null</code> if a matching journal folder could not be found
 	*/
-	public static JournalFolder fetchByUuid_Last(java.lang.String uuid,
+	public static JournalFolder fetchByUuid_Last(String uuid,
 		OrderByComparator<JournalFolder> orderByComparator) {
 		return getPersistence().fetchByUuid_Last(uuid, orderByComparator);
 	}
@@ -241,8 +240,7 @@ public class JournalFolderUtil {
 	* @throws NoSuchFolderException if a journal folder with the primary key could not be found
 	*/
 	public static JournalFolder[] findByUuid_PrevAndNext(long folderId,
-		java.lang.String uuid,
-		OrderByComparator<JournalFolder> orderByComparator)
+		String uuid, OrderByComparator<JournalFolder> orderByComparator)
 		throws com.liferay.journal.exception.NoSuchFolderException {
 		return getPersistence()
 				   .findByUuid_PrevAndNext(folderId, uuid, orderByComparator);
@@ -253,7 +251,7 @@ public class JournalFolderUtil {
 	*
 	* @param uuid the uuid
 	*/
-	public static void removeByUuid(java.lang.String uuid) {
+	public static void removeByUuid(String uuid) {
 		getPersistence().removeByUuid(uuid);
 	}
 
@@ -263,7 +261,7 @@ public class JournalFolderUtil {
 	* @param uuid the uuid
 	* @return the number of matching journal folders
 	*/
-	public static int countByUuid(java.lang.String uuid) {
+	public static int countByUuid(String uuid) {
 		return getPersistence().countByUuid(uuid);
 	}
 
@@ -275,7 +273,7 @@ public class JournalFolderUtil {
 	* @return the matching journal folder
 	* @throws NoSuchFolderException if a matching journal folder could not be found
 	*/
-	public static JournalFolder findByUUID_G(java.lang.String uuid, long groupId)
+	public static JournalFolder findByUUID_G(String uuid, long groupId)
 		throws com.liferay.journal.exception.NoSuchFolderException {
 		return getPersistence().findByUUID_G(uuid, groupId);
 	}
@@ -287,8 +285,7 @@ public class JournalFolderUtil {
 	* @param groupId the group ID
 	* @return the matching journal folder, or <code>null</code> if a matching journal folder could not be found
 	*/
-	public static JournalFolder fetchByUUID_G(java.lang.String uuid,
-		long groupId) {
+	public static JournalFolder fetchByUUID_G(String uuid, long groupId) {
 		return getPersistence().fetchByUUID_G(uuid, groupId);
 	}
 
@@ -300,8 +297,8 @@ public class JournalFolderUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching journal folder, or <code>null</code> if a matching journal folder could not be found
 	*/
-	public static JournalFolder fetchByUUID_G(java.lang.String uuid,
-		long groupId, boolean retrieveFromCache) {
+	public static JournalFolder fetchByUUID_G(String uuid, long groupId,
+		boolean retrieveFromCache) {
 		return getPersistence().fetchByUUID_G(uuid, groupId, retrieveFromCache);
 	}
 
@@ -312,8 +309,7 @@ public class JournalFolderUtil {
 	* @param groupId the group ID
 	* @return the journal folder that was removed
 	*/
-	public static JournalFolder removeByUUID_G(java.lang.String uuid,
-		long groupId)
+	public static JournalFolder removeByUUID_G(String uuid, long groupId)
 		throws com.liferay.journal.exception.NoSuchFolderException {
 		return getPersistence().removeByUUID_G(uuid, groupId);
 	}
@@ -325,7 +321,7 @@ public class JournalFolderUtil {
 	* @param groupId the group ID
 	* @return the number of matching journal folders
 	*/
-	public static int countByUUID_G(java.lang.String uuid, long groupId) {
+	public static int countByUUID_G(String uuid, long groupId) {
 		return getPersistence().countByUUID_G(uuid, groupId);
 	}
 
@@ -336,8 +332,7 @@ public class JournalFolderUtil {
 	* @param companyId the company ID
 	* @return the matching journal folders
 	*/
-	public static List<JournalFolder> findByUuid_C(java.lang.String uuid,
-		long companyId) {
+	public static List<JournalFolder> findByUuid_C(String uuid, long companyId) {
 		return getPersistence().findByUuid_C(uuid, companyId);
 	}
 
@@ -354,8 +349,8 @@ public class JournalFolderUtil {
 	* @param end the upper bound of the range of journal folders (not inclusive)
 	* @return the range of matching journal folders
 	*/
-	public static List<JournalFolder> findByUuid_C(java.lang.String uuid,
-		long companyId, int start, int end) {
+	public static List<JournalFolder> findByUuid_C(String uuid, long companyId,
+		int start, int end) {
 		return getPersistence().findByUuid_C(uuid, companyId, start, end);
 	}
 
@@ -373,9 +368,8 @@ public class JournalFolderUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching journal folders
 	*/
-	public static List<JournalFolder> findByUuid_C(java.lang.String uuid,
-		long companyId, int start, int end,
-		OrderByComparator<JournalFolder> orderByComparator) {
+	public static List<JournalFolder> findByUuid_C(String uuid, long companyId,
+		int start, int end, OrderByComparator<JournalFolder> orderByComparator) {
 		return getPersistence()
 				   .findByUuid_C(uuid, companyId, start, end, orderByComparator);
 	}
@@ -395,9 +389,8 @@ public class JournalFolderUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching journal folders
 	*/
-	public static List<JournalFolder> findByUuid_C(java.lang.String uuid,
-		long companyId, int start, int end,
-		OrderByComparator<JournalFolder> orderByComparator,
+	public static List<JournalFolder> findByUuid_C(String uuid, long companyId,
+		int start, int end, OrderByComparator<JournalFolder> orderByComparator,
 		boolean retrieveFromCache) {
 		return getPersistence()
 				   .findByUuid_C(uuid, companyId, start, end,
@@ -413,8 +406,8 @@ public class JournalFolderUtil {
 	* @return the first matching journal folder
 	* @throws NoSuchFolderException if a matching journal folder could not be found
 	*/
-	public static JournalFolder findByUuid_C_First(java.lang.String uuid,
-		long companyId, OrderByComparator<JournalFolder> orderByComparator)
+	public static JournalFolder findByUuid_C_First(String uuid, long companyId,
+		OrderByComparator<JournalFolder> orderByComparator)
 		throws com.liferay.journal.exception.NoSuchFolderException {
 		return getPersistence()
 				   .findByUuid_C_First(uuid, companyId, orderByComparator);
@@ -428,7 +421,7 @@ public class JournalFolderUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching journal folder, or <code>null</code> if a matching journal folder could not be found
 	*/
-	public static JournalFolder fetchByUuid_C_First(java.lang.String uuid,
+	public static JournalFolder fetchByUuid_C_First(String uuid,
 		long companyId, OrderByComparator<JournalFolder> orderByComparator) {
 		return getPersistence()
 				   .fetchByUuid_C_First(uuid, companyId, orderByComparator);
@@ -443,8 +436,8 @@ public class JournalFolderUtil {
 	* @return the last matching journal folder
 	* @throws NoSuchFolderException if a matching journal folder could not be found
 	*/
-	public static JournalFolder findByUuid_C_Last(java.lang.String uuid,
-		long companyId, OrderByComparator<JournalFolder> orderByComparator)
+	public static JournalFolder findByUuid_C_Last(String uuid, long companyId,
+		OrderByComparator<JournalFolder> orderByComparator)
 		throws com.liferay.journal.exception.NoSuchFolderException {
 		return getPersistence()
 				   .findByUuid_C_Last(uuid, companyId, orderByComparator);
@@ -458,8 +451,8 @@ public class JournalFolderUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching journal folder, or <code>null</code> if a matching journal folder could not be found
 	*/
-	public static JournalFolder fetchByUuid_C_Last(java.lang.String uuid,
-		long companyId, OrderByComparator<JournalFolder> orderByComparator) {
+	public static JournalFolder fetchByUuid_C_Last(String uuid, long companyId,
+		OrderByComparator<JournalFolder> orderByComparator) {
 		return getPersistence()
 				   .fetchByUuid_C_Last(uuid, companyId, orderByComparator);
 	}
@@ -475,7 +468,7 @@ public class JournalFolderUtil {
 	* @throws NoSuchFolderException if a journal folder with the primary key could not be found
 	*/
 	public static JournalFolder[] findByUuid_C_PrevAndNext(long folderId,
-		java.lang.String uuid, long companyId,
+		String uuid, long companyId,
 		OrderByComparator<JournalFolder> orderByComparator)
 		throws com.liferay.journal.exception.NoSuchFolderException {
 		return getPersistence()
@@ -489,7 +482,7 @@ public class JournalFolderUtil {
 	* @param uuid the uuid
 	* @param companyId the company ID
 	*/
-	public static void removeByUuid_C(java.lang.String uuid, long companyId) {
+	public static void removeByUuid_C(String uuid, long companyId) {
 		getPersistence().removeByUuid_C(uuid, companyId);
 	}
 
@@ -500,7 +493,7 @@ public class JournalFolderUtil {
 	* @param companyId the company ID
 	* @return the number of matching journal folders
 	*/
-	public static int countByUuid_C(java.lang.String uuid, long companyId) {
+	public static int countByUuid_C(String uuid, long companyId) {
 		return getPersistence().countByUuid_C(uuid, companyId);
 	}
 
@@ -1161,7 +1154,7 @@ public class JournalFolderUtil {
 	* @return the matching journal folder
 	* @throws NoSuchFolderException if a matching journal folder could not be found
 	*/
-	public static JournalFolder findByG_N(long groupId, java.lang.String name)
+	public static JournalFolder findByG_N(long groupId, String name)
 		throws com.liferay.journal.exception.NoSuchFolderException {
 		return getPersistence().findByG_N(groupId, name);
 	}
@@ -1173,7 +1166,7 @@ public class JournalFolderUtil {
 	* @param name the name
 	* @return the matching journal folder, or <code>null</code> if a matching journal folder could not be found
 	*/
-	public static JournalFolder fetchByG_N(long groupId, java.lang.String name) {
+	public static JournalFolder fetchByG_N(long groupId, String name) {
 		return getPersistence().fetchByG_N(groupId, name);
 	}
 
@@ -1185,7 +1178,7 @@ public class JournalFolderUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching journal folder, or <code>null</code> if a matching journal folder could not be found
 	*/
-	public static JournalFolder fetchByG_N(long groupId, java.lang.String name,
+	public static JournalFolder fetchByG_N(long groupId, String name,
 		boolean retrieveFromCache) {
 		return getPersistence().fetchByG_N(groupId, name, retrieveFromCache);
 	}
@@ -1197,7 +1190,7 @@ public class JournalFolderUtil {
 	* @param name the name
 	* @return the journal folder that was removed
 	*/
-	public static JournalFolder removeByG_N(long groupId, java.lang.String name)
+	public static JournalFolder removeByG_N(long groupId, String name)
 		throws com.liferay.journal.exception.NoSuchFolderException {
 		return getPersistence().removeByG_N(groupId, name);
 	}
@@ -1209,7 +1202,7 @@ public class JournalFolderUtil {
 	* @param name the name
 	* @return the number of matching journal folders
 	*/
-	public static int countByG_N(long groupId, java.lang.String name) {
+	public static int countByG_N(long groupId, String name) {
 		return getPersistence().countByG_N(groupId, name);
 	}
 
@@ -1396,8 +1389,7 @@ public class JournalFolderUtil {
 	* @throws NoSuchFolderException if a matching journal folder could not be found
 	*/
 	public static JournalFolder findByG_P_N(long groupId, long parentFolderId,
-		java.lang.String name)
-		throws com.liferay.journal.exception.NoSuchFolderException {
+		String name) throws com.liferay.journal.exception.NoSuchFolderException {
 		return getPersistence().findByG_P_N(groupId, parentFolderId, name);
 	}
 
@@ -1410,7 +1402,7 @@ public class JournalFolderUtil {
 	* @return the matching journal folder, or <code>null</code> if a matching journal folder could not be found
 	*/
 	public static JournalFolder fetchByG_P_N(long groupId, long parentFolderId,
-		java.lang.String name) {
+		String name) {
 		return getPersistence().fetchByG_P_N(groupId, parentFolderId, name);
 	}
 
@@ -1424,7 +1416,7 @@ public class JournalFolderUtil {
 	* @return the matching journal folder, or <code>null</code> if a matching journal folder could not be found
 	*/
 	public static JournalFolder fetchByG_P_N(long groupId, long parentFolderId,
-		java.lang.String name, boolean retrieveFromCache) {
+		String name, boolean retrieveFromCache) {
 		return getPersistence()
 				   .fetchByG_P_N(groupId, parentFolderId, name,
 			retrieveFromCache);
@@ -1439,7 +1431,7 @@ public class JournalFolderUtil {
 	* @return the journal folder that was removed
 	*/
 	public static JournalFolder removeByG_P_N(long groupId,
-		long parentFolderId, java.lang.String name)
+		long parentFolderId, String name)
 		throws com.liferay.journal.exception.NoSuchFolderException {
 		return getPersistence().removeByG_P_N(groupId, parentFolderId, name);
 	}
@@ -1453,7 +1445,7 @@ public class JournalFolderUtil {
 	* @return the number of matching journal folders
 	*/
 	public static int countByG_P_N(long groupId, long parentFolderId,
-		java.lang.String name) {
+		String name) {
 		return getPersistence().countByG_P_N(groupId, parentFolderId, name);
 	}
 
@@ -2377,7 +2369,7 @@ public class JournalFolderUtil {
 		return getPersistence().countAll();
 	}
 
-	public static java.util.Set<java.lang.String> getBadColumnNames() {
+	public static java.util.Set<String> getBadColumnNames() {
 		return getPersistence().getBadColumnNames();
 	}
 

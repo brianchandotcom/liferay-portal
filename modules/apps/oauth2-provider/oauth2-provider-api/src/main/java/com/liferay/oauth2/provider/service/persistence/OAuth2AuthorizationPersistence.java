@@ -318,8 +318,7 @@ public interface OAuth2AuthorizationPersistence extends BasePersistence<OAuth2Au
 	* @throws NoSuchOAuth2AuthorizationException if a matching o auth2 authorization could not be found
 	*/
 	public OAuth2Authorization findByAccessTokenContent(
-		java.lang.String accessTokenContent)
-		throws NoSuchOAuth2AuthorizationException;
+		String accessTokenContent) throws NoSuchOAuth2AuthorizationException;
 
 	/**
 	* Returns the o auth2 authorization where accessTokenContent = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
@@ -328,7 +327,7 @@ public interface OAuth2AuthorizationPersistence extends BasePersistence<OAuth2Au
 	* @return the matching o auth2 authorization, or <code>null</code> if a matching o auth2 authorization could not be found
 	*/
 	public OAuth2Authorization fetchByAccessTokenContent(
-		java.lang.String accessTokenContent);
+		String accessTokenContent);
 
 	/**
 	* Returns the o auth2 authorization where accessTokenContent = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -338,7 +337,7 @@ public interface OAuth2AuthorizationPersistence extends BasePersistence<OAuth2Au
 	* @return the matching o auth2 authorization, or <code>null</code> if a matching o auth2 authorization could not be found
 	*/
 	public OAuth2Authorization fetchByAccessTokenContent(
-		java.lang.String accessTokenContent, boolean retrieveFromCache);
+		String accessTokenContent, boolean retrieveFromCache);
 
 	/**
 	* Removes the o auth2 authorization where accessTokenContent = &#63; from the database.
@@ -347,8 +346,7 @@ public interface OAuth2AuthorizationPersistence extends BasePersistence<OAuth2Au
 	* @return the o auth2 authorization that was removed
 	*/
 	public OAuth2Authorization removeByAccessTokenContent(
-		java.lang.String accessTokenContent)
-		throws NoSuchOAuth2AuthorizationException;
+		String accessTokenContent) throws NoSuchOAuth2AuthorizationException;
 
 	/**
 	* Returns the number of o auth2 authorizations where accessTokenContent = &#63;.
@@ -356,7 +354,7 @@ public interface OAuth2AuthorizationPersistence extends BasePersistence<OAuth2Au
 	* @param accessTokenContent the access token content
 	* @return the number of matching o auth2 authorizations
 	*/
-	public int countByAccessTokenContent(java.lang.String accessTokenContent);
+	public int countByAccessTokenContent(String accessTokenContent);
 
 	/**
 	* Returns the o auth2 authorization where refreshTokenContent = &#63; or throws a {@link NoSuchOAuth2AuthorizationException} if it could not be found.
@@ -366,8 +364,7 @@ public interface OAuth2AuthorizationPersistence extends BasePersistence<OAuth2Au
 	* @throws NoSuchOAuth2AuthorizationException if a matching o auth2 authorization could not be found
 	*/
 	public OAuth2Authorization findByRefreshTokenContent(
-		java.lang.String refreshTokenContent)
-		throws NoSuchOAuth2AuthorizationException;
+		String refreshTokenContent) throws NoSuchOAuth2AuthorizationException;
 
 	/**
 	* Returns the o auth2 authorization where refreshTokenContent = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
@@ -376,7 +373,7 @@ public interface OAuth2AuthorizationPersistence extends BasePersistence<OAuth2Au
 	* @return the matching o auth2 authorization, or <code>null</code> if a matching o auth2 authorization could not be found
 	*/
 	public OAuth2Authorization fetchByRefreshTokenContent(
-		java.lang.String refreshTokenContent);
+		String refreshTokenContent);
 
 	/**
 	* Returns the o auth2 authorization where refreshTokenContent = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -386,7 +383,7 @@ public interface OAuth2AuthorizationPersistence extends BasePersistence<OAuth2Au
 	* @return the matching o auth2 authorization, or <code>null</code> if a matching o auth2 authorization could not be found
 	*/
 	public OAuth2Authorization fetchByRefreshTokenContent(
-		java.lang.String refreshTokenContent, boolean retrieveFromCache);
+		String refreshTokenContent, boolean retrieveFromCache);
 
 	/**
 	* Removes the o auth2 authorization where refreshTokenContent = &#63; from the database.
@@ -395,8 +392,7 @@ public interface OAuth2AuthorizationPersistence extends BasePersistence<OAuth2Au
 	* @return the o auth2 authorization that was removed
 	*/
 	public OAuth2Authorization removeByRefreshTokenContent(
-		java.lang.String refreshTokenContent)
-		throws NoSuchOAuth2AuthorizationException;
+		String refreshTokenContent) throws NoSuchOAuth2AuthorizationException;
 
 	/**
 	* Returns the number of o auth2 authorizations where refreshTokenContent = &#63;.
@@ -404,7 +400,7 @@ public interface OAuth2AuthorizationPersistence extends BasePersistence<OAuth2Au
 	* @param refreshTokenContent the refresh token content
 	* @return the number of matching o auth2 authorizations
 	*/
-	public int countByRefreshTokenContent(java.lang.String refreshTokenContent);
+	public int countByRefreshTokenContent(String refreshTokenContent);
 
 	/**
 	* Caches the o auth2 authorization in the entity cache if it is enabled.
@@ -695,5 +691,5 @@ public interface OAuth2AuthorizationPersistence extends BasePersistence<OAuth2Au
 		java.util.List<com.liferay.oauth2.provider.model.OAuth2ScopeGrant> oAuth2ScopeGrants);
 
 	@Override
-	public java.util.Set<java.lang.String> getBadColumnNames();
+	public java.util.Set<String> getBadColumnNames();
 }

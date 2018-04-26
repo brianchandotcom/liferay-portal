@@ -59,12 +59,12 @@ public interface LayoutRevision extends LayoutRevisionModel, PersistedModel {
 	public ColorScheme getColorScheme()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
-	public java.lang.String getCssText()
+	public String getCssText()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
-	public java.lang.String getHTMLTitle(java.util.Locale locale);
+	public String getHTMLTitle(java.util.Locale locale);
 
-	public java.lang.String getHTMLTitle(java.lang.String localeLanguageId);
+	public String getHTMLTitle(String localeLanguageId);
 
 	public boolean getIconImage();
 
@@ -74,22 +74,19 @@ public interface LayoutRevision extends LayoutRevisionModel, PersistedModel {
 	public LayoutSet getLayoutSet()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
-	public java.lang.String getRegularURL(
-		javax.servlet.http.HttpServletRequest request)
+	public String getRegularURL(javax.servlet.http.HttpServletRequest request)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public Theme getTheme()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
-	public java.lang.String getThemeSetting(java.lang.String key,
-		java.lang.String device);
+	public String getThemeSetting(String key, String device);
 
 	public com.liferay.portal.kernel.util.UnicodeProperties getTypeSettingsProperties();
 
-	public java.lang.String getTypeSettingsProperty(java.lang.String key);
+	public String getTypeSettingsProperty(String key);
 
-	public java.lang.String getTypeSettingsProperty(java.lang.String key,
-		java.lang.String defaultValue);
+	public String getTypeSettingsProperty(String key, String defaultValue);
 
 	public boolean hasChildren();
 

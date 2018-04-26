@@ -78,7 +78,7 @@ public class CounterWrapper implements Counter, ModelWrapper<Counter> {
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new CounterWrapper((Counter)_counter.clone());
 	}
 
@@ -108,7 +108,7 @@ public class CounterWrapper implements Counter, ModelWrapper<Counter> {
 	* @return the name of this counter
 	*/
 	@Override
-	public java.lang.String getName() {
+	public String getName() {
 		return _counter.getName();
 	}
 
@@ -118,7 +118,7 @@ public class CounterWrapper implements Counter, ModelWrapper<Counter> {
 	* @return the primary key of this counter
 	*/
 	@Override
-	public java.lang.String getPrimaryKey() {
+	public String getPrimaryKey() {
 		return _counter.getPrimaryKey();
 	}
 
@@ -189,7 +189,7 @@ public class CounterWrapper implements Counter, ModelWrapper<Counter> {
 	* @param name the name of this counter
 	*/
 	@Override
-	public void setName(java.lang.String name) {
+	public void setName(String name) {
 		_counter.setName(name);
 	}
 
@@ -204,7 +204,7 @@ public class CounterWrapper implements Counter, ModelWrapper<Counter> {
 	* @param primaryKey the primary key of this counter
 	*/
 	@Override
-	public void setPrimaryKey(java.lang.String primaryKey) {
+	public void setPrimaryKey(String primaryKey) {
 		_counter.setPrimaryKey(primaryKey);
 	}
 
@@ -224,7 +224,7 @@ public class CounterWrapper implements Counter, ModelWrapper<Counter> {
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _counter.toString();
 	}
 
@@ -234,7 +234,7 @@ public class CounterWrapper implements Counter, ModelWrapper<Counter> {
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _counter.toXmlString();
 	}
 

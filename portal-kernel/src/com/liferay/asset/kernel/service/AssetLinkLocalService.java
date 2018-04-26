@@ -291,7 +291,7 @@ public interface AssetLinkLocalService extends BaseLocalService,
 	/**
 	* @deprecated As of 7.0.0, with no direct replacement
 	*/
-	@java.lang.Deprecated
+	@Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ExportActionableDynamicQuery getExportActionbleDynamicQuery(
 		PortletDataContext portletDataContext);
@@ -345,7 +345,7 @@ public interface AssetLinkLocalService extends BaseLocalService,
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

@@ -178,7 +178,7 @@ public interface PortletPersistence extends BasePersistence<Portlet> {
 	* @return the matching portlet
 	* @throws NoSuchPortletException if a matching portlet could not be found
 	*/
-	public Portlet findByC_P(long companyId, java.lang.String portletId)
+	public Portlet findByC_P(long companyId, String portletId)
 		throws NoSuchPortletException;
 
 	/**
@@ -188,7 +188,7 @@ public interface PortletPersistence extends BasePersistence<Portlet> {
 	* @param portletId the portlet ID
 	* @return the matching portlet, or <code>null</code> if a matching portlet could not be found
 	*/
-	public Portlet fetchByC_P(long companyId, java.lang.String portletId);
+	public Portlet fetchByC_P(long companyId, String portletId);
 
 	/**
 	* Returns the portlet where companyId = &#63; and portletId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -198,7 +198,7 @@ public interface PortletPersistence extends BasePersistence<Portlet> {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching portlet, or <code>null</code> if a matching portlet could not be found
 	*/
-	public Portlet fetchByC_P(long companyId, java.lang.String portletId,
+	public Portlet fetchByC_P(long companyId, String portletId,
 		boolean retrieveFromCache);
 
 	/**
@@ -208,7 +208,7 @@ public interface PortletPersistence extends BasePersistence<Portlet> {
 	* @param portletId the portlet ID
 	* @return the portlet that was removed
 	*/
-	public Portlet removeByC_P(long companyId, java.lang.String portletId)
+	public Portlet removeByC_P(long companyId, String portletId)
 		throws NoSuchPortletException;
 
 	/**
@@ -218,7 +218,7 @@ public interface PortletPersistence extends BasePersistence<Portlet> {
 	* @param portletId the portlet ID
 	* @return the number of matching portlets
 	*/
-	public int countByC_P(long companyId, java.lang.String portletId);
+	public int countByC_P(long companyId, String portletId);
 
 	/**
 	* Caches the portlet in the entity cache if it is enabled.
@@ -339,5 +339,5 @@ public interface PortletPersistence extends BasePersistence<Portlet> {
 	public int countAll();
 
 	@Override
-	public java.util.Set<java.lang.String> getBadColumnNames();
+	public java.util.Set<String> getBadColumnNames();
 }

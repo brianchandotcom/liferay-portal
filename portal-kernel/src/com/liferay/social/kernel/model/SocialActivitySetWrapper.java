@@ -142,7 +142,7 @@ public class SocialActivitySetWrapper implements SocialActivitySet,
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new SocialActivitySetWrapper((SocialActivitySet)_socialActivitySet.clone());
 	}
 
@@ -177,7 +177,7 @@ public class SocialActivitySetWrapper implements SocialActivitySet,
 	* @return the fully qualified class name of this social activity set
 	*/
 	@Override
-	public java.lang.String getClassName() {
+	public String getClassName() {
 		return _socialActivitySet.getClassName();
 	}
 
@@ -232,7 +232,7 @@ public class SocialActivitySetWrapper implements SocialActivitySet,
 	* @return the extra data of this social activity set
 	*/
 	@Override
-	public java.lang.String getExtraData() {
+	public String getExtraData() {
 		return _socialActivitySet.getExtraData();
 	}
 
@@ -297,7 +297,7 @@ public class SocialActivitySetWrapper implements SocialActivitySet,
 	* @return the user uuid of this social activity set
 	*/
 	@Override
-	public java.lang.String getUserUuid() {
+	public String getUserUuid() {
 		return _socialActivitySet.getUserUuid();
 	}
 
@@ -352,7 +352,7 @@ public class SocialActivitySetWrapper implements SocialActivitySet,
 	}
 
 	@Override
-	public void setClassName(java.lang.String className) {
+	public void setClassName(String className) {
 		_socialActivitySet.setClassName(className);
 	}
 
@@ -418,7 +418,7 @@ public class SocialActivitySetWrapper implements SocialActivitySet,
 	* @param extraData the extra data of this social activity set
 	*/
 	@Override
-	public void setExtraData(java.lang.String extraData) {
+	public void setExtraData(String extraData) {
 		_socialActivitySet.setExtraData(extraData);
 	}
 
@@ -488,7 +488,7 @@ public class SocialActivitySetWrapper implements SocialActivitySet,
 	* @param userUuid the user uuid of this social activity set
 	*/
 	@Override
-	public void setUserUuid(java.lang.String userUuid) {
+	public void setUserUuid(String userUuid) {
 		_socialActivitySet.setUserUuid(userUuid);
 	}
 
@@ -503,7 +503,7 @@ public class SocialActivitySetWrapper implements SocialActivitySet,
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _socialActivitySet.toString();
 	}
 
@@ -513,7 +513,7 @@ public class SocialActivitySetWrapper implements SocialActivitySet,
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _socialActivitySet.toXmlString();
 	}
 

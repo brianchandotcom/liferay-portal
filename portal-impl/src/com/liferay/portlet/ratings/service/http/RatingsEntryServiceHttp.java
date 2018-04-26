@@ -56,7 +56,7 @@ import com.liferay.ratings.kernel.service.RatingsEntryServiceUtil;
 @ProviderType
 public class RatingsEntryServiceHttp {
 	public static void deleteEntry(HttpPrincipal httpPrincipal,
-		java.lang.String className, long classPK)
+		String className, long classPK)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(RatingsEntryServiceUtil.class,
@@ -84,7 +84,7 @@ public class RatingsEntryServiceHttp {
 	}
 
 	public static com.liferay.ratings.kernel.model.RatingsEntry updateEntry(
-		HttpPrincipal httpPrincipal, java.lang.String className, long classPK,
+		HttpPrincipal httpPrincipal, String className, long classPK,
 		double score)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -118,9 +118,9 @@ public class RatingsEntryServiceHttp {
 
 	private static Log _log = LogFactoryUtil.getLog(RatingsEntryServiceHttp.class);
 	private static final Class<?>[] _deleteEntryParameterTypes0 = new Class[] {
-			java.lang.String.class, long.class
+			String.class, long.class
 		};
 	private static final Class<?>[] _updateEntryParameterTypes1 = new Class[] {
-			java.lang.String.class, long.class, double.class
+			String.class, long.class, double.class
 		};
 }

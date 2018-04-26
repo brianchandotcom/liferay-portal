@@ -66,21 +66,20 @@ public class JournalContentSearchLocalServiceWrapper
 
 	@Override
 	public void deleteArticleContentSearch(long groupId, boolean privateLayout,
-		long layoutId, java.lang.String portletId) {
+		long layoutId, String portletId) {
 		_journalContentSearchLocalService.deleteArticleContentSearch(groupId,
 			privateLayout, layoutId, portletId);
 	}
 
 	@Override
 	public void deleteArticleContentSearch(long groupId, boolean privateLayout,
-		long layoutId, java.lang.String portletId, java.lang.String articleId) {
+		long layoutId, String portletId, String articleId) {
 		_journalContentSearchLocalService.deleteArticleContentSearch(groupId,
 			privateLayout, layoutId, portletId, articleId);
 	}
 
 	@Override
-	public void deleteArticleContentSearches(long groupId,
-		java.lang.String articleId) {
+	public void deleteArticleContentSearches(long groupId, String articleId) {
 		_journalContentSearchLocalService.deleteArticleContentSearches(groupId,
 			articleId);
 	}
@@ -238,14 +237,14 @@ public class JournalContentSearchLocalServiceWrapper
 
 	@Override
 	public java.util.List<com.liferay.journal.model.JournalContentSearch> getArticleContentSearches(
-		long groupId, java.lang.String articleId) {
+		long groupId, String articleId) {
 		return _journalContentSearchLocalService.getArticleContentSearches(groupId,
 			articleId);
 	}
 
 	@Override
 	public java.util.List<com.liferay.journal.model.JournalContentSearch> getArticleContentSearches(
-		java.lang.String articleId) {
+		String articleId) {
 		return _journalContentSearchLocalService.getArticleContentSearches(articleId);
 	}
 
@@ -297,21 +296,21 @@ public class JournalContentSearchLocalServiceWrapper
 	}
 
 	@Override
-	public java.util.List<java.lang.Long> getLayoutIds(long groupId,
-		boolean privateLayout, java.lang.String articleId) {
+	public java.util.List<Long> getLayoutIds(long groupId,
+		boolean privateLayout, String articleId) {
 		return _journalContentSearchLocalService.getLayoutIds(groupId,
 			privateLayout, articleId);
 	}
 
 	@Override
 	public int getLayoutIdsCount(long groupId, boolean privateLayout,
-		java.lang.String articleId) {
+		String articleId) {
 		return _journalContentSearchLocalService.getLayoutIdsCount(groupId,
 			privateLayout, articleId);
 	}
 
 	@Override
-	public int getLayoutIdsCount(java.lang.String articleId) {
+	public int getLayoutIdsCount(String articleId) {
 		return _journalContentSearchLocalService.getLayoutIdsCount(articleId);
 	}
 
@@ -321,7 +320,7 @@ public class JournalContentSearchLocalServiceWrapper
 	* @return the OSGi service identifier
 	*/
 	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
+	public String getOSGiServiceIdentifier() {
 		return _journalContentSearchLocalService.getOSGiServiceIdentifier();
 	}
 
@@ -334,14 +333,14 @@ public class JournalContentSearchLocalServiceWrapper
 
 	@Override
 	public java.util.List<com.liferay.journal.model.JournalContentSearch> getPortletContentSearches(
-		java.lang.String portletId) {
+		String portletId) {
 		return _journalContentSearchLocalService.getPortletContentSearches(portletId);
 	}
 
 	@Override
 	public com.liferay.journal.model.JournalContentSearch updateContentSearch(
-		long groupId, boolean privateLayout, long layoutId,
-		java.lang.String portletId, java.lang.String articleId)
+		long groupId, boolean privateLayout, long layoutId, String portletId,
+		String articleId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _journalContentSearchLocalService.updateContentSearch(groupId,
 			privateLayout, layoutId, portletId, articleId);
@@ -349,8 +348,8 @@ public class JournalContentSearchLocalServiceWrapper
 
 	@Override
 	public com.liferay.journal.model.JournalContentSearch updateContentSearch(
-		long groupId, boolean privateLayout, long layoutId,
-		java.lang.String portletId, java.lang.String articleId, boolean purge)
+		long groupId, boolean privateLayout, long layoutId, String portletId,
+		String articleId, boolean purge)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _journalContentSearchLocalService.updateContentSearch(groupId,
 			privateLayout, layoutId, portletId, articleId, purge);
@@ -358,8 +357,8 @@ public class JournalContentSearchLocalServiceWrapper
 
 	@Override
 	public java.util.List<com.liferay.journal.model.JournalContentSearch> updateContentSearch(
-		long groupId, boolean privateLayout, long layoutId,
-		java.lang.String portletId, java.lang.String[] articleIds)
+		long groupId, boolean privateLayout, long layoutId, String portletId,
+		String[] articleIds)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _journalContentSearchLocalService.updateContentSearch(groupId,
 			privateLayout, layoutId, portletId, articleIds);

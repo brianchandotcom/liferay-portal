@@ -58,18 +58,16 @@ public interface MBCategoryService extends BaseService {
 	 * Never modify or reference this interface directly. Always use {@link MBCategoryServiceUtil} to access the message boards category remote service. Add custom service methods to {@link com.liferay.message.boards.service.impl.MBCategoryServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	public MBCategory addCategory(long userId, long parentCategoryId,
-		java.lang.String name, java.lang.String description,
-		ServiceContext serviceContext) throws PortalException;
+		String name, String description, ServiceContext serviceContext)
+		throws PortalException;
 
-	public MBCategory addCategory(long parentCategoryId, java.lang.String name,
-		java.lang.String description, java.lang.String displayStyle,
-		java.lang.String emailAddress, java.lang.String inProtocol,
-		java.lang.String inServerName, int inServerPort, boolean inUseSSL,
-		java.lang.String inUserName, java.lang.String inPassword,
-		int inReadInterval, java.lang.String outEmailAddress,
-		boolean outCustom, java.lang.String outServerName, int outServerPort,
-		boolean outUseSSL, java.lang.String outUserName,
-		java.lang.String outPassword, boolean mailingListActive,
+	public MBCategory addCategory(long parentCategoryId, String name,
+		String description, String displayStyle, String emailAddress,
+		String inProtocol, String inServerName, int inServerPort,
+		boolean inUseSSL, String inUserName, String inPassword,
+		int inReadInterval, String outEmailAddress, boolean outCustom,
+		String outServerName, int outServerPort, boolean outUseSSL,
+		String outUserName, String outPassword, boolean mailingListActive,
 		boolean allowAnonymousEmail, ServiceContext serviceContext)
 		throws PortalException;
 
@@ -116,26 +114,23 @@ public interface MBCategoryService extends BaseService {
 		int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<java.lang.Object> getCategoriesAndThreads(long groupId,
-		long categoryId);
+	public List<Object> getCategoriesAndThreads(long groupId, long categoryId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<java.lang.Object> getCategoriesAndThreads(long groupId,
-		long categoryId, int status);
+	public List<Object> getCategoriesAndThreads(long groupId, long categoryId,
+		int status);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<java.lang.Object> getCategoriesAndThreads(long groupId,
-		long categoryId, int status, int start, int end);
+	public List<Object> getCategoriesAndThreads(long groupId, long categoryId,
+		int status, int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<java.lang.Object> getCategoriesAndThreads(long groupId,
-		long categoryId, int status, int start, int end,
-		OrderByComparator<?> obc);
+	public List<Object> getCategoriesAndThreads(long groupId, long categoryId,
+		int status, int start, int end, OrderByComparator<?> obc);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<java.lang.Object> getCategoriesAndThreads(long groupId,
-		long categoryId, QueryDefinition<?> queryDefinition)
-		throws PortalException;
+	public List<Object> getCategoriesAndThreads(long groupId, long categoryId,
+		QueryDefinition<?> queryDefinition) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getCategoriesAndThreadsCount(long groupId, long categoryId);
@@ -185,11 +180,11 @@ public interface MBCategoryService extends BaseService {
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<java.lang.Long> getSubcategoryIds(
-		List<java.lang.Long> categoryIds, long groupId, long categoryId);
+	public List<Long> getSubcategoryIds(List<Long> categoryIds, long groupId,
+		long categoryId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<MBCategory> getSubscribedCategories(long groupId, long userId,
@@ -217,14 +212,12 @@ public interface MBCategoryService extends BaseService {
 		throws PortalException;
 
 	public MBCategory updateCategory(long categoryId, long parentCategoryId,
-		java.lang.String name, java.lang.String description,
-		java.lang.String displayStyle, java.lang.String emailAddress,
-		java.lang.String inProtocol, java.lang.String inServerName,
-		int inServerPort, boolean inUseSSL, java.lang.String inUserName,
-		java.lang.String inPassword, int inReadInterval,
-		java.lang.String outEmailAddress, boolean outCustom,
-		java.lang.String outServerName, int outServerPort, boolean outUseSSL,
-		java.lang.String outUserName, java.lang.String outPassword,
+		String name, String description, String displayStyle,
+		String emailAddress, String inProtocol, String inServerName,
+		int inServerPort, boolean inUseSSL, String inUserName,
+		String inPassword, int inReadInterval, String outEmailAddress,
+		boolean outCustom, String outServerName, int outServerPort,
+		boolean outUseSSL, String outUserName, String outPassword,
 		boolean mailingListActive, boolean allowAnonymousEmail,
 		boolean mergeWithParentCategory, ServiceContext serviceContext)
 		throws PortalException;

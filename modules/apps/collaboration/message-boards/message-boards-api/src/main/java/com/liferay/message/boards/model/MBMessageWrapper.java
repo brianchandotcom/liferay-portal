@@ -255,7 +255,7 @@ public class MBMessageWrapper implements MBMessage, ModelWrapper<MBMessage> {
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new MBMessageWrapper((MBMessage)_mbMessage.clone());
 	}
 
@@ -295,7 +295,7 @@ public class MBMessageWrapper implements MBMessage, ModelWrapper<MBMessage> {
 	}
 
 	@Override
-	public java.lang.String[] getAssetTagNames() {
+	public String[] getAssetTagNames() {
 		return _mbMessage.getAssetTagNames();
 	}
 
@@ -330,12 +330,12 @@ public class MBMessageWrapper implements MBMessage, ModelWrapper<MBMessage> {
 	* @return the body of this message-boards message
 	*/
 	@Override
-	public java.lang.String getBody() {
+	public String getBody() {
 		return _mbMessage.getBody();
 	}
 
 	@Override
-	public java.lang.String getBody(boolean translate) {
+	public String getBody(boolean translate) {
 		return _mbMessage.getBody(translate);
 	}
 
@@ -361,7 +361,7 @@ public class MBMessageWrapper implements MBMessage, ModelWrapper<MBMessage> {
 	* @return the fully qualified class name of this message-boards message
 	*/
 	@Override
-	public java.lang.String getClassName() {
+	public String getClassName() {
 		return _mbMessage.getClassName();
 	}
 
@@ -435,7 +435,7 @@ public class MBMessageWrapper implements MBMessage, ModelWrapper<MBMessage> {
 	* @return the format of this message-boards message
 	*/
 	@Override
-	public java.lang.String getFormat() {
+	public String getFormat() {
 		return _mbMessage.getFormat();
 	}
 
@@ -550,7 +550,7 @@ public class MBMessageWrapper implements MBMessage, ModelWrapper<MBMessage> {
 	* @return the status by user name of this message-boards message
 	*/
 	@Override
-	public java.lang.String getStatusByUserName() {
+	public String getStatusByUserName() {
 		return _mbMessage.getStatusByUserName();
 	}
 
@@ -560,7 +560,7 @@ public class MBMessageWrapper implements MBMessage, ModelWrapper<MBMessage> {
 	* @return the status by user uuid of this message-boards message
 	*/
 	@Override
-	public java.lang.String getStatusByUserUuid() {
+	public String getStatusByUserUuid() {
 		return _mbMessage.getStatusByUserUuid();
 	}
 
@@ -580,7 +580,7 @@ public class MBMessageWrapper implements MBMessage, ModelWrapper<MBMessage> {
 	* @return the subject of this message-boards message
 	*/
 	@Override
-	public java.lang.String getSubject() {
+	public String getSubject() {
 		return _mbMessage.getSubject();
 	}
 
@@ -655,7 +655,7 @@ public class MBMessageWrapper implements MBMessage, ModelWrapper<MBMessage> {
 	* @return the user name of this message-boards message
 	*/
 	@Override
-	public java.lang.String getUserName() {
+	public String getUserName() {
 		return _mbMessage.getUserName();
 	}
 
@@ -665,7 +665,7 @@ public class MBMessageWrapper implements MBMessage, ModelWrapper<MBMessage> {
 	* @return the user uuid of this message-boards message
 	*/
 	@Override
-	public java.lang.String getUserUuid() {
+	public String getUserUuid() {
 		return _mbMessage.getUserUuid();
 	}
 
@@ -675,12 +675,12 @@ public class MBMessageWrapper implements MBMessage, ModelWrapper<MBMessage> {
 	* @return the uuid of this message-boards message
 	*/
 	@Override
-	public java.lang.String getUuid() {
+	public String getUuid() {
 		return _mbMessage.getUuid();
 	}
 
 	@Override
-	public java.lang.String getWorkflowClassName() {
+	public String getWorkflowClassName() {
 		return _mbMessage.getWorkflowClassName();
 	}
 
@@ -910,7 +910,7 @@ public class MBMessageWrapper implements MBMessage, ModelWrapper<MBMessage> {
 	* @param body the body of this message-boards message
 	*/
 	@Override
-	public void setBody(java.lang.String body) {
+	public void setBody(String body) {
 		_mbMessage.setBody(body);
 	}
 
@@ -930,7 +930,7 @@ public class MBMessageWrapper implements MBMessage, ModelWrapper<MBMessage> {
 	}
 
 	@Override
-	public void setClassName(java.lang.String className) {
+	public void setClassName(String className) {
 		_mbMessage.setClassName(className);
 	}
 
@@ -996,7 +996,7 @@ public class MBMessageWrapper implements MBMessage, ModelWrapper<MBMessage> {
 	* @param format the format of this message-boards message
 	*/
 	@Override
-	public void setFormat(java.lang.String format) {
+	public void setFormat(String format) {
 		_mbMessage.setFormat(format);
 	}
 
@@ -1116,7 +1116,7 @@ public class MBMessageWrapper implements MBMessage, ModelWrapper<MBMessage> {
 	* @param statusByUserName the status by user name of this message-boards message
 	*/
 	@Override
-	public void setStatusByUserName(java.lang.String statusByUserName) {
+	public void setStatusByUserName(String statusByUserName) {
 		_mbMessage.setStatusByUserName(statusByUserName);
 	}
 
@@ -1126,7 +1126,7 @@ public class MBMessageWrapper implements MBMessage, ModelWrapper<MBMessage> {
 	* @param statusByUserUuid the status by user uuid of this message-boards message
 	*/
 	@Override
-	public void setStatusByUserUuid(java.lang.String statusByUserUuid) {
+	public void setStatusByUserUuid(String statusByUserUuid) {
 		_mbMessage.setStatusByUserUuid(statusByUserUuid);
 	}
 
@@ -1146,7 +1146,7 @@ public class MBMessageWrapper implements MBMessage, ModelWrapper<MBMessage> {
 	* @param subject the subject of this message-boards message
 	*/
 	@Override
-	public void setSubject(java.lang.String subject) {
+	public void setSubject(String subject) {
 		_mbMessage.setSubject(subject);
 	}
 
@@ -1176,7 +1176,7 @@ public class MBMessageWrapper implements MBMessage, ModelWrapper<MBMessage> {
 	* @param userName the user name of this message-boards message
 	*/
 	@Override
-	public void setUserName(java.lang.String userName) {
+	public void setUserName(String userName) {
 		_mbMessage.setUserName(userName);
 	}
 
@@ -1186,7 +1186,7 @@ public class MBMessageWrapper implements MBMessage, ModelWrapper<MBMessage> {
 	* @param userUuid the user uuid of this message-boards message
 	*/
 	@Override
-	public void setUserUuid(java.lang.String userUuid) {
+	public void setUserUuid(String userUuid) {
 		_mbMessage.setUserUuid(userUuid);
 	}
 
@@ -1196,7 +1196,7 @@ public class MBMessageWrapper implements MBMessage, ModelWrapper<MBMessage> {
 	* @param uuid the uuid of this message-boards message
 	*/
 	@Override
-	public void setUuid(java.lang.String uuid) {
+	public void setUuid(String uuid) {
 		_mbMessage.setUuid(uuid);
 	}
 
@@ -1211,7 +1211,7 @@ public class MBMessageWrapper implements MBMessage, ModelWrapper<MBMessage> {
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _mbMessage.toString();
 	}
 
@@ -1221,7 +1221,7 @@ public class MBMessageWrapper implements MBMessage, ModelWrapper<MBMessage> {
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _mbMessage.toXmlString();
 	}
 

@@ -179,7 +179,7 @@ public interface MBDiscussionLocalService extends BaseLocalService,
 	public MBDiscussion fetchDiscussion(long classNameId, long classPK);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public MBDiscussion fetchDiscussion(java.lang.String className, long classPK);
+	public MBDiscussion fetchDiscussion(String className, long classPK);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public MBDiscussion fetchMBDiscussion(long discussionId);
@@ -192,8 +192,8 @@ public interface MBDiscussionLocalService extends BaseLocalService,
 	* @return the matching message boards discussion, or <code>null</code> if a matching message boards discussion could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public MBDiscussion fetchMBDiscussionByUuidAndGroupId(
-		java.lang.String uuid, long groupId);
+	public MBDiscussion fetchMBDiscussionByUuidAndGroupId(String uuid,
+		long groupId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public MBDiscussion fetchThreadDiscussion(long threadId);
@@ -206,11 +206,11 @@ public interface MBDiscussionLocalService extends BaseLocalService,
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public MBDiscussion getDiscussion(java.lang.String className, long classPK)
+	public MBDiscussion getDiscussion(String className, long classPK)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<MBDiscussion> getDiscussions(java.lang.String className);
+	public List<MBDiscussion> getDiscussions(String className);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
@@ -239,7 +239,7 @@ public interface MBDiscussionLocalService extends BaseLocalService,
 	* @throws PortalException if a matching message boards discussion could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public MBDiscussion getMBDiscussionByUuidAndGroupId(java.lang.String uuid,
+	public MBDiscussion getMBDiscussionByUuidAndGroupId(String uuid,
 		long groupId) throws PortalException;
 
 	/**
@@ -264,8 +264,8 @@ public interface MBDiscussionLocalService extends BaseLocalService,
 	* @return the matching message boards discussions, or an empty list if no matches were found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<MBDiscussion> getMBDiscussionsByUuidAndCompanyId(
-		java.lang.String uuid, long companyId);
+	public List<MBDiscussion> getMBDiscussionsByUuidAndCompanyId(String uuid,
+		long companyId);
 
 	/**
 	* Returns a range of message boards discussions matching the UUID and company.
@@ -278,8 +278,8 @@ public interface MBDiscussionLocalService extends BaseLocalService,
 	* @return the range of matching message boards discussions, or an empty list if no matches were found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<MBDiscussion> getMBDiscussionsByUuidAndCompanyId(
-		java.lang.String uuid, long companyId, int start, int end,
+	public List<MBDiscussion> getMBDiscussionsByUuidAndCompanyId(String uuid,
+		long companyId, int start, int end,
 		OrderByComparator<MBDiscussion> orderByComparator);
 
 	/**
@@ -295,7 +295,7 @@ public interface MBDiscussionLocalService extends BaseLocalService,
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -307,9 +307,9 @@ public interface MBDiscussionLocalService extends BaseLocalService,
 		throws PortalException;
 
 	public void subscribeDiscussion(long userId, long groupId,
-		java.lang.String className, long classPK) throws PortalException;
+		String className, long classPK) throws PortalException;
 
-	public void unsubscribeDiscussion(long userId, java.lang.String className,
+	public void unsubscribeDiscussion(long userId, String className,
 		long classPK) throws PortalException;
 
 	/**

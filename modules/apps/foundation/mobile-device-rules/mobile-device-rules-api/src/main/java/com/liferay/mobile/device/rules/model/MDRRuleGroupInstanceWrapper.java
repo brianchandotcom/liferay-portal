@@ -160,7 +160,7 @@ public class MDRRuleGroupInstanceWrapper implements MDRRuleGroupInstance,
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new MDRRuleGroupInstanceWrapper((MDRRuleGroupInstance)_mdrRuleGroupInstance.clone());
 	}
 
@@ -180,7 +180,7 @@ public class MDRRuleGroupInstanceWrapper implements MDRRuleGroupInstance,
 	* @return the fully qualified class name of this mdr rule group instance
 	*/
 	@Override
-	public java.lang.String getClassName() {
+	public String getClassName() {
 		return _mdrRuleGroupInstance.getClassName();
 	}
 
@@ -326,7 +326,7 @@ public class MDRRuleGroupInstanceWrapper implements MDRRuleGroupInstance,
 	* @return the user name of this mdr rule group instance
 	*/
 	@Override
-	public java.lang.String getUserName() {
+	public String getUserName() {
 		return _mdrRuleGroupInstance.getUserName();
 	}
 
@@ -336,7 +336,7 @@ public class MDRRuleGroupInstanceWrapper implements MDRRuleGroupInstance,
 	* @return the user uuid of this mdr rule group instance
 	*/
 	@Override
-	public java.lang.String getUserUuid() {
+	public String getUserUuid() {
 		return _mdrRuleGroupInstance.getUserUuid();
 	}
 
@@ -346,7 +346,7 @@ public class MDRRuleGroupInstanceWrapper implements MDRRuleGroupInstance,
 	* @return the uuid of this mdr rule group instance
 	*/
 	@Override
-	public java.lang.String getUuid() {
+	public String getUuid() {
 		return _mdrRuleGroupInstance.getUuid();
 	}
 
@@ -381,7 +381,7 @@ public class MDRRuleGroupInstanceWrapper implements MDRRuleGroupInstance,
 	}
 
 	@Override
-	public void setClassName(java.lang.String className) {
+	public void setClassName(String className) {
 		_mdrRuleGroupInstance.setClassName(className);
 	}
 
@@ -537,7 +537,7 @@ public class MDRRuleGroupInstanceWrapper implements MDRRuleGroupInstance,
 	* @param userName the user name of this mdr rule group instance
 	*/
 	@Override
-	public void setUserName(java.lang.String userName) {
+	public void setUserName(String userName) {
 		_mdrRuleGroupInstance.setUserName(userName);
 	}
 
@@ -547,7 +547,7 @@ public class MDRRuleGroupInstanceWrapper implements MDRRuleGroupInstance,
 	* @param userUuid the user uuid of this mdr rule group instance
 	*/
 	@Override
-	public void setUserUuid(java.lang.String userUuid) {
+	public void setUserUuid(String userUuid) {
 		_mdrRuleGroupInstance.setUserUuid(userUuid);
 	}
 
@@ -557,7 +557,7 @@ public class MDRRuleGroupInstanceWrapper implements MDRRuleGroupInstance,
 	* @param uuid the uuid of this mdr rule group instance
 	*/
 	@Override
-	public void setUuid(java.lang.String uuid) {
+	public void setUuid(String uuid) {
 		_mdrRuleGroupInstance.setUuid(uuid);
 	}
 
@@ -572,7 +572,7 @@ public class MDRRuleGroupInstanceWrapper implements MDRRuleGroupInstance,
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _mdrRuleGroupInstance.toString();
 	}
 
@@ -582,7 +582,7 @@ public class MDRRuleGroupInstanceWrapper implements MDRRuleGroupInstance,
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _mdrRuleGroupInstance.toXmlString();
 	}
 

@@ -187,13 +187,13 @@ public class BookmarksFolderWrapper implements BookmarksFolder,
 	}
 
 	@Override
-	public java.lang.String buildTreePath()
+	public String buildTreePath()
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _bookmarksFolder.buildTreePath();
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new BookmarksFolderWrapper((BookmarksFolder)_bookmarksFolder.clone());
 	}
 
@@ -203,7 +203,7 @@ public class BookmarksFolderWrapper implements BookmarksFolder,
 	}
 
 	@Override
-	public java.util.List<java.lang.Long> getAncestorFolderIds()
+	public java.util.List<Long> getAncestorFolderIds()
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _bookmarksFolder.getAncestorFolderIds();
 	}
@@ -240,7 +240,7 @@ public class BookmarksFolderWrapper implements BookmarksFolder,
 	* @return the container name of this bookmarks folder
 	*/
 	@Override
-	public java.lang.String getContainerModelName() {
+	public String getContainerModelName() {
 		return _bookmarksFolder.getContainerModelName();
 	}
 
@@ -260,7 +260,7 @@ public class BookmarksFolderWrapper implements BookmarksFolder,
 	* @return the description of this bookmarks folder
 	*/
 	@Override
-	public java.lang.String getDescription() {
+	public String getDescription() {
 		return _bookmarksFolder.getDescription();
 	}
 
@@ -315,7 +315,7 @@ public class BookmarksFolderWrapper implements BookmarksFolder,
 	* @return the name of this bookmarks folder
 	*/
 	@Override
-	public java.lang.String getName() {
+	public String getName() {
 		return _bookmarksFolder.getName();
 	}
 
@@ -386,7 +386,7 @@ public class BookmarksFolderWrapper implements BookmarksFolder,
 	* @return the status by user name of this bookmarks folder
 	*/
 	@Override
-	public java.lang.String getStatusByUserName() {
+	public String getStatusByUserName() {
 		return _bookmarksFolder.getStatusByUserName();
 	}
 
@@ -396,7 +396,7 @@ public class BookmarksFolderWrapper implements BookmarksFolder,
 	* @return the status by user uuid of this bookmarks folder
 	*/
 	@Override
-	public java.lang.String getStatusByUserUuid() {
+	public String getStatusByUserUuid() {
 		return _bookmarksFolder.getStatusByUserUuid();
 	}
 
@@ -449,7 +449,7 @@ public class BookmarksFolderWrapper implements BookmarksFolder,
 	* @return the tree path of this bookmarks folder
 	*/
 	@Override
-	public java.lang.String getTreePath() {
+	public String getTreePath() {
 		return _bookmarksFolder.getTreePath();
 	}
 
@@ -469,7 +469,7 @@ public class BookmarksFolderWrapper implements BookmarksFolder,
 	* @return the user name of this bookmarks folder
 	*/
 	@Override
-	public java.lang.String getUserName() {
+	public String getUserName() {
 		return _bookmarksFolder.getUserName();
 	}
 
@@ -479,7 +479,7 @@ public class BookmarksFolderWrapper implements BookmarksFolder,
 	* @return the user uuid of this bookmarks folder
 	*/
 	@Override
-	public java.lang.String getUserUuid() {
+	public String getUserUuid() {
 		return _bookmarksFolder.getUserUuid();
 	}
 
@@ -489,7 +489,7 @@ public class BookmarksFolderWrapper implements BookmarksFolder,
 	* @return the uuid of this bookmarks folder
 	*/
 	@Override
-	public java.lang.String getUuid() {
+	public String getUuid() {
 		return _bookmarksFolder.getUuid();
 	}
 
@@ -674,7 +674,7 @@ public class BookmarksFolderWrapper implements BookmarksFolder,
 	* @param description the description of this bookmarks folder
 	*/
 	@Override
-	public void setDescription(java.lang.String description) {
+	public void setDescription(String description) {
 		_bookmarksFolder.setDescription(description);
 	}
 
@@ -740,7 +740,7 @@ public class BookmarksFolderWrapper implements BookmarksFolder,
 	* @param name the name of this bookmarks folder
 	*/
 	@Override
-	public void setName(java.lang.String name) {
+	public void setName(String name) {
 		_bookmarksFolder.setName(name);
 	}
 
@@ -810,7 +810,7 @@ public class BookmarksFolderWrapper implements BookmarksFolder,
 	* @param statusByUserName the status by user name of this bookmarks folder
 	*/
 	@Override
-	public void setStatusByUserName(java.lang.String statusByUserName) {
+	public void setStatusByUserName(String statusByUserName) {
 		_bookmarksFolder.setStatusByUserName(statusByUserName);
 	}
 
@@ -820,7 +820,7 @@ public class BookmarksFolderWrapper implements BookmarksFolder,
 	* @param statusByUserUuid the status by user uuid of this bookmarks folder
 	*/
 	@Override
-	public void setStatusByUserUuid(java.lang.String statusByUserUuid) {
+	public void setStatusByUserUuid(String statusByUserUuid) {
 		_bookmarksFolder.setStatusByUserUuid(statusByUserUuid);
 	}
 
@@ -840,7 +840,7 @@ public class BookmarksFolderWrapper implements BookmarksFolder,
 	* @param treePath the tree path of this bookmarks folder
 	*/
 	@Override
-	public void setTreePath(java.lang.String treePath) {
+	public void setTreePath(String treePath) {
 		_bookmarksFolder.setTreePath(treePath);
 	}
 
@@ -860,7 +860,7 @@ public class BookmarksFolderWrapper implements BookmarksFolder,
 	* @param userName the user name of this bookmarks folder
 	*/
 	@Override
-	public void setUserName(java.lang.String userName) {
+	public void setUserName(String userName) {
 		_bookmarksFolder.setUserName(userName);
 	}
 
@@ -870,7 +870,7 @@ public class BookmarksFolderWrapper implements BookmarksFolder,
 	* @param userUuid the user uuid of this bookmarks folder
 	*/
 	@Override
-	public void setUserUuid(java.lang.String userUuid) {
+	public void setUserUuid(String userUuid) {
 		_bookmarksFolder.setUserUuid(userUuid);
 	}
 
@@ -880,7 +880,7 @@ public class BookmarksFolderWrapper implements BookmarksFolder,
 	* @param uuid the uuid of this bookmarks folder
 	*/
 	@Override
-	public void setUuid(java.lang.String uuid) {
+	public void setUuid(String uuid) {
 		_bookmarksFolder.setUuid(uuid);
 	}
 
@@ -895,7 +895,7 @@ public class BookmarksFolderWrapper implements BookmarksFolder,
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _bookmarksFolder.toString();
 	}
 
@@ -905,12 +905,12 @@ public class BookmarksFolderWrapper implements BookmarksFolder,
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _bookmarksFolder.toXmlString();
 	}
 
 	@Override
-	public void updateTreePath(java.lang.String treePath) {
+	public void updateTreePath(String treePath) {
 		_bookmarksFolder.updateTreePath(treePath);
 	}
 

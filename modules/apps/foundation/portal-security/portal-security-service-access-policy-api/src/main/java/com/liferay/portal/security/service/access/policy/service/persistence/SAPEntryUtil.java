@@ -116,7 +116,7 @@ public class SAPEntryUtil {
 	* @param uuid the uuid
 	* @return the matching sap entries
 	*/
-	public static List<SAPEntry> findByUuid(java.lang.String uuid) {
+	public static List<SAPEntry> findByUuid(String uuid) {
 		return getPersistence().findByUuid(uuid);
 	}
 
@@ -132,8 +132,7 @@ public class SAPEntryUtil {
 	* @param end the upper bound of the range of sap entries (not inclusive)
 	* @return the range of matching sap entries
 	*/
-	public static List<SAPEntry> findByUuid(java.lang.String uuid, int start,
-		int end) {
+	public static List<SAPEntry> findByUuid(String uuid, int start, int end) {
 		return getPersistence().findByUuid(uuid, start, end);
 	}
 
@@ -150,8 +149,8 @@ public class SAPEntryUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching sap entries
 	*/
-	public static List<SAPEntry> findByUuid(java.lang.String uuid, int start,
-		int end, OrderByComparator<SAPEntry> orderByComparator) {
+	public static List<SAPEntry> findByUuid(String uuid, int start, int end,
+		OrderByComparator<SAPEntry> orderByComparator) {
 		return getPersistence().findByUuid(uuid, start, end, orderByComparator);
 	}
 
@@ -169,9 +168,8 @@ public class SAPEntryUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching sap entries
 	*/
-	public static List<SAPEntry> findByUuid(java.lang.String uuid, int start,
-		int end, OrderByComparator<SAPEntry> orderByComparator,
-		boolean retrieveFromCache) {
+	public static List<SAPEntry> findByUuid(String uuid, int start, int end,
+		OrderByComparator<SAPEntry> orderByComparator, boolean retrieveFromCache) {
 		return getPersistence()
 				   .findByUuid(uuid, start, end, orderByComparator,
 			retrieveFromCache);
@@ -185,7 +183,7 @@ public class SAPEntryUtil {
 	* @return the first matching sap entry
 	* @throws NoSuchEntryException if a matching sap entry could not be found
 	*/
-	public static SAPEntry findByUuid_First(java.lang.String uuid,
+	public static SAPEntry findByUuid_First(String uuid,
 		OrderByComparator<SAPEntry> orderByComparator)
 		throws com.liferay.portal.security.service.access.policy.exception.NoSuchEntryException {
 		return getPersistence().findByUuid_First(uuid, orderByComparator);
@@ -198,7 +196,7 @@ public class SAPEntryUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching sap entry, or <code>null</code> if a matching sap entry could not be found
 	*/
-	public static SAPEntry fetchByUuid_First(java.lang.String uuid,
+	public static SAPEntry fetchByUuid_First(String uuid,
 		OrderByComparator<SAPEntry> orderByComparator) {
 		return getPersistence().fetchByUuid_First(uuid, orderByComparator);
 	}
@@ -211,7 +209,7 @@ public class SAPEntryUtil {
 	* @return the last matching sap entry
 	* @throws NoSuchEntryException if a matching sap entry could not be found
 	*/
-	public static SAPEntry findByUuid_Last(java.lang.String uuid,
+	public static SAPEntry findByUuid_Last(String uuid,
 		OrderByComparator<SAPEntry> orderByComparator)
 		throws com.liferay.portal.security.service.access.policy.exception.NoSuchEntryException {
 		return getPersistence().findByUuid_Last(uuid, orderByComparator);
@@ -224,7 +222,7 @@ public class SAPEntryUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching sap entry, or <code>null</code> if a matching sap entry could not be found
 	*/
-	public static SAPEntry fetchByUuid_Last(java.lang.String uuid,
+	public static SAPEntry fetchByUuid_Last(String uuid,
 		OrderByComparator<SAPEntry> orderByComparator) {
 		return getPersistence().fetchByUuid_Last(uuid, orderByComparator);
 	}
@@ -239,7 +237,7 @@ public class SAPEntryUtil {
 	* @throws NoSuchEntryException if a sap entry with the primary key could not be found
 	*/
 	public static SAPEntry[] findByUuid_PrevAndNext(long sapEntryId,
-		java.lang.String uuid, OrderByComparator<SAPEntry> orderByComparator)
+		String uuid, OrderByComparator<SAPEntry> orderByComparator)
 		throws com.liferay.portal.security.service.access.policy.exception.NoSuchEntryException {
 		return getPersistence()
 				   .findByUuid_PrevAndNext(sapEntryId, uuid, orderByComparator);
@@ -251,7 +249,7 @@ public class SAPEntryUtil {
 	* @param uuid the uuid
 	* @return the matching sap entries that the user has permission to view
 	*/
-	public static List<SAPEntry> filterFindByUuid(java.lang.String uuid) {
+	public static List<SAPEntry> filterFindByUuid(String uuid) {
 		return getPersistence().filterFindByUuid(uuid);
 	}
 
@@ -267,8 +265,8 @@ public class SAPEntryUtil {
 	* @param end the upper bound of the range of sap entries (not inclusive)
 	* @return the range of matching sap entries that the user has permission to view
 	*/
-	public static List<SAPEntry> filterFindByUuid(java.lang.String uuid,
-		int start, int end) {
+	public static List<SAPEntry> filterFindByUuid(String uuid, int start,
+		int end) {
 		return getPersistence().filterFindByUuid(uuid, start, end);
 	}
 
@@ -285,8 +283,8 @@ public class SAPEntryUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching sap entries that the user has permission to view
 	*/
-	public static List<SAPEntry> filterFindByUuid(java.lang.String uuid,
-		int start, int end, OrderByComparator<SAPEntry> orderByComparator) {
+	public static List<SAPEntry> filterFindByUuid(String uuid, int start,
+		int end, OrderByComparator<SAPEntry> orderByComparator) {
 		return getPersistence()
 				   .filterFindByUuid(uuid, start, end, orderByComparator);
 	}
@@ -301,7 +299,7 @@ public class SAPEntryUtil {
 	* @throws NoSuchEntryException if a sap entry with the primary key could not be found
 	*/
 	public static SAPEntry[] filterFindByUuid_PrevAndNext(long sapEntryId,
-		java.lang.String uuid, OrderByComparator<SAPEntry> orderByComparator)
+		String uuid, OrderByComparator<SAPEntry> orderByComparator)
 		throws com.liferay.portal.security.service.access.policy.exception.NoSuchEntryException {
 		return getPersistence()
 				   .filterFindByUuid_PrevAndNext(sapEntryId, uuid,
@@ -313,7 +311,7 @@ public class SAPEntryUtil {
 	*
 	* @param uuid the uuid
 	*/
-	public static void removeByUuid(java.lang.String uuid) {
+	public static void removeByUuid(String uuid) {
 		getPersistence().removeByUuid(uuid);
 	}
 
@@ -323,7 +321,7 @@ public class SAPEntryUtil {
 	* @param uuid the uuid
 	* @return the number of matching sap entries
 	*/
-	public static int countByUuid(java.lang.String uuid) {
+	public static int countByUuid(String uuid) {
 		return getPersistence().countByUuid(uuid);
 	}
 
@@ -333,7 +331,7 @@ public class SAPEntryUtil {
 	* @param uuid the uuid
 	* @return the number of matching sap entries that the user has permission to view
 	*/
-	public static int filterCountByUuid(java.lang.String uuid) {
+	public static int filterCountByUuid(String uuid) {
 		return getPersistence().filterCountByUuid(uuid);
 	}
 
@@ -344,8 +342,7 @@ public class SAPEntryUtil {
 	* @param companyId the company ID
 	* @return the matching sap entries
 	*/
-	public static List<SAPEntry> findByUuid_C(java.lang.String uuid,
-		long companyId) {
+	public static List<SAPEntry> findByUuid_C(String uuid, long companyId) {
 		return getPersistence().findByUuid_C(uuid, companyId);
 	}
 
@@ -362,8 +359,8 @@ public class SAPEntryUtil {
 	* @param end the upper bound of the range of sap entries (not inclusive)
 	* @return the range of matching sap entries
 	*/
-	public static List<SAPEntry> findByUuid_C(java.lang.String uuid,
-		long companyId, int start, int end) {
+	public static List<SAPEntry> findByUuid_C(String uuid, long companyId,
+		int start, int end) {
 		return getPersistence().findByUuid_C(uuid, companyId, start, end);
 	}
 
@@ -381,9 +378,8 @@ public class SAPEntryUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching sap entries
 	*/
-	public static List<SAPEntry> findByUuid_C(java.lang.String uuid,
-		long companyId, int start, int end,
-		OrderByComparator<SAPEntry> orderByComparator) {
+	public static List<SAPEntry> findByUuid_C(String uuid, long companyId,
+		int start, int end, OrderByComparator<SAPEntry> orderByComparator) {
 		return getPersistence()
 				   .findByUuid_C(uuid, companyId, start, end, orderByComparator);
 	}
@@ -403,9 +399,9 @@ public class SAPEntryUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching sap entries
 	*/
-	public static List<SAPEntry> findByUuid_C(java.lang.String uuid,
-		long companyId, int start, int end,
-		OrderByComparator<SAPEntry> orderByComparator, boolean retrieveFromCache) {
+	public static List<SAPEntry> findByUuid_C(String uuid, long companyId,
+		int start, int end, OrderByComparator<SAPEntry> orderByComparator,
+		boolean retrieveFromCache) {
 		return getPersistence()
 				   .findByUuid_C(uuid, companyId, start, end,
 			orderByComparator, retrieveFromCache);
@@ -420,8 +416,8 @@ public class SAPEntryUtil {
 	* @return the first matching sap entry
 	* @throws NoSuchEntryException if a matching sap entry could not be found
 	*/
-	public static SAPEntry findByUuid_C_First(java.lang.String uuid,
-		long companyId, OrderByComparator<SAPEntry> orderByComparator)
+	public static SAPEntry findByUuid_C_First(String uuid, long companyId,
+		OrderByComparator<SAPEntry> orderByComparator)
 		throws com.liferay.portal.security.service.access.policy.exception.NoSuchEntryException {
 		return getPersistence()
 				   .findByUuid_C_First(uuid, companyId, orderByComparator);
@@ -435,8 +431,8 @@ public class SAPEntryUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching sap entry, or <code>null</code> if a matching sap entry could not be found
 	*/
-	public static SAPEntry fetchByUuid_C_First(java.lang.String uuid,
-		long companyId, OrderByComparator<SAPEntry> orderByComparator) {
+	public static SAPEntry fetchByUuid_C_First(String uuid, long companyId,
+		OrderByComparator<SAPEntry> orderByComparator) {
 		return getPersistence()
 				   .fetchByUuid_C_First(uuid, companyId, orderByComparator);
 	}
@@ -450,8 +446,8 @@ public class SAPEntryUtil {
 	* @return the last matching sap entry
 	* @throws NoSuchEntryException if a matching sap entry could not be found
 	*/
-	public static SAPEntry findByUuid_C_Last(java.lang.String uuid,
-		long companyId, OrderByComparator<SAPEntry> orderByComparator)
+	public static SAPEntry findByUuid_C_Last(String uuid, long companyId,
+		OrderByComparator<SAPEntry> orderByComparator)
 		throws com.liferay.portal.security.service.access.policy.exception.NoSuchEntryException {
 		return getPersistence()
 				   .findByUuid_C_Last(uuid, companyId, orderByComparator);
@@ -465,8 +461,8 @@ public class SAPEntryUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching sap entry, or <code>null</code> if a matching sap entry could not be found
 	*/
-	public static SAPEntry fetchByUuid_C_Last(java.lang.String uuid,
-		long companyId, OrderByComparator<SAPEntry> orderByComparator) {
+	public static SAPEntry fetchByUuid_C_Last(String uuid, long companyId,
+		OrderByComparator<SAPEntry> orderByComparator) {
 		return getPersistence()
 				   .fetchByUuid_C_Last(uuid, companyId, orderByComparator);
 	}
@@ -482,7 +478,7 @@ public class SAPEntryUtil {
 	* @throws NoSuchEntryException if a sap entry with the primary key could not be found
 	*/
 	public static SAPEntry[] findByUuid_C_PrevAndNext(long sapEntryId,
-		java.lang.String uuid, long companyId,
+		String uuid, long companyId,
 		OrderByComparator<SAPEntry> orderByComparator)
 		throws com.liferay.portal.security.service.access.policy.exception.NoSuchEntryException {
 		return getPersistence()
@@ -497,8 +493,7 @@ public class SAPEntryUtil {
 	* @param companyId the company ID
 	* @return the matching sap entries that the user has permission to view
 	*/
-	public static List<SAPEntry> filterFindByUuid_C(java.lang.String uuid,
-		long companyId) {
+	public static List<SAPEntry> filterFindByUuid_C(String uuid, long companyId) {
 		return getPersistence().filterFindByUuid_C(uuid, companyId);
 	}
 
@@ -515,7 +510,7 @@ public class SAPEntryUtil {
 	* @param end the upper bound of the range of sap entries (not inclusive)
 	* @return the range of matching sap entries that the user has permission to view
 	*/
-	public static List<SAPEntry> filterFindByUuid_C(java.lang.String uuid,
+	public static List<SAPEntry> filterFindByUuid_C(String uuid,
 		long companyId, int start, int end) {
 		return getPersistence().filterFindByUuid_C(uuid, companyId, start, end);
 	}
@@ -534,7 +529,7 @@ public class SAPEntryUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching sap entries that the user has permission to view
 	*/
-	public static List<SAPEntry> filterFindByUuid_C(java.lang.String uuid,
+	public static List<SAPEntry> filterFindByUuid_C(String uuid,
 		long companyId, int start, int end,
 		OrderByComparator<SAPEntry> orderByComparator) {
 		return getPersistence()
@@ -553,7 +548,7 @@ public class SAPEntryUtil {
 	* @throws NoSuchEntryException if a sap entry with the primary key could not be found
 	*/
 	public static SAPEntry[] filterFindByUuid_C_PrevAndNext(long sapEntryId,
-		java.lang.String uuid, long companyId,
+		String uuid, long companyId,
 		OrderByComparator<SAPEntry> orderByComparator)
 		throws com.liferay.portal.security.service.access.policy.exception.NoSuchEntryException {
 		return getPersistence()
@@ -567,7 +562,7 @@ public class SAPEntryUtil {
 	* @param uuid the uuid
 	* @param companyId the company ID
 	*/
-	public static void removeByUuid_C(java.lang.String uuid, long companyId) {
+	public static void removeByUuid_C(String uuid, long companyId) {
 		getPersistence().removeByUuid_C(uuid, companyId);
 	}
 
@@ -578,7 +573,7 @@ public class SAPEntryUtil {
 	* @param companyId the company ID
 	* @return the number of matching sap entries
 	*/
-	public static int countByUuid_C(java.lang.String uuid, long companyId) {
+	public static int countByUuid_C(String uuid, long companyId) {
 		return getPersistence().countByUuid_C(uuid, companyId);
 	}
 
@@ -589,7 +584,7 @@ public class SAPEntryUtil {
 	* @param companyId the company ID
 	* @return the number of matching sap entries that the user has permission to view
 	*/
-	public static int filterCountByUuid_C(java.lang.String uuid, long companyId) {
+	public static int filterCountByUuid_C(String uuid, long companyId) {
 		return getPersistence().filterCountByUuid_C(uuid, companyId);
 	}
 
@@ -1097,7 +1092,7 @@ public class SAPEntryUtil {
 	* @return the matching sap entry
 	* @throws NoSuchEntryException if a matching sap entry could not be found
 	*/
-	public static SAPEntry findByC_N(long companyId, java.lang.String name)
+	public static SAPEntry findByC_N(long companyId, String name)
 		throws com.liferay.portal.security.service.access.policy.exception.NoSuchEntryException {
 		return getPersistence().findByC_N(companyId, name);
 	}
@@ -1109,7 +1104,7 @@ public class SAPEntryUtil {
 	* @param name the name
 	* @return the matching sap entry, or <code>null</code> if a matching sap entry could not be found
 	*/
-	public static SAPEntry fetchByC_N(long companyId, java.lang.String name) {
+	public static SAPEntry fetchByC_N(long companyId, String name) {
 		return getPersistence().fetchByC_N(companyId, name);
 	}
 
@@ -1121,7 +1116,7 @@ public class SAPEntryUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching sap entry, or <code>null</code> if a matching sap entry could not be found
 	*/
-	public static SAPEntry fetchByC_N(long companyId, java.lang.String name,
+	public static SAPEntry fetchByC_N(long companyId, String name,
 		boolean retrieveFromCache) {
 		return getPersistence().fetchByC_N(companyId, name, retrieveFromCache);
 	}
@@ -1133,7 +1128,7 @@ public class SAPEntryUtil {
 	* @param name the name
 	* @return the sap entry that was removed
 	*/
-	public static SAPEntry removeByC_N(long companyId, java.lang.String name)
+	public static SAPEntry removeByC_N(long companyId, String name)
 		throws com.liferay.portal.security.service.access.policy.exception.NoSuchEntryException {
 		return getPersistence().removeByC_N(companyId, name);
 	}
@@ -1145,7 +1140,7 @@ public class SAPEntryUtil {
 	* @param name the name
 	* @return the number of matching sap entries
 	*/
-	public static int countByC_N(long companyId, java.lang.String name) {
+	public static int countByC_N(long companyId, String name) {
 		return getPersistence().countByC_N(companyId, name);
 	}
 
@@ -1296,7 +1291,7 @@ public class SAPEntryUtil {
 		return getPersistence().countAll();
 	}
 
-	public static java.util.Set<java.lang.String> getBadColumnNames() {
+	public static java.util.Set<String> getBadColumnNames() {
 		return getPersistence().getBadColumnNames();
 	}
 

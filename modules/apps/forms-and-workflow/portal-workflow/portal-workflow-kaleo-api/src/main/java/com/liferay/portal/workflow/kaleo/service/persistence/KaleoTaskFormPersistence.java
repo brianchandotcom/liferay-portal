@@ -581,8 +581,8 @@ public interface KaleoTaskFormPersistence extends BasePersistence<KaleoTaskForm>
 	* @return the matching kaleo task form
 	* @throws NoSuchTaskFormException if a matching kaleo task form could not be found
 	*/
-	public KaleoTaskForm findByFormUuid_KTI(long kaleoTaskId,
-		java.lang.String formUuid) throws NoSuchTaskFormException;
+	public KaleoTaskForm findByFormUuid_KTI(long kaleoTaskId, String formUuid)
+		throws NoSuchTaskFormException;
 
 	/**
 	* Returns the kaleo task form where kaleoTaskId = &#63; and formUuid = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
@@ -591,8 +591,7 @@ public interface KaleoTaskFormPersistence extends BasePersistence<KaleoTaskForm>
 	* @param formUuid the form uuid
 	* @return the matching kaleo task form, or <code>null</code> if a matching kaleo task form could not be found
 	*/
-	public KaleoTaskForm fetchByFormUuid_KTI(long kaleoTaskId,
-		java.lang.String formUuid);
+	public KaleoTaskForm fetchByFormUuid_KTI(long kaleoTaskId, String formUuid);
 
 	/**
 	* Returns the kaleo task form where kaleoTaskId = &#63; and formUuid = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -602,8 +601,8 @@ public interface KaleoTaskFormPersistence extends BasePersistence<KaleoTaskForm>
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching kaleo task form, or <code>null</code> if a matching kaleo task form could not be found
 	*/
-	public KaleoTaskForm fetchByFormUuid_KTI(long kaleoTaskId,
-		java.lang.String formUuid, boolean retrieveFromCache);
+	public KaleoTaskForm fetchByFormUuid_KTI(long kaleoTaskId, String formUuid,
+		boolean retrieveFromCache);
 
 	/**
 	* Removes the kaleo task form where kaleoTaskId = &#63; and formUuid = &#63; from the database.
@@ -612,8 +611,8 @@ public interface KaleoTaskFormPersistence extends BasePersistence<KaleoTaskForm>
 	* @param formUuid the form uuid
 	* @return the kaleo task form that was removed
 	*/
-	public KaleoTaskForm removeByFormUuid_KTI(long kaleoTaskId,
-		java.lang.String formUuid) throws NoSuchTaskFormException;
+	public KaleoTaskForm removeByFormUuid_KTI(long kaleoTaskId, String formUuid)
+		throws NoSuchTaskFormException;
 
 	/**
 	* Returns the number of kaleo task forms where kaleoTaskId = &#63; and formUuid = &#63;.
@@ -622,7 +621,7 @@ public interface KaleoTaskFormPersistence extends BasePersistence<KaleoTaskForm>
 	* @param formUuid the form uuid
 	* @return the number of matching kaleo task forms
 	*/
-	public int countByFormUuid_KTI(long kaleoTaskId, java.lang.String formUuid);
+	public int countByFormUuid_KTI(long kaleoTaskId, String formUuid);
 
 	/**
 	* Caches the kaleo task form in the entity cache if it is enabled.

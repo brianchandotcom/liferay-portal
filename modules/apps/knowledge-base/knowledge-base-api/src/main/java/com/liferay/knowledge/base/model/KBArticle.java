@@ -54,7 +54,7 @@ public interface KBArticle extends KBArticleModel, PersistedModel {
 			}
 		};
 
-	public java.util.List<java.lang.Long> getAncestorResourcePrimaryKeys()
+	public java.util.List<Long> getAncestorResourcePrimaryKeys()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public java.util.List<com.liferay.portal.kernel.repository.model.FileEntry> getAttachmentsFileEntries()
@@ -70,7 +70,7 @@ public interface KBArticle extends KBArticleModel, PersistedModel {
 	public KBArticle getParentKBArticle()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
-	public java.lang.String getParentTitle(java.util.Locale locale, int status)
+	public String getParentTitle(java.util.Locale locale, int status)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public boolean isFirstVersion();

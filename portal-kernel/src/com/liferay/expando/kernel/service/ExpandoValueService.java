@@ -57,33 +57,31 @@ public interface ExpandoValueService extends BaseService {
 	 * Never modify or reference this interface directly. Always use {@link ExpandoValueServiceUtil} to access the expando value remote service. Add custom service methods to {@link com.liferay.portlet.expando.service.impl.ExpandoValueServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	@JSONWebService(mode = JSONWebServiceMode.IGNORE)
-	public ExpandoValue addValue(long companyId, java.lang.String className,
-		java.lang.String tableName, java.lang.String columnName, long classPK,
-		java.lang.Object data) throws PortalException;
+	public ExpandoValue addValue(long companyId, String className,
+		String tableName, String columnName, long classPK, Object data)
+		throws PortalException;
 
-	public ExpandoValue addValue(long companyId, java.lang.String className,
-		java.lang.String tableName, java.lang.String columnName, long classPK,
-		java.lang.String data) throws PortalException;
+	public ExpandoValue addValue(long companyId, String className,
+		String tableName, String columnName, long classPK, String data)
+		throws PortalException;
 
-	public void addValues(long companyId, java.lang.String className,
-		java.lang.String tableName, long classPK,
-		Map<java.lang.String, Serializable> attributeValues)
+	public void addValues(long companyId, String className, String tableName,
+		long classPK, Map<String, Serializable> attributeValues)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Map<java.lang.String, Serializable> getData(long companyId,
-		java.lang.String className, java.lang.String tableName,
-		Collection<java.lang.String> columnNames, long classPK)
+	public Map<String, Serializable> getData(long companyId, String className,
+		String tableName, Collection<String> columnNames, long classPK)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Serializable getData(long companyId, java.lang.String className,
-		java.lang.String tableName, java.lang.String columnName, long classPK)
+	public Serializable getData(long companyId, String className,
+		String tableName, String columnName, long classPK)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public JSONObject getJSONData(long companyId, java.lang.String className,
-		java.lang.String tableName, java.lang.String columnName, long classPK)
+	public JSONObject getJSONData(long companyId, String className,
+		String tableName, String columnName, long classPK)
 		throws PortalException;
 
 	/**
@@ -91,5 +89,5 @@ public interface ExpandoValueService extends BaseService {
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 }

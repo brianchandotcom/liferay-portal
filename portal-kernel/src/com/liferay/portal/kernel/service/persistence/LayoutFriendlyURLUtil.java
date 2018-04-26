@@ -114,7 +114,7 @@ public class LayoutFriendlyURLUtil {
 	* @param uuid the uuid
 	* @return the matching layout friendly urls
 	*/
-	public static List<LayoutFriendlyURL> findByUuid(java.lang.String uuid) {
+	public static List<LayoutFriendlyURL> findByUuid(String uuid) {
 		return getPersistence().findByUuid(uuid);
 	}
 
@@ -130,8 +130,8 @@ public class LayoutFriendlyURLUtil {
 	* @param end the upper bound of the range of layout friendly urls (not inclusive)
 	* @return the range of matching layout friendly urls
 	*/
-	public static List<LayoutFriendlyURL> findByUuid(java.lang.String uuid,
-		int start, int end) {
+	public static List<LayoutFriendlyURL> findByUuid(String uuid, int start,
+		int end) {
 		return getPersistence().findByUuid(uuid, start, end);
 	}
 
@@ -148,9 +148,8 @@ public class LayoutFriendlyURLUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching layout friendly urls
 	*/
-	public static List<LayoutFriendlyURL> findByUuid(java.lang.String uuid,
-		int start, int end,
-		OrderByComparator<LayoutFriendlyURL> orderByComparator) {
+	public static List<LayoutFriendlyURL> findByUuid(String uuid, int start,
+		int end, OrderByComparator<LayoutFriendlyURL> orderByComparator) {
 		return getPersistence().findByUuid(uuid, start, end, orderByComparator);
 	}
 
@@ -168,9 +167,8 @@ public class LayoutFriendlyURLUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching layout friendly urls
 	*/
-	public static List<LayoutFriendlyURL> findByUuid(java.lang.String uuid,
-		int start, int end,
-		OrderByComparator<LayoutFriendlyURL> orderByComparator,
+	public static List<LayoutFriendlyURL> findByUuid(String uuid, int start,
+		int end, OrderByComparator<LayoutFriendlyURL> orderByComparator,
 		boolean retrieveFromCache) {
 		return getPersistence()
 				   .findByUuid(uuid, start, end, orderByComparator,
@@ -185,7 +183,7 @@ public class LayoutFriendlyURLUtil {
 	* @return the first matching layout friendly url
 	* @throws NoSuchLayoutFriendlyURLException if a matching layout friendly url could not be found
 	*/
-	public static LayoutFriendlyURL findByUuid_First(java.lang.String uuid,
+	public static LayoutFriendlyURL findByUuid_First(String uuid,
 		OrderByComparator<LayoutFriendlyURL> orderByComparator)
 		throws com.liferay.portal.kernel.exception.NoSuchLayoutFriendlyURLException {
 		return getPersistence().findByUuid_First(uuid, orderByComparator);
@@ -198,7 +196,7 @@ public class LayoutFriendlyURLUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching layout friendly url, or <code>null</code> if a matching layout friendly url could not be found
 	*/
-	public static LayoutFriendlyURL fetchByUuid_First(java.lang.String uuid,
+	public static LayoutFriendlyURL fetchByUuid_First(String uuid,
 		OrderByComparator<LayoutFriendlyURL> orderByComparator) {
 		return getPersistence().fetchByUuid_First(uuid, orderByComparator);
 	}
@@ -211,7 +209,7 @@ public class LayoutFriendlyURLUtil {
 	* @return the last matching layout friendly url
 	* @throws NoSuchLayoutFriendlyURLException if a matching layout friendly url could not be found
 	*/
-	public static LayoutFriendlyURL findByUuid_Last(java.lang.String uuid,
+	public static LayoutFriendlyURL findByUuid_Last(String uuid,
 		OrderByComparator<LayoutFriendlyURL> orderByComparator)
 		throws com.liferay.portal.kernel.exception.NoSuchLayoutFriendlyURLException {
 		return getPersistence().findByUuid_Last(uuid, orderByComparator);
@@ -224,7 +222,7 @@ public class LayoutFriendlyURLUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching layout friendly url, or <code>null</code> if a matching layout friendly url could not be found
 	*/
-	public static LayoutFriendlyURL fetchByUuid_Last(java.lang.String uuid,
+	public static LayoutFriendlyURL fetchByUuid_Last(String uuid,
 		OrderByComparator<LayoutFriendlyURL> orderByComparator) {
 		return getPersistence().fetchByUuid_Last(uuid, orderByComparator);
 	}
@@ -239,7 +237,7 @@ public class LayoutFriendlyURLUtil {
 	* @throws NoSuchLayoutFriendlyURLException if a layout friendly url with the primary key could not be found
 	*/
 	public static LayoutFriendlyURL[] findByUuid_PrevAndNext(
-		long layoutFriendlyURLId, java.lang.String uuid,
+		long layoutFriendlyURLId, String uuid,
 		OrderByComparator<LayoutFriendlyURL> orderByComparator)
 		throws com.liferay.portal.kernel.exception.NoSuchLayoutFriendlyURLException {
 		return getPersistence()
@@ -252,7 +250,7 @@ public class LayoutFriendlyURLUtil {
 	*
 	* @param uuid the uuid
 	*/
-	public static void removeByUuid(java.lang.String uuid) {
+	public static void removeByUuid(String uuid) {
 		getPersistence().removeByUuid(uuid);
 	}
 
@@ -262,7 +260,7 @@ public class LayoutFriendlyURLUtil {
 	* @param uuid the uuid
 	* @return the number of matching layout friendly urls
 	*/
-	public static int countByUuid(java.lang.String uuid) {
+	public static int countByUuid(String uuid) {
 		return getPersistence().countByUuid(uuid);
 	}
 
@@ -274,8 +272,7 @@ public class LayoutFriendlyURLUtil {
 	* @return the matching layout friendly url
 	* @throws NoSuchLayoutFriendlyURLException if a matching layout friendly url could not be found
 	*/
-	public static LayoutFriendlyURL findByUUID_G(java.lang.String uuid,
-		long groupId)
+	public static LayoutFriendlyURL findByUUID_G(String uuid, long groupId)
 		throws com.liferay.portal.kernel.exception.NoSuchLayoutFriendlyURLException {
 		return getPersistence().findByUUID_G(uuid, groupId);
 	}
@@ -287,8 +284,7 @@ public class LayoutFriendlyURLUtil {
 	* @param groupId the group ID
 	* @return the matching layout friendly url, or <code>null</code> if a matching layout friendly url could not be found
 	*/
-	public static LayoutFriendlyURL fetchByUUID_G(java.lang.String uuid,
-		long groupId) {
+	public static LayoutFriendlyURL fetchByUUID_G(String uuid, long groupId) {
 		return getPersistence().fetchByUUID_G(uuid, groupId);
 	}
 
@@ -300,8 +296,8 @@ public class LayoutFriendlyURLUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching layout friendly url, or <code>null</code> if a matching layout friendly url could not be found
 	*/
-	public static LayoutFriendlyURL fetchByUUID_G(java.lang.String uuid,
-		long groupId, boolean retrieveFromCache) {
+	public static LayoutFriendlyURL fetchByUUID_G(String uuid, long groupId,
+		boolean retrieveFromCache) {
 		return getPersistence().fetchByUUID_G(uuid, groupId, retrieveFromCache);
 	}
 
@@ -312,8 +308,7 @@ public class LayoutFriendlyURLUtil {
 	* @param groupId the group ID
 	* @return the layout friendly url that was removed
 	*/
-	public static LayoutFriendlyURL removeByUUID_G(java.lang.String uuid,
-		long groupId)
+	public static LayoutFriendlyURL removeByUUID_G(String uuid, long groupId)
 		throws com.liferay.portal.kernel.exception.NoSuchLayoutFriendlyURLException {
 		return getPersistence().removeByUUID_G(uuid, groupId);
 	}
@@ -325,7 +320,7 @@ public class LayoutFriendlyURLUtil {
 	* @param groupId the group ID
 	* @return the number of matching layout friendly urls
 	*/
-	public static int countByUUID_G(java.lang.String uuid, long groupId) {
+	public static int countByUUID_G(String uuid, long groupId) {
 		return getPersistence().countByUUID_G(uuid, groupId);
 	}
 
@@ -336,7 +331,7 @@ public class LayoutFriendlyURLUtil {
 	* @param companyId the company ID
 	* @return the matching layout friendly urls
 	*/
-	public static List<LayoutFriendlyURL> findByUuid_C(java.lang.String uuid,
+	public static List<LayoutFriendlyURL> findByUuid_C(String uuid,
 		long companyId) {
 		return getPersistence().findByUuid_C(uuid, companyId);
 	}
@@ -354,7 +349,7 @@ public class LayoutFriendlyURLUtil {
 	* @param end the upper bound of the range of layout friendly urls (not inclusive)
 	* @return the range of matching layout friendly urls
 	*/
-	public static List<LayoutFriendlyURL> findByUuid_C(java.lang.String uuid,
+	public static List<LayoutFriendlyURL> findByUuid_C(String uuid,
 		long companyId, int start, int end) {
 		return getPersistence().findByUuid_C(uuid, companyId, start, end);
 	}
@@ -373,7 +368,7 @@ public class LayoutFriendlyURLUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching layout friendly urls
 	*/
-	public static List<LayoutFriendlyURL> findByUuid_C(java.lang.String uuid,
+	public static List<LayoutFriendlyURL> findByUuid_C(String uuid,
 		long companyId, int start, int end,
 		OrderByComparator<LayoutFriendlyURL> orderByComparator) {
 		return getPersistence()
@@ -395,7 +390,7 @@ public class LayoutFriendlyURLUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching layout friendly urls
 	*/
-	public static List<LayoutFriendlyURL> findByUuid_C(java.lang.String uuid,
+	public static List<LayoutFriendlyURL> findByUuid_C(String uuid,
 		long companyId, int start, int end,
 		OrderByComparator<LayoutFriendlyURL> orderByComparator,
 		boolean retrieveFromCache) {
@@ -413,7 +408,7 @@ public class LayoutFriendlyURLUtil {
 	* @return the first matching layout friendly url
 	* @throws NoSuchLayoutFriendlyURLException if a matching layout friendly url could not be found
 	*/
-	public static LayoutFriendlyURL findByUuid_C_First(java.lang.String uuid,
+	public static LayoutFriendlyURL findByUuid_C_First(String uuid,
 		long companyId, OrderByComparator<LayoutFriendlyURL> orderByComparator)
 		throws com.liferay.portal.kernel.exception.NoSuchLayoutFriendlyURLException {
 		return getPersistence()
@@ -428,7 +423,7 @@ public class LayoutFriendlyURLUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching layout friendly url, or <code>null</code> if a matching layout friendly url could not be found
 	*/
-	public static LayoutFriendlyURL fetchByUuid_C_First(java.lang.String uuid,
+	public static LayoutFriendlyURL fetchByUuid_C_First(String uuid,
 		long companyId, OrderByComparator<LayoutFriendlyURL> orderByComparator) {
 		return getPersistence()
 				   .fetchByUuid_C_First(uuid, companyId, orderByComparator);
@@ -443,7 +438,7 @@ public class LayoutFriendlyURLUtil {
 	* @return the last matching layout friendly url
 	* @throws NoSuchLayoutFriendlyURLException if a matching layout friendly url could not be found
 	*/
-	public static LayoutFriendlyURL findByUuid_C_Last(java.lang.String uuid,
+	public static LayoutFriendlyURL findByUuid_C_Last(String uuid,
 		long companyId, OrderByComparator<LayoutFriendlyURL> orderByComparator)
 		throws com.liferay.portal.kernel.exception.NoSuchLayoutFriendlyURLException {
 		return getPersistence()
@@ -458,7 +453,7 @@ public class LayoutFriendlyURLUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching layout friendly url, or <code>null</code> if a matching layout friendly url could not be found
 	*/
-	public static LayoutFriendlyURL fetchByUuid_C_Last(java.lang.String uuid,
+	public static LayoutFriendlyURL fetchByUuid_C_Last(String uuid,
 		long companyId, OrderByComparator<LayoutFriendlyURL> orderByComparator) {
 		return getPersistence()
 				   .fetchByUuid_C_Last(uuid, companyId, orderByComparator);
@@ -475,7 +470,7 @@ public class LayoutFriendlyURLUtil {
 	* @throws NoSuchLayoutFriendlyURLException if a layout friendly url with the primary key could not be found
 	*/
 	public static LayoutFriendlyURL[] findByUuid_C_PrevAndNext(
-		long layoutFriendlyURLId, java.lang.String uuid, long companyId,
+		long layoutFriendlyURLId, String uuid, long companyId,
 		OrderByComparator<LayoutFriendlyURL> orderByComparator)
 		throws com.liferay.portal.kernel.exception.NoSuchLayoutFriendlyURLException {
 		return getPersistence()
@@ -489,7 +484,7 @@ public class LayoutFriendlyURLUtil {
 	* @param uuid the uuid
 	* @param companyId the company ID
 	*/
-	public static void removeByUuid_C(java.lang.String uuid, long companyId) {
+	public static void removeByUuid_C(String uuid, long companyId) {
 		getPersistence().removeByUuid_C(uuid, companyId);
 	}
 
@@ -500,7 +495,7 @@ public class LayoutFriendlyURLUtil {
 	* @param companyId the company ID
 	* @return the number of matching layout friendly urls
 	*/
-	public static int countByUuid_C(java.lang.String uuid, long companyId) {
+	public static int countByUuid_C(String uuid, long companyId) {
 		return getPersistence().countByUuid_C(uuid, companyId);
 	}
 
@@ -990,7 +985,7 @@ public class LayoutFriendlyURLUtil {
 	* @return the matching layout friendly urls
 	*/
 	public static List<LayoutFriendlyURL> findByP_F(long plid,
-		java.lang.String friendlyURL) {
+		String friendlyURL) {
 		return getPersistence().findByP_F(plid, friendlyURL);
 	}
 
@@ -1008,7 +1003,7 @@ public class LayoutFriendlyURLUtil {
 	* @return the range of matching layout friendly urls
 	*/
 	public static List<LayoutFriendlyURL> findByP_F(long plid,
-		java.lang.String friendlyURL, int start, int end) {
+		String friendlyURL, int start, int end) {
 		return getPersistence().findByP_F(plid, friendlyURL, start, end);
 	}
 
@@ -1027,7 +1022,7 @@ public class LayoutFriendlyURLUtil {
 	* @return the ordered range of matching layout friendly urls
 	*/
 	public static List<LayoutFriendlyURL> findByP_F(long plid,
-		java.lang.String friendlyURL, int start, int end,
+		String friendlyURL, int start, int end,
 		OrderByComparator<LayoutFriendlyURL> orderByComparator) {
 		return getPersistence()
 				   .findByP_F(plid, friendlyURL, start, end, orderByComparator);
@@ -1049,7 +1044,7 @@ public class LayoutFriendlyURLUtil {
 	* @return the ordered range of matching layout friendly urls
 	*/
 	public static List<LayoutFriendlyURL> findByP_F(long plid,
-		java.lang.String friendlyURL, int start, int end,
+		String friendlyURL, int start, int end,
 		OrderByComparator<LayoutFriendlyURL> orderByComparator,
 		boolean retrieveFromCache) {
 		return getPersistence()
@@ -1067,7 +1062,7 @@ public class LayoutFriendlyURLUtil {
 	* @throws NoSuchLayoutFriendlyURLException if a matching layout friendly url could not be found
 	*/
 	public static LayoutFriendlyURL findByP_F_First(long plid,
-		java.lang.String friendlyURL,
+		String friendlyURL,
 		OrderByComparator<LayoutFriendlyURL> orderByComparator)
 		throws com.liferay.portal.kernel.exception.NoSuchLayoutFriendlyURLException {
 		return getPersistence()
@@ -1083,7 +1078,7 @@ public class LayoutFriendlyURLUtil {
 	* @return the first matching layout friendly url, or <code>null</code> if a matching layout friendly url could not be found
 	*/
 	public static LayoutFriendlyURL fetchByP_F_First(long plid,
-		java.lang.String friendlyURL,
+		String friendlyURL,
 		OrderByComparator<LayoutFriendlyURL> orderByComparator) {
 		return getPersistence()
 				   .fetchByP_F_First(plid, friendlyURL, orderByComparator);
@@ -1099,7 +1094,7 @@ public class LayoutFriendlyURLUtil {
 	* @throws NoSuchLayoutFriendlyURLException if a matching layout friendly url could not be found
 	*/
 	public static LayoutFriendlyURL findByP_F_Last(long plid,
-		java.lang.String friendlyURL,
+		String friendlyURL,
 		OrderByComparator<LayoutFriendlyURL> orderByComparator)
 		throws com.liferay.portal.kernel.exception.NoSuchLayoutFriendlyURLException {
 		return getPersistence()
@@ -1115,7 +1110,7 @@ public class LayoutFriendlyURLUtil {
 	* @return the last matching layout friendly url, or <code>null</code> if a matching layout friendly url could not be found
 	*/
 	public static LayoutFriendlyURL fetchByP_F_Last(long plid,
-		java.lang.String friendlyURL,
+		String friendlyURL,
 		OrderByComparator<LayoutFriendlyURL> orderByComparator) {
 		return getPersistence()
 				   .fetchByP_F_Last(plid, friendlyURL, orderByComparator);
@@ -1132,7 +1127,7 @@ public class LayoutFriendlyURLUtil {
 	* @throws NoSuchLayoutFriendlyURLException if a layout friendly url with the primary key could not be found
 	*/
 	public static LayoutFriendlyURL[] findByP_F_PrevAndNext(
-		long layoutFriendlyURLId, long plid, java.lang.String friendlyURL,
+		long layoutFriendlyURLId, long plid, String friendlyURL,
 		OrderByComparator<LayoutFriendlyURL> orderByComparator)
 		throws com.liferay.portal.kernel.exception.NoSuchLayoutFriendlyURLException {
 		return getPersistence()
@@ -1146,7 +1141,7 @@ public class LayoutFriendlyURLUtil {
 	* @param plid the plid
 	* @param friendlyURL the friendly url
 	*/
-	public static void removeByP_F(long plid, java.lang.String friendlyURL) {
+	public static void removeByP_F(long plid, String friendlyURL) {
 		getPersistence().removeByP_F(plid, friendlyURL);
 	}
 
@@ -1157,7 +1152,7 @@ public class LayoutFriendlyURLUtil {
 	* @param friendlyURL the friendly url
 	* @return the number of matching layout friendly urls
 	*/
-	public static int countByP_F(long plid, java.lang.String friendlyURL) {
+	public static int countByP_F(long plid, String friendlyURL) {
 		return getPersistence().countByP_F(plid, friendlyURL);
 	}
 
@@ -1173,7 +1168,7 @@ public class LayoutFriendlyURLUtil {
 	* @return the matching layout friendly urls
 	*/
 	public static List<LayoutFriendlyURL> findByP_L(long[] plids,
-		java.lang.String languageId) {
+		String languageId) {
 		return getPersistence().findByP_L(plids, languageId);
 	}
 
@@ -1191,7 +1186,7 @@ public class LayoutFriendlyURLUtil {
 	* @return the range of matching layout friendly urls
 	*/
 	public static List<LayoutFriendlyURL> findByP_L(long[] plids,
-		java.lang.String languageId, int start, int end) {
+		String languageId, int start, int end) {
 		return getPersistence().findByP_L(plids, languageId, start, end);
 	}
 
@@ -1210,7 +1205,7 @@ public class LayoutFriendlyURLUtil {
 	* @return the ordered range of matching layout friendly urls
 	*/
 	public static List<LayoutFriendlyURL> findByP_L(long[] plids,
-		java.lang.String languageId, int start, int end,
+		String languageId, int start, int end,
 		OrderByComparator<LayoutFriendlyURL> orderByComparator) {
 		return getPersistence()
 				   .findByP_L(plids, languageId, start, end, orderByComparator);
@@ -1232,7 +1227,7 @@ public class LayoutFriendlyURLUtil {
 	* @return the ordered range of matching layout friendly urls
 	*/
 	public static List<LayoutFriendlyURL> findByP_L(long[] plids,
-		java.lang.String languageId, int start, int end,
+		String languageId, int start, int end,
 		OrderByComparator<LayoutFriendlyURL> orderByComparator,
 		boolean retrieveFromCache) {
 		return getPersistence()
@@ -1248,8 +1243,7 @@ public class LayoutFriendlyURLUtil {
 	* @return the matching layout friendly url
 	* @throws NoSuchLayoutFriendlyURLException if a matching layout friendly url could not be found
 	*/
-	public static LayoutFriendlyURL findByP_L(long plid,
-		java.lang.String languageId)
+	public static LayoutFriendlyURL findByP_L(long plid, String languageId)
 		throws com.liferay.portal.kernel.exception.NoSuchLayoutFriendlyURLException {
 		return getPersistence().findByP_L(plid, languageId);
 	}
@@ -1261,8 +1255,7 @@ public class LayoutFriendlyURLUtil {
 	* @param languageId the language ID
 	* @return the matching layout friendly url, or <code>null</code> if a matching layout friendly url could not be found
 	*/
-	public static LayoutFriendlyURL fetchByP_L(long plid,
-		java.lang.String languageId) {
+	public static LayoutFriendlyURL fetchByP_L(long plid, String languageId) {
 		return getPersistence().fetchByP_L(plid, languageId);
 	}
 
@@ -1274,8 +1267,8 @@ public class LayoutFriendlyURLUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching layout friendly url, or <code>null</code> if a matching layout friendly url could not be found
 	*/
-	public static LayoutFriendlyURL fetchByP_L(long plid,
-		java.lang.String languageId, boolean retrieveFromCache) {
+	public static LayoutFriendlyURL fetchByP_L(long plid, String languageId,
+		boolean retrieveFromCache) {
 		return getPersistence().fetchByP_L(plid, languageId, retrieveFromCache);
 	}
 
@@ -1286,8 +1279,7 @@ public class LayoutFriendlyURLUtil {
 	* @param languageId the language ID
 	* @return the layout friendly url that was removed
 	*/
-	public static LayoutFriendlyURL removeByP_L(long plid,
-		java.lang.String languageId)
+	public static LayoutFriendlyURL removeByP_L(long plid, String languageId)
 		throws com.liferay.portal.kernel.exception.NoSuchLayoutFriendlyURLException {
 		return getPersistence().removeByP_L(plid, languageId);
 	}
@@ -1299,7 +1291,7 @@ public class LayoutFriendlyURLUtil {
 	* @param languageId the language ID
 	* @return the number of matching layout friendly urls
 	*/
-	public static int countByP_L(long plid, java.lang.String languageId) {
+	public static int countByP_L(long plid, String languageId) {
 		return getPersistence().countByP_L(plid, languageId);
 	}
 
@@ -1310,7 +1302,7 @@ public class LayoutFriendlyURLUtil {
 	* @param languageId the language ID
 	* @return the number of matching layout friendly urls
 	*/
-	public static int countByP_L(long[] plids, java.lang.String languageId) {
+	public static int countByP_L(long[] plids, String languageId) {
 		return getPersistence().countByP_L(plids, languageId);
 	}
 
@@ -1323,7 +1315,7 @@ public class LayoutFriendlyURLUtil {
 	* @return the matching layout friendly urls
 	*/
 	public static List<LayoutFriendlyURL> findByG_P_F(long groupId,
-		boolean privateLayout, java.lang.String friendlyURL) {
+		boolean privateLayout, String friendlyURL) {
 		return getPersistence().findByG_P_F(groupId, privateLayout, friendlyURL);
 	}
 
@@ -1342,7 +1334,7 @@ public class LayoutFriendlyURLUtil {
 	* @return the range of matching layout friendly urls
 	*/
 	public static List<LayoutFriendlyURL> findByG_P_F(long groupId,
-		boolean privateLayout, java.lang.String friendlyURL, int start, int end) {
+		boolean privateLayout, String friendlyURL, int start, int end) {
 		return getPersistence()
 				   .findByG_P_F(groupId, privateLayout, friendlyURL, start, end);
 	}
@@ -1363,8 +1355,8 @@ public class LayoutFriendlyURLUtil {
 	* @return the ordered range of matching layout friendly urls
 	*/
 	public static List<LayoutFriendlyURL> findByG_P_F(long groupId,
-		boolean privateLayout, java.lang.String friendlyURL, int start,
-		int end, OrderByComparator<LayoutFriendlyURL> orderByComparator) {
+		boolean privateLayout, String friendlyURL, int start, int end,
+		OrderByComparator<LayoutFriendlyURL> orderByComparator) {
 		return getPersistence()
 				   .findByG_P_F(groupId, privateLayout, friendlyURL, start,
 			end, orderByComparator);
@@ -1387,8 +1379,8 @@ public class LayoutFriendlyURLUtil {
 	* @return the ordered range of matching layout friendly urls
 	*/
 	public static List<LayoutFriendlyURL> findByG_P_F(long groupId,
-		boolean privateLayout, java.lang.String friendlyURL, int start,
-		int end, OrderByComparator<LayoutFriendlyURL> orderByComparator,
+		boolean privateLayout, String friendlyURL, int start, int end,
+		OrderByComparator<LayoutFriendlyURL> orderByComparator,
 		boolean retrieveFromCache) {
 		return getPersistence()
 				   .findByG_P_F(groupId, privateLayout, friendlyURL, start,
@@ -1406,7 +1398,7 @@ public class LayoutFriendlyURLUtil {
 	* @throws NoSuchLayoutFriendlyURLException if a matching layout friendly url could not be found
 	*/
 	public static LayoutFriendlyURL findByG_P_F_First(long groupId,
-		boolean privateLayout, java.lang.String friendlyURL,
+		boolean privateLayout, String friendlyURL,
 		OrderByComparator<LayoutFriendlyURL> orderByComparator)
 		throws com.liferay.portal.kernel.exception.NoSuchLayoutFriendlyURLException {
 		return getPersistence()
@@ -1424,7 +1416,7 @@ public class LayoutFriendlyURLUtil {
 	* @return the first matching layout friendly url, or <code>null</code> if a matching layout friendly url could not be found
 	*/
 	public static LayoutFriendlyURL fetchByG_P_F_First(long groupId,
-		boolean privateLayout, java.lang.String friendlyURL,
+		boolean privateLayout, String friendlyURL,
 		OrderByComparator<LayoutFriendlyURL> orderByComparator) {
 		return getPersistence()
 				   .fetchByG_P_F_First(groupId, privateLayout, friendlyURL,
@@ -1442,7 +1434,7 @@ public class LayoutFriendlyURLUtil {
 	* @throws NoSuchLayoutFriendlyURLException if a matching layout friendly url could not be found
 	*/
 	public static LayoutFriendlyURL findByG_P_F_Last(long groupId,
-		boolean privateLayout, java.lang.String friendlyURL,
+		boolean privateLayout, String friendlyURL,
 		OrderByComparator<LayoutFriendlyURL> orderByComparator)
 		throws com.liferay.portal.kernel.exception.NoSuchLayoutFriendlyURLException {
 		return getPersistence()
@@ -1460,7 +1452,7 @@ public class LayoutFriendlyURLUtil {
 	* @return the last matching layout friendly url, or <code>null</code> if a matching layout friendly url could not be found
 	*/
 	public static LayoutFriendlyURL fetchByG_P_F_Last(long groupId,
-		boolean privateLayout, java.lang.String friendlyURL,
+		boolean privateLayout, String friendlyURL,
 		OrderByComparator<LayoutFriendlyURL> orderByComparator) {
 		return getPersistence()
 				   .fetchByG_P_F_Last(groupId, privateLayout, friendlyURL,
@@ -1480,7 +1472,7 @@ public class LayoutFriendlyURLUtil {
 	*/
 	public static LayoutFriendlyURL[] findByG_P_F_PrevAndNext(
 		long layoutFriendlyURLId, long groupId, boolean privateLayout,
-		java.lang.String friendlyURL,
+		String friendlyURL,
 		OrderByComparator<LayoutFriendlyURL> orderByComparator)
 		throws com.liferay.portal.kernel.exception.NoSuchLayoutFriendlyURLException {
 		return getPersistence()
@@ -1496,7 +1488,7 @@ public class LayoutFriendlyURLUtil {
 	* @param friendlyURL the friendly url
 	*/
 	public static void removeByG_P_F(long groupId, boolean privateLayout,
-		java.lang.String friendlyURL) {
+		String friendlyURL) {
 		getPersistence().removeByG_P_F(groupId, privateLayout, friendlyURL);
 	}
 
@@ -1509,7 +1501,7 @@ public class LayoutFriendlyURLUtil {
 	* @return the number of matching layout friendly urls
 	*/
 	public static int countByG_P_F(long groupId, boolean privateLayout,
-		java.lang.String friendlyURL) {
+		String friendlyURL) {
 		return getPersistence().countByG_P_F(groupId, privateLayout, friendlyURL);
 	}
 
@@ -1524,8 +1516,7 @@ public class LayoutFriendlyURLUtil {
 	* @throws NoSuchLayoutFriendlyURLException if a matching layout friendly url could not be found
 	*/
 	public static LayoutFriendlyURL findByG_P_F_L(long groupId,
-		boolean privateLayout, java.lang.String friendlyURL,
-		java.lang.String languageId)
+		boolean privateLayout, String friendlyURL, String languageId)
 		throws com.liferay.portal.kernel.exception.NoSuchLayoutFriendlyURLException {
 		return getPersistence()
 				   .findByG_P_F_L(groupId, privateLayout, friendlyURL,
@@ -1542,8 +1533,7 @@ public class LayoutFriendlyURLUtil {
 	* @return the matching layout friendly url, or <code>null</code> if a matching layout friendly url could not be found
 	*/
 	public static LayoutFriendlyURL fetchByG_P_F_L(long groupId,
-		boolean privateLayout, java.lang.String friendlyURL,
-		java.lang.String languageId) {
+		boolean privateLayout, String friendlyURL, String languageId) {
 		return getPersistence()
 				   .fetchByG_P_F_L(groupId, privateLayout, friendlyURL,
 			languageId);
@@ -1560,8 +1550,8 @@ public class LayoutFriendlyURLUtil {
 	* @return the matching layout friendly url, or <code>null</code> if a matching layout friendly url could not be found
 	*/
 	public static LayoutFriendlyURL fetchByG_P_F_L(long groupId,
-		boolean privateLayout, java.lang.String friendlyURL,
-		java.lang.String languageId, boolean retrieveFromCache) {
+		boolean privateLayout, String friendlyURL, String languageId,
+		boolean retrieveFromCache) {
 		return getPersistence()
 				   .fetchByG_P_F_L(groupId, privateLayout, friendlyURL,
 			languageId, retrieveFromCache);
@@ -1577,8 +1567,7 @@ public class LayoutFriendlyURLUtil {
 	* @return the layout friendly url that was removed
 	*/
 	public static LayoutFriendlyURL removeByG_P_F_L(long groupId,
-		boolean privateLayout, java.lang.String friendlyURL,
-		java.lang.String languageId)
+		boolean privateLayout, String friendlyURL, String languageId)
 		throws com.liferay.portal.kernel.exception.NoSuchLayoutFriendlyURLException {
 		return getPersistence()
 				   .removeByG_P_F_L(groupId, privateLayout, friendlyURL,
@@ -1595,7 +1584,7 @@ public class LayoutFriendlyURLUtil {
 	* @return the number of matching layout friendly urls
 	*/
 	public static int countByG_P_F_L(long groupId, boolean privateLayout,
-		java.lang.String friendlyURL, java.lang.String languageId) {
+		String friendlyURL, String languageId) {
 		return getPersistence()
 				   .countByG_P_F_L(groupId, privateLayout, friendlyURL,
 			languageId);
@@ -1750,7 +1739,7 @@ public class LayoutFriendlyURLUtil {
 		return getPersistence().countAll();
 	}
 
-	public static java.util.Set<java.lang.String> getBadColumnNames() {
+	public static java.util.Set<String> getBadColumnNames() {
 		return getPersistence().getBadColumnNames();
 	}
 

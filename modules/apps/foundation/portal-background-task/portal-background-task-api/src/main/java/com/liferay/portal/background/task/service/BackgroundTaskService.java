@@ -52,15 +52,15 @@ public interface BackgroundTaskService extends BaseService {
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getBackgroundTasksCount(long groupId,
-		java.lang.String taskExecutorClassName, java.lang.String completed);
+		String taskExecutorClassName, String completed);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.lang.String getBackgroundTaskStatusJSON(long backgroundTaskId);
+	public String getBackgroundTaskStatusJSON(long backgroundTaskId);
 
 	/**
 	* Returns the OSGi service identifier.
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 }

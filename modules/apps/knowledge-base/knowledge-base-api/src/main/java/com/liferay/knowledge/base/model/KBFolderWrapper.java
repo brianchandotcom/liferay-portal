@@ -158,7 +158,7 @@ public class KBFolderWrapper implements KBFolder, ModelWrapper<KBFolder> {
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new KBFolderWrapper((KBFolder)_kbFolder.clone());
 	}
 
@@ -168,7 +168,7 @@ public class KBFolderWrapper implements KBFolder, ModelWrapper<KBFolder> {
 	}
 
 	@Override
-	public java.util.List<java.lang.Long> getAncestorKBFolderIds()
+	public java.util.List<Long> getAncestorKBFolderIds()
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _kbFolder.getAncestorKBFolderIds();
 	}
@@ -204,7 +204,7 @@ public class KBFolderWrapper implements KBFolder, ModelWrapper<KBFolder> {
 	* @return the description of this kb folder
 	*/
 	@Override
-	public java.lang.String getDescription() {
+	public String getDescription() {
 		return _kbFolder.getDescription();
 	}
 
@@ -259,7 +259,7 @@ public class KBFolderWrapper implements KBFolder, ModelWrapper<KBFolder> {
 	* @return the name of this kb folder
 	*/
 	@Override
-	public java.lang.String getName() {
+	public String getName() {
 		return _kbFolder.getName();
 	}
 
@@ -280,7 +280,7 @@ public class KBFolderWrapper implements KBFolder, ModelWrapper<KBFolder> {
 	}
 
 	@Override
-	public java.lang.String getParentTitle(java.util.Locale locale)
+	public String getParentTitle(java.util.Locale locale)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _kbFolder.getParentTitle(locale);
 	}
@@ -306,7 +306,7 @@ public class KBFolderWrapper implements KBFolder, ModelWrapper<KBFolder> {
 	* @return the url title of this kb folder
 	*/
 	@Override
-	public java.lang.String getUrlTitle() {
+	public String getUrlTitle() {
 		return _kbFolder.getUrlTitle();
 	}
 
@@ -326,7 +326,7 @@ public class KBFolderWrapper implements KBFolder, ModelWrapper<KBFolder> {
 	* @return the user name of this kb folder
 	*/
 	@Override
-	public java.lang.String getUserName() {
+	public String getUserName() {
 		return _kbFolder.getUserName();
 	}
 
@@ -336,7 +336,7 @@ public class KBFolderWrapper implements KBFolder, ModelWrapper<KBFolder> {
 	* @return the user uuid of this kb folder
 	*/
 	@Override
-	public java.lang.String getUserUuid() {
+	public String getUserUuid() {
 		return _kbFolder.getUserUuid();
 	}
 
@@ -346,7 +346,7 @@ public class KBFolderWrapper implements KBFolder, ModelWrapper<KBFolder> {
 	* @return the uuid of this kb folder
 	*/
 	@Override
-	public java.lang.String getUuid() {
+	public String getUuid() {
 		return _kbFolder.getUuid();
 	}
 
@@ -417,7 +417,7 @@ public class KBFolderWrapper implements KBFolder, ModelWrapper<KBFolder> {
 	* @param description the description of this kb folder
 	*/
 	@Override
-	public void setDescription(java.lang.String description) {
+	public void setDescription(String description) {
 		_kbFolder.setDescription(description);
 	}
 
@@ -483,7 +483,7 @@ public class KBFolderWrapper implements KBFolder, ModelWrapper<KBFolder> {
 	* @param name the name of this kb folder
 	*/
 	@Override
-	public void setName(java.lang.String name) {
+	public void setName(String name) {
 		_kbFolder.setName(name);
 	}
 
@@ -523,7 +523,7 @@ public class KBFolderWrapper implements KBFolder, ModelWrapper<KBFolder> {
 	* @param urlTitle the url title of this kb folder
 	*/
 	@Override
-	public void setUrlTitle(java.lang.String urlTitle) {
+	public void setUrlTitle(String urlTitle) {
 		_kbFolder.setUrlTitle(urlTitle);
 	}
 
@@ -543,7 +543,7 @@ public class KBFolderWrapper implements KBFolder, ModelWrapper<KBFolder> {
 	* @param userName the user name of this kb folder
 	*/
 	@Override
-	public void setUserName(java.lang.String userName) {
+	public void setUserName(String userName) {
 		_kbFolder.setUserName(userName);
 	}
 
@@ -553,7 +553,7 @@ public class KBFolderWrapper implements KBFolder, ModelWrapper<KBFolder> {
 	* @param userUuid the user uuid of this kb folder
 	*/
 	@Override
-	public void setUserUuid(java.lang.String userUuid) {
+	public void setUserUuid(String userUuid) {
 		_kbFolder.setUserUuid(userUuid);
 	}
 
@@ -563,7 +563,7 @@ public class KBFolderWrapper implements KBFolder, ModelWrapper<KBFolder> {
 	* @param uuid the uuid of this kb folder
 	*/
 	@Override
-	public void setUuid(java.lang.String uuid) {
+	public void setUuid(String uuid) {
 		_kbFolder.setUuid(uuid);
 	}
 
@@ -578,7 +578,7 @@ public class KBFolderWrapper implements KBFolder, ModelWrapper<KBFolder> {
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _kbFolder.toString();
 	}
 
@@ -588,7 +588,7 @@ public class KBFolderWrapper implements KBFolder, ModelWrapper<KBFolder> {
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _kbFolder.toXmlString();
 	}
 

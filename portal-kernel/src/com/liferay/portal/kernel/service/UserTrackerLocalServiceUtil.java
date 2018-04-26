@@ -42,8 +42,8 @@ public class UserTrackerLocalServiceUtil {
 	 */
 	public static com.liferay.portal.kernel.model.UserTracker addUserTracker(
 		long companyId, long userId, java.util.Date modifiedDate,
-		java.lang.String sessionId, java.lang.String remoteAddr,
-		java.lang.String remoteHost, java.lang.String userAgent,
+		String sessionId, String remoteAddr, String remoteHost,
+		String userAgent,
 		java.util.List<com.liferay.portal.kernel.model.UserTrackerPath> userTrackerPaths) {
 		return getService()
 				   .addUserTracker(companyId, userId, modifiedDate, sessionId,
@@ -201,7 +201,7 @@ public class UserTrackerLocalServiceUtil {
 	*
 	* @return the OSGi service identifier
 	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
+	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 

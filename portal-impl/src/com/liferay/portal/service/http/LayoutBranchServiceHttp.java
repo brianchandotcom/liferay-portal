@@ -55,8 +55,8 @@ import com.liferay.portal.kernel.util.MethodKey;
 @ProviderType
 public class LayoutBranchServiceHttp {
 	public static com.liferay.portal.kernel.model.LayoutBranch addLayoutBranch(
-		HttpPrincipal httpPrincipal, long layoutRevisionId,
-		java.lang.String name, java.lang.String description, boolean master,
+		HttpPrincipal httpPrincipal, long layoutRevisionId, String name,
+		String description, boolean master,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -117,8 +117,8 @@ public class LayoutBranchServiceHttp {
 	}
 
 	public static com.liferay.portal.kernel.model.LayoutBranch updateLayoutBranch(
-		HttpPrincipal httpPrincipal, long layoutBranchId,
-		java.lang.String name, java.lang.String description,
+		HttpPrincipal httpPrincipal, long layoutBranchId, String name,
+		String description,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -152,15 +152,14 @@ public class LayoutBranchServiceHttp {
 
 	private static Log _log = LogFactoryUtil.getLog(LayoutBranchServiceHttp.class);
 	private static final Class<?>[] _addLayoutBranchParameterTypes0 = new Class[] {
-			long.class, java.lang.String.class, java.lang.String.class,
-			boolean.class,
+			long.class, String.class, String.class, boolean.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _deleteLayoutBranchParameterTypes1 = new Class[] {
 			long.class
 		};
 	private static final Class<?>[] _updateLayoutBranchParameterTypes2 = new Class[] {
-			long.class, java.lang.String.class, java.lang.String.class,
+			long.class, String.class, String.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 }

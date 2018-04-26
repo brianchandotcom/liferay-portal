@@ -194,7 +194,7 @@ public class KaleoNotificationRecipientWrapper
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new KaleoNotificationRecipientWrapper((KaleoNotificationRecipient)_kaleoNotificationRecipient.clone());
 	}
 
@@ -209,7 +209,7 @@ public class KaleoNotificationRecipientWrapper
 	* @return the address of this kaleo notification recipient
 	*/
 	@Override
-	public java.lang.String getAddress() {
+	public String getAddress() {
 		return _kaleoNotificationRecipient.getAddress();
 	}
 
@@ -294,7 +294,7 @@ public class KaleoNotificationRecipientWrapper
 	* @return the notification reception type of this kaleo notification recipient
 	*/
 	@Override
-	public java.lang.String getNotificationReceptionType() {
+	public String getNotificationReceptionType() {
 		return _kaleoNotificationRecipient.getNotificationReceptionType();
 	}
 
@@ -319,7 +319,7 @@ public class KaleoNotificationRecipientWrapper
 	* @return the recipient class name of this kaleo notification recipient
 	*/
 	@Override
-	public java.lang.String getRecipientClassName() {
+	public String getRecipientClassName() {
 		return _kaleoNotificationRecipient.getRecipientClassName();
 	}
 
@@ -349,7 +349,7 @@ public class KaleoNotificationRecipientWrapper
 	* @return the recipient script of this kaleo notification recipient
 	*/
 	@Override
-	public java.lang.String getRecipientScript() {
+	public String getRecipientScript() {
 		return _kaleoNotificationRecipient.getRecipientScript();
 	}
 
@@ -359,7 +359,7 @@ public class KaleoNotificationRecipientWrapper
 	* @return the recipient script contexts of this kaleo notification recipient
 	*/
 	@Override
-	public java.lang.String getRecipientScriptContexts() {
+	public String getRecipientScriptContexts() {
 		return _kaleoNotificationRecipient.getRecipientScriptContexts();
 	}
 
@@ -369,7 +369,7 @@ public class KaleoNotificationRecipientWrapper
 	* @return the recipient script language of this kaleo notification recipient
 	*/
 	@Override
-	public java.lang.String getRecipientScriptLanguage() {
+	public String getRecipientScriptLanguage() {
 		return _kaleoNotificationRecipient.getRecipientScriptLanguage();
 	}
 
@@ -389,7 +389,7 @@ public class KaleoNotificationRecipientWrapper
 	* @return the user name of this kaleo notification recipient
 	*/
 	@Override
-	public java.lang.String getUserName() {
+	public String getUserName() {
 		return _kaleoNotificationRecipient.getUserName();
 	}
 
@@ -399,7 +399,7 @@ public class KaleoNotificationRecipientWrapper
 	* @return the user uuid of this kaleo notification recipient
 	*/
 	@Override
-	public java.lang.String getUserUuid() {
+	public String getUserUuid() {
 		return _kaleoNotificationRecipient.getUserUuid();
 	}
 
@@ -434,7 +434,7 @@ public class KaleoNotificationRecipientWrapper
 	* @param address the address of this kaleo notification recipient
 	*/
 	@Override
-	public void setAddress(java.lang.String address) {
+	public void setAddress(String address) {
 		_kaleoNotificationRecipient.setAddress(address);
 	}
 
@@ -541,8 +541,7 @@ public class KaleoNotificationRecipientWrapper
 	* @param notificationReceptionType the notification reception type of this kaleo notification recipient
 	*/
 	@Override
-	public void setNotificationReceptionType(
-		java.lang.String notificationReceptionType) {
+	public void setNotificationReceptionType(String notificationReceptionType) {
 		_kaleoNotificationRecipient.setNotificationReceptionType(notificationReceptionType);
 	}
 
@@ -567,7 +566,7 @@ public class KaleoNotificationRecipientWrapper
 	* @param recipientClassName the recipient class name of this kaleo notification recipient
 	*/
 	@Override
-	public void setRecipientClassName(java.lang.String recipientClassName) {
+	public void setRecipientClassName(String recipientClassName) {
 		_kaleoNotificationRecipient.setRecipientClassName(recipientClassName);
 	}
 
@@ -597,7 +596,7 @@ public class KaleoNotificationRecipientWrapper
 	* @param recipientScript the recipient script of this kaleo notification recipient
 	*/
 	@Override
-	public void setRecipientScript(java.lang.String recipientScript) {
+	public void setRecipientScript(String recipientScript) {
 		_kaleoNotificationRecipient.setRecipientScript(recipientScript);
 	}
 
@@ -607,8 +606,7 @@ public class KaleoNotificationRecipientWrapper
 	* @param recipientScriptContexts the recipient script contexts of this kaleo notification recipient
 	*/
 	@Override
-	public void setRecipientScriptContexts(
-		java.lang.String recipientScriptContexts) {
+	public void setRecipientScriptContexts(String recipientScriptContexts) {
 		_kaleoNotificationRecipient.setRecipientScriptContexts(recipientScriptContexts);
 	}
 
@@ -618,8 +616,7 @@ public class KaleoNotificationRecipientWrapper
 	* @param recipientScriptLanguage the recipient script language of this kaleo notification recipient
 	*/
 	@Override
-	public void setRecipientScriptLanguage(
-		java.lang.String recipientScriptLanguage) {
+	public void setRecipientScriptLanguage(String recipientScriptLanguage) {
 		_kaleoNotificationRecipient.setRecipientScriptLanguage(recipientScriptLanguage);
 	}
 
@@ -639,7 +636,7 @@ public class KaleoNotificationRecipientWrapper
 	* @param userName the user name of this kaleo notification recipient
 	*/
 	@Override
-	public void setUserName(java.lang.String userName) {
+	public void setUserName(String userName) {
 		_kaleoNotificationRecipient.setUserName(userName);
 	}
 
@@ -649,7 +646,7 @@ public class KaleoNotificationRecipientWrapper
 	* @param userUuid the user uuid of this kaleo notification recipient
 	*/
 	@Override
-	public void setUserUuid(java.lang.String userUuid) {
+	public void setUserUuid(String userUuid) {
 		_kaleoNotificationRecipient.setUserUuid(userUuid);
 	}
 
@@ -664,7 +661,7 @@ public class KaleoNotificationRecipientWrapper
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _kaleoNotificationRecipient.toString();
 	}
 
@@ -674,7 +671,7 @@ public class KaleoNotificationRecipientWrapper
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _kaleoNotificationRecipient.toXmlString();
 	}
 

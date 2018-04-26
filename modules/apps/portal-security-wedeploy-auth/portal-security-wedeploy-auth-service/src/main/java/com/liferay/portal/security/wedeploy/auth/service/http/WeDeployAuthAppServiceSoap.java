@@ -65,7 +65,7 @@ import java.rmi.RemoteException;
 @ProviderType
 public class WeDeployAuthAppServiceSoap {
 	public static com.liferay.portal.security.wedeploy.auth.model.WeDeployAuthAppSoap addWeDeployAuthApp(
-		java.lang.String name, java.lang.String redirectURI,
+		String name, String redirectURI,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {

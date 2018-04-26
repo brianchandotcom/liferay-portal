@@ -238,7 +238,7 @@ public class DDMTemplateVersionLocalServiceUtil {
 	*
 	* @return the OSGi service identifier
 	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
+	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 
@@ -255,7 +255,7 @@ public class DDMTemplateVersionLocalServiceUtil {
 	}
 
 	public static com.liferay.dynamic.data.mapping.model.DDMTemplateVersion getTemplateVersion(
-		long templateId, java.lang.String version)
+		long templateId, String version)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getTemplateVersion(templateId, version);
 	}

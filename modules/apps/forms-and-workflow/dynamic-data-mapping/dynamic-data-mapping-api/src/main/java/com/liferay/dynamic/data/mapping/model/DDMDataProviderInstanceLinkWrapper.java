@@ -98,7 +98,7 @@ public class DDMDataProviderInstanceLinkWrapper
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new DDMDataProviderInstanceLinkWrapper((DDMDataProviderInstanceLink)_ddmDataProviderInstanceLink.clone());
 	}
 
@@ -285,7 +285,7 @@ public class DDMDataProviderInstanceLinkWrapper
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _ddmDataProviderInstanceLink.toString();
 	}
 
@@ -295,7 +295,7 @@ public class DDMDataProviderInstanceLinkWrapper
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _ddmDataProviderInstanceLink.toXmlString();
 	}
 

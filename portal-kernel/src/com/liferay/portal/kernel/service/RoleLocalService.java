@@ -98,11 +98,10 @@ public interface RoleLocalService extends BaseLocalService,
 	role.
 	* @return the role
 	*/
-	public Role addRole(long userId, java.lang.String className, long classPK,
-		java.lang.String name, Map<Locale, java.lang.String> titleMap,
-		Map<Locale, java.lang.String> descriptionMap, int type,
-		java.lang.String subtype, ServiceContext serviceContext)
-		throws PortalException;
+	public Role addRole(long userId, String className, long classPK,
+		String name, Map<Locale, String> titleMap,
+		Map<Locale, String> descriptionMap, int type, String subtype,
+		ServiceContext serviceContext) throws PortalException;
 
 	/**
 	* Adds the role to the database. Also notifies the appropriate model listeners.
@@ -303,7 +302,7 @@ public interface RoleLocalService extends BaseLocalService,
 	*/
 	@Skip
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Role fetchRole(long companyId, java.lang.String name);
+	public Role fetchRole(long companyId, String name);
 
 	/**
 	* Returns the role with the matching UUID and company.
@@ -313,8 +312,7 @@ public interface RoleLocalService extends BaseLocalService,
 	* @return the matching role, or <code>null</code> if a matching role could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Role fetchRoleByUuidAndCompanyId(java.lang.String uuid,
-		long companyId);
+	public Role fetchRoleByUuidAndCompanyId(String uuid, long companyId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
@@ -369,14 +367,13 @@ public interface RoleLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<Role> getGroupRolesAndTeamRoles(long companyId,
-		java.lang.String keywords, List<java.lang.String> excludedNames,
-		int[] types, long excludedTeamRoleId, long teamGroupId, int start,
-		int end);
+		String keywords, List<String> excludedNames, int[] types,
+		long excludedTeamRoleId, long teamGroupId, int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getGroupRolesAndTeamRolesCount(long companyId,
-		java.lang.String keywords, List<java.lang.String> excludedNames,
-		int[] types, long excludedTeamRoleId, long teamGroupId);
+	public int getGroupRolesAndTeamRolesCount(long companyId, String keywords,
+		List<String> excludedNames, int[] types, long excludedTeamRoleId,
+		long teamGroupId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getGroupRolesCount(long groupId);
@@ -389,7 +386,7 @@ public interface RoleLocalService extends BaseLocalService,
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -399,10 +396,10 @@ public interface RoleLocalService extends BaseLocalService,
 	/**
 	* @deprecated As of 7.0.0, with no direct replacement
 	*/
-	@java.lang.Deprecated
+	@Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<Role> getResourceBlockRoles(long resourceBlockId,
-		java.lang.String className, java.lang.String actionId);
+		String className, String actionId);
 
 	/**
 	* Returns a map of role names to associated action IDs for the named
@@ -417,9 +414,8 @@ public interface RoleLocalService extends BaseLocalService,
 	long, String, int, String)
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Map<java.lang.String, List<java.lang.String>> getResourceRoles(
-		long companyId, java.lang.String name, int scope,
-		java.lang.String primKey);
+	public Map<String, List<String>> getResourceRoles(long companyId,
+		String name, int scope, String primKey);
 
 	/**
 	* Returns all the roles associated with the action ID in the company within
@@ -435,8 +431,8 @@ public interface RoleLocalService extends BaseLocalService,
 	long, String, int, String, String)
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<Role> getResourceRoles(long companyId, java.lang.String name,
-		int scope, java.lang.String primKey, java.lang.String actionId);
+	public List<Role> getResourceRoles(long companyId, String name, int scope,
+		String primKey, String actionId);
 
 	/**
 	* Returns the role with the primary key.
@@ -462,8 +458,7 @@ public interface RoleLocalService extends BaseLocalService,
 	*/
 	@Skip
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Role getRole(long companyId, java.lang.String name)
-		throws PortalException;
+	public Role getRole(long companyId, String name) throws PortalException;
 
 	/**
 	* Returns the role with the matching UUID and company.
@@ -474,7 +469,7 @@ public interface RoleLocalService extends BaseLocalService,
 	* @throws PortalException if a matching role could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Role getRoleByUuidAndCompanyId(java.lang.String uuid, long companyId)
+	public Role getRoleByUuidAndCompanyId(String uuid, long companyId)
 		throws PortalException;
 
 	/**
@@ -499,7 +494,7 @@ public interface RoleLocalService extends BaseLocalService,
 	* @return the roles of the type and subtype
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<Role> getRoles(int type, java.lang.String subtype);
+	public List<Role> getRoles(int type, String subtype);
 
 	/**
 	* Returns all the roles in the company.
@@ -544,7 +539,7 @@ public interface RoleLocalService extends BaseLocalService,
 	* @return the roles of the subtype
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<Role> getSubtypeRoles(java.lang.String subtype);
+	public List<Role> getSubtypeRoles(String subtype);
 
 	/**
 	* Returns the number of roles of the subtype.
@@ -553,7 +548,7 @@ public interface RoleLocalService extends BaseLocalService,
 	* @return the number of roles of the subtype
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getSubtypeRolesCount(java.lang.String subtype);
+	public int getSubtypeRolesCount(String subtype);
 
 	/**
 	* Returns the team role in the company.
@@ -753,8 +748,8 @@ public interface RoleLocalService extends BaseLocalService,
 	*/
 	@ThreadLocalCachable
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public boolean hasUserRole(long userId, long companyId,
-		java.lang.String name, boolean inherited) throws PortalException;
+	public boolean hasUserRole(long userId, long companyId, String name,
+		boolean inherited) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public boolean hasUserRoles(long userId);
@@ -772,8 +767,8 @@ public interface RoleLocalService extends BaseLocalService,
 	<code>false</code> otherwise
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public boolean hasUserRoles(long userId, long companyId,
-		java.lang.String[] names, boolean inherited) throws PortalException;
+	public boolean hasUserRoles(long userId, long companyId, String[] names,
+		boolean inherited) throws PortalException;
 
 	/**
 	* Returns a role with the name in the company.
@@ -784,7 +779,7 @@ public interface RoleLocalService extends BaseLocalService,
 	name could not be found in the company
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Role loadFetchRole(long companyId, java.lang.String name);
+	public Role loadFetchRole(long companyId, String name);
 
 	/**
 	* Returns a role with the name in the company.
@@ -794,7 +789,7 @@ public interface RoleLocalService extends BaseLocalService,
 	* @return the role with the name in the company
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Role loadGetRole(long companyId, java.lang.String name)
+	public Role loadGetRole(long companyId, String name)
 		throws PortalException;
 
 	/**
@@ -825,9 +820,8 @@ public interface RoleLocalService extends BaseLocalService,
 	* @see com.liferay.portal.kernel.service.persistence.RoleFinder
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<Role> search(long companyId, java.lang.String keywords,
-		java.lang.Integer[] types, int start, int end,
-		OrderByComparator<Role> obc);
+	public List<Role> search(long companyId, String keywords, Integer[] types,
+		int start, int end, OrderByComparator<Role> obc);
 
 	/**
 	* Returns an ordered range of all the roles that match the keywords, types,
@@ -860,10 +854,9 @@ public interface RoleLocalService extends BaseLocalService,
 	* @see com.liferay.portal.kernel.service.persistence.RoleFinder
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<Role> search(long companyId, java.lang.String keywords,
-		java.lang.Integer[] types,
-		LinkedHashMap<java.lang.String, java.lang.Object> params, int start,
-		int end, OrderByComparator<Role> obc);
+	public List<Role> search(long companyId, String keywords, Integer[] types,
+		LinkedHashMap<String, Object> params, int start, int end,
+		OrderByComparator<Role> obc);
 
 	/**
 	* Returns an ordered range of all the roles that match the name,
@@ -893,9 +886,8 @@ public interface RoleLocalService extends BaseLocalService,
 	* @see com.liferay.portal.kernel.service.persistence.RoleFinder
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<Role> search(long companyId, java.lang.String name,
-		java.lang.String description, java.lang.Integer[] types, int start,
-		int end, OrderByComparator<Role> obc);
+	public List<Role> search(long companyId, String name, String description,
+		Integer[] types, int start, int end, OrderByComparator<Role> obc);
 
 	/**
 	* Returns an ordered range of all the roles that match the name,
@@ -928,9 +920,8 @@ public interface RoleLocalService extends BaseLocalService,
 	* @see com.liferay.portal.kernel.service.persistence.RoleFinder
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<Role> search(long companyId, java.lang.String name,
-		java.lang.String description, java.lang.Integer[] types,
-		LinkedHashMap<java.lang.String, java.lang.Object> params, int start,
+	public List<Role> search(long companyId, String name, String description,
+		Integer[] types, LinkedHashMap<String, Object> params, int start,
 		int end, OrderByComparator<Role> obc);
 
 	/**
@@ -943,8 +934,7 @@ public interface RoleLocalService extends BaseLocalService,
 	* @return the number of matching roles
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int searchCount(long companyId, java.lang.String keywords,
-		java.lang.Integer[] types);
+	public int searchCount(long companyId, String keywords, Integer[] types);
 
 	/**
 	* Returns the number of roles that match the keywords, types and params.
@@ -958,9 +948,8 @@ public interface RoleLocalService extends BaseLocalService,
 	* @return the number of matching roles
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int searchCount(long companyId, java.lang.String keywords,
-		java.lang.Integer[] types,
-		LinkedHashMap<java.lang.String, java.lang.Object> params);
+	public int searchCount(long companyId, String keywords, Integer[] types,
+		LinkedHashMap<String, Object> params);
 
 	/**
 	* Returns the number of roles that match the name, description, and types.
@@ -972,8 +961,8 @@ public interface RoleLocalService extends BaseLocalService,
 	* @return the number of matching roles
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int searchCount(long companyId, java.lang.String name,
-		java.lang.String description, java.lang.Integer[] types);
+	public int searchCount(long companyId, String name, String description,
+		Integer[] types);
 
 	/**
 	* Returns the number of roles that match the name, description, types, and
@@ -989,9 +978,8 @@ public interface RoleLocalService extends BaseLocalService,
 	* @return the number of matching roles
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int searchCount(long companyId, java.lang.String name,
-		java.lang.String description, java.lang.Integer[] types,
-		LinkedHashMap<java.lang.String, java.lang.Object> params);
+	public int searchCount(long companyId, String name, String description,
+		Integer[] types, LinkedHashMap<String, Object> params);
 
 	public void setGroupRoles(long groupId, long[] roleIds);
 
@@ -1026,10 +1014,10 @@ public interface RoleLocalService extends BaseLocalService,
 	role.
 	* @return the role with the primary key
 	*/
-	public Role updateRole(long roleId, java.lang.String name,
-		Map<Locale, java.lang.String> titleMap,
-		Map<Locale, java.lang.String> descriptionMap, java.lang.String subtype,
-		ServiceContext serviceContext) throws PortalException;
+	public Role updateRole(long roleId, String name,
+		Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
+		String subtype, ServiceContext serviceContext)
+		throws PortalException;
 
 	/**
 	* Updates the role in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.

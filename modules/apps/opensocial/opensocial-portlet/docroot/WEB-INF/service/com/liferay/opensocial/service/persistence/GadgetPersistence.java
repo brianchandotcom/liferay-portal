@@ -47,7 +47,7 @@ public interface GadgetPersistence extends BasePersistence<Gadget> {
 	* @param uuid the uuid
 	* @return the matching gadgets
 	*/
-	public java.util.List<Gadget> findByUuid(java.lang.String uuid);
+	public java.util.List<Gadget> findByUuid(String uuid);
 
 	/**
 	* Returns a range of all the gadgets where uuid = &#63;.
@@ -61,8 +61,7 @@ public interface GadgetPersistence extends BasePersistence<Gadget> {
 	* @param end the upper bound of the range of gadgets (not inclusive)
 	* @return the range of matching gadgets
 	*/
-	public java.util.List<Gadget> findByUuid(java.lang.String uuid, int start,
-		int end);
+	public java.util.List<Gadget> findByUuid(String uuid, int start, int end);
 
 	/**
 	* Returns an ordered range of all the gadgets where uuid = &#63;.
@@ -77,8 +76,7 @@ public interface GadgetPersistence extends BasePersistence<Gadget> {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching gadgets
 	*/
-	public java.util.List<Gadget> findByUuid(java.lang.String uuid, int start,
-		int end,
+	public java.util.List<Gadget> findByUuid(String uuid, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<Gadget> orderByComparator);
 
 	/**
@@ -95,8 +93,7 @@ public interface GadgetPersistence extends BasePersistence<Gadget> {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching gadgets
 	*/
-	public java.util.List<Gadget> findByUuid(java.lang.String uuid, int start,
-		int end,
+	public java.util.List<Gadget> findByUuid(String uuid, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<Gadget> orderByComparator,
 		boolean retrieveFromCache);
 
@@ -108,7 +105,7 @@ public interface GadgetPersistence extends BasePersistence<Gadget> {
 	* @return the first matching gadget
 	* @throws NoSuchGadgetException if a matching gadget could not be found
 	*/
-	public Gadget findByUuid_First(java.lang.String uuid,
+	public Gadget findByUuid_First(String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<Gadget> orderByComparator)
 		throws NoSuchGadgetException;
 
@@ -119,7 +116,7 @@ public interface GadgetPersistence extends BasePersistence<Gadget> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching gadget, or <code>null</code> if a matching gadget could not be found
 	*/
-	public Gadget fetchByUuid_First(java.lang.String uuid,
+	public Gadget fetchByUuid_First(String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<Gadget> orderByComparator);
 
 	/**
@@ -130,7 +127,7 @@ public interface GadgetPersistence extends BasePersistence<Gadget> {
 	* @return the last matching gadget
 	* @throws NoSuchGadgetException if a matching gadget could not be found
 	*/
-	public Gadget findByUuid_Last(java.lang.String uuid,
+	public Gadget findByUuid_Last(String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<Gadget> orderByComparator)
 		throws NoSuchGadgetException;
 
@@ -141,7 +138,7 @@ public interface GadgetPersistence extends BasePersistence<Gadget> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching gadget, or <code>null</code> if a matching gadget could not be found
 	*/
-	public Gadget fetchByUuid_Last(java.lang.String uuid,
+	public Gadget fetchByUuid_Last(String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<Gadget> orderByComparator);
 
 	/**
@@ -153,8 +150,7 @@ public interface GadgetPersistence extends BasePersistence<Gadget> {
 	* @return the previous, current, and next gadget
 	* @throws NoSuchGadgetException if a gadget with the primary key could not be found
 	*/
-	public Gadget[] findByUuid_PrevAndNext(long gadgetId,
-		java.lang.String uuid,
+	public Gadget[] findByUuid_PrevAndNext(long gadgetId, String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<Gadget> orderByComparator)
 		throws NoSuchGadgetException;
 
@@ -164,7 +160,7 @@ public interface GadgetPersistence extends BasePersistence<Gadget> {
 	* @param uuid the uuid
 	* @return the matching gadgets that the user has permission to view
 	*/
-	public java.util.List<Gadget> filterFindByUuid(java.lang.String uuid);
+	public java.util.List<Gadget> filterFindByUuid(String uuid);
 
 	/**
 	* Returns a range of all the gadgets that the user has permission to view where uuid = &#63;.
@@ -178,8 +174,8 @@ public interface GadgetPersistence extends BasePersistence<Gadget> {
 	* @param end the upper bound of the range of gadgets (not inclusive)
 	* @return the range of matching gadgets that the user has permission to view
 	*/
-	public java.util.List<Gadget> filterFindByUuid(java.lang.String uuid,
-		int start, int end);
+	public java.util.List<Gadget> filterFindByUuid(String uuid, int start,
+		int end);
 
 	/**
 	* Returns an ordered range of all the gadgets that the user has permissions to view where uuid = &#63;.
@@ -194,8 +190,8 @@ public interface GadgetPersistence extends BasePersistence<Gadget> {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching gadgets that the user has permission to view
 	*/
-	public java.util.List<Gadget> filterFindByUuid(java.lang.String uuid,
-		int start, int end,
+	public java.util.List<Gadget> filterFindByUuid(String uuid, int start,
+		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<Gadget> orderByComparator);
 
 	/**
@@ -207,8 +203,7 @@ public interface GadgetPersistence extends BasePersistence<Gadget> {
 	* @return the previous, current, and next gadget
 	* @throws NoSuchGadgetException if a gadget with the primary key could not be found
 	*/
-	public Gadget[] filterFindByUuid_PrevAndNext(long gadgetId,
-		java.lang.String uuid,
+	public Gadget[] filterFindByUuid_PrevAndNext(long gadgetId, String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<Gadget> orderByComparator)
 		throws NoSuchGadgetException;
 
@@ -217,7 +212,7 @@ public interface GadgetPersistence extends BasePersistence<Gadget> {
 	*
 	* @param uuid the uuid
 	*/
-	public void removeByUuid(java.lang.String uuid);
+	public void removeByUuid(String uuid);
 
 	/**
 	* Returns the number of gadgets where uuid = &#63;.
@@ -225,7 +220,7 @@ public interface GadgetPersistence extends BasePersistence<Gadget> {
 	* @param uuid the uuid
 	* @return the number of matching gadgets
 	*/
-	public int countByUuid(java.lang.String uuid);
+	public int countByUuid(String uuid);
 
 	/**
 	* Returns the number of gadgets that the user has permission to view where uuid = &#63;.
@@ -233,7 +228,7 @@ public interface GadgetPersistence extends BasePersistence<Gadget> {
 	* @param uuid the uuid
 	* @return the number of matching gadgets that the user has permission to view
 	*/
-	public int filterCountByUuid(java.lang.String uuid);
+	public int filterCountByUuid(String uuid);
 
 	/**
 	* Returns all the gadgets where uuid = &#63; and companyId = &#63;.
@@ -242,8 +237,7 @@ public interface GadgetPersistence extends BasePersistence<Gadget> {
 	* @param companyId the company ID
 	* @return the matching gadgets
 	*/
-	public java.util.List<Gadget> findByUuid_C(java.lang.String uuid,
-		long companyId);
+	public java.util.List<Gadget> findByUuid_C(String uuid, long companyId);
 
 	/**
 	* Returns a range of all the gadgets where uuid = &#63; and companyId = &#63;.
@@ -258,8 +252,8 @@ public interface GadgetPersistence extends BasePersistence<Gadget> {
 	* @param end the upper bound of the range of gadgets (not inclusive)
 	* @return the range of matching gadgets
 	*/
-	public java.util.List<Gadget> findByUuid_C(java.lang.String uuid,
-		long companyId, int start, int end);
+	public java.util.List<Gadget> findByUuid_C(String uuid, long companyId,
+		int start, int end);
 
 	/**
 	* Returns an ordered range of all the gadgets where uuid = &#63; and companyId = &#63;.
@@ -275,8 +269,8 @@ public interface GadgetPersistence extends BasePersistence<Gadget> {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching gadgets
 	*/
-	public java.util.List<Gadget> findByUuid_C(java.lang.String uuid,
-		long companyId, int start, int end,
+	public java.util.List<Gadget> findByUuid_C(String uuid, long companyId,
+		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<Gadget> orderByComparator);
 
 	/**
@@ -294,8 +288,8 @@ public interface GadgetPersistence extends BasePersistence<Gadget> {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching gadgets
 	*/
-	public java.util.List<Gadget> findByUuid_C(java.lang.String uuid,
-		long companyId, int start, int end,
+	public java.util.List<Gadget> findByUuid_C(String uuid, long companyId,
+		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<Gadget> orderByComparator,
 		boolean retrieveFromCache);
 
@@ -308,7 +302,7 @@ public interface GadgetPersistence extends BasePersistence<Gadget> {
 	* @return the first matching gadget
 	* @throws NoSuchGadgetException if a matching gadget could not be found
 	*/
-	public Gadget findByUuid_C_First(java.lang.String uuid, long companyId,
+	public Gadget findByUuid_C_First(String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<Gadget> orderByComparator)
 		throws NoSuchGadgetException;
 
@@ -320,7 +314,7 @@ public interface GadgetPersistence extends BasePersistence<Gadget> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching gadget, or <code>null</code> if a matching gadget could not be found
 	*/
-	public Gadget fetchByUuid_C_First(java.lang.String uuid, long companyId,
+	public Gadget fetchByUuid_C_First(String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<Gadget> orderByComparator);
 
 	/**
@@ -332,7 +326,7 @@ public interface GadgetPersistence extends BasePersistence<Gadget> {
 	* @return the last matching gadget
 	* @throws NoSuchGadgetException if a matching gadget could not be found
 	*/
-	public Gadget findByUuid_C_Last(java.lang.String uuid, long companyId,
+	public Gadget findByUuid_C_Last(String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<Gadget> orderByComparator)
 		throws NoSuchGadgetException;
 
@@ -344,7 +338,7 @@ public interface GadgetPersistence extends BasePersistence<Gadget> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching gadget, or <code>null</code> if a matching gadget could not be found
 	*/
-	public Gadget fetchByUuid_C_Last(java.lang.String uuid, long companyId,
+	public Gadget fetchByUuid_C_Last(String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<Gadget> orderByComparator);
 
 	/**
@@ -357,8 +351,8 @@ public interface GadgetPersistence extends BasePersistence<Gadget> {
 	* @return the previous, current, and next gadget
 	* @throws NoSuchGadgetException if a gadget with the primary key could not be found
 	*/
-	public Gadget[] findByUuid_C_PrevAndNext(long gadgetId,
-		java.lang.String uuid, long companyId,
+	public Gadget[] findByUuid_C_PrevAndNext(long gadgetId, String uuid,
+		long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<Gadget> orderByComparator)
 		throws NoSuchGadgetException;
 
@@ -369,8 +363,7 @@ public interface GadgetPersistence extends BasePersistence<Gadget> {
 	* @param companyId the company ID
 	* @return the matching gadgets that the user has permission to view
 	*/
-	public java.util.List<Gadget> filterFindByUuid_C(java.lang.String uuid,
-		long companyId);
+	public java.util.List<Gadget> filterFindByUuid_C(String uuid, long companyId);
 
 	/**
 	* Returns a range of all the gadgets that the user has permission to view where uuid = &#63; and companyId = &#63;.
@@ -385,7 +378,7 @@ public interface GadgetPersistence extends BasePersistence<Gadget> {
 	* @param end the upper bound of the range of gadgets (not inclusive)
 	* @return the range of matching gadgets that the user has permission to view
 	*/
-	public java.util.List<Gadget> filterFindByUuid_C(java.lang.String uuid,
+	public java.util.List<Gadget> filterFindByUuid_C(String uuid,
 		long companyId, int start, int end);
 
 	/**
@@ -402,7 +395,7 @@ public interface GadgetPersistence extends BasePersistence<Gadget> {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching gadgets that the user has permission to view
 	*/
-	public java.util.List<Gadget> filterFindByUuid_C(java.lang.String uuid,
+	public java.util.List<Gadget> filterFindByUuid_C(String uuid,
 		long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<Gadget> orderByComparator);
 
@@ -416,8 +409,8 @@ public interface GadgetPersistence extends BasePersistence<Gadget> {
 	* @return the previous, current, and next gadget
 	* @throws NoSuchGadgetException if a gadget with the primary key could not be found
 	*/
-	public Gadget[] filterFindByUuid_C_PrevAndNext(long gadgetId,
-		java.lang.String uuid, long companyId,
+	public Gadget[] filterFindByUuid_C_PrevAndNext(long gadgetId, String uuid,
+		long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<Gadget> orderByComparator)
 		throws NoSuchGadgetException;
 
@@ -427,7 +420,7 @@ public interface GadgetPersistence extends BasePersistence<Gadget> {
 	* @param uuid the uuid
 	* @param companyId the company ID
 	*/
-	public void removeByUuid_C(java.lang.String uuid, long companyId);
+	public void removeByUuid_C(String uuid, long companyId);
 
 	/**
 	* Returns the number of gadgets where uuid = &#63; and companyId = &#63;.
@@ -436,7 +429,7 @@ public interface GadgetPersistence extends BasePersistence<Gadget> {
 	* @param companyId the company ID
 	* @return the number of matching gadgets
 	*/
-	public int countByUuid_C(java.lang.String uuid, long companyId);
+	public int countByUuid_C(String uuid, long companyId);
 
 	/**
 	* Returns the number of gadgets that the user has permission to view where uuid = &#63; and companyId = &#63;.
@@ -445,7 +438,7 @@ public interface GadgetPersistence extends BasePersistence<Gadget> {
 	* @param companyId the company ID
 	* @return the number of matching gadgets that the user has permission to view
 	*/
-	public int filterCountByUuid_C(java.lang.String uuid, long companyId);
+	public int filterCountByUuid_C(String uuid, long companyId);
 
 	/**
 	* Returns all the gadgets where companyId = &#63;.
@@ -648,7 +641,7 @@ public interface GadgetPersistence extends BasePersistence<Gadget> {
 	* @return the matching gadget
 	* @throws NoSuchGadgetException if a matching gadget could not be found
 	*/
-	public Gadget findByC_U(long companyId, java.lang.String url)
+	public Gadget findByC_U(long companyId, String url)
 		throws NoSuchGadgetException;
 
 	/**
@@ -658,7 +651,7 @@ public interface GadgetPersistence extends BasePersistence<Gadget> {
 	* @param url the url
 	* @return the matching gadget, or <code>null</code> if a matching gadget could not be found
 	*/
-	public Gadget fetchByC_U(long companyId, java.lang.String url);
+	public Gadget fetchByC_U(long companyId, String url);
 
 	/**
 	* Returns the gadget where companyId = &#63; and url = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -668,7 +661,7 @@ public interface GadgetPersistence extends BasePersistence<Gadget> {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching gadget, or <code>null</code> if a matching gadget could not be found
 	*/
-	public Gadget fetchByC_U(long companyId, java.lang.String url,
+	public Gadget fetchByC_U(long companyId, String url,
 		boolean retrieveFromCache);
 
 	/**
@@ -678,7 +671,7 @@ public interface GadgetPersistence extends BasePersistence<Gadget> {
 	* @param url the url
 	* @return the gadget that was removed
 	*/
-	public Gadget removeByC_U(long companyId, java.lang.String url)
+	public Gadget removeByC_U(long companyId, String url)
 		throws NoSuchGadgetException;
 
 	/**
@@ -688,7 +681,7 @@ public interface GadgetPersistence extends BasePersistence<Gadget> {
 	* @param url the url
 	* @return the number of matching gadgets
 	*/
-	public int countByC_U(long companyId, java.lang.String url);
+	public int countByC_U(long companyId, String url);
 
 	/**
 	* Caches the gadget in the entity cache if it is enabled.
@@ -809,5 +802,5 @@ public interface GadgetPersistence extends BasePersistence<Gadget> {
 	public int countAll();
 
 	@Override
-	public java.util.Set<java.lang.String> getBadColumnNames();
+	public java.util.Set<String> getBadColumnNames();
 }

@@ -107,7 +107,7 @@ public class DLSyncEventWrapper implements DLSyncEvent,
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new DLSyncEventWrapper((DLSyncEvent)_dlSyncEvent.clone());
 	}
 
@@ -132,7 +132,7 @@ public class DLSyncEventWrapper implements DLSyncEvent,
 	* @return the event of this dl sync event
 	*/
 	@Override
-	public java.lang.String getEvent() {
+	public String getEvent() {
 		return _dlSyncEvent.getEvent();
 	}
 
@@ -182,7 +182,7 @@ public class DLSyncEventWrapper implements DLSyncEvent,
 	* @return the type of this dl sync event
 	*/
 	@Override
-	public java.lang.String getType() {
+	public String getType() {
 		return _dlSyncEvent.getType();
 	}
 
@@ -242,7 +242,7 @@ public class DLSyncEventWrapper implements DLSyncEvent,
 	* @param event the event of this dl sync event
 	*/
 	@Override
-	public void setEvent(java.lang.String event) {
+	public void setEvent(String event) {
 		_dlSyncEvent.setEvent(event);
 	}
 
@@ -308,7 +308,7 @@ public class DLSyncEventWrapper implements DLSyncEvent,
 	* @param type the type of this dl sync event
 	*/
 	@Override
-	public void setType(java.lang.String type) {
+	public void setType(String type) {
 		_dlSyncEvent.setType(type);
 	}
 
@@ -333,7 +333,7 @@ public class DLSyncEventWrapper implements DLSyncEvent,
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _dlSyncEvent.toString();
 	}
 
@@ -343,7 +343,7 @@ public class DLSyncEventWrapper implements DLSyncEvent,
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _dlSyncEvent.toXmlString();
 	}
 

@@ -47,7 +47,7 @@ public interface DLFileShortcutPersistence extends BasePersistence<DLFileShortcu
 	* @param uuid the uuid
 	* @return the matching document library file shortcuts
 	*/
-	public java.util.List<DLFileShortcut> findByUuid(java.lang.String uuid);
+	public java.util.List<DLFileShortcut> findByUuid(String uuid);
 
 	/**
 	* Returns a range of all the document library file shortcuts where uuid = &#63;.
@@ -61,8 +61,8 @@ public interface DLFileShortcutPersistence extends BasePersistence<DLFileShortcu
 	* @param end the upper bound of the range of document library file shortcuts (not inclusive)
 	* @return the range of matching document library file shortcuts
 	*/
-	public java.util.List<DLFileShortcut> findByUuid(java.lang.String uuid,
-		int start, int end);
+	public java.util.List<DLFileShortcut> findByUuid(String uuid, int start,
+		int end);
 
 	/**
 	* Returns an ordered range of all the document library file shortcuts where uuid = &#63;.
@@ -77,8 +77,8 @@ public interface DLFileShortcutPersistence extends BasePersistence<DLFileShortcu
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching document library file shortcuts
 	*/
-	public java.util.List<DLFileShortcut> findByUuid(java.lang.String uuid,
-		int start, int end,
+	public java.util.List<DLFileShortcut> findByUuid(String uuid, int start,
+		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<DLFileShortcut> orderByComparator);
 
 	/**
@@ -95,8 +95,8 @@ public interface DLFileShortcutPersistence extends BasePersistence<DLFileShortcu
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching document library file shortcuts
 	*/
-	public java.util.List<DLFileShortcut> findByUuid(java.lang.String uuid,
-		int start, int end,
+	public java.util.List<DLFileShortcut> findByUuid(String uuid, int start,
+		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<DLFileShortcut> orderByComparator,
 		boolean retrieveFromCache);
 
@@ -108,7 +108,7 @@ public interface DLFileShortcutPersistence extends BasePersistence<DLFileShortcu
 	* @return the first matching document library file shortcut
 	* @throws NoSuchFileShortcutException if a matching document library file shortcut could not be found
 	*/
-	public DLFileShortcut findByUuid_First(java.lang.String uuid,
+	public DLFileShortcut findByUuid_First(String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<DLFileShortcut> orderByComparator)
 		throws NoSuchFileShortcutException;
 
@@ -119,7 +119,7 @@ public interface DLFileShortcutPersistence extends BasePersistence<DLFileShortcu
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching document library file shortcut, or <code>null</code> if a matching document library file shortcut could not be found
 	*/
-	public DLFileShortcut fetchByUuid_First(java.lang.String uuid,
+	public DLFileShortcut fetchByUuid_First(String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<DLFileShortcut> orderByComparator);
 
 	/**
@@ -130,7 +130,7 @@ public interface DLFileShortcutPersistence extends BasePersistence<DLFileShortcu
 	* @return the last matching document library file shortcut
 	* @throws NoSuchFileShortcutException if a matching document library file shortcut could not be found
 	*/
-	public DLFileShortcut findByUuid_Last(java.lang.String uuid,
+	public DLFileShortcut findByUuid_Last(String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<DLFileShortcut> orderByComparator)
 		throws NoSuchFileShortcutException;
 
@@ -141,7 +141,7 @@ public interface DLFileShortcutPersistence extends BasePersistence<DLFileShortcu
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching document library file shortcut, or <code>null</code> if a matching document library file shortcut could not be found
 	*/
-	public DLFileShortcut fetchByUuid_Last(java.lang.String uuid,
+	public DLFileShortcut fetchByUuid_Last(String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<DLFileShortcut> orderByComparator);
 
 	/**
@@ -154,7 +154,7 @@ public interface DLFileShortcutPersistence extends BasePersistence<DLFileShortcu
 	* @throws NoSuchFileShortcutException if a document library file shortcut with the primary key could not be found
 	*/
 	public DLFileShortcut[] findByUuid_PrevAndNext(long fileShortcutId,
-		java.lang.String uuid,
+		String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<DLFileShortcut> orderByComparator)
 		throws NoSuchFileShortcutException;
 
@@ -163,7 +163,7 @@ public interface DLFileShortcutPersistence extends BasePersistence<DLFileShortcu
 	*
 	* @param uuid the uuid
 	*/
-	public void removeByUuid(java.lang.String uuid);
+	public void removeByUuid(String uuid);
 
 	/**
 	* Returns the number of document library file shortcuts where uuid = &#63;.
@@ -171,7 +171,7 @@ public interface DLFileShortcutPersistence extends BasePersistence<DLFileShortcu
 	* @param uuid the uuid
 	* @return the number of matching document library file shortcuts
 	*/
-	public int countByUuid(java.lang.String uuid);
+	public int countByUuid(String uuid);
 
 	/**
 	* Returns the document library file shortcut where uuid = &#63; and groupId = &#63; or throws a {@link NoSuchFileShortcutException} if it could not be found.
@@ -181,7 +181,7 @@ public interface DLFileShortcutPersistence extends BasePersistence<DLFileShortcu
 	* @return the matching document library file shortcut
 	* @throws NoSuchFileShortcutException if a matching document library file shortcut could not be found
 	*/
-	public DLFileShortcut findByUUID_G(java.lang.String uuid, long groupId)
+	public DLFileShortcut findByUUID_G(String uuid, long groupId)
 		throws NoSuchFileShortcutException;
 
 	/**
@@ -191,7 +191,7 @@ public interface DLFileShortcutPersistence extends BasePersistence<DLFileShortcu
 	* @param groupId the group ID
 	* @return the matching document library file shortcut, or <code>null</code> if a matching document library file shortcut could not be found
 	*/
-	public DLFileShortcut fetchByUUID_G(java.lang.String uuid, long groupId);
+	public DLFileShortcut fetchByUUID_G(String uuid, long groupId);
 
 	/**
 	* Returns the document library file shortcut where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -201,7 +201,7 @@ public interface DLFileShortcutPersistence extends BasePersistence<DLFileShortcu
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching document library file shortcut, or <code>null</code> if a matching document library file shortcut could not be found
 	*/
-	public DLFileShortcut fetchByUUID_G(java.lang.String uuid, long groupId,
+	public DLFileShortcut fetchByUUID_G(String uuid, long groupId,
 		boolean retrieveFromCache);
 
 	/**
@@ -211,7 +211,7 @@ public interface DLFileShortcutPersistence extends BasePersistence<DLFileShortcu
 	* @param groupId the group ID
 	* @return the document library file shortcut that was removed
 	*/
-	public DLFileShortcut removeByUUID_G(java.lang.String uuid, long groupId)
+	public DLFileShortcut removeByUUID_G(String uuid, long groupId)
 		throws NoSuchFileShortcutException;
 
 	/**
@@ -221,7 +221,7 @@ public interface DLFileShortcutPersistence extends BasePersistence<DLFileShortcu
 	* @param groupId the group ID
 	* @return the number of matching document library file shortcuts
 	*/
-	public int countByUUID_G(java.lang.String uuid, long groupId);
+	public int countByUUID_G(String uuid, long groupId);
 
 	/**
 	* Returns all the document library file shortcuts where uuid = &#63; and companyId = &#63;.
@@ -230,7 +230,7 @@ public interface DLFileShortcutPersistence extends BasePersistence<DLFileShortcu
 	* @param companyId the company ID
 	* @return the matching document library file shortcuts
 	*/
-	public java.util.List<DLFileShortcut> findByUuid_C(java.lang.String uuid,
+	public java.util.List<DLFileShortcut> findByUuid_C(String uuid,
 		long companyId);
 
 	/**
@@ -246,7 +246,7 @@ public interface DLFileShortcutPersistence extends BasePersistence<DLFileShortcu
 	* @param end the upper bound of the range of document library file shortcuts (not inclusive)
 	* @return the range of matching document library file shortcuts
 	*/
-	public java.util.List<DLFileShortcut> findByUuid_C(java.lang.String uuid,
+	public java.util.List<DLFileShortcut> findByUuid_C(String uuid,
 		long companyId, int start, int end);
 
 	/**
@@ -263,7 +263,7 @@ public interface DLFileShortcutPersistence extends BasePersistence<DLFileShortcu
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching document library file shortcuts
 	*/
-	public java.util.List<DLFileShortcut> findByUuid_C(java.lang.String uuid,
+	public java.util.List<DLFileShortcut> findByUuid_C(String uuid,
 		long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<DLFileShortcut> orderByComparator);
 
@@ -282,7 +282,7 @@ public interface DLFileShortcutPersistence extends BasePersistence<DLFileShortcu
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching document library file shortcuts
 	*/
-	public java.util.List<DLFileShortcut> findByUuid_C(java.lang.String uuid,
+	public java.util.List<DLFileShortcut> findByUuid_C(String uuid,
 		long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<DLFileShortcut> orderByComparator,
 		boolean retrieveFromCache);
@@ -296,8 +296,7 @@ public interface DLFileShortcutPersistence extends BasePersistence<DLFileShortcu
 	* @return the first matching document library file shortcut
 	* @throws NoSuchFileShortcutException if a matching document library file shortcut could not be found
 	*/
-	public DLFileShortcut findByUuid_C_First(java.lang.String uuid,
-		long companyId,
+	public DLFileShortcut findByUuid_C_First(String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<DLFileShortcut> orderByComparator)
 		throws NoSuchFileShortcutException;
 
@@ -309,8 +308,7 @@ public interface DLFileShortcutPersistence extends BasePersistence<DLFileShortcu
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching document library file shortcut, or <code>null</code> if a matching document library file shortcut could not be found
 	*/
-	public DLFileShortcut fetchByUuid_C_First(java.lang.String uuid,
-		long companyId,
+	public DLFileShortcut fetchByUuid_C_First(String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<DLFileShortcut> orderByComparator);
 
 	/**
@@ -322,8 +320,7 @@ public interface DLFileShortcutPersistence extends BasePersistence<DLFileShortcu
 	* @return the last matching document library file shortcut
 	* @throws NoSuchFileShortcutException if a matching document library file shortcut could not be found
 	*/
-	public DLFileShortcut findByUuid_C_Last(java.lang.String uuid,
-		long companyId,
+	public DLFileShortcut findByUuid_C_Last(String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<DLFileShortcut> orderByComparator)
 		throws NoSuchFileShortcutException;
 
@@ -335,8 +332,7 @@ public interface DLFileShortcutPersistence extends BasePersistence<DLFileShortcu
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching document library file shortcut, or <code>null</code> if a matching document library file shortcut could not be found
 	*/
-	public DLFileShortcut fetchByUuid_C_Last(java.lang.String uuid,
-		long companyId,
+	public DLFileShortcut fetchByUuid_C_Last(String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<DLFileShortcut> orderByComparator);
 
 	/**
@@ -350,7 +346,7 @@ public interface DLFileShortcutPersistence extends BasePersistence<DLFileShortcu
 	* @throws NoSuchFileShortcutException if a document library file shortcut with the primary key could not be found
 	*/
 	public DLFileShortcut[] findByUuid_C_PrevAndNext(long fileShortcutId,
-		java.lang.String uuid, long companyId,
+		String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<DLFileShortcut> orderByComparator)
 		throws NoSuchFileShortcutException;
 
@@ -360,7 +356,7 @@ public interface DLFileShortcutPersistence extends BasePersistence<DLFileShortcu
 	* @param uuid the uuid
 	* @param companyId the company ID
 	*/
-	public void removeByUuid_C(java.lang.String uuid, long companyId);
+	public void removeByUuid_C(String uuid, long companyId);
 
 	/**
 	* Returns the number of document library file shortcuts where uuid = &#63; and companyId = &#63;.
@@ -369,7 +365,7 @@ public interface DLFileShortcutPersistence extends BasePersistence<DLFileShortcu
 	* @param companyId the company ID
 	* @return the number of matching document library file shortcuts
 	*/
-	public int countByUuid_C(java.lang.String uuid, long companyId);
+	public int countByUuid_C(String uuid, long companyId);
 
 	/**
 	* Returns all the document library file shortcuts where companyId = &#63;.
@@ -1596,5 +1592,5 @@ public interface DLFileShortcutPersistence extends BasePersistence<DLFileShortcu
 	public int countAll();
 
 	@Override
-	public java.util.Set<java.lang.String> getBadColumnNames();
+	public java.util.Set<String> getBadColumnNames();
 }

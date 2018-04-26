@@ -93,11 +93,10 @@ public class DDLRecordSetServiceSoap {
 	* @throws PortalException if a portal exception occurred
 	*/
 	public static com.liferay.dynamic.data.lists.model.DDLRecordSetSoap addRecordSet(
-		long groupId, long ddmStructureId, java.lang.String recordSetKey,
-		java.lang.String[] nameMapLanguageIds,
-		java.lang.String[] nameMapValues,
-		java.lang.String[] descriptionMapLanguageIds,
-		java.lang.String[] descriptionMapValues, int minDisplayRows, int scope,
+		long groupId, long ddmStructureId, String recordSetKey,
+		String[] nameMapLanguageIds, String[] nameMapValues,
+		String[] descriptionMapLanguageIds, String[] descriptionMapValues,
+		int minDisplayRows, int scope,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
@@ -237,8 +236,8 @@ public class DDLRecordSetServiceSoap {
 	* @return the range of matching record sets ordered by the comparator
 	*/
 	public static com.liferay.dynamic.data.lists.model.DDLRecordSetSoap[] search(
-		long companyId, long groupId, java.lang.String keywords, int scope,
-		int start, int end,
+		long companyId, long groupId, String keywords, int scope, int start,
+		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.lists.model.DDLRecordSet> orderByComparator)
 		throws RemoteException {
 		try {
@@ -293,9 +292,8 @@ public class DDLRecordSetServiceSoap {
 	* @return the range of matching record sets ordered by the comparator
 	*/
 	public static com.liferay.dynamic.data.lists.model.DDLRecordSetSoap[] search(
-		long companyId, long groupId, java.lang.String name,
-		java.lang.String description, int scope, boolean andOperator,
-		int start, int end,
+		long companyId, long groupId, String name, String description,
+		int scope, boolean andOperator, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.lists.model.DDLRecordSet> orderByComparator)
 		throws RemoteException {
 		try {
@@ -333,7 +331,7 @@ public class DDLRecordSetServiceSoap {
 	* @return the number of matching record sets
 	*/
 	public static int searchCount(long companyId, long groupId,
-		java.lang.String keywords, int scope) throws RemoteException {
+		String keywords, int scope) throws RemoteException {
 		try {
 			int returnValue = DDLRecordSetServiceUtil.searchCount(companyId,
 					groupId, keywords, scope);
@@ -371,9 +369,9 @@ public class DDLRecordSetServiceSoap {
 	values.
 	* @return the number of matching record sets
 	*/
-	public static int searchCount(long companyId, long groupId,
-		java.lang.String name, java.lang.String description, int scope,
-		boolean andOperator) throws RemoteException {
+	public static int searchCount(long companyId, long groupId, String name,
+		String description, int scope, boolean andOperator)
+		throws RemoteException {
 		try {
 			int returnValue = DDLRecordSetServiceUtil.searchCount(companyId,
 					groupId, name, description, scope, andOperator);
@@ -460,11 +458,9 @@ public class DDLRecordSetServiceSoap {
 	* @throws PortalException if a portal exception occurred
 	*/
 	public static com.liferay.dynamic.data.lists.model.DDLRecordSetSoap updateRecordSet(
-		long recordSetId, long ddmStructureId,
-		java.lang.String[] nameMapLanguageIds,
-		java.lang.String[] nameMapValues,
-		java.lang.String[] descriptionMapLanguageIds,
-		java.lang.String[] descriptionMapValues, int minDisplayRows,
+		long recordSetId, long ddmStructureId, String[] nameMapLanguageIds,
+		String[] nameMapValues, String[] descriptionMapLanguageIds,
+		String[] descriptionMapValues, int minDisplayRows,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
@@ -504,11 +500,10 @@ public class DDLRecordSetServiceSoap {
 	* @throws PortalException if a portal exception occurred
 	*/
 	public static com.liferay.dynamic.data.lists.model.DDLRecordSetSoap updateRecordSet(
-		long groupId, long ddmStructureId, java.lang.String recordSetKey,
-		java.lang.String[] nameMapLanguageIds,
-		java.lang.String[] nameMapValues,
-		java.lang.String[] descriptionMapLanguageIds,
-		java.lang.String[] descriptionMapValues, int minDisplayRows,
+		long groupId, long ddmStructureId, String recordSetKey,
+		String[] nameMapLanguageIds, String[] nameMapValues,
+		String[] descriptionMapLanguageIds, String[] descriptionMapValues,
+		int minDisplayRows,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {

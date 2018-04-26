@@ -223,7 +223,7 @@ public class MBBanLocalServiceUtil {
 	* @return the matching message boards ban, or <code>null</code> if a matching message boards ban could not be found
 	*/
 	public static com.liferay.message.boards.model.MBBan fetchMBBanByUuidAndGroupId(
-		java.lang.String uuid, long groupId) {
+		String uuid, long groupId) {
 		return getService().fetchMBBanByUuidAndGroupId(uuid, groupId);
 	}
 
@@ -270,7 +270,7 @@ public class MBBanLocalServiceUtil {
 	* @throws PortalException if a matching message boards ban could not be found
 	*/
 	public static com.liferay.message.boards.model.MBBan getMBBanByUuidAndGroupId(
-		java.lang.String uuid, long groupId)
+		String uuid, long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getMBBanByUuidAndGroupId(uuid, groupId);
 	}
@@ -299,7 +299,7 @@ public class MBBanLocalServiceUtil {
 	* @return the matching message boards bans, or an empty list if no matches were found
 	*/
 	public static java.util.List<com.liferay.message.boards.model.MBBan> getMBBansByUuidAndCompanyId(
-		java.lang.String uuid, long companyId) {
+		String uuid, long companyId) {
 		return getService().getMBBansByUuidAndCompanyId(uuid, companyId);
 	}
 
@@ -314,7 +314,7 @@ public class MBBanLocalServiceUtil {
 	* @return the range of matching message boards bans, or an empty list if no matches were found
 	*/
 	public static java.util.List<com.liferay.message.boards.model.MBBan> getMBBansByUuidAndCompanyId(
-		java.lang.String uuid, long companyId, int start, int end,
+		String uuid, long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.message.boards.model.MBBan> orderByComparator) {
 		return getService()
 				   .getMBBansByUuidAndCompanyId(uuid, companyId, start, end,
@@ -335,7 +335,7 @@ public class MBBanLocalServiceUtil {
 	*
 	* @return the OSGi service identifier
 	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
+	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 

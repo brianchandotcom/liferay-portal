@@ -65,8 +65,8 @@ import java.rmi.RemoteException;
 @ProviderType
 public class PluginSettingServiceSoap {
 	public static com.liferay.portal.kernel.model.PluginSettingSoap updatePluginSetting(
-		long companyId, java.lang.String pluginId, java.lang.String pluginType,
-		java.lang.String roles, boolean active) throws RemoteException {
+		long companyId, String pluginId, String pluginType, String roles,
+		boolean active) throws RemoteException {
 		try {
 			com.liferay.portal.kernel.model.PluginSetting returnValue = PluginSettingServiceUtil.updatePluginSetting(companyId,
 					pluginId, pluginType, roles, active);

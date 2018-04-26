@@ -55,11 +55,10 @@ public interface BackgroundTask extends BackgroundTaskModel, PersistedModel {
 			}
 		};
 
-	public void addAttachment(long userId, java.lang.String fileName,
-		java.io.File file)
+	public void addAttachment(long userId, String fileName, java.io.File file)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
-	public void addAttachment(long userId, java.lang.String fileName,
+	public void addAttachment(long userId, String fileName,
 		java.io.InputStream inputStream)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
@@ -78,7 +77,7 @@ public interface BackgroundTask extends BackgroundTaskModel, PersistedModel {
 
 	public long getAttachmentsFolderId();
 
-	public java.lang.String getStatusLabel();
+	public String getStatusLabel();
 
 	public boolean isInProgress();
 }

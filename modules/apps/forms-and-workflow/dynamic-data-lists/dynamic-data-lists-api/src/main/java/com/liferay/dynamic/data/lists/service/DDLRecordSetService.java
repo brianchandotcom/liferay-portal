@@ -84,9 +84,9 @@ public interface DDLRecordSetService extends BaseService {
 	* @throws PortalException if a portal exception occurred
 	*/
 	public DDLRecordSet addRecordSet(long groupId, long ddmStructureId,
-		java.lang.String recordSetKey, Map<Locale, java.lang.String> nameMap,
-		Map<Locale, java.lang.String> descriptionMap, int minDisplayRows,
-		int scope, ServiceContext serviceContext) throws PortalException;
+		String recordSetKey, Map<Locale, String> nameMap,
+		Map<Locale, String> descriptionMap, int minDisplayRows, int scope,
+		ServiceContext serviceContext) throws PortalException;
 
 	/**
 	* Deletes a record set and its resources.
@@ -113,7 +113,7 @@ public interface DDLRecordSetService extends BaseService {
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	/**
 	* Returns a record set with the ID.
@@ -172,7 +172,7 @@ public interface DDLRecordSetService extends BaseService {
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<DDLRecordSet> search(long companyId, long groupId,
-		java.lang.String keywords, int scope, int start, int end,
+		String keywords, int scope, int start, int end,
 		OrderByComparator<DDLRecordSet> orderByComparator);
 
 	/**
@@ -213,9 +213,8 @@ public interface DDLRecordSetService extends BaseService {
 	* @return the range of matching record sets ordered by the comparator
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<DDLRecordSet> search(long companyId, long groupId,
-		java.lang.String name, java.lang.String description, int scope,
-		boolean andOperator, int start, int end,
+	public List<DDLRecordSet> search(long companyId, long groupId, String name,
+		String description, int scope, boolean andOperator, int start, int end,
 		OrderByComparator<DDLRecordSet> orderByComparator);
 
 	/**
@@ -238,8 +237,8 @@ public interface DDLRecordSetService extends BaseService {
 	* @return the number of matching record sets
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int searchCount(long companyId, long groupId,
-		java.lang.String keywords, int scope);
+	public int searchCount(long companyId, long groupId, String keywords,
+		int scope);
 
 	/**
 	* Returns the number of all record sets matching the parameters, filtered
@@ -266,8 +265,8 @@ public interface DDLRecordSetService extends BaseService {
 	* @return the number of matching record sets
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int searchCount(long companyId, long groupId, java.lang.String name,
-		java.lang.String description, int scope, boolean andOperator);
+	public int searchCount(long companyId, long groupId, String name,
+		String description, int scope, boolean andOperator);
 
 	/**
 	* Updates the number of minimum rows to display for the record set. Useful
@@ -315,9 +314,9 @@ public interface DDLRecordSetService extends BaseService {
 	* @throws PortalException if a portal exception occurred
 	*/
 	public DDLRecordSet updateRecordSet(long recordSetId, long ddmStructureId,
-		Map<Locale, java.lang.String> nameMap,
-		Map<Locale, java.lang.String> descriptionMap, int minDisplayRows,
-		ServiceContext serviceContext) throws PortalException;
+		Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
+		int minDisplayRows, ServiceContext serviceContext)
+		throws PortalException;
 
 	/**
 	* Updates the DDM structure, name, description, and minimum number of
@@ -337,7 +336,7 @@ public interface DDLRecordSetService extends BaseService {
 	* @throws PortalException if a portal exception occurred
 	*/
 	public DDLRecordSet updateRecordSet(long groupId, long ddmStructureId,
-		java.lang.String recordSetKey, Map<Locale, java.lang.String> nameMap,
-		Map<Locale, java.lang.String> descriptionMap, int minDisplayRows,
+		String recordSetKey, Map<Locale, String> nameMap,
+		Map<Locale, String> descriptionMap, int minDisplayRows,
 		ServiceContext serviceContext) throws PortalException;
 }

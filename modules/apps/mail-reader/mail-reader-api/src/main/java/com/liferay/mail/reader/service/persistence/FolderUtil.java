@@ -277,7 +277,7 @@ public class FolderUtil {
 	* @return the matching folder
 	* @throws NoSuchFolderException if a matching folder could not be found
 	*/
-	public static Folder findByA_F(long accountId, java.lang.String fullName)
+	public static Folder findByA_F(long accountId, String fullName)
 		throws com.liferay.mail.reader.exception.NoSuchFolderException {
 		return getPersistence().findByA_F(accountId, fullName);
 	}
@@ -289,7 +289,7 @@ public class FolderUtil {
 	* @param fullName the full name
 	* @return the matching folder, or <code>null</code> if a matching folder could not be found
 	*/
-	public static Folder fetchByA_F(long accountId, java.lang.String fullName) {
+	public static Folder fetchByA_F(long accountId, String fullName) {
 		return getPersistence().fetchByA_F(accountId, fullName);
 	}
 
@@ -301,7 +301,7 @@ public class FolderUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching folder, or <code>null</code> if a matching folder could not be found
 	*/
-	public static Folder fetchByA_F(long accountId, java.lang.String fullName,
+	public static Folder fetchByA_F(long accountId, String fullName,
 		boolean retrieveFromCache) {
 		return getPersistence()
 				   .fetchByA_F(accountId, fullName, retrieveFromCache);
@@ -314,7 +314,7 @@ public class FolderUtil {
 	* @param fullName the full name
 	* @return the folder that was removed
 	*/
-	public static Folder removeByA_F(long accountId, java.lang.String fullName)
+	public static Folder removeByA_F(long accountId, String fullName)
 		throws com.liferay.mail.reader.exception.NoSuchFolderException {
 		return getPersistence().removeByA_F(accountId, fullName);
 	}
@@ -326,7 +326,7 @@ public class FolderUtil {
 	* @param fullName the full name
 	* @return the number of matching folders
 	*/
-	public static int countByA_F(long accountId, java.lang.String fullName) {
+	public static int countByA_F(long accountId, String fullName) {
 		return getPersistence().countByA_F(accountId, fullName);
 	}
 

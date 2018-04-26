@@ -47,8 +47,7 @@ public interface OAuthConsumerPersistence extends BasePersistence<OAuthConsumer>
 	* @param gadgetKey the gadget key
 	* @return the matching o auth consumers
 	*/
-	public java.util.List<OAuthConsumer> findByGadgetKey(
-		java.lang.String gadgetKey);
+	public java.util.List<OAuthConsumer> findByGadgetKey(String gadgetKey);
 
 	/**
 	* Returns a range of all the o auth consumers where gadgetKey = &#63;.
@@ -62,8 +61,8 @@ public interface OAuthConsumerPersistence extends BasePersistence<OAuthConsumer>
 	* @param end the upper bound of the range of o auth consumers (not inclusive)
 	* @return the range of matching o auth consumers
 	*/
-	public java.util.List<OAuthConsumer> findByGadgetKey(
-		java.lang.String gadgetKey, int start, int end);
+	public java.util.List<OAuthConsumer> findByGadgetKey(String gadgetKey,
+		int start, int end);
 
 	/**
 	* Returns an ordered range of all the o auth consumers where gadgetKey = &#63;.
@@ -78,8 +77,8 @@ public interface OAuthConsumerPersistence extends BasePersistence<OAuthConsumer>
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching o auth consumers
 	*/
-	public java.util.List<OAuthConsumer> findByGadgetKey(
-		java.lang.String gadgetKey, int start, int end,
+	public java.util.List<OAuthConsumer> findByGadgetKey(String gadgetKey,
+		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<OAuthConsumer> orderByComparator);
 
 	/**
@@ -96,8 +95,8 @@ public interface OAuthConsumerPersistence extends BasePersistence<OAuthConsumer>
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching o auth consumers
 	*/
-	public java.util.List<OAuthConsumer> findByGadgetKey(
-		java.lang.String gadgetKey, int start, int end,
+	public java.util.List<OAuthConsumer> findByGadgetKey(String gadgetKey,
+		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<OAuthConsumer> orderByComparator,
 		boolean retrieveFromCache);
 
@@ -109,7 +108,7 @@ public interface OAuthConsumerPersistence extends BasePersistence<OAuthConsumer>
 	* @return the first matching o auth consumer
 	* @throws NoSuchOAuthConsumerException if a matching o auth consumer could not be found
 	*/
-	public OAuthConsumer findByGadgetKey_First(java.lang.String gadgetKey,
+	public OAuthConsumer findByGadgetKey_First(String gadgetKey,
 		com.liferay.portal.kernel.util.OrderByComparator<OAuthConsumer> orderByComparator)
 		throws NoSuchOAuthConsumerException;
 
@@ -120,7 +119,7 @@ public interface OAuthConsumerPersistence extends BasePersistence<OAuthConsumer>
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching o auth consumer, or <code>null</code> if a matching o auth consumer could not be found
 	*/
-	public OAuthConsumer fetchByGadgetKey_First(java.lang.String gadgetKey,
+	public OAuthConsumer fetchByGadgetKey_First(String gadgetKey,
 		com.liferay.portal.kernel.util.OrderByComparator<OAuthConsumer> orderByComparator);
 
 	/**
@@ -131,7 +130,7 @@ public interface OAuthConsumerPersistence extends BasePersistence<OAuthConsumer>
 	* @return the last matching o auth consumer
 	* @throws NoSuchOAuthConsumerException if a matching o auth consumer could not be found
 	*/
-	public OAuthConsumer findByGadgetKey_Last(java.lang.String gadgetKey,
+	public OAuthConsumer findByGadgetKey_Last(String gadgetKey,
 		com.liferay.portal.kernel.util.OrderByComparator<OAuthConsumer> orderByComparator)
 		throws NoSuchOAuthConsumerException;
 
@@ -142,7 +141,7 @@ public interface OAuthConsumerPersistence extends BasePersistence<OAuthConsumer>
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching o auth consumer, or <code>null</code> if a matching o auth consumer could not be found
 	*/
-	public OAuthConsumer fetchByGadgetKey_Last(java.lang.String gadgetKey,
+	public OAuthConsumer fetchByGadgetKey_Last(String gadgetKey,
 		com.liferay.portal.kernel.util.OrderByComparator<OAuthConsumer> orderByComparator);
 
 	/**
@@ -155,7 +154,7 @@ public interface OAuthConsumerPersistence extends BasePersistence<OAuthConsumer>
 	* @throws NoSuchOAuthConsumerException if a o auth consumer with the primary key could not be found
 	*/
 	public OAuthConsumer[] findByGadgetKey_PrevAndNext(long oAuthConsumerId,
-		java.lang.String gadgetKey,
+		String gadgetKey,
 		com.liferay.portal.kernel.util.OrderByComparator<OAuthConsumer> orderByComparator)
 		throws NoSuchOAuthConsumerException;
 
@@ -164,7 +163,7 @@ public interface OAuthConsumerPersistence extends BasePersistence<OAuthConsumer>
 	*
 	* @param gadgetKey the gadget key
 	*/
-	public void removeByGadgetKey(java.lang.String gadgetKey);
+	public void removeByGadgetKey(String gadgetKey);
 
 	/**
 	* Returns the number of o auth consumers where gadgetKey = &#63;.
@@ -172,7 +171,7 @@ public interface OAuthConsumerPersistence extends BasePersistence<OAuthConsumer>
 	* @param gadgetKey the gadget key
 	* @return the number of matching o auth consumers
 	*/
-	public int countByGadgetKey(java.lang.String gadgetKey);
+	public int countByGadgetKey(String gadgetKey);
 
 	/**
 	* Returns the o auth consumer where gadgetKey = &#63; and serviceName = &#63; or throws a {@link NoSuchOAuthConsumerException} if it could not be found.
@@ -182,8 +181,8 @@ public interface OAuthConsumerPersistence extends BasePersistence<OAuthConsumer>
 	* @return the matching o auth consumer
 	* @throws NoSuchOAuthConsumerException if a matching o auth consumer could not be found
 	*/
-	public OAuthConsumer findByG_S(java.lang.String gadgetKey,
-		java.lang.String serviceName) throws NoSuchOAuthConsumerException;
+	public OAuthConsumer findByG_S(String gadgetKey, String serviceName)
+		throws NoSuchOAuthConsumerException;
 
 	/**
 	* Returns the o auth consumer where gadgetKey = &#63; and serviceName = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
@@ -192,8 +191,7 @@ public interface OAuthConsumerPersistence extends BasePersistence<OAuthConsumer>
 	* @param serviceName the service name
 	* @return the matching o auth consumer, or <code>null</code> if a matching o auth consumer could not be found
 	*/
-	public OAuthConsumer fetchByG_S(java.lang.String gadgetKey,
-		java.lang.String serviceName);
+	public OAuthConsumer fetchByG_S(String gadgetKey, String serviceName);
 
 	/**
 	* Returns the o auth consumer where gadgetKey = &#63; and serviceName = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -203,8 +201,8 @@ public interface OAuthConsumerPersistence extends BasePersistence<OAuthConsumer>
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching o auth consumer, or <code>null</code> if a matching o auth consumer could not be found
 	*/
-	public OAuthConsumer fetchByG_S(java.lang.String gadgetKey,
-		java.lang.String serviceName, boolean retrieveFromCache);
+	public OAuthConsumer fetchByG_S(String gadgetKey, String serviceName,
+		boolean retrieveFromCache);
 
 	/**
 	* Removes the o auth consumer where gadgetKey = &#63; and serviceName = &#63; from the database.
@@ -213,8 +211,8 @@ public interface OAuthConsumerPersistence extends BasePersistence<OAuthConsumer>
 	* @param serviceName the service name
 	* @return the o auth consumer that was removed
 	*/
-	public OAuthConsumer removeByG_S(java.lang.String gadgetKey,
-		java.lang.String serviceName) throws NoSuchOAuthConsumerException;
+	public OAuthConsumer removeByG_S(String gadgetKey, String serviceName)
+		throws NoSuchOAuthConsumerException;
 
 	/**
 	* Returns the number of o auth consumers where gadgetKey = &#63; and serviceName = &#63;.
@@ -223,8 +221,7 @@ public interface OAuthConsumerPersistence extends BasePersistence<OAuthConsumer>
 	* @param serviceName the service name
 	* @return the number of matching o auth consumers
 	*/
-	public int countByG_S(java.lang.String gadgetKey,
-		java.lang.String serviceName);
+	public int countByG_S(String gadgetKey, String serviceName);
 
 	/**
 	* Caches the o auth consumer in the entity cache if it is enabled.

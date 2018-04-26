@@ -215,7 +215,7 @@ public class DDMFormInstanceRecordLocalServiceUtil {
 	* @return the matching ddm form instance record, or <code>null</code> if a matching ddm form instance record could not be found
 	*/
 	public static com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecord fetchDDMFormInstanceRecordByUuidAndGroupId(
-		java.lang.String uuid, long groupId) {
+		String uuid, long groupId) {
 		return getService()
 				   .fetchDDMFormInstanceRecordByUuidAndGroupId(uuid, groupId);
 	}
@@ -251,7 +251,7 @@ public class DDMFormInstanceRecordLocalServiceUtil {
 	* @throws PortalException if a matching ddm form instance record could not be found
 	*/
 	public static com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecord getDDMFormInstanceRecordByUuidAndGroupId(
-		java.lang.String uuid, long groupId)
+		String uuid, long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .getDDMFormInstanceRecordByUuidAndGroupId(uuid, groupId);
@@ -281,7 +281,7 @@ public class DDMFormInstanceRecordLocalServiceUtil {
 	* @return the matching ddm form instance records, or an empty list if no matches were found
 	*/
 	public static java.util.List<com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecord> getDDMFormInstanceRecordsByUuidAndCompanyId(
-		java.lang.String uuid, long companyId) {
+		String uuid, long companyId) {
 		return getService()
 				   .getDDMFormInstanceRecordsByUuidAndCompanyId(uuid, companyId);
 	}
@@ -297,7 +297,7 @@ public class DDMFormInstanceRecordLocalServiceUtil {
 	* @return the range of matching ddm form instance records, or an empty list if no matches were found
 	*/
 	public static java.util.List<com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecord> getDDMFormInstanceRecordsByUuidAndCompanyId(
-		java.lang.String uuid, long companyId, int start, int end,
+		String uuid, long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecord> orderByComparator) {
 		return getService()
 				   .getDDMFormInstanceRecordsByUuidAndCompanyId(uuid,
@@ -376,7 +376,7 @@ public class DDMFormInstanceRecordLocalServiceUtil {
 	*
 	* @return the OSGi service identifier
 	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
+	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 
@@ -387,7 +387,7 @@ public class DDMFormInstanceRecordLocalServiceUtil {
 	}
 
 	public static void revertFormInstanceRecord(long userId,
-		long ddmFormInstanceRecordId, java.lang.String version,
+		long ddmFormInstanceRecordId, String version,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService()

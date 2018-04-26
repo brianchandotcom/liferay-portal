@@ -72,9 +72,9 @@ public class DLAppServiceUtil {
 	* @return the file entry
 	*/
 	public static com.liferay.portal.kernel.repository.model.FileEntry addFileEntry(
-		long repositoryId, long folderId, java.lang.String sourceFileName,
-		java.lang.String mimeType, java.lang.String title,
-		java.lang.String description, java.lang.String changeLog, byte[] bytes,
+		long repositoryId, long folderId, String sourceFileName,
+		String mimeType, String title, String description, String changeLog,
+		byte[] bytes,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
@@ -113,9 +113,8 @@ public class DLAppServiceUtil {
 	* @return the file entry
 	*/
 	public static com.liferay.portal.kernel.repository.model.FileEntry addFileEntry(
-		long repositoryId, long folderId, java.lang.String sourceFileName,
-		java.lang.String mimeType, java.lang.String title,
-		java.lang.String description, java.lang.String changeLog,
+		long repositoryId, long folderId, String sourceFileName,
+		String mimeType, String title, String description, String changeLog,
 		java.io.File file,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -156,9 +155,8 @@ public class DLAppServiceUtil {
 	* @return the file entry
 	*/
 	public static com.liferay.portal.kernel.repository.model.FileEntry addFileEntry(
-		long repositoryId, long folderId, java.lang.String sourceFileName,
-		java.lang.String mimeType, java.lang.String title,
-		java.lang.String description, java.lang.String changeLog,
+		long repositoryId, long folderId, String sourceFileName,
+		String mimeType, String title, String description, String changeLog,
 		java.io.InputStream is, long size,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -201,8 +199,8 @@ public class DLAppServiceUtil {
 	* @return the folder
 	*/
 	public static com.liferay.portal.kernel.repository.model.Folder addFolder(
-		long repositoryId, long parentFolderId, java.lang.String name,
-		java.lang.String description,
+		long repositoryId, long parentFolderId, String name,
+		String description,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
@@ -230,8 +228,8 @@ public class DLAppServiceUtil {
 	* @see TempFileEntryUtil
 	*/
 	public static com.liferay.portal.kernel.repository.model.FileEntry addTempFileEntry(
-		long groupId, long folderId, java.lang.String folderName,
-		java.lang.String fileName, java.io.File file, java.lang.String mimeType)
+		long groupId, long folderId, String folderName, String fileName,
+		java.io.File file, String mimeType)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addTempFileEntry(groupId, folderId, folderName, fileName,
@@ -259,9 +257,8 @@ public class DLAppServiceUtil {
 	* @see TempFileEntryUtil
 	*/
 	public static com.liferay.portal.kernel.repository.model.FileEntry addTempFileEntry(
-		long groupId, long folderId, java.lang.String folderName,
-		java.lang.String fileName, java.io.InputStream inputStream,
-		java.lang.String mimeType)
+		long groupId, long folderId, String folderName, String fileName,
+		java.io.InputStream inputStream, String mimeType)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addTempFileEntry(groupId, folderId, folderName, fileName,
@@ -316,7 +313,7 @@ public class DLAppServiceUtil {
 	* @see #checkOutFileEntry(long, ServiceContext)
 	*/
 	public static void checkInFileEntry(long fileEntryId, boolean majorVersion,
-		java.lang.String changeLog,
+		String changeLog,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService()
@@ -346,8 +343,7 @@ public class DLAppServiceUtil {
 	* @see #cancelCheckOut(long)
 	* @see #checkOutFileEntry(long, String, long, ServiceContext)
 	*/
-	public static void checkInFileEntry(long fileEntryId,
-		java.lang.String lockUuid,
+	public static void checkInFileEntry(long fileEntryId, String lockUuid,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().checkInFileEntry(fileEntryId, lockUuid, serviceContext);
@@ -404,7 +400,7 @@ public class DLAppServiceUtil {
 	* @see #checkInFileEntry(long, String)
 	*/
 	public static com.liferay.portal.kernel.repository.model.FileEntry checkOutFileEntry(
-		long fileEntryId, java.lang.String owner, long expirationTime,
+		long fileEntryId, String owner, long expirationTime,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
@@ -425,7 +421,7 @@ public class DLAppServiceUtil {
 	*/
 	public static com.liferay.portal.kernel.repository.model.Folder copyFolder(
 		long repositoryId, long sourceFolderId, long parentFolderId,
-		java.lang.String name, java.lang.String description,
+		String name, String description,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
@@ -451,7 +447,7 @@ public class DLAppServiceUtil {
 	* @param title the file entry's title
 	*/
 	public static void deleteFileEntryByTitle(long repositoryId, long folderId,
-		java.lang.String title)
+		String title)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().deleteFileEntryByTitle(repositoryId, folderId, title);
 	}
@@ -475,8 +471,7 @@ public class DLAppServiceUtil {
 	* @param fileEntryId the primary key of the file entry
 	* @param version the version label of the file version
 	*/
-	public static void deleteFileVersion(long fileEntryId,
-		java.lang.String version)
+	public static void deleteFileVersion(long fileEntryId, String version)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().deleteFileVersion(fileEntryId, version);
 	}
@@ -501,8 +496,7 @@ public class DLAppServiceUtil {
 	* @param name the folder's name
 	*/
 	public static void deleteFolder(long repositoryId, long parentFolderId,
-		java.lang.String name)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		String name) throws com.liferay.portal.kernel.exception.PortalException {
 		getService().deleteFolder(repositoryId, parentFolderId, name);
 	}
 
@@ -517,7 +511,7 @@ public class DLAppServiceUtil {
 	* @see TempFileEntryUtil
 	*/
 	public static void deleteTempFileEntry(long groupId, long folderId,
-		java.lang.String folderName, java.lang.String fileName)
+		String folderName, String fileName)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().deleteTempFileEntry(groupId, folderId, folderName, fileName);
 	}
@@ -647,14 +641,14 @@ public class DLAppServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.portal.kernel.repository.model.FileEntry> getFileEntries(
-		long repositoryId, long folderId, java.lang.String[] mimeTypes)
+		long repositoryId, long folderId, String[] mimeTypes)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getFileEntries(repositoryId, folderId, mimeTypes);
 	}
 
 	public static java.util.List<com.liferay.portal.kernel.repository.model.FileEntry> getFileEntries(
-		long repositoryId, long folderId, java.lang.String[] mimeTypes,
-		int start, int end,
+		long repositoryId, long folderId, String[] mimeTypes, int start,
+		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.kernel.repository.model.FileEntry> obc)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
@@ -681,7 +675,7 @@ public class DLAppServiceUtil {
 	* @param end the upper bound of the range of results (not inclusive)
 	* @return the range of file entries and shortcuts in the folder
 	*/
-	public static java.util.List<java.lang.Object> getFileEntriesAndFileShortcuts(
+	public static java.util.List<Object> getFileEntriesAndFileShortcuts(
 		long repositoryId, long folderId, int status, int start, int end)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
@@ -715,7 +709,7 @@ public class DLAppServiceUtil {
 	* @return the number of file entries and shortcuts in the folder
 	*/
 	public static int getFileEntriesAndFileShortcutsCount(long repositoryId,
-		long folderId, int status, java.lang.String[] mimeTypes)
+		long folderId, int status, String[] mimeTypes)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .getFileEntriesAndFileShortcutsCount(repositoryId, folderId,
@@ -751,7 +745,7 @@ public class DLAppServiceUtil {
 	}
 
 	public static int getFileEntriesCount(long repositoryId, long folderId,
-		java.lang.String[] mimeTypes)
+		String[] mimeTypes)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .getFileEntriesCount(repositoryId, folderId, mimeTypes);
@@ -778,7 +772,7 @@ public class DLAppServiceUtil {
 	* @return the file entry with the title in the folder
 	*/
 	public static com.liferay.portal.kernel.repository.model.FileEntry getFileEntry(
-		long groupId, long folderId, java.lang.String title)
+		long groupId, long folderId, String title)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getFileEntry(groupId, folderId, title);
 	}
@@ -791,7 +785,7 @@ public class DLAppServiceUtil {
 	* @return the file entry with the UUID and group
 	*/
 	public static com.liferay.portal.kernel.repository.model.FileEntry getFileEntryByUuidAndGroupId(
-		java.lang.String uuid, long groupId)
+		String uuid, long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getFileEntryByUuidAndGroupId(uuid, groupId);
 	}
@@ -842,7 +836,7 @@ public class DLAppServiceUtil {
 	* @return the folder with the name in the parent folder
 	*/
 	public static com.liferay.portal.kernel.repository.model.Folder getFolder(
-		long repositoryId, long parentFolderId, java.lang.String name)
+		long repositoryId, long parentFolderId, String name)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getFolder(repositoryId, parentFolderId, name);
 	}
@@ -1057,7 +1051,7 @@ public class DLAppServiceUtil {
 	* @return the name-ordered range of immediate subfolders, file entries, and
 	file shortcuts in the parent folder
 	*/
-	public static java.util.List<java.lang.Object> getFoldersAndFileEntriesAndFileShortcuts(
+	public static java.util.List<Object> getFoldersAndFileEntriesAndFileShortcuts(
 		long repositoryId, long folderId, int status,
 		boolean includeMountFolders, int start, int end)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -1092,7 +1086,7 @@ public class DLAppServiceUtil {
 	shortcuts in the parent folder ordered by comparator
 	<code>obc</code>
 	*/
-	public static java.util.List<java.lang.Object> getFoldersAndFileEntriesAndFileShortcuts(
+	public static java.util.List<Object> getFoldersAndFileEntriesAndFileShortcuts(
 		long repositoryId, long folderId, int status,
 		boolean includeMountFolders, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<?> obc)
@@ -1102,10 +1096,9 @@ public class DLAppServiceUtil {
 			folderId, status, includeMountFolders, start, end, obc);
 	}
 
-	public static java.util.List<java.lang.Object> getFoldersAndFileEntriesAndFileShortcuts(
-		long repositoryId, long folderId, int status,
-		java.lang.String[] mimeTypes, boolean includeMountFolders,
-		boolean includeOwner, int start, int end,
+	public static java.util.List<Object> getFoldersAndFileEntriesAndFileShortcuts(
+		long repositoryId, long folderId, int status, String[] mimeTypes,
+		boolean includeMountFolders, boolean includeOwner, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<?> obc)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
@@ -1114,10 +1107,10 @@ public class DLAppServiceUtil {
 			start, end, obc);
 	}
 
-	public static java.util.List<java.lang.Object> getFoldersAndFileEntriesAndFileShortcuts(
-		long repositoryId, long folderId, int status,
-		java.lang.String[] mimeTypes, boolean includeMountFolders, int start,
-		int end, com.liferay.portal.kernel.util.OrderByComparator<?> obc)
+	public static java.util.List<Object> getFoldersAndFileEntriesAndFileShortcuts(
+		long repositoryId, long folderId, int status, String[] mimeTypes,
+		boolean includeMountFolders, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<?> obc)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .getFoldersAndFileEntriesAndFileShortcuts(repositoryId,
@@ -1146,8 +1139,8 @@ public class DLAppServiceUtil {
 	}
 
 	public static int getFoldersAndFileEntriesAndFileShortcutsCount(
-		long repositoryId, long folderId, int status,
-		java.lang.String[] mimeTypes, boolean includeMountFolders)
+		long repositoryId, long folderId, int status, String[] mimeTypes,
+		boolean includeMountFolders)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .getFoldersAndFileEntriesAndFileShortcutsCount(repositoryId,
@@ -1155,9 +1148,8 @@ public class DLAppServiceUtil {
 	}
 
 	public static int getFoldersAndFileEntriesAndFileShortcutsCount(
-		long repositoryId, long folderId, int status,
-		java.lang.String[] mimeTypes, boolean includeMountFolders,
-		boolean includeOwner)
+		long repositoryId, long folderId, int status, String[] mimeTypes,
+		boolean includeMountFolders, boolean includeOwner)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .getFoldersAndFileEntriesAndFileShortcutsCount(repositoryId,
@@ -1225,7 +1217,7 @@ public class DLAppServiceUtil {
 	folders
 	*/
 	public static int getFoldersFileEntriesCount(long repositoryId,
-		java.util.List<java.lang.Long> folderIds, int status)
+		java.util.List<Long> folderIds, int status)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .getFoldersFileEntriesCount(repositoryId, folderIds, status);
@@ -1361,8 +1353,8 @@ public class DLAppServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.portal.kernel.repository.model.FileEntry> getGroupFileEntries(
-		long groupId, long userId, long rootFolderId,
-		java.lang.String[] mimeTypes, int status, int start, int end,
+		long groupId, long userId, long rootFolderId, String[] mimeTypes,
+		int status, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.kernel.repository.model.FileEntry> obc)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
@@ -1407,7 +1399,7 @@ public class DLAppServiceUtil {
 	}
 
 	public static int getGroupFileEntriesCount(long groupId, long userId,
-		long rootFolderId, java.lang.String[] mimeTypes, int status)
+		long rootFolderId, String[] mimeTypes, int status)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .getGroupFileEntriesCount(groupId, userId, rootFolderId,
@@ -1512,12 +1504,12 @@ public class DLAppServiceUtil {
 	*
 	* @return the OSGi service identifier
 	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
+	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 
 	public static void getSubfolderIds(long repositoryId,
-		java.util.List<java.lang.Long> folderIds, long folderId)
+		java.util.List<Long> folderIds, long folderId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().getSubfolderIds(repositoryId, folderIds, folderId);
 	}
@@ -1529,8 +1521,8 @@ public class DLAppServiceUtil {
 	* @param folderId the primary key of the folder
 	* @return the descendant folders of the folder with the primary key
 	*/
-	public static java.util.List<java.lang.Long> getSubfolderIds(
-		long repositoryId, long folderId)
+	public static java.util.List<Long> getSubfolderIds(long repositoryId,
+		long folderId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getSubfolderIds(repositoryId, folderId);
 	}
@@ -1544,8 +1536,8 @@ public class DLAppServiceUtil {
 	* @param recurse whether to recurse through each subfolder
 	* @return the descendant folders of the folder with the primary key
 	*/
-	public static java.util.List<java.lang.Long> getSubfolderIds(
-		long repositoryId, long folderId, boolean recurse)
+	public static java.util.List<Long> getSubfolderIds(long repositoryId,
+		long folderId, boolean recurse)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getSubfolderIds(repositoryId, folderId, recurse);
 	}
@@ -1561,8 +1553,8 @@ public class DLAppServiceUtil {
 	* @see #addTempFileEntry(long, long, String, String, File, String)
 	* @see TempFileEntryUtil
 	*/
-	public static java.lang.String[] getTempFileNames(long groupId,
-		long folderId, java.lang.String folderName)
+	public static String[] getTempFileNames(long groupId, long folderId,
+		String folderName)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getTempFileNames(groupId, folderId, folderName);
 	}
@@ -1594,8 +1586,8 @@ public class DLAppServiceUtil {
 	* @return the lock object
 	*/
 	public static com.liferay.portal.kernel.lock.Lock lockFolder(
-		long repositoryId, long folderId, java.lang.String owner,
-		boolean inheritable, long expirationTime)
+		long repositoryId, long folderId, String owner, boolean inheritable,
+		long expirationTime)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .lockFolder(repositoryId, folderId, owner, inheritable,
@@ -1645,7 +1637,7 @@ public class DLAppServiceUtil {
 	* @return the lock object
 	*/
 	public static com.liferay.portal.kernel.lock.Lock refreshFileEntryLock(
-		java.lang.String lockUuid, long companyId, long expirationTime)
+		String lockUuid, long companyId, long expirationTime)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .refreshFileEntryLock(lockUuid, companyId, expirationTime);
@@ -1663,7 +1655,7 @@ public class DLAppServiceUtil {
 	* @return the lock object
 	*/
 	public static com.liferay.portal.kernel.lock.Lock refreshFolderLock(
-		java.lang.String lockUuid, long companyId, long expirationTime)
+		String lockUuid, long companyId, long expirationTime)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .refreshFolderLock(lockUuid, companyId, expirationTime);
@@ -1677,8 +1669,7 @@ public class DLAppServiceUtil {
 	* @param version the version to revert back to
 	* @param serviceContext the service context to be applied
 	*/
-	public static void revertFileEntry(long fileEntryId,
-		java.lang.String version,
+	public static void revertFileEntry(long fileEntryId, String version,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().revertFileEntry(fileEntryId, version, serviceContext);
@@ -1693,7 +1684,7 @@ public class DLAppServiceUtil {
 
 	public static com.liferay.portal.kernel.search.Hits search(
 		long repositoryId, long creatorUserId, long folderId,
-		java.lang.String[] mimeTypes, int status, int start, int end)
+		String[] mimeTypes, int status, int start, int end)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .search(repositoryId, creatorUserId, folderId, mimeTypes,
@@ -1747,7 +1738,7 @@ public class DLAppServiceUtil {
 	* @param lockUuid the lock's UUID
 	*/
 	public static void unlockFolder(long repositoryId, long folderId,
-		java.lang.String lockUuid)
+		String lockUuid)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().unlockFolder(repositoryId, folderId, lockUuid);
 	}
@@ -1761,7 +1752,7 @@ public class DLAppServiceUtil {
 	* @param lockUuid the lock's UUID
 	*/
 	public static void unlockFolder(long repositoryId, long parentFolderId,
-		java.lang.String name, java.lang.String lockUuid)
+		String name, String lockUuid)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().unlockFolder(repositoryId, parentFolderId, name, lockUuid);
 	}
@@ -1825,10 +1816,9 @@ public class DLAppServiceUtil {
 	* @return the file entry
 	*/
 	public static com.liferay.portal.kernel.repository.model.FileEntry updateFileEntry(
-		long fileEntryId, java.lang.String sourceFileName,
-		java.lang.String mimeType, java.lang.String title,
-		java.lang.String description, java.lang.String changeLog,
-		boolean majorVersion, byte[] bytes,
+		long fileEntryId, String sourceFileName, String mimeType, String title,
+		String description, String changeLog, boolean majorVersion,
+		byte[] bytes,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
@@ -1870,10 +1860,9 @@ public class DLAppServiceUtil {
 	* @return the file entry
 	*/
 	public static com.liferay.portal.kernel.repository.model.FileEntry updateFileEntry(
-		long fileEntryId, java.lang.String sourceFileName,
-		java.lang.String mimeType, java.lang.String title,
-		java.lang.String description, java.lang.String changeLog,
-		boolean majorVersion, java.io.File file,
+		long fileEntryId, String sourceFileName, String mimeType, String title,
+		String description, String changeLog, boolean majorVersion,
+		java.io.File file,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
@@ -1916,10 +1905,9 @@ public class DLAppServiceUtil {
 	* @return the file entry
 	*/
 	public static com.liferay.portal.kernel.repository.model.FileEntry updateFileEntry(
-		long fileEntryId, java.lang.String sourceFileName,
-		java.lang.String mimeType, java.lang.String title,
-		java.lang.String description, java.lang.String changeLog,
-		boolean majorVersion, java.io.InputStream is, long size,
+		long fileEntryId, String sourceFileName, String mimeType, String title,
+		String description, String changeLog, boolean majorVersion,
+		java.io.InputStream is, long size,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
@@ -1929,10 +1917,9 @@ public class DLAppServiceUtil {
 	}
 
 	public static com.liferay.portal.kernel.repository.model.FileEntry updateFileEntryAndCheckIn(
-		long fileEntryId, java.lang.String sourceFileName,
-		java.lang.String mimeType, java.lang.String title,
-		java.lang.String description, java.lang.String changeLog,
-		boolean majorVersion, java.io.File file,
+		long fileEntryId, String sourceFileName, String mimeType, String title,
+		String description, String changeLog, boolean majorVersion,
+		java.io.File file,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
@@ -1942,10 +1929,9 @@ public class DLAppServiceUtil {
 	}
 
 	public static com.liferay.portal.kernel.repository.model.FileEntry updateFileEntryAndCheckIn(
-		long fileEntryId, java.lang.String sourceFileName,
-		java.lang.String mimeType, java.lang.String title,
-		java.lang.String description, java.lang.String changeLog,
-		boolean majorVersion, java.io.InputStream is, long size,
+		long fileEntryId, String sourceFileName, String mimeType, String title,
+		String description, String changeLog, boolean majorVersion,
+		java.io.InputStream is, long size,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
@@ -1996,7 +1982,7 @@ public class DLAppServiceUtil {
 	* @return the folder
 	*/
 	public static com.liferay.portal.kernel.repository.model.Folder updateFolder(
-		long folderId, java.lang.String name, java.lang.String description,
+		long folderId, String name, String description,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
@@ -2014,14 +2000,14 @@ public class DLAppServiceUtil {
 	<code>false</code> otherwise
 	*/
 	public static boolean verifyFileEntryCheckOut(long repositoryId,
-		long fileEntryId, java.lang.String lockUuid)
+		long fileEntryId, String lockUuid)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .verifyFileEntryCheckOut(repositoryId, fileEntryId, lockUuid);
 	}
 
 	public static boolean verifyFileEntryLock(long repositoryId,
-		long fileEntryId, java.lang.String lockUuid)
+		long fileEntryId, String lockUuid)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .verifyFileEntryLock(repositoryId, fileEntryId, lockUuid);
@@ -2038,7 +2024,7 @@ public class DLAppServiceUtil {
 	<code>false</code> otherwise
 	*/
 	public static boolean verifyInheritableLock(long repositoryId,
-		long folderId, java.lang.String lockUuid)
+		long folderId, String lockUuid)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .verifyInheritableLock(repositoryId, folderId, lockUuid);

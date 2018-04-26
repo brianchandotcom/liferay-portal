@@ -52,8 +52,8 @@ public class PluginSettingLocalServiceUtil {
 		return getService().addPluginSetting(pluginSetting);
 	}
 
-	public static void checkPermission(long userId, java.lang.String pluginId,
-		java.lang.String pluginType)
+	public static void checkPermission(long userId, String pluginId,
+		String pluginType)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().checkPermission(userId, pluginId, pluginType);
 	}
@@ -202,7 +202,7 @@ public class PluginSettingLocalServiceUtil {
 	*
 	* @return the OSGi service identifier
 	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
+	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 
@@ -226,7 +226,7 @@ public class PluginSettingLocalServiceUtil {
 	}
 
 	public static com.liferay.portal.kernel.model.PluginSetting getPluginSetting(
-		long companyId, java.lang.String pluginId, java.lang.String pluginType) {
+		long companyId, String pluginId, String pluginType) {
 		return getService().getPluginSetting(companyId, pluginId, pluginType);
 	}
 
@@ -255,14 +255,14 @@ public class PluginSettingLocalServiceUtil {
 		return getService().getPluginSettingsCount();
 	}
 
-	public static boolean hasPermission(long userId, java.lang.String pluginId,
-		java.lang.String pluginType) {
+	public static boolean hasPermission(long userId, String pluginId,
+		String pluginType) {
 		return getService().hasPermission(userId, pluginId, pluginType);
 	}
 
 	public static com.liferay.portal.kernel.model.PluginSetting updatePluginSetting(
-		long companyId, java.lang.String pluginId, java.lang.String pluginType,
-		java.lang.String roles, boolean active) {
+		long companyId, String pluginId, String pluginType, String roles,
+		boolean active) {
 		return getService()
 				   .updatePluginSetting(companyId, pluginId, pluginType, roles,
 			active);

@@ -43,8 +43,8 @@ public class BookmarksEntryServiceUtil {
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.bookmarks.service.impl.BookmarksEntryServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static com.liferay.bookmarks.model.BookmarksEntry addEntry(
-		long groupId, long folderId, java.lang.String name,
-		java.lang.String url, java.lang.String description,
+		long groupId, long folderId, String name, String url,
+		String description,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
@@ -84,7 +84,7 @@ public class BookmarksEntryServiceUtil {
 	}
 
 	public static int getFoldersEntriesCount(long groupId,
-		java.util.List<java.lang.Long> folderIds) {
+		java.util.List<Long> folderIds) {
 		return getService().getFoldersEntriesCount(groupId, folderIds);
 	}
 
@@ -128,7 +128,7 @@ public class BookmarksEntryServiceUtil {
 	*
 	* @return the OSGi service identifier
 	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
+	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 
@@ -184,8 +184,8 @@ public class BookmarksEntryServiceUtil {
 	}
 
 	public static com.liferay.bookmarks.model.BookmarksEntry updateEntry(
-		long entryId, long groupId, long folderId, java.lang.String name,
-		java.lang.String url, java.lang.String description,
+		long entryId, long groupId, long folderId, String name, String url,
+		String description,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()

@@ -60,8 +60,8 @@ public class PermissionServiceSoap {
 	* @param name the service name
 	* @param primKey the primary key of the service
 	*/
-	public static void checkPermission(long groupId, java.lang.String name,
-		long primKey) throws RemoteException {
+	public static void checkPermission(long groupId, String name, long primKey)
+		throws RemoteException {
 		try {
 			PermissionServiceUtil.checkPermission(groupId, name, primKey);
 		}
@@ -79,8 +79,8 @@ public class PermissionServiceSoap {
 	* @param name the service name
 	* @param primKey the primary key of the service
 	*/
-	public static void checkPermission(long groupId, java.lang.String name,
-		java.lang.String primKey) throws RemoteException {
+	public static void checkPermission(long groupId, String name, String primKey)
+		throws RemoteException {
 		try {
 			PermissionServiceUtil.checkPermission(groupId, name, primKey);
 		}

@@ -41,7 +41,7 @@ public class MembershipRequestLocalServiceUtil {
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.portal.service.impl.MembershipRequestLocalServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static com.liferay.portal.kernel.model.MembershipRequest addMembershipRequest(
-		long userId, long groupId, java.lang.String comments,
+		long userId, long groupId, String comments,
 		ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
@@ -255,7 +255,7 @@ public class MembershipRequestLocalServiceUtil {
 	*
 	* @return the OSGi service identifier
 	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
+	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 
@@ -297,8 +297,8 @@ public class MembershipRequestLocalServiceUtil {
 	}
 
 	public static void updateStatus(long replierUserId,
-		long membershipRequestId, java.lang.String replyComments,
-		long statusId, boolean addUserToGroup, ServiceContext serviceContext)
+		long membershipRequestId, String replyComments, long statusId,
+		boolean addUserToGroup, ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService()
 			.updateStatus(replierUserId, membershipRequestId, replyComments,

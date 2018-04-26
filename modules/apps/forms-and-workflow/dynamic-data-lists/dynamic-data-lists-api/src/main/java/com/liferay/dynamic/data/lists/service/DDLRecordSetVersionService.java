@@ -64,7 +64,7 @@ public interface DDLRecordSetVersionService extends BaseService {
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public DDLRecordSetVersion getRecordSetVersion(long recordSetVersionId)

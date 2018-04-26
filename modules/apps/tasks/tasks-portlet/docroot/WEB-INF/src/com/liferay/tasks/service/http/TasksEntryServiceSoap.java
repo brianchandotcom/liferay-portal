@@ -66,9 +66,9 @@ import java.rmi.RemoteException;
 @ProviderType
 public class TasksEntryServiceSoap {
 	public static com.liferay.tasks.model.TasksEntrySoap addTasksEntry(
-		java.lang.String title, int priority, long assigneeUserId,
-		int dueDateMonth, int dueDateDay, int dueDateYear, int dueDateHour,
-		int dueDateMinute, boolean neverDue,
+		String title, int priority, long assigneeUserId, int dueDateMonth,
+		int dueDateDay, int dueDateYear, int dueDateHour, int dueDateMinute,
+		boolean neverDue,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
@@ -115,10 +115,9 @@ public class TasksEntryServiceSoap {
 	}
 
 	public static com.liferay.tasks.model.TasksEntrySoap updateTasksEntry(
-		long tasksEntryId, java.lang.String title, int priority,
-		long assigneeUserId, long resolverUserId, int dueDateMonth,
-		int dueDateDay, int dueDateYear, int dueDateHour, int dueDateMinute,
-		boolean neverDue, int status,
+		long tasksEntryId, String title, int priority, long assigneeUserId,
+		long resolverUserId, int dueDateMonth, int dueDateDay, int dueDateYear,
+		int dueDateHour, int dueDateMinute, boolean neverDue, int status,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {

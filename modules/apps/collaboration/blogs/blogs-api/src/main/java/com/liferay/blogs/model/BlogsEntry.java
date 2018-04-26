@@ -54,7 +54,7 @@ public interface BlogsEntry extends BlogsEntryModel, PersistedModel {
 			}
 		};
 
-	public java.lang.String getCoverImageURL(
+	public String getCoverImageURL(
 		com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
@@ -62,18 +62,18 @@ public interface BlogsEntry extends BlogsEntryModel, PersistedModel {
 	* @deprecated As of 1.1.0, replaced by {@link
 	#getSmallImageURL(ThemeDisplay)}
 	*/
-	@java.lang.Deprecated()
-	public java.lang.String getEntryImageURL(
+	@Deprecated()
+	public String getEntryImageURL(
 		com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay);
 
-	public java.lang.String getSmallImageType()
+	public String getSmallImageType()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
-	public java.lang.String getSmallImageURL(
+	public String getSmallImageURL(
 		com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public boolean isVisible();
 
-	public void setSmallImageType(java.lang.String smallImageType);
+	public void setSmallImageType(String smallImageType);
 }

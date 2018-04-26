@@ -150,7 +150,7 @@ public class PowwowServerWrapper implements PowwowServer,
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new PowwowServerWrapper((PowwowServer)_powwowServer.clone());
 	}
 
@@ -175,7 +175,7 @@ public class PowwowServerWrapper implements PowwowServer,
 	* @return the api key of this powwow server
 	*/
 	@Override
-	public java.lang.String getApiKey() {
+	public String getApiKey() {
 		return _powwowServer.getApiKey();
 	}
 
@@ -220,7 +220,7 @@ public class PowwowServerWrapper implements PowwowServer,
 	* @return the name of this powwow server
 	*/
 	@Override
-	public java.lang.String getName() {
+	public String getName() {
 		return _powwowServer.getName();
 	}
 
@@ -255,7 +255,7 @@ public class PowwowServerWrapper implements PowwowServer,
 	* @return the provider type of this powwow server
 	*/
 	@Override
-	public java.lang.String getProviderType() {
+	public String getProviderType() {
 		return _powwowServer.getProviderType();
 	}
 
@@ -265,7 +265,7 @@ public class PowwowServerWrapper implements PowwowServer,
 	* @return the secret of this powwow server
 	*/
 	@Override
-	public java.lang.String getSecret() {
+	public String getSecret() {
 		return _powwowServer.getSecret();
 	}
 
@@ -275,7 +275,7 @@ public class PowwowServerWrapper implements PowwowServer,
 	* @return the url of this powwow server
 	*/
 	@Override
-	public java.lang.String getUrl() {
+	public String getUrl() {
 		return _powwowServer.getUrl();
 	}
 
@@ -295,7 +295,7 @@ public class PowwowServerWrapper implements PowwowServer,
 	* @return the user name of this powwow server
 	*/
 	@Override
-	public java.lang.String getUserName() {
+	public String getUserName() {
 		return _powwowServer.getUserName();
 	}
 
@@ -305,7 +305,7 @@ public class PowwowServerWrapper implements PowwowServer,
 	* @return the user uuid of this powwow server
 	*/
 	@Override
-	public java.lang.String getUserUuid() {
+	public String getUserUuid() {
 		return _powwowServer.getUserUuid();
 	}
 
@@ -360,7 +360,7 @@ public class PowwowServerWrapper implements PowwowServer,
 	* @param apiKey the api key of this powwow server
 	*/
 	@Override
-	public void setApiKey(java.lang.String apiKey) {
+	public void setApiKey(String apiKey) {
 		_powwowServer.setApiKey(apiKey);
 	}
 
@@ -421,7 +421,7 @@ public class PowwowServerWrapper implements PowwowServer,
 	* @param name the name of this powwow server
 	*/
 	@Override
-	public void setName(java.lang.String name) {
+	public void setName(String name) {
 		_powwowServer.setName(name);
 	}
 
@@ -461,7 +461,7 @@ public class PowwowServerWrapper implements PowwowServer,
 	* @param providerType the provider type of this powwow server
 	*/
 	@Override
-	public void setProviderType(java.lang.String providerType) {
+	public void setProviderType(String providerType) {
 		_powwowServer.setProviderType(providerType);
 	}
 
@@ -471,7 +471,7 @@ public class PowwowServerWrapper implements PowwowServer,
 	* @param secret the secret of this powwow server
 	*/
 	@Override
-	public void setSecret(java.lang.String secret) {
+	public void setSecret(String secret) {
 		_powwowServer.setSecret(secret);
 	}
 
@@ -481,7 +481,7 @@ public class PowwowServerWrapper implements PowwowServer,
 	* @param url the url of this powwow server
 	*/
 	@Override
-	public void setUrl(java.lang.String url) {
+	public void setUrl(String url) {
 		_powwowServer.setUrl(url);
 	}
 
@@ -501,7 +501,7 @@ public class PowwowServerWrapper implements PowwowServer,
 	* @param userName the user name of this powwow server
 	*/
 	@Override
-	public void setUserName(java.lang.String userName) {
+	public void setUserName(String userName) {
 		_powwowServer.setUserName(userName);
 	}
 
@@ -511,7 +511,7 @@ public class PowwowServerWrapper implements PowwowServer,
 	* @param userUuid the user uuid of this powwow server
 	*/
 	@Override
-	public void setUserUuid(java.lang.String userUuid) {
+	public void setUserUuid(String userUuid) {
 		_powwowServer.setUserUuid(userUuid);
 	}
 
@@ -526,7 +526,7 @@ public class PowwowServerWrapper implements PowwowServer,
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _powwowServer.toString();
 	}
 
@@ -536,7 +536,7 @@ public class PowwowServerWrapper implements PowwowServer,
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _powwowServer.toXmlString();
 	}
 

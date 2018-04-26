@@ -196,7 +196,7 @@ public class SocialActivityAchievementLocalServiceWrapper
 
 	@Override
 	public com.liferay.social.kernel.model.SocialActivityAchievement fetchUserAchievement(
-		long userId, long groupId, java.lang.String name) {
+		long userId, long groupId, String name) {
 		return _socialActivityAchievementLocalService.fetchUserAchievement(userId,
 			groupId, name);
 	}
@@ -214,7 +214,7 @@ public class SocialActivityAchievementLocalServiceWrapper
 
 	@Override
 	public java.util.List<com.liferay.social.kernel.model.SocialActivityAchievement> getGroupAchievements(
-		long groupId, java.lang.String name) {
+		long groupId, String name) {
 		return _socialActivityAchievementLocalService.getGroupAchievements(groupId,
 			name);
 	}
@@ -225,7 +225,7 @@ public class SocialActivityAchievementLocalServiceWrapper
 	}
 
 	@Override
-	public int getGroupAchievementsCount(long groupId, java.lang.String name) {
+	public int getGroupAchievementsCount(long groupId, String name) {
 		return _socialActivityAchievementLocalService.getGroupAchievementsCount(groupId,
 			name);
 	}
@@ -252,7 +252,7 @@ public class SocialActivityAchievementLocalServiceWrapper
 	* @return the OSGi service identifier
 	*/
 	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
+	public String getOSGiServiceIdentifier() {
 		return _socialActivityAchievementLocalService.getOSGiServiceIdentifier();
 	}
 

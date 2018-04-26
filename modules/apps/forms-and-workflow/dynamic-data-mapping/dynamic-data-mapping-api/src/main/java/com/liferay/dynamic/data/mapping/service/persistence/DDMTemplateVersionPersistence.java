@@ -181,8 +181,8 @@ public interface DDMTemplateVersionPersistence extends BasePersistence<DDMTempla
 	* @return the matching ddm template version
 	* @throws NoSuchTemplateVersionException if a matching ddm template version could not be found
 	*/
-	public DDMTemplateVersion findByT_V(long templateId,
-		java.lang.String version) throws NoSuchTemplateVersionException;
+	public DDMTemplateVersion findByT_V(long templateId, String version)
+		throws NoSuchTemplateVersionException;
 
 	/**
 	* Returns the ddm template version where templateId = &#63; and version = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
@@ -191,8 +191,7 @@ public interface DDMTemplateVersionPersistence extends BasePersistence<DDMTempla
 	* @param version the version
 	* @return the matching ddm template version, or <code>null</code> if a matching ddm template version could not be found
 	*/
-	public DDMTemplateVersion fetchByT_V(long templateId,
-		java.lang.String version);
+	public DDMTemplateVersion fetchByT_V(long templateId, String version);
 
 	/**
 	* Returns the ddm template version where templateId = &#63; and version = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -202,8 +201,8 @@ public interface DDMTemplateVersionPersistence extends BasePersistence<DDMTempla
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching ddm template version, or <code>null</code> if a matching ddm template version could not be found
 	*/
-	public DDMTemplateVersion fetchByT_V(long templateId,
-		java.lang.String version, boolean retrieveFromCache);
+	public DDMTemplateVersion fetchByT_V(long templateId, String version,
+		boolean retrieveFromCache);
 
 	/**
 	* Removes the ddm template version where templateId = &#63; and version = &#63; from the database.
@@ -212,8 +211,8 @@ public interface DDMTemplateVersionPersistence extends BasePersistence<DDMTempla
 	* @param version the version
 	* @return the ddm template version that was removed
 	*/
-	public DDMTemplateVersion removeByT_V(long templateId,
-		java.lang.String version) throws NoSuchTemplateVersionException;
+	public DDMTemplateVersion removeByT_V(long templateId, String version)
+		throws NoSuchTemplateVersionException;
 
 	/**
 	* Returns the number of ddm template versions where templateId = &#63; and version = &#63;.
@@ -222,7 +221,7 @@ public interface DDMTemplateVersionPersistence extends BasePersistence<DDMTempla
 	* @param version the version
 	* @return the number of matching ddm template versions
 	*/
-	public int countByT_V(long templateId, java.lang.String version);
+	public int countByT_V(long templateId, String version);
 
 	/**
 	* Returns all the ddm template versions where templateId = &#63; and status = &#63;.

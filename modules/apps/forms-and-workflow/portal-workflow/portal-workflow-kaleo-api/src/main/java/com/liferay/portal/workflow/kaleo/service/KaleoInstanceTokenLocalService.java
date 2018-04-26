@@ -75,8 +75,8 @@ public interface KaleoInstanceTokenLocalService extends BaseLocalService,
 
 	public KaleoInstanceToken addKaleoInstanceToken(
 		long parentKaleoInstanceTokenId,
-		Map<java.lang.String, Serializable> workflowContext,
-		ServiceContext serviceContext) throws PortalException;
+		Map<String, Serializable> workflowContext, ServiceContext serviceContext)
+		throws PortalException;
 
 	public KaleoInstanceToken completeKaleoInstanceToken(
 		long kaleoInstanceTokenId) throws PortalException;
@@ -249,7 +249,7 @@ public interface KaleoInstanceTokenLocalService extends BaseLocalService,
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -258,8 +258,8 @@ public interface KaleoInstanceTokenLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public KaleoInstanceToken getRootKaleoInstanceToken(long kaleoInstanceId,
-		Map<java.lang.String, Serializable> workflowContext,
-		ServiceContext serviceContext) throws PortalException;
+		Map<String, Serializable> workflowContext, ServiceContext serviceContext)
+		throws PortalException;
 
 	/**
 	* Updates the kaleo instance token in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.

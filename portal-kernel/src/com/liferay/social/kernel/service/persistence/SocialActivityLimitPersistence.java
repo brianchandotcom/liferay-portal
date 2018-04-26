@@ -463,8 +463,7 @@ public interface SocialActivityLimitPersistence extends BasePersistence<SocialAc
 	*/
 	public SocialActivityLimit findByG_U_C_C_A_A(long groupId, long userId,
 		long classNameId, long classPK, int activityType,
-		java.lang.String activityCounterName)
-		throws NoSuchActivityLimitException;
+		String activityCounterName) throws NoSuchActivityLimitException;
 
 	/**
 	* Returns the social activity limit where groupId = &#63; and userId = &#63; and classNameId = &#63; and classPK = &#63; and activityType = &#63; and activityCounterName = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
@@ -479,7 +478,7 @@ public interface SocialActivityLimitPersistence extends BasePersistence<SocialAc
 	*/
 	public SocialActivityLimit fetchByG_U_C_C_A_A(long groupId, long userId,
 		long classNameId, long classPK, int activityType,
-		java.lang.String activityCounterName);
+		String activityCounterName);
 
 	/**
 	* Returns the social activity limit where groupId = &#63; and userId = &#63; and classNameId = &#63; and classPK = &#63; and activityType = &#63; and activityCounterName = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -495,7 +494,7 @@ public interface SocialActivityLimitPersistence extends BasePersistence<SocialAc
 	*/
 	public SocialActivityLimit fetchByG_U_C_C_A_A(long groupId, long userId,
 		long classNameId, long classPK, int activityType,
-		java.lang.String activityCounterName, boolean retrieveFromCache);
+		String activityCounterName, boolean retrieveFromCache);
 
 	/**
 	* Removes the social activity limit where groupId = &#63; and userId = &#63; and classNameId = &#63; and classPK = &#63; and activityType = &#63; and activityCounterName = &#63; from the database.
@@ -510,8 +509,7 @@ public interface SocialActivityLimitPersistence extends BasePersistence<SocialAc
 	*/
 	public SocialActivityLimit removeByG_U_C_C_A_A(long groupId, long userId,
 		long classNameId, long classPK, int activityType,
-		java.lang.String activityCounterName)
-		throws NoSuchActivityLimitException;
+		String activityCounterName) throws NoSuchActivityLimitException;
 
 	/**
 	* Returns the number of social activity limits where groupId = &#63; and userId = &#63; and classNameId = &#63; and classPK = &#63; and activityType = &#63; and activityCounterName = &#63;.
@@ -525,7 +523,7 @@ public interface SocialActivityLimitPersistence extends BasePersistence<SocialAc
 	* @return the number of matching social activity limits
 	*/
 	public int countByG_U_C_C_A_A(long groupId, long userId, long classNameId,
-		long classPK, int activityType, java.lang.String activityCounterName);
+		long classPK, int activityType, String activityCounterName);
 
 	/**
 	* Caches the social activity limit in the entity cache if it is enabled.

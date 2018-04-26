@@ -78,17 +78,16 @@ public class KBCommentServiceWrapper implements KBCommentService,
 
 	@Override
 	public java.util.List<com.liferay.knowledge.base.model.KBComment> getKBComments(
-		long groupId, java.lang.String className, long classPK, int status,
-		int start, int end)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		long groupId, String className, long classPK, int status, int start,
+		int end) throws com.liferay.portal.kernel.exception.PortalException {
 		return _kbCommentService.getKBComments(groupId, className, classPK,
 			status, start, end);
 	}
 
 	@Override
 	public java.util.List<com.liferay.knowledge.base.model.KBComment> getKBComments(
-		long groupId, java.lang.String className, long classPK, int status,
-		int start, int end,
+		long groupId, String className, long classPK, int status, int start,
+		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.knowledge.base.model.KBComment> obc)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _kbCommentService.getKBComments(groupId, className, classPK,
@@ -97,8 +96,7 @@ public class KBCommentServiceWrapper implements KBCommentService,
 
 	@Override
 	public java.util.List<com.liferay.knowledge.base.model.KBComment> getKBComments(
-		long groupId, java.lang.String className, long classPK, int start,
-		int end,
+		long groupId, String className, long classPK, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.knowledge.base.model.KBComment> obc)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _kbCommentService.getKBComments(groupId, className, classPK,
@@ -118,16 +116,14 @@ public class KBCommentServiceWrapper implements KBCommentService,
 	}
 
 	@Override
-	public int getKBCommentsCount(long groupId, java.lang.String className,
-		long classPK)
+	public int getKBCommentsCount(long groupId, String className, long classPK)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _kbCommentService.getKBCommentsCount(groupId, className, classPK);
 	}
 
 	@Override
-	public int getKBCommentsCount(long groupId, java.lang.String className,
-		long classPK, int status)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public int getKBCommentsCount(long groupId, String className, long classPK,
+		int status) throws com.liferay.portal.kernel.exception.PortalException {
 		return _kbCommentService.getKBCommentsCount(groupId, className,
 			classPK, status);
 	}
@@ -138,14 +134,14 @@ public class KBCommentServiceWrapper implements KBCommentService,
 	* @return the OSGi service identifier
 	*/
 	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
+	public String getOSGiServiceIdentifier() {
 		return _kbCommentService.getOSGiServiceIdentifier();
 	}
 
 	@Override
 	public com.liferay.knowledge.base.model.KBComment updateKBComment(
-		long kbCommentId, long classNameId, long classPK,
-		java.lang.String content, int status,
+		long kbCommentId, long classNameId, long classPK, String content,
+		int status,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _kbCommentService.updateKBComment(kbCommentId, classNameId,
@@ -154,8 +150,7 @@ public class KBCommentServiceWrapper implements KBCommentService,
 
 	@Override
 	public com.liferay.knowledge.base.model.KBComment updateKBComment(
-		long kbCommentId, long classNameId, long classPK,
-		java.lang.String content,
+		long kbCommentId, long classNameId, long classPK, String content,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _kbCommentService.updateKBComment(kbCommentId, classNameId,

@@ -49,8 +49,7 @@ public class StagingLocalServiceWrapper implements StagingLocalService,
 	}
 
 	@Override
-	public long createStagingRequest(long userId, long groupId,
-		java.lang.String checksum)
+	public long createStagingRequest(long userId, long groupId, String checksum)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _stagingLocalService.createStagingRequest(userId, groupId,
 			checksum);
@@ -87,9 +86,8 @@ public class StagingLocalServiceWrapper implements StagingLocalService,
 	public void enableRemoteStaging(long userId,
 		com.liferay.portal.kernel.model.Group stagingGroup,
 		boolean branchingPublic, boolean branchingPrivate,
-		java.lang.String remoteAddress, int remotePort,
-		java.lang.String remotePathContext, boolean secureConnection,
-		long remoteGroupId,
+		String remoteAddress, int remotePort, String remotePathContext,
+		boolean secureConnection, long remoteGroupId,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_stagingLocalService.enableRemoteStaging(userId, stagingGroup,
@@ -103,7 +101,7 @@ public class StagingLocalServiceWrapper implements StagingLocalService,
 	* @return the OSGi service identifier
 	*/
 	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
+	public String getOSGiServiceIdentifier() {
 		return _stagingLocalService.getOSGiServiceIdentifier();
 	}
 
@@ -114,7 +112,7 @@ public class StagingLocalServiceWrapper implements StagingLocalService,
 	@Override
 	public com.liferay.exportimport.kernel.lar.MissingReferences publishStagingRequest(
 		long userId, long stagingRequestId, boolean privateLayout,
-		java.util.Map<java.lang.String, java.lang.String[]> parameterMap)
+		java.util.Map<String, String[]> parameterMap)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _stagingLocalService.publishStagingRequest(userId,
 			stagingRequestId, privateLayout, parameterMap);
@@ -131,7 +129,7 @@ public class StagingLocalServiceWrapper implements StagingLocalService,
 
 	@Override
 	public void updateStagingRequest(long userId, long stagingRequestId,
-		java.lang.String fileName, byte[] bytes)
+		String fileName, byte[] bytes)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_stagingLocalService.updateStagingRequest(userId, stagingRequestId,
 			fileName, bytes);
@@ -145,7 +143,7 @@ public class StagingLocalServiceWrapper implements StagingLocalService,
 	@Override
 	public com.liferay.exportimport.kernel.lar.MissingReferences validateStagingRequest(
 		long userId, long stagingRequestId, boolean privateLayout,
-		java.util.Map<java.lang.String, java.lang.String[]> parameterMap) {
+		java.util.Map<String, String[]> parameterMap) {
 		return _stagingLocalService.validateStagingRequest(userId,
 			stagingRequestId, privateLayout, parameterMap);
 	}

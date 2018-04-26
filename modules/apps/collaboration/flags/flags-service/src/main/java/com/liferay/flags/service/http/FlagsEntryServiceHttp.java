@@ -55,11 +55,9 @@ import com.liferay.portal.kernel.util.MethodKey;
  */
 @ProviderType
 public class FlagsEntryServiceHttp {
-	public static void addEntry(HttpPrincipal httpPrincipal,
-		java.lang.String className, long classPK,
-		java.lang.String reporterEmailAddress, long reportedUserId,
-		java.lang.String contentTitle, java.lang.String contentURL,
-		java.lang.String reason,
+	public static void addEntry(HttpPrincipal httpPrincipal, String className,
+		long classPK, String reporterEmailAddress, long reportedUserId,
+		String contentTitle, String contentURL, String reason,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -90,9 +88,8 @@ public class FlagsEntryServiceHttp {
 
 	private static Log _log = LogFactoryUtil.getLog(FlagsEntryServiceHttp.class);
 	private static final Class<?>[] _addEntryParameterTypes0 = new Class[] {
-			java.lang.String.class, long.class, java.lang.String.class,
-			long.class, java.lang.String.class, java.lang.String.class,
-			java.lang.String.class,
+			String.class, long.class, String.class, long.class, String.class,
+			String.class, String.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 }

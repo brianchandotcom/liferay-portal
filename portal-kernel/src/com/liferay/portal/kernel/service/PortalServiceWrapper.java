@@ -31,7 +31,7 @@ public class PortalServiceWrapper implements PortalService,
 	}
 
 	@Override
-	public java.lang.String getAutoDeployDirectory() {
+	public String getAutoDeployDirectory() {
 		return _portalService.getAutoDeployDirectory();
 	}
 
@@ -46,40 +46,40 @@ public class PortalServiceWrapper implements PortalService,
 	* @return the OSGi service identifier
 	*/
 	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
+	public String getOSGiServiceIdentifier() {
 		return _portalService.getOSGiServiceIdentifier();
 	}
 
 	@Override
-	public java.lang.String getVersion() {
+	public String getVersion() {
 		return _portalService.getVersion();
 	}
 
 	@Override
-	public void testAddClassName_Rollback(java.lang.String classNameValue) {
+	public void testAddClassName_Rollback(String classNameValue) {
 		_portalService.testAddClassName_Rollback(classNameValue);
 	}
 
 	@Override
-	public void testAddClassName_Success(java.lang.String classNameValue) {
+	public void testAddClassName_Success(String classNameValue) {
 		_portalService.testAddClassName_Success(classNameValue);
 	}
 
 	@Override
 	public void testAddClassNameAndTestTransactionPortletBar_PortalRollback(
-		java.lang.String transactionPortletBarText) {
+		String transactionPortletBarText) {
 		_portalService.testAddClassNameAndTestTransactionPortletBar_PortalRollback(transactionPortletBarText);
 	}
 
 	@Override
 	public void testAddClassNameAndTestTransactionPortletBar_PortletRollback(
-		java.lang.String transactionPortletBarText) {
+		String transactionPortletBarText) {
 		_portalService.testAddClassNameAndTestTransactionPortletBar_PortletRollback(transactionPortletBarText);
 	}
 
 	@Override
 	public void testAddClassNameAndTestTransactionPortletBar_Success(
-		java.lang.String transactionPortletBarText) {
+		String transactionPortletBarText) {
 		_portalService.testAddClassNameAndTestTransactionPortletBar_Success(transactionPortletBarText);
 	}
 

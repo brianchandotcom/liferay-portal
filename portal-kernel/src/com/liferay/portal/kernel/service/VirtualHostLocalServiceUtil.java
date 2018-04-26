@@ -185,7 +185,7 @@ public class VirtualHostLocalServiceUtil {
 	}
 
 	public static com.liferay.portal.kernel.model.VirtualHost fetchVirtualHost(
-		java.lang.String hostname) {
+		String hostname) {
 		return getService().fetchVirtualHost(hostname);
 	}
 
@@ -202,7 +202,7 @@ public class VirtualHostLocalServiceUtil {
 	*
 	* @return the OSGi service identifier
 	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
+	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 
@@ -232,7 +232,7 @@ public class VirtualHostLocalServiceUtil {
 	}
 
 	public static com.liferay.portal.kernel.model.VirtualHost getVirtualHost(
-		java.lang.String hostname)
+		String hostname)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getVirtualHost(hostname);
 	}
@@ -263,7 +263,7 @@ public class VirtualHostLocalServiceUtil {
 	}
 
 	public static com.liferay.portal.kernel.model.VirtualHost updateVirtualHost(
-		long companyId, long layoutSetId, java.lang.String hostname) {
+		long companyId, long layoutSetId, String hostname) {
 		return getService().updateVirtualHost(companyId, layoutSetId, hostname);
 	}
 

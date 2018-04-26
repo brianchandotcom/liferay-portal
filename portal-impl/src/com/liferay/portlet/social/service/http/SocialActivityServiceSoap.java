@@ -158,8 +158,8 @@ public class SocialActivityServiceSoap {
 	* @return the range of matching activities
 	*/
 	public static com.liferay.social.kernel.model.SocialActivitySoap[] getActivities(
-		long mirrorActivityId, java.lang.String className, long classPK,
-		int start, int end) throws RemoteException {
+		long mirrorActivityId, String className, long classPK, int start,
+		int end) throws RemoteException {
 		try {
 			java.util.List<com.liferay.social.kernel.model.SocialActivity> returnValue =
 				SocialActivityServiceUtil.getActivities(mirrorActivityId,
@@ -193,8 +193,7 @@ public class SocialActivityServiceSoap {
 	* @return the range of matching activities
 	*/
 	public static com.liferay.social.kernel.model.SocialActivitySoap[] getActivities(
-		java.lang.String className, int start, int end)
-		throws RemoteException {
+		String className, int start, int end) throws RemoteException {
 		try {
 			java.util.List<com.liferay.social.kernel.model.SocialActivity> returnValue =
 				SocialActivityServiceUtil.getActivities(className, start, end);
@@ -265,7 +264,7 @@ public class SocialActivityServiceSoap {
 	* @return the number of matching activities
 	*/
 	public static int getActivitiesCount(long mirrorActivityId,
-		java.lang.String className, long classPK) throws RemoteException {
+		String className, long classPK) throws RemoteException {
 		try {
 			int returnValue = SocialActivityServiceUtil.getActivitiesCount(mirrorActivityId,
 					className, classPK);
@@ -285,7 +284,7 @@ public class SocialActivityServiceSoap {
 	* @param className the target asset's class name
 	* @return the number of matching activities
 	*/
-	public static int getActivitiesCount(java.lang.String className)
+	public static int getActivitiesCount(String className)
 		throws RemoteException {
 		try {
 			int returnValue = SocialActivityServiceUtil.getActivitiesCount(className);

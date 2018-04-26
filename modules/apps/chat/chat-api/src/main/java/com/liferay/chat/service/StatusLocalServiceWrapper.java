@@ -185,15 +185,15 @@ public class StatusLocalServiceWrapper implements StatusLocalService,
 	}
 
 	@Override
-	public java.util.List<java.lang.Object[]> getAllStatuses(long companyId,
-		long userId, long modifiedDate, int start, int end) {
+	public java.util.List<Object[]> getAllStatuses(long companyId, long userId,
+		long modifiedDate, int start, int end) {
 		return _statusLocalService.getAllStatuses(companyId, userId,
 			modifiedDate, start, end);
 	}
 
 	@Override
-	public java.util.List<java.lang.Object[]> getGroupStatuses(long userId,
-		long modifiedDate, java.lang.String[] groupNames, int start, int end) {
+	public java.util.List<Object[]> getGroupStatuses(long userId,
+		long modifiedDate, String[] groupNames, int start, int end) {
 		return _statusLocalService.getGroupStatuses(userId, modifiedDate,
 			groupNames, start, end);
 	}
@@ -209,7 +209,7 @@ public class StatusLocalServiceWrapper implements StatusLocalService,
 	* @return the OSGi service identifier
 	*/
 	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
+	public String getOSGiServiceIdentifier() {
 		return _statusLocalService.getOSGiServiceIdentifier();
 	}
 
@@ -221,15 +221,15 @@ public class StatusLocalServiceWrapper implements StatusLocalService,
 	}
 
 	@Override
-	public java.util.List<java.lang.Object[]> getSocialStatuses(long userId,
-		int type, long modifiedDate, int start, int end) {
+	public java.util.List<Object[]> getSocialStatuses(long userId, int type,
+		long modifiedDate, int start, int end) {
 		return _statusLocalService.getSocialStatuses(userId, type,
 			modifiedDate, start, end);
 	}
 
 	@Override
-	public java.util.List<java.lang.Object[]> getSocialStatuses(long userId,
-		int[] types, long modifiedDate, int start, int end) {
+	public java.util.List<Object[]> getSocialStatuses(long userId, int[] types,
+		long modifiedDate, int start, int end) {
 		return _statusLocalService.getSocialStatuses(userId, types,
 			modifiedDate, start, end);
 	}
@@ -287,8 +287,8 @@ public class StatusLocalServiceWrapper implements StatusLocalService,
 
 	@Override
 	public com.liferay.chat.model.Status updateStatus(long userId,
-		long modifiedDate, int online, int awake,
-		java.lang.String activePanelIds, java.lang.String message, int playSound) {
+		long modifiedDate, int online, int awake, String activePanelIds,
+		String message, int playSound) {
 		return _statusLocalService.updateStatus(userId, modifiedDate, online,
 			awake, activePanelIds, message, playSound);
 	}

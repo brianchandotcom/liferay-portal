@@ -70,9 +70,8 @@ public interface FolderLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.REINDEX)
 	public Folder addFolder(Folder folder);
 
-	public Folder addFolder(long userId, long accountId,
-		java.lang.String fullName, java.lang.String displayName,
-		int remoteMessageCount) throws PortalException;
+	public Folder addFolder(long userId, long accountId, String fullName,
+		String displayName, int remoteMessageCount) throws PortalException;
 
 	/**
 	* Creates a new folder with the primary key. Does not add the folder to the database.
@@ -188,7 +187,7 @@ public interface FolderLocalService extends BaseLocalService,
 	public Folder getFolder(long folderId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Folder getFolder(long accountId, java.lang.String fullName)
+	public Folder getFolder(long accountId, String fullName)
 		throws PortalException;
 
 	/**
@@ -227,7 +226,7 @@ public interface FolderLocalService extends BaseLocalService,
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getPercentDownloaded(long folderId) throws PortalException;
@@ -250,7 +249,6 @@ public interface FolderLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.REINDEX)
 	public Folder updateFolder(Folder folder);
 
-	public Folder updateFolder(long folderId, java.lang.String fullName,
-		java.lang.String displayName, int remoteMessageCount)
-		throws PortalException;
+	public Folder updateFolder(long folderId, String fullName,
+		String displayName, int remoteMessageCount) throws PortalException;
 }

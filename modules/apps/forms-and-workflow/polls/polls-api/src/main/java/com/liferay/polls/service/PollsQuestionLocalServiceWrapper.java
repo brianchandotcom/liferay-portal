@@ -48,8 +48,8 @@ public class PollsQuestionLocalServiceWrapper
 
 	@Override
 	public com.liferay.polls.model.PollsQuestion addQuestion(long userId,
-		java.util.Map<java.util.Locale, java.lang.String> titleMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		java.util.Map<java.util.Locale, String> titleMap,
+		java.util.Map<java.util.Locale, String> descriptionMap,
 		int expirationDateMonth, int expirationDateDay, int expirationDateYear,
 		int expirationDateHour, int expirationDateMinute, boolean neverExpire,
 		java.util.List<com.liferay.polls.model.PollsChoice> choices,
@@ -71,7 +71,7 @@ public class PollsQuestionLocalServiceWrapper
 
 	@Override
 	public void addQuestionResources(long questionId,
-		java.lang.String[] groupPermissions, java.lang.String[] guestPermissions)
+		String[] groupPermissions, String[] guestPermissions)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_pollsQuestionLocalService.addQuestionResources(questionId,
 			groupPermissions, guestPermissions);
@@ -89,7 +89,7 @@ public class PollsQuestionLocalServiceWrapper
 	@Override
 	public void addQuestionResources(
 		com.liferay.polls.model.PollsQuestion question,
-		java.lang.String[] groupPermissions, java.lang.String[] guestPermissions)
+		String[] groupPermissions, String[] guestPermissions)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_pollsQuestionLocalService.addQuestionResources(question,
 			groupPermissions, guestPermissions);
@@ -261,7 +261,7 @@ public class PollsQuestionLocalServiceWrapper
 	*/
 	@Override
 	public com.liferay.polls.model.PollsQuestion fetchPollsQuestionByUuidAndGroupId(
-		java.lang.String uuid, long groupId) {
+		String uuid, long groupId) {
 		return _pollsQuestionLocalService.fetchPollsQuestionByUuidAndGroupId(uuid,
 			groupId);
 	}
@@ -288,7 +288,7 @@ public class PollsQuestionLocalServiceWrapper
 	* @return the OSGi service identifier
 	*/
 	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
+	public String getOSGiServiceIdentifier() {
 		return _pollsQuestionLocalService.getOSGiServiceIdentifier();
 	}
 
@@ -323,7 +323,7 @@ public class PollsQuestionLocalServiceWrapper
 	*/
 	@Override
 	public com.liferay.polls.model.PollsQuestion getPollsQuestionByUuidAndGroupId(
-		java.lang.String uuid, long groupId)
+		String uuid, long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _pollsQuestionLocalService.getPollsQuestionByUuidAndGroupId(uuid,
 			groupId);
@@ -355,7 +355,7 @@ public class PollsQuestionLocalServiceWrapper
 	*/
 	@Override
 	public java.util.List<com.liferay.polls.model.PollsQuestion> getPollsQuestionsByUuidAndCompanyId(
-		java.lang.String uuid, long companyId) {
+		String uuid, long companyId) {
 		return _pollsQuestionLocalService.getPollsQuestionsByUuidAndCompanyId(uuid,
 			companyId);
 	}
@@ -372,7 +372,7 @@ public class PollsQuestionLocalServiceWrapper
 	*/
 	@Override
 	public java.util.List<com.liferay.polls.model.PollsQuestion> getPollsQuestionsByUuidAndCompanyId(
-		java.lang.String uuid, long companyId, int start, int end,
+		String uuid, long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.polls.model.PollsQuestion> orderByComparator) {
 		return _pollsQuestionLocalService.getPollsQuestionsByUuidAndCompanyId(uuid,
 			companyId, start, end, orderByComparator);
@@ -413,8 +413,7 @@ public class PollsQuestionLocalServiceWrapper
 
 	@Override
 	public java.util.List<com.liferay.polls.model.PollsQuestion> search(
-		long companyId, long[] groupIds, java.lang.String keywords, int start,
-		int end,
+		long companyId, long[] groupIds, String keywords, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.polls.model.PollsQuestion> orderByComparator) {
 		return _pollsQuestionLocalService.search(companyId, groupIds, keywords,
 			start, end, orderByComparator);
@@ -422,24 +421,22 @@ public class PollsQuestionLocalServiceWrapper
 
 	@Override
 	public java.util.List<com.liferay.polls.model.PollsQuestion> search(
-		long companyId, long[] groupIds, java.lang.String name,
-		java.lang.String description, boolean andOperator, int start, int end,
+		long companyId, long[] groupIds, String name, String description,
+		boolean andOperator, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.polls.model.PollsQuestion> orderByComparator) {
 		return _pollsQuestionLocalService.search(companyId, groupIds, name,
 			description, andOperator, start, end, orderByComparator);
 	}
 
 	@Override
-	public int searchCount(long companyId, long[] groupIds,
-		java.lang.String keywords) {
+	public int searchCount(long companyId, long[] groupIds, String keywords) {
 		return _pollsQuestionLocalService.searchCount(companyId, groupIds,
 			keywords);
 	}
 
 	@Override
-	public int searchCount(long companyId, long[] groupIds,
-		java.lang.String title, java.lang.String description,
-		boolean andOperator) {
+	public int searchCount(long companyId, long[] groupIds, String title,
+		String description, boolean andOperator) {
 		return _pollsQuestionLocalService.searchCount(companyId, groupIds,
 			title, description, andOperator);
 	}
@@ -458,9 +455,8 @@ public class PollsQuestionLocalServiceWrapper
 
 	@Override
 	public com.liferay.polls.model.PollsQuestion updateQuestion(long userId,
-		long questionId,
-		java.util.Map<java.util.Locale, java.lang.String> titleMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		long questionId, java.util.Map<java.util.Locale, String> titleMap,
+		java.util.Map<java.util.Locale, String> descriptionMap,
 		int expirationDateMonth, int expirationDateDay, int expirationDateYear,
 		int expirationDateHour, int expirationDateMinute, boolean neverExpire,
 		java.util.List<com.liferay.polls.model.PollsChoice> choices,

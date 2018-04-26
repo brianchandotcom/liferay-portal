@@ -61,7 +61,7 @@ public interface DDLRecordVersionService extends BaseService {
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	/**
 	* Returns the record version matching the ID.
@@ -86,8 +86,8 @@ public interface DDLRecordVersionService extends BaseService {
 	user do not have the required permission to access the record set
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public DDLRecordVersion getRecordVersion(long recordId,
-		java.lang.String version) throws PortalException;
+	public DDLRecordVersion getRecordVersion(long recordId, String version)
+		throws PortalException;
 
 	/**
 	* Returns all the record versions matching the record.

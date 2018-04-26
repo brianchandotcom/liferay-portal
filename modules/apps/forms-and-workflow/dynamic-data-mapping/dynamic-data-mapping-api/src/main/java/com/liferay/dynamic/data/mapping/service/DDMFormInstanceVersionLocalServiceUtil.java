@@ -234,7 +234,7 @@ public class DDMFormInstanceVersionLocalServiceUtil {
 	}
 
 	public static com.liferay.dynamic.data.mapping.model.DDMFormInstanceVersion getFormInstanceVersion(
-		long ddmFormInstanceId, java.lang.String version)
+		long ddmFormInstanceId, String version)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getFormInstanceVersion(ddmFormInstanceId, version);
 	}
@@ -277,7 +277,7 @@ public class DDMFormInstanceVersionLocalServiceUtil {
 	*
 	* @return the OSGi service identifier
 	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
+	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 

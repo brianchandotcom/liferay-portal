@@ -158,7 +158,7 @@ public class EmailAddressWrapper implements EmailAddress,
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new EmailAddressWrapper((EmailAddress)_emailAddress.clone());
 	}
 
@@ -173,7 +173,7 @@ public class EmailAddressWrapper implements EmailAddress,
 	* @return the address of this email address
 	*/
 	@Override
-	public java.lang.String getAddress() {
+	public String getAddress() {
 		return _emailAddress.getAddress();
 	}
 
@@ -183,7 +183,7 @@ public class EmailAddressWrapper implements EmailAddress,
 	* @return the fully qualified class name of this email address
 	*/
 	@Override
-	public java.lang.String getClassName() {
+	public String getClassName() {
 		return _emailAddress.getClassName();
 	}
 
@@ -319,7 +319,7 @@ public class EmailAddressWrapper implements EmailAddress,
 	* @return the user name of this email address
 	*/
 	@Override
-	public java.lang.String getUserName() {
+	public String getUserName() {
 		return _emailAddress.getUserName();
 	}
 
@@ -329,7 +329,7 @@ public class EmailAddressWrapper implements EmailAddress,
 	* @return the user uuid of this email address
 	*/
 	@Override
-	public java.lang.String getUserUuid() {
+	public String getUserUuid() {
 		return _emailAddress.getUserUuid();
 	}
 
@@ -339,7 +339,7 @@ public class EmailAddressWrapper implements EmailAddress,
 	* @return the uuid of this email address
 	*/
 	@Override
-	public java.lang.String getUuid() {
+	public String getUuid() {
 		return _emailAddress.getUuid();
 	}
 
@@ -384,7 +384,7 @@ public class EmailAddressWrapper implements EmailAddress,
 	* @param address the address of this email address
 	*/
 	@Override
-	public void setAddress(java.lang.String address) {
+	public void setAddress(String address) {
 		_emailAddress.setAddress(address);
 	}
 
@@ -394,7 +394,7 @@ public class EmailAddressWrapper implements EmailAddress,
 	}
 
 	@Override
-	public void setClassName(java.lang.String className) {
+	public void setClassName(String className) {
 		_emailAddress.setClassName(className);
 	}
 
@@ -539,7 +539,7 @@ public class EmailAddressWrapper implements EmailAddress,
 	* @param userName the user name of this email address
 	*/
 	@Override
-	public void setUserName(java.lang.String userName) {
+	public void setUserName(String userName) {
 		_emailAddress.setUserName(userName);
 	}
 
@@ -549,7 +549,7 @@ public class EmailAddressWrapper implements EmailAddress,
 	* @param userUuid the user uuid of this email address
 	*/
 	@Override
-	public void setUserUuid(java.lang.String userUuid) {
+	public void setUserUuid(String userUuid) {
 		_emailAddress.setUserUuid(userUuid);
 	}
 
@@ -559,7 +559,7 @@ public class EmailAddressWrapper implements EmailAddress,
 	* @param uuid the uuid of this email address
 	*/
 	@Override
-	public void setUuid(java.lang.String uuid) {
+	public void setUuid(String uuid) {
 		_emailAddress.setUuid(uuid);
 	}
 
@@ -574,7 +574,7 @@ public class EmailAddressWrapper implements EmailAddress,
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _emailAddress.toString();
 	}
 
@@ -584,7 +584,7 @@ public class EmailAddressWrapper implements EmailAddress,
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _emailAddress.toXmlString();
 	}
 

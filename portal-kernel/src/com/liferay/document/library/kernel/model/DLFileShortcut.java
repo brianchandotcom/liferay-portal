@@ -58,7 +58,7 @@ public interface DLFileShortcut extends DLFileShortcutModel, PersistedModel,
 		};
 
 	@Override
-	public java.lang.String buildTreePath()
+	public String buildTreePath()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public DLFolder getDLFolder()
@@ -70,7 +70,7 @@ public interface DLFileShortcut extends DLFileShortcutModel, PersistedModel,
 	public com.liferay.portal.kernel.repository.model.Folder getFolder()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
-	public java.lang.String getToTitle();
+	public String getToTitle();
 
 	public boolean isInHiddenFolder();
 }

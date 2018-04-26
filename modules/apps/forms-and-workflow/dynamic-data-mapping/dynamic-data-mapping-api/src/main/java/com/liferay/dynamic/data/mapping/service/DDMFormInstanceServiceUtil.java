@@ -44,8 +44,8 @@ public class DDMFormInstanceServiceUtil {
 	 */
 	public static com.liferay.dynamic.data.mapping.model.DDMFormInstance addFormInstance(
 		long groupId, long ddmStructureId,
-		java.util.Map<java.util.Locale, java.lang.String> nameMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		java.util.Map<java.util.Locale, String> nameMap,
+		java.util.Map<java.util.Locale, String> descriptionMap,
 		com.liferay.dynamic.data.mapping.storage.DDMFormValues settingsDDMFormValues,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -85,13 +85,12 @@ public class DDMFormInstanceServiceUtil {
 	*
 	* @return the OSGi service identifier
 	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
+	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 
 	public static java.util.List<com.liferay.dynamic.data.mapping.model.DDMFormInstance> search(
-		long companyId, long groupId, java.lang.String keywords, int start,
-		int end,
+		long companyId, long groupId, String keywords, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.mapping.model.DDMFormInstance> orderByComparator) {
 		return getService()
 				   .search(companyId, groupId, keywords, start, end,
@@ -99,23 +98,20 @@ public class DDMFormInstanceServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.dynamic.data.mapping.model.DDMFormInstance> search(
-		long companyId, long groupId, java.lang.String[] names,
-		java.lang.String[] descriptions, boolean andOperator, int start,
-		int end,
+		long companyId, long groupId, String[] names, String[] descriptions,
+		boolean andOperator, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.mapping.model.DDMFormInstance> orderByComparator) {
 		return getService()
 				   .search(companyId, groupId, names, descriptions,
 			andOperator, start, end, orderByComparator);
 	}
 
-	public static int searchCount(long companyId, long groupId,
-		java.lang.String keywords) {
+	public static int searchCount(long companyId, long groupId, String keywords) {
 		return getService().searchCount(companyId, groupId, keywords);
 	}
 
-	public static int searchCount(long companyId, long groupId,
-		java.lang.String[] names, java.lang.String[] descriptions,
-		boolean andOperator) {
+	public static int searchCount(long companyId, long groupId, String[] names,
+		String[] descriptions, boolean andOperator) {
 		return getService()
 				   .searchCount(companyId, groupId, names, descriptions,
 			andOperator);
@@ -141,8 +137,8 @@ public class DDMFormInstanceServiceUtil {
 
 	public static com.liferay.dynamic.data.mapping.model.DDMFormInstance updateFormInstance(
 		long ddmFormInstanceId, long ddmStructureId,
-		java.util.Map<java.util.Locale, java.lang.String> nameMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		java.util.Map<java.util.Locale, String> nameMap,
+		java.util.Map<java.util.Locale, String> descriptionMap,
 		com.liferay.dynamic.data.mapping.storage.DDMFormValues settingsDDMFormValues,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {

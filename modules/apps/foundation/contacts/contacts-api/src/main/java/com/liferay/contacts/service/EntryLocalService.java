@@ -71,9 +71,8 @@ public interface EntryLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.REINDEX)
 	public Entry addEntry(Entry entry);
 
-	public Entry addEntry(long userId, java.lang.String fullName,
-		java.lang.String emailAddress, java.lang.String comments)
-		throws PortalException;
+	public Entry addEntry(long userId, String fullName, String emailAddress,
+		String comments) throws PortalException;
 
 	/**
 	* Creates a new entry with the primary key. Does not add the entry to the database.
@@ -221,7 +220,7 @@ public interface EntryLocalService extends BaseLocalService,
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -229,19 +228,18 @@ public interface EntryLocalService extends BaseLocalService,
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<Entry> search(long userId, java.lang.String keywords,
-		int start, int end);
+	public List<Entry> search(long userId, String keywords, int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int searchCount(long userId, java.lang.String keywords);
+	public int searchCount(long userId, String keywords);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<BaseModel<?>> searchUsersAndContacts(long companyId,
-		long userId, java.lang.String keywords, int start, int end);
+		long userId, String keywords, int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int searchUsersAndContactsCount(long companyId, long userId,
-		java.lang.String keywords);
+		String keywords);
 
 	/**
 	* Updates the entry in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
@@ -252,7 +250,6 @@ public interface EntryLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.REINDEX)
 	public Entry updateEntry(Entry entry);
 
-	public Entry updateEntry(long entryId, java.lang.String fullName,
-		java.lang.String emailAddress, java.lang.String comments)
-		throws PortalException;
+	public Entry updateEntry(long entryId, String fullName,
+		String emailAddress, String comments) throws PortalException;
 }

@@ -145,7 +145,7 @@ public class MDRRuleGroupWrapper implements MDRRuleGroup,
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new MDRRuleGroupWrapper((MDRRuleGroup)_mdrRuleGroup.clone());
 	}
 
@@ -155,7 +155,7 @@ public class MDRRuleGroupWrapper implements MDRRuleGroup,
 	}
 
 	@Override
-	public java.lang.String[] getAvailableLanguageIds() {
+	public String[] getAvailableLanguageIds() {
 		return _mdrRuleGroup.getAvailableLanguageIds();
 	}
 
@@ -180,7 +180,7 @@ public class MDRRuleGroupWrapper implements MDRRuleGroup,
 	}
 
 	@Override
-	public java.lang.String getDefaultLanguageId() {
+	public String getDefaultLanguageId() {
 		return _mdrRuleGroup.getDefaultLanguageId();
 	}
 
@@ -190,7 +190,7 @@ public class MDRRuleGroupWrapper implements MDRRuleGroup,
 	* @return the description of this mdr rule group
 	*/
 	@Override
-	public java.lang.String getDescription() {
+	public String getDescription() {
 		return _mdrRuleGroup.getDescription();
 	}
 
@@ -201,7 +201,7 @@ public class MDRRuleGroupWrapper implements MDRRuleGroup,
 	* @return the localized description of this mdr rule group
 	*/
 	@Override
-	public java.lang.String getDescription(java.util.Locale locale) {
+	public String getDescription(java.util.Locale locale) {
 		return _mdrRuleGroup.getDescription(locale);
 	}
 
@@ -213,8 +213,7 @@ public class MDRRuleGroupWrapper implements MDRRuleGroup,
 	* @return the localized description of this mdr rule group. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
 	*/
 	@Override
-	public java.lang.String getDescription(java.util.Locale locale,
-		boolean useDefault) {
+	public String getDescription(java.util.Locale locale, boolean useDefault) {
 		return _mdrRuleGroup.getDescription(locale, useDefault);
 	}
 
@@ -225,7 +224,7 @@ public class MDRRuleGroupWrapper implements MDRRuleGroup,
 	* @return the localized description of this mdr rule group
 	*/
 	@Override
-	public java.lang.String getDescription(java.lang.String languageId) {
+	public String getDescription(String languageId) {
 		return _mdrRuleGroup.getDescription(languageId);
 	}
 
@@ -237,18 +236,17 @@ public class MDRRuleGroupWrapper implements MDRRuleGroup,
 	* @return the localized description of this mdr rule group
 	*/
 	@Override
-	public java.lang.String getDescription(java.lang.String languageId,
-		boolean useDefault) {
+	public String getDescription(String languageId, boolean useDefault) {
 		return _mdrRuleGroup.getDescription(languageId, useDefault);
 	}
 
 	@Override
-	public java.lang.String getDescriptionCurrentLanguageId() {
+	public String getDescriptionCurrentLanguageId() {
 		return _mdrRuleGroup.getDescriptionCurrentLanguageId();
 	}
 
 	@Override
-	public java.lang.String getDescriptionCurrentValue() {
+	public String getDescriptionCurrentValue() {
 		return _mdrRuleGroup.getDescriptionCurrentValue();
 	}
 
@@ -258,7 +256,7 @@ public class MDRRuleGroupWrapper implements MDRRuleGroup,
 	* @return the locales and localized descriptions of this mdr rule group
 	*/
 	@Override
-	public Map<java.util.Locale, java.lang.String> getDescriptionMap() {
+	public Map<java.util.Locale, String> getDescriptionMap() {
 		return _mdrRuleGroup.getDescriptionMap();
 	}
 
@@ -303,7 +301,7 @@ public class MDRRuleGroupWrapper implements MDRRuleGroup,
 	* @return the name of this mdr rule group
 	*/
 	@Override
-	public java.lang.String getName() {
+	public String getName() {
 		return _mdrRuleGroup.getName();
 	}
 
@@ -314,7 +312,7 @@ public class MDRRuleGroupWrapper implements MDRRuleGroup,
 	* @return the localized name of this mdr rule group
 	*/
 	@Override
-	public java.lang.String getName(java.util.Locale locale) {
+	public String getName(java.util.Locale locale) {
 		return _mdrRuleGroup.getName(locale);
 	}
 
@@ -326,7 +324,7 @@ public class MDRRuleGroupWrapper implements MDRRuleGroup,
 	* @return the localized name of this mdr rule group. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
 	*/
 	@Override
-	public java.lang.String getName(java.util.Locale locale, boolean useDefault) {
+	public String getName(java.util.Locale locale, boolean useDefault) {
 		return _mdrRuleGroup.getName(locale, useDefault);
 	}
 
@@ -337,7 +335,7 @@ public class MDRRuleGroupWrapper implements MDRRuleGroup,
 	* @return the localized name of this mdr rule group
 	*/
 	@Override
-	public java.lang.String getName(java.lang.String languageId) {
+	public String getName(String languageId) {
 		return _mdrRuleGroup.getName(languageId);
 	}
 
@@ -349,18 +347,17 @@ public class MDRRuleGroupWrapper implements MDRRuleGroup,
 	* @return the localized name of this mdr rule group
 	*/
 	@Override
-	public java.lang.String getName(java.lang.String languageId,
-		boolean useDefault) {
+	public String getName(String languageId, boolean useDefault) {
 		return _mdrRuleGroup.getName(languageId, useDefault);
 	}
 
 	@Override
-	public java.lang.String getNameCurrentLanguageId() {
+	public String getNameCurrentLanguageId() {
 		return _mdrRuleGroup.getNameCurrentLanguageId();
 	}
 
 	@Override
-	public java.lang.String getNameCurrentValue() {
+	public String getNameCurrentValue() {
 		return _mdrRuleGroup.getNameCurrentValue();
 	}
 
@@ -370,7 +367,7 @@ public class MDRRuleGroupWrapper implements MDRRuleGroup,
 	* @return the locales and localized names of this mdr rule group
 	*/
 	@Override
-	public Map<java.util.Locale, java.lang.String> getNameMap() {
+	public Map<java.util.Locale, String> getNameMap() {
 		return _mdrRuleGroup.getNameMap();
 	}
 
@@ -420,7 +417,7 @@ public class MDRRuleGroupWrapper implements MDRRuleGroup,
 	* @return the user name of this mdr rule group
 	*/
 	@Override
-	public java.lang.String getUserName() {
+	public String getUserName() {
 		return _mdrRuleGroup.getUserName();
 	}
 
@@ -430,7 +427,7 @@ public class MDRRuleGroupWrapper implements MDRRuleGroup,
 	* @return the user uuid of this mdr rule group
 	*/
 	@Override
-	public java.lang.String getUserUuid() {
+	public String getUserUuid() {
 		return _mdrRuleGroup.getUserUuid();
 	}
 
@@ -440,7 +437,7 @@ public class MDRRuleGroupWrapper implements MDRRuleGroup,
 	* @return the uuid of this mdr rule group
 	*/
 	@Override
-	public java.lang.String getUuid() {
+	public String getUuid() {
 		return _mdrRuleGroup.getUuid();
 	}
 
@@ -513,7 +510,7 @@ public class MDRRuleGroupWrapper implements MDRRuleGroup,
 	* @param description the description of this mdr rule group
 	*/
 	@Override
-	public void setDescription(java.lang.String description) {
+	public void setDescription(String description) {
 		_mdrRuleGroup.setDescription(description);
 	}
 
@@ -524,8 +521,7 @@ public class MDRRuleGroupWrapper implements MDRRuleGroup,
 	* @param locale the locale of the language
 	*/
 	@Override
-	public void setDescription(java.lang.String description,
-		java.util.Locale locale) {
+	public void setDescription(String description, java.util.Locale locale) {
 		_mdrRuleGroup.setDescription(description, locale);
 	}
 
@@ -537,13 +533,13 @@ public class MDRRuleGroupWrapper implements MDRRuleGroup,
 	* @param defaultLocale the default locale
 	*/
 	@Override
-	public void setDescription(java.lang.String description,
-		java.util.Locale locale, java.util.Locale defaultLocale) {
+	public void setDescription(String description, java.util.Locale locale,
+		java.util.Locale defaultLocale) {
 		_mdrRuleGroup.setDescription(description, locale, defaultLocale);
 	}
 
 	@Override
-	public void setDescriptionCurrentLanguageId(java.lang.String languageId) {
+	public void setDescriptionCurrentLanguageId(String languageId) {
 		_mdrRuleGroup.setDescriptionCurrentLanguageId(languageId);
 	}
 
@@ -553,8 +549,7 @@ public class MDRRuleGroupWrapper implements MDRRuleGroup,
 	* @param descriptionMap the locales and localized descriptions of this mdr rule group
 	*/
 	@Override
-	public void setDescriptionMap(
-		Map<java.util.Locale, java.lang.String> descriptionMap) {
+	public void setDescriptionMap(Map<java.util.Locale, String> descriptionMap) {
 		_mdrRuleGroup.setDescriptionMap(descriptionMap);
 	}
 
@@ -566,7 +561,7 @@ public class MDRRuleGroupWrapper implements MDRRuleGroup,
 	*/
 	@Override
 	public void setDescriptionMap(
-		Map<java.util.Locale, java.lang.String> descriptionMap,
+		Map<java.util.Locale, String> descriptionMap,
 		java.util.Locale defaultLocale) {
 		_mdrRuleGroup.setDescriptionMap(descriptionMap, defaultLocale);
 	}
@@ -623,7 +618,7 @@ public class MDRRuleGroupWrapper implements MDRRuleGroup,
 	* @param name the name of this mdr rule group
 	*/
 	@Override
-	public void setName(java.lang.String name) {
+	public void setName(String name) {
 		_mdrRuleGroup.setName(name);
 	}
 
@@ -634,7 +629,7 @@ public class MDRRuleGroupWrapper implements MDRRuleGroup,
 	* @param locale the locale of the language
 	*/
 	@Override
-	public void setName(java.lang.String name, java.util.Locale locale) {
+	public void setName(String name, java.util.Locale locale) {
 		_mdrRuleGroup.setName(name, locale);
 	}
 
@@ -646,13 +641,13 @@ public class MDRRuleGroupWrapper implements MDRRuleGroup,
 	* @param defaultLocale the default locale
 	*/
 	@Override
-	public void setName(java.lang.String name, java.util.Locale locale,
+	public void setName(String name, java.util.Locale locale,
 		java.util.Locale defaultLocale) {
 		_mdrRuleGroup.setName(name, locale, defaultLocale);
 	}
 
 	@Override
-	public void setNameCurrentLanguageId(java.lang.String languageId) {
+	public void setNameCurrentLanguageId(String languageId) {
 		_mdrRuleGroup.setNameCurrentLanguageId(languageId);
 	}
 
@@ -662,7 +657,7 @@ public class MDRRuleGroupWrapper implements MDRRuleGroup,
 	* @param nameMap the locales and localized names of this mdr rule group
 	*/
 	@Override
-	public void setNameMap(Map<java.util.Locale, java.lang.String> nameMap) {
+	public void setNameMap(Map<java.util.Locale, String> nameMap) {
 		_mdrRuleGroup.setNameMap(nameMap);
 	}
 
@@ -673,7 +668,7 @@ public class MDRRuleGroupWrapper implements MDRRuleGroup,
 	* @param defaultLocale the default locale
 	*/
 	@Override
-	public void setNameMap(Map<java.util.Locale, java.lang.String> nameMap,
+	public void setNameMap(Map<java.util.Locale, String> nameMap,
 		java.util.Locale defaultLocale) {
 		_mdrRuleGroup.setNameMap(nameMap, defaultLocale);
 	}
@@ -724,7 +719,7 @@ public class MDRRuleGroupWrapper implements MDRRuleGroup,
 	* @param userName the user name of this mdr rule group
 	*/
 	@Override
-	public void setUserName(java.lang.String userName) {
+	public void setUserName(String userName) {
 		_mdrRuleGroup.setUserName(userName);
 	}
 
@@ -734,7 +729,7 @@ public class MDRRuleGroupWrapper implements MDRRuleGroup,
 	* @param userUuid the user uuid of this mdr rule group
 	*/
 	@Override
-	public void setUserUuid(java.lang.String userUuid) {
+	public void setUserUuid(String userUuid) {
 		_mdrRuleGroup.setUserUuid(userUuid);
 	}
 
@@ -744,7 +739,7 @@ public class MDRRuleGroupWrapper implements MDRRuleGroup,
 	* @param uuid the uuid of this mdr rule group
 	*/
 	@Override
-	public void setUuid(java.lang.String uuid) {
+	public void setUuid(String uuid) {
 		_mdrRuleGroup.setUuid(uuid);
 	}
 
@@ -759,7 +754,7 @@ public class MDRRuleGroupWrapper implements MDRRuleGroup,
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _mdrRuleGroup.toString();
 	}
 
@@ -769,7 +764,7 @@ public class MDRRuleGroupWrapper implements MDRRuleGroup,
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _mdrRuleGroup.toXmlString();
 	}
 

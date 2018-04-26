@@ -56,7 +56,7 @@ import com.liferay.screens.service.ScreensRatingsEntryServiceUtil;
 @ProviderType
 public class ScreensRatingsEntryServiceHttp {
 	public static com.liferay.portal.kernel.json.JSONObject deleteRatingsEntry(
-		HttpPrincipal httpPrincipal, long classPK, java.lang.String className,
+		HttpPrincipal httpPrincipal, long classPK, String className,
 		int ratingsLength)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -121,7 +121,7 @@ public class ScreensRatingsEntryServiceHttp {
 	}
 
 	public static com.liferay.portal.kernel.json.JSONObject getRatingsEntries(
-		HttpPrincipal httpPrincipal, long classPK, java.lang.String className,
+		HttpPrincipal httpPrincipal, long classPK, String className,
 		int ratingsLength)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -154,7 +154,7 @@ public class ScreensRatingsEntryServiceHttp {
 	}
 
 	public static com.liferay.portal.kernel.json.JSONObject updateRatingsEntry(
-		HttpPrincipal httpPrincipal, long classPK, java.lang.String className,
+		HttpPrincipal httpPrincipal, long classPK, String className,
 		double score, int ratingsLength)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -188,15 +188,15 @@ public class ScreensRatingsEntryServiceHttp {
 
 	private static Log _log = LogFactoryUtil.getLog(ScreensRatingsEntryServiceHttp.class);
 	private static final Class<?>[] _deleteRatingsEntryParameterTypes0 = new Class[] {
-			long.class, java.lang.String.class, int.class
+			long.class, String.class, int.class
 		};
 	private static final Class<?>[] _getRatingsEntriesParameterTypes1 = new Class[] {
 			long.class, int.class
 		};
 	private static final Class<?>[] _getRatingsEntriesParameterTypes2 = new Class[] {
-			long.class, java.lang.String.class, int.class
+			long.class, String.class, int.class
 		};
 	private static final Class<?>[] _updateRatingsEntryParameterTypes3 = new Class[] {
-			long.class, java.lang.String.class, double.class, int.class
+			long.class, String.class, double.class, int.class
 		};
 }

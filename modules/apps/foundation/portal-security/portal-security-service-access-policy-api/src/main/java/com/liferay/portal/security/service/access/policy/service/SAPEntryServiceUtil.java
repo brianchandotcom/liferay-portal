@@ -43,9 +43,9 @@ public class SAPEntryServiceUtil {
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.portal.security.service.access.policy.service.impl.SAPEntryServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static com.liferay.portal.security.service.access.policy.model.SAPEntry addSAPEntry(
-		java.lang.String allowedServiceSignatures, boolean defaultSAPEntry,
-		boolean enabled, java.lang.String name,
-		java.util.Map<java.util.Locale, java.lang.String> titleMap,
+		String allowedServiceSignatures, boolean defaultSAPEntry,
+		boolean enabled, String name,
+		java.util.Map<java.util.Locale, String> titleMap,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
@@ -66,7 +66,7 @@ public class SAPEntryServiceUtil {
 	}
 
 	public static com.liferay.portal.security.service.access.policy.model.SAPEntry fetchSAPEntry(
-		long companyId, java.lang.String name)
+		long companyId, String name)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().fetchSAPEntry(companyId, name);
 	}
@@ -91,7 +91,7 @@ public class SAPEntryServiceUtil {
 	*
 	* @return the OSGi service identifier
 	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
+	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 
@@ -102,15 +102,15 @@ public class SAPEntryServiceUtil {
 	}
 
 	public static com.liferay.portal.security.service.access.policy.model.SAPEntry getSAPEntry(
-		long companyId, java.lang.String name)
+		long companyId, String name)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getSAPEntry(companyId, name);
 	}
 
 	public static com.liferay.portal.security.service.access.policy.model.SAPEntry updateSAPEntry(
-		long sapEntryId, java.lang.String allowedServiceSignatures,
-		boolean defaultSAPEntry, boolean enabled, java.lang.String name,
-		java.util.Map<java.util.Locale, java.lang.String> titleMap,
+		long sapEntryId, String allowedServiceSignatures,
+		boolean defaultSAPEntry, boolean enabled, String name,
+		java.util.Map<java.util.Locale, String> titleMap,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()

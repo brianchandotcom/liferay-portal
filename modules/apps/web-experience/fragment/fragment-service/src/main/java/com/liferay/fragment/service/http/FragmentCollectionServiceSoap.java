@@ -66,7 +66,7 @@ import java.rmi.RemoteException;
 @ProviderType
 public class FragmentCollectionServiceSoap {
 	public static com.liferay.fragment.model.FragmentCollectionSoap addFragmentCollection(
-		long groupId, java.lang.String name, java.lang.String description,
+		long groupId, String name, String description,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
@@ -83,8 +83,8 @@ public class FragmentCollectionServiceSoap {
 	}
 
 	public static com.liferay.fragment.model.FragmentCollectionSoap addFragmentCollection(
-		long groupId, java.lang.String fragmentCollectionKey,
-		java.lang.String name, java.lang.String description,
+		long groupId, String fragmentCollectionKey, String name,
+		String description,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
@@ -190,7 +190,7 @@ public class FragmentCollectionServiceSoap {
 	}
 
 	public static com.liferay.fragment.model.FragmentCollectionSoap[] getFragmentCollections(
-		long groupId, java.lang.String name, int start, int end,
+		long groupId, String name, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.fragment.model.FragmentCollection> orderByComparator)
 		throws RemoteException {
 		try {
@@ -221,8 +221,8 @@ public class FragmentCollectionServiceSoap {
 		}
 	}
 
-	public static int getFragmentCollectionsCount(long groupId,
-		java.lang.String name) throws RemoteException {
+	public static int getFragmentCollectionsCount(long groupId, String name)
+		throws RemoteException {
 		try {
 			int returnValue = FragmentCollectionServiceUtil.getFragmentCollectionsCount(groupId,
 					name);
@@ -236,10 +236,10 @@ public class FragmentCollectionServiceSoap {
 		}
 	}
 
-	public static java.lang.String[] getTempFileNames(long groupId,
-		java.lang.String folderName) throws RemoteException {
+	public static String[] getTempFileNames(long groupId, String folderName)
+		throws RemoteException {
 		try {
-			java.lang.String[] returnValue = FragmentCollectionServiceUtil.getTempFileNames(groupId,
+			String[] returnValue = FragmentCollectionServiceUtil.getTempFileNames(groupId,
 					folderName);
 
 			return returnValue;
@@ -252,8 +252,8 @@ public class FragmentCollectionServiceSoap {
 	}
 
 	public static com.liferay.fragment.model.FragmentCollectionSoap updateFragmentCollection(
-		long fragmentCollectionId, java.lang.String name,
-		java.lang.String description) throws RemoteException {
+		long fragmentCollectionId, String name, String description)
+		throws RemoteException {
 		try {
 			com.liferay.fragment.model.FragmentCollection returnValue = FragmentCollectionServiceUtil.updateFragmentCollection(fragmentCollectionId,
 					name, description);

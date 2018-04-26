@@ -118,7 +118,7 @@ public class SyncDLObjectUtil {
 	* @param treePath the tree path
 	* @return the matching sync dl objects
 	*/
-	public static List<SyncDLObject> findByTreePath(java.lang.String treePath) {
+	public static List<SyncDLObject> findByTreePath(String treePath) {
 		return getPersistence().findByTreePath(treePath);
 	}
 
@@ -134,8 +134,8 @@ public class SyncDLObjectUtil {
 	* @param end the upper bound of the range of sync dl objects (not inclusive)
 	* @return the range of matching sync dl objects
 	*/
-	public static List<SyncDLObject> findByTreePath(java.lang.String treePath,
-		int start, int end) {
+	public static List<SyncDLObject> findByTreePath(String treePath, int start,
+		int end) {
 		return getPersistence().findByTreePath(treePath, start, end);
 	}
 
@@ -152,8 +152,8 @@ public class SyncDLObjectUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching sync dl objects
 	*/
-	public static List<SyncDLObject> findByTreePath(java.lang.String treePath,
-		int start, int end, OrderByComparator<SyncDLObject> orderByComparator) {
+	public static List<SyncDLObject> findByTreePath(String treePath, int start,
+		int end, OrderByComparator<SyncDLObject> orderByComparator) {
 		return getPersistence()
 				   .findByTreePath(treePath, start, end, orderByComparator);
 	}
@@ -172,8 +172,8 @@ public class SyncDLObjectUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching sync dl objects
 	*/
-	public static List<SyncDLObject> findByTreePath(java.lang.String treePath,
-		int start, int end, OrderByComparator<SyncDLObject> orderByComparator,
+	public static List<SyncDLObject> findByTreePath(String treePath, int start,
+		int end, OrderByComparator<SyncDLObject> orderByComparator,
 		boolean retrieveFromCache) {
 		return getPersistence()
 				   .findByTreePath(treePath, start, end, orderByComparator,
@@ -188,7 +188,7 @@ public class SyncDLObjectUtil {
 	* @return the first matching sync dl object
 	* @throws NoSuchDLObjectException if a matching sync dl object could not be found
 	*/
-	public static SyncDLObject findByTreePath_First(java.lang.String treePath,
+	public static SyncDLObject findByTreePath_First(String treePath,
 		OrderByComparator<SyncDLObject> orderByComparator)
 		throws com.liferay.sync.exception.NoSuchDLObjectException {
 		return getPersistence().findByTreePath_First(treePath, orderByComparator);
@@ -201,8 +201,7 @@ public class SyncDLObjectUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching sync dl object, or <code>null</code> if a matching sync dl object could not be found
 	*/
-	public static SyncDLObject fetchByTreePath_First(
-		java.lang.String treePath,
+	public static SyncDLObject fetchByTreePath_First(String treePath,
 		OrderByComparator<SyncDLObject> orderByComparator) {
 		return getPersistence()
 				   .fetchByTreePath_First(treePath, orderByComparator);
@@ -216,7 +215,7 @@ public class SyncDLObjectUtil {
 	* @return the last matching sync dl object
 	* @throws NoSuchDLObjectException if a matching sync dl object could not be found
 	*/
-	public static SyncDLObject findByTreePath_Last(java.lang.String treePath,
+	public static SyncDLObject findByTreePath_Last(String treePath,
 		OrderByComparator<SyncDLObject> orderByComparator)
 		throws com.liferay.sync.exception.NoSuchDLObjectException {
 		return getPersistence().findByTreePath_Last(treePath, orderByComparator);
@@ -229,7 +228,7 @@ public class SyncDLObjectUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching sync dl object, or <code>null</code> if a matching sync dl object could not be found
 	*/
-	public static SyncDLObject fetchByTreePath_Last(java.lang.String treePath,
+	public static SyncDLObject fetchByTreePath_Last(String treePath,
 		OrderByComparator<SyncDLObject> orderByComparator) {
 		return getPersistence().fetchByTreePath_Last(treePath, orderByComparator);
 	}
@@ -244,7 +243,7 @@ public class SyncDLObjectUtil {
 	* @throws NoSuchDLObjectException if a sync dl object with the primary key could not be found
 	*/
 	public static SyncDLObject[] findByTreePath_PrevAndNext(
-		long syncDLObjectId, java.lang.String treePath,
+		long syncDLObjectId, String treePath,
 		OrderByComparator<SyncDLObject> orderByComparator)
 		throws com.liferay.sync.exception.NoSuchDLObjectException {
 		return getPersistence()
@@ -257,7 +256,7 @@ public class SyncDLObjectUtil {
 	*
 	* @param treePath the tree path
 	*/
-	public static void removeByTreePath(java.lang.String treePath) {
+	public static void removeByTreePath(String treePath) {
 		getPersistence().removeByTreePath(treePath);
 	}
 
@@ -267,7 +266,7 @@ public class SyncDLObjectUtil {
 	* @param treePath the tree path
 	* @return the number of matching sync dl objects
 	*/
-	public static int countByTreePath(java.lang.String treePath) {
+	public static int countByTreePath(String treePath) {
 		return getPersistence().countByTreePath(treePath);
 	}
 
@@ -639,7 +638,7 @@ public class SyncDLObjectUtil {
 	* @return the matching sync dl objects
 	*/
 	public static List<SyncDLObject> findByR_NotE(long repositoryId,
-		java.lang.String event) {
+		String event) {
 		return getPersistence().findByR_NotE(repositoryId, event);
 	}
 
@@ -657,7 +656,7 @@ public class SyncDLObjectUtil {
 	* @return the range of matching sync dl objects
 	*/
 	public static List<SyncDLObject> findByR_NotE(long repositoryId,
-		java.lang.String event, int start, int end) {
+		String event, int start, int end) {
 		return getPersistence().findByR_NotE(repositoryId, event, start, end);
 	}
 
@@ -676,7 +675,7 @@ public class SyncDLObjectUtil {
 	* @return the ordered range of matching sync dl objects
 	*/
 	public static List<SyncDLObject> findByR_NotE(long repositoryId,
-		java.lang.String event, int start, int end,
+		String event, int start, int end,
 		OrderByComparator<SyncDLObject> orderByComparator) {
 		return getPersistence()
 				   .findByR_NotE(repositoryId, event, start, end,
@@ -699,7 +698,7 @@ public class SyncDLObjectUtil {
 	* @return the ordered range of matching sync dl objects
 	*/
 	public static List<SyncDLObject> findByR_NotE(long repositoryId,
-		java.lang.String event, int start, int end,
+		String event, int start, int end,
 		OrderByComparator<SyncDLObject> orderByComparator,
 		boolean retrieveFromCache) {
 		return getPersistence()
@@ -717,8 +716,7 @@ public class SyncDLObjectUtil {
 	* @throws NoSuchDLObjectException if a matching sync dl object could not be found
 	*/
 	public static SyncDLObject findByR_NotE_First(long repositoryId,
-		java.lang.String event,
-		OrderByComparator<SyncDLObject> orderByComparator)
+		String event, OrderByComparator<SyncDLObject> orderByComparator)
 		throws com.liferay.sync.exception.NoSuchDLObjectException {
 		return getPersistence()
 				   .findByR_NotE_First(repositoryId, event, orderByComparator);
@@ -733,8 +731,7 @@ public class SyncDLObjectUtil {
 	* @return the first matching sync dl object, or <code>null</code> if a matching sync dl object could not be found
 	*/
 	public static SyncDLObject fetchByR_NotE_First(long repositoryId,
-		java.lang.String event,
-		OrderByComparator<SyncDLObject> orderByComparator) {
+		String event, OrderByComparator<SyncDLObject> orderByComparator) {
 		return getPersistence()
 				   .fetchByR_NotE_First(repositoryId, event, orderByComparator);
 	}
@@ -749,8 +746,7 @@ public class SyncDLObjectUtil {
 	* @throws NoSuchDLObjectException if a matching sync dl object could not be found
 	*/
 	public static SyncDLObject findByR_NotE_Last(long repositoryId,
-		java.lang.String event,
-		OrderByComparator<SyncDLObject> orderByComparator)
+		String event, OrderByComparator<SyncDLObject> orderByComparator)
 		throws com.liferay.sync.exception.NoSuchDLObjectException {
 		return getPersistence()
 				   .findByR_NotE_Last(repositoryId, event, orderByComparator);
@@ -765,8 +761,7 @@ public class SyncDLObjectUtil {
 	* @return the last matching sync dl object, or <code>null</code> if a matching sync dl object could not be found
 	*/
 	public static SyncDLObject fetchByR_NotE_Last(long repositoryId,
-		java.lang.String event,
-		OrderByComparator<SyncDLObject> orderByComparator) {
+		String event, OrderByComparator<SyncDLObject> orderByComparator) {
 		return getPersistence()
 				   .fetchByR_NotE_Last(repositoryId, event, orderByComparator);
 	}
@@ -782,7 +777,7 @@ public class SyncDLObjectUtil {
 	* @throws NoSuchDLObjectException if a sync dl object with the primary key could not be found
 	*/
 	public static SyncDLObject[] findByR_NotE_PrevAndNext(long syncDLObjectId,
-		long repositoryId, java.lang.String event,
+		long repositoryId, String event,
 		OrderByComparator<SyncDLObject> orderByComparator)
 		throws com.liferay.sync.exception.NoSuchDLObjectException {
 		return getPersistence()
@@ -796,7 +791,7 @@ public class SyncDLObjectUtil {
 	* @param repositoryId the repository ID
 	* @param event the event
 	*/
-	public static void removeByR_NotE(long repositoryId, java.lang.String event) {
+	public static void removeByR_NotE(long repositoryId, String event) {
 		getPersistence().removeByR_NotE(repositoryId, event);
 	}
 
@@ -807,7 +802,7 @@ public class SyncDLObjectUtil {
 	* @param event the event
 	* @return the number of matching sync dl objects
 	*/
-	public static int countByR_NotE(long repositoryId, java.lang.String event) {
+	public static int countByR_NotE(long repositoryId, String event) {
 		return getPersistence().countByR_NotE(repositoryId, event);
 	}
 
@@ -818,8 +813,7 @@ public class SyncDLObjectUtil {
 	* @param type the type
 	* @return the matching sync dl objects
 	*/
-	public static List<SyncDLObject> findByR_T(long repositoryId,
-		java.lang.String type) {
+	public static List<SyncDLObject> findByR_T(long repositoryId, String type) {
 		return getPersistence().findByR_T(repositoryId, type);
 	}
 
@@ -836,8 +830,8 @@ public class SyncDLObjectUtil {
 	* @param end the upper bound of the range of sync dl objects (not inclusive)
 	* @return the range of matching sync dl objects
 	*/
-	public static List<SyncDLObject> findByR_T(long repositoryId,
-		java.lang.String type, int start, int end) {
+	public static List<SyncDLObject> findByR_T(long repositoryId, String type,
+		int start, int end) {
 		return getPersistence().findByR_T(repositoryId, type, start, end);
 	}
 
@@ -855,9 +849,8 @@ public class SyncDLObjectUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching sync dl objects
 	*/
-	public static List<SyncDLObject> findByR_T(long repositoryId,
-		java.lang.String type, int start, int end,
-		OrderByComparator<SyncDLObject> orderByComparator) {
+	public static List<SyncDLObject> findByR_T(long repositoryId, String type,
+		int start, int end, OrderByComparator<SyncDLObject> orderByComparator) {
 		return getPersistence()
 				   .findByR_T(repositoryId, type, start, end, orderByComparator);
 	}
@@ -877,9 +870,8 @@ public class SyncDLObjectUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching sync dl objects
 	*/
-	public static List<SyncDLObject> findByR_T(long repositoryId,
-		java.lang.String type, int start, int end,
-		OrderByComparator<SyncDLObject> orderByComparator,
+	public static List<SyncDLObject> findByR_T(long repositoryId, String type,
+		int start, int end, OrderByComparator<SyncDLObject> orderByComparator,
 		boolean retrieveFromCache) {
 		return getPersistence()
 				   .findByR_T(repositoryId, type, start, end,
@@ -895,8 +887,8 @@ public class SyncDLObjectUtil {
 	* @return the first matching sync dl object
 	* @throws NoSuchDLObjectException if a matching sync dl object could not be found
 	*/
-	public static SyncDLObject findByR_T_First(long repositoryId,
-		java.lang.String type, OrderByComparator<SyncDLObject> orderByComparator)
+	public static SyncDLObject findByR_T_First(long repositoryId, String type,
+		OrderByComparator<SyncDLObject> orderByComparator)
 		throws com.liferay.sync.exception.NoSuchDLObjectException {
 		return getPersistence()
 				   .findByR_T_First(repositoryId, type, orderByComparator);
@@ -910,8 +902,8 @@ public class SyncDLObjectUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching sync dl object, or <code>null</code> if a matching sync dl object could not be found
 	*/
-	public static SyncDLObject fetchByR_T_First(long repositoryId,
-		java.lang.String type, OrderByComparator<SyncDLObject> orderByComparator) {
+	public static SyncDLObject fetchByR_T_First(long repositoryId, String type,
+		OrderByComparator<SyncDLObject> orderByComparator) {
 		return getPersistence()
 				   .fetchByR_T_First(repositoryId, type, orderByComparator);
 	}
@@ -925,8 +917,8 @@ public class SyncDLObjectUtil {
 	* @return the last matching sync dl object
 	* @throws NoSuchDLObjectException if a matching sync dl object could not be found
 	*/
-	public static SyncDLObject findByR_T_Last(long repositoryId,
-		java.lang.String type, OrderByComparator<SyncDLObject> orderByComparator)
+	public static SyncDLObject findByR_T_Last(long repositoryId, String type,
+		OrderByComparator<SyncDLObject> orderByComparator)
 		throws com.liferay.sync.exception.NoSuchDLObjectException {
 		return getPersistence()
 				   .findByR_T_Last(repositoryId, type, orderByComparator);
@@ -940,8 +932,8 @@ public class SyncDLObjectUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching sync dl object, or <code>null</code> if a matching sync dl object could not be found
 	*/
-	public static SyncDLObject fetchByR_T_Last(long repositoryId,
-		java.lang.String type, OrderByComparator<SyncDLObject> orderByComparator) {
+	public static SyncDLObject fetchByR_T_Last(long repositoryId, String type,
+		OrderByComparator<SyncDLObject> orderByComparator) {
 		return getPersistence()
 				   .fetchByR_T_Last(repositoryId, type, orderByComparator);
 	}
@@ -957,7 +949,7 @@ public class SyncDLObjectUtil {
 	* @throws NoSuchDLObjectException if a sync dl object with the primary key could not be found
 	*/
 	public static SyncDLObject[] findByR_T_PrevAndNext(long syncDLObjectId,
-		long repositoryId, java.lang.String type,
+		long repositoryId, String type,
 		OrderByComparator<SyncDLObject> orderByComparator)
 		throws com.liferay.sync.exception.NoSuchDLObjectException {
 		return getPersistence()
@@ -971,7 +963,7 @@ public class SyncDLObjectUtil {
 	* @param repositoryId the repository ID
 	* @param type the type
 	*/
-	public static void removeByR_T(long repositoryId, java.lang.String type) {
+	public static void removeByR_T(long repositoryId, String type) {
 		getPersistence().removeByR_T(repositoryId, type);
 	}
 
@@ -982,7 +974,7 @@ public class SyncDLObjectUtil {
 	* @param type the type
 	* @return the number of matching sync dl objects
 	*/
-	public static int countByR_T(long repositoryId, java.lang.String type) {
+	public static int countByR_T(long repositoryId, String type) {
 		return getPersistence().countByR_T(repositoryId, type);
 	}
 
@@ -993,8 +985,7 @@ public class SyncDLObjectUtil {
 	* @param event the event
 	* @return the matching sync dl objects
 	*/
-	public static List<SyncDLObject> findByT_NotE(java.lang.String treePath,
-		java.lang.String event) {
+	public static List<SyncDLObject> findByT_NotE(String treePath, String event) {
 		return getPersistence().findByT_NotE(treePath, event);
 	}
 
@@ -1011,8 +1002,8 @@ public class SyncDLObjectUtil {
 	* @param end the upper bound of the range of sync dl objects (not inclusive)
 	* @return the range of matching sync dl objects
 	*/
-	public static List<SyncDLObject> findByT_NotE(java.lang.String treePath,
-		java.lang.String event, int start, int end) {
+	public static List<SyncDLObject> findByT_NotE(String treePath,
+		String event, int start, int end) {
 		return getPersistence().findByT_NotE(treePath, event, start, end);
 	}
 
@@ -1030,8 +1021,8 @@ public class SyncDLObjectUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching sync dl objects
 	*/
-	public static List<SyncDLObject> findByT_NotE(java.lang.String treePath,
-		java.lang.String event, int start, int end,
+	public static List<SyncDLObject> findByT_NotE(String treePath,
+		String event, int start, int end,
 		OrderByComparator<SyncDLObject> orderByComparator) {
 		return getPersistence()
 				   .findByT_NotE(treePath, event, start, end, orderByComparator);
@@ -1052,8 +1043,8 @@ public class SyncDLObjectUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching sync dl objects
 	*/
-	public static List<SyncDLObject> findByT_NotE(java.lang.String treePath,
-		java.lang.String event, int start, int end,
+	public static List<SyncDLObject> findByT_NotE(String treePath,
+		String event, int start, int end,
 		OrderByComparator<SyncDLObject> orderByComparator,
 		boolean retrieveFromCache) {
 		return getPersistence()
@@ -1070,9 +1061,8 @@ public class SyncDLObjectUtil {
 	* @return the first matching sync dl object
 	* @throws NoSuchDLObjectException if a matching sync dl object could not be found
 	*/
-	public static SyncDLObject findByT_NotE_First(java.lang.String treePath,
-		java.lang.String event,
-		OrderByComparator<SyncDLObject> orderByComparator)
+	public static SyncDLObject findByT_NotE_First(String treePath,
+		String event, OrderByComparator<SyncDLObject> orderByComparator)
 		throws com.liferay.sync.exception.NoSuchDLObjectException {
 		return getPersistence()
 				   .findByT_NotE_First(treePath, event, orderByComparator);
@@ -1086,9 +1076,8 @@ public class SyncDLObjectUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching sync dl object, or <code>null</code> if a matching sync dl object could not be found
 	*/
-	public static SyncDLObject fetchByT_NotE_First(java.lang.String treePath,
-		java.lang.String event,
-		OrderByComparator<SyncDLObject> orderByComparator) {
+	public static SyncDLObject fetchByT_NotE_First(String treePath,
+		String event, OrderByComparator<SyncDLObject> orderByComparator) {
 		return getPersistence()
 				   .fetchByT_NotE_First(treePath, event, orderByComparator);
 	}
@@ -1102,8 +1091,7 @@ public class SyncDLObjectUtil {
 	* @return the last matching sync dl object
 	* @throws NoSuchDLObjectException if a matching sync dl object could not be found
 	*/
-	public static SyncDLObject findByT_NotE_Last(java.lang.String treePath,
-		java.lang.String event,
+	public static SyncDLObject findByT_NotE_Last(String treePath, String event,
 		OrderByComparator<SyncDLObject> orderByComparator)
 		throws com.liferay.sync.exception.NoSuchDLObjectException {
 		return getPersistence()
@@ -1118,9 +1106,8 @@ public class SyncDLObjectUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching sync dl object, or <code>null</code> if a matching sync dl object could not be found
 	*/
-	public static SyncDLObject fetchByT_NotE_Last(java.lang.String treePath,
-		java.lang.String event,
-		OrderByComparator<SyncDLObject> orderByComparator) {
+	public static SyncDLObject fetchByT_NotE_Last(String treePath,
+		String event, OrderByComparator<SyncDLObject> orderByComparator) {
 		return getPersistence()
 				   .fetchByT_NotE_Last(treePath, event, orderByComparator);
 	}
@@ -1136,7 +1123,7 @@ public class SyncDLObjectUtil {
 	* @throws NoSuchDLObjectException if a sync dl object with the primary key could not be found
 	*/
 	public static SyncDLObject[] findByT_NotE_PrevAndNext(long syncDLObjectId,
-		java.lang.String treePath, java.lang.String event,
+		String treePath, String event,
 		OrderByComparator<SyncDLObject> orderByComparator)
 		throws com.liferay.sync.exception.NoSuchDLObjectException {
 		return getPersistence()
@@ -1150,8 +1137,7 @@ public class SyncDLObjectUtil {
 	* @param treePath the tree path
 	* @param event the event
 	*/
-	public static void removeByT_NotE(java.lang.String treePath,
-		java.lang.String event) {
+	public static void removeByT_NotE(String treePath, String event) {
 		getPersistence().removeByT_NotE(treePath, event);
 	}
 
@@ -1162,8 +1148,7 @@ public class SyncDLObjectUtil {
 	* @param event the event
 	* @return the number of matching sync dl objects
 	*/
-	public static int countByT_NotE(java.lang.String treePath,
-		java.lang.String event) {
+	public static int countByT_NotE(String treePath, String event) {
 		return getPersistence().countByT_NotE(treePath, event);
 	}
 
@@ -1174,8 +1159,7 @@ public class SyncDLObjectUtil {
 	* @param type the type
 	* @return the matching sync dl objects
 	*/
-	public static List<SyncDLObject> findByV_T(java.lang.String version,
-		java.lang.String type) {
+	public static List<SyncDLObject> findByV_T(String version, String type) {
 		return getPersistence().findByV_T(version, type);
 	}
 
@@ -1192,8 +1176,8 @@ public class SyncDLObjectUtil {
 	* @param end the upper bound of the range of sync dl objects (not inclusive)
 	* @return the range of matching sync dl objects
 	*/
-	public static List<SyncDLObject> findByV_T(java.lang.String version,
-		java.lang.String type, int start, int end) {
+	public static List<SyncDLObject> findByV_T(String version, String type,
+		int start, int end) {
 		return getPersistence().findByV_T(version, type, start, end);
 	}
 
@@ -1211,9 +1195,8 @@ public class SyncDLObjectUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching sync dl objects
 	*/
-	public static List<SyncDLObject> findByV_T(java.lang.String version,
-		java.lang.String type, int start, int end,
-		OrderByComparator<SyncDLObject> orderByComparator) {
+	public static List<SyncDLObject> findByV_T(String version, String type,
+		int start, int end, OrderByComparator<SyncDLObject> orderByComparator) {
 		return getPersistence()
 				   .findByV_T(version, type, start, end, orderByComparator);
 	}
@@ -1233,9 +1216,8 @@ public class SyncDLObjectUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching sync dl objects
 	*/
-	public static List<SyncDLObject> findByV_T(java.lang.String version,
-		java.lang.String type, int start, int end,
-		OrderByComparator<SyncDLObject> orderByComparator,
+	public static List<SyncDLObject> findByV_T(String version, String type,
+		int start, int end, OrderByComparator<SyncDLObject> orderByComparator,
 		boolean retrieveFromCache) {
 		return getPersistence()
 				   .findByV_T(version, type, start, end, orderByComparator,
@@ -1251,8 +1233,8 @@ public class SyncDLObjectUtil {
 	* @return the first matching sync dl object
 	* @throws NoSuchDLObjectException if a matching sync dl object could not be found
 	*/
-	public static SyncDLObject findByV_T_First(java.lang.String version,
-		java.lang.String type, OrderByComparator<SyncDLObject> orderByComparator)
+	public static SyncDLObject findByV_T_First(String version, String type,
+		OrderByComparator<SyncDLObject> orderByComparator)
 		throws com.liferay.sync.exception.NoSuchDLObjectException {
 		return getPersistence().findByV_T_First(version, type, orderByComparator);
 	}
@@ -1265,8 +1247,8 @@ public class SyncDLObjectUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching sync dl object, or <code>null</code> if a matching sync dl object could not be found
 	*/
-	public static SyncDLObject fetchByV_T_First(java.lang.String version,
-		java.lang.String type, OrderByComparator<SyncDLObject> orderByComparator) {
+	public static SyncDLObject fetchByV_T_First(String version, String type,
+		OrderByComparator<SyncDLObject> orderByComparator) {
 		return getPersistence()
 				   .fetchByV_T_First(version, type, orderByComparator);
 	}
@@ -1280,8 +1262,8 @@ public class SyncDLObjectUtil {
 	* @return the last matching sync dl object
 	* @throws NoSuchDLObjectException if a matching sync dl object could not be found
 	*/
-	public static SyncDLObject findByV_T_Last(java.lang.String version,
-		java.lang.String type, OrderByComparator<SyncDLObject> orderByComparator)
+	public static SyncDLObject findByV_T_Last(String version, String type,
+		OrderByComparator<SyncDLObject> orderByComparator)
 		throws com.liferay.sync.exception.NoSuchDLObjectException {
 		return getPersistence().findByV_T_Last(version, type, orderByComparator);
 	}
@@ -1294,8 +1276,8 @@ public class SyncDLObjectUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching sync dl object, or <code>null</code> if a matching sync dl object could not be found
 	*/
-	public static SyncDLObject fetchByV_T_Last(java.lang.String version,
-		java.lang.String type, OrderByComparator<SyncDLObject> orderByComparator) {
+	public static SyncDLObject fetchByV_T_Last(String version, String type,
+		OrderByComparator<SyncDLObject> orderByComparator) {
 		return getPersistence().fetchByV_T_Last(version, type, orderByComparator);
 	}
 
@@ -1310,7 +1292,7 @@ public class SyncDLObjectUtil {
 	* @throws NoSuchDLObjectException if a sync dl object with the primary key could not be found
 	*/
 	public static SyncDLObject[] findByV_T_PrevAndNext(long syncDLObjectId,
-		java.lang.String version, java.lang.String type,
+		String version, String type,
 		OrderByComparator<SyncDLObject> orderByComparator)
 		throws com.liferay.sync.exception.NoSuchDLObjectException {
 		return getPersistence()
@@ -1324,8 +1306,7 @@ public class SyncDLObjectUtil {
 	* @param version the version
 	* @param type the type
 	*/
-	public static void removeByV_T(java.lang.String version,
-		java.lang.String type) {
+	public static void removeByV_T(String version, String type) {
 		getPersistence().removeByV_T(version, type);
 	}
 
@@ -1336,7 +1317,7 @@ public class SyncDLObjectUtil {
 	* @param type the type
 	* @return the number of matching sync dl objects
 	*/
-	public static int countByV_T(java.lang.String version, java.lang.String type) {
+	public static int countByV_T(String version, String type) {
 		return getPersistence().countByV_T(version, type);
 	}
 
@@ -1348,7 +1329,7 @@ public class SyncDLObjectUtil {
 	* @return the matching sync dl object
 	* @throws NoSuchDLObjectException if a matching sync dl object could not be found
 	*/
-	public static SyncDLObject findByT_T(java.lang.String type, long typePK)
+	public static SyncDLObject findByT_T(String type, long typePK)
 		throws com.liferay.sync.exception.NoSuchDLObjectException {
 		return getPersistence().findByT_T(type, typePK);
 	}
@@ -1360,7 +1341,7 @@ public class SyncDLObjectUtil {
 	* @param typePK the type pk
 	* @return the matching sync dl object, or <code>null</code> if a matching sync dl object could not be found
 	*/
-	public static SyncDLObject fetchByT_T(java.lang.String type, long typePK) {
+	public static SyncDLObject fetchByT_T(String type, long typePK) {
 		return getPersistence().fetchByT_T(type, typePK);
 	}
 
@@ -1372,7 +1353,7 @@ public class SyncDLObjectUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching sync dl object, or <code>null</code> if a matching sync dl object could not be found
 	*/
-	public static SyncDLObject fetchByT_T(java.lang.String type, long typePK,
+	public static SyncDLObject fetchByT_T(String type, long typePK,
 		boolean retrieveFromCache) {
 		return getPersistence().fetchByT_T(type, typePK, retrieveFromCache);
 	}
@@ -1384,7 +1365,7 @@ public class SyncDLObjectUtil {
 	* @param typePK the type pk
 	* @return the sync dl object that was removed
 	*/
-	public static SyncDLObject removeByT_T(java.lang.String type, long typePK)
+	public static SyncDLObject removeByT_T(String type, long typePK)
 		throws com.liferay.sync.exception.NoSuchDLObjectException {
 		return getPersistence().removeByT_T(type, typePK);
 	}
@@ -1396,7 +1377,7 @@ public class SyncDLObjectUtil {
 	* @param typePK the type pk
 	* @return the number of matching sync dl objects
 	*/
-	public static int countByT_T(java.lang.String type, long typePK) {
+	public static int countByT_T(String type, long typePK) {
 		return getPersistence().countByT_T(type, typePK);
 	}
 
@@ -1409,7 +1390,7 @@ public class SyncDLObjectUtil {
 	* @return the matching sync dl objects
 	*/
 	public static List<SyncDLObject> findByM_R_NotE(long modifiedTime,
-		long repositoryId, java.lang.String event) {
+		long repositoryId, String event) {
 		return getPersistence().findByM_R_NotE(modifiedTime, repositoryId, event);
 	}
 
@@ -1428,7 +1409,7 @@ public class SyncDLObjectUtil {
 	* @return the range of matching sync dl objects
 	*/
 	public static List<SyncDLObject> findByM_R_NotE(long modifiedTime,
-		long repositoryId, java.lang.String event, int start, int end) {
+		long repositoryId, String event, int start, int end) {
 		return getPersistence()
 				   .findByM_R_NotE(modifiedTime, repositoryId, event, start, end);
 	}
@@ -1449,7 +1430,7 @@ public class SyncDLObjectUtil {
 	* @return the ordered range of matching sync dl objects
 	*/
 	public static List<SyncDLObject> findByM_R_NotE(long modifiedTime,
-		long repositoryId, java.lang.String event, int start, int end,
+		long repositoryId, String event, int start, int end,
 		OrderByComparator<SyncDLObject> orderByComparator) {
 		return getPersistence()
 				   .findByM_R_NotE(modifiedTime, repositoryId, event, start,
@@ -1473,7 +1454,7 @@ public class SyncDLObjectUtil {
 	* @return the ordered range of matching sync dl objects
 	*/
 	public static List<SyncDLObject> findByM_R_NotE(long modifiedTime,
-		long repositoryId, java.lang.String event, int start, int end,
+		long repositoryId, String event, int start, int end,
 		OrderByComparator<SyncDLObject> orderByComparator,
 		boolean retrieveFromCache) {
 		return getPersistence()
@@ -1492,7 +1473,7 @@ public class SyncDLObjectUtil {
 	* @throws NoSuchDLObjectException if a matching sync dl object could not be found
 	*/
 	public static SyncDLObject findByM_R_NotE_First(long modifiedTime,
-		long repositoryId, java.lang.String event,
+		long repositoryId, String event,
 		OrderByComparator<SyncDLObject> orderByComparator)
 		throws com.liferay.sync.exception.NoSuchDLObjectException {
 		return getPersistence()
@@ -1510,7 +1491,7 @@ public class SyncDLObjectUtil {
 	* @return the first matching sync dl object, or <code>null</code> if a matching sync dl object could not be found
 	*/
 	public static SyncDLObject fetchByM_R_NotE_First(long modifiedTime,
-		long repositoryId, java.lang.String event,
+		long repositoryId, String event,
 		OrderByComparator<SyncDLObject> orderByComparator) {
 		return getPersistence()
 				   .fetchByM_R_NotE_First(modifiedTime, repositoryId, event,
@@ -1528,7 +1509,7 @@ public class SyncDLObjectUtil {
 	* @throws NoSuchDLObjectException if a matching sync dl object could not be found
 	*/
 	public static SyncDLObject findByM_R_NotE_Last(long modifiedTime,
-		long repositoryId, java.lang.String event,
+		long repositoryId, String event,
 		OrderByComparator<SyncDLObject> orderByComparator)
 		throws com.liferay.sync.exception.NoSuchDLObjectException {
 		return getPersistence()
@@ -1546,7 +1527,7 @@ public class SyncDLObjectUtil {
 	* @return the last matching sync dl object, or <code>null</code> if a matching sync dl object could not be found
 	*/
 	public static SyncDLObject fetchByM_R_NotE_Last(long modifiedTime,
-		long repositoryId, java.lang.String event,
+		long repositoryId, String event,
 		OrderByComparator<SyncDLObject> orderByComparator) {
 		return getPersistence()
 				   .fetchByM_R_NotE_Last(modifiedTime, repositoryId, event,
@@ -1566,8 +1547,7 @@ public class SyncDLObjectUtil {
 	*/
 	public static SyncDLObject[] findByM_R_NotE_PrevAndNext(
 		long syncDLObjectId, long modifiedTime, long repositoryId,
-		java.lang.String event,
-		OrderByComparator<SyncDLObject> orderByComparator)
+		String event, OrderByComparator<SyncDLObject> orderByComparator)
 		throws com.liferay.sync.exception.NoSuchDLObjectException {
 		return getPersistence()
 				   .findByM_R_NotE_PrevAndNext(syncDLObjectId, modifiedTime,
@@ -1587,7 +1567,7 @@ public class SyncDLObjectUtil {
 	* @return the matching sync dl objects
 	*/
 	public static List<SyncDLObject> findByM_R_NotE(long modifiedTime,
-		long repositoryId, java.lang.String[] events) {
+		long repositoryId, String[] events) {
 		return getPersistence()
 				   .findByM_R_NotE(modifiedTime, repositoryId, events);
 	}
@@ -1607,7 +1587,7 @@ public class SyncDLObjectUtil {
 	* @return the range of matching sync dl objects
 	*/
 	public static List<SyncDLObject> findByM_R_NotE(long modifiedTime,
-		long repositoryId, java.lang.String[] events, int start, int end) {
+		long repositoryId, String[] events, int start, int end) {
 		return getPersistence()
 				   .findByM_R_NotE(modifiedTime, repositoryId, events, start,
 			end);
@@ -1629,7 +1609,7 @@ public class SyncDLObjectUtil {
 	* @return the ordered range of matching sync dl objects
 	*/
 	public static List<SyncDLObject> findByM_R_NotE(long modifiedTime,
-		long repositoryId, java.lang.String[] events, int start, int end,
+		long repositoryId, String[] events, int start, int end,
 		OrderByComparator<SyncDLObject> orderByComparator) {
 		return getPersistence()
 				   .findByM_R_NotE(modifiedTime, repositoryId, events, start,
@@ -1653,7 +1633,7 @@ public class SyncDLObjectUtil {
 	* @return the ordered range of matching sync dl objects
 	*/
 	public static List<SyncDLObject> findByM_R_NotE(long modifiedTime,
-		long repositoryId, java.lang.String[] events, int start, int end,
+		long repositoryId, String[] events, int start, int end,
 		OrderByComparator<SyncDLObject> orderByComparator,
 		boolean retrieveFromCache) {
 		return getPersistence()
@@ -1669,7 +1649,7 @@ public class SyncDLObjectUtil {
 	* @param event the event
 	*/
 	public static void removeByM_R_NotE(long modifiedTime, long repositoryId,
-		java.lang.String event) {
+		String event) {
 		getPersistence().removeByM_R_NotE(modifiedTime, repositoryId, event);
 	}
 
@@ -1682,7 +1662,7 @@ public class SyncDLObjectUtil {
 	* @return the number of matching sync dl objects
 	*/
 	public static int countByM_R_NotE(long modifiedTime, long repositoryId,
-		java.lang.String event) {
+		String event) {
 		return getPersistence()
 				   .countByM_R_NotE(modifiedTime, repositoryId, event);
 	}
@@ -1696,7 +1676,7 @@ public class SyncDLObjectUtil {
 	* @return the number of matching sync dl objects
 	*/
 	public static int countByM_R_NotE(long modifiedTime, long repositoryId,
-		java.lang.String[] events) {
+		String[] events) {
 		return getPersistence()
 				   .countByM_R_NotE(modifiedTime, repositoryId, events);
 	}
@@ -1710,7 +1690,7 @@ public class SyncDLObjectUtil {
 	* @return the matching sync dl objects
 	*/
 	public static List<SyncDLObject> findByR_P_T(long repositoryId,
-		long parentFolderId, java.lang.String type) {
+		long parentFolderId, String type) {
 		return getPersistence().findByR_P_T(repositoryId, parentFolderId, type);
 	}
 
@@ -1729,7 +1709,7 @@ public class SyncDLObjectUtil {
 	* @return the range of matching sync dl objects
 	*/
 	public static List<SyncDLObject> findByR_P_T(long repositoryId,
-		long parentFolderId, java.lang.String type, int start, int end) {
+		long parentFolderId, String type, int start, int end) {
 		return getPersistence()
 				   .findByR_P_T(repositoryId, parentFolderId, type, start, end);
 	}
@@ -1750,7 +1730,7 @@ public class SyncDLObjectUtil {
 	* @return the ordered range of matching sync dl objects
 	*/
 	public static List<SyncDLObject> findByR_P_T(long repositoryId,
-		long parentFolderId, java.lang.String type, int start, int end,
+		long parentFolderId, String type, int start, int end,
 		OrderByComparator<SyncDLObject> orderByComparator) {
 		return getPersistence()
 				   .findByR_P_T(repositoryId, parentFolderId, type, start, end,
@@ -1774,7 +1754,7 @@ public class SyncDLObjectUtil {
 	* @return the ordered range of matching sync dl objects
 	*/
 	public static List<SyncDLObject> findByR_P_T(long repositoryId,
-		long parentFolderId, java.lang.String type, int start, int end,
+		long parentFolderId, String type, int start, int end,
 		OrderByComparator<SyncDLObject> orderByComparator,
 		boolean retrieveFromCache) {
 		return getPersistence()
@@ -1793,7 +1773,7 @@ public class SyncDLObjectUtil {
 	* @throws NoSuchDLObjectException if a matching sync dl object could not be found
 	*/
 	public static SyncDLObject findByR_P_T_First(long repositoryId,
-		long parentFolderId, java.lang.String type,
+		long parentFolderId, String type,
 		OrderByComparator<SyncDLObject> orderByComparator)
 		throws com.liferay.sync.exception.NoSuchDLObjectException {
 		return getPersistence()
@@ -1811,7 +1791,7 @@ public class SyncDLObjectUtil {
 	* @return the first matching sync dl object, or <code>null</code> if a matching sync dl object could not be found
 	*/
 	public static SyncDLObject fetchByR_P_T_First(long repositoryId,
-		long parentFolderId, java.lang.String type,
+		long parentFolderId, String type,
 		OrderByComparator<SyncDLObject> orderByComparator) {
 		return getPersistence()
 				   .fetchByR_P_T_First(repositoryId, parentFolderId, type,
@@ -1829,7 +1809,7 @@ public class SyncDLObjectUtil {
 	* @throws NoSuchDLObjectException if a matching sync dl object could not be found
 	*/
 	public static SyncDLObject findByR_P_T_Last(long repositoryId,
-		long parentFolderId, java.lang.String type,
+		long parentFolderId, String type,
 		OrderByComparator<SyncDLObject> orderByComparator)
 		throws com.liferay.sync.exception.NoSuchDLObjectException {
 		return getPersistence()
@@ -1847,7 +1827,7 @@ public class SyncDLObjectUtil {
 	* @return the last matching sync dl object, or <code>null</code> if a matching sync dl object could not be found
 	*/
 	public static SyncDLObject fetchByR_P_T_Last(long repositoryId,
-		long parentFolderId, java.lang.String type,
+		long parentFolderId, String type,
 		OrderByComparator<SyncDLObject> orderByComparator) {
 		return getPersistence()
 				   .fetchByR_P_T_Last(repositoryId, parentFolderId, type,
@@ -1866,7 +1846,7 @@ public class SyncDLObjectUtil {
 	* @throws NoSuchDLObjectException if a sync dl object with the primary key could not be found
 	*/
 	public static SyncDLObject[] findByR_P_T_PrevAndNext(long syncDLObjectId,
-		long repositoryId, long parentFolderId, java.lang.String type,
+		long repositoryId, long parentFolderId, String type,
 		OrderByComparator<SyncDLObject> orderByComparator)
 		throws com.liferay.sync.exception.NoSuchDLObjectException {
 		return getPersistence()
@@ -1887,7 +1867,7 @@ public class SyncDLObjectUtil {
 	* @return the matching sync dl objects
 	*/
 	public static List<SyncDLObject> findByR_P_T(long repositoryId,
-		long parentFolderId, java.lang.String[] types) {
+		long parentFolderId, String[] types) {
 		return getPersistence().findByR_P_T(repositoryId, parentFolderId, types);
 	}
 
@@ -1906,7 +1886,7 @@ public class SyncDLObjectUtil {
 	* @return the range of matching sync dl objects
 	*/
 	public static List<SyncDLObject> findByR_P_T(long repositoryId,
-		long parentFolderId, java.lang.String[] types, int start, int end) {
+		long parentFolderId, String[] types, int start, int end) {
 		return getPersistence()
 				   .findByR_P_T(repositoryId, parentFolderId, types, start, end);
 	}
@@ -1927,7 +1907,7 @@ public class SyncDLObjectUtil {
 	* @return the ordered range of matching sync dl objects
 	*/
 	public static List<SyncDLObject> findByR_P_T(long repositoryId,
-		long parentFolderId, java.lang.String[] types, int start, int end,
+		long parentFolderId, String[] types, int start, int end,
 		OrderByComparator<SyncDLObject> orderByComparator) {
 		return getPersistence()
 				   .findByR_P_T(repositoryId, parentFolderId, types, start,
@@ -1951,7 +1931,7 @@ public class SyncDLObjectUtil {
 	* @return the ordered range of matching sync dl objects
 	*/
 	public static List<SyncDLObject> findByR_P_T(long repositoryId,
-		long parentFolderId, java.lang.String[] types, int start, int end,
+		long parentFolderId, String[] types, int start, int end,
 		OrderByComparator<SyncDLObject> orderByComparator,
 		boolean retrieveFromCache) {
 		return getPersistence()
@@ -1967,7 +1947,7 @@ public class SyncDLObjectUtil {
 	* @param type the type
 	*/
 	public static void removeByR_P_T(long repositoryId, long parentFolderId,
-		java.lang.String type) {
+		String type) {
 		getPersistence().removeByR_P_T(repositoryId, parentFolderId, type);
 	}
 
@@ -1980,7 +1960,7 @@ public class SyncDLObjectUtil {
 	* @return the number of matching sync dl objects
 	*/
 	public static int countByR_P_T(long repositoryId, long parentFolderId,
-		java.lang.String type) {
+		String type) {
 		return getPersistence().countByR_P_T(repositoryId, parentFolderId, type);
 	}
 
@@ -1993,7 +1973,7 @@ public class SyncDLObjectUtil {
 	* @return the number of matching sync dl objects
 	*/
 	public static int countByR_P_T(long repositoryId, long parentFolderId,
-		java.lang.String[] types) {
+		String[] types) {
 		return getPersistence().countByR_P_T(repositoryId, parentFolderId, types);
 	}
 
@@ -2145,7 +2125,7 @@ public class SyncDLObjectUtil {
 		return getPersistence().countAll();
 	}
 
-	public static java.util.Set<java.lang.String> getBadColumnNames() {
+	public static java.util.Set<String> getBadColumnNames() {
 		return getPersistence().getBadColumnNames();
 	}
 

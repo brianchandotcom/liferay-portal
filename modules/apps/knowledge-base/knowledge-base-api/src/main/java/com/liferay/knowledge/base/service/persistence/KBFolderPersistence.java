@@ -47,7 +47,7 @@ public interface KBFolderPersistence extends BasePersistence<KBFolder> {
 	* @param uuid the uuid
 	* @return the matching kb folders
 	*/
-	public java.util.List<KBFolder> findByUuid(java.lang.String uuid);
+	public java.util.List<KBFolder> findByUuid(String uuid);
 
 	/**
 	* Returns a range of all the kb folders where uuid = &#63;.
@@ -61,8 +61,7 @@ public interface KBFolderPersistence extends BasePersistence<KBFolder> {
 	* @param end the upper bound of the range of kb folders (not inclusive)
 	* @return the range of matching kb folders
 	*/
-	public java.util.List<KBFolder> findByUuid(java.lang.String uuid,
-		int start, int end);
+	public java.util.List<KBFolder> findByUuid(String uuid, int start, int end);
 
 	/**
 	* Returns an ordered range of all the kb folders where uuid = &#63;.
@@ -77,8 +76,7 @@ public interface KBFolderPersistence extends BasePersistence<KBFolder> {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching kb folders
 	*/
-	public java.util.List<KBFolder> findByUuid(java.lang.String uuid,
-		int start, int end,
+	public java.util.List<KBFolder> findByUuid(String uuid, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<KBFolder> orderByComparator);
 
 	/**
@@ -95,8 +93,7 @@ public interface KBFolderPersistence extends BasePersistence<KBFolder> {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching kb folders
 	*/
-	public java.util.List<KBFolder> findByUuid(java.lang.String uuid,
-		int start, int end,
+	public java.util.List<KBFolder> findByUuid(String uuid, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<KBFolder> orderByComparator,
 		boolean retrieveFromCache);
 
@@ -108,7 +105,7 @@ public interface KBFolderPersistence extends BasePersistence<KBFolder> {
 	* @return the first matching kb folder
 	* @throws NoSuchFolderException if a matching kb folder could not be found
 	*/
-	public KBFolder findByUuid_First(java.lang.String uuid,
+	public KBFolder findByUuid_First(String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<KBFolder> orderByComparator)
 		throws NoSuchFolderException;
 
@@ -119,7 +116,7 @@ public interface KBFolderPersistence extends BasePersistence<KBFolder> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching kb folder, or <code>null</code> if a matching kb folder could not be found
 	*/
-	public KBFolder fetchByUuid_First(java.lang.String uuid,
+	public KBFolder fetchByUuid_First(String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<KBFolder> orderByComparator);
 
 	/**
@@ -130,7 +127,7 @@ public interface KBFolderPersistence extends BasePersistence<KBFolder> {
 	* @return the last matching kb folder
 	* @throws NoSuchFolderException if a matching kb folder could not be found
 	*/
-	public KBFolder findByUuid_Last(java.lang.String uuid,
+	public KBFolder findByUuid_Last(String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<KBFolder> orderByComparator)
 		throws NoSuchFolderException;
 
@@ -141,7 +138,7 @@ public interface KBFolderPersistence extends BasePersistence<KBFolder> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching kb folder, or <code>null</code> if a matching kb folder could not be found
 	*/
-	public KBFolder fetchByUuid_Last(java.lang.String uuid,
+	public KBFolder fetchByUuid_Last(String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<KBFolder> orderByComparator);
 
 	/**
@@ -153,8 +150,7 @@ public interface KBFolderPersistence extends BasePersistence<KBFolder> {
 	* @return the previous, current, and next kb folder
 	* @throws NoSuchFolderException if a kb folder with the primary key could not be found
 	*/
-	public KBFolder[] findByUuid_PrevAndNext(long kbFolderId,
-		java.lang.String uuid,
+	public KBFolder[] findByUuid_PrevAndNext(long kbFolderId, String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<KBFolder> orderByComparator)
 		throws NoSuchFolderException;
 
@@ -163,7 +159,7 @@ public interface KBFolderPersistence extends BasePersistence<KBFolder> {
 	*
 	* @param uuid the uuid
 	*/
-	public void removeByUuid(java.lang.String uuid);
+	public void removeByUuid(String uuid);
 
 	/**
 	* Returns the number of kb folders where uuid = &#63;.
@@ -171,7 +167,7 @@ public interface KBFolderPersistence extends BasePersistence<KBFolder> {
 	* @param uuid the uuid
 	* @return the number of matching kb folders
 	*/
-	public int countByUuid(java.lang.String uuid);
+	public int countByUuid(String uuid);
 
 	/**
 	* Returns the kb folder where uuid = &#63; and groupId = &#63; or throws a {@link NoSuchFolderException} if it could not be found.
@@ -181,7 +177,7 @@ public interface KBFolderPersistence extends BasePersistence<KBFolder> {
 	* @return the matching kb folder
 	* @throws NoSuchFolderException if a matching kb folder could not be found
 	*/
-	public KBFolder findByUUID_G(java.lang.String uuid, long groupId)
+	public KBFolder findByUUID_G(String uuid, long groupId)
 		throws NoSuchFolderException;
 
 	/**
@@ -191,7 +187,7 @@ public interface KBFolderPersistence extends BasePersistence<KBFolder> {
 	* @param groupId the group ID
 	* @return the matching kb folder, or <code>null</code> if a matching kb folder could not be found
 	*/
-	public KBFolder fetchByUUID_G(java.lang.String uuid, long groupId);
+	public KBFolder fetchByUUID_G(String uuid, long groupId);
 
 	/**
 	* Returns the kb folder where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -201,7 +197,7 @@ public interface KBFolderPersistence extends BasePersistence<KBFolder> {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching kb folder, or <code>null</code> if a matching kb folder could not be found
 	*/
-	public KBFolder fetchByUUID_G(java.lang.String uuid, long groupId,
+	public KBFolder fetchByUUID_G(String uuid, long groupId,
 		boolean retrieveFromCache);
 
 	/**
@@ -211,7 +207,7 @@ public interface KBFolderPersistence extends BasePersistence<KBFolder> {
 	* @param groupId the group ID
 	* @return the kb folder that was removed
 	*/
-	public KBFolder removeByUUID_G(java.lang.String uuid, long groupId)
+	public KBFolder removeByUUID_G(String uuid, long groupId)
 		throws NoSuchFolderException;
 
 	/**
@@ -221,7 +217,7 @@ public interface KBFolderPersistence extends BasePersistence<KBFolder> {
 	* @param groupId the group ID
 	* @return the number of matching kb folders
 	*/
-	public int countByUUID_G(java.lang.String uuid, long groupId);
+	public int countByUUID_G(String uuid, long groupId);
 
 	/**
 	* Returns all the kb folders where uuid = &#63; and companyId = &#63;.
@@ -230,8 +226,7 @@ public interface KBFolderPersistence extends BasePersistence<KBFolder> {
 	* @param companyId the company ID
 	* @return the matching kb folders
 	*/
-	public java.util.List<KBFolder> findByUuid_C(java.lang.String uuid,
-		long companyId);
+	public java.util.List<KBFolder> findByUuid_C(String uuid, long companyId);
 
 	/**
 	* Returns a range of all the kb folders where uuid = &#63; and companyId = &#63;.
@@ -246,8 +241,8 @@ public interface KBFolderPersistence extends BasePersistence<KBFolder> {
 	* @param end the upper bound of the range of kb folders (not inclusive)
 	* @return the range of matching kb folders
 	*/
-	public java.util.List<KBFolder> findByUuid_C(java.lang.String uuid,
-		long companyId, int start, int end);
+	public java.util.List<KBFolder> findByUuid_C(String uuid, long companyId,
+		int start, int end);
 
 	/**
 	* Returns an ordered range of all the kb folders where uuid = &#63; and companyId = &#63;.
@@ -263,8 +258,8 @@ public interface KBFolderPersistence extends BasePersistence<KBFolder> {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching kb folders
 	*/
-	public java.util.List<KBFolder> findByUuid_C(java.lang.String uuid,
-		long companyId, int start, int end,
+	public java.util.List<KBFolder> findByUuid_C(String uuid, long companyId,
+		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<KBFolder> orderByComparator);
 
 	/**
@@ -282,8 +277,8 @@ public interface KBFolderPersistence extends BasePersistence<KBFolder> {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching kb folders
 	*/
-	public java.util.List<KBFolder> findByUuid_C(java.lang.String uuid,
-		long companyId, int start, int end,
+	public java.util.List<KBFolder> findByUuid_C(String uuid, long companyId,
+		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<KBFolder> orderByComparator,
 		boolean retrieveFromCache);
 
@@ -296,7 +291,7 @@ public interface KBFolderPersistence extends BasePersistence<KBFolder> {
 	* @return the first matching kb folder
 	* @throws NoSuchFolderException if a matching kb folder could not be found
 	*/
-	public KBFolder findByUuid_C_First(java.lang.String uuid, long companyId,
+	public KBFolder findByUuid_C_First(String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<KBFolder> orderByComparator)
 		throws NoSuchFolderException;
 
@@ -308,7 +303,7 @@ public interface KBFolderPersistence extends BasePersistence<KBFolder> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching kb folder, or <code>null</code> if a matching kb folder could not be found
 	*/
-	public KBFolder fetchByUuid_C_First(java.lang.String uuid, long companyId,
+	public KBFolder fetchByUuid_C_First(String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<KBFolder> orderByComparator);
 
 	/**
@@ -320,7 +315,7 @@ public interface KBFolderPersistence extends BasePersistence<KBFolder> {
 	* @return the last matching kb folder
 	* @throws NoSuchFolderException if a matching kb folder could not be found
 	*/
-	public KBFolder findByUuid_C_Last(java.lang.String uuid, long companyId,
+	public KBFolder findByUuid_C_Last(String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<KBFolder> orderByComparator)
 		throws NoSuchFolderException;
 
@@ -332,7 +327,7 @@ public interface KBFolderPersistence extends BasePersistence<KBFolder> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching kb folder, or <code>null</code> if a matching kb folder could not be found
 	*/
-	public KBFolder fetchByUuid_C_Last(java.lang.String uuid, long companyId,
+	public KBFolder fetchByUuid_C_Last(String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<KBFolder> orderByComparator);
 
 	/**
@@ -345,8 +340,8 @@ public interface KBFolderPersistence extends BasePersistence<KBFolder> {
 	* @return the previous, current, and next kb folder
 	* @throws NoSuchFolderException if a kb folder with the primary key could not be found
 	*/
-	public KBFolder[] findByUuid_C_PrevAndNext(long kbFolderId,
-		java.lang.String uuid, long companyId,
+	public KBFolder[] findByUuid_C_PrevAndNext(long kbFolderId, String uuid,
+		long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<KBFolder> orderByComparator)
 		throws NoSuchFolderException;
 
@@ -356,7 +351,7 @@ public interface KBFolderPersistence extends BasePersistence<KBFolder> {
 	* @param uuid the uuid
 	* @param companyId the company ID
 	*/
-	public void removeByUuid_C(java.lang.String uuid, long companyId);
+	public void removeByUuid_C(String uuid, long companyId);
 
 	/**
 	* Returns the number of kb folders where uuid = &#63; and companyId = &#63;.
@@ -365,7 +360,7 @@ public interface KBFolderPersistence extends BasePersistence<KBFolder> {
 	* @param companyId the company ID
 	* @return the number of matching kb folders
 	*/
-	public int countByUuid_C(java.lang.String uuid, long companyId);
+	public int countByUuid_C(String uuid, long companyId);
 
 	/**
 	* Returns all the kb folders where groupId = &#63; and parentKBFolderId = &#63;.
@@ -588,8 +583,8 @@ public interface KBFolderPersistence extends BasePersistence<KBFolder> {
 	* @return the matching kb folder
 	* @throws NoSuchFolderException if a matching kb folder could not be found
 	*/
-	public KBFolder findByG_P_N(long groupId, long parentKBFolderId,
-		java.lang.String name) throws NoSuchFolderException;
+	public KBFolder findByG_P_N(long groupId, long parentKBFolderId, String name)
+		throws NoSuchFolderException;
 
 	/**
 	* Returns the kb folder where groupId = &#63; and parentKBFolderId = &#63; and name = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
@@ -600,7 +595,7 @@ public interface KBFolderPersistence extends BasePersistence<KBFolder> {
 	* @return the matching kb folder, or <code>null</code> if a matching kb folder could not be found
 	*/
 	public KBFolder fetchByG_P_N(long groupId, long parentKBFolderId,
-		java.lang.String name);
+		String name);
 
 	/**
 	* Returns the kb folder where groupId = &#63; and parentKBFolderId = &#63; and name = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -612,7 +607,7 @@ public interface KBFolderPersistence extends BasePersistence<KBFolder> {
 	* @return the matching kb folder, or <code>null</code> if a matching kb folder could not be found
 	*/
 	public KBFolder fetchByG_P_N(long groupId, long parentKBFolderId,
-		java.lang.String name, boolean retrieveFromCache);
+		String name, boolean retrieveFromCache);
 
 	/**
 	* Removes the kb folder where groupId = &#63; and parentKBFolderId = &#63; and name = &#63; from the database.
@@ -623,7 +618,7 @@ public interface KBFolderPersistence extends BasePersistence<KBFolder> {
 	* @return the kb folder that was removed
 	*/
 	public KBFolder removeByG_P_N(long groupId, long parentKBFolderId,
-		java.lang.String name) throws NoSuchFolderException;
+		String name) throws NoSuchFolderException;
 
 	/**
 	* Returns the number of kb folders where groupId = &#63; and parentKBFolderId = &#63; and name = &#63;.
@@ -633,8 +628,7 @@ public interface KBFolderPersistence extends BasePersistence<KBFolder> {
 	* @param name the name
 	* @return the number of matching kb folders
 	*/
-	public int countByG_P_N(long groupId, long parentKBFolderId,
-		java.lang.String name);
+	public int countByG_P_N(long groupId, long parentKBFolderId, String name);
 
 	/**
 	* Returns the kb folder where groupId = &#63; and parentKBFolderId = &#63; and urlTitle = &#63; or throws a {@link NoSuchFolderException} if it could not be found.
@@ -646,7 +640,7 @@ public interface KBFolderPersistence extends BasePersistence<KBFolder> {
 	* @throws NoSuchFolderException if a matching kb folder could not be found
 	*/
 	public KBFolder findByG_P_UT(long groupId, long parentKBFolderId,
-		java.lang.String urlTitle) throws NoSuchFolderException;
+		String urlTitle) throws NoSuchFolderException;
 
 	/**
 	* Returns the kb folder where groupId = &#63; and parentKBFolderId = &#63; and urlTitle = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
@@ -657,7 +651,7 @@ public interface KBFolderPersistence extends BasePersistence<KBFolder> {
 	* @return the matching kb folder, or <code>null</code> if a matching kb folder could not be found
 	*/
 	public KBFolder fetchByG_P_UT(long groupId, long parentKBFolderId,
-		java.lang.String urlTitle);
+		String urlTitle);
 
 	/**
 	* Returns the kb folder where groupId = &#63; and parentKBFolderId = &#63; and urlTitle = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -669,7 +663,7 @@ public interface KBFolderPersistence extends BasePersistence<KBFolder> {
 	* @return the matching kb folder, or <code>null</code> if a matching kb folder could not be found
 	*/
 	public KBFolder fetchByG_P_UT(long groupId, long parentKBFolderId,
-		java.lang.String urlTitle, boolean retrieveFromCache);
+		String urlTitle, boolean retrieveFromCache);
 
 	/**
 	* Removes the kb folder where groupId = &#63; and parentKBFolderId = &#63; and urlTitle = &#63; from the database.
@@ -680,7 +674,7 @@ public interface KBFolderPersistence extends BasePersistence<KBFolder> {
 	* @return the kb folder that was removed
 	*/
 	public KBFolder removeByG_P_UT(long groupId, long parentKBFolderId,
-		java.lang.String urlTitle) throws NoSuchFolderException;
+		String urlTitle) throws NoSuchFolderException;
 
 	/**
 	* Returns the number of kb folders where groupId = &#63; and parentKBFolderId = &#63; and urlTitle = &#63;.
@@ -691,7 +685,7 @@ public interface KBFolderPersistence extends BasePersistence<KBFolder> {
 	* @return the number of matching kb folders
 	*/
 	public int countByG_P_UT(long groupId, long parentKBFolderId,
-		java.lang.String urlTitle);
+		String urlTitle);
 
 	/**
 	* Caches the kb folder in the entity cache if it is enabled.
@@ -813,5 +807,5 @@ public interface KBFolderPersistence extends BasePersistence<KBFolder> {
 	public int countAll();
 
 	@Override
-	public java.util.Set<java.lang.String> getBadColumnNames();
+	public java.util.Set<String> getBadColumnNames();
 }

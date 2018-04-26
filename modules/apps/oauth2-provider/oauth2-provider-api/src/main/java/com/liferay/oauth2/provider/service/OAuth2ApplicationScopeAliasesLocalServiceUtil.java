@@ -43,9 +43,8 @@ public class OAuth2ApplicationScopeAliasesLocalServiceUtil {
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.oauth2.provider.service.impl.OAuth2ApplicationScopeAliasesLocalServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static com.liferay.oauth2.provider.model.OAuth2ApplicationScopeAliases addOAuth2ApplicationScopeAliases(
-		long companyId, long userId, java.lang.String userName,
-		long oAuth2ApplicationId,
-		java.util.List<java.lang.String> scopeAliasesList)
+		long companyId, long userId, String userName, long oAuth2ApplicationId,
+		java.util.List<String> scopeAliasesList)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addOAuth2ApplicationScopeAliases(companyId, userId,
@@ -196,8 +195,7 @@ public class OAuth2ApplicationScopeAliasesLocalServiceUtil {
 	}
 
 	public static com.liferay.oauth2.provider.model.OAuth2ApplicationScopeAliases fetchOAuth2ApplicationScopeAliases(
-		long oAuth2ApplicationId,
-		java.util.List<java.lang.String> scopeAliasesList) {
+		long oAuth2ApplicationId, java.util.List<String> scopeAliasesList) {
 		return getService()
 				   .fetchOAuth2ApplicationScopeAliases(oAuth2ApplicationId,
 			scopeAliasesList);
@@ -263,7 +261,7 @@ public class OAuth2ApplicationScopeAliasesLocalServiceUtil {
 	*
 	* @return the OSGi service identifier
 	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
+	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 

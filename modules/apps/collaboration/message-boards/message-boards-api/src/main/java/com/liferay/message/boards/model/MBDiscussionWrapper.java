@@ -152,7 +152,7 @@ public class MBDiscussionWrapper implements MBDiscussion,
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new MBDiscussionWrapper((MBDiscussion)_mbDiscussion.clone());
 	}
 
@@ -167,7 +167,7 @@ public class MBDiscussionWrapper implements MBDiscussion,
 	* @return the fully qualified class name of this message boards discussion
 	*/
 	@Override
-	public java.lang.String getClassName() {
+	public String getClassName() {
 		return _mbDiscussion.getClassName();
 	}
 
@@ -297,7 +297,7 @@ public class MBDiscussionWrapper implements MBDiscussion,
 	* @return the user name of this message boards discussion
 	*/
 	@Override
-	public java.lang.String getUserName() {
+	public String getUserName() {
 		return _mbDiscussion.getUserName();
 	}
 
@@ -307,7 +307,7 @@ public class MBDiscussionWrapper implements MBDiscussion,
 	* @return the user uuid of this message boards discussion
 	*/
 	@Override
-	public java.lang.String getUserUuid() {
+	public String getUserUuid() {
 		return _mbDiscussion.getUserUuid();
 	}
 
@@ -317,7 +317,7 @@ public class MBDiscussionWrapper implements MBDiscussion,
 	* @return the uuid of this message boards discussion
 	*/
 	@Override
-	public java.lang.String getUuid() {
+	public String getUuid() {
 		return _mbDiscussion.getUuid();
 	}
 
@@ -352,7 +352,7 @@ public class MBDiscussionWrapper implements MBDiscussion,
 	}
 
 	@Override
-	public void setClassName(java.lang.String className) {
+	public void setClassName(String className) {
 		_mbDiscussion.setClassName(className);
 	}
 
@@ -498,7 +498,7 @@ public class MBDiscussionWrapper implements MBDiscussion,
 	* @param userName the user name of this message boards discussion
 	*/
 	@Override
-	public void setUserName(java.lang.String userName) {
+	public void setUserName(String userName) {
 		_mbDiscussion.setUserName(userName);
 	}
 
@@ -508,7 +508,7 @@ public class MBDiscussionWrapper implements MBDiscussion,
 	* @param userUuid the user uuid of this message boards discussion
 	*/
 	@Override
-	public void setUserUuid(java.lang.String userUuid) {
+	public void setUserUuid(String userUuid) {
 		_mbDiscussion.setUserUuid(userUuid);
 	}
 
@@ -518,7 +518,7 @@ public class MBDiscussionWrapper implements MBDiscussion,
 	* @param uuid the uuid of this message boards discussion
 	*/
 	@Override
-	public void setUuid(java.lang.String uuid) {
+	public void setUuid(String uuid) {
 		_mbDiscussion.setUuid(uuid);
 	}
 
@@ -533,7 +533,7 @@ public class MBDiscussionWrapper implements MBDiscussion,
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _mbDiscussion.toString();
 	}
 
@@ -543,7 +543,7 @@ public class MBDiscussionWrapper implements MBDiscussion,
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _mbDiscussion.toXmlString();
 	}
 

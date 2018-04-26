@@ -121,8 +121,8 @@ public class SocialActivityServiceHttp {
 	}
 
 	public static java.util.List<com.liferay.social.kernel.model.SocialActivity> getActivities(
-		HttpPrincipal httpPrincipal, long mirrorActivityId,
-		java.lang.String className, long classPK, int start, int end)
+		HttpPrincipal httpPrincipal, long mirrorActivityId, String className,
+		long classPK, int start, int end)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(SocialActivityServiceUtil.class,
@@ -154,8 +154,8 @@ public class SocialActivityServiceHttp {
 	}
 
 	public static java.util.List<com.liferay.social.kernel.model.SocialActivity> getActivities(
-		HttpPrincipal httpPrincipal, java.lang.String className, int start,
-		int end) throws com.liferay.portal.kernel.exception.PortalException {
+		HttpPrincipal httpPrincipal, String className, int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(SocialActivityServiceUtil.class,
 					"getActivities", _getActivitiesParameterTypes3);
@@ -240,7 +240,7 @@ public class SocialActivityServiceHttp {
 	}
 
 	public static int getActivitiesCount(HttpPrincipal httpPrincipal,
-		long mirrorActivityId, java.lang.String className, long classPK) {
+		long mirrorActivityId, String className, long classPK) {
 		try {
 			MethodKey methodKey = new MethodKey(SocialActivityServiceUtil.class,
 					"getActivitiesCount", _getActivitiesCountParameterTypes6);
@@ -267,7 +267,7 @@ public class SocialActivityServiceHttp {
 	}
 
 	public static int getActivitiesCount(HttpPrincipal httpPrincipal,
-		java.lang.String className) {
+		String className) {
 		try {
 			MethodKey methodKey = new MethodKey(SocialActivityServiceUtil.class,
 					"getActivitiesCount", _getActivitiesCountParameterTypes7);
@@ -998,10 +998,10 @@ public class SocialActivityServiceHttp {
 			long.class, long.class, long.class, int.class, int.class
 		};
 	private static final Class<?>[] _getActivitiesParameterTypes2 = new Class[] {
-			long.class, java.lang.String.class, long.class, int.class, int.class
+			long.class, String.class, long.class, int.class, int.class
 		};
 	private static final Class<?>[] _getActivitiesParameterTypes3 = new Class[] {
-			java.lang.String.class, int.class, int.class
+			String.class, int.class, int.class
 		};
 	private static final Class<?>[] _getActivitiesCountParameterTypes4 = new Class[] {
 			long.class
@@ -1010,10 +1010,10 @@ public class SocialActivityServiceHttp {
 			long.class, long.class, long.class
 		};
 	private static final Class<?>[] _getActivitiesCountParameterTypes6 = new Class[] {
-			long.class, java.lang.String.class, long.class
+			long.class, String.class, long.class
 		};
 	private static final Class<?>[] _getActivitiesCountParameterTypes7 = new Class[] {
-			java.lang.String.class
+			String.class
 		};
 	private static final Class<?>[] _getActivityParameterTypes8 = new Class[] {
 			long.class

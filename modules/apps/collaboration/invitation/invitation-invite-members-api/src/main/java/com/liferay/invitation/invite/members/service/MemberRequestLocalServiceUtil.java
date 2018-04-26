@@ -44,8 +44,7 @@ public class MemberRequestLocalServiceUtil {
 	 */
 	public static com.liferay.invitation.invite.members.model.MemberRequest addMemberRequest(
 		long userId, long groupId, long receiverUserId,
-		java.lang.String receiverEmailAddress, long invitedRoleId,
-		long invitedTeamId,
+		String receiverEmailAddress, long invitedRoleId, long invitedTeamId,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
@@ -74,8 +73,7 @@ public class MemberRequestLocalServiceUtil {
 	}
 
 	public static void addMemberRequests(long userId, long groupId,
-		java.lang.String[] emailAddresses, long invitedRoleId,
-		long invitedTeamId,
+		String[] emailAddresses, long invitedRoleId, long invitedTeamId,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService()
@@ -267,7 +265,7 @@ public class MemberRequestLocalServiceUtil {
 	*
 	* @return the OSGi service identifier
 	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
+	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 
@@ -306,7 +304,7 @@ public class MemberRequestLocalServiceUtil {
 
 	public static com.liferay.invitation.invite.members.model.MemberRequest updateMemberRequest(
 		long userId, long memberRequestId, int status)
-		throws java.lang.Exception {
+		throws Exception {
 		return getService().updateMemberRequest(userId, memberRequestId, status);
 	}
 
@@ -322,7 +320,7 @@ public class MemberRequestLocalServiceUtil {
 	}
 
 	public static com.liferay.invitation.invite.members.model.MemberRequest updateMemberRequest(
-		java.lang.String key, long receiverUserId)
+		String key, long receiverUserId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().updateMemberRequest(key, receiverUserId);
 	}

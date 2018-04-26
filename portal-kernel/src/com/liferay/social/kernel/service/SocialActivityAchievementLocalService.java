@@ -177,7 +177,7 @@ public interface SocialActivityAchievementLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public SocialActivityAchievement fetchUserAchievement(long userId,
-		long groupId, java.lang.String name);
+		long groupId, String name);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
@@ -187,13 +187,13 @@ public interface SocialActivityAchievementLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<SocialActivityAchievement> getGroupAchievements(long groupId,
-		java.lang.String name);
+		String name);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getGroupAchievementsCount(long groupId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getGroupAchievementsCount(long groupId, java.lang.String name);
+	public int getGroupAchievementsCount(long groupId, String name);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<SocialActivityAchievement> getGroupFirstAchievements(
@@ -210,7 +210,7 @@ public interface SocialActivityAchievementLocalService extends BaseLocalService,
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

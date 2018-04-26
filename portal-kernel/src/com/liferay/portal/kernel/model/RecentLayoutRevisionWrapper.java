@@ -122,7 +122,7 @@ public class RecentLayoutRevisionWrapper implements RecentLayoutRevision,
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new RecentLayoutRevisionWrapper((RecentLayoutRevision)_recentLayoutRevision.clone());
 	}
 
@@ -237,7 +237,7 @@ public class RecentLayoutRevisionWrapper implements RecentLayoutRevision,
 	* @return the user uuid of this recent layout revision
 	*/
 	@Override
-	public java.lang.String getUserUuid() {
+	public String getUserUuid() {
 		return _recentLayoutRevision.getUserUuid();
 	}
 
@@ -392,7 +392,7 @@ public class RecentLayoutRevisionWrapper implements RecentLayoutRevision,
 	* @param userUuid the user uuid of this recent layout revision
 	*/
 	@Override
-	public void setUserUuid(java.lang.String userUuid) {
+	public void setUserUuid(String userUuid) {
 		_recentLayoutRevision.setUserUuid(userUuid);
 	}
 
@@ -407,7 +407,7 @@ public class RecentLayoutRevisionWrapper implements RecentLayoutRevision,
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _recentLayoutRevision.toString();
 	}
 
@@ -417,7 +417,7 @@ public class RecentLayoutRevisionWrapper implements RecentLayoutRevision,
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _recentLayoutRevision.toXmlString();
 	}
 

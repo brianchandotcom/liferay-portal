@@ -245,8 +245,8 @@ public interface LayoutPageTemplateCollectionPersistence extends BasePersistence
 	* @return the matching layout page template collection
 	* @throws NoSuchPageTemplateCollectionException if a matching layout page template collection could not be found
 	*/
-	public LayoutPageTemplateCollection findByG_N(long groupId,
-		java.lang.String name) throws NoSuchPageTemplateCollectionException;
+	public LayoutPageTemplateCollection findByG_N(long groupId, String name)
+		throws NoSuchPageTemplateCollectionException;
 
 	/**
 	* Returns the layout page template collection where groupId = &#63; and name = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
@@ -255,8 +255,7 @@ public interface LayoutPageTemplateCollectionPersistence extends BasePersistence
 	* @param name the name
 	* @return the matching layout page template collection, or <code>null</code> if a matching layout page template collection could not be found
 	*/
-	public LayoutPageTemplateCollection fetchByG_N(long groupId,
-		java.lang.String name);
+	public LayoutPageTemplateCollection fetchByG_N(long groupId, String name);
 
 	/**
 	* Returns the layout page template collection where groupId = &#63; and name = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -266,8 +265,8 @@ public interface LayoutPageTemplateCollectionPersistence extends BasePersistence
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching layout page template collection, or <code>null</code> if a matching layout page template collection could not be found
 	*/
-	public LayoutPageTemplateCollection fetchByG_N(long groupId,
-		java.lang.String name, boolean retrieveFromCache);
+	public LayoutPageTemplateCollection fetchByG_N(long groupId, String name,
+		boolean retrieveFromCache);
 
 	/**
 	* Removes the layout page template collection where groupId = &#63; and name = &#63; from the database.
@@ -276,8 +275,8 @@ public interface LayoutPageTemplateCollectionPersistence extends BasePersistence
 	* @param name the name
 	* @return the layout page template collection that was removed
 	*/
-	public LayoutPageTemplateCollection removeByG_N(long groupId,
-		java.lang.String name) throws NoSuchPageTemplateCollectionException;
+	public LayoutPageTemplateCollection removeByG_N(long groupId, String name)
+		throws NoSuchPageTemplateCollectionException;
 
 	/**
 	* Returns the number of layout page template collections where groupId = &#63; and name = &#63;.
@@ -286,7 +285,7 @@ public interface LayoutPageTemplateCollectionPersistence extends BasePersistence
 	* @param name the name
 	* @return the number of matching layout page template collections
 	*/
-	public int countByG_N(long groupId, java.lang.String name);
+	public int countByG_N(long groupId, String name);
 
 	/**
 	* Returns all the layout page template collections where groupId = &#63; and name LIKE &#63;.
@@ -296,7 +295,7 @@ public interface LayoutPageTemplateCollectionPersistence extends BasePersistence
 	* @return the matching layout page template collections
 	*/
 	public java.util.List<LayoutPageTemplateCollection> findByG_LikeN(
-		long groupId, java.lang.String name);
+		long groupId, String name);
 
 	/**
 	* Returns a range of all the layout page template collections where groupId = &#63; and name LIKE &#63;.
@@ -312,7 +311,7 @@ public interface LayoutPageTemplateCollectionPersistence extends BasePersistence
 	* @return the range of matching layout page template collections
 	*/
 	public java.util.List<LayoutPageTemplateCollection> findByG_LikeN(
-		long groupId, java.lang.String name, int start, int end);
+		long groupId, String name, int start, int end);
 
 	/**
 	* Returns an ordered range of all the layout page template collections where groupId = &#63; and name LIKE &#63;.
@@ -329,7 +328,7 @@ public interface LayoutPageTemplateCollectionPersistence extends BasePersistence
 	* @return the ordered range of matching layout page template collections
 	*/
 	public java.util.List<LayoutPageTemplateCollection> findByG_LikeN(
-		long groupId, java.lang.String name, int start, int end,
+		long groupId, String name, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<LayoutPageTemplateCollection> orderByComparator);
 
 	/**
@@ -348,7 +347,7 @@ public interface LayoutPageTemplateCollectionPersistence extends BasePersistence
 	* @return the ordered range of matching layout page template collections
 	*/
 	public java.util.List<LayoutPageTemplateCollection> findByG_LikeN(
-		long groupId, java.lang.String name, int start, int end,
+		long groupId, String name, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<LayoutPageTemplateCollection> orderByComparator,
 		boolean retrieveFromCache);
 
@@ -362,7 +361,7 @@ public interface LayoutPageTemplateCollectionPersistence extends BasePersistence
 	* @throws NoSuchPageTemplateCollectionException if a matching layout page template collection could not be found
 	*/
 	public LayoutPageTemplateCollection findByG_LikeN_First(long groupId,
-		java.lang.String name,
+		String name,
 		com.liferay.portal.kernel.util.OrderByComparator<LayoutPageTemplateCollection> orderByComparator)
 		throws NoSuchPageTemplateCollectionException;
 
@@ -375,7 +374,7 @@ public interface LayoutPageTemplateCollectionPersistence extends BasePersistence
 	* @return the first matching layout page template collection, or <code>null</code> if a matching layout page template collection could not be found
 	*/
 	public LayoutPageTemplateCollection fetchByG_LikeN_First(long groupId,
-		java.lang.String name,
+		String name,
 		com.liferay.portal.kernel.util.OrderByComparator<LayoutPageTemplateCollection> orderByComparator);
 
 	/**
@@ -388,7 +387,7 @@ public interface LayoutPageTemplateCollectionPersistence extends BasePersistence
 	* @throws NoSuchPageTemplateCollectionException if a matching layout page template collection could not be found
 	*/
 	public LayoutPageTemplateCollection findByG_LikeN_Last(long groupId,
-		java.lang.String name,
+		String name,
 		com.liferay.portal.kernel.util.OrderByComparator<LayoutPageTemplateCollection> orderByComparator)
 		throws NoSuchPageTemplateCollectionException;
 
@@ -401,7 +400,7 @@ public interface LayoutPageTemplateCollectionPersistence extends BasePersistence
 	* @return the last matching layout page template collection, or <code>null</code> if a matching layout page template collection could not be found
 	*/
 	public LayoutPageTemplateCollection fetchByG_LikeN_Last(long groupId,
-		java.lang.String name,
+		String name,
 		com.liferay.portal.kernel.util.OrderByComparator<LayoutPageTemplateCollection> orderByComparator);
 
 	/**
@@ -415,8 +414,7 @@ public interface LayoutPageTemplateCollectionPersistence extends BasePersistence
 	* @throws NoSuchPageTemplateCollectionException if a layout page template collection with the primary key could not be found
 	*/
 	public LayoutPageTemplateCollection[] findByG_LikeN_PrevAndNext(
-		long layoutPageTemplateCollectionId, long groupId,
-		java.lang.String name,
+		long layoutPageTemplateCollectionId, long groupId, String name,
 		com.liferay.portal.kernel.util.OrderByComparator<LayoutPageTemplateCollection> orderByComparator)
 		throws NoSuchPageTemplateCollectionException;
 
@@ -428,7 +426,7 @@ public interface LayoutPageTemplateCollectionPersistence extends BasePersistence
 	* @return the matching layout page template collections that the user has permission to view
 	*/
 	public java.util.List<LayoutPageTemplateCollection> filterFindByG_LikeN(
-		long groupId, java.lang.String name);
+		long groupId, String name);
 
 	/**
 	* Returns a range of all the layout page template collections that the user has permission to view where groupId = &#63; and name LIKE &#63;.
@@ -444,7 +442,7 @@ public interface LayoutPageTemplateCollectionPersistence extends BasePersistence
 	* @return the range of matching layout page template collections that the user has permission to view
 	*/
 	public java.util.List<LayoutPageTemplateCollection> filterFindByG_LikeN(
-		long groupId, java.lang.String name, int start, int end);
+		long groupId, String name, int start, int end);
 
 	/**
 	* Returns an ordered range of all the layout page template collections that the user has permissions to view where groupId = &#63; and name LIKE &#63;.
@@ -461,7 +459,7 @@ public interface LayoutPageTemplateCollectionPersistence extends BasePersistence
 	* @return the ordered range of matching layout page template collections that the user has permission to view
 	*/
 	public java.util.List<LayoutPageTemplateCollection> filterFindByG_LikeN(
-		long groupId, java.lang.String name, int start, int end,
+		long groupId, String name, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<LayoutPageTemplateCollection> orderByComparator);
 
 	/**
@@ -475,8 +473,7 @@ public interface LayoutPageTemplateCollectionPersistence extends BasePersistence
 	* @throws NoSuchPageTemplateCollectionException if a layout page template collection with the primary key could not be found
 	*/
 	public LayoutPageTemplateCollection[] filterFindByG_LikeN_PrevAndNext(
-		long layoutPageTemplateCollectionId, long groupId,
-		java.lang.String name,
+		long layoutPageTemplateCollectionId, long groupId, String name,
 		com.liferay.portal.kernel.util.OrderByComparator<LayoutPageTemplateCollection> orderByComparator)
 		throws NoSuchPageTemplateCollectionException;
 
@@ -486,7 +483,7 @@ public interface LayoutPageTemplateCollectionPersistence extends BasePersistence
 	* @param groupId the group ID
 	* @param name the name
 	*/
-	public void removeByG_LikeN(long groupId, java.lang.String name);
+	public void removeByG_LikeN(long groupId, String name);
 
 	/**
 	* Returns the number of layout page template collections where groupId = &#63; and name LIKE &#63;.
@@ -495,7 +492,7 @@ public interface LayoutPageTemplateCollectionPersistence extends BasePersistence
 	* @param name the name
 	* @return the number of matching layout page template collections
 	*/
-	public int countByG_LikeN(long groupId, java.lang.String name);
+	public int countByG_LikeN(long groupId, String name);
 
 	/**
 	* Returns the number of layout page template collections that the user has permission to view where groupId = &#63; and name LIKE &#63;.
@@ -504,7 +501,7 @@ public interface LayoutPageTemplateCollectionPersistence extends BasePersistence
 	* @param name the name
 	* @return the number of matching layout page template collections that the user has permission to view
 	*/
-	public int filterCountByG_LikeN(long groupId, java.lang.String name);
+	public int filterCountByG_LikeN(long groupId, String name);
 
 	/**
 	* Caches the layout page template collection in the entity cache if it is enabled.

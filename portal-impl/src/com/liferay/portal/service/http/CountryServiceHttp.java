@@ -55,9 +55,8 @@ import com.liferay.portal.kernel.util.MethodKey;
 @ProviderType
 public class CountryServiceHttp {
 	public static com.liferay.portal.kernel.model.Country addCountry(
-		HttpPrincipal httpPrincipal, java.lang.String name,
-		java.lang.String a2, java.lang.String a3, java.lang.String number,
-		java.lang.String idd, boolean active)
+		HttpPrincipal httpPrincipal, String name, String a2, String a3,
+		String number, String idd, boolean active)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(CountryServiceUtil.class,
@@ -115,7 +114,7 @@ public class CountryServiceHttp {
 	}
 
 	public static com.liferay.portal.kernel.model.Country fetchCountryByA2(
-		HttpPrincipal httpPrincipal, java.lang.String a2) {
+		HttpPrincipal httpPrincipal, String a2) {
 		try {
 			MethodKey methodKey = new MethodKey(CountryServiceUtil.class,
 					"fetchCountryByA2", _fetchCountryByA2ParameterTypes2);
@@ -141,7 +140,7 @@ public class CountryServiceHttp {
 	}
 
 	public static com.liferay.portal.kernel.model.Country fetchCountryByA3(
-		HttpPrincipal httpPrincipal, java.lang.String a3) {
+		HttpPrincipal httpPrincipal, String a3) {
 		try {
 			MethodKey methodKey = new MethodKey(CountryServiceUtil.class,
 					"fetchCountryByA3", _fetchCountryByA3ParameterTypes3);
@@ -250,7 +249,7 @@ public class CountryServiceHttp {
 	}
 
 	public static com.liferay.portal.kernel.model.Country getCountryByA2(
-		HttpPrincipal httpPrincipal, java.lang.String a2)
+		HttpPrincipal httpPrincipal, String a2)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(CountryServiceUtil.class,
@@ -281,7 +280,7 @@ public class CountryServiceHttp {
 	}
 
 	public static com.liferay.portal.kernel.model.Country getCountryByA3(
-		HttpPrincipal httpPrincipal, java.lang.String a3)
+		HttpPrincipal httpPrincipal, String a3)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(CountryServiceUtil.class,
@@ -312,7 +311,7 @@ public class CountryServiceHttp {
 	}
 
 	public static com.liferay.portal.kernel.model.Country getCountryByName(
-		HttpPrincipal httpPrincipal, java.lang.String name)
+		HttpPrincipal httpPrincipal, String name)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(CountryServiceUtil.class,
@@ -344,18 +343,17 @@ public class CountryServiceHttp {
 
 	private static Log _log = LogFactoryUtil.getLog(CountryServiceHttp.class);
 	private static final Class<?>[] _addCountryParameterTypes0 = new Class[] {
-			java.lang.String.class, java.lang.String.class,
-			java.lang.String.class, java.lang.String.class,
-			java.lang.String.class, boolean.class
+			String.class, String.class, String.class, String.class, String.class,
+			boolean.class
 		};
 	private static final Class<?>[] _fetchCountryParameterTypes1 = new Class[] {
 			long.class
 		};
 	private static final Class<?>[] _fetchCountryByA2ParameterTypes2 = new Class[] {
-			java.lang.String.class
+			String.class
 		};
 	private static final Class<?>[] _fetchCountryByA3ParameterTypes3 = new Class[] {
-			java.lang.String.class
+			String.class
 		};
 	private static final Class<?>[] _getCountriesParameterTypes4 = new Class[] {  };
 	private static final Class<?>[] _getCountriesParameterTypes5 = new Class[] {
@@ -365,12 +363,12 @@ public class CountryServiceHttp {
 			long.class
 		};
 	private static final Class<?>[] _getCountryByA2ParameterTypes7 = new Class[] {
-			java.lang.String.class
+			String.class
 		};
 	private static final Class<?>[] _getCountryByA3ParameterTypes8 = new Class[] {
-			java.lang.String.class
+			String.class
 		};
 	private static final Class<?>[] _getCountryByNameParameterTypes9 = new Class[] {
-			java.lang.String.class
+			String.class
 		};
 }

@@ -242,7 +242,7 @@ public class DDLRecordSetVersionLocalServiceUtil {
 	*
 	* @return the OSGi service identifier
 	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
+	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 
@@ -259,7 +259,7 @@ public class DDLRecordSetVersionLocalServiceUtil {
 	}
 
 	public static com.liferay.dynamic.data.lists.model.DDLRecordSetVersion getRecordSetVersion(
-		long recordSetId, java.lang.String version)
+		long recordSetId, String version)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getRecordSetVersion(recordSetId, version);
 	}

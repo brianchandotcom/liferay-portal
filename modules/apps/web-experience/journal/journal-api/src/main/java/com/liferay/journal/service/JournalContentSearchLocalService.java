@@ -83,13 +83,12 @@ public interface JournalContentSearchLocalService extends BaseLocalService,
 	public JournalContentSearch createJournalContentSearch(long contentSearchId);
 
 	public void deleteArticleContentSearch(long groupId, boolean privateLayout,
-		long layoutId, java.lang.String portletId);
+		long layoutId, String portletId);
 
 	public void deleteArticleContentSearch(long groupId, boolean privateLayout,
-		long layoutId, java.lang.String portletId, java.lang.String articleId);
+		long layoutId, String portletId, String articleId);
 
-	public void deleteArticleContentSearches(long groupId,
-		java.lang.String articleId);
+	public void deleteArticleContentSearches(long groupId, String articleId);
 
 	/**
 	* Deletes the journal content search from the database. Also notifies the appropriate model listeners.
@@ -194,11 +193,11 @@ public interface JournalContentSearchLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<JournalContentSearch> getArticleContentSearches(long groupId,
-		java.lang.String articleId);
+		String articleId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<JournalContentSearch> getArticleContentSearches(
-		java.lang.String articleId);
+		String articleId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
@@ -238,22 +237,22 @@ public interface JournalContentSearchLocalService extends BaseLocalService,
 	public int getJournalContentSearchsCount();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<java.lang.Long> getLayoutIds(long groupId,
-		boolean privateLayout, java.lang.String articleId);
+	public List<Long> getLayoutIds(long groupId, boolean privateLayout,
+		String articleId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getLayoutIdsCount(long groupId, boolean privateLayout,
-		java.lang.String articleId);
+		String articleId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getLayoutIdsCount(java.lang.String articleId);
+	public int getLayoutIdsCount(String articleId);
 
 	/**
 	* Returns the OSGi service identifier.
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -262,19 +261,19 @@ public interface JournalContentSearchLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<JournalContentSearch> getPortletContentSearches(
-		java.lang.String portletId);
+		String portletId);
 
 	public JournalContentSearch updateContentSearch(long groupId,
-		boolean privateLayout, long layoutId, java.lang.String portletId,
-		java.lang.String articleId) throws PortalException;
+		boolean privateLayout, long layoutId, String portletId, String articleId)
+		throws PortalException;
 
 	public JournalContentSearch updateContentSearch(long groupId,
-		boolean privateLayout, long layoutId, java.lang.String portletId,
-		java.lang.String articleId, boolean purge) throws PortalException;
+		boolean privateLayout, long layoutId, String portletId,
+		String articleId, boolean purge) throws PortalException;
 
 	public List<JournalContentSearch> updateContentSearch(long groupId,
-		boolean privateLayout, long layoutId, java.lang.String portletId,
-		java.lang.String[] articleIds) throws PortalException;
+		boolean privateLayout, long layoutId, String portletId,
+		String[] articleIds) throws PortalException;
 
 	/**
 	* Updates the journal content search in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.

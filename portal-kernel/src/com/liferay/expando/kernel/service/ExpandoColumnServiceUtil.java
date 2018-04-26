@@ -41,14 +41,13 @@ public class ExpandoColumnServiceUtil {
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.portlet.expando.service.impl.ExpandoColumnServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static com.liferay.expando.kernel.model.ExpandoColumn addColumn(
-		long tableId, java.lang.String name, int type)
+		long tableId, String name, int type)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().addColumn(tableId, name, type);
 	}
 
 	public static com.liferay.expando.kernel.model.ExpandoColumn addColumn(
-		long tableId, java.lang.String name, int type,
-		java.lang.Object defaultData)
+		long tableId, String name, int type, Object defaultData)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().addColumn(tableId, name, type, defaultData);
 	}
@@ -69,25 +68,24 @@ public class ExpandoColumnServiceUtil {
 	*
 	* @return the OSGi service identifier
 	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
+	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 
 	public static com.liferay.expando.kernel.model.ExpandoColumn updateColumn(
-		long columnId, java.lang.String name, int type)
+		long columnId, String name, int type)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().updateColumn(columnId, name, type);
 	}
 
 	public static com.liferay.expando.kernel.model.ExpandoColumn updateColumn(
-		long columnId, java.lang.String name, int type,
-		java.lang.Object defaultData)
+		long columnId, String name, int type, Object defaultData)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().updateColumn(columnId, name, type, defaultData);
 	}
 
 	public static com.liferay.expando.kernel.model.ExpandoColumn updateTypeSettings(
-		long columnId, java.lang.String typeSettings)
+		long columnId, String typeSettings)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().updateTypeSettings(columnId, typeSettings);
 	}

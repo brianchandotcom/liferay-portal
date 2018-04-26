@@ -49,18 +49,17 @@ public interface CountryService extends BaseService {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CountryServiceUtil} to access the country remote service. Add custom service methods to {@link com.liferay.portal.service.impl.CountryServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public Country addCountry(java.lang.String name, java.lang.String a2,
-		java.lang.String a3, java.lang.String number, java.lang.String idd,
-		boolean active) throws PortalException;
+	public Country addCountry(String name, String a2, String a3, String number,
+		String idd, boolean active) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public Country fetchCountry(long countryId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Country fetchCountryByA2(java.lang.String a2);
+	public Country fetchCountryByA2(String a2);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Country fetchCountryByA3(java.lang.String a3);
+	public Country fetchCountryByA3(String a3);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<Country> getCountries();
@@ -73,21 +72,18 @@ public interface CountryService extends BaseService {
 	public Country getCountry(long countryId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Country getCountryByA2(java.lang.String a2)
-		throws PortalException;
+	public Country getCountryByA2(String a2) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Country getCountryByA3(java.lang.String a3)
-		throws PortalException;
+	public Country getCountryByA3(String a3) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Country getCountryByName(java.lang.String name)
-		throws PortalException;
+	public Country getCountryByName(String name) throws PortalException;
 
 	/**
 	* Returns the OSGi service identifier.
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 }

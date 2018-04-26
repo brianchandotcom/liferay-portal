@@ -116,9 +116,8 @@ public class SocialActivityServiceUtil {
 	* @return the range of matching activities
 	*/
 	public static java.util.List<com.liferay.social.kernel.model.SocialActivity> getActivities(
-		long mirrorActivityId, java.lang.String className, long classPK,
-		int start, int end)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		long mirrorActivityId, String className, long classPK, int start,
+		int end) throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .getActivities(mirrorActivityId, className, classPK, start,
 			end);
@@ -143,7 +142,7 @@ public class SocialActivityServiceUtil {
 	* @return the range of matching activities
 	*/
 	public static java.util.List<com.liferay.social.kernel.model.SocialActivity> getActivities(
-		java.lang.String className, int start, int end)
+		String className, int start, int end)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getActivities(className, start, end);
 	}
@@ -186,7 +185,7 @@ public class SocialActivityServiceUtil {
 	* @return the number of matching activities
 	*/
 	public static int getActivitiesCount(long mirrorActivityId,
-		java.lang.String className, long classPK) {
+		String className, long classPK) {
 		return getService()
 				   .getActivitiesCount(mirrorActivityId, className, classPK);
 	}
@@ -197,7 +196,7 @@ public class SocialActivityServiceUtil {
 	* @param className the target asset's class name
 	* @return the number of matching activities
 	*/
-	public static int getActivitiesCount(java.lang.String className) {
+	public static int getActivitiesCount(String className) {
 		return getService().getActivitiesCount(className);
 	}
 
@@ -391,7 +390,7 @@ public class SocialActivityServiceUtil {
 	*
 	* @return the OSGi service identifier
 	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
+	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 

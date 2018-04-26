@@ -182,7 +182,7 @@ public interface ResourceTypePermissionPersistence extends BasePersistence<Resou
 	* @return the matching resource type permissions
 	*/
 	public java.util.List<ResourceTypePermission> findByC_N_R(long companyId,
-		java.lang.String name, long roleId);
+		String name, long roleId);
 
 	/**
 	* Returns a range of all the resource type permissions where companyId = &#63; and name = &#63; and roleId = &#63;.
@@ -199,7 +199,7 @@ public interface ResourceTypePermissionPersistence extends BasePersistence<Resou
 	* @return the range of matching resource type permissions
 	*/
 	public java.util.List<ResourceTypePermission> findByC_N_R(long companyId,
-		java.lang.String name, long roleId, int start, int end);
+		String name, long roleId, int start, int end);
 
 	/**
 	* Returns an ordered range of all the resource type permissions where companyId = &#63; and name = &#63; and roleId = &#63;.
@@ -217,7 +217,7 @@ public interface ResourceTypePermissionPersistence extends BasePersistence<Resou
 	* @return the ordered range of matching resource type permissions
 	*/
 	public java.util.List<ResourceTypePermission> findByC_N_R(long companyId,
-		java.lang.String name, long roleId, int start, int end,
+		String name, long roleId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<ResourceTypePermission> orderByComparator);
 
 	/**
@@ -237,7 +237,7 @@ public interface ResourceTypePermissionPersistence extends BasePersistence<Resou
 	* @return the ordered range of matching resource type permissions
 	*/
 	public java.util.List<ResourceTypePermission> findByC_N_R(long companyId,
-		java.lang.String name, long roleId, int start, int end,
+		String name, long roleId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<ResourceTypePermission> orderByComparator,
 		boolean retrieveFromCache);
 
@@ -252,7 +252,7 @@ public interface ResourceTypePermissionPersistence extends BasePersistence<Resou
 	* @throws NoSuchResourceTypePermissionException if a matching resource type permission could not be found
 	*/
 	public ResourceTypePermission findByC_N_R_First(long companyId,
-		java.lang.String name, long roleId,
+		String name, long roleId,
 		com.liferay.portal.kernel.util.OrderByComparator<ResourceTypePermission> orderByComparator)
 		throws NoSuchResourceTypePermissionException;
 
@@ -266,7 +266,7 @@ public interface ResourceTypePermissionPersistence extends BasePersistence<Resou
 	* @return the first matching resource type permission, or <code>null</code> if a matching resource type permission could not be found
 	*/
 	public ResourceTypePermission fetchByC_N_R_First(long companyId,
-		java.lang.String name, long roleId,
+		String name, long roleId,
 		com.liferay.portal.kernel.util.OrderByComparator<ResourceTypePermission> orderByComparator);
 
 	/**
@@ -279,8 +279,8 @@ public interface ResourceTypePermissionPersistence extends BasePersistence<Resou
 	* @return the last matching resource type permission
 	* @throws NoSuchResourceTypePermissionException if a matching resource type permission could not be found
 	*/
-	public ResourceTypePermission findByC_N_R_Last(long companyId,
-		java.lang.String name, long roleId,
+	public ResourceTypePermission findByC_N_R_Last(long companyId, String name,
+		long roleId,
 		com.liferay.portal.kernel.util.OrderByComparator<ResourceTypePermission> orderByComparator)
 		throws NoSuchResourceTypePermissionException;
 
@@ -294,7 +294,7 @@ public interface ResourceTypePermissionPersistence extends BasePersistence<Resou
 	* @return the last matching resource type permission, or <code>null</code> if a matching resource type permission could not be found
 	*/
 	public ResourceTypePermission fetchByC_N_R_Last(long companyId,
-		java.lang.String name, long roleId,
+		String name, long roleId,
 		com.liferay.portal.kernel.util.OrderByComparator<ResourceTypePermission> orderByComparator);
 
 	/**
@@ -309,7 +309,7 @@ public interface ResourceTypePermissionPersistence extends BasePersistence<Resou
 	* @throws NoSuchResourceTypePermissionException if a resource type permission with the primary key could not be found
 	*/
 	public ResourceTypePermission[] findByC_N_R_PrevAndNext(
-		long resourceTypePermissionId, long companyId, java.lang.String name,
+		long resourceTypePermissionId, long companyId, String name,
 		long roleId,
 		com.liferay.portal.kernel.util.OrderByComparator<ResourceTypePermission> orderByComparator)
 		throws NoSuchResourceTypePermissionException;
@@ -321,7 +321,7 @@ public interface ResourceTypePermissionPersistence extends BasePersistence<Resou
 	* @param name the name
 	* @param roleId the role ID
 	*/
-	public void removeByC_N_R(long companyId, java.lang.String name, long roleId);
+	public void removeByC_N_R(long companyId, String name, long roleId);
 
 	/**
 	* Returns the number of resource type permissions where companyId = &#63; and name = &#63; and roleId = &#63;.
@@ -331,7 +331,7 @@ public interface ResourceTypePermissionPersistence extends BasePersistence<Resou
 	* @param roleId the role ID
 	* @return the number of matching resource type permissions
 	*/
-	public int countByC_N_R(long companyId, java.lang.String name, long roleId);
+	public int countByC_N_R(long companyId, String name, long roleId);
 
 	/**
 	* Returns the resource type permission where companyId = &#63; and groupId = &#63; and name = &#63; and roleId = &#63; or throws a {@link NoSuchResourceTypePermissionException} if it could not be found.
@@ -344,8 +344,7 @@ public interface ResourceTypePermissionPersistence extends BasePersistence<Resou
 	* @throws NoSuchResourceTypePermissionException if a matching resource type permission could not be found
 	*/
 	public ResourceTypePermission findByC_G_N_R(long companyId, long groupId,
-		java.lang.String name, long roleId)
-		throws NoSuchResourceTypePermissionException;
+		String name, long roleId) throws NoSuchResourceTypePermissionException;
 
 	/**
 	* Returns the resource type permission where companyId = &#63; and groupId = &#63; and name = &#63; and roleId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
@@ -357,7 +356,7 @@ public interface ResourceTypePermissionPersistence extends BasePersistence<Resou
 	* @return the matching resource type permission, or <code>null</code> if a matching resource type permission could not be found
 	*/
 	public ResourceTypePermission fetchByC_G_N_R(long companyId, long groupId,
-		java.lang.String name, long roleId);
+		String name, long roleId);
 
 	/**
 	* Returns the resource type permission where companyId = &#63; and groupId = &#63; and name = &#63; and roleId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -370,7 +369,7 @@ public interface ResourceTypePermissionPersistence extends BasePersistence<Resou
 	* @return the matching resource type permission, or <code>null</code> if a matching resource type permission could not be found
 	*/
 	public ResourceTypePermission fetchByC_G_N_R(long companyId, long groupId,
-		java.lang.String name, long roleId, boolean retrieveFromCache);
+		String name, long roleId, boolean retrieveFromCache);
 
 	/**
 	* Removes the resource type permission where companyId = &#63; and groupId = &#63; and name = &#63; and roleId = &#63; from the database.
@@ -382,8 +381,7 @@ public interface ResourceTypePermissionPersistence extends BasePersistence<Resou
 	* @return the resource type permission that was removed
 	*/
 	public ResourceTypePermission removeByC_G_N_R(long companyId, long groupId,
-		java.lang.String name, long roleId)
-		throws NoSuchResourceTypePermissionException;
+		String name, long roleId) throws NoSuchResourceTypePermissionException;
 
 	/**
 	* Returns the number of resource type permissions where companyId = &#63; and groupId = &#63; and name = &#63; and roleId = &#63;.
@@ -394,8 +392,8 @@ public interface ResourceTypePermissionPersistence extends BasePersistence<Resou
 	* @param roleId the role ID
 	* @return the number of matching resource type permissions
 	*/
-	public int countByC_G_N_R(long companyId, long groupId,
-		java.lang.String name, long roleId);
+	public int countByC_G_N_R(long companyId, long groupId, String name,
+		long roleId);
 
 	/**
 	* Caches the resource type permission in the entity cache if it is enabled.

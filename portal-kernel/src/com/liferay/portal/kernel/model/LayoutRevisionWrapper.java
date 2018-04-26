@@ -269,7 +269,7 @@ public class LayoutRevisionWrapper implements LayoutRevision,
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new LayoutRevisionWrapper((LayoutRevision)_layoutRevision.clone());
 	}
 
@@ -279,7 +279,7 @@ public class LayoutRevisionWrapper implements LayoutRevision,
 	}
 
 	@Override
-	public java.lang.String[] getAvailableLanguageIds() {
+	public String[] getAvailableLanguageIds() {
 		return _layoutRevision.getAvailableLanguageIds();
 	}
 
@@ -300,7 +300,7 @@ public class LayoutRevisionWrapper implements LayoutRevision,
 	* @return the color scheme ID of this layout revision
 	*/
 	@Override
-	public java.lang.String getColorSchemeId() {
+	public String getColorSchemeId() {
 		return _layoutRevision.getColorSchemeId();
 	}
 
@@ -330,18 +330,18 @@ public class LayoutRevisionWrapper implements LayoutRevision,
 	* @return the css of this layout revision
 	*/
 	@Override
-	public java.lang.String getCss() {
+	public String getCss() {
 		return _layoutRevision.getCss();
 	}
 
 	@Override
-	public java.lang.String getCssText()
+	public String getCssText()
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _layoutRevision.getCssText();
 	}
 
 	@Override
-	public java.lang.String getDefaultLanguageId() {
+	public String getDefaultLanguageId() {
 		return _layoutRevision.getDefaultLanguageId();
 	}
 
@@ -351,7 +351,7 @@ public class LayoutRevisionWrapper implements LayoutRevision,
 	* @return the description of this layout revision
 	*/
 	@Override
-	public java.lang.String getDescription() {
+	public String getDescription() {
 		return _layoutRevision.getDescription();
 	}
 
@@ -362,7 +362,7 @@ public class LayoutRevisionWrapper implements LayoutRevision,
 	* @return the localized description of this layout revision
 	*/
 	@Override
-	public java.lang.String getDescription(java.util.Locale locale) {
+	public String getDescription(java.util.Locale locale) {
 		return _layoutRevision.getDescription(locale);
 	}
 
@@ -374,8 +374,7 @@ public class LayoutRevisionWrapper implements LayoutRevision,
 	* @return the localized description of this layout revision. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
 	*/
 	@Override
-	public java.lang.String getDescription(java.util.Locale locale,
-		boolean useDefault) {
+	public String getDescription(java.util.Locale locale, boolean useDefault) {
 		return _layoutRevision.getDescription(locale, useDefault);
 	}
 
@@ -386,7 +385,7 @@ public class LayoutRevisionWrapper implements LayoutRevision,
 	* @return the localized description of this layout revision
 	*/
 	@Override
-	public java.lang.String getDescription(java.lang.String languageId) {
+	public String getDescription(String languageId) {
 		return _layoutRevision.getDescription(languageId);
 	}
 
@@ -398,18 +397,17 @@ public class LayoutRevisionWrapper implements LayoutRevision,
 	* @return the localized description of this layout revision
 	*/
 	@Override
-	public java.lang.String getDescription(java.lang.String languageId,
-		boolean useDefault) {
+	public String getDescription(String languageId, boolean useDefault) {
 		return _layoutRevision.getDescription(languageId, useDefault);
 	}
 
 	@Override
-	public java.lang.String getDescriptionCurrentLanguageId() {
+	public String getDescriptionCurrentLanguageId() {
 		return _layoutRevision.getDescriptionCurrentLanguageId();
 	}
 
 	@Override
-	public java.lang.String getDescriptionCurrentValue() {
+	public String getDescriptionCurrentValue() {
 		return _layoutRevision.getDescriptionCurrentValue();
 	}
 
@@ -419,7 +417,7 @@ public class LayoutRevisionWrapper implements LayoutRevision,
 	* @return the locales and localized descriptions of this layout revision
 	*/
 	@Override
-	public Map<java.util.Locale, java.lang.String> getDescriptionMap() {
+	public Map<java.util.Locale, String> getDescriptionMap() {
 		return _layoutRevision.getDescriptionMap();
 	}
 
@@ -449,12 +447,12 @@ public class LayoutRevisionWrapper implements LayoutRevision,
 	}
 
 	@Override
-	public java.lang.String getHTMLTitle(java.util.Locale locale) {
+	public String getHTMLTitle(java.util.Locale locale) {
 		return _layoutRevision.getHTMLTitle(locale);
 	}
 
 	@Override
-	public java.lang.String getHTMLTitle(java.lang.String localeLanguageId) {
+	public String getHTMLTitle(String localeLanguageId) {
 		return _layoutRevision.getHTMLTitle(localeLanguageId);
 	}
 
@@ -479,7 +477,7 @@ public class LayoutRevisionWrapper implements LayoutRevision,
 	* @return the keywords of this layout revision
 	*/
 	@Override
-	public java.lang.String getKeywords() {
+	public String getKeywords() {
 		return _layoutRevision.getKeywords();
 	}
 
@@ -490,7 +488,7 @@ public class LayoutRevisionWrapper implements LayoutRevision,
 	* @return the localized keywords of this layout revision
 	*/
 	@Override
-	public java.lang.String getKeywords(java.util.Locale locale) {
+	public String getKeywords(java.util.Locale locale) {
 		return _layoutRevision.getKeywords(locale);
 	}
 
@@ -502,8 +500,7 @@ public class LayoutRevisionWrapper implements LayoutRevision,
 	* @return the localized keywords of this layout revision. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
 	*/
 	@Override
-	public java.lang.String getKeywords(java.util.Locale locale,
-		boolean useDefault) {
+	public String getKeywords(java.util.Locale locale, boolean useDefault) {
 		return _layoutRevision.getKeywords(locale, useDefault);
 	}
 
@@ -514,7 +511,7 @@ public class LayoutRevisionWrapper implements LayoutRevision,
 	* @return the localized keywords of this layout revision
 	*/
 	@Override
-	public java.lang.String getKeywords(java.lang.String languageId) {
+	public String getKeywords(String languageId) {
 		return _layoutRevision.getKeywords(languageId);
 	}
 
@@ -526,18 +523,17 @@ public class LayoutRevisionWrapper implements LayoutRevision,
 	* @return the localized keywords of this layout revision
 	*/
 	@Override
-	public java.lang.String getKeywords(java.lang.String languageId,
-		boolean useDefault) {
+	public String getKeywords(String languageId, boolean useDefault) {
 		return _layoutRevision.getKeywords(languageId, useDefault);
 	}
 
 	@Override
-	public java.lang.String getKeywordsCurrentLanguageId() {
+	public String getKeywordsCurrentLanguageId() {
 		return _layoutRevision.getKeywordsCurrentLanguageId();
 	}
 
 	@Override
-	public java.lang.String getKeywordsCurrentValue() {
+	public String getKeywordsCurrentValue() {
 		return _layoutRevision.getKeywordsCurrentValue();
 	}
 
@@ -547,7 +543,7 @@ public class LayoutRevisionWrapper implements LayoutRevision,
 	* @return the locales and localized keywordses of this layout revision
 	*/
 	@Override
-	public Map<java.util.Locale, java.lang.String> getKeywordsMap() {
+	public Map<java.util.Locale, String> getKeywordsMap() {
 		return _layoutRevision.getKeywordsMap();
 	}
 
@@ -629,7 +625,7 @@ public class LayoutRevisionWrapper implements LayoutRevision,
 	* @return the name of this layout revision
 	*/
 	@Override
-	public java.lang.String getName() {
+	public String getName() {
 		return _layoutRevision.getName();
 	}
 
@@ -640,7 +636,7 @@ public class LayoutRevisionWrapper implements LayoutRevision,
 	* @return the localized name of this layout revision
 	*/
 	@Override
-	public java.lang.String getName(java.util.Locale locale) {
+	public String getName(java.util.Locale locale) {
 		return _layoutRevision.getName(locale);
 	}
 
@@ -652,7 +648,7 @@ public class LayoutRevisionWrapper implements LayoutRevision,
 	* @return the localized name of this layout revision. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
 	*/
 	@Override
-	public java.lang.String getName(java.util.Locale locale, boolean useDefault) {
+	public String getName(java.util.Locale locale, boolean useDefault) {
 		return _layoutRevision.getName(locale, useDefault);
 	}
 
@@ -663,7 +659,7 @@ public class LayoutRevisionWrapper implements LayoutRevision,
 	* @return the localized name of this layout revision
 	*/
 	@Override
-	public java.lang.String getName(java.lang.String languageId) {
+	public String getName(String languageId) {
 		return _layoutRevision.getName(languageId);
 	}
 
@@ -675,18 +671,17 @@ public class LayoutRevisionWrapper implements LayoutRevision,
 	* @return the localized name of this layout revision
 	*/
 	@Override
-	public java.lang.String getName(java.lang.String languageId,
-		boolean useDefault) {
+	public String getName(String languageId, boolean useDefault) {
 		return _layoutRevision.getName(languageId, useDefault);
 	}
 
 	@Override
-	public java.lang.String getNameCurrentLanguageId() {
+	public String getNameCurrentLanguageId() {
 		return _layoutRevision.getNameCurrentLanguageId();
 	}
 
 	@Override
-	public java.lang.String getNameCurrentValue() {
+	public String getNameCurrentValue() {
 		return _layoutRevision.getNameCurrentValue();
 	}
 
@@ -696,7 +691,7 @@ public class LayoutRevisionWrapper implements LayoutRevision,
 	* @return the locales and localized names of this layout revision
 	*/
 	@Override
-	public Map<java.util.Locale, java.lang.String> getNameMap() {
+	public Map<java.util.Locale, String> getNameMap() {
 		return _layoutRevision.getNameMap();
 	}
 
@@ -746,8 +741,7 @@ public class LayoutRevisionWrapper implements LayoutRevision,
 	}
 
 	@Override
-	public java.lang.String getRegularURL(
-		javax.servlet.http.HttpServletRequest request)
+	public String getRegularURL(javax.servlet.http.HttpServletRequest request)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _layoutRevision.getRegularURL(request);
 	}
@@ -758,7 +752,7 @@ public class LayoutRevisionWrapper implements LayoutRevision,
 	* @return the robots of this layout revision
 	*/
 	@Override
-	public java.lang.String getRobots() {
+	public String getRobots() {
 		return _layoutRevision.getRobots();
 	}
 
@@ -769,7 +763,7 @@ public class LayoutRevisionWrapper implements LayoutRevision,
 	* @return the localized robots of this layout revision
 	*/
 	@Override
-	public java.lang.String getRobots(java.util.Locale locale) {
+	public String getRobots(java.util.Locale locale) {
 		return _layoutRevision.getRobots(locale);
 	}
 
@@ -781,8 +775,7 @@ public class LayoutRevisionWrapper implements LayoutRevision,
 	* @return the localized robots of this layout revision. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
 	*/
 	@Override
-	public java.lang.String getRobots(java.util.Locale locale,
-		boolean useDefault) {
+	public String getRobots(java.util.Locale locale, boolean useDefault) {
 		return _layoutRevision.getRobots(locale, useDefault);
 	}
 
@@ -793,7 +786,7 @@ public class LayoutRevisionWrapper implements LayoutRevision,
 	* @return the localized robots of this layout revision
 	*/
 	@Override
-	public java.lang.String getRobots(java.lang.String languageId) {
+	public String getRobots(String languageId) {
 		return _layoutRevision.getRobots(languageId);
 	}
 
@@ -805,18 +798,17 @@ public class LayoutRevisionWrapper implements LayoutRevision,
 	* @return the localized robots of this layout revision
 	*/
 	@Override
-	public java.lang.String getRobots(java.lang.String languageId,
-		boolean useDefault) {
+	public String getRobots(String languageId, boolean useDefault) {
 		return _layoutRevision.getRobots(languageId, useDefault);
 	}
 
 	@Override
-	public java.lang.String getRobotsCurrentLanguageId() {
+	public String getRobotsCurrentLanguageId() {
 		return _layoutRevision.getRobotsCurrentLanguageId();
 	}
 
 	@Override
-	public java.lang.String getRobotsCurrentValue() {
+	public String getRobotsCurrentValue() {
 		return _layoutRevision.getRobotsCurrentValue();
 	}
 
@@ -826,7 +818,7 @@ public class LayoutRevisionWrapper implements LayoutRevision,
 	* @return the locales and localized robotses of this layout revision
 	*/
 	@Override
-	public Map<java.util.Locale, java.lang.String> getRobotsMap() {
+	public Map<java.util.Locale, String> getRobotsMap() {
 		return _layoutRevision.getRobotsMap();
 	}
 
@@ -856,7 +848,7 @@ public class LayoutRevisionWrapper implements LayoutRevision,
 	* @return the status by user name of this layout revision
 	*/
 	@Override
-	public java.lang.String getStatusByUserName() {
+	public String getStatusByUserName() {
 		return _layoutRevision.getStatusByUserName();
 	}
 
@@ -866,7 +858,7 @@ public class LayoutRevisionWrapper implements LayoutRevision,
 	* @return the status by user uuid of this layout revision
 	*/
 	@Override
-	public java.lang.String getStatusByUserUuid() {
+	public String getStatusByUserUuid() {
 		return _layoutRevision.getStatusByUserUuid();
 	}
 
@@ -892,13 +884,12 @@ public class LayoutRevisionWrapper implements LayoutRevision,
 	* @return the theme ID of this layout revision
 	*/
 	@Override
-	public java.lang.String getThemeId() {
+	public String getThemeId() {
 		return _layoutRevision.getThemeId();
 	}
 
 	@Override
-	public java.lang.String getThemeSetting(java.lang.String key,
-		java.lang.String device) {
+	public String getThemeSetting(String key, String device) {
 		return _layoutRevision.getThemeSetting(key, device);
 	}
 
@@ -908,7 +899,7 @@ public class LayoutRevisionWrapper implements LayoutRevision,
 	* @return the title of this layout revision
 	*/
 	@Override
-	public java.lang.String getTitle() {
+	public String getTitle() {
 		return _layoutRevision.getTitle();
 	}
 
@@ -919,7 +910,7 @@ public class LayoutRevisionWrapper implements LayoutRevision,
 	* @return the localized title of this layout revision
 	*/
 	@Override
-	public java.lang.String getTitle(java.util.Locale locale) {
+	public String getTitle(java.util.Locale locale) {
 		return _layoutRevision.getTitle(locale);
 	}
 
@@ -931,7 +922,7 @@ public class LayoutRevisionWrapper implements LayoutRevision,
 	* @return the localized title of this layout revision. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
 	*/
 	@Override
-	public java.lang.String getTitle(java.util.Locale locale, boolean useDefault) {
+	public String getTitle(java.util.Locale locale, boolean useDefault) {
 		return _layoutRevision.getTitle(locale, useDefault);
 	}
 
@@ -942,7 +933,7 @@ public class LayoutRevisionWrapper implements LayoutRevision,
 	* @return the localized title of this layout revision
 	*/
 	@Override
-	public java.lang.String getTitle(java.lang.String languageId) {
+	public String getTitle(String languageId) {
 		return _layoutRevision.getTitle(languageId);
 	}
 
@@ -954,18 +945,17 @@ public class LayoutRevisionWrapper implements LayoutRevision,
 	* @return the localized title of this layout revision
 	*/
 	@Override
-	public java.lang.String getTitle(java.lang.String languageId,
-		boolean useDefault) {
+	public String getTitle(String languageId, boolean useDefault) {
 		return _layoutRevision.getTitle(languageId, useDefault);
 	}
 
 	@Override
-	public java.lang.String getTitleCurrentLanguageId() {
+	public String getTitleCurrentLanguageId() {
 		return _layoutRevision.getTitleCurrentLanguageId();
 	}
 
 	@Override
-	public java.lang.String getTitleCurrentValue() {
+	public String getTitleCurrentValue() {
 		return _layoutRevision.getTitleCurrentValue();
 	}
 
@@ -975,7 +965,7 @@ public class LayoutRevisionWrapper implements LayoutRevision,
 	* @return the locales and localized titles of this layout revision
 	*/
 	@Override
-	public Map<java.util.Locale, java.lang.String> getTitleMap() {
+	public Map<java.util.Locale, String> getTitleMap() {
 		return _layoutRevision.getTitleMap();
 	}
 
@@ -985,7 +975,7 @@ public class LayoutRevisionWrapper implements LayoutRevision,
 	* @return the type settings of this layout revision
 	*/
 	@Override
-	public java.lang.String getTypeSettings() {
+	public String getTypeSettings() {
 		return _layoutRevision.getTypeSettings();
 	}
 
@@ -995,13 +985,12 @@ public class LayoutRevisionWrapper implements LayoutRevision,
 	}
 
 	@Override
-	public java.lang.String getTypeSettingsProperty(java.lang.String key) {
+	public String getTypeSettingsProperty(String key) {
 		return _layoutRevision.getTypeSettingsProperty(key);
 	}
 
 	@Override
-	public java.lang.String getTypeSettingsProperty(java.lang.String key,
-		java.lang.String defaultValue) {
+	public String getTypeSettingsProperty(String key, String defaultValue) {
 		return _layoutRevision.getTypeSettingsProperty(key, defaultValue);
 	}
 
@@ -1021,7 +1010,7 @@ public class LayoutRevisionWrapper implements LayoutRevision,
 	* @return the user name of this layout revision
 	*/
 	@Override
-	public java.lang.String getUserName() {
+	public String getUserName() {
 		return _layoutRevision.getUserName();
 	}
 
@@ -1031,7 +1020,7 @@ public class LayoutRevisionWrapper implements LayoutRevision,
 	* @return the user uuid of this layout revision
 	*/
 	@Override
-	public java.lang.String getUserUuid() {
+	public String getUserUuid() {
 		return _layoutRevision.getUserUuid();
 	}
 
@@ -1214,7 +1203,7 @@ public class LayoutRevisionWrapper implements LayoutRevision,
 	* @param colorSchemeId the color scheme ID of this layout revision
 	*/
 	@Override
-	public void setColorSchemeId(java.lang.String colorSchemeId) {
+	public void setColorSchemeId(String colorSchemeId) {
 		_layoutRevision.setColorSchemeId(colorSchemeId);
 	}
 
@@ -1244,7 +1233,7 @@ public class LayoutRevisionWrapper implements LayoutRevision,
 	* @param css the css of this layout revision
 	*/
 	@Override
-	public void setCss(java.lang.String css) {
+	public void setCss(String css) {
 		_layoutRevision.setCss(css);
 	}
 
@@ -1254,7 +1243,7 @@ public class LayoutRevisionWrapper implements LayoutRevision,
 	* @param description the description of this layout revision
 	*/
 	@Override
-	public void setDescription(java.lang.String description) {
+	public void setDescription(String description) {
 		_layoutRevision.setDescription(description);
 	}
 
@@ -1265,8 +1254,7 @@ public class LayoutRevisionWrapper implements LayoutRevision,
 	* @param locale the locale of the language
 	*/
 	@Override
-	public void setDescription(java.lang.String description,
-		java.util.Locale locale) {
+	public void setDescription(String description, java.util.Locale locale) {
 		_layoutRevision.setDescription(description, locale);
 	}
 
@@ -1278,13 +1266,13 @@ public class LayoutRevisionWrapper implements LayoutRevision,
 	* @param defaultLocale the default locale
 	*/
 	@Override
-	public void setDescription(java.lang.String description,
-		java.util.Locale locale, java.util.Locale defaultLocale) {
+	public void setDescription(String description, java.util.Locale locale,
+		java.util.Locale defaultLocale) {
 		_layoutRevision.setDescription(description, locale, defaultLocale);
 	}
 
 	@Override
-	public void setDescriptionCurrentLanguageId(java.lang.String languageId) {
+	public void setDescriptionCurrentLanguageId(String languageId) {
 		_layoutRevision.setDescriptionCurrentLanguageId(languageId);
 	}
 
@@ -1294,8 +1282,7 @@ public class LayoutRevisionWrapper implements LayoutRevision,
 	* @param descriptionMap the locales and localized descriptions of this layout revision
 	*/
 	@Override
-	public void setDescriptionMap(
-		Map<java.util.Locale, java.lang.String> descriptionMap) {
+	public void setDescriptionMap(Map<java.util.Locale, String> descriptionMap) {
 		_layoutRevision.setDescriptionMap(descriptionMap);
 	}
 
@@ -1307,7 +1294,7 @@ public class LayoutRevisionWrapper implements LayoutRevision,
 	*/
 	@Override
 	public void setDescriptionMap(
-		Map<java.util.Locale, java.lang.String> descriptionMap,
+		Map<java.util.Locale, String> descriptionMap,
 		java.util.Locale defaultLocale) {
 		_layoutRevision.setDescriptionMap(descriptionMap, defaultLocale);
 	}
@@ -1363,7 +1350,7 @@ public class LayoutRevisionWrapper implements LayoutRevision,
 	* @param keywords the keywords of this layout revision
 	*/
 	@Override
-	public void setKeywords(java.lang.String keywords) {
+	public void setKeywords(String keywords) {
 		_layoutRevision.setKeywords(keywords);
 	}
 
@@ -1374,7 +1361,7 @@ public class LayoutRevisionWrapper implements LayoutRevision,
 	* @param locale the locale of the language
 	*/
 	@Override
-	public void setKeywords(java.lang.String keywords, java.util.Locale locale) {
+	public void setKeywords(String keywords, java.util.Locale locale) {
 		_layoutRevision.setKeywords(keywords, locale);
 	}
 
@@ -1386,13 +1373,13 @@ public class LayoutRevisionWrapper implements LayoutRevision,
 	* @param defaultLocale the default locale
 	*/
 	@Override
-	public void setKeywords(java.lang.String keywords, java.util.Locale locale,
+	public void setKeywords(String keywords, java.util.Locale locale,
 		java.util.Locale defaultLocale) {
 		_layoutRevision.setKeywords(keywords, locale, defaultLocale);
 	}
 
 	@Override
-	public void setKeywordsCurrentLanguageId(java.lang.String languageId) {
+	public void setKeywordsCurrentLanguageId(String languageId) {
 		_layoutRevision.setKeywordsCurrentLanguageId(languageId);
 	}
 
@@ -1402,8 +1389,7 @@ public class LayoutRevisionWrapper implements LayoutRevision,
 	* @param keywordsMap the locales and localized keywordses of this layout revision
 	*/
 	@Override
-	public void setKeywordsMap(
-		Map<java.util.Locale, java.lang.String> keywordsMap) {
+	public void setKeywordsMap(Map<java.util.Locale, String> keywordsMap) {
 		_layoutRevision.setKeywordsMap(keywordsMap);
 	}
 
@@ -1414,8 +1400,7 @@ public class LayoutRevisionWrapper implements LayoutRevision,
 	* @param defaultLocale the default locale
 	*/
 	@Override
-	public void setKeywordsMap(
-		Map<java.util.Locale, java.lang.String> keywordsMap,
+	public void setKeywordsMap(Map<java.util.Locale, String> keywordsMap,
 		java.util.Locale defaultLocale) {
 		_layoutRevision.setKeywordsMap(keywordsMap, defaultLocale);
 	}
@@ -1486,7 +1471,7 @@ public class LayoutRevisionWrapper implements LayoutRevision,
 	* @param name the name of this layout revision
 	*/
 	@Override
-	public void setName(java.lang.String name) {
+	public void setName(String name) {
 		_layoutRevision.setName(name);
 	}
 
@@ -1497,7 +1482,7 @@ public class LayoutRevisionWrapper implements LayoutRevision,
 	* @param locale the locale of the language
 	*/
 	@Override
-	public void setName(java.lang.String name, java.util.Locale locale) {
+	public void setName(String name, java.util.Locale locale) {
 		_layoutRevision.setName(name, locale);
 	}
 
@@ -1509,13 +1494,13 @@ public class LayoutRevisionWrapper implements LayoutRevision,
 	* @param defaultLocale the default locale
 	*/
 	@Override
-	public void setName(java.lang.String name, java.util.Locale locale,
+	public void setName(String name, java.util.Locale locale,
 		java.util.Locale defaultLocale) {
 		_layoutRevision.setName(name, locale, defaultLocale);
 	}
 
 	@Override
-	public void setNameCurrentLanguageId(java.lang.String languageId) {
+	public void setNameCurrentLanguageId(String languageId) {
 		_layoutRevision.setNameCurrentLanguageId(languageId);
 	}
 
@@ -1525,7 +1510,7 @@ public class LayoutRevisionWrapper implements LayoutRevision,
 	* @param nameMap the locales and localized names of this layout revision
 	*/
 	@Override
-	public void setNameMap(Map<java.util.Locale, java.lang.String> nameMap) {
+	public void setNameMap(Map<java.util.Locale, String> nameMap) {
 		_layoutRevision.setNameMap(nameMap);
 	}
 
@@ -1536,7 +1521,7 @@ public class LayoutRevisionWrapper implements LayoutRevision,
 	* @param defaultLocale the default locale
 	*/
 	@Override
-	public void setNameMap(Map<java.util.Locale, java.lang.String> nameMap,
+	public void setNameMap(Map<java.util.Locale, String> nameMap,
 		java.util.Locale defaultLocale) {
 		_layoutRevision.setNameMap(nameMap, defaultLocale);
 	}
@@ -1597,7 +1582,7 @@ public class LayoutRevisionWrapper implements LayoutRevision,
 	* @param robots the robots of this layout revision
 	*/
 	@Override
-	public void setRobots(java.lang.String robots) {
+	public void setRobots(String robots) {
 		_layoutRevision.setRobots(robots);
 	}
 
@@ -1608,7 +1593,7 @@ public class LayoutRevisionWrapper implements LayoutRevision,
 	* @param locale the locale of the language
 	*/
 	@Override
-	public void setRobots(java.lang.String robots, java.util.Locale locale) {
+	public void setRobots(String robots, java.util.Locale locale) {
 		_layoutRevision.setRobots(robots, locale);
 	}
 
@@ -1620,13 +1605,13 @@ public class LayoutRevisionWrapper implements LayoutRevision,
 	* @param defaultLocale the default locale
 	*/
 	@Override
-	public void setRobots(java.lang.String robots, java.util.Locale locale,
+	public void setRobots(String robots, java.util.Locale locale,
 		java.util.Locale defaultLocale) {
 		_layoutRevision.setRobots(robots, locale, defaultLocale);
 	}
 
 	@Override
-	public void setRobotsCurrentLanguageId(java.lang.String languageId) {
+	public void setRobotsCurrentLanguageId(String languageId) {
 		_layoutRevision.setRobotsCurrentLanguageId(languageId);
 	}
 
@@ -1636,7 +1621,7 @@ public class LayoutRevisionWrapper implements LayoutRevision,
 	* @param robotsMap the locales and localized robotses of this layout revision
 	*/
 	@Override
-	public void setRobotsMap(Map<java.util.Locale, java.lang.String> robotsMap) {
+	public void setRobotsMap(Map<java.util.Locale, String> robotsMap) {
 		_layoutRevision.setRobotsMap(robotsMap);
 	}
 
@@ -1647,8 +1632,7 @@ public class LayoutRevisionWrapper implements LayoutRevision,
 	* @param defaultLocale the default locale
 	*/
 	@Override
-	public void setRobotsMap(
-		Map<java.util.Locale, java.lang.String> robotsMap,
+	public void setRobotsMap(Map<java.util.Locale, String> robotsMap,
 		java.util.Locale defaultLocale) {
 		_layoutRevision.setRobotsMap(robotsMap, defaultLocale);
 	}
@@ -1679,7 +1663,7 @@ public class LayoutRevisionWrapper implements LayoutRevision,
 	* @param statusByUserName the status by user name of this layout revision
 	*/
 	@Override
-	public void setStatusByUserName(java.lang.String statusByUserName) {
+	public void setStatusByUserName(String statusByUserName) {
 		_layoutRevision.setStatusByUserName(statusByUserName);
 	}
 
@@ -1689,7 +1673,7 @@ public class LayoutRevisionWrapper implements LayoutRevision,
 	* @param statusByUserUuid the status by user uuid of this layout revision
 	*/
 	@Override
-	public void setStatusByUserUuid(java.lang.String statusByUserUuid) {
+	public void setStatusByUserUuid(String statusByUserUuid) {
 		_layoutRevision.setStatusByUserUuid(statusByUserUuid);
 	}
 
@@ -1709,7 +1693,7 @@ public class LayoutRevisionWrapper implements LayoutRevision,
 	* @param themeId the theme ID of this layout revision
 	*/
 	@Override
-	public void setThemeId(java.lang.String themeId) {
+	public void setThemeId(String themeId) {
 		_layoutRevision.setThemeId(themeId);
 	}
 
@@ -1719,7 +1703,7 @@ public class LayoutRevisionWrapper implements LayoutRevision,
 	* @param title the title of this layout revision
 	*/
 	@Override
-	public void setTitle(java.lang.String title) {
+	public void setTitle(String title) {
 		_layoutRevision.setTitle(title);
 	}
 
@@ -1730,7 +1714,7 @@ public class LayoutRevisionWrapper implements LayoutRevision,
 	* @param locale the locale of the language
 	*/
 	@Override
-	public void setTitle(java.lang.String title, java.util.Locale locale) {
+	public void setTitle(String title, java.util.Locale locale) {
 		_layoutRevision.setTitle(title, locale);
 	}
 
@@ -1742,13 +1726,13 @@ public class LayoutRevisionWrapper implements LayoutRevision,
 	* @param defaultLocale the default locale
 	*/
 	@Override
-	public void setTitle(java.lang.String title, java.util.Locale locale,
+	public void setTitle(String title, java.util.Locale locale,
 		java.util.Locale defaultLocale) {
 		_layoutRevision.setTitle(title, locale, defaultLocale);
 	}
 
 	@Override
-	public void setTitleCurrentLanguageId(java.lang.String languageId) {
+	public void setTitleCurrentLanguageId(String languageId) {
 		_layoutRevision.setTitleCurrentLanguageId(languageId);
 	}
 
@@ -1758,7 +1742,7 @@ public class LayoutRevisionWrapper implements LayoutRevision,
 	* @param titleMap the locales and localized titles of this layout revision
 	*/
 	@Override
-	public void setTitleMap(Map<java.util.Locale, java.lang.String> titleMap) {
+	public void setTitleMap(Map<java.util.Locale, String> titleMap) {
 		_layoutRevision.setTitleMap(titleMap);
 	}
 
@@ -1769,7 +1753,7 @@ public class LayoutRevisionWrapper implements LayoutRevision,
 	* @param defaultLocale the default locale
 	*/
 	@Override
-	public void setTitleMap(Map<java.util.Locale, java.lang.String> titleMap,
+	public void setTitleMap(Map<java.util.Locale, String> titleMap,
 		java.util.Locale defaultLocale) {
 		_layoutRevision.setTitleMap(titleMap, defaultLocale);
 	}
@@ -1780,7 +1764,7 @@ public class LayoutRevisionWrapper implements LayoutRevision,
 	* @param typeSettings the type settings of this layout revision
 	*/
 	@Override
-	public void setTypeSettings(java.lang.String typeSettings) {
+	public void setTypeSettings(String typeSettings) {
 		_layoutRevision.setTypeSettings(typeSettings);
 	}
 
@@ -1806,7 +1790,7 @@ public class LayoutRevisionWrapper implements LayoutRevision,
 	* @param userName the user name of this layout revision
 	*/
 	@Override
-	public void setUserName(java.lang.String userName) {
+	public void setUserName(String userName) {
 		_layoutRevision.setUserName(userName);
 	}
 
@@ -1816,7 +1800,7 @@ public class LayoutRevisionWrapper implements LayoutRevision,
 	* @param userUuid the user uuid of this layout revision
 	*/
 	@Override
-	public void setUserUuid(java.lang.String userUuid) {
+	public void setUserUuid(String userUuid) {
 		_layoutRevision.setUserUuid(userUuid);
 	}
 
@@ -1831,7 +1815,7 @@ public class LayoutRevisionWrapper implements LayoutRevision,
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _layoutRevision.toString();
 	}
 
@@ -1841,7 +1825,7 @@ public class LayoutRevisionWrapper implements LayoutRevision,
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _layoutRevision.toXmlString();
 	}
 

@@ -114,7 +114,7 @@ public class DLFolderUtil {
 	* @param uuid the uuid
 	* @return the matching document library folders
 	*/
-	public static List<DLFolder> findByUuid(java.lang.String uuid) {
+	public static List<DLFolder> findByUuid(String uuid) {
 		return getPersistence().findByUuid(uuid);
 	}
 
@@ -130,8 +130,7 @@ public class DLFolderUtil {
 	* @param end the upper bound of the range of document library folders (not inclusive)
 	* @return the range of matching document library folders
 	*/
-	public static List<DLFolder> findByUuid(java.lang.String uuid, int start,
-		int end) {
+	public static List<DLFolder> findByUuid(String uuid, int start, int end) {
 		return getPersistence().findByUuid(uuid, start, end);
 	}
 
@@ -148,8 +147,8 @@ public class DLFolderUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching document library folders
 	*/
-	public static List<DLFolder> findByUuid(java.lang.String uuid, int start,
-		int end, OrderByComparator<DLFolder> orderByComparator) {
+	public static List<DLFolder> findByUuid(String uuid, int start, int end,
+		OrderByComparator<DLFolder> orderByComparator) {
 		return getPersistence().findByUuid(uuid, start, end, orderByComparator);
 	}
 
@@ -167,9 +166,8 @@ public class DLFolderUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching document library folders
 	*/
-	public static List<DLFolder> findByUuid(java.lang.String uuid, int start,
-		int end, OrderByComparator<DLFolder> orderByComparator,
-		boolean retrieveFromCache) {
+	public static List<DLFolder> findByUuid(String uuid, int start, int end,
+		OrderByComparator<DLFolder> orderByComparator, boolean retrieveFromCache) {
 		return getPersistence()
 				   .findByUuid(uuid, start, end, orderByComparator,
 			retrieveFromCache);
@@ -183,7 +181,7 @@ public class DLFolderUtil {
 	* @return the first matching document library folder
 	* @throws NoSuchFolderException if a matching document library folder could not be found
 	*/
-	public static DLFolder findByUuid_First(java.lang.String uuid,
+	public static DLFolder findByUuid_First(String uuid,
 		OrderByComparator<DLFolder> orderByComparator)
 		throws com.liferay.document.library.kernel.exception.NoSuchFolderException {
 		return getPersistence().findByUuid_First(uuid, orderByComparator);
@@ -196,7 +194,7 @@ public class DLFolderUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching document library folder, or <code>null</code> if a matching document library folder could not be found
 	*/
-	public static DLFolder fetchByUuid_First(java.lang.String uuid,
+	public static DLFolder fetchByUuid_First(String uuid,
 		OrderByComparator<DLFolder> orderByComparator) {
 		return getPersistence().fetchByUuid_First(uuid, orderByComparator);
 	}
@@ -209,7 +207,7 @@ public class DLFolderUtil {
 	* @return the last matching document library folder
 	* @throws NoSuchFolderException if a matching document library folder could not be found
 	*/
-	public static DLFolder findByUuid_Last(java.lang.String uuid,
+	public static DLFolder findByUuid_Last(String uuid,
 		OrderByComparator<DLFolder> orderByComparator)
 		throws com.liferay.document.library.kernel.exception.NoSuchFolderException {
 		return getPersistence().findByUuid_Last(uuid, orderByComparator);
@@ -222,7 +220,7 @@ public class DLFolderUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching document library folder, or <code>null</code> if a matching document library folder could not be found
 	*/
-	public static DLFolder fetchByUuid_Last(java.lang.String uuid,
+	public static DLFolder fetchByUuid_Last(String uuid,
 		OrderByComparator<DLFolder> orderByComparator) {
 		return getPersistence().fetchByUuid_Last(uuid, orderByComparator);
 	}
@@ -236,8 +234,8 @@ public class DLFolderUtil {
 	* @return the previous, current, and next document library folder
 	* @throws NoSuchFolderException if a document library folder with the primary key could not be found
 	*/
-	public static DLFolder[] findByUuid_PrevAndNext(long folderId,
-		java.lang.String uuid, OrderByComparator<DLFolder> orderByComparator)
+	public static DLFolder[] findByUuid_PrevAndNext(long folderId, String uuid,
+		OrderByComparator<DLFolder> orderByComparator)
 		throws com.liferay.document.library.kernel.exception.NoSuchFolderException {
 		return getPersistence()
 				   .findByUuid_PrevAndNext(folderId, uuid, orderByComparator);
@@ -248,7 +246,7 @@ public class DLFolderUtil {
 	*
 	* @param uuid the uuid
 	*/
-	public static void removeByUuid(java.lang.String uuid) {
+	public static void removeByUuid(String uuid) {
 		getPersistence().removeByUuid(uuid);
 	}
 
@@ -258,7 +256,7 @@ public class DLFolderUtil {
 	* @param uuid the uuid
 	* @return the number of matching document library folders
 	*/
-	public static int countByUuid(java.lang.String uuid) {
+	public static int countByUuid(String uuid) {
 		return getPersistence().countByUuid(uuid);
 	}
 
@@ -270,7 +268,7 @@ public class DLFolderUtil {
 	* @return the matching document library folder
 	* @throws NoSuchFolderException if a matching document library folder could not be found
 	*/
-	public static DLFolder findByUUID_G(java.lang.String uuid, long groupId)
+	public static DLFolder findByUUID_G(String uuid, long groupId)
 		throws com.liferay.document.library.kernel.exception.NoSuchFolderException {
 		return getPersistence().findByUUID_G(uuid, groupId);
 	}
@@ -282,7 +280,7 @@ public class DLFolderUtil {
 	* @param groupId the group ID
 	* @return the matching document library folder, or <code>null</code> if a matching document library folder could not be found
 	*/
-	public static DLFolder fetchByUUID_G(java.lang.String uuid, long groupId) {
+	public static DLFolder fetchByUUID_G(String uuid, long groupId) {
 		return getPersistence().fetchByUUID_G(uuid, groupId);
 	}
 
@@ -294,7 +292,7 @@ public class DLFolderUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching document library folder, or <code>null</code> if a matching document library folder could not be found
 	*/
-	public static DLFolder fetchByUUID_G(java.lang.String uuid, long groupId,
+	public static DLFolder fetchByUUID_G(String uuid, long groupId,
 		boolean retrieveFromCache) {
 		return getPersistence().fetchByUUID_G(uuid, groupId, retrieveFromCache);
 	}
@@ -306,7 +304,7 @@ public class DLFolderUtil {
 	* @param groupId the group ID
 	* @return the document library folder that was removed
 	*/
-	public static DLFolder removeByUUID_G(java.lang.String uuid, long groupId)
+	public static DLFolder removeByUUID_G(String uuid, long groupId)
 		throws com.liferay.document.library.kernel.exception.NoSuchFolderException {
 		return getPersistence().removeByUUID_G(uuid, groupId);
 	}
@@ -318,7 +316,7 @@ public class DLFolderUtil {
 	* @param groupId the group ID
 	* @return the number of matching document library folders
 	*/
-	public static int countByUUID_G(java.lang.String uuid, long groupId) {
+	public static int countByUUID_G(String uuid, long groupId) {
 		return getPersistence().countByUUID_G(uuid, groupId);
 	}
 
@@ -329,8 +327,7 @@ public class DLFolderUtil {
 	* @param companyId the company ID
 	* @return the matching document library folders
 	*/
-	public static List<DLFolder> findByUuid_C(java.lang.String uuid,
-		long companyId) {
+	public static List<DLFolder> findByUuid_C(String uuid, long companyId) {
 		return getPersistence().findByUuid_C(uuid, companyId);
 	}
 
@@ -347,8 +344,8 @@ public class DLFolderUtil {
 	* @param end the upper bound of the range of document library folders (not inclusive)
 	* @return the range of matching document library folders
 	*/
-	public static List<DLFolder> findByUuid_C(java.lang.String uuid,
-		long companyId, int start, int end) {
+	public static List<DLFolder> findByUuid_C(String uuid, long companyId,
+		int start, int end) {
 		return getPersistence().findByUuid_C(uuid, companyId, start, end);
 	}
 
@@ -366,9 +363,8 @@ public class DLFolderUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching document library folders
 	*/
-	public static List<DLFolder> findByUuid_C(java.lang.String uuid,
-		long companyId, int start, int end,
-		OrderByComparator<DLFolder> orderByComparator) {
+	public static List<DLFolder> findByUuid_C(String uuid, long companyId,
+		int start, int end, OrderByComparator<DLFolder> orderByComparator) {
 		return getPersistence()
 				   .findByUuid_C(uuid, companyId, start, end, orderByComparator);
 	}
@@ -388,9 +384,9 @@ public class DLFolderUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching document library folders
 	*/
-	public static List<DLFolder> findByUuid_C(java.lang.String uuid,
-		long companyId, int start, int end,
-		OrderByComparator<DLFolder> orderByComparator, boolean retrieveFromCache) {
+	public static List<DLFolder> findByUuid_C(String uuid, long companyId,
+		int start, int end, OrderByComparator<DLFolder> orderByComparator,
+		boolean retrieveFromCache) {
 		return getPersistence()
 				   .findByUuid_C(uuid, companyId, start, end,
 			orderByComparator, retrieveFromCache);
@@ -405,8 +401,8 @@ public class DLFolderUtil {
 	* @return the first matching document library folder
 	* @throws NoSuchFolderException if a matching document library folder could not be found
 	*/
-	public static DLFolder findByUuid_C_First(java.lang.String uuid,
-		long companyId, OrderByComparator<DLFolder> orderByComparator)
+	public static DLFolder findByUuid_C_First(String uuid, long companyId,
+		OrderByComparator<DLFolder> orderByComparator)
 		throws com.liferay.document.library.kernel.exception.NoSuchFolderException {
 		return getPersistence()
 				   .findByUuid_C_First(uuid, companyId, orderByComparator);
@@ -420,8 +416,8 @@ public class DLFolderUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching document library folder, or <code>null</code> if a matching document library folder could not be found
 	*/
-	public static DLFolder fetchByUuid_C_First(java.lang.String uuid,
-		long companyId, OrderByComparator<DLFolder> orderByComparator) {
+	public static DLFolder fetchByUuid_C_First(String uuid, long companyId,
+		OrderByComparator<DLFolder> orderByComparator) {
 		return getPersistence()
 				   .fetchByUuid_C_First(uuid, companyId, orderByComparator);
 	}
@@ -435,8 +431,8 @@ public class DLFolderUtil {
 	* @return the last matching document library folder
 	* @throws NoSuchFolderException if a matching document library folder could not be found
 	*/
-	public static DLFolder findByUuid_C_Last(java.lang.String uuid,
-		long companyId, OrderByComparator<DLFolder> orderByComparator)
+	public static DLFolder findByUuid_C_Last(String uuid, long companyId,
+		OrderByComparator<DLFolder> orderByComparator)
 		throws com.liferay.document.library.kernel.exception.NoSuchFolderException {
 		return getPersistence()
 				   .findByUuid_C_Last(uuid, companyId, orderByComparator);
@@ -450,8 +446,8 @@ public class DLFolderUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching document library folder, or <code>null</code> if a matching document library folder could not be found
 	*/
-	public static DLFolder fetchByUuid_C_Last(java.lang.String uuid,
-		long companyId, OrderByComparator<DLFolder> orderByComparator) {
+	public static DLFolder fetchByUuid_C_Last(String uuid, long companyId,
+		OrderByComparator<DLFolder> orderByComparator) {
 		return getPersistence()
 				   .fetchByUuid_C_Last(uuid, companyId, orderByComparator);
 	}
@@ -467,7 +463,7 @@ public class DLFolderUtil {
 	* @throws NoSuchFolderException if a document library folder with the primary key could not be found
 	*/
 	public static DLFolder[] findByUuid_C_PrevAndNext(long folderId,
-		java.lang.String uuid, long companyId,
+		String uuid, long companyId,
 		OrderByComparator<DLFolder> orderByComparator)
 		throws com.liferay.document.library.kernel.exception.NoSuchFolderException {
 		return getPersistence()
@@ -481,7 +477,7 @@ public class DLFolderUtil {
 	* @param uuid the uuid
 	* @param companyId the company ID
 	*/
-	public static void removeByUuid_C(java.lang.String uuid, long companyId) {
+	public static void removeByUuid_C(String uuid, long companyId) {
 		getPersistence().removeByUuid_C(uuid, companyId);
 	}
 
@@ -492,7 +488,7 @@ public class DLFolderUtil {
 	* @param companyId the company ID
 	* @return the number of matching document library folders
 	*/
-	public static int countByUuid_C(java.lang.String uuid, long companyId) {
+	public static int countByUuid_C(String uuid, long companyId) {
 		return getPersistence().countByUuid_C(uuid, companyId);
 	}
 
@@ -1721,8 +1717,7 @@ public class DLFolderUtil {
 	* @param name the name
 	* @return the matching document library folders
 	*/
-	public static List<DLFolder> findByP_N(long parentFolderId,
-		java.lang.String name) {
+	public static List<DLFolder> findByP_N(long parentFolderId, String name) {
 		return getPersistence().findByP_N(parentFolderId, name);
 	}
 
@@ -1739,8 +1734,8 @@ public class DLFolderUtil {
 	* @param end the upper bound of the range of document library folders (not inclusive)
 	* @return the range of matching document library folders
 	*/
-	public static List<DLFolder> findByP_N(long parentFolderId,
-		java.lang.String name, int start, int end) {
+	public static List<DLFolder> findByP_N(long parentFolderId, String name,
+		int start, int end) {
 		return getPersistence().findByP_N(parentFolderId, name, start, end);
 	}
 
@@ -1758,9 +1753,8 @@ public class DLFolderUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching document library folders
 	*/
-	public static List<DLFolder> findByP_N(long parentFolderId,
-		java.lang.String name, int start, int end,
-		OrderByComparator<DLFolder> orderByComparator) {
+	public static List<DLFolder> findByP_N(long parentFolderId, String name,
+		int start, int end, OrderByComparator<DLFolder> orderByComparator) {
 		return getPersistence()
 				   .findByP_N(parentFolderId, name, start, end,
 			orderByComparator);
@@ -1781,9 +1775,9 @@ public class DLFolderUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching document library folders
 	*/
-	public static List<DLFolder> findByP_N(long parentFolderId,
-		java.lang.String name, int start, int end,
-		OrderByComparator<DLFolder> orderByComparator, boolean retrieveFromCache) {
+	public static List<DLFolder> findByP_N(long parentFolderId, String name,
+		int start, int end, OrderByComparator<DLFolder> orderByComparator,
+		boolean retrieveFromCache) {
 		return getPersistence()
 				   .findByP_N(parentFolderId, name, start, end,
 			orderByComparator, retrieveFromCache);
@@ -1798,8 +1792,8 @@ public class DLFolderUtil {
 	* @return the first matching document library folder
 	* @throws NoSuchFolderException if a matching document library folder could not be found
 	*/
-	public static DLFolder findByP_N_First(long parentFolderId,
-		java.lang.String name, OrderByComparator<DLFolder> orderByComparator)
+	public static DLFolder findByP_N_First(long parentFolderId, String name,
+		OrderByComparator<DLFolder> orderByComparator)
 		throws com.liferay.document.library.kernel.exception.NoSuchFolderException {
 		return getPersistence()
 				   .findByP_N_First(parentFolderId, name, orderByComparator);
@@ -1813,8 +1807,8 @@ public class DLFolderUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching document library folder, or <code>null</code> if a matching document library folder could not be found
 	*/
-	public static DLFolder fetchByP_N_First(long parentFolderId,
-		java.lang.String name, OrderByComparator<DLFolder> orderByComparator) {
+	public static DLFolder fetchByP_N_First(long parentFolderId, String name,
+		OrderByComparator<DLFolder> orderByComparator) {
 		return getPersistence()
 				   .fetchByP_N_First(parentFolderId, name, orderByComparator);
 	}
@@ -1828,8 +1822,8 @@ public class DLFolderUtil {
 	* @return the last matching document library folder
 	* @throws NoSuchFolderException if a matching document library folder could not be found
 	*/
-	public static DLFolder findByP_N_Last(long parentFolderId,
-		java.lang.String name, OrderByComparator<DLFolder> orderByComparator)
+	public static DLFolder findByP_N_Last(long parentFolderId, String name,
+		OrderByComparator<DLFolder> orderByComparator)
 		throws com.liferay.document.library.kernel.exception.NoSuchFolderException {
 		return getPersistence()
 				   .findByP_N_Last(parentFolderId, name, orderByComparator);
@@ -1843,8 +1837,8 @@ public class DLFolderUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching document library folder, or <code>null</code> if a matching document library folder could not be found
 	*/
-	public static DLFolder fetchByP_N_Last(long parentFolderId,
-		java.lang.String name, OrderByComparator<DLFolder> orderByComparator) {
+	public static DLFolder fetchByP_N_Last(long parentFolderId, String name,
+		OrderByComparator<DLFolder> orderByComparator) {
 		return getPersistence()
 				   .fetchByP_N_Last(parentFolderId, name, orderByComparator);
 	}
@@ -1860,7 +1854,7 @@ public class DLFolderUtil {
 	* @throws NoSuchFolderException if a document library folder with the primary key could not be found
 	*/
 	public static DLFolder[] findByP_N_PrevAndNext(long folderId,
-		long parentFolderId, java.lang.String name,
+		long parentFolderId, String name,
 		OrderByComparator<DLFolder> orderByComparator)
 		throws com.liferay.document.library.kernel.exception.NoSuchFolderException {
 		return getPersistence()
@@ -1874,7 +1868,7 @@ public class DLFolderUtil {
 	* @param parentFolderId the parent folder ID
 	* @param name the name
 	*/
-	public static void removeByP_N(long parentFolderId, java.lang.String name) {
+	public static void removeByP_N(long parentFolderId, String name) {
 		getPersistence().removeByP_N(parentFolderId, name);
 	}
 
@@ -1885,7 +1879,7 @@ public class DLFolderUtil {
 	* @param name the name
 	* @return the number of matching document library folders
 	*/
-	public static int countByP_N(long parentFolderId, java.lang.String name) {
+	public static int countByP_N(long parentFolderId, String name) {
 		return getPersistence().countByP_N(parentFolderId, name);
 	}
 
@@ -2184,7 +2178,7 @@ public class DLFolderUtil {
 	* @throws NoSuchFolderException if a matching document library folder could not be found
 	*/
 	public static DLFolder findByG_P_N(long groupId, long parentFolderId,
-		java.lang.String name)
+		String name)
 		throws com.liferay.document.library.kernel.exception.NoSuchFolderException {
 		return getPersistence().findByG_P_N(groupId, parentFolderId, name);
 	}
@@ -2198,7 +2192,7 @@ public class DLFolderUtil {
 	* @return the matching document library folder, or <code>null</code> if a matching document library folder could not be found
 	*/
 	public static DLFolder fetchByG_P_N(long groupId, long parentFolderId,
-		java.lang.String name) {
+		String name) {
 		return getPersistence().fetchByG_P_N(groupId, parentFolderId, name);
 	}
 
@@ -2212,7 +2206,7 @@ public class DLFolderUtil {
 	* @return the matching document library folder, or <code>null</code> if a matching document library folder could not be found
 	*/
 	public static DLFolder fetchByG_P_N(long groupId, long parentFolderId,
-		java.lang.String name, boolean retrieveFromCache) {
+		String name, boolean retrieveFromCache) {
 		return getPersistence()
 				   .fetchByG_P_N(groupId, parentFolderId, name,
 			retrieveFromCache);
@@ -2227,7 +2221,7 @@ public class DLFolderUtil {
 	* @return the document library folder that was removed
 	*/
 	public static DLFolder removeByG_P_N(long groupId, long parentFolderId,
-		java.lang.String name)
+		String name)
 		throws com.liferay.document.library.kernel.exception.NoSuchFolderException {
 		return getPersistence().removeByG_P_N(groupId, parentFolderId, name);
 	}
@@ -2241,7 +2235,7 @@ public class DLFolderUtil {
 	* @return the number of matching document library folders
 	*/
 	public static int countByG_P_N(long groupId, long parentFolderId,
-		java.lang.String name) {
+		String name) {
 		return getPersistence().countByG_P_N(groupId, parentFolderId, name);
 	}
 
@@ -2761,7 +2755,7 @@ public class DLFolderUtil {
 	* @return the matching document library folders
 	*/
 	public static List<DLFolder> findByG_M_T_H(long groupId,
-		boolean mountPoint, java.lang.String treePath, boolean hidden) {
+		boolean mountPoint, String treePath, boolean hidden) {
 		return getPersistence()
 				   .findByG_M_T_H(groupId, mountPoint, treePath, hidden);
 	}
@@ -2782,8 +2776,7 @@ public class DLFolderUtil {
 	* @return the range of matching document library folders
 	*/
 	public static List<DLFolder> findByG_M_T_H(long groupId,
-		boolean mountPoint, java.lang.String treePath, boolean hidden,
-		int start, int end) {
+		boolean mountPoint, String treePath, boolean hidden, int start, int end) {
 		return getPersistence()
 				   .findByG_M_T_H(groupId, mountPoint, treePath, hidden, start,
 			end);
@@ -2806,8 +2799,8 @@ public class DLFolderUtil {
 	* @return the ordered range of matching document library folders
 	*/
 	public static List<DLFolder> findByG_M_T_H(long groupId,
-		boolean mountPoint, java.lang.String treePath, boolean hidden,
-		int start, int end, OrderByComparator<DLFolder> orderByComparator) {
+		boolean mountPoint, String treePath, boolean hidden, int start,
+		int end, OrderByComparator<DLFolder> orderByComparator) {
 		return getPersistence()
 				   .findByG_M_T_H(groupId, mountPoint, treePath, hidden, start,
 			end, orderByComparator);
@@ -2831,8 +2824,8 @@ public class DLFolderUtil {
 	* @return the ordered range of matching document library folders
 	*/
 	public static List<DLFolder> findByG_M_T_H(long groupId,
-		boolean mountPoint, java.lang.String treePath, boolean hidden,
-		int start, int end, OrderByComparator<DLFolder> orderByComparator,
+		boolean mountPoint, String treePath, boolean hidden, int start,
+		int end, OrderByComparator<DLFolder> orderByComparator,
 		boolean retrieveFromCache) {
 		return getPersistence()
 				   .findByG_M_T_H(groupId, mountPoint, treePath, hidden, start,
@@ -2851,7 +2844,7 @@ public class DLFolderUtil {
 	* @throws NoSuchFolderException if a matching document library folder could not be found
 	*/
 	public static DLFolder findByG_M_T_H_First(long groupId,
-		boolean mountPoint, java.lang.String treePath, boolean hidden,
+		boolean mountPoint, String treePath, boolean hidden,
 		OrderByComparator<DLFolder> orderByComparator)
 		throws com.liferay.document.library.kernel.exception.NoSuchFolderException {
 		return getPersistence()
@@ -2870,7 +2863,7 @@ public class DLFolderUtil {
 	* @return the first matching document library folder, or <code>null</code> if a matching document library folder could not be found
 	*/
 	public static DLFolder fetchByG_M_T_H_First(long groupId,
-		boolean mountPoint, java.lang.String treePath, boolean hidden,
+		boolean mountPoint, String treePath, boolean hidden,
 		OrderByComparator<DLFolder> orderByComparator) {
 		return getPersistence()
 				   .fetchByG_M_T_H_First(groupId, mountPoint, treePath, hidden,
@@ -2889,7 +2882,7 @@ public class DLFolderUtil {
 	* @throws NoSuchFolderException if a matching document library folder could not be found
 	*/
 	public static DLFolder findByG_M_T_H_Last(long groupId, boolean mountPoint,
-		java.lang.String treePath, boolean hidden,
+		String treePath, boolean hidden,
 		OrderByComparator<DLFolder> orderByComparator)
 		throws com.liferay.document.library.kernel.exception.NoSuchFolderException {
 		return getPersistence()
@@ -2908,7 +2901,7 @@ public class DLFolderUtil {
 	* @return the last matching document library folder, or <code>null</code> if a matching document library folder could not be found
 	*/
 	public static DLFolder fetchByG_M_T_H_Last(long groupId,
-		boolean mountPoint, java.lang.String treePath, boolean hidden,
+		boolean mountPoint, String treePath, boolean hidden,
 		OrderByComparator<DLFolder> orderByComparator) {
 		return getPersistence()
 				   .fetchByG_M_T_H_Last(groupId, mountPoint, treePath, hidden,
@@ -2928,8 +2921,8 @@ public class DLFolderUtil {
 	* @throws NoSuchFolderException if a document library folder with the primary key could not be found
 	*/
 	public static DLFolder[] findByG_M_T_H_PrevAndNext(long folderId,
-		long groupId, boolean mountPoint, java.lang.String treePath,
-		boolean hidden, OrderByComparator<DLFolder> orderByComparator)
+		long groupId, boolean mountPoint, String treePath, boolean hidden,
+		OrderByComparator<DLFolder> orderByComparator)
 		throws com.liferay.document.library.kernel.exception.NoSuchFolderException {
 		return getPersistence()
 				   .findByG_M_T_H_PrevAndNext(folderId, groupId, mountPoint,
@@ -2946,7 +2939,7 @@ public class DLFolderUtil {
 	* @return the matching document library folders that the user has permission to view
 	*/
 	public static List<DLFolder> filterFindByG_M_T_H(long groupId,
-		boolean mountPoint, java.lang.String treePath, boolean hidden) {
+		boolean mountPoint, String treePath, boolean hidden) {
 		return getPersistence()
 				   .filterFindByG_M_T_H(groupId, mountPoint, treePath, hidden);
 	}
@@ -2967,8 +2960,7 @@ public class DLFolderUtil {
 	* @return the range of matching document library folders that the user has permission to view
 	*/
 	public static List<DLFolder> filterFindByG_M_T_H(long groupId,
-		boolean mountPoint, java.lang.String treePath, boolean hidden,
-		int start, int end) {
+		boolean mountPoint, String treePath, boolean hidden, int start, int end) {
 		return getPersistence()
 				   .filterFindByG_M_T_H(groupId, mountPoint, treePath, hidden,
 			start, end);
@@ -2991,8 +2983,8 @@ public class DLFolderUtil {
 	* @return the ordered range of matching document library folders that the user has permission to view
 	*/
 	public static List<DLFolder> filterFindByG_M_T_H(long groupId,
-		boolean mountPoint, java.lang.String treePath, boolean hidden,
-		int start, int end, OrderByComparator<DLFolder> orderByComparator) {
+		boolean mountPoint, String treePath, boolean hidden, int start,
+		int end, OrderByComparator<DLFolder> orderByComparator) {
 		return getPersistence()
 				   .filterFindByG_M_T_H(groupId, mountPoint, treePath, hidden,
 			start, end, orderByComparator);
@@ -3011,8 +3003,8 @@ public class DLFolderUtil {
 	* @throws NoSuchFolderException if a document library folder with the primary key could not be found
 	*/
 	public static DLFolder[] filterFindByG_M_T_H_PrevAndNext(long folderId,
-		long groupId, boolean mountPoint, java.lang.String treePath,
-		boolean hidden, OrderByComparator<DLFolder> orderByComparator)
+		long groupId, boolean mountPoint, String treePath, boolean hidden,
+		OrderByComparator<DLFolder> orderByComparator)
 		throws com.liferay.document.library.kernel.exception.NoSuchFolderException {
 		return getPersistence()
 				   .filterFindByG_M_T_H_PrevAndNext(folderId, groupId,
@@ -3028,7 +3020,7 @@ public class DLFolderUtil {
 	* @param hidden the hidden
 	*/
 	public static void removeByG_M_T_H(long groupId, boolean mountPoint,
-		java.lang.String treePath, boolean hidden) {
+		String treePath, boolean hidden) {
 		getPersistence().removeByG_M_T_H(groupId, mountPoint, treePath, hidden);
 	}
 
@@ -3042,7 +3034,7 @@ public class DLFolderUtil {
 	* @return the number of matching document library folders
 	*/
 	public static int countByG_M_T_H(long groupId, boolean mountPoint,
-		java.lang.String treePath, boolean hidden) {
+		String treePath, boolean hidden) {
 		return getPersistence()
 				   .countByG_M_T_H(groupId, mountPoint, treePath, hidden);
 	}
@@ -3057,7 +3049,7 @@ public class DLFolderUtil {
 	* @return the number of matching document library folders that the user has permission to view
 	*/
 	public static int filterCountByG_M_T_H(long groupId, boolean mountPoint,
-		java.lang.String treePath, boolean hidden) {
+		String treePath, boolean hidden) {
 		return getPersistence()
 				   .filterCountByG_M_T_H(groupId, mountPoint, treePath, hidden);
 	}
@@ -4054,7 +4046,7 @@ public class DLFolderUtil {
 		getPersistence().setDLFileEntryTypes(pk, dlFileEntryTypes);
 	}
 
-	public static java.util.Set<java.lang.String> getBadColumnNames() {
+	public static java.util.Set<String> getBadColumnNames() {
 		return getPersistence().getBadColumnNames();
 	}
 

@@ -56,7 +56,7 @@ public interface JournalFolder extends JournalFolderModel, PersistedModel,
 			}
 		};
 
-	public java.util.List<java.lang.Long> getAncestorFolderIds()
+	public java.util.List<Long> getAncestorFolderIds()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public java.util.List<JournalFolder> getAncestors()

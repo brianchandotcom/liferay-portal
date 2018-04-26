@@ -90,7 +90,7 @@ public class DDMFormInstanceRecordVersionServiceHttp {
 
 	public static com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecordVersion getFormInstanceRecordVersion(
 		HttpPrincipal httpPrincipal, long ddmFormInstanceRecordId,
-		java.lang.String version)
+		String version)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(DDMFormInstanceRecordVersionServiceUtil.class,
@@ -227,7 +227,7 @@ public class DDMFormInstanceRecordVersionServiceHttp {
 	private static final Class<?>[] _getFormInstanceRecordVersionParameterTypes0 =
 		new Class[] { long.class };
 	private static final Class<?>[] _getFormInstanceRecordVersionParameterTypes1 =
-		new Class[] { long.class, java.lang.String.class };
+		new Class[] { long.class, String.class };
 	private static final Class<?>[] _getFormInstanceRecordVersionsParameterTypes2 =
 		new Class[] { long.class };
 	private static final Class<?>[] _getFormInstanceRecordVersionsParameterTypes3 =

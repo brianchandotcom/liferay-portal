@@ -114,7 +114,7 @@ public class SocialRelationWrapper implements SocialRelation,
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new SocialRelationWrapper((SocialRelation)_socialRelation.clone());
 	}
 
@@ -209,7 +209,7 @@ public class SocialRelationWrapper implements SocialRelation,
 	* @return the uuid of this social relation
 	*/
 	@Override
-	public java.lang.String getUuid() {
+	public String getUuid() {
 		return _socialRelation.getUuid();
 	}
 
@@ -345,7 +345,7 @@ public class SocialRelationWrapper implements SocialRelation,
 	* @param uuid the uuid of this social relation
 	*/
 	@Override
-	public void setUuid(java.lang.String uuid) {
+	public void setUuid(String uuid) {
 		_socialRelation.setUuid(uuid);
 	}
 
@@ -360,7 +360,7 @@ public class SocialRelationWrapper implements SocialRelation,
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _socialRelation.toString();
 	}
 
@@ -370,7 +370,7 @@ public class SocialRelationWrapper implements SocialRelation,
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _socialRelation.toXmlString();
 	}
 

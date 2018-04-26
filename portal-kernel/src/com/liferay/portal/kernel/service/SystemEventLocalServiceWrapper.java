@@ -33,9 +33,8 @@ public class SystemEventLocalServiceWrapper implements SystemEventLocalService,
 
 	@Override
 	public com.liferay.portal.kernel.model.SystemEvent addSystemEvent(
-		long userId, long groupId, java.lang.String className, long classPK,
-		java.lang.String classUuid, java.lang.String referrerClassName,
-		int type, java.lang.String extraData)
+		long userId, long groupId, String className, long classPK,
+		String classUuid, String referrerClassName, int type, String extraData)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _systemEventLocalService.addSystemEvent(userId, groupId,
 			className, classPK, classUuid, referrerClassName, type, extraData);
@@ -43,9 +42,8 @@ public class SystemEventLocalServiceWrapper implements SystemEventLocalService,
 
 	@Override
 	public com.liferay.portal.kernel.model.SystemEvent addSystemEvent(
-		long companyId, java.lang.String className, long classPK,
-		java.lang.String classUuid, java.lang.String referrerClassName,
-		int type, java.lang.String extraData)
+		long companyId, String className, long classPK, String classUuid,
+		String referrerClassName, int type, String extraData)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _systemEventLocalService.addSystemEvent(companyId, className,
 			classPK, classUuid, referrerClassName, type, extraData);
@@ -241,7 +239,7 @@ public class SystemEventLocalServiceWrapper implements SystemEventLocalService,
 	* @return the OSGi service identifier
 	*/
 	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
+	public String getOSGiServiceIdentifier() {
 		return _systemEventLocalService.getOSGiServiceIdentifier();
 	}
 

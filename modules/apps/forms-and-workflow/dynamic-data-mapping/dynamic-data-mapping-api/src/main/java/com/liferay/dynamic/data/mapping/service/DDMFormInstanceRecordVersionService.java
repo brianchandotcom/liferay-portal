@@ -61,8 +61,7 @@ public interface DDMFormInstanceRecordVersionService extends BaseService {
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public DDMFormInstanceRecordVersion getFormInstanceRecordVersion(
-		long ddmFormInstanceRecordId, java.lang.String version)
-		throws PortalException;
+		long ddmFormInstanceRecordId, String version) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<DDMFormInstanceRecordVersion> getFormInstanceRecordVersions(
@@ -83,5 +82,5 @@ public interface DDMFormInstanceRecordVersionService extends BaseService {
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 }

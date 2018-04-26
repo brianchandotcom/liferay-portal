@@ -75,19 +75,18 @@ public interface LayoutPrototypeLocalService extends BaseLocalService,
 	public LayoutPrototype addLayoutPrototype(LayoutPrototype layoutPrototype);
 
 	public LayoutPrototype addLayoutPrototype(long userId, long companyId,
-		Map<Locale, java.lang.String> nameMap,
-		Map<Locale, java.lang.String> descriptionMap, boolean active,
-		ServiceContext serviceContext) throws PortalException;
+		Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
+		boolean active, ServiceContext serviceContext)
+		throws PortalException;
 
 	/**
 	* @deprecated As of 7.0.0, replaced by {@link #addLayoutPrototype(long,
 	long, Map, Map, boolean, ServiceContext)}
 	*/
-	@java.lang.Deprecated
+	@Deprecated
 	public LayoutPrototype addLayoutPrototype(long userId, long companyId,
-		Map<Locale, java.lang.String> nameMap, java.lang.String description,
-		boolean active, ServiceContext serviceContext)
-		throws PortalException;
+		Map<Locale, String> nameMap, String description, boolean active,
+		ServiceContext serviceContext) throws PortalException;
 
 	/**
 	* Creates a new layout prototype with the primary key. Does not add the layout prototype to the database.
@@ -201,8 +200,8 @@ public interface LayoutPrototypeLocalService extends BaseLocalService,
 	* @return the matching layout prototype, or <code>null</code> if a matching layout prototype could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public LayoutPrototype fetchLayoutPrototypeByUuidAndCompanyId(
-		java.lang.String uuid, long companyId);
+	public LayoutPrototype fetchLayoutPrototypeByUuidAndCompanyId(String uuid,
+		long companyId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
@@ -234,8 +233,8 @@ public interface LayoutPrototypeLocalService extends BaseLocalService,
 	* @throws PortalException if a matching layout prototype could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public LayoutPrototype getLayoutPrototypeByUuidAndCompanyId(
-		java.lang.String uuid, long companyId) throws PortalException;
+	public LayoutPrototype getLayoutPrototypeByUuidAndCompanyId(String uuid,
+		long companyId) throws PortalException;
 
 	/**
 	* Returns a range of all the layout prototypes.
@@ -264,7 +263,7 @@ public interface LayoutPrototypeLocalService extends BaseLocalService,
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -272,12 +271,11 @@ public interface LayoutPrototypeLocalService extends BaseLocalService,
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<LayoutPrototype> search(long companyId,
-		java.lang.Boolean active, int start, int end,
-		OrderByComparator<LayoutPrototype> obc);
+	public List<LayoutPrototype> search(long companyId, Boolean active,
+		int start, int end, OrderByComparator<LayoutPrototype> obc);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int searchCount(long companyId, java.lang.Boolean active);
+	public int searchCount(long companyId, Boolean active);
 
 	/**
 	* Updates the layout prototype in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
@@ -290,17 +288,16 @@ public interface LayoutPrototypeLocalService extends BaseLocalService,
 		LayoutPrototype layoutPrototype);
 
 	public LayoutPrototype updateLayoutPrototype(long layoutPrototypeId,
-		Map<Locale, java.lang.String> nameMap,
-		Map<Locale, java.lang.String> descriptionMap, boolean active,
-		ServiceContext serviceContext) throws PortalException;
+		Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
+		boolean active, ServiceContext serviceContext)
+		throws PortalException;
 
 	/**
 	* @deprecated As of 7.0.0, replaced by {@link #updateLayoutPrototype(long,
 	Map, Map, boolean, ServiceContext)}
 	*/
-	@java.lang.Deprecated
+	@Deprecated
 	public LayoutPrototype updateLayoutPrototype(long layoutPrototypeId,
-		Map<Locale, java.lang.String> nameMap, java.lang.String description,
-		boolean active, ServiceContext serviceContext)
-		throws PortalException;
+		Map<Locale, String> nameMap, String description, boolean active,
+		ServiceContext serviceContext) throws PortalException;
 }

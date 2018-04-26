@@ -116,8 +116,7 @@ public class UserGroupServiceSoap {
 	*/
 	@Deprecated
 	public static com.liferay.portal.kernel.model.UserGroupSoap addUserGroup(
-		java.lang.String name, java.lang.String description)
-		throws RemoteException {
+		String name, String description) throws RemoteException {
 		try {
 			com.liferay.portal.kernel.model.UserGroup returnValue = UserGroupServiceUtil.addUserGroup(name,
 					description);
@@ -147,7 +146,7 @@ public class UserGroupServiceSoap {
 	* @return the user group
 	*/
 	public static com.liferay.portal.kernel.model.UserGroupSoap addUserGroup(
-		java.lang.String name, java.lang.String description,
+		String name, String description,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
@@ -227,7 +226,7 @@ public class UserGroupServiceSoap {
 	* @return the user group with the name
 	*/
 	public static com.liferay.portal.kernel.model.UserGroupSoap getUserGroup(
-		java.lang.String name) throws RemoteException {
+		String name) throws RemoteException {
 		try {
 			com.liferay.portal.kernel.model.UserGroup returnValue = UserGroupServiceUtil.getUserGroup(name);
 
@@ -324,7 +323,7 @@ public class UserGroupServiceSoap {
 	*/
 	@Deprecated
 	public static com.liferay.portal.kernel.model.UserGroupSoap updateUserGroup(
-		long userGroupId, java.lang.String name, java.lang.String description)
+		long userGroupId, String name, String description)
 		throws RemoteException {
 		try {
 			com.liferay.portal.kernel.model.UserGroup returnValue = UserGroupServiceUtil.updateUserGroup(userGroupId,
@@ -351,7 +350,7 @@ public class UserGroupServiceSoap {
 	* @return the user group
 	*/
 	public static com.liferay.portal.kernel.model.UserGroupSoap updateUserGroup(
-		long userGroupId, java.lang.String name, java.lang.String description,
+		long userGroupId, String name, String description,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {

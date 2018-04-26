@@ -129,7 +129,7 @@ public class SocialActivityLimitWrapper implements SocialActivityLimit,
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new SocialActivityLimitWrapper((SocialActivityLimit)_socialActivityLimit.clone());
 	}
 
@@ -144,7 +144,7 @@ public class SocialActivityLimitWrapper implements SocialActivityLimit,
 	* @return the activity counter name of this social activity limit
 	*/
 	@Override
-	public java.lang.String getActivityCounterName() {
+	public String getActivityCounterName() {
 		return _socialActivityLimit.getActivityCounterName();
 	}
 
@@ -174,7 +174,7 @@ public class SocialActivityLimitWrapper implements SocialActivityLimit,
 	* @return the fully qualified class name of this social activity limit
 	*/
 	@Override
-	public java.lang.String getClassName() {
+	public String getClassName() {
 		return _socialActivityLimit.getClassName();
 	}
 
@@ -264,7 +264,7 @@ public class SocialActivityLimitWrapper implements SocialActivityLimit,
 	* @return the user uuid of this social activity limit
 	*/
 	@Override
-	public java.lang.String getUserUuid() {
+	public String getUserUuid() {
 		return _socialActivityLimit.getUserUuid();
 	}
 
@@ -274,7 +274,7 @@ public class SocialActivityLimitWrapper implements SocialActivityLimit,
 	* @return the value of this social activity limit
 	*/
 	@Override
-	public java.lang.String getValue() {
+	public String getValue() {
 		return _socialActivityLimit.getValue();
 	}
 
@@ -309,7 +309,7 @@ public class SocialActivityLimitWrapper implements SocialActivityLimit,
 	* @param activityCounterName the activity counter name of this social activity limit
 	*/
 	@Override
-	public void setActivityCounterName(java.lang.String activityCounterName) {
+	public void setActivityCounterName(String activityCounterName) {
 		_socialActivityLimit.setActivityCounterName(activityCounterName);
 	}
 
@@ -339,7 +339,7 @@ public class SocialActivityLimitWrapper implements SocialActivityLimit,
 	}
 
 	@Override
-	public void setClassName(java.lang.String className) {
+	public void setClassName(String className) {
 		_socialActivityLimit.setClassName(className);
 	}
 
@@ -440,7 +440,7 @@ public class SocialActivityLimitWrapper implements SocialActivityLimit,
 	* @param userUuid the user uuid of this social activity limit
 	*/
 	@Override
-	public void setUserUuid(java.lang.String userUuid) {
+	public void setUserUuid(String userUuid) {
 		_socialActivityLimit.setUserUuid(userUuid);
 	}
 
@@ -450,7 +450,7 @@ public class SocialActivityLimitWrapper implements SocialActivityLimit,
 	* @param value the value of this social activity limit
 	*/
 	@Override
-	public void setValue(java.lang.String value) {
+	public void setValue(String value) {
 		_socialActivityLimit.setValue(value);
 	}
 
@@ -465,7 +465,7 @@ public class SocialActivityLimitWrapper implements SocialActivityLimit,
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _socialActivityLimit.toString();
 	}
 
@@ -475,7 +475,7 @@ public class SocialActivityLimitWrapper implements SocialActivityLimit,
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _socialActivityLimit.toXmlString();
 	}
 

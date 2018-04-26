@@ -46,7 +46,7 @@ public class ClassNameServiceUtil {
 	}
 
 	public static com.liferay.portal.kernel.model.ClassName fetchClassName(
-		java.lang.String value) {
+		String value) {
 		return getService().fetchClassName(value);
 	}
 
@@ -55,7 +55,7 @@ public class ClassNameServiceUtil {
 	*
 	* @return the OSGi service identifier
 	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
+	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 

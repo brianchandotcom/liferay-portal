@@ -53,27 +53,24 @@ public interface JournalFeedService extends BaseService {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link JournalFeedServiceUtil} to access the journal feed remote service. Add custom service methods to {@link com.liferay.journal.service.impl.JournalFeedServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public JournalFeed addFeed(long groupId, java.lang.String feedId,
-		boolean autoFeedId, java.lang.String name,
-		java.lang.String description, java.lang.String ddmStructureKey,
-		java.lang.String ddmTemplateKey,
-		java.lang.String ddmRendererTemplateKey, int delta,
-		java.lang.String orderByCol, java.lang.String orderByType,
-		java.lang.String targetLayoutFriendlyUrl,
-		java.lang.String targetPortletId, java.lang.String contentField,
-		java.lang.String feedType, double feedVersion,
-		ServiceContext serviceContext) throws PortalException;
+	public JournalFeed addFeed(long groupId, String feedId, boolean autoFeedId,
+		String name, String description, String ddmStructureKey,
+		String ddmTemplateKey, String ddmRendererTemplateKey, int delta,
+		String orderByCol, String orderByType, String targetLayoutFriendlyUrl,
+		String targetPortletId, String contentField, String feedType,
+		double feedVersion, ServiceContext serviceContext)
+		throws PortalException;
 
 	public void deleteFeed(long feedId) throws PortalException;
 
-	public void deleteFeed(long groupId, java.lang.String feedId)
+	public void deleteFeed(long groupId, String feedId)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public JournalFeed getFeed(long feedId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public JournalFeed getFeed(long groupId, java.lang.String feedId)
+	public JournalFeed getFeed(long groupId, String feedId)
 		throws PortalException;
 
 	/**
@@ -81,15 +78,13 @@ public interface JournalFeedService extends BaseService {
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
-	public JournalFeed updateFeed(long groupId, java.lang.String feedId,
-		java.lang.String name, java.lang.String description,
-		java.lang.String ddmStructureKey, java.lang.String ddmTemplateKey,
-		java.lang.String ddmRendererTemplateKey, int delta,
-		java.lang.String orderByCol, java.lang.String orderByType,
-		java.lang.String targetLayoutFriendlyUrl,
-		java.lang.String targetPortletId, java.lang.String contentField,
-		java.lang.String feedType, double feedVersion,
-		ServiceContext serviceContext) throws PortalException;
+	public JournalFeed updateFeed(long groupId, String feedId, String name,
+		String description, String ddmStructureKey, String ddmTemplateKey,
+		String ddmRendererTemplateKey, int delta, String orderByCol,
+		String orderByType, String targetLayoutFriendlyUrl,
+		String targetPortletId, String contentField, String feedType,
+		double feedVersion, ServiceContext serviceContext)
+		throws PortalException;
 }

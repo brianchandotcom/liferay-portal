@@ -57,8 +57,8 @@ import com.liferay.portal.kernel.util.MethodKey;
 @ProviderType
 public class ResourceBlockServiceHttp {
 	public static void addCompanyScopePermission(HttpPrincipal httpPrincipal,
-		long scopeGroupId, long companyId, java.lang.String name, long roleId,
-		java.lang.String actionId)
+		long scopeGroupId, long companyId, String name, long roleId,
+		String actionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(ResourceBlockServiceUtil.class,
@@ -87,8 +87,8 @@ public class ResourceBlockServiceHttp {
 	}
 
 	public static void addGroupScopePermission(HttpPrincipal httpPrincipal,
-		long scopeGroupId, long companyId, long groupId, java.lang.String name,
-		long roleId, java.lang.String actionId)
+		long scopeGroupId, long companyId, long groupId, String name,
+		long roleId, String actionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(ResourceBlockServiceUtil.class,
@@ -117,9 +117,8 @@ public class ResourceBlockServiceHttp {
 	}
 
 	public static void addIndividualScopePermission(
-		HttpPrincipal httpPrincipal, long companyId, long groupId,
-		java.lang.String name, long primKey, long roleId,
-		java.lang.String actionId)
+		HttpPrincipal httpPrincipal, long companyId, long groupId, String name,
+		long primKey, long roleId, String actionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(ResourceBlockServiceUtil.class,
@@ -149,7 +148,7 @@ public class ResourceBlockServiceHttp {
 
 	public static void removeAllGroupScopePermissions(
 		HttpPrincipal httpPrincipal, long scopeGroupId, long companyId,
-		java.lang.String name, long roleId, java.lang.String actionId)
+		String name, long roleId, String actionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(ResourceBlockServiceUtil.class,
@@ -179,7 +178,7 @@ public class ResourceBlockServiceHttp {
 
 	public static void removeCompanyScopePermission(
 		HttpPrincipal httpPrincipal, long scopeGroupId, long companyId,
-		java.lang.String name, long roleId, java.lang.String actionId)
+		String name, long roleId, String actionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(ResourceBlockServiceUtil.class,
@@ -208,8 +207,8 @@ public class ResourceBlockServiceHttp {
 	}
 
 	public static void removeGroupScopePermission(HttpPrincipal httpPrincipal,
-		long scopeGroupId, long companyId, long groupId, java.lang.String name,
-		long roleId, java.lang.String actionId)
+		long scopeGroupId, long companyId, long groupId, String name,
+		long roleId, String actionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(ResourceBlockServiceUtil.class,
@@ -238,9 +237,8 @@ public class ResourceBlockServiceHttp {
 	}
 
 	public static void removeIndividualScopePermission(
-		HttpPrincipal httpPrincipal, long companyId, long groupId,
-		java.lang.String name, long primKey, long roleId,
-		java.lang.String actionId)
+		HttpPrincipal httpPrincipal, long companyId, long groupId, String name,
+		long primKey, long roleId, String actionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(ResourceBlockServiceUtil.class,
@@ -269,8 +267,8 @@ public class ResourceBlockServiceHttp {
 	}
 
 	public static void setCompanyScopePermissions(HttpPrincipal httpPrincipal,
-		long scopeGroupId, long companyId, java.lang.String name, long roleId,
-		java.util.List<java.lang.String> actionIds)
+		long scopeGroupId, long companyId, String name, long roleId,
+		java.util.List<String> actionIds)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(ResourceBlockServiceUtil.class,
@@ -299,8 +297,8 @@ public class ResourceBlockServiceHttp {
 	}
 
 	public static void setGroupScopePermissions(HttpPrincipal httpPrincipal,
-		long scopeGroupId, long companyId, long groupId, java.lang.String name,
-		long roleId, java.util.List<java.lang.String> actionIds)
+		long scopeGroupId, long companyId, long groupId, String name,
+		long roleId, java.util.List<String> actionIds)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(ResourceBlockServiceUtil.class,
@@ -329,9 +327,8 @@ public class ResourceBlockServiceHttp {
 	}
 
 	public static void setIndividualScopePermissions(
-		HttpPrincipal httpPrincipal, long companyId, long groupId,
-		java.lang.String name, long primKey, long roleId,
-		java.util.List<java.lang.String> actionIds)
+		HttpPrincipal httpPrincipal, long companyId, long groupId, String name,
+		long primKey, long roleId, java.util.List<String> actionIds)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(ResourceBlockServiceUtil.class,
@@ -360,9 +357,8 @@ public class ResourceBlockServiceHttp {
 	}
 
 	public static void setIndividualScopePermissions(
-		HttpPrincipal httpPrincipal, long companyId, long groupId,
-		java.lang.String name, long primKey,
-		java.util.Map<java.lang.Long, java.lang.String[]> roleIdsToActionIds)
+		HttpPrincipal httpPrincipal, long companyId, long groupId, String name,
+		long primKey, java.util.Map<Long, String[]> roleIdsToActionIds)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(ResourceBlockServiceUtil.class,
@@ -392,53 +388,50 @@ public class ResourceBlockServiceHttp {
 
 	private static Log _log = LogFactoryUtil.getLog(ResourceBlockServiceHttp.class);
 	private static final Class<?>[] _addCompanyScopePermissionParameterTypes0 = new Class[] {
-			long.class, long.class, java.lang.String.class, long.class,
-			java.lang.String.class
+			long.class, long.class, String.class, long.class, String.class
 		};
 	private static final Class<?>[] _addGroupScopePermissionParameterTypes1 = new Class[] {
-			long.class, long.class, long.class, java.lang.String.class,
-			long.class, java.lang.String.class
+			long.class, long.class, long.class, String.class, long.class,
+			String.class
 		};
 	private static final Class<?>[] _addIndividualScopePermissionParameterTypes2 =
 		new Class[] {
-			long.class, long.class, java.lang.String.class, long.class,
-			long.class, java.lang.String.class
+			long.class, long.class, String.class, long.class, long.class,
+			String.class
 		};
 	private static final Class<?>[] _removeAllGroupScopePermissionsParameterTypes3 =
 		new Class[] {
-			long.class, long.class, java.lang.String.class, long.class,
-			java.lang.String.class
+			long.class, long.class, String.class, long.class, String.class
 		};
 	private static final Class<?>[] _removeCompanyScopePermissionParameterTypes4 =
 		new Class[] {
-			long.class, long.class, java.lang.String.class, long.class,
-			java.lang.String.class
+			long.class, long.class, String.class, long.class, String.class
 		};
 	private static final Class<?>[] _removeGroupScopePermissionParameterTypes5 = new Class[] {
-			long.class, long.class, long.class, java.lang.String.class,
-			long.class, java.lang.String.class
+			long.class, long.class, long.class, String.class, long.class,
+			String.class
 		};
 	private static final Class<?>[] _removeIndividualScopePermissionParameterTypes6 =
 		new Class[] {
-			long.class, long.class, java.lang.String.class, long.class,
-			long.class, java.lang.String.class
+			long.class, long.class, String.class, long.class, long.class,
+			String.class
 		};
 	private static final Class<?>[] _setCompanyScopePermissionsParameterTypes7 = new Class[] {
-			long.class, long.class, java.lang.String.class, long.class,
+			long.class, long.class, String.class, long.class,
 			java.util.List.class
 		};
 	private static final Class<?>[] _setGroupScopePermissionsParameterTypes8 = new Class[] {
-			long.class, long.class, long.class, java.lang.String.class,
-			long.class, java.util.List.class
+			long.class, long.class, long.class, String.class, long.class,
+			java.util.List.class
 		};
 	private static final Class<?>[] _setIndividualScopePermissionsParameterTypes9 =
 		new Class[] {
-			long.class, long.class, java.lang.String.class, long.class,
-			long.class, java.util.List.class
+			long.class, long.class, String.class, long.class, long.class,
+			java.util.List.class
 		};
 	private static final Class<?>[] _setIndividualScopePermissionsParameterTypes10 =
 		new Class[] {
-			long.class, long.class, java.lang.String.class, long.class,
+			long.class, long.class, String.class, long.class,
 			java.util.Map.class
 		};
 }

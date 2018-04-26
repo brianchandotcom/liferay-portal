@@ -127,7 +127,7 @@ public class AttachmentWrapper implements Attachment, ModelWrapper<Attachment> {
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new AttachmentWrapper((Attachment)_attachment.clone());
 	}
 
@@ -172,7 +172,7 @@ public class AttachmentWrapper implements Attachment, ModelWrapper<Attachment> {
 	* @return the content path of this attachment
 	*/
 	@Override
-	public java.lang.String getContentPath() {
+	public String getContentPath() {
 		return _attachment.getContentPath();
 	}
 
@@ -187,7 +187,7 @@ public class AttachmentWrapper implements Attachment, ModelWrapper<Attachment> {
 	* @return the file name of this attachment
 	*/
 	@Override
-	public java.lang.String getFileName() {
+	public String getFileName() {
 		return _attachment.getFileName();
 	}
 
@@ -252,7 +252,7 @@ public class AttachmentWrapper implements Attachment, ModelWrapper<Attachment> {
 	* @return the user uuid of this attachment
 	*/
 	@Override
-	public java.lang.String getUserUuid() {
+	public String getUserUuid() {
 		return _attachment.getUserUuid();
 	}
 
@@ -322,7 +322,7 @@ public class AttachmentWrapper implements Attachment, ModelWrapper<Attachment> {
 	* @param contentPath the content path of this attachment
 	*/
 	@Override
-	public void setContentPath(java.lang.String contentPath) {
+	public void setContentPath(String contentPath) {
 		_attachment.setContentPath(contentPath);
 	}
 
@@ -348,7 +348,7 @@ public class AttachmentWrapper implements Attachment, ModelWrapper<Attachment> {
 	* @param fileName the file name of this attachment
 	*/
 	@Override
-	public void setFileName(java.lang.String fileName) {
+	public void setFileName(String fileName) {
 		_attachment.setFileName(fileName);
 	}
 
@@ -418,7 +418,7 @@ public class AttachmentWrapper implements Attachment, ModelWrapper<Attachment> {
 	* @param userUuid the user uuid of this attachment
 	*/
 	@Override
-	public void setUserUuid(java.lang.String userUuid) {
+	public void setUserUuid(String userUuid) {
 		_attachment.setUserUuid(userUuid);
 	}
 
@@ -433,7 +433,7 @@ public class AttachmentWrapper implements Attachment, ModelWrapper<Attachment> {
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _attachment.toString();
 	}
 
@@ -443,7 +443,7 @@ public class AttachmentWrapper implements Attachment, ModelWrapper<Attachment> {
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _attachment.toXmlString();
 	}
 

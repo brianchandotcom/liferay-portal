@@ -265,7 +265,7 @@ public class MeetupsRegistrationLocalServiceWrapper
 	* @return the OSGi service identifier
 	*/
 	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
+	public String getOSGiServiceIdentifier() {
 		return _meetupsRegistrationLocalService.getOSGiServiceIdentifier();
 	}
 
@@ -278,7 +278,7 @@ public class MeetupsRegistrationLocalServiceWrapper
 
 	@Override
 	public com.liferay.social.networking.model.MeetupsRegistration updateMeetupsRegistration(
-		long userId, long meetupsEntryId, int status, java.lang.String comments)
+		long userId, long meetupsEntryId, int status, String comments)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _meetupsRegistrationLocalService.updateMeetupsRegistration(userId,
 			meetupsEntryId, status, comments);

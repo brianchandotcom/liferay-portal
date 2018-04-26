@@ -81,23 +81,23 @@ public interface DDMFormInstanceLocalService extends BaseLocalService,
 	public DDMFormInstance addDDMFormInstance(DDMFormInstance ddmFormInstance);
 
 	public DDMFormInstance addFormInstance(long userId, long groupId,
-		long ddmStructureId, Map<Locale, java.lang.String> nameMap,
-		Map<Locale, java.lang.String> descriptionMap,
+		long ddmStructureId, Map<Locale, String> nameMap,
+		Map<Locale, String> descriptionMap,
 		DDMFormValues settingsDDMFormValues, ServiceContext serviceContext)
 		throws PortalException;
 
 	public DDMFormInstance addFormInstance(long userId, long groupId,
-		long ddmStructureId, Map<Locale, java.lang.String> nameMap,
-		Map<Locale, java.lang.String> descriptionMap,
-		java.lang.String serializedSettingsDDMFormValues,
-		ServiceContext serviceContext) throws PortalException;
+		long ddmStructureId, Map<Locale, String> nameMap,
+		Map<Locale, String> descriptionMap,
+		String serializedSettingsDDMFormValues, ServiceContext serviceContext)
+		throws PortalException;
 
 	public void addFormInstanceResources(DDMFormInstance ddmFormInstance,
 		boolean addGroupPermissions, boolean addGuestPermissions)
 		throws PortalException;
 
 	public void addFormInstanceResources(DDMFormInstance ddmFormInstance,
-		java.lang.String[] groupPermissions, java.lang.String[] guestPermissions)
+		String[] groupPermissions, String[] guestPermissions)
 		throws PortalException;
 
 	/**
@@ -216,8 +216,8 @@ public interface DDMFormInstanceLocalService extends BaseLocalService,
 	* @return the matching ddm form instance, or <code>null</code> if a matching ddm form instance could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public DDMFormInstance fetchDDMFormInstanceByUuidAndGroupId(
-		java.lang.String uuid, long groupId);
+	public DDMFormInstance fetchDDMFormInstanceByUuidAndGroupId(String uuid,
+		long groupId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public DDMFormInstance fetchFormInstance(long ddmFormInstanceId);
@@ -245,8 +245,8 @@ public interface DDMFormInstanceLocalService extends BaseLocalService,
 	* @throws PortalException if a matching ddm form instance could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public DDMFormInstance getDDMFormInstanceByUuidAndGroupId(
-		java.lang.String uuid, long groupId) throws PortalException;
+	public DDMFormInstance getDDMFormInstanceByUuidAndGroupId(String uuid,
+		long groupId) throws PortalException;
 
 	/**
 	* Returns a range of all the ddm form instances.
@@ -271,7 +271,7 @@ public interface DDMFormInstanceLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<DDMFormInstance> getDDMFormInstancesByUuidAndCompanyId(
-		java.lang.String uuid, long companyId);
+		String uuid, long companyId);
 
 	/**
 	* Returns a range of ddm form instances matching the UUID and company.
@@ -285,7 +285,7 @@ public interface DDMFormInstanceLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<DDMFormInstance> getDDMFormInstancesByUuidAndCompanyId(
-		java.lang.String uuid, long companyId, int start, int end,
+		String uuid, long companyId, int start, int end,
 		OrderByComparator<DDMFormInstance> orderByComparator);
 
 	/**
@@ -305,8 +305,8 @@ public interface DDMFormInstanceLocalService extends BaseLocalService,
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public DDMFormInstance getFormInstance(java.lang.String uuid,
-		long ddmFormInstanceId) throws PortalException;
+	public DDMFormInstance getFormInstance(String uuid, long ddmFormInstanceId)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<DDMFormInstance> getFormInstances(long groupId);
@@ -330,7 +330,7 @@ public interface DDMFormInstanceLocalService extends BaseLocalService,
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -339,23 +339,20 @@ public interface DDMFormInstanceLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<DDMFormInstance> search(long companyId, long groupId,
-		java.lang.String keywords, int start, int end,
+		String keywords, int start, int end,
 		OrderByComparator<DDMFormInstance> orderByComparator);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<DDMFormInstance> search(long companyId, long groupId,
-		java.lang.String[] names, java.lang.String[] descriptions,
-		boolean andOperator, int start, int end,
-		OrderByComparator<DDMFormInstance> orderByComparator);
+		String[] names, String[] descriptions, boolean andOperator, int start,
+		int end, OrderByComparator<DDMFormInstance> orderByComparator);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int searchCount(long companyId, long groupId,
-		java.lang.String keywords);
+	public int searchCount(long companyId, long groupId, String keywords);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int searchCount(long companyId, long groupId,
-		java.lang.String[] names, java.lang.String[] descriptions,
-		boolean andOperator);
+	public int searchCount(long companyId, long groupId, String[] names,
+		String[] descriptions, boolean andOperator);
 
 	/**
 	* Updates the ddm form instance in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
@@ -371,14 +368,14 @@ public interface DDMFormInstanceLocalService extends BaseLocalService,
 		DDMFormValues settingsDDMFormValues) throws PortalException;
 
 	public DDMFormInstance updateFormInstance(long ddmFormInstanceId,
-		long ddmStructureId, Map<Locale, java.lang.String> nameMap,
-		Map<Locale, java.lang.String> descriptionMap,
+		long ddmStructureId, Map<Locale, String> nameMap,
+		Map<Locale, String> descriptionMap,
 		DDMFormValues settingsDDMFormValues, ServiceContext serviceContext)
 		throws PortalException;
 
 	public DDMFormInstance updateFormInstance(long ddmFormInstanceId,
-		long ddmStructureId, Map<Locale, java.lang.String> nameMap,
-		Map<Locale, java.lang.String> descriptionMap,
-		java.lang.String serializedSettingsDDMFormValues,
-		ServiceContext serviceContext) throws PortalException;
+		long ddmStructureId, Map<Locale, String> nameMap,
+		Map<Locale, String> descriptionMap,
+		String serializedSettingsDDMFormValues, ServiceContext serviceContext)
+		throws PortalException;
 }

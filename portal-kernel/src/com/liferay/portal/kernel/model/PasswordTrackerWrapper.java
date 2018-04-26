@@ -107,7 +107,7 @@ public class PasswordTrackerWrapper implements PasswordTracker,
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new PasswordTrackerWrapper((PasswordTracker)_passwordTracker.clone());
 	}
 
@@ -157,7 +157,7 @@ public class PasswordTrackerWrapper implements PasswordTracker,
 	* @return the password of this password tracker
 	*/
 	@Override
-	public java.lang.String getPassword() {
+	public String getPassword() {
 		return _passwordTracker.getPassword();
 	}
 
@@ -202,7 +202,7 @@ public class PasswordTrackerWrapper implements PasswordTracker,
 	* @return the user uuid of this password tracker
 	*/
 	@Override
-	public java.lang.String getUserUuid() {
+	public String getUserUuid() {
 		return _passwordTracker.getUserUuid();
 	}
 
@@ -292,7 +292,7 @@ public class PasswordTrackerWrapper implements PasswordTracker,
 	* @param password the password of this password tracker
 	*/
 	@Override
-	public void setPassword(java.lang.String password) {
+	public void setPassword(String password) {
 		_passwordTracker.setPassword(password);
 	}
 
@@ -337,7 +337,7 @@ public class PasswordTrackerWrapper implements PasswordTracker,
 	* @param userUuid the user uuid of this password tracker
 	*/
 	@Override
-	public void setUserUuid(java.lang.String userUuid) {
+	public void setUserUuid(String userUuid) {
 		_passwordTracker.setUserUuid(userUuid);
 	}
 
@@ -352,7 +352,7 @@ public class PasswordTrackerWrapper implements PasswordTracker,
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _passwordTracker.toString();
 	}
 
@@ -362,7 +362,7 @@ public class PasswordTrackerWrapper implements PasswordTracker,
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _passwordTracker.toXmlString();
 	}
 

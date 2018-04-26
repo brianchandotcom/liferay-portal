@@ -34,47 +34,47 @@ String[] displayActivityCounterNameIndexes = new String[displayActivityCounterNa
 
 <liferay-portlet:renderURL portletConfiguration="<%= true %>" var="configurationRenderURL" />
 
-<aui:form action="<%= configurationActionURL %>" method="post" name="fm">
+<liferay-frontend:edit-form
+	action="<%= configurationActionURL %>"
+	method="post"
+	name="fm"
+>
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
 	<aui:input name="redirect" type="hidden" value="<%= configurationRenderURL %>" />
 
-	<div class="portlet-configuration-body-content">
-		<div class="container-fluid-1280">
-			<liferay-ui:panel
+	<liferay-frontend:edit-form-body>
+		<liferay-frontend:fieldset-group>
+			<liferay-frontend:fieldset
 				collapsible="<%= true %>"
-				extended="<%= true %>"
 				id="userStatisticsRankingsPanel"
-				persistState="<%= true %>"
-				title="ranking"
+				label="ranking"
 			>
 				<aui:input label="rank-by-contribution" name="preferences--rankByContribution--" type="checkbox" value="<%= socialUserStatisticsPortletInstanceConfiguration.rankByContribution() %>" />
 
 				<aui:input label="rank-by-participation" name="preferences--rankByParticipation--" type="checkbox" value="<%= socialUserStatisticsPortletInstanceConfiguration.rankByParticipation() %>" />
-			</liferay-ui:panel>
+			</liferay-frontend:fieldset>
 
-			<liferay-ui:panel
+			<liferay-frontend:fieldset
 				collapsible="<%= true %>"
-				extended="<%= true %>"
 				id="userStatisticsSettingsPanel"
-				persistState="<%= true %>"
-				title="settings"
+				label="settings"
 			>
 				<aui:input label="show-header-text" name="preferences--showHeaderText--" type="checkbox" value="<%= socialUserStatisticsPortletInstanceConfiguration.showHeaderText() %>" />
 
 				<aui:input label="show-totals" name="preferences--showTotals--" type="checkbox" value="<%= socialUserStatisticsPortletInstanceConfiguration.showTotals() %>" />
-			</liferay-ui:panel>
+			</liferay-frontend:fieldset>
 
-			<liferay-ui:panel
+			<liferay-frontend:fieldset
 				collapsible="<%= true %>"
-				extended="<%= true %>"
 				id="userStatisticsDisplayActivityCounterNamesPanel"
-				persistState="<%= true %>"
-				title="counters"
+				label="counters"
 			>
 				<div id="<portlet:namespace />displayActivityCounterNames">
 					<aui:input label="display-additional-activity-counters" name="preferences--displayAdditionalActivityCounters--" type="checkbox" value="<%= socialUserStatisticsPortletInstanceConfiguration.displayAdditionalActivityCounters() %>" />
 
-					<aui:fieldset label="">
+					<liferay-frontend:fieldset
+						label=""
+					>
 
 						<%
 						for (int i = 0; i < displayActivityCounterNameIndexCount; i++) {
@@ -96,7 +96,7 @@ String[] displayActivityCounterNameIndexes = new String[displayActivityCounterNa
 						}
 						%>
 
-					</aui:fieldset>
+					</liferay-frontend:fieldset>
 				</div>
 
 				<aui:input name="displayActivityCounterNameIndexes" type="hidden" value="<%= StringUtil.merge(displayActivityCounterNameIndexes) %>" />
@@ -112,11 +112,13 @@ String[] displayActivityCounterNameIndexes = new String[displayActivityCounterNa
 						}
 					).render();
 				</aui:script>
-			</liferay-ui:panel>
-		</div>
-	</div>
+			</liferay-frontend:fieldset>
+		</liferay-frontend:fieldset-group>
+	</liferay-frontend:edit-form-body>
 
-	<aui:button-row>
+	<liferay-frontend:edit-form-footer>
 		<aui:button type="submit" />
-	</aui:button-row>
-</aui:form>
+
+		<aui:button type="cancel" />
+	</liferay-frontend:edit-form-footer>
+</liferay-frontend:edit-form>

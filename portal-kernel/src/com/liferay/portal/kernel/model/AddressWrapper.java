@@ -206,7 +206,7 @@ public class AddressWrapper implements Address, ModelWrapper<Address> {
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new AddressWrapper((Address)_address.clone());
 	}
 
@@ -231,7 +231,7 @@ public class AddressWrapper implements Address, ModelWrapper<Address> {
 	* @return the city of this address
 	*/
 	@Override
-	public java.lang.String getCity() {
+	public String getCity() {
 		return _address.getCity();
 	}
 
@@ -241,7 +241,7 @@ public class AddressWrapper implements Address, ModelWrapper<Address> {
 	* @return the fully qualified class name of this address
 	*/
 	@Override
-	public java.lang.String getClassName() {
+	public String getClassName() {
 		return _address.getClassName();
 	}
 
@@ -381,7 +381,7 @@ public class AddressWrapper implements Address, ModelWrapper<Address> {
 	* @return the street1 of this address
 	*/
 	@Override
-	public java.lang.String getStreet1() {
+	public String getStreet1() {
 		return _address.getStreet1();
 	}
 
@@ -391,7 +391,7 @@ public class AddressWrapper implements Address, ModelWrapper<Address> {
 	* @return the street2 of this address
 	*/
 	@Override
-	public java.lang.String getStreet2() {
+	public String getStreet2() {
 		return _address.getStreet2();
 	}
 
@@ -401,7 +401,7 @@ public class AddressWrapper implements Address, ModelWrapper<Address> {
 	* @return the street3 of this address
 	*/
 	@Override
-	public java.lang.String getStreet3() {
+	public String getStreet3() {
 		return _address.getStreet3();
 	}
 
@@ -436,7 +436,7 @@ public class AddressWrapper implements Address, ModelWrapper<Address> {
 	* @return the user name of this address
 	*/
 	@Override
-	public java.lang.String getUserName() {
+	public String getUserName() {
 		return _address.getUserName();
 	}
 
@@ -446,7 +446,7 @@ public class AddressWrapper implements Address, ModelWrapper<Address> {
 	* @return the user uuid of this address
 	*/
 	@Override
-	public java.lang.String getUserUuid() {
+	public String getUserUuid() {
 		return _address.getUserUuid();
 	}
 
@@ -456,7 +456,7 @@ public class AddressWrapper implements Address, ModelWrapper<Address> {
 	* @return the uuid of this address
 	*/
 	@Override
-	public java.lang.String getUuid() {
+	public String getUuid() {
 		return _address.getUuid();
 	}
 
@@ -466,7 +466,7 @@ public class AddressWrapper implements Address, ModelWrapper<Address> {
 	* @return the zip of this address
 	*/
 	@Override
-	public java.lang.String getZip() {
+	public String getZip() {
 		return _address.getZip();
 	}
 
@@ -536,12 +536,12 @@ public class AddressWrapper implements Address, ModelWrapper<Address> {
 	* @param city the city of this address
 	*/
 	@Override
-	public void setCity(java.lang.String city) {
+	public void setCity(String city) {
 		_address.setCity(city);
 	}
 
 	@Override
-	public void setClassName(java.lang.String className) {
+	public void setClassName(String className) {
 		_address.setClassName(className);
 	}
 
@@ -686,7 +686,7 @@ public class AddressWrapper implements Address, ModelWrapper<Address> {
 	* @param street1 the street1 of this address
 	*/
 	@Override
-	public void setStreet1(java.lang.String street1) {
+	public void setStreet1(String street1) {
 		_address.setStreet1(street1);
 	}
 
@@ -696,7 +696,7 @@ public class AddressWrapper implements Address, ModelWrapper<Address> {
 	* @param street2 the street2 of this address
 	*/
 	@Override
-	public void setStreet2(java.lang.String street2) {
+	public void setStreet2(String street2) {
 		_address.setStreet2(street2);
 	}
 
@@ -706,7 +706,7 @@ public class AddressWrapper implements Address, ModelWrapper<Address> {
 	* @param street3 the street3 of this address
 	*/
 	@Override
-	public void setStreet3(java.lang.String street3) {
+	public void setStreet3(String street3) {
 		_address.setStreet3(street3);
 	}
 
@@ -736,7 +736,7 @@ public class AddressWrapper implements Address, ModelWrapper<Address> {
 	* @param userName the user name of this address
 	*/
 	@Override
-	public void setUserName(java.lang.String userName) {
+	public void setUserName(String userName) {
 		_address.setUserName(userName);
 	}
 
@@ -746,7 +746,7 @@ public class AddressWrapper implements Address, ModelWrapper<Address> {
 	* @param userUuid the user uuid of this address
 	*/
 	@Override
-	public void setUserUuid(java.lang.String userUuid) {
+	public void setUserUuid(String userUuid) {
 		_address.setUserUuid(userUuid);
 	}
 
@@ -756,7 +756,7 @@ public class AddressWrapper implements Address, ModelWrapper<Address> {
 	* @param uuid the uuid of this address
 	*/
 	@Override
-	public void setUuid(java.lang.String uuid) {
+	public void setUuid(String uuid) {
 		_address.setUuid(uuid);
 	}
 
@@ -766,7 +766,7 @@ public class AddressWrapper implements Address, ModelWrapper<Address> {
 	* @param zip the zip of this address
 	*/
 	@Override
-	public void setZip(java.lang.String zip) {
+	public void setZip(String zip) {
 		_address.setZip(zip);
 	}
 
@@ -781,7 +781,7 @@ public class AddressWrapper implements Address, ModelWrapper<Address> {
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _address.toString();
 	}
 
@@ -791,7 +791,7 @@ public class AddressWrapper implements Address, ModelWrapper<Address> {
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _address.toXmlString();
 	}
 

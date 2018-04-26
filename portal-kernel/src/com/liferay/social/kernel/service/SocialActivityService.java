@@ -123,7 +123,7 @@ public interface SocialActivityService extends BaseService {
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<SocialActivity> getActivities(long mirrorActivityId,
-		java.lang.String className, long classPK, int start, int end)
+		String className, long classPK, int start, int end)
 		throws PortalException;
 
 	/**
@@ -145,8 +145,8 @@ public interface SocialActivityService extends BaseService {
 	* @return the range of matching activities
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<SocialActivity> getActivities(java.lang.String className,
-		int start, int end) throws PortalException;
+	public List<SocialActivity> getActivities(String className, int start,
+		int end) throws PortalException;
 
 	/**
 	* Returns the number of activities done on assets identified by the class
@@ -183,8 +183,8 @@ public interface SocialActivityService extends BaseService {
 	* @return the number of matching activities
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getActivitiesCount(long mirrorActivityId,
-		java.lang.String className, long classPK);
+	public int getActivitiesCount(long mirrorActivityId, String className,
+		long classPK);
 
 	/**
 	* Returns the number of activities done on assets identified by class name.
@@ -193,7 +193,7 @@ public interface SocialActivityService extends BaseService {
 	* @return the number of matching activities
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getActivitiesCount(java.lang.String className);
+	public int getActivitiesCount(String className);
 
 	/**
 	* Returns the activity identified by its primary key.
@@ -366,7 +366,7 @@ public interface SocialActivityService extends BaseService {
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	/**
 	* Returns a range of all the activities done by users in a relationship

@@ -70,11 +70,9 @@ import java.util.Map;
 @ProviderType
 public class DDMFormInstanceServiceSoap {
 	public static com.liferay.dynamic.data.mapping.model.DDMFormInstanceSoap addFormInstance(
-		long groupId, long ddmStructureId,
-		java.lang.String[] nameMapLanguageIds,
-		java.lang.String[] nameMapValues,
-		java.lang.String[] descriptionMapLanguageIds,
-		java.lang.String[] descriptionMapValues,
+		long groupId, long ddmStructureId, String[] nameMapLanguageIds,
+		String[] nameMapValues, String[] descriptionMapLanguageIds,
+		String[] descriptionMapValues,
 		com.liferay.dynamic.data.mapping.storage.DDMFormValues settingsDDMFormValues,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
@@ -170,8 +168,7 @@ public class DDMFormInstanceServiceSoap {
 	}
 
 	public static com.liferay.dynamic.data.mapping.model.DDMFormInstanceSoap[] search(
-		long companyId, long groupId, java.lang.String keywords, int start,
-		int end,
+		long companyId, long groupId, String keywords, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.mapping.model.DDMFormInstance> orderByComparator)
 		throws RemoteException {
 		try {
@@ -189,9 +186,8 @@ public class DDMFormInstanceServiceSoap {
 	}
 
 	public static com.liferay.dynamic.data.mapping.model.DDMFormInstanceSoap[] search(
-		long companyId, long groupId, java.lang.String[] names,
-		java.lang.String[] descriptions, boolean andOperator, int start,
-		int end,
+		long companyId, long groupId, String[] names, String[] descriptions,
+		boolean andOperator, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.mapping.model.DDMFormInstance> orderByComparator)
 		throws RemoteException {
 		try {
@@ -208,8 +204,8 @@ public class DDMFormInstanceServiceSoap {
 		}
 	}
 
-	public static int searchCount(long companyId, long groupId,
-		java.lang.String keywords) throws RemoteException {
+	public static int searchCount(long companyId, long groupId, String keywords)
+		throws RemoteException {
 		try {
 			int returnValue = DDMFormInstanceServiceUtil.searchCount(companyId,
 					groupId, keywords);
@@ -223,9 +219,8 @@ public class DDMFormInstanceServiceSoap {
 		}
 	}
 
-	public static int searchCount(long companyId, long groupId,
-		java.lang.String[] names, java.lang.String[] descriptions,
-		boolean andOperator) throws RemoteException {
+	public static int searchCount(long companyId, long groupId, String[] names,
+		String[] descriptions, boolean andOperator) throws RemoteException {
 		try {
 			int returnValue = DDMFormInstanceServiceUtil.searchCount(companyId,
 					groupId, names, descriptions, andOperator);
@@ -268,10 +263,8 @@ public class DDMFormInstanceServiceSoap {
 
 	public static com.liferay.dynamic.data.mapping.model.DDMFormInstanceSoap updateFormInstance(
 		long ddmFormInstanceId, long ddmStructureId,
-		java.lang.String[] nameMapLanguageIds,
-		java.lang.String[] nameMapValues,
-		java.lang.String[] descriptionMapLanguageIds,
-		java.lang.String[] descriptionMapValues,
+		String[] nameMapLanguageIds, String[] nameMapValues,
+		String[] descriptionMapLanguageIds, String[] descriptionMapValues,
 		com.liferay.dynamic.data.mapping.storage.DDMFormValues settingsDDMFormValues,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {

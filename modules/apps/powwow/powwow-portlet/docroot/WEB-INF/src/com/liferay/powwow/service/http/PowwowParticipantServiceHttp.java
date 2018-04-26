@@ -157,8 +157,8 @@ public class PowwowParticipantServiceHttp {
 
 	public static com.liferay.powwow.model.PowwowParticipant updatePowwowParticipant(
 		HttpPrincipal httpPrincipal, long powwowParticipantId,
-		long powwowMeetingId, java.lang.String name, long participantUserId,
-		java.lang.String emailAddress, int type, int status,
+		long powwowMeetingId, String name, long participantUserId,
+		String emailAddress, int type, int status,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -204,8 +204,8 @@ public class PowwowParticipantServiceHttp {
 			long.class
 		};
 	private static final Class<?>[] _updatePowwowParticipantParameterTypes3 = new Class[] {
-			long.class, long.class, java.lang.String.class, long.class,
-			java.lang.String.class, int.class, int.class,
+			long.class, long.class, String.class, long.class, String.class,
+			int.class, int.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 }

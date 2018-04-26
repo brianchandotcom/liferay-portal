@@ -157,7 +157,7 @@ public class PowwowParticipantWrapper implements PowwowParticipant,
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new PowwowParticipantWrapper((PowwowParticipant)_powwowParticipant.clone());
 	}
 
@@ -192,7 +192,7 @@ public class PowwowParticipantWrapper implements PowwowParticipant,
 	* @return the email address of this powwow participant
 	*/
 	@Override
-	public java.lang.String getEmailAddress() {
+	public String getEmailAddress() {
 		return _powwowParticipant.getEmailAddress();
 	}
 
@@ -227,7 +227,7 @@ public class PowwowParticipantWrapper implements PowwowParticipant,
 	* @return the name of this powwow participant
 	*/
 	@Override
-	public java.lang.String getName() {
+	public String getName() {
 		return _powwowParticipant.getName();
 	}
 
@@ -247,7 +247,7 @@ public class PowwowParticipantWrapper implements PowwowParticipant,
 	* @return the participant user uuid of this powwow participant
 	*/
 	@Override
-	public java.lang.String getParticipantUserUuid() {
+	public String getParticipantUserUuid() {
 		return _powwowParticipant.getParticipantUserUuid();
 	}
 
@@ -322,7 +322,7 @@ public class PowwowParticipantWrapper implements PowwowParticipant,
 	* @return the user name of this powwow participant
 	*/
 	@Override
-	public java.lang.String getUserName() {
+	public String getUserName() {
 		return _powwowParticipant.getUserName();
 	}
 
@@ -332,7 +332,7 @@ public class PowwowParticipantWrapper implements PowwowParticipant,
 	* @return the user uuid of this powwow participant
 	*/
 	@Override
-	public java.lang.String getUserUuid() {
+	public String getUserUuid() {
 		return _powwowParticipant.getUserUuid();
 	}
 
@@ -392,7 +392,7 @@ public class PowwowParticipantWrapper implements PowwowParticipant,
 	* @param emailAddress the email address of this powwow participant
 	*/
 	@Override
-	public void setEmailAddress(java.lang.String emailAddress) {
+	public void setEmailAddress(String emailAddress) {
 		_powwowParticipant.setEmailAddress(emailAddress);
 	}
 
@@ -438,7 +438,7 @@ public class PowwowParticipantWrapper implements PowwowParticipant,
 	* @param name the name of this powwow participant
 	*/
 	@Override
-	public void setName(java.lang.String name) {
+	public void setName(String name) {
 		_powwowParticipant.setName(name);
 	}
 
@@ -463,7 +463,7 @@ public class PowwowParticipantWrapper implements PowwowParticipant,
 	* @param participantUserUuid the participant user uuid of this powwow participant
 	*/
 	@Override
-	public void setParticipantUserUuid(java.lang.String participantUserUuid) {
+	public void setParticipantUserUuid(String participantUserUuid) {
 		_powwowParticipant.setParticipantUserUuid(participantUserUuid);
 	}
 
@@ -538,7 +538,7 @@ public class PowwowParticipantWrapper implements PowwowParticipant,
 	* @param userName the user name of this powwow participant
 	*/
 	@Override
-	public void setUserName(java.lang.String userName) {
+	public void setUserName(String userName) {
 		_powwowParticipant.setUserName(userName);
 	}
 
@@ -548,7 +548,7 @@ public class PowwowParticipantWrapper implements PowwowParticipant,
 	* @param userUuid the user uuid of this powwow participant
 	*/
 	@Override
-	public void setUserUuid(java.lang.String userUuid) {
+	public void setUserUuid(String userUuid) {
 		_powwowParticipant.setUserUuid(userUuid);
 	}
 
@@ -563,7 +563,7 @@ public class PowwowParticipantWrapper implements PowwowParticipant,
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _powwowParticipant.toString();
 	}
 
@@ -573,7 +573,7 @@ public class PowwowParticipantWrapper implements PowwowParticipant,
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _powwowParticipant.toXmlString();
 	}
 

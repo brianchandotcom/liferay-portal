@@ -185,7 +185,7 @@ public class WikiNodeWrapper implements WikiNode, ModelWrapper<WikiNode> {
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new WikiNodeWrapper((WikiNode)_wikiNode.clone());
 	}
 
@@ -225,7 +225,7 @@ public class WikiNodeWrapper implements WikiNode, ModelWrapper<WikiNode> {
 	* @return the container name of this wiki node
 	*/
 	@Override
-	public java.lang.String getContainerModelName() {
+	public String getContainerModelName() {
 		return _wikiNode.getContainerModelName();
 	}
 
@@ -251,7 +251,7 @@ public class WikiNodeWrapper implements WikiNode, ModelWrapper<WikiNode> {
 	* @return the description of this wiki node
 	*/
 	@Override
-	public java.lang.String getDescription() {
+	public String getDescription() {
 		return _wikiNode.getDescription();
 	}
 
@@ -306,7 +306,7 @@ public class WikiNodeWrapper implements WikiNode, ModelWrapper<WikiNode> {
 	* @return the name of this wiki node
 	*/
 	@Override
-	public java.lang.String getName() {
+	public String getName() {
 		return _wikiNode.getName();
 	}
 
@@ -371,7 +371,7 @@ public class WikiNodeWrapper implements WikiNode, ModelWrapper<WikiNode> {
 	* @return the status by user name of this wiki node
 	*/
 	@Override
-	public java.lang.String getStatusByUserName() {
+	public String getStatusByUserName() {
 		return _wikiNode.getStatusByUserName();
 	}
 
@@ -381,7 +381,7 @@ public class WikiNodeWrapper implements WikiNode, ModelWrapper<WikiNode> {
 	* @return the status by user uuid of this wiki node
 	*/
 	@Override
-	public java.lang.String getStatusByUserUuid() {
+	public String getStatusByUserUuid() {
 		return _wikiNode.getStatusByUserUuid();
 	}
 
@@ -444,7 +444,7 @@ public class WikiNodeWrapper implements WikiNode, ModelWrapper<WikiNode> {
 	* @return the user name of this wiki node
 	*/
 	@Override
-	public java.lang.String getUserName() {
+	public String getUserName() {
 		return _wikiNode.getUserName();
 	}
 
@@ -454,7 +454,7 @@ public class WikiNodeWrapper implements WikiNode, ModelWrapper<WikiNode> {
 	* @return the user uuid of this wiki node
 	*/
 	@Override
-	public java.lang.String getUserUuid() {
+	public String getUserUuid() {
 		return _wikiNode.getUserUuid();
 	}
 
@@ -464,7 +464,7 @@ public class WikiNodeWrapper implements WikiNode, ModelWrapper<WikiNode> {
 	* @return the uuid of this wiki node
 	*/
 	@Override
-	public java.lang.String getUuid() {
+	public String getUuid() {
 		return _wikiNode.getUuid();
 	}
 
@@ -644,7 +644,7 @@ public class WikiNodeWrapper implements WikiNode, ModelWrapper<WikiNode> {
 	* @param description the description of this wiki node
 	*/
 	@Override
-	public void setDescription(java.lang.String description) {
+	public void setDescription(String description) {
 		_wikiNode.setDescription(description);
 	}
 
@@ -710,7 +710,7 @@ public class WikiNodeWrapper implements WikiNode, ModelWrapper<WikiNode> {
 	* @param name the name of this wiki node
 	*/
 	@Override
-	public void setName(java.lang.String name) {
+	public void setName(String name) {
 		_wikiNode.setName(name);
 	}
 
@@ -780,7 +780,7 @@ public class WikiNodeWrapper implements WikiNode, ModelWrapper<WikiNode> {
 	* @param statusByUserName the status by user name of this wiki node
 	*/
 	@Override
-	public void setStatusByUserName(java.lang.String statusByUserName) {
+	public void setStatusByUserName(String statusByUserName) {
 		_wikiNode.setStatusByUserName(statusByUserName);
 	}
 
@@ -790,7 +790,7 @@ public class WikiNodeWrapper implements WikiNode, ModelWrapper<WikiNode> {
 	* @param statusByUserUuid the status by user uuid of this wiki node
 	*/
 	@Override
-	public void setStatusByUserUuid(java.lang.String statusByUserUuid) {
+	public void setStatusByUserUuid(String statusByUserUuid) {
 		_wikiNode.setStatusByUserUuid(statusByUserUuid);
 	}
 
@@ -820,7 +820,7 @@ public class WikiNodeWrapper implements WikiNode, ModelWrapper<WikiNode> {
 	* @param userName the user name of this wiki node
 	*/
 	@Override
-	public void setUserName(java.lang.String userName) {
+	public void setUserName(String userName) {
 		_wikiNode.setUserName(userName);
 	}
 
@@ -830,7 +830,7 @@ public class WikiNodeWrapper implements WikiNode, ModelWrapper<WikiNode> {
 	* @param userUuid the user uuid of this wiki node
 	*/
 	@Override
-	public void setUserUuid(java.lang.String userUuid) {
+	public void setUserUuid(String userUuid) {
 		_wikiNode.setUserUuid(userUuid);
 	}
 
@@ -840,7 +840,7 @@ public class WikiNodeWrapper implements WikiNode, ModelWrapper<WikiNode> {
 	* @param uuid the uuid of this wiki node
 	*/
 	@Override
-	public void setUuid(java.lang.String uuid) {
+	public void setUuid(String uuid) {
 		_wikiNode.setUuid(uuid);
 	}
 
@@ -855,7 +855,7 @@ public class WikiNodeWrapper implements WikiNode, ModelWrapper<WikiNode> {
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _wikiNode.toString();
 	}
 
@@ -865,7 +865,7 @@ public class WikiNodeWrapper implements WikiNode, ModelWrapper<WikiNode> {
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _wikiNode.toXmlString();
 	}
 

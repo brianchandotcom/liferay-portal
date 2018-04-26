@@ -46,15 +46,13 @@ public class AccountLocalServiceWrapper implements AccountLocalService,
 
 	@Override
 	public com.liferay.mail.reader.model.Account addAccount(long userId,
-		java.lang.String address, java.lang.String personalName,
-		java.lang.String protocol, java.lang.String incomingHostName,
-		int incomingPort, boolean incomingSecure,
-		java.lang.String outgoingHostName, int outgoingPort,
-		boolean outgoingSecure, java.lang.String login,
-		java.lang.String password, boolean savePassword,
-		java.lang.String signature, boolean useSignature,
-		java.lang.String folderPrefix, long inboxFolderId, long draftFolderId,
-		long sentFolderId, long trashFolderId, boolean defaultSender)
+		String address, String personalName, String protocol,
+		String incomingHostName, int incomingPort, boolean incomingSecure,
+		String outgoingHostName, int outgoingPort, boolean outgoingSecure,
+		String login, String password, boolean savePassword, String signature,
+		boolean useSignature, String folderPrefix, long inboxFolderId,
+		long draftFolderId, long sentFolderId, long trashFolderId,
+		boolean defaultSender)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _accountLocalService.addAccount(userId, address, personalName,
 			protocol, incomingHostName, incomingPort, incomingSecure,
@@ -221,7 +219,7 @@ public class AccountLocalServiceWrapper implements AccountLocalService,
 
 	@Override
 	public com.liferay.mail.reader.model.Account getAccount(long userId,
-		java.lang.String address)
+		String address)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _accountLocalService.getAccount(userId, address);
 	}
@@ -275,7 +273,7 @@ public class AccountLocalServiceWrapper implements AccountLocalService,
 	* @return the OSGi service identifier
 	*/
 	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
+	public String getOSGiServiceIdentifier() {
 		return _accountLocalService.getOSGiServiceIdentifier();
 	}
 
@@ -300,9 +298,9 @@ public class AccountLocalServiceWrapper implements AccountLocalService,
 
 	@Override
 	public com.liferay.mail.reader.model.Account updateAccount(long accountId,
-		java.lang.String personalName, java.lang.String password,
-		boolean savePassword, java.lang.String signature, boolean useSignature,
-		java.lang.String folderPrefix, boolean defaultSender)
+		String personalName, String password, boolean savePassword,
+		String signature, boolean useSignature, String folderPrefix,
+		boolean defaultSender)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _accountLocalService.updateAccount(accountId, personalName,
 			password, savePassword, signature, useSignature, folderPrefix,

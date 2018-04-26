@@ -43,15 +43,15 @@ public class DLContentLocalServiceUtil {
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.document.library.content.service.impl.DLContentLocalServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static com.liferay.document.library.content.model.DLContent addContent(
-		long companyId, long repositoryId, java.lang.String path,
-		java.lang.String version, byte[] bytes) {
+		long companyId, long repositoryId, String path, String version,
+		byte[] bytes) {
 		return getService()
 				   .addContent(companyId, repositoryId, path, version, bytes);
 	}
 
 	public static com.liferay.document.library.content.model.DLContent addContent(
-		long companyId, long repositoryId, java.lang.String path,
-		java.lang.String version, java.io.InputStream inputStream, long size) {
+		long companyId, long repositoryId, String path, String version,
+		java.io.InputStream inputStream, long size) {
 		return getService()
 				   .addContent(companyId, repositoryId, path, version,
 			inputStream, size);
@@ -80,18 +80,18 @@ public class DLContentLocalServiceUtil {
 	}
 
 	public static void deleteContent(long companyId, long repositoryId,
-		java.lang.String path, java.lang.String version)
+		String path, String version)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().deleteContent(companyId, repositoryId, path, version);
 	}
 
 	public static void deleteContents(long companyId, long repositoryId,
-		java.lang.String path) {
+		String path) {
 		getService().deleteContents(companyId, repositoryId, path);
 	}
 
 	public static void deleteContentsByDirectory(long companyId,
-		long repositoryId, java.lang.String dirName) {
+		long repositoryId, String dirName) {
 		getService().deleteContentsByDirectory(companyId, repositoryId, dirName);
 	}
 
@@ -216,14 +216,13 @@ public class DLContentLocalServiceUtil {
 	}
 
 	public static com.liferay.document.library.content.model.DLContent getContent(
-		long companyId, long repositoryId, java.lang.String path)
+		long companyId, long repositoryId, String path)
 		throws com.liferay.document.library.content.exception.NoSuchContentException {
 		return getService().getContent(companyId, repositoryId, path);
 	}
 
 	public static com.liferay.document.library.content.model.DLContent getContent(
-		long companyId, long repositoryId, java.lang.String path,
-		java.lang.String version)
+		long companyId, long repositoryId, String path, String version)
 		throws com.liferay.document.library.content.exception.NoSuchContentException {
 		return getService().getContent(companyId, repositoryId, path, version);
 	}
@@ -234,12 +233,12 @@ public class DLContentLocalServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.document.library.content.model.DLContent> getContents(
-		long companyId, long repositoryId, java.lang.String path) {
+		long companyId, long repositoryId, String path) {
 		return getService().getContents(companyId, repositoryId, path);
 	}
 
 	public static java.util.List<com.liferay.document.library.content.model.DLContent> getContentsByDirectory(
-		long companyId, long repositoryId, java.lang.String dirName) {
+		long companyId, long repositoryId, String dirName) {
 		return getService()
 				   .getContentsByDirectory(companyId, repositoryId, dirName);
 	}
@@ -296,7 +295,7 @@ public class DLContentLocalServiceUtil {
 	*
 	* @return the OSGi service identifier
 	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
+	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 
@@ -307,7 +306,7 @@ public class DLContentLocalServiceUtil {
 	}
 
 	public static boolean hasContent(long companyId, long repositoryId,
-		java.lang.String path, java.lang.String version) {
+		String path, String version) {
 		return getService().hasContent(companyId, repositoryId, path, version);
 	}
 
@@ -323,7 +322,7 @@ public class DLContentLocalServiceUtil {
 	}
 
 	public static void updateDLContent(long companyId, long oldRepositoryId,
-		long newRepositoryId, java.lang.String oldPath, java.lang.String newPath) {
+		long newRepositoryId, String oldPath, String newPath) {
 		getService()
 			.updateDLContent(companyId, oldRepositoryId, newRepositoryId,
 			oldPath, newPath);

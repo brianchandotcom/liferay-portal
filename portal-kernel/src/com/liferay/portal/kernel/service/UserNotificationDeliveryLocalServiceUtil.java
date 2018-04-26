@@ -41,8 +41,8 @@ public class UserNotificationDeliveryLocalServiceUtil {
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.portal.service.impl.UserNotificationDeliveryLocalServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static com.liferay.portal.kernel.model.UserNotificationDelivery addUserNotificationDelivery(
-		long userId, java.lang.String portletId, long classNameId,
-		int notificationType, int deliveryType, boolean deliver)
+		long userId, String portletId, long classNameId, int notificationType,
+		int deliveryType, boolean deliver)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addUserNotificationDelivery(userId, portletId, classNameId,
@@ -100,7 +100,7 @@ public class UserNotificationDeliveryLocalServiceUtil {
 	}
 
 	public static void deleteUserNotificationDelivery(long userId,
-		java.lang.String portletId, long classNameId, int notificationType,
+		String portletId, long classNameId, int notificationType,
 		int deliveryType) {
 		getService()
 			.deleteUserNotificationDelivery(userId, portletId, classNameId,
@@ -204,8 +204,8 @@ public class UserNotificationDeliveryLocalServiceUtil {
 	}
 
 	public static com.liferay.portal.kernel.model.UserNotificationDelivery fetchUserNotificationDelivery(
-		long userId, java.lang.String portletId, long classNameId,
-		int notificationType, int deliveryType) {
+		long userId, String portletId, long classNameId, int notificationType,
+		int deliveryType) {
 		return getService()
 				   .fetchUserNotificationDelivery(userId, portletId,
 			classNameId, notificationType, deliveryType);
@@ -224,7 +224,7 @@ public class UserNotificationDeliveryLocalServiceUtil {
 	*
 	* @return the OSGi service identifier
 	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
+	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 
@@ -274,8 +274,8 @@ public class UserNotificationDeliveryLocalServiceUtil {
 	}
 
 	public static com.liferay.portal.kernel.model.UserNotificationDelivery getUserNotificationDelivery(
-		long userId, java.lang.String portletId, long classNameId,
-		int notificationType, int deliveryType, boolean deliver)
+		long userId, String portletId, long classNameId, int notificationType,
+		int deliveryType, boolean deliver)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .getUserNotificationDelivery(userId, portletId, classNameId,

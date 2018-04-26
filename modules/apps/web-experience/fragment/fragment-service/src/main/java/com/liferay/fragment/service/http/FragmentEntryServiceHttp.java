@@ -57,7 +57,7 @@ import com.liferay.portal.kernel.util.MethodKey;
 public class FragmentEntryServiceHttp {
 	public static com.liferay.fragment.model.FragmentEntry addFragmentEntry(
 		HttpPrincipal httpPrincipal, long groupId, long fragmentCollectionId,
-		java.lang.String name, int status,
+		String name, int status,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -91,7 +91,7 @@ public class FragmentEntryServiceHttp {
 
 	public static com.liferay.fragment.model.FragmentEntry addFragmentEntry(
 		HttpPrincipal httpPrincipal, long groupId, long fragmentCollectionId,
-		java.lang.String fragmentEntryKey, java.lang.String name, int status,
+		String fragmentEntryKey, String name, int status,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -126,8 +126,7 @@ public class FragmentEntryServiceHttp {
 
 	public static com.liferay.fragment.model.FragmentEntry addFragmentEntry(
 		HttpPrincipal httpPrincipal, long groupId, long fragmentCollectionId,
-		java.lang.String name, java.lang.String css, java.lang.String html,
-		java.lang.String js, int status,
+		String name, String css, String html, String js, int status,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -162,9 +161,8 @@ public class FragmentEntryServiceHttp {
 
 	public static com.liferay.fragment.model.FragmentEntry addFragmentEntry(
 		HttpPrincipal httpPrincipal, long groupId, long fragmentCollectionId,
-		java.lang.String fragmentEntryKey, java.lang.String name,
-		java.lang.String css, java.lang.String html, java.lang.String js,
-		int status,
+		String fragmentEntryKey, String name, String css, String html,
+		String js, int status,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -319,7 +317,7 @@ public class FragmentEntryServiceHttp {
 	}
 
 	public static int getFragmentCollectionsCount(HttpPrincipal httpPrincipal,
-		long groupId, long fragmentCollectionId, java.lang.String name) {
+		long groupId, long fragmentCollectionId, String name) {
 		try {
 			MethodKey methodKey = new MethodKey(FragmentEntryServiceUtil.class,
 					"getFragmentCollectionsCount",
@@ -459,7 +457,7 @@ public class FragmentEntryServiceHttp {
 
 	public static java.util.List<com.liferay.fragment.model.FragmentEntry> getFragmentEntries(
 		HttpPrincipal httpPrincipal, long groupId, long fragmentCollectionId,
-		java.lang.String name, int start, int end,
+		String name, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.fragment.model.FragmentEntry> orderByComparator) {
 		try {
 			MethodKey methodKey = new MethodKey(FragmentEntryServiceUtil.class,
@@ -486,8 +484,8 @@ public class FragmentEntryServiceHttp {
 		}
 	}
 
-	public static java.lang.String[] getTempFileNames(
-		HttpPrincipal httpPrincipal, long groupId, java.lang.String folderName)
+	public static String[] getTempFileNames(HttpPrincipal httpPrincipal,
+		long groupId, String folderName)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(FragmentEntryServiceUtil.class,
@@ -509,7 +507,7 @@ public class FragmentEntryServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (java.lang.String[])returnObj;
+			return (String[])returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -519,7 +517,7 @@ public class FragmentEntryServiceHttp {
 	}
 
 	public static com.liferay.fragment.model.FragmentEntry updateFragmentEntry(
-		HttpPrincipal httpPrincipal, long fragmentEntryId, java.lang.String name)
+		HttpPrincipal httpPrincipal, long fragmentEntryId, String name)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(FragmentEntryServiceUtil.class,
@@ -551,9 +549,8 @@ public class FragmentEntryServiceHttp {
 	}
 
 	public static com.liferay.fragment.model.FragmentEntry updateFragmentEntry(
-		HttpPrincipal httpPrincipal, long fragmentEntryId,
-		java.lang.String name, java.lang.String css, java.lang.String html,
-		java.lang.String js, int status,
+		HttpPrincipal httpPrincipal, long fragmentEntryId, String name,
+		String css, String html, String js, int status,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -587,24 +584,21 @@ public class FragmentEntryServiceHttp {
 
 	private static Log _log = LogFactoryUtil.getLog(FragmentEntryServiceHttp.class);
 	private static final Class<?>[] _addFragmentEntryParameterTypes0 = new Class[] {
-			long.class, long.class, java.lang.String.class, int.class,
+			long.class, long.class, String.class, int.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _addFragmentEntryParameterTypes1 = new Class[] {
-			long.class, long.class, java.lang.String.class,
-			java.lang.String.class, int.class,
+			long.class, long.class, String.class, String.class, int.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _addFragmentEntryParameterTypes2 = new Class[] {
-			long.class, long.class, java.lang.String.class,
-			java.lang.String.class, java.lang.String.class,
-			java.lang.String.class, int.class,
+			long.class, long.class, String.class, String.class, String.class,
+			String.class, int.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _addFragmentEntryParameterTypes3 = new Class[] {
-			long.class, long.class, java.lang.String.class,
-			java.lang.String.class, java.lang.String.class,
-			java.lang.String.class, java.lang.String.class, int.class,
+			long.class, long.class, String.class, String.class, String.class,
+			String.class, String.class, int.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _deleteFragmentEntriesParameterTypes4 = new Class[] {
@@ -620,7 +614,7 @@ public class FragmentEntryServiceHttp {
 			long.class, long.class
 		};
 	private static final Class<?>[] _getFragmentCollectionsCountParameterTypes8 = new Class[] {
-			long.class, long.class, java.lang.String.class
+			long.class, long.class, String.class
 		};
 	private static final Class<?>[] _getFragmentEntriesParameterTypes9 = new Class[] {
 			long.class
@@ -636,18 +630,17 @@ public class FragmentEntryServiceHttp {
 			com.liferay.portal.kernel.util.OrderByComparator.class
 		};
 	private static final Class<?>[] _getFragmentEntriesParameterTypes13 = new Class[] {
-			long.class, long.class, java.lang.String.class, int.class, int.class,
+			long.class, long.class, String.class, int.class, int.class,
 			com.liferay.portal.kernel.util.OrderByComparator.class
 		};
 	private static final Class<?>[] _getTempFileNamesParameterTypes14 = new Class[] {
-			long.class, java.lang.String.class
+			long.class, String.class
 		};
 	private static final Class<?>[] _updateFragmentEntryParameterTypes15 = new Class[] {
-			long.class, java.lang.String.class
+			long.class, String.class
 		};
 	private static final Class<?>[] _updateFragmentEntryParameterTypes16 = new Class[] {
-			long.class, java.lang.String.class, java.lang.String.class,
-			java.lang.String.class, java.lang.String.class, int.class,
-			com.liferay.portal.kernel.service.ServiceContext.class
+			long.class, String.class, String.class, String.class, String.class,
+			int.class, com.liferay.portal.kernel.service.ServiceContext.class
 		};
 }

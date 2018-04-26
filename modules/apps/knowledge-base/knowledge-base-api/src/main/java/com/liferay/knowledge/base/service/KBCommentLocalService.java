@@ -77,11 +77,11 @@ public interface KBCommentLocalService extends BaseLocalService,
 	public KBComment addKBComment(KBComment kbComment);
 
 	public KBComment addKBComment(long userId, long classNameId, long classPK,
-		java.lang.String content, int userRating, ServiceContext serviceContext)
+		String content, int userRating, ServiceContext serviceContext)
 		throws PortalException;
 
 	public KBComment addKBComment(long userId, long classNameId, long classPK,
-		java.lang.String content, ServiceContext serviceContext)
+		String content, ServiceContext serviceContext)
 		throws PortalException;
 
 	/**
@@ -116,7 +116,7 @@ public interface KBCommentLocalService extends BaseLocalService,
 	public KBComment deleteKBComment(long kbCommentId)
 		throws PortalException;
 
-	public void deleteKBComments(java.lang.String className, long classPK)
+	public void deleteKBComments(String className, long classPK)
 		throws PortalException;
 
 	/**
@@ -196,8 +196,7 @@ public interface KBCommentLocalService extends BaseLocalService,
 	* @return the matching kb comment, or <code>null</code> if a matching kb comment could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public KBComment fetchKBCommentByUuidAndGroupId(java.lang.String uuid,
-		long groupId);
+	public KBComment fetchKBCommentByUuidAndGroupId(String uuid, long groupId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
@@ -220,8 +219,8 @@ public interface KBCommentLocalService extends BaseLocalService,
 	public KBComment getKBComment(long kbCommentId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public KBComment getKBComment(long userId, java.lang.String className,
-		long classPK) throws PortalException;
+	public KBComment getKBComment(long userId, String className, long classPK)
+		throws PortalException;
 
 	/**
 	* Returns the kb comment matching the UUID and group.
@@ -232,8 +231,8 @@ public interface KBCommentLocalService extends BaseLocalService,
 	* @throws PortalException if a matching kb comment could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public KBComment getKBCommentByUuidAndGroupId(java.lang.String uuid,
-		long groupId) throws PortalException;
+	public KBComment getKBCommentByUuidAndGroupId(String uuid, long groupId)
+		throws PortalException;
 
 	/**
 	* Returns a range of all the kb comments.
@@ -262,26 +261,25 @@ public interface KBCommentLocalService extends BaseLocalService,
 		OrderByComparator<KBComment> obc);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<KBComment> getKBComments(long userId,
-		java.lang.String className, long classPK, int start, int end,
+	public List<KBComment> getKBComments(long userId, String className,
+		long classPK, int start, int end,
 		OrderByComparator<KBComment> orderByComparator);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<KBComment> getKBComments(java.lang.String className,
-		long classPK, int status, int start, int end);
+	public List<KBComment> getKBComments(String className, long classPK,
+		int status, int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<KBComment> getKBComments(java.lang.String className,
-		long classPK, int status, int start, int end,
-		OrderByComparator<KBComment> obc);
+	public List<KBComment> getKBComments(String className, long classPK,
+		int status, int start, int end, OrderByComparator<KBComment> obc);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<KBComment> getKBComments(java.lang.String className,
-		long classPK, int start, int end, OrderByComparator orderByComparator);
+	public List<KBComment> getKBComments(String className, long classPK,
+		int start, int end, OrderByComparator orderByComparator);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<KBComment> getKBComments(java.lang.String className,
-		long classPK, int[] status, int start, int end);
+	public List<KBComment> getKBComments(String className, long classPK,
+		int[] status, int start, int end);
 
 	/**
 	* Returns all the kb comments matching the UUID and company.
@@ -291,8 +289,8 @@ public interface KBCommentLocalService extends BaseLocalService,
 	* @return the matching kb comments, or an empty list if no matches were found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<KBComment> getKBCommentsByUuidAndCompanyId(
-		java.lang.String uuid, long companyId);
+	public List<KBComment> getKBCommentsByUuidAndCompanyId(String uuid,
+		long companyId);
 
 	/**
 	* Returns a range of kb comments matching the UUID and company.
@@ -305,8 +303,8 @@ public interface KBCommentLocalService extends BaseLocalService,
 	* @return the range of matching kb comments, or an empty list if no matches were found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<KBComment> getKBCommentsByUuidAndCompanyId(
-		java.lang.String uuid, long companyId, int start, int end,
+	public List<KBComment> getKBCommentsByUuidAndCompanyId(String uuid,
+		long companyId, int start, int end,
 		OrderByComparator<KBComment> orderByComparator);
 
 	/**
@@ -321,26 +319,23 @@ public interface KBCommentLocalService extends BaseLocalService,
 	public int getKBCommentsCount(long groupId, int status);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getKBCommentsCount(long userId, java.lang.String className,
-		long classPK);
+	public int getKBCommentsCount(long userId, String className, long classPK);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getKBCommentsCount(java.lang.String className, long classPK);
+	public int getKBCommentsCount(String className, long classPK);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getKBCommentsCount(java.lang.String className, long classPK,
-		int status);
+	public int getKBCommentsCount(String className, long classPK, int status);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getKBCommentsCount(java.lang.String className, long classPK,
-		int[] status);
+	public int getKBCommentsCount(String className, long classPK, int[] status);
 
 	/**
 	* Returns the OSGi service identifier.
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -357,12 +352,12 @@ public interface KBCommentLocalService extends BaseLocalService,
 	public KBComment updateKBComment(KBComment kbComment);
 
 	public KBComment updateKBComment(long kbCommentId, long classNameId,
-		long classPK, java.lang.String content, int userRating, int status,
+		long classPK, String content, int userRating, int status,
 		ServiceContext serviceContext) throws PortalException;
 
 	public KBComment updateKBComment(long kbCommentId, long classNameId,
-		long classPK, java.lang.String content, int status,
-		ServiceContext serviceContext) throws PortalException;
+		long classPK, String content, int status, ServiceContext serviceContext)
+		throws PortalException;
 
 	public KBComment updateStatus(long userId, long kbCommentId, int status,
 		ServiceContext serviceContext) throws PortalException;

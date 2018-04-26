@@ -36,8 +36,8 @@ public class MDRRuleGroupInstanceServiceWrapper
 
 	@Override
 	public com.liferay.mobile.device.rules.model.MDRRuleGroupInstance addRuleGroupInstance(
-		long groupId, java.lang.String className, long classPK,
-		long ruleGroupId, int priority,
+		long groupId, String className, long classPK, long ruleGroupId,
+		int priority,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _mdrRuleGroupInstanceService.addRuleGroupInstance(groupId,
@@ -46,8 +46,7 @@ public class MDRRuleGroupInstanceServiceWrapper
 
 	@Override
 	public com.liferay.mobile.device.rules.model.MDRRuleGroupInstance addRuleGroupInstance(
-		long groupId, java.lang.String className, long classPK,
-		long ruleGroupId,
+		long groupId, String className, long classPK, long ruleGroupId,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _mdrRuleGroupInstanceService.addRuleGroupInstance(groupId,
@@ -66,21 +65,20 @@ public class MDRRuleGroupInstanceServiceWrapper
 	* @return the OSGi service identifier
 	*/
 	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
+	public String getOSGiServiceIdentifier() {
 		return _mdrRuleGroupInstanceService.getOSGiServiceIdentifier();
 	}
 
 	@Override
 	public java.util.List<com.liferay.mobile.device.rules.model.MDRRuleGroupInstance> getRuleGroupInstances(
-		java.lang.String className, long classPK, int start, int end,
+		String className, long classPK, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.mobile.device.rules.model.MDRRuleGroupInstance> orderByComparator) {
 		return _mdrRuleGroupInstanceService.getRuleGroupInstances(className,
 			classPK, start, end, orderByComparator);
 	}
 
 	@Override
-	public int getRuleGroupInstancesCount(java.lang.String className,
-		long classPK) {
+	public int getRuleGroupInstancesCount(String className, long classPK) {
 		return _mdrRuleGroupInstanceService.getRuleGroupInstancesCount(className,
 			classPK);
 	}

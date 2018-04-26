@@ -45,13 +45,13 @@ public class ClusterGroupLocalServiceWrapper implements ClusterGroupLocalService
 
 	@Override
 	public com.liferay.portal.kernel.model.ClusterGroup addClusterGroup(
-		java.lang.String name, java.util.List<java.lang.String> clusterNodeIds) {
+		String name, java.util.List<String> clusterNodeIds) {
 		return _clusterGroupLocalService.addClusterGroup(name, clusterNodeIds);
 	}
 
 	@Override
 	public com.liferay.portal.kernel.model.ClusterGroup addWholeClusterGroup(
-		java.lang.String name) {
+		String name) {
 		return _clusterGroupLocalService.addWholeClusterGroup(name);
 	}
 
@@ -251,7 +251,7 @@ public class ClusterGroupLocalServiceWrapper implements ClusterGroupLocalService
 	* @return the OSGi service identifier
 	*/
 	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
+	public String getOSGiServiceIdentifier() {
 		return _clusterGroupLocalService.getOSGiServiceIdentifier();
 	}
 

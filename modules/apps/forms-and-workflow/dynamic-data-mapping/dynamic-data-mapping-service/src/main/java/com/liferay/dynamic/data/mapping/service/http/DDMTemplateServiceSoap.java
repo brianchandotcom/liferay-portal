@@ -95,12 +95,9 @@ public class DDMTemplateServiceSoap {
 	*/
 	public static com.liferay.dynamic.data.mapping.model.DDMTemplateSoap addTemplate(
 		long groupId, long classNameId, long classPK, long resourceClassNameId,
-		java.lang.String[] nameMapLanguageIds,
-		java.lang.String[] nameMapValues,
-		java.lang.String[] descriptionMapLanguageIds,
-		java.lang.String[] descriptionMapValues, java.lang.String type,
-		java.lang.String mode, java.lang.String language,
-		java.lang.String script,
+		String[] nameMapLanguageIds, String[] nameMapValues,
+		String[] descriptionMapLanguageIds, String[] descriptionMapValues,
+		String type, String mode, String language, String script,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
@@ -138,10 +135,8 @@ public class DDMTemplateServiceSoap {
 	* @return the new template
 	*/
 	public static com.liferay.dynamic.data.mapping.model.DDMTemplateSoap copyTemplate(
-		long templateId, java.lang.String[] nameMapLanguageIds,
-		java.lang.String[] nameMapValues,
-		java.lang.String[] descriptionMapLanguageIds,
-		java.lang.String[] descriptionMapValues,
+		long templateId, String[] nameMapLanguageIds, String[] nameMapValues,
+		String[] descriptionMapLanguageIds, String[] descriptionMapValues,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
@@ -200,7 +195,7 @@ public class DDMTemplateServiceSoap {
 	*/
 	public static com.liferay.dynamic.data.mapping.model.DDMTemplateSoap[] copyTemplates(
 		long classNameId, long oldClassPK, long resourceClassNameId,
-		long newClassPK, java.lang.String type,
+		long newClassPK, String type,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
@@ -245,7 +240,7 @@ public class DDMTemplateServiceSoap {
 	template could not be found
 	*/
 	public static com.liferay.dynamic.data.mapping.model.DDMTemplateSoap fetchTemplate(
-		long groupId, long classNameId, java.lang.String templateKey)
+		long groupId, long classNameId, String templateKey)
 		throws RemoteException {
 		try {
 			com.liferay.dynamic.data.mapping.model.DDMTemplate returnValue = DDMTemplateServiceUtil.fetchTemplate(groupId,
@@ -290,7 +285,7 @@ public class DDMTemplateServiceSoap {
 	* @return the matching template
 	*/
 	public static com.liferay.dynamic.data.mapping.model.DDMTemplateSoap getTemplate(
-		long groupId, long classNameId, java.lang.String templateKey)
+		long groupId, long classNameId, String templateKey)
 		throws RemoteException {
 		try {
 			com.liferay.dynamic.data.mapping.model.DDMTemplate returnValue = DDMTemplateServiceUtil.getTemplate(groupId,
@@ -327,7 +322,7 @@ public class DDMTemplateServiceSoap {
 	* @return the matching template
 	*/
 	public static com.liferay.dynamic.data.mapping.model.DDMTemplateSoap getTemplate(
-		long groupId, long classNameId, java.lang.String templateKey,
+		long groupId, long classNameId, String templateKey,
 		boolean includeAncestorTemplates) throws RemoteException {
 		try {
 			com.liferay.dynamic.data.mapping.model.DDMTemplate returnValue = DDMTemplateServiceUtil.getTemplate(groupId,
@@ -412,7 +407,7 @@ public class DDMTemplateServiceSoap {
 	*/
 	public static com.liferay.dynamic.data.mapping.model.DDMTemplateSoap[] getTemplates(
 		long companyId, long groupId, long classNameId, long classPK,
-		long resourceClassNameId, java.lang.String type, int status)
+		long resourceClassNameId, String type, int status)
 		throws RemoteException {
 		try {
 			java.util.List<com.liferay.dynamic.data.mapping.model.DDMTemplate> returnValue =
@@ -430,8 +425,8 @@ public class DDMTemplateServiceSoap {
 
 	public static com.liferay.dynamic.data.mapping.model.DDMTemplateSoap[] getTemplates(
 		long companyId, long groupId, long classNameId, long classPK,
-		long resourceClassNameId, java.lang.String type, java.lang.String mode,
-		int status) throws RemoteException {
+		long resourceClassNameId, String type, String mode, int status)
+		throws RemoteException {
 		try {
 			java.util.List<com.liferay.dynamic.data.mapping.model.DDMTemplate> returnValue =
 				DDMTemplateServiceUtil.getTemplates(companyId, groupId,
@@ -544,8 +539,7 @@ public class DDMTemplateServiceSoap {
 		}
 	}
 
-	public static void revertTemplate(long templateId,
-		java.lang.String version,
+	public static void revertTemplate(long templateId, String version,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
@@ -597,9 +591,8 @@ public class DDMTemplateServiceSoap {
 	*/
 	public static com.liferay.dynamic.data.mapping.model.DDMTemplateSoap[] search(
 		long companyId, long groupId, long classNameId, long classPK,
-		long resourceClassNameId, java.lang.String keywords,
-		java.lang.String type, java.lang.String mode, int status, int start,
-		int end,
+		long resourceClassNameId, String keywords, String type, String mode,
+		int status, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.mapping.model.DDMTemplate> orderByComparator)
 		throws RemoteException {
 		try {
@@ -661,10 +654,9 @@ public class DDMTemplateServiceSoap {
 	*/
 	public static com.liferay.dynamic.data.mapping.model.DDMTemplateSoap[] search(
 		long companyId, long groupId, long classNameId, long classPK,
-		long resourceClassNameId, java.lang.String name,
-		java.lang.String description, java.lang.String type,
-		java.lang.String mode, java.lang.String language, int status,
-		boolean andOperator, int start, int end,
+		long resourceClassNameId, String name, String description, String type,
+		String mode, String language, int status, boolean andOperator,
+		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.mapping.model.DDMTemplate> orderByComparator)
 		throws RemoteException {
 		try {
@@ -721,9 +713,8 @@ public class DDMTemplateServiceSoap {
 	*/
 	public static com.liferay.dynamic.data.mapping.model.DDMTemplateSoap[] search(
 		long companyId, long[] groupIds, long[] classNameIds, long[] classPKs,
-		long resourceClassNameId, java.lang.String keywords,
-		java.lang.String type, java.lang.String mode, int status, int start,
-		int end,
+		long resourceClassNameId, String keywords, String type, String mode,
+		int status, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.mapping.model.DDMTemplate> orderByComparator)
 		throws RemoteException {
 		try {
@@ -785,10 +776,9 @@ public class DDMTemplateServiceSoap {
 	*/
 	public static com.liferay.dynamic.data.mapping.model.DDMTemplateSoap[] search(
 		long companyId, long[] groupIds, long[] classNameIds, long[] classPKs,
-		long resourceClassNameId, java.lang.String name,
-		java.lang.String description, java.lang.String type,
-		java.lang.String mode, java.lang.String language, int status,
-		boolean andOperator, int start, int end,
+		long resourceClassNameId, String name, String description, String type,
+		String mode, String language, int status, boolean andOperator,
+		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.mapping.model.DDMTemplate> orderByComparator)
 		throws RemoteException {
 		try {
@@ -831,8 +821,8 @@ public class DDMTemplateServiceSoap {
 	*/
 	public static int searchCount(long companyId, long groupId,
 		long classNameId, long classPK, long resourceClassNameId,
-		java.lang.String keywords, java.lang.String type,
-		java.lang.String mode, int status) throws RemoteException {
+		String keywords, String type, String mode, int status)
+		throws RemoteException {
 		try {
 			int returnValue = DDMTemplateServiceUtil.searchCount(companyId,
 					groupId, classNameId, classPK, resourceClassNameId,
@@ -875,11 +865,9 @@ public class DDMTemplateServiceSoap {
 	* @return the number of matching templates
 	*/
 	public static int searchCount(long companyId, long groupId,
-		long classNameId, long classPK, long resourceClassNameId,
-		java.lang.String name, java.lang.String description,
-		java.lang.String type, java.lang.String mode,
-		java.lang.String language, int status, boolean andOperator)
-		throws RemoteException {
+		long classNameId, long classPK, long resourceClassNameId, String name,
+		String description, String type, String mode, String language,
+		int status, boolean andOperator) throws RemoteException {
 		try {
 			int returnValue = DDMTemplateServiceUtil.searchCount(companyId,
 					groupId, classNameId, classPK, resourceClassNameId, name,
@@ -918,8 +906,8 @@ public class DDMTemplateServiceSoap {
 	*/
 	public static int searchCount(long companyId, long[] groupIds,
 		long[] classNameIds, long[] classPKs, long resourceClassNameId,
-		java.lang.String keywords, java.lang.String type,
-		java.lang.String mode, int status) throws RemoteException {
+		String keywords, String type, String mode, int status)
+		throws RemoteException {
 		try {
 			int returnValue = DDMTemplateServiceUtil.searchCount(companyId,
 					groupIds, classNameIds, classPKs, resourceClassNameId,
@@ -963,9 +951,8 @@ public class DDMTemplateServiceSoap {
 	*/
 	public static int searchCount(long companyId, long[] groupIds,
 		long[] classNameIds, long[] classPKs, long resourceClassNameId,
-		java.lang.String name, java.lang.String description,
-		java.lang.String type, java.lang.String mode,
-		java.lang.String language, int status, boolean andOperator)
+		String name, String description, String type, String mode,
+		String language, int status, boolean andOperator)
 		throws RemoteException {
 		try {
 			int returnValue = DDMTemplateServiceUtil.searchCount(companyId,
@@ -1002,12 +989,10 @@ public class DDMTemplateServiceSoap {
 	* @return the updated template
 	*/
 	public static com.liferay.dynamic.data.mapping.model.DDMTemplateSoap updateTemplate(
-		long templateId, long classPK, java.lang.String[] nameMapLanguageIds,
-		java.lang.String[] nameMapValues,
-		java.lang.String[] descriptionMapLanguageIds,
-		java.lang.String[] descriptionMapValues, java.lang.String type,
-		java.lang.String mode, java.lang.String language,
-		java.lang.String script, boolean cacheable,
+		long templateId, long classPK, String[] nameMapLanguageIds,
+		String[] nameMapValues, String[] descriptionMapLanguageIds,
+		String[] descriptionMapValues, String type, String mode,
+		String language, String script, boolean cacheable,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {

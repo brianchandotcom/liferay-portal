@@ -183,7 +183,7 @@ public interface UserNotificationDeliveryPersistence extends BasePersistence<Use
 	* @throws NoSuchUserNotificationDeliveryException if a matching user notification delivery could not be found
 	*/
 	public UserNotificationDelivery findByU_P_C_N_D(long userId,
-		java.lang.String portletId, long classNameId, int notificationType,
+		String portletId, long classNameId, int notificationType,
 		int deliveryType) throws NoSuchUserNotificationDeliveryException;
 
 	/**
@@ -197,7 +197,7 @@ public interface UserNotificationDeliveryPersistence extends BasePersistence<Use
 	* @return the matching user notification delivery, or <code>null</code> if a matching user notification delivery could not be found
 	*/
 	public UserNotificationDelivery fetchByU_P_C_N_D(long userId,
-		java.lang.String portletId, long classNameId, int notificationType,
+		String portletId, long classNameId, int notificationType,
 		int deliveryType);
 
 	/**
@@ -212,7 +212,7 @@ public interface UserNotificationDeliveryPersistence extends BasePersistence<Use
 	* @return the matching user notification delivery, or <code>null</code> if a matching user notification delivery could not be found
 	*/
 	public UserNotificationDelivery fetchByU_P_C_N_D(long userId,
-		java.lang.String portletId, long classNameId, int notificationType,
+		String portletId, long classNameId, int notificationType,
 		int deliveryType, boolean retrieveFromCache);
 
 	/**
@@ -226,7 +226,7 @@ public interface UserNotificationDeliveryPersistence extends BasePersistence<Use
 	* @return the user notification delivery that was removed
 	*/
 	public UserNotificationDelivery removeByU_P_C_N_D(long userId,
-		java.lang.String portletId, long classNameId, int notificationType,
+		String portletId, long classNameId, int notificationType,
 		int deliveryType) throws NoSuchUserNotificationDeliveryException;
 
 	/**
@@ -239,7 +239,7 @@ public interface UserNotificationDeliveryPersistence extends BasePersistence<Use
 	* @param deliveryType the delivery type
 	* @return the number of matching user notification deliveries
 	*/
-	public int countByU_P_C_N_D(long userId, java.lang.String portletId,
+	public int countByU_P_C_N_D(long userId, String portletId,
 		long classNameId, int notificationType, int deliveryType);
 
 	/**

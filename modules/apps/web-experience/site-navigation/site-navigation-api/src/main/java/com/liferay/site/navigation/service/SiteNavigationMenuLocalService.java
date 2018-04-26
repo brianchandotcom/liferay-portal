@@ -65,16 +65,15 @@ public interface SiteNavigationMenuLocalService extends BaseLocalService,
 		long groupId, ServiceContext serviceContext) throws PortalException;
 
 	public SiteNavigationMenu addSiteNavigationMenu(long userId, long groupId,
-		java.lang.String name, int type, boolean auto,
-		ServiceContext serviceContext) throws PortalException;
-
-	public SiteNavigationMenu addSiteNavigationMenu(long userId, long groupId,
-		java.lang.String name, int type, ServiceContext serviceContext)
+		String name, int type, boolean auto, ServiceContext serviceContext)
 		throws PortalException;
 
 	public SiteNavigationMenu addSiteNavigationMenu(long userId, long groupId,
-		java.lang.String name, ServiceContext serviceContext)
+		String name, int type, ServiceContext serviceContext)
 		throws PortalException;
+
+	public SiteNavigationMenu addSiteNavigationMenu(long userId, long groupId,
+		String name, ServiceContext serviceContext) throws PortalException;
 
 	/**
 	* Adds the site navigation menu to the database. Also notifies the appropriate model listeners.
@@ -207,7 +206,7 @@ public interface SiteNavigationMenuLocalService extends BaseLocalService,
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -248,8 +247,7 @@ public interface SiteNavigationMenuLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<SiteNavigationMenu> getSiteNavigationMenus(long groupId,
-		java.lang.String keywords, int start, int end,
-		OrderByComparator orderByComparator);
+		String keywords, int start, int end, OrderByComparator orderByComparator);
 
 	/**
 	* Returns the number of site navigation menus.
@@ -263,16 +261,15 @@ public interface SiteNavigationMenuLocalService extends BaseLocalService,
 	public int getSiteNavigationMenusCount(long groupId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getSiteNavigationMenusCount(long groupId,
-		java.lang.String keywords);
+	public int getSiteNavigationMenusCount(long groupId, String keywords);
 
 	public SiteNavigationMenu updateSiteNavigationMenu(long userId,
 		long siteNavigationMenuId, int type, boolean auto,
 		ServiceContext serviceContext) throws PortalException;
 
 	public SiteNavigationMenu updateSiteNavigationMenu(long userId,
-		long siteNavigationMenuId, java.lang.String name,
-		ServiceContext serviceContext) throws PortalException;
+		long siteNavigationMenuId, String name, ServiceContext serviceContext)
+		throws PortalException;
 
 	/**
 	* Updates the site navigation menu in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.

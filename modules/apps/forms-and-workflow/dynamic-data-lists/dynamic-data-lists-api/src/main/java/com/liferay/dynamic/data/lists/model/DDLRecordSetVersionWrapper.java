@@ -179,7 +179,7 @@ public class DDLRecordSetVersionWrapper implements DDLRecordSetVersion,
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new DDLRecordSetVersionWrapper((DDLRecordSetVersion)_ddlRecordSetVersion.clone());
 	}
 
@@ -189,7 +189,7 @@ public class DDLRecordSetVersionWrapper implements DDLRecordSetVersion,
 	}
 
 	@Override
-	public java.lang.String[] getAvailableLanguageIds() {
+	public String[] getAvailableLanguageIds() {
 		return _ddlRecordSetVersion.getAvailableLanguageIds();
 	}
 
@@ -230,7 +230,7 @@ public class DDLRecordSetVersionWrapper implements DDLRecordSetVersion,
 	}
 
 	@Override
-	public java.lang.String getDefaultLanguageId() {
+	public String getDefaultLanguageId() {
 		return _ddlRecordSetVersion.getDefaultLanguageId();
 	}
 
@@ -240,7 +240,7 @@ public class DDLRecordSetVersionWrapper implements DDLRecordSetVersion,
 	* @return the description of this ddl record set version
 	*/
 	@Override
-	public java.lang.String getDescription() {
+	public String getDescription() {
 		return _ddlRecordSetVersion.getDescription();
 	}
 
@@ -251,7 +251,7 @@ public class DDLRecordSetVersionWrapper implements DDLRecordSetVersion,
 	* @return the localized description of this ddl record set version
 	*/
 	@Override
-	public java.lang.String getDescription(java.util.Locale locale) {
+	public String getDescription(java.util.Locale locale) {
 		return _ddlRecordSetVersion.getDescription(locale);
 	}
 
@@ -263,8 +263,7 @@ public class DDLRecordSetVersionWrapper implements DDLRecordSetVersion,
 	* @return the localized description of this ddl record set version. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
 	*/
 	@Override
-	public java.lang.String getDescription(java.util.Locale locale,
-		boolean useDefault) {
+	public String getDescription(java.util.Locale locale, boolean useDefault) {
 		return _ddlRecordSetVersion.getDescription(locale, useDefault);
 	}
 
@@ -275,7 +274,7 @@ public class DDLRecordSetVersionWrapper implements DDLRecordSetVersion,
 	* @return the localized description of this ddl record set version
 	*/
 	@Override
-	public java.lang.String getDescription(java.lang.String languageId) {
+	public String getDescription(String languageId) {
 		return _ddlRecordSetVersion.getDescription(languageId);
 	}
 
@@ -287,18 +286,17 @@ public class DDLRecordSetVersionWrapper implements DDLRecordSetVersion,
 	* @return the localized description of this ddl record set version
 	*/
 	@Override
-	public java.lang.String getDescription(java.lang.String languageId,
-		boolean useDefault) {
+	public String getDescription(String languageId, boolean useDefault) {
 		return _ddlRecordSetVersion.getDescription(languageId, useDefault);
 	}
 
 	@Override
-	public java.lang.String getDescriptionCurrentLanguageId() {
+	public String getDescriptionCurrentLanguageId() {
 		return _ddlRecordSetVersion.getDescriptionCurrentLanguageId();
 	}
 
 	@Override
-	public java.lang.String getDescriptionCurrentValue() {
+	public String getDescriptionCurrentValue() {
 		return _ddlRecordSetVersion.getDescriptionCurrentValue();
 	}
 
@@ -308,7 +306,7 @@ public class DDLRecordSetVersionWrapper implements DDLRecordSetVersion,
 	* @return the locales and localized descriptions of this ddl record set version
 	*/
 	@Override
-	public Map<java.util.Locale, java.lang.String> getDescriptionMap() {
+	public Map<java.util.Locale, String> getDescriptionMap() {
 		return _ddlRecordSetVersion.getDescriptionMap();
 	}
 
@@ -333,7 +331,7 @@ public class DDLRecordSetVersionWrapper implements DDLRecordSetVersion,
 	* @return the name of this ddl record set version
 	*/
 	@Override
-	public java.lang.String getName() {
+	public String getName() {
 		return _ddlRecordSetVersion.getName();
 	}
 
@@ -344,7 +342,7 @@ public class DDLRecordSetVersionWrapper implements DDLRecordSetVersion,
 	* @return the localized name of this ddl record set version
 	*/
 	@Override
-	public java.lang.String getName(java.util.Locale locale) {
+	public String getName(java.util.Locale locale) {
 		return _ddlRecordSetVersion.getName(locale);
 	}
 
@@ -356,7 +354,7 @@ public class DDLRecordSetVersionWrapper implements DDLRecordSetVersion,
 	* @return the localized name of this ddl record set version. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
 	*/
 	@Override
-	public java.lang.String getName(java.util.Locale locale, boolean useDefault) {
+	public String getName(java.util.Locale locale, boolean useDefault) {
 		return _ddlRecordSetVersion.getName(locale, useDefault);
 	}
 
@@ -367,7 +365,7 @@ public class DDLRecordSetVersionWrapper implements DDLRecordSetVersion,
 	* @return the localized name of this ddl record set version
 	*/
 	@Override
-	public java.lang.String getName(java.lang.String languageId) {
+	public String getName(String languageId) {
 		return _ddlRecordSetVersion.getName(languageId);
 	}
 
@@ -379,18 +377,17 @@ public class DDLRecordSetVersionWrapper implements DDLRecordSetVersion,
 	* @return the localized name of this ddl record set version
 	*/
 	@Override
-	public java.lang.String getName(java.lang.String languageId,
-		boolean useDefault) {
+	public String getName(String languageId, boolean useDefault) {
 		return _ddlRecordSetVersion.getName(languageId, useDefault);
 	}
 
 	@Override
-	public java.lang.String getNameCurrentLanguageId() {
+	public String getNameCurrentLanguageId() {
 		return _ddlRecordSetVersion.getNameCurrentLanguageId();
 	}
 
 	@Override
-	public java.lang.String getNameCurrentValue() {
+	public String getNameCurrentValue() {
 		return _ddlRecordSetVersion.getNameCurrentValue();
 	}
 
@@ -400,7 +397,7 @@ public class DDLRecordSetVersionWrapper implements DDLRecordSetVersion,
 	* @return the locales and localized names of this ddl record set version
 	*/
 	@Override
-	public Map<java.util.Locale, java.lang.String> getNameMap() {
+	public Map<java.util.Locale, String> getNameMap() {
 		return _ddlRecordSetVersion.getNameMap();
 	}
 
@@ -451,7 +448,7 @@ public class DDLRecordSetVersionWrapper implements DDLRecordSetVersion,
 	* @return the settings of this ddl record set version
 	*/
 	@Override
-	public java.lang.String getSettings() {
+	public String getSettings() {
 		return _ddlRecordSetVersion.getSettings();
 	}
 
@@ -481,7 +478,7 @@ public class DDLRecordSetVersionWrapper implements DDLRecordSetVersion,
 	* @return the status by user name of this ddl record set version
 	*/
 	@Override
-	public java.lang.String getStatusByUserName() {
+	public String getStatusByUserName() {
 		return _ddlRecordSetVersion.getStatusByUserName();
 	}
 
@@ -491,7 +488,7 @@ public class DDLRecordSetVersionWrapper implements DDLRecordSetVersion,
 	* @return the status by user uuid of this ddl record set version
 	*/
 	@Override
-	public java.lang.String getStatusByUserUuid() {
+	public String getStatusByUserUuid() {
 		return _ddlRecordSetVersion.getStatusByUserUuid();
 	}
 
@@ -521,7 +518,7 @@ public class DDLRecordSetVersionWrapper implements DDLRecordSetVersion,
 	* @return the user name of this ddl record set version
 	*/
 	@Override
-	public java.lang.String getUserName() {
+	public String getUserName() {
 		return _ddlRecordSetVersion.getUserName();
 	}
 
@@ -531,7 +528,7 @@ public class DDLRecordSetVersionWrapper implements DDLRecordSetVersion,
 	* @return the user uuid of this ddl record set version
 	*/
 	@Override
-	public java.lang.String getUserUuid() {
+	public String getUserUuid() {
 		return _ddlRecordSetVersion.getUserUuid();
 	}
 
@@ -541,7 +538,7 @@ public class DDLRecordSetVersionWrapper implements DDLRecordSetVersion,
 	* @return the version of this ddl record set version
 	*/
 	@Override
-	public java.lang.String getVersion() {
+	public String getVersion() {
 		return _ddlRecordSetVersion.getVersion();
 	}
 
@@ -704,7 +701,7 @@ public class DDLRecordSetVersionWrapper implements DDLRecordSetVersion,
 	* @param description the description of this ddl record set version
 	*/
 	@Override
-	public void setDescription(java.lang.String description) {
+	public void setDescription(String description) {
 		_ddlRecordSetVersion.setDescription(description);
 	}
 
@@ -715,8 +712,7 @@ public class DDLRecordSetVersionWrapper implements DDLRecordSetVersion,
 	* @param locale the locale of the language
 	*/
 	@Override
-	public void setDescription(java.lang.String description,
-		java.util.Locale locale) {
+	public void setDescription(String description, java.util.Locale locale) {
 		_ddlRecordSetVersion.setDescription(description, locale);
 	}
 
@@ -728,13 +724,13 @@ public class DDLRecordSetVersionWrapper implements DDLRecordSetVersion,
 	* @param defaultLocale the default locale
 	*/
 	@Override
-	public void setDescription(java.lang.String description,
-		java.util.Locale locale, java.util.Locale defaultLocale) {
+	public void setDescription(String description, java.util.Locale locale,
+		java.util.Locale defaultLocale) {
 		_ddlRecordSetVersion.setDescription(description, locale, defaultLocale);
 	}
 
 	@Override
-	public void setDescriptionCurrentLanguageId(java.lang.String languageId) {
+	public void setDescriptionCurrentLanguageId(String languageId) {
 		_ddlRecordSetVersion.setDescriptionCurrentLanguageId(languageId);
 	}
 
@@ -744,8 +740,7 @@ public class DDLRecordSetVersionWrapper implements DDLRecordSetVersion,
 	* @param descriptionMap the locales and localized descriptions of this ddl record set version
 	*/
 	@Override
-	public void setDescriptionMap(
-		Map<java.util.Locale, java.lang.String> descriptionMap) {
+	public void setDescriptionMap(Map<java.util.Locale, String> descriptionMap) {
 		_ddlRecordSetVersion.setDescriptionMap(descriptionMap);
 	}
 
@@ -757,7 +752,7 @@ public class DDLRecordSetVersionWrapper implements DDLRecordSetVersion,
 	*/
 	@Override
 	public void setDescriptionMap(
-		Map<java.util.Locale, java.lang.String> descriptionMap,
+		Map<java.util.Locale, String> descriptionMap,
 		java.util.Locale defaultLocale) {
 		_ddlRecordSetVersion.setDescriptionMap(descriptionMap, defaultLocale);
 	}
@@ -794,7 +789,7 @@ public class DDLRecordSetVersionWrapper implements DDLRecordSetVersion,
 	* @param name the name of this ddl record set version
 	*/
 	@Override
-	public void setName(java.lang.String name) {
+	public void setName(String name) {
 		_ddlRecordSetVersion.setName(name);
 	}
 
@@ -805,7 +800,7 @@ public class DDLRecordSetVersionWrapper implements DDLRecordSetVersion,
 	* @param locale the locale of the language
 	*/
 	@Override
-	public void setName(java.lang.String name, java.util.Locale locale) {
+	public void setName(String name, java.util.Locale locale) {
 		_ddlRecordSetVersion.setName(name, locale);
 	}
 
@@ -817,13 +812,13 @@ public class DDLRecordSetVersionWrapper implements DDLRecordSetVersion,
 	* @param defaultLocale the default locale
 	*/
 	@Override
-	public void setName(java.lang.String name, java.util.Locale locale,
+	public void setName(String name, java.util.Locale locale,
 		java.util.Locale defaultLocale) {
 		_ddlRecordSetVersion.setName(name, locale, defaultLocale);
 	}
 
 	@Override
-	public void setNameCurrentLanguageId(java.lang.String languageId) {
+	public void setNameCurrentLanguageId(String languageId) {
 		_ddlRecordSetVersion.setNameCurrentLanguageId(languageId);
 	}
 
@@ -833,7 +828,7 @@ public class DDLRecordSetVersionWrapper implements DDLRecordSetVersion,
 	* @param nameMap the locales and localized names of this ddl record set version
 	*/
 	@Override
-	public void setNameMap(Map<java.util.Locale, java.lang.String> nameMap) {
+	public void setNameMap(Map<java.util.Locale, String> nameMap) {
 		_ddlRecordSetVersion.setNameMap(nameMap);
 	}
 
@@ -844,7 +839,7 @@ public class DDLRecordSetVersionWrapper implements DDLRecordSetVersion,
 	* @param defaultLocale the default locale
 	*/
 	@Override
-	public void setNameMap(Map<java.util.Locale, java.lang.String> nameMap,
+	public void setNameMap(Map<java.util.Locale, String> nameMap,
 		java.util.Locale defaultLocale) {
 		_ddlRecordSetVersion.setNameMap(nameMap, defaultLocale);
 	}
@@ -895,7 +890,7 @@ public class DDLRecordSetVersionWrapper implements DDLRecordSetVersion,
 	* @param settings the settings of this ddl record set version
 	*/
 	@Override
-	public void setSettings(java.lang.String settings) {
+	public void setSettings(String settings) {
 		_ddlRecordSetVersion.setSettings(settings);
 	}
 
@@ -925,7 +920,7 @@ public class DDLRecordSetVersionWrapper implements DDLRecordSetVersion,
 	* @param statusByUserName the status by user name of this ddl record set version
 	*/
 	@Override
-	public void setStatusByUserName(java.lang.String statusByUserName) {
+	public void setStatusByUserName(String statusByUserName) {
 		_ddlRecordSetVersion.setStatusByUserName(statusByUserName);
 	}
 
@@ -935,7 +930,7 @@ public class DDLRecordSetVersionWrapper implements DDLRecordSetVersion,
 	* @param statusByUserUuid the status by user uuid of this ddl record set version
 	*/
 	@Override
-	public void setStatusByUserUuid(java.lang.String statusByUserUuid) {
+	public void setStatusByUserUuid(String statusByUserUuid) {
 		_ddlRecordSetVersion.setStatusByUserUuid(statusByUserUuid);
 	}
 
@@ -965,7 +960,7 @@ public class DDLRecordSetVersionWrapper implements DDLRecordSetVersion,
 	* @param userName the user name of this ddl record set version
 	*/
 	@Override
-	public void setUserName(java.lang.String userName) {
+	public void setUserName(String userName) {
 		_ddlRecordSetVersion.setUserName(userName);
 	}
 
@@ -975,7 +970,7 @@ public class DDLRecordSetVersionWrapper implements DDLRecordSetVersion,
 	* @param userUuid the user uuid of this ddl record set version
 	*/
 	@Override
-	public void setUserUuid(java.lang.String userUuid) {
+	public void setUserUuid(String userUuid) {
 		_ddlRecordSetVersion.setUserUuid(userUuid);
 	}
 
@@ -985,7 +980,7 @@ public class DDLRecordSetVersionWrapper implements DDLRecordSetVersion,
 	* @param version the version of this ddl record set version
 	*/
 	@Override
-	public void setVersion(java.lang.String version) {
+	public void setVersion(String version) {
 		_ddlRecordSetVersion.setVersion(version);
 	}
 
@@ -1000,7 +995,7 @@ public class DDLRecordSetVersionWrapper implements DDLRecordSetVersion,
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _ddlRecordSetVersion.toString();
 	}
 
@@ -1010,7 +1005,7 @@ public class DDLRecordSetVersionWrapper implements DDLRecordSetVersion,
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _ddlRecordSetVersion.toXmlString();
 	}
 

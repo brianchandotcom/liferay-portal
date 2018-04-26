@@ -197,7 +197,7 @@ public class LayoutSetLocalServiceUtil {
 	}
 
 	public static com.liferay.portal.kernel.model.LayoutSet fetchLayoutSet(
-		java.lang.String virtualHostname) {
+		String virtualHostname) {
 		return getService().fetchLayoutSet(virtualHostname);
 	}
 
@@ -235,7 +235,7 @@ public class LayoutSetLocalServiceUtil {
 	}
 
 	public static com.liferay.portal.kernel.model.LayoutSet getLayoutSet(
-		java.lang.String virtualHostname)
+		String virtualHostname)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getLayoutSet(virtualHostname);
 	}
@@ -257,7 +257,7 @@ public class LayoutSetLocalServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.portal.kernel.model.LayoutSet> getLayoutSetsByLayoutSetPrototypeUuid(
-		java.lang.String layoutSetPrototypeUuid) {
+		String layoutSetPrototypeUuid) {
 		return getService()
 				   .getLayoutSetsByLayoutSetPrototypeUuid(layoutSetPrototypeUuid);
 	}
@@ -276,7 +276,7 @@ public class LayoutSetLocalServiceUtil {
 	*
 	* @return the OSGi service identifier
 	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
+	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 
@@ -309,7 +309,7 @@ public class LayoutSetLocalServiceUtil {
 	*/
 	public static void updateLayoutSetPrototypeLinkEnabled(long groupId,
 		boolean privateLayout, boolean layoutSetPrototypeLinkEnabled,
-		java.lang.String layoutSetPrototypeUuid)
+		String layoutSetPrototypeUuid)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService()
 			.updateLayoutSetPrototypeLinkEnabled(groupId, privateLayout,
@@ -344,17 +344,16 @@ public class LayoutSetLocalServiceUtil {
 	}
 
 	public static com.liferay.portal.kernel.model.LayoutSet updateLookAndFeel(
-		long groupId, boolean privateLayout, java.lang.String themeId,
-		java.lang.String colorSchemeId, java.lang.String css)
+		long groupId, boolean privateLayout, String themeId,
+		String colorSchemeId, String css)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .updateLookAndFeel(groupId, privateLayout, themeId,
 			colorSchemeId, css);
 	}
 
-	public static void updateLookAndFeel(long groupId,
-		java.lang.String themeId, java.lang.String colorSchemeId,
-		java.lang.String css)
+	public static void updateLookAndFeel(long groupId, String themeId,
+		String colorSchemeId, String css)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().updateLookAndFeel(groupId, themeId, colorSchemeId, css);
 	}
@@ -366,13 +365,13 @@ public class LayoutSetLocalServiceUtil {
 	}
 
 	public static com.liferay.portal.kernel.model.LayoutSet updateSettings(
-		long groupId, boolean privateLayout, java.lang.String settings)
+		long groupId, boolean privateLayout, String settings)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().updateSettings(groupId, privateLayout, settings);
 	}
 
 	public static com.liferay.portal.kernel.model.LayoutSet updateVirtualHost(
-		long groupId, boolean privateLayout, java.lang.String virtualHostname)
+		long groupId, boolean privateLayout, String virtualHostname)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .updateVirtualHost(groupId, privateLayout, virtualHostname);

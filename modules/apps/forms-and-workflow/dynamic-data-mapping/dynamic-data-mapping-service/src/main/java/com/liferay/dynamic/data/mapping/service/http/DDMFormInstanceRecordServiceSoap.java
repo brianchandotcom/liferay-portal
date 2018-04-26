@@ -159,7 +159,7 @@ public class DDMFormInstanceRecordServiceSoap {
 	}
 
 	public static void revertFormInstanceRecord(long ddmFormInstanceRecordId,
-		java.lang.String version,
+		String version,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {

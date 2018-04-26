@@ -53,10 +53,9 @@ import java.rmi.RemoteException;
  */
 @ProviderType
 public class PortalServiceSoap {
-	public static java.lang.String getAutoDeployDirectory()
-		throws RemoteException {
+	public static String getAutoDeployDirectory() throws RemoteException {
 		try {
-			java.lang.String returnValue = PortalServiceUtil.getAutoDeployDirectory();
+			String returnValue = PortalServiceUtil.getAutoDeployDirectory();
 
 			return returnValue;
 		}
@@ -80,9 +79,9 @@ public class PortalServiceSoap {
 		}
 	}
 
-	public static java.lang.String getVersion() throws RemoteException {
+	public static String getVersion() throws RemoteException {
 		try {
-			java.lang.String returnValue = PortalServiceUtil.getVersion();
+			String returnValue = PortalServiceUtil.getVersion();
 
 			return returnValue;
 		}
@@ -93,8 +92,8 @@ public class PortalServiceSoap {
 		}
 	}
 
-	public static void testAddClassName_Rollback(
-		java.lang.String classNameValue) throws RemoteException {
+	public static void testAddClassName_Rollback(String classNameValue)
+		throws RemoteException {
 		try {
 			PortalServiceUtil.testAddClassName_Rollback(classNameValue);
 		}
@@ -105,7 +104,7 @@ public class PortalServiceSoap {
 		}
 	}
 
-	public static void testAddClassName_Success(java.lang.String classNameValue)
+	public static void testAddClassName_Success(String classNameValue)
 		throws RemoteException {
 		try {
 			PortalServiceUtil.testAddClassName_Success(classNameValue);
@@ -118,7 +117,7 @@ public class PortalServiceSoap {
 	}
 
 	public static void testAddClassNameAndTestTransactionPortletBar_PortalRollback(
-		java.lang.String transactionPortletBarText) throws RemoteException {
+		String transactionPortletBarText) throws RemoteException {
 		try {
 			PortalServiceUtil.testAddClassNameAndTestTransactionPortletBar_PortalRollback(transactionPortletBarText);
 		}
@@ -130,7 +129,7 @@ public class PortalServiceSoap {
 	}
 
 	public static void testAddClassNameAndTestTransactionPortletBar_PortletRollback(
-		java.lang.String transactionPortletBarText) throws RemoteException {
+		String transactionPortletBarText) throws RemoteException {
 		try {
 			PortalServiceUtil.testAddClassNameAndTestTransactionPortletBar_PortletRollback(transactionPortletBarText);
 		}
@@ -142,7 +141,7 @@ public class PortalServiceSoap {
 	}
 
 	public static void testAddClassNameAndTestTransactionPortletBar_Success(
-		java.lang.String transactionPortletBarText) throws RemoteException {
+		String transactionPortletBarText) throws RemoteException {
 		try {
 			PortalServiceUtil.testAddClassNameAndTestTransactionPortletBar_Success(transactionPortletBarText);
 		}

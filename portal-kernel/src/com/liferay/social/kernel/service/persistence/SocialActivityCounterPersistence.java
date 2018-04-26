@@ -506,7 +506,7 @@ public interface SocialActivityCounterPersistence extends BasePersistence<Social
 	* @throws NoSuchActivityCounterException if a matching social activity counter could not be found
 	*/
 	public SocialActivityCounter findByG_C_C_N_O_S(long groupId,
-		long classNameId, long classPK, java.lang.String name, int ownerType,
+		long classNameId, long classPK, String name, int ownerType,
 		int startPeriod) throws NoSuchActivityCounterException;
 
 	/**
@@ -521,7 +521,7 @@ public interface SocialActivityCounterPersistence extends BasePersistence<Social
 	* @return the matching social activity counter, or <code>null</code> if a matching social activity counter could not be found
 	*/
 	public SocialActivityCounter fetchByG_C_C_N_O_S(long groupId,
-		long classNameId, long classPK, java.lang.String name, int ownerType,
+		long classNameId, long classPK, String name, int ownerType,
 		int startPeriod);
 
 	/**
@@ -537,7 +537,7 @@ public interface SocialActivityCounterPersistence extends BasePersistence<Social
 	* @return the matching social activity counter, or <code>null</code> if a matching social activity counter could not be found
 	*/
 	public SocialActivityCounter fetchByG_C_C_N_O_S(long groupId,
-		long classNameId, long classPK, java.lang.String name, int ownerType,
+		long classNameId, long classPK, String name, int ownerType,
 		int startPeriod, boolean retrieveFromCache);
 
 	/**
@@ -552,7 +552,7 @@ public interface SocialActivityCounterPersistence extends BasePersistence<Social
 	* @return the social activity counter that was removed
 	*/
 	public SocialActivityCounter removeByG_C_C_N_O_S(long groupId,
-		long classNameId, long classPK, java.lang.String name, int ownerType,
+		long classNameId, long classPK, String name, int ownerType,
 		int startPeriod) throws NoSuchActivityCounterException;
 
 	/**
@@ -567,7 +567,7 @@ public interface SocialActivityCounterPersistence extends BasePersistence<Social
 	* @return the number of matching social activity counters
 	*/
 	public int countByG_C_C_N_O_S(long groupId, long classNameId, long classPK,
-		java.lang.String name, int ownerType, int startPeriod);
+		String name, int ownerType, int startPeriod);
 
 	/**
 	* Returns the social activity counter where groupId = &#63; and classNameId = &#63; and classPK = &#63; and name = &#63; and ownerType = &#63; and endPeriod = &#63; or throws a {@link NoSuchActivityCounterException} if it could not be found.
@@ -582,7 +582,7 @@ public interface SocialActivityCounterPersistence extends BasePersistence<Social
 	* @throws NoSuchActivityCounterException if a matching social activity counter could not be found
 	*/
 	public SocialActivityCounter findByG_C_C_N_O_E(long groupId,
-		long classNameId, long classPK, java.lang.String name, int ownerType,
+		long classNameId, long classPK, String name, int ownerType,
 		int endPeriod) throws NoSuchActivityCounterException;
 
 	/**
@@ -597,7 +597,7 @@ public interface SocialActivityCounterPersistence extends BasePersistence<Social
 	* @return the matching social activity counter, or <code>null</code> if a matching social activity counter could not be found
 	*/
 	public SocialActivityCounter fetchByG_C_C_N_O_E(long groupId,
-		long classNameId, long classPK, java.lang.String name, int ownerType,
+		long classNameId, long classPK, String name, int ownerType,
 		int endPeriod);
 
 	/**
@@ -613,7 +613,7 @@ public interface SocialActivityCounterPersistence extends BasePersistence<Social
 	* @return the matching social activity counter, or <code>null</code> if a matching social activity counter could not be found
 	*/
 	public SocialActivityCounter fetchByG_C_C_N_O_E(long groupId,
-		long classNameId, long classPK, java.lang.String name, int ownerType,
+		long classNameId, long classPK, String name, int ownerType,
 		int endPeriod, boolean retrieveFromCache);
 
 	/**
@@ -628,7 +628,7 @@ public interface SocialActivityCounterPersistence extends BasePersistence<Social
 	* @return the social activity counter that was removed
 	*/
 	public SocialActivityCounter removeByG_C_C_N_O_E(long groupId,
-		long classNameId, long classPK, java.lang.String name, int ownerType,
+		long classNameId, long classPK, String name, int ownerType,
 		int endPeriod) throws NoSuchActivityCounterException;
 
 	/**
@@ -643,7 +643,7 @@ public interface SocialActivityCounterPersistence extends BasePersistence<Social
 	* @return the number of matching social activity counters
 	*/
 	public int countByG_C_C_N_O_E(long groupId, long classNameId, long classPK,
-		java.lang.String name, int ownerType, int endPeriod);
+		String name, int ownerType, int endPeriod);
 
 	/**
 	* Caches the social activity counter in the entity cache if it is enabled.
@@ -768,5 +768,5 @@ public interface SocialActivityCounterPersistence extends BasePersistence<Social
 	public int countAll();
 
 	@Override
-	public java.util.Set<java.lang.String> getBadColumnNames();
+	public java.util.Set<String> getBadColumnNames();
 }

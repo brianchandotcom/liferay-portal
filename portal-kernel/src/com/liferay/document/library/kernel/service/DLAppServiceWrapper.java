@@ -64,9 +64,9 @@ public class DLAppServiceWrapper implements DLAppService,
 	*/
 	@Override
 	public com.liferay.portal.kernel.repository.model.FileEntry addFileEntry(
-		long repositoryId, long folderId, java.lang.String sourceFileName,
-		java.lang.String mimeType, java.lang.String title,
-		java.lang.String description, java.lang.String changeLog, byte[] bytes,
+		long repositoryId, long folderId, String sourceFileName,
+		String mimeType, String title, String description, String changeLog,
+		byte[] bytes,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _dlAppService.addFileEntry(repositoryId, folderId,
@@ -106,9 +106,8 @@ public class DLAppServiceWrapper implements DLAppService,
 	*/
 	@Override
 	public com.liferay.portal.kernel.repository.model.FileEntry addFileEntry(
-		long repositoryId, long folderId, java.lang.String sourceFileName,
-		java.lang.String mimeType, java.lang.String title,
-		java.lang.String description, java.lang.String changeLog,
+		long repositoryId, long folderId, String sourceFileName,
+		String mimeType, String title, String description, String changeLog,
 		java.io.File file,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -150,9 +149,8 @@ public class DLAppServiceWrapper implements DLAppService,
 	*/
 	@Override
 	public com.liferay.portal.kernel.repository.model.FileEntry addFileEntry(
-		long repositoryId, long folderId, java.lang.String sourceFileName,
-		java.lang.String mimeType, java.lang.String title,
-		java.lang.String description, java.lang.String changeLog,
+		long repositoryId, long folderId, String sourceFileName,
+		String mimeType, String title, String description, String changeLog,
 		java.io.InputStream is, long size,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -196,8 +194,8 @@ public class DLAppServiceWrapper implements DLAppService,
 	*/
 	@Override
 	public com.liferay.portal.kernel.repository.model.Folder addFolder(
-		long repositoryId, long parentFolderId, java.lang.String name,
-		java.lang.String description,
+		long repositoryId, long parentFolderId, String name,
+		String description,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _dlAppService.addFolder(repositoryId, parentFolderId, name,
@@ -225,8 +223,8 @@ public class DLAppServiceWrapper implements DLAppService,
 	*/
 	@Override
 	public com.liferay.portal.kernel.repository.model.FileEntry addTempFileEntry(
-		long groupId, long folderId, java.lang.String folderName,
-		java.lang.String fileName, java.io.File file, java.lang.String mimeType)
+		long groupId, long folderId, String folderName, String fileName,
+		java.io.File file, String mimeType)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _dlAppService.addTempFileEntry(groupId, folderId, folderName,
 			fileName, file, mimeType);
@@ -254,9 +252,8 @@ public class DLAppServiceWrapper implements DLAppService,
 	*/
 	@Override
 	public com.liferay.portal.kernel.repository.model.FileEntry addTempFileEntry(
-		long groupId, long folderId, java.lang.String folderName,
-		java.lang.String fileName, java.io.InputStream inputStream,
-		java.lang.String mimeType)
+		long groupId, long folderId, String folderName, String fileName,
+		java.io.InputStream inputStream, String mimeType)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _dlAppService.addTempFileEntry(groupId, folderId, folderName,
 			fileName, inputStream, mimeType);
@@ -312,7 +309,7 @@ public class DLAppServiceWrapper implements DLAppService,
 	*/
 	@Override
 	public void checkInFileEntry(long fileEntryId, boolean majorVersion,
-		java.lang.String changeLog,
+		String changeLog,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_dlAppService.checkInFileEntry(fileEntryId, majorVersion, changeLog,
@@ -342,7 +339,7 @@ public class DLAppServiceWrapper implements DLAppService,
 	* @see #checkOutFileEntry(long, String, long, ServiceContext)
 	*/
 	@Override
-	public void checkInFileEntry(long fileEntryId, java.lang.String lockUuid,
+	public void checkInFileEntry(long fileEntryId, String lockUuid,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_dlAppService.checkInFileEntry(fileEntryId, lockUuid, serviceContext);
@@ -401,7 +398,7 @@ public class DLAppServiceWrapper implements DLAppService,
 	*/
 	@Override
 	public com.liferay.portal.kernel.repository.model.FileEntry checkOutFileEntry(
-		long fileEntryId, java.lang.String owner, long expirationTime,
+		long fileEntryId, String owner, long expirationTime,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _dlAppService.checkOutFileEntry(fileEntryId, owner,
@@ -422,7 +419,7 @@ public class DLAppServiceWrapper implements DLAppService,
 	@Override
 	public com.liferay.portal.kernel.repository.model.Folder copyFolder(
 		long repositoryId, long sourceFolderId, long parentFolderId,
-		java.lang.String name, java.lang.String description,
+		String name, String description,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _dlAppService.copyFolder(repositoryId, sourceFolderId,
@@ -449,7 +446,7 @@ public class DLAppServiceWrapper implements DLAppService,
 	*/
 	@Override
 	public void deleteFileEntryByTitle(long repositoryId, long folderId,
-		java.lang.String title)
+		String title)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_dlAppService.deleteFileEntryByTitle(repositoryId, folderId, title);
 	}
@@ -475,7 +472,7 @@ public class DLAppServiceWrapper implements DLAppService,
 	* @param version the version label of the file version
 	*/
 	@Override
-	public void deleteFileVersion(long fileEntryId, java.lang.String version)
+	public void deleteFileVersion(long fileEntryId, String version)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_dlAppService.deleteFileVersion(fileEntryId, version);
 	}
@@ -501,8 +498,7 @@ public class DLAppServiceWrapper implements DLAppService,
 	* @param name the folder's name
 	*/
 	@Override
-	public void deleteFolder(long repositoryId, long parentFolderId,
-		java.lang.String name)
+	public void deleteFolder(long repositoryId, long parentFolderId, String name)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_dlAppService.deleteFolder(repositoryId, parentFolderId, name);
 	}
@@ -519,7 +515,7 @@ public class DLAppServiceWrapper implements DLAppService,
 	*/
 	@Override
 	public void deleteTempFileEntry(long groupId, long folderId,
-		java.lang.String folderName, java.lang.String fileName)
+		String folderName, String fileName)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_dlAppService.deleteTempFileEntry(groupId, folderId, folderName,
 			fileName);
@@ -655,15 +651,15 @@ public class DLAppServiceWrapper implements DLAppService,
 
 	@Override
 	public java.util.List<com.liferay.portal.kernel.repository.model.FileEntry> getFileEntries(
-		long repositoryId, long folderId, java.lang.String[] mimeTypes)
+		long repositoryId, long folderId, String[] mimeTypes)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _dlAppService.getFileEntries(repositoryId, folderId, mimeTypes);
 	}
 
 	@Override
 	public java.util.List<com.liferay.portal.kernel.repository.model.FileEntry> getFileEntries(
-		long repositoryId, long folderId, java.lang.String[] mimeTypes,
-		int start, int end,
+		long repositoryId, long folderId, String[] mimeTypes, int start,
+		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.kernel.repository.model.FileEntry> obc)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _dlAppService.getFileEntries(repositoryId, folderId, mimeTypes,
@@ -690,7 +686,7 @@ public class DLAppServiceWrapper implements DLAppService,
 	* @return the range of file entries and shortcuts in the folder
 	*/
 	@Override
-	public java.util.List<java.lang.Object> getFileEntriesAndFileShortcuts(
+	public java.util.List<Object> getFileEntriesAndFileShortcuts(
 		long repositoryId, long folderId, int status, int start, int end)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _dlAppService.getFileEntriesAndFileShortcuts(repositoryId,
@@ -724,7 +720,7 @@ public class DLAppServiceWrapper implements DLAppService,
 	*/
 	@Override
 	public int getFileEntriesAndFileShortcutsCount(long repositoryId,
-		long folderId, int status, java.lang.String[] mimeTypes)
+		long folderId, int status, String[] mimeTypes)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _dlAppService.getFileEntriesAndFileShortcutsCount(repositoryId,
 			folderId, status, mimeTypes);
@@ -762,7 +758,7 @@ public class DLAppServiceWrapper implements DLAppService,
 
 	@Override
 	public int getFileEntriesCount(long repositoryId, long folderId,
-		java.lang.String[] mimeTypes)
+		String[] mimeTypes)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _dlAppService.getFileEntriesCount(repositoryId, folderId,
 			mimeTypes);
@@ -791,7 +787,7 @@ public class DLAppServiceWrapper implements DLAppService,
 	*/
 	@Override
 	public com.liferay.portal.kernel.repository.model.FileEntry getFileEntry(
-		long groupId, long folderId, java.lang.String title)
+		long groupId, long folderId, String title)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _dlAppService.getFileEntry(groupId, folderId, title);
 	}
@@ -805,7 +801,7 @@ public class DLAppServiceWrapper implements DLAppService,
 	*/
 	@Override
 	public com.liferay.portal.kernel.repository.model.FileEntry getFileEntryByUuidAndGroupId(
-		java.lang.String uuid, long groupId)
+		String uuid, long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _dlAppService.getFileEntryByUuidAndGroupId(uuid, groupId);
 	}
@@ -860,7 +856,7 @@ public class DLAppServiceWrapper implements DLAppService,
 	*/
 	@Override
 	public com.liferay.portal.kernel.repository.model.Folder getFolder(
-		long repositoryId, long parentFolderId, java.lang.String name)
+		long repositoryId, long parentFolderId, String name)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _dlAppService.getFolder(repositoryId, parentFolderId, name);
 	}
@@ -1080,7 +1076,7 @@ public class DLAppServiceWrapper implements DLAppService,
 	file shortcuts in the parent folder
 	*/
 	@Override
-	public java.util.List<java.lang.Object> getFoldersAndFileEntriesAndFileShortcuts(
+	public java.util.List<Object> getFoldersAndFileEntriesAndFileShortcuts(
 		long repositoryId, long folderId, int status,
 		boolean includeMountFolders, int start, int end)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -1115,7 +1111,7 @@ public class DLAppServiceWrapper implements DLAppService,
 	<code>obc</code>
 	*/
 	@Override
-	public java.util.List<java.lang.Object> getFoldersAndFileEntriesAndFileShortcuts(
+	public java.util.List<Object> getFoldersAndFileEntriesAndFileShortcuts(
 		long repositoryId, long folderId, int status,
 		boolean includeMountFolders, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<?> obc)
@@ -1125,10 +1121,9 @@ public class DLAppServiceWrapper implements DLAppService,
 	}
 
 	@Override
-	public java.util.List<java.lang.Object> getFoldersAndFileEntriesAndFileShortcuts(
-		long repositoryId, long folderId, int status,
-		java.lang.String[] mimeTypes, boolean includeMountFolders,
-		boolean includeOwner, int start, int end,
+	public java.util.List<Object> getFoldersAndFileEntriesAndFileShortcuts(
+		long repositoryId, long folderId, int status, String[] mimeTypes,
+		boolean includeMountFolders, boolean includeOwner, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<?> obc)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _dlAppService.getFoldersAndFileEntriesAndFileShortcuts(repositoryId,
@@ -1137,10 +1132,10 @@ public class DLAppServiceWrapper implements DLAppService,
 	}
 
 	@Override
-	public java.util.List<java.lang.Object> getFoldersAndFileEntriesAndFileShortcuts(
-		long repositoryId, long folderId, int status,
-		java.lang.String[] mimeTypes, boolean includeMountFolders, int start,
-		int end, com.liferay.portal.kernel.util.OrderByComparator<?> obc)
+	public java.util.List<Object> getFoldersAndFileEntriesAndFileShortcuts(
+		long repositoryId, long folderId, int status, String[] mimeTypes,
+		boolean includeMountFolders, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<?> obc)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _dlAppService.getFoldersAndFileEntriesAndFileShortcuts(repositoryId,
 			folderId, status, mimeTypes, includeMountFolders, start, end, obc);
@@ -1169,8 +1164,8 @@ public class DLAppServiceWrapper implements DLAppService,
 
 	@Override
 	public int getFoldersAndFileEntriesAndFileShortcutsCount(
-		long repositoryId, long folderId, int status,
-		java.lang.String[] mimeTypes, boolean includeMountFolders)
+		long repositoryId, long folderId, int status, String[] mimeTypes,
+		boolean includeMountFolders)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _dlAppService.getFoldersAndFileEntriesAndFileShortcutsCount(repositoryId,
 			folderId, status, mimeTypes, includeMountFolders);
@@ -1178,9 +1173,8 @@ public class DLAppServiceWrapper implements DLAppService,
 
 	@Override
 	public int getFoldersAndFileEntriesAndFileShortcutsCount(
-		long repositoryId, long folderId, int status,
-		java.lang.String[] mimeTypes, boolean includeMountFolders,
-		boolean includeOwner)
+		long repositoryId, long folderId, int status, String[] mimeTypes,
+		boolean includeMountFolders, boolean includeOwner)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _dlAppService.getFoldersAndFileEntriesAndFileShortcutsCount(repositoryId,
 			folderId, status, mimeTypes, includeMountFolders, includeOwner);
@@ -1249,7 +1243,7 @@ public class DLAppServiceWrapper implements DLAppService,
 	*/
 	@Override
 	public int getFoldersFileEntriesCount(long repositoryId,
-		java.util.List<java.lang.Long> folderIds, int status)
+		java.util.List<Long> folderIds, int status)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _dlAppService.getFoldersFileEntriesCount(repositoryId,
 			folderIds, status);
@@ -1389,8 +1383,8 @@ public class DLAppServiceWrapper implements DLAppService,
 
 	@Override
 	public java.util.List<com.liferay.portal.kernel.repository.model.FileEntry> getGroupFileEntries(
-		long groupId, long userId, long rootFolderId,
-		java.lang.String[] mimeTypes, int status, int start, int end,
+		long groupId, long userId, long rootFolderId, String[] mimeTypes,
+		int status, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.kernel.repository.model.FileEntry> obc)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _dlAppService.getGroupFileEntries(groupId, userId, rootFolderId,
@@ -1437,7 +1431,7 @@ public class DLAppServiceWrapper implements DLAppService,
 
 	@Override
 	public int getGroupFileEntriesCount(long groupId, long userId,
-		long rootFolderId, java.lang.String[] mimeTypes, int status)
+		long rootFolderId, String[] mimeTypes, int status)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _dlAppService.getGroupFileEntriesCount(groupId, userId,
 			rootFolderId, mimeTypes, status);
@@ -1544,13 +1538,13 @@ public class DLAppServiceWrapper implements DLAppService,
 	* @return the OSGi service identifier
 	*/
 	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
+	public String getOSGiServiceIdentifier() {
 		return _dlAppService.getOSGiServiceIdentifier();
 	}
 
 	@Override
 	public void getSubfolderIds(long repositoryId,
-		java.util.List<java.lang.Long> folderIds, long folderId)
+		java.util.List<Long> folderIds, long folderId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_dlAppService.getSubfolderIds(repositoryId, folderIds, folderId);
 	}
@@ -1563,8 +1557,7 @@ public class DLAppServiceWrapper implements DLAppService,
 	* @return the descendant folders of the folder with the primary key
 	*/
 	@Override
-	public java.util.List<java.lang.Long> getSubfolderIds(long repositoryId,
-		long folderId)
+	public java.util.List<Long> getSubfolderIds(long repositoryId, long folderId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _dlAppService.getSubfolderIds(repositoryId, folderId);
 	}
@@ -1579,7 +1572,7 @@ public class DLAppServiceWrapper implements DLAppService,
 	* @return the descendant folders of the folder with the primary key
 	*/
 	@Override
-	public java.util.List<java.lang.Long> getSubfolderIds(long repositoryId,
+	public java.util.List<Long> getSubfolderIds(long repositoryId,
 		long folderId, boolean recurse)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _dlAppService.getSubfolderIds(repositoryId, folderId, recurse);
@@ -1597,8 +1590,8 @@ public class DLAppServiceWrapper implements DLAppService,
 	* @see TempFileEntryUtil
 	*/
 	@Override
-	public java.lang.String[] getTempFileNames(long groupId, long folderId,
-		java.lang.String folderName)
+	public String[] getTempFileNames(long groupId, long folderId,
+		String folderName)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _dlAppService.getTempFileNames(groupId, folderId, folderName);
 	}
@@ -1632,8 +1625,7 @@ public class DLAppServiceWrapper implements DLAppService,
 	*/
 	@Override
 	public com.liferay.portal.kernel.lock.Lock lockFolder(long repositoryId,
-		long folderId, java.lang.String owner, boolean inheritable,
-		long expirationTime)
+		long folderId, String owner, boolean inheritable, long expirationTime)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _dlAppService.lockFolder(repositoryId, folderId, owner,
 			inheritable, expirationTime);
@@ -1685,7 +1677,7 @@ public class DLAppServiceWrapper implements DLAppService,
 	*/
 	@Override
 	public com.liferay.portal.kernel.lock.Lock refreshFileEntryLock(
-		java.lang.String lockUuid, long companyId, long expirationTime)
+		String lockUuid, long companyId, long expirationTime)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _dlAppService.refreshFileEntryLock(lockUuid, companyId,
 			expirationTime);
@@ -1704,7 +1696,7 @@ public class DLAppServiceWrapper implements DLAppService,
 	*/
 	@Override
 	public com.liferay.portal.kernel.lock.Lock refreshFolderLock(
-		java.lang.String lockUuid, long companyId, long expirationTime)
+		String lockUuid, long companyId, long expirationTime)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _dlAppService.refreshFolderLock(lockUuid, companyId,
 			expirationTime);
@@ -1719,7 +1711,7 @@ public class DLAppServiceWrapper implements DLAppService,
 	* @param serviceContext the service context to be applied
 	*/
 	@Override
-	public void revertFileEntry(long fileEntryId, java.lang.String version,
+	public void revertFileEntry(long fileEntryId, String version,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_dlAppService.revertFileEntry(fileEntryId, version, serviceContext);
@@ -1735,8 +1727,8 @@ public class DLAppServiceWrapper implements DLAppService,
 
 	@Override
 	public com.liferay.portal.kernel.search.Hits search(long repositoryId,
-		long creatorUserId, long folderId, java.lang.String[] mimeTypes,
-		int status, int start, int end)
+		long creatorUserId, long folderId, String[] mimeTypes, int status,
+		int start, int end)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _dlAppService.search(repositoryId, creatorUserId, folderId,
 			mimeTypes, status, start, end);
@@ -1791,8 +1783,7 @@ public class DLAppServiceWrapper implements DLAppService,
 	* @param lockUuid the lock's UUID
 	*/
 	@Override
-	public void unlockFolder(long repositoryId, long folderId,
-		java.lang.String lockUuid)
+	public void unlockFolder(long repositoryId, long folderId, String lockUuid)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_dlAppService.unlockFolder(repositoryId, folderId, lockUuid);
 	}
@@ -1807,7 +1798,7 @@ public class DLAppServiceWrapper implements DLAppService,
 	*/
 	@Override
 	public void unlockFolder(long repositoryId, long parentFolderId,
-		java.lang.String name, java.lang.String lockUuid)
+		String name, String lockUuid)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_dlAppService.unlockFolder(repositoryId, parentFolderId, name, lockUuid);
 	}
@@ -1873,10 +1864,9 @@ public class DLAppServiceWrapper implements DLAppService,
 	*/
 	@Override
 	public com.liferay.portal.kernel.repository.model.FileEntry updateFileEntry(
-		long fileEntryId, java.lang.String sourceFileName,
-		java.lang.String mimeType, java.lang.String title,
-		java.lang.String description, java.lang.String changeLog,
-		boolean majorVersion, byte[] bytes,
+		long fileEntryId, String sourceFileName, String mimeType, String title,
+		String description, String changeLog, boolean majorVersion,
+		byte[] bytes,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _dlAppService.updateFileEntry(fileEntryId, sourceFileName,
@@ -1919,10 +1909,9 @@ public class DLAppServiceWrapper implements DLAppService,
 	*/
 	@Override
 	public com.liferay.portal.kernel.repository.model.FileEntry updateFileEntry(
-		long fileEntryId, java.lang.String sourceFileName,
-		java.lang.String mimeType, java.lang.String title,
-		java.lang.String description, java.lang.String changeLog,
-		boolean majorVersion, java.io.File file,
+		long fileEntryId, String sourceFileName, String mimeType, String title,
+		String description, String changeLog, boolean majorVersion,
+		java.io.File file,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _dlAppService.updateFileEntry(fileEntryId, sourceFileName,
@@ -1966,10 +1955,9 @@ public class DLAppServiceWrapper implements DLAppService,
 	*/
 	@Override
 	public com.liferay.portal.kernel.repository.model.FileEntry updateFileEntry(
-		long fileEntryId, java.lang.String sourceFileName,
-		java.lang.String mimeType, java.lang.String title,
-		java.lang.String description, java.lang.String changeLog,
-		boolean majorVersion, java.io.InputStream is, long size,
+		long fileEntryId, String sourceFileName, String mimeType, String title,
+		String description, String changeLog, boolean majorVersion,
+		java.io.InputStream is, long size,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _dlAppService.updateFileEntry(fileEntryId, sourceFileName,
@@ -1979,10 +1967,9 @@ public class DLAppServiceWrapper implements DLAppService,
 
 	@Override
 	public com.liferay.portal.kernel.repository.model.FileEntry updateFileEntryAndCheckIn(
-		long fileEntryId, java.lang.String sourceFileName,
-		java.lang.String mimeType, java.lang.String title,
-		java.lang.String description, java.lang.String changeLog,
-		boolean majorVersion, java.io.File file,
+		long fileEntryId, String sourceFileName, String mimeType, String title,
+		String description, String changeLog, boolean majorVersion,
+		java.io.File file,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _dlAppService.updateFileEntryAndCheckIn(fileEntryId,
@@ -1992,10 +1979,9 @@ public class DLAppServiceWrapper implements DLAppService,
 
 	@Override
 	public com.liferay.portal.kernel.repository.model.FileEntry updateFileEntryAndCheckIn(
-		long fileEntryId, java.lang.String sourceFileName,
-		java.lang.String mimeType, java.lang.String title,
-		java.lang.String description, java.lang.String changeLog,
-		boolean majorVersion, java.io.InputStream is, long size,
+		long fileEntryId, String sourceFileName, String mimeType, String title,
+		String description, String changeLog, boolean majorVersion,
+		java.io.InputStream is, long size,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _dlAppService.updateFileEntryAndCheckIn(fileEntryId,
@@ -2046,7 +2032,7 @@ public class DLAppServiceWrapper implements DLAppService,
 	*/
 	@Override
 	public com.liferay.portal.kernel.repository.model.Folder updateFolder(
-		long folderId, java.lang.String name, java.lang.String description,
+		long folderId, String name, String description,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _dlAppService.updateFolder(folderId, name, description,
@@ -2065,7 +2051,7 @@ public class DLAppServiceWrapper implements DLAppService,
 	*/
 	@Override
 	public boolean verifyFileEntryCheckOut(long repositoryId, long fileEntryId,
-		java.lang.String lockUuid)
+		String lockUuid)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _dlAppService.verifyFileEntryCheckOut(repositoryId, fileEntryId,
 			lockUuid);
@@ -2073,7 +2059,7 @@ public class DLAppServiceWrapper implements DLAppService,
 
 	@Override
 	public boolean verifyFileEntryLock(long repositoryId, long fileEntryId,
-		java.lang.String lockUuid)
+		String lockUuid)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _dlAppService.verifyFileEntryLock(repositoryId, fileEntryId,
 			lockUuid);
@@ -2091,7 +2077,7 @@ public class DLAppServiceWrapper implements DLAppService,
 	*/
 	@Override
 	public boolean verifyInheritableLock(long repositoryId, long folderId,
-		java.lang.String lockUuid)
+		String lockUuid)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _dlAppService.verifyInheritableLock(repositoryId, folderId,
 			lockUuid);

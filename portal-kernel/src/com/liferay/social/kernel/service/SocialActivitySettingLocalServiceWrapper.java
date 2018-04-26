@@ -59,7 +59,7 @@ public class SocialActivitySettingLocalServiceWrapper
 	}
 
 	@Override
-	public void deleteActivitySetting(long groupId, java.lang.String className,
+	public void deleteActivitySetting(long groupId, String className,
 		long classPK) {
 		_socialActivitySettingLocalService.deleteActivitySetting(groupId,
 			className, classPK);
@@ -205,14 +205,14 @@ public class SocialActivitySettingLocalServiceWrapper
 
 	@Override
 	public com.liferay.social.kernel.model.SocialActivityDefinition getActivityDefinition(
-		long groupId, java.lang.String className, int activityType) {
+		long groupId, String className, int activityType) {
 		return _socialActivitySettingLocalService.getActivityDefinition(groupId,
 			className, activityType);
 	}
 
 	@Override
 	public java.util.List<com.liferay.social.kernel.model.SocialActivityDefinition> getActivityDefinitions(
-		long groupId, java.lang.String className) {
+		long groupId, String className) {
 		return _socialActivitySettingLocalService.getActivityDefinitions(groupId,
 			className);
 	}
@@ -234,7 +234,7 @@ public class SocialActivitySettingLocalServiceWrapper
 	* @return the OSGi service identifier
 	*/
 	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
+	public String getOSGiServiceIdentifier() {
 		return _socialActivitySettingLocalService.getOSGiServiceIdentifier();
 	}
 
@@ -299,7 +299,7 @@ public class SocialActivitySettingLocalServiceWrapper
 	}
 
 	@Override
-	public void updateActivitySetting(long groupId, java.lang.String className,
+	public void updateActivitySetting(long groupId, String className,
 		boolean enabled)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_socialActivitySettingLocalService.updateActivitySetting(groupId,
@@ -307,7 +307,7 @@ public class SocialActivitySettingLocalServiceWrapper
 	}
 
 	@Override
-	public void updateActivitySetting(long groupId, java.lang.String className,
+	public void updateActivitySetting(long groupId, String className,
 		int activityType,
 		com.liferay.social.kernel.model.SocialActivityCounterDefinition activityCounterDefinition)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -316,7 +316,7 @@ public class SocialActivitySettingLocalServiceWrapper
 	}
 
 	@Override
-	public void updateActivitySetting(long groupId, java.lang.String className,
+	public void updateActivitySetting(long groupId, String className,
 		long classPK, boolean enabled)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_socialActivitySettingLocalService.updateActivitySetting(groupId,
@@ -324,8 +324,8 @@ public class SocialActivitySettingLocalServiceWrapper
 	}
 
 	@Override
-	public void updateActivitySettings(long groupId,
-		java.lang.String className, int activityType,
+	public void updateActivitySettings(long groupId, String className,
+		int activityType,
 		java.util.List<com.liferay.social.kernel.model.SocialActivityCounterDefinition> activityCounterDefinitions)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_socialActivitySettingLocalService.updateActivitySettings(groupId,

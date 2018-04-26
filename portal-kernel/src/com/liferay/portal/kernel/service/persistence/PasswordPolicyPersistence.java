@@ -45,7 +45,7 @@ public interface PasswordPolicyPersistence extends BasePersistence<PasswordPolic
 	* @param uuid the uuid
 	* @return the matching password policies
 	*/
-	public java.util.List<PasswordPolicy> findByUuid(java.lang.String uuid);
+	public java.util.List<PasswordPolicy> findByUuid(String uuid);
 
 	/**
 	* Returns a range of all the password policies where uuid = &#63;.
@@ -59,8 +59,8 @@ public interface PasswordPolicyPersistence extends BasePersistence<PasswordPolic
 	* @param end the upper bound of the range of password policies (not inclusive)
 	* @return the range of matching password policies
 	*/
-	public java.util.List<PasswordPolicy> findByUuid(java.lang.String uuid,
-		int start, int end);
+	public java.util.List<PasswordPolicy> findByUuid(String uuid, int start,
+		int end);
 
 	/**
 	* Returns an ordered range of all the password policies where uuid = &#63;.
@@ -75,8 +75,8 @@ public interface PasswordPolicyPersistence extends BasePersistence<PasswordPolic
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching password policies
 	*/
-	public java.util.List<PasswordPolicy> findByUuid(java.lang.String uuid,
-		int start, int end,
+	public java.util.List<PasswordPolicy> findByUuid(String uuid, int start,
+		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<PasswordPolicy> orderByComparator);
 
 	/**
@@ -93,8 +93,8 @@ public interface PasswordPolicyPersistence extends BasePersistence<PasswordPolic
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching password policies
 	*/
-	public java.util.List<PasswordPolicy> findByUuid(java.lang.String uuid,
-		int start, int end,
+	public java.util.List<PasswordPolicy> findByUuid(String uuid, int start,
+		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<PasswordPolicy> orderByComparator,
 		boolean retrieveFromCache);
 
@@ -106,7 +106,7 @@ public interface PasswordPolicyPersistence extends BasePersistence<PasswordPolic
 	* @return the first matching password policy
 	* @throws NoSuchPasswordPolicyException if a matching password policy could not be found
 	*/
-	public PasswordPolicy findByUuid_First(java.lang.String uuid,
+	public PasswordPolicy findByUuid_First(String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<PasswordPolicy> orderByComparator)
 		throws NoSuchPasswordPolicyException;
 
@@ -117,7 +117,7 @@ public interface PasswordPolicyPersistence extends BasePersistence<PasswordPolic
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching password policy, or <code>null</code> if a matching password policy could not be found
 	*/
-	public PasswordPolicy fetchByUuid_First(java.lang.String uuid,
+	public PasswordPolicy fetchByUuid_First(String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<PasswordPolicy> orderByComparator);
 
 	/**
@@ -128,7 +128,7 @@ public interface PasswordPolicyPersistence extends BasePersistence<PasswordPolic
 	* @return the last matching password policy
 	* @throws NoSuchPasswordPolicyException if a matching password policy could not be found
 	*/
-	public PasswordPolicy findByUuid_Last(java.lang.String uuid,
+	public PasswordPolicy findByUuid_Last(String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<PasswordPolicy> orderByComparator)
 		throws NoSuchPasswordPolicyException;
 
@@ -139,7 +139,7 @@ public interface PasswordPolicyPersistence extends BasePersistence<PasswordPolic
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching password policy, or <code>null</code> if a matching password policy could not be found
 	*/
-	public PasswordPolicy fetchByUuid_Last(java.lang.String uuid,
+	public PasswordPolicy fetchByUuid_Last(String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<PasswordPolicy> orderByComparator);
 
 	/**
@@ -152,7 +152,7 @@ public interface PasswordPolicyPersistence extends BasePersistence<PasswordPolic
 	* @throws NoSuchPasswordPolicyException if a password policy with the primary key could not be found
 	*/
 	public PasswordPolicy[] findByUuid_PrevAndNext(long passwordPolicyId,
-		java.lang.String uuid,
+		String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<PasswordPolicy> orderByComparator)
 		throws NoSuchPasswordPolicyException;
 
@@ -162,8 +162,7 @@ public interface PasswordPolicyPersistence extends BasePersistence<PasswordPolic
 	* @param uuid the uuid
 	* @return the matching password policies that the user has permission to view
 	*/
-	public java.util.List<PasswordPolicy> filterFindByUuid(
-		java.lang.String uuid);
+	public java.util.List<PasswordPolicy> filterFindByUuid(String uuid);
 
 	/**
 	* Returns a range of all the password policies that the user has permission to view where uuid = &#63;.
@@ -177,8 +176,8 @@ public interface PasswordPolicyPersistence extends BasePersistence<PasswordPolic
 	* @param end the upper bound of the range of password policies (not inclusive)
 	* @return the range of matching password policies that the user has permission to view
 	*/
-	public java.util.List<PasswordPolicy> filterFindByUuid(
-		java.lang.String uuid, int start, int end);
+	public java.util.List<PasswordPolicy> filterFindByUuid(String uuid,
+		int start, int end);
 
 	/**
 	* Returns an ordered range of all the password policies that the user has permissions to view where uuid = &#63;.
@@ -193,8 +192,8 @@ public interface PasswordPolicyPersistence extends BasePersistence<PasswordPolic
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching password policies that the user has permission to view
 	*/
-	public java.util.List<PasswordPolicy> filterFindByUuid(
-		java.lang.String uuid, int start, int end,
+	public java.util.List<PasswordPolicy> filterFindByUuid(String uuid,
+		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<PasswordPolicy> orderByComparator);
 
 	/**
@@ -207,7 +206,7 @@ public interface PasswordPolicyPersistence extends BasePersistence<PasswordPolic
 	* @throws NoSuchPasswordPolicyException if a password policy with the primary key could not be found
 	*/
 	public PasswordPolicy[] filterFindByUuid_PrevAndNext(
-		long passwordPolicyId, java.lang.String uuid,
+		long passwordPolicyId, String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<PasswordPolicy> orderByComparator)
 		throws NoSuchPasswordPolicyException;
 
@@ -216,7 +215,7 @@ public interface PasswordPolicyPersistence extends BasePersistence<PasswordPolic
 	*
 	* @param uuid the uuid
 	*/
-	public void removeByUuid(java.lang.String uuid);
+	public void removeByUuid(String uuid);
 
 	/**
 	* Returns the number of password policies where uuid = &#63;.
@@ -224,7 +223,7 @@ public interface PasswordPolicyPersistence extends BasePersistence<PasswordPolic
 	* @param uuid the uuid
 	* @return the number of matching password policies
 	*/
-	public int countByUuid(java.lang.String uuid);
+	public int countByUuid(String uuid);
 
 	/**
 	* Returns the number of password policies that the user has permission to view where uuid = &#63;.
@@ -232,7 +231,7 @@ public interface PasswordPolicyPersistence extends BasePersistence<PasswordPolic
 	* @param uuid the uuid
 	* @return the number of matching password policies that the user has permission to view
 	*/
-	public int filterCountByUuid(java.lang.String uuid);
+	public int filterCountByUuid(String uuid);
 
 	/**
 	* Returns all the password policies where uuid = &#63; and companyId = &#63;.
@@ -241,7 +240,7 @@ public interface PasswordPolicyPersistence extends BasePersistence<PasswordPolic
 	* @param companyId the company ID
 	* @return the matching password policies
 	*/
-	public java.util.List<PasswordPolicy> findByUuid_C(java.lang.String uuid,
+	public java.util.List<PasswordPolicy> findByUuid_C(String uuid,
 		long companyId);
 
 	/**
@@ -257,7 +256,7 @@ public interface PasswordPolicyPersistence extends BasePersistence<PasswordPolic
 	* @param end the upper bound of the range of password policies (not inclusive)
 	* @return the range of matching password policies
 	*/
-	public java.util.List<PasswordPolicy> findByUuid_C(java.lang.String uuid,
+	public java.util.List<PasswordPolicy> findByUuid_C(String uuid,
 		long companyId, int start, int end);
 
 	/**
@@ -274,7 +273,7 @@ public interface PasswordPolicyPersistence extends BasePersistence<PasswordPolic
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching password policies
 	*/
-	public java.util.List<PasswordPolicy> findByUuid_C(java.lang.String uuid,
+	public java.util.List<PasswordPolicy> findByUuid_C(String uuid,
 		long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<PasswordPolicy> orderByComparator);
 
@@ -293,7 +292,7 @@ public interface PasswordPolicyPersistence extends BasePersistence<PasswordPolic
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching password policies
 	*/
-	public java.util.List<PasswordPolicy> findByUuid_C(java.lang.String uuid,
+	public java.util.List<PasswordPolicy> findByUuid_C(String uuid,
 		long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<PasswordPolicy> orderByComparator,
 		boolean retrieveFromCache);
@@ -307,8 +306,7 @@ public interface PasswordPolicyPersistence extends BasePersistence<PasswordPolic
 	* @return the first matching password policy
 	* @throws NoSuchPasswordPolicyException if a matching password policy could not be found
 	*/
-	public PasswordPolicy findByUuid_C_First(java.lang.String uuid,
-		long companyId,
+	public PasswordPolicy findByUuid_C_First(String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<PasswordPolicy> orderByComparator)
 		throws NoSuchPasswordPolicyException;
 
@@ -320,8 +318,7 @@ public interface PasswordPolicyPersistence extends BasePersistence<PasswordPolic
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching password policy, or <code>null</code> if a matching password policy could not be found
 	*/
-	public PasswordPolicy fetchByUuid_C_First(java.lang.String uuid,
-		long companyId,
+	public PasswordPolicy fetchByUuid_C_First(String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<PasswordPolicy> orderByComparator);
 
 	/**
@@ -333,8 +330,7 @@ public interface PasswordPolicyPersistence extends BasePersistence<PasswordPolic
 	* @return the last matching password policy
 	* @throws NoSuchPasswordPolicyException if a matching password policy could not be found
 	*/
-	public PasswordPolicy findByUuid_C_Last(java.lang.String uuid,
-		long companyId,
+	public PasswordPolicy findByUuid_C_Last(String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<PasswordPolicy> orderByComparator)
 		throws NoSuchPasswordPolicyException;
 
@@ -346,8 +342,7 @@ public interface PasswordPolicyPersistence extends BasePersistence<PasswordPolic
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching password policy, or <code>null</code> if a matching password policy could not be found
 	*/
-	public PasswordPolicy fetchByUuid_C_Last(java.lang.String uuid,
-		long companyId,
+	public PasswordPolicy fetchByUuid_C_Last(String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<PasswordPolicy> orderByComparator);
 
 	/**
@@ -361,7 +356,7 @@ public interface PasswordPolicyPersistence extends BasePersistence<PasswordPolic
 	* @throws NoSuchPasswordPolicyException if a password policy with the primary key could not be found
 	*/
 	public PasswordPolicy[] findByUuid_C_PrevAndNext(long passwordPolicyId,
-		java.lang.String uuid, long companyId,
+		String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<PasswordPolicy> orderByComparator)
 		throws NoSuchPasswordPolicyException;
 
@@ -372,8 +367,8 @@ public interface PasswordPolicyPersistence extends BasePersistence<PasswordPolic
 	* @param companyId the company ID
 	* @return the matching password policies that the user has permission to view
 	*/
-	public java.util.List<PasswordPolicy> filterFindByUuid_C(
-		java.lang.String uuid, long companyId);
+	public java.util.List<PasswordPolicy> filterFindByUuid_C(String uuid,
+		long companyId);
 
 	/**
 	* Returns a range of all the password policies that the user has permission to view where uuid = &#63; and companyId = &#63;.
@@ -388,8 +383,8 @@ public interface PasswordPolicyPersistence extends BasePersistence<PasswordPolic
 	* @param end the upper bound of the range of password policies (not inclusive)
 	* @return the range of matching password policies that the user has permission to view
 	*/
-	public java.util.List<PasswordPolicy> filterFindByUuid_C(
-		java.lang.String uuid, long companyId, int start, int end);
+	public java.util.List<PasswordPolicy> filterFindByUuid_C(String uuid,
+		long companyId, int start, int end);
 
 	/**
 	* Returns an ordered range of all the password policies that the user has permissions to view where uuid = &#63; and companyId = &#63;.
@@ -405,8 +400,8 @@ public interface PasswordPolicyPersistence extends BasePersistence<PasswordPolic
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching password policies that the user has permission to view
 	*/
-	public java.util.List<PasswordPolicy> filterFindByUuid_C(
-		java.lang.String uuid, long companyId, int start, int end,
+	public java.util.List<PasswordPolicy> filterFindByUuid_C(String uuid,
+		long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<PasswordPolicy> orderByComparator);
 
 	/**
@@ -420,7 +415,7 @@ public interface PasswordPolicyPersistence extends BasePersistence<PasswordPolic
 	* @throws NoSuchPasswordPolicyException if a password policy with the primary key could not be found
 	*/
 	public PasswordPolicy[] filterFindByUuid_C_PrevAndNext(
-		long passwordPolicyId, java.lang.String uuid, long companyId,
+		long passwordPolicyId, String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<PasswordPolicy> orderByComparator)
 		throws NoSuchPasswordPolicyException;
 
@@ -430,7 +425,7 @@ public interface PasswordPolicyPersistence extends BasePersistence<PasswordPolic
 	* @param uuid the uuid
 	* @param companyId the company ID
 	*/
-	public void removeByUuid_C(java.lang.String uuid, long companyId);
+	public void removeByUuid_C(String uuid, long companyId);
 
 	/**
 	* Returns the number of password policies where uuid = &#63; and companyId = &#63;.
@@ -439,7 +434,7 @@ public interface PasswordPolicyPersistence extends BasePersistence<PasswordPolic
 	* @param companyId the company ID
 	* @return the number of matching password policies
 	*/
-	public int countByUuid_C(java.lang.String uuid, long companyId);
+	public int countByUuid_C(String uuid, long companyId);
 
 	/**
 	* Returns the number of password policies that the user has permission to view where uuid = &#63; and companyId = &#63;.
@@ -448,7 +443,7 @@ public interface PasswordPolicyPersistence extends BasePersistence<PasswordPolic
 	* @param companyId the company ID
 	* @return the number of matching password policies that the user has permission to view
 	*/
-	public int filterCountByUuid_C(java.lang.String uuid, long companyId);
+	public int filterCountByUuid_C(String uuid, long companyId);
 
 	/**
 	* Returns all the password policies where companyId = &#63;.
@@ -702,7 +697,7 @@ public interface PasswordPolicyPersistence extends BasePersistence<PasswordPolic
 	* @return the matching password policy
 	* @throws NoSuchPasswordPolicyException if a matching password policy could not be found
 	*/
-	public PasswordPolicy findByC_N(long companyId, java.lang.String name)
+	public PasswordPolicy findByC_N(long companyId, String name)
 		throws NoSuchPasswordPolicyException;
 
 	/**
@@ -712,7 +707,7 @@ public interface PasswordPolicyPersistence extends BasePersistence<PasswordPolic
 	* @param name the name
 	* @return the matching password policy, or <code>null</code> if a matching password policy could not be found
 	*/
-	public PasswordPolicy fetchByC_N(long companyId, java.lang.String name);
+	public PasswordPolicy fetchByC_N(long companyId, String name);
 
 	/**
 	* Returns the password policy where companyId = &#63; and name = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -722,7 +717,7 @@ public interface PasswordPolicyPersistence extends BasePersistence<PasswordPolic
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching password policy, or <code>null</code> if a matching password policy could not be found
 	*/
-	public PasswordPolicy fetchByC_N(long companyId, java.lang.String name,
+	public PasswordPolicy fetchByC_N(long companyId, String name,
 		boolean retrieveFromCache);
 
 	/**
@@ -732,7 +727,7 @@ public interface PasswordPolicyPersistence extends BasePersistence<PasswordPolic
 	* @param name the name
 	* @return the password policy that was removed
 	*/
-	public PasswordPolicy removeByC_N(long companyId, java.lang.String name)
+	public PasswordPolicy removeByC_N(long companyId, String name)
 		throws NoSuchPasswordPolicyException;
 
 	/**
@@ -742,7 +737,7 @@ public interface PasswordPolicyPersistence extends BasePersistence<PasswordPolic
 	* @param name the name
 	* @return the number of matching password policies
 	*/
-	public int countByC_N(long companyId, java.lang.String name);
+	public int countByC_N(long companyId, String name);
 
 	/**
 	* Caches the password policy in the entity cache if it is enabled.
@@ -865,5 +860,5 @@ public interface PasswordPolicyPersistence extends BasePersistence<PasswordPolic
 	public int countAll();
 
 	@Override
-	public java.util.Set<java.lang.String> getBadColumnNames();
+	public java.util.Set<String> getBadColumnNames();
 }

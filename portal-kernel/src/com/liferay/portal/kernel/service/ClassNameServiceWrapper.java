@@ -38,7 +38,7 @@ public class ClassNameServiceWrapper implements ClassNameService,
 
 	@Override
 	public com.liferay.portal.kernel.model.ClassName fetchClassName(
-		java.lang.String value) {
+		String value) {
 		return _classNameService.fetchClassName(value);
 	}
 
@@ -48,7 +48,7 @@ public class ClassNameServiceWrapper implements ClassNameService,
 	* @return the OSGi service identifier
 	*/
 	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
+	public String getOSGiServiceIdentifier() {
 		return _classNameService.getOSGiServiceIdentifier();
 	}
 

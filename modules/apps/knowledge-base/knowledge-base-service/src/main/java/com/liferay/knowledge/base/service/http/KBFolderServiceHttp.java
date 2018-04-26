@@ -58,7 +58,7 @@ public class KBFolderServiceHttp {
 	public static com.liferay.knowledge.base.model.KBFolder addKBFolder(
 		HttpPrincipal httpPrincipal, long groupId,
 		long parentResourceClassNameId, long parentResourcePrimKey,
-		java.lang.String name, java.lang.String description,
+		String name, String description,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -224,7 +224,7 @@ public class KBFolderServiceHttp {
 
 	public static com.liferay.knowledge.base.model.KBFolder fetchKBFolderByUrlTitle(
 		HttpPrincipal httpPrincipal, long groupId, long parentKbFolderId,
-		java.lang.String urlTitle)
+		String urlTitle)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(KBFolderServiceUtil.class,
@@ -290,7 +290,7 @@ public class KBFolderServiceHttp {
 
 	public static com.liferay.knowledge.base.model.KBFolder getKBFolderByUrlTitle(
 		HttpPrincipal httpPrincipal, long groupId, long parentKbFolderId,
-		java.lang.String urlTitle)
+		String urlTitle)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(KBFolderServiceUtil.class,
@@ -355,7 +355,7 @@ public class KBFolderServiceHttp {
 		}
 	}
 
-	public static java.util.List<java.lang.Object> getKBFoldersAndKBArticles(
+	public static java.util.List<Object> getKBFoldersAndKBArticles(
 		HttpPrincipal httpPrincipal, long groupId, long parentResourcePrimKey,
 		int status, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<?> orderByComparator) {
@@ -376,7 +376,7 @@ public class KBFolderServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (java.util.List<java.lang.Object>)returnObj;
+			return (java.util.List<Object>)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -476,8 +476,8 @@ public class KBFolderServiceHttp {
 
 	public static com.liferay.knowledge.base.model.KBFolder updateKBFolder(
 		HttpPrincipal httpPrincipal, long parentResourceClassNameId,
-		long parentResourcePrimKey, long kbFolderId, java.lang.String name,
-		java.lang.String description)
+		long parentResourcePrimKey, long kbFolderId, String name,
+		String description)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(KBFolderServiceUtil.class,
@@ -511,8 +511,8 @@ public class KBFolderServiceHttp {
 
 	public static com.liferay.knowledge.base.model.KBFolder updateKBFolder(
 		HttpPrincipal httpPrincipal, long parentResourceClassNameId,
-		long parentResourcePrimKey, long kbFolderId, java.lang.String name,
-		java.lang.String description,
+		long parentResourcePrimKey, long kbFolderId, String name,
+		String description,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -547,8 +547,7 @@ public class KBFolderServiceHttp {
 
 	private static Log _log = LogFactoryUtil.getLog(KBFolderServiceHttp.class);
 	private static final Class<?>[] _addKBFolderParameterTypes0 = new Class[] {
-			long.class, long.class, long.class, java.lang.String.class,
-			java.lang.String.class,
+			long.class, long.class, long.class, String.class, String.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _deleteKBFolderParameterTypes1 = new Class[] {
@@ -565,13 +564,13 @@ public class KBFolderServiceHttp {
 			long.class
 		};
 	private static final Class<?>[] _fetchKBFolderByUrlTitleParameterTypes5 = new Class[] {
-			long.class, long.class, java.lang.String.class
+			long.class, long.class, String.class
 		};
 	private static final Class<?>[] _getKBFolderParameterTypes6 = new Class[] {
 			long.class
 		};
 	private static final Class<?>[] _getKBFolderByUrlTitleParameterTypes7 = new Class[] {
-			long.class, long.class, java.lang.String.class
+			long.class, long.class, String.class
 		};
 	private static final Class<?>[] _getKBFoldersParameterTypes8 = new Class[] {
 			long.class, long.class, int.class, int.class
@@ -589,12 +588,10 @@ public class KBFolderServiceHttp {
 			long.class, long.class
 		};
 	private static final Class<?>[] _updateKBFolderParameterTypes13 = new Class[] {
-			long.class, long.class, long.class, java.lang.String.class,
-			java.lang.String.class
+			long.class, long.class, long.class, String.class, String.class
 		};
 	private static final Class<?>[] _updateKBFolderParameterTypes14 = new Class[] {
-			long.class, long.class, long.class, java.lang.String.class,
-			java.lang.String.class,
+			long.class, long.class, long.class, String.class, String.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 }

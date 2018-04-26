@@ -55,7 +55,7 @@ import com.liferay.portal.kernel.util.MethodKey;
 @ProviderType
 public class MembershipRequestServiceHttp {
 	public static com.liferay.portal.kernel.model.MembershipRequest addMembershipRequest(
-		HttpPrincipal httpPrincipal, long groupId, java.lang.String comments,
+		HttpPrincipal httpPrincipal, long groupId, String comments,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -149,8 +149,7 @@ public class MembershipRequestServiceHttp {
 	}
 
 	public static void updateStatus(HttpPrincipal httpPrincipal,
-		long membershipRequestId, java.lang.String reviewComments,
-		long statusId,
+		long membershipRequestId, String reviewComments, long statusId,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -181,7 +180,7 @@ public class MembershipRequestServiceHttp {
 
 	private static Log _log = LogFactoryUtil.getLog(MembershipRequestServiceHttp.class);
 	private static final Class<?>[] _addMembershipRequestParameterTypes0 = new Class[] {
-			long.class, java.lang.String.class,
+			long.class, String.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _deleteMembershipRequestsParameterTypes1 = new Class[] {
@@ -191,7 +190,7 @@ public class MembershipRequestServiceHttp {
 			long.class
 		};
 	private static final Class<?>[] _updateStatusParameterTypes3 = new Class[] {
-			long.class, java.lang.String.class, long.class,
+			long.class, String.class, long.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 }

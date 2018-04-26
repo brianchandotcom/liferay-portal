@@ -85,9 +85,8 @@ public interface CompanyLocalService extends BaseLocalService,
 	* @param active whether the company is active
 	* @return the company
 	*/
-	public Company addCompany(java.lang.String webId,
-		java.lang.String virtualHostname, java.lang.String mx, boolean system,
-		int maxUsers, boolean active) throws PortalException;
+	public Company addCompany(String webId, String virtualHostname, String mx,
+		boolean system, int maxUsers, boolean active) throws PortalException;
 
 	/**
 	* Returns the company with the web domain.
@@ -98,8 +97,7 @@ public interface CompanyLocalService extends BaseLocalService,
 	* @param webId the company's web domain
 	* @return the company with the web domain
 	*/
-	public Company checkCompany(java.lang.String webId)
-		throws PortalException;
+	public Company checkCompany(String webId) throws PortalException;
 
 	/**
 	* Returns the company with the web domain and mail domain. If no such
@@ -115,7 +113,7 @@ public interface CompanyLocalService extends BaseLocalService,
 	@Transactional(isolation = Isolation.PORTAL, rollbackFor =  {
 		PortalException.class, SystemException.class}
 	)
-	public Company checkCompany(java.lang.String webId, java.lang.String mx)
+	public Company checkCompany(String webId, String mx)
 		throws PortalException;
 
 	/**
@@ -250,7 +248,7 @@ public interface CompanyLocalService extends BaseLocalService,
 	company with the virtual host could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Company fetchCompanyByVirtualHost(java.lang.String virtualHostname);
+	public Company fetchCompanyByVirtualHost(String virtualHostname);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
@@ -343,8 +341,7 @@ public interface CompanyLocalService extends BaseLocalService,
 	* @return the company with the mail domain
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Company getCompanyByMx(java.lang.String mx)
-		throws PortalException;
+	public Company getCompanyByMx(String mx) throws PortalException;
 
 	/**
 	* Returns the company with the virtual host name.
@@ -353,7 +350,7 @@ public interface CompanyLocalService extends BaseLocalService,
 	* @return the company with the virtual host name
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Company getCompanyByVirtualHost(java.lang.String virtualHostname)
+	public Company getCompanyByVirtualHost(String virtualHostname)
 		throws PortalException;
 
 	/**
@@ -363,8 +360,7 @@ public interface CompanyLocalService extends BaseLocalService,
 	* @return the company with the web domain
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Company getCompanyByWebId(java.lang.String webId)
-		throws PortalException;
+	public Company getCompanyByWebId(String webId) throws PortalException;
 
 	/**
 	* Returns the user's company.
@@ -376,7 +372,7 @@ public interface CompanyLocalService extends BaseLocalService,
 	* @throws Exception if a user with the primary key could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public long getCompanyIdByUserId(long userId) throws java.lang.Exception;
+	public long getCompanyIdByUserId(long userId) throws Exception;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
@@ -386,7 +382,7 @@ public interface CompanyLocalService extends BaseLocalService,
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -403,7 +399,7 @@ public interface CompanyLocalService extends BaseLocalService,
 	* @param companyId the primary key of the company
 	* @param keys the company's preferences keys to be remove
 	*/
-	public void removePreferences(long companyId, java.lang.String[] keys);
+	public void removePreferences(long companyId, String[] keys);
 
 	/**
 	* Returns an ordered range of all assets that match the keywords in the
@@ -423,8 +419,8 @@ public interface CompanyLocalService extends BaseLocalService,
 	* @return the matching assets in the company
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Hits search(long companyId, long userId, java.lang.String keywords,
-		int start, int end);
+	public Hits search(long companyId, long userId, String keywords, int start,
+		int end);
 
 	/**
 	* Returns an ordered range of all assets that match the keywords in the
@@ -445,9 +441,8 @@ public interface CompanyLocalService extends BaseLocalService,
 	* @return the matching assets in the portlet within the company
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Hits search(long companyId, long userId, java.lang.String portletId,
-		long groupId, java.lang.String type, java.lang.String keywords,
-		int start, int end);
+	public Hits search(long companyId, long userId, String portletId,
+		long groupId, String type, String keywords, int start, int end);
 
 	/**
 	* Updates the company in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
@@ -469,9 +464,8 @@ public interface CompanyLocalService extends BaseLocalService,
 	* @param active whether the company is active
 	* @return the company with the primary key
 	*/
-	public Company updateCompany(long companyId,
-		java.lang.String virtualHostname, java.lang.String mx, int maxUsers,
-		boolean active) throws PortalException;
+	public Company updateCompany(long companyId, String virtualHostname,
+		String mx, int maxUsers, boolean active) throws PortalException;
 
 	/**
 	* Update the company with additional account information.
@@ -499,13 +493,10 @@ public interface CompanyLocalService extends BaseLocalService,
 	* @param size the company's account size (optionally <code>null</code>)
 	* @return the company with the primary key
 	*/
-	public Company updateCompany(long companyId,
-		java.lang.String virtualHostname, java.lang.String mx,
-		java.lang.String homeURL, boolean logo, byte[] logoBytes,
-		java.lang.String name, java.lang.String legalName,
-		java.lang.String legalId, java.lang.String legalType,
-		java.lang.String sicCode, java.lang.String tickerSymbol,
-		java.lang.String industry, java.lang.String type, java.lang.String size)
+	public Company updateCompany(long companyId, String virtualHostname,
+		String mx, String homeURL, boolean logo, byte[] logoBytes, String name,
+		String legalName, String legalId, String legalType, String sicCode,
+		String tickerSymbol, String industry, String type, String size)
 		throws PortalException;
 
 	/**
@@ -537,14 +528,11 @@ public interface CompanyLocalService extends BaseLocalService,
 	String, String, boolean, byte[], String, String, String,
 	String, String, String, String, String, String)}
 	*/
-	@java.lang.Deprecated
-	public Company updateCompany(long companyId,
-		java.lang.String virtualHostname, java.lang.String mx,
-		java.lang.String homeURL, java.lang.String name,
-		java.lang.String legalName, java.lang.String legalId,
-		java.lang.String legalType, java.lang.String sicCode,
-		java.lang.String tickerSymbol, java.lang.String industry,
-		java.lang.String type, java.lang.String size) throws PortalException;
+	@Deprecated
+	public Company updateCompany(long companyId, String virtualHostname,
+		String mx, String homeURL, String name, String legalName,
+		String legalId, String legalType, String sicCode, String tickerSymbol,
+		String industry, String type, String size) throws PortalException;
 
 	/**
 	* Update the company's display.
@@ -553,8 +541,8 @@ public interface CompanyLocalService extends BaseLocalService,
 	* @param languageId the ID of the company's default user's language
 	* @param timeZoneId the ID of the company's default user's time zone
 	*/
-	public void updateDisplay(long companyId, java.lang.String languageId,
-		java.lang.String timeZoneId) throws PortalException;
+	public void updateDisplay(long companyId, String languageId,
+		String timeZoneId) throws PortalException;
 
 	@Async
 	public void updateDisplayGroupNames(long companyId)
@@ -618,7 +606,7 @@ public interface CompanyLocalService extends BaseLocalService,
 	* @param siteLogo whether to allow site administrators to use their own
 	logo instead of the enterprise logo
 	*/
-	public void updateSecurity(long companyId, java.lang.String authType,
+	public void updateSecurity(long companyId, String authType,
 		boolean autoLogin, boolean sendPassword, boolean strangers,
 		boolean strangersWithMx, boolean strangersVerify, boolean siteLogo);
 }

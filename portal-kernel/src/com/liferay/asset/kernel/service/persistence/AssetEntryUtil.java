@@ -910,7 +910,7 @@ public class AssetEntryUtil {
 	* @param layoutUuid the layout uuid
 	* @return the matching asset entries
 	*/
-	public static List<AssetEntry> findByLayoutUuid(java.lang.String layoutUuid) {
+	public static List<AssetEntry> findByLayoutUuid(String layoutUuid) {
 		return getPersistence().findByLayoutUuid(layoutUuid);
 	}
 
@@ -926,8 +926,8 @@ public class AssetEntryUtil {
 	* @param end the upper bound of the range of asset entries (not inclusive)
 	* @return the range of matching asset entries
 	*/
-	public static List<AssetEntry> findByLayoutUuid(
-		java.lang.String layoutUuid, int start, int end) {
+	public static List<AssetEntry> findByLayoutUuid(String layoutUuid,
+		int start, int end) {
 		return getPersistence().findByLayoutUuid(layoutUuid, start, end);
 	}
 
@@ -944,9 +944,8 @@ public class AssetEntryUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching asset entries
 	*/
-	public static List<AssetEntry> findByLayoutUuid(
-		java.lang.String layoutUuid, int start, int end,
-		OrderByComparator<AssetEntry> orderByComparator) {
+	public static List<AssetEntry> findByLayoutUuid(String layoutUuid,
+		int start, int end, OrderByComparator<AssetEntry> orderByComparator) {
 		return getPersistence()
 				   .findByLayoutUuid(layoutUuid, start, end, orderByComparator);
 	}
@@ -965,9 +964,8 @@ public class AssetEntryUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching asset entries
 	*/
-	public static List<AssetEntry> findByLayoutUuid(
-		java.lang.String layoutUuid, int start, int end,
-		OrderByComparator<AssetEntry> orderByComparator,
+	public static List<AssetEntry> findByLayoutUuid(String layoutUuid,
+		int start, int end, OrderByComparator<AssetEntry> orderByComparator,
 		boolean retrieveFromCache) {
 		return getPersistence()
 				   .findByLayoutUuid(layoutUuid, start, end, orderByComparator,
@@ -982,8 +980,7 @@ public class AssetEntryUtil {
 	* @return the first matching asset entry
 	* @throws NoSuchEntryException if a matching asset entry could not be found
 	*/
-	public static AssetEntry findByLayoutUuid_First(
-		java.lang.String layoutUuid,
+	public static AssetEntry findByLayoutUuid_First(String layoutUuid,
 		OrderByComparator<AssetEntry> orderByComparator)
 		throws com.liferay.asset.kernel.exception.NoSuchEntryException {
 		return getPersistence()
@@ -997,8 +994,7 @@ public class AssetEntryUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching asset entry, or <code>null</code> if a matching asset entry could not be found
 	*/
-	public static AssetEntry fetchByLayoutUuid_First(
-		java.lang.String layoutUuid,
+	public static AssetEntry fetchByLayoutUuid_First(String layoutUuid,
 		OrderByComparator<AssetEntry> orderByComparator) {
 		return getPersistence()
 				   .fetchByLayoutUuid_First(layoutUuid, orderByComparator);
@@ -1012,8 +1008,7 @@ public class AssetEntryUtil {
 	* @return the last matching asset entry
 	* @throws NoSuchEntryException if a matching asset entry could not be found
 	*/
-	public static AssetEntry findByLayoutUuid_Last(
-		java.lang.String layoutUuid,
+	public static AssetEntry findByLayoutUuid_Last(String layoutUuid,
 		OrderByComparator<AssetEntry> orderByComparator)
 		throws com.liferay.asset.kernel.exception.NoSuchEntryException {
 		return getPersistence()
@@ -1027,8 +1022,7 @@ public class AssetEntryUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching asset entry, or <code>null</code> if a matching asset entry could not be found
 	*/
-	public static AssetEntry fetchByLayoutUuid_Last(
-		java.lang.String layoutUuid,
+	public static AssetEntry fetchByLayoutUuid_Last(String layoutUuid,
 		OrderByComparator<AssetEntry> orderByComparator) {
 		return getPersistence()
 				   .fetchByLayoutUuid_Last(layoutUuid, orderByComparator);
@@ -1044,8 +1038,7 @@ public class AssetEntryUtil {
 	* @throws NoSuchEntryException if a asset entry with the primary key could not be found
 	*/
 	public static AssetEntry[] findByLayoutUuid_PrevAndNext(long entryId,
-		java.lang.String layoutUuid,
-		OrderByComparator<AssetEntry> orderByComparator)
+		String layoutUuid, OrderByComparator<AssetEntry> orderByComparator)
 		throws com.liferay.asset.kernel.exception.NoSuchEntryException {
 		return getPersistence()
 				   .findByLayoutUuid_PrevAndNext(entryId, layoutUuid,
@@ -1057,7 +1050,7 @@ public class AssetEntryUtil {
 	*
 	* @param layoutUuid the layout uuid
 	*/
-	public static void removeByLayoutUuid(java.lang.String layoutUuid) {
+	public static void removeByLayoutUuid(String layoutUuid) {
 		getPersistence().removeByLayoutUuid(layoutUuid);
 	}
 
@@ -1067,7 +1060,7 @@ public class AssetEntryUtil {
 	* @param layoutUuid the layout uuid
 	* @return the number of matching asset entries
 	*/
-	public static int countByLayoutUuid(java.lang.String layoutUuid) {
+	public static int countByLayoutUuid(String layoutUuid) {
 		return getPersistence().countByLayoutUuid(layoutUuid);
 	}
 
@@ -1079,7 +1072,7 @@ public class AssetEntryUtil {
 	* @return the matching asset entry
 	* @throws NoSuchEntryException if a matching asset entry could not be found
 	*/
-	public static AssetEntry findByG_CU(long groupId, java.lang.String classUuid)
+	public static AssetEntry findByG_CU(long groupId, String classUuid)
 		throws com.liferay.asset.kernel.exception.NoSuchEntryException {
 		return getPersistence().findByG_CU(groupId, classUuid);
 	}
@@ -1091,8 +1084,7 @@ public class AssetEntryUtil {
 	* @param classUuid the class uuid
 	* @return the matching asset entry, or <code>null</code> if a matching asset entry could not be found
 	*/
-	public static AssetEntry fetchByG_CU(long groupId,
-		java.lang.String classUuid) {
+	public static AssetEntry fetchByG_CU(long groupId, String classUuid) {
 		return getPersistence().fetchByG_CU(groupId, classUuid);
 	}
 
@@ -1104,8 +1096,8 @@ public class AssetEntryUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching asset entry, or <code>null</code> if a matching asset entry could not be found
 	*/
-	public static AssetEntry fetchByG_CU(long groupId,
-		java.lang.String classUuid, boolean retrieveFromCache) {
+	public static AssetEntry fetchByG_CU(long groupId, String classUuid,
+		boolean retrieveFromCache) {
 		return getPersistence()
 				   .fetchByG_CU(groupId, classUuid, retrieveFromCache);
 	}
@@ -1117,8 +1109,7 @@ public class AssetEntryUtil {
 	* @param classUuid the class uuid
 	* @return the asset entry that was removed
 	*/
-	public static AssetEntry removeByG_CU(long groupId,
-		java.lang.String classUuid)
+	public static AssetEntry removeByG_CU(long groupId, String classUuid)
 		throws com.liferay.asset.kernel.exception.NoSuchEntryException {
 		return getPersistence().removeByG_CU(groupId, classUuid);
 	}
@@ -1130,7 +1121,7 @@ public class AssetEntryUtil {
 	* @param classUuid the class uuid
 	* @return the number of matching asset entries
 	*/
-	public static int countByG_CU(long groupId, java.lang.String classUuid) {
+	public static int countByG_CU(long groupId, String classUuid) {
 		return getPersistence().countByG_CU(groupId, classUuid);
 	}
 

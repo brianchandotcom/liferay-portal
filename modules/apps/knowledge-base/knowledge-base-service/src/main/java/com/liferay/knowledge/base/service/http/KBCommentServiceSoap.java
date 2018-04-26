@@ -160,8 +160,8 @@ public class KBCommentServiceSoap {
 	}
 
 	public static com.liferay.knowledge.base.model.KBCommentSoap[] getKBComments(
-		long groupId, java.lang.String className, long classPK, int status,
-		int start, int end) throws RemoteException {
+		long groupId, String className, long classPK, int status, int start,
+		int end) throws RemoteException {
 		try {
 			java.util.List<com.liferay.knowledge.base.model.KBComment> returnValue =
 				KBCommentServiceUtil.getKBComments(groupId, className, classPK,
@@ -177,8 +177,8 @@ public class KBCommentServiceSoap {
 	}
 
 	public static com.liferay.knowledge.base.model.KBCommentSoap[] getKBComments(
-		long groupId, java.lang.String className, long classPK, int status,
-		int start, int end,
+		long groupId, String className, long classPK, int status, int start,
+		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.knowledge.base.model.KBComment> obc)
 		throws RemoteException {
 		try {
@@ -196,8 +196,7 @@ public class KBCommentServiceSoap {
 	}
 
 	public static com.liferay.knowledge.base.model.KBCommentSoap[] getKBComments(
-		long groupId, java.lang.String className, long classPK, int start,
-		int end,
+		long groupId, String className, long classPK, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.knowledge.base.model.KBComment> obc)
 		throws RemoteException {
 		try {
@@ -243,8 +242,8 @@ public class KBCommentServiceSoap {
 		}
 	}
 
-	public static int getKBCommentsCount(long groupId,
-		java.lang.String className, long classPK) throws RemoteException {
+	public static int getKBCommentsCount(long groupId, String className,
+		long classPK) throws RemoteException {
 		try {
 			int returnValue = KBCommentServiceUtil.getKBCommentsCount(groupId,
 					className, classPK);
@@ -258,9 +257,8 @@ public class KBCommentServiceSoap {
 		}
 	}
 
-	public static int getKBCommentsCount(long groupId,
-		java.lang.String className, long classPK, int status)
-		throws RemoteException {
+	public static int getKBCommentsCount(long groupId, String className,
+		long classPK, int status) throws RemoteException {
 		try {
 			int returnValue = KBCommentServiceUtil.getKBCommentsCount(groupId,
 					className, classPK, status);
@@ -275,8 +273,8 @@ public class KBCommentServiceSoap {
 	}
 
 	public static com.liferay.knowledge.base.model.KBCommentSoap updateKBComment(
-		long kbCommentId, long classNameId, long classPK,
-		java.lang.String content, int status,
+		long kbCommentId, long classNameId, long classPK, String content,
+		int status,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
@@ -293,8 +291,7 @@ public class KBCommentServiceSoap {
 	}
 
 	public static com.liferay.knowledge.base.model.KBCommentSoap updateKBComment(
-		long kbCommentId, long classNameId, long classPK,
-		java.lang.String content,
+		long kbCommentId, long classNameId, long classPK, String content,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {

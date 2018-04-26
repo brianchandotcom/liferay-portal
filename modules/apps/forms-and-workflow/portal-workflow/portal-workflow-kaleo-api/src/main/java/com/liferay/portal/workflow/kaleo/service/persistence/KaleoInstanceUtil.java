@@ -820,7 +820,7 @@ public class KaleoInstanceUtil {
 	* @param classPK the class pk
 	* @return the matching kaleo instances
 	*/
-	public static List<KaleoInstance> findByCN_CPK(java.lang.String className,
+	public static List<KaleoInstance> findByCN_CPK(String className,
 		long classPK) {
 		return getPersistence().findByCN_CPK(className, classPK);
 	}
@@ -838,7 +838,7 @@ public class KaleoInstanceUtil {
 	* @param end the upper bound of the range of kaleo instances (not inclusive)
 	* @return the range of matching kaleo instances
 	*/
-	public static List<KaleoInstance> findByCN_CPK(java.lang.String className,
+	public static List<KaleoInstance> findByCN_CPK(String className,
 		long classPK, int start, int end) {
 		return getPersistence().findByCN_CPK(className, classPK, start, end);
 	}
@@ -857,7 +857,7 @@ public class KaleoInstanceUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching kaleo instances
 	*/
-	public static List<KaleoInstance> findByCN_CPK(java.lang.String className,
+	public static List<KaleoInstance> findByCN_CPK(String className,
 		long classPK, int start, int end,
 		OrderByComparator<KaleoInstance> orderByComparator) {
 		return getPersistence()
@@ -880,7 +880,7 @@ public class KaleoInstanceUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching kaleo instances
 	*/
-	public static List<KaleoInstance> findByCN_CPK(java.lang.String className,
+	public static List<KaleoInstance> findByCN_CPK(String className,
 		long classPK, int start, int end,
 		OrderByComparator<KaleoInstance> orderByComparator,
 		boolean retrieveFromCache) {
@@ -898,7 +898,7 @@ public class KaleoInstanceUtil {
 	* @return the first matching kaleo instance
 	* @throws NoSuchInstanceException if a matching kaleo instance could not be found
 	*/
-	public static KaleoInstance findByCN_CPK_First(java.lang.String className,
+	public static KaleoInstance findByCN_CPK_First(String className,
 		long classPK, OrderByComparator<KaleoInstance> orderByComparator)
 		throws com.liferay.portal.workflow.kaleo.exception.NoSuchInstanceException {
 		return getPersistence()
@@ -913,9 +913,8 @@ public class KaleoInstanceUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching kaleo instance, or <code>null</code> if a matching kaleo instance could not be found
 	*/
-	public static KaleoInstance fetchByCN_CPK_First(
-		java.lang.String className, long classPK,
-		OrderByComparator<KaleoInstance> orderByComparator) {
+	public static KaleoInstance fetchByCN_CPK_First(String className,
+		long classPK, OrderByComparator<KaleoInstance> orderByComparator) {
 		return getPersistence()
 				   .fetchByCN_CPK_First(className, classPK, orderByComparator);
 	}
@@ -929,7 +928,7 @@ public class KaleoInstanceUtil {
 	* @return the last matching kaleo instance
 	* @throws NoSuchInstanceException if a matching kaleo instance could not be found
 	*/
-	public static KaleoInstance findByCN_CPK_Last(java.lang.String className,
+	public static KaleoInstance findByCN_CPK_Last(String className,
 		long classPK, OrderByComparator<KaleoInstance> orderByComparator)
 		throws com.liferay.portal.workflow.kaleo.exception.NoSuchInstanceException {
 		return getPersistence()
@@ -944,7 +943,7 @@ public class KaleoInstanceUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching kaleo instance, or <code>null</code> if a matching kaleo instance could not be found
 	*/
-	public static KaleoInstance fetchByCN_CPK_Last(java.lang.String className,
+	public static KaleoInstance fetchByCN_CPK_Last(String className,
 		long classPK, OrderByComparator<KaleoInstance> orderByComparator) {
 		return getPersistence()
 				   .fetchByCN_CPK_Last(className, classPK, orderByComparator);
@@ -961,7 +960,7 @@ public class KaleoInstanceUtil {
 	* @throws NoSuchInstanceException if a kaleo instance with the primary key could not be found
 	*/
 	public static KaleoInstance[] findByCN_CPK_PrevAndNext(
-		long kaleoInstanceId, java.lang.String className, long classPK,
+		long kaleoInstanceId, String className, long classPK,
 		OrderByComparator<KaleoInstance> orderByComparator)
 		throws com.liferay.portal.workflow.kaleo.exception.NoSuchInstanceException {
 		return getPersistence()
@@ -975,7 +974,7 @@ public class KaleoInstanceUtil {
 	* @param className the class name
 	* @param classPK the class pk
 	*/
-	public static void removeByCN_CPK(java.lang.String className, long classPK) {
+	public static void removeByCN_CPK(String className, long classPK) {
 		getPersistence().removeByCN_CPK(className, classPK);
 	}
 
@@ -986,7 +985,7 @@ public class KaleoInstanceUtil {
 	* @param classPK the class pk
 	* @return the number of matching kaleo instances
 	*/
-	public static int countByCN_CPK(java.lang.String className, long classPK) {
+	public static int countByCN_CPK(String className, long classPK) {
 		return getPersistence().countByCN_CPK(className, classPK);
 	}
 
@@ -1000,7 +999,7 @@ public class KaleoInstanceUtil {
 	* @return the matching kaleo instances
 	*/
 	public static List<KaleoInstance> findByC_KDN_KDV_CD(long companyId,
-		java.lang.String kaleoDefinitionName, int kaleoDefinitionVersion,
+		String kaleoDefinitionName, int kaleoDefinitionVersion,
 		Date completionDate) {
 		return getPersistence()
 				   .findByC_KDN_KDV_CD(companyId, kaleoDefinitionName,
@@ -1023,7 +1022,7 @@ public class KaleoInstanceUtil {
 	* @return the range of matching kaleo instances
 	*/
 	public static List<KaleoInstance> findByC_KDN_KDV_CD(long companyId,
-		java.lang.String kaleoDefinitionName, int kaleoDefinitionVersion,
+		String kaleoDefinitionName, int kaleoDefinitionVersion,
 		Date completionDate, int start, int end) {
 		return getPersistence()
 				   .findByC_KDN_KDV_CD(companyId, kaleoDefinitionName,
@@ -1047,7 +1046,7 @@ public class KaleoInstanceUtil {
 	* @return the ordered range of matching kaleo instances
 	*/
 	public static List<KaleoInstance> findByC_KDN_KDV_CD(long companyId,
-		java.lang.String kaleoDefinitionName, int kaleoDefinitionVersion,
+		String kaleoDefinitionName, int kaleoDefinitionVersion,
 		Date completionDate, int start, int end,
 		OrderByComparator<KaleoInstance> orderByComparator) {
 		return getPersistence()
@@ -1074,7 +1073,7 @@ public class KaleoInstanceUtil {
 	* @return the ordered range of matching kaleo instances
 	*/
 	public static List<KaleoInstance> findByC_KDN_KDV_CD(long companyId,
-		java.lang.String kaleoDefinitionName, int kaleoDefinitionVersion,
+		String kaleoDefinitionName, int kaleoDefinitionVersion,
 		Date completionDate, int start, int end,
 		OrderByComparator<KaleoInstance> orderByComparator,
 		boolean retrieveFromCache) {
@@ -1096,7 +1095,7 @@ public class KaleoInstanceUtil {
 	* @throws NoSuchInstanceException if a matching kaleo instance could not be found
 	*/
 	public static KaleoInstance findByC_KDN_KDV_CD_First(long companyId,
-		java.lang.String kaleoDefinitionName, int kaleoDefinitionVersion,
+		String kaleoDefinitionName, int kaleoDefinitionVersion,
 		Date completionDate, OrderByComparator<KaleoInstance> orderByComparator)
 		throws com.liferay.portal.workflow.kaleo.exception.NoSuchInstanceException {
 		return getPersistence()
@@ -1115,7 +1114,7 @@ public class KaleoInstanceUtil {
 	* @return the first matching kaleo instance, or <code>null</code> if a matching kaleo instance could not be found
 	*/
 	public static KaleoInstance fetchByC_KDN_KDV_CD_First(long companyId,
-		java.lang.String kaleoDefinitionName, int kaleoDefinitionVersion,
+		String kaleoDefinitionName, int kaleoDefinitionVersion,
 		Date completionDate, OrderByComparator<KaleoInstance> orderByComparator) {
 		return getPersistence()
 				   .fetchByC_KDN_KDV_CD_First(companyId, kaleoDefinitionName,
@@ -1134,7 +1133,7 @@ public class KaleoInstanceUtil {
 	* @throws NoSuchInstanceException if a matching kaleo instance could not be found
 	*/
 	public static KaleoInstance findByC_KDN_KDV_CD_Last(long companyId,
-		java.lang.String kaleoDefinitionName, int kaleoDefinitionVersion,
+		String kaleoDefinitionName, int kaleoDefinitionVersion,
 		Date completionDate, OrderByComparator<KaleoInstance> orderByComparator)
 		throws com.liferay.portal.workflow.kaleo.exception.NoSuchInstanceException {
 		return getPersistence()
@@ -1153,7 +1152,7 @@ public class KaleoInstanceUtil {
 	* @return the last matching kaleo instance, or <code>null</code> if a matching kaleo instance could not be found
 	*/
 	public static KaleoInstance fetchByC_KDN_KDV_CD_Last(long companyId,
-		java.lang.String kaleoDefinitionName, int kaleoDefinitionVersion,
+		String kaleoDefinitionName, int kaleoDefinitionVersion,
 		Date completionDate, OrderByComparator<KaleoInstance> orderByComparator) {
 		return getPersistence()
 				   .fetchByC_KDN_KDV_CD_Last(companyId, kaleoDefinitionName,
@@ -1173,9 +1172,9 @@ public class KaleoInstanceUtil {
 	* @throws NoSuchInstanceException if a kaleo instance with the primary key could not be found
 	*/
 	public static KaleoInstance[] findByC_KDN_KDV_CD_PrevAndNext(
-		long kaleoInstanceId, long companyId,
-		java.lang.String kaleoDefinitionName, int kaleoDefinitionVersion,
-		Date completionDate, OrderByComparator<KaleoInstance> orderByComparator)
+		long kaleoInstanceId, long companyId, String kaleoDefinitionName,
+		int kaleoDefinitionVersion, Date completionDate,
+		OrderByComparator<KaleoInstance> orderByComparator)
 		throws com.liferay.portal.workflow.kaleo.exception.NoSuchInstanceException {
 		return getPersistence()
 				   .findByC_KDN_KDV_CD_PrevAndNext(kaleoInstanceId, companyId,
@@ -1192,7 +1191,7 @@ public class KaleoInstanceUtil {
 	* @param completionDate the completion date
 	*/
 	public static void removeByC_KDN_KDV_CD(long companyId,
-		java.lang.String kaleoDefinitionName, int kaleoDefinitionVersion,
+		String kaleoDefinitionName, int kaleoDefinitionVersion,
 		Date completionDate) {
 		getPersistence()
 			.removeByC_KDN_KDV_CD(companyId, kaleoDefinitionName,
@@ -1209,7 +1208,7 @@ public class KaleoInstanceUtil {
 	* @return the number of matching kaleo instances
 	*/
 	public static int countByC_KDN_KDV_CD(long companyId,
-		java.lang.String kaleoDefinitionName, int kaleoDefinitionVersion,
+		String kaleoDefinitionName, int kaleoDefinitionVersion,
 		Date completionDate) {
 		return getPersistence()
 				   .countByC_KDN_KDV_CD(companyId, kaleoDefinitionName,

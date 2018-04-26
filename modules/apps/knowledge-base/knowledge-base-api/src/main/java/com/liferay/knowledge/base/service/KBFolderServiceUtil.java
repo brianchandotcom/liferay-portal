@@ -44,8 +44,7 @@ public class KBFolderServiceUtil {
 	 */
 	public static com.liferay.knowledge.base.model.KBFolder addKBFolder(
 		long groupId, long parentResourceClassNameId,
-		long parentResourcePrimKey, java.lang.String name,
-		java.lang.String description,
+		long parentResourcePrimKey, String name, String description,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
@@ -79,7 +78,7 @@ public class KBFolderServiceUtil {
 	}
 
 	public static com.liferay.knowledge.base.model.KBFolder fetchKBFolderByUrlTitle(
-		long groupId, long parentKbFolderId, java.lang.String urlTitle)
+		long groupId, long parentKbFolderId, String urlTitle)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .fetchKBFolderByUrlTitle(groupId, parentKbFolderId, urlTitle);
@@ -92,7 +91,7 @@ public class KBFolderServiceUtil {
 	}
 
 	public static com.liferay.knowledge.base.model.KBFolder getKBFolderByUrlTitle(
-		long groupId, long parentKbFolderId, java.lang.String urlTitle)
+		long groupId, long parentKbFolderId, String urlTitle)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .getKBFolderByUrlTitle(groupId, parentKbFolderId, urlTitle);
@@ -104,7 +103,7 @@ public class KBFolderServiceUtil {
 		return getService().getKBFolders(groupId, parentKBFolderId, start, end);
 	}
 
-	public static java.util.List<java.lang.Object> getKBFoldersAndKBArticles(
+	public static java.util.List<Object> getKBFoldersAndKBArticles(
 		long groupId, long parentResourcePrimKey, int status, int start,
 		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<?> orderByComparator) {
@@ -130,7 +129,7 @@ public class KBFolderServiceUtil {
 	*
 	* @return the OSGi service identifier
 	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
+	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 
@@ -146,7 +145,7 @@ public class KBFolderServiceUtil {
 	@Deprecated
 	public static com.liferay.knowledge.base.model.KBFolder updateKBFolder(
 		long parentResourceClassNameId, long parentResourcePrimKey,
-		long kbFolderId, java.lang.String name, java.lang.String description)
+		long kbFolderId, String name, String description)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .updateKBFolder(parentResourceClassNameId,
@@ -155,7 +154,7 @@ public class KBFolderServiceUtil {
 
 	public static com.liferay.knowledge.base.model.KBFolder updateKBFolder(
 		long parentResourceClassNameId, long parentResourcePrimKey,
-		long kbFolderId, java.lang.String name, java.lang.String description,
+		long kbFolderId, String name, String description,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()

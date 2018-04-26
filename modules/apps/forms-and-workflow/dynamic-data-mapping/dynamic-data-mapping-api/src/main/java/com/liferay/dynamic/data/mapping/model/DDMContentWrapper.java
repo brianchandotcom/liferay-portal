@@ -144,7 +144,7 @@ public class DDMContentWrapper implements DDMContent, ModelWrapper<DDMContent> {
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new DDMContentWrapper((DDMContent)_ddmContent.clone());
 	}
 
@@ -154,7 +154,7 @@ public class DDMContentWrapper implements DDMContent, ModelWrapper<DDMContent> {
 	}
 
 	@Override
-	public java.lang.String[] getAvailableLanguageIds() {
+	public String[] getAvailableLanguageIds() {
 		return _ddmContent.getAvailableLanguageIds();
 	}
 
@@ -194,12 +194,12 @@ public class DDMContentWrapper implements DDMContent, ModelWrapper<DDMContent> {
 	* @return the data of this ddm content
 	*/
 	@Override
-	public java.lang.String getData() {
+	public String getData() {
 		return _ddmContent.getData();
 	}
 
 	@Override
-	public java.lang.String getDefaultLanguageId() {
+	public String getDefaultLanguageId() {
 		return _ddmContent.getDefaultLanguageId();
 	}
 
@@ -209,7 +209,7 @@ public class DDMContentWrapper implements DDMContent, ModelWrapper<DDMContent> {
 	* @return the description of this ddm content
 	*/
 	@Override
-	public java.lang.String getDescription() {
+	public String getDescription() {
 		return _ddmContent.getDescription();
 	}
 
@@ -244,7 +244,7 @@ public class DDMContentWrapper implements DDMContent, ModelWrapper<DDMContent> {
 	* @return the name of this ddm content
 	*/
 	@Override
-	public java.lang.String getName() {
+	public String getName() {
 		return _ddmContent.getName();
 	}
 
@@ -255,7 +255,7 @@ public class DDMContentWrapper implements DDMContent, ModelWrapper<DDMContent> {
 	* @return the localized name of this ddm content
 	*/
 	@Override
-	public java.lang.String getName(java.util.Locale locale) {
+	public String getName(java.util.Locale locale) {
 		return _ddmContent.getName(locale);
 	}
 
@@ -267,7 +267,7 @@ public class DDMContentWrapper implements DDMContent, ModelWrapper<DDMContent> {
 	* @return the localized name of this ddm content. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
 	*/
 	@Override
-	public java.lang.String getName(java.util.Locale locale, boolean useDefault) {
+	public String getName(java.util.Locale locale, boolean useDefault) {
 		return _ddmContent.getName(locale, useDefault);
 	}
 
@@ -278,7 +278,7 @@ public class DDMContentWrapper implements DDMContent, ModelWrapper<DDMContent> {
 	* @return the localized name of this ddm content
 	*/
 	@Override
-	public java.lang.String getName(java.lang.String languageId) {
+	public String getName(String languageId) {
 		return _ddmContent.getName(languageId);
 	}
 
@@ -290,18 +290,17 @@ public class DDMContentWrapper implements DDMContent, ModelWrapper<DDMContent> {
 	* @return the localized name of this ddm content
 	*/
 	@Override
-	public java.lang.String getName(java.lang.String languageId,
-		boolean useDefault) {
+	public String getName(String languageId, boolean useDefault) {
 		return _ddmContent.getName(languageId, useDefault);
 	}
 
 	@Override
-	public java.lang.String getNameCurrentLanguageId() {
+	public String getNameCurrentLanguageId() {
 		return _ddmContent.getNameCurrentLanguageId();
 	}
 
 	@Override
-	public java.lang.String getNameCurrentValue() {
+	public String getNameCurrentValue() {
 		return _ddmContent.getNameCurrentValue();
 	}
 
@@ -311,7 +310,7 @@ public class DDMContentWrapper implements DDMContent, ModelWrapper<DDMContent> {
 	* @return the locales and localized names of this ddm content
 	*/
 	@Override
-	public Map<java.util.Locale, java.lang.String> getNameMap() {
+	public Map<java.util.Locale, String> getNameMap() {
 		return _ddmContent.getNameMap();
 	}
 
@@ -346,7 +345,7 @@ public class DDMContentWrapper implements DDMContent, ModelWrapper<DDMContent> {
 	* @return the user name of this ddm content
 	*/
 	@Override
-	public java.lang.String getUserName() {
+	public String getUserName() {
 		return _ddmContent.getUserName();
 	}
 
@@ -356,7 +355,7 @@ public class DDMContentWrapper implements DDMContent, ModelWrapper<DDMContent> {
 	* @return the user uuid of this ddm content
 	*/
 	@Override
-	public java.lang.String getUserUuid() {
+	public String getUserUuid() {
 		return _ddmContent.getUserUuid();
 	}
 
@@ -366,7 +365,7 @@ public class DDMContentWrapper implements DDMContent, ModelWrapper<DDMContent> {
 	* @return the uuid of this ddm content
 	*/
 	@Override
-	public java.lang.String getUuid() {
+	public String getUuid() {
 		return _ddmContent.getUuid();
 	}
 
@@ -449,7 +448,7 @@ public class DDMContentWrapper implements DDMContent, ModelWrapper<DDMContent> {
 	* @param data the data of this ddm content
 	*/
 	@Override
-	public void setData(java.lang.String data) {
+	public void setData(String data) {
 		_ddmContent.setData(data);
 	}
 
@@ -459,7 +458,7 @@ public class DDMContentWrapper implements DDMContent, ModelWrapper<DDMContent> {
 	* @param description the description of this ddm content
 	*/
 	@Override
-	public void setDescription(java.lang.String description) {
+	public void setDescription(String description) {
 		_ddmContent.setDescription(description);
 	}
 
@@ -505,7 +504,7 @@ public class DDMContentWrapper implements DDMContent, ModelWrapper<DDMContent> {
 	* @param name the name of this ddm content
 	*/
 	@Override
-	public void setName(java.lang.String name) {
+	public void setName(String name) {
 		_ddmContent.setName(name);
 	}
 
@@ -516,7 +515,7 @@ public class DDMContentWrapper implements DDMContent, ModelWrapper<DDMContent> {
 	* @param locale the locale of the language
 	*/
 	@Override
-	public void setName(java.lang.String name, java.util.Locale locale) {
+	public void setName(String name, java.util.Locale locale) {
 		_ddmContent.setName(name, locale);
 	}
 
@@ -528,13 +527,13 @@ public class DDMContentWrapper implements DDMContent, ModelWrapper<DDMContent> {
 	* @param defaultLocale the default locale
 	*/
 	@Override
-	public void setName(java.lang.String name, java.util.Locale locale,
+	public void setName(String name, java.util.Locale locale,
 		java.util.Locale defaultLocale) {
 		_ddmContent.setName(name, locale, defaultLocale);
 	}
 
 	@Override
-	public void setNameCurrentLanguageId(java.lang.String languageId) {
+	public void setNameCurrentLanguageId(String languageId) {
 		_ddmContent.setNameCurrentLanguageId(languageId);
 	}
 
@@ -544,7 +543,7 @@ public class DDMContentWrapper implements DDMContent, ModelWrapper<DDMContent> {
 	* @param nameMap the locales and localized names of this ddm content
 	*/
 	@Override
-	public void setNameMap(Map<java.util.Locale, java.lang.String> nameMap) {
+	public void setNameMap(Map<java.util.Locale, String> nameMap) {
 		_ddmContent.setNameMap(nameMap);
 	}
 
@@ -555,7 +554,7 @@ public class DDMContentWrapper implements DDMContent, ModelWrapper<DDMContent> {
 	* @param defaultLocale the default locale
 	*/
 	@Override
-	public void setNameMap(Map<java.util.Locale, java.lang.String> nameMap,
+	public void setNameMap(Map<java.util.Locale, String> nameMap,
 		java.util.Locale defaultLocale) {
 		_ddmContent.setNameMap(nameMap, defaultLocale);
 	}
@@ -596,7 +595,7 @@ public class DDMContentWrapper implements DDMContent, ModelWrapper<DDMContent> {
 	* @param userName the user name of this ddm content
 	*/
 	@Override
-	public void setUserName(java.lang.String userName) {
+	public void setUserName(String userName) {
 		_ddmContent.setUserName(userName);
 	}
 
@@ -606,7 +605,7 @@ public class DDMContentWrapper implements DDMContent, ModelWrapper<DDMContent> {
 	* @param userUuid the user uuid of this ddm content
 	*/
 	@Override
-	public void setUserUuid(java.lang.String userUuid) {
+	public void setUserUuid(String userUuid) {
 		_ddmContent.setUserUuid(userUuid);
 	}
 
@@ -616,7 +615,7 @@ public class DDMContentWrapper implements DDMContent, ModelWrapper<DDMContent> {
 	* @param uuid the uuid of this ddm content
 	*/
 	@Override
-	public void setUuid(java.lang.String uuid) {
+	public void setUuid(String uuid) {
 		_ddmContent.setUuid(uuid);
 	}
 
@@ -631,7 +630,7 @@ public class DDMContentWrapper implements DDMContent, ModelWrapper<DDMContent> {
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _ddmContent.toString();
 	}
 
@@ -641,7 +640,7 @@ public class DDMContentWrapper implements DDMContent, ModelWrapper<DDMContent> {
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _ddmContent.toXmlString();
 	}
 

@@ -73,8 +73,8 @@ public class SocialActivityLocalServiceWrapper
 	*/
 	@Override
 	public void addActivity(long userId, long groupId,
-		java.util.Date createDate, java.lang.String className, long classPK,
-		int type, java.lang.String extraData, long receiverUserId)
+		java.util.Date createDate, String className, long classPK, int type,
+		String extraData, long receiverUserId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_socialActivityLocalService.addActivity(userId, groupId, createDate,
 			className, classPK, type, extraData, receiverUserId);
@@ -93,9 +93,8 @@ public class SocialActivityLocalServiceWrapper
 	* @param receiverUserId the primary key of the receiving user
 	*/
 	@Override
-	public void addActivity(long userId, long groupId,
-		java.lang.String className, long classPK, int type,
-		java.lang.String extraData, long receiverUserId)
+	public void addActivity(long userId, long groupId, String className,
+		long classPK, int type, String extraData, long receiverUserId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_socialActivityLocalService.addActivity(userId, groupId, className,
 			classPK, type, extraData, receiverUserId);
@@ -141,8 +140,8 @@ public class SocialActivityLocalServiceWrapper
 	*/
 	@Override
 	public void addUniqueActivity(long userId, long groupId,
-		java.util.Date createDate, java.lang.String className, long classPK,
-		int type, java.lang.String extraData, long receiverUserId)
+		java.util.Date createDate, String className, long classPK, int type,
+		String extraData, long receiverUserId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_socialActivityLocalService.addUniqueActivity(userId, groupId,
 			createDate, className, classPK, type, extraData, receiverUserId);
@@ -166,9 +165,8 @@ public class SocialActivityLocalServiceWrapper
 	* @param receiverUserId the primary key of the receiving user
 	*/
 	@Override
-	public void addUniqueActivity(long userId, long groupId,
-		java.lang.String className, long classPK, int type,
-		java.lang.String extraData, long receiverUserId)
+	public void addUniqueActivity(long userId, long groupId, String className,
+		long classPK, int type, String extraData, long receiverUserId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_socialActivityLocalService.addUniqueActivity(userId, groupId,
 			className, classPK, type, extraData, receiverUserId);
@@ -211,7 +209,7 @@ public class SocialActivityLocalServiceWrapper
 	* @param classPK the primary key of the target asset
 	*/
 	@Override
-	public void deleteActivities(java.lang.String className, long classPK)
+	public void deleteActivities(String className, long classPK)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_socialActivityLocalService.deleteActivities(className, classPK);
 	}
@@ -378,7 +376,7 @@ public class SocialActivityLocalServiceWrapper
 
 	@Override
 	public com.liferay.social.kernel.model.SocialActivity fetchFirstActivity(
-		java.lang.String className, long classPK, int type) {
+		String className, long classPK, int type) {
 		return _socialActivityLocalService.fetchFirstActivity(className,
 			classPK, type);
 	}
@@ -470,8 +468,8 @@ public class SocialActivityLocalServiceWrapper
 	*/
 	@Override
 	public java.util.List<com.liferay.social.kernel.model.SocialActivity> getActivities(
-		long mirrorActivityId, java.lang.String className, long classPK,
-		int start, int end) {
+		long mirrorActivityId, String className, long classPK, int start,
+		int end) {
 		return _socialActivityLocalService.getActivities(mirrorActivityId,
 			className, classPK, start, end);
 	}
@@ -496,7 +494,7 @@ public class SocialActivityLocalServiceWrapper
 	*/
 	@Override
 	public java.util.List<com.liferay.social.kernel.model.SocialActivity> getActivities(
-		java.lang.String className, int start, int end) {
+		String className, int start, int end) {
 		return _socialActivityLocalService.getActivities(className, start, end);
 	}
 
@@ -514,8 +512,8 @@ public class SocialActivityLocalServiceWrapper
 
 	@Override
 	public int getActivitiesCount(long userId, long groupId,
-		java.util.Date createDate, java.lang.String className, long classPK,
-		int type, long receiverUserId) {
+		java.util.Date createDate, String className, long classPK, int type,
+		long receiverUserId) {
 		return _socialActivityLocalService.getActivitiesCount(userId, groupId,
 			createDate, className, classPK, type, receiverUserId);
 	}
@@ -548,8 +546,8 @@ public class SocialActivityLocalServiceWrapper
 	* @return the number of matching activities
 	*/
 	@Override
-	public int getActivitiesCount(long mirrorActivityId,
-		java.lang.String className, long classPK) {
+	public int getActivitiesCount(long mirrorActivityId, String className,
+		long classPK) {
 		return _socialActivityLocalService.getActivitiesCount(mirrorActivityId,
 			className, classPK);
 	}
@@ -561,7 +559,7 @@ public class SocialActivityLocalServiceWrapper
 	* @return the number of matching activities
 	*/
 	@Override
-	public int getActivitiesCount(java.lang.String className) {
+	public int getActivitiesCount(String className) {
 		return _socialActivityLocalService.getActivitiesCount(className);
 	}
 
@@ -771,7 +769,7 @@ public class SocialActivityLocalServiceWrapper
 	* @return the OSGi service identifier
 	*/
 	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
+	public String getOSGiServiceIdentifier() {
 		return _socialActivityLocalService.getOSGiServiceIdentifier();
 	}
 

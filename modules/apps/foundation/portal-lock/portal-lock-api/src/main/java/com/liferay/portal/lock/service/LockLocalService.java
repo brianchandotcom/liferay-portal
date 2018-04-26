@@ -170,10 +170,10 @@ public interface LockLocalService extends BaseLocalService,
 	public Lock fetchLock(long lockId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Lock fetchLock(java.lang.String className, long key);
+	public Lock fetchLock(String className, long key);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Lock fetchLock(java.lang.String className, java.lang.String key);
+	public Lock fetchLock(String className, String key);
 
 	/**
 	* Returns the lock with the matching UUID and company.
@@ -183,8 +183,7 @@ public interface LockLocalService extends BaseLocalService,
 	* @return the matching lock, or <code>null</code> if a matching lock could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Lock fetchLockByUuidAndCompanyId(java.lang.String uuid,
-		long companyId);
+	public Lock fetchLockByUuidAndCompanyId(String uuid, long companyId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
@@ -203,12 +202,10 @@ public interface LockLocalService extends BaseLocalService,
 	public Lock getLock(long lockId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Lock getLock(java.lang.String className, long key)
-		throws PortalException;
+	public Lock getLock(String className, long key) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Lock getLock(java.lang.String className, java.lang.String key)
-		throws PortalException;
+	public Lock getLock(String className, String key) throws PortalException;
 
 	/**
 	* Returns the lock with the matching UUID and company.
@@ -219,7 +216,7 @@ public interface LockLocalService extends BaseLocalService,
 	* @throws PortalException if a matching lock could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Lock getLockByUuidAndCompanyId(java.lang.String uuid, long companyId)
+	public Lock getLockByUuidAndCompanyId(String uuid, long companyId)
 		throws PortalException;
 
 	/**
@@ -249,7 +246,7 @@ public interface LockLocalService extends BaseLocalService,
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -257,52 +254,47 @@ public interface LockLocalService extends BaseLocalService,
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public boolean hasLock(long userId, java.lang.String className, long key);
+	public boolean hasLock(long userId, String className, long key);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public boolean hasLock(long userId, java.lang.String className,
-		java.lang.String key);
+	public boolean hasLock(long userId, String className, String key);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public boolean isLocked(java.lang.String className, long key);
+	public boolean isLocked(String className, long key);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public boolean isLocked(java.lang.String className, java.lang.String key);
+	public boolean isLocked(String className, String key);
 
-	public Lock lock(long userId, java.lang.String className, long key,
-		java.lang.String owner, boolean inheritable, long expirationTime)
+	public Lock lock(long userId, String className, long key, String owner,
+		boolean inheritable, long expirationTime) throws PortalException;
+
+	public Lock lock(long userId, String className, long key, String owner,
+		boolean inheritable, long expirationTime, boolean renew)
 		throws PortalException;
 
-	public Lock lock(long userId, java.lang.String className, long key,
-		java.lang.String owner, boolean inheritable, long expirationTime,
-		boolean renew) throws PortalException;
+	public Lock lock(long userId, String className, String key, String owner,
+		boolean inheritable, long expirationTime) throws PortalException;
 
-	public Lock lock(long userId, java.lang.String className,
-		java.lang.String key, java.lang.String owner, boolean inheritable,
-		long expirationTime) throws PortalException;
-
-	public Lock lock(long userId, java.lang.String className,
-		java.lang.String key, java.lang.String owner, boolean inheritable,
-		long expirationTime, boolean renew) throws PortalException;
+	public Lock lock(long userId, String className, String key, String owner,
+		boolean inheritable, long expirationTime, boolean renew)
+		throws PortalException;
 
 	@MasterDataSource
-	public Lock lock(java.lang.String className, java.lang.String key,
-		java.lang.String owner);
+	public Lock lock(String className, String key, String owner);
 
 	@MasterDataSource
-	public Lock lock(java.lang.String className, java.lang.String key,
-		java.lang.String expectedOwner, java.lang.String updatedOwner);
+	public Lock lock(String className, String key, String expectedOwner,
+		String updatedOwner);
 
-	public Lock refresh(java.lang.String uuid, long companyId,
-		long expirationTime) throws PortalException;
+	public Lock refresh(String uuid, long companyId, long expirationTime)
+		throws PortalException;
 
-	public void unlock(java.lang.String className, long key);
+	public void unlock(String className, long key);
 
-	public void unlock(java.lang.String className, java.lang.String key);
+	public void unlock(String className, String key);
 
 	@MasterDataSource
-	public void unlock(java.lang.String className, java.lang.String key,
-		java.lang.String owner);
+	public void unlock(String className, String key, String owner);
 
 	/**
 	* Updates the lock in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.

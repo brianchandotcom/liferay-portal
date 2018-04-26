@@ -273,7 +273,7 @@ public class KBArticleWrapper implements KBArticle, ModelWrapper<KBArticle> {
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new KBArticleWrapper((KBArticle)_kbArticle.clone());
 	}
 
@@ -283,7 +283,7 @@ public class KBArticleWrapper implements KBArticle, ModelWrapper<KBArticle> {
 	}
 
 	@Override
-	public java.util.List<java.lang.Long> getAncestorResourcePrimaryKeys()
+	public java.util.List<Long> getAncestorResourcePrimaryKeys()
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _kbArticle.getAncestorResourcePrimaryKeys();
 	}
@@ -326,7 +326,7 @@ public class KBArticleWrapper implements KBArticle, ModelWrapper<KBArticle> {
 	* @return the content of this kb article
 	*/
 	@Override
-	public java.lang.String getContent() {
+	public String getContent() {
 		return _kbArticle.getContent();
 	}
 
@@ -346,7 +346,7 @@ public class KBArticleWrapper implements KBArticle, ModelWrapper<KBArticle> {
 	* @return the description of this kb article
 	*/
 	@Override
-	public java.lang.String getDescription() {
+	public String getDescription() {
 		return _kbArticle.getDescription();
 	}
 
@@ -452,7 +452,7 @@ public class KBArticleWrapper implements KBArticle, ModelWrapper<KBArticle> {
 	}
 
 	@Override
-	public java.lang.String getParentTitle(java.util.Locale locale, int status)
+	public String getParentTitle(java.util.Locale locale, int status)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _kbArticle.getParentTitle(locale, status);
 	}
@@ -508,7 +508,7 @@ public class KBArticleWrapper implements KBArticle, ModelWrapper<KBArticle> {
 	* @return the sections of this kb article
 	*/
 	@Override
-	public java.lang.String getSections() {
+	public String getSections() {
 		return _kbArticle.getSections();
 	}
 
@@ -518,7 +518,7 @@ public class KBArticleWrapper implements KBArticle, ModelWrapper<KBArticle> {
 	* @return the source url of this kb article
 	*/
 	@Override
-	public java.lang.String getSourceURL() {
+	public String getSourceURL() {
 		return _kbArticle.getSourceURL();
 	}
 
@@ -548,7 +548,7 @@ public class KBArticleWrapper implements KBArticle, ModelWrapper<KBArticle> {
 	* @return the status by user name of this kb article
 	*/
 	@Override
-	public java.lang.String getStatusByUserName() {
+	public String getStatusByUserName() {
 		return _kbArticle.getStatusByUserName();
 	}
 
@@ -558,7 +558,7 @@ public class KBArticleWrapper implements KBArticle, ModelWrapper<KBArticle> {
 	* @return the status by user uuid of this kb article
 	*/
 	@Override
-	public java.lang.String getStatusByUserUuid() {
+	public String getStatusByUserUuid() {
 		return _kbArticle.getStatusByUserUuid();
 	}
 
@@ -578,7 +578,7 @@ public class KBArticleWrapper implements KBArticle, ModelWrapper<KBArticle> {
 	* @return the title of this kb article
 	*/
 	@Override
-	public java.lang.String getTitle() {
+	public String getTitle() {
 		return _kbArticle.getTitle();
 	}
 
@@ -588,7 +588,7 @@ public class KBArticleWrapper implements KBArticle, ModelWrapper<KBArticle> {
 	* @return the url title of this kb article
 	*/
 	@Override
-	public java.lang.String getUrlTitle() {
+	public String getUrlTitle() {
 		return _kbArticle.getUrlTitle();
 	}
 
@@ -608,7 +608,7 @@ public class KBArticleWrapper implements KBArticle, ModelWrapper<KBArticle> {
 	* @return the user name of this kb article
 	*/
 	@Override
-	public java.lang.String getUserName() {
+	public String getUserName() {
 		return _kbArticle.getUserName();
 	}
 
@@ -618,7 +618,7 @@ public class KBArticleWrapper implements KBArticle, ModelWrapper<KBArticle> {
 	* @return the user uuid of this kb article
 	*/
 	@Override
-	public java.lang.String getUserUuid() {
+	public String getUserUuid() {
 		return _kbArticle.getUserUuid();
 	}
 
@@ -628,7 +628,7 @@ public class KBArticleWrapper implements KBArticle, ModelWrapper<KBArticle> {
 	* @return the uuid of this kb article
 	*/
 	@Override
-	public java.lang.String getUuid() {
+	public String getUuid() {
 		return _kbArticle.getUuid();
 	}
 
@@ -813,7 +813,7 @@ public class KBArticleWrapper implements KBArticle, ModelWrapper<KBArticle> {
 	* @param content the content of this kb article
 	*/
 	@Override
-	public void setContent(java.lang.String content) {
+	public void setContent(String content) {
 		_kbArticle.setContent(content);
 	}
 
@@ -833,7 +833,7 @@ public class KBArticleWrapper implements KBArticle, ModelWrapper<KBArticle> {
 	* @param description the description of this kb article
 	*/
 	@Override
-	public void setDescription(java.lang.String description) {
+	public void setDescription(String description) {
 		_kbArticle.setDescription(description);
 	}
 
@@ -999,7 +999,7 @@ public class KBArticleWrapper implements KBArticle, ModelWrapper<KBArticle> {
 	* @param sections the sections of this kb article
 	*/
 	@Override
-	public void setSections(java.lang.String sections) {
+	public void setSections(String sections) {
 		_kbArticle.setSections(sections);
 	}
 
@@ -1009,7 +1009,7 @@ public class KBArticleWrapper implements KBArticle, ModelWrapper<KBArticle> {
 	* @param sourceURL the source url of this kb article
 	*/
 	@Override
-	public void setSourceURL(java.lang.String sourceURL) {
+	public void setSourceURL(String sourceURL) {
 		_kbArticle.setSourceURL(sourceURL);
 	}
 
@@ -1039,7 +1039,7 @@ public class KBArticleWrapper implements KBArticle, ModelWrapper<KBArticle> {
 	* @param statusByUserName the status by user name of this kb article
 	*/
 	@Override
-	public void setStatusByUserName(java.lang.String statusByUserName) {
+	public void setStatusByUserName(String statusByUserName) {
 		_kbArticle.setStatusByUserName(statusByUserName);
 	}
 
@@ -1049,7 +1049,7 @@ public class KBArticleWrapper implements KBArticle, ModelWrapper<KBArticle> {
 	* @param statusByUserUuid the status by user uuid of this kb article
 	*/
 	@Override
-	public void setStatusByUserUuid(java.lang.String statusByUserUuid) {
+	public void setStatusByUserUuid(String statusByUserUuid) {
 		_kbArticle.setStatusByUserUuid(statusByUserUuid);
 	}
 
@@ -1069,7 +1069,7 @@ public class KBArticleWrapper implements KBArticle, ModelWrapper<KBArticle> {
 	* @param title the title of this kb article
 	*/
 	@Override
-	public void setTitle(java.lang.String title) {
+	public void setTitle(String title) {
 		_kbArticle.setTitle(title);
 	}
 
@@ -1079,7 +1079,7 @@ public class KBArticleWrapper implements KBArticle, ModelWrapper<KBArticle> {
 	* @param urlTitle the url title of this kb article
 	*/
 	@Override
-	public void setUrlTitle(java.lang.String urlTitle) {
+	public void setUrlTitle(String urlTitle) {
 		_kbArticle.setUrlTitle(urlTitle);
 	}
 
@@ -1099,7 +1099,7 @@ public class KBArticleWrapper implements KBArticle, ModelWrapper<KBArticle> {
 	* @param userName the user name of this kb article
 	*/
 	@Override
-	public void setUserName(java.lang.String userName) {
+	public void setUserName(String userName) {
 		_kbArticle.setUserName(userName);
 	}
 
@@ -1109,7 +1109,7 @@ public class KBArticleWrapper implements KBArticle, ModelWrapper<KBArticle> {
 	* @param userUuid the user uuid of this kb article
 	*/
 	@Override
-	public void setUserUuid(java.lang.String userUuid) {
+	public void setUserUuid(String userUuid) {
 		_kbArticle.setUserUuid(userUuid);
 	}
 
@@ -1119,7 +1119,7 @@ public class KBArticleWrapper implements KBArticle, ModelWrapper<KBArticle> {
 	* @param uuid the uuid of this kb article
 	*/
 	@Override
-	public void setUuid(java.lang.String uuid) {
+	public void setUuid(String uuid) {
 		_kbArticle.setUuid(uuid);
 	}
 
@@ -1154,7 +1154,7 @@ public class KBArticleWrapper implements KBArticle, ModelWrapper<KBArticle> {
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _kbArticle.toString();
 	}
 
@@ -1164,7 +1164,7 @@ public class KBArticleWrapper implements KBArticle, ModelWrapper<KBArticle> {
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _kbArticle.toXmlString();
 	}
 

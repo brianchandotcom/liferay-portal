@@ -56,9 +56,9 @@ import com.liferay.portal.kernel.util.MethodKey;
 @ProviderType
 public class MBMessageServiceHttp {
 	public static com.liferay.message.boards.model.MBMessage addDiscussionMessage(
-		HttpPrincipal httpPrincipal, long groupId, java.lang.String className,
-		long classPK, long threadId, long parentMessageId,
-		java.lang.String subject, java.lang.String body,
+		HttpPrincipal httpPrincipal, long groupId, String className,
+		long classPK, long threadId, long parentMessageId, String subject,
+		String body,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -93,9 +93,8 @@ public class MBMessageServiceHttp {
 
 	public static com.liferay.message.boards.model.MBMessage addMessage(
 		HttpPrincipal httpPrincipal, long groupId, long categoryId,
-		java.lang.String subject, java.lang.String body,
-		java.lang.String format,
-		java.util.List<com.liferay.portal.kernel.util.ObjectValuePair<java.lang.String, java.io.InputStream>> inputStreamOVPs,
+		String subject, String body, String format,
+		java.util.List<com.liferay.portal.kernel.util.ObjectValuePair<String, java.io.InputStream>> inputStreamOVPs,
 		boolean anonymous, double priority, boolean allowPingbacks,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -131,9 +130,9 @@ public class MBMessageServiceHttp {
 
 	public static com.liferay.message.boards.model.MBMessage addMessage(
 		HttpPrincipal httpPrincipal, long groupId, long categoryId,
-		java.lang.String subject, java.lang.String body,
-		java.lang.String format, java.lang.String fileName, java.io.File file,
-		boolean anonymous, double priority, boolean allowPingbacks,
+		String subject, String body, String format, String fileName,
+		java.io.File file, boolean anonymous, double priority,
+		boolean allowPingbacks,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws java.io.FileNotFoundException,
 			com.liferay.portal.kernel.exception.PortalException {
@@ -172,8 +171,8 @@ public class MBMessageServiceHttp {
 	}
 
 	public static com.liferay.message.boards.model.MBMessage addMessage(
-		HttpPrincipal httpPrincipal, long categoryId, java.lang.String subject,
-		java.lang.String body,
+		HttpPrincipal httpPrincipal, long categoryId, String subject,
+		String body,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -206,10 +205,9 @@ public class MBMessageServiceHttp {
 	}
 
 	public static com.liferay.message.boards.model.MBMessage addMessage(
-		HttpPrincipal httpPrincipal, long parentMessageId,
-		java.lang.String subject, java.lang.String body,
-		java.lang.String format,
-		java.util.List<com.liferay.portal.kernel.util.ObjectValuePair<java.lang.String, java.io.InputStream>> inputStreamOVPs,
+		HttpPrincipal httpPrincipal, long parentMessageId, String subject,
+		String body, String format,
+		java.util.List<com.liferay.portal.kernel.util.ObjectValuePair<String, java.io.InputStream>> inputStreamOVPs,
 		boolean anonymous, double priority, boolean allowPingbacks,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -244,8 +242,7 @@ public class MBMessageServiceHttp {
 	}
 
 	public static void addMessageAttachment(HttpPrincipal httpPrincipal,
-		long messageId, java.lang.String fileName, java.io.File file,
-		java.lang.String mimeType)
+		long messageId, String fileName, java.io.File file, String mimeType)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(MBMessageServiceUtil.class,
@@ -274,8 +271,8 @@ public class MBMessageServiceHttp {
 
 	public static com.liferay.portal.kernel.repository.model.FileEntry addTempAttachment(
 		HttpPrincipal httpPrincipal, long groupId, long categoryId,
-		java.lang.String folderName, java.lang.String fileName,
-		java.io.InputStream inputStream, java.lang.String mimeType)
+		String folderName, String fileName, java.io.InputStream inputStream,
+		String mimeType)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(MBMessageServiceUtil.class,
@@ -361,7 +358,7 @@ public class MBMessageServiceHttp {
 	}
 
 	public static void deleteMessageAttachment(HttpPrincipal httpPrincipal,
-		long messageId, java.lang.String fileName)
+		long messageId, String fileName)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(MBMessageServiceUtil.class,
@@ -418,8 +415,7 @@ public class MBMessageServiceHttp {
 	}
 
 	public static void deleteTempAttachment(HttpPrincipal httpPrincipal,
-		long groupId, long categoryId, java.lang.String folderName,
-		java.lang.String fileName)
+		long groupId, long categoryId, String folderName, String fileName)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(MBMessageServiceUtil.class,
@@ -536,11 +532,9 @@ public class MBMessageServiceHttp {
 		}
 	}
 
-	public static java.lang.String getCategoryMessagesRSS(
-		HttpPrincipal httpPrincipal, long groupId, long categoryId, int status,
-		int max, java.lang.String type, double version,
-		java.lang.String displayStyle, java.lang.String feedURL,
-		java.lang.String entryURL,
+	public static String getCategoryMessagesRSS(HttpPrincipal httpPrincipal,
+		long groupId, long categoryId, int status, int max, String type,
+		double version, String displayStyle, String feedURL, String entryURL,
 		com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -565,7 +559,7 @@ public class MBMessageServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (java.lang.String)returnObj;
+			return (String)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -574,10 +568,9 @@ public class MBMessageServiceHttp {
 		}
 	}
 
-	public static java.lang.String getCompanyMessagesRSS(
-		HttpPrincipal httpPrincipal, long companyId, int status, int max,
-		java.lang.String type, double version, java.lang.String displayStyle,
-		java.lang.String feedURL, java.lang.String entryURL,
+	public static String getCompanyMessagesRSS(HttpPrincipal httpPrincipal,
+		long companyId, int status, int max, String type, double version,
+		String displayStyle, String feedURL, String entryURL,
 		com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -602,7 +595,7 @@ public class MBMessageServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (java.lang.String)returnObj;
+			return (String)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -639,10 +632,9 @@ public class MBMessageServiceHttp {
 		}
 	}
 
-	public static java.lang.String getGroupMessagesRSS(
-		HttpPrincipal httpPrincipal, long groupId, int status, int max,
-		java.lang.String type, double version, java.lang.String displayStyle,
-		java.lang.String feedURL, java.lang.String entryURL,
+	public static String getGroupMessagesRSS(HttpPrincipal httpPrincipal,
+		long groupId, int status, int max, String type, double version,
+		String displayStyle, String feedURL, String entryURL,
 		com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -666,7 +658,7 @@ public class MBMessageServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (java.lang.String)returnObj;
+			return (String)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -675,11 +667,9 @@ public class MBMessageServiceHttp {
 		}
 	}
 
-	public static java.lang.String getGroupMessagesRSS(
-		HttpPrincipal httpPrincipal, long groupId, long userId, int status,
-		int max, java.lang.String type, double version,
-		java.lang.String displayStyle, java.lang.String feedURL,
-		java.lang.String entryURL,
+	public static String getGroupMessagesRSS(HttpPrincipal httpPrincipal,
+		long groupId, long userId, int status, int max, String type,
+		double version, String displayStyle, String feedURL, String entryURL,
 		com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -703,7 +693,7 @@ public class MBMessageServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (java.lang.String)returnObj;
+			return (String)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -775,8 +765,8 @@ public class MBMessageServiceHttp {
 		}
 	}
 
-	public static java.lang.String[] getTempAttachmentNames(
-		HttpPrincipal httpPrincipal, long groupId, java.lang.String folderName)
+	public static String[] getTempAttachmentNames(HttpPrincipal httpPrincipal,
+		long groupId, String folderName)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(MBMessageServiceUtil.class,
@@ -799,7 +789,7 @@ public class MBMessageServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (java.lang.String[])returnObj;
+			return (String[])returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -892,10 +882,9 @@ public class MBMessageServiceHttp {
 		}
 	}
 
-	public static java.lang.String getThreadMessagesRSS(
-		HttpPrincipal httpPrincipal, long threadId, int status, int max,
-		java.lang.String type, double version, java.lang.String displayStyle,
-		java.lang.String feedURL, java.lang.String entryURL,
+	public static String getThreadMessagesRSS(HttpPrincipal httpPrincipal,
+		long threadId, int status, int max, String type, double version,
+		String displayStyle, String feedURL, String entryURL,
 		com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -920,7 +909,7 @@ public class MBMessageServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (java.lang.String)returnObj;
+			return (String)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -930,7 +919,7 @@ public class MBMessageServiceHttp {
 	}
 
 	public static void moveMessageAttachmentToTrash(
-		HttpPrincipal httpPrincipal, long messageId, java.lang.String fileName)
+		HttpPrincipal httpPrincipal, long messageId, String fileName)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(MBMessageServiceUtil.class,
@@ -959,7 +948,7 @@ public class MBMessageServiceHttp {
 	}
 
 	public static void restoreMessageAttachmentFromTrash(
-		HttpPrincipal httpPrincipal, long messageId, java.lang.String fileName)
+		HttpPrincipal httpPrincipal, long messageId, String fileName)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(MBMessageServiceUtil.class,
@@ -1070,8 +1059,8 @@ public class MBMessageServiceHttp {
 	}
 
 	public static com.liferay.message.boards.model.MBMessage updateDiscussionMessage(
-		HttpPrincipal httpPrincipal, java.lang.String className, long classPK,
-		long messageId, java.lang.String subject, java.lang.String body,
+		HttpPrincipal httpPrincipal, String className, long classPK,
+		long messageId, String subject, String body,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -1105,10 +1094,10 @@ public class MBMessageServiceHttp {
 	}
 
 	public static com.liferay.message.boards.model.MBMessage updateMessage(
-		HttpPrincipal httpPrincipal, long messageId, java.lang.String subject,
-		java.lang.String body,
-		java.util.List<com.liferay.portal.kernel.util.ObjectValuePair<java.lang.String, java.io.InputStream>> inputStreamOVPs,
-		java.util.List<java.lang.String> existingFiles, double priority,
+		HttpPrincipal httpPrincipal, long messageId, String subject,
+		String body,
+		java.util.List<com.liferay.portal.kernel.util.ObjectValuePair<String, java.io.InputStream>> inputStreamOVPs,
+		java.util.List<String> existingFiles, double priority,
 		boolean allowPingbacks,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -1144,41 +1133,36 @@ public class MBMessageServiceHttp {
 
 	private static Log _log = LogFactoryUtil.getLog(MBMessageServiceHttp.class);
 	private static final Class<?>[] _addDiscussionMessageParameterTypes0 = new Class[] {
-			long.class, java.lang.String.class, long.class, long.class,
-			long.class, java.lang.String.class, java.lang.String.class,
+			long.class, String.class, long.class, long.class, long.class,
+			String.class, String.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _addMessageParameterTypes1 = new Class[] {
-			long.class, long.class, java.lang.String.class,
-			java.lang.String.class, java.lang.String.class, java.util.List.class,
-			boolean.class, double.class, boolean.class,
+			long.class, long.class, String.class, String.class, String.class,
+			java.util.List.class, boolean.class, double.class, boolean.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _addMessageParameterTypes2 = new Class[] {
-			long.class, long.class, java.lang.String.class,
-			java.lang.String.class, java.lang.String.class,
-			java.lang.String.class, java.io.File.class, boolean.class,
-			double.class, boolean.class,
+			long.class, long.class, String.class, String.class, String.class,
+			String.class, java.io.File.class, boolean.class, double.class,
+			boolean.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _addMessageParameterTypes3 = new Class[] {
-			long.class, java.lang.String.class, java.lang.String.class,
+			long.class, String.class, String.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _addMessageParameterTypes4 = new Class[] {
-			long.class, java.lang.String.class, java.lang.String.class,
-			java.lang.String.class, java.util.List.class, boolean.class,
-			double.class, boolean.class,
+			long.class, String.class, String.class, String.class,
+			java.util.List.class, boolean.class, double.class, boolean.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _addMessageAttachmentParameterTypes5 = new Class[] {
-			long.class, java.lang.String.class, java.io.File.class,
-			java.lang.String.class
+			long.class, String.class, java.io.File.class, String.class
 		};
 	private static final Class<?>[] _addTempAttachmentParameterTypes6 = new Class[] {
-			long.class, long.class, java.lang.String.class,
-			java.lang.String.class, java.io.InputStream.class,
-			java.lang.String.class
+			long.class, long.class, String.class, String.class,
+			java.io.InputStream.class, String.class
 		};
 	private static final Class<?>[] _deleteDiscussionMessageParameterTypes7 = new Class[] {
 			long.class
@@ -1187,14 +1171,13 @@ public class MBMessageServiceHttp {
 			long.class
 		};
 	private static final Class<?>[] _deleteMessageAttachmentParameterTypes9 = new Class[] {
-			long.class, java.lang.String.class
+			long.class, String.class
 		};
 	private static final Class<?>[] _deleteMessageAttachmentsParameterTypes10 = new Class[] {
 			long.class
 		};
 	private static final Class<?>[] _deleteTempAttachmentParameterTypes11 = new Class[] {
-			long.class, long.class, java.lang.String.class,
-			java.lang.String.class
+			long.class, long.class, String.class, String.class
 		};
 	private static final Class<?>[] _emptyMessageAttachmentsParameterTypes12 = new Class[] {
 			long.class
@@ -1206,30 +1189,26 @@ public class MBMessageServiceHttp {
 			long.class, long.class, int.class
 		};
 	private static final Class<?>[] _getCategoryMessagesRSSParameterTypes15 = new Class[] {
-			long.class, long.class, int.class, int.class, java.lang.String.class,
-			double.class, java.lang.String.class, java.lang.String.class,
-			java.lang.String.class,
+			long.class, long.class, int.class, int.class, String.class,
+			double.class, String.class, String.class, String.class,
 			com.liferay.portal.kernel.theme.ThemeDisplay.class
 		};
 	private static final Class<?>[] _getCompanyMessagesRSSParameterTypes16 = new Class[] {
-			long.class, int.class, int.class, java.lang.String.class,
-			double.class, java.lang.String.class, java.lang.String.class,
-			java.lang.String.class,
+			long.class, int.class, int.class, String.class, double.class,
+			String.class, String.class, String.class,
 			com.liferay.portal.kernel.theme.ThemeDisplay.class
 		};
 	private static final Class<?>[] _getGroupMessagesCountParameterTypes17 = new Class[] {
 			long.class, int.class
 		};
 	private static final Class<?>[] _getGroupMessagesRSSParameterTypes18 = new Class[] {
-			long.class, int.class, int.class, java.lang.String.class,
-			double.class, java.lang.String.class, java.lang.String.class,
-			java.lang.String.class,
+			long.class, int.class, int.class, String.class, double.class,
+			String.class, String.class, String.class,
 			com.liferay.portal.kernel.theme.ThemeDisplay.class
 		};
 	private static final Class<?>[] _getGroupMessagesRSSParameterTypes19 = new Class[] {
-			long.class, long.class, int.class, int.class, java.lang.String.class,
-			double.class, java.lang.String.class, java.lang.String.class,
-			java.lang.String.class,
+			long.class, long.class, int.class, int.class, String.class,
+			double.class, String.class, String.class, String.class,
 			com.liferay.portal.kernel.theme.ThemeDisplay.class
 		};
 	private static final Class<?>[] _getMessageParameterTypes20 = new Class[] {
@@ -1239,7 +1218,7 @@ public class MBMessageServiceHttp {
 			long.class, int.class
 		};
 	private static final Class<?>[] _getTempAttachmentNamesParameterTypes22 = new Class[] {
-			long.class, java.lang.String.class
+			long.class, String.class
 		};
 	private static final Class<?>[] _getThreadAnswersCountParameterTypes23 = new Class[] {
 			long.class, long.class, long.class
@@ -1251,15 +1230,14 @@ public class MBMessageServiceHttp {
 			long.class, long.class, long.class, int.class
 		};
 	private static final Class<?>[] _getThreadMessagesRSSParameterTypes26 = new Class[] {
-			long.class, int.class, int.class, java.lang.String.class,
-			double.class, java.lang.String.class, java.lang.String.class,
-			java.lang.String.class,
+			long.class, int.class, int.class, String.class, double.class,
+			String.class, String.class, String.class,
 			com.liferay.portal.kernel.theme.ThemeDisplay.class
 		};
 	private static final Class<?>[] _moveMessageAttachmentToTrashParameterTypes27 =
-		new Class[] { long.class, java.lang.String.class };
+		new Class[] { long.class, String.class };
 	private static final Class<?>[] _restoreMessageAttachmentFromTrashParameterTypes28 =
-		new Class[] { long.class, java.lang.String.class };
+		new Class[] { long.class, String.class };
 	private static final Class<?>[] _subscribeMessageParameterTypes29 = new Class[] {
 			long.class
 		};
@@ -1270,14 +1248,12 @@ public class MBMessageServiceHttp {
 			long.class, boolean.class, boolean.class
 		};
 	private static final Class<?>[] _updateDiscussionMessageParameterTypes32 = new Class[] {
-			java.lang.String.class, long.class, long.class,
-			java.lang.String.class, java.lang.String.class,
+			String.class, long.class, long.class, String.class, String.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _updateMessageParameterTypes33 = new Class[] {
-			long.class, java.lang.String.class, java.lang.String.class,
-			java.util.List.class, java.util.List.class, double.class,
-			boolean.class,
+			long.class, String.class, String.class, java.util.List.class,
+			java.util.List.class, double.class, boolean.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 }

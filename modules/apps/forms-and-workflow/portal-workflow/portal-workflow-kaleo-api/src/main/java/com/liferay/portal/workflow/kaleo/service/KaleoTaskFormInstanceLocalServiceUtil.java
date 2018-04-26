@@ -55,7 +55,7 @@ public class KaleoTaskFormInstanceLocalServiceUtil {
 	}
 
 	public static com.liferay.portal.workflow.kaleo.model.KaleoTaskFormInstance addKaleoTaskFormInstance(
-		long groupId, long kaleoTaskFormId, java.lang.String formValues,
+		long groupId, long kaleoTaskFormId, String formValues,
 		com.liferay.portal.workflow.kaleo.model.KaleoTaskInstanceToken kaleoTaskInstanceToken,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -279,7 +279,7 @@ public class KaleoTaskFormInstanceLocalServiceUtil {
 	*
 	* @return the OSGi service identifier
 	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
+	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 

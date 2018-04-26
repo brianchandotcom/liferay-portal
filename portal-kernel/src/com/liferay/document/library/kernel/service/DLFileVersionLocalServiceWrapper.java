@@ -194,7 +194,7 @@ public class DLFileVersionLocalServiceWrapper
 	*/
 	@Override
 	public com.liferay.document.library.kernel.model.DLFileVersion fetchDLFileVersionByUuidAndGroupId(
-		java.lang.String uuid, long groupId) {
+		String uuid, long groupId) {
 		return _dlFileVersionLocalService.fetchDLFileVersionByUuidAndGroupId(uuid,
 			groupId);
 	}
@@ -235,7 +235,7 @@ public class DLFileVersionLocalServiceWrapper
 	*/
 	@Override
 	public com.liferay.document.library.kernel.model.DLFileVersion getDLFileVersionByUuidAndGroupId(
-		java.lang.String uuid, long groupId)
+		String uuid, long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _dlFileVersionLocalService.getDLFileVersionByUuidAndGroupId(uuid,
 			groupId);
@@ -267,7 +267,7 @@ public class DLFileVersionLocalServiceWrapper
 	*/
 	@Override
 	public java.util.List<com.liferay.document.library.kernel.model.DLFileVersion> getDLFileVersionsByUuidAndCompanyId(
-		java.lang.String uuid, long companyId) {
+		String uuid, long companyId) {
 		return _dlFileVersionLocalService.getDLFileVersionsByUuidAndCompanyId(uuid,
 			companyId);
 	}
@@ -284,7 +284,7 @@ public class DLFileVersionLocalServiceWrapper
 	*/
 	@Override
 	public java.util.List<com.liferay.document.library.kernel.model.DLFileVersion> getDLFileVersionsByUuidAndCompanyId(
-		java.lang.String uuid, long companyId, int start, int end,
+		String uuid, long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.document.library.kernel.model.DLFileVersion> orderByComparator) {
 		return _dlFileVersionLocalService.getDLFileVersionsByUuidAndCompanyId(uuid,
 			companyId, start, end, orderByComparator);
@@ -315,14 +315,14 @@ public class DLFileVersionLocalServiceWrapper
 
 	@Override
 	public com.liferay.document.library.kernel.model.DLFileVersion getFileVersion(
-		long fileEntryId, java.lang.String version)
+		long fileEntryId, String version)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _dlFileVersionLocalService.getFileVersion(fileEntryId, version);
 	}
 
 	@Override
 	public com.liferay.document.library.kernel.model.DLFileVersion getFileVersionByUuidAndGroupId(
-		java.lang.String uuid, long groupId) {
+		String uuid, long groupId) {
 		return _dlFileVersionLocalService.getFileVersionByUuidAndGroupId(uuid,
 			groupId);
 	}
@@ -366,7 +366,7 @@ public class DLFileVersionLocalServiceWrapper
 	* @return the OSGi service identifier
 	*/
 	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
+	public String getOSGiServiceIdentifier() {
 		return _dlFileVersionLocalService.getOSGiServiceIdentifier();
 	}
 
@@ -384,7 +384,7 @@ public class DLFileVersionLocalServiceWrapper
 	}
 
 	@Override
-	public void setTreePaths(long folderId, java.lang.String treePath)
+	public void setTreePaths(long folderId, String treePath)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_dlFileVersionLocalService.setTreePaths(folderId, treePath);
 	}

@@ -207,7 +207,7 @@ public class MBCategoryWrapper implements MBCategory, ModelWrapper<MBCategory> {
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new MBCategoryWrapper((MBCategory)_mbCategory.clone());
 	}
 
@@ -217,7 +217,7 @@ public class MBCategoryWrapper implements MBCategory, ModelWrapper<MBCategory> {
 	}
 
 	@Override
-	public java.util.List<java.lang.Long> getAncestorCategoryIds()
+	public java.util.List<Long> getAncestorCategoryIds()
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _mbCategory.getAncestorCategoryIds();
 	}
@@ -264,7 +264,7 @@ public class MBCategoryWrapper implements MBCategory, ModelWrapper<MBCategory> {
 	* @return the container name of this message boards category
 	*/
 	@Override
-	public java.lang.String getContainerModelName() {
+	public String getContainerModelName() {
 		return _mbCategory.getContainerModelName();
 	}
 
@@ -284,7 +284,7 @@ public class MBCategoryWrapper implements MBCategory, ModelWrapper<MBCategory> {
 	* @return the description of this message boards category
 	*/
 	@Override
-	public java.lang.String getDescription() {
+	public String getDescription() {
 		return _mbCategory.getDescription();
 	}
 
@@ -294,7 +294,7 @@ public class MBCategoryWrapper implements MBCategory, ModelWrapper<MBCategory> {
 	* @return the display style of this message boards category
 	*/
 	@Override
-	public java.lang.String getDisplayStyle() {
+	public String getDisplayStyle() {
 		return _mbCategory.getDisplayStyle();
 	}
 
@@ -359,7 +359,7 @@ public class MBCategoryWrapper implements MBCategory, ModelWrapper<MBCategory> {
 	* @return the name of this message boards category
 	*/
 	@Override
-	public java.lang.String getName() {
+	public String getName() {
 		return _mbCategory.getName();
 	}
 
@@ -430,7 +430,7 @@ public class MBCategoryWrapper implements MBCategory, ModelWrapper<MBCategory> {
 	* @return the status by user name of this message boards category
 	*/
 	@Override
-	public java.lang.String getStatusByUserName() {
+	public String getStatusByUserName() {
 		return _mbCategory.getStatusByUserName();
 	}
 
@@ -440,7 +440,7 @@ public class MBCategoryWrapper implements MBCategory, ModelWrapper<MBCategory> {
 	* @return the status by user uuid of this message boards category
 	*/
 	@Override
-	public java.lang.String getStatusByUserUuid() {
+	public String getStatusByUserUuid() {
 		return _mbCategory.getStatusByUserUuid();
 	}
 
@@ -513,7 +513,7 @@ public class MBCategoryWrapper implements MBCategory, ModelWrapper<MBCategory> {
 	* @return the user name of this message boards category
 	*/
 	@Override
-	public java.lang.String getUserName() {
+	public String getUserName() {
 		return _mbCategory.getUserName();
 	}
 
@@ -523,7 +523,7 @@ public class MBCategoryWrapper implements MBCategory, ModelWrapper<MBCategory> {
 	* @return the user uuid of this message boards category
 	*/
 	@Override
-	public java.lang.String getUserUuid() {
+	public String getUserUuid() {
 		return _mbCategory.getUserUuid();
 	}
 
@@ -533,7 +533,7 @@ public class MBCategoryWrapper implements MBCategory, ModelWrapper<MBCategory> {
 	* @return the uuid of this message boards category
 	*/
 	@Override
-	public java.lang.String getUuid() {
+	public String getUuid() {
 		return _mbCategory.getUuid();
 	}
 
@@ -728,7 +728,7 @@ public class MBCategoryWrapper implements MBCategory, ModelWrapper<MBCategory> {
 	* @param description the description of this message boards category
 	*/
 	@Override
-	public void setDescription(java.lang.String description) {
+	public void setDescription(String description) {
 		_mbCategory.setDescription(description);
 	}
 
@@ -738,7 +738,7 @@ public class MBCategoryWrapper implements MBCategory, ModelWrapper<MBCategory> {
 	* @param displayStyle the display style of this message boards category
 	*/
 	@Override
-	public void setDisplayStyle(java.lang.String displayStyle) {
+	public void setDisplayStyle(String displayStyle) {
 		_mbCategory.setDisplayStyle(displayStyle);
 	}
 
@@ -814,7 +814,7 @@ public class MBCategoryWrapper implements MBCategory, ModelWrapper<MBCategory> {
 	* @param name the name of this message boards category
 	*/
 	@Override
-	public void setName(java.lang.String name) {
+	public void setName(String name) {
 		_mbCategory.setName(name);
 	}
 
@@ -884,7 +884,7 @@ public class MBCategoryWrapper implements MBCategory, ModelWrapper<MBCategory> {
 	* @param statusByUserName the status by user name of this message boards category
 	*/
 	@Override
-	public void setStatusByUserName(java.lang.String statusByUserName) {
+	public void setStatusByUserName(String statusByUserName) {
 		_mbCategory.setStatusByUserName(statusByUserName);
 	}
 
@@ -894,7 +894,7 @@ public class MBCategoryWrapper implements MBCategory, ModelWrapper<MBCategory> {
 	* @param statusByUserUuid the status by user uuid of this message boards category
 	*/
 	@Override
-	public void setStatusByUserUuid(java.lang.String statusByUserUuid) {
+	public void setStatusByUserUuid(String statusByUserUuid) {
 		_mbCategory.setStatusByUserUuid(statusByUserUuid);
 	}
 
@@ -934,7 +934,7 @@ public class MBCategoryWrapper implements MBCategory, ModelWrapper<MBCategory> {
 	* @param userName the user name of this message boards category
 	*/
 	@Override
-	public void setUserName(java.lang.String userName) {
+	public void setUserName(String userName) {
 		_mbCategory.setUserName(userName);
 	}
 
@@ -944,7 +944,7 @@ public class MBCategoryWrapper implements MBCategory, ModelWrapper<MBCategory> {
 	* @param userUuid the user uuid of this message boards category
 	*/
 	@Override
-	public void setUserUuid(java.lang.String userUuid) {
+	public void setUserUuid(String userUuid) {
 		_mbCategory.setUserUuid(userUuid);
 	}
 
@@ -954,7 +954,7 @@ public class MBCategoryWrapper implements MBCategory, ModelWrapper<MBCategory> {
 	* @param uuid the uuid of this message boards category
 	*/
 	@Override
-	public void setUuid(java.lang.String uuid) {
+	public void setUuid(String uuid) {
 		_mbCategory.setUuid(uuid);
 	}
 
@@ -969,7 +969,7 @@ public class MBCategoryWrapper implements MBCategory, ModelWrapper<MBCategory> {
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _mbCategory.toString();
 	}
 
@@ -979,7 +979,7 @@ public class MBCategoryWrapper implements MBCategory, ModelWrapper<MBCategory> {
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _mbCategory.toXmlString();
 	}
 

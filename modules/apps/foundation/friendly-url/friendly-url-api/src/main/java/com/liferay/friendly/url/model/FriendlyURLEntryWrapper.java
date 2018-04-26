@@ -138,7 +138,7 @@ public class FriendlyURLEntryWrapper implements FriendlyURLEntry,
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new FriendlyURLEntryWrapper((FriendlyURLEntry)_friendlyURLEntry.clone());
 	}
 
@@ -148,7 +148,7 @@ public class FriendlyURLEntryWrapper implements FriendlyURLEntry,
 	}
 
 	@Override
-	public java.lang.String[] getAvailableLanguageIds() {
+	public String[] getAvailableLanguageIds() {
 		return _friendlyURLEntry.getAvailableLanguageIds();
 	}
 
@@ -158,7 +158,7 @@ public class FriendlyURLEntryWrapper implements FriendlyURLEntry,
 	* @return the fully qualified class name of this friendly url entry
 	*/
 	@Override
-	public java.lang.String getClassName() {
+	public String getClassName() {
 		return _friendlyURLEntry.getClassName();
 	}
 
@@ -208,7 +208,7 @@ public class FriendlyURLEntryWrapper implements FriendlyURLEntry,
 	* @return the default language ID of this friendly url entry
 	*/
 	@Override
-	public java.lang.String getDefaultLanguageId() {
+	public String getDefaultLanguageId() {
 		return _friendlyURLEntry.getDefaultLanguageId();
 	}
 
@@ -238,7 +238,7 @@ public class FriendlyURLEntryWrapper implements FriendlyURLEntry,
 	}
 
 	@Override
-	public Map<java.lang.String, java.lang.String> getLanguageIdToUrlTitleMap() {
+	public Map<String, String> getLanguageIdToUrlTitleMap() {
 		return _friendlyURLEntry.getLanguageIdToUrlTitleMap();
 	}
 
@@ -278,23 +278,22 @@ public class FriendlyURLEntryWrapper implements FriendlyURLEntry,
 	}
 
 	@Override
-	public java.lang.String getUrlTitle() {
+	public String getUrlTitle() {
 		return _friendlyURLEntry.getUrlTitle();
 	}
 
 	@Override
-	public java.lang.String getUrlTitle(java.lang.String languageId) {
+	public String getUrlTitle(String languageId) {
 		return _friendlyURLEntry.getUrlTitle(languageId);
 	}
 
 	@Override
-	public java.lang.String getUrlTitle(java.lang.String languageId,
-		boolean useDefault) {
+	public String getUrlTitle(String languageId, boolean useDefault) {
 		return _friendlyURLEntry.getUrlTitle(languageId, useDefault);
 	}
 
 	@Override
-	public java.lang.String getUrlTitleMapAsXML() {
+	public String getUrlTitleMapAsXML() {
 		return _friendlyURLEntry.getUrlTitleMapAsXML();
 	}
 
@@ -304,7 +303,7 @@ public class FriendlyURLEntryWrapper implements FriendlyURLEntry,
 	* @return the uuid of this friendly url entry
 	*/
 	@Override
-	public java.lang.String getUuid() {
+	public String getUuid() {
 		return _friendlyURLEntry.getUuid();
 	}
 
@@ -345,7 +344,7 @@ public class FriendlyURLEntryWrapper implements FriendlyURLEntry,
 	}
 
 	@Override
-	public void setClassName(java.lang.String className) {
+	public void setClassName(String className) {
 		_friendlyURLEntry.setClassName(className);
 	}
 
@@ -395,7 +394,7 @@ public class FriendlyURLEntryWrapper implements FriendlyURLEntry,
 	* @param defaultLanguageId the default language ID of this friendly url entry
 	*/
 	@Override
-	public void setDefaultLanguageId(java.lang.String defaultLanguageId) {
+	public void setDefaultLanguageId(String defaultLanguageId) {
 		_friendlyURLEntry.setDefaultLanguageId(defaultLanguageId);
 	}
 
@@ -481,7 +480,7 @@ public class FriendlyURLEntryWrapper implements FriendlyURLEntry,
 	* @param uuid the uuid of this friendly url entry
 	*/
 	@Override
-	public void setUuid(java.lang.String uuid) {
+	public void setUuid(String uuid) {
 		_friendlyURLEntry.setUuid(uuid);
 	}
 
@@ -496,7 +495,7 @@ public class FriendlyURLEntryWrapper implements FriendlyURLEntry,
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _friendlyURLEntry.toString();
 	}
 
@@ -506,7 +505,7 @@ public class FriendlyURLEntryWrapper implements FriendlyURLEntry,
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _friendlyURLEntry.toXmlString();
 	}
 

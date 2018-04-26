@@ -66,8 +66,8 @@ import java.rmi.RemoteException;
 @ProviderType
 public class SyncDLObjectServiceSoap {
 	public static com.liferay.sync.model.SyncDLObjectSoap addFolder(
-		long repositoryId, long parentFolderId, java.lang.String name,
-		java.lang.String description,
+		long repositoryId, long parentFolderId, String name,
+		String description,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
@@ -98,7 +98,7 @@ public class SyncDLObjectServiceSoap {
 	}
 
 	public static com.liferay.sync.model.SyncDLObjectSoap checkInFileEntry(
-		long fileEntryId, boolean majorVersion, java.lang.String changeLog,
+		long fileEntryId, boolean majorVersion, String changeLog,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
@@ -132,7 +132,7 @@ public class SyncDLObjectServiceSoap {
 	}
 
 	public static com.liferay.sync.model.SyncDLObjectSoap checkOutFileEntry(
-		long fileEntryId, java.lang.String owner, long expirationTime,
+		long fileEntryId, String owner, long expirationTime,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
@@ -150,7 +150,7 @@ public class SyncDLObjectServiceSoap {
 
 	public static com.liferay.sync.model.SyncDLObjectSoap copyFileEntry(
 		long sourceFileEntryId, long repositoryId, long folderId,
-		java.lang.String sourceFileName, java.lang.String title,
+		String sourceFileName, String title,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
@@ -182,7 +182,7 @@ public class SyncDLObjectServiceSoap {
 	}
 
 	public static com.liferay.sync.model.SyncDLObjectSoap getFileEntrySyncDLObject(
-		long repositoryId, long folderId, java.lang.String title)
+		long repositoryId, long folderId, String title)
 		throws RemoteException {
 		try {
 			com.liferay.sync.model.SyncDLObject returnValue = SyncDLObjectServiceUtil.getFileEntrySyncDLObject(repositoryId,
@@ -227,7 +227,7 @@ public class SyncDLObjectServiceSoap {
 	}
 
 	public static com.liferay.sync.model.SyncDLObjectSoap getFolderSyncDLObject(
-		long repositoryId, long parentFolderId, java.lang.String name)
+		long repositoryId, long parentFolderId, String name)
 		throws RemoteException {
 		try {
 			com.liferay.sync.model.SyncDLObject returnValue = SyncDLObjectServiceUtil.getFolderSyncDLObject(repositoryId,
@@ -284,9 +284,9 @@ public class SyncDLObjectServiceSoap {
 		}
 	}
 
-	public static java.lang.Object getSyncContext() throws RemoteException {
+	public static Object getSyncContext() throws RemoteException {
 		try {
-			java.lang.Object returnValue = SyncDLObjectServiceUtil.getSyncContext();
+			Object returnValue = SyncDLObjectServiceUtil.getSyncContext();
 
 			return returnValue;
 		}
@@ -297,10 +297,10 @@ public class SyncDLObjectServiceSoap {
 		}
 	}
 
-	public static java.lang.String getSyncDLObjectUpdate(long repositoryId,
+	public static String getSyncDLObjectUpdate(long repositoryId,
 		long lastAccessTime, int max) throws RemoteException {
 		try {
-			java.lang.String returnValue = SyncDLObjectServiceUtil.getSyncDLObjectUpdate(repositoryId,
+			String returnValue = SyncDLObjectServiceUtil.getSyncDLObjectUpdate(repositoryId,
 					lastAccessTime, max);
 
 			return returnValue;
@@ -312,11 +312,11 @@ public class SyncDLObjectServiceSoap {
 		}
 	}
 
-	public static java.lang.String getSyncDLObjectUpdate(long repositoryId,
+	public static String getSyncDLObjectUpdate(long repositoryId,
 		long lastAccessTime, int max, boolean retrieveFromCache)
 		throws RemoteException {
 		try {
-			java.lang.String returnValue = SyncDLObjectServiceUtil.getSyncDLObjectUpdate(repositoryId,
+			String returnValue = SyncDLObjectServiceUtil.getSyncDLObjectUpdate(repositoryId,
 					lastAccessTime, max, retrieveFromCache);
 
 			return returnValue;
@@ -328,10 +328,10 @@ public class SyncDLObjectServiceSoap {
 		}
 	}
 
-	public static java.lang.String getSyncDLObjectUpdate(long repositoryId,
+	public static String getSyncDLObjectUpdate(long repositoryId,
 		long parentFolderId, long lastAccessTime) throws RemoteException {
 		try {
-			java.lang.String returnValue = SyncDLObjectServiceUtil.getSyncDLObjectUpdate(repositoryId,
+			String returnValue = SyncDLObjectServiceUtil.getSyncDLObjectUpdate(repositoryId,
 					parentFolderId, lastAccessTime);
 
 			return returnValue;
@@ -448,7 +448,7 @@ public class SyncDLObjectServiceSoap {
 	}
 
 	public static com.liferay.sync.model.SyncDLObjectSoap updateFolder(
-		long folderId, java.lang.String name, java.lang.String description,
+		long folderId, String name, String description,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {

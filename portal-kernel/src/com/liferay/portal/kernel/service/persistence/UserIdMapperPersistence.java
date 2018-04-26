@@ -179,7 +179,7 @@ public interface UserIdMapperPersistence extends BasePersistence<UserIdMapper> {
 	* @return the matching user ID mapper
 	* @throws NoSuchUserIdMapperException if a matching user ID mapper could not be found
 	*/
-	public UserIdMapper findByU_T(long userId, java.lang.String type)
+	public UserIdMapper findByU_T(long userId, String type)
 		throws NoSuchUserIdMapperException;
 
 	/**
@@ -189,7 +189,7 @@ public interface UserIdMapperPersistence extends BasePersistence<UserIdMapper> {
 	* @param type the type
 	* @return the matching user ID mapper, or <code>null</code> if a matching user ID mapper could not be found
 	*/
-	public UserIdMapper fetchByU_T(long userId, java.lang.String type);
+	public UserIdMapper fetchByU_T(long userId, String type);
 
 	/**
 	* Returns the user ID mapper where userId = &#63; and type = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -199,7 +199,7 @@ public interface UserIdMapperPersistence extends BasePersistence<UserIdMapper> {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching user ID mapper, or <code>null</code> if a matching user ID mapper could not be found
 	*/
-	public UserIdMapper fetchByU_T(long userId, java.lang.String type,
+	public UserIdMapper fetchByU_T(long userId, String type,
 		boolean retrieveFromCache);
 
 	/**
@@ -209,7 +209,7 @@ public interface UserIdMapperPersistence extends BasePersistence<UserIdMapper> {
 	* @param type the type
 	* @return the user ID mapper that was removed
 	*/
-	public UserIdMapper removeByU_T(long userId, java.lang.String type)
+	public UserIdMapper removeByU_T(long userId, String type)
 		throws NoSuchUserIdMapperException;
 
 	/**
@@ -219,7 +219,7 @@ public interface UserIdMapperPersistence extends BasePersistence<UserIdMapper> {
 	* @param type the type
 	* @return the number of matching user ID mappers
 	*/
-	public int countByU_T(long userId, java.lang.String type);
+	public int countByU_T(long userId, String type);
 
 	/**
 	* Returns the user ID mapper where type = &#63; and externalUserId = &#63; or throws a {@link NoSuchUserIdMapperException} if it could not be found.
@@ -229,8 +229,8 @@ public interface UserIdMapperPersistence extends BasePersistence<UserIdMapper> {
 	* @return the matching user ID mapper
 	* @throws NoSuchUserIdMapperException if a matching user ID mapper could not be found
 	*/
-	public UserIdMapper findByT_E(java.lang.String type,
-		java.lang.String externalUserId) throws NoSuchUserIdMapperException;
+	public UserIdMapper findByT_E(String type, String externalUserId)
+		throws NoSuchUserIdMapperException;
 
 	/**
 	* Returns the user ID mapper where type = &#63; and externalUserId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
@@ -239,8 +239,7 @@ public interface UserIdMapperPersistence extends BasePersistence<UserIdMapper> {
 	* @param externalUserId the external user ID
 	* @return the matching user ID mapper, or <code>null</code> if a matching user ID mapper could not be found
 	*/
-	public UserIdMapper fetchByT_E(java.lang.String type,
-		java.lang.String externalUserId);
+	public UserIdMapper fetchByT_E(String type, String externalUserId);
 
 	/**
 	* Returns the user ID mapper where type = &#63; and externalUserId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -250,8 +249,8 @@ public interface UserIdMapperPersistence extends BasePersistence<UserIdMapper> {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching user ID mapper, or <code>null</code> if a matching user ID mapper could not be found
 	*/
-	public UserIdMapper fetchByT_E(java.lang.String type,
-		java.lang.String externalUserId, boolean retrieveFromCache);
+	public UserIdMapper fetchByT_E(String type, String externalUserId,
+		boolean retrieveFromCache);
 
 	/**
 	* Removes the user ID mapper where type = &#63; and externalUserId = &#63; from the database.
@@ -260,8 +259,8 @@ public interface UserIdMapperPersistence extends BasePersistence<UserIdMapper> {
 	* @param externalUserId the external user ID
 	* @return the user ID mapper that was removed
 	*/
-	public UserIdMapper removeByT_E(java.lang.String type,
-		java.lang.String externalUserId) throws NoSuchUserIdMapperException;
+	public UserIdMapper removeByT_E(String type, String externalUserId)
+		throws NoSuchUserIdMapperException;
 
 	/**
 	* Returns the number of user ID mappers where type = &#63; and externalUserId = &#63;.
@@ -270,7 +269,7 @@ public interface UserIdMapperPersistence extends BasePersistence<UserIdMapper> {
 	* @param externalUserId the external user ID
 	* @return the number of matching user ID mappers
 	*/
-	public int countByT_E(java.lang.String type, java.lang.String externalUserId);
+	public int countByT_E(String type, String externalUserId);
 
 	/**
 	* Caches the user ID mapper in the entity cache if it is enabled.
@@ -393,5 +392,5 @@ public interface UserIdMapperPersistence extends BasePersistence<UserIdMapper> {
 	public int countAll();
 
 	@Override
-	public java.util.Set<java.lang.String> getBadColumnNames();
+	public java.util.Set<String> getBadColumnNames();
 }

@@ -150,7 +150,7 @@ public class MemberRequestWrapper implements MemberRequest,
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new MemberRequestWrapper((MemberRequest)_memberRequest.clone());
 	}
 
@@ -220,7 +220,7 @@ public class MemberRequestWrapper implements MemberRequest,
 	* @return the key of this member request
 	*/
 	@Override
-	public java.lang.String getKey() {
+	public String getKey() {
 		return _memberRequest.getKey();
 	}
 
@@ -275,7 +275,7 @@ public class MemberRequestWrapper implements MemberRequest,
 	* @return the receiver user uuid of this member request
 	*/
 	@Override
-	public java.lang.String getReceiverUserUuid() {
+	public String getReceiverUserUuid() {
 		return _memberRequest.getReceiverUserUuid();
 	}
 
@@ -305,7 +305,7 @@ public class MemberRequestWrapper implements MemberRequest,
 	* @return the user name of this member request
 	*/
 	@Override
-	public java.lang.String getUserName() {
+	public String getUserName() {
 		return _memberRequest.getUserName();
 	}
 
@@ -315,7 +315,7 @@ public class MemberRequestWrapper implements MemberRequest,
 	* @return the user uuid of this member request
 	*/
 	@Override
-	public java.lang.String getUserUuid() {
+	public String getUserUuid() {
 		return _memberRequest.getUserUuid();
 	}
 
@@ -421,7 +421,7 @@ public class MemberRequestWrapper implements MemberRequest,
 	* @param key the key of this member request
 	*/
 	@Override
-	public void setKey(java.lang.String key) {
+	public void setKey(String key) {
 		_memberRequest.setKey(key);
 	}
 
@@ -481,7 +481,7 @@ public class MemberRequestWrapper implements MemberRequest,
 	* @param receiverUserUuid the receiver user uuid of this member request
 	*/
 	@Override
-	public void setReceiverUserUuid(java.lang.String receiverUserUuid) {
+	public void setReceiverUserUuid(String receiverUserUuid) {
 		_memberRequest.setReceiverUserUuid(receiverUserUuid);
 	}
 
@@ -511,7 +511,7 @@ public class MemberRequestWrapper implements MemberRequest,
 	* @param userName the user name of this member request
 	*/
 	@Override
-	public void setUserName(java.lang.String userName) {
+	public void setUserName(String userName) {
 		_memberRequest.setUserName(userName);
 	}
 
@@ -521,7 +521,7 @@ public class MemberRequestWrapper implements MemberRequest,
 	* @param userUuid the user uuid of this member request
 	*/
 	@Override
-	public void setUserUuid(java.lang.String userUuid) {
+	public void setUserUuid(String userUuid) {
 		_memberRequest.setUserUuid(userUuid);
 	}
 
@@ -536,7 +536,7 @@ public class MemberRequestWrapper implements MemberRequest,
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _memberRequest.toString();
 	}
 
@@ -546,7 +546,7 @@ public class MemberRequestWrapper implements MemberRequest,
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _memberRequest.toXmlString();
 	}
 

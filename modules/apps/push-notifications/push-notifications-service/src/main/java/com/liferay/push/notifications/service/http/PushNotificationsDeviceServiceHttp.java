@@ -56,8 +56,7 @@ import com.liferay.push.notifications.service.PushNotificationsDeviceServiceUtil
 @ProviderType
 public class PushNotificationsDeviceServiceHttp {
 	public static com.liferay.push.notifications.model.PushNotificationsDevice addPushNotificationsDevice(
-		HttpPrincipal httpPrincipal, java.lang.String token,
-		java.lang.String platform)
+		HttpPrincipal httpPrincipal, String token, String platform)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(PushNotificationsDeviceServiceUtil.class,
@@ -123,7 +122,7 @@ public class PushNotificationsDeviceServiceHttp {
 	}
 
 	public static com.liferay.push.notifications.model.PushNotificationsDevice deletePushNotificationsDevice(
-		HttpPrincipal httpPrincipal, java.lang.String token)
+		HttpPrincipal httpPrincipal, String token)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(PushNotificationsDeviceServiceUtil.class,
@@ -155,7 +154,7 @@ public class PushNotificationsDeviceServiceHttp {
 	}
 
 	public static void sendPushNotification(HttpPrincipal httpPrincipal,
-		long[] toUserIds, java.lang.String payload)
+		long[] toUserIds, String payload)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(PushNotificationsDeviceServiceUtil.class,
@@ -183,8 +182,7 @@ public class PushNotificationsDeviceServiceHttp {
 	}
 
 	public static void sendPushNotification(HttpPrincipal httpPrincipal,
-		java.lang.String platform, java.util.List<java.lang.String> tokens,
-		java.lang.String payload)
+		String platform, java.util.List<String> tokens, String payload)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(PushNotificationsDeviceServiceUtil.class,
@@ -213,16 +211,16 @@ public class PushNotificationsDeviceServiceHttp {
 
 	private static Log _log = LogFactoryUtil.getLog(PushNotificationsDeviceServiceHttp.class);
 	private static final Class<?>[] _addPushNotificationsDeviceParameterTypes0 = new Class[] {
-			java.lang.String.class, java.lang.String.class
+			String.class, String.class
 		};
 	private static final Class<?>[] _deletePushNotificationsDeviceParameterTypes1 =
 		new Class[] { long.class };
 	private static final Class<?>[] _deletePushNotificationsDeviceParameterTypes2 =
-		new Class[] { java.lang.String.class };
+		new Class[] { String.class };
 	private static final Class<?>[] _sendPushNotificationParameterTypes3 = new Class[] {
-			long[].class, java.lang.String.class
+			long[].class, String.class
 		};
 	private static final Class<?>[] _sendPushNotificationParameterTypes4 = new Class[] {
-			java.lang.String.class, java.util.List.class, java.lang.String.class
+			String.class, java.util.List.class, String.class
 		};
 }

@@ -46,8 +46,7 @@ public interface CountryPersistence extends BasePersistence<Country> {
 	* @return the matching country
 	* @throws NoSuchCountryException if a matching country could not be found
 	*/
-	public Country findByName(java.lang.String name)
-		throws NoSuchCountryException;
+	public Country findByName(String name) throws NoSuchCountryException;
 
 	/**
 	* Returns the country where name = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
@@ -55,7 +54,7 @@ public interface CountryPersistence extends BasePersistence<Country> {
 	* @param name the name
 	* @return the matching country, or <code>null</code> if a matching country could not be found
 	*/
-	public Country fetchByName(java.lang.String name);
+	public Country fetchByName(String name);
 
 	/**
 	* Returns the country where name = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -64,7 +63,7 @@ public interface CountryPersistence extends BasePersistence<Country> {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching country, or <code>null</code> if a matching country could not be found
 	*/
-	public Country fetchByName(java.lang.String name, boolean retrieveFromCache);
+	public Country fetchByName(String name, boolean retrieveFromCache);
 
 	/**
 	* Removes the country where name = &#63; from the database.
@@ -72,8 +71,7 @@ public interface CountryPersistence extends BasePersistence<Country> {
 	* @param name the name
 	* @return the country that was removed
 	*/
-	public Country removeByName(java.lang.String name)
-		throws NoSuchCountryException;
+	public Country removeByName(String name) throws NoSuchCountryException;
 
 	/**
 	* Returns the number of countries where name = &#63;.
@@ -81,7 +79,7 @@ public interface CountryPersistence extends BasePersistence<Country> {
 	* @param name the name
 	* @return the number of matching countries
 	*/
-	public int countByName(java.lang.String name);
+	public int countByName(String name);
 
 	/**
 	* Returns the country where a2 = &#63; or throws a {@link NoSuchCountryException} if it could not be found.
@@ -90,7 +88,7 @@ public interface CountryPersistence extends BasePersistence<Country> {
 	* @return the matching country
 	* @throws NoSuchCountryException if a matching country could not be found
 	*/
-	public Country findByA2(java.lang.String a2) throws NoSuchCountryException;
+	public Country findByA2(String a2) throws NoSuchCountryException;
 
 	/**
 	* Returns the country where a2 = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
@@ -98,7 +96,7 @@ public interface CountryPersistence extends BasePersistence<Country> {
 	* @param a2 the a2
 	* @return the matching country, or <code>null</code> if a matching country could not be found
 	*/
-	public Country fetchByA2(java.lang.String a2);
+	public Country fetchByA2(String a2);
 
 	/**
 	* Returns the country where a2 = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -107,7 +105,7 @@ public interface CountryPersistence extends BasePersistence<Country> {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching country, or <code>null</code> if a matching country could not be found
 	*/
-	public Country fetchByA2(java.lang.String a2, boolean retrieveFromCache);
+	public Country fetchByA2(String a2, boolean retrieveFromCache);
 
 	/**
 	* Removes the country where a2 = &#63; from the database.
@@ -115,8 +113,7 @@ public interface CountryPersistence extends BasePersistence<Country> {
 	* @param a2 the a2
 	* @return the country that was removed
 	*/
-	public Country removeByA2(java.lang.String a2)
-		throws NoSuchCountryException;
+	public Country removeByA2(String a2) throws NoSuchCountryException;
 
 	/**
 	* Returns the number of countries where a2 = &#63;.
@@ -124,7 +121,7 @@ public interface CountryPersistence extends BasePersistence<Country> {
 	* @param a2 the a2
 	* @return the number of matching countries
 	*/
-	public int countByA2(java.lang.String a2);
+	public int countByA2(String a2);
 
 	/**
 	* Returns the country where a3 = &#63; or throws a {@link NoSuchCountryException} if it could not be found.
@@ -133,7 +130,7 @@ public interface CountryPersistence extends BasePersistence<Country> {
 	* @return the matching country
 	* @throws NoSuchCountryException if a matching country could not be found
 	*/
-	public Country findByA3(java.lang.String a3) throws NoSuchCountryException;
+	public Country findByA3(String a3) throws NoSuchCountryException;
 
 	/**
 	* Returns the country where a3 = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
@@ -141,7 +138,7 @@ public interface CountryPersistence extends BasePersistence<Country> {
 	* @param a3 the a3
 	* @return the matching country, or <code>null</code> if a matching country could not be found
 	*/
-	public Country fetchByA3(java.lang.String a3);
+	public Country fetchByA3(String a3);
 
 	/**
 	* Returns the country where a3 = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -150,7 +147,7 @@ public interface CountryPersistence extends BasePersistence<Country> {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching country, or <code>null</code> if a matching country could not be found
 	*/
-	public Country fetchByA3(java.lang.String a3, boolean retrieveFromCache);
+	public Country fetchByA3(String a3, boolean retrieveFromCache);
 
 	/**
 	* Removes the country where a3 = &#63; from the database.
@@ -158,8 +155,7 @@ public interface CountryPersistence extends BasePersistence<Country> {
 	* @param a3 the a3
 	* @return the country that was removed
 	*/
-	public Country removeByA3(java.lang.String a3)
-		throws NoSuchCountryException;
+	public Country removeByA3(String a3) throws NoSuchCountryException;
 
 	/**
 	* Returns the number of countries where a3 = &#63;.
@@ -167,7 +163,7 @@ public interface CountryPersistence extends BasePersistence<Country> {
 	* @param a3 the a3
 	* @return the number of matching countries
 	*/
-	public int countByA3(java.lang.String a3);
+	public int countByA3(String a3);
 
 	/**
 	* Returns all the countries where active = &#63;.
@@ -420,5 +416,5 @@ public interface CountryPersistence extends BasePersistence<Country> {
 	public int countAll();
 
 	@Override
-	public java.util.Set<java.lang.String> getBadColumnNames();
+	public java.util.Set<String> getBadColumnNames();
 }

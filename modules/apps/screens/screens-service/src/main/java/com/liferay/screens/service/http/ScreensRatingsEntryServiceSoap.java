@@ -54,9 +54,8 @@ import java.rmi.RemoteException;
  */
 @ProviderType
 public class ScreensRatingsEntryServiceSoap {
-	public static java.lang.String deleteRatingsEntry(long classPK,
-		java.lang.String className, int ratingsLength)
-		throws RemoteException {
+	public static String deleteRatingsEntry(long classPK, String className,
+		int ratingsLength) throws RemoteException {
 		try {
 			com.liferay.portal.kernel.json.JSONObject returnValue = ScreensRatingsEntryServiceUtil.deleteRatingsEntry(classPK,
 					className, ratingsLength);
@@ -70,8 +69,8 @@ public class ScreensRatingsEntryServiceSoap {
 		}
 	}
 
-	public static java.lang.String getRatingsEntries(long assetEntryId,
-		int ratingsLength) throws RemoteException {
+	public static String getRatingsEntries(long assetEntryId, int ratingsLength)
+		throws RemoteException {
 		try {
 			com.liferay.portal.kernel.json.JSONObject returnValue = ScreensRatingsEntryServiceUtil.getRatingsEntries(assetEntryId,
 					ratingsLength);
@@ -85,9 +84,8 @@ public class ScreensRatingsEntryServiceSoap {
 		}
 	}
 
-	public static java.lang.String getRatingsEntries(long classPK,
-		java.lang.String className, int ratingsLength)
-		throws RemoteException {
+	public static String getRatingsEntries(long classPK, String className,
+		int ratingsLength) throws RemoteException {
 		try {
 			com.liferay.portal.kernel.json.JSONObject returnValue = ScreensRatingsEntryServiceUtil.getRatingsEntries(classPK,
 					className, ratingsLength);
@@ -101,9 +99,8 @@ public class ScreensRatingsEntryServiceSoap {
 		}
 	}
 
-	public static java.lang.String updateRatingsEntry(long classPK,
-		java.lang.String className, double score, int ratingsLength)
-		throws RemoteException {
+	public static String updateRatingsEntry(long classPK, String className,
+		double score, int ratingsLength) throws RemoteException {
 		try {
 			com.liferay.portal.kernel.json.JSONObject returnValue = ScreensRatingsEntryServiceUtil.updateRatingsEntry(classPK,
 					className, score, ratingsLength);

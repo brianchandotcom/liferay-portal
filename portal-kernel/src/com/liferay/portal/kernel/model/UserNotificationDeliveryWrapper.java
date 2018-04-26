@@ -130,7 +130,7 @@ public class UserNotificationDeliveryWrapper implements UserNotificationDelivery
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new UserNotificationDeliveryWrapper((UserNotificationDelivery)_userNotificationDelivery.clone());
 	}
 
@@ -145,7 +145,7 @@ public class UserNotificationDeliveryWrapper implements UserNotificationDelivery
 	* @return the fully qualified class name of this user notification delivery
 	*/
 	@Override
-	public java.lang.String getClassName() {
+	public String getClassName() {
 		return _userNotificationDelivery.getClassName();
 	}
 
@@ -220,7 +220,7 @@ public class UserNotificationDeliveryWrapper implements UserNotificationDelivery
 	* @return the portlet ID of this user notification delivery
 	*/
 	@Override
-	public java.lang.String getPortletId() {
+	public String getPortletId() {
 		return _userNotificationDelivery.getPortletId();
 	}
 
@@ -265,7 +265,7 @@ public class UserNotificationDeliveryWrapper implements UserNotificationDelivery
 	* @return the user uuid of this user notification delivery
 	*/
 	@Override
-	public java.lang.String getUserUuid() {
+	public String getUserUuid() {
 		return _userNotificationDelivery.getUserUuid();
 	}
 
@@ -310,7 +310,7 @@ public class UserNotificationDeliveryWrapper implements UserNotificationDelivery
 	}
 
 	@Override
-	public void setClassName(java.lang.String className) {
+	public void setClassName(String className) {
 		_userNotificationDelivery.setClassName(className);
 	}
 
@@ -400,7 +400,7 @@ public class UserNotificationDeliveryWrapper implements UserNotificationDelivery
 	* @param portletId the portlet ID of this user notification delivery
 	*/
 	@Override
-	public void setPortletId(java.lang.String portletId) {
+	public void setPortletId(String portletId) {
 		_userNotificationDelivery.setPortletId(portletId);
 	}
 
@@ -445,7 +445,7 @@ public class UserNotificationDeliveryWrapper implements UserNotificationDelivery
 	* @param userUuid the user uuid of this user notification delivery
 	*/
 	@Override
-	public void setUserUuid(java.lang.String userUuid) {
+	public void setUserUuid(String userUuid) {
 		_userNotificationDelivery.setUserUuid(userUuid);
 	}
 
@@ -460,7 +460,7 @@ public class UserNotificationDeliveryWrapper implements UserNotificationDelivery
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _userNotificationDelivery.toString();
 	}
 
@@ -470,7 +470,7 @@ public class UserNotificationDeliveryWrapper implements UserNotificationDelivery
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _userNotificationDelivery.toXmlString();
 	}
 

@@ -109,7 +109,7 @@ public class OAuth2ScopeGrantWrapper implements OAuth2ScopeGrant,
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new OAuth2ScopeGrantWrapper((OAuth2ScopeGrant)_oAuth2ScopeGrant.clone());
 	}
 
@@ -124,7 +124,7 @@ public class OAuth2ScopeGrantWrapper implements OAuth2ScopeGrant,
 	* @return the application name of this o auth2 scope grant
 	*/
 	@Override
-	public java.lang.String getApplicationName() {
+	public String getApplicationName() {
 		return _oAuth2ScopeGrant.getApplicationName();
 	}
 
@@ -134,7 +134,7 @@ public class OAuth2ScopeGrantWrapper implements OAuth2ScopeGrant,
 	* @return the bundle symbolic name of this o auth2 scope grant
 	*/
 	@Override
-	public java.lang.String getBundleSymbolicName() {
+	public String getBundleSymbolicName() {
 		return _oAuth2ScopeGrant.getBundleSymbolicName();
 	}
 
@@ -194,7 +194,7 @@ public class OAuth2ScopeGrantWrapper implements OAuth2ScopeGrant,
 	* @return the scope of this o auth2 scope grant
 	*/
 	@Override
-	public java.lang.String getScope() {
+	public String getScope() {
 		return _oAuth2ScopeGrant.getScope();
 	}
 
@@ -229,7 +229,7 @@ public class OAuth2ScopeGrantWrapper implements OAuth2ScopeGrant,
 	* @param applicationName the application name of this o auth2 scope grant
 	*/
 	@Override
-	public void setApplicationName(java.lang.String applicationName) {
+	public void setApplicationName(String applicationName) {
 		_oAuth2ScopeGrant.setApplicationName(applicationName);
 	}
 
@@ -239,7 +239,7 @@ public class OAuth2ScopeGrantWrapper implements OAuth2ScopeGrant,
 	* @param bundleSymbolicName the bundle symbolic name of this o auth2 scope grant
 	*/
 	@Override
-	public void setBundleSymbolicName(java.lang.String bundleSymbolicName) {
+	public void setBundleSymbolicName(String bundleSymbolicName) {
 		_oAuth2ScopeGrant.setBundleSymbolicName(bundleSymbolicName);
 	}
 
@@ -321,7 +321,7 @@ public class OAuth2ScopeGrantWrapper implements OAuth2ScopeGrant,
 	* @param scope the scope of this o auth2 scope grant
 	*/
 	@Override
-	public void setScope(java.lang.String scope) {
+	public void setScope(String scope) {
 		_oAuth2ScopeGrant.setScope(scope);
 	}
 
@@ -336,7 +336,7 @@ public class OAuth2ScopeGrantWrapper implements OAuth2ScopeGrant,
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _oAuth2ScopeGrant.toString();
 	}
 
@@ -346,7 +346,7 @@ public class OAuth2ScopeGrantWrapper implements OAuth2ScopeGrant,
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _oAuth2ScopeGrant.toXmlString();
 	}
 

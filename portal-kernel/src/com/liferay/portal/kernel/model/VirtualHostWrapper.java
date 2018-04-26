@@ -99,7 +99,7 @@ public class VirtualHostWrapper implements VirtualHost,
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new VirtualHostWrapper((VirtualHost)_virtualHost.clone());
 	}
 
@@ -129,7 +129,7 @@ public class VirtualHostWrapper implements VirtualHost,
 	* @return the hostname of this virtual host
 	*/
 	@Override
-	public java.lang.String getHostname() {
+	public String getHostname() {
 		return _virtualHost.getHostname();
 	}
 
@@ -239,7 +239,7 @@ public class VirtualHostWrapper implements VirtualHost,
 	* @param hostname the hostname of this virtual host
 	*/
 	@Override
-	public void setHostname(java.lang.String hostname) {
+	public void setHostname(String hostname) {
 		_virtualHost.setHostname(hostname);
 	}
 
@@ -304,7 +304,7 @@ public class VirtualHostWrapper implements VirtualHost,
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _virtualHost.toString();
 	}
 
@@ -314,7 +314,7 @@ public class VirtualHostWrapper implements VirtualHost,
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _virtualHost.toXmlString();
 	}
 

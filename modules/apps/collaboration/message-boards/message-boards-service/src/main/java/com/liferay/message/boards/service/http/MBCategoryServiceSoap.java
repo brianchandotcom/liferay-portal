@@ -67,8 +67,7 @@ import java.rmi.RemoteException;
 @ProviderType
 public class MBCategoryServiceSoap {
 	public static com.liferay.message.boards.model.MBCategorySoap addCategory(
-		long userId, long parentCategoryId, java.lang.String name,
-		java.lang.String description,
+		long userId, long parentCategoryId, String name, String description,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
@@ -85,15 +84,13 @@ public class MBCategoryServiceSoap {
 	}
 
 	public static com.liferay.message.boards.model.MBCategorySoap addCategory(
-		long parentCategoryId, java.lang.String name,
-		java.lang.String description, java.lang.String displayStyle,
-		java.lang.String emailAddress, java.lang.String inProtocol,
-		java.lang.String inServerName, int inServerPort, boolean inUseSSL,
-		java.lang.String inUserName, java.lang.String inPassword,
-		int inReadInterval, java.lang.String outEmailAddress,
-		boolean outCustom, java.lang.String outServerName, int outServerPort,
-		boolean outUseSSL, java.lang.String outUserName,
-		java.lang.String outPassword, boolean mailingListActive,
+		long parentCategoryId, String name, String description,
+		String displayStyle, String emailAddress, String inProtocol,
+		String inServerName, int inServerPort, boolean inUseSSL,
+		String inUserName, String inPassword, int inReadInterval,
+		String outEmailAddress, boolean outCustom, String outServerName,
+		int outServerPort, boolean outUseSSL, String outUserName,
+		String outPassword, boolean mailingListActive,
 		boolean allowAnonymousEmail,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
@@ -473,13 +470,13 @@ public class MBCategoryServiceSoap {
 		}
 	}
 
-	public static java.lang.Long[] getSubcategoryIds(Long[] categoryIds,
-		long groupId, long categoryId) throws RemoteException {
+	public static Long[] getSubcategoryIds(Long[] categoryIds, long groupId,
+		long categoryId) throws RemoteException {
 		try {
-			java.util.List<java.lang.Long> returnValue = MBCategoryServiceUtil.getSubcategoryIds(ListUtil.toList(
+			java.util.List<Long> returnValue = MBCategoryServiceUtil.getSubcategoryIds(ListUtil.toList(
 						categoryIds), groupId, categoryId);
 
-			return returnValue.toArray(new java.lang.Long[returnValue.size()]);
+			return returnValue.toArray(new Long[returnValue.size()]);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -602,15 +599,13 @@ public class MBCategoryServiceSoap {
 	}
 
 	public static com.liferay.message.boards.model.MBCategorySoap updateCategory(
-		long categoryId, long parentCategoryId, java.lang.String name,
-		java.lang.String description, java.lang.String displayStyle,
-		java.lang.String emailAddress, java.lang.String inProtocol,
-		java.lang.String inServerName, int inServerPort, boolean inUseSSL,
-		java.lang.String inUserName, java.lang.String inPassword,
-		int inReadInterval, java.lang.String outEmailAddress,
-		boolean outCustom, java.lang.String outServerName, int outServerPort,
-		boolean outUseSSL, java.lang.String outUserName,
-		java.lang.String outPassword, boolean mailingListActive,
+		long categoryId, long parentCategoryId, String name,
+		String description, String displayStyle, String emailAddress,
+		String inProtocol, String inServerName, int inServerPort,
+		boolean inUseSSL, String inUserName, String inPassword,
+		int inReadInterval, String outEmailAddress, boolean outCustom,
+		String outServerName, int outServerPort, boolean outUseSSL,
+		String outUserName, String outPassword, boolean mailingListActive,
 		boolean allowAnonymousEmail, boolean mergeWithParentCategory,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {

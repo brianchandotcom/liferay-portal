@@ -101,7 +101,7 @@ public class JournalArticleResourceWrapper implements JournalArticleResource,
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new JournalArticleResourceWrapper((JournalArticleResource)_journalArticleResource.clone());
 	}
 
@@ -116,7 +116,7 @@ public class JournalArticleResourceWrapper implements JournalArticleResource,
 	* @return the article ID of this journal article resource
 	*/
 	@Override
-	public java.lang.String getArticleId() {
+	public String getArticleId() {
 		return _journalArticleResource.getArticleId();
 	}
 
@@ -176,7 +176,7 @@ public class JournalArticleResourceWrapper implements JournalArticleResource,
 	* @return the uuid of this journal article resource
 	*/
 	@Override
-	public java.lang.String getUuid() {
+	public String getUuid() {
 		return _journalArticleResource.getUuid();
 	}
 
@@ -211,7 +211,7 @@ public class JournalArticleResourceWrapper implements JournalArticleResource,
 	* @param articleId the article ID of this journal article resource
 	*/
 	@Override
-	public void setArticleId(java.lang.String articleId) {
+	public void setArticleId(String articleId) {
 		_journalArticleResource.setArticleId(articleId);
 	}
 
@@ -292,7 +292,7 @@ public class JournalArticleResourceWrapper implements JournalArticleResource,
 	* @param uuid the uuid of this journal article resource
 	*/
 	@Override
-	public void setUuid(java.lang.String uuid) {
+	public void setUuid(String uuid) {
 		_journalArticleResource.setUuid(uuid);
 	}
 
@@ -307,7 +307,7 @@ public class JournalArticleResourceWrapper implements JournalArticleResource,
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _journalArticleResource.toString();
 	}
 
@@ -317,7 +317,7 @@ public class JournalArticleResourceWrapper implements JournalArticleResource,
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _journalArticleResource.toXmlString();
 	}
 

@@ -72,9 +72,8 @@ public interface KaleoNotificationLocalService extends BaseLocalService,
 	public KaleoNotification addKaleoNotification(
 		KaleoNotification kaleoNotification);
 
-	public KaleoNotification addKaleoNotification(
-		java.lang.String kaleoClassName, long kaleoClassPK,
-		long kaleoDefinitionVersionId, java.lang.String kaleoNodeName,
+	public KaleoNotification addKaleoNotification(String kaleoClassName,
+		long kaleoClassPK, long kaleoDefinitionVersionId, String kaleoNodeName,
 		Notification notification, ServiceContext serviceContext)
 		throws PortalException;
 
@@ -215,12 +214,11 @@ public interface KaleoNotificationLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<KaleoNotification> getKaleoNotifications(
-		java.lang.String kaleoClassName, long kaleoClassPK);
+		String kaleoClassName, long kaleoClassPK);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<KaleoNotification> getKaleoNotifications(
-		java.lang.String kaleoClassName, long kaleoClassPK,
-		java.lang.String executionType);
+		String kaleoClassName, long kaleoClassPK, String executionType);
 
 	/**
 	* Returns the number of kaleo notifications.
@@ -235,7 +233,7 @@ public interface KaleoNotificationLocalService extends BaseLocalService,
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

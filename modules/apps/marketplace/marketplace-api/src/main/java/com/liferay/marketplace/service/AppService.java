@@ -60,7 +60,7 @@ public interface AppService extends BaseService {
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	public void installApp(long remoteAppId) throws PortalException;
 

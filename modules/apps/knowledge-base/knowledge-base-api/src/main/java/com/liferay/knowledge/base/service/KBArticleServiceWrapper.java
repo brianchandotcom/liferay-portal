@@ -34,11 +34,10 @@ public class KBArticleServiceWrapper implements KBArticleService,
 
 	@Override
 	public com.liferay.knowledge.base.model.KBArticle addKBArticle(
-		java.lang.String portletId, long parentResourceClassNameId,
-		long parentResourcePrimKey, java.lang.String title,
-		java.lang.String urlTitle, java.lang.String content,
-		java.lang.String description, java.lang.String sourceURL,
-		java.lang.String[] sections, java.lang.String[] selectedFileNames,
+		String portletId, long parentResourceClassNameId,
+		long parentResourcePrimKey, String title, String urlTitle,
+		String content, String description, String sourceURL,
+		String[] sections, String[] selectedFileNames,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _kbArticleService.addKBArticle(portletId,
@@ -49,7 +48,7 @@ public class KBArticleServiceWrapper implements KBArticleService,
 
 	@Override
 	public int addKBArticlesMarkdown(long groupId, long parentKBFolderId,
-		java.lang.String fileName, boolean prioritizeByNumericalPrefix,
+		String fileName, boolean prioritizeByNumericalPrefix,
 		java.io.InputStream inputStream,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -60,8 +59,8 @@ public class KBArticleServiceWrapper implements KBArticleService,
 
 	@Override
 	public void addTempAttachment(long groupId, long resourcePrimKey,
-		java.lang.String fileName, java.lang.String tempFolderName,
-		java.io.InputStream inputStream, java.lang.String mimeType)
+		String fileName, String tempFolderName,
+		java.io.InputStream inputStream, String mimeType)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_kbArticleService.addTempAttachment(groupId, resourcePrimKey, fileName,
 			tempFolderName, inputStream, mimeType);
@@ -82,7 +81,7 @@ public class KBArticleServiceWrapper implements KBArticleService,
 
 	@Override
 	public void deleteTempAttachment(long groupId, long resourcePrimKey,
-		java.lang.String fileName, java.lang.String tempFolderName)
+		String fileName, String tempFolderName)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_kbArticleService.deleteTempAttachment(groupId, resourcePrimKey,
 			fileName, tempFolderName);
@@ -97,7 +96,7 @@ public class KBArticleServiceWrapper implements KBArticleService,
 
 	@Override
 	public com.liferay.knowledge.base.model.KBArticle fetchKBArticleByUrlTitle(
-		long groupId, long kbFolderId, java.lang.String urlTitle)
+		long groupId, long kbFolderId, String urlTitle)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _kbArticleService.fetchKBArticleByUrlTitle(groupId, kbFolderId,
 			urlTitle);
@@ -112,7 +111,7 @@ public class KBArticleServiceWrapper implements KBArticleService,
 
 	@Override
 	public com.liferay.knowledge.base.model.KBArticle fetchLatestKBArticleByUrlTitle(
-		long groupId, long kbFolderId, java.lang.String urlTitle, int status)
+		long groupId, long kbFolderId, String urlTitle, int status)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _kbArticleService.fetchLatestKBArticleByUrlTitle(groupId,
 			kbFolderId, urlTitle, status);
@@ -156,8 +155,8 @@ public class KBArticleServiceWrapper implements KBArticleService,
 	}
 
 	@Override
-	public java.lang.String getGroupKBArticlesRSS(int status, int rssDelta,
-		java.lang.String rssDisplayStyle, java.lang.String rssFormat,
+	public String getGroupKBArticlesRSS(int status, int rssDelta,
+		String rssDisplayStyle, String rssFormat,
 		com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _kbArticleService.getGroupKBArticlesRSS(status, rssDelta,
@@ -195,9 +194,8 @@ public class KBArticleServiceWrapper implements KBArticleService,
 	}
 
 	@Override
-	public java.lang.String getKBArticleRSS(long resourcePrimKey, int status,
-		int rssDelta, java.lang.String rssDisplayStyle,
-		java.lang.String rssFormat,
+	public String getKBArticleRSS(long resourcePrimKey, int status,
+		int rssDelta, String rssDisplayStyle, String rssFormat,
 		com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _kbArticleService.getKBArticleRSS(resourcePrimKey, status,
@@ -245,9 +243,9 @@ public class KBArticleServiceWrapper implements KBArticleService,
 
 	@Override
 	public com.liferay.knowledge.base.model.KBArticleSearchDisplay getKBArticleSearchDisplay(
-		long groupId, java.lang.String title, java.lang.String content,
-		int status, java.util.Date startDate, java.util.Date endDate,
-		boolean andOperator, int[] curStartValues, int cur, int delta,
+		long groupId, String title, String content, int status,
+		java.util.Date startDate, java.util.Date endDate, boolean andOperator,
+		int[] curStartValues, int cur, int delta,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.knowledge.base.model.KBArticle> orderByComparator)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _kbArticleService.getKBArticleSearchDisplay(groupId, title,
@@ -283,7 +281,7 @@ public class KBArticleServiceWrapper implements KBArticleService,
 	* @return the OSGi service identifier
 	*/
 	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
+	public String getOSGiServiceIdentifier() {
 		return _kbArticleService.getOSGiServiceIdentifier();
 	}
 
@@ -296,16 +294,15 @@ public class KBArticleServiceWrapper implements KBArticleService,
 
 	@Override
 	public java.util.List<com.liferay.knowledge.base.model.KBArticle> getSectionsKBArticles(
-		long groupId, java.lang.String[] sections, int status, int start,
-		int end,
+		long groupId, String[] sections, int status, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.knowledge.base.model.KBArticle> orderByComparator) {
 		return _kbArticleService.getSectionsKBArticles(groupId, sections,
 			status, start, end, orderByComparator);
 	}
 
 	@Override
-	public int getSectionsKBArticlesCount(long groupId,
-		java.lang.String[] sections, int status) {
+	public int getSectionsKBArticlesCount(long groupId, String[] sections,
+		int status) {
 		return _kbArticleService.getSectionsKBArticlesCount(groupId, sections,
 			status);
 	}
@@ -337,8 +334,7 @@ public class KBArticleServiceWrapper implements KBArticleService,
 	}
 
 	@Override
-	public java.lang.String[] getTempAttachmentNames(long groupId,
-		java.lang.String tempFolderName)
+	public String[] getTempAttachmentNames(long groupId, String tempFolderName)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _kbArticleService.getTempAttachmentNames(groupId, tempFolderName);
 	}
@@ -362,8 +358,7 @@ public class KBArticleServiceWrapper implements KBArticleService,
 	}
 
 	@Override
-	public void subscribeGroupKBArticles(long groupId,
-		java.lang.String portletId)
+	public void subscribeGroupKBArticles(long groupId, String portletId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_kbArticleService.subscribeGroupKBArticles(groupId, portletId);
 	}
@@ -375,8 +370,7 @@ public class KBArticleServiceWrapper implements KBArticleService,
 	}
 
 	@Override
-	public void unsubscribeGroupKBArticles(long groupId,
-		java.lang.String portletId)
+	public void unsubscribeGroupKBArticles(long groupId, String portletId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_kbArticleService.unsubscribeGroupKBArticles(groupId, portletId);
 	}
@@ -389,9 +383,8 @@ public class KBArticleServiceWrapper implements KBArticleService,
 
 	@Override
 	public com.liferay.knowledge.base.model.KBArticle updateKBArticle(
-		long resourcePrimKey, java.lang.String title, java.lang.String content,
-		java.lang.String description, java.lang.String sourceURL,
-		java.lang.String[] sections, java.lang.String[] selectedFileNames,
+		long resourcePrimKey, String title, String content, String description,
+		String sourceURL, String[] sections, String[] selectedFileNames,
 		long[] removeFileEntryIds,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -402,7 +395,7 @@ public class KBArticleServiceWrapper implements KBArticleService,
 
 	@Override
 	public void updateKBArticlesPriorities(long groupId,
-		java.util.Map<java.lang.Long, java.lang.Double> resourcePrimKeyToPriorityMap)
+		java.util.Map<Long, Double> resourcePrimKeyToPriorityMap)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_kbArticleService.updateKBArticlesPriorities(groupId,
 			resourcePrimKeyToPriorityMap);

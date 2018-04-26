@@ -113,7 +113,7 @@ public class CountryUtil {
 	* @return the matching country
 	* @throws NoSuchCountryException if a matching country could not be found
 	*/
-	public static Country findByName(java.lang.String name)
+	public static Country findByName(String name)
 		throws com.liferay.portal.kernel.exception.NoSuchCountryException {
 		return getPersistence().findByName(name);
 	}
@@ -124,7 +124,7 @@ public class CountryUtil {
 	* @param name the name
 	* @return the matching country, or <code>null</code> if a matching country could not be found
 	*/
-	public static Country fetchByName(java.lang.String name) {
+	public static Country fetchByName(String name) {
 		return getPersistence().fetchByName(name);
 	}
 
@@ -135,8 +135,7 @@ public class CountryUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching country, or <code>null</code> if a matching country could not be found
 	*/
-	public static Country fetchByName(java.lang.String name,
-		boolean retrieveFromCache) {
+	public static Country fetchByName(String name, boolean retrieveFromCache) {
 		return getPersistence().fetchByName(name, retrieveFromCache);
 	}
 
@@ -146,7 +145,7 @@ public class CountryUtil {
 	* @param name the name
 	* @return the country that was removed
 	*/
-	public static Country removeByName(java.lang.String name)
+	public static Country removeByName(String name)
 		throws com.liferay.portal.kernel.exception.NoSuchCountryException {
 		return getPersistence().removeByName(name);
 	}
@@ -157,7 +156,7 @@ public class CountryUtil {
 	* @param name the name
 	* @return the number of matching countries
 	*/
-	public static int countByName(java.lang.String name) {
+	public static int countByName(String name) {
 		return getPersistence().countByName(name);
 	}
 
@@ -168,7 +167,7 @@ public class CountryUtil {
 	* @return the matching country
 	* @throws NoSuchCountryException if a matching country could not be found
 	*/
-	public static Country findByA2(java.lang.String a2)
+	public static Country findByA2(String a2)
 		throws com.liferay.portal.kernel.exception.NoSuchCountryException {
 		return getPersistence().findByA2(a2);
 	}
@@ -179,7 +178,7 @@ public class CountryUtil {
 	* @param a2 the a2
 	* @return the matching country, or <code>null</code> if a matching country could not be found
 	*/
-	public static Country fetchByA2(java.lang.String a2) {
+	public static Country fetchByA2(String a2) {
 		return getPersistence().fetchByA2(a2);
 	}
 
@@ -190,8 +189,7 @@ public class CountryUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching country, or <code>null</code> if a matching country could not be found
 	*/
-	public static Country fetchByA2(java.lang.String a2,
-		boolean retrieveFromCache) {
+	public static Country fetchByA2(String a2, boolean retrieveFromCache) {
 		return getPersistence().fetchByA2(a2, retrieveFromCache);
 	}
 
@@ -201,7 +199,7 @@ public class CountryUtil {
 	* @param a2 the a2
 	* @return the country that was removed
 	*/
-	public static Country removeByA2(java.lang.String a2)
+	public static Country removeByA2(String a2)
 		throws com.liferay.portal.kernel.exception.NoSuchCountryException {
 		return getPersistence().removeByA2(a2);
 	}
@@ -212,7 +210,7 @@ public class CountryUtil {
 	* @param a2 the a2
 	* @return the number of matching countries
 	*/
-	public static int countByA2(java.lang.String a2) {
+	public static int countByA2(String a2) {
 		return getPersistence().countByA2(a2);
 	}
 
@@ -223,7 +221,7 @@ public class CountryUtil {
 	* @return the matching country
 	* @throws NoSuchCountryException if a matching country could not be found
 	*/
-	public static Country findByA3(java.lang.String a3)
+	public static Country findByA3(String a3)
 		throws com.liferay.portal.kernel.exception.NoSuchCountryException {
 		return getPersistence().findByA3(a3);
 	}
@@ -234,7 +232,7 @@ public class CountryUtil {
 	* @param a3 the a3
 	* @return the matching country, or <code>null</code> if a matching country could not be found
 	*/
-	public static Country fetchByA3(java.lang.String a3) {
+	public static Country fetchByA3(String a3) {
 		return getPersistence().fetchByA3(a3);
 	}
 
@@ -245,8 +243,7 @@ public class CountryUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching country, or <code>null</code> if a matching country could not be found
 	*/
-	public static Country fetchByA3(java.lang.String a3,
-		boolean retrieveFromCache) {
+	public static Country fetchByA3(String a3, boolean retrieveFromCache) {
 		return getPersistence().fetchByA3(a3, retrieveFromCache);
 	}
 
@@ -256,7 +253,7 @@ public class CountryUtil {
 	* @param a3 the a3
 	* @return the country that was removed
 	*/
-	public static Country removeByA3(java.lang.String a3)
+	public static Country removeByA3(String a3)
 		throws com.liferay.portal.kernel.exception.NoSuchCountryException {
 		return getPersistence().removeByA3(a3);
 	}
@@ -267,7 +264,7 @@ public class CountryUtil {
 	* @param a3 the a3
 	* @return the number of matching countries
 	*/
-	public static int countByA3(java.lang.String a3) {
+	public static int countByA3(String a3) {
 		return getPersistence().countByA3(a3);
 	}
 
@@ -573,7 +570,7 @@ public class CountryUtil {
 		return getPersistence().countAll();
 	}
 
-	public static java.util.Set<java.lang.String> getBadColumnNames() {
+	public static java.util.Set<String> getBadColumnNames() {
 		return getPersistence().getBadColumnNames();
 	}
 

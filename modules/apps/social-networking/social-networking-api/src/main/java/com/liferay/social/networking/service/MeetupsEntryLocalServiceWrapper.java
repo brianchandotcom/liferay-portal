@@ -35,11 +35,11 @@ public class MeetupsEntryLocalServiceWrapper implements MeetupsEntryLocalService
 
 	@Override
 	public com.liferay.social.networking.model.MeetupsEntry addMeetupsEntry(
-		long userId, java.lang.String title, java.lang.String description,
-		int startDateMonth, int startDateDay, int startDateYear,
-		int startDateHour, int startDateMinute, int endDateMonth,
-		int endDateDay, int endDateYear, int endDateHour, int endDateMinute,
-		int totalAttendees, int maxAttendees, double price, byte[] thumbnail)
+		long userId, String title, String description, int startDateMonth,
+		int startDateDay, int startDateYear, int startDateHour,
+		int startDateMinute, int endDateMonth, int endDateDay, int endDateYear,
+		int endDateHour, int endDateMinute, int totalAttendees,
+		int maxAttendees, double price, byte[] thumbnail)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _meetupsEntryLocalService.addMeetupsEntry(userId, title,
 			description, startDateMonth, startDateDay, startDateYear,
@@ -268,7 +268,7 @@ public class MeetupsEntryLocalServiceWrapper implements MeetupsEntryLocalService
 	* @return the OSGi service identifier
 	*/
 	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
+	public String getOSGiServiceIdentifier() {
 		return _meetupsEntryLocalService.getOSGiServiceIdentifier();
 	}
 
@@ -281,12 +281,11 @@ public class MeetupsEntryLocalServiceWrapper implements MeetupsEntryLocalService
 
 	@Override
 	public com.liferay.social.networking.model.MeetupsEntry updateMeetupsEntry(
-		long userId, long meetupsEntryId, java.lang.String title,
-		java.lang.String description, int startDateMonth, int startDateDay,
-		int startDateYear, int startDateHour, int startDateMinute,
-		int endDateMonth, int endDateDay, int endDateYear, int endDateHour,
-		int endDateMinute, int totalAttendees, int maxAttendees, double price,
-		byte[] thumbnail)
+		long userId, long meetupsEntryId, String title, String description,
+		int startDateMonth, int startDateDay, int startDateYear,
+		int startDateHour, int startDateMinute, int endDateMonth,
+		int endDateDay, int endDateYear, int endDateHour, int endDateMinute,
+		int totalAttendees, int maxAttendees, double price, byte[] thumbnail)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _meetupsEntryLocalService.updateMeetupsEntry(userId,
 			meetupsEntryId, title, description, startDateMonth, startDateDay,

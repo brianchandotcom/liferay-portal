@@ -233,7 +233,7 @@ public interface DDMStructureLinkLocalService extends BaseLocalService,
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -272,22 +272,22 @@ public interface DDMStructureLinkLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<DDMStructure> getStructureLinkStructures(long classNameId,
-		long classPK, java.lang.String keywords) throws PortalException;
+		long classPK, String keywords) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<DDMStructure> getStructureLinkStructures(long classNameId,
-		long classPK, java.lang.String keywords, int start, int end)
+		long classPK, String keywords, int start, int end)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<DDMStructure> getStructureLinkStructures(long classNameId,
-		long classPK, java.lang.String keywords, int start, int end,
+		long classPK, String keywords, int start, int end,
 		OrderByComparator<DDMStructureLink> orderByComparator)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getStructureLinkStructuresCount(long classNameId, long classPK,
-		java.lang.String keywords);
+		String keywords);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public DDMStructureLink getUniqueStructureLink(long classNameId,

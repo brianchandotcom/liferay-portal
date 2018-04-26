@@ -47,8 +47,8 @@ public class AttachmentLocalServiceWrapper implements AttachmentLocalService,
 
 	@Override
 	public com.liferay.mail.reader.model.Attachment addAttachment(long userId,
-		long messageId, java.lang.String contentPath,
-		java.lang.String fileName, long size, java.io.File file)
+		long messageId, String contentPath, String fileName, long size,
+		java.io.File file)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _attachmentLocalService.addAttachment(userId, messageId,
 			contentPath, fileName, size, file);
@@ -274,7 +274,7 @@ public class AttachmentLocalServiceWrapper implements AttachmentLocalService,
 	* @return the OSGi service identifier
 	*/
 	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
+	public String getOSGiServiceIdentifier() {
 		return _attachmentLocalService.getOSGiServiceIdentifier();
 	}
 

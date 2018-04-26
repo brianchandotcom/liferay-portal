@@ -100,10 +100,9 @@ public interface UserGroupLocalService extends BaseLocalService,
 	* @deprecated As of 6.2.0, replaced by {@link #addUserGroup(long, long,
 	String, String, ServiceContext)}
 	*/
-	@java.lang.Deprecated
-	public UserGroup addUserGroup(long userId, long companyId,
-		java.lang.String name, java.lang.String description)
-		throws PortalException;
+	@Deprecated
+	public UserGroup addUserGroup(long userId, long companyId, String name,
+		String description) throws PortalException;
 
 	/**
 	* Adds a user group.
@@ -124,9 +123,9 @@ public interface UserGroupLocalService extends BaseLocalService,
 	user group.
 	* @return the user group
 	*/
-	public UserGroup addUserGroup(long userId, long companyId,
-		java.lang.String name, java.lang.String description,
-		ServiceContext serviceContext) throws PortalException;
+	public UserGroup addUserGroup(long userId, long companyId, String name,
+		String description, ServiceContext serviceContext)
+		throws PortalException;
 
 	/**
 	* Adds the user group to the database. Also notifies the appropriate model listeners.
@@ -158,7 +157,7 @@ public interface UserGroupLocalService extends BaseLocalService,
 	* @param userId the primary key of the user
 	* @deprecated As of 6.2.0
 	*/
-	@java.lang.Deprecated
+	@Deprecated
 	public void copyUserGroupLayouts(long userGroupId, long userId)
 		throws PortalException;
 
@@ -170,7 +169,7 @@ public interface UserGroupLocalService extends BaseLocalService,
 	* @param userIds the primary keys of the users
 	* @deprecated As of 6.1.0
 	*/
-	@java.lang.Deprecated
+	@Deprecated
 	public void copyUserGroupLayouts(long userGroupId, long[] userIds)
 		throws PortalException;
 
@@ -181,7 +180,7 @@ public interface UserGroupLocalService extends BaseLocalService,
 	* @param userId the primary key of the user
 	* @deprecated As of 6.1.0
 	*/
-	@java.lang.Deprecated
+	@Deprecated
 	public void copyUserGroupLayouts(long[] userGroupIds, long userId)
 		throws PortalException;
 
@@ -313,7 +312,7 @@ public interface UserGroupLocalService extends BaseLocalService,
 	public UserGroup fetchUserGroup(long userGroupId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public UserGroup fetchUserGroup(long companyId, java.lang.String name);
+	public UserGroup fetchUserGroup(long companyId, String name);
 
 	/**
 	* Returns the user group with the matching UUID and company.
@@ -323,7 +322,7 @@ public interface UserGroupLocalService extends BaseLocalService,
 	* @return the matching user group, or <code>null</code> if a matching user group could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public UserGroup fetchUserGroupByUuidAndCompanyId(java.lang.String uuid,
+	public UserGroup fetchUserGroupByUuidAndCompanyId(String uuid,
 		long companyId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -367,7 +366,7 @@ public interface UserGroupLocalService extends BaseLocalService,
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -414,7 +413,7 @@ public interface UserGroupLocalService extends BaseLocalService,
 	* @return Returns the user group with the name
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public UserGroup getUserGroup(long companyId, java.lang.String name)
+	public UserGroup getUserGroup(long companyId, String name)
 		throws PortalException;
 
 	/**
@@ -426,8 +425,8 @@ public interface UserGroupLocalService extends BaseLocalService,
 	* @throws PortalException if a matching user group could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public UserGroup getUserGroupByUuidAndCompanyId(java.lang.String uuid,
-		long companyId) throws PortalException;
+	public UserGroup getUserGroupByUuidAndCompanyId(String uuid, long companyId)
+		throws PortalException;
 
 	/**
 	* Returns a range of all the user groups.
@@ -537,9 +536,9 @@ public interface UserGroupLocalService extends BaseLocalService,
 	* @see com.liferay.portal.kernel.service.persistence.UserGroupFinder
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<UserGroup> search(long companyId, java.lang.String keywords,
-		LinkedHashMap<java.lang.String, java.lang.Object> params, int start,
-		int end, OrderByComparator<UserGroup> obc);
+	public List<UserGroup> search(long companyId, String keywords,
+		LinkedHashMap<String, Object> params, int start, int end,
+		OrderByComparator<UserGroup> obc);
 
 	/**
 	* Returns an ordered range of all the user groups that match the keywords,
@@ -570,9 +569,8 @@ public interface UserGroupLocalService extends BaseLocalService,
 	* @see com.liferay.user.groups.admin.web.search.UserGroupIndexer
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Hits search(long companyId, java.lang.String keywords,
-		LinkedHashMap<java.lang.String, java.lang.Object> params, int start,
-		int end, Sort sort);
+	public Hits search(long companyId, String keywords,
+		LinkedHashMap<String, Object> params, int start, int end, Sort sort);
 
 	/**
 	* Returns an ordered range of all the user groups that match the name and
@@ -605,9 +603,8 @@ public interface UserGroupLocalService extends BaseLocalService,
 	* @see com.liferay.portal.kernel.service.persistence.UserGroupFinder
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<UserGroup> search(long companyId, java.lang.String name,
-		java.lang.String description,
-		LinkedHashMap<java.lang.String, java.lang.Object> params,
+	public List<UserGroup> search(long companyId, String name,
+		String description, LinkedHashMap<String, Object> params,
 		boolean andOperator, int start, int end,
 		OrderByComparator<UserGroup> obc);
 
@@ -643,10 +640,9 @@ public interface UserGroupLocalService extends BaseLocalService,
 	* @see com.liferay.portal.kernel.service.persistence.UserGroupFinder
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Hits search(long companyId, java.lang.String name,
-		java.lang.String description,
-		LinkedHashMap<java.lang.String, java.lang.Object> params,
-		boolean andSearch, int start, int end, Sort sort);
+	public Hits search(long companyId, String name, String description,
+		LinkedHashMap<String, Object> params, boolean andSearch, int start,
+		int end, Sort sort);
 
 	/**
 	* Returns the number of user groups that match the keywords
@@ -661,8 +657,8 @@ public interface UserGroupLocalService extends BaseLocalService,
 	* @see com.liferay.portal.kernel.service.persistence.UserGroupFinder
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int searchCount(long companyId, java.lang.String keywords,
-		LinkedHashMap<java.lang.String, java.lang.Object> params);
+	public int searchCount(long companyId, String keywords,
+		LinkedHashMap<String, Object> params);
 
 	/**
 	* Returns the number of user groups that match the name and description.
@@ -680,21 +676,17 @@ public interface UserGroupLocalService extends BaseLocalService,
 	* @see com.liferay.portal.kernel.service.persistence.UserGroupFinder
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int searchCount(long companyId, java.lang.String name,
-		java.lang.String description,
-		LinkedHashMap<java.lang.String, java.lang.Object> params,
-		boolean andOperator);
+	public int searchCount(long companyId, String name, String description,
+		LinkedHashMap<String, Object> params, boolean andOperator);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public BaseModelSearchResult<UserGroup> searchUserGroups(long companyId,
-		java.lang.String keywords,
-		LinkedHashMap<java.lang.String, java.lang.Object> params, int start,
+		String keywords, LinkedHashMap<String, Object> params, int start,
 		int end, Sort sort) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public BaseModelSearchResult<UserGroup> searchUserGroups(long companyId,
-		java.lang.String name, java.lang.String description,
-		LinkedHashMap<java.lang.String, java.lang.Object> params,
+		String name, String description, LinkedHashMap<String, Object> params,
 		boolean andSearch, int start, int end, Sort sort)
 		throws PortalException;
 
@@ -735,10 +727,9 @@ public interface UserGroupLocalService extends BaseLocalService,
 	* @deprecated As of 6.2.0, replaced by {@link #updateUserGroup(long, long,
 	String, String, ServiceContext)}
 	*/
-	@java.lang.Deprecated
+	@Deprecated
 	public UserGroup updateUserGroup(long companyId, long userGroupId,
-		java.lang.String name, java.lang.String description)
-		throws PortalException;
+		String name, String description) throws PortalException;
 
 	/**
 	* Updates the user group.
@@ -753,8 +744,8 @@ public interface UserGroupLocalService extends BaseLocalService,
 	* @return the user group
 	*/
 	public UserGroup updateUserGroup(long companyId, long userGroupId,
-		java.lang.String name, java.lang.String description,
-		ServiceContext serviceContext) throws PortalException;
+		String name, String description, ServiceContext serviceContext)
+		throws PortalException;
 
 	/**
 	* Updates the user group in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.

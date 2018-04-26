@@ -115,7 +115,7 @@ public class DLFileVersionUtil {
 	* @param uuid the uuid
 	* @return the matching document library file versions
 	*/
-	public static List<DLFileVersion> findByUuid(java.lang.String uuid) {
+	public static List<DLFileVersion> findByUuid(String uuid) {
 		return getPersistence().findByUuid(uuid);
 	}
 
@@ -131,8 +131,7 @@ public class DLFileVersionUtil {
 	* @param end the upper bound of the range of document library file versions (not inclusive)
 	* @return the range of matching document library file versions
 	*/
-	public static List<DLFileVersion> findByUuid(java.lang.String uuid,
-		int start, int end) {
+	public static List<DLFileVersion> findByUuid(String uuid, int start, int end) {
 		return getPersistence().findByUuid(uuid, start, end);
 	}
 
@@ -149,8 +148,8 @@ public class DLFileVersionUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching document library file versions
 	*/
-	public static List<DLFileVersion> findByUuid(java.lang.String uuid,
-		int start, int end, OrderByComparator<DLFileVersion> orderByComparator) {
+	public static List<DLFileVersion> findByUuid(String uuid, int start,
+		int end, OrderByComparator<DLFileVersion> orderByComparator) {
 		return getPersistence().findByUuid(uuid, start, end, orderByComparator);
 	}
 
@@ -168,8 +167,8 @@ public class DLFileVersionUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching document library file versions
 	*/
-	public static List<DLFileVersion> findByUuid(java.lang.String uuid,
-		int start, int end, OrderByComparator<DLFileVersion> orderByComparator,
+	public static List<DLFileVersion> findByUuid(String uuid, int start,
+		int end, OrderByComparator<DLFileVersion> orderByComparator,
 		boolean retrieveFromCache) {
 		return getPersistence()
 				   .findByUuid(uuid, start, end, orderByComparator,
@@ -184,7 +183,7 @@ public class DLFileVersionUtil {
 	* @return the first matching document library file version
 	* @throws NoSuchFileVersionException if a matching document library file version could not be found
 	*/
-	public static DLFileVersion findByUuid_First(java.lang.String uuid,
+	public static DLFileVersion findByUuid_First(String uuid,
 		OrderByComparator<DLFileVersion> orderByComparator)
 		throws com.liferay.document.library.kernel.exception.NoSuchFileVersionException {
 		return getPersistence().findByUuid_First(uuid, orderByComparator);
@@ -197,7 +196,7 @@ public class DLFileVersionUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching document library file version, or <code>null</code> if a matching document library file version could not be found
 	*/
-	public static DLFileVersion fetchByUuid_First(java.lang.String uuid,
+	public static DLFileVersion fetchByUuid_First(String uuid,
 		OrderByComparator<DLFileVersion> orderByComparator) {
 		return getPersistence().fetchByUuid_First(uuid, orderByComparator);
 	}
@@ -210,7 +209,7 @@ public class DLFileVersionUtil {
 	* @return the last matching document library file version
 	* @throws NoSuchFileVersionException if a matching document library file version could not be found
 	*/
-	public static DLFileVersion findByUuid_Last(java.lang.String uuid,
+	public static DLFileVersion findByUuid_Last(String uuid,
 		OrderByComparator<DLFileVersion> orderByComparator)
 		throws com.liferay.document.library.kernel.exception.NoSuchFileVersionException {
 		return getPersistence().findByUuid_Last(uuid, orderByComparator);
@@ -223,7 +222,7 @@ public class DLFileVersionUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching document library file version, or <code>null</code> if a matching document library file version could not be found
 	*/
-	public static DLFileVersion fetchByUuid_Last(java.lang.String uuid,
+	public static DLFileVersion fetchByUuid_Last(String uuid,
 		OrderByComparator<DLFileVersion> orderByComparator) {
 		return getPersistence().fetchByUuid_Last(uuid, orderByComparator);
 	}
@@ -238,8 +237,7 @@ public class DLFileVersionUtil {
 	* @throws NoSuchFileVersionException if a document library file version with the primary key could not be found
 	*/
 	public static DLFileVersion[] findByUuid_PrevAndNext(long fileVersionId,
-		java.lang.String uuid,
-		OrderByComparator<DLFileVersion> orderByComparator)
+		String uuid, OrderByComparator<DLFileVersion> orderByComparator)
 		throws com.liferay.document.library.kernel.exception.NoSuchFileVersionException {
 		return getPersistence()
 				   .findByUuid_PrevAndNext(fileVersionId, uuid,
@@ -251,7 +249,7 @@ public class DLFileVersionUtil {
 	*
 	* @param uuid the uuid
 	*/
-	public static void removeByUuid(java.lang.String uuid) {
+	public static void removeByUuid(String uuid) {
 		getPersistence().removeByUuid(uuid);
 	}
 
@@ -261,7 +259,7 @@ public class DLFileVersionUtil {
 	* @param uuid the uuid
 	* @return the number of matching document library file versions
 	*/
-	public static int countByUuid(java.lang.String uuid) {
+	public static int countByUuid(String uuid) {
 		return getPersistence().countByUuid(uuid);
 	}
 
@@ -273,7 +271,7 @@ public class DLFileVersionUtil {
 	* @return the matching document library file version
 	* @throws NoSuchFileVersionException if a matching document library file version could not be found
 	*/
-	public static DLFileVersion findByUUID_G(java.lang.String uuid, long groupId)
+	public static DLFileVersion findByUUID_G(String uuid, long groupId)
 		throws com.liferay.document.library.kernel.exception.NoSuchFileVersionException {
 		return getPersistence().findByUUID_G(uuid, groupId);
 	}
@@ -285,8 +283,7 @@ public class DLFileVersionUtil {
 	* @param groupId the group ID
 	* @return the matching document library file version, or <code>null</code> if a matching document library file version could not be found
 	*/
-	public static DLFileVersion fetchByUUID_G(java.lang.String uuid,
-		long groupId) {
+	public static DLFileVersion fetchByUUID_G(String uuid, long groupId) {
 		return getPersistence().fetchByUUID_G(uuid, groupId);
 	}
 
@@ -298,8 +295,8 @@ public class DLFileVersionUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching document library file version, or <code>null</code> if a matching document library file version could not be found
 	*/
-	public static DLFileVersion fetchByUUID_G(java.lang.String uuid,
-		long groupId, boolean retrieveFromCache) {
+	public static DLFileVersion fetchByUUID_G(String uuid, long groupId,
+		boolean retrieveFromCache) {
 		return getPersistence().fetchByUUID_G(uuid, groupId, retrieveFromCache);
 	}
 
@@ -310,8 +307,7 @@ public class DLFileVersionUtil {
 	* @param groupId the group ID
 	* @return the document library file version that was removed
 	*/
-	public static DLFileVersion removeByUUID_G(java.lang.String uuid,
-		long groupId)
+	public static DLFileVersion removeByUUID_G(String uuid, long groupId)
 		throws com.liferay.document.library.kernel.exception.NoSuchFileVersionException {
 		return getPersistence().removeByUUID_G(uuid, groupId);
 	}
@@ -323,7 +319,7 @@ public class DLFileVersionUtil {
 	* @param groupId the group ID
 	* @return the number of matching document library file versions
 	*/
-	public static int countByUUID_G(java.lang.String uuid, long groupId) {
+	public static int countByUUID_G(String uuid, long groupId) {
 		return getPersistence().countByUUID_G(uuid, groupId);
 	}
 
@@ -334,8 +330,7 @@ public class DLFileVersionUtil {
 	* @param companyId the company ID
 	* @return the matching document library file versions
 	*/
-	public static List<DLFileVersion> findByUuid_C(java.lang.String uuid,
-		long companyId) {
+	public static List<DLFileVersion> findByUuid_C(String uuid, long companyId) {
 		return getPersistence().findByUuid_C(uuid, companyId);
 	}
 
@@ -352,8 +347,8 @@ public class DLFileVersionUtil {
 	* @param end the upper bound of the range of document library file versions (not inclusive)
 	* @return the range of matching document library file versions
 	*/
-	public static List<DLFileVersion> findByUuid_C(java.lang.String uuid,
-		long companyId, int start, int end) {
+	public static List<DLFileVersion> findByUuid_C(String uuid, long companyId,
+		int start, int end) {
 		return getPersistence().findByUuid_C(uuid, companyId, start, end);
 	}
 
@@ -371,9 +366,8 @@ public class DLFileVersionUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching document library file versions
 	*/
-	public static List<DLFileVersion> findByUuid_C(java.lang.String uuid,
-		long companyId, int start, int end,
-		OrderByComparator<DLFileVersion> orderByComparator) {
+	public static List<DLFileVersion> findByUuid_C(String uuid, long companyId,
+		int start, int end, OrderByComparator<DLFileVersion> orderByComparator) {
 		return getPersistence()
 				   .findByUuid_C(uuid, companyId, start, end, orderByComparator);
 	}
@@ -393,9 +387,8 @@ public class DLFileVersionUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching document library file versions
 	*/
-	public static List<DLFileVersion> findByUuid_C(java.lang.String uuid,
-		long companyId, int start, int end,
-		OrderByComparator<DLFileVersion> orderByComparator,
+	public static List<DLFileVersion> findByUuid_C(String uuid, long companyId,
+		int start, int end, OrderByComparator<DLFileVersion> orderByComparator,
 		boolean retrieveFromCache) {
 		return getPersistence()
 				   .findByUuid_C(uuid, companyId, start, end,
@@ -411,8 +404,8 @@ public class DLFileVersionUtil {
 	* @return the first matching document library file version
 	* @throws NoSuchFileVersionException if a matching document library file version could not be found
 	*/
-	public static DLFileVersion findByUuid_C_First(java.lang.String uuid,
-		long companyId, OrderByComparator<DLFileVersion> orderByComparator)
+	public static DLFileVersion findByUuid_C_First(String uuid, long companyId,
+		OrderByComparator<DLFileVersion> orderByComparator)
 		throws com.liferay.document.library.kernel.exception.NoSuchFileVersionException {
 		return getPersistence()
 				   .findByUuid_C_First(uuid, companyId, orderByComparator);
@@ -426,7 +419,7 @@ public class DLFileVersionUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching document library file version, or <code>null</code> if a matching document library file version could not be found
 	*/
-	public static DLFileVersion fetchByUuid_C_First(java.lang.String uuid,
+	public static DLFileVersion fetchByUuid_C_First(String uuid,
 		long companyId, OrderByComparator<DLFileVersion> orderByComparator) {
 		return getPersistence()
 				   .fetchByUuid_C_First(uuid, companyId, orderByComparator);
@@ -441,8 +434,8 @@ public class DLFileVersionUtil {
 	* @return the last matching document library file version
 	* @throws NoSuchFileVersionException if a matching document library file version could not be found
 	*/
-	public static DLFileVersion findByUuid_C_Last(java.lang.String uuid,
-		long companyId, OrderByComparator<DLFileVersion> orderByComparator)
+	public static DLFileVersion findByUuid_C_Last(String uuid, long companyId,
+		OrderByComparator<DLFileVersion> orderByComparator)
 		throws com.liferay.document.library.kernel.exception.NoSuchFileVersionException {
 		return getPersistence()
 				   .findByUuid_C_Last(uuid, companyId, orderByComparator);
@@ -456,8 +449,8 @@ public class DLFileVersionUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching document library file version, or <code>null</code> if a matching document library file version could not be found
 	*/
-	public static DLFileVersion fetchByUuid_C_Last(java.lang.String uuid,
-		long companyId, OrderByComparator<DLFileVersion> orderByComparator) {
+	public static DLFileVersion fetchByUuid_C_Last(String uuid, long companyId,
+		OrderByComparator<DLFileVersion> orderByComparator) {
 		return getPersistence()
 				   .fetchByUuid_C_Last(uuid, companyId, orderByComparator);
 	}
@@ -473,7 +466,7 @@ public class DLFileVersionUtil {
 	* @throws NoSuchFileVersionException if a document library file version with the primary key could not be found
 	*/
 	public static DLFileVersion[] findByUuid_C_PrevAndNext(long fileVersionId,
-		java.lang.String uuid, long companyId,
+		String uuid, long companyId,
 		OrderByComparator<DLFileVersion> orderByComparator)
 		throws com.liferay.document.library.kernel.exception.NoSuchFileVersionException {
 		return getPersistence()
@@ -487,7 +480,7 @@ public class DLFileVersionUtil {
 	* @param uuid the uuid
 	* @param companyId the company ID
 	*/
-	public static void removeByUuid_C(java.lang.String uuid, long companyId) {
+	public static void removeByUuid_C(String uuid, long companyId) {
 		getPersistence().removeByUuid_C(uuid, companyId);
 	}
 
@@ -498,7 +491,7 @@ public class DLFileVersionUtil {
 	* @param companyId the company ID
 	* @return the number of matching document library file versions
 	*/
-	public static int countByUuid_C(java.lang.String uuid, long companyId) {
+	public static int countByUuid_C(String uuid, long companyId) {
 		return getPersistence().countByUuid_C(uuid, companyId);
 	}
 
@@ -830,7 +823,7 @@ public class DLFileVersionUtil {
 	* @param mimeType the mime type
 	* @return the matching document library file versions
 	*/
-	public static List<DLFileVersion> findByMimeType(java.lang.String mimeType) {
+	public static List<DLFileVersion> findByMimeType(String mimeType) {
 		return getPersistence().findByMimeType(mimeType);
 	}
 
@@ -846,8 +839,8 @@ public class DLFileVersionUtil {
 	* @param end the upper bound of the range of document library file versions (not inclusive)
 	* @return the range of matching document library file versions
 	*/
-	public static List<DLFileVersion> findByMimeType(
-		java.lang.String mimeType, int start, int end) {
+	public static List<DLFileVersion> findByMimeType(String mimeType,
+		int start, int end) {
 		return getPersistence().findByMimeType(mimeType, start, end);
 	}
 
@@ -864,9 +857,8 @@ public class DLFileVersionUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching document library file versions
 	*/
-	public static List<DLFileVersion> findByMimeType(
-		java.lang.String mimeType, int start, int end,
-		OrderByComparator<DLFileVersion> orderByComparator) {
+	public static List<DLFileVersion> findByMimeType(String mimeType,
+		int start, int end, OrderByComparator<DLFileVersion> orderByComparator) {
 		return getPersistence()
 				   .findByMimeType(mimeType, start, end, orderByComparator);
 	}
@@ -885,9 +877,8 @@ public class DLFileVersionUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching document library file versions
 	*/
-	public static List<DLFileVersion> findByMimeType(
-		java.lang.String mimeType, int start, int end,
-		OrderByComparator<DLFileVersion> orderByComparator,
+	public static List<DLFileVersion> findByMimeType(String mimeType,
+		int start, int end, OrderByComparator<DLFileVersion> orderByComparator,
 		boolean retrieveFromCache) {
 		return getPersistence()
 				   .findByMimeType(mimeType, start, end, orderByComparator,
@@ -902,8 +893,7 @@ public class DLFileVersionUtil {
 	* @return the first matching document library file version
 	* @throws NoSuchFileVersionException if a matching document library file version could not be found
 	*/
-	public static DLFileVersion findByMimeType_First(
-		java.lang.String mimeType,
+	public static DLFileVersion findByMimeType_First(String mimeType,
 		OrderByComparator<DLFileVersion> orderByComparator)
 		throws com.liferay.document.library.kernel.exception.NoSuchFileVersionException {
 		return getPersistence().findByMimeType_First(mimeType, orderByComparator);
@@ -916,8 +906,7 @@ public class DLFileVersionUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching document library file version, or <code>null</code> if a matching document library file version could not be found
 	*/
-	public static DLFileVersion fetchByMimeType_First(
-		java.lang.String mimeType,
+	public static DLFileVersion fetchByMimeType_First(String mimeType,
 		OrderByComparator<DLFileVersion> orderByComparator) {
 		return getPersistence()
 				   .fetchByMimeType_First(mimeType, orderByComparator);
@@ -931,7 +920,7 @@ public class DLFileVersionUtil {
 	* @return the last matching document library file version
 	* @throws NoSuchFileVersionException if a matching document library file version could not be found
 	*/
-	public static DLFileVersion findByMimeType_Last(java.lang.String mimeType,
+	public static DLFileVersion findByMimeType_Last(String mimeType,
 		OrderByComparator<DLFileVersion> orderByComparator)
 		throws com.liferay.document.library.kernel.exception.NoSuchFileVersionException {
 		return getPersistence().findByMimeType_Last(mimeType, orderByComparator);
@@ -944,8 +933,7 @@ public class DLFileVersionUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching document library file version, or <code>null</code> if a matching document library file version could not be found
 	*/
-	public static DLFileVersion fetchByMimeType_Last(
-		java.lang.String mimeType,
+	public static DLFileVersion fetchByMimeType_Last(String mimeType,
 		OrderByComparator<DLFileVersion> orderByComparator) {
 		return getPersistence().fetchByMimeType_Last(mimeType, orderByComparator);
 	}
@@ -960,7 +948,7 @@ public class DLFileVersionUtil {
 	* @throws NoSuchFileVersionException if a document library file version with the primary key could not be found
 	*/
 	public static DLFileVersion[] findByMimeType_PrevAndNext(
-		long fileVersionId, java.lang.String mimeType,
+		long fileVersionId, String mimeType,
 		OrderByComparator<DLFileVersion> orderByComparator)
 		throws com.liferay.document.library.kernel.exception.NoSuchFileVersionException {
 		return getPersistence()
@@ -973,7 +961,7 @@ public class DLFileVersionUtil {
 	*
 	* @param mimeType the mime type
 	*/
-	public static void removeByMimeType(java.lang.String mimeType) {
+	public static void removeByMimeType(String mimeType) {
 		getPersistence().removeByMimeType(mimeType);
 	}
 
@@ -983,7 +971,7 @@ public class DLFileVersionUtil {
 	* @param mimeType the mime type
 	* @return the number of matching document library file versions
 	*/
-	public static int countByMimeType(java.lang.String mimeType) {
+	public static int countByMimeType(String mimeType) {
 		return getPersistence().countByMimeType(mimeType);
 	}
 
@@ -1168,8 +1156,7 @@ public class DLFileVersionUtil {
 	* @return the matching document library file version
 	* @throws NoSuchFileVersionException if a matching document library file version could not be found
 	*/
-	public static DLFileVersion findByF_V(long fileEntryId,
-		java.lang.String version)
+	public static DLFileVersion findByF_V(long fileEntryId, String version)
 		throws com.liferay.document.library.kernel.exception.NoSuchFileVersionException {
 		return getPersistence().findByF_V(fileEntryId, version);
 	}
@@ -1181,8 +1168,7 @@ public class DLFileVersionUtil {
 	* @param version the version
 	* @return the matching document library file version, or <code>null</code> if a matching document library file version could not be found
 	*/
-	public static DLFileVersion fetchByF_V(long fileEntryId,
-		java.lang.String version) {
+	public static DLFileVersion fetchByF_V(long fileEntryId, String version) {
 		return getPersistence().fetchByF_V(fileEntryId, version);
 	}
 
@@ -1194,8 +1180,8 @@ public class DLFileVersionUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching document library file version, or <code>null</code> if a matching document library file version could not be found
 	*/
-	public static DLFileVersion fetchByF_V(long fileEntryId,
-		java.lang.String version, boolean retrieveFromCache) {
+	public static DLFileVersion fetchByF_V(long fileEntryId, String version,
+		boolean retrieveFromCache) {
 		return getPersistence()
 				   .fetchByF_V(fileEntryId, version, retrieveFromCache);
 	}
@@ -1207,8 +1193,7 @@ public class DLFileVersionUtil {
 	* @param version the version
 	* @return the document library file version that was removed
 	*/
-	public static DLFileVersion removeByF_V(long fileEntryId,
-		java.lang.String version)
+	public static DLFileVersion removeByF_V(long fileEntryId, String version)
 		throws com.liferay.document.library.kernel.exception.NoSuchFileVersionException {
 		return getPersistence().removeByF_V(fileEntryId, version);
 	}
@@ -1220,7 +1205,7 @@ public class DLFileVersionUtil {
 	* @param version the version
 	* @return the number of matching document library file versions
 	*/
-	public static int countByF_V(long fileEntryId, java.lang.String version) {
+	public static int countByF_V(long fileEntryId, String version) {
 		return getPersistence().countByF_V(fileEntryId, version);
 	}
 
@@ -1598,7 +1583,7 @@ public class DLFileVersionUtil {
 	* @return the matching document library file versions
 	*/
 	public static List<DLFileVersion> findByG_F_T_V(long groupId,
-		long folderId, java.lang.String title, java.lang.String version) {
+		long folderId, String title, String version) {
 		return getPersistence().findByG_F_T_V(groupId, folderId, title, version);
 	}
 
@@ -1618,8 +1603,7 @@ public class DLFileVersionUtil {
 	* @return the range of matching document library file versions
 	*/
 	public static List<DLFileVersion> findByG_F_T_V(long groupId,
-		long folderId, java.lang.String title, java.lang.String version,
-		int start, int end) {
+		long folderId, String title, String version, int start, int end) {
 		return getPersistence()
 				   .findByG_F_T_V(groupId, folderId, title, version, start, end);
 	}
@@ -1641,8 +1625,8 @@ public class DLFileVersionUtil {
 	* @return the ordered range of matching document library file versions
 	*/
 	public static List<DLFileVersion> findByG_F_T_V(long groupId,
-		long folderId, java.lang.String title, java.lang.String version,
-		int start, int end, OrderByComparator<DLFileVersion> orderByComparator) {
+		long folderId, String title, String version, int start, int end,
+		OrderByComparator<DLFileVersion> orderByComparator) {
 		return getPersistence()
 				   .findByG_F_T_V(groupId, folderId, title, version, start,
 			end, orderByComparator);
@@ -1666,8 +1650,8 @@ public class DLFileVersionUtil {
 	* @return the ordered range of matching document library file versions
 	*/
 	public static List<DLFileVersion> findByG_F_T_V(long groupId,
-		long folderId, java.lang.String title, java.lang.String version,
-		int start, int end, OrderByComparator<DLFileVersion> orderByComparator,
+		long folderId, String title, String version, int start, int end,
+		OrderByComparator<DLFileVersion> orderByComparator,
 		boolean retrieveFromCache) {
 		return getPersistence()
 				   .findByG_F_T_V(groupId, folderId, title, version, start,
@@ -1686,7 +1670,7 @@ public class DLFileVersionUtil {
 	* @throws NoSuchFileVersionException if a matching document library file version could not be found
 	*/
 	public static DLFileVersion findByG_F_T_V_First(long groupId,
-		long folderId, java.lang.String title, java.lang.String version,
+		long folderId, String title, String version,
 		OrderByComparator<DLFileVersion> orderByComparator)
 		throws com.liferay.document.library.kernel.exception.NoSuchFileVersionException {
 		return getPersistence()
@@ -1705,7 +1689,7 @@ public class DLFileVersionUtil {
 	* @return the first matching document library file version, or <code>null</code> if a matching document library file version could not be found
 	*/
 	public static DLFileVersion fetchByG_F_T_V_First(long groupId,
-		long folderId, java.lang.String title, java.lang.String version,
+		long folderId, String title, String version,
 		OrderByComparator<DLFileVersion> orderByComparator) {
 		return getPersistence()
 				   .fetchByG_F_T_V_First(groupId, folderId, title, version,
@@ -1724,7 +1708,7 @@ public class DLFileVersionUtil {
 	* @throws NoSuchFileVersionException if a matching document library file version could not be found
 	*/
 	public static DLFileVersion findByG_F_T_V_Last(long groupId, long folderId,
-		java.lang.String title, java.lang.String version,
+		String title, String version,
 		OrderByComparator<DLFileVersion> orderByComparator)
 		throws com.liferay.document.library.kernel.exception.NoSuchFileVersionException {
 		return getPersistence()
@@ -1743,7 +1727,7 @@ public class DLFileVersionUtil {
 	* @return the last matching document library file version, or <code>null</code> if a matching document library file version could not be found
 	*/
 	public static DLFileVersion fetchByG_F_T_V_Last(long groupId,
-		long folderId, java.lang.String title, java.lang.String version,
+		long folderId, String title, String version,
 		OrderByComparator<DLFileVersion> orderByComparator) {
 		return getPersistence()
 				   .fetchByG_F_T_V_Last(groupId, folderId, title, version,
@@ -1763,9 +1747,8 @@ public class DLFileVersionUtil {
 	* @throws NoSuchFileVersionException if a document library file version with the primary key could not be found
 	*/
 	public static DLFileVersion[] findByG_F_T_V_PrevAndNext(
-		long fileVersionId, long groupId, long folderId,
-		java.lang.String title, java.lang.String version,
-		OrderByComparator<DLFileVersion> orderByComparator)
+		long fileVersionId, long groupId, long folderId, String title,
+		String version, OrderByComparator<DLFileVersion> orderByComparator)
 		throws com.liferay.document.library.kernel.exception.NoSuchFileVersionException {
 		return getPersistence()
 				   .findByG_F_T_V_PrevAndNext(fileVersionId, groupId, folderId,
@@ -1781,7 +1764,7 @@ public class DLFileVersionUtil {
 	* @param version the version
 	*/
 	public static void removeByG_F_T_V(long groupId, long folderId,
-		java.lang.String title, java.lang.String version) {
+		String title, String version) {
 		getPersistence().removeByG_F_T_V(groupId, folderId, title, version);
 	}
 
@@ -1794,8 +1777,8 @@ public class DLFileVersionUtil {
 	* @param version the version
 	* @return the number of matching document library file versions
 	*/
-	public static int countByG_F_T_V(long groupId, long folderId,
-		java.lang.String title, java.lang.String version) {
+	public static int countByG_F_T_V(long groupId, long folderId, String title,
+		String version) {
 		return getPersistence().countByG_F_T_V(groupId, folderId, title, version);
 	}
 
@@ -1947,7 +1930,7 @@ public class DLFileVersionUtil {
 		return getPersistence().countAll();
 	}
 
-	public static java.util.Set<java.lang.String> getBadColumnNames() {
+	public static java.util.Set<String> getBadColumnNames() {
 		return getPersistence().getBadColumnNames();
 	}
 

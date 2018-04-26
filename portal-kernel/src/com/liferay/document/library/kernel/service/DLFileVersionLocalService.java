@@ -179,8 +179,8 @@ public interface DLFileVersionLocalService extends BaseLocalService,
 	* @return the matching document library file version, or <code>null</code> if a matching document library file version could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public DLFileVersion fetchDLFileVersionByUuidAndGroupId(
-		java.lang.String uuid, long groupId);
+	public DLFileVersion fetchDLFileVersionByUuidAndGroupId(String uuid,
+		long groupId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public DLFileVersion fetchLatestFileVersion(long fileEntryId,
@@ -209,8 +209,8 @@ public interface DLFileVersionLocalService extends BaseLocalService,
 	* @throws PortalException if a matching document library file version could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public DLFileVersion getDLFileVersionByUuidAndGroupId(
-		java.lang.String uuid, long groupId) throws PortalException;
+	public DLFileVersion getDLFileVersionByUuidAndGroupId(String uuid,
+		long groupId) throws PortalException;
 
 	/**
 	* Returns a range of all the document library file versions.
@@ -235,7 +235,7 @@ public interface DLFileVersionLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<DLFileVersion> getDLFileVersionsByUuidAndCompanyId(
-		java.lang.String uuid, long companyId);
+		String uuid, long companyId);
 
 	/**
 	* Returns a range of document library file versions matching the UUID and company.
@@ -249,7 +249,7 @@ public interface DLFileVersionLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<DLFileVersion> getDLFileVersionsByUuidAndCompanyId(
-		java.lang.String uuid, long companyId, int start, int end,
+		String uuid, long companyId, int start, int end,
 		OrderByComparator<DLFileVersion> orderByComparator);
 
 	/**
@@ -269,11 +269,11 @@ public interface DLFileVersionLocalService extends BaseLocalService,
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public DLFileVersion getFileVersion(long fileEntryId,
-		java.lang.String version) throws PortalException;
+	public DLFileVersion getFileVersion(long fileEntryId, String version)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public DLFileVersion getFileVersionByUuidAndGroupId(java.lang.String uuid,
+	public DLFileVersion getFileVersionByUuidAndGroupId(String uuid,
 		long groupId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -298,7 +298,7 @@ public interface DLFileVersionLocalService extends BaseLocalService,
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -307,7 +307,7 @@ public interface DLFileVersionLocalService extends BaseLocalService,
 
 	public void rebuildTree(long companyId) throws PortalException;
 
-	public void setTreePaths(long folderId, java.lang.String treePath)
+	public void setTreePaths(long folderId, String treePath)
 		throws PortalException;
 
 	/**

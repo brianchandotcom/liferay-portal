@@ -78,16 +78,16 @@ public interface KaleoTimerInstanceTokenLocalService extends BaseLocalService,
 
 	public KaleoTimerInstanceToken addKaleoTimerInstanceToken(
 		long kaleoInstanceTokenId, long kaleoTaskInstanceTokenId,
-		long kaleoTimerId, java.lang.String kaleoTimerName,
-		Map<java.lang.String, Serializable> workflowContext,
-		ServiceContext serviceContext) throws PortalException;
+		long kaleoTimerId, String kaleoTimerName,
+		Map<String, Serializable> workflowContext, ServiceContext serviceContext)
+		throws PortalException;
 
 	public List<KaleoTimerInstanceToken> addKaleoTimerInstanceTokens(
 		KaleoInstanceToken kaleoInstanceToken,
 		KaleoTaskInstanceToken kaleoTaskInstanceToken,
 		Collection<KaleoTimer> kaleoTimers,
-		Map<java.lang.String, Serializable> workflowContext,
-		ServiceContext serviceContext) throws PortalException;
+		Map<String, Serializable> workflowContext, ServiceContext serviceContext)
+		throws PortalException;
 
 	public KaleoTimerInstanceToken completeKaleoTimerInstanceToken(
 		long kaleoTimerInstanceTokenId, ServiceContext serviceContext)
@@ -264,7 +264,7 @@ public interface KaleoTimerInstanceTokenLocalService extends BaseLocalService,
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

@@ -66,9 +66,8 @@ import java.rmi.RemoteException;
 @ProviderType
 public class AssetDisplayTemplateServiceSoap {
 	public static com.liferay.asset.display.template.model.AssetDisplayTemplateSoap addAssetDisplayTemplate(
-		long groupId, long userId, java.lang.String name, long classNameId,
-		java.lang.String language, java.lang.String scriptContent,
-		boolean main,
+		long groupId, long userId, String name, long classNameId,
+		String language, String scriptContent, boolean main,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
@@ -102,9 +101,8 @@ public class AssetDisplayTemplateServiceSoap {
 	}
 
 	public static com.liferay.asset.display.template.model.AssetDisplayTemplateSoap updateAssetDisplayTemplate(
-		long assetDisplayTemplateId, java.lang.String name, long classNameId,
-		java.lang.String language, java.lang.String scriptContent,
-		boolean main,
+		long assetDisplayTemplateId, String name, long classNameId,
+		String language, String scriptContent, boolean main,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {

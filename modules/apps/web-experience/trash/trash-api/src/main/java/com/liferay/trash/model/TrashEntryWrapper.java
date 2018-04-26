@@ -142,7 +142,7 @@ public class TrashEntryWrapper implements TrashEntry, ModelWrapper<TrashEntry> {
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new TrashEntryWrapper((TrashEntry)_trashEntry.clone());
 	}
 
@@ -157,7 +157,7 @@ public class TrashEntryWrapper implements TrashEntry, ModelWrapper<TrashEntry> {
 	* @return the fully qualified class name of this trash entry
 	*/
 	@Override
-	public java.lang.String getClassName() {
+	public String getClassName() {
 		return _trashEntry.getClassName();
 	}
 
@@ -272,7 +272,7 @@ public class TrashEntryWrapper implements TrashEntry, ModelWrapper<TrashEntry> {
 	* @return the type settings of this trash entry
 	*/
 	@Override
-	public java.lang.String getTypeSettings() {
+	public String getTypeSettings() {
 		return _trashEntry.getTypeSettings();
 	}
 
@@ -282,13 +282,12 @@ public class TrashEntryWrapper implements TrashEntry, ModelWrapper<TrashEntry> {
 	}
 
 	@Override
-	public java.lang.String getTypeSettingsProperty(java.lang.String key) {
+	public String getTypeSettingsProperty(String key) {
 		return _trashEntry.getTypeSettingsProperty(key);
 	}
 
 	@Override
-	public java.lang.String getTypeSettingsProperty(java.lang.String key,
-		java.lang.String defaultValue) {
+	public String getTypeSettingsProperty(String key, String defaultValue) {
 		return _trashEntry.getTypeSettingsProperty(key, defaultValue);
 	}
 
@@ -308,7 +307,7 @@ public class TrashEntryWrapper implements TrashEntry, ModelWrapper<TrashEntry> {
 	* @return the user name of this trash entry
 	*/
 	@Override
-	public java.lang.String getUserName() {
+	public String getUserName() {
 		return _trashEntry.getUserName();
 	}
 
@@ -318,7 +317,7 @@ public class TrashEntryWrapper implements TrashEntry, ModelWrapper<TrashEntry> {
 	* @return the user uuid of this trash entry
 	*/
 	@Override
-	public java.lang.String getUserUuid() {
+	public String getUserUuid() {
 		return _trashEntry.getUserUuid();
 	}
 
@@ -343,12 +342,12 @@ public class TrashEntryWrapper implements TrashEntry, ModelWrapper<TrashEntry> {
 	}
 
 	@Override
-	public boolean isTrashEntry(java.lang.Class<?> clazz, long classPK) {
+	public boolean isTrashEntry(Class<?> clazz, long classPK) {
 		return _trashEntry.isTrashEntry(clazz, classPK);
 	}
 
 	@Override
-	public boolean isTrashEntry(java.lang.String className, long classPK) {
+	public boolean isTrashEntry(String className, long classPK) {
 		return _trashEntry.isTrashEntry(className, classPK);
 	}
 
@@ -363,7 +362,7 @@ public class TrashEntryWrapper implements TrashEntry, ModelWrapper<TrashEntry> {
 	}
 
 	@Override
-	public void setClassName(java.lang.String className) {
+	public void setClassName(String className) {
 		_trashEntry.setClassName(className);
 	}
 
@@ -494,7 +493,7 @@ public class TrashEntryWrapper implements TrashEntry, ModelWrapper<TrashEntry> {
 	* @param typeSettings the type settings of this trash entry
 	*/
 	@Override
-	public void setTypeSettings(java.lang.String typeSettings) {
+	public void setTypeSettings(String typeSettings) {
 		_trashEntry.setTypeSettings(typeSettings);
 	}
 
@@ -520,7 +519,7 @@ public class TrashEntryWrapper implements TrashEntry, ModelWrapper<TrashEntry> {
 	* @param userName the user name of this trash entry
 	*/
 	@Override
-	public void setUserName(java.lang.String userName) {
+	public void setUserName(String userName) {
 		_trashEntry.setUserName(userName);
 	}
 
@@ -530,7 +529,7 @@ public class TrashEntryWrapper implements TrashEntry, ModelWrapper<TrashEntry> {
 	* @param userUuid the user uuid of this trash entry
 	*/
 	@Override
-	public void setUserUuid(java.lang.String userUuid) {
+	public void setUserUuid(String userUuid) {
 		_trashEntry.setUserUuid(userUuid);
 	}
 
@@ -545,7 +544,7 @@ public class TrashEntryWrapper implements TrashEntry, ModelWrapper<TrashEntry> {
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _trashEntry.toString();
 	}
 
@@ -555,7 +554,7 @@ public class TrashEntryWrapper implements TrashEntry, ModelWrapper<TrashEntry> {
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _trashEntry.toXmlString();
 	}
 

@@ -84,7 +84,7 @@ public class ClassNameWrapper implements ClassName, ModelWrapper<ClassName> {
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new ClassNameWrapper((ClassName)_className.clone());
 	}
 
@@ -99,7 +99,7 @@ public class ClassNameWrapper implements ClassName, ModelWrapper<ClassName> {
 	* @return the fully qualified class name of this class name
 	*/
 	@Override
-	public java.lang.String getClassName() {
+	public String getClassName() {
 		return _className.getClassName();
 	}
 
@@ -149,7 +149,7 @@ public class ClassNameWrapper implements ClassName, ModelWrapper<ClassName> {
 	* @return the value of this class name
 	*/
 	@Override
-	public java.lang.String getValue() {
+	public String getValue() {
 		return _className.getValue();
 	}
 
@@ -184,7 +184,7 @@ public class ClassNameWrapper implements ClassName, ModelWrapper<ClassName> {
 	}
 
 	@Override
-	public void setClassName(java.lang.String className) {
+	public void setClassName(String className) {
 		_className.setClassName(className);
 	}
 
@@ -249,7 +249,7 @@ public class ClassNameWrapper implements ClassName, ModelWrapper<ClassName> {
 	* @param value the value of this class name
 	*/
 	@Override
-	public void setValue(java.lang.String value) {
+	public void setValue(String value) {
 		_className.setValue(value);
 	}
 
@@ -264,7 +264,7 @@ public class ClassNameWrapper implements ClassName, ModelWrapper<ClassName> {
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _className.toString();
 	}
 
@@ -274,7 +274,7 @@ public class ClassNameWrapper implements ClassName, ModelWrapper<ClassName> {
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _className.toXmlString();
 	}
 

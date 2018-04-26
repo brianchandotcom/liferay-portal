@@ -180,8 +180,8 @@ public interface PluginSettingPersistence extends BasePersistence<PluginSetting>
 	* @return the matching plugin setting
 	* @throws NoSuchPluginSettingException if a matching plugin setting could not be found
 	*/
-	public PluginSetting findByC_I_T(long companyId, java.lang.String pluginId,
-		java.lang.String pluginType) throws NoSuchPluginSettingException;
+	public PluginSetting findByC_I_T(long companyId, String pluginId,
+		String pluginType) throws NoSuchPluginSettingException;
 
 	/**
 	* Returns the plugin setting where companyId = &#63; and pluginId = &#63; and pluginType = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
@@ -191,8 +191,8 @@ public interface PluginSettingPersistence extends BasePersistence<PluginSetting>
 	* @param pluginType the plugin type
 	* @return the matching plugin setting, or <code>null</code> if a matching plugin setting could not be found
 	*/
-	public PluginSetting fetchByC_I_T(long companyId,
-		java.lang.String pluginId, java.lang.String pluginType);
+	public PluginSetting fetchByC_I_T(long companyId, String pluginId,
+		String pluginType);
 
 	/**
 	* Returns the plugin setting where companyId = &#63; and pluginId = &#63; and pluginType = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -203,9 +203,8 @@ public interface PluginSettingPersistence extends BasePersistence<PluginSetting>
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching plugin setting, or <code>null</code> if a matching plugin setting could not be found
 	*/
-	public PluginSetting fetchByC_I_T(long companyId,
-		java.lang.String pluginId, java.lang.String pluginType,
-		boolean retrieveFromCache);
+	public PluginSetting fetchByC_I_T(long companyId, String pluginId,
+		String pluginType, boolean retrieveFromCache);
 
 	/**
 	* Removes the plugin setting where companyId = &#63; and pluginId = &#63; and pluginType = &#63; from the database.
@@ -215,9 +214,8 @@ public interface PluginSettingPersistence extends BasePersistence<PluginSetting>
 	* @param pluginType the plugin type
 	* @return the plugin setting that was removed
 	*/
-	public PluginSetting removeByC_I_T(long companyId,
-		java.lang.String pluginId, java.lang.String pluginType)
-		throws NoSuchPluginSettingException;
+	public PluginSetting removeByC_I_T(long companyId, String pluginId,
+		String pluginType) throws NoSuchPluginSettingException;
 
 	/**
 	* Returns the number of plugin settings where companyId = &#63; and pluginId = &#63; and pluginType = &#63;.
@@ -227,8 +225,7 @@ public interface PluginSettingPersistence extends BasePersistence<PluginSetting>
 	* @param pluginType the plugin type
 	* @return the number of matching plugin settings
 	*/
-	public int countByC_I_T(long companyId, java.lang.String pluginId,
-		java.lang.String pluginType);
+	public int countByC_I_T(long companyId, String pluginId, String pluginType);
 
 	/**
 	* Caches the plugin setting in the entity cache if it is enabled.
@@ -351,5 +348,5 @@ public interface PluginSettingPersistence extends BasePersistence<PluginSetting>
 	public int countAll();
 
 	@Override
-	public java.util.Set<java.lang.String> getBadColumnNames();
+	public java.util.Set<String> getBadColumnNames();
 }

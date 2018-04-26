@@ -1121,7 +1121,7 @@ public interface ExpandoValuePersistence extends BasePersistence<ExpandoValue> {
 	* @return the matching expando values
 	*/
 	public java.util.List<ExpandoValue> findByT_C_D(long tableId,
-		long columnId, java.lang.String data);
+		long columnId, String data);
 
 	/**
 	* Returns a range of all the expando values where tableId = &#63; and columnId = &#63; and data = &#63;.
@@ -1138,7 +1138,7 @@ public interface ExpandoValuePersistence extends BasePersistence<ExpandoValue> {
 	* @return the range of matching expando values
 	*/
 	public java.util.List<ExpandoValue> findByT_C_D(long tableId,
-		long columnId, java.lang.String data, int start, int end);
+		long columnId, String data, int start, int end);
 
 	/**
 	* Returns an ordered range of all the expando values where tableId = &#63; and columnId = &#63; and data = &#63;.
@@ -1156,7 +1156,7 @@ public interface ExpandoValuePersistence extends BasePersistence<ExpandoValue> {
 	* @return the ordered range of matching expando values
 	*/
 	public java.util.List<ExpandoValue> findByT_C_D(long tableId,
-		long columnId, java.lang.String data, int start, int end,
+		long columnId, String data, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<ExpandoValue> orderByComparator);
 
 	/**
@@ -1176,7 +1176,7 @@ public interface ExpandoValuePersistence extends BasePersistence<ExpandoValue> {
 	* @return the ordered range of matching expando values
 	*/
 	public java.util.List<ExpandoValue> findByT_C_D(long tableId,
-		long columnId, java.lang.String data, int start, int end,
+		long columnId, String data, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<ExpandoValue> orderByComparator,
 		boolean retrieveFromCache);
 
@@ -1191,7 +1191,7 @@ public interface ExpandoValuePersistence extends BasePersistence<ExpandoValue> {
 	* @throws NoSuchValueException if a matching expando value could not be found
 	*/
 	public ExpandoValue findByT_C_D_First(long tableId, long columnId,
-		java.lang.String data,
+		String data,
 		com.liferay.portal.kernel.util.OrderByComparator<ExpandoValue> orderByComparator)
 		throws NoSuchValueException;
 
@@ -1205,7 +1205,7 @@ public interface ExpandoValuePersistence extends BasePersistence<ExpandoValue> {
 	* @return the first matching expando value, or <code>null</code> if a matching expando value could not be found
 	*/
 	public ExpandoValue fetchByT_C_D_First(long tableId, long columnId,
-		java.lang.String data,
+		String data,
 		com.liferay.portal.kernel.util.OrderByComparator<ExpandoValue> orderByComparator);
 
 	/**
@@ -1219,7 +1219,7 @@ public interface ExpandoValuePersistence extends BasePersistence<ExpandoValue> {
 	* @throws NoSuchValueException if a matching expando value could not be found
 	*/
 	public ExpandoValue findByT_C_D_Last(long tableId, long columnId,
-		java.lang.String data,
+		String data,
 		com.liferay.portal.kernel.util.OrderByComparator<ExpandoValue> orderByComparator)
 		throws NoSuchValueException;
 
@@ -1233,7 +1233,7 @@ public interface ExpandoValuePersistence extends BasePersistence<ExpandoValue> {
 	* @return the last matching expando value, or <code>null</code> if a matching expando value could not be found
 	*/
 	public ExpandoValue fetchByT_C_D_Last(long tableId, long columnId,
-		java.lang.String data,
+		String data,
 		com.liferay.portal.kernel.util.OrderByComparator<ExpandoValue> orderByComparator);
 
 	/**
@@ -1248,7 +1248,7 @@ public interface ExpandoValuePersistence extends BasePersistence<ExpandoValue> {
 	* @throws NoSuchValueException if a expando value with the primary key could not be found
 	*/
 	public ExpandoValue[] findByT_C_D_PrevAndNext(long valueId, long tableId,
-		long columnId, java.lang.String data,
+		long columnId, String data,
 		com.liferay.portal.kernel.util.OrderByComparator<ExpandoValue> orderByComparator)
 		throws NoSuchValueException;
 
@@ -1259,7 +1259,7 @@ public interface ExpandoValuePersistence extends BasePersistence<ExpandoValue> {
 	* @param columnId the column ID
 	* @param data the data
 	*/
-	public void removeByT_C_D(long tableId, long columnId, java.lang.String data);
+	public void removeByT_C_D(long tableId, long columnId, String data);
 
 	/**
 	* Returns the number of expando values where tableId = &#63; and columnId = &#63; and data = &#63;.
@@ -1269,7 +1269,7 @@ public interface ExpandoValuePersistence extends BasePersistence<ExpandoValue> {
 	* @param data the data
 	* @return the number of matching expando values
 	*/
-	public int countByT_C_D(long tableId, long columnId, java.lang.String data);
+	public int countByT_C_D(long tableId, long columnId, String data);
 
 	/**
 	* Caches the expando value in the entity cache if it is enabled.
@@ -1391,5 +1391,5 @@ public interface ExpandoValuePersistence extends BasePersistence<ExpandoValue> {
 	public int countAll();
 
 	@Override
-	public java.util.Set<java.lang.String> getBadColumnNames();
+	public java.util.Set<String> getBadColumnNames();
 }

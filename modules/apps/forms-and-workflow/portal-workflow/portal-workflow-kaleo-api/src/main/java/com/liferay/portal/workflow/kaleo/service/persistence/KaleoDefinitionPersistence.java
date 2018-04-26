@@ -180,7 +180,7 @@ public interface KaleoDefinitionPersistence extends BasePersistence<KaleoDefinit
 	* @return the matching kaleo definition
 	* @throws NoSuchDefinitionException if a matching kaleo definition could not be found
 	*/
-	public KaleoDefinition findByC_N(long companyId, java.lang.String name)
+	public KaleoDefinition findByC_N(long companyId, String name)
 		throws NoSuchDefinitionException;
 
 	/**
@@ -190,7 +190,7 @@ public interface KaleoDefinitionPersistence extends BasePersistence<KaleoDefinit
 	* @param name the name
 	* @return the matching kaleo definition, or <code>null</code> if a matching kaleo definition could not be found
 	*/
-	public KaleoDefinition fetchByC_N(long companyId, java.lang.String name);
+	public KaleoDefinition fetchByC_N(long companyId, String name);
 
 	/**
 	* Returns the kaleo definition where companyId = &#63; and name = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -200,7 +200,7 @@ public interface KaleoDefinitionPersistence extends BasePersistence<KaleoDefinit
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching kaleo definition, or <code>null</code> if a matching kaleo definition could not be found
 	*/
-	public KaleoDefinition fetchByC_N(long companyId, java.lang.String name,
+	public KaleoDefinition fetchByC_N(long companyId, String name,
 		boolean retrieveFromCache);
 
 	/**
@@ -210,7 +210,7 @@ public interface KaleoDefinitionPersistence extends BasePersistence<KaleoDefinit
 	* @param name the name
 	* @return the kaleo definition that was removed
 	*/
-	public KaleoDefinition removeByC_N(long companyId, java.lang.String name)
+	public KaleoDefinition removeByC_N(long companyId, String name)
 		throws NoSuchDefinitionException;
 
 	/**
@@ -220,7 +220,7 @@ public interface KaleoDefinitionPersistence extends BasePersistence<KaleoDefinit
 	* @param name the name
 	* @return the number of matching kaleo definitions
 	*/
-	public int countByC_N(long companyId, java.lang.String name);
+	public int countByC_N(long companyId, String name);
 
 	/**
 	* Returns all the kaleo definitions where companyId = &#63; and active = &#63;.
@@ -375,8 +375,8 @@ public interface KaleoDefinitionPersistence extends BasePersistence<KaleoDefinit
 	* @return the matching kaleo definition
 	* @throws NoSuchDefinitionException if a matching kaleo definition could not be found
 	*/
-	public KaleoDefinition findByC_N_V(long companyId, java.lang.String name,
-		int version) throws NoSuchDefinitionException;
+	public KaleoDefinition findByC_N_V(long companyId, String name, int version)
+		throws NoSuchDefinitionException;
 
 	/**
 	* Returns the kaleo definition where companyId = &#63; and name = &#63; and version = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
@@ -386,8 +386,7 @@ public interface KaleoDefinitionPersistence extends BasePersistence<KaleoDefinit
 	* @param version the version
 	* @return the matching kaleo definition, or <code>null</code> if a matching kaleo definition could not be found
 	*/
-	public KaleoDefinition fetchByC_N_V(long companyId, java.lang.String name,
-		int version);
+	public KaleoDefinition fetchByC_N_V(long companyId, String name, int version);
 
 	/**
 	* Returns the kaleo definition where companyId = &#63; and name = &#63; and version = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -398,7 +397,7 @@ public interface KaleoDefinitionPersistence extends BasePersistence<KaleoDefinit
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching kaleo definition, or <code>null</code> if a matching kaleo definition could not be found
 	*/
-	public KaleoDefinition fetchByC_N_V(long companyId, java.lang.String name,
+	public KaleoDefinition fetchByC_N_V(long companyId, String name,
 		int version, boolean retrieveFromCache);
 
 	/**
@@ -409,7 +408,7 @@ public interface KaleoDefinitionPersistence extends BasePersistence<KaleoDefinit
 	* @param version the version
 	* @return the kaleo definition that was removed
 	*/
-	public KaleoDefinition removeByC_N_V(long companyId, java.lang.String name,
+	public KaleoDefinition removeByC_N_V(long companyId, String name,
 		int version) throws NoSuchDefinitionException;
 
 	/**
@@ -420,7 +419,7 @@ public interface KaleoDefinitionPersistence extends BasePersistence<KaleoDefinit
 	* @param version the version
 	* @return the number of matching kaleo definitions
 	*/
-	public int countByC_N_V(long companyId, java.lang.String name, int version);
+	public int countByC_N_V(long companyId, String name, int version);
 
 	/**
 	* Returns the kaleo definition where companyId = &#63; and name = &#63; and active = &#63; or throws a {@link NoSuchDefinitionException} if it could not be found.
@@ -431,7 +430,7 @@ public interface KaleoDefinitionPersistence extends BasePersistence<KaleoDefinit
 	* @return the matching kaleo definition
 	* @throws NoSuchDefinitionException if a matching kaleo definition could not be found
 	*/
-	public KaleoDefinition findByC_N_A(long companyId, java.lang.String name,
+	public KaleoDefinition findByC_N_A(long companyId, String name,
 		boolean active) throws NoSuchDefinitionException;
 
 	/**
@@ -442,7 +441,7 @@ public interface KaleoDefinitionPersistence extends BasePersistence<KaleoDefinit
 	* @param active the active
 	* @return the matching kaleo definition, or <code>null</code> if a matching kaleo definition could not be found
 	*/
-	public KaleoDefinition fetchByC_N_A(long companyId, java.lang.String name,
+	public KaleoDefinition fetchByC_N_A(long companyId, String name,
 		boolean active);
 
 	/**
@@ -454,7 +453,7 @@ public interface KaleoDefinitionPersistence extends BasePersistence<KaleoDefinit
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching kaleo definition, or <code>null</code> if a matching kaleo definition could not be found
 	*/
-	public KaleoDefinition fetchByC_N_A(long companyId, java.lang.String name,
+	public KaleoDefinition fetchByC_N_A(long companyId, String name,
 		boolean active, boolean retrieveFromCache);
 
 	/**
@@ -465,7 +464,7 @@ public interface KaleoDefinitionPersistence extends BasePersistence<KaleoDefinit
 	* @param active the active
 	* @return the kaleo definition that was removed
 	*/
-	public KaleoDefinition removeByC_N_A(long companyId, java.lang.String name,
+	public KaleoDefinition removeByC_N_A(long companyId, String name,
 		boolean active) throws NoSuchDefinitionException;
 
 	/**
@@ -476,8 +475,7 @@ public interface KaleoDefinitionPersistence extends BasePersistence<KaleoDefinit
 	* @param active the active
 	* @return the number of matching kaleo definitions
 	*/
-	public int countByC_N_A(long companyId, java.lang.String name,
-		boolean active);
+	public int countByC_N_A(long companyId, String name, boolean active);
 
 	/**
 	* Caches the kaleo definition in the entity cache if it is enabled.
@@ -600,5 +598,5 @@ public interface KaleoDefinitionPersistence extends BasePersistence<KaleoDefinit
 	public int countAll();
 
 	@Override
-	public java.util.Set<java.lang.String> getBadColumnNames();
+	public java.util.Set<String> getBadColumnNames();
 }

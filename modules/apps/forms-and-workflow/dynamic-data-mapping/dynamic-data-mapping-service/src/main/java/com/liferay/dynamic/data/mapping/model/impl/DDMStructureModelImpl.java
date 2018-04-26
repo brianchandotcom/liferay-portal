@@ -957,11 +957,11 @@ public class DDMStructureModelImpl extends BaseModelImpl<DDMStructure>
 		_lastPublishDate = lastPublishDate;
 	}
 
-	public java.lang.String getClassName() {
+	public String getClassName() {
 		return null;
 	}
 
-	public void setClassName(java.lang.String className) {
+	public void setClassName(String className) {
 	}
 
 	public com.liferay.dynamic.data.mapping.model.DDMForm getDDMForm() {

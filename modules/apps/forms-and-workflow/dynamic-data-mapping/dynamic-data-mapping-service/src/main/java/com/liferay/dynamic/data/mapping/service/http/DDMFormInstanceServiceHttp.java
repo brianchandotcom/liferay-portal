@@ -57,8 +57,8 @@ import com.liferay.portal.kernel.util.MethodKey;
 public class DDMFormInstanceServiceHttp {
 	public static com.liferay.dynamic.data.mapping.model.DDMFormInstance addFormInstance(
 		HttpPrincipal httpPrincipal, long groupId, long ddmStructureId,
-		java.util.Map<java.util.Locale, java.lang.String> nameMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		java.util.Map<java.util.Locale, String> nameMap,
+		java.util.Map<java.util.Locale, String> descriptionMap,
 		com.liferay.dynamic.data.mapping.storage.DDMFormValues settingsDDMFormValues,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -242,7 +242,7 @@ public class DDMFormInstanceServiceHttp {
 
 	public static java.util.List<com.liferay.dynamic.data.mapping.model.DDMFormInstance> search(
 		HttpPrincipal httpPrincipal, long companyId, long groupId,
-		java.lang.String keywords, int start, int end,
+		String keywords, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.mapping.model.DDMFormInstance> orderByComparator) {
 		try {
 			MethodKey methodKey = new MethodKey(DDMFormInstanceServiceUtil.class,
@@ -271,8 +271,8 @@ public class DDMFormInstanceServiceHttp {
 
 	public static java.util.List<com.liferay.dynamic.data.mapping.model.DDMFormInstance> search(
 		HttpPrincipal httpPrincipal, long companyId, long groupId,
-		java.lang.String[] names, java.lang.String[] descriptions,
-		boolean andOperator, int start, int end,
+		String[] names, String[] descriptions, boolean andOperator, int start,
+		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.mapping.model.DDMFormInstance> orderByComparator) {
 		try {
 			MethodKey methodKey = new MethodKey(DDMFormInstanceServiceUtil.class,
@@ -301,7 +301,7 @@ public class DDMFormInstanceServiceHttp {
 	}
 
 	public static int searchCount(HttpPrincipal httpPrincipal, long companyId,
-		long groupId, java.lang.String keywords) {
+		long groupId, String keywords) {
 		try {
 			MethodKey methodKey = new MethodKey(DDMFormInstanceServiceUtil.class,
 					"searchCount", _searchCountParameterTypes8);
@@ -328,8 +328,7 @@ public class DDMFormInstanceServiceHttp {
 	}
 
 	public static int searchCount(HttpPrincipal httpPrincipal, long companyId,
-		long groupId, java.lang.String[] names,
-		java.lang.String[] descriptions, boolean andOperator) {
+		long groupId, String[] names, String[] descriptions, boolean andOperator) {
 		try {
 			MethodKey methodKey = new MethodKey(DDMFormInstanceServiceUtil.class,
 					"searchCount", _searchCountParameterTypes9);
@@ -390,9 +389,8 @@ public class DDMFormInstanceServiceHttp {
 
 	public static com.liferay.dynamic.data.mapping.model.DDMFormInstance updateFormInstance(
 		HttpPrincipal httpPrincipal, long ddmFormInstanceId,
-		long ddmStructureId,
-		java.util.Map<java.util.Locale, java.lang.String> nameMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		long ddmStructureId, java.util.Map<java.util.Locale, String> nameMap,
+		java.util.Map<java.util.Locale, String> descriptionMap,
 		com.liferay.dynamic.data.mapping.storage.DDMFormValues settingsDDMFormValues,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -448,20 +446,20 @@ public class DDMFormInstanceServiceHttp {
 			long.class, long.class
 		};
 	private static final Class<?>[] _searchParameterTypes6 = new Class[] {
-			long.class, long.class, java.lang.String.class, int.class, int.class,
+			long.class, long.class, String.class, int.class, int.class,
 			com.liferay.portal.kernel.util.OrderByComparator.class
 		};
 	private static final Class<?>[] _searchParameterTypes7 = new Class[] {
-			long.class, long.class, java.lang.String[].class,
-			java.lang.String[].class, boolean.class, int.class, int.class,
+			long.class, long.class, String[].class, String[].class,
+			boolean.class, int.class, int.class,
 			com.liferay.portal.kernel.util.OrderByComparator.class
 		};
 	private static final Class<?>[] _searchCountParameterTypes8 = new Class[] {
-			long.class, long.class, java.lang.String.class
+			long.class, long.class, String.class
 		};
 	private static final Class<?>[] _searchCountParameterTypes9 = new Class[] {
-			long.class, long.class, java.lang.String[].class,
-			java.lang.String[].class, boolean.class
+			long.class, long.class, String[].class, String[].class,
+			boolean.class
 		};
 	private static final Class<?>[] _updateFormInstanceParameterTypes10 = new Class[] {
 			long.class,

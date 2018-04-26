@@ -115,7 +115,7 @@ public class DLAppHelperLocalServiceWrapper implements DLAppHelperLocalService,
 	* @return the OSGi service identifier
 	*/
 	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
+	public String getOSGiServiceIdentifier() {
 		return _dlAppHelperLocalService.getOSGiServiceIdentifier();
 	}
 
@@ -133,8 +133,7 @@ public class DLAppHelperLocalServiceWrapper implements DLAppHelperLocalService,
 	@Deprecated
 	@Override
 	public void moveDependentsToTrash(
-		java.util.List<java.lang.Object> dlFileEntriesAndDLFolders,
-		long trashEntryId)
+		java.util.List<Object> dlFileEntriesAndDLFolders, long trashEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_dlAppHelperLocalService.moveDependentsToTrash(dlFileEntriesAndDLFolders,
 			trashEntryId);
@@ -231,7 +230,7 @@ public class DLAppHelperLocalServiceWrapper implements DLAppHelperLocalService,
 	@Deprecated
 	@Override
 	public void restoreDependentsFromTrash(
-		java.util.List<java.lang.Object> dlFileEntriesAndDLFolders)
+		java.util.List<Object> dlFileEntriesAndDLFolders)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_dlAppHelperLocalService.restoreDependentsFromTrash(dlFileEntriesAndDLFolders);
 	}
@@ -243,8 +242,7 @@ public class DLAppHelperLocalServiceWrapper implements DLAppHelperLocalService,
 	@Deprecated
 	@Override
 	public void restoreDependentsFromTrash(
-		java.util.List<java.lang.Object> dlFileEntriesAndDLFolders,
-		long trashEntryId)
+		java.util.List<Object> dlFileEntriesAndDLFolders, long trashEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_dlAppHelperLocalService.restoreDependentsFromTrash(dlFileEntriesAndDLFolders,
 			trashEntryId);
@@ -286,7 +284,7 @@ public class DLAppHelperLocalServiceWrapper implements DLAppHelperLocalService,
 	public com.liferay.asset.kernel.model.AssetEntry updateAsset(long userId,
 		com.liferay.portal.kernel.repository.model.FileEntry fileEntry,
 		com.liferay.portal.kernel.repository.model.FileVersion fileVersion,
-		long[] assetCategoryIds, java.lang.String[] assetTagNames,
+		long[] assetCategoryIds, String[] assetTagNames,
 		long[] assetLinkEntryIds)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _dlAppHelperLocalService.updateAsset(userId, fileEntry,
@@ -296,7 +294,7 @@ public class DLAppHelperLocalServiceWrapper implements DLAppHelperLocalService,
 	@Override
 	public com.liferay.asset.kernel.model.AssetEntry updateAsset(long userId,
 		com.liferay.portal.kernel.repository.model.Folder folder,
-		long[] assetCategoryIds, java.lang.String[] assetTagNames,
+		long[] assetCategoryIds, String[] assetTagNames,
 		long[] assetLinkEntryIds)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _dlAppHelperLocalService.updateAsset(userId, folder,
@@ -339,7 +337,7 @@ public class DLAppHelperLocalServiceWrapper implements DLAppHelperLocalService,
 		com.liferay.portal.kernel.repository.model.FileVersion latestFileVersion,
 		int oldStatus, int newStatus,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext,
-		java.util.Map<java.lang.String, java.io.Serializable> workflowContext)
+		java.util.Map<String, java.io.Serializable> workflowContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_dlAppHelperLocalService.updateStatus(userId, fileEntry,
 			latestFileVersion, oldStatus, newStatus, serviceContext,

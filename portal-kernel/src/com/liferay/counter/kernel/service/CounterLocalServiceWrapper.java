@@ -51,8 +51,7 @@ public class CounterLocalServiceWrapper implements CounterLocalService,
 	* @return the new counter
 	*/
 	@Override
-	public com.liferay.counter.kernel.model.Counter createCounter(
-		java.lang.String name) {
+	public com.liferay.counter.kernel.model.Counter createCounter(String name) {
 		return _counterLocalService.createCounter(name);
 	}
 
@@ -76,8 +75,7 @@ public class CounterLocalServiceWrapper implements CounterLocalService,
 	* @throws PortalException if a counter with the primary key could not be found
 	*/
 	@Override
-	public com.liferay.counter.kernel.model.Counter deleteCounter(
-		java.lang.String name)
+	public com.liferay.counter.kernel.model.Counter deleteCounter(String name)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _counterLocalService.deleteCounter(name);
 	}
@@ -177,8 +175,7 @@ public class CounterLocalServiceWrapper implements CounterLocalService,
 	}
 
 	@Override
-	public com.liferay.counter.kernel.model.Counter fetchCounter(
-		java.lang.String name) {
+	public com.liferay.counter.kernel.model.Counter fetchCounter(String name) {
 		return _counterLocalService.fetchCounter(name);
 	}
 
@@ -190,8 +187,7 @@ public class CounterLocalServiceWrapper implements CounterLocalService,
 	* @throws PortalException if a counter with the primary key could not be found
 	*/
 	@Override
-	public com.liferay.counter.kernel.model.Counter getCounter(
-		java.lang.String name)
+	public com.liferay.counter.kernel.model.Counter getCounter(String name)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _counterLocalService.getCounter(name);
 	}
@@ -224,7 +220,7 @@ public class CounterLocalServiceWrapper implements CounterLocalService,
 	}
 
 	@Override
-	public java.util.List<java.lang.String> getNames() {
+	public java.util.List<String> getNames() {
 		return _counterLocalService.getNames();
 	}
 
@@ -234,7 +230,7 @@ public class CounterLocalServiceWrapper implements CounterLocalService,
 	* @return the OSGi service identifier
 	*/
 	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
+	public String getOSGiServiceIdentifier() {
 		return _counterLocalService.getOSGiServiceIdentifier();
 	}
 
@@ -251,27 +247,27 @@ public class CounterLocalServiceWrapper implements CounterLocalService,
 	}
 
 	@Override
-	public long increment(java.lang.String name) {
+	public long increment(String name) {
 		return _counterLocalService.increment(name);
 	}
 
 	@Override
-	public long increment(java.lang.String name, int size) {
+	public long increment(String name, int size) {
 		return _counterLocalService.increment(name, size);
 	}
 
 	@Override
-	public void rename(java.lang.String oldName, java.lang.String newName) {
+	public void rename(String oldName, String newName) {
 		_counterLocalService.rename(oldName, newName);
 	}
 
 	@Override
-	public void reset(java.lang.String name) {
+	public void reset(String name) {
 		_counterLocalService.reset(name);
 	}
 
 	@Override
-	public void reset(java.lang.String name, long size) {
+	public void reset(String name, long size) {
 		_counterLocalService.reset(name, size);
 	}
 

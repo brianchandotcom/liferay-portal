@@ -65,15 +65,13 @@ public interface MBMailingListLocalService extends BaseLocalService,
 	 * Never modify or reference this interface directly. Always use {@link MBMailingListLocalServiceUtil} to access the message boards mailing list local service. Add custom service methods to {@link com.liferay.message.boards.service.impl.MBMailingListLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	public MBMailingList addMailingList(long userId, long groupId,
-		long categoryId, java.lang.String emailAddress,
-		java.lang.String inProtocol, java.lang.String inServerName,
-		int inServerPort, boolean inUseSSL, java.lang.String inUserName,
-		java.lang.String inPassword, int inReadInterval,
-		java.lang.String outEmailAddress, boolean outCustom,
-		java.lang.String outServerName, int outServerPort, boolean outUseSSL,
-		java.lang.String outUserName, java.lang.String outPassword,
-		boolean allowAnonymous, boolean active, ServiceContext serviceContext)
-		throws PortalException;
+		long categoryId, String emailAddress, String inProtocol,
+		String inServerName, int inServerPort, boolean inUseSSL,
+		String inUserName, String inPassword, int inReadInterval,
+		String outEmailAddress, boolean outCustom, String outServerName,
+		int outServerPort, boolean outUseSSL, String outUserName,
+		String outPassword, boolean allowAnonymous, boolean active,
+		ServiceContext serviceContext) throws PortalException;
 
 	/**
 	* Adds the message boards mailing list to the database. Also notifies the appropriate model listeners.
@@ -201,8 +199,8 @@ public interface MBMailingListLocalService extends BaseLocalService,
 	* @return the matching message boards mailing list, or <code>null</code> if a matching message boards mailing list could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public MBMailingList fetchMBMailingListByUuidAndGroupId(
-		java.lang.String uuid, long groupId);
+	public MBMailingList fetchMBMailingListByUuidAndGroupId(String uuid,
+		long groupId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
@@ -238,8 +236,8 @@ public interface MBMailingListLocalService extends BaseLocalService,
 	* @throws PortalException if a matching message boards mailing list could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public MBMailingList getMBMailingListByUuidAndGroupId(
-		java.lang.String uuid, long groupId) throws PortalException;
+	public MBMailingList getMBMailingListByUuidAndGroupId(String uuid,
+		long groupId) throws PortalException;
 
 	/**
 	* Returns a range of all the message boards mailing lists.
@@ -264,7 +262,7 @@ public interface MBMailingListLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<MBMailingList> getMBMailingListsByUuidAndCompanyId(
-		java.lang.String uuid, long companyId);
+		String uuid, long companyId);
 
 	/**
 	* Returns a range of message boards mailing lists matching the UUID and company.
@@ -278,7 +276,7 @@ public interface MBMailingListLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<MBMailingList> getMBMailingListsByUuidAndCompanyId(
-		java.lang.String uuid, long companyId, int start, int end,
+		String uuid, long companyId, int start, int end,
 		OrderByComparator<MBMailingList> orderByComparator);
 
 	/**
@@ -294,7 +292,7 @@ public interface MBMailingListLocalService extends BaseLocalService,
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -302,14 +300,13 @@ public interface MBMailingListLocalService extends BaseLocalService,
 		throws PortalException;
 
 	public MBMailingList updateMailingList(long mailingListId,
-		java.lang.String emailAddress, java.lang.String inProtocol,
-		java.lang.String inServerName, int inServerPort, boolean inUseSSL,
-		java.lang.String inUserName, java.lang.String inPassword,
-		int inReadInterval, java.lang.String outEmailAddress,
-		boolean outCustom, java.lang.String outServerName, int outServerPort,
-		boolean outUseSSL, java.lang.String outUserName,
-		java.lang.String outPassword, boolean allowAnonymous, boolean active,
-		ServiceContext serviceContext) throws PortalException;
+		String emailAddress, String inProtocol, String inServerName,
+		int inServerPort, boolean inUseSSL, String inUserName,
+		String inPassword, int inReadInterval, String outEmailAddress,
+		boolean outCustom, String outServerName, int outServerPort,
+		boolean outUseSSL, String outUserName, String outPassword,
+		boolean allowAnonymous, boolean active, ServiceContext serviceContext)
+		throws PortalException;
 
 	/**
 	* Updates the message boards mailing list in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.

@@ -68,8 +68,7 @@ public interface LayoutSetBranchLocalService extends BaseLocalService,
 	public LayoutSetBranch addLayoutSetBranch(LayoutSetBranch layoutSetBranch);
 
 	public LayoutSetBranch addLayoutSetBranch(long userId, long groupId,
-		boolean privateLayout, java.lang.String name,
-		java.lang.String description, boolean master,
+		boolean privateLayout, String name, String description, boolean master,
 		long copyLayoutSetBranchId, ServiceContext serviceContext)
 		throws PortalException;
 
@@ -185,7 +184,7 @@ public interface LayoutSetBranchLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public LayoutSetBranch fetchLayoutSetBranch(long groupId,
-		boolean privateLayout, java.lang.String name);
+		boolean privateLayout, String name);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
@@ -206,7 +205,7 @@ public interface LayoutSetBranchLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public LayoutSetBranch getLayoutSetBranch(long groupId,
-		boolean privateLayout, java.lang.String name) throws PortalException;
+		boolean privateLayout, String name) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<LayoutSetBranch> getLayoutSetBranches(long groupId,
@@ -243,7 +242,7 @@ public interface LayoutSetBranchLocalService extends BaseLocalService,
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -270,6 +269,6 @@ public interface LayoutSetBranchLocalService extends BaseLocalService,
 		LayoutSetBranch layoutSetBranch);
 
 	public LayoutSetBranch updateLayoutSetBranch(long layoutSetBranchId,
-		java.lang.String name, java.lang.String description,
-		ServiceContext serviceContext) throws PortalException;
+		String name, String description, ServiceContext serviceContext)
+		throws PortalException;
 }

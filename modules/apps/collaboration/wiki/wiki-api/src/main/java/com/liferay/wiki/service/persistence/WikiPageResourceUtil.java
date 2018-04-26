@@ -118,7 +118,7 @@ public class WikiPageResourceUtil {
 	* @param uuid the uuid
 	* @return the matching wiki page resources
 	*/
-	public static List<WikiPageResource> findByUuid(java.lang.String uuid) {
+	public static List<WikiPageResource> findByUuid(String uuid) {
 		return getPersistence().findByUuid(uuid);
 	}
 
@@ -134,8 +134,8 @@ public class WikiPageResourceUtil {
 	* @param end the upper bound of the range of wiki page resources (not inclusive)
 	* @return the range of matching wiki page resources
 	*/
-	public static List<WikiPageResource> findByUuid(java.lang.String uuid,
-		int start, int end) {
+	public static List<WikiPageResource> findByUuid(String uuid, int start,
+		int end) {
 		return getPersistence().findByUuid(uuid, start, end);
 	}
 
@@ -152,9 +152,8 @@ public class WikiPageResourceUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching wiki page resources
 	*/
-	public static List<WikiPageResource> findByUuid(java.lang.String uuid,
-		int start, int end,
-		OrderByComparator<WikiPageResource> orderByComparator) {
+	public static List<WikiPageResource> findByUuid(String uuid, int start,
+		int end, OrderByComparator<WikiPageResource> orderByComparator) {
 		return getPersistence().findByUuid(uuid, start, end, orderByComparator);
 	}
 
@@ -172,9 +171,8 @@ public class WikiPageResourceUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching wiki page resources
 	*/
-	public static List<WikiPageResource> findByUuid(java.lang.String uuid,
-		int start, int end,
-		OrderByComparator<WikiPageResource> orderByComparator,
+	public static List<WikiPageResource> findByUuid(String uuid, int start,
+		int end, OrderByComparator<WikiPageResource> orderByComparator,
 		boolean retrieveFromCache) {
 		return getPersistence()
 				   .findByUuid(uuid, start, end, orderByComparator,
@@ -189,7 +187,7 @@ public class WikiPageResourceUtil {
 	* @return the first matching wiki page resource
 	* @throws NoSuchPageResourceException if a matching wiki page resource could not be found
 	*/
-	public static WikiPageResource findByUuid_First(java.lang.String uuid,
+	public static WikiPageResource findByUuid_First(String uuid,
 		OrderByComparator<WikiPageResource> orderByComparator)
 		throws com.liferay.wiki.exception.NoSuchPageResourceException {
 		return getPersistence().findByUuid_First(uuid, orderByComparator);
@@ -202,7 +200,7 @@ public class WikiPageResourceUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching wiki page resource, or <code>null</code> if a matching wiki page resource could not be found
 	*/
-	public static WikiPageResource fetchByUuid_First(java.lang.String uuid,
+	public static WikiPageResource fetchByUuid_First(String uuid,
 		OrderByComparator<WikiPageResource> orderByComparator) {
 		return getPersistence().fetchByUuid_First(uuid, orderByComparator);
 	}
@@ -215,7 +213,7 @@ public class WikiPageResourceUtil {
 	* @return the last matching wiki page resource
 	* @throws NoSuchPageResourceException if a matching wiki page resource could not be found
 	*/
-	public static WikiPageResource findByUuid_Last(java.lang.String uuid,
+	public static WikiPageResource findByUuid_Last(String uuid,
 		OrderByComparator<WikiPageResource> orderByComparator)
 		throws com.liferay.wiki.exception.NoSuchPageResourceException {
 		return getPersistence().findByUuid_Last(uuid, orderByComparator);
@@ -228,7 +226,7 @@ public class WikiPageResourceUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching wiki page resource, or <code>null</code> if a matching wiki page resource could not be found
 	*/
-	public static WikiPageResource fetchByUuid_Last(java.lang.String uuid,
+	public static WikiPageResource fetchByUuid_Last(String uuid,
 		OrderByComparator<WikiPageResource> orderByComparator) {
 		return getPersistence().fetchByUuid_Last(uuid, orderByComparator);
 	}
@@ -243,7 +241,7 @@ public class WikiPageResourceUtil {
 	* @throws NoSuchPageResourceException if a wiki page resource with the primary key could not be found
 	*/
 	public static WikiPageResource[] findByUuid_PrevAndNext(
-		long resourcePrimKey, java.lang.String uuid,
+		long resourcePrimKey, String uuid,
 		OrderByComparator<WikiPageResource> orderByComparator)
 		throws com.liferay.wiki.exception.NoSuchPageResourceException {
 		return getPersistence()
@@ -256,7 +254,7 @@ public class WikiPageResourceUtil {
 	*
 	* @param uuid the uuid
 	*/
-	public static void removeByUuid(java.lang.String uuid) {
+	public static void removeByUuid(String uuid) {
 		getPersistence().removeByUuid(uuid);
 	}
 
@@ -266,7 +264,7 @@ public class WikiPageResourceUtil {
 	* @param uuid the uuid
 	* @return the number of matching wiki page resources
 	*/
-	public static int countByUuid(java.lang.String uuid) {
+	public static int countByUuid(String uuid) {
 		return getPersistence().countByUuid(uuid);
 	}
 
@@ -278,8 +276,7 @@ public class WikiPageResourceUtil {
 	* @return the matching wiki page resource
 	* @throws NoSuchPageResourceException if a matching wiki page resource could not be found
 	*/
-	public static WikiPageResource findByUUID_G(java.lang.String uuid,
-		long groupId)
+	public static WikiPageResource findByUUID_G(String uuid, long groupId)
 		throws com.liferay.wiki.exception.NoSuchPageResourceException {
 		return getPersistence().findByUUID_G(uuid, groupId);
 	}
@@ -291,8 +288,7 @@ public class WikiPageResourceUtil {
 	* @param groupId the group ID
 	* @return the matching wiki page resource, or <code>null</code> if a matching wiki page resource could not be found
 	*/
-	public static WikiPageResource fetchByUUID_G(java.lang.String uuid,
-		long groupId) {
+	public static WikiPageResource fetchByUUID_G(String uuid, long groupId) {
 		return getPersistence().fetchByUUID_G(uuid, groupId);
 	}
 
@@ -304,8 +300,8 @@ public class WikiPageResourceUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching wiki page resource, or <code>null</code> if a matching wiki page resource could not be found
 	*/
-	public static WikiPageResource fetchByUUID_G(java.lang.String uuid,
-		long groupId, boolean retrieveFromCache) {
+	public static WikiPageResource fetchByUUID_G(String uuid, long groupId,
+		boolean retrieveFromCache) {
 		return getPersistence().fetchByUUID_G(uuid, groupId, retrieveFromCache);
 	}
 
@@ -316,8 +312,7 @@ public class WikiPageResourceUtil {
 	* @param groupId the group ID
 	* @return the wiki page resource that was removed
 	*/
-	public static WikiPageResource removeByUUID_G(java.lang.String uuid,
-		long groupId)
+	public static WikiPageResource removeByUUID_G(String uuid, long groupId)
 		throws com.liferay.wiki.exception.NoSuchPageResourceException {
 		return getPersistence().removeByUUID_G(uuid, groupId);
 	}
@@ -329,7 +324,7 @@ public class WikiPageResourceUtil {
 	* @param groupId the group ID
 	* @return the number of matching wiki page resources
 	*/
-	public static int countByUUID_G(java.lang.String uuid, long groupId) {
+	public static int countByUUID_G(String uuid, long groupId) {
 		return getPersistence().countByUUID_G(uuid, groupId);
 	}
 
@@ -340,7 +335,7 @@ public class WikiPageResourceUtil {
 	* @param companyId the company ID
 	* @return the matching wiki page resources
 	*/
-	public static List<WikiPageResource> findByUuid_C(java.lang.String uuid,
+	public static List<WikiPageResource> findByUuid_C(String uuid,
 		long companyId) {
 		return getPersistence().findByUuid_C(uuid, companyId);
 	}
@@ -358,7 +353,7 @@ public class WikiPageResourceUtil {
 	* @param end the upper bound of the range of wiki page resources (not inclusive)
 	* @return the range of matching wiki page resources
 	*/
-	public static List<WikiPageResource> findByUuid_C(java.lang.String uuid,
+	public static List<WikiPageResource> findByUuid_C(String uuid,
 		long companyId, int start, int end) {
 		return getPersistence().findByUuid_C(uuid, companyId, start, end);
 	}
@@ -377,7 +372,7 @@ public class WikiPageResourceUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching wiki page resources
 	*/
-	public static List<WikiPageResource> findByUuid_C(java.lang.String uuid,
+	public static List<WikiPageResource> findByUuid_C(String uuid,
 		long companyId, int start, int end,
 		OrderByComparator<WikiPageResource> orderByComparator) {
 		return getPersistence()
@@ -399,7 +394,7 @@ public class WikiPageResourceUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching wiki page resources
 	*/
-	public static List<WikiPageResource> findByUuid_C(java.lang.String uuid,
+	public static List<WikiPageResource> findByUuid_C(String uuid,
 		long companyId, int start, int end,
 		OrderByComparator<WikiPageResource> orderByComparator,
 		boolean retrieveFromCache) {
@@ -417,7 +412,7 @@ public class WikiPageResourceUtil {
 	* @return the first matching wiki page resource
 	* @throws NoSuchPageResourceException if a matching wiki page resource could not be found
 	*/
-	public static WikiPageResource findByUuid_C_First(java.lang.String uuid,
+	public static WikiPageResource findByUuid_C_First(String uuid,
 		long companyId, OrderByComparator<WikiPageResource> orderByComparator)
 		throws com.liferay.wiki.exception.NoSuchPageResourceException {
 		return getPersistence()
@@ -432,7 +427,7 @@ public class WikiPageResourceUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching wiki page resource, or <code>null</code> if a matching wiki page resource could not be found
 	*/
-	public static WikiPageResource fetchByUuid_C_First(java.lang.String uuid,
+	public static WikiPageResource fetchByUuid_C_First(String uuid,
 		long companyId, OrderByComparator<WikiPageResource> orderByComparator) {
 		return getPersistence()
 				   .fetchByUuid_C_First(uuid, companyId, orderByComparator);
@@ -447,7 +442,7 @@ public class WikiPageResourceUtil {
 	* @return the last matching wiki page resource
 	* @throws NoSuchPageResourceException if a matching wiki page resource could not be found
 	*/
-	public static WikiPageResource findByUuid_C_Last(java.lang.String uuid,
+	public static WikiPageResource findByUuid_C_Last(String uuid,
 		long companyId, OrderByComparator<WikiPageResource> orderByComparator)
 		throws com.liferay.wiki.exception.NoSuchPageResourceException {
 		return getPersistence()
@@ -462,7 +457,7 @@ public class WikiPageResourceUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching wiki page resource, or <code>null</code> if a matching wiki page resource could not be found
 	*/
-	public static WikiPageResource fetchByUuid_C_Last(java.lang.String uuid,
+	public static WikiPageResource fetchByUuid_C_Last(String uuid,
 		long companyId, OrderByComparator<WikiPageResource> orderByComparator) {
 		return getPersistence()
 				   .fetchByUuid_C_Last(uuid, companyId, orderByComparator);
@@ -479,7 +474,7 @@ public class WikiPageResourceUtil {
 	* @throws NoSuchPageResourceException if a wiki page resource with the primary key could not be found
 	*/
 	public static WikiPageResource[] findByUuid_C_PrevAndNext(
-		long resourcePrimKey, java.lang.String uuid, long companyId,
+		long resourcePrimKey, String uuid, long companyId,
 		OrderByComparator<WikiPageResource> orderByComparator)
 		throws com.liferay.wiki.exception.NoSuchPageResourceException {
 		return getPersistence()
@@ -493,7 +488,7 @@ public class WikiPageResourceUtil {
 	* @param uuid the uuid
 	* @param companyId the company ID
 	*/
-	public static void removeByUuid_C(java.lang.String uuid, long companyId) {
+	public static void removeByUuid_C(String uuid, long companyId) {
 		getPersistence().removeByUuid_C(uuid, companyId);
 	}
 
@@ -504,7 +499,7 @@ public class WikiPageResourceUtil {
 	* @param companyId the company ID
 	* @return the number of matching wiki page resources
 	*/
-	public static int countByUuid_C(java.lang.String uuid, long companyId) {
+	public static int countByUuid_C(String uuid, long companyId) {
 		return getPersistence().countByUuid_C(uuid, companyId);
 	}
 
@@ -516,7 +511,7 @@ public class WikiPageResourceUtil {
 	* @return the matching wiki page resource
 	* @throws NoSuchPageResourceException if a matching wiki page resource could not be found
 	*/
-	public static WikiPageResource findByN_T(long nodeId, java.lang.String title)
+	public static WikiPageResource findByN_T(long nodeId, String title)
 		throws com.liferay.wiki.exception.NoSuchPageResourceException {
 		return getPersistence().findByN_T(nodeId, title);
 	}
@@ -528,8 +523,7 @@ public class WikiPageResourceUtil {
 	* @param title the title
 	* @return the matching wiki page resource, or <code>null</code> if a matching wiki page resource could not be found
 	*/
-	public static WikiPageResource fetchByN_T(long nodeId,
-		java.lang.String title) {
+	public static WikiPageResource fetchByN_T(long nodeId, String title) {
 		return getPersistence().fetchByN_T(nodeId, title);
 	}
 
@@ -541,8 +535,8 @@ public class WikiPageResourceUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching wiki page resource, or <code>null</code> if a matching wiki page resource could not be found
 	*/
-	public static WikiPageResource fetchByN_T(long nodeId,
-		java.lang.String title, boolean retrieveFromCache) {
+	public static WikiPageResource fetchByN_T(long nodeId, String title,
+		boolean retrieveFromCache) {
 		return getPersistence().fetchByN_T(nodeId, title, retrieveFromCache);
 	}
 
@@ -553,8 +547,7 @@ public class WikiPageResourceUtil {
 	* @param title the title
 	* @return the wiki page resource that was removed
 	*/
-	public static WikiPageResource removeByN_T(long nodeId,
-		java.lang.String title)
+	public static WikiPageResource removeByN_T(long nodeId, String title)
 		throws com.liferay.wiki.exception.NoSuchPageResourceException {
 		return getPersistence().removeByN_T(nodeId, title);
 	}
@@ -566,7 +559,7 @@ public class WikiPageResourceUtil {
 	* @param title the title
 	* @return the number of matching wiki page resources
 	*/
-	public static int countByN_T(long nodeId, java.lang.String title) {
+	public static int countByN_T(long nodeId, String title) {
 		return getPersistence().countByN_T(nodeId, title);
 	}
 
@@ -718,7 +711,7 @@ public class WikiPageResourceUtil {
 		return getPersistence().countAll();
 	}
 
-	public static java.util.Set<java.lang.String> getBadColumnNames() {
+	public static java.util.Set<String> getBadColumnNames() {
 		return getPersistence().getBadColumnNames();
 	}
 

@@ -65,14 +65,14 @@ import java.rmi.RemoteException;
 @ProviderType
 public class PasswordPolicyServiceSoap {
 	public static com.liferay.portal.kernel.model.PasswordPolicySoap addPasswordPolicy(
-		java.lang.String name, java.lang.String description,
-		boolean changeable, boolean changeRequired, long minAge,
-		boolean checkSyntax, boolean allowDictionaryWords, int minAlphanumeric,
-		int minLength, int minLowerCase, int minNumbers, int minSymbols,
-		int minUpperCase, java.lang.String regex, boolean history,
-		int historyCount, boolean expireable, long maxAge, long warningTime,
-		int graceLimit, boolean lockout, int maxFailure, long lockoutDuration,
-		long resetFailureCount, long resetTicketMaxAge,
+		String name, String description, boolean changeable,
+		boolean changeRequired, long minAge, boolean checkSyntax,
+		boolean allowDictionaryWords, int minAlphanumeric, int minLength,
+		int minLowerCase, int minNumbers, int minSymbols, int minUpperCase,
+		String regex, boolean history, int historyCount, boolean expireable,
+		long maxAge, long warningTime, int graceLimit, boolean lockout,
+		int maxFailure, long lockoutDuration, long resetFailureCount,
+		long resetTicketMaxAge,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
@@ -121,7 +121,7 @@ public class PasswordPolicyServiceSoap {
 	}
 
 	public static com.liferay.portal.kernel.model.PasswordPolicySoap[] search(
-		long companyId, java.lang.String name, int start, int end,
+		long companyId, String name, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.kernel.model.PasswordPolicy> obc)
 		throws RemoteException {
 		try {
@@ -138,7 +138,7 @@ public class PasswordPolicyServiceSoap {
 		}
 	}
 
-	public static int searchCount(long companyId, java.lang.String name)
+	public static int searchCount(long companyId, String name)
 		throws RemoteException {
 		try {
 			int returnValue = PasswordPolicyServiceUtil.searchCount(companyId,
@@ -154,12 +154,11 @@ public class PasswordPolicyServiceSoap {
 	}
 
 	public static com.liferay.portal.kernel.model.PasswordPolicySoap updatePasswordPolicy(
-		long passwordPolicyId, java.lang.String name,
-		java.lang.String description, boolean changeable,
-		boolean changeRequired, long minAge, boolean checkSyntax,
-		boolean allowDictionaryWords, int minAlphanumeric, int minLength,
-		int minLowerCase, int minNumbers, int minSymbols, int minUpperCase,
-		java.lang.String regex, boolean history, int historyCount,
+		long passwordPolicyId, String name, String description,
+		boolean changeable, boolean changeRequired, long minAge,
+		boolean checkSyntax, boolean allowDictionaryWords, int minAlphanumeric,
+		int minLength, int minLowerCase, int minNumbers, int minSymbols,
+		int minUpperCase, String regex, boolean history, int historyCount,
 		boolean expireable, long maxAge, long warningTime, int graceLimit,
 		boolean lockout, int maxFailure, long lockoutDuration,
 		long resetFailureCount, long resetTicketMaxAge,

@@ -186,8 +186,8 @@ public interface DDMFormInstanceVersionPersistence extends BasePersistence<DDMFo
 	* @return the matching ddm form instance version
 	* @throws NoSuchFormInstanceVersionException if a matching ddm form instance version could not be found
 	*/
-	public DDMFormInstanceVersion findByF_V(long formInstanceId,
-		java.lang.String version) throws NoSuchFormInstanceVersionException;
+	public DDMFormInstanceVersion findByF_V(long formInstanceId, String version)
+		throws NoSuchFormInstanceVersionException;
 
 	/**
 	* Returns the ddm form instance version where formInstanceId = &#63; and version = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
@@ -196,8 +196,7 @@ public interface DDMFormInstanceVersionPersistence extends BasePersistence<DDMFo
 	* @param version the version
 	* @return the matching ddm form instance version, or <code>null</code> if a matching ddm form instance version could not be found
 	*/
-	public DDMFormInstanceVersion fetchByF_V(long formInstanceId,
-		java.lang.String version);
+	public DDMFormInstanceVersion fetchByF_V(long formInstanceId, String version);
 
 	/**
 	* Returns the ddm form instance version where formInstanceId = &#63; and version = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -208,7 +207,7 @@ public interface DDMFormInstanceVersionPersistence extends BasePersistence<DDMFo
 	* @return the matching ddm form instance version, or <code>null</code> if a matching ddm form instance version could not be found
 	*/
 	public DDMFormInstanceVersion fetchByF_V(long formInstanceId,
-		java.lang.String version, boolean retrieveFromCache);
+		String version, boolean retrieveFromCache);
 
 	/**
 	* Removes the ddm form instance version where formInstanceId = &#63; and version = &#63; from the database.
@@ -218,7 +217,7 @@ public interface DDMFormInstanceVersionPersistence extends BasePersistence<DDMFo
 	* @return the ddm form instance version that was removed
 	*/
 	public DDMFormInstanceVersion removeByF_V(long formInstanceId,
-		java.lang.String version) throws NoSuchFormInstanceVersionException;
+		String version) throws NoSuchFormInstanceVersionException;
 
 	/**
 	* Returns the number of ddm form instance versions where formInstanceId = &#63; and version = &#63;.
@@ -227,7 +226,7 @@ public interface DDMFormInstanceVersionPersistence extends BasePersistence<DDMFo
 	* @param version the version
 	* @return the number of matching ddm form instance versions
 	*/
-	public int countByF_V(long formInstanceId, java.lang.String version);
+	public int countByF_V(long formInstanceId, String version);
 
 	/**
 	* Returns all the ddm form instance versions where formInstanceId = &#63; and status = &#63;.
@@ -500,5 +499,5 @@ public interface DDMFormInstanceVersionPersistence extends BasePersistence<DDMFo
 	public int countAll();
 
 	@Override
-	public java.util.Set<java.lang.String> getBadColumnNames();
+	public java.util.Set<String> getBadColumnNames();
 }

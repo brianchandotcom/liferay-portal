@@ -178,7 +178,7 @@ public class RepositoryWrapper implements Repository, ModelWrapper<Repository> {
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new RepositoryWrapper((Repository)_repository.clone());
 	}
 
@@ -193,7 +193,7 @@ public class RepositoryWrapper implements Repository, ModelWrapper<Repository> {
 	* @return the fully qualified class name of this repository
 	*/
 	@Override
-	public java.lang.String getClassName() {
+	public String getClassName() {
 		return _repository.getClassName();
 	}
 
@@ -233,7 +233,7 @@ public class RepositoryWrapper implements Repository, ModelWrapper<Repository> {
 	* @return the description of this repository
 	*/
 	@Override
-	public java.lang.String getDescription() {
+	public String getDescription() {
 		return _repository.getDescription();
 	}
 
@@ -298,7 +298,7 @@ public class RepositoryWrapper implements Repository, ModelWrapper<Repository> {
 	* @return the name of this repository
 	*/
 	@Override
-	public java.lang.String getName() {
+	public String getName() {
 		return _repository.getName();
 	}
 
@@ -308,7 +308,7 @@ public class RepositoryWrapper implements Repository, ModelWrapper<Repository> {
 	* @return the portlet ID of this repository
 	*/
 	@Override
-	public java.lang.String getPortletId() {
+	public String getPortletId() {
 		return _repository.getPortletId();
 	}
 
@@ -343,7 +343,7 @@ public class RepositoryWrapper implements Repository, ModelWrapper<Repository> {
 	* @return the type settings of this repository
 	*/
 	@Override
-	public java.lang.String getTypeSettings() {
+	public String getTypeSettings() {
 		return _repository.getTypeSettings();
 	}
 
@@ -368,7 +368,7 @@ public class RepositoryWrapper implements Repository, ModelWrapper<Repository> {
 	* @return the user name of this repository
 	*/
 	@Override
-	public java.lang.String getUserName() {
+	public String getUserName() {
 		return _repository.getUserName();
 	}
 
@@ -378,7 +378,7 @@ public class RepositoryWrapper implements Repository, ModelWrapper<Repository> {
 	* @return the user uuid of this repository
 	*/
 	@Override
-	public java.lang.String getUserUuid() {
+	public String getUserUuid() {
 		return _repository.getUserUuid();
 	}
 
@@ -388,7 +388,7 @@ public class RepositoryWrapper implements Repository, ModelWrapper<Repository> {
 	* @return the uuid of this repository
 	*/
 	@Override
-	public java.lang.String getUuid() {
+	public String getUuid() {
 		return _repository.getUuid();
 	}
 
@@ -423,7 +423,7 @@ public class RepositoryWrapper implements Repository, ModelWrapper<Repository> {
 	}
 
 	@Override
-	public void setClassName(java.lang.String className) {
+	public void setClassName(String className) {
 		_repository.setClassName(className);
 	}
 
@@ -463,7 +463,7 @@ public class RepositoryWrapper implements Repository, ModelWrapper<Repository> {
 	* @param description the description of this repository
 	*/
 	@Override
-	public void setDescription(java.lang.String description) {
+	public void setDescription(String description) {
 		_repository.setDescription(description);
 	}
 
@@ -538,7 +538,7 @@ public class RepositoryWrapper implements Repository, ModelWrapper<Repository> {
 	* @param name the name of this repository
 	*/
 	@Override
-	public void setName(java.lang.String name) {
+	public void setName(String name) {
 		_repository.setName(name);
 	}
 
@@ -553,7 +553,7 @@ public class RepositoryWrapper implements Repository, ModelWrapper<Repository> {
 	* @param portletId the portlet ID of this repository
 	*/
 	@Override
-	public void setPortletId(java.lang.String portletId) {
+	public void setPortletId(String portletId) {
 		_repository.setPortletId(portletId);
 	}
 
@@ -588,7 +588,7 @@ public class RepositoryWrapper implements Repository, ModelWrapper<Repository> {
 	* @param typeSettings the type settings of this repository
 	*/
 	@Override
-	public void setTypeSettings(java.lang.String typeSettings) {
+	public void setTypeSettings(String typeSettings) {
 		_repository.setTypeSettings(typeSettings);
 	}
 
@@ -614,7 +614,7 @@ public class RepositoryWrapper implements Repository, ModelWrapper<Repository> {
 	* @param userName the user name of this repository
 	*/
 	@Override
-	public void setUserName(java.lang.String userName) {
+	public void setUserName(String userName) {
 		_repository.setUserName(userName);
 	}
 
@@ -624,7 +624,7 @@ public class RepositoryWrapper implements Repository, ModelWrapper<Repository> {
 	* @param userUuid the user uuid of this repository
 	*/
 	@Override
-	public void setUserUuid(java.lang.String userUuid) {
+	public void setUserUuid(String userUuid) {
 		_repository.setUserUuid(userUuid);
 	}
 
@@ -634,7 +634,7 @@ public class RepositoryWrapper implements Repository, ModelWrapper<Repository> {
 	* @param uuid the uuid of this repository
 	*/
 	@Override
-	public void setUuid(java.lang.String uuid) {
+	public void setUuid(String uuid) {
 		_repository.setUuid(uuid);
 	}
 
@@ -649,7 +649,7 @@ public class RepositoryWrapper implements Repository, ModelWrapper<Repository> {
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _repository.toString();
 	}
 
@@ -659,7 +659,7 @@ public class RepositoryWrapper implements Repository, ModelWrapper<Repository> {
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _repository.toXmlString();
 	}
 

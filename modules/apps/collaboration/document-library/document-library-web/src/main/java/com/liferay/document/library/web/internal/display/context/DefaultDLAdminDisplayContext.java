@@ -645,6 +645,23 @@ public class DefaultDLAdminDisplayContext implements DLAdminDisplayContext {
 	}
 
 	@Override
+	public boolean isDisabled() {
+		try {
+			if (DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcutsCount(
+					getRepositoryId(), getFolderId(),
+					WorkflowConstants.STATUS_ANY, true) <= 0) {
+
+				return true;
+			}
+
+			return false;
+		}
+		catch (PortalException pe) {
+			throw new SystemException(pe);
+		}
+	}
+
+	@Override
 	public boolean isShowSearchInfo() {
 		if (_isSearch() && ParamUtil.getBoolean(_request, "showSearchInfo")) {
 			return true;

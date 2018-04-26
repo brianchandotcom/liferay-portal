@@ -12,10 +12,10 @@
  * details.
  */
 
-package com.liferay.commerce.price.service;
+package com.liferay.commerce.price;
 
 /**
  * @author Marco Leo
  */
-public interface CommerceTaxCalculation {
+public interface CommerceDiscountCalculation {
 }

@@ -12,16 +12,10 @@
  * details.
  */
 
-package com.liferay.commerce.price.service;
-
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.transaction.Propagation;
-import com.liferay.portal.kernel.transaction.Transactional;
-
-import java.math.BigDecimal;
+package com.liferay.commerce.price;
 
 /**
  * @author Marco Leo
  */
-public interface CommercePriceCalculation {
+public interface CommerceTaxCalculation {
 }

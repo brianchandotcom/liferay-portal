@@ -19,24 +19,26 @@
 <div class="microblogs-status-update">
 	<liferay-portlet:actionURL portletConfiguration="<%= true %>" var="configurationActionURL" />
 
-	<aui:form action="<%= configurationActionURL %>" method="post" name="fm">
+	<liferay-frontend:edit-form
+		action="<%= configurationActionURL %>"
+		method="post"
+		name="fm"
+	>
 		<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
 
-		<div class="portlet-configuration-body-content">
-			<div class="container-fluid-1280">
-				<liferay-ui:panel
-					collapsible="<%= true %>"
-					extended="<%= true %>"
-					persistState="<%= true %>"
-					title="display-settings"
-				>
-					<aui:input label="display-most-recent-status" name="preferences--showStatus--" type="checkbox" value="<%= showStatus %>" />
-				</liferay-ui:panel>
-			</div>
-		</div>
+		<liferay-frontend:edit-form-body>
+			<liferay-frontend:fieldset
+				collapsible="<%= true %>"
+				label="display-settings"
+			>
+				<aui:input label="display-most-recent-status" name="preferences--showStatus--" type="checkbox" value="<%= showStatus %>" />
+			</liferay-frontend:fieldset>
+		</liferay-frontend:edit-form-body>
 
-		<aui:button-row>
+		<liferay-frontend:edit-form-footer>
 			<aui:button type="submit" />
-		</aui:button-row>
-	</aui:form>
+
+			<aui:button type="cancel" />
+		</liferay-frontend:edit-form-footer>
+	</liferay-frontend:edit-form>
 </div>

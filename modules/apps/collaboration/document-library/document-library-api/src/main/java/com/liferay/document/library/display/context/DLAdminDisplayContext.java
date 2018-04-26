@@ -54,6 +54,10 @@ public interface DLAdminDisplayContext {
 
 	public long getRepositoryId();
 
+	public long getRootFolderId();
+
+	public String getRootFolderName();
+
 	public SearchContainer getSearchContainer();
 
 	public PortletURL getSearchURL();

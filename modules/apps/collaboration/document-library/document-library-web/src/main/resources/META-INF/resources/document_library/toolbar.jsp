@@ -17,17 +17,11 @@
 <%@ include file="/document_library/init.jsp" %>
 
 <%
-String mvcRenderCommandName = ParamUtil.getString(request, "mvcRenderCommandName");
-
-String navigation = ParamUtil.getString(request, "navigation", "home");
-
 long repositoryId = GetterUtil.getLong((String)request.getAttribute("view.jsp-repositoryId"));
 
 long folderId = GetterUtil.getLong((String)request.getAttribute("view.jsp-folderId"));
 
 long fileEntryTypeId = ParamUtil.getLong(request, "fileEntryTypeId", -1);
-
-boolean search = mvcRenderCommandName.equals("/document_library/search");
 
 DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletInstanceSettingsHelper(dlRequestHelper);
 %>
@@ -43,6 +37,8 @@ DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletI
 	selectable="<%= dlPortletInstanceSettingsHelper.isShowActions() %>"
 	showInfoButton="<%= true %>"
 	showSearch="<%= dlPortletInstanceSettingsHelper.isShowSearch() %>"
+	sortingOrder="<%= dlAdminDisplayContext.getOrderByType() %>"
+	sortingURL="<%= String.valueOf(dlAdminDisplayContext.getSortingURL()) %>"
 	totalItems="<%= dlAdminDisplayContext.getTotalItems() %>"
 	viewTypes="<%= dlAdminDisplayContext.getViewTypes() %>"
 />
@@ -52,45 +48,6 @@ DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletI
 	includeCheckBox="<%= dlPortletInstanceSettingsHelper.isShowActions() %>"
 	searchContainerId="entries"
 >
-	<liferay-frontend:management-bar-filters>
-		<c:if test='<%= !search && !navigation.equals("recent") %>'>
-
-			<%
-			int deltaEntry = ParamUtil.getInteger(request, "deltaEntry");
-
-			String orderByCol = GetterUtil.getString((String)request.getAttribute("view.jsp-orderByCol"));
-			String orderByType = GetterUtil.getString((String)request.getAttribute("view.jsp-orderByType"));
-
-			Map<String, String> orderColumns = new HashMap<String, String>();
-
-			orderColumns.put("creationDate", "create-date");
-			orderColumns.put("downloads", "downloads");
-			orderColumns.put("modifiedDate", "modified-date");
-			orderColumns.put("size", "size");
-			orderColumns.put("title", "title");
-
-			PortletURL sortURL = renderResponse.createRenderURL();
-
-			sortURL.setParameter("mvcRenderCommandName", (folderId == DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) ? "/document_library/view" : "/document_library/view_folder");
-			sortURL.setParameter("navigation", navigation);
-
-			if (deltaEntry > 0) {
-				sortURL.setParameter("deltaEntry", String.valueOf(deltaEntry));
-			}
-
-			sortURL.setParameter("folderId", String.valueOf(folderId));
-			sortURL.setParameter("fileEntryTypeId", String.valueOf(fileEntryTypeId));
-			%>
-
-			<liferay-frontend:management-bar-sort
-				orderByCol="<%= orderByCol %>"
-				orderByType="<%= orderByType %>"
-				orderColumns="<%= orderColumns %>"
-				portletURL="<%= sortURL %>"
-			/>
-		</c:if>
-	</liferay-frontend:management-bar-filters>
-
 	<liferay-frontend:management-bar-action-buttons>
 		<liferay-frontend:management-bar-sidenav-toggler-button
 			icon="info-circle"

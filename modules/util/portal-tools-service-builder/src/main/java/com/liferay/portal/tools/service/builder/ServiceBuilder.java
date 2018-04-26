@@ -902,6 +902,7 @@ public class ServiceBuilder {
 						}
 
 						if (entity.isUADEnabled()) {
+							_createBaseUADExporter(entity);
 							_createUADAggregator(entity);
 							_createUADAggregatorTest(entity);
 							_createUADAnonymizer(entity);
@@ -925,6 +926,7 @@ public class ServiceBuilder {
 							}
 						}
 						else {
+							//_removeBaseUADExporter(entity);
 							//_removeUADAggregator(entity);
 							//_removeUADAggregatorTest(entity);
 							//_removeUADAnonymizer(entity);
@@ -2138,6 +2140,26 @@ public class ServiceBuilder {
 		if (indexMetadata != null) {
 			indexMetadatas.add(indexMetadata);
 		}
+	}
+
+	private void _createBaseUADExporter(Entity entity) throws Exception {
+		Map<String, Object> context = _getContext();
+
+		context.put("entity", entity);
+
+		// Content
+
+		String content = _processTemplate(_tplBaseUADExporter, context);
+
+		// Write file
+
+		File file = new File(
+			StringBundler.concat(
+				_uadOutputPath, "/uad/exporter/Base", entity.getName(),
+				"UADExporter.java"));
+
+		ToolsUtil.writeFile(
+			file, content, _author, _jalopySettings, _modifiedFileNames);
 	}
 
 	private void _createBlobModels(Entity entity) throws Exception {
@@ -6304,6 +6326,13 @@ public class ServiceBuilder {
 		file.delete();
 	}
 
+	private void _removeBaseUADExporter(Entity entity) {
+		_deleteFile(
+			StringBundler.concat(
+				_uadOutputPath, "/uad/exporter/Base", entity.getName(),
+				"UADExporter.java"));
+	}
+
 	private void _removeBlobModels(Entity entity, String outputPath) {
 		for (EntityColumn entityColumn : _getBlobEntityColumns(entity)) {
 			_deleteFile(
@@ -6716,6 +6745,7 @@ public class ServiceBuilder {
 	private String _tplBadAliasNames = _TPL_ROOT + "bad_alias_names.txt";
 	private String _tplBadColumnNames = _TPL_ROOT + "bad_column_names.txt";
 	private String _tplBadTableNames = _TPL_ROOT + "bad_table_names.txt";
+	private String _tplBaseUADExporter = _TPL_ROOT + "base_uad_exporter.ftl";
 	private String _tplBlobModel = _TPL_ROOT + "blob_model.ftl";
 	private String _tplEjbPK = _TPL_ROOT + "ejb_pk.ftl";
 	private String _tplException = _TPL_ROOT + "exception.ftl";

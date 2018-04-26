@@ -505,7 +505,7 @@ public class HttpImpl implements Http {
 			return url;
 		}
 
-		if (!hasProtocol(url)) {
+		if (_getProtocolDelimiterIndex(url) < 0) {
 			url = Http.HTTPS_WITH_SLASH + url;
 		}
 
@@ -641,31 +641,15 @@ public class HttpImpl implements Http {
 
 	@Override
 	public String getProtocol(String url) {
-		if (Validator.isNull(url)) {
-			return url;
+		int index = _getProtocolDelimiterIndex(url);
+
+		if (index > 0) {
+			url = url.trim();
+
+			return url.substring(0, index);
 		}
 
-		url = url.trim();
-
-		// Define protocol as "[a-zA-Z][a-zA-Z0-9]*://"
-
-		int pos = url.indexOf(Http.PROTOCOL_DELIMITER);
-
-		if (pos <= 0) {
-			return StringPool.BLANK;
-		}
-
-		if (!_isLetter(url.charAt(0))) {
-			return StringPool.BLANK;
-		}
-
-		for (int i = 1; i < pos; ++i) {
-			if (!_isLetter(url.charAt(i)) && !_isNumber(url.charAt(i))) {
-				return StringPool.BLANK;
-			}
-		}
-
-		return url.substring(0, pos);
+		return StringPool.BLANK;
 	}
 
 	@Override
@@ -699,31 +683,11 @@ public class HttpImpl implements Http {
 
 	@Override
 	public boolean hasProtocol(String url) {
-		if (Validator.isNull(url)) {
-			return false;
+		if (_getProtocolDelimiterIndex(url) > 0) {
+			return true;
 		}
 
-		url = url.trim();
-
-		// Define protocol as "[a-zA-Z][a-zA-Z0-9]*://"
-
-		int pos = url.indexOf(Http.PROTOCOL_DELIMITER);
-
-		if (pos <= 0) {
-			return false;
-		}
-
-		if (!_isLetter(url.charAt(0))) {
-			return false;
-		}
-
-		for (int i = 1; i < pos; ++i) {
-			if (!_isLetter(url.charAt(i)) && !_isNumber(url.charAt(i))) {
-				return false;
-			}
-		}
-
-		return true;
+		return false;
 	}
 
 	@Override
@@ -1127,21 +1091,15 @@ public class HttpImpl implements Http {
 
 	@Override
 	public String removeProtocol(String url) {
-		if (Validator.isNull(url)) {
-			return url;
+		int index = _getProtocolDelimiterIndex(url);
+
+		if (index > 0) {
+			url = url.trim();
+
+			return url.substring(index + PROTOCOL_DELIMITER.length());
 		}
 
-		url = url.trim();
-
-		String protocol = getProtocol(url);
-
-		if (protocol.length() > 0) {
-			return url.substring(
-				protocol.length() + Http.PROTOCOL_DELIMITER.length());
-		}
-		else {
-			return url;
-		}
+		return url;
 	}
 
 	@Override
@@ -2008,6 +1966,34 @@ public class HttpImpl implements Http {
 				_log.error(e, e);
 			}
 		}
+	}
+
+	private int _getProtocolDelimiterIndex(String url) {
+		if (Validator.isNull(url)) {
+			return -1;
+		}
+
+		url = url.trim();
+
+		// Define protocol as "[a-zA-Z][a-zA-Z0-9]*://"
+
+		int pos = url.indexOf(Http.PROTOCOL_DELIMITER);
+
+		if (pos <= 0) {
+			return -1;
+		}
+
+		if (!_isLetter(url.charAt(0))) {
+			return -1;
+		}
+
+		for (int i = 1; i < pos; ++i) {
+			if (!_isLetter(url.charAt(i)) && !_isNumber(url.charAt(i))) {
+				return -1;
+			}
+		}
+
+		return pos;
 	}
 
 	private boolean _isLetter(char c) {

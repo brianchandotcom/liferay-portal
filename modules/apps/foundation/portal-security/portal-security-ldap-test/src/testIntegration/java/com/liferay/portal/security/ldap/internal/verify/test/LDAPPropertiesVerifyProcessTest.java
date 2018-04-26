@@ -102,12 +102,19 @@ public class LDAPPropertiesVerifyProcessTest extends BaseVerifyProcessTestCase {
 				"com.liferay.portal.security.ldap.internal.configuration." +
 					"LDAPConfigurationListener");
 
-		_serviceComponentRuntime.disableComponent(_componentDescriptionDTO);
+		_enabled = _serviceComponentRuntime.isComponentEnabled(
+			_componentDescriptionDTO);
+
+		if (_enabled) {
+			_serviceComponentRuntime.disableComponent(_componentDescriptionDTO);
+		}
 	}
 
 	@AfterClass
 	public static void tearDownClass() {
-		_serviceComponentRuntime.enableComponent(_componentDescriptionDTO);
+		if (_enabled) {
+			_serviceComponentRuntime.enableComponent(_componentDescriptionDTO);
+		}
 	}
 
 	@After
@@ -588,6 +595,7 @@ public class LDAPPropertiesVerifyProcessTest extends BaseVerifyProcessTestCase {
 	private static BundleContext _bundleContext;
 	private static ComponentDescriptionDTO _componentDescriptionDTO;
 	private static ConfigurationAdmin _configurationAdmin;
+	private static boolean _enabled;
 
 	@Inject
 	private static ServiceComponentRuntime _serviceComponentRuntime;

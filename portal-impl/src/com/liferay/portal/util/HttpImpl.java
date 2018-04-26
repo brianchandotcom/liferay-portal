@@ -1983,37 +1983,19 @@ public class HttpImpl implements Http {
 			return -1;
 		}
 
-		if (!_isLetter(url.charAt(0))) {
+		if (!Validator.isChar(url.charAt(0))) {
 			return -1;
 		}
 
 		for (int i = 1; i < pos; ++i) {
-			if (!_isLetter(url.charAt(i)) && !_isNumber(url.charAt(i))) {
+			if (!Validator.isChar(url.charAt(i)) &&
+				!Validator.isDigit(url.charAt(i))) {
+
 				return -1;
 			}
 		}
 
 		return pos;
-	}
-
-	private boolean _isLetter(char c) {
-		if (((CharPool.UPPER_CASE_A <= c) && (c <= CharPool.UPPER_CASE_Z)) ||
-			((CharPool.LOWER_CASE_A <= c) && (c <= CharPool.LOWER_CASE_Z))) {
-
-			return true;
-		}
-		else {
-			return false;
-		}
-	}
-
-	private boolean _isNumber(char c) {
-		if ((CharPool.NUMBER_0 <= c) && (c <= CharPool.NUMBER_9)) {
-			return true;
-		}
-		else {
-			return false;
-		}
 	}
 
 	private String _shortenURL(String url, int currentLength) {

@@ -60,43 +60,6 @@ DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletI
 		<liferay-frontend:management-bar-navigation
 			label="<%= label %>"
 		>
-			<portlet:renderURL var="viewDocumentsHomeURL">
-				<portlet:param name="mvcRenderCommandName" value="/document_library/view" />
-				<portlet:param name="folderId" value="<%= String.valueOf(rootFolderId) %>" />
-			</portlet:renderURL>
-
-			<liferay-frontend:management-bar-filter-item
-				active='<%= ((navigation.equals("home")) && (folderId == rootFolderId) && (fileEntryTypeId == -1)) %>'
-				label="all"
-				url="<%= viewDocumentsHomeURL.toString() %>"
-			/>
-
-			<portlet:renderURL var="viewRecentDocumentsURL">
-				<portlet:param name="mvcRenderCommandName" value="/document_library/view" />
-				<portlet:param name="navigation" value="recent" />
-				<portlet:param name="folderId" value="<%= String.valueOf(rootFolderId) %>" />
-			</portlet:renderURL>
-
-			<liferay-frontend:management-bar-filter-item
-				active='<%= navigation.equals("recent") %>'
-				label="recent"
-				url="<%= viewRecentDocumentsURL.toString() %>"
-			/>
-
-			<c:if test="<%= themeDisplay.isSignedIn() %>">
-				<portlet:renderURL var="viewMyDocumentsURL">
-					<portlet:param name="mvcRenderCommandName" value="/document_library/view" />
-					<portlet:param name="navigation" value="mine" />
-					<portlet:param name="folderId" value="<%= String.valueOf(rootFolderId) %>" />
-				</portlet:renderURL>
-
-				<liferay-frontend:management-bar-filter-item
-					active='<%= navigation.equals("mine") %>'
-					label="mine"
-					url="<%= viewMyDocumentsURL.toString() %>"
-				/>
-			</c:if>
-
 			<liferay-frontend:management-bar-filter-item
 				active="<%= fileEntryTypeId != -1 %>"
 				id="fileEntryTypes"

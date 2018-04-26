@@ -104,7 +104,7 @@ public class DefaultDLAdminDisplayContext implements DLAdminDisplayContext {
 		List<Menu> menus = dlPortletToolbarContributor.getPortletTitleMenus(
 			_liferayPortletRequest, _liferayPortletResponse);
 
-		CreationMenu creationMenu = new CreationMenu(_request);
+		CreationMenu creationMenu = new CreationMenu();
 
 		for (Menu menu : menus) {
 			List<URLMenuItem> urlMenuItems =

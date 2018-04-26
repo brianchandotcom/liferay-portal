@@ -68,14 +68,9 @@ public class DLDisplayContextProvider {
 		LiferayPortletResponse liferayPortletResponse, PortletURL currentURLObj,
 		HttpServletRequest request, PermissionChecker permissionChecker) {
 
-		try {
-			return new DefaultDLAdminDisplayContext(
-				liferayPortletRequest, liferayPortletResponse, currentURLObj,
-				request, permissionChecker);
-		}
-		catch (PortalException pe) {
-			throw new SystemException(pe);
-		}
+		return new DefaultDLAdminDisplayContext(
+			liferayPortletRequest, liferayPortletResponse, currentURLObj,
+			request, permissionChecker);
 	}
 
 	public DLEditFileEntryDisplayContext getDLEditFileEntryDisplayContext(

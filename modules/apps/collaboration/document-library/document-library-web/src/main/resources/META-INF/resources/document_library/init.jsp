@@ -32,32 +32,15 @@ String portletResource = dlRequestHelper.getPortletResource();
 
 DLPortletInstanceSettings dlPortletInstanceSettings = dlRequestHelper.getDLPortletInstanceSettings();
 DLGroupServiceSettings dlGroupServiceSettings = dlRequestHelper.getDLGroupServiceSettings();
+DLAdminDisplayContext dlAdminDisplayContext = dlDisplayContextProvider.getDLAdminDisplayContext(liferayPortletRequest, liferayPortletResponse, currentURLObj, request, permissionChecker);
 
-long rootFolderId = dlPortletInstanceSettings.getRootFolderId();
-String rootFolderName = StringPool.BLANK;
-
-if (rootFolderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
-	try {
-		Folder rootFolder = DLAppLocalServiceUtil.getFolder(rootFolderId);
-
-		rootFolderName = rootFolder.getName();
-
-		if (rootFolder.getGroupId() != scopeGroupId) {
-			rootFolderId = DLFolderConstants.DEFAULT_PARENT_FOLDER_ID;
-			rootFolderName = StringPool.BLANK;
-		}
-	}
-	catch (NoSuchFolderException | PrincipalException e) {
-		rootFolderId = DLFolderConstants.DEFAULT_PARENT_FOLDER_ID;
-	}
-}
+long rootFolderId = dlAdminDisplayContext.getRootFolderId();
+String rootFolderName = dlAdminDisplayContext.getRootFolderName();
 
 DLConfiguration dlConfiguration = ConfigurationProviderUtil.getSystemConfiguration(DLConfiguration.class);
 
 boolean showComments = ParamUtil.getBoolean(request, "showComments", true);
 boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
-
-DLAdminDisplayContext dlAdminDisplayContext = dlDisplayContextProvider.getDLAdminDisplayContext(liferayPortletRequest, liferayPortletResponse, currentURLObj, request, permissionChecker);
 %>
 
 <%@ include file="/document_library/init-ext.jsp" %>

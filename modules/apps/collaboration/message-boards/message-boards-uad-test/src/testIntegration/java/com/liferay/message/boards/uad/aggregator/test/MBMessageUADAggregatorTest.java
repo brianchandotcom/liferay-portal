@@ -18,7 +18,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 
 import com.liferay.message.boards.model.MBMessage;
 import com.liferay.message.boards.uad.constants.MBUADConstants;
-import com.liferay.message.boards.uad.test.MBMessageUADEntityTestHelper;
+import com.liferay.message.boards.uad.test.MBMessageUADTestHelper;
 
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -52,7 +52,7 @@ public class MBMessageUADAggregatorTest extends BaseUADAggregatorTestCase<MBMess
 	@Override
 	public MBMessage addBaseModelWithStatusByUserId(long userId,
 		long statusByUserId) throws Exception {
-		MBMessage mbMessage = _mbMessageUADEntityTestHelper.addMBMessageWithStatusByUserId(userId,
+		MBMessage mbMessage = _mbMessageUADTestHelper.addMBMessageWithStatusByUserId(userId,
 				statusByUserId);
 
 		_mbMessages.add(mbMessage);
@@ -62,12 +62,12 @@ public class MBMessageUADAggregatorTest extends BaseUADAggregatorTestCase<MBMess
 
 	@After
 	public void tearDown() throws Exception {
-		_mbMessageUADEntityTestHelper.cleanUpDependencies(_mbMessages);
+		_mbMessageUADTestHelper.cleanUpDependencies(_mbMessages);
 	}
 
 	@Override
 	protected MBMessage addBaseModel(long userId) throws Exception {
-		MBMessage mbMessage = _mbMessageUADEntityTestHelper.addMBMessage(userId);
+		MBMessage mbMessage = _mbMessageUADTestHelper.addMBMessage(userId);
 
 		_mbMessages.add(mbMessage);
 
@@ -82,7 +82,7 @@ public class MBMessageUADAggregatorTest extends BaseUADAggregatorTestCase<MBMess
 	@DeleteAfterTestRun
 	private final List<MBMessage> _mbMessages = new ArrayList<MBMessage>();
 	@Inject
-	private MBMessageUADEntityTestHelper _mbMessageUADEntityTestHelper;
+	private MBMessageUADTestHelper _mbMessageUADTestHelper;
 	@Inject(filter = "model.class.name=" +
 	MBUADConstants.CLASS_NAME_MB_MESSAGE)
 	private UADAggregator _uadAggregator;

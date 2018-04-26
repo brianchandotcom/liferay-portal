@@ -18,7 +18,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 
 import com.liferay.message.boards.model.MBCategory;
 import com.liferay.message.boards.uad.constants.MBUADConstants;
-import com.liferay.message.boards.uad.test.MBCategoryUADEntityTestHelper;
+import com.liferay.message.boards.uad.test.MBCategoryUADTestHelper;
 
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -52,7 +52,7 @@ public class MBCategoryUADExporterTest extends BaseUADExporterTestCase<MBCategor
 	@Override
 	public MBCategory addBaseModelWithStatusByUserId(long userId,
 		long statusByUserId) throws Exception {
-		MBCategory mbCategory = _mbCategoryUADEntityTestHelper.addMBCategoryWithStatusByUserId(userId,
+		MBCategory mbCategory = _mbCategoryUADTestHelper.addMBCategoryWithStatusByUserId(userId,
 				statusByUserId);
 
 		_mbCategories.add(mbCategory);
@@ -62,12 +62,12 @@ public class MBCategoryUADExporterTest extends BaseUADExporterTestCase<MBCategor
 
 	@After
 	public void tearDown() throws Exception {
-		_mbCategoryUADEntityTestHelper.cleanUpDependencies(_mbCategories);
+		_mbCategoryUADTestHelper.cleanUpDependencies(_mbCategories);
 	}
 
 	@Override
 	protected MBCategory addBaseModel(long userId) throws Exception {
-		MBCategory mbCategory = _mbCategoryUADEntityTestHelper.addMBCategory(userId);
+		MBCategory mbCategory = _mbCategoryUADTestHelper.addMBCategory(userId);
 
 		_mbCategories.add(mbCategory);
 
@@ -87,7 +87,7 @@ public class MBCategoryUADExporterTest extends BaseUADExporterTestCase<MBCategor
 	@DeleteAfterTestRun
 	private final List<MBCategory> _mbCategories = new ArrayList<MBCategory>();
 	@Inject
-	private MBCategoryUADEntityTestHelper _mbCategoryUADEntityTestHelper;
+	private MBCategoryUADTestHelper _mbCategoryUADTestHelper;
 	@Inject(filter = "model.class.name=" +
 	MBUADConstants.CLASS_NAME_MB_CATEGORY)
 	private UADExporter _uadExporter;

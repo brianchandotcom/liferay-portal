@@ -17,7 +17,7 @@ package com.liferay.announcements.uad.anonymizer.test;
 import com.liferay.announcements.kernel.model.AnnouncementsFlag;
 import com.liferay.announcements.kernel.service.AnnouncementsFlagLocalService;
 import com.liferay.announcements.uad.constants.AnnouncementsUADConstants;
-import com.liferay.announcements.uad.test.AnnouncementsFlagUADEntityTestHelper;
+import com.liferay.announcements.uad.test.AnnouncementsFlagUADTestHelper;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -58,7 +58,7 @@ public class AnnouncementsFlagUADAnonymizerTest
 		throws Exception {
 
 		AnnouncementsFlag announcementsFlag =
-			_announcementsFlagUADEntityTestHelper.addAnnouncementsFlag(userId);
+			_announcementsFlagUADTestHelper.addAnnouncementsFlag(userId);
 
 		if (deleteAfterTestRun) {
 			_announcementsFlags.add(announcementsFlag);
@@ -110,8 +110,7 @@ public class AnnouncementsFlagUADAnonymizerTest
 		new ArrayList<>();
 
 	@Inject
-	private AnnouncementsFlagUADEntityTestHelper
-		_announcementsFlagUADEntityTestHelper;
+	private AnnouncementsFlagUADTestHelper _announcementsFlagUADTestHelper;
 
 	@Inject(
 		filter = "model.class.name=" + AnnouncementsUADConstants.CLASS_NAME_ANNOUNCEMENTS_FLAG

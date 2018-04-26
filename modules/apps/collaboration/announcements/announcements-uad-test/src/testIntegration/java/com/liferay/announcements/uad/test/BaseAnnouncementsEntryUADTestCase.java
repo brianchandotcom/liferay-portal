@@ -17,26 +17,30 @@ package com.liferay.announcements.uad.test;
 import com.liferay.announcements.kernel.model.AnnouncementsEntry;
 import com.liferay.announcements.kernel.service.AnnouncementsEntryLocalService;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.service.ClassNameLocalService;
+import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
+import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
+import com.liferay.portal.test.rule.Inject;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
+import org.junit.Before;
 
 /**
  * @author Noah Sherrill
  */
-@Component(
-	immediate = true, service = AnnouncementsEntryUADEntityTestHelper.class
-)
-public class AnnouncementsEntryUADEntityTestHelper {
+public abstract class BaseAnnouncementsEntryUADTestCase {
 
-	public AnnouncementsEntry addAnnouncementsEntry(long userId)
+	@Before
+	public void setUp() throws Exception {
+		_group = GroupTestUtil.addGroup();
+	}
+
+	protected AnnouncementsEntry addAnnouncementsEntry(long userId)
 		throws Exception {
 
 		Calendar calendar = CalendarFactoryUtil.getCalendar();
@@ -47,17 +51,26 @@ public class AnnouncementsEntryUADEntityTestHelper {
 
 		calendar.add(Calendar.DATE, 1);
 
-		return _announcementsEntryLocalService.addEntry(
-			userId, _classNameLocalService.getClassNameId(Group.class),
-			TestPropsValues.getGroupId(), RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(), "http://localhost", "general",
-			displayDate, calendar.getTime(), 1, false);
+		AnnouncementsEntry announcementsEntry =
+			announcementsEntryLocalService.addEntry(
+				userId, _group.getClassNameId(), _group.getGroupId(),
+				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+				"http://localhost", "general", displayDate, calendar.getTime(),
+				1, false);
+
+		_announcementsEntries.add(announcementsEntry);
+
+		return announcementsEntry;
 	}
 
-	@Reference
-	private AnnouncementsEntryLocalService _announcementsEntryLocalService;
+	@Inject
+	protected AnnouncementsEntryLocalService announcementsEntryLocalService;
 
-	@Reference
-	private ClassNameLocalService _classNameLocalService;
+	@DeleteAfterTestRun
+	private final List<AnnouncementsEntry> _announcementsEntries =
+		new ArrayList<>();
+
+	@DeleteAfterTestRun
+	private Group _group;
 
 }

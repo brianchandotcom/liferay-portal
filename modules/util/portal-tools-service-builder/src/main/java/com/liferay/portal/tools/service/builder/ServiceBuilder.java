@@ -906,7 +906,7 @@ public class ServiceBuilder {
 							_createUADAggregatorTest(entity);
 							_createUADAnonymizer(entity);
 							_createUADAnonymizerTest(entity);
-							_createUADEntityTestHelper(entity);
+							_createUADTestHelper(entity);
 							_createUADExporter(entity);
 							_createUADExporterTest(entity);
 
@@ -932,7 +932,7 @@ public class ServiceBuilder {
 							//_removeUADDisplay(entity);
 							//_removeUADDisplayHelper(entity);
 							//_removeUADDisplayTest(entity);
-							//_removeUADEntityTestHelper(entity);
+							//_removeUADTestHelper(entity);
 							//_removeUADExporter(entity);
 							//_removeUADExporterTest(entity);
 						}
@@ -4137,28 +4137,6 @@ public class ServiceBuilder {
 			file, content, _author, _jalopySettings, _modifiedFileNames);
 	}
 
-	private void _createUADEntityTestHelper(Entity entity) throws Exception {
-		Map<String, Object> context = _getContext();
-
-		context.put("entity", entity);
-
-		// Content
-
-		String content = _processTemplate(_tplUADEntityTestHelper, context);
-
-		// Write file
-
-		File file = new File(
-			StringBundler.concat(
-				_uadTestIntegrationOutputPath, "/uad/test/", entity.getName(),
-				"UADEntityTestHelper.java"));
-
-		if (!file.exists()) {
-			ToolsUtil.writeFile(
-				file, content, _author, _jalopySettings, _modifiedFileNames);
-		}
-	}
-
 	private void _createUADExporter(Entity entity) throws Exception {
 		Map<String, Object> context = _getContext();
 
@@ -4214,6 +4192,28 @@ public class ServiceBuilder {
 
 		if (!file.exists()) {
 			ToolsUtil.writeFileRaw(file, content, _modifiedFileNames);
+		}
+	}
+
+	private void _createUADTestHelper(Entity entity) throws Exception {
+		Map<String, Object> context = _getContext();
+
+		context.put("entity", entity);
+
+		// Content
+
+		String content = _processTemplate(_tplUADTestHelper, context);
+
+		// Write file
+
+		File file = new File(
+			StringBundler.concat(
+				_uadTestIntegrationOutputPath, "/uad/test/", entity.getName(),
+				"UADTestHelper.java"));
+
+		if (!file.exists()) {
+			ToolsUtil.writeFile(
+				file, content, _author, _jalopySettings, _modifiedFileNames);
 		}
 	}
 
@@ -6599,27 +6599,6 @@ public class ServiceBuilder {
 				entity.getName(), "UADDisplayTest.java"));
 	}
 
-	private void _removeUADEntity(Entity entity) {
-		_deleteFile(
-			StringBundler.concat(
-				_uadOutputPath, "/uad/entity/", entity.getName(),
-				"UADEntity.java"));
-	}
-
-	private void _removeUADEntityTest(Entity entity) {
-		_deleteFile(
-			StringBundler.concat(
-				_uadTestUnitOutputPath, "/uad/entity/", entity.getName(),
-				"UADEntityTest.java"));
-	}
-
-	private void _removeUADEntityTestHelper(Entity entity) {
-		_deleteFile(
-			StringBundler.concat(
-				_uadTestIntegrationOutputPath, "/uad/test/", entity.getName(),
-				"UADEntityTestHelper.java"));
-	}
-
 	private void _removeUADExporter(Entity entity) {
 		_deleteFile(
 			StringBundler.concat(
@@ -6632,6 +6611,13 @@ public class ServiceBuilder {
 			StringBundler.concat(
 				_uadTestIntegrationOutputPath, "/uad/exporter/test/",
 				entity.getName(), "UADExporterTest.java"));
+	}
+
+	private void _removeUADTestHelper(Entity entity) {
+		_deleteFile(
+			StringBundler.concat(
+				_uadTestIntegrationOutputPath, "/uad/test/", entity.getName(),
+				"UADTestHelper.java"));
 	}
 
 	private void _resolveEntity(Entity entity) throws Exception {
@@ -6777,11 +6763,10 @@ public class ServiceBuilder {
 	private String _tplUADDisplay = _TPL_ROOT + "uad_display.ftl";
 	private String _tplUADDisplayHelper = _TPL_ROOT + "uad_display_helper.ftl";
 	private String _tplUADDisplayTest = _TPL_ROOT + "uad_display_test.ftl";
-	private String _tplUADEntityTestHelper =
-		_TPL_ROOT + "uad_entity_test_helper.ftl";
 	private String _tplUADExporter = _TPL_ROOT + "uad_exporter.ftl";
 	private String _tplUADExporterTest = _TPL_ROOT + "uad_exporter_test.ftl";
 	private String _tplUADTestBnd = _TPL_ROOT + "uad_test_bnd.ftl";
+	private String _tplUADTestHelper = _TPL_ROOT + "uad_test_helper.ftl";
 	private String _uadDirName;
 	private String _uadOutputPath;
 	private String _uadTestIntegrationDirName;

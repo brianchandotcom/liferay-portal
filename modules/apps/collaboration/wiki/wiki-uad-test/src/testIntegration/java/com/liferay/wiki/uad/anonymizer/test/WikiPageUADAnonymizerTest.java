@@ -30,7 +30,7 @@ import com.liferay.user.associated.data.test.util.WhenHasStatusByUserIdField;
 import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.service.WikiPageLocalService;
 import com.liferay.wiki.uad.constants.WikiUADConstants;
-import com.liferay.wiki.uad.test.WikiPageUADEntityTestHelper;
+import com.liferay.wiki.uad.test.WikiPageUADTestHelper;
 
 import org.junit.After;
 import org.junit.ClassRule;
@@ -55,7 +55,7 @@ public class WikiPageUADAnonymizerTest extends BaseUADAnonymizerTestCase<WikiPag
 	@Override
 	public WikiPage addBaseModelWithStatusByUserId(long userId,
 		long statusByUserId) throws Exception {
-		WikiPage wikiPage = _wikiPageUADEntityTestHelper.addWikiPageWithStatusByUserId(userId,
+		WikiPage wikiPage = _wikiPageUADTestHelper.addWikiPageWithStatusByUserId(userId,
 				statusByUserId);
 
 		_wikiPages.add(wikiPage);
@@ -65,7 +65,7 @@ public class WikiPageUADAnonymizerTest extends BaseUADAnonymizerTestCase<WikiPag
 
 	@After
 	public void tearDown() throws Exception {
-		_wikiPageUADEntityTestHelper.cleanUpDependencies(_wikiPages);
+		_wikiPageUADTestHelper.cleanUpDependencies(_wikiPages);
 	}
 
 	@Override
@@ -76,7 +76,7 @@ public class WikiPageUADAnonymizerTest extends BaseUADAnonymizerTestCase<WikiPag
 	@Override
 	protected WikiPage addBaseModel(long userId, boolean deleteAfterTestRun)
 		throws Exception {
-		WikiPage wikiPage = _wikiPageUADEntityTestHelper.addWikiPage(userId);
+		WikiPage wikiPage = _wikiPageUADTestHelper.addWikiPage(userId);
 
 		if (deleteAfterTestRun) {
 			_wikiPages.add(wikiPage);
@@ -88,7 +88,7 @@ public class WikiPageUADAnonymizerTest extends BaseUADAnonymizerTestCase<WikiPag
 	@Override
 	protected void deleteBaseModels(List<WikiPage> baseModels)
 		throws Exception {
-		_wikiPageUADEntityTestHelper.cleanUpDependencies(baseModels);
+		_wikiPageUADTestHelper.cleanUpDependencies(baseModels);
 	}
 
 	@Override
@@ -133,7 +133,7 @@ public class WikiPageUADAnonymizerTest extends BaseUADAnonymizerTestCase<WikiPag
 	@Inject
 	private WikiPageLocalService _wikiPageLocalService;
 	@Inject
-	private WikiPageUADEntityTestHelper _wikiPageUADEntityTestHelper;
+	private WikiPageUADTestHelper _wikiPageUADTestHelper;
 	@Inject(filter = "model.class.name=" +
 	WikiUADConstants.CLASS_NAME_WIKI_PAGE)
 	private UADAggregator _uadAggregator;

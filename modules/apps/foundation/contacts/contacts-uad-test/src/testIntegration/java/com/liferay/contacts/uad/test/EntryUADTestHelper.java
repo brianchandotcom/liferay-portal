@@ -26,8 +26,8 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author William Newbury
  */
-@Component(immediate = true, service = EntryUADEntityTestHelper.class)
-public class EntryUADEntityTestHelper {
+@Component(immediate = true, service = EntryUADTestHelper.class)
+public class EntryUADTestHelper {
 
 	public Entry addEntry(long userId) throws Exception {
 		return _entryLocalService.addEntry(

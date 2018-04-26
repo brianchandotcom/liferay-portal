@@ -18,7 +18,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.bookmarks.model.BookmarksEntry;
 import com.liferay.bookmarks.service.BookmarksEntryLocalService;
 import com.liferay.bookmarks.uad.constants.BookmarksUADConstants;
-import com.liferay.bookmarks.uad.test.BookmarksEntryUADEntityTestHelper;
+import com.liferay.bookmarks.uad.test.BookmarksEntryUADTestHelper;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -56,8 +56,8 @@ public class BookmarksEntryUADAnonymizerTest
 		throws Exception {
 
 		BookmarksEntry bookmarksEntry =
-			_bookmarksEntryUADEntityTestHelper.
-				addBookmarksEntryWithStatusByUserId(userId, statusByUserId);
+			_bookmarksEntryUADTestHelper.addBookmarksEntryWithStatusByUserId(
+				userId, statusByUserId);
 
 		_bookmarksEntries.add(bookmarksEntry);
 
@@ -75,7 +75,7 @@ public class BookmarksEntryUADAnonymizerTest
 		throws Exception {
 
 		BookmarksEntry bookmarksEntry =
-			_bookmarksEntryUADEntityTestHelper.addBookmarksEntry(userId);
+			_bookmarksEntryUADTestHelper.addBookmarksEntry(userId);
 
 		if (deleteAfterTestRun) {
 			_bookmarksEntries.add(bookmarksEntry);
@@ -132,8 +132,7 @@ public class BookmarksEntryUADAnonymizerTest
 	private BookmarksEntryLocalService _bookmarksEntryLocalService;
 
 	@Inject
-	private BookmarksEntryUADEntityTestHelper
-		_bookmarksEntryUADEntityTestHelper;
+	private BookmarksEntryUADTestHelper _bookmarksEntryUADTestHelper;
 
 	@Inject(
 		filter = "model.class.name=" + BookmarksUADConstants.CLASS_NAME_BOOKMARKS_ENTRY

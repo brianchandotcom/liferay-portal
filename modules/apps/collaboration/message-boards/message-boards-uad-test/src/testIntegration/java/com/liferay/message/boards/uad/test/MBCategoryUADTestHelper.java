@@ -12,51 +12,53 @@
  * details.
  */
 
-package com.liferay.bookmarks.uad.test;
+package com.liferay.message.boards.uad.test;
 
-import com.liferay.bookmarks.model.BookmarksEntry;
-import com.liferay.bookmarks.model.BookmarksFolderConstants;
-import com.liferay.bookmarks.service.BookmarksEntryLocalService;
+import com.liferay.message.boards.model.MBCategory;
+import com.liferay.message.boards.service.MBCategoryLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
+import java.util.List;
+
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Noah Sherrill
+ * @author Brian Wing Shun Chan
  */
-@Component(immediate = true, service = BookmarksEntryUADEntityTestHelper.class)
-public class BookmarksEntryUADEntityTestHelper {
+@Component(immediate = true, service = MBCategoryUADTestHelper.class)
+public class MBCategoryUADTestHelper {
 
-	public BookmarksEntry addBookmarksEntry(long userId) throws Exception {
+	public MBCategory addMBCategory(long userId) throws Exception {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
 				TestPropsValues.getGroupId());
 
-		return _bookmarksEntryLocalService.addEntry(
-			userId, serviceContext.getScopeGroupId(),
-			BookmarksFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			RandomTestUtil.randomString(), "http://www.liferay.com",
+		return _mbCategoryLocalService.addCategory(
+			userId, 0, RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), serviceContext);
 	}
 
-	public BookmarksEntry addBookmarksEntryWithStatusByUserId(
+	public MBCategory addMBCategoryWithStatusByUserId(
 			long userId, long statusByUserId)
 		throws Exception {
 
-		BookmarksEntry bookmarksEntry = addBookmarksEntry(userId);
+		MBCategory mbCategory = addMBCategory(userId);
 
-		_bookmarksEntryLocalService.updateStatus(
-			statusByUserId, bookmarksEntry, WorkflowConstants.STATUS_APPROVED);
+		return _mbCategoryLocalService.updateStatus(
+			statusByUserId, mbCategory.getCategoryId(),
+			WorkflowConstants.STATUS_APPROVED);
+	}
 
-		return bookmarksEntry;
+	public void cleanUpDependencies(List<MBCategory> mbCategories)
+		throws Exception {
 	}
 
 	@Reference
-	private BookmarksEntryLocalService _bookmarksEntryLocalService;
+	private MBCategoryLocalService _mbCategoryLocalService;
 
 }

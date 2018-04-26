@@ -18,7 +18,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 
 import com.liferay.message.boards.model.MBCategory;
 import com.liferay.message.boards.uad.constants.MBUADConstants;
-import com.liferay.message.boards.uad.test.MBCategoryUADEntityTestHelper;
+import com.liferay.message.boards.uad.test.MBCategoryUADTestHelper;
 
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -51,7 +51,7 @@ public class MBCategoryUADDisplayTest extends BaseUADDisplayTestCase {
 
 	@Override
 	protected BaseModel<?> addBaseModel(long userId) throws Exception {
-		MBCategory mbCategory = _mbCategoryUADEntityTestHelper.addMBCategory(userId);
+		MBCategory mbCategory = _mbCategoryUADTestHelper.addMBCategory(userId);
 
 		_mbCategories.add(mbCategory);
 
@@ -80,13 +80,13 @@ public class MBCategoryUADDisplayTest extends BaseUADDisplayTestCase {
 
 	@After
 	public void tearDown() throws Exception {
-		_mbCategoryUADEntityTestHelper.cleanUpDependencies(_mbCategories);
+		_mbCategoryUADTestHelper.cleanUpDependencies(_mbCategories);
 	}
 
 	@DeleteAfterTestRun
 	private final List<MBCategory> _mbCategories = new ArrayList<MBCategory>();
 	@Inject
-	private MBCategoryUADEntityTestHelper _mbCategoryUADEntityTestHelper;
+	private MBCategoryUADTestHelper _mbCategoryUADTestHelper;
 	@Inject(filter = "model.class.name=" +
 	MBUADConstants.CLASS_NAME_MB_CATEGORY)
 	private UADAggregator _uadAggregator;

@@ -27,7 +27,7 @@ import com.liferay.user.associated.data.test.util.WhenHasStatusByUserIdField;
 
 import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.uad.constants.WikiUADConstants;
-import com.liferay.wiki.uad.test.WikiNodeUADEntityTestHelper;
+import com.liferay.wiki.uad.test.WikiNodeUADTestHelper;
 
 import org.junit.After;
 import org.junit.ClassRule;
@@ -52,7 +52,7 @@ public class WikiNodeUADExporterTest extends BaseUADExporterTestCase<WikiNode>
 	@Override
 	public WikiNode addBaseModelWithStatusByUserId(long userId,
 		long statusByUserId) throws Exception {
-		WikiNode wikiNode = _wikiNodeUADEntityTestHelper.addWikiNodeWithStatusByUserId(userId,
+		WikiNode wikiNode = _wikiNodeUADTestHelper.addWikiNodeWithStatusByUserId(userId,
 				statusByUserId);
 
 		_wikiNodes.add(wikiNode);
@@ -62,12 +62,12 @@ public class WikiNodeUADExporterTest extends BaseUADExporterTestCase<WikiNode>
 
 	@After
 	public void tearDown() throws Exception {
-		_wikiNodeUADEntityTestHelper.cleanUpDependencies(_wikiNodes);
+		_wikiNodeUADTestHelper.cleanUpDependencies(_wikiNodes);
 	}
 
 	@Override
 	protected WikiNode addBaseModel(long userId) throws Exception {
-		WikiNode wikiNode = _wikiNodeUADEntityTestHelper.addWikiNode(userId);
+		WikiNode wikiNode = _wikiNodeUADTestHelper.addWikiNode(userId);
 
 		_wikiNodes.add(wikiNode);
 
@@ -87,7 +87,7 @@ public class WikiNodeUADExporterTest extends BaseUADExporterTestCase<WikiNode>
 	@DeleteAfterTestRun
 	private final List<WikiNode> _wikiNodes = new ArrayList<WikiNode>();
 	@Inject
-	private WikiNodeUADEntityTestHelper _wikiNodeUADEntityTestHelper;
+	private WikiNodeUADTestHelper _wikiNodeUADTestHelper;
 	@Inject(filter = "model.class.name=" +
 	WikiUADConstants.CLASS_NAME_WIKI_NODE)
 	private UADExporter _uadExporter;

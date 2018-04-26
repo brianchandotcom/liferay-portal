@@ -12,17 +12,17 @@
  * details.
  */
 
-package com.liferay.wiki.uad.test;
+package com.liferay.message.boards.uad.test;
 
+import com.liferay.message.boards.model.MBCategory;
+import com.liferay.message.boards.model.MBMessage;
+import com.liferay.message.boards.service.MBCategoryLocalService;
+import com.liferay.message.boards.service.MBMessageLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.wiki.model.WikiNode;
-import com.liferay.wiki.model.WikiPage;
-import com.liferay.wiki.service.WikiNodeLocalService;
-import com.liferay.wiki.service.WikiPageLocalService;
 
 import java.io.Serializable;
 
@@ -34,31 +34,31 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author William Newbury
+ * @author Brian Wing Shun Chan
  */
-@Component(immediate = true, service = WikiPageUADEntityTestHelper.class)
-public class WikiPageUADEntityTestHelper {
+@Component(immediate = true, service = MBMessageUADTestHelper.class)
+public class MBMessageUADTestHelper {
 
-	public WikiPage addWikiPage(long userId) throws Exception {
+	public MBMessage addMBMessage(long userId) throws Exception {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
 				TestPropsValues.getGroupId());
 
-		WikiNode wikiNode = _wikiNodeLocalService.addNode(
-			userId, RandomTestUtil.randomString(),
+		MBCategory mbCategory = _mbCategoryLocalService.addCategory(
+			userId, 0, RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), serviceContext);
 
-		return _wikiPageLocalService.addPage(
-			userId, wikiNode.getNodeId(), RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(), RandomTestUtil.randomString(), false,
-			serviceContext);
+		return _mbMessageLocalService.addMessage(
+			userId, RandomTestUtil.randomString(), TestPropsValues.getGroupId(),
+			mbCategory.getCategoryId(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), serviceContext);
 	}
 
-	public WikiPage addWikiPageWithStatusByUserId(
+	public MBMessage addMBMessageWithStatusByUserId(
 			long userId, long statusByUserId)
 		throws Exception {
 
-		WikiPage wikiPage = addWikiPage(userId);
+		MBMessage mbMessage = addMBMessage(userId);
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
@@ -68,23 +68,23 @@ public class WikiPageUADEntityTestHelper {
 
 		workflowContext.put(WorkflowConstants.CONTEXT_URL, "http://localhost");
 
-		_wikiPageLocalService.updateStatus(
-			statusByUserId, wikiPage, WorkflowConstants.STATUS_APPROVED,
-			serviceContext, workflowContext);
-
-		return wikiPage;
+		return _mbMessageLocalService.updateStatus(
+			statusByUserId, mbMessage.getMessageId(),
+			WorkflowConstants.STATUS_APPROVED, serviceContext, workflowContext);
 	}
 
-	public void cleanUpDependencies(List<WikiPage> wikiPages) throws Exception {
-		for (WikiPage wikiPage : wikiPages) {
-			_wikiNodeLocalService.deleteNode(wikiPage.getNodeId());
+	public void cleanUpDependencies(List<MBMessage> mbMessages)
+		throws Exception {
+
+		for (MBMessage mbMessage : mbMessages) {
+			_mbCategoryLocalService.deleteCategory(mbMessage.getCategoryId());
 		}
 	}
 
 	@Reference
-	private WikiNodeLocalService _wikiNodeLocalService;
+	private MBCategoryLocalService _mbCategoryLocalService;
 
 	@Reference
-	private WikiPageLocalService _wikiPageLocalService;
+	private MBMessageLocalService _mbMessageLocalService;
 
 }

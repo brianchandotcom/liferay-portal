@@ -17,36 +17,26 @@ package com.liferay.announcements.uad.test;
 import com.liferay.announcements.kernel.model.AnnouncementsFlag;
 import com.liferay.announcements.kernel.model.AnnouncementsFlagConstants;
 import com.liferay.announcements.kernel.service.AnnouncementsFlagLocalService;
-import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.test.rule.Inject;
 
-import java.util.ArrayList;
-import java.util.List;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Noah Sherrill
  */
-public abstract class BaseAnnouncementsFlagUADEntityTestCase {
+@Component(immediate = true, service = AnnouncementsFlagUADTestHelper.class)
+public class AnnouncementsFlagUADTestHelper {
 
-	protected AnnouncementsFlag addAnnouncementsFlag(long userId)
+	public AnnouncementsFlag addAnnouncementsFlag(long userId)
 		throws Exception {
 
-		AnnouncementsFlag announcementsFlag =
-			announcementsFlagLocalService.addFlag(
-				userId, RandomTestUtil.randomLong(),
-				AnnouncementsFlagConstants.UNREAD);
-
-		_announcementsFlags.add(announcementsFlag);
-
-		return announcementsFlag;
+		return _announcementsFlagLocalService.addFlag(
+			userId, RandomTestUtil.randomLong(),
+			AnnouncementsFlagConstants.UNREAD);
 	}
 
-	@Inject
-	protected AnnouncementsFlagLocalService announcementsFlagLocalService;
-
-	@DeleteAfterTestRun
-	private final List<AnnouncementsFlag> _announcementsFlags =
-		new ArrayList<>();
+	@Reference
+	private AnnouncementsFlagLocalService _announcementsFlagLocalService;
 
 }

@@ -18,7 +18,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 
 import com.liferay.message.boards.model.MBThread;
 import com.liferay.message.boards.uad.constants.MBUADConstants;
-import com.liferay.message.boards.uad.test.MBThreadUADEntityTestHelper;
+import com.liferay.message.boards.uad.test.MBThreadUADTestHelper;
 
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -52,7 +52,7 @@ public class MBThreadUADExporterTest extends BaseUADExporterTestCase<MBThread>
 	@Override
 	public MBThread addBaseModelWithStatusByUserId(long userId,
 		long statusByUserId) throws Exception {
-		MBThread mbThread = _mbThreadUADEntityTestHelper.addMBThreadWithStatusByUserId(userId,
+		MBThread mbThread = _mbThreadUADTestHelper.addMBThreadWithStatusByUserId(userId,
 				statusByUserId);
 
 		_mbThreads.add(mbThread);
@@ -62,12 +62,12 @@ public class MBThreadUADExporterTest extends BaseUADExporterTestCase<MBThread>
 
 	@After
 	public void tearDown() throws Exception {
-		_mbThreadUADEntityTestHelper.cleanUpDependencies(_mbThreads);
+		_mbThreadUADTestHelper.cleanUpDependencies(_mbThreads);
 	}
 
 	@Override
 	protected MBThread addBaseModel(long userId) throws Exception {
-		MBThread mbThread = _mbThreadUADEntityTestHelper.addMBThread(userId);
+		MBThread mbThread = _mbThreadUADTestHelper.addMBThread(userId);
 
 		_mbThreads.add(mbThread);
 
@@ -87,7 +87,7 @@ public class MBThreadUADExporterTest extends BaseUADExporterTestCase<MBThread>
 	@DeleteAfterTestRun
 	private final List<MBThread> _mbThreads = new ArrayList<MBThread>();
 	@Inject
-	private MBThreadUADEntityTestHelper _mbThreadUADEntityTestHelper;
+	private MBThreadUADTestHelper _mbThreadUADTestHelper;
 	@Inject(filter = "model.class.name=" + MBUADConstants.CLASS_NAME_MB_THREAD)
 	private UADExporter _uadExporter;
 }

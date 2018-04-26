@@ -217,7 +217,7 @@ public class AssetBrowserDisplayContext {
 	}
 
 	public CreationMenu getCreationMenu() {
-		return new CreationMenu(_request) {
+		return new CreationMenu() {
 			{
 				addPrimaryDropdownItem(
 					dropdownItem -> {
@@ -258,21 +258,23 @@ public class AssetBrowserDisplayContext {
 	}
 
 	public List<DropdownItem> getFilterItemsDropdownItems() {
-		return new DropdownItemList(_request) {
+		return new DropdownItemList() {
 			{
 				addGroup(
 					SafeConsumer.ignore(
 						dropdownGroupItem -> {
 							dropdownGroupItem.setDropdownItems(
 								_getFilterNavigationDropdownItems());
-							dropdownGroupItem.setLabel("sites");
+							dropdownGroupItem.setLabel(
+								LanguageUtil.get(_request, "sites"));
 						}));
 
 				addGroup(
 					dropdownGroupItem -> {
 						dropdownGroupItem.setDropdownItems(
 							_getOrderByDropdownItems());
-						dropdownGroupItem.setLabel("order-by");
+						dropdownGroupItem.setLabel(
+							LanguageUtil.get(_request, "order-by"));
 					});
 			}
 		};
@@ -403,7 +405,7 @@ public class AssetBrowserDisplayContext {
 			ActionRequest.ACTION_NAME, "changeDisplayStyle");
 		portletURL.setParameter("redirect", PortalUtil.getCurrentURL(_request));
 
-		return new ViewTypeItemList(_request, portletURL, getDisplayStyle()) {
+		return new ViewTypeItemList(portletURL, getDisplayStyle()) {
 			{
 				addCardViewTypeItem();
 				addListViewTypeItem();
@@ -452,13 +454,14 @@ public class AssetBrowserDisplayContext {
 		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		return new DropdownItemList(_request) {
+		return new DropdownItemList() {
 			{
 				add(
 					dropdownItem -> {
 						dropdownItem.setActive(_getGroupId() == 0);
 						dropdownItem.setHref(getPortletURL(), "groupId", 0);
-						dropdownItem.setLabel("all");
+						dropdownItem.setLabel(
+							LanguageUtil.get(_request, "all"));
 					});
 
 				List<Group> groups = GroupLocalServiceUtil.getGroups(
@@ -527,7 +530,7 @@ public class AssetBrowserDisplayContext {
 	}
 
 	private List<DropdownItem> _getOrderByDropdownItems() {
-		return new DropdownItemList(_request) {
+		return new DropdownItemList() {
 			{
 
 				if (!AssetBrowserWebConfigurationValues.SEARCH_WITH_DATABASE) {
@@ -537,7 +540,8 @@ public class AssetBrowserDisplayContext {
 								Objects.equals(_getOrderByCol(), "title"));
 							dropdownItem.setHref(
 								getPortletURL(), "orderByCol", "title");
-							dropdownItem.setLabel("title");
+							dropdownItem.setLabel(
+								LanguageUtil.get(_request, "title"));
 						});
 				}
 
@@ -547,7 +551,8 @@ public class AssetBrowserDisplayContext {
 							Objects.equals(_getOrderByCol(), "modified-date"));
 						dropdownItem.setHref(
 							getPortletURL(), "orderByCol", "modified-date");
-						dropdownItem.setLabel("modified-date");
+						dropdownItem.setLabel(
+							LanguageUtil.get(_request, "modified-date"));
 					});
 			}
 		};

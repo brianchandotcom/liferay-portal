@@ -67,7 +67,7 @@ public class JournalHistoryDisplayContext {
 		ThemeDisplay themeDisplay = (ThemeDisplay)_renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		return new DropdownItemList(_request) {
+		return new DropdownItemList() {
 			{
 				if (JournalArticlePermission.contains(
 						themeDisplay.getPermissionChecker(), _article,
@@ -79,7 +79,8 @@ public class JournalHistoryDisplayContext {
 								"javascript:" + _renderResponse.getNamespace() +
 									"deleteArticles();");
 							dropdownItem.setIcon("trash");
-							dropdownItem.setLabel("delete");
+							dropdownItem.setLabel(
+								LanguageUtil.get(_request, "delete"));
 							dropdownItem.setQuickAction(true);
 						});
 				}
@@ -94,7 +95,8 @@ public class JournalHistoryDisplayContext {
 								"javascript:" + _renderResponse.getNamespace() +
 									"expireArticles();");
 							dropdownItem.setIcon("time");
-							dropdownItem.setLabel("expire");
+							dropdownItem.setLabel(
+								LanguageUtil.get(_request, "expire"));
 							dropdownItem.setQuickAction(true);
 						});
 				}
@@ -142,20 +144,22 @@ public class JournalHistoryDisplayContext {
 	}
 
 	public List<DropdownItem> getFilterItemsDropdownItems() {
-		return new DropdownItemList(_request) {
+		return new DropdownItemList() {
 			{
 				addGroup(
 					dropdownGroupItem -> {
 						dropdownGroupItem.setDropdownItems(
 							_getFilterNavigationDropdownItems());
-						dropdownGroupItem.setLabel("filter-by-navigation");
+						dropdownGroupItem.setLabel(
+							LanguageUtil.get(_request, "filter-by-navigation"));
 					});
 
 				addGroup(
 					dropdownGroupItem -> {
 						dropdownGroupItem.setDropdownItems(
 							_getOrderByDropdownItems());
-						dropdownGroupItem.setLabel("order-by");
+						dropdownGroupItem.setLabel(
+							LanguageUtil.get(_request, "order-by"));
 					});
 			}
 		};
@@ -241,8 +245,7 @@ public class JournalHistoryDisplayContext {
 	}
 
 	public List<ViewTypeItem> getViewTypeItems() {
-		return new ViewTypeItemList(
-			_request, getPortletURL(), getDisplayStyle()) {
+		return new ViewTypeItemList(getPortletURL(), getDisplayStyle()) {
 
 			{
 				addCardViewTypeItem();
@@ -254,20 +257,21 @@ public class JournalHistoryDisplayContext {
 	}
 
 	private List<DropdownItem> _getFilterNavigationDropdownItems() {
-		return new DropdownItemList(_request) {
+		return new DropdownItemList() {
 			{
 				add(
 					dropdownItem -> {
 						dropdownItem.setActive(true);
 						dropdownItem.setHref(_renderResponse.createRenderURL());
-						dropdownItem.setLabel("all");
+						dropdownItem.setLabel(
+							LanguageUtil.get(_request, "all"));
 					});
 			}
 		};
 	}
 
 	private List<DropdownItem> _getOrderByDropdownItems() {
-		return new DropdownItemList(_request) {
+		return new DropdownItemList() {
 			{
 				add(
 					dropdownItem -> {
@@ -275,7 +279,8 @@ public class JournalHistoryDisplayContext {
 							Objects.equals(getOrderByCol(), "version"));
 						dropdownItem.setHref(
 							getPortletURL(), "orderByCol", "version");
-						dropdownItem.setLabel("version");
+						dropdownItem.setLabel(
+							LanguageUtil.get(_request, "version"));
 					});
 
 				add(
@@ -284,7 +289,8 @@ public class JournalHistoryDisplayContext {
 							Objects.equals(getOrderByCol(), "display-date"));
 						dropdownItem.setHref(
 							getPortletURL(), "orderByCol", "display-date");
-						dropdownItem.setLabel("display-date");
+						dropdownItem.setLabel(
+							LanguageUtil.get(_request, "display-date"));
 					});
 
 				add(
@@ -293,7 +299,8 @@ public class JournalHistoryDisplayContext {
 							Objects.equals(getOrderByCol(), "modified-date"));
 						dropdownItem.setHref(
 							getPortletURL(), "orderByCol", "modified-date");
-						dropdownItem.setLabel("modified-date");
+						dropdownItem.setLabel(
+							LanguageUtil.get(_request, "modified-date"));
 					});
 			}
 		};

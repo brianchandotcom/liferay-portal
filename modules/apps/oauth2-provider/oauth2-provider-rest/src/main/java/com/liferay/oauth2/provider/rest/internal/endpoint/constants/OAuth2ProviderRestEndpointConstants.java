@@ -19,6 +19,7 @@ package com.liferay.oauth2.provider.rest.internal.endpoint.constants;
  */
 public class OAuth2ProviderRestEndpointConstants {
 
+	/* Embraces CXF OAuthConstants naming + RFC grant_type value formats */
 	public static final String AUTHORIZATION_CODE_PKCE_GRANT =
 		"authorization_code_pkce";
 

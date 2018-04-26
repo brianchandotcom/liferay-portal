@@ -16,6 +16,15 @@ Main-Class: com.liferay.portal.tools.service.builder.ServiceBuilder
 	com/liferay/dynamic/data/mapping/service.xml=../../../modules/apps/forms-and-workflow/dynamic-data-mapping/dynamic-data-mapping-service/service.xml,\
 	com/liferay/journal/service.xml=../../../modules/apps/web-experience/journal/journal-service/service.xml,\
 	com/liferay/mobile/device/rules/service.xml=../../../modules/apps/foundation/mobile-device-rules/mobile-device-rules-service/service.xml,\
+	@com.liferay.petra.concurrent-[0-9]*.jar!/com/liferay/petra/concurrent/ConcurrentMapperHashMap.class,\
+	@com.liferay.petra.concurrent-[0-9]*.jar!/com/liferay/petra/concurrent/ConcurrentReferenceKeyHashMap.class,\
+	@com.liferay.petra.concurrent-[0-9]*.jar!/com/liferay/petra/concurrent/ConcurrentReferenceKeyHashMap$*.class,\
+	@com.liferay.petra.memory-[0-9]*.jar!/com/liferay/petra/memory/EqualityPhantomReference.class,\
+	@com.liferay.petra.memory-[0-9]*.jar!/com/liferay/petra/memory/EqualitySoftReference.class,\
+	@com.liferay.petra.memory-[0-9]*.jar!/com/liferay/petra/memory/EqualityWeakReference.class,\
+	@com.liferay.petra.memory-[0-9]*.jar!/com/liferay/petra/memory/FinalizeAction.class,\
+	@com.liferay.petra.memory-[0-9]*.jar!/com/liferay/petra/memory/FinalizeManager.class,\
+	@com.liferay.petra.memory-[0-9]*.jar!/com/liferay/petra/memory/FinalizeManager$*.class,\
 	@com.liferay.petra.string-[0-9]*.jar!/com/liferay/petra/string/CharPool.class,\
 	@com.liferay.petra.string-[0-9]*.jar!/com/liferay/petra/string/StringPool.class,\
 	@com.liferay.petra.xml-[0-9]*.jar!/com/liferay/petra/xml/Dom4jUtil.class,\
@@ -32,6 +41,8 @@ Main-Class: com.liferay.portal.tools.service.builder.ServiceBuilder
 	@com.liferay.portal.impl-[0-9]*.jar!/com/liferay/portal/tools/JavaImportsFormatter.class,\
 	@com.liferay.portal.impl-[0-9]*.jar!/com/liferay/portal/tools/ToolsUtil.class,\
 	@com.liferay.portal.impl-[0-9]*.jar!/com/liferay/portal/util/EntityResolver.class,\
+	@com.liferay.portal.impl-[0-9]*.jar!/com/liferay/portal/xml/DocumentFactory.class,\
+	@com.liferay.portal.impl-[0-9]*.jar!/com/liferay/portal/xml/QNameCache.class,\
 	@com.liferay.portal.impl-[0-9]*.jar!/com/liferay/portal/xml/SAXReaderFactory.class,\
 	@com.liferay.portal.impl-[0-9]*.jar!/com/liferay/portlet/announcements/service.xml,\
 	@com.liferay.portal.impl-[0-9]*.jar!/com/liferay/portlet/asset/service.xml,\

@@ -76,7 +76,8 @@ public class GridDDMFormFieldTemplateContextContributor
 				getDDMFormFieldOptions(key, ddmFormField),
 				ddmFormFieldRenderingContext.getLocale());
 
-		return gridDDMFormFieldContextHelper.getOptions();
+		return gridDDMFormFieldContextHelper.getOptions(
+			ddmFormFieldRenderingContext);
 	}
 
 	@Reference

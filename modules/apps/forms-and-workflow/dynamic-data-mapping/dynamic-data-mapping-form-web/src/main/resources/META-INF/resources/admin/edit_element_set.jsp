@@ -76,7 +76,7 @@ renderResponse.setTitle((structure == null) ? LanguageUtil.get(request, "new-ele
 				<h1>
 					<liferay-ui:input-editor
 						autoCreate="<%= false %>"
-						contents="<%= HtmlUtil.escape(ddmFormAdminDisplayContext.getFormName()) %>"
+						contents="<%= HtmlUtil.escape(HtmlUtil.unescape(ddmFormAdminDisplayContext.getFormName())) %>"
 						cssClass="ddm-form-name"
 						editorName="alloyeditor"
 						name="nameEditor"
@@ -90,7 +90,7 @@ renderResponse.setTitle((structure == null) ? LanguageUtil.get(request, "new-ele
 				<h5>
 					<liferay-ui:input-editor
 						autoCreate="<%= false %>"
-						contents="<%= HtmlUtil.escape(ddmFormAdminDisplayContext.getFormDescription()) %>"
+						contents="<%= HtmlUtil.escape(HtmlUtil.unescape(ddmFormAdminDisplayContext.getFormDescription())) %>"
 						cssClass="ddm-form-description h5"
 						editorName="alloyeditor"
 						name="descriptionEditor"
@@ -160,7 +160,7 @@ renderResponse.setTitle((structure == null) ? LanguageUtil.get(request, "new-ele
 									}
 								);
 							},
-							['liferay-ddm-form-portlet','liferay-ddm-soy-template-util'].concat(systemFieldModules)
+							['liferay-ddm-form-portlet', 'liferay-ddm-soy-template-util'].concat(systemFieldModules)
 						);
 
 						<portlet:namespace />init();
@@ -173,12 +173,12 @@ renderResponse.setTitle((structure == null) ? LanguageUtil.get(request, "new-ele
 					'formPortlet',
 					new Liferay.DDM.FormPortlet(
 						{
+							defaultLanguageId: '<%= ddmFormAdminDisplayContext.getDefaultLanguageId() %>',
+							editForm: form,
+							editingLanguageId: '<%= ddmFormAdminDisplayContext.getDefaultLanguageId() %>',
+							formBuilder: Liferay.component('<portlet:namespace />formBuilder'),
 							localizedDescription: <%= ddmFormAdminDisplayContext.getFormLocalizedDescription() %>,
 							localizedName: <%= ddmFormAdminDisplayContext.getFormLocalizedName() %>,
-							defaultLanguageId: '<%= ddmFormAdminDisplayContext.getDefaultLanguageId() %>',
-							editingLanguageId: '<%= ddmFormAdminDisplayContext.getDefaultLanguageId() %>',
-							editForm: form,
-							formBuilder: Liferay.component('<portlet:namespace />formBuilder'),
 							namespace: '<portlet:namespace />',
 							translationManager: Liferay.component('<portlet:namespace />translationManager'),
 							view: 'fieldSets'

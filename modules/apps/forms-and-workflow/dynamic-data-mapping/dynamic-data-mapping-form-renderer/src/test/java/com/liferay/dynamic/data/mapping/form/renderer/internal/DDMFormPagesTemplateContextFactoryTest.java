@@ -17,8 +17,10 @@ package com.liferay.dynamic.data.mapping.form.renderer.internal;
 import com.liferay.dynamic.data.mapping.expression.internal.DDMExpressionFactoryImpl;
 import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormEvaluator;
 import com.liferay.dynamic.data.mapping.form.evaluator.internal.DDMFormEvaluatorImpl;
+import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTemplateContextContributor;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesTracker;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderingContext;
+import com.liferay.dynamic.data.mapping.form.renderer.internal.util.DDMFormFieldTemplateContextContributorTestHelper;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayoutColumn;
@@ -26,6 +28,7 @@ import com.liferay.dynamic.data.mapping.model.DDMFormLayoutPage;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayoutRow;
 import com.liferay.dynamic.data.mapping.model.DDMFormRule;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
+import com.liferay.dynamic.data.mapping.model.UnlocalizedValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormTestUtil;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormValuesTestUtil;
@@ -33,12 +36,15 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.ResourceBundleLoaderUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.util.HtmlImpl;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -75,6 +81,7 @@ public class DDMFormPagesTemplateContextFactoryTest extends PowerMockito {
 
 	@Before
 	public void setUp() {
+		setUpHtmlUtil();
 		setUpLanguageUtil();
 		setUpResourceBundleLoaderUtil();
 		setUpDDMFormTemplateContextFactoryUtil();
@@ -106,41 +113,14 @@ public class DDMFormPagesTemplateContextFactoryTest extends PowerMockito {
 
 		DDMFormLayout ddmFormLayout = new DDMFormLayout();
 
-		DDMFormLayoutPage ddmFormLayoutPage1 = createDDMFormLayoutPage(
-			"Page 1", "Page 1 Description");
+		ddmFormLayout = createDDMFormLayoutPage(
+			ddmFormLayout, "Page 1", "Page 1 Description", "Field1");
 
-		DDMFormLayoutRow ddmFormLayoutRow = new DDMFormLayoutRow();
+		ddmFormLayout = createDDMFormLayoutPage(
+			ddmFormLayout, "Page 2", "Page 2 Description", "Field2");
 
-		ddmFormLayoutRow.setDDMFormLayoutColumns(
-			createDDMFormLayoutColumns("Field1"));
-
-		ddmFormLayoutPage1.addDDMFormLayoutRow(ddmFormLayoutRow);
-
-		ddmFormLayout.addDDMFormLayoutPage(ddmFormLayoutPage1);
-
-		DDMFormLayoutPage ddmFormLayoutPage2 = createDDMFormLayoutPage(
-			"Page 2", "Page 2 Description");
-
-		ddmFormLayoutRow = new DDMFormLayoutRow();
-
-		ddmFormLayoutRow.setDDMFormLayoutColumns(
-			createDDMFormLayoutColumns("Field2"));
-
-		ddmFormLayoutPage2.addDDMFormLayoutRow(ddmFormLayoutRow);
-
-		ddmFormLayout.addDDMFormLayoutPage(ddmFormLayoutPage2);
-
-		DDMFormLayoutPage ddmFormLayoutPage3 = createDDMFormLayoutPage(
-			"Page 3", "Page 3 Description");
-
-		ddmFormLayoutRow = new DDMFormLayoutRow();
-
-		ddmFormLayoutRow.setDDMFormLayoutColumns(
-			createDDMFormLayoutColumns("Field3"));
-
-		ddmFormLayoutPage3.addDDMFormLayoutRow(ddmFormLayoutRow);
-
-		ddmFormLayout.addDDMFormLayoutPage(ddmFormLayoutPage3);
+		ddmFormLayout = createDDMFormLayoutPage(
+			ddmFormLayout, "Page 3", "Page 3 Description", "Field3");
 
 		// Dynamic data mapping form values
 
@@ -163,7 +143,7 @@ public class DDMFormPagesTemplateContextFactoryTest extends PowerMockito {
 
 		DDMFormPagesTemplateContextFactory ddmFormPagesTemplateContextFactory =
 			createDDMFormPagesTemplateContextFactory(
-				ddmForm, ddmFormLayout, ddmFormValues, false, false);
+				ddmForm, ddmFormLayout, ddmFormValues, false, false, false);
 
 		List<Object> pagesTemplateContext =
 			ddmFormPagesTemplateContextFactory.create();
@@ -185,6 +165,432 @@ public class DDMFormPagesTemplateContextFactoryTest extends PowerMockito {
 			(Map<String, Object>)pagesTemplateContext.get(2);
 
 		Assert.assertTrue(MapUtil.getBoolean(page3TemplateContext, "enabled"));
+	}
+
+	@Test
+	public void testExtractHTMLTagsFromCheckboxMultipleFieldTemplateContext()
+		throws Exception {
+
+		// Dynamic data mapping form
+
+		DDMForm ddmForm = DDMFormTestUtil.createDDMForm();
+
+		ddmForm.addDDMFormField(
+			DDMFormTestUtil.createDDMFormField(
+				"Field1", String.format(_HTML_WRAPPER, "label"),
+				"checkbox-multiple", "string", false, false, true,
+				String.format(_HTML_WRAPPER, "tip"),
+				String.format(_HTML_WRAPPER, "option")));
+
+		mockDDMFormFieldTypeServicesTracker(
+			"checkbox-multiple",
+			_ddmFormFieldTemplateContextContributorTestHelper.
+				createCheckboxMultipleDDMFormFieldTemplateContextContributor());
+
+		// Dynamic data mapping form layout
+
+		DDMFormLayout ddmFormLayout = new DDMFormLayout();
+
+		ddmFormLayout = createDDMFormLayoutPage(
+			ddmFormLayout, "Page 1", "Page 1 Description", "Field1");
+
+		// Template context
+
+		DDMFormPagesTemplateContextFactory ddmFormPagesTemplateContextFactory =
+			createDDMFormPagesTemplateContextFactory(
+				ddmForm, ddmFormLayout, null, false, true, true);
+
+		List<Object> pages = ddmFormPagesTemplateContextFactory.create();
+
+		Map<String, Object> fieldTemplateContext = getFieldTemplateContext(
+			pages);
+
+		Assert.assertEquals("label", fieldTemplateContext.get("label"));
+
+		List<Map<String, String>> options =
+			(List<Map<String, String>>)fieldTemplateContext.get("options");
+
+		Map<String, String> optionField = options.get(0);
+
+		Assert.assertEquals("option", optionField.get("label"));
+
+		Assert.assertEquals("tip", fieldTemplateContext.get("tip"));
+	}
+
+	@Test
+	public void testExtractHTMLTagsFromDateFieldTemplateContext()
+		throws Exception {
+
+		// Dynamic data mapping form
+
+		DDMForm ddmForm = DDMFormTestUtil.createDDMForm();
+
+		ddmForm.addDDMFormField(
+			DDMFormTestUtil.createDDMFormField(
+				"Field1", String.format(_HTML_WRAPPER, "label"), "date",
+				"string", false, false, true,
+				String.format(_HTML_WRAPPER, "tip")));
+
+		mockDDMFormFieldTypeServicesTracker(
+			"date",
+			_ddmFormFieldTemplateContextContributorTestHelper.
+				createDateDDMFormFieldTemplateContextContributor());
+
+		// Dynamic data mapping form layout
+
+		DDMFormLayout ddmFormLayout = new DDMFormLayout();
+
+		ddmFormLayout = createDDMFormLayoutPage(
+			ddmFormLayout, "Page 1", "Page 1 Description", "Field1");
+
+		// Template context
+
+		DDMFormPagesTemplateContextFactory ddmFormPagesTemplateContextFactory =
+			createDDMFormPagesTemplateContextFactory(
+				ddmForm, ddmFormLayout, null, false, true, true);
+
+		List<Object> pages = ddmFormPagesTemplateContextFactory.create();
+
+		Map<String, Object> fieldTemplateContext = getFieldTemplateContext(
+			pages);
+
+		Assert.assertEquals("label", fieldTemplateContext.get("label"));
+		Assert.assertEquals("tip", fieldTemplateContext.get("tip"));
+	}
+
+	@Test
+	public void testExtractHTMLTagsFromGridFieldTemplateContext()
+		throws Exception {
+
+		// Dynamic data mapping form
+
+		DDMForm ddmForm = DDMFormTestUtil.createDDMForm();
+
+		ddmForm.addDDMFormField(
+			DDMFormTestUtil.createGridDDMFormField(
+				"Field1", String.format(_HTML_WRAPPER, "label"), "grid",
+				"string", false, false, true,
+				String.format(_HTML_WRAPPER, "tip"),
+				String.format(_HTML_WRAPPER, "option")));
+
+		mockDDMFormFieldTypeServicesTracker(
+			"grid",
+			_ddmFormFieldTemplateContextContributorTestHelper.
+				createGridDDMFormFieldTemplateContextContributor());
+
+		// Dynamic data mapping form layout
+
+		DDMFormLayout ddmFormLayout = new DDMFormLayout();
+
+		ddmFormLayout = createDDMFormLayoutPage(
+			ddmFormLayout, "Page 1", "Page 1 Description", "Field1");
+
+		// Template context
+
+		DDMFormValues ddmFormValues = DDMFormValuesTestUtil.createDDMFormValues(
+			ddmForm);
+
+		ddmFormValues.addDDMFormFieldValue(
+			DDMFormValuesTestUtil.createDDMFormFieldValue(
+				"Field1", new UnlocalizedValue("{}")));
+
+		DDMFormPagesTemplateContextFactory ddmFormPagesTemplateContextFactory =
+			createDDMFormPagesTemplateContextFactory(
+				ddmForm, ddmFormLayout, ddmFormValues, false, true, true);
+
+		List<Object> pages = ddmFormPagesTemplateContextFactory.create();
+
+		Map<String, Object> fieldTemplateContext = getFieldTemplateContext(
+			pages);
+
+		Assert.assertEquals("label", fieldTemplateContext.get("label"));
+
+		List<Map<String, String>> columns =
+			(List<Map<String, String>>)fieldTemplateContext.get("columns");
+
+		Map<String, String> columnField = columns.get(0);
+
+		Assert.assertEquals("option", columnField.get("label"));
+
+		List<Map<String, String>> rows =
+			(List<Map<String, String>>)fieldTemplateContext.get("rows");
+
+		Map<String, String> rowField = rows.get(0);
+
+		Assert.assertEquals("option", rowField.get("label"));
+
+		Assert.assertEquals("tip", fieldTemplateContext.get("tip"));
+	}
+
+	@Test
+	public void testExtractHTMLTagsFromNumericFieldTemplateContext()
+		throws Exception {
+
+		// Dynamic data mapping form
+
+		DDMForm ddmForm = DDMFormTestUtil.createDDMForm();
+
+		ddmForm.addDDMFormField(
+			DDMFormTestUtil.createNumericDDMFormField(
+				"Field1", String.format(_HTML_WRAPPER, "label"), "integer",
+				false, false, true, String.format(_HTML_WRAPPER, "tip"),
+				String.format(_HTML_WRAPPER, "placeHolder"),
+				String.format(_HTML_WRAPPER, "toolTip")));
+
+		mockDDMFormFieldTypeServicesTracker(
+			"numeric",
+			_ddmFormFieldTemplateContextContributorTestHelper.
+				createNumericDDMFormFieldTemplateContextContributor());
+
+		// Dynamic data mapping form layout
+
+		DDMFormLayout ddmFormLayout = new DDMFormLayout();
+
+		ddmFormLayout = createDDMFormLayoutPage(
+			ddmFormLayout, "Page 1", "Page 1 Description", "Field1");
+
+		// Template context
+
+		DDMFormPagesTemplateContextFactory ddmFormPagesTemplateContextFactory =
+			createDDMFormPagesTemplateContextFactory(
+				ddmForm, ddmFormLayout, null, false, true, true);
+
+		List<Object> pages = ddmFormPagesTemplateContextFactory.create();
+
+		Map<String, Object> fieldTemplateContext = getFieldTemplateContext(
+			pages);
+
+		Assert.assertEquals("label", fieldTemplateContext.get("label"));
+		Assert.assertEquals(
+			"placeHolder", fieldTemplateContext.get("placeholder"));
+		Assert.assertEquals("tip", fieldTemplateContext.get("tip"));
+		Assert.assertEquals("toolTip", fieldTemplateContext.get("tooltip"));
+	}
+
+	@Test
+	public void testExtractHTMLTagsFromPageDescription() throws Exception {
+
+		// Dynamic data mapping form
+
+		DDMForm ddmForm = DDMFormTestUtil.createDDMForm();
+
+		// Dynamic data mapping form layout
+
+		DDMFormLayout ddmFormLayout = new DDMFormLayout();
+
+		DDMFormLayoutPage ddmFormLayoutPage1 = createDDMFormLayoutPage(
+			"titlePage", String.format(_HTML_WRAPPER, "descriptionPage"));
+
+		ddmFormLayout.addDDMFormLayoutPage(ddmFormLayoutPage1);
+
+		// Template context
+
+		DDMFormPagesTemplateContextFactory ddmFormPagesTemplateContextFactory =
+			createDDMFormPagesTemplateContextFactory(
+				ddmForm, ddmFormLayout, null, false, true, true);
+
+		List<Object> pages = ddmFormPagesTemplateContextFactory.create();
+
+		Map<String, Object> pageTemplateContext =
+			(Map<String, Object>)pages.get(0);
+
+		Assert.assertEquals(
+			"descriptionPage", pageTemplateContext.get("description"));
+	}
+
+	@Test
+	public void testExtractHTMLTagsFromPageTitle() throws Exception {
+
+		// Dynamic data mapping form
+
+		DDMForm ddmForm = DDMFormTestUtil.createDDMForm();
+
+		// Dynamic data mapping form layout
+
+		DDMFormLayout ddmFormLayout = new DDMFormLayout();
+
+		DDMFormLayoutPage ddmFormLayoutPage1 = createDDMFormLayoutPage(
+			String.format(_HTML_WRAPPER, "titlePage"), "descriptionPage");
+
+		ddmFormLayout.addDDMFormLayoutPage(ddmFormLayoutPage1);
+
+		// Template context
+
+		DDMFormPagesTemplateContextFactory ddmFormPagesTemplateContextFactory =
+			createDDMFormPagesTemplateContextFactory(
+				ddmForm, ddmFormLayout, null, false, true, true);
+
+		List<Object> pages = ddmFormPagesTemplateContextFactory.create();
+
+		Map<String, Object> pageTemplateContext =
+			(Map<String, Object>)pages.get(0);
+
+		Assert.assertEquals("titlePage", pageTemplateContext.get("title"));
+	}
+
+	@Test
+	public void testExtractHTMLTagsFromRadioFieldTemplateContext()
+		throws Exception {
+
+		// Dynamic data mapping form
+
+		DDMForm ddmForm = DDMFormTestUtil.createDDMForm();
+
+		ddmForm.addDDMFormField(
+			DDMFormTestUtil.createDDMFormField(
+				"Field1", String.format(_HTML_WRAPPER, "label"), "radio",
+				"string", false, false, true,
+				String.format(_HTML_WRAPPER, "tip"),
+				StringBundler.concat(
+					StringPool.OPEN_BRACKET,
+					String.format(_HTML_WRAPPER, "predefinedValue"),
+					StringPool.CLOSE_BRACKET),
+				String.format(_HTML_WRAPPER, "option")));
+
+		mockDDMFormFieldTypeServicesTracker(
+			"radio",
+			_ddmFormFieldTemplateContextContributorTestHelper.
+				createRadioDDMFormFieldTemplateContextContributor());
+
+		// Dynamic data mapping form layout
+
+		DDMFormLayout ddmFormLayout = new DDMFormLayout();
+
+		ddmFormLayout = createDDMFormLayoutPage(
+			ddmFormLayout, "Page 1", "Page 1 Description", "Field1");
+
+		// Template context
+
+		DDMFormPagesTemplateContextFactory ddmFormPagesTemplateContextFactory =
+			createDDMFormPagesTemplateContextFactory(
+				ddmForm, ddmFormLayout, null, false, true, true);
+
+		List<Object> pages = ddmFormPagesTemplateContextFactory.create();
+
+		Map<String, Object> fieldTemplateContext = getFieldTemplateContext(
+			pages);
+
+		List<Map<String, String>> options =
+			(List<Map<String, String>>)fieldTemplateContext.get("options");
+
+		Map<String, String> optionField = options.get(0);
+
+		Assert.assertEquals("label", fieldTemplateContext.get("label"));
+		Assert.assertEquals("option", optionField.get("label"));
+
+		Object predefinedValue = fieldTemplateContext.get("predefinedValue");
+
+		Assert.assertEquals("predefinedValue", predefinedValue.toString());
+
+		Assert.assertEquals("tip", fieldTemplateContext.get("tip"));
+	}
+
+	@Test
+	public void testExtractHTMLTagsFromSelectFieldTemplateContext()
+		throws Exception {
+
+		// Dynamic data mapping form
+
+		DDMForm ddmForm = DDMFormTestUtil.createDDMForm();
+
+		ddmForm.addDDMFormField(
+			DDMFormTestUtil.createDDMFormField(
+				"Field1", String.format(_HTML_WRAPPER, "label"), "select",
+				"string", false, false, true,
+				String.format(_HTML_WRAPPER, "tip"),
+				String.format(_HTML_WRAPPER, "option")));
+
+		mockDDMFormFieldTypeServicesTracker(
+			"select",
+			_ddmFormFieldTemplateContextContributorTestHelper.
+				createSelectDDMFormFieldTemplateContextContributor());
+
+		// Dynamic data mapping form layout
+
+		DDMFormLayout ddmFormLayout = new DDMFormLayout();
+
+		ddmFormLayout = createDDMFormLayoutPage(
+			ddmFormLayout, "Page 1", "Page 1 Description", "Field1");
+
+		// Template context
+
+		DDMFormPagesTemplateContextFactory ddmFormPagesTemplateContextFactory =
+			createDDMFormPagesTemplateContextFactory(
+				ddmForm, ddmFormLayout, null, false, true, true);
+
+		List<Object> pages = ddmFormPagesTemplateContextFactory.create();
+
+		Map<String, Object> fieldTemplateContext = getFieldTemplateContext(
+			pages);
+
+		Assert.assertEquals("label", fieldTemplateContext.get("label"));
+
+		List<Map<String, String>> options =
+			(List<Map<String, String>>)fieldTemplateContext.get("options");
+
+		Map<String, String> optionField = options.get(0);
+
+		Assert.assertEquals("option", optionField.get("label"));
+
+		Assert.assertEquals("tip", fieldTemplateContext.get("tip"));
+	}
+
+	@Test
+	public void testExtractHTMLTagsFromTextFieldTemplateContext()
+		throws Exception {
+
+		// Dynamic data mapping form
+
+		DDMForm ddmForm = DDMFormTestUtil.createDDMForm();
+
+		ddmForm.addDDMFormField(
+			DDMFormTestUtil.createDDMFormField(
+				"Field1", String.format(_HTML_WRAPPER, "label"), "text",
+				"string", false, false, true,
+				String.format(_HTML_WRAPPER, "tip"),
+				String.format(_HTML_WRAPPER, "predefinedValue"),
+				String.format(_HTML_WRAPPER, "placeHolder"),
+				String.format(_HTML_WRAPPER, "toolTip"),
+				String.format(_HTML_WRAPPER, "option")));
+
+		mockDDMFormFieldTypeServicesTracker(
+			"text",
+			_ddmFormFieldTemplateContextContributorTestHelper.
+				createTextDDMFormFieldTemplateContextContributor());
+
+		// Dynamic data mapping form layout
+
+		DDMFormLayout ddmFormLayout = new DDMFormLayout();
+
+		ddmFormLayout = createDDMFormLayoutPage(
+			ddmFormLayout, "Page 1", "Page 1 Description", "Field1");
+
+		// Template context
+
+		DDMFormPagesTemplateContextFactory ddmFormPagesTemplateContextFactory =
+			createDDMFormPagesTemplateContextFactory(
+				ddmForm, ddmFormLayout, null, false, true, true);
+
+		List<Object> pages = ddmFormPagesTemplateContextFactory.create();
+
+		Map<String, Object> fieldTemplateContext = getFieldTemplateContext(
+			pages);
+
+		Assert.assertEquals("label", fieldTemplateContext.get("label"));
+
+		List<Map<String, String>> options =
+			(List<Map<String, String>>)fieldTemplateContext.get("options");
+
+		Map<String, String> optionField = options.get(0);
+
+		Assert.assertEquals("option", optionField.get("label"));
+
+		Assert.assertEquals(
+			"placeHolder", fieldTemplateContext.get("placeholder"));
+		Assert.assertEquals(
+			"predefinedValue", fieldTemplateContext.get("predefinedValue"));
+		Assert.assertEquals("tip", fieldTemplateContext.get("tip"));
+		Assert.assertEquals("toolTip", fieldTemplateContext.get("tooltip"));
 	}
 
 	@Test
@@ -229,7 +635,7 @@ public class DDMFormPagesTemplateContextFactoryTest extends PowerMockito {
 
 		DDMFormPagesTemplateContextFactory ddmFormPagesTemplateContextFactory =
 			createDDMFormPagesTemplateContextFactory(
-				ddmForm, ddmFormLayout, null, false, true);
+				ddmForm, ddmFormLayout, null, false, true, false);
 
 		List<Object> pages = ddmFormPagesTemplateContextFactory.create();
 
@@ -294,35 +700,17 @@ public class DDMFormPagesTemplateContextFactoryTest extends PowerMockito {
 
 		DDMFormLayout ddmFormLayout = new DDMFormLayout();
 
-		DDMFormLayoutPage ddmFormLayoutPage1 = createDDMFormLayoutPage(
-			"Page 1", "Page 1 Description");
+		ddmFormLayout = createDDMFormLayoutPage(
+			ddmFormLayout, "Page 1", "Page 1 Description", "Field1", "Field2");
 
-		DDMFormLayoutRow ddmFormLayoutRow = new DDMFormLayoutRow();
-
-		ddmFormLayoutRow.setDDMFormLayoutColumns(
-			createDDMFormLayoutColumns("Field1", "Field2"));
-
-		ddmFormLayoutPage1.addDDMFormLayoutRow(ddmFormLayoutRow);
-
-		ddmFormLayout.addDDMFormLayoutPage(ddmFormLayoutPage1);
-
-		DDMFormLayoutPage ddmFormLayoutPage2 = createDDMFormLayoutPage(
-			"Page 2", "Page 2 Description");
-
-		ddmFormLayoutRow = new DDMFormLayoutRow();
-
-		ddmFormLayoutRow.setDDMFormLayoutColumns(
-			createDDMFormLayoutColumns("Field3"));
-
-		ddmFormLayoutPage2.addDDMFormLayoutRow(ddmFormLayoutRow);
-
-		ddmFormLayout.addDDMFormLayoutPage(ddmFormLayoutPage2);
+		ddmFormLayout = createDDMFormLayoutPage(
+			ddmFormLayout, "Page 2", "Page 2 Description", "Field3");
 
 		// Template context
 
 		DDMFormPagesTemplateContextFactory ddmFormPagesTemplateContextFactory =
 			createDDMFormPagesTemplateContextFactory(
-				ddmForm, ddmFormLayout, null, false, false);
+				ddmForm, ddmFormLayout, null, false, false, false);
 
 		List<Object> pagesTemplateContext =
 			ddmFormPagesTemplateContextFactory.create();
@@ -368,35 +756,17 @@ public class DDMFormPagesTemplateContextFactoryTest extends PowerMockito {
 
 		DDMFormLayout ddmFormLayout = new DDMFormLayout();
 
-		DDMFormLayoutPage ddmFormLayoutPage1 = createDDMFormLayoutPage(
-			"Page 1", "Page 1 Description");
+		ddmFormLayout = createDDMFormLayoutPage(
+			ddmFormLayout, "Page 1", "Page 1 Description", "Field1", "Field2");
 
-		DDMFormLayoutRow ddmFormLayoutRow = new DDMFormLayoutRow();
-
-		ddmFormLayoutRow.setDDMFormLayoutColumns(
-			createDDMFormLayoutColumns("Field1", "Field2"));
-
-		ddmFormLayoutPage1.addDDMFormLayoutRow(ddmFormLayoutRow);
-
-		ddmFormLayout.addDDMFormLayoutPage(ddmFormLayoutPage1);
-
-		DDMFormLayoutPage ddmFormLayoutPage2 = createDDMFormLayoutPage(
-			"Page 2", "Page 2 Description");
-
-		ddmFormLayoutRow = new DDMFormLayoutRow();
-
-		ddmFormLayoutRow.setDDMFormLayoutColumns(
-			createDDMFormLayoutColumns("Field3"));
-
-		ddmFormLayoutPage2.addDDMFormLayoutRow(ddmFormLayoutRow);
-
-		ddmFormLayout.addDDMFormLayoutPage(ddmFormLayoutPage2);
+		ddmFormLayout = createDDMFormLayoutPage(
+			ddmFormLayout, "Page 2", "Page 2 Description", "Field3");
 
 		// Template context
 
 		DDMFormPagesTemplateContextFactory ddmFormPagesTemplateContextFactory =
 			createDDMFormPagesTemplateContextFactory(
-				ddmForm, ddmFormLayout, null, false, true);
+				ddmForm, ddmFormLayout, null, false, true, false);
 
 		List<Object> pagesTemplateContext =
 			ddmFormPagesTemplateContextFactory.create();
@@ -449,6 +819,25 @@ public class DDMFormPagesTemplateContextFactoryTest extends PowerMockito {
 		return ddmFormLayoutColumns;
 	}
 
+	protected DDMFormLayout createDDMFormLayoutPage(
+		DDMFormLayout ddmFormLayout, String pageTitle, String pageDescription,
+		String... ddmFormFieldName) {
+
+		DDMFormLayoutPage ddmFormLayoutPage = createDDMFormLayoutPage(
+			pageTitle, pageDescription);
+
+		DDMFormLayoutRow ddmFormLayoutRow = new DDMFormLayoutRow();
+
+		ddmFormLayoutRow.setDDMFormLayoutColumns(
+			createDDMFormLayoutColumns(ddmFormFieldName));
+
+		ddmFormLayoutPage.addDDMFormLayoutRow(ddmFormLayoutRow);
+
+		ddmFormLayout.addDDMFormLayoutPage(ddmFormLayoutPage);
+
+		return ddmFormLayout;
+	}
+
 	protected DDMFormLayoutPage createDDMFormLayoutPage(
 		String titleString, String descriptionString) {
 
@@ -473,7 +862,7 @@ public class DDMFormPagesTemplateContextFactoryTest extends PowerMockito {
 			createDDMFormPagesTemplateContextFactory(
 				DDMForm ddmForm, DDMFormLayout ddmFormLayout,
 				DDMFormValues ddmFormValues, boolean ddmFormReadOnly,
-				boolean showRequiredFieldsWarning)
+				boolean showRequiredFieldsWarning, boolean viewMode)
 		throws Exception {
 
 		DDMFormRenderingContext ddmFormRenderingContext =
@@ -486,6 +875,7 @@ public class DDMFormPagesTemplateContextFactoryTest extends PowerMockito {
 		ddmFormRenderingContext.setReadOnly(ddmFormReadOnly);
 		ddmFormRenderingContext.setShowRequiredFieldsWarning(
 			showRequiredFieldsWarning);
+		ddmFormRenderingContext.setViewMode(viewMode);
 
 		DDMFormPagesTemplateContextFactory ddmFormPagesTemplateContextFactory =
 			new DDMFormPagesTemplateContextFactory(
@@ -517,6 +907,37 @@ public class DDMFormPagesTemplateContextFactoryTest extends PowerMockito {
 		return ddmFormEvaluator;
 	}
 
+	protected Map<String, Object> getFieldTemplateContext(List<Object> pages) {
+		Map<String, Object> page1 = (Map<String, Object>)pages.get(0);
+
+		List<Object> rows = (List<Object>)page1.get("rows");
+
+		Map<String, Object> row1 = (Map<String, Object>)rows.get(0);
+
+		List<Object> columnsRow1 = (List<Object>)row1.get("columns");
+
+		Map<String, Object> column1Row1 = (Map<String, Object>)columnsRow1.get(
+			0);
+
+		List<Object> fieldsColumn1Row1 = (List<Object>)column1Row1.get(
+			"fields");
+
+		return (Map<String, Object>)fieldsColumn1Row1.get(0);
+	}
+
+	protected void mockDDMFormFieldTypeServicesTracker(
+		String type,
+		DDMFormFieldTemplateContextContributor
+			ddmFormFieldTemplateContextContributor) {
+
+		when(
+			_ddmFormFieldTypeServicesTracker.
+				getDDMFormFieldTemplateContextContributor(Matchers.eq(type))
+		).thenReturn(
+			ddmFormFieldTemplateContextContributor
+		);
+	}
+
 	protected void setUpDDMFormTemplateContextFactoryUtil() {
 		_request = Mockito.mock(HttpServletRequest.class);
 
@@ -524,11 +945,17 @@ public class DDMFormPagesTemplateContextFactoryTest extends PowerMockito {
 
 		themeDisplay.setPathThemeImages(StringPool.BLANK);
 
-		Mockito.when(
+		when(
 			(ThemeDisplay)_request.getAttribute(WebKeys.THEME_DISPLAY)
 		).thenReturn(
 			themeDisplay
 		);
+	}
+
+	protected void setUpHtmlUtil() {
+		HtmlUtil htmlUtil = new HtmlUtil();
+
+		htmlUtil.setHtml(new HtmlImpl());
 	}
 
 	protected void setUpLanguageUtil() {
@@ -566,9 +993,15 @@ public class DDMFormPagesTemplateContextFactoryTest extends PowerMockito {
 		);
 	}
 
+	private static final String _HTML_WRAPPER = "<a>%s</a>";
+
 	private static final Locale _LOCALE = LocaleUtil.US;
 
 	private static final String _PORTLET_NAMESPACE = StringUtil.randomString();
+
+	private final DDMFormFieldTemplateContextContributorTestHelper
+		_ddmFormFieldTemplateContextContributorTestHelper =
+			new DDMFormFieldTemplateContextContributorTestHelper();
 
 	@Mock
 	private DDMFormFieldTypeServicesTracker _ddmFormFieldTypeServicesTracker;

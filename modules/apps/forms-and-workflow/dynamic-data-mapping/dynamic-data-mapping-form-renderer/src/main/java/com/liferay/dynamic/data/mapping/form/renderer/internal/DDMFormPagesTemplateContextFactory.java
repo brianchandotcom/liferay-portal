@@ -32,6 +32,7 @@ import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 
@@ -189,18 +190,23 @@ public class DDMFormPagesTemplateContextFactory {
 
 		LocalizedValue description = ddmFormLayoutPage.getDescription();
 
-		pageTemplateContext.put("description", description.getString(_locale));
+		pageTemplateContext.put(
+			"description",
+			getValue(_ddmFormRenderingContext, description.getString(_locale)));
 
 		_pageEnabled = isPageEnabled(pageIndex);
 
 		pageTemplateContext.put("enabled", _pageEnabled);
 
 		pageTemplateContext.put(
-			"localizedDescription", getLocalizedValueMap(description));
+			"localizedDescription",
+			getLocalizedValueMap(description, _ddmFormRenderingContext));
 
 		LocalizedValue title = ddmFormLayoutPage.getTitle();
 
-		pageTemplateContext.put("localizedTitle", getLocalizedValueMap(title));
+		pageTemplateContext.put(
+			"localizedTitle",
+			getLocalizedValueMap(title, _ddmFormRenderingContext));
 
 		pageTemplateContext.put(
 			"rows",
@@ -213,7 +219,9 @@ public class DDMFormPagesTemplateContextFactory {
 		pageTemplateContext.put(
 			"showRequiredFieldsWarning", showRequiredFieldsWarning);
 
-		pageTemplateContext.put("title", title.getString(_locale));
+		pageTemplateContext.put(
+			"title",
+			getValue(_ddmFormRenderingContext, title.getString(_locale)));
 
 		return pageTemplateContext;
 	}
@@ -244,7 +252,8 @@ public class DDMFormPagesTemplateContextFactory {
 	}
 
 	protected Map<String, String> getLocalizedValueMap(
-		LocalizedValue localizedValue) {
+		LocalizedValue localizedValue,
+		DDMFormRenderingContext ddmFormRenderingContext) {
 
 		Map<String, String> map = new HashMap<>();
 
@@ -253,10 +262,23 @@ public class DDMFormPagesTemplateContextFactory {
 		for (Map.Entry<Locale, String> entry : values.entrySet()) {
 			String languageId = LocaleUtil.toLanguageId(entry.getKey());
 
-			map.put(languageId, entry.getValue());
+			String keyValue = getValue(
+				ddmFormRenderingContext, entry.getValue());
+
+			map.put(languageId, keyValue);
 		}
 
 		return map;
+	}
+
+	protected String getValue(
+		DDMFormRenderingContext ddmFormRenderingContext, String value) {
+
+		if (ddmFormRenderingContext.isViewMode()) {
+			return HtmlUtil.extractText(value);
+		}
+
+		return value;
 	}
 
 	protected boolean isPageEnabled(int pageIndex) {

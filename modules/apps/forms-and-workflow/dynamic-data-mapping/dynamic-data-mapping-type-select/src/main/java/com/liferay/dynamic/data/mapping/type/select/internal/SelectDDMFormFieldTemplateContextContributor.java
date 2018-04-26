@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.AggregateResourceBundle;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.ResourceBundleLoaderUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
@@ -78,7 +79,8 @@ public class SelectDDMFormFieldTemplateContextContributor
 		parameters.put(
 			"options",
 			getOptions(
-				ddmFormFieldOptions, ddmFormFieldRenderingContext.getLocale()));
+				ddmFormFieldOptions, ddmFormFieldRenderingContext.getLocale(),
+				ddmFormFieldRenderingContext));
 
 		Map<String, String> stringsMap = new HashMap<>();
 
@@ -137,7 +139,8 @@ public class SelectDDMFormFieldTemplateContextContributor
 	}
 
 	protected List<Object> getOptions(
-		DDMFormFieldOptions ddmFormFieldOptions, Locale locale) {
+		DDMFormFieldOptions ddmFormFieldOptions, Locale locale,
+		DDMFormFieldRenderingContext ddmFormFieldRenderingContext) {
 
 		List<Object> options = new ArrayList<>();
 
@@ -147,7 +150,13 @@ public class SelectDDMFormFieldTemplateContextContributor
 			LocalizedValue optionLabel = ddmFormFieldOptions.getOptionLabels(
 				optionValue);
 
-			optionMap.put("label", optionLabel.getString(locale));
+			String optionLabelString = optionLabel.getString(locale);
+
+			if (ddmFormFieldRenderingContext.isViewMode()) {
+				optionLabelString = HtmlUtil.extractText(optionLabelString);
+			}
+
+			optionMap.put("label", optionLabelString);
 
 			optionMap.put("value", optionValue);
 
@@ -167,8 +176,10 @@ public class SelectDDMFormFieldTemplateContextContributor
 			return null;
 		}
 
-		return predefinedValue.getString(
+		String predefinedValueString = predefinedValue.getString(
 			ddmFormFieldRenderingContext.getLocale());
+
+		return predefinedValueString;
 	}
 
 	protected ResourceBundle getResourceBundle(Locale locale) {

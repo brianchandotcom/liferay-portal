@@ -351,6 +351,8 @@ public class DDMFormDisplayContext {
 		ddmFormRenderingContext.setPortletNamespace(
 			_renderResponse.getNamespace());
 
+		ddmFormRenderingContext.setViewMode(true);
+
 		return ddmFormRenderingContext;
 	}
 

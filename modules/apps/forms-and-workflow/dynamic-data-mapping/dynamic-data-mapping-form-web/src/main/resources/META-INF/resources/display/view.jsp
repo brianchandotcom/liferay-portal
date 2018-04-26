@@ -117,10 +117,10 @@ Locale displayLocale = LocaleUtil.fromLanguageId(languageId);
 
 						<div class="ddm-form-basic-info">
 							<div class="container-fluid-1280">
-								<h1 class="ddm-form-name"><%= formInstance.getName(displayLocale) %></h1>
+								<h1 class="ddm-form-name"><%= HtmlUtil.extractText(HtmlUtil.unescape(formInstance.getName(displayLocale))) %></h1>
 
 								<%
-								String description = formInstance.getDescription(displayLocale);
+								String description = HtmlUtil.extractText(HtmlUtil.unescape(formInstance.getDescription(displayLocale)));
 								%>
 
 								<c:if test="<%= Validator.isNotNull(description) %>">
@@ -185,15 +185,21 @@ Locale displayLocale = LocaleUtil.fromLanguageId(languageId);
 							}
 
 							function <portlet:namespace />fireFormView() {
-								Liferay.fire('ddmFormView', {
-									formId: <%= formInstanceId %>,
-									title: '<%= HtmlUtil.escape(formInstance.getName(displayLocale)) %>'
-								});
+								Liferay.fire(
+									'ddmFormView',
+									{
+										formId: <%= formInstanceId %>,
+										title: '<%= HtmlUtil.escape(formInstance.getName(displayLocale)) %>'
+									}
+								);
 
-								Liferay.fire("ddmFormPageShow", {
-									formId: <%= formInstanceId %>,
-									page: 1
-								});
+								Liferay.fire(
+									'ddmFormPageShow',
+									{
+										formId: <%= formInstanceId %>,
+										page: 1
+									}
+								);
 							}
 
 							<portlet:namespace />form = Liferay.component('<%= ddmFormDisplayContext.getContainerId() %>DDMForm');

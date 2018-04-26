@@ -163,7 +163,7 @@ public class DDMFormViewFormInstanceRecordsDisplayContext {
 						navigationItem.setActive(true);
 						navigationItem.setHref(StringPool.BLANK);
 						navigationItem.setLabel(
-							HtmlUtil.escape(
+							HtmlUtil.extractText(
 								ddmFormInstance.getName(
 									_renderRequest.getLocale())));
 					});

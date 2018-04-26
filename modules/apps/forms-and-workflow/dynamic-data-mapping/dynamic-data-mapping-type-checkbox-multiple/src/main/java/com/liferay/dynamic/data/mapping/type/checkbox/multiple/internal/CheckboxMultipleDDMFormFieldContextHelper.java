@@ -16,6 +16,7 @@ package com.liferay.dynamic.data.mapping.type.checkbox.multiple.internal;
 
 import com.liferay.dynamic.data.mapping.model.DDMFormFieldOptions;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
+import com.liferay.dynamic.data.mapping.render.DDMFormFieldRenderingContext;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -23,6 +24,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -46,7 +48,9 @@ public class CheckboxMultipleDDMFormFieldContextHelper {
 		_locale = locale;
 	}
 
-	public List<Object> getOptions() {
+	public List<Object> getOptions(
+		DDMFormFieldRenderingContext ddmFormFieldRenderingContext) {
+
 		List<Object> options = new ArrayList<>();
 
 		for (String optionValue : _ddmFormFieldOptions.getOptionsValues()) {
@@ -55,7 +59,13 @@ public class CheckboxMultipleDDMFormFieldContextHelper {
 			LocalizedValue optionLabel = _ddmFormFieldOptions.getOptionLabels(
 				optionValue);
 
-			optionMap.put("label", optionLabel.getString(_locale));
+			String optionLabelString = optionLabel.getString(_locale);
+
+			if (ddmFormFieldRenderingContext.isViewMode()) {
+				optionLabelString = HtmlUtil.extractText(optionLabelString);
+			}
+
+			optionMap.put("label", optionLabelString);
 
 			optionMap.put("value", optionValue);
 

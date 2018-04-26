@@ -115,7 +115,8 @@ public class CheckboxMultipleDDMFormFieldTemplateContextContributor
 						ddmFormField, ddmFormFieldRenderingContext),
 					ddmFormFieldRenderingContext.getLocale());
 
-		return checkboxMultipleDDMFormFieldContextHelper.getOptions();
+		return checkboxMultipleDDMFormFieldContextHelper.getOptions(
+			ddmFormFieldRenderingContext);
 	}
 
 	protected String getPredefinedValue(
@@ -128,8 +129,10 @@ public class CheckboxMultipleDDMFormFieldTemplateContextContributor
 			return null;
 		}
 
-		return predefinedValue.getString(
+		String predefinedValueString = predefinedValue.getString(
 			ddmFormFieldRenderingContext.getLocale());
+
+		return predefinedValueString;
 	}
 
 	protected List<String> getValue(String valueString) {

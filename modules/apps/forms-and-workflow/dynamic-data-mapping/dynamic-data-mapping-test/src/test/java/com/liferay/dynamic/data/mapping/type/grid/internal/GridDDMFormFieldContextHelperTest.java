@@ -15,6 +15,7 @@
 package com.liferay.dynamic.data.mapping.type.grid.internal;
 
 import com.liferay.dynamic.data.mapping.model.DDMFormFieldOptions;
+import com.liferay.dynamic.data.mapping.render.DDMFormFieldRenderingContext;
 import com.liferay.portal.kernel.util.LocaleUtil;
 
 import java.util.ArrayList;
@@ -72,7 +73,11 @@ public class GridDDMFormFieldContextHelperTest {
 		GridDDMFormFieldContextHelper gridDDMFormFieldContextHelper =
 			new GridDDMFormFieldContextHelper(ddmFormFieldOptions, locale);
 
-		return gridDDMFormFieldContextHelper.getOptions();
+		DDMFormFieldRenderingContext ddmFormFieldRenderingContext =
+			new DDMFormFieldRenderingContext();
+
+		return gridDDMFormFieldContextHelper.getOptions(
+			ddmFormFieldRenderingContext);
 	}
 
 }

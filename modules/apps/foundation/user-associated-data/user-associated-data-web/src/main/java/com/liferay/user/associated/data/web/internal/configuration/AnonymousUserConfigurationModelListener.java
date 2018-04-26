@@ -14,10 +14,8 @@
 
 package com.liferay.user.associated.data.web.internal.configuration;
 
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.configuration.persistence.listener.ConfigurationModelListener;
 import com.liferay.portal.configuration.persistence.listener.ConfigurationModelListenerException;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 
@@ -46,9 +44,10 @@ public class AnonymousUserConfigurationModelListener
 		try {
 			long companyId = (long)properties.get("companyId");
 
-			_validateCompanyId(companyId);
+			_companyLocalService.getCompanyById(companyId);
 
-			_validateUserId(companyId, (long)properties.get("userId"));
+			_userLocalService.getUserById(
+				companyId, (long)properties.get("userId"));
 
 			_validateUniqueConfiguration(pid, companyId);
 		}
@@ -56,19 +55,6 @@ public class AnonymousUserConfigurationModelListener
 			throw new ConfigurationModelListenerException(
 				e.getMessage(), AnonymousUserConfiguration.class, getClass(),
 				properties);
-		}
-	}
-
-	private void _validateCompanyId(long companyId) throws Exception {
-		if (companyId == 0) {
-			throw new Exception("companyId must not be 0.");
-		}
-
-		if (_companyLocalService.fetchCompanyById(companyId) == null) {
-			throw new Exception(
-				StringBundler.concat(
-					"The given company ID does not belong to an existing ",
-					"company: ", String.valueOf(companyId)));
 		}
 	}
 
@@ -96,23 +82,6 @@ public class AnonymousUserConfigurationModelListener
 					"An anonymous user is already defined for the company: " +
 						companyId);
 			}
-		}
-	}
-
-	private void _validateUserId(long companyId, long userId) throws Exception {
-		if (userId == 0) {
-			throw new Exception("userId must not be 0.");
-		}
-
-		try {
-			_userLocalService.getUserById(companyId, userId);
-		}
-		catch (PortalException pe) {
-			throw new Exception(
-				StringBundler.concat(
-					"The given user ID does not belong to an existing user on ",
-					"the given company: ", String.valueOf(userId)),
-				pe);
 		}
 	}
 

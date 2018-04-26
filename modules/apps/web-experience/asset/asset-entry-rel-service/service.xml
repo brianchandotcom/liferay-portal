@@ -24,4 +24,26 @@
 			<finder-column name="assetCategoryId" />
 		</finder>
 	</entity>
+	<entity local-service="true" name="AssetEntryClassNameRel" remote-service="false">
+
+		<!-- PK fields -->
+
+		<column name="assetEntryClassNameRelId" primary="true" type="long" />
+
+		<!-- Other fields -->
+
+		<column name="assetEntryId" type="long" />
+		<column name="classNameId" type="long" />
+		<column name="classPK" type="long" />
+
+		<!-- Finder methods -->
+
+		<finder name="AssetEntry" return-type="Collection">
+			<finder-column name="assetEntryId" />
+		</finder>
+		<finder name="A_C" return-type="AssetEntryClassNameRel" unique="true">
+			<finder-column name="assetEntryId" />
+			<finder-column name="classNameId" />
+		</finder>
+	</entity>
 </service-builder>

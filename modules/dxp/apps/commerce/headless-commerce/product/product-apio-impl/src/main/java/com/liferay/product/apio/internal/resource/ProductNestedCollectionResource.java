@@ -107,7 +107,7 @@ public class ProductNestedCollectionResource
 			"webSite", "products", WebSiteIdentifier.class,
 			document -> GetterUtil.getLong(document.get(Field.GROUP_ID))
 		).addDate(
-			"dateModified",
+			"dateCreated",
 			document -> Try.fromFallible(
 				() -> document.getDate(Field.CREATE_DATE)
 			).getUnchecked()

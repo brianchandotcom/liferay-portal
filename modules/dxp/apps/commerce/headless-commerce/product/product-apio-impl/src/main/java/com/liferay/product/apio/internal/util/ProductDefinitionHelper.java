@@ -68,15 +68,14 @@ public class ProductDefinitionHelper {
 
 		Map<String, Serializable> attributes = new HashMap<>();
 		LinkedHashMap<String, Object> params = new LinkedHashMap<>();
+
+		params.put("keywords", keywords);
+
 		SearchContext searchContext = new SearchContext();
 
-		if (Validator.isNotNull(keywords)) {
-			attributes.put(Field.ENTRY_CLASS_PK, keywords);
-			params.put("keywords", keywords);
-			searchContext.setKeywords(keywords);
-		}
-
+		attributes.put(Field.ENTRY_CLASS_PK, keywords);
 		attributes.put(Field.STATUS, WorkflowConstants.STATUS_APPROVED);
+
 		attributes.put("params", params);
 
 		searchContext.setAttributes(attributes);
@@ -90,6 +89,10 @@ public class ProductDefinitionHelper {
 			searchContext.setGroupIds(new long[] {groupId});
 		}
 
+		if (Validator.isNotNull(keywords)) {
+			searchContext.setKeywords(keywords);
+		}
+
 		QueryConfig queryConfig = searchContext.getQueryConfig();
 
 		queryConfig.addSelectedFieldNames(Field.CREATE_DATE);
@@ -101,7 +104,6 @@ public class ProductDefinitionHelper {
 		queryConfig.addSelectedFieldNames(Field.USER_ID);
 
 		queryConfig.setLocale(serviceContext.getLocale());
-
 		queryConfig.setHighlightEnabled(false);
 		queryConfig.setScoreEnabled(false);
 
@@ -193,11 +195,7 @@ public class ProductDefinitionHelper {
 		serviceContext.setAddGuestPermissions(true);
 		serviceContext.setAssetCategoryIds(assetCategoryIds);
 		serviceContext.setCompanyId(user.getCompanyId());
-
-		if (groupId != 0) {
-			serviceContext.setScopeGroupId(groupId);
-		}
-
+		serviceContext.setScopeGroupId(groupId);
 		serviceContext.setTimeZone(user.getTimeZone());
 		serviceContext.setUserId(user.getUserId());
 

@@ -111,6 +111,7 @@ public class LayoutTypePortletImpl
 		setModeConfig(StringUtil.add(getModeConfig(), portletId));
 	}
 
+	@Override
 	public void addModeCustomPortletId(String portletId, String portletMode) {
 		removeModesPortletId(portletId);
 		setModeCustom(
@@ -261,6 +262,7 @@ public class LayoutTypePortletImpl
 		return list;
 	}
 
+	@Override
 	public String getAddedCustomPortletMode() {
 		return _addedCustomPortletMode;
 	}
@@ -418,6 +420,7 @@ public class LayoutTypePortletImpl
 		return getTypeSettingsProperty(LayoutTypePortletConstants.MODE_CONFIG);
 	}
 
+	@Override
 	public String getModeCustom(String portletMode) {
 		return getTypeSettingsProperty("mode-" + portletMode);
 	}
@@ -544,6 +547,7 @@ public class LayoutTypePortletImpl
 		return StringUtil.contains(getModeConfig(), portletId);
 	}
 
+	@Override
 	public boolean hasModeCustomPortletId(
 		String portletId, String portletMode) {
 
@@ -1222,6 +1226,7 @@ public class LayoutTypePortletImpl
 			LayoutTypePortletConstants.MODE_CONFIG, modeConfig);
 	}
 
+	@Override
 	public void setModeCustom(String modeCustom, String portletMode) {
 		setTypeSettingsProperty("mode-" + portletMode, modeCustom);
 	}

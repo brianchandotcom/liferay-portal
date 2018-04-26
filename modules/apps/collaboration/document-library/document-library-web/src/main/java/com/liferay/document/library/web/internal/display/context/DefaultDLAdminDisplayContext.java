@@ -22,6 +22,7 @@ import com.liferay.document.library.kernel.exception.NoSuchFolderException;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryConstants;
 import com.liferay.document.library.kernel.model.DLFileEntryType;
+import com.liferay.document.library.kernel.model.DLFileEntryTypeConstants;
 import com.liferay.document.library.kernel.model.DLFileShortcutConstants;
 import com.liferay.document.library.kernel.model.DLFolder;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
@@ -708,6 +709,41 @@ public class DefaultDLAdminDisplayContext implements DLAdminDisplayContext {
 								LanguageUtil.get(_request, "mine"));
 						});
 				}
+
+				add(
+					SafeConsumer.ignore(
+						dropdownItem -> {
+							dropdownItem.setActive(fileEntryTypeId != -1);
+
+							String label = LanguageUtil.get(
+								_request, "document-types");
+
+							if (fileEntryTypeId != -1) {
+								String fileEntryTypeName = LanguageUtil.get(
+									_request, "basic-document");
+
+								if (fileEntryTypeId !=
+										DLFileEntryTypeConstants.
+											FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT) {
+
+									DLFileEntryType fileEntryType =
+										DLFileEntryTypeLocalServiceUtil.
+											getFileEntryType(fileEntryTypeId);
+
+									fileEntryTypeName = fileEntryType.getName(
+										_request.getLocale());
+								}
+
+								label = String.format(
+									"%s: %s", label, fileEntryTypeName);
+							}
+
+							dropdownItem.setLabel(label);
+							dropdownItem.setHref(
+								"javascript:" +
+									_liferayPortletResponse.getNamespace() +
+										"openDocumentTypesSelector();");
+						}));
 			}
 		};
 	}

@@ -12,7 +12,15 @@
  * details.
  */
 
-package com.liferay.portal.kernel.backgroundtask;
+package com.liferay.portal.background.task.internal;
+
+import com.liferay.portal.kernel.backgroundtask.BackgroundTask;
+import com.liferay.portal.kernel.backgroundtask.BackgroundTaskExecutor;
+import com.liferay.portal.kernel.backgroundtask.BackgroundTaskResult;
+import com.liferay.portal.kernel.backgroundtask.BackgroundTaskThreadLocalManager;
+import com.liferay.portal.kernel.backgroundtask.DelegatingBackgroundTaskExecutor;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 
 import java.io.Serializable;
 
@@ -20,10 +28,7 @@ import java.util.Map;
 
 /**
  * @author Michael C. Han
- * @deprecated As of 7.0.0, moved to {@link
- *             com.liferay.portal.background.task.internal.ThreadLocalAwareBackgroundTaskExecutor}
  */
-@Deprecated
 public class ThreadLocalAwareBackgroundTaskExecutor
 	extends DelegatingBackgroundTaskExecutor {
 
@@ -53,8 +58,19 @@ public class ThreadLocalAwareBackgroundTaskExecutor
 			_backgroundTaskThreadLocalManager.getThreadLocalValues();
 
 		try {
-			_backgroundTaskThreadLocalManager.deserializeThreadLocals(
-				backgroundTask.getTaskContextMap());
+			try {
+				_backgroundTaskThreadLocalManager.deserializeThreadLocals(
+					backgroundTask.getTaskContextMap());
+			}
+			catch (StaleBackgroundTaskException sbte) {
+				if (_log.isInfoEnabled()) {
+					_log.info(
+						"Skipped stale background task " + backgroundTask,
+						sbte);
+				}
+
+				return BackgroundTaskResult.SUCCESS;
+			}
 
 			return super.execute(backgroundTask);
 		}
@@ -63,6 +79,9 @@ public class ThreadLocalAwareBackgroundTaskExecutor
 				threadLocalValues);
 		}
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		ThreadLocalAwareBackgroundTaskExecutor.class);
 
 	private final BackgroundTaskThreadLocalManager
 		_backgroundTaskThreadLocalManager;

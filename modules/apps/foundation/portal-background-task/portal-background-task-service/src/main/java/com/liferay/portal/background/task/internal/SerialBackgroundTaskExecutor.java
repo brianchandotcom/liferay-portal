@@ -12,32 +12,37 @@
  * details.
  */
 
-package com.liferay.portal.kernel.backgroundtask;
+package com.liferay.portal.background.task.internal;
 
+import com.liferay.portal.background.task.internal.lock.BackgroundTaskLockHelper;
+import com.liferay.portal.kernel.backgroundtask.BackgroundTask;
+import com.liferay.portal.kernel.backgroundtask.BackgroundTaskExecutor;
+import com.liferay.portal.kernel.backgroundtask.BackgroundTaskLockHelperUtil;
+import com.liferay.portal.kernel.backgroundtask.BackgroundTaskResult;
+import com.liferay.portal.kernel.backgroundtask.DelegatingBackgroundTaskExecutor;
 import com.liferay.portal.kernel.lock.DuplicateLockException;
 import com.liferay.portal.kernel.lock.Lock;
+import com.liferay.portal.kernel.lock.LockManager;
 
 /**
  * @author Michael C. Han
- * @deprecated As of 7.0.0, moved to {@link
- *             com.liferay.portal.background.task.internal.SerialBackgroundTaskExecutor}
  */
-@Deprecated
 public class SerialBackgroundTaskExecutor
 	extends DelegatingBackgroundTaskExecutor {
 
 	public SerialBackgroundTaskExecutor(
-		BackgroundTaskExecutor backgroundTaskExecutor) {
+		BackgroundTaskExecutor backgroundTaskExecutor,
+		LockManager lockManager) {
 
 		super(backgroundTaskExecutor);
+
+		_lockManager = lockManager;
 	}
 
 	@Override
 	public BackgroundTaskExecutor clone() {
-		BackgroundTaskExecutor backgroundTaskExecutor =
-			new SerialBackgroundTaskExecutor(getBackgroundTaskExecutor());
-
-		return backgroundTaskExecutor;
+		return new SerialBackgroundTaskExecutor(
+			getBackgroundTaskExecutor(), _lockManager);
 	}
 
 	@Override
@@ -67,8 +72,10 @@ public class SerialBackgroundTaskExecutor
 	protected Lock acquireLock(BackgroundTask backgroundTask)
 		throws DuplicateLockException {
 
-		Lock lock = BackgroundTaskLockHelperUtil.lockBackgroundTask(
-			backgroundTask);
+		BackgroundTaskLockHelper backgroundTaskLockHelper =
+			new BackgroundTaskLockHelper(_lockManager);
+
+		Lock lock = backgroundTaskLockHelper.lockBackgroundTask(backgroundTask);
 
 		if (!lock.isNew()) {
 			throw new DuplicateLockException(lock);
@@ -76,5 +83,7 @@ public class SerialBackgroundTaskExecutor
 
 		return lock;
 	}
+
+	private final LockManager _lockManager;
 
 }

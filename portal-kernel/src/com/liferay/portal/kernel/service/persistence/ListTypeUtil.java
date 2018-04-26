@@ -113,7 +113,7 @@ public class ListTypeUtil {
 	* @param type the type
 	* @return the matching list types
 	*/
-	public static List<ListType> findByType(java.lang.String type) {
+	public static List<ListType> findByType(String type) {
 		return getPersistence().findByType(type);
 	}
 
@@ -129,8 +129,7 @@ public class ListTypeUtil {
 	* @param end the upper bound of the range of list types (not inclusive)
 	* @return the range of matching list types
 	*/
-	public static List<ListType> findByType(java.lang.String type, int start,
-		int end) {
+	public static List<ListType> findByType(String type, int start, int end) {
 		return getPersistence().findByType(type, start, end);
 	}
 
@@ -147,8 +146,8 @@ public class ListTypeUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching list types
 	*/
-	public static List<ListType> findByType(java.lang.String type, int start,
-		int end, OrderByComparator<ListType> orderByComparator) {
+	public static List<ListType> findByType(String type, int start, int end,
+		OrderByComparator<ListType> orderByComparator) {
 		return getPersistence().findByType(type, start, end, orderByComparator);
 	}
 
@@ -166,9 +165,8 @@ public class ListTypeUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching list types
 	*/
-	public static List<ListType> findByType(java.lang.String type, int start,
-		int end, OrderByComparator<ListType> orderByComparator,
-		boolean retrieveFromCache) {
+	public static List<ListType> findByType(String type, int start, int end,
+		OrderByComparator<ListType> orderByComparator, boolean retrieveFromCache) {
 		return getPersistence()
 				   .findByType(type, start, end, orderByComparator,
 			retrieveFromCache);
@@ -182,7 +180,7 @@ public class ListTypeUtil {
 	* @return the first matching list type
 	* @throws NoSuchListTypeException if a matching list type could not be found
 	*/
-	public static ListType findByType_First(java.lang.String type,
+	public static ListType findByType_First(String type,
 		OrderByComparator<ListType> orderByComparator)
 		throws com.liferay.portal.kernel.exception.NoSuchListTypeException {
 		return getPersistence().findByType_First(type, orderByComparator);
@@ -195,7 +193,7 @@ public class ListTypeUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching list type, or <code>null</code> if a matching list type could not be found
 	*/
-	public static ListType fetchByType_First(java.lang.String type,
+	public static ListType fetchByType_First(String type,
 		OrderByComparator<ListType> orderByComparator) {
 		return getPersistence().fetchByType_First(type, orderByComparator);
 	}
@@ -208,7 +206,7 @@ public class ListTypeUtil {
 	* @return the last matching list type
 	* @throws NoSuchListTypeException if a matching list type could not be found
 	*/
-	public static ListType findByType_Last(java.lang.String type,
+	public static ListType findByType_Last(String type,
 		OrderByComparator<ListType> orderByComparator)
 		throws com.liferay.portal.kernel.exception.NoSuchListTypeException {
 		return getPersistence().findByType_Last(type, orderByComparator);
@@ -221,7 +219,7 @@ public class ListTypeUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching list type, or <code>null</code> if a matching list type could not be found
 	*/
-	public static ListType fetchByType_Last(java.lang.String type,
+	public static ListType fetchByType_Last(String type,
 		OrderByComparator<ListType> orderByComparator) {
 		return getPersistence().fetchByType_Last(type, orderByComparator);
 	}
@@ -236,7 +234,7 @@ public class ListTypeUtil {
 	* @throws NoSuchListTypeException if a list type with the primary key could not be found
 	*/
 	public static ListType[] findByType_PrevAndNext(long listTypeId,
-		java.lang.String type, OrderByComparator<ListType> orderByComparator)
+		String type, OrderByComparator<ListType> orderByComparator)
 		throws com.liferay.portal.kernel.exception.NoSuchListTypeException {
 		return getPersistence()
 				   .findByType_PrevAndNext(listTypeId, type, orderByComparator);
@@ -247,7 +245,7 @@ public class ListTypeUtil {
 	*
 	* @param type the type
 	*/
-	public static void removeByType(java.lang.String type) {
+	public static void removeByType(String type) {
 		getPersistence().removeByType(type);
 	}
 
@@ -257,7 +255,7 @@ public class ListTypeUtil {
 	* @param type the type
 	* @return the number of matching list types
 	*/
-	public static int countByType(java.lang.String type) {
+	public static int countByType(String type) {
 		return getPersistence().countByType(type);
 	}
 
@@ -269,8 +267,7 @@ public class ListTypeUtil {
 	* @return the matching list type
 	* @throws NoSuchListTypeException if a matching list type could not be found
 	*/
-	public static ListType findByN_T(java.lang.String name,
-		java.lang.String type)
+	public static ListType findByN_T(String name, String type)
 		throws com.liferay.portal.kernel.exception.NoSuchListTypeException {
 		return getPersistence().findByN_T(name, type);
 	}
@@ -282,8 +279,7 @@ public class ListTypeUtil {
 	* @param type the type
 	* @return the matching list type, or <code>null</code> if a matching list type could not be found
 	*/
-	public static ListType fetchByN_T(java.lang.String name,
-		java.lang.String type) {
+	public static ListType fetchByN_T(String name, String type) {
 		return getPersistence().fetchByN_T(name, type);
 	}
 
@@ -295,8 +291,8 @@ public class ListTypeUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching list type, or <code>null</code> if a matching list type could not be found
 	*/
-	public static ListType fetchByN_T(java.lang.String name,
-		java.lang.String type, boolean retrieveFromCache) {
+	public static ListType fetchByN_T(String name, String type,
+		boolean retrieveFromCache) {
 		return getPersistence().fetchByN_T(name, type, retrieveFromCache);
 	}
 
@@ -307,8 +303,7 @@ public class ListTypeUtil {
 	* @param type the type
 	* @return the list type that was removed
 	*/
-	public static ListType removeByN_T(java.lang.String name,
-		java.lang.String type)
+	public static ListType removeByN_T(String name, String type)
 		throws com.liferay.portal.kernel.exception.NoSuchListTypeException {
 		return getPersistence().removeByN_T(name, type);
 	}
@@ -320,7 +315,7 @@ public class ListTypeUtil {
 	* @param type the type
 	* @return the number of matching list types
 	*/
-	public static int countByN_T(java.lang.String name, java.lang.String type) {
+	public static int countByN_T(String name, String type) {
 		return getPersistence().countByN_T(name, type);
 	}
 
@@ -471,7 +466,7 @@ public class ListTypeUtil {
 		return getPersistence().countAll();
 	}
 
-	public static java.util.Set<java.lang.String> getBadColumnNames() {
+	public static java.util.Set<String> getBadColumnNames() {
 		return getPersistence().getBadColumnNames();
 	}
 

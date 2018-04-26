@@ -123,7 +123,7 @@ public class MBThreadServiceUtil {
 	*
 	* @return the OSGi service identifier
 	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
+	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 
@@ -193,7 +193,7 @@ public class MBThreadServiceUtil {
 	}
 
 	public static com.liferay.message.boards.model.MBThread splitThread(
-		long messageId, java.lang.String subject,
+		long messageId, String subject,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().splitThread(messageId, subject, serviceContext);

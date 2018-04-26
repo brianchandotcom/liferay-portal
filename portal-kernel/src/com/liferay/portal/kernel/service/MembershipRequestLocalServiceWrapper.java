@@ -34,7 +34,7 @@ public class MembershipRequestLocalServiceWrapper
 
 	@Override
 	public com.liferay.portal.kernel.model.MembershipRequest addMembershipRequest(
-		long userId, long groupId, java.lang.String comments,
+		long userId, long groupId, String comments,
 		ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _membershipRequestLocalService.addMembershipRequest(userId,
@@ -273,7 +273,7 @@ public class MembershipRequestLocalServiceWrapper
 	* @return the OSGi service identifier
 	*/
 	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
+	public String getOSGiServiceIdentifier() {
 		return _membershipRequestLocalService.getOSGiServiceIdentifier();
 	}
 
@@ -323,7 +323,7 @@ public class MembershipRequestLocalServiceWrapper
 
 	@Override
 	public void updateStatus(long replierUserId, long membershipRequestId,
-		java.lang.String replyComments, long statusId, boolean addUserToGroup,
+		String replyComments, long statusId, boolean addUserToGroup,
 		ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_membershipRequestLocalService.updateStatus(replierUserId,

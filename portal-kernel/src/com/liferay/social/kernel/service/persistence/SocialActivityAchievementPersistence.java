@@ -326,7 +326,7 @@ public interface SocialActivityAchievementPersistence extends BasePersistence<So
 	* @return the matching social activity achievements
 	*/
 	public java.util.List<SocialActivityAchievement> findByG_N(long groupId,
-		java.lang.String name);
+		String name);
 
 	/**
 	* Returns a range of all the social activity achievements where groupId = &#63; and name = &#63;.
@@ -342,7 +342,7 @@ public interface SocialActivityAchievementPersistence extends BasePersistence<So
 	* @return the range of matching social activity achievements
 	*/
 	public java.util.List<SocialActivityAchievement> findByG_N(long groupId,
-		java.lang.String name, int start, int end);
+		String name, int start, int end);
 
 	/**
 	* Returns an ordered range of all the social activity achievements where groupId = &#63; and name = &#63;.
@@ -359,7 +359,7 @@ public interface SocialActivityAchievementPersistence extends BasePersistence<So
 	* @return the ordered range of matching social activity achievements
 	*/
 	public java.util.List<SocialActivityAchievement> findByG_N(long groupId,
-		java.lang.String name, int start, int end,
+		String name, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<SocialActivityAchievement> orderByComparator);
 
 	/**
@@ -378,7 +378,7 @@ public interface SocialActivityAchievementPersistence extends BasePersistence<So
 	* @return the ordered range of matching social activity achievements
 	*/
 	public java.util.List<SocialActivityAchievement> findByG_N(long groupId,
-		java.lang.String name, int start, int end,
+		String name, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<SocialActivityAchievement> orderByComparator,
 		boolean retrieveFromCache);
 
@@ -391,8 +391,7 @@ public interface SocialActivityAchievementPersistence extends BasePersistence<So
 	* @return the first matching social activity achievement
 	* @throws NoSuchActivityAchievementException if a matching social activity achievement could not be found
 	*/
-	public SocialActivityAchievement findByG_N_First(long groupId,
-		java.lang.String name,
+	public SocialActivityAchievement findByG_N_First(long groupId, String name,
 		com.liferay.portal.kernel.util.OrderByComparator<SocialActivityAchievement> orderByComparator)
 		throws NoSuchActivityAchievementException;
 
@@ -405,7 +404,7 @@ public interface SocialActivityAchievementPersistence extends BasePersistence<So
 	* @return the first matching social activity achievement, or <code>null</code> if a matching social activity achievement could not be found
 	*/
 	public SocialActivityAchievement fetchByG_N_First(long groupId,
-		java.lang.String name,
+		String name,
 		com.liferay.portal.kernel.util.OrderByComparator<SocialActivityAchievement> orderByComparator);
 
 	/**
@@ -417,8 +416,7 @@ public interface SocialActivityAchievementPersistence extends BasePersistence<So
 	* @return the last matching social activity achievement
 	* @throws NoSuchActivityAchievementException if a matching social activity achievement could not be found
 	*/
-	public SocialActivityAchievement findByG_N_Last(long groupId,
-		java.lang.String name,
+	public SocialActivityAchievement findByG_N_Last(long groupId, String name,
 		com.liferay.portal.kernel.util.OrderByComparator<SocialActivityAchievement> orderByComparator)
 		throws NoSuchActivityAchievementException;
 
@@ -430,8 +428,7 @@ public interface SocialActivityAchievementPersistence extends BasePersistence<So
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching social activity achievement, or <code>null</code> if a matching social activity achievement could not be found
 	*/
-	public SocialActivityAchievement fetchByG_N_Last(long groupId,
-		java.lang.String name,
+	public SocialActivityAchievement fetchByG_N_Last(long groupId, String name,
 		com.liferay.portal.kernel.util.OrderByComparator<SocialActivityAchievement> orderByComparator);
 
 	/**
@@ -445,7 +442,7 @@ public interface SocialActivityAchievementPersistence extends BasePersistence<So
 	* @throws NoSuchActivityAchievementException if a social activity achievement with the primary key could not be found
 	*/
 	public SocialActivityAchievement[] findByG_N_PrevAndNext(
-		long activityAchievementId, long groupId, java.lang.String name,
+		long activityAchievementId, long groupId, String name,
 		com.liferay.portal.kernel.util.OrderByComparator<SocialActivityAchievement> orderByComparator)
 		throws NoSuchActivityAchievementException;
 
@@ -455,7 +452,7 @@ public interface SocialActivityAchievementPersistence extends BasePersistence<So
 	* @param groupId the group ID
 	* @param name the name
 	*/
-	public void removeByG_N(long groupId, java.lang.String name);
+	public void removeByG_N(long groupId, String name);
 
 	/**
 	* Returns the number of social activity achievements where groupId = &#63; and name = &#63;.
@@ -464,7 +461,7 @@ public interface SocialActivityAchievementPersistence extends BasePersistence<So
 	* @param name the name
 	* @return the number of matching social activity achievements
 	*/
-	public int countByG_N(long groupId, java.lang.String name);
+	public int countByG_N(long groupId, String name);
 
 	/**
 	* Returns all the social activity achievements where groupId = &#63; and firstInGroup = &#63;.
@@ -624,7 +621,7 @@ public interface SocialActivityAchievementPersistence extends BasePersistence<So
 	* @throws NoSuchActivityAchievementException if a matching social activity achievement could not be found
 	*/
 	public SocialActivityAchievement findByG_U_N(long groupId, long userId,
-		java.lang.String name) throws NoSuchActivityAchievementException;
+		String name) throws NoSuchActivityAchievementException;
 
 	/**
 	* Returns the social activity achievement where groupId = &#63; and userId = &#63; and name = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
@@ -635,7 +632,7 @@ public interface SocialActivityAchievementPersistence extends BasePersistence<So
 	* @return the matching social activity achievement, or <code>null</code> if a matching social activity achievement could not be found
 	*/
 	public SocialActivityAchievement fetchByG_U_N(long groupId, long userId,
-		java.lang.String name);
+		String name);
 
 	/**
 	* Returns the social activity achievement where groupId = &#63; and userId = &#63; and name = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -647,7 +644,7 @@ public interface SocialActivityAchievementPersistence extends BasePersistence<So
 	* @return the matching social activity achievement, or <code>null</code> if a matching social activity achievement could not be found
 	*/
 	public SocialActivityAchievement fetchByG_U_N(long groupId, long userId,
-		java.lang.String name, boolean retrieveFromCache);
+		String name, boolean retrieveFromCache);
 
 	/**
 	* Removes the social activity achievement where groupId = &#63; and userId = &#63; and name = &#63; from the database.
@@ -658,7 +655,7 @@ public interface SocialActivityAchievementPersistence extends BasePersistence<So
 	* @return the social activity achievement that was removed
 	*/
 	public SocialActivityAchievement removeByG_U_N(long groupId, long userId,
-		java.lang.String name) throws NoSuchActivityAchievementException;
+		String name) throws NoSuchActivityAchievementException;
 
 	/**
 	* Returns the number of social activity achievements where groupId = &#63; and userId = &#63; and name = &#63;.
@@ -668,7 +665,7 @@ public interface SocialActivityAchievementPersistence extends BasePersistence<So
 	* @param name the name
 	* @return the number of matching social activity achievements
 	*/
-	public int countByG_U_N(long groupId, long userId, java.lang.String name);
+	public int countByG_U_N(long groupId, long userId, String name);
 
 	/**
 	* Returns all the social activity achievements where groupId = &#63; and userId = &#63; and firstInGroup = &#63;.

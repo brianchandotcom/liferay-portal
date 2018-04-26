@@ -264,13 +264,13 @@ public class DLFileVersionWrapper implements DLFileVersion,
 	}
 
 	@Override
-	public java.lang.String buildTreePath()
+	public String buildTreePath()
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _dlFileVersion.buildTreePath();
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new DLFileVersionWrapper((DLFileVersion)_dlFileVersion.clone());
 	}
 
@@ -285,7 +285,7 @@ public class DLFileVersionWrapper implements DLFileVersion,
 	* @return the change log of this document library file version
 	*/
 	@Override
-	public java.lang.String getChangeLog() {
+	public String getChangeLog() {
 		return _dlFileVersion.getChangeLog();
 	}
 
@@ -295,7 +295,7 @@ public class DLFileVersionWrapper implements DLFileVersion,
 	* @return the checksum of this document library file version
 	*/
 	@Override
-	public java.lang.String getChecksum() {
+	public String getChecksum() {
 		return _dlFileVersion.getChecksum();
 	}
 
@@ -337,7 +337,7 @@ public class DLFileVersionWrapper implements DLFileVersion,
 	* @return the description of this document library file version
 	*/
 	@Override
-	public java.lang.String getDescription() {
+	public String getDescription() {
 		return _dlFileVersion.getDescription();
 	}
 
@@ -358,7 +358,7 @@ public class DLFileVersionWrapper implements DLFileVersion,
 	* @return the extension of this document library file version
 	*/
 	@Override
-	public java.lang.String getExtension() {
+	public String getExtension() {
 		return _dlFileVersion.getExtension();
 	}
 
@@ -368,7 +368,7 @@ public class DLFileVersionWrapper implements DLFileVersion,
 	* @return the extra settings of this document library file version
 	*/
 	@Override
-	public java.lang.String getExtraSettings() {
+	public String getExtraSettings() {
 		return _dlFileVersion.getExtraSettings();
 	}
 
@@ -409,7 +409,7 @@ public class DLFileVersionWrapper implements DLFileVersion,
 	* @return the file name of this document library file version
 	*/
 	@Override
-	public java.lang.String getFileName() {
+	public String getFileName() {
 		return _dlFileVersion.getFileName();
 	}
 
@@ -450,7 +450,7 @@ public class DLFileVersionWrapper implements DLFileVersion,
 	}
 
 	@Override
-	public java.lang.String getIcon() {
+	public String getIcon() {
 		return _dlFileVersion.getIcon();
 	}
 
@@ -470,7 +470,7 @@ public class DLFileVersionWrapper implements DLFileVersion,
 	* @return the mime type of this document library file version
 	*/
 	@Override
-	public java.lang.String getMimeType() {
+	public String getMimeType() {
 		return _dlFileVersion.getMimeType();
 	}
 
@@ -545,7 +545,7 @@ public class DLFileVersionWrapper implements DLFileVersion,
 	* @return the status by user name of this document library file version
 	*/
 	@Override
-	public java.lang.String getStatusByUserName() {
+	public String getStatusByUserName() {
 		return _dlFileVersion.getStatusByUserName();
 	}
 
@@ -555,7 +555,7 @@ public class DLFileVersionWrapper implements DLFileVersion,
 	* @return the status by user uuid of this document library file version
 	*/
 	@Override
-	public java.lang.String getStatusByUserUuid() {
+	public String getStatusByUserUuid() {
 		return _dlFileVersion.getStatusByUserUuid();
 	}
 
@@ -575,7 +575,7 @@ public class DLFileVersionWrapper implements DLFileVersion,
 	* @return the title of this document library file version
 	*/
 	@Override
-	public java.lang.String getTitle() {
+	public String getTitle() {
 		return _dlFileVersion.getTitle();
 	}
 
@@ -585,7 +585,7 @@ public class DLFileVersionWrapper implements DLFileVersion,
 	* @return the tree path of this document library file version
 	*/
 	@Override
-	public java.lang.String getTreePath() {
+	public String getTreePath() {
 		return _dlFileVersion.getTreePath();
 	}
 
@@ -605,7 +605,7 @@ public class DLFileVersionWrapper implements DLFileVersion,
 	* @return the user name of this document library file version
 	*/
 	@Override
-	public java.lang.String getUserName() {
+	public String getUserName() {
 		return _dlFileVersion.getUserName();
 	}
 
@@ -615,7 +615,7 @@ public class DLFileVersionWrapper implements DLFileVersion,
 	* @return the user uuid of this document library file version
 	*/
 	@Override
-	public java.lang.String getUserUuid() {
+	public String getUserUuid() {
 		return _dlFileVersion.getUserUuid();
 	}
 
@@ -625,7 +625,7 @@ public class DLFileVersionWrapper implements DLFileVersion,
 	* @return the uuid of this document library file version
 	*/
 	@Override
-	public java.lang.String getUuid() {
+	public String getUuid() {
 		return _dlFileVersion.getUuid();
 	}
 
@@ -635,7 +635,7 @@ public class DLFileVersionWrapper implements DLFileVersion,
 	* @return the version of this document library file version
 	*/
 	@Override
-	public java.lang.String getVersion() {
+	public String getVersion() {
 		return _dlFileVersion.getVersion();
 	}
 
@@ -755,7 +755,7 @@ public class DLFileVersionWrapper implements DLFileVersion,
 	* @param changeLog the change log of this document library file version
 	*/
 	@Override
-	public void setChangeLog(java.lang.String changeLog) {
+	public void setChangeLog(String changeLog) {
 		_dlFileVersion.setChangeLog(changeLog);
 	}
 
@@ -765,7 +765,7 @@ public class DLFileVersionWrapper implements DLFileVersion,
 	* @param checksum the checksum of this document library file version
 	*/
 	@Override
-	public void setChecksum(java.lang.String checksum) {
+	public void setChecksum(String checksum) {
 		_dlFileVersion.setChecksum(checksum);
 	}
 
@@ -795,7 +795,7 @@ public class DLFileVersionWrapper implements DLFileVersion,
 	* @param description the description of this document library file version
 	*/
 	@Override
-	public void setDescription(java.lang.String description) {
+	public void setDescription(String description) {
 		_dlFileVersion.setDescription(description);
 	}
 
@@ -821,7 +821,7 @@ public class DLFileVersionWrapper implements DLFileVersion,
 	* @param extension the extension of this document library file version
 	*/
 	@Override
-	public void setExtension(java.lang.String extension) {
+	public void setExtension(String extension) {
 		_dlFileVersion.setExtension(extension);
 	}
 
@@ -831,7 +831,7 @@ public class DLFileVersionWrapper implements DLFileVersion,
 	* @param extraSettings the extra settings of this document library file version
 	*/
 	@Override
-	public void setExtraSettings(java.lang.String extraSettings) {
+	public void setExtraSettings(String extraSettings) {
 		_dlFileVersion.setExtraSettings(extraSettings);
 	}
 
@@ -867,7 +867,7 @@ public class DLFileVersionWrapper implements DLFileVersion,
 	* @param fileName the file name of this document library file version
 	*/
 	@Override
-	public void setFileName(java.lang.String fileName) {
+	public void setFileName(String fileName) {
 		_dlFileVersion.setFileName(fileName);
 	}
 
@@ -917,7 +917,7 @@ public class DLFileVersionWrapper implements DLFileVersion,
 	* @param mimeType the mime type of this document library file version
 	*/
 	@Override
-	public void setMimeType(java.lang.String mimeType) {
+	public void setMimeType(String mimeType) {
 		_dlFileVersion.setMimeType(mimeType);
 	}
 
@@ -997,7 +997,7 @@ public class DLFileVersionWrapper implements DLFileVersion,
 	* @param statusByUserName the status by user name of this document library file version
 	*/
 	@Override
-	public void setStatusByUserName(java.lang.String statusByUserName) {
+	public void setStatusByUserName(String statusByUserName) {
 		_dlFileVersion.setStatusByUserName(statusByUserName);
 	}
 
@@ -1007,7 +1007,7 @@ public class DLFileVersionWrapper implements DLFileVersion,
 	* @param statusByUserUuid the status by user uuid of this document library file version
 	*/
 	@Override
-	public void setStatusByUserUuid(java.lang.String statusByUserUuid) {
+	public void setStatusByUserUuid(String statusByUserUuid) {
 		_dlFileVersion.setStatusByUserUuid(statusByUserUuid);
 	}
 
@@ -1027,7 +1027,7 @@ public class DLFileVersionWrapper implements DLFileVersion,
 	* @param title the title of this document library file version
 	*/
 	@Override
-	public void setTitle(java.lang.String title) {
+	public void setTitle(String title) {
 		_dlFileVersion.setTitle(title);
 	}
 
@@ -1037,7 +1037,7 @@ public class DLFileVersionWrapper implements DLFileVersion,
 	* @param treePath the tree path of this document library file version
 	*/
 	@Override
-	public void setTreePath(java.lang.String treePath) {
+	public void setTreePath(String treePath) {
 		_dlFileVersion.setTreePath(treePath);
 	}
 
@@ -1057,7 +1057,7 @@ public class DLFileVersionWrapper implements DLFileVersion,
 	* @param userName the user name of this document library file version
 	*/
 	@Override
-	public void setUserName(java.lang.String userName) {
+	public void setUserName(String userName) {
 		_dlFileVersion.setUserName(userName);
 	}
 
@@ -1067,7 +1067,7 @@ public class DLFileVersionWrapper implements DLFileVersion,
 	* @param userUuid the user uuid of this document library file version
 	*/
 	@Override
-	public void setUserUuid(java.lang.String userUuid) {
+	public void setUserUuid(String userUuid) {
 		_dlFileVersion.setUserUuid(userUuid);
 	}
 
@@ -1077,7 +1077,7 @@ public class DLFileVersionWrapper implements DLFileVersion,
 	* @param uuid the uuid of this document library file version
 	*/
 	@Override
-	public void setUuid(java.lang.String uuid) {
+	public void setUuid(String uuid) {
 		_dlFileVersion.setUuid(uuid);
 	}
 
@@ -1087,7 +1087,7 @@ public class DLFileVersionWrapper implements DLFileVersion,
 	* @param version the version of this document library file version
 	*/
 	@Override
-	public void setVersion(java.lang.String version) {
+	public void setVersion(String version) {
 		_dlFileVersion.setVersion(version);
 	}
 
@@ -1102,7 +1102,7 @@ public class DLFileVersionWrapper implements DLFileVersion,
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _dlFileVersion.toString();
 	}
 
@@ -1112,12 +1112,12 @@ public class DLFileVersionWrapper implements DLFileVersion,
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _dlFileVersion.toXmlString();
 	}
 
 	@Override
-	public void updateTreePath(java.lang.String treePath) {
+	public void updateTreePath(String treePath) {
 		_dlFileVersion.updateTreePath(treePath);
 	}
 

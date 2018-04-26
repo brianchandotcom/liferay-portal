@@ -65,12 +65,11 @@ public interface OAuth2AuthorizationLocalService extends BaseLocalService,
 	 * Never modify or reference this interface directly. Always use {@link OAuth2AuthorizationLocalServiceUtil} to access the o auth2 authorization local service. Add custom service methods to {@link com.liferay.oauth2.provider.service.impl.OAuth2AuthorizationLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	public OAuth2Authorization addOAuth2Authorization(long companyId,
-		long userId, java.lang.String userName, long oAuth2ApplicationId,
-		long oAuth2ApplicationScopeAliasesId,
-		java.lang.String accessTokenContent, Date accessTokenCreateDate,
-		Date accessTokenExpirationDate, java.lang.String remoteIPInfo,
-		java.lang.String refreshTokenContent, Date refreshTokenCreateDate,
-		Date refreshTokenExpirationDate);
+		long userId, String userName, long oAuth2ApplicationId,
+		long oAuth2ApplicationScopeAliasesId, String accessTokenContent,
+		Date accessTokenCreateDate, Date accessTokenExpirationDate,
+		String remoteIPInfo, String refreshTokenContent,
+		Date refreshTokenCreateDate, Date refreshTokenExpirationDate);
 
 	/**
 	* Adds the o auth2 authorization to the database. Also notifies the appropriate model listeners.
@@ -212,11 +211,11 @@ public interface OAuth2AuthorizationLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public OAuth2Authorization fetchOAuth2AuthorizationByAccessTokenContent(
-		java.lang.String accessTokenContent);
+		String accessTokenContent);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public OAuth2Authorization fetchOAuth2AuthorizationByRefreshTokenContent(
-		java.lang.String refreshTokenContent);
+		String refreshTokenContent);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
@@ -237,13 +236,11 @@ public interface OAuth2AuthorizationLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public OAuth2Authorization getOAuth2AuthorizationByAccessTokenContent(
-		java.lang.String accessTokenContent)
-		throws NoSuchOAuth2AuthorizationException;
+		String accessTokenContent) throws NoSuchOAuth2AuthorizationException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public OAuth2Authorization getOAuth2AuthorizationByRefreshTokenContent(
-		java.lang.String refreshTokenContent)
-		throws NoSuchOAuth2AuthorizationException;
+		String refreshTokenContent) throws NoSuchOAuth2AuthorizationException;
 
 	/**
 	* Returns a range of all the o auth2 authorizations.
@@ -310,7 +307,7 @@ public interface OAuth2AuthorizationLocalService extends BaseLocalService,
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

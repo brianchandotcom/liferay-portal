@@ -131,7 +131,7 @@ public class ReadingTimeEntryWrapper implements ReadingTimeEntry,
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new ReadingTimeEntryWrapper((ReadingTimeEntry)_readingTimeEntry.clone());
 	}
 
@@ -146,7 +146,7 @@ public class ReadingTimeEntryWrapper implements ReadingTimeEntry,
 	* @return the fully qualified class name of this reading time entry
 	*/
 	@Override
-	public java.lang.String getClassName() {
+	public String getClassName() {
 		return _readingTimeEntry.getClassName();
 	}
 
@@ -299,7 +299,7 @@ public class ReadingTimeEntryWrapper implements ReadingTimeEntry,
 	* @return the uuid of this reading time entry
 	*/
 	@Override
-	public java.lang.String getUuid() {
+	public String getUuid() {
 		return _readingTimeEntry.getUuid();
 	}
 
@@ -364,7 +364,7 @@ public class ReadingTimeEntryWrapper implements ReadingTimeEntry,
 	}
 
 	@Override
-	public void setClassName(java.lang.String className) {
+	public void setClassName(String className) {
 		_readingTimeEntry.setClassName(className);
 	}
 
@@ -490,7 +490,7 @@ public class ReadingTimeEntryWrapper implements ReadingTimeEntry,
 	* @param uuid the uuid of this reading time entry
 	*/
 	@Override
-	public void setUuid(java.lang.String uuid) {
+	public void setUuid(String uuid) {
 		_readingTimeEntry.setUuid(uuid);
 	}
 
@@ -505,7 +505,7 @@ public class ReadingTimeEntryWrapper implements ReadingTimeEntry,
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _readingTimeEntry.toString();
 	}
 
@@ -515,7 +515,7 @@ public class ReadingTimeEntryWrapper implements ReadingTimeEntry,
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _readingTimeEntry.toXmlString();
 	}
 

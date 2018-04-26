@@ -361,7 +361,7 @@ public class PowwowParticipantUtil {
 	* @throws NoSuchParticipantException if a matching powwow participant could not be found
 	*/
 	public static PowwowParticipant findByPMI_EA(long powwowMeetingId,
-		java.lang.String emailAddress)
+		String emailAddress)
 		throws com.liferay.powwow.exception.NoSuchParticipantException {
 		return getPersistence().findByPMI_EA(powwowMeetingId, emailAddress);
 	}
@@ -374,7 +374,7 @@ public class PowwowParticipantUtil {
 	* @return the matching powwow participant, or <code>null</code> if a matching powwow participant could not be found
 	*/
 	public static PowwowParticipant fetchByPMI_EA(long powwowMeetingId,
-		java.lang.String emailAddress) {
+		String emailAddress) {
 		return getPersistence().fetchByPMI_EA(powwowMeetingId, emailAddress);
 	}
 
@@ -387,7 +387,7 @@ public class PowwowParticipantUtil {
 	* @return the matching powwow participant, or <code>null</code> if a matching powwow participant could not be found
 	*/
 	public static PowwowParticipant fetchByPMI_EA(long powwowMeetingId,
-		java.lang.String emailAddress, boolean retrieveFromCache) {
+		String emailAddress, boolean retrieveFromCache) {
 		return getPersistence()
 				   .fetchByPMI_EA(powwowMeetingId, emailAddress,
 			retrieveFromCache);
@@ -401,7 +401,7 @@ public class PowwowParticipantUtil {
 	* @return the powwow participant that was removed
 	*/
 	public static PowwowParticipant removeByPMI_EA(long powwowMeetingId,
-		java.lang.String emailAddress)
+		String emailAddress)
 		throws com.liferay.powwow.exception.NoSuchParticipantException {
 		return getPersistence().removeByPMI_EA(powwowMeetingId, emailAddress);
 	}
@@ -413,8 +413,7 @@ public class PowwowParticipantUtil {
 	* @param emailAddress the email address
 	* @return the number of matching powwow participants
 	*/
-	public static int countByPMI_EA(long powwowMeetingId,
-		java.lang.String emailAddress) {
+	public static int countByPMI_EA(long powwowMeetingId, String emailAddress) {
 		return getPersistence().countByPMI_EA(powwowMeetingId, emailAddress);
 	}
 
@@ -743,7 +742,7 @@ public class PowwowParticipantUtil {
 		return getPersistence().countAll();
 	}
 
-	public static java.util.Set<java.lang.String> getBadColumnNames() {
+	public static java.util.Set<String> getBadColumnNames() {
 		return getPersistence().getBadColumnNames();
 	}
 

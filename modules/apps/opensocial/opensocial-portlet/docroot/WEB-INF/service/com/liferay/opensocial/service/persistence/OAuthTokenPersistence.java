@@ -48,8 +48,8 @@ public interface OAuthTokenPersistence extends BasePersistence<OAuthToken> {
 	* @param serviceName the service name
 	* @return the matching o auth tokens
 	*/
-	public java.util.List<OAuthToken> findByG_S(java.lang.String gadgetKey,
-		java.lang.String serviceName);
+	public java.util.List<OAuthToken> findByG_S(String gadgetKey,
+		String serviceName);
 
 	/**
 	* Returns a range of all the o auth tokens where gadgetKey = &#63; and serviceName = &#63;.
@@ -64,8 +64,8 @@ public interface OAuthTokenPersistence extends BasePersistence<OAuthToken> {
 	* @param end the upper bound of the range of o auth tokens (not inclusive)
 	* @return the range of matching o auth tokens
 	*/
-	public java.util.List<OAuthToken> findByG_S(java.lang.String gadgetKey,
-		java.lang.String serviceName, int start, int end);
+	public java.util.List<OAuthToken> findByG_S(String gadgetKey,
+		String serviceName, int start, int end);
 
 	/**
 	* Returns an ordered range of all the o auth tokens where gadgetKey = &#63; and serviceName = &#63;.
@@ -81,8 +81,8 @@ public interface OAuthTokenPersistence extends BasePersistence<OAuthToken> {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching o auth tokens
 	*/
-	public java.util.List<OAuthToken> findByG_S(java.lang.String gadgetKey,
-		java.lang.String serviceName, int start, int end,
+	public java.util.List<OAuthToken> findByG_S(String gadgetKey,
+		String serviceName, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<OAuthToken> orderByComparator);
 
 	/**
@@ -100,8 +100,8 @@ public interface OAuthTokenPersistence extends BasePersistence<OAuthToken> {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching o auth tokens
 	*/
-	public java.util.List<OAuthToken> findByG_S(java.lang.String gadgetKey,
-		java.lang.String serviceName, int start, int end,
+	public java.util.List<OAuthToken> findByG_S(String gadgetKey,
+		String serviceName, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<OAuthToken> orderByComparator,
 		boolean retrieveFromCache);
 
@@ -114,8 +114,7 @@ public interface OAuthTokenPersistence extends BasePersistence<OAuthToken> {
 	* @return the first matching o auth token
 	* @throws NoSuchOAuthTokenException if a matching o auth token could not be found
 	*/
-	public OAuthToken findByG_S_First(java.lang.String gadgetKey,
-		java.lang.String serviceName,
+	public OAuthToken findByG_S_First(String gadgetKey, String serviceName,
 		com.liferay.portal.kernel.util.OrderByComparator<OAuthToken> orderByComparator)
 		throws NoSuchOAuthTokenException;
 
@@ -127,8 +126,7 @@ public interface OAuthTokenPersistence extends BasePersistence<OAuthToken> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching o auth token, or <code>null</code> if a matching o auth token could not be found
 	*/
-	public OAuthToken fetchByG_S_First(java.lang.String gadgetKey,
-		java.lang.String serviceName,
+	public OAuthToken fetchByG_S_First(String gadgetKey, String serviceName,
 		com.liferay.portal.kernel.util.OrderByComparator<OAuthToken> orderByComparator);
 
 	/**
@@ -140,8 +138,7 @@ public interface OAuthTokenPersistence extends BasePersistence<OAuthToken> {
 	* @return the last matching o auth token
 	* @throws NoSuchOAuthTokenException if a matching o auth token could not be found
 	*/
-	public OAuthToken findByG_S_Last(java.lang.String gadgetKey,
-		java.lang.String serviceName,
+	public OAuthToken findByG_S_Last(String gadgetKey, String serviceName,
 		com.liferay.portal.kernel.util.OrderByComparator<OAuthToken> orderByComparator)
 		throws NoSuchOAuthTokenException;
 
@@ -153,8 +150,7 @@ public interface OAuthTokenPersistence extends BasePersistence<OAuthToken> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching o auth token, or <code>null</code> if a matching o auth token could not be found
 	*/
-	public OAuthToken fetchByG_S_Last(java.lang.String gadgetKey,
-		java.lang.String serviceName,
+	public OAuthToken fetchByG_S_Last(String gadgetKey, String serviceName,
 		com.liferay.portal.kernel.util.OrderByComparator<OAuthToken> orderByComparator);
 
 	/**
@@ -168,7 +164,7 @@ public interface OAuthTokenPersistence extends BasePersistence<OAuthToken> {
 	* @throws NoSuchOAuthTokenException if a o auth token with the primary key could not be found
 	*/
 	public OAuthToken[] findByG_S_PrevAndNext(long oAuthTokenId,
-		java.lang.String gadgetKey, java.lang.String serviceName,
+		String gadgetKey, String serviceName,
 		com.liferay.portal.kernel.util.OrderByComparator<OAuthToken> orderByComparator)
 		throws NoSuchOAuthTokenException;
 
@@ -178,8 +174,7 @@ public interface OAuthTokenPersistence extends BasePersistence<OAuthToken> {
 	* @param gadgetKey the gadget key
 	* @param serviceName the service name
 	*/
-	public void removeByG_S(java.lang.String gadgetKey,
-		java.lang.String serviceName);
+	public void removeByG_S(String gadgetKey, String serviceName);
 
 	/**
 	* Returns the number of o auth tokens where gadgetKey = &#63; and serviceName = &#63;.
@@ -188,8 +183,7 @@ public interface OAuthTokenPersistence extends BasePersistence<OAuthToken> {
 	* @param serviceName the service name
 	* @return the number of matching o auth tokens
 	*/
-	public int countByG_S(java.lang.String gadgetKey,
-		java.lang.String serviceName);
+	public int countByG_S(String gadgetKey, String serviceName);
 
 	/**
 	* Returns the o auth token where userId = &#63; and gadgetKey = &#63; and serviceName = &#63; and moduleId = &#63; and tokenName = &#63; or throws a {@link NoSuchOAuthTokenException} if it could not be found.
@@ -202,8 +196,8 @@ public interface OAuthTokenPersistence extends BasePersistence<OAuthToken> {
 	* @return the matching o auth token
 	* @throws NoSuchOAuthTokenException if a matching o auth token could not be found
 	*/
-	public OAuthToken findByU_G_S_M_T(long userId, java.lang.String gadgetKey,
-		java.lang.String serviceName, long moduleId, java.lang.String tokenName)
+	public OAuthToken findByU_G_S_M_T(long userId, String gadgetKey,
+		String serviceName, long moduleId, String tokenName)
 		throws NoSuchOAuthTokenException;
 
 	/**
@@ -216,8 +210,8 @@ public interface OAuthTokenPersistence extends BasePersistence<OAuthToken> {
 	* @param tokenName the token name
 	* @return the matching o auth token, or <code>null</code> if a matching o auth token could not be found
 	*/
-	public OAuthToken fetchByU_G_S_M_T(long userId, java.lang.String gadgetKey,
-		java.lang.String serviceName, long moduleId, java.lang.String tokenName);
+	public OAuthToken fetchByU_G_S_M_T(long userId, String gadgetKey,
+		String serviceName, long moduleId, String tokenName);
 
 	/**
 	* Returns the o auth token where userId = &#63; and gadgetKey = &#63; and serviceName = &#63; and moduleId = &#63; and tokenName = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -230,9 +224,9 @@ public interface OAuthTokenPersistence extends BasePersistence<OAuthToken> {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching o auth token, or <code>null</code> if a matching o auth token could not be found
 	*/
-	public OAuthToken fetchByU_G_S_M_T(long userId, java.lang.String gadgetKey,
-		java.lang.String serviceName, long moduleId,
-		java.lang.String tokenName, boolean retrieveFromCache);
+	public OAuthToken fetchByU_G_S_M_T(long userId, String gadgetKey,
+		String serviceName, long moduleId, String tokenName,
+		boolean retrieveFromCache);
 
 	/**
 	* Removes the o auth token where userId = &#63; and gadgetKey = &#63; and serviceName = &#63; and moduleId = &#63; and tokenName = &#63; from the database.
@@ -244,9 +238,8 @@ public interface OAuthTokenPersistence extends BasePersistence<OAuthToken> {
 	* @param tokenName the token name
 	* @return the o auth token that was removed
 	*/
-	public OAuthToken removeByU_G_S_M_T(long userId,
-		java.lang.String gadgetKey, java.lang.String serviceName,
-		long moduleId, java.lang.String tokenName)
+	public OAuthToken removeByU_G_S_M_T(long userId, String gadgetKey,
+		String serviceName, long moduleId, String tokenName)
 		throws NoSuchOAuthTokenException;
 
 	/**
@@ -259,8 +252,8 @@ public interface OAuthTokenPersistence extends BasePersistence<OAuthToken> {
 	* @param tokenName the token name
 	* @return the number of matching o auth tokens
 	*/
-	public int countByU_G_S_M_T(long userId, java.lang.String gadgetKey,
-		java.lang.String serviceName, long moduleId, java.lang.String tokenName);
+	public int countByU_G_S_M_T(long userId, String gadgetKey,
+		String serviceName, long moduleId, String tokenName);
 
 	/**
 	* Caches the o auth token in the entity cache if it is enabled.

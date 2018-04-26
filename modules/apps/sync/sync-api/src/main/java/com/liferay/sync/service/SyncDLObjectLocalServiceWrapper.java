@@ -42,16 +42,13 @@ public class SyncDLObjectLocalServiceWrapper implements SyncDLObjectLocalService
 	@Deprecated
 	@Override
 	public com.liferay.sync.model.SyncDLObject addSyncDLObject(long companyId,
-		long userId, java.lang.String userName, long modifiedTime,
-		long repositoryId, long parentFolderId, java.lang.String treePath,
-		java.lang.String name, java.lang.String extension,
-		java.lang.String mimeType, java.lang.String description,
-		java.lang.String changeLog, java.lang.String extraSettings,
-		java.lang.String version, long versionId, long size,
-		java.lang.String checksum, java.lang.String event,
-		java.util.Date lockExpirationDate, long lockUserId,
-		java.lang.String lockUserName, java.lang.String type, long typePK,
-		java.lang.String typeUuid)
+		long userId, String userName, long modifiedTime, long repositoryId,
+		long parentFolderId, String treePath, String name, String extension,
+		String mimeType, String description, String changeLog,
+		String extraSettings, String version, long versionId, long size,
+		String checksum, String event, java.util.Date lockExpirationDate,
+		long lockUserId, String lockUserName, String type, long typePK,
+		String typeUuid)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _syncDLObjectLocalService.addSyncDLObject(companyId, userId,
 			userName, modifiedTime, repositoryId, parentFolderId, treePath,
@@ -62,16 +59,13 @@ public class SyncDLObjectLocalServiceWrapper implements SyncDLObjectLocalService
 
 	@Override
 	public com.liferay.sync.model.SyncDLObject addSyncDLObject(long companyId,
-		long userId, java.lang.String userName, long modifiedTime,
-		long repositoryId, long parentFolderId, java.lang.String treePath,
-		java.lang.String name, java.lang.String extension,
-		java.lang.String mimeType, java.lang.String description,
-		java.lang.String changeLog, java.lang.String extraSettings,
-		java.lang.String version, long versionId, long size,
-		java.lang.String checksum, java.lang.String event,
-		java.lang.String lanTokenKey, java.util.Date lockExpirationDate,
-		long lockUserId, java.lang.String lockUserName, java.lang.String type,
-		long typePK, java.lang.String typeUuid)
+		long userId, String userName, long modifiedTime, long repositoryId,
+		long parentFolderId, String treePath, String name, String extension,
+		String mimeType, String description, String changeLog,
+		String extraSettings, String version, long versionId, long size,
+		String checksum, String event, String lanTokenKey,
+		java.util.Date lockExpirationDate, long lockUserId,
+		String lockUserName, String type, long typePK, String typeUuid)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _syncDLObjectLocalService.addSyncDLObject(companyId, userId,
 			userName, modifiedTime, repositoryId, parentFolderId, treePath,
@@ -141,8 +135,7 @@ public class SyncDLObjectLocalServiceWrapper implements SyncDLObjectLocalService
 	}
 
 	@Override
-	public void deleteSyncDLObjects(java.lang.String version,
-		java.lang.String type) {
+	public void deleteSyncDLObjects(String version, String type) {
 		_syncDLObjectLocalService.deleteSyncDLObjects(version, type);
 	}
 
@@ -238,8 +231,8 @@ public class SyncDLObjectLocalServiceWrapper implements SyncDLObjectLocalService
 	}
 
 	@Override
-	public com.liferay.sync.model.SyncDLObject fetchSyncDLObject(
-		java.lang.String type, long typePK) {
+	public com.liferay.sync.model.SyncDLObject fetchSyncDLObject(String type,
+		long typePK) {
 		return _syncDLObjectLocalService.fetchSyncDLObject(type, typePK);
 	}
 
@@ -264,7 +257,7 @@ public class SyncDLObjectLocalServiceWrapper implements SyncDLObjectLocalService
 	* @return the OSGi service identifier
 	*/
 	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
+	public String getOSGiServiceIdentifier() {
 		return _syncDLObjectLocalService.getOSGiServiceIdentifier();
 	}
 

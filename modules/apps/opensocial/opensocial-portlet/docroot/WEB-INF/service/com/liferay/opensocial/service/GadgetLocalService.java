@@ -77,8 +77,8 @@ public interface GadgetLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.REINDEX)
 	public Gadget addGadget(Gadget gadget);
 
-	public Gadget addGadget(long companyId, java.lang.String url,
-		java.lang.String portletCategoryNames, ServiceContext serviceContext)
+	public Gadget addGadget(long companyId, String url,
+		String portletCategoryNames, ServiceContext serviceContext)
 		throws PortalException;
 
 	/**
@@ -121,7 +121,7 @@ public interface GadgetLocalService extends BaseLocalService,
 		throws PortalException;
 
 	@Clusterable
-	public void destroyGadget(java.lang.String uuid, long companyId);
+	public void destroyGadget(String uuid, long companyId);
 
 	public void destroyGadgets();
 
@@ -188,7 +188,7 @@ public interface GadgetLocalService extends BaseLocalService,
 	public Gadget fetchGadget(long gadgetId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Gadget fetchGadget(long companyId, java.lang.String url);
+	public Gadget fetchGadget(long companyId, String url);
 
 	/**
 	* Returns the gadget with the matching UUID and company.
@@ -198,8 +198,7 @@ public interface GadgetLocalService extends BaseLocalService,
 	* @return the matching gadget, or <code>null</code> if a matching gadget could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Gadget fetchGadgetByUuidAndCompanyId(java.lang.String uuid,
-		long companyId);
+	public Gadget fetchGadgetByUuidAndCompanyId(String uuid, long companyId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
@@ -219,11 +218,11 @@ public interface GadgetLocalService extends BaseLocalService,
 	public Gadget getGadget(long gadgetId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Gadget getGadget(long companyId, java.lang.String url)
+	public Gadget getGadget(long companyId, String url)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Gadget getGadget(java.lang.String uuid, long companyId)
+	public Gadget getGadget(String uuid, long companyId)
 		throws PortalException;
 
 	/**
@@ -235,8 +234,8 @@ public interface GadgetLocalService extends BaseLocalService,
 	* @throws PortalException if a matching gadget could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Gadget getGadgetByUuidAndCompanyId(java.lang.String uuid,
-		long companyId) throws PortalException;
+	public Gadget getGadgetByUuidAndCompanyId(String uuid, long companyId)
+		throws PortalException;
 
 	/**
 	* Returns a range of all the gadgets.
@@ -274,7 +273,7 @@ public interface GadgetLocalService extends BaseLocalService,
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -282,9 +281,8 @@ public interface GadgetLocalService extends BaseLocalService,
 		throws PortalException;
 
 	@Clusterable
-	public void initGadget(java.lang.String uuid, long companyId,
-		long gadgetId, java.lang.String name,
-		java.lang.String portletCategoryNames) throws PortalException;
+	public void initGadget(String uuid, long companyId, long gadgetId,
+		String name, String portletCategoryNames) throws PortalException;
 
 	public void initGadgets() throws PortalException;
 
@@ -297,6 +295,6 @@ public interface GadgetLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.REINDEX)
 	public Gadget updateGadget(Gadget gadget);
 
-	public Gadget updateGadget(long gadgetId,
-		java.lang.String portletCategoryNames) throws PortalException;
+	public Gadget updateGadget(long gadgetId, String portletCategoryNames)
+		throws PortalException;
 }

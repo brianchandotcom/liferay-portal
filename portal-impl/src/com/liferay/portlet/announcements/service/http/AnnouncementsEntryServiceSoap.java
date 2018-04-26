@@ -71,10 +71,10 @@ public class AnnouncementsEntryServiceSoap {
 	*/
 	@Deprecated
 	public static com.liferay.announcements.kernel.model.AnnouncementsEntrySoap addEntry(
-		long plid, long classNameId, long classPK, java.lang.String title,
-		java.lang.String content, java.lang.String url, java.lang.String type,
-		int displayDateMonth, int displayDateDay, int displayDateYear,
-		int displayDateHour, int displayDateMinute, boolean displayImmediately,
+		long plid, long classNameId, long classPK, String title,
+		String content, String url, String type, int displayDateMonth,
+		int displayDateDay, int displayDateYear, int displayDateHour,
+		int displayDateMinute, boolean displayImmediately,
 		int expirationDateMonth, int expirationDateDay, int expirationDateYear,
 		int expirationDateHour, int expirationDateMinute, int priority,
 		boolean alert) throws RemoteException {
@@ -97,10 +97,10 @@ public class AnnouncementsEntryServiceSoap {
 	}
 
 	public static com.liferay.announcements.kernel.model.AnnouncementsEntrySoap addEntry(
-		long classNameId, long classPK, java.lang.String title,
-		java.lang.String content, java.lang.String url, java.lang.String type,
-		java.util.Date displayDate, java.util.Date expirationDate,
-		int priority, boolean alert) throws RemoteException {
+		long classNameId, long classPK, String title, String content,
+		String url, String type, java.util.Date displayDate,
+		java.util.Date expirationDate, int priority, boolean alert)
+		throws RemoteException {
 		try {
 			com.liferay.announcements.kernel.model.AnnouncementsEntry returnValue =
 				AnnouncementsEntryServiceUtil.addEntry(classNameId, classPK,
@@ -143,8 +143,7 @@ public class AnnouncementsEntryServiceSoap {
 	}
 
 	public static com.liferay.announcements.kernel.model.AnnouncementsEntrySoap updateEntry(
-		long entryId, java.lang.String title, java.lang.String content,
-		java.lang.String url, java.lang.String type,
+		long entryId, String title, String content, String url, String type,
 		java.util.Date displayDate, java.util.Date expirationDate, int priority)
 		throws RemoteException {
 		try {
@@ -167,10 +166,9 @@ public class AnnouncementsEntryServiceSoap {
 	*/
 	@Deprecated
 	public static com.liferay.announcements.kernel.model.AnnouncementsEntrySoap updateEntry(
-		long entryId, java.lang.String title, java.lang.String content,
-		java.lang.String url, java.lang.String type, int displayDateMonth,
-		int displayDateDay, int displayDateYear, int displayDateHour,
-		int displayDateMinute, boolean displayImmediately,
+		long entryId, String title, String content, String url, String type,
+		int displayDateMonth, int displayDateDay, int displayDateYear,
+		int displayDateHour, int displayDateMinute, boolean displayImmediately,
 		int expirationDateMonth, int expirationDateDay, int expirationDateYear,
 		int expirationDateHour, int expirationDateMinute, int priority)
 		throws RemoteException {

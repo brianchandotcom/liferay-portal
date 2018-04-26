@@ -80,9 +80,8 @@ public interface PollsQuestionLocalService extends BaseLocalService,
 	public PollsQuestion addPollsQuestion(PollsQuestion pollsQuestion);
 
 	@Indexable(type = IndexableType.REINDEX)
-	public PollsQuestion addQuestion(long userId,
-		Map<Locale, java.lang.String> titleMap,
-		Map<Locale, java.lang.String> descriptionMap, int expirationDateMonth,
+	public PollsQuestion addQuestion(long userId, Map<Locale, String> titleMap,
+		Map<Locale, String> descriptionMap, int expirationDateMonth,
 		int expirationDateDay, int expirationDateYear, int expirationDateHour,
 		int expirationDateMinute, boolean neverExpire,
 		List<PollsChoice> choices, ServiceContext serviceContext)
@@ -93,7 +92,7 @@ public interface PollsQuestionLocalService extends BaseLocalService,
 		throws PortalException;
 
 	public void addQuestionResources(long questionId,
-		java.lang.String[] groupPermissions, java.lang.String[] guestPermissions)
+		String[] groupPermissions, String[] guestPermissions)
 		throws PortalException;
 
 	public void addQuestionResources(PollsQuestion question,
@@ -101,7 +100,7 @@ public interface PollsQuestionLocalService extends BaseLocalService,
 		throws PortalException;
 
 	public void addQuestionResources(PollsQuestion question,
-		java.lang.String[] groupPermissions, java.lang.String[] guestPermissions)
+		String[] groupPermissions, String[] guestPermissions)
 		throws PortalException;
 
 	/**
@@ -218,8 +217,8 @@ public interface PollsQuestionLocalService extends BaseLocalService,
 	* @return the matching polls question, or <code>null</code> if a matching polls question could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public PollsQuestion fetchPollsQuestionByUuidAndGroupId(
-		java.lang.String uuid, long groupId);
+	public PollsQuestion fetchPollsQuestionByUuidAndGroupId(String uuid,
+		long groupId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
@@ -236,7 +235,7 @@ public interface PollsQuestionLocalService extends BaseLocalService,
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -263,8 +262,8 @@ public interface PollsQuestionLocalService extends BaseLocalService,
 	* @throws PortalException if a matching polls question could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public PollsQuestion getPollsQuestionByUuidAndGroupId(
-		java.lang.String uuid, long groupId) throws PortalException;
+	public PollsQuestion getPollsQuestionByUuidAndGroupId(String uuid,
+		long groupId) throws PortalException;
 
 	/**
 	* Returns a range of all the polls questions.
@@ -289,7 +288,7 @@ public interface PollsQuestionLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<PollsQuestion> getPollsQuestionsByUuidAndCompanyId(
-		java.lang.String uuid, long companyId);
+		String uuid, long companyId);
 
 	/**
 	* Returns a range of polls questions matching the UUID and company.
@@ -303,7 +302,7 @@ public interface PollsQuestionLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<PollsQuestion> getPollsQuestionsByUuidAndCompanyId(
-		java.lang.String uuid, long companyId, int start, int end,
+		String uuid, long companyId, int start, int end,
 		OrderByComparator<PollsQuestion> orderByComparator);
 
 	/**
@@ -328,23 +327,20 @@ public interface PollsQuestionLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<PollsQuestion> search(long companyId, long[] groupIds,
-		java.lang.String keywords, int start, int end,
+		String keywords, int start, int end,
 		OrderByComparator<PollsQuestion> orderByComparator);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<PollsQuestion> search(long companyId, long[] groupIds,
-		java.lang.String name, java.lang.String description,
-		boolean andOperator, int start, int end,
-		OrderByComparator<PollsQuestion> orderByComparator);
+		String name, String description, boolean andOperator, int start,
+		int end, OrderByComparator<PollsQuestion> orderByComparator);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int searchCount(long companyId, long[] groupIds,
-		java.lang.String keywords);
+	public int searchCount(long companyId, long[] groupIds, String keywords);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int searchCount(long companyId, long[] groupIds,
-		java.lang.String title, java.lang.String description,
-		boolean andOperator);
+	public int searchCount(long companyId, long[] groupIds, String title,
+		String description, boolean andOperator);
 
 	/**
 	* Updates the polls question in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
@@ -357,10 +353,9 @@ public interface PollsQuestionLocalService extends BaseLocalService,
 
 	@Indexable(type = IndexableType.REINDEX)
 	public PollsQuestion updateQuestion(long userId, long questionId,
-		Map<Locale, java.lang.String> titleMap,
-		Map<Locale, java.lang.String> descriptionMap, int expirationDateMonth,
-		int expirationDateDay, int expirationDateYear, int expirationDateHour,
-		int expirationDateMinute, boolean neverExpire,
+		Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
+		int expirationDateMonth, int expirationDateDay, int expirationDateYear,
+		int expirationDateHour, int expirationDateMinute, boolean neverExpire,
 		List<PollsChoice> choices, ServiceContext serviceContext)
 		throws PortalException;
 }

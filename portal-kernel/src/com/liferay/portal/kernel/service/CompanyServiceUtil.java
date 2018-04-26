@@ -54,8 +54,8 @@ public class CompanyServiceUtil {
 	* @return the company
 	*/
 	public static com.liferay.portal.kernel.model.Company addCompany(
-		java.lang.String webId, java.lang.String virtualHost,
-		java.lang.String mx, boolean system, int maxUsers, boolean active)
+		String webId, String virtualHost, String mx, boolean system,
+		int maxUsers, boolean active)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addCompany(webId, virtualHost, mx, system, maxUsers, active);
@@ -107,8 +107,7 @@ public class CompanyServiceUtil {
 	* @return Returns the company with the mail domain
 	*/
 	public static com.liferay.portal.kernel.model.Company getCompanyByMx(
-		java.lang.String mx)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		String mx) throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getCompanyByMx(mx);
 	}
 
@@ -119,7 +118,7 @@ public class CompanyServiceUtil {
 	* @return Returns the company with the virtual host name
 	*/
 	public static com.liferay.portal.kernel.model.Company getCompanyByVirtualHost(
-		java.lang.String virtualHost)
+		String virtualHost)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getCompanyByVirtualHost(virtualHost);
 	}
@@ -131,7 +130,7 @@ public class CompanyServiceUtil {
 	* @return Returns the company with the web domain
 	*/
 	public static com.liferay.portal.kernel.model.Company getCompanyByWebId(
-		java.lang.String webId)
+		String webId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getCompanyByWebId(webId);
 	}
@@ -141,7 +140,7 @@ public class CompanyServiceUtil {
 	*
 	* @return the OSGi service identifier
 	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
+	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 
@@ -155,7 +154,7 @@ public class CompanyServiceUtil {
 	* @param companyId the primary key of the company
 	* @param keys the company's preferences keys to be remove
 	*/
-	public static void removePreferences(long companyId, java.lang.String[] keys)
+	public static void removePreferences(long companyId, String[] keys)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().removePreferences(companyId, keys);
 	}
@@ -172,8 +171,8 @@ public class CompanyServiceUtil {
 	* @return the company with the primary key
 	*/
 	public static com.liferay.portal.kernel.model.Company updateCompany(
-		long companyId, java.lang.String virtualHost, java.lang.String mx,
-		int maxUsers, boolean active)
+		long companyId, String virtualHost, String mx, int maxUsers,
+		boolean active)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .updateCompany(companyId, virtualHost, mx, maxUsers, active);
@@ -206,12 +205,10 @@ public class CompanyServiceUtil {
 	* @return the the company with the primary key
 	*/
 	public static com.liferay.portal.kernel.model.Company updateCompany(
-		long companyId, java.lang.String virtualHost, java.lang.String mx,
-		java.lang.String homeURL, boolean logo, byte[] logoBytes,
-		java.lang.String name, java.lang.String legalName,
-		java.lang.String legalId, java.lang.String legalType,
-		java.lang.String sicCode, java.lang.String tickerSymbol,
-		java.lang.String industry, java.lang.String type, java.lang.String size)
+		long companyId, String virtualHost, String mx, String homeURL,
+		boolean logo, byte[] logoBytes, String name, String legalName,
+		String legalId, String legalType, String sicCode, String tickerSymbol,
+		String industry, String type, String size)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .updateCompany(companyId, virtualHost, mx, homeURL, logo,
@@ -253,14 +250,11 @@ public class CompanyServiceUtil {
 	* @return the company with the primary key
 	*/
 	public static com.liferay.portal.kernel.model.Company updateCompany(
-		long companyId, java.lang.String virtualHost, java.lang.String mx,
-		java.lang.String homeURL, boolean logo, byte[] logoBytes,
-		java.lang.String name, java.lang.String legalName,
-		java.lang.String legalId, java.lang.String legalType,
-		java.lang.String sicCode, java.lang.String tickerSymbol,
-		java.lang.String industry, java.lang.String type,
-		java.lang.String size, java.lang.String languageId,
-		java.lang.String timeZoneId,
+		long companyId, String virtualHost, String mx, String homeURL,
+		boolean logo, byte[] logoBytes, String name, String legalName,
+		String legalId, String legalType, String sicCode, String tickerSymbol,
+		String industry, String type, String size, String languageId,
+		String timeZoneId,
 		java.util.List<com.liferay.portal.kernel.model.Address> addresses,
 		java.util.List<com.liferay.portal.kernel.model.EmailAddress> emailAddresses,
 		java.util.List<com.liferay.portal.kernel.model.Phone> phones,
@@ -306,13 +300,10 @@ public class CompanyServiceUtil {
 	*/
 	@Deprecated
 	public static com.liferay.portal.kernel.model.Company updateCompany(
-		long companyId, java.lang.String virtualHost, java.lang.String mx,
-		java.lang.String homeURL, java.lang.String name,
-		java.lang.String legalName, java.lang.String legalId,
-		java.lang.String legalType, java.lang.String sicCode,
-		java.lang.String tickerSymbol, java.lang.String industry,
-		java.lang.String type, java.lang.String size)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		long companyId, String virtualHost, String mx, String homeURL,
+		String name, String legalName, String legalId, String legalType,
+		String sicCode, String tickerSymbol, String industry, String type,
+		String size) throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .updateCompany(companyId, virtualHost, mx, homeURL, name,
 			legalName, legalId, legalType, sicCode, tickerSymbol, industry,
@@ -359,13 +350,10 @@ public class CompanyServiceUtil {
 	*/
 	@Deprecated
 	public static com.liferay.portal.kernel.model.Company updateCompany(
-		long companyId, java.lang.String virtualHost, java.lang.String mx,
-		java.lang.String homeURL, java.lang.String name,
-		java.lang.String legalName, java.lang.String legalId,
-		java.lang.String legalType, java.lang.String sicCode,
-		java.lang.String tickerSymbol, java.lang.String industry,
-		java.lang.String type, java.lang.String size,
-		java.lang.String languageId, java.lang.String timeZoneId,
+		long companyId, String virtualHost, String mx, String homeURL,
+		String name, String legalName, String legalId, String legalType,
+		String sicCode, String tickerSymbol, String industry, String type,
+		String size, String languageId, String timeZoneId,
 		java.util.List<com.liferay.portal.kernel.model.Address> addresses,
 		java.util.List<com.liferay.portal.kernel.model.EmailAddress> emailAddresses,
 		java.util.List<com.liferay.portal.kernel.model.Phone> phones,
@@ -386,8 +374,8 @@ public class CompanyServiceUtil {
 	* @param languageId the ID of the company's default user's language
 	* @param timeZoneId the ID of the company's default user's time zone
 	*/
-	public static void updateDisplay(long companyId,
-		java.lang.String languageId, java.lang.String timeZoneId)
+	public static void updateDisplay(long companyId, String languageId,
+		String timeZoneId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().updateDisplay(companyId, languageId, timeZoneId);
 	}
@@ -449,10 +437,9 @@ public class CompanyServiceUtil {
 	* @param siteLogo whether to to allow site administrators to use their own
 	logo instead of the enterprise logo
 	*/
-	public static void updateSecurity(long companyId,
-		java.lang.String authType, boolean autoLogin, boolean sendPassword,
-		boolean strangers, boolean strangersWithMx, boolean strangersVerify,
-		boolean siteLogo)
+	public static void updateSecurity(long companyId, String authType,
+		boolean autoLogin, boolean sendPassword, boolean strangers,
+		boolean strangersWithMx, boolean strangersVerify, boolean siteLogo)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService()
 			.updateSecurity(companyId, authType, autoLogin, sendPassword,

@@ -65,15 +65,12 @@ public interface OAuth2ApplicationLocalService extends BaseLocalService,
 	 * Never modify or reference this interface directly. Always use {@link OAuth2ApplicationLocalServiceUtil} to access the o auth2 application local service. Add custom service methods to {@link com.liferay.oauth2.provider.service.impl.OAuth2ApplicationLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	public OAuth2Application addOAuth2Application(long companyId, long userId,
-		java.lang.String userName, List<GrantType> allowedGrantTypesList,
-		java.lang.String clientId, int clientProfile,
-		java.lang.String clientSecret, java.lang.String description,
-		List<java.lang.String> featuresList, java.lang.String homePageURL,
-		long iconFileEntryId, java.lang.String name,
-		java.lang.String privacyPolicyURL,
-		List<java.lang.String> redirectURIsList,
-		List<java.lang.String> scopeAliasesList, ServiceContext serviceContext)
-		throws PortalException;
+		String userName, List<GrantType> allowedGrantTypesList,
+		String clientId, int clientProfile, String clientSecret,
+		String description, List<String> featuresList, String homePageURL,
+		long iconFileEntryId, String name, String privacyPolicyURL,
+		List<String> redirectURIsList, List<String> scopeAliasesList,
+		ServiceContext serviceContext) throws PortalException;
 
 	/**
 	* Adds the o auth2 application to the database. Also notifies the appropriate model listeners.
@@ -186,7 +183,7 @@ public interface OAuth2ApplicationLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public OAuth2Application fetchOAuth2Application(long companyId,
-		java.lang.String clientId);
+		String clientId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
@@ -207,7 +204,7 @@ public interface OAuth2ApplicationLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public OAuth2Application getOAuth2Application(long companyId,
-		java.lang.String clientId) throws NoSuchOAuth2ApplicationException;
+		String clientId) throws NoSuchOAuth2ApplicationException;
 
 	/**
 	* Returns a range of all the o auth2 applications.
@@ -236,7 +233,7 @@ public interface OAuth2ApplicationLocalService extends BaseLocalService,
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -247,12 +244,10 @@ public interface OAuth2ApplicationLocalService extends BaseLocalService,
 		InputStream inputStream) throws PortalException;
 
 	public OAuth2Application updateOAuth2Application(long oAuth2ApplicationId,
-		List<GrantType> allowedGrantTypesList, java.lang.String clientId,
-		int clientProfile, java.lang.String clientSecret,
-		java.lang.String description, List<java.lang.String> featuresList,
-		java.lang.String homePageURL, long iconFileEntryId,
-		java.lang.String name, java.lang.String privacyPolicyURL,
-		List<java.lang.String> redirectURIsList,
+		List<GrantType> allowedGrantTypesList, String clientId,
+		int clientProfile, String clientSecret, String description,
+		List<String> featuresList, String homePageURL, long iconFileEntryId,
+		String name, String privacyPolicyURL, List<String> redirectURIsList,
 		long auth2ApplicationScopeAliasesId, ServiceContext serviceContext)
 		throws PortalException;
 
@@ -266,7 +261,7 @@ public interface OAuth2ApplicationLocalService extends BaseLocalService,
 	public OAuth2Application updateOAuth2Application(
 		OAuth2Application oAuth2Application);
 
-	public OAuth2Application updateScopeAliases(long userId,
-		java.lang.String userName, long oAuth2ApplicationId,
-		List<java.lang.String> scopeAliasesList) throws PortalException;
+	public OAuth2Application updateScopeAliases(long userId, String userName,
+		long oAuth2ApplicationId, List<String> scopeAliasesList)
+		throws PortalException;
 }

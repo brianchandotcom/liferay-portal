@@ -178,7 +178,7 @@ public class DDLRecordVersionWrapper implements DDLRecordVersion,
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new DDLRecordVersionWrapper((DDLRecordVersion)_ddlRecordVersion.clone());
 	}
 
@@ -301,7 +301,7 @@ public class DDLRecordVersionWrapper implements DDLRecordVersion,
 	* @return the record set version of this ddl record version
 	*/
 	@Override
-	public java.lang.String getRecordSetVersion() {
+	public String getRecordSetVersion() {
 		return _ddlRecordVersion.getRecordSetVersion();
 	}
 
@@ -341,7 +341,7 @@ public class DDLRecordVersionWrapper implements DDLRecordVersion,
 	* @return the status by user name of this ddl record version
 	*/
 	@Override
-	public java.lang.String getStatusByUserName() {
+	public String getStatusByUserName() {
 		return _ddlRecordVersion.getStatusByUserName();
 	}
 
@@ -351,7 +351,7 @@ public class DDLRecordVersionWrapper implements DDLRecordVersion,
 	* @return the status by user uuid of this ddl record version
 	*/
 	@Override
-	public java.lang.String getStatusByUserUuid() {
+	public String getStatusByUserUuid() {
 		return _ddlRecordVersion.getStatusByUserUuid();
 	}
 
@@ -381,7 +381,7 @@ public class DDLRecordVersionWrapper implements DDLRecordVersion,
 	* @return the user name of this ddl record version
 	*/
 	@Override
-	public java.lang.String getUserName() {
+	public String getUserName() {
 		return _ddlRecordVersion.getUserName();
 	}
 
@@ -391,7 +391,7 @@ public class DDLRecordVersionWrapper implements DDLRecordVersion,
 	* @return the user uuid of this ddl record version
 	*/
 	@Override
-	public java.lang.String getUserUuid() {
+	public String getUserUuid() {
 		return _ddlRecordVersion.getUserUuid();
 	}
 
@@ -401,7 +401,7 @@ public class DDLRecordVersionWrapper implements DDLRecordVersion,
 	* @return the version of this ddl record version
 	*/
 	@Override
-	public java.lang.String getVersion() {
+	public String getVersion() {
 		return _ddlRecordVersion.getVersion();
 	}
 
@@ -627,7 +627,7 @@ public class DDLRecordVersionWrapper implements DDLRecordVersion,
 	* @param recordSetVersion the record set version of this ddl record version
 	*/
 	@Override
-	public void setRecordSetVersion(java.lang.String recordSetVersion) {
+	public void setRecordSetVersion(String recordSetVersion) {
 		_ddlRecordVersion.setRecordSetVersion(recordSetVersion);
 	}
 
@@ -667,7 +667,7 @@ public class DDLRecordVersionWrapper implements DDLRecordVersion,
 	* @param statusByUserName the status by user name of this ddl record version
 	*/
 	@Override
-	public void setStatusByUserName(java.lang.String statusByUserName) {
+	public void setStatusByUserName(String statusByUserName) {
 		_ddlRecordVersion.setStatusByUserName(statusByUserName);
 	}
 
@@ -677,7 +677,7 @@ public class DDLRecordVersionWrapper implements DDLRecordVersion,
 	* @param statusByUserUuid the status by user uuid of this ddl record version
 	*/
 	@Override
-	public void setStatusByUserUuid(java.lang.String statusByUserUuid) {
+	public void setStatusByUserUuid(String statusByUserUuid) {
 		_ddlRecordVersion.setStatusByUserUuid(statusByUserUuid);
 	}
 
@@ -707,7 +707,7 @@ public class DDLRecordVersionWrapper implements DDLRecordVersion,
 	* @param userName the user name of this ddl record version
 	*/
 	@Override
-	public void setUserName(java.lang.String userName) {
+	public void setUserName(String userName) {
 		_ddlRecordVersion.setUserName(userName);
 	}
 
@@ -717,7 +717,7 @@ public class DDLRecordVersionWrapper implements DDLRecordVersion,
 	* @param userUuid the user uuid of this ddl record version
 	*/
 	@Override
-	public void setUserUuid(java.lang.String userUuid) {
+	public void setUserUuid(String userUuid) {
 		_ddlRecordVersion.setUserUuid(userUuid);
 	}
 
@@ -727,7 +727,7 @@ public class DDLRecordVersionWrapper implements DDLRecordVersion,
 	* @param version the version of this ddl record version
 	*/
 	@Override
-	public void setVersion(java.lang.String version) {
+	public void setVersion(String version) {
 		_ddlRecordVersion.setVersion(version);
 	}
 
@@ -742,7 +742,7 @@ public class DDLRecordVersionWrapper implements DDLRecordVersion,
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _ddlRecordVersion.toString();
 	}
 
@@ -752,7 +752,7 @@ public class DDLRecordVersionWrapper implements DDLRecordVersion,
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _ddlRecordVersion.toXmlString();
 	}
 

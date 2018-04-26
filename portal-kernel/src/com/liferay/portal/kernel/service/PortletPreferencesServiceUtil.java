@@ -50,14 +50,13 @@ public class PortletPreferencesServiceUtil {
 	*
 	* @return the OSGi service identifier
 	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
+	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 
 	public static void restoreArchivedPreferences(long groupId,
-		com.liferay.portal.kernel.model.Layout layout,
-		java.lang.String portletId, long portletItemId,
-		javax.portlet.PortletPreferences preferences)
+		com.liferay.portal.kernel.model.Layout layout, String portletId,
+		long portletItemId, javax.portlet.PortletPreferences preferences)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService()
 			.restoreArchivedPreferences(groupId, layout, portletId,
@@ -65,8 +64,7 @@ public class PortletPreferencesServiceUtil {
 	}
 
 	public static void restoreArchivedPreferences(long groupId,
-		com.liferay.portal.kernel.model.Layout layout,
-		java.lang.String portletId,
+		com.liferay.portal.kernel.model.Layout layout, String portletId,
 		com.liferay.portal.kernel.model.PortletItem portletItem,
 		javax.portlet.PortletPreferences preferences)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -75,9 +73,9 @@ public class PortletPreferencesServiceUtil {
 			portletItem, preferences);
 	}
 
-	public static void restoreArchivedPreferences(long groupId,
-		java.lang.String name, com.liferay.portal.kernel.model.Layout layout,
-		java.lang.String portletId, javax.portlet.PortletPreferences preferences)
+	public static void restoreArchivedPreferences(long groupId, String name,
+		com.liferay.portal.kernel.model.Layout layout, String portletId,
+		javax.portlet.PortletPreferences preferences)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService()
 			.restoreArchivedPreferences(groupId, name, layout, portletId,
@@ -85,7 +83,7 @@ public class PortletPreferencesServiceUtil {
 	}
 
 	public static void updateArchivePreferences(long userId, long groupId,
-		java.lang.String name, java.lang.String portletId,
+		String name, String portletId,
 		javax.portlet.PortletPreferences preferences)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService()

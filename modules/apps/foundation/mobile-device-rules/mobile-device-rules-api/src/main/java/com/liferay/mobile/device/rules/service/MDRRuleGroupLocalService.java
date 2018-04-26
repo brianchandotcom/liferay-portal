@@ -79,10 +79,9 @@ public interface MDRRuleGroupLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.REINDEX)
 	public MDRRuleGroup addMDRRuleGroup(MDRRuleGroup mdrRuleGroup);
 
-	public MDRRuleGroup addRuleGroup(long groupId,
-		Map<Locale, java.lang.String> nameMap,
-		Map<Locale, java.lang.String> descriptionMap,
-		ServiceContext serviceContext) throws PortalException;
+	public MDRRuleGroup addRuleGroup(long groupId, Map<Locale, String> nameMap,
+		Map<Locale, String> descriptionMap, ServiceContext serviceContext)
+		throws PortalException;
 
 	public MDRRuleGroup copyRuleGroup(long ruleGroupId, long groupId,
 		ServiceContext serviceContext) throws PortalException;
@@ -203,8 +202,8 @@ public interface MDRRuleGroupLocalService extends BaseLocalService,
 	* @return the matching mdr rule group, or <code>null</code> if a matching mdr rule group could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public MDRRuleGroup fetchMDRRuleGroupByUuidAndGroupId(
-		java.lang.String uuid, long groupId);
+	public MDRRuleGroup fetchMDRRuleGroupByUuidAndGroupId(String uuid,
+		long groupId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public MDRRuleGroup fetchRuleGroup(long ruleGroupId);
@@ -239,7 +238,7 @@ public interface MDRRuleGroupLocalService extends BaseLocalService,
 	* @throws PortalException if a matching mdr rule group could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public MDRRuleGroup getMDRRuleGroupByUuidAndGroupId(java.lang.String uuid,
+	public MDRRuleGroup getMDRRuleGroupByUuidAndGroupId(String uuid,
 		long groupId) throws PortalException;
 
 	/**
@@ -264,8 +263,8 @@ public interface MDRRuleGroupLocalService extends BaseLocalService,
 	* @return the matching mdr rule groups, or an empty list if no matches were found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<MDRRuleGroup> getMDRRuleGroupsByUuidAndCompanyId(
-		java.lang.String uuid, long companyId);
+	public List<MDRRuleGroup> getMDRRuleGroupsByUuidAndCompanyId(String uuid,
+		long companyId);
 
 	/**
 	* Returns a range of mdr rule groups matching the UUID and company.
@@ -278,8 +277,8 @@ public interface MDRRuleGroupLocalService extends BaseLocalService,
 	* @return the range of matching mdr rule groups, or an empty list if no matches were found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<MDRRuleGroup> getMDRRuleGroupsByUuidAndCompanyId(
-		java.lang.String uuid, long companyId, int start, int end,
+	public List<MDRRuleGroup> getMDRRuleGroupsByUuidAndCompanyId(String uuid,
+		long companyId, int start, int end,
 		OrderByComparator<MDRRuleGroup> orderByComparator);
 
 	/**
@@ -295,7 +294,7 @@ public interface MDRRuleGroupLocalService extends BaseLocalService,
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -322,32 +321,27 @@ public interface MDRRuleGroupLocalService extends BaseLocalService,
 	public int getRuleGroupsCount(long[] groupIds);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<MDRRuleGroup> search(long groupId, java.lang.String name,
-		LinkedHashMap<java.lang.String, java.lang.Object> params,
-		boolean andOperator, int start, int end);
+	public List<MDRRuleGroup> search(long groupId, String name,
+		LinkedHashMap<String, Object> params, boolean andOperator, int start,
+		int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<MDRRuleGroup> searchByKeywords(long groupId,
-		java.lang.String keywords,
-		LinkedHashMap<java.lang.String, java.lang.Object> params,
-		boolean andOperator, int start, int end);
+	public List<MDRRuleGroup> searchByKeywords(long groupId, String keywords,
+		LinkedHashMap<String, Object> params, boolean andOperator, int start,
+		int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<MDRRuleGroup> searchByKeywords(long groupId,
-		java.lang.String keywords,
-		LinkedHashMap<java.lang.String, java.lang.Object> params,
-		boolean andOperator, int start, int end,
-		OrderByComparator<MDRRuleGroup> obc);
+	public List<MDRRuleGroup> searchByKeywords(long groupId, String keywords,
+		LinkedHashMap<String, Object> params, boolean andOperator, int start,
+		int end, OrderByComparator<MDRRuleGroup> obc);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int searchByKeywordsCount(long groupId, java.lang.String keywords,
-		LinkedHashMap<java.lang.String, java.lang.Object> params,
-		boolean andOperator);
+	public int searchByKeywordsCount(long groupId, String keywords,
+		LinkedHashMap<String, Object> params, boolean andOperator);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int searchCount(long groupId, java.lang.String name,
-		LinkedHashMap<java.lang.String, java.lang.Object> params,
-		boolean andOperator);
+	public int searchCount(long groupId, String name,
+		LinkedHashMap<String, Object> params, boolean andOperator);
 
 	/**
 	* Updates the mdr rule group in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
@@ -359,7 +353,6 @@ public interface MDRRuleGroupLocalService extends BaseLocalService,
 	public MDRRuleGroup updateMDRRuleGroup(MDRRuleGroup mdrRuleGroup);
 
 	public MDRRuleGroup updateRuleGroup(long ruleGroupId,
-		Map<Locale, java.lang.String> nameMap,
-		Map<Locale, java.lang.String> descriptionMap,
+		Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
 		ServiceContext serviceContext) throws PortalException;
 }

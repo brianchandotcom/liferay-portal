@@ -56,8 +56,7 @@ public class KBFolderLocalServiceUtil {
 
 	public static com.liferay.knowledge.base.model.KBFolder addKBFolder(
 		long userId, long groupId, long parentResourceClassNameId,
-		long parentResourcePrimKey, java.lang.String name,
-		java.lang.String description,
+		long parentResourcePrimKey, String name, String description,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
@@ -211,12 +210,12 @@ public class KBFolderLocalServiceUtil {
 	}
 
 	public static com.liferay.knowledge.base.model.KBFolder fetchKBFolder(
-		java.lang.String uuid, long groupId) {
+		String uuid, long groupId) {
 		return getService().fetchKBFolder(uuid, groupId);
 	}
 
 	public static com.liferay.knowledge.base.model.KBFolder fetchKBFolderByUrlTitle(
-		long groupId, long parentKbFolderId, java.lang.String urlTitle)
+		long groupId, long parentKbFolderId, String urlTitle)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .fetchKBFolderByUrlTitle(groupId, parentKbFolderId, urlTitle);
@@ -230,7 +229,7 @@ public class KBFolderLocalServiceUtil {
 	* @return the matching kb folder, or <code>null</code> if a matching kb folder could not be found
 	*/
 	public static com.liferay.knowledge.base.model.KBFolder fetchKBFolderByUuidAndGroupId(
-		java.lang.String uuid, long groupId) {
+		String uuid, long groupId) {
 		return getService().fetchKBFolderByUuidAndGroupId(uuid, groupId);
 	}
 
@@ -261,7 +260,7 @@ public class KBFolderLocalServiceUtil {
 	}
 
 	public static com.liferay.knowledge.base.model.KBFolder getKBFolderByUrlTitle(
-		long groupId, long parentKbFolderId, java.lang.String urlTitle)
+		long groupId, long parentKbFolderId, String urlTitle)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .getKBFolderByUrlTitle(groupId, parentKbFolderId, urlTitle);
@@ -276,7 +275,7 @@ public class KBFolderLocalServiceUtil {
 	* @throws PortalException if a matching kb folder could not be found
 	*/
 	public static com.liferay.knowledge.base.model.KBFolder getKBFolderByUuidAndGroupId(
-		java.lang.String uuid, long groupId)
+		String uuid, long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getKBFolderByUuidAndGroupId(uuid, groupId);
 	}
@@ -303,7 +302,7 @@ public class KBFolderLocalServiceUtil {
 		return getService().getKBFolders(groupId, parentKBFolderId, start, end);
 	}
 
-	public static java.util.List<java.lang.Object> getKBFoldersAndKBArticles(
+	public static java.util.List<Object> getKBFoldersAndKBArticles(
 		long groupId, long parentResourcePrimKey, int status, int start,
 		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<?> orderByComparator) {
@@ -327,7 +326,7 @@ public class KBFolderLocalServiceUtil {
 	* @return the matching kb folders, or an empty list if no matches were found
 	*/
 	public static java.util.List<com.liferay.knowledge.base.model.KBFolder> getKBFoldersByUuidAndCompanyId(
-		java.lang.String uuid, long companyId) {
+		String uuid, long companyId) {
 		return getService().getKBFoldersByUuidAndCompanyId(uuid, companyId);
 	}
 
@@ -342,7 +341,7 @@ public class KBFolderLocalServiceUtil {
 	* @return the range of matching kb folders, or an empty list if no matches were found
 	*/
 	public static java.util.List<com.liferay.knowledge.base.model.KBFolder> getKBFoldersByUuidAndCompanyId(
-		java.lang.String uuid, long companyId, int start, int end,
+		String uuid, long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.knowledge.base.model.KBFolder> orderByComparator) {
 		return getService()
 				   .getKBFoldersByUuidAndCompanyId(uuid, companyId, start, end,
@@ -368,7 +367,7 @@ public class KBFolderLocalServiceUtil {
 	*
 	* @return the OSGi service identifier
 	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
+	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 
@@ -401,7 +400,7 @@ public class KBFolderLocalServiceUtil {
 	@Deprecated
 	public static com.liferay.knowledge.base.model.KBFolder updateKBFolder(
 		long parentResourceClassNameId, long parentResourcePrimKey,
-		long kbFolderId, java.lang.String name, java.lang.String description)
+		long kbFolderId, String name, String description)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .updateKBFolder(parentResourceClassNameId,
@@ -410,7 +409,7 @@ public class KBFolderLocalServiceUtil {
 
 	public static com.liferay.knowledge.base.model.KBFolder updateKBFolder(
 		long parentResourceClassNameId, long parentResourcePrimKey,
-		long kbFolderId, java.lang.String name, java.lang.String description,
+		long kbFolderId, String name, String description,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()

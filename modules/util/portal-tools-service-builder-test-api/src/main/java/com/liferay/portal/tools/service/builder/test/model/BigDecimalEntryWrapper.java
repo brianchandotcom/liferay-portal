@@ -82,7 +82,7 @@ public class BigDecimalEntryWrapper implements BigDecimalEntry,
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new BigDecimalEntryWrapper((BigDecimalEntry)_bigDecimalEntry.clone());
 	}
 
@@ -223,7 +223,7 @@ public class BigDecimalEntryWrapper implements BigDecimalEntry,
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _bigDecimalEntry.toString();
 	}
 
@@ -233,7 +233,7 @@ public class BigDecimalEntryWrapper implements BigDecimalEntry,
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _bigDecimalEntry.toXmlString();
 	}
 

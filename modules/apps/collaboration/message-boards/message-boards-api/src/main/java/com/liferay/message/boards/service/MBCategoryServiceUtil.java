@@ -43,8 +43,7 @@ public class MBCategoryServiceUtil {
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.message.boards.service.impl.MBCategoryServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static com.liferay.message.boards.model.MBCategory addCategory(
-		long userId, long parentCategoryId, java.lang.String name,
-		java.lang.String description,
+		long userId, long parentCategoryId, String name, String description,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
@@ -53,15 +52,13 @@ public class MBCategoryServiceUtil {
 	}
 
 	public static com.liferay.message.boards.model.MBCategory addCategory(
-		long parentCategoryId, java.lang.String name,
-		java.lang.String description, java.lang.String displayStyle,
-		java.lang.String emailAddress, java.lang.String inProtocol,
-		java.lang.String inServerName, int inServerPort, boolean inUseSSL,
-		java.lang.String inUserName, java.lang.String inPassword,
-		int inReadInterval, java.lang.String outEmailAddress,
-		boolean outCustom, java.lang.String outServerName, int outServerPort,
-		boolean outUseSSL, java.lang.String outUserName,
-		java.lang.String outPassword, boolean mailingListActive,
+		long parentCategoryId, String name, String description,
+		String displayStyle, String emailAddress, String inProtocol,
+		String inServerName, int inServerPort, boolean inUseSSL,
+		String inUserName, String inPassword, int inReadInterval,
+		String outEmailAddress, boolean outCustom, String outServerName,
+		int outServerPort, boolean outUseSSL, String outUserName,
+		String outPassword, boolean mailingListActive,
 		boolean allowAnonymousEmail,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -140,33 +137,33 @@ public class MBCategoryServiceUtil {
 			parentCategoryIds, status, start, end);
 	}
 
-	public static java.util.List<java.lang.Object> getCategoriesAndThreads(
-		long groupId, long categoryId) {
+	public static java.util.List<Object> getCategoriesAndThreads(long groupId,
+		long categoryId) {
 		return getService().getCategoriesAndThreads(groupId, categoryId);
 	}
 
-	public static java.util.List<java.lang.Object> getCategoriesAndThreads(
-		long groupId, long categoryId, int status) {
+	public static java.util.List<Object> getCategoriesAndThreads(long groupId,
+		long categoryId, int status) {
 		return getService().getCategoriesAndThreads(groupId, categoryId, status);
 	}
 
-	public static java.util.List<java.lang.Object> getCategoriesAndThreads(
-		long groupId, long categoryId, int status, int start, int end) {
+	public static java.util.List<Object> getCategoriesAndThreads(long groupId,
+		long categoryId, int status, int start, int end) {
 		return getService()
 				   .getCategoriesAndThreads(groupId, categoryId, status, start,
 			end);
 	}
 
-	public static java.util.List<java.lang.Object> getCategoriesAndThreads(
-		long groupId, long categoryId, int status, int start, int end,
+	public static java.util.List<Object> getCategoriesAndThreads(long groupId,
+		long categoryId, int status, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<?> obc) {
 		return getService()
 				   .getCategoriesAndThreads(groupId, categoryId, status, start,
 			end, obc);
 	}
 
-	public static java.util.List<java.lang.Object> getCategoriesAndThreads(
-		long groupId, long categoryId,
+	public static java.util.List<Object> getCategoriesAndThreads(long groupId,
+		long categoryId,
 		com.liferay.portal.kernel.dao.orm.QueryDefinition<?> queryDefinition)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
@@ -248,13 +245,12 @@ public class MBCategoryServiceUtil {
 	*
 	* @return the OSGi service identifier
 	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
+	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 
-	public static java.util.List<java.lang.Long> getSubcategoryIds(
-		java.util.List<java.lang.Long> categoryIds, long groupId,
-		long categoryId) {
+	public static java.util.List<Long> getSubcategoryIds(
+		java.util.List<Long> categoryIds, long groupId, long categoryId) {
 		return getService().getSubcategoryIds(categoryIds, groupId, categoryId);
 	}
 
@@ -303,15 +299,13 @@ public class MBCategoryServiceUtil {
 	}
 
 	public static com.liferay.message.boards.model.MBCategory updateCategory(
-		long categoryId, long parentCategoryId, java.lang.String name,
-		java.lang.String description, java.lang.String displayStyle,
-		java.lang.String emailAddress, java.lang.String inProtocol,
-		java.lang.String inServerName, int inServerPort, boolean inUseSSL,
-		java.lang.String inUserName, java.lang.String inPassword,
-		int inReadInterval, java.lang.String outEmailAddress,
-		boolean outCustom, java.lang.String outServerName, int outServerPort,
-		boolean outUseSSL, java.lang.String outUserName,
-		java.lang.String outPassword, boolean mailingListActive,
+		long categoryId, long parentCategoryId, String name,
+		String description, String displayStyle, String emailAddress,
+		String inProtocol, String inServerName, int inServerPort,
+		boolean inUseSSL, String inUserName, String inPassword,
+		int inReadInterval, String outEmailAddress, boolean outCustom,
+		String outServerName, int outServerPort, boolean outUseSSL,
+		String outUserName, String outPassword, boolean mailingListActive,
 		boolean allowAnonymousEmail, boolean mergeWithParentCategory,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {

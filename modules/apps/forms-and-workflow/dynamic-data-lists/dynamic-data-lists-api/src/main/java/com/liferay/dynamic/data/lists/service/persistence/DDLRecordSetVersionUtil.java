@@ -288,7 +288,7 @@ public class DDLRecordSetVersionUtil {
 	* @throws NoSuchRecordSetVersionException if a matching ddl record set version could not be found
 	*/
 	public static DDLRecordSetVersion findByRS_V(long recordSetId,
-		java.lang.String version)
+		String version)
 		throws com.liferay.dynamic.data.lists.exception.NoSuchRecordSetVersionException {
 		return getPersistence().findByRS_V(recordSetId, version);
 	}
@@ -301,7 +301,7 @@ public class DDLRecordSetVersionUtil {
 	* @return the matching ddl record set version, or <code>null</code> if a matching ddl record set version could not be found
 	*/
 	public static DDLRecordSetVersion fetchByRS_V(long recordSetId,
-		java.lang.String version) {
+		String version) {
 		return getPersistence().fetchByRS_V(recordSetId, version);
 	}
 
@@ -314,7 +314,7 @@ public class DDLRecordSetVersionUtil {
 	* @return the matching ddl record set version, or <code>null</code> if a matching ddl record set version could not be found
 	*/
 	public static DDLRecordSetVersion fetchByRS_V(long recordSetId,
-		java.lang.String version, boolean retrieveFromCache) {
+		String version, boolean retrieveFromCache) {
 		return getPersistence()
 				   .fetchByRS_V(recordSetId, version, retrieveFromCache);
 	}
@@ -327,7 +327,7 @@ public class DDLRecordSetVersionUtil {
 	* @return the ddl record set version that was removed
 	*/
 	public static DDLRecordSetVersion removeByRS_V(long recordSetId,
-		java.lang.String version)
+		String version)
 		throws com.liferay.dynamic.data.lists.exception.NoSuchRecordSetVersionException {
 		return getPersistence().removeByRS_V(recordSetId, version);
 	}
@@ -339,7 +339,7 @@ public class DDLRecordSetVersionUtil {
 	* @param version the version
 	* @return the number of matching ddl record set versions
 	*/
-	public static int countByRS_V(long recordSetId, java.lang.String version) {
+	public static int countByRS_V(long recordSetId, String version) {
 		return getPersistence().countByRS_V(recordSetId, version);
 	}
 
@@ -669,7 +669,7 @@ public class DDLRecordSetVersionUtil {
 		return getPersistence().countAll();
 	}
 
-	public static java.util.Set<java.lang.String> getBadColumnNames() {
+	public static java.util.Set<String> getBadColumnNames() {
 		return getPersistence().getBadColumnNames();
 	}
 

@@ -55,6 +55,6 @@ public interface HtmlPreviewEntry extends HtmlPreviewEntryModel, PersistedModel 
 			}
 		};
 
-	public java.lang.String getImagePreviewURL(
+	public String getImagePreviewURL(
 		com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay);
 }

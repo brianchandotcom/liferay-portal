@@ -67,8 +67,8 @@ import java.rmi.RemoteException;
 @ProviderType
 public class BookmarksEntryServiceSoap {
 	public static com.liferay.bookmarks.model.BookmarksEntrySoap addEntry(
-		long groupId, long folderId, java.lang.String name,
-		java.lang.String url, java.lang.String description,
+		long groupId, long folderId, String name, String url,
+		String description,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
@@ -391,8 +391,8 @@ public class BookmarksEntryServiceSoap {
 	}
 
 	public static com.liferay.bookmarks.model.BookmarksEntrySoap updateEntry(
-		long entryId, long groupId, long folderId, java.lang.String name,
-		java.lang.String url, java.lang.String description,
+		long entryId, long groupId, long folderId, String name, String url,
+		String description,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {

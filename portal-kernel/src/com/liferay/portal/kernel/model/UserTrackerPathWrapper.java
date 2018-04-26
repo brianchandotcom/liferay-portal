@@ -107,7 +107,7 @@ public class UserTrackerPathWrapper implements UserTrackerPath,
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new UserTrackerPathWrapper((UserTrackerPath)_userTrackerPath.clone());
 	}
 
@@ -147,7 +147,7 @@ public class UserTrackerPathWrapper implements UserTrackerPath,
 	* @return the path of this user tracker path
 	*/
 	@Override
-	public java.lang.String getPath() {
+	public String getPath() {
 		return _userTrackerPath.getPath();
 	}
 
@@ -272,7 +272,7 @@ public class UserTrackerPathWrapper implements UserTrackerPath,
 	* @param path the path of this user tracker path
 	*/
 	@Override
-	public void setPath(java.lang.String path) {
+	public void setPath(String path) {
 		_userTrackerPath.setPath(path);
 	}
 
@@ -332,7 +332,7 @@ public class UserTrackerPathWrapper implements UserTrackerPath,
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _userTrackerPath.toString();
 	}
 
@@ -342,7 +342,7 @@ public class UserTrackerPathWrapper implements UserTrackerPath,
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _userTrackerPath.toXmlString();
 	}
 

@@ -251,7 +251,7 @@ public class BrowserTrackerLocalServiceWrapper
 	* @return the OSGi service identifier
 	*/
 	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
+	public String getOSGiServiceIdentifier() {
 		return _browserTrackerLocalService.getOSGiServiceIdentifier();
 	}
 

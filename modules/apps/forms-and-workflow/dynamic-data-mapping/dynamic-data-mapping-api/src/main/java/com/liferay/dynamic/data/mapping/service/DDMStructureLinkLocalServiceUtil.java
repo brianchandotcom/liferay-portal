@@ -266,7 +266,7 @@ public class DDMStructureLinkLocalServiceUtil {
 	*
 	* @return the OSGi service identifier
 	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
+	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 
@@ -320,23 +320,22 @@ public class DDMStructureLinkLocalServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.dynamic.data.mapping.model.DDMStructure> getStructureLinkStructures(
-		long classNameId, long classPK, java.lang.String keywords)
+		long classNameId, long classPK, String keywords)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .getStructureLinkStructures(classNameId, classPK, keywords);
 	}
 
 	public static java.util.List<com.liferay.dynamic.data.mapping.model.DDMStructure> getStructureLinkStructures(
-		long classNameId, long classPK, java.lang.String keywords, int start,
-		int end) throws com.liferay.portal.kernel.exception.PortalException {
+		long classNameId, long classPK, String keywords, int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .getStructureLinkStructures(classNameId, classPK, keywords,
 			start, end);
 	}
 
 	public static java.util.List<com.liferay.dynamic.data.mapping.model.DDMStructure> getStructureLinkStructures(
-		long classNameId, long classPK, java.lang.String keywords, int start,
-		int end,
+		long classNameId, long classPK, String keywords, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.mapping.model.DDMStructureLink> orderByComparator)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
@@ -345,7 +344,7 @@ public class DDMStructureLinkLocalServiceUtil {
 	}
 
 	public static int getStructureLinkStructuresCount(long classNameId,
-		long classPK, java.lang.String keywords) {
+		long classPK, String keywords) {
 		return getService()
 				   .getStructureLinkStructuresCount(classNameId, classPK,
 			keywords);

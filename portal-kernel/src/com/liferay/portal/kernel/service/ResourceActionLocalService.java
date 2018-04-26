@@ -68,17 +68,16 @@ public interface ResourceActionLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.REINDEX)
 	public ResourceAction addResourceAction(ResourceAction resourceAction);
 
-	public ResourceAction addResourceAction(java.lang.String name,
-		java.lang.String actionId, long bitwiseValue);
+	public ResourceAction addResourceAction(String name, String actionId,
+		long bitwiseValue);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public void checkResourceActions();
 
-	public void checkResourceActions(java.lang.String name,
-		List<java.lang.String> actionIds);
+	public void checkResourceActions(String name, List<String> actionIds);
 
-	public void checkResourceActions(java.lang.String name,
-		List<java.lang.String> actionIds, boolean addDefaultActions);
+	public void checkResourceActions(String name, List<String> actionIds,
+		boolean addDefaultActions);
 
 	/**
 	* Creates a new resource action with the primary key. Does not add the resource action to the database.
@@ -180,8 +179,7 @@ public interface ResourceActionLocalService extends BaseLocalService,
 
 	@Skip
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ResourceAction fetchResourceAction(java.lang.String name,
-		java.lang.String actionId);
+	public ResourceAction fetchResourceAction(String name, String actionId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
@@ -194,7 +192,7 @@ public interface ResourceActionLocalService extends BaseLocalService,
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -214,8 +212,8 @@ public interface ResourceActionLocalService extends BaseLocalService,
 
 	@Skip
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ResourceAction getResourceAction(java.lang.String name,
-		java.lang.String actionId) throws PortalException;
+	public ResourceAction getResourceAction(String name, String actionId)
+		throws PortalException;
 
 	/**
 	* Returns a range of all the resource actions.
@@ -232,7 +230,7 @@ public interface ResourceActionLocalService extends BaseLocalService,
 	public List<ResourceAction> getResourceActions(int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<ResourceAction> getResourceActions(java.lang.String name);
+	public List<ResourceAction> getResourceActions(String name);
 
 	/**
 	* Returns the number of resource actions.
@@ -243,7 +241,7 @@ public interface ResourceActionLocalService extends BaseLocalService,
 	public int getResourceActionsCount();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getResourceActionsCount(java.lang.String name);
+	public int getResourceActionsCount(String name);
 
 	/**
 	* Updates the resource action in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.

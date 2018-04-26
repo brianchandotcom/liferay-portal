@@ -24,50 +24,49 @@ import aQute.bnd.annotation.ProviderType;
 public interface CalendarBookingFinder {
 	public int countByKeywords(long companyId, long[] groupIds,
 		long[] calendarIds, long[] calendarResourceIds,
-		long parentCalendarBookingId, java.lang.String keywords,
-		long startTime, long endTime, int[] statuses);
+		long parentCalendarBookingId, String keywords, long startTime,
+		long endTime, int[] statuses);
 
 	public int countByC_G_C_C_P_T_D_L_S_E_S(long companyId, long[] groupIds,
 		long[] calendarIds, long[] calendarResourceIds,
-		long parentCalendarBookingId, java.lang.String title,
-		java.lang.String description, java.lang.String location,
-		long startTime, long endTime, int[] statuses, boolean andOperator);
+		long parentCalendarBookingId, String title, String description,
+		String location, long startTime, long endTime, int[] statuses,
+		boolean andOperator);
 
 	public int countByC_G_C_C_P_T_D_L_S_E_S(long companyId, long[] groupIds,
 		long[] calendarIds, long[] calendarResourceIds,
-		long parentCalendarBookingId, java.lang.String[] titles,
-		java.lang.String[] descriptions, java.lang.String[] locations,
-		long startTime, long endTime, int[] statuses, boolean andOperator);
+		long parentCalendarBookingId, String[] titles, String[] descriptions,
+		String[] locations, long startTime, long endTime, int[] statuses,
+		boolean andOperator);
 
 	public int filterCountByKeywords(long companyId, long[] groupIds,
 		long[] calendarIds, long[] calendarResourceIds,
-		long parentCalendarBookingId, java.lang.String keywords,
-		long startTime, long endTime, int[] statuses);
+		long parentCalendarBookingId, String keywords, long startTime,
+		long endTime, int[] statuses);
 
 	public int filterCountByC_G_C_C_P_T_D_L_S_E_S(long companyId,
 		long[] groupIds, long[] calendarIds, long[] calendarResourceIds,
-		long parentCalendarBookingId, java.lang.String title,
-		java.lang.String description, java.lang.String location,
-		long startTime, long endTime, int[] statuses, boolean andOperator);
+		long parentCalendarBookingId, String title, String description,
+		String location, long startTime, long endTime, int[] statuses,
+		boolean andOperator);
 
 	public int filterCountByC_G_C_C_P_T_D_L_S_E_S(long companyId,
 		long[] groupIds, long[] calendarIds, long[] calendarResourceIds,
-		long parentCalendarBookingId, java.lang.String[] titles,
-		java.lang.String[] descriptions, java.lang.String[] locations,
-		long startTime, long endTime, int[] statuses, boolean andOperator);
+		long parentCalendarBookingId, String[] titles, String[] descriptions,
+		String[] locations, long startTime, long endTime, int[] statuses,
+		boolean andOperator);
 
 	public java.util.List<com.liferay.calendar.model.CalendarBooking> filterFindByKeywords(
 		long companyId, long[] groupIds, long[] calendarIds,
 		long[] calendarResourceIds, long parentCalendarBookingId,
-		java.lang.String keywords, long startTime, long endTime,
-		boolean recurring, int[] statuses, int start, int end,
+		String keywords, long startTime, long endTime, boolean recurring,
+		int[] statuses, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.calendar.model.CalendarBooking> orderByComparator);
 
 	public java.util.List<com.liferay.calendar.model.CalendarBooking> filterFindByC_G_C_C_P_T_D_L_S_E_S(
 		long companyId, long[] groupIds, long[] calendarIds,
-		long[] calendarResourceIds, long parentCalendarBookingId,
-		java.lang.String title, java.lang.String description,
-		java.lang.String location, long startTime, long endTime,
+		long[] calendarResourceIds, long parentCalendarBookingId, String title,
+		String description, String location, long startTime, long endTime,
 		boolean recurring, int[] statuses, boolean andOperator, int start,
 		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.calendar.model.CalendarBooking> orderByComparator);
@@ -75,10 +74,9 @@ public interface CalendarBookingFinder {
 	public java.util.List<com.liferay.calendar.model.CalendarBooking> filterFindByC_G_C_C_P_T_D_L_S_E_S(
 		long companyId, long[] groupIds, long[] calendarIds,
 		long[] calendarResourceIds, long parentCalendarBookingId,
-		java.lang.String[] titles, java.lang.String[] descriptions,
-		java.lang.String[] locations, long startTime, long endTime,
-		boolean recurring, int[] statuses, boolean andOperator, int start,
-		int end,
+		String[] titles, String[] descriptions, String[] locations,
+		long startTime, long endTime, boolean recurring, int[] statuses,
+		boolean andOperator, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.calendar.model.CalendarBooking> orderByComparator);
 
 	public java.util.List<com.liferay.calendar.model.CalendarBooking> findByFutureReminders(
@@ -87,15 +85,14 @@ public interface CalendarBookingFinder {
 	public java.util.List<com.liferay.calendar.model.CalendarBooking> findByKeywords(
 		long companyId, long[] groupIds, long[] calendarIds,
 		long[] calendarResourceIds, long parentCalendarBookingId,
-		java.lang.String keywords, long startTime, long endTime,
-		boolean recurring, int[] statuses, int start, int end,
+		String keywords, long startTime, long endTime, boolean recurring,
+		int[] statuses, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.calendar.model.CalendarBooking> orderByComparator);
 
 	public java.util.List<com.liferay.calendar.model.CalendarBooking> findByC_G_C_C_P_T_D_L_S_E_S(
 		long companyId, long[] groupIds, long[] calendarIds,
-		long[] calendarResourceIds, long parentCalendarBookingId,
-		java.lang.String title, java.lang.String description,
-		java.lang.String location, long startTime, long endTime,
+		long[] calendarResourceIds, long parentCalendarBookingId, String title,
+		String description, String location, long startTime, long endTime,
 		boolean recurring, int[] statuses, boolean andOperator, int start,
 		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.calendar.model.CalendarBooking> orderByComparator);
@@ -103,9 +100,8 @@ public interface CalendarBookingFinder {
 	public java.util.List<com.liferay.calendar.model.CalendarBooking> findByC_G_C_C_P_T_D_L_S_E_S(
 		long companyId, long[] groupIds, long[] calendarIds,
 		long[] calendarResourceIds, long parentCalendarBookingId,
-		java.lang.String[] titles, java.lang.String[] descriptions,
-		java.lang.String[] locations, long startTime, long endTime,
-		boolean recurring, int[] statuses, boolean andOperator, int start,
-		int end,
+		String[] titles, String[] descriptions, String[] locations,
+		long startTime, long endTime, boolean recurring, int[] statuses,
+		boolean andOperator, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.calendar.model.CalendarBooking> orderByComparator);
 }

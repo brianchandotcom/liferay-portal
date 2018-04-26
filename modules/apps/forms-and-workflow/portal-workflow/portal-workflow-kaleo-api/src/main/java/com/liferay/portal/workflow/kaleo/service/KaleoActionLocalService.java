@@ -71,9 +71,8 @@ public interface KaleoActionLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.REINDEX)
 	public KaleoAction addKaleoAction(KaleoAction kaleoAction);
 
-	public KaleoAction addKaleoAction(java.lang.String kaleoClassName,
-		long kaleoClassPK, long kaleoDefinitionVersionId,
-		java.lang.String kaleoNodeName, Action action,
+	public KaleoAction addKaleoAction(String kaleoClassName, long kaleoClassPK,
+		long kaleoDefinitionVersionId, String kaleoNodeName, Action action,
 		ServiceContext serviceContext) throws PortalException;
 
 	/**
@@ -211,12 +210,12 @@ public interface KaleoActionLocalService extends BaseLocalService,
 	public List<KaleoAction> getKaleoActions(int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<KaleoAction> getKaleoActions(java.lang.String kaleoClassName,
+	public List<KaleoAction> getKaleoActions(String kaleoClassName,
 		long kaleoClassPK);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<KaleoAction> getKaleoActions(java.lang.String kaleoClassName,
-		long kaleoClassPK, java.lang.String executionType);
+	public List<KaleoAction> getKaleoActions(String kaleoClassName,
+		long kaleoClassPK, String executionType);
 
 	/**
 	* Returns the number of kaleo actions.
@@ -231,7 +230,7 @@ public interface KaleoActionLocalService extends BaseLocalService,
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

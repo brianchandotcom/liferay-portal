@@ -243,7 +243,7 @@ public class ReadingTimeEntryLocalServiceWrapper
 	*/
 	@Override
 	public com.liferay.reading.time.model.ReadingTimeEntry fetchReadingTimeEntryByUuidAndGroupId(
-		java.lang.String uuid, long groupId) {
+		String uuid, long groupId) {
 		return _readingTimeEntryLocalService.fetchReadingTimeEntryByUuidAndGroupId(uuid,
 			groupId);
 	}
@@ -270,7 +270,7 @@ public class ReadingTimeEntryLocalServiceWrapper
 	* @return the OSGi service identifier
 	*/
 	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
+	public String getOSGiServiceIdentifier() {
 		return _readingTimeEntryLocalService.getOSGiServiceIdentifier();
 	}
 
@@ -307,7 +307,7 @@ public class ReadingTimeEntryLocalServiceWrapper
 	*/
 	@Override
 	public java.util.List<com.liferay.reading.time.model.ReadingTimeEntry> getReadingTimeEntriesByUuidAndCompanyId(
-		java.lang.String uuid, long companyId) {
+		String uuid, long companyId) {
 		return _readingTimeEntryLocalService.getReadingTimeEntriesByUuidAndCompanyId(uuid,
 			companyId);
 	}
@@ -324,7 +324,7 @@ public class ReadingTimeEntryLocalServiceWrapper
 	*/
 	@Override
 	public java.util.List<com.liferay.reading.time.model.ReadingTimeEntry> getReadingTimeEntriesByUuidAndCompanyId(
-		java.lang.String uuid, long companyId, int start, int end,
+		String uuid, long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.reading.time.model.ReadingTimeEntry> orderByComparator) {
 		return _readingTimeEntryLocalService.getReadingTimeEntriesByUuidAndCompanyId(uuid,
 			companyId, start, end, orderByComparator);
@@ -364,7 +364,7 @@ public class ReadingTimeEntryLocalServiceWrapper
 	*/
 	@Override
 	public com.liferay.reading.time.model.ReadingTimeEntry getReadingTimeEntryByUuidAndGroupId(
-		java.lang.String uuid, long groupId)
+		String uuid, long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _readingTimeEntryLocalService.getReadingTimeEntryByUuidAndGroupId(uuid,
 			groupId);

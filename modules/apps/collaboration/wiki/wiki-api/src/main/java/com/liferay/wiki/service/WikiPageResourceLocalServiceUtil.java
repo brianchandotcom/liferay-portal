@@ -43,7 +43,7 @@ public class WikiPageResourceLocalServiceUtil {
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.wiki.service.impl.WikiPageResourceLocalServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static com.liferay.wiki.model.WikiPageResource addPageResource(
-		long groupId, long nodeId, java.lang.String title) {
+		long groupId, long nodeId, String title) {
 		return getService().addPageResource(groupId, nodeId, title);
 	}
 
@@ -53,7 +53,7 @@ public class WikiPageResourceLocalServiceUtil {
 	*/
 	@Deprecated
 	public static com.liferay.wiki.model.WikiPageResource addPageResource(
-		long nodeId, java.lang.String title) {
+		long nodeId, String title) {
 		return getService().addPageResource(nodeId, title);
 	}
 
@@ -79,7 +79,7 @@ public class WikiPageResourceLocalServiceUtil {
 		return getService().createWikiPageResource(resourcePrimKey);
 	}
 
-	public static void deletePageResource(long nodeId, java.lang.String title)
+	public static void deletePageResource(long nodeId, String title)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().deletePageResource(nodeId, title);
 	}
@@ -196,12 +196,12 @@ public class WikiPageResourceLocalServiceUtil {
 	}
 
 	public static com.liferay.wiki.model.WikiPageResource fetchPageResource(
-		long nodeId, java.lang.String title) {
+		long nodeId, String title) {
 		return getService().fetchPageResource(nodeId, title);
 	}
 
 	public static com.liferay.wiki.model.WikiPageResource fetchPageResource(
-		java.lang.String uuid) {
+		String uuid) {
 		return getService().fetchPageResource(uuid);
 	}
 
@@ -218,7 +218,7 @@ public class WikiPageResourceLocalServiceUtil {
 	* @return the matching wiki page resource, or <code>null</code> if a matching wiki page resource could not be found
 	*/
 	public static com.liferay.wiki.model.WikiPageResource fetchWikiPageResourceByUuidAndGroupId(
-		java.lang.String uuid, long groupId) {
+		String uuid, long groupId) {
 		return getService().fetchWikiPageResourceByUuidAndGroupId(uuid, groupId);
 	}
 
@@ -235,7 +235,7 @@ public class WikiPageResourceLocalServiceUtil {
 	*
 	* @return the OSGi service identifier
 	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
+	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 
@@ -246,13 +246,13 @@ public class WikiPageResourceLocalServiceUtil {
 	}
 
 	public static com.liferay.wiki.model.WikiPageResource getPageResource(
-		long nodeId, java.lang.String title)
+		long nodeId, String title)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getPageResource(nodeId, title);
 	}
 
 	public static long getPageResourcePrimKey(long groupId, long nodeId,
-		java.lang.String title) {
+		String title) {
 		return getService().getPageResourcePrimKey(groupId, nodeId, title);
 	}
 
@@ -261,8 +261,7 @@ public class WikiPageResourceLocalServiceUtil {
 	long, String)}
 	*/
 	@Deprecated
-	public static long getPageResourcePrimKey(long nodeId,
-		java.lang.String title) {
+	public static long getPageResourcePrimKey(long nodeId, String title) {
 		return getService().getPageResourcePrimKey(nodeId, title);
 	}
 
@@ -294,7 +293,7 @@ public class WikiPageResourceLocalServiceUtil {
 	* @throws PortalException if a matching wiki page resource could not be found
 	*/
 	public static com.liferay.wiki.model.WikiPageResource getWikiPageResourceByUuidAndGroupId(
-		java.lang.String uuid, long groupId)
+		String uuid, long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getWikiPageResourceByUuidAndGroupId(uuid, groupId);
 	}
@@ -323,7 +322,7 @@ public class WikiPageResourceLocalServiceUtil {
 	* @return the matching wiki page resources, or an empty list if no matches were found
 	*/
 	public static java.util.List<com.liferay.wiki.model.WikiPageResource> getWikiPageResourcesByUuidAndCompanyId(
-		java.lang.String uuid, long companyId) {
+		String uuid, long companyId) {
 		return getService()
 				   .getWikiPageResourcesByUuidAndCompanyId(uuid, companyId);
 	}
@@ -339,7 +338,7 @@ public class WikiPageResourceLocalServiceUtil {
 	* @return the range of matching wiki page resources, or an empty list if no matches were found
 	*/
 	public static java.util.List<com.liferay.wiki.model.WikiPageResource> getWikiPageResourcesByUuidAndCompanyId(
-		java.lang.String uuid, long companyId, int start, int end,
+		String uuid, long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiPageResource> orderByComparator) {
 		return getService()
 				   .getWikiPageResourcesByUuidAndCompanyId(uuid, companyId,

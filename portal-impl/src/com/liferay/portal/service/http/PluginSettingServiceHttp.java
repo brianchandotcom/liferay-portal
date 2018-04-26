@@ -55,8 +55,8 @@ import com.liferay.portal.kernel.util.MethodKey;
 @ProviderType
 public class PluginSettingServiceHttp {
 	public static com.liferay.portal.kernel.model.PluginSetting updatePluginSetting(
-		HttpPrincipal httpPrincipal, long companyId, java.lang.String pluginId,
-		java.lang.String pluginType, java.lang.String roles, boolean active)
+		HttpPrincipal httpPrincipal, long companyId, String pluginId,
+		String pluginType, String roles, boolean active)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(PluginSettingServiceUtil.class,
@@ -89,7 +89,6 @@ public class PluginSettingServiceHttp {
 
 	private static Log _log = LogFactoryUtil.getLog(PluginSettingServiceHttp.class);
 	private static final Class<?>[] _updatePluginSettingParameterTypes0 = new Class[] {
-			long.class, java.lang.String.class, java.lang.String.class,
-			java.lang.String.class, boolean.class
+			long.class, String.class, String.class, String.class, boolean.class
 		};
 }

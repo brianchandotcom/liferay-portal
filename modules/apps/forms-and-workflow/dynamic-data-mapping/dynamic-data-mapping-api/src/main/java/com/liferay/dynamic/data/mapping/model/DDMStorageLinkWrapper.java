@@ -114,7 +114,7 @@ public class DDMStorageLinkWrapper implements DDMStorageLink,
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new DDMStorageLinkWrapper((DDMStorageLink)_ddmStorageLink.clone());
 	}
 
@@ -129,7 +129,7 @@ public class DDMStorageLinkWrapper implements DDMStorageLink,
 	* @return the fully qualified class name of this ddm storage link
 	*/
 	@Override
-	public java.lang.String getClassName() {
+	public String getClassName() {
 		return _ddmStorageLink.getClassName();
 	}
 
@@ -194,7 +194,7 @@ public class DDMStorageLinkWrapper implements DDMStorageLink,
 	}
 
 	@Override
-	public java.lang.String getStorageType()
+	public String getStorageType()
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _ddmStorageLink.getStorageType();
 	}
@@ -231,7 +231,7 @@ public class DDMStorageLinkWrapper implements DDMStorageLink,
 	* @return the uuid of this ddm storage link
 	*/
 	@Override
-	public java.lang.String getUuid() {
+	public String getUuid() {
 		return _ddmStorageLink.getUuid();
 	}
 
@@ -266,7 +266,7 @@ public class DDMStorageLinkWrapper implements DDMStorageLink,
 	}
 
 	@Override
-	public void setClassName(java.lang.String className) {
+	public void setClassName(String className) {
 		_ddmStorageLink.setClassName(className);
 	}
 
@@ -372,7 +372,7 @@ public class DDMStorageLinkWrapper implements DDMStorageLink,
 	* @param uuid the uuid of this ddm storage link
 	*/
 	@Override
-	public void setUuid(java.lang.String uuid) {
+	public void setUuid(String uuid) {
 		_ddmStorageLink.setUuid(uuid);
 	}
 
@@ -387,7 +387,7 @@ public class DDMStorageLinkWrapper implements DDMStorageLink,
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _ddmStorageLink.toString();
 	}
 
@@ -397,7 +397,7 @@ public class DDMStorageLinkWrapper implements DDMStorageLink,
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _ddmStorageLink.toXmlString();
 	}
 

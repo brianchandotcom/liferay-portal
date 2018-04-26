@@ -83,7 +83,7 @@ public interface SocialActivitySettingLocalService extends BaseLocalService,
 	public SocialActivitySetting createSocialActivitySetting(
 		long activitySettingId);
 
-	public void deleteActivitySetting(long groupId, java.lang.String className,
+	public void deleteActivitySetting(long groupId, String className,
 		long classPK);
 
 	public void deleteActivitySettings(long groupId);
@@ -184,11 +184,11 @@ public interface SocialActivitySettingLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public SocialActivityDefinition getActivityDefinition(long groupId,
-		java.lang.String className, int activityType);
+		String className, int activityType);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<SocialActivityDefinition> getActivityDefinitions(long groupId,
-		java.lang.String className);
+		String className);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<SocialActivitySetting> getActivitySettings(long groupId);
@@ -201,7 +201,7 @@ public interface SocialActivitySettingLocalService extends BaseLocalService,
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -248,19 +248,19 @@ public interface SocialActivitySettingLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public boolean isEnabled(long groupId, long classNameId, long classPK);
 
-	public void updateActivitySetting(long groupId, java.lang.String className,
+	public void updateActivitySetting(long groupId, String className,
 		boolean enabled) throws PortalException;
 
-	public void updateActivitySetting(long groupId, java.lang.String className,
+	public void updateActivitySetting(long groupId, String className,
 		int activityType,
 		SocialActivityCounterDefinition activityCounterDefinition)
 		throws PortalException;
 
-	public void updateActivitySetting(long groupId, java.lang.String className,
+	public void updateActivitySetting(long groupId, String className,
 		long classPK, boolean enabled) throws PortalException;
 
-	public void updateActivitySettings(long groupId,
-		java.lang.String className, int activityType,
+	public void updateActivitySettings(long groupId, String className,
+		int activityType,
 		List<SocialActivityCounterDefinition> activityCounterDefinitions)
 		throws PortalException;
 

@@ -179,7 +179,7 @@ public class DDLRecordWrapper implements DDLRecord, ModelWrapper<DDLRecord> {
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new DDLRecordWrapper((DDLRecord)_ddlRecord.clone());
 	}
 
@@ -210,7 +210,7 @@ public class DDLRecordWrapper implements DDLRecord, ModelWrapper<DDLRecord> {
 
 	@Override
 	public java.util.List<com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue> getDDMFormFieldValues(
-		java.lang.String fieldName)
+		String fieldName)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _ddlRecord.getDDMFormFieldValues(fieldName);
 	}
@@ -247,14 +247,14 @@ public class DDLRecordWrapper implements DDLRecord, ModelWrapper<DDLRecord> {
 	}
 
 	@Override
-	public Serializable getFieldDataType(java.lang.String fieldName)
+	public Serializable getFieldDataType(String fieldName)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _ddlRecord.getFieldDataType(fieldName);
 	}
 
 	@Override
-	public Serializable getFieldType(java.lang.String fieldName)
-		throws java.lang.Exception {
+	public Serializable getFieldType(String fieldName)
+		throws Exception {
 		return _ddlRecord.getFieldType(fieldName);
 	}
 
@@ -341,7 +341,7 @@ public class DDLRecordWrapper implements DDLRecord, ModelWrapper<DDLRecord> {
 	* @return the record set version of this ddl record
 	*/
 	@Override
-	public java.lang.String getRecordSetVersion() {
+	public String getRecordSetVersion() {
 		return _ddlRecord.getRecordSetVersion();
 	}
 
@@ -352,7 +352,7 @@ public class DDLRecordWrapper implements DDLRecord, ModelWrapper<DDLRecord> {
 	}
 
 	@Override
-	public DDLRecordVersion getRecordVersion(java.lang.String version)
+	public DDLRecordVersion getRecordVersion(String version)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _ddlRecord.getRecordVersion(version);
 	}
@@ -379,7 +379,7 @@ public class DDLRecordWrapper implements DDLRecord, ModelWrapper<DDLRecord> {
 	* @return the user name of this ddl record
 	*/
 	@Override
-	public java.lang.String getUserName() {
+	public String getUserName() {
 		return _ddlRecord.getUserName();
 	}
 
@@ -389,7 +389,7 @@ public class DDLRecordWrapper implements DDLRecord, ModelWrapper<DDLRecord> {
 	* @return the user uuid of this ddl record
 	*/
 	@Override
-	public java.lang.String getUserUuid() {
+	public String getUserUuid() {
 		return _ddlRecord.getUserUuid();
 	}
 
@@ -399,7 +399,7 @@ public class DDLRecordWrapper implements DDLRecord, ModelWrapper<DDLRecord> {
 	* @return the uuid of this ddl record
 	*/
 	@Override
-	public java.lang.String getUuid() {
+	public String getUuid() {
 		return _ddlRecord.getUuid();
 	}
 
@@ -409,7 +409,7 @@ public class DDLRecordWrapper implements DDLRecord, ModelWrapper<DDLRecord> {
 	* @return the version of this ddl record
 	*/
 	@Override
-	public java.lang.String getVersion() {
+	public String getVersion() {
 		return _ddlRecord.getVersion();
 	}
 
@@ -429,7 +429,7 @@ public class DDLRecordWrapper implements DDLRecord, ModelWrapper<DDLRecord> {
 	* @return the version user name of this ddl record
 	*/
 	@Override
-	public java.lang.String getVersionUserName() {
+	public String getVersionUserName() {
 		return _ddlRecord.getVersionUserName();
 	}
 
@@ -439,7 +439,7 @@ public class DDLRecordWrapper implements DDLRecord, ModelWrapper<DDLRecord> {
 	* @return the version user uuid of this ddl record
 	*/
 	@Override
-	public java.lang.String getVersionUserUuid() {
+	public String getVersionUserUuid() {
 		return _ddlRecord.getVersionUserUuid();
 	}
 
@@ -605,7 +605,7 @@ public class DDLRecordWrapper implements DDLRecord, ModelWrapper<DDLRecord> {
 	* @param recordSetVersion the record set version of this ddl record
 	*/
 	@Override
-	public void setRecordSetVersion(java.lang.String recordSetVersion) {
+	public void setRecordSetVersion(String recordSetVersion) {
 		_ddlRecord.setRecordSetVersion(recordSetVersion);
 	}
 
@@ -625,7 +625,7 @@ public class DDLRecordWrapper implements DDLRecord, ModelWrapper<DDLRecord> {
 	* @param userName the user name of this ddl record
 	*/
 	@Override
-	public void setUserName(java.lang.String userName) {
+	public void setUserName(String userName) {
 		_ddlRecord.setUserName(userName);
 	}
 
@@ -635,7 +635,7 @@ public class DDLRecordWrapper implements DDLRecord, ModelWrapper<DDLRecord> {
 	* @param userUuid the user uuid of this ddl record
 	*/
 	@Override
-	public void setUserUuid(java.lang.String userUuid) {
+	public void setUserUuid(String userUuid) {
 		_ddlRecord.setUserUuid(userUuid);
 	}
 
@@ -645,7 +645,7 @@ public class DDLRecordWrapper implements DDLRecord, ModelWrapper<DDLRecord> {
 	* @param uuid the uuid of this ddl record
 	*/
 	@Override
-	public void setUuid(java.lang.String uuid) {
+	public void setUuid(String uuid) {
 		_ddlRecord.setUuid(uuid);
 	}
 
@@ -655,7 +655,7 @@ public class DDLRecordWrapper implements DDLRecord, ModelWrapper<DDLRecord> {
 	* @param version the version of this ddl record
 	*/
 	@Override
-	public void setVersion(java.lang.String version) {
+	public void setVersion(String version) {
 		_ddlRecord.setVersion(version);
 	}
 
@@ -675,7 +675,7 @@ public class DDLRecordWrapper implements DDLRecord, ModelWrapper<DDLRecord> {
 	* @param versionUserName the version user name of this ddl record
 	*/
 	@Override
-	public void setVersionUserName(java.lang.String versionUserName) {
+	public void setVersionUserName(String versionUserName) {
 		_ddlRecord.setVersionUserName(versionUserName);
 	}
 
@@ -685,7 +685,7 @@ public class DDLRecordWrapper implements DDLRecord, ModelWrapper<DDLRecord> {
 	* @param versionUserUuid the version user uuid of this ddl record
 	*/
 	@Override
-	public void setVersionUserUuid(java.lang.String versionUserUuid) {
+	public void setVersionUserUuid(String versionUserUuid) {
 		_ddlRecord.setVersionUserUuid(versionUserUuid);
 	}
 
@@ -700,7 +700,7 @@ public class DDLRecordWrapper implements DDLRecord, ModelWrapper<DDLRecord> {
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _ddlRecord.toString();
 	}
 
@@ -710,7 +710,7 @@ public class DDLRecordWrapper implements DDLRecord, ModelWrapper<DDLRecord> {
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _ddlRecord.toXmlString();
 	}
 

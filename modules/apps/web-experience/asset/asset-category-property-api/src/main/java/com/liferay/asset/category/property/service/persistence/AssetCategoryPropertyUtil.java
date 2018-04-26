@@ -451,7 +451,7 @@ public class AssetCategoryPropertyUtil {
 	* @return the matching asset category properties
 	*/
 	public static List<AssetCategoryProperty> findByC_K(long companyId,
-		java.lang.String key) {
+		String key) {
 		return getPersistence().findByC_K(companyId, key);
 	}
 
@@ -469,7 +469,7 @@ public class AssetCategoryPropertyUtil {
 	* @return the range of matching asset category properties
 	*/
 	public static List<AssetCategoryProperty> findByC_K(long companyId,
-		java.lang.String key, int start, int end) {
+		String key, int start, int end) {
 		return getPersistence().findByC_K(companyId, key, start, end);
 	}
 
@@ -488,7 +488,7 @@ public class AssetCategoryPropertyUtil {
 	* @return the ordered range of matching asset category properties
 	*/
 	public static List<AssetCategoryProperty> findByC_K(long companyId,
-		java.lang.String key, int start, int end,
+		String key, int start, int end,
 		OrderByComparator<AssetCategoryProperty> orderByComparator) {
 		return getPersistence()
 				   .findByC_K(companyId, key, start, end, orderByComparator);
@@ -510,7 +510,7 @@ public class AssetCategoryPropertyUtil {
 	* @return the ordered range of matching asset category properties
 	*/
 	public static List<AssetCategoryProperty> findByC_K(long companyId,
-		java.lang.String key, int start, int end,
+		String key, int start, int end,
 		OrderByComparator<AssetCategoryProperty> orderByComparator,
 		boolean retrieveFromCache) {
 		return getPersistence()
@@ -528,8 +528,7 @@ public class AssetCategoryPropertyUtil {
 	* @throws NoSuchCategoryPropertyException if a matching asset category property could not be found
 	*/
 	public static AssetCategoryProperty findByC_K_First(long companyId,
-		java.lang.String key,
-		OrderByComparator<AssetCategoryProperty> orderByComparator)
+		String key, OrderByComparator<AssetCategoryProperty> orderByComparator)
 		throws com.liferay.asset.category.property.exception.NoSuchCategoryPropertyException {
 		return getPersistence()
 				   .findByC_K_First(companyId, key, orderByComparator);
@@ -544,8 +543,7 @@ public class AssetCategoryPropertyUtil {
 	* @return the first matching asset category property, or <code>null</code> if a matching asset category property could not be found
 	*/
 	public static AssetCategoryProperty fetchByC_K_First(long companyId,
-		java.lang.String key,
-		OrderByComparator<AssetCategoryProperty> orderByComparator) {
+		String key, OrderByComparator<AssetCategoryProperty> orderByComparator) {
 		return getPersistence()
 				   .fetchByC_K_First(companyId, key, orderByComparator);
 	}
@@ -560,8 +558,7 @@ public class AssetCategoryPropertyUtil {
 	* @throws NoSuchCategoryPropertyException if a matching asset category property could not be found
 	*/
 	public static AssetCategoryProperty findByC_K_Last(long companyId,
-		java.lang.String key,
-		OrderByComparator<AssetCategoryProperty> orderByComparator)
+		String key, OrderByComparator<AssetCategoryProperty> orderByComparator)
 		throws com.liferay.asset.category.property.exception.NoSuchCategoryPropertyException {
 		return getPersistence().findByC_K_Last(companyId, key, orderByComparator);
 	}
@@ -575,8 +572,7 @@ public class AssetCategoryPropertyUtil {
 	* @return the last matching asset category property, or <code>null</code> if a matching asset category property could not be found
 	*/
 	public static AssetCategoryProperty fetchByC_K_Last(long companyId,
-		java.lang.String key,
-		OrderByComparator<AssetCategoryProperty> orderByComparator) {
+		String key, OrderByComparator<AssetCategoryProperty> orderByComparator) {
 		return getPersistence()
 				   .fetchByC_K_Last(companyId, key, orderByComparator);
 	}
@@ -592,7 +588,7 @@ public class AssetCategoryPropertyUtil {
 	* @throws NoSuchCategoryPropertyException if a asset category property with the primary key could not be found
 	*/
 	public static AssetCategoryProperty[] findByC_K_PrevAndNext(
-		long categoryPropertyId, long companyId, java.lang.String key,
+		long categoryPropertyId, long companyId, String key,
 		OrderByComparator<AssetCategoryProperty> orderByComparator)
 		throws com.liferay.asset.category.property.exception.NoSuchCategoryPropertyException {
 		return getPersistence()
@@ -606,7 +602,7 @@ public class AssetCategoryPropertyUtil {
 	* @param companyId the company ID
 	* @param key the key
 	*/
-	public static void removeByC_K(long companyId, java.lang.String key) {
+	public static void removeByC_K(long companyId, String key) {
 		getPersistence().removeByC_K(companyId, key);
 	}
 
@@ -617,7 +613,7 @@ public class AssetCategoryPropertyUtil {
 	* @param key the key
 	* @return the number of matching asset category properties
 	*/
-	public static int countByC_K(long companyId, java.lang.String key) {
+	public static int countByC_K(long companyId, String key) {
 		return getPersistence().countByC_K(companyId, key);
 	}
 
@@ -629,8 +625,7 @@ public class AssetCategoryPropertyUtil {
 	* @return the matching asset category property
 	* @throws NoSuchCategoryPropertyException if a matching asset category property could not be found
 	*/
-	public static AssetCategoryProperty findByCA_K(long categoryId,
-		java.lang.String key)
+	public static AssetCategoryProperty findByCA_K(long categoryId, String key)
 		throws com.liferay.asset.category.property.exception.NoSuchCategoryPropertyException {
 		return getPersistence().findByCA_K(categoryId, key);
 	}
@@ -642,8 +637,7 @@ public class AssetCategoryPropertyUtil {
 	* @param key the key
 	* @return the matching asset category property, or <code>null</code> if a matching asset category property could not be found
 	*/
-	public static AssetCategoryProperty fetchByCA_K(long categoryId,
-		java.lang.String key) {
+	public static AssetCategoryProperty fetchByCA_K(long categoryId, String key) {
 		return getPersistence().fetchByCA_K(categoryId, key);
 	}
 
@@ -656,7 +650,7 @@ public class AssetCategoryPropertyUtil {
 	* @return the matching asset category property, or <code>null</code> if a matching asset category property could not be found
 	*/
 	public static AssetCategoryProperty fetchByCA_K(long categoryId,
-		java.lang.String key, boolean retrieveFromCache) {
+		String key, boolean retrieveFromCache) {
 		return getPersistence().fetchByCA_K(categoryId, key, retrieveFromCache);
 	}
 
@@ -667,8 +661,7 @@ public class AssetCategoryPropertyUtil {
 	* @param key the key
 	* @return the asset category property that was removed
 	*/
-	public static AssetCategoryProperty removeByCA_K(long categoryId,
-		java.lang.String key)
+	public static AssetCategoryProperty removeByCA_K(long categoryId, String key)
 		throws com.liferay.asset.category.property.exception.NoSuchCategoryPropertyException {
 		return getPersistence().removeByCA_K(categoryId, key);
 	}
@@ -680,7 +673,7 @@ public class AssetCategoryPropertyUtil {
 	* @param key the key
 	* @return the number of matching asset category properties
 	*/
-	public static int countByCA_K(long categoryId, java.lang.String key) {
+	public static int countByCA_K(long categoryId, String key) {
 		return getPersistence().countByCA_K(categoryId, key);
 	}
 
@@ -836,7 +829,7 @@ public class AssetCategoryPropertyUtil {
 		return getPersistence().countAll();
 	}
 
-	public static java.util.Set<java.lang.String> getBadColumnNames() {
+	public static java.util.Set<String> getBadColumnNames() {
 		return getPersistence().getBadColumnNames();
 	}
 

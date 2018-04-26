@@ -46,7 +46,7 @@ public interface VirtualHostPersistence extends BasePersistence<VirtualHost> {
 	* @return the matching virtual host
 	* @throws NoSuchVirtualHostException if a matching virtual host could not be found
 	*/
-	public VirtualHost findByHostname(java.lang.String hostname)
+	public VirtualHost findByHostname(String hostname)
 		throws NoSuchVirtualHostException;
 
 	/**
@@ -55,7 +55,7 @@ public interface VirtualHostPersistence extends BasePersistence<VirtualHost> {
 	* @param hostname the hostname
 	* @return the matching virtual host, or <code>null</code> if a matching virtual host could not be found
 	*/
-	public VirtualHost fetchByHostname(java.lang.String hostname);
+	public VirtualHost fetchByHostname(String hostname);
 
 	/**
 	* Returns the virtual host where hostname = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -64,7 +64,7 @@ public interface VirtualHostPersistence extends BasePersistence<VirtualHost> {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching virtual host, or <code>null</code> if a matching virtual host could not be found
 	*/
-	public VirtualHost fetchByHostname(java.lang.String hostname,
+	public VirtualHost fetchByHostname(String hostname,
 		boolean retrieveFromCache);
 
 	/**
@@ -73,7 +73,7 @@ public interface VirtualHostPersistence extends BasePersistence<VirtualHost> {
 	* @param hostname the hostname
 	* @return the virtual host that was removed
 	*/
-	public VirtualHost removeByHostname(java.lang.String hostname)
+	public VirtualHost removeByHostname(String hostname)
 		throws NoSuchVirtualHostException;
 
 	/**
@@ -82,7 +82,7 @@ public interface VirtualHostPersistence extends BasePersistence<VirtualHost> {
 	* @param hostname the hostname
 	* @return the number of matching virtual hosts
 	*/
-	public int countByHostname(java.lang.String hostname);
+	public int countByHostname(String hostname);
 
 	/**
 	* Returns the virtual host where companyId = &#63; and layoutSetId = &#63; or throws a {@link NoSuchVirtualHostException} if it could not be found.

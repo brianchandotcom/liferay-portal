@@ -282,7 +282,7 @@ public class UserNotificationDeliveryUtil {
 	* @throws NoSuchUserNotificationDeliveryException if a matching user notification delivery could not be found
 	*/
 	public static UserNotificationDelivery findByU_P_C_N_D(long userId,
-		java.lang.String portletId, long classNameId, int notificationType,
+		String portletId, long classNameId, int notificationType,
 		int deliveryType)
 		throws com.liferay.portal.kernel.exception.NoSuchUserNotificationDeliveryException {
 		return getPersistence()
@@ -301,7 +301,7 @@ public class UserNotificationDeliveryUtil {
 	* @return the matching user notification delivery, or <code>null</code> if a matching user notification delivery could not be found
 	*/
 	public static UserNotificationDelivery fetchByU_P_C_N_D(long userId,
-		java.lang.String portletId, long classNameId, int notificationType,
+		String portletId, long classNameId, int notificationType,
 		int deliveryType) {
 		return getPersistence()
 				   .fetchByU_P_C_N_D(userId, portletId, classNameId,
@@ -320,7 +320,7 @@ public class UserNotificationDeliveryUtil {
 	* @return the matching user notification delivery, or <code>null</code> if a matching user notification delivery could not be found
 	*/
 	public static UserNotificationDelivery fetchByU_P_C_N_D(long userId,
-		java.lang.String portletId, long classNameId, int notificationType,
+		String portletId, long classNameId, int notificationType,
 		int deliveryType, boolean retrieveFromCache) {
 		return getPersistence()
 				   .fetchByU_P_C_N_D(userId, portletId, classNameId,
@@ -338,7 +338,7 @@ public class UserNotificationDeliveryUtil {
 	* @return the user notification delivery that was removed
 	*/
 	public static UserNotificationDelivery removeByU_P_C_N_D(long userId,
-		java.lang.String portletId, long classNameId, int notificationType,
+		String portletId, long classNameId, int notificationType,
 		int deliveryType)
 		throws com.liferay.portal.kernel.exception.NoSuchUserNotificationDeliveryException {
 		return getPersistence()
@@ -356,7 +356,7 @@ public class UserNotificationDeliveryUtil {
 	* @param deliveryType the delivery type
 	* @return the number of matching user notification deliveries
 	*/
-	public static int countByU_P_C_N_D(long userId, java.lang.String portletId,
+	public static int countByU_P_C_N_D(long userId, String portletId,
 		long classNameId, int notificationType, int deliveryType) {
 		return getPersistence()
 				   .countByU_P_C_N_D(userId, portletId, classNameId,

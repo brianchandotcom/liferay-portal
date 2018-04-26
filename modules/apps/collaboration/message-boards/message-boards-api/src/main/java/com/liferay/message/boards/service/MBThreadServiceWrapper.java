@@ -120,7 +120,7 @@ public class MBThreadServiceWrapper implements MBThreadService,
 	* @return the OSGi service identifier
 	*/
 	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
+	public String getOSGiServiceIdentifier() {
 		return _mbThreadService.getOSGiServiceIdentifier();
 	}
 
@@ -204,7 +204,7 @@ public class MBThreadServiceWrapper implements MBThreadService,
 
 	@Override
 	public com.liferay.message.boards.model.MBThread splitThread(
-		long messageId, java.lang.String subject,
+		long messageId, String subject,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _mbThreadService.splitThread(messageId, subject, serviceContext);

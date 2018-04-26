@@ -120,7 +120,7 @@ public class ExpandoValueWrapper implements ExpandoValue,
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new ExpandoValueWrapper((ExpandoValue)_expandoValue.clone());
 	}
 
@@ -153,7 +153,7 @@ public class ExpandoValueWrapper implements ExpandoValue,
 	* @return the fully qualified class name of this expando value
 	*/
 	@Override
-	public java.lang.String getClassName() {
+	public String getClassName() {
 		return _expandoValue.getClassName();
 	}
 
@@ -209,7 +209,7 @@ public class ExpandoValueWrapper implements ExpandoValue,
 	* @return the data of this expando value
 	*/
 	@Override
-	public java.lang.String getData() {
+	public String getData() {
 		return _expandoValue.getData();
 	}
 
@@ -291,13 +291,13 @@ public class ExpandoValueWrapper implements ExpandoValue,
 	}
 
 	@Override
-	public java.lang.Number getNumber()
+	public Number getNumber()
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _expandoValue.getNumber();
 	}
 
 	@Override
-	public java.lang.Number[] getNumberArray()
+	public Number[] getNumberArray()
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _expandoValue.getNumberArray();
 	}
@@ -346,37 +346,37 @@ public class ExpandoValueWrapper implements ExpandoValue,
 	}
 
 	@Override
-	public java.lang.String getString()
+	public String getString()
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _expandoValue.getString();
 	}
 
 	@Override
-	public java.lang.String getString(java.util.Locale locale)
+	public String getString(java.util.Locale locale)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _expandoValue.getString(locale);
 	}
 
 	@Override
-	public java.lang.String[] getStringArray()
+	public String[] getStringArray()
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _expandoValue.getStringArray();
 	}
 
 	@Override
-	public java.lang.String[] getStringArray(java.util.Locale locale)
+	public String[] getStringArray(java.util.Locale locale)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _expandoValue.getStringArray(locale);
 	}
 
 	@Override
-	public Map<java.util.Locale, java.lang.String[]> getStringArrayMap()
+	public Map<java.util.Locale, String[]> getStringArrayMap()
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _expandoValue.getStringArrayMap();
 	}
 
 	@Override
-	public Map<java.util.Locale, java.lang.String> getStringMap()
+	public Map<java.util.Locale, String> getStringMap()
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _expandoValue.getStringMap();
 	}
@@ -444,7 +444,7 @@ public class ExpandoValueWrapper implements ExpandoValue,
 	}
 
 	@Override
-	public void setClassName(java.lang.String className) {
+	public void setClassName(String className) {
 		_expandoValue.setClassName(className);
 	}
 
@@ -499,7 +499,7 @@ public class ExpandoValueWrapper implements ExpandoValue,
 	* @param data the data of this expando value
 	*/
 	@Override
-	public void setData(java.lang.String data) {
+	public void setData(String data) {
 		_expandoValue.setData(data);
 	}
 
@@ -592,13 +592,13 @@ public class ExpandoValueWrapper implements ExpandoValue,
 	}
 
 	@Override
-	public void setNumber(java.lang.Number data)
+	public void setNumber(Number data)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_expandoValue.setNumber(data);
 	}
 
 	@Override
-	public void setNumberArray(java.lang.Number[] data)
+	public void setNumberArray(Number[] data)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_expandoValue.setNumberArray(data);
 	}
@@ -641,41 +641,40 @@ public class ExpandoValueWrapper implements ExpandoValue,
 	}
 
 	@Override
-	public void setString(java.lang.String data)
+	public void setString(String data)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_expandoValue.setString(data);
 	}
 
 	@Override
-	public void setString(java.lang.String data, java.util.Locale locale,
+	public void setString(String data, java.util.Locale locale,
 		java.util.Locale defaultLocale)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_expandoValue.setString(data, locale, defaultLocale);
 	}
 
 	@Override
-	public void setStringArray(java.lang.String[] data)
+	public void setStringArray(String[] data)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_expandoValue.setStringArray(data);
 	}
 
 	@Override
-	public void setStringArray(java.lang.String[] data,
-		java.util.Locale locale, java.util.Locale defaultLocale)
+	public void setStringArray(String[] data, java.util.Locale locale,
+		java.util.Locale defaultLocale)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_expandoValue.setStringArray(data, locale, defaultLocale);
 	}
 
 	@Override
-	public void setStringArrayMap(
-		Map<java.util.Locale, java.lang.String[]> dataMap,
+	public void setStringArrayMap(Map<java.util.Locale, String[]> dataMap,
 		java.util.Locale defaultLocale)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_expandoValue.setStringArrayMap(dataMap, defaultLocale);
 	}
 
 	@Override
-	public void setStringMap(Map<java.util.Locale, java.lang.String> dataMap,
+	public void setStringMap(Map<java.util.Locale, String> dataMap,
 		java.util.Locale defaultLocale)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_expandoValue.setStringMap(dataMap, defaultLocale);
@@ -712,7 +711,7 @@ public class ExpandoValueWrapper implements ExpandoValue,
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _expandoValue.toString();
 	}
 
@@ -722,7 +721,7 @@ public class ExpandoValueWrapper implements ExpandoValue,
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _expandoValue.toXmlString();
 	}
 

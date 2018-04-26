@@ -42,21 +42,21 @@ public class ScreensJournalArticleServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.screens.service.impl.ScreensJournalArticleServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static java.lang.String getJournalArticleContent(long classPK,
+	public static String getJournalArticleContent(long classPK,
 		java.util.Locale locale)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getJournalArticleContent(classPK, locale);
 	}
 
-	public static java.lang.String getJournalArticleContent(long classPK,
+	public static String getJournalArticleContent(long classPK,
 		long ddmTemplateId, java.util.Locale locale)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .getJournalArticleContent(classPK, ddmTemplateId, locale);
 	}
 
-	public static java.lang.String getJournalArticleContent(long groupId,
-		java.lang.String articleId, long ddmTemplateId, java.util.Locale locale)
+	public static String getJournalArticleContent(long groupId,
+		String articleId, long ddmTemplateId, java.util.Locale locale)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .getJournalArticleContent(groupId, articleId, ddmTemplateId,
@@ -68,7 +68,7 @@ public class ScreensJournalArticleServiceUtil {
 	*
 	* @return the OSGi service identifier
 	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
+	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 

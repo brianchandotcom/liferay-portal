@@ -58,9 +58,9 @@ public interface KBTemplateService extends BaseService {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link KBTemplateServiceUtil} to access the kb template remote service. Add custom service methods to {@link com.liferay.knowledge.base.service.impl.KBTemplateServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public KBTemplate addKBTemplate(java.lang.String portletId,
-		java.lang.String title, java.lang.String content,
-		ServiceContext serviceContext) throws PortalException;
+	public KBTemplate addKBTemplate(String portletId, String title,
+		String content, ServiceContext serviceContext)
+		throws PortalException;
 
 	public KBTemplate deleteKBTemplate(long kbTemplateId)
 		throws PortalException;
@@ -81,9 +81,9 @@ public interface KBTemplateService extends BaseService {
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public KBTemplateSearchDisplay getKBTemplateSearchDisplay(long groupId,
-		java.lang.String title, java.lang.String content, Date startDate,
-		Date endDate, boolean andOperator, int[] curStartValues, int cur,
-		int delta, OrderByComparator<KBTemplate> orderByComparator)
+		String title, String content, Date startDate, Date endDate,
+		boolean andOperator, int[] curStartValues, int cur, int delta,
+		OrderByComparator<KBTemplate> orderByComparator)
 		throws PortalException;
 
 	/**
@@ -91,9 +91,9 @@ public interface KBTemplateService extends BaseService {
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
-	public KBTemplate updateKBTemplate(long kbTemplateId,
-		java.lang.String title, java.lang.String content,
-		ServiceContext serviceContext) throws PortalException;
+	public KBTemplate updateKBTemplate(long kbTemplateId, String title,
+		String content, ServiceContext serviceContext)
+		throws PortalException;
 }

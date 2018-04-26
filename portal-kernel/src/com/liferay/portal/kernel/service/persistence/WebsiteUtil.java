@@ -112,7 +112,7 @@ public class WebsiteUtil {
 	* @param uuid the uuid
 	* @return the matching websites
 	*/
-	public static List<Website> findByUuid(java.lang.String uuid) {
+	public static List<Website> findByUuid(String uuid) {
 		return getPersistence().findByUuid(uuid);
 	}
 
@@ -128,8 +128,7 @@ public class WebsiteUtil {
 	* @param end the upper bound of the range of websites (not inclusive)
 	* @return the range of matching websites
 	*/
-	public static List<Website> findByUuid(java.lang.String uuid, int start,
-		int end) {
+	public static List<Website> findByUuid(String uuid, int start, int end) {
 		return getPersistence().findByUuid(uuid, start, end);
 	}
 
@@ -146,8 +145,8 @@ public class WebsiteUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching websites
 	*/
-	public static List<Website> findByUuid(java.lang.String uuid, int start,
-		int end, OrderByComparator<Website> orderByComparator) {
+	public static List<Website> findByUuid(String uuid, int start, int end,
+		OrderByComparator<Website> orderByComparator) {
 		return getPersistence().findByUuid(uuid, start, end, orderByComparator);
 	}
 
@@ -165,9 +164,8 @@ public class WebsiteUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching websites
 	*/
-	public static List<Website> findByUuid(java.lang.String uuid, int start,
-		int end, OrderByComparator<Website> orderByComparator,
-		boolean retrieveFromCache) {
+	public static List<Website> findByUuid(String uuid, int start, int end,
+		OrderByComparator<Website> orderByComparator, boolean retrieveFromCache) {
 		return getPersistence()
 				   .findByUuid(uuid, start, end, orderByComparator,
 			retrieveFromCache);
@@ -181,7 +179,7 @@ public class WebsiteUtil {
 	* @return the first matching website
 	* @throws NoSuchWebsiteException if a matching website could not be found
 	*/
-	public static Website findByUuid_First(java.lang.String uuid,
+	public static Website findByUuid_First(String uuid,
 		OrderByComparator<Website> orderByComparator)
 		throws com.liferay.portal.kernel.exception.NoSuchWebsiteException {
 		return getPersistence().findByUuid_First(uuid, orderByComparator);
@@ -194,7 +192,7 @@ public class WebsiteUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching website, or <code>null</code> if a matching website could not be found
 	*/
-	public static Website fetchByUuid_First(java.lang.String uuid,
+	public static Website fetchByUuid_First(String uuid,
 		OrderByComparator<Website> orderByComparator) {
 		return getPersistence().fetchByUuid_First(uuid, orderByComparator);
 	}
@@ -207,7 +205,7 @@ public class WebsiteUtil {
 	* @return the last matching website
 	* @throws NoSuchWebsiteException if a matching website could not be found
 	*/
-	public static Website findByUuid_Last(java.lang.String uuid,
+	public static Website findByUuid_Last(String uuid,
 		OrderByComparator<Website> orderByComparator)
 		throws com.liferay.portal.kernel.exception.NoSuchWebsiteException {
 		return getPersistence().findByUuid_Last(uuid, orderByComparator);
@@ -220,7 +218,7 @@ public class WebsiteUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching website, or <code>null</code> if a matching website could not be found
 	*/
-	public static Website fetchByUuid_Last(java.lang.String uuid,
+	public static Website fetchByUuid_Last(String uuid,
 		OrderByComparator<Website> orderByComparator) {
 		return getPersistence().fetchByUuid_Last(uuid, orderByComparator);
 	}
@@ -234,8 +232,8 @@ public class WebsiteUtil {
 	* @return the previous, current, and next website
 	* @throws NoSuchWebsiteException if a website with the primary key could not be found
 	*/
-	public static Website[] findByUuid_PrevAndNext(long websiteId,
-		java.lang.String uuid, OrderByComparator<Website> orderByComparator)
+	public static Website[] findByUuid_PrevAndNext(long websiteId, String uuid,
+		OrderByComparator<Website> orderByComparator)
 		throws com.liferay.portal.kernel.exception.NoSuchWebsiteException {
 		return getPersistence()
 				   .findByUuid_PrevAndNext(websiteId, uuid, orderByComparator);
@@ -246,7 +244,7 @@ public class WebsiteUtil {
 	*
 	* @param uuid the uuid
 	*/
-	public static void removeByUuid(java.lang.String uuid) {
+	public static void removeByUuid(String uuid) {
 		getPersistence().removeByUuid(uuid);
 	}
 
@@ -256,7 +254,7 @@ public class WebsiteUtil {
 	* @param uuid the uuid
 	* @return the number of matching websites
 	*/
-	public static int countByUuid(java.lang.String uuid) {
+	public static int countByUuid(String uuid) {
 		return getPersistence().countByUuid(uuid);
 	}
 
@@ -267,8 +265,7 @@ public class WebsiteUtil {
 	* @param companyId the company ID
 	* @return the matching websites
 	*/
-	public static List<Website> findByUuid_C(java.lang.String uuid,
-		long companyId) {
+	public static List<Website> findByUuid_C(String uuid, long companyId) {
 		return getPersistence().findByUuid_C(uuid, companyId);
 	}
 
@@ -285,8 +282,8 @@ public class WebsiteUtil {
 	* @param end the upper bound of the range of websites (not inclusive)
 	* @return the range of matching websites
 	*/
-	public static List<Website> findByUuid_C(java.lang.String uuid,
-		long companyId, int start, int end) {
+	public static List<Website> findByUuid_C(String uuid, long companyId,
+		int start, int end) {
 		return getPersistence().findByUuid_C(uuid, companyId, start, end);
 	}
 
@@ -304,9 +301,8 @@ public class WebsiteUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching websites
 	*/
-	public static List<Website> findByUuid_C(java.lang.String uuid,
-		long companyId, int start, int end,
-		OrderByComparator<Website> orderByComparator) {
+	public static List<Website> findByUuid_C(String uuid, long companyId,
+		int start, int end, OrderByComparator<Website> orderByComparator) {
 		return getPersistence()
 				   .findByUuid_C(uuid, companyId, start, end, orderByComparator);
 	}
@@ -326,9 +322,9 @@ public class WebsiteUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching websites
 	*/
-	public static List<Website> findByUuid_C(java.lang.String uuid,
-		long companyId, int start, int end,
-		OrderByComparator<Website> orderByComparator, boolean retrieveFromCache) {
+	public static List<Website> findByUuid_C(String uuid, long companyId,
+		int start, int end, OrderByComparator<Website> orderByComparator,
+		boolean retrieveFromCache) {
 		return getPersistence()
 				   .findByUuid_C(uuid, companyId, start, end,
 			orderByComparator, retrieveFromCache);
@@ -343,8 +339,8 @@ public class WebsiteUtil {
 	* @return the first matching website
 	* @throws NoSuchWebsiteException if a matching website could not be found
 	*/
-	public static Website findByUuid_C_First(java.lang.String uuid,
-		long companyId, OrderByComparator<Website> orderByComparator)
+	public static Website findByUuid_C_First(String uuid, long companyId,
+		OrderByComparator<Website> orderByComparator)
 		throws com.liferay.portal.kernel.exception.NoSuchWebsiteException {
 		return getPersistence()
 				   .findByUuid_C_First(uuid, companyId, orderByComparator);
@@ -358,8 +354,8 @@ public class WebsiteUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching website, or <code>null</code> if a matching website could not be found
 	*/
-	public static Website fetchByUuid_C_First(java.lang.String uuid,
-		long companyId, OrderByComparator<Website> orderByComparator) {
+	public static Website fetchByUuid_C_First(String uuid, long companyId,
+		OrderByComparator<Website> orderByComparator) {
 		return getPersistence()
 				   .fetchByUuid_C_First(uuid, companyId, orderByComparator);
 	}
@@ -373,8 +369,8 @@ public class WebsiteUtil {
 	* @return the last matching website
 	* @throws NoSuchWebsiteException if a matching website could not be found
 	*/
-	public static Website findByUuid_C_Last(java.lang.String uuid,
-		long companyId, OrderByComparator<Website> orderByComparator)
+	public static Website findByUuid_C_Last(String uuid, long companyId,
+		OrderByComparator<Website> orderByComparator)
 		throws com.liferay.portal.kernel.exception.NoSuchWebsiteException {
 		return getPersistence()
 				   .findByUuid_C_Last(uuid, companyId, orderByComparator);
@@ -388,8 +384,8 @@ public class WebsiteUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching website, or <code>null</code> if a matching website could not be found
 	*/
-	public static Website fetchByUuid_C_Last(java.lang.String uuid,
-		long companyId, OrderByComparator<Website> orderByComparator) {
+	public static Website fetchByUuid_C_Last(String uuid, long companyId,
+		OrderByComparator<Website> orderByComparator) {
 		return getPersistence()
 				   .fetchByUuid_C_Last(uuid, companyId, orderByComparator);
 	}
@@ -405,7 +401,7 @@ public class WebsiteUtil {
 	* @throws NoSuchWebsiteException if a website with the primary key could not be found
 	*/
 	public static Website[] findByUuid_C_PrevAndNext(long websiteId,
-		java.lang.String uuid, long companyId,
+		String uuid, long companyId,
 		OrderByComparator<Website> orderByComparator)
 		throws com.liferay.portal.kernel.exception.NoSuchWebsiteException {
 		return getPersistence()
@@ -419,7 +415,7 @@ public class WebsiteUtil {
 	* @param uuid the uuid
 	* @param companyId the company ID
 	*/
-	public static void removeByUuid_C(java.lang.String uuid, long companyId) {
+	public static void removeByUuid_C(String uuid, long companyId) {
 		getPersistence().removeByUuid_C(uuid, companyId);
 	}
 
@@ -430,7 +426,7 @@ public class WebsiteUtil {
 	* @param companyId the company ID
 	* @return the number of matching websites
 	*/
-	public static int countByUuid_C(java.lang.String uuid, long companyId) {
+	public static int countByUuid_C(String uuid, long companyId) {
 		return getPersistence().countByUuid_C(uuid, companyId);
 	}
 
@@ -1473,7 +1469,7 @@ public class WebsiteUtil {
 		return getPersistence().countAll();
 	}
 
-	public static java.util.Set<java.lang.String> getBadColumnNames() {
+	public static java.util.Set<String> getBadColumnNames() {
 		return getPersistence().getBadColumnNames();
 	}
 

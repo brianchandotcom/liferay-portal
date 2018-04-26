@@ -457,7 +457,7 @@ public class OAuth2ApplicationScopeAliasesUtil {
 	* @throws NoSuchOAuth2ApplicationScopeAliasesException if a matching o auth2 application scope aliases could not be found
 	*/
 	public static OAuth2ApplicationScopeAliases findByO_S(
-		long oAuth2ApplicationId, java.lang.String scopeAliases)
+		long oAuth2ApplicationId, String scopeAliases)
 		throws com.liferay.oauth2.provider.exception.NoSuchOAuth2ApplicationScopeAliasesException {
 		return getPersistence().findByO_S(oAuth2ApplicationId, scopeAliases);
 	}
@@ -470,7 +470,7 @@ public class OAuth2ApplicationScopeAliasesUtil {
 	* @return the matching o auth2 application scope aliases, or <code>null</code> if a matching o auth2 application scope aliases could not be found
 	*/
 	public static OAuth2ApplicationScopeAliases fetchByO_S(
-		long oAuth2ApplicationId, java.lang.String scopeAliases) {
+		long oAuth2ApplicationId, String scopeAliases) {
 		return getPersistence().fetchByO_S(oAuth2ApplicationId, scopeAliases);
 	}
 
@@ -483,8 +483,7 @@ public class OAuth2ApplicationScopeAliasesUtil {
 	* @return the matching o auth2 application scope aliases, or <code>null</code> if a matching o auth2 application scope aliases could not be found
 	*/
 	public static OAuth2ApplicationScopeAliases fetchByO_S(
-		long oAuth2ApplicationId, java.lang.String scopeAliases,
-		boolean retrieveFromCache) {
+		long oAuth2ApplicationId, String scopeAliases, boolean retrieveFromCache) {
 		return getPersistence()
 				   .fetchByO_S(oAuth2ApplicationId, scopeAliases,
 			retrieveFromCache);
@@ -498,7 +497,7 @@ public class OAuth2ApplicationScopeAliasesUtil {
 	* @return the o auth2 application scope aliases that was removed
 	*/
 	public static OAuth2ApplicationScopeAliases removeByO_S(
-		long oAuth2ApplicationId, java.lang.String scopeAliases)
+		long oAuth2ApplicationId, String scopeAliases)
 		throws com.liferay.oauth2.provider.exception.NoSuchOAuth2ApplicationScopeAliasesException {
 		return getPersistence().removeByO_S(oAuth2ApplicationId, scopeAliases);
 	}
@@ -510,8 +509,7 @@ public class OAuth2ApplicationScopeAliasesUtil {
 	* @param scopeAliases the scope aliases
 	* @return the number of matching o auth2 application scope aliaseses
 	*/
-	public static int countByO_S(long oAuth2ApplicationId,
-		java.lang.String scopeAliases) {
+	public static int countByO_S(long oAuth2ApplicationId, String scopeAliases) {
 		return getPersistence().countByO_S(oAuth2ApplicationId, scopeAliases);
 	}
 
@@ -673,7 +671,7 @@ public class OAuth2ApplicationScopeAliasesUtil {
 		return getPersistence().countAll();
 	}
 
-	public static java.util.Set<java.lang.String> getBadColumnNames() {
+	public static java.util.Set<String> getBadColumnNames() {
 		return getPersistence().getBadColumnNames();
 	}
 

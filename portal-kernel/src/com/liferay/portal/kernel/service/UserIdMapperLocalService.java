@@ -178,7 +178,7 @@ public interface UserIdMapperLocalService extends BaseLocalService,
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -197,12 +197,12 @@ public interface UserIdMapperLocalService extends BaseLocalService,
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public UserIdMapper getUserIdMapper(long userId, java.lang.String type)
+	public UserIdMapper getUserIdMapper(long userId, String type)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public UserIdMapper getUserIdMapperByExternalUserId(java.lang.String type,
-		java.lang.String externalUserId) throws PortalException;
+	public UserIdMapper getUserIdMapperByExternalUserId(String type,
+		String externalUserId) throws PortalException;
 
 	/**
 	* Returns a range of all the user ID mappers.
@@ -229,8 +229,8 @@ public interface UserIdMapperLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getUserIdMappersCount();
 
-	public UserIdMapper updateUserIdMapper(long userId, java.lang.String type,
-		java.lang.String description, java.lang.String externalUserId);
+	public UserIdMapper updateUserIdMapper(long userId, String type,
+		String description, String externalUserId);
 
 	/**
 	* Updates the user ID mapper in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.

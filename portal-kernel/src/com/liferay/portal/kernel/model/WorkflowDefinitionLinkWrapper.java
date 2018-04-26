@@ -161,7 +161,7 @@ public class WorkflowDefinitionLinkWrapper implements WorkflowDefinitionLink,
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new WorkflowDefinitionLinkWrapper((WorkflowDefinitionLink)_workflowDefinitionLink.clone());
 	}
 
@@ -176,7 +176,7 @@ public class WorkflowDefinitionLinkWrapper implements WorkflowDefinitionLink,
 	* @return the fully qualified class name of this workflow definition link
 	*/
 	@Override
-	public java.lang.String getClassName() {
+	public String getClassName() {
 		return _workflowDefinitionLink.getClassName();
 	}
 
@@ -296,7 +296,7 @@ public class WorkflowDefinitionLinkWrapper implements WorkflowDefinitionLink,
 	* @return the user name of this workflow definition link
 	*/
 	@Override
-	public java.lang.String getUserName() {
+	public String getUserName() {
 		return _workflowDefinitionLink.getUserName();
 	}
 
@@ -306,7 +306,7 @@ public class WorkflowDefinitionLinkWrapper implements WorkflowDefinitionLink,
 	* @return the user uuid of this workflow definition link
 	*/
 	@Override
-	public java.lang.String getUserUuid() {
+	public String getUserUuid() {
 		return _workflowDefinitionLink.getUserUuid();
 	}
 
@@ -326,7 +326,7 @@ public class WorkflowDefinitionLinkWrapper implements WorkflowDefinitionLink,
 	* @return the workflow definition name of this workflow definition link
 	*/
 	@Override
-	public java.lang.String getWorkflowDefinitionName() {
+	public String getWorkflowDefinitionName() {
 		return _workflowDefinitionLink.getWorkflowDefinitionName();
 	}
 
@@ -371,7 +371,7 @@ public class WorkflowDefinitionLinkWrapper implements WorkflowDefinitionLink,
 	}
 
 	@Override
-	public void setClassName(java.lang.String className) {
+	public void setClassName(String className) {
 		_workflowDefinitionLink.setClassName(className);
 	}
 
@@ -506,7 +506,7 @@ public class WorkflowDefinitionLinkWrapper implements WorkflowDefinitionLink,
 	* @param userName the user name of this workflow definition link
 	*/
 	@Override
-	public void setUserName(java.lang.String userName) {
+	public void setUserName(String userName) {
 		_workflowDefinitionLink.setUserName(userName);
 	}
 
@@ -516,7 +516,7 @@ public class WorkflowDefinitionLinkWrapper implements WorkflowDefinitionLink,
 	* @param userUuid the user uuid of this workflow definition link
 	*/
 	@Override
-	public void setUserUuid(java.lang.String userUuid) {
+	public void setUserUuid(String userUuid) {
 		_workflowDefinitionLink.setUserUuid(userUuid);
 	}
 
@@ -536,8 +536,7 @@ public class WorkflowDefinitionLinkWrapper implements WorkflowDefinitionLink,
 	* @param workflowDefinitionName the workflow definition name of this workflow definition link
 	*/
 	@Override
-	public void setWorkflowDefinitionName(
-		java.lang.String workflowDefinitionName) {
+	public void setWorkflowDefinitionName(String workflowDefinitionName) {
 		_workflowDefinitionLink.setWorkflowDefinitionName(workflowDefinitionName);
 	}
 
@@ -562,7 +561,7 @@ public class WorkflowDefinitionLinkWrapper implements WorkflowDefinitionLink,
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _workflowDefinitionLink.toString();
 	}
 
@@ -572,7 +571,7 @@ public class WorkflowDefinitionLinkWrapper implements WorkflowDefinitionLink,
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _workflowDefinitionLink.toXmlString();
 	}
 

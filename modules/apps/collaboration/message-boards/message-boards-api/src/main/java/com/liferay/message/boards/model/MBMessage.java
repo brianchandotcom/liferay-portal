@@ -57,7 +57,7 @@ public interface MBMessage extends MBMessageModel, PersistedModel {
 	public com.liferay.portal.kernel.repository.model.Folder addAttachmentsFolder()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
-	public java.lang.String[] getAssetTagNames();
+	public String[] getAssetTagNames();
 
 	public java.util.List<com.liferay.portal.kernel.repository.model.FileEntry> getAttachmentsFileEntries()
 		throws com.liferay.portal.kernel.exception.PortalException;
@@ -72,7 +72,7 @@ public interface MBMessage extends MBMessageModel, PersistedModel {
 	public long getAttachmentsFolderId()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
-	public java.lang.String getBody(boolean translate);
+	public String getBody(boolean translate);
 
 	public MBCategory getCategory()
 		throws com.liferay.portal.kernel.exception.PortalException;
@@ -93,7 +93,7 @@ public interface MBMessage extends MBMessageModel, PersistedModel {
 	public long getThreadAttachmentsFolderId()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
-	public java.lang.String getWorkflowClassName();
+	public String getWorkflowClassName();
 
 	public boolean isDiscussion();
 

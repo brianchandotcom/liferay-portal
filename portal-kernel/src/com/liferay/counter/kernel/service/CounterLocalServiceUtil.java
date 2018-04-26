@@ -59,7 +59,7 @@ public class CounterLocalServiceUtil {
 	* @return the new counter
 	*/
 	public static com.liferay.counter.kernel.model.Counter createCounter(
-		java.lang.String name) {
+		String name) {
 		return getService().createCounter(name);
 	}
 
@@ -82,8 +82,7 @@ public class CounterLocalServiceUtil {
 	* @throws PortalException if a counter with the primary key could not be found
 	*/
 	public static com.liferay.counter.kernel.model.Counter deleteCounter(
-		java.lang.String name)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		String name) throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().deleteCounter(name);
 	}
 
@@ -175,7 +174,7 @@ public class CounterLocalServiceUtil {
 	}
 
 	public static com.liferay.counter.kernel.model.Counter fetchCounter(
-		java.lang.String name) {
+		String name) {
 		return getService().fetchCounter(name);
 	}
 
@@ -187,8 +186,7 @@ public class CounterLocalServiceUtil {
 	* @throws PortalException if a counter with the primary key could not be found
 	*/
 	public static com.liferay.counter.kernel.model.Counter getCounter(
-		java.lang.String name)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		String name) throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getCounter(name);
 	}
 
@@ -217,7 +215,7 @@ public class CounterLocalServiceUtil {
 		return getService().getCountersCount();
 	}
 
-	public static java.util.List<java.lang.String> getNames() {
+	public static java.util.List<String> getNames() {
 		return getService().getNames();
 	}
 
@@ -226,7 +224,7 @@ public class CounterLocalServiceUtil {
 	*
 	* @return the OSGi service identifier
 	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
+	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 
@@ -240,23 +238,23 @@ public class CounterLocalServiceUtil {
 		return getService().increment();
 	}
 
-	public static long increment(java.lang.String name) {
+	public static long increment(String name) {
 		return getService().increment(name);
 	}
 
-	public static long increment(java.lang.String name, int size) {
+	public static long increment(String name, int size) {
 		return getService().increment(name, size);
 	}
 
-	public static void rename(java.lang.String oldName, java.lang.String newName) {
+	public static void rename(String oldName, String newName) {
 		getService().rename(oldName, newName);
 	}
 
-	public static void reset(java.lang.String name) {
+	public static void reset(String name) {
 		getService().reset(name);
 	}
 
-	public static void reset(java.lang.String name, long size) {
+	public static void reset(String name, long size) {
 		getService().reset(name, size);
 	}
 

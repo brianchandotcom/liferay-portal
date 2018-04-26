@@ -49,7 +49,7 @@ public class HtmlPreviewEntryLocalServiceWrapper
 	@Override
 	public com.liferay.html.preview.model.HtmlPreviewEntry addHtmlPreviewEntry(
 		long userId, long groupId, long classNameId, long classPK,
-		java.lang.String content, java.lang.String mimeType,
+		String content, String mimeType,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _htmlPreviewEntryLocalService.addHtmlPreviewEntry(userId,
@@ -255,7 +255,7 @@ public class HtmlPreviewEntryLocalServiceWrapper
 	* @return the OSGi service identifier
 	*/
 	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
+	public String getOSGiServiceIdentifier() {
 		return _htmlPreviewEntryLocalService.getOSGiServiceIdentifier();
 	}
 
@@ -280,8 +280,7 @@ public class HtmlPreviewEntryLocalServiceWrapper
 
 	@Override
 	public com.liferay.html.preview.model.HtmlPreviewEntry updateHtmlPreviewEntry(
-		long htmlPreviewEntryId, java.lang.String content,
-		java.lang.String mimeType,
+		long htmlPreviewEntryId, String content, String mimeType,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _htmlPreviewEntryLocalService.updateHtmlPreviewEntry(htmlPreviewEntryId,

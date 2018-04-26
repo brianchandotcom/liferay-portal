@@ -235,7 +235,7 @@ public interface PowwowParticipantPersistence extends BasePersistence<PowwowPart
 	* @throws NoSuchParticipantException if a matching powwow participant could not be found
 	*/
 	public PowwowParticipant findByPMI_EA(long powwowMeetingId,
-		java.lang.String emailAddress) throws NoSuchParticipantException;
+		String emailAddress) throws NoSuchParticipantException;
 
 	/**
 	* Returns the powwow participant where powwowMeetingId = &#63; and emailAddress = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
@@ -245,7 +245,7 @@ public interface PowwowParticipantPersistence extends BasePersistence<PowwowPart
 	* @return the matching powwow participant, or <code>null</code> if a matching powwow participant could not be found
 	*/
 	public PowwowParticipant fetchByPMI_EA(long powwowMeetingId,
-		java.lang.String emailAddress);
+		String emailAddress);
 
 	/**
 	* Returns the powwow participant where powwowMeetingId = &#63; and emailAddress = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -256,7 +256,7 @@ public interface PowwowParticipantPersistence extends BasePersistence<PowwowPart
 	* @return the matching powwow participant, or <code>null</code> if a matching powwow participant could not be found
 	*/
 	public PowwowParticipant fetchByPMI_EA(long powwowMeetingId,
-		java.lang.String emailAddress, boolean retrieveFromCache);
+		String emailAddress, boolean retrieveFromCache);
 
 	/**
 	* Removes the powwow participant where powwowMeetingId = &#63; and emailAddress = &#63; from the database.
@@ -266,7 +266,7 @@ public interface PowwowParticipantPersistence extends BasePersistence<PowwowPart
 	* @return the powwow participant that was removed
 	*/
 	public PowwowParticipant removeByPMI_EA(long powwowMeetingId,
-		java.lang.String emailAddress) throws NoSuchParticipantException;
+		String emailAddress) throws NoSuchParticipantException;
 
 	/**
 	* Returns the number of powwow participants where powwowMeetingId = &#63; and emailAddress = &#63;.
@@ -275,7 +275,7 @@ public interface PowwowParticipantPersistence extends BasePersistence<PowwowPart
 	* @param emailAddress the email address
 	* @return the number of matching powwow participants
 	*/
-	public int countByPMI_EA(long powwowMeetingId, java.lang.String emailAddress);
+	public int countByPMI_EA(long powwowMeetingId, String emailAddress);
 
 	/**
 	* Returns all the powwow participants where powwowMeetingId = &#63; and type = &#63;.
@@ -543,5 +543,5 @@ public interface PowwowParticipantPersistence extends BasePersistence<PowwowPart
 	public int countAll();
 
 	@Override
-	public java.util.Set<java.lang.String> getBadColumnNames();
+	public java.util.Set<String> getBadColumnNames();
 }

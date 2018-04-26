@@ -201,7 +201,7 @@ public class AssetEntryLocalServiceWrapper implements AssetEntryLocalService,
 	}
 
 	@Override
-	public void deleteEntry(java.lang.String className, long classPK)
+	public void deleteEntry(String className, long classPK)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_assetEntryLocalService.deleteEntry(className, classPK);
 	}
@@ -326,13 +326,13 @@ public class AssetEntryLocalServiceWrapper implements AssetEntryLocalService,
 
 	@Override
 	public com.liferay.asset.kernel.model.AssetEntry fetchEntry(long groupId,
-		java.lang.String classUuid) {
+		String classUuid) {
 		return _assetEntryLocalService.fetchEntry(groupId, classUuid);
 	}
 
 	@Override
 	public com.liferay.asset.kernel.model.AssetEntry fetchEntry(
-		java.lang.String className, long classPK) {
+		String className, long classPK) {
 		return _assetEntryLocalService.fetchEntry(className, classPK);
 	}
 
@@ -487,12 +487,11 @@ public class AssetEntryLocalServiceWrapper implements AssetEntryLocalService,
 
 	@Override
 	public java.util.List<com.liferay.asset.kernel.model.AssetEntry> getEntries(
-		long[] groupIds, long[] classNameIds, java.lang.String keywords,
-		java.lang.String userName, java.lang.String title,
-		java.lang.String description, java.lang.Boolean listable,
+		long[] groupIds, long[] classNameIds, String keywords, String userName,
+		String title, String description, Boolean listable,
 		boolean advancedSearch, boolean andOperator, int start, int end,
-		java.lang.String orderByCol1, java.lang.String orderByCol2,
-		java.lang.String orderByType1, java.lang.String orderByType2) {
+		String orderByCol1, String orderByCol2, String orderByType1,
+		String orderByType2) {
 		return _assetEntryLocalService.getEntries(groupIds, classNameIds,
 			keywords, userName, title, description, listable, advancedSearch,
 			andOperator, start, end, orderByCol1, orderByCol2, orderByType1,
@@ -507,9 +506,8 @@ public class AssetEntryLocalServiceWrapper implements AssetEntryLocalService,
 
 	@Override
 	public int getEntriesCount(long[] groupIds, long[] classNameIds,
-		java.lang.String keywords, java.lang.String userName,
-		java.lang.String title, java.lang.String description,
-		java.lang.Boolean listable, boolean advancedSearch, boolean andOperator) {
+		String keywords, String userName, String title, String description,
+		Boolean listable, boolean advancedSearch, boolean andOperator) {
 		return _assetEntryLocalService.getEntriesCount(groupIds, classNameIds,
 			keywords, userName, title, description, listable, advancedSearch,
 			andOperator);
@@ -523,14 +521,14 @@ public class AssetEntryLocalServiceWrapper implements AssetEntryLocalService,
 
 	@Override
 	public com.liferay.asset.kernel.model.AssetEntry getEntry(long groupId,
-		java.lang.String classUuid)
+		String classUuid)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _assetEntryLocalService.getEntry(groupId, classUuid);
 	}
 
 	@Override
 	public com.liferay.asset.kernel.model.AssetEntry getEntry(
-		java.lang.String className, long classPK)
+		String className, long classPK)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _assetEntryLocalService.getEntry(className, classPK);
 	}
@@ -541,7 +539,7 @@ public class AssetEntryLocalServiceWrapper implements AssetEntryLocalService,
 	}
 
 	@Override
-	public double getEntryPriority(java.lang.String className, long classPK) {
+	public double getEntryPriority(String className, long classPK) {
 		return _assetEntryLocalService.getEntryPriority(className, classPK);
 	}
 
@@ -568,7 +566,7 @@ public class AssetEntryLocalServiceWrapper implements AssetEntryLocalService,
 	* @return the OSGi service identifier
 	*/
 	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
+	public String getOSGiServiceIdentifier() {
 		return _assetEntryLocalService.getOSGiServiceIdentifier();
 	}
 
@@ -595,14 +593,14 @@ public class AssetEntryLocalServiceWrapper implements AssetEntryLocalService,
 
 	@Override
 	public java.util.List<com.liferay.asset.kernel.model.AssetEntry> getTopViewedEntries(
-		java.lang.String className, boolean asc, int start, int end) {
+		String className, boolean asc, int start, int end) {
 		return _assetEntryLocalService.getTopViewedEntries(className, asc,
 			start, end);
 	}
 
 	@Override
 	public java.util.List<com.liferay.asset.kernel.model.AssetEntry> getTopViewedEntries(
-		java.lang.String[] className, boolean asc, int start, int end) {
+		String[] className, boolean asc, int start, int end) {
 		return _assetEntryLocalService.getTopViewedEntries(className, asc,
 			start, end);
 	}
@@ -637,14 +635,14 @@ public class AssetEntryLocalServiceWrapper implements AssetEntryLocalService,
 
 	@Override
 	public com.liferay.asset.kernel.model.AssetEntry incrementViewCounter(
-		long userId, java.lang.String className, long classPK)
+		long userId, String className, long classPK)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _assetEntryLocalService.incrementViewCounter(userId, className,
 			classPK);
 	}
 
 	@Override
-	public void incrementViewCounter(long userId, java.lang.String className,
+	public void incrementViewCounter(long userId, String className,
 		long classPK, int increment) {
 		_assetEntryLocalService.incrementViewCounter(userId, className,
 			classPK, increment);
@@ -659,9 +657,9 @@ public class AssetEntryLocalServiceWrapper implements AssetEntryLocalService,
 
 	@Override
 	public com.liferay.portal.kernel.search.Hits search(long companyId,
-		long[] groupIds, long userId, java.lang.String className,
-		long classTypeId, java.lang.String keywords, boolean showNonindexable,
-		int status, int start, int end) {
+		long[] groupIds, long userId, String className, long classTypeId,
+		String keywords, boolean showNonindexable, int status, int start,
+		int end) {
 		return _assetEntryLocalService.search(companyId, groupIds, userId,
 			className, classTypeId, keywords, showNonindexable, status, start,
 			end);
@@ -669,9 +667,9 @@ public class AssetEntryLocalServiceWrapper implements AssetEntryLocalService,
 
 	@Override
 	public com.liferay.portal.kernel.search.Hits search(long companyId,
-		long[] groupIds, long userId, java.lang.String className,
-		long classTypeId, java.lang.String keywords, boolean showNonindexable,
-		int[] statuses, int start, int end) {
+		long[] groupIds, long userId, String className, long classTypeId,
+		String keywords, boolean showNonindexable, int[] statuses, int start,
+		int end) {
 		return _assetEntryLocalService.search(companyId, groupIds, userId,
 			className, classTypeId, keywords, showNonindexable, statuses,
 			start, end);
@@ -679,10 +677,9 @@ public class AssetEntryLocalServiceWrapper implements AssetEntryLocalService,
 
 	@Override
 	public com.liferay.portal.kernel.search.Hits search(long companyId,
-		long[] groupIds, long userId, java.lang.String className,
-		long classTypeId, java.lang.String keywords, boolean showNonindexable,
-		int[] statuses, int start, int end,
-		com.liferay.portal.kernel.search.Sort sort) {
+		long[] groupIds, long userId, String className, long classTypeId,
+		String keywords, boolean showNonindexable, int[] statuses, int start,
+		int end, com.liferay.portal.kernel.search.Sort sort) {
 		return _assetEntryLocalService.search(companyId, groupIds, userId,
 			className, classTypeId, keywords, showNonindexable, statuses,
 			start, end, sort);
@@ -690,20 +687,19 @@ public class AssetEntryLocalServiceWrapper implements AssetEntryLocalService,
 
 	@Override
 	public com.liferay.portal.kernel.search.Hits search(long companyId,
-		long[] groupIds, long userId, java.lang.String className,
-		long classTypeId, java.lang.String keywords, int status, int start,
-		int end) {
+		long[] groupIds, long userId, String className, long classTypeId,
+		String keywords, int status, int start, int end) {
 		return _assetEntryLocalService.search(companyId, groupIds, userId,
 			className, classTypeId, keywords, status, start, end);
 	}
 
 	@Override
 	public com.liferay.portal.kernel.search.Hits search(long companyId,
-		long[] groupIds, long userId, java.lang.String className,
-		long classTypeId, java.lang.String userName, java.lang.String title,
-		java.lang.String description, java.lang.String assetCategoryIds,
-		java.lang.String assetTagNames, boolean showNonindexable, int status,
-		boolean andSearch, int start, int end) {
+		long[] groupIds, long userId, String className, long classTypeId,
+		String userName, String title, String description,
+		String assetCategoryIds, String assetTagNames,
+		boolean showNonindexable, int status, boolean andSearch, int start,
+		int end) {
 		return _assetEntryLocalService.search(companyId, groupIds, userId,
 			className, classTypeId, userName, title, description,
 			assetCategoryIds, assetTagNames, showNonindexable, status,
@@ -712,11 +708,11 @@ public class AssetEntryLocalServiceWrapper implements AssetEntryLocalService,
 
 	@Override
 	public com.liferay.portal.kernel.search.Hits search(long companyId,
-		long[] groupIds, long userId, java.lang.String className,
-		long classTypeId, java.lang.String userName, java.lang.String title,
-		java.lang.String description, java.lang.String assetCategoryIds,
-		java.lang.String assetTagNames, boolean showNonindexable,
-		int[] statuses, boolean andSearch, int start, int end) {
+		long[] groupIds, long userId, String className, long classTypeId,
+		String userName, String title, String description,
+		String assetCategoryIds, String assetTagNames,
+		boolean showNonindexable, int[] statuses, boolean andSearch, int start,
+		int end) {
 		return _assetEntryLocalService.search(companyId, groupIds, userId,
 			className, classTypeId, userName, title, description,
 			assetCategoryIds, assetTagNames, showNonindexable, statuses,
@@ -725,11 +721,10 @@ public class AssetEntryLocalServiceWrapper implements AssetEntryLocalService,
 
 	@Override
 	public com.liferay.portal.kernel.search.Hits search(long companyId,
-		long[] groupIds, long userId, java.lang.String className,
-		long classTypeId, java.lang.String userName, java.lang.String title,
-		java.lang.String description, java.lang.String assetCategoryIds,
-		java.lang.String assetTagNames, int status, boolean andSearch,
-		int start, int end) {
+		long[] groupIds, long userId, String className, long classTypeId,
+		String userName, String title, String description,
+		String assetCategoryIds, String assetTagNames, int status,
+		boolean andSearch, int start, int end) {
 		return _assetEntryLocalService.search(companyId, groupIds, userId,
 			className, classTypeId, userName, title, description,
 			assetCategoryIds, assetTagNames, status, andSearch, start, end);
@@ -737,19 +732,17 @@ public class AssetEntryLocalServiceWrapper implements AssetEntryLocalService,
 
 	@Override
 	public com.liferay.portal.kernel.search.Hits search(long companyId,
-		long[] groupIds, long userId, java.lang.String className,
-		java.lang.String keywords, int status, int start, int end) {
+		long[] groupIds, long userId, String className, String keywords,
+		int status, int start, int end) {
 		return _assetEntryLocalService.search(companyId, groupIds, userId,
 			className, keywords, status, start, end);
 	}
 
 	@Override
 	public com.liferay.portal.kernel.search.Hits search(long companyId,
-		long[] groupIds, long userId, java.lang.String className,
-		java.lang.String userName, java.lang.String title,
-		java.lang.String description, java.lang.String assetCategoryIds,
-		java.lang.String assetTagNames, int status, boolean andSearch,
-		int start, int end) {
+		long[] groupIds, long userId, String className, String userName,
+		String title, String description, String assetCategoryIds,
+		String assetTagNames, int status, boolean andSearch, int start, int end) {
 		return _assetEntryLocalService.search(companyId, groupIds, userId,
 			className, userName, title, description, assetCategoryIds,
 			assetTagNames, status, andSearch, start, end);
@@ -757,19 +750,18 @@ public class AssetEntryLocalServiceWrapper implements AssetEntryLocalService,
 
 	@Override
 	public long searchCount(long companyId, long[] groupIds, long userId,
-		java.lang.String className, long classTypeId,
-		java.lang.String keywords, boolean showNonindexable, int[] statuses) {
+		String className, long classTypeId, String keywords,
+		boolean showNonindexable, int[] statuses) {
 		return _assetEntryLocalService.searchCount(companyId, groupIds, userId,
 			className, classTypeId, keywords, showNonindexable, statuses);
 	}
 
 	@Override
 	public long searchCount(long companyId, long[] groupIds, long userId,
-		java.lang.String className, long classTypeId,
-		java.lang.String userName, java.lang.String title,
-		java.lang.String description, java.lang.String assetCategoryIds,
-		java.lang.String assetTagNames, boolean showInvisible,
-		boolean showNonindexable, int[] statuses, boolean andSearch) {
+		String className, long classTypeId, String userName, String title,
+		String description, String assetCategoryIds, String assetTagNames,
+		boolean showInvisible, boolean showNonindexable, int[] statuses,
+		boolean andSearch) {
 		return _assetEntryLocalService.searchCount(companyId, groupIds, userId,
 			className, classTypeId, userName, title, description,
 			assetCategoryIds, assetTagNames, showInvisible, showNonindexable,
@@ -778,11 +770,9 @@ public class AssetEntryLocalServiceWrapper implements AssetEntryLocalService,
 
 	@Override
 	public long searchCount(long companyId, long[] groupIds, long userId,
-		java.lang.String className, long classTypeId,
-		java.lang.String userName, java.lang.String title,
-		java.lang.String description, java.lang.String assetCategoryIds,
-		java.lang.String assetTagNames, boolean showNonindexable,
-		int[] statuses, boolean andSearch) {
+		String className, long classTypeId, String userName, String title,
+		String description, String assetCategoryIds, String assetTagNames,
+		boolean showNonindexable, int[] statuses, boolean andSearch) {
 		return _assetEntryLocalService.searchCount(companyId, groupIds, userId,
 			className, classTypeId, userName, title, description,
 			assetCategoryIds, assetTagNames, showNonindexable, statuses,
@@ -815,15 +805,12 @@ public class AssetEntryLocalServiceWrapper implements AssetEntryLocalService,
 	@Override
 	public com.liferay.asset.kernel.model.AssetEntry updateEntry(long userId,
 		long groupId, java.util.Date createDate, java.util.Date modifiedDate,
-		java.lang.String className, long classPK, java.lang.String classUuid,
-		long classTypeId, long[] categoryIds, java.lang.String[] tagNames,
-		boolean listable, boolean visible, java.util.Date startDate,
-		java.util.Date endDate, java.util.Date publishDate,
-		java.util.Date expirationDate, java.lang.String mimeType,
-		java.lang.String title, java.lang.String description,
-		java.lang.String summary, java.lang.String url,
-		java.lang.String layoutUuid, int height, int width,
-		java.lang.Double priority)
+		String className, long classPK, String classUuid, long classTypeId,
+		long[] categoryIds, String[] tagNames, boolean listable,
+		boolean visible, java.util.Date startDate, java.util.Date endDate,
+		java.util.Date publishDate, java.util.Date expirationDate,
+		String mimeType, String title, String description, String summary,
+		String url, String layoutUuid, int height, int width, Double priority)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _assetEntryLocalService.updateEntry(userId, groupId, createDate,
 			modifiedDate, className, classPK, classUuid, classTypeId,
@@ -842,14 +829,12 @@ public class AssetEntryLocalServiceWrapper implements AssetEntryLocalService,
 	@Override
 	public com.liferay.asset.kernel.model.AssetEntry updateEntry(long userId,
 		long groupId, java.util.Date createDate, java.util.Date modifiedDate,
-		java.lang.String className, long classPK, java.lang.String classUuid,
-		long classTypeId, long[] categoryIds, java.lang.String[] tagNames,
-		boolean listable, boolean visible, java.util.Date startDate,
-		java.util.Date endDate, java.util.Date expirationDate,
-		java.lang.String mimeType, java.lang.String title,
-		java.lang.String description, java.lang.String summary,
-		java.lang.String url, java.lang.String layoutUuid, int height,
-		int width, java.lang.Double priority)
+		String className, long classPK, String classUuid, long classTypeId,
+		long[] categoryIds, String[] tagNames, boolean listable,
+		boolean visible, java.util.Date startDate, java.util.Date endDate,
+		java.util.Date expirationDate, String mimeType, String title,
+		String description, String summary, String url, String layoutUuid,
+		int height, int width, Double priority)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _assetEntryLocalService.updateEntry(userId, groupId, createDate,
 			modifiedDate, className, classPK, classUuid, classTypeId,
@@ -868,14 +853,12 @@ public class AssetEntryLocalServiceWrapper implements AssetEntryLocalService,
 	@Override
 	public com.liferay.asset.kernel.model.AssetEntry updateEntry(long userId,
 		long groupId, java.util.Date createDate, java.util.Date modifiedDate,
-		java.lang.String className, long classPK, java.lang.String classUuid,
-		long classTypeId, long[] categoryIds, java.lang.String[] tagNames,
-		boolean visible, java.util.Date startDate, java.util.Date endDate,
-		java.util.Date expirationDate, java.lang.String mimeType,
-		java.lang.String title, java.lang.String description,
-		java.lang.String summary, java.lang.String url,
-		java.lang.String layoutUuid, int height, int width,
-		java.lang.Integer priority, boolean sync)
+		String className, long classPK, String classUuid, long classTypeId,
+		long[] categoryIds, String[] tagNames, boolean visible,
+		java.util.Date startDate, java.util.Date endDate,
+		java.util.Date expirationDate, String mimeType, String title,
+		String description, String summary, String url, String layoutUuid,
+		int height, int width, Integer priority, boolean sync)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _assetEntryLocalService.updateEntry(userId, groupId, createDate,
 			modifiedDate, className, classPK, classUuid, classTypeId,
@@ -886,8 +869,8 @@ public class AssetEntryLocalServiceWrapper implements AssetEntryLocalService,
 
 	@Override
 	public com.liferay.asset.kernel.model.AssetEntry updateEntry(long userId,
-		long groupId, java.lang.String className, long classPK,
-		long[] categoryIds, java.lang.String[] tagNames)
+		long groupId, String className, long classPK, long[] categoryIds,
+		String[] tagNames)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _assetEntryLocalService.updateEntry(userId, groupId, className,
 			classPK, categoryIds, tagNames);
@@ -900,7 +883,7 @@ public class AssetEntryLocalServiceWrapper implements AssetEntryLocalService,
 	@Deprecated
 	@Override
 	public com.liferay.asset.kernel.model.AssetEntry updateEntry(
-		java.lang.String className, long classPK, java.util.Date publishDate,
+		String className, long classPK, java.util.Date publishDate,
 		boolean visible)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _assetEntryLocalService.updateEntry(className, classPK,
@@ -914,7 +897,7 @@ public class AssetEntryLocalServiceWrapper implements AssetEntryLocalService,
 	@Deprecated
 	@Override
 	public com.liferay.asset.kernel.model.AssetEntry updateEntry(
-		java.lang.String className, long classPK, java.util.Date publishDate,
+		String className, long classPK, java.util.Date publishDate,
 		java.util.Date expirationDate, boolean visible)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _assetEntryLocalService.updateEntry(className, classPK,
@@ -923,7 +906,7 @@ public class AssetEntryLocalServiceWrapper implements AssetEntryLocalService,
 
 	@Override
 	public com.liferay.asset.kernel.model.AssetEntry updateEntry(
-		java.lang.String className, long classPK, java.util.Date publishDate,
+		String className, long classPK, java.util.Date publishDate,
 		java.util.Date expirationDate, boolean listable, boolean visible)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _assetEntryLocalService.updateEntry(className, classPK,
@@ -939,23 +922,22 @@ public class AssetEntryLocalServiceWrapper implements AssetEntryLocalService,
 
 	@Override
 	public com.liferay.asset.kernel.model.AssetEntry updateVisible(
-		java.lang.String className, long classPK, boolean visible)
+		String className, long classPK, boolean visible)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _assetEntryLocalService.updateVisible(className, classPK, visible);
 	}
 
 	@Override
-	public void validate(long groupId, java.lang.String className,
-		long classPK, long classTypePK, long[] categoryIds,
-		java.lang.String[] tagNames)
+	public void validate(long groupId, String className, long classPK,
+		long classTypePK, long[] categoryIds, String[] tagNames)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_assetEntryLocalService.validate(groupId, className, classPK,
 			classTypePK, categoryIds, tagNames);
 	}
 
 	@Override
-	public void validate(long groupId, java.lang.String className,
-		long classTypePK, long[] categoryIds, java.lang.String[] tagNames)
+	public void validate(long groupId, String className, long classTypePK,
+		long[] categoryIds, String[] tagNames)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_assetEntryLocalService.validate(groupId, className, classTypePK,
 			categoryIds, tagNames);
@@ -967,8 +949,8 @@ public class AssetEntryLocalServiceWrapper implements AssetEntryLocalService,
 	*/
 	@Deprecated
 	@Override
-	public void validate(long groupId, java.lang.String className,
-		long[] categoryIds, java.lang.String[] tagNames)
+	public void validate(long groupId, String className, long[] categoryIds,
+		String[] tagNames)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_assetEntryLocalService.validate(groupId, className, categoryIds,
 			tagNames);

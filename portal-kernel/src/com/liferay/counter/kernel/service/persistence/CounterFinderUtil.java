@@ -25,11 +25,11 @@ import com.liferay.portal.kernel.util.ReferenceRegistry;
  */
 @ProviderType
 public class CounterFinderUtil {
-	public static java.util.List<java.lang.String> getNames() {
+	public static java.util.List<String> getNames() {
 		return getFinder().getNames();
 	}
 
-	public static java.lang.String getRegistryName() {
+	public static String getRegistryName() {
 		return getFinder().getRegistryName();
 	}
 
@@ -37,11 +37,11 @@ public class CounterFinderUtil {
 		return getFinder().increment();
 	}
 
-	public static long increment(java.lang.String name) {
+	public static long increment(String name) {
 		return getFinder().increment(name);
 	}
 
-	public static long increment(java.lang.String name, int size) {
+	public static long increment(String name, int size) {
 		return getFinder().increment(name, size);
 	}
 
@@ -49,15 +49,15 @@ public class CounterFinderUtil {
 		getFinder().invalidate();
 	}
 
-	public static void rename(java.lang.String oldName, java.lang.String newName) {
+	public static void rename(String oldName, String newName) {
 		getFinder().rename(oldName, newName);
 	}
 
-	public static void reset(java.lang.String name) {
+	public static void reset(String name) {
 		getFinder().reset(name);
 	}
 
-	public static void reset(java.lang.String name, long size) {
+	public static void reset(String name, long size) {
 		getFinder().reset(name, size);
 	}
 

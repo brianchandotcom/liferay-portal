@@ -95,10 +95,10 @@ public interface AssetCategory extends AssetCategoryModel,
 
 	public AssetCategory getParentCategory();
 
-	public java.lang.String getPath(java.util.Locale locale)
+	public String getPath(java.util.Locale locale)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
-	public java.lang.String getPath(java.util.Locale locale, boolean reverse)
+	public String getPath(java.util.Locale locale, boolean reverse)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public boolean isRootCategory();

@@ -55,7 +55,7 @@ public interface DLFolder extends DLFolderModel, PersistedModel, TreeModel {
 			}
 		};
 
-	public java.util.List<java.lang.Long> getAncestorFolderIds()
+	public java.util.List<Long> getAncestorFolderIds()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public java.util.List<DLFolder> getAncestors()
@@ -64,10 +64,10 @@ public interface DLFolder extends DLFolderModel, PersistedModel, TreeModel {
 	public DLFolder getParentFolder()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
-	public java.lang.String getPath()
+	public String getPath()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
-	public java.lang.String[] getPathArray()
+	public String[] getPathArray()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public boolean hasInheritableLock();

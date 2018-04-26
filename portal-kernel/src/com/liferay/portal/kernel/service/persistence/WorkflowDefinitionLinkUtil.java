@@ -482,7 +482,7 @@ public class WorkflowDefinitionLinkUtil {
 	* @return the matching workflow definition links
 	*/
 	public static List<WorkflowDefinitionLink> findByC_W_W(long companyId,
-		java.lang.String workflowDefinitionName, int workflowDefinitionVersion) {
+		String workflowDefinitionName, int workflowDefinitionVersion) {
 		return getPersistence()
 				   .findByC_W_W(companyId, workflowDefinitionName,
 			workflowDefinitionVersion);
@@ -503,7 +503,7 @@ public class WorkflowDefinitionLinkUtil {
 	* @return the range of matching workflow definition links
 	*/
 	public static List<WorkflowDefinitionLink> findByC_W_W(long companyId,
-		java.lang.String workflowDefinitionName, int workflowDefinitionVersion,
+		String workflowDefinitionName, int workflowDefinitionVersion,
 		int start, int end) {
 		return getPersistence()
 				   .findByC_W_W(companyId, workflowDefinitionName,
@@ -526,7 +526,7 @@ public class WorkflowDefinitionLinkUtil {
 	* @return the ordered range of matching workflow definition links
 	*/
 	public static List<WorkflowDefinitionLink> findByC_W_W(long companyId,
-		java.lang.String workflowDefinitionName, int workflowDefinitionVersion,
+		String workflowDefinitionName, int workflowDefinitionVersion,
 		int start, int end,
 		OrderByComparator<WorkflowDefinitionLink> orderByComparator) {
 		return getPersistence()
@@ -551,7 +551,7 @@ public class WorkflowDefinitionLinkUtil {
 	* @return the ordered range of matching workflow definition links
 	*/
 	public static List<WorkflowDefinitionLink> findByC_W_W(long companyId,
-		java.lang.String workflowDefinitionName, int workflowDefinitionVersion,
+		String workflowDefinitionName, int workflowDefinitionVersion,
 		int start, int end,
 		OrderByComparator<WorkflowDefinitionLink> orderByComparator,
 		boolean retrieveFromCache) {
@@ -572,7 +572,7 @@ public class WorkflowDefinitionLinkUtil {
 	* @throws NoSuchWorkflowDefinitionLinkException if a matching workflow definition link could not be found
 	*/
 	public static WorkflowDefinitionLink findByC_W_W_First(long companyId,
-		java.lang.String workflowDefinitionName, int workflowDefinitionVersion,
+		String workflowDefinitionName, int workflowDefinitionVersion,
 		OrderByComparator<WorkflowDefinitionLink> orderByComparator)
 		throws com.liferay.portal.kernel.exception.NoSuchWorkflowDefinitionLinkException {
 		return getPersistence()
@@ -590,7 +590,7 @@ public class WorkflowDefinitionLinkUtil {
 	* @return the first matching workflow definition link, or <code>null</code> if a matching workflow definition link could not be found
 	*/
 	public static WorkflowDefinitionLink fetchByC_W_W_First(long companyId,
-		java.lang.String workflowDefinitionName, int workflowDefinitionVersion,
+		String workflowDefinitionName, int workflowDefinitionVersion,
 		OrderByComparator<WorkflowDefinitionLink> orderByComparator) {
 		return getPersistence()
 				   .fetchByC_W_W_First(companyId, workflowDefinitionName,
@@ -608,7 +608,7 @@ public class WorkflowDefinitionLinkUtil {
 	* @throws NoSuchWorkflowDefinitionLinkException if a matching workflow definition link could not be found
 	*/
 	public static WorkflowDefinitionLink findByC_W_W_Last(long companyId,
-		java.lang.String workflowDefinitionName, int workflowDefinitionVersion,
+		String workflowDefinitionName, int workflowDefinitionVersion,
 		OrderByComparator<WorkflowDefinitionLink> orderByComparator)
 		throws com.liferay.portal.kernel.exception.NoSuchWorkflowDefinitionLinkException {
 		return getPersistence()
@@ -626,7 +626,7 @@ public class WorkflowDefinitionLinkUtil {
 	* @return the last matching workflow definition link, or <code>null</code> if a matching workflow definition link could not be found
 	*/
 	public static WorkflowDefinitionLink fetchByC_W_W_Last(long companyId,
-		java.lang.String workflowDefinitionName, int workflowDefinitionVersion,
+		String workflowDefinitionName, int workflowDefinitionVersion,
 		OrderByComparator<WorkflowDefinitionLink> orderByComparator) {
 		return getPersistence()
 				   .fetchByC_W_W_Last(companyId, workflowDefinitionName,
@@ -646,7 +646,7 @@ public class WorkflowDefinitionLinkUtil {
 	*/
 	public static WorkflowDefinitionLink[] findByC_W_W_PrevAndNext(
 		long workflowDefinitionLinkId, long companyId,
-		java.lang.String workflowDefinitionName, int workflowDefinitionVersion,
+		String workflowDefinitionName, int workflowDefinitionVersion,
 		OrderByComparator<WorkflowDefinitionLink> orderByComparator)
 		throws com.liferay.portal.kernel.exception.NoSuchWorkflowDefinitionLinkException {
 		return getPersistence()
@@ -663,7 +663,7 @@ public class WorkflowDefinitionLinkUtil {
 	* @param workflowDefinitionVersion the workflow definition version
 	*/
 	public static void removeByC_W_W(long companyId,
-		java.lang.String workflowDefinitionName, int workflowDefinitionVersion) {
+		String workflowDefinitionName, int workflowDefinitionVersion) {
 		getPersistence()
 			.removeByC_W_W(companyId, workflowDefinitionName,
 			workflowDefinitionVersion);
@@ -678,7 +678,7 @@ public class WorkflowDefinitionLinkUtil {
 	* @return the number of matching workflow definition links
 	*/
 	public static int countByC_W_W(long companyId,
-		java.lang.String workflowDefinitionName, int workflowDefinitionVersion) {
+		String workflowDefinitionName, int workflowDefinitionVersion) {
 		return getPersistence()
 				   .countByC_W_W(companyId, workflowDefinitionName,
 			workflowDefinitionVersion);

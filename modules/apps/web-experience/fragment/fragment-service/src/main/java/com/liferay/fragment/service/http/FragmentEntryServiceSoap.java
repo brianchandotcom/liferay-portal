@@ -66,8 +66,7 @@ import java.rmi.RemoteException;
 @ProviderType
 public class FragmentEntryServiceSoap {
 	public static com.liferay.fragment.model.FragmentEntrySoap addFragmentEntry(
-		long groupId, long fragmentCollectionId, java.lang.String name,
-		int status,
+		long groupId, long fragmentCollectionId, String name, int status,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
@@ -84,8 +83,8 @@ public class FragmentEntryServiceSoap {
 	}
 
 	public static com.liferay.fragment.model.FragmentEntrySoap addFragmentEntry(
-		long groupId, long fragmentCollectionId,
-		java.lang.String fragmentEntryKey, java.lang.String name, int status,
+		long groupId, long fragmentCollectionId, String fragmentEntryKey,
+		String name, int status,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
@@ -103,9 +102,8 @@ public class FragmentEntryServiceSoap {
 	}
 
 	public static com.liferay.fragment.model.FragmentEntrySoap addFragmentEntry(
-		long groupId, long fragmentCollectionId, java.lang.String name,
-		java.lang.String css, java.lang.String html, java.lang.String js,
-		int status,
+		long groupId, long fragmentCollectionId, String name, String css,
+		String html, String js, int status,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
@@ -123,10 +121,8 @@ public class FragmentEntryServiceSoap {
 	}
 
 	public static com.liferay.fragment.model.FragmentEntrySoap addFragmentEntry(
-		long groupId, long fragmentCollectionId,
-		java.lang.String fragmentEntryKey, java.lang.String name,
-		java.lang.String css, java.lang.String html, java.lang.String js,
-		int status,
+		long groupId, long fragmentCollectionId, String fragmentEntryKey,
+		String name, String css, String html, String js, int status,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
@@ -199,8 +195,7 @@ public class FragmentEntryServiceSoap {
 	}
 
 	public static int getFragmentCollectionsCount(long groupId,
-		long fragmentCollectionId, java.lang.String name)
-		throws RemoteException {
+		long fragmentCollectionId, String name) throws RemoteException {
 		try {
 			int returnValue = FragmentEntryServiceUtil.getFragmentCollectionsCount(groupId,
 					fragmentCollectionId, name);
@@ -281,8 +276,8 @@ public class FragmentEntryServiceSoap {
 	}
 
 	public static com.liferay.fragment.model.FragmentEntrySoap[] getFragmentEntries(
-		long groupId, long fragmentCollectionId, java.lang.String name,
-		int start, int end,
+		long groupId, long fragmentCollectionId, String name, int start,
+		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.fragment.model.FragmentEntry> orderByComparator)
 		throws RemoteException {
 		try {
@@ -299,10 +294,10 @@ public class FragmentEntryServiceSoap {
 		}
 	}
 
-	public static java.lang.String[] getTempFileNames(long groupId,
-		java.lang.String folderName) throws RemoteException {
+	public static String[] getTempFileNames(long groupId, String folderName)
+		throws RemoteException {
 		try {
-			java.lang.String[] returnValue = FragmentEntryServiceUtil.getTempFileNames(groupId,
+			String[] returnValue = FragmentEntryServiceUtil.getTempFileNames(groupId,
 					folderName);
 
 			return returnValue;
@@ -315,7 +310,7 @@ public class FragmentEntryServiceSoap {
 	}
 
 	public static com.liferay.fragment.model.FragmentEntrySoap updateFragmentEntry(
-		long fragmentEntryId, java.lang.String name) throws RemoteException {
+		long fragmentEntryId, String name) throws RemoteException {
 		try {
 			com.liferay.fragment.model.FragmentEntry returnValue = FragmentEntryServiceUtil.updateFragmentEntry(fragmentEntryId,
 					name);
@@ -330,8 +325,8 @@ public class FragmentEntryServiceSoap {
 	}
 
 	public static com.liferay.fragment.model.FragmentEntrySoap updateFragmentEntry(
-		long fragmentEntryId, java.lang.String name, java.lang.String css,
-		java.lang.String html, java.lang.String js, int status,
+		long fragmentEntryId, String name, String css, String html, String js,
+		int status,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {

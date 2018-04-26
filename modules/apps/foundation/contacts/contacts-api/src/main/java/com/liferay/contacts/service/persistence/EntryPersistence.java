@@ -177,7 +177,7 @@ public interface EntryPersistence extends BasePersistence<Entry> {
 	* @return the matching entry
 	* @throws NoSuchEntryException if a matching entry could not be found
 	*/
-	public Entry findByU_EA(long userId, java.lang.String emailAddress)
+	public Entry findByU_EA(long userId, String emailAddress)
 		throws NoSuchEntryException;
 
 	/**
@@ -187,7 +187,7 @@ public interface EntryPersistence extends BasePersistence<Entry> {
 	* @param emailAddress the email address
 	* @return the matching entry, or <code>null</code> if a matching entry could not be found
 	*/
-	public Entry fetchByU_EA(long userId, java.lang.String emailAddress);
+	public Entry fetchByU_EA(long userId, String emailAddress);
 
 	/**
 	* Returns the entry where userId = &#63; and emailAddress = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -197,7 +197,7 @@ public interface EntryPersistence extends BasePersistence<Entry> {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching entry, or <code>null</code> if a matching entry could not be found
 	*/
-	public Entry fetchByU_EA(long userId, java.lang.String emailAddress,
+	public Entry fetchByU_EA(long userId, String emailAddress,
 		boolean retrieveFromCache);
 
 	/**
@@ -207,7 +207,7 @@ public interface EntryPersistence extends BasePersistence<Entry> {
 	* @param emailAddress the email address
 	* @return the entry that was removed
 	*/
-	public Entry removeByU_EA(long userId, java.lang.String emailAddress)
+	public Entry removeByU_EA(long userId, String emailAddress)
 		throws NoSuchEntryException;
 
 	/**
@@ -217,7 +217,7 @@ public interface EntryPersistence extends BasePersistence<Entry> {
 	* @param emailAddress the email address
 	* @return the number of matching entries
 	*/
-	public int countByU_EA(long userId, java.lang.String emailAddress);
+	public int countByU_EA(long userId, String emailAddress);
 
 	/**
 	* Caches the entry in the entity cache if it is enabled.

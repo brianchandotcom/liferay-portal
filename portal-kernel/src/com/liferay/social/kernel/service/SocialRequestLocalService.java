@@ -83,9 +83,8 @@ public interface SocialRequestLocalService extends BaseLocalService,
 	* @return the social request
 	*/
 	public SocialRequest addRequest(long userId, long groupId,
-		java.lang.String className, long classPK, int type,
-		java.lang.String extraData, long receiverUserId)
-		throws PortalException;
+		String className, long classPK, int type, String extraData,
+		long receiverUserId) throws PortalException;
 
 	/**
 	* Adds the social request to the database. Also notifies the appropriate model listeners.
@@ -233,8 +232,8 @@ public interface SocialRequestLocalService extends BaseLocalService,
 	* @return the matching social request, or <code>null</code> if a matching social request could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public SocialRequest fetchSocialRequestByUuidAndGroupId(
-		java.lang.String uuid, long groupId);
+	public SocialRequest fetchSocialRequestByUuidAndGroupId(String uuid,
+		long groupId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
@@ -247,7 +246,7 @@ public interface SocialRequestLocalService extends BaseLocalService,
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -340,8 +339,8 @@ public interface SocialRequestLocalService extends BaseLocalService,
 	* @throws PortalException if a matching social request could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public SocialRequest getSocialRequestByUuidAndGroupId(
-		java.lang.String uuid, long groupId) throws PortalException;
+	public SocialRequest getSocialRequestByUuidAndGroupId(String uuid,
+		long groupId) throws PortalException;
 
 	/**
 	* Returns a range of all the social requests.
@@ -366,7 +365,7 @@ public interface SocialRequestLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<SocialRequest> getSocialRequestsByUuidAndCompanyId(
-		java.lang.String uuid, long companyId);
+		String uuid, long companyId);
 
 	/**
 	* Returns a range of social requests matching the UUID and company.
@@ -380,7 +379,7 @@ public interface SocialRequestLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<SocialRequest> getSocialRequestsByUuidAndCompanyId(
-		java.lang.String uuid, long companyId, int start, int end,
+		String uuid, long companyId, int start, int end,
 		OrderByComparator<SocialRequest> orderByComparator);
 
 	/**
@@ -471,8 +470,8 @@ public interface SocialRequestLocalService extends BaseLocalService,
 	otherwise
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public boolean hasRequest(long userId, java.lang.String className,
-		long classPK, int type, int status);
+	public boolean hasRequest(long userId, String className, long classPK,
+		int type, int status);
 
 	/**
 	* Returns <code>true</code> if a matching social request exists in the
@@ -490,8 +489,8 @@ public interface SocialRequestLocalService extends BaseLocalService,
 	<code>false</code> otherwise
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public boolean hasRequest(long userId, java.lang.String className,
-		long classPK, int type, long receiverUserId, int status);
+	public boolean hasRequest(long userId, String className, long classPK,
+		int type, long receiverUserId, int status);
 
 	/**
 	* Updates the social request replacing its status.

@@ -224,8 +224,8 @@ public interface DLFileShortcutLocalService extends BaseLocalService,
 	* @return the matching document library file shortcut, or <code>null</code> if a matching document library file shortcut could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public DLFileShortcut fetchDLFileShortcutByUuidAndGroupId(
-		java.lang.String uuid, long groupId);
+	public DLFileShortcut fetchDLFileShortcutByUuidAndGroupId(String uuid,
+		long groupId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
@@ -250,8 +250,8 @@ public interface DLFileShortcutLocalService extends BaseLocalService,
 	* @throws PortalException if a matching document library file shortcut could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public DLFileShortcut getDLFileShortcutByUuidAndGroupId(
-		java.lang.String uuid, long groupId) throws PortalException;
+	public DLFileShortcut getDLFileShortcutByUuidAndGroupId(String uuid,
+		long groupId) throws PortalException;
 
 	/**
 	* Returns a range of all the document library file shortcuts.
@@ -276,7 +276,7 @@ public interface DLFileShortcutLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<DLFileShortcut> getDLFileShortcutsByUuidAndCompanyId(
-		java.lang.String uuid, long companyId);
+		String uuid, long companyId);
 
 	/**
 	* Returns a range of document library file shortcuts matching the UUID and company.
@@ -290,7 +290,7 @@ public interface DLFileShortcutLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<DLFileShortcut> getDLFileShortcutsByUuidAndCompanyId(
-		java.lang.String uuid, long companyId, int start, int end,
+		String uuid, long companyId, int start, int end,
 		OrderByComparator<DLFileShortcut> orderByComparator);
 
 	/**
@@ -328,7 +328,7 @@ public interface DLFileShortcutLocalService extends BaseLocalService,
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -337,11 +337,11 @@ public interface DLFileShortcutLocalService extends BaseLocalService,
 
 	public void rebuildTree(long companyId) throws PortalException;
 
-	public void setTreePaths(long folderId, java.lang.String treePath)
+	public void setTreePaths(long folderId, String treePath)
 		throws PortalException;
 
 	public void updateAsset(long userId, DLFileShortcut fileShortcut,
-		long[] assetCategoryIds, java.lang.String[] assetTagNames)
+		long[] assetCategoryIds, String[] assetTagNames)
 		throws PortalException;
 
 	/**

@@ -240,7 +240,7 @@ public class AccountLocalServiceWrapper implements AccountLocalService,
 	* @return the OSGi service identifier
 	*/
 	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
+	public String getOSGiServiceIdentifier() {
 		return _accountLocalService.getOSGiServiceIdentifier();
 	}
 

@@ -77,18 +77,18 @@ public interface KaleoTaskAssignmentInstanceLocalService
 
 	public KaleoTaskAssignmentInstance addKaleoTaskAssignmentInstance(
 		long groupId, KaleoTaskInstanceToken kaleoTaskInstanceToken,
-		java.lang.String assigneeClassName, long assigneeClassPK,
+		String assigneeClassName, long assigneeClassPK,
 		ServiceContext serviceContext) throws PortalException;
 
 	public List<KaleoTaskAssignmentInstance> addTaskAssignmentInstances(
 		KaleoTaskInstanceToken kaleoTaskInstanceToken,
 		Collection<KaleoTaskAssignment> kaleoTaskAssignments,
-		Map<java.lang.String, Serializable> workflowContext,
-		ServiceContext serviceContext) throws PortalException;
+		Map<String, Serializable> workflowContext, ServiceContext serviceContext)
+		throws PortalException;
 
 	public KaleoTaskAssignmentInstance assignKaleoTaskAssignmentInstance(
 		KaleoTaskInstanceToken kaleoTaskInstanceToken,
-		java.lang.String assigneeClassName, long assigneeClassPK,
+		String assigneeClassName, long assigneeClassPK,
 		ServiceContext serviceContext) throws PortalException;
 
 	public KaleoTaskAssignmentInstance completeKaleoTaskInstanceToken(
@@ -265,7 +265,7 @@ public interface KaleoTaskAssignmentInstanceLocalService
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

@@ -66,12 +66,12 @@ public interface TeamLocalService extends BaseLocalService,
 	* @deprecated As of 7.0.0, replaced by {@link #addTeam(long, long, String,
 	String, ServiceContext)}
 	*/
-	@java.lang.Deprecated
-	public Team addTeam(long userId, long groupId, java.lang.String name,
-		java.lang.String description) throws PortalException;
+	@Deprecated
+	public Team addTeam(long userId, long groupId, String name,
+		String description) throws PortalException;
 
-	public Team addTeam(long userId, long groupId, java.lang.String name,
-		java.lang.String description, ServiceContext serviceContext)
+	public Team addTeam(long userId, long groupId, String name,
+		String description, ServiceContext serviceContext)
 		throws PortalException;
 
 	/**
@@ -220,7 +220,7 @@ public interface TeamLocalService extends BaseLocalService,
 	public Team fetchTeam(long teamId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Team fetchTeam(long groupId, java.lang.String name);
+	public Team fetchTeam(long groupId, String name);
 
 	/**
 	* Returns the team matching the UUID and group.
@@ -230,7 +230,7 @@ public interface TeamLocalService extends BaseLocalService,
 	* @return the matching team, or <code>null</code> if a matching team could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Team fetchTeamByUuidAndGroupId(java.lang.String uuid, long groupId);
+	public Team fetchTeamByUuidAndGroupId(String uuid, long groupId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
@@ -250,7 +250,7 @@ public interface TeamLocalService extends BaseLocalService,
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -268,8 +268,7 @@ public interface TeamLocalService extends BaseLocalService,
 	public Team getTeam(long teamId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Team getTeam(long groupId, java.lang.String name)
-		throws PortalException;
+	public Team getTeam(long groupId, String name) throws PortalException;
 
 	/**
 	* Returns the team matching the UUID and group.
@@ -280,7 +279,7 @@ public interface TeamLocalService extends BaseLocalService,
 	* @throws PortalException if a matching team could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Team getTeamByUuidAndGroupId(java.lang.String uuid, long groupId)
+	public Team getTeamByUuidAndGroupId(String uuid, long groupId)
 		throws PortalException;
 
 	/**
@@ -305,8 +304,7 @@ public interface TeamLocalService extends BaseLocalService,
 	* @return the matching teams, or an empty list if no matches were found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<Team> getTeamsByUuidAndCompanyId(java.lang.String uuid,
-		long companyId);
+	public List<Team> getTeamsByUuidAndCompanyId(String uuid, long companyId);
 
 	/**
 	* Returns a range of teams matching the UUID and company.
@@ -319,9 +317,8 @@ public interface TeamLocalService extends BaseLocalService,
 	* @return the range of matching teams, or an empty list if no matches were found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<Team> getTeamsByUuidAndCompanyId(java.lang.String uuid,
-		long companyId, int start, int end,
-		OrderByComparator<Team> orderByComparator);
+	public List<Team> getTeamsByUuidAndCompanyId(String uuid, long companyId,
+		int start, int end, OrderByComparator<Team> orderByComparator);
 
 	/**
 	* Returns the number of teams.
@@ -394,22 +391,20 @@ public interface TeamLocalService extends BaseLocalService,
 	public boolean hasUserTeams(long userId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<Team> search(long groupId, java.lang.String name,
-		java.lang.String description,
-		LinkedHashMap<java.lang.String, java.lang.Object> params, int start,
-		int end, OrderByComparator<Team> obc);
+	public List<Team> search(long groupId, String name, String description,
+		LinkedHashMap<String, Object> params, int start, int end,
+		OrderByComparator<Team> obc);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int searchCount(long groupId, java.lang.String name,
-		java.lang.String description,
-		LinkedHashMap<java.lang.String, java.lang.Object> params);
+	public int searchCount(long groupId, String name, String description,
+		LinkedHashMap<String, Object> params);
 
 	public void setUserGroupTeams(long userGroupId, long[] teamIds);
 
 	public void setUserTeams(long userId, long[] teamIds);
 
-	public Team updateTeam(long teamId, java.lang.String name,
-		java.lang.String description) throws PortalException;
+	public Team updateTeam(long teamId, String name, String description)
+		throws PortalException;
 
 	/**
 	* Updates the team in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.

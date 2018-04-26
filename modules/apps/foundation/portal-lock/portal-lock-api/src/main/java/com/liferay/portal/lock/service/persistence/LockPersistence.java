@@ -48,7 +48,7 @@ public interface LockPersistence extends BasePersistence<Lock> {
 	* @param uuid the uuid
 	* @return the matching locks
 	*/
-	public java.util.List<Lock> findByUuid(java.lang.String uuid);
+	public java.util.List<Lock> findByUuid(String uuid);
 
 	/**
 	* Returns a range of all the locks where uuid = &#63;.
@@ -62,8 +62,7 @@ public interface LockPersistence extends BasePersistence<Lock> {
 	* @param end the upper bound of the range of locks (not inclusive)
 	* @return the range of matching locks
 	*/
-	public java.util.List<Lock> findByUuid(java.lang.String uuid, int start,
-		int end);
+	public java.util.List<Lock> findByUuid(String uuid, int start, int end);
 
 	/**
 	* Returns an ordered range of all the locks where uuid = &#63;.
@@ -78,8 +77,7 @@ public interface LockPersistence extends BasePersistence<Lock> {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching locks
 	*/
-	public java.util.List<Lock> findByUuid(java.lang.String uuid, int start,
-		int end,
+	public java.util.List<Lock> findByUuid(String uuid, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<Lock> orderByComparator);
 
 	/**
@@ -96,8 +94,7 @@ public interface LockPersistence extends BasePersistence<Lock> {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching locks
 	*/
-	public java.util.List<Lock> findByUuid(java.lang.String uuid, int start,
-		int end,
+	public java.util.List<Lock> findByUuid(String uuid, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<Lock> orderByComparator,
 		boolean retrieveFromCache);
 
@@ -109,7 +106,7 @@ public interface LockPersistence extends BasePersistence<Lock> {
 	* @return the first matching lock
 	* @throws NoSuchLockException if a matching lock could not be found
 	*/
-	public Lock findByUuid_First(java.lang.String uuid,
+	public Lock findByUuid_First(String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<Lock> orderByComparator)
 		throws NoSuchLockException;
 
@@ -120,7 +117,7 @@ public interface LockPersistence extends BasePersistence<Lock> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching lock, or <code>null</code> if a matching lock could not be found
 	*/
-	public Lock fetchByUuid_First(java.lang.String uuid,
+	public Lock fetchByUuid_First(String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<Lock> orderByComparator);
 
 	/**
@@ -131,7 +128,7 @@ public interface LockPersistence extends BasePersistence<Lock> {
 	* @return the last matching lock
 	* @throws NoSuchLockException if a matching lock could not be found
 	*/
-	public Lock findByUuid_Last(java.lang.String uuid,
+	public Lock findByUuid_Last(String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<Lock> orderByComparator)
 		throws NoSuchLockException;
 
@@ -142,7 +139,7 @@ public interface LockPersistence extends BasePersistence<Lock> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching lock, or <code>null</code> if a matching lock could not be found
 	*/
-	public Lock fetchByUuid_Last(java.lang.String uuid,
+	public Lock fetchByUuid_Last(String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<Lock> orderByComparator);
 
 	/**
@@ -154,7 +151,7 @@ public interface LockPersistence extends BasePersistence<Lock> {
 	* @return the previous, current, and next lock
 	* @throws NoSuchLockException if a lock with the primary key could not be found
 	*/
-	public Lock[] findByUuid_PrevAndNext(long lockId, java.lang.String uuid,
+	public Lock[] findByUuid_PrevAndNext(long lockId, String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<Lock> orderByComparator)
 		throws NoSuchLockException;
 
@@ -163,7 +160,7 @@ public interface LockPersistence extends BasePersistence<Lock> {
 	*
 	* @param uuid the uuid
 	*/
-	public void removeByUuid(java.lang.String uuid);
+	public void removeByUuid(String uuid);
 
 	/**
 	* Returns the number of locks where uuid = &#63;.
@@ -171,7 +168,7 @@ public interface LockPersistence extends BasePersistence<Lock> {
 	* @param uuid the uuid
 	* @return the number of matching locks
 	*/
-	public int countByUuid(java.lang.String uuid);
+	public int countByUuid(String uuid);
 
 	/**
 	* Returns all the locks where uuid = &#63; and companyId = &#63;.
@@ -180,8 +177,7 @@ public interface LockPersistence extends BasePersistence<Lock> {
 	* @param companyId the company ID
 	* @return the matching locks
 	*/
-	public java.util.List<Lock> findByUuid_C(java.lang.String uuid,
-		long companyId);
+	public java.util.List<Lock> findByUuid_C(String uuid, long companyId);
 
 	/**
 	* Returns a range of all the locks where uuid = &#63; and companyId = &#63;.
@@ -196,8 +192,8 @@ public interface LockPersistence extends BasePersistence<Lock> {
 	* @param end the upper bound of the range of locks (not inclusive)
 	* @return the range of matching locks
 	*/
-	public java.util.List<Lock> findByUuid_C(java.lang.String uuid,
-		long companyId, int start, int end);
+	public java.util.List<Lock> findByUuid_C(String uuid, long companyId,
+		int start, int end);
 
 	/**
 	* Returns an ordered range of all the locks where uuid = &#63; and companyId = &#63;.
@@ -213,8 +209,8 @@ public interface LockPersistence extends BasePersistence<Lock> {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching locks
 	*/
-	public java.util.List<Lock> findByUuid_C(java.lang.String uuid,
-		long companyId, int start, int end,
+	public java.util.List<Lock> findByUuid_C(String uuid, long companyId,
+		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<Lock> orderByComparator);
 
 	/**
@@ -232,8 +228,8 @@ public interface LockPersistence extends BasePersistence<Lock> {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching locks
 	*/
-	public java.util.List<Lock> findByUuid_C(java.lang.String uuid,
-		long companyId, int start, int end,
+	public java.util.List<Lock> findByUuid_C(String uuid, long companyId,
+		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<Lock> orderByComparator,
 		boolean retrieveFromCache);
 
@@ -246,7 +242,7 @@ public interface LockPersistence extends BasePersistence<Lock> {
 	* @return the first matching lock
 	* @throws NoSuchLockException if a matching lock could not be found
 	*/
-	public Lock findByUuid_C_First(java.lang.String uuid, long companyId,
+	public Lock findByUuid_C_First(String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<Lock> orderByComparator)
 		throws NoSuchLockException;
 
@@ -258,7 +254,7 @@ public interface LockPersistence extends BasePersistence<Lock> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching lock, or <code>null</code> if a matching lock could not be found
 	*/
-	public Lock fetchByUuid_C_First(java.lang.String uuid, long companyId,
+	public Lock fetchByUuid_C_First(String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<Lock> orderByComparator);
 
 	/**
@@ -270,7 +266,7 @@ public interface LockPersistence extends BasePersistence<Lock> {
 	* @return the last matching lock
 	* @throws NoSuchLockException if a matching lock could not be found
 	*/
-	public Lock findByUuid_C_Last(java.lang.String uuid, long companyId,
+	public Lock findByUuid_C_Last(String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<Lock> orderByComparator)
 		throws NoSuchLockException;
 
@@ -282,7 +278,7 @@ public interface LockPersistence extends BasePersistence<Lock> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching lock, or <code>null</code> if a matching lock could not be found
 	*/
-	public Lock fetchByUuid_C_Last(java.lang.String uuid, long companyId,
+	public Lock fetchByUuid_C_Last(String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<Lock> orderByComparator);
 
 	/**
@@ -295,7 +291,7 @@ public interface LockPersistence extends BasePersistence<Lock> {
 	* @return the previous, current, and next lock
 	* @throws NoSuchLockException if a lock with the primary key could not be found
 	*/
-	public Lock[] findByUuid_C_PrevAndNext(long lockId, java.lang.String uuid,
+	public Lock[] findByUuid_C_PrevAndNext(long lockId, String uuid,
 		long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<Lock> orderByComparator)
 		throws NoSuchLockException;
@@ -306,7 +302,7 @@ public interface LockPersistence extends BasePersistence<Lock> {
 	* @param uuid the uuid
 	* @param companyId the company ID
 	*/
-	public void removeByUuid_C(java.lang.String uuid, long companyId);
+	public void removeByUuid_C(String uuid, long companyId);
 
 	/**
 	* Returns the number of locks where uuid = &#63; and companyId = &#63;.
@@ -315,7 +311,7 @@ public interface LockPersistence extends BasePersistence<Lock> {
 	* @param companyId the company ID
 	* @return the number of matching locks
 	*/
-	public int countByUuid_C(java.lang.String uuid, long companyId);
+	public int countByUuid_C(String uuid, long companyId);
 
 	/**
 	* Returns all the locks where expirationDate &lt; &#63;.
@@ -457,7 +453,7 @@ public interface LockPersistence extends BasePersistence<Lock> {
 	* @return the matching lock
 	* @throws NoSuchLockException if a matching lock could not be found
 	*/
-	public Lock findByC_K(java.lang.String className, java.lang.String key)
+	public Lock findByC_K(String className, String key)
 		throws NoSuchLockException;
 
 	/**
@@ -467,7 +463,7 @@ public interface LockPersistence extends BasePersistence<Lock> {
 	* @param key the key
 	* @return the matching lock, or <code>null</code> if a matching lock could not be found
 	*/
-	public Lock fetchByC_K(java.lang.String className, java.lang.String key);
+	public Lock fetchByC_K(String className, String key);
 
 	/**
 	* Returns the lock where className = &#63; and key = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -477,7 +473,7 @@ public interface LockPersistence extends BasePersistence<Lock> {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching lock, or <code>null</code> if a matching lock could not be found
 	*/
-	public Lock fetchByC_K(java.lang.String className, java.lang.String key,
+	public Lock fetchByC_K(String className, String key,
 		boolean retrieveFromCache);
 
 	/**
@@ -487,7 +483,7 @@ public interface LockPersistence extends BasePersistence<Lock> {
 	* @param key the key
 	* @return the lock that was removed
 	*/
-	public Lock removeByC_K(java.lang.String className, java.lang.String key)
+	public Lock removeByC_K(String className, String key)
 		throws NoSuchLockException;
 
 	/**
@@ -497,7 +493,7 @@ public interface LockPersistence extends BasePersistence<Lock> {
 	* @param key the key
 	* @return the number of matching locks
 	*/
-	public int countByC_K(java.lang.String className, java.lang.String key);
+	public int countByC_K(String className, String key);
 
 	/**
 	* Caches the lock in the entity cache if it is enabled.
@@ -618,5 +614,5 @@ public interface LockPersistence extends BasePersistence<Lock> {
 	public int countAll();
 
 	@Override
-	public java.util.Set<java.lang.String> getBadColumnNames();
+	public java.util.Set<String> getBadColumnNames();
 }

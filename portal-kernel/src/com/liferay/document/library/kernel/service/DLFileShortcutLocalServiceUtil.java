@@ -268,7 +268,7 @@ public class DLFileShortcutLocalServiceUtil {
 	* @return the matching document library file shortcut, or <code>null</code> if a matching document library file shortcut could not be found
 	*/
 	public static com.liferay.document.library.kernel.model.DLFileShortcut fetchDLFileShortcutByUuidAndGroupId(
-		java.lang.String uuid, long groupId) {
+		String uuid, long groupId) {
 		return getService().fetchDLFileShortcutByUuidAndGroupId(uuid, groupId);
 	}
 
@@ -298,7 +298,7 @@ public class DLFileShortcutLocalServiceUtil {
 	* @throws PortalException if a matching document library file shortcut could not be found
 	*/
 	public static com.liferay.document.library.kernel.model.DLFileShortcut getDLFileShortcutByUuidAndGroupId(
-		java.lang.String uuid, long groupId)
+		String uuid, long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getDLFileShortcutByUuidAndGroupId(uuid, groupId);
 	}
@@ -327,7 +327,7 @@ public class DLFileShortcutLocalServiceUtil {
 	* @return the matching document library file shortcuts, or an empty list if no matches were found
 	*/
 	public static java.util.List<com.liferay.document.library.kernel.model.DLFileShortcut> getDLFileShortcutsByUuidAndCompanyId(
-		java.lang.String uuid, long companyId) {
+		String uuid, long companyId) {
 		return getService().getDLFileShortcutsByUuidAndCompanyId(uuid, companyId);
 	}
 
@@ -342,7 +342,7 @@ public class DLFileShortcutLocalServiceUtil {
 	* @return the range of matching document library file shortcuts, or an empty list if no matches were found
 	*/
 	public static java.util.List<com.liferay.document.library.kernel.model.DLFileShortcut> getDLFileShortcutsByUuidAndCompanyId(
-		java.lang.String uuid, long companyId, int start, int end,
+		String uuid, long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.document.library.kernel.model.DLFileShortcut> orderByComparator) {
 		return getService()
 				   .getDLFileShortcutsByUuidAndCompanyId(uuid, companyId,
@@ -397,7 +397,7 @@ public class DLFileShortcutLocalServiceUtil {
 	*
 	* @return the OSGi service identifier
 	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
+	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 
@@ -412,14 +412,14 @@ public class DLFileShortcutLocalServiceUtil {
 		getService().rebuildTree(companyId);
 	}
 
-	public static void setTreePaths(long folderId, java.lang.String treePath)
+	public static void setTreePaths(long folderId, String treePath)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().setTreePaths(folderId, treePath);
 	}
 
 	public static void updateAsset(long userId,
 		com.liferay.document.library.kernel.model.DLFileShortcut fileShortcut,
-		long[] assetCategoryIds, java.lang.String[] assetTagNames)
+		long[] assetCategoryIds, String[] assetTagNames)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService()
 			.updateAsset(userId, fileShortcut, assetCategoryIds, assetTagNames);

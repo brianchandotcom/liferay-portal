@@ -125,7 +125,7 @@ public interface DDLRecordLocalService extends BaseLocalService,
 	* @deprecated As of 1.1.0, replaced by {@link #addRecord(long, long, int,
 	DDMFormValues, ServiceContext)}
 	*/
-	@java.lang.Deprecated
+	@Deprecated
 	public DDLRecord addRecord(long userId, long groupId, long recordSetId,
 		int displayIndex, Fields fields, ServiceContext serviceContext)
 		throws PortalException;
@@ -149,9 +149,9 @@ public interface DDLRecordLocalService extends BaseLocalService,
 	* @deprecated As of 1.1.0, replaced by {@link #addRecord(long, long, int,
 	DDMFormValues, ServiceContext)}
 	*/
-	@java.lang.Deprecated
+	@Deprecated
 	public DDLRecord addRecord(long userId, long groupId, long recordSetId,
-		int displayIndex, Map<java.lang.String, Serializable> fieldsMap,
+		int displayIndex, Map<String, Serializable> fieldsMap,
 		ServiceContext serviceContext) throws PortalException;
 
 	/**
@@ -220,7 +220,7 @@ public interface DDLRecordLocalService extends BaseLocalService,
 	* @deprecated As of 1.1.0, replaced by {@link #updateRecord(long, boolean,
 	int, DDMFormValues, ServiceContext)}
 	*/
-	@java.lang.Deprecated
+	@Deprecated
 	public DDLRecord deleteRecordLocale(long recordId, Locale locale,
 		ServiceContext serviceContext) throws PortalException;
 
@@ -303,8 +303,7 @@ public interface DDLRecordLocalService extends BaseLocalService,
 	* @return the matching ddl record, or <code>null</code> if a matching ddl record could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public DDLRecord fetchDDLRecordByUuidAndGroupId(java.lang.String uuid,
-		long groupId);
+	public DDLRecord fetchDDLRecordByUuidAndGroupId(String uuid, long groupId);
 
 	/**
 	* Returns the record with the ID.
@@ -385,8 +384,8 @@ public interface DDLRecordLocalService extends BaseLocalService,
 	* @throws PortalException if a matching ddl record could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public DDLRecord getDDLRecordByUuidAndGroupId(java.lang.String uuid,
-		long groupId) throws PortalException;
+	public DDLRecord getDDLRecordByUuidAndGroupId(String uuid, long groupId)
+		throws PortalException;
 
 	/**
 	* Returns a range of all the ddl records.
@@ -410,8 +409,8 @@ public interface DDLRecordLocalService extends BaseLocalService,
 	* @return the matching ddl records, or an empty list if no matches were found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<DDLRecord> getDDLRecordsByUuidAndCompanyId(
-		java.lang.String uuid, long companyId);
+	public List<DDLRecord> getDDLRecordsByUuidAndCompanyId(String uuid,
+		long companyId);
 
 	/**
 	* Returns a range of ddl records matching the UUID and company.
@@ -424,8 +423,8 @@ public interface DDLRecordLocalService extends BaseLocalService,
 	* @return the range of matching ddl records, or an empty list if no matches were found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<DDLRecord> getDDLRecordsByUuidAndCompanyId(
-		java.lang.String uuid, long companyId, int start, int end,
+	public List<DDLRecord> getDDLRecordsByUuidAndCompanyId(String uuid,
+		long companyId, int start, int end,
 		OrderByComparator<DDLRecord> orderByComparator);
 
 	/**
@@ -459,14 +458,14 @@ public interface DDLRecordLocalService extends BaseLocalService,
 	* @deprecated As of 1.1.0, replaced by {@link
 	DDLRecordVersionLocalService#getLatestRecordVersion(long)}
 	*/
-	@java.lang.Deprecated
+	@Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public DDLRecordVersion getLatestRecordVersion(long recordId)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.lang.Long[] getMinAndMaxCompanyRecordIds(long companyId,
-		int status, int scope);
+	public Long[] getMinAndMaxCompanyRecordIds(long companyId, int status,
+		int scope);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<DDLRecord> getMinAndMaxCompanyRecords(long companyId,
@@ -477,7 +476,7 @@ public interface DDLRecordLocalService extends BaseLocalService,
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -572,7 +571,7 @@ public interface DDLRecordLocalService extends BaseLocalService,
 	DDLRecordVersionLocalService#getRecordVersion(
 	long)}
 	*/
-	@java.lang.Deprecated
+	@Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public DDLRecordVersion getRecordVersion(long recordVersionId)
 		throws PortalException;
@@ -582,17 +581,17 @@ public interface DDLRecordLocalService extends BaseLocalService,
 	DDLRecordVersionLocalService#getRecordVersion(
 	long, String)}
 	*/
-	@java.lang.Deprecated
+	@Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public DDLRecordVersion getRecordVersion(long recordId,
-		java.lang.String version) throws PortalException;
+	public DDLRecordVersion getRecordVersion(long recordId, String version)
+		throws PortalException;
 
 	/**
 	* @deprecated As of 1.1.0, replaced by {@link
 	DDLRecordVersionLocalService#getRecordVersions(
 	long, int, int, OrderByComparator)}
 	*/
-	@java.lang.Deprecated
+	@Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<DDLRecordVersion> getRecordVersions(long recordId, int start,
 		int end, OrderByComparator<DDLRecordVersion> orderByComparator);
@@ -602,7 +601,7 @@ public interface DDLRecordLocalService extends BaseLocalService,
 	DDLRecordVersionLocalService#getRecordVersionsCount(
 	long)}
 	*/
-	@java.lang.Deprecated
+	@Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getRecordVersionsCount(long recordId);
 
@@ -616,18 +615,16 @@ public interface DDLRecordLocalService extends BaseLocalService,
 	the record modified date.
 	* @throws PortalException if a portal exception occurred
 	*/
-	public void revertRecord(long userId, long recordId,
-		java.lang.String version, ServiceContext serviceContext)
-		throws PortalException;
+	public void revertRecord(long userId, long recordId, String version,
+		ServiceContext serviceContext) throws PortalException;
 
 	/**
 	* @deprecated As of 1.1.0, replaced by {@link #revertRecord(long, long,
 	String, ServiceContext)}
 	*/
-	@java.lang.Deprecated
-	public void revertRecordVersion(long userId, long recordId,
-		java.lang.String version, ServiceContext serviceContext)
-		throws PortalException;
+	@Deprecated
+	public void revertRecordVersion(long userId, long recordId, String version,
+		ServiceContext serviceContext) throws PortalException;
 
 	/**
 	* Returns hits to all the records indexed by the search engine matching the
@@ -669,8 +666,8 @@ public interface DDLRecordLocalService extends BaseLocalService,
 	*/
 	public void updateAsset(long userId, DDLRecord record,
 		DDLRecordVersion recordVersion, long[] assetCategoryIds,
-		java.lang.String[] assetTagNames, Locale locale,
-		java.lang.Double priority) throws PortalException;
+		String[] assetTagNames, Locale locale, Double priority)
+		throws PortalException;
 
 	/**
 	* Updates the ddl record in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
@@ -722,7 +719,7 @@ public interface DDLRecordLocalService extends BaseLocalService,
 	* @deprecated As of 1.1.0, replaced by {@link #updateRecord(long, long,
 	boolean, int, DDMFormValues, ServiceContext)}
 	*/
-	@java.lang.Deprecated
+	@Deprecated
 	public DDLRecord updateRecord(long userId, long recordId,
 		boolean majorVersion, int displayIndex, Fields fields,
 		boolean mergeFields, ServiceContext serviceContext)
@@ -746,9 +743,9 @@ public interface DDLRecordLocalService extends BaseLocalService,
 	* @deprecated As of 1.1.0, replaced by {@link #updateRecord(long, long,
 	boolean, int, DDMFormValues, ServiceContext)}
 	*/
-	@java.lang.Deprecated
+	@Deprecated
 	public DDLRecord updateRecord(long userId, long recordId, int displayIndex,
-		Map<java.lang.String, Serializable> fieldsMap, boolean mergeFields,
+		Map<String, Serializable> fieldsMap, boolean mergeFields,
 		ServiceContext serviceContext) throws PortalException;
 
 	/**

@@ -459,8 +459,8 @@ public class KaleoActionUtil {
 	* @param kaleoClassPK the kaleo class pk
 	* @return the matching kaleo actions
 	*/
-	public static List<KaleoAction> findByKCN_KCPK(
-		java.lang.String kaleoClassName, long kaleoClassPK) {
+	public static List<KaleoAction> findByKCN_KCPK(String kaleoClassName,
+		long kaleoClassPK) {
 		return getPersistence().findByKCN_KCPK(kaleoClassName, kaleoClassPK);
 	}
 
@@ -477,8 +477,8 @@ public class KaleoActionUtil {
 	* @param end the upper bound of the range of kaleo actions (not inclusive)
 	* @return the range of matching kaleo actions
 	*/
-	public static List<KaleoAction> findByKCN_KCPK(
-		java.lang.String kaleoClassName, long kaleoClassPK, int start, int end) {
+	public static List<KaleoAction> findByKCN_KCPK(String kaleoClassName,
+		long kaleoClassPK, int start, int end) {
 		return getPersistence()
 				   .findByKCN_KCPK(kaleoClassName, kaleoClassPK, start, end);
 	}
@@ -497,8 +497,8 @@ public class KaleoActionUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching kaleo actions
 	*/
-	public static List<KaleoAction> findByKCN_KCPK(
-		java.lang.String kaleoClassName, long kaleoClassPK, int start, int end,
+	public static List<KaleoAction> findByKCN_KCPK(String kaleoClassName,
+		long kaleoClassPK, int start, int end,
 		OrderByComparator<KaleoAction> orderByComparator) {
 		return getPersistence()
 				   .findByKCN_KCPK(kaleoClassName, kaleoClassPK, start, end,
@@ -520,8 +520,8 @@ public class KaleoActionUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching kaleo actions
 	*/
-	public static List<KaleoAction> findByKCN_KCPK(
-		java.lang.String kaleoClassName, long kaleoClassPK, int start, int end,
+	public static List<KaleoAction> findByKCN_KCPK(String kaleoClassName,
+		long kaleoClassPK, int start, int end,
 		OrderByComparator<KaleoAction> orderByComparator,
 		boolean retrieveFromCache) {
 		return getPersistence()
@@ -538,9 +538,8 @@ public class KaleoActionUtil {
 	* @return the first matching kaleo action
 	* @throws NoSuchActionException if a matching kaleo action could not be found
 	*/
-	public static KaleoAction findByKCN_KCPK_First(
-		java.lang.String kaleoClassName, long kaleoClassPK,
-		OrderByComparator<KaleoAction> orderByComparator)
+	public static KaleoAction findByKCN_KCPK_First(String kaleoClassName,
+		long kaleoClassPK, OrderByComparator<KaleoAction> orderByComparator)
 		throws com.liferay.portal.workflow.kaleo.exception.NoSuchActionException {
 		return getPersistence()
 				   .findByKCN_KCPK_First(kaleoClassName, kaleoClassPK,
@@ -555,9 +554,8 @@ public class KaleoActionUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching kaleo action, or <code>null</code> if a matching kaleo action could not be found
 	*/
-	public static KaleoAction fetchByKCN_KCPK_First(
-		java.lang.String kaleoClassName, long kaleoClassPK,
-		OrderByComparator<KaleoAction> orderByComparator) {
+	public static KaleoAction fetchByKCN_KCPK_First(String kaleoClassName,
+		long kaleoClassPK, OrderByComparator<KaleoAction> orderByComparator) {
 		return getPersistence()
 				   .fetchByKCN_KCPK_First(kaleoClassName, kaleoClassPK,
 			orderByComparator);
@@ -572,9 +570,8 @@ public class KaleoActionUtil {
 	* @return the last matching kaleo action
 	* @throws NoSuchActionException if a matching kaleo action could not be found
 	*/
-	public static KaleoAction findByKCN_KCPK_Last(
-		java.lang.String kaleoClassName, long kaleoClassPK,
-		OrderByComparator<KaleoAction> orderByComparator)
+	public static KaleoAction findByKCN_KCPK_Last(String kaleoClassName,
+		long kaleoClassPK, OrderByComparator<KaleoAction> orderByComparator)
 		throws com.liferay.portal.workflow.kaleo.exception.NoSuchActionException {
 		return getPersistence()
 				   .findByKCN_KCPK_Last(kaleoClassName, kaleoClassPK,
@@ -589,9 +586,8 @@ public class KaleoActionUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching kaleo action, or <code>null</code> if a matching kaleo action could not be found
 	*/
-	public static KaleoAction fetchByKCN_KCPK_Last(
-		java.lang.String kaleoClassName, long kaleoClassPK,
-		OrderByComparator<KaleoAction> orderByComparator) {
+	public static KaleoAction fetchByKCN_KCPK_Last(String kaleoClassName,
+		long kaleoClassPK, OrderByComparator<KaleoAction> orderByComparator) {
 		return getPersistence()
 				   .fetchByKCN_KCPK_Last(kaleoClassName, kaleoClassPK,
 			orderByComparator);
@@ -608,7 +604,7 @@ public class KaleoActionUtil {
 	* @throws NoSuchActionException if a kaleo action with the primary key could not be found
 	*/
 	public static KaleoAction[] findByKCN_KCPK_PrevAndNext(long kaleoActionId,
-		java.lang.String kaleoClassName, long kaleoClassPK,
+		String kaleoClassName, long kaleoClassPK,
 		OrderByComparator<KaleoAction> orderByComparator)
 		throws com.liferay.portal.workflow.kaleo.exception.NoSuchActionException {
 		return getPersistence()
@@ -622,8 +618,7 @@ public class KaleoActionUtil {
 	* @param kaleoClassName the kaleo class name
 	* @param kaleoClassPK the kaleo class pk
 	*/
-	public static void removeByKCN_KCPK(java.lang.String kaleoClassName,
-		long kaleoClassPK) {
+	public static void removeByKCN_KCPK(String kaleoClassName, long kaleoClassPK) {
 		getPersistence().removeByKCN_KCPK(kaleoClassName, kaleoClassPK);
 	}
 
@@ -634,8 +629,7 @@ public class KaleoActionUtil {
 	* @param kaleoClassPK the kaleo class pk
 	* @return the number of matching kaleo actions
 	*/
-	public static int countByKCN_KCPK(java.lang.String kaleoClassName,
-		long kaleoClassPK) {
+	public static int countByKCN_KCPK(String kaleoClassName, long kaleoClassPK) {
 		return getPersistence().countByKCN_KCPK(kaleoClassName, kaleoClassPK);
 	}
 
@@ -647,9 +641,8 @@ public class KaleoActionUtil {
 	* @param executionType the execution type
 	* @return the matching kaleo actions
 	*/
-	public static List<KaleoAction> findByKCN_KCPK_ET(
-		java.lang.String kaleoClassName, long kaleoClassPK,
-		java.lang.String executionType) {
+	public static List<KaleoAction> findByKCN_KCPK_ET(String kaleoClassName,
+		long kaleoClassPK, String executionType) {
 		return getPersistence()
 				   .findByKCN_KCPK_ET(kaleoClassName, kaleoClassPK,
 			executionType);
@@ -669,9 +662,8 @@ public class KaleoActionUtil {
 	* @param end the upper bound of the range of kaleo actions (not inclusive)
 	* @return the range of matching kaleo actions
 	*/
-	public static List<KaleoAction> findByKCN_KCPK_ET(
-		java.lang.String kaleoClassName, long kaleoClassPK,
-		java.lang.String executionType, int start, int end) {
+	public static List<KaleoAction> findByKCN_KCPK_ET(String kaleoClassName,
+		long kaleoClassPK, String executionType, int start, int end) {
 		return getPersistence()
 				   .findByKCN_KCPK_ET(kaleoClassName, kaleoClassPK,
 			executionType, start, end);
@@ -692,9 +684,8 @@ public class KaleoActionUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching kaleo actions
 	*/
-	public static List<KaleoAction> findByKCN_KCPK_ET(
-		java.lang.String kaleoClassName, long kaleoClassPK,
-		java.lang.String executionType, int start, int end,
+	public static List<KaleoAction> findByKCN_KCPK_ET(String kaleoClassName,
+		long kaleoClassPK, String executionType, int start, int end,
 		OrderByComparator<KaleoAction> orderByComparator) {
 		return getPersistence()
 				   .findByKCN_KCPK_ET(kaleoClassName, kaleoClassPK,
@@ -717,9 +708,8 @@ public class KaleoActionUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching kaleo actions
 	*/
-	public static List<KaleoAction> findByKCN_KCPK_ET(
-		java.lang.String kaleoClassName, long kaleoClassPK,
-		java.lang.String executionType, int start, int end,
+	public static List<KaleoAction> findByKCN_KCPK_ET(String kaleoClassName,
+		long kaleoClassPK, String executionType, int start, int end,
 		OrderByComparator<KaleoAction> orderByComparator,
 		boolean retrieveFromCache) {
 		return getPersistence()
@@ -737,9 +727,8 @@ public class KaleoActionUtil {
 	* @return the first matching kaleo action
 	* @throws NoSuchActionException if a matching kaleo action could not be found
 	*/
-	public static KaleoAction findByKCN_KCPK_ET_First(
-		java.lang.String kaleoClassName, long kaleoClassPK,
-		java.lang.String executionType,
+	public static KaleoAction findByKCN_KCPK_ET_First(String kaleoClassName,
+		long kaleoClassPK, String executionType,
 		OrderByComparator<KaleoAction> orderByComparator)
 		throws com.liferay.portal.workflow.kaleo.exception.NoSuchActionException {
 		return getPersistence()
@@ -756,9 +745,8 @@ public class KaleoActionUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching kaleo action, or <code>null</code> if a matching kaleo action could not be found
 	*/
-	public static KaleoAction fetchByKCN_KCPK_ET_First(
-		java.lang.String kaleoClassName, long kaleoClassPK,
-		java.lang.String executionType,
+	public static KaleoAction fetchByKCN_KCPK_ET_First(String kaleoClassName,
+		long kaleoClassPK, String executionType,
 		OrderByComparator<KaleoAction> orderByComparator) {
 		return getPersistence()
 				   .fetchByKCN_KCPK_ET_First(kaleoClassName, kaleoClassPK,
@@ -775,9 +763,8 @@ public class KaleoActionUtil {
 	* @return the last matching kaleo action
 	* @throws NoSuchActionException if a matching kaleo action could not be found
 	*/
-	public static KaleoAction findByKCN_KCPK_ET_Last(
-		java.lang.String kaleoClassName, long kaleoClassPK,
-		java.lang.String executionType,
+	public static KaleoAction findByKCN_KCPK_ET_Last(String kaleoClassName,
+		long kaleoClassPK, String executionType,
 		OrderByComparator<KaleoAction> orderByComparator)
 		throws com.liferay.portal.workflow.kaleo.exception.NoSuchActionException {
 		return getPersistence()
@@ -794,9 +781,8 @@ public class KaleoActionUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching kaleo action, or <code>null</code> if a matching kaleo action could not be found
 	*/
-	public static KaleoAction fetchByKCN_KCPK_ET_Last(
-		java.lang.String kaleoClassName, long kaleoClassPK,
-		java.lang.String executionType,
+	public static KaleoAction fetchByKCN_KCPK_ET_Last(String kaleoClassName,
+		long kaleoClassPK, String executionType,
 		OrderByComparator<KaleoAction> orderByComparator) {
 		return getPersistence()
 				   .fetchByKCN_KCPK_ET_Last(kaleoClassName, kaleoClassPK,
@@ -815,9 +801,8 @@ public class KaleoActionUtil {
 	* @throws NoSuchActionException if a kaleo action with the primary key could not be found
 	*/
 	public static KaleoAction[] findByKCN_KCPK_ET_PrevAndNext(
-		long kaleoActionId, java.lang.String kaleoClassName, long kaleoClassPK,
-		java.lang.String executionType,
-		OrderByComparator<KaleoAction> orderByComparator)
+		long kaleoActionId, String kaleoClassName, long kaleoClassPK,
+		String executionType, OrderByComparator<KaleoAction> orderByComparator)
 		throws com.liferay.portal.workflow.kaleo.exception.NoSuchActionException {
 		return getPersistence()
 				   .findByKCN_KCPK_ET_PrevAndNext(kaleoActionId,
@@ -831,8 +816,8 @@ public class KaleoActionUtil {
 	* @param kaleoClassPK the kaleo class pk
 	* @param executionType the execution type
 	*/
-	public static void removeByKCN_KCPK_ET(java.lang.String kaleoClassName,
-		long kaleoClassPK, java.lang.String executionType) {
+	public static void removeByKCN_KCPK_ET(String kaleoClassName,
+		long kaleoClassPK, String executionType) {
 		getPersistence()
 			.removeByKCN_KCPK_ET(kaleoClassName, kaleoClassPK, executionType);
 	}
@@ -845,8 +830,8 @@ public class KaleoActionUtil {
 	* @param executionType the execution type
 	* @return the number of matching kaleo actions
 	*/
-	public static int countByKCN_KCPK_ET(java.lang.String kaleoClassName,
-		long kaleoClassPK, java.lang.String executionType) {
+	public static int countByKCN_KCPK_ET(String kaleoClassName,
+		long kaleoClassPK, String executionType) {
 		return getPersistence()
 				   .countByKCN_KCPK_ET(kaleoClassName, kaleoClassPK,
 			executionType);

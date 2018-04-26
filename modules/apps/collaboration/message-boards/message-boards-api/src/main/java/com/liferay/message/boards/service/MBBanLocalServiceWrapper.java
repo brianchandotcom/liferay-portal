@@ -234,7 +234,7 @@ public class MBBanLocalServiceWrapper implements MBBanLocalService,
 	*/
 	@Override
 	public com.liferay.message.boards.model.MBBan fetchMBBanByUuidAndGroupId(
-		java.lang.String uuid, long groupId) {
+		String uuid, long groupId) {
 		return _mbBanLocalService.fetchMBBanByUuidAndGroupId(uuid, groupId);
 	}
 
@@ -288,7 +288,7 @@ public class MBBanLocalServiceWrapper implements MBBanLocalService,
 	*/
 	@Override
 	public com.liferay.message.boards.model.MBBan getMBBanByUuidAndGroupId(
-		java.lang.String uuid, long groupId)
+		String uuid, long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _mbBanLocalService.getMBBanByUuidAndGroupId(uuid, groupId);
 	}
@@ -319,7 +319,7 @@ public class MBBanLocalServiceWrapper implements MBBanLocalService,
 	*/
 	@Override
 	public java.util.List<com.liferay.message.boards.model.MBBan> getMBBansByUuidAndCompanyId(
-		java.lang.String uuid, long companyId) {
+		String uuid, long companyId) {
 		return _mbBanLocalService.getMBBansByUuidAndCompanyId(uuid, companyId);
 	}
 
@@ -335,7 +335,7 @@ public class MBBanLocalServiceWrapper implements MBBanLocalService,
 	*/
 	@Override
 	public java.util.List<com.liferay.message.boards.model.MBBan> getMBBansByUuidAndCompanyId(
-		java.lang.String uuid, long companyId, int start, int end,
+		String uuid, long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.message.boards.model.MBBan> orderByComparator) {
 		return _mbBanLocalService.getMBBansByUuidAndCompanyId(uuid, companyId,
 			start, end, orderByComparator);
@@ -357,7 +357,7 @@ public class MBBanLocalServiceWrapper implements MBBanLocalService,
 	* @return the OSGi service identifier
 	*/
 	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
+	public String getOSGiServiceIdentifier() {
 		return _mbBanLocalService.getOSGiServiceIdentifier();
 	}
 

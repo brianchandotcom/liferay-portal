@@ -618,7 +618,7 @@ public class SocialActivityLimitUtil {
 	*/
 	public static SocialActivityLimit findByG_U_C_C_A_A(long groupId,
 		long userId, long classNameId, long classPK, int activityType,
-		java.lang.String activityCounterName)
+		String activityCounterName)
 		throws com.liferay.social.kernel.exception.NoSuchActivityLimitException {
 		return getPersistence()
 				   .findByG_U_C_C_A_A(groupId, userId, classNameId, classPK,
@@ -638,7 +638,7 @@ public class SocialActivityLimitUtil {
 	*/
 	public static SocialActivityLimit fetchByG_U_C_C_A_A(long groupId,
 		long userId, long classNameId, long classPK, int activityType,
-		java.lang.String activityCounterName) {
+		String activityCounterName) {
 		return getPersistence()
 				   .fetchByG_U_C_C_A_A(groupId, userId, classNameId, classPK,
 			activityType, activityCounterName);
@@ -658,7 +658,7 @@ public class SocialActivityLimitUtil {
 	*/
 	public static SocialActivityLimit fetchByG_U_C_C_A_A(long groupId,
 		long userId, long classNameId, long classPK, int activityType,
-		java.lang.String activityCounterName, boolean retrieveFromCache) {
+		String activityCounterName, boolean retrieveFromCache) {
 		return getPersistence()
 				   .fetchByG_U_C_C_A_A(groupId, userId, classNameId, classPK,
 			activityType, activityCounterName, retrieveFromCache);
@@ -677,7 +677,7 @@ public class SocialActivityLimitUtil {
 	*/
 	public static SocialActivityLimit removeByG_U_C_C_A_A(long groupId,
 		long userId, long classNameId, long classPK, int activityType,
-		java.lang.String activityCounterName)
+		String activityCounterName)
 		throws com.liferay.social.kernel.exception.NoSuchActivityLimitException {
 		return getPersistence()
 				   .removeByG_U_C_C_A_A(groupId, userId, classNameId, classPK,
@@ -697,7 +697,7 @@ public class SocialActivityLimitUtil {
 	*/
 	public static int countByG_U_C_C_A_A(long groupId, long userId,
 		long classNameId, long classPK, int activityType,
-		java.lang.String activityCounterName) {
+		String activityCounterName) {
 		return getPersistence()
 				   .countByG_U_C_C_A_A(groupId, userId, classNameId, classPK,
 			activityType, activityCounterName);

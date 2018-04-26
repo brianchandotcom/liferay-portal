@@ -41,8 +41,8 @@ public class EmailAddressServiceUtil {
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.portal.service.impl.EmailAddressServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static com.liferay.portal.kernel.model.EmailAddress addEmailAddress(
-		java.lang.String className, long classPK, java.lang.String address,
-		long typeId, boolean primary, ServiceContext serviceContext)
+		String className, long classPK, String address, long typeId,
+		boolean primary, ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addEmailAddress(className, classPK, address, typeId,
@@ -75,7 +75,7 @@ public class EmailAddressServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.portal.kernel.model.EmailAddress> getEmailAddresses(
-		java.lang.String className, long classPK)
+		String className, long classPK)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getEmailAddresses(className, classPK);
 	}
@@ -85,13 +85,12 @@ public class EmailAddressServiceUtil {
 	*
 	* @return the OSGi service identifier
 	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
+	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 
 	public static com.liferay.portal.kernel.model.EmailAddress updateEmailAddress(
-		long emailAddressId, java.lang.String address, long typeId,
-		boolean primary)
+		long emailAddressId, String address, long typeId, boolean primary)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .updateEmailAddress(emailAddressId, address, typeId, primary);

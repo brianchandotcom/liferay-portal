@@ -55,8 +55,8 @@ public class BookmarksEntryLocalServiceUtil {
 	}
 
 	public static com.liferay.bookmarks.model.BookmarksEntry addEntry(
-		long userId, long groupId, long folderId, java.lang.String name,
-		java.lang.String url, java.lang.String description,
+		long userId, long groupId, long folderId, String name, String url,
+		String description,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
@@ -222,7 +222,7 @@ public class BookmarksEntryLocalServiceUtil {
 	* @return the matching bookmarks entry, or <code>null</code> if a matching bookmarks entry could not be found
 	*/
 	public static com.liferay.bookmarks.model.BookmarksEntry fetchBookmarksEntryByUuidAndGroupId(
-		java.lang.String uuid, long groupId) {
+		String uuid, long groupId) {
 		return getService().fetchBookmarksEntryByUuidAndGroupId(uuid, groupId);
 	}
 
@@ -254,7 +254,7 @@ public class BookmarksEntryLocalServiceUtil {
 	* @return the matching bookmarks entries, or an empty list if no matches were found
 	*/
 	public static java.util.List<com.liferay.bookmarks.model.BookmarksEntry> getBookmarksEntriesByUuidAndCompanyId(
-		java.lang.String uuid, long companyId) {
+		String uuid, long companyId) {
 		return getService()
 				   .getBookmarksEntriesByUuidAndCompanyId(uuid, companyId);
 	}
@@ -270,7 +270,7 @@ public class BookmarksEntryLocalServiceUtil {
 	* @return the range of matching bookmarks entries, or an empty list if no matches were found
 	*/
 	public static java.util.List<com.liferay.bookmarks.model.BookmarksEntry> getBookmarksEntriesByUuidAndCompanyId(
-		java.lang.String uuid, long companyId, int start, int end,
+		String uuid, long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.bookmarks.model.BookmarksEntry> orderByComparator) {
 		return getService()
 				   .getBookmarksEntriesByUuidAndCompanyId(uuid, companyId,
@@ -308,7 +308,7 @@ public class BookmarksEntryLocalServiceUtil {
 	* @throws PortalException if a matching bookmarks entry could not be found
 	*/
 	public static com.liferay.bookmarks.model.BookmarksEntry getBookmarksEntryByUuidAndGroupId(
-		java.lang.String uuid, long groupId)
+		String uuid, long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getBookmarksEntryByUuidAndGroupId(uuid, groupId);
 	}
@@ -358,7 +358,7 @@ public class BookmarksEntryLocalServiceUtil {
 	}
 
 	public static int getFoldersEntriesCount(long groupId,
-		java.util.List<java.lang.Long> folderIds) {
+		java.util.List<Long> folderIds) {
 		return getService().getFoldersEntriesCount(groupId, folderIds);
 	}
 
@@ -397,7 +397,7 @@ public class BookmarksEntryLocalServiceUtil {
 	*
 	* @return the OSGi service identifier
 	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
+	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 
@@ -460,7 +460,7 @@ public class BookmarksEntryLocalServiceUtil {
 				   .search(groupId, userId, creatorUserId, status, start, end);
 	}
 
-	public static void setTreePaths(long folderId, java.lang.String treePath,
+	public static void setTreePaths(long folderId, String treePath,
 		boolean reindex)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().setTreePaths(folderId, treePath, reindex);
@@ -478,8 +478,8 @@ public class BookmarksEntryLocalServiceUtil {
 
 	public static void updateAsset(long userId,
 		com.liferay.bookmarks.model.BookmarksEntry entry,
-		long[] assetCategoryIds, java.lang.String[] assetTagNames,
-		long[] assetLinkEntryIds, java.lang.Double priority)
+		long[] assetCategoryIds, String[] assetTagNames,
+		long[] assetLinkEntryIds, Double priority)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService()
 			.updateAsset(userId, entry, assetCategoryIds, assetTagNames,
@@ -498,9 +498,8 @@ public class BookmarksEntryLocalServiceUtil {
 	}
 
 	public static com.liferay.bookmarks.model.BookmarksEntry updateEntry(
-		long userId, long entryId, long groupId, long folderId,
-		java.lang.String name, java.lang.String url,
-		java.lang.String description,
+		long userId, long entryId, long groupId, long folderId, String name,
+		String url, String description,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()

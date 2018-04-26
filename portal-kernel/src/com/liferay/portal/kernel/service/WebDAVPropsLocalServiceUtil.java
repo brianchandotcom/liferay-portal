@@ -85,8 +85,7 @@ public class WebDAVPropsLocalServiceUtil {
 		return getService().deleteWebDAVProps(webDavPropsId);
 	}
 
-	public static void deleteWebDAVProps(java.lang.String className,
-		long classPK) {
+	public static void deleteWebDAVProps(String className, long classPK) {
 		getService().deleteWebDAVProps(className, classPK);
 	}
 
@@ -197,7 +196,7 @@ public class WebDAVPropsLocalServiceUtil {
 	*
 	* @return the OSGi service identifier
 	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
+	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 
@@ -221,7 +220,7 @@ public class WebDAVPropsLocalServiceUtil {
 	}
 
 	public static com.liferay.portal.kernel.model.WebDAVProps getWebDAVProps(
-		long companyId, java.lang.String className, long classPK) {
+		long companyId, String className, long classPK) {
 		return getService().getWebDAVProps(companyId, className, classPK);
 	}
 

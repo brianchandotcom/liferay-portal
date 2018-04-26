@@ -190,7 +190,7 @@ public class AppLocalServiceUtil {
 	* @return the matching app, or <code>null</code> if a matching app could not be found
 	*/
 	public static com.liferay.marketplace.model.App fetchAppByUuidAndCompanyId(
-		java.lang.String uuid, long companyId) {
+		String uuid, long companyId) {
 		return getService().fetchAppByUuidAndCompanyId(uuid, companyId);
 	}
 
@@ -224,7 +224,7 @@ public class AppLocalServiceUtil {
 	* @throws PortalException if a matching app could not be found
 	*/
 	public static com.liferay.marketplace.model.App getAppByUuidAndCompanyId(
-		java.lang.String uuid, long companyId)
+		String uuid, long companyId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getAppByUuidAndCompanyId(uuid, companyId);
 	}
@@ -246,7 +246,7 @@ public class AppLocalServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.marketplace.model.App> getApps(
-		java.lang.String category) {
+		String category) {
 		return getService().getApps(category);
 	}
 
@@ -273,7 +273,7 @@ public class AppLocalServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.marketplace.model.App> getInstalledApps(
-		java.lang.String category) {
+		String category) {
 		return getService().getInstalledApps(category);
 	}
 
@@ -282,7 +282,7 @@ public class AppLocalServiceUtil {
 	*
 	* @return the OSGi service identifier
 	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
+	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 
@@ -292,7 +292,7 @@ public class AppLocalServiceUtil {
 		return getService().getPersistedModel(primaryKeyObj);
 	}
 
-	public static java.util.Map<java.lang.String, java.lang.String> getPrepackagedApps() {
+	public static java.util.Map<String, String> getPrepackagedApps() {
 		return getService().getPrepackagedApps();
 	}
 
@@ -324,9 +324,8 @@ public class AppLocalServiceUtil {
 	}
 
 	public static com.liferay.marketplace.model.App updateApp(long userId,
-		long remoteAppId, java.lang.String title, java.lang.String description,
-		java.lang.String category, java.lang.String iconURL,
-		java.lang.String version, boolean required, java.io.File file)
+		long remoteAppId, String title, String description, String category,
+		String iconURL, String version, boolean required, java.io.File file)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .updateApp(userId, remoteAppId, title, description,

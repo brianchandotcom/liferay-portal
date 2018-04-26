@@ -114,7 +114,7 @@ public class DLFileEntryMetadataWrapper implements DLFileEntryMetadata,
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new DLFileEntryMetadataWrapper((DLFileEntryMetadata)_dlFileEntryMetadata.clone());
 	}
 
@@ -215,7 +215,7 @@ public class DLFileEntryMetadataWrapper implements DLFileEntryMetadata,
 	* @return the uuid of this document library file entry metadata
 	*/
 	@Override
-	public java.lang.String getUuid() {
+	public String getUuid() {
 		return _dlFileEntryMetadata.getUuid();
 	}
 
@@ -351,7 +351,7 @@ public class DLFileEntryMetadataWrapper implements DLFileEntryMetadata,
 	* @param uuid the uuid of this document library file entry metadata
 	*/
 	@Override
-	public void setUuid(java.lang.String uuid) {
+	public void setUuid(String uuid) {
 		_dlFileEntryMetadata.setUuid(uuid);
 	}
 
@@ -366,7 +366,7 @@ public class DLFileEntryMetadataWrapper implements DLFileEntryMetadata,
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _dlFileEntryMetadata.toString();
 	}
 
@@ -376,7 +376,7 @@ public class DLFileEntryMetadataWrapper implements DLFileEntryMetadata,
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _dlFileEntryMetadata.toXmlString();
 	}
 

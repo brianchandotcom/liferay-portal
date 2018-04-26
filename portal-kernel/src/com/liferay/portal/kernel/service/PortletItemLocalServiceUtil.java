@@ -41,8 +41,8 @@ public class PortletItemLocalServiceUtil {
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.portal.service.impl.PortletItemLocalServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static com.liferay.portal.kernel.model.PortletItem addPortletItem(
-		long userId, long groupId, java.lang.String name,
-		java.lang.String portletId, java.lang.String className)
+		long userId, long groupId, String name, String portletId,
+		String className)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addPortletItem(userId, groupId, name, portletId, className);
@@ -199,7 +199,7 @@ public class PortletItemLocalServiceUtil {
 	*
 	* @return the OSGi service identifier
 	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
+	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 
@@ -223,8 +223,7 @@ public class PortletItemLocalServiceUtil {
 	}
 
 	public static com.liferay.portal.kernel.model.PortletItem getPortletItem(
-		long groupId, java.lang.String name, java.lang.String portletId,
-		java.lang.String className)
+		long groupId, String name, String portletId, String className)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getPortletItem(groupId, name, portletId, className);
 	}
@@ -246,12 +245,12 @@ public class PortletItemLocalServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.portal.kernel.model.PortletItem> getPortletItems(
-		long groupId, java.lang.String className) {
+		long groupId, String className) {
 		return getService().getPortletItems(groupId, className);
 	}
 
 	public static java.util.List<com.liferay.portal.kernel.model.PortletItem> getPortletItems(
-		long groupId, java.lang.String portletId, java.lang.String className) {
+		long groupId, String portletId, String className) {
 		return getService().getPortletItems(groupId, portletId, className);
 	}
 
@@ -265,8 +264,8 @@ public class PortletItemLocalServiceUtil {
 	}
 
 	public static com.liferay.portal.kernel.model.PortletItem updatePortletItem(
-		long userId, long groupId, java.lang.String name,
-		java.lang.String portletId, java.lang.String className)
+		long userId, long groupId, String name, String portletId,
+		String className)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .updatePortletItem(userId, groupId, name, portletId,

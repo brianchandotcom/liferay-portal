@@ -54,7 +54,7 @@ public interface MBCategory extends MBCategoryModel, PersistedModel {
 			}
 		};
 
-	public java.util.List<java.lang.Long> getAncestorCategoryIds()
+	public java.util.List<Long> getAncestorCategoryIds()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public java.util.List<MBCategory> getAncestors()

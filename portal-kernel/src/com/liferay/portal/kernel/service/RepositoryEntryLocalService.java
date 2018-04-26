@@ -61,8 +61,8 @@ public interface RepositoryEntryLocalService extends BaseLocalService,
 	 * Never modify or reference this interface directly. Always use {@link RepositoryEntryLocalServiceUtil} to access the repository entry local service. Add custom service methods to {@link com.liferay.portal.service.impl.RepositoryEntryLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	public RepositoryEntry addRepositoryEntry(long userId, long groupId,
-		long repositoryId, java.lang.String mappedId,
-		ServiceContext serviceContext) throws PortalException;
+		long repositoryId, String mappedId, ServiceContext serviceContext)
+		throws PortalException;
 
 	/**
 	* Adds the repository entry to the database. Also notifies the appropriate model listeners.
@@ -90,8 +90,7 @@ public interface RepositoryEntryLocalService extends BaseLocalService,
 		throws PortalException;
 
 	public void deleteRepositoryEntries(long repositoryId,
-		java.lang.Iterable<java.lang.String> mappedIds)
-		throws PortalException;
+		Iterable<String> mappedIds) throws PortalException;
 
 	/**
 	* Deletes the repository entry with the primary key from the database. Also notifies the appropriate model listeners.
@@ -104,8 +103,8 @@ public interface RepositoryEntryLocalService extends BaseLocalService,
 	public RepositoryEntry deleteRepositoryEntry(long repositoryEntryId)
 		throws PortalException;
 
-	public void deleteRepositoryEntry(long repositoryId,
-		java.lang.String mappedId) throws PortalException;
+	public void deleteRepositoryEntry(long repositoryId, String mappedId)
+		throws PortalException;
 
 	/**
 	* Deletes the repository entry from the database. Also notifies the appropriate model listeners.
@@ -187,8 +186,8 @@ public interface RepositoryEntryLocalService extends BaseLocalService,
 	* @return the matching repository entry, or <code>null</code> if a matching repository entry could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public RepositoryEntry fetchRepositoryEntryByUuidAndGroupId(
-		java.lang.String uuid, long groupId);
+	public RepositoryEntry fetchRepositoryEntryByUuidAndGroupId(String uuid,
+		long groupId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
@@ -205,7 +204,7 @@ public interface RepositoryEntryLocalService extends BaseLocalService,
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -238,7 +237,7 @@ public interface RepositoryEntryLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<RepositoryEntry> getRepositoryEntriesByUuidAndCompanyId(
-		java.lang.String uuid, long companyId);
+		String uuid, long companyId);
 
 	/**
 	* Returns a range of repository entries matching the UUID and company.
@@ -252,7 +251,7 @@ public interface RepositoryEntryLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<RepositoryEntry> getRepositoryEntriesByUuidAndCompanyId(
-		java.lang.String uuid, long companyId, int start, int end,
+		String uuid, long companyId, int start, int end,
 		OrderByComparator<RepositoryEntry> orderByComparator);
 
 	/**
@@ -276,11 +275,11 @@ public interface RepositoryEntryLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public RepositoryEntry getRepositoryEntry(long userId, long groupId,
-		long repositoryId, java.lang.String objectId) throws PortalException;
+		long repositoryId, String objectId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public RepositoryEntry getRepositoryEntry(java.lang.String uuid,
-		long groupId) throws PortalException;
+	public RepositoryEntry getRepositoryEntry(String uuid, long groupId)
+		throws PortalException;
 
 	/**
 	* Returns the repository entry matching the UUID and group.
@@ -291,11 +290,11 @@ public interface RepositoryEntryLocalService extends BaseLocalService,
 	* @throws PortalException if a matching repository entry could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public RepositoryEntry getRepositoryEntryByUuidAndGroupId(
-		java.lang.String uuid, long groupId) throws PortalException;
+	public RepositoryEntry getRepositoryEntryByUuidAndGroupId(String uuid,
+		long groupId) throws PortalException;
 
 	public RepositoryEntry updateRepositoryEntry(long repositoryEntryId,
-		java.lang.String mappedId) throws PortalException;
+		String mappedId) throws PortalException;
 
 	/**
 	* Updates the repository entry in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.

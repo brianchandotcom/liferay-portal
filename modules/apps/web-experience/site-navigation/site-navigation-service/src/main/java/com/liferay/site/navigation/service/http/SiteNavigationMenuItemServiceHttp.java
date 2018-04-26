@@ -57,8 +57,7 @@ import com.liferay.site.navigation.service.SiteNavigationMenuItemServiceUtil;
 public class SiteNavigationMenuItemServiceHttp {
 	public static com.liferay.site.navigation.model.SiteNavigationMenuItem addSiteNavigationMenuItem(
 		HttpPrincipal httpPrincipal, long groupId, long siteNavigationMenuId,
-		long parentSiteNavigationMenuItemId, java.lang.String type,
-		java.lang.String typeSettings,
+		long parentSiteNavigationMenuItemId, String type, String typeSettings,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -218,7 +217,7 @@ public class SiteNavigationMenuItemServiceHttp {
 
 	public static com.liferay.site.navigation.model.SiteNavigationMenuItem updateSiteNavigationMenuItem(
 		HttpPrincipal httpPrincipal, long siteNavigationMenuId,
-		java.lang.String typeSettings,
+		String typeSettings,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -253,8 +252,7 @@ public class SiteNavigationMenuItemServiceHttp {
 
 	private static Log _log = LogFactoryUtil.getLog(SiteNavigationMenuItemServiceHttp.class);
 	private static final Class<?>[] _addSiteNavigationMenuItemParameterTypes0 = new Class[] {
-			long.class, long.class, long.class, java.lang.String.class,
-			java.lang.String.class,
+			long.class, long.class, long.class, String.class, String.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _deleteSiteNavigationMenuItemParameterTypes1 =
@@ -268,7 +266,7 @@ public class SiteNavigationMenuItemServiceHttp {
 		new Class[] { long.class, long.class, int.class };
 	private static final Class<?>[] _updateSiteNavigationMenuItemParameterTypes5 =
 		new Class[] {
-			long.class, java.lang.String.class,
+			long.class, String.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 }

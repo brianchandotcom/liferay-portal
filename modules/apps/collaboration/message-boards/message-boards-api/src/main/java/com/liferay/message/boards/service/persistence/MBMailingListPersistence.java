@@ -47,7 +47,7 @@ public interface MBMailingListPersistence extends BasePersistence<MBMailingList>
 	* @param uuid the uuid
 	* @return the matching message boards mailing lists
 	*/
-	public java.util.List<MBMailingList> findByUuid(java.lang.String uuid);
+	public java.util.List<MBMailingList> findByUuid(String uuid);
 
 	/**
 	* Returns a range of all the message boards mailing lists where uuid = &#63;.
@@ -61,8 +61,8 @@ public interface MBMailingListPersistence extends BasePersistence<MBMailingList>
 	* @param end the upper bound of the range of message boards mailing lists (not inclusive)
 	* @return the range of matching message boards mailing lists
 	*/
-	public java.util.List<MBMailingList> findByUuid(java.lang.String uuid,
-		int start, int end);
+	public java.util.List<MBMailingList> findByUuid(String uuid, int start,
+		int end);
 
 	/**
 	* Returns an ordered range of all the message boards mailing lists where uuid = &#63;.
@@ -77,8 +77,8 @@ public interface MBMailingListPersistence extends BasePersistence<MBMailingList>
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching message boards mailing lists
 	*/
-	public java.util.List<MBMailingList> findByUuid(java.lang.String uuid,
-		int start, int end,
+	public java.util.List<MBMailingList> findByUuid(String uuid, int start,
+		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<MBMailingList> orderByComparator);
 
 	/**
@@ -95,8 +95,8 @@ public interface MBMailingListPersistence extends BasePersistence<MBMailingList>
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching message boards mailing lists
 	*/
-	public java.util.List<MBMailingList> findByUuid(java.lang.String uuid,
-		int start, int end,
+	public java.util.List<MBMailingList> findByUuid(String uuid, int start,
+		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<MBMailingList> orderByComparator,
 		boolean retrieveFromCache);
 
@@ -108,7 +108,7 @@ public interface MBMailingListPersistence extends BasePersistence<MBMailingList>
 	* @return the first matching message boards mailing list
 	* @throws NoSuchMailingListException if a matching message boards mailing list could not be found
 	*/
-	public MBMailingList findByUuid_First(java.lang.String uuid,
+	public MBMailingList findByUuid_First(String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<MBMailingList> orderByComparator)
 		throws NoSuchMailingListException;
 
@@ -119,7 +119,7 @@ public interface MBMailingListPersistence extends BasePersistence<MBMailingList>
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching message boards mailing list, or <code>null</code> if a matching message boards mailing list could not be found
 	*/
-	public MBMailingList fetchByUuid_First(java.lang.String uuid,
+	public MBMailingList fetchByUuid_First(String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<MBMailingList> orderByComparator);
 
 	/**
@@ -130,7 +130,7 @@ public interface MBMailingListPersistence extends BasePersistence<MBMailingList>
 	* @return the last matching message boards mailing list
 	* @throws NoSuchMailingListException if a matching message boards mailing list could not be found
 	*/
-	public MBMailingList findByUuid_Last(java.lang.String uuid,
+	public MBMailingList findByUuid_Last(String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<MBMailingList> orderByComparator)
 		throws NoSuchMailingListException;
 
@@ -141,7 +141,7 @@ public interface MBMailingListPersistence extends BasePersistence<MBMailingList>
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching message boards mailing list, or <code>null</code> if a matching message boards mailing list could not be found
 	*/
-	public MBMailingList fetchByUuid_Last(java.lang.String uuid,
+	public MBMailingList fetchByUuid_Last(String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<MBMailingList> orderByComparator);
 
 	/**
@@ -154,7 +154,7 @@ public interface MBMailingListPersistence extends BasePersistence<MBMailingList>
 	* @throws NoSuchMailingListException if a message boards mailing list with the primary key could not be found
 	*/
 	public MBMailingList[] findByUuid_PrevAndNext(long mailingListId,
-		java.lang.String uuid,
+		String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<MBMailingList> orderByComparator)
 		throws NoSuchMailingListException;
 
@@ -163,7 +163,7 @@ public interface MBMailingListPersistence extends BasePersistence<MBMailingList>
 	*
 	* @param uuid the uuid
 	*/
-	public void removeByUuid(java.lang.String uuid);
+	public void removeByUuid(String uuid);
 
 	/**
 	* Returns the number of message boards mailing lists where uuid = &#63;.
@@ -171,7 +171,7 @@ public interface MBMailingListPersistence extends BasePersistence<MBMailingList>
 	* @param uuid the uuid
 	* @return the number of matching message boards mailing lists
 	*/
-	public int countByUuid(java.lang.String uuid);
+	public int countByUuid(String uuid);
 
 	/**
 	* Returns the message boards mailing list where uuid = &#63; and groupId = &#63; or throws a {@link NoSuchMailingListException} if it could not be found.
@@ -181,7 +181,7 @@ public interface MBMailingListPersistence extends BasePersistence<MBMailingList>
 	* @return the matching message boards mailing list
 	* @throws NoSuchMailingListException if a matching message boards mailing list could not be found
 	*/
-	public MBMailingList findByUUID_G(java.lang.String uuid, long groupId)
+	public MBMailingList findByUUID_G(String uuid, long groupId)
 		throws NoSuchMailingListException;
 
 	/**
@@ -191,7 +191,7 @@ public interface MBMailingListPersistence extends BasePersistence<MBMailingList>
 	* @param groupId the group ID
 	* @return the matching message boards mailing list, or <code>null</code> if a matching message boards mailing list could not be found
 	*/
-	public MBMailingList fetchByUUID_G(java.lang.String uuid, long groupId);
+	public MBMailingList fetchByUUID_G(String uuid, long groupId);
 
 	/**
 	* Returns the message boards mailing list where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -201,7 +201,7 @@ public interface MBMailingListPersistence extends BasePersistence<MBMailingList>
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching message boards mailing list, or <code>null</code> if a matching message boards mailing list could not be found
 	*/
-	public MBMailingList fetchByUUID_G(java.lang.String uuid, long groupId,
+	public MBMailingList fetchByUUID_G(String uuid, long groupId,
 		boolean retrieveFromCache);
 
 	/**
@@ -211,7 +211,7 @@ public interface MBMailingListPersistence extends BasePersistence<MBMailingList>
 	* @param groupId the group ID
 	* @return the message boards mailing list that was removed
 	*/
-	public MBMailingList removeByUUID_G(java.lang.String uuid, long groupId)
+	public MBMailingList removeByUUID_G(String uuid, long groupId)
 		throws NoSuchMailingListException;
 
 	/**
@@ -221,7 +221,7 @@ public interface MBMailingListPersistence extends BasePersistence<MBMailingList>
 	* @param groupId the group ID
 	* @return the number of matching message boards mailing lists
 	*/
-	public int countByUUID_G(java.lang.String uuid, long groupId);
+	public int countByUUID_G(String uuid, long groupId);
 
 	/**
 	* Returns all the message boards mailing lists where uuid = &#63; and companyId = &#63;.
@@ -230,7 +230,7 @@ public interface MBMailingListPersistence extends BasePersistence<MBMailingList>
 	* @param companyId the company ID
 	* @return the matching message boards mailing lists
 	*/
-	public java.util.List<MBMailingList> findByUuid_C(java.lang.String uuid,
+	public java.util.List<MBMailingList> findByUuid_C(String uuid,
 		long companyId);
 
 	/**
@@ -246,7 +246,7 @@ public interface MBMailingListPersistence extends BasePersistence<MBMailingList>
 	* @param end the upper bound of the range of message boards mailing lists (not inclusive)
 	* @return the range of matching message boards mailing lists
 	*/
-	public java.util.List<MBMailingList> findByUuid_C(java.lang.String uuid,
+	public java.util.List<MBMailingList> findByUuid_C(String uuid,
 		long companyId, int start, int end);
 
 	/**
@@ -263,7 +263,7 @@ public interface MBMailingListPersistence extends BasePersistence<MBMailingList>
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching message boards mailing lists
 	*/
-	public java.util.List<MBMailingList> findByUuid_C(java.lang.String uuid,
+	public java.util.List<MBMailingList> findByUuid_C(String uuid,
 		long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<MBMailingList> orderByComparator);
 
@@ -282,7 +282,7 @@ public interface MBMailingListPersistence extends BasePersistence<MBMailingList>
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching message boards mailing lists
 	*/
-	public java.util.List<MBMailingList> findByUuid_C(java.lang.String uuid,
+	public java.util.List<MBMailingList> findByUuid_C(String uuid,
 		long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<MBMailingList> orderByComparator,
 		boolean retrieveFromCache);
@@ -296,8 +296,7 @@ public interface MBMailingListPersistence extends BasePersistence<MBMailingList>
 	* @return the first matching message boards mailing list
 	* @throws NoSuchMailingListException if a matching message boards mailing list could not be found
 	*/
-	public MBMailingList findByUuid_C_First(java.lang.String uuid,
-		long companyId,
+	public MBMailingList findByUuid_C_First(String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<MBMailingList> orderByComparator)
 		throws NoSuchMailingListException;
 
@@ -309,8 +308,7 @@ public interface MBMailingListPersistence extends BasePersistence<MBMailingList>
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching message boards mailing list, or <code>null</code> if a matching message boards mailing list could not be found
 	*/
-	public MBMailingList fetchByUuid_C_First(java.lang.String uuid,
-		long companyId,
+	public MBMailingList fetchByUuid_C_First(String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<MBMailingList> orderByComparator);
 
 	/**
@@ -322,8 +320,7 @@ public interface MBMailingListPersistence extends BasePersistence<MBMailingList>
 	* @return the last matching message boards mailing list
 	* @throws NoSuchMailingListException if a matching message boards mailing list could not be found
 	*/
-	public MBMailingList findByUuid_C_Last(java.lang.String uuid,
-		long companyId,
+	public MBMailingList findByUuid_C_Last(String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<MBMailingList> orderByComparator)
 		throws NoSuchMailingListException;
 
@@ -335,8 +332,7 @@ public interface MBMailingListPersistence extends BasePersistence<MBMailingList>
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching message boards mailing list, or <code>null</code> if a matching message boards mailing list could not be found
 	*/
-	public MBMailingList fetchByUuid_C_Last(java.lang.String uuid,
-		long companyId,
+	public MBMailingList fetchByUuid_C_Last(String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<MBMailingList> orderByComparator);
 
 	/**
@@ -350,7 +346,7 @@ public interface MBMailingListPersistence extends BasePersistence<MBMailingList>
 	* @throws NoSuchMailingListException if a message boards mailing list with the primary key could not be found
 	*/
 	public MBMailingList[] findByUuid_C_PrevAndNext(long mailingListId,
-		java.lang.String uuid, long companyId,
+		String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<MBMailingList> orderByComparator)
 		throws NoSuchMailingListException;
 
@@ -360,7 +356,7 @@ public interface MBMailingListPersistence extends BasePersistence<MBMailingList>
 	* @param uuid the uuid
 	* @param companyId the company ID
 	*/
-	public void removeByUuid_C(java.lang.String uuid, long companyId);
+	public void removeByUuid_C(String uuid, long companyId);
 
 	/**
 	* Returns the number of message boards mailing lists where uuid = &#63; and companyId = &#63;.
@@ -369,7 +365,7 @@ public interface MBMailingListPersistence extends BasePersistence<MBMailingList>
 	* @param companyId the company ID
 	* @return the number of matching message boards mailing lists
 	*/
-	public int countByUuid_C(java.lang.String uuid, long companyId);
+	public int countByUuid_C(String uuid, long companyId);
 
 	/**
 	* Returns all the message boards mailing lists where active = &#63;.
@@ -674,5 +670,5 @@ public interface MBMailingListPersistence extends BasePersistence<MBMailingList>
 	public int countAll();
 
 	@Override
-	public java.util.Set<java.lang.String> getBadColumnNames();
+	public java.util.Set<String> getBadColumnNames();
 }

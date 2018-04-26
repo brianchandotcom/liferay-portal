@@ -70,11 +70,9 @@ import java.util.Map;
 @ProviderType
 public class DLFileEntryTypeServiceSoap {
 	public static com.liferay.document.library.kernel.model.DLFileEntryTypeSoap addFileEntryType(
-		long groupId, java.lang.String fileEntryTypeKey,
-		java.lang.String[] nameMapLanguageIds,
-		java.lang.String[] nameMapValues,
-		java.lang.String[] descriptionMapLanguageIds,
-		java.lang.String[] descriptionMapValues, long[] ddmStructureIds,
+		long groupId, String fileEntryTypeKey, String[] nameMapLanguageIds,
+		String[] nameMapValues, String[] descriptionMapLanguageIds,
+		String[] descriptionMapValues, long[] ddmStructureIds,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
@@ -98,8 +96,7 @@ public class DLFileEntryTypeServiceSoap {
 	}
 
 	public static com.liferay.document.library.kernel.model.DLFileEntryTypeSoap addFileEntryType(
-		long groupId, java.lang.String name, java.lang.String description,
-		long[] ddmStructureIds,
+		long groupId, String name, String description, long[] ddmStructureIds,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
@@ -206,7 +203,7 @@ public class DLFileEntryTypeServiceSoap {
 	}
 
 	public static com.liferay.document.library.kernel.model.DLFileEntryTypeSoap[] search(
-		long companyId, long[] groupIds, java.lang.String keywords,
+		long companyId, long[] groupIds, String keywords,
 		boolean includeBasicFileEntryType, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.document.library.kernel.model.DLFileEntryType> orderByComparator)
 		throws RemoteException {
@@ -226,7 +223,7 @@ public class DLFileEntryTypeServiceSoap {
 	}
 
 	public static int searchCount(long companyId, long[] groupIds,
-		java.lang.String keywords, boolean includeBasicFileEntryType)
+		String keywords, boolean includeBasicFileEntryType)
 		throws RemoteException {
 		try {
 			int returnValue = DLFileEntryTypeServiceUtil.searchCount(companyId,
@@ -242,10 +239,9 @@ public class DLFileEntryTypeServiceSoap {
 	}
 
 	public static void updateFileEntryType(long fileEntryTypeId,
-		java.lang.String[] nameMapLanguageIds,
-		java.lang.String[] nameMapValues,
-		java.lang.String[] descriptionMapLanguageIds,
-		java.lang.String[] descriptionMapValues, long[] ddmStructureIds,
+		String[] nameMapLanguageIds, String[] nameMapValues,
+		String[] descriptionMapLanguageIds, String[] descriptionMapValues,
+		long[] ddmStructureIds,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
@@ -264,9 +260,8 @@ public class DLFileEntryTypeServiceSoap {
 		}
 	}
 
-	public static void updateFileEntryType(long fileEntryTypeId,
-		java.lang.String name, java.lang.String description,
-		long[] ddmStructureIds,
+	public static void updateFileEntryType(long fileEntryTypeId, String name,
+		String description, long[] ddmStructureIds,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {

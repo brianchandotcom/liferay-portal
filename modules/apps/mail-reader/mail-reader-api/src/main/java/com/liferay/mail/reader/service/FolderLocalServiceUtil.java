@@ -55,8 +55,8 @@ public class FolderLocalServiceUtil {
 	}
 
 	public static com.liferay.mail.reader.model.Folder addFolder(long userId,
-		long accountId, java.lang.String fullName,
-		java.lang.String displayName, int remoteMessageCount)
+		long accountId, String fullName, String displayName,
+		int remoteMessageCount)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addFolder(userId, accountId, fullName, displayName,
@@ -214,7 +214,7 @@ public class FolderLocalServiceUtil {
 	}
 
 	public static com.liferay.mail.reader.model.Folder getFolder(
-		long accountId, java.lang.String fullName)
+		long accountId, String fullName)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getFolder(accountId, fullName);
 	}
@@ -262,7 +262,7 @@ public class FolderLocalServiceUtil {
 	*
 	* @return the OSGi service identifier
 	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
+	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 
@@ -294,7 +294,7 @@ public class FolderLocalServiceUtil {
 	}
 
 	public static com.liferay.mail.reader.model.Folder updateFolder(
-		long folderId, java.lang.String fullName, java.lang.String displayName,
+		long folderId, String fullName, String displayName,
 		int remoteMessageCount)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()

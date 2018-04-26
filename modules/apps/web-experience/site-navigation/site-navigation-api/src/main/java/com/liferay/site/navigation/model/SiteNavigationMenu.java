@@ -73,7 +73,7 @@ public interface SiteNavigationMenu extends SiteNavigationMenuModel,
 			}
 		};
 
-	public java.lang.String getTypeKey();
+	public String getTypeKey();
 
 	public boolean isPrimary();
 }

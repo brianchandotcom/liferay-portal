@@ -55,9 +55,8 @@ public class BackgroundTaskLocalServiceUtil {
 	}
 
 	public static com.liferay.portal.background.task.model.BackgroundTask addBackgroundTask(
-		long userId, long groupId, java.lang.String name,
-		java.lang.String taskExecutorClassName,
-		java.util.Map<java.lang.String, java.io.Serializable> taskContextMap,
+		long userId, long groupId, String name, String taskExecutorClassName,
+		java.util.Map<String, java.io.Serializable> taskContextMap,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
@@ -66,10 +65,9 @@ public class BackgroundTaskLocalServiceUtil {
 	}
 
 	public static com.liferay.portal.background.task.model.BackgroundTask addBackgroundTask(
-		long userId, long groupId, java.lang.String name,
-		java.lang.String[] servletContextNames,
-		java.lang.Class<?> taskExecutorClass,
-		java.util.Map<java.lang.String, java.io.Serializable> taskContextMap,
+		long userId, long groupId, String name, String[] servletContextNames,
+		Class<?> taskExecutorClass,
+		java.util.Map<String, java.io.Serializable> taskContextMap,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
@@ -79,7 +77,7 @@ public class BackgroundTaskLocalServiceUtil {
 	}
 
 	public static void addBackgroundTaskAttachment(long userId,
-		long backgroundTaskId, java.lang.String fileName, java.io.File file)
+		long backgroundTaskId, String fileName, java.io.File file)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService()
 			.addBackgroundTaskAttachment(userId, backgroundTaskId, fileName,
@@ -87,8 +85,7 @@ public class BackgroundTaskLocalServiceUtil {
 	}
 
 	public static void addBackgroundTaskAttachment(long userId,
-		long backgroundTaskId, java.lang.String fileName,
-		java.io.InputStream inputStream)
+		long backgroundTaskId, String fileName, java.io.InputStream inputStream)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService()
 			.addBackgroundTaskAttachment(userId, backgroundTaskId, fileName,
@@ -97,8 +94,7 @@ public class BackgroundTaskLocalServiceUtil {
 
 	public static com.liferay.portal.background.task.model.BackgroundTask amendBackgroundTask(
 		long backgroundTaskId,
-		java.util.Map<java.lang.String, java.io.Serializable> taskContextMap,
-		int status,
+		java.util.Map<String, java.io.Serializable> taskContextMap, int status,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext) {
 		return getService()
 				   .amendBackgroundTask(backgroundTaskId, taskContextMap,
@@ -107,8 +103,8 @@ public class BackgroundTaskLocalServiceUtil {
 
 	public static com.liferay.portal.background.task.model.BackgroundTask amendBackgroundTask(
 		long backgroundTaskId,
-		java.util.Map<java.lang.String, java.io.Serializable> taskContextMap,
-		int status, java.lang.String statusMessage,
+		java.util.Map<String, java.io.Serializable> taskContextMap, int status,
+		String statusMessage,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext) {
 		return getService()
 				   .amendBackgroundTask(backgroundTaskId, taskContextMap,
@@ -170,8 +166,8 @@ public class BackgroundTaskLocalServiceUtil {
 		getService().deleteGroupBackgroundTasks(groupId);
 	}
 
-	public static void deleteGroupBackgroundTasks(long groupId,
-		java.lang.String name, java.lang.String taskExecutorClassName)
+	public static void deleteGroupBackgroundTasks(long groupId, String name,
+		String taskExecutorClassName)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService()
 			.deleteGroupBackgroundTasks(groupId, name, taskExecutorClassName);
@@ -270,8 +266,7 @@ public class BackgroundTaskLocalServiceUtil {
 	}
 
 	public static com.liferay.portal.background.task.model.BackgroundTask fetchFirstBackgroundTask(
-		long groupId, java.lang.String taskExecutorClassName,
-		boolean completed,
+		long groupId, String taskExecutorClassName, boolean completed,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.background.task.model.BackgroundTask> orderByComparator) {
 		return getService()
 				   .fetchFirstBackgroundTask(groupId, taskExecutorClassName,
@@ -279,13 +274,13 @@ public class BackgroundTaskLocalServiceUtil {
 	}
 
 	public static com.liferay.portal.background.task.model.BackgroundTask fetchFirstBackgroundTask(
-		java.lang.String taskExecutorClassName, int status) {
+		String taskExecutorClassName, int status) {
 		return getService()
 				   .fetchFirstBackgroundTask(taskExecutorClassName, status);
 	}
 
 	public static com.liferay.portal.background.task.model.BackgroundTask fetchFirstBackgroundTask(
-		java.lang.String taskExecutorClassName, int status,
+		String taskExecutorClassName, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.background.task.model.BackgroundTask> orderByComparator) {
 		return getService()
 				   .fetchFirstBackgroundTask(taskExecutorClassName, status,
@@ -331,13 +326,13 @@ public class BackgroundTaskLocalServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.portal.background.task.model.BackgroundTask> getBackgroundTasks(
-		long groupId, java.lang.String taskExecutorClassName) {
+		long groupId, String taskExecutorClassName) {
 		return getService().getBackgroundTasks(groupId, taskExecutorClassName);
 	}
 
 	public static java.util.List<com.liferay.portal.background.task.model.BackgroundTask> getBackgroundTasks(
-		long groupId, java.lang.String taskExecutorClassName,
-		boolean completed, int start, int end,
+		long groupId, String taskExecutorClassName, boolean completed,
+		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.background.task.model.BackgroundTask> orderByComparator) {
 		return getService()
 				   .getBackgroundTasks(groupId, taskExecutorClassName,
@@ -345,14 +340,13 @@ public class BackgroundTaskLocalServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.portal.background.task.model.BackgroundTask> getBackgroundTasks(
-		long groupId, java.lang.String taskExecutorClassName, int status) {
+		long groupId, String taskExecutorClassName, int status) {
 		return getService()
 				   .getBackgroundTasks(groupId, taskExecutorClassName, status);
 	}
 
 	public static java.util.List<com.liferay.portal.background.task.model.BackgroundTask> getBackgroundTasks(
-		long groupId, java.lang.String taskExecutorClassName, int start,
-		int end,
+		long groupId, String taskExecutorClassName, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.background.task.model.BackgroundTask> orderByComparator) {
 		return getService()
 				   .getBackgroundTasks(groupId, taskExecutorClassName, start,
@@ -360,8 +354,8 @@ public class BackgroundTaskLocalServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.portal.background.task.model.BackgroundTask> getBackgroundTasks(
-		long groupId, java.lang.String name,
-		java.lang.String taskExecutorClassName, int start, int end,
+		long groupId, String name, String taskExecutorClassName, int start,
+		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.background.task.model.BackgroundTask> orderByComparator) {
 		return getService()
 				   .getBackgroundTasks(groupId, name, taskExecutorClassName,
@@ -369,14 +363,14 @@ public class BackgroundTaskLocalServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.portal.background.task.model.BackgroundTask> getBackgroundTasks(
-		long groupId, java.lang.String[] taskExecutorClassNames, int status) {
+		long groupId, String[] taskExecutorClassNames, int status) {
 		return getService()
 				   .getBackgroundTasks(groupId, taskExecutorClassNames, status);
 	}
 
 	public static java.util.List<com.liferay.portal.background.task.model.BackgroundTask> getBackgroundTasks(
-		long[] groupIds, java.lang.String name,
-		java.lang.String taskExecutorClassName, int start, int end,
+		long[] groupIds, String name, String taskExecutorClassName, int start,
+		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.background.task.model.BackgroundTask> orderByComparator) {
 		return getService()
 				   .getBackgroundTasks(groupIds, name, taskExecutorClassName,
@@ -384,8 +378,8 @@ public class BackgroundTaskLocalServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.portal.background.task.model.BackgroundTask> getBackgroundTasks(
-		long[] groupIds, java.lang.String name,
-		java.lang.String[] taskExecutorClassNames, int start, int end,
+		long[] groupIds, String name, String[] taskExecutorClassNames,
+		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.background.task.model.BackgroundTask> orderByComparator) {
 		return getService()
 				   .getBackgroundTasks(groupIds, name, taskExecutorClassNames,
@@ -393,21 +387,20 @@ public class BackgroundTaskLocalServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.portal.background.task.model.BackgroundTask> getBackgroundTasks(
-		long[] groupIds, java.lang.String[] taskExecutorClassNames) {
+		long[] groupIds, String[] taskExecutorClassNames) {
 		return getService().getBackgroundTasks(groupIds, taskExecutorClassNames);
 	}
 
 	public static java.util.List<com.liferay.portal.background.task.model.BackgroundTask> getBackgroundTasks(
-		long[] groupIds, java.lang.String[] taskExecutorClassNames,
-		boolean completed) {
+		long[] groupIds, String[] taskExecutorClassNames, boolean completed) {
 		return getService()
 				   .getBackgroundTasks(groupIds, taskExecutorClassNames,
 			completed);
 	}
 
 	public static java.util.List<com.liferay.portal.background.task.model.BackgroundTask> getBackgroundTasks(
-		long[] groupIds, java.lang.String[] taskExecutorClassNames,
-		boolean completed, int start, int end,
+		long[] groupIds, String[] taskExecutorClassNames, boolean completed,
+		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.background.task.model.BackgroundTask> orderByComparator) {
 		return getService()
 				   .getBackgroundTasks(groupIds, taskExecutorClassNames,
@@ -415,8 +408,7 @@ public class BackgroundTaskLocalServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.portal.background.task.model.BackgroundTask> getBackgroundTasks(
-		long[] groupIds, java.lang.String[] taskExecutorClassNames, int start,
-		int end,
+		long[] groupIds, String[] taskExecutorClassNames, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.background.task.model.BackgroundTask> orderByComparator) {
 		return getService()
 				   .getBackgroundTasks(groupIds, taskExecutorClassNames, start,
@@ -424,12 +416,12 @@ public class BackgroundTaskLocalServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.portal.background.task.model.BackgroundTask> getBackgroundTasks(
-		java.lang.String taskExecutorClassName, int status) {
+		String taskExecutorClassName, int status) {
 		return getService().getBackgroundTasks(taskExecutorClassName, status);
 	}
 
 	public static java.util.List<com.liferay.portal.background.task.model.BackgroundTask> getBackgroundTasks(
-		java.lang.String taskExecutorClassName, int status, int start, int end,
+		String taskExecutorClassName, int status, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.background.task.model.BackgroundTask> orderByComparator) {
 		return getService()
 				   .getBackgroundTasks(taskExecutorClassName, status, start,
@@ -437,13 +429,12 @@ public class BackgroundTaskLocalServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.portal.background.task.model.BackgroundTask> getBackgroundTasks(
-		java.lang.String[] taskExecutorClassNames, int status) {
+		String[] taskExecutorClassNames, int status) {
 		return getService().getBackgroundTasks(taskExecutorClassNames, status);
 	}
 
 	public static java.util.List<com.liferay.portal.background.task.model.BackgroundTask> getBackgroundTasks(
-		java.lang.String[] taskExecutorClassNames, int status, int start,
-		int end,
+		String[] taskExecutorClassNames, int status, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.background.task.model.BackgroundTask> orderByComparator) {
 		return getService()
 				   .getBackgroundTasks(taskExecutorClassNames, status, start,
@@ -451,16 +442,16 @@ public class BackgroundTaskLocalServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.portal.background.task.model.BackgroundTask> getBackgroundTasksByDuration(
-		long[] groupIds, java.lang.String[] taskExecutorClassNames,
-		boolean completed, int start, int end, boolean orderByType) {
+		long[] groupIds, String[] taskExecutorClassNames, boolean completed,
+		int start, int end, boolean orderByType) {
 		return getService()
 				   .getBackgroundTasksByDuration(groupIds,
 			taskExecutorClassNames, completed, start, end, orderByType);
 	}
 
 	public static java.util.List<com.liferay.portal.background.task.model.BackgroundTask> getBackgroundTasksByDuration(
-		long[] groupIds, java.lang.String[] taskExecutorClassNames, int start,
-		int end, boolean orderByType) {
+		long[] groupIds, String[] taskExecutorClassNames, int start, int end,
+		boolean orderByType) {
 		return getService()
 				   .getBackgroundTasksByDuration(groupIds,
 			taskExecutorClassNames, start, end, orderByType);
@@ -476,69 +467,66 @@ public class BackgroundTaskLocalServiceUtil {
 	}
 
 	public static int getBackgroundTasksCount(long groupId,
-		java.lang.String taskExecutorClassName) {
+		String taskExecutorClassName) {
 		return getService()
 				   .getBackgroundTasksCount(groupId, taskExecutorClassName);
 	}
 
 	public static int getBackgroundTasksCount(long groupId,
-		java.lang.String taskExecutorClassName, boolean completed) {
+		String taskExecutorClassName, boolean completed) {
 		return getService()
 				   .getBackgroundTasksCount(groupId, taskExecutorClassName,
 			completed);
 	}
 
-	public static int getBackgroundTasksCount(long groupId,
-		java.lang.String name, java.lang.String taskExecutorClassName) {
+	public static int getBackgroundTasksCount(long groupId, String name,
+		String taskExecutorClassName) {
 		return getService()
 				   .getBackgroundTasksCount(groupId, name, taskExecutorClassName);
 	}
 
-	public static int getBackgroundTasksCount(long groupId,
-		java.lang.String name, java.lang.String taskExecutorClassName,
-		boolean completed) {
+	public static int getBackgroundTasksCount(long groupId, String name,
+		String taskExecutorClassName, boolean completed) {
 		return getService()
 				   .getBackgroundTasksCount(groupId, name,
 			taskExecutorClassName, completed);
 	}
 
-	public static int getBackgroundTasksCount(long[] groupIds,
-		java.lang.String name, java.lang.String taskExecutorClassName) {
+	public static int getBackgroundTasksCount(long[] groupIds, String name,
+		String taskExecutorClassName) {
 		return getService()
 				   .getBackgroundTasksCount(groupIds, name,
 			taskExecutorClassName);
 	}
 
-	public static int getBackgroundTasksCount(long[] groupIds,
-		java.lang.String name, java.lang.String taskExecutorClassName,
-		boolean completed) {
+	public static int getBackgroundTasksCount(long[] groupIds, String name,
+		String taskExecutorClassName, boolean completed) {
 		return getService()
 				   .getBackgroundTasksCount(groupIds, name,
 			taskExecutorClassName, completed);
 	}
 
-	public static int getBackgroundTasksCount(long[] groupIds,
-		java.lang.String name, java.lang.String[] taskExecutorClassName) {
+	public static int getBackgroundTasksCount(long[] groupIds, String name,
+		String[] taskExecutorClassName) {
 		return getService()
 				   .getBackgroundTasksCount(groupIds, name,
 			taskExecutorClassName);
 	}
 
 	public static int getBackgroundTasksCount(long[] groupIds,
-		java.lang.String[] taskExecutorClassNames) {
+		String[] taskExecutorClassNames) {
 		return getService()
 				   .getBackgroundTasksCount(groupIds, taskExecutorClassNames);
 	}
 
 	public static int getBackgroundTasksCount(long[] groupIds,
-		java.lang.String[] taskExecutorClassNames, boolean completed) {
+		String[] taskExecutorClassNames, boolean completed) {
 		return getService()
 				   .getBackgroundTasksCount(groupIds, taskExecutorClassNames,
 			completed);
 	}
 
-	public static java.lang.String getBackgroundTaskStatusJSON(
-		long backgroundTaskId) {
+	public static String getBackgroundTaskStatusJSON(long backgroundTaskId) {
 		return getService().getBackgroundTaskStatusJSON(backgroundTaskId);
 	}
 
@@ -551,7 +539,7 @@ public class BackgroundTaskLocalServiceUtil {
 	*
 	* @return the OSGi service identifier
 	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
+	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 

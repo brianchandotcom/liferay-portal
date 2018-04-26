@@ -48,7 +48,7 @@ public interface WeDeployAuthTokenPersistence extends BasePersistence<WeDeployAu
 	* @return the matching we deploy auth token
 	* @throws NoSuchTokenException if a matching we deploy auth token could not be found
 	*/
-	public WeDeployAuthToken findByT_T(java.lang.String token, int type)
+	public WeDeployAuthToken findByT_T(String token, int type)
 		throws NoSuchTokenException;
 
 	/**
@@ -58,7 +58,7 @@ public interface WeDeployAuthTokenPersistence extends BasePersistence<WeDeployAu
 	* @param type the type
 	* @return the matching we deploy auth token, or <code>null</code> if a matching we deploy auth token could not be found
 	*/
-	public WeDeployAuthToken fetchByT_T(java.lang.String token, int type);
+	public WeDeployAuthToken fetchByT_T(String token, int type);
 
 	/**
 	* Returns the we deploy auth token where token = &#63; and type = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -68,7 +68,7 @@ public interface WeDeployAuthTokenPersistence extends BasePersistence<WeDeployAu
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching we deploy auth token, or <code>null</code> if a matching we deploy auth token could not be found
 	*/
-	public WeDeployAuthToken fetchByT_T(java.lang.String token, int type,
+	public WeDeployAuthToken fetchByT_T(String token, int type,
 		boolean retrieveFromCache);
 
 	/**
@@ -78,7 +78,7 @@ public interface WeDeployAuthTokenPersistence extends BasePersistence<WeDeployAu
 	* @param type the type
 	* @return the we deploy auth token that was removed
 	*/
-	public WeDeployAuthToken removeByT_T(java.lang.String token, int type)
+	public WeDeployAuthToken removeByT_T(String token, int type)
 		throws NoSuchTokenException;
 
 	/**
@@ -88,7 +88,7 @@ public interface WeDeployAuthTokenPersistence extends BasePersistence<WeDeployAu
 	* @param type the type
 	* @return the number of matching we deploy auth tokens
 	*/
-	public int countByT_T(java.lang.String token, int type);
+	public int countByT_T(String token, int type);
 
 	/**
 	* Returns the we deploy auth token where clientId = &#63; and token = &#63; and type = &#63; or throws a {@link NoSuchTokenException} if it could not be found.
@@ -99,8 +99,8 @@ public interface WeDeployAuthTokenPersistence extends BasePersistence<WeDeployAu
 	* @return the matching we deploy auth token
 	* @throws NoSuchTokenException if a matching we deploy auth token could not be found
 	*/
-	public WeDeployAuthToken findByCI_T_T(java.lang.String clientId,
-		java.lang.String token, int type) throws NoSuchTokenException;
+	public WeDeployAuthToken findByCI_T_T(String clientId, String token,
+		int type) throws NoSuchTokenException;
 
 	/**
 	* Returns the we deploy auth token where clientId = &#63; and token = &#63; and type = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
@@ -110,8 +110,8 @@ public interface WeDeployAuthTokenPersistence extends BasePersistence<WeDeployAu
 	* @param type the type
 	* @return the matching we deploy auth token, or <code>null</code> if a matching we deploy auth token could not be found
 	*/
-	public WeDeployAuthToken fetchByCI_T_T(java.lang.String clientId,
-		java.lang.String token, int type);
+	public WeDeployAuthToken fetchByCI_T_T(String clientId, String token,
+		int type);
 
 	/**
 	* Returns the we deploy auth token where clientId = &#63; and token = &#63; and type = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -122,8 +122,8 @@ public interface WeDeployAuthTokenPersistence extends BasePersistence<WeDeployAu
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching we deploy auth token, or <code>null</code> if a matching we deploy auth token could not be found
 	*/
-	public WeDeployAuthToken fetchByCI_T_T(java.lang.String clientId,
-		java.lang.String token, int type, boolean retrieveFromCache);
+	public WeDeployAuthToken fetchByCI_T_T(String clientId, String token,
+		int type, boolean retrieveFromCache);
 
 	/**
 	* Removes the we deploy auth token where clientId = &#63; and token = &#63; and type = &#63; from the database.
@@ -133,8 +133,8 @@ public interface WeDeployAuthTokenPersistence extends BasePersistence<WeDeployAu
 	* @param type the type
 	* @return the we deploy auth token that was removed
 	*/
-	public WeDeployAuthToken removeByCI_T_T(java.lang.String clientId,
-		java.lang.String token, int type) throws NoSuchTokenException;
+	public WeDeployAuthToken removeByCI_T_T(String clientId, String token,
+		int type) throws NoSuchTokenException;
 
 	/**
 	* Returns the number of we deploy auth tokens where clientId = &#63; and token = &#63; and type = &#63;.
@@ -144,8 +144,7 @@ public interface WeDeployAuthTokenPersistence extends BasePersistence<WeDeployAu
 	* @param type the type
 	* @return the number of matching we deploy auth tokens
 	*/
-	public int countByCI_T_T(java.lang.String clientId, java.lang.String token,
-		int type);
+	public int countByCI_T_T(String clientId, String token, int type);
 
 	/**
 	* Caches the we deploy auth token in the entity cache if it is enabled.
@@ -269,5 +268,5 @@ public interface WeDeployAuthTokenPersistence extends BasePersistence<WeDeployAu
 	public int countAll();
 
 	@Override
-	public java.util.Set<java.lang.String> getBadColumnNames();
+	public java.util.Set<String> getBadColumnNames();
 }

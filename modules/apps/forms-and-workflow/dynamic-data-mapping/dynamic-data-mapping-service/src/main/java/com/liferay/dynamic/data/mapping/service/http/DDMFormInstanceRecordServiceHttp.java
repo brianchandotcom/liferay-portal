@@ -254,7 +254,7 @@ public class DDMFormInstanceRecordServiceHttp {
 	}
 
 	public static void revertFormInstanceRecord(HttpPrincipal httpPrincipal,
-		long ddmFormInstanceRecordId, java.lang.String version,
+		long ddmFormInstanceRecordId, String version,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -343,7 +343,7 @@ public class DDMFormInstanceRecordServiceHttp {
 			long.class
 		};
 	private static final Class<?>[] _revertFormInstanceRecordParameterTypes6 = new Class[] {
-			long.class, java.lang.String.class,
+			long.class, String.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _updateFormInstanceRecordParameterTypes7 = new Class[] {

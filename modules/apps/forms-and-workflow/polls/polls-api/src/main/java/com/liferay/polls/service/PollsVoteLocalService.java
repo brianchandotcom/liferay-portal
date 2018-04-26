@@ -182,8 +182,7 @@ public interface PollsVoteLocalService extends BaseLocalService,
 	* @return the matching polls vote, or <code>null</code> if a matching polls vote could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public PollsVote fetchPollsVoteByUuidAndGroupId(java.lang.String uuid,
-		long groupId);
+	public PollsVote fetchPollsVoteByUuidAndGroupId(String uuid, long groupId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public PollsVote fetchQuestionUserVote(long questionId, long userId);
@@ -209,7 +208,7 @@ public interface PollsVoteLocalService extends BaseLocalService,
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -235,8 +234,8 @@ public interface PollsVoteLocalService extends BaseLocalService,
 	* @throws PortalException if a matching polls vote could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public PollsVote getPollsVoteByUuidAndGroupId(java.lang.String uuid,
-		long groupId) throws PortalException;
+	public PollsVote getPollsVoteByUuidAndGroupId(String uuid, long groupId)
+		throws PortalException;
 
 	/**
 	* Returns a range of all the polls votes.
@@ -260,8 +259,8 @@ public interface PollsVoteLocalService extends BaseLocalService,
 	* @return the matching polls votes, or an empty list if no matches were found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<PollsVote> getPollsVotesByUuidAndCompanyId(
-		java.lang.String uuid, long companyId);
+	public List<PollsVote> getPollsVotesByUuidAndCompanyId(String uuid,
+		long companyId);
 
 	/**
 	* Returns a range of polls votes matching the UUID and company.
@@ -274,8 +273,8 @@ public interface PollsVoteLocalService extends BaseLocalService,
 	* @return the range of matching polls votes, or an empty list if no matches were found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<PollsVote> getPollsVotesByUuidAndCompanyId(
-		java.lang.String uuid, long companyId, int start, int end,
+	public List<PollsVote> getPollsVotesByUuidAndCompanyId(String uuid,
+		long companyId, int start, int end,
 		OrderByComparator<PollsVote> orderByComparator);
 
 	/**

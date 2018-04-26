@@ -57,9 +57,9 @@ public interface SAPEntryService extends BaseService {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link SAPEntryServiceUtil} to access the sap entry remote service. Add custom service methods to {@link com.liferay.portal.security.service.access.policy.service.impl.SAPEntryServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public SAPEntry addSAPEntry(java.lang.String allowedServiceSignatures,
-		boolean defaultSAPEntry, boolean enabled, java.lang.String name,
-		Map<Locale, java.lang.String> titleMap, ServiceContext serviceContext)
+	public SAPEntry addSAPEntry(String allowedServiceSignatures,
+		boolean defaultSAPEntry, boolean enabled, String name,
+		Map<Locale, String> titleMap, ServiceContext serviceContext)
 		throws PortalException;
 
 	public SAPEntry deleteSAPEntry(long sapEntryId) throws PortalException;
@@ -67,7 +67,7 @@ public interface SAPEntryService extends BaseService {
 	public SAPEntry deleteSAPEntry(SAPEntry sapEntry) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public SAPEntry fetchSAPEntry(long companyId, java.lang.String name)
+	public SAPEntry fetchSAPEntry(long companyId, String name)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -86,18 +86,17 @@ public interface SAPEntryService extends BaseService {
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public SAPEntry getSAPEntry(long sapEntryId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public SAPEntry getSAPEntry(long companyId, java.lang.String name)
+	public SAPEntry getSAPEntry(long companyId, String name)
 		throws PortalException;
 
 	public SAPEntry updateSAPEntry(long sapEntryId,
-		java.lang.String allowedServiceSignatures, boolean defaultSAPEntry,
-		boolean enabled, java.lang.String name,
-		Map<Locale, java.lang.String> titleMap, ServiceContext serviceContext)
-		throws PortalException;
+		String allowedServiceSignatures, boolean defaultSAPEntry,
+		boolean enabled, String name, Map<Locale, String> titleMap,
+		ServiceContext serviceContext) throws PortalException;
 }

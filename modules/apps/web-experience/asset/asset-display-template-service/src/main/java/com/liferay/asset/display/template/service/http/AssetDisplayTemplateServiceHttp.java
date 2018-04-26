@@ -56,9 +56,8 @@ import com.liferay.portal.kernel.util.MethodKey;
 @ProviderType
 public class AssetDisplayTemplateServiceHttp {
 	public static com.liferay.asset.display.template.model.AssetDisplayTemplate addAssetDisplayTemplate(
-		HttpPrincipal httpPrincipal, long groupId, long userId,
-		java.lang.String name, long classNameId, java.lang.String language,
-		java.lang.String scriptContent, boolean main,
+		HttpPrincipal httpPrincipal, long groupId, long userId, String name,
+		long classNameId, String language, String scriptContent, boolean main,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -126,9 +125,8 @@ public class AssetDisplayTemplateServiceHttp {
 	}
 
 	public static com.liferay.asset.display.template.model.AssetDisplayTemplate updateAssetDisplayTemplate(
-		HttpPrincipal httpPrincipal, long assetDisplayTemplateId,
-		java.lang.String name, long classNameId, java.lang.String language,
-		java.lang.String scriptContent, boolean main,
+		HttpPrincipal httpPrincipal, long assetDisplayTemplateId, String name,
+		long classNameId, String language, String scriptContent, boolean main,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -164,16 +162,16 @@ public class AssetDisplayTemplateServiceHttp {
 
 	private static Log _log = LogFactoryUtil.getLog(AssetDisplayTemplateServiceHttp.class);
 	private static final Class<?>[] _addAssetDisplayTemplateParameterTypes0 = new Class[] {
-			long.class, long.class, java.lang.String.class, long.class,
-			java.lang.String.class, java.lang.String.class, boolean.class,
+			long.class, long.class, String.class, long.class, String.class,
+			String.class, boolean.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _deleteAssetDisplayTemplateParameterTypes1 = new Class[] {
 			long.class
 		};
 	private static final Class<?>[] _updateAssetDisplayTemplateParameterTypes2 = new Class[] {
-			long.class, java.lang.String.class, long.class,
-			java.lang.String.class, java.lang.String.class, boolean.class,
+			long.class, String.class, long.class, String.class, String.class,
+			boolean.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 }

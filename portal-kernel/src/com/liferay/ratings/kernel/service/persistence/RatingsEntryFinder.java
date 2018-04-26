@@ -28,5 +28,5 @@ public interface RatingsEntryFinder {
 		java.util.Set<java.io.Serializable> primaryKeys);
 
 	public java.util.List<com.liferay.ratings.kernel.model.RatingsEntry> findByU_C_C(
-		long userId, long classNameId, java.util.List<java.lang.Long> classPKs);
+		long userId, long classNameId, java.util.List<Long> classPKs);
 }

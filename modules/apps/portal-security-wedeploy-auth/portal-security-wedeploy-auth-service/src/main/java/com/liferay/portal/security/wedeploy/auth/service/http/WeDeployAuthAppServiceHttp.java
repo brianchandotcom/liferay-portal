@@ -55,8 +55,7 @@ import com.liferay.portal.security.wedeploy.auth.service.WeDeployAuthAppServiceU
 @ProviderType
 public class WeDeployAuthAppServiceHttp {
 	public static com.liferay.portal.security.wedeploy.auth.model.WeDeployAuthApp addWeDeployAuthApp(
-		HttpPrincipal httpPrincipal, java.lang.String name,
-		java.lang.String redirectURI,
+		HttpPrincipal httpPrincipal, String name, String redirectURI,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -123,7 +122,7 @@ public class WeDeployAuthAppServiceHttp {
 
 	private static Log _log = LogFactoryUtil.getLog(WeDeployAuthAppServiceHttp.class);
 	private static final Class<?>[] _addWeDeployAuthAppParameterTypes0 = new Class[] {
-			java.lang.String.class, java.lang.String.class,
+			String.class, String.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _deleteWeDeployAuthAppParameterTypes1 = new Class[] {

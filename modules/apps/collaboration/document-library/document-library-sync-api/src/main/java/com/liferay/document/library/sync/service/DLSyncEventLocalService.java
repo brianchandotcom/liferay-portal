@@ -70,8 +70,7 @@ public interface DLSyncEventLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.REINDEX)
 	public DLSyncEvent addDLSyncEvent(DLSyncEvent dlSyncEvent);
 
-	public DLSyncEvent addDLSyncEvent(java.lang.String event,
-		java.lang.String type, long typePK);
+	public DLSyncEvent addDLSyncEvent(String event, String type, long typePK);
 
 	/**
 	* Creates a new dl sync event with the primary key. Does not add the dl sync event to the database.
@@ -223,7 +222,7 @@ public interface DLSyncEventLocalService extends BaseLocalService,
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

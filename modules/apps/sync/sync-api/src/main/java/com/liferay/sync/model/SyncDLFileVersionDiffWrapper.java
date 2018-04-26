@@ -117,7 +117,7 @@ public class SyncDLFileVersionDiffWrapper implements SyncDLFileVersionDiff,
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new SyncDLFileVersionDiffWrapper((SyncDLFileVersionDiff)_syncDLFileVersionDiff.clone());
 	}
 
@@ -363,7 +363,7 @@ public class SyncDLFileVersionDiffWrapper implements SyncDLFileVersionDiff,
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _syncDLFileVersionDiff.toString();
 	}
 
@@ -373,7 +373,7 @@ public class SyncDLFileVersionDiffWrapper implements SyncDLFileVersionDiff,
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _syncDLFileVersionDiff.toXmlString();
 	}
 

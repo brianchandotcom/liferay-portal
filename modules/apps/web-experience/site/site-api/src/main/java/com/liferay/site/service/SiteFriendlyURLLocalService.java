@@ -67,9 +67,8 @@ public interface SiteFriendlyURLLocalService extends BaseLocalService,
 	 * Never modify or reference this interface directly. Always use {@link SiteFriendlyURLLocalServiceUtil} to access the site friendly url local service. Add custom service methods to {@link com.liferay.site.service.impl.SiteFriendlyURLLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	public SiteFriendlyURL addSiteFriendlyURL(long userId, long companyId,
-		long groupId, java.lang.String friendlyURL,
-		java.lang.String languageId, ServiceContext serviceContext)
-		throws PortalException;
+		long groupId, String friendlyURL, String languageId,
+		ServiceContext serviceContext) throws PortalException;
 
 	/**
 	* Adds the site friendly url to the database. Also notifies the appropriate model listeners.
@@ -81,8 +80,7 @@ public interface SiteFriendlyURLLocalService extends BaseLocalService,
 	public SiteFriendlyURL addSiteFriendlyURL(SiteFriendlyURL siteFriendlyURL);
 
 	public List<SiteFriendlyURL> addSiteFriendlyURLs(long userId,
-		long companyId, long groupId,
-		Map<Locale, java.lang.String> friendlyURLMap,
+		long companyId, long groupId, Map<Locale, String> friendlyURLMap,
 		ServiceContext serviceContext) throws PortalException;
 
 	/**
@@ -113,7 +111,7 @@ public interface SiteFriendlyURLLocalService extends BaseLocalService,
 		throws PortalException;
 
 	public SiteFriendlyURL deleteSiteFriendlyURL(long companyId, long groupId,
-		java.lang.String languageId) throws PortalException;
+		String languageId) throws PortalException;
 
 	/**
 	* Deletes the site friendly url from the database. Also notifies the appropriate model listeners.
@@ -191,11 +189,11 @@ public interface SiteFriendlyURLLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public SiteFriendlyURL fetchSiteFriendlyURL(long companyId, long groupId,
-		java.lang.String languageId);
+		String languageId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public SiteFriendlyURL fetchSiteFriendlyURLByFriendlyURL(long companyId,
-		java.lang.String friendlyURL);
+		String friendlyURL);
 
 	/**
 	* Returns the site friendly url matching the UUID and group.
@@ -205,8 +203,8 @@ public interface SiteFriendlyURLLocalService extends BaseLocalService,
 	* @return the matching site friendly url, or <code>null</code> if a matching site friendly url could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public SiteFriendlyURL fetchSiteFriendlyURLByUuidAndGroupId(
-		java.lang.String uuid, long groupId);
+	public SiteFriendlyURL fetchSiteFriendlyURLByUuidAndGroupId(String uuid,
+		long groupId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
@@ -223,7 +221,7 @@ public interface SiteFriendlyURLLocalService extends BaseLocalService,
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -250,8 +248,8 @@ public interface SiteFriendlyURLLocalService extends BaseLocalService,
 	* @throws PortalException if a matching site friendly url could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public SiteFriendlyURL getSiteFriendlyURLByUuidAndGroupId(
-		java.lang.String uuid, long groupId) throws PortalException;
+	public SiteFriendlyURL getSiteFriendlyURLByUuidAndGroupId(String uuid,
+		long groupId) throws PortalException;
 
 	/**
 	* Returns a range of all the site friendly urls.
@@ -280,7 +278,7 @@ public interface SiteFriendlyURLLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<SiteFriendlyURL> getSiteFriendlyURLsByUuidAndCompanyId(
-		java.lang.String uuid, long companyId);
+		String uuid, long companyId);
 
 	/**
 	* Returns a range of site friendly urls matching the UUID and company.
@@ -294,7 +292,7 @@ public interface SiteFriendlyURLLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<SiteFriendlyURL> getSiteFriendlyURLsByUuidAndCompanyId(
-		java.lang.String uuid, long companyId, int start, int end,
+		String uuid, long companyId, int start, int end,
 		OrderByComparator<SiteFriendlyURL> orderByComparator);
 
 	/**
@@ -306,9 +304,8 @@ public interface SiteFriendlyURLLocalService extends BaseLocalService,
 	public int getSiteFriendlyURLsCount();
 
 	public SiteFriendlyURL updateSiteFriendlyURL(long userId, long companyId,
-		long groupId, java.lang.String friendlyURL,
-		java.lang.String languageId, ServiceContext serviceContext)
-		throws PortalException;
+		long groupId, String friendlyURL, String languageId,
+		ServiceContext serviceContext) throws PortalException;
 
 	/**
 	* Updates the site friendly url in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
@@ -321,7 +318,6 @@ public interface SiteFriendlyURLLocalService extends BaseLocalService,
 		SiteFriendlyURL siteFriendlyURL);
 
 	public List<SiteFriendlyURL> updateSiteFriendlyURLs(long userId,
-		long companyId, long groupId,
-		Map<Locale, java.lang.String> friendlyURLMap,
+		long companyId, long groupId, Map<Locale, String> friendlyURLMap,
 		ServiceContext serviceContext) throws PortalException;
 }

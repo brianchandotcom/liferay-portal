@@ -70,16 +70,14 @@ public interface MDRActionLocalService extends BaseLocalService,
 	 * Never modify or reference this interface directly. Always use {@link MDRActionLocalServiceUtil} to access the mdr action local service. Add custom service methods to {@link com.liferay.mobile.device.rules.service.impl.MDRActionLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	public MDRAction addAction(long ruleGroupInstanceId,
-		Map<Locale, java.lang.String> nameMap,
-		Map<Locale, java.lang.String> descriptionMap, java.lang.String type,
-		java.lang.String typeSettings, ServiceContext serviceContext)
+		Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
+		String type, String typeSettings, ServiceContext serviceContext)
 		throws PortalException;
 
 	public MDRAction addAction(long ruleGroupInstanceId,
-		Map<Locale, java.lang.String> nameMap,
-		Map<Locale, java.lang.String> descriptionMap, java.lang.String type,
-		UnicodeProperties typeSettingsProperties, ServiceContext serviceContext)
-		throws PortalException;
+		Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
+		String type, UnicodeProperties typeSettingsProperties,
+		ServiceContext serviceContext) throws PortalException;
 
 	/**
 	* Adds the mdr action to the database. Also notifies the appropriate model listeners.
@@ -205,8 +203,7 @@ public interface MDRActionLocalService extends BaseLocalService,
 	* @return the matching mdr action, or <code>null</code> if a matching mdr action could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public MDRAction fetchMDRActionByUuidAndGroupId(java.lang.String uuid,
-		long groupId);
+	public MDRAction fetchMDRActionByUuidAndGroupId(String uuid, long groupId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public MDRAction getAction(long actionId) throws PortalException;
@@ -254,8 +251,8 @@ public interface MDRActionLocalService extends BaseLocalService,
 	* @throws PortalException if a matching mdr action could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public MDRAction getMDRActionByUuidAndGroupId(java.lang.String uuid,
-		long groupId) throws PortalException;
+	public MDRAction getMDRActionByUuidAndGroupId(String uuid, long groupId)
+		throws PortalException;
 
 	/**
 	* Returns a range of all the mdr actions.
@@ -279,8 +276,8 @@ public interface MDRActionLocalService extends BaseLocalService,
 	* @return the matching mdr actions, or an empty list if no matches were found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<MDRAction> getMDRActionsByUuidAndCompanyId(
-		java.lang.String uuid, long companyId);
+	public List<MDRAction> getMDRActionsByUuidAndCompanyId(String uuid,
+		long companyId);
 
 	/**
 	* Returns a range of mdr actions matching the UUID and company.
@@ -293,8 +290,8 @@ public interface MDRActionLocalService extends BaseLocalService,
 	* @return the range of matching mdr actions, or an empty list if no matches were found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<MDRAction> getMDRActionsByUuidAndCompanyId(
-		java.lang.String uuid, long companyId, int start, int end,
+	public List<MDRAction> getMDRActionsByUuidAndCompanyId(String uuid,
+		long companyId, int start, int end,
 		OrderByComparator<MDRAction> orderByComparator);
 
 	/**
@@ -310,22 +307,19 @@ public interface MDRActionLocalService extends BaseLocalService,
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
 
-	public MDRAction updateAction(long actionId,
-		Map<Locale, java.lang.String> nameMap,
-		Map<Locale, java.lang.String> descriptionMap, java.lang.String type,
-		java.lang.String typeSettings, ServiceContext serviceContext)
-		throws PortalException;
+	public MDRAction updateAction(long actionId, Map<Locale, String> nameMap,
+		Map<Locale, String> descriptionMap, String type, String typeSettings,
+		ServiceContext serviceContext) throws PortalException;
 
-	public MDRAction updateAction(long actionId,
-		Map<Locale, java.lang.String> nameMap,
-		Map<Locale, java.lang.String> descriptionMap, java.lang.String type,
+	public MDRAction updateAction(long actionId, Map<Locale, String> nameMap,
+		Map<Locale, String> descriptionMap, String type,
 		UnicodeProperties typeSettingsProperties, ServiceContext serviceContext)
 		throws PortalException;
 

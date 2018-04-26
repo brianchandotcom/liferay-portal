@@ -36,7 +36,7 @@ public class PushNotificationsDeviceLocalServiceWrapper
 
 	@Override
 	public com.liferay.push.notifications.model.PushNotificationsDevice addPushNotificationsDevice(
-		long userId, java.lang.String platform, java.lang.String token)
+		long userId, String platform, String token)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _pushNotificationsDeviceLocalService.addPushNotificationsDevice(userId,
 			platform, token);
@@ -104,7 +104,7 @@ public class PushNotificationsDeviceLocalServiceWrapper
 
 	@Override
 	public com.liferay.push.notifications.model.PushNotificationsDevice deletePushNotificationsDevice(
-		java.lang.String token)
+		String token)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _pushNotificationsDeviceLocalService.deletePushNotificationsDevice(token);
 	}
@@ -217,7 +217,7 @@ public class PushNotificationsDeviceLocalServiceWrapper
 	* @return the OSGi service identifier
 	*/
 	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
+	public String getOSGiServiceIdentifier() {
 		return _pushNotificationsDeviceLocalService.getOSGiServiceIdentifier();
 	}
 
@@ -287,8 +287,8 @@ public class PushNotificationsDeviceLocalServiceWrapper
 	}
 
 	@Override
-	public void sendPushNotification(java.lang.String platform,
-		java.util.List<java.lang.String> tokens,
+	public void sendPushNotification(String platform,
+		java.util.List<String> tokens,
 		com.liferay.portal.kernel.json.JSONObject payloadJSONObject)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_pushNotificationsDeviceLocalService.sendPushNotification(platform,
@@ -308,7 +308,7 @@ public class PushNotificationsDeviceLocalServiceWrapper
 	}
 
 	@Override
-	public void updateToken(java.lang.String oldToken, java.lang.String newToken)
+	public void updateToken(String oldToken, String newToken)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_pushNotificationsDeviceLocalService.updateToken(oldToken, newToken);
 	}

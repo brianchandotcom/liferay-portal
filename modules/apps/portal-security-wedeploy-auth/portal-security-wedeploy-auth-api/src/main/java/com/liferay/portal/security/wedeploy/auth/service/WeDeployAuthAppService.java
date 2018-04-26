@@ -51,9 +51,8 @@ public interface WeDeployAuthAppService extends BaseService {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link WeDeployAuthAppServiceUtil} to access the we deploy auth app remote service. Add custom service methods to {@link com.liferay.portal.security.wedeploy.auth.service.impl.WeDeployAuthAppServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public WeDeployAuthApp addWeDeployAuthApp(java.lang.String name,
-		java.lang.String redirectURI, ServiceContext serviceContext)
-		throws PortalException;
+	public WeDeployAuthApp addWeDeployAuthApp(String name, String redirectURI,
+		ServiceContext serviceContext) throws PortalException;
 
 	public WeDeployAuthApp deleteWeDeployAuthApp(long weDeployAuthAppId)
 		throws PortalException;
@@ -63,5 +62,5 @@ public interface WeDeployAuthAppService extends BaseService {
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 }

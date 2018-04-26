@@ -36,10 +36,10 @@ public class PowwowMeetingLocalServiceWrapper
 
 	@Override
 	public com.liferay.powwow.model.PowwowMeeting addPowwowMeeting(
-		long userId, long groupId, long powwowServerId, java.lang.String name,
-		java.lang.String description, java.lang.String providerType,
-		java.util.Map<java.lang.String, java.io.Serializable> providerTypeMetadataMap,
-		java.lang.String languageId, long calendarBookingId, int status,
+		long userId, long groupId, long powwowServerId, String name,
+		String description, String providerType,
+		java.util.Map<String, java.io.Serializable> providerTypeMetadataMap,
+		String languageId, long calendarBookingId, int status,
 		java.util.List<com.liferay.powwow.model.PowwowParticipant> powwowParticipants,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -224,7 +224,7 @@ public class PowwowMeetingLocalServiceWrapper
 	* @return the OSGi service identifier
 	*/
 	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
+	public String getOSGiServiceIdentifier() {
 		return _powwowMeetingLocalService.getOSGiServiceIdentifier();
 	}
 
@@ -296,9 +296,9 @@ public class PowwowMeetingLocalServiceWrapper
 
 	@Override
 	public java.util.List<com.liferay.powwow.model.PowwowMeeting> getPowwowMeetings(
-		long groupId, long userId, java.lang.String name,
-		java.lang.String description, int status, boolean andSearch, int start,
-		int end, java.lang.String orderByField, java.lang.String orderByType) {
+		long groupId, long userId, String name, String description, int status,
+		boolean andSearch, int start, int end, String orderByField,
+		String orderByType) {
 		return _powwowMeetingLocalService.getPowwowMeetings(groupId, userId,
 			name, description, status, andSearch, start, end, orderByField,
 			orderByType);
@@ -326,9 +326,8 @@ public class PowwowMeetingLocalServiceWrapper
 	}
 
 	@Override
-	public int getPowwowMeetingsCount(long groupId, long userId,
-		java.lang.String name, java.lang.String description, int status,
-		boolean andSearch) {
+	public int getPowwowMeetingsCount(long groupId, long userId, String name,
+		String description, int status, boolean andSearch) {
 		return _powwowMeetingLocalService.getPowwowMeetingsCount(groupId,
 			userId, name, description, status, andSearch);
 	}
@@ -341,10 +340,10 @@ public class PowwowMeetingLocalServiceWrapper
 
 	@Override
 	public com.liferay.powwow.model.PowwowMeeting updatePowwowMeeting(
-		long powwowMeetingId, long powwowServerId, java.lang.String name,
-		java.lang.String description, java.lang.String providerType,
-		java.util.Map<java.lang.String, java.io.Serializable> providerTypeMetadataMap,
-		java.lang.String languageId, long calendarBookingId, int status,
+		long powwowMeetingId, long powwowServerId, String name,
+		String description, String providerType,
+		java.util.Map<String, java.io.Serializable> providerTypeMetadataMap,
+		String languageId, long calendarBookingId, int status,
 		java.util.List<com.liferay.powwow.model.PowwowParticipant> powwowParticipants,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {

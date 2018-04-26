@@ -28,24 +28,22 @@ public interface MicroblogsEntryFinder {
 
 	public int countByU_MU(long userId, long microblogsEntryUserId);
 
-	public int countByU_ATN(long userId, java.lang.String assetTagName);
+	public int countByU_ATN(long userId, String assetTagName);
 
-	public int countByCCNI_ATN(long creatorClassNameId,
-		java.lang.String assetTagName);
+	public int countByCCNI_ATN(long creatorClassNameId, String assetTagName);
 
-	public int countByC_U_ATN(long companyId, long userId,
-		java.lang.String assetTagName);
+	public int countByC_U_ATN(long companyId, long userId, String assetTagName);
 
 	public int countByC_CCNI_ATN(long companyId, long creatorClassNameId,
-		java.lang.String assetTagName);
+		String assetTagName);
 
 	public int countByU_T_MU(long userId, int type, long microblogsEntryUserId);
 
 	public int countByCCNI_CCPK_ATN(long creatorClassNameId,
-		long creatorClassPK, java.lang.String assetTagName, boolean andOperator);
+		long creatorClassPK, String assetTagName, boolean andOperator);
 
 	public int countByC_CCNI_CCPK_ATN(long companyId, long creatorClassNameId,
-		long creatorClassPK, java.lang.String assetTagName, boolean andOperator);
+		long creatorClassPK, String assetTagName, boolean andOperator);
 
 	public java.util.List<com.liferay.microblogs.model.MicroblogsEntry> findByUserId(
 		long userId, int start, int end);
@@ -57,28 +55,26 @@ public interface MicroblogsEntryFinder {
 		long userId, long microblogsEntryUserId, int start, int end);
 
 	public java.util.List<com.liferay.microblogs.model.MicroblogsEntry> findByU_ATN(
-		long userId, java.lang.String assetTagName, int start, int end);
+		long userId, String assetTagName, int start, int end);
 
 	public java.util.List<com.liferay.microblogs.model.MicroblogsEntry> findByCCNI_ATN(
-		long creatorClassNameId, java.lang.String assetTagName, int start,
-		int end);
+		long creatorClassNameId, String assetTagName, int start, int end);
 
 	public java.util.List<com.liferay.microblogs.model.MicroblogsEntry> findByC_U_ATN(
-		long companyId, long userId, java.lang.String assetTagName, int start,
-		int end);
+		long companyId, long userId, String assetTagName, int start, int end);
 
 	public java.util.List<com.liferay.microblogs.model.MicroblogsEntry> findByC_CCNI_ATN(
-		long companyId, long creatorClassNameId, java.lang.String assetTagName,
+		long companyId, long creatorClassNameId, String assetTagName,
 		int start, int end);
 
 	public java.util.List<com.liferay.microblogs.model.MicroblogsEntry> findByU_T_MU(
 		long userId, int type, long microblogsEntryUserId, int start, int end);
 
 	public java.util.List<com.liferay.microblogs.model.MicroblogsEntry> findByCCNI_CCPK_ATN(
-		long creatorClassNameId, long creatorClassPK,
-		java.lang.String assetTagName, boolean andOperator, int start, int end);
+		long creatorClassNameId, long creatorClassPK, String assetTagName,
+		boolean andOperator, int start, int end);
 
 	public java.util.List<com.liferay.microblogs.model.MicroblogsEntry> findByC_CCNI_CCPK_ATN(
 		long companyId, long creatorClassNameId, long creatorClassPK,
-		java.lang.String assetTagName, boolean andOperator, int start, int end);
+		String assetTagName, boolean andOperator, int start, int end);
 }

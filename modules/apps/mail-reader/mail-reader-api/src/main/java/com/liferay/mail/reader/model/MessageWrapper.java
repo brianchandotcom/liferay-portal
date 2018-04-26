@@ -205,7 +205,7 @@ public class MessageWrapper implements Message, ModelWrapper<Message> {
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new MessageWrapper((Message)_message.clone());
 	}
 
@@ -230,7 +230,7 @@ public class MessageWrapper implements Message, ModelWrapper<Message> {
 	* @return the bcc of this message
 	*/
 	@Override
-	public java.lang.String getBcc() {
+	public String getBcc() {
 		return _message.getBcc();
 	}
 
@@ -240,7 +240,7 @@ public class MessageWrapper implements Message, ModelWrapper<Message> {
 	* @return the body of this message
 	*/
 	@Override
-	public java.lang.String getBody() {
+	public String getBody() {
 		return _message.getBody();
 	}
 
@@ -250,7 +250,7 @@ public class MessageWrapper implements Message, ModelWrapper<Message> {
 	* @return the cc of this message
 	*/
 	@Override
-	public java.lang.String getCc() {
+	public String getCc() {
 		return _message.getCc();
 	}
 
@@ -270,7 +270,7 @@ public class MessageWrapper implements Message, ModelWrapper<Message> {
 	* @return the content type of this message
 	*/
 	@Override
-	public java.lang.String getContentType() {
+	public String getContentType() {
 		return _message.getContentType();
 	}
 
@@ -295,7 +295,7 @@ public class MessageWrapper implements Message, ModelWrapper<Message> {
 	* @return the flags of this message
 	*/
 	@Override
-	public java.lang.String getFlags() {
+	public String getFlags() {
 		return _message.getFlags();
 	}
 
@@ -341,7 +341,7 @@ public class MessageWrapper implements Message, ModelWrapper<Message> {
 	* @return the preview of this message
 	*/
 	@Override
-	public java.lang.String getPreview() {
+	public String getPreview() {
 		return _message.getPreview();
 	}
 
@@ -376,7 +376,7 @@ public class MessageWrapper implements Message, ModelWrapper<Message> {
 	* @return the sender of this message
 	*/
 	@Override
-	public java.lang.String getSender() {
+	public String getSender() {
 		return _message.getSender();
 	}
 
@@ -406,7 +406,7 @@ public class MessageWrapper implements Message, ModelWrapper<Message> {
 	* @return the subject of this message
 	*/
 	@Override
-	public java.lang.String getSubject() {
+	public String getSubject() {
 		return _message.getSubject();
 	}
 
@@ -416,7 +416,7 @@ public class MessageWrapper implements Message, ModelWrapper<Message> {
 	* @return the to of this message
 	*/
 	@Override
-	public java.lang.String getTo() {
+	public String getTo() {
 		return _message.getTo();
 	}
 
@@ -436,7 +436,7 @@ public class MessageWrapper implements Message, ModelWrapper<Message> {
 	* @return the user name of this message
 	*/
 	@Override
-	public java.lang.String getUserName() {
+	public String getUserName() {
 		return _message.getUserName();
 	}
 
@@ -446,7 +446,7 @@ public class MessageWrapper implements Message, ModelWrapper<Message> {
 	* @return the user uuid of this message
 	*/
 	@Override
-	public java.lang.String getUserUuid() {
+	public String getUserUuid() {
 		return _message.getUserUuid();
 	}
 
@@ -501,7 +501,7 @@ public class MessageWrapper implements Message, ModelWrapper<Message> {
 	* @param bcc the bcc of this message
 	*/
 	@Override
-	public void setBcc(java.lang.String bcc) {
+	public void setBcc(String bcc) {
 		_message.setBcc(bcc);
 	}
 
@@ -511,7 +511,7 @@ public class MessageWrapper implements Message, ModelWrapper<Message> {
 	* @param body the body of this message
 	*/
 	@Override
-	public void setBody(java.lang.String body) {
+	public void setBody(String body) {
 		_message.setBody(body);
 	}
 
@@ -526,7 +526,7 @@ public class MessageWrapper implements Message, ModelWrapper<Message> {
 	* @param cc the cc of this message
 	*/
 	@Override
-	public void setCc(java.lang.String cc) {
+	public void setCc(String cc) {
 		_message.setCc(cc);
 	}
 
@@ -546,7 +546,7 @@ public class MessageWrapper implements Message, ModelWrapper<Message> {
 	* @param contentType the content type of this message
 	*/
 	@Override
-	public void setContentType(java.lang.String contentType) {
+	public void setContentType(String contentType) {
 		_message.setContentType(contentType);
 	}
 
@@ -582,7 +582,7 @@ public class MessageWrapper implements Message, ModelWrapper<Message> {
 	* @param flags the flags of this message
 	*/
 	@Override
-	public void setFlags(java.lang.String flags) {
+	public void setFlags(String flags) {
 		_message.setFlags(flags);
 	}
 
@@ -627,7 +627,7 @@ public class MessageWrapper implements Message, ModelWrapper<Message> {
 	* @param preview the preview of this message
 	*/
 	@Override
-	public void setPreview(java.lang.String preview) {
+	public void setPreview(String preview) {
 		_message.setPreview(preview);
 	}
 
@@ -662,7 +662,7 @@ public class MessageWrapper implements Message, ModelWrapper<Message> {
 	* @param sender the sender of this message
 	*/
 	@Override
-	public void setSender(java.lang.String sender) {
+	public void setSender(String sender) {
 		_message.setSender(sender);
 	}
 
@@ -692,7 +692,7 @@ public class MessageWrapper implements Message, ModelWrapper<Message> {
 	* @param subject the subject of this message
 	*/
 	@Override
-	public void setSubject(java.lang.String subject) {
+	public void setSubject(String subject) {
 		_message.setSubject(subject);
 	}
 
@@ -702,7 +702,7 @@ public class MessageWrapper implements Message, ModelWrapper<Message> {
 	* @param to the to of this message
 	*/
 	@Override
-	public void setTo(java.lang.String to) {
+	public void setTo(String to) {
 		_message.setTo(to);
 	}
 
@@ -722,7 +722,7 @@ public class MessageWrapper implements Message, ModelWrapper<Message> {
 	* @param userName the user name of this message
 	*/
 	@Override
-	public void setUserName(java.lang.String userName) {
+	public void setUserName(String userName) {
 		_message.setUserName(userName);
 	}
 
@@ -732,7 +732,7 @@ public class MessageWrapper implements Message, ModelWrapper<Message> {
 	* @param userUuid the user uuid of this message
 	*/
 	@Override
-	public void setUserUuid(java.lang.String userUuid) {
+	public void setUserUuid(String userUuid) {
 		_message.setUserUuid(userUuid);
 	}
 
@@ -747,7 +747,7 @@ public class MessageWrapper implements Message, ModelWrapper<Message> {
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _message.toString();
 	}
 
@@ -757,7 +757,7 @@ public class MessageWrapper implements Message, ModelWrapper<Message> {
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _message.toXmlString();
 	}
 

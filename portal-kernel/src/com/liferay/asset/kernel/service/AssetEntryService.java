@@ -78,24 +78,22 @@ public interface AssetEntryService extends BaseService {
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	public void incrementViewCounter(AssetEntry assetEntry)
 		throws PortalException;
 
 	@AccessControlled(guestAccessEnabled = true)
-	public AssetEntry incrementViewCounter(java.lang.String className,
-		long classPK) throws PortalException;
+	public AssetEntry incrementViewCounter(String className, long classPK)
+		throws PortalException;
 
 	public AssetEntry updateEntry(long groupId, Date createDate,
-		Date modifiedDate, java.lang.String className, long classPK,
-		java.lang.String classUuid, long classTypeId, long[] categoryIds,
-		java.lang.String[] tagNames, boolean listable, boolean visible,
-		Date startDate, Date endDate, Date publishDate, Date expirationDate,
-		java.lang.String mimeType, java.lang.String title,
-		java.lang.String description, java.lang.String summary,
-		java.lang.String url, java.lang.String layoutUuid, int height,
-		int width, java.lang.Double priority) throws PortalException;
+		Date modifiedDate, String className, long classPK, String classUuid,
+		long classTypeId, long[] categoryIds, String[] tagNames,
+		boolean listable, boolean visible, Date startDate, Date endDate,
+		Date publishDate, Date expirationDate, String mimeType, String title,
+		String description, String summary, String url, String layoutUuid,
+		int height, int width, Double priority) throws PortalException;
 
 	/**
 	* @deprecated As of 7.0.0, replaced by {@link #updateEntry(long, Date,
@@ -103,16 +101,14 @@ public interface AssetEntryService extends BaseService {
 	boolean, Date, Date, Date, Date, String, String, String,
 	String, String, String, int, int, Double)}
 	*/
-	@java.lang.Deprecated
+	@Deprecated
 	public AssetEntry updateEntry(long groupId, Date createDate,
-		Date modifiedDate, java.lang.String className, long classPK,
-		java.lang.String classUuid, long classTypeId, long[] categoryIds,
-		java.lang.String[] tagNames, boolean listable, boolean visible,
-		Date startDate, Date endDate, Date expirationDate,
-		java.lang.String mimeType, java.lang.String title,
-		java.lang.String description, java.lang.String summary,
-		java.lang.String url, java.lang.String layoutUuid, int height,
-		int width, java.lang.Double priority) throws PortalException;
+		Date modifiedDate, String className, long classPK, String classUuid,
+		long classTypeId, long[] categoryIds, String[] tagNames,
+		boolean listable, boolean visible, Date startDate, Date endDate,
+		Date expirationDate, String mimeType, String title, String description,
+		String summary, String url, String layoutUuid, int height, int width,
+		Double priority) throws PortalException;
 
 	/**
 	* @deprecated As of 7.0.0, replaced by {@link #updateEntry(long, Date,
@@ -120,14 +116,12 @@ public interface AssetEntryService extends BaseService {
 	boolean, Date, Date, Date, Date, String, String, String,
 	String, String, String, int, int, Double)}
 	*/
-	@java.lang.Deprecated
+	@Deprecated
 	public AssetEntry updateEntry(long groupId, Date createDate,
-		Date modifiedDate, java.lang.String className, long classPK,
-		java.lang.String classUuid, long classTypeId, long[] categoryIds,
-		java.lang.String[] tagNames, boolean visible, Date startDate,
-		Date endDate, Date expirationDate, java.lang.String mimeType,
-		java.lang.String title, java.lang.String description,
-		java.lang.String summary, java.lang.String url,
-		java.lang.String layoutUuid, int height, int width,
-		java.lang.Integer priority, boolean sync) throws PortalException;
+		Date modifiedDate, String className, long classPK, String classUuid,
+		long classTypeId, long[] categoryIds, String[] tagNames,
+		boolean visible, Date startDate, Date endDate, Date expirationDate,
+		String mimeType, String title, String description, String summary,
+		String url, String layoutUuid, int height, int width, Integer priority,
+		boolean sync) throws PortalException;
 }

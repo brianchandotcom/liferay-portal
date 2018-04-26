@@ -41,15 +41,14 @@ public class PasswordPolicyServiceUtil {
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.portal.service.impl.PasswordPolicyServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static com.liferay.portal.kernel.model.PasswordPolicy addPasswordPolicy(
-		java.lang.String name, java.lang.String description,
-		boolean changeable, boolean changeRequired, long minAge,
-		boolean checkSyntax, boolean allowDictionaryWords, int minAlphanumeric,
-		int minLength, int minLowerCase, int minNumbers, int minSymbols,
-		int minUpperCase, java.lang.String regex, boolean history,
-		int historyCount, boolean expireable, long maxAge, long warningTime,
-		int graceLimit, boolean lockout, int maxFailure, long lockoutDuration,
-		long resetFailureCount, long resetTicketMaxAge,
-		ServiceContext serviceContext)
+		String name, String description, boolean changeable,
+		boolean changeRequired, long minAge, boolean checkSyntax,
+		boolean allowDictionaryWords, int minAlphanumeric, int minLength,
+		int minLowerCase, int minNumbers, int minSymbols, int minUpperCase,
+		String regex, boolean history, int historyCount, boolean expireable,
+		long maxAge, long warningTime, int graceLimit, boolean lockout,
+		int maxFailure, long lockoutDuration, long resetFailureCount,
+		long resetTicketMaxAge, ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addPasswordPolicy(name, description, changeable,
@@ -76,27 +75,26 @@ public class PasswordPolicyServiceUtil {
 	*
 	* @return the OSGi service identifier
 	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
+	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 
 	public static java.util.List<com.liferay.portal.kernel.model.PasswordPolicy> search(
-		long companyId, java.lang.String name, int start, int end,
+		long companyId, String name, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.kernel.model.PasswordPolicy> obc) {
 		return getService().search(companyId, name, start, end, obc);
 	}
 
-	public static int searchCount(long companyId, java.lang.String name) {
+	public static int searchCount(long companyId, String name) {
 		return getService().searchCount(companyId, name);
 	}
 
 	public static com.liferay.portal.kernel.model.PasswordPolicy updatePasswordPolicy(
-		long passwordPolicyId, java.lang.String name,
-		java.lang.String description, boolean changeable,
-		boolean changeRequired, long minAge, boolean checkSyntax,
-		boolean allowDictionaryWords, int minAlphanumeric, int minLength,
-		int minLowerCase, int minNumbers, int minSymbols, int minUpperCase,
-		java.lang.String regex, boolean history, int historyCount,
+		long passwordPolicyId, String name, String description,
+		boolean changeable, boolean changeRequired, long minAge,
+		boolean checkSyntax, boolean allowDictionaryWords, int minAlphanumeric,
+		int minLength, int minLowerCase, int minNumbers, int minSymbols,
+		int minUpperCase, String regex, boolean history, int historyCount,
 		boolean expireable, long maxAge, long warningTime, int graceLimit,
 		boolean lockout, int maxFailure, long lockoutDuration,
 		long resetFailureCount, long resetTicketMaxAge,

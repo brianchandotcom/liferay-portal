@@ -73,9 +73,8 @@ public interface HtmlPreviewEntryLocalService extends BaseLocalService,
 		HtmlPreviewEntry htmlPreviewEntry);
 
 	public HtmlPreviewEntry addHtmlPreviewEntry(long userId, long groupId,
-		long classNameId, long classPK, java.lang.String content,
-		java.lang.String mimeType, ServiceContext serviceContext)
-		throws PortalException;
+		long classNameId, long classPK, String content, String mimeType,
+		ServiceContext serviceContext) throws PortalException;
 
 	/**
 	* Creates a new html preview entry with the primary key. Does not add the html preview entry to the database.
@@ -221,7 +220,7 @@ public interface HtmlPreviewEntryLocalService extends BaseLocalService,
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -239,6 +238,6 @@ public interface HtmlPreviewEntryLocalService extends BaseLocalService,
 		HtmlPreviewEntry htmlPreviewEntry);
 
 	public HtmlPreviewEntry updateHtmlPreviewEntry(long htmlPreviewEntryId,
-		java.lang.String content, java.lang.String mimeType,
-		ServiceContext serviceContext) throws PortalException;
+		String content, String mimeType, ServiceContext serviceContext)
+		throws PortalException;
 }

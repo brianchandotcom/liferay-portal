@@ -181,14 +181,13 @@ public class BackgroundTaskWrapper implements BackgroundTask,
 	}
 
 	@Override
-	public void addAttachment(long userId, java.lang.String fileName,
-		java.io.File file)
+	public void addAttachment(long userId, String fileName, java.io.File file)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_backgroundTask.addAttachment(userId, fileName, file);
 	}
 
 	@Override
-	public void addAttachment(long userId, java.lang.String fileName,
+	public void addAttachment(long userId, String fileName,
 		java.io.InputStream inputStream)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_backgroundTask.addAttachment(userId, fileName, inputStream);
@@ -201,7 +200,7 @@ public class BackgroundTaskWrapper implements BackgroundTask,
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new BackgroundTaskWrapper((BackgroundTask)_backgroundTask.clone());
 	}
 
@@ -325,7 +324,7 @@ public class BackgroundTaskWrapper implements BackgroundTask,
 	* @return the name of this background task
 	*/
 	@Override
-	public java.lang.String getName() {
+	public String getName() {
 		return _backgroundTask.getName();
 	}
 
@@ -350,7 +349,7 @@ public class BackgroundTaskWrapper implements BackgroundTask,
 	* @return the servlet context names of this background task
 	*/
 	@Override
-	public java.lang.String getServletContextNames() {
+	public String getServletContextNames() {
 		return _backgroundTask.getServletContextNames();
 	}
 
@@ -365,7 +364,7 @@ public class BackgroundTaskWrapper implements BackgroundTask,
 	}
 
 	@Override
-	public java.lang.String getStatusLabel() {
+	public String getStatusLabel() {
 		return _backgroundTask.getStatusLabel();
 	}
 
@@ -375,7 +374,7 @@ public class BackgroundTaskWrapper implements BackgroundTask,
 	* @return the status message of this background task
 	*/
 	@Override
-	public java.lang.String getStatusMessage() {
+	public String getStatusMessage() {
 		return _backgroundTask.getStatusMessage();
 	}
 
@@ -385,7 +384,7 @@ public class BackgroundTaskWrapper implements BackgroundTask,
 	* @return the task context map of this background task
 	*/
 	@Override
-	public Map<java.lang.String, Serializable> getTaskContextMap() {
+	public Map<String, Serializable> getTaskContextMap() {
 		return _backgroundTask.getTaskContextMap();
 	}
 
@@ -395,7 +394,7 @@ public class BackgroundTaskWrapper implements BackgroundTask,
 	* @return the task executor class name of this background task
 	*/
 	@Override
-	public java.lang.String getTaskExecutorClassName() {
+	public String getTaskExecutorClassName() {
 		return _backgroundTask.getTaskExecutorClassName();
 	}
 
@@ -415,7 +414,7 @@ public class BackgroundTaskWrapper implements BackgroundTask,
 	* @return the user name of this background task
 	*/
 	@Override
-	public java.lang.String getUserName() {
+	public String getUserName() {
 		return _backgroundTask.getUserName();
 	}
 
@@ -425,7 +424,7 @@ public class BackgroundTaskWrapper implements BackgroundTask,
 	* @return the user uuid of this background task
 	*/
 	@Override
-	public java.lang.String getUserUuid() {
+	public String getUserUuid() {
 		return _backgroundTask.getUserUuid();
 	}
 
@@ -576,7 +575,7 @@ public class BackgroundTaskWrapper implements BackgroundTask,
 	* @param name the name of this background task
 	*/
 	@Override
-	public void setName(java.lang.String name) {
+	public void setName(String name) {
 		_backgroundTask.setName(name);
 	}
 
@@ -606,7 +605,7 @@ public class BackgroundTaskWrapper implements BackgroundTask,
 	* @param servletContextNames the servlet context names of this background task
 	*/
 	@Override
-	public void setServletContextNames(java.lang.String servletContextNames) {
+	public void setServletContextNames(String servletContextNames) {
 		_backgroundTask.setServletContextNames(servletContextNames);
 	}
 
@@ -626,7 +625,7 @@ public class BackgroundTaskWrapper implements BackgroundTask,
 	* @param statusMessage the status message of this background task
 	*/
 	@Override
-	public void setStatusMessage(java.lang.String statusMessage) {
+	public void setStatusMessage(String statusMessage) {
 		_backgroundTask.setStatusMessage(statusMessage);
 	}
 
@@ -636,8 +635,7 @@ public class BackgroundTaskWrapper implements BackgroundTask,
 	* @param taskContextMap the task context map of this background task
 	*/
 	@Override
-	public void setTaskContextMap(
-		Map<java.lang.String, Serializable> taskContextMap) {
+	public void setTaskContextMap(Map<String, Serializable> taskContextMap) {
 		_backgroundTask.setTaskContextMap(taskContextMap);
 	}
 
@@ -647,7 +645,7 @@ public class BackgroundTaskWrapper implements BackgroundTask,
 	* @param taskExecutorClassName the task executor class name of this background task
 	*/
 	@Override
-	public void setTaskExecutorClassName(java.lang.String taskExecutorClassName) {
+	public void setTaskExecutorClassName(String taskExecutorClassName) {
 		_backgroundTask.setTaskExecutorClassName(taskExecutorClassName);
 	}
 
@@ -667,7 +665,7 @@ public class BackgroundTaskWrapper implements BackgroundTask,
 	* @param userName the user name of this background task
 	*/
 	@Override
-	public void setUserName(java.lang.String userName) {
+	public void setUserName(String userName) {
 		_backgroundTask.setUserName(userName);
 	}
 
@@ -677,7 +675,7 @@ public class BackgroundTaskWrapper implements BackgroundTask,
 	* @param userUuid the user uuid of this background task
 	*/
 	@Override
-	public void setUserUuid(java.lang.String userUuid) {
+	public void setUserUuid(String userUuid) {
 		_backgroundTask.setUserUuid(userUuid);
 	}
 
@@ -692,7 +690,7 @@ public class BackgroundTaskWrapper implements BackgroundTask,
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _backgroundTask.toString();
 	}
 
@@ -702,7 +700,7 @@ public class BackgroundTaskWrapper implements BackgroundTask,
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _backgroundTask.toXmlString();
 	}
 

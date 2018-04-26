@@ -41,23 +41,23 @@ public class ThemeLocalServiceUtil {
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.portal.service.impl.ThemeLocalServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static com.liferay.portal.kernel.model.ColorScheme fetchColorScheme(
-		long companyId, java.lang.String themeId, java.lang.String colorSchemeId) {
+		long companyId, String themeId, String colorSchemeId) {
 		return getService().fetchColorScheme(companyId, themeId, colorSchemeId);
 	}
 
 	public static com.liferay.portal.kernel.model.PortletDecorator fetchPortletDecorator(
-		long companyId, java.lang.String themeId, java.lang.String colorSchemeId) {
+		long companyId, String themeId, String colorSchemeId) {
 		return getService()
 				   .fetchPortletDecorator(companyId, themeId, colorSchemeId);
 	}
 
 	public static com.liferay.portal.kernel.model.Theme fetchTheme(
-		long companyId, java.lang.String themeId) {
+		long companyId, String themeId) {
 		return getService().fetchTheme(companyId, themeId);
 	}
 
 	public static com.liferay.portal.kernel.model.ColorScheme getColorScheme(
-		long companyId, java.lang.String themeId, java.lang.String colorSchemeId) {
+		long companyId, String themeId, String colorSchemeId) {
 		return getService().getColorScheme(companyId, themeId, colorSchemeId);
 	}
 
@@ -71,7 +71,7 @@ public class ThemeLocalServiceUtil {
 	*
 	* @return the OSGi service identifier
 	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
+	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 
@@ -81,14 +81,13 @@ public class ThemeLocalServiceUtil {
 	}
 
 	public static com.liferay.portal.kernel.model.PortletDecorator getPortletDecorator(
-		long companyId, java.lang.String themeId,
-		java.lang.String portletDecoratorId) {
+		long companyId, String themeId, String portletDecoratorId) {
 		return getService()
 				   .getPortletDecorator(companyId, themeId, portletDecoratorId);
 	}
 
 	public static com.liferay.portal.kernel.model.Theme getTheme(
-		long companyId, java.lang.String themeId) {
+		long companyId, String themeId) {
 		return getService().getTheme(companyId, themeId);
 	}
 
@@ -111,9 +110,8 @@ public class ThemeLocalServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.portal.kernel.model.Theme> init(
-		javax.servlet.ServletContext servletContext,
-		java.lang.String themesPath, boolean loadFromServletContext,
-		java.lang.String[] xmls,
+		javax.servlet.ServletContext servletContext, String themesPath,
+		boolean loadFromServletContext, String[] xmls,
 		com.liferay.portal.kernel.plugin.PluginPackage pluginPackage) {
 		return getService()
 				   .init(servletContext, themesPath, loadFromServletContext,
@@ -121,10 +119,8 @@ public class ThemeLocalServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.portal.kernel.model.Theme> init(
-		java.lang.String servletContextName,
-		javax.servlet.ServletContext servletContext,
-		java.lang.String themesPath, boolean loadFromServletContext,
-		java.lang.String[] xmls,
+		String servletContextName, javax.servlet.ServletContext servletContext,
+		String themesPath, boolean loadFromServletContext, String[] xmls,
 		com.liferay.portal.kernel.plugin.PluginPackage pluginPackage) {
 		return getService()
 				   .init(servletContextName, servletContext, themesPath,

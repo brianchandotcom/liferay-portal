@@ -77,8 +77,8 @@ public interface BookmarksFolderLocalService extends BaseLocalService,
 	public BookmarksFolder addBookmarksFolder(BookmarksFolder bookmarksFolder);
 
 	public BookmarksFolder addFolder(long userId, long parentFolderId,
-		java.lang.String name, java.lang.String description,
-		ServiceContext serviceContext) throws PortalException;
+		String name, String description, ServiceContext serviceContext)
+		throws PortalException;
 
 	/**
 	* Creates a new bookmarks folder with the primary key. Does not add the bookmarks folder to the database.
@@ -207,8 +207,8 @@ public interface BookmarksFolderLocalService extends BaseLocalService,
 	* @return the matching bookmarks folder, or <code>null</code> if a matching bookmarks folder could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public BookmarksFolder fetchBookmarksFolderByUuidAndGroupId(
-		java.lang.String uuid, long groupId);
+	public BookmarksFolder fetchBookmarksFolderByUuidAndGroupId(String uuid,
+		long groupId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
@@ -233,8 +233,8 @@ public interface BookmarksFolderLocalService extends BaseLocalService,
 	* @throws PortalException if a matching bookmarks folder could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public BookmarksFolder getBookmarksFolderByUuidAndGroupId(
-		java.lang.String uuid, long groupId) throws PortalException;
+	public BookmarksFolder getBookmarksFolderByUuidAndGroupId(String uuid,
+		long groupId) throws PortalException;
 
 	/**
 	* Returns a range of all the bookmarks folders.
@@ -259,7 +259,7 @@ public interface BookmarksFolderLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<BookmarksFolder> getBookmarksFoldersByUuidAndCompanyId(
-		java.lang.String uuid, long companyId);
+		String uuid, long companyId);
 
 	/**
 	* Returns a range of bookmarks folders matching the UUID and company.
@@ -273,7 +273,7 @@ public interface BookmarksFolderLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<BookmarksFolder> getBookmarksFoldersByUuidAndCompanyId(
-		java.lang.String uuid, long companyId, int start, int end,
+		String uuid, long companyId, int start, int end,
 		OrderByComparator<BookmarksFolder> orderByComparator);
 
 	/**
@@ -313,20 +313,19 @@ public interface BookmarksFolderLocalService extends BaseLocalService,
 		int status, int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<java.lang.Object> getFoldersAndEntries(long groupId,
-		long folderId);
+	public List<Object> getFoldersAndEntries(long groupId, long folderId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<java.lang.Object> getFoldersAndEntries(long groupId,
-		long folderId, int status);
+	public List<Object> getFoldersAndEntries(long groupId, long folderId,
+		int status);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<java.lang.Object> getFoldersAndEntries(long groupId,
-		long folderId, int status, int start, int end);
+	public List<Object> getFoldersAndEntries(long groupId, long folderId,
+		int status, int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<java.lang.Object> getFoldersAndEntries(long groupId,
-		long folderId, int status, int start, int end, OrderByComparator obc);
+	public List<Object> getFoldersAndEntries(long groupId, long folderId,
+		int status, int start, int end, OrderByComparator obc);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getFoldersAndEntriesCount(long groupId, long folderId, int status);
@@ -348,7 +347,7 @@ public interface BookmarksFolderLocalService extends BaseLocalService,
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -356,7 +355,7 @@ public interface BookmarksFolderLocalService extends BaseLocalService,
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public void getSubfolderIds(List<java.lang.Long> folderIds, long groupId,
+	public void getSubfolderIds(List<Long> folderIds, long groupId,
 		long folderId);
 
 	public void mergeFolders(long folderId, long parentFolderId)
@@ -376,8 +375,7 @@ public interface BookmarksFolderLocalService extends BaseLocalService,
 	public void rebuildTree(long companyId) throws PortalException;
 
 	public void rebuildTree(long companyId, long parentFolderId,
-		java.lang.String parentTreePath, boolean reindex)
-		throws PortalException;
+		String parentTreePath, boolean reindex) throws PortalException;
 
 	@Indexable(type = IndexableType.REINDEX)
 	public BookmarksFolder restoreFolderFromTrash(long userId, long folderId)
@@ -390,9 +388,8 @@ public interface BookmarksFolderLocalService extends BaseLocalService,
 		throws PortalException;
 
 	public void updateAsset(long userId, BookmarksFolder folder,
-		long[] assetCategoryIds, java.lang.String[] assetTagNames,
-		long[] assetLinkEntryIds, java.lang.Double priority)
-		throws PortalException;
+		long[] assetCategoryIds, String[] assetTagNames,
+		long[] assetLinkEntryIds, Double priority) throws PortalException;
 
 	/**
 	* Updates the bookmarks folder in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
@@ -409,18 +406,17 @@ public interface BookmarksFolderLocalService extends BaseLocalService,
 	long, String, String, ServiceContext)} and {@link
 	#mergeFolders(long, long)}
 	*/
-	@java.lang.Deprecated
+	@Deprecated
 	@Indexable(type = IndexableType.REINDEX)
 	public BookmarksFolder updateFolder(long userId, long folderId,
-		long parentFolderId, java.lang.String name,
-		java.lang.String description, boolean mergeWithParentFolder,
-		ServiceContext serviceContext) throws PortalException;
+		long parentFolderId, String name, String description,
+		boolean mergeWithParentFolder, ServiceContext serviceContext)
+		throws PortalException;
 
 	@Indexable(type = IndexableType.REINDEX)
 	public BookmarksFolder updateFolder(long userId, long folderId,
-		long parentFolderId, java.lang.String name,
-		java.lang.String description, ServiceContext serviceContext)
-		throws PortalException;
+		long parentFolderId, String name, String description,
+		ServiceContext serviceContext) throws PortalException;
 
 	public BookmarksFolder updateStatus(long userId, BookmarksFolder folder,
 		int status) throws PortalException;

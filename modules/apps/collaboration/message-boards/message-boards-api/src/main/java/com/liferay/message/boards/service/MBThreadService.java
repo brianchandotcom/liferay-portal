@@ -109,7 +109,7 @@ public interface MBThreadService extends BaseService {
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<MBThread> getThreads(long groupId, long categoryId, int status,
@@ -146,7 +146,7 @@ public interface MBThreadService extends BaseService {
 	public Hits search(long groupId, long creatorUserId, long startDate,
 		long endDate, int status, int start, int end) throws PortalException;
 
-	public MBThread splitThread(long messageId, java.lang.String subject,
+	public MBThread splitThread(long messageId, String subject,
 		ServiceContext serviceContext) throws PortalException;
 
 	public void unlockThread(long threadId) throws PortalException;

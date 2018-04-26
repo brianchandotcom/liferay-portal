@@ -207,7 +207,7 @@ public class KaleoTaskFormWrapper implements KaleoTaskForm,
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new KaleoTaskFormWrapper((KaleoTaskForm)_kaleoTaskForm.clone());
 	}
 
@@ -242,7 +242,7 @@ public class KaleoTaskFormWrapper implements KaleoTaskForm,
 	* @return the description of this kaleo task form
 	*/
 	@Override
-	public java.lang.String getDescription() {
+	public String getDescription() {
 		return _kaleoTaskForm.getDescription();
 	}
 
@@ -267,7 +267,7 @@ public class KaleoTaskFormWrapper implements KaleoTaskForm,
 	* @return the form definition of this kaleo task form
 	*/
 	@Override
-	public java.lang.String getFormDefinition() {
+	public String getFormDefinition() {
 		return _kaleoTaskForm.getFormDefinition();
 	}
 
@@ -297,7 +297,7 @@ public class KaleoTaskFormWrapper implements KaleoTaskForm,
 	* @return the form uuid of this kaleo task form
 	*/
 	@Override
-	public java.lang.String getFormUuid() {
+	public String getFormUuid() {
 		return _kaleoTaskForm.getFormUuid();
 	}
 
@@ -357,7 +357,7 @@ public class KaleoTaskFormWrapper implements KaleoTaskForm,
 	* @return the kaleo task name of this kaleo task form
 	*/
 	@Override
-	public java.lang.String getKaleoTaskName() {
+	public String getKaleoTaskName() {
 		return _kaleoTaskForm.getKaleoTaskName();
 	}
 
@@ -367,7 +367,7 @@ public class KaleoTaskFormWrapper implements KaleoTaskForm,
 	* @return the metadata of this kaleo task form
 	*/
 	@Override
-	public java.lang.String getMetadata() {
+	public String getMetadata() {
 		return _kaleoTaskForm.getMetadata();
 	}
 
@@ -387,7 +387,7 @@ public class KaleoTaskFormWrapper implements KaleoTaskForm,
 	* @return the name of this kaleo task form
 	*/
 	@Override
-	public java.lang.String getName() {
+	public String getName() {
 		return _kaleoTaskForm.getName();
 	}
 
@@ -432,7 +432,7 @@ public class KaleoTaskFormWrapper implements KaleoTaskForm,
 	* @return the user name of this kaleo task form
 	*/
 	@Override
-	public java.lang.String getUserName() {
+	public String getUserName() {
 		return _kaleoTaskForm.getUserName();
 	}
 
@@ -442,7 +442,7 @@ public class KaleoTaskFormWrapper implements KaleoTaskForm,
 	* @return the user uuid of this kaleo task form
 	*/
 	@Override
-	public java.lang.String getUserUuid() {
+	public String getUserUuid() {
 		return _kaleoTaskForm.getUserUuid();
 	}
 
@@ -502,7 +502,7 @@ public class KaleoTaskFormWrapper implements KaleoTaskForm,
 	* @param description the description of this kaleo task form
 	*/
 	@Override
-	public void setDescription(java.lang.String description) {
+	public void setDescription(String description) {
 		_kaleoTaskForm.setDescription(description);
 	}
 
@@ -538,7 +538,7 @@ public class KaleoTaskFormWrapper implements KaleoTaskForm,
 	* @param formDefinition the form definition of this kaleo task form
 	*/
 	@Override
-	public void setFormDefinition(java.lang.String formDefinition) {
+	public void setFormDefinition(String formDefinition) {
 		_kaleoTaskForm.setFormDefinition(formDefinition);
 	}
 
@@ -568,7 +568,7 @@ public class KaleoTaskFormWrapper implements KaleoTaskForm,
 	* @param formUuid the form uuid of this kaleo task form
 	*/
 	@Override
-	public void setFormUuid(java.lang.String formUuid) {
+	public void setFormUuid(String formUuid) {
 		_kaleoTaskForm.setFormUuid(formUuid);
 	}
 
@@ -628,7 +628,7 @@ public class KaleoTaskFormWrapper implements KaleoTaskForm,
 	* @param kaleoTaskName the kaleo task name of this kaleo task form
 	*/
 	@Override
-	public void setKaleoTaskName(java.lang.String kaleoTaskName) {
+	public void setKaleoTaskName(String kaleoTaskName) {
 		_kaleoTaskForm.setKaleoTaskName(kaleoTaskName);
 	}
 
@@ -638,7 +638,7 @@ public class KaleoTaskFormWrapper implements KaleoTaskForm,
 	* @param metadata the metadata of this kaleo task form
 	*/
 	@Override
-	public void setMetadata(java.lang.String metadata) {
+	public void setMetadata(String metadata) {
 		_kaleoTaskForm.setMetadata(metadata);
 	}
 
@@ -658,7 +658,7 @@ public class KaleoTaskFormWrapper implements KaleoTaskForm,
 	* @param name the name of this kaleo task form
 	*/
 	@Override
-	public void setName(java.lang.String name) {
+	public void setName(String name) {
 		_kaleoTaskForm.setName(name);
 	}
 
@@ -708,7 +708,7 @@ public class KaleoTaskFormWrapper implements KaleoTaskForm,
 	* @param userName the user name of this kaleo task form
 	*/
 	@Override
-	public void setUserName(java.lang.String userName) {
+	public void setUserName(String userName) {
 		_kaleoTaskForm.setUserName(userName);
 	}
 
@@ -718,7 +718,7 @@ public class KaleoTaskFormWrapper implements KaleoTaskForm,
 	* @param userUuid the user uuid of this kaleo task form
 	*/
 	@Override
-	public void setUserUuid(java.lang.String userUuid) {
+	public void setUserUuid(String userUuid) {
 		_kaleoTaskForm.setUserUuid(userUuid);
 	}
 
@@ -733,7 +733,7 @@ public class KaleoTaskFormWrapper implements KaleoTaskForm,
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _kaleoTaskForm.toString();
 	}
 
@@ -743,7 +743,7 @@ public class KaleoTaskFormWrapper implements KaleoTaskForm,
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _kaleoTaskForm.toXmlString();
 	}
 

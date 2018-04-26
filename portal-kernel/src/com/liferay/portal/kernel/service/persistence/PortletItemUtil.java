@@ -289,8 +289,8 @@ public class PortletItemUtil {
 	* @param classNameId the class name ID
 	* @return the matching portlet items
 	*/
-	public static List<PortletItem> findByG_P_C(long groupId,
-		java.lang.String portletId, long classNameId) {
+	public static List<PortletItem> findByG_P_C(long groupId, String portletId,
+		long classNameId) {
 		return getPersistence().findByG_P_C(groupId, portletId, classNameId);
 	}
 
@@ -308,8 +308,8 @@ public class PortletItemUtil {
 	* @param end the upper bound of the range of portlet items (not inclusive)
 	* @return the range of matching portlet items
 	*/
-	public static List<PortletItem> findByG_P_C(long groupId,
-		java.lang.String portletId, long classNameId, int start, int end) {
+	public static List<PortletItem> findByG_P_C(long groupId, String portletId,
+		long classNameId, int start, int end) {
 		return getPersistence()
 				   .findByG_P_C(groupId, portletId, classNameId, start, end);
 	}
@@ -329,8 +329,8 @@ public class PortletItemUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching portlet items
 	*/
-	public static List<PortletItem> findByG_P_C(long groupId,
-		java.lang.String portletId, long classNameId, int start, int end,
+	public static List<PortletItem> findByG_P_C(long groupId, String portletId,
+		long classNameId, int start, int end,
 		OrderByComparator<PortletItem> orderByComparator) {
 		return getPersistence()
 				   .findByG_P_C(groupId, portletId, classNameId, start, end,
@@ -353,8 +353,8 @@ public class PortletItemUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching portlet items
 	*/
-	public static List<PortletItem> findByG_P_C(long groupId,
-		java.lang.String portletId, long classNameId, int start, int end,
+	public static List<PortletItem> findByG_P_C(long groupId, String portletId,
+		long classNameId, int start, int end,
 		OrderByComparator<PortletItem> orderByComparator,
 		boolean retrieveFromCache) {
 		return getPersistence()
@@ -372,9 +372,8 @@ public class PortletItemUtil {
 	* @return the first matching portlet item
 	* @throws NoSuchPortletItemException if a matching portlet item could not be found
 	*/
-	public static PortletItem findByG_P_C_First(long groupId,
-		java.lang.String portletId, long classNameId,
-		OrderByComparator<PortletItem> orderByComparator)
+	public static PortletItem findByG_P_C_First(long groupId, String portletId,
+		long classNameId, OrderByComparator<PortletItem> orderByComparator)
 		throws com.liferay.portal.kernel.exception.NoSuchPortletItemException {
 		return getPersistence()
 				   .findByG_P_C_First(groupId, portletId, classNameId,
@@ -391,7 +390,7 @@ public class PortletItemUtil {
 	* @return the first matching portlet item, or <code>null</code> if a matching portlet item could not be found
 	*/
 	public static PortletItem fetchByG_P_C_First(long groupId,
-		java.lang.String portletId, long classNameId,
+		String portletId, long classNameId,
 		OrderByComparator<PortletItem> orderByComparator) {
 		return getPersistence()
 				   .fetchByG_P_C_First(groupId, portletId, classNameId,
@@ -408,9 +407,8 @@ public class PortletItemUtil {
 	* @return the last matching portlet item
 	* @throws NoSuchPortletItemException if a matching portlet item could not be found
 	*/
-	public static PortletItem findByG_P_C_Last(long groupId,
-		java.lang.String portletId, long classNameId,
-		OrderByComparator<PortletItem> orderByComparator)
+	public static PortletItem findByG_P_C_Last(long groupId, String portletId,
+		long classNameId, OrderByComparator<PortletItem> orderByComparator)
 		throws com.liferay.portal.kernel.exception.NoSuchPortletItemException {
 		return getPersistence()
 				   .findByG_P_C_Last(groupId, portletId, classNameId,
@@ -426,9 +424,8 @@ public class PortletItemUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching portlet item, or <code>null</code> if a matching portlet item could not be found
 	*/
-	public static PortletItem fetchByG_P_C_Last(long groupId,
-		java.lang.String portletId, long classNameId,
-		OrderByComparator<PortletItem> orderByComparator) {
+	public static PortletItem fetchByG_P_C_Last(long groupId, String portletId,
+		long classNameId, OrderByComparator<PortletItem> orderByComparator) {
 		return getPersistence()
 				   .fetchByG_P_C_Last(groupId, portletId, classNameId,
 			orderByComparator);
@@ -446,7 +443,7 @@ public class PortletItemUtil {
 	* @throws NoSuchPortletItemException if a portlet item with the primary key could not be found
 	*/
 	public static PortletItem[] findByG_P_C_PrevAndNext(long portletItemId,
-		long groupId, java.lang.String portletId, long classNameId,
+		long groupId, String portletId, long classNameId,
 		OrderByComparator<PortletItem> orderByComparator)
 		throws com.liferay.portal.kernel.exception.NoSuchPortletItemException {
 		return getPersistence()
@@ -461,7 +458,7 @@ public class PortletItemUtil {
 	* @param portletId the portlet ID
 	* @param classNameId the class name ID
 	*/
-	public static void removeByG_P_C(long groupId, java.lang.String portletId,
+	public static void removeByG_P_C(long groupId, String portletId,
 		long classNameId) {
 		getPersistence().removeByG_P_C(groupId, portletId, classNameId);
 	}
@@ -474,7 +471,7 @@ public class PortletItemUtil {
 	* @param classNameId the class name ID
 	* @return the number of matching portlet items
 	*/
-	public static int countByG_P_C(long groupId, java.lang.String portletId,
+	public static int countByG_P_C(long groupId, String portletId,
 		long classNameId) {
 		return getPersistence().countByG_P_C(groupId, portletId, classNameId);
 	}
@@ -489,8 +486,8 @@ public class PortletItemUtil {
 	* @return the matching portlet item
 	* @throws NoSuchPortletItemException if a matching portlet item could not be found
 	*/
-	public static PortletItem findByG_N_P_C(long groupId,
-		java.lang.String name, java.lang.String portletId, long classNameId)
+	public static PortletItem findByG_N_P_C(long groupId, String name,
+		String portletId, long classNameId)
 		throws com.liferay.portal.kernel.exception.NoSuchPortletItemException {
 		return getPersistence()
 				   .findByG_N_P_C(groupId, name, portletId, classNameId);
@@ -505,8 +502,8 @@ public class PortletItemUtil {
 	* @param classNameId the class name ID
 	* @return the matching portlet item, or <code>null</code> if a matching portlet item could not be found
 	*/
-	public static PortletItem fetchByG_N_P_C(long groupId,
-		java.lang.String name, java.lang.String portletId, long classNameId) {
+	public static PortletItem fetchByG_N_P_C(long groupId, String name,
+		String portletId, long classNameId) {
 		return getPersistence()
 				   .fetchByG_N_P_C(groupId, name, portletId, classNameId);
 	}
@@ -521,9 +518,8 @@ public class PortletItemUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching portlet item, or <code>null</code> if a matching portlet item could not be found
 	*/
-	public static PortletItem fetchByG_N_P_C(long groupId,
-		java.lang.String name, java.lang.String portletId, long classNameId,
-		boolean retrieveFromCache) {
+	public static PortletItem fetchByG_N_P_C(long groupId, String name,
+		String portletId, long classNameId, boolean retrieveFromCache) {
 		return getPersistence()
 				   .fetchByG_N_P_C(groupId, name, portletId, classNameId,
 			retrieveFromCache);
@@ -538,8 +534,8 @@ public class PortletItemUtil {
 	* @param classNameId the class name ID
 	* @return the portlet item that was removed
 	*/
-	public static PortletItem removeByG_N_P_C(long groupId,
-		java.lang.String name, java.lang.String portletId, long classNameId)
+	public static PortletItem removeByG_N_P_C(long groupId, String name,
+		String portletId, long classNameId)
 		throws com.liferay.portal.kernel.exception.NoSuchPortletItemException {
 		return getPersistence()
 				   .removeByG_N_P_C(groupId, name, portletId, classNameId);
@@ -554,8 +550,8 @@ public class PortletItemUtil {
 	* @param classNameId the class name ID
 	* @return the number of matching portlet items
 	*/
-	public static int countByG_N_P_C(long groupId, java.lang.String name,
-		java.lang.String portletId, long classNameId) {
+	public static int countByG_N_P_C(long groupId, String name,
+		String portletId, long classNameId) {
 		return getPersistence()
 				   .countByG_N_P_C(groupId, name, portletId, classNameId);
 	}

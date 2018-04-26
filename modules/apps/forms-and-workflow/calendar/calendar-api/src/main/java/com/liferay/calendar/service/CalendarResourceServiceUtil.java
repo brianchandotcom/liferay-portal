@@ -43,11 +43,9 @@ public class CalendarResourceServiceUtil {
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.calendar.service.impl.CalendarResourceServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static com.liferay.calendar.model.CalendarResource addCalendarResource(
-		long groupId, long classNameId, long classPK,
-		java.lang.String classUuid, java.lang.String code,
-		java.util.Map<java.util.Locale, java.lang.String> nameMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		boolean active,
+		long groupId, long classNameId, long classPK, String classUuid,
+		String code, java.util.Map<java.util.Locale, String> nameMap,
+		java.util.Map<java.util.Locale, String> descriptionMap, boolean active,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
@@ -78,14 +76,13 @@ public class CalendarResourceServiceUtil {
 	*
 	* @return the OSGi service identifier
 	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
+	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 
 	public static java.util.List<com.liferay.calendar.model.CalendarResource> search(
-		long companyId, long[] groupIds, long[] classNameIds,
-		java.lang.String keywords, boolean active, boolean andOperator,
-		int start, int end,
+		long companyId, long[] groupIds, long[] classNameIds, String keywords,
+		boolean active, boolean andOperator, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.calendar.model.CalendarResource> orderByComparator) {
 		return getService()
 				   .search(companyId, groupIds, classNameIds, keywords, active,
@@ -93,9 +90,8 @@ public class CalendarResourceServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.calendar.model.CalendarResource> search(
-		long companyId, long[] groupIds, long[] classNameIds,
-		java.lang.String code, java.lang.String name,
-		java.lang.String description, boolean active, boolean andOperator,
+		long companyId, long[] groupIds, long[] classNameIds, String code,
+		String name, String description, boolean active, boolean andOperator,
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.calendar.model.CalendarResource> orderByComparator) {
 		return getService()
@@ -104,15 +100,15 @@ public class CalendarResourceServiceUtil {
 	}
 
 	public static int searchCount(long companyId, long[] groupIds,
-		long[] classNameIds, java.lang.String keywords, boolean active) {
+		long[] classNameIds, String keywords, boolean active) {
 		return getService()
 				   .searchCount(companyId, groupIds, classNameIds, keywords,
 			active);
 	}
 
 	public static int searchCount(long companyId, long[] groupIds,
-		long[] classNameIds, java.lang.String code, java.lang.String name,
-		java.lang.String description, boolean active, boolean andOperator) {
+		long[] classNameIds, String code, String name, String description,
+		boolean active, boolean andOperator) {
 		return getService()
 				   .searchCount(companyId, groupIds, classNameIds, code, name,
 			description, active, andOperator);
@@ -120,9 +116,8 @@ public class CalendarResourceServiceUtil {
 
 	public static com.liferay.calendar.model.CalendarResource updateCalendarResource(
 		long calendarResourceId,
-		java.util.Map<java.util.Locale, java.lang.String> nameMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		boolean active,
+		java.util.Map<java.util.Locale, String> nameMap,
+		java.util.Map<java.util.Locale, String> descriptionMap, boolean active,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()

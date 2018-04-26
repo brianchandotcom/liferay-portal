@@ -296,7 +296,7 @@ public class DDMTemplateCacheModel implements CacheModel<DDMTemplate>,
 		smallImageURL = objectInput.readUTF();
 		lastPublishDate = objectInput.readLong();
 
-		_resourceClassName = (java.lang.String)objectInput.readObject();
+		_resourceClassName = (String)objectInput.readObject();
 	}
 
 	@Override
@@ -442,5 +442,5 @@ public class DDMTemplateCacheModel implements CacheModel<DDMTemplate>,
 	public long smallImageId;
 	public String smallImageURL;
 	public long lastPublishDate;
-	public java.lang.String _resourceClassName;
+	public String _resourceClassName;
 }

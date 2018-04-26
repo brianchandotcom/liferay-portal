@@ -44,8 +44,7 @@ public class SiteNavigationMenuItemServiceUtil {
 	 */
 	public static com.liferay.site.navigation.model.SiteNavigationMenuItem addSiteNavigationMenuItem(
 		long groupId, long siteNavigationMenuId,
-		long parentSiteNavigationMenuItemId, java.lang.String type,
-		java.lang.String typeSettings,
+		long parentSiteNavigationMenuItemId, String type, String typeSettings,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
@@ -70,7 +69,7 @@ public class SiteNavigationMenuItemServiceUtil {
 	*
 	* @return the OSGi service identifier
 	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
+	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 
@@ -88,7 +87,7 @@ public class SiteNavigationMenuItemServiceUtil {
 	}
 
 	public static com.liferay.site.navigation.model.SiteNavigationMenuItem updateSiteNavigationMenuItem(
-		long siteNavigationMenuId, java.lang.String typeSettings,
+		long siteNavigationMenuId, String typeSettings,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()

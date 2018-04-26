@@ -181,7 +181,7 @@ public interface AnnouncementsDeliveryPersistence extends BasePersistence<Announ
 	* @return the matching announcements delivery
 	* @throws NoSuchDeliveryException if a matching announcements delivery could not be found
 	*/
-	public AnnouncementsDelivery findByU_T(long userId, java.lang.String type)
+	public AnnouncementsDelivery findByU_T(long userId, String type)
 		throws NoSuchDeliveryException;
 
 	/**
@@ -191,7 +191,7 @@ public interface AnnouncementsDeliveryPersistence extends BasePersistence<Announ
 	* @param type the type
 	* @return the matching announcements delivery, or <code>null</code> if a matching announcements delivery could not be found
 	*/
-	public AnnouncementsDelivery fetchByU_T(long userId, java.lang.String type);
+	public AnnouncementsDelivery fetchByU_T(long userId, String type);
 
 	/**
 	* Returns the announcements delivery where userId = &#63; and type = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -201,7 +201,7 @@ public interface AnnouncementsDeliveryPersistence extends BasePersistence<Announ
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching announcements delivery, or <code>null</code> if a matching announcements delivery could not be found
 	*/
-	public AnnouncementsDelivery fetchByU_T(long userId, java.lang.String type,
+	public AnnouncementsDelivery fetchByU_T(long userId, String type,
 		boolean retrieveFromCache);
 
 	/**
@@ -211,7 +211,7 @@ public interface AnnouncementsDeliveryPersistence extends BasePersistence<Announ
 	* @param type the type
 	* @return the announcements delivery that was removed
 	*/
-	public AnnouncementsDelivery removeByU_T(long userId, java.lang.String type)
+	public AnnouncementsDelivery removeByU_T(long userId, String type)
 		throws NoSuchDeliveryException;
 
 	/**
@@ -221,7 +221,7 @@ public interface AnnouncementsDeliveryPersistence extends BasePersistence<Announ
 	* @param type the type
 	* @return the number of matching announcements deliveries
 	*/
-	public int countByU_T(long userId, java.lang.String type);
+	public int countByU_T(long userId, String type);
 
 	/**
 	* Caches the announcements delivery in the entity cache if it is enabled.
@@ -346,5 +346,5 @@ public interface AnnouncementsDeliveryPersistence extends BasePersistence<Announ
 	public int countAll();
 
 	@Override
-	public java.util.Set<java.lang.String> getBadColumnNames();
+	public java.util.Set<String> getBadColumnNames();
 }

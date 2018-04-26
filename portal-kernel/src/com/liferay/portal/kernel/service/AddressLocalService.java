@@ -72,11 +72,10 @@ public interface AddressLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.REINDEX)
 	public Address addAddress(Address address);
 
-	public Address addAddress(long userId, java.lang.String className,
-		long classPK, java.lang.String street1, java.lang.String street2,
-		java.lang.String street3, java.lang.String city, java.lang.String zip,
-		long regionId, long countryId, long typeId, boolean mailing,
-		boolean primary, ServiceContext serviceContext)
+	public Address addAddress(long userId, String className, long classPK,
+		String street1, String street2, String street3, String city,
+		String zip, long regionId, long countryId, long typeId,
+		boolean mailing, boolean primary, ServiceContext serviceContext)
 		throws PortalException;
 
 	/**
@@ -108,8 +107,7 @@ public interface AddressLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.DELETE)
 	public Address deleteAddress(long addressId) throws PortalException;
 
-	public void deleteAddresses(long companyId, java.lang.String className,
-		long classPK);
+	public void deleteAddresses(long companyId, String className, long classPK);
 
 	/**
 	* @throws PortalException
@@ -188,8 +186,7 @@ public interface AddressLocalService extends BaseLocalService,
 	* @return the matching address, or <code>null</code> if a matching address could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Address fetchAddressByUuidAndCompanyId(java.lang.String uuid,
-		long companyId);
+	public Address fetchAddressByUuidAndCompanyId(String uuid, long companyId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
@@ -213,8 +210,8 @@ public interface AddressLocalService extends BaseLocalService,
 	* @throws PortalException if a matching address could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Address getAddressByUuidAndCompanyId(java.lang.String uuid,
-		long companyId) throws PortalException;
+	public Address getAddressByUuidAndCompanyId(String uuid, long companyId)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<Address> getAddresses();
@@ -234,8 +231,8 @@ public interface AddressLocalService extends BaseLocalService,
 	public List<Address> getAddresses(int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<Address> getAddresses(long companyId,
-		java.lang.String className, long classPK);
+	public List<Address> getAddresses(long companyId, String className,
+		long classPK);
 
 	/**
 	* Returns the number of addresses.
@@ -257,7 +254,7 @@ public interface AddressLocalService extends BaseLocalService,
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -273,9 +270,8 @@ public interface AddressLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.REINDEX)
 	public Address updateAddress(Address address);
 
-	public Address updateAddress(long addressId, java.lang.String street1,
-		java.lang.String street2, java.lang.String street3,
-		java.lang.String city, java.lang.String zip, long regionId,
+	public Address updateAddress(long addressId, String street1,
+		String street2, String street3, String city, String zip, long regionId,
 		long countryId, long typeId, boolean mailing, boolean primary)
 		throws PortalException;
 }

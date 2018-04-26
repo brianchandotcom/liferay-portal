@@ -114,7 +114,7 @@ public class RepositoryEntryUtil {
 	* @param uuid the uuid
 	* @return the matching repository entries
 	*/
-	public static List<RepositoryEntry> findByUuid(java.lang.String uuid) {
+	public static List<RepositoryEntry> findByUuid(String uuid) {
 		return getPersistence().findByUuid(uuid);
 	}
 
@@ -130,8 +130,8 @@ public class RepositoryEntryUtil {
 	* @param end the upper bound of the range of repository entries (not inclusive)
 	* @return the range of matching repository entries
 	*/
-	public static List<RepositoryEntry> findByUuid(java.lang.String uuid,
-		int start, int end) {
+	public static List<RepositoryEntry> findByUuid(String uuid, int start,
+		int end) {
 		return getPersistence().findByUuid(uuid, start, end);
 	}
 
@@ -148,8 +148,8 @@ public class RepositoryEntryUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching repository entries
 	*/
-	public static List<RepositoryEntry> findByUuid(java.lang.String uuid,
-		int start, int end, OrderByComparator<RepositoryEntry> orderByComparator) {
+	public static List<RepositoryEntry> findByUuid(String uuid, int start,
+		int end, OrderByComparator<RepositoryEntry> orderByComparator) {
 		return getPersistence().findByUuid(uuid, start, end, orderByComparator);
 	}
 
@@ -167,9 +167,8 @@ public class RepositoryEntryUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching repository entries
 	*/
-	public static List<RepositoryEntry> findByUuid(java.lang.String uuid,
-		int start, int end,
-		OrderByComparator<RepositoryEntry> orderByComparator,
+	public static List<RepositoryEntry> findByUuid(String uuid, int start,
+		int end, OrderByComparator<RepositoryEntry> orderByComparator,
 		boolean retrieveFromCache) {
 		return getPersistence()
 				   .findByUuid(uuid, start, end, orderByComparator,
@@ -184,7 +183,7 @@ public class RepositoryEntryUtil {
 	* @return the first matching repository entry
 	* @throws NoSuchRepositoryEntryException if a matching repository entry could not be found
 	*/
-	public static RepositoryEntry findByUuid_First(java.lang.String uuid,
+	public static RepositoryEntry findByUuid_First(String uuid,
 		OrderByComparator<RepositoryEntry> orderByComparator)
 		throws com.liferay.portal.kernel.exception.NoSuchRepositoryEntryException {
 		return getPersistence().findByUuid_First(uuid, orderByComparator);
@@ -197,7 +196,7 @@ public class RepositoryEntryUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching repository entry, or <code>null</code> if a matching repository entry could not be found
 	*/
-	public static RepositoryEntry fetchByUuid_First(java.lang.String uuid,
+	public static RepositoryEntry fetchByUuid_First(String uuid,
 		OrderByComparator<RepositoryEntry> orderByComparator) {
 		return getPersistence().fetchByUuid_First(uuid, orderByComparator);
 	}
@@ -210,7 +209,7 @@ public class RepositoryEntryUtil {
 	* @return the last matching repository entry
 	* @throws NoSuchRepositoryEntryException if a matching repository entry could not be found
 	*/
-	public static RepositoryEntry findByUuid_Last(java.lang.String uuid,
+	public static RepositoryEntry findByUuid_Last(String uuid,
 		OrderByComparator<RepositoryEntry> orderByComparator)
 		throws com.liferay.portal.kernel.exception.NoSuchRepositoryEntryException {
 		return getPersistence().findByUuid_Last(uuid, orderByComparator);
@@ -223,7 +222,7 @@ public class RepositoryEntryUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching repository entry, or <code>null</code> if a matching repository entry could not be found
 	*/
-	public static RepositoryEntry fetchByUuid_Last(java.lang.String uuid,
+	public static RepositoryEntry fetchByUuid_Last(String uuid,
 		OrderByComparator<RepositoryEntry> orderByComparator) {
 		return getPersistence().fetchByUuid_Last(uuid, orderByComparator);
 	}
@@ -238,7 +237,7 @@ public class RepositoryEntryUtil {
 	* @throws NoSuchRepositoryEntryException if a repository entry with the primary key could not be found
 	*/
 	public static RepositoryEntry[] findByUuid_PrevAndNext(
-		long repositoryEntryId, java.lang.String uuid,
+		long repositoryEntryId, String uuid,
 		OrderByComparator<RepositoryEntry> orderByComparator)
 		throws com.liferay.portal.kernel.exception.NoSuchRepositoryEntryException {
 		return getPersistence()
@@ -251,7 +250,7 @@ public class RepositoryEntryUtil {
 	*
 	* @param uuid the uuid
 	*/
-	public static void removeByUuid(java.lang.String uuid) {
+	public static void removeByUuid(String uuid) {
 		getPersistence().removeByUuid(uuid);
 	}
 
@@ -261,7 +260,7 @@ public class RepositoryEntryUtil {
 	* @param uuid the uuid
 	* @return the number of matching repository entries
 	*/
-	public static int countByUuid(java.lang.String uuid) {
+	public static int countByUuid(String uuid) {
 		return getPersistence().countByUuid(uuid);
 	}
 
@@ -273,8 +272,7 @@ public class RepositoryEntryUtil {
 	* @return the matching repository entry
 	* @throws NoSuchRepositoryEntryException if a matching repository entry could not be found
 	*/
-	public static RepositoryEntry findByUUID_G(java.lang.String uuid,
-		long groupId)
+	public static RepositoryEntry findByUUID_G(String uuid, long groupId)
 		throws com.liferay.portal.kernel.exception.NoSuchRepositoryEntryException {
 		return getPersistence().findByUUID_G(uuid, groupId);
 	}
@@ -286,8 +284,7 @@ public class RepositoryEntryUtil {
 	* @param groupId the group ID
 	* @return the matching repository entry, or <code>null</code> if a matching repository entry could not be found
 	*/
-	public static RepositoryEntry fetchByUUID_G(java.lang.String uuid,
-		long groupId) {
+	public static RepositoryEntry fetchByUUID_G(String uuid, long groupId) {
 		return getPersistence().fetchByUUID_G(uuid, groupId);
 	}
 
@@ -299,8 +296,8 @@ public class RepositoryEntryUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching repository entry, or <code>null</code> if a matching repository entry could not be found
 	*/
-	public static RepositoryEntry fetchByUUID_G(java.lang.String uuid,
-		long groupId, boolean retrieveFromCache) {
+	public static RepositoryEntry fetchByUUID_G(String uuid, long groupId,
+		boolean retrieveFromCache) {
 		return getPersistence().fetchByUUID_G(uuid, groupId, retrieveFromCache);
 	}
 
@@ -311,8 +308,7 @@ public class RepositoryEntryUtil {
 	* @param groupId the group ID
 	* @return the repository entry that was removed
 	*/
-	public static RepositoryEntry removeByUUID_G(java.lang.String uuid,
-		long groupId)
+	public static RepositoryEntry removeByUUID_G(String uuid, long groupId)
 		throws com.liferay.portal.kernel.exception.NoSuchRepositoryEntryException {
 		return getPersistence().removeByUUID_G(uuid, groupId);
 	}
@@ -324,7 +320,7 @@ public class RepositoryEntryUtil {
 	* @param groupId the group ID
 	* @return the number of matching repository entries
 	*/
-	public static int countByUUID_G(java.lang.String uuid, long groupId) {
+	public static int countByUUID_G(String uuid, long groupId) {
 		return getPersistence().countByUUID_G(uuid, groupId);
 	}
 
@@ -335,8 +331,7 @@ public class RepositoryEntryUtil {
 	* @param companyId the company ID
 	* @return the matching repository entries
 	*/
-	public static List<RepositoryEntry> findByUuid_C(java.lang.String uuid,
-		long companyId) {
+	public static List<RepositoryEntry> findByUuid_C(String uuid, long companyId) {
 		return getPersistence().findByUuid_C(uuid, companyId);
 	}
 
@@ -353,7 +348,7 @@ public class RepositoryEntryUtil {
 	* @param end the upper bound of the range of repository entries (not inclusive)
 	* @return the range of matching repository entries
 	*/
-	public static List<RepositoryEntry> findByUuid_C(java.lang.String uuid,
+	public static List<RepositoryEntry> findByUuid_C(String uuid,
 		long companyId, int start, int end) {
 		return getPersistence().findByUuid_C(uuid, companyId, start, end);
 	}
@@ -372,7 +367,7 @@ public class RepositoryEntryUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching repository entries
 	*/
-	public static List<RepositoryEntry> findByUuid_C(java.lang.String uuid,
+	public static List<RepositoryEntry> findByUuid_C(String uuid,
 		long companyId, int start, int end,
 		OrderByComparator<RepositoryEntry> orderByComparator) {
 		return getPersistence()
@@ -394,7 +389,7 @@ public class RepositoryEntryUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching repository entries
 	*/
-	public static List<RepositoryEntry> findByUuid_C(java.lang.String uuid,
+	public static List<RepositoryEntry> findByUuid_C(String uuid,
 		long companyId, int start, int end,
 		OrderByComparator<RepositoryEntry> orderByComparator,
 		boolean retrieveFromCache) {
@@ -412,7 +407,7 @@ public class RepositoryEntryUtil {
 	* @return the first matching repository entry
 	* @throws NoSuchRepositoryEntryException if a matching repository entry could not be found
 	*/
-	public static RepositoryEntry findByUuid_C_First(java.lang.String uuid,
+	public static RepositoryEntry findByUuid_C_First(String uuid,
 		long companyId, OrderByComparator<RepositoryEntry> orderByComparator)
 		throws com.liferay.portal.kernel.exception.NoSuchRepositoryEntryException {
 		return getPersistence()
@@ -427,7 +422,7 @@ public class RepositoryEntryUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching repository entry, or <code>null</code> if a matching repository entry could not be found
 	*/
-	public static RepositoryEntry fetchByUuid_C_First(java.lang.String uuid,
+	public static RepositoryEntry fetchByUuid_C_First(String uuid,
 		long companyId, OrderByComparator<RepositoryEntry> orderByComparator) {
 		return getPersistence()
 				   .fetchByUuid_C_First(uuid, companyId, orderByComparator);
@@ -442,7 +437,7 @@ public class RepositoryEntryUtil {
 	* @return the last matching repository entry
 	* @throws NoSuchRepositoryEntryException if a matching repository entry could not be found
 	*/
-	public static RepositoryEntry findByUuid_C_Last(java.lang.String uuid,
+	public static RepositoryEntry findByUuid_C_Last(String uuid,
 		long companyId, OrderByComparator<RepositoryEntry> orderByComparator)
 		throws com.liferay.portal.kernel.exception.NoSuchRepositoryEntryException {
 		return getPersistence()
@@ -457,7 +452,7 @@ public class RepositoryEntryUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching repository entry, or <code>null</code> if a matching repository entry could not be found
 	*/
-	public static RepositoryEntry fetchByUuid_C_Last(java.lang.String uuid,
+	public static RepositoryEntry fetchByUuid_C_Last(String uuid,
 		long companyId, OrderByComparator<RepositoryEntry> orderByComparator) {
 		return getPersistence()
 				   .fetchByUuid_C_Last(uuid, companyId, orderByComparator);
@@ -474,7 +469,7 @@ public class RepositoryEntryUtil {
 	* @throws NoSuchRepositoryEntryException if a repository entry with the primary key could not be found
 	*/
 	public static RepositoryEntry[] findByUuid_C_PrevAndNext(
-		long repositoryEntryId, java.lang.String uuid, long companyId,
+		long repositoryEntryId, String uuid, long companyId,
 		OrderByComparator<RepositoryEntry> orderByComparator)
 		throws com.liferay.portal.kernel.exception.NoSuchRepositoryEntryException {
 		return getPersistence()
@@ -488,7 +483,7 @@ public class RepositoryEntryUtil {
 	* @param uuid the uuid
 	* @param companyId the company ID
 	*/
-	public static void removeByUuid_C(java.lang.String uuid, long companyId) {
+	public static void removeByUuid_C(String uuid, long companyId) {
 		getPersistence().removeByUuid_C(uuid, companyId);
 	}
 
@@ -499,7 +494,7 @@ public class RepositoryEntryUtil {
 	* @param companyId the company ID
 	* @return the number of matching repository entries
 	*/
-	public static int countByUuid_C(java.lang.String uuid, long companyId) {
+	public static int countByUuid_C(String uuid, long companyId) {
 		return getPersistence().countByUuid_C(uuid, companyId);
 	}
 
@@ -674,8 +669,7 @@ public class RepositoryEntryUtil {
 	* @return the matching repository entry
 	* @throws NoSuchRepositoryEntryException if a matching repository entry could not be found
 	*/
-	public static RepositoryEntry findByR_M(long repositoryId,
-		java.lang.String mappedId)
+	public static RepositoryEntry findByR_M(long repositoryId, String mappedId)
 		throws com.liferay.portal.kernel.exception.NoSuchRepositoryEntryException {
 		return getPersistence().findByR_M(repositoryId, mappedId);
 	}
@@ -687,8 +681,7 @@ public class RepositoryEntryUtil {
 	* @param mappedId the mapped ID
 	* @return the matching repository entry, or <code>null</code> if a matching repository entry could not be found
 	*/
-	public static RepositoryEntry fetchByR_M(long repositoryId,
-		java.lang.String mappedId) {
+	public static RepositoryEntry fetchByR_M(long repositoryId, String mappedId) {
 		return getPersistence().fetchByR_M(repositoryId, mappedId);
 	}
 
@@ -701,7 +694,7 @@ public class RepositoryEntryUtil {
 	* @return the matching repository entry, or <code>null</code> if a matching repository entry could not be found
 	*/
 	public static RepositoryEntry fetchByR_M(long repositoryId,
-		java.lang.String mappedId, boolean retrieveFromCache) {
+		String mappedId, boolean retrieveFromCache) {
 		return getPersistence()
 				   .fetchByR_M(repositoryId, mappedId, retrieveFromCache);
 	}
@@ -713,8 +706,7 @@ public class RepositoryEntryUtil {
 	* @param mappedId the mapped ID
 	* @return the repository entry that was removed
 	*/
-	public static RepositoryEntry removeByR_M(long repositoryId,
-		java.lang.String mappedId)
+	public static RepositoryEntry removeByR_M(long repositoryId, String mappedId)
 		throws com.liferay.portal.kernel.exception.NoSuchRepositoryEntryException {
 		return getPersistence().removeByR_M(repositoryId, mappedId);
 	}
@@ -726,7 +718,7 @@ public class RepositoryEntryUtil {
 	* @param mappedId the mapped ID
 	* @return the number of matching repository entries
 	*/
-	public static int countByR_M(long repositoryId, java.lang.String mappedId) {
+	public static int countByR_M(long repositoryId, String mappedId) {
 		return getPersistence().countByR_M(repositoryId, mappedId);
 	}
 
@@ -878,7 +870,7 @@ public class RepositoryEntryUtil {
 		return getPersistence().countAll();
 	}
 
-	public static java.util.Set<java.lang.String> getBadColumnNames() {
+	public static java.util.Set<String> getBadColumnNames() {
 		return getPersistence().getBadColumnNames();
 	}
 

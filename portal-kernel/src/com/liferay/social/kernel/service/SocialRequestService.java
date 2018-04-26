@@ -55,7 +55,7 @@ public interface SocialRequestService extends BaseService {
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	public SocialRequest updateRequest(long requestId, int status,
 		ThemeDisplay themeDisplay) throws PortalException;

@@ -55,8 +55,8 @@ import com.liferay.portal.kernel.util.MethodKey;
 @ProviderType
 public class RegionServiceHttp {
 	public static com.liferay.portal.kernel.model.Region addRegion(
-		HttpPrincipal httpPrincipal, long countryId,
-		java.lang.String regionCode, java.lang.String name, boolean active)
+		HttpPrincipal httpPrincipal, long countryId, String regionCode,
+		String name, boolean active)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(RegionServiceUtil.class,
@@ -114,7 +114,7 @@ public class RegionServiceHttp {
 	}
 
 	public static com.liferay.portal.kernel.model.Region fetchRegion(
-		HttpPrincipal httpPrincipal, long countryId, java.lang.String regionCode) {
+		HttpPrincipal httpPrincipal, long countryId, String regionCode) {
 		try {
 			MethodKey methodKey = new MethodKey(RegionServiceUtil.class,
 					"fetchRegion", _fetchRegionParameterTypes2);
@@ -172,7 +172,7 @@ public class RegionServiceHttp {
 	}
 
 	public static com.liferay.portal.kernel.model.Region getRegion(
-		HttpPrincipal httpPrincipal, long countryId, java.lang.String regionCode)
+		HttpPrincipal httpPrincipal, long countryId, String regionCode)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(RegionServiceUtil.class,
@@ -310,20 +310,19 @@ public class RegionServiceHttp {
 
 	private static Log _log = LogFactoryUtil.getLog(RegionServiceHttp.class);
 	private static final Class<?>[] _addRegionParameterTypes0 = new Class[] {
-			long.class, java.lang.String.class, java.lang.String.class,
-			boolean.class
+			long.class, String.class, String.class, boolean.class
 		};
 	private static final Class<?>[] _fetchRegionParameterTypes1 = new Class[] {
 			long.class
 		};
 	private static final Class<?>[] _fetchRegionParameterTypes2 = new Class[] {
-			long.class, java.lang.String.class
+			long.class, String.class
 		};
 	private static final Class<?>[] _getRegionParameterTypes3 = new Class[] {
 			long.class
 		};
 	private static final Class<?>[] _getRegionParameterTypes4 = new Class[] {
-			long.class, java.lang.String.class
+			long.class, String.class
 		};
 	private static final Class<?>[] _getRegionsParameterTypes5 = new Class[] {  };
 	private static final Class<?>[] _getRegionsParameterTypes6 = new Class[] {

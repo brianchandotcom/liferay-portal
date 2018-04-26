@@ -41,14 +41,13 @@ public class ExpandoColumnLocalServiceUtil {
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.portlet.expando.service.impl.ExpandoColumnLocalServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static com.liferay.expando.kernel.model.ExpandoColumn addColumn(
-		long tableId, java.lang.String name, int type)
+		long tableId, String name, int type)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().addColumn(tableId, name, type);
 	}
 
 	public static com.liferay.expando.kernel.model.ExpandoColumn addColumn(
-		long tableId, java.lang.String name, int type,
-		java.lang.Object defaultData)
+		long tableId, String name, int type, Object defaultData)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().addColumn(tableId, name, type, defaultData);
 	}
@@ -86,17 +85,17 @@ public class ExpandoColumnLocalServiceUtil {
 	}
 
 	public static void deleteColumn(long companyId, long classNameId,
-		java.lang.String tableName, java.lang.String name)
+		String tableName, String name)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().deleteColumn(companyId, classNameId, tableName, name);
 	}
 
-	public static void deleteColumn(long tableId, java.lang.String name) {
+	public static void deleteColumn(long tableId, String name) {
 		getService().deleteColumn(tableId, name);
 	}
 
-	public static void deleteColumn(long companyId, java.lang.String className,
-		java.lang.String tableName, java.lang.String name)
+	public static void deleteColumn(long companyId, String className,
+		String tableName, String name)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().deleteColumn(companyId, className, tableName, name);
 	}
@@ -106,13 +105,13 @@ public class ExpandoColumnLocalServiceUtil {
 	}
 
 	public static void deleteColumns(long companyId, long classNameId,
-		java.lang.String tableName)
+		String tableName)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().deleteColumns(companyId, classNameId, tableName);
 	}
 
-	public static void deleteColumns(long companyId,
-		java.lang.String className, java.lang.String tableName)
+	public static void deleteColumns(long companyId, String className,
+		String tableName)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().deleteColumns(companyId, className, tableName);
 	}
@@ -244,19 +243,17 @@ public class ExpandoColumnLocalServiceUtil {
 	}
 
 	public static com.liferay.expando.kernel.model.ExpandoColumn getColumn(
-		long companyId, long classNameId, java.lang.String tableName,
-		java.lang.String name) {
+		long companyId, long classNameId, String tableName, String name) {
 		return getService().getColumn(companyId, classNameId, tableName, name);
 	}
 
 	public static com.liferay.expando.kernel.model.ExpandoColumn getColumn(
-		long tableId, java.lang.String name) {
+		long tableId, String name) {
 		return getService().getColumn(tableId, name);
 	}
 
 	public static com.liferay.expando.kernel.model.ExpandoColumn getColumn(
-		long companyId, java.lang.String className, java.lang.String tableName,
-		java.lang.String name) {
+		long companyId, String className, String tableName, String name) {
 		return getService().getColumn(companyId, className, tableName, name);
 	}
 
@@ -266,29 +263,29 @@ public class ExpandoColumnLocalServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.expando.kernel.model.ExpandoColumn> getColumns(
-		long tableId, java.util.Collection<java.lang.String> names) {
+		long tableId, java.util.Collection<String> names) {
 		return getService().getColumns(tableId, names);
 	}
 
 	public static java.util.List<com.liferay.expando.kernel.model.ExpandoColumn> getColumns(
-		long companyId, long classNameId, java.lang.String tableName) {
+		long companyId, long classNameId, String tableName) {
 		return getService().getColumns(companyId, classNameId, tableName);
 	}
 
 	public static java.util.List<com.liferay.expando.kernel.model.ExpandoColumn> getColumns(
-		long companyId, long classNameId, java.lang.String tableName,
-		java.util.Collection<java.lang.String> names) {
+		long companyId, long classNameId, String tableName,
+		java.util.Collection<String> names) {
 		return getService().getColumns(companyId, classNameId, tableName, names);
 	}
 
 	public static java.util.List<com.liferay.expando.kernel.model.ExpandoColumn> getColumns(
-		long companyId, java.lang.String className, java.lang.String tableName) {
+		long companyId, String className, String tableName) {
 		return getService().getColumns(companyId, className, tableName);
 	}
 
 	public static java.util.List<com.liferay.expando.kernel.model.ExpandoColumn> getColumns(
-		long companyId, java.lang.String className, java.lang.String tableName,
-		java.util.Collection<java.lang.String> columnNames) {
+		long companyId, String className, String tableName,
+		java.util.Collection<String> columnNames) {
 		return getService()
 				   .getColumns(companyId, className, tableName, columnNames);
 	}
@@ -298,22 +295,22 @@ public class ExpandoColumnLocalServiceUtil {
 	}
 
 	public static int getColumnsCount(long companyId, long classNameId,
-		java.lang.String tableName) {
+		String tableName) {
 		return getService().getColumnsCount(companyId, classNameId, tableName);
 	}
 
-	public static int getColumnsCount(long companyId,
-		java.lang.String className, java.lang.String tableName) {
+	public static int getColumnsCount(long companyId, String className,
+		String tableName) {
 		return getService().getColumnsCount(companyId, className, tableName);
 	}
 
 	public static com.liferay.expando.kernel.model.ExpandoColumn getDefaultTableColumn(
-		long companyId, long classNameId, java.lang.String name) {
+		long companyId, long classNameId, String name) {
 		return getService().getDefaultTableColumn(companyId, classNameId, name);
 	}
 
 	public static com.liferay.expando.kernel.model.ExpandoColumn getDefaultTableColumn(
-		long companyId, java.lang.String className, java.lang.String name) {
+		long companyId, String className, String name) {
 		return getService().getDefaultTableColumn(companyId, className, name);
 	}
 
@@ -323,7 +320,7 @@ public class ExpandoColumnLocalServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.expando.kernel.model.ExpandoColumn> getDefaultTableColumns(
-		long companyId, java.lang.String className) {
+		long companyId, String className) {
 		return getService().getDefaultTableColumns(companyId, className);
 	}
 
@@ -333,7 +330,7 @@ public class ExpandoColumnLocalServiceUtil {
 	}
 
 	public static int getDefaultTableColumnsCount(long companyId,
-		java.lang.String className) {
+		String className) {
 		return getService().getDefaultTableColumnsCount(companyId, className);
 	}
 
@@ -384,7 +381,7 @@ public class ExpandoColumnLocalServiceUtil {
 	*
 	* @return the OSGi service identifier
 	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
+	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 
@@ -395,14 +392,13 @@ public class ExpandoColumnLocalServiceUtil {
 	}
 
 	public static com.liferay.expando.kernel.model.ExpandoColumn updateColumn(
-		long columnId, java.lang.String name, int type)
+		long columnId, String name, int type)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().updateColumn(columnId, name, type);
 	}
 
 	public static com.liferay.expando.kernel.model.ExpandoColumn updateColumn(
-		long columnId, java.lang.String name, int type,
-		java.lang.Object defaultData)
+		long columnId, String name, int type, Object defaultData)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().updateColumn(columnId, name, type, defaultData);
 	}
@@ -419,7 +415,7 @@ public class ExpandoColumnLocalServiceUtil {
 	}
 
 	public static com.liferay.expando.kernel.model.ExpandoColumn updateTypeSettings(
-		long columnId, java.lang.String typeSettings)
+		long columnId, String typeSettings)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().updateTypeSettings(columnId, typeSettings);
 	}

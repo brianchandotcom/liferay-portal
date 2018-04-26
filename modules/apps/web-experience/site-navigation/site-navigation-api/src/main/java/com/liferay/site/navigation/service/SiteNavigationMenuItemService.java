@@ -57,8 +57,8 @@ public interface SiteNavigationMenuItemService extends BaseService {
 	 */
 	public SiteNavigationMenuItem addSiteNavigationMenuItem(long groupId,
 		long siteNavigationMenuId, long parentSiteNavigationMenuItemId,
-		java.lang.String type, java.lang.String typeSettings,
-		ServiceContext serviceContext) throws PortalException;
+		String type, String typeSettings, ServiceContext serviceContext)
+		throws PortalException;
 
 	public SiteNavigationMenuItem deleteSiteNavigationMenuItem(
 		long siteNavigationMenuItemId) throws PortalException;
@@ -71,7 +71,7 @@ public interface SiteNavigationMenuItemService extends BaseService {
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<SiteNavigationMenuItem> getSiteNavigationMenuItems(
@@ -82,6 +82,6 @@ public interface SiteNavigationMenuItemService extends BaseService {
 		int order) throws PortalException;
 
 	public SiteNavigationMenuItem updateSiteNavigationMenuItem(
-		long siteNavigationMenuId, java.lang.String typeSettings,
+		long siteNavigationMenuId, String typeSettings,
 		ServiceContext serviceContext) throws PortalException;
 }

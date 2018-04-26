@@ -187,7 +187,7 @@ public class KaleoDefinitionVersionWrapper implements KaleoDefinitionVersion,
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new KaleoDefinitionVersionWrapper((KaleoDefinitionVersion)_kaleoDefinitionVersion.clone());
 	}
 
@@ -202,7 +202,7 @@ public class KaleoDefinitionVersionWrapper implements KaleoDefinitionVersion,
 	}
 
 	@Override
-	public java.lang.String[] getAvailableLanguageIds() {
+	public String[] getAvailableLanguageIds() {
 		return _kaleoDefinitionVersion.getAvailableLanguageIds();
 	}
 
@@ -222,7 +222,7 @@ public class KaleoDefinitionVersionWrapper implements KaleoDefinitionVersion,
 	* @return the content of this kaleo definition version
 	*/
 	@Override
-	public java.lang.String getContent() {
+	public String getContent() {
 		return _kaleoDefinitionVersion.getContent();
 	}
 
@@ -237,7 +237,7 @@ public class KaleoDefinitionVersionWrapper implements KaleoDefinitionVersion,
 	}
 
 	@Override
-	public java.lang.String getDefaultLanguageId() {
+	public String getDefaultLanguageId() {
 		return _kaleoDefinitionVersion.getDefaultLanguageId();
 	}
 
@@ -247,7 +247,7 @@ public class KaleoDefinitionVersionWrapper implements KaleoDefinitionVersion,
 	* @return the description of this kaleo definition version
 	*/
 	@Override
-	public java.lang.String getDescription() {
+	public String getDescription() {
 		return _kaleoDefinitionVersion.getDescription();
 	}
 
@@ -304,7 +304,7 @@ public class KaleoDefinitionVersionWrapper implements KaleoDefinitionVersion,
 	* @return the name of this kaleo definition version
 	*/
 	@Override
-	public java.lang.String getName() {
+	public String getName() {
 		return _kaleoDefinitionVersion.getName();
 	}
 
@@ -359,7 +359,7 @@ public class KaleoDefinitionVersionWrapper implements KaleoDefinitionVersion,
 	* @return the status by user name of this kaleo definition version
 	*/
 	@Override
-	public java.lang.String getStatusByUserName() {
+	public String getStatusByUserName() {
 		return _kaleoDefinitionVersion.getStatusByUserName();
 	}
 
@@ -369,7 +369,7 @@ public class KaleoDefinitionVersionWrapper implements KaleoDefinitionVersion,
 	* @return the status by user uuid of this kaleo definition version
 	*/
 	@Override
-	public java.lang.String getStatusByUserUuid() {
+	public String getStatusByUserUuid() {
 		return _kaleoDefinitionVersion.getStatusByUserUuid();
 	}
 
@@ -389,7 +389,7 @@ public class KaleoDefinitionVersionWrapper implements KaleoDefinitionVersion,
 	* @return the title of this kaleo definition version
 	*/
 	@Override
-	public java.lang.String getTitle() {
+	public String getTitle() {
 		return _kaleoDefinitionVersion.getTitle();
 	}
 
@@ -400,7 +400,7 @@ public class KaleoDefinitionVersionWrapper implements KaleoDefinitionVersion,
 	* @return the localized title of this kaleo definition version
 	*/
 	@Override
-	public java.lang.String getTitle(java.util.Locale locale) {
+	public String getTitle(java.util.Locale locale) {
 		return _kaleoDefinitionVersion.getTitle(locale);
 	}
 
@@ -412,7 +412,7 @@ public class KaleoDefinitionVersionWrapper implements KaleoDefinitionVersion,
 	* @return the localized title of this kaleo definition version. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
 	*/
 	@Override
-	public java.lang.String getTitle(java.util.Locale locale, boolean useDefault) {
+	public String getTitle(java.util.Locale locale, boolean useDefault) {
 		return _kaleoDefinitionVersion.getTitle(locale, useDefault);
 	}
 
@@ -423,7 +423,7 @@ public class KaleoDefinitionVersionWrapper implements KaleoDefinitionVersion,
 	* @return the localized title of this kaleo definition version
 	*/
 	@Override
-	public java.lang.String getTitle(java.lang.String languageId) {
+	public String getTitle(String languageId) {
 		return _kaleoDefinitionVersion.getTitle(languageId);
 	}
 
@@ -435,18 +435,17 @@ public class KaleoDefinitionVersionWrapper implements KaleoDefinitionVersion,
 	* @return the localized title of this kaleo definition version
 	*/
 	@Override
-	public java.lang.String getTitle(java.lang.String languageId,
-		boolean useDefault) {
+	public String getTitle(String languageId, boolean useDefault) {
 		return _kaleoDefinitionVersion.getTitle(languageId, useDefault);
 	}
 
 	@Override
-	public java.lang.String getTitleCurrentLanguageId() {
+	public String getTitleCurrentLanguageId() {
 		return _kaleoDefinitionVersion.getTitleCurrentLanguageId();
 	}
 
 	@Override
-	public java.lang.String getTitleCurrentValue() {
+	public String getTitleCurrentValue() {
 		return _kaleoDefinitionVersion.getTitleCurrentValue();
 	}
 
@@ -456,7 +455,7 @@ public class KaleoDefinitionVersionWrapper implements KaleoDefinitionVersion,
 	* @return the locales and localized titles of this kaleo definition version
 	*/
 	@Override
-	public Map<java.util.Locale, java.lang.String> getTitleMap() {
+	public Map<java.util.Locale, String> getTitleMap() {
 		return _kaleoDefinitionVersion.getTitleMap();
 	}
 
@@ -476,7 +475,7 @@ public class KaleoDefinitionVersionWrapper implements KaleoDefinitionVersion,
 	* @return the user name of this kaleo definition version
 	*/
 	@Override
-	public java.lang.String getUserName() {
+	public String getUserName() {
 		return _kaleoDefinitionVersion.getUserName();
 	}
 
@@ -486,7 +485,7 @@ public class KaleoDefinitionVersionWrapper implements KaleoDefinitionVersion,
 	* @return the user uuid of this kaleo definition version
 	*/
 	@Override
-	public java.lang.String getUserUuid() {
+	public String getUserUuid() {
 		return _kaleoDefinitionVersion.getUserUuid();
 	}
 
@@ -496,7 +495,7 @@ public class KaleoDefinitionVersionWrapper implements KaleoDefinitionVersion,
 	* @return the version of this kaleo definition version
 	*/
 	@Override
-	public java.lang.String getVersion() {
+	public String getVersion() {
 		return _kaleoDefinitionVersion.getVersion();
 	}
 
@@ -644,7 +643,7 @@ public class KaleoDefinitionVersionWrapper implements KaleoDefinitionVersion,
 	* @param content the content of this kaleo definition version
 	*/
 	@Override
-	public void setContent(java.lang.String content) {
+	public void setContent(String content) {
 		_kaleoDefinitionVersion.setContent(content);
 	}
 
@@ -664,7 +663,7 @@ public class KaleoDefinitionVersionWrapper implements KaleoDefinitionVersion,
 	* @param description the description of this kaleo definition version
 	*/
 	@Override
-	public void setDescription(java.lang.String description) {
+	public void setDescription(String description) {
 		_kaleoDefinitionVersion.setDescription(description);
 	}
 
@@ -720,7 +719,7 @@ public class KaleoDefinitionVersionWrapper implements KaleoDefinitionVersion,
 	* @param name the name of this kaleo definition version
 	*/
 	@Override
-	public void setName(java.lang.String name) {
+	public void setName(String name) {
 		_kaleoDefinitionVersion.setName(name);
 	}
 
@@ -780,7 +779,7 @@ public class KaleoDefinitionVersionWrapper implements KaleoDefinitionVersion,
 	* @param statusByUserName the status by user name of this kaleo definition version
 	*/
 	@Override
-	public void setStatusByUserName(java.lang.String statusByUserName) {
+	public void setStatusByUserName(String statusByUserName) {
 		_kaleoDefinitionVersion.setStatusByUserName(statusByUserName);
 	}
 
@@ -790,7 +789,7 @@ public class KaleoDefinitionVersionWrapper implements KaleoDefinitionVersion,
 	* @param statusByUserUuid the status by user uuid of this kaleo definition version
 	*/
 	@Override
-	public void setStatusByUserUuid(java.lang.String statusByUserUuid) {
+	public void setStatusByUserUuid(String statusByUserUuid) {
 		_kaleoDefinitionVersion.setStatusByUserUuid(statusByUserUuid);
 	}
 
@@ -810,7 +809,7 @@ public class KaleoDefinitionVersionWrapper implements KaleoDefinitionVersion,
 	* @param title the title of this kaleo definition version
 	*/
 	@Override
-	public void setTitle(java.lang.String title) {
+	public void setTitle(String title) {
 		_kaleoDefinitionVersion.setTitle(title);
 	}
 
@@ -821,7 +820,7 @@ public class KaleoDefinitionVersionWrapper implements KaleoDefinitionVersion,
 	* @param locale the locale of the language
 	*/
 	@Override
-	public void setTitle(java.lang.String title, java.util.Locale locale) {
+	public void setTitle(String title, java.util.Locale locale) {
 		_kaleoDefinitionVersion.setTitle(title, locale);
 	}
 
@@ -833,13 +832,13 @@ public class KaleoDefinitionVersionWrapper implements KaleoDefinitionVersion,
 	* @param defaultLocale the default locale
 	*/
 	@Override
-	public void setTitle(java.lang.String title, java.util.Locale locale,
+	public void setTitle(String title, java.util.Locale locale,
 		java.util.Locale defaultLocale) {
 		_kaleoDefinitionVersion.setTitle(title, locale, defaultLocale);
 	}
 
 	@Override
-	public void setTitleCurrentLanguageId(java.lang.String languageId) {
+	public void setTitleCurrentLanguageId(String languageId) {
 		_kaleoDefinitionVersion.setTitleCurrentLanguageId(languageId);
 	}
 
@@ -849,7 +848,7 @@ public class KaleoDefinitionVersionWrapper implements KaleoDefinitionVersion,
 	* @param titleMap the locales and localized titles of this kaleo definition version
 	*/
 	@Override
-	public void setTitleMap(Map<java.util.Locale, java.lang.String> titleMap) {
+	public void setTitleMap(Map<java.util.Locale, String> titleMap) {
 		_kaleoDefinitionVersion.setTitleMap(titleMap);
 	}
 
@@ -860,7 +859,7 @@ public class KaleoDefinitionVersionWrapper implements KaleoDefinitionVersion,
 	* @param defaultLocale the default locale
 	*/
 	@Override
-	public void setTitleMap(Map<java.util.Locale, java.lang.String> titleMap,
+	public void setTitleMap(Map<java.util.Locale, String> titleMap,
 		java.util.Locale defaultLocale) {
 		_kaleoDefinitionVersion.setTitleMap(titleMap, defaultLocale);
 	}
@@ -881,7 +880,7 @@ public class KaleoDefinitionVersionWrapper implements KaleoDefinitionVersion,
 	* @param userName the user name of this kaleo definition version
 	*/
 	@Override
-	public void setUserName(java.lang.String userName) {
+	public void setUserName(String userName) {
 		_kaleoDefinitionVersion.setUserName(userName);
 	}
 
@@ -891,7 +890,7 @@ public class KaleoDefinitionVersionWrapper implements KaleoDefinitionVersion,
 	* @param userUuid the user uuid of this kaleo definition version
 	*/
 	@Override
-	public void setUserUuid(java.lang.String userUuid) {
+	public void setUserUuid(String userUuid) {
 		_kaleoDefinitionVersion.setUserUuid(userUuid);
 	}
 
@@ -901,7 +900,7 @@ public class KaleoDefinitionVersionWrapper implements KaleoDefinitionVersion,
 	* @param version the version of this kaleo definition version
 	*/
 	@Override
-	public void setVersion(java.lang.String version) {
+	public void setVersion(String version) {
 		_kaleoDefinitionVersion.setVersion(version);
 	}
 
@@ -916,7 +915,7 @@ public class KaleoDefinitionVersionWrapper implements KaleoDefinitionVersion,
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _kaleoDefinitionVersion.toString();
 	}
 
@@ -926,7 +925,7 @@ public class KaleoDefinitionVersionWrapper implements KaleoDefinitionVersion,
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _kaleoDefinitionVersion.toXmlString();
 	}
 

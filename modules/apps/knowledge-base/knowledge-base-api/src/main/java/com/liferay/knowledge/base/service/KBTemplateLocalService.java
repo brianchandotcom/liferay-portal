@@ -77,9 +77,8 @@ public interface KBTemplateLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.REINDEX)
 	public KBTemplate addKBTemplate(KBTemplate kbTemplate);
 
-	public KBTemplate addKBTemplate(long userId, java.lang.String title,
-		java.lang.String content, ServiceContext serviceContext)
-		throws PortalException;
+	public KBTemplate addKBTemplate(long userId, String title, String content,
+		ServiceContext serviceContext) throws PortalException;
 
 	/**
 	* Creates a new kb template with the primary key. Does not add the kb template to the database.
@@ -195,8 +194,7 @@ public interface KBTemplateLocalService extends BaseLocalService,
 	* @return the matching kb template, or <code>null</code> if a matching kb template could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public KBTemplate fetchKBTemplateByUuidAndGroupId(java.lang.String uuid,
-		long groupId);
+	public KBTemplate fetchKBTemplateByUuidAndGroupId(String uuid, long groupId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
@@ -235,8 +233,8 @@ public interface KBTemplateLocalService extends BaseLocalService,
 	* @throws PortalException if a matching kb template could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public KBTemplate getKBTemplateByUuidAndGroupId(java.lang.String uuid,
-		long groupId) throws PortalException;
+	public KBTemplate getKBTemplateByUuidAndGroupId(String uuid, long groupId)
+		throws PortalException;
 
 	/**
 	* Returns a range of all the kb templates.
@@ -260,8 +258,8 @@ public interface KBTemplateLocalService extends BaseLocalService,
 	* @return the matching kb templates, or an empty list if no matches were found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<KBTemplate> getKBTemplatesByUuidAndCompanyId(
-		java.lang.String uuid, long companyId);
+	public List<KBTemplate> getKBTemplatesByUuidAndCompanyId(String uuid,
+		long companyId);
 
 	/**
 	* Returns a range of kb templates matching the UUID and company.
@@ -274,8 +272,8 @@ public interface KBTemplateLocalService extends BaseLocalService,
 	* @return the range of matching kb templates, or an empty list if no matches were found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<KBTemplate> getKBTemplatesByUuidAndCompanyId(
-		java.lang.String uuid, long companyId, int start, int end,
+	public List<KBTemplate> getKBTemplatesByUuidAndCompanyId(String uuid,
+		long companyId, int start, int end,
 		OrderByComparator<KBTemplate> orderByComparator);
 
 	/**
@@ -291,7 +289,7 @@ public interface KBTemplateLocalService extends BaseLocalService,
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -299,9 +297,8 @@ public interface KBTemplateLocalService extends BaseLocalService,
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<KBTemplate> search(long groupId, java.lang.String title,
-		java.lang.String content, Date startDate, Date endDate,
-		boolean andOperator, int start, int end,
+	public List<KBTemplate> search(long groupId, String title, String content,
+		Date startDate, Date endDate, boolean andOperator, int start, int end,
 		OrderByComparator<KBTemplate> orderByComparator);
 
 	/**
@@ -313,11 +310,11 @@ public interface KBTemplateLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.REINDEX)
 	public KBTemplate updateKBTemplate(KBTemplate kbTemplate);
 
-	public KBTemplate updateKBTemplate(long kbTemplateId,
-		java.lang.String title, java.lang.String content,
-		ServiceContext serviceContext) throws PortalException;
+	public KBTemplate updateKBTemplate(long kbTemplateId, String title,
+		String content, ServiceContext serviceContext)
+		throws PortalException;
 
 	public void updateKBTemplateResources(KBTemplate kbTemplate,
-		java.lang.String[] groupPermissions, java.lang.String[] guestPermissions)
+		String[] groupPermissions, String[] guestPermissions)
 		throws PortalException;
 }

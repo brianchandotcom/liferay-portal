@@ -145,7 +145,7 @@ public class AssetDisplayTemplateWrapper implements AssetDisplayTemplate,
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new AssetDisplayTemplateWrapper((AssetDisplayTemplate)_assetDisplayTemplate.clone());
 	}
 
@@ -165,7 +165,7 @@ public class AssetDisplayTemplateWrapper implements AssetDisplayTemplate,
 	}
 
 	@Override
-	public java.lang.String getAssetTypeName(java.util.Locale locale)
+	public String getAssetTypeName(java.util.Locale locale)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _assetDisplayTemplate.getAssetTypeName(locale);
 	}
@@ -176,7 +176,7 @@ public class AssetDisplayTemplateWrapper implements AssetDisplayTemplate,
 	* @return the fully qualified class name of this asset display template
 	*/
 	@Override
-	public java.lang.String getClassName() {
+	public String getClassName() {
 		return _assetDisplayTemplate.getClassName();
 	}
 
@@ -261,7 +261,7 @@ public class AssetDisplayTemplateWrapper implements AssetDisplayTemplate,
 	* @return the name of this asset display template
 	*/
 	@Override
-	public java.lang.String getName() {
+	public String getName() {
 		return _assetDisplayTemplate.getName();
 	}
 
@@ -296,7 +296,7 @@ public class AssetDisplayTemplateWrapper implements AssetDisplayTemplate,
 	* @return the user name of this asset display template
 	*/
 	@Override
-	public java.lang.String getUserName() {
+	public String getUserName() {
 		return _assetDisplayTemplate.getUserName();
 	}
 
@@ -306,7 +306,7 @@ public class AssetDisplayTemplateWrapper implements AssetDisplayTemplate,
 	* @return the user uuid of this asset display template
 	*/
 	@Override
-	public java.lang.String getUserUuid() {
+	public String getUserUuid() {
 		return _assetDisplayTemplate.getUserUuid();
 	}
 
@@ -361,7 +361,7 @@ public class AssetDisplayTemplateWrapper implements AssetDisplayTemplate,
 	}
 
 	@Override
-	public void setClassName(java.lang.String className) {
+	public void setClassName(String className) {
 		_assetDisplayTemplate.setClassName(className);
 	}
 
@@ -457,7 +457,7 @@ public class AssetDisplayTemplateWrapper implements AssetDisplayTemplate,
 	* @param name the name of this asset display template
 	*/
 	@Override
-	public void setName(java.lang.String name) {
+	public void setName(String name) {
 		_assetDisplayTemplate.setName(name);
 	}
 
@@ -497,7 +497,7 @@ public class AssetDisplayTemplateWrapper implements AssetDisplayTemplate,
 	* @param userName the user name of this asset display template
 	*/
 	@Override
-	public void setUserName(java.lang.String userName) {
+	public void setUserName(String userName) {
 		_assetDisplayTemplate.setUserName(userName);
 	}
 
@@ -507,7 +507,7 @@ public class AssetDisplayTemplateWrapper implements AssetDisplayTemplate,
 	* @param userUuid the user uuid of this asset display template
 	*/
 	@Override
-	public void setUserUuid(java.lang.String userUuid) {
+	public void setUserUuid(String userUuid) {
 		_assetDisplayTemplate.setUserUuid(userUuid);
 	}
 
@@ -522,7 +522,7 @@ public class AssetDisplayTemplateWrapper implements AssetDisplayTemplate,
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _assetDisplayTemplate.toString();
 	}
 
@@ -532,7 +532,7 @@ public class AssetDisplayTemplateWrapper implements AssetDisplayTemplate,
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _assetDisplayTemplate.toXmlString();
 	}
 

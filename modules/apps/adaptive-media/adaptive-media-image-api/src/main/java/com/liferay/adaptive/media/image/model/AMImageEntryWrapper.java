@@ -143,7 +143,7 @@ public class AMImageEntryWrapper implements AMImageEntry,
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new AMImageEntryWrapper((AMImageEntry)_amImageEntry.clone());
 	}
 
@@ -178,7 +178,7 @@ public class AMImageEntryWrapper implements AMImageEntry,
 	* @return the configuration uuid of this am image entry
 	*/
 	@Override
-	public java.lang.String getConfigurationUuid() {
+	public String getConfigurationUuid() {
 		return _amImageEntry.getConfigurationUuid();
 	}
 
@@ -233,7 +233,7 @@ public class AMImageEntryWrapper implements AMImageEntry,
 	* @return the mime type of this am image entry
 	*/
 	@Override
-	public java.lang.String getMimeType() {
+	public String getMimeType() {
 		return _amImageEntry.getMimeType();
 	}
 
@@ -268,7 +268,7 @@ public class AMImageEntryWrapper implements AMImageEntry,
 	* @return the uuid of this am image entry
 	*/
 	@Override
-	public java.lang.String getUuid() {
+	public String getUuid() {
 		return _amImageEntry.getUuid();
 	}
 
@@ -338,7 +338,7 @@ public class AMImageEntryWrapper implements AMImageEntry,
 	* @param configurationUuid the configuration uuid of this am image entry
 	*/
 	@Override
-	public void setConfigurationUuid(java.lang.String configurationUuid) {
+	public void setConfigurationUuid(String configurationUuid) {
 		_amImageEntry.setConfigurationUuid(configurationUuid);
 	}
 
@@ -404,7 +404,7 @@ public class AMImageEntryWrapper implements AMImageEntry,
 	* @param mimeType the mime type of this am image entry
 	*/
 	@Override
-	public void setMimeType(java.lang.String mimeType) {
+	public void setMimeType(String mimeType) {
 		_amImageEntry.setMimeType(mimeType);
 	}
 
@@ -444,7 +444,7 @@ public class AMImageEntryWrapper implements AMImageEntry,
 	* @param uuid the uuid of this am image entry
 	*/
 	@Override
-	public void setUuid(java.lang.String uuid) {
+	public void setUuid(String uuid) {
 		_amImageEntry.setUuid(uuid);
 	}
 
@@ -469,7 +469,7 @@ public class AMImageEntryWrapper implements AMImageEntry,
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _amImageEntry.toString();
 	}
 
@@ -479,7 +479,7 @@ public class AMImageEntryWrapper implements AMImageEntry,
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _amImageEntry.toXmlString();
 	}
 

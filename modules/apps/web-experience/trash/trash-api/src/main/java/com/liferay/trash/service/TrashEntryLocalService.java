@@ -84,9 +84,9 @@ public interface TrashEntryLocalService extends BaseLocalService,
 	* @return the trashEntry
 	*/
 	public TrashEntry addTrashEntry(long userId, long groupId,
-		java.lang.String className, long classPK, java.lang.String classUuid,
-		java.lang.String referrerClassName, int status,
-		List<ObjectValuePair<java.lang.Long, java.lang.Integer>> statusOVPs,
+		String className, long classPK, String classUuid,
+		String referrerClassName, int status,
+		List<ObjectValuePair<Long, Integer>> statusOVPs,
 		UnicodeProperties typeSettingsProperties) throws PortalException;
 
 	/**
@@ -128,7 +128,7 @@ public interface TrashEntryLocalService extends BaseLocalService,
 	* @param classPK the primary key of the entry
 	* @return the trash entry with the entity class name and primary key
 	*/
-	public TrashEntry deleteEntry(java.lang.String className, long classPK);
+	public TrashEntry deleteEntry(String className, long classPK);
 
 	@Indexable(type = IndexableType.DELETE)
 	public TrashEntry deleteEntry(TrashEntry trashEntry);
@@ -235,7 +235,7 @@ public interface TrashEntryLocalService extends BaseLocalService,
 	* @return the trash entry with the entity class name and primary key
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public TrashEntry fetchEntry(java.lang.String className, long classPK);
+	public TrashEntry fetchEntry(String className, long classPK);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public TrashEntry fetchTrashEntry(long entryId);
@@ -281,7 +281,7 @@ public interface TrashEntryLocalService extends BaseLocalService,
 		OrderByComparator<TrashEntry> obc);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<TrashEntry> getEntries(long groupId, java.lang.String className);
+	public List<TrashEntry> getEntries(long groupId, String className);
 
 	/**
 	* Returns the number of trash entries with the group ID.
@@ -309,7 +309,7 @@ public interface TrashEntryLocalService extends BaseLocalService,
 	* @return the trash entry with the entity class name and primary key
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public TrashEntry getEntry(java.lang.String className, long classPK)
+	public TrashEntry getEntry(String className, long classPK)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -320,7 +320,7 @@ public interface TrashEntryLocalService extends BaseLocalService,
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -361,12 +361,12 @@ public interface TrashEntryLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public Hits search(long companyId, long groupId, long userId,
-		java.lang.String keywords, int start, int end, Sort sort);
+		String keywords, int start, int end, Sort sort);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public BaseModelSearchResult<TrashEntry> searchTrashEntries(
-		long companyId, long groupId, long userId, java.lang.String keywords,
-		int start, int end, Sort sort);
+		long companyId, long groupId, long userId, String keywords, int start,
+		int end, Sort sort);
 
 	/**
 	* Updates the trash entry in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.

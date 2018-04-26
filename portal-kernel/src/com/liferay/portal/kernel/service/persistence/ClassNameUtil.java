@@ -115,7 +115,7 @@ public class ClassNameUtil {
 	* @return the matching class name
 	* @throws NoSuchClassNameException if a matching class name could not be found
 	*/
-	public static ClassName findByValue(java.lang.String value)
+	public static ClassName findByValue(String value)
 		throws com.liferay.portal.kernel.exception.NoSuchClassNameException {
 		return getPersistence().findByValue(value);
 	}
@@ -126,7 +126,7 @@ public class ClassNameUtil {
 	* @param value the value
 	* @return the matching class name, or <code>null</code> if a matching class name could not be found
 	*/
-	public static ClassName fetchByValue(java.lang.String value) {
+	public static ClassName fetchByValue(String value) {
 		return getPersistence().fetchByValue(value);
 	}
 
@@ -137,8 +137,7 @@ public class ClassNameUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching class name, or <code>null</code> if a matching class name could not be found
 	*/
-	public static ClassName fetchByValue(java.lang.String value,
-		boolean retrieveFromCache) {
+	public static ClassName fetchByValue(String value, boolean retrieveFromCache) {
 		return getPersistence().fetchByValue(value, retrieveFromCache);
 	}
 
@@ -148,7 +147,7 @@ public class ClassNameUtil {
 	* @param value the value
 	* @return the class name that was removed
 	*/
-	public static ClassName removeByValue(java.lang.String value)
+	public static ClassName removeByValue(String value)
 		throws com.liferay.portal.kernel.exception.NoSuchClassNameException {
 		return getPersistence().removeByValue(value);
 	}
@@ -159,7 +158,7 @@ public class ClassNameUtil {
 	* @param value the value
 	* @return the number of matching class names
 	*/
-	public static int countByValue(java.lang.String value) {
+	public static int countByValue(String value) {
 		return getPersistence().countByValue(value);
 	}
 

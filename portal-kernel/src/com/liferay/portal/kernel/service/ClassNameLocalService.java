@@ -68,7 +68,7 @@ public interface ClassNameLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.REINDEX)
 	public ClassName addClassName(ClassName className);
 
-	public ClassName addClassName(java.lang.String value);
+	public ClassName addClassName(String value);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public void checkClassNames();
@@ -175,7 +175,7 @@ public interface ClassNameLocalService extends BaseLocalService,
 	public ClassName fetchClassName(long classNameId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ClassName fetchClassName(java.lang.String value);
+	public ClassName fetchClassName(String value);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
@@ -192,15 +192,15 @@ public interface ClassNameLocalService extends BaseLocalService,
 
 	@Skip
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ClassName getClassName(java.lang.String value);
+	public ClassName getClassName(String value);
 
 	@Skip
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public long getClassNameId(java.lang.Class<?> clazz);
+	public long getClassNameId(Class<?> clazz);
 
 	@Skip
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public long getClassNameId(java.lang.String value);
+	public long getClassNameId(String value);
 
 	/**
 	* Returns a range of all the class names.
@@ -232,7 +232,7 @@ public interface ClassNameLocalService extends BaseLocalService,
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -240,7 +240,7 @@ public interface ClassNameLocalService extends BaseLocalService,
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.lang.String getRegistryName();
+	public String getRegistryName();
 
 	public void invalidate();
 

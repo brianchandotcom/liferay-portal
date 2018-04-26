@@ -57,9 +57,8 @@ public interface BookmarksEntryService extends BaseService {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link BookmarksEntryServiceUtil} to access the bookmarks entry remote service. Add custom service methods to {@link com.liferay.bookmarks.service.impl.BookmarksEntryServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public BookmarksEntry addEntry(long groupId, long folderId,
-		java.lang.String name, java.lang.String url,
-		java.lang.String description, ServiceContext serviceContext)
+	public BookmarksEntry addEntry(long groupId, long folderId, String name,
+		String url, String description, ServiceContext serviceContext)
 		throws PortalException;
 
 	public void deleteEntry(long entryId) throws PortalException;
@@ -82,8 +81,7 @@ public interface BookmarksEntryService extends BaseService {
 	public BookmarksEntry getEntry(long entryId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getFoldersEntriesCount(long groupId,
-		List<java.lang.Long> folderIds);
+	public int getFoldersEntriesCount(long groupId, List<Long> folderIds);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<BookmarksEntry> getGroupEntries(long groupId, int start, int end)
@@ -113,7 +111,7 @@ public interface BookmarksEntryService extends BaseService {
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	public BookmarksEntry moveEntry(long entryId, long parentFolderId)
 		throws PortalException;
@@ -140,7 +138,6 @@ public interface BookmarksEntryService extends BaseService {
 	public void unsubscribeEntry(long entryId) throws PortalException;
 
 	public BookmarksEntry updateEntry(long entryId, long groupId,
-		long folderId, java.lang.String name, java.lang.String url,
-		java.lang.String description, ServiceContext serviceContext)
-		throws PortalException;
+		long folderId, String name, String url, String description,
+		ServiceContext serviceContext) throws PortalException;
 }

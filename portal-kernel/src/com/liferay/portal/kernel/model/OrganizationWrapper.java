@@ -193,13 +193,13 @@ public class OrganizationWrapper implements Organization,
 	}
 
 	@Override
-	public java.lang.String buildTreePath()
+	public String buildTreePath()
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _organization.buildTreePath();
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new OrganizationWrapper((Organization)_organization.clone());
 	}
 
@@ -231,7 +231,7 @@ public class OrganizationWrapper implements Organization,
 	}
 
 	@Override
-	public java.lang.String[] getChildrenTypes() {
+	public String[] getChildrenTypes() {
 		return _organization.getChildrenTypes();
 	}
 
@@ -241,7 +241,7 @@ public class OrganizationWrapper implements Organization,
 	* @return the comments of this organization
 	*/
 	@Override
-	public java.lang.String getComments() {
+	public String getComments() {
 		return _organization.getComments();
 	}
 
@@ -331,7 +331,7 @@ public class OrganizationWrapper implements Organization,
 	* @return the name of this organization
 	*/
 	@Override
-	public java.lang.String getName() {
+	public String getName() {
 		return _organization.getName();
 	}
 
@@ -362,7 +362,7 @@ public class OrganizationWrapper implements Organization,
 	}
 
 	@Override
-	public java.lang.String getParentOrganizationName() {
+	public String getParentOrganizationName() {
 		return _organization.getParentOrganizationName();
 	}
 
@@ -417,14 +417,13 @@ public class OrganizationWrapper implements Organization,
 	}
 
 	@Override
-	public java.util.Set<java.lang.String> getReminderQueryQuestions(
+	public java.util.Set<String> getReminderQueryQuestions(
 		java.util.Locale locale) {
 		return _organization.getReminderQueryQuestions(locale);
 	}
 
 	@Override
-	public java.util.Set<java.lang.String> getReminderQueryQuestions(
-		java.lang.String languageId) {
+	public java.util.Set<String> getReminderQueryQuestions(String languageId) {
 		return _organization.getReminderQueryQuestions(languageId);
 	}
 
@@ -454,7 +453,7 @@ public class OrganizationWrapper implements Organization,
 	* @return the tree path of this organization
 	*/
 	@Override
-	public java.lang.String getTreePath() {
+	public String getTreePath() {
 		return _organization.getTreePath();
 	}
 
@@ -464,7 +463,7 @@ public class OrganizationWrapper implements Organization,
 	* @return the type of this organization
 	*/
 	@Override
-	public java.lang.String getType() {
+	public String getType() {
 		return _organization.getType();
 	}
 
@@ -489,7 +488,7 @@ public class OrganizationWrapper implements Organization,
 	* @return the user name of this organization
 	*/
 	@Override
-	public java.lang.String getUserName() {
+	public String getUserName() {
 		return _organization.getUserName();
 	}
 
@@ -499,7 +498,7 @@ public class OrganizationWrapper implements Organization,
 	* @return the user uuid of this organization
 	*/
 	@Override
-	public java.lang.String getUserUuid() {
+	public String getUserUuid() {
 		return _organization.getUserUuid();
 	}
 
@@ -509,7 +508,7 @@ public class OrganizationWrapper implements Organization,
 	* @return the uuid of this organization
 	*/
 	@Override
-	public java.lang.String getUuid() {
+	public String getUuid() {
 		return _organization.getUuid();
 	}
 
@@ -584,7 +583,7 @@ public class OrganizationWrapper implements Organization,
 	* @param comments the comments of this organization
 	*/
 	@Override
-	public void setComments(java.lang.String comments) {
+	public void setComments(String comments) {
 		_organization.setComments(comments);
 	}
 
@@ -669,7 +668,7 @@ public class OrganizationWrapper implements Organization,
 	* @param name the name of this organization
 	*/
 	@Override
-	public void setName(java.lang.String name) {
+	public void setName(String name) {
 		_organization.setName(name);
 	}
 
@@ -749,7 +748,7 @@ public class OrganizationWrapper implements Organization,
 	* @param treePath the tree path of this organization
 	*/
 	@Override
-	public void setTreePath(java.lang.String treePath) {
+	public void setTreePath(String treePath) {
 		_organization.setTreePath(treePath);
 	}
 
@@ -759,7 +758,7 @@ public class OrganizationWrapper implements Organization,
 	* @param type the type of this organization
 	*/
 	@Override
-	public void setType(java.lang.String type) {
+	public void setType(String type) {
 		_organization.setType(type);
 	}
 
@@ -779,7 +778,7 @@ public class OrganizationWrapper implements Organization,
 	* @param userName the user name of this organization
 	*/
 	@Override
-	public void setUserName(java.lang.String userName) {
+	public void setUserName(String userName) {
 		_organization.setUserName(userName);
 	}
 
@@ -789,7 +788,7 @@ public class OrganizationWrapper implements Organization,
 	* @param userUuid the user uuid of this organization
 	*/
 	@Override
-	public void setUserUuid(java.lang.String userUuid) {
+	public void setUserUuid(String userUuid) {
 		_organization.setUserUuid(userUuid);
 	}
 
@@ -799,7 +798,7 @@ public class OrganizationWrapper implements Organization,
 	* @param uuid the uuid of this organization
 	*/
 	@Override
-	public void setUuid(java.lang.String uuid) {
+	public void setUuid(String uuid) {
 		_organization.setUuid(uuid);
 	}
 
@@ -814,7 +813,7 @@ public class OrganizationWrapper implements Organization,
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _organization.toString();
 	}
 
@@ -824,12 +823,12 @@ public class OrganizationWrapper implements Organization,
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _organization.toXmlString();
 	}
 
 	@Override
-	public void updateTreePath(java.lang.String treePath) {
+	public void updateTreePath(String treePath) {
 		_organization.updateTreePath(treePath);
 	}
 

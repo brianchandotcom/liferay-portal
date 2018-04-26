@@ -60,8 +60,8 @@ public interface MeetupsEntryLocalService extends BaseLocalService,
 	 *
 	 * Never modify or reference this interface directly. Always use {@link MeetupsEntryLocalServiceUtil} to access the meetups entry local service. Add custom service methods to {@link com.liferay.social.networking.service.impl.MeetupsEntryLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public MeetupsEntry addMeetupsEntry(long userId, java.lang.String title,
-		java.lang.String description, int startDateMonth, int startDateDay,
+	public MeetupsEntry addMeetupsEntry(long userId, String title,
+		String description, int startDateMonth, int startDateDay,
 		int startDateYear, int startDateHour, int startDateMinute,
 		int endDateMonth, int endDateDay, int endDateYear, int endDateHour,
 		int endDateMinute, int totalAttendees, int maxAttendees, double price,
@@ -224,7 +224,7 @@ public interface MeetupsEntryLocalService extends BaseLocalService,
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -232,12 +232,11 @@ public interface MeetupsEntryLocalService extends BaseLocalService,
 		throws PortalException;
 
 	public MeetupsEntry updateMeetupsEntry(long userId, long meetupsEntryId,
-		java.lang.String title, java.lang.String description,
-		int startDateMonth, int startDateDay, int startDateYear,
-		int startDateHour, int startDateMinute, int endDateMonth,
-		int endDateDay, int endDateYear, int endDateHour, int endDateMinute,
-		int totalAttendees, int maxAttendees, double price, byte[] thumbnail)
-		throws PortalException;
+		String title, String description, int startDateMonth, int startDateDay,
+		int startDateYear, int startDateHour, int startDateMinute,
+		int endDateMonth, int endDateDay, int endDateYear, int endDateHour,
+		int endDateMinute, int totalAttendees, int maxAttendees, double price,
+		byte[] thumbnail) throws PortalException;
 
 	/**
 	* Updates the meetups entry in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.

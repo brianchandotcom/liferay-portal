@@ -53,5 +53,5 @@ public interface ClusterGroup extends ClusterGroupModel, PersistedModel {
 			}
 		};
 
-	public java.lang.String[] getClusterNodeIdsArray();
+	public String[] getClusterNodeIdsArray();
 }

@@ -99,7 +99,7 @@ public class OrgGroupRoleWrapper implements OrgGroupRole,
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new OrgGroupRoleWrapper((OrgGroupRole)_orgGroupRole.clone());
 	}
 
@@ -311,7 +311,7 @@ public class OrgGroupRoleWrapper implements OrgGroupRole,
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _orgGroupRole.toString();
 	}
 
@@ -321,7 +321,7 @@ public class OrgGroupRoleWrapper implements OrgGroupRole,
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _orgGroupRole.toXmlString();
 	}
 

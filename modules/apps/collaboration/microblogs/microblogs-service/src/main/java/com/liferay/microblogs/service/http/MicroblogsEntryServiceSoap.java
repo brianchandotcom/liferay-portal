@@ -66,8 +66,8 @@ import java.rmi.RemoteException;
 @ProviderType
 public class MicroblogsEntryServiceSoap {
 	public static com.liferay.microblogs.model.MicroblogsEntrySoap addMicroblogsEntry(
-		long userId, java.lang.String content, int type,
-		long parentMicroblogsEntryId, int socialRelationType,
+		long userId, String content, int type, long parentMicroblogsEntryId,
+		int socialRelationType,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
@@ -114,8 +114,7 @@ public class MicroblogsEntryServiceSoap {
 	}
 
 	public static com.liferay.microblogs.model.MicroblogsEntrySoap[] getMicroblogsEntries(
-		java.lang.String assetTagName, int start, int end)
-		throws RemoteException {
+		String assetTagName, int start, int end) throws RemoteException {
 		try {
 			java.util.List<com.liferay.microblogs.model.MicroblogsEntry> returnValue =
 				MicroblogsEntryServiceUtil.getMicroblogsEntries(assetTagName,
@@ -143,7 +142,7 @@ public class MicroblogsEntryServiceSoap {
 		}
 	}
 
-	public static int getMicroblogsEntriesCount(java.lang.String assetTagName)
+	public static int getMicroblogsEntriesCount(String assetTagName)
 		throws RemoteException {
 		try {
 			int returnValue = MicroblogsEntryServiceUtil.getMicroblogsEntriesCount(assetTagName);
@@ -235,8 +234,7 @@ public class MicroblogsEntryServiceSoap {
 	}
 
 	public static com.liferay.microblogs.model.MicroblogsEntrySoap updateMicroblogsEntry(
-		long microblogsEntryId, java.lang.String content,
-		int socialRelationType,
+		long microblogsEntryId, String content, int socialRelationType,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {

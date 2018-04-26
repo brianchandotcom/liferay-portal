@@ -131,7 +131,7 @@ public class GadgetWrapper implements Gadget, ModelWrapper<Gadget> {
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new GadgetWrapper((Gadget)_gadget.clone());
 	}
 
@@ -201,7 +201,7 @@ public class GadgetWrapper implements Gadget, ModelWrapper<Gadget> {
 	* @return the name of this gadget
 	*/
 	@Override
-	public java.lang.String getName() {
+	public String getName() {
 		return _gadget.getName();
 	}
 
@@ -211,7 +211,7 @@ public class GadgetWrapper implements Gadget, ModelWrapper<Gadget> {
 	* @return the portlet category names of this gadget
 	*/
 	@Override
-	public java.lang.String getPortletCategoryNames() {
+	public String getPortletCategoryNames() {
 		return _gadget.getPortletCategoryNames();
 	}
 
@@ -236,7 +236,7 @@ public class GadgetWrapper implements Gadget, ModelWrapper<Gadget> {
 	* @return the url of this gadget
 	*/
 	@Override
-	public java.lang.String getUrl() {
+	public String getUrl() {
 		return _gadget.getUrl();
 	}
 
@@ -246,7 +246,7 @@ public class GadgetWrapper implements Gadget, ModelWrapper<Gadget> {
 	* @return the uuid of this gadget
 	*/
 	@Override
-	public java.lang.String getUuid() {
+	public String getUuid() {
 		return _gadget.getUuid();
 	}
 
@@ -352,7 +352,7 @@ public class GadgetWrapper implements Gadget, ModelWrapper<Gadget> {
 	* @param name the name of this gadget
 	*/
 	@Override
-	public void setName(java.lang.String name) {
+	public void setName(String name) {
 		_gadget.setName(name);
 	}
 
@@ -367,7 +367,7 @@ public class GadgetWrapper implements Gadget, ModelWrapper<Gadget> {
 	* @param portletCategoryNames the portlet category names of this gadget
 	*/
 	@Override
-	public void setPortletCategoryNames(java.lang.String portletCategoryNames) {
+	public void setPortletCategoryNames(String portletCategoryNames) {
 		_gadget.setPortletCategoryNames(portletCategoryNames);
 	}
 
@@ -392,7 +392,7 @@ public class GadgetWrapper implements Gadget, ModelWrapper<Gadget> {
 	* @param url the url of this gadget
 	*/
 	@Override
-	public void setUrl(java.lang.String url) {
+	public void setUrl(String url) {
 		_gadget.setUrl(url);
 	}
 
@@ -402,7 +402,7 @@ public class GadgetWrapper implements Gadget, ModelWrapper<Gadget> {
 	* @param uuid the uuid of this gadget
 	*/
 	@Override
-	public void setUuid(java.lang.String uuid) {
+	public void setUuid(String uuid) {
 		_gadget.setUuid(uuid);
 	}
 
@@ -417,7 +417,7 @@ public class GadgetWrapper implements Gadget, ModelWrapper<Gadget> {
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _gadget.toString();
 	}
 
@@ -427,7 +427,7 @@ public class GadgetWrapper implements Gadget, ModelWrapper<Gadget> {
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _gadget.toXmlString();
 	}
 

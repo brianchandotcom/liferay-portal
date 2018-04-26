@@ -116,12 +116,12 @@ public class PluginSettingWrapper implements PluginSetting,
 	* Adds a role to the list of roles.
 	*/
 	@Override
-	public void addRole(java.lang.String role) {
+	public void addRole(String role) {
 		_pluginSetting.addRole(role);
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new PluginSettingWrapper((PluginSetting)_pluginSetting.clone());
 	}
 
@@ -171,7 +171,7 @@ public class PluginSettingWrapper implements PluginSetting,
 	* @return the plugin ID of this plugin setting
 	*/
 	@Override
-	public java.lang.String getPluginId() {
+	public String getPluginId() {
 		return _pluginSetting.getPluginId();
 	}
 
@@ -191,7 +191,7 @@ public class PluginSettingWrapper implements PluginSetting,
 	* @return the plugin type of this plugin setting
 	*/
 	@Override
-	public java.lang.String getPluginType() {
+	public String getPluginType() {
 		return _pluginSetting.getPluginType();
 	}
 
@@ -216,7 +216,7 @@ public class PluginSettingWrapper implements PluginSetting,
 	* @return the roles of this plugin setting
 	*/
 	@Override
-	public java.lang.String getRoles() {
+	public String getRoles() {
 		return _pluginSetting.getRoles();
 	}
 
@@ -226,7 +226,7 @@ public class PluginSettingWrapper implements PluginSetting,
 	* @return an array of required roles of the plugin
 	*/
 	@Override
-	public java.lang.String[] getRolesArray() {
+	public String[] getRolesArray() {
 		return _pluginSetting.getRolesArray();
 	}
 
@@ -255,7 +255,7 @@ public class PluginSettingWrapper implements PluginSetting,
 	name
 	*/
 	@Override
-	public boolean hasRoleWithName(java.lang.String roleName) {
+	public boolean hasRoleWithName(String roleName) {
 		return _pluginSetting.hasRoleWithName(roleName);
 	}
 
@@ -350,7 +350,7 @@ public class PluginSettingWrapper implements PluginSetting,
 	* @param pluginId the plugin ID of this plugin setting
 	*/
 	@Override
-	public void setPluginId(java.lang.String pluginId) {
+	public void setPluginId(String pluginId) {
 		_pluginSetting.setPluginId(pluginId);
 	}
 
@@ -370,7 +370,7 @@ public class PluginSettingWrapper implements PluginSetting,
 	* @param pluginType the plugin type of this plugin setting
 	*/
 	@Override
-	public void setPluginType(java.lang.String pluginType) {
+	public void setPluginType(String pluginType) {
 		_pluginSetting.setPluginType(pluginType);
 	}
 
@@ -395,7 +395,7 @@ public class PluginSettingWrapper implements PluginSetting,
 	* @param roles the roles of this plugin setting
 	*/
 	@Override
-	public void setRoles(java.lang.String roles) {
+	public void setRoles(String roles) {
 		_pluginSetting.setRoles(roles);
 	}
 
@@ -403,7 +403,7 @@ public class PluginSettingWrapper implements PluginSetting,
 	* Sets an array of required roles of the plugin.
 	*/
 	@Override
-	public void setRolesArray(java.lang.String[] rolesArray) {
+	public void setRolesArray(String[] rolesArray) {
 		_pluginSetting.setRolesArray(rolesArray);
 	}
 
@@ -418,7 +418,7 @@ public class PluginSettingWrapper implements PluginSetting,
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _pluginSetting.toString();
 	}
 
@@ -428,7 +428,7 @@ public class PluginSettingWrapper implements PluginSetting,
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _pluginSetting.toXmlString();
 	}
 

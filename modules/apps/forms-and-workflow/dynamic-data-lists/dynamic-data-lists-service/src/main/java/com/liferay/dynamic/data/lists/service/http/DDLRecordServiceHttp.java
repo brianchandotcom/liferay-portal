@@ -128,7 +128,7 @@ public class DDLRecordServiceHttp {
 	public static com.liferay.dynamic.data.lists.model.DDLRecord addRecord(
 		HttpPrincipal httpPrincipal, long groupId, long recordSetId,
 		int displayIndex,
-		java.util.Map<java.lang.String, java.io.Serializable> fieldsMap,
+		java.util.Map<String, java.io.Serializable> fieldsMap,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -283,7 +283,7 @@ public class DDLRecordServiceHttp {
 	}
 
 	public static void revertRecord(HttpPrincipal httpPrincipal, long recordId,
-		java.lang.String version,
+		String version,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -312,7 +312,7 @@ public class DDLRecordServiceHttp {
 	}
 
 	public static void revertRecordVersion(HttpPrincipal httpPrincipal,
-		long recordId, java.lang.String version,
+		long recordId, String version,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -415,7 +415,7 @@ public class DDLRecordServiceHttp {
 
 	public static com.liferay.dynamic.data.lists.model.DDLRecord updateRecord(
 		HttpPrincipal httpPrincipal, long recordId, int displayIndex,
-		java.util.Map<java.lang.String, java.io.Serializable> fieldsMap,
+		java.util.Map<String, java.io.Serializable> fieldsMap,
 		boolean mergeFields,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -478,11 +478,11 @@ public class DDLRecordServiceHttp {
 			long.class
 		};
 	private static final Class<?>[] _revertRecordParameterTypes7 = new Class[] {
-			long.class, java.lang.String.class,
+			long.class, String.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _revertRecordVersionParameterTypes8 = new Class[] {
-			long.class, java.lang.String.class,
+			long.class, String.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _updateRecordParameterTypes9 = new Class[] {

@@ -217,7 +217,7 @@ public class DDMStructureLayoutLocalServiceWrapper
 	*/
 	@Override
 	public com.liferay.dynamic.data.mapping.model.DDMStructureLayout fetchDDMStructureLayoutByUuidAndGroupId(
-		java.lang.String uuid, long groupId) {
+		String uuid, long groupId) {
 		return _ddmStructureLayoutLocalService.fetchDDMStructureLayoutByUuidAndGroupId(uuid,
 			groupId);
 	}
@@ -251,7 +251,7 @@ public class DDMStructureLayoutLocalServiceWrapper
 	*/
 	@Override
 	public com.liferay.dynamic.data.mapping.model.DDMStructureLayout getDDMStructureLayoutByUuidAndGroupId(
-		java.lang.String uuid, long groupId)
+		String uuid, long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _ddmStructureLayoutLocalService.getDDMStructureLayoutByUuidAndGroupId(uuid,
 			groupId);
@@ -283,7 +283,7 @@ public class DDMStructureLayoutLocalServiceWrapper
 	*/
 	@Override
 	public java.util.List<com.liferay.dynamic.data.mapping.model.DDMStructureLayout> getDDMStructureLayoutsByUuidAndCompanyId(
-		java.lang.String uuid, long companyId) {
+		String uuid, long companyId) {
 		return _ddmStructureLayoutLocalService.getDDMStructureLayoutsByUuidAndCompanyId(uuid,
 			companyId);
 	}
@@ -300,7 +300,7 @@ public class DDMStructureLayoutLocalServiceWrapper
 	*/
 	@Override
 	public java.util.List<com.liferay.dynamic.data.mapping.model.DDMStructureLayout> getDDMStructureLayoutsByUuidAndCompanyId(
-		java.lang.String uuid, long companyId, int start, int end,
+		String uuid, long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.mapping.model.DDMStructureLayout> orderByComparator) {
 		return _ddmStructureLayoutLocalService.getDDMStructureLayoutsByUuidAndCompanyId(uuid,
 			companyId, start, end, orderByComparator);
@@ -333,7 +333,7 @@ public class DDMStructureLayoutLocalServiceWrapper
 	* @return the OSGi service identifier
 	*/
 	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
+	public String getOSGiServiceIdentifier() {
 		return _ddmStructureLayoutLocalService.getOSGiServiceIdentifier();
 	}
 

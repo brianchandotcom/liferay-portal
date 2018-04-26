@@ -56,16 +56,16 @@ public interface Company extends CompanyModel, PersistedModel {
 	public Account getAccount()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
-	public java.lang.String getAdminName();
+	public String getAdminName();
 
-	public java.lang.String getAuthType();
+	public String getAuthType();
 
 	public User getDefaultUser()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
-	public java.lang.String getDefaultWebId();
+	public String getDefaultWebId();
 
-	public java.lang.String getEmailAddress();
+	public String getEmailAddress();
 
 	public Group getGroup()
 		throws com.liferay.portal.kernel.exception.PortalException;
@@ -79,21 +79,21 @@ public interface Company extends CompanyModel, PersistedModel {
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	@com.liferay.portal.kernel.bean.AutoEscape()
-	public java.lang.String getName()
+	public String getName()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
-	public java.lang.String getPortalURL(long groupId)
+	public String getPortalURL(long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
-	public java.lang.String getShortName()
+	public String getShortName()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public java.util.TimeZone getTimeZone()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
-	public java.lang.String getVirtualHostname();
+	public String getVirtualHostname();
 
-	public boolean hasCompanyMx(java.lang.String emailAddress);
+	public boolean hasCompanyMx(String emailAddress);
 
 	public boolean isAutoLogin();
 
@@ -111,5 +111,5 @@ public interface Company extends CompanyModel, PersistedModel {
 
 	public void setKeyObj(java.security.Key keyObj);
 
-	public void setVirtualHostname(java.lang.String virtualHostname);
+	public void setVirtualHostname(String virtualHostname);
 }

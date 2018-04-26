@@ -75,7 +75,7 @@ public class AssetEntryServiceWrapper implements AssetEntryService,
 	* @return the OSGi service identifier
 	*/
 	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
+	public String getOSGiServiceIdentifier() {
 		return _assetEntryService.getOSGiServiceIdentifier();
 	}
 
@@ -88,7 +88,7 @@ public class AssetEntryServiceWrapper implements AssetEntryService,
 
 	@Override
 	public com.liferay.asset.kernel.model.AssetEntry incrementViewCounter(
-		java.lang.String className, long classPK)
+		String className, long classPK)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _assetEntryService.incrementViewCounter(className, classPK);
 	}
@@ -96,15 +96,12 @@ public class AssetEntryServiceWrapper implements AssetEntryService,
 	@Override
 	public com.liferay.asset.kernel.model.AssetEntry updateEntry(long groupId,
 		java.util.Date createDate, java.util.Date modifiedDate,
-		java.lang.String className, long classPK, java.lang.String classUuid,
-		long classTypeId, long[] categoryIds, java.lang.String[] tagNames,
-		boolean listable, boolean visible, java.util.Date startDate,
-		java.util.Date endDate, java.util.Date publishDate,
-		java.util.Date expirationDate, java.lang.String mimeType,
-		java.lang.String title, java.lang.String description,
-		java.lang.String summary, java.lang.String url,
-		java.lang.String layoutUuid, int height, int width,
-		java.lang.Double priority)
+		String className, long classPK, String classUuid, long classTypeId,
+		long[] categoryIds, String[] tagNames, boolean listable,
+		boolean visible, java.util.Date startDate, java.util.Date endDate,
+		java.util.Date publishDate, java.util.Date expirationDate,
+		String mimeType, String title, String description, String summary,
+		String url, String layoutUuid, int height, int width, Double priority)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _assetEntryService.updateEntry(groupId, createDate,
 			modifiedDate, className, classPK, classUuid, classTypeId,
@@ -123,14 +120,12 @@ public class AssetEntryServiceWrapper implements AssetEntryService,
 	@Override
 	public com.liferay.asset.kernel.model.AssetEntry updateEntry(long groupId,
 		java.util.Date createDate, java.util.Date modifiedDate,
-		java.lang.String className, long classPK, java.lang.String classUuid,
-		long classTypeId, long[] categoryIds, java.lang.String[] tagNames,
-		boolean listable, boolean visible, java.util.Date startDate,
-		java.util.Date endDate, java.util.Date expirationDate,
-		java.lang.String mimeType, java.lang.String title,
-		java.lang.String description, java.lang.String summary,
-		java.lang.String url, java.lang.String layoutUuid, int height,
-		int width, java.lang.Double priority)
+		String className, long classPK, String classUuid, long classTypeId,
+		long[] categoryIds, String[] tagNames, boolean listable,
+		boolean visible, java.util.Date startDate, java.util.Date endDate,
+		java.util.Date expirationDate, String mimeType, String title,
+		String description, String summary, String url, String layoutUuid,
+		int height, int width, Double priority)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _assetEntryService.updateEntry(groupId, createDate,
 			modifiedDate, className, classPK, classUuid, classTypeId,
@@ -149,14 +144,12 @@ public class AssetEntryServiceWrapper implements AssetEntryService,
 	@Override
 	public com.liferay.asset.kernel.model.AssetEntry updateEntry(long groupId,
 		java.util.Date createDate, java.util.Date modifiedDate,
-		java.lang.String className, long classPK, java.lang.String classUuid,
-		long classTypeId, long[] categoryIds, java.lang.String[] tagNames,
-		boolean visible, java.util.Date startDate, java.util.Date endDate,
-		java.util.Date expirationDate, java.lang.String mimeType,
-		java.lang.String title, java.lang.String description,
-		java.lang.String summary, java.lang.String url,
-		java.lang.String layoutUuid, int height, int width,
-		java.lang.Integer priority, boolean sync)
+		String className, long classPK, String classUuid, long classTypeId,
+		long[] categoryIds, String[] tagNames, boolean visible,
+		java.util.Date startDate, java.util.Date endDate,
+		java.util.Date expirationDate, String mimeType, String title,
+		String description, String summary, String url, String layoutUuid,
+		int height, int width, Integer priority, boolean sync)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _assetEntryService.updateEntry(groupId, createDate,
 			modifiedDate, className, classPK, classUuid, classTypeId,

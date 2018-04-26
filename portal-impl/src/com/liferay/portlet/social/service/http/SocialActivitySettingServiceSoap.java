@@ -80,8 +80,8 @@ public class SocialActivitySettingServiceSoap {
 		}
 	}
 
-	public static java.lang.String getJSONActivityDefinitions(long groupId,
-		java.lang.String className) throws RemoteException {
+	public static String getJSONActivityDefinitions(long groupId,
+		String className) throws RemoteException {
 		try {
 			com.liferay.portal.kernel.json.JSONArray returnValue = SocialActivitySettingServiceUtil.getJSONActivityDefinitions(groupId,
 					className);
@@ -95,8 +95,8 @@ public class SocialActivitySettingServiceSoap {
 		}
 	}
 
-	public static void updateActivitySetting(long groupId,
-		java.lang.String className, boolean enabled) throws RemoteException {
+	public static void updateActivitySetting(long groupId, String className,
+		boolean enabled) throws RemoteException {
 		try {
 			SocialActivitySettingServiceUtil.updateActivitySetting(groupId,
 				className, enabled);
@@ -108,8 +108,8 @@ public class SocialActivitySettingServiceSoap {
 		}
 	}
 
-	public static void updateActivitySetting(long groupId,
-		java.lang.String className, int activityType,
+	public static void updateActivitySetting(long groupId, String className,
+		int activityType,
 		com.liferay.social.kernel.model.SocialActivityCounterDefinition activityCounterDefinition)
 		throws RemoteException {
 		try {
@@ -123,8 +123,8 @@ public class SocialActivitySettingServiceSoap {
 		}
 	}
 
-	public static void updateActivitySettings(long groupId,
-		java.lang.String className, int activityType,
+	public static void updateActivitySettings(long groupId, String className,
+		int activityType,
 		java.util.List<com.liferay.social.kernel.model.SocialActivityCounterDefinition> activityCounterDefinitions)
 		throws RemoteException {
 		try {

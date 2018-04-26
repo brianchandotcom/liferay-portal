@@ -196,8 +196,8 @@ public interface MBThreadFlagLocalService extends BaseLocalService,
 	* @return the matching message boards thread flag, or <code>null</code> if a matching message boards thread flag could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public MBThreadFlag fetchMBThreadFlagByUuidAndGroupId(
-		java.lang.String uuid, long groupId);
+	public MBThreadFlag fetchMBThreadFlagByUuidAndGroupId(String uuid,
+		long groupId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
@@ -229,7 +229,7 @@ public interface MBThreadFlagLocalService extends BaseLocalService,
 	* @throws PortalException if a matching message boards thread flag could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public MBThreadFlag getMBThreadFlagByUuidAndGroupId(java.lang.String uuid,
+	public MBThreadFlag getMBThreadFlagByUuidAndGroupId(String uuid,
 		long groupId) throws PortalException;
 
 	/**
@@ -254,8 +254,8 @@ public interface MBThreadFlagLocalService extends BaseLocalService,
 	* @return the matching message boards thread flags, or an empty list if no matches were found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<MBThreadFlag> getMBThreadFlagsByUuidAndCompanyId(
-		java.lang.String uuid, long companyId);
+	public List<MBThreadFlag> getMBThreadFlagsByUuidAndCompanyId(String uuid,
+		long companyId);
 
 	/**
 	* Returns a range of message boards thread flags matching the UUID and company.
@@ -268,8 +268,8 @@ public interface MBThreadFlagLocalService extends BaseLocalService,
 	* @return the range of matching message boards thread flags, or an empty list if no matches were found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<MBThreadFlag> getMBThreadFlagsByUuidAndCompanyId(
-		java.lang.String uuid, long companyId, int start, int end,
+	public List<MBThreadFlag> getMBThreadFlagsByUuidAndCompanyId(String uuid,
+		long companyId, int start, int end,
 		OrderByComparator<MBThreadFlag> orderByComparator);
 
 	/**
@@ -285,7 +285,7 @@ public interface MBThreadFlagLocalService extends BaseLocalService,
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

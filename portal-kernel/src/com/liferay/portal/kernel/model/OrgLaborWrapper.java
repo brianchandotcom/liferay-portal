@@ -196,7 +196,7 @@ public class OrgLaborWrapper implements OrgLabor, ModelWrapper<OrgLabor> {
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new OrgLaborWrapper((OrgLabor)_orgLabor.clone());
 	}
 
@@ -687,7 +687,7 @@ public class OrgLaborWrapper implements OrgLabor, ModelWrapper<OrgLabor> {
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _orgLabor.toString();
 	}
 
@@ -697,7 +697,7 @@ public class OrgLaborWrapper implements OrgLabor, ModelWrapper<OrgLabor> {
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _orgLabor.toXmlString();
 	}
 

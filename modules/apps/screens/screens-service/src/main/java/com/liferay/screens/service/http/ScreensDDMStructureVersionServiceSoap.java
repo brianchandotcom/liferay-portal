@@ -54,7 +54,7 @@ import java.rmi.RemoteException;
  */
 @ProviderType
 public class ScreensDDMStructureVersionServiceSoap {
-	public static java.lang.String getDDMStructureVersion(long structureId)
+	public static String getDDMStructureVersion(long structureId)
 		throws RemoteException {
 		try {
 			com.liferay.portal.kernel.json.JSONObject returnValue = ScreensDDMStructureVersionServiceUtil.getDDMStructureVersion(structureId);

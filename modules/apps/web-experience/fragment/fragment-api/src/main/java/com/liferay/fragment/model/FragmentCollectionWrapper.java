@@ -137,7 +137,7 @@ public class FragmentCollectionWrapper implements FragmentCollection,
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new FragmentCollectionWrapper((FragmentCollection)_fragmentCollection.clone());
 	}
 
@@ -172,7 +172,7 @@ public class FragmentCollectionWrapper implements FragmentCollection,
 	* @return the description of this fragment collection
 	*/
 	@Override
-	public java.lang.String getDescription() {
+	public String getDescription() {
 		return _fragmentCollection.getDescription();
 	}
 
@@ -197,7 +197,7 @@ public class FragmentCollectionWrapper implements FragmentCollection,
 	* @return the fragment collection key of this fragment collection
 	*/
 	@Override
-	public java.lang.String getFragmentCollectionKey() {
+	public String getFragmentCollectionKey() {
 		return _fragmentCollection.getFragmentCollectionKey();
 	}
 
@@ -227,7 +227,7 @@ public class FragmentCollectionWrapper implements FragmentCollection,
 	* @return the name of this fragment collection
 	*/
 	@Override
-	public java.lang.String getName() {
+	public String getName() {
 		return _fragmentCollection.getName();
 	}
 
@@ -262,7 +262,7 @@ public class FragmentCollectionWrapper implements FragmentCollection,
 	* @return the user name of this fragment collection
 	*/
 	@Override
-	public java.lang.String getUserName() {
+	public String getUserName() {
 		return _fragmentCollection.getUserName();
 	}
 
@@ -272,7 +272,7 @@ public class FragmentCollectionWrapper implements FragmentCollection,
 	* @return the user uuid of this fragment collection
 	*/
 	@Override
-	public java.lang.String getUserUuid() {
+	public String getUserUuid() {
 		return _fragmentCollection.getUserUuid();
 	}
 
@@ -304,7 +304,7 @@ public class FragmentCollectionWrapper implements FragmentCollection,
 	@Override
 	public void populateZipWriter(
 		com.liferay.portal.kernel.zip.ZipWriter zipWriter)
-		throws java.lang.Exception {
+		throws Exception {
 		_fragmentCollection.populateZipWriter(zipWriter);
 	}
 
@@ -339,7 +339,7 @@ public class FragmentCollectionWrapper implements FragmentCollection,
 	* @param description the description of this fragment collection
 	*/
 	@Override
-	public void setDescription(java.lang.String description) {
+	public void setDescription(String description) {
 		_fragmentCollection.setDescription(description);
 	}
 
@@ -375,7 +375,7 @@ public class FragmentCollectionWrapper implements FragmentCollection,
 	* @param fragmentCollectionKey the fragment collection key of this fragment collection
 	*/
 	@Override
-	public void setFragmentCollectionKey(java.lang.String fragmentCollectionKey) {
+	public void setFragmentCollectionKey(String fragmentCollectionKey) {
 		_fragmentCollection.setFragmentCollectionKey(fragmentCollectionKey);
 	}
 
@@ -405,7 +405,7 @@ public class FragmentCollectionWrapper implements FragmentCollection,
 	* @param name the name of this fragment collection
 	*/
 	@Override
-	public void setName(java.lang.String name) {
+	public void setName(String name) {
 		_fragmentCollection.setName(name);
 	}
 
@@ -445,7 +445,7 @@ public class FragmentCollectionWrapper implements FragmentCollection,
 	* @param userName the user name of this fragment collection
 	*/
 	@Override
-	public void setUserName(java.lang.String userName) {
+	public void setUserName(String userName) {
 		_fragmentCollection.setUserName(userName);
 	}
 
@@ -455,7 +455,7 @@ public class FragmentCollectionWrapper implements FragmentCollection,
 	* @param userUuid the user uuid of this fragment collection
 	*/
 	@Override
-	public void setUserUuid(java.lang.String userUuid) {
+	public void setUserUuid(String userUuid) {
 		_fragmentCollection.setUserUuid(userUuid);
 	}
 
@@ -470,7 +470,7 @@ public class FragmentCollectionWrapper implements FragmentCollection,
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _fragmentCollection.toString();
 	}
 
@@ -480,7 +480,7 @@ public class FragmentCollectionWrapper implements FragmentCollection,
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _fragmentCollection.toXmlString();
 	}
 

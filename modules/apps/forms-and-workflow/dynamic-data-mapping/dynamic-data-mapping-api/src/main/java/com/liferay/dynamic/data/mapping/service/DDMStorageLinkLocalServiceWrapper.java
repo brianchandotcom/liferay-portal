@@ -223,7 +223,7 @@ public class DDMStorageLinkLocalServiceWrapper
 	*/
 	@Override
 	public com.liferay.dynamic.data.mapping.model.DDMStorageLink fetchDDMStorageLinkByUuidAndCompanyId(
-		java.lang.String uuid, long companyId) {
+		String uuid, long companyId) {
 		return _ddmStorageLinkLocalService.fetchDDMStorageLinkByUuidAndCompanyId(uuid,
 			companyId);
 	}
@@ -264,7 +264,7 @@ public class DDMStorageLinkLocalServiceWrapper
 	*/
 	@Override
 	public com.liferay.dynamic.data.mapping.model.DDMStorageLink getDDMStorageLinkByUuidAndCompanyId(
-		java.lang.String uuid, long companyId)
+		String uuid, long companyId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _ddmStorageLinkLocalService.getDDMStorageLinkByUuidAndCompanyId(uuid,
 			companyId);
@@ -308,7 +308,7 @@ public class DDMStorageLinkLocalServiceWrapper
 	* @return the OSGi service identifier
 	*/
 	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
+	public String getOSGiServiceIdentifier() {
 		return _ddmStorageLinkLocalService.getOSGiServiceIdentifier();
 	}
 

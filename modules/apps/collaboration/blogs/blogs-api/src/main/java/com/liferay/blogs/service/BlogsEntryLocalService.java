@@ -75,7 +75,7 @@ public interface BlogsEntryLocalService extends BaseLocalService,
 	 * Never modify or reference this interface directly. Always use {@link BlogsEntryLocalServiceUtil} to access the blogs entry local service. Add custom service methods to {@link com.liferay.blogs.service.impl.BlogsEntryLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	public FileEntry addAttachmentFileEntry(BlogsEntry blogsEntry, long userId,
-		java.lang.String fileName, java.lang.String mimeType, InputStream is)
+		String fileName, String mimeType, InputStream is)
 		throws PortalException;
 
 	public Folder addAttachmentsFolder(long userId, long groupId)
@@ -93,13 +93,12 @@ public interface BlogsEntryLocalService extends BaseLocalService,
 	public void addCoverImage(long entryId, ImageSelector imageSelector)
 		throws PortalException;
 
-	public BlogsEntry addEntry(long userId, java.lang.String title,
-		java.lang.String content, Date displayDate,
-		ServiceContext serviceContext) throws PortalException;
-
-	public BlogsEntry addEntry(long userId, java.lang.String title,
-		java.lang.String content, ServiceContext serviceContext)
+	public BlogsEntry addEntry(long userId, String title, String content,
+		Date displayDate, ServiceContext serviceContext)
 		throws PortalException;
+
+	public BlogsEntry addEntry(long userId, String title, String content,
+		ServiceContext serviceContext) throws PortalException;
 
 	/**
 	* @deprecated As of 1.1.0, replaced by {@link #addEntry(long, String,
@@ -107,53 +106,45 @@ public interface BlogsEntryLocalService extends BaseLocalService,
 	boolean, String[], String, ImageSelector, ImageSelector,
 	ServiceContext)}
 	*/
-	@java.lang.Deprecated
-	public BlogsEntry addEntry(long userId, java.lang.String title,
-		java.lang.String description, java.lang.String content,
-		int displayDateMonth, int displayDateDay, int displayDateYear,
-		int displayDateHour, int displayDateMinute, boolean allowPingbacks,
-		boolean allowTrackbacks, java.lang.String[] trackbacks,
-		boolean smallImage, java.lang.String smallImageURL,
-		java.lang.String smallImageFileName, InputStream smallImageInputStream,
-		ServiceContext serviceContext) throws PortalException;
-
-	@Indexable(type = IndexableType.REINDEX)
-	public BlogsEntry addEntry(long userId, java.lang.String title,
-		java.lang.String subtitle, java.lang.String description,
-		java.lang.String content, Date displayDate, boolean allowPingbacks,
-		boolean allowTrackbacks, java.lang.String[] trackbacks,
-		java.lang.String coverImageCaption,
-		ImageSelector coverImageImageSelector,
-		ImageSelector smallImageImageSelector, ServiceContext serviceContext)
-		throws PortalException;
-
-	public BlogsEntry addEntry(long userId, java.lang.String title,
-		java.lang.String subtitle, java.lang.String description,
-		java.lang.String content, int displayDateMonth, int displayDateDay,
+	@Deprecated
+	public BlogsEntry addEntry(long userId, String title, String description,
+		String content, int displayDateMonth, int displayDateDay,
 		int displayDateYear, int displayDateHour, int displayDateMinute,
-		boolean allowPingbacks, boolean allowTrackbacks,
-		java.lang.String[] trackbacks, java.lang.String coverImageCaption,
+		boolean allowPingbacks, boolean allowTrackbacks, String[] trackbacks,
+		boolean smallImage, String smallImageURL, String smallImageFileName,
+		InputStream smallImageInputStream, ServiceContext serviceContext)
+		throws PortalException;
+
+	@Indexable(type = IndexableType.REINDEX)
+	public BlogsEntry addEntry(long userId, String title, String subtitle,
+		String description, String content, Date displayDate,
+		boolean allowPingbacks, boolean allowTrackbacks, String[] trackbacks,
+		String coverImageCaption, ImageSelector coverImageImageSelector,
+		ImageSelector smallImageImageSelector, ServiceContext serviceContext)
+		throws PortalException;
+
+	public BlogsEntry addEntry(long userId, String title, String subtitle,
+		String description, String content, int displayDateMonth,
+		int displayDateDay, int displayDateYear, int displayDateHour,
+		int displayDateMinute, boolean allowPingbacks, boolean allowTrackbacks,
+		String[] trackbacks, String coverImageCaption,
 		ImageSelector coverImageImageSelector,
 		ImageSelector smallImageImageSelector, ServiceContext serviceContext)
 		throws PortalException;
 
 	@Indexable(type = IndexableType.REINDEX)
-	public BlogsEntry addEntry(long userId, java.lang.String title,
-		java.lang.String subtitle, java.lang.String urlTitle,
-		java.lang.String description, java.lang.String content,
-		Date displayDate, boolean allowPingbacks, boolean allowTrackbacks,
-		java.lang.String[] trackbacks, java.lang.String coverImageCaption,
-		ImageSelector coverImageImageSelector,
+	public BlogsEntry addEntry(long userId, String title, String subtitle,
+		String urlTitle, String description, String content, Date displayDate,
+		boolean allowPingbacks, boolean allowTrackbacks, String[] trackbacks,
+		String coverImageCaption, ImageSelector coverImageImageSelector,
 		ImageSelector smallImageImageSelector, ServiceContext serviceContext)
 		throws PortalException;
 
-	public BlogsEntry addEntry(long userId, java.lang.String title,
-		java.lang.String subtitle, java.lang.String urlTitle,
-		java.lang.String description, java.lang.String content,
+	public BlogsEntry addEntry(long userId, String title, String subtitle,
+		String urlTitle, String description, String content,
 		int displayDateMonth, int displayDateDay, int displayDateYear,
 		int displayDateHour, int displayDateMinute, boolean allowPingbacks,
-		boolean allowTrackbacks, java.lang.String[] trackbacks,
-		java.lang.String coverImageCaption,
+		boolean allowTrackbacks, String[] trackbacks, String coverImageCaption,
 		ImageSelector coverImageImageSelector,
 		ImageSelector smallImageImageSelector, ServiceContext serviceContext)
 		throws PortalException;
@@ -295,11 +286,10 @@ public interface BlogsEntryLocalService extends BaseLocalService,
 	* @return the matching blogs entry, or <code>null</code> if a matching blogs entry could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public BlogsEntry fetchBlogsEntryByUuidAndGroupId(java.lang.String uuid,
-		long groupId);
+	public BlogsEntry fetchBlogsEntryByUuidAndGroupId(String uuid, long groupId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public BlogsEntry fetchEntry(long groupId, java.lang.String urlTitle);
+	public BlogsEntry fetchEntry(long groupId, String urlTitle);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
@@ -326,8 +316,8 @@ public interface BlogsEntryLocalService extends BaseLocalService,
 	* @return the matching blogs entries, or an empty list if no matches were found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<BlogsEntry> getBlogsEntriesByUuidAndCompanyId(
-		java.lang.String uuid, long companyId);
+	public List<BlogsEntry> getBlogsEntriesByUuidAndCompanyId(String uuid,
+		long companyId);
 
 	/**
 	* Returns a range of blogs entries matching the UUID and company.
@@ -340,8 +330,8 @@ public interface BlogsEntryLocalService extends BaseLocalService,
 	* @return the range of matching blogs entries, or an empty list if no matches were found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<BlogsEntry> getBlogsEntriesByUuidAndCompanyId(
-		java.lang.String uuid, long companyId, int start, int end,
+	public List<BlogsEntry> getBlogsEntriesByUuidAndCompanyId(String uuid,
+		long companyId, int start, int end,
 		OrderByComparator<BlogsEntry> orderByComparator);
 
 	/**
@@ -371,8 +361,8 @@ public interface BlogsEntryLocalService extends BaseLocalService,
 	* @throws PortalException if a matching blogs entry could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public BlogsEntry getBlogsEntryByUuidAndGroupId(java.lang.String uuid,
-		long groupId) throws PortalException;
+	public BlogsEntry getBlogsEntryByUuidAndGroupId(String uuid, long groupId)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<BlogsEntry> getCompanyEntries(long companyId, Date displayDate,
@@ -390,7 +380,7 @@ public interface BlogsEntryLocalService extends BaseLocalService,
 	public BlogsEntry getEntry(long entryId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public BlogsEntry getEntry(long groupId, java.lang.String urlTitle)
+	public BlogsEntry getEntry(long groupId, String urlTitle)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -444,7 +434,7 @@ public interface BlogsEntryLocalService extends BaseLocalService,
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -452,8 +442,7 @@ public interface BlogsEntryLocalService extends BaseLocalService,
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.lang.String getUniqueUrlTitle(BlogsEntry entry)
-		throws PortalException;
+	public String getUniqueUrlTitle(BlogsEntry entry) throws PortalException;
 
 	public void moveEntriesToTrash(long groupId, long userId)
 		throws PortalException;
@@ -498,9 +487,8 @@ public interface BlogsEntryLocalService extends BaseLocalService,
 		throws PortalException;
 
 	public void updateAsset(long userId, BlogsEntry entry,
-		long[] assetCategoryIds, java.lang.String[] assetTagNames,
-		long[] assetLinkEntryIds, java.lang.Double priority)
-		throws PortalException;
+		long[] assetCategoryIds, String[] assetTagNames,
+		long[] assetLinkEntryIds, Double priority) throws PortalException;
 
 	/**
 	* Updates the blogs entry in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
@@ -511,9 +499,9 @@ public interface BlogsEntryLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.REINDEX)
 	public BlogsEntry updateBlogsEntry(BlogsEntry blogsEntry);
 
-	public BlogsEntry updateEntry(long userId, long entryId,
-		java.lang.String title, java.lang.String content,
-		ServiceContext serviceContext) throws PortalException;
+	public BlogsEntry updateEntry(long userId, long entryId, String title,
+		String content, ServiceContext serviceContext)
+		throws PortalException;
 
 	/**
 	* @deprecated As of 1.1.0, replaced by {@link #updateEntry(long, long,
@@ -521,56 +509,46 @@ public interface BlogsEntryLocalService extends BaseLocalService,
 	boolean, boolean, String[], String, ImageSelector,
 	ImageSelector, ServiceContext)}
 	*/
-	@java.lang.Deprecated
-	public BlogsEntry updateEntry(long userId, long entryId,
-		java.lang.String title, java.lang.String description,
-		java.lang.String content, int displayDateMonth, int displayDateDay,
-		int displayDateYear, int displayDateHour, int displayDateMinute,
-		boolean allowPingbacks, boolean allowTrackbacks,
-		java.lang.String[] trackbacks, boolean smallImage,
-		java.lang.String smallImageURL, java.lang.String smallImageFileName,
-		InputStream smallImageInputStream, ServiceContext serviceContext)
-		throws PortalException;
+	@Deprecated
+	public BlogsEntry updateEntry(long userId, long entryId, String title,
+		String description, String content, int displayDateMonth,
+		int displayDateDay, int displayDateYear, int displayDateHour,
+		int displayDateMinute, boolean allowPingbacks, boolean allowTrackbacks,
+		String[] trackbacks, boolean smallImage, String smallImageURL,
+		String smallImageFileName, InputStream smallImageInputStream,
+		ServiceContext serviceContext) throws PortalException;
 
 	@Indexable(type = IndexableType.REINDEX)
-	public BlogsEntry updateEntry(long userId, long entryId,
-		java.lang.String title, java.lang.String subtitle,
-		java.lang.String description, java.lang.String content,
-		Date displayDate, boolean allowPingbacks, boolean allowTrackbacks,
-		java.lang.String[] trackbacks, java.lang.String coverImageCaption,
-		ImageSelector coverImageImageSelector,
+	public BlogsEntry updateEntry(long userId, long entryId, String title,
+		String subtitle, String description, String content, Date displayDate,
+		boolean allowPingbacks, boolean allowTrackbacks, String[] trackbacks,
+		String coverImageCaption, ImageSelector coverImageImageSelector,
 		ImageSelector smallImageImageSelector, ServiceContext serviceContext)
 		throws PortalException;
 
-	public BlogsEntry updateEntry(long userId, long entryId,
-		java.lang.String title, java.lang.String subtitle,
-		java.lang.String description, java.lang.String content,
+	public BlogsEntry updateEntry(long userId, long entryId, String title,
+		String subtitle, String description, String content,
 		int displayDateMonth, int displayDateDay, int displayDateYear,
 		int displayDateHour, int displayDateMinute, boolean allowPingbacks,
-		boolean allowTrackbacks, java.lang.String[] trackbacks,
-		java.lang.String coverImageCaption,
+		boolean allowTrackbacks, String[] trackbacks, String coverImageCaption,
 		ImageSelector coverImageImageSelector,
 		ImageSelector smallImageImageSelector, ServiceContext serviceContext)
 		throws PortalException;
 
 	@Indexable(type = IndexableType.REINDEX)
-	public BlogsEntry updateEntry(long userId, long entryId,
-		java.lang.String title, java.lang.String subtitle,
-		java.lang.String urlTitle, java.lang.String description,
-		java.lang.String content, Date displayDate, boolean allowPingbacks,
-		boolean allowTrackbacks, java.lang.String[] trackbacks,
-		java.lang.String coverImageCaption,
+	public BlogsEntry updateEntry(long userId, long entryId, String title,
+		String subtitle, String urlTitle, String description, String content,
+		Date displayDate, boolean allowPingbacks, boolean allowTrackbacks,
+		String[] trackbacks, String coverImageCaption,
 		ImageSelector coverImageImageSelector,
 		ImageSelector smallImageImageSelector, ServiceContext serviceContext)
 		throws PortalException;
 
-	public BlogsEntry updateEntry(long userId, long entryId,
-		java.lang.String title, java.lang.String subtitle,
-		java.lang.String urlTitle, java.lang.String description,
-		java.lang.String content, int displayDateMonth, int displayDateDay,
-		int displayDateYear, int displayDateHour, int displayDateMinute,
-		boolean allowPingbacks, boolean allowTrackbacks,
-		java.lang.String[] trackbacks, java.lang.String coverImageCaption,
+	public BlogsEntry updateEntry(long userId, long entryId, String title,
+		String subtitle, String urlTitle, String description, String content,
+		int displayDateMonth, int displayDateDay, int displayDateYear,
+		int displayDateHour, int displayDateMinute, boolean allowPingbacks,
+		boolean allowTrackbacks, String[] trackbacks, String coverImageCaption,
 		ImageSelector coverImageImageSelector,
 		ImageSelector smallImageImageSelector, ServiceContext serviceContext)
 		throws PortalException;
@@ -579,20 +557,19 @@ public interface BlogsEntryLocalService extends BaseLocalService,
 		ModelPermissions modelPermissions) throws PortalException;
 
 	public void updateEntryResources(BlogsEntry entry,
-		java.lang.String[] groupPermissions, java.lang.String[] guestPermissions)
+		String[] groupPermissions, String[] guestPermissions)
 		throws PortalException;
 
 	/**
 	* @deprecated As of 1.1.0, replaced by {@link #updateStatus(long, long,
 	int, ServiceContext, Map)}
 	*/
-	@java.lang.Deprecated
+	@Deprecated
 	public BlogsEntry updateStatus(long userId, long entryId, int status,
 		ServiceContext serviceContext) throws PortalException;
 
 	@Indexable(type = IndexableType.REINDEX)
 	public BlogsEntry updateStatus(long userId, long entryId, int status,
-		ServiceContext serviceContext,
-		Map<java.lang.String, Serializable> workflowContext)
+		ServiceContext serviceContext, Map<String, Serializable> workflowContext)
 		throws PortalException;
 }

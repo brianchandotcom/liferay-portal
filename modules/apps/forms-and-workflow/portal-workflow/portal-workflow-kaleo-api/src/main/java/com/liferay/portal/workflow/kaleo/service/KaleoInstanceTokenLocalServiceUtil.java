@@ -56,7 +56,7 @@ public class KaleoInstanceTokenLocalServiceUtil {
 
 	public static com.liferay.portal.workflow.kaleo.model.KaleoInstanceToken addKaleoInstanceToken(
 		long parentKaleoInstanceTokenId,
-		java.util.Map<java.lang.String, java.io.Serializable> workflowContext,
+		java.util.Map<String, java.io.Serializable> workflowContext,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
@@ -295,7 +295,7 @@ public class KaleoInstanceTokenLocalServiceUtil {
 	*
 	* @return the OSGi service identifier
 	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
+	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 
@@ -307,7 +307,7 @@ public class KaleoInstanceTokenLocalServiceUtil {
 
 	public static com.liferay.portal.workflow.kaleo.model.KaleoInstanceToken getRootKaleoInstanceToken(
 		long kaleoInstanceId,
-		java.util.Map<java.lang.String, java.io.Serializable> workflowContext,
+		java.util.Map<String, java.io.Serializable> workflowContext,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()

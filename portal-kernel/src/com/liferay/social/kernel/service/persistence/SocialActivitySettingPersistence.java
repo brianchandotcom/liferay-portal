@@ -638,8 +638,7 @@ public interface SocialActivitySettingPersistence extends BasePersistence<Social
 	* @throws NoSuchActivitySettingException if a matching social activity setting could not be found
 	*/
 	public SocialActivitySetting findByG_C_A_N(long groupId, long classNameId,
-		int activityType, java.lang.String name)
-		throws NoSuchActivitySettingException;
+		int activityType, String name) throws NoSuchActivitySettingException;
 
 	/**
 	* Returns the social activity setting where groupId = &#63; and classNameId = &#63; and activityType = &#63; and name = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
@@ -651,7 +650,7 @@ public interface SocialActivitySettingPersistence extends BasePersistence<Social
 	* @return the matching social activity setting, or <code>null</code> if a matching social activity setting could not be found
 	*/
 	public SocialActivitySetting fetchByG_C_A_N(long groupId, long classNameId,
-		int activityType, java.lang.String name);
+		int activityType, String name);
 
 	/**
 	* Returns the social activity setting where groupId = &#63; and classNameId = &#63; and activityType = &#63; and name = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -664,7 +663,7 @@ public interface SocialActivitySettingPersistence extends BasePersistence<Social
 	* @return the matching social activity setting, or <code>null</code> if a matching social activity setting could not be found
 	*/
 	public SocialActivitySetting fetchByG_C_A_N(long groupId, long classNameId,
-		int activityType, java.lang.String name, boolean retrieveFromCache);
+		int activityType, String name, boolean retrieveFromCache);
 
 	/**
 	* Removes the social activity setting where groupId = &#63; and classNameId = &#63; and activityType = &#63; and name = &#63; from the database.
@@ -676,7 +675,7 @@ public interface SocialActivitySettingPersistence extends BasePersistence<Social
 	* @return the social activity setting that was removed
 	*/
 	public SocialActivitySetting removeByG_C_A_N(long groupId,
-		long classNameId, int activityType, java.lang.String name)
+		long classNameId, int activityType, String name)
 		throws NoSuchActivitySettingException;
 
 	/**
@@ -689,7 +688,7 @@ public interface SocialActivitySettingPersistence extends BasePersistence<Social
 	* @return the number of matching social activity settings
 	*/
 	public int countByG_C_A_N(long groupId, long classNameId, int activityType,
-		java.lang.String name);
+		String name);
 
 	/**
 	* Caches the social activity setting in the entity cache if it is enabled.

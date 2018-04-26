@@ -120,7 +120,7 @@ public class DDMFormInstanceRecordUtil {
 	* @param uuid the uuid
 	* @return the matching ddm form instance records
 	*/
-	public static List<DDMFormInstanceRecord> findByUuid(java.lang.String uuid) {
+	public static List<DDMFormInstanceRecord> findByUuid(String uuid) {
 		return getPersistence().findByUuid(uuid);
 	}
 
@@ -136,8 +136,8 @@ public class DDMFormInstanceRecordUtil {
 	* @param end the upper bound of the range of ddm form instance records (not inclusive)
 	* @return the range of matching ddm form instance records
 	*/
-	public static List<DDMFormInstanceRecord> findByUuid(
-		java.lang.String uuid, int start, int end) {
+	public static List<DDMFormInstanceRecord> findByUuid(String uuid,
+		int start, int end) {
 		return getPersistence().findByUuid(uuid, start, end);
 	}
 
@@ -154,8 +154,8 @@ public class DDMFormInstanceRecordUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching ddm form instance records
 	*/
-	public static List<DDMFormInstanceRecord> findByUuid(
-		java.lang.String uuid, int start, int end,
+	public static List<DDMFormInstanceRecord> findByUuid(String uuid,
+		int start, int end,
 		OrderByComparator<DDMFormInstanceRecord> orderByComparator) {
 		return getPersistence().findByUuid(uuid, start, end, orderByComparator);
 	}
@@ -174,8 +174,8 @@ public class DDMFormInstanceRecordUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching ddm form instance records
 	*/
-	public static List<DDMFormInstanceRecord> findByUuid(
-		java.lang.String uuid, int start, int end,
+	public static List<DDMFormInstanceRecord> findByUuid(String uuid,
+		int start, int end,
 		OrderByComparator<DDMFormInstanceRecord> orderByComparator,
 		boolean retrieveFromCache) {
 		return getPersistence()
@@ -191,8 +191,7 @@ public class DDMFormInstanceRecordUtil {
 	* @return the first matching ddm form instance record
 	* @throws NoSuchFormInstanceRecordException if a matching ddm form instance record could not be found
 	*/
-	public static DDMFormInstanceRecord findByUuid_First(
-		java.lang.String uuid,
+	public static DDMFormInstanceRecord findByUuid_First(String uuid,
 		OrderByComparator<DDMFormInstanceRecord> orderByComparator)
 		throws com.liferay.dynamic.data.mapping.exception.NoSuchFormInstanceRecordException {
 		return getPersistence().findByUuid_First(uuid, orderByComparator);
@@ -205,8 +204,7 @@ public class DDMFormInstanceRecordUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching ddm form instance record, or <code>null</code> if a matching ddm form instance record could not be found
 	*/
-	public static DDMFormInstanceRecord fetchByUuid_First(
-		java.lang.String uuid,
+	public static DDMFormInstanceRecord fetchByUuid_First(String uuid,
 		OrderByComparator<DDMFormInstanceRecord> orderByComparator) {
 		return getPersistence().fetchByUuid_First(uuid, orderByComparator);
 	}
@@ -219,7 +217,7 @@ public class DDMFormInstanceRecordUtil {
 	* @return the last matching ddm form instance record
 	* @throws NoSuchFormInstanceRecordException if a matching ddm form instance record could not be found
 	*/
-	public static DDMFormInstanceRecord findByUuid_Last(java.lang.String uuid,
+	public static DDMFormInstanceRecord findByUuid_Last(String uuid,
 		OrderByComparator<DDMFormInstanceRecord> orderByComparator)
 		throws com.liferay.dynamic.data.mapping.exception.NoSuchFormInstanceRecordException {
 		return getPersistence().findByUuid_Last(uuid, orderByComparator);
@@ -232,8 +230,7 @@ public class DDMFormInstanceRecordUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching ddm form instance record, or <code>null</code> if a matching ddm form instance record could not be found
 	*/
-	public static DDMFormInstanceRecord fetchByUuid_Last(
-		java.lang.String uuid,
+	public static DDMFormInstanceRecord fetchByUuid_Last(String uuid,
 		OrderByComparator<DDMFormInstanceRecord> orderByComparator) {
 		return getPersistence().fetchByUuid_Last(uuid, orderByComparator);
 	}
@@ -248,7 +245,7 @@ public class DDMFormInstanceRecordUtil {
 	* @throws NoSuchFormInstanceRecordException if a ddm form instance record with the primary key could not be found
 	*/
 	public static DDMFormInstanceRecord[] findByUuid_PrevAndNext(
-		long formInstanceRecordId, java.lang.String uuid,
+		long formInstanceRecordId, String uuid,
 		OrderByComparator<DDMFormInstanceRecord> orderByComparator)
 		throws com.liferay.dynamic.data.mapping.exception.NoSuchFormInstanceRecordException {
 		return getPersistence()
@@ -261,7 +258,7 @@ public class DDMFormInstanceRecordUtil {
 	*
 	* @param uuid the uuid
 	*/
-	public static void removeByUuid(java.lang.String uuid) {
+	public static void removeByUuid(String uuid) {
 		getPersistence().removeByUuid(uuid);
 	}
 
@@ -271,7 +268,7 @@ public class DDMFormInstanceRecordUtil {
 	* @param uuid the uuid
 	* @return the number of matching ddm form instance records
 	*/
-	public static int countByUuid(java.lang.String uuid) {
+	public static int countByUuid(String uuid) {
 		return getPersistence().countByUuid(uuid);
 	}
 
@@ -283,8 +280,7 @@ public class DDMFormInstanceRecordUtil {
 	* @return the matching ddm form instance record
 	* @throws NoSuchFormInstanceRecordException if a matching ddm form instance record could not be found
 	*/
-	public static DDMFormInstanceRecord findByUUID_G(java.lang.String uuid,
-		long groupId)
+	public static DDMFormInstanceRecord findByUUID_G(String uuid, long groupId)
 		throws com.liferay.dynamic.data.mapping.exception.NoSuchFormInstanceRecordException {
 		return getPersistence().findByUUID_G(uuid, groupId);
 	}
@@ -296,8 +292,7 @@ public class DDMFormInstanceRecordUtil {
 	* @param groupId the group ID
 	* @return the matching ddm form instance record, or <code>null</code> if a matching ddm form instance record could not be found
 	*/
-	public static DDMFormInstanceRecord fetchByUUID_G(java.lang.String uuid,
-		long groupId) {
+	public static DDMFormInstanceRecord fetchByUUID_G(String uuid, long groupId) {
 		return getPersistence().fetchByUUID_G(uuid, groupId);
 	}
 
@@ -309,7 +304,7 @@ public class DDMFormInstanceRecordUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching ddm form instance record, or <code>null</code> if a matching ddm form instance record could not be found
 	*/
-	public static DDMFormInstanceRecord fetchByUUID_G(java.lang.String uuid,
+	public static DDMFormInstanceRecord fetchByUUID_G(String uuid,
 		long groupId, boolean retrieveFromCache) {
 		return getPersistence().fetchByUUID_G(uuid, groupId, retrieveFromCache);
 	}
@@ -321,8 +316,7 @@ public class DDMFormInstanceRecordUtil {
 	* @param groupId the group ID
 	* @return the ddm form instance record that was removed
 	*/
-	public static DDMFormInstanceRecord removeByUUID_G(java.lang.String uuid,
-		long groupId)
+	public static DDMFormInstanceRecord removeByUUID_G(String uuid, long groupId)
 		throws com.liferay.dynamic.data.mapping.exception.NoSuchFormInstanceRecordException {
 		return getPersistence().removeByUUID_G(uuid, groupId);
 	}
@@ -334,7 +328,7 @@ public class DDMFormInstanceRecordUtil {
 	* @param groupId the group ID
 	* @return the number of matching ddm form instance records
 	*/
-	public static int countByUUID_G(java.lang.String uuid, long groupId) {
+	public static int countByUUID_G(String uuid, long groupId) {
 		return getPersistence().countByUUID_G(uuid, groupId);
 	}
 
@@ -345,8 +339,8 @@ public class DDMFormInstanceRecordUtil {
 	* @param companyId the company ID
 	* @return the matching ddm form instance records
 	*/
-	public static List<DDMFormInstanceRecord> findByUuid_C(
-		java.lang.String uuid, long companyId) {
+	public static List<DDMFormInstanceRecord> findByUuid_C(String uuid,
+		long companyId) {
 		return getPersistence().findByUuid_C(uuid, companyId);
 	}
 
@@ -363,8 +357,8 @@ public class DDMFormInstanceRecordUtil {
 	* @param end the upper bound of the range of ddm form instance records (not inclusive)
 	* @return the range of matching ddm form instance records
 	*/
-	public static List<DDMFormInstanceRecord> findByUuid_C(
-		java.lang.String uuid, long companyId, int start, int end) {
+	public static List<DDMFormInstanceRecord> findByUuid_C(String uuid,
+		long companyId, int start, int end) {
 		return getPersistence().findByUuid_C(uuid, companyId, start, end);
 	}
 
@@ -382,8 +376,8 @@ public class DDMFormInstanceRecordUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching ddm form instance records
 	*/
-	public static List<DDMFormInstanceRecord> findByUuid_C(
-		java.lang.String uuid, long companyId, int start, int end,
+	public static List<DDMFormInstanceRecord> findByUuid_C(String uuid,
+		long companyId, int start, int end,
 		OrderByComparator<DDMFormInstanceRecord> orderByComparator) {
 		return getPersistence()
 				   .findByUuid_C(uuid, companyId, start, end, orderByComparator);
@@ -404,8 +398,8 @@ public class DDMFormInstanceRecordUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching ddm form instance records
 	*/
-	public static List<DDMFormInstanceRecord> findByUuid_C(
-		java.lang.String uuid, long companyId, int start, int end,
+	public static List<DDMFormInstanceRecord> findByUuid_C(String uuid,
+		long companyId, int start, int end,
 		OrderByComparator<DDMFormInstanceRecord> orderByComparator,
 		boolean retrieveFromCache) {
 		return getPersistence()
@@ -422,8 +416,8 @@ public class DDMFormInstanceRecordUtil {
 	* @return the first matching ddm form instance record
 	* @throws NoSuchFormInstanceRecordException if a matching ddm form instance record could not be found
 	*/
-	public static DDMFormInstanceRecord findByUuid_C_First(
-		java.lang.String uuid, long companyId,
+	public static DDMFormInstanceRecord findByUuid_C_First(String uuid,
+		long companyId,
 		OrderByComparator<DDMFormInstanceRecord> orderByComparator)
 		throws com.liferay.dynamic.data.mapping.exception.NoSuchFormInstanceRecordException {
 		return getPersistence()
@@ -438,8 +432,8 @@ public class DDMFormInstanceRecordUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching ddm form instance record, or <code>null</code> if a matching ddm form instance record could not be found
 	*/
-	public static DDMFormInstanceRecord fetchByUuid_C_First(
-		java.lang.String uuid, long companyId,
+	public static DDMFormInstanceRecord fetchByUuid_C_First(String uuid,
+		long companyId,
 		OrderByComparator<DDMFormInstanceRecord> orderByComparator) {
 		return getPersistence()
 				   .fetchByUuid_C_First(uuid, companyId, orderByComparator);
@@ -454,8 +448,8 @@ public class DDMFormInstanceRecordUtil {
 	* @return the last matching ddm form instance record
 	* @throws NoSuchFormInstanceRecordException if a matching ddm form instance record could not be found
 	*/
-	public static DDMFormInstanceRecord findByUuid_C_Last(
-		java.lang.String uuid, long companyId,
+	public static DDMFormInstanceRecord findByUuid_C_Last(String uuid,
+		long companyId,
 		OrderByComparator<DDMFormInstanceRecord> orderByComparator)
 		throws com.liferay.dynamic.data.mapping.exception.NoSuchFormInstanceRecordException {
 		return getPersistence()
@@ -470,8 +464,8 @@ public class DDMFormInstanceRecordUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching ddm form instance record, or <code>null</code> if a matching ddm form instance record could not be found
 	*/
-	public static DDMFormInstanceRecord fetchByUuid_C_Last(
-		java.lang.String uuid, long companyId,
+	public static DDMFormInstanceRecord fetchByUuid_C_Last(String uuid,
+		long companyId,
 		OrderByComparator<DDMFormInstanceRecord> orderByComparator) {
 		return getPersistence()
 				   .fetchByUuid_C_Last(uuid, companyId, orderByComparator);
@@ -488,7 +482,7 @@ public class DDMFormInstanceRecordUtil {
 	* @throws NoSuchFormInstanceRecordException if a ddm form instance record with the primary key could not be found
 	*/
 	public static DDMFormInstanceRecord[] findByUuid_C_PrevAndNext(
-		long formInstanceRecordId, java.lang.String uuid, long companyId,
+		long formInstanceRecordId, String uuid, long companyId,
 		OrderByComparator<DDMFormInstanceRecord> orderByComparator)
 		throws com.liferay.dynamic.data.mapping.exception.NoSuchFormInstanceRecordException {
 		return getPersistence()
@@ -502,7 +496,7 @@ public class DDMFormInstanceRecordUtil {
 	* @param uuid the uuid
 	* @param companyId the company ID
 	*/
-	public static void removeByUuid_C(java.lang.String uuid, long companyId) {
+	public static void removeByUuid_C(String uuid, long companyId) {
 		getPersistence().removeByUuid_C(uuid, companyId);
 	}
 
@@ -513,7 +507,7 @@ public class DDMFormInstanceRecordUtil {
 	* @param companyId the company ID
 	* @return the number of matching ddm form instance records
 	*/
-	public static int countByUuid_C(java.lang.String uuid, long companyId) {
+	public static int countByUuid_C(String uuid, long companyId) {
 		return getPersistence().countByUuid_C(uuid, companyId);
 	}
 
@@ -1038,7 +1032,7 @@ public class DDMFormInstanceRecordUtil {
 	* @return the matching ddm form instance records
 	*/
 	public static List<DDMFormInstanceRecord> findByF_F(long formInstanceId,
-		java.lang.String formInstanceVersion) {
+		String formInstanceVersion) {
 		return getPersistence().findByF_F(formInstanceId, formInstanceVersion);
 	}
 
@@ -1056,7 +1050,7 @@ public class DDMFormInstanceRecordUtil {
 	* @return the range of matching ddm form instance records
 	*/
 	public static List<DDMFormInstanceRecord> findByF_F(long formInstanceId,
-		java.lang.String formInstanceVersion, int start, int end) {
+		String formInstanceVersion, int start, int end) {
 		return getPersistence()
 				   .findByF_F(formInstanceId, formInstanceVersion, start, end);
 	}
@@ -1076,7 +1070,7 @@ public class DDMFormInstanceRecordUtil {
 	* @return the ordered range of matching ddm form instance records
 	*/
 	public static List<DDMFormInstanceRecord> findByF_F(long formInstanceId,
-		java.lang.String formInstanceVersion, int start, int end,
+		String formInstanceVersion, int start, int end,
 		OrderByComparator<DDMFormInstanceRecord> orderByComparator) {
 		return getPersistence()
 				   .findByF_F(formInstanceId, formInstanceVersion, start, end,
@@ -1099,7 +1093,7 @@ public class DDMFormInstanceRecordUtil {
 	* @return the ordered range of matching ddm form instance records
 	*/
 	public static List<DDMFormInstanceRecord> findByF_F(long formInstanceId,
-		java.lang.String formInstanceVersion, int start, int end,
+		String formInstanceVersion, int start, int end,
 		OrderByComparator<DDMFormInstanceRecord> orderByComparator,
 		boolean retrieveFromCache) {
 		return getPersistence()
@@ -1117,7 +1111,7 @@ public class DDMFormInstanceRecordUtil {
 	* @throws NoSuchFormInstanceRecordException if a matching ddm form instance record could not be found
 	*/
 	public static DDMFormInstanceRecord findByF_F_First(long formInstanceId,
-		java.lang.String formInstanceVersion,
+		String formInstanceVersion,
 		OrderByComparator<DDMFormInstanceRecord> orderByComparator)
 		throws com.liferay.dynamic.data.mapping.exception.NoSuchFormInstanceRecordException {
 		return getPersistence()
@@ -1134,7 +1128,7 @@ public class DDMFormInstanceRecordUtil {
 	* @return the first matching ddm form instance record, or <code>null</code> if a matching ddm form instance record could not be found
 	*/
 	public static DDMFormInstanceRecord fetchByF_F_First(long formInstanceId,
-		java.lang.String formInstanceVersion,
+		String formInstanceVersion,
 		OrderByComparator<DDMFormInstanceRecord> orderByComparator) {
 		return getPersistence()
 				   .fetchByF_F_First(formInstanceId, formInstanceVersion,
@@ -1151,7 +1145,7 @@ public class DDMFormInstanceRecordUtil {
 	* @throws NoSuchFormInstanceRecordException if a matching ddm form instance record could not be found
 	*/
 	public static DDMFormInstanceRecord findByF_F_Last(long formInstanceId,
-		java.lang.String formInstanceVersion,
+		String formInstanceVersion,
 		OrderByComparator<DDMFormInstanceRecord> orderByComparator)
 		throws com.liferay.dynamic.data.mapping.exception.NoSuchFormInstanceRecordException {
 		return getPersistence()
@@ -1168,7 +1162,7 @@ public class DDMFormInstanceRecordUtil {
 	* @return the last matching ddm form instance record, or <code>null</code> if a matching ddm form instance record could not be found
 	*/
 	public static DDMFormInstanceRecord fetchByF_F_Last(long formInstanceId,
-		java.lang.String formInstanceVersion,
+		String formInstanceVersion,
 		OrderByComparator<DDMFormInstanceRecord> orderByComparator) {
 		return getPersistence()
 				   .fetchByF_F_Last(formInstanceId, formInstanceVersion,
@@ -1187,7 +1181,7 @@ public class DDMFormInstanceRecordUtil {
 	*/
 	public static DDMFormInstanceRecord[] findByF_F_PrevAndNext(
 		long formInstanceRecordId, long formInstanceId,
-		java.lang.String formInstanceVersion,
+		String formInstanceVersion,
 		OrderByComparator<DDMFormInstanceRecord> orderByComparator)
 		throws com.liferay.dynamic.data.mapping.exception.NoSuchFormInstanceRecordException {
 		return getPersistence()
@@ -1202,7 +1196,7 @@ public class DDMFormInstanceRecordUtil {
 	* @param formInstanceVersion the form instance version
 	*/
 	public static void removeByF_F(long formInstanceId,
-		java.lang.String formInstanceVersion) {
+		String formInstanceVersion) {
 		getPersistence().removeByF_F(formInstanceId, formInstanceVersion);
 	}
 
@@ -1213,8 +1207,7 @@ public class DDMFormInstanceRecordUtil {
 	* @param formInstanceVersion the form instance version
 	* @return the number of matching ddm form instance records
 	*/
-	public static int countByF_F(long formInstanceId,
-		java.lang.String formInstanceVersion) {
+	public static int countByF_F(long formInstanceId, String formInstanceVersion) {
 		return getPersistence().countByF_F(formInstanceId, formInstanceVersion);
 	}
 
@@ -1370,7 +1363,7 @@ public class DDMFormInstanceRecordUtil {
 		return getPersistence().countAll();
 	}
 
-	public static java.util.Set<java.lang.String> getBadColumnNames() {
+	public static java.util.Set<String> getBadColumnNames() {
 		return getPersistence().getBadColumnNames();
 	}
 

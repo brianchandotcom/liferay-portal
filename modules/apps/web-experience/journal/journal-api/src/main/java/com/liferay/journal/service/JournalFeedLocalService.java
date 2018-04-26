@@ -66,30 +66,26 @@ public interface JournalFeedLocalService extends BaseLocalService,
 	 *
 	 * Never modify or reference this interface directly. Always use {@link JournalFeedLocalServiceUtil} to access the journal feed local service. Add custom service methods to {@link com.liferay.journal.service.impl.JournalFeedLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public JournalFeed addFeed(long userId, long groupId,
-		java.lang.String feedId, boolean autoFeedId, java.lang.String name,
-		java.lang.String description, java.lang.String ddmStructureKey,
-		java.lang.String ddmTemplateKey,
-		java.lang.String ddmRendererTemplateKey, int delta,
-		java.lang.String orderByCol, java.lang.String orderByType,
-		java.lang.String targetLayoutFriendlyUrl,
-		java.lang.String targetPortletId, java.lang.String contentField,
-		java.lang.String feedFormat, double feedVersion,
-		ServiceContext serviceContext) throws PortalException;
+	public JournalFeed addFeed(long userId, long groupId, String feedId,
+		boolean autoFeedId, String name, String description,
+		String ddmStructureKey, String ddmTemplateKey,
+		String ddmRendererTemplateKey, int delta, String orderByCol,
+		String orderByType, String targetLayoutFriendlyUrl,
+		String targetPortletId, String contentField, String feedFormat,
+		double feedVersion, ServiceContext serviceContext)
+		throws PortalException;
 
 	public void addFeedResources(JournalFeed feed, boolean addGroupPermissions,
 		boolean addGuestPermissions) throws PortalException;
 
-	public void addFeedResources(JournalFeed feed,
-		java.lang.String[] groupPermissions, java.lang.String[] guestPermissions)
-		throws PortalException;
+	public void addFeedResources(JournalFeed feed, String[] groupPermissions,
+		String[] guestPermissions) throws PortalException;
 
 	public void addFeedResources(long feedId, boolean addGroupPermissions,
 		boolean addGuestPermissions) throws PortalException;
 
-	public void addFeedResources(long feedId,
-		java.lang.String[] groupPermissions, java.lang.String[] guestPermissions)
-		throws PortalException;
+	public void addFeedResources(long feedId, String[] groupPermissions,
+		String[] guestPermissions) throws PortalException;
 
 	/**
 	* Adds the journal feed to the database. Also notifies the appropriate model listeners.
@@ -114,7 +110,7 @@ public interface JournalFeedLocalService extends BaseLocalService,
 
 	public void deleteFeed(long feedId) throws PortalException;
 
-	public void deleteFeed(long groupId, java.lang.String feedId)
+	public void deleteFeed(long groupId, String feedId)
 		throws PortalException;
 
 	/**
@@ -203,7 +199,7 @@ public interface JournalFeedLocalService extends BaseLocalService,
 		Projection projection);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public JournalFeed fetchFeed(long groupId, java.lang.String feedId);
+	public JournalFeed fetchFeed(long groupId, String feedId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public JournalFeed fetchJournalFeed(long id);
@@ -216,7 +212,7 @@ public interface JournalFeedLocalService extends BaseLocalService,
 	* @return the matching journal feed, or <code>null</code> if a matching journal feed could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public JournalFeed fetchJournalFeedByUuidAndGroupId(java.lang.String uuid,
+	public JournalFeed fetchJournalFeedByUuidAndGroupId(String uuid,
 		long groupId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -230,7 +226,7 @@ public interface JournalFeedLocalService extends BaseLocalService,
 	public JournalFeed getFeed(long feedId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public JournalFeed getFeed(long groupId, java.lang.String feedId)
+	public JournalFeed getFeed(long groupId, String feedId)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -267,8 +263,8 @@ public interface JournalFeedLocalService extends BaseLocalService,
 	* @throws PortalException if a matching journal feed could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public JournalFeed getJournalFeedByUuidAndGroupId(java.lang.String uuid,
-		long groupId) throws PortalException;
+	public JournalFeed getJournalFeedByUuidAndGroupId(String uuid, long groupId)
+		throws PortalException;
 
 	/**
 	* Returns a range of all the journal feeds.
@@ -292,8 +288,8 @@ public interface JournalFeedLocalService extends BaseLocalService,
 	* @return the matching journal feeds, or an empty list if no matches were found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<JournalFeed> getJournalFeedsByUuidAndCompanyId(
-		java.lang.String uuid, long companyId);
+	public List<JournalFeed> getJournalFeedsByUuidAndCompanyId(String uuid,
+		long companyId);
 
 	/**
 	* Returns a range of journal feeds matching the UUID and company.
@@ -306,8 +302,8 @@ public interface JournalFeedLocalService extends BaseLocalService,
 	* @return the range of matching journal feeds, or an empty list if no matches were found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<JournalFeed> getJournalFeedsByUuidAndCompanyId(
-		java.lang.String uuid, long companyId, int start, int end,
+	public List<JournalFeed> getJournalFeedsByUuidAndCompanyId(String uuid,
+		long companyId, int start, int end,
 		OrderByComparator<JournalFeed> orderByComparator);
 
 	/**
@@ -323,7 +319,7 @@ public interface JournalFeedLocalService extends BaseLocalService,
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -332,33 +328,27 @@ public interface JournalFeedLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<JournalFeed> search(long companyId, long groupId,
-		java.lang.String keywords, int start, int end,
-		OrderByComparator<JournalFeed> obc);
+		String keywords, int start, int end, OrderByComparator<JournalFeed> obc);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<JournalFeed> search(long companyId, long groupId,
-		java.lang.String feedId, java.lang.String name,
-		java.lang.String description, boolean andOperator, int start, int end,
-		OrderByComparator<JournalFeed> obc);
+		String feedId, String name, String description, boolean andOperator,
+		int start, int end, OrderByComparator<JournalFeed> obc);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int searchCount(long companyId, long groupId,
-		java.lang.String keywords);
+	public int searchCount(long companyId, long groupId, String keywords);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int searchCount(long companyId, long groupId,
-		java.lang.String feedId, java.lang.String name,
-		java.lang.String description, boolean andOperator);
+	public int searchCount(long companyId, long groupId, String feedId,
+		String name, String description, boolean andOperator);
 
-	public JournalFeed updateFeed(long groupId, java.lang.String feedId,
-		java.lang.String name, java.lang.String description,
-		java.lang.String ddmStructureKey, java.lang.String ddmTemplateKey,
-		java.lang.String ddmRendererTemplateKey, int delta,
-		java.lang.String orderByCol, java.lang.String orderByType,
-		java.lang.String targetLayoutFriendlyUrl,
-		java.lang.String targetPortletId, java.lang.String contentField,
-		java.lang.String feedFormat, double feedVersion,
-		ServiceContext serviceContext) throws PortalException;
+	public JournalFeed updateFeed(long groupId, String feedId, String name,
+		String description, String ddmStructureKey, String ddmTemplateKey,
+		String ddmRendererTemplateKey, int delta, String orderByCol,
+		String orderByType, String targetLayoutFriendlyUrl,
+		String targetPortletId, String contentField, String feedFormat,
+		double feedVersion, ServiceContext serviceContext)
+		throws PortalException;
 
 	/**
 	* Updates the journal feed in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.

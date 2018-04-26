@@ -62,10 +62,9 @@ public interface PhoneLocalService extends BaseLocalService,
 	 *
 	 * Never modify or reference this interface directly. Always use {@link PhoneLocalServiceUtil} to access the phone local service. Add custom service methods to {@link com.liferay.portal.service.impl.PhoneLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public Phone addPhone(long userId, java.lang.String className,
-		long classPK, java.lang.String number, java.lang.String extension,
-		long typeId, boolean primary, ServiceContext serviceContext)
-		throws PortalException;
+	public Phone addPhone(long userId, String className, long classPK,
+		String number, String extension, long typeId, boolean primary,
+		ServiceContext serviceContext) throws PortalException;
 
 	/**
 	* Adds the phone to the database. Also notifies the appropriate model listeners.
@@ -112,8 +111,7 @@ public interface PhoneLocalService extends BaseLocalService,
 	@SystemEvent(action = SystemEventConstants.ACTION_SKIP, type = SystemEventConstants.TYPE_DELETE)
 	public Phone deletePhone(Phone phone);
 
-	public void deletePhones(long companyId, java.lang.String className,
-		long classPK);
+	public void deletePhones(long companyId, String className, long classPK);
 
 	public DynamicQuery dynamicQuery();
 
@@ -185,8 +183,7 @@ public interface PhoneLocalService extends BaseLocalService,
 	* @return the matching phone, or <code>null</code> if a matching phone could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Phone fetchPhoneByUuidAndCompanyId(java.lang.String uuid,
-		long companyId);
+	public Phone fetchPhoneByUuidAndCompanyId(String uuid, long companyId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
@@ -203,7 +200,7 @@ public interface PhoneLocalService extends BaseLocalService,
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -229,8 +226,8 @@ public interface PhoneLocalService extends BaseLocalService,
 	* @throws PortalException if a matching phone could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Phone getPhoneByUuidAndCompanyId(java.lang.String uuid,
-		long companyId) throws PortalException;
+	public Phone getPhoneByUuidAndCompanyId(String uuid, long companyId)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<Phone> getPhones();
@@ -250,8 +247,7 @@ public interface PhoneLocalService extends BaseLocalService,
 	public List<Phone> getPhones(int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<Phone> getPhones(long companyId, java.lang.String className,
-		long classPK);
+	public List<Phone> getPhones(long companyId, String className, long classPK);
 
 	/**
 	* Returns the number of phones.
@@ -261,9 +257,8 @@ public interface PhoneLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getPhonesCount();
 
-	public Phone updatePhone(long phoneId, java.lang.String number,
-		java.lang.String extension, long typeId, boolean primary)
-		throws PortalException;
+	public Phone updatePhone(long phoneId, String number, String extension,
+		long typeId, boolean primary) throws PortalException;
 
 	/**
 	* Updates the phone in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.

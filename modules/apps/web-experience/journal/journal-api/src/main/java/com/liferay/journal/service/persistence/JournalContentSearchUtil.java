@@ -119,8 +119,7 @@ public class JournalContentSearchUtil {
 	* @param portletId the portlet ID
 	* @return the matching journal content searchs
 	*/
-	public static List<JournalContentSearch> findByPortletId(
-		java.lang.String portletId) {
+	public static List<JournalContentSearch> findByPortletId(String portletId) {
 		return getPersistence().findByPortletId(portletId);
 	}
 
@@ -136,8 +135,8 @@ public class JournalContentSearchUtil {
 	* @param end the upper bound of the range of journal content searchs (not inclusive)
 	* @return the range of matching journal content searchs
 	*/
-	public static List<JournalContentSearch> findByPortletId(
-		java.lang.String portletId, int start, int end) {
+	public static List<JournalContentSearch> findByPortletId(String portletId,
+		int start, int end) {
 		return getPersistence().findByPortletId(portletId, start, end);
 	}
 
@@ -154,8 +153,8 @@ public class JournalContentSearchUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching journal content searchs
 	*/
-	public static List<JournalContentSearch> findByPortletId(
-		java.lang.String portletId, int start, int end,
+	public static List<JournalContentSearch> findByPortletId(String portletId,
+		int start, int end,
 		OrderByComparator<JournalContentSearch> orderByComparator) {
 		return getPersistence()
 				   .findByPortletId(portletId, start, end, orderByComparator);
@@ -175,8 +174,8 @@ public class JournalContentSearchUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching journal content searchs
 	*/
-	public static List<JournalContentSearch> findByPortletId(
-		java.lang.String portletId, int start, int end,
+	public static List<JournalContentSearch> findByPortletId(String portletId,
+		int start, int end,
 		OrderByComparator<JournalContentSearch> orderByComparator,
 		boolean retrieveFromCache) {
 		return getPersistence()
@@ -192,8 +191,7 @@ public class JournalContentSearchUtil {
 	* @return the first matching journal content search
 	* @throws NoSuchContentSearchException if a matching journal content search could not be found
 	*/
-	public static JournalContentSearch findByPortletId_First(
-		java.lang.String portletId,
+	public static JournalContentSearch findByPortletId_First(String portletId,
 		OrderByComparator<JournalContentSearch> orderByComparator)
 		throws com.liferay.journal.exception.NoSuchContentSearchException {
 		return getPersistence()
@@ -208,7 +206,7 @@ public class JournalContentSearchUtil {
 	* @return the first matching journal content search, or <code>null</code> if a matching journal content search could not be found
 	*/
 	public static JournalContentSearch fetchByPortletId_First(
-		java.lang.String portletId,
+		String portletId,
 		OrderByComparator<JournalContentSearch> orderByComparator) {
 		return getPersistence()
 				   .fetchByPortletId_First(portletId, orderByComparator);
@@ -222,8 +220,7 @@ public class JournalContentSearchUtil {
 	* @return the last matching journal content search
 	* @throws NoSuchContentSearchException if a matching journal content search could not be found
 	*/
-	public static JournalContentSearch findByPortletId_Last(
-		java.lang.String portletId,
+	public static JournalContentSearch findByPortletId_Last(String portletId,
 		OrderByComparator<JournalContentSearch> orderByComparator)
 		throws com.liferay.journal.exception.NoSuchContentSearchException {
 		return getPersistence()
@@ -237,8 +234,7 @@ public class JournalContentSearchUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching journal content search, or <code>null</code> if a matching journal content search could not be found
 	*/
-	public static JournalContentSearch fetchByPortletId_Last(
-		java.lang.String portletId,
+	public static JournalContentSearch fetchByPortletId_Last(String portletId,
 		OrderByComparator<JournalContentSearch> orderByComparator) {
 		return getPersistence()
 				   .fetchByPortletId_Last(portletId, orderByComparator);
@@ -254,7 +250,7 @@ public class JournalContentSearchUtil {
 	* @throws NoSuchContentSearchException if a journal content search with the primary key could not be found
 	*/
 	public static JournalContentSearch[] findByPortletId_PrevAndNext(
-		long contentSearchId, java.lang.String portletId,
+		long contentSearchId, String portletId,
 		OrderByComparator<JournalContentSearch> orderByComparator)
 		throws com.liferay.journal.exception.NoSuchContentSearchException {
 		return getPersistence()
@@ -267,7 +263,7 @@ public class JournalContentSearchUtil {
 	*
 	* @param portletId the portlet ID
 	*/
-	public static void removeByPortletId(java.lang.String portletId) {
+	public static void removeByPortletId(String portletId) {
 		getPersistence().removeByPortletId(portletId);
 	}
 
@@ -277,7 +273,7 @@ public class JournalContentSearchUtil {
 	* @param portletId the portlet ID
 	* @return the number of matching journal content searchs
 	*/
-	public static int countByPortletId(java.lang.String portletId) {
+	public static int countByPortletId(String portletId) {
 		return getPersistence().countByPortletId(portletId);
 	}
 
@@ -287,8 +283,7 @@ public class JournalContentSearchUtil {
 	* @param articleId the article ID
 	* @return the matching journal content searchs
 	*/
-	public static List<JournalContentSearch> findByArticleId(
-		java.lang.String articleId) {
+	public static List<JournalContentSearch> findByArticleId(String articleId) {
 		return getPersistence().findByArticleId(articleId);
 	}
 
@@ -304,8 +299,8 @@ public class JournalContentSearchUtil {
 	* @param end the upper bound of the range of journal content searchs (not inclusive)
 	* @return the range of matching journal content searchs
 	*/
-	public static List<JournalContentSearch> findByArticleId(
-		java.lang.String articleId, int start, int end) {
+	public static List<JournalContentSearch> findByArticleId(String articleId,
+		int start, int end) {
 		return getPersistence().findByArticleId(articleId, start, end);
 	}
 
@@ -322,8 +317,8 @@ public class JournalContentSearchUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching journal content searchs
 	*/
-	public static List<JournalContentSearch> findByArticleId(
-		java.lang.String articleId, int start, int end,
+	public static List<JournalContentSearch> findByArticleId(String articleId,
+		int start, int end,
 		OrderByComparator<JournalContentSearch> orderByComparator) {
 		return getPersistence()
 				   .findByArticleId(articleId, start, end, orderByComparator);
@@ -343,8 +338,8 @@ public class JournalContentSearchUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching journal content searchs
 	*/
-	public static List<JournalContentSearch> findByArticleId(
-		java.lang.String articleId, int start, int end,
+	public static List<JournalContentSearch> findByArticleId(String articleId,
+		int start, int end,
 		OrderByComparator<JournalContentSearch> orderByComparator,
 		boolean retrieveFromCache) {
 		return getPersistence()
@@ -360,8 +355,7 @@ public class JournalContentSearchUtil {
 	* @return the first matching journal content search
 	* @throws NoSuchContentSearchException if a matching journal content search could not be found
 	*/
-	public static JournalContentSearch findByArticleId_First(
-		java.lang.String articleId,
+	public static JournalContentSearch findByArticleId_First(String articleId,
 		OrderByComparator<JournalContentSearch> orderByComparator)
 		throws com.liferay.journal.exception.NoSuchContentSearchException {
 		return getPersistence()
@@ -376,7 +370,7 @@ public class JournalContentSearchUtil {
 	* @return the first matching journal content search, or <code>null</code> if a matching journal content search could not be found
 	*/
 	public static JournalContentSearch fetchByArticleId_First(
-		java.lang.String articleId,
+		String articleId,
 		OrderByComparator<JournalContentSearch> orderByComparator) {
 		return getPersistence()
 				   .fetchByArticleId_First(articleId, orderByComparator);
@@ -390,8 +384,7 @@ public class JournalContentSearchUtil {
 	* @return the last matching journal content search
 	* @throws NoSuchContentSearchException if a matching journal content search could not be found
 	*/
-	public static JournalContentSearch findByArticleId_Last(
-		java.lang.String articleId,
+	public static JournalContentSearch findByArticleId_Last(String articleId,
 		OrderByComparator<JournalContentSearch> orderByComparator)
 		throws com.liferay.journal.exception.NoSuchContentSearchException {
 		return getPersistence()
@@ -405,8 +398,7 @@ public class JournalContentSearchUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching journal content search, or <code>null</code> if a matching journal content search could not be found
 	*/
-	public static JournalContentSearch fetchByArticleId_Last(
-		java.lang.String articleId,
+	public static JournalContentSearch fetchByArticleId_Last(String articleId,
 		OrderByComparator<JournalContentSearch> orderByComparator) {
 		return getPersistence()
 				   .fetchByArticleId_Last(articleId, orderByComparator);
@@ -422,7 +414,7 @@ public class JournalContentSearchUtil {
 	* @throws NoSuchContentSearchException if a journal content search with the primary key could not be found
 	*/
 	public static JournalContentSearch[] findByArticleId_PrevAndNext(
-		long contentSearchId, java.lang.String articleId,
+		long contentSearchId, String articleId,
 		OrderByComparator<JournalContentSearch> orderByComparator)
 		throws com.liferay.journal.exception.NoSuchContentSearchException {
 		return getPersistence()
@@ -435,7 +427,7 @@ public class JournalContentSearchUtil {
 	*
 	* @param articleId the article ID
 	*/
-	public static void removeByArticleId(java.lang.String articleId) {
+	public static void removeByArticleId(String articleId) {
 		getPersistence().removeByArticleId(articleId);
 	}
 
@@ -445,7 +437,7 @@ public class JournalContentSearchUtil {
 	* @param articleId the article ID
 	* @return the number of matching journal content searchs
 	*/
-	public static int countByArticleId(java.lang.String articleId) {
+	public static int countByArticleId(String articleId) {
 		return getPersistence().countByArticleId(articleId);
 	}
 
@@ -637,7 +629,7 @@ public class JournalContentSearchUtil {
 	* @return the matching journal content searchs
 	*/
 	public static List<JournalContentSearch> findByG_A(long groupId,
-		java.lang.String articleId) {
+		String articleId) {
 		return getPersistence().findByG_A(groupId, articleId);
 	}
 
@@ -655,7 +647,7 @@ public class JournalContentSearchUtil {
 	* @return the range of matching journal content searchs
 	*/
 	public static List<JournalContentSearch> findByG_A(long groupId,
-		java.lang.String articleId, int start, int end) {
+		String articleId, int start, int end) {
 		return getPersistence().findByG_A(groupId, articleId, start, end);
 	}
 
@@ -674,7 +666,7 @@ public class JournalContentSearchUtil {
 	* @return the ordered range of matching journal content searchs
 	*/
 	public static List<JournalContentSearch> findByG_A(long groupId,
-		java.lang.String articleId, int start, int end,
+		String articleId, int start, int end,
 		OrderByComparator<JournalContentSearch> orderByComparator) {
 		return getPersistence()
 				   .findByG_A(groupId, articleId, start, end, orderByComparator);
@@ -696,7 +688,7 @@ public class JournalContentSearchUtil {
 	* @return the ordered range of matching journal content searchs
 	*/
 	public static List<JournalContentSearch> findByG_A(long groupId,
-		java.lang.String articleId, int start, int end,
+		String articleId, int start, int end,
 		OrderByComparator<JournalContentSearch> orderByComparator,
 		boolean retrieveFromCache) {
 		return getPersistence()
@@ -714,7 +706,7 @@ public class JournalContentSearchUtil {
 	* @throws NoSuchContentSearchException if a matching journal content search could not be found
 	*/
 	public static JournalContentSearch findByG_A_First(long groupId,
-		java.lang.String articleId,
+		String articleId,
 		OrderByComparator<JournalContentSearch> orderByComparator)
 		throws com.liferay.journal.exception.NoSuchContentSearchException {
 		return getPersistence()
@@ -730,7 +722,7 @@ public class JournalContentSearchUtil {
 	* @return the first matching journal content search, or <code>null</code> if a matching journal content search could not be found
 	*/
 	public static JournalContentSearch fetchByG_A_First(long groupId,
-		java.lang.String articleId,
+		String articleId,
 		OrderByComparator<JournalContentSearch> orderByComparator) {
 		return getPersistence()
 				   .fetchByG_A_First(groupId, articleId, orderByComparator);
@@ -746,7 +738,7 @@ public class JournalContentSearchUtil {
 	* @throws NoSuchContentSearchException if a matching journal content search could not be found
 	*/
 	public static JournalContentSearch findByG_A_Last(long groupId,
-		java.lang.String articleId,
+		String articleId,
 		OrderByComparator<JournalContentSearch> orderByComparator)
 		throws com.liferay.journal.exception.NoSuchContentSearchException {
 		return getPersistence()
@@ -762,7 +754,7 @@ public class JournalContentSearchUtil {
 	* @return the last matching journal content search, or <code>null</code> if a matching journal content search could not be found
 	*/
 	public static JournalContentSearch fetchByG_A_Last(long groupId,
-		java.lang.String articleId,
+		String articleId,
 		OrderByComparator<JournalContentSearch> orderByComparator) {
 		return getPersistence()
 				   .fetchByG_A_Last(groupId, articleId, orderByComparator);
@@ -779,7 +771,7 @@ public class JournalContentSearchUtil {
 	* @throws NoSuchContentSearchException if a journal content search with the primary key could not be found
 	*/
 	public static JournalContentSearch[] findByG_A_PrevAndNext(
-		long contentSearchId, long groupId, java.lang.String articleId,
+		long contentSearchId, long groupId, String articleId,
 		OrderByComparator<JournalContentSearch> orderByComparator)
 		throws com.liferay.journal.exception.NoSuchContentSearchException {
 		return getPersistence()
@@ -793,7 +785,7 @@ public class JournalContentSearchUtil {
 	* @param groupId the group ID
 	* @param articleId the article ID
 	*/
-	public static void removeByG_A(long groupId, java.lang.String articleId) {
+	public static void removeByG_A(long groupId, String articleId) {
 		getPersistence().removeByG_A(groupId, articleId);
 	}
 
@@ -804,7 +796,7 @@ public class JournalContentSearchUtil {
 	* @param articleId the article ID
 	* @return the number of matching journal content searchs
 	*/
-	public static int countByG_A(long groupId, java.lang.String articleId) {
+	public static int countByG_A(long groupId, String articleId) {
 		return getPersistence().countByG_A(groupId, articleId);
 	}
 
@@ -1015,7 +1007,7 @@ public class JournalContentSearchUtil {
 	* @return the matching journal content searchs
 	*/
 	public static List<JournalContentSearch> findByG_P_A(long groupId,
-		boolean privateLayout, java.lang.String articleId) {
+		boolean privateLayout, String articleId) {
 		return getPersistence().findByG_P_A(groupId, privateLayout, articleId);
 	}
 
@@ -1034,7 +1026,7 @@ public class JournalContentSearchUtil {
 	* @return the range of matching journal content searchs
 	*/
 	public static List<JournalContentSearch> findByG_P_A(long groupId,
-		boolean privateLayout, java.lang.String articleId, int start, int end) {
+		boolean privateLayout, String articleId, int start, int end) {
 		return getPersistence()
 				   .findByG_P_A(groupId, privateLayout, articleId, start, end);
 	}
@@ -1055,7 +1047,7 @@ public class JournalContentSearchUtil {
 	* @return the ordered range of matching journal content searchs
 	*/
 	public static List<JournalContentSearch> findByG_P_A(long groupId,
-		boolean privateLayout, java.lang.String articleId, int start, int end,
+		boolean privateLayout, String articleId, int start, int end,
 		OrderByComparator<JournalContentSearch> orderByComparator) {
 		return getPersistence()
 				   .findByG_P_A(groupId, privateLayout, articleId, start, end,
@@ -1079,7 +1071,7 @@ public class JournalContentSearchUtil {
 	* @return the ordered range of matching journal content searchs
 	*/
 	public static List<JournalContentSearch> findByG_P_A(long groupId,
-		boolean privateLayout, java.lang.String articleId, int start, int end,
+		boolean privateLayout, String articleId, int start, int end,
 		OrderByComparator<JournalContentSearch> orderByComparator,
 		boolean retrieveFromCache) {
 		return getPersistence()
@@ -1098,7 +1090,7 @@ public class JournalContentSearchUtil {
 	* @throws NoSuchContentSearchException if a matching journal content search could not be found
 	*/
 	public static JournalContentSearch findByG_P_A_First(long groupId,
-		boolean privateLayout, java.lang.String articleId,
+		boolean privateLayout, String articleId,
 		OrderByComparator<JournalContentSearch> orderByComparator)
 		throws com.liferay.journal.exception.NoSuchContentSearchException {
 		return getPersistence()
@@ -1116,7 +1108,7 @@ public class JournalContentSearchUtil {
 	* @return the first matching journal content search, or <code>null</code> if a matching journal content search could not be found
 	*/
 	public static JournalContentSearch fetchByG_P_A_First(long groupId,
-		boolean privateLayout, java.lang.String articleId,
+		boolean privateLayout, String articleId,
 		OrderByComparator<JournalContentSearch> orderByComparator) {
 		return getPersistence()
 				   .fetchByG_P_A_First(groupId, privateLayout, articleId,
@@ -1134,7 +1126,7 @@ public class JournalContentSearchUtil {
 	* @throws NoSuchContentSearchException if a matching journal content search could not be found
 	*/
 	public static JournalContentSearch findByG_P_A_Last(long groupId,
-		boolean privateLayout, java.lang.String articleId,
+		boolean privateLayout, String articleId,
 		OrderByComparator<JournalContentSearch> orderByComparator)
 		throws com.liferay.journal.exception.NoSuchContentSearchException {
 		return getPersistence()
@@ -1152,7 +1144,7 @@ public class JournalContentSearchUtil {
 	* @return the last matching journal content search, or <code>null</code> if a matching journal content search could not be found
 	*/
 	public static JournalContentSearch fetchByG_P_A_Last(long groupId,
-		boolean privateLayout, java.lang.String articleId,
+		boolean privateLayout, String articleId,
 		OrderByComparator<JournalContentSearch> orderByComparator) {
 		return getPersistence()
 				   .fetchByG_P_A_Last(groupId, privateLayout, articleId,
@@ -1172,7 +1164,7 @@ public class JournalContentSearchUtil {
 	*/
 	public static JournalContentSearch[] findByG_P_A_PrevAndNext(
 		long contentSearchId, long groupId, boolean privateLayout,
-		java.lang.String articleId,
+		String articleId,
 		OrderByComparator<JournalContentSearch> orderByComparator)
 		throws com.liferay.journal.exception.NoSuchContentSearchException {
 		return getPersistence()
@@ -1188,7 +1180,7 @@ public class JournalContentSearchUtil {
 	* @param articleId the article ID
 	*/
 	public static void removeByG_P_A(long groupId, boolean privateLayout,
-		java.lang.String articleId) {
+		String articleId) {
 		getPersistence().removeByG_P_A(groupId, privateLayout, articleId);
 	}
 
@@ -1201,7 +1193,7 @@ public class JournalContentSearchUtil {
 	* @return the number of matching journal content searchs
 	*/
 	public static int countByG_P_A(long groupId, boolean privateLayout,
-		java.lang.String articleId) {
+		String articleId) {
 		return getPersistence().countByG_P_A(groupId, privateLayout, articleId);
 	}
 
@@ -1215,7 +1207,7 @@ public class JournalContentSearchUtil {
 	* @return the matching journal content searchs
 	*/
 	public static List<JournalContentSearch> findByG_P_L_P(long groupId,
-		boolean privateLayout, long layoutId, java.lang.String portletId) {
+		boolean privateLayout, long layoutId, String portletId) {
 		return getPersistence()
 				   .findByG_P_L_P(groupId, privateLayout, layoutId, portletId);
 	}
@@ -1236,8 +1228,8 @@ public class JournalContentSearchUtil {
 	* @return the range of matching journal content searchs
 	*/
 	public static List<JournalContentSearch> findByG_P_L_P(long groupId,
-		boolean privateLayout, long layoutId, java.lang.String portletId,
-		int start, int end) {
+		boolean privateLayout, long layoutId, String portletId, int start,
+		int end) {
 		return getPersistence()
 				   .findByG_P_L_P(groupId, privateLayout, layoutId, portletId,
 			start, end);
@@ -1260,9 +1252,8 @@ public class JournalContentSearchUtil {
 	* @return the ordered range of matching journal content searchs
 	*/
 	public static List<JournalContentSearch> findByG_P_L_P(long groupId,
-		boolean privateLayout, long layoutId, java.lang.String portletId,
-		int start, int end,
-		OrderByComparator<JournalContentSearch> orderByComparator) {
+		boolean privateLayout, long layoutId, String portletId, int start,
+		int end, OrderByComparator<JournalContentSearch> orderByComparator) {
 		return getPersistence()
 				   .findByG_P_L_P(groupId, privateLayout, layoutId, portletId,
 			start, end, orderByComparator);
@@ -1286,9 +1277,8 @@ public class JournalContentSearchUtil {
 	* @return the ordered range of matching journal content searchs
 	*/
 	public static List<JournalContentSearch> findByG_P_L_P(long groupId,
-		boolean privateLayout, long layoutId, java.lang.String portletId,
-		int start, int end,
-		OrderByComparator<JournalContentSearch> orderByComparator,
+		boolean privateLayout, long layoutId, String portletId, int start,
+		int end, OrderByComparator<JournalContentSearch> orderByComparator,
 		boolean retrieveFromCache) {
 		return getPersistence()
 				   .findByG_P_L_P(groupId, privateLayout, layoutId, portletId,
@@ -1307,7 +1297,7 @@ public class JournalContentSearchUtil {
 	* @throws NoSuchContentSearchException if a matching journal content search could not be found
 	*/
 	public static JournalContentSearch findByG_P_L_P_First(long groupId,
-		boolean privateLayout, long layoutId, java.lang.String portletId,
+		boolean privateLayout, long layoutId, String portletId,
 		OrderByComparator<JournalContentSearch> orderByComparator)
 		throws com.liferay.journal.exception.NoSuchContentSearchException {
 		return getPersistence()
@@ -1326,7 +1316,7 @@ public class JournalContentSearchUtil {
 	* @return the first matching journal content search, or <code>null</code> if a matching journal content search could not be found
 	*/
 	public static JournalContentSearch fetchByG_P_L_P_First(long groupId,
-		boolean privateLayout, long layoutId, java.lang.String portletId,
+		boolean privateLayout, long layoutId, String portletId,
 		OrderByComparator<JournalContentSearch> orderByComparator) {
 		return getPersistence()
 				   .fetchByG_P_L_P_First(groupId, privateLayout, layoutId,
@@ -1345,7 +1335,7 @@ public class JournalContentSearchUtil {
 	* @throws NoSuchContentSearchException if a matching journal content search could not be found
 	*/
 	public static JournalContentSearch findByG_P_L_P_Last(long groupId,
-		boolean privateLayout, long layoutId, java.lang.String portletId,
+		boolean privateLayout, long layoutId, String portletId,
 		OrderByComparator<JournalContentSearch> orderByComparator)
 		throws com.liferay.journal.exception.NoSuchContentSearchException {
 		return getPersistence()
@@ -1364,7 +1354,7 @@ public class JournalContentSearchUtil {
 	* @return the last matching journal content search, or <code>null</code> if a matching journal content search could not be found
 	*/
 	public static JournalContentSearch fetchByG_P_L_P_Last(long groupId,
-		boolean privateLayout, long layoutId, java.lang.String portletId,
+		boolean privateLayout, long layoutId, String portletId,
 		OrderByComparator<JournalContentSearch> orderByComparator) {
 		return getPersistence()
 				   .fetchByG_P_L_P_Last(groupId, privateLayout, layoutId,
@@ -1385,7 +1375,7 @@ public class JournalContentSearchUtil {
 	*/
 	public static JournalContentSearch[] findByG_P_L_P_PrevAndNext(
 		long contentSearchId, long groupId, boolean privateLayout,
-		long layoutId, java.lang.String portletId,
+		long layoutId, String portletId,
 		OrderByComparator<JournalContentSearch> orderByComparator)
 		throws com.liferay.journal.exception.NoSuchContentSearchException {
 		return getPersistence()
@@ -1402,7 +1392,7 @@ public class JournalContentSearchUtil {
 	* @param portletId the portlet ID
 	*/
 	public static void removeByG_P_L_P(long groupId, boolean privateLayout,
-		long layoutId, java.lang.String portletId) {
+		long layoutId, String portletId) {
 		getPersistence()
 			.removeByG_P_L_P(groupId, privateLayout, layoutId, portletId);
 	}
@@ -1417,7 +1407,7 @@ public class JournalContentSearchUtil {
 	* @return the number of matching journal content searchs
 	*/
 	public static int countByG_P_L_P(long groupId, boolean privateLayout,
-		long layoutId, java.lang.String portletId) {
+		long layoutId, String portletId) {
 		return getPersistence()
 				   .countByG_P_L_P(groupId, privateLayout, layoutId, portletId);
 	}
@@ -1434,8 +1424,7 @@ public class JournalContentSearchUtil {
 	* @throws NoSuchContentSearchException if a matching journal content search could not be found
 	*/
 	public static JournalContentSearch findByG_P_L_P_A(long groupId,
-		boolean privateLayout, long layoutId, java.lang.String portletId,
-		java.lang.String articleId)
+		boolean privateLayout, long layoutId, String portletId, String articleId)
 		throws com.liferay.journal.exception.NoSuchContentSearchException {
 		return getPersistence()
 				   .findByG_P_L_P_A(groupId, privateLayout, layoutId,
@@ -1453,8 +1442,7 @@ public class JournalContentSearchUtil {
 	* @return the matching journal content search, or <code>null</code> if a matching journal content search could not be found
 	*/
 	public static JournalContentSearch fetchByG_P_L_P_A(long groupId,
-		boolean privateLayout, long layoutId, java.lang.String portletId,
-		java.lang.String articleId) {
+		boolean privateLayout, long layoutId, String portletId, String articleId) {
 		return getPersistence()
 				   .fetchByG_P_L_P_A(groupId, privateLayout, layoutId,
 			portletId, articleId);
@@ -1472,8 +1460,8 @@ public class JournalContentSearchUtil {
 	* @return the matching journal content search, or <code>null</code> if a matching journal content search could not be found
 	*/
 	public static JournalContentSearch fetchByG_P_L_P_A(long groupId,
-		boolean privateLayout, long layoutId, java.lang.String portletId,
-		java.lang.String articleId, boolean retrieveFromCache) {
+		boolean privateLayout, long layoutId, String portletId,
+		String articleId, boolean retrieveFromCache) {
 		return getPersistence()
 				   .fetchByG_P_L_P_A(groupId, privateLayout, layoutId,
 			portletId, articleId, retrieveFromCache);
@@ -1490,8 +1478,7 @@ public class JournalContentSearchUtil {
 	* @return the journal content search that was removed
 	*/
 	public static JournalContentSearch removeByG_P_L_P_A(long groupId,
-		boolean privateLayout, long layoutId, java.lang.String portletId,
-		java.lang.String articleId)
+		boolean privateLayout, long layoutId, String portletId, String articleId)
 		throws com.liferay.journal.exception.NoSuchContentSearchException {
 		return getPersistence()
 				   .removeByG_P_L_P_A(groupId, privateLayout, layoutId,
@@ -1509,7 +1496,7 @@ public class JournalContentSearchUtil {
 	* @return the number of matching journal content searchs
 	*/
 	public static int countByG_P_L_P_A(long groupId, boolean privateLayout,
-		long layoutId, java.lang.String portletId, java.lang.String articleId) {
+		long layoutId, String portletId, String articleId) {
 		return getPersistence()
 				   .countByG_P_L_P_A(groupId, privateLayout, layoutId,
 			portletId, articleId);

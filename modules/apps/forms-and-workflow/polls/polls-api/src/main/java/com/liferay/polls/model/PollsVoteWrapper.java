@@ -151,7 +151,7 @@ public class PollsVoteWrapper implements PollsVote, ModelWrapper<PollsVote> {
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new PollsVoteWrapper((PollsVote)_pollsVote.clone());
 	}
 
@@ -272,7 +272,7 @@ public class PollsVoteWrapper implements PollsVote, ModelWrapper<PollsVote> {
 	* @return the user name of this polls vote
 	*/
 	@Override
-	public java.lang.String getUserName() {
+	public String getUserName() {
 		return _pollsVote.getUserName();
 	}
 
@@ -282,7 +282,7 @@ public class PollsVoteWrapper implements PollsVote, ModelWrapper<PollsVote> {
 	* @return the user uuid of this polls vote
 	*/
 	@Override
-	public java.lang.String getUserUuid() {
+	public String getUserUuid() {
 		return _pollsVote.getUserUuid();
 	}
 
@@ -292,7 +292,7 @@ public class PollsVoteWrapper implements PollsVote, ModelWrapper<PollsVote> {
 	* @return the uuid of this polls vote
 	*/
 	@Override
-	public java.lang.String getUuid() {
+	public String getUuid() {
 		return _pollsVote.getUuid();
 	}
 
@@ -468,7 +468,7 @@ public class PollsVoteWrapper implements PollsVote, ModelWrapper<PollsVote> {
 	* @param userName the user name of this polls vote
 	*/
 	@Override
-	public void setUserName(java.lang.String userName) {
+	public void setUserName(String userName) {
 		_pollsVote.setUserName(userName);
 	}
 
@@ -478,7 +478,7 @@ public class PollsVoteWrapper implements PollsVote, ModelWrapper<PollsVote> {
 	* @param userUuid the user uuid of this polls vote
 	*/
 	@Override
-	public void setUserUuid(java.lang.String userUuid) {
+	public void setUserUuid(String userUuid) {
 		_pollsVote.setUserUuid(userUuid);
 	}
 
@@ -488,7 +488,7 @@ public class PollsVoteWrapper implements PollsVote, ModelWrapper<PollsVote> {
 	* @param uuid the uuid of this polls vote
 	*/
 	@Override
-	public void setUuid(java.lang.String uuid) {
+	public void setUuid(String uuid) {
 		_pollsVote.setUuid(uuid);
 	}
 
@@ -523,7 +523,7 @@ public class PollsVoteWrapper implements PollsVote, ModelWrapper<PollsVote> {
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _pollsVote.toString();
 	}
 
@@ -533,7 +533,7 @@ public class PollsVoteWrapper implements PollsVote, ModelWrapper<PollsVote> {
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _pollsVote.toXmlString();
 	}
 

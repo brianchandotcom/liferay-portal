@@ -47,7 +47,7 @@ public interface MDRRulePersistence extends BasePersistence<MDRRule> {
 	* @param uuid the uuid
 	* @return the matching mdr rules
 	*/
-	public java.util.List<MDRRule> findByUuid(java.lang.String uuid);
+	public java.util.List<MDRRule> findByUuid(String uuid);
 
 	/**
 	* Returns a range of all the mdr rules where uuid = &#63;.
@@ -61,8 +61,7 @@ public interface MDRRulePersistence extends BasePersistence<MDRRule> {
 	* @param end the upper bound of the range of mdr rules (not inclusive)
 	* @return the range of matching mdr rules
 	*/
-	public java.util.List<MDRRule> findByUuid(java.lang.String uuid, int start,
-		int end);
+	public java.util.List<MDRRule> findByUuid(String uuid, int start, int end);
 
 	/**
 	* Returns an ordered range of all the mdr rules where uuid = &#63;.
@@ -77,8 +76,7 @@ public interface MDRRulePersistence extends BasePersistence<MDRRule> {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching mdr rules
 	*/
-	public java.util.List<MDRRule> findByUuid(java.lang.String uuid, int start,
-		int end,
+	public java.util.List<MDRRule> findByUuid(String uuid, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<MDRRule> orderByComparator);
 
 	/**
@@ -95,8 +93,7 @@ public interface MDRRulePersistence extends BasePersistence<MDRRule> {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching mdr rules
 	*/
-	public java.util.List<MDRRule> findByUuid(java.lang.String uuid, int start,
-		int end,
+	public java.util.List<MDRRule> findByUuid(String uuid, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<MDRRule> orderByComparator,
 		boolean retrieveFromCache);
 
@@ -108,7 +105,7 @@ public interface MDRRulePersistence extends BasePersistence<MDRRule> {
 	* @return the first matching mdr rule
 	* @throws NoSuchRuleException if a matching mdr rule could not be found
 	*/
-	public MDRRule findByUuid_First(java.lang.String uuid,
+	public MDRRule findByUuid_First(String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<MDRRule> orderByComparator)
 		throws NoSuchRuleException;
 
@@ -119,7 +116,7 @@ public interface MDRRulePersistence extends BasePersistence<MDRRule> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching mdr rule, or <code>null</code> if a matching mdr rule could not be found
 	*/
-	public MDRRule fetchByUuid_First(java.lang.String uuid,
+	public MDRRule fetchByUuid_First(String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<MDRRule> orderByComparator);
 
 	/**
@@ -130,7 +127,7 @@ public interface MDRRulePersistence extends BasePersistence<MDRRule> {
 	* @return the last matching mdr rule
 	* @throws NoSuchRuleException if a matching mdr rule could not be found
 	*/
-	public MDRRule findByUuid_Last(java.lang.String uuid,
+	public MDRRule findByUuid_Last(String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<MDRRule> orderByComparator)
 		throws NoSuchRuleException;
 
@@ -141,7 +138,7 @@ public interface MDRRulePersistence extends BasePersistence<MDRRule> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching mdr rule, or <code>null</code> if a matching mdr rule could not be found
 	*/
-	public MDRRule fetchByUuid_Last(java.lang.String uuid,
+	public MDRRule fetchByUuid_Last(String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<MDRRule> orderByComparator);
 
 	/**
@@ -153,7 +150,7 @@ public interface MDRRulePersistence extends BasePersistence<MDRRule> {
 	* @return the previous, current, and next mdr rule
 	* @throws NoSuchRuleException if a mdr rule with the primary key could not be found
 	*/
-	public MDRRule[] findByUuid_PrevAndNext(long ruleId, java.lang.String uuid,
+	public MDRRule[] findByUuid_PrevAndNext(long ruleId, String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<MDRRule> orderByComparator)
 		throws NoSuchRuleException;
 
@@ -162,7 +159,7 @@ public interface MDRRulePersistence extends BasePersistence<MDRRule> {
 	*
 	* @param uuid the uuid
 	*/
-	public void removeByUuid(java.lang.String uuid);
+	public void removeByUuid(String uuid);
 
 	/**
 	* Returns the number of mdr rules where uuid = &#63;.
@@ -170,7 +167,7 @@ public interface MDRRulePersistence extends BasePersistence<MDRRule> {
 	* @param uuid the uuid
 	* @return the number of matching mdr rules
 	*/
-	public int countByUuid(java.lang.String uuid);
+	public int countByUuid(String uuid);
 
 	/**
 	* Returns the mdr rule where uuid = &#63; and groupId = &#63; or throws a {@link NoSuchRuleException} if it could not be found.
@@ -180,7 +177,7 @@ public interface MDRRulePersistence extends BasePersistence<MDRRule> {
 	* @return the matching mdr rule
 	* @throws NoSuchRuleException if a matching mdr rule could not be found
 	*/
-	public MDRRule findByUUID_G(java.lang.String uuid, long groupId)
+	public MDRRule findByUUID_G(String uuid, long groupId)
 		throws NoSuchRuleException;
 
 	/**
@@ -190,7 +187,7 @@ public interface MDRRulePersistence extends BasePersistence<MDRRule> {
 	* @param groupId the group ID
 	* @return the matching mdr rule, or <code>null</code> if a matching mdr rule could not be found
 	*/
-	public MDRRule fetchByUUID_G(java.lang.String uuid, long groupId);
+	public MDRRule fetchByUUID_G(String uuid, long groupId);
 
 	/**
 	* Returns the mdr rule where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -200,7 +197,7 @@ public interface MDRRulePersistence extends BasePersistence<MDRRule> {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching mdr rule, or <code>null</code> if a matching mdr rule could not be found
 	*/
-	public MDRRule fetchByUUID_G(java.lang.String uuid, long groupId,
+	public MDRRule fetchByUUID_G(String uuid, long groupId,
 		boolean retrieveFromCache);
 
 	/**
@@ -210,7 +207,7 @@ public interface MDRRulePersistence extends BasePersistence<MDRRule> {
 	* @param groupId the group ID
 	* @return the mdr rule that was removed
 	*/
-	public MDRRule removeByUUID_G(java.lang.String uuid, long groupId)
+	public MDRRule removeByUUID_G(String uuid, long groupId)
 		throws NoSuchRuleException;
 
 	/**
@@ -220,7 +217,7 @@ public interface MDRRulePersistence extends BasePersistence<MDRRule> {
 	* @param groupId the group ID
 	* @return the number of matching mdr rules
 	*/
-	public int countByUUID_G(java.lang.String uuid, long groupId);
+	public int countByUUID_G(String uuid, long groupId);
 
 	/**
 	* Returns all the mdr rules where uuid = &#63; and companyId = &#63;.
@@ -229,8 +226,7 @@ public interface MDRRulePersistence extends BasePersistence<MDRRule> {
 	* @param companyId the company ID
 	* @return the matching mdr rules
 	*/
-	public java.util.List<MDRRule> findByUuid_C(java.lang.String uuid,
-		long companyId);
+	public java.util.List<MDRRule> findByUuid_C(String uuid, long companyId);
 
 	/**
 	* Returns a range of all the mdr rules where uuid = &#63; and companyId = &#63;.
@@ -245,8 +241,8 @@ public interface MDRRulePersistence extends BasePersistence<MDRRule> {
 	* @param end the upper bound of the range of mdr rules (not inclusive)
 	* @return the range of matching mdr rules
 	*/
-	public java.util.List<MDRRule> findByUuid_C(java.lang.String uuid,
-		long companyId, int start, int end);
+	public java.util.List<MDRRule> findByUuid_C(String uuid, long companyId,
+		int start, int end);
 
 	/**
 	* Returns an ordered range of all the mdr rules where uuid = &#63; and companyId = &#63;.
@@ -262,8 +258,8 @@ public interface MDRRulePersistence extends BasePersistence<MDRRule> {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching mdr rules
 	*/
-	public java.util.List<MDRRule> findByUuid_C(java.lang.String uuid,
-		long companyId, int start, int end,
+	public java.util.List<MDRRule> findByUuid_C(String uuid, long companyId,
+		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<MDRRule> orderByComparator);
 
 	/**
@@ -281,8 +277,8 @@ public interface MDRRulePersistence extends BasePersistence<MDRRule> {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching mdr rules
 	*/
-	public java.util.List<MDRRule> findByUuid_C(java.lang.String uuid,
-		long companyId, int start, int end,
+	public java.util.List<MDRRule> findByUuid_C(String uuid, long companyId,
+		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<MDRRule> orderByComparator,
 		boolean retrieveFromCache);
 
@@ -295,7 +291,7 @@ public interface MDRRulePersistence extends BasePersistence<MDRRule> {
 	* @return the first matching mdr rule
 	* @throws NoSuchRuleException if a matching mdr rule could not be found
 	*/
-	public MDRRule findByUuid_C_First(java.lang.String uuid, long companyId,
+	public MDRRule findByUuid_C_First(String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<MDRRule> orderByComparator)
 		throws NoSuchRuleException;
 
@@ -307,7 +303,7 @@ public interface MDRRulePersistence extends BasePersistence<MDRRule> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching mdr rule, or <code>null</code> if a matching mdr rule could not be found
 	*/
-	public MDRRule fetchByUuid_C_First(java.lang.String uuid, long companyId,
+	public MDRRule fetchByUuid_C_First(String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<MDRRule> orderByComparator);
 
 	/**
@@ -319,7 +315,7 @@ public interface MDRRulePersistence extends BasePersistence<MDRRule> {
 	* @return the last matching mdr rule
 	* @throws NoSuchRuleException if a matching mdr rule could not be found
 	*/
-	public MDRRule findByUuid_C_Last(java.lang.String uuid, long companyId,
+	public MDRRule findByUuid_C_Last(String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<MDRRule> orderByComparator)
 		throws NoSuchRuleException;
 
@@ -331,7 +327,7 @@ public interface MDRRulePersistence extends BasePersistence<MDRRule> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching mdr rule, or <code>null</code> if a matching mdr rule could not be found
 	*/
-	public MDRRule fetchByUuid_C_Last(java.lang.String uuid, long companyId,
+	public MDRRule fetchByUuid_C_Last(String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<MDRRule> orderByComparator);
 
 	/**
@@ -344,8 +340,8 @@ public interface MDRRulePersistence extends BasePersistence<MDRRule> {
 	* @return the previous, current, and next mdr rule
 	* @throws NoSuchRuleException if a mdr rule with the primary key could not be found
 	*/
-	public MDRRule[] findByUuid_C_PrevAndNext(long ruleId,
-		java.lang.String uuid, long companyId,
+	public MDRRule[] findByUuid_C_PrevAndNext(long ruleId, String uuid,
+		long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<MDRRule> orderByComparator)
 		throws NoSuchRuleException;
 
@@ -355,7 +351,7 @@ public interface MDRRulePersistence extends BasePersistence<MDRRule> {
 	* @param uuid the uuid
 	* @param companyId the company ID
 	*/
-	public void removeByUuid_C(java.lang.String uuid, long companyId);
+	public void removeByUuid_C(String uuid, long companyId);
 
 	/**
 	* Returns the number of mdr rules where uuid = &#63; and companyId = &#63;.
@@ -364,7 +360,7 @@ public interface MDRRulePersistence extends BasePersistence<MDRRule> {
 	* @param companyId the company ID
 	* @return the number of matching mdr rules
 	*/
-	public int countByUuid_C(java.lang.String uuid, long companyId);
+	public int countByUuid_C(String uuid, long companyId);
 
 	/**
 	* Returns all the mdr rules where ruleGroupId = &#63;.
@@ -617,5 +613,5 @@ public interface MDRRulePersistence extends BasePersistence<MDRRule> {
 	public int countAll();
 
 	@Override
-	public java.util.Set<java.lang.String> getBadColumnNames();
+	public java.util.Set<String> getBadColumnNames();
 }

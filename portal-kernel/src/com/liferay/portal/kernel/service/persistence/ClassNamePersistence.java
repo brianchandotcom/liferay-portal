@@ -46,8 +46,7 @@ public interface ClassNamePersistence extends BasePersistence<ClassName> {
 	* @return the matching class name
 	* @throws NoSuchClassNameException if a matching class name could not be found
 	*/
-	public ClassName findByValue(java.lang.String value)
-		throws NoSuchClassNameException;
+	public ClassName findByValue(String value) throws NoSuchClassNameException;
 
 	/**
 	* Returns the class name where value = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
@@ -55,7 +54,7 @@ public interface ClassNamePersistence extends BasePersistence<ClassName> {
 	* @param value the value
 	* @return the matching class name, or <code>null</code> if a matching class name could not be found
 	*/
-	public ClassName fetchByValue(java.lang.String value);
+	public ClassName fetchByValue(String value);
 
 	/**
 	* Returns the class name where value = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -64,8 +63,7 @@ public interface ClassNamePersistence extends BasePersistence<ClassName> {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching class name, or <code>null</code> if a matching class name could not be found
 	*/
-	public ClassName fetchByValue(java.lang.String value,
-		boolean retrieveFromCache);
+	public ClassName fetchByValue(String value, boolean retrieveFromCache);
 
 	/**
 	* Removes the class name where value = &#63; from the database.
@@ -73,7 +71,7 @@ public interface ClassNamePersistence extends BasePersistence<ClassName> {
 	* @param value the value
 	* @return the class name that was removed
 	*/
-	public ClassName removeByValue(java.lang.String value)
+	public ClassName removeByValue(String value)
 		throws NoSuchClassNameException;
 
 	/**
@@ -82,7 +80,7 @@ public interface ClassNamePersistence extends BasePersistence<ClassName> {
 	* @param value the value
 	* @return the number of matching class names
 	*/
-	public int countByValue(java.lang.String value);
+	public int countByValue(String value);
 
 	/**
 	* Caches the class name in the entity cache if it is enabled.

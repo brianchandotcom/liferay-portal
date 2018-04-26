@@ -100,7 +100,7 @@ public class RatingsStatsLocalServiceWrapper implements RatingsStatsLocalService
 	}
 
 	@Override
-	public void deleteStats(java.lang.String className, long classPK) {
+	public void deleteStats(String className, long classPK) {
 		_ratingsStatsLocalService.deleteStats(className, classPK);
 	}
 
@@ -197,7 +197,7 @@ public class RatingsStatsLocalServiceWrapper implements RatingsStatsLocalService
 
 	@Override
 	public com.liferay.ratings.kernel.model.RatingsStats fetchStats(
-		java.lang.String className, long classPK) {
+		String className, long classPK) {
 		return _ratingsStatsLocalService.fetchStats(className, classPK);
 	}
 
@@ -217,7 +217,7 @@ public class RatingsStatsLocalServiceWrapper implements RatingsStatsLocalService
 	* @return the OSGi service identifier
 	*/
 	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
+	public String getOSGiServiceIdentifier() {
 		return _ratingsStatsLocalService.getOSGiServiceIdentifier();
 	}
 
@@ -281,20 +281,20 @@ public class RatingsStatsLocalServiceWrapper implements RatingsStatsLocalService
 	@Deprecated
 	@Override
 	public java.util.List<com.liferay.ratings.kernel.model.RatingsStats> getStats(
-		java.lang.String className, java.util.List<java.lang.Long> classPKs) {
+		String className, java.util.List<Long> classPKs) {
 		return _ratingsStatsLocalService.getStats(className, classPKs);
 	}
 
 	@Override
 	public com.liferay.ratings.kernel.model.RatingsStats getStats(
-		java.lang.String className, long classPK)
+		String className, long classPK)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _ratingsStatsLocalService.getStats(className, classPK);
 	}
 
 	@Override
-	public java.util.Map<java.lang.Long, com.liferay.ratings.kernel.model.RatingsStats> getStats(
-		java.lang.String className, long[] classPKs) {
+	public java.util.Map<Long, com.liferay.ratings.kernel.model.RatingsStats> getStats(
+		String className, long[] classPKs) {
 		return _ratingsStatsLocalService.getStats(className, classPKs);
 	}
 

@@ -55,8 +55,7 @@ public class FriendlyURLEntryLocalServiceUtil {
 	}
 
 	public static com.liferay.friendly.url.model.FriendlyURLEntry addFriendlyURLEntry(
-		long groupId, java.lang.Class<?> clazz, long classPK,
-		java.lang.String urlTitle,
+		long groupId, Class<?> clazz, long classPK, String urlTitle,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
@@ -66,7 +65,7 @@ public class FriendlyURLEntryLocalServiceUtil {
 
 	public static com.liferay.friendly.url.model.FriendlyURLEntry addFriendlyURLEntry(
 		long groupId, long classNameId, long classPK,
-		java.util.Map<java.lang.String, java.lang.String> urlTitleMap,
+		java.util.Map<String, String> urlTitleMap,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
@@ -75,9 +74,8 @@ public class FriendlyURLEntryLocalServiceUtil {
 	}
 
 	public static com.liferay.friendly.url.model.FriendlyURLEntry addFriendlyURLEntry(
-		long groupId, long classNameId, long classPK,
-		java.lang.String defaultLanguageId,
-		java.util.Map<java.lang.String, java.lang.String> urlTitleMap,
+		long groupId, long classNameId, long classPK, String defaultLanguageId,
+		java.util.Map<String, String> urlTitleMap,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
@@ -86,8 +84,7 @@ public class FriendlyURLEntryLocalServiceUtil {
 	}
 
 	public static com.liferay.friendly.url.model.FriendlyURLEntry addFriendlyURLEntry(
-		long groupId, long classNameId, long classPK,
-		java.lang.String urlTitle,
+		long groupId, long classNameId, long classPK, String urlTitle,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
@@ -130,8 +127,8 @@ public class FriendlyURLEntryLocalServiceUtil {
 		return getService().deleteFriendlyURLEntry(friendlyURLEntryId);
 	}
 
-	public static void deleteFriendlyURLEntry(long groupId,
-		java.lang.Class<?> clazz, long classPK)
+	public static void deleteFriendlyURLEntry(long groupId, Class<?> clazz,
+		long classPK)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().deleteFriendlyURLEntry(groupId, clazz, classPK);
 	}
@@ -234,12 +231,12 @@ public class FriendlyURLEntryLocalServiceUtil {
 	}
 
 	public static com.liferay.friendly.url.model.FriendlyURLEntry fetchFriendlyURLEntry(
-		long groupId, java.lang.Class<?> clazz, java.lang.String urlTitle) {
+		long groupId, Class<?> clazz, String urlTitle) {
 		return getService().fetchFriendlyURLEntry(groupId, clazz, urlTitle);
 	}
 
 	public static com.liferay.friendly.url.model.FriendlyURLEntry fetchFriendlyURLEntry(
-		long groupId, long classNameId, java.lang.String urlTitle) {
+		long groupId, long classNameId, String urlTitle) {
 		return getService().fetchFriendlyURLEntry(groupId, classNameId, urlTitle);
 	}
 
@@ -251,19 +248,19 @@ public class FriendlyURLEntryLocalServiceUtil {
 	* @return the matching friendly url entry, or <code>null</code> if a matching friendly url entry could not be found
 	*/
 	public static com.liferay.friendly.url.model.FriendlyURLEntry fetchFriendlyURLEntryByUuidAndGroupId(
-		java.lang.String uuid, long groupId) {
+		String uuid, long groupId) {
 		return getService().fetchFriendlyURLEntryByUuidAndGroupId(uuid, groupId);
 	}
 
 	public static com.liferay.friendly.url.model.FriendlyURLEntryLocalization fetchFriendlyURLEntryLocalization(
-		long groupId, long classNameId, java.lang.String urlTitle) {
+		long groupId, long classNameId, String urlTitle) {
 		return getService()
 				   .fetchFriendlyURLEntryLocalization(groupId, classNameId,
 			urlTitle);
 	}
 
 	public static com.liferay.friendly.url.model.FriendlyURLEntryLocalization fetchFriendlyURLEntryLocalization(
-		long friendlyURLEntryId, java.lang.String languageId) {
+		long friendlyURLEntryId, String languageId) {
 		return getService()
 				   .fetchFriendlyURLEntryLocalization(friendlyURLEntryId,
 			languageId);
@@ -307,7 +304,7 @@ public class FriendlyURLEntryLocalServiceUtil {
 	* @return the matching friendly url entries, or an empty list if no matches were found
 	*/
 	public static java.util.List<com.liferay.friendly.url.model.FriendlyURLEntry> getFriendlyURLEntriesByUuidAndCompanyId(
-		java.lang.String uuid, long companyId) {
+		String uuid, long companyId) {
 		return getService()
 				   .getFriendlyURLEntriesByUuidAndCompanyId(uuid, companyId);
 	}
@@ -323,7 +320,7 @@ public class FriendlyURLEntryLocalServiceUtil {
 	* @return the range of matching friendly url entries, or an empty list if no matches were found
 	*/
 	public static java.util.List<com.liferay.friendly.url.model.FriendlyURLEntry> getFriendlyURLEntriesByUuidAndCompanyId(
-		java.lang.String uuid, long companyId, int start, int end,
+		String uuid, long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.friendly.url.model.FriendlyURLEntry> orderByComparator) {
 		return getService()
 				   .getFriendlyURLEntriesByUuidAndCompanyId(uuid, companyId,
@@ -361,13 +358,13 @@ public class FriendlyURLEntryLocalServiceUtil {
 	* @throws PortalException if a matching friendly url entry could not be found
 	*/
 	public static com.liferay.friendly.url.model.FriendlyURLEntry getFriendlyURLEntryByUuidAndGroupId(
-		java.lang.String uuid, long groupId)
+		String uuid, long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getFriendlyURLEntryByUuidAndGroupId(uuid, groupId);
 	}
 
 	public static com.liferay.friendly.url.model.FriendlyURLEntryLocalization getFriendlyURLEntryLocalization(
-		long friendlyURLEntryId, java.lang.String languageId)
+		long friendlyURLEntryId, String languageId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .getFriendlyURLEntryLocalization(friendlyURLEntryId,
@@ -384,7 +381,7 @@ public class FriendlyURLEntryLocalServiceUtil {
 	}
 
 	public static com.liferay.friendly.url.model.FriendlyURLEntry getMainFriendlyURLEntry(
-		java.lang.Class<?> clazz, long classPK)
+		Class<?> clazz, long classPK)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getMainFriendlyURLEntry(clazz, classPK);
 	}
@@ -400,7 +397,7 @@ public class FriendlyURLEntryLocalServiceUtil {
 	*
 	* @return the OSGi service identifier
 	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
+	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 
@@ -410,8 +407,8 @@ public class FriendlyURLEntryLocalServiceUtil {
 		return getService().getPersistedModel(primaryKeyObj);
 	}
 
-	public static java.lang.String getUniqueUrlTitle(long groupId,
-		long classNameId, long classPK, java.lang.String urlTitle) {
+	public static String getUniqueUrlTitle(long groupId, long classNameId,
+		long classPK, String urlTitle) {
 		return getService()
 				   .getUniqueUrlTitle(groupId, classNameId, classPK, urlTitle);
 	}
@@ -434,8 +431,7 @@ public class FriendlyURLEntryLocalServiceUtil {
 
 	public static com.liferay.friendly.url.model.FriendlyURLEntry updateFriendlyURLEntry(
 		long friendlyURLEntryId, long classNameId, long classPK,
-		java.lang.String defaultLanguageId,
-		java.util.Map<java.lang.String, java.lang.String> urlTitleMap)
+		String defaultLanguageId, java.util.Map<String, String> urlTitleMap)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .updateFriendlyURLEntry(friendlyURLEntryId, classNameId,
@@ -449,7 +445,7 @@ public class FriendlyURLEntryLocalServiceUtil {
 	}
 
 	public static com.liferay.friendly.url.model.FriendlyURLEntryLocalization updateFriendlyURLLocalization(
-		long friendlyURLLocalizationId, java.lang.String urlTitle)
+		long friendlyURLLocalizationId, String urlTitle)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .updateFriendlyURLLocalization(friendlyURLLocalizationId,
@@ -457,19 +453,18 @@ public class FriendlyURLEntryLocalServiceUtil {
 	}
 
 	public static void validate(long groupId, long classNameId, long classPK,
-		java.util.Map<java.lang.String, java.lang.String> urlTitleMap)
+		java.util.Map<String, String> urlTitleMap)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().validate(groupId, classNameId, classPK, urlTitleMap);
 	}
 
 	public static void validate(long groupId, long classNameId, long classPK,
-		java.lang.String urlTitle)
+		String urlTitle)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().validate(groupId, classNameId, classPK, urlTitle);
 	}
 
-	public static void validate(long groupId, long classNameId,
-		java.lang.String urlTitle)
+	public static void validate(long groupId, long classNameId, String urlTitle)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().validate(groupId, classNameId, urlTitle);
 	}

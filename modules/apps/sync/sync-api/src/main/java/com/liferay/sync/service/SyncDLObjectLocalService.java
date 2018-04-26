@@ -68,29 +68,24 @@ public interface SyncDLObjectLocalService extends BaseLocalService,
 	String, String, String, String, long, long, String, String,
 	String, Date, long, String, String, long, String)}
 	*/
-	@java.lang.Deprecated
+	@Deprecated
 	public SyncDLObject addSyncDLObject(long companyId, long userId,
-		java.lang.String userName, long modifiedTime, long repositoryId,
-		long parentFolderId, java.lang.String treePath, java.lang.String name,
-		java.lang.String extension, java.lang.String mimeType,
-		java.lang.String description, java.lang.String changeLog,
-		java.lang.String extraSettings, java.lang.String version,
-		long versionId, long size, java.lang.String checksum,
-		java.lang.String event, Date lockExpirationDate, long lockUserId,
-		java.lang.String lockUserName, java.lang.String type, long typePK,
-		java.lang.String typeUuid) throws PortalException;
+		String userName, long modifiedTime, long repositoryId,
+		long parentFolderId, String treePath, String name, String extension,
+		String mimeType, String description, String changeLog,
+		String extraSettings, String version, long versionId, long size,
+		String checksum, String event, Date lockExpirationDate,
+		long lockUserId, String lockUserName, String type, long typePK,
+		String typeUuid) throws PortalException;
 
 	public SyncDLObject addSyncDLObject(long companyId, long userId,
-		java.lang.String userName, long modifiedTime, long repositoryId,
-		long parentFolderId, java.lang.String treePath, java.lang.String name,
-		java.lang.String extension, java.lang.String mimeType,
-		java.lang.String description, java.lang.String changeLog,
-		java.lang.String extraSettings, java.lang.String version,
-		long versionId, long size, java.lang.String checksum,
-		java.lang.String event, java.lang.String lanTokenKey,
-		Date lockExpirationDate, long lockUserId,
-		java.lang.String lockUserName, java.lang.String type, long typePK,
-		java.lang.String typeUuid) throws PortalException;
+		String userName, long modifiedTime, long repositoryId,
+		long parentFolderId, String treePath, String name, String extension,
+		String mimeType, String description, String changeLog,
+		String extraSettings, String version, long versionId, long size,
+		String checksum, String event, String lanTokenKey,
+		Date lockExpirationDate, long lockUserId, String lockUserName,
+		String type, long typePK, String typeUuid) throws PortalException;
 
 	/**
 	* Adds the sync dl object to the database. Also notifies the appropriate model listeners.
@@ -137,8 +132,7 @@ public interface SyncDLObjectLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.DELETE)
 	public SyncDLObject deleteSyncDLObject(SyncDLObject syncDLObject);
 
-	public void deleteSyncDLObjects(java.lang.String version,
-		java.lang.String type);
+	public void deleteSyncDLObjects(String version, String type);
 
 	public DynamicQuery dynamicQuery();
 
@@ -203,7 +197,7 @@ public interface SyncDLObjectLocalService extends BaseLocalService,
 	public SyncDLObject fetchSyncDLObject(long syncDLObjectId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public SyncDLObject fetchSyncDLObject(java.lang.String type, long typePK);
+	public SyncDLObject fetchSyncDLObject(String type, long typePK);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
@@ -219,7 +213,7 @@ public interface SyncDLObjectLocalService extends BaseLocalService,
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

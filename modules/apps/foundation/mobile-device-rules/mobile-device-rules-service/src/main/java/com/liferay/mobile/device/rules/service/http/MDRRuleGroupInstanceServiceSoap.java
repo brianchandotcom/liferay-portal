@@ -66,8 +66,8 @@ import java.rmi.RemoteException;
 @ProviderType
 public class MDRRuleGroupInstanceServiceSoap {
 	public static com.liferay.mobile.device.rules.model.MDRRuleGroupInstanceSoap addRuleGroupInstance(
-		long groupId, java.lang.String className, long classPK,
-		long ruleGroupId, int priority,
+		long groupId, String className, long classPK, long ruleGroupId,
+		int priority,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
@@ -85,8 +85,7 @@ public class MDRRuleGroupInstanceServiceSoap {
 	}
 
 	public static com.liferay.mobile.device.rules.model.MDRRuleGroupInstanceSoap addRuleGroupInstance(
-		long groupId, java.lang.String className, long classPK,
-		long ruleGroupId,
+		long groupId, String className, long classPK, long ruleGroupId,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
@@ -116,7 +115,7 @@ public class MDRRuleGroupInstanceServiceSoap {
 	}
 
 	public static com.liferay.mobile.device.rules.model.MDRRuleGroupInstanceSoap[] getRuleGroupInstances(
-		java.lang.String className, long classPK, int start, int end,
+		String className, long classPK, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.mobile.device.rules.model.MDRRuleGroupInstance> orderByComparator)
 		throws RemoteException {
 		try {
@@ -133,8 +132,8 @@ public class MDRRuleGroupInstanceServiceSoap {
 		}
 	}
 
-	public static int getRuleGroupInstancesCount(java.lang.String className,
-		long classPK) throws RemoteException {
+	public static int getRuleGroupInstancesCount(String className, long classPK)
+		throws RemoteException {
 		try {
 			int returnValue = MDRRuleGroupInstanceServiceUtil.getRuleGroupInstancesCount(className,
 					classPK);

@@ -75,8 +75,7 @@ public class DLFolderLocalServiceWrapper implements DLFolderLocalService,
 	@Override
 	public com.liferay.document.library.kernel.model.DLFolder addFolder(
 		long userId, long groupId, long repositoryId, boolean mountPoint,
-		long parentFolderId, java.lang.String name,
-		java.lang.String description, boolean hidden,
+		long parentFolderId, String name, String description, boolean hidden,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _dlFolderLocalService.addFolder(userId, groupId, repositoryId,
@@ -325,7 +324,7 @@ public class DLFolderLocalServiceWrapper implements DLFolderLocalService,
 	*/
 	@Override
 	public com.liferay.document.library.kernel.model.DLFolder fetchDLFolderByUuidAndGroupId(
-		java.lang.String uuid, long groupId) {
+		String uuid, long groupId) {
 		return _dlFolderLocalService.fetchDLFolderByUuidAndGroupId(uuid, groupId);
 	}
 
@@ -337,13 +336,13 @@ public class DLFolderLocalServiceWrapper implements DLFolderLocalService,
 
 	@Override
 	public com.liferay.document.library.kernel.model.DLFolder fetchFolder(
-		long groupId, long parentFolderId, java.lang.String name) {
+		long groupId, long parentFolderId, String name) {
 		return _dlFolderLocalService.fetchFolder(groupId, parentFolderId, name);
 	}
 
 	@Override
 	public com.liferay.document.library.kernel.model.DLFolder fetchFolder(
-		java.lang.String uuid, long groupId) {
+		String uuid, long groupId) {
 		return _dlFolderLocalService.fetchFolder(uuid, groupId);
 	}
 
@@ -424,7 +423,7 @@ public class DLFolderLocalServiceWrapper implements DLFolderLocalService,
 	*/
 	@Override
 	public com.liferay.document.library.kernel.model.DLFolder getDLFolderByUuidAndGroupId(
-		java.lang.String uuid, long groupId)
+		String uuid, long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _dlFolderLocalService.getDLFolderByUuidAndGroupId(uuid, groupId);
 	}
@@ -455,7 +454,7 @@ public class DLFolderLocalServiceWrapper implements DLFolderLocalService,
 	*/
 	@Override
 	public java.util.List<com.liferay.document.library.kernel.model.DLFolder> getDLFoldersByUuidAndCompanyId(
-		java.lang.String uuid, long companyId) {
+		String uuid, long companyId) {
 		return _dlFolderLocalService.getDLFoldersByUuidAndCompanyId(uuid,
 			companyId);
 	}
@@ -472,7 +471,7 @@ public class DLFolderLocalServiceWrapper implements DLFolderLocalService,
 	*/
 	@Override
 	public java.util.List<com.liferay.document.library.kernel.model.DLFolder> getDLFoldersByUuidAndCompanyId(
-		java.lang.String uuid, long companyId, int start, int end,
+		String uuid, long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.document.library.kernel.model.DLFolder> orderByComparator) {
 		return _dlFolderLocalService.getDLFoldersByUuidAndCompanyId(uuid,
 			companyId, start, end, orderByComparator);
@@ -495,8 +494,8 @@ public class DLFolderLocalServiceWrapper implements DLFolderLocalService,
 	}
 
 	@Override
-	public java.util.List<java.lang.Object> getFileEntriesAndFileShortcuts(
-		long groupId, long folderId,
+	public java.util.List<Object> getFileEntriesAndFileShortcuts(long groupId,
+		long folderId,
 		com.liferay.portal.kernel.dao.orm.QueryDefinition<?> queryDefinition) {
 		return _dlFolderLocalService.getFileEntriesAndFileShortcuts(groupId,
 			folderId, queryDefinition);
@@ -518,7 +517,7 @@ public class DLFolderLocalServiceWrapper implements DLFolderLocalService,
 
 	@Override
 	public com.liferay.document.library.kernel.model.DLFolder getFolder(
-		long groupId, long parentFolderId, java.lang.String name)
+		long groupId, long parentFolderId, String name)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _dlFolderLocalService.getFolder(groupId, parentFolderId, name);
 	}
@@ -534,8 +533,7 @@ public class DLFolderLocalServiceWrapper implements DLFolderLocalService,
 	*/
 	@Deprecated
 	@Override
-	public java.util.List<java.lang.Long> getFolderIds(long groupId,
-		long parentFolderId) {
+	public java.util.List<Long> getFolderIds(long groupId, long parentFolderId) {
 		return _dlFolderLocalService.getFolderIds(groupId, parentFolderId);
 	}
 
@@ -579,8 +577,8 @@ public class DLFolderLocalServiceWrapper implements DLFolderLocalService,
 	}
 
 	@Override
-	public java.util.List<java.lang.Object> getFoldersAndFileEntriesAndFileShortcuts(
-		long groupId, long folderId, java.lang.String[] mimeTypes,
+	public java.util.List<Object> getFoldersAndFileEntriesAndFileShortcuts(
+		long groupId, long folderId, String[] mimeTypes,
 		boolean includeMountFolders,
 		com.liferay.portal.kernel.dao.orm.QueryDefinition<?> queryDefinition) {
 		return _dlFolderLocalService.getFoldersAndFileEntriesAndFileShortcuts(groupId,
@@ -589,8 +587,7 @@ public class DLFolderLocalServiceWrapper implements DLFolderLocalService,
 
 	@Override
 	public int getFoldersAndFileEntriesAndFileShortcutsCount(long groupId,
-		long folderId, java.lang.String[] mimeTypes,
-		boolean includeMountFolders,
+		long folderId, String[] mimeTypes, boolean includeMountFolders,
 		com.liferay.portal.kernel.dao.orm.QueryDefinition<?> queryDefinition) {
 		return _dlFolderLocalService.getFoldersAndFileEntriesAndFileShortcutsCount(groupId,
 			folderId, mimeTypes, includeMountFolders, queryDefinition);
@@ -616,13 +613,13 @@ public class DLFolderLocalServiceWrapper implements DLFolderLocalService,
 	}
 
 	@Override
-	public java.util.List<java.lang.Long> getGroupFolderIds(long groupId,
+	public java.util.List<Long> getGroupFolderIds(long groupId,
 		long parentFolderId) {
 		return _dlFolderLocalService.getGroupFolderIds(groupId, parentFolderId);
 	}
 
 	@Override
-	public void getGroupSubfolderIds(java.util.List<java.lang.Long> folderIds,
+	public void getGroupSubfolderIds(java.util.List<Long> folderIds,
 		long groupId, long folderId) {
 		_dlFolderLocalService.getGroupSubfolderIds(folderIds, groupId, folderId);
 	}
@@ -664,7 +661,7 @@ public class DLFolderLocalServiceWrapper implements DLFolderLocalService,
 	* @return the OSGi service identifier
 	*/
 	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
+	public String getOSGiServiceIdentifier() {
 		return _dlFolderLocalService.getOSGiServiceIdentifier();
 	}
 
@@ -676,8 +673,8 @@ public class DLFolderLocalServiceWrapper implements DLFolderLocalService,
 	}
 
 	@Override
-	public java.util.List<java.lang.Long> getRepositoryFolderIds(
-		long repositoryId, long parentFolderId) {
+	public java.util.List<Long> getRepositoryFolderIds(long repositoryId,
+		long parentFolderId) {
 		return _dlFolderLocalService.getRepositoryFolderIds(repositoryId,
 			parentFolderId);
 	}
@@ -695,9 +692,8 @@ public class DLFolderLocalServiceWrapper implements DLFolderLocalService,
 	}
 
 	@Override
-	public void getRepositorySubfolderIds(
-		java.util.List<java.lang.Long> folderIds, long repositoryId,
-		long folderId) {
+	public void getRepositorySubfolderIds(java.util.List<Long> folderIds,
+		long repositoryId, long folderId) {
 		_dlFolderLocalService.getRepositorySubfolderIds(folderIds,
 			repositoryId, folderId);
 	}
@@ -708,8 +704,8 @@ public class DLFolderLocalServiceWrapper implements DLFolderLocalService,
 	*/
 	@Deprecated
 	@Override
-	public void getSubfolderIds(java.util.List<java.lang.Long> folderIds,
-		long groupId, long folderId) {
+	public void getSubfolderIds(java.util.List<Long> folderIds, long groupId,
+		long folderId) {
 		_dlFolderLocalService.getSubfolderIds(folderIds, groupId, folderId);
 	}
 
@@ -744,8 +740,7 @@ public class DLFolderLocalServiceWrapper implements DLFolderLocalService,
 
 	@Override
 	public com.liferay.portal.kernel.lock.Lock lockFolder(long userId,
-		long folderId, java.lang.String owner, boolean inheritable,
-		long expirationTime)
+		long folderId, String owner, boolean inheritable, long expirationTime)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _dlFolderLocalService.lockFolder(userId, folderId, owner,
 			inheritable, expirationTime);
@@ -768,7 +763,7 @@ public class DLFolderLocalServiceWrapper implements DLFolderLocalService,
 
 	@Override
 	public void rebuildTree(long companyId, long parentFolderId,
-		java.lang.String parentTreePath, boolean reindex)
+		String parentTreePath, boolean reindex)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_dlFolderLocalService.rebuildTree(companyId, parentFolderId,
 			parentTreePath, reindex);
@@ -782,15 +777,15 @@ public class DLFolderLocalServiceWrapper implements DLFolderLocalService,
 	}
 
 	@Override
-	public void unlockFolder(long groupId, long parentFolderId,
-		java.lang.String name, java.lang.String lockUuid)
+	public void unlockFolder(long groupId, long parentFolderId, String name,
+		String lockUuid)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_dlFolderLocalService.unlockFolder(groupId, parentFolderId, name,
 			lockUuid);
 	}
 
 	@Override
-	public void unlockFolder(long folderId, java.lang.String lockUuid)
+	public void unlockFolder(long folderId, String lockUuid)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_dlFolderLocalService.unlockFolder(folderId, lockUuid);
 	}
@@ -814,9 +809,8 @@ public class DLFolderLocalServiceWrapper implements DLFolderLocalService,
 	@Deprecated
 	@Override
 	public com.liferay.document.library.kernel.model.DLFolder updateFolder(
-		long folderId, long parentFolderId, java.lang.String name,
-		java.lang.String description, long defaultFileEntryTypeId,
-		java.util.List<java.lang.Long> fileEntryTypeIds,
+		long folderId, long parentFolderId, String name, String description,
+		long defaultFileEntryTypeId, java.util.List<Long> fileEntryTypeIds,
 		boolean overrideFileEntryTypes,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -827,9 +821,9 @@ public class DLFolderLocalServiceWrapper implements DLFolderLocalService,
 
 	@Override
 	public com.liferay.document.library.kernel.model.DLFolder updateFolder(
-		long folderId, long parentFolderId, java.lang.String name,
-		java.lang.String description, long defaultFileEntryTypeId,
-		java.util.List<java.lang.Long> fileEntryTypeIds, int restrictionType,
+		long folderId, long parentFolderId, String name, String description,
+		long defaultFileEntryTypeId, java.util.List<Long> fileEntryTypeIds,
+		int restrictionType,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _dlFolderLocalService.updateFolder(folderId, parentFolderId,
@@ -844,9 +838,8 @@ public class DLFolderLocalServiceWrapper implements DLFolderLocalService,
 	@Deprecated
 	@Override
 	public com.liferay.document.library.kernel.model.DLFolder updateFolder(
-		long folderId, java.lang.String name, java.lang.String description,
-		long defaultFileEntryTypeId,
-		java.util.List<java.lang.Long> fileEntryTypeIds,
+		long folderId, String name, String description,
+		long defaultFileEntryTypeId, java.util.List<Long> fileEntryTypeIds,
 		boolean overrideFileEntryTypes,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -857,9 +850,9 @@ public class DLFolderLocalServiceWrapper implements DLFolderLocalService,
 
 	@Override
 	public com.liferay.document.library.kernel.model.DLFolder updateFolder(
-		long folderId, java.lang.String name, java.lang.String description,
-		long defaultFileEntryTypeId,
-		java.util.List<java.lang.Long> fileEntryTypeIds, int restrictionType,
+		long folderId, String name, String description,
+		long defaultFileEntryTypeId, java.util.List<Long> fileEntryTypeIds,
+		int restrictionType,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _dlFolderLocalService.updateFolder(folderId, name, description,
@@ -875,10 +868,9 @@ public class DLFolderLocalServiceWrapper implements DLFolderLocalService,
 	@Deprecated
 	@Override
 	public com.liferay.document.library.kernel.model.DLFolder updateFolderAndFileEntryTypes(
-		long userId, long folderId, long parentFolderId, java.lang.String name,
-		java.lang.String description, long defaultFileEntryTypeId,
-		java.util.List<java.lang.Long> fileEntryTypeIds,
-		boolean overrideFileEntryTypes,
+		long userId, long folderId, long parentFolderId, String name,
+		String description, long defaultFileEntryTypeId,
+		java.util.List<Long> fileEntryTypeIds, boolean overrideFileEntryTypes,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _dlFolderLocalService.updateFolderAndFileEntryTypes(userId,
@@ -889,9 +881,9 @@ public class DLFolderLocalServiceWrapper implements DLFolderLocalService,
 
 	@Override
 	public com.liferay.document.library.kernel.model.DLFolder updateFolderAndFileEntryTypes(
-		long userId, long folderId, long parentFolderId, java.lang.String name,
-		java.lang.String description, long defaultFileEntryTypeId,
-		java.util.List<java.lang.Long> fileEntryTypeIds, int restrictionType,
+		long userId, long folderId, long parentFolderId, String name,
+		String description, long defaultFileEntryTypeId,
+		java.util.List<Long> fileEntryTypeIds, int restrictionType,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _dlFolderLocalService.updateFolderAndFileEntryTypes(userId,
@@ -909,7 +901,7 @@ public class DLFolderLocalServiceWrapper implements DLFolderLocalService,
 	@Override
 	public com.liferay.document.library.kernel.model.DLFolder updateStatus(
 		long userId, long folderId, int status,
-		java.util.Map<java.lang.String, java.io.Serializable> workflowContext,
+		java.util.Map<String, java.io.Serializable> workflowContext,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _dlFolderLocalService.updateStatus(userId, folderId, status,
@@ -917,8 +909,7 @@ public class DLFolderLocalServiceWrapper implements DLFolderLocalService,
 	}
 
 	@Override
-	public boolean verifyInheritableLock(long folderId,
-		java.lang.String lockUuid)
+	public boolean verifyInheritableLock(long folderId, String lockUuid)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _dlFolderLocalService.verifyInheritableLock(folderId, lockUuid);
 	}

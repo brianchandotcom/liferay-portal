@@ -65,8 +65,8 @@ import java.rmi.RemoteException;
 @ProviderType
 public class RegionServiceSoap {
 	public static com.liferay.portal.kernel.model.RegionSoap addRegion(
-		long countryId, java.lang.String regionCode, java.lang.String name,
-		boolean active) throws RemoteException {
+		long countryId, String regionCode, String name, boolean active)
+		throws RemoteException {
 		try {
 			com.liferay.portal.kernel.model.Region returnValue = RegionServiceUtil.addRegion(countryId,
 					regionCode, name, active);
@@ -95,7 +95,7 @@ public class RegionServiceSoap {
 	}
 
 	public static com.liferay.portal.kernel.model.RegionSoap fetchRegion(
-		long countryId, java.lang.String regionCode) throws RemoteException {
+		long countryId, String regionCode) throws RemoteException {
 		try {
 			com.liferay.portal.kernel.model.Region returnValue = RegionServiceUtil.fetchRegion(countryId,
 					regionCode);
@@ -124,7 +124,7 @@ public class RegionServiceSoap {
 	}
 
 	public static com.liferay.portal.kernel.model.RegionSoap getRegion(
-		long countryId, java.lang.String regionCode) throws RemoteException {
+		long countryId, String regionCode) throws RemoteException {
 		try {
 			com.liferay.portal.kernel.model.Region returnValue = RegionServiceUtil.getRegion(countryId,
 					regionCode);

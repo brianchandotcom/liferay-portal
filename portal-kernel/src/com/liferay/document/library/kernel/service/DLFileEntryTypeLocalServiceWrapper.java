@@ -36,7 +36,7 @@ public class DLFileEntryTypeLocalServiceWrapper
 
 	@Override
 	public void addDDMStructureLinks(long fileEntryTypeId,
-		java.util.Set<java.lang.Long> ddmStructureIds) {
+		java.util.Set<Long> ddmStructureIds) {
 		_dlFileEntryTypeLocalService.addDDMStructureLinks(fileEntryTypeId,
 			ddmStructureIds);
 	}
@@ -82,9 +82,9 @@ public class DLFileEntryTypeLocalServiceWrapper
 
 	@Override
 	public com.liferay.document.library.kernel.model.DLFileEntryType addFileEntryType(
-		long userId, long groupId, java.lang.String fileEntryTypeKey,
-		java.util.Map<java.util.Locale, java.lang.String> nameMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		long userId, long groupId, String fileEntryTypeKey,
+		java.util.Map<java.util.Locale, String> nameMap,
+		java.util.Map<java.util.Locale, String> descriptionMap,
 		long[] ddmStructureIds,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -95,8 +95,8 @@ public class DLFileEntryTypeLocalServiceWrapper
 
 	@Override
 	public com.liferay.document.library.kernel.model.DLFileEntryType addFileEntryType(
-		long userId, long groupId, java.lang.String name,
-		java.lang.String description, long[] ddmStructureIds,
+		long userId, long groupId, String name, String description,
+		long[] ddmStructureIds,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _dlFileEntryTypeLocalService.addFileEntryType(userId, groupId,
@@ -311,7 +311,7 @@ public class DLFileEntryTypeLocalServiceWrapper
 	*/
 	@Override
 	public com.liferay.document.library.kernel.model.DLFileEntryType fetchDLFileEntryTypeByUuidAndGroupId(
-		java.lang.String uuid, long groupId) {
+		String uuid, long groupId) {
 		return _dlFileEntryTypeLocalService.fetchDLFileEntryTypeByUuidAndGroupId(uuid,
 			groupId);
 	}
@@ -324,7 +324,7 @@ public class DLFileEntryTypeLocalServiceWrapper
 
 	@Override
 	public com.liferay.document.library.kernel.model.DLFileEntryType fetchFileEntryType(
-		long groupId, java.lang.String fileEntryTypeKey) {
+		long groupId, String fileEntryTypeKey) {
 		return _dlFileEntryTypeLocalService.fetchFileEntryType(groupId,
 			fileEntryTypeKey);
 	}
@@ -364,7 +364,7 @@ public class DLFileEntryTypeLocalServiceWrapper
 	*/
 	@Override
 	public com.liferay.document.library.kernel.model.DLFileEntryType getDLFileEntryTypeByUuidAndGroupId(
-		java.lang.String uuid, long groupId)
+		String uuid, long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _dlFileEntryTypeLocalService.getDLFileEntryTypeByUuidAndGroupId(uuid,
 			groupId);
@@ -396,7 +396,7 @@ public class DLFileEntryTypeLocalServiceWrapper
 	*/
 	@Override
 	public java.util.List<com.liferay.document.library.kernel.model.DLFileEntryType> getDLFileEntryTypesByUuidAndCompanyId(
-		java.lang.String uuid, long companyId) {
+		String uuid, long companyId) {
 		return _dlFileEntryTypeLocalService.getDLFileEntryTypesByUuidAndCompanyId(uuid,
 			companyId);
 	}
@@ -413,7 +413,7 @@ public class DLFileEntryTypeLocalServiceWrapper
 	*/
 	@Override
 	public java.util.List<com.liferay.document.library.kernel.model.DLFileEntryType> getDLFileEntryTypesByUuidAndCompanyId(
-		java.lang.String uuid, long companyId, int start, int end,
+		String uuid, long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.document.library.kernel.model.DLFileEntryType> orderByComparator) {
 		return _dlFileEntryTypeLocalService.getDLFileEntryTypesByUuidAndCompanyId(uuid,
 			companyId, start, end, orderByComparator);
@@ -481,7 +481,7 @@ public class DLFileEntryTypeLocalServiceWrapper
 
 	@Override
 	public com.liferay.document.library.kernel.model.DLFileEntryType getFileEntryType(
-		long groupId, java.lang.String fileEntryTypeKey)
+		long groupId, String fileEntryTypeKey)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _dlFileEntryTypeLocalService.getFileEntryType(groupId,
 			fileEntryTypeKey);
@@ -519,7 +519,7 @@ public class DLFileEntryTypeLocalServiceWrapper
 	* @return the OSGi service identifier
 	*/
 	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
+	public String getOSGiServiceIdentifier() {
 		return _dlFileEntryTypeLocalService.getOSGiServiceIdentifier();
 	}
 
@@ -544,7 +544,7 @@ public class DLFileEntryTypeLocalServiceWrapper
 
 	@Override
 	public java.util.List<com.liferay.document.library.kernel.model.DLFileEntryType> search(
-		long companyId, long[] groupIds, java.lang.String keywords,
+		long companyId, long[] groupIds, String keywords,
 		boolean includeBasicFileEntryType, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.document.library.kernel.model.DLFileEntryType> orderByComparator) {
 		return _dlFileEntryTypeLocalService.search(companyId, groupIds,
@@ -552,8 +552,8 @@ public class DLFileEntryTypeLocalServiceWrapper
 	}
 
 	@Override
-	public int searchCount(long companyId, long[] groupIds,
-		java.lang.String keywords, boolean includeBasicFileEntryType) {
+	public int searchCount(long companyId, long[] groupIds, String keywords,
+		boolean includeBasicFileEntryType) {
 		return _dlFileEntryTypeLocalService.searchCount(companyId, groupIds,
 			keywords, includeBasicFileEntryType);
 	}
@@ -572,7 +572,7 @@ public class DLFileEntryTypeLocalServiceWrapper
 
 	@Override
 	public void updateDDMStructureLinks(long fileEntryTypeId,
-		java.util.Set<java.lang.Long> ddmStructureIds)
+		java.util.Set<Long> ddmStructureIds)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_dlFileEntryTypeLocalService.updateDDMStructureLinks(fileEntryTypeId,
 			ddmStructureIds);
@@ -601,8 +601,8 @@ public class DLFileEntryTypeLocalServiceWrapper
 
 	@Override
 	public void updateFileEntryType(long userId, long fileEntryTypeId,
-		java.util.Map<java.util.Locale, java.lang.String> nameMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		java.util.Map<java.util.Locale, String> nameMap,
+		java.util.Map<java.util.Locale, String> descriptionMap,
 		long[] ddmStructureIds,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -613,8 +613,7 @@ public class DLFileEntryTypeLocalServiceWrapper
 
 	@Override
 	public void updateFileEntryType(long userId, long fileEntryTypeId,
-		java.lang.String name, java.lang.String description,
-		long[] ddmStructureIds,
+		String name, String description, long[] ddmStructureIds,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_dlFileEntryTypeLocalService.updateFileEntryType(userId,
@@ -624,8 +623,7 @@ public class DLFileEntryTypeLocalServiceWrapper
 	@Override
 	public void updateFolderFileEntryTypes(
 		com.liferay.document.library.kernel.model.DLFolder dlFolder,
-		java.util.List<java.lang.Long> fileEntryTypeIds,
-		long defaultFileEntryTypeId,
+		java.util.List<Long> fileEntryTypeIds, long defaultFileEntryTypeId,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext) {
 		_dlFileEntryTypeLocalService.updateFolderFileEntryTypes(dlFolder,
 			fileEntryTypeIds, defaultFileEntryTypeId, serviceContext);

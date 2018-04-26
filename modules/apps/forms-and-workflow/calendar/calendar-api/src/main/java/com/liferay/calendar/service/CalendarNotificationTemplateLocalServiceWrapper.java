@@ -50,9 +50,9 @@ public class CalendarNotificationTemplateLocalServiceWrapper
 	public com.liferay.calendar.model.CalendarNotificationTemplate addCalendarNotificationTemplate(
 		long userId, long calendarId,
 		com.liferay.calendar.notification.NotificationType notificationType,
-		java.lang.String notificationTypeSettings,
+		String notificationTypeSettings,
 		com.liferay.calendar.notification.NotificationTemplateType notificationTemplateType,
-		java.lang.String subject, java.lang.String body,
+		String subject, String body,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _calendarNotificationTemplateLocalService.addCalendarNotificationTemplate(userId,
@@ -223,7 +223,7 @@ public class CalendarNotificationTemplateLocalServiceWrapper
 	*/
 	@Override
 	public com.liferay.calendar.model.CalendarNotificationTemplate fetchCalendarNotificationTemplateByUuidAndGroupId(
-		java.lang.String uuid, long groupId) {
+		String uuid, long groupId) {
 		return _calendarNotificationTemplateLocalService.fetchCalendarNotificationTemplateByUuidAndGroupId(uuid,
 			groupId);
 	}
@@ -257,7 +257,7 @@ public class CalendarNotificationTemplateLocalServiceWrapper
 	*/
 	@Override
 	public com.liferay.calendar.model.CalendarNotificationTemplate getCalendarNotificationTemplateByUuidAndGroupId(
-		java.lang.String uuid, long groupId)
+		String uuid, long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _calendarNotificationTemplateLocalService.getCalendarNotificationTemplateByUuidAndGroupId(uuid,
 			groupId);
@@ -290,7 +290,7 @@ public class CalendarNotificationTemplateLocalServiceWrapper
 	*/
 	@Override
 	public java.util.List<com.liferay.calendar.model.CalendarNotificationTemplate> getCalendarNotificationTemplatesByUuidAndCompanyId(
-		java.lang.String uuid, long companyId) {
+		String uuid, long companyId) {
 		return _calendarNotificationTemplateLocalService.getCalendarNotificationTemplatesByUuidAndCompanyId(uuid,
 			companyId);
 	}
@@ -307,7 +307,7 @@ public class CalendarNotificationTemplateLocalServiceWrapper
 	*/
 	@Override
 	public java.util.List<com.liferay.calendar.model.CalendarNotificationTemplate> getCalendarNotificationTemplatesByUuidAndCompanyId(
-		java.lang.String uuid, long companyId, int start, int end,
+		String uuid, long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.calendar.model.CalendarNotificationTemplate> orderByComparator) {
 		return _calendarNotificationTemplateLocalService.getCalendarNotificationTemplatesByUuidAndCompanyId(uuid,
 			companyId, start, end, orderByComparator);
@@ -340,7 +340,7 @@ public class CalendarNotificationTemplateLocalServiceWrapper
 	* @return the OSGi service identifier
 	*/
 	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
+	public String getOSGiServiceIdentifier() {
 		return _calendarNotificationTemplateLocalService.getOSGiServiceIdentifier();
 	}
 
@@ -365,9 +365,8 @@ public class CalendarNotificationTemplateLocalServiceWrapper
 
 	@Override
 	public com.liferay.calendar.model.CalendarNotificationTemplate updateCalendarNotificationTemplate(
-		long calendarNotificationTemplateId,
-		java.lang.String notificationTypeSettings, java.lang.String subject,
-		java.lang.String body,
+		long calendarNotificationTemplateId, String notificationTypeSettings,
+		String subject, String body,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _calendarNotificationTemplateLocalService.updateCalendarNotificationTemplate(calendarNotificationTemplateId,

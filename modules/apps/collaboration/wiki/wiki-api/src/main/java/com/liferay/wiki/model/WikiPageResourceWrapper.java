@@ -107,7 +107,7 @@ public class WikiPageResourceWrapper implements WikiPageResource,
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new WikiPageResourceWrapper((WikiPageResource)_wikiPageResource.clone());
 	}
 
@@ -182,7 +182,7 @@ public class WikiPageResourceWrapper implements WikiPageResource,
 	* @return the title of this wiki page resource
 	*/
 	@Override
-	public java.lang.String getTitle() {
+	public String getTitle() {
 		return _wikiPageResource.getTitle();
 	}
 
@@ -192,7 +192,7 @@ public class WikiPageResourceWrapper implements WikiPageResource,
 	* @return the uuid of this wiki page resource
 	*/
 	@Override
-	public java.lang.String getUuid() {
+	public String getUuid() {
 		return _wikiPageResource.getUuid();
 	}
 
@@ -308,7 +308,7 @@ public class WikiPageResourceWrapper implements WikiPageResource,
 	* @param title the title of this wiki page resource
 	*/
 	@Override
-	public void setTitle(java.lang.String title) {
+	public void setTitle(String title) {
 		_wikiPageResource.setTitle(title);
 	}
 
@@ -318,7 +318,7 @@ public class WikiPageResourceWrapper implements WikiPageResource,
 	* @param uuid the uuid of this wiki page resource
 	*/
 	@Override
-	public void setUuid(java.lang.String uuid) {
+	public void setUuid(String uuid) {
 		_wikiPageResource.setUuid(uuid);
 	}
 
@@ -333,7 +333,7 @@ public class WikiPageResourceWrapper implements WikiPageResource,
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _wikiPageResource.toString();
 	}
 
@@ -343,7 +343,7 @@ public class WikiPageResourceWrapper implements WikiPageResource,
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _wikiPageResource.toXmlString();
 	}
 

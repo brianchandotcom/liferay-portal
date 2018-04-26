@@ -131,7 +131,7 @@ public class BlogsStatsUserWrapper implements BlogsStatsUser,
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new BlogsStatsUserWrapper((BlogsStatsUser)_blogsStatsUser.clone());
 	}
 
@@ -246,7 +246,7 @@ public class BlogsStatsUserWrapper implements BlogsStatsUser,
 	* @return the stats user uuid of this blogs stats user
 	*/
 	@Override
-	public java.lang.String getStatsUserUuid() {
+	public String getStatsUserUuid() {
 		return _blogsStatsUser.getStatsUserUuid();
 	}
 
@@ -266,7 +266,7 @@ public class BlogsStatsUserWrapper implements BlogsStatsUser,
 	* @return the user uuid of this blogs stats user
 	*/
 	@Override
-	public java.lang.String getUserUuid() {
+	public String getUserUuid() {
 		return _blogsStatsUser.getUserUuid();
 	}
 
@@ -422,7 +422,7 @@ public class BlogsStatsUserWrapper implements BlogsStatsUser,
 	* @param statsUserUuid the stats user uuid of this blogs stats user
 	*/
 	@Override
-	public void setStatsUserUuid(java.lang.String statsUserUuid) {
+	public void setStatsUserUuid(String statsUserUuid) {
 		_blogsStatsUser.setStatsUserUuid(statsUserUuid);
 	}
 
@@ -442,7 +442,7 @@ public class BlogsStatsUserWrapper implements BlogsStatsUser,
 	* @param userUuid the user uuid of this blogs stats user
 	*/
 	@Override
-	public void setUserUuid(java.lang.String userUuid) {
+	public void setUserUuid(String userUuid) {
 		_blogsStatsUser.setUserUuid(userUuid);
 	}
 
@@ -457,7 +457,7 @@ public class BlogsStatsUserWrapper implements BlogsStatsUser,
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _blogsStatsUser.toString();
 	}
 
@@ -467,7 +467,7 @@ public class BlogsStatsUserWrapper implements BlogsStatsUser,
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _blogsStatsUser.toXmlString();
 	}
 

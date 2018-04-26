@@ -55,8 +55,7 @@ import com.liferay.portal.kernel.util.MethodKey;
 @ProviderType
 public class BackgroundTaskServiceHttp {
 	public static int getBackgroundTasksCount(HttpPrincipal httpPrincipal,
-		long groupId, java.lang.String taskExecutorClassName,
-		java.lang.String completed) {
+		long groupId, String taskExecutorClassName, String completed) {
 		try {
 			MethodKey methodKey = new MethodKey(BackgroundTaskServiceUtil.class,
 					"getBackgroundTasksCount",
@@ -83,7 +82,7 @@ public class BackgroundTaskServiceHttp {
 		}
 	}
 
-	public static java.lang.String getBackgroundTaskStatusJSON(
+	public static String getBackgroundTaskStatusJSON(
 		HttpPrincipal httpPrincipal, long backgroundTaskId) {
 		try {
 			MethodKey methodKey = new MethodKey(BackgroundTaskServiceUtil.class,
@@ -102,7 +101,7 @@ public class BackgroundTaskServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (java.lang.String)returnObj;
+			return (String)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -113,7 +112,7 @@ public class BackgroundTaskServiceHttp {
 
 	private static Log _log = LogFactoryUtil.getLog(BackgroundTaskServiceHttp.class);
 	private static final Class<?>[] _getBackgroundTasksCountParameterTypes0 = new Class[] {
-			long.class, java.lang.String.class, java.lang.String.class
+			long.class, String.class, String.class
 		};
 	private static final Class<?>[] _getBackgroundTaskStatusJSONParameterTypes1 = new Class[] {
 			long.class

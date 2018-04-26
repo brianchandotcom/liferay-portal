@@ -61,7 +61,7 @@ public interface CounterPersistence extends BasePersistence<Counter> {
 	* @param name the primary key for the new counter
 	* @return the new counter
 	*/
-	public Counter create(java.lang.String name);
+	public Counter create(String name);
 
 	/**
 	* Removes the counter with the primary key from the database. Also notifies the appropriate model listeners.
@@ -70,7 +70,7 @@ public interface CounterPersistence extends BasePersistence<Counter> {
 	* @return the counter that was removed
 	* @throws NoSuchCounterException if a counter with the primary key could not be found
 	*/
-	public Counter remove(java.lang.String name) throws NoSuchCounterException;
+	public Counter remove(String name) throws NoSuchCounterException;
 
 	public Counter updateImpl(Counter counter);
 
@@ -81,8 +81,7 @@ public interface CounterPersistence extends BasePersistence<Counter> {
 	* @return the counter
 	* @throws NoSuchCounterException if a counter with the primary key could not be found
 	*/
-	public Counter findByPrimaryKey(java.lang.String name)
-		throws NoSuchCounterException;
+	public Counter findByPrimaryKey(String name) throws NoSuchCounterException;
 
 	/**
 	* Returns the counter with the primary key or returns <code>null</code> if it could not be found.
@@ -90,7 +89,7 @@ public interface CounterPersistence extends BasePersistence<Counter> {
 	* @param name the primary key of the counter
 	* @return the counter, or <code>null</code> if a counter with the primary key could not be found
 	*/
-	public Counter fetchByPrimaryKey(java.lang.String name);
+	public Counter fetchByPrimaryKey(String name);
 
 	@Override
 	public java.util.Map<java.io.Serializable, Counter> fetchByPrimaryKeys(

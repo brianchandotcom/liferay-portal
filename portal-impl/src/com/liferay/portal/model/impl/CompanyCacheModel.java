@@ -180,7 +180,7 @@ public class CompanyCacheModel implements CacheModel<Company>, Externalizable,
 
 		_companySecurityBag = (CompanyImpl.CompanySecurityBag)objectInput.readObject();
 		_keyObj = (java.security.Key)objectInput.readObject();
-		_virtualHostname = (java.lang.String)objectInput.readObject();
+		_virtualHostname = (String)objectInput.readObject();
 	}
 
 	@Override
@@ -246,5 +246,5 @@ public class CompanyCacheModel implements CacheModel<Company>, Externalizable,
 	public boolean active;
 	public CompanyImpl.CompanySecurityBag _companySecurityBag;
 	public java.security.Key _keyObj;
-	public java.lang.String _virtualHostname;
+	public String _virtualHostname;
 }

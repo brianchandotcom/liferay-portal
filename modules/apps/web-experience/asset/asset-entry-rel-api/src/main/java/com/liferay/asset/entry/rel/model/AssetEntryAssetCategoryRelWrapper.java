@@ -97,7 +97,7 @@ public class AssetEntryAssetCategoryRelWrapper
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new AssetEntryAssetCategoryRelWrapper((AssetEntryAssetCategoryRel)_assetEntryAssetCategoryRel.clone());
 	}
 
@@ -284,7 +284,7 @@ public class AssetEntryAssetCategoryRelWrapper
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _assetEntryAssetCategoryRel.toString();
 	}
 
@@ -294,7 +294,7 @@ public class AssetEntryAssetCategoryRelWrapper
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _assetEntryAssetCategoryRel.toXmlString();
 	}
 

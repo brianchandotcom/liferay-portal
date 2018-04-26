@@ -293,7 +293,7 @@ public class DDMFormInstanceVersionUtil {
 	* @throws NoSuchFormInstanceVersionException if a matching ddm form instance version could not be found
 	*/
 	public static DDMFormInstanceVersion findByF_V(long formInstanceId,
-		java.lang.String version)
+		String version)
 		throws com.liferay.dynamic.data.mapping.exception.NoSuchFormInstanceVersionException {
 		return getPersistence().findByF_V(formInstanceId, version);
 	}
@@ -306,7 +306,7 @@ public class DDMFormInstanceVersionUtil {
 	* @return the matching ddm form instance version, or <code>null</code> if a matching ddm form instance version could not be found
 	*/
 	public static DDMFormInstanceVersion fetchByF_V(long formInstanceId,
-		java.lang.String version) {
+		String version) {
 		return getPersistence().fetchByF_V(formInstanceId, version);
 	}
 
@@ -319,7 +319,7 @@ public class DDMFormInstanceVersionUtil {
 	* @return the matching ddm form instance version, or <code>null</code> if a matching ddm form instance version could not be found
 	*/
 	public static DDMFormInstanceVersion fetchByF_V(long formInstanceId,
-		java.lang.String version, boolean retrieveFromCache) {
+		String version, boolean retrieveFromCache) {
 		return getPersistence()
 				   .fetchByF_V(formInstanceId, version, retrieveFromCache);
 	}
@@ -332,7 +332,7 @@ public class DDMFormInstanceVersionUtil {
 	* @return the ddm form instance version that was removed
 	*/
 	public static DDMFormInstanceVersion removeByF_V(long formInstanceId,
-		java.lang.String version)
+		String version)
 		throws com.liferay.dynamic.data.mapping.exception.NoSuchFormInstanceVersionException {
 		return getPersistence().removeByF_V(formInstanceId, version);
 	}
@@ -344,7 +344,7 @@ public class DDMFormInstanceVersionUtil {
 	* @param version the version
 	* @return the number of matching ddm form instance versions
 	*/
-	public static int countByF_V(long formInstanceId, java.lang.String version) {
+	public static int countByF_V(long formInstanceId, String version) {
 		return getPersistence().countByF_V(formInstanceId, version);
 	}
 
@@ -677,7 +677,7 @@ public class DDMFormInstanceVersionUtil {
 		return getPersistence().countAll();
 	}
 
-	public static java.util.Set<java.lang.String> getBadColumnNames() {
+	public static java.util.Set<String> getBadColumnNames() {
 		return getPersistence().getBadColumnNames();
 	}
 

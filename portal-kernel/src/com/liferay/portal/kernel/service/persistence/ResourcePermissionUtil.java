@@ -115,7 +115,7 @@ public class ResourcePermissionUtil {
 	* @param name the name
 	* @return the matching resource permissions
 	*/
-	public static List<ResourcePermission> findByName(java.lang.String name) {
+	public static List<ResourcePermission> findByName(String name) {
 		return getPersistence().findByName(name);
 	}
 
@@ -131,8 +131,8 @@ public class ResourcePermissionUtil {
 	* @param end the upper bound of the range of resource permissions (not inclusive)
 	* @return the range of matching resource permissions
 	*/
-	public static List<ResourcePermission> findByName(java.lang.String name,
-		int start, int end) {
+	public static List<ResourcePermission> findByName(String name, int start,
+		int end) {
 		return getPersistence().findByName(name, start, end);
 	}
 
@@ -149,9 +149,8 @@ public class ResourcePermissionUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching resource permissions
 	*/
-	public static List<ResourcePermission> findByName(java.lang.String name,
-		int start, int end,
-		OrderByComparator<ResourcePermission> orderByComparator) {
+	public static List<ResourcePermission> findByName(String name, int start,
+		int end, OrderByComparator<ResourcePermission> orderByComparator) {
 		return getPersistence().findByName(name, start, end, orderByComparator);
 	}
 
@@ -169,9 +168,8 @@ public class ResourcePermissionUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching resource permissions
 	*/
-	public static List<ResourcePermission> findByName(java.lang.String name,
-		int start, int end,
-		OrderByComparator<ResourcePermission> orderByComparator,
+	public static List<ResourcePermission> findByName(String name, int start,
+		int end, OrderByComparator<ResourcePermission> orderByComparator,
 		boolean retrieveFromCache) {
 		return getPersistence()
 				   .findByName(name, start, end, orderByComparator,
@@ -186,7 +184,7 @@ public class ResourcePermissionUtil {
 	* @return the first matching resource permission
 	* @throws NoSuchResourcePermissionException if a matching resource permission could not be found
 	*/
-	public static ResourcePermission findByName_First(java.lang.String name,
+	public static ResourcePermission findByName_First(String name,
 		OrderByComparator<ResourcePermission> orderByComparator)
 		throws com.liferay.portal.kernel.exception.NoSuchResourcePermissionException {
 		return getPersistence().findByName_First(name, orderByComparator);
@@ -199,7 +197,7 @@ public class ResourcePermissionUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching resource permission, or <code>null</code> if a matching resource permission could not be found
 	*/
-	public static ResourcePermission fetchByName_First(java.lang.String name,
+	public static ResourcePermission fetchByName_First(String name,
 		OrderByComparator<ResourcePermission> orderByComparator) {
 		return getPersistence().fetchByName_First(name, orderByComparator);
 	}
@@ -212,7 +210,7 @@ public class ResourcePermissionUtil {
 	* @return the last matching resource permission
 	* @throws NoSuchResourcePermissionException if a matching resource permission could not be found
 	*/
-	public static ResourcePermission findByName_Last(java.lang.String name,
+	public static ResourcePermission findByName_Last(String name,
 		OrderByComparator<ResourcePermission> orderByComparator)
 		throws com.liferay.portal.kernel.exception.NoSuchResourcePermissionException {
 		return getPersistence().findByName_Last(name, orderByComparator);
@@ -225,7 +223,7 @@ public class ResourcePermissionUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching resource permission, or <code>null</code> if a matching resource permission could not be found
 	*/
-	public static ResourcePermission fetchByName_Last(java.lang.String name,
+	public static ResourcePermission fetchByName_Last(String name,
 		OrderByComparator<ResourcePermission> orderByComparator) {
 		return getPersistence().fetchByName_Last(name, orderByComparator);
 	}
@@ -240,7 +238,7 @@ public class ResourcePermissionUtil {
 	* @throws NoSuchResourcePermissionException if a resource permission with the primary key could not be found
 	*/
 	public static ResourcePermission[] findByName_PrevAndNext(
-		long resourcePermissionId, java.lang.String name,
+		long resourcePermissionId, String name,
 		OrderByComparator<ResourcePermission> orderByComparator)
 		throws com.liferay.portal.kernel.exception.NoSuchResourcePermissionException {
 		return getPersistence()
@@ -253,7 +251,7 @@ public class ResourcePermissionUtil {
 	*
 	* @param name the name
 	*/
-	public static void removeByName(java.lang.String name) {
+	public static void removeByName(String name) {
 		getPersistence().removeByName(name);
 	}
 
@@ -263,7 +261,7 @@ public class ResourcePermissionUtil {
 	* @param name the name
 	* @return the number of matching resource permissions
 	*/
-	public static int countByName(java.lang.String name) {
+	public static int countByName(String name) {
 		return getPersistence().countByName(name);
 	}
 
@@ -670,7 +668,7 @@ public class ResourcePermissionUtil {
 	* @return the matching resource permissions
 	*/
 	public static List<ResourcePermission> findByC_LikeP(long companyId,
-		java.lang.String primKey) {
+		String primKey) {
 		return getPersistence().findByC_LikeP(companyId, primKey);
 	}
 
@@ -688,7 +686,7 @@ public class ResourcePermissionUtil {
 	* @return the range of matching resource permissions
 	*/
 	public static List<ResourcePermission> findByC_LikeP(long companyId,
-		java.lang.String primKey, int start, int end) {
+		String primKey, int start, int end) {
 		return getPersistence().findByC_LikeP(companyId, primKey, start, end);
 	}
 
@@ -707,7 +705,7 @@ public class ResourcePermissionUtil {
 	* @return the ordered range of matching resource permissions
 	*/
 	public static List<ResourcePermission> findByC_LikeP(long companyId,
-		java.lang.String primKey, int start, int end,
+		String primKey, int start, int end,
 		OrderByComparator<ResourcePermission> orderByComparator) {
 		return getPersistence()
 				   .findByC_LikeP(companyId, primKey, start, end,
@@ -730,7 +728,7 @@ public class ResourcePermissionUtil {
 	* @return the ordered range of matching resource permissions
 	*/
 	public static List<ResourcePermission> findByC_LikeP(long companyId,
-		java.lang.String primKey, int start, int end,
+		String primKey, int start, int end,
 		OrderByComparator<ResourcePermission> orderByComparator,
 		boolean retrieveFromCache) {
 		return getPersistence()
@@ -748,8 +746,7 @@ public class ResourcePermissionUtil {
 	* @throws NoSuchResourcePermissionException if a matching resource permission could not be found
 	*/
 	public static ResourcePermission findByC_LikeP_First(long companyId,
-		java.lang.String primKey,
-		OrderByComparator<ResourcePermission> orderByComparator)
+		String primKey, OrderByComparator<ResourcePermission> orderByComparator)
 		throws com.liferay.portal.kernel.exception.NoSuchResourcePermissionException {
 		return getPersistence()
 				   .findByC_LikeP_First(companyId, primKey, orderByComparator);
@@ -764,8 +761,7 @@ public class ResourcePermissionUtil {
 	* @return the first matching resource permission, or <code>null</code> if a matching resource permission could not be found
 	*/
 	public static ResourcePermission fetchByC_LikeP_First(long companyId,
-		java.lang.String primKey,
-		OrderByComparator<ResourcePermission> orderByComparator) {
+		String primKey, OrderByComparator<ResourcePermission> orderByComparator) {
 		return getPersistence()
 				   .fetchByC_LikeP_First(companyId, primKey, orderByComparator);
 	}
@@ -780,8 +776,7 @@ public class ResourcePermissionUtil {
 	* @throws NoSuchResourcePermissionException if a matching resource permission could not be found
 	*/
 	public static ResourcePermission findByC_LikeP_Last(long companyId,
-		java.lang.String primKey,
-		OrderByComparator<ResourcePermission> orderByComparator)
+		String primKey, OrderByComparator<ResourcePermission> orderByComparator)
 		throws com.liferay.portal.kernel.exception.NoSuchResourcePermissionException {
 		return getPersistence()
 				   .findByC_LikeP_Last(companyId, primKey, orderByComparator);
@@ -796,8 +791,7 @@ public class ResourcePermissionUtil {
 	* @return the last matching resource permission, or <code>null</code> if a matching resource permission could not be found
 	*/
 	public static ResourcePermission fetchByC_LikeP_Last(long companyId,
-		java.lang.String primKey,
-		OrderByComparator<ResourcePermission> orderByComparator) {
+		String primKey, OrderByComparator<ResourcePermission> orderByComparator) {
 		return getPersistence()
 				   .fetchByC_LikeP_Last(companyId, primKey, orderByComparator);
 	}
@@ -813,7 +807,7 @@ public class ResourcePermissionUtil {
 	* @throws NoSuchResourcePermissionException if a resource permission with the primary key could not be found
 	*/
 	public static ResourcePermission[] findByC_LikeP_PrevAndNext(
-		long resourcePermissionId, long companyId, java.lang.String primKey,
+		long resourcePermissionId, long companyId, String primKey,
 		OrderByComparator<ResourcePermission> orderByComparator)
 		throws com.liferay.portal.kernel.exception.NoSuchResourcePermissionException {
 		return getPersistence()
@@ -827,7 +821,7 @@ public class ResourcePermissionUtil {
 	* @param companyId the company ID
 	* @param primKey the prim key
 	*/
-	public static void removeByC_LikeP(long companyId, java.lang.String primKey) {
+	public static void removeByC_LikeP(long companyId, String primKey) {
 		getPersistence().removeByC_LikeP(companyId, primKey);
 	}
 
@@ -838,7 +832,7 @@ public class ResourcePermissionUtil {
 	* @param primKey the prim key
 	* @return the number of matching resource permissions
 	*/
-	public static int countByC_LikeP(long companyId, java.lang.String primKey) {
+	public static int countByC_LikeP(long companyId, String primKey) {
 		return getPersistence().countByC_LikeP(companyId, primKey);
 	}
 
@@ -851,7 +845,7 @@ public class ResourcePermissionUtil {
 	* @return the matching resource permissions
 	*/
 	public static List<ResourcePermission> findByC_N_S(long companyId,
-		java.lang.String name, int scope) {
+		String name, int scope) {
 		return getPersistence().findByC_N_S(companyId, name, scope);
 	}
 
@@ -870,7 +864,7 @@ public class ResourcePermissionUtil {
 	* @return the range of matching resource permissions
 	*/
 	public static List<ResourcePermission> findByC_N_S(long companyId,
-		java.lang.String name, int scope, int start, int end) {
+		String name, int scope, int start, int end) {
 		return getPersistence().findByC_N_S(companyId, name, scope, start, end);
 	}
 
@@ -890,7 +884,7 @@ public class ResourcePermissionUtil {
 	* @return the ordered range of matching resource permissions
 	*/
 	public static List<ResourcePermission> findByC_N_S(long companyId,
-		java.lang.String name, int scope, int start, int end,
+		String name, int scope, int start, int end,
 		OrderByComparator<ResourcePermission> orderByComparator) {
 		return getPersistence()
 				   .findByC_N_S(companyId, name, scope, start, end,
@@ -914,7 +908,7 @@ public class ResourcePermissionUtil {
 	* @return the ordered range of matching resource permissions
 	*/
 	public static List<ResourcePermission> findByC_N_S(long companyId,
-		java.lang.String name, int scope, int start, int end,
+		String name, int scope, int start, int end,
 		OrderByComparator<ResourcePermission> orderByComparator,
 		boolean retrieveFromCache) {
 		return getPersistence()
@@ -933,7 +927,7 @@ public class ResourcePermissionUtil {
 	* @throws NoSuchResourcePermissionException if a matching resource permission could not be found
 	*/
 	public static ResourcePermission findByC_N_S_First(long companyId,
-		java.lang.String name, int scope,
+		String name, int scope,
 		OrderByComparator<ResourcePermission> orderByComparator)
 		throws com.liferay.portal.kernel.exception.NoSuchResourcePermissionException {
 		return getPersistence()
@@ -950,7 +944,7 @@ public class ResourcePermissionUtil {
 	* @return the first matching resource permission, or <code>null</code> if a matching resource permission could not be found
 	*/
 	public static ResourcePermission fetchByC_N_S_First(long companyId,
-		java.lang.String name, int scope,
+		String name, int scope,
 		OrderByComparator<ResourcePermission> orderByComparator) {
 		return getPersistence()
 				   .fetchByC_N_S_First(companyId, name, scope, orderByComparator);
@@ -967,7 +961,7 @@ public class ResourcePermissionUtil {
 	* @throws NoSuchResourcePermissionException if a matching resource permission could not be found
 	*/
 	public static ResourcePermission findByC_N_S_Last(long companyId,
-		java.lang.String name, int scope,
+		String name, int scope,
 		OrderByComparator<ResourcePermission> orderByComparator)
 		throws com.liferay.portal.kernel.exception.NoSuchResourcePermissionException {
 		return getPersistence()
@@ -984,7 +978,7 @@ public class ResourcePermissionUtil {
 	* @return the last matching resource permission, or <code>null</code> if a matching resource permission could not be found
 	*/
 	public static ResourcePermission fetchByC_N_S_Last(long companyId,
-		java.lang.String name, int scope,
+		String name, int scope,
 		OrderByComparator<ResourcePermission> orderByComparator) {
 		return getPersistence()
 				   .fetchByC_N_S_Last(companyId, name, scope, orderByComparator);
@@ -1002,8 +996,8 @@ public class ResourcePermissionUtil {
 	* @throws NoSuchResourcePermissionException if a resource permission with the primary key could not be found
 	*/
 	public static ResourcePermission[] findByC_N_S_PrevAndNext(
-		long resourcePermissionId, long companyId, java.lang.String name,
-		int scope, OrderByComparator<ResourcePermission> orderByComparator)
+		long resourcePermissionId, long companyId, String name, int scope,
+		OrderByComparator<ResourcePermission> orderByComparator)
 		throws com.liferay.portal.kernel.exception.NoSuchResourcePermissionException {
 		return getPersistence()
 				   .findByC_N_S_PrevAndNext(resourcePermissionId, companyId,
@@ -1017,8 +1011,7 @@ public class ResourcePermissionUtil {
 	* @param name the name
 	* @param scope the scope
 	*/
-	public static void removeByC_N_S(long companyId, java.lang.String name,
-		int scope) {
+	public static void removeByC_N_S(long companyId, String name, int scope) {
 		getPersistence().removeByC_N_S(companyId, name, scope);
 	}
 
@@ -1030,8 +1023,7 @@ public class ResourcePermissionUtil {
 	* @param scope the scope
 	* @return the number of matching resource permissions
 	*/
-	public static int countByC_N_S(long companyId, java.lang.String name,
-		int scope) {
+	public static int countByC_N_S(long companyId, String name, int scope) {
 		return getPersistence().countByC_N_S(companyId, name, scope);
 	}
 
@@ -1044,7 +1036,7 @@ public class ResourcePermissionUtil {
 	* @return the matching resource permissions
 	*/
 	public static List<ResourcePermission> findByC_S_P(long companyId,
-		int scope, java.lang.String primKey) {
+		int scope, String primKey) {
 		return getPersistence().findByC_S_P(companyId, scope, primKey);
 	}
 
@@ -1063,7 +1055,7 @@ public class ResourcePermissionUtil {
 	* @return the range of matching resource permissions
 	*/
 	public static List<ResourcePermission> findByC_S_P(long companyId,
-		int scope, java.lang.String primKey, int start, int end) {
+		int scope, String primKey, int start, int end) {
 		return getPersistence()
 				   .findByC_S_P(companyId, scope, primKey, start, end);
 	}
@@ -1084,7 +1076,7 @@ public class ResourcePermissionUtil {
 	* @return the ordered range of matching resource permissions
 	*/
 	public static List<ResourcePermission> findByC_S_P(long companyId,
-		int scope, java.lang.String primKey, int start, int end,
+		int scope, String primKey, int start, int end,
 		OrderByComparator<ResourcePermission> orderByComparator) {
 		return getPersistence()
 				   .findByC_S_P(companyId, scope, primKey, start, end,
@@ -1108,7 +1100,7 @@ public class ResourcePermissionUtil {
 	* @return the ordered range of matching resource permissions
 	*/
 	public static List<ResourcePermission> findByC_S_P(long companyId,
-		int scope, java.lang.String primKey, int start, int end,
+		int scope, String primKey, int start, int end,
 		OrderByComparator<ResourcePermission> orderByComparator,
 		boolean retrieveFromCache) {
 		return getPersistence()
@@ -1127,7 +1119,7 @@ public class ResourcePermissionUtil {
 	* @throws NoSuchResourcePermissionException if a matching resource permission could not be found
 	*/
 	public static ResourcePermission findByC_S_P_First(long companyId,
-		int scope, java.lang.String primKey,
+		int scope, String primKey,
 		OrderByComparator<ResourcePermission> orderByComparator)
 		throws com.liferay.portal.kernel.exception.NoSuchResourcePermissionException {
 		return getPersistence()
@@ -1145,7 +1137,7 @@ public class ResourcePermissionUtil {
 	* @return the first matching resource permission, or <code>null</code> if a matching resource permission could not be found
 	*/
 	public static ResourcePermission fetchByC_S_P_First(long companyId,
-		int scope, java.lang.String primKey,
+		int scope, String primKey,
 		OrderByComparator<ResourcePermission> orderByComparator) {
 		return getPersistence()
 				   .fetchByC_S_P_First(companyId, scope, primKey,
@@ -1163,7 +1155,7 @@ public class ResourcePermissionUtil {
 	* @throws NoSuchResourcePermissionException if a matching resource permission could not be found
 	*/
 	public static ResourcePermission findByC_S_P_Last(long companyId,
-		int scope, java.lang.String primKey,
+		int scope, String primKey,
 		OrderByComparator<ResourcePermission> orderByComparator)
 		throws com.liferay.portal.kernel.exception.NoSuchResourcePermissionException {
 		return getPersistence()
@@ -1181,7 +1173,7 @@ public class ResourcePermissionUtil {
 	* @return the last matching resource permission, or <code>null</code> if a matching resource permission could not be found
 	*/
 	public static ResourcePermission fetchByC_S_P_Last(long companyId,
-		int scope, java.lang.String primKey,
+		int scope, String primKey,
 		OrderByComparator<ResourcePermission> orderByComparator) {
 		return getPersistence()
 				   .fetchByC_S_P_Last(companyId, scope, primKey,
@@ -1200,8 +1192,7 @@ public class ResourcePermissionUtil {
 	* @throws NoSuchResourcePermissionException if a resource permission with the primary key could not be found
 	*/
 	public static ResourcePermission[] findByC_S_P_PrevAndNext(
-		long resourcePermissionId, long companyId, int scope,
-		java.lang.String primKey,
+		long resourcePermissionId, long companyId, int scope, String primKey,
 		OrderByComparator<ResourcePermission> orderByComparator)
 		throws com.liferay.portal.kernel.exception.NoSuchResourcePermissionException {
 		return getPersistence()
@@ -1216,8 +1207,7 @@ public class ResourcePermissionUtil {
 	* @param scope the scope
 	* @param primKey the prim key
 	*/
-	public static void removeByC_S_P(long companyId, int scope,
-		java.lang.String primKey) {
+	public static void removeByC_S_P(long companyId, int scope, String primKey) {
 		getPersistence().removeByC_S_P(companyId, scope, primKey);
 	}
 
@@ -1229,8 +1219,7 @@ public class ResourcePermissionUtil {
 	* @param primKey the prim key
 	* @return the number of matching resource permissions
 	*/
-	public static int countByC_S_P(long companyId, int scope,
-		java.lang.String primKey) {
+	public static int countByC_S_P(long companyId, int scope, String primKey) {
 		return getPersistence().countByC_S_P(companyId, scope, primKey);
 	}
 
@@ -1244,7 +1233,7 @@ public class ResourcePermissionUtil {
 	* @return the matching resource permissions
 	*/
 	public static List<ResourcePermission> findByC_N_S_P(long companyId,
-		java.lang.String name, int scope, java.lang.String primKey) {
+		String name, int scope, String primKey) {
 		return getPersistence().findByC_N_S_P(companyId, name, scope, primKey);
 	}
 
@@ -1264,8 +1253,7 @@ public class ResourcePermissionUtil {
 	* @return the range of matching resource permissions
 	*/
 	public static List<ResourcePermission> findByC_N_S_P(long companyId,
-		java.lang.String name, int scope, java.lang.String primKey, int start,
-		int end) {
+		String name, int scope, String primKey, int start, int end) {
 		return getPersistence()
 				   .findByC_N_S_P(companyId, name, scope, primKey, start, end);
 	}
@@ -1287,8 +1275,8 @@ public class ResourcePermissionUtil {
 	* @return the ordered range of matching resource permissions
 	*/
 	public static List<ResourcePermission> findByC_N_S_P(long companyId,
-		java.lang.String name, int scope, java.lang.String primKey, int start,
-		int end, OrderByComparator<ResourcePermission> orderByComparator) {
+		String name, int scope, String primKey, int start, int end,
+		OrderByComparator<ResourcePermission> orderByComparator) {
 		return getPersistence()
 				   .findByC_N_S_P(companyId, name, scope, primKey, start, end,
 			orderByComparator);
@@ -1312,8 +1300,8 @@ public class ResourcePermissionUtil {
 	* @return the ordered range of matching resource permissions
 	*/
 	public static List<ResourcePermission> findByC_N_S_P(long companyId,
-		java.lang.String name, int scope, java.lang.String primKey, int start,
-		int end, OrderByComparator<ResourcePermission> orderByComparator,
+		String name, int scope, String primKey, int start, int end,
+		OrderByComparator<ResourcePermission> orderByComparator,
 		boolean retrieveFromCache) {
 		return getPersistence()
 				   .findByC_N_S_P(companyId, name, scope, primKey, start, end,
@@ -1332,7 +1320,7 @@ public class ResourcePermissionUtil {
 	* @throws NoSuchResourcePermissionException if a matching resource permission could not be found
 	*/
 	public static ResourcePermission findByC_N_S_P_First(long companyId,
-		java.lang.String name, int scope, java.lang.String primKey,
+		String name, int scope, String primKey,
 		OrderByComparator<ResourcePermission> orderByComparator)
 		throws com.liferay.portal.kernel.exception.NoSuchResourcePermissionException {
 		return getPersistence()
@@ -1351,7 +1339,7 @@ public class ResourcePermissionUtil {
 	* @return the first matching resource permission, or <code>null</code> if a matching resource permission could not be found
 	*/
 	public static ResourcePermission fetchByC_N_S_P_First(long companyId,
-		java.lang.String name, int scope, java.lang.String primKey,
+		String name, int scope, String primKey,
 		OrderByComparator<ResourcePermission> orderByComparator) {
 		return getPersistence()
 				   .fetchByC_N_S_P_First(companyId, name, scope, primKey,
@@ -1370,7 +1358,7 @@ public class ResourcePermissionUtil {
 	* @throws NoSuchResourcePermissionException if a matching resource permission could not be found
 	*/
 	public static ResourcePermission findByC_N_S_P_Last(long companyId,
-		java.lang.String name, int scope, java.lang.String primKey,
+		String name, int scope, String primKey,
 		OrderByComparator<ResourcePermission> orderByComparator)
 		throws com.liferay.portal.kernel.exception.NoSuchResourcePermissionException {
 		return getPersistence()
@@ -1389,7 +1377,7 @@ public class ResourcePermissionUtil {
 	* @return the last matching resource permission, or <code>null</code> if a matching resource permission could not be found
 	*/
 	public static ResourcePermission fetchByC_N_S_P_Last(long companyId,
-		java.lang.String name, int scope, java.lang.String primKey,
+		String name, int scope, String primKey,
 		OrderByComparator<ResourcePermission> orderByComparator) {
 		return getPersistence()
 				   .fetchByC_N_S_P_Last(companyId, name, scope, primKey,
@@ -1409,9 +1397,8 @@ public class ResourcePermissionUtil {
 	* @throws NoSuchResourcePermissionException if a resource permission with the primary key could not be found
 	*/
 	public static ResourcePermission[] findByC_N_S_P_PrevAndNext(
-		long resourcePermissionId, long companyId, java.lang.String name,
-		int scope, java.lang.String primKey,
-		OrderByComparator<ResourcePermission> orderByComparator)
+		long resourcePermissionId, long companyId, String name, int scope,
+		String primKey, OrderByComparator<ResourcePermission> orderByComparator)
 		throws com.liferay.portal.kernel.exception.NoSuchResourcePermissionException {
 		return getPersistence()
 				   .findByC_N_S_P_PrevAndNext(resourcePermissionId, companyId,
@@ -1426,8 +1413,8 @@ public class ResourcePermissionUtil {
 	* @param scope the scope
 	* @param primKey the prim key
 	*/
-	public static void removeByC_N_S_P(long companyId, java.lang.String name,
-		int scope, java.lang.String primKey) {
+	public static void removeByC_N_S_P(long companyId, String name, int scope,
+		String primKey) {
 		getPersistence().removeByC_N_S_P(companyId, name, scope, primKey);
 	}
 
@@ -1440,8 +1427,8 @@ public class ResourcePermissionUtil {
 	* @param primKey the prim key
 	* @return the number of matching resource permissions
 	*/
-	public static int countByC_N_S_P(long companyId, java.lang.String name,
-		int scope, java.lang.String primKey) {
+	public static int countByC_N_S_P(long companyId, String name, int scope,
+		String primKey) {
 		return getPersistence().countByC_N_S_P(companyId, name, scope, primKey);
 	}
 
@@ -1460,8 +1447,7 @@ public class ResourcePermissionUtil {
 	* @return the matching resource permissions
 	*/
 	public static List<ResourcePermission> findByC_N_S_P_R(long companyId,
-		java.lang.String name, int scope, java.lang.String primKey,
-		long[] roleIds) {
+		String name, int scope, String primKey, long[] roleIds) {
 		return getPersistence()
 				   .findByC_N_S_P_R(companyId, name, scope, primKey, roleIds);
 	}
@@ -1483,8 +1469,8 @@ public class ResourcePermissionUtil {
 	* @return the range of matching resource permissions
 	*/
 	public static List<ResourcePermission> findByC_N_S_P_R(long companyId,
-		java.lang.String name, int scope, java.lang.String primKey,
-		long[] roleIds, int start, int end) {
+		String name, int scope, String primKey, long[] roleIds, int start,
+		int end) {
 		return getPersistence()
 				   .findByC_N_S_P_R(companyId, name, scope, primKey, roleIds,
 			start, end);
@@ -1508,9 +1494,8 @@ public class ResourcePermissionUtil {
 	* @return the ordered range of matching resource permissions
 	*/
 	public static List<ResourcePermission> findByC_N_S_P_R(long companyId,
-		java.lang.String name, int scope, java.lang.String primKey,
-		long[] roleIds, int start, int end,
-		OrderByComparator<ResourcePermission> orderByComparator) {
+		String name, int scope, String primKey, long[] roleIds, int start,
+		int end, OrderByComparator<ResourcePermission> orderByComparator) {
 		return getPersistence()
 				   .findByC_N_S_P_R(companyId, name, scope, primKey, roleIds,
 			start, end, orderByComparator);
@@ -1535,9 +1520,8 @@ public class ResourcePermissionUtil {
 	* @return the ordered range of matching resource permissions
 	*/
 	public static List<ResourcePermission> findByC_N_S_P_R(long companyId,
-		java.lang.String name, int scope, java.lang.String primKey,
-		long[] roleIds, int start, int end,
-		OrderByComparator<ResourcePermission> orderByComparator,
+		String name, int scope, String primKey, long[] roleIds, int start,
+		int end, OrderByComparator<ResourcePermission> orderByComparator,
 		boolean retrieveFromCache) {
 		return getPersistence()
 				   .findByC_N_S_P_R(companyId, name, scope, primKey, roleIds,
@@ -1556,7 +1540,7 @@ public class ResourcePermissionUtil {
 	* @throws NoSuchResourcePermissionException if a matching resource permission could not be found
 	*/
 	public static ResourcePermission findByC_N_S_P_R(long companyId,
-		java.lang.String name, int scope, java.lang.String primKey, long roleId)
+		String name, int scope, String primKey, long roleId)
 		throws com.liferay.portal.kernel.exception.NoSuchResourcePermissionException {
 		return getPersistence()
 				   .findByC_N_S_P_R(companyId, name, scope, primKey, roleId);
@@ -1573,7 +1557,7 @@ public class ResourcePermissionUtil {
 	* @return the matching resource permission, or <code>null</code> if a matching resource permission could not be found
 	*/
 	public static ResourcePermission fetchByC_N_S_P_R(long companyId,
-		java.lang.String name, int scope, java.lang.String primKey, long roleId) {
+		String name, int scope, String primKey, long roleId) {
 		return getPersistence()
 				   .fetchByC_N_S_P_R(companyId, name, scope, primKey, roleId);
 	}
@@ -1590,8 +1574,8 @@ public class ResourcePermissionUtil {
 	* @return the matching resource permission, or <code>null</code> if a matching resource permission could not be found
 	*/
 	public static ResourcePermission fetchByC_N_S_P_R(long companyId,
-		java.lang.String name, int scope, java.lang.String primKey,
-		long roleId, boolean retrieveFromCache) {
+		String name, int scope, String primKey, long roleId,
+		boolean retrieveFromCache) {
 		return getPersistence()
 				   .fetchByC_N_S_P_R(companyId, name, scope, primKey, roleId,
 			retrieveFromCache);
@@ -1608,7 +1592,7 @@ public class ResourcePermissionUtil {
 	* @return the resource permission that was removed
 	*/
 	public static ResourcePermission removeByC_N_S_P_R(long companyId,
-		java.lang.String name, int scope, java.lang.String primKey, long roleId)
+		String name, int scope, String primKey, long roleId)
 		throws com.liferay.portal.kernel.exception.NoSuchResourcePermissionException {
 		return getPersistence()
 				   .removeByC_N_S_P_R(companyId, name, scope, primKey, roleId);
@@ -1624,8 +1608,8 @@ public class ResourcePermissionUtil {
 	* @param roleId the role ID
 	* @return the number of matching resource permissions
 	*/
-	public static int countByC_N_S_P_R(long companyId, java.lang.String name,
-		int scope, java.lang.String primKey, long roleId) {
+	public static int countByC_N_S_P_R(long companyId, String name, int scope,
+		String primKey, long roleId) {
 		return getPersistence()
 				   .countByC_N_S_P_R(companyId, name, scope, primKey, roleId);
 	}
@@ -1640,8 +1624,8 @@ public class ResourcePermissionUtil {
 	* @param roleIds the role IDs
 	* @return the number of matching resource permissions
 	*/
-	public static int countByC_N_S_P_R(long companyId, java.lang.String name,
-		int scope, java.lang.String primKey, long[] roleIds) {
+	public static int countByC_N_S_P_R(long companyId, String name, int scope,
+		String primKey, long[] roleIds) {
 		return getPersistence()
 				   .countByC_N_S_P_R(companyId, name, scope, primKey, roleIds);
 	}
@@ -1658,7 +1642,7 @@ public class ResourcePermissionUtil {
 	* @return the matching resource permissions
 	*/
 	public static List<ResourcePermission> findByC_N_S_P_R_V(long companyId,
-		java.lang.String name, int scope, long primKeyId, long roleId,
+		String name, int scope, long primKeyId, long roleId,
 		boolean viewActionId) {
 		return getPersistence()
 				   .findByC_N_S_P_R_V(companyId, name, scope, primKeyId,
@@ -1683,7 +1667,7 @@ public class ResourcePermissionUtil {
 	* @return the range of matching resource permissions
 	*/
 	public static List<ResourcePermission> findByC_N_S_P_R_V(long companyId,
-		java.lang.String name, int scope, long primKeyId, long roleId,
+		String name, int scope, long primKeyId, long roleId,
 		boolean viewActionId, int start, int end) {
 		return getPersistence()
 				   .findByC_N_S_P_R_V(companyId, name, scope, primKeyId,
@@ -1709,7 +1693,7 @@ public class ResourcePermissionUtil {
 	* @return the ordered range of matching resource permissions
 	*/
 	public static List<ResourcePermission> findByC_N_S_P_R_V(long companyId,
-		java.lang.String name, int scope, long primKeyId, long roleId,
+		String name, int scope, long primKeyId, long roleId,
 		boolean viewActionId, int start, int end,
 		OrderByComparator<ResourcePermission> orderByComparator) {
 		return getPersistence()
@@ -1737,7 +1721,7 @@ public class ResourcePermissionUtil {
 	* @return the ordered range of matching resource permissions
 	*/
 	public static List<ResourcePermission> findByC_N_S_P_R_V(long companyId,
-		java.lang.String name, int scope, long primKeyId, long roleId,
+		String name, int scope, long primKeyId, long roleId,
 		boolean viewActionId, int start, int end,
 		OrderByComparator<ResourcePermission> orderByComparator,
 		boolean retrieveFromCache) {
@@ -1761,7 +1745,7 @@ public class ResourcePermissionUtil {
 	* @throws NoSuchResourcePermissionException if a matching resource permission could not be found
 	*/
 	public static ResourcePermission findByC_N_S_P_R_V_First(long companyId,
-		java.lang.String name, int scope, long primKeyId, long roleId,
+		String name, int scope, long primKeyId, long roleId,
 		boolean viewActionId,
 		OrderByComparator<ResourcePermission> orderByComparator)
 		throws com.liferay.portal.kernel.exception.NoSuchResourcePermissionException {
@@ -1783,7 +1767,7 @@ public class ResourcePermissionUtil {
 	* @return the first matching resource permission, or <code>null</code> if a matching resource permission could not be found
 	*/
 	public static ResourcePermission fetchByC_N_S_P_R_V_First(long companyId,
-		java.lang.String name, int scope, long primKeyId, long roleId,
+		String name, int scope, long primKeyId, long roleId,
 		boolean viewActionId,
 		OrderByComparator<ResourcePermission> orderByComparator) {
 		return getPersistence()
@@ -1805,7 +1789,7 @@ public class ResourcePermissionUtil {
 	* @throws NoSuchResourcePermissionException if a matching resource permission could not be found
 	*/
 	public static ResourcePermission findByC_N_S_P_R_V_Last(long companyId,
-		java.lang.String name, int scope, long primKeyId, long roleId,
+		String name, int scope, long primKeyId, long roleId,
 		boolean viewActionId,
 		OrderByComparator<ResourcePermission> orderByComparator)
 		throws com.liferay.portal.kernel.exception.NoSuchResourcePermissionException {
@@ -1827,7 +1811,7 @@ public class ResourcePermissionUtil {
 	* @return the last matching resource permission, or <code>null</code> if a matching resource permission could not be found
 	*/
 	public static ResourcePermission fetchByC_N_S_P_R_V_Last(long companyId,
-		java.lang.String name, int scope, long primKeyId, long roleId,
+		String name, int scope, long primKeyId, long roleId,
 		boolean viewActionId,
 		OrderByComparator<ResourcePermission> orderByComparator) {
 		return getPersistence()
@@ -1850,8 +1834,8 @@ public class ResourcePermissionUtil {
 	* @throws NoSuchResourcePermissionException if a resource permission with the primary key could not be found
 	*/
 	public static ResourcePermission[] findByC_N_S_P_R_V_PrevAndNext(
-		long resourcePermissionId, long companyId, java.lang.String name,
-		int scope, long primKeyId, long roleId, boolean viewActionId,
+		long resourcePermissionId, long companyId, String name, int scope,
+		long primKeyId, long roleId, boolean viewActionId,
 		OrderByComparator<ResourcePermission> orderByComparator)
 		throws com.liferay.portal.kernel.exception.NoSuchResourcePermissionException {
 		return getPersistence()
@@ -1876,7 +1860,7 @@ public class ResourcePermissionUtil {
 	* @return the matching resource permissions
 	*/
 	public static List<ResourcePermission> findByC_N_S_P_R_V(long companyId,
-		java.lang.String name, int scope, long primKeyId, long[] roleIds,
+		String name, int scope, long primKeyId, long[] roleIds,
 		boolean viewActionId) {
 		return getPersistence()
 				   .findByC_N_S_P_R_V(companyId, name, scope, primKeyId,
@@ -1901,7 +1885,7 @@ public class ResourcePermissionUtil {
 	* @return the range of matching resource permissions
 	*/
 	public static List<ResourcePermission> findByC_N_S_P_R_V(long companyId,
-		java.lang.String name, int scope, long primKeyId, long[] roleIds,
+		String name, int scope, long primKeyId, long[] roleIds,
 		boolean viewActionId, int start, int end) {
 		return getPersistence()
 				   .findByC_N_S_P_R_V(companyId, name, scope, primKeyId,
@@ -1927,7 +1911,7 @@ public class ResourcePermissionUtil {
 	* @return the ordered range of matching resource permissions
 	*/
 	public static List<ResourcePermission> findByC_N_S_P_R_V(long companyId,
-		java.lang.String name, int scope, long primKeyId, long[] roleIds,
+		String name, int scope, long primKeyId, long[] roleIds,
 		boolean viewActionId, int start, int end,
 		OrderByComparator<ResourcePermission> orderByComparator) {
 		return getPersistence()
@@ -1955,7 +1939,7 @@ public class ResourcePermissionUtil {
 	* @return the ordered range of matching resource permissions
 	*/
 	public static List<ResourcePermission> findByC_N_S_P_R_V(long companyId,
-		java.lang.String name, int scope, long primKeyId, long[] roleIds,
+		String name, int scope, long primKeyId, long[] roleIds,
 		boolean viewActionId, int start, int end,
 		OrderByComparator<ResourcePermission> orderByComparator,
 		boolean retrieveFromCache) {
@@ -1975,9 +1959,8 @@ public class ResourcePermissionUtil {
 	* @param roleId the role ID
 	* @param viewActionId the view action ID
 	*/
-	public static void removeByC_N_S_P_R_V(long companyId,
-		java.lang.String name, int scope, long primKeyId, long roleId,
-		boolean viewActionId) {
+	public static void removeByC_N_S_P_R_V(long companyId, String name,
+		int scope, long primKeyId, long roleId, boolean viewActionId) {
 		getPersistence()
 			.removeByC_N_S_P_R_V(companyId, name, scope, primKeyId, roleId,
 			viewActionId);
@@ -1994,7 +1977,7 @@ public class ResourcePermissionUtil {
 	* @param viewActionId the view action ID
 	* @return the number of matching resource permissions
 	*/
-	public static int countByC_N_S_P_R_V(long companyId, java.lang.String name,
+	public static int countByC_N_S_P_R_V(long companyId, String name,
 		int scope, long primKeyId, long roleId, boolean viewActionId) {
 		return getPersistence()
 				   .countByC_N_S_P_R_V(companyId, name, scope, primKeyId,
@@ -2012,7 +1995,7 @@ public class ResourcePermissionUtil {
 	* @param viewActionId the view action ID
 	* @return the number of matching resource permissions
 	*/
-	public static int countByC_N_S_P_R_V(long companyId, java.lang.String name,
+	public static int countByC_N_S_P_R_V(long companyId, String name,
 		int scope, long primKeyId, long[] roleIds, boolean viewActionId) {
 		return getPersistence()
 				   .countByC_N_S_P_R_V(companyId, name, scope, primKeyId,

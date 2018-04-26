@@ -99,7 +99,7 @@ public class PortalPreferencesWrapper implements PortalPreferences,
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new PortalPreferencesWrapper((PortalPreferences)_portalPreferences.clone());
 	}
 
@@ -159,7 +159,7 @@ public class PortalPreferencesWrapper implements PortalPreferences,
 	* @return the preferences of this portal preferences
 	*/
 	@Override
-	public java.lang.String getPreferences() {
+	public String getPreferences() {
 		return _portalPreferences.getPreferences();
 	}
 
@@ -274,7 +274,7 @@ public class PortalPreferencesWrapper implements PortalPreferences,
 	* @param preferences the preferences of this portal preferences
 	*/
 	@Override
-	public void setPreferences(java.lang.String preferences) {
+	public void setPreferences(String preferences) {
 		_portalPreferences.setPreferences(preferences);
 	}
 
@@ -304,7 +304,7 @@ public class PortalPreferencesWrapper implements PortalPreferences,
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _portalPreferences.toString();
 	}
 
@@ -314,7 +314,7 @@ public class PortalPreferencesWrapper implements PortalPreferences,
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _portalPreferences.toXmlString();
 	}
 

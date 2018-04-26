@@ -98,7 +98,7 @@ public class ExpandoRowWrapper implements ExpandoRow, ModelWrapper<ExpandoRow> {
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new ExpandoRowWrapper((ExpandoRow)_expandoRow.clone());
 	}
 
@@ -304,7 +304,7 @@ public class ExpandoRowWrapper implements ExpandoRow, ModelWrapper<ExpandoRow> {
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _expandoRow.toString();
 	}
 
@@ -314,7 +314,7 @@ public class ExpandoRowWrapper implements ExpandoRow, ModelWrapper<ExpandoRow> {
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _expandoRow.toXmlString();
 	}
 

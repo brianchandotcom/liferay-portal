@@ -176,7 +176,7 @@ public class DDMFormInstanceRecordVersionWrapper
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new DDMFormInstanceRecordVersionWrapper((DDMFormInstanceRecordVersion)_ddmFormInstanceRecordVersion.clone());
 	}
 
@@ -265,7 +265,7 @@ public class DDMFormInstanceRecordVersionWrapper
 	* @return the form instance version of this ddm form instance record version
 	*/
 	@Override
-	public java.lang.String getFormInstanceVersion() {
+	public String getFormInstanceVersion() {
 		return _ddmFormInstanceRecordVersion.getFormInstanceVersion();
 	}
 
@@ -320,7 +320,7 @@ public class DDMFormInstanceRecordVersionWrapper
 	* @return the status by user name of this ddm form instance record version
 	*/
 	@Override
-	public java.lang.String getStatusByUserName() {
+	public String getStatusByUserName() {
 		return _ddmFormInstanceRecordVersion.getStatusByUserName();
 	}
 
@@ -330,7 +330,7 @@ public class DDMFormInstanceRecordVersionWrapper
 	* @return the status by user uuid of this ddm form instance record version
 	*/
 	@Override
-	public java.lang.String getStatusByUserUuid() {
+	public String getStatusByUserUuid() {
 		return _ddmFormInstanceRecordVersion.getStatusByUserUuid();
 	}
 
@@ -370,7 +370,7 @@ public class DDMFormInstanceRecordVersionWrapper
 	* @return the user name of this ddm form instance record version
 	*/
 	@Override
-	public java.lang.String getUserName() {
+	public String getUserName() {
 		return _ddmFormInstanceRecordVersion.getUserName();
 	}
 
@@ -380,7 +380,7 @@ public class DDMFormInstanceRecordVersionWrapper
 	* @return the user uuid of this ddm form instance record version
 	*/
 	@Override
-	public java.lang.String getUserUuid() {
+	public String getUserUuid() {
 		return _ddmFormInstanceRecordVersion.getUserUuid();
 	}
 
@@ -390,7 +390,7 @@ public class DDMFormInstanceRecordVersionWrapper
 	* @return the version of this ddm form instance record version
 	*/
 	@Override
-	public java.lang.String getVersion() {
+	public String getVersion() {
 		return _ddmFormInstanceRecordVersion.getVersion();
 	}
 
@@ -576,7 +576,7 @@ public class DDMFormInstanceRecordVersionWrapper
 	* @param formInstanceVersion the form instance version of this ddm form instance record version
 	*/
 	@Override
-	public void setFormInstanceVersion(java.lang.String formInstanceVersion) {
+	public void setFormInstanceVersion(String formInstanceVersion) {
 		_ddmFormInstanceRecordVersion.setFormInstanceVersion(formInstanceVersion);
 	}
 
@@ -636,7 +636,7 @@ public class DDMFormInstanceRecordVersionWrapper
 	* @param statusByUserName the status by user name of this ddm form instance record version
 	*/
 	@Override
-	public void setStatusByUserName(java.lang.String statusByUserName) {
+	public void setStatusByUserName(String statusByUserName) {
 		_ddmFormInstanceRecordVersion.setStatusByUserName(statusByUserName);
 	}
 
@@ -646,7 +646,7 @@ public class DDMFormInstanceRecordVersionWrapper
 	* @param statusByUserUuid the status by user uuid of this ddm form instance record version
 	*/
 	@Override
-	public void setStatusByUserUuid(java.lang.String statusByUserUuid) {
+	public void setStatusByUserUuid(String statusByUserUuid) {
 		_ddmFormInstanceRecordVersion.setStatusByUserUuid(statusByUserUuid);
 	}
 
@@ -686,7 +686,7 @@ public class DDMFormInstanceRecordVersionWrapper
 	* @param userName the user name of this ddm form instance record version
 	*/
 	@Override
-	public void setUserName(java.lang.String userName) {
+	public void setUserName(String userName) {
 		_ddmFormInstanceRecordVersion.setUserName(userName);
 	}
 
@@ -696,7 +696,7 @@ public class DDMFormInstanceRecordVersionWrapper
 	* @param userUuid the user uuid of this ddm form instance record version
 	*/
 	@Override
-	public void setUserUuid(java.lang.String userUuid) {
+	public void setUserUuid(String userUuid) {
 		_ddmFormInstanceRecordVersion.setUserUuid(userUuid);
 	}
 
@@ -706,7 +706,7 @@ public class DDMFormInstanceRecordVersionWrapper
 	* @param version the version of this ddm form instance record version
 	*/
 	@Override
-	public void setVersion(java.lang.String version) {
+	public void setVersion(String version) {
 		_ddmFormInstanceRecordVersion.setVersion(version);
 	}
 
@@ -721,7 +721,7 @@ public class DDMFormInstanceRecordVersionWrapper
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _ddmFormInstanceRecordVersion.toString();
 	}
 
@@ -731,7 +731,7 @@ public class DDMFormInstanceRecordVersionWrapper
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _ddmFormInstanceRecordVersion.toXmlString();
 	}
 

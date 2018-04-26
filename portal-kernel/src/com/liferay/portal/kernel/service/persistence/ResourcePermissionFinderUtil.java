@@ -29,8 +29,8 @@ public class ResourcePermissionFinderUtil {
 		return getFinder().countByR_S(roleId, scopes);
 	}
 
-	public static int countByC_N_S_P_R_A(long companyId, java.lang.String name,
-		int scope, java.lang.String primKey, long[] roleIds, long actionId) {
+	public static int countByC_N_S_P_R_A(long companyId, String name,
+		int scope, String primKey, long[] roleIds, long actionId) {
 		return getFinder()
 				   .countByC_N_S_P_R_A(companyId, name, scope, primKey,
 			roleIds, actionId);
@@ -42,8 +42,7 @@ public class ResourcePermissionFinderUtil {
 	}
 
 	public static java.util.List<com.liferay.portal.kernel.model.ResourcePermission> findByResource(
-		long companyId, long groupId, java.lang.String name,
-		java.lang.String primKey) {
+		long companyId, long groupId, String name, String primKey) {
 		return getFinder().findByResource(companyId, groupId, name, primKey);
 	}
 

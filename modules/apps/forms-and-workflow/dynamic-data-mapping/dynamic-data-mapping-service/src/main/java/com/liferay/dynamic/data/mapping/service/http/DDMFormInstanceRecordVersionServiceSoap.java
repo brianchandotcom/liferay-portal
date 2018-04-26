@@ -81,8 +81,7 @@ public class DDMFormInstanceRecordVersionServiceSoap {
 	}
 
 	public static com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecordVersionSoap getFormInstanceRecordVersion(
-		long ddmFormInstanceRecordId, java.lang.String version)
-		throws RemoteException {
+		long ddmFormInstanceRecordId, String version) throws RemoteException {
 		try {
 			com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecordVersion returnValue =
 				DDMFormInstanceRecordVersionServiceUtil.getFormInstanceRecordVersion(ddmFormInstanceRecordId,

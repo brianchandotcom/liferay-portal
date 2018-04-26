@@ -43,14 +43,13 @@ public class MBMailingListLocalServiceUtil {
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.message.boards.service.impl.MBMailingListLocalServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static com.liferay.message.boards.model.MBMailingList addMailingList(
-		long userId, long groupId, long categoryId,
-		java.lang.String emailAddress, java.lang.String inProtocol,
-		java.lang.String inServerName, int inServerPort, boolean inUseSSL,
-		java.lang.String inUserName, java.lang.String inPassword,
-		int inReadInterval, java.lang.String outEmailAddress,
-		boolean outCustom, java.lang.String outServerName, int outServerPort,
-		boolean outUseSSL, java.lang.String outUserName,
-		java.lang.String outPassword, boolean allowAnonymous, boolean active,
+		long userId, long groupId, long categoryId, String emailAddress,
+		String inProtocol, String inServerName, int inServerPort,
+		boolean inUseSSL, String inUserName, String inPassword,
+		int inReadInterval, String outEmailAddress, boolean outCustom,
+		String outServerName, int outServerPort, boolean outUseSSL,
+		String outUserName, String outPassword, boolean allowAnonymous,
+		boolean active,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
@@ -228,7 +227,7 @@ public class MBMailingListLocalServiceUtil {
 	* @return the matching message boards mailing list, or <code>null</code> if a matching message boards mailing list could not be found
 	*/
 	public static com.liferay.message.boards.model.MBMailingList fetchMBMailingListByUuidAndGroupId(
-		java.lang.String uuid, long groupId) {
+		String uuid, long groupId) {
 		return getService().fetchMBMailingListByUuidAndGroupId(uuid, groupId);
 	}
 
@@ -273,7 +272,7 @@ public class MBMailingListLocalServiceUtil {
 	* @throws PortalException if a matching message boards mailing list could not be found
 	*/
 	public static com.liferay.message.boards.model.MBMailingList getMBMailingListByUuidAndGroupId(
-		java.lang.String uuid, long groupId)
+		String uuid, long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getMBMailingListByUuidAndGroupId(uuid, groupId);
 	}
@@ -302,7 +301,7 @@ public class MBMailingListLocalServiceUtil {
 	* @return the matching message boards mailing lists, or an empty list if no matches were found
 	*/
 	public static java.util.List<com.liferay.message.boards.model.MBMailingList> getMBMailingListsByUuidAndCompanyId(
-		java.lang.String uuid, long companyId) {
+		String uuid, long companyId) {
 		return getService().getMBMailingListsByUuidAndCompanyId(uuid, companyId);
 	}
 
@@ -317,7 +316,7 @@ public class MBMailingListLocalServiceUtil {
 	* @return the range of matching message boards mailing lists, or an empty list if no matches were found
 	*/
 	public static java.util.List<com.liferay.message.boards.model.MBMailingList> getMBMailingListsByUuidAndCompanyId(
-		java.lang.String uuid, long companyId, int start, int end,
+		String uuid, long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.message.boards.model.MBMailingList> orderByComparator) {
 		return getService()
 				   .getMBMailingListsByUuidAndCompanyId(uuid, companyId, start,
@@ -338,7 +337,7 @@ public class MBMailingListLocalServiceUtil {
 	*
 	* @return the OSGi service identifier
 	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
+	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 
@@ -349,14 +348,12 @@ public class MBMailingListLocalServiceUtil {
 	}
 
 	public static com.liferay.message.boards.model.MBMailingList updateMailingList(
-		long mailingListId, java.lang.String emailAddress,
-		java.lang.String inProtocol, java.lang.String inServerName,
-		int inServerPort, boolean inUseSSL, java.lang.String inUserName,
-		java.lang.String inPassword, int inReadInterval,
-		java.lang.String outEmailAddress, boolean outCustom,
-		java.lang.String outServerName, int outServerPort, boolean outUseSSL,
-		java.lang.String outUserName, java.lang.String outPassword,
-		boolean allowAnonymous, boolean active,
+		long mailingListId, String emailAddress, String inProtocol,
+		String inServerName, int inServerPort, boolean inUseSSL,
+		String inUserName, String inPassword, int inReadInterval,
+		String outEmailAddress, boolean outCustom, String outServerName,
+		int outServerPort, boolean outUseSSL, String outUserName,
+		String outPassword, boolean allowAnonymous, boolean active,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()

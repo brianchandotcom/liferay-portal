@@ -198,8 +198,7 @@ public class DDLRecordVersionLocalServiceWrapper
 	*/
 	@Override
 	public com.liferay.dynamic.data.lists.model.DDLRecordVersion fetchLatestRecordVersion(
-		long userId, long recordSetId, java.lang.String recordSetVersion,
-		int status) {
+		long userId, long recordSetId, String recordSetVersion, int status) {
 		return _ddlRecordVersionLocalService.fetchLatestRecordVersion(userId,
 			recordSetId, recordSetVersion, status);
 	}
@@ -275,7 +274,7 @@ public class DDLRecordVersionLocalServiceWrapper
 	* @return the OSGi service identifier
 	*/
 	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
+	public String getOSGiServiceIdentifier() {
 		return _ddlRecordVersionLocalService.getOSGiServiceIdentifier();
 	}
 
@@ -310,7 +309,7 @@ public class DDLRecordVersionLocalServiceWrapper
 	*/
 	@Override
 	public com.liferay.dynamic.data.lists.model.DDLRecordVersion getRecordVersion(
-		long recordId, java.lang.String version)
+		long recordId, String version)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _ddlRecordVersionLocalService.getRecordVersion(recordId, version);
 	}

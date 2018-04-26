@@ -55,17 +55,17 @@ public interface DDLRecord extends DDLRecordModel, PersistedModel {
 		};
 
 	public java.util.List<com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue> getDDMFormFieldValues(
-		java.lang.String fieldName)
+		String fieldName)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public com.liferay.dynamic.data.mapping.storage.DDMFormValues getDDMFormValues()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
-	public java.io.Serializable getFieldDataType(java.lang.String fieldName)
+	public java.io.Serializable getFieldDataType(String fieldName)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
-	public java.io.Serializable getFieldType(java.lang.String fieldName)
-		throws java.lang.Exception;
+	public java.io.Serializable getFieldType(String fieldName)
+		throws Exception;
 
 	public DDLRecordVersion getLatestRecordVersion()
 		throws com.liferay.portal.kernel.exception.PortalException;
@@ -76,7 +76,7 @@ public interface DDLRecord extends DDLRecordModel, PersistedModel {
 	public DDLRecordVersion getRecordVersion()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
-	public DDLRecordVersion getRecordVersion(java.lang.String version)
+	public DDLRecordVersion getRecordVersion(String version)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public int getStatus()

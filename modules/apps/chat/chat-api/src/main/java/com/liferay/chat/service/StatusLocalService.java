@@ -171,12 +171,12 @@ public interface StatusLocalService extends BaseLocalService,
 	public ActionableDynamicQuery getActionableDynamicQuery();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<java.lang.Object[]> getAllStatuses(long companyId, long userId,
+	public List<Object[]> getAllStatuses(long companyId, long userId,
 		long modifiedDate, int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<java.lang.Object[]> getGroupStatuses(long userId,
-		long modifiedDate, java.lang.String[] groupNames, int start, int end);
+	public List<Object[]> getGroupStatuses(long userId, long modifiedDate,
+		String[] groupNames, int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
@@ -186,7 +186,7 @@ public interface StatusLocalService extends BaseLocalService,
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -194,11 +194,11 @@ public interface StatusLocalService extends BaseLocalService,
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<java.lang.Object[]> getSocialStatuses(long userId, int type,
+	public List<Object[]> getSocialStatuses(long userId, int type,
 		long modifiedDate, int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<java.lang.Object[]> getSocialStatuses(long userId, int[] types,
+	public List<Object[]> getSocialStatuses(long userId, int[] types,
 		long modifiedDate, int start, int end);
 
 	/**
@@ -239,8 +239,7 @@ public interface StatusLocalService extends BaseLocalService,
 	public Status updateStatus(long userId, long modifiedDate);
 
 	public Status updateStatus(long userId, long modifiedDate, int online,
-		int awake, java.lang.String activePanelIds, java.lang.String message,
-		int playSound);
+		int awake, String activePanelIds, String message, int playSound);
 
 	/**
 	* Updates the status in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.

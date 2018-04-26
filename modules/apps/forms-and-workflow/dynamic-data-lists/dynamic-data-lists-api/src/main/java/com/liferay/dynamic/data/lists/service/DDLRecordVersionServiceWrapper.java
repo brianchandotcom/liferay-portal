@@ -39,7 +39,7 @@ public class DDLRecordVersionServiceWrapper implements DDLRecordVersionService,
 	* @return the OSGi service identifier
 	*/
 	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
+	public String getOSGiServiceIdentifier() {
 		return _ddlRecordVersionService.getOSGiServiceIdentifier();
 	}
 
@@ -70,7 +70,7 @@ public class DDLRecordVersionServiceWrapper implements DDLRecordVersionService,
 	*/
 	@Override
 	public com.liferay.dynamic.data.lists.model.DDLRecordVersion getRecordVersion(
-		long recordId, java.lang.String version)
+		long recordId, String version)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _ddlRecordVersionService.getRecordVersion(recordId, version);
 	}

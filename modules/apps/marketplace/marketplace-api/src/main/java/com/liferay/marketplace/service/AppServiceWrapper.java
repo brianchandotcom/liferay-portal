@@ -44,7 +44,7 @@ public class AppServiceWrapper implements AppService,
 	* @return the OSGi service identifier
 	*/
 	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
+	public String getOSGiServiceIdentifier() {
 		return _appService.getOSGiServiceIdentifier();
 	}
 

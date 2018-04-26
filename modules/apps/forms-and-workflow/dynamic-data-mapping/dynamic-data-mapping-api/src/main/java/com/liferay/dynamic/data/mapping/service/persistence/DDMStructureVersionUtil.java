@@ -287,8 +287,7 @@ public class DDMStructureVersionUtil {
 	* @return the matching ddm structure version
 	* @throws NoSuchStructureVersionException if a matching ddm structure version could not be found
 	*/
-	public static DDMStructureVersion findByS_V(long structureId,
-		java.lang.String version)
+	public static DDMStructureVersion findByS_V(long structureId, String version)
 		throws com.liferay.dynamic.data.mapping.exception.NoSuchStructureVersionException {
 		return getPersistence().findByS_V(structureId, version);
 	}
@@ -301,7 +300,7 @@ public class DDMStructureVersionUtil {
 	* @return the matching ddm structure version, or <code>null</code> if a matching ddm structure version could not be found
 	*/
 	public static DDMStructureVersion fetchByS_V(long structureId,
-		java.lang.String version) {
+		String version) {
 		return getPersistence().fetchByS_V(structureId, version);
 	}
 
@@ -314,7 +313,7 @@ public class DDMStructureVersionUtil {
 	* @return the matching ddm structure version, or <code>null</code> if a matching ddm structure version could not be found
 	*/
 	public static DDMStructureVersion fetchByS_V(long structureId,
-		java.lang.String version, boolean retrieveFromCache) {
+		String version, boolean retrieveFromCache) {
 		return getPersistence()
 				   .fetchByS_V(structureId, version, retrieveFromCache);
 	}
@@ -327,7 +326,7 @@ public class DDMStructureVersionUtil {
 	* @return the ddm structure version that was removed
 	*/
 	public static DDMStructureVersion removeByS_V(long structureId,
-		java.lang.String version)
+		String version)
 		throws com.liferay.dynamic.data.mapping.exception.NoSuchStructureVersionException {
 		return getPersistence().removeByS_V(structureId, version);
 	}
@@ -339,7 +338,7 @@ public class DDMStructureVersionUtil {
 	* @param version the version
 	* @return the number of matching ddm structure versions
 	*/
-	public static int countByS_V(long structureId, java.lang.String version) {
+	public static int countByS_V(long structureId, String version) {
 		return getPersistence().countByS_V(structureId, version);
 	}
 
@@ -668,7 +667,7 @@ public class DDMStructureVersionUtil {
 		return getPersistence().countAll();
 	}
 
-	public static java.util.Set<java.lang.String> getBadColumnNames() {
+	public static java.util.Set<String> getBadColumnNames() {
 		return getPersistence().getBadColumnNames();
 	}
 

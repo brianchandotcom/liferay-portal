@@ -69,10 +69,9 @@ import java.util.Map;
 @ProviderType
 public class SAPEntryServiceSoap {
 	public static com.liferay.portal.security.service.access.policy.model.SAPEntrySoap addSAPEntry(
-		java.lang.String allowedServiceSignatures, boolean defaultSAPEntry,
-		boolean enabled, java.lang.String name,
-		java.lang.String[] titleMapLanguageIds,
-		java.lang.String[] titleMapValues,
+		String allowedServiceSignatures, boolean defaultSAPEntry,
+		boolean enabled, String name, String[] titleMapLanguageIds,
+		String[] titleMapValues,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
@@ -125,7 +124,7 @@ public class SAPEntryServiceSoap {
 	}
 
 	public static com.liferay.portal.security.service.access.policy.model.SAPEntrySoap fetchSAPEntry(
-		long companyId, java.lang.String name) throws RemoteException {
+		long companyId, String name) throws RemoteException {
 		try {
 			com.liferay.portal.security.service.access.policy.model.SAPEntry returnValue =
 				SAPEntryServiceUtil.fetchSAPEntry(companyId, name);
@@ -202,7 +201,7 @@ public class SAPEntryServiceSoap {
 	}
 
 	public static com.liferay.portal.security.service.access.policy.model.SAPEntrySoap getSAPEntry(
-		long companyId, java.lang.String name) throws RemoteException {
+		long companyId, String name) throws RemoteException {
 		try {
 			com.liferay.portal.security.service.access.policy.model.SAPEntry returnValue =
 				SAPEntryServiceUtil.getSAPEntry(companyId, name);
@@ -217,10 +216,9 @@ public class SAPEntryServiceSoap {
 	}
 
 	public static com.liferay.portal.security.service.access.policy.model.SAPEntrySoap updateSAPEntry(
-		long sapEntryId, java.lang.String allowedServiceSignatures,
-		boolean defaultSAPEntry, boolean enabled, java.lang.String name,
-		java.lang.String[] titleMapLanguageIds,
-		java.lang.String[] titleMapValues,
+		long sapEntryId, String allowedServiceSignatures,
+		boolean defaultSAPEntry, boolean enabled, String name,
+		String[] titleMapLanguageIds, String[] titleMapValues,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {

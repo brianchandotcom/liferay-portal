@@ -46,8 +46,8 @@ public class FolderLocalServiceWrapper implements FolderLocalService,
 
 	@Override
 	public com.liferay.mail.reader.model.Folder addFolder(long userId,
-		long accountId, java.lang.String fullName,
-		java.lang.String displayName, int remoteMessageCount)
+		long accountId, String fullName, String displayName,
+		int remoteMessageCount)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _folderLocalService.addFolder(userId, accountId, fullName,
 			displayName, remoteMessageCount);
@@ -216,7 +216,7 @@ public class FolderLocalServiceWrapper implements FolderLocalService,
 
 	@Override
 	public com.liferay.mail.reader.model.Folder getFolder(long accountId,
-		java.lang.String fullName)
+		String fullName)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _folderLocalService.getFolder(accountId, fullName);
 	}
@@ -270,7 +270,7 @@ public class FolderLocalServiceWrapper implements FolderLocalService,
 	* @return the OSGi service identifier
 	*/
 	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
+	public String getOSGiServiceIdentifier() {
 		return _folderLocalService.getOSGiServiceIdentifier();
 	}
 
@@ -307,8 +307,7 @@ public class FolderLocalServiceWrapper implements FolderLocalService,
 
 	@Override
 	public com.liferay.mail.reader.model.Folder updateFolder(long folderId,
-		java.lang.String fullName, java.lang.String displayName,
-		int remoteMessageCount)
+		String fullName, String displayName, int remoteMessageCount)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _folderLocalService.updateFolder(folderId, fullName,
 			displayName, remoteMessageCount);

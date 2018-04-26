@@ -71,18 +71,18 @@ public interface SocialActivityInterpreterLocalService extends BaseLocalService 
 		SocialActivityInterpreter activityInterpreter);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Map<java.lang.String, List<SocialActivityInterpreter>> getActivityInterpreters();
+	public Map<String, List<SocialActivityInterpreter>> getActivityInterpreters();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<SocialActivityInterpreter> getActivityInterpreters(
-		java.lang.String selector);
+		String selector);
 
 	/**
 	* Returns the OSGi service identifier.
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	/**
 	* Creates a human readable activity feed entry for the activity using an
@@ -101,10 +101,10 @@ public interface SocialActivityInterpreterLocalService extends BaseLocalService 
 	record or <code>null</code> if a compatible interpreter is not
 	found
 	*/
-	public SocialActivityFeedEntry interpret(java.lang.String selector,
+	public SocialActivityFeedEntry interpret(String selector,
 		SocialActivity activity, ServiceContext serviceContext);
 
-	public SocialActivityFeedEntry interpret(java.lang.String selector,
+	public SocialActivityFeedEntry interpret(String selector,
 		SocialActivitySet activitySet, ServiceContext serviceContext);
 
 	public void updateActivitySet(long activityId) throws PortalException;

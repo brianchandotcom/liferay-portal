@@ -54,11 +54,11 @@ public interface PortletService extends BaseService {
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public JSONArray getWARPortlets();
 
-	public Portlet updatePortlet(long companyId, java.lang.String portletId,
-		java.lang.String roles, boolean active) throws PortalException;
+	public Portlet updatePortlet(long companyId, String portletId,
+		String roles, boolean active) throws PortalException;
 }

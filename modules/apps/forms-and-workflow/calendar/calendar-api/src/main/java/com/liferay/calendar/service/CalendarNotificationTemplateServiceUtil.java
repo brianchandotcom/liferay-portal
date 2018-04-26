@@ -45,9 +45,9 @@ public class CalendarNotificationTemplateServiceUtil {
 	public static com.liferay.calendar.model.CalendarNotificationTemplate addCalendarNotificationTemplate(
 		long calendarId,
 		com.liferay.calendar.notification.NotificationType notificationType,
-		java.lang.String notificationTypeSettings,
+		String notificationTypeSettings,
 		com.liferay.calendar.notification.NotificationTemplateType notificationTemplateType,
-		java.lang.String subject, java.lang.String body,
+		String subject, String body,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
@@ -61,14 +61,13 @@ public class CalendarNotificationTemplateServiceUtil {
 	*
 	* @return the OSGi service identifier
 	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
+	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 
 	public static com.liferay.calendar.model.CalendarNotificationTemplate updateCalendarNotificationTemplate(
-		long calendarNotificationTemplateId,
-		java.lang.String notificationTypeSettings, java.lang.String subject,
-		java.lang.String body,
+		long calendarNotificationTemplateId, String notificationTypeSettings,
+		String subject, String body,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()

@@ -81,10 +81,9 @@ public interface CalendarNotificationTemplateLocalService
 
 	public CalendarNotificationTemplate addCalendarNotificationTemplate(
 		long userId, long calendarId, NotificationType notificationType,
-		java.lang.String notificationTypeSettings,
-		NotificationTemplateType notificationTemplateType,
-		java.lang.String subject, java.lang.String body,
-		ServiceContext serviceContext) throws PortalException;
+		String notificationTypeSettings,
+		NotificationTemplateType notificationTemplateType, String subject,
+		String body, ServiceContext serviceContext) throws PortalException;
 
 	/**
 	* Creates a new calendar notification template with the primary key. Does not add the calendar notification template to the database.
@@ -204,7 +203,7 @@ public interface CalendarNotificationTemplateLocalService
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CalendarNotificationTemplate fetchCalendarNotificationTemplateByUuidAndGroupId(
-		java.lang.String uuid, long groupId);
+		String uuid, long groupId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
@@ -230,7 +229,7 @@ public interface CalendarNotificationTemplateLocalService
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CalendarNotificationTemplate getCalendarNotificationTemplateByUuidAndGroupId(
-		java.lang.String uuid, long groupId) throws PortalException;
+		String uuid, long groupId) throws PortalException;
 
 	/**
 	* Returns a range of all the calendar notification templates.
@@ -256,7 +255,7 @@ public interface CalendarNotificationTemplateLocalService
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CalendarNotificationTemplate> getCalendarNotificationTemplatesByUuidAndCompanyId(
-		java.lang.String uuid, long companyId);
+		String uuid, long companyId);
 
 	/**
 	* Returns a range of calendar notification templates matching the UUID and company.
@@ -270,7 +269,7 @@ public interface CalendarNotificationTemplateLocalService
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CalendarNotificationTemplate> getCalendarNotificationTemplatesByUuidAndCompanyId(
-		java.lang.String uuid, long companyId, int start, int end,
+		String uuid, long companyId, int start, int end,
 		OrderByComparator<CalendarNotificationTemplate> orderByComparator);
 
 	/**
@@ -293,7 +292,7 @@ public interface CalendarNotificationTemplateLocalService
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -311,8 +310,7 @@ public interface CalendarNotificationTemplateLocalService
 		CalendarNotificationTemplate calendarNotificationTemplate);
 
 	public CalendarNotificationTemplate updateCalendarNotificationTemplate(
-		long calendarNotificationTemplateId,
-		java.lang.String notificationTypeSettings, java.lang.String subject,
-		java.lang.String body, ServiceContext serviceContext)
+		long calendarNotificationTemplateId, String notificationTypeSettings,
+		String subject, String body, ServiceContext serviceContext)
 		throws PortalException;
 }

@@ -531,15 +531,7 @@ public class AssetPublisherDisplayContext {
 	}
 
 	public Integer getDelta() {
-		if (_delta != null) {
-			return _delta;
-		}
-
-		_delta = GetterUtil.getInteger(
-			_portletPreferences.getValue("delta", StringPool.BLANK),
-			_assetPublisherCustomizer.getDelta(_request));
-
-		return _delta;
+		return _assetPublisherCustomizer.getDelta(_request);
 	}
 
 	public String getDisplayStyle() {

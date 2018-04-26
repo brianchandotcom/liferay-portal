@@ -1871,6 +1871,8 @@ tell application "Safari" to quit
 				<elseif>
 					<equals arg1="@{search.engine}" arg2="solr" />
 					<then>
+						<ant antfile="build-test-solr.xml" inheritAll="false" target="deploy-solr" />
+
 						<ant antfile="build-test-solr.xml" inheritAll="false" target="start-solr" />
 					</then>
 				</elseif>

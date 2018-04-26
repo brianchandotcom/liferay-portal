@@ -28,11 +28,7 @@
 
 		<liferay-frontend:edit-form-body>
 			<liferay-frontend:fieldset-group>
-				<liferay-frontend:fieldset
-					collapsible="<%= true %>"
-					extended="<%= true %>"
-					label="user-profile"
-				>
+				<liferay-frontend:fieldset>
 					<aui:select label="display-style" name="preferences--displayStyle--" value="<%= displayStyle %>">
 						<aui:option label="<%= ContactsConstants.DISPLAY_STYLE_FULL_LABEL %>" value="<%= ContactsConstants.DISPLAY_STYLE_FULL %>" />
 						<aui:option label="<%= ContactsConstants.DISPLAY_STYLE_BASIC_LABEL %>" value="<%= ContactsConstants.DISPLAY_STYLE_BASIC %>" />

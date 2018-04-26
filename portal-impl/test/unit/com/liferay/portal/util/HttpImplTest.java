@@ -241,6 +241,7 @@ public class HttpImplTest extends PowerMockito {
 
 	@Test
 	public void testGetProtocols() {
+		Assert.assertEquals("https", _httpImpl.getProtocol(" https://foo.com"));
 		Assert.assertEquals("https", _httpImpl.getProtocol("https://foo.com"));
 		Assert.assertEquals("HtTps", _httpImpl.getProtocol("HtTps://foo.com"));
 		Assert.assertEquals("a012", _httpImpl.getProtocol("a012://foo.com"));
@@ -423,6 +424,8 @@ public class HttpImplTest extends PowerMockito {
 			_httpImpl.removeProtocol("http://www.google.com/://localhost"));
 		Assert.assertEquals(
 			"a:b@foo.com", _httpImpl.removeProtocol("http://a:b@foo.com"));
+		Assert.assertEquals(
+			"a:b@foo.com", _httpImpl.removeProtocol(" http://a:b@foo.com"));
 		Assert.assertEquals(
 			"a:b@foo.com", _httpImpl.removeProtocol("a:b@foo.com"));
 		Assert.assertEquals(

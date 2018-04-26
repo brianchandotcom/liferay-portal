@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutRevision;
 import com.liferay.portal.kernel.model.LayoutStagingHandler;
 import com.liferay.portal.kernel.model.LayoutTypePortlet;
+import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.PortletPreferences;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
@@ -132,7 +133,8 @@ public class CleanUpPortletPreferencesUtil {
 
 					Layout proxiedLayout = (Layout)ProxyUtil.newProxyInstance(
 						PortalClassLoaderUtil.getClassLoader(),
-						new Class<?>[] {Layout.class}, layoutStagingHandler);
+						new Class<?>[] {Layout.class, ModelWrapper.class},
+						layoutStagingHandler);
 
 					if (containsPortlet(
 							proxiedLayout, portletPreferences.getPortletId())) {

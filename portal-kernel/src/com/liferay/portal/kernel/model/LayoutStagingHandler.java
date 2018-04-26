@@ -81,6 +81,9 @@ public class LayoutStagingHandler implements InvocationHandler, Serializable {
 
 				return method.invoke(_layoutRevision, arguments);
 			}
+			else if (methodName.equals("getWrappedModel")) {
+				return _layout;
+			}
 			else if (methodName.equals("toEscapedModel")) {
 				if (_layout.isEscapedModel()) {
 					return this;

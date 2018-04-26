@@ -155,9 +155,9 @@ public class NestableFlushEventListenerTest {
 		}
 		finally {
 			transaction.commit();
-		}
 
-		session.close();
+			session.close();
+		}
 	}
 
 	@Test
@@ -174,9 +174,9 @@ public class NestableFlushEventListenerTest {
 		}
 		finally {
 			transaction.commit();
-		}
 
-		session.close();
+			session.close();
+		}
 	}
 
 	private void _assignKeys(List<ClassName> classNames, long[] keys)

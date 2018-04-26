@@ -47,7 +47,7 @@ import java.util.List;
  *
  * @author Brian Wing Shun Chan
  * @see BlogsStatsUserLocalServiceUtil
- * @see com.liferay.blogs.service.base.BlogsStatsUserLocalServiceBaseImpl
+ * @see BlogsStatsUserLocalServiceBaseImpl
  * @see com.liferay.blogs.service.impl.BlogsStatsUserLocalServiceImpl
  * @generated
  */

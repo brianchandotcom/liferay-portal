@@ -53,7 +53,7 @@ import java.util.List;
  *
  * @author Brian Wing Shun Chan
  * @see MBThreadFlagLocalServiceUtil
- * @see com.liferay.message.boards.service.base.MBThreadFlagLocalServiceBaseImpl
+ * @see MBThreadFlagLocalServiceBaseImpl
  * @see com.liferay.message.boards.service.impl.MBThreadFlagLocalServiceImpl
  * @generated
  */

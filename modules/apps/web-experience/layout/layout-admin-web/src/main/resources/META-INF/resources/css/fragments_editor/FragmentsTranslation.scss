@@ -1,0 +1,40 @@
+$gridSize: 6px;
+$translatedColor: #3DC513;
+$untranslatedColor: #A7A9BC;
+
+.fragments-editor__fragment-entry-links {
+	lfr-editable {
+		display: block;
+		position: relative;
+	}
+
+	&.translating {
+		.translated,
+		.untranslated {
+			background-size: $gridSize $gridSize;
+		}
+
+		.translated,
+		.translated[type="image"]:after {
+			background-image: linear-gradient(45deg, transparent 0%, transparent calc(50% - 1px), fade_out($translatedColor, 0.75) 50%, transparent calc(50% + 1px), transparent 100%);
+			box-shadow: 0 0 0 1px fade_out($translatedColor, 0.4);
+		}
+
+		.untranslated,
+		.untranslated[type="image"]:after {
+			background-image: linear-gradient(45deg, transparent 0%, transparent calc(50% - 1px), fade_out($untranslatedColor, 0.75) 50%, transparent calc(50% + 1px), transparent 100%);
+			box-shadow: 0 0 0 1px fade_out($untranslatedColor, 0.4);
+		}
+
+		.translated[type="image"]:after,
+		.untranslated[type="image"]:after {
+			background-size: $gridSize $gridSize;
+			content: '';
+			height: 100%;
+			left: 0;
+			position: absolute;
+			top: 0;
+			width: 100%;
+		}
+	}
+}

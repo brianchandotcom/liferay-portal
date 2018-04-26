@@ -480,255 +480,22 @@ public class DefaultDLAdminDisplayContext implements DLAdminDisplayContext {
 	}
 
 	@Override
-	public SearchContainer getSearchContainer() throws PortalException {
-		if (_isSearch()) {
-			SearchContainer searchContainer = new SearchContainer(
-				_liferayPortletRequest, getPortletURL(), null, null);
-
-			searchContainer.setResults(_getSearchResults(searchContainer));
-
-			return searchContainer;
+	public SearchContainer getSearchContainer() {
+		if (_searchContainer == null) {
+			try {
+				if (_isSearch()) {
+					_searchContainer = _getSearchSearchContainer();
+				}
+				else {
+					_searchContainer = _getDLSearchContainer();
+				}
+			}
+			catch (PortalException pe) {
+				throw new SystemException(pe);
+			}
 		}
-		else {
-			String navigation = ParamUtil.getString(
-				_request, "navigation", "home");
 
-			String currentFolder = ParamUtil.getString(_request, "curFolder");
-			String deltaFolder = ParamUtil.getString(_request, "deltaFolder");
-
-			long fileEntryTypeId = ParamUtil.getLong(
-				_request, "fileEntryTypeId", -1);
-
-			String dlFileEntryTypeName = LanguageUtil.get(
-				_request, "basic-document");
-
-			int status = WorkflowConstants.STATUS_APPROVED;
-
-			User user = _themeDisplay.getUser();
-
-			if (_permissionChecker.isContentReviewer(
-					user.getCompanyId(), _themeDisplay.getScopeGroupId())) {
-
-				status = WorkflowConstants.STATUS_ANY;
-			}
-
-			long categoryId = ParamUtil.getLong(_request, "categoryId");
-			String tagName = ParamUtil.getString(_request, "tag");
-
-			boolean useAssetEntryQuery = false;
-
-			if ((categoryId > 0) || Validator.isNotNull(tagName)) {
-				useAssetEntryQuery = true;
-			}
-
-			PortletURL portletURL = _liferayPortletResponse.createRenderURL();
-
-			long folderId = getFolderId();
-
-			if (folderId == DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
-				portletURL.setParameter(
-					"mvcRenderCommandName", "/document_library/view");
-			}
-			else {
-				portletURL.setParameter(
-					"mvcRenderCommandName", "/document_library/view_folder");
-			}
-
-			portletURL.setParameter("navigation", navigation);
-			portletURL.setParameter("curFolder", currentFolder);
-			portletURL.setParameter("deltaFolder", deltaFolder);
-			portletURL.setParameter("folderId", String.valueOf(folderId));
-
-			SearchContainer dlSearchContainer = new SearchContainer(
-				_liferayPortletRequest, null, null, "curEntry",
-				_dlPortletInstanceSettings.getEntriesPerPage(), portletURL,
-				null, null);
-
-			String[] entryColumns =
-				_dlPortletInstanceSettingsHelper.getEntryColumns();
-
-			dlSearchContainer.setHeaderNames(ListUtil.fromArray(entryColumns));
-
-			String orderByCol = getOrderByCol();
-			String orderByType = getOrderByType();
-
-			boolean orderByModel = false;
-
-			if (navigation.equals("home")) {
-				orderByModel = true;
-			}
-
-			OrderByComparator<?> orderByComparator =
-				DLUtil.getRepositoryModelOrderByComparator(
-					orderByCol, orderByType, orderByModel);
-
-			if (navigation.equals("recent")) {
-				orderByComparator = new RepositoryModelModifiedDateComparator();
-			}
-
-			dlSearchContainer.setOrderByCol(orderByCol);
-			dlSearchContainer.setOrderByComparator(orderByComparator);
-			dlSearchContainer.setOrderByType(orderByType);
-
-			List results = new ArrayList();
-			int total = 0;
-
-			if (fileEntryTypeId >= 0) {
-				Indexer indexer = IndexerRegistryUtil.getIndexer(
-					DLFileEntryConstants.getClassName());
-
-				if (fileEntryTypeId > 0) {
-					DLFileEntryType dlFileEntryType =
-						DLFileEntryTypeLocalServiceUtil.getFileEntryType(
-							fileEntryTypeId);
-
-					dlFileEntryTypeName = dlFileEntryType.getName(
-						_request.getLocale());
-				}
-
-				SearchContext searchContext = SearchContextFactory.getInstance(
-					_request);
-
-				searchContext.setAttribute("paginationType", "none");
-				searchContext.setEnd(dlSearchContainer.getEnd());
-
-				if (orderByCol.equals("creationDate")) {
-					orderByCol = "createDate";
-				}
-				else if (orderByCol.equals("readCount")) {
-					orderByCol = "downloads";
-				}
-				else if (orderByCol.equals("modifiedDate")) {
-					orderByCol = "modified";
-				}
-
-				Sort sort = new Sort(
-					orderByCol,
-					!StringUtil.equalsIgnoreCase(orderByType, "asc"));
-
-				searchContext.setSorts(sort);
-
-				searchContext.setStart(dlSearchContainer.getStart());
-
-				Hits hits = indexer.search(searchContext);
-
-				total = hits.getLength();
-
-				dlSearchContainer.setTotal(total);
-
-				for (Document doc : hits.getDocs()) {
-					long fileEntryId = GetterUtil.getLong(
-						doc.get(Field.ENTRY_CLASS_PK));
-
-					FileEntry fileEntry = null;
-
-					try {
-						fileEntry = DLAppLocalServiceUtil.getFileEntry(
-							fileEntryId);
-					}
-					catch (Exception e) {
-						if (_log.isWarnEnabled()) {
-							_log.warn(
-								StringBundler.concat(
-									"Documents and Media search index is ",
-									"stale and contains file entry {",
-									String.valueOf(fileEntryId), "}"));
-						}
-
-						continue;
-					}
-
-					results.add(fileEntry);
-				}
-			}
-			else {
-				if (navigation.equals("home")) {
-					if (useAssetEntryQuery) {
-						long[] classNameIds = {
-							PortalUtil.getClassNameId(
-								DLFileEntryConstants.getClassName()),
-							PortalUtil.getClassNameId(
-								DLFileShortcutConstants.getClassName())
-						};
-
-						AssetEntryQuery assetEntryQuery = new AssetEntryQuery(
-							classNameIds, dlSearchContainer);
-
-						assetEntryQuery.setEnablePermissions(true);
-						assetEntryQuery.setExcludeZeroViewCount(false);
-
-						total = AssetEntryServiceUtil.getEntriesCount(
-							assetEntryQuery);
-
-						dlSearchContainer.setTotal(total);
-
-						results = AssetEntryServiceUtil.getEntries(
-							assetEntryQuery);
-					}
-					else {
-						long repositoryId = getRepositoryId();
-
-						total =
-							DLAppServiceUtil.
-								getFoldersAndFileEntriesAndFileShortcutsCount(
-									repositoryId, folderId, status, true);
-
-						dlSearchContainer.setTotal(total);
-
-						results =
-							DLAppServiceUtil.
-								getFoldersAndFileEntriesAndFileShortcuts(
-									repositoryId, folderId, status, true,
-									dlSearchContainer.getStart(),
-									dlSearchContainer.getEnd(),
-									dlSearchContainer.getOrderByComparator());
-					}
-				}
-				else if (navigation.equals("mine") ||
-						 navigation.equals("recent")) {
-
-					long groupFileEntriesUserId = 0;
-
-					if (navigation.equals("mine") &&
-						_themeDisplay.isSignedIn()) {
-
-						groupFileEntriesUserId = _themeDisplay.getUserId();
-
-						status = WorkflowConstants.STATUS_ANY;
-					}
-
-					long repositoryId = getRepositoryId();
-
-					total = DLAppServiceUtil.getGroupFileEntriesCount(
-						repositoryId, groupFileEntriesUserId, folderId, null,
-						status);
-
-					dlSearchContainer.setTotal(total);
-
-					results = DLAppServiceUtil.getGroupFileEntries(
-						repositoryId, groupFileEntriesUserId, folderId, null,
-						status, dlSearchContainer.getStart(),
-						dlSearchContainer.getEnd(),
-						dlSearchContainer.getOrderByComparator());
-				}
-			}
-
-			dlSearchContainer.setResults(results);
-
-			if (fileEntryTypeId >= 0) {
-				dlSearchContainer.setEmptyResultsMessage(
-					LanguageUtil.format(
-						_request,
-						"there-are-no-documents-or-media-files-of-type-x",
-						HtmlUtil.escape(dlFileEntryTypeName)));
-			}
-			else {
-				dlSearchContainer.setEmptyResultsMessage(
-					"there-are-no-documents-or-media-files-in-this-folder");
-			}
-
-			return dlSearchContainer;
-		}
+		return _searchContainer;
 	}
 
 	@Override
@@ -795,7 +562,7 @@ public class DefaultDLAdminDisplayContext implements DLAdminDisplayContext {
 	}
 
 	@Override
-	public int getTotalItems() throws PortalException {
+	public int getTotalItems() {
 		SearchContainer searchContainer = getSearchContainer();
 
 		return searchContainer.getTotal();
@@ -915,6 +682,238 @@ public class DefaultDLAdminDisplayContext implements DLAdminDisplayContext {
 		catch (PortalException pe) {
 			throw new SystemException(pe);
 		}
+	}
+
+	private SearchContainer _getDLSearchContainer() throws PortalException {
+		String navigation = ParamUtil.getString(_request, "navigation", "home");
+
+		String currentFolder = ParamUtil.getString(_request, "curFolder");
+		String deltaFolder = ParamUtil.getString(_request, "deltaFolder");
+
+		long fileEntryTypeId = ParamUtil.getLong(
+			_request, "fileEntryTypeId", -1);
+
+		String dlFileEntryTypeName = LanguageUtil.get(
+			_request, "basic-document");
+
+		int status = WorkflowConstants.STATUS_APPROVED;
+
+		User user = _themeDisplay.getUser();
+
+		if (_permissionChecker.isContentReviewer(
+				user.getCompanyId(), _themeDisplay.getScopeGroupId())) {
+
+			status = WorkflowConstants.STATUS_ANY;
+		}
+
+		long categoryId = ParamUtil.getLong(_request, "categoryId");
+		String tagName = ParamUtil.getString(_request, "tag");
+
+		boolean useAssetEntryQuery = false;
+
+		if ((categoryId > 0) || Validator.isNotNull(tagName)) {
+			useAssetEntryQuery = true;
+		}
+
+		PortletURL portletURL = _liferayPortletResponse.createRenderURL();
+
+		long folderId = getFolderId();
+
+		if (folderId == DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+			portletURL.setParameter(
+				"mvcRenderCommandName", "/document_library/view");
+		}
+		else {
+			portletURL.setParameter(
+				"mvcRenderCommandName", "/document_library/view_folder");
+		}
+
+		portletURL.setParameter("navigation", navigation);
+		portletURL.setParameter("curFolder", currentFolder);
+		portletURL.setParameter("deltaFolder", deltaFolder);
+		portletURL.setParameter("folderId", String.valueOf(folderId));
+
+		SearchContainer dlSearchContainer = new SearchContainer(
+			_liferayPortletRequest, null, null, "curEntry",
+			_dlPortletInstanceSettings.getEntriesPerPage(), portletURL, null,
+			null);
+
+		String[] entryColumns =
+			_dlPortletInstanceSettingsHelper.getEntryColumns();
+
+		dlSearchContainer.setHeaderNames(ListUtil.fromArray(entryColumns));
+
+		String orderByCol = getOrderByCol();
+		String orderByType = getOrderByType();
+
+		boolean orderByModel = false;
+
+		if (navigation.equals("home")) {
+			orderByModel = true;
+		}
+
+		OrderByComparator<?> orderByComparator =
+			DLUtil.getRepositoryModelOrderByComparator(
+				orderByCol, orderByType, orderByModel);
+
+		if (navigation.equals("recent")) {
+			orderByComparator = new RepositoryModelModifiedDateComparator();
+		}
+
+		dlSearchContainer.setOrderByCol(orderByCol);
+		dlSearchContainer.setOrderByComparator(orderByComparator);
+		dlSearchContainer.setOrderByType(orderByType);
+
+		List results = new ArrayList();
+		int total = 0;
+
+		if (fileEntryTypeId >= 0) {
+			Indexer indexer = IndexerRegistryUtil.getIndexer(
+				DLFileEntryConstants.getClassName());
+
+			if (fileEntryTypeId > 0) {
+				DLFileEntryType dlFileEntryType =
+					DLFileEntryTypeLocalServiceUtil.getFileEntryType(
+						fileEntryTypeId);
+
+				dlFileEntryTypeName = dlFileEntryType.getName(
+					_request.getLocale());
+			}
+
+			SearchContext searchContext = SearchContextFactory.getInstance(
+				_request);
+
+			searchContext.setAttribute("paginationType", "none");
+			searchContext.setEnd(dlSearchContainer.getEnd());
+
+			if (orderByCol.equals("creationDate")) {
+				orderByCol = "createDate";
+			}
+			else if (orderByCol.equals("readCount")) {
+				orderByCol = "downloads";
+			}
+			else if (orderByCol.equals("modifiedDate")) {
+				orderByCol = "modified";
+			}
+
+			Sort sort = new Sort(
+				orderByCol, !StringUtil.equalsIgnoreCase(orderByType, "asc"));
+
+			searchContext.setSorts(sort);
+
+			searchContext.setStart(dlSearchContainer.getStart());
+
+			Hits hits = indexer.search(searchContext);
+
+			total = hits.getLength();
+
+			dlSearchContainer.setTotal(total);
+
+			for (Document doc : hits.getDocs()) {
+				long fileEntryId = GetterUtil.getLong(
+					doc.get(Field.ENTRY_CLASS_PK));
+
+				FileEntry fileEntry = null;
+
+				try {
+					fileEntry = DLAppLocalServiceUtil.getFileEntry(fileEntryId);
+				}
+				catch (Exception e) {
+					if (_log.isWarnEnabled()) {
+						_log.warn(
+							StringBundler.concat(
+								"Documents and Media search index is stale ",
+								"and contains file entry {",
+								String.valueOf(fileEntryId), "}"));
+					}
+
+					continue;
+				}
+
+				results.add(fileEntry);
+			}
+		}
+		else {
+			if (navigation.equals("home")) {
+				if (useAssetEntryQuery) {
+					long[] classNameIds = {
+						PortalUtil.getClassNameId(
+							DLFileEntryConstants.getClassName()),
+						PortalUtil.getClassNameId(
+							DLFileShortcutConstants.getClassName())
+					};
+
+					AssetEntryQuery assetEntryQuery = new AssetEntryQuery(
+						classNameIds, dlSearchContainer);
+
+					assetEntryQuery.setEnablePermissions(true);
+					assetEntryQuery.setExcludeZeroViewCount(false);
+
+					total = AssetEntryServiceUtil.getEntriesCount(
+						assetEntryQuery);
+
+					dlSearchContainer.setTotal(total);
+
+					results = AssetEntryServiceUtil.getEntries(assetEntryQuery);
+				}
+				else {
+					long repositoryId = getRepositoryId();
+
+					total =
+						DLAppServiceUtil.
+							getFoldersAndFileEntriesAndFileShortcutsCount(
+								repositoryId, folderId, status, true);
+
+					dlSearchContainer.setTotal(total);
+
+					results =
+						DLAppServiceUtil.
+							getFoldersAndFileEntriesAndFileShortcuts(
+								repositoryId, folderId, status, true,
+								dlSearchContainer.getStart(),
+								dlSearchContainer.getEnd(),
+								dlSearchContainer.getOrderByComparator());
+				}
+			}
+			else if (navigation.equals("mine") || navigation.equals("recent")) {
+				long groupFileEntriesUserId = 0;
+
+				if (navigation.equals("mine") && _themeDisplay.isSignedIn()) {
+					groupFileEntriesUserId = _themeDisplay.getUserId();
+
+					status = WorkflowConstants.STATUS_ANY;
+				}
+
+				long repositoryId = getRepositoryId();
+
+				total = DLAppServiceUtil.getGroupFileEntriesCount(
+					repositoryId, groupFileEntriesUserId, folderId, null,
+					status);
+
+				dlSearchContainer.setTotal(total);
+
+				results = DLAppServiceUtil.getGroupFileEntries(
+					repositoryId, groupFileEntriesUserId, folderId, null,
+					status, dlSearchContainer.getStart(),
+					dlSearchContainer.getEnd(),
+					dlSearchContainer.getOrderByComparator());
+			}
+		}
+
+		dlSearchContainer.setResults(results);
+
+		if (fileEntryTypeId >= 0) {
+			dlSearchContainer.setEmptyResultsMessage(
+				LanguageUtil.format(
+					_request, "there-are-no-documents-or-media-files-of-type-x",
+					HtmlUtil.escape(dlFileEntryTypeName)));
+		}
+		else {
+			dlSearchContainer.setEmptyResultsMessage(
+				"there-are-no-documents-or-media-files-in-this-folder");
+		}
+
+		return dlSearchContainer;
 	}
 
 	private List<DropdownItem> _getFilterNavigationDropdownItems() {
@@ -1157,6 +1156,15 @@ public class DefaultDLAdminDisplayContext implements DLAdminDisplayContext {
 		return dlSearchResults;
 	}
 
+	private SearchContainer _getSearchSearchContainer() throws PortalException {
+		SearchContainer searchContainer = new SearchContainer(
+			_liferayPortletRequest, getPortletURL(), null, null);
+
+		searchContainer.setResults(_getSearchResults(searchContainer));
+
+		return searchContainer;
+	}
+
 	private boolean _isNavigationRecent() {
 		if (Objects.equals(getNavigation(), "recent")) {
 			return true;
@@ -1268,6 +1276,7 @@ public class DefaultDLAdminDisplayContext implements DLAdminDisplayContext {
 	private final PermissionChecker _permissionChecker;
 	private final PortalPreferences _portalPreferences;
 	private final HttpServletRequest _request;
+	private SearchContainer _searchContainer;
 	private final ThemeDisplay _themeDisplay;
 
 }

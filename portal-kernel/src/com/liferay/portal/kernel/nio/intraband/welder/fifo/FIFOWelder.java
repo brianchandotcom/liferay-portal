@@ -14,7 +14,7 @@
 
 package com.liferay.portal.kernel.nio.intraband.welder.fifo;
 
-import com.liferay.portal.kernel.io.AutoDeleteFileInputStream;
+import com.liferay.petra.io.AutoDeleteFileInputStream;
 import com.liferay.portal.kernel.nio.intraband.Intraband;
 import com.liferay.portal.kernel.nio.intraband.RegistrationReference;
 import com.liferay.portal.kernel.nio.intraband.welder.BaseWelder;

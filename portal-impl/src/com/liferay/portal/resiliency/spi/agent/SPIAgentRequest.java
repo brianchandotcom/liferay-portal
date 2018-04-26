@@ -14,8 +14,8 @@
 
 package com.liferay.portal.resiliency.spi.agent;
 
+import com.liferay.petra.io.AutoDeleteFileInputStream;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.io.AutoDeleteFileInputStream;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.resiliency.spi.SPIUtil;
 import com.liferay.portal.kernel.resiliency.spi.agent.annotation.Direction;

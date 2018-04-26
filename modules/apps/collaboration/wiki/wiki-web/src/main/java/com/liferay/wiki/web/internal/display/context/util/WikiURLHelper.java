@@ -15,11 +15,14 @@
 package com.liferay.wiki.web.internal.display.context.util;
 
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.wiki.configuration.WikiGroupServiceConfiguration;
 import com.liferay.wiki.model.WikiNode;
 
 import javax.portlet.ActionRequest;
+import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderResponse;
 
@@ -29,11 +32,24 @@ import javax.portlet.RenderResponse;
 public class WikiURLHelper {
 
 	public WikiURLHelper(
+		WikiRequestHelper wikiRequestHelper, PortletResponse portletResponse,
+		WikiGroupServiceConfiguration wikiGroupServiceConfiguration) {
+
+		_wikiRequestHelper = wikiRequestHelper;
+
+		_liferayPortletResponse = PortalUtil.getLiferayPortletResponse(
+			portletResponse);
+		_wikiGroupServiceConfiguration = wikiGroupServiceConfiguration;
+	}
+
+	public WikiURLHelper(
 		WikiRequestHelper wikiRequestHelper, RenderResponse renderResponse,
 		WikiGroupServiceConfiguration wikiGroupServiceConfiguration) {
 
 		_wikiRequestHelper = wikiRequestHelper;
-		_renderResponse = renderResponse;
+
+		_liferayPortletResponse = PortalUtil.getLiferayPortletResponse(
+			renderResponse);
 		_wikiGroupServiceConfiguration = wikiGroupServiceConfiguration;
 	}
 
@@ -42,7 +58,7 @@ public class WikiURLHelper {
 	}
 
 	public PortletURL getBackToViewPagesURL(WikiNode node) {
-		PortletURL viewPagesURL = _renderResponse.createRenderURL();
+		PortletURL viewPagesURL = _liferayPortletResponse.createRenderURL();
 
 		viewPagesURL.setParameter("mvcRenderCommandName", "/wiki/view_pages");
 		viewPagesURL.setParameter("navigation", "all-pages");
@@ -63,7 +79,7 @@ public class WikiURLHelper {
 	}
 
 	public PortletURL getSearchURL() {
-		PortletURL searchURL = _renderResponse.createRenderURL();
+		PortletURL searchURL = _liferayPortletResponse.createRenderURL();
 
 		searchURL.setParameter("mvcRenderCommandName", "/wiki/search");
 
@@ -71,7 +87,7 @@ public class WikiURLHelper {
 	}
 
 	public PortletURL getUndoTrashURL() {
-		PortletURL undoTrashURL = _renderResponse.createActionURL();
+		PortletURL undoTrashURL = _liferayPortletResponse.createActionURL();
 
 		undoTrashURL.setParameter(ActionRequest.ACTION_NAME, "/wiki/edit_page");
 		undoTrashURL.setParameter(Constants.CMD, Constants.RESTORE);
@@ -111,7 +127,7 @@ public class WikiURLHelper {
 	}
 
 	public PortletURL getViewPageURL(WikiNode wikiNode, String title) {
-		PortletURL viewPageURL = _renderResponse.createRenderURL();
+		PortletURL viewPageURL = _liferayPortletResponse.createRenderURL();
 
 		viewPageURL.setParameter("mvcRenderCommandName", "/wiki/view");
 		viewPageURL.setParameter("nodeName", wikiNode.getName());
@@ -130,7 +146,7 @@ public class WikiURLHelper {
 	}
 
 	protected PortletURL getWikiNodeBaseURL(WikiNode node) {
-		PortletURL portletURL = _renderResponse.createRenderURL();
+		PortletURL portletURL = _liferayPortletResponse.createRenderURL();
 
 		portletURL.setParameter("nodeName", node.getName());
 
@@ -143,7 +159,7 @@ public class WikiURLHelper {
 		return portletURL;
 	}
 
-	private final RenderResponse _renderResponse;
+	private final LiferayPortletResponse _liferayPortletResponse;
 	private final WikiGroupServiceConfiguration _wikiGroupServiceConfiguration;
 	private final WikiRequestHelper _wikiRequestHelper;
 

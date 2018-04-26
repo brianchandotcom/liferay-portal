@@ -75,78 +75,46 @@ if (portletTitleBasedNavigation) {
 		</aui:nav>
 	</c:if>
 
-	<aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
-		<aui:nav cssClass="navbar-nav">
+	<clay:navigation-bar
+		items="<%=
+			new JSPNavigationItemList(pageContext) {
+				{
+					add(
+						navigationItem -> {
+							navigationItem.setActive(wikiVisualizationHelper.isFrontPageNavItemSelected());
+							navigationItem.setHref(wikiURLHelper.getFrontPageURL(node));
+							navigationItem.setLabel(wikiGroupServiceConfiguration.frontPageName());
+						});
 
-			<%
-			PortletURL frontPageURL = wikiURLHelper.getFrontPageURL(node);
+					add(
+						navigationItem -> {
+							navigationItem.setActive(wikiVisualizationHelper.isViewRecentChangesNavItemSelected());
+							navigationItem.setHref(wikiURLHelper.getViewRecentChangesURL(node));
+							navigationItem.setLabel(LanguageUtil.get(request, "recent-changes"));
+						});
 
-			String label = wikiGroupServiceConfiguration.frontPageName();
-			boolean selected = wikiVisualizationHelper.isFrontPageNavItemSelected();
-			%>
+					add(
+						navigationItem -> {
+							navigationItem.setActive(wikiVisualizationHelper.isViewAllPagesNavItemSelected());
+							navigationItem.setHref(wikiURLHelper.getViewPagesURL(node));
+							navigationItem.setLabel(LanguageUtil.get(request, "all-pages"));
+						});
 
-			<aui:nav-item href="<%= frontPageURL.toString() %>" label="<%= label %>" selected="<%= selected %>" />
+					add(
+						navigationItem -> {
+							navigationItem.setActive(wikiVisualizationHelper.isViewOrphanPagesNavItemSelected());
+							navigationItem.setHref(wikiURLHelper.getViewOrphanPagesURL(node));
+							navigationItem.setLabel(LanguageUtil.get(request, "orphan-pages"));
+						});
 
-			<%
-			PortletURL viewRecentChangesURL = wikiURLHelper.getViewRecentChangesURL(node);
-
-			label = "recent-changes";
-			selected = wikiVisualizationHelper.isViewRecentChangesNavItemSelected();
-			%>
-
-			<aui:nav-item href="<%= viewRecentChangesURL.toString() %>" label="<%= label %>" selected="<%= selected %>" />
-
-			<%
-			PortletURL viewAllPagesURL = wikiURLHelper.getViewPagesURL(node);
-
-			label = "all-pages";
-			selected = wikiVisualizationHelper.isViewAllPagesNavItemSelected();
-			%>
-
-			<aui:nav-item href="<%= viewAllPagesURL.toString() %>" label="<%= label %>" selected="<%= selected %>" />
-
-			<%
-			PortletURL viewOrphanPagesURL = wikiURLHelper.getViewOrphanPagesURL(node);
-
-			label = "orphan-pages";
-			selected = wikiVisualizationHelper.isViewOrphanPagesNavItemSelected();
-			%>
-
-			<aui:nav-item href="<%= viewOrphanPagesURL.toString() %>" label="<%= label %>" selected="<%= selected %>" />
-
-			<%
-			PortletURL viewDraftPagesURL = wikiURLHelper.getViewDraftPagesURL(node);
-
-			label = "draft-pages";
-			selected = wikiVisualizationHelper.isViewDraftPagesNavItemSelected();
-			%>
-
-			<aui:nav-item href="<%= viewDraftPagesURL.toString() %>" label="<%= label %>" selected="<%= selected %>" />
-		</aui:nav>
-
-		<%
-		PortletURL searchURL = wikiURLHelper.getSearchURL();
-		%>
-
-		<aui:nav-bar-search>
-			<div class="form-search">
-				<aui:form action="<%= searchURL %>" method="get" name="searchFm">
-					<liferay-portlet:renderURLParams portletURL="<%= searchURL %>" />
-					<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
-					<aui:input name="nodeId" type="hidden" value="<%= node.getNodeId() %>" />
-
-					<liferay-ui:input-search
-						id="keywords1"
-						markupView="lexicon"
-					/>
-				</aui:form>
-			</div>
-		</aui:nav-bar-search>
-	</aui:nav-bar>
-
-	<c:if test="<%= windowState.equals(WindowState.MAXIMIZED) %>">
-		<aui:script>
-			Liferay.Util.focusFormField(document.getElementById('<portlet:namespace />keywords1'));
-		</aui:script>
-	</c:if>
+					add(
+						navigationItem -> {
+							navigationItem.setActive(wikiVisualizationHelper.isViewDraftPagesNavItemSelected());
+							navigationItem.setHref(wikiURLHelper.getViewDraftPagesURL(node));
+							navigationItem.setLabel(LanguageUtil.get(request, "draft-pages"));
+						});
+				}
+			}
+		%>"
+	/>
 </c:if>

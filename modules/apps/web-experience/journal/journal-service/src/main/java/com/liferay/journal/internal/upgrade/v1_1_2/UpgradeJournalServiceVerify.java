@@ -20,10 +20,8 @@ import com.liferay.dynamic.data.mapping.exception.NoSuchStructureException;
 import com.liferay.journal.configuration.JournalServiceConfiguration;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalArticleConstants;
-import com.liferay.journal.model.JournalArticleResource;
 import com.liferay.journal.model.JournalFolder;
 import com.liferay.journal.service.JournalArticleLocalService;
-import com.liferay.journal.service.JournalArticleResourceLocalService;
 import com.liferay.journal.service.JournalFolderLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
@@ -70,15 +68,12 @@ public class UpgradeJournalServiceVerify extends UpgradeProcess {
 	public UpgradeJournalServiceVerify(
 		AssetEntryLocalService assetEntryLocalService,
 		JournalArticleLocalService journalArticleLocalService,
-		JournalArticleResourceLocalService journalArticleResourceLocalService,
 		JournalFolderLocalService journalFolderLocalService, Portal portal,
 		ResourceLocalService resourceLocalService,
 		SystemEventLocalService systemEventLocalService) {
 
 		_assetEntryLocalService = assetEntryLocalService;
 		_journalArticleLocalService = journalArticleLocalService;
-		_journalArticleResourceLocalService =
-			journalArticleResourceLocalService;
 		_journalFolderLocalService = journalFolderLocalService;
 		_portal = portal;
 		_resourceLocalService = resourceLocalService;
@@ -575,20 +570,30 @@ public class UpgradeJournalServiceVerify extends UpgradeProcess {
 					continue;
 				}
 
-				JournalArticleResource journalArticleResource =
-					_journalArticleResourceLocalService.
-						fetchJournalArticleResourceByUuidAndGroupId(
-							systemEvent.getClassUuid(),
-							systemEvent.getGroupId());
+				String articleId = null;
 
-				if (journalArticleResource == null) {
+				try (PreparedStatement ps = connection.prepareStatement(
+						"select articleId from JournalArticleResource where " +
+							"JournalArticleResource.uuid_ = ? AND " +
+								"JournalArticleResource.groupId = ?")) {
+
+					ps.setString(1, systemEvent.getClassUuid());
+					ps.setLong(2, systemEvent.getGroupId());
+
+					try (ResultSet rs = ps.executeQuery()) {
+						if (rs.next()) {
+							articleId = rs.getString(1);
+						}
+					}
+				}
+
+				if (articleId == null) {
 					continue;
 				}
 
 				JournalArticle journalArticle =
 					_journalArticleLocalService.fetchArticle(
-						systemEvent.getGroupId(),
-						journalArticleResource.getArticleId(),
+						systemEvent.getGroupId(), articleId,
 						extraDataJSONObject.getDouble("version"));
 
 				if ((journalArticle == null) || journalArticle.isInTrash()) {
@@ -624,8 +629,6 @@ public class UpgradeJournalServiceVerify extends UpgradeProcess {
 
 	private final AssetEntryLocalService _assetEntryLocalService;
 	private final JournalArticleLocalService _journalArticleLocalService;
-	private final JournalArticleResourceLocalService
-		_journalArticleResourceLocalService;
 	private final JournalFolderLocalService _journalFolderLocalService;
 	private final Portal _portal;
 	private final ResourceLocalService _resourceLocalService;

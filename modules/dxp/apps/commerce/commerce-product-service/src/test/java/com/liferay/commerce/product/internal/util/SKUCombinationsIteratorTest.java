@@ -49,9 +49,9 @@ public class SKUCombinationsIteratorTest {
 		ConfigurationFactoryUtil.setConfigurationFactory(
 			new ConfigurationFactoryImpl());
 
-		_jsonFactoryUtil = new JSONFactoryUtil();
+		JSONFactoryUtil jsonFactoryUtil = new JSONFactoryUtil();
 
-		_jsonFactoryUtil.setJSONFactory(new JSONFactoryImpl());
+		jsonFactoryUtil.setJSONFactory(new JSONFactoryImpl());
 	}
 
 	@Test
@@ -73,7 +73,7 @@ public class SKUCombinationsIteratorTest {
 		Iterator<CPDefinitionOptionValueRel[]> iterator =
 			new SKUCombinationsIterator(combinationGeneratorMap);
 
-		JSONArray jsonArray = _jsonFactoryUtil.createJSONArray();
+		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
 		while (iterator.hasNext()) {
 			CPDefinitionOptionValueRel[]
@@ -198,7 +198,5 @@ public class SKUCombinationsIteratorTest {
 	private static final long _USER_ID = 123456789;
 
 	private static final String _USER_NAME = "UserName";
-
-	private JSONFactoryUtil _jsonFactoryUtil;
 
 }

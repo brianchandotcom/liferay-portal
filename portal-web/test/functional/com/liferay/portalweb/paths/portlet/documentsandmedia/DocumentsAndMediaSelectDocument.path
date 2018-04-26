@@ -118,7 +118,7 @@
 </tr>
 <tr>
 	<td>DOCUMENTS_TABLE_CHOOSE</td>
-	<td>//tr[contains(.,'${key_dmDocumentTypeName}')]/td//button[contains(.,'Choose')] | //tr[contains(.,'${key_documentTitle}')]/td//button[contains(.,'Choose')]</td>
+	<td>//button[@data-entityname='${key_dmDocumentTypeName}']</td>
 	<td></td>
 </tr>
 </tbody>

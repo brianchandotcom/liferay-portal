@@ -77,8 +77,6 @@ public class DDMFormViewFormInstanceRecordDisplayContext {
 
 		DDMFormInstance formInstance = formInstanceRecord.getFormInstance();
 
-		DDMStructure structure = formInstance.getStructure();
-
 		DDMFormInstanceVersion formInstanceVersion =
 			formInstance.getFormInstanceVersion(
 				formInstanceRecord.getFormInstanceVersion());
@@ -86,25 +84,24 @@ public class DDMFormViewFormInstanceRecordDisplayContext {
 		DDMStructureVersion structureVersion =
 			formInstanceVersion.getStructureVersion();
 
-		DDMForm currentForm = structureVersion.getDDMForm();
-
 		DDMFormValues formValues = _ddmFormValuesFactory.create(
-			renderRequest, currentForm);
+			renderRequest, structureVersion.getDDMForm());
 
 		formValues = _ddmFormValuesMerger.merge(
 			formInstanceRecord.getDDMFormValues(), formValues);
 
 		DDMFormRenderingContext formRenderingContext =
-			createDDMFormRenderingContext(structure.getDDMForm());
+			createDDMFormRenderingContext(structureVersion.getDDMForm());
 
 		formRenderingContext.setDDMFormValues(formValues);
 
-		updateDDMFormFields(currentForm, structure.getDDMForm());
+		updateDDMFormFields(
+			structureVersion.getDDMForm(), structureVersion.getDDMForm());
 
 		DDMFormLayout formLayout = structureVersion.getDDMFormLayout();
 
 		return _ddmFormRenderer.render(
-			currentForm, formLayout, formRenderingContext);
+			structureVersion.getDDMForm(), formLayout, formRenderingContext);
 	}
 
 	protected DDMFormRenderingContext createDDMFormRenderingContext(

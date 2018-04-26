@@ -403,7 +403,10 @@ public class DDMFormInstanceLocalServiceImpl
 
 		boolean updateVersion = false;
 
-		if (latestDDMFormInstanceVersion.getStatus() == status) {
+		if ((latestDDMFormInstanceVersion.getStatus() ==
+				WorkflowConstants.STATUS_DRAFT) &&
+			(status == WorkflowConstants.STATUS_DRAFT)) {
+
 			updateVersion = true;
 		}
 

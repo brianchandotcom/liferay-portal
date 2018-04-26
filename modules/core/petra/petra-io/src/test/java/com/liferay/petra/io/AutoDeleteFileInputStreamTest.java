@@ -38,6 +38,9 @@ public class AutoDeleteFileInputStreamTest {
 
 	@Test
 	public void testAutoRemoveFileInputStream() throws Exception {
+
+		// Normal close
+
 		File tempFile = new File("tempFile");
 
 		Assert.assertTrue(tempFile.createNewFile());
@@ -70,6 +73,8 @@ public class AutoDeleteFileInputStreamTest {
 		Assert.assertFalse(tempFile.exists());
 		Assert.assertEquals(1, checkDeleteCount.get());
 
+		// File already not exist on close
+
 		checkDeleteCount.set(0);
 
 		Assert.assertTrue(tempFile.createNewFile());
@@ -87,12 +92,76 @@ public class AutoDeleteFileInputStreamTest {
 		}
 
 		Assert.assertFalse(tempFile.exists());
-		Assert.assertEquals(2, checkDeleteCount.get());
+		Assert.assertEquals(0, checkDeleteCount.get());
 
 		Set<String> files = ReflectionTestUtil.getFieldValue(
 			Class.forName("java.io.DeleteOnExitHook"), "files");
 
+		Assert.assertFalse(files.toString(), files.contains(tempFile));
+
+		// Unable to delete on close
+
+		checkDeleteCount.set(0);
+
+		Assert.assertTrue(tempFile.createNewFile());
+
+		autoRemoveFileInputStream = new AutoDeleteFileInputStream(tempFile);
+
+		String path = ReflectionTestUtil.getFieldValue(tempFile, "path");
+
+		try (SwappableSecurityManager autoCloseSwappableSecurityManager =
+				new SwappableSecurityManager() {
+
+					@Override
+					public void checkDelete(String file) {
+						if (file.contains("tempFile")) {
+							ReflectionTestUtil.setFieldValue(
+								tempFile, "path", "\u0000");
+
+							ReflectionTestUtil.setFieldValue(
+								tempFile, "status", null);
+
+							checkDeleteCount.getAndIncrement();
+						}
+						else if (file.equals("\u0000")) {
+							ReflectionTestUtil.setFieldValue(
+								tempFile, "path", path);
+
+							ReflectionTestUtil.setFieldValue(
+								tempFile, "status", null);
+						}
+					}
+
+				}) {
+
+			autoCloseSwappableSecurityManager.install();
+
+			autoRemoveFileInputStream.close();
+		}
+
+		Assert.assertTrue(tempFile.delete());
+		Assert.assertEquals(1, checkDeleteCount.get());
 		Assert.assertTrue(files.toString(), files.contains(tempFile.getPath()));
+
+		// Close with FileChannel
+
+		Assert.assertTrue(tempFile.createNewFile());
+
+		autoRemoveFileInputStream = new AutoDeleteFileInputStream(tempFile);
+
+		Assert.assertNotNull(autoRemoveFileInputStream.getChannel());
+
+		try (SwappableSecurityManager autoCloseSwappableSecurityManager =
+				swappableSecurityManager) {
+
+			autoCloseSwappableSecurityManager.install();
+
+			autoRemoveFileInputStream.close();
+		}
+
+		Assert.assertFalse(tempFile.exists());
+		Assert.assertEquals(2, checkDeleteCount.get());
+		Assert.assertFalse(files.toString(), files.contains(tempFile));
 	}
 
 }

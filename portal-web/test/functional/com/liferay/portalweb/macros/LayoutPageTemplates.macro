@@ -27,6 +27,33 @@
 		</execute>
 	</command>
 
+	<command name="moveFragment">
+		<execute function="Refresh" />
+
+		<execute function="MouseOver#mouseOverNotVisible" locator1="Fragment#PAGE_TEMPLATE_FRAGMENT_HEADER">
+			<var name="key_fragmentName" value="${fragmentName}" />
+		</execute>
+
+		<var method="StringUtil#lowerCase('${direction}')" name="direction" />
+
+		<if>
+			<equals arg1="${direction}" arg2="up" />
+			<then>
+				<execute function="Click#clickNoWaitForVisible" locator1="Fragment#PAGE_TEMPLATE_FRAGMENT_UP_ARROW_BUTTON">
+					<var name="key_fragmentName" value="${fragmentName}" />
+				</execute>
+			</then>
+			<elseif>
+				<equals arg1="${direction}" arg2="down" />
+				<then>
+					<execute function="Click#clickNoWaitForVisible" locator1="Fragment#PAGE_TEMPLATE_FRAGMENT_DOWN_ARROW_BUTTON">
+						<var name="key_fragmentName" value="${fragmentName}" />
+					</execute>
+				</then>
+			</elseif>
+		</if>
+	</command>
+
 	<command name="removeFragment">
 		<execute function="MouseOver#mouseOverNotVisible" locator1="Fragment#PAGE_TEMPLATE_FRAGMENT_HEADER">
 			<var name="key_fragmentName" value="${fragmentName}" />
@@ -71,6 +98,13 @@
 	<command name="viewCollectionNotPresent">
 		<execute function="AssertElementNotPresent" locator1="Fragment#FRAGMENT_SIDEBAR_COLLECTION_PANEL">
 			<var name="key_collectionName" value="${collectionName}" />
+		</execute>
+	</command>
+
+	<command name="viewFragmentOrder">
+		<execute function="AssertElementPresent" locator1="Fragment#PAGE_TEMPLATE_FRAGMENT_HEADER_POSITION">
+			<var name="key_fragmentName" value="${fragmentName}" />
+			<var name="key_position" value="${position}" />
 		</execute>
 	</command>
 </definition>

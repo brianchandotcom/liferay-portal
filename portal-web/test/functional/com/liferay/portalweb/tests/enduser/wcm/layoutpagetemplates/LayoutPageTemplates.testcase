@@ -248,6 +248,116 @@
 		</execute>
 	</command>
 
+	<command name="ReorderFragments" priority="5">
+		<execute macro="LexiconEntry#gotoEntry">
+			<var name="rowEntry" value="Collection Name" />
+		</execute>
+
+		<execute macro="Fragment#addFragment">
+			<var name="fragmentName" value="Fragment 1" />
+		</execute>
+
+		<var name="htmlSnippet"><![CDATA[
+<div>${line.separator}
+Test Content 1${line.separator}
+</div>${line.separator}]]></var>
+
+		<execute macro="Fragment#typeFragmentEditor">
+			<var name="editor" value="html" />
+			<var name="templateScript" value="${htmlSnippet}" />
+		</execute>
+
+		<execute macro="PortletEntry#publish" />
+
+		<execute macro="Fragment#addFragment">
+			<var name="fragmentName" value="Fragment 2" />
+		</execute>
+
+		<var name="htmlSnippet"><![CDATA[
+<div>${line.separator}
+Test Content 2${line.separator}
+</div>${line.separator}]]></var>
+
+		<execute macro="Fragment#typeFragmentEditor">
+			<var name="editor" value="html" />
+			<var name="templateScript" value="${htmlSnippet}" />
+		</execute>
+
+		<execute macro="PortletEntry#publish" />
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Navigation" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Site Pages" />
+		</execute>
+
+		<execute macro="Navigator#gotoNavItem">
+			<var name="navItem" value="Page Templates" />
+		</execute>
+
+		<execute macro="Collection#addCollection">
+			<var name="collectionName" value="Page Template Collection" />
+		</execute>
+
+		<execute macro="LexiconEntry#gotoEntry">
+			<var name="rowEntry" value="Page Template Collection" />
+		</execute>
+
+		<execute macro="LayoutPageTemplates#add">
+			<var name="pageTemplateName" value="Page Template Name" />
+		</execute>
+
+		<execute macro="LayoutPageTemplates#selectFragment">
+			<var name="collectionName" value="Collection Name" />
+			<var name="fragmentName" value="Fragment 1" />
+		</execute>
+
+		<execute macro="LayoutPageTemplates#selectFragment">
+			<var name="collectionName" value="Collection Name" />
+			<var name="fragmentName" value="Fragment 2" />
+		</execute>
+
+		<execute macro="LayoutPageTemplates#viewFragmentOrder">
+			<var name="fragmentName" value="Fragment 1" />
+			<var name="position" value="1" />
+		</execute>
+
+		<execute macro="LayoutPageTemplates#viewFragmentOrder">
+			<var name="fragmentName" value="Fragment 2" />
+			<var name="position" value="2" />
+		</execute>
+
+		<execute macro="LayoutPageTemplates#moveFragment">
+			<var name="direction" value="down" />
+			<var name="fragmentName" value="Fragment 1" />
+		</execute>
+
+		<execute macro="LayoutPageTemplates#viewFragmentOrder">
+			<var name="fragmentName" value="Fragment 1" />
+			<var name="position" value="2" />
+		</execute>
+
+		<execute macro="LayoutPageTemplates#viewFragmentOrder">
+			<var name="fragmentName" value="Fragment 2" />
+			<var name="position" value="1" />
+		</execute>
+
+		<execute macro="LayoutPageTemplates#moveFragment">
+			<var name="direction" value="up" />
+			<var name="fragmentName" value="Fragment 1" />
+		</execute>
+
+		<execute macro="LayoutPageTemplates#viewFragmentOrder">
+			<var name="fragmentName" value="Fragment 1" />
+			<var name="position" value="1" />
+		</execute>
+
+		<execute macro="LayoutPageTemplates#viewFragmentOrder">
+			<var name="fragmentName" value="Fragment 2" />
+			<var name="position" value="2" />
+		</execute>
+	</command>
+
 	<command name="ViewDraftFragmentDoesNotDisplayInSidebar" priority="4">
 		<execute macro="LexiconEntry#gotoEntry">
 			<var name="rowEntry" value="Collection Name" />

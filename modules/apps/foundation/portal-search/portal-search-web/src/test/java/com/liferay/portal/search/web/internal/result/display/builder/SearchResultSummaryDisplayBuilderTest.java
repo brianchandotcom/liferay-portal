@@ -32,9 +32,11 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.ResourceActions;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.FastDateFormatFactory;
 import com.liferay.portal.kernel.util.Html;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.search.internal.summary.SummaryBuilderFactoryImpl;
@@ -42,6 +44,7 @@ import com.liferay.portal.search.test.SearchTestUtil;
 import com.liferay.portal.search.web.internal.display.context.PortletURLFactory;
 import com.liferay.portal.search.web.internal.display.context.SearchResultPreferences;
 import com.liferay.portal.search.web.internal.result.display.context.SearchResultSummaryDisplayContext;
+import com.liferay.portal.util.FastDateFormatFactoryImpl;
 
 import java.util.Locale;
 
@@ -93,14 +96,8 @@ public class SearchResultSummaryDisplayBuilderTest {
 		whenAssetRendererFactoryLookupGetAssetRendererFactoryByClassName(
 			entryClassName);
 
-		SearchResultSummaryDisplayBuilder searchResultSummaryDisplayBuilder =
-			createSearchResultSummaryDisplayBuilder();
-
-		searchResultSummaryDisplayBuilder.setDocument(
-			createDocument(entryClassName, entryClassPK));
-
 		SearchResultSummaryDisplayContext searchResultSummaryDisplayContext =
-			searchResultSummaryDisplayBuilder.build();
+			build(createDocument(entryClassName, entryClassPK));
 
 		Assert.assertEquals(
 			entryClassName, searchResultSummaryDisplayContext.getClassName());
@@ -111,17 +108,41 @@ public class SearchResultSummaryDisplayBuilderTest {
 	}
 
 	@Test
+	public void testCreationDate() throws Exception {
+		String entryClassName = RandomTestUtil.randomString();
+
+		long entryClassPK = RandomTestUtil.randomLong();
+
+		whenAssetRendererFactoryGetAssetRenderer(entryClassPK, assetRenderer);
+
+		whenAssetRendererFactoryLookupGetAssetRendererFactoryByClassName(
+			entryClassName);
+
+		Document document = createDocument(entryClassName, entryClassPK);
+
+		assertCreationDateMissing(document);
+
+		document.addKeyword(Field.CREATE_DATE, "20180425171442");
+
+		assertCreationDate("Apr 25, 2018 5:14 PM", document);
+
+		assertCreationDate(LocaleUtil.BRAZIL, "25/04/2018 17:14", document);
+		assertCreationDate(LocaleUtil.CHINA, "2018-4-25 下午5:14", document);
+		assertCreationDate(LocaleUtil.GERMANY, "25.04.2018 17:14", document);
+		assertCreationDate(LocaleUtil.HUNGARY, "2018.04.25. 17:14", document);
+		assertCreationDate(LocaleUtil.ITALY, "25-apr-2018 17.14", document);
+		assertCreationDate(LocaleUtil.JAPAN, "2018/04/25 17:14", document);
+		assertCreationDate(
+			LocaleUtil.NETHERLANDS, "25-apr-2018 17:14", document);
+		assertCreationDate(LocaleUtil.SPAIN, "25-abr-2018 17:14", document);
+	}
+
+	@Test
 	public void testResultIsTemporarilyUnavailable() throws Exception {
 		ruinAssetRendererFactoryLookup();
 
-		SearchResultSummaryDisplayBuilder searchResultSummaryDisplayBuilder =
-			createSearchResultSummaryDisplayBuilder();
-
-		searchResultSummaryDisplayBuilder.setDocument(
-			Mockito.mock(Document.class));
-
 		SearchResultSummaryDisplayContext searchResultSummaryDisplayContext =
-			searchResultSummaryDisplayBuilder.build();
+			build(Mockito.mock(Document.class));
 
 		Assert.assertTrue(
 			searchResultSummaryDisplayContext.isTemporarilyUnavailable());
@@ -153,14 +174,8 @@ public class SearchResultSummaryDisplayBuilderTest {
 
 		whenIndexerRegistryGetIndexer(className, createIndexer());
 
-		SearchResultSummaryDisplayBuilder searchResultSummaryDisplayBuilder =
-			createSearchResultSummaryDisplayBuilder();
-
-		searchResultSummaryDisplayBuilder.setDocument(
-			createDocument(className, entryClassPK));
-
 		SearchResultSummaryDisplayContext searchResultSummaryDisplayContext =
-			searchResultSummaryDisplayBuilder.build();
+			build(createDocument(className, entryClassPK));
 
 		assertAssetRendererURLDownloadVisible(
 			urlDownload, searchResultSummaryDisplayContext);
@@ -210,17 +225,12 @@ public class SearchResultSummaryDisplayBuilderTest {
 
 		whenIndexerRegistryGetIndexer(className, createIndexer());
 
-		SearchResultSummaryDisplayBuilder searchResultSummaryDisplayBuilder =
-			createSearchResultSummaryDisplayBuilder();
-
 		Document document = createDocument(className, entryClassPK);
 
 		document.addKeyword(Field.ROOT_ENTRY_CLASS_PK, rootEntryClassPK);
 
-		searchResultSummaryDisplayBuilder.setDocument(document);
-
 		SearchResultSummaryDisplayContext searchResultSummaryDisplayContext =
-			searchResultSummaryDisplayBuilder.build();
+			build(document);
 
 		assertAssetRendererURLDownloadVisible(
 			rootURLDownload, searchResultSummaryDisplayContext);
@@ -243,6 +253,44 @@ public class SearchResultSummaryDisplayBuilderTest {
 			searchResultSummaryDisplayContext.getAssetRendererURLDownload());
 	}
 
+	protected void assertCreationDate(
+			Locale locale1, String expectedCreationDateString,
+			Document document)
+		throws Exception {
+
+		locale = locale1;
+
+		assertCreationDate(expectedCreationDateString, document);
+	}
+
+	protected void assertCreationDate(
+			String expectedCreationDateString, Document document)
+		throws Exception {
+
+		SearchResultSummaryDisplayContext searchResultSummaryDisplayContext =
+			build(document);
+
+		Assert.assertEquals(
+			expectedCreationDateString,
+			searchResultSummaryDisplayContext.getCreationDateString());
+
+		Assert.assertTrue(
+			searchResultSummaryDisplayContext.isCreationDateVisible());
+	}
+
+	protected void assertCreationDateMissing(Document document)
+		throws Exception {
+
+		SearchResultSummaryDisplayContext searchResultSummaryDisplayContext =
+			build(document);
+
+		Assert.assertNull(
+			searchResultSummaryDisplayContext.getCreationDateString());
+
+		Assert.assertFalse(
+			searchResultSummaryDisplayContext.isCreationDateVisible());
+	}
+
 	protected void assertTagsVisible(
 		long entryClassPK,
 		SearchResultSummaryDisplayContext searchResultSummaryDisplayContext) {
@@ -263,6 +311,17 @@ public class SearchResultSummaryDisplayBuilderTest {
 
 		Assert.assertEquals(
 			userId, searchResultSummaryDisplayContext.getAssetEntryUserId());
+	}
+
+	protected SearchResultSummaryDisplayContext build(Document document)
+		throws Exception {
+
+		SearchResultSummaryDisplayBuilder searchResultSummaryDisplayBuilder =
+			createSearchResultSummaryDisplayBuilder();
+
+		searchResultSummaryDisplayBuilder.setDocument(document);
+
+		return searchResultSummaryDisplayBuilder.build();
 	}
 
 	protected AssetEntry createAssetEntry(long userId) {
@@ -337,10 +396,12 @@ public class SearchResultSummaryDisplayBuilderTest {
 			assetEntryLocalService);
 		searchResultSummaryDisplayBuilder.setAssetRendererFactoryLookup(
 			assetRendererFactoryLookup);
+		searchResultSummaryDisplayBuilder.setFastDateFormatFactory(
+			fastDateFormatFactory);
 		searchResultSummaryDisplayBuilder.setIndexerRegistry(indexerRegistry);
 		searchResultSummaryDisplayBuilder.setLanguage(
 			Mockito.mock(Language.class));
-		searchResultSummaryDisplayBuilder.setLocale(Locale.US);
+		searchResultSummaryDisplayBuilder.setLocale(locale);
 		searchResultSummaryDisplayBuilder.setPortletURLFactory(
 			portletURLFactory);
 		searchResultSummaryDisplayBuilder.setResourceActions(
@@ -482,8 +543,13 @@ public class SearchResultSummaryDisplayBuilderTest {
 	@Mock
 	protected AssetRendererFactoryLookup assetRendererFactoryLookup;
 
+	protected FastDateFormatFactory fastDateFormatFactory =
+		new FastDateFormatFactoryImpl();
+
 	@Mock
 	protected IndexerRegistry indexerRegistry;
+
+	protected Locale locale = Locale.US;
 
 	@Mock
 	protected PermissionChecker permissionChecker;

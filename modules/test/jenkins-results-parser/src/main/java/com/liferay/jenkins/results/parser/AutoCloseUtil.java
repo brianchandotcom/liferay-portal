@@ -116,7 +116,7 @@ public class AutoCloseUtil {
 				sb.append("<li><a href=\"");
 				sb.append(failureBuildURL);
 				sb.append("\">");
-				sb.append(getBatchName(failedDownstreamBuild));
+				sb.append(failedDownstreamBuild.getJobVariant());
 				sb.append("</a></li>");
 			}
 
@@ -190,7 +190,7 @@ public class AutoCloseUtil {
 		List<Build> downstreamBuilds = topLevelBuild.getDownstreamBuilds(null);
 
 		for (Build downstreamBuild : downstreamBuilds) {
-			String batchName = getBatchName(downstreamBuild);
+			String batchName = downstreamBuild.getJobVariant();
 
 			if (batchName == null) {
 				continue;
@@ -369,21 +369,6 @@ public class AutoCloseUtil {
 		return list;
 	}
 
-	public static String getBatchName(Build downstreamBuild) throws Exception {
-		Map<String, String> parameters = downstreamBuild.getParameters();
-
-		if (parameters.containsKey("JOB_VARIANT")) {
-			return parameters.get("JOB_VARIANT");
-		}
-
-		if (parameters.containsKey("JENKINS_JOB_VARIANT")) {
-			return downstreamBuild.getJobName() + "/" +
-				parameters.get("JENKINS_JOB_VARIANT");
-		}
-
-		return downstreamBuild.getJobName();
-	}
-
 	public static boolean isAutoCloseBranch(Project project) {
 		String repository = project.getProperty("repository");
 
@@ -539,33 +524,18 @@ public class AutoCloseUtil {
 			return ruleData;
 		}
 
-		protected String getBatchName(Build build) {
-			String batchName = build.getParameterValue("JOB_VARIANT");
-
-			if ((batchName == null) || batchName.isEmpty()) {
-				batchName = build.getParameterValue("JENKINS_JOB_VARIANT");
-			}
-
-			if ((batchName == null) || batchName.isEmpty()) {
-				return build.getJobName();
-			}
-
-			return batchName;
-		}
-
 		protected List<Build> getMatchingBuilds(List<Build> downstreamBuilds) {
 			List<Build> filteredDownstreamBuilds = new ArrayList<>(
 				downstreamBuilds.size());
 
 			for (Build downstreamBuild : downstreamBuilds) {
-				String batchName = getBatchName(downstreamBuild);
+				String jobVariant = downstreamBuild.getJobVariant();
 
-				if ((batchName == null) || batchName.isEmpty()) {
+				if ((jobVariant == null) || jobVariant.isEmpty()) {
 					continue;
 				}
 
-				Matcher matcher = rulePattern.matcher(
-					getBatchName(downstreamBuild));
+				Matcher matcher = rulePattern.matcher(jobVariant);
 
 				if (matcher.matches()) {
 					filteredDownstreamBuilds.add(downstreamBuild);

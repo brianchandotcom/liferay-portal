@@ -94,7 +94,10 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.util.PropsValues;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
 import javax.portlet.PortletException;
 import javax.portlet.PortletRequest;
@@ -128,6 +131,9 @@ public class DefaultDLAdminDisplayContext implements DLAdminDisplayContext {
 
 		_themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
+
+		_portalPreferences = PortletPreferencesFactoryUtil.getPortalPreferences(
+			liferayPortletRequest);
 	}
 
 	@Override
@@ -209,8 +215,22 @@ public class DefaultDLAdminDisplayContext implements DLAdminDisplayContext {
 								LanguageUtil.get(
 									_request, "filter-by-navigation"));
 						}));
+
+				if (!_isSearch() && !_isNavigationRecent()) {
+					addGroup(
+						dropdownGroupItem -> {
+							dropdownGroupItem.setDropdownItems(
+								_getOrderByDropdownItems());
+							dropdownGroupItem.setLabel(
+								LanguageUtil.get(_request, "order-by"));
+						});
+				}
 			}
 		};
+	}
+
+	public String getNavigation() {
+		return ParamUtil.getString(_request, "navigation", "home");
 	}
 
 	@Override
@@ -242,6 +262,38 @@ public class DefaultDLAdminDisplayContext implements DLAdminDisplayContext {
 				}
 			}
 		};
+	}
+
+	@Override
+	public String getOrderByCol() {
+		String orderByCol = ParamUtil.getString(_request, "orderByCol");
+
+		if (Validator.isNotNull(orderByCol)) {
+			_portalPreferences.setValue(
+				DLPortletKeys.DOCUMENT_LIBRARY, "order-by-col", orderByCol);
+		}
+		else {
+			orderByCol = _portalPreferences.getValue(
+				DLPortletKeys.DOCUMENT_LIBRARY, "order-by-col", "modifiedDate");
+		}
+
+		return orderByCol;
+	}
+
+	@Override
+	public String getOrderByType() {
+		String orderByType = ParamUtil.getString(_request, "orderByType");
+
+		if (Validator.isNotNull(orderByType)) {
+			_portalPreferences.setValue(
+				DLPortletKeys.DOCUMENT_LIBRARY, "order-by-type", orderByType);
+		}
+		else {
+			orderByType = _portalPreferences.getValue(
+				DLPortletKeys.DOCUMENT_LIBRARY, "order-by-type", "asc");
+		}
+
+		return orderByType;
 	}
 
 	@Override
@@ -552,6 +604,45 @@ public class DefaultDLAdminDisplayContext implements DLAdminDisplayContext {
 	}
 
 	@Override
+	public PortletURL getSortingURL() {
+		int deltaEntry = ParamUtil.getInteger(_request, "deltaEntry");
+
+		PortletURL sortingURL = _liferayPortletResponse.createRenderURL();
+
+		long folderId = GetterUtil.getLong(
+			(String)_request.getAttribute("view.jsp-folderId"));
+
+		if (folderId == DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+			sortingURL.setParameter(
+				"mvcRenderCommandName", "/document_library/view");
+		}
+		else {
+			sortingURL.setParameter(
+				"mvcRenderCommandName", "/document_library/view_folder");
+		}
+
+		sortingURL.setParameter("navigation", getNavigation());
+
+		if (deltaEntry > 0) {
+			sortingURL.setParameter("deltaEntry", String.valueOf(deltaEntry));
+		}
+
+		sortingURL.setParameter("folderId", String.valueOf(folderId));
+
+		long fileEntryTypeId = ParamUtil.getLong(
+			_request, "fileEntryTypeId", -1);
+
+		sortingURL.setParameter(
+			"fileEntryTypeId", String.valueOf(fileEntryTypeId));
+
+		sortingURL.setParameter(
+			"orderByType",
+			Objects.equals(getOrderByType(), "asc") ? "desc" : "asc");
+
+		return sortingURL;
+	}
+
+	@Override
 	public int getTotalItems() throws Exception {
 		SearchContainer searchContainer = getSearchContainer();
 
@@ -748,6 +839,37 @@ public class DefaultDLAdminDisplayContext implements DLAdminDisplayContext {
 		};
 	}
 
+	private List<DropdownItem> _getOrderByDropdownItems() {
+		final Map<String, String> orderColumns = new HashMap<>();
+
+		orderColumns.put("creationDate", "create-date");
+		orderColumns.put("downloads", "downloads");
+		orderColumns.put("modifiedDate", "modified-date");
+		orderColumns.put("size", "size");
+		orderColumns.put("title", "title");
+
+		return new DropdownItemList() {
+			{
+				for (Map.Entry<String, String> orderByColEntry :
+						orderColumns.entrySet()) {
+
+					String orderByCol = orderByColEntry.getKey();
+
+					add(
+						dropdownItem -> {
+							dropdownItem.setActive(
+								orderByCol.equals(getOrderByCol()));
+							dropdownItem.setHref(
+								getSortingURL(), "orderByCol", orderByCol);
+							dropdownItem.setLabel(
+								LanguageUtil.get(
+									_request, orderByColEntry.getValue()));
+						});
+				}
+			}
+		};
+	}
+
 	private Portlet _getPortlet(ThemeDisplay themeDisplay) {
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
@@ -840,6 +962,14 @@ public class DefaultDLAdminDisplayContext implements DLAdminDisplayContext {
 		}
 
 		return dlSearchResults;
+	}
+
+	private boolean _isNavigationRecent() {
+		if (Objects.equals(getNavigation(), "recent")) {
+			return true;
+		}
+
+		return false;
 	}
 
 	private boolean _isSearch() {
@@ -939,6 +1069,7 @@ public class DefaultDLAdminDisplayContext implements DLAdminDisplayContext {
 	private final LiferayPortletRequest _liferayPortletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;
 	private final PermissionChecker _permissionChecker;
+	private final PortalPreferences _portalPreferences;
 	private final HttpServletRequest _request;
 	private final ThemeDisplay _themeDisplay;
 

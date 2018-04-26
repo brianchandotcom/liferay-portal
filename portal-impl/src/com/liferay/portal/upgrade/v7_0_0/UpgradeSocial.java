@@ -16,6 +16,7 @@ package com.liferay.portal.upgrade.v7_0_0;
 
 import com.liferay.counter.kernel.model.Counter;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 
 import java.sql.PreparedStatement;
@@ -43,15 +44,16 @@ public class UpgradeSocial extends UpgradeProcess {
 	}
 
 	protected void deleteOrphanedSocialRequests() throws Exception {
-		try (Statement s = connection.createStatement()) {
-			StringBundler sb = new StringBundler(4);
+		try (PreparedStatement ps = connection.prepareStatement(
+				"delete from SocialRequest where classNameId = ? and classPk " +
+					"not in (select groupId from Group_)")) {
 
-			sb.append("delete from SocialRequest where classNameId = (select ");
-			sb.append("classNameId from ClassName_ where value = ");
-			sb.append("'com.liferay.portal.kernel.model.Group') and classPk ");
-			sb.append("not in (select groupId from Group_)");
+			ps.setLong(
+				1,
+				PortalUtil.getClassNameId(
+					"com.liferay.portal.kernel.model.Group"));
 
-			s.execute(sb.toString());
+			ps.execute();
 		}
 	}
 

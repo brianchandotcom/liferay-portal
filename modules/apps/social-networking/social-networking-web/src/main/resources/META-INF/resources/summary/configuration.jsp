@@ -20,24 +20,32 @@
 
 <liferay-portlet:renderURL portletConfiguration="<%= true %>" var="configurationRenderURL" />
 
-<aui:form action="<%= configurationActionURL %>" method="post" name="fm">
+<liferay-frontend:edit-form
+	action="<%= configurationActionURL %>"
+	method="post"
+	name="fm"
+>
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
 	<aui:input name="redirect" type="hidden" value="<%= configurationRenderURL %>" />
 
-	<div class="portlet-configuration-body-content sheet">
-		<div class="container-fluid-1280">
-			<c:if test="<%= PortalUtil.isRSSFeedsEnabled() %>">
-				<liferay-rss:rss-settings
-					delta="<%= rssDelta %>"
-					displayStyle="<%= rssDisplayStyle %>"
-					enabled="<%= enableRSS %>"
-					feedType="<%= rssFeedType %>"
-				/>
-			</c:if>
-		</div>
-	</div>
+	<liferay-frontend:edit-form-body>
+		<liferay-frontend:fieldset-group>
+			<liferay-frontend:fieldset>
+				<c:if test="<%= PortalUtil.isRSSFeedsEnabled() %>">
+					<liferay-rss:rss-settings
+						delta="<%= rssDelta %>"
+						displayStyle="<%= rssDisplayStyle %>"
+						enabled="<%= enableRSS %>"
+						feedType="<%= rssFeedType %>"
+					/>
+				</c:if>
+			</liferay-frontend:fieldset>
+		</liferay-frontend:fieldset-group>
+	</liferay-frontend:edit-form-body>
 
-	<aui:button-row>
+	<liferay-frontend:edit-form-footer>
 		<aui:button type="submit" />
-	</aui:button-row>
-</aui:form>
+
+		<aui:button type="cancel" />
+	</liferay-frontend:edit-form-footer>
+</liferay-frontend:edit-form>

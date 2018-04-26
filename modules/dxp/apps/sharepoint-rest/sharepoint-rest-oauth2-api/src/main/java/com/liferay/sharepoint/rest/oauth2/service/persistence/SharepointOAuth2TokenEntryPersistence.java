@@ -50,7 +50,7 @@ public interface SharepointOAuth2TokenEntryPersistence extends BasePersistence<S
 	* @throws NoSuch2TokenEntryException if a matching sharepoint o auth2 token entry could not be found
 	*/
 	public SharepointOAuth2TokenEntry findByU_C(long userId,
-		java.lang.String configurationPid) throws NoSuch2TokenEntryException;
+		String configurationPid) throws NoSuch2TokenEntryException;
 
 	/**
 	* Returns the sharepoint o auth2 token entry where userId = &#63; and configurationPid = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
@@ -60,7 +60,7 @@ public interface SharepointOAuth2TokenEntryPersistence extends BasePersistence<S
 	* @return the matching sharepoint o auth2 token entry, or <code>null</code> if a matching sharepoint o auth2 token entry could not be found
 	*/
 	public SharepointOAuth2TokenEntry fetchByU_C(long userId,
-		java.lang.String configurationPid);
+		String configurationPid);
 
 	/**
 	* Returns the sharepoint o auth2 token entry where userId = &#63; and configurationPid = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -71,7 +71,7 @@ public interface SharepointOAuth2TokenEntryPersistence extends BasePersistence<S
 	* @return the matching sharepoint o auth2 token entry, or <code>null</code> if a matching sharepoint o auth2 token entry could not be found
 	*/
 	public SharepointOAuth2TokenEntry fetchByU_C(long userId,
-		java.lang.String configurationPid, boolean retrieveFromCache);
+		String configurationPid, boolean retrieveFromCache);
 
 	/**
 	* Removes the sharepoint o auth2 token entry where userId = &#63; and configurationPid = &#63; from the database.
@@ -81,7 +81,7 @@ public interface SharepointOAuth2TokenEntryPersistence extends BasePersistence<S
 	* @return the sharepoint o auth2 token entry that was removed
 	*/
 	public SharepointOAuth2TokenEntry removeByU_C(long userId,
-		java.lang.String configurationPid) throws NoSuch2TokenEntryException;
+		String configurationPid) throws NoSuch2TokenEntryException;
 
 	/**
 	* Returns the number of sharepoint o auth2 token entries where userId = &#63; and configurationPid = &#63;.
@@ -90,7 +90,7 @@ public interface SharepointOAuth2TokenEntryPersistence extends BasePersistence<S
 	* @param configurationPid the configuration pid
 	* @return the number of matching sharepoint o auth2 token entries
 	*/
-	public int countByU_C(long userId, java.lang.String configurationPid);
+	public int countByU_C(long userId, String configurationPid);
 
 	/**
 	* Caches the sharepoint o auth2 token entry in the entity cache if it is enabled.

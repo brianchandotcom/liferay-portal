@@ -35,9 +35,9 @@ public class SourceLocalServiceWrapper implements SourceLocalService,
 	@Override
 	public com.liferay.portal.reports.engine.console.model.Source addSource(
 		long userId, long groupId,
-		java.util.Map<java.util.Locale, java.lang.String> nameMap,
-		java.lang.String driverClassName, java.lang.String driverUrl,
-		java.lang.String driverUserName, java.lang.String driverPassword,
+		java.util.Map<java.util.Locale, String> nameMap,
+		String driverClassName, String driverUrl, String driverUserName,
+		String driverPassword,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _sourceLocalService.addSource(userId, groupId, nameMap,
@@ -212,7 +212,7 @@ public class SourceLocalServiceWrapper implements SourceLocalService,
 	*/
 	@Override
 	public com.liferay.portal.reports.engine.console.model.Source fetchSourceByUuidAndGroupId(
-		java.lang.String uuid, long groupId) {
+		String uuid, long groupId) {
 		return _sourceLocalService.fetchSourceByUuidAndGroupId(uuid, groupId);
 	}
 
@@ -238,7 +238,7 @@ public class SourceLocalServiceWrapper implements SourceLocalService,
 	* @return the OSGi service identifier
 	*/
 	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
+	public String getOSGiServiceIdentifier() {
 		return _sourceLocalService.getOSGiServiceIdentifier();
 	}
 
@@ -273,7 +273,7 @@ public class SourceLocalServiceWrapper implements SourceLocalService,
 	*/
 	@Override
 	public com.liferay.portal.reports.engine.console.model.Source getSourceByUuidAndGroupId(
-		java.lang.String uuid, long groupId)
+		String uuid, long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _sourceLocalService.getSourceByUuidAndGroupId(uuid, groupId);
 	}
@@ -297,8 +297,8 @@ public class SourceLocalServiceWrapper implements SourceLocalService,
 
 	@Override
 	public java.util.List<com.liferay.portal.reports.engine.console.model.Source> getSources(
-		long groupId, java.lang.String name, java.lang.String driverUrl,
-		boolean andSearch, int start, int end,
+		long groupId, String name, String driverUrl, boolean andSearch,
+		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return _sourceLocalService.getSources(groupId, name, driverUrl,
 			andSearch, start, end, orderByComparator);
@@ -313,7 +313,7 @@ public class SourceLocalServiceWrapper implements SourceLocalService,
 	*/
 	@Override
 	public java.util.List<com.liferay.portal.reports.engine.console.model.Source> getSourcesByUuidAndCompanyId(
-		java.lang.String uuid, long companyId) {
+		String uuid, long companyId) {
 		return _sourceLocalService.getSourcesByUuidAndCompanyId(uuid, companyId);
 	}
 
@@ -329,7 +329,7 @@ public class SourceLocalServiceWrapper implements SourceLocalService,
 	*/
 	@Override
 	public java.util.List<com.liferay.portal.reports.engine.console.model.Source> getSourcesByUuidAndCompanyId(
-		java.lang.String uuid, long companyId, int start, int end,
+		String uuid, long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.reports.engine.console.model.Source> orderByComparator) {
 		return _sourceLocalService.getSourcesByUuidAndCompanyId(uuid,
 			companyId, start, end, orderByComparator);
@@ -346,18 +346,17 @@ public class SourceLocalServiceWrapper implements SourceLocalService,
 	}
 
 	@Override
-	public int getSourcesCount(long groupId, java.lang.String name,
-		java.lang.String driverUrl, boolean andSearch) {
+	public int getSourcesCount(long groupId, String name, String driverUrl,
+		boolean andSearch) {
 		return _sourceLocalService.getSourcesCount(groupId, name, driverUrl,
 			andSearch);
 	}
 
 	@Override
 	public com.liferay.portal.reports.engine.console.model.Source updateSource(
-		long sourceId,
-		java.util.Map<java.util.Locale, java.lang.String> nameMap,
-		java.lang.String driverClassName, java.lang.String driverUrl,
-		java.lang.String driverUserName, java.lang.String driverPassword,
+		long sourceId, java.util.Map<java.util.Locale, String> nameMap,
+		String driverClassName, String driverUrl, String driverUserName,
+		String driverPassword,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _sourceLocalService.updateSource(sourceId, nameMap,

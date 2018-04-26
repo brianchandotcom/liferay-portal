@@ -100,9 +100,9 @@ public interface KaleoProcessLocalService extends BaseLocalService,
 	* @throws PortalException if a portal exception occurred
 	*/
 	public KaleoProcess addKaleoProcess(long userId, long groupId,
-		long ddmStructureId, Map<Locale, java.lang.String> nameMap,
-		Map<Locale, java.lang.String> descriptionMap, long ddmTemplateId,
-		java.lang.String workflowDefinitionName, int workflowDefinitionVersion,
+		long ddmStructureId, Map<Locale, String> nameMap,
+		Map<Locale, String> descriptionMap, long ddmTemplateId,
+		String workflowDefinitionName, int workflowDefinitionVersion,
 		KaleoTaskFormPairs kaleoTaskFormPairs, ServiceContext serviceContext)
 		throws PortalException;
 
@@ -214,8 +214,8 @@ public interface KaleoProcessLocalService extends BaseLocalService,
 	* @return the matching kaleo process, or <code>null</code> if a matching kaleo process could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public KaleoProcess fetchKaleoProcessByUuidAndGroupId(
-		java.lang.String uuid, long groupId);
+	public KaleoProcess fetchKaleoProcessByUuidAndGroupId(String uuid,
+		long groupId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
@@ -259,7 +259,7 @@ public interface KaleoProcessLocalService extends BaseLocalService,
 	* @throws PortalException if a matching kaleo process could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public KaleoProcess getKaleoProcessByUuidAndGroupId(java.lang.String uuid,
+	public KaleoProcess getKaleoProcessByUuidAndGroupId(String uuid,
 		long groupId) throws PortalException;
 
 	/**
@@ -316,8 +316,8 @@ public interface KaleoProcessLocalService extends BaseLocalService,
 	* @return the matching kaleo processes, or an empty list if no matches were found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<KaleoProcess> getKaleoProcessesByUuidAndCompanyId(
-		java.lang.String uuid, long companyId);
+	public List<KaleoProcess> getKaleoProcessesByUuidAndCompanyId(String uuid,
+		long companyId);
 
 	/**
 	* Returns a range of kaleo processes matching the UUID and company.
@@ -330,8 +330,8 @@ public interface KaleoProcessLocalService extends BaseLocalService,
 	* @return the range of matching kaleo processes, or an empty list if no matches were found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<KaleoProcess> getKaleoProcessesByUuidAndCompanyId(
-		java.lang.String uuid, long companyId, int start, int end,
+	public List<KaleoProcess> getKaleoProcessesByUuidAndCompanyId(String uuid,
+		long companyId, int start, int end,
 		OrderByComparator<KaleoProcess> orderByComparator);
 
 	/**
@@ -356,7 +356,7 @@ public interface KaleoProcessLocalService extends BaseLocalService,
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -395,9 +395,9 @@ public interface KaleoProcessLocalService extends BaseLocalService,
 	* @throws PortalException if a portal exception occurred
 	*/
 	public KaleoProcess updateKaleoProcess(long kaleoProcessId,
-		long ddmStructureId, Map<Locale, java.lang.String> nameMap,
-		Map<Locale, java.lang.String> descriptionMap, long ddmTemplateId,
-		java.lang.String workflowDefinitionName, int workflowDefinitionVersion,
+		long ddmStructureId, Map<Locale, String> nameMap,
+		Map<Locale, String> descriptionMap, long ddmTemplateId,
+		String workflowDefinitionName, int workflowDefinitionVersion,
 		KaleoTaskFormPairs kaleoTaskFormPairs, ServiceContext serviceContext)
 		throws PortalException;
 }

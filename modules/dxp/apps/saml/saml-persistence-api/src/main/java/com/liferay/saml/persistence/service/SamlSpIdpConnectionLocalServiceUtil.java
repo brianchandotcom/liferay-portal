@@ -55,12 +55,12 @@ public class SamlSpIdpConnectionLocalServiceUtil {
 	}
 
 	public static com.liferay.saml.persistence.model.SamlSpIdpConnection addSamlSpIdpConnection(
-		java.lang.String samlIdpEntityId, boolean assertionSignatureRequired,
+		String samlIdpEntityId, boolean assertionSignatureRequired,
 		long clockSkew, boolean enabled, boolean forceAuthn,
-		boolean ldapImportEnabled, java.lang.String metadataUrl,
-		java.io.InputStream metadataXmlInputStream, java.lang.String name,
-		java.lang.String nameIdFormat, boolean signAuthnRequest,
-		java.lang.String userAttributeMappings,
+		boolean ldapImportEnabled, String metadataUrl,
+		java.io.InputStream metadataXmlInputStream, String name,
+		String nameIdFormat, boolean signAuthnRequest,
+		String userAttributeMappings,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
@@ -211,7 +211,7 @@ public class SamlSpIdpConnectionLocalServiceUtil {
 	*
 	* @return the OSGi service identifier
 	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
+	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 
@@ -235,7 +235,7 @@ public class SamlSpIdpConnectionLocalServiceUtil {
 	}
 
 	public static com.liferay.saml.persistence.model.SamlSpIdpConnection getSamlSpIdpConnection(
-		long companyId, java.lang.String samlIdpEntityId)
+		long companyId, String samlIdpEntityId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getSamlSpIdpConnection(companyId, samlIdpEntityId);
 	}
@@ -293,13 +293,12 @@ public class SamlSpIdpConnectionLocalServiceUtil {
 	}
 
 	public static com.liferay.saml.persistence.model.SamlSpIdpConnection updateSamlSpIdpConnection(
-		long samlSpIdpConnectionId, java.lang.String samlIdpEntityId,
+		long samlSpIdpConnectionId, String samlIdpEntityId,
 		boolean assertionSignatureRequired, long clockSkew, boolean enabled,
-		boolean forceAuthn, boolean ldapImportEnabled,
-		java.lang.String metadataUrl,
-		java.io.InputStream metadataXmlInputStream, java.lang.String name,
-		java.lang.String nameIdFormat, boolean signAuthnRequest,
-		java.lang.String userAttributeMappings,
+		boolean forceAuthn, boolean ldapImportEnabled, String metadataUrl,
+		java.io.InputStream metadataXmlInputStream, String name,
+		String nameIdFormat, boolean signAuthnRequest,
+		String userAttributeMappings,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()

@@ -62,9 +62,8 @@ public interface SharepointOAuth2TokenEntryLocalService extends BaseLocalService
 	 * Never modify or reference this interface directly. Always use {@link SharepointOAuth2TokenEntryLocalServiceUtil} to access the sharepoint o auth2 token entry local service. Add custom service methods to {@link com.liferay.sharepoint.rest.oauth2.service.impl.SharepointOAuth2TokenEntryLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	public SharepointOAuth2TokenEntry addSharepointOAuth2TokenEntry(
-		long userId, java.lang.String configurationPid,
-		java.lang.String accessToken, java.lang.String refreshToken,
-		Date expirationDate) throws PortalException;
+		long userId, String configurationPid, String accessToken,
+		String refreshToken, Date expirationDate) throws PortalException;
 
 	/**
 	* Adds the sharepoint o auth2 token entry to the database. Also notifies the appropriate model listeners.
@@ -105,7 +104,7 @@ public interface SharepointOAuth2TokenEntryLocalService extends BaseLocalService
 		long sharepointOAuth2TokenEntryId) throws PortalException;
 
 	public void deleteSharepointOAuth2TokenEntry(long userId,
-		java.lang.String configurationPid) throws PortalException;
+		String configurationPid) throws PortalException;
 
 	/**
 	* Deletes the sharepoint o auth2 token entry from the database. Also notifies the appropriate model listeners.
@@ -182,7 +181,7 @@ public interface SharepointOAuth2TokenEntryLocalService extends BaseLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public SharepointOAuth2TokenEntry fetchSharepointOAuth2TokenEntry(
-		long userId, java.lang.String configurationPid);
+		long userId, String configurationPid);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
@@ -195,7 +194,7 @@ public interface SharepointOAuth2TokenEntryLocalService extends BaseLocalService
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -238,8 +237,7 @@ public interface SharepointOAuth2TokenEntryLocalService extends BaseLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public SharepointOAuth2TokenEntry getSharepointOAuth2TokenEntry(
-		long userId, java.lang.String configurationPid)
-		throws PortalException;
+		long userId, String configurationPid) throws PortalException;
 
 	/**
 	* Updates the sharepoint o auth2 token entry in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.

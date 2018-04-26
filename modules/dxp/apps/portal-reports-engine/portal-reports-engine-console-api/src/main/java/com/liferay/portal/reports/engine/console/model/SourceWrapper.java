@@ -165,7 +165,7 @@ public class SourceWrapper implements Source, ModelWrapper<Source> {
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new SourceWrapper((Source)_source.clone());
 	}
 
@@ -175,18 +175,18 @@ public class SourceWrapper implements Source, ModelWrapper<Source> {
 	}
 
 	@Override
-	public java.lang.String getAttachmentsDir() {
+	public String getAttachmentsDir() {
 		return _source.getAttachmentsDir();
 	}
 
 	@Override
-	public java.lang.String[] getAttachmentsFiles()
+	public String[] getAttachmentsFiles()
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _source.getAttachmentsFiles();
 	}
 
 	@Override
-	public java.lang.String[] getAvailableLanguageIds() {
+	public String[] getAvailableLanguageIds() {
 		return _source.getAvailableLanguageIds();
 	}
 
@@ -211,7 +211,7 @@ public class SourceWrapper implements Source, ModelWrapper<Source> {
 	}
 
 	@Override
-	public java.lang.String getDefaultLanguageId() {
+	public String getDefaultLanguageId() {
 		return _source.getDefaultLanguageId();
 	}
 
@@ -221,7 +221,7 @@ public class SourceWrapper implements Source, ModelWrapper<Source> {
 	* @return the driver class name of this source
 	*/
 	@Override
-	public java.lang.String getDriverClassName() {
+	public String getDriverClassName() {
 		return _source.getDriverClassName();
 	}
 
@@ -231,7 +231,7 @@ public class SourceWrapper implements Source, ModelWrapper<Source> {
 	* @return the driver password of this source
 	*/
 	@Override
-	public java.lang.String getDriverPassword() {
+	public String getDriverPassword() {
 		return _source.getDriverPassword();
 	}
 
@@ -241,7 +241,7 @@ public class SourceWrapper implements Source, ModelWrapper<Source> {
 	* @return the driver url of this source
 	*/
 	@Override
-	public java.lang.String getDriverUrl() {
+	public String getDriverUrl() {
 		return _source.getDriverUrl();
 	}
 
@@ -251,7 +251,7 @@ public class SourceWrapper implements Source, ModelWrapper<Source> {
 	* @return the driver user name of this source
 	*/
 	@Override
-	public java.lang.String getDriverUserName() {
+	public String getDriverUserName() {
 		return _source.getDriverUserName();
 	}
 
@@ -296,7 +296,7 @@ public class SourceWrapper implements Source, ModelWrapper<Source> {
 	* @return the name of this source
 	*/
 	@Override
-	public java.lang.String getName() {
+	public String getName() {
 		return _source.getName();
 	}
 
@@ -307,7 +307,7 @@ public class SourceWrapper implements Source, ModelWrapper<Source> {
 	* @return the localized name of this source
 	*/
 	@Override
-	public java.lang.String getName(java.util.Locale locale) {
+	public String getName(java.util.Locale locale) {
 		return _source.getName(locale);
 	}
 
@@ -319,7 +319,7 @@ public class SourceWrapper implements Source, ModelWrapper<Source> {
 	* @return the localized name of this source. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
 	*/
 	@Override
-	public java.lang.String getName(java.util.Locale locale, boolean useDefault) {
+	public String getName(java.util.Locale locale, boolean useDefault) {
 		return _source.getName(locale, useDefault);
 	}
 
@@ -330,7 +330,7 @@ public class SourceWrapper implements Source, ModelWrapper<Source> {
 	* @return the localized name of this source
 	*/
 	@Override
-	public java.lang.String getName(java.lang.String languageId) {
+	public String getName(String languageId) {
 		return _source.getName(languageId);
 	}
 
@@ -342,18 +342,17 @@ public class SourceWrapper implements Source, ModelWrapper<Source> {
 	* @return the localized name of this source
 	*/
 	@Override
-	public java.lang.String getName(java.lang.String languageId,
-		boolean useDefault) {
+	public String getName(String languageId, boolean useDefault) {
 		return _source.getName(languageId, useDefault);
 	}
 
 	@Override
-	public java.lang.String getNameCurrentLanguageId() {
+	public String getNameCurrentLanguageId() {
 		return _source.getNameCurrentLanguageId();
 	}
 
 	@Override
-	public java.lang.String getNameCurrentValue() {
+	public String getNameCurrentValue() {
 		return _source.getNameCurrentValue();
 	}
 
@@ -363,7 +362,7 @@ public class SourceWrapper implements Source, ModelWrapper<Source> {
 	* @return the locales and localized names of this source
 	*/
 	@Override
-	public Map<java.util.Locale, java.lang.String> getNameMap() {
+	public Map<java.util.Locale, String> getNameMap() {
 		return _source.getNameMap();
 	}
 
@@ -408,7 +407,7 @@ public class SourceWrapper implements Source, ModelWrapper<Source> {
 	* @return the user name of this source
 	*/
 	@Override
-	public java.lang.String getUserName() {
+	public String getUserName() {
 		return _source.getUserName();
 	}
 
@@ -418,7 +417,7 @@ public class SourceWrapper implements Source, ModelWrapper<Source> {
 	* @return the user uuid of this source
 	*/
 	@Override
-	public java.lang.String getUserUuid() {
+	public String getUserUuid() {
 		return _source.getUserUuid();
 	}
 
@@ -428,7 +427,7 @@ public class SourceWrapper implements Source, ModelWrapper<Source> {
 	* @return the uuid of this source
 	*/
 	@Override
-	public java.lang.String getUuid() {
+	public String getUuid() {
 		return _source.getUuid();
 	}
 
@@ -501,7 +500,7 @@ public class SourceWrapper implements Source, ModelWrapper<Source> {
 	* @param driverClassName the driver class name of this source
 	*/
 	@Override
-	public void setDriverClassName(java.lang.String driverClassName) {
+	public void setDriverClassName(String driverClassName) {
 		_source.setDriverClassName(driverClassName);
 	}
 
@@ -511,7 +510,7 @@ public class SourceWrapper implements Source, ModelWrapper<Source> {
 	* @param driverPassword the driver password of this source
 	*/
 	@Override
-	public void setDriverPassword(java.lang.String driverPassword) {
+	public void setDriverPassword(String driverPassword) {
 		_source.setDriverPassword(driverPassword);
 	}
 
@@ -521,7 +520,7 @@ public class SourceWrapper implements Source, ModelWrapper<Source> {
 	* @param driverUrl the driver url of this source
 	*/
 	@Override
-	public void setDriverUrl(java.lang.String driverUrl) {
+	public void setDriverUrl(String driverUrl) {
 		_source.setDriverUrl(driverUrl);
 	}
 
@@ -531,7 +530,7 @@ public class SourceWrapper implements Source, ModelWrapper<Source> {
 	* @param driverUserName the driver user name of this source
 	*/
 	@Override
-	public void setDriverUserName(java.lang.String driverUserName) {
+	public void setDriverUserName(String driverUserName) {
 		_source.setDriverUserName(driverUserName);
 	}
 
@@ -587,7 +586,7 @@ public class SourceWrapper implements Source, ModelWrapper<Source> {
 	* @param name the name of this source
 	*/
 	@Override
-	public void setName(java.lang.String name) {
+	public void setName(String name) {
 		_source.setName(name);
 	}
 
@@ -598,7 +597,7 @@ public class SourceWrapper implements Source, ModelWrapper<Source> {
 	* @param locale the locale of the language
 	*/
 	@Override
-	public void setName(java.lang.String name, java.util.Locale locale) {
+	public void setName(String name, java.util.Locale locale) {
 		_source.setName(name, locale);
 	}
 
@@ -610,13 +609,13 @@ public class SourceWrapper implements Source, ModelWrapper<Source> {
 	* @param defaultLocale the default locale
 	*/
 	@Override
-	public void setName(java.lang.String name, java.util.Locale locale,
+	public void setName(String name, java.util.Locale locale,
 		java.util.Locale defaultLocale) {
 		_source.setName(name, locale, defaultLocale);
 	}
 
 	@Override
-	public void setNameCurrentLanguageId(java.lang.String languageId) {
+	public void setNameCurrentLanguageId(String languageId) {
 		_source.setNameCurrentLanguageId(languageId);
 	}
 
@@ -626,7 +625,7 @@ public class SourceWrapper implements Source, ModelWrapper<Source> {
 	* @param nameMap the locales and localized names of this source
 	*/
 	@Override
-	public void setNameMap(Map<java.util.Locale, java.lang.String> nameMap) {
+	public void setNameMap(Map<java.util.Locale, String> nameMap) {
 		_source.setNameMap(nameMap);
 	}
 
@@ -637,7 +636,7 @@ public class SourceWrapper implements Source, ModelWrapper<Source> {
 	* @param defaultLocale the default locale
 	*/
 	@Override
-	public void setNameMap(Map<java.util.Locale, java.lang.String> nameMap,
+	public void setNameMap(Map<java.util.Locale, String> nameMap,
 		java.util.Locale defaultLocale) {
 		_source.setNameMap(nameMap, defaultLocale);
 	}
@@ -688,7 +687,7 @@ public class SourceWrapper implements Source, ModelWrapper<Source> {
 	* @param userName the user name of this source
 	*/
 	@Override
-	public void setUserName(java.lang.String userName) {
+	public void setUserName(String userName) {
 		_source.setUserName(userName);
 	}
 
@@ -698,7 +697,7 @@ public class SourceWrapper implements Source, ModelWrapper<Source> {
 	* @param userUuid the user uuid of this source
 	*/
 	@Override
-	public void setUserUuid(java.lang.String userUuid) {
+	public void setUserUuid(String userUuid) {
 		_source.setUserUuid(userUuid);
 	}
 
@@ -708,7 +707,7 @@ public class SourceWrapper implements Source, ModelWrapper<Source> {
 	* @param uuid the uuid of this source
 	*/
 	@Override
-	public void setUuid(java.lang.String uuid) {
+	public void setUuid(String uuid) {
 		_source.setUuid(uuid);
 	}
 
@@ -723,7 +722,7 @@ public class SourceWrapper implements Source, ModelWrapper<Source> {
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _source.toString();
 	}
 
@@ -733,7 +732,7 @@ public class SourceWrapper implements Source, ModelWrapper<Source> {
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _source.toXmlString();
 	}
 

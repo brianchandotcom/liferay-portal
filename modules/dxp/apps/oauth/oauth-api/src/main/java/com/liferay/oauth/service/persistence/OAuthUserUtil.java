@@ -444,7 +444,7 @@ public class OAuthUserUtil {
 	* @return the matching o auth user
 	* @throws NoSuchUserException if a matching o auth user could not be found
 	*/
-	public static OAuthUser findByAccessToken(java.lang.String accessToken)
+	public static OAuthUser findByAccessToken(String accessToken)
 		throws com.liferay.oauth.exception.NoSuchUserException {
 		return getPersistence().findByAccessToken(accessToken);
 	}
@@ -455,7 +455,7 @@ public class OAuthUserUtil {
 	* @param accessToken the access token
 	* @return the matching o auth user, or <code>null</code> if a matching o auth user could not be found
 	*/
-	public static OAuthUser fetchByAccessToken(java.lang.String accessToken) {
+	public static OAuthUser fetchByAccessToken(String accessToken) {
 		return getPersistence().fetchByAccessToken(accessToken);
 	}
 
@@ -466,7 +466,7 @@ public class OAuthUserUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching o auth user, or <code>null</code> if a matching o auth user could not be found
 	*/
-	public static OAuthUser fetchByAccessToken(java.lang.String accessToken,
+	public static OAuthUser fetchByAccessToken(String accessToken,
 		boolean retrieveFromCache) {
 		return getPersistence()
 				   .fetchByAccessToken(accessToken, retrieveFromCache);
@@ -478,7 +478,7 @@ public class OAuthUserUtil {
 	* @param accessToken the access token
 	* @return the o auth user that was removed
 	*/
-	public static OAuthUser removeByAccessToken(java.lang.String accessToken)
+	public static OAuthUser removeByAccessToken(String accessToken)
 		throws com.liferay.oauth.exception.NoSuchUserException {
 		return getPersistence().removeByAccessToken(accessToken);
 	}
@@ -489,7 +489,7 @@ public class OAuthUserUtil {
 	* @param accessToken the access token
 	* @return the number of matching o auth users
 	*/
-	public static int countByAccessToken(java.lang.String accessToken) {
+	public static int countByAccessToken(String accessToken) {
 		return getPersistence().countByAccessToken(accessToken);
 	}
 

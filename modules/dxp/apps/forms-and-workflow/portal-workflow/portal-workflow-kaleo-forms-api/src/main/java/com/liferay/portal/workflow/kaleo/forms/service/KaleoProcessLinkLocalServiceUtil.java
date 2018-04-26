@@ -65,8 +65,7 @@ public class KaleoProcessLinkLocalServiceUtil {
 	* @return the Kaleo process link
 	*/
 	public static com.liferay.portal.workflow.kaleo.forms.model.KaleoProcessLink addKaleoProcessLink(
-		long kaleoProcessId, java.lang.String workflowTaskName,
-		long ddmTemplateId) {
+		long kaleoProcessId, String workflowTaskName, long ddmTemplateId) {
 		return getService()
 				   .addKaleoProcessLink(kaleoProcessId, workflowTaskName,
 			ddmTemplateId);
@@ -223,7 +222,7 @@ public class KaleoProcessLinkLocalServiceUtil {
 	could not be found
 	*/
 	public static com.liferay.portal.workflow.kaleo.forms.model.KaleoProcessLink fetchKaleoProcessLink(
-		long kaleoProcessId, java.lang.String workflowTaskName) {
+		long kaleoProcessId, String workflowTaskName) {
 		return getService()
 				   .fetchKaleoProcessLink(kaleoProcessId, workflowTaskName);
 	}
@@ -293,7 +292,7 @@ public class KaleoProcessLinkLocalServiceUtil {
 	*
 	* @return the OSGi service identifier
 	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
+	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 
@@ -348,8 +347,8 @@ public class KaleoProcessLinkLocalServiceUtil {
 	* @throws PortalException if a portal exception occurred
 	*/
 	public static com.liferay.portal.workflow.kaleo.forms.model.KaleoProcessLink updateKaleoProcessLink(
-		long kaleoProcessLinkId, long kaleoProcessId,
-		java.lang.String workflowTaskName, long ddmTemplateId)
+		long kaleoProcessLinkId, long kaleoProcessId, String workflowTaskName,
+		long ddmTemplateId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .updateKaleoProcessLink(kaleoProcessLinkId, kaleoProcessId,
@@ -370,8 +369,7 @@ public class KaleoProcessLinkLocalServiceUtil {
 	* @return the Kaleo process link
 	*/
 	public static com.liferay.portal.workflow.kaleo.forms.model.KaleoProcessLink updateKaleoProcessLink(
-		long kaleoProcessId, java.lang.String workflowTaskName,
-		long ddmTemplateId) {
+		long kaleoProcessId, String workflowTaskName, long ddmTemplateId) {
 		return getService()
 				   .updateKaleoProcessLink(kaleoProcessId, workflowTaskName,
 			ddmTemplateId);

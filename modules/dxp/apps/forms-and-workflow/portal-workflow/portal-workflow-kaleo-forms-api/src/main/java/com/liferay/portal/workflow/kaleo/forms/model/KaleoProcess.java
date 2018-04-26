@@ -60,19 +60,19 @@ public interface KaleoProcess extends KaleoProcessModel, PersistedModel {
 	public com.liferay.dynamic.data.mapping.model.DDMTemplate getDDMTemplate()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
-	public java.lang.String getDescription()
+	public String getDescription()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
-	public java.lang.String getDescription(java.util.Locale locale)
+	public String getDescription(java.util.Locale locale)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public java.util.List<KaleoProcessLink> getKaleoProcessLinks();
 
-	public java.lang.String getName()
+	public String getName()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
-	public java.lang.String getName(java.util.Locale locale)
+	public String getName(java.util.Locale locale)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
-	public java.lang.String getWorkflowDefinition();
+	public String getWorkflowDefinition();
 }

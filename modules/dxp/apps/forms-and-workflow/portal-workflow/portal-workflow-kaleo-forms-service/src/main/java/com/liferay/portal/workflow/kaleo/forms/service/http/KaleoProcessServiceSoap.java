@@ -91,12 +91,10 @@ public class KaleoProcessServiceSoap {
 	* @throws PortalException if a portal exception occurred
 	*/
 	public static com.liferay.portal.workflow.kaleo.forms.model.KaleoProcessSoap addKaleoProcess(
-		long groupId, long ddmStructureId,
-		java.lang.String[] nameMapLanguageIds,
-		java.lang.String[] nameMapValues,
-		java.lang.String[] descriptionMapLanguageIds,
-		java.lang.String[] descriptionMapValues, long ddmTemplateId,
-		java.lang.String workflowDefinitionName, int workflowDefinitionVersion,
+		long groupId, long ddmStructureId, String[] nameMapLanguageIds,
+		String[] nameMapValues, String[] descriptionMapLanguageIds,
+		String[] descriptionMapValues, long ddmTemplateId,
+		String workflowDefinitionName, int workflowDefinitionVersion,
 		com.liferay.portal.workflow.kaleo.forms.model.KaleoTaskFormPairs kaleoTaskFormPairs,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
@@ -194,7 +192,7 @@ public class KaleoProcessServiceSoap {
 	* @return the range of matching Kaleo processes ordered by the comparator
 	*/
 	public static com.liferay.portal.workflow.kaleo.forms.model.KaleoProcessSoap[] search(
-		long groupId, java.lang.String keywords, int start, int end,
+		long groupId, String keywords, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws RemoteException {
 		try {
@@ -224,7 +222,7 @@ public class KaleoProcessServiceSoap {
 	the <code>AND</code> operator.
 	* @return the number of matching Kaleo processes
 	*/
-	public static int searchCount(long groupId, java.lang.String keywords)
+	public static int searchCount(long groupId, String keywords)
 		throws RemoteException {
 		try {
 			int returnValue = KaleoProcessServiceUtil.searchCount(groupId,
@@ -262,12 +260,10 @@ public class KaleoProcessServiceSoap {
 	* @throws PortalException if a portal exception occurred
 	*/
 	public static com.liferay.portal.workflow.kaleo.forms.model.KaleoProcessSoap updateKaleoProcess(
-		long kaleoProcessId, long ddmStructureId,
-		java.lang.String[] nameMapLanguageIds,
-		java.lang.String[] nameMapValues,
-		java.lang.String[] descriptionMapLanguageIds,
-		java.lang.String[] descriptionMapValues, long ddmTemplateId,
-		java.lang.String workflowDefinitionName, int workflowDefinitionVersion,
+		long kaleoProcessId, long ddmStructureId, String[] nameMapLanguageIds,
+		String[] nameMapValues, String[] descriptionMapLanguageIds,
+		String[] descriptionMapValues, long ddmTemplateId,
+		String workflowDefinitionName, int workflowDefinitionVersion,
 		com.liferay.portal.workflow.kaleo.forms.model.KaleoTaskFormPairs kaleoTaskFormPairs,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {

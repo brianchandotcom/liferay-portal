@@ -56,9 +56,9 @@ import com.liferay.portal.workflow.kaleo.forms.service.KaleoProcessServiceUtil;
 public class KaleoProcessServiceHttp {
 	public static com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess addKaleoProcess(
 		HttpPrincipal httpPrincipal, long groupId, long ddmStructureId,
-		java.util.Map<java.util.Locale, java.lang.String> nameMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		long ddmTemplateId, java.lang.String workflowDefinitionName,
+		java.util.Map<java.util.Locale, String> nameMap,
+		java.util.Map<java.util.Locale, String> descriptionMap,
+		long ddmTemplateId, String workflowDefinitionName,
 		int workflowDefinitionVersion,
 		com.liferay.portal.workflow.kaleo.forms.model.KaleoTaskFormPairs kaleoTaskFormPairs,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
@@ -159,8 +159,8 @@ public class KaleoProcessServiceHttp {
 	}
 
 	public static java.util.List<com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess> search(
-		HttpPrincipal httpPrincipal, long groupId, java.lang.String keywords,
-		int start, int end,
+		HttpPrincipal httpPrincipal, long groupId, String keywords, int start,
+		int end,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		try {
 			MethodKey methodKey = new MethodKey(KaleoProcessServiceUtil.class,
@@ -188,7 +188,7 @@ public class KaleoProcessServiceHttp {
 	}
 
 	public static int searchCount(HttpPrincipal httpPrincipal, long groupId,
-		java.lang.String keywords) {
+		String keywords) {
 		try {
 			MethodKey methodKey = new MethodKey(KaleoProcessServiceUtil.class,
 					"searchCount", _searchCountParameterTypes4);
@@ -216,9 +216,9 @@ public class KaleoProcessServiceHttp {
 
 	public static com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess updateKaleoProcess(
 		HttpPrincipal httpPrincipal, long kaleoProcessId, long ddmStructureId,
-		java.util.Map<java.util.Locale, java.lang.String> nameMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		long ddmTemplateId, java.lang.String workflowDefinitionName,
+		java.util.Map<java.util.Locale, String> nameMap,
+		java.util.Map<java.util.Locale, String> descriptionMap,
+		long ddmTemplateId, String workflowDefinitionName,
 		int workflowDefinitionVersion,
 		com.liferay.portal.workflow.kaleo.forms.model.KaleoTaskFormPairs kaleoTaskFormPairs,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
@@ -258,7 +258,7 @@ public class KaleoProcessServiceHttp {
 	private static Log _log = LogFactoryUtil.getLog(KaleoProcessServiceHttp.class);
 	private static final Class<?>[] _addKaleoProcessParameterTypes0 = new Class[] {
 			long.class, long.class, java.util.Map.class, java.util.Map.class,
-			long.class, java.lang.String.class, int.class,
+			long.class, String.class, int.class,
 			com.liferay.portal.workflow.kaleo.forms.model.KaleoTaskFormPairs.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
@@ -269,15 +269,15 @@ public class KaleoProcessServiceHttp {
 			long.class
 		};
 	private static final Class<?>[] _searchParameterTypes3 = new Class[] {
-			long.class, java.lang.String.class, int.class, int.class,
+			long.class, String.class, int.class, int.class,
 			com.liferay.portal.kernel.util.OrderByComparator.class
 		};
 	private static final Class<?>[] _searchCountParameterTypes4 = new Class[] {
-			long.class, java.lang.String.class
+			long.class, String.class
 		};
 	private static final Class<?>[] _updateKaleoProcessParameterTypes5 = new Class[] {
 			long.class, long.class, java.util.Map.class, java.util.Map.class,
-			long.class, java.lang.String.class, int.class,
+			long.class, String.class, int.class,
 			com.liferay.portal.workflow.kaleo.forms.model.KaleoTaskFormPairs.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};

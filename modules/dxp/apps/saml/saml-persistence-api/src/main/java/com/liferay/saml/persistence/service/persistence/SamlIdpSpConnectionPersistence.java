@@ -182,7 +182,7 @@ public interface SamlIdpSpConnectionPersistence extends BasePersistence<SamlIdpS
 	* @throws NoSuchIdpSpConnectionException if a matching saml idp sp connection could not be found
 	*/
 	public SamlIdpSpConnection findByC_SSEI(long companyId,
-		java.lang.String samlSpEntityId) throws NoSuchIdpSpConnectionException;
+		String samlSpEntityId) throws NoSuchIdpSpConnectionException;
 
 	/**
 	* Returns the saml idp sp connection where companyId = &#63; and samlSpEntityId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
@@ -192,7 +192,7 @@ public interface SamlIdpSpConnectionPersistence extends BasePersistence<SamlIdpS
 	* @return the matching saml idp sp connection, or <code>null</code> if a matching saml idp sp connection could not be found
 	*/
 	public SamlIdpSpConnection fetchByC_SSEI(long companyId,
-		java.lang.String samlSpEntityId);
+		String samlSpEntityId);
 
 	/**
 	* Returns the saml idp sp connection where companyId = &#63; and samlSpEntityId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -203,7 +203,7 @@ public interface SamlIdpSpConnectionPersistence extends BasePersistence<SamlIdpS
 	* @return the matching saml idp sp connection, or <code>null</code> if a matching saml idp sp connection could not be found
 	*/
 	public SamlIdpSpConnection fetchByC_SSEI(long companyId,
-		java.lang.String samlSpEntityId, boolean retrieveFromCache);
+		String samlSpEntityId, boolean retrieveFromCache);
 
 	/**
 	* Removes the saml idp sp connection where companyId = &#63; and samlSpEntityId = &#63; from the database.
@@ -213,7 +213,7 @@ public interface SamlIdpSpConnectionPersistence extends BasePersistence<SamlIdpS
 	* @return the saml idp sp connection that was removed
 	*/
 	public SamlIdpSpConnection removeByC_SSEI(long companyId,
-		java.lang.String samlSpEntityId) throws NoSuchIdpSpConnectionException;
+		String samlSpEntityId) throws NoSuchIdpSpConnectionException;
 
 	/**
 	* Returns the number of saml idp sp connections where companyId = &#63; and samlSpEntityId = &#63;.
@@ -222,7 +222,7 @@ public interface SamlIdpSpConnectionPersistence extends BasePersistence<SamlIdpS
 	* @param samlSpEntityId the saml sp entity ID
 	* @return the number of matching saml idp sp connections
 	*/
-	public int countByC_SSEI(long companyId, java.lang.String samlSpEntityId);
+	public int countByC_SSEI(long companyId, String samlSpEntityId);
 
 	/**
 	* Caches the saml idp sp connection in the entity cache if it is enabled.

@@ -66,9 +66,8 @@ import java.rmi.RemoteException;
 @ProviderType
 public class OAuthApplicationServiceSoap {
 	public static com.liferay.oauth.model.OAuthApplicationSoap addOAuthApplication(
-		java.lang.String name, java.lang.String description, int accessLevel,
-		boolean shareableAccessToken, java.lang.String callbackURI,
-		java.lang.String websiteURL,
+		String name, String description, int accessLevel,
+		boolean shareableAccessToken, String callbackURI, String websiteURL,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
@@ -112,9 +111,8 @@ public class OAuthApplicationServiceSoap {
 	}
 
 	public static com.liferay.oauth.model.OAuthApplicationSoap updateOAuthApplication(
-		long oAuthApplicationId, java.lang.String name,
-		java.lang.String description, boolean shareableAccessToken,
-		java.lang.String callbackURI, java.lang.String websiteURL,
+		long oAuthApplicationId, String name, String description,
+		boolean shareableAccessToken, String callbackURI, String websiteURL,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {

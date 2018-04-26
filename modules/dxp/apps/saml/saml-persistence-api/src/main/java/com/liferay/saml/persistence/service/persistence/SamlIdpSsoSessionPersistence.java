@@ -183,8 +183,7 @@ public interface SamlIdpSsoSessionPersistence extends BasePersistence<SamlIdpSso
 	* @throws NoSuchIdpSsoSessionException if a matching saml idp sso session could not be found
 	*/
 	public SamlIdpSsoSession findBySamlIdpSsoSessionKey(
-		java.lang.String samlIdpSsoSessionKey)
-		throws NoSuchIdpSsoSessionException;
+		String samlIdpSsoSessionKey) throws NoSuchIdpSsoSessionException;
 
 	/**
 	* Returns the saml idp sso session where samlIdpSsoSessionKey = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
@@ -193,7 +192,7 @@ public interface SamlIdpSsoSessionPersistence extends BasePersistence<SamlIdpSso
 	* @return the matching saml idp sso session, or <code>null</code> if a matching saml idp sso session could not be found
 	*/
 	public SamlIdpSsoSession fetchBySamlIdpSsoSessionKey(
-		java.lang.String samlIdpSsoSessionKey);
+		String samlIdpSsoSessionKey);
 
 	/**
 	* Returns the saml idp sso session where samlIdpSsoSessionKey = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -203,7 +202,7 @@ public interface SamlIdpSsoSessionPersistence extends BasePersistence<SamlIdpSso
 	* @return the matching saml idp sso session, or <code>null</code> if a matching saml idp sso session could not be found
 	*/
 	public SamlIdpSsoSession fetchBySamlIdpSsoSessionKey(
-		java.lang.String samlIdpSsoSessionKey, boolean retrieveFromCache);
+		String samlIdpSsoSessionKey, boolean retrieveFromCache);
 
 	/**
 	* Removes the saml idp sso session where samlIdpSsoSessionKey = &#63; from the database.
@@ -212,8 +211,7 @@ public interface SamlIdpSsoSessionPersistence extends BasePersistence<SamlIdpSso
 	* @return the saml idp sso session that was removed
 	*/
 	public SamlIdpSsoSession removeBySamlIdpSsoSessionKey(
-		java.lang.String samlIdpSsoSessionKey)
-		throws NoSuchIdpSsoSessionException;
+		String samlIdpSsoSessionKey) throws NoSuchIdpSsoSessionException;
 
 	/**
 	* Returns the number of saml idp sso sessions where samlIdpSsoSessionKey = &#63;.
@@ -221,8 +219,7 @@ public interface SamlIdpSsoSessionPersistence extends BasePersistence<SamlIdpSso
 	* @param samlIdpSsoSessionKey the saml idp sso session key
 	* @return the number of matching saml idp sso sessions
 	*/
-	public int countBySamlIdpSsoSessionKey(
-		java.lang.String samlIdpSsoSessionKey);
+	public int countBySamlIdpSsoSessionKey(String samlIdpSsoSessionKey);
 
 	/**
 	* Caches the saml idp sso session in the entity cache if it is enabled.

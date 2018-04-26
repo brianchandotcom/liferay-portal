@@ -284,8 +284,8 @@ public class SamlSpAuthRequestUtil {
 	* @return the matching saml sp auth request
 	* @throws NoSuchSpAuthRequestException if a matching saml sp auth request could not be found
 	*/
-	public static SamlSpAuthRequest findBySIEI_SSARK(
-		java.lang.String samlIdpEntityId, java.lang.String samlSpAuthRequestKey)
+	public static SamlSpAuthRequest findBySIEI_SSARK(String samlIdpEntityId,
+		String samlSpAuthRequestKey)
 		throws com.liferay.saml.persistence.exception.NoSuchSpAuthRequestException {
 		return getPersistence()
 				   .findBySIEI_SSARK(samlIdpEntityId, samlSpAuthRequestKey);
@@ -298,8 +298,8 @@ public class SamlSpAuthRequestUtil {
 	* @param samlSpAuthRequestKey the saml sp auth request key
 	* @return the matching saml sp auth request, or <code>null</code> if a matching saml sp auth request could not be found
 	*/
-	public static SamlSpAuthRequest fetchBySIEI_SSARK(
-		java.lang.String samlIdpEntityId, java.lang.String samlSpAuthRequestKey) {
+	public static SamlSpAuthRequest fetchBySIEI_SSARK(String samlIdpEntityId,
+		String samlSpAuthRequestKey) {
 		return getPersistence()
 				   .fetchBySIEI_SSARK(samlIdpEntityId, samlSpAuthRequestKey);
 	}
@@ -312,9 +312,8 @@ public class SamlSpAuthRequestUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching saml sp auth request, or <code>null</code> if a matching saml sp auth request could not be found
 	*/
-	public static SamlSpAuthRequest fetchBySIEI_SSARK(
-		java.lang.String samlIdpEntityId,
-		java.lang.String samlSpAuthRequestKey, boolean retrieveFromCache) {
+	public static SamlSpAuthRequest fetchBySIEI_SSARK(String samlIdpEntityId,
+		String samlSpAuthRequestKey, boolean retrieveFromCache) {
 		return getPersistence()
 				   .fetchBySIEI_SSARK(samlIdpEntityId, samlSpAuthRequestKey,
 			retrieveFromCache);
@@ -327,8 +326,8 @@ public class SamlSpAuthRequestUtil {
 	* @param samlSpAuthRequestKey the saml sp auth request key
 	* @return the saml sp auth request that was removed
 	*/
-	public static SamlSpAuthRequest removeBySIEI_SSARK(
-		java.lang.String samlIdpEntityId, java.lang.String samlSpAuthRequestKey)
+	public static SamlSpAuthRequest removeBySIEI_SSARK(String samlIdpEntityId,
+		String samlSpAuthRequestKey)
 		throws com.liferay.saml.persistence.exception.NoSuchSpAuthRequestException {
 		return getPersistence()
 				   .removeBySIEI_SSARK(samlIdpEntityId, samlSpAuthRequestKey);
@@ -341,8 +340,8 @@ public class SamlSpAuthRequestUtil {
 	* @param samlSpAuthRequestKey the saml sp auth request key
 	* @return the number of matching saml sp auth requests
 	*/
-	public static int countBySIEI_SSARK(java.lang.String samlIdpEntityId,
-		java.lang.String samlSpAuthRequestKey) {
+	public static int countBySIEI_SSARK(String samlIdpEntityId,
+		String samlSpAuthRequestKey) {
 		return getPersistence()
 				   .countBySIEI_SSARK(samlIdpEntityId, samlSpAuthRequestKey);
 	}

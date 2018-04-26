@@ -46,7 +46,7 @@ public interface SourcePersistence extends BasePersistence<Source> {
 	* @param uuid the uuid
 	* @return the matching sources
 	*/
-	public java.util.List<Source> findByUuid(java.lang.String uuid);
+	public java.util.List<Source> findByUuid(String uuid);
 
 	/**
 	* Returns a range of all the sources where uuid = &#63;.
@@ -60,8 +60,7 @@ public interface SourcePersistence extends BasePersistence<Source> {
 	* @param end the upper bound of the range of sources (not inclusive)
 	* @return the range of matching sources
 	*/
-	public java.util.List<Source> findByUuid(java.lang.String uuid, int start,
-		int end);
+	public java.util.List<Source> findByUuid(String uuid, int start, int end);
 
 	/**
 	* Returns an ordered range of all the sources where uuid = &#63;.
@@ -76,8 +75,7 @@ public interface SourcePersistence extends BasePersistence<Source> {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching sources
 	*/
-	public java.util.List<Source> findByUuid(java.lang.String uuid, int start,
-		int end,
+	public java.util.List<Source> findByUuid(String uuid, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<Source> orderByComparator);
 
 	/**
@@ -94,8 +92,7 @@ public interface SourcePersistence extends BasePersistence<Source> {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching sources
 	*/
-	public java.util.List<Source> findByUuid(java.lang.String uuid, int start,
-		int end,
+	public java.util.List<Source> findByUuid(String uuid, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<Source> orderByComparator,
 		boolean retrieveFromCache);
 
@@ -107,7 +104,7 @@ public interface SourcePersistence extends BasePersistence<Source> {
 	* @return the first matching source
 	* @throws NoSuchSourceException if a matching source could not be found
 	*/
-	public Source findByUuid_First(java.lang.String uuid,
+	public Source findByUuid_First(String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<Source> orderByComparator)
 		throws NoSuchSourceException;
 
@@ -118,7 +115,7 @@ public interface SourcePersistence extends BasePersistence<Source> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching source, or <code>null</code> if a matching source could not be found
 	*/
-	public Source fetchByUuid_First(java.lang.String uuid,
+	public Source fetchByUuid_First(String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<Source> orderByComparator);
 
 	/**
@@ -129,7 +126,7 @@ public interface SourcePersistence extends BasePersistence<Source> {
 	* @return the last matching source
 	* @throws NoSuchSourceException if a matching source could not be found
 	*/
-	public Source findByUuid_Last(java.lang.String uuid,
+	public Source findByUuid_Last(String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<Source> orderByComparator)
 		throws NoSuchSourceException;
 
@@ -140,7 +137,7 @@ public interface SourcePersistence extends BasePersistence<Source> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching source, or <code>null</code> if a matching source could not be found
 	*/
-	public Source fetchByUuid_Last(java.lang.String uuid,
+	public Source fetchByUuid_Last(String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<Source> orderByComparator);
 
 	/**
@@ -152,8 +149,7 @@ public interface SourcePersistence extends BasePersistence<Source> {
 	* @return the previous, current, and next source
 	* @throws NoSuchSourceException if a source with the primary key could not be found
 	*/
-	public Source[] findByUuid_PrevAndNext(long sourceId,
-		java.lang.String uuid,
+	public Source[] findByUuid_PrevAndNext(long sourceId, String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<Source> orderByComparator)
 		throws NoSuchSourceException;
 
@@ -162,7 +158,7 @@ public interface SourcePersistence extends BasePersistence<Source> {
 	*
 	* @param uuid the uuid
 	*/
-	public void removeByUuid(java.lang.String uuid);
+	public void removeByUuid(String uuid);
 
 	/**
 	* Returns the number of sources where uuid = &#63;.
@@ -170,7 +166,7 @@ public interface SourcePersistence extends BasePersistence<Source> {
 	* @param uuid the uuid
 	* @return the number of matching sources
 	*/
-	public int countByUuid(java.lang.String uuid);
+	public int countByUuid(String uuid);
 
 	/**
 	* Returns the source where uuid = &#63; and groupId = &#63; or throws a {@link NoSuchSourceException} if it could not be found.
@@ -180,7 +176,7 @@ public interface SourcePersistence extends BasePersistence<Source> {
 	* @return the matching source
 	* @throws NoSuchSourceException if a matching source could not be found
 	*/
-	public Source findByUUID_G(java.lang.String uuid, long groupId)
+	public Source findByUUID_G(String uuid, long groupId)
 		throws NoSuchSourceException;
 
 	/**
@@ -190,7 +186,7 @@ public interface SourcePersistence extends BasePersistence<Source> {
 	* @param groupId the group ID
 	* @return the matching source, or <code>null</code> if a matching source could not be found
 	*/
-	public Source fetchByUUID_G(java.lang.String uuid, long groupId);
+	public Source fetchByUUID_G(String uuid, long groupId);
 
 	/**
 	* Returns the source where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -200,7 +196,7 @@ public interface SourcePersistence extends BasePersistence<Source> {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching source, or <code>null</code> if a matching source could not be found
 	*/
-	public Source fetchByUUID_G(java.lang.String uuid, long groupId,
+	public Source fetchByUUID_G(String uuid, long groupId,
 		boolean retrieveFromCache);
 
 	/**
@@ -210,7 +206,7 @@ public interface SourcePersistence extends BasePersistence<Source> {
 	* @param groupId the group ID
 	* @return the source that was removed
 	*/
-	public Source removeByUUID_G(java.lang.String uuid, long groupId)
+	public Source removeByUUID_G(String uuid, long groupId)
 		throws NoSuchSourceException;
 
 	/**
@@ -220,7 +216,7 @@ public interface SourcePersistence extends BasePersistence<Source> {
 	* @param groupId the group ID
 	* @return the number of matching sources
 	*/
-	public int countByUUID_G(java.lang.String uuid, long groupId);
+	public int countByUUID_G(String uuid, long groupId);
 
 	/**
 	* Returns all the sources where uuid = &#63; and companyId = &#63;.
@@ -229,8 +225,7 @@ public interface SourcePersistence extends BasePersistence<Source> {
 	* @param companyId the company ID
 	* @return the matching sources
 	*/
-	public java.util.List<Source> findByUuid_C(java.lang.String uuid,
-		long companyId);
+	public java.util.List<Source> findByUuid_C(String uuid, long companyId);
 
 	/**
 	* Returns a range of all the sources where uuid = &#63; and companyId = &#63;.
@@ -245,8 +240,8 @@ public interface SourcePersistence extends BasePersistence<Source> {
 	* @param end the upper bound of the range of sources (not inclusive)
 	* @return the range of matching sources
 	*/
-	public java.util.List<Source> findByUuid_C(java.lang.String uuid,
-		long companyId, int start, int end);
+	public java.util.List<Source> findByUuid_C(String uuid, long companyId,
+		int start, int end);
 
 	/**
 	* Returns an ordered range of all the sources where uuid = &#63; and companyId = &#63;.
@@ -262,8 +257,8 @@ public interface SourcePersistence extends BasePersistence<Source> {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching sources
 	*/
-	public java.util.List<Source> findByUuid_C(java.lang.String uuid,
-		long companyId, int start, int end,
+	public java.util.List<Source> findByUuid_C(String uuid, long companyId,
+		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<Source> orderByComparator);
 
 	/**
@@ -281,8 +276,8 @@ public interface SourcePersistence extends BasePersistence<Source> {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching sources
 	*/
-	public java.util.List<Source> findByUuid_C(java.lang.String uuid,
-		long companyId, int start, int end,
+	public java.util.List<Source> findByUuid_C(String uuid, long companyId,
+		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<Source> orderByComparator,
 		boolean retrieveFromCache);
 
@@ -295,7 +290,7 @@ public interface SourcePersistence extends BasePersistence<Source> {
 	* @return the first matching source
 	* @throws NoSuchSourceException if a matching source could not be found
 	*/
-	public Source findByUuid_C_First(java.lang.String uuid, long companyId,
+	public Source findByUuid_C_First(String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<Source> orderByComparator)
 		throws NoSuchSourceException;
 
@@ -307,7 +302,7 @@ public interface SourcePersistence extends BasePersistence<Source> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching source, or <code>null</code> if a matching source could not be found
 	*/
-	public Source fetchByUuid_C_First(java.lang.String uuid, long companyId,
+	public Source fetchByUuid_C_First(String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<Source> orderByComparator);
 
 	/**
@@ -319,7 +314,7 @@ public interface SourcePersistence extends BasePersistence<Source> {
 	* @return the last matching source
 	* @throws NoSuchSourceException if a matching source could not be found
 	*/
-	public Source findByUuid_C_Last(java.lang.String uuid, long companyId,
+	public Source findByUuid_C_Last(String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<Source> orderByComparator)
 		throws NoSuchSourceException;
 
@@ -331,7 +326,7 @@ public interface SourcePersistence extends BasePersistence<Source> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching source, or <code>null</code> if a matching source could not be found
 	*/
-	public Source fetchByUuid_C_Last(java.lang.String uuid, long companyId,
+	public Source fetchByUuid_C_Last(String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<Source> orderByComparator);
 
 	/**
@@ -344,8 +339,8 @@ public interface SourcePersistence extends BasePersistence<Source> {
 	* @return the previous, current, and next source
 	* @throws NoSuchSourceException if a source with the primary key could not be found
 	*/
-	public Source[] findByUuid_C_PrevAndNext(long sourceId,
-		java.lang.String uuid, long companyId,
+	public Source[] findByUuid_C_PrevAndNext(long sourceId, String uuid,
+		long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<Source> orderByComparator)
 		throws NoSuchSourceException;
 
@@ -355,7 +350,7 @@ public interface SourcePersistence extends BasePersistence<Source> {
 	* @param uuid the uuid
 	* @param companyId the company ID
 	*/
-	public void removeByUuid_C(java.lang.String uuid, long companyId);
+	public void removeByUuid_C(String uuid, long companyId);
 
 	/**
 	* Returns the number of sources where uuid = &#63; and companyId = &#63;.
@@ -364,7 +359,7 @@ public interface SourcePersistence extends BasePersistence<Source> {
 	* @param companyId the company ID
 	* @return the number of matching sources
 	*/
-	public int countByUuid_C(java.lang.String uuid, long companyId);
+	public int countByUuid_C(String uuid, long companyId);
 
 	/**
 	* Returns all the sources where groupId = &#63;.
@@ -808,5 +803,5 @@ public interface SourcePersistence extends BasePersistence<Source> {
 	public int countAll();
 
 	@Override
-	public java.util.Set<java.lang.String> getBadColumnNames();
+	public java.util.Set<String> getBadColumnNames();
 }

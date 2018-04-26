@@ -119,8 +119,7 @@ public class SamlSpSessionUtil {
 	* @return the matching saml sp session
 	* @throws NoSuchSpSessionException if a matching saml sp session could not be found
 	*/
-	public static SamlSpSession findBySamlSpSessionKey(
-		java.lang.String samlSpSessionKey)
+	public static SamlSpSession findBySamlSpSessionKey(String samlSpSessionKey)
 		throws com.liferay.saml.persistence.exception.NoSuchSpSessionException {
 		return getPersistence().findBySamlSpSessionKey(samlSpSessionKey);
 	}
@@ -131,8 +130,7 @@ public class SamlSpSessionUtil {
 	* @param samlSpSessionKey the saml sp session key
 	* @return the matching saml sp session, or <code>null</code> if a matching saml sp session could not be found
 	*/
-	public static SamlSpSession fetchBySamlSpSessionKey(
-		java.lang.String samlSpSessionKey) {
+	public static SamlSpSession fetchBySamlSpSessionKey(String samlSpSessionKey) {
 		return getPersistence().fetchBySamlSpSessionKey(samlSpSessionKey);
 	}
 
@@ -144,7 +142,7 @@ public class SamlSpSessionUtil {
 	* @return the matching saml sp session, or <code>null</code> if a matching saml sp session could not be found
 	*/
 	public static SamlSpSession fetchBySamlSpSessionKey(
-		java.lang.String samlSpSessionKey, boolean retrieveFromCache) {
+		String samlSpSessionKey, boolean retrieveFromCache) {
 		return getPersistence()
 				   .fetchBySamlSpSessionKey(samlSpSessionKey, retrieveFromCache);
 	}
@@ -156,7 +154,7 @@ public class SamlSpSessionUtil {
 	* @return the saml sp session that was removed
 	*/
 	public static SamlSpSession removeBySamlSpSessionKey(
-		java.lang.String samlSpSessionKey)
+		String samlSpSessionKey)
 		throws com.liferay.saml.persistence.exception.NoSuchSpSessionException {
 		return getPersistence().removeBySamlSpSessionKey(samlSpSessionKey);
 	}
@@ -167,7 +165,7 @@ public class SamlSpSessionUtil {
 	* @param samlSpSessionKey the saml sp session key
 	* @return the number of matching saml sp sessions
 	*/
-	public static int countBySamlSpSessionKey(java.lang.String samlSpSessionKey) {
+	public static int countBySamlSpSessionKey(String samlSpSessionKey) {
 		return getPersistence().countBySamlSpSessionKey(samlSpSessionKey);
 	}
 
@@ -178,7 +176,7 @@ public class SamlSpSessionUtil {
 	* @return the matching saml sp session
 	* @throws NoSuchSpSessionException if a matching saml sp session could not be found
 	*/
-	public static SamlSpSession findByJSessionId(java.lang.String jSessionId)
+	public static SamlSpSession findByJSessionId(String jSessionId)
 		throws com.liferay.saml.persistence.exception.NoSuchSpSessionException {
 		return getPersistence().findByJSessionId(jSessionId);
 	}
@@ -189,7 +187,7 @@ public class SamlSpSessionUtil {
 	* @param jSessionId the j session ID
 	* @return the matching saml sp session, or <code>null</code> if a matching saml sp session could not be found
 	*/
-	public static SamlSpSession fetchByJSessionId(java.lang.String jSessionId) {
+	public static SamlSpSession fetchByJSessionId(String jSessionId) {
 		return getPersistence().fetchByJSessionId(jSessionId);
 	}
 
@@ -200,7 +198,7 @@ public class SamlSpSessionUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching saml sp session, or <code>null</code> if a matching saml sp session could not be found
 	*/
-	public static SamlSpSession fetchByJSessionId(java.lang.String jSessionId,
+	public static SamlSpSession fetchByJSessionId(String jSessionId,
 		boolean retrieveFromCache) {
 		return getPersistence().fetchByJSessionId(jSessionId, retrieveFromCache);
 	}
@@ -211,7 +209,7 @@ public class SamlSpSessionUtil {
 	* @param jSessionId the j session ID
 	* @return the saml sp session that was removed
 	*/
-	public static SamlSpSession removeByJSessionId(java.lang.String jSessionId)
+	public static SamlSpSession removeByJSessionId(String jSessionId)
 		throws com.liferay.saml.persistence.exception.NoSuchSpSessionException {
 		return getPersistence().removeByJSessionId(jSessionId);
 	}
@@ -222,7 +220,7 @@ public class SamlSpSessionUtil {
 	* @param jSessionId the j session ID
 	* @return the number of matching saml sp sessions
 	*/
-	public static int countByJSessionId(java.lang.String jSessionId) {
+	public static int countByJSessionId(String jSessionId) {
 		return getPersistence().countByJSessionId(jSessionId);
 	}
 
@@ -232,8 +230,7 @@ public class SamlSpSessionUtil {
 	* @param nameIdValue the name ID value
 	* @return the matching saml sp sessions
 	*/
-	public static List<SamlSpSession> findByNameIdValue(
-		java.lang.String nameIdValue) {
+	public static List<SamlSpSession> findByNameIdValue(String nameIdValue) {
 		return getPersistence().findByNameIdValue(nameIdValue);
 	}
 
@@ -249,8 +246,8 @@ public class SamlSpSessionUtil {
 	* @param end the upper bound of the range of saml sp sessions (not inclusive)
 	* @return the range of matching saml sp sessions
 	*/
-	public static List<SamlSpSession> findByNameIdValue(
-		java.lang.String nameIdValue, int start, int end) {
+	public static List<SamlSpSession> findByNameIdValue(String nameIdValue,
+		int start, int end) {
 		return getPersistence().findByNameIdValue(nameIdValue, start, end);
 	}
 
@@ -267,9 +264,8 @@ public class SamlSpSessionUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching saml sp sessions
 	*/
-	public static List<SamlSpSession> findByNameIdValue(
-		java.lang.String nameIdValue, int start, int end,
-		OrderByComparator<SamlSpSession> orderByComparator) {
+	public static List<SamlSpSession> findByNameIdValue(String nameIdValue,
+		int start, int end, OrderByComparator<SamlSpSession> orderByComparator) {
 		return getPersistence()
 				   .findByNameIdValue(nameIdValue, start, end, orderByComparator);
 	}
@@ -288,9 +284,8 @@ public class SamlSpSessionUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching saml sp sessions
 	*/
-	public static List<SamlSpSession> findByNameIdValue(
-		java.lang.String nameIdValue, int start, int end,
-		OrderByComparator<SamlSpSession> orderByComparator,
+	public static List<SamlSpSession> findByNameIdValue(String nameIdValue,
+		int start, int end, OrderByComparator<SamlSpSession> orderByComparator,
 		boolean retrieveFromCache) {
 		return getPersistence()
 				   .findByNameIdValue(nameIdValue, start, end,
@@ -305,8 +300,7 @@ public class SamlSpSessionUtil {
 	* @return the first matching saml sp session
 	* @throws NoSuchSpSessionException if a matching saml sp session could not be found
 	*/
-	public static SamlSpSession findByNameIdValue_First(
-		java.lang.String nameIdValue,
+	public static SamlSpSession findByNameIdValue_First(String nameIdValue,
 		OrderByComparator<SamlSpSession> orderByComparator)
 		throws com.liferay.saml.persistence.exception.NoSuchSpSessionException {
 		return getPersistence()
@@ -320,8 +314,7 @@ public class SamlSpSessionUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching saml sp session, or <code>null</code> if a matching saml sp session could not be found
 	*/
-	public static SamlSpSession fetchByNameIdValue_First(
-		java.lang.String nameIdValue,
+	public static SamlSpSession fetchByNameIdValue_First(String nameIdValue,
 		OrderByComparator<SamlSpSession> orderByComparator) {
 		return getPersistence()
 				   .fetchByNameIdValue_First(nameIdValue, orderByComparator);
@@ -335,8 +328,7 @@ public class SamlSpSessionUtil {
 	* @return the last matching saml sp session
 	* @throws NoSuchSpSessionException if a matching saml sp session could not be found
 	*/
-	public static SamlSpSession findByNameIdValue_Last(
-		java.lang.String nameIdValue,
+	public static SamlSpSession findByNameIdValue_Last(String nameIdValue,
 		OrderByComparator<SamlSpSession> orderByComparator)
 		throws com.liferay.saml.persistence.exception.NoSuchSpSessionException {
 		return getPersistence()
@@ -350,8 +342,7 @@ public class SamlSpSessionUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching saml sp session, or <code>null</code> if a matching saml sp session could not be found
 	*/
-	public static SamlSpSession fetchByNameIdValue_Last(
-		java.lang.String nameIdValue,
+	public static SamlSpSession fetchByNameIdValue_Last(String nameIdValue,
 		OrderByComparator<SamlSpSession> orderByComparator) {
 		return getPersistence()
 				   .fetchByNameIdValue_Last(nameIdValue, orderByComparator);
@@ -367,7 +358,7 @@ public class SamlSpSessionUtil {
 	* @throws NoSuchSpSessionException if a saml sp session with the primary key could not be found
 	*/
 	public static SamlSpSession[] findByNameIdValue_PrevAndNext(
-		long samlSpSessionId, java.lang.String nameIdValue,
+		long samlSpSessionId, String nameIdValue,
 		OrderByComparator<SamlSpSession> orderByComparator)
 		throws com.liferay.saml.persistence.exception.NoSuchSpSessionException {
 		return getPersistence()
@@ -380,7 +371,7 @@ public class SamlSpSessionUtil {
 	*
 	* @param nameIdValue the name ID value
 	*/
-	public static void removeByNameIdValue(java.lang.String nameIdValue) {
+	public static void removeByNameIdValue(String nameIdValue) {
 		getPersistence().removeByNameIdValue(nameIdValue);
 	}
 
@@ -390,7 +381,7 @@ public class SamlSpSessionUtil {
 	* @param nameIdValue the name ID value
 	* @return the number of matching saml sp sessions
 	*/
-	public static int countByNameIdValue(java.lang.String nameIdValue) {
+	public static int countByNameIdValue(String nameIdValue) {
 		return getPersistence().countByNameIdValue(nameIdValue);
 	}
 
@@ -401,8 +392,7 @@ public class SamlSpSessionUtil {
 	* @return the matching saml sp session
 	* @throws NoSuchSpSessionException if a matching saml sp session could not be found
 	*/
-	public static SamlSpSession findBySessionIndex(
-		java.lang.String sessionIndex)
+	public static SamlSpSession findBySessionIndex(String sessionIndex)
 		throws com.liferay.saml.persistence.exception.NoSuchSpSessionException {
 		return getPersistence().findBySessionIndex(sessionIndex);
 	}
@@ -413,8 +403,7 @@ public class SamlSpSessionUtil {
 	* @param sessionIndex the session index
 	* @return the matching saml sp session, or <code>null</code> if a matching saml sp session could not be found
 	*/
-	public static SamlSpSession fetchBySessionIndex(
-		java.lang.String sessionIndex) {
+	public static SamlSpSession fetchBySessionIndex(String sessionIndex) {
 		return getPersistence().fetchBySessionIndex(sessionIndex);
 	}
 
@@ -425,8 +414,8 @@ public class SamlSpSessionUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching saml sp session, or <code>null</code> if a matching saml sp session could not be found
 	*/
-	public static SamlSpSession fetchBySessionIndex(
-		java.lang.String sessionIndex, boolean retrieveFromCache) {
+	public static SamlSpSession fetchBySessionIndex(String sessionIndex,
+		boolean retrieveFromCache) {
 		return getPersistence()
 				   .fetchBySessionIndex(sessionIndex, retrieveFromCache);
 	}
@@ -437,8 +426,7 @@ public class SamlSpSessionUtil {
 	* @param sessionIndex the session index
 	* @return the saml sp session that was removed
 	*/
-	public static SamlSpSession removeBySessionIndex(
-		java.lang.String sessionIndex)
+	public static SamlSpSession removeBySessionIndex(String sessionIndex)
 		throws com.liferay.saml.persistence.exception.NoSuchSpSessionException {
 		return getPersistence().removeBySessionIndex(sessionIndex);
 	}
@@ -449,7 +437,7 @@ public class SamlSpSessionUtil {
 	* @param sessionIndex the session index
 	* @return the number of matching saml sp sessions
 	*/
-	public static int countBySessionIndex(java.lang.String sessionIndex) {
+	public static int countBySessionIndex(String sessionIndex) {
 		return getPersistence().countBySessionIndex(sessionIndex);
 	}
 
@@ -601,7 +589,7 @@ public class SamlSpSessionUtil {
 		return getPersistence().countAll();
 	}
 
-	public static java.util.Set<java.lang.String> getBadColumnNames() {
+	public static java.util.Set<String> getBadColumnNames() {
 		return getPersistence().getBadColumnNames();
 	}
 

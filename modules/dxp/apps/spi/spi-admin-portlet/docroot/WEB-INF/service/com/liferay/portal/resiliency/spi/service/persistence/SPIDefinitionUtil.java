@@ -352,7 +352,7 @@ public class SPIDefinitionUtil {
 	* @return the matching spi definition
 	* @throws NoSuchDefinitionException if a matching spi definition could not be found
 	*/
-	public static SPIDefinition findByC_N(long companyId, java.lang.String name)
+	public static SPIDefinition findByC_N(long companyId, String name)
 		throws com.liferay.portal.resiliency.spi.exception.NoSuchDefinitionException {
 		return getPersistence().findByC_N(companyId, name);
 	}
@@ -364,7 +364,7 @@ public class SPIDefinitionUtil {
 	* @param name the name
 	* @return the matching spi definition, or <code>null</code> if a matching spi definition could not be found
 	*/
-	public static SPIDefinition fetchByC_N(long companyId, java.lang.String name) {
+	public static SPIDefinition fetchByC_N(long companyId, String name) {
 		return getPersistence().fetchByC_N(companyId, name);
 	}
 
@@ -376,8 +376,8 @@ public class SPIDefinitionUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching spi definition, or <code>null</code> if a matching spi definition could not be found
 	*/
-	public static SPIDefinition fetchByC_N(long companyId,
-		java.lang.String name, boolean retrieveFromCache) {
+	public static SPIDefinition fetchByC_N(long companyId, String name,
+		boolean retrieveFromCache) {
 		return getPersistence().fetchByC_N(companyId, name, retrieveFromCache);
 	}
 
@@ -388,8 +388,7 @@ public class SPIDefinitionUtil {
 	* @param name the name
 	* @return the spi definition that was removed
 	*/
-	public static SPIDefinition removeByC_N(long companyId,
-		java.lang.String name)
+	public static SPIDefinition removeByC_N(long companyId, String name)
 		throws com.liferay.portal.resiliency.spi.exception.NoSuchDefinitionException {
 		return getPersistence().removeByC_N(companyId, name);
 	}
@@ -401,7 +400,7 @@ public class SPIDefinitionUtil {
 	* @param name the name
 	* @return the number of matching spi definitions
 	*/
-	public static int countByC_N(long companyId, java.lang.String name) {
+	public static int countByC_N(long companyId, String name) {
 		return getPersistence().countByC_N(companyId, name);
 	}
 
@@ -816,7 +815,7 @@ public class SPIDefinitionUtil {
 	* @return the matching spi definition
 	* @throws NoSuchDefinitionException if a matching spi definition could not be found
 	*/
-	public static SPIDefinition findByCA_CP(java.lang.String connectorAddress,
+	public static SPIDefinition findByCA_CP(String connectorAddress,
 		int connectorPort)
 		throws com.liferay.portal.resiliency.spi.exception.NoSuchDefinitionException {
 		return getPersistence().findByCA_CP(connectorAddress, connectorPort);
@@ -829,8 +828,8 @@ public class SPIDefinitionUtil {
 	* @param connectorPort the connector port
 	* @return the matching spi definition, or <code>null</code> if a matching spi definition could not be found
 	*/
-	public static SPIDefinition fetchByCA_CP(
-		java.lang.String connectorAddress, int connectorPort) {
+	public static SPIDefinition fetchByCA_CP(String connectorAddress,
+		int connectorPort) {
 		return getPersistence().fetchByCA_CP(connectorAddress, connectorPort);
 	}
 
@@ -842,9 +841,8 @@ public class SPIDefinitionUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching spi definition, or <code>null</code> if a matching spi definition could not be found
 	*/
-	public static SPIDefinition fetchByCA_CP(
-		java.lang.String connectorAddress, int connectorPort,
-		boolean retrieveFromCache) {
+	public static SPIDefinition fetchByCA_CP(String connectorAddress,
+		int connectorPort, boolean retrieveFromCache) {
 		return getPersistence()
 				   .fetchByCA_CP(connectorAddress, connectorPort,
 			retrieveFromCache);
@@ -857,8 +855,8 @@ public class SPIDefinitionUtil {
 	* @param connectorPort the connector port
 	* @return the spi definition that was removed
 	*/
-	public static SPIDefinition removeByCA_CP(
-		java.lang.String connectorAddress, int connectorPort)
+	public static SPIDefinition removeByCA_CP(String connectorAddress,
+		int connectorPort)
 		throws com.liferay.portal.resiliency.spi.exception.NoSuchDefinitionException {
 		return getPersistence().removeByCA_CP(connectorAddress, connectorPort);
 	}
@@ -870,8 +868,7 @@ public class SPIDefinitionUtil {
 	* @param connectorPort the connector port
 	* @return the number of matching spi definitions
 	*/
-	public static int countByCA_CP(java.lang.String connectorAddress,
-		int connectorPort) {
+	public static int countByCA_CP(String connectorAddress, int connectorPort) {
 		return getPersistence().countByCA_CP(connectorAddress, connectorPort);
 	}
 

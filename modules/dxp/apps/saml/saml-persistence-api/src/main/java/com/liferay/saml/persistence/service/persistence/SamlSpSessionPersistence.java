@@ -48,8 +48,8 @@ public interface SamlSpSessionPersistence extends BasePersistence<SamlSpSession>
 	* @return the matching saml sp session
 	* @throws NoSuchSpSessionException if a matching saml sp session could not be found
 	*/
-	public SamlSpSession findBySamlSpSessionKey(
-		java.lang.String samlSpSessionKey) throws NoSuchSpSessionException;
+	public SamlSpSession findBySamlSpSessionKey(String samlSpSessionKey)
+		throws NoSuchSpSessionException;
 
 	/**
 	* Returns the saml sp session where samlSpSessionKey = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
@@ -57,8 +57,7 @@ public interface SamlSpSessionPersistence extends BasePersistence<SamlSpSession>
 	* @param samlSpSessionKey the saml sp session key
 	* @return the matching saml sp session, or <code>null</code> if a matching saml sp session could not be found
 	*/
-	public SamlSpSession fetchBySamlSpSessionKey(
-		java.lang.String samlSpSessionKey);
+	public SamlSpSession fetchBySamlSpSessionKey(String samlSpSessionKey);
 
 	/**
 	* Returns the saml sp session where samlSpSessionKey = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -67,8 +66,8 @@ public interface SamlSpSessionPersistence extends BasePersistence<SamlSpSession>
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching saml sp session, or <code>null</code> if a matching saml sp session could not be found
 	*/
-	public SamlSpSession fetchBySamlSpSessionKey(
-		java.lang.String samlSpSessionKey, boolean retrieveFromCache);
+	public SamlSpSession fetchBySamlSpSessionKey(String samlSpSessionKey,
+		boolean retrieveFromCache);
 
 	/**
 	* Removes the saml sp session where samlSpSessionKey = &#63; from the database.
@@ -76,8 +75,8 @@ public interface SamlSpSessionPersistence extends BasePersistence<SamlSpSession>
 	* @param samlSpSessionKey the saml sp session key
 	* @return the saml sp session that was removed
 	*/
-	public SamlSpSession removeBySamlSpSessionKey(
-		java.lang.String samlSpSessionKey) throws NoSuchSpSessionException;
+	public SamlSpSession removeBySamlSpSessionKey(String samlSpSessionKey)
+		throws NoSuchSpSessionException;
 
 	/**
 	* Returns the number of saml sp sessions where samlSpSessionKey = &#63;.
@@ -85,7 +84,7 @@ public interface SamlSpSessionPersistence extends BasePersistence<SamlSpSession>
 	* @param samlSpSessionKey the saml sp session key
 	* @return the number of matching saml sp sessions
 	*/
-	public int countBySamlSpSessionKey(java.lang.String samlSpSessionKey);
+	public int countBySamlSpSessionKey(String samlSpSessionKey);
 
 	/**
 	* Returns the saml sp session where jSessionId = &#63; or throws a {@link NoSuchSpSessionException} if it could not be found.
@@ -94,7 +93,7 @@ public interface SamlSpSessionPersistence extends BasePersistence<SamlSpSession>
 	* @return the matching saml sp session
 	* @throws NoSuchSpSessionException if a matching saml sp session could not be found
 	*/
-	public SamlSpSession findByJSessionId(java.lang.String jSessionId)
+	public SamlSpSession findByJSessionId(String jSessionId)
 		throws NoSuchSpSessionException;
 
 	/**
@@ -103,7 +102,7 @@ public interface SamlSpSessionPersistence extends BasePersistence<SamlSpSession>
 	* @param jSessionId the j session ID
 	* @return the matching saml sp session, or <code>null</code> if a matching saml sp session could not be found
 	*/
-	public SamlSpSession fetchByJSessionId(java.lang.String jSessionId);
+	public SamlSpSession fetchByJSessionId(String jSessionId);
 
 	/**
 	* Returns the saml sp session where jSessionId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -112,7 +111,7 @@ public interface SamlSpSessionPersistence extends BasePersistence<SamlSpSession>
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching saml sp session, or <code>null</code> if a matching saml sp session could not be found
 	*/
-	public SamlSpSession fetchByJSessionId(java.lang.String jSessionId,
+	public SamlSpSession fetchByJSessionId(String jSessionId,
 		boolean retrieveFromCache);
 
 	/**
@@ -121,7 +120,7 @@ public interface SamlSpSessionPersistence extends BasePersistence<SamlSpSession>
 	* @param jSessionId the j session ID
 	* @return the saml sp session that was removed
 	*/
-	public SamlSpSession removeByJSessionId(java.lang.String jSessionId)
+	public SamlSpSession removeByJSessionId(String jSessionId)
 		throws NoSuchSpSessionException;
 
 	/**
@@ -130,7 +129,7 @@ public interface SamlSpSessionPersistence extends BasePersistence<SamlSpSession>
 	* @param jSessionId the j session ID
 	* @return the number of matching saml sp sessions
 	*/
-	public int countByJSessionId(java.lang.String jSessionId);
+	public int countByJSessionId(String jSessionId);
 
 	/**
 	* Returns all the saml sp sessions where nameIdValue = &#63;.
@@ -138,8 +137,7 @@ public interface SamlSpSessionPersistence extends BasePersistence<SamlSpSession>
 	* @param nameIdValue the name ID value
 	* @return the matching saml sp sessions
 	*/
-	public java.util.List<SamlSpSession> findByNameIdValue(
-		java.lang.String nameIdValue);
+	public java.util.List<SamlSpSession> findByNameIdValue(String nameIdValue);
 
 	/**
 	* Returns a range of all the saml sp sessions where nameIdValue = &#63;.
@@ -153,8 +151,8 @@ public interface SamlSpSessionPersistence extends BasePersistence<SamlSpSession>
 	* @param end the upper bound of the range of saml sp sessions (not inclusive)
 	* @return the range of matching saml sp sessions
 	*/
-	public java.util.List<SamlSpSession> findByNameIdValue(
-		java.lang.String nameIdValue, int start, int end);
+	public java.util.List<SamlSpSession> findByNameIdValue(String nameIdValue,
+		int start, int end);
 
 	/**
 	* Returns an ordered range of all the saml sp sessions where nameIdValue = &#63;.
@@ -169,8 +167,8 @@ public interface SamlSpSessionPersistence extends BasePersistence<SamlSpSession>
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching saml sp sessions
 	*/
-	public java.util.List<SamlSpSession> findByNameIdValue(
-		java.lang.String nameIdValue, int start, int end,
+	public java.util.List<SamlSpSession> findByNameIdValue(String nameIdValue,
+		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<SamlSpSession> orderByComparator);
 
 	/**
@@ -187,8 +185,8 @@ public interface SamlSpSessionPersistence extends BasePersistence<SamlSpSession>
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching saml sp sessions
 	*/
-	public java.util.List<SamlSpSession> findByNameIdValue(
-		java.lang.String nameIdValue, int start, int end,
+	public java.util.List<SamlSpSession> findByNameIdValue(String nameIdValue,
+		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<SamlSpSession> orderByComparator,
 		boolean retrieveFromCache);
 
@@ -200,7 +198,7 @@ public interface SamlSpSessionPersistence extends BasePersistence<SamlSpSession>
 	* @return the first matching saml sp session
 	* @throws NoSuchSpSessionException if a matching saml sp session could not be found
 	*/
-	public SamlSpSession findByNameIdValue_First(java.lang.String nameIdValue,
+	public SamlSpSession findByNameIdValue_First(String nameIdValue,
 		com.liferay.portal.kernel.util.OrderByComparator<SamlSpSession> orderByComparator)
 		throws NoSuchSpSessionException;
 
@@ -211,8 +209,7 @@ public interface SamlSpSessionPersistence extends BasePersistence<SamlSpSession>
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching saml sp session, or <code>null</code> if a matching saml sp session could not be found
 	*/
-	public SamlSpSession fetchByNameIdValue_First(
-		java.lang.String nameIdValue,
+	public SamlSpSession fetchByNameIdValue_First(String nameIdValue,
 		com.liferay.portal.kernel.util.OrderByComparator<SamlSpSession> orderByComparator);
 
 	/**
@@ -223,7 +220,7 @@ public interface SamlSpSessionPersistence extends BasePersistence<SamlSpSession>
 	* @return the last matching saml sp session
 	* @throws NoSuchSpSessionException if a matching saml sp session could not be found
 	*/
-	public SamlSpSession findByNameIdValue_Last(java.lang.String nameIdValue,
+	public SamlSpSession findByNameIdValue_Last(String nameIdValue,
 		com.liferay.portal.kernel.util.OrderByComparator<SamlSpSession> orderByComparator)
 		throws NoSuchSpSessionException;
 
@@ -234,7 +231,7 @@ public interface SamlSpSessionPersistence extends BasePersistence<SamlSpSession>
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching saml sp session, or <code>null</code> if a matching saml sp session could not be found
 	*/
-	public SamlSpSession fetchByNameIdValue_Last(java.lang.String nameIdValue,
+	public SamlSpSession fetchByNameIdValue_Last(String nameIdValue,
 		com.liferay.portal.kernel.util.OrderByComparator<SamlSpSession> orderByComparator);
 
 	/**
@@ -247,7 +244,7 @@ public interface SamlSpSessionPersistence extends BasePersistence<SamlSpSession>
 	* @throws NoSuchSpSessionException if a saml sp session with the primary key could not be found
 	*/
 	public SamlSpSession[] findByNameIdValue_PrevAndNext(long samlSpSessionId,
-		java.lang.String nameIdValue,
+		String nameIdValue,
 		com.liferay.portal.kernel.util.OrderByComparator<SamlSpSession> orderByComparator)
 		throws NoSuchSpSessionException;
 
@@ -256,7 +253,7 @@ public interface SamlSpSessionPersistence extends BasePersistence<SamlSpSession>
 	*
 	* @param nameIdValue the name ID value
 	*/
-	public void removeByNameIdValue(java.lang.String nameIdValue);
+	public void removeByNameIdValue(String nameIdValue);
 
 	/**
 	* Returns the number of saml sp sessions where nameIdValue = &#63;.
@@ -264,7 +261,7 @@ public interface SamlSpSessionPersistence extends BasePersistence<SamlSpSession>
 	* @param nameIdValue the name ID value
 	* @return the number of matching saml sp sessions
 	*/
-	public int countByNameIdValue(java.lang.String nameIdValue);
+	public int countByNameIdValue(String nameIdValue);
 
 	/**
 	* Returns the saml sp session where sessionIndex = &#63; or throws a {@link NoSuchSpSessionException} if it could not be found.
@@ -273,7 +270,7 @@ public interface SamlSpSessionPersistence extends BasePersistence<SamlSpSession>
 	* @return the matching saml sp session
 	* @throws NoSuchSpSessionException if a matching saml sp session could not be found
 	*/
-	public SamlSpSession findBySessionIndex(java.lang.String sessionIndex)
+	public SamlSpSession findBySessionIndex(String sessionIndex)
 		throws NoSuchSpSessionException;
 
 	/**
@@ -282,7 +279,7 @@ public interface SamlSpSessionPersistence extends BasePersistence<SamlSpSession>
 	* @param sessionIndex the session index
 	* @return the matching saml sp session, or <code>null</code> if a matching saml sp session could not be found
 	*/
-	public SamlSpSession fetchBySessionIndex(java.lang.String sessionIndex);
+	public SamlSpSession fetchBySessionIndex(String sessionIndex);
 
 	/**
 	* Returns the saml sp session where sessionIndex = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -291,7 +288,7 @@ public interface SamlSpSessionPersistence extends BasePersistence<SamlSpSession>
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching saml sp session, or <code>null</code> if a matching saml sp session could not be found
 	*/
-	public SamlSpSession fetchBySessionIndex(java.lang.String sessionIndex,
+	public SamlSpSession fetchBySessionIndex(String sessionIndex,
 		boolean retrieveFromCache);
 
 	/**
@@ -300,7 +297,7 @@ public interface SamlSpSessionPersistence extends BasePersistence<SamlSpSession>
 	* @param sessionIndex the session index
 	* @return the saml sp session that was removed
 	*/
-	public SamlSpSession removeBySessionIndex(java.lang.String sessionIndex)
+	public SamlSpSession removeBySessionIndex(String sessionIndex)
 		throws NoSuchSpSessionException;
 
 	/**
@@ -309,7 +306,7 @@ public interface SamlSpSessionPersistence extends BasePersistence<SamlSpSession>
 	* @param sessionIndex the session index
 	* @return the number of matching saml sp sessions
 	*/
-	public int countBySessionIndex(java.lang.String sessionIndex);
+	public int countBySessionIndex(String sessionIndex);
 
 	/**
 	* Caches the saml sp session in the entity cache if it is enabled.
@@ -432,5 +429,5 @@ public interface SamlSpSessionPersistence extends BasePersistence<SamlSpSession>
 	public int countAll();
 
 	@Override
-	public java.util.Set<java.lang.String> getBadColumnNames();
+	public java.util.Set<String> getBadColumnNames();
 }

@@ -79,9 +79,8 @@ public interface DefinitionLocalService extends BaseLocalService,
 	public Definition addDefinition(Definition definition);
 
 	public Definition addDefinition(long userId, long groupId,
-		Map<Locale, java.lang.String> nameMap,
-		Map<Locale, java.lang.String> descriptionMap, long sourceId,
-		java.lang.String reportParameters, java.lang.String fileName,
+		Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
+		long sourceId, String reportParameters, String fileName,
 		InputStream inputStream, ServiceContext serviceContext)
 		throws PortalException;
 
@@ -120,7 +119,7 @@ public interface DefinitionLocalService extends BaseLocalService,
 	public void deleteDefinitions(long groupId) throws PortalException;
 
 	public void deleteDefinitionTemplates(long companyId,
-		java.lang.String attachmentsDirectory) throws PortalException;
+		String attachmentsDirectory) throws PortalException;
 
 	/**
 	* @throws PortalException
@@ -199,8 +198,7 @@ public interface DefinitionLocalService extends BaseLocalService,
 	* @return the matching definition, or <code>null</code> if a matching definition could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Definition fetchDefinitionByUuidAndGroupId(java.lang.String uuid,
-		long groupId);
+	public Definition fetchDefinitionByUuidAndGroupId(String uuid, long groupId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
@@ -225,8 +223,8 @@ public interface DefinitionLocalService extends BaseLocalService,
 	* @throws PortalException if a matching definition could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Definition getDefinitionByUuidAndGroupId(java.lang.String uuid,
-		long groupId) throws PortalException;
+	public Definition getDefinitionByUuidAndGroupId(String uuid, long groupId)
+		throws PortalException;
 
 	/**
 	* Returns a range of all the definitions.
@@ -243,9 +241,8 @@ public interface DefinitionLocalService extends BaseLocalService,
 	public List<Definition> getDefinitions(int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<Definition> getDefinitions(long groupId,
-		java.lang.String definitionName, java.lang.String description,
-		java.lang.String sourceId, java.lang.String reportName,
+	public List<Definition> getDefinitions(long groupId, String definitionName,
+		String description, String sourceId, String reportName,
 		boolean andSearch, int start, int end,
 		OrderByComparator orderByComparator);
 
@@ -257,8 +254,8 @@ public interface DefinitionLocalService extends BaseLocalService,
 	* @return the matching definitions, or an empty list if no matches were found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<Definition> getDefinitionsByUuidAndCompanyId(
-		java.lang.String uuid, long companyId);
+	public List<Definition> getDefinitionsByUuidAndCompanyId(String uuid,
+		long companyId);
 
 	/**
 	* Returns a range of definitions matching the UUID and company.
@@ -271,8 +268,8 @@ public interface DefinitionLocalService extends BaseLocalService,
 	* @return the range of matching definitions, or an empty list if no matches were found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<Definition> getDefinitionsByUuidAndCompanyId(
-		java.lang.String uuid, long companyId, int start, int end,
+	public List<Definition> getDefinitionsByUuidAndCompanyId(String uuid,
+		long companyId, int start, int end,
 		OrderByComparator<Definition> orderByComparator);
 
 	/**
@@ -284,9 +281,8 @@ public interface DefinitionLocalService extends BaseLocalService,
 	public int getDefinitionsCount();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getDefinitionsCount(long groupId,
-		java.lang.String definitionName, java.lang.String description,
-		java.lang.String sourceId, java.lang.String reportName,
+	public int getDefinitionsCount(long groupId, String definitionName,
+		String description, String sourceId, String reportName,
 		boolean andSearch);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -301,7 +297,7 @@ public interface DefinitionLocalService extends BaseLocalService,
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -318,13 +314,12 @@ public interface DefinitionLocalService extends BaseLocalService,
 	public Definition updateDefinition(Definition definition);
 
 	public Definition updateDefinition(long definitionId,
-		Map<Locale, java.lang.String> nameMap,
-		Map<Locale, java.lang.String> descriptionMap, long sourceId,
-		java.lang.String reportParameters, java.lang.String fileName,
+		Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
+		long sourceId, String reportParameters, String fileName,
 		InputStream inputStream, ServiceContext serviceContext)
 		throws PortalException;
 
 	public void updateDefinitionResources(Definition definition,
-		java.lang.String[] communityPermissions,
-		java.lang.String[] guestPermissions) throws PortalException;
+		String[] communityPermissions, String[] guestPermissions)
+		throws PortalException;
 }

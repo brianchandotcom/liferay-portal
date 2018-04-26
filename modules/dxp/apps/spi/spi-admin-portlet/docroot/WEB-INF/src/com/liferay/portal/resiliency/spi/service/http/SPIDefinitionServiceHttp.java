@@ -55,11 +55,9 @@ import com.liferay.portal.resiliency.spi.service.SPIDefinitionServiceUtil;
 @ProviderType
 public class SPIDefinitionServiceHttp {
 	public static com.liferay.portal.resiliency.spi.model.SPIDefinition addSPIDefinition(
-		HttpPrincipal httpPrincipal, java.lang.String name,
-		java.lang.String connectorAddress, int connectorPort,
-		java.lang.String description, java.lang.String jvmArguments,
-		java.lang.String portletIds, java.lang.String servletContextNames,
-		java.lang.String typeSettings,
+		HttpPrincipal httpPrincipal, String name, String connectorAddress,
+		int connectorPort, String description, String jvmArguments,
+		String portletIds, String servletContextNames, String typeSettings,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -190,7 +188,7 @@ public class SPIDefinitionServiceHttp {
 	}
 
 	public static com.liferay.portal.resiliency.spi.model.SPIDefinition getSPIDefinition(
-		HttpPrincipal httpPrincipal, long companyId, java.lang.String name)
+		HttpPrincipal httpPrincipal, long companyId, String name)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(SPIDefinitionServiceUtil.class,
@@ -373,10 +371,9 @@ public class SPIDefinitionServiceHttp {
 
 	public static com.liferay.portal.resiliency.spi.model.SPIDefinition updateSPIDefinition(
 		HttpPrincipal httpPrincipal, long spiDefinitionId,
-		java.lang.String connectorAddress, int connectorPort,
-		java.lang.String description, java.lang.String jvmArguments,
-		java.lang.String portletIds, java.lang.String servletContextNames,
-		java.lang.String typeSettings,
+		String connectorAddress, int connectorPort, String description,
+		String jvmArguments, String portletIds, String servletContextNames,
+		String typeSettings,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -412,7 +409,7 @@ public class SPIDefinitionServiceHttp {
 
 	public static com.liferay.portal.resiliency.spi.model.SPIDefinition updateTypeSettings(
 		HttpPrincipal httpPrincipal, long userId, long spiDefinitionId,
-		java.lang.String recoveryOptions,
+		String recoveryOptions,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -446,10 +443,8 @@ public class SPIDefinitionServiceHttp {
 
 	private static Log _log = LogFactoryUtil.getLog(SPIDefinitionServiceHttp.class);
 	private static final Class<?>[] _addSPIDefinitionParameterTypes0 = new Class[] {
-			java.lang.String.class, java.lang.String.class, int.class,
-			java.lang.String.class, java.lang.String.class,
-			java.lang.String.class, java.lang.String.class,
-			java.lang.String.class,
+			String.class, String.class, int.class, String.class, String.class,
+			String.class, String.class, String.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _deleteSPIDefinitionParameterTypes1 = new Class[] {
@@ -461,7 +456,7 @@ public class SPIDefinitionServiceHttp {
 			long.class
 		};
 	private static final Class<?>[] _getSPIDefinitionParameterTypes4 = new Class[] {
-			long.class, java.lang.String.class
+			long.class, String.class
 		};
 	private static final Class<?>[] _getSPIDefinitionsParameterTypes5 = new Class[] {
 			
@@ -479,14 +474,12 @@ public class SPIDefinitionServiceHttp {
 			long.class
 		};
 	private static final Class<?>[] _updateSPIDefinitionParameterTypes10 = new Class[] {
-			long.class, java.lang.String.class, int.class,
-			java.lang.String.class, java.lang.String.class,
-			java.lang.String.class, java.lang.String.class,
-			java.lang.String.class,
+			long.class, String.class, int.class, String.class, String.class,
+			String.class, String.class, String.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _updateTypeSettingsParameterTypes11 = new Class[] {
-			long.class, long.class, java.lang.String.class,
+			long.class, long.class, String.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 }

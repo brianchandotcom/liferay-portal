@@ -73,19 +73,17 @@ public interface EntryLocalService extends BaseLocalService,
 	public Entry addEntry(Entry entry);
 
 	public Entry addEntry(long userId, long groupId, long definitionId,
-		java.lang.String format, boolean schedulerRequest, Date startDate,
-		Date endDate, boolean repeating, java.lang.String recurrence,
-		java.lang.String emailNotifications, java.lang.String emailDelivery,
-		java.lang.String portletId, java.lang.String pageURL,
-		java.lang.String reportName, java.lang.String reportParameters,
+		String format, boolean schedulerRequest, Date startDate, Date endDate,
+		boolean repeating, String recurrence, String emailNotifications,
+		String emailDelivery, String portletId, String pageURL,
+		String reportName, String reportParameters,
 		ServiceContext serviceContext) throws PortalException;
 
 	public void addEntryResources(Entry entry, boolean addCommunityPermissions,
 		boolean addGuestPermissions) throws PortalException;
 
-	public void addEntryResources(Entry entry,
-		java.lang.String[] communityPermissions,
-		java.lang.String[] guestPermissions) throws PortalException;
+	public void addEntryResources(Entry entry, String[] communityPermissions,
+		String[] guestPermissions) throws PortalException;
 
 	/**
 	* Creates a new entry with the primary key. Does not add the entry to the database.
@@ -96,7 +94,7 @@ public interface EntryLocalService extends BaseLocalService,
 	@Transactional(enabled = false)
 	public Entry createEntry(long entryId);
 
-	public void deleteAttachment(long companyId, java.lang.String fileName)
+	public void deleteAttachment(long companyId, String fileName)
 		throws PortalException;
 
 	/**
@@ -190,7 +188,7 @@ public interface EntryLocalService extends BaseLocalService,
 
 	public void generateReport(long entryId) throws PortalException;
 
-	public void generateReport(long entryId, java.lang.String reportName)
+	public void generateReport(long entryId, String reportName)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -211,10 +209,10 @@ public interface EntryLocalService extends BaseLocalService,
 	public List<Entry> getEntries(int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<Entry> getEntries(long groupId,
-		java.lang.String definitionName, java.lang.String userName,
-		Date createDateGT, Date createDateLT, boolean andSearch, int start,
-		int end, OrderByComparator orderByComparator);
+	public List<Entry> getEntries(long groupId, String definitionName,
+		String userName, Date createDateGT, Date createDateLT,
+		boolean andSearch, int start, int end,
+		OrderByComparator orderByComparator);
 
 	/**
 	* Returns the number of entries.
@@ -225,9 +223,8 @@ public interface EntryLocalService extends BaseLocalService,
 	public int getEntriesCount();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getEntriesCount(long groupId, java.lang.String definitionName,
-		java.lang.String userName, Date createDateGT, Date createDateLT,
-		boolean andSearch);
+	public int getEntriesCount(long groupId, String definitionName,
+		String userName, Date createDateGT, Date createDateLT, boolean andSearch);
 
 	/**
 	* Returns the entry with the primary key.
@@ -247,15 +244,15 @@ public interface EntryLocalService extends BaseLocalService,
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
 
-	public void sendEmails(long entryId, java.lang.String fileName,
-		java.lang.String[] emailAddresses, boolean notification)
+	public void sendEmails(long entryId, String fileName,
+		String[] emailAddresses, boolean notification)
 		throws PortalException;
 
 	public void unscheduleEntry(long entryId) throws PortalException;
@@ -269,9 +266,9 @@ public interface EntryLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.REINDEX)
 	public Entry updateEntry(Entry entry);
 
-	public void updateEntry(long entryId, java.lang.String reportName,
+	public void updateEntry(long entryId, String reportName,
 		byte[] reportResults) throws PortalException;
 
 	public void updateEntryStatus(long entryId, ReportStatus status,
-		java.lang.String errorMessage) throws PortalException;
+		String errorMessage) throws PortalException;
 }

@@ -63,10 +63,9 @@ public interface OAuthApplicationLocalService extends BaseLocalService,
 	 *
 	 * Never modify or reference this interface directly. Always use {@link OAuthApplicationLocalServiceUtil} to access the o auth application local service. Add custom service methods to {@link com.liferay.oauth.service.impl.OAuthApplicationLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public OAuthApplication addOAuthApplication(long userId,
-		java.lang.String name, java.lang.String description, int accessLevel,
-		boolean shareableAccessToken, java.lang.String callbackURI,
-		java.lang.String websiteURL, ServiceContext serviceContext)
+	public OAuthApplication addOAuthApplication(long userId, String name,
+		String description, int accessLevel, boolean shareableAccessToken,
+		String callbackURI, String websiteURL, ServiceContext serviceContext)
 		throws PortalException;
 
 	/**
@@ -182,7 +181,7 @@ public interface OAuthApplicationLocalService extends BaseLocalService,
 	public OAuthApplication fetchOAuthApplication(long oAuthApplicationId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public OAuthApplication fetchOAuthApplication(java.lang.String consumerKey);
+	public OAuthApplication fetchOAuthApplication(String consumerKey);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
@@ -202,7 +201,7 @@ public interface OAuthApplicationLocalService extends BaseLocalService,
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public OAuthApplication getOAuthApplication(java.lang.String consumerKey)
+	public OAuthApplication getOAuthApplication(String consumerKey)
 		throws PortalException;
 
 	/**
@@ -239,7 +238,7 @@ public interface OAuthApplicationLocalService extends BaseLocalService,
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -247,22 +246,20 @@ public interface OAuthApplicationLocalService extends BaseLocalService,
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<OAuthApplication> search(long companyId,
-		java.lang.String keywords,
-		LinkedHashMap<java.lang.String, java.lang.Object> params, int start,
-		int end, OrderByComparator orderByComparator);
+	public List<OAuthApplication> search(long companyId, String keywords,
+		LinkedHashMap<String, Object> params, int start, int end,
+		OrderByComparator orderByComparator);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int searchCount(long companyId, java.lang.String keywords,
-		LinkedHashMap<java.lang.String, java.lang.Object> params);
+	public int searchCount(long companyId, String keywords,
+		LinkedHashMap<String, Object> params);
 
 	public OAuthApplication updateLogo(long oAuthApplicationId,
 		InputStream inputStream) throws PortalException;
 
 	public OAuthApplication updateOAuthApplication(long oAuthApplicationId,
-		java.lang.String name, java.lang.String description,
-		boolean shareableAccessToken, java.lang.String callbackURI,
-		java.lang.String websiteURL, ServiceContext serviceContext)
+		String name, String description, boolean shareableAccessToken,
+		String callbackURI, String websiteURL, ServiceContext serviceContext)
 		throws PortalException;
 
 	/**

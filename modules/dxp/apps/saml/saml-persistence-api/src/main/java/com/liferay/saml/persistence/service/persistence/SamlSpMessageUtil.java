@@ -286,8 +286,8 @@ public class SamlSpMessageUtil {
 	* @return the matching saml sp message
 	* @throws NoSuchSpMessageException if a matching saml sp message could not be found
 	*/
-	public static SamlSpMessage findBySIEI_SIRK(
-		java.lang.String samlIdpEntityId, java.lang.String samlIdpResponseKey)
+	public static SamlSpMessage findBySIEI_SIRK(String samlIdpEntityId,
+		String samlIdpResponseKey)
 		throws com.liferay.saml.persistence.exception.NoSuchSpMessageException {
 		return getPersistence()
 				   .findBySIEI_SIRK(samlIdpEntityId, samlIdpResponseKey);
@@ -300,8 +300,8 @@ public class SamlSpMessageUtil {
 	* @param samlIdpResponseKey the saml idp response key
 	* @return the matching saml sp message, or <code>null</code> if a matching saml sp message could not be found
 	*/
-	public static SamlSpMessage fetchBySIEI_SIRK(
-		java.lang.String samlIdpEntityId, java.lang.String samlIdpResponseKey) {
+	public static SamlSpMessage fetchBySIEI_SIRK(String samlIdpEntityId,
+		String samlIdpResponseKey) {
 		return getPersistence()
 				   .fetchBySIEI_SIRK(samlIdpEntityId, samlIdpResponseKey);
 	}
@@ -314,9 +314,8 @@ public class SamlSpMessageUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching saml sp message, or <code>null</code> if a matching saml sp message could not be found
 	*/
-	public static SamlSpMessage fetchBySIEI_SIRK(
-		java.lang.String samlIdpEntityId, java.lang.String samlIdpResponseKey,
-		boolean retrieveFromCache) {
+	public static SamlSpMessage fetchBySIEI_SIRK(String samlIdpEntityId,
+		String samlIdpResponseKey, boolean retrieveFromCache) {
 		return getPersistence()
 				   .fetchBySIEI_SIRK(samlIdpEntityId, samlIdpResponseKey,
 			retrieveFromCache);
@@ -329,8 +328,8 @@ public class SamlSpMessageUtil {
 	* @param samlIdpResponseKey the saml idp response key
 	* @return the saml sp message that was removed
 	*/
-	public static SamlSpMessage removeBySIEI_SIRK(
-		java.lang.String samlIdpEntityId, java.lang.String samlIdpResponseKey)
+	public static SamlSpMessage removeBySIEI_SIRK(String samlIdpEntityId,
+		String samlIdpResponseKey)
 		throws com.liferay.saml.persistence.exception.NoSuchSpMessageException {
 		return getPersistence()
 				   .removeBySIEI_SIRK(samlIdpEntityId, samlIdpResponseKey);
@@ -343,8 +342,8 @@ public class SamlSpMessageUtil {
 	* @param samlIdpResponseKey the saml idp response key
 	* @return the number of matching saml sp messages
 	*/
-	public static int countBySIEI_SIRK(java.lang.String samlIdpEntityId,
-		java.lang.String samlIdpResponseKey) {
+	public static int countBySIEI_SIRK(String samlIdpEntityId,
+		String samlIdpResponseKey) {
 		return getPersistence()
 				   .countBySIEI_SIRK(samlIdpEntityId, samlIdpResponseKey);
 	}

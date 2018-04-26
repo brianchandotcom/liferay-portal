@@ -54,8 +54,8 @@ public interface Source extends SourceModel, PersistedModel {
 			}
 		};
 
-	public java.lang.String getAttachmentsDir();
+	public String getAttachmentsDir();
 
-	public java.lang.String[] getAttachmentsFiles()
+	public String[] getAttachmentsFiles()
 		throws com.liferay.portal.kernel.exception.PortalException;
 }

@@ -48,10 +48,10 @@ public class DefinitionLocalServiceWrapper implements DefinitionLocalService,
 	@Override
 	public com.liferay.portal.reports.engine.console.model.Definition addDefinition(
 		long userId, long groupId,
-		java.util.Map<java.util.Locale, java.lang.String> nameMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		long sourceId, java.lang.String reportParameters,
-		java.lang.String fileName, java.io.InputStream inputStream,
+		java.util.Map<java.util.Locale, String> nameMap,
+		java.util.Map<java.util.Locale, String> descriptionMap, long sourceId,
+		String reportParameters, String fileName,
+		java.io.InputStream inputStream,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _definitionLocalService.addDefinition(userId, groupId, nameMap,
@@ -107,7 +107,7 @@ public class DefinitionLocalServiceWrapper implements DefinitionLocalService,
 
 	@Override
 	public void deleteDefinitionTemplates(long companyId,
-		java.lang.String attachmentsDirectory)
+		String attachmentsDirectory)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_definitionLocalService.deleteDefinitionTemplates(companyId,
 			attachmentsDirectory);
@@ -223,7 +223,7 @@ public class DefinitionLocalServiceWrapper implements DefinitionLocalService,
 	*/
 	@Override
 	public com.liferay.portal.reports.engine.console.model.Definition fetchDefinitionByUuidAndGroupId(
-		java.lang.String uuid, long groupId) {
+		String uuid, long groupId) {
 		return _definitionLocalService.fetchDefinitionByUuidAndGroupId(uuid,
 			groupId);
 	}
@@ -257,7 +257,7 @@ public class DefinitionLocalServiceWrapper implements DefinitionLocalService,
 	*/
 	@Override
 	public com.liferay.portal.reports.engine.console.model.Definition getDefinitionByUuidAndGroupId(
-		java.lang.String uuid, long groupId)
+		String uuid, long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _definitionLocalService.getDefinitionByUuidAndGroupId(uuid,
 			groupId);
@@ -282,9 +282,9 @@ public class DefinitionLocalServiceWrapper implements DefinitionLocalService,
 
 	@Override
 	public java.util.List<com.liferay.portal.reports.engine.console.model.Definition> getDefinitions(
-		long groupId, java.lang.String definitionName,
-		java.lang.String description, java.lang.String sourceId,
-		java.lang.String reportName, boolean andSearch, int start, int end,
+		long groupId, String definitionName, String description,
+		String sourceId, String reportName, boolean andSearch, int start,
+		int end,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return _definitionLocalService.getDefinitions(groupId, definitionName,
 			description, sourceId, reportName, andSearch, start, end,
@@ -300,7 +300,7 @@ public class DefinitionLocalServiceWrapper implements DefinitionLocalService,
 	*/
 	@Override
 	public java.util.List<com.liferay.portal.reports.engine.console.model.Definition> getDefinitionsByUuidAndCompanyId(
-		java.lang.String uuid, long companyId) {
+		String uuid, long companyId) {
 		return _definitionLocalService.getDefinitionsByUuidAndCompanyId(uuid,
 			companyId);
 	}
@@ -317,7 +317,7 @@ public class DefinitionLocalServiceWrapper implements DefinitionLocalService,
 	*/
 	@Override
 	public java.util.List<com.liferay.portal.reports.engine.console.model.Definition> getDefinitionsByUuidAndCompanyId(
-		java.lang.String uuid, long companyId, int start, int end,
+		String uuid, long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.reports.engine.console.model.Definition> orderByComparator) {
 		return _definitionLocalService.getDefinitionsByUuidAndCompanyId(uuid,
 			companyId, start, end, orderByComparator);
@@ -334,9 +334,8 @@ public class DefinitionLocalServiceWrapper implements DefinitionLocalService,
 	}
 
 	@Override
-	public int getDefinitionsCount(long groupId,
-		java.lang.String definitionName, java.lang.String description,
-		java.lang.String sourceId, java.lang.String reportName,
+	public int getDefinitionsCount(long groupId, String definitionName,
+		String description, String sourceId, String reportName,
 		boolean andSearch) {
 		return _definitionLocalService.getDefinitionsCount(groupId,
 			definitionName, description, sourceId, reportName, andSearch);
@@ -359,7 +358,7 @@ public class DefinitionLocalServiceWrapper implements DefinitionLocalService,
 	* @return the OSGi service identifier
 	*/
 	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
+	public String getOSGiServiceIdentifier() {
 		return _definitionLocalService.getOSGiServiceIdentifier();
 	}
 
@@ -384,11 +383,10 @@ public class DefinitionLocalServiceWrapper implements DefinitionLocalService,
 
 	@Override
 	public com.liferay.portal.reports.engine.console.model.Definition updateDefinition(
-		long definitionId,
-		java.util.Map<java.util.Locale, java.lang.String> nameMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		long sourceId, java.lang.String reportParameters,
-		java.lang.String fileName, java.io.InputStream inputStream,
+		long definitionId, java.util.Map<java.util.Locale, String> nameMap,
+		java.util.Map<java.util.Locale, String> descriptionMap, long sourceId,
+		String reportParameters, String fileName,
+		java.io.InputStream inputStream,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _definitionLocalService.updateDefinition(definitionId, nameMap,
@@ -399,8 +397,7 @@ public class DefinitionLocalServiceWrapper implements DefinitionLocalService,
 	@Override
 	public void updateDefinitionResources(
 		com.liferay.portal.reports.engine.console.model.Definition definition,
-		java.lang.String[] communityPermissions,
-		java.lang.String[] guestPermissions)
+		String[] communityPermissions, String[] guestPermissions)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_definitionLocalService.updateDefinitionResources(definition,
 			communityPermissions, guestPermissions);

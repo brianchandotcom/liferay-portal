@@ -48,11 +48,9 @@ public class SamlSpSessionLocalServiceWrapper
 
 	@Override
 	public com.liferay.saml.persistence.model.SamlSpSession addSamlSpSession(
-		java.lang.String samlSpSessionKey, java.lang.String assertionXml,
-		java.lang.String jSessionId, java.lang.String nameIdFormat,
-		java.lang.String nameIdNameQualifier,
-		java.lang.String nameIdSPNameQualifier, java.lang.String nameIdValue,
-		java.lang.String sessionIndex,
+		String samlSpSessionKey, String assertionXml, String jSessionId,
+		String nameIdFormat, String nameIdNameQualifier,
+		String nameIdSPNameQualifier, String nameIdValue, String sessionIndex,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _samlSpSessionLocalService.addSamlSpSession(samlSpSessionKey,
@@ -201,19 +199,19 @@ public class SamlSpSessionLocalServiceWrapper
 
 	@Override
 	public com.liferay.saml.persistence.model.SamlSpSession fetchSamlSpSessionByJSessionId(
-		java.lang.String jSessionId) {
+		String jSessionId) {
 		return _samlSpSessionLocalService.fetchSamlSpSessionByJSessionId(jSessionId);
 	}
 
 	@Override
 	public com.liferay.saml.persistence.model.SamlSpSession fetchSamlSpSessionBySamlSpSessionKey(
-		java.lang.String samlSpSessionKey) {
+		String samlSpSessionKey) {
 		return _samlSpSessionLocalService.fetchSamlSpSessionBySamlSpSessionKey(samlSpSessionKey);
 	}
 
 	@Override
 	public com.liferay.saml.persistence.model.SamlSpSession fetchSamlSpSessionBySessionIndex(
-		java.lang.String sessionIndex) {
+		String sessionIndex) {
 		return _samlSpSessionLocalService.fetchSamlSpSessionBySessionIndex(sessionIndex);
 	}
 
@@ -233,7 +231,7 @@ public class SamlSpSessionLocalServiceWrapper
 	* @return the OSGi service identifier
 	*/
 	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
+	public String getOSGiServiceIdentifier() {
 		return _samlSpSessionLocalService.getOSGiServiceIdentifier();
 	}
 
@@ -260,21 +258,21 @@ public class SamlSpSessionLocalServiceWrapper
 
 	@Override
 	public com.liferay.saml.persistence.model.SamlSpSession getSamlSpSessionByJSessionId(
-		java.lang.String jSessionId)
+		String jSessionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _samlSpSessionLocalService.getSamlSpSessionByJSessionId(jSessionId);
 	}
 
 	@Override
 	public com.liferay.saml.persistence.model.SamlSpSession getSamlSpSessionBySamlSpSessionKey(
-		java.lang.String samlSpSessionKey)
+		String samlSpSessionKey)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _samlSpSessionLocalService.getSamlSpSessionBySamlSpSessionKey(samlSpSessionKey);
 	}
 
 	@Override
 	public com.liferay.saml.persistence.model.SamlSpSession getSamlSpSessionBySessionIndex(
-		java.lang.String sessionIndex)
+		String sessionIndex)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _samlSpSessionLocalService.getSamlSpSessionBySessionIndex(sessionIndex);
 	}
@@ -298,7 +296,7 @@ public class SamlSpSessionLocalServiceWrapper
 
 	@Override
 	public java.util.List<com.liferay.saml.persistence.model.SamlSpSession> getSamlSpSessions(
-		java.lang.String nameIdValue) {
+		String nameIdValue) {
 		return _samlSpSessionLocalService.getSamlSpSessions(nameIdValue);
 	}
 
@@ -314,7 +312,7 @@ public class SamlSpSessionLocalServiceWrapper
 
 	@Override
 	public com.liferay.saml.persistence.model.SamlSpSession updateSamlSpSession(
-		long samlSpSessionId, java.lang.String jSessionId)
+		long samlSpSessionId, String jSessionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _samlSpSessionLocalService.updateSamlSpSession(samlSpSessionId,
 			jSessionId);
@@ -322,11 +320,9 @@ public class SamlSpSessionLocalServiceWrapper
 
 	@Override
 	public com.liferay.saml.persistence.model.SamlSpSession updateSamlSpSession(
-		long samlSpSessionId, java.lang.String samlSpSessionKey,
-		java.lang.String assertionXml, java.lang.String jSessionId,
-		java.lang.String nameIdFormat, java.lang.String nameIdNameQualifier,
-		java.lang.String nameIdSPNameQualifier, java.lang.String nameIdValue,
-		java.lang.String sessionIndex,
+		long samlSpSessionId, String samlSpSessionKey, String assertionXml,
+		String jSessionId, String nameIdFormat, String nameIdNameQualifier,
+		String nameIdSPNameQualifier, String nameIdValue, String sessionIndex,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _samlSpSessionLocalService.updateSamlSpSession(samlSpSessionId,

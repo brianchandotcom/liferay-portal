@@ -62,9 +62,8 @@ public interface SamlIdpSpSessionLocalService extends BaseLocalService,
 	 * Never modify or reference this interface directly. Always use {@link SamlIdpSpSessionLocalServiceUtil} to access the saml idp sp session local service. Add custom service methods to {@link com.liferay.saml.persistence.service.impl.SamlIdpSpSessionLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	public SamlIdpSpSession addSamlIdpSpSession(long samlIdpSsoSessionId,
-		java.lang.String samlSpEntityId, java.lang.String nameIdFormat,
-		java.lang.String nameIdValue, ServiceContext serviceContext)
-		throws PortalException;
+		String samlSpEntityId, String nameIdFormat, String nameIdValue,
+		ServiceContext serviceContext) throws PortalException;
 
 	/**
 	* Adds the saml idp sp session to the database. Also notifies the appropriate model listeners.
@@ -186,7 +185,7 @@ public interface SamlIdpSpSessionLocalService extends BaseLocalService,
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -206,7 +205,7 @@ public interface SamlIdpSpSessionLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public SamlIdpSpSession getSamlIdpSpSession(long samlIdpSsoSessionId,
-		java.lang.String samlSpEntityId) throws PortalException;
+		String samlSpEntityId) throws PortalException;
 
 	/**
 	* Returns a range of all the saml idp sp sessions.
@@ -234,7 +233,7 @@ public interface SamlIdpSpSessionLocalService extends BaseLocalService,
 	public int getSamlIdpSpSessionsCount();
 
 	public SamlIdpSpSession updateModifiedDate(long samlIdpSsoSessionId,
-		java.lang.String samlSpEntityId) throws PortalException;
+		String samlSpEntityId) throws PortalException;
 
 	/**
 	* Updates the saml idp sp session in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.

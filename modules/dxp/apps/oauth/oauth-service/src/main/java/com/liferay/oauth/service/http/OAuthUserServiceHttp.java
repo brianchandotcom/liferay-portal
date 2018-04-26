@@ -56,7 +56,7 @@ import com.liferay.portal.kernel.util.MethodKey;
 @ProviderType
 public class OAuthUserServiceHttp {
 	public static com.liferay.oauth.model.OAuthUser addOAuthUser(
-		HttpPrincipal httpPrincipal, java.lang.String consumerKey,
+		HttpPrincipal httpPrincipal, String consumerKey,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -122,8 +122,7 @@ public class OAuthUserServiceHttp {
 
 	private static Log _log = LogFactoryUtil.getLog(OAuthUserServiceHttp.class);
 	private static final Class<?>[] _addOAuthUserParameterTypes0 = new Class[] {
-			java.lang.String.class,
-			com.liferay.portal.kernel.service.ServiceContext.class
+			String.class, com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _deleteOAuthUserParameterTypes1 = new Class[] {
 			long.class

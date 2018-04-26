@@ -128,7 +128,7 @@ public class OAuthUserWrapper implements OAuthUser, ModelWrapper<OAuthUser> {
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new OAuthUserWrapper((OAuthUser)_oAuthUser.clone());
 	}
 
@@ -143,7 +143,7 @@ public class OAuthUserWrapper implements OAuthUser, ModelWrapper<OAuthUser> {
 	* @return the access secret of this o auth user
 	*/
 	@Override
-	public java.lang.String getAccessSecret() {
+	public String getAccessSecret() {
 		return _oAuthUser.getAccessSecret();
 	}
 
@@ -153,7 +153,7 @@ public class OAuthUserWrapper implements OAuthUser, ModelWrapper<OAuthUser> {
 	* @return the access token of this o auth user
 	*/
 	@Override
-	public java.lang.String getAccessToken() {
+	public String getAccessToken() {
 		return _oAuthUser.getAccessToken();
 	}
 
@@ -218,7 +218,7 @@ public class OAuthUserWrapper implements OAuthUser, ModelWrapper<OAuthUser> {
 	* @return the o auth user uuid of this o auth user
 	*/
 	@Override
-	public java.lang.String getOAuthUserUuid() {
+	public String getOAuthUserUuid() {
 		return _oAuthUser.getOAuthUserUuid();
 	}
 
@@ -253,7 +253,7 @@ public class OAuthUserWrapper implements OAuthUser, ModelWrapper<OAuthUser> {
 	* @return the user name of this o auth user
 	*/
 	@Override
-	public java.lang.String getUserName() {
+	public String getUserName() {
 		return _oAuthUser.getUserName();
 	}
 
@@ -263,7 +263,7 @@ public class OAuthUserWrapper implements OAuthUser, ModelWrapper<OAuthUser> {
 	* @return the user uuid of this o auth user
 	*/
 	@Override
-	public java.lang.String getUserUuid() {
+	public String getUserUuid() {
 		return _oAuthUser.getUserUuid();
 	}
 
@@ -298,7 +298,7 @@ public class OAuthUserWrapper implements OAuthUser, ModelWrapper<OAuthUser> {
 	* @param accessSecret the access secret of this o auth user
 	*/
 	@Override
-	public void setAccessSecret(java.lang.String accessSecret) {
+	public void setAccessSecret(String accessSecret) {
 		_oAuthUser.setAccessSecret(accessSecret);
 	}
 
@@ -308,7 +308,7 @@ public class OAuthUserWrapper implements OAuthUser, ModelWrapper<OAuthUser> {
 	* @param accessToken the access token of this o auth user
 	*/
 	@Override
-	public void setAccessToken(java.lang.String accessToken) {
+	public void setAccessToken(String accessToken) {
 		_oAuthUser.setAccessToken(accessToken);
 	}
 
@@ -394,7 +394,7 @@ public class OAuthUserWrapper implements OAuthUser, ModelWrapper<OAuthUser> {
 	* @param oAuthUserUuid the o auth user uuid of this o auth user
 	*/
 	@Override
-	public void setOAuthUserUuid(java.lang.String oAuthUserUuid) {
+	public void setOAuthUserUuid(String oAuthUserUuid) {
 		_oAuthUser.setOAuthUserUuid(oAuthUserUuid);
 	}
 
@@ -429,7 +429,7 @@ public class OAuthUserWrapper implements OAuthUser, ModelWrapper<OAuthUser> {
 	* @param userName the user name of this o auth user
 	*/
 	@Override
-	public void setUserName(java.lang.String userName) {
+	public void setUserName(String userName) {
 		_oAuthUser.setUserName(userName);
 	}
 
@@ -439,7 +439,7 @@ public class OAuthUserWrapper implements OAuthUser, ModelWrapper<OAuthUser> {
 	* @param userUuid the user uuid of this o auth user
 	*/
 	@Override
-	public void setUserUuid(java.lang.String userUuid) {
+	public void setUserUuid(String userUuid) {
 		_oAuthUser.setUserUuid(userUuid);
 	}
 
@@ -454,7 +454,7 @@ public class OAuthUserWrapper implements OAuthUser, ModelWrapper<OAuthUser> {
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _oAuthUser.toString();
 	}
 
@@ -464,7 +464,7 @@ public class OAuthUserWrapper implements OAuthUser, ModelWrapper<OAuthUser> {
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _oAuthUser.toXmlString();
 	}
 

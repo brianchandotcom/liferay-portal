@@ -55,7 +55,7 @@ public class SamlSpMessageLocalServiceUtil {
 	}
 
 	public static com.liferay.saml.persistence.model.SamlSpMessage addSamlSpMessage(
-		java.lang.String samlIdpEntityId, java.lang.String samlIdpResponseKey,
+		String samlIdpEntityId, String samlIdpResponseKey,
 		java.util.Date expirationDate,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext) {
 		return getService()
@@ -195,7 +195,7 @@ public class SamlSpMessageLocalServiceUtil {
 	}
 
 	public static com.liferay.saml.persistence.model.SamlSpMessage fetchSamlSpMessage(
-		java.lang.String samlIdpEntityId, java.lang.String samlIdpResponseKey) {
+		String samlIdpEntityId, String samlIdpResponseKey) {
 		return getService()
 				   .fetchSamlSpMessage(samlIdpEntityId, samlIdpResponseKey);
 	}
@@ -213,7 +213,7 @@ public class SamlSpMessageLocalServiceUtil {
 	*
 	* @return the OSGi service identifier
 	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
+	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 
@@ -237,7 +237,7 @@ public class SamlSpMessageLocalServiceUtil {
 	}
 
 	public static com.liferay.saml.persistence.model.SamlSpMessage getSamlSpMessage(
-		java.lang.String samlIdpEntityId, java.lang.String samlIdpResponseKey)
+		String samlIdpEntityId, String samlIdpResponseKey)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getSamlSpMessage(samlIdpEntityId, samlIdpResponseKey);
 	}

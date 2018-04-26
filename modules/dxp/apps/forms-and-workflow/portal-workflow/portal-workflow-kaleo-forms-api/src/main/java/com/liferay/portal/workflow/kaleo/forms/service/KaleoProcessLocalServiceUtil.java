@@ -79,9 +79,9 @@ public class KaleoProcessLocalServiceUtil {
 	*/
 	public static com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess addKaleoProcess(
 		long userId, long groupId, long ddmStructureId,
-		java.util.Map<java.util.Locale, java.lang.String> nameMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		long ddmTemplateId, java.lang.String workflowDefinitionName,
+		java.util.Map<java.util.Locale, String> nameMap,
+		java.util.Map<java.util.Locale, String> descriptionMap,
+		long ddmTemplateId, String workflowDefinitionName,
 		int workflowDefinitionVersion,
 		com.liferay.portal.workflow.kaleo.forms.model.KaleoTaskFormPairs kaleoTaskFormPairs,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
@@ -229,7 +229,7 @@ public class KaleoProcessLocalServiceUtil {
 	* @return the matching kaleo process, or <code>null</code> if a matching kaleo process could not be found
 	*/
 	public static com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess fetchKaleoProcessByUuidAndGroupId(
-		java.lang.String uuid, long groupId) {
+		String uuid, long groupId) {
 		return getService().fetchKaleoProcessByUuidAndGroupId(uuid, groupId);
 	}
 
@@ -282,7 +282,7 @@ public class KaleoProcessLocalServiceUtil {
 	* @throws PortalException if a matching kaleo process could not be found
 	*/
 	public static com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess getKaleoProcessByUuidAndGroupId(
-		java.lang.String uuid, long groupId)
+		String uuid, long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getKaleoProcessByUuidAndGroupId(uuid, groupId);
 	}
@@ -348,7 +348,7 @@ public class KaleoProcessLocalServiceUtil {
 	* @return the matching kaleo processes, or an empty list if no matches were found
 	*/
 	public static java.util.List<com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess> getKaleoProcessesByUuidAndCompanyId(
-		java.lang.String uuid, long companyId) {
+		String uuid, long companyId) {
 		return getService().getKaleoProcessesByUuidAndCompanyId(uuid, companyId);
 	}
 
@@ -363,7 +363,7 @@ public class KaleoProcessLocalServiceUtil {
 	* @return the range of matching kaleo processes, or an empty list if no matches were found
 	*/
 	public static java.util.List<com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess> getKaleoProcessesByUuidAndCompanyId(
-		java.lang.String uuid, long companyId, int start, int end,
+		String uuid, long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess> orderByComparator) {
 		return getService()
 				   .getKaleoProcessesByUuidAndCompanyId(uuid, companyId, start,
@@ -394,7 +394,7 @@ public class KaleoProcessLocalServiceUtil {
 	*
 	* @return the OSGi service identifier
 	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
+	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 
@@ -439,9 +439,9 @@ public class KaleoProcessLocalServiceUtil {
 	*/
 	public static com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess updateKaleoProcess(
 		long kaleoProcessId, long ddmStructureId,
-		java.util.Map<java.util.Locale, java.lang.String> nameMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		long ddmTemplateId, java.lang.String workflowDefinitionName,
+		java.util.Map<java.util.Locale, String> nameMap,
+		java.util.Map<java.util.Locale, String> descriptionMap,
+		long ddmTemplateId, String workflowDefinitionName,
 		int workflowDefinitionVersion,
 		com.liferay.portal.workflow.kaleo.forms.model.KaleoTaskFormPairs kaleoTaskFormPairs,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)

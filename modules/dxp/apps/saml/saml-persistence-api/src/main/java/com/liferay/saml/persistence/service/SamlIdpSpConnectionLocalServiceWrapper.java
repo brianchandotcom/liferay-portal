@@ -48,12 +48,11 @@ public class SamlIdpSpConnectionLocalServiceWrapper
 
 	@Override
 	public com.liferay.saml.persistence.model.SamlIdpSpConnection addSamlIdpSpConnection(
-		java.lang.String samlSpEntityId, int assertionLifetime,
-		java.lang.String attributeNames, boolean attributesEnabled,
-		boolean attributesNamespaceEnabled, boolean enabled,
-		java.lang.String metadataUrl,
-		java.io.InputStream metadataXmlInputStream, java.lang.String name,
-		java.lang.String nameIdAttribute, java.lang.String nameIdFormat,
+		String samlSpEntityId, int assertionLifetime, String attributeNames,
+		boolean attributesEnabled, boolean attributesNamespaceEnabled,
+		boolean enabled, String metadataUrl,
+		java.io.InputStream metadataXmlInputStream, String name,
+		String nameIdAttribute, String nameIdFormat,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _samlIdpSpConnectionLocalService.addSamlIdpSpConnection(samlSpEntityId,
@@ -219,7 +218,7 @@ public class SamlIdpSpConnectionLocalServiceWrapper
 	* @return the OSGi service identifier
 	*/
 	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
+	public String getOSGiServiceIdentifier() {
 		return _samlIdpSpConnectionLocalService.getOSGiServiceIdentifier();
 	}
 
@@ -246,7 +245,7 @@ public class SamlIdpSpConnectionLocalServiceWrapper
 
 	@Override
 	public com.liferay.saml.persistence.model.SamlIdpSpConnection getSamlIdpSpConnection(
-		long companyId, java.lang.String samlSpEntityId)
+		long companyId, String samlSpEntityId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _samlIdpSpConnectionLocalService.getSamlIdpSpConnection(companyId,
 			samlSpEntityId);
@@ -314,12 +313,12 @@ public class SamlIdpSpConnectionLocalServiceWrapper
 
 	@Override
 	public com.liferay.saml.persistence.model.SamlIdpSpConnection updateSamlIdpSpConnection(
-		long samlIdpSpConnectionId, java.lang.String samlSpEntityId,
-		int assertionLifetime, java.lang.String attributeNames,
+		long samlIdpSpConnectionId, String samlSpEntityId,
+		int assertionLifetime, String attributeNames,
 		boolean attributesEnabled, boolean attributesNamespaceEnabled,
-		boolean enabled, java.lang.String metadataUrl,
-		java.io.InputStream metadataXmlInputStream, java.lang.String name,
-		java.lang.String nameIdAttribute, java.lang.String nameIdFormat,
+		boolean enabled, String metadataUrl,
+		java.io.InputStream metadataXmlInputStream, String name,
+		String nameIdAttribute, String nameIdFormat,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _samlIdpSpConnectionLocalService.updateSamlIdpSpConnection(samlIdpSpConnectionId,

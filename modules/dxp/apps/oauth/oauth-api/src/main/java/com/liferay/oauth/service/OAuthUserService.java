@@ -52,7 +52,7 @@ public interface OAuthUserService extends BaseService {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link OAuthUserServiceUtil} to access the o auth user remote service. Add custom service methods to {@link com.liferay.oauth.service.impl.OAuthUserServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public OAuthUser addOAuthUser(java.lang.String consumerKey,
+	public OAuthUser addOAuthUser(String consumerKey,
 		ServiceContext serviceContext) throws PortalException;
 
 	public OAuthUser deleteOAuthUser(long oAuthApplicationId)
@@ -63,5 +63,5 @@ public interface OAuthUserService extends BaseService {
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 }

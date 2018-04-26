@@ -66,7 +66,7 @@ import java.rmi.RemoteException;
 @ProviderType
 public class OAuthUserServiceSoap {
 	public static com.liferay.oauth.model.OAuthUserSoap addOAuthUser(
-		java.lang.String consumerKey,
+		String consumerKey,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {

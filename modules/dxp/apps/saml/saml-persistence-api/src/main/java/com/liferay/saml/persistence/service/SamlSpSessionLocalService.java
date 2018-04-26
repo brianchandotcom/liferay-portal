@@ -71,11 +71,10 @@ public interface SamlSpSessionLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.REINDEX)
 	public SamlSpSession addSamlSpSession(SamlSpSession samlSpSession);
 
-	public SamlSpSession addSamlSpSession(java.lang.String samlSpSessionKey,
-		java.lang.String assertionXml, java.lang.String jSessionId,
-		java.lang.String nameIdFormat, java.lang.String nameIdNameQualifier,
-		java.lang.String nameIdSPNameQualifier, java.lang.String nameIdValue,
-		java.lang.String sessionIndex, ServiceContext serviceContext)
+	public SamlSpSession addSamlSpSession(String samlSpSessionKey,
+		String assertionXml, String jSessionId, String nameIdFormat,
+		String nameIdNameQualifier, String nameIdSPNameQualifier,
+		String nameIdValue, String sessionIndex, ServiceContext serviceContext)
 		throws PortalException;
 
 	/**
@@ -177,16 +176,14 @@ public interface SamlSpSessionLocalService extends BaseLocalService,
 	public SamlSpSession fetchSamlSpSession(long samlSpSessionId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public SamlSpSession fetchSamlSpSessionByJSessionId(
-		java.lang.String jSessionId);
+	public SamlSpSession fetchSamlSpSessionByJSessionId(String jSessionId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public SamlSpSession fetchSamlSpSessionBySamlSpSessionKey(
-		java.lang.String samlSpSessionKey);
+		String samlSpSessionKey);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public SamlSpSession fetchSamlSpSessionBySessionIndex(
-		java.lang.String sessionIndex);
+	public SamlSpSession fetchSamlSpSessionBySessionIndex(String sessionIndex);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
@@ -199,7 +196,7 @@ public interface SamlSpSessionLocalService extends BaseLocalService,
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -218,16 +215,16 @@ public interface SamlSpSessionLocalService extends BaseLocalService,
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public SamlSpSession getSamlSpSessionByJSessionId(
-		java.lang.String jSessionId) throws PortalException;
+	public SamlSpSession getSamlSpSessionByJSessionId(String jSessionId)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public SamlSpSession getSamlSpSessionBySamlSpSessionKey(
-		java.lang.String samlSpSessionKey) throws PortalException;
+		String samlSpSessionKey) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public SamlSpSession getSamlSpSessionBySessionIndex(
-		java.lang.String sessionIndex) throws PortalException;
+	public SamlSpSession getSamlSpSessionBySessionIndex(String sessionIndex)
+		throws PortalException;
 
 	/**
 	* Returns a range of all the saml sp sessions.
@@ -244,7 +241,7 @@ public interface SamlSpSessionLocalService extends BaseLocalService,
 	public List<SamlSpSession> getSamlSpSessions(int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<SamlSpSession> getSamlSpSessions(java.lang.String nameIdValue);
+	public List<SamlSpSession> getSamlSpSessions(String nameIdValue);
 
 	/**
 	* Returns the number of saml sp sessions.
@@ -255,15 +252,13 @@ public interface SamlSpSessionLocalService extends BaseLocalService,
 	public int getSamlSpSessionsCount();
 
 	public SamlSpSession updateSamlSpSession(long samlSpSessionId,
-		java.lang.String jSessionId) throws PortalException;
+		String jSessionId) throws PortalException;
 
 	public SamlSpSession updateSamlSpSession(long samlSpSessionId,
-		java.lang.String samlSpSessionKey, java.lang.String assertionXml,
-		java.lang.String jSessionId, java.lang.String nameIdFormat,
-		java.lang.String nameIdNameQualifier,
-		java.lang.String nameIdSPNameQualifier, java.lang.String nameIdValue,
-		java.lang.String sessionIndex, ServiceContext serviceContext)
-		throws PortalException;
+		String samlSpSessionKey, String assertionXml, String jSessionId,
+		String nameIdFormat, String nameIdNameQualifier,
+		String nameIdSPNameQualifier, String nameIdValue, String sessionIndex,
+		ServiceContext serviceContext) throws PortalException;
 
 	/**
 	* Updates the saml sp session in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.

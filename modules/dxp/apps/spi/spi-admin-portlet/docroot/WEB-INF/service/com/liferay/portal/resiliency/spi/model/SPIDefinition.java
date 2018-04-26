@@ -57,11 +57,11 @@ public interface SPIDefinition extends SPIDefinitionModel, PersistedModel {
 
 	public void deleteBaseDir();
 
-	public java.lang.String getAgentClassName();
+	public String getAgentClassName();
 
-	public java.lang.String getBaseDir();
+	public String getBaseDir();
 
-	public java.lang.String getJavaExecutable();
+	public String getJavaExecutable();
 
 	public int getMaxRestartAttempts();
 
@@ -69,11 +69,11 @@ public interface SPIDefinition extends SPIDefinitionModel, PersistedModel {
 
 	public int getMinThreads();
 
-	public java.lang.String getNotificationRecipients();
+	public String getNotificationRecipients();
 
 	public long getPingInterval();
 
-	public java.lang.String getPortalProperties();
+	public String getPortalProperties();
 
 	public long getRegisterTimeout();
 
@@ -83,23 +83,21 @@ public interface SPIDefinition extends SPIDefinitionModel, PersistedModel {
 
 	public com.liferay.portal.kernel.resiliency.spi.SPI getSPI();
 
-	public java.lang.String getStatusLabel();
+	public String getStatusLabel();
 
 	public com.liferay.portal.kernel.util.UnicodeProperties getTypeSettingsProperties();
 
-	public java.lang.String getTypeSettingsProperty(java.lang.String key);
+	public String getTypeSettingsProperty(String key);
 
-	public java.lang.String getTypeSettingsProperty(java.lang.String key,
-		java.lang.String defaultValue);
+	public String getTypeSettingsProperty(String key, String defaultValue);
 
 	public boolean isAlive();
 
 	public void setMaxRestartAttempts(int maxRestartAttempts);
 
-	public void setNotificationRecipients(
-		java.lang.String notificationRecipients);
+	public void setNotificationRecipients(String notificationRecipients);
 
-	public void setPortalProperties(java.lang.String portalProperties);
+	public void setPortalProperties(String portalProperties);
 
 	public void setRestartAttempts(int restartAttempts);
 

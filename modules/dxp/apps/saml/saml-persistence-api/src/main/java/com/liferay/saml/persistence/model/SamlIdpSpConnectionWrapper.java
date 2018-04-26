@@ -195,7 +195,7 @@ public class SamlIdpSpConnectionWrapper implements SamlIdpSpConnection,
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new SamlIdpSpConnectionWrapper((SamlIdpSpConnection)_samlIdpSpConnection.clone());
 	}
 
@@ -220,7 +220,7 @@ public class SamlIdpSpConnectionWrapper implements SamlIdpSpConnection,
 	* @return the attribute names of this saml idp sp connection
 	*/
 	@Override
-	public java.lang.String getAttributeNames() {
+	public String getAttributeNames() {
 		return _samlIdpSpConnection.getAttributeNames();
 	}
 
@@ -295,7 +295,7 @@ public class SamlIdpSpConnectionWrapper implements SamlIdpSpConnection,
 	* @return the metadata url of this saml idp sp connection
 	*/
 	@Override
-	public java.lang.String getMetadataUrl() {
+	public String getMetadataUrl() {
 		return _samlIdpSpConnection.getMetadataUrl();
 	}
 
@@ -305,7 +305,7 @@ public class SamlIdpSpConnectionWrapper implements SamlIdpSpConnection,
 	* @return the metadata xml of this saml idp sp connection
 	*/
 	@Override
-	public java.lang.String getMetadataXml() {
+	public String getMetadataXml() {
 		return _samlIdpSpConnection.getMetadataXml();
 	}
 
@@ -325,7 +325,7 @@ public class SamlIdpSpConnectionWrapper implements SamlIdpSpConnection,
 	* @return the name of this saml idp sp connection
 	*/
 	@Override
-	public java.lang.String getName() {
+	public String getName() {
 		return _samlIdpSpConnection.getName();
 	}
 
@@ -335,7 +335,7 @@ public class SamlIdpSpConnectionWrapper implements SamlIdpSpConnection,
 	* @return the name ID attribute of this saml idp sp connection
 	*/
 	@Override
-	public java.lang.String getNameIdAttribute() {
+	public String getNameIdAttribute() {
 		return _samlIdpSpConnection.getNameIdAttribute();
 	}
 
@@ -345,7 +345,7 @@ public class SamlIdpSpConnectionWrapper implements SamlIdpSpConnection,
 	* @return the name ID format of this saml idp sp connection
 	*/
 	@Override
-	public java.lang.String getNameIdFormat() {
+	public String getNameIdFormat() {
 		return _samlIdpSpConnection.getNameIdFormat();
 	}
 
@@ -380,7 +380,7 @@ public class SamlIdpSpConnectionWrapper implements SamlIdpSpConnection,
 	* @return the saml sp entity ID of this saml idp sp connection
 	*/
 	@Override
-	public java.lang.String getSamlSpEntityId() {
+	public String getSamlSpEntityId() {
 		return _samlIdpSpConnection.getSamlSpEntityId();
 	}
 
@@ -400,7 +400,7 @@ public class SamlIdpSpConnectionWrapper implements SamlIdpSpConnection,
 	* @return the user name of this saml idp sp connection
 	*/
 	@Override
-	public java.lang.String getUserName() {
+	public String getUserName() {
 		return _samlIdpSpConnection.getUserName();
 	}
 
@@ -410,7 +410,7 @@ public class SamlIdpSpConnectionWrapper implements SamlIdpSpConnection,
 	* @return the user uuid of this saml idp sp connection
 	*/
 	@Override
-	public java.lang.String getUserUuid() {
+	public String getUserUuid() {
 		return _samlIdpSpConnection.getUserUuid();
 	}
 
@@ -485,7 +485,7 @@ public class SamlIdpSpConnectionWrapper implements SamlIdpSpConnection,
 	* @param attributeNames the attribute names of this saml idp sp connection
 	*/
 	@Override
-	public void setAttributeNames(java.lang.String attributeNames) {
+	public void setAttributeNames(String attributeNames) {
 		_samlIdpSpConnection.setAttributeNames(attributeNames);
 	}
 
@@ -577,7 +577,7 @@ public class SamlIdpSpConnectionWrapper implements SamlIdpSpConnection,
 	* @param metadataUrl the metadata url of this saml idp sp connection
 	*/
 	@Override
-	public void setMetadataUrl(java.lang.String metadataUrl) {
+	public void setMetadataUrl(String metadataUrl) {
 		_samlIdpSpConnection.setMetadataUrl(metadataUrl);
 	}
 
@@ -587,7 +587,7 @@ public class SamlIdpSpConnectionWrapper implements SamlIdpSpConnection,
 	* @param metadataXml the metadata xml of this saml idp sp connection
 	*/
 	@Override
-	public void setMetadataXml(java.lang.String metadataXml) {
+	public void setMetadataXml(String metadataXml) {
 		_samlIdpSpConnection.setMetadataXml(metadataXml);
 	}
 
@@ -607,7 +607,7 @@ public class SamlIdpSpConnectionWrapper implements SamlIdpSpConnection,
 	* @param name the name of this saml idp sp connection
 	*/
 	@Override
-	public void setName(java.lang.String name) {
+	public void setName(String name) {
 		_samlIdpSpConnection.setName(name);
 	}
 
@@ -617,7 +617,7 @@ public class SamlIdpSpConnectionWrapper implements SamlIdpSpConnection,
 	* @param nameIdAttribute the name ID attribute of this saml idp sp connection
 	*/
 	@Override
-	public void setNameIdAttribute(java.lang.String nameIdAttribute) {
+	public void setNameIdAttribute(String nameIdAttribute) {
 		_samlIdpSpConnection.setNameIdAttribute(nameIdAttribute);
 	}
 
@@ -627,7 +627,7 @@ public class SamlIdpSpConnectionWrapper implements SamlIdpSpConnection,
 	* @param nameIdFormat the name ID format of this saml idp sp connection
 	*/
 	@Override
-	public void setNameIdFormat(java.lang.String nameIdFormat) {
+	public void setNameIdFormat(String nameIdFormat) {
 		_samlIdpSpConnection.setNameIdFormat(nameIdFormat);
 	}
 
@@ -667,7 +667,7 @@ public class SamlIdpSpConnectionWrapper implements SamlIdpSpConnection,
 	* @param samlSpEntityId the saml sp entity ID of this saml idp sp connection
 	*/
 	@Override
-	public void setSamlSpEntityId(java.lang.String samlSpEntityId) {
+	public void setSamlSpEntityId(String samlSpEntityId) {
 		_samlIdpSpConnection.setSamlSpEntityId(samlSpEntityId);
 	}
 
@@ -687,7 +687,7 @@ public class SamlIdpSpConnectionWrapper implements SamlIdpSpConnection,
 	* @param userName the user name of this saml idp sp connection
 	*/
 	@Override
-	public void setUserName(java.lang.String userName) {
+	public void setUserName(String userName) {
 		_samlIdpSpConnection.setUserName(userName);
 	}
 
@@ -697,7 +697,7 @@ public class SamlIdpSpConnectionWrapper implements SamlIdpSpConnection,
 	* @param userUuid the user uuid of this saml idp sp connection
 	*/
 	@Override
-	public void setUserUuid(java.lang.String userUuid) {
+	public void setUserUuid(String userUuid) {
 		_samlIdpSpConnection.setUserUuid(userUuid);
 	}
 
@@ -712,7 +712,7 @@ public class SamlIdpSpConnectionWrapper implements SamlIdpSpConnection,
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _samlIdpSpConnection.toString();
 	}
 
@@ -722,7 +722,7 @@ public class SamlIdpSpConnectionWrapper implements SamlIdpSpConnection,
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _samlIdpSpConnection.toXmlString();
 	}
 

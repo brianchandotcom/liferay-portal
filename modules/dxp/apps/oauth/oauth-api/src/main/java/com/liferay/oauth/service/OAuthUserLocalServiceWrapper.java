@@ -35,8 +35,7 @@ public class OAuthUserLocalServiceWrapper implements OAuthUserLocalService,
 
 	@Override
 	public com.liferay.oauth.model.OAuthUser addOAuthUser(long userId,
-		long oAuthApplicationId, java.lang.String accessToken,
-		java.lang.String accessSecret,
+		long oAuthApplicationId, String accessToken, String accessSecret,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _oAuthUserLocalService.addOAuthUser(userId, oAuthApplicationId,
@@ -206,8 +205,7 @@ public class OAuthUserLocalServiceWrapper implements OAuthUserLocalService,
 	}
 
 	@Override
-	public com.liferay.oauth.model.OAuthUser fetchOAuthUser(
-		java.lang.String accessToken) {
+	public com.liferay.oauth.model.OAuthUser fetchOAuthUser(String accessToken) {
 		return _oAuthUserLocalService.fetchOAuthUser(accessToken);
 	}
 
@@ -255,8 +253,7 @@ public class OAuthUserLocalServiceWrapper implements OAuthUserLocalService,
 	}
 
 	@Override
-	public com.liferay.oauth.model.OAuthUser getOAuthUser(
-		java.lang.String accessToken)
+	public com.liferay.oauth.model.OAuthUser getOAuthUser(String accessToken)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _oAuthUserLocalService.getOAuthUser(accessToken);
 	}
@@ -294,7 +291,7 @@ public class OAuthUserLocalServiceWrapper implements OAuthUserLocalService,
 	* @return the OSGi service identifier
 	*/
 	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
+	public String getOSGiServiceIdentifier() {
 		return _oAuthUserLocalService.getOSGiServiceIdentifier();
 	}
 
@@ -320,8 +317,7 @@ public class OAuthUserLocalServiceWrapper implements OAuthUserLocalService,
 
 	@Override
 	public com.liferay.oauth.model.OAuthUser updateOAuthUser(long userId,
-		long oAuthApplicationId, java.lang.String accessToken,
-		java.lang.String accessSecret,
+		long oAuthApplicationId, String accessToken, String accessSecret,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _oAuthUserLocalService.updateOAuthUser(userId,

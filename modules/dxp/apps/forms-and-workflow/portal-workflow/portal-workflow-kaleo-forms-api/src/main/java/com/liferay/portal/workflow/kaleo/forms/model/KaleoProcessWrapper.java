@@ -155,7 +155,7 @@ public class KaleoProcessWrapper implements KaleoProcess,
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new KaleoProcessWrapper((KaleoProcess)_kaleoProcess.clone());
 	}
 
@@ -217,13 +217,13 @@ public class KaleoProcessWrapper implements KaleoProcess,
 	}
 
 	@Override
-	public java.lang.String getDescription()
+	public String getDescription()
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _kaleoProcess.getDescription();
 	}
 
 	@Override
-	public java.lang.String getDescription(java.util.Locale locale)
+	public String getDescription(java.util.Locale locale)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _kaleoProcess.getDescription(locale);
 	}
@@ -269,13 +269,13 @@ public class KaleoProcessWrapper implements KaleoProcess,
 	}
 
 	@Override
-	public java.lang.String getName()
+	public String getName()
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _kaleoProcess.getName();
 	}
 
 	@Override
-	public java.lang.String getName(java.util.Locale locale)
+	public String getName(java.util.Locale locale)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _kaleoProcess.getName(locale);
 	}
@@ -311,7 +311,7 @@ public class KaleoProcessWrapper implements KaleoProcess,
 	* @return the user name of this kaleo process
 	*/
 	@Override
-	public java.lang.String getUserName() {
+	public String getUserName() {
 		return _kaleoProcess.getUserName();
 	}
 
@@ -321,7 +321,7 @@ public class KaleoProcessWrapper implements KaleoProcess,
 	* @return the user uuid of this kaleo process
 	*/
 	@Override
-	public java.lang.String getUserUuid() {
+	public String getUserUuid() {
 		return _kaleoProcess.getUserUuid();
 	}
 
@@ -331,12 +331,12 @@ public class KaleoProcessWrapper implements KaleoProcess,
 	* @return the uuid of this kaleo process
 	*/
 	@Override
-	public java.lang.String getUuid() {
+	public String getUuid() {
 		return _kaleoProcess.getUuid();
 	}
 
 	@Override
-	public java.lang.String getWorkflowDefinition() {
+	public String getWorkflowDefinition() {
 		return _kaleoProcess.getWorkflowDefinition();
 	}
 
@@ -346,7 +346,7 @@ public class KaleoProcessWrapper implements KaleoProcess,
 	* @return the workflow definition name of this kaleo process
 	*/
 	@Override
-	public java.lang.String getWorkflowDefinitionName() {
+	public String getWorkflowDefinitionName() {
 		return _kaleoProcess.getWorkflowDefinitionName();
 	}
 
@@ -512,7 +512,7 @@ public class KaleoProcessWrapper implements KaleoProcess,
 	* @param userName the user name of this kaleo process
 	*/
 	@Override
-	public void setUserName(java.lang.String userName) {
+	public void setUserName(String userName) {
 		_kaleoProcess.setUserName(userName);
 	}
 
@@ -522,7 +522,7 @@ public class KaleoProcessWrapper implements KaleoProcess,
 	* @param userUuid the user uuid of this kaleo process
 	*/
 	@Override
-	public void setUserUuid(java.lang.String userUuid) {
+	public void setUserUuid(String userUuid) {
 		_kaleoProcess.setUserUuid(userUuid);
 	}
 
@@ -532,7 +532,7 @@ public class KaleoProcessWrapper implements KaleoProcess,
 	* @param uuid the uuid of this kaleo process
 	*/
 	@Override
-	public void setUuid(java.lang.String uuid) {
+	public void setUuid(String uuid) {
 		_kaleoProcess.setUuid(uuid);
 	}
 
@@ -542,8 +542,7 @@ public class KaleoProcessWrapper implements KaleoProcess,
 	* @param workflowDefinitionName the workflow definition name of this kaleo process
 	*/
 	@Override
-	public void setWorkflowDefinitionName(
-		java.lang.String workflowDefinitionName) {
+	public void setWorkflowDefinitionName(String workflowDefinitionName) {
 		_kaleoProcess.setWorkflowDefinitionName(workflowDefinitionName);
 	}
 
@@ -568,7 +567,7 @@ public class KaleoProcessWrapper implements KaleoProcess,
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _kaleoProcess.toString();
 	}
 
@@ -578,7 +577,7 @@ public class KaleoProcessWrapper implements KaleoProcess,
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _kaleoProcess.toXmlString();
 	}
 

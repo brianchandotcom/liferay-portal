@@ -173,7 +173,7 @@ public class SamlSpSessionWrapper implements SamlSpSession,
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new SamlSpSessionWrapper((SamlSpSession)_samlSpSession.clone());
 	}
 
@@ -188,7 +188,7 @@ public class SamlSpSessionWrapper implements SamlSpSession,
 	* @return the assertion xml of this saml sp session
 	*/
 	@Override
-	public java.lang.String getAssertionXml() {
+	public String getAssertionXml() {
 		return _samlSpSession.getAssertionXml();
 	}
 
@@ -223,7 +223,7 @@ public class SamlSpSessionWrapper implements SamlSpSession,
 	* @return the j session ID of this saml sp session
 	*/
 	@Override
-	public java.lang.String getJSessionId() {
+	public String getJSessionId() {
 		return _samlSpSession.getJSessionId();
 	}
 
@@ -243,7 +243,7 @@ public class SamlSpSessionWrapper implements SamlSpSession,
 	* @return the name ID format of this saml sp session
 	*/
 	@Override
-	public java.lang.String getNameIdFormat() {
+	public String getNameIdFormat() {
 		return _samlSpSession.getNameIdFormat();
 	}
 
@@ -253,7 +253,7 @@ public class SamlSpSessionWrapper implements SamlSpSession,
 	* @return the name ID name qualifier of this saml sp session
 	*/
 	@Override
-	public java.lang.String getNameIdNameQualifier() {
+	public String getNameIdNameQualifier() {
 		return _samlSpSession.getNameIdNameQualifier();
 	}
 
@@ -263,7 +263,7 @@ public class SamlSpSessionWrapper implements SamlSpSession,
 	* @return the name ID sp name qualifier of this saml sp session
 	*/
 	@Override
-	public java.lang.String getNameIdSPNameQualifier() {
+	public String getNameIdSPNameQualifier() {
 		return _samlSpSession.getNameIdSPNameQualifier();
 	}
 
@@ -273,7 +273,7 @@ public class SamlSpSessionWrapper implements SamlSpSession,
 	* @return the name ID value of this saml sp session
 	*/
 	@Override
-	public java.lang.String getNameIdValue() {
+	public String getNameIdValue() {
 		return _samlSpSession.getNameIdValue();
 	}
 
@@ -308,7 +308,7 @@ public class SamlSpSessionWrapper implements SamlSpSession,
 	* @return the saml sp session key of this saml sp session
 	*/
 	@Override
-	public java.lang.String getSamlSpSessionKey() {
+	public String getSamlSpSessionKey() {
 		return _samlSpSession.getSamlSpSessionKey();
 	}
 
@@ -318,7 +318,7 @@ public class SamlSpSessionWrapper implements SamlSpSession,
 	* @return the session index of this saml sp session
 	*/
 	@Override
-	public java.lang.String getSessionIndex() {
+	public String getSessionIndex() {
 		return _samlSpSession.getSessionIndex();
 	}
 
@@ -348,7 +348,7 @@ public class SamlSpSessionWrapper implements SamlSpSession,
 	* @return the user name of this saml sp session
 	*/
 	@Override
-	public java.lang.String getUserName() {
+	public String getUserName() {
 		return _samlSpSession.getUserName();
 	}
 
@@ -358,7 +358,7 @@ public class SamlSpSessionWrapper implements SamlSpSession,
 	* @return the user uuid of this saml sp session
 	*/
 	@Override
-	public java.lang.String getUserUuid() {
+	public String getUserUuid() {
 		return _samlSpSession.getUserUuid();
 	}
 
@@ -403,7 +403,7 @@ public class SamlSpSessionWrapper implements SamlSpSession,
 	* @param assertionXml the assertion xml of this saml sp session
 	*/
 	@Override
-	public void setAssertionXml(java.lang.String assertionXml) {
+	public void setAssertionXml(String assertionXml) {
 		_samlSpSession.setAssertionXml(assertionXml);
 	}
 
@@ -454,7 +454,7 @@ public class SamlSpSessionWrapper implements SamlSpSession,
 	* @param jSessionId the j session ID of this saml sp session
 	*/
 	@Override
-	public void setJSessionId(java.lang.String jSessionId) {
+	public void setJSessionId(String jSessionId) {
 		_samlSpSession.setJSessionId(jSessionId);
 	}
 
@@ -474,7 +474,7 @@ public class SamlSpSessionWrapper implements SamlSpSession,
 	* @param nameIdFormat the name ID format of this saml sp session
 	*/
 	@Override
-	public void setNameIdFormat(java.lang.String nameIdFormat) {
+	public void setNameIdFormat(String nameIdFormat) {
 		_samlSpSession.setNameIdFormat(nameIdFormat);
 	}
 
@@ -484,7 +484,7 @@ public class SamlSpSessionWrapper implements SamlSpSession,
 	* @param nameIdNameQualifier the name ID name qualifier of this saml sp session
 	*/
 	@Override
-	public void setNameIdNameQualifier(java.lang.String nameIdNameQualifier) {
+	public void setNameIdNameQualifier(String nameIdNameQualifier) {
 		_samlSpSession.setNameIdNameQualifier(nameIdNameQualifier);
 	}
 
@@ -494,7 +494,7 @@ public class SamlSpSessionWrapper implements SamlSpSession,
 	* @param nameIdSPNameQualifier the name ID sp name qualifier of this saml sp session
 	*/
 	@Override
-	public void setNameIdSPNameQualifier(java.lang.String nameIdSPNameQualifier) {
+	public void setNameIdSPNameQualifier(String nameIdSPNameQualifier) {
 		_samlSpSession.setNameIdSPNameQualifier(nameIdSPNameQualifier);
 	}
 
@@ -504,7 +504,7 @@ public class SamlSpSessionWrapper implements SamlSpSession,
 	* @param nameIdValue the name ID value of this saml sp session
 	*/
 	@Override
-	public void setNameIdValue(java.lang.String nameIdValue) {
+	public void setNameIdValue(String nameIdValue) {
 		_samlSpSession.setNameIdValue(nameIdValue);
 	}
 
@@ -544,7 +544,7 @@ public class SamlSpSessionWrapper implements SamlSpSession,
 	* @param samlSpSessionKey the saml sp session key of this saml sp session
 	*/
 	@Override
-	public void setSamlSpSessionKey(java.lang.String samlSpSessionKey) {
+	public void setSamlSpSessionKey(String samlSpSessionKey) {
 		_samlSpSession.setSamlSpSessionKey(samlSpSessionKey);
 	}
 
@@ -554,7 +554,7 @@ public class SamlSpSessionWrapper implements SamlSpSession,
 	* @param sessionIndex the session index of this saml sp session
 	*/
 	@Override
-	public void setSessionIndex(java.lang.String sessionIndex) {
+	public void setSessionIndex(String sessionIndex) {
 		_samlSpSession.setSessionIndex(sessionIndex);
 	}
 
@@ -584,7 +584,7 @@ public class SamlSpSessionWrapper implements SamlSpSession,
 	* @param userName the user name of this saml sp session
 	*/
 	@Override
-	public void setUserName(java.lang.String userName) {
+	public void setUserName(String userName) {
 		_samlSpSession.setUserName(userName);
 	}
 
@@ -594,7 +594,7 @@ public class SamlSpSessionWrapper implements SamlSpSession,
 	* @param userUuid the user uuid of this saml sp session
 	*/
 	@Override
-	public void setUserUuid(java.lang.String userUuid) {
+	public void setUserUuid(String userUuid) {
 		_samlSpSession.setUserUuid(userUuid);
 	}
 
@@ -609,7 +609,7 @@ public class SamlSpSessionWrapper implements SamlSpSession,
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _samlSpSession.toString();
 	}
 
@@ -619,7 +619,7 @@ public class SamlSpSessionWrapper implements SamlSpSession,
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _samlSpSession.toXmlString();
 	}
 

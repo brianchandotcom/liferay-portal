@@ -43,8 +43,8 @@ public class SamlIdpSpSessionLocalServiceUtil {
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.saml.persistence.service.impl.SamlIdpSpSessionLocalServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static com.liferay.saml.persistence.model.SamlIdpSpSession addSamlIdpSpSession(
-		long samlIdpSsoSessionId, java.lang.String samlSpEntityId,
-		java.lang.String nameIdFormat, java.lang.String nameIdValue,
+		long samlIdpSsoSessionId, String samlSpEntityId, String nameIdFormat,
+		String nameIdValue,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
@@ -203,7 +203,7 @@ public class SamlIdpSpSessionLocalServiceUtil {
 	*
 	* @return the OSGi service identifier
 	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
+	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 
@@ -227,7 +227,7 @@ public class SamlIdpSpSessionLocalServiceUtil {
 	}
 
 	public static com.liferay.saml.persistence.model.SamlIdpSpSession getSamlIdpSpSession(
-		long samlIdpSsoSessionId, java.lang.String samlSpEntityId)
+		long samlIdpSsoSessionId, String samlSpEntityId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .getSamlIdpSpSession(samlIdpSsoSessionId, samlSpEntityId);
@@ -264,7 +264,7 @@ public class SamlIdpSpSessionLocalServiceUtil {
 	}
 
 	public static com.liferay.saml.persistence.model.SamlIdpSpSession updateModifiedDate(
-		long samlIdpSsoSessionId, java.lang.String samlSpEntityId)
+		long samlIdpSsoSessionId, String samlSpEntityId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .updateModifiedDate(samlIdpSsoSessionId, samlSpEntityId);

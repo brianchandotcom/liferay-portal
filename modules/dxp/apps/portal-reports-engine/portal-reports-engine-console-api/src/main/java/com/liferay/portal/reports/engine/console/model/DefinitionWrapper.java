@@ -165,7 +165,7 @@ public class DefinitionWrapper implements Definition, ModelWrapper<Definition> {
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new DefinitionWrapper((Definition)_definition.clone());
 	}
 
@@ -175,18 +175,18 @@ public class DefinitionWrapper implements Definition, ModelWrapper<Definition> {
 	}
 
 	@Override
-	public java.lang.String getAttachmentsDir() {
+	public String getAttachmentsDir() {
 		return _definition.getAttachmentsDir();
 	}
 
 	@Override
-	public java.lang.String[] getAttachmentsFiles()
+	public String[] getAttachmentsFiles()
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _definition.getAttachmentsFiles();
 	}
 
 	@Override
-	public java.lang.String[] getAvailableLanguageIds() {
+	public String[] getAvailableLanguageIds() {
 		return _definition.getAvailableLanguageIds();
 	}
 
@@ -211,7 +211,7 @@ public class DefinitionWrapper implements Definition, ModelWrapper<Definition> {
 	}
 
 	@Override
-	public java.lang.String getDefaultLanguageId() {
+	public String getDefaultLanguageId() {
 		return _definition.getDefaultLanguageId();
 	}
 
@@ -231,7 +231,7 @@ public class DefinitionWrapper implements Definition, ModelWrapper<Definition> {
 	* @return the description of this definition
 	*/
 	@Override
-	public java.lang.String getDescription() {
+	public String getDescription() {
 		return _definition.getDescription();
 	}
 
@@ -242,7 +242,7 @@ public class DefinitionWrapper implements Definition, ModelWrapper<Definition> {
 	* @return the localized description of this definition
 	*/
 	@Override
-	public java.lang.String getDescription(java.util.Locale locale) {
+	public String getDescription(java.util.Locale locale) {
 		return _definition.getDescription(locale);
 	}
 
@@ -254,8 +254,7 @@ public class DefinitionWrapper implements Definition, ModelWrapper<Definition> {
 	* @return the localized description of this definition. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
 	*/
 	@Override
-	public java.lang.String getDescription(java.util.Locale locale,
-		boolean useDefault) {
+	public String getDescription(java.util.Locale locale, boolean useDefault) {
 		return _definition.getDescription(locale, useDefault);
 	}
 
@@ -266,7 +265,7 @@ public class DefinitionWrapper implements Definition, ModelWrapper<Definition> {
 	* @return the localized description of this definition
 	*/
 	@Override
-	public java.lang.String getDescription(java.lang.String languageId) {
+	public String getDescription(String languageId) {
 		return _definition.getDescription(languageId);
 	}
 
@@ -278,18 +277,17 @@ public class DefinitionWrapper implements Definition, ModelWrapper<Definition> {
 	* @return the localized description of this definition
 	*/
 	@Override
-	public java.lang.String getDescription(java.lang.String languageId,
-		boolean useDefault) {
+	public String getDescription(String languageId, boolean useDefault) {
 		return _definition.getDescription(languageId, useDefault);
 	}
 
 	@Override
-	public java.lang.String getDescriptionCurrentLanguageId() {
+	public String getDescriptionCurrentLanguageId() {
 		return _definition.getDescriptionCurrentLanguageId();
 	}
 
 	@Override
-	public java.lang.String getDescriptionCurrentValue() {
+	public String getDescriptionCurrentValue() {
 		return _definition.getDescriptionCurrentValue();
 	}
 
@@ -299,7 +297,7 @@ public class DefinitionWrapper implements Definition, ModelWrapper<Definition> {
 	* @return the locales and localized descriptions of this definition
 	*/
 	@Override
-	public Map<java.util.Locale, java.lang.String> getDescriptionMap() {
+	public Map<java.util.Locale, String> getDescriptionMap() {
 		return _definition.getDescriptionMap();
 	}
 
@@ -344,7 +342,7 @@ public class DefinitionWrapper implements Definition, ModelWrapper<Definition> {
 	* @return the name of this definition
 	*/
 	@Override
-	public java.lang.String getName() {
+	public String getName() {
 		return _definition.getName();
 	}
 
@@ -355,7 +353,7 @@ public class DefinitionWrapper implements Definition, ModelWrapper<Definition> {
 	* @return the localized name of this definition
 	*/
 	@Override
-	public java.lang.String getName(java.util.Locale locale) {
+	public String getName(java.util.Locale locale) {
 		return _definition.getName(locale);
 	}
 
@@ -367,7 +365,7 @@ public class DefinitionWrapper implements Definition, ModelWrapper<Definition> {
 	* @return the localized name of this definition. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
 	*/
 	@Override
-	public java.lang.String getName(java.util.Locale locale, boolean useDefault) {
+	public String getName(java.util.Locale locale, boolean useDefault) {
 		return _definition.getName(locale, useDefault);
 	}
 
@@ -378,7 +376,7 @@ public class DefinitionWrapper implements Definition, ModelWrapper<Definition> {
 	* @return the localized name of this definition
 	*/
 	@Override
-	public java.lang.String getName(java.lang.String languageId) {
+	public String getName(String languageId) {
 		return _definition.getName(languageId);
 	}
 
@@ -390,18 +388,17 @@ public class DefinitionWrapper implements Definition, ModelWrapper<Definition> {
 	* @return the localized name of this definition
 	*/
 	@Override
-	public java.lang.String getName(java.lang.String languageId,
-		boolean useDefault) {
+	public String getName(String languageId, boolean useDefault) {
 		return _definition.getName(languageId, useDefault);
 	}
 
 	@Override
-	public java.lang.String getNameCurrentLanguageId() {
+	public String getNameCurrentLanguageId() {
 		return _definition.getNameCurrentLanguageId();
 	}
 
 	@Override
-	public java.lang.String getNameCurrentValue() {
+	public String getNameCurrentValue() {
 		return _definition.getNameCurrentValue();
 	}
 
@@ -411,7 +408,7 @@ public class DefinitionWrapper implements Definition, ModelWrapper<Definition> {
 	* @return the locales and localized names of this definition
 	*/
 	@Override
-	public Map<java.util.Locale, java.lang.String> getNameMap() {
+	public Map<java.util.Locale, String> getNameMap() {
 		return _definition.getNameMap();
 	}
 
@@ -436,7 +433,7 @@ public class DefinitionWrapper implements Definition, ModelWrapper<Definition> {
 	* @return the report name of this definition
 	*/
 	@Override
-	public java.lang.String getReportName() {
+	public String getReportName() {
 		return _definition.getReportName();
 	}
 
@@ -446,7 +443,7 @@ public class DefinitionWrapper implements Definition, ModelWrapper<Definition> {
 	* @return the report parameters of this definition
 	*/
 	@Override
-	public java.lang.String getReportParameters() {
+	public String getReportParameters() {
 		return _definition.getReportParameters();
 	}
 
@@ -476,7 +473,7 @@ public class DefinitionWrapper implements Definition, ModelWrapper<Definition> {
 	* @return the user name of this definition
 	*/
 	@Override
-	public java.lang.String getUserName() {
+	public String getUserName() {
 		return _definition.getUserName();
 	}
 
@@ -486,7 +483,7 @@ public class DefinitionWrapper implements Definition, ModelWrapper<Definition> {
 	* @return the user uuid of this definition
 	*/
 	@Override
-	public java.lang.String getUserUuid() {
+	public String getUserUuid() {
 		return _definition.getUserUuid();
 	}
 
@@ -496,7 +493,7 @@ public class DefinitionWrapper implements Definition, ModelWrapper<Definition> {
 	* @return the uuid of this definition
 	*/
 	@Override
-	public java.lang.String getUuid() {
+	public String getUuid() {
 		return _definition.getUuid();
 	}
 
@@ -579,7 +576,7 @@ public class DefinitionWrapper implements Definition, ModelWrapper<Definition> {
 	* @param description the description of this definition
 	*/
 	@Override
-	public void setDescription(java.lang.String description) {
+	public void setDescription(String description) {
 		_definition.setDescription(description);
 	}
 
@@ -590,8 +587,7 @@ public class DefinitionWrapper implements Definition, ModelWrapper<Definition> {
 	* @param locale the locale of the language
 	*/
 	@Override
-	public void setDescription(java.lang.String description,
-		java.util.Locale locale) {
+	public void setDescription(String description, java.util.Locale locale) {
 		_definition.setDescription(description, locale);
 	}
 
@@ -603,13 +599,13 @@ public class DefinitionWrapper implements Definition, ModelWrapper<Definition> {
 	* @param defaultLocale the default locale
 	*/
 	@Override
-	public void setDescription(java.lang.String description,
-		java.util.Locale locale, java.util.Locale defaultLocale) {
+	public void setDescription(String description, java.util.Locale locale,
+		java.util.Locale defaultLocale) {
 		_definition.setDescription(description, locale, defaultLocale);
 	}
 
 	@Override
-	public void setDescriptionCurrentLanguageId(java.lang.String languageId) {
+	public void setDescriptionCurrentLanguageId(String languageId) {
 		_definition.setDescriptionCurrentLanguageId(languageId);
 	}
 
@@ -619,8 +615,7 @@ public class DefinitionWrapper implements Definition, ModelWrapper<Definition> {
 	* @param descriptionMap the locales and localized descriptions of this definition
 	*/
 	@Override
-	public void setDescriptionMap(
-		Map<java.util.Locale, java.lang.String> descriptionMap) {
+	public void setDescriptionMap(Map<java.util.Locale, String> descriptionMap) {
 		_definition.setDescriptionMap(descriptionMap);
 	}
 
@@ -632,7 +627,7 @@ public class DefinitionWrapper implements Definition, ModelWrapper<Definition> {
 	*/
 	@Override
 	public void setDescriptionMap(
-		Map<java.util.Locale, java.lang.String> descriptionMap,
+		Map<java.util.Locale, String> descriptionMap,
 		java.util.Locale defaultLocale) {
 		_definition.setDescriptionMap(descriptionMap, defaultLocale);
 	}
@@ -689,7 +684,7 @@ public class DefinitionWrapper implements Definition, ModelWrapper<Definition> {
 	* @param name the name of this definition
 	*/
 	@Override
-	public void setName(java.lang.String name) {
+	public void setName(String name) {
 		_definition.setName(name);
 	}
 
@@ -700,7 +695,7 @@ public class DefinitionWrapper implements Definition, ModelWrapper<Definition> {
 	* @param locale the locale of the language
 	*/
 	@Override
-	public void setName(java.lang.String name, java.util.Locale locale) {
+	public void setName(String name, java.util.Locale locale) {
 		_definition.setName(name, locale);
 	}
 
@@ -712,13 +707,13 @@ public class DefinitionWrapper implements Definition, ModelWrapper<Definition> {
 	* @param defaultLocale the default locale
 	*/
 	@Override
-	public void setName(java.lang.String name, java.util.Locale locale,
+	public void setName(String name, java.util.Locale locale,
 		java.util.Locale defaultLocale) {
 		_definition.setName(name, locale, defaultLocale);
 	}
 
 	@Override
-	public void setNameCurrentLanguageId(java.lang.String languageId) {
+	public void setNameCurrentLanguageId(String languageId) {
 		_definition.setNameCurrentLanguageId(languageId);
 	}
 
@@ -728,7 +723,7 @@ public class DefinitionWrapper implements Definition, ModelWrapper<Definition> {
 	* @param nameMap the locales and localized names of this definition
 	*/
 	@Override
-	public void setNameMap(Map<java.util.Locale, java.lang.String> nameMap) {
+	public void setNameMap(Map<java.util.Locale, String> nameMap) {
 		_definition.setNameMap(nameMap);
 	}
 
@@ -739,7 +734,7 @@ public class DefinitionWrapper implements Definition, ModelWrapper<Definition> {
 	* @param defaultLocale the default locale
 	*/
 	@Override
-	public void setNameMap(Map<java.util.Locale, java.lang.String> nameMap,
+	public void setNameMap(Map<java.util.Locale, String> nameMap,
 		java.util.Locale defaultLocale) {
 		_definition.setNameMap(nameMap, defaultLocale);
 	}
@@ -770,7 +765,7 @@ public class DefinitionWrapper implements Definition, ModelWrapper<Definition> {
 	* @param reportName the report name of this definition
 	*/
 	@Override
-	public void setReportName(java.lang.String reportName) {
+	public void setReportName(String reportName) {
 		_definition.setReportName(reportName);
 	}
 
@@ -780,7 +775,7 @@ public class DefinitionWrapper implements Definition, ModelWrapper<Definition> {
 	* @param reportParameters the report parameters of this definition
 	*/
 	@Override
-	public void setReportParameters(java.lang.String reportParameters) {
+	public void setReportParameters(String reportParameters) {
 		_definition.setReportParameters(reportParameters);
 	}
 
@@ -810,7 +805,7 @@ public class DefinitionWrapper implements Definition, ModelWrapper<Definition> {
 	* @param userName the user name of this definition
 	*/
 	@Override
-	public void setUserName(java.lang.String userName) {
+	public void setUserName(String userName) {
 		_definition.setUserName(userName);
 	}
 
@@ -820,7 +815,7 @@ public class DefinitionWrapper implements Definition, ModelWrapper<Definition> {
 	* @param userUuid the user uuid of this definition
 	*/
 	@Override
-	public void setUserUuid(java.lang.String userUuid) {
+	public void setUserUuid(String userUuid) {
 		_definition.setUserUuid(userUuid);
 	}
 
@@ -830,7 +825,7 @@ public class DefinitionWrapper implements Definition, ModelWrapper<Definition> {
 	* @param uuid the uuid of this definition
 	*/
 	@Override
-	public void setUuid(java.lang.String uuid) {
+	public void setUuid(String uuid) {
 		_definition.setUuid(uuid);
 	}
 
@@ -845,7 +840,7 @@ public class DefinitionWrapper implements Definition, ModelWrapper<Definition> {
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _definition.toString();
 	}
 
@@ -855,7 +850,7 @@ public class DefinitionWrapper implements Definition, ModelWrapper<Definition> {
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _definition.toXmlString();
 	}
 

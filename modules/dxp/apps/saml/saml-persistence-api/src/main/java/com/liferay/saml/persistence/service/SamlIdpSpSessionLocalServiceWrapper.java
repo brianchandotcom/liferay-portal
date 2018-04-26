@@ -36,8 +36,8 @@ public class SamlIdpSpSessionLocalServiceWrapper
 
 	@Override
 	public com.liferay.saml.persistence.model.SamlIdpSpSession addSamlIdpSpSession(
-		long samlIdpSsoSessionId, java.lang.String samlSpEntityId,
-		java.lang.String nameIdFormat, java.lang.String nameIdValue,
+		long samlIdpSsoSessionId, String samlSpEntityId, String nameIdFormat,
+		String nameIdValue,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _samlIdpSpSessionLocalService.addSamlIdpSpSession(samlIdpSsoSessionId,
@@ -212,7 +212,7 @@ public class SamlIdpSpSessionLocalServiceWrapper
 	* @return the OSGi service identifier
 	*/
 	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
+	public String getOSGiServiceIdentifier() {
 		return _samlIdpSpSessionLocalService.getOSGiServiceIdentifier();
 	}
 
@@ -239,7 +239,7 @@ public class SamlIdpSpSessionLocalServiceWrapper
 
 	@Override
 	public com.liferay.saml.persistence.model.SamlIdpSpSession getSamlIdpSpSession(
-		long samlIdpSsoSessionId, java.lang.String samlSpEntityId)
+		long samlIdpSsoSessionId, String samlSpEntityId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _samlIdpSpSessionLocalService.getSamlIdpSpSession(samlIdpSsoSessionId,
 			samlSpEntityId);
@@ -280,7 +280,7 @@ public class SamlIdpSpSessionLocalServiceWrapper
 
 	@Override
 	public com.liferay.saml.persistence.model.SamlIdpSpSession updateModifiedDate(
-		long samlIdpSsoSessionId, java.lang.String samlSpEntityId)
+		long samlIdpSsoSessionId, String samlSpEntityId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _samlIdpSpSessionLocalService.updateModifiedDate(samlIdpSsoSessionId,
 			samlSpEntityId);

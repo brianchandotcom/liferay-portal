@@ -48,8 +48,7 @@ public class SamlSpAuthRequestLocalServiceWrapper
 
 	@Override
 	public com.liferay.saml.persistence.model.SamlSpAuthRequest addSamlSpAuthRequest(
-		java.lang.String samlIdpEntityId,
-		java.lang.String samlSpAuthRequestKey,
+		String samlIdpEntityId, String samlSpAuthRequestKey,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext) {
 		return _samlSpAuthRequestLocalService.addSamlSpAuthRequest(samlIdpEntityId,
 			samlSpAuthRequestKey, serviceContext);
@@ -202,7 +201,7 @@ public class SamlSpAuthRequestLocalServiceWrapper
 
 	@Override
 	public com.liferay.saml.persistence.model.SamlSpAuthRequest fetchSamlSpAuthRequest(
-		java.lang.String samlIdpEntityId, java.lang.String samlSpAuthRequestKey) {
+		String samlIdpEntityId, String samlSpAuthRequestKey) {
 		return _samlSpAuthRequestLocalService.fetchSamlSpAuthRequest(samlIdpEntityId,
 			samlSpAuthRequestKey);
 	}
@@ -223,7 +222,7 @@ public class SamlSpAuthRequestLocalServiceWrapper
 	* @return the OSGi service identifier
 	*/
 	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
+	public String getOSGiServiceIdentifier() {
 		return _samlSpAuthRequestLocalService.getOSGiServiceIdentifier();
 	}
 
@@ -250,7 +249,7 @@ public class SamlSpAuthRequestLocalServiceWrapper
 
 	@Override
 	public com.liferay.saml.persistence.model.SamlSpAuthRequest getSamlSpAuthRequest(
-		java.lang.String samlIdpEntityId, java.lang.String samlSpAuthRequestKey)
+		String samlIdpEntityId, String samlSpAuthRequestKey)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _samlSpAuthRequestLocalService.getSamlSpAuthRequest(samlIdpEntityId,
 			samlSpAuthRequestKey);

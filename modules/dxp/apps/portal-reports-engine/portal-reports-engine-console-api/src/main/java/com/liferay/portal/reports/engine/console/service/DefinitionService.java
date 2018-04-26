@@ -59,12 +59,10 @@ public interface DefinitionService extends BaseService {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link DefinitionServiceUtil} to access the definition remote service. Add custom service methods to {@link com.liferay.portal.reports.engine.console.service.impl.DefinitionServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public Definition addDefinition(long groupId,
-		Map<Locale, java.lang.String> nameMap,
-		Map<Locale, java.lang.String> descriptionMap, long sourceId,
-		java.lang.String reportParameters, java.lang.String fileName,
-		InputStream inputStream, ServiceContext serviceContext)
-		throws PortalException;
+	public Definition addDefinition(long groupId, Map<Locale, String> nameMap,
+		Map<Locale, String> descriptionMap, long sourceId,
+		String reportParameters, String fileName, InputStream inputStream,
+		ServiceContext serviceContext) throws PortalException;
 
 	public Definition deleteDefinition(long definitionId)
 		throws PortalException;
@@ -74,16 +72,14 @@ public interface DefinitionService extends BaseService {
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<Definition> getDefinitions(long groupId,
-		java.lang.String definitionName, java.lang.String description,
-		java.lang.String sourceId, java.lang.String reportName,
+	public List<Definition> getDefinitions(long groupId, String definitionName,
+		String description, String sourceId, String reportName,
 		boolean andSearch, int start, int end,
 		OrderByComparator orderByComparator) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getDefinitionsCount(long groupId,
-		java.lang.String definitionName, java.lang.String description,
-		java.lang.String sourceId, java.lang.String reportName,
+	public int getDefinitionsCount(long groupId, String definitionName,
+		String description, String sourceId, String reportName,
 		boolean andSearch);
 
 	/**
@@ -91,12 +87,11 @@ public interface DefinitionService extends BaseService {
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	public Definition updateDefinition(long definitionId,
-		Map<Locale, java.lang.String> nameMap,
-		Map<Locale, java.lang.String> descriptionMap, long sourceId,
-		java.lang.String reportParameters, java.lang.String fileName,
+		Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
+		long sourceId, String reportParameters, String fileName,
 		InputStream inputStream, ServiceContext serviceContext)
 		throws PortalException;
 }

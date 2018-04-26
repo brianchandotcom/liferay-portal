@@ -312,7 +312,7 @@ public interface OAuthUserPersistence extends BasePersistence<OAuthUser> {
 	* @return the matching o auth user
 	* @throws NoSuchUserException if a matching o auth user could not be found
 	*/
-	public OAuthUser findByAccessToken(java.lang.String accessToken)
+	public OAuthUser findByAccessToken(String accessToken)
 		throws NoSuchUserException;
 
 	/**
@@ -321,7 +321,7 @@ public interface OAuthUserPersistence extends BasePersistence<OAuthUser> {
 	* @param accessToken the access token
 	* @return the matching o auth user, or <code>null</code> if a matching o auth user could not be found
 	*/
-	public OAuthUser fetchByAccessToken(java.lang.String accessToken);
+	public OAuthUser fetchByAccessToken(String accessToken);
 
 	/**
 	* Returns the o auth user where accessToken = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -330,7 +330,7 @@ public interface OAuthUserPersistence extends BasePersistence<OAuthUser> {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching o auth user, or <code>null</code> if a matching o auth user could not be found
 	*/
-	public OAuthUser fetchByAccessToken(java.lang.String accessToken,
+	public OAuthUser fetchByAccessToken(String accessToken,
 		boolean retrieveFromCache);
 
 	/**
@@ -339,7 +339,7 @@ public interface OAuthUserPersistence extends BasePersistence<OAuthUser> {
 	* @param accessToken the access token
 	* @return the o auth user that was removed
 	*/
-	public OAuthUser removeByAccessToken(java.lang.String accessToken)
+	public OAuthUser removeByAccessToken(String accessToken)
 		throws NoSuchUserException;
 
 	/**
@@ -348,7 +348,7 @@ public interface OAuthUserPersistence extends BasePersistence<OAuthUser> {
 	* @param accessToken the access token
 	* @return the number of matching o auth users
 	*/
-	public int countByAccessToken(java.lang.String accessToken);
+	public int countByAccessToken(String accessToken);
 
 	/**
 	* Returns the o auth user where userId = &#63; and oAuthApplicationId = &#63; or throws a {@link NoSuchUserException} if it could not be found.

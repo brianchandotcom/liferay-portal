@@ -34,10 +34,9 @@ public class SourceServiceWrapper implements SourceService,
 
 	@Override
 	public com.liferay.portal.reports.engine.console.model.Source addSource(
-		long groupId,
-		java.util.Map<java.util.Locale, java.lang.String> nameMap,
-		java.lang.String driverClassName, java.lang.String driverUrl,
-		java.lang.String driverUserName, java.lang.String driverPassword,
+		long groupId, java.util.Map<java.util.Locale, String> nameMap,
+		String driverClassName, String driverUrl, String driverUserName,
+		String driverPassword,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _sourceService.addSource(groupId, nameMap, driverClassName,
@@ -57,7 +56,7 @@ public class SourceServiceWrapper implements SourceService,
 	* @return the OSGi service identifier
 	*/
 	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
+	public String getOSGiServiceIdentifier() {
 		return _sourceService.getOSGiServiceIdentifier();
 	}
 
@@ -70,8 +69,8 @@ public class SourceServiceWrapper implements SourceService,
 
 	@Override
 	public java.util.List<com.liferay.portal.reports.engine.console.model.Source> getSources(
-		long groupId, java.lang.String name, java.lang.String driverUrl,
-		boolean andSearch, int start, int end,
+		long groupId, String name, String driverUrl, boolean andSearch,
+		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _sourceService.getSources(groupId, name, driverUrl, andSearch,
@@ -79,18 +78,17 @@ public class SourceServiceWrapper implements SourceService,
 	}
 
 	@Override
-	public int getSourcesCount(long groupId, java.lang.String name,
-		java.lang.String driverUrl, boolean andSearch) {
+	public int getSourcesCount(long groupId, String name, String driverUrl,
+		boolean andSearch) {
 		return _sourceService.getSourcesCount(groupId, name, driverUrl,
 			andSearch);
 	}
 
 	@Override
 	public com.liferay.portal.reports.engine.console.model.Source updateSource(
-		long sourceId,
-		java.util.Map<java.util.Locale, java.lang.String> nameMap,
-		java.lang.String driverClassName, java.lang.String driverUrl,
-		java.lang.String driverUserName, java.lang.String driverPassword,
+		long sourceId, java.util.Map<java.util.Locale, String> nameMap,
+		String driverClassName, String driverUrl, String driverUserName,
+		String driverPassword,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _sourceService.updateSource(sourceId, nameMap, driverClassName,

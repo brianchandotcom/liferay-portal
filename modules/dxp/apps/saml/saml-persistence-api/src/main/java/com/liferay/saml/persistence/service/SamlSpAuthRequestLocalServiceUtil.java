@@ -55,8 +55,7 @@ public class SamlSpAuthRequestLocalServiceUtil {
 	}
 
 	public static com.liferay.saml.persistence.model.SamlSpAuthRequest addSamlSpAuthRequest(
-		java.lang.String samlIdpEntityId,
-		java.lang.String samlSpAuthRequestKey,
+		String samlIdpEntityId, String samlSpAuthRequestKey,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext) {
 		return getService()
 				   .addSamlSpAuthRequest(samlIdpEntityId, samlSpAuthRequestKey,
@@ -195,7 +194,7 @@ public class SamlSpAuthRequestLocalServiceUtil {
 	}
 
 	public static com.liferay.saml.persistence.model.SamlSpAuthRequest fetchSamlSpAuthRequest(
-		java.lang.String samlIdpEntityId, java.lang.String samlSpAuthRequestKey) {
+		String samlIdpEntityId, String samlSpAuthRequestKey) {
 		return getService()
 				   .fetchSamlSpAuthRequest(samlIdpEntityId, samlSpAuthRequestKey);
 	}
@@ -213,7 +212,7 @@ public class SamlSpAuthRequestLocalServiceUtil {
 	*
 	* @return the OSGi service identifier
 	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
+	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 
@@ -237,7 +236,7 @@ public class SamlSpAuthRequestLocalServiceUtil {
 	}
 
 	public static com.liferay.saml.persistence.model.SamlSpAuthRequest getSamlSpAuthRequest(
-		java.lang.String samlIdpEntityId, java.lang.String samlSpAuthRequestKey)
+		String samlIdpEntityId, String samlSpAuthRequestKey)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .getSamlSpAuthRequest(samlIdpEntityId, samlSpAuthRequestKey);

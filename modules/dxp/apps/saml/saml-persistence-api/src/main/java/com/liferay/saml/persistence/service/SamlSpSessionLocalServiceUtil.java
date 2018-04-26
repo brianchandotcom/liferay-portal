@@ -55,11 +55,9 @@ public class SamlSpSessionLocalServiceUtil {
 	}
 
 	public static com.liferay.saml.persistence.model.SamlSpSession addSamlSpSession(
-		java.lang.String samlSpSessionKey, java.lang.String assertionXml,
-		java.lang.String jSessionId, java.lang.String nameIdFormat,
-		java.lang.String nameIdNameQualifier,
-		java.lang.String nameIdSPNameQualifier, java.lang.String nameIdValue,
-		java.lang.String sessionIndex,
+		String samlSpSessionKey, String assertionXml, String jSessionId,
+		String nameIdFormat, String nameIdNameQualifier,
+		String nameIdSPNameQualifier, String nameIdValue, String sessionIndex,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
@@ -196,18 +194,18 @@ public class SamlSpSessionLocalServiceUtil {
 	}
 
 	public static com.liferay.saml.persistence.model.SamlSpSession fetchSamlSpSessionByJSessionId(
-		java.lang.String jSessionId) {
+		String jSessionId) {
 		return getService().fetchSamlSpSessionByJSessionId(jSessionId);
 	}
 
 	public static com.liferay.saml.persistence.model.SamlSpSession fetchSamlSpSessionBySamlSpSessionKey(
-		java.lang.String samlSpSessionKey) {
+		String samlSpSessionKey) {
 		return getService()
 				   .fetchSamlSpSessionBySamlSpSessionKey(samlSpSessionKey);
 	}
 
 	public static com.liferay.saml.persistence.model.SamlSpSession fetchSamlSpSessionBySessionIndex(
-		java.lang.String sessionIndex) {
+		String sessionIndex) {
 		return getService().fetchSamlSpSessionBySessionIndex(sessionIndex);
 	}
 
@@ -224,7 +222,7 @@ public class SamlSpSessionLocalServiceUtil {
 	*
 	* @return the OSGi service identifier
 	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
+	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 
@@ -248,19 +246,19 @@ public class SamlSpSessionLocalServiceUtil {
 	}
 
 	public static com.liferay.saml.persistence.model.SamlSpSession getSamlSpSessionByJSessionId(
-		java.lang.String jSessionId)
+		String jSessionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getSamlSpSessionByJSessionId(jSessionId);
 	}
 
 	public static com.liferay.saml.persistence.model.SamlSpSession getSamlSpSessionBySamlSpSessionKey(
-		java.lang.String samlSpSessionKey)
+		String samlSpSessionKey)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getSamlSpSessionBySamlSpSessionKey(samlSpSessionKey);
 	}
 
 	public static com.liferay.saml.persistence.model.SamlSpSession getSamlSpSessionBySessionIndex(
-		java.lang.String sessionIndex)
+		String sessionIndex)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getSamlSpSessionBySessionIndex(sessionIndex);
 	}
@@ -282,7 +280,7 @@ public class SamlSpSessionLocalServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.saml.persistence.model.SamlSpSession> getSamlSpSessions(
-		java.lang.String nameIdValue) {
+		String nameIdValue) {
 		return getService().getSamlSpSessions(nameIdValue);
 	}
 
@@ -296,17 +294,15 @@ public class SamlSpSessionLocalServiceUtil {
 	}
 
 	public static com.liferay.saml.persistence.model.SamlSpSession updateSamlSpSession(
-		long samlSpSessionId, java.lang.String jSessionId)
+		long samlSpSessionId, String jSessionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().updateSamlSpSession(samlSpSessionId, jSessionId);
 	}
 
 	public static com.liferay.saml.persistence.model.SamlSpSession updateSamlSpSession(
-		long samlSpSessionId, java.lang.String samlSpSessionKey,
-		java.lang.String assertionXml, java.lang.String jSessionId,
-		java.lang.String nameIdFormat, java.lang.String nameIdNameQualifier,
-		java.lang.String nameIdSPNameQualifier, java.lang.String nameIdValue,
-		java.lang.String sessionIndex,
+		long samlSpSessionId, String samlSpSessionKey, String assertionXml,
+		String jSessionId, String nameIdFormat, String nameIdNameQualifier,
+		String nameIdSPNameQualifier, String nameIdValue, String sessionIndex,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()

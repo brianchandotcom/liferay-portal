@@ -57,11 +57,10 @@ public interface SourceService extends BaseService {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link SourceServiceUtil} to access the source remote service. Add custom service methods to {@link com.liferay.portal.reports.engine.console.service.impl.SourceServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public Source addSource(long groupId,
-		Map<Locale, java.lang.String> nameMap,
-		java.lang.String driverClassName, java.lang.String driverUrl,
-		java.lang.String driverUserName, java.lang.String driverPassword,
-		ServiceContext serviceContext) throws PortalException;
+	public Source addSource(long groupId, Map<Locale, String> nameMap,
+		String driverClassName, String driverUrl, String driverUserName,
+		String driverPassword, ServiceContext serviceContext)
+		throws PortalException;
 
 	public Source deleteSource(long sourceId) throws PortalException;
 
@@ -70,23 +69,22 @@ public interface SourceService extends BaseService {
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public Source getSource(long sourceId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<Source> getSources(long groupId, java.lang.String name,
-		java.lang.String driverUrl, boolean andSearch, int start, int end,
+	public List<Source> getSources(long groupId, String name, String driverUrl,
+		boolean andSearch, int start, int end,
 		OrderByComparator orderByComparator) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getSourcesCount(long groupId, java.lang.String name,
-		java.lang.String driverUrl, boolean andSearch);
+	public int getSourcesCount(long groupId, String name, String driverUrl,
+		boolean andSearch);
 
-	public Source updateSource(long sourceId,
-		Map<Locale, java.lang.String> nameMap,
-		java.lang.String driverClassName, java.lang.String driverUrl,
-		java.lang.String driverUserName, java.lang.String driverPassword,
-		ServiceContext serviceContext) throws PortalException;
+	public Source updateSource(long sourceId, Map<Locale, String> nameMap,
+		String driverClassName, String driverUrl, String driverUserName,
+		String driverPassword, ServiceContext serviceContext)
+		throws PortalException;
 }

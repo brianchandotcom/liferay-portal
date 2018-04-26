@@ -285,7 +285,7 @@ public class SamlSpIdpConnectionUtil {
 	* @throws NoSuchSpIdpConnectionException if a matching saml sp idp connection could not be found
 	*/
 	public static SamlSpIdpConnection findByC_SIEI(long companyId,
-		java.lang.String samlIdpEntityId)
+		String samlIdpEntityId)
 		throws com.liferay.saml.persistence.exception.NoSuchSpIdpConnectionException {
 		return getPersistence().findByC_SIEI(companyId, samlIdpEntityId);
 	}
@@ -298,7 +298,7 @@ public class SamlSpIdpConnectionUtil {
 	* @return the matching saml sp idp connection, or <code>null</code> if a matching saml sp idp connection could not be found
 	*/
 	public static SamlSpIdpConnection fetchByC_SIEI(long companyId,
-		java.lang.String samlIdpEntityId) {
+		String samlIdpEntityId) {
 		return getPersistence().fetchByC_SIEI(companyId, samlIdpEntityId);
 	}
 
@@ -311,7 +311,7 @@ public class SamlSpIdpConnectionUtil {
 	* @return the matching saml sp idp connection, or <code>null</code> if a matching saml sp idp connection could not be found
 	*/
 	public static SamlSpIdpConnection fetchByC_SIEI(long companyId,
-		java.lang.String samlIdpEntityId, boolean retrieveFromCache) {
+		String samlIdpEntityId, boolean retrieveFromCache) {
 		return getPersistence()
 				   .fetchByC_SIEI(companyId, samlIdpEntityId, retrieveFromCache);
 	}
@@ -324,7 +324,7 @@ public class SamlSpIdpConnectionUtil {
 	* @return the saml sp idp connection that was removed
 	*/
 	public static SamlSpIdpConnection removeByC_SIEI(long companyId,
-		java.lang.String samlIdpEntityId)
+		String samlIdpEntityId)
 		throws com.liferay.saml.persistence.exception.NoSuchSpIdpConnectionException {
 		return getPersistence().removeByC_SIEI(companyId, samlIdpEntityId);
 	}
@@ -336,8 +336,7 @@ public class SamlSpIdpConnectionUtil {
 	* @param samlIdpEntityId the saml idp entity ID
 	* @return the number of matching saml sp idp connections
 	*/
-	public static int countByC_SIEI(long companyId,
-		java.lang.String samlIdpEntityId) {
+	public static int countByC_SIEI(long companyId, String samlIdpEntityId) {
 		return getPersistence().countByC_SIEI(companyId, samlIdpEntityId);
 	}
 

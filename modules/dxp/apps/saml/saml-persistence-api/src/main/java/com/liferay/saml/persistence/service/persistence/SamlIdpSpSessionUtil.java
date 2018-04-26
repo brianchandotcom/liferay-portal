@@ -459,7 +459,7 @@ public class SamlIdpSpSessionUtil {
 	* @throws NoSuchIdpSpSessionException if a matching saml idp sp session could not be found
 	*/
 	public static SamlIdpSpSession findBySISSI_SSEI(long samlIdpSsoSessionId,
-		java.lang.String samlSpEntityId)
+		String samlSpEntityId)
 		throws com.liferay.saml.persistence.exception.NoSuchIdpSpSessionException {
 		return getPersistence()
 				   .findBySISSI_SSEI(samlIdpSsoSessionId, samlSpEntityId);
@@ -473,7 +473,7 @@ public class SamlIdpSpSessionUtil {
 	* @return the matching saml idp sp session, or <code>null</code> if a matching saml idp sp session could not be found
 	*/
 	public static SamlIdpSpSession fetchBySISSI_SSEI(long samlIdpSsoSessionId,
-		java.lang.String samlSpEntityId) {
+		String samlSpEntityId) {
 		return getPersistence()
 				   .fetchBySISSI_SSEI(samlIdpSsoSessionId, samlSpEntityId);
 	}
@@ -487,7 +487,7 @@ public class SamlIdpSpSessionUtil {
 	* @return the matching saml idp sp session, or <code>null</code> if a matching saml idp sp session could not be found
 	*/
 	public static SamlIdpSpSession fetchBySISSI_SSEI(long samlIdpSsoSessionId,
-		java.lang.String samlSpEntityId, boolean retrieveFromCache) {
+		String samlSpEntityId, boolean retrieveFromCache) {
 		return getPersistence()
 				   .fetchBySISSI_SSEI(samlIdpSsoSessionId, samlSpEntityId,
 			retrieveFromCache);
@@ -501,7 +501,7 @@ public class SamlIdpSpSessionUtil {
 	* @return the saml idp sp session that was removed
 	*/
 	public static SamlIdpSpSession removeBySISSI_SSEI(
-		long samlIdpSsoSessionId, java.lang.String samlSpEntityId)
+		long samlIdpSsoSessionId, String samlSpEntityId)
 		throws com.liferay.saml.persistence.exception.NoSuchIdpSpSessionException {
 		return getPersistence()
 				   .removeBySISSI_SSEI(samlIdpSsoSessionId, samlSpEntityId);
@@ -515,7 +515,7 @@ public class SamlIdpSpSessionUtil {
 	* @return the number of matching saml idp sp sessions
 	*/
 	public static int countBySISSI_SSEI(long samlIdpSsoSessionId,
-		java.lang.String samlSpEntityId) {
+		String samlSpEntityId) {
 		return getPersistence()
 				   .countBySISSI_SSEI(samlIdpSsoSessionId, samlSpEntityId);
 	}

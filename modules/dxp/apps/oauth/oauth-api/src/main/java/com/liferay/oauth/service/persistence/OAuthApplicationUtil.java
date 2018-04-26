@@ -439,8 +439,7 @@ public class OAuthApplicationUtil {
 	* @return the matching o auth application
 	* @throws NoSuchApplicationException if a matching o auth application could not be found
 	*/
-	public static OAuthApplication findByConsumerKey(
-		java.lang.String consumerKey)
+	public static OAuthApplication findByConsumerKey(String consumerKey)
 		throws com.liferay.oauth.exception.NoSuchApplicationException {
 		return getPersistence().findByConsumerKey(consumerKey);
 	}
@@ -451,8 +450,7 @@ public class OAuthApplicationUtil {
 	* @param consumerKey the consumer key
 	* @return the matching o auth application, or <code>null</code> if a matching o auth application could not be found
 	*/
-	public static OAuthApplication fetchByConsumerKey(
-		java.lang.String consumerKey) {
+	public static OAuthApplication fetchByConsumerKey(String consumerKey) {
 		return getPersistence().fetchByConsumerKey(consumerKey);
 	}
 
@@ -463,8 +461,8 @@ public class OAuthApplicationUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching o auth application, or <code>null</code> if a matching o auth application could not be found
 	*/
-	public static OAuthApplication fetchByConsumerKey(
-		java.lang.String consumerKey, boolean retrieveFromCache) {
+	public static OAuthApplication fetchByConsumerKey(String consumerKey,
+		boolean retrieveFromCache) {
 		return getPersistence()
 				   .fetchByConsumerKey(consumerKey, retrieveFromCache);
 	}
@@ -475,8 +473,7 @@ public class OAuthApplicationUtil {
 	* @param consumerKey the consumer key
 	* @return the o auth application that was removed
 	*/
-	public static OAuthApplication removeByConsumerKey(
-		java.lang.String consumerKey)
+	public static OAuthApplication removeByConsumerKey(String consumerKey)
 		throws com.liferay.oauth.exception.NoSuchApplicationException {
 		return getPersistence().removeByConsumerKey(consumerKey);
 	}
@@ -487,7 +484,7 @@ public class OAuthApplicationUtil {
 	* @param consumerKey the consumer key
 	* @return the number of matching o auth applications
 	*/
-	public static int countByConsumerKey(java.lang.String consumerKey) {
+	public static int countByConsumerKey(String consumerKey) {
 		return getPersistence().countByConsumerKey(consumerKey);
 	}
 
@@ -498,8 +495,7 @@ public class OAuthApplicationUtil {
 	* @param name the name
 	* @return the matching o auth applications
 	*/
-	public static List<OAuthApplication> findByC_N(long companyId,
-		java.lang.String name) {
+	public static List<OAuthApplication> findByC_N(long companyId, String name) {
 		return getPersistence().findByC_N(companyId, name);
 	}
 
@@ -516,8 +512,8 @@ public class OAuthApplicationUtil {
 	* @param end the upper bound of the range of o auth applications (not inclusive)
 	* @return the range of matching o auth applications
 	*/
-	public static List<OAuthApplication> findByC_N(long companyId,
-		java.lang.String name, int start, int end) {
+	public static List<OAuthApplication> findByC_N(long companyId, String name,
+		int start, int end) {
 		return getPersistence().findByC_N(companyId, name, start, end);
 	}
 
@@ -535,8 +531,8 @@ public class OAuthApplicationUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching o auth applications
 	*/
-	public static List<OAuthApplication> findByC_N(long companyId,
-		java.lang.String name, int start, int end,
+	public static List<OAuthApplication> findByC_N(long companyId, String name,
+		int start, int end,
 		OrderByComparator<OAuthApplication> orderByComparator) {
 		return getPersistence()
 				   .findByC_N(companyId, name, start, end, orderByComparator);
@@ -557,8 +553,8 @@ public class OAuthApplicationUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching o auth applications
 	*/
-	public static List<OAuthApplication> findByC_N(long companyId,
-		java.lang.String name, int start, int end,
+	public static List<OAuthApplication> findByC_N(long companyId, String name,
+		int start, int end,
 		OrderByComparator<OAuthApplication> orderByComparator,
 		boolean retrieveFromCache) {
 		return getPersistence()
@@ -575,8 +571,7 @@ public class OAuthApplicationUtil {
 	* @return the first matching o auth application
 	* @throws NoSuchApplicationException if a matching o auth application could not be found
 	*/
-	public static OAuthApplication findByC_N_First(long companyId,
-		java.lang.String name,
+	public static OAuthApplication findByC_N_First(long companyId, String name,
 		OrderByComparator<OAuthApplication> orderByComparator)
 		throws com.liferay.oauth.exception.NoSuchApplicationException {
 		return getPersistence()
@@ -592,8 +587,7 @@ public class OAuthApplicationUtil {
 	* @return the first matching o auth application, or <code>null</code> if a matching o auth application could not be found
 	*/
 	public static OAuthApplication fetchByC_N_First(long companyId,
-		java.lang.String name,
-		OrderByComparator<OAuthApplication> orderByComparator) {
+		String name, OrderByComparator<OAuthApplication> orderByComparator) {
 		return getPersistence()
 				   .fetchByC_N_First(companyId, name, orderByComparator);
 	}
@@ -607,8 +601,7 @@ public class OAuthApplicationUtil {
 	* @return the last matching o auth application
 	* @throws NoSuchApplicationException if a matching o auth application could not be found
 	*/
-	public static OAuthApplication findByC_N_Last(long companyId,
-		java.lang.String name,
+	public static OAuthApplication findByC_N_Last(long companyId, String name,
 		OrderByComparator<OAuthApplication> orderByComparator)
 		throws com.liferay.oauth.exception.NoSuchApplicationException {
 		return getPersistence()
@@ -623,8 +616,7 @@ public class OAuthApplicationUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching o auth application, or <code>null</code> if a matching o auth application could not be found
 	*/
-	public static OAuthApplication fetchByC_N_Last(long companyId,
-		java.lang.String name,
+	public static OAuthApplication fetchByC_N_Last(long companyId, String name,
 		OrderByComparator<OAuthApplication> orderByComparator) {
 		return getPersistence()
 				   .fetchByC_N_Last(companyId, name, orderByComparator);
@@ -641,7 +633,7 @@ public class OAuthApplicationUtil {
 	* @throws NoSuchApplicationException if a o auth application with the primary key could not be found
 	*/
 	public static OAuthApplication[] findByC_N_PrevAndNext(
-		long oAuthApplicationId, long companyId, java.lang.String name,
+		long oAuthApplicationId, long companyId, String name,
 		OrderByComparator<OAuthApplication> orderByComparator)
 		throws com.liferay.oauth.exception.NoSuchApplicationException {
 		return getPersistence()
@@ -655,7 +647,7 @@ public class OAuthApplicationUtil {
 	* @param companyId the company ID
 	* @param name the name
 	*/
-	public static void removeByC_N(long companyId, java.lang.String name) {
+	public static void removeByC_N(long companyId, String name) {
 		getPersistence().removeByC_N(companyId, name);
 	}
 
@@ -666,7 +658,7 @@ public class OAuthApplicationUtil {
 	* @param name the name
 	* @return the number of matching o auth applications
 	*/
-	public static int countByC_N(long companyId, java.lang.String name) {
+	public static int countByC_N(long companyId, String name) {
 		return getPersistence().countByC_N(companyId, name);
 	}
 
@@ -677,8 +669,7 @@ public class OAuthApplicationUtil {
 	* @param name the name
 	* @return the matching o auth applications
 	*/
-	public static List<OAuthApplication> findByU_N(long userId,
-		java.lang.String name) {
+	public static List<OAuthApplication> findByU_N(long userId, String name) {
 		return getPersistence().findByU_N(userId, name);
 	}
 
@@ -695,8 +686,8 @@ public class OAuthApplicationUtil {
 	* @param end the upper bound of the range of o auth applications (not inclusive)
 	* @return the range of matching o auth applications
 	*/
-	public static List<OAuthApplication> findByU_N(long userId,
-		java.lang.String name, int start, int end) {
+	public static List<OAuthApplication> findByU_N(long userId, String name,
+		int start, int end) {
 		return getPersistence().findByU_N(userId, name, start, end);
 	}
 
@@ -714,8 +705,8 @@ public class OAuthApplicationUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching o auth applications
 	*/
-	public static List<OAuthApplication> findByU_N(long userId,
-		java.lang.String name, int start, int end,
+	public static List<OAuthApplication> findByU_N(long userId, String name,
+		int start, int end,
 		OrderByComparator<OAuthApplication> orderByComparator) {
 		return getPersistence()
 				   .findByU_N(userId, name, start, end, orderByComparator);
@@ -736,8 +727,8 @@ public class OAuthApplicationUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching o auth applications
 	*/
-	public static List<OAuthApplication> findByU_N(long userId,
-		java.lang.String name, int start, int end,
+	public static List<OAuthApplication> findByU_N(long userId, String name,
+		int start, int end,
 		OrderByComparator<OAuthApplication> orderByComparator,
 		boolean retrieveFromCache) {
 		return getPersistence()
@@ -754,8 +745,7 @@ public class OAuthApplicationUtil {
 	* @return the first matching o auth application
 	* @throws NoSuchApplicationException if a matching o auth application could not be found
 	*/
-	public static OAuthApplication findByU_N_First(long userId,
-		java.lang.String name,
+	public static OAuthApplication findByU_N_First(long userId, String name,
 		OrderByComparator<OAuthApplication> orderByComparator)
 		throws com.liferay.oauth.exception.NoSuchApplicationException {
 		return getPersistence().findByU_N_First(userId, name, orderByComparator);
@@ -769,8 +759,7 @@ public class OAuthApplicationUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching o auth application, or <code>null</code> if a matching o auth application could not be found
 	*/
-	public static OAuthApplication fetchByU_N_First(long userId,
-		java.lang.String name,
+	public static OAuthApplication fetchByU_N_First(long userId, String name,
 		OrderByComparator<OAuthApplication> orderByComparator) {
 		return getPersistence().fetchByU_N_First(userId, name, orderByComparator);
 	}
@@ -784,8 +773,7 @@ public class OAuthApplicationUtil {
 	* @return the last matching o auth application
 	* @throws NoSuchApplicationException if a matching o auth application could not be found
 	*/
-	public static OAuthApplication findByU_N_Last(long userId,
-		java.lang.String name,
+	public static OAuthApplication findByU_N_Last(long userId, String name,
 		OrderByComparator<OAuthApplication> orderByComparator)
 		throws com.liferay.oauth.exception.NoSuchApplicationException {
 		return getPersistence().findByU_N_Last(userId, name, orderByComparator);
@@ -799,8 +787,7 @@ public class OAuthApplicationUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching o auth application, or <code>null</code> if a matching o auth application could not be found
 	*/
-	public static OAuthApplication fetchByU_N_Last(long userId,
-		java.lang.String name,
+	public static OAuthApplication fetchByU_N_Last(long userId, String name,
 		OrderByComparator<OAuthApplication> orderByComparator) {
 		return getPersistence().fetchByU_N_Last(userId, name, orderByComparator);
 	}
@@ -816,7 +803,7 @@ public class OAuthApplicationUtil {
 	* @throws NoSuchApplicationException if a o auth application with the primary key could not be found
 	*/
 	public static OAuthApplication[] findByU_N_PrevAndNext(
-		long oAuthApplicationId, long userId, java.lang.String name,
+		long oAuthApplicationId, long userId, String name,
 		OrderByComparator<OAuthApplication> orderByComparator)
 		throws com.liferay.oauth.exception.NoSuchApplicationException {
 		return getPersistence()
@@ -830,7 +817,7 @@ public class OAuthApplicationUtil {
 	* @param userId the user ID
 	* @param name the name
 	*/
-	public static void removeByU_N(long userId, java.lang.String name) {
+	public static void removeByU_N(long userId, String name) {
 		getPersistence().removeByU_N(userId, name);
 	}
 
@@ -841,7 +828,7 @@ public class OAuthApplicationUtil {
 	* @param name the name
 	* @return the number of matching o auth applications
 	*/
-	public static int countByU_N(long userId, java.lang.String name) {
+	public static int countByU_N(long userId, String name) {
 		return getPersistence().countByU_N(userId, name);
 	}
 

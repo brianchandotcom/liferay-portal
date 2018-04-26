@@ -136,7 +136,7 @@ public class SamlIdpSpSessionWrapper implements SamlIdpSpSession,
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new SamlIdpSpSessionWrapper((SamlIdpSpSession)_samlIdpSpSession.clone());
 	}
 
@@ -186,7 +186,7 @@ public class SamlIdpSpSessionWrapper implements SamlIdpSpSession,
 	* @return the name ID format of this saml idp sp session
 	*/
 	@Override
-	public java.lang.String getNameIdFormat() {
+	public String getNameIdFormat() {
 		return _samlIdpSpSession.getNameIdFormat();
 	}
 
@@ -196,7 +196,7 @@ public class SamlIdpSpSessionWrapper implements SamlIdpSpSession,
 	* @return the name ID value of this saml idp sp session
 	*/
 	@Override
-	public java.lang.String getNameIdValue() {
+	public String getNameIdValue() {
 		return _samlIdpSpSession.getNameIdValue();
 	}
 
@@ -241,7 +241,7 @@ public class SamlIdpSpSessionWrapper implements SamlIdpSpSession,
 	* @return the saml sp entity ID of this saml idp sp session
 	*/
 	@Override
-	public java.lang.String getSamlSpEntityId() {
+	public String getSamlSpEntityId() {
 		return _samlIdpSpSession.getSamlSpEntityId();
 	}
 
@@ -261,7 +261,7 @@ public class SamlIdpSpSessionWrapper implements SamlIdpSpSession,
 	* @return the user name of this saml idp sp session
 	*/
 	@Override
-	public java.lang.String getUserName() {
+	public String getUserName() {
 		return _samlIdpSpSession.getUserName();
 	}
 
@@ -271,7 +271,7 @@ public class SamlIdpSpSessionWrapper implements SamlIdpSpSession,
 	* @return the user uuid of this saml idp sp session
 	*/
 	@Override
-	public java.lang.String getUserUuid() {
+	public String getUserUuid() {
 		return _samlIdpSpSession.getUserUuid();
 	}
 
@@ -357,7 +357,7 @@ public class SamlIdpSpSessionWrapper implements SamlIdpSpSession,
 	* @param nameIdFormat the name ID format of this saml idp sp session
 	*/
 	@Override
-	public void setNameIdFormat(java.lang.String nameIdFormat) {
+	public void setNameIdFormat(String nameIdFormat) {
 		_samlIdpSpSession.setNameIdFormat(nameIdFormat);
 	}
 
@@ -367,7 +367,7 @@ public class SamlIdpSpSessionWrapper implements SamlIdpSpSession,
 	* @param nameIdValue the name ID value of this saml idp sp session
 	*/
 	@Override
-	public void setNameIdValue(java.lang.String nameIdValue) {
+	public void setNameIdValue(String nameIdValue) {
 		_samlIdpSpSession.setNameIdValue(nameIdValue);
 	}
 
@@ -417,7 +417,7 @@ public class SamlIdpSpSessionWrapper implements SamlIdpSpSession,
 	* @param samlSpEntityId the saml sp entity ID of this saml idp sp session
 	*/
 	@Override
-	public void setSamlSpEntityId(java.lang.String samlSpEntityId) {
+	public void setSamlSpEntityId(String samlSpEntityId) {
 		_samlIdpSpSession.setSamlSpEntityId(samlSpEntityId);
 	}
 
@@ -437,7 +437,7 @@ public class SamlIdpSpSessionWrapper implements SamlIdpSpSession,
 	* @param userName the user name of this saml idp sp session
 	*/
 	@Override
-	public void setUserName(java.lang.String userName) {
+	public void setUserName(String userName) {
 		_samlIdpSpSession.setUserName(userName);
 	}
 
@@ -447,7 +447,7 @@ public class SamlIdpSpSessionWrapper implements SamlIdpSpSession,
 	* @param userUuid the user uuid of this saml idp sp session
 	*/
 	@Override
-	public void setUserUuid(java.lang.String userUuid) {
+	public void setUserUuid(String userUuid) {
 		_samlIdpSpSession.setUserUuid(userUuid);
 	}
 
@@ -462,7 +462,7 @@ public class SamlIdpSpSessionWrapper implements SamlIdpSpSession,
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _samlIdpSpSession.toString();
 	}
 
@@ -472,7 +472,7 @@ public class SamlIdpSpSessionWrapper implements SamlIdpSpSession,
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _samlIdpSpSession.toXmlString();
 	}
 

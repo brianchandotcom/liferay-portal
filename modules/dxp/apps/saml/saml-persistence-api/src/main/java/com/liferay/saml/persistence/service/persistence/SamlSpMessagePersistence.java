@@ -184,8 +184,8 @@ public interface SamlSpMessagePersistence extends BasePersistence<SamlSpMessage>
 	* @return the matching saml sp message
 	* @throws NoSuchSpMessageException if a matching saml sp message could not be found
 	*/
-	public SamlSpMessage findBySIEI_SIRK(java.lang.String samlIdpEntityId,
-		java.lang.String samlIdpResponseKey) throws NoSuchSpMessageException;
+	public SamlSpMessage findBySIEI_SIRK(String samlIdpEntityId,
+		String samlIdpResponseKey) throws NoSuchSpMessageException;
 
 	/**
 	* Returns the saml sp message where samlIdpEntityId = &#63; and samlIdpResponseKey = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
@@ -194,8 +194,8 @@ public interface SamlSpMessagePersistence extends BasePersistence<SamlSpMessage>
 	* @param samlIdpResponseKey the saml idp response key
 	* @return the matching saml sp message, or <code>null</code> if a matching saml sp message could not be found
 	*/
-	public SamlSpMessage fetchBySIEI_SIRK(java.lang.String samlIdpEntityId,
-		java.lang.String samlIdpResponseKey);
+	public SamlSpMessage fetchBySIEI_SIRK(String samlIdpEntityId,
+		String samlIdpResponseKey);
 
 	/**
 	* Returns the saml sp message where samlIdpEntityId = &#63; and samlIdpResponseKey = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -205,8 +205,8 @@ public interface SamlSpMessagePersistence extends BasePersistence<SamlSpMessage>
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching saml sp message, or <code>null</code> if a matching saml sp message could not be found
 	*/
-	public SamlSpMessage fetchBySIEI_SIRK(java.lang.String samlIdpEntityId,
-		java.lang.String samlIdpResponseKey, boolean retrieveFromCache);
+	public SamlSpMessage fetchBySIEI_SIRK(String samlIdpEntityId,
+		String samlIdpResponseKey, boolean retrieveFromCache);
 
 	/**
 	* Removes the saml sp message where samlIdpEntityId = &#63; and samlIdpResponseKey = &#63; from the database.
@@ -215,8 +215,8 @@ public interface SamlSpMessagePersistence extends BasePersistence<SamlSpMessage>
 	* @param samlIdpResponseKey the saml idp response key
 	* @return the saml sp message that was removed
 	*/
-	public SamlSpMessage removeBySIEI_SIRK(java.lang.String samlIdpEntityId,
-		java.lang.String samlIdpResponseKey) throws NoSuchSpMessageException;
+	public SamlSpMessage removeBySIEI_SIRK(String samlIdpEntityId,
+		String samlIdpResponseKey) throws NoSuchSpMessageException;
 
 	/**
 	* Returns the number of saml sp messages where samlIdpEntityId = &#63; and samlIdpResponseKey = &#63;.
@@ -225,8 +225,8 @@ public interface SamlSpMessagePersistence extends BasePersistence<SamlSpMessage>
 	* @param samlIdpResponseKey the saml idp response key
 	* @return the number of matching saml sp messages
 	*/
-	public int countBySIEI_SIRK(java.lang.String samlIdpEntityId,
-		java.lang.String samlIdpResponseKey);
+	public int countBySIEI_SIRK(String samlIdpEntityId,
+		String samlIdpResponseKey);
 
 	/**
 	* Caches the saml sp message in the entity cache if it is enabled.

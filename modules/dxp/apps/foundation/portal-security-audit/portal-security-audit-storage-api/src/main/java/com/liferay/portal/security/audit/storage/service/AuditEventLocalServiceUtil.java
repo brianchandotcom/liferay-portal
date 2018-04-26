@@ -227,12 +227,11 @@ public class AuditEventLocalServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.portal.security.audit.storage.model.AuditEvent> getAuditEvents(
-		long companyId, long userId, java.lang.String userName,
+		long companyId, long userId, String userName,
 		java.util.Date createDateGT, java.util.Date createDateLT,
-		java.lang.String eventType, java.lang.String className,
-		java.lang.String classPK, java.lang.String clientHost,
-		java.lang.String clientIP, java.lang.String serverName, int serverPort,
-		java.lang.String sessionID, boolean andSearch, int start, int end,
+		String eventType, String className, String classPK, String clientHost,
+		String clientIP, String serverName, int serverPort, String sessionID,
+		boolean andSearch, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getService()
 				   .getAuditEvents(companyId, userId, userName, createDateGT,
@@ -255,12 +254,10 @@ public class AuditEventLocalServiceUtil {
 	}
 
 	public static int getAuditEventsCount(long companyId, long userId,
-		java.lang.String userName, java.util.Date createDateGT,
-		java.util.Date createDateLT, java.lang.String eventType,
-		java.lang.String className, java.lang.String classPK,
-		java.lang.String clientHost, java.lang.String clientIP,
-		java.lang.String serverName, int serverPort,
-		java.lang.String sessionID, boolean andSearch) {
+		String userName, java.util.Date createDateGT,
+		java.util.Date createDateLT, String eventType, String className,
+		String classPK, String clientHost, String clientIP, String serverName,
+		int serverPort, String sessionID, boolean andSearch) {
 		return getService()
 				   .getAuditEventsCount(companyId, userId, userName,
 			createDateGT, createDateLT, eventType, className, classPK,
@@ -276,7 +273,7 @@ public class AuditEventLocalServiceUtil {
 	*
 	* @return the OSGi service identifier
 	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
+	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 

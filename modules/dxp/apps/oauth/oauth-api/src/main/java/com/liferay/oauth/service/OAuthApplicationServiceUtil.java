@@ -43,9 +43,8 @@ public class OAuthApplicationServiceUtil {
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.oauth.service.impl.OAuthApplicationServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static com.liferay.oauth.model.OAuthApplication addOAuthApplication(
-		java.lang.String name, java.lang.String description, int accessLevel,
-		boolean shareableAccessToken, java.lang.String callbackURI,
-		java.lang.String websiteURL,
+		String name, String description, int accessLevel,
+		boolean shareableAccessToken, String callbackURI, String websiteURL,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
@@ -69,7 +68,7 @@ public class OAuthApplicationServiceUtil {
 	*
 	* @return the OSGi service identifier
 	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
+	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 
@@ -80,9 +79,8 @@ public class OAuthApplicationServiceUtil {
 	}
 
 	public static com.liferay.oauth.model.OAuthApplication updateOAuthApplication(
-		long oAuthApplicationId, java.lang.String name,
-		java.lang.String description, boolean shareableAccessToken,
-		java.lang.String callbackURI, java.lang.String websiteURL,
+		long oAuthApplicationId, String name, String description,
+		boolean shareableAccessToken, String callbackURI, String websiteURL,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()

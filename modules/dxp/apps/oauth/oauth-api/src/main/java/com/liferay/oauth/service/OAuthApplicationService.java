@@ -54,10 +54,9 @@ public interface OAuthApplicationService extends BaseService {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link OAuthApplicationServiceUtil} to access the o auth application remote service. Add custom service methods to {@link com.liferay.oauth.service.impl.OAuthApplicationServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public OAuthApplication addOAuthApplication(java.lang.String name,
-		java.lang.String description, int accessLevel,
-		boolean shareableAccessToken, java.lang.String callbackURI,
-		java.lang.String websiteURL, ServiceContext serviceContext)
+	public OAuthApplication addOAuthApplication(String name,
+		String description, int accessLevel, boolean shareableAccessToken,
+		String callbackURI, String websiteURL, ServiceContext serviceContext)
 		throws PortalException;
 
 	public void deleteLogo(long oAuthApplicationId) throws PortalException;
@@ -70,14 +69,13 @@ public interface OAuthApplicationService extends BaseService {
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	public OAuthApplication updateLogo(long oAuthApplicationId,
 		InputStream inputStream) throws PortalException;
 
 	public OAuthApplication updateOAuthApplication(long oAuthApplicationId,
-		java.lang.String name, java.lang.String description,
-		boolean shareableAccessToken, java.lang.String callbackURI,
-		java.lang.String websiteURL, ServiceContext serviceContext)
+		String name, String description, boolean shareableAccessToken,
+		String callbackURI, String websiteURL, ServiceContext serviceContext)
 		throws PortalException;
 }

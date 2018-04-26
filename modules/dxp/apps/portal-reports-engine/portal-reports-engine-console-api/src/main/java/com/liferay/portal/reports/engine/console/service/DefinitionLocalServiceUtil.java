@@ -56,10 +56,10 @@ public class DefinitionLocalServiceUtil {
 
 	public static com.liferay.portal.reports.engine.console.model.Definition addDefinition(
 		long userId, long groupId,
-		java.util.Map<java.util.Locale, java.lang.String> nameMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		long sourceId, java.lang.String reportParameters,
-		java.lang.String fileName, java.io.InputStream inputStream,
+		java.util.Map<java.util.Locale, String> nameMap,
+		java.util.Map<java.util.Locale, String> descriptionMap, long sourceId,
+		String reportParameters, String fileName,
+		java.io.InputStream inputStream,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
@@ -110,7 +110,7 @@ public class DefinitionLocalServiceUtil {
 	}
 
 	public static void deleteDefinitionTemplates(long companyId,
-		java.lang.String attachmentsDirectory)
+		String attachmentsDirectory)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().deleteDefinitionTemplates(companyId, attachmentsDirectory);
 	}
@@ -215,7 +215,7 @@ public class DefinitionLocalServiceUtil {
 	* @return the matching definition, or <code>null</code> if a matching definition could not be found
 	*/
 	public static com.liferay.portal.reports.engine.console.model.Definition fetchDefinitionByUuidAndGroupId(
-		java.lang.String uuid, long groupId) {
+		String uuid, long groupId) {
 		return getService().fetchDefinitionByUuidAndGroupId(uuid, groupId);
 	}
 
@@ -245,7 +245,7 @@ public class DefinitionLocalServiceUtil {
 	* @throws PortalException if a matching definition could not be found
 	*/
 	public static com.liferay.portal.reports.engine.console.model.Definition getDefinitionByUuidAndGroupId(
-		java.lang.String uuid, long groupId)
+		String uuid, long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getDefinitionByUuidAndGroupId(uuid, groupId);
 	}
@@ -267,9 +267,9 @@ public class DefinitionLocalServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.portal.reports.engine.console.model.Definition> getDefinitions(
-		long groupId, java.lang.String definitionName,
-		java.lang.String description, java.lang.String sourceId,
-		java.lang.String reportName, boolean andSearch, int start, int end,
+		long groupId, String definitionName, String description,
+		String sourceId, String reportName, boolean andSearch, int start,
+		int end,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getService()
 				   .getDefinitions(groupId, definitionName, description,
@@ -284,7 +284,7 @@ public class DefinitionLocalServiceUtil {
 	* @return the matching definitions, or an empty list if no matches were found
 	*/
 	public static java.util.List<com.liferay.portal.reports.engine.console.model.Definition> getDefinitionsByUuidAndCompanyId(
-		java.lang.String uuid, long companyId) {
+		String uuid, long companyId) {
 		return getService().getDefinitionsByUuidAndCompanyId(uuid, companyId);
 	}
 
@@ -299,7 +299,7 @@ public class DefinitionLocalServiceUtil {
 	* @return the range of matching definitions, or an empty list if no matches were found
 	*/
 	public static java.util.List<com.liferay.portal.reports.engine.console.model.Definition> getDefinitionsByUuidAndCompanyId(
-		java.lang.String uuid, long companyId, int start, int end,
+		String uuid, long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.reports.engine.console.model.Definition> orderByComparator) {
 		return getService()
 				   .getDefinitionsByUuidAndCompanyId(uuid, companyId, start,
@@ -315,9 +315,8 @@ public class DefinitionLocalServiceUtil {
 		return getService().getDefinitionsCount();
 	}
 
-	public static int getDefinitionsCount(long groupId,
-		java.lang.String definitionName, java.lang.String description,
-		java.lang.String sourceId, java.lang.String reportName,
+	public static int getDefinitionsCount(long groupId, String definitionName,
+		String description, String sourceId, String reportName,
 		boolean andSearch) {
 		return getService()
 				   .getDefinitionsCount(groupId, definitionName, description,
@@ -338,7 +337,7 @@ public class DefinitionLocalServiceUtil {
 	*
 	* @return the OSGi service identifier
 	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
+	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 
@@ -360,11 +359,10 @@ public class DefinitionLocalServiceUtil {
 	}
 
 	public static com.liferay.portal.reports.engine.console.model.Definition updateDefinition(
-		long definitionId,
-		java.util.Map<java.util.Locale, java.lang.String> nameMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		long sourceId, java.lang.String reportParameters,
-		java.lang.String fileName, java.io.InputStream inputStream,
+		long definitionId, java.util.Map<java.util.Locale, String> nameMap,
+		java.util.Map<java.util.Locale, String> descriptionMap, long sourceId,
+		String reportParameters, String fileName,
+		java.io.InputStream inputStream,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
@@ -374,8 +372,7 @@ public class DefinitionLocalServiceUtil {
 
 	public static void updateDefinitionResources(
 		com.liferay.portal.reports.engine.console.model.Definition definition,
-		java.lang.String[] communityPermissions,
-		java.lang.String[] guestPermissions)
+		String[] communityPermissions, String[] guestPermissions)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService()
 			.updateDefinitionResources(definition, communityPermissions,

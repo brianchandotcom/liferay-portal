@@ -93,7 +93,7 @@ public class KaleoProcessLinkWrapper implements KaleoProcessLink,
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new KaleoProcessLinkWrapper((KaleoProcessLink)_kaleoProcessLink.clone());
 	}
 
@@ -164,7 +164,7 @@ public class KaleoProcessLinkWrapper implements KaleoProcessLink,
 	* @return the workflow task name of this kaleo process link
 	*/
 	@Override
-	public java.lang.String getWorkflowTaskName() {
+	public String getWorkflowTaskName() {
 		return _kaleoProcessLink.getWorkflowTaskName();
 	}
 
@@ -270,7 +270,7 @@ public class KaleoProcessLinkWrapper implements KaleoProcessLink,
 	* @param workflowTaskName the workflow task name of this kaleo process link
 	*/
 	@Override
-	public void setWorkflowTaskName(java.lang.String workflowTaskName) {
+	public void setWorkflowTaskName(String workflowTaskName) {
 		_kaleoProcessLink.setWorkflowTaskName(workflowTaskName);
 	}
 
@@ -285,7 +285,7 @@ public class KaleoProcessLinkWrapper implements KaleoProcessLink,
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _kaleoProcessLink.toString();
 	}
 
@@ -295,7 +295,7 @@ public class KaleoProcessLinkWrapper implements KaleoProcessLink,
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _kaleoProcessLink.toXmlString();
 	}
 

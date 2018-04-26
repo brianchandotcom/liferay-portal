@@ -36,9 +36,8 @@ public class OAuthApplicationLocalServiceWrapper
 
 	@Override
 	public com.liferay.oauth.model.OAuthApplication addOAuthApplication(
-		long userId, java.lang.String name, java.lang.String description,
-		int accessLevel, boolean shareableAccessToken,
-		java.lang.String callbackURI, java.lang.String websiteURL,
+		long userId, String name, String description, int accessLevel,
+		boolean shareableAccessToken, String callbackURI, String websiteURL,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _oAuthApplicationLocalService.addOAuthApplication(userId, name,
@@ -208,7 +207,7 @@ public class OAuthApplicationLocalServiceWrapper
 
 	@Override
 	public com.liferay.oauth.model.OAuthApplication fetchOAuthApplication(
-		java.lang.String consumerKey) {
+		String consumerKey) {
 		return _oAuthApplicationLocalService.fetchOAuthApplication(consumerKey);
 	}
 
@@ -238,7 +237,7 @@ public class OAuthApplicationLocalServiceWrapper
 
 	@Override
 	public com.liferay.oauth.model.OAuthApplication getOAuthApplication(
-		java.lang.String consumerKey)
+		String consumerKey)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _oAuthApplicationLocalService.getOAuthApplication(consumerKey);
 	}
@@ -289,7 +288,7 @@ public class OAuthApplicationLocalServiceWrapper
 	* @return the OSGi service identifier
 	*/
 	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
+	public String getOSGiServiceIdentifier() {
 		return _oAuthApplicationLocalService.getOSGiServiceIdentifier();
 	}
 
@@ -302,17 +301,16 @@ public class OAuthApplicationLocalServiceWrapper
 
 	@Override
 	public java.util.List<com.liferay.oauth.model.OAuthApplication> search(
-		long companyId, java.lang.String keywords,
-		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
-		int start, int end,
+		long companyId, String keywords,
+		java.util.LinkedHashMap<String, Object> params, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return _oAuthApplicationLocalService.search(companyId, keywords,
 			params, start, end, orderByComparator);
 	}
 
 	@Override
-	public int searchCount(long companyId, java.lang.String keywords,
-		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params) {
+	public int searchCount(long companyId, String keywords,
+		java.util.LinkedHashMap<String, Object> params) {
 		return _oAuthApplicationLocalService.searchCount(companyId, keywords,
 			params);
 	}
@@ -327,9 +325,8 @@ public class OAuthApplicationLocalServiceWrapper
 
 	@Override
 	public com.liferay.oauth.model.OAuthApplication updateOAuthApplication(
-		long oAuthApplicationId, java.lang.String name,
-		java.lang.String description, boolean shareableAccessToken,
-		java.lang.String callbackURI, java.lang.String websiteURL,
+		long oAuthApplicationId, String name, String description,
+		boolean shareableAccessToken, String callbackURI, String websiteURL,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _oAuthApplicationLocalService.updateOAuthApplication(oAuthApplicationId,

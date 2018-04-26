@@ -65,10 +65,9 @@ import java.rmi.RemoteException;
 @ProviderType
 public class SPIDefinitionServiceSoap {
 	public static com.liferay.portal.resiliency.spi.model.SPIDefinitionSoap addSPIDefinition(
-		java.lang.String name, java.lang.String connectorAddress,
-		int connectorPort, java.lang.String description,
-		java.lang.String jvmArguments, java.lang.String portletIds,
-		java.lang.String servletContextNames, java.lang.String typeSettings,
+		String name, String connectorAddress, int connectorPort,
+		String description, String jvmArguments, String portletIds,
+		String servletContextNames, String typeSettings,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
@@ -129,7 +128,7 @@ public class SPIDefinitionServiceSoap {
 	}
 
 	public static com.liferay.portal.resiliency.spi.model.SPIDefinitionSoap getSPIDefinition(
-		long companyId, java.lang.String name) throws RemoteException {
+		long companyId, String name) throws RemoteException {
 		try {
 			com.liferay.portal.resiliency.spi.model.SPIDefinition returnValue = SPIDefinitionServiceUtil.getSPIDefinition(companyId,
 					name);
@@ -209,10 +208,9 @@ public class SPIDefinitionServiceSoap {
 	}
 
 	public static com.liferay.portal.resiliency.spi.model.SPIDefinitionSoap updateSPIDefinition(
-		long spiDefinitionId, java.lang.String connectorAddress,
-		int connectorPort, java.lang.String description,
-		java.lang.String jvmArguments, java.lang.String portletIds,
-		java.lang.String servletContextNames, java.lang.String typeSettings,
+		long spiDefinitionId, String connectorAddress, int connectorPort,
+		String description, String jvmArguments, String portletIds,
+		String servletContextNames, String typeSettings,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
@@ -231,7 +229,7 @@ public class SPIDefinitionServiceSoap {
 	}
 
 	public static com.liferay.portal.resiliency.spi.model.SPIDefinitionSoap updateTypeSettings(
-		long userId, long spiDefinitionId, java.lang.String recoveryOptions,
+		long userId, long spiDefinitionId, String recoveryOptions,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {

@@ -56,10 +56,9 @@ import com.liferay.portal.kernel.util.MethodKey;
 @ProviderType
 public class OAuthApplicationServiceHttp {
 	public static com.liferay.oauth.model.OAuthApplication addOAuthApplication(
-		HttpPrincipal httpPrincipal, java.lang.String name,
-		java.lang.String description, int accessLevel,
-		boolean shareableAccessToken, java.lang.String callbackURI,
-		java.lang.String websiteURL,
+		HttpPrincipal httpPrincipal, String name, String description,
+		int accessLevel, boolean shareableAccessToken, String callbackURI,
+		String websiteURL,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -187,10 +186,9 @@ public class OAuthApplicationServiceHttp {
 	}
 
 	public static com.liferay.oauth.model.OAuthApplication updateOAuthApplication(
-		HttpPrincipal httpPrincipal, long oAuthApplicationId,
-		java.lang.String name, java.lang.String description,
-		boolean shareableAccessToken, java.lang.String callbackURI,
-		java.lang.String websiteURL,
+		HttpPrincipal httpPrincipal, long oAuthApplicationId, String name,
+		String description, boolean shareableAccessToken, String callbackURI,
+		String websiteURL,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -227,9 +225,8 @@ public class OAuthApplicationServiceHttp {
 
 	private static Log _log = LogFactoryUtil.getLog(OAuthApplicationServiceHttp.class);
 	private static final Class<?>[] _addOAuthApplicationParameterTypes0 = new Class[] {
-			java.lang.String.class, java.lang.String.class, int.class,
-			boolean.class, java.lang.String.class, java.lang.String.class,
-			com.liferay.portal.kernel.service.ServiceContext.class
+			String.class, String.class, int.class, boolean.class, String.class,
+			String.class, com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _deleteLogoParameterTypes1 = new Class[] {
 			long.class
@@ -241,8 +238,7 @@ public class OAuthApplicationServiceHttp {
 			long.class, java.io.InputStream.class
 		};
 	private static final Class<?>[] _updateOAuthApplicationParameterTypes4 = new Class[] {
-			long.class, java.lang.String.class, java.lang.String.class,
-			boolean.class, java.lang.String.class, java.lang.String.class,
-			com.liferay.portal.kernel.service.ServiceContext.class
+			long.class, String.class, String.class, boolean.class, String.class,
+			String.class, com.liferay.portal.kernel.service.ServiceContext.class
 		};
 }

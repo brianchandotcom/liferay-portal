@@ -34,12 +34,11 @@ public class EntryServiceWrapper implements EntryService,
 
 	@Override
 	public com.liferay.portal.reports.engine.console.model.Entry addEntry(
-		long groupId, long definitionId, java.lang.String format,
+		long groupId, long definitionId, String format,
 		boolean schedulerRequest, java.util.Date startDate,
-		java.util.Date endDate, boolean repeating, java.lang.String recurrence,
-		java.lang.String emailNotifications, java.lang.String emailDelivery,
-		java.lang.String portletId, java.lang.String pageURL,
-		java.lang.String reportName, java.lang.String reportParameters,
+		java.util.Date endDate, boolean repeating, String recurrence,
+		String emailNotifications, String emailDelivery, String portletId,
+		String pageURL, String reportName, String reportParameters,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _entryService.addEntry(groupId, definitionId, format,
@@ -49,8 +48,7 @@ public class EntryServiceWrapper implements EntryService,
 	}
 
 	@Override
-	public void deleteAttachment(long companyId, long entryId,
-		java.lang.String fileName)
+	public void deleteAttachment(long companyId, long entryId, String fileName)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_entryService.deleteAttachment(companyId, entryId, fileName);
 	}
@@ -64,9 +62,9 @@ public class EntryServiceWrapper implements EntryService,
 
 	@Override
 	public java.util.List<com.liferay.portal.reports.engine.console.model.Entry> getEntries(
-		long groupId, java.lang.String definitionName,
-		java.lang.String userName, java.util.Date createDateGT,
-		java.util.Date createDateLT, boolean andSearch, int start, int end,
+		long groupId, String definitionName, String userName,
+		java.util.Date createDateGT, java.util.Date createDateLT,
+		boolean andSearch, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _entryService.getEntries(groupId, definitionName, userName,
@@ -74,8 +72,8 @@ public class EntryServiceWrapper implements EntryService,
 	}
 
 	@Override
-	public int getEntriesCount(long groupId, java.lang.String definitionName,
-		java.lang.String userName, java.util.Date createDateGT,
+	public int getEntriesCount(long groupId, String definitionName,
+		String userName, java.util.Date createDateGT,
 		java.util.Date createDateLT, boolean andSearch)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _entryService.getEntriesCount(groupId, definitionName, userName,
@@ -88,13 +86,13 @@ public class EntryServiceWrapper implements EntryService,
 	* @return the OSGi service identifier
 	*/
 	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
+	public String getOSGiServiceIdentifier() {
 		return _entryService.getOSGiServiceIdentifier();
 	}
 
 	@Override
-	public void sendEmails(long entryId, java.lang.String fileName,
-		java.lang.String[] emailAddresses, boolean notification)
+	public void sendEmails(long entryId, String fileName,
+		String[] emailAddresses, boolean notification)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_entryService.sendEmails(entryId, fileName, emailAddresses, notification);
 	}

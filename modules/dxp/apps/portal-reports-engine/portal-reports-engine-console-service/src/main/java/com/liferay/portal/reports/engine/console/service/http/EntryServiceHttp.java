@@ -56,12 +56,10 @@ import com.liferay.portal.reports.engine.console.service.EntryServiceUtil;
 public class EntryServiceHttp {
 	public static com.liferay.portal.reports.engine.console.model.Entry addEntry(
 		HttpPrincipal httpPrincipal, long groupId, long definitionId,
-		java.lang.String format, boolean schedulerRequest,
-		java.util.Date startDate, java.util.Date endDate, boolean repeating,
-		java.lang.String recurrence, java.lang.String emailNotifications,
-		java.lang.String emailDelivery, java.lang.String portletId,
-		java.lang.String pageURL, java.lang.String reportName,
-		java.lang.String reportParameters,
+		String format, boolean schedulerRequest, java.util.Date startDate,
+		java.util.Date endDate, boolean repeating, String recurrence,
+		String emailNotifications, String emailDelivery, String portletId,
+		String pageURL, String reportName, String reportParameters,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -97,7 +95,7 @@ public class EntryServiceHttp {
 	}
 
 	public static void deleteAttachment(HttpPrincipal httpPrincipal,
-		long companyId, long entryId, java.lang.String fileName)
+		long companyId, long entryId, String fileName)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(EntryServiceUtil.class,
@@ -156,10 +154,9 @@ public class EntryServiceHttp {
 	}
 
 	public static java.util.List<com.liferay.portal.reports.engine.console.model.Entry> getEntries(
-		HttpPrincipal httpPrincipal, long groupId,
-		java.lang.String definitionName, java.lang.String userName,
-		java.util.Date createDateGT, java.util.Date createDateLT,
-		boolean andSearch, int start, int end,
+		HttpPrincipal httpPrincipal, long groupId, String definitionName,
+		String userName, java.util.Date createDateGT,
+		java.util.Date createDateLT, boolean andSearch, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -193,9 +190,9 @@ public class EntryServiceHttp {
 	}
 
 	public static int getEntriesCount(HttpPrincipal httpPrincipal,
-		long groupId, java.lang.String definitionName,
-		java.lang.String userName, java.util.Date createDateGT,
-		java.util.Date createDateLT, boolean andSearch)
+		long groupId, String definitionName, String userName,
+		java.util.Date createDateGT, java.util.Date createDateLT,
+		boolean andSearch)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(EntryServiceUtil.class,
@@ -228,8 +225,7 @@ public class EntryServiceHttp {
 	}
 
 	public static void sendEmails(HttpPrincipal httpPrincipal, long entryId,
-		java.lang.String fileName, java.lang.String[] emailAddresses,
-		boolean notification)
+		String fileName, String[] emailAddresses, boolean notification)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(EntryServiceUtil.class,
@@ -284,32 +280,29 @@ public class EntryServiceHttp {
 
 	private static Log _log = LogFactoryUtil.getLog(EntryServiceHttp.class);
 	private static final Class<?>[] _addEntryParameterTypes0 = new Class[] {
-			long.class, long.class, java.lang.String.class, boolean.class,
+			long.class, long.class, String.class, boolean.class,
 			java.util.Date.class, java.util.Date.class, boolean.class,
-			java.lang.String.class, java.lang.String.class,
-			java.lang.String.class, java.lang.String.class,
-			java.lang.String.class, java.lang.String.class,
-			java.lang.String.class,
+			String.class, String.class, String.class, String.class, String.class,
+			String.class, String.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _deleteAttachmentParameterTypes1 = new Class[] {
-			long.class, long.class, java.lang.String.class
+			long.class, long.class, String.class
 		};
 	private static final Class<?>[] _deleteEntryParameterTypes2 = new Class[] {
 			long.class
 		};
 	private static final Class<?>[] _getEntriesParameterTypes3 = new Class[] {
-			long.class, java.lang.String.class, java.lang.String.class,
-			java.util.Date.class, java.util.Date.class, boolean.class, int.class,
-			int.class, com.liferay.portal.kernel.util.OrderByComparator.class
+			long.class, String.class, String.class, java.util.Date.class,
+			java.util.Date.class, boolean.class, int.class, int.class,
+			com.liferay.portal.kernel.util.OrderByComparator.class
 		};
 	private static final Class<?>[] _getEntriesCountParameterTypes4 = new Class[] {
-			long.class, java.lang.String.class, java.lang.String.class,
-			java.util.Date.class, java.util.Date.class, boolean.class
+			long.class, String.class, String.class, java.util.Date.class,
+			java.util.Date.class, boolean.class
 		};
 	private static final Class<?>[] _sendEmailsParameterTypes5 = new Class[] {
-			long.class, java.lang.String.class, java.lang.String[].class,
-			boolean.class
+			long.class, String.class, String[].class, boolean.class
 		};
 	private static final Class<?>[] _unscheduleEntryParameterTypes6 = new Class[] {
 			long.class

@@ -46,7 +46,7 @@ public interface KaleoProcessPersistence extends BasePersistence<KaleoProcess> {
 	* @param uuid the uuid
 	* @return the matching kaleo processes
 	*/
-	public java.util.List<KaleoProcess> findByUuid(java.lang.String uuid);
+	public java.util.List<KaleoProcess> findByUuid(String uuid);
 
 	/**
 	* Returns a range of all the kaleo processes where uuid = &#63;.
@@ -60,8 +60,8 @@ public interface KaleoProcessPersistence extends BasePersistence<KaleoProcess> {
 	* @param end the upper bound of the range of kaleo processes (not inclusive)
 	* @return the range of matching kaleo processes
 	*/
-	public java.util.List<KaleoProcess> findByUuid(java.lang.String uuid,
-		int start, int end);
+	public java.util.List<KaleoProcess> findByUuid(String uuid, int start,
+		int end);
 
 	/**
 	* Returns an ordered range of all the kaleo processes where uuid = &#63;.
@@ -76,8 +76,8 @@ public interface KaleoProcessPersistence extends BasePersistence<KaleoProcess> {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching kaleo processes
 	*/
-	public java.util.List<KaleoProcess> findByUuid(java.lang.String uuid,
-		int start, int end,
+	public java.util.List<KaleoProcess> findByUuid(String uuid, int start,
+		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<KaleoProcess> orderByComparator);
 
 	/**
@@ -94,8 +94,8 @@ public interface KaleoProcessPersistence extends BasePersistence<KaleoProcess> {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching kaleo processes
 	*/
-	public java.util.List<KaleoProcess> findByUuid(java.lang.String uuid,
-		int start, int end,
+	public java.util.List<KaleoProcess> findByUuid(String uuid, int start,
+		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<KaleoProcess> orderByComparator,
 		boolean retrieveFromCache);
 
@@ -107,7 +107,7 @@ public interface KaleoProcessPersistence extends BasePersistence<KaleoProcess> {
 	* @return the first matching kaleo process
 	* @throws NoSuchKaleoProcessException if a matching kaleo process could not be found
 	*/
-	public KaleoProcess findByUuid_First(java.lang.String uuid,
+	public KaleoProcess findByUuid_First(String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<KaleoProcess> orderByComparator)
 		throws NoSuchKaleoProcessException;
 
@@ -118,7 +118,7 @@ public interface KaleoProcessPersistence extends BasePersistence<KaleoProcess> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching kaleo process, or <code>null</code> if a matching kaleo process could not be found
 	*/
-	public KaleoProcess fetchByUuid_First(java.lang.String uuid,
+	public KaleoProcess fetchByUuid_First(String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<KaleoProcess> orderByComparator);
 
 	/**
@@ -129,7 +129,7 @@ public interface KaleoProcessPersistence extends BasePersistence<KaleoProcess> {
 	* @return the last matching kaleo process
 	* @throws NoSuchKaleoProcessException if a matching kaleo process could not be found
 	*/
-	public KaleoProcess findByUuid_Last(java.lang.String uuid,
+	public KaleoProcess findByUuid_Last(String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<KaleoProcess> orderByComparator)
 		throws NoSuchKaleoProcessException;
 
@@ -140,7 +140,7 @@ public interface KaleoProcessPersistence extends BasePersistence<KaleoProcess> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching kaleo process, or <code>null</code> if a matching kaleo process could not be found
 	*/
-	public KaleoProcess fetchByUuid_Last(java.lang.String uuid,
+	public KaleoProcess fetchByUuid_Last(String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<KaleoProcess> orderByComparator);
 
 	/**
@@ -153,7 +153,7 @@ public interface KaleoProcessPersistence extends BasePersistence<KaleoProcess> {
 	* @throws NoSuchKaleoProcessException if a kaleo process with the primary key could not be found
 	*/
 	public KaleoProcess[] findByUuid_PrevAndNext(long kaleoProcessId,
-		java.lang.String uuid,
+		String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<KaleoProcess> orderByComparator)
 		throws NoSuchKaleoProcessException;
 
@@ -162,7 +162,7 @@ public interface KaleoProcessPersistence extends BasePersistence<KaleoProcess> {
 	*
 	* @param uuid the uuid
 	*/
-	public void removeByUuid(java.lang.String uuid);
+	public void removeByUuid(String uuid);
 
 	/**
 	* Returns the number of kaleo processes where uuid = &#63;.
@@ -170,7 +170,7 @@ public interface KaleoProcessPersistence extends BasePersistence<KaleoProcess> {
 	* @param uuid the uuid
 	* @return the number of matching kaleo processes
 	*/
-	public int countByUuid(java.lang.String uuid);
+	public int countByUuid(String uuid);
 
 	/**
 	* Returns the kaleo process where uuid = &#63; and groupId = &#63; or throws a {@link NoSuchKaleoProcessException} if it could not be found.
@@ -180,7 +180,7 @@ public interface KaleoProcessPersistence extends BasePersistence<KaleoProcess> {
 	* @return the matching kaleo process
 	* @throws NoSuchKaleoProcessException if a matching kaleo process could not be found
 	*/
-	public KaleoProcess findByUUID_G(java.lang.String uuid, long groupId)
+	public KaleoProcess findByUUID_G(String uuid, long groupId)
 		throws NoSuchKaleoProcessException;
 
 	/**
@@ -190,7 +190,7 @@ public interface KaleoProcessPersistence extends BasePersistence<KaleoProcess> {
 	* @param groupId the group ID
 	* @return the matching kaleo process, or <code>null</code> if a matching kaleo process could not be found
 	*/
-	public KaleoProcess fetchByUUID_G(java.lang.String uuid, long groupId);
+	public KaleoProcess fetchByUUID_G(String uuid, long groupId);
 
 	/**
 	* Returns the kaleo process where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -200,7 +200,7 @@ public interface KaleoProcessPersistence extends BasePersistence<KaleoProcess> {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching kaleo process, or <code>null</code> if a matching kaleo process could not be found
 	*/
-	public KaleoProcess fetchByUUID_G(java.lang.String uuid, long groupId,
+	public KaleoProcess fetchByUUID_G(String uuid, long groupId,
 		boolean retrieveFromCache);
 
 	/**
@@ -210,7 +210,7 @@ public interface KaleoProcessPersistence extends BasePersistence<KaleoProcess> {
 	* @param groupId the group ID
 	* @return the kaleo process that was removed
 	*/
-	public KaleoProcess removeByUUID_G(java.lang.String uuid, long groupId)
+	public KaleoProcess removeByUUID_G(String uuid, long groupId)
 		throws NoSuchKaleoProcessException;
 
 	/**
@@ -220,7 +220,7 @@ public interface KaleoProcessPersistence extends BasePersistence<KaleoProcess> {
 	* @param groupId the group ID
 	* @return the number of matching kaleo processes
 	*/
-	public int countByUUID_G(java.lang.String uuid, long groupId);
+	public int countByUUID_G(String uuid, long groupId);
 
 	/**
 	* Returns all the kaleo processes where uuid = &#63; and companyId = &#63;.
@@ -229,8 +229,7 @@ public interface KaleoProcessPersistence extends BasePersistence<KaleoProcess> {
 	* @param companyId the company ID
 	* @return the matching kaleo processes
 	*/
-	public java.util.List<KaleoProcess> findByUuid_C(java.lang.String uuid,
-		long companyId);
+	public java.util.List<KaleoProcess> findByUuid_C(String uuid, long companyId);
 
 	/**
 	* Returns a range of all the kaleo processes where uuid = &#63; and companyId = &#63;.
@@ -245,7 +244,7 @@ public interface KaleoProcessPersistence extends BasePersistence<KaleoProcess> {
 	* @param end the upper bound of the range of kaleo processes (not inclusive)
 	* @return the range of matching kaleo processes
 	*/
-	public java.util.List<KaleoProcess> findByUuid_C(java.lang.String uuid,
+	public java.util.List<KaleoProcess> findByUuid_C(String uuid,
 		long companyId, int start, int end);
 
 	/**
@@ -262,7 +261,7 @@ public interface KaleoProcessPersistence extends BasePersistence<KaleoProcess> {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching kaleo processes
 	*/
-	public java.util.List<KaleoProcess> findByUuid_C(java.lang.String uuid,
+	public java.util.List<KaleoProcess> findByUuid_C(String uuid,
 		long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<KaleoProcess> orderByComparator);
 
@@ -281,7 +280,7 @@ public interface KaleoProcessPersistence extends BasePersistence<KaleoProcess> {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching kaleo processes
 	*/
-	public java.util.List<KaleoProcess> findByUuid_C(java.lang.String uuid,
+	public java.util.List<KaleoProcess> findByUuid_C(String uuid,
 		long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<KaleoProcess> orderByComparator,
 		boolean retrieveFromCache);
@@ -295,8 +294,7 @@ public interface KaleoProcessPersistence extends BasePersistence<KaleoProcess> {
 	* @return the first matching kaleo process
 	* @throws NoSuchKaleoProcessException if a matching kaleo process could not be found
 	*/
-	public KaleoProcess findByUuid_C_First(java.lang.String uuid,
-		long companyId,
+	public KaleoProcess findByUuid_C_First(String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<KaleoProcess> orderByComparator)
 		throws NoSuchKaleoProcessException;
 
@@ -308,8 +306,7 @@ public interface KaleoProcessPersistence extends BasePersistence<KaleoProcess> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching kaleo process, or <code>null</code> if a matching kaleo process could not be found
 	*/
-	public KaleoProcess fetchByUuid_C_First(java.lang.String uuid,
-		long companyId,
+	public KaleoProcess fetchByUuid_C_First(String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<KaleoProcess> orderByComparator);
 
 	/**
@@ -321,8 +318,7 @@ public interface KaleoProcessPersistence extends BasePersistence<KaleoProcess> {
 	* @return the last matching kaleo process
 	* @throws NoSuchKaleoProcessException if a matching kaleo process could not be found
 	*/
-	public KaleoProcess findByUuid_C_Last(java.lang.String uuid,
-		long companyId,
+	public KaleoProcess findByUuid_C_Last(String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<KaleoProcess> orderByComparator)
 		throws NoSuchKaleoProcessException;
 
@@ -334,8 +330,7 @@ public interface KaleoProcessPersistence extends BasePersistence<KaleoProcess> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching kaleo process, or <code>null</code> if a matching kaleo process could not be found
 	*/
-	public KaleoProcess fetchByUuid_C_Last(java.lang.String uuid,
-		long companyId,
+	public KaleoProcess fetchByUuid_C_Last(String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<KaleoProcess> orderByComparator);
 
 	/**
@@ -349,7 +344,7 @@ public interface KaleoProcessPersistence extends BasePersistence<KaleoProcess> {
 	* @throws NoSuchKaleoProcessException if a kaleo process with the primary key could not be found
 	*/
 	public KaleoProcess[] findByUuid_C_PrevAndNext(long kaleoProcessId,
-		java.lang.String uuid, long companyId,
+		String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<KaleoProcess> orderByComparator)
 		throws NoSuchKaleoProcessException;
 
@@ -359,7 +354,7 @@ public interface KaleoProcessPersistence extends BasePersistence<KaleoProcess> {
 	* @param uuid the uuid
 	* @param companyId the company ID
 	*/
-	public void removeByUuid_C(java.lang.String uuid, long companyId);
+	public void removeByUuid_C(String uuid, long companyId);
 
 	/**
 	* Returns the number of kaleo processes where uuid = &#63; and companyId = &#63;.
@@ -368,7 +363,7 @@ public interface KaleoProcessPersistence extends BasePersistence<KaleoProcess> {
 	* @param companyId the company ID
 	* @return the number of matching kaleo processes
 	*/
-	public int countByUuid_C(java.lang.String uuid, long companyId);
+	public int countByUuid_C(String uuid, long companyId);
 
 	/**
 	* Returns all the kaleo processes where groupId = &#63;.
@@ -730,5 +725,5 @@ public interface KaleoProcessPersistence extends BasePersistence<KaleoProcess> {
 	public int countAll();
 
 	@Override
-	public java.util.Set<java.lang.String> getBadColumnNames();
+	public java.util.Set<String> getBadColumnNames();
 }

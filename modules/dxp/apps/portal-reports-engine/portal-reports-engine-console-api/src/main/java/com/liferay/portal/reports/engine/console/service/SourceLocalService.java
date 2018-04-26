@@ -68,9 +68,8 @@ public interface SourceLocalService extends BaseLocalService,
 	 * Never modify or reference this interface directly. Always use {@link SourceLocalServiceUtil} to access the source local service. Add custom service methods to {@link com.liferay.portal.reports.engine.console.service.impl.SourceLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	public Source addSource(long userId, long groupId,
-		Map<Locale, java.lang.String> nameMap,
-		java.lang.String driverClassName, java.lang.String driverUrl,
-		java.lang.String driverUserName, java.lang.String driverPassword,
+		Map<Locale, String> nameMap, String driverClassName, String driverUrl,
+		String driverUserName, String driverPassword,
 		ServiceContext serviceContext) throws PortalException;
 
 	/**
@@ -191,8 +190,7 @@ public interface SourceLocalService extends BaseLocalService,
 	* @return the matching source, or <code>null</code> if a matching source could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Source fetchSourceByUuidAndGroupId(java.lang.String uuid,
-		long groupId);
+	public Source fetchSourceByUuidAndGroupId(String uuid, long groupId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
@@ -209,7 +207,7 @@ public interface SourceLocalService extends BaseLocalService,
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -235,7 +233,7 @@ public interface SourceLocalService extends BaseLocalService,
 	* @throws PortalException if a matching source could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Source getSourceByUuidAndGroupId(java.lang.String uuid, long groupId)
+	public Source getSourceByUuidAndGroupId(String uuid, long groupId)
 		throws PortalException;
 
 	/**
@@ -253,8 +251,8 @@ public interface SourceLocalService extends BaseLocalService,
 	public List<Source> getSources(int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<Source> getSources(long groupId, java.lang.String name,
-		java.lang.String driverUrl, boolean andSearch, int start, int end,
+	public List<Source> getSources(long groupId, String name, String driverUrl,
+		boolean andSearch, int start, int end,
 		OrderByComparator orderByComparator);
 
 	/**
@@ -265,8 +263,7 @@ public interface SourceLocalService extends BaseLocalService,
 	* @return the matching sources, or an empty list if no matches were found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<Source> getSourcesByUuidAndCompanyId(java.lang.String uuid,
-		long companyId);
+	public List<Source> getSourcesByUuidAndCompanyId(String uuid, long companyId);
 
 	/**
 	* Returns a range of sources matching the UUID and company.
@@ -279,7 +276,7 @@ public interface SourceLocalService extends BaseLocalService,
 	* @return the range of matching sources, or an empty list if no matches were found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<Source> getSourcesByUuidAndCompanyId(java.lang.String uuid,
+	public List<Source> getSourcesByUuidAndCompanyId(String uuid,
 		long companyId, int start, int end,
 		OrderByComparator<Source> orderByComparator);
 
@@ -292,14 +289,13 @@ public interface SourceLocalService extends BaseLocalService,
 	public int getSourcesCount();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getSourcesCount(long groupId, java.lang.String name,
-		java.lang.String driverUrl, boolean andSearch);
+	public int getSourcesCount(long groupId, String name, String driverUrl,
+		boolean andSearch);
 
-	public Source updateSource(long sourceId,
-		Map<Locale, java.lang.String> nameMap,
-		java.lang.String driverClassName, java.lang.String driverUrl,
-		java.lang.String driverUserName, java.lang.String driverPassword,
-		ServiceContext serviceContext) throws PortalException;
+	public Source updateSource(long sourceId, Map<Locale, String> nameMap,
+		String driverClassName, String driverUrl, String driverUserName,
+		String driverPassword, ServiceContext serviceContext)
+		throws PortalException;
 
 	/**
 	* Updates the source in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.

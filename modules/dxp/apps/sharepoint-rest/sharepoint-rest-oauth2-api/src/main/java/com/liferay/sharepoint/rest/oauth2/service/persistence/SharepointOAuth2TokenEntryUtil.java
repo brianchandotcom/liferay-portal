@@ -125,7 +125,7 @@ public class SharepointOAuth2TokenEntryUtil {
 	* @throws NoSuch2TokenEntryException if a matching sharepoint o auth2 token entry could not be found
 	*/
 	public static SharepointOAuth2TokenEntry findByU_C(long userId,
-		java.lang.String configurationPid)
+		String configurationPid)
 		throws com.liferay.sharepoint.rest.oauth2.exception.NoSuch2TokenEntryException {
 		return getPersistence().findByU_C(userId, configurationPid);
 	}
@@ -138,7 +138,7 @@ public class SharepointOAuth2TokenEntryUtil {
 	* @return the matching sharepoint o auth2 token entry, or <code>null</code> if a matching sharepoint o auth2 token entry could not be found
 	*/
 	public static SharepointOAuth2TokenEntry fetchByU_C(long userId,
-		java.lang.String configurationPid) {
+		String configurationPid) {
 		return getPersistence().fetchByU_C(userId, configurationPid);
 	}
 
@@ -151,7 +151,7 @@ public class SharepointOAuth2TokenEntryUtil {
 	* @return the matching sharepoint o auth2 token entry, or <code>null</code> if a matching sharepoint o auth2 token entry could not be found
 	*/
 	public static SharepointOAuth2TokenEntry fetchByU_C(long userId,
-		java.lang.String configurationPid, boolean retrieveFromCache) {
+		String configurationPid, boolean retrieveFromCache) {
 		return getPersistence()
 				   .fetchByU_C(userId, configurationPid, retrieveFromCache);
 	}
@@ -164,7 +164,7 @@ public class SharepointOAuth2TokenEntryUtil {
 	* @return the sharepoint o auth2 token entry that was removed
 	*/
 	public static SharepointOAuth2TokenEntry removeByU_C(long userId,
-		java.lang.String configurationPid)
+		String configurationPid)
 		throws com.liferay.sharepoint.rest.oauth2.exception.NoSuch2TokenEntryException {
 		return getPersistence().removeByU_C(userId, configurationPid);
 	}
@@ -176,7 +176,7 @@ public class SharepointOAuth2TokenEntryUtil {
 	* @param configurationPid the configuration pid
 	* @return the number of matching sharepoint o auth2 token entries
 	*/
-	public static int countByU_C(long userId, java.lang.String configurationPid) {
+	public static int countByU_C(long userId, String configurationPid) {
 		return getPersistence().countByU_C(userId, configurationPid);
 	}
 

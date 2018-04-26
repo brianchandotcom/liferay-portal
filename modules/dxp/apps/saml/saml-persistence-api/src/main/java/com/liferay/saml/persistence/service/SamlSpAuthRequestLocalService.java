@@ -72,9 +72,8 @@ public interface SamlSpAuthRequestLocalService extends BaseLocalService,
 	public SamlSpAuthRequest addSamlSpAuthRequest(
 		SamlSpAuthRequest samlSpAuthRequest);
 
-	public SamlSpAuthRequest addSamlSpAuthRequest(
-		java.lang.String samlIdpEntityId,
-		java.lang.String samlSpAuthRequestKey, ServiceContext serviceContext);
+	public SamlSpAuthRequest addSamlSpAuthRequest(String samlIdpEntityId,
+		String samlSpAuthRequestKey, ServiceContext serviceContext);
 
 	/**
 	* Creates a new saml sp auth request with the primary key. Does not add the saml sp auth request to the database.
@@ -178,8 +177,8 @@ public interface SamlSpAuthRequestLocalService extends BaseLocalService,
 	public SamlSpAuthRequest fetchSamlSpAuthRequest(long samlSpAuthnRequestId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public SamlSpAuthRequest fetchSamlSpAuthRequest(
-		java.lang.String samlIdpEntityId, java.lang.String samlSpAuthRequestKey);
+	public SamlSpAuthRequest fetchSamlSpAuthRequest(String samlIdpEntityId,
+		String samlSpAuthRequestKey);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
@@ -192,7 +191,7 @@ public interface SamlSpAuthRequestLocalService extends BaseLocalService,
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -211,9 +210,8 @@ public interface SamlSpAuthRequestLocalService extends BaseLocalService,
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public SamlSpAuthRequest getSamlSpAuthRequest(
-		java.lang.String samlIdpEntityId, java.lang.String samlSpAuthRequestKey)
-		throws PortalException;
+	public SamlSpAuthRequest getSamlSpAuthRequest(String samlIdpEntityId,
+		String samlSpAuthRequestKey) throws PortalException;
 
 	/**
 	* Returns a range of all the saml sp auth requests.

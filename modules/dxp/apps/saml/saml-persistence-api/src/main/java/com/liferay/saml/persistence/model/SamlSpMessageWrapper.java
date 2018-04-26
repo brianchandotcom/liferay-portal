@@ -108,7 +108,7 @@ public class SamlSpMessageWrapper implements SamlSpMessage,
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new SamlSpMessageWrapper((SamlSpMessage)_samlSpMessage.clone());
 	}
 
@@ -173,7 +173,7 @@ public class SamlSpMessageWrapper implements SamlSpMessage,
 	* @return the saml idp entity ID of this saml sp message
 	*/
 	@Override
-	public java.lang.String getSamlIdpEntityId() {
+	public String getSamlIdpEntityId() {
 		return _samlSpMessage.getSamlIdpEntityId();
 	}
 
@@ -183,7 +183,7 @@ public class SamlSpMessageWrapper implements SamlSpMessage,
 	* @return the saml idp response key of this saml sp message
 	*/
 	@Override
-	public java.lang.String getSamlIdpResponseKey() {
+	public String getSamlIdpResponseKey() {
 		return _samlSpMessage.getSamlIdpResponseKey();
 	}
 
@@ -304,7 +304,7 @@ public class SamlSpMessageWrapper implements SamlSpMessage,
 	* @param samlIdpEntityId the saml idp entity ID of this saml sp message
 	*/
 	@Override
-	public void setSamlIdpEntityId(java.lang.String samlIdpEntityId) {
+	public void setSamlIdpEntityId(String samlIdpEntityId) {
 		_samlSpMessage.setSamlIdpEntityId(samlIdpEntityId);
 	}
 
@@ -314,7 +314,7 @@ public class SamlSpMessageWrapper implements SamlSpMessage,
 	* @param samlIdpResponseKey the saml idp response key of this saml sp message
 	*/
 	@Override
-	public void setSamlIdpResponseKey(java.lang.String samlIdpResponseKey) {
+	public void setSamlIdpResponseKey(String samlIdpResponseKey) {
 		_samlSpMessage.setSamlIdpResponseKey(samlIdpResponseKey);
 	}
 
@@ -339,7 +339,7 @@ public class SamlSpMessageWrapper implements SamlSpMessage,
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _samlSpMessage.toString();
 	}
 
@@ -349,7 +349,7 @@ public class SamlSpMessageWrapper implements SamlSpMessage,
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _samlSpMessage.toXmlString();
 	}
 

@@ -41,10 +41,9 @@ public class SPIDefinitionServiceUtil {
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.portal.resiliency.spi.service.impl.SPIDefinitionServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static com.liferay.portal.resiliency.spi.model.SPIDefinition addSPIDefinition(
-		java.lang.String name, java.lang.String connectorAddress,
-		int connectorPort, java.lang.String description,
-		java.lang.String jvmArguments, java.lang.String portletIds,
-		java.lang.String servletContextNames, java.lang.String typeSettings,
+		String name, String connectorAddress, int connectorPort,
+		String description, String jvmArguments, String portletIds,
+		String servletContextNames, String typeSettings,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
@@ -64,7 +63,7 @@ public class SPIDefinitionServiceUtil {
 	*
 	* @return the OSGi service identifier
 	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
+	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 
@@ -80,7 +79,7 @@ public class SPIDefinitionServiceUtil {
 	}
 
 	public static com.liferay.portal.resiliency.spi.model.SPIDefinition getSPIDefinition(
-		long companyId, java.lang.String name)
+		long companyId, String name)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getSPIDefinition(companyId, name);
 	}
@@ -111,10 +110,9 @@ public class SPIDefinitionServiceUtil {
 	}
 
 	public static com.liferay.portal.resiliency.spi.model.SPIDefinition updateSPIDefinition(
-		long spiDefinitionId, java.lang.String connectorAddress,
-		int connectorPort, java.lang.String description,
-		java.lang.String jvmArguments, java.lang.String portletIds,
-		java.lang.String servletContextNames, java.lang.String typeSettings,
+		long spiDefinitionId, String connectorAddress, int connectorPort,
+		String description, String jvmArguments, String portletIds,
+		String servletContextNames, String typeSettings,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
@@ -124,7 +122,7 @@ public class SPIDefinitionServiceUtil {
 	}
 
 	public static com.liferay.portal.resiliency.spi.model.SPIDefinition updateTypeSettings(
-		long userId, long spiDefinitionId, java.lang.String recoveryOptions,
+		long userId, long spiDefinitionId, String recoveryOptions,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()

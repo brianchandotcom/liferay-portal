@@ -55,12 +55,11 @@ public class EntryLocalServiceUtil {
 	}
 
 	public static com.liferay.portal.reports.engine.console.model.Entry addEntry(
-		long userId, long groupId, long definitionId, java.lang.String format,
+		long userId, long groupId, long definitionId, String format,
 		boolean schedulerRequest, java.util.Date startDate,
-		java.util.Date endDate, boolean repeating, java.lang.String recurrence,
-		java.lang.String emailNotifications, java.lang.String emailDelivery,
-		java.lang.String portletId, java.lang.String pageURL,
-		java.lang.String reportName, java.lang.String reportParameters,
+		java.util.Date endDate, boolean repeating, String recurrence,
+		String emailNotifications, String emailDelivery, String portletId,
+		String pageURL, String reportName, String reportParameters,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
@@ -81,8 +80,7 @@ public class EntryLocalServiceUtil {
 
 	public static void addEntryResources(
 		com.liferay.portal.reports.engine.console.model.Entry entry,
-		java.lang.String[] communityPermissions,
-		java.lang.String[] guestPermissions)
+		String[] communityPermissions, String[] guestPermissions)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService()
 			.addEntryResources(entry, communityPermissions, guestPermissions);
@@ -99,8 +97,7 @@ public class EntryLocalServiceUtil {
 		return getService().createEntry(entryId);
 	}
 
-	public static void deleteAttachment(long companyId,
-		java.lang.String fileName)
+	public static void deleteAttachment(long companyId, String fileName)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().deleteAttachment(companyId, fileName);
 	}
@@ -228,7 +225,7 @@ public class EntryLocalServiceUtil {
 		getService().generateReport(entryId);
 	}
 
-	public static void generateReport(long entryId, java.lang.String reportName)
+	public static void generateReport(long entryId, String reportName)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().generateReport(entryId, reportName);
 	}
@@ -254,9 +251,9 @@ public class EntryLocalServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.portal.reports.engine.console.model.Entry> getEntries(
-		long groupId, java.lang.String definitionName,
-		java.lang.String userName, java.util.Date createDateGT,
-		java.util.Date createDateLT, boolean andSearch, int start, int end,
+		long groupId, String definitionName, String userName,
+		java.util.Date createDateGT, java.util.Date createDateLT,
+		boolean andSearch, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getService()
 				   .getEntries(groupId, definitionName, userName, createDateGT,
@@ -272,10 +269,9 @@ public class EntryLocalServiceUtil {
 		return getService().getEntriesCount();
 	}
 
-	public static int getEntriesCount(long groupId,
-		java.lang.String definitionName, java.lang.String userName,
-		java.util.Date createDateGT, java.util.Date createDateLT,
-		boolean andSearch) {
+	public static int getEntriesCount(long groupId, String definitionName,
+		String userName, java.util.Date createDateGT,
+		java.util.Date createDateLT, boolean andSearch) {
 		return getService()
 				   .getEntriesCount(groupId, definitionName, userName,
 			createDateGT, createDateLT, andSearch);
@@ -303,7 +299,7 @@ public class EntryLocalServiceUtil {
 	*
 	* @return the OSGi service identifier
 	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
+	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 
@@ -313,8 +309,8 @@ public class EntryLocalServiceUtil {
 		return getService().getPersistedModel(primaryKeyObj);
 	}
 
-	public static void sendEmails(long entryId, java.lang.String fileName,
-		java.lang.String[] emailAddresses, boolean notification)
+	public static void sendEmails(long entryId, String fileName,
+		String[] emailAddresses, boolean notification)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().sendEmails(entryId, fileName, emailAddresses, notification);
 	}
@@ -335,7 +331,7 @@ public class EntryLocalServiceUtil {
 		return getService().updateEntry(entry);
 	}
 
-	public static void updateEntry(long entryId, java.lang.String reportName,
+	public static void updateEntry(long entryId, String reportName,
 		byte[] reportResults)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().updateEntry(entryId, reportName, reportResults);
@@ -343,7 +339,7 @@ public class EntryLocalServiceUtil {
 
 	public static void updateEntryStatus(long entryId,
 		com.liferay.portal.reports.engine.console.status.ReportStatus status,
-		java.lang.String errorMessage)
+		String errorMessage)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().updateEntryStatus(entryId, status, errorMessage);
 	}

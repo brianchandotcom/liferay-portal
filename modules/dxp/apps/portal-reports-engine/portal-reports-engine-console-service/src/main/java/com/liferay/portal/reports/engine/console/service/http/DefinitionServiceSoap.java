@@ -95,9 +95,9 @@ public class DefinitionServiceSoap {
 	}
 
 	public static com.liferay.portal.reports.engine.console.model.DefinitionSoap[] getDefinitions(
-		long groupId, java.lang.String definitionName,
-		java.lang.String description, java.lang.String sourceId,
-		java.lang.String reportName, boolean andSearch, int start, int end,
+		long groupId, String definitionName, String description,
+		String sourceId, String reportName, boolean andSearch, int start,
+		int end,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws RemoteException {
 		try {
@@ -115,9 +115,8 @@ public class DefinitionServiceSoap {
 		}
 	}
 
-	public static int getDefinitionsCount(long groupId,
-		java.lang.String definitionName, java.lang.String description,
-		java.lang.String sourceId, java.lang.String reportName,
+	public static int getDefinitionsCount(long groupId, String definitionName,
+		String description, String sourceId, String reportName,
 		boolean andSearch) throws RemoteException {
 		try {
 			int returnValue = DefinitionServiceUtil.getDefinitionsCount(groupId,

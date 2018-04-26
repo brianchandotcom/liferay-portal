@@ -55,5 +55,5 @@ public interface OAuthApplication extends OAuthApplicationModel, PersistedModel 
 			}
 		};
 
-	public java.lang.String getAccessLevelLabel();
+	public String getAccessLevelLabel();
 }

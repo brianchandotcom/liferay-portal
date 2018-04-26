@@ -81,7 +81,7 @@ public interface KaleoProcessLinkLocalService extends BaseLocalService,
 	* @return the Kaleo process link
 	*/
 	public KaleoProcessLink addKaleoProcessLink(long kaleoProcessId,
-		java.lang.String workflowTaskName, long ddmTemplateId);
+		String workflowTaskName, long ddmTemplateId);
 
 	/**
 	* Creates a new kaleo process link with the primary key. Does not add the kaleo process link to the database.
@@ -205,7 +205,7 @@ public interface KaleoProcessLinkLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public KaleoProcessLink fetchKaleoProcessLink(long kaleoProcessId,
-		java.lang.String workflowTaskName);
+		String workflowTaskName);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
@@ -263,7 +263,7 @@ public interface KaleoProcessLinkLocalService extends BaseLocalService,
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -310,8 +310,8 @@ public interface KaleoProcessLinkLocalService extends BaseLocalService,
 	* @throws PortalException if a portal exception occurred
 	*/
 	public KaleoProcessLink updateKaleoProcessLink(long kaleoProcessLinkId,
-		long kaleoProcessId, java.lang.String workflowTaskName,
-		long ddmTemplateId) throws PortalException;
+		long kaleoProcessId, String workflowTaskName, long ddmTemplateId)
+		throws PortalException;
 
 	/**
 	* Updates the Kaleo process link. If no Kaleo process link is found
@@ -327,5 +327,5 @@ public interface KaleoProcessLinkLocalService extends BaseLocalService,
 	* @return the Kaleo process link
 	*/
 	public KaleoProcessLink updateKaleoProcessLink(long kaleoProcessId,
-		java.lang.String workflowTaskName, long ddmTemplateId);
+		String workflowTaskName, long ddmTemplateId);
 }

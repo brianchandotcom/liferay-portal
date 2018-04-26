@@ -54,14 +54,14 @@ public interface Entry extends EntryModel, PersistedModel {
 			}
 		};
 
-	public java.lang.String getAttachmentsDir();
+	public String getAttachmentsDir();
 
-	public java.lang.String[] getAttachmentsFiles()
+	public String[] getAttachmentsFiles()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
-	public java.lang.String getJobName();
+	public String getJobName();
 
 	public com.liferay.portal.kernel.cal.TZSRecurrence getRecurrenceObj();
 
-	public java.lang.String getSchedulerRequestName();
+	public String getSchedulerRequestName();
 }

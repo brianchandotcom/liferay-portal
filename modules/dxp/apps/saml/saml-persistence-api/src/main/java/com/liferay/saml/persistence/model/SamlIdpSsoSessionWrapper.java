@@ -116,7 +116,7 @@ public class SamlIdpSsoSessionWrapper implements SamlIdpSsoSession,
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new SamlIdpSsoSessionWrapper((SamlIdpSsoSession)_samlIdpSsoSession.clone());
 	}
 
@@ -191,7 +191,7 @@ public class SamlIdpSsoSessionWrapper implements SamlIdpSsoSession,
 	* @return the saml idp sso session key of this saml idp sso session
 	*/
 	@Override
-	public java.lang.String getSamlIdpSsoSessionKey() {
+	public String getSamlIdpSsoSessionKey() {
 		return _samlIdpSsoSession.getSamlIdpSsoSessionKey();
 	}
 
@@ -211,7 +211,7 @@ public class SamlIdpSsoSessionWrapper implements SamlIdpSsoSession,
 	* @return the user name of this saml idp sso session
 	*/
 	@Override
-	public java.lang.String getUserName() {
+	public String getUserName() {
 		return _samlIdpSsoSession.getUserName();
 	}
 
@@ -221,7 +221,7 @@ public class SamlIdpSsoSessionWrapper implements SamlIdpSsoSession,
 	* @return the user uuid of this saml idp sso session
 	*/
 	@Override
-	public java.lang.String getUserUuid() {
+	public String getUserUuid() {
 		return _samlIdpSsoSession.getUserUuid();
 	}
 
@@ -342,7 +342,7 @@ public class SamlIdpSsoSessionWrapper implements SamlIdpSsoSession,
 	* @param samlIdpSsoSessionKey the saml idp sso session key of this saml idp sso session
 	*/
 	@Override
-	public void setSamlIdpSsoSessionKey(java.lang.String samlIdpSsoSessionKey) {
+	public void setSamlIdpSsoSessionKey(String samlIdpSsoSessionKey) {
 		_samlIdpSsoSession.setSamlIdpSsoSessionKey(samlIdpSsoSessionKey);
 	}
 
@@ -362,7 +362,7 @@ public class SamlIdpSsoSessionWrapper implements SamlIdpSsoSession,
 	* @param userName the user name of this saml idp sso session
 	*/
 	@Override
-	public void setUserName(java.lang.String userName) {
+	public void setUserName(String userName) {
 		_samlIdpSsoSession.setUserName(userName);
 	}
 
@@ -372,7 +372,7 @@ public class SamlIdpSsoSessionWrapper implements SamlIdpSsoSession,
 	* @param userUuid the user uuid of this saml idp sso session
 	*/
 	@Override
-	public void setUserUuid(java.lang.String userUuid) {
+	public void setUserUuid(String userUuid) {
 		_samlIdpSsoSession.setUserUuid(userUuid);
 	}
 
@@ -387,7 +387,7 @@ public class SamlIdpSsoSessionWrapper implements SamlIdpSsoSession,
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _samlIdpSsoSession.toString();
 	}
 
@@ -397,7 +397,7 @@ public class SamlIdpSsoSessionWrapper implements SamlIdpSsoSession,
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _samlIdpSsoSession.toXmlString();
 	}
 

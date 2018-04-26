@@ -56,9 +56,9 @@ import com.liferay.portal.reports.engine.console.service.SourceServiceUtil;
 public class SourceServiceHttp {
 	public static com.liferay.portal.reports.engine.console.model.Source addSource(
 		HttpPrincipal httpPrincipal, long groupId,
-		java.util.Map<java.util.Locale, java.lang.String> nameMap,
-		java.lang.String driverClassName, java.lang.String driverUrl,
-		java.lang.String driverUserName, java.lang.String driverPassword,
+		java.util.Map<java.util.Locale, String> nameMap,
+		String driverClassName, String driverUrl, String driverUserName,
+		String driverPassword,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -154,8 +154,8 @@ public class SourceServiceHttp {
 	}
 
 	public static java.util.List<com.liferay.portal.reports.engine.console.model.Source> getSources(
-		HttpPrincipal httpPrincipal, long groupId, java.lang.String name,
-		java.lang.String driverUrl, boolean andSearch, int start, int end,
+		HttpPrincipal httpPrincipal, long groupId, String name,
+		String driverUrl, boolean andSearch, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -188,8 +188,7 @@ public class SourceServiceHttp {
 	}
 
 	public static int getSourcesCount(HttpPrincipal httpPrincipal,
-		long groupId, java.lang.String name, java.lang.String driverUrl,
-		boolean andSearch) {
+		long groupId, String name, String driverUrl, boolean andSearch) {
 		try {
 			MethodKey methodKey = new MethodKey(SourceServiceUtil.class,
 					"getSourcesCount", _getSourcesCountParameterTypes4);
@@ -217,9 +216,9 @@ public class SourceServiceHttp {
 
 	public static com.liferay.portal.reports.engine.console.model.Source updateSource(
 		HttpPrincipal httpPrincipal, long sourceId,
-		java.util.Map<java.util.Locale, java.lang.String> nameMap,
-		java.lang.String driverClassName, java.lang.String driverUrl,
-		java.lang.String driverUserName, java.lang.String driverPassword,
+		java.util.Map<java.util.Locale, String> nameMap,
+		String driverClassName, String driverUrl, String driverUserName,
+		String driverPassword,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -254,9 +253,8 @@ public class SourceServiceHttp {
 
 	private static Log _log = LogFactoryUtil.getLog(SourceServiceHttp.class);
 	private static final Class<?>[] _addSourceParameterTypes0 = new Class[] {
-			long.class, java.util.Map.class, java.lang.String.class,
-			java.lang.String.class, java.lang.String.class,
-			java.lang.String.class,
+			long.class, java.util.Map.class, String.class, String.class,
+			String.class, String.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _deleteSourceParameterTypes1 = new Class[] {
@@ -266,18 +264,15 @@ public class SourceServiceHttp {
 			long.class
 		};
 	private static final Class<?>[] _getSourcesParameterTypes3 = new Class[] {
-			long.class, java.lang.String.class, java.lang.String.class,
-			boolean.class, int.class, int.class,
-			com.liferay.portal.kernel.util.OrderByComparator.class
+			long.class, String.class, String.class, boolean.class, int.class,
+			int.class, com.liferay.portal.kernel.util.OrderByComparator.class
 		};
 	private static final Class<?>[] _getSourcesCountParameterTypes4 = new Class[] {
-			long.class, java.lang.String.class, java.lang.String.class,
-			boolean.class
+			long.class, String.class, String.class, boolean.class
 		};
 	private static final Class<?>[] _updateSourceParameterTypes5 = new Class[] {
-			long.class, java.util.Map.class, java.lang.String.class,
-			java.lang.String.class, java.lang.String.class,
-			java.lang.String.class,
+			long.class, java.util.Map.class, String.class, String.class,
+			String.class, String.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 }

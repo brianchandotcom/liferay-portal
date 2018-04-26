@@ -48,12 +48,12 @@ public class SamlSpIdpConnectionLocalServiceWrapper
 
 	@Override
 	public com.liferay.saml.persistence.model.SamlSpIdpConnection addSamlSpIdpConnection(
-		java.lang.String samlIdpEntityId, boolean assertionSignatureRequired,
+		String samlIdpEntityId, boolean assertionSignatureRequired,
 		long clockSkew, boolean enabled, boolean forceAuthn,
-		boolean ldapImportEnabled, java.lang.String metadataUrl,
-		java.io.InputStream metadataXmlInputStream, java.lang.String name,
-		java.lang.String nameIdFormat, boolean signAuthnRequest,
-		java.lang.String userAttributeMappings,
+		boolean ldapImportEnabled, String metadataUrl,
+		java.io.InputStream metadataXmlInputStream, String name,
+		String nameIdFormat, boolean signAuthnRequest,
+		String userAttributeMappings,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _samlSpIdpConnectionLocalService.addSamlSpIdpConnection(samlIdpEntityId,
@@ -219,7 +219,7 @@ public class SamlSpIdpConnectionLocalServiceWrapper
 	* @return the OSGi service identifier
 	*/
 	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
+	public String getOSGiServiceIdentifier() {
 		return _samlSpIdpConnectionLocalService.getOSGiServiceIdentifier();
 	}
 
@@ -246,7 +246,7 @@ public class SamlSpIdpConnectionLocalServiceWrapper
 
 	@Override
 	public com.liferay.saml.persistence.model.SamlSpIdpConnection getSamlSpIdpConnection(
-		long companyId, java.lang.String samlIdpEntityId)
+		long companyId, String samlIdpEntityId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _samlSpIdpConnectionLocalService.getSamlSpIdpConnection(companyId,
 			samlIdpEntityId);
@@ -314,13 +314,12 @@ public class SamlSpIdpConnectionLocalServiceWrapper
 
 	@Override
 	public com.liferay.saml.persistence.model.SamlSpIdpConnection updateSamlSpIdpConnection(
-		long samlSpIdpConnectionId, java.lang.String samlIdpEntityId,
+		long samlSpIdpConnectionId, String samlIdpEntityId,
 		boolean assertionSignatureRequired, long clockSkew, boolean enabled,
-		boolean forceAuthn, boolean ldapImportEnabled,
-		java.lang.String metadataUrl,
-		java.io.InputStream metadataXmlInputStream, java.lang.String name,
-		java.lang.String nameIdFormat, boolean signAuthnRequest,
-		java.lang.String userAttributeMappings,
+		boolean forceAuthn, boolean ldapImportEnabled, String metadataUrl,
+		java.io.InputStream metadataXmlInputStream, String name,
+		String nameIdFormat, boolean signAuthnRequest,
+		String userAttributeMappings,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _samlSpIdpConnectionLocalService.updateSamlSpIdpConnection(samlSpIdpConnectionId,

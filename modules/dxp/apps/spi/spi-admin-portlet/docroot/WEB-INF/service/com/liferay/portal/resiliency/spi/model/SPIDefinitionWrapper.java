@@ -179,7 +179,7 @@ public class SPIDefinitionWrapper implements SPIDefinition,
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new SPIDefinitionWrapper((SPIDefinition)_spiDefinition.clone());
 	}
 
@@ -194,12 +194,12 @@ public class SPIDefinitionWrapper implements SPIDefinition,
 	}
 
 	@Override
-	public java.lang.String getAgentClassName() {
+	public String getAgentClassName() {
 		return _spiDefinition.getAgentClassName();
 	}
 
 	@Override
-	public java.lang.String getBaseDir() {
+	public String getBaseDir() {
 		return _spiDefinition.getBaseDir();
 	}
 
@@ -219,7 +219,7 @@ public class SPIDefinitionWrapper implements SPIDefinition,
 	* @return the connector address of this spi definition
 	*/
 	@Override
-	public java.lang.String getConnectorAddress() {
+	public String getConnectorAddress() {
 		return _spiDefinition.getConnectorAddress();
 	}
 
@@ -249,7 +249,7 @@ public class SPIDefinitionWrapper implements SPIDefinition,
 	* @return the description of this spi definition
 	*/
 	@Override
-	public java.lang.String getDescription() {
+	public String getDescription() {
 		return _spiDefinition.getDescription();
 	}
 
@@ -259,7 +259,7 @@ public class SPIDefinitionWrapper implements SPIDefinition,
 	}
 
 	@Override
-	public java.lang.String getJavaExecutable() {
+	public String getJavaExecutable() {
 		return _spiDefinition.getJavaExecutable();
 	}
 
@@ -269,7 +269,7 @@ public class SPIDefinitionWrapper implements SPIDefinition,
 	* @return the jvm arguments of this spi definition
 	*/
 	@Override
-	public java.lang.String getJvmArguments() {
+	public String getJvmArguments() {
 		return _spiDefinition.getJvmArguments();
 	}
 
@@ -304,12 +304,12 @@ public class SPIDefinitionWrapper implements SPIDefinition,
 	* @return the name of this spi definition
 	*/
 	@Override
-	public java.lang.String getName() {
+	public String getName() {
 		return _spiDefinition.getName();
 	}
 
 	@Override
-	public java.lang.String getNotificationRecipients() {
+	public String getNotificationRecipients() {
 		return _spiDefinition.getNotificationRecipients();
 	}
 
@@ -319,7 +319,7 @@ public class SPIDefinitionWrapper implements SPIDefinition,
 	}
 
 	@Override
-	public java.lang.String getPortalProperties() {
+	public String getPortalProperties() {
 		return _spiDefinition.getPortalProperties();
 	}
 
@@ -329,7 +329,7 @@ public class SPIDefinitionWrapper implements SPIDefinition,
 	* @return the portlet IDs of this spi definition
 	*/
 	@Override
-	public java.lang.String getPortletIds() {
+	public String getPortletIds() {
 		return _spiDefinition.getPortletIds();
 	}
 
@@ -364,7 +364,7 @@ public class SPIDefinitionWrapper implements SPIDefinition,
 	* @return the servlet context names of this spi definition
 	*/
 	@Override
-	public java.lang.String getServletContextNames() {
+	public String getServletContextNames() {
 		return _spiDefinition.getServletContextNames();
 	}
 
@@ -399,7 +399,7 @@ public class SPIDefinitionWrapper implements SPIDefinition,
 	}
 
 	@Override
-	public java.lang.String getStatusLabel() {
+	public String getStatusLabel() {
 		return _spiDefinition.getStatusLabel();
 	}
 
@@ -409,7 +409,7 @@ public class SPIDefinitionWrapper implements SPIDefinition,
 	* @return the status message of this spi definition
 	*/
 	@Override
-	public java.lang.String getStatusMessage() {
+	public String getStatusMessage() {
 		return _spiDefinition.getStatusMessage();
 	}
 
@@ -419,7 +419,7 @@ public class SPIDefinitionWrapper implements SPIDefinition,
 	* @return the type settings of this spi definition
 	*/
 	@Override
-	public java.lang.String getTypeSettings() {
+	public String getTypeSettings() {
 		return _spiDefinition.getTypeSettings();
 	}
 
@@ -429,13 +429,12 @@ public class SPIDefinitionWrapper implements SPIDefinition,
 	}
 
 	@Override
-	public java.lang.String getTypeSettingsProperty(java.lang.String key) {
+	public String getTypeSettingsProperty(String key) {
 		return _spiDefinition.getTypeSettingsProperty(key);
 	}
 
 	@Override
-	public java.lang.String getTypeSettingsProperty(java.lang.String key,
-		java.lang.String defaultValue) {
+	public String getTypeSettingsProperty(String key, String defaultValue) {
 		return _spiDefinition.getTypeSettingsProperty(key, defaultValue);
 	}
 
@@ -455,7 +454,7 @@ public class SPIDefinitionWrapper implements SPIDefinition,
 	* @return the user name of this spi definition
 	*/
 	@Override
-	public java.lang.String getUserName() {
+	public String getUserName() {
 		return _spiDefinition.getUserName();
 	}
 
@@ -465,7 +464,7 @@ public class SPIDefinitionWrapper implements SPIDefinition,
 	* @return the user uuid of this spi definition
 	*/
 	@Override
-	public java.lang.String getUserUuid() {
+	public String getUserUuid() {
 		return _spiDefinition.getUserUuid();
 	}
 
@@ -520,7 +519,7 @@ public class SPIDefinitionWrapper implements SPIDefinition,
 	* @param connectorAddress the connector address of this spi definition
 	*/
 	@Override
-	public void setConnectorAddress(java.lang.String connectorAddress) {
+	public void setConnectorAddress(String connectorAddress) {
 		_spiDefinition.setConnectorAddress(connectorAddress);
 	}
 
@@ -550,7 +549,7 @@ public class SPIDefinitionWrapper implements SPIDefinition,
 	* @param description the description of this spi definition
 	*/
 	@Override
-	public void setDescription(java.lang.String description) {
+	public void setDescription(String description) {
 		_spiDefinition.setDescription(description);
 	}
 
@@ -576,7 +575,7 @@ public class SPIDefinitionWrapper implements SPIDefinition,
 	* @param jvmArguments the jvm arguments of this spi definition
 	*/
 	@Override
-	public void setJvmArguments(java.lang.String jvmArguments) {
+	public void setJvmArguments(String jvmArguments) {
 		_spiDefinition.setJvmArguments(jvmArguments);
 	}
 
@@ -601,7 +600,7 @@ public class SPIDefinitionWrapper implements SPIDefinition,
 	* @param name the name of this spi definition
 	*/
 	@Override
-	public void setName(java.lang.String name) {
+	public void setName(String name) {
 		_spiDefinition.setName(name);
 	}
 
@@ -611,13 +610,12 @@ public class SPIDefinitionWrapper implements SPIDefinition,
 	}
 
 	@Override
-	public void setNotificationRecipients(
-		java.lang.String notificationRecipients) {
+	public void setNotificationRecipients(String notificationRecipients) {
 		_spiDefinition.setNotificationRecipients(notificationRecipients);
 	}
 
 	@Override
-	public void setPortalProperties(java.lang.String portalProperties) {
+	public void setPortalProperties(String portalProperties) {
 		_spiDefinition.setPortalProperties(portalProperties);
 	}
 
@@ -627,7 +625,7 @@ public class SPIDefinitionWrapper implements SPIDefinition,
 	* @param portletIds the portlet IDs of this spi definition
 	*/
 	@Override
-	public void setPortletIds(java.lang.String portletIds) {
+	public void setPortletIds(String portletIds) {
 		_spiDefinition.setPortletIds(portletIds);
 	}
 
@@ -657,7 +655,7 @@ public class SPIDefinitionWrapper implements SPIDefinition,
 	* @param servletContextNames the servlet context names of this spi definition
 	*/
 	@Override
-	public void setServletContextNames(java.lang.String servletContextNames) {
+	public void setServletContextNames(String servletContextNames) {
 		_spiDefinition.setServletContextNames(servletContextNames);
 	}
 
@@ -687,7 +685,7 @@ public class SPIDefinitionWrapper implements SPIDefinition,
 	* @param statusMessage the status message of this spi definition
 	*/
 	@Override
-	public void setStatusMessage(java.lang.String statusMessage) {
+	public void setStatusMessage(String statusMessage) {
 		_spiDefinition.setStatusMessage(statusMessage);
 	}
 
@@ -697,7 +695,7 @@ public class SPIDefinitionWrapper implements SPIDefinition,
 	* @param typeSettings the type settings of this spi definition
 	*/
 	@Override
-	public void setTypeSettings(java.lang.String typeSettings) {
+	public void setTypeSettings(String typeSettings) {
 		_spiDefinition.setTypeSettings(typeSettings);
 	}
 
@@ -723,7 +721,7 @@ public class SPIDefinitionWrapper implements SPIDefinition,
 	* @param userName the user name of this spi definition
 	*/
 	@Override
-	public void setUserName(java.lang.String userName) {
+	public void setUserName(String userName) {
 		_spiDefinition.setUserName(userName);
 	}
 
@@ -733,7 +731,7 @@ public class SPIDefinitionWrapper implements SPIDefinition,
 	* @param userUuid the user uuid of this spi definition
 	*/
 	@Override
-	public void setUserUuid(java.lang.String userUuid) {
+	public void setUserUuid(String userUuid) {
 		_spiDefinition.setUserUuid(userUuid);
 	}
 
@@ -748,7 +746,7 @@ public class SPIDefinitionWrapper implements SPIDefinition,
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _spiDefinition.toString();
 	}
 
@@ -758,7 +756,7 @@ public class SPIDefinitionWrapper implements SPIDefinition,
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _spiDefinition.toXmlString();
 	}
 

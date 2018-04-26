@@ -72,8 +72,8 @@ public interface SamlSpMessageLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.REINDEX)
 	public SamlSpMessage addSamlSpMessage(SamlSpMessage samlSpMessage);
 
-	public SamlSpMessage addSamlSpMessage(java.lang.String samlIdpEntityId,
-		java.lang.String samlIdpResponseKey, Date expirationDate,
+	public SamlSpMessage addSamlSpMessage(String samlIdpEntityId,
+		String samlIdpResponseKey, Date expirationDate,
 		ServiceContext serviceContext);
 
 	/**
@@ -177,8 +177,8 @@ public interface SamlSpMessageLocalService extends BaseLocalService,
 	public SamlSpMessage fetchSamlSpMessage(long samlSpMessageId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public SamlSpMessage fetchSamlSpMessage(java.lang.String samlIdpEntityId,
-		java.lang.String samlIdpResponseKey);
+	public SamlSpMessage fetchSamlSpMessage(String samlIdpEntityId,
+		String samlIdpResponseKey);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
@@ -191,7 +191,7 @@ public interface SamlSpMessageLocalService extends BaseLocalService,
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -210,8 +210,8 @@ public interface SamlSpMessageLocalService extends BaseLocalService,
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public SamlSpMessage getSamlSpMessage(java.lang.String samlIdpEntityId,
-		java.lang.String samlIdpResponseKey) throws PortalException;
+	public SamlSpMessage getSamlSpMessage(String samlIdpEntityId,
+		String samlIdpResponseKey) throws PortalException;
 
 	/**
 	* Returns a range of all the saml sp messages.

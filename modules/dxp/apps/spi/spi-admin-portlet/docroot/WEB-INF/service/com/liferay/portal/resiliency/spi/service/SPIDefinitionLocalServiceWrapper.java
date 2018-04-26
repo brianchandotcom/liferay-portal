@@ -36,10 +36,9 @@ public class SPIDefinitionLocalServiceWrapper
 
 	@Override
 	public com.liferay.portal.resiliency.spi.model.SPIDefinition addSPIDefinition(
-		long userId, java.lang.String name, java.lang.String connectorAddress,
-		int connectorPort, java.lang.String description,
-		java.lang.String jvmArguments, java.lang.String portletIds,
-		java.lang.String servletContextNames, java.lang.String typeSettings,
+		long userId, String name, String connectorAddress, int connectorPort,
+		String description, String jvmArguments, String portletIds,
+		String servletContextNames, String typeSettings,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _spiDefinitionLocalService.addSPIDefinition(userId, name,
@@ -216,7 +215,7 @@ public class SPIDefinitionLocalServiceWrapper
 	* @return the OSGi service identifier
 	*/
 	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
+	public String getOSGiServiceIdentifier() {
 		return _spiDefinitionLocalService.getOSGiServiceIdentifier();
 	}
 
@@ -248,7 +247,7 @@ public class SPIDefinitionLocalServiceWrapper
 
 	@Override
 	public com.liferay.portal.resiliency.spi.model.SPIDefinition getSPIDefinition(
-		long companyId, java.lang.String name)
+		long companyId, String name)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _spiDefinitionLocalService.getSPIDefinition(companyId, name);
 	}
@@ -333,7 +332,7 @@ public class SPIDefinitionLocalServiceWrapper
 
 	@Override
 	public com.liferay.portal.resiliency.spi.model.SPIDefinition updateSPIDefinition(
-		long spiDefinitionId, int status, java.lang.String statusMessage)
+		long spiDefinitionId, int status, String statusMessage)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _spiDefinitionLocalService.updateSPIDefinition(spiDefinitionId,
 			status, statusMessage);
@@ -341,10 +340,9 @@ public class SPIDefinitionLocalServiceWrapper
 
 	@Override
 	public com.liferay.portal.resiliency.spi.model.SPIDefinition updateSPIDefinition(
-		long userId, long spiDefinitionId, java.lang.String connectorAddress,
-		int connectorPort, java.lang.String description,
-		java.lang.String jvmArguments, java.lang.String portletIds,
-		java.lang.String servletContextNames, java.lang.String typeSettings,
+		long userId, long spiDefinitionId, String connectorAddress,
+		int connectorPort, String description, String jvmArguments,
+		String portletIds, String servletContextNames, String typeSettings,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _spiDefinitionLocalService.updateSPIDefinition(userId,
@@ -367,7 +365,7 @@ public class SPIDefinitionLocalServiceWrapper
 
 	@Override
 	public com.liferay.portal.resiliency.spi.model.SPIDefinition updateTypeSettings(
-		long userId, long spiDefinitionId, java.lang.String typeSettings,
+		long userId, long spiDefinitionId, String typeSettings,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _spiDefinitionLocalService.updateTypeSettings(userId,

@@ -102,7 +102,7 @@ public class SamlSpAuthRequestWrapper implements SamlSpAuthRequest,
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new SamlSpAuthRequestWrapper((SamlSpAuthRequest)_samlSpAuthRequest.clone());
 	}
 
@@ -157,7 +157,7 @@ public class SamlSpAuthRequestWrapper implements SamlSpAuthRequest,
 	* @return the saml idp entity ID of this saml sp auth request
 	*/
 	@Override
-	public java.lang.String getSamlIdpEntityId() {
+	public String getSamlIdpEntityId() {
 		return _samlSpAuthRequest.getSamlIdpEntityId();
 	}
 
@@ -177,7 +177,7 @@ public class SamlSpAuthRequestWrapper implements SamlSpAuthRequest,
 	* @return the saml sp auth request key of this saml sp auth request
 	*/
 	@Override
-	public java.lang.String getSamlSpAuthRequestKey() {
+	public String getSamlSpAuthRequestKey() {
 		return _samlSpAuthRequest.getSamlSpAuthRequestKey();
 	}
 
@@ -273,7 +273,7 @@ public class SamlSpAuthRequestWrapper implements SamlSpAuthRequest,
 	* @param samlIdpEntityId the saml idp entity ID of this saml sp auth request
 	*/
 	@Override
-	public void setSamlIdpEntityId(java.lang.String samlIdpEntityId) {
+	public void setSamlIdpEntityId(String samlIdpEntityId) {
 		_samlSpAuthRequest.setSamlIdpEntityId(samlIdpEntityId);
 	}
 
@@ -293,7 +293,7 @@ public class SamlSpAuthRequestWrapper implements SamlSpAuthRequest,
 	* @param samlSpAuthRequestKey the saml sp auth request key of this saml sp auth request
 	*/
 	@Override
-	public void setSamlSpAuthRequestKey(java.lang.String samlSpAuthRequestKey) {
+	public void setSamlSpAuthRequestKey(String samlSpAuthRequestKey) {
 		_samlSpAuthRequest.setSamlSpAuthRequestKey(samlSpAuthRequestKey);
 	}
 
@@ -308,7 +308,7 @@ public class SamlSpAuthRequestWrapper implements SamlSpAuthRequest,
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _samlSpAuthRequest.toString();
 	}
 
@@ -318,7 +318,7 @@ public class SamlSpAuthRequestWrapper implements SamlSpAuthRequest,
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _samlSpAuthRequest.toXmlString();
 	}
 

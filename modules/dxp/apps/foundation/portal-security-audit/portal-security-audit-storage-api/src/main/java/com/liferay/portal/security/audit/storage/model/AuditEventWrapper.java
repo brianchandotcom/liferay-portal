@@ -170,7 +170,7 @@ public class AuditEventWrapper implements AuditEvent, ModelWrapper<AuditEvent> {
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new AuditEventWrapper((AuditEvent)_auditEvent.clone());
 	}
 
@@ -185,7 +185,7 @@ public class AuditEventWrapper implements AuditEvent, ModelWrapper<AuditEvent> {
 	* @return the additional info of this audit event
 	*/
 	@Override
-	public java.lang.String getAdditionalInfo() {
+	public String getAdditionalInfo() {
 		return _auditEvent.getAdditionalInfo();
 	}
 
@@ -205,7 +205,7 @@ public class AuditEventWrapper implements AuditEvent, ModelWrapper<AuditEvent> {
 	* @return the class name of this audit event
 	*/
 	@Override
-	public java.lang.String getClassName() {
+	public String getClassName() {
 		return _auditEvent.getClassName();
 	}
 
@@ -215,7 +215,7 @@ public class AuditEventWrapper implements AuditEvent, ModelWrapper<AuditEvent> {
 	* @return the class pk of this audit event
 	*/
 	@Override
-	public java.lang.String getClassPK() {
+	public String getClassPK() {
 		return _auditEvent.getClassPK();
 	}
 
@@ -225,7 +225,7 @@ public class AuditEventWrapper implements AuditEvent, ModelWrapper<AuditEvent> {
 	* @return the client host of this audit event
 	*/
 	@Override
-	public java.lang.String getClientHost() {
+	public String getClientHost() {
 		return _auditEvent.getClientHost();
 	}
 
@@ -235,7 +235,7 @@ public class AuditEventWrapper implements AuditEvent, ModelWrapper<AuditEvent> {
 	* @return the client ip of this audit event
 	*/
 	@Override
-	public java.lang.String getClientIP() {
+	public String getClientIP() {
 		return _auditEvent.getClientIP();
 	}
 
@@ -265,7 +265,7 @@ public class AuditEventWrapper implements AuditEvent, ModelWrapper<AuditEvent> {
 	* @return the event type of this audit event
 	*/
 	@Override
-	public java.lang.String getEventType() {
+	public String getEventType() {
 		return _auditEvent.getEventType();
 	}
 
@@ -280,7 +280,7 @@ public class AuditEventWrapper implements AuditEvent, ModelWrapper<AuditEvent> {
 	* @return the message of this audit event
 	*/
 	@Override
-	public java.lang.String getMessage() {
+	public String getMessage() {
 		return _auditEvent.getMessage();
 	}
 
@@ -305,7 +305,7 @@ public class AuditEventWrapper implements AuditEvent, ModelWrapper<AuditEvent> {
 	* @return the server name of this audit event
 	*/
 	@Override
-	public java.lang.String getServerName() {
+	public String getServerName() {
 		return _auditEvent.getServerName();
 	}
 
@@ -325,7 +325,7 @@ public class AuditEventWrapper implements AuditEvent, ModelWrapper<AuditEvent> {
 	* @return the session ID of this audit event
 	*/
 	@Override
-	public java.lang.String getSessionID() {
+	public String getSessionID() {
 		return _auditEvent.getSessionID();
 	}
 
@@ -345,7 +345,7 @@ public class AuditEventWrapper implements AuditEvent, ModelWrapper<AuditEvent> {
 	* @return the user name of this audit event
 	*/
 	@Override
-	public java.lang.String getUserName() {
+	public String getUserName() {
 		return _auditEvent.getUserName();
 	}
 
@@ -355,7 +355,7 @@ public class AuditEventWrapper implements AuditEvent, ModelWrapper<AuditEvent> {
 	* @return the user uuid of this audit event
 	*/
 	@Override
-	public java.lang.String getUserUuid() {
+	public String getUserUuid() {
 		return _auditEvent.getUserUuid();
 	}
 
@@ -390,7 +390,7 @@ public class AuditEventWrapper implements AuditEvent, ModelWrapper<AuditEvent> {
 	* @param additionalInfo the additional info of this audit event
 	*/
 	@Override
-	public void setAdditionalInfo(java.lang.String additionalInfo) {
+	public void setAdditionalInfo(String additionalInfo) {
 		_auditEvent.setAdditionalInfo(additionalInfo);
 	}
 
@@ -415,7 +415,7 @@ public class AuditEventWrapper implements AuditEvent, ModelWrapper<AuditEvent> {
 	* @param className the class name of this audit event
 	*/
 	@Override
-	public void setClassName(java.lang.String className) {
+	public void setClassName(String className) {
 		_auditEvent.setClassName(className);
 	}
 
@@ -425,7 +425,7 @@ public class AuditEventWrapper implements AuditEvent, ModelWrapper<AuditEvent> {
 	* @param classPK the class pk of this audit event
 	*/
 	@Override
-	public void setClassPK(java.lang.String classPK) {
+	public void setClassPK(String classPK) {
 		_auditEvent.setClassPK(classPK);
 	}
 
@@ -435,7 +435,7 @@ public class AuditEventWrapper implements AuditEvent, ModelWrapper<AuditEvent> {
 	* @param clientHost the client host of this audit event
 	*/
 	@Override
-	public void setClientHost(java.lang.String clientHost) {
+	public void setClientHost(String clientHost) {
 		_auditEvent.setClientHost(clientHost);
 	}
 
@@ -445,7 +445,7 @@ public class AuditEventWrapper implements AuditEvent, ModelWrapper<AuditEvent> {
 	* @param clientIP the client ip of this audit event
 	*/
 	@Override
-	public void setClientIP(java.lang.String clientIP) {
+	public void setClientIP(String clientIP) {
 		_auditEvent.setClientIP(clientIP);
 	}
 
@@ -475,7 +475,7 @@ public class AuditEventWrapper implements AuditEvent, ModelWrapper<AuditEvent> {
 	* @param eventType the event type of this audit event
 	*/
 	@Override
-	public void setEventType(java.lang.String eventType) {
+	public void setEventType(String eventType) {
 		_auditEvent.setEventType(eventType);
 	}
 
@@ -501,7 +501,7 @@ public class AuditEventWrapper implements AuditEvent, ModelWrapper<AuditEvent> {
 	* @param message the message of this audit event
 	*/
 	@Override
-	public void setMessage(java.lang.String message) {
+	public void setMessage(String message) {
 		_auditEvent.setMessage(message);
 	}
 
@@ -531,7 +531,7 @@ public class AuditEventWrapper implements AuditEvent, ModelWrapper<AuditEvent> {
 	* @param serverName the server name of this audit event
 	*/
 	@Override
-	public void setServerName(java.lang.String serverName) {
+	public void setServerName(String serverName) {
 		_auditEvent.setServerName(serverName);
 	}
 
@@ -551,7 +551,7 @@ public class AuditEventWrapper implements AuditEvent, ModelWrapper<AuditEvent> {
 	* @param sessionID the session ID of this audit event
 	*/
 	@Override
-	public void setSessionID(java.lang.String sessionID) {
+	public void setSessionID(String sessionID) {
 		_auditEvent.setSessionID(sessionID);
 	}
 
@@ -571,7 +571,7 @@ public class AuditEventWrapper implements AuditEvent, ModelWrapper<AuditEvent> {
 	* @param userName the user name of this audit event
 	*/
 	@Override
-	public void setUserName(java.lang.String userName) {
+	public void setUserName(String userName) {
 		_auditEvent.setUserName(userName);
 	}
 
@@ -581,7 +581,7 @@ public class AuditEventWrapper implements AuditEvent, ModelWrapper<AuditEvent> {
 	* @param userUuid the user uuid of this audit event
 	*/
 	@Override
-	public void setUserUuid(java.lang.String userUuid) {
+	public void setUserUuid(String userUuid) {
 		_auditEvent.setUserUuid(userUuid);
 	}
 
@@ -596,7 +596,7 @@ public class AuditEventWrapper implements AuditEvent, ModelWrapper<AuditEvent> {
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _auditEvent.toString();
 	}
 
@@ -606,7 +606,7 @@ public class AuditEventWrapper implements AuditEvent, ModelWrapper<AuditEvent> {
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _auditEvent.toXmlString();
 	}
 

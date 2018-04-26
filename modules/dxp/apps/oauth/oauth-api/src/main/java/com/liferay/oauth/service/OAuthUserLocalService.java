@@ -62,8 +62,8 @@ public interface OAuthUserLocalService extends BaseLocalService,
 	 * Never modify or reference this interface directly. Always use {@link OAuthUserLocalServiceUtil} to access the o auth user local service. Add custom service methods to {@link com.liferay.oauth.service.impl.OAuthUserLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	public OAuthUser addOAuthUser(long userId, long oAuthApplicationId,
-		java.lang.String accessToken, java.lang.String accessSecret,
-		ServiceContext serviceContext) throws PortalException;
+		String accessToken, String accessSecret, ServiceContext serviceContext)
+		throws PortalException;
 
 	/**
 	* Adds the o auth user to the database. Also notifies the appropriate model listeners.
@@ -181,7 +181,7 @@ public interface OAuthUserLocalService extends BaseLocalService,
 	public OAuthUser fetchOAuthUser(long userId, long oAuthApplicationId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public OAuthUser fetchOAuthUser(java.lang.String accessToken);
+	public OAuthUser fetchOAuthUser(String accessToken);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
@@ -212,8 +212,7 @@ public interface OAuthUserLocalService extends BaseLocalService,
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public OAuthUser getOAuthUser(java.lang.String accessToken)
-		throws PortalException;
+	public OAuthUser getOAuthUser(String accessToken) throws PortalException;
 
 	/**
 	* Returns a range of all the o auth users.
@@ -242,7 +241,7 @@ public interface OAuthUserLocalService extends BaseLocalService,
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -257,8 +256,8 @@ public interface OAuthUserLocalService extends BaseLocalService,
 	public int getUserOAuthUsersCount(long userId);
 
 	public OAuthUser updateOAuthUser(long userId, long oAuthApplicationId,
-		java.lang.String accessToken, java.lang.String accessSecret,
-		ServiceContext serviceContext) throws PortalException;
+		String accessToken, String accessSecret, ServiceContext serviceContext)
+		throws PortalException;
 
 	/**
 	* Updates the o auth user in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.

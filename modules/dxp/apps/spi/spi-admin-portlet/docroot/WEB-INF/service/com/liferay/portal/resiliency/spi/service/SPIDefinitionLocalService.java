@@ -62,11 +62,10 @@ public interface SPIDefinitionLocalService extends BaseLocalService,
 	 *
 	 * Never modify or reference this interface directly. Always use {@link SPIDefinitionLocalServiceUtil} to access the spi definition local service. Add custom service methods to {@link com.liferay.portal.resiliency.spi.service.impl.SPIDefinitionLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public SPIDefinition addSPIDefinition(long userId, java.lang.String name,
-		java.lang.String connectorAddress, int connectorPort,
-		java.lang.String description, java.lang.String jvmArguments,
-		java.lang.String portletIds, java.lang.String servletContextNames,
-		java.lang.String typeSettings, ServiceContext serviceContext)
+	public SPIDefinition addSPIDefinition(long userId, String name,
+		String connectorAddress, int connectorPort, String description,
+		String jvmArguments, String portletIds, String servletContextNames,
+		String typeSettings, ServiceContext serviceContext)
 		throws PortalException;
 
 	/**
@@ -189,7 +188,7 @@ public interface SPIDefinitionLocalService extends BaseLocalService,
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -211,7 +210,7 @@ public interface SPIDefinitionLocalService extends BaseLocalService,
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public SPIDefinition getSPIDefinition(long companyId, java.lang.String name)
+	public SPIDefinition getSPIDefinition(long companyId, String name)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -261,13 +260,12 @@ public interface SPIDefinitionLocalService extends BaseLocalService,
 		throws PortalException;
 
 	public SPIDefinition updateSPIDefinition(long spiDefinitionId, int status,
-		java.lang.String statusMessage) throws PortalException;
+		String statusMessage) throws PortalException;
 
 	public SPIDefinition updateSPIDefinition(long userId, long spiDefinitionId,
-		java.lang.String connectorAddress, int connectorPort,
-		java.lang.String description, java.lang.String jvmArguments,
-		java.lang.String portletIds, java.lang.String servletContextNames,
-		java.lang.String typeSettings, ServiceContext serviceContext)
+		String connectorAddress, int connectorPort, String description,
+		String jvmArguments, String portletIds, String servletContextNames,
+		String typeSettings, ServiceContext serviceContext)
 		throws PortalException;
 
 	/**
@@ -280,6 +278,6 @@ public interface SPIDefinitionLocalService extends BaseLocalService,
 	public SPIDefinition updateSPIDefinition(SPIDefinition spiDefinition);
 
 	public SPIDefinition updateTypeSettings(long userId, long spiDefinitionId,
-		java.lang.String typeSettings, ServiceContext serviceContext)
+		String typeSettings, ServiceContext serviceContext)
 		throws PortalException;
 }

@@ -82,11 +82,10 @@ public interface KaleoProcessService extends BaseService {
 	* @throws PortalException if a portal exception occurred
 	*/
 	public KaleoProcess addKaleoProcess(long groupId, long ddmStructureId,
-		Map<Locale, java.lang.String> nameMap,
-		Map<Locale, java.lang.String> descriptionMap, long ddmTemplateId,
-		java.lang.String workflowDefinitionName, int workflowDefinitionVersion,
-		KaleoTaskFormPairs kaleoTaskFormPairs, ServiceContext serviceContext)
-		throws PortalException;
+		Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
+		long ddmTemplateId, String workflowDefinitionName,
+		int workflowDefinitionVersion, KaleoTaskFormPairs kaleoTaskFormPairs,
+		ServiceContext serviceContext) throws PortalException;
 
 	/**
 	* Deletes the Kaleo process and its resources.
@@ -115,7 +114,7 @@ public interface KaleoProcessService extends BaseService {
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	/**
 	* Returns an ordered range of all Kaleo processes matching the parameters,
@@ -145,8 +144,8 @@ public interface KaleoProcessService extends BaseService {
 	* @return the range of matching Kaleo processes ordered by the comparator
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<KaleoProcess> search(long groupId, java.lang.String keywords,
-		int start, int end, OrderByComparator orderByComparator);
+	public List<KaleoProcess> search(long groupId, String keywords, int start,
+		int end, OrderByComparator orderByComparator);
 
 	/**
 	* Returns the number of Kaleo processes matching the parameters. The
@@ -162,7 +161,7 @@ public interface KaleoProcessService extends BaseService {
 	* @return the number of matching Kaleo processes
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int searchCount(long groupId, java.lang.String keywords);
+	public int searchCount(long groupId, String keywords);
 
 	/**
 	* Updates the Kaleo process.
@@ -187,9 +186,9 @@ public interface KaleoProcessService extends BaseService {
 	* @throws PortalException if a portal exception occurred
 	*/
 	public KaleoProcess updateKaleoProcess(long kaleoProcessId,
-		long ddmStructureId, Map<Locale, java.lang.String> nameMap,
-		Map<Locale, java.lang.String> descriptionMap, long ddmTemplateId,
-		java.lang.String workflowDefinitionName, int workflowDefinitionVersion,
+		long ddmStructureId, Map<Locale, String> nameMap,
+		Map<Locale, String> descriptionMap, long ddmTemplateId,
+		String workflowDefinitionName, int workflowDefinitionVersion,
 		KaleoTaskFormPairs kaleoTaskFormPairs, ServiceContext serviceContext)
 		throws PortalException;
 }

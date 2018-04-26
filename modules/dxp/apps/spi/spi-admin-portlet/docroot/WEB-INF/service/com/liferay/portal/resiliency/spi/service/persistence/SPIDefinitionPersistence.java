@@ -242,7 +242,7 @@ public interface SPIDefinitionPersistence extends BasePersistence<SPIDefinition>
 	* @return the matching spi definition
 	* @throws NoSuchDefinitionException if a matching spi definition could not be found
 	*/
-	public SPIDefinition findByC_N(long companyId, java.lang.String name)
+	public SPIDefinition findByC_N(long companyId, String name)
 		throws NoSuchDefinitionException;
 
 	/**
@@ -252,7 +252,7 @@ public interface SPIDefinitionPersistence extends BasePersistence<SPIDefinition>
 	* @param name the name
 	* @return the matching spi definition, or <code>null</code> if a matching spi definition could not be found
 	*/
-	public SPIDefinition fetchByC_N(long companyId, java.lang.String name);
+	public SPIDefinition fetchByC_N(long companyId, String name);
 
 	/**
 	* Returns the spi definition where companyId = &#63; and name = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -262,7 +262,7 @@ public interface SPIDefinitionPersistence extends BasePersistence<SPIDefinition>
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching spi definition, or <code>null</code> if a matching spi definition could not be found
 	*/
-	public SPIDefinition fetchByC_N(long companyId, java.lang.String name,
+	public SPIDefinition fetchByC_N(long companyId, String name,
 		boolean retrieveFromCache);
 
 	/**
@@ -272,7 +272,7 @@ public interface SPIDefinitionPersistence extends BasePersistence<SPIDefinition>
 	* @param name the name
 	* @return the spi definition that was removed
 	*/
-	public SPIDefinition removeByC_N(long companyId, java.lang.String name)
+	public SPIDefinition removeByC_N(long companyId, String name)
 		throws NoSuchDefinitionException;
 
 	/**
@@ -282,7 +282,7 @@ public interface SPIDefinitionPersistence extends BasePersistence<SPIDefinition>
 	* @param name the name
 	* @return the number of matching spi definitions
 	*/
-	public int countByC_N(long companyId, java.lang.String name);
+	public int countByC_N(long companyId, String name);
 
 	/**
 	* Returns all the spi definitions where companyId = &#63; and status = &#63;.
@@ -633,8 +633,8 @@ public interface SPIDefinitionPersistence extends BasePersistence<SPIDefinition>
 	* @return the matching spi definition
 	* @throws NoSuchDefinitionException if a matching spi definition could not be found
 	*/
-	public SPIDefinition findByCA_CP(java.lang.String connectorAddress,
-		int connectorPort) throws NoSuchDefinitionException;
+	public SPIDefinition findByCA_CP(String connectorAddress, int connectorPort)
+		throws NoSuchDefinitionException;
 
 	/**
 	* Returns the spi definition where connectorAddress = &#63; and connectorPort = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
@@ -643,8 +643,7 @@ public interface SPIDefinitionPersistence extends BasePersistence<SPIDefinition>
 	* @param connectorPort the connector port
 	* @return the matching spi definition, or <code>null</code> if a matching spi definition could not be found
 	*/
-	public SPIDefinition fetchByCA_CP(java.lang.String connectorAddress,
-		int connectorPort);
+	public SPIDefinition fetchByCA_CP(String connectorAddress, int connectorPort);
 
 	/**
 	* Returns the spi definition where connectorAddress = &#63; and connectorPort = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -654,7 +653,7 @@ public interface SPIDefinitionPersistence extends BasePersistence<SPIDefinition>
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching spi definition, or <code>null</code> if a matching spi definition could not be found
 	*/
-	public SPIDefinition fetchByCA_CP(java.lang.String connectorAddress,
+	public SPIDefinition fetchByCA_CP(String connectorAddress,
 		int connectorPort, boolean retrieveFromCache);
 
 	/**
@@ -664,7 +663,7 @@ public interface SPIDefinitionPersistence extends BasePersistence<SPIDefinition>
 	* @param connectorPort the connector port
 	* @return the spi definition that was removed
 	*/
-	public SPIDefinition removeByCA_CP(java.lang.String connectorAddress,
+	public SPIDefinition removeByCA_CP(String connectorAddress,
 		int connectorPort) throws NoSuchDefinitionException;
 
 	/**
@@ -674,7 +673,7 @@ public interface SPIDefinitionPersistence extends BasePersistence<SPIDefinition>
 	* @param connectorPort the connector port
 	* @return the number of matching spi definitions
 	*/
-	public int countByCA_CP(java.lang.String connectorAddress, int connectorPort);
+	public int countByCA_CP(String connectorAddress, int connectorPort);
 
 	/**
 	* Caches the spi definition in the entity cache if it is enabled.

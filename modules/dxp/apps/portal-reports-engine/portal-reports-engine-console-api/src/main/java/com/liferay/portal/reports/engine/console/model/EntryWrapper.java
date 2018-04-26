@@ -212,7 +212,7 @@ public class EntryWrapper implements Entry, ModelWrapper<Entry> {
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new EntryWrapper((Entry)_entry.clone());
 	}
 
@@ -222,12 +222,12 @@ public class EntryWrapper implements Entry, ModelWrapper<Entry> {
 	}
 
 	@Override
-	public java.lang.String getAttachmentsDir() {
+	public String getAttachmentsDir() {
 		return _entry.getAttachmentsDir();
 	}
 
 	@Override
-	public java.lang.String[] getAttachmentsFiles()
+	public String[] getAttachmentsFiles()
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _entry.getAttachmentsFiles();
 	}
@@ -268,7 +268,7 @@ public class EntryWrapper implements Entry, ModelWrapper<Entry> {
 	* @return the email delivery of this entry
 	*/
 	@Override
-	public java.lang.String getEmailDelivery() {
+	public String getEmailDelivery() {
 		return _entry.getEmailDelivery();
 	}
 
@@ -278,7 +278,7 @@ public class EntryWrapper implements Entry, ModelWrapper<Entry> {
 	* @return the email notifications of this entry
 	*/
 	@Override
-	public java.lang.String getEmailNotifications() {
+	public String getEmailNotifications() {
 		return _entry.getEmailNotifications();
 	}
 
@@ -308,7 +308,7 @@ public class EntryWrapper implements Entry, ModelWrapper<Entry> {
 	* @return the error message of this entry
 	*/
 	@Override
-	public java.lang.String getErrorMessage() {
+	public String getErrorMessage() {
 		return _entry.getErrorMessage();
 	}
 
@@ -323,7 +323,7 @@ public class EntryWrapper implements Entry, ModelWrapper<Entry> {
 	* @return the format of this entry
 	*/
 	@Override
-	public java.lang.String getFormat() {
+	public String getFormat() {
 		return _entry.getFormat();
 	}
 
@@ -338,7 +338,7 @@ public class EntryWrapper implements Entry, ModelWrapper<Entry> {
 	}
 
 	@Override
-	public java.lang.String getJobName() {
+	public String getJobName() {
 		return _entry.getJobName();
 	}
 
@@ -358,7 +358,7 @@ public class EntryWrapper implements Entry, ModelWrapper<Entry> {
 	* @return the page url of this entry
 	*/
 	@Override
-	public java.lang.String getPageURL() {
+	public String getPageURL() {
 		return _entry.getPageURL();
 	}
 
@@ -368,7 +368,7 @@ public class EntryWrapper implements Entry, ModelWrapper<Entry> {
 	* @return the portlet ID of this entry
 	*/
 	@Override
-	public java.lang.String getPortletId() {
+	public String getPortletId() {
 		return _entry.getPortletId();
 	}
 
@@ -393,7 +393,7 @@ public class EntryWrapper implements Entry, ModelWrapper<Entry> {
 	* @return the recurrence of this entry
 	*/
 	@Override
-	public java.lang.String getRecurrence() {
+	public String getRecurrence() {
 		return _entry.getRecurrence();
 	}
 
@@ -418,7 +418,7 @@ public class EntryWrapper implements Entry, ModelWrapper<Entry> {
 	* @return the report parameters of this entry
 	*/
 	@Override
-	public java.lang.String getReportParameters() {
+	public String getReportParameters() {
 		return _entry.getReportParameters();
 	}
 
@@ -433,7 +433,7 @@ public class EntryWrapper implements Entry, ModelWrapper<Entry> {
 	}
 
 	@Override
-	public java.lang.String getSchedulerRequestName() {
+	public String getSchedulerRequestName() {
 		return _entry.getSchedulerRequestName();
 	}
 
@@ -453,7 +453,7 @@ public class EntryWrapper implements Entry, ModelWrapper<Entry> {
 	* @return the status of this entry
 	*/
 	@Override
-	public java.lang.String getStatus() {
+	public String getStatus() {
 		return _entry.getStatus();
 	}
 
@@ -473,7 +473,7 @@ public class EntryWrapper implements Entry, ModelWrapper<Entry> {
 	* @return the user name of this entry
 	*/
 	@Override
-	public java.lang.String getUserName() {
+	public String getUserName() {
 		return _entry.getUserName();
 	}
 
@@ -483,7 +483,7 @@ public class EntryWrapper implements Entry, ModelWrapper<Entry> {
 	* @return the user uuid of this entry
 	*/
 	@Override
-	public java.lang.String getUserUuid() {
+	public String getUserUuid() {
 		return _entry.getUserUuid();
 	}
 
@@ -573,7 +573,7 @@ public class EntryWrapper implements Entry, ModelWrapper<Entry> {
 	* @param emailDelivery the email delivery of this entry
 	*/
 	@Override
-	public void setEmailDelivery(java.lang.String emailDelivery) {
+	public void setEmailDelivery(String emailDelivery) {
 		_entry.setEmailDelivery(emailDelivery);
 	}
 
@@ -583,7 +583,7 @@ public class EntryWrapper implements Entry, ModelWrapper<Entry> {
 	* @param emailNotifications the email notifications of this entry
 	*/
 	@Override
-	public void setEmailNotifications(java.lang.String emailNotifications) {
+	public void setEmailNotifications(String emailNotifications) {
 		_entry.setEmailNotifications(emailNotifications);
 	}
 
@@ -613,7 +613,7 @@ public class EntryWrapper implements Entry, ModelWrapper<Entry> {
 	* @param errorMessage the error message of this entry
 	*/
 	@Override
-	public void setErrorMessage(java.lang.String errorMessage) {
+	public void setErrorMessage(String errorMessage) {
 		_entry.setErrorMessage(errorMessage);
 	}
 
@@ -639,7 +639,7 @@ public class EntryWrapper implements Entry, ModelWrapper<Entry> {
 	* @param format the format of this entry
 	*/
 	@Override
-	public void setFormat(java.lang.String format) {
+	public void setFormat(String format) {
 		_entry.setFormat(format);
 	}
 
@@ -674,7 +674,7 @@ public class EntryWrapper implements Entry, ModelWrapper<Entry> {
 	* @param pageURL the page url of this entry
 	*/
 	@Override
-	public void setPageURL(java.lang.String pageURL) {
+	public void setPageURL(String pageURL) {
 		_entry.setPageURL(pageURL);
 	}
 
@@ -684,7 +684,7 @@ public class EntryWrapper implements Entry, ModelWrapper<Entry> {
 	* @param portletId the portlet ID of this entry
 	*/
 	@Override
-	public void setPortletId(java.lang.String portletId) {
+	public void setPortletId(String portletId) {
 		_entry.setPortletId(portletId);
 	}
 
@@ -709,7 +709,7 @@ public class EntryWrapper implements Entry, ModelWrapper<Entry> {
 	* @param recurrence the recurrence of this entry
 	*/
 	@Override
-	public void setRecurrence(java.lang.String recurrence) {
+	public void setRecurrence(String recurrence) {
 		_entry.setRecurrence(recurrence);
 	}
 
@@ -729,7 +729,7 @@ public class EntryWrapper implements Entry, ModelWrapper<Entry> {
 	* @param reportParameters the report parameters of this entry
 	*/
 	@Override
-	public void setReportParameters(java.lang.String reportParameters) {
+	public void setReportParameters(String reportParameters) {
 		_entry.setReportParameters(reportParameters);
 	}
 
@@ -759,7 +759,7 @@ public class EntryWrapper implements Entry, ModelWrapper<Entry> {
 	* @param status the status of this entry
 	*/
 	@Override
-	public void setStatus(java.lang.String status) {
+	public void setStatus(String status) {
 		_entry.setStatus(status);
 	}
 
@@ -779,7 +779,7 @@ public class EntryWrapper implements Entry, ModelWrapper<Entry> {
 	* @param userName the user name of this entry
 	*/
 	@Override
-	public void setUserName(java.lang.String userName) {
+	public void setUserName(String userName) {
 		_entry.setUserName(userName);
 	}
 
@@ -789,7 +789,7 @@ public class EntryWrapper implements Entry, ModelWrapper<Entry> {
 	* @param userUuid the user uuid of this entry
 	*/
 	@Override
-	public void setUserUuid(java.lang.String userUuid) {
+	public void setUserUuid(String userUuid) {
 		_entry.setUserUuid(userUuid);
 	}
 
@@ -804,7 +804,7 @@ public class EntryWrapper implements Entry, ModelWrapper<Entry> {
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _entry.toString();
 	}
 
@@ -814,7 +814,7 @@ public class EntryWrapper implements Entry, ModelWrapper<Entry> {
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _entry.toXmlString();
 	}
 

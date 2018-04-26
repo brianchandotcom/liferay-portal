@@ -117,7 +117,7 @@ public class DefinitionUtil {
 	* @param uuid the uuid
 	* @return the matching definitions
 	*/
-	public static List<Definition> findByUuid(java.lang.String uuid) {
+	public static List<Definition> findByUuid(String uuid) {
 		return getPersistence().findByUuid(uuid);
 	}
 
@@ -133,8 +133,7 @@ public class DefinitionUtil {
 	* @param end the upper bound of the range of definitions (not inclusive)
 	* @return the range of matching definitions
 	*/
-	public static List<Definition> findByUuid(java.lang.String uuid, int start,
-		int end) {
+	public static List<Definition> findByUuid(String uuid, int start, int end) {
 		return getPersistence().findByUuid(uuid, start, end);
 	}
 
@@ -151,8 +150,8 @@ public class DefinitionUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching definitions
 	*/
-	public static List<Definition> findByUuid(java.lang.String uuid, int start,
-		int end, OrderByComparator<Definition> orderByComparator) {
+	public static List<Definition> findByUuid(String uuid, int start, int end,
+		OrderByComparator<Definition> orderByComparator) {
 		return getPersistence().findByUuid(uuid, start, end, orderByComparator);
 	}
 
@@ -170,8 +169,8 @@ public class DefinitionUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching definitions
 	*/
-	public static List<Definition> findByUuid(java.lang.String uuid, int start,
-		int end, OrderByComparator<Definition> orderByComparator,
+	public static List<Definition> findByUuid(String uuid, int start, int end,
+		OrderByComparator<Definition> orderByComparator,
 		boolean retrieveFromCache) {
 		return getPersistence()
 				   .findByUuid(uuid, start, end, orderByComparator,
@@ -186,7 +185,7 @@ public class DefinitionUtil {
 	* @return the first matching definition
 	* @throws NoSuchDefinitionException if a matching definition could not be found
 	*/
-	public static Definition findByUuid_First(java.lang.String uuid,
+	public static Definition findByUuid_First(String uuid,
 		OrderByComparator<Definition> orderByComparator)
 		throws com.liferay.portal.reports.engine.console.exception.NoSuchDefinitionException {
 		return getPersistence().findByUuid_First(uuid, orderByComparator);
@@ -199,7 +198,7 @@ public class DefinitionUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching definition, or <code>null</code> if a matching definition could not be found
 	*/
-	public static Definition fetchByUuid_First(java.lang.String uuid,
+	public static Definition fetchByUuid_First(String uuid,
 		OrderByComparator<Definition> orderByComparator) {
 		return getPersistence().fetchByUuid_First(uuid, orderByComparator);
 	}
@@ -212,7 +211,7 @@ public class DefinitionUtil {
 	* @return the last matching definition
 	* @throws NoSuchDefinitionException if a matching definition could not be found
 	*/
-	public static Definition findByUuid_Last(java.lang.String uuid,
+	public static Definition findByUuid_Last(String uuid,
 		OrderByComparator<Definition> orderByComparator)
 		throws com.liferay.portal.reports.engine.console.exception.NoSuchDefinitionException {
 		return getPersistence().findByUuid_Last(uuid, orderByComparator);
@@ -225,7 +224,7 @@ public class DefinitionUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching definition, or <code>null</code> if a matching definition could not be found
 	*/
-	public static Definition fetchByUuid_Last(java.lang.String uuid,
+	public static Definition fetchByUuid_Last(String uuid,
 		OrderByComparator<Definition> orderByComparator) {
 		return getPersistence().fetchByUuid_Last(uuid, orderByComparator);
 	}
@@ -240,7 +239,7 @@ public class DefinitionUtil {
 	* @throws NoSuchDefinitionException if a definition with the primary key could not be found
 	*/
 	public static Definition[] findByUuid_PrevAndNext(long definitionId,
-		java.lang.String uuid, OrderByComparator<Definition> orderByComparator)
+		String uuid, OrderByComparator<Definition> orderByComparator)
 		throws com.liferay.portal.reports.engine.console.exception.NoSuchDefinitionException {
 		return getPersistence()
 				   .findByUuid_PrevAndNext(definitionId, uuid, orderByComparator);
@@ -251,7 +250,7 @@ public class DefinitionUtil {
 	*
 	* @param uuid the uuid
 	*/
-	public static void removeByUuid(java.lang.String uuid) {
+	public static void removeByUuid(String uuid) {
 		getPersistence().removeByUuid(uuid);
 	}
 
@@ -261,7 +260,7 @@ public class DefinitionUtil {
 	* @param uuid the uuid
 	* @return the number of matching definitions
 	*/
-	public static int countByUuid(java.lang.String uuid) {
+	public static int countByUuid(String uuid) {
 		return getPersistence().countByUuid(uuid);
 	}
 
@@ -273,7 +272,7 @@ public class DefinitionUtil {
 	* @return the matching definition
 	* @throws NoSuchDefinitionException if a matching definition could not be found
 	*/
-	public static Definition findByUUID_G(java.lang.String uuid, long groupId)
+	public static Definition findByUUID_G(String uuid, long groupId)
 		throws com.liferay.portal.reports.engine.console.exception.NoSuchDefinitionException {
 		return getPersistence().findByUUID_G(uuid, groupId);
 	}
@@ -285,7 +284,7 @@ public class DefinitionUtil {
 	* @param groupId the group ID
 	* @return the matching definition, or <code>null</code> if a matching definition could not be found
 	*/
-	public static Definition fetchByUUID_G(java.lang.String uuid, long groupId) {
+	public static Definition fetchByUUID_G(String uuid, long groupId) {
 		return getPersistence().fetchByUUID_G(uuid, groupId);
 	}
 
@@ -297,7 +296,7 @@ public class DefinitionUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching definition, or <code>null</code> if a matching definition could not be found
 	*/
-	public static Definition fetchByUUID_G(java.lang.String uuid, long groupId,
+	public static Definition fetchByUUID_G(String uuid, long groupId,
 		boolean retrieveFromCache) {
 		return getPersistence().fetchByUUID_G(uuid, groupId, retrieveFromCache);
 	}
@@ -309,7 +308,7 @@ public class DefinitionUtil {
 	* @param groupId the group ID
 	* @return the definition that was removed
 	*/
-	public static Definition removeByUUID_G(java.lang.String uuid, long groupId)
+	public static Definition removeByUUID_G(String uuid, long groupId)
 		throws com.liferay.portal.reports.engine.console.exception.NoSuchDefinitionException {
 		return getPersistence().removeByUUID_G(uuid, groupId);
 	}
@@ -321,7 +320,7 @@ public class DefinitionUtil {
 	* @param groupId the group ID
 	* @return the number of matching definitions
 	*/
-	public static int countByUUID_G(java.lang.String uuid, long groupId) {
+	public static int countByUUID_G(String uuid, long groupId) {
 		return getPersistence().countByUUID_G(uuid, groupId);
 	}
 
@@ -332,8 +331,7 @@ public class DefinitionUtil {
 	* @param companyId the company ID
 	* @return the matching definitions
 	*/
-	public static List<Definition> findByUuid_C(java.lang.String uuid,
-		long companyId) {
+	public static List<Definition> findByUuid_C(String uuid, long companyId) {
 		return getPersistence().findByUuid_C(uuid, companyId);
 	}
 
@@ -350,8 +348,8 @@ public class DefinitionUtil {
 	* @param end the upper bound of the range of definitions (not inclusive)
 	* @return the range of matching definitions
 	*/
-	public static List<Definition> findByUuid_C(java.lang.String uuid,
-		long companyId, int start, int end) {
+	public static List<Definition> findByUuid_C(String uuid, long companyId,
+		int start, int end) {
 		return getPersistence().findByUuid_C(uuid, companyId, start, end);
 	}
 
@@ -369,9 +367,8 @@ public class DefinitionUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching definitions
 	*/
-	public static List<Definition> findByUuid_C(java.lang.String uuid,
-		long companyId, int start, int end,
-		OrderByComparator<Definition> orderByComparator) {
+	public static List<Definition> findByUuid_C(String uuid, long companyId,
+		int start, int end, OrderByComparator<Definition> orderByComparator) {
 		return getPersistence()
 				   .findByUuid_C(uuid, companyId, start, end, orderByComparator);
 	}
@@ -391,9 +388,8 @@ public class DefinitionUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching definitions
 	*/
-	public static List<Definition> findByUuid_C(java.lang.String uuid,
-		long companyId, int start, int end,
-		OrderByComparator<Definition> orderByComparator,
+	public static List<Definition> findByUuid_C(String uuid, long companyId,
+		int start, int end, OrderByComparator<Definition> orderByComparator,
 		boolean retrieveFromCache) {
 		return getPersistence()
 				   .findByUuid_C(uuid, companyId, start, end,
@@ -409,8 +405,8 @@ public class DefinitionUtil {
 	* @return the first matching definition
 	* @throws NoSuchDefinitionException if a matching definition could not be found
 	*/
-	public static Definition findByUuid_C_First(java.lang.String uuid,
-		long companyId, OrderByComparator<Definition> orderByComparator)
+	public static Definition findByUuid_C_First(String uuid, long companyId,
+		OrderByComparator<Definition> orderByComparator)
 		throws com.liferay.portal.reports.engine.console.exception.NoSuchDefinitionException {
 		return getPersistence()
 				   .findByUuid_C_First(uuid, companyId, orderByComparator);
@@ -424,8 +420,8 @@ public class DefinitionUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching definition, or <code>null</code> if a matching definition could not be found
 	*/
-	public static Definition fetchByUuid_C_First(java.lang.String uuid,
-		long companyId, OrderByComparator<Definition> orderByComparator) {
+	public static Definition fetchByUuid_C_First(String uuid, long companyId,
+		OrderByComparator<Definition> orderByComparator) {
 		return getPersistence()
 				   .fetchByUuid_C_First(uuid, companyId, orderByComparator);
 	}
@@ -439,8 +435,8 @@ public class DefinitionUtil {
 	* @return the last matching definition
 	* @throws NoSuchDefinitionException if a matching definition could not be found
 	*/
-	public static Definition findByUuid_C_Last(java.lang.String uuid,
-		long companyId, OrderByComparator<Definition> orderByComparator)
+	public static Definition findByUuid_C_Last(String uuid, long companyId,
+		OrderByComparator<Definition> orderByComparator)
 		throws com.liferay.portal.reports.engine.console.exception.NoSuchDefinitionException {
 		return getPersistence()
 				   .findByUuid_C_Last(uuid, companyId, orderByComparator);
@@ -454,8 +450,8 @@ public class DefinitionUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching definition, or <code>null</code> if a matching definition could not be found
 	*/
-	public static Definition fetchByUuid_C_Last(java.lang.String uuid,
-		long companyId, OrderByComparator<Definition> orderByComparator) {
+	public static Definition fetchByUuid_C_Last(String uuid, long companyId,
+		OrderByComparator<Definition> orderByComparator) {
 		return getPersistence()
 				   .fetchByUuid_C_Last(uuid, companyId, orderByComparator);
 	}
@@ -471,7 +467,7 @@ public class DefinitionUtil {
 	* @throws NoSuchDefinitionException if a definition with the primary key could not be found
 	*/
 	public static Definition[] findByUuid_C_PrevAndNext(long definitionId,
-		java.lang.String uuid, long companyId,
+		String uuid, long companyId,
 		OrderByComparator<Definition> orderByComparator)
 		throws com.liferay.portal.reports.engine.console.exception.NoSuchDefinitionException {
 		return getPersistence()
@@ -485,7 +481,7 @@ public class DefinitionUtil {
 	* @param uuid the uuid
 	* @param companyId the company ID
 	*/
-	public static void removeByUuid_C(java.lang.String uuid, long companyId) {
+	public static void removeByUuid_C(String uuid, long companyId) {
 		getPersistence().removeByUuid_C(uuid, companyId);
 	}
 
@@ -496,7 +492,7 @@ public class DefinitionUtil {
 	* @param companyId the company ID
 	* @return the number of matching definitions
 	*/
-	public static int countByUuid_C(java.lang.String uuid, long companyId) {
+	public static int countByUuid_C(String uuid, long companyId) {
 		return getPersistence().countByUuid_C(uuid, companyId);
 	}
 
@@ -1038,7 +1034,7 @@ public class DefinitionUtil {
 		return getPersistence().countAll();
 	}
 
-	public static java.util.Set<java.lang.String> getBadColumnNames() {
+	public static java.util.Set<String> getBadColumnNames() {
 		return getPersistence().getBadColumnNames();
 	}
 

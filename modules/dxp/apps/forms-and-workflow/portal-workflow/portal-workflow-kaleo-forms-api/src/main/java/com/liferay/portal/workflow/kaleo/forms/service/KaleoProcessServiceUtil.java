@@ -67,9 +67,9 @@ public class KaleoProcessServiceUtil {
 	*/
 	public static com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess addKaleoProcess(
 		long groupId, long ddmStructureId,
-		java.util.Map<java.util.Locale, java.lang.String> nameMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		long ddmTemplateId, java.lang.String workflowDefinitionName,
+		java.util.Map<java.util.Locale, String> nameMap,
+		java.util.Map<java.util.Locale, String> descriptionMap,
+		long ddmTemplateId, String workflowDefinitionName,
 		int workflowDefinitionVersion,
 		com.liferay.portal.workflow.kaleo.forms.model.KaleoTaskFormPairs kaleoTaskFormPairs,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
@@ -112,7 +112,7 @@ public class KaleoProcessServiceUtil {
 	*
 	* @return the OSGi service identifier
 	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
+	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 
@@ -144,7 +144,7 @@ public class KaleoProcessServiceUtil {
 	* @return the range of matching Kaleo processes ordered by the comparator
 	*/
 	public static java.util.List<com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess> search(
-		long groupId, java.lang.String keywords, int start, int end,
+		long groupId, String keywords, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getService()
 				   .search(groupId, keywords, start, end, orderByComparator);
@@ -163,7 +163,7 @@ public class KaleoProcessServiceUtil {
 	the <code>AND</code> operator.
 	* @return the number of matching Kaleo processes
 	*/
-	public static int searchCount(long groupId, java.lang.String keywords) {
+	public static int searchCount(long groupId, String keywords) {
 		return getService().searchCount(groupId, keywords);
 	}
 
@@ -191,9 +191,9 @@ public class KaleoProcessServiceUtil {
 	*/
 	public static com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess updateKaleoProcess(
 		long kaleoProcessId, long ddmStructureId,
-		java.util.Map<java.util.Locale, java.lang.String> nameMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		long ddmTemplateId, java.lang.String workflowDefinitionName,
+		java.util.Map<java.util.Locale, String> nameMap,
+		java.util.Map<java.util.Locale, String> descriptionMap,
+		long ddmTemplateId, String workflowDefinitionName,
 		int workflowDefinitionVersion,
 		com.liferay.portal.workflow.kaleo.forms.model.KaleoTaskFormPairs kaleoTaskFormPairs,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)

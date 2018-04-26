@@ -73,14 +73,12 @@ public interface SamlSpIdpConnectionLocalService extends BaseLocalService,
 	public SamlSpIdpConnection addSamlSpIdpConnection(
 		SamlSpIdpConnection samlSpIdpConnection);
 
-	public SamlSpIdpConnection addSamlSpIdpConnection(
-		java.lang.String samlIdpEntityId, boolean assertionSignatureRequired,
-		long clockSkew, boolean enabled, boolean forceAuthn,
-		boolean ldapImportEnabled, java.lang.String metadataUrl,
-		InputStream metadataXmlInputStream, java.lang.String name,
-		java.lang.String nameIdFormat, boolean signAuthnRequest,
-		java.lang.String userAttributeMappings, ServiceContext serviceContext)
-		throws PortalException;
+	public SamlSpIdpConnection addSamlSpIdpConnection(String samlIdpEntityId,
+		boolean assertionSignatureRequired, long clockSkew, boolean enabled,
+		boolean forceAuthn, boolean ldapImportEnabled, String metadataUrl,
+		InputStream metadataXmlInputStream, String name, String nameIdFormat,
+		boolean signAuthnRequest, String userAttributeMappings,
+		ServiceContext serviceContext) throws PortalException;
 
 	/**
 	* Creates a new saml sp idp connection with the primary key. Does not add the saml sp idp connection to the database.
@@ -194,7 +192,7 @@ public interface SamlSpIdpConnectionLocalService extends BaseLocalService,
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -214,7 +212,7 @@ public interface SamlSpIdpConnectionLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public SamlSpIdpConnection getSamlSpIdpConnection(long companyId,
-		java.lang.String samlIdpEntityId) throws PortalException;
+		String samlIdpEntityId) throws PortalException;
 
 	/**
 	* Returns a range of all the saml sp idp connections.
@@ -256,12 +254,11 @@ public interface SamlSpIdpConnectionLocalService extends BaseLocalService,
 		throws PortalException;
 
 	public SamlSpIdpConnection updateSamlSpIdpConnection(
-		long samlSpIdpConnectionId, java.lang.String samlIdpEntityId,
+		long samlSpIdpConnectionId, String samlIdpEntityId,
 		boolean assertionSignatureRequired, long clockSkew, boolean enabled,
-		boolean forceAuthn, boolean ldapImportEnabled,
-		java.lang.String metadataUrl, InputStream metadataXmlInputStream,
-		java.lang.String name, java.lang.String nameIdFormat,
-		boolean signAuthnRequest, java.lang.String userAttributeMappings,
+		boolean forceAuthn, boolean ldapImportEnabled, String metadataUrl,
+		InputStream metadataXmlInputStream, String name, String nameIdFormat,
+		boolean signAuthnRequest, String userAttributeMappings,
 		ServiceContext serviceContext) throws PortalException;
 
 	/**

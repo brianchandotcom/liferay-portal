@@ -72,9 +72,8 @@ public interface SamlIdpSsoSessionLocalService extends BaseLocalService,
 	public SamlIdpSsoSession addSamlIdpSsoSession(
 		SamlIdpSsoSession samlIdpSsoSession);
 
-	public SamlIdpSsoSession addSamlIdpSsoSession(
-		java.lang.String samlIdpSsoSessionKey, ServiceContext serviceContext)
-		throws PortalException;
+	public SamlIdpSsoSession addSamlIdpSsoSession(String samlIdpSsoSessionKey,
+		ServiceContext serviceContext) throws PortalException;
 
 	/**
 	* Creates a new saml idp sso session with the primary key. Does not add the saml idp sso session to the database.
@@ -175,8 +174,7 @@ public interface SamlIdpSsoSessionLocalService extends BaseLocalService,
 		Projection projection);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public SamlIdpSsoSession fetchSamlIdpSso(
-		java.lang.String samlIdpSsoSessionKey);
+	public SamlIdpSsoSession fetchSamlIdpSso(String samlIdpSsoSessionKey);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public SamlIdpSsoSession fetchSamlIdpSsoSession(long samlIdpSsoSessionId);
@@ -192,7 +190,7 @@ public interface SamlIdpSsoSessionLocalService extends BaseLocalService,
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -200,8 +198,8 @@ public interface SamlIdpSsoSessionLocalService extends BaseLocalService,
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public SamlIdpSsoSession getSamlIdpSso(
-		java.lang.String samlIdpSsoSessionKey) throws PortalException;
+	public SamlIdpSsoSession getSamlIdpSso(String samlIdpSsoSessionKey)
+		throws PortalException;
 
 	/**
 	* Returns the saml idp sso session with the primary key.
@@ -236,8 +234,8 @@ public interface SamlIdpSsoSessionLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getSamlIdpSsoSessionsCount();
 
-	public SamlIdpSsoSession updateModifiedDate(
-		java.lang.String samlIdpSsoSessionKey) throws PortalException;
+	public SamlIdpSsoSession updateModifiedDate(String samlIdpSsoSessionKey)
+		throws PortalException;
 
 	/**
 	* Updates the saml idp sso session in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.

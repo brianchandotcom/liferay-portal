@@ -182,8 +182,7 @@ public interface KaleoProcessLinkPersistence extends BasePersistence<KaleoProces
 	* @throws NoSuchKaleoProcessLinkException if a matching kaleo process link could not be found
 	*/
 	public KaleoProcessLink findByKPI_WTN(long kaleoProcessId,
-		java.lang.String workflowTaskName)
-		throws NoSuchKaleoProcessLinkException;
+		String workflowTaskName) throws NoSuchKaleoProcessLinkException;
 
 	/**
 	* Returns the kaleo process link where kaleoProcessId = &#63; and workflowTaskName = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
@@ -193,7 +192,7 @@ public interface KaleoProcessLinkPersistence extends BasePersistence<KaleoProces
 	* @return the matching kaleo process link, or <code>null</code> if a matching kaleo process link could not be found
 	*/
 	public KaleoProcessLink fetchByKPI_WTN(long kaleoProcessId,
-		java.lang.String workflowTaskName);
+		String workflowTaskName);
 
 	/**
 	* Returns the kaleo process link where kaleoProcessId = &#63; and workflowTaskName = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -204,7 +203,7 @@ public interface KaleoProcessLinkPersistence extends BasePersistence<KaleoProces
 	* @return the matching kaleo process link, or <code>null</code> if a matching kaleo process link could not be found
 	*/
 	public KaleoProcessLink fetchByKPI_WTN(long kaleoProcessId,
-		java.lang.String workflowTaskName, boolean retrieveFromCache);
+		String workflowTaskName, boolean retrieveFromCache);
 
 	/**
 	* Removes the kaleo process link where kaleoProcessId = &#63; and workflowTaskName = &#63; from the database.
@@ -214,8 +213,7 @@ public interface KaleoProcessLinkPersistence extends BasePersistence<KaleoProces
 	* @return the kaleo process link that was removed
 	*/
 	public KaleoProcessLink removeByKPI_WTN(long kaleoProcessId,
-		java.lang.String workflowTaskName)
-		throws NoSuchKaleoProcessLinkException;
+		String workflowTaskName) throws NoSuchKaleoProcessLinkException;
 
 	/**
 	* Returns the number of kaleo process links where kaleoProcessId = &#63; and workflowTaskName = &#63;.
@@ -224,8 +222,7 @@ public interface KaleoProcessLinkPersistence extends BasePersistence<KaleoProces
 	* @param workflowTaskName the workflow task name
 	* @return the number of matching kaleo process links
 	*/
-	public int countByKPI_WTN(long kaleoProcessId,
-		java.lang.String workflowTaskName);
+	public int countByKPI_WTN(long kaleoProcessId, String workflowTaskName);
 
 	/**
 	* Caches the kaleo process link in the entity cache if it is enabled.

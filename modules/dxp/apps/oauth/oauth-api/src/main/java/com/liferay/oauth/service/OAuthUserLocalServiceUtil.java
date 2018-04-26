@@ -43,8 +43,7 @@ public class OAuthUserLocalServiceUtil {
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.oauth.service.impl.OAuthUserLocalServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static com.liferay.oauth.model.OAuthUser addOAuthUser(long userId,
-		long oAuthApplicationId, java.lang.String accessToken,
-		java.lang.String accessSecret,
+		long oAuthApplicationId, String accessToken, String accessSecret,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
@@ -204,7 +203,7 @@ public class OAuthUserLocalServiceUtil {
 	}
 
 	public static com.liferay.oauth.model.OAuthUser fetchOAuthUser(
-		java.lang.String accessToken) {
+		String accessToken) {
 		return getService().fetchOAuthUser(accessToken);
 	}
 
@@ -250,7 +249,7 @@ public class OAuthUserLocalServiceUtil {
 	}
 
 	public static com.liferay.oauth.model.OAuthUser getOAuthUser(
-		java.lang.String accessToken)
+		String accessToken)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getOAuthUser(accessToken);
 	}
@@ -285,7 +284,7 @@ public class OAuthUserLocalServiceUtil {
 	*
 	* @return the OSGi service identifier
 	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
+	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 
@@ -307,8 +306,8 @@ public class OAuthUserLocalServiceUtil {
 	}
 
 	public static com.liferay.oauth.model.OAuthUser updateOAuthUser(
-		long userId, long oAuthApplicationId, java.lang.String accessToken,
-		java.lang.String accessSecret,
+		long userId, long oAuthApplicationId, String accessToken,
+		String accessSecret,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()

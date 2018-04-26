@@ -172,7 +172,7 @@ public class OAuthApplicationWrapper implements OAuthApplication,
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new OAuthApplicationWrapper((OAuthApplication)_oAuthApplication.clone());
 	}
 
@@ -192,7 +192,7 @@ public class OAuthApplicationWrapper implements OAuthApplication,
 	}
 
 	@Override
-	public java.lang.String getAccessLevelLabel() {
+	public String getAccessLevelLabel() {
 		return _oAuthApplication.getAccessLevelLabel();
 	}
 
@@ -202,7 +202,7 @@ public class OAuthApplicationWrapper implements OAuthApplication,
 	* @return the callback uri of this o auth application
 	*/
 	@Override
-	public java.lang.String getCallbackURI() {
+	public String getCallbackURI() {
 		return _oAuthApplication.getCallbackURI();
 	}
 
@@ -222,7 +222,7 @@ public class OAuthApplicationWrapper implements OAuthApplication,
 	* @return the consumer key of this o auth application
 	*/
 	@Override
-	public java.lang.String getConsumerKey() {
+	public String getConsumerKey() {
 		return _oAuthApplication.getConsumerKey();
 	}
 
@@ -232,7 +232,7 @@ public class OAuthApplicationWrapper implements OAuthApplication,
 	* @return the consumer secret of this o auth application
 	*/
 	@Override
-	public java.lang.String getConsumerSecret() {
+	public String getConsumerSecret() {
 		return _oAuthApplication.getConsumerSecret();
 	}
 
@@ -252,7 +252,7 @@ public class OAuthApplicationWrapper implements OAuthApplication,
 	* @return the description of this o auth application
 	*/
 	@Override
-	public java.lang.String getDescription() {
+	public String getDescription() {
 		return _oAuthApplication.getDescription();
 	}
 
@@ -287,7 +287,7 @@ public class OAuthApplicationWrapper implements OAuthApplication,
 	* @return the name of this o auth application
 	*/
 	@Override
-	public java.lang.String getName() {
+	public String getName() {
 		return _oAuthApplication.getName();
 	}
 
@@ -342,7 +342,7 @@ public class OAuthApplicationWrapper implements OAuthApplication,
 	* @return the user name of this o auth application
 	*/
 	@Override
-	public java.lang.String getUserName() {
+	public String getUserName() {
 		return _oAuthApplication.getUserName();
 	}
 
@@ -352,7 +352,7 @@ public class OAuthApplicationWrapper implements OAuthApplication,
 	* @return the user uuid of this o auth application
 	*/
 	@Override
-	public java.lang.String getUserUuid() {
+	public String getUserUuid() {
 		return _oAuthApplication.getUserUuid();
 	}
 
@@ -362,7 +362,7 @@ public class OAuthApplicationWrapper implements OAuthApplication,
 	* @return the website url of this o auth application
 	*/
 	@Override
-	public java.lang.String getWebsiteURL() {
+	public String getWebsiteURL() {
 		return _oAuthApplication.getWebsiteURL();
 	}
 
@@ -422,7 +422,7 @@ public class OAuthApplicationWrapper implements OAuthApplication,
 	* @param callbackURI the callback uri of this o auth application
 	*/
 	@Override
-	public void setCallbackURI(java.lang.String callbackURI) {
+	public void setCallbackURI(String callbackURI) {
 		_oAuthApplication.setCallbackURI(callbackURI);
 	}
 
@@ -442,7 +442,7 @@ public class OAuthApplicationWrapper implements OAuthApplication,
 	* @param consumerKey the consumer key of this o auth application
 	*/
 	@Override
-	public void setConsumerKey(java.lang.String consumerKey) {
+	public void setConsumerKey(String consumerKey) {
 		_oAuthApplication.setConsumerKey(consumerKey);
 	}
 
@@ -452,7 +452,7 @@ public class OAuthApplicationWrapper implements OAuthApplication,
 	* @param consumerSecret the consumer secret of this o auth application
 	*/
 	@Override
-	public void setConsumerSecret(java.lang.String consumerSecret) {
+	public void setConsumerSecret(String consumerSecret) {
 		_oAuthApplication.setConsumerSecret(consumerSecret);
 	}
 
@@ -472,7 +472,7 @@ public class OAuthApplicationWrapper implements OAuthApplication,
 	* @param description the description of this o auth application
 	*/
 	@Override
-	public void setDescription(java.lang.String description) {
+	public void setDescription(String description) {
 		_oAuthApplication.setDescription(description);
 	}
 
@@ -518,7 +518,7 @@ public class OAuthApplicationWrapper implements OAuthApplication,
 	* @param name the name of this o auth application
 	*/
 	@Override
-	public void setName(java.lang.String name) {
+	public void setName(String name) {
 		_oAuthApplication.setName(name);
 	}
 
@@ -578,7 +578,7 @@ public class OAuthApplicationWrapper implements OAuthApplication,
 	* @param userName the user name of this o auth application
 	*/
 	@Override
-	public void setUserName(java.lang.String userName) {
+	public void setUserName(String userName) {
 		_oAuthApplication.setUserName(userName);
 	}
 
@@ -588,7 +588,7 @@ public class OAuthApplicationWrapper implements OAuthApplication,
 	* @param userUuid the user uuid of this o auth application
 	*/
 	@Override
-	public void setUserUuid(java.lang.String userUuid) {
+	public void setUserUuid(String userUuid) {
 		_oAuthApplication.setUserUuid(userUuid);
 	}
 
@@ -598,7 +598,7 @@ public class OAuthApplicationWrapper implements OAuthApplication,
 	* @param websiteURL the website url of this o auth application
 	*/
 	@Override
-	public void setWebsiteURL(java.lang.String websiteURL) {
+	public void setWebsiteURL(String websiteURL) {
 		_oAuthApplication.setWebsiteURL(websiteURL);
 	}
 
@@ -613,7 +613,7 @@ public class OAuthApplicationWrapper implements OAuthApplication,
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _oAuthApplication.toString();
 	}
 
@@ -623,7 +623,7 @@ public class OAuthApplicationWrapper implements OAuthApplication,
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _oAuthApplication.toXmlString();
 	}
 

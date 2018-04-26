@@ -284,7 +284,7 @@ public class SamlIdpSsoSessionUtil {
 	* @throws NoSuchIdpSsoSessionException if a matching saml idp sso session could not be found
 	*/
 	public static SamlIdpSsoSession findBySamlIdpSsoSessionKey(
-		java.lang.String samlIdpSsoSessionKey)
+		String samlIdpSsoSessionKey)
 		throws com.liferay.saml.persistence.exception.NoSuchIdpSsoSessionException {
 		return getPersistence().findBySamlIdpSsoSessionKey(samlIdpSsoSessionKey);
 	}
@@ -296,7 +296,7 @@ public class SamlIdpSsoSessionUtil {
 	* @return the matching saml idp sso session, or <code>null</code> if a matching saml idp sso session could not be found
 	*/
 	public static SamlIdpSsoSession fetchBySamlIdpSsoSessionKey(
-		java.lang.String samlIdpSsoSessionKey) {
+		String samlIdpSsoSessionKey) {
 		return getPersistence().fetchBySamlIdpSsoSessionKey(samlIdpSsoSessionKey);
 	}
 
@@ -308,7 +308,7 @@ public class SamlIdpSsoSessionUtil {
 	* @return the matching saml idp sso session, or <code>null</code> if a matching saml idp sso session could not be found
 	*/
 	public static SamlIdpSsoSession fetchBySamlIdpSsoSessionKey(
-		java.lang.String samlIdpSsoSessionKey, boolean retrieveFromCache) {
+		String samlIdpSsoSessionKey, boolean retrieveFromCache) {
 		return getPersistence()
 				   .fetchBySamlIdpSsoSessionKey(samlIdpSsoSessionKey,
 			retrieveFromCache);
@@ -321,7 +321,7 @@ public class SamlIdpSsoSessionUtil {
 	* @return the saml idp sso session that was removed
 	*/
 	public static SamlIdpSsoSession removeBySamlIdpSsoSessionKey(
-		java.lang.String samlIdpSsoSessionKey)
+		String samlIdpSsoSessionKey)
 		throws com.liferay.saml.persistence.exception.NoSuchIdpSsoSessionException {
 		return getPersistence()
 				   .removeBySamlIdpSsoSessionKey(samlIdpSsoSessionKey);
@@ -333,8 +333,7 @@ public class SamlIdpSsoSessionUtil {
 	* @param samlIdpSsoSessionKey the saml idp sso session key
 	* @return the number of matching saml idp sso sessions
 	*/
-	public static int countBySamlIdpSsoSessionKey(
-		java.lang.String samlIdpSsoSessionKey) {
+	public static int countBySamlIdpSsoSessionKey(String samlIdpSsoSessionKey) {
 		return getPersistence().countBySamlIdpSsoSessionKey(samlIdpSsoSessionKey);
 	}
 

@@ -321,7 +321,7 @@ public interface SamlIdpSpSessionPersistence extends BasePersistence<SamlIdpSpSe
 	* @throws NoSuchIdpSpSessionException if a matching saml idp sp session could not be found
 	*/
 	public SamlIdpSpSession findBySISSI_SSEI(long samlIdpSsoSessionId,
-		java.lang.String samlSpEntityId) throws NoSuchIdpSpSessionException;
+		String samlSpEntityId) throws NoSuchIdpSpSessionException;
 
 	/**
 	* Returns the saml idp sp session where samlIdpSsoSessionId = &#63; and samlSpEntityId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
@@ -331,7 +331,7 @@ public interface SamlIdpSpSessionPersistence extends BasePersistence<SamlIdpSpSe
 	* @return the matching saml idp sp session, or <code>null</code> if a matching saml idp sp session could not be found
 	*/
 	public SamlIdpSpSession fetchBySISSI_SSEI(long samlIdpSsoSessionId,
-		java.lang.String samlSpEntityId);
+		String samlSpEntityId);
 
 	/**
 	* Returns the saml idp sp session where samlIdpSsoSessionId = &#63; and samlSpEntityId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -342,7 +342,7 @@ public interface SamlIdpSpSessionPersistence extends BasePersistence<SamlIdpSpSe
 	* @return the matching saml idp sp session, or <code>null</code> if a matching saml idp sp session could not be found
 	*/
 	public SamlIdpSpSession fetchBySISSI_SSEI(long samlIdpSsoSessionId,
-		java.lang.String samlSpEntityId, boolean retrieveFromCache);
+		String samlSpEntityId, boolean retrieveFromCache);
 
 	/**
 	* Removes the saml idp sp session where samlIdpSsoSessionId = &#63; and samlSpEntityId = &#63; from the database.
@@ -352,7 +352,7 @@ public interface SamlIdpSpSessionPersistence extends BasePersistence<SamlIdpSpSe
 	* @return the saml idp sp session that was removed
 	*/
 	public SamlIdpSpSession removeBySISSI_SSEI(long samlIdpSsoSessionId,
-		java.lang.String samlSpEntityId) throws NoSuchIdpSpSessionException;
+		String samlSpEntityId) throws NoSuchIdpSpSessionException;
 
 	/**
 	* Returns the number of saml idp sp sessions where samlIdpSsoSessionId = &#63; and samlSpEntityId = &#63;.
@@ -361,8 +361,7 @@ public interface SamlIdpSpSessionPersistence extends BasePersistence<SamlIdpSpSe
 	* @param samlSpEntityId the saml sp entity ID
 	* @return the number of matching saml idp sp sessions
 	*/
-	public int countBySISSI_SSEI(long samlIdpSsoSessionId,
-		java.lang.String samlSpEntityId);
+	public int countBySISSI_SSEI(long samlIdpSsoSessionId, String samlSpEntityId);
 
 	/**
 	* Caches the saml idp sp session in the entity cache if it is enabled.

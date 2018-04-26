@@ -35,9 +35,8 @@ public class OAuthApplicationServiceWrapper implements OAuthApplicationService,
 
 	@Override
 	public com.liferay.oauth.model.OAuthApplication addOAuthApplication(
-		java.lang.String name, java.lang.String description, int accessLevel,
-		boolean shareableAccessToken, java.lang.String callbackURI,
-		java.lang.String websiteURL,
+		String name, String description, int accessLevel,
+		boolean shareableAccessToken, String callbackURI, String websiteURL,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _oAuthApplicationService.addOAuthApplication(name, description,
@@ -64,7 +63,7 @@ public class OAuthApplicationServiceWrapper implements OAuthApplicationService,
 	* @return the OSGi service identifier
 	*/
 	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
+	public String getOSGiServiceIdentifier() {
 		return _oAuthApplicationService.getOSGiServiceIdentifier();
 	}
 
@@ -78,9 +77,8 @@ public class OAuthApplicationServiceWrapper implements OAuthApplicationService,
 
 	@Override
 	public com.liferay.oauth.model.OAuthApplication updateOAuthApplication(
-		long oAuthApplicationId, java.lang.String name,
-		java.lang.String description, boolean shareableAccessToken,
-		java.lang.String callbackURI, java.lang.String websiteURL,
+		long oAuthApplicationId, String name, String description,
+		boolean shareableAccessToken, String callbackURI, String websiteURL,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _oAuthApplicationService.updateOAuthApplication(oAuthApplicationId,

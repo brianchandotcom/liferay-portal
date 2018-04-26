@@ -126,7 +126,7 @@ public class SharepointOAuth2TokenEntryWrapper
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new SharepointOAuth2TokenEntryWrapper((SharepointOAuth2TokenEntry)_sharepointOAuth2TokenEntry.clone());
 	}
 
@@ -141,7 +141,7 @@ public class SharepointOAuth2TokenEntryWrapper
 	* @return the access token of this sharepoint o auth2 token entry
 	*/
 	@Override
-	public java.lang.String getAccessToken() {
+	public String getAccessToken() {
 		return _sharepointOAuth2TokenEntry.getAccessToken();
 	}
 
@@ -151,7 +151,7 @@ public class SharepointOAuth2TokenEntryWrapper
 	* @return the configuration pid of this sharepoint o auth2 token entry
 	*/
 	@Override
-	public java.lang.String getConfigurationPid() {
+	public String getConfigurationPid() {
 		return _sharepointOAuth2TokenEntry.getConfigurationPid();
 	}
 
@@ -201,7 +201,7 @@ public class SharepointOAuth2TokenEntryWrapper
 	* @return the refresh token of this sharepoint o auth2 token entry
 	*/
 	@Override
-	public java.lang.String getRefreshToken() {
+	public String getRefreshToken() {
 		return _sharepointOAuth2TokenEntry.getRefreshToken();
 	}
 
@@ -231,7 +231,7 @@ public class SharepointOAuth2TokenEntryWrapper
 	* @return the user name of this sharepoint o auth2 token entry
 	*/
 	@Override
-	public java.lang.String getUserName() {
+	public String getUserName() {
 		return _sharepointOAuth2TokenEntry.getUserName();
 	}
 
@@ -241,7 +241,7 @@ public class SharepointOAuth2TokenEntryWrapper
 	* @return the user uuid of this sharepoint o auth2 token entry
 	*/
 	@Override
-	public java.lang.String getUserUuid() {
+	public String getUserUuid() {
 		return _sharepointOAuth2TokenEntry.getUserUuid();
 	}
 
@@ -276,7 +276,7 @@ public class SharepointOAuth2TokenEntryWrapper
 	* @param accessToken the access token of this sharepoint o auth2 token entry
 	*/
 	@Override
-	public void setAccessToken(java.lang.String accessToken) {
+	public void setAccessToken(String accessToken) {
 		_sharepointOAuth2TokenEntry.setAccessToken(accessToken);
 	}
 
@@ -291,7 +291,7 @@ public class SharepointOAuth2TokenEntryWrapper
 	* @param configurationPid the configuration pid of this sharepoint o auth2 token entry
 	*/
 	@Override
-	public void setConfigurationPid(java.lang.String configurationPid) {
+	public void setConfigurationPid(String configurationPid) {
 		_sharepointOAuth2TokenEntry.setConfigurationPid(configurationPid);
 	}
 
@@ -357,7 +357,7 @@ public class SharepointOAuth2TokenEntryWrapper
 	* @param refreshToken the refresh token of this sharepoint o auth2 token entry
 	*/
 	@Override
-	public void setRefreshToken(java.lang.String refreshToken) {
+	public void setRefreshToken(String refreshToken) {
 		_sharepointOAuth2TokenEntry.setRefreshToken(refreshToken);
 	}
 
@@ -388,7 +388,7 @@ public class SharepointOAuth2TokenEntryWrapper
 	* @param userName the user name of this sharepoint o auth2 token entry
 	*/
 	@Override
-	public void setUserName(java.lang.String userName) {
+	public void setUserName(String userName) {
 		_sharepointOAuth2TokenEntry.setUserName(userName);
 	}
 
@@ -398,7 +398,7 @@ public class SharepointOAuth2TokenEntryWrapper
 	* @param userUuid the user uuid of this sharepoint o auth2 token entry
 	*/
 	@Override
-	public void setUserUuid(java.lang.String userUuid) {
+	public void setUserUuid(String userUuid) {
 		_sharepointOAuth2TokenEntry.setUserUuid(userUuid);
 	}
 
@@ -413,7 +413,7 @@ public class SharepointOAuth2TokenEntryWrapper
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _sharepointOAuth2TokenEntry.toString();
 	}
 
@@ -423,7 +423,7 @@ public class SharepointOAuth2TokenEntryWrapper
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _sharepointOAuth2TokenEntry.toXmlString();
 	}
 

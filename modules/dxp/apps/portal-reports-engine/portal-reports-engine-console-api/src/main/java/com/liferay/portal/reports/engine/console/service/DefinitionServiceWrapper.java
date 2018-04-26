@@ -34,11 +34,10 @@ public class DefinitionServiceWrapper implements DefinitionService,
 
 	@Override
 	public com.liferay.portal.reports.engine.console.model.Definition addDefinition(
-		long groupId,
-		java.util.Map<java.util.Locale, java.lang.String> nameMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		long sourceId, java.lang.String reportParameters,
-		java.lang.String fileName, java.io.InputStream inputStream,
+		long groupId, java.util.Map<java.util.Locale, String> nameMap,
+		java.util.Map<java.util.Locale, String> descriptionMap, long sourceId,
+		String reportParameters, String fileName,
+		java.io.InputStream inputStream,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _definitionService.addDefinition(groupId, nameMap,
@@ -62,9 +61,9 @@ public class DefinitionServiceWrapper implements DefinitionService,
 
 	@Override
 	public java.util.List<com.liferay.portal.reports.engine.console.model.Definition> getDefinitions(
-		long groupId, java.lang.String definitionName,
-		java.lang.String description, java.lang.String sourceId,
-		java.lang.String reportName, boolean andSearch, int start, int end,
+		long groupId, String definitionName, String description,
+		String sourceId, String reportName, boolean andSearch, int start,
+		int end,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _definitionService.getDefinitions(groupId, definitionName,
@@ -73,9 +72,8 @@ public class DefinitionServiceWrapper implements DefinitionService,
 	}
 
 	@Override
-	public int getDefinitionsCount(long groupId,
-		java.lang.String definitionName, java.lang.String description,
-		java.lang.String sourceId, java.lang.String reportName,
+	public int getDefinitionsCount(long groupId, String definitionName,
+		String description, String sourceId, String reportName,
 		boolean andSearch) {
 		return _definitionService.getDefinitionsCount(groupId, definitionName,
 			description, sourceId, reportName, andSearch);
@@ -87,17 +85,16 @@ public class DefinitionServiceWrapper implements DefinitionService,
 	* @return the OSGi service identifier
 	*/
 	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
+	public String getOSGiServiceIdentifier() {
 		return _definitionService.getOSGiServiceIdentifier();
 	}
 
 	@Override
 	public com.liferay.portal.reports.engine.console.model.Definition updateDefinition(
-		long definitionId,
-		java.util.Map<java.util.Locale, java.lang.String> nameMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		long sourceId, java.lang.String reportParameters,
-		java.lang.String fileName, java.io.InputStream inputStream,
+		long definitionId, java.util.Map<java.util.Locale, String> nameMap,
+		java.util.Map<java.util.Locale, String> descriptionMap, long sourceId,
+		String reportParameters, String fileName,
+		java.io.InputStream inputStream,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _definitionService.updateDefinition(definitionId, nameMap,

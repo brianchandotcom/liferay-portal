@@ -69,10 +69,9 @@ import java.util.Map;
 @ProviderType
 public class SourceServiceSoap {
 	public static com.liferay.portal.reports.engine.console.model.SourceSoap addSource(
-		long groupId, java.lang.String[] nameMapLanguageIds,
-		java.lang.String[] nameMapValues, java.lang.String driverClassName,
-		java.lang.String driverUrl, java.lang.String driverUserName,
-		java.lang.String driverPassword,
+		long groupId, String[] nameMapLanguageIds, String[] nameMapValues,
+		String driverClassName, String driverUrl, String driverUserName,
+		String driverPassword,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
@@ -121,8 +120,8 @@ public class SourceServiceSoap {
 	}
 
 	public static com.liferay.portal.reports.engine.console.model.SourceSoap[] getSources(
-		long groupId, java.lang.String name, java.lang.String driverUrl,
-		boolean andSearch, int start, int end,
+		long groupId, String name, String driverUrl, boolean andSearch,
+		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws RemoteException {
 		try {
@@ -139,9 +138,8 @@ public class SourceServiceSoap {
 		}
 	}
 
-	public static int getSourcesCount(long groupId, java.lang.String name,
-		java.lang.String driverUrl, boolean andSearch)
-		throws RemoteException {
+	public static int getSourcesCount(long groupId, String name,
+		String driverUrl, boolean andSearch) throws RemoteException {
 		try {
 			int returnValue = SourceServiceUtil.getSourcesCount(groupId, name,
 					driverUrl, andSearch);
@@ -156,10 +154,9 @@ public class SourceServiceSoap {
 	}
 
 	public static com.liferay.portal.reports.engine.console.model.SourceSoap updateSource(
-		long sourceId, java.lang.String[] nameMapLanguageIds,
-		java.lang.String[] nameMapValues, java.lang.String driverClassName,
-		java.lang.String driverUrl, java.lang.String driverUserName,
-		java.lang.String driverPassword,
+		long sourceId, String[] nameMapLanguageIds, String[] nameMapValues,
+		String driverClassName, String driverUrl, String driverUserName,
+		String driverPassword,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {

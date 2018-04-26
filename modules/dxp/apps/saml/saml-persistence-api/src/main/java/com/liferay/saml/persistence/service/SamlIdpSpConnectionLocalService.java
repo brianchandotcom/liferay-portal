@@ -73,14 +73,13 @@ public interface SamlIdpSpConnectionLocalService extends BaseLocalService,
 	public SamlIdpSpConnection addSamlIdpSpConnection(
 		SamlIdpSpConnection samlIdpSpConnection);
 
-	public SamlIdpSpConnection addSamlIdpSpConnection(
-		java.lang.String samlSpEntityId, int assertionLifetime,
-		java.lang.String attributeNames, boolean attributesEnabled,
-		boolean attributesNamespaceEnabled, boolean enabled,
-		java.lang.String metadataUrl, InputStream metadataXmlInputStream,
-		java.lang.String name, java.lang.String nameIdAttribute,
-		java.lang.String nameIdFormat, ServiceContext serviceContext)
-		throws PortalException;
+	public SamlIdpSpConnection addSamlIdpSpConnection(String samlSpEntityId,
+		int assertionLifetime, String attributeNames,
+		boolean attributesEnabled, boolean attributesNamespaceEnabled,
+		boolean enabled, String metadataUrl,
+		InputStream metadataXmlInputStream, String name,
+		String nameIdAttribute, String nameIdFormat,
+		ServiceContext serviceContext) throws PortalException;
 
 	/**
 	* Creates a new saml idp sp connection with the primary key. Does not add the saml idp sp connection to the database.
@@ -194,7 +193,7 @@ public interface SamlIdpSpConnectionLocalService extends BaseLocalService,
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -214,7 +213,7 @@ public interface SamlIdpSpConnectionLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public SamlIdpSpConnection getSamlIdpSpConnection(long companyId,
-		java.lang.String samlSpEntityId) throws PortalException;
+		String samlSpEntityId) throws PortalException;
 
 	/**
 	* Returns a range of all the saml idp sp connections.
@@ -256,12 +255,12 @@ public interface SamlIdpSpConnectionLocalService extends BaseLocalService,
 		throws PortalException;
 
 	public SamlIdpSpConnection updateSamlIdpSpConnection(
-		long samlIdpSpConnectionId, java.lang.String samlSpEntityId,
-		int assertionLifetime, java.lang.String attributeNames,
+		long samlIdpSpConnectionId, String samlSpEntityId,
+		int assertionLifetime, String attributeNames,
 		boolean attributesEnabled, boolean attributesNamespaceEnabled,
-		boolean enabled, java.lang.String metadataUrl,
-		InputStream metadataXmlInputStream, java.lang.String name,
-		java.lang.String nameIdAttribute, java.lang.String nameIdFormat,
+		boolean enabled, String metadataUrl,
+		InputStream metadataXmlInputStream, String name,
+		String nameIdAttribute, String nameIdFormat,
 		ServiceContext serviceContext) throws PortalException;
 
 	/**

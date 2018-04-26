@@ -48,7 +48,7 @@ public class SamlSpMessageLocalServiceWrapper
 
 	@Override
 	public com.liferay.saml.persistence.model.SamlSpMessage addSamlSpMessage(
-		java.lang.String samlIdpEntityId, java.lang.String samlIdpResponseKey,
+		String samlIdpEntityId, String samlIdpResponseKey,
 		java.util.Date expirationDate,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext) {
 		return _samlSpMessageLocalService.addSamlSpMessage(samlIdpEntityId,
@@ -201,7 +201,7 @@ public class SamlSpMessageLocalServiceWrapper
 
 	@Override
 	public com.liferay.saml.persistence.model.SamlSpMessage fetchSamlSpMessage(
-		java.lang.String samlIdpEntityId, java.lang.String samlIdpResponseKey) {
+		String samlIdpEntityId, String samlIdpResponseKey) {
 		return _samlSpMessageLocalService.fetchSamlSpMessage(samlIdpEntityId,
 			samlIdpResponseKey);
 	}
@@ -222,7 +222,7 @@ public class SamlSpMessageLocalServiceWrapper
 	* @return the OSGi service identifier
 	*/
 	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
+	public String getOSGiServiceIdentifier() {
 		return _samlSpMessageLocalService.getOSGiServiceIdentifier();
 	}
 
@@ -249,7 +249,7 @@ public class SamlSpMessageLocalServiceWrapper
 
 	@Override
 	public com.liferay.saml.persistence.model.SamlSpMessage getSamlSpMessage(
-		java.lang.String samlIdpEntityId, java.lang.String samlIdpResponseKey)
+		String samlIdpEntityId, String samlIdpResponseKey)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _samlSpMessageLocalService.getSamlSpMessage(samlIdpEntityId,
 			samlIdpResponseKey);

@@ -183,9 +183,8 @@ public interface SamlSpAuthRequestPersistence extends BasePersistence<SamlSpAuth
 	* @return the matching saml sp auth request
 	* @throws NoSuchSpAuthRequestException if a matching saml sp auth request could not be found
 	*/
-	public SamlSpAuthRequest findBySIEI_SSARK(
-		java.lang.String samlIdpEntityId, java.lang.String samlSpAuthRequestKey)
-		throws NoSuchSpAuthRequestException;
+	public SamlSpAuthRequest findBySIEI_SSARK(String samlIdpEntityId,
+		String samlSpAuthRequestKey) throws NoSuchSpAuthRequestException;
 
 	/**
 	* Returns the saml sp auth request where samlIdpEntityId = &#63; and samlSpAuthRequestKey = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
@@ -194,8 +193,8 @@ public interface SamlSpAuthRequestPersistence extends BasePersistence<SamlSpAuth
 	* @param samlSpAuthRequestKey the saml sp auth request key
 	* @return the matching saml sp auth request, or <code>null</code> if a matching saml sp auth request could not be found
 	*/
-	public SamlSpAuthRequest fetchBySIEI_SSARK(
-		java.lang.String samlIdpEntityId, java.lang.String samlSpAuthRequestKey);
+	public SamlSpAuthRequest fetchBySIEI_SSARK(String samlIdpEntityId,
+		String samlSpAuthRequestKey);
 
 	/**
 	* Returns the saml sp auth request where samlIdpEntityId = &#63; and samlSpAuthRequestKey = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -205,9 +204,8 @@ public interface SamlSpAuthRequestPersistence extends BasePersistence<SamlSpAuth
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching saml sp auth request, or <code>null</code> if a matching saml sp auth request could not be found
 	*/
-	public SamlSpAuthRequest fetchBySIEI_SSARK(
-		java.lang.String samlIdpEntityId,
-		java.lang.String samlSpAuthRequestKey, boolean retrieveFromCache);
+	public SamlSpAuthRequest fetchBySIEI_SSARK(String samlIdpEntityId,
+		String samlSpAuthRequestKey, boolean retrieveFromCache);
 
 	/**
 	* Removes the saml sp auth request where samlIdpEntityId = &#63; and samlSpAuthRequestKey = &#63; from the database.
@@ -216,9 +214,8 @@ public interface SamlSpAuthRequestPersistence extends BasePersistence<SamlSpAuth
 	* @param samlSpAuthRequestKey the saml sp auth request key
 	* @return the saml sp auth request that was removed
 	*/
-	public SamlSpAuthRequest removeBySIEI_SSARK(
-		java.lang.String samlIdpEntityId, java.lang.String samlSpAuthRequestKey)
-		throws NoSuchSpAuthRequestException;
+	public SamlSpAuthRequest removeBySIEI_SSARK(String samlIdpEntityId,
+		String samlSpAuthRequestKey) throws NoSuchSpAuthRequestException;
 
 	/**
 	* Returns the number of saml sp auth requests where samlIdpEntityId = &#63; and samlSpAuthRequestKey = &#63;.
@@ -227,8 +224,8 @@ public interface SamlSpAuthRequestPersistence extends BasePersistence<SamlSpAuth
 	* @param samlSpAuthRequestKey the saml sp auth request key
 	* @return the number of matching saml sp auth requests
 	*/
-	public int countBySIEI_SSARK(java.lang.String samlIdpEntityId,
-		java.lang.String samlSpAuthRequestKey);
+	public int countBySIEI_SSARK(String samlIdpEntityId,
+		String samlSpAuthRequestKey);
 
 	/**
 	* Caches the saml sp auth request in the entity cache if it is enabled.

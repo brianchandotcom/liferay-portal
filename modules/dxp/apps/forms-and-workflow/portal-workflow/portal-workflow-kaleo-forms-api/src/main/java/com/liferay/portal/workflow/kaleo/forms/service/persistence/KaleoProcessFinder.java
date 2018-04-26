@@ -22,43 +22,41 @@ import aQute.bnd.annotation.ProviderType;
  */
 @ProviderType
 public interface KaleoProcessFinder {
-	public int countByKeywords(long groupId, java.lang.String keywords);
+	public int countByKeywords(long groupId, String keywords);
 
-	public int countByG_N_D(long groupId, java.lang.String name,
-		java.lang.String description, boolean andOperator);
+	public int countByG_N_D(long groupId, String name, String description,
+		boolean andOperator);
 
-	public int filterCountByKeywords(long groupId, java.lang.String keywords);
+	public int filterCountByKeywords(long groupId, String keywords);
 
-	public int filterCountByG_N_D(long groupId, java.lang.String name,
-		java.lang.String description, boolean andOperator);
+	public int filterCountByG_N_D(long groupId, String name,
+		String description, boolean andOperator);
 
 	public java.util.List<com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess> filterFindByKeywords(
-		long groupId, java.lang.String keywords, int start, int end,
+		long groupId, String keywords, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess> orderByComparator);
 
 	public java.util.List<com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess> filterFindByG_N_D(
-		long groupId, java.lang.String name, java.lang.String description,
+		long groupId, String name, String description, boolean andOperator,
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess> orderByComparator);
+
+	public java.util.List<com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess> filterFindByG_N_D(
+		long groupId, String[] names, String[] descriptions,
 		boolean andOperator, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess> orderByComparator);
-
-	public java.util.List<com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess> filterFindByG_N_D(
-		long groupId, java.lang.String[] names,
-		java.lang.String[] descriptions, boolean andOperator, int start,
-		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess> orderByComparator);
 
 	public java.util.List<com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess> findByKeywords(
-		long groupId, java.lang.String keywords, int start, int end,
+		long groupId, String keywords, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess> orderByComparator);
 
 	public java.util.List<com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess> findByG_N_D(
-		long groupId, java.lang.String name, java.lang.String description,
+		long groupId, String name, String description, boolean andOperator,
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess> orderByComparator);
+
+	public java.util.List<com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess> findByG_N_D(
+		long groupId, String[] names, String[] descriptions,
 		boolean andOperator, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess> orderByComparator);
-
-	public java.util.List<com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess> findByG_N_D(
-		long groupId, java.lang.String[] names,
-		java.lang.String[] descriptions, boolean andOperator, int start,
-		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess> orderByComparator);
 }

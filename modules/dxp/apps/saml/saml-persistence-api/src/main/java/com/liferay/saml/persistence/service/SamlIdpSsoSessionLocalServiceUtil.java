@@ -55,7 +55,7 @@ public class SamlIdpSsoSessionLocalServiceUtil {
 	}
 
 	public static com.liferay.saml.persistence.model.SamlIdpSsoSession addSamlIdpSsoSession(
-		java.lang.String samlIdpSsoSessionKey,
+		String samlIdpSsoSessionKey,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
@@ -189,7 +189,7 @@ public class SamlIdpSsoSessionLocalServiceUtil {
 	}
 
 	public static com.liferay.saml.persistence.model.SamlIdpSsoSession fetchSamlIdpSso(
-		java.lang.String samlIdpSsoSessionKey) {
+		String samlIdpSsoSessionKey) {
 		return getService().fetchSamlIdpSso(samlIdpSsoSessionKey);
 	}
 
@@ -211,7 +211,7 @@ public class SamlIdpSsoSessionLocalServiceUtil {
 	*
 	* @return the OSGi service identifier
 	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
+	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 
@@ -222,7 +222,7 @@ public class SamlIdpSsoSessionLocalServiceUtil {
 	}
 
 	public static com.liferay.saml.persistence.model.SamlIdpSsoSession getSamlIdpSso(
-		java.lang.String samlIdpSsoSessionKey)
+		String samlIdpSsoSessionKey)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getSamlIdpSso(samlIdpSsoSessionKey);
 	}
@@ -266,7 +266,7 @@ public class SamlIdpSsoSessionLocalServiceUtil {
 	}
 
 	public static com.liferay.saml.persistence.model.SamlIdpSsoSession updateModifiedDate(
-		java.lang.String samlIdpSsoSessionKey)
+		String samlIdpSsoSessionKey)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().updateModifiedDate(samlIdpSsoSessionKey);
 	}

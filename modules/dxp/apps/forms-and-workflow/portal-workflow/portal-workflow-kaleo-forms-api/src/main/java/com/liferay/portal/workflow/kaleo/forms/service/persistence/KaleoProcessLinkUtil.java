@@ -290,7 +290,7 @@ public class KaleoProcessLinkUtil {
 	* @throws NoSuchKaleoProcessLinkException if a matching kaleo process link could not be found
 	*/
 	public static KaleoProcessLink findByKPI_WTN(long kaleoProcessId,
-		java.lang.String workflowTaskName)
+		String workflowTaskName)
 		throws com.liferay.portal.workflow.kaleo.forms.exception.NoSuchKaleoProcessLinkException {
 		return getPersistence().findByKPI_WTN(kaleoProcessId, workflowTaskName);
 	}
@@ -303,7 +303,7 @@ public class KaleoProcessLinkUtil {
 	* @return the matching kaleo process link, or <code>null</code> if a matching kaleo process link could not be found
 	*/
 	public static KaleoProcessLink fetchByKPI_WTN(long kaleoProcessId,
-		java.lang.String workflowTaskName) {
+		String workflowTaskName) {
 		return getPersistence().fetchByKPI_WTN(kaleoProcessId, workflowTaskName);
 	}
 
@@ -316,7 +316,7 @@ public class KaleoProcessLinkUtil {
 	* @return the matching kaleo process link, or <code>null</code> if a matching kaleo process link could not be found
 	*/
 	public static KaleoProcessLink fetchByKPI_WTN(long kaleoProcessId,
-		java.lang.String workflowTaskName, boolean retrieveFromCache) {
+		String workflowTaskName, boolean retrieveFromCache) {
 		return getPersistence()
 				   .fetchByKPI_WTN(kaleoProcessId, workflowTaskName,
 			retrieveFromCache);
@@ -330,7 +330,7 @@ public class KaleoProcessLinkUtil {
 	* @return the kaleo process link that was removed
 	*/
 	public static KaleoProcessLink removeByKPI_WTN(long kaleoProcessId,
-		java.lang.String workflowTaskName)
+		String workflowTaskName)
 		throws com.liferay.portal.workflow.kaleo.forms.exception.NoSuchKaleoProcessLinkException {
 		return getPersistence().removeByKPI_WTN(kaleoProcessId, workflowTaskName);
 	}
@@ -343,7 +343,7 @@ public class KaleoProcessLinkUtil {
 	* @return the number of matching kaleo process links
 	*/
 	public static int countByKPI_WTN(long kaleoProcessId,
-		java.lang.String workflowTaskName) {
+		String workflowTaskName) {
 		return getPersistence().countByKPI_WTN(kaleoProcessId, workflowTaskName);
 	}
 

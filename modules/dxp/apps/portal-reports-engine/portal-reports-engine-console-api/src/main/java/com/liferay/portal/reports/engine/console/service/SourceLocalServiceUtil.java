@@ -44,9 +44,9 @@ public class SourceLocalServiceUtil {
 	 */
 	public static com.liferay.portal.reports.engine.console.model.Source addSource(
 		long userId, long groupId,
-		java.util.Map<java.util.Locale, java.lang.String> nameMap,
-		java.lang.String driverClassName, java.lang.String driverUrl,
-		java.lang.String driverUserName, java.lang.String driverPassword,
+		java.util.Map<java.util.Locale, String> nameMap,
+		String driverClassName, String driverUrl, String driverUserName,
+		String driverPassword,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
@@ -207,7 +207,7 @@ public class SourceLocalServiceUtil {
 	* @return the matching source, or <code>null</code> if a matching source could not be found
 	*/
 	public static com.liferay.portal.reports.engine.console.model.Source fetchSourceByUuidAndGroupId(
-		java.lang.String uuid, long groupId) {
+		String uuid, long groupId) {
 		return getService().fetchSourceByUuidAndGroupId(uuid, groupId);
 	}
 
@@ -229,7 +229,7 @@ public class SourceLocalServiceUtil {
 	*
 	* @return the OSGi service identifier
 	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
+	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 
@@ -261,7 +261,7 @@ public class SourceLocalServiceUtil {
 	* @throws PortalException if a matching source could not be found
 	*/
 	public static com.liferay.portal.reports.engine.console.model.Source getSourceByUuidAndGroupId(
-		java.lang.String uuid, long groupId)
+		String uuid, long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getSourceByUuidAndGroupId(uuid, groupId);
 	}
@@ -283,8 +283,8 @@ public class SourceLocalServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.portal.reports.engine.console.model.Source> getSources(
-		long groupId, java.lang.String name, java.lang.String driverUrl,
-		boolean andSearch, int start, int end,
+		long groupId, String name, String driverUrl, boolean andSearch,
+		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getService()
 				   .getSources(groupId, name, driverUrl, andSearch, start, end,
@@ -299,7 +299,7 @@ public class SourceLocalServiceUtil {
 	* @return the matching sources, or an empty list if no matches were found
 	*/
 	public static java.util.List<com.liferay.portal.reports.engine.console.model.Source> getSourcesByUuidAndCompanyId(
-		java.lang.String uuid, long companyId) {
+		String uuid, long companyId) {
 		return getService().getSourcesByUuidAndCompanyId(uuid, companyId);
 	}
 
@@ -314,7 +314,7 @@ public class SourceLocalServiceUtil {
 	* @return the range of matching sources, or an empty list if no matches were found
 	*/
 	public static java.util.List<com.liferay.portal.reports.engine.console.model.Source> getSourcesByUuidAndCompanyId(
-		java.lang.String uuid, long companyId, int start, int end,
+		String uuid, long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.reports.engine.console.model.Source> orderByComparator) {
 		return getService()
 				   .getSourcesByUuidAndCompanyId(uuid, companyId, start, end,
@@ -330,16 +330,15 @@ public class SourceLocalServiceUtil {
 		return getService().getSourcesCount();
 	}
 
-	public static int getSourcesCount(long groupId, java.lang.String name,
-		java.lang.String driverUrl, boolean andSearch) {
+	public static int getSourcesCount(long groupId, String name,
+		String driverUrl, boolean andSearch) {
 		return getService().getSourcesCount(groupId, name, driverUrl, andSearch);
 	}
 
 	public static com.liferay.portal.reports.engine.console.model.Source updateSource(
-		long sourceId,
-		java.util.Map<java.util.Locale, java.lang.String> nameMap,
-		java.lang.String driverClassName, java.lang.String driverUrl,
-		java.lang.String driverUserName, java.lang.String driverPassword,
+		long sourceId, java.util.Map<java.util.Locale, String> nameMap,
+		String driverClassName, String driverUrl, String driverUserName,
+		String driverPassword,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()

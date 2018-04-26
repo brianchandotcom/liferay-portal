@@ -33,8 +33,7 @@ public class OAuthUserServiceWrapper implements OAuthUserService,
 	}
 
 	@Override
-	public com.liferay.oauth.model.OAuthUser addOAuthUser(
-		java.lang.String consumerKey,
+	public com.liferay.oauth.model.OAuthUser addOAuthUser(String consumerKey,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _oAuthUserService.addOAuthUser(consumerKey, serviceContext);
@@ -53,7 +52,7 @@ public class OAuthUserServiceWrapper implements OAuthUserService,
 	* @return the OSGi service identifier
 	*/
 	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
+	public String getOSGiServiceIdentifier() {
 		return _oAuthUserService.getOSGiServiceIdentifier();
 	}
 

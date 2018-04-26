@@ -56,10 +56,10 @@ import com.liferay.portal.reports.engine.console.service.DefinitionServiceUtil;
 public class DefinitionServiceHttp {
 	public static com.liferay.portal.reports.engine.console.model.Definition addDefinition(
 		HttpPrincipal httpPrincipal, long groupId,
-		java.util.Map<java.util.Locale, java.lang.String> nameMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		long sourceId, java.lang.String reportParameters,
-		java.lang.String fileName, java.io.InputStream inputStream,
+		java.util.Map<java.util.Locale, String> nameMap,
+		java.util.Map<java.util.Locale, String> descriptionMap, long sourceId,
+		String reportParameters, String fileName,
+		java.io.InputStream inputStream,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -157,9 +157,8 @@ public class DefinitionServiceHttp {
 	}
 
 	public static java.util.List<com.liferay.portal.reports.engine.console.model.Definition> getDefinitions(
-		HttpPrincipal httpPrincipal, long groupId,
-		java.lang.String definitionName, java.lang.String description,
-		java.lang.String sourceId, java.lang.String reportName,
+		HttpPrincipal httpPrincipal, long groupId, String definitionName,
+		String description, String sourceId, String reportName,
 		boolean andSearch, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -194,9 +193,8 @@ public class DefinitionServiceHttp {
 	}
 
 	public static int getDefinitionsCount(HttpPrincipal httpPrincipal,
-		long groupId, java.lang.String definitionName,
-		java.lang.String description, java.lang.String sourceId,
-		java.lang.String reportName, boolean andSearch) {
+		long groupId, String definitionName, String description,
+		String sourceId, String reportName, boolean andSearch) {
 		try {
 			MethodKey methodKey = new MethodKey(DefinitionServiceUtil.class,
 					"getDefinitionsCount", _getDefinitionsCountParameterTypes4);
@@ -224,10 +222,10 @@ public class DefinitionServiceHttp {
 
 	public static com.liferay.portal.reports.engine.console.model.Definition updateDefinition(
 		HttpPrincipal httpPrincipal, long definitionId,
-		java.util.Map<java.util.Locale, java.lang.String> nameMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		long sourceId, java.lang.String reportParameters,
-		java.lang.String fileName, java.io.InputStream inputStream,
+		java.util.Map<java.util.Locale, String> nameMap,
+		java.util.Map<java.util.Locale, String> descriptionMap, long sourceId,
+		String reportParameters, String fileName,
+		java.io.InputStream inputStream,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -263,8 +261,7 @@ public class DefinitionServiceHttp {
 	private static Log _log = LogFactoryUtil.getLog(DefinitionServiceHttp.class);
 	private static final Class<?>[] _addDefinitionParameterTypes0 = new Class[] {
 			long.class, java.util.Map.class, java.util.Map.class, long.class,
-			java.lang.String.class, java.lang.String.class,
-			java.io.InputStream.class,
+			String.class, String.class, java.io.InputStream.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _deleteDefinitionParameterTypes1 = new Class[] {
@@ -274,19 +271,17 @@ public class DefinitionServiceHttp {
 			long.class
 		};
 	private static final Class<?>[] _getDefinitionsParameterTypes3 = new Class[] {
-			long.class, java.lang.String.class, java.lang.String.class,
-			java.lang.String.class, java.lang.String.class, boolean.class,
-			int.class, int.class,
+			long.class, String.class, String.class, String.class, String.class,
+			boolean.class, int.class, int.class,
 			com.liferay.portal.kernel.util.OrderByComparator.class
 		};
 	private static final Class<?>[] _getDefinitionsCountParameterTypes4 = new Class[] {
-			long.class, java.lang.String.class, java.lang.String.class,
-			java.lang.String.class, java.lang.String.class, boolean.class
+			long.class, String.class, String.class, String.class, String.class,
+			boolean.class
 		};
 	private static final Class<?>[] _updateDefinitionParameterTypes5 = new Class[] {
 			long.class, java.util.Map.class, java.util.Map.class, long.class,
-			java.lang.String.class, java.lang.String.class,
-			java.io.InputStream.class,
+			String.class, String.class, java.io.InputStream.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 }

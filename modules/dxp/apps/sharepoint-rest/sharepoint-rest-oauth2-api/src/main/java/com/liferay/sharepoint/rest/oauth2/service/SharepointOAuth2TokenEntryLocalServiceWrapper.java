@@ -36,9 +36,8 @@ public class SharepointOAuth2TokenEntryLocalServiceWrapper
 
 	@Override
 	public com.liferay.sharepoint.rest.oauth2.model.SharepointOAuth2TokenEntry addSharepointOAuth2TokenEntry(
-		long userId, java.lang.String configurationPid,
-		java.lang.String accessToken, java.lang.String refreshToken,
-		java.util.Date expirationDate)
+		long userId, String configurationPid, String accessToken,
+		String refreshToken, java.util.Date expirationDate)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _sharepointOAuth2TokenEntryLocalService.addSharepointOAuth2TokenEntry(userId,
 			configurationPid, accessToken, refreshToken, expirationDate);
@@ -94,7 +93,7 @@ public class SharepointOAuth2TokenEntryLocalServiceWrapper
 
 	@Override
 	public void deleteSharepointOAuth2TokenEntry(long userId,
-		java.lang.String configurationPid)
+		String configurationPid)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_sharepointOAuth2TokenEntryLocalService.deleteSharepointOAuth2TokenEntry(userId,
 			configurationPid);
@@ -206,7 +205,7 @@ public class SharepointOAuth2TokenEntryLocalServiceWrapper
 
 	@Override
 	public com.liferay.sharepoint.rest.oauth2.model.SharepointOAuth2TokenEntry fetchSharepointOAuth2TokenEntry(
-		long userId, java.lang.String configurationPid) {
+		long userId, String configurationPid) {
 		return _sharepointOAuth2TokenEntryLocalService.fetchSharepointOAuth2TokenEntry(userId,
 			configurationPid);
 	}
@@ -227,7 +226,7 @@ public class SharepointOAuth2TokenEntryLocalServiceWrapper
 	* @return the OSGi service identifier
 	*/
 	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
+	public String getOSGiServiceIdentifier() {
 		return _sharepointOAuth2TokenEntryLocalService.getOSGiServiceIdentifier();
 	}
 
@@ -282,7 +281,7 @@ public class SharepointOAuth2TokenEntryLocalServiceWrapper
 
 	@Override
 	public com.liferay.sharepoint.rest.oauth2.model.SharepointOAuth2TokenEntry getSharepointOAuth2TokenEntry(
-		long userId, java.lang.String configurationPid)
+		long userId, String configurationPid)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _sharepointOAuth2TokenEntryLocalService.getSharepointOAuth2TokenEntry(userId,
 			configurationPid);

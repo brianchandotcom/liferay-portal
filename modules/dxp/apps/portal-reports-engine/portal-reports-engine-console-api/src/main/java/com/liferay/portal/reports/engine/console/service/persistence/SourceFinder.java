@@ -22,19 +22,19 @@ import aQute.bnd.annotation.ProviderType;
  */
 @ProviderType
 public interface SourceFinder {
-	public int countByG_N_DU(long groupId, java.lang.String name,
-		java.lang.String driverUrl, boolean andOperator);
+	public int countByG_N_DU(long groupId, String name, String driverUrl,
+		boolean andOperator);
 
-	public int filterCountByG_N_DU(long groupId, java.lang.String name,
-		java.lang.String driverUrl, boolean andOperator);
+	public int filterCountByG_N_DU(long groupId, String name, String driverUrl,
+		boolean andOperator);
 
 	public java.util.List<com.liferay.portal.reports.engine.console.model.Source> filterFindByG_N_DU(
-		long groupId, java.lang.String name, java.lang.String driverUrl,
-		boolean andOperator, int start, int end,
+		long groupId, String name, String driverUrl, boolean andOperator,
+		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.reports.engine.console.model.Source> orderByComparator);
 
 	public java.util.List<com.liferay.portal.reports.engine.console.model.Source> findByG_N_DU(
-		long groupId, java.lang.String name, java.lang.String driverUrl,
-		boolean andOperator, int start, int end,
+		long groupId, String name, String driverUrl, boolean andOperator,
+		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.reports.engine.console.model.Source> orderByComparator);
 }

@@ -55,7 +55,7 @@ else if (collapsible) {
 						</a>
 					</c:when>
 					<c:otherwise>
-						<%= header %>
+						<h3 class="sheet-subtitle"><%= header %></h3>
 					</c:otherwise>
 				</c:choose>
 			</div>

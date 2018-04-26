@@ -30,6 +30,8 @@ import com.liferay.person.apio.identifier.PersonIdentifier;
 import com.liferay.portal.apio.permission.HasPermission;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
@@ -174,7 +176,17 @@ public class ProductNestedCollectionResource
 
 			if (hits.getLength() == 0) {
 				throw new NotFoundException(
-					"Unable to find Product with Id: " + cpDefinitionId);
+					"Unable to find product with Id: " + cpDefinitionId);
+			}
+			else if (hits.getLength() > 1) {
+				_log.warn(
+					"More than one index found for product with Id: " +
+						cpDefinitionId);
+
+				CPDefinition cpDefinition =
+					_cpDefinitionService.getCPDefinition(cpDefinitionId);
+
+				return _indexer.getDocument(cpDefinition);
 			}
 
 			List<Document> documents = hits.toList();
@@ -210,6 +222,9 @@ public class ProductNestedCollectionResource
 			throw new ServerErrorException(500, pe);
 		}
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		ProductNestedCollectionResource.class);
 
 	@Reference
 	private CPDefinitionService _cpDefinitionService;

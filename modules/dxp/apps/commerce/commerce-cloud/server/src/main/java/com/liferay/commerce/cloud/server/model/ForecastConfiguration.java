@@ -52,8 +52,8 @@ public class ForecastConfiguration implements JsonSerializable {
 		return _targets;
 	}
 
-	public String getTimeZoneId() {
-		return _timeZoneId;
+	public String getTimeZoneOffset() {
+		return _timeZoneOffset;
 	}
 
 	public void setAhead(int ahead) {
@@ -76,8 +76,8 @@ public class ForecastConfiguration implements JsonSerializable {
 		_targets = targets;
 	}
 
-	public void setTimeZoneId(String timeZoneId) {
-		_timeZoneId = timeZoneId;
+	public void setTimeZoneOffset(String timeZoneOffset) {
+		_timeZoneOffset = timeZoneOffset;
 	}
 
 	@Override
@@ -118,6 +118,6 @@ public class ForecastConfiguration implements JsonSerializable {
 	private Set<Level> _levels;
 	private Set<Period> _periods;
 	private Set<Target> _targets;
-	private String _timeZoneId;
+	private String _timeZoneOffset;
 
 }

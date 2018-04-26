@@ -49,7 +49,8 @@ public class EleflowForecastSchedulerDecoder
 		forecastScheduler.setTargets(
 			EleflowUtil.fromEleflow(
 				eleflowForecastScheduler.getTargets(), Target.class));
-		forecastScheduler.setTimeZoneId(eleflowForecastScheduler.getTimezone());
+		forecastScheduler.setTimeZoneOffset(
+			eleflowForecastScheduler.getTimezone());
 
 		return forecastScheduler;
 	}

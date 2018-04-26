@@ -56,7 +56,7 @@ public class ForecastConfigurationTest {
 		Assert.assertEquals(
 			EnumSet.of(ForecastConfiguration.Target.REVENUE),
 			forecastScheduler.getTargets());
-		Assert.assertEquals("+03:00", forecastScheduler.getTimeZoneId());
+		Assert.assertEquals("+03:00", forecastScheduler.getTimeZoneOffset());
 	}
 
 }

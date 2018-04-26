@@ -56,7 +56,7 @@ public class EleflowForecastSchedulerEncoder
 			EleflowUtil.toEleflow(
 				forecastConfiguration.getTargets(), TargetsEnum::fromValue));
 		eleflowForecastScheduler.setTimezone(
-			forecastConfiguration.getTimeZoneId());
+			forecastConfiguration.getTimeZoneOffset());
 
 		return eleflowForecastScheduler;
 	}

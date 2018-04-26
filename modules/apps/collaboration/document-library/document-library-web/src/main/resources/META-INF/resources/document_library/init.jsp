@@ -22,8 +22,6 @@ page import="com.liferay.portal.kernel.module.configuration.ConfigurationProvide
 page import="com.liferay.portal.kernel.util.LocaleUtil" %>
 
 <%
-PortalPreferences portalPreferences = PortletPreferencesFactoryUtil.getPortalPreferences(liferayPortletRequest);
-
 DLRequestHelper dlRequestHelper = new DLRequestHelper(request);
 
 String portletId = dlRequestHelper.getResourcePortletId();

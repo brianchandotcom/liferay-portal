@@ -27,17 +27,30 @@ long folderId = GetterUtil.getLong((String)request.getAttribute("view.jsp-folder
 
 long fileEntryTypeId = ParamUtil.getLong(request, "fileEntryTypeId", -1);
 
-String searchContainerId = ParamUtil.getString(request, "searchContainerId");
-
 boolean search = mvcRenderCommandName.equals("/document_library/search");
 
 DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletInstanceSettingsHelper(dlRequestHelper);
 %>
 
+<clay:management-toolbar
+	clearResultsURL="<%= dlAdminDisplayContext.getClearResultsURL() %>"
+	creationMenu="<%= dlAdminDisplayContext.getCreationMenu() %>"
+	disabled="<%= DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcutsCount(repositoryId, folderId, WorkflowConstants.STATUS_ANY, true) <= 0 %>"
+	filterItems="<%= dlAdminDisplayContext.getFilterDropdownItems() %>"
+	infoPanelId="infoPanelId"
+	searchActionURL="<%= String.valueOf(dlAdminDisplayContext.getSearchURL()) %>"
+	searchContainerId="entries"
+	selectable="<%= dlPortletInstanceSettingsHelper.isShowActions() %>"
+	showInfoButton="<%= true %>"
+	showSearch="<%= dlPortletInstanceSettingsHelper.isShowSearch() %>"
+	totalItems="<%= dlAdminDisplayContext.getTotalItems() %>"
+	viewTypes="<%= dlAdminDisplayContext.getViewTypes() %>"
+/>
+
 <liferay-frontend:management-bar
 	disabled="<%= DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcutsCount(repositoryId, folderId, WorkflowConstants.STATUS_ANY, true) <= 0 %>"
 	includeCheckBox="<%= dlPortletInstanceSettingsHelper.isShowActions() %>"
-	searchContainerId="<%= searchContainerId %>"
+	searchContainerId="entries"
 >
 
 	<%

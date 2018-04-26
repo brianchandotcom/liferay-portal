@@ -87,13 +87,13 @@ TABLE_COLUMNS_MAP.put("lastPublishDate", Types.TIMESTAMP);
 	public static final String TABLE_SQL_DROP = "drop table CalendarResource";
 
 	public static final String[] TABLE_SQL_ADD_INDEXES = {
-		"create index IX_76DDD0F7 on CalendarResource (active_)",
-		"create unique index IX_16A12327 on CalendarResource (classNameId, classPK)",
-		"create index IX_4470A59D on CalendarResource (companyId, code_[$COLUMN_LENGTH:75$], active_)",
-		"create index IX_40678371 on CalendarResource (groupId, active_)",
-		"create index IX_55C2F8AA on CalendarResource (groupId, code_[$COLUMN_LENGTH:75$])",
-		"create index IX_56A06BC6 on CalendarResource (uuid_[$COLUMN_LENGTH:75$], companyId)",
-		"create unique index IX_4ABD2BC8 on CalendarResource (uuid_[$COLUMN_LENGTH:75$], groupId)"
+		"create index IX_76DDD0F7 on CalendarResource (active_);",
+		"create unique index IX_16A12327 on CalendarResource (classNameId, classPK);",
+		"create index IX_4470A59D on CalendarResource (companyId, code_[$COLUMN_LENGTH:75$], active_);",
+		"create index IX_40678371 on CalendarResource (groupId, active_);",
+		"create index IX_55C2F8AA on CalendarResource (groupId, code_[$COLUMN_LENGTH:75$]);",
+		"create index IX_56A06BC6 on CalendarResource (uuid_[$COLUMN_LENGTH:75$], companyId);",
+		"create unique index IX_4ABD2BC8 on CalendarResource (uuid_[$COLUMN_LENGTH:75$], groupId);"
 	};
 
 }

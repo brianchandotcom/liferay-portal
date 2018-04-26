@@ -63,20 +63,20 @@ public class LayoutTable {
 	public static final String TABLE_SQL_DROP = "drop table Layout";
 
 	public static final String[] TABLE_SQL_ADD_INDEXES = {
-		"create index IX_C7FBC998 on Layout (companyId)",
-		"create index IX_C099D61A on Layout (groupId)",
-		"create index IX_705F5AA3 on Layout (groupId, privateLayout)",
-		"create unique index IX_BC2C4231 on Layout (groupId, privateLayout, friendlyURL)",
-		"create unique index IX_7162C27C on Layout (groupId, privateLayout, layoutId)",
-		"create index IX_6DE88B06 on Layout (groupId, privateLayout, parentLayoutId)",
-		"create index IX_8CE8C0D9 on Layout (groupId, privateLayout, sourcePrototypeLayoutUuid)",
-		"create index IX_1A1B61D2 on Layout (groupId, privateLayout, type_)",
-		"create index IX_23922F7D on Layout (iconImageId)",
-		"create index IX_B529BFD3 on Layout (layoutPrototypeUuid)",
-		"create index IX_39A18ECC on Layout (sourcePrototypeLayoutUuid)",
-		"create index IX_D0822724 on Layout (uuid_)",
-		"create index IX_2CE4BE84 on Layout (uuid_, companyId)",
-		"create unique index IX_E118C537 on Layout (uuid_, groupId, privateLayout)"
+		"create index IX_C7FBC998 on Layout (companyId);",
+		"create index IX_C099D61A on Layout (groupId);",
+		"create index IX_705F5AA3 on Layout (groupId, privateLayout);",
+		"create unique index IX_BC2C4231 on Layout (groupId, privateLayout, friendlyURL);",
+		"create unique index IX_7162C27C on Layout (groupId, privateLayout, layoutId);",
+		"create index IX_6DE88B06 on Layout (groupId, privateLayout, parentLayoutId);",
+		"create index IX_8CE8C0D9 on Layout (groupId, privateLayout, sourcePrototypeLayoutUuid);",
+		"create index IX_1A1B61D2 on Layout (groupId, privateLayout, type_);",
+		"create index IX_23922F7D on Layout (iconImageId);",
+		"create index IX_B529BFD3 on Layout (layoutPrototypeUuid);",
+		"create index IX_39A18ECC on Layout (sourcePrototypeLayoutUuid);",
+		"create index IX_D0822724 on Layout (uuid_);",
+		"create index IX_2CE4BE84 on Layout (uuid_, companyId);",
+		"create unique index IX_E118C537 on Layout (uuid_, groupId, privateLayout);"
 	};
 
 }

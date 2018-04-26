@@ -108,9 +108,9 @@ TABLE_COLUMNS_MAP.put("lastPublishDate", Types.TIMESTAMP);
 	public static final String TABLE_SQL_DROP = "drop table JournalFeed";
 
 	public static final String[] TABLE_SQL_ADD_INDEXES = {
-		"create unique index IX_65576CBC on JournalFeed (groupId, feedId)",
-		"create index IX_CB37A10F on JournalFeed (uuid_, companyId)",
-		"create unique index IX_39031F51 on JournalFeed (uuid_, groupId)"
+		"create unique index IX_65576CBC on JournalFeed (groupId, feedId);",
+		"create index IX_CB37A10F on JournalFeed (uuid_, companyId);",
+		"create unique index IX_39031F51 on JournalFeed (uuid_, groupId);"
 	};
 
 }

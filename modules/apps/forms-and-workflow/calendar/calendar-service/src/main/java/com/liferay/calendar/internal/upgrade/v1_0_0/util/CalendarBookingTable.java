@@ -126,14 +126,14 @@ TABLE_COLUMNS_MAP.put("statusDate", Types.TIMESTAMP);
 	public static final String TABLE_SQL_DROP = "drop table CalendarBooking";
 
 	public static final String[] TABLE_SQL_ADD_INDEXES = {
-		"create unique index IX_113A264E on CalendarBooking (calendarId, parentCalendarBookingId)",
-		"create index IX_470170B4 on CalendarBooking (calendarId, status)",
-		"create unique index IX_8B23DA0E on CalendarBooking (calendarId, vEventUid[$COLUMN_LENGTH:255$])",
-		"create index IX_B198FFC on CalendarBooking (calendarResourceId)",
-		"create index IX_F7B8A941 on CalendarBooking (parentCalendarBookingId, status)",
-		"create index IX_22DFDB49 on CalendarBooking (resourceBlockId)",
-		"create index IX_A21D9FD5 on CalendarBooking (uuid_[$COLUMN_LENGTH:75$], companyId)",
-		"create unique index IX_F4C61797 on CalendarBooking (uuid_[$COLUMN_LENGTH:75$], groupId)"
+		"create unique index IX_113A264E on CalendarBooking (calendarId, parentCalendarBookingId);",
+		"create index IX_470170B4 on CalendarBooking (calendarId, status);",
+		"create unique index IX_8B23DA0E on CalendarBooking (calendarId, vEventUid[$COLUMN_LENGTH:255$]);",
+		"create index IX_B198FFC on CalendarBooking (calendarResourceId);",
+		"create index IX_F7B8A941 on CalendarBooking (parentCalendarBookingId, status);",
+		"create index IX_22DFDB49 on CalendarBooking (resourceBlockId);",
+		"create index IX_A21D9FD5 on CalendarBooking (uuid_[$COLUMN_LENGTH:75$], companyId);",
+		"create unique index IX_F4C61797 on CalendarBooking (uuid_[$COLUMN_LENGTH:75$], groupId);"
 	};
 
 }

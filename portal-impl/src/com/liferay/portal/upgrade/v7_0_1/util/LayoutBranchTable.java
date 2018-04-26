@@ -72,8 +72,8 @@ TABLE_COLUMNS_MAP.put("master", Types.BOOLEAN);
 	public static final String TABLE_SQL_DROP = "drop table LayoutBranch";
 
 	public static final String[] TABLE_SQL_ADD_INDEXES = {
-		"create index IX_A705FF94 on LayoutBranch (layoutSetBranchId, plid, master)",
-		"create unique index IX_FD57097D on LayoutBranch (layoutSetBranchId, plid, name[$COLUMN_LENGTH:75$])"
+		"create index IX_A705FF94 on LayoutBranch (layoutSetBranchId, plid, master);",
+		"create unique index IX_FD57097D on LayoutBranch (layoutSetBranchId, plid, name[$COLUMN_LENGTH:75$]);"
 	};
 
 }

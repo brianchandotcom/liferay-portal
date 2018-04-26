@@ -117,10 +117,10 @@ TABLE_COLUMNS_MAP.put("active_", Types.BOOLEAN);
 	public static final String TABLE_SQL_DROP = "drop table MBMailingList";
 
 	public static final String[] TABLE_SQL_ADD_INDEXES = {
-		"create index IX_BFEB984F on MBMailingList (active_)",
-		"create unique index IX_76CE9CDD on MBMailingList (groupId, categoryId)",
-		"create index IX_FC61676E on MBMailingList (uuid_[$COLUMN_LENGTH:75$], companyId)",
-		"create unique index IX_E858F170 on MBMailingList (uuid_[$COLUMN_LENGTH:75$], groupId)"
+		"create index IX_BFEB984F on MBMailingList (active_);",
+		"create unique index IX_76CE9CDD on MBMailingList (groupId, categoryId);",
+		"create index IX_FC61676E on MBMailingList (uuid_[$COLUMN_LENGTH:75$], companyId);",
+		"create unique index IX_E858F170 on MBMailingList (uuid_[$COLUMN_LENGTH:75$], groupId);"
 	};
 
 }

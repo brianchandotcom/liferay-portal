@@ -72,10 +72,10 @@ TABLE_COLUMNS_MAP.put("active_", Types.BOOLEAN);
 	public static final String TABLE_SQL_DROP = "drop table Company";
 
 	public static final String[] TABLE_SQL_ADD_INDEXES = {
-		"create index IX_38EFE3FD on Company (logoId)",
-		"create index IX_12566EC2 on Company (mx[$COLUMN_LENGTH:200$])",
-		"create index IX_35E3E7C6 on Company (system)",
-		"create unique index IX_EC00543C on Company (webId[$COLUMN_LENGTH:75$])"
+		"create index IX_38EFE3FD on Company (logoId);",
+		"create index IX_12566EC2 on Company (mx[$COLUMN_LENGTH:200$]);",
+		"create index IX_35E3E7C6 on Company (system);",
+		"create unique index IX_EC00543C on Company (webId[$COLUMN_LENGTH:75$]);"
 	};
 
 }

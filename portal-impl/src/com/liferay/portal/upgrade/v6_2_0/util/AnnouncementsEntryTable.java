@@ -49,11 +49,11 @@ public class AnnouncementsEntryTable {
 	public static final String TABLE_SQL_DROP = "drop table AnnouncementsEntry";
 
 	public static final String[] TABLE_SQL_ADD_INDEXES = {
-		"create index IX_A6EF0B81 on AnnouncementsEntry (classNameId, classPK)",
-		"create index IX_14F06A6B on AnnouncementsEntry (classNameId, classPK, alert)",
-		"create index IX_D49C2E66 on AnnouncementsEntry (userId)",
-		"create index IX_1AFBDE08 on AnnouncementsEntry (uuid_)",
-		"create index IX_F2949120 on AnnouncementsEntry (uuid_, companyId)"
+		"create index IX_A6EF0B81 on AnnouncementsEntry (classNameId, classPK);",
+		"create index IX_14F06A6B on AnnouncementsEntry (classNameId, classPK, alert);",
+		"create index IX_D49C2E66 on AnnouncementsEntry (userId);",
+		"create index IX_1AFBDE08 on AnnouncementsEntry (uuid_);",
+		"create index IX_F2949120 on AnnouncementsEntry (uuid_, companyId);"
 	};
 
 }

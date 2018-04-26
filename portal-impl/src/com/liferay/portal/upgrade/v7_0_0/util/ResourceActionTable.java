@@ -54,7 +54,7 @@ TABLE_COLUMNS_MAP.put("bitwiseValue", Types.BIGINT);
 	public static final String TABLE_SQL_DROP = "drop table ResourceAction";
 
 	public static final String[] TABLE_SQL_ADD_INDEXES = {
-		"create unique index IX_EDB9986E on ResourceAction (name[$COLUMN_LENGTH:255$], actionId[$COLUMN_LENGTH:75$])"
+		"create unique index IX_EDB9986E on ResourceAction (name[$COLUMN_LENGTH:255$], actionId[$COLUMN_LENGTH:75$]);"
 	};
 
 }

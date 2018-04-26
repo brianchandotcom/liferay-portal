@@ -51,22 +51,22 @@ public class GroupTable {
 	public static final String TABLE_SQL_DROP = "drop table Group_";
 
 	public static final String[] TABLE_SQL_ADD_INDEXES = {
-		"create index IX_ABA5CEC2 on Group_ (companyId)",
-		"create index IX_B584B5CC on Group_ (companyId, classNameId)",
-		"create unique index IX_D0D5E397 on Group_ (companyId, classNameId, classPK)",
-		"create unique index IX_5DE0BE11 on Group_ (companyId, classNameId, liveGroupId, name)",
-		"create index IX_ABE2D54 on Group_ (companyId, classNameId, parentGroupId)",
-		"create unique index IX_5BDDB872 on Group_ (companyId, friendlyURL)",
-		"create unique index IX_BBCA55B on Group_ (companyId, liveGroupId, name)",
-		"create unique index IX_5AA68501 on Group_ (companyId, name)",
-		"create index IX_5D75499E on Group_ (companyId, parentGroupId)",
-		"create index IX_6C499099 on Group_ (companyId, parentGroupId, site)",
-		"create index IX_63A2AABD on Group_ (companyId, site)",
-		"create index IX_16218A38 on Group_ (liveGroupId)",
-		"create index IX_7B590A7A on Group_ (type_, active_)",
-		"create index IX_F981514E on Group_ (uuid_)",
-		"create index IX_26CC761A on Group_ (uuid_, companyId)",
-		"create unique index IX_754FBB1C on Group_ (uuid_, groupId)"
+		"create index IX_ABA5CEC2 on Group_ (companyId);",
+		"create index IX_B584B5CC on Group_ (companyId, classNameId);",
+		"create unique index IX_D0D5E397 on Group_ (companyId, classNameId, classPK);",
+		"create unique index IX_5DE0BE11 on Group_ (companyId, classNameId, liveGroupId, name);",
+		"create index IX_ABE2D54 on Group_ (companyId, classNameId, parentGroupId);",
+		"create unique index IX_5BDDB872 on Group_ (companyId, friendlyURL);",
+		"create unique index IX_BBCA55B on Group_ (companyId, liveGroupId, name);",
+		"create unique index IX_5AA68501 on Group_ (companyId, name);",
+		"create index IX_5D75499E on Group_ (companyId, parentGroupId);",
+		"create index IX_6C499099 on Group_ (companyId, parentGroupId, site);",
+		"create index IX_63A2AABD on Group_ (companyId, site);",
+		"create index IX_16218A38 on Group_ (liveGroupId);",
+		"create index IX_7B590A7A on Group_ (type_, active_);",
+		"create index IX_F981514E on Group_ (uuid_);",
+		"create index IX_26CC761A on Group_ (uuid_, companyId);",
+		"create unique index IX_754FBB1C on Group_ (uuid_, groupId);"
 	};
 
 }

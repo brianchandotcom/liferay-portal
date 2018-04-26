@@ -55,11 +55,11 @@ public class JournalFeedTable {
 	public static final String TABLE_SQL_DROP = "drop table JournalFeed";
 
 	public static final String[] TABLE_SQL_ADD_INDEXES = {
-		"create index IX_35A2DB2F on JournalFeed (groupId)",
-		"create unique index IX_65576CBC on JournalFeed (groupId, feedId)",
-		"create index IX_50C36D79 on JournalFeed (uuid_)",
-		"create index IX_CB37A10F on JournalFeed (uuid_, companyId)",
-		"create unique index IX_39031F51 on JournalFeed (uuid_, groupId)"
+		"create index IX_35A2DB2F on JournalFeed (groupId);",
+		"create unique index IX_65576CBC on JournalFeed (groupId, feedId);",
+		"create index IX_50C36D79 on JournalFeed (uuid_);",
+		"create index IX_CB37A10F on JournalFeed (uuid_, companyId);",
+		"create unique index IX_39031F51 on JournalFeed (uuid_, groupId);"
 	};
 
 }

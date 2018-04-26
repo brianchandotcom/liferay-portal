@@ -129,12 +129,12 @@ TABLE_COLUMNS_MAP.put("workflowContext", Types.CLOB);
 	public static final String TABLE_SQL_DROP = "drop table KaleoLog";
 
 	public static final String[] TABLE_SQL_ADD_INDEXES = {
-		"create index IX_73B5F4DE on KaleoLog (companyId)",
-		"create index IX_E66A153A on KaleoLog (kaleoClassName[$COLUMN_LENGTH:200$], kaleoClassPK, kaleoInstanceTokenId, type_[$COLUMN_LENGTH:50$])",
-		"create index IX_6C64B7D4 on KaleoLog (kaleoDefinitionId)",
-		"create index IX_5BC6AB16 on KaleoLog (kaleoInstanceId)",
-		"create index IX_470B9FF8 on KaleoLog (kaleoInstanceTokenId, type_[$COLUMN_LENGTH:50$])",
-		"create index IX_B0CDCA38 on KaleoLog (kaleoTaskInstanceTokenId)"
+		"create index IX_73B5F4DE on KaleoLog (companyId);",
+		"create index IX_E66A153A on KaleoLog (kaleoClassName[$COLUMN_LENGTH:200$], kaleoClassPK, kaleoInstanceTokenId, type_[$COLUMN_LENGTH:50$]);",
+		"create index IX_6C64B7D4 on KaleoLog (kaleoDefinitionId);",
+		"create index IX_5BC6AB16 on KaleoLog (kaleoInstanceId);",
+		"create index IX_470B9FF8 on KaleoLog (kaleoInstanceTokenId, type_[$COLUMN_LENGTH:50$]);",
+		"create index IX_B0CDCA38 on KaleoLog (kaleoTaskInstanceTokenId);"
 	};
 
 }

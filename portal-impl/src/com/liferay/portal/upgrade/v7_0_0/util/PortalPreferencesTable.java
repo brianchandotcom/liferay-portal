@@ -54,7 +54,7 @@ TABLE_COLUMNS_MAP.put("preferences", Types.CLOB);
 	public static final String TABLE_SQL_DROP = "drop table PortalPreferences";
 
 	public static final String[] TABLE_SQL_ADD_INDEXES = {
-		"create index IX_D1F795F1 on PortalPreferences (ownerId, ownerType)"
+		"create index IX_D1F795F1 on PortalPreferences (ownerId, ownerType);"
 	};
 
 }

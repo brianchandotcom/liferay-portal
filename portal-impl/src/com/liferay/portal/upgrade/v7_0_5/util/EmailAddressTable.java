@@ -78,9 +78,9 @@ TABLE_COLUMNS_MAP.put("primary_", Types.BOOLEAN);
 	public static final String TABLE_SQL_DROP = "drop table EmailAddress";
 
 	public static final String[] TABLE_SQL_ADD_INDEXES = {
-		"create index IX_2A2CB130 on EmailAddress (companyId, classNameId, classPK, primary_)",
-		"create index IX_7B43CD8 on EmailAddress (userId)",
-		"create index IX_F74AB912 on EmailAddress (uuid_[$COLUMN_LENGTH:75$], companyId)"
+		"create index IX_2A2CB130 on EmailAddress (companyId, classNameId, classPK, primary_);",
+		"create index IX_7B43CD8 on EmailAddress (userId);",
+		"create index IX_F74AB912 on EmailAddress (uuid_[$COLUMN_LENGTH:75$], companyId);"
 	};
 
 }

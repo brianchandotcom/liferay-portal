@@ -90,9 +90,9 @@ TABLE_COLUMNS_MAP.put("lastPublishDate", Types.TIMESTAMP);
 	public static final String TABLE_SQL_DROP = "drop table Calendar";
 
 	public static final String[] TABLE_SQL_ADD_INDEXES = {
-		"create index IX_97FC174E on Calendar (groupId, calendarResourceId, defaultCalendar)",
-		"create index IX_97656498 on Calendar (uuid_[$COLUMN_LENGTH:75$], companyId)",
-		"create unique index IX_3AE311A on Calendar (uuid_[$COLUMN_LENGTH:75$], groupId)"
+		"create index IX_97FC174E on Calendar (groupId, calendarResourceId, defaultCalendar);",
+		"create index IX_97656498 on Calendar (uuid_[$COLUMN_LENGTH:75$], companyId);",
+		"create unique index IX_3AE311A on Calendar (uuid_[$COLUMN_LENGTH:75$], groupId);"
 	};
 
 }

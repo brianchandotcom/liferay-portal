@@ -105,20 +105,20 @@ TABLE_COLUMNS_MAP.put("active_", Types.BOOLEAN);
 	public static final String TABLE_SQL_DROP = "drop table Group_";
 
 	public static final String[] TABLE_SQL_ADD_INDEXES = {
-		"create index IX_BD3CB13A on Group_ (classNameId, groupId, companyId, parentGroupId)",
-		"create index IX_DDC91A87 on Group_ (companyId, active_)",
-		"create unique index IX_D0D5E397 on Group_ (companyId, classNameId, classPK)",
-		"create unique index IX_A729E3A6 on Group_ (companyId, classNameId, liveGroupId, groupKey[$COLUMN_LENGTH:150$])",
-		"create index IX_ABE2D54 on Group_ (companyId, classNameId, parentGroupId)",
-		"create unique index IX_5BDDB872 on Group_ (companyId, friendlyURL[$COLUMN_LENGTH:255$])",
-		"create unique index IX_ACD2B296 on Group_ (companyId, groupKey[$COLUMN_LENGTH:150$])",
-		"create unique index IX_AACD15F0 on Group_ (companyId, liveGroupId, groupKey[$COLUMN_LENGTH:150$])",
-		"create index IX_D4BFF38B on Group_ (companyId, parentGroupId, site, inheritContent)",
-		"create index IX_63A2AABD on Group_ (companyId, site)",
-		"create index IX_16218A38 on Group_ (liveGroupId)",
-		"create index IX_7B590A7A on Group_ (type_, active_)",
-		"create index IX_26CC761A on Group_ (uuid_[$COLUMN_LENGTH:75$], companyId)",
-		"create unique index IX_754FBB1C on Group_ (uuid_[$COLUMN_LENGTH:75$], groupId)"
+		"create index IX_BD3CB13A on Group_ (classNameId, groupId, companyId, parentGroupId);",
+		"create index IX_DDC91A87 on Group_ (companyId, active_);",
+		"create unique index IX_D0D5E397 on Group_ (companyId, classNameId, classPK);",
+		"create unique index IX_A729E3A6 on Group_ (companyId, classNameId, liveGroupId, groupKey[$COLUMN_LENGTH:150$]);",
+		"create index IX_ABE2D54 on Group_ (companyId, classNameId, parentGroupId);",
+		"create unique index IX_5BDDB872 on Group_ (companyId, friendlyURL[$COLUMN_LENGTH:255$]);",
+		"create unique index IX_ACD2B296 on Group_ (companyId, groupKey[$COLUMN_LENGTH:150$]);",
+		"create unique index IX_AACD15F0 on Group_ (companyId, liveGroupId, groupKey[$COLUMN_LENGTH:150$]);",
+		"create index IX_D4BFF38B on Group_ (companyId, parentGroupId, site, inheritContent);",
+		"create index IX_63A2AABD on Group_ (companyId, site);",
+		"create index IX_16218A38 on Group_ (liveGroupId);",
+		"create index IX_7B590A7A on Group_ (type_, active_);",
+		"create index IX_26CC761A on Group_ (uuid_[$COLUMN_LENGTH:75$], companyId);",
+		"create unique index IX_754FBB1C on Group_ (uuid_[$COLUMN_LENGTH:75$], groupId);"
 	};
 
 }

@@ -99,10 +99,10 @@ TABLE_COLUMNS_MAP.put("primary_", Types.BOOLEAN);
 	public static final String TABLE_SQL_DROP = "drop table Address";
 
 	public static final String[] TABLE_SQL_ADD_INDEXES = {
-		"create index IX_923BD178 on Address (companyId, classNameId, classPK, mailing)",
-		"create index IX_9226DBB4 on Address (companyId, classNameId, classPK, primary_)",
-		"create index IX_5BC8B0D4 on Address (userId)",
-		"create index IX_8FCB620E on Address (uuid_[$COLUMN_LENGTH:75$], companyId)"
+		"create index IX_923BD178 on Address (companyId, classNameId, classPK, mailing);",
+		"create index IX_9226DBB4 on Address (companyId, classNameId, classPK, primary_);",
+		"create index IX_5BC8B0D4 on Address (userId);",
+		"create index IX_8FCB620E on Address (uuid_[$COLUMN_LENGTH:75$], companyId);"
 	};
 
 }

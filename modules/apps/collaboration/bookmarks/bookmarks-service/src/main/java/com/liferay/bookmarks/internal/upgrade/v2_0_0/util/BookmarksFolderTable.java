@@ -90,10 +90,10 @@ TABLE_COLUMNS_MAP.put("statusDate", Types.TIMESTAMP);
 	public static final String TABLE_SQL_DROP = "drop table BookmarksFolder";
 
 	public static final String[] TABLE_SQL_ADD_INDEXES = {
-		"create index IX_C27C9DBD on BookmarksFolder (companyId, status)",
-		"create index IX_D16018A6 on BookmarksFolder (groupId, parentFolderId, status)",
-		"create index IX_54F0ED65 on BookmarksFolder (uuid_[$COLUMN_LENGTH:75$], companyId)",
-		"create unique index IX_DC2F8927 on BookmarksFolder (uuid_[$COLUMN_LENGTH:75$], groupId)"
+		"create index IX_C27C9DBD on BookmarksFolder (companyId, status);",
+		"create index IX_D16018A6 on BookmarksFolder (groupId, parentFolderId, status);",
+		"create index IX_54F0ED65 on BookmarksFolder (uuid_[$COLUMN_LENGTH:75$], companyId);",
+		"create unique index IX_DC2F8927 on BookmarksFolder (uuid_[$COLUMN_LENGTH:75$], groupId);"
 	};
 
 }

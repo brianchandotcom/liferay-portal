@@ -53,22 +53,22 @@ public class DDMTemplateTable {
 	public static final String TABLE_SQL_DROP = "drop table DDMTemplate";
 
 	public static final String[] TABLE_SQL_ADD_INDEXES = {
-		"create index IX_B6356F93 on DDMTemplate (classNameId, classPK, type_)",
-		"create index IX_32F83D16 on DDMTemplate (classPK)",
-		"create index IX_DB24DDDD on DDMTemplate (groupId)",
-		"create index IX_BD9A4A91 on DDMTemplate (groupId, classNameId)",
-		"create index IX_824ADC72 on DDMTemplate (groupId, classNameId, classPK)",
-		"create index IX_90800923 on DDMTemplate (groupId, classNameId, classPK, type_)",
-		"create index IX_F0C3449 on DDMTemplate (groupId, classNameId, classPK, type_, mode_)",
-		"create unique index IX_E6DFAB84 on DDMTemplate (groupId, classNameId, templateKey)",
-		"create index IX_B1C33EA6 on DDMTemplate (groupId, classPK)",
-		"create index IX_33BEF579 on DDMTemplate (language)",
-		"create index IX_127A35B0 on DDMTemplate (smallImageId)",
-		"create index IX_CAE41A28 on DDMTemplate (templateKey)",
-		"create index IX_C4F283C8 on DDMTemplate (type_)",
-		"create index IX_F2A243A7 on DDMTemplate (uuid_)",
-		"create index IX_D4C2C221 on DDMTemplate (uuid_, companyId)",
-		"create unique index IX_1AA75CE3 on DDMTemplate (uuid_, groupId)"
+		"create index IX_B6356F93 on DDMTemplate (classNameId, classPK, type_);",
+		"create index IX_32F83D16 on DDMTemplate (classPK);",
+		"create index IX_DB24DDDD on DDMTemplate (groupId);",
+		"create index IX_BD9A4A91 on DDMTemplate (groupId, classNameId);",
+		"create index IX_824ADC72 on DDMTemplate (groupId, classNameId, classPK);",
+		"create index IX_90800923 on DDMTemplate (groupId, classNameId, classPK, type_);",
+		"create index IX_F0C3449 on DDMTemplate (groupId, classNameId, classPK, type_, mode_);",
+		"create unique index IX_E6DFAB84 on DDMTemplate (groupId, classNameId, templateKey);",
+		"create index IX_B1C33EA6 on DDMTemplate (groupId, classPK);",
+		"create index IX_33BEF579 on DDMTemplate (language);",
+		"create index IX_127A35B0 on DDMTemplate (smallImageId);",
+		"create index IX_CAE41A28 on DDMTemplate (templateKey);",
+		"create index IX_C4F283C8 on DDMTemplate (type_);",
+		"create index IX_F2A243A7 on DDMTemplate (uuid_);",
+		"create index IX_D4C2C221 on DDMTemplate (uuid_, companyId);",
+		"create unique index IX_1AA75CE3 on DDMTemplate (uuid_, groupId);"
 	};
 
 }

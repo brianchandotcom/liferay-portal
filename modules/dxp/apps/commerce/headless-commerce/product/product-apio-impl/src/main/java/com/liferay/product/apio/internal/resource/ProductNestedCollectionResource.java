@@ -14,6 +14,9 @@
 
 package com.liferay.product.apio.internal.resource;
 
+import static com.liferay.portal.apio.idempotent.Idempotent.idempotent;
+
+import com.liferay.apio.architect.functional.Try;
 import com.liferay.apio.architect.pagination.PageItems;
 import com.liferay.apio.architect.pagination.Pagination;
 import com.liferay.apio.architect.representor.Representor;
@@ -22,17 +25,23 @@ import com.liferay.apio.architect.routes.ItemRoutes;
 import com.liferay.apio.architect.routes.NestedCollectionRoutes;
 import com.liferay.commerce.product.exception.CPDefinitionProductTypeNameException;
 import com.liferay.commerce.product.model.CPDefinition;
-import com.liferay.commerce.product.model.CPDefinitionModel;
 import com.liferay.commerce.product.service.CPDefinitionService;
-import com.liferay.person.apio.architect.identifier.PersonIdentifier;
-import com.liferay.petra.string.StringPool;
-import com.liferay.portal.apio.architect.context.auth.MockPermissions;
+import com.liferay.person.apio.identifier.PersonIdentifier;
+import com.liferay.portal.apio.permission.HasPermission;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.kernel.search.Document;
+import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.search.Hits;
+import com.liferay.portal.kernel.search.Indexer;
+import com.liferay.portal.kernel.search.IndexerRegistryUtil;
+import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.product.apio.identifier.ProductDefinitionIdentifier;
 import com.liferay.product.apio.internal.form.ProductCreatorForm;
-import com.liferay.product.apio.internal.util.ProductResourceCollectionUtil;
-import com.liferay.site.apio.architect.identifier.WebSiteIdentifier;
+import com.liferay.product.apio.internal.util.ProductDefinitionHelper;
+import com.liferay.site.apio.identifier.WebSiteIdentifier;
 
 import java.util.List;
 import java.util.stream.Stream;
@@ -54,17 +63,17 @@ import org.osgi.service.component.annotations.Reference;
 @Component(immediate = true)
 public class ProductNestedCollectionResource
 	implements
-		NestedCollectionResource<CPDefinition, Long,
+		NestedCollectionResource<Document, Long,
 			ProductDefinitionIdentifier, Long, WebSiteIdentifier> {
 
 	@Override
-	public NestedCollectionRoutes<CPDefinition, Long> collectionRoutes(
-		NestedCollectionRoutes.Builder<CPDefinition, Long> builder) {
+	public NestedCollectionRoutes<Document, Long> collectionRoutes(
+		NestedCollectionRoutes.Builder<Document, Long> builder) {
 
 		return builder.addGetter(
 			this::_getPageItems
 		).addCreator(
-			this::_addCPDefinition, MockPermissions::validPermission,
+			this::_addCPDefinition, (credentials, s) -> true,
 			ProductCreatorForm::buildForm
 		).build();
 	}
@@ -75,67 +84,68 @@ public class ProductNestedCollectionResource
 	}
 
 	@Override
-	public ItemRoutes<CPDefinition, Long> itemRoutes(
-		ItemRoutes.Builder<CPDefinition, Long> builder) {
+	public ItemRoutes<Document, Long> itemRoutes(
+		ItemRoutes.Builder<Document, Long> builder) {
 
 		return builder.addGetter(
 			this::_getCPDefinition
 		).addRemover(
-			this::_deleteCPDefinition, MockPermissions::validPermission
+			idempotent(_cpDefinitionService::deleteCPDefinition),
+			_hasPermission.forDeleting(CPDefinition.class)
 		).build();
 	}
 
 	@Override
-	public Representor<CPDefinition, Long> representor(
-		Representor.Builder<CPDefinition, Long> builder) {
+	public Representor<Document, Long> representor(
+		Representor.Builder<Document, Long> builder) {
 
 		return builder.types(
 			"Product"
 		).identifier(
-			CPDefinition::getCPDefinitionId
+			document -> GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK))
 		).addBidirectionalModel(
 			"webSite", "products", WebSiteIdentifier.class,
-			CPDefinitionModel::getGroupId
+			document -> GetterUtil.getLong(document.get(Field.GROUP_ID))
 		).addDate(
-			"dateCreated", CPDefinition::getCreateDate
+			"dateModified",
+			document -> Try.fromFallible(
+				() -> document.getDate(Field.CREATE_DATE)
+			).getUnchecked()
 		).addDate(
-			"dateModified", CPDefinition::getModifiedDate
+			"dateModified",
+			document -> Try.fromFallible(
+				() -> document.getDate(Field.MODIFIED_DATE)
+			).getUnchecked()
 		).addLinkedModel(
-			"author", PersonIdentifier.class, CPDefinition::getUserId
+			"author", PersonIdentifier.class,
+			document -> GetterUtil.getLong(document.get(Field.USER_ID))
 		).addString(
-			"description", CPDefinition::getDescription
+			"description", document -> document.get(Field.DESCRIPTION)
 		).addString(
-			"short-description", CPDefinition::getShortDescription
-		).addString(
-			"title", CPDefinition::getTitle
+			"title", document -> document.get(Field.TITLE)
 		).build();
 	}
 
-	private CPDefinition _addCPDefinition(
+	private Document _addCPDefinition(
 			Long webSiteId, ProductCreatorForm productCreatorForm)
 		throws PortalException {
 
 		try {
-			return _productResourceCollectionUtil.createCPDefinition(
-				webSiteId, productCreatorForm.getTitleMap(),
-				productCreatorForm.getDescriptionMap(),
-				productCreatorForm.getProductTypeName(),
-				_getAssetCategoryIds(productCreatorForm.getAssetCategoryIds()));
+			CPDefinition cpDefinition =
+				_productDefinitionHelper.createCPDefinition(
+					webSiteId, productCreatorForm.getTitleMap(),
+					productCreatorForm.getDescriptionMap(),
+					productCreatorForm.getProductTypeName(),
+					_getAssetCategoryIds(
+						productCreatorForm.getAssetCategoryIds()));
+
+			return _indexer.getDocument(cpDefinition);
 		}
 		catch (CPDefinitionProductTypeNameException cpdptne) {
 			throw new NotFoundException(
-				"Unable to get product name " +
+				"Product type not available: " +
 					productCreatorForm.getProductTypeName(),
 				cpdptne);
-		}
-		catch (PortalException pe) {
-			throw new ServerErrorException(500, pe);
-		}
-	}
-
-	private void _deleteCPDefinition(Long cpDefinitionId) {
-		try {
-			_cpDefinitionService.deleteCPDefinition(cpDefinitionId);
 		}
 		catch (PortalException pe) {
 			throw new ServerErrorException(500, pe);
@@ -150,30 +160,46 @@ public class ProductNestedCollectionResource
 		).toArray();
 	}
 
-	private CPDefinition _getCPDefinition(Long cpDefinitionId) {
+	private Document _getCPDefinition(Long cpDefinitionId) {
 		try {
-			return _cpDefinitionService.getCPDefinition(cpDefinitionId);
+			ServiceContext serviceContext =
+				_productDefinitionHelper.getServiceContext(0, new long[0]);
+
+			SearchContext searchContext =
+				_productDefinitionHelper.buildSearchContext(
+					String.valueOf(cpDefinitionId), QueryUtil.ALL_POS,
+					QueryUtil.ALL_POS, null, serviceContext);
+
+			Hits hits = _indexer.search(searchContext);
+
+			List<Document> documents = hits.toList();
+
+			return documents.get(0);
 		}
 		catch (PortalException pe) {
 			throw new ServerErrorException(500, pe);
 		}
 	}
 
-	private PageItems<CPDefinition> _getPageItems(
-		Pagination pagination, Long webSiteId) {
+	private PageItems<Document> _getPageItems(
+			Pagination pagination, Long webSiteId)
+		throws PortalException {
 
 		try {
-			List<CPDefinition> cpDefinitions =
-				_cpDefinitionService.getCPDefinitions(
-					webSiteId, StringPool.BLANK, StringPool.BLANK,
-					WorkflowConstants.STATUS_APPROVED,
-					pagination.getStartPosition(), pagination.getEndPosition(),
-					null);
-			int count = _cpDefinitionService.getCPDefinitionsCount(
-				webSiteId, StringPool.BLANK, StringPool.BLANK,
-				WorkflowConstants.STATUS_APPROVED);
+			ServiceContext serviceContext =
+				_productDefinitionHelper.getServiceContext(
+					webSiteId, new long[0]);
 
-			return new PageItems<>(cpDefinitions, count);
+			SearchContext searchContext =
+				_productDefinitionHelper.buildSearchContext(
+					null, pagination.getStartPosition(),
+					pagination.getEndPosition(), null, serviceContext);
+
+			Hits hits = _indexer.search(searchContext);
+
+			List<Document> documents = hits.toList();
+
+			return new PageItems<>(documents, hits.getLength());
 		}
 		catch (PortalException pe) {
 			throw new ServerErrorException(500, pe);
@@ -184,6 +210,12 @@ public class ProductNestedCollectionResource
 	private CPDefinitionService _cpDefinitionService;
 
 	@Reference
-	private ProductResourceCollectionUtil _productResourceCollectionUtil;
+	private HasPermission _hasPermission;
+
+	private Indexer<CPDefinition> _indexer =
+		IndexerRegistryUtil.nullSafeGetIndexer(CPDefinition.class);
+
+	@Reference
+	private ProductDefinitionHelper _productDefinitionHelper;
 
 }

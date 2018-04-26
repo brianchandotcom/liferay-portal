@@ -20,13 +20,23 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.search.QueryConfig;
+import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.UserService;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
+
+import java.io.Serializable;
 
 import java.util.Calendar;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
@@ -37,8 +47,66 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Zoltán Takács
  */
-@Component(immediate = true, service = ProductResourceCollectionUtil.class)
-public class ProductResourceCollectionUtil {
+@Component(immediate = true, service = ProductDefinitionHelper.class)
+public class ProductDefinitionHelper {
+
+	/**
+	 * Builds the SearchContext for finding {@link CPDefinition}'s
+	 * {@link com.liferay.portal.kernel.search.Document}
+	 *
+	 * @param keywords
+	 * @param start
+	 * @param end
+	 * @param sort
+	 * @param serviceContext
+	 *
+	 * @return SearchContext
+	 */
+	public SearchContext buildSearchContext(
+		String keywords, int start, int end, Sort sort,
+		ServiceContext serviceContext) {
+
+		Map<String, Serializable> attributes = new HashMap<>();
+		LinkedHashMap<String, Object> params = new LinkedHashMap<>();
+		SearchContext searchContext = new SearchContext();
+
+		if (Validator.isNotNull(keywords)) {
+			attributes.put(Field.ENTRY_CLASS_PK, keywords);
+			params.put("keywords", keywords);
+			searchContext.setKeywords(keywords);
+		}
+
+		attributes.put(Field.STATUS, WorkflowConstants.STATUS_APPROVED);
+		attributes.put("params", params);
+
+		searchContext.setAttributes(attributes);
+		searchContext.setStart(start);
+		searchContext.setEnd(end);
+		searchContext.setCompanyId(serviceContext.getCompanyId());
+		searchContext.setGroupIds(
+			new long[] {serviceContext.getScopeGroupId()});
+
+		QueryConfig queryConfig = searchContext.getQueryConfig();
+
+		queryConfig.addSelectedFieldNames(Field.CREATE_DATE);
+		queryConfig.addSelectedFieldNames(Field.ENTRY_CLASS_PK);
+		queryConfig.addSelectedFieldNames(Field.DESCRIPTION);
+		queryConfig.addSelectedFieldNames(Field.GROUP_ID);
+		queryConfig.addSelectedFieldNames(Field.MODIFIED_DATE);
+		queryConfig.addSelectedFieldNames(Field.TITLE);
+		queryConfig.addSelectedFieldNames(Field.USER_ID);
+
+		queryConfig.setLocale(serviceContext.getLocale());
+
+		queryConfig.setHighlightEnabled(false);
+		queryConfig.setScoreEnabled(false);
+
+		if (sort != null) {
+			searchContext.setSorts(sort);
+		}
+
+		return searchContext;
+	}
 
 	public CPDefinition createCPDefinition(
 			long groupId, Map<Locale, String> titleMap,
@@ -90,12 +158,18 @@ public class ProductResourceCollectionUtil {
 			expirationDateHour, expirationDateMinute, true, serviceContext);
 	}
 
+	public ServiceContext getServiceContext() throws PortalException {
+		return getServiceContext(0, new long[0]);
+	}
+
 	/**
 	 * Compose the ServiceContext object which is needed to add or update a
 	 * {@link CPDefinition}
 	 * @see BaseCPDemoDataCreatorHelper
 	 *
 	 * @param groupId
+	 * @param assetCategoryIds
+	 *
 	 * @return ServiceContext
 	 * @throws PortalException
 	 */
@@ -115,7 +189,11 @@ public class ProductResourceCollectionUtil {
 		serviceContext.setAddGuestPermissions(true);
 		serviceContext.setAssetCategoryIds(assetCategoryIds);
 		serviceContext.setCompanyId(user.getCompanyId());
-		serviceContext.setScopeGroupId(groupId);
+
+		if (groupId > 0) {
+			serviceContext.setScopeGroupId(groupId);
+		}
+
 		serviceContext.setTimeZone(user.getTimeZone());
 		serviceContext.setUserId(user.getUserId());
 
@@ -123,7 +201,7 @@ public class ProductResourceCollectionUtil {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		ProductResourceCollectionUtil.class);
+		ProductDefinitionHelper.class);
 
 	@Reference
 	private CPDefinitionService _cpDefinitionService;

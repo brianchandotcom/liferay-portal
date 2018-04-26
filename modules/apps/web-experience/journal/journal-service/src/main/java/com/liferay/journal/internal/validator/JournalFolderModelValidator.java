@@ -156,7 +156,52 @@ public class JournalFolderModelValidator
 	}
 
 	@Override
-	public ModelValidationResults validateModel(JournalFolder model) {
+	public ModelValidationResults validateModel(JournalFolder folder) {
+		long folderId = folder.getFolderId();
+
+		long[] ddmStructureIds = null;
+
+		try {
+			List<DDMStructure> ddmStructures =
+				_journalFolderLocalService.getDDMStructures(
+					new long[] {folder.getGroupId()}, folder.getFolderId(),
+					folder.getRestrictionType());
+
+			ddmStructureIds = new long[ddmStructures.size()];
+
+			int i = 0;
+
+			for (DDMStructure ddmStructure : ddmStructures) {
+				ddmStructureIds[i] = ddmStructure.getStructureId();
+			}
+		}
+		catch (PortalException pe) {
+			ModelValidationResults.FailureBuilder failureBuilder =
+				ModelValidationResults.failure();
+
+			return failureBuilder.exceptionFailure(
+				"Unable to retrieve folder structures for validation: " +
+					pe.getMessage(),
+				pe
+			).getResults();
+		}
+
+		try {
+			validateArticleDDMStructures(folderId, ddmStructureIds);
+
+			validateFolder(
+				folderId, folder.getGroupId(), folder.getParentFolderId(),
+				folder.getName());
+		}
+		catch (PortalException pe) {
+			ModelValidationResults.FailureBuilder failureBuilder =
+				ModelValidationResults.failure();
+
+			return failureBuilder.exceptionFailure(
+				pe.getMessage(), pe
+			).getResults();
+		}
+
 		return ModelValidationResults.success();
 	}
 

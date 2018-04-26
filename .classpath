@@ -316,6 +316,7 @@
 	<classpathentry kind="lib" path="tmp/lib-pre/com.liferay.portal.kernel.blogs.compat.jar"/>
 	<classpathentry kind="lib" path="tmp/lib-pre/com.liferay.portal.kernel.concurrent.compat.jar"/>
 	<classpathentry kind="lib" path="tmp/lib-pre/com.liferay.portal.kernel.document.library.compat.jar"/>
+	<classpathentry kind="lib" path="tmp/lib-pre/com.liferay.portal.kernel.io.compat.jar"/>
 	<classpathentry kind="lib" path="tmp/lib-pre/com.liferay.portal.kernel.memory.compat.jar"/>
 	<classpathentry kind="lib" path="tmp/lib-pre/com.liferay.portal.kernel.message.boards.compat.jar"/>
 	<classpathentry kind="lib" path="tmp/lib-pre/com.liferay.portal.kernel.nio.compat.jar"/>

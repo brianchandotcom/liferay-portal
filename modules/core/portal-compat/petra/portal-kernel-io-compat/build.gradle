@@ -1,0 +1,5 @@
+apply plugin: "com.liferay.osgi.portal.compat.defaults.plugin"
+
+transformImportedFiles {
+	enabled = false
+}

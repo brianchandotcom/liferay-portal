@@ -644,6 +644,15 @@ public class DefaultDLAdminDisplayContext implements DLAdminDisplayContext {
 		return _defaultFolderView;
 	}
 
+	@Override
+	public boolean isShowSearchInfo() {
+		if (_isSearch() && ParamUtil.getBoolean(_request, "showSearchInfo")) {
+			return true;
+		}
+
+		return false;
+	}
+
 	private PortletURL _clonePortletURL() {
 		try {
 			return PortletURLUtil.clone(
@@ -1187,7 +1196,8 @@ public class DefaultDLAdminDisplayContext implements DLAdminDisplayContext {
 			!mvcRenderCommandName.equals(
 				"/document_library/view_file_entry_types"));
 
-		PortletURL viewDocumentLibraryURL = _clonePortletURL();
+		PortletURL viewDocumentLibraryURL =
+			_liferayPortletResponse.createRenderURL();
 
 		viewDocumentLibraryURL.setParameter(
 			"mvcRenderCommandName", "/document_library/view");

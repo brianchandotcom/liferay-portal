@@ -14,29 +14,58 @@
 
 package com.liferay.asset.entry.rel.service.impl;
 
+import com.liferay.asset.entry.rel.exception.NoSuchEntryAssetDisplayPageRelException;
+import com.liferay.asset.entry.rel.model.AssetEntryAssetDisplayPageRel;
 import com.liferay.asset.entry.rel.service.base.AssetEntryAssetDisplayPageRelLocalServiceBaseImpl;
 
 /**
- * The implementation of the asset entry asset display page rel local service.
- *
- * <p>
- * All custom service methods should be put in this class. Whenever methods are added, rerun ServiceBuilder to copy their definitions into the {@link com.liferay.asset.entry.rel.service.AssetEntryAssetDisplayPageRelLocalService} interface.
- *
- * <p>
- * This is a local service. Methods of this service will not have security checks based on the propagated JAAS credentials because this service can only be accessed from within the same VM.
- * </p>
- *
- * @author Brian Wing Shun Chan
- * @see AssetEntryAssetDisplayPageRelLocalServiceBaseImpl
- * @see com.liferay.asset.entry.rel.service.AssetEntryAssetDisplayPageRelLocalServiceUtil
+ * @author Jürgen Kappler
  */
 public class AssetEntryAssetDisplayPageRelLocalServiceImpl
 	extends AssetEntryAssetDisplayPageRelLocalServiceBaseImpl {
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this class directly. Always use {@link com.liferay.asset.entry.rel.service.AssetEntryAssetDisplayPageRelLocalServiceUtil} to access the asset entry asset display page rel local service.
-	 */
+	@Override
+	public AssetEntryAssetDisplayPageRel addAssetEntryAssetDisplayPageRel(
+		long assetEntryId, long assetDisplayPageId) {
+
+		long assetEntryAssetDisplayPageRelId = counterLocalService.increment();
+
+		AssetEntryAssetDisplayPageRel assetEntryAssetDisplayPageRel =
+			assetEntryAssetDisplayPageRelPersistence.create(
+				assetEntryAssetDisplayPageRelId);
+
+		assetEntryAssetDisplayPageRel.setAssetEntryId(assetEntryId);
+		assetEntryAssetDisplayPageRel.setAssetDisplayPageId(assetDisplayPageId);
+
+		assetEntryAssetDisplayPageRelPersistence.update(
+			assetEntryAssetDisplayPageRel);
+
+		return assetEntryAssetDisplayPageRel;
+	}
+
+	@Override
+	public void deleteAssetEntryAssetDisplayPageRel(
+			long assetEntryId, long assetDisplayPageId)
+		throws NoSuchEntryAssetDisplayPageRelException {
+
+		assetEntryAssetDisplayPageRelPersistence.removeByA_A(
+			assetEntryId, assetDisplayPageId);
+	}
+
+	@Override
+	public void deleteAssetEntryAssetDisplayPageRelByAssetEntryId(
+		long assetEntryId) {
+
+		assetEntryAssetDisplayPageRelPersistence.removeByAssetEntryId(
+			assetEntryId);
+	}
+
+	@Override
+	public AssetEntryAssetDisplayPageRel fetchAssetEntryAssetDisplayPageRel(
+		long assetEntryId, long assetDisplayPageId) {
+
+		return assetEntryAssetDisplayPageRelPersistence.fetchByA_A(
+			assetEntryId, assetDisplayPageId);
+	}
 
 }

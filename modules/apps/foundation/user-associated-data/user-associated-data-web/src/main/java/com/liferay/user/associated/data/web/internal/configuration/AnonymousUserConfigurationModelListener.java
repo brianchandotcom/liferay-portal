@@ -23,6 +23,8 @@ import com.liferay.portal.kernel.service.UserLocalService;
 
 import java.util.Dictionary;
 
+import org.osgi.service.cm.Configuration;
+import org.osgi.service.cm.ConfigurationAdmin;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -45,7 +47,10 @@ public class AnonymousUserConfigurationModelListener
 			long companyId = (long)properties.get("companyId");
 
 			_validateCompanyId(companyId);
+
 			_validateUserId(companyId, (long)properties.get("userId"));
+
+			_validateUniqueConfiguration(pid, companyId);
 		}
 		catch (Exception e) {
 			throw new ConfigurationModelListenerException(
@@ -64,6 +69,33 @@ public class AnonymousUserConfigurationModelListener
 				StringBundler.concat(
 					"The given company ID does not belong to an existing ",
 					"company: ", String.valueOf(companyId)));
+		}
+	}
+
+	private void _validateUniqueConfiguration(String pid, long companyId)
+		throws Exception {
+
+		Configuration[] configurations = _configurationAdmin.listConfigurations(
+			"(service.factoryPid=com.liferay.user.associated.data.web." +
+				"internal.configuration.AnonymousUserConfiguration)");
+
+		if (configurations == null) {
+			return;
+		}
+
+		for (Configuration configuration : configurations) {
+			if (pid.equals(configuration.getPid())) {
+				continue;
+			}
+
+			Dictionary<String, Object> properties =
+				configuration.getProperties();
+
+			if (companyId == (long)properties.get("companyId")) {
+				throw new Exception(
+					"An anonymous user is already defined for the company: " +
+						companyId);
+			}
 		}
 	}
 
@@ -86,6 +118,9 @@ public class AnonymousUserConfigurationModelListener
 
 	@Reference
 	private CompanyLocalService _companyLocalService;
+
+	@Reference
+	private ConfigurationAdmin _configurationAdmin;
 
 	@Reference
 	private UserLocalService _userLocalService;

@@ -369,7 +369,6 @@ AUI.add(
 					},
 
 					_showFile: function(file, preview) {
-
 						var instance = this;
 
 						var returnType = instance.get('uploadItemReturnType');

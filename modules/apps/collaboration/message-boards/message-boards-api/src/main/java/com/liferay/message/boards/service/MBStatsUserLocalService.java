@@ -47,7 +47,7 @@ import java.util.List;
  *
  * @author Brian Wing Shun Chan
  * @see MBStatsUserLocalServiceUtil
- * @see com.liferay.message.boards.service.base.MBStatsUserLocalServiceBaseImpl
+ * @see MBStatsUserLocalServiceBaseImpl
  * @see com.liferay.message.boards.service.impl.MBStatsUserLocalServiceImpl
  * @generated
  */

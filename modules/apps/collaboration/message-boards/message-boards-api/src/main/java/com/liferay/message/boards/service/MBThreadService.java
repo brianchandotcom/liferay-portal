@@ -42,7 +42,7 @@ import java.util.List;
  *
  * @author Brian Wing Shun Chan
  * @see MBThreadServiceUtil
- * @see com.liferay.message.boards.service.base.MBThreadServiceBaseImpl
+ * @see MBThreadServiceBaseImpl
  * @see com.liferay.message.boards.service.impl.MBThreadServiceImpl
  * @generated
  */

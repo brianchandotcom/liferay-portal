@@ -52,7 +52,7 @@ import java.util.List;
  *
  * @author Brian Wing Shun Chan
  * @see MBBanLocalServiceUtil
- * @see com.liferay.message.boards.service.base.MBBanLocalServiceBaseImpl
+ * @see MBBanLocalServiceBaseImpl
  * @see com.liferay.message.boards.service.impl.MBBanLocalServiceImpl
  * @generated
  */

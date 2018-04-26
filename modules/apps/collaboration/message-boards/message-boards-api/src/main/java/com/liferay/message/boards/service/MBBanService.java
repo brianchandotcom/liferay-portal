@@ -35,7 +35,7 @@ import com.liferay.portal.kernel.transaction.Transactional;
  *
  * @author Brian Wing Shun Chan
  * @see MBBanServiceUtil
- * @see com.liferay.message.boards.service.base.MBBanServiceBaseImpl
+ * @see MBBanServiceBaseImpl
  * @see com.liferay.message.boards.service.impl.MBBanServiceImpl
  * @generated
  */

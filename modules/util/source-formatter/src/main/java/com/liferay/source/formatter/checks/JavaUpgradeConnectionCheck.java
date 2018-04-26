@@ -65,9 +65,7 @@ public class JavaUpgradeConnectionCheck extends BaseJavaTermCheck {
 			String fileContent)
 		throws Exception {
 
-		if (absolutePath.contains("/source-formatter/") ||
-			absolutePath.contains("/test/")) {
-
+		if (absolutePath.contains("/test/")) {
 			return javaTerm.getContent();
 		}
 

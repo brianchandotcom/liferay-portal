@@ -45,13 +45,40 @@ import org.osgi.service.component.annotations.Reference;
 public class LiferayResourceOwnerLoginHandler
 	implements ResourceOwnerLoginHandler {
 
-	public User authenticateUser(String login, String password) {
-		int authResult = Authenticator.FAILURE;
-		String authType = company.getAuthType();
+	@Override
+	public UserSubject createSubject(String login, String password) {
+		try {
+			User user = authenticateUser(login, password);
 
+			if (user == null) {
+				return null;
+			}
+
+			UserSubject userSubject = new UserSubject(
+				user.getLogin(), GetterUtil.getString(user.getUserId()));
+
+			Map<String, String> properties = userSubject.getProperties();
+
+			properties.put(
+				OAuth2ProviderRestEndpointConstants.PROPERTY_KEY_COMPANY_ID,
+				GetterUtil.getString(user.getCompanyId()));
+
+			return userSubject;
+		}
+		catch (PortalException pe) {
+			_log.error(pe);
+
+			return null;
+		}
+	}
+
+	protected User authenticateUser(String login, String password) {
+		int authResult = Authenticator.FAILURE;
 		Long companyId = CompanyThreadLocal.getCompanyId();
 
 		Company company = _companyLocalService.fetchCompany(companyId);
+
+		String authType = company.getAuthType();
 
 		Map<String, Object> resultsMap = new HashMap<>();
 
@@ -89,33 +116,6 @@ public class LiferayResourceOwnerLoginHandler
 		}
 
 		return _userLocalService.fetchUser(userId);
-	}
-
-	@Override
-	public UserSubject createSubject(String login, String password) {
-		try {
-			User user = authenticateUser(login, password);
-
-			if (user == null) {
-				return null;
-			}
-
-			UserSubject userSubject = new UserSubject(
-				user.getLogin(), GetterUtil.getString(user.getUserId()));
-
-			Map<String, String> properties = userSubject.getProperties();
-
-			properties.put(
-				OAuth2ProviderRestEndpointConstants.PROPERTY_KEY_COMPANY_ID,
-				GetterUtil.getString(user.getCompanyId()));
-
-			return userSubject;
-		}
-		catch (PortalException pe) {
-			_log.error(pe);
-
-			return null;
-		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

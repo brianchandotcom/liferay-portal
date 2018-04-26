@@ -68,9 +68,9 @@ public class CalendarNotificationTemplateServiceSoap {
 	public static com.liferay.calendar.model.CalendarNotificationTemplateSoap addCalendarNotificationTemplate(
 		long calendarId,
 		com.liferay.calendar.notification.NotificationType notificationType,
-		java.lang.String notificationTypeSettings,
+		String notificationTypeSettings,
 		com.liferay.calendar.notification.NotificationTemplateType notificationTemplateType,
-		java.lang.String subject, java.lang.String body,
+		String subject, String body,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
@@ -88,9 +88,8 @@ public class CalendarNotificationTemplateServiceSoap {
 	}
 
 	public static com.liferay.calendar.model.CalendarNotificationTemplateSoap updateCalendarNotificationTemplate(
-		long calendarNotificationTemplateId,
-		java.lang.String notificationTypeSettings, java.lang.String subject,
-		java.lang.String body,
+		long calendarNotificationTemplateId, String notificationTypeSettings,
+		String subject, String body,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {

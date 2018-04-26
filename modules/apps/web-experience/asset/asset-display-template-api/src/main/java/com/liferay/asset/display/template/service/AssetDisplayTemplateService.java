@@ -53,9 +53,9 @@ public interface AssetDisplayTemplateService extends BaseService {
 	 * Never modify or reference this interface directly. Always use {@link AssetDisplayTemplateServiceUtil} to access the asset display template remote service. Add custom service methods to {@link com.liferay.asset.display.template.service.impl.AssetDisplayTemplateServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	public AssetDisplayTemplate addAssetDisplayTemplate(long groupId,
-		long userId, java.lang.String name, long classNameId,
-		java.lang.String language, java.lang.String scriptContent,
-		boolean main, ServiceContext serviceContext) throws PortalException;
+		long userId, String name, long classNameId, String language,
+		String scriptContent, boolean main, ServiceContext serviceContext)
+		throws PortalException;
 
 	public AssetDisplayTemplate deleteAssetDisplayTemplate(
 		long assetDisplayTemplateId) throws PortalException;
@@ -65,10 +65,10 @@ public interface AssetDisplayTemplateService extends BaseService {
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	public AssetDisplayTemplate updateAssetDisplayTemplate(
-		long assetDisplayTemplateId, java.lang.String name, long classNameId,
-		java.lang.String language, java.lang.String scriptContent,
-		boolean main, ServiceContext serviceContext) throws PortalException;
+		long assetDisplayTemplateId, String name, long classNameId,
+		String language, String scriptContent, boolean main,
+		ServiceContext serviceContext) throws PortalException;
 }

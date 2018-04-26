@@ -36,8 +36,7 @@ public class ShoppingCategoryLocalServiceWrapper
 
 	@Override
 	public com.liferay.shopping.model.ShoppingCategory addCategory(
-		long userId, long parentCategoryId, java.lang.String name,
-		java.lang.String description,
+		long userId, long parentCategoryId, String name, String description,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _shoppingCategoryLocalService.addCategory(userId,
@@ -282,7 +281,7 @@ public class ShoppingCategoryLocalServiceWrapper
 
 	@Override
 	public com.liferay.shopping.model.ShoppingCategory getCategory(
-		long groupId, java.lang.String categoryName) {
+		long groupId, String categoryName) {
 		return _shoppingCategoryLocalService.getCategory(groupId, categoryName);
 	}
 
@@ -297,7 +296,7 @@ public class ShoppingCategoryLocalServiceWrapper
 	* @return the OSGi service identifier
 	*/
 	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
+	public String getOSGiServiceIdentifier() {
 		return _shoppingCategoryLocalService.getOSGiServiceIdentifier();
 	}
 
@@ -371,7 +370,7 @@ public class ShoppingCategoryLocalServiceWrapper
 	}
 
 	@Override
-	public void getSubcategoryIds(java.util.List<java.lang.Long> categoryIds,
+	public void getSubcategoryIds(java.util.List<Long> categoryIds,
 		long groupId, long categoryId) {
 		_shoppingCategoryLocalService.getSubcategoryIds(categoryIds, groupId,
 			categoryId);
@@ -379,8 +378,8 @@ public class ShoppingCategoryLocalServiceWrapper
 
 	@Override
 	public com.liferay.shopping.model.ShoppingCategory updateCategory(
-		long categoryId, long parentCategoryId, java.lang.String name,
-		java.lang.String description, boolean mergeWithParentCategory,
+		long categoryId, long parentCategoryId, String name,
+		String description, boolean mergeWithParentCategory,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _shoppingCategoryLocalService.updateCategory(categoryId,

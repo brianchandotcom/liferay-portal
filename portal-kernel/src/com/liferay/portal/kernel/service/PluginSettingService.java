@@ -52,9 +52,9 @@ public interface PluginSettingService extends BaseService {
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
-	public PluginSetting updatePluginSetting(long companyId,
-		java.lang.String pluginId, java.lang.String pluginType,
-		java.lang.String roles, boolean active) throws PortalException;
+	public PluginSetting updatePluginSetting(long companyId, String pluginId,
+		String pluginType, String roles, boolean active)
+		throws PortalException;
 }

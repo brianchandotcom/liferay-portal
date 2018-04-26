@@ -78,7 +78,7 @@ public class TestEntityWrapper implements TestEntity, ModelWrapper<TestEntity> {
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new TestEntityWrapper((TestEntity)_testEntity.clone());
 	}
 
@@ -93,7 +93,7 @@ public class TestEntityWrapper implements TestEntity, ModelWrapper<TestEntity> {
 	* @return the data of this test entity
 	*/
 	@Override
-	public java.lang.String getData() {
+	public String getData() {
 		return _testEntity.getData();
 	}
 
@@ -163,7 +163,7 @@ public class TestEntityWrapper implements TestEntity, ModelWrapper<TestEntity> {
 	* @param data the data of this test entity
 	*/
 	@Override
-	public void setData(java.lang.String data) {
+	public void setData(String data) {
 		_testEntity.setData(data);
 	}
 
@@ -224,7 +224,7 @@ public class TestEntityWrapper implements TestEntity, ModelWrapper<TestEntity> {
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _testEntity.toString();
 	}
 
@@ -234,7 +234,7 @@ public class TestEntityWrapper implements TestEntity, ModelWrapper<TestEntity> {
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _testEntity.toXmlString();
 	}
 

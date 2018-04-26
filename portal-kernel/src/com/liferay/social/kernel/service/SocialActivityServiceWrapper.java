@@ -110,9 +110,8 @@ public class SocialActivityServiceWrapper implements SocialActivityService,
 	*/
 	@Override
 	public java.util.List<com.liferay.social.kernel.model.SocialActivity> getActivities(
-		long mirrorActivityId, java.lang.String className, long classPK,
-		int start, int end)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		long mirrorActivityId, String className, long classPK, int start,
+		int end) throws com.liferay.portal.kernel.exception.PortalException {
 		return _socialActivityService.getActivities(mirrorActivityId,
 			className, classPK, start, end);
 	}
@@ -137,7 +136,7 @@ public class SocialActivityServiceWrapper implements SocialActivityService,
 	*/
 	@Override
 	public java.util.List<com.liferay.social.kernel.model.SocialActivity> getActivities(
-		java.lang.String className, int start, int end)
+		String className, int start, int end)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _socialActivityService.getActivities(className, start, end);
 	}
@@ -182,8 +181,8 @@ public class SocialActivityServiceWrapper implements SocialActivityService,
 	* @return the number of matching activities
 	*/
 	@Override
-	public int getActivitiesCount(long mirrorActivityId,
-		java.lang.String className, long classPK) {
+	public int getActivitiesCount(long mirrorActivityId, String className,
+		long classPK) {
 		return _socialActivityService.getActivitiesCount(mirrorActivityId,
 			className, classPK);
 	}
@@ -195,7 +194,7 @@ public class SocialActivityServiceWrapper implements SocialActivityService,
 	* @return the number of matching activities
 	*/
 	@Override
-	public int getActivitiesCount(java.lang.String className) {
+	public int getActivitiesCount(String className) {
 		return _socialActivityService.getActivitiesCount(className);
 	}
 
@@ -404,7 +403,7 @@ public class SocialActivityServiceWrapper implements SocialActivityService,
 	* @return the OSGi service identifier
 	*/
 	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
+	public String getOSGiServiceIdentifier() {
 		return _socialActivityService.getOSGiServiceIdentifier();
 	}
 

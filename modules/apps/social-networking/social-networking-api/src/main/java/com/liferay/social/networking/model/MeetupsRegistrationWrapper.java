@@ -130,7 +130,7 @@ public class MeetupsRegistrationWrapper implements MeetupsRegistration,
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new MeetupsRegistrationWrapper((MeetupsRegistration)_meetupsRegistration.clone());
 	}
 
@@ -145,7 +145,7 @@ public class MeetupsRegistrationWrapper implements MeetupsRegistration,
 	* @return the comments of this meetups registration
 	*/
 	@Override
-	public java.lang.String getComments() {
+	public String getComments() {
 		return _meetupsRegistration.getComments();
 	}
 
@@ -245,7 +245,7 @@ public class MeetupsRegistrationWrapper implements MeetupsRegistration,
 	* @return the user name of this meetups registration
 	*/
 	@Override
-	public java.lang.String getUserName() {
+	public String getUserName() {
 		return _meetupsRegistration.getUserName();
 	}
 
@@ -255,7 +255,7 @@ public class MeetupsRegistrationWrapper implements MeetupsRegistration,
 	* @return the user uuid of this meetups registration
 	*/
 	@Override
-	public java.lang.String getUserUuid() {
+	public String getUserUuid() {
 		return _meetupsRegistration.getUserUuid();
 	}
 
@@ -295,7 +295,7 @@ public class MeetupsRegistrationWrapper implements MeetupsRegistration,
 	* @param comments the comments of this meetups registration
 	*/
 	@Override
-	public void setComments(java.lang.String comments) {
+	public void setComments(String comments) {
 		_meetupsRegistration.setComments(comments);
 	}
 
@@ -411,7 +411,7 @@ public class MeetupsRegistrationWrapper implements MeetupsRegistration,
 	* @param userName the user name of this meetups registration
 	*/
 	@Override
-	public void setUserName(java.lang.String userName) {
+	public void setUserName(String userName) {
 		_meetupsRegistration.setUserName(userName);
 	}
 
@@ -421,7 +421,7 @@ public class MeetupsRegistrationWrapper implements MeetupsRegistration,
 	* @param userUuid the user uuid of this meetups registration
 	*/
 	@Override
-	public void setUserUuid(java.lang.String userUuid) {
+	public void setUserUuid(String userUuid) {
 		_meetupsRegistration.setUserUuid(userUuid);
 	}
 
@@ -436,7 +436,7 @@ public class MeetupsRegistrationWrapper implements MeetupsRegistration,
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _meetupsRegistration.toString();
 	}
 
@@ -446,7 +446,7 @@ public class MeetupsRegistrationWrapper implements MeetupsRegistration,
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _meetupsRegistration.toXmlString();
 	}
 

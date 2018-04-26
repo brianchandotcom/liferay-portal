@@ -57,12 +57,10 @@ public interface SyncDeviceService extends BaseService {
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
-	public SyncDevice registerSyncDevice(java.lang.String type,
-		long buildNumber, int featureSet, java.lang.String uuid)
-		throws PortalException;
+	public SyncDevice registerSyncDevice(String type, long buildNumber,
+		int featureSet, String uuid) throws PortalException;
 
-	public void unregisterSyncDevice(java.lang.String uuid)
-		throws PortalException;
+	public void unregisterSyncDevice(String uuid) throws PortalException;
 }

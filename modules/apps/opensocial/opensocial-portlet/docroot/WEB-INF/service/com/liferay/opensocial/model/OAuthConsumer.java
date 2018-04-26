@@ -55,7 +55,7 @@ public interface OAuthConsumer extends OAuthConsumerModel, PersistedModel {
 			}
 		};
 
-	public java.lang.String getKeyName();
+	public String getKeyName();
 
-	public void setKeyName(java.lang.String keyName);
+	public void setKeyName(String keyName);
 }

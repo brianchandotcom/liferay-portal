@@ -106,7 +106,7 @@ public class DDLRecordServiceWrapper implements DDLRecordService,
 	@Override
 	public com.liferay.dynamic.data.lists.model.DDLRecord addRecord(
 		long groupId, long recordSetId, int displayIndex,
-		java.util.Map<java.lang.String, java.io.Serializable> fieldsMap,
+		java.util.Map<String, java.io.Serializable> fieldsMap,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _ddlRecordService.addRecord(groupId, recordSetId, displayIndex,
@@ -153,7 +153,7 @@ public class DDLRecordServiceWrapper implements DDLRecordService,
 	* @return the OSGi service identifier
 	*/
 	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
+	public String getOSGiServiceIdentifier() {
 		return _ddlRecordService.getOSGiServiceIdentifier();
 	}
 
@@ -195,7 +195,7 @@ public class DDLRecordServiceWrapper implements DDLRecordService,
 	* @throws PortalException if a portal exception occurred
 	*/
 	@Override
-	public void revertRecord(long recordId, java.lang.String version,
+	public void revertRecord(long recordId, String version,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_ddlRecordService.revertRecord(recordId, version, serviceContext);
@@ -207,7 +207,7 @@ public class DDLRecordServiceWrapper implements DDLRecordService,
 	*/
 	@Deprecated
 	@Override
-	public void revertRecordVersion(long recordId, java.lang.String version,
+	public void revertRecordVersion(long recordId, String version,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_ddlRecordService.revertRecordVersion(recordId, version, serviceContext);
@@ -290,7 +290,7 @@ public class DDLRecordServiceWrapper implements DDLRecordService,
 	@Override
 	public com.liferay.dynamic.data.lists.model.DDLRecord updateRecord(
 		long recordId, int displayIndex,
-		java.util.Map<java.lang.String, java.io.Serializable> fieldsMap,
+		java.util.Map<String, java.io.Serializable> fieldsMap,
 		boolean mergeFields,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {

@@ -189,7 +189,7 @@ public class SocialActivityAchievementLocalServiceUtil {
 	}
 
 	public static com.liferay.social.kernel.model.SocialActivityAchievement fetchUserAchievement(
-		long userId, long groupId, java.lang.String name) {
+		long userId, long groupId, String name) {
 		return getService().fetchUserAchievement(userId, groupId, name);
 	}
 
@@ -203,7 +203,7 @@ public class SocialActivityAchievementLocalServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.social.kernel.model.SocialActivityAchievement> getGroupAchievements(
-		long groupId, java.lang.String name) {
+		long groupId, String name) {
 		return getService().getGroupAchievements(groupId, name);
 	}
 
@@ -211,8 +211,7 @@ public class SocialActivityAchievementLocalServiceUtil {
 		return getService().getGroupAchievementsCount(groupId);
 	}
 
-	public static int getGroupAchievementsCount(long groupId,
-		java.lang.String name) {
+	public static int getGroupAchievementsCount(long groupId, String name) {
 		return getService().getGroupAchievementsCount(groupId, name);
 	}
 
@@ -234,7 +233,7 @@ public class SocialActivityAchievementLocalServiceUtil {
 	*
 	* @return the OSGi service identifier
 	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
+	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 

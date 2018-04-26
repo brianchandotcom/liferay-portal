@@ -111,7 +111,7 @@ public class PushNotificationsDeviceWrapper implements PushNotificationsDevice,
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new PushNotificationsDeviceWrapper((PushNotificationsDevice)_pushNotificationsDevice.clone());
 	}
 
@@ -151,7 +151,7 @@ public class PushNotificationsDeviceWrapper implements PushNotificationsDevice,
 	* @return the platform of this push notifications device
 	*/
 	@Override
-	public java.lang.String getPlatform() {
+	public String getPlatform() {
 		return _pushNotificationsDevice.getPlatform();
 	}
 
@@ -186,7 +186,7 @@ public class PushNotificationsDeviceWrapper implements PushNotificationsDevice,
 	* @return the token of this push notifications device
 	*/
 	@Override
-	public java.lang.String getToken() {
+	public String getToken() {
 		return _pushNotificationsDevice.getToken();
 	}
 
@@ -206,7 +206,7 @@ public class PushNotificationsDeviceWrapper implements PushNotificationsDevice,
 	* @return the user uuid of this push notifications device
 	*/
 	@Override
-	public java.lang.String getUserUuid() {
+	public String getUserUuid() {
 		return _pushNotificationsDevice.getUserUuid();
 	}
 
@@ -287,7 +287,7 @@ public class PushNotificationsDeviceWrapper implements PushNotificationsDevice,
 	* @param platform the platform of this push notifications device
 	*/
 	@Override
-	public void setPlatform(java.lang.String platform) {
+	public void setPlatform(String platform) {
 		_pushNotificationsDevice.setPlatform(platform);
 	}
 
@@ -322,7 +322,7 @@ public class PushNotificationsDeviceWrapper implements PushNotificationsDevice,
 	* @param token the token of this push notifications device
 	*/
 	@Override
-	public void setToken(java.lang.String token) {
+	public void setToken(String token) {
 		_pushNotificationsDevice.setToken(token);
 	}
 
@@ -342,7 +342,7 @@ public class PushNotificationsDeviceWrapper implements PushNotificationsDevice,
 	* @param userUuid the user uuid of this push notifications device
 	*/
 	@Override
-	public void setUserUuid(java.lang.String userUuid) {
+	public void setUserUuid(String userUuid) {
 		_pushNotificationsDevice.setUserUuid(userUuid);
 	}
 
@@ -357,7 +357,7 @@ public class PushNotificationsDeviceWrapper implements PushNotificationsDevice,
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _pushNotificationsDevice.toString();
 	}
 
@@ -367,7 +367,7 @@ public class PushNotificationsDeviceWrapper implements PushNotificationsDevice,
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _pushNotificationsDevice.toXmlString();
 	}
 

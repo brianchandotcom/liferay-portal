@@ -136,7 +136,7 @@ public class WeDeployAuthAppWrapper implements WeDeployAuthApp,
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new WeDeployAuthAppWrapper((WeDeployAuthApp)_weDeployAuthApp.clone());
 	}
 
@@ -151,7 +151,7 @@ public class WeDeployAuthAppWrapper implements WeDeployAuthApp,
 	* @return the client ID of this we deploy auth app
 	*/
 	@Override
-	public java.lang.String getClientId() {
+	public String getClientId() {
 		return _weDeployAuthApp.getClientId();
 	}
 
@@ -161,7 +161,7 @@ public class WeDeployAuthAppWrapper implements WeDeployAuthApp,
 	* @return the client secret of this we deploy auth app
 	*/
 	@Override
-	public java.lang.String getClientSecret() {
+	public String getClientSecret() {
 		return _weDeployAuthApp.getClientSecret();
 	}
 
@@ -206,7 +206,7 @@ public class WeDeployAuthAppWrapper implements WeDeployAuthApp,
 	* @return the name of this we deploy auth app
 	*/
 	@Override
-	public java.lang.String getName() {
+	public String getName() {
 		return _weDeployAuthApp.getName();
 	}
 
@@ -231,7 +231,7 @@ public class WeDeployAuthAppWrapper implements WeDeployAuthApp,
 	* @return the redirect uri of this we deploy auth app
 	*/
 	@Override
-	public java.lang.String getRedirectURI() {
+	public String getRedirectURI() {
 		return _weDeployAuthApp.getRedirectURI();
 	}
 
@@ -251,7 +251,7 @@ public class WeDeployAuthAppWrapper implements WeDeployAuthApp,
 	* @return the user name of this we deploy auth app
 	*/
 	@Override
-	public java.lang.String getUserName() {
+	public String getUserName() {
 		return _weDeployAuthApp.getUserName();
 	}
 
@@ -261,7 +261,7 @@ public class WeDeployAuthAppWrapper implements WeDeployAuthApp,
 	* @return the user uuid of this we deploy auth app
 	*/
 	@Override
-	public java.lang.String getUserUuid() {
+	public String getUserUuid() {
 		return _weDeployAuthApp.getUserUuid();
 	}
 
@@ -311,7 +311,7 @@ public class WeDeployAuthAppWrapper implements WeDeployAuthApp,
 	* @param clientId the client ID of this we deploy auth app
 	*/
 	@Override
-	public void setClientId(java.lang.String clientId) {
+	public void setClientId(String clientId) {
 		_weDeployAuthApp.setClientId(clientId);
 	}
 
@@ -321,7 +321,7 @@ public class WeDeployAuthAppWrapper implements WeDeployAuthApp,
 	* @param clientSecret the client secret of this we deploy auth app
 	*/
 	@Override
-	public void setClientSecret(java.lang.String clientSecret) {
+	public void setClientSecret(String clientSecret) {
 		_weDeployAuthApp.setClientSecret(clientSecret);
 	}
 
@@ -377,7 +377,7 @@ public class WeDeployAuthAppWrapper implements WeDeployAuthApp,
 	* @param name the name of this we deploy auth app
 	*/
 	@Override
-	public void setName(java.lang.String name) {
+	public void setName(String name) {
 		_weDeployAuthApp.setName(name);
 	}
 
@@ -407,7 +407,7 @@ public class WeDeployAuthAppWrapper implements WeDeployAuthApp,
 	* @param redirectURI the redirect uri of this we deploy auth app
 	*/
 	@Override
-	public void setRedirectURI(java.lang.String redirectURI) {
+	public void setRedirectURI(String redirectURI) {
 		_weDeployAuthApp.setRedirectURI(redirectURI);
 	}
 
@@ -427,7 +427,7 @@ public class WeDeployAuthAppWrapper implements WeDeployAuthApp,
 	* @param userName the user name of this we deploy auth app
 	*/
 	@Override
-	public void setUserName(java.lang.String userName) {
+	public void setUserName(String userName) {
 		_weDeployAuthApp.setUserName(userName);
 	}
 
@@ -437,7 +437,7 @@ public class WeDeployAuthAppWrapper implements WeDeployAuthApp,
 	* @param userUuid the user uuid of this we deploy auth app
 	*/
 	@Override
-	public void setUserUuid(java.lang.String userUuid) {
+	public void setUserUuid(String userUuid) {
 		_weDeployAuthApp.setUserUuid(userUuid);
 	}
 
@@ -462,7 +462,7 @@ public class WeDeployAuthAppWrapper implements WeDeployAuthApp,
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _weDeployAuthApp.toString();
 	}
 
@@ -472,7 +472,7 @@ public class WeDeployAuthAppWrapper implements WeDeployAuthApp,
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _weDeployAuthApp.toXmlString();
 	}
 

@@ -40,7 +40,7 @@ public class RatingsEntryServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.portlet.ratings.service.impl.RatingsEntryServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static void deleteEntry(java.lang.String className, long classPK)
+	public static void deleteEntry(String className, long classPK)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().deleteEntry(className, classPK);
 	}
@@ -50,12 +50,12 @@ public class RatingsEntryServiceUtil {
 	*
 	* @return the OSGi service identifier
 	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
+	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 
 	public static com.liferay.ratings.kernel.model.RatingsEntry updateEntry(
-		java.lang.String className, long classPK, double score)
+		String className, long classPK, double score)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().updateEntry(className, classPK, score);
 	}

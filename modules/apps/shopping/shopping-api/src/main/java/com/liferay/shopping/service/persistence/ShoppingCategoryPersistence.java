@@ -458,7 +458,7 @@ public interface ShoppingCategoryPersistence extends BasePersistence<ShoppingCat
 	* @return the matching shopping category
 	* @throws NoSuchCategoryException if a matching shopping category could not be found
 	*/
-	public ShoppingCategory findByG_N(long groupId, java.lang.String name)
+	public ShoppingCategory findByG_N(long groupId, String name)
 		throws NoSuchCategoryException;
 
 	/**
@@ -468,7 +468,7 @@ public interface ShoppingCategoryPersistence extends BasePersistence<ShoppingCat
 	* @param name the name
 	* @return the matching shopping category, or <code>null</code> if a matching shopping category could not be found
 	*/
-	public ShoppingCategory fetchByG_N(long groupId, java.lang.String name);
+	public ShoppingCategory fetchByG_N(long groupId, String name);
 
 	/**
 	* Returns the shopping category where groupId = &#63; and name = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -478,7 +478,7 @@ public interface ShoppingCategoryPersistence extends BasePersistence<ShoppingCat
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching shopping category, or <code>null</code> if a matching shopping category could not be found
 	*/
-	public ShoppingCategory fetchByG_N(long groupId, java.lang.String name,
+	public ShoppingCategory fetchByG_N(long groupId, String name,
 		boolean retrieveFromCache);
 
 	/**
@@ -488,7 +488,7 @@ public interface ShoppingCategoryPersistence extends BasePersistence<ShoppingCat
 	* @param name the name
 	* @return the shopping category that was removed
 	*/
-	public ShoppingCategory removeByG_N(long groupId, java.lang.String name)
+	public ShoppingCategory removeByG_N(long groupId, String name)
 		throws NoSuchCategoryException;
 
 	/**
@@ -498,7 +498,7 @@ public interface ShoppingCategoryPersistence extends BasePersistence<ShoppingCat
 	* @param name the name
 	* @return the number of matching shopping categories
 	*/
-	public int countByG_N(long groupId, java.lang.String name);
+	public int countByG_N(long groupId, String name);
 
 	/**
 	* Caches the shopping category in the entity cache if it is enabled.

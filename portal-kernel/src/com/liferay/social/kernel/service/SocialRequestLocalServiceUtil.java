@@ -62,8 +62,8 @@ public class SocialRequestLocalServiceUtil {
 	* @return the social request
 	*/
 	public static com.liferay.social.kernel.model.SocialRequest addRequest(
-		long userId, long groupId, java.lang.String className, long classPK,
-		int type, java.lang.String extraData, long receiverUserId)
+		long userId, long groupId, String className, long classPK, int type,
+		String extraData, long receiverUserId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addRequest(userId, groupId, className, classPK, type,
@@ -259,7 +259,7 @@ public class SocialRequestLocalServiceUtil {
 	* @return the matching social request, or <code>null</code> if a matching social request could not be found
 	*/
 	public static com.liferay.social.kernel.model.SocialRequest fetchSocialRequestByUuidAndGroupId(
-		java.lang.String uuid, long groupId) {
+		String uuid, long groupId) {
 		return getService().fetchSocialRequestByUuidAndGroupId(uuid, groupId);
 	}
 
@@ -276,7 +276,7 @@ public class SocialRequestLocalServiceUtil {
 	*
 	* @return the OSGi service identifier
 	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
+	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 
@@ -380,7 +380,7 @@ public class SocialRequestLocalServiceUtil {
 	* @throws PortalException if a matching social request could not be found
 	*/
 	public static com.liferay.social.kernel.model.SocialRequest getSocialRequestByUuidAndGroupId(
-		java.lang.String uuid, long groupId)
+		String uuid, long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getSocialRequestByUuidAndGroupId(uuid, groupId);
 	}
@@ -409,7 +409,7 @@ public class SocialRequestLocalServiceUtil {
 	* @return the matching social requests, or an empty list if no matches were found
 	*/
 	public static java.util.List<com.liferay.social.kernel.model.SocialRequest> getSocialRequestsByUuidAndCompanyId(
-		java.lang.String uuid, long companyId) {
+		String uuid, long companyId) {
 		return getService().getSocialRequestsByUuidAndCompanyId(uuid, companyId);
 	}
 
@@ -424,7 +424,7 @@ public class SocialRequestLocalServiceUtil {
 	* @return the range of matching social requests, or an empty list if no matches were found
 	*/
 	public static java.util.List<com.liferay.social.kernel.model.SocialRequest> getSocialRequestsByUuidAndCompanyId(
-		java.lang.String uuid, long companyId, int start, int end,
+		String uuid, long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.social.kernel.model.SocialRequest> orderByComparator) {
 		return getService()
 				   .getSocialRequestsByUuidAndCompanyId(uuid, companyId, start,
@@ -524,7 +524,7 @@ public class SocialRequestLocalServiceUtil {
 	* @return <code>true</code> if the request exists; <code>false</code>
 	otherwise
 	*/
-	public static boolean hasRequest(long userId, java.lang.String className,
+	public static boolean hasRequest(long userId, String className,
 		long classPK, int type, int status) {
 		return getService().hasRequest(userId, className, classPK, type, status);
 	}
@@ -544,7 +544,7 @@ public class SocialRequestLocalServiceUtil {
 	* @return <code>true</code> if the social request exists;
 	<code>false</code> otherwise
 	*/
-	public static boolean hasRequest(long userId, java.lang.String className,
+	public static boolean hasRequest(long userId, String className,
 		long classPK, int type, long receiverUserId, int status) {
 		return getService()
 				   .hasRequest(userId, className, classPK, type,

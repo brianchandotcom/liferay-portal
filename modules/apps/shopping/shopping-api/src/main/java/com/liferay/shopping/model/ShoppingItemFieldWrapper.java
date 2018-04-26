@@ -107,7 +107,7 @@ public class ShoppingItemFieldWrapper implements ShoppingItemField,
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new ShoppingItemFieldWrapper((ShoppingItemField)_shoppingItemField.clone());
 	}
 
@@ -132,7 +132,7 @@ public class ShoppingItemFieldWrapper implements ShoppingItemField,
 	* @return the description of this shopping item field
 	*/
 	@Override
-	public java.lang.String getDescription() {
+	public String getDescription() {
 		return _shoppingItemField.getDescription();
 	}
 
@@ -167,7 +167,7 @@ public class ShoppingItemFieldWrapper implements ShoppingItemField,
 	* @return the name of this shopping item field
 	*/
 	@Override
-	public java.lang.String getName() {
+	public String getName() {
 		return _shoppingItemField.getName();
 	}
 
@@ -192,12 +192,12 @@ public class ShoppingItemFieldWrapper implements ShoppingItemField,
 	* @return the values of this shopping item field
 	*/
 	@Override
-	public java.lang.String getValues() {
+	public String getValues() {
 		return _shoppingItemField.getValues();
 	}
 
 	@Override
-	public java.lang.String[] getValuesArray() {
+	public String[] getValuesArray() {
 		return _shoppingItemField.getValuesArray();
 	}
 
@@ -247,7 +247,7 @@ public class ShoppingItemFieldWrapper implements ShoppingItemField,
 	* @param description the description of this shopping item field
 	*/
 	@Override
-	public void setDescription(java.lang.String description) {
+	public void setDescription(String description) {
 		_shoppingItemField.setDescription(description);
 	}
 
@@ -293,7 +293,7 @@ public class ShoppingItemFieldWrapper implements ShoppingItemField,
 	* @param name the name of this shopping item field
 	*/
 	@Override
-	public void setName(java.lang.String name) {
+	public void setName(String name) {
 		_shoppingItemField.setName(name);
 	}
 
@@ -323,12 +323,12 @@ public class ShoppingItemFieldWrapper implements ShoppingItemField,
 	* @param values the values of this shopping item field
 	*/
 	@Override
-	public void setValues(java.lang.String values) {
+	public void setValues(String values) {
 		_shoppingItemField.setValues(values);
 	}
 
 	@Override
-	public void setValuesArray(java.lang.String[] valuesArray) {
+	public void setValuesArray(String[] valuesArray) {
 		_shoppingItemField.setValuesArray(valuesArray);
 	}
 
@@ -343,7 +343,7 @@ public class ShoppingItemFieldWrapper implements ShoppingItemField,
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _shoppingItemField.toString();
 	}
 
@@ -353,7 +353,7 @@ public class ShoppingItemFieldWrapper implements ShoppingItemField,
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _shoppingItemField.toXmlString();
 	}
 

@@ -294,5 +294,5 @@ public interface AttachmentPersistence extends BasePersistence<Attachment> {
 	public int countAll();
 
 	@Override
-	public java.util.Set<java.lang.String> getBadColumnNames();
+	public java.util.Set<String> getBadColumnNames();
 }

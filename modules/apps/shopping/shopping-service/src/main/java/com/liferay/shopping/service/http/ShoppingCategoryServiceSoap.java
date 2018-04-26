@@ -67,8 +67,7 @@ import java.rmi.RemoteException;
 @ProviderType
 public class ShoppingCategoryServiceSoap {
 	public static com.liferay.shopping.model.ShoppingCategorySoap addCategory(
-		long parentCategoryId, java.lang.String name,
-		java.lang.String description,
+		long parentCategoryId, String name, String description,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
@@ -186,8 +185,8 @@ public class ShoppingCategoryServiceSoap {
 	}
 
 	public static com.liferay.shopping.model.ShoppingCategorySoap updateCategory(
-		long categoryId, long parentCategoryId, java.lang.String name,
-		java.lang.String description, boolean mergeWithParentCategory,
+		long categoryId, long parentCategoryId, String name,
+		String description, boolean mergeWithParentCategory,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {

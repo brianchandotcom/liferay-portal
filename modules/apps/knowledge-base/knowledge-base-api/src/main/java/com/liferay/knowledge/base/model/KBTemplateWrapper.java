@@ -144,7 +144,7 @@ public class KBTemplateWrapper implements KBTemplate, ModelWrapper<KBTemplate> {
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new KBTemplateWrapper((KBTemplate)_kbTemplate.clone());
 	}
 
@@ -169,7 +169,7 @@ public class KBTemplateWrapper implements KBTemplate, ModelWrapper<KBTemplate> {
 	* @return the content of this kb template
 	*/
 	@Override
-	public java.lang.String getContent() {
+	public String getContent() {
 		return _kbTemplate.getContent();
 	}
 
@@ -249,7 +249,7 @@ public class KBTemplateWrapper implements KBTemplate, ModelWrapper<KBTemplate> {
 	* @return the title of this kb template
 	*/
 	@Override
-	public java.lang.String getTitle() {
+	public String getTitle() {
 		return _kbTemplate.getTitle();
 	}
 
@@ -269,7 +269,7 @@ public class KBTemplateWrapper implements KBTemplate, ModelWrapper<KBTemplate> {
 	* @return the user name of this kb template
 	*/
 	@Override
-	public java.lang.String getUserName() {
+	public String getUserName() {
 		return _kbTemplate.getUserName();
 	}
 
@@ -279,7 +279,7 @@ public class KBTemplateWrapper implements KBTemplate, ModelWrapper<KBTemplate> {
 	* @return the user uuid of this kb template
 	*/
 	@Override
-	public java.lang.String getUserUuid() {
+	public String getUserUuid() {
 		return _kbTemplate.getUserUuid();
 	}
 
@@ -289,7 +289,7 @@ public class KBTemplateWrapper implements KBTemplate, ModelWrapper<KBTemplate> {
 	* @return the uuid of this kb template
 	*/
 	@Override
-	public java.lang.String getUuid() {
+	public String getUuid() {
 		return _kbTemplate.getUuid();
 	}
 
@@ -339,7 +339,7 @@ public class KBTemplateWrapper implements KBTemplate, ModelWrapper<KBTemplate> {
 	* @param content the content of this kb template
 	*/
 	@Override
-	public void setContent(java.lang.String content) {
+	public void setContent(String content) {
 		_kbTemplate.setContent(content);
 	}
 
@@ -435,7 +435,7 @@ public class KBTemplateWrapper implements KBTemplate, ModelWrapper<KBTemplate> {
 	* @param title the title of this kb template
 	*/
 	@Override
-	public void setTitle(java.lang.String title) {
+	public void setTitle(String title) {
 		_kbTemplate.setTitle(title);
 	}
 
@@ -455,7 +455,7 @@ public class KBTemplateWrapper implements KBTemplate, ModelWrapper<KBTemplate> {
 	* @param userName the user name of this kb template
 	*/
 	@Override
-	public void setUserName(java.lang.String userName) {
+	public void setUserName(String userName) {
 		_kbTemplate.setUserName(userName);
 	}
 
@@ -465,7 +465,7 @@ public class KBTemplateWrapper implements KBTemplate, ModelWrapper<KBTemplate> {
 	* @param userUuid the user uuid of this kb template
 	*/
 	@Override
-	public void setUserUuid(java.lang.String userUuid) {
+	public void setUserUuid(String userUuid) {
 		_kbTemplate.setUserUuid(userUuid);
 	}
 
@@ -475,7 +475,7 @@ public class KBTemplateWrapper implements KBTemplate, ModelWrapper<KBTemplate> {
 	* @param uuid the uuid of this kb template
 	*/
 	@Override
-	public void setUuid(java.lang.String uuid) {
+	public void setUuid(String uuid) {
 		_kbTemplate.setUuid(uuid);
 	}
 
@@ -490,7 +490,7 @@ public class KBTemplateWrapper implements KBTemplate, ModelWrapper<KBTemplate> {
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _kbTemplate.toString();
 	}
 
@@ -500,7 +500,7 @@ public class KBTemplateWrapper implements KBTemplate, ModelWrapper<KBTemplate> {
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _kbTemplate.toXmlString();
 	}
 

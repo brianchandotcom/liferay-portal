@@ -66,7 +66,7 @@ public interface DDMFormInstanceRecord extends DDMFormInstanceRecordModel,
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public DDMFormInstanceRecordVersion getFormInstanceRecordVersion(
-		java.lang.String version)
+		String version)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public DDMFormInstanceRecordVersion getLatestFormInstanceRecordVersion()

@@ -65,8 +65,8 @@ import java.rmi.RemoteException;
 @ProviderType
 public class EmailAddressServiceSoap {
 	public static com.liferay.portal.kernel.model.EmailAddressSoap addEmailAddress(
-		java.lang.String className, long classPK, java.lang.String address,
-		long typeId, boolean primary,
+		String className, long classPK, String address, long typeId,
+		boolean primary,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
@@ -131,7 +131,7 @@ public class EmailAddressServiceSoap {
 	}
 
 	public static com.liferay.portal.kernel.model.EmailAddressSoap[] getEmailAddresses(
-		java.lang.String className, long classPK) throws RemoteException {
+		String className, long classPK) throws RemoteException {
 		try {
 			java.util.List<com.liferay.portal.kernel.model.EmailAddress> returnValue =
 				EmailAddressServiceUtil.getEmailAddresses(className, classPK);
@@ -146,8 +146,8 @@ public class EmailAddressServiceSoap {
 	}
 
 	public static com.liferay.portal.kernel.model.EmailAddressSoap updateEmailAddress(
-		long emailAddressId, java.lang.String address, long typeId,
-		boolean primary) throws RemoteException {
+		long emailAddressId, String address, long typeId, boolean primary)
+		throws RemoteException {
 		try {
 			com.liferay.portal.kernel.model.EmailAddress returnValue = EmailAddressServiceUtil.updateEmailAddress(emailAddressId,
 					address, typeId, primary);

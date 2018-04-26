@@ -56,18 +56,17 @@ public interface SocialActivity extends SocialActivityModel, PersistedModel {
 
 	public com.liferay.asset.kernel.model.AssetEntry getAssetEntry();
 
-	public java.lang.String getExtraDataValue(java.lang.String key)
+	public String getExtraDataValue(String key)
 		throws com.liferay.portal.kernel.json.JSONException;
 
-	public java.lang.String getExtraDataValue(java.lang.String key,
-		java.util.Locale locale)
+	public String getExtraDataValue(String key, java.util.Locale locale)
 		throws com.liferay.portal.kernel.json.JSONException;
 
-	public boolean isClassName(java.lang.String className);
+	public boolean isClassName(String className);
 
 	public void setAssetEntry(
 		com.liferay.asset.kernel.model.AssetEntry assetEntry);
 
-	public void setExtraDataValue(java.lang.String key, java.lang.String value)
+	public void setExtraDataValue(String key, String value)
 		throws com.liferay.portal.kernel.json.JSONException;
 }

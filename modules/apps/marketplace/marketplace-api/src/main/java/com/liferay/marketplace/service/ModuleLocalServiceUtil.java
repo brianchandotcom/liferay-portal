@@ -49,8 +49,8 @@ public class ModuleLocalServiceUtil {
 	*/
 	@Deprecated
 	public static com.liferay.marketplace.model.Module addModule(long userId,
-		long appId, java.lang.String bundleSymbolicName,
-		java.lang.String bundleVersion, java.lang.String contextName)
+		long appId, String bundleSymbolicName, String bundleVersion,
+		String contextName)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addModule(userId, appId, bundleSymbolicName, bundleVersion,
@@ -58,8 +58,7 @@ public class ModuleLocalServiceUtil {
 	}
 
 	public static com.liferay.marketplace.model.Module addModule(long appId,
-		java.lang.String bundleSymbolicName, java.lang.String bundleVersion,
-		java.lang.String contextName)
+		String bundleSymbolicName, String bundleVersion, String contextName)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addModule(appId, bundleSymbolicName, bundleVersion,
@@ -209,8 +208,7 @@ public class ModuleLocalServiceUtil {
 	}
 
 	public static com.liferay.marketplace.model.Module fetchModule(long appId,
-		java.lang.String bundleSymbolicName, java.lang.String bundleVersion,
-		java.lang.String contextName) {
+		String bundleSymbolicName, String bundleVersion, String contextName) {
 		return getService()
 				   .fetchModule(appId, bundleSymbolicName, bundleVersion,
 			contextName);
@@ -224,7 +222,7 @@ public class ModuleLocalServiceUtil {
 	* @return the matching module, or <code>null</code> if a matching module could not be found
 	*/
 	public static com.liferay.marketplace.model.Module fetchModuleByUuidAndCompanyId(
-		java.lang.String uuid, long companyId) {
+		String uuid, long companyId) {
 		return getService().fetchModuleByUuidAndCompanyId(uuid, companyId);
 	}
 
@@ -257,7 +255,7 @@ public class ModuleLocalServiceUtil {
 	* @throws PortalException if a matching module could not be found
 	*/
 	public static com.liferay.marketplace.model.Module getModuleByUuidAndCompanyId(
-		java.lang.String uuid, long companyId)
+		String uuid, long companyId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getModuleByUuidAndCompanyId(uuid, companyId);
 	}
@@ -297,7 +295,7 @@ public class ModuleLocalServiceUtil {
 	*
 	* @return the OSGi service identifier
 	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
+	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 

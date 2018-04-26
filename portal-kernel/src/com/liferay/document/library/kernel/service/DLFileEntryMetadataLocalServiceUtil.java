@@ -203,7 +203,7 @@ public class DLFileEntryMetadataLocalServiceUtil {
 	* @return the matching document library file entry metadata, or <code>null</code> if a matching document library file entry metadata could not be found
 	*/
 	public static com.liferay.document.library.kernel.model.DLFileEntryMetadata fetchDLFileEntryMetadataByUuidAndCompanyId(
-		java.lang.String uuid, long companyId) {
+		String uuid, long companyId) {
 		return getService()
 				   .fetchDLFileEntryMetadataByUuidAndCompanyId(uuid, companyId);
 	}
@@ -244,7 +244,7 @@ public class DLFileEntryMetadataLocalServiceUtil {
 	* @throws PortalException if a matching document library file entry metadata could not be found
 	*/
 	public static com.liferay.document.library.kernel.model.DLFileEntryMetadata getDLFileEntryMetadataByUuidAndCompanyId(
-		java.lang.String uuid, long companyId)
+		String uuid, long companyId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .getDLFileEntryMetadataByUuidAndCompanyId(uuid, companyId);
@@ -313,7 +313,7 @@ public class DLFileEntryMetadataLocalServiceUtil {
 	*
 	* @return the OSGi service identifier
 	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
+	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 
@@ -337,7 +337,7 @@ public class DLFileEntryMetadataLocalServiceUtil {
 	public static void updateFileEntryMetadata(long companyId,
 		java.util.List<com.liferay.dynamic.data.mapping.kernel.DDMStructure> ddmStructures,
 		long fileEntryId, long fileVersionId,
-		java.util.Map<java.lang.String, com.liferay.dynamic.data.mapping.kernel.DDMFormValues> ddmFormValuesMap,
+		java.util.Map<String, com.liferay.dynamic.data.mapping.kernel.DDMFormValues> ddmFormValuesMap,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService()
@@ -347,7 +347,7 @@ public class DLFileEntryMetadataLocalServiceUtil {
 
 	public static void updateFileEntryMetadata(long fileEntryTypeId,
 		long fileEntryId, long fileVersionId,
-		java.util.Map<java.lang.String, com.liferay.dynamic.data.mapping.kernel.DDMFormValues> ddmFormValuesMap,
+		java.util.Map<String, com.liferay.dynamic.data.mapping.kernel.DDMFormValues> ddmFormValuesMap,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService()

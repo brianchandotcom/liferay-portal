@@ -74,10 +74,9 @@ public interface ShoppingOrderLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.REINDEX)
 	public ShoppingOrder addShoppingOrder(ShoppingOrder shoppingOrder);
 
-	public void completeOrder(java.lang.String number,
-		java.lang.String ppTxnId, java.lang.String ppPaymentStatus,
-		double ppPaymentGross, java.lang.String ppReceiverEmail,
-		java.lang.String ppPayerEmail, boolean updateInventory,
+	public void completeOrder(String number, String ppTxnId,
+		String ppPaymentStatus, double ppPaymentGross, String ppReceiverEmail,
+		String ppPayerEmail, boolean updateInventory,
 		ServiceContext serviceContext) throws PortalException;
 
 	/**
@@ -198,18 +197,17 @@ public interface ShoppingOrderLocalService extends BaseLocalService,
 	public ShoppingOrder getOrder(long orderId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ShoppingOrder getOrder(java.lang.String number)
-		throws PortalException;
+	public ShoppingOrder getOrder(String number) throws PortalException;
 
 	/**
 	* Returns the OSGi service identifier.
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ShoppingOrder getPayPalTxnIdOrder(java.lang.String ppTxnId)
+	public ShoppingOrder getPayPalTxnIdOrder(String ppTxnId)
 		throws PortalException;
 
 	@Override
@@ -255,65 +253,52 @@ public interface ShoppingOrderLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<ShoppingOrder> search(long groupId, long companyId,
-		long userId, java.lang.String number,
-		java.lang.String billingFirstName, java.lang.String billingLastName,
-		java.lang.String billingEmailAddress,
-		java.lang.String shippingFirstName, java.lang.String shippingLastName,
-		java.lang.String shippingEmailAddress,
-		java.lang.String ppPaymentStatus, boolean andOperator, int start,
-		int end);
+		long userId, String number, String billingFirstName,
+		String billingLastName, String billingEmailAddress,
+		String shippingFirstName, String shippingLastName,
+		String shippingEmailAddress, String ppPaymentStatus,
+		boolean andOperator, int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int searchCount(long groupId, long companyId, long userId,
-		java.lang.String number, java.lang.String billingFirstName,
-		java.lang.String billingLastName, java.lang.String billingEmailAddress,
-		java.lang.String shippingFirstName, java.lang.String shippingLastName,
-		java.lang.String shippingEmailAddress,
-		java.lang.String ppPaymentStatus, boolean andOperator);
+		String number, String billingFirstName, String billingLastName,
+		String billingEmailAddress, String shippingFirstName,
+		String shippingLastName, String shippingEmailAddress,
+		String ppPaymentStatus, boolean andOperator);
 
-	public void sendEmail(long orderId, java.lang.String emailType,
+	public void sendEmail(long orderId, String emailType,
 		ServiceContext serviceContext) throws PortalException;
 
-	public void sendEmail(ShoppingOrder order, java.lang.String emailType,
+	public void sendEmail(ShoppingOrder order, String emailType,
 		ServiceContext serviceContext) throws PortalException;
 
 	public ShoppingOrder updateLatestOrder(long userId, long groupId,
-		java.lang.String billingFirstName, java.lang.String billingLastName,
-		java.lang.String billingEmailAddress, java.lang.String billingCompany,
-		java.lang.String billingStreet, java.lang.String billingCity,
-		java.lang.String billingState, java.lang.String billingZip,
-		java.lang.String billingCountry, java.lang.String billingPhone,
-		boolean shipToBilling, java.lang.String shippingFirstName,
-		java.lang.String shippingLastName,
-		java.lang.String shippingEmailAddress,
-		java.lang.String shippingCompany, java.lang.String shippingStreet,
-		java.lang.String shippingCity, java.lang.String shippingState,
-		java.lang.String shippingZip, java.lang.String shippingCountry,
-		java.lang.String shippingPhone, java.lang.String ccName,
-		java.lang.String ccType, java.lang.String ccNumber, int ccExpMonth,
-		int ccExpYear, java.lang.String ccVerNumber, java.lang.String comments)
+		String billingFirstName, String billingLastName,
+		String billingEmailAddress, String billingCompany,
+		String billingStreet, String billingCity, String billingState,
+		String billingZip, String billingCountry, String billingPhone,
+		boolean shipToBilling, String shippingFirstName,
+		String shippingLastName, String shippingEmailAddress,
+		String shippingCompany, String shippingStreet, String shippingCity,
+		String shippingState, String shippingZip, String shippingCountry,
+		String shippingPhone, String ccName, String ccType, String ccNumber,
+		int ccExpMonth, int ccExpYear, String ccVerNumber, String comments)
 		throws PortalException;
 
-	public ShoppingOrder updateOrder(long orderId, java.lang.String ppTxnId,
-		java.lang.String ppPaymentStatus, double ppPaymentGross,
-		java.lang.String ppReceiverEmail, java.lang.String ppPayerEmail)
-		throws PortalException;
+	public ShoppingOrder updateOrder(long orderId, String ppTxnId,
+		String ppPaymentStatus, double ppPaymentGross, String ppReceiverEmail,
+		String ppPayerEmail) throws PortalException;
 
-	public ShoppingOrder updateOrder(long orderId,
-		java.lang.String billingFirstName, java.lang.String billingLastName,
-		java.lang.String billingEmailAddress, java.lang.String billingCompany,
-		java.lang.String billingStreet, java.lang.String billingCity,
-		java.lang.String billingState, java.lang.String billingZip,
-		java.lang.String billingCountry, java.lang.String billingPhone,
-		boolean shipToBilling, java.lang.String shippingFirstName,
-		java.lang.String shippingLastName,
-		java.lang.String shippingEmailAddress,
-		java.lang.String shippingCompany, java.lang.String shippingStreet,
-		java.lang.String shippingCity, java.lang.String shippingState,
-		java.lang.String shippingZip, java.lang.String shippingCountry,
-		java.lang.String shippingPhone, java.lang.String ccName,
-		java.lang.String ccType, java.lang.String ccNumber, int ccExpMonth,
-		int ccExpYear, java.lang.String ccVerNumber, java.lang.String comments)
+	public ShoppingOrder updateOrder(long orderId, String billingFirstName,
+		String billingLastName, String billingEmailAddress,
+		String billingCompany, String billingStreet, String billingCity,
+		String billingState, String billingZip, String billingCountry,
+		String billingPhone, boolean shipToBilling, String shippingFirstName,
+		String shippingLastName, String shippingEmailAddress,
+		String shippingCompany, String shippingStreet, String shippingCity,
+		String shippingState, String shippingZip, String shippingCountry,
+		String shippingPhone, String ccName, String ccType, String ccNumber,
+		int ccExpMonth, int ccExpYear, String ccVerNumber, String comments)
 		throws PortalException;
 
 	/**

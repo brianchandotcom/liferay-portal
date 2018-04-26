@@ -57,10 +57,9 @@ import com.liferay.sync.service.SyncDLObjectServiceUtil;
 public class SyncDLObjectServiceHttp {
 	public static com.liferay.sync.model.SyncDLObject addFileEntry(
 		HttpPrincipal httpPrincipal, long repositoryId, long folderId,
-		java.lang.String sourceFileName, java.lang.String mimeType,
-		java.lang.String title, java.lang.String description,
-		java.lang.String changeLog, java.io.File file,
-		java.lang.String checksum,
+		String sourceFileName, String mimeType, String title,
+		String description, String changeLog, java.io.File file,
+		String checksum,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -95,7 +94,7 @@ public class SyncDLObjectServiceHttp {
 
 	public static com.liferay.sync.model.SyncDLObject addFolder(
 		HttpPrincipal httpPrincipal, long repositoryId, long parentFolderId,
-		java.lang.String name, java.lang.String description,
+		String name, String description,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -162,7 +161,7 @@ public class SyncDLObjectServiceHttp {
 
 	public static com.liferay.sync.model.SyncDLObject checkInFileEntry(
 		HttpPrincipal httpPrincipal, long fileEntryId, boolean majorVersion,
-		java.lang.String changeLog,
+		String changeLog,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -228,7 +227,7 @@ public class SyncDLObjectServiceHttp {
 	}
 
 	public static com.liferay.sync.model.SyncDLObject checkOutFileEntry(
-		HttpPrincipal httpPrincipal, long fileEntryId, java.lang.String owner,
+		HttpPrincipal httpPrincipal, long fileEntryId, String owner,
 		long expirationTime,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -263,7 +262,7 @@ public class SyncDLObjectServiceHttp {
 
 	public static com.liferay.sync.model.SyncDLObject copyFileEntry(
 		HttpPrincipal httpPrincipal, long sourceFileEntryId, long repositoryId,
-		long folderId, java.lang.String sourceFileName, java.lang.String title,
+		long folderId, String sourceFileName, String title,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -331,7 +330,7 @@ public class SyncDLObjectServiceHttp {
 
 	public static com.liferay.sync.model.SyncDLObject getFileEntrySyncDLObject(
 		HttpPrincipal httpPrincipal, long repositoryId, long folderId,
-		java.lang.String title)
+		String title)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(SyncDLObjectServiceUtil.class,
@@ -430,8 +429,7 @@ public class SyncDLObjectServiceHttp {
 
 	public static com.liferay.sync.model.SyncDLObject getFolderSyncDLObject(
 		HttpPrincipal httpPrincipal, long repositoryId, long parentFolderId,
-		java.lang.String name)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		String name) throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(SyncDLObjectServiceUtil.class,
 					"getFolderSyncDLObject",
@@ -557,7 +555,7 @@ public class SyncDLObjectServiceHttp {
 		}
 	}
 
-	public static java.lang.Object getSyncContext(HttpPrincipal httpPrincipal)
+	public static Object getSyncContext(HttpPrincipal httpPrincipal)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(SyncDLObjectServiceUtil.class,
@@ -587,9 +585,9 @@ public class SyncDLObjectServiceHttp {
 		}
 	}
 
-	public static java.lang.String getSyncDLObjectUpdate(
-		HttpPrincipal httpPrincipal, long repositoryId, long lastAccessTime,
-		int max) throws com.liferay.portal.kernel.exception.PortalException {
+	public static String getSyncDLObjectUpdate(HttpPrincipal httpPrincipal,
+		long repositoryId, long lastAccessTime, int max)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(SyncDLObjectServiceUtil.class,
 					"getSyncDLObjectUpdate",
@@ -611,7 +609,7 @@ public class SyncDLObjectServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (java.lang.String)returnObj;
+			return (String)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -620,9 +618,9 @@ public class SyncDLObjectServiceHttp {
 		}
 	}
 
-	public static java.lang.String getSyncDLObjectUpdate(
-		HttpPrincipal httpPrincipal, long repositoryId, long lastAccessTime,
-		int max, boolean retrieveFromCache)
+	public static String getSyncDLObjectUpdate(HttpPrincipal httpPrincipal,
+		long repositoryId, long lastAccessTime, int max,
+		boolean retrieveFromCache)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(SyncDLObjectServiceUtil.class,
@@ -645,7 +643,7 @@ public class SyncDLObjectServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (java.lang.String)returnObj;
+			return (String)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -654,9 +652,8 @@ public class SyncDLObjectServiceHttp {
 		}
 	}
 
-	public static java.lang.String getSyncDLObjectUpdate(
-		HttpPrincipal httpPrincipal, long repositoryId, long parentFolderId,
-		long lastAccessTime)
+	public static String getSyncDLObjectUpdate(HttpPrincipal httpPrincipal,
+		long repositoryId, long parentFolderId, long lastAccessTime)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(SyncDLObjectServiceUtil.class,
@@ -679,7 +676,7 @@ public class SyncDLObjectServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (java.lang.String)returnObj;
+			return (String)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -851,10 +848,9 @@ public class SyncDLObjectServiceHttp {
 
 	public static com.liferay.sync.model.SyncDLObject patchFileEntry(
 		HttpPrincipal httpPrincipal, long fileEntryId, long sourceVersionId,
-		java.lang.String sourceFileName, java.lang.String mimeType,
-		java.lang.String title, java.lang.String description,
-		java.lang.String changeLog, boolean majorVersion,
-		java.io.File deltaFile, java.lang.String checksum,
+		String sourceFileName, String mimeType, String title,
+		String description, String changeLog, boolean majorVersion,
+		java.io.File deltaFile, String checksum,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -953,7 +949,7 @@ public class SyncDLObjectServiceHttp {
 		}
 	}
 
-	public static java.util.Map<java.lang.String, java.lang.Object> updateFileEntries(
+	public static java.util.Map<String, Object> updateFileEntries(
 		HttpPrincipal httpPrincipal, java.io.File zipFile)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -975,7 +971,7 @@ public class SyncDLObjectServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (java.util.Map<java.lang.String, java.lang.Object>)returnObj;
+			return (java.util.Map<String, Object>)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -985,11 +981,9 @@ public class SyncDLObjectServiceHttp {
 	}
 
 	public static com.liferay.sync.model.SyncDLObject updateFileEntry(
-		HttpPrincipal httpPrincipal, long fileEntryId,
-		java.lang.String sourceFileName, java.lang.String mimeType,
-		java.lang.String title, java.lang.String description,
-		java.lang.String changeLog, boolean majorVersion, java.io.File file,
-		java.lang.String checksum,
+		HttpPrincipal httpPrincipal, long fileEntryId, String sourceFileName,
+		String mimeType, String title, String description, String changeLog,
+		boolean majorVersion, java.io.File file, String checksum,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -1023,8 +1017,8 @@ public class SyncDLObjectServiceHttp {
 	}
 
 	public static com.liferay.sync.model.SyncDLObject updateFolder(
-		HttpPrincipal httpPrincipal, long folderId, java.lang.String name,
-		java.lang.String description,
+		HttpPrincipal httpPrincipal, long folderId, String name,
+		String description,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -1058,41 +1052,37 @@ public class SyncDLObjectServiceHttp {
 
 	private static Log _log = LogFactoryUtil.getLog(SyncDLObjectServiceHttp.class);
 	private static final Class<?>[] _addFileEntryParameterTypes0 = new Class[] {
-			long.class, long.class, java.lang.String.class,
-			java.lang.String.class, java.lang.String.class,
-			java.lang.String.class, java.lang.String.class, java.io.File.class,
-			java.lang.String.class,
+			long.class, long.class, String.class, String.class, String.class,
+			String.class, String.class, java.io.File.class, String.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _addFolderParameterTypes1 = new Class[] {
-			long.class, long.class, java.lang.String.class,
-			java.lang.String.class,
+			long.class, long.class, String.class, String.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _cancelCheckOutParameterTypes2 = new Class[] {
 			long.class
 		};
 	private static final Class<?>[] _checkInFileEntryParameterTypes3 = new Class[] {
-			long.class, boolean.class, java.lang.String.class,
+			long.class, boolean.class, String.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _checkOutFileEntryParameterTypes4 = new Class[] {
 			long.class, com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _checkOutFileEntryParameterTypes5 = new Class[] {
-			long.class, java.lang.String.class, long.class,
+			long.class, String.class, long.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _copyFileEntryParameterTypes6 = new Class[] {
-			long.class, long.class, long.class, java.lang.String.class,
-			java.lang.String.class,
+			long.class, long.class, long.class, String.class, String.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _getAllFolderSyncDLObjectsParameterTypes7 = new Class[] {
 			long.class
 		};
 	private static final Class<?>[] _getFileEntrySyncDLObjectParameterTypes8 = new Class[] {
-			long.class, long.class, java.lang.String.class
+			long.class, long.class, String.class
 		};
 	private static final Class<?>[] _getFileEntrySyncDLObjectsParameterTypes9 = new Class[] {
 			long.class, long.class
@@ -1101,7 +1091,7 @@ public class SyncDLObjectServiceHttp {
 			long.class
 		};
 	private static final Class<?>[] _getFolderSyncDLObjectParameterTypes11 = new Class[] {
-			long.class, long.class, java.lang.String.class
+			long.class, long.class, String.class
 		};
 	private static final Class<?>[] _getFolderSyncDLObjectsParameterTypes12 = new Class[] {
 			long.class, long.class
@@ -1142,11 +1132,9 @@ public class SyncDLObjectServiceHttp {
 			long.class
 		};
 	private static final Class<?>[] _patchFileEntryParameterTypes24 = new Class[] {
-			long.class, long.class, java.lang.String.class,
-			java.lang.String.class, java.lang.String.class,
-			java.lang.String.class, java.lang.String.class, boolean.class,
-			java.io.File.class, java.lang.String.class,
-			com.liferay.portal.kernel.service.ServiceContext.class
+			long.class, long.class, String.class, String.class, String.class,
+			String.class, String.class, boolean.class, java.io.File.class,
+			String.class, com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _restoreFileEntryFromTrashParameterTypes25 = new Class[] {
 			long.class
@@ -1158,14 +1146,12 @@ public class SyncDLObjectServiceHttp {
 			java.io.File.class
 		};
 	private static final Class<?>[] _updateFileEntryParameterTypes28 = new Class[] {
-			long.class, java.lang.String.class, java.lang.String.class,
-			java.lang.String.class, java.lang.String.class,
-			java.lang.String.class, boolean.class, java.io.File.class,
-			java.lang.String.class,
+			long.class, String.class, String.class, String.class, String.class,
+			String.class, boolean.class, java.io.File.class, String.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _updateFolderParameterTypes29 = new Class[] {
-			long.class, java.lang.String.class, java.lang.String.class,
+			long.class, String.class, String.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 }

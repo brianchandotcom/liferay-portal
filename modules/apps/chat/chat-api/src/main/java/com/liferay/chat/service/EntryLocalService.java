@@ -71,10 +71,9 @@ public interface EntryLocalService extends BaseLocalService,
 	public Entry addEntry(Entry entry);
 
 	public Entry addEntry(long createDate, long fromUserId, long toUserId,
-		java.lang.String content);
+		String content);
 
-	public Entry addEntry(long fromUserId, long toUserId,
-		java.lang.String content);
+	public Entry addEntry(long fromUserId, long toUserId, String content);
 
 	/**
 	* Creates a new entry with the primary key. Does not add the entry to the database.
@@ -225,7 +224,7 @@ public interface EntryLocalService extends BaseLocalService,
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

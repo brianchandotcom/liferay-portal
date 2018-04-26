@@ -35,8 +35,7 @@ public class BookmarksFolderServiceWrapper implements BookmarksFolderService,
 
 	@Override
 	public com.liferay.bookmarks.model.BookmarksFolder addFolder(
-		long parentFolderId, java.lang.String name,
-		java.lang.String description,
+		long parentFolderId, String name, String description,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _bookmarksFolderService.addFolder(parentFolderId, name,
@@ -62,8 +61,7 @@ public class BookmarksFolderServiceWrapper implements BookmarksFolderService,
 	}
 
 	@Override
-	public java.util.List<java.lang.Long> getFolderIds(long groupId,
-		long folderId)
+	public java.util.List<Long> getFolderIds(long groupId, long folderId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _bookmarksFolderService.getFolderIds(groupId, folderId);
 	}
@@ -95,20 +93,20 @@ public class BookmarksFolderServiceWrapper implements BookmarksFolderService,
 	}
 
 	@Override
-	public java.util.List<java.lang.Object> getFoldersAndEntries(long groupId,
+	public java.util.List<Object> getFoldersAndEntries(long groupId,
 		long folderId) {
 		return _bookmarksFolderService.getFoldersAndEntries(groupId, folderId);
 	}
 
 	@Override
-	public java.util.List<java.lang.Object> getFoldersAndEntries(long groupId,
+	public java.util.List<Object> getFoldersAndEntries(long groupId,
 		long folderId, int status) {
 		return _bookmarksFolderService.getFoldersAndEntries(groupId, folderId,
 			status);
 	}
 
 	@Override
-	public java.util.List<java.lang.Object> getFoldersAndEntries(long groupId,
+	public java.util.List<Object> getFoldersAndEntries(long groupId,
 		long folderId, int status, int start, int end) {
 		return _bookmarksFolderService.getFoldersAndEntries(groupId, folderId,
 			status, start, end);
@@ -143,7 +141,7 @@ public class BookmarksFolderServiceWrapper implements BookmarksFolderService,
 	* @return the OSGi service identifier
 	*/
 	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
+	public String getOSGiServiceIdentifier() {
 		return _bookmarksFolderService.getOSGiServiceIdentifier();
 	}
 
@@ -153,21 +151,21 @@ public class BookmarksFolderServiceWrapper implements BookmarksFolderService,
 	*/
 	@Deprecated
 	@Override
-	public void getSubfolderIds(java.util.List<java.lang.Long> folderIds,
-		long groupId, long folderId) {
+	public void getSubfolderIds(java.util.List<Long> folderIds, long groupId,
+		long folderId) {
 		_bookmarksFolderService.getSubfolderIds(folderIds, groupId, folderId);
 	}
 
 	@Override
-	public void getSubfolderIds(java.util.List<java.lang.Long> folderIds,
-		long groupId, long folderId, boolean recurse) {
+	public void getSubfolderIds(java.util.List<Long> folderIds, long groupId,
+		long folderId, boolean recurse) {
 		_bookmarksFolderService.getSubfolderIds(folderIds, groupId, folderId,
 			recurse);
 	}
 
 	@Override
-	public java.util.List<java.lang.Long> getSubfolderIds(long groupId,
-		long folderId, boolean recurse) {
+	public java.util.List<Long> getSubfolderIds(long groupId, long folderId,
+		boolean recurse) {
 		return _bookmarksFolderService.getSubfolderIds(groupId, folderId,
 			recurse);
 	}
@@ -226,8 +224,8 @@ public class BookmarksFolderServiceWrapper implements BookmarksFolderService,
 	@Deprecated
 	@Override
 	public com.liferay.bookmarks.model.BookmarksFolder updateFolder(
-		long folderId, long parentFolderId, java.lang.String name,
-		java.lang.String description, boolean mergeWithParentFolder,
+		long folderId, long parentFolderId, String name, String description,
+		boolean mergeWithParentFolder,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _bookmarksFolderService.updateFolder(folderId, parentFolderId,
@@ -236,8 +234,7 @@ public class BookmarksFolderServiceWrapper implements BookmarksFolderService,
 
 	@Override
 	public com.liferay.bookmarks.model.BookmarksFolder updateFolder(
-		long folderId, long parentFolderId, java.lang.String name,
-		java.lang.String description,
+		long folderId, long parentFolderId, String name, String description,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _bookmarksFolderService.updateFolder(folderId, parentFolderId,

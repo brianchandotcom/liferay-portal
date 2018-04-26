@@ -61,9 +61,8 @@ public interface WallEntryLocalService extends BaseLocalService,
 	 *
 	 * Never modify or reference this interface directly. Always use {@link WallEntryLocalServiceUtil} to access the wall entry local service. Add custom service methods to {@link com.liferay.social.networking.service.impl.WallEntryLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public WallEntry addWallEntry(long groupId, long userId,
-		java.lang.String comments, ThemeDisplay themeDisplay)
-		throws PortalException;
+	public WallEntry addWallEntry(long groupId, long userId, String comments,
+		ThemeDisplay themeDisplay) throws PortalException;
 
 	/**
 	* Adds the wall entry to the database. Also notifies the appropriate model listeners.
@@ -187,7 +186,7 @@ public interface WallEntryLocalService extends BaseLocalService,
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -240,7 +239,7 @@ public interface WallEntryLocalService extends BaseLocalService,
 	public int getWallToWallEntriesCount(long groupId1, long groupId2,
 		long userId1, long userId2);
 
-	public WallEntry updateWallEntry(long wallEntryId, java.lang.String comments)
+	public WallEntry updateWallEntry(long wallEntryId, String comments)
 		throws PortalException;
 
 	/**

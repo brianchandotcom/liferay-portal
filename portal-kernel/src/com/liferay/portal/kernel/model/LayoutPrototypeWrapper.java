@@ -151,7 +151,7 @@ public class LayoutPrototypeWrapper implements LayoutPrototype,
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new LayoutPrototypeWrapper((LayoutPrototype)_layoutPrototype.clone());
 	}
 
@@ -171,7 +171,7 @@ public class LayoutPrototypeWrapper implements LayoutPrototype,
 	}
 
 	@Override
-	public java.lang.String[] getAvailableLanguageIds() {
+	public String[] getAvailableLanguageIds() {
 		return _layoutPrototype.getAvailableLanguageIds();
 	}
 
@@ -196,7 +196,7 @@ public class LayoutPrototypeWrapper implements LayoutPrototype,
 	}
 
 	@Override
-	public java.lang.String getDefaultLanguageId() {
+	public String getDefaultLanguageId() {
 		return _layoutPrototype.getDefaultLanguageId();
 	}
 
@@ -206,7 +206,7 @@ public class LayoutPrototypeWrapper implements LayoutPrototype,
 	* @return the description of this layout prototype
 	*/
 	@Override
-	public java.lang.String getDescription() {
+	public String getDescription() {
 		return _layoutPrototype.getDescription();
 	}
 
@@ -217,7 +217,7 @@ public class LayoutPrototypeWrapper implements LayoutPrototype,
 	* @return the localized description of this layout prototype
 	*/
 	@Override
-	public java.lang.String getDescription(java.util.Locale locale) {
+	public String getDescription(java.util.Locale locale) {
 		return _layoutPrototype.getDescription(locale);
 	}
 
@@ -229,8 +229,7 @@ public class LayoutPrototypeWrapper implements LayoutPrototype,
 	* @return the localized description of this layout prototype. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
 	*/
 	@Override
-	public java.lang.String getDescription(java.util.Locale locale,
-		boolean useDefault) {
+	public String getDescription(java.util.Locale locale, boolean useDefault) {
 		return _layoutPrototype.getDescription(locale, useDefault);
 	}
 
@@ -241,7 +240,7 @@ public class LayoutPrototypeWrapper implements LayoutPrototype,
 	* @return the localized description of this layout prototype
 	*/
 	@Override
-	public java.lang.String getDescription(java.lang.String languageId) {
+	public String getDescription(String languageId) {
 		return _layoutPrototype.getDescription(languageId);
 	}
 
@@ -253,18 +252,17 @@ public class LayoutPrototypeWrapper implements LayoutPrototype,
 	* @return the localized description of this layout prototype
 	*/
 	@Override
-	public java.lang.String getDescription(java.lang.String languageId,
-		boolean useDefault) {
+	public String getDescription(String languageId, boolean useDefault) {
 		return _layoutPrototype.getDescription(languageId, useDefault);
 	}
 
 	@Override
-	public java.lang.String getDescriptionCurrentLanguageId() {
+	public String getDescriptionCurrentLanguageId() {
 		return _layoutPrototype.getDescriptionCurrentLanguageId();
 	}
 
 	@Override
-	public java.lang.String getDescriptionCurrentValue() {
+	public String getDescriptionCurrentValue() {
 		return _layoutPrototype.getDescriptionCurrentValue();
 	}
 
@@ -274,7 +272,7 @@ public class LayoutPrototypeWrapper implements LayoutPrototype,
 	* @return the locales and localized descriptions of this layout prototype
 	*/
 	@Override
-	public Map<java.util.Locale, java.lang.String> getDescriptionMap() {
+	public Map<java.util.Locale, String> getDescriptionMap() {
 		return _layoutPrototype.getDescriptionMap();
 	}
 
@@ -337,7 +335,7 @@ public class LayoutPrototypeWrapper implements LayoutPrototype,
 	* @return the name of this layout prototype
 	*/
 	@Override
-	public java.lang.String getName() {
+	public String getName() {
 		return _layoutPrototype.getName();
 	}
 
@@ -348,7 +346,7 @@ public class LayoutPrototypeWrapper implements LayoutPrototype,
 	* @return the localized name of this layout prototype
 	*/
 	@Override
-	public java.lang.String getName(java.util.Locale locale) {
+	public String getName(java.util.Locale locale) {
 		return _layoutPrototype.getName(locale);
 	}
 
@@ -360,7 +358,7 @@ public class LayoutPrototypeWrapper implements LayoutPrototype,
 	* @return the localized name of this layout prototype. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
 	*/
 	@Override
-	public java.lang.String getName(java.util.Locale locale, boolean useDefault) {
+	public String getName(java.util.Locale locale, boolean useDefault) {
 		return _layoutPrototype.getName(locale, useDefault);
 	}
 
@@ -371,7 +369,7 @@ public class LayoutPrototypeWrapper implements LayoutPrototype,
 	* @return the localized name of this layout prototype
 	*/
 	@Override
-	public java.lang.String getName(java.lang.String languageId) {
+	public String getName(String languageId) {
 		return _layoutPrototype.getName(languageId);
 	}
 
@@ -383,18 +381,17 @@ public class LayoutPrototypeWrapper implements LayoutPrototype,
 	* @return the localized name of this layout prototype
 	*/
 	@Override
-	public java.lang.String getName(java.lang.String languageId,
-		boolean useDefault) {
+	public String getName(String languageId, boolean useDefault) {
 		return _layoutPrototype.getName(languageId, useDefault);
 	}
 
 	@Override
-	public java.lang.String getNameCurrentLanguageId() {
+	public String getNameCurrentLanguageId() {
 		return _layoutPrototype.getNameCurrentLanguageId();
 	}
 
 	@Override
-	public java.lang.String getNameCurrentValue() {
+	public String getNameCurrentValue() {
 		return _layoutPrototype.getNameCurrentValue();
 	}
 
@@ -404,7 +401,7 @@ public class LayoutPrototypeWrapper implements LayoutPrototype,
 	* @return the locales and localized names of this layout prototype
 	*/
 	@Override
-	public Map<java.util.Locale, java.lang.String> getNameMap() {
+	public Map<java.util.Locale, String> getNameMap() {
 		return _layoutPrototype.getNameMap();
 	}
 
@@ -429,7 +426,7 @@ public class LayoutPrototypeWrapper implements LayoutPrototype,
 	* @return the settings of this layout prototype
 	*/
 	@Override
-	public java.lang.String getSettings() {
+	public String getSettings() {
 		return _layoutPrototype.getSettings();
 	}
 
@@ -449,7 +446,7 @@ public class LayoutPrototypeWrapper implements LayoutPrototype,
 	* @return the user name of this layout prototype
 	*/
 	@Override
-	public java.lang.String getUserName() {
+	public String getUserName() {
 		return _layoutPrototype.getUserName();
 	}
 
@@ -459,7 +456,7 @@ public class LayoutPrototypeWrapper implements LayoutPrototype,
 	* @return the user uuid of this layout prototype
 	*/
 	@Override
-	public java.lang.String getUserUuid() {
+	public String getUserUuid() {
 		return _layoutPrototype.getUserUuid();
 	}
 
@@ -469,7 +466,7 @@ public class LayoutPrototypeWrapper implements LayoutPrototype,
 	* @return the uuid of this layout prototype
 	*/
 	@Override
-	public java.lang.String getUuid() {
+	public String getUuid() {
 		return _layoutPrototype.getUuid();
 	}
 
@@ -567,7 +564,7 @@ public class LayoutPrototypeWrapper implements LayoutPrototype,
 	* @param description the description of this layout prototype
 	*/
 	@Override
-	public void setDescription(java.lang.String description) {
+	public void setDescription(String description) {
 		_layoutPrototype.setDescription(description);
 	}
 
@@ -578,8 +575,7 @@ public class LayoutPrototypeWrapper implements LayoutPrototype,
 	* @param locale the locale of the language
 	*/
 	@Override
-	public void setDescription(java.lang.String description,
-		java.util.Locale locale) {
+	public void setDescription(String description, java.util.Locale locale) {
 		_layoutPrototype.setDescription(description, locale);
 	}
 
@@ -591,13 +587,13 @@ public class LayoutPrototypeWrapper implements LayoutPrototype,
 	* @param defaultLocale the default locale
 	*/
 	@Override
-	public void setDescription(java.lang.String description,
-		java.util.Locale locale, java.util.Locale defaultLocale) {
+	public void setDescription(String description, java.util.Locale locale,
+		java.util.Locale defaultLocale) {
 		_layoutPrototype.setDescription(description, locale, defaultLocale);
 	}
 
 	@Override
-	public void setDescriptionCurrentLanguageId(java.lang.String languageId) {
+	public void setDescriptionCurrentLanguageId(String languageId) {
 		_layoutPrototype.setDescriptionCurrentLanguageId(languageId);
 	}
 
@@ -607,8 +603,7 @@ public class LayoutPrototypeWrapper implements LayoutPrototype,
 	* @param descriptionMap the locales and localized descriptions of this layout prototype
 	*/
 	@Override
-	public void setDescriptionMap(
-		Map<java.util.Locale, java.lang.String> descriptionMap) {
+	public void setDescriptionMap(Map<java.util.Locale, String> descriptionMap) {
 		_layoutPrototype.setDescriptionMap(descriptionMap);
 	}
 
@@ -620,7 +615,7 @@ public class LayoutPrototypeWrapper implements LayoutPrototype,
 	*/
 	@Override
 	public void setDescriptionMap(
-		Map<java.util.Locale, java.lang.String> descriptionMap,
+		Map<java.util.Locale, String> descriptionMap,
 		java.util.Locale defaultLocale) {
 		_layoutPrototype.setDescriptionMap(descriptionMap, defaultLocale);
 	}
@@ -676,7 +671,7 @@ public class LayoutPrototypeWrapper implements LayoutPrototype,
 	* @param name the name of this layout prototype
 	*/
 	@Override
-	public void setName(java.lang.String name) {
+	public void setName(String name) {
 		_layoutPrototype.setName(name);
 	}
 
@@ -687,7 +682,7 @@ public class LayoutPrototypeWrapper implements LayoutPrototype,
 	* @param locale the locale of the language
 	*/
 	@Override
-	public void setName(java.lang.String name, java.util.Locale locale) {
+	public void setName(String name, java.util.Locale locale) {
 		_layoutPrototype.setName(name, locale);
 	}
 
@@ -699,13 +694,13 @@ public class LayoutPrototypeWrapper implements LayoutPrototype,
 	* @param defaultLocale the default locale
 	*/
 	@Override
-	public void setName(java.lang.String name, java.util.Locale locale,
+	public void setName(String name, java.util.Locale locale,
 		java.util.Locale defaultLocale) {
 		_layoutPrototype.setName(name, locale, defaultLocale);
 	}
 
 	@Override
-	public void setNameCurrentLanguageId(java.lang.String languageId) {
+	public void setNameCurrentLanguageId(String languageId) {
 		_layoutPrototype.setNameCurrentLanguageId(languageId);
 	}
 
@@ -715,7 +710,7 @@ public class LayoutPrototypeWrapper implements LayoutPrototype,
 	* @param nameMap the locales and localized names of this layout prototype
 	*/
 	@Override
-	public void setNameMap(Map<java.util.Locale, java.lang.String> nameMap) {
+	public void setNameMap(Map<java.util.Locale, String> nameMap) {
 		_layoutPrototype.setNameMap(nameMap);
 	}
 
@@ -726,7 +721,7 @@ public class LayoutPrototypeWrapper implements LayoutPrototype,
 	* @param defaultLocale the default locale
 	*/
 	@Override
-	public void setNameMap(Map<java.util.Locale, java.lang.String> nameMap,
+	public void setNameMap(Map<java.util.Locale, String> nameMap,
 		java.util.Locale defaultLocale) {
 		_layoutPrototype.setNameMap(nameMap, defaultLocale);
 	}
@@ -757,7 +752,7 @@ public class LayoutPrototypeWrapper implements LayoutPrototype,
 	* @param settings the settings of this layout prototype
 	*/
 	@Override
-	public void setSettings(java.lang.String settings) {
+	public void setSettings(String settings) {
 		_layoutPrototype.setSettings(settings);
 	}
 
@@ -777,7 +772,7 @@ public class LayoutPrototypeWrapper implements LayoutPrototype,
 	* @param userName the user name of this layout prototype
 	*/
 	@Override
-	public void setUserName(java.lang.String userName) {
+	public void setUserName(String userName) {
 		_layoutPrototype.setUserName(userName);
 	}
 
@@ -787,7 +782,7 @@ public class LayoutPrototypeWrapper implements LayoutPrototype,
 	* @param userUuid the user uuid of this layout prototype
 	*/
 	@Override
-	public void setUserUuid(java.lang.String userUuid) {
+	public void setUserUuid(String userUuid) {
 		_layoutPrototype.setUserUuid(userUuid);
 	}
 
@@ -797,7 +792,7 @@ public class LayoutPrototypeWrapper implements LayoutPrototype,
 	* @param uuid the uuid of this layout prototype
 	*/
 	@Override
-	public void setUuid(java.lang.String uuid) {
+	public void setUuid(String uuid) {
 		_layoutPrototype.setUuid(uuid);
 	}
 
@@ -812,7 +807,7 @@ public class LayoutPrototypeWrapper implements LayoutPrototype,
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _layoutPrototype.toString();
 	}
 
@@ -822,7 +817,7 @@ public class LayoutPrototypeWrapper implements LayoutPrototype,
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _layoutPrototype.toXmlString();
 	}
 

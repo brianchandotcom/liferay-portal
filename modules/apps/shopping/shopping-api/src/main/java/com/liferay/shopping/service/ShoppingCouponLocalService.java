@@ -61,14 +61,13 @@ public interface ShoppingCouponLocalService extends BaseLocalService,
 	 *
 	 * Never modify or reference this interface directly. Always use {@link ShoppingCouponLocalServiceUtil} to access the shopping coupon local service. Add custom service methods to {@link com.liferay.shopping.service.impl.ShoppingCouponLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public ShoppingCoupon addCoupon(long userId, java.lang.String code,
-		boolean autoCode, java.lang.String name, java.lang.String description,
-		int startDateMonth, int startDateDay, int startDateYear,
-		int startDateHour, int startDateMinute, int endDateMonth,
-		int endDateDay, int endDateYear, int endDateHour, int endDateMinute,
-		boolean neverExpire, boolean active, java.lang.String limitCategories,
-		java.lang.String limitSkus, double minOrder, double discount,
-		java.lang.String discountType, ServiceContext serviceContext)
+	public ShoppingCoupon addCoupon(long userId, String code, boolean autoCode,
+		String name, String description, int startDateMonth, int startDateDay,
+		int startDateYear, int startDateHour, int startDateMinute,
+		int endDateMonth, int endDateDay, int endDateYear, int endDateHour,
+		int endDateMinute, boolean neverExpire, boolean active,
+		String limitCategories, String limitSkus, double minOrder,
+		double discount, String discountType, ServiceContext serviceContext)
 		throws PortalException;
 
 	/**
@@ -191,8 +190,7 @@ public interface ShoppingCouponLocalService extends BaseLocalService,
 	public ShoppingCoupon getCoupon(long couponId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ShoppingCoupon getCoupon(java.lang.String code)
-		throws PortalException;
+	public ShoppingCoupon getCoupon(String code) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
@@ -202,7 +200,7 @@ public interface ShoppingCouponLocalService extends BaseLocalService,
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -244,21 +242,20 @@ public interface ShoppingCouponLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<ShoppingCoupon> search(long groupId, long companyId,
-		java.lang.String code, boolean active, java.lang.String discountType,
-		boolean andOperator, int start, int end);
+		String code, boolean active, String discountType, boolean andOperator,
+		int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int searchCount(long groupId, long companyId, java.lang.String code,
-		boolean active, java.lang.String discountType, boolean andOperator);
+	public int searchCount(long groupId, long companyId, String code,
+		boolean active, String discountType, boolean andOperator);
 
-	public ShoppingCoupon updateCoupon(long userId, long couponId,
-		java.lang.String name, java.lang.String description,
-		int startDateMonth, int startDateDay, int startDateYear,
-		int startDateHour, int startDateMinute, int endDateMonth,
-		int endDateDay, int endDateYear, int endDateHour, int endDateMinute,
-		boolean neverExpire, boolean active, java.lang.String limitCategories,
-		java.lang.String limitSkus, double minOrder, double discount,
-		java.lang.String discountType, ServiceContext serviceContext)
+	public ShoppingCoupon updateCoupon(long userId, long couponId, String name,
+		String description, int startDateMonth, int startDateDay,
+		int startDateYear, int startDateHour, int startDateMinute,
+		int endDateMonth, int endDateDay, int endDateYear, int endDateHour,
+		int endDateMinute, boolean neverExpire, boolean active,
+		String limitCategories, String limitSkus, double minOrder,
+		double discount, String discountType, ServiceContext serviceContext)
 		throws PortalException;
 
 	/**

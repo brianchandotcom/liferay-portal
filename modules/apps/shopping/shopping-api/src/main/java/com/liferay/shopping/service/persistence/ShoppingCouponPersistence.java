@@ -180,8 +180,7 @@ public interface ShoppingCouponPersistence extends BasePersistence<ShoppingCoupo
 	* @return the matching shopping coupon
 	* @throws NoSuchCouponException if a matching shopping coupon could not be found
 	*/
-	public ShoppingCoupon findByCode(java.lang.String code)
-		throws NoSuchCouponException;
+	public ShoppingCoupon findByCode(String code) throws NoSuchCouponException;
 
 	/**
 	* Returns the shopping coupon where code = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
@@ -189,7 +188,7 @@ public interface ShoppingCouponPersistence extends BasePersistence<ShoppingCoupo
 	* @param code the code
 	* @return the matching shopping coupon, or <code>null</code> if a matching shopping coupon could not be found
 	*/
-	public ShoppingCoupon fetchByCode(java.lang.String code);
+	public ShoppingCoupon fetchByCode(String code);
 
 	/**
 	* Returns the shopping coupon where code = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -198,8 +197,7 @@ public interface ShoppingCouponPersistence extends BasePersistence<ShoppingCoupo
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching shopping coupon, or <code>null</code> if a matching shopping coupon could not be found
 	*/
-	public ShoppingCoupon fetchByCode(java.lang.String code,
-		boolean retrieveFromCache);
+	public ShoppingCoupon fetchByCode(String code, boolean retrieveFromCache);
 
 	/**
 	* Removes the shopping coupon where code = &#63; from the database.
@@ -207,7 +205,7 @@ public interface ShoppingCouponPersistence extends BasePersistence<ShoppingCoupo
 	* @param code the code
 	* @return the shopping coupon that was removed
 	*/
-	public ShoppingCoupon removeByCode(java.lang.String code)
+	public ShoppingCoupon removeByCode(String code)
 		throws NoSuchCouponException;
 
 	/**
@@ -216,7 +214,7 @@ public interface ShoppingCouponPersistence extends BasePersistence<ShoppingCoupo
 	* @param code the code
 	* @return the number of matching shopping coupons
 	*/
-	public int countByCode(java.lang.String code);
+	public int countByCode(String code);
 
 	/**
 	* Caches the shopping coupon in the entity cache if it is enabled.
@@ -338,5 +336,5 @@ public interface ShoppingCouponPersistence extends BasePersistence<ShoppingCoupo
 	public int countAll();
 
 	@Override
-	public java.util.Set<java.lang.String> getBadColumnNames();
+	public java.util.Set<String> getBadColumnNames();
 }

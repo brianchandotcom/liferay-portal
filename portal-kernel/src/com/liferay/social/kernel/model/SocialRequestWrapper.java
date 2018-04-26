@@ -156,7 +156,7 @@ public class SocialRequestWrapper implements SocialRequest,
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new SocialRequestWrapper((SocialRequest)_socialRequest.clone());
 	}
 
@@ -171,7 +171,7 @@ public class SocialRequestWrapper implements SocialRequest,
 	* @return the fully qualified class name of this social request
 	*/
 	@Override
-	public java.lang.String getClassName() {
+	public String getClassName() {
 		return _socialRequest.getClassName();
 	}
 
@@ -226,7 +226,7 @@ public class SocialRequestWrapper implements SocialRequest,
 	* @return the extra data of this social request
 	*/
 	@Override
-	public java.lang.String getExtraData() {
+	public String getExtraData() {
 		return _socialRequest.getExtraData();
 	}
 
@@ -281,7 +281,7 @@ public class SocialRequestWrapper implements SocialRequest,
 	* @return the receiver user uuid of this social request
 	*/
 	@Override
-	public java.lang.String getReceiverUserUuid() {
+	public String getReceiverUserUuid() {
 		return _socialRequest.getReceiverUserUuid();
 	}
 
@@ -331,7 +331,7 @@ public class SocialRequestWrapper implements SocialRequest,
 	* @return the user uuid of this social request
 	*/
 	@Override
-	public java.lang.String getUserUuid() {
+	public String getUserUuid() {
 		return _socialRequest.getUserUuid();
 	}
 
@@ -341,7 +341,7 @@ public class SocialRequestWrapper implements SocialRequest,
 	* @return the uuid of this social request
 	*/
 	@Override
-	public java.lang.String getUuid() {
+	public String getUuid() {
 		return _socialRequest.getUuid();
 	}
 
@@ -376,7 +376,7 @@ public class SocialRequestWrapper implements SocialRequest,
 	}
 
 	@Override
-	public void setClassName(java.lang.String className) {
+	public void setClassName(String className) {
 		_socialRequest.setClassName(className);
 	}
 
@@ -442,7 +442,7 @@ public class SocialRequestWrapper implements SocialRequest,
 	* @param extraData the extra data of this social request
 	*/
 	@Override
-	public void setExtraData(java.lang.String extraData) {
+	public void setExtraData(String extraData) {
 		_socialRequest.setExtraData(extraData);
 	}
 
@@ -502,7 +502,7 @@ public class SocialRequestWrapper implements SocialRequest,
 	* @param receiverUserUuid the receiver user uuid of this social request
 	*/
 	@Override
-	public void setReceiverUserUuid(java.lang.String receiverUserUuid) {
+	public void setReceiverUserUuid(String receiverUserUuid) {
 		_socialRequest.setReceiverUserUuid(receiverUserUuid);
 	}
 
@@ -552,7 +552,7 @@ public class SocialRequestWrapper implements SocialRequest,
 	* @param userUuid the user uuid of this social request
 	*/
 	@Override
-	public void setUserUuid(java.lang.String userUuid) {
+	public void setUserUuid(String userUuid) {
 		_socialRequest.setUserUuid(userUuid);
 	}
 
@@ -562,7 +562,7 @@ public class SocialRequestWrapper implements SocialRequest,
 	* @param uuid the uuid of this social request
 	*/
 	@Override
-	public void setUuid(java.lang.String uuid) {
+	public void setUuid(String uuid) {
 		_socialRequest.setUuid(uuid);
 	}
 
@@ -577,7 +577,7 @@ public class SocialRequestWrapper implements SocialRequest,
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _socialRequest.toString();
 	}
 
@@ -587,7 +587,7 @@ public class SocialRequestWrapper implements SocialRequest,
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _socialRequest.toXmlString();
 	}
 

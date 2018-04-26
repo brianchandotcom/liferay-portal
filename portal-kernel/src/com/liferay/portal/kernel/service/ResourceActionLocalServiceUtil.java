@@ -53,7 +53,7 @@ public class ResourceActionLocalServiceUtil {
 	}
 
 	public static com.liferay.portal.kernel.model.ResourceAction addResourceAction(
-		java.lang.String name, java.lang.String actionId, long bitwiseValue) {
+		String name, String actionId, long bitwiseValue) {
 		return getService().addResourceAction(name, actionId, bitwiseValue);
 	}
 
@@ -61,13 +61,13 @@ public class ResourceActionLocalServiceUtil {
 		getService().checkResourceActions();
 	}
 
-	public static void checkResourceActions(java.lang.String name,
-		java.util.List<java.lang.String> actionIds) {
+	public static void checkResourceActions(String name,
+		java.util.List<String> actionIds) {
 		getService().checkResourceActions(name, actionIds);
 	}
 
-	public static void checkResourceActions(java.lang.String name,
-		java.util.List<java.lang.String> actionIds, boolean addDefaultActions) {
+	public static void checkResourceActions(String name,
+		java.util.List<String> actionIds, boolean addDefaultActions) {
 		getService().checkResourceActions(name, actionIds, addDefaultActions);
 	}
 
@@ -199,7 +199,7 @@ public class ResourceActionLocalServiceUtil {
 	}
 
 	public static com.liferay.portal.kernel.model.ResourceAction fetchResourceAction(
-		java.lang.String name, java.lang.String actionId) {
+		String name, String actionId) {
 		return getService().fetchResourceAction(name, actionId);
 	}
 
@@ -216,7 +216,7 @@ public class ResourceActionLocalServiceUtil {
 	*
 	* @return the OSGi service identifier
 	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
+	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 
@@ -240,7 +240,7 @@ public class ResourceActionLocalServiceUtil {
 	}
 
 	public static com.liferay.portal.kernel.model.ResourceAction getResourceAction(
-		java.lang.String name, java.lang.String actionId)
+		String name, String actionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getResourceAction(name, actionId);
 	}
@@ -262,7 +262,7 @@ public class ResourceActionLocalServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.portal.kernel.model.ResourceAction> getResourceActions(
-		java.lang.String name) {
+		String name) {
 		return getService().getResourceActions(name);
 	}
 
@@ -275,7 +275,7 @@ public class ResourceActionLocalServiceUtil {
 		return getService().getResourceActionsCount();
 	}
 
-	public static int getResourceActionsCount(java.lang.String name) {
+	public static int getResourceActionsCount(String name) {
 		return getService().getResourceActionsCount(name);
 	}
 

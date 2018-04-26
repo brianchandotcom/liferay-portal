@@ -138,7 +138,7 @@ public class DDMStructureLayoutWrapper implements DDMStructureLayout,
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new DDMStructureLayoutWrapper((DDMStructureLayout)_ddmStructureLayout.clone());
 	}
 
@@ -178,7 +178,7 @@ public class DDMStructureLayoutWrapper implements DDMStructureLayout,
 	* @return the definition of this ddm structure layout
 	*/
 	@Override
-	public java.lang.String getDefinition() {
+	public String getDefinition() {
 		return _ddmStructureLayout.getDefinition();
 	}
 
@@ -258,7 +258,7 @@ public class DDMStructureLayoutWrapper implements DDMStructureLayout,
 	* @return the user name of this ddm structure layout
 	*/
 	@Override
-	public java.lang.String getUserName() {
+	public String getUserName() {
 		return _ddmStructureLayout.getUserName();
 	}
 
@@ -268,7 +268,7 @@ public class DDMStructureLayoutWrapper implements DDMStructureLayout,
 	* @return the user uuid of this ddm structure layout
 	*/
 	@Override
-	public java.lang.String getUserUuid() {
+	public String getUserUuid() {
 		return _ddmStructureLayout.getUserUuid();
 	}
 
@@ -278,7 +278,7 @@ public class DDMStructureLayoutWrapper implements DDMStructureLayout,
 	* @return the uuid of this ddm structure layout
 	*/
 	@Override
-	public java.lang.String getUuid() {
+	public String getUuid() {
 		return _ddmStructureLayout.getUuid();
 	}
 
@@ -338,7 +338,7 @@ public class DDMStructureLayoutWrapper implements DDMStructureLayout,
 	* @param definition the definition of this ddm structure layout
 	*/
 	@Override
-	public void setDefinition(java.lang.String definition) {
+	public void setDefinition(String definition) {
 		_ddmStructureLayout.setDefinition(definition);
 	}
 
@@ -434,7 +434,7 @@ public class DDMStructureLayoutWrapper implements DDMStructureLayout,
 	* @param userName the user name of this ddm structure layout
 	*/
 	@Override
-	public void setUserName(java.lang.String userName) {
+	public void setUserName(String userName) {
 		_ddmStructureLayout.setUserName(userName);
 	}
 
@@ -444,7 +444,7 @@ public class DDMStructureLayoutWrapper implements DDMStructureLayout,
 	* @param userUuid the user uuid of this ddm structure layout
 	*/
 	@Override
-	public void setUserUuid(java.lang.String userUuid) {
+	public void setUserUuid(String userUuid) {
 		_ddmStructureLayout.setUserUuid(userUuid);
 	}
 
@@ -454,7 +454,7 @@ public class DDMStructureLayoutWrapper implements DDMStructureLayout,
 	* @param uuid the uuid of this ddm structure layout
 	*/
 	@Override
-	public void setUuid(java.lang.String uuid) {
+	public void setUuid(String uuid) {
 		_ddmStructureLayout.setUuid(uuid);
 	}
 
@@ -469,7 +469,7 @@ public class DDMStructureLayoutWrapper implements DDMStructureLayout,
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _ddmStructureLayout.toString();
 	}
 
@@ -479,7 +479,7 @@ public class DDMStructureLayoutWrapper implements DDMStructureLayout,
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _ddmStructureLayout.toXmlString();
 	}
 

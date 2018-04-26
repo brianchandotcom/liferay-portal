@@ -278,8 +278,8 @@ public class PluginSettingUtil {
 	* @return the matching plugin setting
 	* @throws NoSuchPluginSettingException if a matching plugin setting could not be found
 	*/
-	public static PluginSetting findByC_I_T(long companyId,
-		java.lang.String pluginId, java.lang.String pluginType)
+	public static PluginSetting findByC_I_T(long companyId, String pluginId,
+		String pluginType)
 		throws com.liferay.portal.kernel.exception.NoSuchPluginSettingException {
 		return getPersistence().findByC_I_T(companyId, pluginId, pluginType);
 	}
@@ -292,8 +292,8 @@ public class PluginSettingUtil {
 	* @param pluginType the plugin type
 	* @return the matching plugin setting, or <code>null</code> if a matching plugin setting could not be found
 	*/
-	public static PluginSetting fetchByC_I_T(long companyId,
-		java.lang.String pluginId, java.lang.String pluginType) {
+	public static PluginSetting fetchByC_I_T(long companyId, String pluginId,
+		String pluginType) {
 		return getPersistence().fetchByC_I_T(companyId, pluginId, pluginType);
 	}
 
@@ -306,9 +306,8 @@ public class PluginSettingUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching plugin setting, or <code>null</code> if a matching plugin setting could not be found
 	*/
-	public static PluginSetting fetchByC_I_T(long companyId,
-		java.lang.String pluginId, java.lang.String pluginType,
-		boolean retrieveFromCache) {
+	public static PluginSetting fetchByC_I_T(long companyId, String pluginId,
+		String pluginType, boolean retrieveFromCache) {
 		return getPersistence()
 				   .fetchByC_I_T(companyId, pluginId, pluginType,
 			retrieveFromCache);
@@ -322,8 +321,8 @@ public class PluginSettingUtil {
 	* @param pluginType the plugin type
 	* @return the plugin setting that was removed
 	*/
-	public static PluginSetting removeByC_I_T(long companyId,
-		java.lang.String pluginId, java.lang.String pluginType)
+	public static PluginSetting removeByC_I_T(long companyId, String pluginId,
+		String pluginType)
 		throws com.liferay.portal.kernel.exception.NoSuchPluginSettingException {
 		return getPersistence().removeByC_I_T(companyId, pluginId, pluginType);
 	}
@@ -336,8 +335,8 @@ public class PluginSettingUtil {
 	* @param pluginType the plugin type
 	* @return the number of matching plugin settings
 	*/
-	public static int countByC_I_T(long companyId, java.lang.String pluginId,
-		java.lang.String pluginType) {
+	public static int countByC_I_T(long companyId, String pluginId,
+		String pluginType) {
 		return getPersistence().countByC_I_T(companyId, pluginId, pluginType);
 	}
 
@@ -489,7 +488,7 @@ public class PluginSettingUtil {
 		return getPersistence().countAll();
 	}
 
-	public static java.util.Set<java.lang.String> getBadColumnNames() {
+	public static java.util.Set<String> getBadColumnNames() {
 		return getPersistence().getBadColumnNames();
 	}
 

@@ -80,10 +80,10 @@ public interface CalendarResourceLocalService extends BaseLocalService,
 		CalendarResource calendarResource);
 
 	public CalendarResource addCalendarResource(long userId, long groupId,
-		long classNameId, long classPK, java.lang.String classUuid,
-		java.lang.String code, Map<Locale, java.lang.String> nameMap,
-		Map<Locale, java.lang.String> descriptionMap, boolean active,
-		ServiceContext serviceContext) throws PortalException;
+		long classNameId, long classPK, String classUuid, String code,
+		Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
+		boolean active, ServiceContext serviceContext)
+		throws PortalException;
 
 	/**
 	* Creates a new calendar resource with the primary key. Does not add the calendar resource to the database.
@@ -192,8 +192,7 @@ public interface CalendarResourceLocalService extends BaseLocalService,
 	public CalendarResource fetchCalendarResource(long classNameId, long classPK);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CalendarResource fetchCalendarResource(long groupId,
-		java.lang.String code);
+	public CalendarResource fetchCalendarResource(long groupId, String code);
 
 	/**
 	* Returns the calendar resource matching the UUID and group.
@@ -203,8 +202,8 @@ public interface CalendarResourceLocalService extends BaseLocalService,
 	* @return the matching calendar resource, or <code>null</code> if a matching calendar resource could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CalendarResource fetchCalendarResourceByUuidAndGroupId(
-		java.lang.String uuid, long groupId);
+	public CalendarResource fetchCalendarResourceByUuidAndGroupId(String uuid,
+		long groupId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
@@ -229,8 +228,8 @@ public interface CalendarResourceLocalService extends BaseLocalService,
 	* @throws PortalException if a matching calendar resource could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CalendarResource getCalendarResourceByUuidAndGroupId(
-		java.lang.String uuid, long groupId) throws PortalException;
+	public CalendarResource getCalendarResourceByUuidAndGroupId(String uuid,
+		long groupId) throws PortalException;
 
 	/**
 	* Returns a range of all the calendar resources.
@@ -258,7 +257,7 @@ public interface CalendarResourceLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CalendarResource> getCalendarResourcesByUuidAndCompanyId(
-		java.lang.String uuid, long companyId);
+		String uuid, long companyId);
 
 	/**
 	* Returns a range of calendar resources matching the UUID and company.
@@ -272,7 +271,7 @@ public interface CalendarResourceLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CalendarResource> getCalendarResourcesByUuidAndCompanyId(
-		java.lang.String uuid, long companyId, int start, int end,
+		String uuid, long companyId, int start, int end,
 		OrderByComparator<CalendarResource> orderByComparator);
 
 	/**
@@ -295,7 +294,7 @@ public interface CalendarResourceLocalService extends BaseLocalService,
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -304,29 +303,28 @@ public interface CalendarResourceLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CalendarResource> search(long companyId, long[] groupIds,
-		long[] classNameIds, java.lang.String code, java.lang.String name,
-		java.lang.String description, boolean active, boolean andOperator,
-		int start, int end,
-		OrderByComparator<CalendarResource> orderByComparator);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<CalendarResource> searchByKeywords(long companyId,
-		long[] groupIds, long[] classNameIds, java.lang.String keywords,
+		long[] classNameIds, String code, String name, String description,
 		boolean active, boolean andOperator, int start, int end,
 		OrderByComparator<CalendarResource> orderByComparator);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int searchCount(long companyId, long[] groupIds,
-		long[] classNameIds, java.lang.String keywords, boolean active);
+	public List<CalendarResource> searchByKeywords(long companyId,
+		long[] groupIds, long[] classNameIds, String keywords, boolean active,
+		boolean andOperator, int start, int end,
+		OrderByComparator<CalendarResource> orderByComparator);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int searchCount(long companyId, long[] groupIds,
-		long[] classNameIds, java.lang.String code, java.lang.String name,
-		java.lang.String description, boolean active, boolean andOperator);
+		long[] classNameIds, String keywords, boolean active);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int searchCount(long companyId, long[] groupIds,
+		long[] classNameIds, String code, String name, String description,
+		boolean active, boolean andOperator);
 
 	public void updateAsset(long userId, CalendarResource calendarResource,
-		long[] assetCategoryIds, java.lang.String[] assetTagNames,
-		java.lang.Double priority) throws PortalException;
+		long[] assetCategoryIds, String[] assetTagNames, Double priority)
+		throws PortalException;
 
 	/**
 	* Updates the calendar resource in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
@@ -339,7 +337,7 @@ public interface CalendarResourceLocalService extends BaseLocalService,
 		CalendarResource calendarResource);
 
 	public CalendarResource updateCalendarResource(long calendarResourceId,
-		Map<Locale, java.lang.String> nameMap,
-		Map<Locale, java.lang.String> descriptionMap, boolean active,
-		ServiceContext serviceContext) throws PortalException;
+		Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
+		boolean active, ServiceContext serviceContext)
+		throws PortalException;
 }

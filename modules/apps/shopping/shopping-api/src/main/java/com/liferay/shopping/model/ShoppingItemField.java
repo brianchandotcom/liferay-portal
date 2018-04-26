@@ -55,7 +55,7 @@ public interface ShoppingItemField extends ShoppingItemFieldModel, PersistedMode
 			}
 		};
 
-	public java.lang.String[] getValuesArray();
+	public String[] getValuesArray();
 
-	public void setValuesArray(java.lang.String[] valuesArray);
+	public void setValuesArray(String[] valuesArray);
 }

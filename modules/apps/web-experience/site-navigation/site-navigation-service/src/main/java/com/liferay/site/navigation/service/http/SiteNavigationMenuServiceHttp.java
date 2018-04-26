@@ -56,8 +56,7 @@ import com.liferay.site.navigation.service.SiteNavigationMenuServiceUtil;
 @ProviderType
 public class SiteNavigationMenuServiceHttp {
 	public static com.liferay.site.navigation.model.SiteNavigationMenu addSiteNavigationMenu(
-		HttpPrincipal httpPrincipal, long groupId, java.lang.String name,
-		int type,
+		HttpPrincipal httpPrincipal, long groupId, String name, int type,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -91,7 +90,7 @@ public class SiteNavigationMenuServiceHttp {
 	}
 
 	public static com.liferay.site.navigation.model.SiteNavigationMenu addSiteNavigationMenu(
-		HttpPrincipal httpPrincipal, long groupId, java.lang.String name,
+		HttpPrincipal httpPrincipal, long groupId, String name,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -247,8 +246,8 @@ public class SiteNavigationMenuServiceHttp {
 	}
 
 	public static java.util.List<com.liferay.site.navigation.model.SiteNavigationMenu> getSiteNavigationMenus(
-		HttpPrincipal httpPrincipal, long groupId, java.lang.String keywords,
-		int start, int end,
+		HttpPrincipal httpPrincipal, long groupId, String keywords, int start,
+		int end,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		try {
 			MethodKey methodKey = new MethodKey(SiteNavigationMenuServiceUtil.class,
@@ -304,7 +303,7 @@ public class SiteNavigationMenuServiceHttp {
 	}
 
 	public static int getSiteNavigationMenusCount(HttpPrincipal httpPrincipal,
-		long groupId, java.lang.String keywords) {
+		long groupId, String keywords) {
 		try {
 			MethodKey methodKey = new MethodKey(SiteNavigationMenuServiceUtil.class,
 					"getSiteNavigationMenusCount",
@@ -367,8 +366,7 @@ public class SiteNavigationMenuServiceHttp {
 	}
 
 	public static com.liferay.site.navigation.model.SiteNavigationMenu updateSiteNavigationMenu(
-		HttpPrincipal httpPrincipal, long siteNavigationMenuId,
-		java.lang.String name,
+		HttpPrincipal httpPrincipal, long siteNavigationMenuId, String name,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -403,11 +401,11 @@ public class SiteNavigationMenuServiceHttp {
 
 	private static Log _log = LogFactoryUtil.getLog(SiteNavigationMenuServiceHttp.class);
 	private static final Class<?>[] _addSiteNavigationMenuParameterTypes0 = new Class[] {
-			long.class, java.lang.String.class, int.class,
+			long.class, String.class, int.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _addSiteNavigationMenuParameterTypes1 = new Class[] {
-			long.class, java.lang.String.class,
+			long.class, String.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _deleteSiteNavigationMenuParameterTypes2 = new Class[] {
@@ -424,21 +422,21 @@ public class SiteNavigationMenuServiceHttp {
 			com.liferay.portal.kernel.util.OrderByComparator.class
 		};
 	private static final Class<?>[] _getSiteNavigationMenusParameterTypes6 = new Class[] {
-			long.class, java.lang.String.class, int.class, int.class,
+			long.class, String.class, int.class, int.class,
 			com.liferay.portal.kernel.util.OrderByComparator.class
 		};
 	private static final Class<?>[] _getSiteNavigationMenusCountParameterTypes7 = new Class[] {
 			long.class
 		};
 	private static final Class<?>[] _getSiteNavigationMenusCountParameterTypes8 = new Class[] {
-			long.class, java.lang.String.class
+			long.class, String.class
 		};
 	private static final Class<?>[] _updateSiteNavigationMenuParameterTypes9 = new Class[] {
 			long.class, int.class, boolean.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _updateSiteNavigationMenuParameterTypes10 = new Class[] {
-			long.class, java.lang.String.class,
+			long.class, String.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 }

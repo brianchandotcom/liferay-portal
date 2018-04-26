@@ -57,9 +57,8 @@ import com.liferay.portal.kernel.util.MethodKey;
 public class DDLRecordSetServiceHttp {
 	public static com.liferay.dynamic.data.lists.model.DDLRecordSet addRecordSet(
 		HttpPrincipal httpPrincipal, long groupId, long ddmStructureId,
-		java.lang.String recordSetKey,
-		java.util.Map<java.util.Locale, java.lang.String> nameMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		String recordSetKey, java.util.Map<java.util.Locale, String> nameMap,
+		java.util.Map<java.util.Locale, String> descriptionMap,
 		int minDisplayRows, int scope,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -213,7 +212,7 @@ public class DDLRecordSetServiceHttp {
 
 	public static java.util.List<com.liferay.dynamic.data.lists.model.DDLRecordSet> search(
 		HttpPrincipal httpPrincipal, long companyId, long groupId,
-		java.lang.String keywords, int scope, int start, int end,
+		String keywords, int scope, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.lists.model.DDLRecordSet> orderByComparator) {
 		try {
 			MethodKey methodKey = new MethodKey(DDLRecordSetServiceUtil.class,
@@ -242,9 +241,8 @@ public class DDLRecordSetServiceHttp {
 	}
 
 	public static java.util.List<com.liferay.dynamic.data.lists.model.DDLRecordSet> search(
-		HttpPrincipal httpPrincipal, long companyId, long groupId,
-		java.lang.String name, java.lang.String description, int scope,
-		boolean andOperator, int start, int end,
+		HttpPrincipal httpPrincipal, long companyId, long groupId, String name,
+		String description, int scope, boolean andOperator, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.lists.model.DDLRecordSet> orderByComparator) {
 		try {
 			MethodKey methodKey = new MethodKey(DDLRecordSetServiceUtil.class,
@@ -273,7 +271,7 @@ public class DDLRecordSetServiceHttp {
 	}
 
 	public static int searchCount(HttpPrincipal httpPrincipal, long companyId,
-		long groupId, java.lang.String keywords, int scope) {
+		long groupId, String keywords, int scope) {
 		try {
 			MethodKey methodKey = new MethodKey(DDLRecordSetServiceUtil.class,
 					"searchCount", _searchCountParameterTypes7);
@@ -300,8 +298,8 @@ public class DDLRecordSetServiceHttp {
 	}
 
 	public static int searchCount(HttpPrincipal httpPrincipal, long companyId,
-		long groupId, java.lang.String name, java.lang.String description,
-		int scope, boolean andOperator) {
+		long groupId, String name, String description, int scope,
+		boolean andOperator) {
 		try {
 			MethodKey methodKey = new MethodKey(DDLRecordSetServiceUtil.class,
 					"searchCount", _searchCountParameterTypes8);
@@ -395,8 +393,8 @@ public class DDLRecordSetServiceHttp {
 
 	public static com.liferay.dynamic.data.lists.model.DDLRecordSet updateRecordSet(
 		HttpPrincipal httpPrincipal, long recordSetId, long ddmStructureId,
-		java.util.Map<java.util.Locale, java.lang.String> nameMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		java.util.Map<java.util.Locale, String> nameMap,
+		java.util.Map<java.util.Locale, String> descriptionMap,
 		int minDisplayRows,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -432,9 +430,8 @@ public class DDLRecordSetServiceHttp {
 
 	public static com.liferay.dynamic.data.lists.model.DDLRecordSet updateRecordSet(
 		HttpPrincipal httpPrincipal, long groupId, long ddmStructureId,
-		java.lang.String recordSetKey,
-		java.util.Map<java.util.Locale, java.lang.String> nameMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		String recordSetKey, java.util.Map<java.util.Locale, String> nameMap,
+		java.util.Map<java.util.Locale, String> descriptionMap,
 		int minDisplayRows,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -470,7 +467,7 @@ public class DDLRecordSetServiceHttp {
 
 	private static Log _log = LogFactoryUtil.getLog(DDLRecordSetServiceHttp.class);
 	private static final Class<?>[] _addRecordSetParameterTypes0 = new Class[] {
-			long.class, long.class, java.lang.String.class, java.util.Map.class,
+			long.class, long.class, String.class, java.util.Map.class,
 			java.util.Map.class, int.class, int.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
@@ -487,20 +484,20 @@ public class DDLRecordSetServiceHttp {
 			long[].class
 		};
 	private static final Class<?>[] _searchParameterTypes5 = new Class[] {
-			long.class, long.class, java.lang.String.class, int.class, int.class,
+			long.class, long.class, String.class, int.class, int.class,
 			int.class, com.liferay.portal.kernel.util.OrderByComparator.class
 		};
 	private static final Class<?>[] _searchParameterTypes6 = new Class[] {
-			long.class, long.class, java.lang.String.class,
-			java.lang.String.class, int.class, boolean.class, int.class,
-			int.class, com.liferay.portal.kernel.util.OrderByComparator.class
+			long.class, long.class, String.class, String.class, int.class,
+			boolean.class, int.class, int.class,
+			com.liferay.portal.kernel.util.OrderByComparator.class
 		};
 	private static final Class<?>[] _searchCountParameterTypes7 = new Class[] {
-			long.class, long.class, java.lang.String.class, int.class
+			long.class, long.class, String.class, int.class
 		};
 	private static final Class<?>[] _searchCountParameterTypes8 = new Class[] {
-			long.class, long.class, java.lang.String.class,
-			java.lang.String.class, int.class, boolean.class
+			long.class, long.class, String.class, String.class, int.class,
+			boolean.class
 		};
 	private static final Class<?>[] _updateMinDisplayRowsParameterTypes9 = new Class[] {
 			long.class, int.class,
@@ -515,7 +512,7 @@ public class DDLRecordSetServiceHttp {
 			int.class, com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _updateRecordSetParameterTypes12 = new Class[] {
-			long.class, long.class, java.lang.String.class, java.util.Map.class,
+			long.class, long.class, String.class, java.util.Map.class,
 			java.util.Map.class, int.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};

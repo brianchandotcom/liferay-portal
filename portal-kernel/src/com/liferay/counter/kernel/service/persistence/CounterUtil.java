@@ -131,7 +131,7 @@ public class CounterUtil {
 	* @param name the primary key for the new counter
 	* @return the new counter
 	*/
-	public static Counter create(java.lang.String name) {
+	public static Counter create(String name) {
 		return getPersistence().create(name);
 	}
 
@@ -142,7 +142,7 @@ public class CounterUtil {
 	* @return the counter that was removed
 	* @throws NoSuchCounterException if a counter with the primary key could not be found
 	*/
-	public static Counter remove(java.lang.String name)
+	public static Counter remove(String name)
 		throws com.liferay.counter.kernel.exception.NoSuchCounterException {
 		return getPersistence().remove(name);
 	}
@@ -158,7 +158,7 @@ public class CounterUtil {
 	* @return the counter
 	* @throws NoSuchCounterException if a counter with the primary key could not be found
 	*/
-	public static Counter findByPrimaryKey(java.lang.String name)
+	public static Counter findByPrimaryKey(String name)
 		throws com.liferay.counter.kernel.exception.NoSuchCounterException {
 		return getPersistence().findByPrimaryKey(name);
 	}
@@ -169,7 +169,7 @@ public class CounterUtil {
 	* @param name the primary key of the counter
 	* @return the counter, or <code>null</code> if a counter with the primary key could not be found
 	*/
-	public static Counter fetchByPrimaryKey(java.lang.String name) {
+	public static Counter fetchByPrimaryKey(String name) {
 		return getPersistence().fetchByPrimaryKey(name);
 	}
 

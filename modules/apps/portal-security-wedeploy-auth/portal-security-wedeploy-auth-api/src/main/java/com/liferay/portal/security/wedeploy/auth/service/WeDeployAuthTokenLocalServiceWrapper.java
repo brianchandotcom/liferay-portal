@@ -36,9 +36,8 @@ public class WeDeployAuthTokenLocalServiceWrapper
 
 	@Override
 	public com.liferay.portal.security.wedeploy.auth.model.WeDeployAuthToken addAccessWeDeployAuthToken(
-		java.lang.String redirectURI, java.lang.String clientId,
-		java.lang.String clientSecret, java.lang.String authorizationToken,
-		int type,
+		String redirectURI, String clientId, String clientSecret,
+		String authorizationToken, int type,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _weDeployAuthTokenLocalService.addAccessWeDeployAuthToken(redirectURI,
@@ -47,7 +46,7 @@ public class WeDeployAuthTokenLocalServiceWrapper
 
 	@Override
 	public com.liferay.portal.security.wedeploy.auth.model.WeDeployAuthToken addAuthorizationWeDeployAuthToken(
-		long userId, java.lang.String redirectURI, java.lang.String clientId,
+		long userId, String redirectURI, String clientId,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _weDeployAuthTokenLocalService.addAuthorizationWeDeployAuthToken(userId,
@@ -56,8 +55,7 @@ public class WeDeployAuthTokenLocalServiceWrapper
 
 	@Override
 	public com.liferay.portal.security.wedeploy.auth.model.WeDeployAuthToken addWeDeployAuthToken(
-		long userId, java.lang.String clientId, java.lang.String token,
-		int type,
+		long userId, String clientId, String token, int type,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _weDeployAuthTokenLocalService.addWeDeployAuthToken(userId,
@@ -232,7 +230,7 @@ public class WeDeployAuthTokenLocalServiceWrapper
 	* @return the OSGi service identifier
 	*/
 	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
+	public String getOSGiServiceIdentifier() {
 		return _weDeployAuthTokenLocalService.getOSGiServiceIdentifier();
 	}
 
@@ -259,7 +257,7 @@ public class WeDeployAuthTokenLocalServiceWrapper
 
 	@Override
 	public com.liferay.portal.security.wedeploy.auth.model.WeDeployAuthToken getWeDeployAuthToken(
-		java.lang.String token, int type)
+		String token, int type)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _weDeployAuthTokenLocalService.getWeDeployAuthToken(token, type);
 	}

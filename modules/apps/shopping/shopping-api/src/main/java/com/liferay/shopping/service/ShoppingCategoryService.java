@@ -56,9 +56,9 @@ public interface ShoppingCategoryService extends BaseService {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link ShoppingCategoryServiceUtil} to access the shopping category remote service. Add custom service methods to {@link com.liferay.shopping.service.impl.ShoppingCategoryServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public ShoppingCategory addCategory(long parentCategoryId,
-		java.lang.String name, java.lang.String description,
-		ServiceContext serviceContext) throws PortalException;
+	public ShoppingCategory addCategory(long parentCategoryId, String name,
+		String description, ServiceContext serviceContext)
+		throws PortalException;
 
 	public void deleteCategory(long categoryId) throws PortalException;
 
@@ -70,8 +70,8 @@ public interface ShoppingCategoryService extends BaseService {
 		long parentCategoryId, int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<java.lang.Object> getCategoriesAndItems(long groupId,
-		long categoryId, int start, int end, OrderByComparator<?> obc);
+	public List<Object> getCategoriesAndItems(long groupId, long categoryId,
+		int start, int end, OrderByComparator<?> obc);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getCategoriesAndItemsCount(long groupId, long categoryId);
@@ -88,14 +88,14 @@ public interface ShoppingCategoryService extends BaseService {
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public void getSubcategoryIds(List<java.lang.Long> categoryIds,
-		long groupId, long categoryId);
+	public void getSubcategoryIds(List<Long> categoryIds, long groupId,
+		long categoryId);
 
 	public ShoppingCategory updateCategory(long categoryId,
-		long parentCategoryId, java.lang.String name,
-		java.lang.String description, boolean mergeWithParentCategory,
-		ServiceContext serviceContext) throws PortalException;
+		long parentCategoryId, String name, String description,
+		boolean mergeWithParentCategory, ServiceContext serviceContext)
+		throws PortalException;
 }

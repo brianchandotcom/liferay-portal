@@ -72,9 +72,8 @@ public interface JournalFolderLocalService extends BaseLocalService,
 	 * Never modify or reference this interface directly. Always use {@link JournalFolderLocalServiceUtil} to access the journal folder local service. Add custom service methods to {@link com.liferay.journal.service.impl.JournalFolderLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	public JournalFolder addFolder(long userId, long groupId,
-		long parentFolderId, java.lang.String name,
-		java.lang.String description, ServiceContext serviceContext)
-		throws PortalException;
+		long parentFolderId, String name, String description,
+		ServiceContext serviceContext) throws PortalException;
 
 	/**
 	* Adds the journal folder to the database. Also notifies the appropriate model listeners.
@@ -204,10 +203,10 @@ public interface JournalFolderLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public JournalFolder fetchFolder(long groupId, long parentFolderId,
-		java.lang.String name);
+		String name);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public JournalFolder fetchFolder(long groupId, java.lang.String name);
+	public JournalFolder fetchFolder(long groupId, String name);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public JournalFolder fetchJournalFolder(long folderId);
@@ -220,8 +219,8 @@ public interface JournalFolderLocalService extends BaseLocalService,
 	* @return the matching journal folder, or <code>null</code> if a matching journal folder could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public JournalFolder fetchJournalFolderByUuidAndGroupId(
-		java.lang.String uuid, long groupId);
+	public JournalFolder fetchJournalFolderByUuidAndGroupId(String uuid,
+		long groupId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
@@ -263,24 +262,23 @@ public interface JournalFolderLocalService extends BaseLocalService,
 		int status, int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<java.lang.Object> getFoldersAndArticles(long groupId,
-		long folderId);
+	public List<Object> getFoldersAndArticles(long groupId, long folderId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<java.lang.Object> getFoldersAndArticles(long groupId,
-		long folderId, int status);
+	public List<Object> getFoldersAndArticles(long groupId, long folderId,
+		int status);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<java.lang.Object> getFoldersAndArticles(long groupId,
-		long folderId, int status, int start, int end, OrderByComparator<?> obc);
+	public List<Object> getFoldersAndArticles(long groupId, long folderId,
+		int status, int start, int end, OrderByComparator<?> obc);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<java.lang.Object> getFoldersAndArticles(long groupId,
-		long folderId, int start, int end, OrderByComparator<?> obc);
+	public List<Object> getFoldersAndArticles(long groupId, long folderId,
+		int start, int end, OrderByComparator<?> obc);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getFoldersAndArticlesCount(long groupId,
-		List<java.lang.Long> folderIds, int status);
+	public int getFoldersAndArticlesCount(long groupId, List<Long> folderIds,
+		int status);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getFoldersAndArticlesCount(long groupId, long folderId);
@@ -322,8 +320,8 @@ public interface JournalFolderLocalService extends BaseLocalService,
 	* @throws PortalException if a matching journal folder could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public JournalFolder getJournalFolderByUuidAndGroupId(
-		java.lang.String uuid, long groupId) throws PortalException;
+	public JournalFolder getJournalFolderByUuidAndGroupId(String uuid,
+		long groupId) throws PortalException;
 
 	/**
 	* Returns a range of all the journal folders.
@@ -348,7 +346,7 @@ public interface JournalFolderLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<JournalFolder> getJournalFoldersByUuidAndCompanyId(
-		java.lang.String uuid, long companyId);
+		String uuid, long companyId);
 
 	/**
 	* Returns a range of journal folders matching the UUID and company.
@@ -362,7 +360,7 @@ public interface JournalFolderLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<JournalFolder> getJournalFoldersByUuidAndCompanyId(
-		java.lang.String uuid, long companyId, int start, int end,
+		String uuid, long companyId, int start, int end,
 		OrderByComparator<JournalFolder> orderByComparator);
 
 	/**
@@ -381,7 +379,7 @@ public interface JournalFolderLocalService extends BaseLocalService,
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public long getOverridedDDMStructuresFolderId(long folderId)
@@ -393,13 +391,13 @@ public interface JournalFolderLocalService extends BaseLocalService,
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public void getSubfolderIds(List<java.lang.Long> folderIds, long groupId,
+	public void getSubfolderIds(List<Long> folderIds, long groupId,
 		long folderId);
 
 	/**
 	* @deprecated As of 4.0.0, with no direct replacement
 	*/
-	@java.lang.Deprecated
+	@Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.kernel.service.SubscriptionLocalService getSubscriptionLocalService();
 
@@ -418,22 +416,21 @@ public interface JournalFolderLocalService extends BaseLocalService,
 	public void rebuildTree(long companyId) throws PortalException;
 
 	public void rebuildTree(long companyId, long parentFolderId,
-		java.lang.String parentTreePath, boolean reindex)
-		throws PortalException;
+		String parentTreePath, boolean reindex) throws PortalException;
 
 	public void restoreFolderFromTrash(long userId, long folderId)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<DDMStructure> searchDDMStructures(long companyId,
-		long[] groupIds, long folderId, int restrictionType,
-		java.lang.String keywords, int start, int end,
-		OrderByComparator<DDMStructure> obc) throws PortalException;
+		long[] groupIds, long folderId, int restrictionType, String keywords,
+		int start, int end, OrderByComparator<DDMStructure> obc)
+		throws PortalException;
 
 	/**
 	* @deprecated As of 4.0.0, with no direct replacement
 	*/
-	@java.lang.Deprecated
+	@Deprecated
 	public void setSubscriptionLocalService(
 		com.liferay.portal.kernel.service.SubscriptionLocalService subscriptionLocalService);
 
@@ -444,22 +441,21 @@ public interface JournalFolderLocalService extends BaseLocalService,
 		throws PortalException;
 
 	public void updateAsset(long userId, JournalFolder folder,
-		long[] assetCategoryIds, java.lang.String[] assetTagNames,
-		long[] assetLinkEntryIds, java.lang.Double priority)
+		long[] assetCategoryIds, String[] assetTagNames,
+		long[] assetLinkEntryIds, Double priority) throws PortalException;
+
+	@Indexable(type = IndexableType.REINDEX)
+	public JournalFolder updateFolder(long userId, long groupId, long folderId,
+		long parentFolderId, String name, String description,
+		boolean mergeWithParentFolder, ServiceContext serviceContext)
 		throws PortalException;
 
 	@Indexable(type = IndexableType.REINDEX)
 	public JournalFolder updateFolder(long userId, long groupId, long folderId,
-		long parentFolderId, java.lang.String name,
-		java.lang.String description, boolean mergeWithParentFolder,
-		ServiceContext serviceContext) throws PortalException;
-
-	@Indexable(type = IndexableType.REINDEX)
-	public JournalFolder updateFolder(long userId, long groupId, long folderId,
-		long parentFolderId, java.lang.String name,
-		java.lang.String description, long[] ddmStructureIds,
-		int restrictionType, boolean mergeWithParentFolder,
-		ServiceContext serviceContext) throws PortalException;
+		long parentFolderId, String name, String description,
+		long[] ddmStructureIds, int restrictionType,
+		boolean mergeWithParentFolder, ServiceContext serviceContext)
+		throws PortalException;
 
 	public void updateFolderDDMStructures(JournalFolder folder,
 		long[] ddmStructureIdsArray) throws PortalException;

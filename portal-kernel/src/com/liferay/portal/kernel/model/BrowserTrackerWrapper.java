@@ -99,7 +99,7 @@ public class BrowserTrackerWrapper implements BrowserTracker,
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new BrowserTrackerWrapper((BrowserTracker)_browserTracker.clone());
 	}
 
@@ -184,7 +184,7 @@ public class BrowserTrackerWrapper implements BrowserTracker,
 	* @return the user uuid of this browser tracker
 	*/
 	@Override
-	public java.lang.String getUserUuid() {
+	public String getUserUuid() {
 		return _browserTracker.getUserUuid();
 	}
 
@@ -309,7 +309,7 @@ public class BrowserTrackerWrapper implements BrowserTracker,
 	* @param userUuid the user uuid of this browser tracker
 	*/
 	@Override
-	public void setUserUuid(java.lang.String userUuid) {
+	public void setUserUuid(String userUuid) {
 		_browserTracker.setUserUuid(userUuid);
 	}
 
@@ -324,7 +324,7 @@ public class BrowserTrackerWrapper implements BrowserTracker,
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _browserTracker.toString();
 	}
 
@@ -334,7 +334,7 @@ public class BrowserTrackerWrapper implements BrowserTracker,
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _browserTracker.toXmlString();
 	}
 

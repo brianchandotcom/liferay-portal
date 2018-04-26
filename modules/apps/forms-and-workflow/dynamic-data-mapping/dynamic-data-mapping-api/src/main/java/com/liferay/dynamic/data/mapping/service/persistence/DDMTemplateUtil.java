@@ -118,7 +118,7 @@ public class DDMTemplateUtil {
 	* @param uuid the uuid
 	* @return the matching ddm templates
 	*/
-	public static List<DDMTemplate> findByUuid(java.lang.String uuid) {
+	public static List<DDMTemplate> findByUuid(String uuid) {
 		return getPersistence().findByUuid(uuid);
 	}
 
@@ -134,8 +134,7 @@ public class DDMTemplateUtil {
 	* @param end the upper bound of the range of ddm templates (not inclusive)
 	* @return the range of matching ddm templates
 	*/
-	public static List<DDMTemplate> findByUuid(java.lang.String uuid,
-		int start, int end) {
+	public static List<DDMTemplate> findByUuid(String uuid, int start, int end) {
 		return getPersistence().findByUuid(uuid, start, end);
 	}
 
@@ -152,8 +151,8 @@ public class DDMTemplateUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching ddm templates
 	*/
-	public static List<DDMTemplate> findByUuid(java.lang.String uuid,
-		int start, int end, OrderByComparator<DDMTemplate> orderByComparator) {
+	public static List<DDMTemplate> findByUuid(String uuid, int start, int end,
+		OrderByComparator<DDMTemplate> orderByComparator) {
 		return getPersistence().findByUuid(uuid, start, end, orderByComparator);
 	}
 
@@ -171,8 +170,8 @@ public class DDMTemplateUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching ddm templates
 	*/
-	public static List<DDMTemplate> findByUuid(java.lang.String uuid,
-		int start, int end, OrderByComparator<DDMTemplate> orderByComparator,
+	public static List<DDMTemplate> findByUuid(String uuid, int start, int end,
+		OrderByComparator<DDMTemplate> orderByComparator,
 		boolean retrieveFromCache) {
 		return getPersistence()
 				   .findByUuid(uuid, start, end, orderByComparator,
@@ -187,7 +186,7 @@ public class DDMTemplateUtil {
 	* @return the first matching ddm template
 	* @throws NoSuchTemplateException if a matching ddm template could not be found
 	*/
-	public static DDMTemplate findByUuid_First(java.lang.String uuid,
+	public static DDMTemplate findByUuid_First(String uuid,
 		OrderByComparator<DDMTemplate> orderByComparator)
 		throws com.liferay.dynamic.data.mapping.exception.NoSuchTemplateException {
 		return getPersistence().findByUuid_First(uuid, orderByComparator);
@@ -200,7 +199,7 @@ public class DDMTemplateUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching ddm template, or <code>null</code> if a matching ddm template could not be found
 	*/
-	public static DDMTemplate fetchByUuid_First(java.lang.String uuid,
+	public static DDMTemplate fetchByUuid_First(String uuid,
 		OrderByComparator<DDMTemplate> orderByComparator) {
 		return getPersistence().fetchByUuid_First(uuid, orderByComparator);
 	}
@@ -213,7 +212,7 @@ public class DDMTemplateUtil {
 	* @return the last matching ddm template
 	* @throws NoSuchTemplateException if a matching ddm template could not be found
 	*/
-	public static DDMTemplate findByUuid_Last(java.lang.String uuid,
+	public static DDMTemplate findByUuid_Last(String uuid,
 		OrderByComparator<DDMTemplate> orderByComparator)
 		throws com.liferay.dynamic.data.mapping.exception.NoSuchTemplateException {
 		return getPersistence().findByUuid_Last(uuid, orderByComparator);
@@ -226,7 +225,7 @@ public class DDMTemplateUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching ddm template, or <code>null</code> if a matching ddm template could not be found
 	*/
-	public static DDMTemplate fetchByUuid_Last(java.lang.String uuid,
+	public static DDMTemplate fetchByUuid_Last(String uuid,
 		OrderByComparator<DDMTemplate> orderByComparator) {
 		return getPersistence().fetchByUuid_Last(uuid, orderByComparator);
 	}
@@ -241,7 +240,7 @@ public class DDMTemplateUtil {
 	* @throws NoSuchTemplateException if a ddm template with the primary key could not be found
 	*/
 	public static DDMTemplate[] findByUuid_PrevAndNext(long templateId,
-		java.lang.String uuid, OrderByComparator<DDMTemplate> orderByComparator)
+		String uuid, OrderByComparator<DDMTemplate> orderByComparator)
 		throws com.liferay.dynamic.data.mapping.exception.NoSuchTemplateException {
 		return getPersistence()
 				   .findByUuid_PrevAndNext(templateId, uuid, orderByComparator);
@@ -252,7 +251,7 @@ public class DDMTemplateUtil {
 	*
 	* @param uuid the uuid
 	*/
-	public static void removeByUuid(java.lang.String uuid) {
+	public static void removeByUuid(String uuid) {
 		getPersistence().removeByUuid(uuid);
 	}
 
@@ -262,7 +261,7 @@ public class DDMTemplateUtil {
 	* @param uuid the uuid
 	* @return the number of matching ddm templates
 	*/
-	public static int countByUuid(java.lang.String uuid) {
+	public static int countByUuid(String uuid) {
 		return getPersistence().countByUuid(uuid);
 	}
 
@@ -274,7 +273,7 @@ public class DDMTemplateUtil {
 	* @return the matching ddm template
 	* @throws NoSuchTemplateException if a matching ddm template could not be found
 	*/
-	public static DDMTemplate findByUUID_G(java.lang.String uuid, long groupId)
+	public static DDMTemplate findByUUID_G(String uuid, long groupId)
 		throws com.liferay.dynamic.data.mapping.exception.NoSuchTemplateException {
 		return getPersistence().findByUUID_G(uuid, groupId);
 	}
@@ -286,7 +285,7 @@ public class DDMTemplateUtil {
 	* @param groupId the group ID
 	* @return the matching ddm template, or <code>null</code> if a matching ddm template could not be found
 	*/
-	public static DDMTemplate fetchByUUID_G(java.lang.String uuid, long groupId) {
+	public static DDMTemplate fetchByUUID_G(String uuid, long groupId) {
 		return getPersistence().fetchByUUID_G(uuid, groupId);
 	}
 
@@ -298,8 +297,8 @@ public class DDMTemplateUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching ddm template, or <code>null</code> if a matching ddm template could not be found
 	*/
-	public static DDMTemplate fetchByUUID_G(java.lang.String uuid,
-		long groupId, boolean retrieveFromCache) {
+	public static DDMTemplate fetchByUUID_G(String uuid, long groupId,
+		boolean retrieveFromCache) {
 		return getPersistence().fetchByUUID_G(uuid, groupId, retrieveFromCache);
 	}
 
@@ -310,7 +309,7 @@ public class DDMTemplateUtil {
 	* @param groupId the group ID
 	* @return the ddm template that was removed
 	*/
-	public static DDMTemplate removeByUUID_G(java.lang.String uuid, long groupId)
+	public static DDMTemplate removeByUUID_G(String uuid, long groupId)
 		throws com.liferay.dynamic.data.mapping.exception.NoSuchTemplateException {
 		return getPersistence().removeByUUID_G(uuid, groupId);
 	}
@@ -322,7 +321,7 @@ public class DDMTemplateUtil {
 	* @param groupId the group ID
 	* @return the number of matching ddm templates
 	*/
-	public static int countByUUID_G(java.lang.String uuid, long groupId) {
+	public static int countByUUID_G(String uuid, long groupId) {
 		return getPersistence().countByUUID_G(uuid, groupId);
 	}
 
@@ -333,8 +332,7 @@ public class DDMTemplateUtil {
 	* @param companyId the company ID
 	* @return the matching ddm templates
 	*/
-	public static List<DDMTemplate> findByUuid_C(java.lang.String uuid,
-		long companyId) {
+	public static List<DDMTemplate> findByUuid_C(String uuid, long companyId) {
 		return getPersistence().findByUuid_C(uuid, companyId);
 	}
 
@@ -351,8 +349,8 @@ public class DDMTemplateUtil {
 	* @param end the upper bound of the range of ddm templates (not inclusive)
 	* @return the range of matching ddm templates
 	*/
-	public static List<DDMTemplate> findByUuid_C(java.lang.String uuid,
-		long companyId, int start, int end) {
+	public static List<DDMTemplate> findByUuid_C(String uuid, long companyId,
+		int start, int end) {
 		return getPersistence().findByUuid_C(uuid, companyId, start, end);
 	}
 
@@ -370,9 +368,8 @@ public class DDMTemplateUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching ddm templates
 	*/
-	public static List<DDMTemplate> findByUuid_C(java.lang.String uuid,
-		long companyId, int start, int end,
-		OrderByComparator<DDMTemplate> orderByComparator) {
+	public static List<DDMTemplate> findByUuid_C(String uuid, long companyId,
+		int start, int end, OrderByComparator<DDMTemplate> orderByComparator) {
 		return getPersistence()
 				   .findByUuid_C(uuid, companyId, start, end, orderByComparator);
 	}
@@ -392,9 +389,8 @@ public class DDMTemplateUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching ddm templates
 	*/
-	public static List<DDMTemplate> findByUuid_C(java.lang.String uuid,
-		long companyId, int start, int end,
-		OrderByComparator<DDMTemplate> orderByComparator,
+	public static List<DDMTemplate> findByUuid_C(String uuid, long companyId,
+		int start, int end, OrderByComparator<DDMTemplate> orderByComparator,
 		boolean retrieveFromCache) {
 		return getPersistence()
 				   .findByUuid_C(uuid, companyId, start, end,
@@ -410,8 +406,8 @@ public class DDMTemplateUtil {
 	* @return the first matching ddm template
 	* @throws NoSuchTemplateException if a matching ddm template could not be found
 	*/
-	public static DDMTemplate findByUuid_C_First(java.lang.String uuid,
-		long companyId, OrderByComparator<DDMTemplate> orderByComparator)
+	public static DDMTemplate findByUuid_C_First(String uuid, long companyId,
+		OrderByComparator<DDMTemplate> orderByComparator)
 		throws com.liferay.dynamic.data.mapping.exception.NoSuchTemplateException {
 		return getPersistence()
 				   .findByUuid_C_First(uuid, companyId, orderByComparator);
@@ -425,8 +421,8 @@ public class DDMTemplateUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching ddm template, or <code>null</code> if a matching ddm template could not be found
 	*/
-	public static DDMTemplate fetchByUuid_C_First(java.lang.String uuid,
-		long companyId, OrderByComparator<DDMTemplate> orderByComparator) {
+	public static DDMTemplate fetchByUuid_C_First(String uuid, long companyId,
+		OrderByComparator<DDMTemplate> orderByComparator) {
 		return getPersistence()
 				   .fetchByUuid_C_First(uuid, companyId, orderByComparator);
 	}
@@ -440,8 +436,8 @@ public class DDMTemplateUtil {
 	* @return the last matching ddm template
 	* @throws NoSuchTemplateException if a matching ddm template could not be found
 	*/
-	public static DDMTemplate findByUuid_C_Last(java.lang.String uuid,
-		long companyId, OrderByComparator<DDMTemplate> orderByComparator)
+	public static DDMTemplate findByUuid_C_Last(String uuid, long companyId,
+		OrderByComparator<DDMTemplate> orderByComparator)
 		throws com.liferay.dynamic.data.mapping.exception.NoSuchTemplateException {
 		return getPersistence()
 				   .findByUuid_C_Last(uuid, companyId, orderByComparator);
@@ -455,8 +451,8 @@ public class DDMTemplateUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching ddm template, or <code>null</code> if a matching ddm template could not be found
 	*/
-	public static DDMTemplate fetchByUuid_C_Last(java.lang.String uuid,
-		long companyId, OrderByComparator<DDMTemplate> orderByComparator) {
+	public static DDMTemplate fetchByUuid_C_Last(String uuid, long companyId,
+		OrderByComparator<DDMTemplate> orderByComparator) {
 		return getPersistence()
 				   .fetchByUuid_C_Last(uuid, companyId, orderByComparator);
 	}
@@ -472,7 +468,7 @@ public class DDMTemplateUtil {
 	* @throws NoSuchTemplateException if a ddm template with the primary key could not be found
 	*/
 	public static DDMTemplate[] findByUuid_C_PrevAndNext(long templateId,
-		java.lang.String uuid, long companyId,
+		String uuid, long companyId,
 		OrderByComparator<DDMTemplate> orderByComparator)
 		throws com.liferay.dynamic.data.mapping.exception.NoSuchTemplateException {
 		return getPersistence()
@@ -486,7 +482,7 @@ public class DDMTemplateUtil {
 	* @param uuid the uuid
 	* @param companyId the company ID
 	*/
-	public static void removeByUuid_C(java.lang.String uuid, long companyId) {
+	public static void removeByUuid_C(String uuid, long companyId) {
 		getPersistence().removeByUuid_C(uuid, companyId);
 	}
 
@@ -497,7 +493,7 @@ public class DDMTemplateUtil {
 	* @param companyId the company ID
 	* @return the number of matching ddm templates
 	*/
-	public static int countByUuid_C(java.lang.String uuid, long companyId) {
+	public static int countByUuid_C(String uuid, long companyId) {
 		return getPersistence().countByUuid_C(uuid, companyId);
 	}
 
@@ -893,8 +889,7 @@ public class DDMTemplateUtil {
 	* @param templateKey the template key
 	* @return the matching ddm templates
 	*/
-	public static List<DDMTemplate> findByTemplateKey(
-		java.lang.String templateKey) {
+	public static List<DDMTemplate> findByTemplateKey(String templateKey) {
 		return getPersistence().findByTemplateKey(templateKey);
 	}
 
@@ -910,8 +905,8 @@ public class DDMTemplateUtil {
 	* @param end the upper bound of the range of ddm templates (not inclusive)
 	* @return the range of matching ddm templates
 	*/
-	public static List<DDMTemplate> findByTemplateKey(
-		java.lang.String templateKey, int start, int end) {
+	public static List<DDMTemplate> findByTemplateKey(String templateKey,
+		int start, int end) {
 		return getPersistence().findByTemplateKey(templateKey, start, end);
 	}
 
@@ -928,9 +923,8 @@ public class DDMTemplateUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching ddm templates
 	*/
-	public static List<DDMTemplate> findByTemplateKey(
-		java.lang.String templateKey, int start, int end,
-		OrderByComparator<DDMTemplate> orderByComparator) {
+	public static List<DDMTemplate> findByTemplateKey(String templateKey,
+		int start, int end, OrderByComparator<DDMTemplate> orderByComparator) {
 		return getPersistence()
 				   .findByTemplateKey(templateKey, start, end, orderByComparator);
 	}
@@ -949,9 +943,8 @@ public class DDMTemplateUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching ddm templates
 	*/
-	public static List<DDMTemplate> findByTemplateKey(
-		java.lang.String templateKey, int start, int end,
-		OrderByComparator<DDMTemplate> orderByComparator,
+	public static List<DDMTemplate> findByTemplateKey(String templateKey,
+		int start, int end, OrderByComparator<DDMTemplate> orderByComparator,
 		boolean retrieveFromCache) {
 		return getPersistence()
 				   .findByTemplateKey(templateKey, start, end,
@@ -966,8 +959,7 @@ public class DDMTemplateUtil {
 	* @return the first matching ddm template
 	* @throws NoSuchTemplateException if a matching ddm template could not be found
 	*/
-	public static DDMTemplate findByTemplateKey_First(
-		java.lang.String templateKey,
+	public static DDMTemplate findByTemplateKey_First(String templateKey,
 		OrderByComparator<DDMTemplate> orderByComparator)
 		throws com.liferay.dynamic.data.mapping.exception.NoSuchTemplateException {
 		return getPersistence()
@@ -981,8 +973,7 @@ public class DDMTemplateUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching ddm template, or <code>null</code> if a matching ddm template could not be found
 	*/
-	public static DDMTemplate fetchByTemplateKey_First(
-		java.lang.String templateKey,
+	public static DDMTemplate fetchByTemplateKey_First(String templateKey,
 		OrderByComparator<DDMTemplate> orderByComparator) {
 		return getPersistence()
 				   .fetchByTemplateKey_First(templateKey, orderByComparator);
@@ -996,8 +987,7 @@ public class DDMTemplateUtil {
 	* @return the last matching ddm template
 	* @throws NoSuchTemplateException if a matching ddm template could not be found
 	*/
-	public static DDMTemplate findByTemplateKey_Last(
-		java.lang.String templateKey,
+	public static DDMTemplate findByTemplateKey_Last(String templateKey,
 		OrderByComparator<DDMTemplate> orderByComparator)
 		throws com.liferay.dynamic.data.mapping.exception.NoSuchTemplateException {
 		return getPersistence()
@@ -1011,8 +1001,7 @@ public class DDMTemplateUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching ddm template, or <code>null</code> if a matching ddm template could not be found
 	*/
-	public static DDMTemplate fetchByTemplateKey_Last(
-		java.lang.String templateKey,
+	public static DDMTemplate fetchByTemplateKey_Last(String templateKey,
 		OrderByComparator<DDMTemplate> orderByComparator) {
 		return getPersistence()
 				   .fetchByTemplateKey_Last(templateKey, orderByComparator);
@@ -1028,8 +1017,7 @@ public class DDMTemplateUtil {
 	* @throws NoSuchTemplateException if a ddm template with the primary key could not be found
 	*/
 	public static DDMTemplate[] findByTemplateKey_PrevAndNext(long templateId,
-		java.lang.String templateKey,
-		OrderByComparator<DDMTemplate> orderByComparator)
+		String templateKey, OrderByComparator<DDMTemplate> orderByComparator)
 		throws com.liferay.dynamic.data.mapping.exception.NoSuchTemplateException {
 		return getPersistence()
 				   .findByTemplateKey_PrevAndNext(templateId, templateKey,
@@ -1041,7 +1029,7 @@ public class DDMTemplateUtil {
 	*
 	* @param templateKey the template key
 	*/
-	public static void removeByTemplateKey(java.lang.String templateKey) {
+	public static void removeByTemplateKey(String templateKey) {
 		getPersistence().removeByTemplateKey(templateKey);
 	}
 
@@ -1051,7 +1039,7 @@ public class DDMTemplateUtil {
 	* @param templateKey the template key
 	* @return the number of matching ddm templates
 	*/
-	public static int countByTemplateKey(java.lang.String templateKey) {
+	public static int countByTemplateKey(String templateKey) {
 		return getPersistence().countByTemplateKey(templateKey);
 	}
 
@@ -1061,7 +1049,7 @@ public class DDMTemplateUtil {
 	* @param type the type
 	* @return the matching ddm templates
 	*/
-	public static List<DDMTemplate> findByType(java.lang.String type) {
+	public static List<DDMTemplate> findByType(String type) {
 		return getPersistence().findByType(type);
 	}
 
@@ -1077,8 +1065,7 @@ public class DDMTemplateUtil {
 	* @param end the upper bound of the range of ddm templates (not inclusive)
 	* @return the range of matching ddm templates
 	*/
-	public static List<DDMTemplate> findByType(java.lang.String type,
-		int start, int end) {
+	public static List<DDMTemplate> findByType(String type, int start, int end) {
 		return getPersistence().findByType(type, start, end);
 	}
 
@@ -1095,8 +1082,8 @@ public class DDMTemplateUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching ddm templates
 	*/
-	public static List<DDMTemplate> findByType(java.lang.String type,
-		int start, int end, OrderByComparator<DDMTemplate> orderByComparator) {
+	public static List<DDMTemplate> findByType(String type, int start, int end,
+		OrderByComparator<DDMTemplate> orderByComparator) {
 		return getPersistence().findByType(type, start, end, orderByComparator);
 	}
 
@@ -1114,8 +1101,8 @@ public class DDMTemplateUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching ddm templates
 	*/
-	public static List<DDMTemplate> findByType(java.lang.String type,
-		int start, int end, OrderByComparator<DDMTemplate> orderByComparator,
+	public static List<DDMTemplate> findByType(String type, int start, int end,
+		OrderByComparator<DDMTemplate> orderByComparator,
 		boolean retrieveFromCache) {
 		return getPersistence()
 				   .findByType(type, start, end, orderByComparator,
@@ -1130,7 +1117,7 @@ public class DDMTemplateUtil {
 	* @return the first matching ddm template
 	* @throws NoSuchTemplateException if a matching ddm template could not be found
 	*/
-	public static DDMTemplate findByType_First(java.lang.String type,
+	public static DDMTemplate findByType_First(String type,
 		OrderByComparator<DDMTemplate> orderByComparator)
 		throws com.liferay.dynamic.data.mapping.exception.NoSuchTemplateException {
 		return getPersistence().findByType_First(type, orderByComparator);
@@ -1143,7 +1130,7 @@ public class DDMTemplateUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching ddm template, or <code>null</code> if a matching ddm template could not be found
 	*/
-	public static DDMTemplate fetchByType_First(java.lang.String type,
+	public static DDMTemplate fetchByType_First(String type,
 		OrderByComparator<DDMTemplate> orderByComparator) {
 		return getPersistence().fetchByType_First(type, orderByComparator);
 	}
@@ -1156,7 +1143,7 @@ public class DDMTemplateUtil {
 	* @return the last matching ddm template
 	* @throws NoSuchTemplateException if a matching ddm template could not be found
 	*/
-	public static DDMTemplate findByType_Last(java.lang.String type,
+	public static DDMTemplate findByType_Last(String type,
 		OrderByComparator<DDMTemplate> orderByComparator)
 		throws com.liferay.dynamic.data.mapping.exception.NoSuchTemplateException {
 		return getPersistence().findByType_Last(type, orderByComparator);
@@ -1169,7 +1156,7 @@ public class DDMTemplateUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching ddm template, or <code>null</code> if a matching ddm template could not be found
 	*/
-	public static DDMTemplate fetchByType_Last(java.lang.String type,
+	public static DDMTemplate fetchByType_Last(String type,
 		OrderByComparator<DDMTemplate> orderByComparator) {
 		return getPersistence().fetchByType_Last(type, orderByComparator);
 	}
@@ -1184,7 +1171,7 @@ public class DDMTemplateUtil {
 	* @throws NoSuchTemplateException if a ddm template with the primary key could not be found
 	*/
 	public static DDMTemplate[] findByType_PrevAndNext(long templateId,
-		java.lang.String type, OrderByComparator<DDMTemplate> orderByComparator)
+		String type, OrderByComparator<DDMTemplate> orderByComparator)
 		throws com.liferay.dynamic.data.mapping.exception.NoSuchTemplateException {
 		return getPersistence()
 				   .findByType_PrevAndNext(templateId, type, orderByComparator);
@@ -1195,7 +1182,7 @@ public class DDMTemplateUtil {
 	*
 	* @param type the type
 	*/
-	public static void removeByType(java.lang.String type) {
+	public static void removeByType(String type) {
 		getPersistence().removeByType(type);
 	}
 
@@ -1205,7 +1192,7 @@ public class DDMTemplateUtil {
 	* @param type the type
 	* @return the number of matching ddm templates
 	*/
-	public static int countByType(java.lang.String type) {
+	public static int countByType(String type) {
 		return getPersistence().countByType(type);
 	}
 
@@ -1215,7 +1202,7 @@ public class DDMTemplateUtil {
 	* @param language the language
 	* @return the matching ddm templates
 	*/
-	public static List<DDMTemplate> findByLanguage(java.lang.String language) {
+	public static List<DDMTemplate> findByLanguage(String language) {
 		return getPersistence().findByLanguage(language);
 	}
 
@@ -1231,8 +1218,8 @@ public class DDMTemplateUtil {
 	* @param end the upper bound of the range of ddm templates (not inclusive)
 	* @return the range of matching ddm templates
 	*/
-	public static List<DDMTemplate> findByLanguage(java.lang.String language,
-		int start, int end) {
+	public static List<DDMTemplate> findByLanguage(String language, int start,
+		int end) {
 		return getPersistence().findByLanguage(language, start, end);
 	}
 
@@ -1249,8 +1236,8 @@ public class DDMTemplateUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching ddm templates
 	*/
-	public static List<DDMTemplate> findByLanguage(java.lang.String language,
-		int start, int end, OrderByComparator<DDMTemplate> orderByComparator) {
+	public static List<DDMTemplate> findByLanguage(String language, int start,
+		int end, OrderByComparator<DDMTemplate> orderByComparator) {
 		return getPersistence()
 				   .findByLanguage(language, start, end, orderByComparator);
 	}
@@ -1269,8 +1256,8 @@ public class DDMTemplateUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching ddm templates
 	*/
-	public static List<DDMTemplate> findByLanguage(java.lang.String language,
-		int start, int end, OrderByComparator<DDMTemplate> orderByComparator,
+	public static List<DDMTemplate> findByLanguage(String language, int start,
+		int end, OrderByComparator<DDMTemplate> orderByComparator,
 		boolean retrieveFromCache) {
 		return getPersistence()
 				   .findByLanguage(language, start, end, orderByComparator,
@@ -1285,7 +1272,7 @@ public class DDMTemplateUtil {
 	* @return the first matching ddm template
 	* @throws NoSuchTemplateException if a matching ddm template could not be found
 	*/
-	public static DDMTemplate findByLanguage_First(java.lang.String language,
+	public static DDMTemplate findByLanguage_First(String language,
 		OrderByComparator<DDMTemplate> orderByComparator)
 		throws com.liferay.dynamic.data.mapping.exception.NoSuchTemplateException {
 		return getPersistence().findByLanguage_First(language, orderByComparator);
@@ -1298,7 +1285,7 @@ public class DDMTemplateUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching ddm template, or <code>null</code> if a matching ddm template could not be found
 	*/
-	public static DDMTemplate fetchByLanguage_First(java.lang.String language,
+	public static DDMTemplate fetchByLanguage_First(String language,
 		OrderByComparator<DDMTemplate> orderByComparator) {
 		return getPersistence()
 				   .fetchByLanguage_First(language, orderByComparator);
@@ -1312,7 +1299,7 @@ public class DDMTemplateUtil {
 	* @return the last matching ddm template
 	* @throws NoSuchTemplateException if a matching ddm template could not be found
 	*/
-	public static DDMTemplate findByLanguage_Last(java.lang.String language,
+	public static DDMTemplate findByLanguage_Last(String language,
 		OrderByComparator<DDMTemplate> orderByComparator)
 		throws com.liferay.dynamic.data.mapping.exception.NoSuchTemplateException {
 		return getPersistence().findByLanguage_Last(language, orderByComparator);
@@ -1325,7 +1312,7 @@ public class DDMTemplateUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching ddm template, or <code>null</code> if a matching ddm template could not be found
 	*/
-	public static DDMTemplate fetchByLanguage_Last(java.lang.String language,
+	public static DDMTemplate fetchByLanguage_Last(String language,
 		OrderByComparator<DDMTemplate> orderByComparator) {
 		return getPersistence().fetchByLanguage_Last(language, orderByComparator);
 	}
@@ -1340,8 +1327,7 @@ public class DDMTemplateUtil {
 	* @throws NoSuchTemplateException if a ddm template with the primary key could not be found
 	*/
 	public static DDMTemplate[] findByLanguage_PrevAndNext(long templateId,
-		java.lang.String language,
-		OrderByComparator<DDMTemplate> orderByComparator)
+		String language, OrderByComparator<DDMTemplate> orderByComparator)
 		throws com.liferay.dynamic.data.mapping.exception.NoSuchTemplateException {
 		return getPersistence()
 				   .findByLanguage_PrevAndNext(templateId, language,
@@ -1353,7 +1339,7 @@ public class DDMTemplateUtil {
 	*
 	* @param language the language
 	*/
-	public static void removeByLanguage(java.lang.String language) {
+	public static void removeByLanguage(String language) {
 		getPersistence().removeByLanguage(language);
 	}
 
@@ -1363,7 +1349,7 @@ public class DDMTemplateUtil {
 	* @param language the language
 	* @return the number of matching ddm templates
 	*/
-	public static int countByLanguage(java.lang.String language) {
+	public static int countByLanguage(String language) {
 		return getPersistence().countByLanguage(language);
 	}
 
@@ -2542,7 +2528,7 @@ public class DDMTemplateUtil {
 	* @throws NoSuchTemplateException if a matching ddm template could not be found
 	*/
 	public static DDMTemplate findByG_C_T(long groupId, long classNameId,
-		java.lang.String templateKey)
+		String templateKey)
 		throws com.liferay.dynamic.data.mapping.exception.NoSuchTemplateException {
 		return getPersistence().findByG_C_T(groupId, classNameId, templateKey);
 	}
@@ -2556,7 +2542,7 @@ public class DDMTemplateUtil {
 	* @return the matching ddm template, or <code>null</code> if a matching ddm template could not be found
 	*/
 	public static DDMTemplate fetchByG_C_T(long groupId, long classNameId,
-		java.lang.String templateKey) {
+		String templateKey) {
 		return getPersistence().fetchByG_C_T(groupId, classNameId, templateKey);
 	}
 
@@ -2570,7 +2556,7 @@ public class DDMTemplateUtil {
 	* @return the matching ddm template, or <code>null</code> if a matching ddm template could not be found
 	*/
 	public static DDMTemplate fetchByG_C_T(long groupId, long classNameId,
-		java.lang.String templateKey, boolean retrieveFromCache) {
+		String templateKey, boolean retrieveFromCache) {
 		return getPersistence()
 				   .fetchByG_C_T(groupId, classNameId, templateKey,
 			retrieveFromCache);
@@ -2585,7 +2571,7 @@ public class DDMTemplateUtil {
 	* @return the ddm template that was removed
 	*/
 	public static DDMTemplate removeByG_C_T(long groupId, long classNameId,
-		java.lang.String templateKey)
+		String templateKey)
 		throws com.liferay.dynamic.data.mapping.exception.NoSuchTemplateException {
 		return getPersistence().removeByG_C_T(groupId, classNameId, templateKey);
 	}
@@ -2599,7 +2585,7 @@ public class DDMTemplateUtil {
 	* @return the number of matching ddm templates
 	*/
 	public static int countByG_C_T(long groupId, long classNameId,
-		java.lang.String templateKey) {
+		String templateKey) {
 		return getPersistence().countByG_C_T(groupId, classNameId, templateKey);
 	}
 
@@ -2612,7 +2598,7 @@ public class DDMTemplateUtil {
 	* @return the matching ddm templates
 	*/
 	public static List<DDMTemplate> findByC_C_T(long classNameId, long classPK,
-		java.lang.String type) {
+		String type) {
 		return getPersistence().findByC_C_T(classNameId, classPK, type);
 	}
 
@@ -2631,7 +2617,7 @@ public class DDMTemplateUtil {
 	* @return the range of matching ddm templates
 	*/
 	public static List<DDMTemplate> findByC_C_T(long classNameId, long classPK,
-		java.lang.String type, int start, int end) {
+		String type, int start, int end) {
 		return getPersistence()
 				   .findByC_C_T(classNameId, classPK, type, start, end);
 	}
@@ -2652,7 +2638,7 @@ public class DDMTemplateUtil {
 	* @return the ordered range of matching ddm templates
 	*/
 	public static List<DDMTemplate> findByC_C_T(long classNameId, long classPK,
-		java.lang.String type, int start, int end,
+		String type, int start, int end,
 		OrderByComparator<DDMTemplate> orderByComparator) {
 		return getPersistence()
 				   .findByC_C_T(classNameId, classPK, type, start, end,
@@ -2676,7 +2662,7 @@ public class DDMTemplateUtil {
 	* @return the ordered range of matching ddm templates
 	*/
 	public static List<DDMTemplate> findByC_C_T(long classNameId, long classPK,
-		java.lang.String type, int start, int end,
+		String type, int start, int end,
 		OrderByComparator<DDMTemplate> orderByComparator,
 		boolean retrieveFromCache) {
 		return getPersistence()
@@ -2695,7 +2681,7 @@ public class DDMTemplateUtil {
 	* @throws NoSuchTemplateException if a matching ddm template could not be found
 	*/
 	public static DDMTemplate findByC_C_T_First(long classNameId, long classPK,
-		java.lang.String type, OrderByComparator<DDMTemplate> orderByComparator)
+		String type, OrderByComparator<DDMTemplate> orderByComparator)
 		throws com.liferay.dynamic.data.mapping.exception.NoSuchTemplateException {
 		return getPersistence()
 				   .findByC_C_T_First(classNameId, classPK, type,
@@ -2712,7 +2698,7 @@ public class DDMTemplateUtil {
 	* @return the first matching ddm template, or <code>null</code> if a matching ddm template could not be found
 	*/
 	public static DDMTemplate fetchByC_C_T_First(long classNameId,
-		long classPK, java.lang.String type,
+		long classPK, String type,
 		OrderByComparator<DDMTemplate> orderByComparator) {
 		return getPersistence()
 				   .fetchByC_C_T_First(classNameId, classPK, type,
@@ -2730,7 +2716,7 @@ public class DDMTemplateUtil {
 	* @throws NoSuchTemplateException if a matching ddm template could not be found
 	*/
 	public static DDMTemplate findByC_C_T_Last(long classNameId, long classPK,
-		java.lang.String type, OrderByComparator<DDMTemplate> orderByComparator)
+		String type, OrderByComparator<DDMTemplate> orderByComparator)
 		throws com.liferay.dynamic.data.mapping.exception.NoSuchTemplateException {
 		return getPersistence()
 				   .findByC_C_T_Last(classNameId, classPK, type,
@@ -2747,7 +2733,7 @@ public class DDMTemplateUtil {
 	* @return the last matching ddm template, or <code>null</code> if a matching ddm template could not be found
 	*/
 	public static DDMTemplate fetchByC_C_T_Last(long classNameId, long classPK,
-		java.lang.String type, OrderByComparator<DDMTemplate> orderByComparator) {
+		String type, OrderByComparator<DDMTemplate> orderByComparator) {
 		return getPersistence()
 				   .fetchByC_C_T_Last(classNameId, classPK, type,
 			orderByComparator);
@@ -2765,7 +2751,7 @@ public class DDMTemplateUtil {
 	* @throws NoSuchTemplateException if a ddm template with the primary key could not be found
 	*/
 	public static DDMTemplate[] findByC_C_T_PrevAndNext(long templateId,
-		long classNameId, long classPK, java.lang.String type,
+		long classNameId, long classPK, String type,
 		OrderByComparator<DDMTemplate> orderByComparator)
 		throws com.liferay.dynamic.data.mapping.exception.NoSuchTemplateException {
 		return getPersistence()
@@ -2780,8 +2766,7 @@ public class DDMTemplateUtil {
 	* @param classPK the class pk
 	* @param type the type
 	*/
-	public static void removeByC_C_T(long classNameId, long classPK,
-		java.lang.String type) {
+	public static void removeByC_C_T(long classNameId, long classPK, String type) {
 		getPersistence().removeByC_C_T(classNameId, classPK, type);
 	}
 
@@ -2793,8 +2778,7 @@ public class DDMTemplateUtil {
 	* @param type the type
 	* @return the number of matching ddm templates
 	*/
-	public static int countByC_C_T(long classNameId, long classPK,
-		java.lang.String type) {
+	public static int countByC_C_T(long classNameId, long classPK, String type) {
 		return getPersistence().countByC_C_T(classNameId, classPK, type);
 	}
 
@@ -2808,7 +2792,7 @@ public class DDMTemplateUtil {
 	* @return the matching ddm templates
 	*/
 	public static List<DDMTemplate> findByG_C_C_T(long groupId,
-		long classNameId, long classPK, java.lang.String type) {
+		long classNameId, long classPK, String type) {
 		return getPersistence()
 				   .findByG_C_C_T(groupId, classNameId, classPK, type);
 	}
@@ -2829,8 +2813,7 @@ public class DDMTemplateUtil {
 	* @return the range of matching ddm templates
 	*/
 	public static List<DDMTemplate> findByG_C_C_T(long groupId,
-		long classNameId, long classPK, java.lang.String type, int start,
-		int end) {
+		long classNameId, long classPK, String type, int start, int end) {
 		return getPersistence()
 				   .findByG_C_C_T(groupId, classNameId, classPK, type, start,
 			end);
@@ -2853,8 +2836,8 @@ public class DDMTemplateUtil {
 	* @return the ordered range of matching ddm templates
 	*/
 	public static List<DDMTemplate> findByG_C_C_T(long groupId,
-		long classNameId, long classPK, java.lang.String type, int start,
-		int end, OrderByComparator<DDMTemplate> orderByComparator) {
+		long classNameId, long classPK, String type, int start, int end,
+		OrderByComparator<DDMTemplate> orderByComparator) {
 		return getPersistence()
 				   .findByG_C_C_T(groupId, classNameId, classPK, type, start,
 			end, orderByComparator);
@@ -2878,8 +2861,8 @@ public class DDMTemplateUtil {
 	* @return the ordered range of matching ddm templates
 	*/
 	public static List<DDMTemplate> findByG_C_C_T(long groupId,
-		long classNameId, long classPK, java.lang.String type, int start,
-		int end, OrderByComparator<DDMTemplate> orderByComparator,
+		long classNameId, long classPK, String type, int start, int end,
+		OrderByComparator<DDMTemplate> orderByComparator,
 		boolean retrieveFromCache) {
 		return getPersistence()
 				   .findByG_C_C_T(groupId, classNameId, classPK, type, start,
@@ -2898,7 +2881,7 @@ public class DDMTemplateUtil {
 	* @throws NoSuchTemplateException if a matching ddm template could not be found
 	*/
 	public static DDMTemplate findByG_C_C_T_First(long groupId,
-		long classNameId, long classPK, java.lang.String type,
+		long classNameId, long classPK, String type,
 		OrderByComparator<DDMTemplate> orderByComparator)
 		throws com.liferay.dynamic.data.mapping.exception.NoSuchTemplateException {
 		return getPersistence()
@@ -2917,7 +2900,7 @@ public class DDMTemplateUtil {
 	* @return the first matching ddm template, or <code>null</code> if a matching ddm template could not be found
 	*/
 	public static DDMTemplate fetchByG_C_C_T_First(long groupId,
-		long classNameId, long classPK, java.lang.String type,
+		long classNameId, long classPK, String type,
 		OrderByComparator<DDMTemplate> orderByComparator) {
 		return getPersistence()
 				   .fetchByG_C_C_T_First(groupId, classNameId, classPK, type,
@@ -2936,7 +2919,7 @@ public class DDMTemplateUtil {
 	* @throws NoSuchTemplateException if a matching ddm template could not be found
 	*/
 	public static DDMTemplate findByG_C_C_T_Last(long groupId,
-		long classNameId, long classPK, java.lang.String type,
+		long classNameId, long classPK, String type,
 		OrderByComparator<DDMTemplate> orderByComparator)
 		throws com.liferay.dynamic.data.mapping.exception.NoSuchTemplateException {
 		return getPersistence()
@@ -2955,7 +2938,7 @@ public class DDMTemplateUtil {
 	* @return the last matching ddm template, or <code>null</code> if a matching ddm template could not be found
 	*/
 	public static DDMTemplate fetchByG_C_C_T_Last(long groupId,
-		long classNameId, long classPK, java.lang.String type,
+		long classNameId, long classPK, String type,
 		OrderByComparator<DDMTemplate> orderByComparator) {
 		return getPersistence()
 				   .fetchByG_C_C_T_Last(groupId, classNameId, classPK, type,
@@ -2975,7 +2958,7 @@ public class DDMTemplateUtil {
 	* @throws NoSuchTemplateException if a ddm template with the primary key could not be found
 	*/
 	public static DDMTemplate[] findByG_C_C_T_PrevAndNext(long templateId,
-		long groupId, long classNameId, long classPK, java.lang.String type,
+		long groupId, long classNameId, long classPK, String type,
 		OrderByComparator<DDMTemplate> orderByComparator)
 		throws com.liferay.dynamic.data.mapping.exception.NoSuchTemplateException {
 		return getPersistence()
@@ -2993,7 +2976,7 @@ public class DDMTemplateUtil {
 	* @return the matching ddm templates that the user has permission to view
 	*/
 	public static List<DDMTemplate> filterFindByG_C_C_T(long groupId,
-		long classNameId, long classPK, java.lang.String type) {
+		long classNameId, long classPK, String type) {
 		return getPersistence()
 				   .filterFindByG_C_C_T(groupId, classNameId, classPK, type);
 	}
@@ -3014,8 +2997,7 @@ public class DDMTemplateUtil {
 	* @return the range of matching ddm templates that the user has permission to view
 	*/
 	public static List<DDMTemplate> filterFindByG_C_C_T(long groupId,
-		long classNameId, long classPK, java.lang.String type, int start,
-		int end) {
+		long classNameId, long classPK, String type, int start, int end) {
 		return getPersistence()
 				   .filterFindByG_C_C_T(groupId, classNameId, classPK, type,
 			start, end);
@@ -3038,8 +3020,8 @@ public class DDMTemplateUtil {
 	* @return the ordered range of matching ddm templates that the user has permission to view
 	*/
 	public static List<DDMTemplate> filterFindByG_C_C_T(long groupId,
-		long classNameId, long classPK, java.lang.String type, int start,
-		int end, OrderByComparator<DDMTemplate> orderByComparator) {
+		long classNameId, long classPK, String type, int start, int end,
+		OrderByComparator<DDMTemplate> orderByComparator) {
 		return getPersistence()
 				   .filterFindByG_C_C_T(groupId, classNameId, classPK, type,
 			start, end, orderByComparator);
@@ -3059,7 +3041,7 @@ public class DDMTemplateUtil {
 	*/
 	public static DDMTemplate[] filterFindByG_C_C_T_PrevAndNext(
 		long templateId, long groupId, long classNameId, long classPK,
-		java.lang.String type, OrderByComparator<DDMTemplate> orderByComparator)
+		String type, OrderByComparator<DDMTemplate> orderByComparator)
 		throws com.liferay.dynamic.data.mapping.exception.NoSuchTemplateException {
 		return getPersistence()
 				   .filterFindByG_C_C_T_PrevAndNext(templateId, groupId,
@@ -3075,7 +3057,7 @@ public class DDMTemplateUtil {
 	* @param type the type
 	*/
 	public static void removeByG_C_C_T(long groupId, long classNameId,
-		long classPK, java.lang.String type) {
+		long classPK, String type) {
 		getPersistence().removeByG_C_C_T(groupId, classNameId, classPK, type);
 	}
 
@@ -3089,7 +3071,7 @@ public class DDMTemplateUtil {
 	* @return the number of matching ddm templates
 	*/
 	public static int countByG_C_C_T(long groupId, long classNameId,
-		long classPK, java.lang.String type) {
+		long classPK, String type) {
 		return getPersistence()
 				   .countByG_C_C_T(groupId, classNameId, classPK, type);
 	}
@@ -3104,7 +3086,7 @@ public class DDMTemplateUtil {
 	* @return the number of matching ddm templates that the user has permission to view
 	*/
 	public static int filterCountByG_C_C_T(long groupId, long classNameId,
-		long classPK, java.lang.String type) {
+		long classPK, String type) {
 		return getPersistence()
 				   .filterCountByG_C_C_T(groupId, classNameId, classPK, type);
 	}
@@ -3120,8 +3102,7 @@ public class DDMTemplateUtil {
 	* @return the matching ddm templates
 	*/
 	public static List<DDMTemplate> findByG_C_C_T_M(long groupId,
-		long classNameId, long classPK, java.lang.String type,
-		java.lang.String mode) {
+		long classNameId, long classPK, String type, String mode) {
 		return getPersistence()
 				   .findByG_C_C_T_M(groupId, classNameId, classPK, type, mode);
 	}
@@ -3143,8 +3124,8 @@ public class DDMTemplateUtil {
 	* @return the range of matching ddm templates
 	*/
 	public static List<DDMTemplate> findByG_C_C_T_M(long groupId,
-		long classNameId, long classPK, java.lang.String type,
-		java.lang.String mode, int start, int end) {
+		long classNameId, long classPK, String type, String mode, int start,
+		int end) {
 		return getPersistence()
 				   .findByG_C_C_T_M(groupId, classNameId, classPK, type, mode,
 			start, end);
@@ -3168,9 +3149,8 @@ public class DDMTemplateUtil {
 	* @return the ordered range of matching ddm templates
 	*/
 	public static List<DDMTemplate> findByG_C_C_T_M(long groupId,
-		long classNameId, long classPK, java.lang.String type,
-		java.lang.String mode, int start, int end,
-		OrderByComparator<DDMTemplate> orderByComparator) {
+		long classNameId, long classPK, String type, String mode, int start,
+		int end, OrderByComparator<DDMTemplate> orderByComparator) {
 		return getPersistence()
 				   .findByG_C_C_T_M(groupId, classNameId, classPK, type, mode,
 			start, end, orderByComparator);
@@ -3195,9 +3175,8 @@ public class DDMTemplateUtil {
 	* @return the ordered range of matching ddm templates
 	*/
 	public static List<DDMTemplate> findByG_C_C_T_M(long groupId,
-		long classNameId, long classPK, java.lang.String type,
-		java.lang.String mode, int start, int end,
-		OrderByComparator<DDMTemplate> orderByComparator,
+		long classNameId, long classPK, String type, String mode, int start,
+		int end, OrderByComparator<DDMTemplate> orderByComparator,
 		boolean retrieveFromCache) {
 		return getPersistence()
 				   .findByG_C_C_T_M(groupId, classNameId, classPK, type, mode,
@@ -3217,8 +3196,8 @@ public class DDMTemplateUtil {
 	* @throws NoSuchTemplateException if a matching ddm template could not be found
 	*/
 	public static DDMTemplate findByG_C_C_T_M_First(long groupId,
-		long classNameId, long classPK, java.lang.String type,
-		java.lang.String mode, OrderByComparator<DDMTemplate> orderByComparator)
+		long classNameId, long classPK, String type, String mode,
+		OrderByComparator<DDMTemplate> orderByComparator)
 		throws com.liferay.dynamic.data.mapping.exception.NoSuchTemplateException {
 		return getPersistence()
 				   .findByG_C_C_T_M_First(groupId, classNameId, classPK, type,
@@ -3237,8 +3216,8 @@ public class DDMTemplateUtil {
 	* @return the first matching ddm template, or <code>null</code> if a matching ddm template could not be found
 	*/
 	public static DDMTemplate fetchByG_C_C_T_M_First(long groupId,
-		long classNameId, long classPK, java.lang.String type,
-		java.lang.String mode, OrderByComparator<DDMTemplate> orderByComparator) {
+		long classNameId, long classPK, String type, String mode,
+		OrderByComparator<DDMTemplate> orderByComparator) {
 		return getPersistence()
 				   .fetchByG_C_C_T_M_First(groupId, classNameId, classPK, type,
 			mode, orderByComparator);
@@ -3257,8 +3236,8 @@ public class DDMTemplateUtil {
 	* @throws NoSuchTemplateException if a matching ddm template could not be found
 	*/
 	public static DDMTemplate findByG_C_C_T_M_Last(long groupId,
-		long classNameId, long classPK, java.lang.String type,
-		java.lang.String mode, OrderByComparator<DDMTemplate> orderByComparator)
+		long classNameId, long classPK, String type, String mode,
+		OrderByComparator<DDMTemplate> orderByComparator)
 		throws com.liferay.dynamic.data.mapping.exception.NoSuchTemplateException {
 		return getPersistence()
 				   .findByG_C_C_T_M_Last(groupId, classNameId, classPK, type,
@@ -3277,8 +3256,8 @@ public class DDMTemplateUtil {
 	* @return the last matching ddm template, or <code>null</code> if a matching ddm template could not be found
 	*/
 	public static DDMTemplate fetchByG_C_C_T_M_Last(long groupId,
-		long classNameId, long classPK, java.lang.String type,
-		java.lang.String mode, OrderByComparator<DDMTemplate> orderByComparator) {
+		long classNameId, long classPK, String type, String mode,
+		OrderByComparator<DDMTemplate> orderByComparator) {
 		return getPersistence()
 				   .fetchByG_C_C_T_M_Last(groupId, classNameId, classPK, type,
 			mode, orderByComparator);
@@ -3298,8 +3277,8 @@ public class DDMTemplateUtil {
 	* @throws NoSuchTemplateException if a ddm template with the primary key could not be found
 	*/
 	public static DDMTemplate[] findByG_C_C_T_M_PrevAndNext(long templateId,
-		long groupId, long classNameId, long classPK, java.lang.String type,
-		java.lang.String mode, OrderByComparator<DDMTemplate> orderByComparator)
+		long groupId, long classNameId, long classPK, String type, String mode,
+		OrderByComparator<DDMTemplate> orderByComparator)
 		throws com.liferay.dynamic.data.mapping.exception.NoSuchTemplateException {
 		return getPersistence()
 				   .findByG_C_C_T_M_PrevAndNext(templateId, groupId,
@@ -3317,8 +3296,7 @@ public class DDMTemplateUtil {
 	* @return the matching ddm templates that the user has permission to view
 	*/
 	public static List<DDMTemplate> filterFindByG_C_C_T_M(long groupId,
-		long classNameId, long classPK, java.lang.String type,
-		java.lang.String mode) {
+		long classNameId, long classPK, String type, String mode) {
 		return getPersistence()
 				   .filterFindByG_C_C_T_M(groupId, classNameId, classPK, type,
 			mode);
@@ -3341,8 +3319,8 @@ public class DDMTemplateUtil {
 	* @return the range of matching ddm templates that the user has permission to view
 	*/
 	public static List<DDMTemplate> filterFindByG_C_C_T_M(long groupId,
-		long classNameId, long classPK, java.lang.String type,
-		java.lang.String mode, int start, int end) {
+		long classNameId, long classPK, String type, String mode, int start,
+		int end) {
 		return getPersistence()
 				   .filterFindByG_C_C_T_M(groupId, classNameId, classPK, type,
 			mode, start, end);
@@ -3366,9 +3344,8 @@ public class DDMTemplateUtil {
 	* @return the ordered range of matching ddm templates that the user has permission to view
 	*/
 	public static List<DDMTemplate> filterFindByG_C_C_T_M(long groupId,
-		long classNameId, long classPK, java.lang.String type,
-		java.lang.String mode, int start, int end,
-		OrderByComparator<DDMTemplate> orderByComparator) {
+		long classNameId, long classPK, String type, String mode, int start,
+		int end, OrderByComparator<DDMTemplate> orderByComparator) {
 		return getPersistence()
 				   .filterFindByG_C_C_T_M(groupId, classNameId, classPK, type,
 			mode, start, end, orderByComparator);
@@ -3389,7 +3366,7 @@ public class DDMTemplateUtil {
 	*/
 	public static DDMTemplate[] filterFindByG_C_C_T_M_PrevAndNext(
 		long templateId, long groupId, long classNameId, long classPK,
-		java.lang.String type, java.lang.String mode,
+		String type, String mode,
 		OrderByComparator<DDMTemplate> orderByComparator)
 		throws com.liferay.dynamic.data.mapping.exception.NoSuchTemplateException {
 		return getPersistence()
@@ -3407,7 +3384,7 @@ public class DDMTemplateUtil {
 	* @param mode the mode
 	*/
 	public static void removeByG_C_C_T_M(long groupId, long classNameId,
-		long classPK, java.lang.String type, java.lang.String mode) {
+		long classPK, String type, String mode) {
 		getPersistence()
 			.removeByG_C_C_T_M(groupId, classNameId, classPK, type, mode);
 	}
@@ -3423,7 +3400,7 @@ public class DDMTemplateUtil {
 	* @return the number of matching ddm templates
 	*/
 	public static int countByG_C_C_T_M(long groupId, long classNameId,
-		long classPK, java.lang.String type, java.lang.String mode) {
+		long classPK, String type, String mode) {
 		return getPersistence()
 				   .countByG_C_C_T_M(groupId, classNameId, classPK, type, mode);
 	}
@@ -3439,7 +3416,7 @@ public class DDMTemplateUtil {
 	* @return the number of matching ddm templates that the user has permission to view
 	*/
 	public static int filterCountByG_C_C_T_M(long groupId, long classNameId,
-		long classPK, java.lang.String type, java.lang.String mode) {
+		long classPK, String type, String mode) {
 		return getPersistence()
 				   .filterCountByG_C_C_T_M(groupId, classNameId, classPK, type,
 			mode);
@@ -3593,7 +3570,7 @@ public class DDMTemplateUtil {
 		return getPersistence().countAll();
 	}
 
-	public static java.util.Set<java.lang.String> getBadColumnNames() {
+	public static java.util.Set<String> getBadColumnNames() {
 		return getPersistence().getBadColumnNames();
 	}
 

@@ -86,9 +86,9 @@ public class DLAppServiceSoap {
 	* @return the file entry
 	*/
 	public static com.liferay.portal.kernel.repository.model.FileEntrySoap addFileEntry(
-		long repositoryId, long folderId, java.lang.String sourceFileName,
-		java.lang.String mimeType, java.lang.String title,
-		java.lang.String description, java.lang.String changeLog, byte[] bytes,
+		long repositoryId, long folderId, String sourceFileName,
+		String mimeType, String title, String description, String changeLog,
+		byte[] bytes,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
@@ -118,8 +118,8 @@ public class DLAppServiceSoap {
 	* @return the folder
 	*/
 	public static com.liferay.portal.kernel.repository.model.FolderSoap addFolder(
-		long repositoryId, long parentFolderId, java.lang.String name,
-		java.lang.String description,
+		long repositoryId, long parentFolderId, String name,
+		String description,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
@@ -190,7 +190,7 @@ public class DLAppServiceSoap {
 	* @see #checkOutFileEntry(long, ServiceContext)
 	*/
 	public static void checkInFileEntry(long fileEntryId, boolean majorVersion,
-		java.lang.String changeLog,
+		String changeLog,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
@@ -226,8 +226,7 @@ public class DLAppServiceSoap {
 	* @see #cancelCheckOut(long)
 	* @see #checkOutFileEntry(long, String, long, ServiceContext)
 	*/
-	public static void checkInFileEntry(long fileEntryId,
-		java.lang.String lockUuid,
+	public static void checkInFileEntry(long fileEntryId, String lockUuid,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
@@ -299,7 +298,7 @@ public class DLAppServiceSoap {
 	* @see #checkInFileEntry(long, String)
 	*/
 	public static com.liferay.portal.kernel.repository.model.FileEntrySoap checkOutFileEntry(
-		long fileEntryId, java.lang.String owner, long expirationTime,
+		long fileEntryId, String owner, long expirationTime,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
@@ -328,7 +327,7 @@ public class DLAppServiceSoap {
 	*/
 	public static com.liferay.portal.kernel.repository.model.FolderSoap copyFolder(
 		long repositoryId, long sourceFolderId, long parentFolderId,
-		java.lang.String name, java.lang.String description,
+		String name, String description,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
@@ -370,7 +369,7 @@ public class DLAppServiceSoap {
 	* @param title the file entry's title
 	*/
 	public static void deleteFileEntryByTitle(long repositoryId, long folderId,
-		java.lang.String title) throws RemoteException {
+		String title) throws RemoteException {
 		try {
 			DLAppServiceUtil.deleteFileEntryByTitle(repositoryId, folderId,
 				title);
@@ -408,8 +407,8 @@ public class DLAppServiceSoap {
 	* @param fileEntryId the primary key of the file entry
 	* @param version the version label of the file version
 	*/
-	public static void deleteFileVersion(long fileEntryId,
-		java.lang.String version) throws RemoteException {
+	public static void deleteFileVersion(long fileEntryId, String version)
+		throws RemoteException {
 		try {
 			DLAppServiceUtil.deleteFileVersion(fileEntryId, version);
 		}
@@ -446,7 +445,7 @@ public class DLAppServiceSoap {
 	* @param name the folder's name
 	*/
 	public static void deleteFolder(long repositoryId, long parentFolderId,
-		java.lang.String name) throws RemoteException {
+		String name) throws RemoteException {
 		try {
 			DLAppServiceUtil.deleteFolder(repositoryId, parentFolderId, name);
 		}
@@ -468,8 +467,7 @@ public class DLAppServiceSoap {
 	* @see TempFileEntryUtil
 	*/
 	public static void deleteTempFileEntry(long groupId, long folderId,
-		java.lang.String folderName, java.lang.String fileName)
-		throws RemoteException {
+		String folderName, String fileName) throws RemoteException {
 		try {
 			DLAppServiceUtil.deleteTempFileEntry(groupId, folderId, folderName,
 				fileName);
@@ -664,7 +662,7 @@ public class DLAppServiceSoap {
 	}
 
 	public static com.liferay.portal.kernel.repository.model.FileEntrySoap[] getFileEntries(
-		long repositoryId, long folderId, java.lang.String[] mimeTypes)
+		long repositoryId, long folderId, String[] mimeTypes)
 		throws RemoteException {
 		try {
 			java.util.List<com.liferay.portal.kernel.repository.model.FileEntry> returnValue =
@@ -681,8 +679,8 @@ public class DLAppServiceSoap {
 	}
 
 	public static com.liferay.portal.kernel.repository.model.FileEntrySoap[] getFileEntries(
-		long repositoryId, long folderId, java.lang.String[] mimeTypes,
-		int start, int end,
+		long repositoryId, long folderId, String[] mimeTypes, int start,
+		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.kernel.repository.model.FileEntry> obc)
 		throws RemoteException {
 		try {
@@ -732,7 +730,7 @@ public class DLAppServiceSoap {
 	* @return the number of file entries and shortcuts in the folder
 	*/
 	public static int getFileEntriesAndFileShortcutsCount(long repositoryId,
-		long folderId, int status, java.lang.String[] mimeTypes)
+		long folderId, int status, String[] mimeTypes)
 		throws RemoteException {
 		try {
 			int returnValue = DLAppServiceUtil.getFileEntriesAndFileShortcutsCount(repositoryId,
@@ -794,7 +792,7 @@ public class DLAppServiceSoap {
 	}
 
 	public static int getFileEntriesCount(long repositoryId, long folderId,
-		java.lang.String[] mimeTypes) throws RemoteException {
+		String[] mimeTypes) throws RemoteException {
 		try {
 			int returnValue = DLAppServiceUtil.getFileEntriesCount(repositoryId,
 					folderId, mimeTypes);
@@ -837,8 +835,7 @@ public class DLAppServiceSoap {
 	* @return the file entry with the title in the folder
 	*/
 	public static com.liferay.portal.kernel.repository.model.FileEntrySoap getFileEntry(
-		long groupId, long folderId, java.lang.String title)
-		throws RemoteException {
+		long groupId, long folderId, String title) throws RemoteException {
 		try {
 			com.liferay.portal.kernel.repository.model.FileEntry returnValue = DLAppServiceUtil.getFileEntry(groupId,
 					folderId, title);
@@ -860,7 +857,7 @@ public class DLAppServiceSoap {
 	* @return the file entry with the UUID and group
 	*/
 	public static com.liferay.portal.kernel.repository.model.FileEntrySoap getFileEntryByUuidAndGroupId(
-		java.lang.String uuid, long groupId) throws RemoteException {
+		String uuid, long groupId) throws RemoteException {
 		try {
 			com.liferay.portal.kernel.repository.model.FileEntry returnValue = DLAppServiceUtil.getFileEntryByUuidAndGroupId(uuid,
 					groupId);
@@ -903,7 +900,7 @@ public class DLAppServiceSoap {
 	* @return the folder with the name in the parent folder
 	*/
 	public static com.liferay.portal.kernel.repository.model.FolderSoap getFolder(
-		long repositoryId, long parentFolderId, java.lang.String name)
+		long repositoryId, long parentFolderId, String name)
 		throws RemoteException {
 		try {
 			com.liferay.portal.kernel.repository.model.Folder returnValue = DLAppServiceUtil.getFolder(repositoryId,
@@ -1200,9 +1197,8 @@ public class DLAppServiceSoap {
 	}
 
 	public static int getFoldersAndFileEntriesAndFileShortcutsCount(
-		long repositoryId, long folderId, int status,
-		java.lang.String[] mimeTypes, boolean includeMountFolders)
-		throws RemoteException {
+		long repositoryId, long folderId, int status, String[] mimeTypes,
+		boolean includeMountFolders) throws RemoteException {
 		try {
 			int returnValue = DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcutsCount(repositoryId,
 					folderId, status, mimeTypes, includeMountFolders);
@@ -1217,9 +1213,9 @@ public class DLAppServiceSoap {
 	}
 
 	public static int getFoldersAndFileEntriesAndFileShortcutsCount(
-		long repositoryId, long folderId, int status,
-		java.lang.String[] mimeTypes, boolean includeMountFolders,
-		boolean includeOwner) throws RemoteException {
+		long repositoryId, long folderId, int status, String[] mimeTypes,
+		boolean includeMountFolders, boolean includeOwner)
+		throws RemoteException {
 		try {
 			int returnValue = DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcutsCount(repositoryId,
 					folderId, status, mimeTypes, includeMountFolders,
@@ -1502,8 +1498,8 @@ public class DLAppServiceSoap {
 	}
 
 	public static com.liferay.portal.kernel.repository.model.FileEntrySoap[] getGroupFileEntries(
-		long groupId, long userId, long rootFolderId,
-		java.lang.String[] mimeTypes, int status, int start, int end,
+		long groupId, long userId, long rootFolderId, String[] mimeTypes,
+		int status, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.kernel.repository.model.FileEntry> obc)
 		throws RemoteException {
 		try {
@@ -1575,7 +1571,7 @@ public class DLAppServiceSoap {
 	}
 
 	public static int getGroupFileEntriesCount(long groupId, long userId,
-		long rootFolderId, java.lang.String[] mimeTypes, int status)
+		long rootFolderId, String[] mimeTypes, int status)
 		throws RemoteException {
 		try {
 			int returnValue = DLAppServiceUtil.getGroupFileEntriesCount(groupId,
@@ -1740,13 +1736,13 @@ public class DLAppServiceSoap {
 	* @param folderId the primary key of the folder
 	* @return the descendant folders of the folder with the primary key
 	*/
-	public static java.lang.Long[] getSubfolderIds(long repositoryId,
-		long folderId) throws RemoteException {
+	public static Long[] getSubfolderIds(long repositoryId, long folderId)
+		throws RemoteException {
 		try {
-			java.util.List<java.lang.Long> returnValue = DLAppServiceUtil.getSubfolderIds(repositoryId,
+			java.util.List<Long> returnValue = DLAppServiceUtil.getSubfolderIds(repositoryId,
 					folderId);
 
-			return returnValue.toArray(new java.lang.Long[returnValue.size()]);
+			return returnValue.toArray(new Long[returnValue.size()]);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -1764,13 +1760,13 @@ public class DLAppServiceSoap {
 	* @param recurse whether to recurse through each subfolder
 	* @return the descendant folders of the folder with the primary key
 	*/
-	public static java.lang.Long[] getSubfolderIds(long repositoryId,
-		long folderId, boolean recurse) throws RemoteException {
+	public static Long[] getSubfolderIds(long repositoryId, long folderId,
+		boolean recurse) throws RemoteException {
 		try {
-			java.util.List<java.lang.Long> returnValue = DLAppServiceUtil.getSubfolderIds(repositoryId,
+			java.util.List<Long> returnValue = DLAppServiceUtil.getSubfolderIds(repositoryId,
 					folderId, recurse);
 
-			return returnValue.toArray(new java.lang.Long[returnValue.size()]);
+			return returnValue.toArray(new Long[returnValue.size()]);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -1790,10 +1786,10 @@ public class DLAppServiceSoap {
 	* @see #addTempFileEntry(long, long, String, String, File, String)
 	* @see TempFileEntryUtil
 	*/
-	public static java.lang.String[] getTempFileNames(long groupId,
-		long folderId, java.lang.String folderName) throws RemoteException {
+	public static String[] getTempFileNames(long groupId, long folderId,
+		String folderName) throws RemoteException {
 		try {
-			java.lang.String[] returnValue = DLAppServiceUtil.getTempFileNames(groupId,
+			String[] returnValue = DLAppServiceUtil.getTempFileNames(groupId,
 					folderId, folderName);
 
 			return returnValue;
@@ -1841,8 +1837,8 @@ public class DLAppServiceSoap {
 	* @return the lock object
 	*/
 	public static com.liferay.portal.kernel.lock.Lock lockFolder(
-		long repositoryId, long folderId, java.lang.String owner,
-		boolean inheritable, long expirationTime) throws RemoteException {
+		long repositoryId, long folderId, String owner, boolean inheritable,
+		long expirationTime) throws RemoteException {
 		try {
 			com.liferay.portal.kernel.lock.Lock returnValue = DLAppServiceUtil.lockFolder(repositoryId,
 					folderId, owner, inheritable, expirationTime);
@@ -1918,7 +1914,7 @@ public class DLAppServiceSoap {
 	* @return the lock object
 	*/
 	public static com.liferay.portal.kernel.lock.Lock refreshFileEntryLock(
-		java.lang.String lockUuid, long companyId, long expirationTime)
+		String lockUuid, long companyId, long expirationTime)
 		throws RemoteException {
 		try {
 			com.liferay.portal.kernel.lock.Lock returnValue = DLAppServiceUtil.refreshFileEntryLock(lockUuid,
@@ -1945,7 +1941,7 @@ public class DLAppServiceSoap {
 	* @return the lock object
 	*/
 	public static com.liferay.portal.kernel.lock.Lock refreshFolderLock(
-		java.lang.String lockUuid, long companyId, long expirationTime)
+		String lockUuid, long companyId, long expirationTime)
 		throws RemoteException {
 		try {
 			com.liferay.portal.kernel.lock.Lock returnValue = DLAppServiceUtil.refreshFolderLock(lockUuid,
@@ -1968,8 +1964,7 @@ public class DLAppServiceSoap {
 	* @param version the version to revert back to
 	* @param serviceContext the service context to be applied
 	*/
-	public static void revertFileEntry(long fileEntryId,
-		java.lang.String version,
+	public static void revertFileEntry(long fileEntryId, String version,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
@@ -2029,7 +2024,7 @@ public class DLAppServiceSoap {
 	* @param lockUuid the lock's UUID
 	*/
 	public static void unlockFolder(long repositoryId, long folderId,
-		java.lang.String lockUuid) throws RemoteException {
+		String lockUuid) throws RemoteException {
 		try {
 			DLAppServiceUtil.unlockFolder(repositoryId, folderId, lockUuid);
 		}
@@ -2049,8 +2044,7 @@ public class DLAppServiceSoap {
 	* @param lockUuid the lock's UUID
 	*/
 	public static void unlockFolder(long repositoryId, long parentFolderId,
-		java.lang.String name, java.lang.String lockUuid)
-		throws RemoteException {
+		String name, String lockUuid) throws RemoteException {
 		try {
 			DLAppServiceUtil.unlockFolder(repositoryId, parentFolderId, name,
 				lockUuid);
@@ -2134,10 +2128,9 @@ public class DLAppServiceSoap {
 	* @return the file entry
 	*/
 	public static com.liferay.portal.kernel.repository.model.FileEntrySoap updateFileEntry(
-		long fileEntryId, java.lang.String sourceFileName,
-		java.lang.String mimeType, java.lang.String title,
-		java.lang.String description, java.lang.String changeLog,
-		boolean majorVersion, byte[] bytes,
+		long fileEntryId, String sourceFileName, String mimeType, String title,
+		String description, String changeLog, boolean majorVersion,
+		byte[] bytes,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
@@ -2175,7 +2168,7 @@ public class DLAppServiceSoap {
 	* @return the folder
 	*/
 	public static com.liferay.portal.kernel.repository.model.FolderSoap updateFolder(
-		long folderId, java.lang.String name, java.lang.String description,
+		long folderId, String name, String description,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
@@ -2202,7 +2195,7 @@ public class DLAppServiceSoap {
 	<code>false</code> otherwise
 	*/
 	public static boolean verifyFileEntryCheckOut(long repositoryId,
-		long fileEntryId, java.lang.String lockUuid) throws RemoteException {
+		long fileEntryId, String lockUuid) throws RemoteException {
 		try {
 			boolean returnValue = DLAppServiceUtil.verifyFileEntryCheckOut(repositoryId,
 					fileEntryId, lockUuid);
@@ -2217,7 +2210,7 @@ public class DLAppServiceSoap {
 	}
 
 	public static boolean verifyFileEntryLock(long repositoryId,
-		long fileEntryId, java.lang.String lockUuid) throws RemoteException {
+		long fileEntryId, String lockUuid) throws RemoteException {
 		try {
 			boolean returnValue = DLAppServiceUtil.verifyFileEntryLock(repositoryId,
 					fileEntryId, lockUuid);
@@ -2242,7 +2235,7 @@ public class DLAppServiceSoap {
 	<code>false</code> otherwise
 	*/
 	public static boolean verifyInheritableLock(long repositoryId,
-		long folderId, java.lang.String lockUuid) throws RemoteException {
+		long folderId, String lockUuid) throws RemoteException {
 		try {
 			boolean returnValue = DLAppServiceUtil.verifyInheritableLock(repositoryId,
 					folderId, lockUuid);

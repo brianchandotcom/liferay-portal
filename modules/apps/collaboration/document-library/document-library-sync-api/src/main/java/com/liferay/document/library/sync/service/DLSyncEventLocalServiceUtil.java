@@ -55,7 +55,7 @@ public class DLSyncEventLocalServiceUtil {
 	}
 
 	public static com.liferay.document.library.sync.model.DLSyncEvent addDLSyncEvent(
-		java.lang.String event, java.lang.String type, long typePK) {
+		String event, String type, long typePK) {
 		return getService().addDLSyncEvent(event, type, typePK);
 	}
 
@@ -250,7 +250,7 @@ public class DLSyncEventLocalServiceUtil {
 	*
 	* @return the OSGi service identifier
 	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
+	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 

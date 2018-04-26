@@ -132,7 +132,7 @@ public class FriendlyURLEntryLocalizationWrapper
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new FriendlyURLEntryLocalizationWrapper((FriendlyURLEntryLocalization)_friendlyURLEntryLocalization.clone());
 	}
 
@@ -148,7 +148,7 @@ public class FriendlyURLEntryLocalizationWrapper
 	* @return the fully qualified class name of this friendly url entry localization
 	*/
 	@Override
-	public java.lang.String getClassName() {
+	public String getClassName() {
 		return _friendlyURLEntryLocalization.getClassName();
 	}
 
@@ -223,7 +223,7 @@ public class FriendlyURLEntryLocalizationWrapper
 	* @return the language ID of this friendly url entry localization
 	*/
 	@Override
-	public java.lang.String getLanguageId() {
+	public String getLanguageId() {
 		return _friendlyURLEntryLocalization.getLanguageId();
 	}
 
@@ -258,7 +258,7 @@ public class FriendlyURLEntryLocalizationWrapper
 	* @return the url title of this friendly url entry localization
 	*/
 	@Override
-	public java.lang.String getUrlTitle() {
+	public String getUrlTitle() {
 		return _friendlyURLEntryLocalization.getUrlTitle();
 	}
 
@@ -288,7 +288,7 @@ public class FriendlyURLEntryLocalizationWrapper
 	}
 
 	@Override
-	public void setClassName(java.lang.String className) {
+	public void setClassName(String className) {
 		_friendlyURLEntryLocalization.setClassName(className);
 	}
 
@@ -375,7 +375,7 @@ public class FriendlyURLEntryLocalizationWrapper
 	* @param languageId the language ID of this friendly url entry localization
 	*/
 	@Override
-	public void setLanguageId(java.lang.String languageId) {
+	public void setLanguageId(String languageId) {
 		_friendlyURLEntryLocalization.setLanguageId(languageId);
 	}
 
@@ -415,7 +415,7 @@ public class FriendlyURLEntryLocalizationWrapper
 	* @param urlTitle the url title of this friendly url entry localization
 	*/
 	@Override
-	public void setUrlTitle(java.lang.String urlTitle) {
+	public void setUrlTitle(String urlTitle) {
 		_friendlyURLEntryLocalization.setUrlTitle(urlTitle);
 	}
 
@@ -430,7 +430,7 @@ public class FriendlyURLEntryLocalizationWrapper
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _friendlyURLEntryLocalization.toString();
 	}
 
@@ -440,7 +440,7 @@ public class FriendlyURLEntryLocalizationWrapper
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _friendlyURLEntryLocalization.toXmlString();
 	}
 

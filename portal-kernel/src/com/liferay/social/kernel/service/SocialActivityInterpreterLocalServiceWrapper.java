@@ -57,13 +57,13 @@ public class SocialActivityInterpreterLocalServiceWrapper
 	}
 
 	@Override
-	public java.util.Map<java.lang.String, java.util.List<com.liferay.social.kernel.model.SocialActivityInterpreter>> getActivityInterpreters() {
+	public java.util.Map<String, java.util.List<com.liferay.social.kernel.model.SocialActivityInterpreter>> getActivityInterpreters() {
 		return _socialActivityInterpreterLocalService.getActivityInterpreters();
 	}
 
 	@Override
 	public java.util.List<com.liferay.social.kernel.model.SocialActivityInterpreter> getActivityInterpreters(
-		java.lang.String selector) {
+		String selector) {
 		return _socialActivityInterpreterLocalService.getActivityInterpreters(selector);
 	}
 
@@ -73,7 +73,7 @@ public class SocialActivityInterpreterLocalServiceWrapper
 	* @return the OSGi service identifier
 	*/
 	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
+	public String getOSGiServiceIdentifier() {
 		return _socialActivityInterpreterLocalService.getOSGiServiceIdentifier();
 	}
 
@@ -96,7 +96,7 @@ public class SocialActivityInterpreterLocalServiceWrapper
 	*/
 	@Override
 	public com.liferay.social.kernel.model.SocialActivityFeedEntry interpret(
-		java.lang.String selector,
+		String selector,
 		com.liferay.social.kernel.model.SocialActivity activity,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext) {
 		return _socialActivityInterpreterLocalService.interpret(selector,
@@ -105,7 +105,7 @@ public class SocialActivityInterpreterLocalServiceWrapper
 
 	@Override
 	public com.liferay.social.kernel.model.SocialActivityFeedEntry interpret(
-		java.lang.String selector,
+		String selector,
 		com.liferay.social.kernel.model.SocialActivitySet activitySet,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext) {
 		return _socialActivityInterpreterLocalService.interpret(selector,

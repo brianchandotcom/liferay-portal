@@ -43,7 +43,7 @@ public class ScreensRatingsEntryServiceUtil {
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.screens.service.impl.ScreensRatingsEntryServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static com.liferay.portal.kernel.json.JSONObject deleteRatingsEntry(
-		long classPK, java.lang.String className, int ratingsLength)
+		long classPK, String className, int ratingsLength)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().deleteRatingsEntry(classPK, className, ratingsLength);
 	}
@@ -53,7 +53,7 @@ public class ScreensRatingsEntryServiceUtil {
 	*
 	* @return the OSGi service identifier
 	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
+	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 
@@ -64,14 +64,13 @@ public class ScreensRatingsEntryServiceUtil {
 	}
 
 	public static com.liferay.portal.kernel.json.JSONObject getRatingsEntries(
-		long classPK, java.lang.String className, int ratingsLength)
+		long classPK, String className, int ratingsLength)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getRatingsEntries(classPK, className, ratingsLength);
 	}
 
 	public static com.liferay.portal.kernel.json.JSONObject updateRatingsEntry(
-		long classPK, java.lang.String className, double score,
-		int ratingsLength)
+		long classPK, String className, double score, int ratingsLength)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .updateRatingsEntry(classPK, className, score, ratingsLength);

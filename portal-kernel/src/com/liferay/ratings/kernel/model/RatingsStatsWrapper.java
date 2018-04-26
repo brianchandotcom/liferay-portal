@@ -114,7 +114,7 @@ public class RatingsStatsWrapper implements RatingsStats,
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new RatingsStatsWrapper((RatingsStats)_ratingsStats.clone());
 	}
 
@@ -139,7 +139,7 @@ public class RatingsStatsWrapper implements RatingsStats,
 	* @return the fully qualified class name of this ratings stats
 	*/
 	@Override
-	public java.lang.String getClassName() {
+	public String getClassName() {
 		return _ratingsStats.getClassName();
 	}
 
@@ -264,7 +264,7 @@ public class RatingsStatsWrapper implements RatingsStats,
 	}
 
 	@Override
-	public void setClassName(java.lang.String className) {
+	public void setClassName(String className) {
 		_ratingsStats.setClassName(className);
 	}
 
@@ -375,7 +375,7 @@ public class RatingsStatsWrapper implements RatingsStats,
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _ratingsStats.toString();
 	}
 
@@ -385,7 +385,7 @@ public class RatingsStatsWrapper implements RatingsStats,
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _ratingsStats.toXmlString();
 	}
 

@@ -34,8 +34,8 @@ public class UserTrackerLocalServiceWrapper implements UserTrackerLocalService,
 	@Override
 	public com.liferay.portal.kernel.model.UserTracker addUserTracker(
 		long companyId, long userId, java.util.Date modifiedDate,
-		java.lang.String sessionId, java.lang.String remoteAddr,
-		java.lang.String remoteHost, java.lang.String userAgent,
+		String sessionId, String remoteAddr, String remoteHost,
+		String userAgent,
 		java.util.List<com.liferay.portal.kernel.model.UserTrackerPath> userTrackerPaths) {
 		return _userTrackerLocalService.addUserTracker(companyId, userId,
 			modifiedDate, sessionId, remoteAddr, remoteHost, userAgent,
@@ -209,7 +209,7 @@ public class UserTrackerLocalServiceWrapper implements UserTrackerLocalService,
 	* @return the OSGi service identifier
 	*/
 	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
+	public String getOSGiServiceIdentifier() {
 		return _userTrackerLocalService.getOSGiServiceIdentifier();
 	}
 

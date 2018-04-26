@@ -33,7 +33,7 @@ public class RatingsStatsFinderUtil {
 	}
 
 	public static java.util.List<com.liferay.ratings.kernel.model.RatingsStats> findByC_C(
-		long classNameId, java.util.List<java.lang.Long> classPKs) {
+		long classNameId, java.util.List<Long> classPKs) {
 		return getFinder().findByC_C(classNameId, classPKs);
 	}
 

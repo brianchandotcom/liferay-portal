@@ -192,7 +192,7 @@ public class ShoppingCouponWrapper implements ShoppingCoupon,
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new ShoppingCouponWrapper((ShoppingCoupon)_shoppingCoupon.clone());
 	}
 
@@ -217,7 +217,7 @@ public class ShoppingCouponWrapper implements ShoppingCoupon,
 	* @return the code of this shopping coupon
 	*/
 	@Override
-	public java.lang.String getCode() {
+	public String getCode() {
 		return _shoppingCoupon.getCode();
 	}
 
@@ -257,7 +257,7 @@ public class ShoppingCouponWrapper implements ShoppingCoupon,
 	* @return the description of this shopping coupon
 	*/
 	@Override
-	public java.lang.String getDescription() {
+	public String getDescription() {
 		return _shoppingCoupon.getDescription();
 	}
 
@@ -277,7 +277,7 @@ public class ShoppingCouponWrapper implements ShoppingCoupon,
 	* @return the discount type of this shopping coupon
 	*/
 	@Override
-	public java.lang.String getDiscountType() {
+	public String getDiscountType() {
 		return _shoppingCoupon.getDiscountType();
 	}
 
@@ -312,7 +312,7 @@ public class ShoppingCouponWrapper implements ShoppingCoupon,
 	* @return the limit categories of this shopping coupon
 	*/
 	@Override
-	public java.lang.String getLimitCategories() {
+	public String getLimitCategories() {
 		return _shoppingCoupon.getLimitCategories();
 	}
 
@@ -322,7 +322,7 @@ public class ShoppingCouponWrapper implements ShoppingCoupon,
 	* @return the limit skus of this shopping coupon
 	*/
 	@Override
-	public java.lang.String getLimitSkus() {
+	public String getLimitSkus() {
 		return _shoppingCoupon.getLimitSkus();
 	}
 
@@ -352,7 +352,7 @@ public class ShoppingCouponWrapper implements ShoppingCoupon,
 	* @return the name of this shopping coupon
 	*/
 	@Override
-	public java.lang.String getName() {
+	public String getName() {
 		return _shoppingCoupon.getName();
 	}
 
@@ -397,7 +397,7 @@ public class ShoppingCouponWrapper implements ShoppingCoupon,
 	* @return the user name of this shopping coupon
 	*/
 	@Override
-	public java.lang.String getUserName() {
+	public String getUserName() {
 		return _shoppingCoupon.getUserName();
 	}
 
@@ -407,7 +407,7 @@ public class ShoppingCouponWrapper implements ShoppingCoupon,
 	* @return the user uuid of this shopping coupon
 	*/
 	@Override
-	public java.lang.String getUserUuid() {
+	public String getUserUuid() {
 		return _shoppingCoupon.getUserUuid();
 	}
 
@@ -482,7 +482,7 @@ public class ShoppingCouponWrapper implements ShoppingCoupon,
 	* @param code the code of this shopping coupon
 	*/
 	@Override
-	public void setCode(java.lang.String code) {
+	public void setCode(String code) {
 		_shoppingCoupon.setCode(code);
 	}
 
@@ -522,7 +522,7 @@ public class ShoppingCouponWrapper implements ShoppingCoupon,
 	* @param description the description of this shopping coupon
 	*/
 	@Override
-	public void setDescription(java.lang.String description) {
+	public void setDescription(String description) {
 		_shoppingCoupon.setDescription(description);
 	}
 
@@ -542,7 +542,7 @@ public class ShoppingCouponWrapper implements ShoppingCoupon,
 	* @param discountType the discount type of this shopping coupon
 	*/
 	@Override
-	public void setDiscountType(java.lang.String discountType) {
+	public void setDiscountType(String discountType) {
 		_shoppingCoupon.setDiscountType(discountType);
 	}
 
@@ -588,7 +588,7 @@ public class ShoppingCouponWrapper implements ShoppingCoupon,
 	* @param limitCategories the limit categories of this shopping coupon
 	*/
 	@Override
-	public void setLimitCategories(java.lang.String limitCategories) {
+	public void setLimitCategories(String limitCategories) {
 		_shoppingCoupon.setLimitCategories(limitCategories);
 	}
 
@@ -598,7 +598,7 @@ public class ShoppingCouponWrapper implements ShoppingCoupon,
 	* @param limitSkus the limit skus of this shopping coupon
 	*/
 	@Override
-	public void setLimitSkus(java.lang.String limitSkus) {
+	public void setLimitSkus(String limitSkus) {
 		_shoppingCoupon.setLimitSkus(limitSkus);
 	}
 
@@ -628,7 +628,7 @@ public class ShoppingCouponWrapper implements ShoppingCoupon,
 	* @param name the name of this shopping coupon
 	*/
 	@Override
-	public void setName(java.lang.String name) {
+	public void setName(String name) {
 		_shoppingCoupon.setName(name);
 	}
 
@@ -678,7 +678,7 @@ public class ShoppingCouponWrapper implements ShoppingCoupon,
 	* @param userName the user name of this shopping coupon
 	*/
 	@Override
-	public void setUserName(java.lang.String userName) {
+	public void setUserName(String userName) {
 		_shoppingCoupon.setUserName(userName);
 	}
 
@@ -688,7 +688,7 @@ public class ShoppingCouponWrapper implements ShoppingCoupon,
 	* @param userUuid the user uuid of this shopping coupon
 	*/
 	@Override
-	public void setUserUuid(java.lang.String userUuid) {
+	public void setUserUuid(String userUuid) {
 		_shoppingCoupon.setUserUuid(userUuid);
 	}
 
@@ -703,7 +703,7 @@ public class ShoppingCouponWrapper implements ShoppingCoupon,
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _shoppingCoupon.toString();
 	}
 
@@ -713,7 +713,7 @@ public class ShoppingCouponWrapper implements ShoppingCoupon,
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _shoppingCoupon.toXmlString();
 	}
 

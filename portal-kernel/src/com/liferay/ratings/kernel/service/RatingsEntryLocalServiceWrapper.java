@@ -58,8 +58,7 @@ public class RatingsEntryLocalServiceWrapper implements RatingsEntryLocalService
 	}
 
 	@Override
-	public void deleteEntry(long userId, java.lang.String className,
-		long classPK)
+	public void deleteEntry(long userId, String className, long classPK)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_ratingsEntryLocalService.deleteEntry(userId, className, classPK);
 	}
@@ -67,7 +66,7 @@ public class RatingsEntryLocalServiceWrapper implements RatingsEntryLocalService
 	@Override
 	public void deleteEntry(
 		com.liferay.ratings.kernel.model.RatingsEntry entry, long userId,
-		java.lang.String className, long classPK)
+		String className, long classPK)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_ratingsEntryLocalService.deleteEntry(entry, userId, className, classPK);
 	}
@@ -195,7 +194,7 @@ public class RatingsEntryLocalServiceWrapper implements RatingsEntryLocalService
 
 	@Override
 	public com.liferay.ratings.kernel.model.RatingsEntry fetchEntry(
-		long userId, java.lang.String className, long classPK) {
+		long userId, String className, long classPK) {
 		return _ratingsEntryLocalService.fetchEntry(userId, className, classPK);
 	}
 
@@ -214,7 +213,7 @@ public class RatingsEntryLocalServiceWrapper implements RatingsEntryLocalService
 	*/
 	@Override
 	public com.liferay.ratings.kernel.model.RatingsEntry fetchRatingsEntryByUuidAndCompanyId(
-		java.lang.String uuid, long companyId) {
+		String uuid, long companyId) {
 		return _ratingsEntryLocalService.fetchRatingsEntryByUuidAndCompanyId(uuid,
 			companyId);
 	}
@@ -230,39 +229,37 @@ public class RatingsEntryLocalServiceWrapper implements RatingsEntryLocalService
 	@Deprecated
 	@Override
 	public java.util.List<com.liferay.ratings.kernel.model.RatingsEntry> getEntries(
-		long userId, java.lang.String className,
-		java.util.List<java.lang.Long> classPKs) {
+		long userId, String className, java.util.List<Long> classPKs) {
 		return _ratingsEntryLocalService.getEntries(userId, className, classPKs);
 	}
 
 	@Override
-	public java.util.Map<java.lang.Long, com.liferay.ratings.kernel.model.RatingsEntry> getEntries(
-		long userId, java.lang.String className, long[] classPKs) {
+	public java.util.Map<Long, com.liferay.ratings.kernel.model.RatingsEntry> getEntries(
+		long userId, String className, long[] classPKs) {
 		return _ratingsEntryLocalService.getEntries(userId, className, classPKs);
 	}
 
 	@Override
 	public java.util.List<com.liferay.ratings.kernel.model.RatingsEntry> getEntries(
-		java.lang.String className, long classPK) {
+		String className, long classPK) {
 		return _ratingsEntryLocalService.getEntries(className, classPK);
 	}
 
 	@Override
 	public java.util.List<com.liferay.ratings.kernel.model.RatingsEntry> getEntries(
-		java.lang.String className, long classPK, double score) {
+		String className, long classPK, double score) {
 		return _ratingsEntryLocalService.getEntries(className, classPK, score);
 	}
 
 	@Override
-	public int getEntriesCount(java.lang.String className, long classPK,
-		double score) {
+	public int getEntriesCount(String className, long classPK, double score) {
 		return _ratingsEntryLocalService.getEntriesCount(className, classPK,
 			score);
 	}
 
 	@Override
 	public com.liferay.ratings.kernel.model.RatingsEntry getEntry(long userId,
-		java.lang.String className, long classPK)
+		String className, long classPK)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _ratingsEntryLocalService.getEntry(userId, className, classPK);
 	}
@@ -284,7 +281,7 @@ public class RatingsEntryLocalServiceWrapper implements RatingsEntryLocalService
 	* @return the OSGi service identifier
 	*/
 	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
+	public String getOSGiServiceIdentifier() {
 		return _ratingsEntryLocalService.getOSGiServiceIdentifier();
 	}
 
@@ -346,7 +343,7 @@ public class RatingsEntryLocalServiceWrapper implements RatingsEntryLocalService
 	*/
 	@Override
 	public com.liferay.ratings.kernel.model.RatingsEntry getRatingsEntryByUuidAndCompanyId(
-		java.lang.String uuid, long companyId)
+		String uuid, long companyId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _ratingsEntryLocalService.getRatingsEntryByUuidAndCompanyId(uuid,
 			companyId);
@@ -354,7 +351,7 @@ public class RatingsEntryLocalServiceWrapper implements RatingsEntryLocalService
 
 	@Override
 	public com.liferay.ratings.kernel.model.RatingsEntry updateEntry(
-		long userId, java.lang.String className, long classPK, double score,
+		long userId, String className, long classPK, double score,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _ratingsEntryLocalService.updateEntry(userId, className,

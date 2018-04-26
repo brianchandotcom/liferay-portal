@@ -242,7 +242,7 @@ public interface ShoppingOrderPersistence extends BasePersistence<ShoppingOrder>
 	* @return the matching shopping order
 	* @throws NoSuchOrderException if a matching shopping order could not be found
 	*/
-	public ShoppingOrder findByNumber(java.lang.String number)
+	public ShoppingOrder findByNumber(String number)
 		throws NoSuchOrderException;
 
 	/**
@@ -251,7 +251,7 @@ public interface ShoppingOrderPersistence extends BasePersistence<ShoppingOrder>
 	* @param number the number
 	* @return the matching shopping order, or <code>null</code> if a matching shopping order could not be found
 	*/
-	public ShoppingOrder fetchByNumber(java.lang.String number);
+	public ShoppingOrder fetchByNumber(String number);
 
 	/**
 	* Returns the shopping order where number = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -260,8 +260,7 @@ public interface ShoppingOrderPersistence extends BasePersistence<ShoppingOrder>
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching shopping order, or <code>null</code> if a matching shopping order could not be found
 	*/
-	public ShoppingOrder fetchByNumber(java.lang.String number,
-		boolean retrieveFromCache);
+	public ShoppingOrder fetchByNumber(String number, boolean retrieveFromCache);
 
 	/**
 	* Removes the shopping order where number = &#63; from the database.
@@ -269,7 +268,7 @@ public interface ShoppingOrderPersistence extends BasePersistence<ShoppingOrder>
 	* @param number the number
 	* @return the shopping order that was removed
 	*/
-	public ShoppingOrder removeByNumber(java.lang.String number)
+	public ShoppingOrder removeByNumber(String number)
 		throws NoSuchOrderException;
 
 	/**
@@ -278,7 +277,7 @@ public interface ShoppingOrderPersistence extends BasePersistence<ShoppingOrder>
 	* @param number the number
 	* @return the number of matching shopping orders
 	*/
-	public int countByNumber(java.lang.String number);
+	public int countByNumber(String number);
 
 	/**
 	* Returns the shopping order where ppTxnId = &#63; or throws a {@link NoSuchOrderException} if it could not be found.
@@ -287,7 +286,7 @@ public interface ShoppingOrderPersistence extends BasePersistence<ShoppingOrder>
 	* @return the matching shopping order
 	* @throws NoSuchOrderException if a matching shopping order could not be found
 	*/
-	public ShoppingOrder findByPPTxnId(java.lang.String ppTxnId)
+	public ShoppingOrder findByPPTxnId(String ppTxnId)
 		throws NoSuchOrderException;
 
 	/**
@@ -296,7 +295,7 @@ public interface ShoppingOrderPersistence extends BasePersistence<ShoppingOrder>
 	* @param ppTxnId the pp txn ID
 	* @return the matching shopping order, or <code>null</code> if a matching shopping order could not be found
 	*/
-	public ShoppingOrder fetchByPPTxnId(java.lang.String ppTxnId);
+	public ShoppingOrder fetchByPPTxnId(String ppTxnId);
 
 	/**
 	* Returns the shopping order where ppTxnId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -305,7 +304,7 @@ public interface ShoppingOrderPersistence extends BasePersistence<ShoppingOrder>
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching shopping order, or <code>null</code> if a matching shopping order could not be found
 	*/
-	public ShoppingOrder fetchByPPTxnId(java.lang.String ppTxnId,
+	public ShoppingOrder fetchByPPTxnId(String ppTxnId,
 		boolean retrieveFromCache);
 
 	/**
@@ -314,7 +313,7 @@ public interface ShoppingOrderPersistence extends BasePersistence<ShoppingOrder>
 	* @param ppTxnId the pp txn ID
 	* @return the shopping order that was removed
 	*/
-	public ShoppingOrder removeByPPTxnId(java.lang.String ppTxnId)
+	public ShoppingOrder removeByPPTxnId(String ppTxnId)
 		throws NoSuchOrderException;
 
 	/**
@@ -323,7 +322,7 @@ public interface ShoppingOrderPersistence extends BasePersistence<ShoppingOrder>
 	* @param ppTxnId the pp txn ID
 	* @return the number of matching shopping orders
 	*/
-	public int countByPPTxnId(java.lang.String ppTxnId);
+	public int countByPPTxnId(String ppTxnId);
 
 	/**
 	* Returns all the shopping orders where groupId = &#63; and userId = &#63; and ppPaymentStatus = &#63;.
@@ -334,7 +333,7 @@ public interface ShoppingOrderPersistence extends BasePersistence<ShoppingOrder>
 	* @return the matching shopping orders
 	*/
 	public java.util.List<ShoppingOrder> findByG_U_PPPS(long groupId,
-		long userId, java.lang.String ppPaymentStatus);
+		long userId, String ppPaymentStatus);
 
 	/**
 	* Returns a range of all the shopping orders where groupId = &#63; and userId = &#63; and ppPaymentStatus = &#63;.
@@ -351,7 +350,7 @@ public interface ShoppingOrderPersistence extends BasePersistence<ShoppingOrder>
 	* @return the range of matching shopping orders
 	*/
 	public java.util.List<ShoppingOrder> findByG_U_PPPS(long groupId,
-		long userId, java.lang.String ppPaymentStatus, int start, int end);
+		long userId, String ppPaymentStatus, int start, int end);
 
 	/**
 	* Returns an ordered range of all the shopping orders where groupId = &#63; and userId = &#63; and ppPaymentStatus = &#63;.
@@ -369,7 +368,7 @@ public interface ShoppingOrderPersistence extends BasePersistence<ShoppingOrder>
 	* @return the ordered range of matching shopping orders
 	*/
 	public java.util.List<ShoppingOrder> findByG_U_PPPS(long groupId,
-		long userId, java.lang.String ppPaymentStatus, int start, int end,
+		long userId, String ppPaymentStatus, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<ShoppingOrder> orderByComparator);
 
 	/**
@@ -389,7 +388,7 @@ public interface ShoppingOrderPersistence extends BasePersistence<ShoppingOrder>
 	* @return the ordered range of matching shopping orders
 	*/
 	public java.util.List<ShoppingOrder> findByG_U_PPPS(long groupId,
-		long userId, java.lang.String ppPaymentStatus, int start, int end,
+		long userId, String ppPaymentStatus, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<ShoppingOrder> orderByComparator,
 		boolean retrieveFromCache);
 
@@ -404,7 +403,7 @@ public interface ShoppingOrderPersistence extends BasePersistence<ShoppingOrder>
 	* @throws NoSuchOrderException if a matching shopping order could not be found
 	*/
 	public ShoppingOrder findByG_U_PPPS_First(long groupId, long userId,
-		java.lang.String ppPaymentStatus,
+		String ppPaymentStatus,
 		com.liferay.portal.kernel.util.OrderByComparator<ShoppingOrder> orderByComparator)
 		throws NoSuchOrderException;
 
@@ -418,7 +417,7 @@ public interface ShoppingOrderPersistence extends BasePersistence<ShoppingOrder>
 	* @return the first matching shopping order, or <code>null</code> if a matching shopping order could not be found
 	*/
 	public ShoppingOrder fetchByG_U_PPPS_First(long groupId, long userId,
-		java.lang.String ppPaymentStatus,
+		String ppPaymentStatus,
 		com.liferay.portal.kernel.util.OrderByComparator<ShoppingOrder> orderByComparator);
 
 	/**
@@ -432,7 +431,7 @@ public interface ShoppingOrderPersistence extends BasePersistence<ShoppingOrder>
 	* @throws NoSuchOrderException if a matching shopping order could not be found
 	*/
 	public ShoppingOrder findByG_U_PPPS_Last(long groupId, long userId,
-		java.lang.String ppPaymentStatus,
+		String ppPaymentStatus,
 		com.liferay.portal.kernel.util.OrderByComparator<ShoppingOrder> orderByComparator)
 		throws NoSuchOrderException;
 
@@ -446,7 +445,7 @@ public interface ShoppingOrderPersistence extends BasePersistence<ShoppingOrder>
 	* @return the last matching shopping order, or <code>null</code> if a matching shopping order could not be found
 	*/
 	public ShoppingOrder fetchByG_U_PPPS_Last(long groupId, long userId,
-		java.lang.String ppPaymentStatus,
+		String ppPaymentStatus,
 		com.liferay.portal.kernel.util.OrderByComparator<ShoppingOrder> orderByComparator);
 
 	/**
@@ -461,7 +460,7 @@ public interface ShoppingOrderPersistence extends BasePersistence<ShoppingOrder>
 	* @throws NoSuchOrderException if a shopping order with the primary key could not be found
 	*/
 	public ShoppingOrder[] findByG_U_PPPS_PrevAndNext(long orderId,
-		long groupId, long userId, java.lang.String ppPaymentStatus,
+		long groupId, long userId, String ppPaymentStatus,
 		com.liferay.portal.kernel.util.OrderByComparator<ShoppingOrder> orderByComparator)
 		throws NoSuchOrderException;
 
@@ -474,7 +473,7 @@ public interface ShoppingOrderPersistence extends BasePersistence<ShoppingOrder>
 	* @return the matching shopping orders that the user has permission to view
 	*/
 	public java.util.List<ShoppingOrder> filterFindByG_U_PPPS(long groupId,
-		long userId, java.lang.String ppPaymentStatus);
+		long userId, String ppPaymentStatus);
 
 	/**
 	* Returns a range of all the shopping orders that the user has permission to view where groupId = &#63; and userId = &#63; and ppPaymentStatus = &#63;.
@@ -491,7 +490,7 @@ public interface ShoppingOrderPersistence extends BasePersistence<ShoppingOrder>
 	* @return the range of matching shopping orders that the user has permission to view
 	*/
 	public java.util.List<ShoppingOrder> filterFindByG_U_PPPS(long groupId,
-		long userId, java.lang.String ppPaymentStatus, int start, int end);
+		long userId, String ppPaymentStatus, int start, int end);
 
 	/**
 	* Returns an ordered range of all the shopping orders that the user has permissions to view where groupId = &#63; and userId = &#63; and ppPaymentStatus = &#63;.
@@ -509,7 +508,7 @@ public interface ShoppingOrderPersistence extends BasePersistence<ShoppingOrder>
 	* @return the ordered range of matching shopping orders that the user has permission to view
 	*/
 	public java.util.List<ShoppingOrder> filterFindByG_U_PPPS(long groupId,
-		long userId, java.lang.String ppPaymentStatus, int start, int end,
+		long userId, String ppPaymentStatus, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<ShoppingOrder> orderByComparator);
 
 	/**
@@ -524,7 +523,7 @@ public interface ShoppingOrderPersistence extends BasePersistence<ShoppingOrder>
 	* @throws NoSuchOrderException if a shopping order with the primary key could not be found
 	*/
 	public ShoppingOrder[] filterFindByG_U_PPPS_PrevAndNext(long orderId,
-		long groupId, long userId, java.lang.String ppPaymentStatus,
+		long groupId, long userId, String ppPaymentStatus,
 		com.liferay.portal.kernel.util.OrderByComparator<ShoppingOrder> orderByComparator)
 		throws NoSuchOrderException;
 
@@ -536,7 +535,7 @@ public interface ShoppingOrderPersistence extends BasePersistence<ShoppingOrder>
 	* @param ppPaymentStatus the pp payment status
 	*/
 	public void removeByG_U_PPPS(long groupId, long userId,
-		java.lang.String ppPaymentStatus);
+		String ppPaymentStatus);
 
 	/**
 	* Returns the number of shopping orders where groupId = &#63; and userId = &#63; and ppPaymentStatus = &#63;.
@@ -546,8 +545,7 @@ public interface ShoppingOrderPersistence extends BasePersistence<ShoppingOrder>
 	* @param ppPaymentStatus the pp payment status
 	* @return the number of matching shopping orders
 	*/
-	public int countByG_U_PPPS(long groupId, long userId,
-		java.lang.String ppPaymentStatus);
+	public int countByG_U_PPPS(long groupId, long userId, String ppPaymentStatus);
 
 	/**
 	* Returns the number of shopping orders that the user has permission to view where groupId = &#63; and userId = &#63; and ppPaymentStatus = &#63;.
@@ -558,7 +556,7 @@ public interface ShoppingOrderPersistence extends BasePersistence<ShoppingOrder>
 	* @return the number of matching shopping orders that the user has permission to view
 	*/
 	public int filterCountByG_U_PPPS(long groupId, long userId,
-		java.lang.String ppPaymentStatus);
+		String ppPaymentStatus);
 
 	/**
 	* Caches the shopping order in the entity cache if it is enabled.
@@ -680,5 +678,5 @@ public interface ShoppingOrderPersistence extends BasePersistence<ShoppingOrder>
 	public int countAll();
 
 	@Override
-	public java.util.Set<java.lang.String> getBadColumnNames();
+	public java.util.Set<String> getBadColumnNames();
 }

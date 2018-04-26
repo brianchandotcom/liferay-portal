@@ -202,8 +202,8 @@ public class ShoppingCartLocalServiceUtil {
 		return getService().getIndexableActionableDynamicQuery();
 	}
 
-	public static java.util.Map<com.liferay.shopping.model.ShoppingCartItem, java.lang.Integer> getItems(
-		long groupId, java.lang.String itemIds) {
+	public static java.util.Map<com.liferay.shopping.model.ShoppingCartItem, Integer> getItems(
+		long groupId, String itemIds) {
 		return getService().getItems(groupId, itemIds);
 	}
 
@@ -212,7 +212,7 @@ public class ShoppingCartLocalServiceUtil {
 	*
 	* @return the OSGi service identifier
 	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
+	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 
@@ -260,8 +260,8 @@ public class ShoppingCartLocalServiceUtil {
 	}
 
 	public static com.liferay.shopping.model.ShoppingCart updateCart(
-		long userId, long groupId, java.lang.String itemIds,
-		java.lang.String couponCodes, int altShipping, boolean insure)
+		long userId, long groupId, String itemIds, String couponCodes,
+		int altShipping, boolean insure)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .updateCart(userId, groupId, itemIds, couponCodes,

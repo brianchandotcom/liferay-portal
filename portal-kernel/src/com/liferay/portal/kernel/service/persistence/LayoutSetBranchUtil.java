@@ -612,7 +612,7 @@ public class LayoutSetBranchUtil {
 	* @throws NoSuchLayoutSetBranchException if a matching layout set branch could not be found
 	*/
 	public static LayoutSetBranch findByG_P_N(long groupId,
-		boolean privateLayout, java.lang.String name)
+		boolean privateLayout, String name)
 		throws com.liferay.portal.kernel.exception.NoSuchLayoutSetBranchException {
 		return getPersistence().findByG_P_N(groupId, privateLayout, name);
 	}
@@ -626,7 +626,7 @@ public class LayoutSetBranchUtil {
 	* @return the matching layout set branch, or <code>null</code> if a matching layout set branch could not be found
 	*/
 	public static LayoutSetBranch fetchByG_P_N(long groupId,
-		boolean privateLayout, java.lang.String name) {
+		boolean privateLayout, String name) {
 		return getPersistence().fetchByG_P_N(groupId, privateLayout, name);
 	}
 
@@ -640,7 +640,7 @@ public class LayoutSetBranchUtil {
 	* @return the matching layout set branch, or <code>null</code> if a matching layout set branch could not be found
 	*/
 	public static LayoutSetBranch fetchByG_P_N(long groupId,
-		boolean privateLayout, java.lang.String name, boolean retrieveFromCache) {
+		boolean privateLayout, String name, boolean retrieveFromCache) {
 		return getPersistence()
 				   .fetchByG_P_N(groupId, privateLayout, name, retrieveFromCache);
 	}
@@ -654,7 +654,7 @@ public class LayoutSetBranchUtil {
 	* @return the layout set branch that was removed
 	*/
 	public static LayoutSetBranch removeByG_P_N(long groupId,
-		boolean privateLayout, java.lang.String name)
+		boolean privateLayout, String name)
 		throws com.liferay.portal.kernel.exception.NoSuchLayoutSetBranchException {
 		return getPersistence().removeByG_P_N(groupId, privateLayout, name);
 	}
@@ -668,7 +668,7 @@ public class LayoutSetBranchUtil {
 	* @return the number of matching layout set branchs
 	*/
 	public static int countByG_P_N(long groupId, boolean privateLayout,
-		java.lang.String name) {
+		String name) {
 		return getPersistence().countByG_P_N(groupId, privateLayout, name);
 	}
 
@@ -1108,7 +1108,7 @@ public class LayoutSetBranchUtil {
 		return getPersistence().countAll();
 	}
 
-	public static java.util.Set<java.lang.String> getBadColumnNames() {
+	public static java.util.Set<String> getBadColumnNames() {
 		return getPersistence().getBadColumnNames();
 	}
 

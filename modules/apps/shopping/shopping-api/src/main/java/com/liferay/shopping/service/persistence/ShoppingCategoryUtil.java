@@ -616,7 +616,7 @@ public class ShoppingCategoryUtil {
 	* @return the matching shopping category
 	* @throws NoSuchCategoryException if a matching shopping category could not be found
 	*/
-	public static ShoppingCategory findByG_N(long groupId, java.lang.String name)
+	public static ShoppingCategory findByG_N(long groupId, String name)
 		throws com.liferay.shopping.exception.NoSuchCategoryException {
 		return getPersistence().findByG_N(groupId, name);
 	}
@@ -628,8 +628,7 @@ public class ShoppingCategoryUtil {
 	* @param name the name
 	* @return the matching shopping category, or <code>null</code> if a matching shopping category could not be found
 	*/
-	public static ShoppingCategory fetchByG_N(long groupId,
-		java.lang.String name) {
+	public static ShoppingCategory fetchByG_N(long groupId, String name) {
 		return getPersistence().fetchByG_N(groupId, name);
 	}
 
@@ -641,8 +640,8 @@ public class ShoppingCategoryUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching shopping category, or <code>null</code> if a matching shopping category could not be found
 	*/
-	public static ShoppingCategory fetchByG_N(long groupId,
-		java.lang.String name, boolean retrieveFromCache) {
+	public static ShoppingCategory fetchByG_N(long groupId, String name,
+		boolean retrieveFromCache) {
 		return getPersistence().fetchByG_N(groupId, name, retrieveFromCache);
 	}
 
@@ -653,8 +652,7 @@ public class ShoppingCategoryUtil {
 	* @param name the name
 	* @return the shopping category that was removed
 	*/
-	public static ShoppingCategory removeByG_N(long groupId,
-		java.lang.String name)
+	public static ShoppingCategory removeByG_N(long groupId, String name)
 		throws com.liferay.shopping.exception.NoSuchCategoryException {
 		return getPersistence().removeByG_N(groupId, name);
 	}
@@ -666,7 +664,7 @@ public class ShoppingCategoryUtil {
 	* @param name the name
 	* @return the number of matching shopping categories
 	*/
-	public static int countByG_N(long groupId, java.lang.String name) {
+	public static int countByG_N(long groupId, String name) {
 		return getPersistence().countByG_N(groupId, name);
 	}
 

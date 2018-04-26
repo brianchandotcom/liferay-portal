@@ -174,7 +174,7 @@ public class OAuth2AuthorizationWrapper implements OAuth2Authorization,
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new OAuth2AuthorizationWrapper((OAuth2Authorization)_oAuth2Authorization.clone());
 	}
 
@@ -189,7 +189,7 @@ public class OAuth2AuthorizationWrapper implements OAuth2Authorization,
 	* @return the access token content of this o auth2 authorization
 	*/
 	@Override
-	public java.lang.String getAccessTokenContent() {
+	public String getAccessTokenContent() {
 		return _oAuth2Authorization.getAccessTokenContent();
 	}
 
@@ -289,7 +289,7 @@ public class OAuth2AuthorizationWrapper implements OAuth2Authorization,
 	* @return the refresh token content of this o auth2 authorization
 	*/
 	@Override
-	public java.lang.String getRefreshTokenContent() {
+	public String getRefreshTokenContent() {
 		return _oAuth2Authorization.getRefreshTokenContent();
 	}
 
@@ -319,7 +319,7 @@ public class OAuth2AuthorizationWrapper implements OAuth2Authorization,
 	* @return the remote ip info of this o auth2 authorization
 	*/
 	@Override
-	public java.lang.String getRemoteIPInfo() {
+	public String getRemoteIPInfo() {
 		return _oAuth2Authorization.getRemoteIPInfo();
 	}
 
@@ -339,7 +339,7 @@ public class OAuth2AuthorizationWrapper implements OAuth2Authorization,
 	* @return the user name of this o auth2 authorization
 	*/
 	@Override
-	public java.lang.String getUserName() {
+	public String getUserName() {
 		return _oAuth2Authorization.getUserName();
 	}
 
@@ -349,7 +349,7 @@ public class OAuth2AuthorizationWrapper implements OAuth2Authorization,
 	* @return the user uuid of this o auth2 authorization
 	*/
 	@Override
-	public java.lang.String getUserUuid() {
+	public String getUserUuid() {
 		return _oAuth2Authorization.getUserUuid();
 	}
 
@@ -384,7 +384,7 @@ public class OAuth2AuthorizationWrapper implements OAuth2Authorization,
 	* @param accessTokenContent the access token content of this o auth2 authorization
 	*/
 	@Override
-	public void setAccessTokenContent(java.lang.String accessTokenContent) {
+	public void setAccessTokenContent(String accessTokenContent) {
 		_oAuth2Authorization.setAccessTokenContent(accessTokenContent);
 	}
 
@@ -506,7 +506,7 @@ public class OAuth2AuthorizationWrapper implements OAuth2Authorization,
 	* @param refreshTokenContent the refresh token content of this o auth2 authorization
 	*/
 	@Override
-	public void setRefreshTokenContent(java.lang.String refreshTokenContent) {
+	public void setRefreshTokenContent(String refreshTokenContent) {
 		_oAuth2Authorization.setRefreshTokenContent(refreshTokenContent);
 	}
 
@@ -536,7 +536,7 @@ public class OAuth2AuthorizationWrapper implements OAuth2Authorization,
 	* @param remoteIPInfo the remote ip info of this o auth2 authorization
 	*/
 	@Override
-	public void setRemoteIPInfo(java.lang.String remoteIPInfo) {
+	public void setRemoteIPInfo(String remoteIPInfo) {
 		_oAuth2Authorization.setRemoteIPInfo(remoteIPInfo);
 	}
 
@@ -556,7 +556,7 @@ public class OAuth2AuthorizationWrapper implements OAuth2Authorization,
 	* @param userName the user name of this o auth2 authorization
 	*/
 	@Override
-	public void setUserName(java.lang.String userName) {
+	public void setUserName(String userName) {
 		_oAuth2Authorization.setUserName(userName);
 	}
 
@@ -566,7 +566,7 @@ public class OAuth2AuthorizationWrapper implements OAuth2Authorization,
 	* @param userUuid the user uuid of this o auth2 authorization
 	*/
 	@Override
-	public void setUserUuid(java.lang.String userUuid) {
+	public void setUserUuid(String userUuid) {
 		_oAuth2Authorization.setUserUuid(userUuid);
 	}
 
@@ -581,7 +581,7 @@ public class OAuth2AuthorizationWrapper implements OAuth2Authorization,
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _oAuth2Authorization.toString();
 	}
 
@@ -591,7 +591,7 @@ public class OAuth2AuthorizationWrapper implements OAuth2Authorization,
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _oAuth2Authorization.toXmlString();
 	}
 

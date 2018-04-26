@@ -57,7 +57,7 @@ import com.liferay.portal.kernel.util.MethodKey;
 public class MBCategoryServiceHttp {
 	public static com.liferay.message.boards.model.MBCategory addCategory(
 		HttpPrincipal httpPrincipal, long userId, long parentCategoryId,
-		java.lang.String name, java.lang.String description,
+		String name, String description,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -90,16 +90,14 @@ public class MBCategoryServiceHttp {
 	}
 
 	public static com.liferay.message.boards.model.MBCategory addCategory(
-		HttpPrincipal httpPrincipal, long parentCategoryId,
-		java.lang.String name, java.lang.String description,
-		java.lang.String displayStyle, java.lang.String emailAddress,
-		java.lang.String inProtocol, java.lang.String inServerName,
-		int inServerPort, boolean inUseSSL, java.lang.String inUserName,
-		java.lang.String inPassword, int inReadInterval,
-		java.lang.String outEmailAddress, boolean outCustom,
-		java.lang.String outServerName, int outServerPort, boolean outUseSSL,
-		java.lang.String outUserName, java.lang.String outPassword,
-		boolean mailingListActive, boolean allowAnonymousEmail,
+		HttpPrincipal httpPrincipal, long parentCategoryId, String name,
+		String description, String displayStyle, String emailAddress,
+		String inProtocol, String inServerName, int inServerPort,
+		boolean inUseSSL, String inUserName, String inPassword,
+		int inReadInterval, String outEmailAddress, boolean outCustom,
+		String outServerName, int outServerPort, boolean outUseSSL,
+		String outUserName, String outPassword, boolean mailingListActive,
+		boolean allowAnonymousEmail,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -446,7 +444,7 @@ public class MBCategoryServiceHttp {
 		}
 	}
 
-	public static java.util.List<java.lang.Object> getCategoriesAndThreads(
+	public static java.util.List<Object> getCategoriesAndThreads(
 		HttpPrincipal httpPrincipal, long groupId, long categoryId) {
 		try {
 			MethodKey methodKey = new MethodKey(MBCategoryServiceUtil.class,
@@ -465,7 +463,7 @@ public class MBCategoryServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (java.util.List<java.lang.Object>)returnObj;
+			return (java.util.List<Object>)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -474,7 +472,7 @@ public class MBCategoryServiceHttp {
 		}
 	}
 
-	public static java.util.List<java.lang.Object> getCategoriesAndThreads(
+	public static java.util.List<Object> getCategoriesAndThreads(
 		HttpPrincipal httpPrincipal, long groupId, long categoryId, int status) {
 		try {
 			MethodKey methodKey = new MethodKey(MBCategoryServiceUtil.class,
@@ -493,7 +491,7 @@ public class MBCategoryServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (java.util.List<java.lang.Object>)returnObj;
+			return (java.util.List<Object>)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -502,7 +500,7 @@ public class MBCategoryServiceHttp {
 		}
 	}
 
-	public static java.util.List<java.lang.Object> getCategoriesAndThreads(
+	public static java.util.List<Object> getCategoriesAndThreads(
 		HttpPrincipal httpPrincipal, long groupId, long categoryId, int status,
 		int start, int end) {
 		try {
@@ -522,7 +520,7 @@ public class MBCategoryServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (java.util.List<java.lang.Object>)returnObj;
+			return (java.util.List<Object>)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -531,7 +529,7 @@ public class MBCategoryServiceHttp {
 		}
 	}
 
-	public static java.util.List<java.lang.Object> getCategoriesAndThreads(
+	public static java.util.List<Object> getCategoriesAndThreads(
 		HttpPrincipal httpPrincipal, long groupId, long categoryId, int status,
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<?> obc) {
@@ -552,7 +550,7 @@ public class MBCategoryServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (java.util.List<java.lang.Object>)returnObj;
+			return (java.util.List<Object>)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -561,7 +559,7 @@ public class MBCategoryServiceHttp {
 		}
 	}
 
-	public static java.util.List<java.lang.Object> getCategoriesAndThreads(
+	public static java.util.List<Object> getCategoriesAndThreads(
 		HttpPrincipal httpPrincipal, long groupId, long categoryId,
 		com.liferay.portal.kernel.dao.orm.QueryDefinition<?> queryDefinition)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -586,7 +584,7 @@ public class MBCategoryServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (java.util.List<java.lang.Object>)returnObj;
+			return (java.util.List<Object>)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -940,10 +938,9 @@ public class MBCategoryServiceHttp {
 		}
 	}
 
-	public static java.util.List<java.lang.Long> getSubcategoryIds(
-		HttpPrincipal httpPrincipal,
-		java.util.List<java.lang.Long> categoryIds, long groupId,
-		long categoryId) {
+	public static java.util.List<Long> getSubcategoryIds(
+		HttpPrincipal httpPrincipal, java.util.List<Long> categoryIds,
+		long groupId, long categoryId) {
 		try {
 			MethodKey methodKey = new MethodKey(MBCategoryServiceUtil.class,
 					"getSubcategoryIds", _getSubcategoryIdsParameterTypes30);
@@ -960,7 +957,7 @@ public class MBCategoryServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (java.util.List<java.lang.Long>)returnObj;
+			return (java.util.List<Long>)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -1211,14 +1208,12 @@ public class MBCategoryServiceHttp {
 
 	public static com.liferay.message.boards.model.MBCategory updateCategory(
 		HttpPrincipal httpPrincipal, long categoryId, long parentCategoryId,
-		java.lang.String name, java.lang.String description,
-		java.lang.String displayStyle, java.lang.String emailAddress,
-		java.lang.String inProtocol, java.lang.String inServerName,
-		int inServerPort, boolean inUseSSL, java.lang.String inUserName,
-		java.lang.String inPassword, int inReadInterval,
-		java.lang.String outEmailAddress, boolean outCustom,
-		java.lang.String outServerName, int outServerPort, boolean outUseSSL,
-		java.lang.String outUserName, java.lang.String outPassword,
+		String name, String description, String displayStyle,
+		String emailAddress, String inProtocol, String inServerName,
+		int inServerPort, boolean inUseSSL, String inUserName,
+		String inPassword, int inReadInterval, String outEmailAddress,
+		boolean outCustom, String outServerName, int outServerPort,
+		boolean outUseSSL, String outUserName, String outPassword,
 		boolean mailingListActive, boolean allowAnonymousEmail,
 		boolean mergeWithParentCategory,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
@@ -1260,18 +1255,14 @@ public class MBCategoryServiceHttp {
 
 	private static Log _log = LogFactoryUtil.getLog(MBCategoryServiceHttp.class);
 	private static final Class<?>[] _addCategoryParameterTypes0 = new Class[] {
-			long.class, long.class, java.lang.String.class,
-			java.lang.String.class,
+			long.class, long.class, String.class, String.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _addCategoryParameterTypes1 = new Class[] {
-			long.class, java.lang.String.class, java.lang.String.class,
-			java.lang.String.class, java.lang.String.class,
-			java.lang.String.class, java.lang.String.class, int.class,
-			boolean.class, java.lang.String.class, java.lang.String.class,
-			int.class, java.lang.String.class, boolean.class,
-			java.lang.String.class, int.class, boolean.class,
-			java.lang.String.class, java.lang.String.class, boolean.class,
+			long.class, String.class, String.class, String.class, String.class,
+			String.class, String.class, int.class, boolean.class, String.class,
+			String.class, int.class, String.class, boolean.class, String.class,
+			int.class, boolean.class, String.class, String.class, boolean.class,
 			boolean.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
@@ -1391,14 +1382,11 @@ public class MBCategoryServiceHttp {
 			long.class, long.class
 		};
 	private static final Class<?>[] _updateCategoryParameterTypes39 = new Class[] {
-			long.class, long.class, java.lang.String.class,
-			java.lang.String.class, java.lang.String.class,
-			java.lang.String.class, java.lang.String.class,
-			java.lang.String.class, int.class, boolean.class,
-			java.lang.String.class, java.lang.String.class, int.class,
-			java.lang.String.class, boolean.class, java.lang.String.class,
-			int.class, boolean.class, java.lang.String.class,
-			java.lang.String.class, boolean.class, boolean.class, boolean.class,
+			long.class, long.class, String.class, String.class, String.class,
+			String.class, String.class, String.class, int.class, boolean.class,
+			String.class, String.class, int.class, String.class, boolean.class,
+			String.class, int.class, boolean.class, String.class, String.class,
+			boolean.class, boolean.class, boolean.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 }

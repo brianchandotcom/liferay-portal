@@ -192,8 +192,8 @@ public interface OAuth2ScopeGrantPersistence extends BasePersistence<OAuth2Scope
 	* @throws NoSuchOAuth2ScopeGrantException if a matching o auth2 scope grant could not be found
 	*/
 	public OAuth2ScopeGrant findByC_O_A_B_S(long companyId,
-		long oAuth2ApplicationScopeAliasesId, java.lang.String applicationName,
-		java.lang.String bundleSymbolicName, java.lang.String scope)
+		long oAuth2ApplicationScopeAliasesId, String applicationName,
+		String bundleSymbolicName, String scope)
 		throws NoSuchOAuth2ScopeGrantException;
 
 	/**
@@ -207,8 +207,8 @@ public interface OAuth2ScopeGrantPersistence extends BasePersistence<OAuth2Scope
 	* @return the matching o auth2 scope grant, or <code>null</code> if a matching o auth2 scope grant could not be found
 	*/
 	public OAuth2ScopeGrant fetchByC_O_A_B_S(long companyId,
-		long oAuth2ApplicationScopeAliasesId, java.lang.String applicationName,
-		java.lang.String bundleSymbolicName, java.lang.String scope);
+		long oAuth2ApplicationScopeAliasesId, String applicationName,
+		String bundleSymbolicName, String scope);
 
 	/**
 	* Returns the o auth2 scope grant where companyId = &#63; and oAuth2ApplicationScopeAliasesId = &#63; and applicationName = &#63; and bundleSymbolicName = &#63; and scope = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -222,9 +222,8 @@ public interface OAuth2ScopeGrantPersistence extends BasePersistence<OAuth2Scope
 	* @return the matching o auth2 scope grant, or <code>null</code> if a matching o auth2 scope grant could not be found
 	*/
 	public OAuth2ScopeGrant fetchByC_O_A_B_S(long companyId,
-		long oAuth2ApplicationScopeAliasesId, java.lang.String applicationName,
-		java.lang.String bundleSymbolicName, java.lang.String scope,
-		boolean retrieveFromCache);
+		long oAuth2ApplicationScopeAliasesId, String applicationName,
+		String bundleSymbolicName, String scope, boolean retrieveFromCache);
 
 	/**
 	* Removes the o auth2 scope grant where companyId = &#63; and oAuth2ApplicationScopeAliasesId = &#63; and applicationName = &#63; and bundleSymbolicName = &#63; and scope = &#63; from the database.
@@ -237,8 +236,8 @@ public interface OAuth2ScopeGrantPersistence extends BasePersistence<OAuth2Scope
 	* @return the o auth2 scope grant that was removed
 	*/
 	public OAuth2ScopeGrant removeByC_O_A_B_S(long companyId,
-		long oAuth2ApplicationScopeAliasesId, java.lang.String applicationName,
-		java.lang.String bundleSymbolicName, java.lang.String scope)
+		long oAuth2ApplicationScopeAliasesId, String applicationName,
+		String bundleSymbolicName, String scope)
 		throws NoSuchOAuth2ScopeGrantException;
 
 	/**
@@ -252,8 +251,8 @@ public interface OAuth2ScopeGrantPersistence extends BasePersistence<OAuth2Scope
 	* @return the number of matching o auth2 scope grants
 	*/
 	public int countByC_O_A_B_S(long companyId,
-		long oAuth2ApplicationScopeAliasesId, java.lang.String applicationName,
-		java.lang.String bundleSymbolicName, java.lang.String scope);
+		long oAuth2ApplicationScopeAliasesId, String applicationName,
+		String bundleSymbolicName, String scope);
 
 	/**
 	* Caches the o auth2 scope grant in the entity cache if it is enabled.
@@ -544,5 +543,5 @@ public interface OAuth2ScopeGrantPersistence extends BasePersistence<OAuth2Scope
 		java.util.List<com.liferay.oauth2.provider.model.OAuth2Authorization> oAuth2Authorizations);
 
 	@Override
-	public java.util.Set<java.lang.String> getBadColumnNames();
+	public java.util.Set<String> getBadColumnNames();
 }

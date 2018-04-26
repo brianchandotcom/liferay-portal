@@ -122,7 +122,7 @@ public class DLContentWrapper implements DLContent, ModelWrapper<DLContent> {
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new DLContentWrapper((DLContent)_dlContent.clone());
 	}
 
@@ -182,7 +182,7 @@ public class DLContentWrapper implements DLContent, ModelWrapper<DLContent> {
 	* @return the path of this document library content
 	*/
 	@Override
-	public java.lang.String getPath() {
+	public String getPath() {
 		return _dlContent.getPath();
 	}
 
@@ -227,7 +227,7 @@ public class DLContentWrapper implements DLContent, ModelWrapper<DLContent> {
 	* @return the version of this document library content
 	*/
 	@Override
-	public java.lang.String getVersion() {
+	public String getVersion() {
 		return _dlContent.getVersion();
 	}
 
@@ -328,7 +328,7 @@ public class DLContentWrapper implements DLContent, ModelWrapper<DLContent> {
 	* @param path the path of this document library content
 	*/
 	@Override
-	public void setPath(java.lang.String path) {
+	public void setPath(String path) {
 		_dlContent.setPath(path);
 	}
 
@@ -373,7 +373,7 @@ public class DLContentWrapper implements DLContent, ModelWrapper<DLContent> {
 	* @param version the version of this document library content
 	*/
 	@Override
-	public void setVersion(java.lang.String version) {
+	public void setVersion(String version) {
 		_dlContent.setVersion(version);
 	}
 
@@ -388,7 +388,7 @@ public class DLContentWrapper implements DLContent, ModelWrapper<DLContent> {
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _dlContent.toString();
 	}
 
@@ -398,7 +398,7 @@ public class DLContentWrapper implements DLContent, ModelWrapper<DLContent> {
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _dlContent.toXmlString();
 	}
 

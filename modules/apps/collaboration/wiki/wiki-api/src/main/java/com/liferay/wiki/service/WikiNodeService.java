@@ -59,9 +59,8 @@ public interface WikiNodeService extends BaseService {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link WikiNodeServiceUtil} to access the wiki node remote service. Add custom service methods to {@link com.liferay.wiki.service.impl.WikiNodeServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public WikiNode addNode(java.lang.String name,
-		java.lang.String description, ServiceContext serviceContext)
-		throws PortalException;
+	public WikiNode addNode(String name, String description,
+		ServiceContext serviceContext) throws PortalException;
 
 	public void deleteNode(long nodeId) throws PortalException;
 
@@ -69,7 +68,7 @@ public interface WikiNodeService extends BaseService {
 	public WikiNode getNode(long nodeId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public WikiNode getNode(long groupId, java.lang.String name)
+	public WikiNode getNode(long groupId, String name)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -100,11 +99,10 @@ public interface WikiNodeService extends BaseService {
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
-	public void importPages(long nodeId, java.lang.String importer,
-		InputStream[] inputStreams,
-		Map<java.lang.String, java.lang.String[]> options)
+	public void importPages(long nodeId, String importer,
+		InputStream[] inputStreams, Map<String, String[]> options)
 		throws PortalException;
 
 	public WikiNode moveNodeToTrash(long nodeId) throws PortalException;
@@ -115,7 +113,6 @@ public interface WikiNodeService extends BaseService {
 
 	public void unsubscribeNode(long nodeId) throws PortalException;
 
-	public WikiNode updateNode(long nodeId, java.lang.String name,
-		java.lang.String description, ServiceContext serviceContext)
-		throws PortalException;
+	public WikiNode updateNode(long nodeId, String name, String description,
+		ServiceContext serviceContext) throws PortalException;
 }

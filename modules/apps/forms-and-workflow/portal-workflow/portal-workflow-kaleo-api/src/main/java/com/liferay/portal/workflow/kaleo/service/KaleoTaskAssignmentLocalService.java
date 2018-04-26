@@ -72,10 +72,10 @@ public interface KaleoTaskAssignmentLocalService extends BaseLocalService,
 	public KaleoTaskAssignment addKaleoTaskAssignment(
 		KaleoTaskAssignment kaleoTaskAssignment);
 
-	public KaleoTaskAssignment addKaleoTaskAssignment(
-		java.lang.String kaleoClassName, long kaleoClassPK,
-		long kaleoDefinitionVersionId, Assignment assignment,
-		ServiceContext serviceContext) throws PortalException;
+	public KaleoTaskAssignment addKaleoTaskAssignment(String kaleoClassName,
+		long kaleoClassPK, long kaleoDefinitionVersionId,
+		Assignment assignment, ServiceContext serviceContext)
+		throws PortalException;
 
 	/**
 	* Creates a new kaleo task assignment with the primary key. Does not add the kaleo task assignment to the database.
@@ -219,11 +219,11 @@ public interface KaleoTaskAssignmentLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<KaleoTaskAssignment> getKaleoTaskAssignments(long kaleoTaskId,
-		java.lang.String assigneeClassName);
+		String assigneeClassName);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<KaleoTaskAssignment> getKaleoTaskAssignments(
-		java.lang.String kaleoClassName, long kaleoClassPK);
+		String kaleoClassName, long kaleoClassPK);
 
 	/**
 	* Returns the number of kaleo task assignments.
@@ -238,14 +238,14 @@ public interface KaleoTaskAssignmentLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getKaleoTaskAssignmentsCount(long kaleoTaskId,
-		java.lang.String assigneeClassName);
+		String assigneeClassName);
 
 	/**
 	* Returns the OSGi service identifier.
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

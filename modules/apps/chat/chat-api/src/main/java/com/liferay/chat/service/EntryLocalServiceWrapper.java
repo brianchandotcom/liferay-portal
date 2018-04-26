@@ -46,14 +46,14 @@ public class EntryLocalServiceWrapper implements EntryLocalService,
 
 	@Override
 	public com.liferay.chat.model.Entry addEntry(long createDate,
-		long fromUserId, long toUserId, java.lang.String content) {
+		long fromUserId, long toUserId, String content) {
 		return _entryLocalService.addEntry(createDate, fromUserId, toUserId,
 			content);
 	}
 
 	@Override
 	public com.liferay.chat.model.Entry addEntry(long fromUserId,
-		long toUserId, java.lang.String content) {
+		long toUserId, String content) {
 		return _entryLocalService.addEntry(fromUserId, toUserId, content);
 	}
 
@@ -265,7 +265,7 @@ public class EntryLocalServiceWrapper implements EntryLocalService,
 	* @return the OSGi service identifier
 	*/
 	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
+	public String getOSGiServiceIdentifier() {
 		return _entryLocalService.getOSGiServiceIdentifier();
 	}
 

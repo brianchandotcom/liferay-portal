@@ -65,8 +65,8 @@ import java.rmi.RemoteException;
 @ProviderType
 public class PhoneServiceSoap {
 	public static com.liferay.portal.kernel.model.PhoneSoap addPhone(
-		java.lang.String className, long classPK, java.lang.String number,
-		java.lang.String extension, long typeId, boolean primary,
+		String className, long classPK, String number, String extension,
+		long typeId, boolean primary,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
@@ -108,7 +108,7 @@ public class PhoneServiceSoap {
 	}
 
 	public static com.liferay.portal.kernel.model.PhoneSoap[] getPhones(
-		java.lang.String className, long classPK) throws RemoteException {
+		String className, long classPK) throws RemoteException {
 		try {
 			java.util.List<com.liferay.portal.kernel.model.Phone> returnValue = PhoneServiceUtil.getPhones(className,
 					classPK);
@@ -123,8 +123,8 @@ public class PhoneServiceSoap {
 	}
 
 	public static com.liferay.portal.kernel.model.PhoneSoap updatePhone(
-		long phoneId, java.lang.String number, java.lang.String extension,
-		long typeId, boolean primary) throws RemoteException {
+		long phoneId, String number, String extension, long typeId,
+		boolean primary) throws RemoteException {
 		try {
 			com.liferay.portal.kernel.model.Phone returnValue = PhoneServiceUtil.updatePhone(phoneId,
 					number, extension, typeId, primary);

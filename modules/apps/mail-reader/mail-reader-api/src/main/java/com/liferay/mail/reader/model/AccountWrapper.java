@@ -247,7 +247,7 @@ public class AccountWrapper implements Account, ModelWrapper<Account> {
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new AccountWrapper((Account)_account.clone());
 	}
 
@@ -272,7 +272,7 @@ public class AccountWrapper implements Account, ModelWrapper<Account> {
 	* @return the address of this account
 	*/
 	@Override
-	public java.lang.String getAddress() {
+	public String getAddress() {
 		return _account.getAddress();
 	}
 
@@ -327,7 +327,7 @@ public class AccountWrapper implements Account, ModelWrapper<Account> {
 	* @return the folder prefix of this account
 	*/
 	@Override
-	public java.lang.String getFolderPrefix() {
+	public String getFolderPrefix() {
 		return _account.getFolderPrefix();
 	}
 
@@ -347,7 +347,7 @@ public class AccountWrapper implements Account, ModelWrapper<Account> {
 	* @return the incoming host name of this account
 	*/
 	@Override
-	public java.lang.String getIncomingHostName() {
+	public String getIncomingHostName() {
 		return _account.getIncomingHostName();
 	}
 
@@ -377,7 +377,7 @@ public class AccountWrapper implements Account, ModelWrapper<Account> {
 	* @return the login of this account
 	*/
 	@Override
-	public java.lang.String getLogin() {
+	public String getLogin() {
 		return _account.getLogin();
 	}
 
@@ -397,7 +397,7 @@ public class AccountWrapper implements Account, ModelWrapper<Account> {
 	* @return the outgoing host name of this account
 	*/
 	@Override
-	public java.lang.String getOutgoingHostName() {
+	public String getOutgoingHostName() {
 		return _account.getOutgoingHostName();
 	}
 
@@ -427,12 +427,12 @@ public class AccountWrapper implements Account, ModelWrapper<Account> {
 	* @return the password of this account
 	*/
 	@Override
-	public java.lang.String getPassword() {
+	public String getPassword() {
 		return _account.getPassword();
 	}
 
 	@Override
-	public java.lang.String getPasswordDecrypted() {
+	public String getPasswordDecrypted() {
 		return _account.getPasswordDecrypted();
 	}
 
@@ -442,7 +442,7 @@ public class AccountWrapper implements Account, ModelWrapper<Account> {
 	* @return the personal name of this account
 	*/
 	@Override
-	public java.lang.String getPersonalName() {
+	public String getPersonalName() {
 		return _account.getPersonalName();
 	}
 
@@ -467,7 +467,7 @@ public class AccountWrapper implements Account, ModelWrapper<Account> {
 	* @return the protocol of this account
 	*/
 	@Override
-	public java.lang.String getProtocol() {
+	public String getProtocol() {
 		return _account.getProtocol();
 	}
 
@@ -497,7 +497,7 @@ public class AccountWrapper implements Account, ModelWrapper<Account> {
 	* @return the signature of this account
 	*/
 	@Override
-	public java.lang.String getSignature() {
+	public String getSignature() {
 		return _account.getSignature();
 	}
 
@@ -527,7 +527,7 @@ public class AccountWrapper implements Account, ModelWrapper<Account> {
 	* @return the user name of this account
 	*/
 	@Override
-	public java.lang.String getUserName() {
+	public String getUserName() {
 		return _account.getUserName();
 	}
 
@@ -537,7 +537,7 @@ public class AccountWrapper implements Account, ModelWrapper<Account> {
 	* @return the user uuid of this account
 	*/
 	@Override
-	public java.lang.String getUserUuid() {
+	public String getUserUuid() {
 		return _account.getUserUuid();
 	}
 
@@ -642,7 +642,7 @@ public class AccountWrapper implements Account, ModelWrapper<Account> {
 	* @param address the address of this account
 	*/
 	@Override
-	public void setAddress(java.lang.String address) {
+	public void setAddress(String address) {
 		_account.setAddress(address);
 	}
 
@@ -713,7 +713,7 @@ public class AccountWrapper implements Account, ModelWrapper<Account> {
 	* @param folderPrefix the folder prefix of this account
 	*/
 	@Override
-	public void setFolderPrefix(java.lang.String folderPrefix) {
+	public void setFolderPrefix(String folderPrefix) {
 		_account.setFolderPrefix(folderPrefix);
 	}
 
@@ -733,7 +733,7 @@ public class AccountWrapper implements Account, ModelWrapper<Account> {
 	* @param incomingHostName the incoming host name of this account
 	*/
 	@Override
-	public void setIncomingHostName(java.lang.String incomingHostName) {
+	public void setIncomingHostName(String incomingHostName) {
 		_account.setIncomingHostName(incomingHostName);
 	}
 
@@ -763,7 +763,7 @@ public class AccountWrapper implements Account, ModelWrapper<Account> {
 	* @param login the login of this account
 	*/
 	@Override
-	public void setLogin(java.lang.String login) {
+	public void setLogin(String login) {
 		_account.setLogin(login);
 	}
 
@@ -788,7 +788,7 @@ public class AccountWrapper implements Account, ModelWrapper<Account> {
 	* @param outgoingHostName the outgoing host name of this account
 	*/
 	@Override
-	public void setOutgoingHostName(java.lang.String outgoingHostName) {
+	public void setOutgoingHostName(String outgoingHostName) {
 		_account.setOutgoingHostName(outgoingHostName);
 	}
 
@@ -818,12 +818,12 @@ public class AccountWrapper implements Account, ModelWrapper<Account> {
 	* @param password the password of this account
 	*/
 	@Override
-	public void setPassword(java.lang.String password) {
+	public void setPassword(String password) {
 		_account.setPassword(password);
 	}
 
 	@Override
-	public void setPasswordDecrypted(java.lang.String unencryptedPassword) {
+	public void setPasswordDecrypted(String unencryptedPassword) {
 		_account.setPasswordDecrypted(unencryptedPassword);
 	}
 
@@ -833,7 +833,7 @@ public class AccountWrapper implements Account, ModelWrapper<Account> {
 	* @param personalName the personal name of this account
 	*/
 	@Override
-	public void setPersonalName(java.lang.String personalName) {
+	public void setPersonalName(String personalName) {
 		_account.setPersonalName(personalName);
 	}
 
@@ -858,7 +858,7 @@ public class AccountWrapper implements Account, ModelWrapper<Account> {
 	* @param protocol the protocol of this account
 	*/
 	@Override
-	public void setProtocol(java.lang.String protocol) {
+	public void setProtocol(String protocol) {
 		_account.setProtocol(protocol);
 	}
 
@@ -888,7 +888,7 @@ public class AccountWrapper implements Account, ModelWrapper<Account> {
 	* @param signature the signature of this account
 	*/
 	@Override
-	public void setSignature(java.lang.String signature) {
+	public void setSignature(String signature) {
 		_account.setSignature(signature);
 	}
 
@@ -918,7 +918,7 @@ public class AccountWrapper implements Account, ModelWrapper<Account> {
 	* @param userName the user name of this account
 	*/
 	@Override
-	public void setUserName(java.lang.String userName) {
+	public void setUserName(String userName) {
 		_account.setUserName(userName);
 	}
 
@@ -928,7 +928,7 @@ public class AccountWrapper implements Account, ModelWrapper<Account> {
 	* @param userUuid the user uuid of this account
 	*/
 	@Override
-	public void setUserUuid(java.lang.String userUuid) {
+	public void setUserUuid(String userUuid) {
 		_account.setUserUuid(userUuid);
 	}
 
@@ -953,7 +953,7 @@ public class AccountWrapper implements Account, ModelWrapper<Account> {
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _account.toString();
 	}
 
@@ -963,7 +963,7 @@ public class AccountWrapper implements Account, ModelWrapper<Account> {
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _account.toXmlString();
 	}
 

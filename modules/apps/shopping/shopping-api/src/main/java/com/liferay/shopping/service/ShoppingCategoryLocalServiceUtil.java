@@ -43,8 +43,7 @@ public class ShoppingCategoryLocalServiceUtil {
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.shopping.service.impl.ShoppingCategoryLocalServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static com.liferay.shopping.model.ShoppingCategory addCategory(
-		long userId, long parentCategoryId, java.lang.String name,
-		java.lang.String description,
+		long userId, long parentCategoryId, String name, String description,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
@@ -261,7 +260,7 @@ public class ShoppingCategoryLocalServiceUtil {
 	}
 
 	public static com.liferay.shopping.model.ShoppingCategory getCategory(
-		long groupId, java.lang.String categoryName) {
+		long groupId, String categoryName) {
 		return getService().getCategory(groupId, categoryName);
 	}
 
@@ -274,7 +273,7 @@ public class ShoppingCategoryLocalServiceUtil {
 	*
 	* @return the OSGi service identifier
 	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
+	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 
@@ -340,15 +339,14 @@ public class ShoppingCategoryLocalServiceUtil {
 		return getService().getShoppingCategory(categoryId);
 	}
 
-	public static void getSubcategoryIds(
-		java.util.List<java.lang.Long> categoryIds, long groupId,
-		long categoryId) {
+	public static void getSubcategoryIds(java.util.List<Long> categoryIds,
+		long groupId, long categoryId) {
 		getService().getSubcategoryIds(categoryIds, groupId, categoryId);
 	}
 
 	public static com.liferay.shopping.model.ShoppingCategory updateCategory(
-		long categoryId, long parentCategoryId, java.lang.String name,
-		java.lang.String description, boolean mergeWithParentCategory,
+		long categoryId, long parentCategoryId, String name,
+		String description, boolean mergeWithParentCategory,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()

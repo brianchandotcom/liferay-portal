@@ -73,13 +73,12 @@ public interface FragmentCollectionLocalService extends BaseLocalService,
 		FragmentCollection fragmentCollection);
 
 	public FragmentCollection addFragmentCollection(long userId, long groupId,
-		java.lang.String name, java.lang.String description,
-		ServiceContext serviceContext) throws PortalException;
+		String name, String description, ServiceContext serviceContext)
+		throws PortalException;
 
 	public FragmentCollection addFragmentCollection(long userId, long groupId,
-		java.lang.String fragmentCollectionKey, java.lang.String name,
-		java.lang.String description, ServiceContext serviceContext)
-		throws PortalException;
+		String fragmentCollectionKey, String name, String description,
+		ServiceContext serviceContext) throws PortalException;
 
 	/**
 	* Creates a new fragment collection with the primary key. Does not add the fragment collection to the database.
@@ -184,7 +183,7 @@ public interface FragmentCollectionLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public FragmentCollection fetchFragmentCollection(long groupId,
-		java.lang.String fragmentCollectionKey);
+		String fragmentCollectionKey);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
@@ -225,7 +224,7 @@ public interface FragmentCollectionLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<FragmentCollection> getFragmentCollections(long groupId,
-		java.lang.String name, int start, int end,
+		String name, int start, int end,
 		OrderByComparator<FragmentCollection> orderByComparator);
 
 	/**
@@ -244,7 +243,7 @@ public interface FragmentCollectionLocalService extends BaseLocalService,
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -252,8 +251,8 @@ public interface FragmentCollectionLocalService extends BaseLocalService,
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.lang.String[] getTempFileNames(long userId, long groupId,
-		java.lang.String folderName) throws PortalException;
+	public String[] getTempFileNames(long userId, long groupId,
+		String folderName) throws PortalException;
 
 	/**
 	* Updates the fragment collection in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
@@ -266,6 +265,6 @@ public interface FragmentCollectionLocalService extends BaseLocalService,
 		FragmentCollection fragmentCollection);
 
 	public FragmentCollection updateFragmentCollection(
-		long fragmentCollectionId, java.lang.String name,
-		java.lang.String description) throws PortalException;
+		long fragmentCollectionId, String name, String description)
+		throws PortalException;
 }

@@ -55,8 +55,8 @@ import com.liferay.screens.service.ScreensJournalArticleServiceUtil;
  */
 @ProviderType
 public class ScreensJournalArticleServiceHttp {
-	public static java.lang.String getJournalArticleContent(
-		HttpPrincipal httpPrincipal, long classPK, java.util.Locale locale)
+	public static String getJournalArticleContent(HttpPrincipal httpPrincipal,
+		long classPK, java.util.Locale locale)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(ScreensJournalArticleServiceUtil.class,
@@ -79,7 +79,7 @@ public class ScreensJournalArticleServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (java.lang.String)returnObj;
+			return (String)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -88,9 +88,8 @@ public class ScreensJournalArticleServiceHttp {
 		}
 	}
 
-	public static java.lang.String getJournalArticleContent(
-		HttpPrincipal httpPrincipal, long classPK, long ddmTemplateId,
-		java.util.Locale locale)
+	public static String getJournalArticleContent(HttpPrincipal httpPrincipal,
+		long classPK, long ddmTemplateId, java.util.Locale locale)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(ScreensJournalArticleServiceUtil.class,
@@ -113,7 +112,7 @@ public class ScreensJournalArticleServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (java.lang.String)returnObj;
+			return (String)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -122,9 +121,9 @@ public class ScreensJournalArticleServiceHttp {
 		}
 	}
 
-	public static java.lang.String getJournalArticleContent(
-		HttpPrincipal httpPrincipal, long groupId, java.lang.String articleId,
-		long ddmTemplateId, java.util.Locale locale)
+	public static String getJournalArticleContent(HttpPrincipal httpPrincipal,
+		long groupId, String articleId, long ddmTemplateId,
+		java.util.Locale locale)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(ScreensJournalArticleServiceUtil.class,
@@ -147,7 +146,7 @@ public class ScreensJournalArticleServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (java.lang.String)returnObj;
+			return (String)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -164,7 +163,6 @@ public class ScreensJournalArticleServiceHttp {
 			long.class, long.class, java.util.Locale.class
 		};
 	private static final Class<?>[] _getJournalArticleContentParameterTypes2 = new Class[] {
-			long.class, java.lang.String.class, long.class,
-			java.util.Locale.class
+			long.class, String.class, long.class, java.util.Locale.class
 		};
 }

@@ -57,8 +57,8 @@ import com.liferay.portal.kernel.util.MethodKey;
 public class MDRRuleGroupServiceHttp {
 	public static com.liferay.mobile.device.rules.model.MDRRuleGroup addRuleGroup(
 		HttpPrincipal httpPrincipal, long groupId,
-		java.util.Map<java.util.Locale, java.lang.String> nameMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		java.util.Map<java.util.Locale, String> nameMap,
+		java.util.Map<java.util.Locale, String> descriptionMap,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -270,8 +270,8 @@ public class MDRRuleGroupServiceHttp {
 
 	public static com.liferay.mobile.device.rules.model.MDRRuleGroup updateRuleGroup(
 		HttpPrincipal httpPrincipal, long ruleGroupId,
-		java.util.Map<java.util.Locale, java.lang.String> nameMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		java.util.Map<java.util.Locale, String> nameMap,
+		java.util.Map<java.util.Locale, String> descriptionMap,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {

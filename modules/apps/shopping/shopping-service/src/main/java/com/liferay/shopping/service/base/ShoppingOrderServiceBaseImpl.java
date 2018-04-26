@@ -252,6 +252,7 @@ public abstract class ShoppingOrderServiceBaseImpl extends BaseServiceImpl
 	 *
 	 * @return the subscription local service
 	 */
+	@SuppressWarnings("deprecation")
 	public com.liferay.portal.kernel.service.SubscriptionLocalService getSubscriptionLocalService() {
 		return subscriptionLocalService;
 	}
@@ -261,6 +262,7 @@ public abstract class ShoppingOrderServiceBaseImpl extends BaseServiceImpl
 	 *
 	 * @param subscriptionLocalService the subscription local service
 	 */
+	@SuppressWarnings("deprecation")
 	public void setSubscriptionLocalService(
 		com.liferay.portal.kernel.service.SubscriptionLocalService subscriptionLocalService) {
 		this.subscriptionLocalService = subscriptionLocalService;
@@ -561,6 +563,7 @@ public abstract class ShoppingOrderServiceBaseImpl extends BaseServiceImpl
 	@ServiceReference(type = com.liferay.portal.kernel.service.ResourceLocalService.class)
 	protected com.liferay.portal.kernel.service.ResourceLocalService resourceLocalService;
 	@ServiceReference(type = com.liferay.portal.kernel.service.SubscriptionLocalService.class)
+	@SuppressWarnings("deprecation")
 	protected com.liferay.portal.kernel.service.SubscriptionLocalService subscriptionLocalService;
 	@ServiceReference(type = SubscriptionPersistence.class)
 	protected SubscriptionPersistence subscriptionPersistence;

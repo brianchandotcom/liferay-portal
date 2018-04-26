@@ -55,7 +55,7 @@ import java.rmi.RemoteException;
  */
 @ProviderType
 public class ScreensDDLRecordServiceSoap {
-	public static java.lang.String getDDLRecord(long ddlRecordId, String locale)
+	public static String getDDLRecord(long ddlRecordId, String locale)
 		throws RemoteException {
 		try {
 			com.liferay.portal.kernel.json.JSONObject returnValue = ScreensDDLRecordServiceUtil.getDDLRecord(ddlRecordId,
@@ -70,8 +70,8 @@ public class ScreensDDLRecordServiceSoap {
 		}
 	}
 
-	public static java.lang.String getDDLRecords(long ddlRecordSetId,
-		String locale, int start, int end,
+	public static String getDDLRecords(long ddlRecordSetId, String locale,
+		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.lists.model.DDLRecord> obc)
 		throws RemoteException {
 		try {
@@ -87,8 +87,8 @@ public class ScreensDDLRecordServiceSoap {
 		}
 	}
 
-	public static java.lang.String getDDLRecords(long ddlRecordSetId,
-		long userId, String locale, int start, int end,
+	public static String getDDLRecords(long ddlRecordSetId, long userId,
+		String locale, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.lists.model.DDLRecord> obc)
 		throws RemoteException {
 		try {

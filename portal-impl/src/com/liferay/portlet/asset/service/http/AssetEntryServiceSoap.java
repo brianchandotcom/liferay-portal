@@ -168,7 +168,7 @@ public class AssetEntryServiceSoap {
 	}
 
 	public static com.liferay.asset.kernel.model.AssetEntrySoap incrementViewCounter(
-		java.lang.String className, long classPK) throws RemoteException {
+		String className, long classPK) throws RemoteException {
 		try {
 			com.liferay.asset.kernel.model.AssetEntry returnValue = AssetEntryServiceUtil.incrementViewCounter(className,
 					classPK);
@@ -184,15 +184,13 @@ public class AssetEntryServiceSoap {
 
 	public static com.liferay.asset.kernel.model.AssetEntrySoap updateEntry(
 		long groupId, java.util.Date createDate, java.util.Date modifiedDate,
-		java.lang.String className, long classPK, java.lang.String classUuid,
-		long classTypeId, long[] categoryIds, java.lang.String[] tagNames,
-		boolean listable, boolean visible, java.util.Date startDate,
-		java.util.Date endDate, java.util.Date publishDate,
-		java.util.Date expirationDate, java.lang.String mimeType,
-		java.lang.String title, java.lang.String description,
-		java.lang.String summary, java.lang.String url,
-		java.lang.String layoutUuid, int height, int width,
-		java.lang.Double priority) throws RemoteException {
+		String className, long classPK, String classUuid, long classTypeId,
+		long[] categoryIds, String[] tagNames, boolean listable,
+		boolean visible, java.util.Date startDate, java.util.Date endDate,
+		java.util.Date publishDate, java.util.Date expirationDate,
+		String mimeType, String title, String description, String summary,
+		String url, String layoutUuid, int height, int width, Double priority)
+		throws RemoteException {
 		try {
 			com.liferay.asset.kernel.model.AssetEntry returnValue = AssetEntryServiceUtil.updateEntry(groupId,
 					createDate, modifiedDate, className, classPK, classUuid,
@@ -219,14 +217,12 @@ public class AssetEntryServiceSoap {
 	@Deprecated
 	public static com.liferay.asset.kernel.model.AssetEntrySoap updateEntry(
 		long groupId, java.util.Date createDate, java.util.Date modifiedDate,
-		java.lang.String className, long classPK, java.lang.String classUuid,
-		long classTypeId, long[] categoryIds, java.lang.String[] tagNames,
-		boolean listable, boolean visible, java.util.Date startDate,
-		java.util.Date endDate, java.util.Date expirationDate,
-		java.lang.String mimeType, java.lang.String title,
-		java.lang.String description, java.lang.String summary,
-		java.lang.String url, java.lang.String layoutUuid, int height,
-		int width, java.lang.Double priority) throws RemoteException {
+		String className, long classPK, String classUuid, long classTypeId,
+		long[] categoryIds, String[] tagNames, boolean listable,
+		boolean visible, java.util.Date startDate, java.util.Date endDate,
+		java.util.Date expirationDate, String mimeType, String title,
+		String description, String summary, String url, String layoutUuid,
+		int height, int width, Double priority) throws RemoteException {
 		try {
 			com.liferay.asset.kernel.model.AssetEntry returnValue = AssetEntryServiceUtil.updateEntry(groupId,
 					createDate, modifiedDate, className, classPK, classUuid,
@@ -253,14 +249,13 @@ public class AssetEntryServiceSoap {
 	@Deprecated
 	public static com.liferay.asset.kernel.model.AssetEntrySoap updateEntry(
 		long groupId, java.util.Date createDate, java.util.Date modifiedDate,
-		java.lang.String className, long classPK, java.lang.String classUuid,
-		long classTypeId, long[] categoryIds, java.lang.String[] tagNames,
-		boolean visible, java.util.Date startDate, java.util.Date endDate,
-		java.util.Date expirationDate, java.lang.String mimeType,
-		java.lang.String title, java.lang.String description,
-		java.lang.String summary, java.lang.String url,
-		java.lang.String layoutUuid, int height, int width,
-		java.lang.Integer priority, boolean sync) throws RemoteException {
+		String className, long classPK, String classUuid, long classTypeId,
+		long[] categoryIds, String[] tagNames, boolean visible,
+		java.util.Date startDate, java.util.Date endDate,
+		java.util.Date expirationDate, String mimeType, String title,
+		String description, String summary, String url, String layoutUuid,
+		int height, int width, Integer priority, boolean sync)
+		throws RemoteException {
 		try {
 			com.liferay.asset.kernel.model.AssetEntry returnValue = AssetEntryServiceUtil.updateEntry(groupId,
 					createDate, modifiedDate, className, classPK, classUuid,

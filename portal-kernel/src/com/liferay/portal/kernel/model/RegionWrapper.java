@@ -105,7 +105,7 @@ public class RegionWrapper implements Region, ModelWrapper<Region> {
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new RegionWrapper((Region)_region.clone());
 	}
 
@@ -155,7 +155,7 @@ public class RegionWrapper implements Region, ModelWrapper<Region> {
 	* @return the name of this region
 	*/
 	@Override
-	public java.lang.String getName() {
+	public String getName() {
 		return _region.getName();
 	}
 
@@ -180,7 +180,7 @@ public class RegionWrapper implements Region, ModelWrapper<Region> {
 	* @return the region code of this region
 	*/
 	@Override
-	public java.lang.String getRegionCode() {
+	public String getRegionCode() {
 		return _region.getRegionCode();
 	}
 
@@ -280,7 +280,7 @@ public class RegionWrapper implements Region, ModelWrapper<Region> {
 	* @param name the name of this region
 	*/
 	@Override
-	public void setName(java.lang.String name) {
+	public void setName(String name) {
 		_region.setName(name);
 	}
 
@@ -310,7 +310,7 @@ public class RegionWrapper implements Region, ModelWrapper<Region> {
 	* @param regionCode the region code of this region
 	*/
 	@Override
-	public void setRegionCode(java.lang.String regionCode) {
+	public void setRegionCode(String regionCode) {
 		_region.setRegionCode(regionCode);
 	}
 
@@ -335,7 +335,7 @@ public class RegionWrapper implements Region, ModelWrapper<Region> {
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _region.toString();
 	}
 
@@ -345,7 +345,7 @@ public class RegionWrapper implements Region, ModelWrapper<Region> {
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _region.toXmlString();
 	}
 

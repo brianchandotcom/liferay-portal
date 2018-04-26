@@ -33,8 +33,8 @@ public class WikiNodeServiceWrapper implements WikiNodeService,
 	}
 
 	@Override
-	public com.liferay.wiki.model.WikiNode addNode(java.lang.String name,
-		java.lang.String description,
+	public com.liferay.wiki.model.WikiNode addNode(String name,
+		String description,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _wikiNodeService.addNode(name, description, serviceContext);
@@ -53,8 +53,7 @@ public class WikiNodeServiceWrapper implements WikiNodeService,
 	}
 
 	@Override
-	public com.liferay.wiki.model.WikiNode getNode(long groupId,
-		java.lang.String name)
+	public com.liferay.wiki.model.WikiNode getNode(long groupId, String name)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _wikiNodeService.getNode(groupId, name);
 	}
@@ -108,14 +107,14 @@ public class WikiNodeServiceWrapper implements WikiNodeService,
 	* @return the OSGi service identifier
 	*/
 	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
+	public String getOSGiServiceIdentifier() {
 		return _wikiNodeService.getOSGiServiceIdentifier();
 	}
 
 	@Override
-	public void importPages(long nodeId, java.lang.String importer,
+	public void importPages(long nodeId, String importer,
 		java.io.InputStream[] inputStreams,
-		java.util.Map<java.lang.String, java.lang.String[]> options)
+		java.util.Map<String, String[]> options)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_wikiNodeService.importPages(nodeId, importer, inputStreams, options);
 	}
@@ -145,8 +144,8 @@ public class WikiNodeServiceWrapper implements WikiNodeService,
 	}
 
 	@Override
-	public com.liferay.wiki.model.WikiNode updateNode(long nodeId,
-		java.lang.String name, java.lang.String description,
+	public com.liferay.wiki.model.WikiNode updateNode(long nodeId, String name,
+		String description,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _wikiNodeService.updateNode(nodeId, name, description,

@@ -794,7 +794,7 @@ public class FragmentEntryUtil {
 	* @throws NoSuchEntryException if a matching fragment entry could not be found
 	*/
 	public static FragmentEntry findByG_FEK(long groupId,
-		java.lang.String fragmentEntryKey)
+		String fragmentEntryKey)
 		throws com.liferay.fragment.exception.NoSuchEntryException {
 		return getPersistence().findByG_FEK(groupId, fragmentEntryKey);
 	}
@@ -807,7 +807,7 @@ public class FragmentEntryUtil {
 	* @return the matching fragment entry, or <code>null</code> if a matching fragment entry could not be found
 	*/
 	public static FragmentEntry fetchByG_FEK(long groupId,
-		java.lang.String fragmentEntryKey) {
+		String fragmentEntryKey) {
 		return getPersistence().fetchByG_FEK(groupId, fragmentEntryKey);
 	}
 
@@ -820,7 +820,7 @@ public class FragmentEntryUtil {
 	* @return the matching fragment entry, or <code>null</code> if a matching fragment entry could not be found
 	*/
 	public static FragmentEntry fetchByG_FEK(long groupId,
-		java.lang.String fragmentEntryKey, boolean retrieveFromCache) {
+		String fragmentEntryKey, boolean retrieveFromCache) {
 		return getPersistence()
 				   .fetchByG_FEK(groupId, fragmentEntryKey, retrieveFromCache);
 	}
@@ -833,7 +833,7 @@ public class FragmentEntryUtil {
 	* @return the fragment entry that was removed
 	*/
 	public static FragmentEntry removeByG_FEK(long groupId,
-		java.lang.String fragmentEntryKey)
+		String fragmentEntryKey)
 		throws com.liferay.fragment.exception.NoSuchEntryException {
 		return getPersistence().removeByG_FEK(groupId, fragmentEntryKey);
 	}
@@ -845,8 +845,7 @@ public class FragmentEntryUtil {
 	* @param fragmentEntryKey the fragment entry key
 	* @return the number of matching fragment entries
 	*/
-	public static int countByG_FEK(long groupId,
-		java.lang.String fragmentEntryKey) {
+	public static int countByG_FEK(long groupId, String fragmentEntryKey) {
 		return getPersistence().countByG_FEK(groupId, fragmentEntryKey);
 	}
 
@@ -1040,7 +1039,7 @@ public class FragmentEntryUtil {
 	* @return the matching fragment entries
 	*/
 	public static List<FragmentEntry> findByG_FCI_LikeN(long groupId,
-		long fragmentCollectionId, java.lang.String name) {
+		long fragmentCollectionId, String name) {
 		return getPersistence()
 				   .findByG_FCI_LikeN(groupId, fragmentCollectionId, name);
 	}
@@ -1060,7 +1059,7 @@ public class FragmentEntryUtil {
 	* @return the range of matching fragment entries
 	*/
 	public static List<FragmentEntry> findByG_FCI_LikeN(long groupId,
-		long fragmentCollectionId, java.lang.String name, int start, int end) {
+		long fragmentCollectionId, String name, int start, int end) {
 		return getPersistence()
 				   .findByG_FCI_LikeN(groupId, fragmentCollectionId, name,
 			start, end);
@@ -1082,7 +1081,7 @@ public class FragmentEntryUtil {
 	* @return the ordered range of matching fragment entries
 	*/
 	public static List<FragmentEntry> findByG_FCI_LikeN(long groupId,
-		long fragmentCollectionId, java.lang.String name, int start, int end,
+		long fragmentCollectionId, String name, int start, int end,
 		OrderByComparator<FragmentEntry> orderByComparator) {
 		return getPersistence()
 				   .findByG_FCI_LikeN(groupId, fragmentCollectionId, name,
@@ -1106,7 +1105,7 @@ public class FragmentEntryUtil {
 	* @return the ordered range of matching fragment entries
 	*/
 	public static List<FragmentEntry> findByG_FCI_LikeN(long groupId,
-		long fragmentCollectionId, java.lang.String name, int start, int end,
+		long fragmentCollectionId, String name, int start, int end,
 		OrderByComparator<FragmentEntry> orderByComparator,
 		boolean retrieveFromCache) {
 		return getPersistence()
@@ -1125,7 +1124,7 @@ public class FragmentEntryUtil {
 	* @throws NoSuchEntryException if a matching fragment entry could not be found
 	*/
 	public static FragmentEntry findByG_FCI_LikeN_First(long groupId,
-		long fragmentCollectionId, java.lang.String name,
+		long fragmentCollectionId, String name,
 		OrderByComparator<FragmentEntry> orderByComparator)
 		throws com.liferay.fragment.exception.NoSuchEntryException {
 		return getPersistence()
@@ -1143,7 +1142,7 @@ public class FragmentEntryUtil {
 	* @return the first matching fragment entry, or <code>null</code> if a matching fragment entry could not be found
 	*/
 	public static FragmentEntry fetchByG_FCI_LikeN_First(long groupId,
-		long fragmentCollectionId, java.lang.String name,
+		long fragmentCollectionId, String name,
 		OrderByComparator<FragmentEntry> orderByComparator) {
 		return getPersistence()
 				   .fetchByG_FCI_LikeN_First(groupId, fragmentCollectionId,
@@ -1161,7 +1160,7 @@ public class FragmentEntryUtil {
 	* @throws NoSuchEntryException if a matching fragment entry could not be found
 	*/
 	public static FragmentEntry findByG_FCI_LikeN_Last(long groupId,
-		long fragmentCollectionId, java.lang.String name,
+		long fragmentCollectionId, String name,
 		OrderByComparator<FragmentEntry> orderByComparator)
 		throws com.liferay.fragment.exception.NoSuchEntryException {
 		return getPersistence()
@@ -1179,7 +1178,7 @@ public class FragmentEntryUtil {
 	* @return the last matching fragment entry, or <code>null</code> if a matching fragment entry could not be found
 	*/
 	public static FragmentEntry fetchByG_FCI_LikeN_Last(long groupId,
-		long fragmentCollectionId, java.lang.String name,
+		long fragmentCollectionId, String name,
 		OrderByComparator<FragmentEntry> orderByComparator) {
 		return getPersistence()
 				   .fetchByG_FCI_LikeN_Last(groupId, fragmentCollectionId,
@@ -1199,8 +1198,7 @@ public class FragmentEntryUtil {
 	*/
 	public static FragmentEntry[] findByG_FCI_LikeN_PrevAndNext(
 		long fragmentEntryId, long groupId, long fragmentCollectionId,
-		java.lang.String name,
-		OrderByComparator<FragmentEntry> orderByComparator)
+		String name, OrderByComparator<FragmentEntry> orderByComparator)
 		throws com.liferay.fragment.exception.NoSuchEntryException {
 		return getPersistence()
 				   .findByG_FCI_LikeN_PrevAndNext(fragmentEntryId, groupId,
@@ -1216,7 +1214,7 @@ public class FragmentEntryUtil {
 	* @return the matching fragment entries that the user has permission to view
 	*/
 	public static List<FragmentEntry> filterFindByG_FCI_LikeN(long groupId,
-		long fragmentCollectionId, java.lang.String name) {
+		long fragmentCollectionId, String name) {
 		return getPersistence()
 				   .filterFindByG_FCI_LikeN(groupId, fragmentCollectionId, name);
 	}
@@ -1236,7 +1234,7 @@ public class FragmentEntryUtil {
 	* @return the range of matching fragment entries that the user has permission to view
 	*/
 	public static List<FragmentEntry> filterFindByG_FCI_LikeN(long groupId,
-		long fragmentCollectionId, java.lang.String name, int start, int end) {
+		long fragmentCollectionId, String name, int start, int end) {
 		return getPersistence()
 				   .filterFindByG_FCI_LikeN(groupId, fragmentCollectionId,
 			name, start, end);
@@ -1258,7 +1256,7 @@ public class FragmentEntryUtil {
 	* @return the ordered range of matching fragment entries that the user has permission to view
 	*/
 	public static List<FragmentEntry> filterFindByG_FCI_LikeN(long groupId,
-		long fragmentCollectionId, java.lang.String name, int start, int end,
+		long fragmentCollectionId, String name, int start, int end,
 		OrderByComparator<FragmentEntry> orderByComparator) {
 		return getPersistence()
 				   .filterFindByG_FCI_LikeN(groupId, fragmentCollectionId,
@@ -1278,8 +1276,7 @@ public class FragmentEntryUtil {
 	*/
 	public static FragmentEntry[] filterFindByG_FCI_LikeN_PrevAndNext(
 		long fragmentEntryId, long groupId, long fragmentCollectionId,
-		java.lang.String name,
-		OrderByComparator<FragmentEntry> orderByComparator)
+		String name, OrderByComparator<FragmentEntry> orderByComparator)
 		throws com.liferay.fragment.exception.NoSuchEntryException {
 		return getPersistence()
 				   .filterFindByG_FCI_LikeN_PrevAndNext(fragmentEntryId,
@@ -1294,7 +1291,7 @@ public class FragmentEntryUtil {
 	* @param name the name
 	*/
 	public static void removeByG_FCI_LikeN(long groupId,
-		long fragmentCollectionId, java.lang.String name) {
+		long fragmentCollectionId, String name) {
 		getPersistence().removeByG_FCI_LikeN(groupId, fragmentCollectionId, name);
 	}
 
@@ -1307,7 +1304,7 @@ public class FragmentEntryUtil {
 	* @return the number of matching fragment entries
 	*/
 	public static int countByG_FCI_LikeN(long groupId,
-		long fragmentCollectionId, java.lang.String name) {
+		long fragmentCollectionId, String name) {
 		return getPersistence()
 				   .countByG_FCI_LikeN(groupId, fragmentCollectionId, name);
 	}
@@ -1321,7 +1318,7 @@ public class FragmentEntryUtil {
 	* @return the number of matching fragment entries that the user has permission to view
 	*/
 	public static int filterCountByG_FCI_LikeN(long groupId,
-		long fragmentCollectionId, java.lang.String name) {
+		long fragmentCollectionId, String name) {
 		return getPersistence()
 				   .filterCountByG_FCI_LikeN(groupId, fragmentCollectionId, name);
 	}

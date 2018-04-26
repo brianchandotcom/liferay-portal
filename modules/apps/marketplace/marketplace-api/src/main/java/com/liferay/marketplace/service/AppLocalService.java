@@ -182,7 +182,7 @@ public interface AppLocalService extends BaseLocalService,
 	* @return the matching app, or <code>null</code> if a matching app could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public App fetchAppByUuidAndCompanyId(java.lang.String uuid, long companyId);
+	public App fetchAppByUuidAndCompanyId(String uuid, long companyId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public App fetchRemoteApp(long remoteAppId);
@@ -209,7 +209,7 @@ public interface AppLocalService extends BaseLocalService,
 	* @throws PortalException if a matching app could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public App getAppByUuidAndCompanyId(java.lang.String uuid, long companyId)
+	public App getAppByUuidAndCompanyId(String uuid, long companyId)
 		throws PortalException;
 
 	/**
@@ -227,7 +227,7 @@ public interface AppLocalService extends BaseLocalService,
 	public List<App> getApps(int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<App> getApps(java.lang.String category);
+	public List<App> getApps(String category);
 
 	/**
 	* Returns the number of apps.
@@ -248,14 +248,14 @@ public interface AppLocalService extends BaseLocalService,
 	public List<App> getInstalledApps();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<App> getInstalledApps(java.lang.String category);
+	public List<App> getInstalledApps(String category);
 
 	/**
 	* Returns the OSGi service identifier.
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -263,7 +263,7 @@ public interface AppLocalService extends BaseLocalService,
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Map<java.lang.String, java.lang.String> getPrepackagedApps();
+	public Map<String, String> getPrepackagedApps();
 
 	public void installApp(long remoteAppId) throws PortalException;
 
@@ -280,8 +280,7 @@ public interface AppLocalService extends BaseLocalService,
 
 	public App updateApp(long userId, File file) throws PortalException;
 
-	public App updateApp(long userId, long remoteAppId, java.lang.String title,
-		java.lang.String description, java.lang.String category,
-		java.lang.String iconURL, java.lang.String version, boolean required,
-		File file) throws PortalException;
+	public App updateApp(long userId, long remoteAppId, String title,
+		String description, String category, String iconURL, String version,
+		boolean required, File file) throws PortalException;
 }

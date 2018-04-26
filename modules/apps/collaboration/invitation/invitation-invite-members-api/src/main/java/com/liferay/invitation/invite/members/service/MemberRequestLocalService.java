@@ -62,8 +62,8 @@ public interface MemberRequestLocalService extends BaseLocalService,
 	 * Never modify or reference this interface directly. Always use {@link MemberRequestLocalServiceUtil} to access the member request local service. Add custom service methods to {@link com.liferay.invitation.invite.members.service.impl.MemberRequestLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	public MemberRequest addMemberRequest(long userId, long groupId,
-		long receiverUserId, java.lang.String receiverEmailAddress,
-		long invitedRoleId, long invitedTeamId, ServiceContext serviceContext)
+		long receiverUserId, String receiverEmailAddress, long invitedRoleId,
+		long invitedTeamId, ServiceContext serviceContext)
 		throws PortalException;
 
 	/**
@@ -80,9 +80,8 @@ public interface MemberRequestLocalService extends BaseLocalService,
 		ServiceContext serviceContext) throws PortalException;
 
 	public void addMemberRequests(long userId, long groupId,
-		java.lang.String[] emailAddresses, long invitedRoleId,
-		long invitedTeamId, ServiceContext serviceContext)
-		throws PortalException;
+		String[] emailAddresses, long invitedRoleId, long invitedTeamId,
+		ServiceContext serviceContext) throws PortalException;
 
 	/**
 	* Creates a new member request with the primary key. Does not add the member request to the database.
@@ -230,7 +229,7 @@ public interface MemberRequestLocalService extends BaseLocalService,
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -256,7 +255,7 @@ public interface MemberRequestLocalService extends BaseLocalService,
 	public boolean hasPendingMemberRequest(long groupId, long receiverUserId);
 
 	public MemberRequest updateMemberRequest(long userId, long memberRequestId,
-		int status) throws java.lang.Exception;
+		int status) throws Exception;
 
 	/**
 	* Updates the member request in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
@@ -267,6 +266,6 @@ public interface MemberRequestLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.REINDEX)
 	public MemberRequest updateMemberRequest(MemberRequest memberRequest);
 
-	public MemberRequest updateMemberRequest(java.lang.String key,
-		long receiverUserId) throws PortalException;
+	public MemberRequest updateMemberRequest(String key, long receiverUserId)
+		throws PortalException;
 }

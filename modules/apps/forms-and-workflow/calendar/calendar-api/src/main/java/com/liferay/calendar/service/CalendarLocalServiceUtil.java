@@ -56,9 +56,9 @@ public class CalendarLocalServiceUtil {
 
 	public static com.liferay.calendar.model.Calendar addCalendar(long userId,
 		long groupId, long calendarResourceId,
-		java.util.Map<java.util.Locale, java.lang.String> nameMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		java.lang.String timeZoneId, int color, boolean defaultCalendar,
+		java.util.Map<java.util.Locale, String> nameMap,
+		java.util.Map<java.util.Locale, String> descriptionMap,
+		String timeZoneId, int color, boolean defaultCalendar,
 		boolean enableComments, boolean enableRatings,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -192,8 +192,8 @@ public class CalendarLocalServiceUtil {
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
-	public static java.lang.String exportCalendar(long calendarId,
-		java.lang.String type) throws java.lang.Exception {
+	public static String exportCalendar(long calendarId, String type)
+		throws Exception {
 		return getService().exportCalendar(calendarId, type);
 	}
 
@@ -210,7 +210,7 @@ public class CalendarLocalServiceUtil {
 	* @return the matching calendar, or <code>null</code> if a matching calendar could not be found
 	*/
 	public static com.liferay.calendar.model.Calendar fetchCalendarByUuidAndGroupId(
-		java.lang.String uuid, long groupId) {
+		String uuid, long groupId) {
 		return getService().fetchCalendarByUuidAndGroupId(uuid, groupId);
 	}
 
@@ -240,7 +240,7 @@ public class CalendarLocalServiceUtil {
 	* @throws PortalException if a matching calendar could not be found
 	*/
 	public static com.liferay.calendar.model.Calendar getCalendarByUuidAndGroupId(
-		java.lang.String uuid, long groupId)
+		String uuid, long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getCalendarByUuidAndGroupId(uuid, groupId);
 	}
@@ -282,7 +282,7 @@ public class CalendarLocalServiceUtil {
 	* @return the matching calendars, or an empty list if no matches were found
 	*/
 	public static java.util.List<com.liferay.calendar.model.Calendar> getCalendarsByUuidAndCompanyId(
-		java.lang.String uuid, long companyId) {
+		String uuid, long companyId) {
 		return getService().getCalendarsByUuidAndCompanyId(uuid, companyId);
 	}
 
@@ -297,7 +297,7 @@ public class CalendarLocalServiceUtil {
 	* @return the range of matching calendars, or an empty list if no matches were found
 	*/
 	public static java.util.List<com.liferay.calendar.model.Calendar> getCalendarsByUuidAndCompanyId(
-		java.lang.String uuid, long companyId, int start, int end,
+		String uuid, long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.calendar.model.Calendar> orderByComparator) {
 		return getService()
 				   .getCalendarsByUuidAndCompanyId(uuid, companyId, start, end,
@@ -327,7 +327,7 @@ public class CalendarLocalServiceUtil {
 	*
 	* @return the OSGi service identifier
 	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
+	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 
@@ -343,8 +343,8 @@ public class CalendarLocalServiceUtil {
 		return getService().hasStagingCalendar(calendar);
 	}
 
-	public static void importCalendar(long calendarId, java.lang.String data,
-		java.lang.String type) throws java.lang.Exception {
+	public static void importCalendar(long calendarId, String data, String type)
+		throws Exception {
 		getService().importCalendar(calendarId, data, type);
 	}
 
@@ -355,7 +355,7 @@ public class CalendarLocalServiceUtil {
 
 	public static java.util.List<com.liferay.calendar.model.Calendar> search(
 		long companyId, long[] groupIds, long[] calendarResourceIds,
-		java.lang.String keywords, boolean andOperator, int start, int end,
+		String keywords, boolean andOperator, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.calendar.model.Calendar> orderByComparator) {
 		return getService()
 				   .search(companyId, groupIds, calendarResourceIds, keywords,
@@ -364,8 +364,8 @@ public class CalendarLocalServiceUtil {
 
 	public static java.util.List<com.liferay.calendar.model.Calendar> search(
 		long companyId, long[] groupIds, long[] calendarResourceIds,
-		java.lang.String name, java.lang.String description,
-		boolean andOperator, int start, int end,
+		String name, String description, boolean andOperator, int start,
+		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.calendar.model.Calendar> orderByComparator) {
 		return getService()
 				   .search(companyId, groupIds, calendarResourceIds, name,
@@ -373,16 +373,15 @@ public class CalendarLocalServiceUtil {
 	}
 
 	public static int searchCount(long companyId, long[] groupIds,
-		long[] calendarResourceIds, java.lang.String keywords,
-		boolean andOperator) {
+		long[] calendarResourceIds, String keywords, boolean andOperator) {
 		return getService()
 				   .searchCount(companyId, groupIds, calendarResourceIds,
 			keywords, andOperator);
 	}
 
 	public static int searchCount(long companyId, long[] groupIds,
-		long[] calendarResourceIds, java.lang.String name,
-		java.lang.String description, boolean andOperator) {
+		long[] calendarResourceIds, String name, String description,
+		boolean andOperator) {
 		return getService()
 				   .searchCount(companyId, groupIds, calendarResourceIds, name,
 			description, andOperator);
@@ -405,10 +404,8 @@ public class CalendarLocalServiceUtil {
 	}
 
 	public static com.liferay.calendar.model.Calendar updateCalendar(
-		long calendarId,
-		java.util.Map<java.util.Locale, java.lang.String> nameMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		int color,
+		long calendarId, java.util.Map<java.util.Locale, String> nameMap,
+		java.util.Map<java.util.Locale, String> descriptionMap, int color,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
@@ -417,10 +414,9 @@ public class CalendarLocalServiceUtil {
 	}
 
 	public static com.liferay.calendar.model.Calendar updateCalendar(
-		long calendarId,
-		java.util.Map<java.util.Locale, java.lang.String> nameMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		java.lang.String timeZoneId, int color, boolean defaultCalendar,
+		long calendarId, java.util.Map<java.util.Locale, String> nameMap,
+		java.util.Map<java.util.Locale, String> descriptionMap,
+		String timeZoneId, int color, boolean defaultCalendar,
 		boolean enableComments, boolean enableRatings,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {

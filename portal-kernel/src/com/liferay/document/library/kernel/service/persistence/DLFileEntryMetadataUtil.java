@@ -116,7 +116,7 @@ public class DLFileEntryMetadataUtil {
 	* @param uuid the uuid
 	* @return the matching document library file entry metadatas
 	*/
-	public static List<DLFileEntryMetadata> findByUuid(java.lang.String uuid) {
+	public static List<DLFileEntryMetadata> findByUuid(String uuid) {
 		return getPersistence().findByUuid(uuid);
 	}
 
@@ -132,8 +132,8 @@ public class DLFileEntryMetadataUtil {
 	* @param end the upper bound of the range of document library file entry metadatas (not inclusive)
 	* @return the range of matching document library file entry metadatas
 	*/
-	public static List<DLFileEntryMetadata> findByUuid(java.lang.String uuid,
-		int start, int end) {
+	public static List<DLFileEntryMetadata> findByUuid(String uuid, int start,
+		int end) {
 		return getPersistence().findByUuid(uuid, start, end);
 	}
 
@@ -150,9 +150,8 @@ public class DLFileEntryMetadataUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching document library file entry metadatas
 	*/
-	public static List<DLFileEntryMetadata> findByUuid(java.lang.String uuid,
-		int start, int end,
-		OrderByComparator<DLFileEntryMetadata> orderByComparator) {
+	public static List<DLFileEntryMetadata> findByUuid(String uuid, int start,
+		int end, OrderByComparator<DLFileEntryMetadata> orderByComparator) {
 		return getPersistence().findByUuid(uuid, start, end, orderByComparator);
 	}
 
@@ -170,9 +169,8 @@ public class DLFileEntryMetadataUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching document library file entry metadatas
 	*/
-	public static List<DLFileEntryMetadata> findByUuid(java.lang.String uuid,
-		int start, int end,
-		OrderByComparator<DLFileEntryMetadata> orderByComparator,
+	public static List<DLFileEntryMetadata> findByUuid(String uuid, int start,
+		int end, OrderByComparator<DLFileEntryMetadata> orderByComparator,
 		boolean retrieveFromCache) {
 		return getPersistence()
 				   .findByUuid(uuid, start, end, orderByComparator,
@@ -187,7 +185,7 @@ public class DLFileEntryMetadataUtil {
 	* @return the first matching document library file entry metadata
 	* @throws NoSuchFileEntryMetadataException if a matching document library file entry metadata could not be found
 	*/
-	public static DLFileEntryMetadata findByUuid_First(java.lang.String uuid,
+	public static DLFileEntryMetadata findByUuid_First(String uuid,
 		OrderByComparator<DLFileEntryMetadata> orderByComparator)
 		throws com.liferay.document.library.kernel.exception.NoSuchFileEntryMetadataException {
 		return getPersistence().findByUuid_First(uuid, orderByComparator);
@@ -200,7 +198,7 @@ public class DLFileEntryMetadataUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching document library file entry metadata, or <code>null</code> if a matching document library file entry metadata could not be found
 	*/
-	public static DLFileEntryMetadata fetchByUuid_First(java.lang.String uuid,
+	public static DLFileEntryMetadata fetchByUuid_First(String uuid,
 		OrderByComparator<DLFileEntryMetadata> orderByComparator) {
 		return getPersistence().fetchByUuid_First(uuid, orderByComparator);
 	}
@@ -213,7 +211,7 @@ public class DLFileEntryMetadataUtil {
 	* @return the last matching document library file entry metadata
 	* @throws NoSuchFileEntryMetadataException if a matching document library file entry metadata could not be found
 	*/
-	public static DLFileEntryMetadata findByUuid_Last(java.lang.String uuid,
+	public static DLFileEntryMetadata findByUuid_Last(String uuid,
 		OrderByComparator<DLFileEntryMetadata> orderByComparator)
 		throws com.liferay.document.library.kernel.exception.NoSuchFileEntryMetadataException {
 		return getPersistence().findByUuid_Last(uuid, orderByComparator);
@@ -226,7 +224,7 @@ public class DLFileEntryMetadataUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching document library file entry metadata, or <code>null</code> if a matching document library file entry metadata could not be found
 	*/
-	public static DLFileEntryMetadata fetchByUuid_Last(java.lang.String uuid,
+	public static DLFileEntryMetadata fetchByUuid_Last(String uuid,
 		OrderByComparator<DLFileEntryMetadata> orderByComparator) {
 		return getPersistence().fetchByUuid_Last(uuid, orderByComparator);
 	}
@@ -241,7 +239,7 @@ public class DLFileEntryMetadataUtil {
 	* @throws NoSuchFileEntryMetadataException if a document library file entry metadata with the primary key could not be found
 	*/
 	public static DLFileEntryMetadata[] findByUuid_PrevAndNext(
-		long fileEntryMetadataId, java.lang.String uuid,
+		long fileEntryMetadataId, String uuid,
 		OrderByComparator<DLFileEntryMetadata> orderByComparator)
 		throws com.liferay.document.library.kernel.exception.NoSuchFileEntryMetadataException {
 		return getPersistence()
@@ -254,7 +252,7 @@ public class DLFileEntryMetadataUtil {
 	*
 	* @param uuid the uuid
 	*/
-	public static void removeByUuid(java.lang.String uuid) {
+	public static void removeByUuid(String uuid) {
 		getPersistence().removeByUuid(uuid);
 	}
 
@@ -264,7 +262,7 @@ public class DLFileEntryMetadataUtil {
 	* @param uuid the uuid
 	* @return the number of matching document library file entry metadatas
 	*/
-	public static int countByUuid(java.lang.String uuid) {
+	public static int countByUuid(String uuid) {
 		return getPersistence().countByUuid(uuid);
 	}
 
@@ -275,8 +273,8 @@ public class DLFileEntryMetadataUtil {
 	* @param companyId the company ID
 	* @return the matching document library file entry metadatas
 	*/
-	public static List<DLFileEntryMetadata> findByUuid_C(
-		java.lang.String uuid, long companyId) {
+	public static List<DLFileEntryMetadata> findByUuid_C(String uuid,
+		long companyId) {
 		return getPersistence().findByUuid_C(uuid, companyId);
 	}
 
@@ -293,8 +291,8 @@ public class DLFileEntryMetadataUtil {
 	* @param end the upper bound of the range of document library file entry metadatas (not inclusive)
 	* @return the range of matching document library file entry metadatas
 	*/
-	public static List<DLFileEntryMetadata> findByUuid_C(
-		java.lang.String uuid, long companyId, int start, int end) {
+	public static List<DLFileEntryMetadata> findByUuid_C(String uuid,
+		long companyId, int start, int end) {
 		return getPersistence().findByUuid_C(uuid, companyId, start, end);
 	}
 
@@ -312,8 +310,8 @@ public class DLFileEntryMetadataUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching document library file entry metadatas
 	*/
-	public static List<DLFileEntryMetadata> findByUuid_C(
-		java.lang.String uuid, long companyId, int start, int end,
+	public static List<DLFileEntryMetadata> findByUuid_C(String uuid,
+		long companyId, int start, int end,
 		OrderByComparator<DLFileEntryMetadata> orderByComparator) {
 		return getPersistence()
 				   .findByUuid_C(uuid, companyId, start, end, orderByComparator);
@@ -334,8 +332,8 @@ public class DLFileEntryMetadataUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching document library file entry metadatas
 	*/
-	public static List<DLFileEntryMetadata> findByUuid_C(
-		java.lang.String uuid, long companyId, int start, int end,
+	public static List<DLFileEntryMetadata> findByUuid_C(String uuid,
+		long companyId, int start, int end,
 		OrderByComparator<DLFileEntryMetadata> orderByComparator,
 		boolean retrieveFromCache) {
 		return getPersistence()
@@ -352,9 +350,8 @@ public class DLFileEntryMetadataUtil {
 	* @return the first matching document library file entry metadata
 	* @throws NoSuchFileEntryMetadataException if a matching document library file entry metadata could not be found
 	*/
-	public static DLFileEntryMetadata findByUuid_C_First(
-		java.lang.String uuid, long companyId,
-		OrderByComparator<DLFileEntryMetadata> orderByComparator)
+	public static DLFileEntryMetadata findByUuid_C_First(String uuid,
+		long companyId, OrderByComparator<DLFileEntryMetadata> orderByComparator)
 		throws com.liferay.document.library.kernel.exception.NoSuchFileEntryMetadataException {
 		return getPersistence()
 				   .findByUuid_C_First(uuid, companyId, orderByComparator);
@@ -368,9 +365,8 @@ public class DLFileEntryMetadataUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching document library file entry metadata, or <code>null</code> if a matching document library file entry metadata could not be found
 	*/
-	public static DLFileEntryMetadata fetchByUuid_C_First(
-		java.lang.String uuid, long companyId,
-		OrderByComparator<DLFileEntryMetadata> orderByComparator) {
+	public static DLFileEntryMetadata fetchByUuid_C_First(String uuid,
+		long companyId, OrderByComparator<DLFileEntryMetadata> orderByComparator) {
 		return getPersistence()
 				   .fetchByUuid_C_First(uuid, companyId, orderByComparator);
 	}
@@ -384,7 +380,7 @@ public class DLFileEntryMetadataUtil {
 	* @return the last matching document library file entry metadata
 	* @throws NoSuchFileEntryMetadataException if a matching document library file entry metadata could not be found
 	*/
-	public static DLFileEntryMetadata findByUuid_C_Last(java.lang.String uuid,
+	public static DLFileEntryMetadata findByUuid_C_Last(String uuid,
 		long companyId, OrderByComparator<DLFileEntryMetadata> orderByComparator)
 		throws com.liferay.document.library.kernel.exception.NoSuchFileEntryMetadataException {
 		return getPersistence()
@@ -399,9 +395,8 @@ public class DLFileEntryMetadataUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching document library file entry metadata, or <code>null</code> if a matching document library file entry metadata could not be found
 	*/
-	public static DLFileEntryMetadata fetchByUuid_C_Last(
-		java.lang.String uuid, long companyId,
-		OrderByComparator<DLFileEntryMetadata> orderByComparator) {
+	public static DLFileEntryMetadata fetchByUuid_C_Last(String uuid,
+		long companyId, OrderByComparator<DLFileEntryMetadata> orderByComparator) {
 		return getPersistence()
 				   .fetchByUuid_C_Last(uuid, companyId, orderByComparator);
 	}
@@ -417,7 +412,7 @@ public class DLFileEntryMetadataUtil {
 	* @throws NoSuchFileEntryMetadataException if a document library file entry metadata with the primary key could not be found
 	*/
 	public static DLFileEntryMetadata[] findByUuid_C_PrevAndNext(
-		long fileEntryMetadataId, java.lang.String uuid, long companyId,
+		long fileEntryMetadataId, String uuid, long companyId,
 		OrderByComparator<DLFileEntryMetadata> orderByComparator)
 		throws com.liferay.document.library.kernel.exception.NoSuchFileEntryMetadataException {
 		return getPersistence()
@@ -431,7 +426,7 @@ public class DLFileEntryMetadataUtil {
 	* @param uuid the uuid
 	* @param companyId the company ID
 	*/
-	public static void removeByUuid_C(java.lang.String uuid, long companyId) {
+	public static void removeByUuid_C(String uuid, long companyId) {
 		getPersistence().removeByUuid_C(uuid, companyId);
 	}
 
@@ -442,7 +437,7 @@ public class DLFileEntryMetadataUtil {
 	* @param companyId the company ID
 	* @return the number of matching document library file entry metadatas
 	*/
-	public static int countByUuid_C(java.lang.String uuid, long companyId) {
+	public static int countByUuid_C(String uuid, long companyId) {
 		return getPersistence().countByUuid_C(uuid, companyId);
 	}
 
@@ -996,7 +991,7 @@ public class DLFileEntryMetadataUtil {
 		return getPersistence().countAll();
 	}
 
-	public static java.util.Set<java.lang.String> getBadColumnNames() {
+	public static java.util.Set<String> getBadColumnNames() {
 		return getPersistence().getBadColumnNames();
 	}
 

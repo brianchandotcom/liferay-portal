@@ -501,11 +501,11 @@ public class CompanyModelImpl extends BaseModelImpl<Company>
 	public void setKeyObj(java.security.Key keyObj) {
 	}
 
-	public java.lang.String getVirtualHostname() {
+	public String getVirtualHostname() {
 		return null;
 	}
 
-	public void setVirtualHostname(java.lang.String virtualHostname) {
+	public void setVirtualHostname(String virtualHostname) {
 	}
 
 	public long getColumnBitmask() {

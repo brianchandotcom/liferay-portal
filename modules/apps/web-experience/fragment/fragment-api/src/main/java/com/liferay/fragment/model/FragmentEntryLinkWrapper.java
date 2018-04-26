@@ -203,7 +203,7 @@ public class FragmentEntryLinkWrapper implements FragmentEntryLink,
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new FragmentEntryLinkWrapper((FragmentEntryLink)_fragmentEntryLink.clone());
 	}
 
@@ -218,7 +218,7 @@ public class FragmentEntryLinkWrapper implements FragmentEntryLink,
 	* @return the fully qualified class name of this fragment entry link
 	*/
 	@Override
-	public java.lang.String getClassName() {
+	public String getClassName() {
 		return _fragmentEntryLink.getClassName();
 	}
 
@@ -268,7 +268,7 @@ public class FragmentEntryLinkWrapper implements FragmentEntryLink,
 	* @return the css of this fragment entry link
 	*/
 	@Override
-	public java.lang.String getCss() {
+	public String getCss() {
 		return _fragmentEntryLink.getCss();
 	}
 
@@ -278,7 +278,7 @@ public class FragmentEntryLinkWrapper implements FragmentEntryLink,
 	* @return the editable values of this fragment entry link
 	*/
 	@Override
-	public java.lang.String getEditableValues() {
+	public String getEditableValues() {
 		return _fragmentEntryLink.getEditableValues();
 	}
 
@@ -323,7 +323,7 @@ public class FragmentEntryLinkWrapper implements FragmentEntryLink,
 	* @return the html of this fragment entry link
 	*/
 	@Override
-	public java.lang.String getHtml() {
+	public String getHtml() {
 		return _fragmentEntryLink.getHtml();
 	}
 
@@ -333,7 +333,7 @@ public class FragmentEntryLinkWrapper implements FragmentEntryLink,
 	* @return the js of this fragment entry link
 	*/
 	@Override
-	public java.lang.String getJs() {
+	public String getJs() {
 		return _fragmentEntryLink.getJs();
 	}
 
@@ -363,7 +363,7 @@ public class FragmentEntryLinkWrapper implements FragmentEntryLink,
 	* @return the namespace of this fragment entry link
 	*/
 	@Override
-	public java.lang.String getNamespace() {
+	public String getNamespace() {
 		return _fragmentEntryLink.getNamespace();
 	}
 
@@ -418,7 +418,7 @@ public class FragmentEntryLinkWrapper implements FragmentEntryLink,
 	* @return the user name of this fragment entry link
 	*/
 	@Override
-	public java.lang.String getUserName() {
+	public String getUserName() {
 		return _fragmentEntryLink.getUserName();
 	}
 
@@ -428,7 +428,7 @@ public class FragmentEntryLinkWrapper implements FragmentEntryLink,
 	* @return the user uuid of this fragment entry link
 	*/
 	@Override
-	public java.lang.String getUserUuid() {
+	public String getUserUuid() {
 		return _fragmentEntryLink.getUserUuid();
 	}
 
@@ -438,7 +438,7 @@ public class FragmentEntryLinkWrapper implements FragmentEntryLink,
 	* @return the uuid of this fragment entry link
 	*/
 	@Override
-	public java.lang.String getUuid() {
+	public String getUuid() {
 		return _fragmentEntryLink.getUuid();
 	}
 
@@ -479,7 +479,7 @@ public class FragmentEntryLinkWrapper implements FragmentEntryLink,
 	}
 
 	@Override
-	public void setClassName(java.lang.String className) {
+	public void setClassName(String className) {
 		_fragmentEntryLink.setClassName(className);
 	}
 
@@ -529,7 +529,7 @@ public class FragmentEntryLinkWrapper implements FragmentEntryLink,
 	* @param css the css of this fragment entry link
 	*/
 	@Override
-	public void setCss(java.lang.String css) {
+	public void setCss(String css) {
 		_fragmentEntryLink.setCss(css);
 	}
 
@@ -539,7 +539,7 @@ public class FragmentEntryLinkWrapper implements FragmentEntryLink,
 	* @param editableValues the editable values of this fragment entry link
 	*/
 	@Override
-	public void setEditableValues(java.lang.String editableValues) {
+	public void setEditableValues(String editableValues) {
 		_fragmentEntryLink.setEditableValues(editableValues);
 	}
 
@@ -595,7 +595,7 @@ public class FragmentEntryLinkWrapper implements FragmentEntryLink,
 	* @param html the html of this fragment entry link
 	*/
 	@Override
-	public void setHtml(java.lang.String html) {
+	public void setHtml(String html) {
 		_fragmentEntryLink.setHtml(html);
 	}
 
@@ -605,7 +605,7 @@ public class FragmentEntryLinkWrapper implements FragmentEntryLink,
 	* @param js the js of this fragment entry link
 	*/
 	@Override
-	public void setJs(java.lang.String js) {
+	public void setJs(String js) {
 		_fragmentEntryLink.setJs(js);
 	}
 
@@ -635,7 +635,7 @@ public class FragmentEntryLinkWrapper implements FragmentEntryLink,
 	* @param namespace the namespace of this fragment entry link
 	*/
 	@Override
-	public void setNamespace(java.lang.String namespace) {
+	public void setNamespace(String namespace) {
 		_fragmentEntryLink.setNamespace(namespace);
 	}
 
@@ -695,7 +695,7 @@ public class FragmentEntryLinkWrapper implements FragmentEntryLink,
 	* @param userName the user name of this fragment entry link
 	*/
 	@Override
-	public void setUserName(java.lang.String userName) {
+	public void setUserName(String userName) {
 		_fragmentEntryLink.setUserName(userName);
 	}
 
@@ -705,7 +705,7 @@ public class FragmentEntryLinkWrapper implements FragmentEntryLink,
 	* @param userUuid the user uuid of this fragment entry link
 	*/
 	@Override
-	public void setUserUuid(java.lang.String userUuid) {
+	public void setUserUuid(String userUuid) {
 		_fragmentEntryLink.setUserUuid(userUuid);
 	}
 
@@ -715,7 +715,7 @@ public class FragmentEntryLinkWrapper implements FragmentEntryLink,
 	* @param uuid the uuid of this fragment entry link
 	*/
 	@Override
-	public void setUuid(java.lang.String uuid) {
+	public void setUuid(String uuid) {
 		_fragmentEntryLink.setUuid(uuid);
 	}
 
@@ -730,7 +730,7 @@ public class FragmentEntryLinkWrapper implements FragmentEntryLink,
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _fragmentEntryLink.toString();
 	}
 
@@ -740,7 +740,7 @@ public class FragmentEntryLinkWrapper implements FragmentEntryLink,
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _fragmentEntryLink.toXmlString();
 	}
 

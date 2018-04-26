@@ -143,7 +143,7 @@ public class ShoppingItemPriceWrapper implements ShoppingItemPrice,
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new ShoppingItemPriceWrapper((ShoppingItemPrice)_shoppingItemPrice.clone());
 	}
 
@@ -489,7 +489,7 @@ public class ShoppingItemPriceWrapper implements ShoppingItemPrice,
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _shoppingItemPrice.toString();
 	}
 
@@ -499,7 +499,7 @@ public class ShoppingItemPriceWrapper implements ShoppingItemPrice,
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _shoppingItemPrice.toXmlString();
 	}
 

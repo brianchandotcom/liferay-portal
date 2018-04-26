@@ -118,7 +118,7 @@ public class DDMStorageLinkUtil {
 	* @param uuid the uuid
 	* @return the matching ddm storage links
 	*/
-	public static List<DDMStorageLink> findByUuid(java.lang.String uuid) {
+	public static List<DDMStorageLink> findByUuid(String uuid) {
 		return getPersistence().findByUuid(uuid);
 	}
 
@@ -134,8 +134,8 @@ public class DDMStorageLinkUtil {
 	* @param end the upper bound of the range of ddm storage links (not inclusive)
 	* @return the range of matching ddm storage links
 	*/
-	public static List<DDMStorageLink> findByUuid(java.lang.String uuid,
-		int start, int end) {
+	public static List<DDMStorageLink> findByUuid(String uuid, int start,
+		int end) {
 		return getPersistence().findByUuid(uuid, start, end);
 	}
 
@@ -152,8 +152,8 @@ public class DDMStorageLinkUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching ddm storage links
 	*/
-	public static List<DDMStorageLink> findByUuid(java.lang.String uuid,
-		int start, int end, OrderByComparator<DDMStorageLink> orderByComparator) {
+	public static List<DDMStorageLink> findByUuid(String uuid, int start,
+		int end, OrderByComparator<DDMStorageLink> orderByComparator) {
 		return getPersistence().findByUuid(uuid, start, end, orderByComparator);
 	}
 
@@ -171,9 +171,8 @@ public class DDMStorageLinkUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching ddm storage links
 	*/
-	public static List<DDMStorageLink> findByUuid(java.lang.String uuid,
-		int start, int end,
-		OrderByComparator<DDMStorageLink> orderByComparator,
+	public static List<DDMStorageLink> findByUuid(String uuid, int start,
+		int end, OrderByComparator<DDMStorageLink> orderByComparator,
 		boolean retrieveFromCache) {
 		return getPersistence()
 				   .findByUuid(uuid, start, end, orderByComparator,
@@ -188,7 +187,7 @@ public class DDMStorageLinkUtil {
 	* @return the first matching ddm storage link
 	* @throws NoSuchStorageLinkException if a matching ddm storage link could not be found
 	*/
-	public static DDMStorageLink findByUuid_First(java.lang.String uuid,
+	public static DDMStorageLink findByUuid_First(String uuid,
 		OrderByComparator<DDMStorageLink> orderByComparator)
 		throws com.liferay.dynamic.data.mapping.exception.NoSuchStorageLinkException {
 		return getPersistence().findByUuid_First(uuid, orderByComparator);
@@ -201,7 +200,7 @@ public class DDMStorageLinkUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching ddm storage link, or <code>null</code> if a matching ddm storage link could not be found
 	*/
-	public static DDMStorageLink fetchByUuid_First(java.lang.String uuid,
+	public static DDMStorageLink fetchByUuid_First(String uuid,
 		OrderByComparator<DDMStorageLink> orderByComparator) {
 		return getPersistence().fetchByUuid_First(uuid, orderByComparator);
 	}
@@ -214,7 +213,7 @@ public class DDMStorageLinkUtil {
 	* @return the last matching ddm storage link
 	* @throws NoSuchStorageLinkException if a matching ddm storage link could not be found
 	*/
-	public static DDMStorageLink findByUuid_Last(java.lang.String uuid,
+	public static DDMStorageLink findByUuid_Last(String uuid,
 		OrderByComparator<DDMStorageLink> orderByComparator)
 		throws com.liferay.dynamic.data.mapping.exception.NoSuchStorageLinkException {
 		return getPersistence().findByUuid_Last(uuid, orderByComparator);
@@ -227,7 +226,7 @@ public class DDMStorageLinkUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching ddm storage link, or <code>null</code> if a matching ddm storage link could not be found
 	*/
-	public static DDMStorageLink fetchByUuid_Last(java.lang.String uuid,
+	public static DDMStorageLink fetchByUuid_Last(String uuid,
 		OrderByComparator<DDMStorageLink> orderByComparator) {
 		return getPersistence().fetchByUuid_Last(uuid, orderByComparator);
 	}
@@ -242,8 +241,7 @@ public class DDMStorageLinkUtil {
 	* @throws NoSuchStorageLinkException if a ddm storage link with the primary key could not be found
 	*/
 	public static DDMStorageLink[] findByUuid_PrevAndNext(long storageLinkId,
-		java.lang.String uuid,
-		OrderByComparator<DDMStorageLink> orderByComparator)
+		String uuid, OrderByComparator<DDMStorageLink> orderByComparator)
 		throws com.liferay.dynamic.data.mapping.exception.NoSuchStorageLinkException {
 		return getPersistence()
 				   .findByUuid_PrevAndNext(storageLinkId, uuid,
@@ -255,7 +253,7 @@ public class DDMStorageLinkUtil {
 	*
 	* @param uuid the uuid
 	*/
-	public static void removeByUuid(java.lang.String uuid) {
+	public static void removeByUuid(String uuid) {
 		getPersistence().removeByUuid(uuid);
 	}
 
@@ -265,7 +263,7 @@ public class DDMStorageLinkUtil {
 	* @param uuid the uuid
 	* @return the number of matching ddm storage links
 	*/
-	public static int countByUuid(java.lang.String uuid) {
+	public static int countByUuid(String uuid) {
 		return getPersistence().countByUuid(uuid);
 	}
 
@@ -276,8 +274,7 @@ public class DDMStorageLinkUtil {
 	* @param companyId the company ID
 	* @return the matching ddm storage links
 	*/
-	public static List<DDMStorageLink> findByUuid_C(java.lang.String uuid,
-		long companyId) {
+	public static List<DDMStorageLink> findByUuid_C(String uuid, long companyId) {
 		return getPersistence().findByUuid_C(uuid, companyId);
 	}
 
@@ -294,7 +291,7 @@ public class DDMStorageLinkUtil {
 	* @param end the upper bound of the range of ddm storage links (not inclusive)
 	* @return the range of matching ddm storage links
 	*/
-	public static List<DDMStorageLink> findByUuid_C(java.lang.String uuid,
+	public static List<DDMStorageLink> findByUuid_C(String uuid,
 		long companyId, int start, int end) {
 		return getPersistence().findByUuid_C(uuid, companyId, start, end);
 	}
@@ -313,7 +310,7 @@ public class DDMStorageLinkUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching ddm storage links
 	*/
-	public static List<DDMStorageLink> findByUuid_C(java.lang.String uuid,
+	public static List<DDMStorageLink> findByUuid_C(String uuid,
 		long companyId, int start, int end,
 		OrderByComparator<DDMStorageLink> orderByComparator) {
 		return getPersistence()
@@ -335,7 +332,7 @@ public class DDMStorageLinkUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching ddm storage links
 	*/
-	public static List<DDMStorageLink> findByUuid_C(java.lang.String uuid,
+	public static List<DDMStorageLink> findByUuid_C(String uuid,
 		long companyId, int start, int end,
 		OrderByComparator<DDMStorageLink> orderByComparator,
 		boolean retrieveFromCache) {
@@ -353,7 +350,7 @@ public class DDMStorageLinkUtil {
 	* @return the first matching ddm storage link
 	* @throws NoSuchStorageLinkException if a matching ddm storage link could not be found
 	*/
-	public static DDMStorageLink findByUuid_C_First(java.lang.String uuid,
+	public static DDMStorageLink findByUuid_C_First(String uuid,
 		long companyId, OrderByComparator<DDMStorageLink> orderByComparator)
 		throws com.liferay.dynamic.data.mapping.exception.NoSuchStorageLinkException {
 		return getPersistence()
@@ -368,7 +365,7 @@ public class DDMStorageLinkUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching ddm storage link, or <code>null</code> if a matching ddm storage link could not be found
 	*/
-	public static DDMStorageLink fetchByUuid_C_First(java.lang.String uuid,
+	public static DDMStorageLink fetchByUuid_C_First(String uuid,
 		long companyId, OrderByComparator<DDMStorageLink> orderByComparator) {
 		return getPersistence()
 				   .fetchByUuid_C_First(uuid, companyId, orderByComparator);
@@ -383,8 +380,8 @@ public class DDMStorageLinkUtil {
 	* @return the last matching ddm storage link
 	* @throws NoSuchStorageLinkException if a matching ddm storage link could not be found
 	*/
-	public static DDMStorageLink findByUuid_C_Last(java.lang.String uuid,
-		long companyId, OrderByComparator<DDMStorageLink> orderByComparator)
+	public static DDMStorageLink findByUuid_C_Last(String uuid, long companyId,
+		OrderByComparator<DDMStorageLink> orderByComparator)
 		throws com.liferay.dynamic.data.mapping.exception.NoSuchStorageLinkException {
 		return getPersistence()
 				   .findByUuid_C_Last(uuid, companyId, orderByComparator);
@@ -398,7 +395,7 @@ public class DDMStorageLinkUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching ddm storage link, or <code>null</code> if a matching ddm storage link could not be found
 	*/
-	public static DDMStorageLink fetchByUuid_C_Last(java.lang.String uuid,
+	public static DDMStorageLink fetchByUuid_C_Last(String uuid,
 		long companyId, OrderByComparator<DDMStorageLink> orderByComparator) {
 		return getPersistence()
 				   .fetchByUuid_C_Last(uuid, companyId, orderByComparator);
@@ -415,7 +412,7 @@ public class DDMStorageLinkUtil {
 	* @throws NoSuchStorageLinkException if a ddm storage link with the primary key could not be found
 	*/
 	public static DDMStorageLink[] findByUuid_C_PrevAndNext(
-		long storageLinkId, java.lang.String uuid, long companyId,
+		long storageLinkId, String uuid, long companyId,
 		OrderByComparator<DDMStorageLink> orderByComparator)
 		throws com.liferay.dynamic.data.mapping.exception.NoSuchStorageLinkException {
 		return getPersistence()
@@ -429,7 +426,7 @@ public class DDMStorageLinkUtil {
 	* @param uuid the uuid
 	* @param companyId the company ID
 	*/
-	public static void removeByUuid_C(java.lang.String uuid, long companyId) {
+	public static void removeByUuid_C(String uuid, long companyId) {
 		getPersistence().removeByUuid_C(uuid, companyId);
 	}
 
@@ -440,7 +437,7 @@ public class DDMStorageLinkUtil {
 	* @param companyId the company ID
 	* @return the number of matching ddm storage links
 	*/
-	public static int countByUuid_C(java.lang.String uuid, long companyId) {
+	public static int countByUuid_C(String uuid, long companyId) {
 		return getPersistence().countByUuid_C(uuid, companyId);
 	}
 
@@ -1070,7 +1067,7 @@ public class DDMStorageLinkUtil {
 		return getPersistence().countAll();
 	}
 
-	public static java.util.Set<java.lang.String> getBadColumnNames() {
+	public static java.util.Set<String> getBadColumnNames() {
 		return getPersistence().getBadColumnNames();
 	}
 

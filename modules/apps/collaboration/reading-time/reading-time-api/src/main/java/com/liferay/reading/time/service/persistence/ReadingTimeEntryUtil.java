@@ -118,7 +118,7 @@ public class ReadingTimeEntryUtil {
 	* @param uuid the uuid
 	* @return the matching reading time entries
 	*/
-	public static List<ReadingTimeEntry> findByUuid(java.lang.String uuid) {
+	public static List<ReadingTimeEntry> findByUuid(String uuid) {
 		return getPersistence().findByUuid(uuid);
 	}
 
@@ -134,8 +134,8 @@ public class ReadingTimeEntryUtil {
 	* @param end the upper bound of the range of reading time entries (not inclusive)
 	* @return the range of matching reading time entries
 	*/
-	public static List<ReadingTimeEntry> findByUuid(java.lang.String uuid,
-		int start, int end) {
+	public static List<ReadingTimeEntry> findByUuid(String uuid, int start,
+		int end) {
 		return getPersistence().findByUuid(uuid, start, end);
 	}
 
@@ -152,9 +152,8 @@ public class ReadingTimeEntryUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching reading time entries
 	*/
-	public static List<ReadingTimeEntry> findByUuid(java.lang.String uuid,
-		int start, int end,
-		OrderByComparator<ReadingTimeEntry> orderByComparator) {
+	public static List<ReadingTimeEntry> findByUuid(String uuid, int start,
+		int end, OrderByComparator<ReadingTimeEntry> orderByComparator) {
 		return getPersistence().findByUuid(uuid, start, end, orderByComparator);
 	}
 
@@ -172,9 +171,8 @@ public class ReadingTimeEntryUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching reading time entries
 	*/
-	public static List<ReadingTimeEntry> findByUuid(java.lang.String uuid,
-		int start, int end,
-		OrderByComparator<ReadingTimeEntry> orderByComparator,
+	public static List<ReadingTimeEntry> findByUuid(String uuid, int start,
+		int end, OrderByComparator<ReadingTimeEntry> orderByComparator,
 		boolean retrieveFromCache) {
 		return getPersistence()
 				   .findByUuid(uuid, start, end, orderByComparator,
@@ -189,7 +187,7 @@ public class ReadingTimeEntryUtil {
 	* @return the first matching reading time entry
 	* @throws NoSuchEntryException if a matching reading time entry could not be found
 	*/
-	public static ReadingTimeEntry findByUuid_First(java.lang.String uuid,
+	public static ReadingTimeEntry findByUuid_First(String uuid,
 		OrderByComparator<ReadingTimeEntry> orderByComparator)
 		throws com.liferay.reading.time.exception.NoSuchEntryException {
 		return getPersistence().findByUuid_First(uuid, orderByComparator);
@@ -202,7 +200,7 @@ public class ReadingTimeEntryUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching reading time entry, or <code>null</code> if a matching reading time entry could not be found
 	*/
-	public static ReadingTimeEntry fetchByUuid_First(java.lang.String uuid,
+	public static ReadingTimeEntry fetchByUuid_First(String uuid,
 		OrderByComparator<ReadingTimeEntry> orderByComparator) {
 		return getPersistence().fetchByUuid_First(uuid, orderByComparator);
 	}
@@ -215,7 +213,7 @@ public class ReadingTimeEntryUtil {
 	* @return the last matching reading time entry
 	* @throws NoSuchEntryException if a matching reading time entry could not be found
 	*/
-	public static ReadingTimeEntry findByUuid_Last(java.lang.String uuid,
+	public static ReadingTimeEntry findByUuid_Last(String uuid,
 		OrderByComparator<ReadingTimeEntry> orderByComparator)
 		throws com.liferay.reading.time.exception.NoSuchEntryException {
 		return getPersistence().findByUuid_Last(uuid, orderByComparator);
@@ -228,7 +226,7 @@ public class ReadingTimeEntryUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching reading time entry, or <code>null</code> if a matching reading time entry could not be found
 	*/
-	public static ReadingTimeEntry fetchByUuid_Last(java.lang.String uuid,
+	public static ReadingTimeEntry fetchByUuid_Last(String uuid,
 		OrderByComparator<ReadingTimeEntry> orderByComparator) {
 		return getPersistence().fetchByUuid_Last(uuid, orderByComparator);
 	}
@@ -243,7 +241,7 @@ public class ReadingTimeEntryUtil {
 	* @throws NoSuchEntryException if a reading time entry with the primary key could not be found
 	*/
 	public static ReadingTimeEntry[] findByUuid_PrevAndNext(
-		long readingTimeEntryId, java.lang.String uuid,
+		long readingTimeEntryId, String uuid,
 		OrderByComparator<ReadingTimeEntry> orderByComparator)
 		throws com.liferay.reading.time.exception.NoSuchEntryException {
 		return getPersistence()
@@ -256,7 +254,7 @@ public class ReadingTimeEntryUtil {
 	*
 	* @param uuid the uuid
 	*/
-	public static void removeByUuid(java.lang.String uuid) {
+	public static void removeByUuid(String uuid) {
 		getPersistence().removeByUuid(uuid);
 	}
 
@@ -266,7 +264,7 @@ public class ReadingTimeEntryUtil {
 	* @param uuid the uuid
 	* @return the number of matching reading time entries
 	*/
-	public static int countByUuid(java.lang.String uuid) {
+	public static int countByUuid(String uuid) {
 		return getPersistence().countByUuid(uuid);
 	}
 
@@ -278,8 +276,7 @@ public class ReadingTimeEntryUtil {
 	* @return the matching reading time entry
 	* @throws NoSuchEntryException if a matching reading time entry could not be found
 	*/
-	public static ReadingTimeEntry findByUUID_G(java.lang.String uuid,
-		long groupId)
+	public static ReadingTimeEntry findByUUID_G(String uuid, long groupId)
 		throws com.liferay.reading.time.exception.NoSuchEntryException {
 		return getPersistence().findByUUID_G(uuid, groupId);
 	}
@@ -291,8 +288,7 @@ public class ReadingTimeEntryUtil {
 	* @param groupId the group ID
 	* @return the matching reading time entry, or <code>null</code> if a matching reading time entry could not be found
 	*/
-	public static ReadingTimeEntry fetchByUUID_G(java.lang.String uuid,
-		long groupId) {
+	public static ReadingTimeEntry fetchByUUID_G(String uuid, long groupId) {
 		return getPersistence().fetchByUUID_G(uuid, groupId);
 	}
 
@@ -304,8 +300,8 @@ public class ReadingTimeEntryUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching reading time entry, or <code>null</code> if a matching reading time entry could not be found
 	*/
-	public static ReadingTimeEntry fetchByUUID_G(java.lang.String uuid,
-		long groupId, boolean retrieveFromCache) {
+	public static ReadingTimeEntry fetchByUUID_G(String uuid, long groupId,
+		boolean retrieveFromCache) {
 		return getPersistence().fetchByUUID_G(uuid, groupId, retrieveFromCache);
 	}
 
@@ -316,8 +312,7 @@ public class ReadingTimeEntryUtil {
 	* @param groupId the group ID
 	* @return the reading time entry that was removed
 	*/
-	public static ReadingTimeEntry removeByUUID_G(java.lang.String uuid,
-		long groupId)
+	public static ReadingTimeEntry removeByUUID_G(String uuid, long groupId)
 		throws com.liferay.reading.time.exception.NoSuchEntryException {
 		return getPersistence().removeByUUID_G(uuid, groupId);
 	}
@@ -329,7 +324,7 @@ public class ReadingTimeEntryUtil {
 	* @param groupId the group ID
 	* @return the number of matching reading time entries
 	*/
-	public static int countByUUID_G(java.lang.String uuid, long groupId) {
+	public static int countByUUID_G(String uuid, long groupId) {
 		return getPersistence().countByUUID_G(uuid, groupId);
 	}
 
@@ -340,7 +335,7 @@ public class ReadingTimeEntryUtil {
 	* @param companyId the company ID
 	* @return the matching reading time entries
 	*/
-	public static List<ReadingTimeEntry> findByUuid_C(java.lang.String uuid,
+	public static List<ReadingTimeEntry> findByUuid_C(String uuid,
 		long companyId) {
 		return getPersistence().findByUuid_C(uuid, companyId);
 	}
@@ -358,7 +353,7 @@ public class ReadingTimeEntryUtil {
 	* @param end the upper bound of the range of reading time entries (not inclusive)
 	* @return the range of matching reading time entries
 	*/
-	public static List<ReadingTimeEntry> findByUuid_C(java.lang.String uuid,
+	public static List<ReadingTimeEntry> findByUuid_C(String uuid,
 		long companyId, int start, int end) {
 		return getPersistence().findByUuid_C(uuid, companyId, start, end);
 	}
@@ -377,7 +372,7 @@ public class ReadingTimeEntryUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching reading time entries
 	*/
-	public static List<ReadingTimeEntry> findByUuid_C(java.lang.String uuid,
+	public static List<ReadingTimeEntry> findByUuid_C(String uuid,
 		long companyId, int start, int end,
 		OrderByComparator<ReadingTimeEntry> orderByComparator) {
 		return getPersistence()
@@ -399,7 +394,7 @@ public class ReadingTimeEntryUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching reading time entries
 	*/
-	public static List<ReadingTimeEntry> findByUuid_C(java.lang.String uuid,
+	public static List<ReadingTimeEntry> findByUuid_C(String uuid,
 		long companyId, int start, int end,
 		OrderByComparator<ReadingTimeEntry> orderByComparator,
 		boolean retrieveFromCache) {
@@ -417,7 +412,7 @@ public class ReadingTimeEntryUtil {
 	* @return the first matching reading time entry
 	* @throws NoSuchEntryException if a matching reading time entry could not be found
 	*/
-	public static ReadingTimeEntry findByUuid_C_First(java.lang.String uuid,
+	public static ReadingTimeEntry findByUuid_C_First(String uuid,
 		long companyId, OrderByComparator<ReadingTimeEntry> orderByComparator)
 		throws com.liferay.reading.time.exception.NoSuchEntryException {
 		return getPersistence()
@@ -432,7 +427,7 @@ public class ReadingTimeEntryUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching reading time entry, or <code>null</code> if a matching reading time entry could not be found
 	*/
-	public static ReadingTimeEntry fetchByUuid_C_First(java.lang.String uuid,
+	public static ReadingTimeEntry fetchByUuid_C_First(String uuid,
 		long companyId, OrderByComparator<ReadingTimeEntry> orderByComparator) {
 		return getPersistence()
 				   .fetchByUuid_C_First(uuid, companyId, orderByComparator);
@@ -447,7 +442,7 @@ public class ReadingTimeEntryUtil {
 	* @return the last matching reading time entry
 	* @throws NoSuchEntryException if a matching reading time entry could not be found
 	*/
-	public static ReadingTimeEntry findByUuid_C_Last(java.lang.String uuid,
+	public static ReadingTimeEntry findByUuid_C_Last(String uuid,
 		long companyId, OrderByComparator<ReadingTimeEntry> orderByComparator)
 		throws com.liferay.reading.time.exception.NoSuchEntryException {
 		return getPersistence()
@@ -462,7 +457,7 @@ public class ReadingTimeEntryUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching reading time entry, or <code>null</code> if a matching reading time entry could not be found
 	*/
-	public static ReadingTimeEntry fetchByUuid_C_Last(java.lang.String uuid,
+	public static ReadingTimeEntry fetchByUuid_C_Last(String uuid,
 		long companyId, OrderByComparator<ReadingTimeEntry> orderByComparator) {
 		return getPersistence()
 				   .fetchByUuid_C_Last(uuid, companyId, orderByComparator);
@@ -479,7 +474,7 @@ public class ReadingTimeEntryUtil {
 	* @throws NoSuchEntryException if a reading time entry with the primary key could not be found
 	*/
 	public static ReadingTimeEntry[] findByUuid_C_PrevAndNext(
-		long readingTimeEntryId, java.lang.String uuid, long companyId,
+		long readingTimeEntryId, String uuid, long companyId,
 		OrderByComparator<ReadingTimeEntry> orderByComparator)
 		throws com.liferay.reading.time.exception.NoSuchEntryException {
 		return getPersistence()
@@ -493,7 +488,7 @@ public class ReadingTimeEntryUtil {
 	* @param uuid the uuid
 	* @param companyId the company ID
 	*/
-	public static void removeByUuid_C(java.lang.String uuid, long companyId) {
+	public static void removeByUuid_C(String uuid, long companyId) {
 		getPersistence().removeByUuid_C(uuid, companyId);
 	}
 
@@ -504,7 +499,7 @@ public class ReadingTimeEntryUtil {
 	* @param companyId the company ID
 	* @return the number of matching reading time entries
 	*/
-	public static int countByUuid_C(java.lang.String uuid, long companyId) {
+	public static int countByUuid_C(String uuid, long companyId) {
 		return getPersistence().countByUuid_C(uuid, companyId);
 	}
 
@@ -726,7 +721,7 @@ public class ReadingTimeEntryUtil {
 		return getPersistence().countAll();
 	}
 
-	public static java.util.Set<java.lang.String> getBadColumnNames() {
+	public static java.util.Set<String> getBadColumnNames() {
 		return getPersistence().getBadColumnNames();
 	}
 

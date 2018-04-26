@@ -54,12 +54,12 @@ public interface ShoppingCart extends ShoppingCartModel, PersistedModel {
 			}
 		};
 
-	public void addItemId(long itemId, java.lang.String fields);
+	public void addItemId(long itemId, String fields);
 
 	public ShoppingCoupon getCoupon()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
-	public java.util.Map<ShoppingCartItem, java.lang.Integer> getItems();
+	public java.util.Map<ShoppingCartItem, Integer> getItems();
 
 	public int getItemsSize();
 }

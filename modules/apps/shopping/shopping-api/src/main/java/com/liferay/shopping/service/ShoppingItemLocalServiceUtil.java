@@ -43,15 +43,13 @@ public class ShoppingItemLocalServiceUtil {
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.shopping.service.impl.ShoppingItemLocalServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static com.liferay.shopping.model.ShoppingItem addItem(long userId,
-		long groupId, long categoryId, java.lang.String sku,
-		java.lang.String name, java.lang.String description,
-		java.lang.String properties, java.lang.String fieldsQuantities,
+		long groupId, long categoryId, String sku, String name,
+		String description, String properties, String fieldsQuantities,
 		boolean requiresShipping, int stockQuantity, boolean featured,
-		java.lang.Boolean sale, boolean smallImage,
-		java.lang.String smallImageURL, java.io.File smallImageFile,
-		boolean mediumImage, java.lang.String mediumImageURL,
-		java.io.File mediumImageFile, boolean largeImage,
-		java.lang.String largeImageURL, java.io.File largeImageFile,
+		Boolean sale, boolean smallImage, String smallImageURL,
+		java.io.File smallImageFile, boolean mediumImage,
+		String mediumImageURL, java.io.File mediumImageFile,
+		boolean largeImage, String largeImageURL, java.io.File largeImageFile,
 		java.util.List<com.liferay.shopping.model.ShoppingItemField> itemFields,
 		java.util.List<com.liferay.shopping.model.ShoppingItemPrice> itemPrices,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
@@ -250,7 +248,7 @@ public class ShoppingItemLocalServiceUtil {
 	}
 
 	public static int getCategoriesItemsCount(long groupId,
-		java.util.List<java.lang.Long> categoryIds) {
+		java.util.List<Long> categoryIds) {
 		return getService().getCategoriesItemsCount(groupId, categoryIds);
 	}
 
@@ -269,7 +267,7 @@ public class ShoppingItemLocalServiceUtil {
 	}
 
 	public static com.liferay.shopping.model.ShoppingItem getItem(
-		long companyId, java.lang.String sku)
+		long companyId, String sku)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getItem(companyId, sku);
 	}
@@ -319,7 +317,7 @@ public class ShoppingItemLocalServiceUtil {
 	*
 	* @return the OSGi service identifier
 	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
+	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 
@@ -372,41 +370,36 @@ public class ShoppingItemLocalServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.shopping.model.ShoppingItem> search(
-		long groupId, long[] categoryIds, java.lang.String keywords, int start,
-		int end) {
+		long groupId, long[] categoryIds, String keywords, int start, int end) {
 		return getService().search(groupId, categoryIds, keywords, start, end);
 	}
 
 	public static java.util.List<com.liferay.shopping.model.ShoppingItem> search(
-		long groupId, long[] categoryIds, java.lang.String keywords, int start,
-		int end,
+		long groupId, long[] categoryIds, String keywords, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.shopping.model.ShoppingItem> obc) {
 		return getService()
 				   .search(groupId, categoryIds, keywords, start, end, obc);
 	}
 
 	public static int searchCount(long groupId, long[] categoryIds,
-		java.lang.String keywords) {
+		String keywords) {
 		return getService().searchCount(groupId, categoryIds, keywords);
 	}
 
 	public static int searchCount(long groupId, long[] categoryIds,
-		java.lang.String keywords,
+		String keywords,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.shopping.model.ShoppingItem> obc) {
 		return getService().searchCount(groupId, categoryIds, keywords, obc);
 	}
 
 	public static com.liferay.shopping.model.ShoppingItem updateItem(
-		long userId, long itemId, long groupId, long categoryId,
-		java.lang.String sku, java.lang.String name,
-		java.lang.String description, java.lang.String properties,
-		java.lang.String fieldsQuantities, boolean requiresShipping,
-		int stockQuantity, boolean featured, java.lang.Boolean sale,
-		boolean smallImage, java.lang.String smallImageURL,
-		java.io.File smallImageFile, boolean mediumImage,
-		java.lang.String mediumImageURL, java.io.File mediumImageFile,
-		boolean largeImage, java.lang.String largeImageURL,
-		java.io.File largeImageFile,
+		long userId, long itemId, long groupId, long categoryId, String sku,
+		String name, String description, String properties,
+		String fieldsQuantities, boolean requiresShipping, int stockQuantity,
+		boolean featured, Boolean sale, boolean smallImage,
+		String smallImageURL, java.io.File smallImageFile, boolean mediumImage,
+		String mediumImageURL, java.io.File mediumImageFile,
+		boolean largeImage, String largeImageURL, java.io.File largeImageFile,
 		java.util.List<com.liferay.shopping.model.ShoppingItemField> itemFields,
 		java.util.List<com.liferay.shopping.model.ShoppingItemPrice> itemPrices,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)

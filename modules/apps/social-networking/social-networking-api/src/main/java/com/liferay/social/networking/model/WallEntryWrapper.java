@@ -121,7 +121,7 @@ public class WallEntryWrapper implements WallEntry, ModelWrapper<WallEntry> {
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new WallEntryWrapper((WallEntry)_wallEntry.clone());
 	}
 
@@ -136,7 +136,7 @@ public class WallEntryWrapper implements WallEntry, ModelWrapper<WallEntry> {
 	* @return the comments of this wall entry
 	*/
 	@Override
-	public java.lang.String getComments() {
+	public String getComments() {
 		return _wallEntry.getComments();
 	}
 
@@ -216,7 +216,7 @@ public class WallEntryWrapper implements WallEntry, ModelWrapper<WallEntry> {
 	* @return the user name of this wall entry
 	*/
 	@Override
-	public java.lang.String getUserName() {
+	public String getUserName() {
 		return _wallEntry.getUserName();
 	}
 
@@ -226,7 +226,7 @@ public class WallEntryWrapper implements WallEntry, ModelWrapper<WallEntry> {
 	* @return the user uuid of this wall entry
 	*/
 	@Override
-	public java.lang.String getUserUuid() {
+	public String getUserUuid() {
 		return _wallEntry.getUserUuid();
 	}
 
@@ -276,7 +276,7 @@ public class WallEntryWrapper implements WallEntry, ModelWrapper<WallEntry> {
 	* @param comments the comments of this wall entry
 	*/
 	@Override
-	public void setComments(java.lang.String comments) {
+	public void setComments(String comments) {
 		_wallEntry.setComments(comments);
 	}
 
@@ -372,7 +372,7 @@ public class WallEntryWrapper implements WallEntry, ModelWrapper<WallEntry> {
 	* @param userName the user name of this wall entry
 	*/
 	@Override
-	public void setUserName(java.lang.String userName) {
+	public void setUserName(String userName) {
 		_wallEntry.setUserName(userName);
 	}
 
@@ -382,7 +382,7 @@ public class WallEntryWrapper implements WallEntry, ModelWrapper<WallEntry> {
 	* @param userUuid the user uuid of this wall entry
 	*/
 	@Override
-	public void setUserUuid(java.lang.String userUuid) {
+	public void setUserUuid(String userUuid) {
 		_wallEntry.setUserUuid(userUuid);
 	}
 
@@ -407,7 +407,7 @@ public class WallEntryWrapper implements WallEntry, ModelWrapper<WallEntry> {
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _wallEntry.toString();
 	}
 
@@ -417,7 +417,7 @@ public class WallEntryWrapper implements WallEntry, ModelWrapper<WallEntry> {
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _wallEntry.toXmlString();
 	}
 

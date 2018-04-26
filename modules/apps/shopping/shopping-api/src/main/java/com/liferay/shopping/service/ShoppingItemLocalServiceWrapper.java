@@ -35,15 +35,13 @@ public class ShoppingItemLocalServiceWrapper implements ShoppingItemLocalService
 
 	@Override
 	public com.liferay.shopping.model.ShoppingItem addItem(long userId,
-		long groupId, long categoryId, java.lang.String sku,
-		java.lang.String name, java.lang.String description,
-		java.lang.String properties, java.lang.String fieldsQuantities,
+		long groupId, long categoryId, String sku, String name,
+		String description, String properties, String fieldsQuantities,
 		boolean requiresShipping, int stockQuantity, boolean featured,
-		java.lang.Boolean sale, boolean smallImage,
-		java.lang.String smallImageURL, java.io.File smallImageFile,
-		boolean mediumImage, java.lang.String mediumImageURL,
-		java.io.File mediumImageFile, boolean largeImage,
-		java.lang.String largeImageURL, java.io.File largeImageFile,
+		Boolean sale, boolean smallImage, String smallImageURL,
+		java.io.File smallImageFile, boolean mediumImage,
+		String mediumImageURL, java.io.File mediumImageFile,
+		boolean largeImage, String largeImageURL, java.io.File largeImageFile,
 		java.util.List<com.liferay.shopping.model.ShoppingItemField> itemFields,
 		java.util.List<com.liferay.shopping.model.ShoppingItemPrice> itemPrices,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
@@ -261,7 +259,7 @@ public class ShoppingItemLocalServiceWrapper implements ShoppingItemLocalService
 
 	@Override
 	public int getCategoriesItemsCount(long groupId,
-		java.util.List<java.lang.Long> categoryIds) {
+		java.util.List<Long> categoryIds) {
 		return _shoppingItemLocalService.getCategoriesItemsCount(groupId,
 			categoryIds);
 	}
@@ -286,8 +284,7 @@ public class ShoppingItemLocalServiceWrapper implements ShoppingItemLocalService
 
 	@Override
 	public com.liferay.shopping.model.ShoppingItem getItem(long companyId,
-		java.lang.String sku)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		String sku) throws com.liferay.portal.kernel.exception.PortalException {
 		return _shoppingItemLocalService.getItem(companyId, sku);
 	}
 
@@ -345,7 +342,7 @@ public class ShoppingItemLocalServiceWrapper implements ShoppingItemLocalService
 	* @return the OSGi service identifier
 	*/
 	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
+	public String getOSGiServiceIdentifier() {
 		return _shoppingItemLocalService.getOSGiServiceIdentifier();
 	}
 
@@ -405,31 +402,27 @@ public class ShoppingItemLocalServiceWrapper implements ShoppingItemLocalService
 
 	@Override
 	public java.util.List<com.liferay.shopping.model.ShoppingItem> search(
-		long groupId, long[] categoryIds, java.lang.String keywords, int start,
-		int end) {
+		long groupId, long[] categoryIds, String keywords, int start, int end) {
 		return _shoppingItemLocalService.search(groupId, categoryIds, keywords,
 			start, end);
 	}
 
 	@Override
 	public java.util.List<com.liferay.shopping.model.ShoppingItem> search(
-		long groupId, long[] categoryIds, java.lang.String keywords, int start,
-		int end,
+		long groupId, long[] categoryIds, String keywords, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.shopping.model.ShoppingItem> obc) {
 		return _shoppingItemLocalService.search(groupId, categoryIds, keywords,
 			start, end, obc);
 	}
 
 	@Override
-	public int searchCount(long groupId, long[] categoryIds,
-		java.lang.String keywords) {
+	public int searchCount(long groupId, long[] categoryIds, String keywords) {
 		return _shoppingItemLocalService.searchCount(groupId, categoryIds,
 			keywords);
 	}
 
 	@Override
-	public int searchCount(long groupId, long[] categoryIds,
-		java.lang.String keywords,
+	public int searchCount(long groupId, long[] categoryIds, String keywords,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.shopping.model.ShoppingItem> obc) {
 		return _shoppingItemLocalService.searchCount(groupId, categoryIds,
 			keywords, obc);
@@ -437,15 +430,13 @@ public class ShoppingItemLocalServiceWrapper implements ShoppingItemLocalService
 
 	@Override
 	public com.liferay.shopping.model.ShoppingItem updateItem(long userId,
-		long itemId, long groupId, long categoryId, java.lang.String sku,
-		java.lang.String name, java.lang.String description,
-		java.lang.String properties, java.lang.String fieldsQuantities,
+		long itemId, long groupId, long categoryId, String sku, String name,
+		String description, String properties, String fieldsQuantities,
 		boolean requiresShipping, int stockQuantity, boolean featured,
-		java.lang.Boolean sale, boolean smallImage,
-		java.lang.String smallImageURL, java.io.File smallImageFile,
-		boolean mediumImage, java.lang.String mediumImageURL,
-		java.io.File mediumImageFile, boolean largeImage,
-		java.lang.String largeImageURL, java.io.File largeImageFile,
+		Boolean sale, boolean smallImage, String smallImageURL,
+		java.io.File smallImageFile, boolean mediumImage,
+		String mediumImageURL, java.io.File mediumImageFile,
+		boolean largeImage, String largeImageURL, java.io.File largeImageFile,
 		java.util.List<com.liferay.shopping.model.ShoppingItemField> itemFields,
 		java.util.List<com.liferay.shopping.model.ShoppingItemPrice> itemPrices,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)

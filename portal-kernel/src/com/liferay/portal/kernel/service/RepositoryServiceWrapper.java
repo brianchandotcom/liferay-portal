@@ -32,9 +32,8 @@ public class RepositoryServiceWrapper implements RepositoryService,
 
 	@Override
 	public com.liferay.portal.kernel.model.Repository addRepository(
-		long groupId, long classNameId, long parentFolderId,
-		java.lang.String name, java.lang.String description,
-		java.lang.String portletId,
+		long groupId, long classNameId, long parentFolderId, String name,
+		String description, String portletId,
 		com.liferay.portal.kernel.util.UnicodeProperties typeSettingsProperties,
 		ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -61,7 +60,7 @@ public class RepositoryServiceWrapper implements RepositoryService,
 	* @return the OSGi service identifier
 	*/
 	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
+	public String getOSGiServiceIdentifier() {
 		return _repositoryService.getOSGiServiceIdentifier();
 	}
 
@@ -77,7 +76,7 @@ public class RepositoryServiceWrapper implements RepositoryService,
 	*/
 	@Deprecated
 	@Override
-	public java.lang.String[] getSupportedConfigurations(long classNameId) {
+	public String[] getSupportedConfigurations(long classNameId) {
 		return _repositoryService.getSupportedConfigurations(classNameId);
 	}
 
@@ -86,8 +85,8 @@ public class RepositoryServiceWrapper implements RepositoryService,
 	*/
 	@Deprecated
 	@Override
-	public java.lang.String[] getSupportedParameters(long classNameId,
-		java.lang.String configuration) {
+	public String[] getSupportedParameters(long classNameId,
+		String configuration) {
 		return _repositoryService.getSupportedParameters(classNameId,
 			configuration);
 	}
@@ -97,8 +96,8 @@ public class RepositoryServiceWrapper implements RepositoryService,
 	*/
 	@Deprecated
 	@Override
-	public java.lang.String[] getSupportedParameters(
-		java.lang.String className, java.lang.String configuration) {
+	public String[] getSupportedParameters(String className,
+		String configuration) {
 		return _repositoryService.getSupportedParameters(className,
 			configuration);
 	}
@@ -111,8 +110,8 @@ public class RepositoryServiceWrapper implements RepositoryService,
 	}
 
 	@Override
-	public void updateRepository(long repositoryId, java.lang.String name,
-		java.lang.String description)
+	public void updateRepository(long repositoryId, String name,
+		String description)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_repositoryService.updateRepository(repositoryId, name, description);
 	}

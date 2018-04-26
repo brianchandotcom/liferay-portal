@@ -136,7 +136,7 @@ public class ShoppingCategoryWrapper implements ShoppingCategory,
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new ShoppingCategoryWrapper((ShoppingCategory)_shoppingCategory.clone());
 	}
 
@@ -181,7 +181,7 @@ public class ShoppingCategoryWrapper implements ShoppingCategory,
 	* @return the description of this shopping category
 	*/
 	@Override
-	public java.lang.String getDescription() {
+	public String getDescription() {
 		return _shoppingCategory.getDescription();
 	}
 
@@ -216,7 +216,7 @@ public class ShoppingCategoryWrapper implements ShoppingCategory,
 	* @return the name of this shopping category
 	*/
 	@Override
-	public java.lang.String getName() {
+	public String getName() {
 		return _shoppingCategory.getName();
 	}
 
@@ -261,7 +261,7 @@ public class ShoppingCategoryWrapper implements ShoppingCategory,
 	* @return the user name of this shopping category
 	*/
 	@Override
-	public java.lang.String getUserName() {
+	public String getUserName() {
 		return _shoppingCategory.getUserName();
 	}
 
@@ -271,7 +271,7 @@ public class ShoppingCategoryWrapper implements ShoppingCategory,
 	* @return the user uuid of this shopping category
 	*/
 	@Override
-	public java.lang.String getUserUuid() {
+	public String getUserUuid() {
 		return _shoppingCategory.getUserUuid();
 	}
 
@@ -346,7 +346,7 @@ public class ShoppingCategoryWrapper implements ShoppingCategory,
 	* @param description the description of this shopping category
 	*/
 	@Override
-	public void setDescription(java.lang.String description) {
+	public void setDescription(String description) {
 		_shoppingCategory.setDescription(description);
 	}
 
@@ -392,7 +392,7 @@ public class ShoppingCategoryWrapper implements ShoppingCategory,
 	* @param name the name of this shopping category
 	*/
 	@Override
-	public void setName(java.lang.String name) {
+	public void setName(String name) {
 		_shoppingCategory.setName(name);
 	}
 
@@ -442,7 +442,7 @@ public class ShoppingCategoryWrapper implements ShoppingCategory,
 	* @param userName the user name of this shopping category
 	*/
 	@Override
-	public void setUserName(java.lang.String userName) {
+	public void setUserName(String userName) {
 		_shoppingCategory.setUserName(userName);
 	}
 
@@ -452,7 +452,7 @@ public class ShoppingCategoryWrapper implements ShoppingCategory,
 	* @param userUuid the user uuid of this shopping category
 	*/
 	@Override
-	public void setUserUuid(java.lang.String userUuid) {
+	public void setUserUuid(String userUuid) {
 		_shoppingCategory.setUserUuid(userUuid);
 	}
 
@@ -467,7 +467,7 @@ public class ShoppingCategoryWrapper implements ShoppingCategory,
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _shoppingCategory.toString();
 	}
 
@@ -477,7 +477,7 @@ public class ShoppingCategoryWrapper implements ShoppingCategory,
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _shoppingCategory.toXmlString();
 	}
 

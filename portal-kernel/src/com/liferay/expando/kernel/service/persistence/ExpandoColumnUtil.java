@@ -350,8 +350,7 @@ public class ExpandoColumnUtil {
 	* @param names the names
 	* @return the matching expando columns
 	*/
-	public static List<ExpandoColumn> findByT_N(long tableId,
-		java.lang.String[] names) {
+	public static List<ExpandoColumn> findByT_N(long tableId, String[] names) {
 		return getPersistence().findByT_N(tableId, names);
 	}
 
@@ -368,8 +367,8 @@ public class ExpandoColumnUtil {
 	* @param end the upper bound of the range of expando columns (not inclusive)
 	* @return the range of matching expando columns
 	*/
-	public static List<ExpandoColumn> findByT_N(long tableId,
-		java.lang.String[] names, int start, int end) {
+	public static List<ExpandoColumn> findByT_N(long tableId, String[] names,
+		int start, int end) {
 		return getPersistence().findByT_N(tableId, names, start, end);
 	}
 
@@ -387,9 +386,8 @@ public class ExpandoColumnUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching expando columns
 	*/
-	public static List<ExpandoColumn> findByT_N(long tableId,
-		java.lang.String[] names, int start, int end,
-		OrderByComparator<ExpandoColumn> orderByComparator) {
+	public static List<ExpandoColumn> findByT_N(long tableId, String[] names,
+		int start, int end, OrderByComparator<ExpandoColumn> orderByComparator) {
 		return getPersistence()
 				   .findByT_N(tableId, names, start, end, orderByComparator);
 	}
@@ -409,9 +407,8 @@ public class ExpandoColumnUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching expando columns
 	*/
-	public static List<ExpandoColumn> findByT_N(long tableId,
-		java.lang.String[] names, int start, int end,
-		OrderByComparator<ExpandoColumn> orderByComparator,
+	public static List<ExpandoColumn> findByT_N(long tableId, String[] names,
+		int start, int end, OrderByComparator<ExpandoColumn> orderByComparator,
 		boolean retrieveFromCache) {
 		return getPersistence()
 				   .findByT_N(tableId, names, start, end, orderByComparator,
@@ -426,7 +423,7 @@ public class ExpandoColumnUtil {
 	* @return the matching expando column
 	* @throws NoSuchColumnException if a matching expando column could not be found
 	*/
-	public static ExpandoColumn findByT_N(long tableId, java.lang.String name)
+	public static ExpandoColumn findByT_N(long tableId, String name)
 		throws com.liferay.expando.kernel.exception.NoSuchColumnException {
 		return getPersistence().findByT_N(tableId, name);
 	}
@@ -438,7 +435,7 @@ public class ExpandoColumnUtil {
 	* @param name the name
 	* @return the matching expando column, or <code>null</code> if a matching expando column could not be found
 	*/
-	public static ExpandoColumn fetchByT_N(long tableId, java.lang.String name) {
+	public static ExpandoColumn fetchByT_N(long tableId, String name) {
 		return getPersistence().fetchByT_N(tableId, name);
 	}
 
@@ -450,7 +447,7 @@ public class ExpandoColumnUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching expando column, or <code>null</code> if a matching expando column could not be found
 	*/
-	public static ExpandoColumn fetchByT_N(long tableId, java.lang.String name,
+	public static ExpandoColumn fetchByT_N(long tableId, String name,
 		boolean retrieveFromCache) {
 		return getPersistence().fetchByT_N(tableId, name, retrieveFromCache);
 	}
@@ -462,7 +459,7 @@ public class ExpandoColumnUtil {
 	* @param name the name
 	* @return the expando column that was removed
 	*/
-	public static ExpandoColumn removeByT_N(long tableId, java.lang.String name)
+	public static ExpandoColumn removeByT_N(long tableId, String name)
 		throws com.liferay.expando.kernel.exception.NoSuchColumnException {
 		return getPersistence().removeByT_N(tableId, name);
 	}
@@ -474,7 +471,7 @@ public class ExpandoColumnUtil {
 	* @param name the name
 	* @return the number of matching expando columns
 	*/
-	public static int countByT_N(long tableId, java.lang.String name) {
+	public static int countByT_N(long tableId, String name) {
 		return getPersistence().countByT_N(tableId, name);
 	}
 
@@ -485,7 +482,7 @@ public class ExpandoColumnUtil {
 	* @param names the names
 	* @return the number of matching expando columns
 	*/
-	public static int countByT_N(long tableId, java.lang.String[] names) {
+	public static int countByT_N(long tableId, String[] names) {
 		return getPersistence().countByT_N(tableId, names);
 	}
 
@@ -496,7 +493,7 @@ public class ExpandoColumnUtil {
 	* @param name the name
 	* @return the number of matching expando columns that the user has permission to view
 	*/
-	public static int filterCountByT_N(long tableId, java.lang.String name) {
+	public static int filterCountByT_N(long tableId, String name) {
 		return getPersistence().filterCountByT_N(tableId, name);
 	}
 
@@ -507,7 +504,7 @@ public class ExpandoColumnUtil {
 	* @param names the names
 	* @return the number of matching expando columns that the user has permission to view
 	*/
-	public static int filterCountByT_N(long tableId, java.lang.String[] names) {
+	public static int filterCountByT_N(long tableId, String[] names) {
 		return getPersistence().filterCountByT_N(tableId, names);
 	}
 
@@ -659,7 +656,7 @@ public class ExpandoColumnUtil {
 		return getPersistence().countAll();
 	}
 
-	public static java.util.Set<java.lang.String> getBadColumnNames() {
+	public static java.util.Set<String> getBadColumnNames() {
 		return getPersistence().getBadColumnNames();
 	}
 

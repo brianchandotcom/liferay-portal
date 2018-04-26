@@ -86,12 +86,12 @@ public interface RatingsEntryLocalService extends BaseLocalService,
 	@Transactional(enabled = false)
 	public RatingsEntry createRatingsEntry(long entryId);
 
-	public void deleteEntry(long userId, java.lang.String className,
-		long classPK) throws PortalException;
+	public void deleteEntry(long userId, String className, long classPK)
+		throws PortalException;
 
 	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
-	public void deleteEntry(RatingsEntry entry, long userId,
-		java.lang.String className, long classPK) throws PortalException;
+	public void deleteEntry(RatingsEntry entry, long userId, String className,
+		long classPK) throws PortalException;
 
 	/**
 	* @throws PortalException
@@ -180,8 +180,7 @@ public interface RatingsEntryLocalService extends BaseLocalService,
 		Projection projection);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public RatingsEntry fetchEntry(long userId, java.lang.String className,
-		long classPK);
+	public RatingsEntry fetchEntry(long userId, String className, long classPK);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public RatingsEntry fetchRatingsEntry(long entryId);
@@ -194,8 +193,8 @@ public interface RatingsEntryLocalService extends BaseLocalService,
 	* @return the matching ratings entry, or <code>null</code> if a matching ratings entry could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public RatingsEntry fetchRatingsEntryByUuidAndCompanyId(
-		java.lang.String uuid, long companyId);
+	public RatingsEntry fetchRatingsEntryByUuidAndCompanyId(String uuid,
+		long companyId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
@@ -203,30 +202,28 @@ public interface RatingsEntryLocalService extends BaseLocalService,
 	/**
 	* @deprecated As of 7.0.0, with no direct replacement
 	*/
-	@java.lang.Deprecated
+	@Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<RatingsEntry> getEntries(long userId,
-		java.lang.String className, List<java.lang.Long> classPKs);
+	public List<RatingsEntry> getEntries(long userId, String className,
+		List<Long> classPKs);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Map<java.lang.Long, RatingsEntry> getEntries(long userId,
-		java.lang.String className, long[] classPKs);
+	public Map<Long, RatingsEntry> getEntries(long userId, String className,
+		long[] classPKs);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<RatingsEntry> getEntries(java.lang.String className,
-		long classPK);
+	public List<RatingsEntry> getEntries(String className, long classPK);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<RatingsEntry> getEntries(java.lang.String className,
-		long classPK, double score);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getEntriesCount(java.lang.String className, long classPK,
+	public List<RatingsEntry> getEntries(String className, long classPK,
 		double score);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public RatingsEntry getEntry(long userId, java.lang.String className,
-		long classPK) throws PortalException;
+	public int getEntriesCount(String className, long classPK, double score);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public RatingsEntry getEntry(long userId, String className, long classPK)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
@@ -240,7 +237,7 @@ public interface RatingsEntryLocalService extends BaseLocalService,
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -288,10 +285,10 @@ public interface RatingsEntryLocalService extends BaseLocalService,
 	* @throws PortalException if a matching ratings entry could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public RatingsEntry getRatingsEntryByUuidAndCompanyId(
-		java.lang.String uuid, long companyId) throws PortalException;
+	public RatingsEntry getRatingsEntryByUuidAndCompanyId(String uuid,
+		long companyId) throws PortalException;
 
-	public RatingsEntry updateEntry(long userId, java.lang.String className,
+	public RatingsEntry updateEntry(long userId, String className,
 		long classPK, double score, ServiceContext serviceContext)
 		throws PortalException;
 

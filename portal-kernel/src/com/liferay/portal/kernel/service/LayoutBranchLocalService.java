@@ -68,12 +68,12 @@ public interface LayoutBranchLocalService extends BaseLocalService,
 	public LayoutBranch addLayoutBranch(LayoutBranch layoutBranch);
 
 	public LayoutBranch addLayoutBranch(long layoutSetBranchId, long plid,
-		java.lang.String name, java.lang.String description, boolean master,
+		String name, String description, boolean master,
 		ServiceContext serviceContext) throws PortalException;
 
-	public LayoutBranch addLayoutBranch(long layoutRevisionId,
-		java.lang.String name, java.lang.String description, boolean master,
-		ServiceContext serviceContext) throws PortalException;
+	public LayoutBranch addLayoutBranch(long layoutRevisionId, String name,
+		String description, boolean master, ServiceContext serviceContext)
+		throws PortalException;
 
 	/**
 	* Creates a new layout branch with the primary key. Does not add the layout branch to the database.
@@ -237,7 +237,7 @@ public interface LayoutBranchLocalService extends BaseLocalService,
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -253,7 +253,7 @@ public interface LayoutBranchLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.REINDEX)
 	public LayoutBranch updateLayoutBranch(LayoutBranch layoutBranch);
 
-	public LayoutBranch updateLayoutBranch(long layoutBranchId,
-		java.lang.String name, java.lang.String description,
-		ServiceContext serviceContext) throws PortalException;
+	public LayoutBranch updateLayoutBranch(long layoutBranchId, String name,
+		String description, ServiceContext serviceContext)
+		throws PortalException;
 }

@@ -64,9 +64,9 @@ public interface PollsChoiceLocalService extends BaseLocalService,
 	 *
 	 * Never modify or reference this interface directly. Always use {@link PollsChoiceLocalServiceUtil} to access the polls choice local service. Add custom service methods to {@link com.liferay.polls.service.impl.PollsChoiceLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public PollsChoice addChoice(long userId, long questionId,
-		java.lang.String name, java.lang.String description,
-		ServiceContext serviceContext) throws PortalException;
+	public PollsChoice addChoice(long userId, long questionId, String name,
+		String description, ServiceContext serviceContext)
+		throws PortalException;
 
 	/**
 	* Adds the polls choice to the database. Also notifies the appropriate model listeners.
@@ -183,7 +183,7 @@ public interface PollsChoiceLocalService extends BaseLocalService,
 	* @return the matching polls choice, or <code>null</code> if a matching polls choice could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public PollsChoice fetchPollsChoiceByUuidAndGroupId(java.lang.String uuid,
+	public PollsChoice fetchPollsChoiceByUuidAndGroupId(String uuid,
 		long groupId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -210,7 +210,7 @@ public interface PollsChoiceLocalService extends BaseLocalService,
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -236,8 +236,8 @@ public interface PollsChoiceLocalService extends BaseLocalService,
 	* @throws PortalException if a matching polls choice could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public PollsChoice getPollsChoiceByUuidAndGroupId(java.lang.String uuid,
-		long groupId) throws PortalException;
+	public PollsChoice getPollsChoiceByUuidAndGroupId(String uuid, long groupId)
+		throws PortalException;
 
 	/**
 	* Returns a range of all the polls choices.
@@ -261,8 +261,8 @@ public interface PollsChoiceLocalService extends BaseLocalService,
 	* @return the matching polls choices, or an empty list if no matches were found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<PollsChoice> getPollsChoicesByUuidAndCompanyId(
-		java.lang.String uuid, long companyId);
+	public List<PollsChoice> getPollsChoicesByUuidAndCompanyId(String uuid,
+		long companyId);
 
 	/**
 	* Returns a range of polls choices matching the UUID and company.
@@ -275,8 +275,8 @@ public interface PollsChoiceLocalService extends BaseLocalService,
 	* @return the range of matching polls choices, or an empty list if no matches were found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<PollsChoice> getPollsChoicesByUuidAndCompanyId(
-		java.lang.String uuid, long companyId, int start, int end,
+	public List<PollsChoice> getPollsChoicesByUuidAndCompanyId(String uuid,
+		long companyId, int start, int end,
 		OrderByComparator<PollsChoice> orderByComparator);
 
 	/**
@@ -288,8 +288,8 @@ public interface PollsChoiceLocalService extends BaseLocalService,
 	public int getPollsChoicesCount();
 
 	public PollsChoice updateChoice(long choiceId, long questionId,
-		java.lang.String name, java.lang.String description,
-		ServiceContext serviceContext) throws PortalException;
+		String name, String description, ServiceContext serviceContext)
+		throws PortalException;
 
 	/**
 	* Updates the polls choice in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.

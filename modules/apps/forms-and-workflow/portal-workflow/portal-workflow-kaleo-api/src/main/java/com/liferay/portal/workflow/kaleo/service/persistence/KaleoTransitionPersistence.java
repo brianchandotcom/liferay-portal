@@ -449,7 +449,7 @@ public interface KaleoTransitionPersistence extends BasePersistence<KaleoTransit
 	* @return the matching kaleo transition
 	* @throws NoSuchTransitionException if a matching kaleo transition could not be found
 	*/
-	public KaleoTransition findByKNI_N(long kaleoNodeId, java.lang.String name)
+	public KaleoTransition findByKNI_N(long kaleoNodeId, String name)
 		throws NoSuchTransitionException;
 
 	/**
@@ -459,7 +459,7 @@ public interface KaleoTransitionPersistence extends BasePersistence<KaleoTransit
 	* @param name the name
 	* @return the matching kaleo transition, or <code>null</code> if a matching kaleo transition could not be found
 	*/
-	public KaleoTransition fetchByKNI_N(long kaleoNodeId, java.lang.String name);
+	public KaleoTransition fetchByKNI_N(long kaleoNodeId, String name);
 
 	/**
 	* Returns the kaleo transition where kaleoNodeId = &#63; and name = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -469,8 +469,8 @@ public interface KaleoTransitionPersistence extends BasePersistence<KaleoTransit
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching kaleo transition, or <code>null</code> if a matching kaleo transition could not be found
 	*/
-	public KaleoTransition fetchByKNI_N(long kaleoNodeId,
-		java.lang.String name, boolean retrieveFromCache);
+	public KaleoTransition fetchByKNI_N(long kaleoNodeId, String name,
+		boolean retrieveFromCache);
 
 	/**
 	* Removes the kaleo transition where kaleoNodeId = &#63; and name = &#63; from the database.
@@ -479,7 +479,7 @@ public interface KaleoTransitionPersistence extends BasePersistence<KaleoTransit
 	* @param name the name
 	* @return the kaleo transition that was removed
 	*/
-	public KaleoTransition removeByKNI_N(long kaleoNodeId, java.lang.String name)
+	public KaleoTransition removeByKNI_N(long kaleoNodeId, String name)
 		throws NoSuchTransitionException;
 
 	/**
@@ -489,7 +489,7 @@ public interface KaleoTransitionPersistence extends BasePersistence<KaleoTransit
 	* @param name the name
 	* @return the number of matching kaleo transitions
 	*/
-	public int countByKNI_N(long kaleoNodeId, java.lang.String name);
+	public int countByKNI_N(long kaleoNodeId, String name);
 
 	/**
 	* Returns the kaleo transition where kaleoNodeId = &#63; and defaultTransition = &#63; or throws a {@link NoSuchTransitionException} if it could not be found.

@@ -54,8 +54,8 @@ import java.rmi.RemoteException;
  */
 @ProviderType
 public class ScreensCommentServiceSoap {
-	public static java.lang.String addComment(java.lang.String className,
-		long classPK, java.lang.String body) throws RemoteException {
+	public static String addComment(String className, long classPK, String body)
+		throws RemoteException {
 		try {
 			com.liferay.portal.kernel.json.JSONObject returnValue = ScreensCommentServiceUtil.addComment(className,
 					classPK, body);
@@ -69,8 +69,7 @@ public class ScreensCommentServiceSoap {
 		}
 	}
 
-	public static java.lang.String getComment(long commentId)
-		throws RemoteException {
+	public static String getComment(long commentId) throws RemoteException {
 		try {
 			com.liferay.portal.kernel.json.JSONObject returnValue = ScreensCommentServiceUtil.getComment(commentId);
 
@@ -83,8 +82,8 @@ public class ScreensCommentServiceSoap {
 		}
 	}
 
-	public static java.lang.String getComments(java.lang.String className,
-		long classPK, int start, int end) throws RemoteException {
+	public static String getComments(String className, long classPK, int start,
+		int end) throws RemoteException {
 		try {
 			com.liferay.portal.kernel.json.JSONArray returnValue = ScreensCommentServiceUtil.getComments(className,
 					classPK, start, end);
@@ -98,7 +97,7 @@ public class ScreensCommentServiceSoap {
 		}
 	}
 
-	public static int getCommentsCount(java.lang.String className, long classPK)
+	public static int getCommentsCount(String className, long classPK)
 		throws RemoteException {
 		try {
 			int returnValue = ScreensCommentServiceUtil.getCommentsCount(className,
@@ -113,8 +112,8 @@ public class ScreensCommentServiceSoap {
 		}
 	}
 
-	public static java.lang.String updateComment(long commentId,
-		java.lang.String body) throws RemoteException {
+	public static String updateComment(long commentId, String body)
+		throws RemoteException {
 		try {
 			com.liferay.portal.kernel.json.JSONObject returnValue = ScreensCommentServiceUtil.updateComment(commentId,
 					body);

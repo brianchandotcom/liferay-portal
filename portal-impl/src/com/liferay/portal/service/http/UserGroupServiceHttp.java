@@ -111,8 +111,7 @@ public class UserGroupServiceHttp {
 	}
 
 	public static com.liferay.portal.kernel.model.UserGroup addUserGroup(
-		HttpPrincipal httpPrincipal, java.lang.String name,
-		java.lang.String description)
+		HttpPrincipal httpPrincipal, String name, String description)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(UserGroupServiceUtil.class,
@@ -144,8 +143,7 @@ public class UserGroupServiceHttp {
 	}
 
 	public static com.liferay.portal.kernel.model.UserGroup addUserGroup(
-		HttpPrincipal httpPrincipal, java.lang.String name,
-		java.lang.String description,
+		HttpPrincipal httpPrincipal, String name, String description,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -270,7 +268,7 @@ public class UserGroupServiceHttp {
 	}
 
 	public static com.liferay.portal.kernel.model.UserGroup getUserGroup(
-		HttpPrincipal httpPrincipal, java.lang.String name)
+		HttpPrincipal httpPrincipal, String name)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(UserGroupServiceUtil.class,
@@ -420,8 +418,8 @@ public class UserGroupServiceHttp {
 	}
 
 	public static com.liferay.portal.kernel.model.UserGroup updateUserGroup(
-		HttpPrincipal httpPrincipal, long userGroupId, java.lang.String name,
-		java.lang.String description)
+		HttpPrincipal httpPrincipal, long userGroupId, String name,
+		String description)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(UserGroupServiceUtil.class,
@@ -453,8 +451,8 @@ public class UserGroupServiceHttp {
 	}
 
 	public static com.liferay.portal.kernel.model.UserGroup updateUserGroup(
-		HttpPrincipal httpPrincipal, long userGroupId, java.lang.String name,
-		java.lang.String description,
+		HttpPrincipal httpPrincipal, long userGroupId, String name,
+		String description,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -494,10 +492,10 @@ public class UserGroupServiceHttp {
 			long.class, long[].class
 		};
 	private static final Class<?>[] _addUserGroupParameterTypes2 = new Class[] {
-			java.lang.String.class, java.lang.String.class
+			String.class, String.class
 		};
 	private static final Class<?>[] _addUserGroupParameterTypes3 = new Class[] {
-			java.lang.String.class, java.lang.String.class,
+			String.class, String.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _deleteUserGroupParameterTypes4 = new Class[] {
@@ -510,7 +508,7 @@ public class UserGroupServiceHttp {
 			long.class
 		};
 	private static final Class<?>[] _getUserGroupParameterTypes7 = new Class[] {
-			java.lang.String.class
+			String.class
 		};
 	private static final Class<?>[] _getUserGroupsParameterTypes8 = new Class[] {
 			long.class
@@ -525,10 +523,10 @@ public class UserGroupServiceHttp {
 			long.class, long[].class
 		};
 	private static final Class<?>[] _updateUserGroupParameterTypes12 = new Class[] {
-			long.class, java.lang.String.class, java.lang.String.class
+			long.class, String.class, String.class
 		};
 	private static final Class<?>[] _updateUserGroupParameterTypes13 = new Class[] {
-			long.class, java.lang.String.class, java.lang.String.class,
+			long.class, String.class, String.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 }

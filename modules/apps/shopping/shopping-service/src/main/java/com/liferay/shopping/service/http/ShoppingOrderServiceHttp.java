@@ -56,9 +56,8 @@ import com.liferay.shopping.service.ShoppingOrderServiceUtil;
 @ProviderType
 public class ShoppingOrderServiceHttp {
 	public static void completeOrder(HttpPrincipal httpPrincipal, long groupId,
-		java.lang.String number, java.lang.String ppTxnId,
-		java.lang.String ppPaymentStatus, double ppPaymentGross,
-		java.lang.String ppReceiverEmail, java.lang.String ppPayerEmail,
+		String number, String ppTxnId, String ppPaymentStatus,
+		double ppPaymentGross, String ppReceiverEmail, String ppPayerEmail,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -148,7 +147,7 @@ public class ShoppingOrderServiceHttp {
 	}
 
 	public static void sendEmail(HttpPrincipal httpPrincipal, long groupId,
-		long orderId, java.lang.String emailType,
+		long orderId, String emailType,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -178,9 +177,8 @@ public class ShoppingOrderServiceHttp {
 
 	public static com.liferay.shopping.model.ShoppingOrder updateOrder(
 		HttpPrincipal httpPrincipal, long groupId, long orderId,
-		java.lang.String ppTxnId, java.lang.String ppPaymentStatus,
-		double ppPaymentGross, java.lang.String ppReceiverEmail,
-		java.lang.String ppPayerEmail)
+		String ppTxnId, String ppPaymentStatus, double ppPaymentGross,
+		String ppReceiverEmail, String ppPayerEmail)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(ShoppingOrderServiceUtil.class,
@@ -214,20 +212,16 @@ public class ShoppingOrderServiceHttp {
 
 	public static com.liferay.shopping.model.ShoppingOrder updateOrder(
 		HttpPrincipal httpPrincipal, long groupId, long orderId,
-		java.lang.String billingFirstName, java.lang.String billingLastName,
-		java.lang.String billingEmailAddress, java.lang.String billingCompany,
-		java.lang.String billingStreet, java.lang.String billingCity,
-		java.lang.String billingState, java.lang.String billingZip,
-		java.lang.String billingCountry, java.lang.String billingPhone,
-		boolean shipToBilling, java.lang.String shippingFirstName,
-		java.lang.String shippingLastName,
-		java.lang.String shippingEmailAddress,
-		java.lang.String shippingCompany, java.lang.String shippingStreet,
-		java.lang.String shippingCity, java.lang.String shippingState,
-		java.lang.String shippingZip, java.lang.String shippingCountry,
-		java.lang.String shippingPhone, java.lang.String ccName,
-		java.lang.String ccType, java.lang.String ccNumber, int ccExpMonth,
-		int ccExpYear, java.lang.String ccVerNumber, java.lang.String comments)
+		String billingFirstName, String billingLastName,
+		String billingEmailAddress, String billingCompany,
+		String billingStreet, String billingCity, String billingState,
+		String billingZip, String billingCountry, String billingPhone,
+		boolean shipToBilling, String shippingFirstName,
+		String shippingLastName, String shippingEmailAddress,
+		String shippingCompany, String shippingStreet, String shippingCity,
+		String shippingState, String shippingZip, String shippingCountry,
+		String shippingPhone, String ccName, String ccType, String ccNumber,
+		int ccExpMonth, int ccExpYear, String ccVerNumber, String comments)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(ShoppingOrderServiceUtil.class,
@@ -267,9 +261,8 @@ public class ShoppingOrderServiceHttp {
 
 	private static Log _log = LogFactoryUtil.getLog(ShoppingOrderServiceHttp.class);
 	private static final Class<?>[] _completeOrderParameterTypes0 = new Class[] {
-			long.class, java.lang.String.class, java.lang.String.class,
-			java.lang.String.class, double.class, java.lang.String.class,
-			java.lang.String.class,
+			long.class, String.class, String.class, String.class, double.class,
+			String.class, String.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _deleteOrderParameterTypes1 = new Class[] {
@@ -279,27 +272,20 @@ public class ShoppingOrderServiceHttp {
 			long.class, long.class
 		};
 	private static final Class<?>[] _sendEmailParameterTypes3 = new Class[] {
-			long.class, long.class, java.lang.String.class,
+			long.class, long.class, String.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _updateOrderParameterTypes4 = new Class[] {
-			long.class, long.class, java.lang.String.class,
-			java.lang.String.class, double.class, java.lang.String.class,
-			java.lang.String.class
+			long.class, long.class, String.class, String.class, double.class,
+			String.class, String.class
 		};
 	private static final Class<?>[] _updateOrderParameterTypes5 = new Class[] {
-			long.class, long.class, java.lang.String.class,
-			java.lang.String.class, java.lang.String.class,
-			java.lang.String.class, java.lang.String.class,
-			java.lang.String.class, java.lang.String.class,
-			java.lang.String.class, java.lang.String.class,
-			java.lang.String.class, boolean.class, java.lang.String.class,
-			java.lang.String.class, java.lang.String.class,
-			java.lang.String.class, java.lang.String.class,
-			java.lang.String.class, java.lang.String.class,
-			java.lang.String.class, java.lang.String.class,
-			java.lang.String.class, java.lang.String.class,
-			java.lang.String.class, java.lang.String.class, int.class, int.class,
-			java.lang.String.class, java.lang.String.class
+			long.class, long.class, String.class, String.class, String.class,
+			String.class, String.class, String.class, String.class, String.class,
+			String.class, String.class, boolean.class, String.class,
+			String.class, String.class, String.class, String.class, String.class,
+			String.class, String.class, String.class, String.class, String.class,
+			String.class, String.class, int.class, int.class, String.class,
+			String.class
 		};
 }

@@ -65,29 +65,29 @@ public class PortalInstancesLocalServiceWrapper
 	* @return the OSGi service identifier
 	*/
 	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
+	public String getOSGiServiceIdentifier() {
 		return _portalInstancesLocalService.getOSGiServiceIdentifier();
 	}
 
 	@Override
-	public java.lang.String[] getWebIds() {
+	public String[] getWebIds() {
 		return _portalInstancesLocalService.getWebIds();
 	}
 
 	@Override
 	public void initializePortalInstance(
-		javax.servlet.ServletContext servletContext, java.lang.String webId) {
+		javax.servlet.ServletContext servletContext, String webId) {
 		_portalInstancesLocalService.initializePortalInstance(servletContext,
 			webId);
 	}
 
 	@Override
-	public boolean isAutoLoginIgnoreHost(java.lang.String host) {
+	public boolean isAutoLoginIgnoreHost(String host) {
 		return _portalInstancesLocalService.isAutoLoginIgnoreHost(host);
 	}
 
 	@Override
-	public boolean isAutoLoginIgnorePath(java.lang.String path) {
+	public boolean isAutoLoginIgnorePath(String path) {
 		return _portalInstancesLocalService.isAutoLoginIgnorePath(path);
 	}
 
@@ -97,12 +97,12 @@ public class PortalInstancesLocalServiceWrapper
 	}
 
 	@Override
-	public boolean isVirtualHostsIgnoreHost(java.lang.String host) {
+	public boolean isVirtualHostsIgnoreHost(String host) {
 		return _portalInstancesLocalService.isVirtualHostsIgnoreHost(host);
 	}
 
 	@Override
-	public boolean isVirtualHostsIgnorePath(java.lang.String path) {
+	public boolean isVirtualHostsIgnorePath(String path) {
 		return _portalInstancesLocalService.isVirtualHostsIgnorePath(path);
 	}
 

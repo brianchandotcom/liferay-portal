@@ -570,7 +570,7 @@ public class OrgGroupRoleUtil {
 		return getPersistence().countAll();
 	}
 
-	public static java.util.Set<java.lang.String> getCompoundPKColumnNames() {
+	public static java.util.Set<String> getCompoundPKColumnNames() {
 		return getPersistence().getCompoundPKColumnNames();
 	}
 

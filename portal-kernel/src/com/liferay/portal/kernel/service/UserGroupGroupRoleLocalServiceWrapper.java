@@ -261,7 +261,7 @@ public class UserGroupGroupRoleLocalServiceWrapper
 	* @return the OSGi service identifier
 	*/
 	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
+	public String getOSGiServiceIdentifier() {
 		return _userGroupGroupRoleLocalService.getOSGiServiceIdentifier();
 	}
 
@@ -355,7 +355,7 @@ public class UserGroupGroupRoleLocalServiceWrapper
 
 	@Override
 	public boolean hasUserGroupGroupRole(long userGroupId, long groupId,
-		java.lang.String roleName)
+		String roleName)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _userGroupGroupRoleLocalService.hasUserGroupGroupRole(userGroupId,
 			groupId, roleName);

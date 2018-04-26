@@ -48,8 +48,7 @@ public class FragmentCollectionLocalServiceWrapper
 
 	@Override
 	public com.liferay.fragment.model.FragmentCollection addFragmentCollection(
-		long userId, long groupId, java.lang.String name,
-		java.lang.String description,
+		long userId, long groupId, String name, String description,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _fragmentCollectionLocalService.addFragmentCollection(userId,
@@ -58,8 +57,8 @@ public class FragmentCollectionLocalServiceWrapper
 
 	@Override
 	public com.liferay.fragment.model.FragmentCollection addFragmentCollection(
-		long userId, long groupId, java.lang.String fragmentCollectionKey,
-		java.lang.String name, java.lang.String description,
+		long userId, long groupId, String fragmentCollectionKey, String name,
+		String description,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _fragmentCollectionLocalService.addFragmentCollection(userId,
@@ -210,7 +209,7 @@ public class FragmentCollectionLocalServiceWrapper
 
 	@Override
 	public com.liferay.fragment.model.FragmentCollection fetchFragmentCollection(
-		long groupId, java.lang.String fragmentCollectionKey) {
+		long groupId, String fragmentCollectionKey) {
 		return _fragmentCollectionLocalService.fetchFragmentCollection(groupId,
 			fragmentCollectionKey);
 	}
@@ -268,7 +267,7 @@ public class FragmentCollectionLocalServiceWrapper
 
 	@Override
 	public java.util.List<com.liferay.fragment.model.FragmentCollection> getFragmentCollections(
-		long groupId, java.lang.String name, int start, int end,
+		long groupId, String name, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.fragment.model.FragmentCollection> orderByComparator) {
 		return _fragmentCollectionLocalService.getFragmentCollections(groupId,
 			name, start, end, orderByComparator);
@@ -295,7 +294,7 @@ public class FragmentCollectionLocalServiceWrapper
 	* @return the OSGi service identifier
 	*/
 	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
+	public String getOSGiServiceIdentifier() {
 		return _fragmentCollectionLocalService.getOSGiServiceIdentifier();
 	}
 
@@ -307,8 +306,8 @@ public class FragmentCollectionLocalServiceWrapper
 	}
 
 	@Override
-	public java.lang.String[] getTempFileNames(long userId, long groupId,
-		java.lang.String folderName)
+	public String[] getTempFileNames(long userId, long groupId,
+		String folderName)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _fragmentCollectionLocalService.getTempFileNames(userId,
 			groupId, folderName);
@@ -328,8 +327,7 @@ public class FragmentCollectionLocalServiceWrapper
 
 	@Override
 	public com.liferay.fragment.model.FragmentCollection updateFragmentCollection(
-		long fragmentCollectionId, java.lang.String name,
-		java.lang.String description)
+		long fragmentCollectionId, String name, String description)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _fragmentCollectionLocalService.updateFragmentCollection(fragmentCollectionId,
 			name, description);

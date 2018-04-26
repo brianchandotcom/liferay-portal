@@ -145,7 +145,7 @@ public class SiteFriendlyURLWrapper implements SiteFriendlyURL,
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new SiteFriendlyURLWrapper((SiteFriendlyURL)_siteFriendlyURL.clone());
 	}
 
@@ -185,7 +185,7 @@ public class SiteFriendlyURLWrapper implements SiteFriendlyURL,
 	* @return the friendly url of this site friendly url
 	*/
 	@Override
-	public java.lang.String getFriendlyURL() {
+	public String getFriendlyURL() {
 		return _siteFriendlyURL.getFriendlyURL();
 	}
 
@@ -205,7 +205,7 @@ public class SiteFriendlyURLWrapper implements SiteFriendlyURL,
 	* @return the language ID of this site friendly url
 	*/
 	@Override
-	public java.lang.String getLanguageId() {
+	public String getLanguageId() {
 		return _siteFriendlyURL.getLanguageId();
 	}
 
@@ -270,7 +270,7 @@ public class SiteFriendlyURLWrapper implements SiteFriendlyURL,
 	* @return the user name of this site friendly url
 	*/
 	@Override
-	public java.lang.String getUserName() {
+	public String getUserName() {
 		return _siteFriendlyURL.getUserName();
 	}
 
@@ -280,7 +280,7 @@ public class SiteFriendlyURLWrapper implements SiteFriendlyURL,
 	* @return the user uuid of this site friendly url
 	*/
 	@Override
-	public java.lang.String getUserUuid() {
+	public String getUserUuid() {
 		return _siteFriendlyURL.getUserUuid();
 	}
 
@@ -290,7 +290,7 @@ public class SiteFriendlyURLWrapper implements SiteFriendlyURL,
 	* @return the uuid of this site friendly url
 	*/
 	@Override
-	public java.lang.String getUuid() {
+	public String getUuid() {
 		return _siteFriendlyURL.getUuid();
 	}
 
@@ -366,7 +366,7 @@ public class SiteFriendlyURLWrapper implements SiteFriendlyURL,
 	* @param friendlyURL the friendly url of this site friendly url
 	*/
 	@Override
-	public void setFriendlyURL(java.lang.String friendlyURL) {
+	public void setFriendlyURL(String friendlyURL) {
 		_siteFriendlyURL.setFriendlyURL(friendlyURL);
 	}
 
@@ -386,7 +386,7 @@ public class SiteFriendlyURLWrapper implements SiteFriendlyURL,
 	* @param languageId the language ID of this site friendly url
 	*/
 	@Override
-	public void setLanguageId(java.lang.String languageId) {
+	public void setLanguageId(String languageId) {
 		_siteFriendlyURL.setLanguageId(languageId);
 	}
 
@@ -456,7 +456,7 @@ public class SiteFriendlyURLWrapper implements SiteFriendlyURL,
 	* @param userName the user name of this site friendly url
 	*/
 	@Override
-	public void setUserName(java.lang.String userName) {
+	public void setUserName(String userName) {
 		_siteFriendlyURL.setUserName(userName);
 	}
 
@@ -466,7 +466,7 @@ public class SiteFriendlyURLWrapper implements SiteFriendlyURL,
 	* @param userUuid the user uuid of this site friendly url
 	*/
 	@Override
-	public void setUserUuid(java.lang.String userUuid) {
+	public void setUserUuid(String userUuid) {
 		_siteFriendlyURL.setUserUuid(userUuid);
 	}
 
@@ -476,7 +476,7 @@ public class SiteFriendlyURLWrapper implements SiteFriendlyURL,
 	* @param uuid the uuid of this site friendly url
 	*/
 	@Override
-	public void setUuid(java.lang.String uuid) {
+	public void setUuid(String uuid) {
 		_siteFriendlyURL.setUuid(uuid);
 	}
 
@@ -491,7 +491,7 @@ public class SiteFriendlyURLWrapper implements SiteFriendlyURL,
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _siteFriendlyURL.toString();
 	}
 
@@ -501,7 +501,7 @@ public class SiteFriendlyURLWrapper implements SiteFriendlyURL,
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _siteFriendlyURL.toXmlString();
 	}
 

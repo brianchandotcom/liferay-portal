@@ -98,7 +98,7 @@ public class ServiceComponentLocalServiceUtil {
 
 	public static void destroyServiceComponent(
 		com.liferay.portal.kernel.service.configuration.ServiceComponentConfiguration serviceComponentConfiguration,
-		java.lang.ClassLoader classLoader) {
+		ClassLoader classLoader) {
 		getService()
 			.destroyServiceComponent(serviceComponentConfiguration, classLoader);
 	}
@@ -203,7 +203,7 @@ public class ServiceComponentLocalServiceUtil {
 	*
 	* @return the OSGi service identifier
 	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
+	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 
@@ -253,8 +253,8 @@ public class ServiceComponentLocalServiceUtil {
 
 	public static com.liferay.portal.kernel.model.ServiceComponent initServiceComponent(
 		com.liferay.portal.kernel.service.configuration.ServiceComponentConfiguration serviceComponentConfiguration,
-		java.lang.ClassLoader classLoader, java.lang.String buildNamespace,
-		long buildNumber, long buildDate)
+		ClassLoader classLoader, String buildNamespace, long buildNumber,
+		long buildDate)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .initServiceComponent(serviceComponentConfiguration,
@@ -269,8 +269,8 @@ public class ServiceComponentLocalServiceUtil {
 	@Deprecated
 	public static com.liferay.portal.kernel.model.ServiceComponent initServiceComponent(
 		com.liferay.portal.kernel.service.configuration.ServiceComponentConfiguration serviceComponentConfiguration,
-		java.lang.ClassLoader classLoader, java.lang.String buildNamespace,
-		long buildNumber, long buildDate, boolean buildAutoUpgrade)
+		ClassLoader classLoader, String buildNamespace, long buildNumber,
+		long buildDate, boolean buildAutoUpgrade)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .initServiceComponent(serviceComponentConfiguration,
@@ -294,23 +294,22 @@ public class ServiceComponentLocalServiceUtil {
 	String, long, ServiceComponent, String, String, String)}
 	*/
 	@Deprecated
-	public static void upgradeDB(java.lang.ClassLoader classLoader,
-		java.lang.String buildNamespace, long buildNumber,
-		boolean buildAutoUpgrade,
+	public static void upgradeDB(ClassLoader classLoader,
+		String buildNamespace, long buildNumber, boolean buildAutoUpgrade,
 		com.liferay.portal.kernel.model.ServiceComponent previousServiceComponent,
-		java.lang.String tablesSQL, java.lang.String sequencesSQL,
-		java.lang.String indexesSQL) throws java.lang.Exception {
+		String tablesSQL, String sequencesSQL, String indexesSQL)
+		throws Exception {
 		getService()
 			.upgradeDB(classLoader, buildNamespace, buildNumber,
 			buildAutoUpgrade, previousServiceComponent, tablesSQL,
 			sequencesSQL, indexesSQL);
 	}
 
-	public static void upgradeDB(java.lang.ClassLoader classLoader,
-		java.lang.String buildNamespace, long buildNumber,
+	public static void upgradeDB(ClassLoader classLoader,
+		String buildNamespace, long buildNumber,
 		com.liferay.portal.kernel.model.ServiceComponent previousServiceComponent,
-		java.lang.String tablesSQL, java.lang.String sequencesSQL,
-		java.lang.String indexesSQL) throws java.lang.Exception {
+		String tablesSQL, String sequencesSQL, String indexesSQL)
+		throws Exception {
 		getService()
 			.upgradeDB(classLoader, buildNamespace, buildNumber,
 			previousServiceComponent, tablesSQL, sequencesSQL, indexesSQL);

@@ -284,8 +284,7 @@ public class DDMTemplateVersionUtil {
 	* @return the matching ddm template version
 	* @throws NoSuchTemplateVersionException if a matching ddm template version could not be found
 	*/
-	public static DDMTemplateVersion findByT_V(long templateId,
-		java.lang.String version)
+	public static DDMTemplateVersion findByT_V(long templateId, String version)
 		throws com.liferay.dynamic.data.mapping.exception.NoSuchTemplateVersionException {
 		return getPersistence().findByT_V(templateId, version);
 	}
@@ -297,8 +296,7 @@ public class DDMTemplateVersionUtil {
 	* @param version the version
 	* @return the matching ddm template version, or <code>null</code> if a matching ddm template version could not be found
 	*/
-	public static DDMTemplateVersion fetchByT_V(long templateId,
-		java.lang.String version) {
+	public static DDMTemplateVersion fetchByT_V(long templateId, String version) {
 		return getPersistence().fetchByT_V(templateId, version);
 	}
 
@@ -311,7 +309,7 @@ public class DDMTemplateVersionUtil {
 	* @return the matching ddm template version, or <code>null</code> if a matching ddm template version could not be found
 	*/
 	public static DDMTemplateVersion fetchByT_V(long templateId,
-		java.lang.String version, boolean retrieveFromCache) {
+		String version, boolean retrieveFromCache) {
 		return getPersistence()
 				   .fetchByT_V(templateId, version, retrieveFromCache);
 	}
@@ -323,8 +321,7 @@ public class DDMTemplateVersionUtil {
 	* @param version the version
 	* @return the ddm template version that was removed
 	*/
-	public static DDMTemplateVersion removeByT_V(long templateId,
-		java.lang.String version)
+	public static DDMTemplateVersion removeByT_V(long templateId, String version)
 		throws com.liferay.dynamic.data.mapping.exception.NoSuchTemplateVersionException {
 		return getPersistence().removeByT_V(templateId, version);
 	}
@@ -336,7 +333,7 @@ public class DDMTemplateVersionUtil {
 	* @param version the version
 	* @return the number of matching ddm template versions
 	*/
-	public static int countByT_V(long templateId, java.lang.String version) {
+	public static int countByT_V(long templateId, String version) {
 		return getPersistence().countByT_V(templateId, version);
 	}
 

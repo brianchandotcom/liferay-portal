@@ -257,7 +257,7 @@ public class SocialRelationLocalServiceUtil {
 	* @return the matching social relation, or <code>null</code> if a matching social relation could not be found
 	*/
 	public static com.liferay.social.kernel.model.SocialRelation fetchSocialRelationByUuidAndCompanyId(
-		java.lang.String uuid, long companyId) {
+		String uuid, long companyId) {
 		return getService()
 				   .fetchSocialRelationByUuidAndCompanyId(uuid, companyId);
 	}
@@ -312,7 +312,7 @@ public class SocialRelationLocalServiceUtil {
 	*
 	* @return the OSGi service identifier
 	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
+	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 
@@ -442,7 +442,7 @@ public class SocialRelationLocalServiceUtil {
 	* @throws PortalException if a matching social relation could not be found
 	*/
 	public static com.liferay.social.kernel.model.SocialRelation getSocialRelationByUuidAndCompanyId(
-		java.lang.String uuid, long companyId)
+		String uuid, long companyId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getSocialRelationByUuidAndCompanyId(uuid, companyId);
 	}

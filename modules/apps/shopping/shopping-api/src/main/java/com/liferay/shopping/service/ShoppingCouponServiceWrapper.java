@@ -34,14 +34,13 @@ public class ShoppingCouponServiceWrapper implements ShoppingCouponService,
 	}
 
 	@Override
-	public com.liferay.shopping.model.ShoppingCoupon addCoupon(
-		java.lang.String code, boolean autoCode, java.lang.String name,
-		java.lang.String description, int startDateMonth, int startDateDay,
-		int startDateYear, int startDateHour, int startDateMinute,
-		int endDateMonth, int endDateDay, int endDateYear, int endDateHour,
-		int endDateMinute, boolean neverExpire, boolean active,
-		java.lang.String limitCategories, java.lang.String limitSkus,
-		double minOrder, double discount, java.lang.String discountType,
+	public com.liferay.shopping.model.ShoppingCoupon addCoupon(String code,
+		boolean autoCode, String name, String description, int startDateMonth,
+		int startDateDay, int startDateYear, int startDateHour,
+		int startDateMinute, int endDateMonth, int endDateDay, int endDateYear,
+		int endDateHour, int endDateMinute, boolean neverExpire,
+		boolean active, String limitCategories, String limitSkus,
+		double minOrder, double discount, String discountType,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _shoppingCouponService.addCoupon(code, autoCode, name,
@@ -71,14 +70,14 @@ public class ShoppingCouponServiceWrapper implements ShoppingCouponService,
 	* @return the OSGi service identifier
 	*/
 	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
+	public String getOSGiServiceIdentifier() {
 		return _shoppingCouponService.getOSGiServiceIdentifier();
 	}
 
 	@Override
 	public java.util.List<com.liferay.shopping.model.ShoppingCoupon> search(
-		long groupId, long companyId, java.lang.String code, boolean active,
-		java.lang.String discountType, boolean andOperator, int start, int end)
+		long groupId, long companyId, String code, boolean active,
+		String discountType, boolean andOperator, int start, int end)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _shoppingCouponService.search(groupId, companyId, code, active,
 			discountType, andOperator, start, end);
@@ -86,13 +85,12 @@ public class ShoppingCouponServiceWrapper implements ShoppingCouponService,
 
 	@Override
 	public com.liferay.shopping.model.ShoppingCoupon updateCoupon(
-		long couponId, java.lang.String name, java.lang.String description,
-		int startDateMonth, int startDateDay, int startDateYear,
-		int startDateHour, int startDateMinute, int endDateMonth,
-		int endDateDay, int endDateYear, int endDateHour, int endDateMinute,
-		boolean neverExpire, boolean active, java.lang.String limitCategories,
-		java.lang.String limitSkus, double minOrder, double discount,
-		java.lang.String discountType,
+		long couponId, String name, String description, int startDateMonth,
+		int startDateDay, int startDateYear, int startDateHour,
+		int startDateMinute, int endDateMonth, int endDateDay, int endDateYear,
+		int endDateHour, int endDateMinute, boolean neverExpire,
+		boolean active, String limitCategories, String limitSkus,
+		double minOrder, double discount, String discountType,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _shoppingCouponService.updateCoupon(couponId, name, description,

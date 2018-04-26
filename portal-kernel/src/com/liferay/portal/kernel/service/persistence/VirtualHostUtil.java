@@ -115,7 +115,7 @@ public class VirtualHostUtil {
 	* @return the matching virtual host
 	* @throws NoSuchVirtualHostException if a matching virtual host could not be found
 	*/
-	public static VirtualHost findByHostname(java.lang.String hostname)
+	public static VirtualHost findByHostname(String hostname)
 		throws com.liferay.portal.kernel.exception.NoSuchVirtualHostException {
 		return getPersistence().findByHostname(hostname);
 	}
@@ -126,7 +126,7 @@ public class VirtualHostUtil {
 	* @param hostname the hostname
 	* @return the matching virtual host, or <code>null</code> if a matching virtual host could not be found
 	*/
-	public static VirtualHost fetchByHostname(java.lang.String hostname) {
+	public static VirtualHost fetchByHostname(String hostname) {
 		return getPersistence().fetchByHostname(hostname);
 	}
 
@@ -137,7 +137,7 @@ public class VirtualHostUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching virtual host, or <code>null</code> if a matching virtual host could not be found
 	*/
-	public static VirtualHost fetchByHostname(java.lang.String hostname,
+	public static VirtualHost fetchByHostname(String hostname,
 		boolean retrieveFromCache) {
 		return getPersistence().fetchByHostname(hostname, retrieveFromCache);
 	}
@@ -148,7 +148,7 @@ public class VirtualHostUtil {
 	* @param hostname the hostname
 	* @return the virtual host that was removed
 	*/
-	public static VirtualHost removeByHostname(java.lang.String hostname)
+	public static VirtualHost removeByHostname(String hostname)
 		throws com.liferay.portal.kernel.exception.NoSuchVirtualHostException {
 		return getPersistence().removeByHostname(hostname);
 	}
@@ -159,7 +159,7 @@ public class VirtualHostUtil {
 	* @param hostname the hostname
 	* @return the number of matching virtual hosts
 	*/
-	public static int countByHostname(java.lang.String hostname) {
+	public static int countByHostname(String hostname) {
 		return getPersistence().countByHostname(hostname);
 	}
 

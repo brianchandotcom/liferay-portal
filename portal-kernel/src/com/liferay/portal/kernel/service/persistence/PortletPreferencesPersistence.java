@@ -177,8 +177,7 @@ public interface PortletPreferencesPersistence extends BasePersistence<PortletPr
 	* @param portletId the portlet ID
 	* @return the matching portlet preferenceses
 	*/
-	public java.util.List<PortletPreferences> findByPortletId(
-		java.lang.String portletId);
+	public java.util.List<PortletPreferences> findByPortletId(String portletId);
 
 	/**
 	* Returns a range of all the portlet preferenceses where portletId = &#63;.
@@ -193,7 +192,7 @@ public interface PortletPreferencesPersistence extends BasePersistence<PortletPr
 	* @return the range of matching portlet preferenceses
 	*/
 	public java.util.List<PortletPreferences> findByPortletId(
-		java.lang.String portletId, int start, int end);
+		String portletId, int start, int end);
 
 	/**
 	* Returns an ordered range of all the portlet preferenceses where portletId = &#63;.
@@ -209,7 +208,7 @@ public interface PortletPreferencesPersistence extends BasePersistence<PortletPr
 	* @return the ordered range of matching portlet preferenceses
 	*/
 	public java.util.List<PortletPreferences> findByPortletId(
-		java.lang.String portletId, int start, int end,
+		String portletId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<PortletPreferences> orderByComparator);
 
 	/**
@@ -227,7 +226,7 @@ public interface PortletPreferencesPersistence extends BasePersistence<PortletPr
 	* @return the ordered range of matching portlet preferenceses
 	*/
 	public java.util.List<PortletPreferences> findByPortletId(
-		java.lang.String portletId, int start, int end,
+		String portletId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<PortletPreferences> orderByComparator,
 		boolean retrieveFromCache);
 
@@ -239,8 +238,7 @@ public interface PortletPreferencesPersistence extends BasePersistence<PortletPr
 	* @return the first matching portlet preferences
 	* @throws NoSuchPortletPreferencesException if a matching portlet preferences could not be found
 	*/
-	public PortletPreferences findByPortletId_First(
-		java.lang.String portletId,
+	public PortletPreferences findByPortletId_First(String portletId,
 		com.liferay.portal.kernel.util.OrderByComparator<PortletPreferences> orderByComparator)
 		throws NoSuchPortletPreferencesException;
 
@@ -251,8 +249,7 @@ public interface PortletPreferencesPersistence extends BasePersistence<PortletPr
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching portlet preferences, or <code>null</code> if a matching portlet preferences could not be found
 	*/
-	public PortletPreferences fetchByPortletId_First(
-		java.lang.String portletId,
+	public PortletPreferences fetchByPortletId_First(String portletId,
 		com.liferay.portal.kernel.util.OrderByComparator<PortletPreferences> orderByComparator);
 
 	/**
@@ -263,7 +260,7 @@ public interface PortletPreferencesPersistence extends BasePersistence<PortletPr
 	* @return the last matching portlet preferences
 	* @throws NoSuchPortletPreferencesException if a matching portlet preferences could not be found
 	*/
-	public PortletPreferences findByPortletId_Last(java.lang.String portletId,
+	public PortletPreferences findByPortletId_Last(String portletId,
 		com.liferay.portal.kernel.util.OrderByComparator<PortletPreferences> orderByComparator)
 		throws NoSuchPortletPreferencesException;
 
@@ -274,8 +271,7 @@ public interface PortletPreferencesPersistence extends BasePersistence<PortletPr
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching portlet preferences, or <code>null</code> if a matching portlet preferences could not be found
 	*/
-	public PortletPreferences fetchByPortletId_Last(
-		java.lang.String portletId,
+	public PortletPreferences fetchByPortletId_Last(String portletId,
 		com.liferay.portal.kernel.util.OrderByComparator<PortletPreferences> orderByComparator);
 
 	/**
@@ -288,7 +284,7 @@ public interface PortletPreferencesPersistence extends BasePersistence<PortletPr
 	* @throws NoSuchPortletPreferencesException if a portlet preferences with the primary key could not be found
 	*/
 	public PortletPreferences[] findByPortletId_PrevAndNext(
-		long portletPreferencesId, java.lang.String portletId,
+		long portletPreferencesId, String portletId,
 		com.liferay.portal.kernel.util.OrderByComparator<PortletPreferences> orderByComparator)
 		throws NoSuchPortletPreferencesException;
 
@@ -297,7 +293,7 @@ public interface PortletPreferencesPersistence extends BasePersistence<PortletPr
 	*
 	* @param portletId the portlet ID
 	*/
-	public void removeByPortletId(java.lang.String portletId);
+	public void removeByPortletId(String portletId);
 
 	/**
 	* Returns the number of portlet preferenceses where portletId = &#63;.
@@ -305,7 +301,7 @@ public interface PortletPreferencesPersistence extends BasePersistence<PortletPr
 	* @param portletId the portlet ID
 	* @return the number of matching portlet preferenceses
 	*/
-	public int countByPortletId(java.lang.String portletId);
+	public int countByPortletId(String portletId);
 
 	/**
 	* Returns all the portlet preferenceses where ownerType = &#63; and portletId = &#63;.
@@ -315,7 +311,7 @@ public interface PortletPreferencesPersistence extends BasePersistence<PortletPr
 	* @return the matching portlet preferenceses
 	*/
 	public java.util.List<PortletPreferences> findByO_P(int ownerType,
-		java.lang.String portletId);
+		String portletId);
 
 	/**
 	* Returns a range of all the portlet preferenceses where ownerType = &#63; and portletId = &#63;.
@@ -331,7 +327,7 @@ public interface PortletPreferencesPersistence extends BasePersistence<PortletPr
 	* @return the range of matching portlet preferenceses
 	*/
 	public java.util.List<PortletPreferences> findByO_P(int ownerType,
-		java.lang.String portletId, int start, int end);
+		String portletId, int start, int end);
 
 	/**
 	* Returns an ordered range of all the portlet preferenceses where ownerType = &#63; and portletId = &#63;.
@@ -348,7 +344,7 @@ public interface PortletPreferencesPersistence extends BasePersistence<PortletPr
 	* @return the ordered range of matching portlet preferenceses
 	*/
 	public java.util.List<PortletPreferences> findByO_P(int ownerType,
-		java.lang.String portletId, int start, int end,
+		String portletId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<PortletPreferences> orderByComparator);
 
 	/**
@@ -367,7 +363,7 @@ public interface PortletPreferencesPersistence extends BasePersistence<PortletPr
 	* @return the ordered range of matching portlet preferenceses
 	*/
 	public java.util.List<PortletPreferences> findByO_P(int ownerType,
-		java.lang.String portletId, int start, int end,
+		String portletId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<PortletPreferences> orderByComparator,
 		boolean retrieveFromCache);
 
@@ -380,8 +376,7 @@ public interface PortletPreferencesPersistence extends BasePersistence<PortletPr
 	* @return the first matching portlet preferences
 	* @throws NoSuchPortletPreferencesException if a matching portlet preferences could not be found
 	*/
-	public PortletPreferences findByO_P_First(int ownerType,
-		java.lang.String portletId,
+	public PortletPreferences findByO_P_First(int ownerType, String portletId,
 		com.liferay.portal.kernel.util.OrderByComparator<PortletPreferences> orderByComparator)
 		throws NoSuchPortletPreferencesException;
 
@@ -393,8 +388,7 @@ public interface PortletPreferencesPersistence extends BasePersistence<PortletPr
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching portlet preferences, or <code>null</code> if a matching portlet preferences could not be found
 	*/
-	public PortletPreferences fetchByO_P_First(int ownerType,
-		java.lang.String portletId,
+	public PortletPreferences fetchByO_P_First(int ownerType, String portletId,
 		com.liferay.portal.kernel.util.OrderByComparator<PortletPreferences> orderByComparator);
 
 	/**
@@ -406,8 +400,7 @@ public interface PortletPreferencesPersistence extends BasePersistence<PortletPr
 	* @return the last matching portlet preferences
 	* @throws NoSuchPortletPreferencesException if a matching portlet preferences could not be found
 	*/
-	public PortletPreferences findByO_P_Last(int ownerType,
-		java.lang.String portletId,
+	public PortletPreferences findByO_P_Last(int ownerType, String portletId,
 		com.liferay.portal.kernel.util.OrderByComparator<PortletPreferences> orderByComparator)
 		throws NoSuchPortletPreferencesException;
 
@@ -419,8 +412,7 @@ public interface PortletPreferencesPersistence extends BasePersistence<PortletPr
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching portlet preferences, or <code>null</code> if a matching portlet preferences could not be found
 	*/
-	public PortletPreferences fetchByO_P_Last(int ownerType,
-		java.lang.String portletId,
+	public PortletPreferences fetchByO_P_Last(int ownerType, String portletId,
 		com.liferay.portal.kernel.util.OrderByComparator<PortletPreferences> orderByComparator);
 
 	/**
@@ -434,7 +426,7 @@ public interface PortletPreferencesPersistence extends BasePersistence<PortletPr
 	* @throws NoSuchPortletPreferencesException if a portlet preferences with the primary key could not be found
 	*/
 	public PortletPreferences[] findByO_P_PrevAndNext(
-		long portletPreferencesId, int ownerType, java.lang.String portletId,
+		long portletPreferencesId, int ownerType, String portletId,
 		com.liferay.portal.kernel.util.OrderByComparator<PortletPreferences> orderByComparator)
 		throws NoSuchPortletPreferencesException;
 
@@ -444,7 +436,7 @@ public interface PortletPreferencesPersistence extends BasePersistence<PortletPr
 	* @param ownerType the owner type
 	* @param portletId the portlet ID
 	*/
-	public void removeByO_P(int ownerType, java.lang.String portletId);
+	public void removeByO_P(int ownerType, String portletId);
 
 	/**
 	* Returns the number of portlet preferenceses where ownerType = &#63; and portletId = &#63;.
@@ -453,7 +445,7 @@ public interface PortletPreferencesPersistence extends BasePersistence<PortletPr
 	* @param portletId the portlet ID
 	* @return the number of matching portlet preferenceses
 	*/
-	public int countByO_P(int ownerType, java.lang.String portletId);
+	public int countByO_P(int ownerType, String portletId);
 
 	/**
 	* Returns all the portlet preferenceses where plid = &#63; and portletId = &#63;.
@@ -463,7 +455,7 @@ public interface PortletPreferencesPersistence extends BasePersistence<PortletPr
 	* @return the matching portlet preferenceses
 	*/
 	public java.util.List<PortletPreferences> findByP_P(long plid,
-		java.lang.String portletId);
+		String portletId);
 
 	/**
 	* Returns a range of all the portlet preferenceses where plid = &#63; and portletId = &#63;.
@@ -479,7 +471,7 @@ public interface PortletPreferencesPersistence extends BasePersistence<PortletPr
 	* @return the range of matching portlet preferenceses
 	*/
 	public java.util.List<PortletPreferences> findByP_P(long plid,
-		java.lang.String portletId, int start, int end);
+		String portletId, int start, int end);
 
 	/**
 	* Returns an ordered range of all the portlet preferenceses where plid = &#63; and portletId = &#63;.
@@ -496,7 +488,7 @@ public interface PortletPreferencesPersistence extends BasePersistence<PortletPr
 	* @return the ordered range of matching portlet preferenceses
 	*/
 	public java.util.List<PortletPreferences> findByP_P(long plid,
-		java.lang.String portletId, int start, int end,
+		String portletId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<PortletPreferences> orderByComparator);
 
 	/**
@@ -515,7 +507,7 @@ public interface PortletPreferencesPersistence extends BasePersistence<PortletPr
 	* @return the ordered range of matching portlet preferenceses
 	*/
 	public java.util.List<PortletPreferences> findByP_P(long plid,
-		java.lang.String portletId, int start, int end,
+		String portletId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<PortletPreferences> orderByComparator,
 		boolean retrieveFromCache);
 
@@ -528,8 +520,7 @@ public interface PortletPreferencesPersistence extends BasePersistence<PortletPr
 	* @return the first matching portlet preferences
 	* @throws NoSuchPortletPreferencesException if a matching portlet preferences could not be found
 	*/
-	public PortletPreferences findByP_P_First(long plid,
-		java.lang.String portletId,
+	public PortletPreferences findByP_P_First(long plid, String portletId,
 		com.liferay.portal.kernel.util.OrderByComparator<PortletPreferences> orderByComparator)
 		throws NoSuchPortletPreferencesException;
 
@@ -541,8 +532,7 @@ public interface PortletPreferencesPersistence extends BasePersistence<PortletPr
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching portlet preferences, or <code>null</code> if a matching portlet preferences could not be found
 	*/
-	public PortletPreferences fetchByP_P_First(long plid,
-		java.lang.String portletId,
+	public PortletPreferences fetchByP_P_First(long plid, String portletId,
 		com.liferay.portal.kernel.util.OrderByComparator<PortletPreferences> orderByComparator);
 
 	/**
@@ -554,8 +544,7 @@ public interface PortletPreferencesPersistence extends BasePersistence<PortletPr
 	* @return the last matching portlet preferences
 	* @throws NoSuchPortletPreferencesException if a matching portlet preferences could not be found
 	*/
-	public PortletPreferences findByP_P_Last(long plid,
-		java.lang.String portletId,
+	public PortletPreferences findByP_P_Last(long plid, String portletId,
 		com.liferay.portal.kernel.util.OrderByComparator<PortletPreferences> orderByComparator)
 		throws NoSuchPortletPreferencesException;
 
@@ -567,8 +556,7 @@ public interface PortletPreferencesPersistence extends BasePersistence<PortletPr
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching portlet preferences, or <code>null</code> if a matching portlet preferences could not be found
 	*/
-	public PortletPreferences fetchByP_P_Last(long plid,
-		java.lang.String portletId,
+	public PortletPreferences fetchByP_P_Last(long plid, String portletId,
 		com.liferay.portal.kernel.util.OrderByComparator<PortletPreferences> orderByComparator);
 
 	/**
@@ -582,7 +570,7 @@ public interface PortletPreferencesPersistence extends BasePersistence<PortletPr
 	* @throws NoSuchPortletPreferencesException if a portlet preferences with the primary key could not be found
 	*/
 	public PortletPreferences[] findByP_P_PrevAndNext(
-		long portletPreferencesId, long plid, java.lang.String portletId,
+		long portletPreferencesId, long plid, String portletId,
 		com.liferay.portal.kernel.util.OrderByComparator<PortletPreferences> orderByComparator)
 		throws NoSuchPortletPreferencesException;
 
@@ -592,7 +580,7 @@ public interface PortletPreferencesPersistence extends BasePersistence<PortletPr
 	* @param plid the plid
 	* @param portletId the portlet ID
 	*/
-	public void removeByP_P(long plid, java.lang.String portletId);
+	public void removeByP_P(long plid, String portletId);
 
 	/**
 	* Returns the number of portlet preferenceses where plid = &#63; and portletId = &#63;.
@@ -601,7 +589,7 @@ public interface PortletPreferencesPersistence extends BasePersistence<PortletPr
 	* @param portletId the portlet ID
 	* @return the number of matching portlet preferenceses
 	*/
-	public int countByP_P(long plid, java.lang.String portletId);
+	public int countByP_P(long plid, String portletId);
 
 	/**
 	* Returns all the portlet preferenceses where ownerId = &#63; and ownerType = &#63; and plid = &#63;.
@@ -771,7 +759,7 @@ public interface PortletPreferencesPersistence extends BasePersistence<PortletPr
 	* @return the matching portlet preferenceses
 	*/
 	public java.util.List<PortletPreferences> findByO_O_PI(long ownerId,
-		int ownerType, java.lang.String portletId);
+		int ownerType, String portletId);
 
 	/**
 	* Returns a range of all the portlet preferenceses where ownerId = &#63; and ownerType = &#63; and portletId = &#63;.
@@ -788,7 +776,7 @@ public interface PortletPreferencesPersistence extends BasePersistence<PortletPr
 	* @return the range of matching portlet preferenceses
 	*/
 	public java.util.List<PortletPreferences> findByO_O_PI(long ownerId,
-		int ownerType, java.lang.String portletId, int start, int end);
+		int ownerType, String portletId, int start, int end);
 
 	/**
 	* Returns an ordered range of all the portlet preferenceses where ownerId = &#63; and ownerType = &#63; and portletId = &#63;.
@@ -806,7 +794,7 @@ public interface PortletPreferencesPersistence extends BasePersistence<PortletPr
 	* @return the ordered range of matching portlet preferenceses
 	*/
 	public java.util.List<PortletPreferences> findByO_O_PI(long ownerId,
-		int ownerType, java.lang.String portletId, int start, int end,
+		int ownerType, String portletId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<PortletPreferences> orderByComparator);
 
 	/**
@@ -826,7 +814,7 @@ public interface PortletPreferencesPersistence extends BasePersistence<PortletPr
 	* @return the ordered range of matching portlet preferenceses
 	*/
 	public java.util.List<PortletPreferences> findByO_O_PI(long ownerId,
-		int ownerType, java.lang.String portletId, int start, int end,
+		int ownerType, String portletId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<PortletPreferences> orderByComparator,
 		boolean retrieveFromCache);
 
@@ -841,7 +829,7 @@ public interface PortletPreferencesPersistence extends BasePersistence<PortletPr
 	* @throws NoSuchPortletPreferencesException if a matching portlet preferences could not be found
 	*/
 	public PortletPreferences findByO_O_PI_First(long ownerId, int ownerType,
-		java.lang.String portletId,
+		String portletId,
 		com.liferay.portal.kernel.util.OrderByComparator<PortletPreferences> orderByComparator)
 		throws NoSuchPortletPreferencesException;
 
@@ -855,7 +843,7 @@ public interface PortletPreferencesPersistence extends BasePersistence<PortletPr
 	* @return the first matching portlet preferences, or <code>null</code> if a matching portlet preferences could not be found
 	*/
 	public PortletPreferences fetchByO_O_PI_First(long ownerId, int ownerType,
-		java.lang.String portletId,
+		String portletId,
 		com.liferay.portal.kernel.util.OrderByComparator<PortletPreferences> orderByComparator);
 
 	/**
@@ -869,7 +857,7 @@ public interface PortletPreferencesPersistence extends BasePersistence<PortletPr
 	* @throws NoSuchPortletPreferencesException if a matching portlet preferences could not be found
 	*/
 	public PortletPreferences findByO_O_PI_Last(long ownerId, int ownerType,
-		java.lang.String portletId,
+		String portletId,
 		com.liferay.portal.kernel.util.OrderByComparator<PortletPreferences> orderByComparator)
 		throws NoSuchPortletPreferencesException;
 
@@ -883,7 +871,7 @@ public interface PortletPreferencesPersistence extends BasePersistence<PortletPr
 	* @return the last matching portlet preferences, or <code>null</code> if a matching portlet preferences could not be found
 	*/
 	public PortletPreferences fetchByO_O_PI_Last(long ownerId, int ownerType,
-		java.lang.String portletId,
+		String portletId,
 		com.liferay.portal.kernel.util.OrderByComparator<PortletPreferences> orderByComparator);
 
 	/**
@@ -899,7 +887,7 @@ public interface PortletPreferencesPersistence extends BasePersistence<PortletPr
 	*/
 	public PortletPreferences[] findByO_O_PI_PrevAndNext(
 		long portletPreferencesId, long ownerId, int ownerType,
-		java.lang.String portletId,
+		String portletId,
 		com.liferay.portal.kernel.util.OrderByComparator<PortletPreferences> orderByComparator)
 		throws NoSuchPortletPreferencesException;
 
@@ -910,8 +898,7 @@ public interface PortletPreferencesPersistence extends BasePersistence<PortletPr
 	* @param ownerType the owner type
 	* @param portletId the portlet ID
 	*/
-	public void removeByO_O_PI(long ownerId, int ownerType,
-		java.lang.String portletId);
+	public void removeByO_O_PI(long ownerId, int ownerType, String portletId);
 
 	/**
 	* Returns the number of portlet preferenceses where ownerId = &#63; and ownerType = &#63; and portletId = &#63;.
@@ -921,8 +908,7 @@ public interface PortletPreferencesPersistence extends BasePersistence<PortletPr
 	* @param portletId the portlet ID
 	* @return the number of matching portlet preferenceses
 	*/
-	public int countByO_O_PI(long ownerId, int ownerType,
-		java.lang.String portletId);
+	public int countByO_O_PI(long ownerId, int ownerType, String portletId);
 
 	/**
 	* Returns all the portlet preferenceses where ownerType = &#63; and plid = &#63; and portletId = &#63;.
@@ -933,7 +919,7 @@ public interface PortletPreferencesPersistence extends BasePersistence<PortletPr
 	* @return the matching portlet preferenceses
 	*/
 	public java.util.List<PortletPreferences> findByO_P_P(int ownerType,
-		long plid, java.lang.String portletId);
+		long plid, String portletId);
 
 	/**
 	* Returns a range of all the portlet preferenceses where ownerType = &#63; and plid = &#63; and portletId = &#63;.
@@ -950,7 +936,7 @@ public interface PortletPreferencesPersistence extends BasePersistence<PortletPr
 	* @return the range of matching portlet preferenceses
 	*/
 	public java.util.List<PortletPreferences> findByO_P_P(int ownerType,
-		long plid, java.lang.String portletId, int start, int end);
+		long plid, String portletId, int start, int end);
 
 	/**
 	* Returns an ordered range of all the portlet preferenceses where ownerType = &#63; and plid = &#63; and portletId = &#63;.
@@ -968,7 +954,7 @@ public interface PortletPreferencesPersistence extends BasePersistence<PortletPr
 	* @return the ordered range of matching portlet preferenceses
 	*/
 	public java.util.List<PortletPreferences> findByO_P_P(int ownerType,
-		long plid, java.lang.String portletId, int start, int end,
+		long plid, String portletId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<PortletPreferences> orderByComparator);
 
 	/**
@@ -988,7 +974,7 @@ public interface PortletPreferencesPersistence extends BasePersistence<PortletPr
 	* @return the ordered range of matching portlet preferenceses
 	*/
 	public java.util.List<PortletPreferences> findByO_P_P(int ownerType,
-		long plid, java.lang.String portletId, int start, int end,
+		long plid, String portletId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<PortletPreferences> orderByComparator,
 		boolean retrieveFromCache);
 
@@ -1003,7 +989,7 @@ public interface PortletPreferencesPersistence extends BasePersistence<PortletPr
 	* @throws NoSuchPortletPreferencesException if a matching portlet preferences could not be found
 	*/
 	public PortletPreferences findByO_P_P_First(int ownerType, long plid,
-		java.lang.String portletId,
+		String portletId,
 		com.liferay.portal.kernel.util.OrderByComparator<PortletPreferences> orderByComparator)
 		throws NoSuchPortletPreferencesException;
 
@@ -1017,7 +1003,7 @@ public interface PortletPreferencesPersistence extends BasePersistence<PortletPr
 	* @return the first matching portlet preferences, or <code>null</code> if a matching portlet preferences could not be found
 	*/
 	public PortletPreferences fetchByO_P_P_First(int ownerType, long plid,
-		java.lang.String portletId,
+		String portletId,
 		com.liferay.portal.kernel.util.OrderByComparator<PortletPreferences> orderByComparator);
 
 	/**
@@ -1031,7 +1017,7 @@ public interface PortletPreferencesPersistence extends BasePersistence<PortletPr
 	* @throws NoSuchPortletPreferencesException if a matching portlet preferences could not be found
 	*/
 	public PortletPreferences findByO_P_P_Last(int ownerType, long plid,
-		java.lang.String portletId,
+		String portletId,
 		com.liferay.portal.kernel.util.OrderByComparator<PortletPreferences> orderByComparator)
 		throws NoSuchPortletPreferencesException;
 
@@ -1045,7 +1031,7 @@ public interface PortletPreferencesPersistence extends BasePersistence<PortletPr
 	* @return the last matching portlet preferences, or <code>null</code> if a matching portlet preferences could not be found
 	*/
 	public PortletPreferences fetchByO_P_P_Last(int ownerType, long plid,
-		java.lang.String portletId,
+		String portletId,
 		com.liferay.portal.kernel.util.OrderByComparator<PortletPreferences> orderByComparator);
 
 	/**
@@ -1060,8 +1046,7 @@ public interface PortletPreferencesPersistence extends BasePersistence<PortletPr
 	* @throws NoSuchPortletPreferencesException if a portlet preferences with the primary key could not be found
 	*/
 	public PortletPreferences[] findByO_P_P_PrevAndNext(
-		long portletPreferencesId, int ownerType, long plid,
-		java.lang.String portletId,
+		long portletPreferencesId, int ownerType, long plid, String portletId,
 		com.liferay.portal.kernel.util.OrderByComparator<PortletPreferences> orderByComparator)
 		throws NoSuchPortletPreferencesException;
 
@@ -1072,8 +1057,7 @@ public interface PortletPreferencesPersistence extends BasePersistence<PortletPr
 	* @param plid the plid
 	* @param portletId the portlet ID
 	*/
-	public void removeByO_P_P(int ownerType, long plid,
-		java.lang.String portletId);
+	public void removeByO_P_P(int ownerType, long plid, String portletId);
 
 	/**
 	* Returns the number of portlet preferenceses where ownerType = &#63; and plid = &#63; and portletId = &#63;.
@@ -1083,7 +1067,7 @@ public interface PortletPreferencesPersistence extends BasePersistence<PortletPr
 	* @param portletId the portlet ID
 	* @return the number of matching portlet preferenceses
 	*/
-	public int countByO_P_P(int ownerType, long plid, java.lang.String portletId);
+	public int countByO_P_P(int ownerType, long plid, String portletId);
 
 	/**
 	* Returns all the portlet preferenceses where companyId = &#63; and ownerId = &#63; and ownerType = &#63; and portletId LIKE &#63;.
@@ -1095,7 +1079,7 @@ public interface PortletPreferencesPersistence extends BasePersistence<PortletPr
 	* @return the matching portlet preferenceses
 	*/
 	public java.util.List<PortletPreferences> findByC_O_O_LikeP(
-		long companyId, long ownerId, int ownerType, java.lang.String portletId);
+		long companyId, long ownerId, int ownerType, String portletId);
 
 	/**
 	* Returns a range of all the portlet preferenceses where companyId = &#63; and ownerId = &#63; and ownerType = &#63; and portletId LIKE &#63;.
@@ -1113,8 +1097,8 @@ public interface PortletPreferencesPersistence extends BasePersistence<PortletPr
 	* @return the range of matching portlet preferenceses
 	*/
 	public java.util.List<PortletPreferences> findByC_O_O_LikeP(
-		long companyId, long ownerId, int ownerType,
-		java.lang.String portletId, int start, int end);
+		long companyId, long ownerId, int ownerType, String portletId,
+		int start, int end);
 
 	/**
 	* Returns an ordered range of all the portlet preferenceses where companyId = &#63; and ownerId = &#63; and ownerType = &#63; and portletId LIKE &#63;.
@@ -1133,8 +1117,8 @@ public interface PortletPreferencesPersistence extends BasePersistence<PortletPr
 	* @return the ordered range of matching portlet preferenceses
 	*/
 	public java.util.List<PortletPreferences> findByC_O_O_LikeP(
-		long companyId, long ownerId, int ownerType,
-		java.lang.String portletId, int start, int end,
+		long companyId, long ownerId, int ownerType, String portletId,
+		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<PortletPreferences> orderByComparator);
 
 	/**
@@ -1155,8 +1139,8 @@ public interface PortletPreferencesPersistence extends BasePersistence<PortletPr
 	* @return the ordered range of matching portlet preferenceses
 	*/
 	public java.util.List<PortletPreferences> findByC_O_O_LikeP(
-		long companyId, long ownerId, int ownerType,
-		java.lang.String portletId, int start, int end,
+		long companyId, long ownerId, int ownerType, String portletId,
+		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<PortletPreferences> orderByComparator,
 		boolean retrieveFromCache);
 
@@ -1172,7 +1156,7 @@ public interface PortletPreferencesPersistence extends BasePersistence<PortletPr
 	* @throws NoSuchPortletPreferencesException if a matching portlet preferences could not be found
 	*/
 	public PortletPreferences findByC_O_O_LikeP_First(long companyId,
-		long ownerId, int ownerType, java.lang.String portletId,
+		long ownerId, int ownerType, String portletId,
 		com.liferay.portal.kernel.util.OrderByComparator<PortletPreferences> orderByComparator)
 		throws NoSuchPortletPreferencesException;
 
@@ -1187,7 +1171,7 @@ public interface PortletPreferencesPersistence extends BasePersistence<PortletPr
 	* @return the first matching portlet preferences, or <code>null</code> if a matching portlet preferences could not be found
 	*/
 	public PortletPreferences fetchByC_O_O_LikeP_First(long companyId,
-		long ownerId, int ownerType, java.lang.String portletId,
+		long ownerId, int ownerType, String portletId,
 		com.liferay.portal.kernel.util.OrderByComparator<PortletPreferences> orderByComparator);
 
 	/**
@@ -1202,7 +1186,7 @@ public interface PortletPreferencesPersistence extends BasePersistence<PortletPr
 	* @throws NoSuchPortletPreferencesException if a matching portlet preferences could not be found
 	*/
 	public PortletPreferences findByC_O_O_LikeP_Last(long companyId,
-		long ownerId, int ownerType, java.lang.String portletId,
+		long ownerId, int ownerType, String portletId,
 		com.liferay.portal.kernel.util.OrderByComparator<PortletPreferences> orderByComparator)
 		throws NoSuchPortletPreferencesException;
 
@@ -1217,7 +1201,7 @@ public interface PortletPreferencesPersistence extends BasePersistence<PortletPr
 	* @return the last matching portlet preferences, or <code>null</code> if a matching portlet preferences could not be found
 	*/
 	public PortletPreferences fetchByC_O_O_LikeP_Last(long companyId,
-		long ownerId, int ownerType, java.lang.String portletId,
+		long ownerId, int ownerType, String portletId,
 		com.liferay.portal.kernel.util.OrderByComparator<PortletPreferences> orderByComparator);
 
 	/**
@@ -1234,7 +1218,7 @@ public interface PortletPreferencesPersistence extends BasePersistence<PortletPr
 	*/
 	public PortletPreferences[] findByC_O_O_LikeP_PrevAndNext(
 		long portletPreferencesId, long companyId, long ownerId, int ownerType,
-		java.lang.String portletId,
+		String portletId,
 		com.liferay.portal.kernel.util.OrderByComparator<PortletPreferences> orderByComparator)
 		throws NoSuchPortletPreferencesException;
 
@@ -1247,7 +1231,7 @@ public interface PortletPreferencesPersistence extends BasePersistence<PortletPr
 	* @param portletId the portlet ID
 	*/
 	public void removeByC_O_O_LikeP(long companyId, long ownerId,
-		int ownerType, java.lang.String portletId);
+		int ownerType, String portletId);
 
 	/**
 	* Returns the number of portlet preferenceses where companyId = &#63; and ownerId = &#63; and ownerType = &#63; and portletId LIKE &#63;.
@@ -1259,7 +1243,7 @@ public interface PortletPreferencesPersistence extends BasePersistence<PortletPr
 	* @return the number of matching portlet preferenceses
 	*/
 	public int countByC_O_O_LikeP(long companyId, long ownerId, int ownerType,
-		java.lang.String portletId);
+		String portletId);
 
 	/**
 	* Returns the portlet preferences where ownerId = &#63; and ownerType = &#63; and plid = &#63; and portletId = &#63; or throws a {@link NoSuchPortletPreferencesException} if it could not be found.
@@ -1272,8 +1256,7 @@ public interface PortletPreferencesPersistence extends BasePersistence<PortletPr
 	* @throws NoSuchPortletPreferencesException if a matching portlet preferences could not be found
 	*/
 	public PortletPreferences findByO_O_P_P(long ownerId, int ownerType,
-		long plid, java.lang.String portletId)
-		throws NoSuchPortletPreferencesException;
+		long plid, String portletId) throws NoSuchPortletPreferencesException;
 
 	/**
 	* Returns the portlet preferences where ownerId = &#63; and ownerType = &#63; and plid = &#63; and portletId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
@@ -1285,7 +1268,7 @@ public interface PortletPreferencesPersistence extends BasePersistence<PortletPr
 	* @return the matching portlet preferences, or <code>null</code> if a matching portlet preferences could not be found
 	*/
 	public PortletPreferences fetchByO_O_P_P(long ownerId, int ownerType,
-		long plid, java.lang.String portletId);
+		long plid, String portletId);
 
 	/**
 	* Returns the portlet preferences where ownerId = &#63; and ownerType = &#63; and plid = &#63; and portletId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -1298,7 +1281,7 @@ public interface PortletPreferencesPersistence extends BasePersistence<PortletPr
 	* @return the matching portlet preferences, or <code>null</code> if a matching portlet preferences could not be found
 	*/
 	public PortletPreferences fetchByO_O_P_P(long ownerId, int ownerType,
-		long plid, java.lang.String portletId, boolean retrieveFromCache);
+		long plid, String portletId, boolean retrieveFromCache);
 
 	/**
 	* Removes the portlet preferences where ownerId = &#63; and ownerType = &#63; and plid = &#63; and portletId = &#63; from the database.
@@ -1310,8 +1293,7 @@ public interface PortletPreferencesPersistence extends BasePersistence<PortletPr
 	* @return the portlet preferences that was removed
 	*/
 	public PortletPreferences removeByO_O_P_P(long ownerId, int ownerType,
-		long plid, java.lang.String portletId)
-		throws NoSuchPortletPreferencesException;
+		long plid, String portletId) throws NoSuchPortletPreferencesException;
 
 	/**
 	* Returns the number of portlet preferenceses where ownerId = &#63; and ownerType = &#63; and plid = &#63; and portletId = &#63;.
@@ -1323,7 +1305,7 @@ public interface PortletPreferencesPersistence extends BasePersistence<PortletPr
 	* @return the number of matching portlet preferenceses
 	*/
 	public int countByO_O_P_P(long ownerId, int ownerType, long plid,
-		java.lang.String portletId);
+		String portletId);
 
 	/**
 	* Caches the portlet preferences in the entity cache if it is enabled.

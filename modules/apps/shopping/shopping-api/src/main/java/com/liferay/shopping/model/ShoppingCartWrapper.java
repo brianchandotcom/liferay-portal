@@ -143,12 +143,12 @@ public class ShoppingCartWrapper implements ShoppingCart,
 	}
 
 	@Override
-	public void addItemId(long itemId, java.lang.String fields) {
+	public void addItemId(long itemId, String fields) {
 		_shoppingCart.addItemId(itemId, fields);
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new ShoppingCartWrapper((ShoppingCart)_shoppingCart.clone());
 	}
 
@@ -199,7 +199,7 @@ public class ShoppingCartWrapper implements ShoppingCart,
 	* @return the coupon codes of this shopping cart
 	*/
 	@Override
-	public java.lang.String getCouponCodes() {
+	public String getCouponCodes() {
 		return _shoppingCart.getCouponCodes();
 	}
 
@@ -244,12 +244,12 @@ public class ShoppingCartWrapper implements ShoppingCart,
 	* @return the item IDs of this shopping cart
 	*/
 	@Override
-	public java.lang.String getItemIds() {
+	public String getItemIds() {
 		return _shoppingCart.getItemIds();
 	}
 
 	@Override
-	public Map<ShoppingCartItem, java.lang.Integer> getItems() {
+	public Map<ShoppingCartItem, Integer> getItems() {
 		return _shoppingCart.getItems();
 	}
 
@@ -299,7 +299,7 @@ public class ShoppingCartWrapper implements ShoppingCart,
 	* @return the user name of this shopping cart
 	*/
 	@Override
-	public java.lang.String getUserName() {
+	public String getUserName() {
 		return _shoppingCart.getUserName();
 	}
 
@@ -309,7 +309,7 @@ public class ShoppingCartWrapper implements ShoppingCart,
 	* @return the user uuid of this shopping cart
 	*/
 	@Override
-	public java.lang.String getUserUuid() {
+	public String getUserUuid() {
 		return _shoppingCart.getUserUuid();
 	}
 
@@ -389,7 +389,7 @@ public class ShoppingCartWrapper implements ShoppingCart,
 	* @param couponCodes the coupon codes of this shopping cart
 	*/
 	@Override
-	public void setCouponCodes(java.lang.String couponCodes) {
+	public void setCouponCodes(String couponCodes) {
 		_shoppingCart.setCouponCodes(couponCodes);
 	}
 
@@ -445,7 +445,7 @@ public class ShoppingCartWrapper implements ShoppingCart,
 	* @param itemIds the item IDs of this shopping cart
 	*/
 	@Override
-	public void setItemIds(java.lang.String itemIds) {
+	public void setItemIds(String itemIds) {
 		_shoppingCart.setItemIds(itemIds);
 	}
 
@@ -495,7 +495,7 @@ public class ShoppingCartWrapper implements ShoppingCart,
 	* @param userName the user name of this shopping cart
 	*/
 	@Override
-	public void setUserName(java.lang.String userName) {
+	public void setUserName(String userName) {
 		_shoppingCart.setUserName(userName);
 	}
 
@@ -505,7 +505,7 @@ public class ShoppingCartWrapper implements ShoppingCart,
 	* @param userUuid the user uuid of this shopping cart
 	*/
 	@Override
-	public void setUserUuid(java.lang.String userUuid) {
+	public void setUserUuid(String userUuid) {
 		_shoppingCart.setUserUuid(userUuid);
 	}
 
@@ -520,7 +520,7 @@ public class ShoppingCartWrapper implements ShoppingCart,
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _shoppingCart.toString();
 	}
 
@@ -530,7 +530,7 @@ public class ShoppingCartWrapper implements ShoppingCart,
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _shoppingCart.toXmlString();
 	}
 

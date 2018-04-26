@@ -61,9 +61,8 @@ public interface TrashVersionLocalService extends BaseLocalService,
 	 *
 	 * Never modify or reference this interface directly. Always use {@link TrashVersionLocalServiceUtil} to access the trash version local service. Add custom service methods to {@link com.liferay.trash.service.impl.TrashVersionLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public TrashVersion addTrashVersion(long trashEntryId,
-		java.lang.String className, long classPK, int status,
-		UnicodeProperties typeSettingsProperties);
+	public TrashVersion addTrashVersion(long trashEntryId, String className,
+		long classPK, int status, UnicodeProperties typeSettingsProperties);
 
 	/**
 	* Adds the trash version to the database. Also notifies the appropriate model listeners.
@@ -101,8 +100,7 @@ public interface TrashVersionLocalService extends BaseLocalService,
 	public TrashVersion deleteTrashVersion(long versionId)
 		throws PortalException;
 
-	public TrashVersion deleteTrashVersion(java.lang.String className,
-		long classPK);
+	public TrashVersion deleteTrashVersion(String className, long classPK);
 
 	/**
 	* Deletes the trash version from the database. Also notifies the appropriate model listeners.
@@ -178,13 +176,13 @@ public interface TrashVersionLocalService extends BaseLocalService,
 	/**
 	* @deprecated As of 1.0.0, replaced by {@link #fetchVersion(String, long)}
 	*/
-	@java.lang.Deprecated
+	@Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public TrashVersion fetchVersion(long entryId, java.lang.String className,
+	public TrashVersion fetchVersion(long entryId, String className,
 		long classPK);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public TrashVersion fetchVersion(java.lang.String className, long classPK);
+	public TrashVersion fetchVersion(String className, long classPK);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
@@ -197,7 +195,7 @@ public interface TrashVersionLocalService extends BaseLocalService,
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -241,8 +239,7 @@ public interface TrashVersionLocalService extends BaseLocalService,
 	public List<TrashVersion> getVersions(long entryId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<TrashVersion> getVersions(long entryId,
-		java.lang.String className);
+	public List<TrashVersion> getVersions(long entryId, String className);
 
 	/**
 	* Updates the trash version in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.

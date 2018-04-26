@@ -316,8 +316,8 @@ public interface KaleoActionPersistence extends BasePersistence<KaleoAction> {
 	* @param kaleoClassPK the kaleo class pk
 	* @return the matching kaleo actions
 	*/
-	public java.util.List<KaleoAction> findByKCN_KCPK(
-		java.lang.String kaleoClassName, long kaleoClassPK);
+	public java.util.List<KaleoAction> findByKCN_KCPK(String kaleoClassName,
+		long kaleoClassPK);
 
 	/**
 	* Returns a range of all the kaleo actions where kaleoClassName = &#63; and kaleoClassPK = &#63;.
@@ -332,8 +332,8 @@ public interface KaleoActionPersistence extends BasePersistence<KaleoAction> {
 	* @param end the upper bound of the range of kaleo actions (not inclusive)
 	* @return the range of matching kaleo actions
 	*/
-	public java.util.List<KaleoAction> findByKCN_KCPK(
-		java.lang.String kaleoClassName, long kaleoClassPK, int start, int end);
+	public java.util.List<KaleoAction> findByKCN_KCPK(String kaleoClassName,
+		long kaleoClassPK, int start, int end);
 
 	/**
 	* Returns an ordered range of all the kaleo actions where kaleoClassName = &#63; and kaleoClassPK = &#63;.
@@ -349,8 +349,8 @@ public interface KaleoActionPersistence extends BasePersistence<KaleoAction> {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching kaleo actions
 	*/
-	public java.util.List<KaleoAction> findByKCN_KCPK(
-		java.lang.String kaleoClassName, long kaleoClassPK, int start, int end,
+	public java.util.List<KaleoAction> findByKCN_KCPK(String kaleoClassName,
+		long kaleoClassPK, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<KaleoAction> orderByComparator);
 
 	/**
@@ -368,8 +368,8 @@ public interface KaleoActionPersistence extends BasePersistence<KaleoAction> {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching kaleo actions
 	*/
-	public java.util.List<KaleoAction> findByKCN_KCPK(
-		java.lang.String kaleoClassName, long kaleoClassPK, int start, int end,
+	public java.util.List<KaleoAction> findByKCN_KCPK(String kaleoClassName,
+		long kaleoClassPK, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<KaleoAction> orderByComparator,
 		boolean retrieveFromCache);
 
@@ -382,7 +382,7 @@ public interface KaleoActionPersistence extends BasePersistence<KaleoAction> {
 	* @return the first matching kaleo action
 	* @throws NoSuchActionException if a matching kaleo action could not be found
 	*/
-	public KaleoAction findByKCN_KCPK_First(java.lang.String kaleoClassName,
+	public KaleoAction findByKCN_KCPK_First(String kaleoClassName,
 		long kaleoClassPK,
 		com.liferay.portal.kernel.util.OrderByComparator<KaleoAction> orderByComparator)
 		throws NoSuchActionException;
@@ -395,7 +395,7 @@ public interface KaleoActionPersistence extends BasePersistence<KaleoAction> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching kaleo action, or <code>null</code> if a matching kaleo action could not be found
 	*/
-	public KaleoAction fetchByKCN_KCPK_First(java.lang.String kaleoClassName,
+	public KaleoAction fetchByKCN_KCPK_First(String kaleoClassName,
 		long kaleoClassPK,
 		com.liferay.portal.kernel.util.OrderByComparator<KaleoAction> orderByComparator);
 
@@ -408,7 +408,7 @@ public interface KaleoActionPersistence extends BasePersistence<KaleoAction> {
 	* @return the last matching kaleo action
 	* @throws NoSuchActionException if a matching kaleo action could not be found
 	*/
-	public KaleoAction findByKCN_KCPK_Last(java.lang.String kaleoClassName,
+	public KaleoAction findByKCN_KCPK_Last(String kaleoClassName,
 		long kaleoClassPK,
 		com.liferay.portal.kernel.util.OrderByComparator<KaleoAction> orderByComparator)
 		throws NoSuchActionException;
@@ -421,7 +421,7 @@ public interface KaleoActionPersistence extends BasePersistence<KaleoAction> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching kaleo action, or <code>null</code> if a matching kaleo action could not be found
 	*/
-	public KaleoAction fetchByKCN_KCPK_Last(java.lang.String kaleoClassName,
+	public KaleoAction fetchByKCN_KCPK_Last(String kaleoClassName,
 		long kaleoClassPK,
 		com.liferay.portal.kernel.util.OrderByComparator<KaleoAction> orderByComparator);
 
@@ -436,7 +436,7 @@ public interface KaleoActionPersistence extends BasePersistence<KaleoAction> {
 	* @throws NoSuchActionException if a kaleo action with the primary key could not be found
 	*/
 	public KaleoAction[] findByKCN_KCPK_PrevAndNext(long kaleoActionId,
-		java.lang.String kaleoClassName, long kaleoClassPK,
+		String kaleoClassName, long kaleoClassPK,
 		com.liferay.portal.kernel.util.OrderByComparator<KaleoAction> orderByComparator)
 		throws NoSuchActionException;
 
@@ -446,8 +446,7 @@ public interface KaleoActionPersistence extends BasePersistence<KaleoAction> {
 	* @param kaleoClassName the kaleo class name
 	* @param kaleoClassPK the kaleo class pk
 	*/
-	public void removeByKCN_KCPK(java.lang.String kaleoClassName,
-		long kaleoClassPK);
+	public void removeByKCN_KCPK(String kaleoClassName, long kaleoClassPK);
 
 	/**
 	* Returns the number of kaleo actions where kaleoClassName = &#63; and kaleoClassPK = &#63;.
@@ -456,8 +455,7 @@ public interface KaleoActionPersistence extends BasePersistence<KaleoAction> {
 	* @param kaleoClassPK the kaleo class pk
 	* @return the number of matching kaleo actions
 	*/
-	public int countByKCN_KCPK(java.lang.String kaleoClassName,
-		long kaleoClassPK);
+	public int countByKCN_KCPK(String kaleoClassName, long kaleoClassPK);
 
 	/**
 	* Returns all the kaleo actions where kaleoClassName = &#63; and kaleoClassPK = &#63; and executionType = &#63;.
@@ -468,8 +466,7 @@ public interface KaleoActionPersistence extends BasePersistence<KaleoAction> {
 	* @return the matching kaleo actions
 	*/
 	public java.util.List<KaleoAction> findByKCN_KCPK_ET(
-		java.lang.String kaleoClassName, long kaleoClassPK,
-		java.lang.String executionType);
+		String kaleoClassName, long kaleoClassPK, String executionType);
 
 	/**
 	* Returns a range of all the kaleo actions where kaleoClassName = &#63; and kaleoClassPK = &#63; and executionType = &#63;.
@@ -486,8 +483,8 @@ public interface KaleoActionPersistence extends BasePersistence<KaleoAction> {
 	* @return the range of matching kaleo actions
 	*/
 	public java.util.List<KaleoAction> findByKCN_KCPK_ET(
-		java.lang.String kaleoClassName, long kaleoClassPK,
-		java.lang.String executionType, int start, int end);
+		String kaleoClassName, long kaleoClassPK, String executionType,
+		int start, int end);
 
 	/**
 	* Returns an ordered range of all the kaleo actions where kaleoClassName = &#63; and kaleoClassPK = &#63; and executionType = &#63;.
@@ -505,8 +502,8 @@ public interface KaleoActionPersistence extends BasePersistence<KaleoAction> {
 	* @return the ordered range of matching kaleo actions
 	*/
 	public java.util.List<KaleoAction> findByKCN_KCPK_ET(
-		java.lang.String kaleoClassName, long kaleoClassPK,
-		java.lang.String executionType, int start, int end,
+		String kaleoClassName, long kaleoClassPK, String executionType,
+		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<KaleoAction> orderByComparator);
 
 	/**
@@ -526,8 +523,8 @@ public interface KaleoActionPersistence extends BasePersistence<KaleoAction> {
 	* @return the ordered range of matching kaleo actions
 	*/
 	public java.util.List<KaleoAction> findByKCN_KCPK_ET(
-		java.lang.String kaleoClassName, long kaleoClassPK,
-		java.lang.String executionType, int start, int end,
+		String kaleoClassName, long kaleoClassPK, String executionType,
+		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<KaleoAction> orderByComparator,
 		boolean retrieveFromCache);
 
@@ -541,9 +538,8 @@ public interface KaleoActionPersistence extends BasePersistence<KaleoAction> {
 	* @return the first matching kaleo action
 	* @throws NoSuchActionException if a matching kaleo action could not be found
 	*/
-	public KaleoAction findByKCN_KCPK_ET_First(
-		java.lang.String kaleoClassName, long kaleoClassPK,
-		java.lang.String executionType,
+	public KaleoAction findByKCN_KCPK_ET_First(String kaleoClassName,
+		long kaleoClassPK, String executionType,
 		com.liferay.portal.kernel.util.OrderByComparator<KaleoAction> orderByComparator)
 		throws NoSuchActionException;
 
@@ -556,9 +552,8 @@ public interface KaleoActionPersistence extends BasePersistence<KaleoAction> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching kaleo action, or <code>null</code> if a matching kaleo action could not be found
 	*/
-	public KaleoAction fetchByKCN_KCPK_ET_First(
-		java.lang.String kaleoClassName, long kaleoClassPK,
-		java.lang.String executionType,
+	public KaleoAction fetchByKCN_KCPK_ET_First(String kaleoClassName,
+		long kaleoClassPK, String executionType,
 		com.liferay.portal.kernel.util.OrderByComparator<KaleoAction> orderByComparator);
 
 	/**
@@ -571,8 +566,8 @@ public interface KaleoActionPersistence extends BasePersistence<KaleoAction> {
 	* @return the last matching kaleo action
 	* @throws NoSuchActionException if a matching kaleo action could not be found
 	*/
-	public KaleoAction findByKCN_KCPK_ET_Last(java.lang.String kaleoClassName,
-		long kaleoClassPK, java.lang.String executionType,
+	public KaleoAction findByKCN_KCPK_ET_Last(String kaleoClassName,
+		long kaleoClassPK, String executionType,
 		com.liferay.portal.kernel.util.OrderByComparator<KaleoAction> orderByComparator)
 		throws NoSuchActionException;
 
@@ -585,9 +580,8 @@ public interface KaleoActionPersistence extends BasePersistence<KaleoAction> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching kaleo action, or <code>null</code> if a matching kaleo action could not be found
 	*/
-	public KaleoAction fetchByKCN_KCPK_ET_Last(
-		java.lang.String kaleoClassName, long kaleoClassPK,
-		java.lang.String executionType,
+	public KaleoAction fetchByKCN_KCPK_ET_Last(String kaleoClassName,
+		long kaleoClassPK, String executionType,
 		com.liferay.portal.kernel.util.OrderByComparator<KaleoAction> orderByComparator);
 
 	/**
@@ -602,8 +596,7 @@ public interface KaleoActionPersistence extends BasePersistence<KaleoAction> {
 	* @throws NoSuchActionException if a kaleo action with the primary key could not be found
 	*/
 	public KaleoAction[] findByKCN_KCPK_ET_PrevAndNext(long kaleoActionId,
-		java.lang.String kaleoClassName, long kaleoClassPK,
-		java.lang.String executionType,
+		String kaleoClassName, long kaleoClassPK, String executionType,
 		com.liferay.portal.kernel.util.OrderByComparator<KaleoAction> orderByComparator)
 		throws NoSuchActionException;
 
@@ -614,8 +607,8 @@ public interface KaleoActionPersistence extends BasePersistence<KaleoAction> {
 	* @param kaleoClassPK the kaleo class pk
 	* @param executionType the execution type
 	*/
-	public void removeByKCN_KCPK_ET(java.lang.String kaleoClassName,
-		long kaleoClassPK, java.lang.String executionType);
+	public void removeByKCN_KCPK_ET(String kaleoClassName, long kaleoClassPK,
+		String executionType);
 
 	/**
 	* Returns the number of kaleo actions where kaleoClassName = &#63; and kaleoClassPK = &#63; and executionType = &#63;.
@@ -625,8 +618,8 @@ public interface KaleoActionPersistence extends BasePersistence<KaleoAction> {
 	* @param executionType the execution type
 	* @return the number of matching kaleo actions
 	*/
-	public int countByKCN_KCPK_ET(java.lang.String kaleoClassName,
-		long kaleoClassPK, java.lang.String executionType);
+	public int countByKCN_KCPK_ET(String kaleoClassName, long kaleoClassPK,
+		String executionType);
 
 	/**
 	* Caches the kaleo action in the entity cache if it is enabled.

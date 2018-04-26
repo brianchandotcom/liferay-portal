@@ -115,7 +115,7 @@ public class RecentLayoutSetBranchWrapper implements RecentLayoutSetBranch,
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new RecentLayoutSetBranchWrapper((RecentLayoutSetBranch)_recentLayoutSetBranch.clone());
 	}
 
@@ -220,7 +220,7 @@ public class RecentLayoutSetBranchWrapper implements RecentLayoutSetBranch,
 	* @return the user uuid of this recent layout set branch
 	*/
 	@Override
-	public java.lang.String getUserUuid() {
+	public String getUserUuid() {
 		return _recentLayoutSetBranch.getUserUuid();
 	}
 
@@ -365,7 +365,7 @@ public class RecentLayoutSetBranchWrapper implements RecentLayoutSetBranch,
 	* @param userUuid the user uuid of this recent layout set branch
 	*/
 	@Override
-	public void setUserUuid(java.lang.String userUuid) {
+	public void setUserUuid(String userUuid) {
 		_recentLayoutSetBranch.setUserUuid(userUuid);
 	}
 
@@ -380,7 +380,7 @@ public class RecentLayoutSetBranchWrapper implements RecentLayoutSetBranch,
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _recentLayoutSetBranch.toString();
 	}
 
@@ -390,7 +390,7 @@ public class RecentLayoutSetBranchWrapper implements RecentLayoutSetBranch,
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _recentLayoutSetBranch.toXmlString();
 	}
 

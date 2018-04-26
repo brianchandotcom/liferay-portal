@@ -35,9 +35,9 @@ public class SAPEntryLocalServiceWrapper implements SAPEntryLocalService,
 
 	@Override
 	public com.liferay.portal.security.service.access.policy.model.SAPEntry addSAPEntry(
-		long userId, java.lang.String allowedServiceSignatures,
-		boolean defaultSAPEntry, boolean enabled, java.lang.String name,
-		java.util.Map<java.util.Locale, java.lang.String> titleMap,
+		long userId, String allowedServiceSignatures, boolean defaultSAPEntry,
+		boolean enabled, String name,
+		java.util.Map<java.util.Locale, String> titleMap,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _sapEntryLocalService.addSAPEntry(userId,
@@ -205,7 +205,7 @@ public class SAPEntryLocalServiceWrapper implements SAPEntryLocalService,
 
 	@Override
 	public com.liferay.portal.security.service.access.policy.model.SAPEntry fetchSAPEntry(
-		long companyId, java.lang.String name)
+		long companyId, String name)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _sapEntryLocalService.fetchSAPEntry(companyId, name);
 	}
@@ -219,7 +219,7 @@ public class SAPEntryLocalServiceWrapper implements SAPEntryLocalService,
 	*/
 	@Override
 	public com.liferay.portal.security.service.access.policy.model.SAPEntry fetchSAPEntryByUuidAndCompanyId(
-		java.lang.String uuid, long companyId) {
+		String uuid, long companyId) {
 		return _sapEntryLocalService.fetchSAPEntryByUuidAndCompanyId(uuid,
 			companyId);
 	}
@@ -272,7 +272,7 @@ public class SAPEntryLocalServiceWrapper implements SAPEntryLocalService,
 	* @return the OSGi service identifier
 	*/
 	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
+	public String getOSGiServiceIdentifier() {
 		return _sapEntryLocalService.getOSGiServiceIdentifier();
 	}
 
@@ -326,7 +326,7 @@ public class SAPEntryLocalServiceWrapper implements SAPEntryLocalService,
 
 	@Override
 	public com.liferay.portal.security.service.access.policy.model.SAPEntry getSAPEntry(
-		long companyId, java.lang.String name)
+		long companyId, String name)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _sapEntryLocalService.getSAPEntry(companyId, name);
 	}
@@ -341,7 +341,7 @@ public class SAPEntryLocalServiceWrapper implements SAPEntryLocalService,
 	*/
 	@Override
 	public com.liferay.portal.security.service.access.policy.model.SAPEntry getSAPEntryByUuidAndCompanyId(
-		java.lang.String uuid, long companyId)
+		String uuid, long companyId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _sapEntryLocalService.getSAPEntryByUuidAndCompanyId(uuid,
 			companyId);
@@ -349,9 +349,9 @@ public class SAPEntryLocalServiceWrapper implements SAPEntryLocalService,
 
 	@Override
 	public com.liferay.portal.security.service.access.policy.model.SAPEntry updateSAPEntry(
-		long sapEntryId, java.lang.String allowedServiceSignatures,
-		boolean defaultSAPEntry, boolean enabled, java.lang.String name,
-		java.util.Map<java.util.Locale, java.lang.String> titleMap,
+		long sapEntryId, String allowedServiceSignatures,
+		boolean defaultSAPEntry, boolean enabled, String name,
+		java.util.Map<java.util.Locale, String> titleMap,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _sapEntryLocalService.updateSAPEntry(sapEntryId,

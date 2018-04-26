@@ -35,8 +35,7 @@ public class SyncDeviceLocalServiceWrapper implements SyncDeviceLocalService,
 
 	@Override
 	public com.liferay.sync.model.SyncDevice addSyncDevice(long userId,
-		java.lang.String type, long buildNumber, java.lang.String hostname,
-		int featureSet)
+		String type, long buildNumber, String hostname, int featureSet)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _syncDeviceLocalService.addSyncDevice(userId, type, buildNumber,
 			hostname, featureSet);
@@ -199,7 +198,7 @@ public class SyncDeviceLocalServiceWrapper implements SyncDeviceLocalService,
 	*/
 	@Override
 	public com.liferay.sync.model.SyncDevice fetchSyncDeviceByUuidAndCompanyId(
-		java.lang.String uuid, long companyId) {
+		String uuid, long companyId) {
 		return _syncDeviceLocalService.fetchSyncDeviceByUuidAndCompanyId(uuid,
 			companyId);
 	}
@@ -226,7 +225,7 @@ public class SyncDeviceLocalServiceWrapper implements SyncDeviceLocalService,
 	* @return the OSGi service identifier
 	*/
 	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
+	public String getOSGiServiceIdentifier() {
 		return _syncDeviceLocalService.getOSGiServiceIdentifier();
 	}
 
@@ -260,7 +259,7 @@ public class SyncDeviceLocalServiceWrapper implements SyncDeviceLocalService,
 	*/
 	@Override
 	public com.liferay.sync.model.SyncDevice getSyncDeviceByUuidAndCompanyId(
-		java.lang.String uuid, long companyId)
+		String uuid, long companyId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _syncDeviceLocalService.getSyncDeviceByUuidAndCompanyId(uuid,
 			companyId);
@@ -304,7 +303,7 @@ public class SyncDeviceLocalServiceWrapper implements SyncDeviceLocalService,
 
 	@Override
 	public java.util.List<com.liferay.sync.model.SyncDevice> search(
-		long companyId, java.lang.String keywords, int start, int end,
+		long companyId, String keywords, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.sync.model.SyncDevice> orderByComparator) {
 		return _syncDeviceLocalService.search(companyId, keywords, start, end,
 			orderByComparator);
@@ -318,8 +317,8 @@ public class SyncDeviceLocalServiceWrapper implements SyncDeviceLocalService,
 
 	@Override
 	public com.liferay.sync.model.SyncDevice updateSyncDevice(
-		long syncDeviceId, java.lang.String type, long buildNumber,
-		int featureSet, java.lang.String hostname, int status)
+		long syncDeviceId, String type, long buildNumber, int featureSet,
+		String hostname, int status)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _syncDeviceLocalService.updateSyncDevice(syncDeviceId, type,
 			buildNumber, featureSet, hostname, status);

@@ -304,8 +304,8 @@ public class OAuth2ScopeGrantUtil {
 	* @throws NoSuchOAuth2ScopeGrantException if a matching o auth2 scope grant could not be found
 	*/
 	public static OAuth2ScopeGrant findByC_O_A_B_S(long companyId,
-		long oAuth2ApplicationScopeAliasesId, java.lang.String applicationName,
-		java.lang.String bundleSymbolicName, java.lang.String scope)
+		long oAuth2ApplicationScopeAliasesId, String applicationName,
+		String bundleSymbolicName, String scope)
 		throws com.liferay.oauth2.provider.exception.NoSuchOAuth2ScopeGrantException {
 		return getPersistence()
 				   .findByC_O_A_B_S(companyId, oAuth2ApplicationScopeAliasesId,
@@ -323,8 +323,8 @@ public class OAuth2ScopeGrantUtil {
 	* @return the matching o auth2 scope grant, or <code>null</code> if a matching o auth2 scope grant could not be found
 	*/
 	public static OAuth2ScopeGrant fetchByC_O_A_B_S(long companyId,
-		long oAuth2ApplicationScopeAliasesId, java.lang.String applicationName,
-		java.lang.String bundleSymbolicName, java.lang.String scope) {
+		long oAuth2ApplicationScopeAliasesId, String applicationName,
+		String bundleSymbolicName, String scope) {
 		return getPersistence()
 				   .fetchByC_O_A_B_S(companyId,
 			oAuth2ApplicationScopeAliasesId, applicationName,
@@ -343,9 +343,8 @@ public class OAuth2ScopeGrantUtil {
 	* @return the matching o auth2 scope grant, or <code>null</code> if a matching o auth2 scope grant could not be found
 	*/
 	public static OAuth2ScopeGrant fetchByC_O_A_B_S(long companyId,
-		long oAuth2ApplicationScopeAliasesId, java.lang.String applicationName,
-		java.lang.String bundleSymbolicName, java.lang.String scope,
-		boolean retrieveFromCache) {
+		long oAuth2ApplicationScopeAliasesId, String applicationName,
+		String bundleSymbolicName, String scope, boolean retrieveFromCache) {
 		return getPersistence()
 				   .fetchByC_O_A_B_S(companyId,
 			oAuth2ApplicationScopeAliasesId, applicationName,
@@ -363,8 +362,8 @@ public class OAuth2ScopeGrantUtil {
 	* @return the o auth2 scope grant that was removed
 	*/
 	public static OAuth2ScopeGrant removeByC_O_A_B_S(long companyId,
-		long oAuth2ApplicationScopeAliasesId, java.lang.String applicationName,
-		java.lang.String bundleSymbolicName, java.lang.String scope)
+		long oAuth2ApplicationScopeAliasesId, String applicationName,
+		String bundleSymbolicName, String scope)
 		throws com.liferay.oauth2.provider.exception.NoSuchOAuth2ScopeGrantException {
 		return getPersistence()
 				   .removeByC_O_A_B_S(companyId,
@@ -383,8 +382,8 @@ public class OAuth2ScopeGrantUtil {
 	* @return the number of matching o auth2 scope grants
 	*/
 	public static int countByC_O_A_B_S(long companyId,
-		long oAuth2ApplicationScopeAliasesId, java.lang.String applicationName,
-		java.lang.String bundleSymbolicName, java.lang.String scope) {
+		long oAuth2ApplicationScopeAliasesId, String applicationName,
+		String bundleSymbolicName, String scope) {
 		return getPersistence()
 				   .countByC_O_A_B_S(companyId,
 			oAuth2ApplicationScopeAliasesId, applicationName,
@@ -749,7 +748,7 @@ public class OAuth2ScopeGrantUtil {
 		getPersistence().setOAuth2Authorizations(pk, oAuth2Authorizations);
 	}
 
-	public static java.util.Set<java.lang.String> getBadColumnNames() {
+	public static java.util.Set<String> getBadColumnNames() {
 		return getPersistence().getBadColumnNames();
 	}
 

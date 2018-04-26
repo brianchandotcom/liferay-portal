@@ -81,7 +81,7 @@ public interface Organization extends OrganizationModel, PersistedModel,
 	public java.util.List<Organization> getAncestors()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
-	public java.lang.String[] getChildrenTypes();
+	public String[] getChildrenTypes();
 
 	public java.util.List<Organization> getDescendants();
 
@@ -92,7 +92,7 @@ public interface Organization extends OrganizationModel, PersistedModel,
 	public Organization getParentOrganization()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
-	public java.lang.String getParentOrganizationName();
+	public String getParentOrganizationName();
 
 	public javax.portlet.PortletPreferences getPreferences();
 
@@ -100,11 +100,10 @@ public interface Organization extends OrganizationModel, PersistedModel,
 
 	public int getPublicLayoutsPageCount();
 
-	public java.util.Set<java.lang.String> getReminderQueryQuestions(
+	public java.util.Set<String> getReminderQueryQuestions(
 		java.util.Locale locale);
 
-	public java.util.Set<java.lang.String> getReminderQueryQuestions(
-		java.lang.String languageId);
+	public java.util.Set<String> getReminderQueryQuestions(String languageId);
 
 	public java.util.List<Organization> getSuborganizations();
 

@@ -35,8 +35,7 @@ public class ShoppingCategoryServiceWrapper implements ShoppingCategoryService,
 
 	@Override
 	public com.liferay.shopping.model.ShoppingCategory addCategory(
-		long parentCategoryId, java.lang.String name,
-		java.lang.String description,
+		long parentCategoryId, String name, String description,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _shoppingCategoryService.addCategory(parentCategoryId, name,
@@ -63,8 +62,8 @@ public class ShoppingCategoryServiceWrapper implements ShoppingCategoryService,
 	}
 
 	@Override
-	public java.util.List<java.lang.Object> getCategoriesAndItems(
-		long groupId, long categoryId, int start, int end,
+	public java.util.List<Object> getCategoriesAndItems(long groupId,
+		long categoryId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<?> obc) {
 		return _shoppingCategoryService.getCategoriesAndItems(groupId,
 			categoryId, start, end, obc);
@@ -95,12 +94,12 @@ public class ShoppingCategoryServiceWrapper implements ShoppingCategoryService,
 	* @return the OSGi service identifier
 	*/
 	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
+	public String getOSGiServiceIdentifier() {
 		return _shoppingCategoryService.getOSGiServiceIdentifier();
 	}
 
 	@Override
-	public void getSubcategoryIds(java.util.List<java.lang.Long> categoryIds,
+	public void getSubcategoryIds(java.util.List<Long> categoryIds,
 		long groupId, long categoryId) {
 		_shoppingCategoryService.getSubcategoryIds(categoryIds, groupId,
 			categoryId);
@@ -108,8 +107,8 @@ public class ShoppingCategoryServiceWrapper implements ShoppingCategoryService,
 
 	@Override
 	public com.liferay.shopping.model.ShoppingCategory updateCategory(
-		long categoryId, long parentCategoryId, java.lang.String name,
-		java.lang.String description, boolean mergeWithParentCategory,
+		long categoryId, long parentCategoryId, String name,
+		String description, boolean mergeWithParentCategory,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _shoppingCategoryService.updateCategory(categoryId,

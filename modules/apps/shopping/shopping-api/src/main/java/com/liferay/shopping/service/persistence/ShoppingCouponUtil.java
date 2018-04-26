@@ -275,7 +275,7 @@ public class ShoppingCouponUtil {
 	* @return the matching shopping coupon
 	* @throws NoSuchCouponException if a matching shopping coupon could not be found
 	*/
-	public static ShoppingCoupon findByCode(java.lang.String code)
+	public static ShoppingCoupon findByCode(String code)
 		throws com.liferay.shopping.exception.NoSuchCouponException {
 		return getPersistence().findByCode(code);
 	}
@@ -286,7 +286,7 @@ public class ShoppingCouponUtil {
 	* @param code the code
 	* @return the matching shopping coupon, or <code>null</code> if a matching shopping coupon could not be found
 	*/
-	public static ShoppingCoupon fetchByCode(java.lang.String code) {
+	public static ShoppingCoupon fetchByCode(String code) {
 		return getPersistence().fetchByCode(code);
 	}
 
@@ -297,7 +297,7 @@ public class ShoppingCouponUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching shopping coupon, or <code>null</code> if a matching shopping coupon could not be found
 	*/
-	public static ShoppingCoupon fetchByCode(java.lang.String code,
+	public static ShoppingCoupon fetchByCode(String code,
 		boolean retrieveFromCache) {
 		return getPersistence().fetchByCode(code, retrieveFromCache);
 	}
@@ -308,7 +308,7 @@ public class ShoppingCouponUtil {
 	* @param code the code
 	* @return the shopping coupon that was removed
 	*/
-	public static ShoppingCoupon removeByCode(java.lang.String code)
+	public static ShoppingCoupon removeByCode(String code)
 		throws com.liferay.shopping.exception.NoSuchCouponException {
 		return getPersistence().removeByCode(code);
 	}
@@ -319,7 +319,7 @@ public class ShoppingCouponUtil {
 	* @param code the code
 	* @return the number of matching shopping coupons
 	*/
-	public static int countByCode(java.lang.String code) {
+	public static int countByCode(String code) {
 		return getPersistence().countByCode(code);
 	}
 
@@ -471,7 +471,7 @@ public class ShoppingCouponUtil {
 		return getPersistence().countAll();
 	}
 
-	public static java.util.Set<java.lang.String> getBadColumnNames() {
+	public static java.util.Set<String> getBadColumnNames() {
 		return getPersistence().getBadColumnNames();
 	}
 

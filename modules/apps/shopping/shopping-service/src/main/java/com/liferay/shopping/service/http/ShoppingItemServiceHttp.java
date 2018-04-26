@@ -56,16 +56,13 @@ import com.liferay.shopping.service.ShoppingItemServiceUtil;
 @ProviderType
 public class ShoppingItemServiceHttp {
 	public static com.liferay.shopping.model.ShoppingItem addItem(
-		HttpPrincipal httpPrincipal, long groupId, long categoryId,
-		java.lang.String sku, java.lang.String name,
-		java.lang.String description, java.lang.String properties,
-		java.lang.String fieldsQuantities, boolean requiresShipping,
-		int stockQuantity, boolean featured, java.lang.Boolean sale,
-		boolean smallImage, java.lang.String smallImageURL,
-		java.io.File smallFile, boolean mediumImage,
-		java.lang.String mediumImageURL, java.io.File mediumFile,
-		boolean largeImage, java.lang.String largeImageURL,
-		java.io.File largeFile,
+		HttpPrincipal httpPrincipal, long groupId, long categoryId, String sku,
+		String name, String description, String properties,
+		String fieldsQuantities, boolean requiresShipping, int stockQuantity,
+		boolean featured, Boolean sale, boolean smallImage,
+		String smallImageURL, java.io.File smallFile, boolean mediumImage,
+		String mediumImageURL, java.io.File mediumFile, boolean largeImage,
+		String largeImageURL, java.io.File largeFile,
 		java.util.List<com.liferay.shopping.model.ShoppingItemField> itemFields,
 		java.util.List<com.liferay.shopping.model.ShoppingItemPrice> itemPrices,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
@@ -131,7 +128,7 @@ public class ShoppingItemServiceHttp {
 	}
 
 	public static int getCategoriesItemsCount(HttpPrincipal httpPrincipal,
-		long groupId, java.util.List<java.lang.Long> categoryIds) {
+		long groupId, java.util.List<Long> categoryIds) {
 		try {
 			MethodKey methodKey = new MethodKey(ShoppingItemServiceUtil.class,
 					"getCategoriesItemsCount",
@@ -307,15 +304,12 @@ public class ShoppingItemServiceHttp {
 
 	public static com.liferay.shopping.model.ShoppingItem updateItem(
 		HttpPrincipal httpPrincipal, long itemId, long groupId,
-		long categoryId, java.lang.String sku, java.lang.String name,
-		java.lang.String description, java.lang.String properties,
-		java.lang.String fieldsQuantities, boolean requiresShipping,
-		int stockQuantity, boolean featured, java.lang.Boolean sale,
-		boolean smallImage, java.lang.String smallImageURL,
-		java.io.File smallFile, boolean mediumImage,
-		java.lang.String mediumImageURL, java.io.File mediumFile,
-		boolean largeImage, java.lang.String largeImageURL,
-		java.io.File largeFile,
+		long categoryId, String sku, String name, String description,
+		String properties, String fieldsQuantities, boolean requiresShipping,
+		int stockQuantity, boolean featured, Boolean sale, boolean smallImage,
+		String smallImageURL, java.io.File smallFile, boolean mediumImage,
+		String mediumImageURL, java.io.File mediumFile, boolean largeImage,
+		String largeImageURL, java.io.File largeFile,
 		java.util.List<com.liferay.shopping.model.ShoppingItemField> itemFields,
 		java.util.List<com.liferay.shopping.model.ShoppingItemPrice> itemPrices,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
@@ -356,13 +350,11 @@ public class ShoppingItemServiceHttp {
 
 	private static Log _log = LogFactoryUtil.getLog(ShoppingItemServiceHttp.class);
 	private static final Class<?>[] _addItemParameterTypes0 = new Class[] {
-			long.class, long.class, java.lang.String.class,
-			java.lang.String.class, java.lang.String.class,
-			java.lang.String.class, java.lang.String.class, boolean.class,
-			int.class, boolean.class, java.lang.Boolean.class, boolean.class,
-			java.lang.String.class, java.io.File.class, boolean.class,
-			java.lang.String.class, java.io.File.class, boolean.class,
-			java.lang.String.class, java.io.File.class, java.util.List.class,
+			long.class, long.class, String.class, String.class, String.class,
+			String.class, String.class, boolean.class, int.class, boolean.class,
+			Boolean.class, boolean.class, String.class, java.io.File.class,
+			boolean.class, String.class, java.io.File.class, boolean.class,
+			String.class, java.io.File.class, java.util.List.class,
 			java.util.List.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
@@ -389,14 +381,12 @@ public class ShoppingItemServiceHttp {
 			long.class, com.liferay.portal.kernel.util.OrderByComparator.class
 		};
 	private static final Class<?>[] _updateItemParameterTypes8 = new Class[] {
-			long.class, long.class, long.class, java.lang.String.class,
-			java.lang.String.class, java.lang.String.class,
-			java.lang.String.class, java.lang.String.class, boolean.class,
-			int.class, boolean.class, java.lang.Boolean.class, boolean.class,
-			java.lang.String.class, java.io.File.class, boolean.class,
-			java.lang.String.class, java.io.File.class, boolean.class,
-			java.lang.String.class, java.io.File.class, java.util.List.class,
-			java.util.List.class,
+			long.class, long.class, long.class, String.class, String.class,
+			String.class, String.class, String.class, boolean.class, int.class,
+			boolean.class, Boolean.class, boolean.class, String.class,
+			java.io.File.class, boolean.class, String.class, java.io.File.class,
+			boolean.class, String.class, java.io.File.class,
+			java.util.List.class, java.util.List.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 }

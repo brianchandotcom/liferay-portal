@@ -1154,11 +1154,11 @@ public class DDMTemplateModelImpl extends BaseModelImpl<DDMTemplate>
 		_lastPublishDate = lastPublishDate;
 	}
 
-	public java.lang.String getResourceClassName() {
+	public String getResourceClassName() {
 		return null;
 	}
 
-	public void setResourceClassName(java.lang.String resourceClassName) {
+	public void setResourceClassName(String resourceClassName) {
 	}
 
 	@Override

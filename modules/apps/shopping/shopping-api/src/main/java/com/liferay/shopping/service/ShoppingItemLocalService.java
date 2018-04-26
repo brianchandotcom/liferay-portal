@@ -66,17 +66,14 @@ public interface ShoppingItemLocalService extends BaseLocalService,
 	 * Never modify or reference this interface directly. Always use {@link ShoppingItemLocalServiceUtil} to access the shopping item local service. Add custom service methods to {@link com.liferay.shopping.service.impl.ShoppingItemLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	public ShoppingItem addItem(long userId, long groupId, long categoryId,
-		java.lang.String sku, java.lang.String name,
-		java.lang.String description, java.lang.String properties,
-		java.lang.String fieldsQuantities, boolean requiresShipping,
-		int stockQuantity, boolean featured, java.lang.Boolean sale,
-		boolean smallImage, java.lang.String smallImageURL,
-		File smallImageFile, boolean mediumImage,
-		java.lang.String mediumImageURL, File mediumImageFile,
-		boolean largeImage, java.lang.String largeImageURL,
-		File largeImageFile, List<ShoppingItemField> itemFields,
-		List<ShoppingItemPrice> itemPrices, ServiceContext serviceContext)
-		throws PortalException;
+		String sku, String name, String description, String properties,
+		String fieldsQuantities, boolean requiresShipping, int stockQuantity,
+		boolean featured, Boolean sale, boolean smallImage,
+		String smallImageURL, File smallImageFile, boolean mediumImage,
+		String mediumImageURL, File mediumImageFile, boolean largeImage,
+		String largeImageURL, File largeImageFile,
+		List<ShoppingItemField> itemFields, List<ShoppingItemPrice> itemPrices,
+		ServiceContext serviceContext) throws PortalException;
 
 	public void addItemResources(long itemId, boolean addGroupPermissions,
 		boolean addGuestPermissions) throws PortalException;
@@ -209,8 +206,7 @@ public interface ShoppingItemLocalService extends BaseLocalService,
 	public ActionableDynamicQuery getActionableDynamicQuery();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getCategoriesItemsCount(long groupId,
-		List<java.lang.Long> categoryIds);
+	public int getCategoriesItemsCount(long groupId, List<Long> categoryIds);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<ShoppingItem> getFeaturedItems(long groupId, long categoryId,
@@ -223,7 +219,7 @@ public interface ShoppingItemLocalService extends BaseLocalService,
 	public ShoppingItem getItem(long itemId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ShoppingItem getItem(long companyId, java.lang.String sku)
+	public ShoppingItem getItem(long companyId, String sku)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -257,7 +253,7 @@ public interface ShoppingItemLocalService extends BaseLocalService,
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -302,33 +298,28 @@ public interface ShoppingItemLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<ShoppingItem> search(long groupId, long[] categoryIds,
-		java.lang.String keywords, int start, int end);
+		String keywords, int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<ShoppingItem> search(long groupId, long[] categoryIds,
-		java.lang.String keywords, int start, int end,
+		String keywords, int start, int end, OrderByComparator<ShoppingItem> obc);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int searchCount(long groupId, long[] categoryIds, String keywords);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int searchCount(long groupId, long[] categoryIds, String keywords,
 		OrderByComparator<ShoppingItem> obc);
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int searchCount(long groupId, long[] categoryIds,
-		java.lang.String keywords);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int searchCount(long groupId, long[] categoryIds,
-		java.lang.String keywords, OrderByComparator<ShoppingItem> obc);
-
 	public ShoppingItem updateItem(long userId, long itemId, long groupId,
-		long categoryId, java.lang.String sku, java.lang.String name,
-		java.lang.String description, java.lang.String properties,
-		java.lang.String fieldsQuantities, boolean requiresShipping,
-		int stockQuantity, boolean featured, java.lang.Boolean sale,
-		boolean smallImage, java.lang.String smallImageURL,
-		File smallImageFile, boolean mediumImage,
-		java.lang.String mediumImageURL, File mediumImageFile,
-		boolean largeImage, java.lang.String largeImageURL,
-		File largeImageFile, List<ShoppingItemField> itemFields,
-		List<ShoppingItemPrice> itemPrices, ServiceContext serviceContext)
-		throws PortalException;
+		long categoryId, String sku, String name, String description,
+		String properties, String fieldsQuantities, boolean requiresShipping,
+		int stockQuantity, boolean featured, Boolean sale, boolean smallImage,
+		String smallImageURL, File smallImageFile, boolean mediumImage,
+		String mediumImageURL, File mediumImageFile, boolean largeImage,
+		String largeImageURL, File largeImageFile,
+		List<ShoppingItemField> itemFields, List<ShoppingItemPrice> itemPrices,
+		ServiceContext serviceContext) throws PortalException;
 
 	/**
 	* Updates the shopping item in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.

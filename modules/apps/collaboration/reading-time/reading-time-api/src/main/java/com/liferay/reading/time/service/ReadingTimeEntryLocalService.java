@@ -205,8 +205,8 @@ public interface ReadingTimeEntryLocalService extends BaseLocalService,
 	* @return the matching reading time entry, or <code>null</code> if a matching reading time entry could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ReadingTimeEntry fetchReadingTimeEntryByUuidAndGroupId(
-		java.lang.String uuid, long groupId);
+	public ReadingTimeEntry fetchReadingTimeEntryByUuidAndGroupId(String uuid,
+		long groupId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
@@ -223,7 +223,7 @@ public interface ReadingTimeEntryLocalService extends BaseLocalService,
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -253,7 +253,7 @@ public interface ReadingTimeEntryLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<ReadingTimeEntry> getReadingTimeEntriesByUuidAndCompanyId(
-		java.lang.String uuid, long companyId);
+		String uuid, long companyId);
 
 	/**
 	* Returns a range of reading time entries matching the UUID and company.
@@ -267,7 +267,7 @@ public interface ReadingTimeEntryLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<ReadingTimeEntry> getReadingTimeEntriesByUuidAndCompanyId(
-		java.lang.String uuid, long companyId, int start, int end,
+		String uuid, long companyId, int start, int end,
 		OrderByComparator<ReadingTimeEntry> orderByComparator);
 
 	/**
@@ -298,8 +298,8 @@ public interface ReadingTimeEntryLocalService extends BaseLocalService,
 	* @throws PortalException if a matching reading time entry could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ReadingTimeEntry getReadingTimeEntryByUuidAndGroupId(
-		java.lang.String uuid, long groupId) throws PortalException;
+	public ReadingTimeEntry getReadingTimeEntryByUuidAndGroupId(String uuid,
+		long groupId) throws PortalException;
 
 	public ReadingTimeEntry updateReadingTimeEntry(GroupedModel groupedModel);
 

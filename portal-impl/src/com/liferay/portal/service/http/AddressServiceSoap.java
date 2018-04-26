@@ -65,10 +65,9 @@ import java.rmi.RemoteException;
 @ProviderType
 public class AddressServiceSoap {
 	public static com.liferay.portal.kernel.model.AddressSoap addAddress(
-		java.lang.String className, long classPK, java.lang.String street1,
-		java.lang.String street2, java.lang.String street3,
-		java.lang.String city, java.lang.String zip, long regionId,
-		long countryId, long typeId, boolean mailing, boolean primary,
+		String className, long classPK, String street1, String street2,
+		String street3, String city, String zip, long regionId, long countryId,
+		long typeId, boolean mailing, boolean primary,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
@@ -111,7 +110,7 @@ public class AddressServiceSoap {
 	}
 
 	public static com.liferay.portal.kernel.model.AddressSoap[] getAddresses(
-		java.lang.String className, long classPK) throws RemoteException {
+		String className, long classPK) throws RemoteException {
 		try {
 			java.util.List<com.liferay.portal.kernel.model.Address> returnValue = AddressServiceUtil.getAddresses(className,
 					classPK);
@@ -126,10 +125,9 @@ public class AddressServiceSoap {
 	}
 
 	public static com.liferay.portal.kernel.model.AddressSoap updateAddress(
-		long addressId, java.lang.String street1, java.lang.String street2,
-		java.lang.String street3, java.lang.String city, java.lang.String zip,
-		long regionId, long countryId, long typeId, boolean mailing,
-		boolean primary) throws RemoteException {
+		long addressId, String street1, String street2, String street3,
+		String city, String zip, long regionId, long countryId, long typeId,
+		boolean mailing, boolean primary) throws RemoteException {
 		try {
 			com.liferay.portal.kernel.model.Address returnValue = AddressServiceUtil.updateAddress(addressId,
 					street1, street2, street3, city, zip, regionId, countryId,

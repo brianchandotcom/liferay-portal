@@ -117,7 +117,7 @@ public class SocialActivityAchievementWrapper
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new SocialActivityAchievementWrapper((SocialActivityAchievement)_socialActivityAchievement.clone());
 	}
 
@@ -187,7 +187,7 @@ public class SocialActivityAchievementWrapper
 	* @return the name of this social activity achievement
 	*/
 	@Override
-	public java.lang.String getName() {
+	public String getName() {
 		return _socialActivityAchievement.getName();
 	}
 
@@ -222,7 +222,7 @@ public class SocialActivityAchievementWrapper
 	* @return the user uuid of this social activity achievement
 	*/
 	@Override
-	public java.lang.String getUserUuid() {
+	public String getUserUuid() {
 		return _socialActivityAchievement.getUserUuid();
 	}
 
@@ -338,7 +338,7 @@ public class SocialActivityAchievementWrapper
 	* @param name the name of this social activity achievement
 	*/
 	@Override
-	public void setName(java.lang.String name) {
+	public void setName(String name) {
 		_socialActivityAchievement.setName(name);
 	}
 
@@ -378,7 +378,7 @@ public class SocialActivityAchievementWrapper
 	* @param userUuid the user uuid of this social activity achievement
 	*/
 	@Override
-	public void setUserUuid(java.lang.String userUuid) {
+	public void setUserUuid(String userUuid) {
 		_socialActivityAchievement.setUserUuid(userUuid);
 	}
 
@@ -393,7 +393,7 @@ public class SocialActivityAchievementWrapper
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _socialActivityAchievement.toString();
 	}
 
@@ -403,7 +403,7 @@ public class SocialActivityAchievementWrapper
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _socialActivityAchievement.toXmlString();
 	}
 

@@ -70,11 +70,9 @@ import java.util.Map;
 @ProviderType
 public class MDRActionServiceSoap {
 	public static com.liferay.mobile.device.rules.model.MDRActionSoap addAction(
-		long ruleGroupInstanceId, java.lang.String[] nameMapLanguageIds,
-		java.lang.String[] nameMapValues,
-		java.lang.String[] descriptionMapLanguageIds,
-		java.lang.String[] descriptionMapValues, java.lang.String type,
-		java.lang.String typeSettings,
+		long ruleGroupInstanceId, String[] nameMapLanguageIds,
+		String[] nameMapValues, String[] descriptionMapLanguageIds,
+		String[] descriptionMapValues, String type, String typeSettings,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
@@ -135,11 +133,9 @@ public class MDRActionServiceSoap {
 	}
 
 	public static com.liferay.mobile.device.rules.model.MDRActionSoap updateAction(
-		long actionId, java.lang.String[] nameMapLanguageIds,
-		java.lang.String[] nameMapValues,
-		java.lang.String[] descriptionMapLanguageIds,
-		java.lang.String[] descriptionMapValues, java.lang.String type,
-		java.lang.String typeSettings,
+		long actionId, String[] nameMapLanguageIds, String[] nameMapValues,
+		String[] descriptionMapLanguageIds, String[] descriptionMapValues,
+		String type, String typeSettings,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {

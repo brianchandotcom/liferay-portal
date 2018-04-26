@@ -62,14 +62,13 @@ public interface MicroblogsEntryLocalService extends BaseLocalService,
 	 * Never modify or reference this interface directly. Always use {@link MicroblogsEntryLocalServiceUtil} to access the microblogs entry local service. Add custom service methods to {@link com.liferay.microblogs.service.impl.MicroblogsEntryLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	public MicroblogsEntry addMicroblogsEntry(long userId,
-		long creatorClassNameId, long creatorClassPK, java.lang.String content,
-		int type, long parentMicroblogsEntryId, int socialRelationType,
+		long creatorClassNameId, long creatorClassPK, String content, int type,
+		long parentMicroblogsEntryId, int socialRelationType,
 		ServiceContext serviceContext) throws PortalException;
 
-	public MicroblogsEntry addMicroblogsEntry(long userId,
-		java.lang.String content, int type, long parentMicroblogsEntryId,
-		int socialRelationType, ServiceContext serviceContext)
-		throws PortalException;
+	public MicroblogsEntry addMicroblogsEntry(long userId, String content,
+		int type, long parentMicroblogsEntryId, int socialRelationType,
+		ServiceContext serviceContext) throws PortalException;
 
 	/**
 	* Adds the microblogs entry to the database. Also notifies the appropriate model listeners.
@@ -216,7 +215,7 @@ public interface MicroblogsEntryLocalService extends BaseLocalService,
 	/**
 	* @deprecated As of 2.1.0
 	*/
-	@java.lang.Deprecated
+	@Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<MicroblogsEntry> getMicroblogsEntries(long creatorClassNameId,
 		int type, int start, int end, OrderByComparator obc);
@@ -224,7 +223,7 @@ public interface MicroblogsEntryLocalService extends BaseLocalService,
 	/**
 	* @deprecated As of 2.1.0
 	*/
-	@java.lang.Deprecated
+	@Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<MicroblogsEntry> getMicroblogsEntries(long creatorClassNameId,
 		long creatorClassPK, int start, int end);
@@ -232,7 +231,7 @@ public interface MicroblogsEntryLocalService extends BaseLocalService,
 	/**
 	* @deprecated As of 2.1.0
 	*/
-	@java.lang.Deprecated
+	@Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<MicroblogsEntry> getMicroblogsEntries(long creatorClassNameId,
 		long creatorClassPK, int type, int start, int end);
@@ -253,30 +252,29 @@ public interface MicroblogsEntryLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<MicroblogsEntry> getMicroblogsEntries(long companyId,
-		long creatorClassNameId, long creatorClassPK,
-		java.lang.String assetTagName, boolean andOperator, int start, int end);
+		long creatorClassNameId, long creatorClassPK, String assetTagName,
+		boolean andOperator, int start, int end);
 
 	/**
 	* @deprecated As of 2.1.0
 	*/
-	@java.lang.Deprecated
+	@Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<MicroblogsEntry> getMicroblogsEntries(long creatorClassNameId,
-		long creatorClassPK, java.lang.String assetTagName,
-		boolean andOperator, int start, int end);
+		long creatorClassPK, String assetTagName, boolean andOperator,
+		int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<MicroblogsEntry> getMicroblogsEntries(long companyId,
-		long creatorClassNameId, java.lang.String assetTagName, int start,
-		int end);
+		long creatorClassNameId, String assetTagName, int start, int end);
 
 	/**
 	* @deprecated As of 2.1.0
 	*/
-	@java.lang.Deprecated
+	@Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<MicroblogsEntry> getMicroblogsEntries(long creatorClassNameId,
-		java.lang.String assetTagName, int start, int end);
+		String assetTagName, int start, int end);
 
 	/**
 	* Returns the number of microblogs entries.
@@ -289,7 +287,7 @@ public interface MicroblogsEntryLocalService extends BaseLocalService,
 	/**
 	* @deprecated As of 2.1.0
 	*/
-	@java.lang.Deprecated
+	@Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getMicroblogsEntriesCount(long creatorClassNameId,
 		long creatorClassPK);
@@ -297,7 +295,7 @@ public interface MicroblogsEntryLocalService extends BaseLocalService,
 	/**
 	* @deprecated As of 2.1.0
 	*/
-	@java.lang.Deprecated
+	@Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getMicroblogsEntriesCount(long creatorClassNameId,
 		long creatorClassPK, int type);
@@ -312,28 +310,28 @@ public interface MicroblogsEntryLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getMicroblogsEntriesCount(long companyId,
-		long creatorClassNameId, long creatorClassPK,
-		java.lang.String assetTagName, boolean andOperator);
+		long creatorClassNameId, long creatorClassPK, String assetTagName,
+		boolean andOperator);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getMicroblogsEntriesCount(long companyId,
-		long creatorClassNameId, java.lang.String assetTagName);
+		long creatorClassNameId, String assetTagName);
 
 	/**
 	* @deprecated As of 2.1.0
 	*/
-	@java.lang.Deprecated
+	@Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getMicroblogsEntriesCount(long creatorClassNameId,
-		long creatorClassPK, java.lang.String assetTagName, boolean andOperator);
+		long creatorClassPK, String assetTagName, boolean andOperator);
 
 	/**
 	* @deprecated As of 2.1.0
 	*/
-	@java.lang.Deprecated
+	@Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getMicroblogsEntriesCount(long creatorClassNameId,
-		java.lang.String assetTagName);
+		String assetTagName);
 
 	/**
 	* Returns the microblogs entry with the primary key.
@@ -351,7 +349,7 @@ public interface MicroblogsEntryLocalService extends BaseLocalService,
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<MicroblogsEntry> getParentMicroblogsEntryMicroblogsEntries(
@@ -386,12 +384,12 @@ public interface MicroblogsEntryLocalService extends BaseLocalService,
 	public int getUserMicroblogsEntriesCount(long userId, int type);
 
 	public void updateAsset(MicroblogsEntry microblogsEntry,
-		long[] assetCategoryIds, java.lang.String[] assetTagNames)
+		long[] assetCategoryIds, String[] assetTagNames)
 		throws PortalException;
 
 	public MicroblogsEntry updateMicroblogsEntry(long microblogsEntryId,
-		java.lang.String content, int socialRelationType,
-		ServiceContext serviceContext) throws PortalException;
+		String content, int socialRelationType, ServiceContext serviceContext)
+		throws PortalException;
 
 	/**
 	* Updates the microblogs entry in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.

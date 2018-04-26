@@ -26,11 +26,10 @@ public interface ShoppingCategoryFinder {
 
 	public int filterCountC_I_ByG_C(long groupId, long categoryId);
 
-	public java.util.List<java.lang.Object> filterFindC_I_ByG_C(long groupId,
+	public java.util.List<Object> filterFindC_I_ByG_C(long groupId,
 		long categoryId,
 		com.liferay.portal.kernel.dao.orm.QueryDefinition<?> queryDefinition);
 
-	public java.util.List<java.lang.Object> findC_I_ByG_C(long groupId,
-		long categoryId,
+	public java.util.List<Object> findC_I_ByG_C(long groupId, long categoryId,
 		com.liferay.portal.kernel.dao.orm.QueryDefinition<?> queryDefinition);
 }

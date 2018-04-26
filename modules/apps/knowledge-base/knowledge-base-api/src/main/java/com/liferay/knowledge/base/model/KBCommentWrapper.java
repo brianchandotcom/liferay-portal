@@ -165,7 +165,7 @@ public class KBCommentWrapper implements KBComment, ModelWrapper<KBComment> {
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new KBCommentWrapper((KBComment)_kbComment.clone());
 	}
 
@@ -180,7 +180,7 @@ public class KBCommentWrapper implements KBComment, ModelWrapper<KBComment> {
 	* @return the fully qualified class name of this kb comment
 	*/
 	@Override
-	public java.lang.String getClassName() {
+	public String getClassName() {
 		return _kbComment.getClassName();
 	}
 
@@ -220,7 +220,7 @@ public class KBCommentWrapper implements KBComment, ModelWrapper<KBComment> {
 	* @return the content of this kb comment
 	*/
 	@Override
-	public java.lang.String getContent() {
+	public String getContent() {
 		return _kbComment.getContent();
 	}
 
@@ -320,7 +320,7 @@ public class KBCommentWrapper implements KBComment, ModelWrapper<KBComment> {
 	* @return the user name of this kb comment
 	*/
 	@Override
-	public java.lang.String getUserName() {
+	public String getUserName() {
 		return _kbComment.getUserName();
 	}
 
@@ -340,7 +340,7 @@ public class KBCommentWrapper implements KBComment, ModelWrapper<KBComment> {
 	* @return the user uuid of this kb comment
 	*/
 	@Override
-	public java.lang.String getUserUuid() {
+	public String getUserUuid() {
 		return _kbComment.getUserUuid();
 	}
 
@@ -350,7 +350,7 @@ public class KBCommentWrapper implements KBComment, ModelWrapper<KBComment> {
 	* @return the uuid of this kb comment
 	*/
 	@Override
-	public java.lang.String getUuid() {
+	public String getUuid() {
 		return _kbComment.getUuid();
 	}
 
@@ -385,7 +385,7 @@ public class KBCommentWrapper implements KBComment, ModelWrapper<KBComment> {
 	}
 
 	@Override
-	public void setClassName(java.lang.String className) {
+	public void setClassName(String className) {
 		_kbComment.setClassName(className);
 	}
 
@@ -425,7 +425,7 @@ public class KBCommentWrapper implements KBComment, ModelWrapper<KBComment> {
 	* @param content the content of this kb comment
 	*/
 	@Override
-	public void setContent(java.lang.String content) {
+	public void setContent(String content) {
 		_kbComment.setContent(content);
 	}
 
@@ -541,7 +541,7 @@ public class KBCommentWrapper implements KBComment, ModelWrapper<KBComment> {
 	* @param userName the user name of this kb comment
 	*/
 	@Override
-	public void setUserName(java.lang.String userName) {
+	public void setUserName(String userName) {
 		_kbComment.setUserName(userName);
 	}
 
@@ -561,7 +561,7 @@ public class KBCommentWrapper implements KBComment, ModelWrapper<KBComment> {
 	* @param userUuid the user uuid of this kb comment
 	*/
 	@Override
-	public void setUserUuid(java.lang.String userUuid) {
+	public void setUserUuid(String userUuid) {
 		_kbComment.setUserUuid(userUuid);
 	}
 
@@ -571,7 +571,7 @@ public class KBCommentWrapper implements KBComment, ModelWrapper<KBComment> {
 	* @param uuid the uuid of this kb comment
 	*/
 	@Override
-	public void setUuid(java.lang.String uuid) {
+	public void setUuid(String uuid) {
 		_kbComment.setUuid(uuid);
 	}
 
@@ -586,7 +586,7 @@ public class KBCommentWrapper implements KBComment, ModelWrapper<KBComment> {
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _kbComment.toString();
 	}
 
@@ -596,7 +596,7 @@ public class KBCommentWrapper implements KBComment, ModelWrapper<KBComment> {
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _kbComment.toXmlString();
 	}
 

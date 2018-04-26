@@ -56,8 +56,8 @@ import com.liferay.shopping.service.ShoppingCategoryServiceUtil;
 @ProviderType
 public class ShoppingCategoryServiceHttp {
 	public static com.liferay.shopping.model.ShoppingCategory addCategory(
-		HttpPrincipal httpPrincipal, long parentCategoryId,
-		java.lang.String name, java.lang.String description,
+		HttpPrincipal httpPrincipal, long parentCategoryId, String name,
+		String description,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -171,7 +171,7 @@ public class ShoppingCategoryServiceHttp {
 		}
 	}
 
-	public static java.util.List<java.lang.Object> getCategoriesAndItems(
+	public static java.util.List<Object> getCategoriesAndItems(
 		HttpPrincipal httpPrincipal, long groupId, long categoryId, int start,
 		int end, com.liferay.portal.kernel.util.OrderByComparator<?> obc) {
 		try {
@@ -191,7 +191,7 @@ public class ShoppingCategoryServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (java.util.List<java.lang.Object>)returnObj;
+			return (java.util.List<Object>)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -288,8 +288,7 @@ public class ShoppingCategoryServiceHttp {
 	}
 
 	public static void getSubcategoryIds(HttpPrincipal httpPrincipal,
-		java.util.List<java.lang.Long> categoryIds, long groupId,
-		long categoryId) {
+		java.util.List<Long> categoryIds, long groupId, long categoryId) {
 		try {
 			MethodKey methodKey = new MethodKey(ShoppingCategoryServiceUtil.class,
 					"getSubcategoryIds", _getSubcategoryIdsParameterTypes8);
@@ -313,8 +312,7 @@ public class ShoppingCategoryServiceHttp {
 
 	public static com.liferay.shopping.model.ShoppingCategory updateCategory(
 		HttpPrincipal httpPrincipal, long categoryId, long parentCategoryId,
-		java.lang.String name, java.lang.String description,
-		boolean mergeWithParentCategory,
+		String name, String description, boolean mergeWithParentCategory,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -349,7 +347,7 @@ public class ShoppingCategoryServiceHttp {
 
 	private static Log _log = LogFactoryUtil.getLog(ShoppingCategoryServiceHttp.class);
 	private static final Class<?>[] _addCategoryParameterTypes0 = new Class[] {
-			long.class, java.lang.String.class, java.lang.String.class,
+			long.class, String.class, String.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _deleteCategoryParameterTypes1 = new Class[] {
@@ -378,8 +376,7 @@ public class ShoppingCategoryServiceHttp {
 			java.util.List.class, long.class, long.class
 		};
 	private static final Class<?>[] _updateCategoryParameterTypes9 = new Class[] {
-			long.class, long.class, java.lang.String.class,
-			java.lang.String.class, boolean.class,
+			long.class, long.class, String.class, String.class, boolean.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 }

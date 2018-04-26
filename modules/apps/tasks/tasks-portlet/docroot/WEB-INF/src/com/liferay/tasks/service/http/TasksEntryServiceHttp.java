@@ -56,7 +56,7 @@ import com.liferay.tasks.service.TasksEntryServiceUtil;
 @ProviderType
 public class TasksEntryServiceHttp {
 	public static com.liferay.tasks.model.TasksEntry addTasksEntry(
-		HttpPrincipal httpPrincipal, java.lang.String title, int priority,
+		HttpPrincipal httpPrincipal, String title, int priority,
 		long assigneeUserId, int dueDateMonth, int dueDateDay, int dueDateYear,
 		int dueDateHour, int dueDateMinute, boolean neverDue,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
@@ -157,7 +157,7 @@ public class TasksEntryServiceHttp {
 	}
 
 	public static com.liferay.tasks.model.TasksEntry updateTasksEntry(
-		HttpPrincipal httpPrincipal, long tasksEntryId, java.lang.String title,
+		HttpPrincipal httpPrincipal, long tasksEntryId, String title,
 		int priority, long assigneeUserId, long resolverUserId,
 		int dueDateMonth, int dueDateDay, int dueDateYear, int dueDateHour,
 		int dueDateMinute, boolean neverDue, int status,
@@ -231,8 +231,8 @@ public class TasksEntryServiceHttp {
 
 	private static Log _log = LogFactoryUtil.getLog(TasksEntryServiceHttp.class);
 	private static final Class<?>[] _addTasksEntryParameterTypes0 = new Class[] {
-			java.lang.String.class, int.class, long.class, int.class, int.class,
-			int.class, int.class, int.class, boolean.class,
+			String.class, int.class, long.class, int.class, int.class, int.class,
+			int.class, int.class, boolean.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _deleteTasksEntryParameterTypes1 = new Class[] {
@@ -242,10 +242,9 @@ public class TasksEntryServiceHttp {
 			long.class
 		};
 	private static final Class<?>[] _updateTasksEntryParameterTypes3 = new Class[] {
-			long.class, java.lang.String.class, int.class, long.class,
-			long.class, int.class, int.class, int.class, int.class, int.class,
-			boolean.class, int.class,
-			com.liferay.portal.kernel.service.ServiceContext.class
+			long.class, String.class, int.class, long.class, long.class,
+			int.class, int.class, int.class, int.class, int.class, boolean.class,
+			int.class, com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _updateTasksEntryStatusParameterTypes4 = new Class[] {
 			long.class, long.class, int.class,

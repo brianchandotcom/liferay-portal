@@ -66,7 +66,7 @@ public interface DLFileShortcutService extends BaseService {
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	public DLFileShortcut updateFileShortcut(long fileShortcutId,
 		long repositoryId, long folderId, long toFileEntryId,

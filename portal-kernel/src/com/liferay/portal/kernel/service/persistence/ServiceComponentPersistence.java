@@ -46,7 +46,7 @@ public interface ServiceComponentPersistence extends BasePersistence<ServiceComp
 	* @return the matching service components
 	*/
 	public java.util.List<ServiceComponent> findByBuildNamespace(
-		java.lang.String buildNamespace);
+		String buildNamespace);
 
 	/**
 	* Returns a range of all the service components where buildNamespace = &#63;.
@@ -61,7 +61,7 @@ public interface ServiceComponentPersistence extends BasePersistence<ServiceComp
 	* @return the range of matching service components
 	*/
 	public java.util.List<ServiceComponent> findByBuildNamespace(
-		java.lang.String buildNamespace, int start, int end);
+		String buildNamespace, int start, int end);
 
 	/**
 	* Returns an ordered range of all the service components where buildNamespace = &#63;.
@@ -77,7 +77,7 @@ public interface ServiceComponentPersistence extends BasePersistence<ServiceComp
 	* @return the ordered range of matching service components
 	*/
 	public java.util.List<ServiceComponent> findByBuildNamespace(
-		java.lang.String buildNamespace, int start, int end,
+		String buildNamespace, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<ServiceComponent> orderByComparator);
 
 	/**
@@ -95,7 +95,7 @@ public interface ServiceComponentPersistence extends BasePersistence<ServiceComp
 	* @return the ordered range of matching service components
 	*/
 	public java.util.List<ServiceComponent> findByBuildNamespace(
-		java.lang.String buildNamespace, int start, int end,
+		String buildNamespace, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<ServiceComponent> orderByComparator,
 		boolean retrieveFromCache);
 
@@ -107,8 +107,7 @@ public interface ServiceComponentPersistence extends BasePersistence<ServiceComp
 	* @return the first matching service component
 	* @throws NoSuchServiceComponentException if a matching service component could not be found
 	*/
-	public ServiceComponent findByBuildNamespace_First(
-		java.lang.String buildNamespace,
+	public ServiceComponent findByBuildNamespace_First(String buildNamespace,
 		com.liferay.portal.kernel.util.OrderByComparator<ServiceComponent> orderByComparator)
 		throws NoSuchServiceComponentException;
 
@@ -119,8 +118,7 @@ public interface ServiceComponentPersistence extends BasePersistence<ServiceComp
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching service component, or <code>null</code> if a matching service component could not be found
 	*/
-	public ServiceComponent fetchByBuildNamespace_First(
-		java.lang.String buildNamespace,
+	public ServiceComponent fetchByBuildNamespace_First(String buildNamespace,
 		com.liferay.portal.kernel.util.OrderByComparator<ServiceComponent> orderByComparator);
 
 	/**
@@ -131,8 +129,7 @@ public interface ServiceComponentPersistence extends BasePersistence<ServiceComp
 	* @return the last matching service component
 	* @throws NoSuchServiceComponentException if a matching service component could not be found
 	*/
-	public ServiceComponent findByBuildNamespace_Last(
-		java.lang.String buildNamespace,
+	public ServiceComponent findByBuildNamespace_Last(String buildNamespace,
 		com.liferay.portal.kernel.util.OrderByComparator<ServiceComponent> orderByComparator)
 		throws NoSuchServiceComponentException;
 
@@ -143,8 +140,7 @@ public interface ServiceComponentPersistence extends BasePersistence<ServiceComp
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching service component, or <code>null</code> if a matching service component could not be found
 	*/
-	public ServiceComponent fetchByBuildNamespace_Last(
-		java.lang.String buildNamespace,
+	public ServiceComponent fetchByBuildNamespace_Last(String buildNamespace,
 		com.liferay.portal.kernel.util.OrderByComparator<ServiceComponent> orderByComparator);
 
 	/**
@@ -157,7 +153,7 @@ public interface ServiceComponentPersistence extends BasePersistence<ServiceComp
 	* @throws NoSuchServiceComponentException if a service component with the primary key could not be found
 	*/
 	public ServiceComponent[] findByBuildNamespace_PrevAndNext(
-		long serviceComponentId, java.lang.String buildNamespace,
+		long serviceComponentId, String buildNamespace,
 		com.liferay.portal.kernel.util.OrderByComparator<ServiceComponent> orderByComparator)
 		throws NoSuchServiceComponentException;
 
@@ -166,7 +162,7 @@ public interface ServiceComponentPersistence extends BasePersistence<ServiceComp
 	*
 	* @param buildNamespace the build namespace
 	*/
-	public void removeByBuildNamespace(java.lang.String buildNamespace);
+	public void removeByBuildNamespace(String buildNamespace);
 
 	/**
 	* Returns the number of service components where buildNamespace = &#63;.
@@ -174,7 +170,7 @@ public interface ServiceComponentPersistence extends BasePersistence<ServiceComp
 	* @param buildNamespace the build namespace
 	* @return the number of matching service components
 	*/
-	public int countByBuildNamespace(java.lang.String buildNamespace);
+	public int countByBuildNamespace(String buildNamespace);
 
 	/**
 	* Returns the service component where buildNamespace = &#63; and buildNumber = &#63; or throws a {@link NoSuchServiceComponentException} if it could not be found.
@@ -184,7 +180,7 @@ public interface ServiceComponentPersistence extends BasePersistence<ServiceComp
 	* @return the matching service component
 	* @throws NoSuchServiceComponentException if a matching service component could not be found
 	*/
-	public ServiceComponent findByBNS_BNU(java.lang.String buildNamespace,
+	public ServiceComponent findByBNS_BNU(String buildNamespace,
 		long buildNumber) throws NoSuchServiceComponentException;
 
 	/**
@@ -194,7 +190,7 @@ public interface ServiceComponentPersistence extends BasePersistence<ServiceComp
 	* @param buildNumber the build number
 	* @return the matching service component, or <code>null</code> if a matching service component could not be found
 	*/
-	public ServiceComponent fetchByBNS_BNU(java.lang.String buildNamespace,
+	public ServiceComponent fetchByBNS_BNU(String buildNamespace,
 		long buildNumber);
 
 	/**
@@ -205,7 +201,7 @@ public interface ServiceComponentPersistence extends BasePersistence<ServiceComp
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching service component, or <code>null</code> if a matching service component could not be found
 	*/
-	public ServiceComponent fetchByBNS_BNU(java.lang.String buildNamespace,
+	public ServiceComponent fetchByBNS_BNU(String buildNamespace,
 		long buildNumber, boolean retrieveFromCache);
 
 	/**
@@ -215,7 +211,7 @@ public interface ServiceComponentPersistence extends BasePersistence<ServiceComp
 	* @param buildNumber the build number
 	* @return the service component that was removed
 	*/
-	public ServiceComponent removeByBNS_BNU(java.lang.String buildNamespace,
+	public ServiceComponent removeByBNS_BNU(String buildNamespace,
 		long buildNumber) throws NoSuchServiceComponentException;
 
 	/**
@@ -225,7 +221,7 @@ public interface ServiceComponentPersistence extends BasePersistence<ServiceComp
 	* @param buildNumber the build number
 	* @return the number of matching service components
 	*/
-	public int countByBNS_BNU(java.lang.String buildNamespace, long buildNumber);
+	public int countByBNS_BNU(String buildNamespace, long buildNumber);
 
 	/**
 	* Caches the service component in the entity cache if it is enabled.
@@ -348,5 +344,5 @@ public interface ServiceComponentPersistence extends BasePersistence<ServiceComp
 	public int countAll();
 
 	@Override
-	public java.util.Set<java.lang.String> getBadColumnNames();
+	public java.util.Set<String> getBadColumnNames();
 }

@@ -364,7 +364,7 @@ public class LayoutPageTemplateCollectionUtil {
 	* @throws NoSuchPageTemplateCollectionException if a matching layout page template collection could not be found
 	*/
 	public static LayoutPageTemplateCollection findByG_N(long groupId,
-		java.lang.String name)
+		String name)
 		throws com.liferay.layout.page.template.exception.NoSuchPageTemplateCollectionException {
 		return getPersistence().findByG_N(groupId, name);
 	}
@@ -377,7 +377,7 @@ public class LayoutPageTemplateCollectionUtil {
 	* @return the matching layout page template collection, or <code>null</code> if a matching layout page template collection could not be found
 	*/
 	public static LayoutPageTemplateCollection fetchByG_N(long groupId,
-		java.lang.String name) {
+		String name) {
 		return getPersistence().fetchByG_N(groupId, name);
 	}
 
@@ -390,7 +390,7 @@ public class LayoutPageTemplateCollectionUtil {
 	* @return the matching layout page template collection, or <code>null</code> if a matching layout page template collection could not be found
 	*/
 	public static LayoutPageTemplateCollection fetchByG_N(long groupId,
-		java.lang.String name, boolean retrieveFromCache) {
+		String name, boolean retrieveFromCache) {
 		return getPersistence().fetchByG_N(groupId, name, retrieveFromCache);
 	}
 
@@ -402,7 +402,7 @@ public class LayoutPageTemplateCollectionUtil {
 	* @return the layout page template collection that was removed
 	*/
 	public static LayoutPageTemplateCollection removeByG_N(long groupId,
-		java.lang.String name)
+		String name)
 		throws com.liferay.layout.page.template.exception.NoSuchPageTemplateCollectionException {
 		return getPersistence().removeByG_N(groupId, name);
 	}
@@ -414,7 +414,7 @@ public class LayoutPageTemplateCollectionUtil {
 	* @param name the name
 	* @return the number of matching layout page template collections
 	*/
-	public static int countByG_N(long groupId, java.lang.String name) {
+	public static int countByG_N(long groupId, String name) {
 		return getPersistence().countByG_N(groupId, name);
 	}
 
@@ -426,7 +426,7 @@ public class LayoutPageTemplateCollectionUtil {
 	* @return the matching layout page template collections
 	*/
 	public static List<LayoutPageTemplateCollection> findByG_LikeN(
-		long groupId, java.lang.String name) {
+		long groupId, String name) {
 		return getPersistence().findByG_LikeN(groupId, name);
 	}
 
@@ -444,7 +444,7 @@ public class LayoutPageTemplateCollectionUtil {
 	* @return the range of matching layout page template collections
 	*/
 	public static List<LayoutPageTemplateCollection> findByG_LikeN(
-		long groupId, java.lang.String name, int start, int end) {
+		long groupId, String name, int start, int end) {
 		return getPersistence().findByG_LikeN(groupId, name, start, end);
 	}
 
@@ -463,7 +463,7 @@ public class LayoutPageTemplateCollectionUtil {
 	* @return the ordered range of matching layout page template collections
 	*/
 	public static List<LayoutPageTemplateCollection> findByG_LikeN(
-		long groupId, java.lang.String name, int start, int end,
+		long groupId, String name, int start, int end,
 		OrderByComparator<LayoutPageTemplateCollection> orderByComparator) {
 		return getPersistence()
 				   .findByG_LikeN(groupId, name, start, end, orderByComparator);
@@ -485,7 +485,7 @@ public class LayoutPageTemplateCollectionUtil {
 	* @return the ordered range of matching layout page template collections
 	*/
 	public static List<LayoutPageTemplateCollection> findByG_LikeN(
-		long groupId, java.lang.String name, int start, int end,
+		long groupId, String name, int start, int end,
 		OrderByComparator<LayoutPageTemplateCollection> orderByComparator,
 		boolean retrieveFromCache) {
 		return getPersistence()
@@ -503,7 +503,7 @@ public class LayoutPageTemplateCollectionUtil {
 	* @throws NoSuchPageTemplateCollectionException if a matching layout page template collection could not be found
 	*/
 	public static LayoutPageTemplateCollection findByG_LikeN_First(
-		long groupId, java.lang.String name,
+		long groupId, String name,
 		OrderByComparator<LayoutPageTemplateCollection> orderByComparator)
 		throws com.liferay.layout.page.template.exception.NoSuchPageTemplateCollectionException {
 		return getPersistence()
@@ -519,7 +519,7 @@ public class LayoutPageTemplateCollectionUtil {
 	* @return the first matching layout page template collection, or <code>null</code> if a matching layout page template collection could not be found
 	*/
 	public static LayoutPageTemplateCollection fetchByG_LikeN_First(
-		long groupId, java.lang.String name,
+		long groupId, String name,
 		OrderByComparator<LayoutPageTemplateCollection> orderByComparator) {
 		return getPersistence()
 				   .fetchByG_LikeN_First(groupId, name, orderByComparator);
@@ -535,7 +535,7 @@ public class LayoutPageTemplateCollectionUtil {
 	* @throws NoSuchPageTemplateCollectionException if a matching layout page template collection could not be found
 	*/
 	public static LayoutPageTemplateCollection findByG_LikeN_Last(
-		long groupId, java.lang.String name,
+		long groupId, String name,
 		OrderByComparator<LayoutPageTemplateCollection> orderByComparator)
 		throws com.liferay.layout.page.template.exception.NoSuchPageTemplateCollectionException {
 		return getPersistence()
@@ -551,7 +551,7 @@ public class LayoutPageTemplateCollectionUtil {
 	* @return the last matching layout page template collection, or <code>null</code> if a matching layout page template collection could not be found
 	*/
 	public static LayoutPageTemplateCollection fetchByG_LikeN_Last(
-		long groupId, java.lang.String name,
+		long groupId, String name,
 		OrderByComparator<LayoutPageTemplateCollection> orderByComparator) {
 		return getPersistence()
 				   .fetchByG_LikeN_Last(groupId, name, orderByComparator);
@@ -568,8 +568,7 @@ public class LayoutPageTemplateCollectionUtil {
 	* @throws NoSuchPageTemplateCollectionException if a layout page template collection with the primary key could not be found
 	*/
 	public static LayoutPageTemplateCollection[] findByG_LikeN_PrevAndNext(
-		long layoutPageTemplateCollectionId, long groupId,
-		java.lang.String name,
+		long layoutPageTemplateCollectionId, long groupId, String name,
 		OrderByComparator<LayoutPageTemplateCollection> orderByComparator)
 		throws com.liferay.layout.page.template.exception.NoSuchPageTemplateCollectionException {
 		return getPersistence()
@@ -585,7 +584,7 @@ public class LayoutPageTemplateCollectionUtil {
 	* @return the matching layout page template collections that the user has permission to view
 	*/
 	public static List<LayoutPageTemplateCollection> filterFindByG_LikeN(
-		long groupId, java.lang.String name) {
+		long groupId, String name) {
 		return getPersistence().filterFindByG_LikeN(groupId, name);
 	}
 
@@ -603,7 +602,7 @@ public class LayoutPageTemplateCollectionUtil {
 	* @return the range of matching layout page template collections that the user has permission to view
 	*/
 	public static List<LayoutPageTemplateCollection> filterFindByG_LikeN(
-		long groupId, java.lang.String name, int start, int end) {
+		long groupId, String name, int start, int end) {
 		return getPersistence().filterFindByG_LikeN(groupId, name, start, end);
 	}
 
@@ -622,7 +621,7 @@ public class LayoutPageTemplateCollectionUtil {
 	* @return the ordered range of matching layout page template collections that the user has permission to view
 	*/
 	public static List<LayoutPageTemplateCollection> filterFindByG_LikeN(
-		long groupId, java.lang.String name, int start, int end,
+		long groupId, String name, int start, int end,
 		OrderByComparator<LayoutPageTemplateCollection> orderByComparator) {
 		return getPersistence()
 				   .filterFindByG_LikeN(groupId, name, start, end,
@@ -640,8 +639,7 @@ public class LayoutPageTemplateCollectionUtil {
 	* @throws NoSuchPageTemplateCollectionException if a layout page template collection with the primary key could not be found
 	*/
 	public static LayoutPageTemplateCollection[] filterFindByG_LikeN_PrevAndNext(
-		long layoutPageTemplateCollectionId, long groupId,
-		java.lang.String name,
+		long layoutPageTemplateCollectionId, long groupId, String name,
 		OrderByComparator<LayoutPageTemplateCollection> orderByComparator)
 		throws com.liferay.layout.page.template.exception.NoSuchPageTemplateCollectionException {
 		return getPersistence()
@@ -655,7 +653,7 @@ public class LayoutPageTemplateCollectionUtil {
 	* @param groupId the group ID
 	* @param name the name
 	*/
-	public static void removeByG_LikeN(long groupId, java.lang.String name) {
+	public static void removeByG_LikeN(long groupId, String name) {
 		getPersistence().removeByG_LikeN(groupId, name);
 	}
 
@@ -666,7 +664,7 @@ public class LayoutPageTemplateCollectionUtil {
 	* @param name the name
 	* @return the number of matching layout page template collections
 	*/
-	public static int countByG_LikeN(long groupId, java.lang.String name) {
+	public static int countByG_LikeN(long groupId, String name) {
 		return getPersistence().countByG_LikeN(groupId, name);
 	}
 
@@ -677,7 +675,7 @@ public class LayoutPageTemplateCollectionUtil {
 	* @param name the name
 	* @return the number of matching layout page template collections that the user has permission to view
 	*/
-	public static int filterCountByG_LikeN(long groupId, java.lang.String name) {
+	public static int filterCountByG_LikeN(long groupId, String name) {
 		return getPersistence().filterCountByG_LikeN(groupId, name);
 	}
 

@@ -46,7 +46,7 @@ public class PollsVoteServiceWrapper implements PollsVoteService,
 	* @return the OSGi service identifier
 	*/
 	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
+	public String getOSGiServiceIdentifier() {
 		return _pollsVoteService.getOSGiServiceIdentifier();
 	}
 

@@ -72,8 +72,7 @@ public interface AssetCategoryPropertyLocalService extends BaseLocalService,
 		AssetCategoryProperty assetCategoryProperty);
 
 	public AssetCategoryProperty addCategoryProperty(long userId,
-		long categoryId, java.lang.String key, java.lang.String value)
-		throws PortalException;
+		long categoryId, String key, String value) throws PortalException;
 
 	/**
 	* Creates a new asset category property with the primary key. Does not add the asset category property to the database.
@@ -185,7 +184,7 @@ public interface AssetCategoryPropertyLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public AssetCategoryProperty fetchCategoryProperty(long categoryId,
-		java.lang.String key);
+		String key);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
@@ -235,12 +234,12 @@ public interface AssetCategoryPropertyLocalService extends BaseLocalService,
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public AssetCategoryProperty getCategoryProperty(long categoryId,
-		java.lang.String key) throws PortalException;
+	public AssetCategoryProperty getCategoryProperty(long categoryId, String key)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<AssetCategoryProperty> getCategoryPropertyValues(long groupId,
-		java.lang.String key);
+		String key);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
@@ -250,7 +249,7 @@ public interface AssetCategoryPropertyLocalService extends BaseLocalService,
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -268,10 +267,10 @@ public interface AssetCategoryPropertyLocalService extends BaseLocalService,
 		AssetCategoryProperty assetCategoryProperty);
 
 	public AssetCategoryProperty updateCategoryProperty(long userId,
-		long categoryPropertyId, java.lang.String key, java.lang.String value)
+		long categoryPropertyId, String key, String value)
 		throws PortalException;
 
 	public AssetCategoryProperty updateCategoryProperty(
-		long categoryPropertyId, java.lang.String key, java.lang.String value)
+		long categoryPropertyId, String key, String value)
 		throws PortalException;
 }

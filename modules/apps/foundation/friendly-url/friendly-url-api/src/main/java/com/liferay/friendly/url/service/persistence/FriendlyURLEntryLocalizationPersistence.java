@@ -187,7 +187,7 @@ public interface FriendlyURLEntryLocalizationPersistence extends BasePersistence
 	* @throws NoSuchFriendlyURLEntryLocalizationException if a matching friendly url entry localization could not be found
 	*/
 	public FriendlyURLEntryLocalization findByFriendlyURLEntryId_LanguageId(
-		long friendlyURLEntryId, java.lang.String languageId)
+		long friendlyURLEntryId, String languageId)
 		throws NoSuchFriendlyURLEntryLocalizationException;
 
 	/**
@@ -198,7 +198,7 @@ public interface FriendlyURLEntryLocalizationPersistence extends BasePersistence
 	* @return the matching friendly url entry localization, or <code>null</code> if a matching friendly url entry localization could not be found
 	*/
 	public FriendlyURLEntryLocalization fetchByFriendlyURLEntryId_LanguageId(
-		long friendlyURLEntryId, java.lang.String languageId);
+		long friendlyURLEntryId, String languageId);
 
 	/**
 	* Returns the friendly url entry localization where friendlyURLEntryId = &#63; and languageId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -209,8 +209,7 @@ public interface FriendlyURLEntryLocalizationPersistence extends BasePersistence
 	* @return the matching friendly url entry localization, or <code>null</code> if a matching friendly url entry localization could not be found
 	*/
 	public FriendlyURLEntryLocalization fetchByFriendlyURLEntryId_LanguageId(
-		long friendlyURLEntryId, java.lang.String languageId,
-		boolean retrieveFromCache);
+		long friendlyURLEntryId, String languageId, boolean retrieveFromCache);
 
 	/**
 	* Removes the friendly url entry localization where friendlyURLEntryId = &#63; and languageId = &#63; from the database.
@@ -220,7 +219,7 @@ public interface FriendlyURLEntryLocalizationPersistence extends BasePersistence
 	* @return the friendly url entry localization that was removed
 	*/
 	public FriendlyURLEntryLocalization removeByFriendlyURLEntryId_LanguageId(
-		long friendlyURLEntryId, java.lang.String languageId)
+		long friendlyURLEntryId, String languageId)
 		throws NoSuchFriendlyURLEntryLocalizationException;
 
 	/**
@@ -231,7 +230,7 @@ public interface FriendlyURLEntryLocalizationPersistence extends BasePersistence
 	* @return the number of matching friendly url entry localizations
 	*/
 	public int countByFriendlyURLEntryId_LanguageId(long friendlyURLEntryId,
-		java.lang.String languageId);
+		String languageId);
 
 	/**
 	* Returns the friendly url entry localization where groupId = &#63; and classNameId = &#63; and urlTitle = &#63; or throws a {@link NoSuchFriendlyURLEntryLocalizationException} if it could not be found.
@@ -243,7 +242,7 @@ public interface FriendlyURLEntryLocalizationPersistence extends BasePersistence
 	* @throws NoSuchFriendlyURLEntryLocalizationException if a matching friendly url entry localization could not be found
 	*/
 	public FriendlyURLEntryLocalization findByG_C_U(long groupId,
-		long classNameId, java.lang.String urlTitle)
+		long classNameId, String urlTitle)
 		throws NoSuchFriendlyURLEntryLocalizationException;
 
 	/**
@@ -255,7 +254,7 @@ public interface FriendlyURLEntryLocalizationPersistence extends BasePersistence
 	* @return the matching friendly url entry localization, or <code>null</code> if a matching friendly url entry localization could not be found
 	*/
 	public FriendlyURLEntryLocalization fetchByG_C_U(long groupId,
-		long classNameId, java.lang.String urlTitle);
+		long classNameId, String urlTitle);
 
 	/**
 	* Returns the friendly url entry localization where groupId = &#63; and classNameId = &#63; and urlTitle = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -267,7 +266,7 @@ public interface FriendlyURLEntryLocalizationPersistence extends BasePersistence
 	* @return the matching friendly url entry localization, or <code>null</code> if a matching friendly url entry localization could not be found
 	*/
 	public FriendlyURLEntryLocalization fetchByG_C_U(long groupId,
-		long classNameId, java.lang.String urlTitle, boolean retrieveFromCache);
+		long classNameId, String urlTitle, boolean retrieveFromCache);
 
 	/**
 	* Removes the friendly url entry localization where groupId = &#63; and classNameId = &#63; and urlTitle = &#63; from the database.
@@ -278,7 +277,7 @@ public interface FriendlyURLEntryLocalizationPersistence extends BasePersistence
 	* @return the friendly url entry localization that was removed
 	*/
 	public FriendlyURLEntryLocalization removeByG_C_U(long groupId,
-		long classNameId, java.lang.String urlTitle)
+		long classNameId, String urlTitle)
 		throws NoSuchFriendlyURLEntryLocalizationException;
 
 	/**
@@ -289,8 +288,7 @@ public interface FriendlyURLEntryLocalizationPersistence extends BasePersistence
 	* @param urlTitle the url title
 	* @return the number of matching friendly url entry localizations
 	*/
-	public int countByG_C_U(long groupId, long classNameId,
-		java.lang.String urlTitle);
+	public int countByG_C_U(long groupId, long classNameId, String urlTitle);
 
 	/**
 	* Caches the friendly url entry localization in the entity cache if it is enabled.

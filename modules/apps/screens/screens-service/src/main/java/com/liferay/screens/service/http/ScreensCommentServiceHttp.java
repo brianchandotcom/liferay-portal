@@ -56,8 +56,7 @@ import com.liferay.screens.service.ScreensCommentServiceUtil;
 @ProviderType
 public class ScreensCommentServiceHttp {
 	public static com.liferay.portal.kernel.json.JSONObject addComment(
-		HttpPrincipal httpPrincipal, java.lang.String className, long classPK,
-		java.lang.String body)
+		HttpPrincipal httpPrincipal, String className, long classPK, String body)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(ScreensCommentServiceUtil.class,
@@ -120,9 +119,8 @@ public class ScreensCommentServiceHttp {
 	}
 
 	public static com.liferay.portal.kernel.json.JSONArray getComments(
-		HttpPrincipal httpPrincipal, java.lang.String className, long classPK,
-		int start, int end)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		HttpPrincipal httpPrincipal, String className, long classPK, int start,
+		int end) throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(ScreensCommentServiceUtil.class,
 					"getComments", _getCommentsParameterTypes2);
@@ -153,7 +151,7 @@ public class ScreensCommentServiceHttp {
 	}
 
 	public static int getCommentsCount(HttpPrincipal httpPrincipal,
-		java.lang.String className, long classPK)
+		String className, long classPK)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(ScreensCommentServiceUtil.class,
@@ -185,7 +183,7 @@ public class ScreensCommentServiceHttp {
 	}
 
 	public static com.liferay.portal.kernel.json.JSONObject updateComment(
-		HttpPrincipal httpPrincipal, long commentId, java.lang.String body)
+		HttpPrincipal httpPrincipal, long commentId, String body)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(ScreensCommentServiceUtil.class,
@@ -218,18 +216,18 @@ public class ScreensCommentServiceHttp {
 
 	private static Log _log = LogFactoryUtil.getLog(ScreensCommentServiceHttp.class);
 	private static final Class<?>[] _addCommentParameterTypes0 = new Class[] {
-			java.lang.String.class, long.class, java.lang.String.class
+			String.class, long.class, String.class
 		};
 	private static final Class<?>[] _getCommentParameterTypes1 = new Class[] {
 			long.class
 		};
 	private static final Class<?>[] _getCommentsParameterTypes2 = new Class[] {
-			java.lang.String.class, long.class, int.class, int.class
+			String.class, long.class, int.class, int.class
 		};
 	private static final Class<?>[] _getCommentsCountParameterTypes3 = new Class[] {
-			java.lang.String.class, long.class
+			String.class, long.class
 		};
 	private static final Class<?>[] _updateCommentParameterTypes4 = new Class[] {
-			long.class, java.lang.String.class
+			long.class, String.class
 		};
 }

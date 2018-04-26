@@ -56,8 +56,8 @@ public class SocialRequestLocalServiceWrapper
 	*/
 	@Override
 	public com.liferay.social.kernel.model.SocialRequest addRequest(
-		long userId, long groupId, java.lang.String className, long classPK,
-		int type, java.lang.String extraData, long receiverUserId)
+		long userId, long groupId, String className, long classPK, int type,
+		String extraData, long receiverUserId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _socialRequestLocalService.addRequest(userId, groupId,
 			className, classPK, type, extraData, receiverUserId);
@@ -271,7 +271,7 @@ public class SocialRequestLocalServiceWrapper
 	*/
 	@Override
 	public com.liferay.social.kernel.model.SocialRequest fetchSocialRequestByUuidAndGroupId(
-		java.lang.String uuid, long groupId) {
+		String uuid, long groupId) {
 		return _socialRequestLocalService.fetchSocialRequestByUuidAndGroupId(uuid,
 			groupId);
 	}
@@ -292,7 +292,7 @@ public class SocialRequestLocalServiceWrapper
 	* @return the OSGi service identifier
 	*/
 	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
+	public String getOSGiServiceIdentifier() {
 		return _socialRequestLocalService.getOSGiServiceIdentifier();
 	}
 
@@ -404,7 +404,7 @@ public class SocialRequestLocalServiceWrapper
 	*/
 	@Override
 	public com.liferay.social.kernel.model.SocialRequest getSocialRequestByUuidAndGroupId(
-		java.lang.String uuid, long groupId)
+		String uuid, long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _socialRequestLocalService.getSocialRequestByUuidAndGroupId(uuid,
 			groupId);
@@ -436,7 +436,7 @@ public class SocialRequestLocalServiceWrapper
 	*/
 	@Override
 	public java.util.List<com.liferay.social.kernel.model.SocialRequest> getSocialRequestsByUuidAndCompanyId(
-		java.lang.String uuid, long companyId) {
+		String uuid, long companyId) {
 		return _socialRequestLocalService.getSocialRequestsByUuidAndCompanyId(uuid,
 			companyId);
 	}
@@ -453,7 +453,7 @@ public class SocialRequestLocalServiceWrapper
 	*/
 	@Override
 	public java.util.List<com.liferay.social.kernel.model.SocialRequest> getSocialRequestsByUuidAndCompanyId(
-		java.lang.String uuid, long companyId, int start, int end,
+		String uuid, long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.social.kernel.model.SocialRequest> orderByComparator) {
 		return _socialRequestLocalService.getSocialRequestsByUuidAndCompanyId(uuid,
 			companyId, start, end, orderByComparator);
@@ -559,8 +559,8 @@ public class SocialRequestLocalServiceWrapper
 	otherwise
 	*/
 	@Override
-	public boolean hasRequest(long userId, java.lang.String className,
-		long classPK, int type, int status) {
+	public boolean hasRequest(long userId, String className, long classPK,
+		int type, int status) {
 		return _socialRequestLocalService.hasRequest(userId, className,
 			classPK, type, status);
 	}
@@ -581,8 +581,8 @@ public class SocialRequestLocalServiceWrapper
 	<code>false</code> otherwise
 	*/
 	@Override
-	public boolean hasRequest(long userId, java.lang.String className,
-		long classPK, int type, long receiverUserId, int status) {
+	public boolean hasRequest(long userId, String className, long classPK,
+		int type, long receiverUserId, int status) {
 		return _socialRequestLocalService.hasRequest(userId, className,
 			classPK, type, receiverUserId, status);
 	}

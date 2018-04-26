@@ -36,8 +36,8 @@ public class SiteFriendlyURLLocalServiceWrapper
 
 	@Override
 	public com.liferay.site.model.SiteFriendlyURL addSiteFriendlyURL(
-		long userId, long companyId, long groupId,
-		java.lang.String friendlyURL, java.lang.String languageId,
+		long userId, long companyId, long groupId, String friendlyURL,
+		String languageId,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _siteFriendlyURLLocalService.addSiteFriendlyURL(userId,
@@ -59,7 +59,7 @@ public class SiteFriendlyURLLocalServiceWrapper
 	@Override
 	public java.util.List<com.liferay.site.model.SiteFriendlyURL> addSiteFriendlyURLs(
 		long userId, long companyId, long groupId,
-		java.util.Map<java.util.Locale, java.lang.String> friendlyURLMap,
+		java.util.Map<java.util.Locale, String> friendlyURLMap,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _siteFriendlyURLLocalService.addSiteFriendlyURLs(userId,
@@ -104,7 +104,7 @@ public class SiteFriendlyURLLocalServiceWrapper
 
 	@Override
 	public com.liferay.site.model.SiteFriendlyURL deleteSiteFriendlyURL(
-		long companyId, long groupId, java.lang.String languageId)
+		long companyId, long groupId, String languageId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _siteFriendlyURLLocalService.deleteSiteFriendlyURL(companyId,
 			groupId, languageId);
@@ -221,14 +221,14 @@ public class SiteFriendlyURLLocalServiceWrapper
 
 	@Override
 	public com.liferay.site.model.SiteFriendlyURL fetchSiteFriendlyURL(
-		long companyId, long groupId, java.lang.String languageId) {
+		long companyId, long groupId, String languageId) {
 		return _siteFriendlyURLLocalService.fetchSiteFriendlyURL(companyId,
 			groupId, languageId);
 	}
 
 	@Override
 	public com.liferay.site.model.SiteFriendlyURL fetchSiteFriendlyURLByFriendlyURL(
-		long companyId, java.lang.String friendlyURL) {
+		long companyId, String friendlyURL) {
 		return _siteFriendlyURLLocalService.fetchSiteFriendlyURLByFriendlyURL(companyId,
 			friendlyURL);
 	}
@@ -242,7 +242,7 @@ public class SiteFriendlyURLLocalServiceWrapper
 	*/
 	@Override
 	public com.liferay.site.model.SiteFriendlyURL fetchSiteFriendlyURLByUuidAndGroupId(
-		java.lang.String uuid, long groupId) {
+		String uuid, long groupId) {
 		return _siteFriendlyURLLocalService.fetchSiteFriendlyURLByUuidAndGroupId(uuid,
 			groupId);
 	}
@@ -269,7 +269,7 @@ public class SiteFriendlyURLLocalServiceWrapper
 	* @return the OSGi service identifier
 	*/
 	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
+	public String getOSGiServiceIdentifier() {
 		return _siteFriendlyURLLocalService.getOSGiServiceIdentifier();
 	}
 
@@ -304,7 +304,7 @@ public class SiteFriendlyURLLocalServiceWrapper
 	*/
 	@Override
 	public com.liferay.site.model.SiteFriendlyURL getSiteFriendlyURLByUuidAndGroupId(
-		java.lang.String uuid, long groupId)
+		String uuid, long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _siteFriendlyURLLocalService.getSiteFriendlyURLByUuidAndGroupId(uuid,
 			groupId);
@@ -343,7 +343,7 @@ public class SiteFriendlyURLLocalServiceWrapper
 	*/
 	@Override
 	public java.util.List<com.liferay.site.model.SiteFriendlyURL> getSiteFriendlyURLsByUuidAndCompanyId(
-		java.lang.String uuid, long companyId) {
+		String uuid, long companyId) {
 		return _siteFriendlyURLLocalService.getSiteFriendlyURLsByUuidAndCompanyId(uuid,
 			companyId);
 	}
@@ -360,7 +360,7 @@ public class SiteFriendlyURLLocalServiceWrapper
 	*/
 	@Override
 	public java.util.List<com.liferay.site.model.SiteFriendlyURL> getSiteFriendlyURLsByUuidAndCompanyId(
-		java.lang.String uuid, long companyId, int start, int end,
+		String uuid, long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.site.model.SiteFriendlyURL> orderByComparator) {
 		return _siteFriendlyURLLocalService.getSiteFriendlyURLsByUuidAndCompanyId(uuid,
 			companyId, start, end, orderByComparator);
@@ -378,8 +378,8 @@ public class SiteFriendlyURLLocalServiceWrapper
 
 	@Override
 	public com.liferay.site.model.SiteFriendlyURL updateSiteFriendlyURL(
-		long userId, long companyId, long groupId,
-		java.lang.String friendlyURL, java.lang.String languageId,
+		long userId, long companyId, long groupId, String friendlyURL,
+		String languageId,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _siteFriendlyURLLocalService.updateSiteFriendlyURL(userId,
@@ -401,7 +401,7 @@ public class SiteFriendlyURLLocalServiceWrapper
 	@Override
 	public java.util.List<com.liferay.site.model.SiteFriendlyURL> updateSiteFriendlyURLs(
 		long userId, long companyId, long groupId,
-		java.util.Map<java.util.Locale, java.lang.String> friendlyURLMap,
+		java.util.Map<java.util.Locale, String> friendlyURLMap,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _siteFriendlyURLLocalService.updateSiteFriendlyURLs(userId,

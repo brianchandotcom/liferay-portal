@@ -53,7 +53,7 @@ import java.rmi.RemoteException;
  */
 @ProviderType
 public class ThemeServiceSoap {
-	public static java.lang.String getWARThemes() throws RemoteException {
+	public static String getWARThemes() throws RemoteException {
 		try {
 			com.liferay.portal.kernel.json.JSONArray returnValue = ThemeServiceUtil.getWARThemes();
 

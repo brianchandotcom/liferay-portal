@@ -68,9 +68,8 @@ public class ResourcePermissionLocalServiceWrapper
 	* @param actionId the action ID
 	*/
 	@Override
-	public void addResourcePermission(long companyId, java.lang.String name,
-		int scope, java.lang.String primKey, long roleId,
-		java.lang.String actionId)
+	public void addResourcePermission(long companyId, String name, int scope,
+		String primKey, long roleId, String actionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_resourcePermissionLocalService.addResourcePermission(companyId, name,
 			scope, primKey, roleId, actionId);
@@ -106,8 +105,8 @@ public class ResourcePermissionLocalServiceWrapper
 	* @param resourceActionBitwiseValue the bitwise IDs of the actions
 	*/
 	@Override
-	public void addResourcePermissions(java.lang.String resourceName,
-		java.lang.String roleName, int scope, long resourceActionBitwiseValue) {
+	public void addResourcePermissions(String resourceName, String roleName,
+		int scope, long resourceActionBitwiseValue) {
 		_resourcePermissionLocalService.addResourcePermissions(resourceName,
 			roleName, scope, resourceActionBitwiseValue);
 	}
@@ -182,8 +181,8 @@ public class ResourcePermissionLocalServiceWrapper
 	* @param primKey the primary key
 	*/
 	@Override
-	public void deleteResourcePermissions(long companyId,
-		java.lang.String name, int scope, long primKey)
+	public void deleteResourcePermissions(long companyId, String name,
+		int scope, long primKey)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_resourcePermissionLocalService.deleteResourcePermissions(companyId,
 			name, scope, primKey);
@@ -211,8 +210,8 @@ public class ResourcePermissionLocalServiceWrapper
 	* @param primKey the primary key
 	*/
 	@Override
-	public void deleteResourcePermissions(long companyId,
-		java.lang.String name, int scope, java.lang.String primKey)
+	public void deleteResourcePermissions(long companyId, String name,
+		int scope, String primKey)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_resourcePermissionLocalService.deleteResourcePermissions(companyId,
 			name, scope, primKey);
@@ -312,8 +311,7 @@ public class ResourcePermissionLocalServiceWrapper
 
 	@Override
 	public com.liferay.portal.kernel.model.ResourcePermission fetchResourcePermission(
-		long companyId, java.lang.String name, int scope,
-		java.lang.String primKey, long roleId) {
+		long companyId, String name, int scope, String primKey, long roleId) {
 		return _resourcePermissionLocalService.fetchResourcePermission(companyId,
 			name, scope, primKey, roleId);
 	}
@@ -324,10 +322,9 @@ public class ResourcePermissionLocalServiceWrapper
 	}
 
 	@Override
-	public java.util.Map<java.lang.Long, java.util.Set<java.lang.String>> getAvailableResourcePermissionActionIds(
-		long companyId, java.lang.String name, int scope,
-		java.lang.String primKey,
-		java.util.Collection<java.lang.String> actionIds) {
+	public java.util.Map<Long, java.util.Set<String>> getAvailableResourcePermissionActionIds(
+		long companyId, String name, int scope, String primKey,
+		java.util.Collection<String> actionIds) {
 		return _resourcePermissionLocalService.getAvailableResourcePermissionActionIds(companyId,
 			name, scope, primKey, actionIds);
 	}
@@ -347,10 +344,9 @@ public class ResourcePermissionLocalServiceWrapper
 	scope to perform on resources of the type
 	*/
 	@Override
-	public java.util.List<java.lang.String> getAvailableResourcePermissionActionIds(
-		long companyId, java.lang.String name, int scope,
-		java.lang.String primKey, long roleId,
-		java.util.Collection<java.lang.String> actionIds)
+	public java.util.List<String> getAvailableResourcePermissionActionIds(
+		long companyId, String name, int scope, String primKey, long roleId,
+		java.util.Collection<String> actionIds)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _resourcePermissionLocalService.getAvailableResourcePermissionActionIds(companyId,
 			name, scope, primKey, roleId, actionIds);
@@ -363,10 +359,9 @@ public class ResourcePermissionLocalServiceWrapper
 	*/
 	@Deprecated
 	@Override
-	public java.util.Map<java.lang.Long, java.util.Set<java.lang.String>> getAvailableResourcePermissionActionIds(
-		long companyId, java.lang.String name, int scope,
-		java.lang.String primKey, long[] roleIds,
-		java.util.Collection<java.lang.String> actionIds) {
+	public java.util.Map<Long, java.util.Set<String>> getAvailableResourcePermissionActionIds(
+		long companyId, String name, int scope, String primKey, long[] roleIds,
+		java.util.Collection<String> actionIds) {
 		return _resourcePermissionLocalService.getAvailableResourcePermissionActionIds(companyId,
 			name, scope, primKey, roleIds, actionIds);
 	}
@@ -382,7 +377,7 @@ public class ResourcePermissionLocalServiceWrapper
 	* @return the OSGi service identifier
 	*/
 	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
+	public String getOSGiServiceIdentifier() {
 		return _resourcePermissionLocalService.getOSGiServiceIdentifier();
 	}
 
@@ -422,8 +417,7 @@ public class ResourcePermissionLocalServiceWrapper
 	*/
 	@Override
 	public com.liferay.portal.kernel.model.ResourcePermission getResourcePermission(
-		long companyId, java.lang.String name, int scope,
-		java.lang.String primKey, long roleId)
+		long companyId, String name, int scope, String primKey, long roleId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _resourcePermissionLocalService.getResourcePermission(companyId,
 			name, scope, primKey, roleId);
@@ -458,8 +452,7 @@ public class ResourcePermissionLocalServiceWrapper
 	*/
 	@Override
 	public java.util.List<com.liferay.portal.kernel.model.ResourcePermission> getResourcePermissions(
-		long companyId, java.lang.String name, int scope,
-		java.lang.String primKey) {
+		long companyId, String name, int scope, String primKey) {
 		return _resourcePermissionLocalService.getResourcePermissions(companyId,
 			name, scope, primKey);
 	}
@@ -485,8 +478,8 @@ public class ResourcePermissionLocalServiceWrapper
 	* @return the number of resource permissions at the scope of the type
 	*/
 	@Override
-	public int getResourcePermissionsCount(long companyId,
-		java.lang.String name, int scope, java.lang.String primKey) {
+	public int getResourcePermissionsCount(long companyId, String name,
+		int scope, String primKey) {
 		return _resourcePermissionLocalService.getResourcePermissionsCount(companyId,
 			name, scope, primKey);
 	}
@@ -503,8 +496,7 @@ public class ResourcePermissionLocalServiceWrapper
 	*/
 	@Override
 	public java.util.List<com.liferay.portal.kernel.model.ResourcePermission> getResourceResourcePermissions(
-		long companyId, long groupId, java.lang.String name,
-		java.lang.String primKey) {
+		long companyId, long groupId, String name, String primKey) {
 		return _resourcePermissionLocalService.getResourceResourcePermissions(companyId,
 			groupId, name, primKey);
 	}
@@ -550,8 +542,7 @@ public class ResourcePermissionLocalServiceWrapper
 
 	@Override
 	public java.util.List<com.liferay.portal.kernel.model.Role> getRoles(
-		long companyId, java.lang.String name, int scope,
-		java.lang.String primKey, java.lang.String actionId)
+		long companyId, String name, int scope, String primKey, String actionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _resourcePermissionLocalService.getRoles(companyId, name, scope,
 			primKey, actionId);
@@ -618,7 +609,7 @@ public class ResourcePermissionLocalServiceWrapper
 	@Override
 	public boolean hasResourcePermission(
 		java.util.List<com.liferay.portal.kernel.model.Resource> resources,
-		long[] roleIds, java.lang.String actionId)
+		long[] roleIds, String actionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _resourcePermissionLocalService.hasResourcePermission(resources,
 			roleIds, actionId);
@@ -645,9 +636,8 @@ public class ResourcePermissionLocalServiceWrapper
 	action on the resource; <code>false</code> otherwise
 	*/
 	@Override
-	public boolean hasResourcePermission(long companyId, java.lang.String name,
-		int scope, java.lang.String primKey, long roleId,
-		java.lang.String actionId)
+	public boolean hasResourcePermission(long companyId, String name,
+		int scope, String primKey, long roleId, String actionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _resourcePermissionLocalService.hasResourcePermission(companyId,
 			name, scope, primKey, roleId, actionId);
@@ -674,9 +664,8 @@ public class ResourcePermissionLocalServiceWrapper
 	perform the action on the resource; <code>false</code> otherwise
 	*/
 	@Override
-	public boolean hasResourcePermission(long companyId, java.lang.String name,
-		int scope, java.lang.String primKey, long[] roleIds,
-		java.lang.String actionId)
+	public boolean hasResourcePermission(long companyId, String name,
+		int scope, String primKey, long[] roleIds, String actionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _resourcePermissionLocalService.hasResourcePermission(companyId,
 			name, scope, primKey, roleIds, actionId);
@@ -688,9 +677,8 @@ public class ResourcePermissionLocalServiceWrapper
 	*/
 	@Deprecated
 	@Override
-	public boolean[] hasResourcePermissions(long companyId,
-		java.lang.String name, int scope, java.lang.String primKey,
-		long[] roleIds, java.lang.String actionId)
+	public boolean[] hasResourcePermissions(long companyId, String name,
+		int scope, String primKey, long[] roleIds, String actionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _resourcePermissionLocalService.hasResourcePermissions(companyId,
 			name, scope, primKey, roleIds, actionId);
@@ -716,8 +704,8 @@ public class ResourcePermissionLocalServiceWrapper
 	action on the resource; <code>false</code> otherwise
 	*/
 	@Override
-	public boolean hasScopeResourcePermission(long companyId,
-		java.lang.String name, int scope, long roleId, java.lang.String actionId)
+	public boolean hasScopeResourcePermission(long companyId, String name,
+		int scope, long roleId, String actionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _resourcePermissionLocalService.hasScopeResourcePermission(companyId,
 			name, scope, roleId, actionId);
@@ -772,9 +760,8 @@ public class ResourcePermissionLocalServiceWrapper
 	* @param actionId the action ID
 	*/
 	@Override
-	public void removeResourcePermission(long companyId, java.lang.String name,
-		int scope, java.lang.String primKey, long roleId,
-		java.lang.String actionId)
+	public void removeResourcePermission(long companyId, String name,
+		int scope, String primKey, long roleId, String actionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_resourcePermissionLocalService.removeResourcePermission(companyId,
 			name, scope, primKey, roleId, actionId);
@@ -794,8 +781,8 @@ public class ResourcePermissionLocalServiceWrapper
 	* @param actionId the action ID
 	*/
 	@Override
-	public void removeResourcePermissions(long companyId,
-		java.lang.String name, int scope, long roleId, java.lang.String actionId)
+	public void removeResourcePermissions(long companyId, String name,
+		int scope, long roleId, String actionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_resourcePermissionLocalService.removeResourcePermissions(companyId,
 			name, scope, roleId, actionId);
@@ -829,9 +816,8 @@ public class ResourcePermissionLocalServiceWrapper
 	* @param actionIds the action IDs of the actions
 	*/
 	@Override
-	public void setOwnerResourcePermissions(long companyId,
-		java.lang.String name, int scope, java.lang.String primKey,
-		long roleId, long ownerId, java.lang.String[] actionIds)
+	public void setOwnerResourcePermissions(long companyId, String name,
+		int scope, String primKey, long roleId, long ownerId, String[] actionIds)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_resourcePermissionLocalService.setOwnerResourcePermissions(companyId,
 			name, scope, primKey, roleId, ownerId, actionIds);
@@ -862,9 +848,8 @@ public class ResourcePermissionLocalServiceWrapper
 	* @param actionIds the action IDs of the actions
 	*/
 	@Override
-	public void setResourcePermissions(long companyId, java.lang.String name,
-		int scope, java.lang.String primKey, long roleId,
-		java.lang.String[] actionIds)
+	public void setResourcePermissions(long companyId, String name, int scope,
+		String primKey, long roleId, String[] actionIds)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_resourcePermissionLocalService.setResourcePermissions(companyId, name,
 			scope, primKey, roleId, actionIds);
@@ -894,9 +879,8 @@ public class ResourcePermissionLocalServiceWrapper
 	* @param roleIdsToActionIds a map of role IDs to action IDs of the actions
 	*/
 	@Override
-	public void setResourcePermissions(long companyId, java.lang.String name,
-		int scope, java.lang.String primKey,
-		java.util.Map<java.lang.Long, java.lang.String[]> roleIdsToActionIds)
+	public void setResourcePermissions(long companyId, String name, int scope,
+		String primKey, java.util.Map<Long, String[]> roleIdsToActionIds)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_resourcePermissionLocalService.setResourcePermissions(companyId, name,
 			scope, primKey, roleIdsToActionIds);

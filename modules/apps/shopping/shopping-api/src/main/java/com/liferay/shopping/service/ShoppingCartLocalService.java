@@ -185,15 +185,14 @@ public interface ShoppingCartLocalService extends BaseLocalService,
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Map<ShoppingCartItem, java.lang.Integer> getItems(long groupId,
-		java.lang.String itemIds);
+	public Map<ShoppingCartItem, Integer> getItems(long groupId, String itemIds);
 
 	/**
 	* Returns the OSGi service identifier.
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -232,9 +231,9 @@ public interface ShoppingCartLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getShoppingCartsCount();
 
-	public ShoppingCart updateCart(long userId, long groupId,
-		java.lang.String itemIds, java.lang.String couponCodes,
-		int altShipping, boolean insure) throws PortalException;
+	public ShoppingCart updateCart(long userId, long groupId, String itemIds,
+		String couponCodes, int altShipping, boolean insure)
+		throws PortalException;
 
 	/**
 	* Updates the shopping cart in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.

@@ -66,13 +66,13 @@ import java.rmi.RemoteException;
 @ProviderType
 public class ShoppingCouponServiceSoap {
 	public static com.liferay.shopping.model.ShoppingCouponSoap addCoupon(
-		java.lang.String code, boolean autoCode, java.lang.String name,
-		java.lang.String description, int startDateMonth, int startDateDay,
-		int startDateYear, int startDateHour, int startDateMinute,
-		int endDateMonth, int endDateDay, int endDateYear, int endDateHour,
-		int endDateMinute, boolean neverExpire, boolean active,
-		java.lang.String limitCategories, java.lang.String limitSkus,
-		double minOrder, double discount, java.lang.String discountType,
+		String code, boolean autoCode, String name, String description,
+		int startDateMonth, int startDateDay, int startDateYear,
+		int startDateHour, int startDateMinute, int endDateMonth,
+		int endDateDay, int endDateYear, int endDateHour, int endDateMinute,
+		boolean neverExpire, boolean active, String limitCategories,
+		String limitSkus, double minOrder, double discount,
+		String discountType,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
@@ -120,8 +120,8 @@ public class ShoppingCouponServiceSoap {
 	}
 
 	public static com.liferay.shopping.model.ShoppingCouponSoap[] search(
-		long groupId, long companyId, java.lang.String code, boolean active,
-		java.lang.String discountType, boolean andOperator, int start, int end)
+		long groupId, long companyId, String code, boolean active,
+		String discountType, boolean andOperator, int start, int end)
 		throws RemoteException {
 		try {
 			java.util.List<com.liferay.shopping.model.ShoppingCoupon> returnValue =
@@ -138,13 +138,12 @@ public class ShoppingCouponServiceSoap {
 	}
 
 	public static com.liferay.shopping.model.ShoppingCouponSoap updateCoupon(
-		long couponId, java.lang.String name, java.lang.String description,
-		int startDateMonth, int startDateDay, int startDateYear,
-		int startDateHour, int startDateMinute, int endDateMonth,
-		int endDateDay, int endDateYear, int endDateHour, int endDateMinute,
-		boolean neverExpire, boolean active, java.lang.String limitCategories,
-		java.lang.String limitSkus, double minOrder, double discount,
-		java.lang.String discountType,
+		long couponId, String name, String description, int startDateMonth,
+		int startDateDay, int startDateYear, int startDateHour,
+		int startDateMinute, int endDateMonth, int endDateDay, int endDateYear,
+		int endDateHour, int endDateMinute, boolean neverExpire,
+		boolean active, String limitCategories, String limitSkus,
+		double minOrder, double discount, String discountType,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {

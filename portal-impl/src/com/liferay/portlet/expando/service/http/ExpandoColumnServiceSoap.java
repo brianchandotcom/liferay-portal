@@ -66,8 +66,7 @@ import java.rmi.RemoteException;
 @ProviderType
 public class ExpandoColumnServiceSoap {
 	public static com.liferay.expando.kernel.model.ExpandoColumnSoap addColumn(
-		long tableId, java.lang.String name, int type)
-		throws RemoteException {
+		long tableId, String name, int type) throws RemoteException {
 		try {
 			com.liferay.expando.kernel.model.ExpandoColumn returnValue = ExpandoColumnServiceUtil.addColumn(tableId,
 					name, type);
@@ -82,8 +81,8 @@ public class ExpandoColumnServiceSoap {
 	}
 
 	public static com.liferay.expando.kernel.model.ExpandoColumnSoap addColumn(
-		long tableId, java.lang.String name, int type,
-		java.lang.Object defaultData) throws RemoteException {
+		long tableId, String name, int type, Object defaultData)
+		throws RemoteException {
 		try {
 			com.liferay.expando.kernel.model.ExpandoColumn returnValue = ExpandoColumnServiceUtil.addColumn(tableId,
 					name, type, defaultData);
@@ -123,8 +122,7 @@ public class ExpandoColumnServiceSoap {
 	}
 
 	public static com.liferay.expando.kernel.model.ExpandoColumnSoap updateColumn(
-		long columnId, java.lang.String name, int type)
-		throws RemoteException {
+		long columnId, String name, int type) throws RemoteException {
 		try {
 			com.liferay.expando.kernel.model.ExpandoColumn returnValue = ExpandoColumnServiceUtil.updateColumn(columnId,
 					name, type);
@@ -139,8 +137,8 @@ public class ExpandoColumnServiceSoap {
 	}
 
 	public static com.liferay.expando.kernel.model.ExpandoColumnSoap updateColumn(
-		long columnId, java.lang.String name, int type,
-		java.lang.Object defaultData) throws RemoteException {
+		long columnId, String name, int type, Object defaultData)
+		throws RemoteException {
 		try {
 			com.liferay.expando.kernel.model.ExpandoColumn returnValue = ExpandoColumnServiceUtil.updateColumn(columnId,
 					name, type, defaultData);
@@ -155,7 +153,7 @@ public class ExpandoColumnServiceSoap {
 	}
 
 	public static com.liferay.expando.kernel.model.ExpandoColumnSoap updateTypeSettings(
-		long columnId, java.lang.String typeSettings) throws RemoteException {
+		long columnId, String typeSettings) throws RemoteException {
 		try {
 			com.liferay.expando.kernel.model.ExpandoColumn returnValue = ExpandoColumnServiceUtil.updateTypeSettings(columnId,
 					typeSettings);

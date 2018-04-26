@@ -54,7 +54,7 @@ public interface KBFolder extends KBFolderModel, PersistedModel {
 			}
 		};
 
-	public java.util.List<java.lang.Long> getAncestorKBFolderIds()
+	public java.util.List<Long> getAncestorKBFolderIds()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public long getClassNameId();
@@ -62,7 +62,7 @@ public interface KBFolder extends KBFolderModel, PersistedModel {
 	public KBFolder getParentKBFolder()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
-	public java.lang.String getParentTitle(java.util.Locale locale)
+	public String getParentTitle(java.util.Locale locale)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public boolean isEmpty()

@@ -60,8 +60,7 @@ public interface DDMFormInstanceService extends BaseService {
 	 * Never modify or reference this interface directly. Always use {@link DDMFormInstanceServiceUtil} to access the ddm form instance remote service. Add custom service methods to {@link com.liferay.dynamic.data.mapping.service.impl.DDMFormInstanceServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	public DDMFormInstance addFormInstance(long groupId, long ddmStructureId,
-		Map<Locale, java.lang.String> nameMap,
-		Map<Locale, java.lang.String> descriptionMap,
+		Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
 		DDMFormValues settingsDDMFormValues, ServiceContext serviceContext)
 		throws PortalException;
 
@@ -88,27 +87,24 @@ public interface DDMFormInstanceService extends BaseService {
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<DDMFormInstance> search(long companyId, long groupId,
-		java.lang.String keywords, int start, int end,
+		String keywords, int start, int end,
 		OrderByComparator<DDMFormInstance> orderByComparator);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<DDMFormInstance> search(long companyId, long groupId,
-		java.lang.String[] names, java.lang.String[] descriptions,
-		boolean andOperator, int start, int end,
-		OrderByComparator<DDMFormInstance> orderByComparator);
+		String[] names, String[] descriptions, boolean andOperator, int start,
+		int end, OrderByComparator<DDMFormInstance> orderByComparator);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int searchCount(long companyId, long groupId,
-		java.lang.String keywords);
+	public int searchCount(long companyId, long groupId, String keywords);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int searchCount(long companyId, long groupId,
-		java.lang.String[] names, java.lang.String[] descriptions,
-		boolean andOperator);
+	public int searchCount(long companyId, long groupId, String[] names,
+		String[] descriptions, boolean andOperator);
 
 	/**
 	* Updates the the record set's settings.
@@ -124,8 +120,8 @@ public interface DDMFormInstanceService extends BaseService {
 		DDMFormValues settingsDDMFormValues) throws PortalException;
 
 	public DDMFormInstance updateFormInstance(long ddmFormInstanceId,
-		long ddmStructureId, Map<Locale, java.lang.String> nameMap,
-		Map<Locale, java.lang.String> descriptionMap,
+		long ddmStructureId, Map<Locale, String> nameMap,
+		Map<Locale, String> descriptionMap,
 		DDMFormValues settingsDDMFormValues, ServiceContext serviceContext)
 		throws PortalException;
 }

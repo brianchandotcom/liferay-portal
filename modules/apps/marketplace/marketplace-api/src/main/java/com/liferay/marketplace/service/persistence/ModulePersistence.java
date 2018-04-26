@@ -47,7 +47,7 @@ public interface ModulePersistence extends BasePersistence<Module> {
 	* @param uuid the uuid
 	* @return the matching modules
 	*/
-	public java.util.List<Module> findByUuid(java.lang.String uuid);
+	public java.util.List<Module> findByUuid(String uuid);
 
 	/**
 	* Returns a range of all the modules where uuid = &#63;.
@@ -61,8 +61,7 @@ public interface ModulePersistence extends BasePersistence<Module> {
 	* @param end the upper bound of the range of modules (not inclusive)
 	* @return the range of matching modules
 	*/
-	public java.util.List<Module> findByUuid(java.lang.String uuid, int start,
-		int end);
+	public java.util.List<Module> findByUuid(String uuid, int start, int end);
 
 	/**
 	* Returns an ordered range of all the modules where uuid = &#63;.
@@ -77,8 +76,7 @@ public interface ModulePersistence extends BasePersistence<Module> {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching modules
 	*/
-	public java.util.List<Module> findByUuid(java.lang.String uuid, int start,
-		int end,
+	public java.util.List<Module> findByUuid(String uuid, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<Module> orderByComparator);
 
 	/**
@@ -95,8 +93,7 @@ public interface ModulePersistence extends BasePersistence<Module> {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching modules
 	*/
-	public java.util.List<Module> findByUuid(java.lang.String uuid, int start,
-		int end,
+	public java.util.List<Module> findByUuid(String uuid, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<Module> orderByComparator,
 		boolean retrieveFromCache);
 
@@ -108,7 +105,7 @@ public interface ModulePersistence extends BasePersistence<Module> {
 	* @return the first matching module
 	* @throws NoSuchModuleException if a matching module could not be found
 	*/
-	public Module findByUuid_First(java.lang.String uuid,
+	public Module findByUuid_First(String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<Module> orderByComparator)
 		throws NoSuchModuleException;
 
@@ -119,7 +116,7 @@ public interface ModulePersistence extends BasePersistence<Module> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching module, or <code>null</code> if a matching module could not be found
 	*/
-	public Module fetchByUuid_First(java.lang.String uuid,
+	public Module fetchByUuid_First(String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<Module> orderByComparator);
 
 	/**
@@ -130,7 +127,7 @@ public interface ModulePersistence extends BasePersistence<Module> {
 	* @return the last matching module
 	* @throws NoSuchModuleException if a matching module could not be found
 	*/
-	public Module findByUuid_Last(java.lang.String uuid,
+	public Module findByUuid_Last(String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<Module> orderByComparator)
 		throws NoSuchModuleException;
 
@@ -141,7 +138,7 @@ public interface ModulePersistence extends BasePersistence<Module> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching module, or <code>null</code> if a matching module could not be found
 	*/
-	public Module fetchByUuid_Last(java.lang.String uuid,
+	public Module fetchByUuid_Last(String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<Module> orderByComparator);
 
 	/**
@@ -153,8 +150,7 @@ public interface ModulePersistence extends BasePersistence<Module> {
 	* @return the previous, current, and next module
 	* @throws NoSuchModuleException if a module with the primary key could not be found
 	*/
-	public Module[] findByUuid_PrevAndNext(long moduleId,
-		java.lang.String uuid,
+	public Module[] findByUuid_PrevAndNext(long moduleId, String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<Module> orderByComparator)
 		throws NoSuchModuleException;
 
@@ -163,7 +159,7 @@ public interface ModulePersistence extends BasePersistence<Module> {
 	*
 	* @param uuid the uuid
 	*/
-	public void removeByUuid(java.lang.String uuid);
+	public void removeByUuid(String uuid);
 
 	/**
 	* Returns the number of modules where uuid = &#63;.
@@ -171,7 +167,7 @@ public interface ModulePersistence extends BasePersistence<Module> {
 	* @param uuid the uuid
 	* @return the number of matching modules
 	*/
-	public int countByUuid(java.lang.String uuid);
+	public int countByUuid(String uuid);
 
 	/**
 	* Returns all the modules where uuid = &#63; and companyId = &#63;.
@@ -180,8 +176,7 @@ public interface ModulePersistence extends BasePersistence<Module> {
 	* @param companyId the company ID
 	* @return the matching modules
 	*/
-	public java.util.List<Module> findByUuid_C(java.lang.String uuid,
-		long companyId);
+	public java.util.List<Module> findByUuid_C(String uuid, long companyId);
 
 	/**
 	* Returns a range of all the modules where uuid = &#63; and companyId = &#63;.
@@ -196,8 +191,8 @@ public interface ModulePersistence extends BasePersistence<Module> {
 	* @param end the upper bound of the range of modules (not inclusive)
 	* @return the range of matching modules
 	*/
-	public java.util.List<Module> findByUuid_C(java.lang.String uuid,
-		long companyId, int start, int end);
+	public java.util.List<Module> findByUuid_C(String uuid, long companyId,
+		int start, int end);
 
 	/**
 	* Returns an ordered range of all the modules where uuid = &#63; and companyId = &#63;.
@@ -213,8 +208,8 @@ public interface ModulePersistence extends BasePersistence<Module> {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching modules
 	*/
-	public java.util.List<Module> findByUuid_C(java.lang.String uuid,
-		long companyId, int start, int end,
+	public java.util.List<Module> findByUuid_C(String uuid, long companyId,
+		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<Module> orderByComparator);
 
 	/**
@@ -232,8 +227,8 @@ public interface ModulePersistence extends BasePersistence<Module> {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching modules
 	*/
-	public java.util.List<Module> findByUuid_C(java.lang.String uuid,
-		long companyId, int start, int end,
+	public java.util.List<Module> findByUuid_C(String uuid, long companyId,
+		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<Module> orderByComparator,
 		boolean retrieveFromCache);
 
@@ -246,7 +241,7 @@ public interface ModulePersistence extends BasePersistence<Module> {
 	* @return the first matching module
 	* @throws NoSuchModuleException if a matching module could not be found
 	*/
-	public Module findByUuid_C_First(java.lang.String uuid, long companyId,
+	public Module findByUuid_C_First(String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<Module> orderByComparator)
 		throws NoSuchModuleException;
 
@@ -258,7 +253,7 @@ public interface ModulePersistence extends BasePersistence<Module> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching module, or <code>null</code> if a matching module could not be found
 	*/
-	public Module fetchByUuid_C_First(java.lang.String uuid, long companyId,
+	public Module fetchByUuid_C_First(String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<Module> orderByComparator);
 
 	/**
@@ -270,7 +265,7 @@ public interface ModulePersistence extends BasePersistence<Module> {
 	* @return the last matching module
 	* @throws NoSuchModuleException if a matching module could not be found
 	*/
-	public Module findByUuid_C_Last(java.lang.String uuid, long companyId,
+	public Module findByUuid_C_Last(String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<Module> orderByComparator)
 		throws NoSuchModuleException;
 
@@ -282,7 +277,7 @@ public interface ModulePersistence extends BasePersistence<Module> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching module, or <code>null</code> if a matching module could not be found
 	*/
-	public Module fetchByUuid_C_Last(java.lang.String uuid, long companyId,
+	public Module fetchByUuid_C_Last(String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<Module> orderByComparator);
 
 	/**
@@ -295,8 +290,8 @@ public interface ModulePersistence extends BasePersistence<Module> {
 	* @return the previous, current, and next module
 	* @throws NoSuchModuleException if a module with the primary key could not be found
 	*/
-	public Module[] findByUuid_C_PrevAndNext(long moduleId,
-		java.lang.String uuid, long companyId,
+	public Module[] findByUuid_C_PrevAndNext(long moduleId, String uuid,
+		long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<Module> orderByComparator)
 		throws NoSuchModuleException;
 
@@ -306,7 +301,7 @@ public interface ModulePersistence extends BasePersistence<Module> {
 	* @param uuid the uuid
 	* @param companyId the company ID
 	*/
-	public void removeByUuid_C(java.lang.String uuid, long companyId);
+	public void removeByUuid_C(String uuid, long companyId);
 
 	/**
 	* Returns the number of modules where uuid = &#63; and companyId = &#63;.
@@ -315,7 +310,7 @@ public interface ModulePersistence extends BasePersistence<Module> {
 	* @param companyId the company ID
 	* @return the number of matching modules
 	*/
-	public int countByUuid_C(java.lang.String uuid, long companyId);
+	public int countByUuid_C(String uuid, long companyId);
 
 	/**
 	* Returns all the modules where appId = &#63;.
@@ -452,7 +447,7 @@ public interface ModulePersistence extends BasePersistence<Module> {
 	* @return the matching modules
 	*/
 	public java.util.List<Module> findByBundleSymbolicName(
-		java.lang.String bundleSymbolicName);
+		String bundleSymbolicName);
 
 	/**
 	* Returns a range of all the modules where bundleSymbolicName = &#63;.
@@ -467,7 +462,7 @@ public interface ModulePersistence extends BasePersistence<Module> {
 	* @return the range of matching modules
 	*/
 	public java.util.List<Module> findByBundleSymbolicName(
-		java.lang.String bundleSymbolicName, int start, int end);
+		String bundleSymbolicName, int start, int end);
 
 	/**
 	* Returns an ordered range of all the modules where bundleSymbolicName = &#63;.
@@ -483,7 +478,7 @@ public interface ModulePersistence extends BasePersistence<Module> {
 	* @return the ordered range of matching modules
 	*/
 	public java.util.List<Module> findByBundleSymbolicName(
-		java.lang.String bundleSymbolicName, int start, int end,
+		String bundleSymbolicName, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<Module> orderByComparator);
 
 	/**
@@ -501,7 +496,7 @@ public interface ModulePersistence extends BasePersistence<Module> {
 	* @return the ordered range of matching modules
 	*/
 	public java.util.List<Module> findByBundleSymbolicName(
-		java.lang.String bundleSymbolicName, int start, int end,
+		String bundleSymbolicName, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<Module> orderByComparator,
 		boolean retrieveFromCache);
 
@@ -513,8 +508,7 @@ public interface ModulePersistence extends BasePersistence<Module> {
 	* @return the first matching module
 	* @throws NoSuchModuleException if a matching module could not be found
 	*/
-	public Module findByBundleSymbolicName_First(
-		java.lang.String bundleSymbolicName,
+	public Module findByBundleSymbolicName_First(String bundleSymbolicName,
 		com.liferay.portal.kernel.util.OrderByComparator<Module> orderByComparator)
 		throws NoSuchModuleException;
 
@@ -525,8 +519,7 @@ public interface ModulePersistence extends BasePersistence<Module> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching module, or <code>null</code> if a matching module could not be found
 	*/
-	public Module fetchByBundleSymbolicName_First(
-		java.lang.String bundleSymbolicName,
+	public Module fetchByBundleSymbolicName_First(String bundleSymbolicName,
 		com.liferay.portal.kernel.util.OrderByComparator<Module> orderByComparator);
 
 	/**
@@ -537,8 +530,7 @@ public interface ModulePersistence extends BasePersistence<Module> {
 	* @return the last matching module
 	* @throws NoSuchModuleException if a matching module could not be found
 	*/
-	public Module findByBundleSymbolicName_Last(
-		java.lang.String bundleSymbolicName,
+	public Module findByBundleSymbolicName_Last(String bundleSymbolicName,
 		com.liferay.portal.kernel.util.OrderByComparator<Module> orderByComparator)
 		throws NoSuchModuleException;
 
@@ -549,8 +541,7 @@ public interface ModulePersistence extends BasePersistence<Module> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching module, or <code>null</code> if a matching module could not be found
 	*/
-	public Module fetchByBundleSymbolicName_Last(
-		java.lang.String bundleSymbolicName,
+	public Module fetchByBundleSymbolicName_Last(String bundleSymbolicName,
 		com.liferay.portal.kernel.util.OrderByComparator<Module> orderByComparator);
 
 	/**
@@ -563,7 +554,7 @@ public interface ModulePersistence extends BasePersistence<Module> {
 	* @throws NoSuchModuleException if a module with the primary key could not be found
 	*/
 	public Module[] findByBundleSymbolicName_PrevAndNext(long moduleId,
-		java.lang.String bundleSymbolicName,
+		String bundleSymbolicName,
 		com.liferay.portal.kernel.util.OrderByComparator<Module> orderByComparator)
 		throws NoSuchModuleException;
 
@@ -572,7 +563,7 @@ public interface ModulePersistence extends BasePersistence<Module> {
 	*
 	* @param bundleSymbolicName the bundle symbolic name
 	*/
-	public void removeByBundleSymbolicName(java.lang.String bundleSymbolicName);
+	public void removeByBundleSymbolicName(String bundleSymbolicName);
 
 	/**
 	* Returns the number of modules where bundleSymbolicName = &#63;.
@@ -580,7 +571,7 @@ public interface ModulePersistence extends BasePersistence<Module> {
 	* @param bundleSymbolicName the bundle symbolic name
 	* @return the number of matching modules
 	*/
-	public int countByBundleSymbolicName(java.lang.String bundleSymbolicName);
+	public int countByBundleSymbolicName(String bundleSymbolicName);
 
 	/**
 	* Returns all the modules where contextName = &#63;.
@@ -588,8 +579,7 @@ public interface ModulePersistence extends BasePersistence<Module> {
 	* @param contextName the context name
 	* @return the matching modules
 	*/
-	public java.util.List<Module> findByContextName(
-		java.lang.String contextName);
+	public java.util.List<Module> findByContextName(String contextName);
 
 	/**
 	* Returns a range of all the modules where contextName = &#63;.
@@ -603,8 +593,8 @@ public interface ModulePersistence extends BasePersistence<Module> {
 	* @param end the upper bound of the range of modules (not inclusive)
 	* @return the range of matching modules
 	*/
-	public java.util.List<Module> findByContextName(
-		java.lang.String contextName, int start, int end);
+	public java.util.List<Module> findByContextName(String contextName,
+		int start, int end);
 
 	/**
 	* Returns an ordered range of all the modules where contextName = &#63;.
@@ -619,8 +609,8 @@ public interface ModulePersistence extends BasePersistence<Module> {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching modules
 	*/
-	public java.util.List<Module> findByContextName(
-		java.lang.String contextName, int start, int end,
+	public java.util.List<Module> findByContextName(String contextName,
+		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<Module> orderByComparator);
 
 	/**
@@ -637,8 +627,8 @@ public interface ModulePersistence extends BasePersistence<Module> {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching modules
 	*/
-	public java.util.List<Module> findByContextName(
-		java.lang.String contextName, int start, int end,
+	public java.util.List<Module> findByContextName(String contextName,
+		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<Module> orderByComparator,
 		boolean retrieveFromCache);
 
@@ -650,7 +640,7 @@ public interface ModulePersistence extends BasePersistence<Module> {
 	* @return the first matching module
 	* @throws NoSuchModuleException if a matching module could not be found
 	*/
-	public Module findByContextName_First(java.lang.String contextName,
+	public Module findByContextName_First(String contextName,
 		com.liferay.portal.kernel.util.OrderByComparator<Module> orderByComparator)
 		throws NoSuchModuleException;
 
@@ -661,7 +651,7 @@ public interface ModulePersistence extends BasePersistence<Module> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching module, or <code>null</code> if a matching module could not be found
 	*/
-	public Module fetchByContextName_First(java.lang.String contextName,
+	public Module fetchByContextName_First(String contextName,
 		com.liferay.portal.kernel.util.OrderByComparator<Module> orderByComparator);
 
 	/**
@@ -672,7 +662,7 @@ public interface ModulePersistence extends BasePersistence<Module> {
 	* @return the last matching module
 	* @throws NoSuchModuleException if a matching module could not be found
 	*/
-	public Module findByContextName_Last(java.lang.String contextName,
+	public Module findByContextName_Last(String contextName,
 		com.liferay.portal.kernel.util.OrderByComparator<Module> orderByComparator)
 		throws NoSuchModuleException;
 
@@ -683,7 +673,7 @@ public interface ModulePersistence extends BasePersistence<Module> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching module, or <code>null</code> if a matching module could not be found
 	*/
-	public Module fetchByContextName_Last(java.lang.String contextName,
+	public Module fetchByContextName_Last(String contextName,
 		com.liferay.portal.kernel.util.OrderByComparator<Module> orderByComparator);
 
 	/**
@@ -696,7 +686,7 @@ public interface ModulePersistence extends BasePersistence<Module> {
 	* @throws NoSuchModuleException if a module with the primary key could not be found
 	*/
 	public Module[] findByContextName_PrevAndNext(long moduleId,
-		java.lang.String contextName,
+		String contextName,
 		com.liferay.portal.kernel.util.OrderByComparator<Module> orderByComparator)
 		throws NoSuchModuleException;
 
@@ -705,7 +695,7 @@ public interface ModulePersistence extends BasePersistence<Module> {
 	*
 	* @param contextName the context name
 	*/
-	public void removeByContextName(java.lang.String contextName);
+	public void removeByContextName(String contextName);
 
 	/**
 	* Returns the number of modules where contextName = &#63;.
@@ -713,7 +703,7 @@ public interface ModulePersistence extends BasePersistence<Module> {
 	* @param contextName the context name
 	* @return the number of matching modules
 	*/
-	public int countByContextName(java.lang.String contextName);
+	public int countByContextName(String contextName);
 
 	/**
 	* Returns the module where appId = &#63; and contextName = &#63; or throws a {@link NoSuchModuleException} if it could not be found.
@@ -723,7 +713,7 @@ public interface ModulePersistence extends BasePersistence<Module> {
 	* @return the matching module
 	* @throws NoSuchModuleException if a matching module could not be found
 	*/
-	public Module findByA_CN(long appId, java.lang.String contextName)
+	public Module findByA_CN(long appId, String contextName)
 		throws NoSuchModuleException;
 
 	/**
@@ -733,7 +723,7 @@ public interface ModulePersistence extends BasePersistence<Module> {
 	* @param contextName the context name
 	* @return the matching module, or <code>null</code> if a matching module could not be found
 	*/
-	public Module fetchByA_CN(long appId, java.lang.String contextName);
+	public Module fetchByA_CN(long appId, String contextName);
 
 	/**
 	* Returns the module where appId = &#63; and contextName = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -743,7 +733,7 @@ public interface ModulePersistence extends BasePersistence<Module> {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching module, or <code>null</code> if a matching module could not be found
 	*/
-	public Module fetchByA_CN(long appId, java.lang.String contextName,
+	public Module fetchByA_CN(long appId, String contextName,
 		boolean retrieveFromCache);
 
 	/**
@@ -753,7 +743,7 @@ public interface ModulePersistence extends BasePersistence<Module> {
 	* @param contextName the context name
 	* @return the module that was removed
 	*/
-	public Module removeByA_CN(long appId, java.lang.String contextName)
+	public Module removeByA_CN(long appId, String contextName)
 		throws NoSuchModuleException;
 
 	/**
@@ -763,7 +753,7 @@ public interface ModulePersistence extends BasePersistence<Module> {
 	* @param contextName the context name
 	* @return the number of matching modules
 	*/
-	public int countByA_CN(long appId, java.lang.String contextName);
+	public int countByA_CN(long appId, String contextName);
 
 	/**
 	* Returns the module where appId = &#63; and bundleSymbolicName = &#63; and bundleVersion = &#63; or throws a {@link NoSuchModuleException} if it could not be found.
@@ -774,9 +764,8 @@ public interface ModulePersistence extends BasePersistence<Module> {
 	* @return the matching module
 	* @throws NoSuchModuleException if a matching module could not be found
 	*/
-	public Module findByA_BSN_BV(long appId,
-		java.lang.String bundleSymbolicName, java.lang.String bundleVersion)
-		throws NoSuchModuleException;
+	public Module findByA_BSN_BV(long appId, String bundleSymbolicName,
+		String bundleVersion) throws NoSuchModuleException;
 
 	/**
 	* Returns the module where appId = &#63; and bundleSymbolicName = &#63; and bundleVersion = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
@@ -786,8 +775,8 @@ public interface ModulePersistence extends BasePersistence<Module> {
 	* @param bundleVersion the bundle version
 	* @return the matching module, or <code>null</code> if a matching module could not be found
 	*/
-	public Module fetchByA_BSN_BV(long appId,
-		java.lang.String bundleSymbolicName, java.lang.String bundleVersion);
+	public Module fetchByA_BSN_BV(long appId, String bundleSymbolicName,
+		String bundleVersion);
 
 	/**
 	* Returns the module where appId = &#63; and bundleSymbolicName = &#63; and bundleVersion = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -798,9 +787,8 @@ public interface ModulePersistence extends BasePersistence<Module> {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching module, or <code>null</code> if a matching module could not be found
 	*/
-	public Module fetchByA_BSN_BV(long appId,
-		java.lang.String bundleSymbolicName, java.lang.String bundleVersion,
-		boolean retrieveFromCache);
+	public Module fetchByA_BSN_BV(long appId, String bundleSymbolicName,
+		String bundleVersion, boolean retrieveFromCache);
 
 	/**
 	* Removes the module where appId = &#63; and bundleSymbolicName = &#63; and bundleVersion = &#63; from the database.
@@ -810,9 +798,8 @@ public interface ModulePersistence extends BasePersistence<Module> {
 	* @param bundleVersion the bundle version
 	* @return the module that was removed
 	*/
-	public Module removeByA_BSN_BV(long appId,
-		java.lang.String bundleSymbolicName, java.lang.String bundleVersion)
-		throws NoSuchModuleException;
+	public Module removeByA_BSN_BV(long appId, String bundleSymbolicName,
+		String bundleVersion) throws NoSuchModuleException;
 
 	/**
 	* Returns the number of modules where appId = &#63; and bundleSymbolicName = &#63; and bundleVersion = &#63;.
@@ -822,8 +809,8 @@ public interface ModulePersistence extends BasePersistence<Module> {
 	* @param bundleVersion the bundle version
 	* @return the number of matching modules
 	*/
-	public int countByA_BSN_BV(long appId, java.lang.String bundleSymbolicName,
-		java.lang.String bundleVersion);
+	public int countByA_BSN_BV(long appId, String bundleSymbolicName,
+		String bundleVersion);
 
 	/**
 	* Caches the module in the entity cache if it is enabled.
@@ -944,5 +931,5 @@ public interface ModulePersistence extends BasePersistence<Module> {
 	public int countAll();
 
 	@Override
-	public java.util.Set<java.lang.String> getBadColumnNames();
+	public java.util.Set<String> getBadColumnNames();
 }

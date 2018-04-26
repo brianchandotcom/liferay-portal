@@ -182,8 +182,8 @@ public interface DDMStructureVersionPersistence extends BasePersistence<DDMStruc
 	* @return the matching ddm structure version
 	* @throws NoSuchStructureVersionException if a matching ddm structure version could not be found
 	*/
-	public DDMStructureVersion findByS_V(long structureId,
-		java.lang.String version) throws NoSuchStructureVersionException;
+	public DDMStructureVersion findByS_V(long structureId, String version)
+		throws NoSuchStructureVersionException;
 
 	/**
 	* Returns the ddm structure version where structureId = &#63; and version = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
@@ -192,8 +192,7 @@ public interface DDMStructureVersionPersistence extends BasePersistence<DDMStruc
 	* @param version the version
 	* @return the matching ddm structure version, or <code>null</code> if a matching ddm structure version could not be found
 	*/
-	public DDMStructureVersion fetchByS_V(long structureId,
-		java.lang.String version);
+	public DDMStructureVersion fetchByS_V(long structureId, String version);
 
 	/**
 	* Returns the ddm structure version where structureId = &#63; and version = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -203,8 +202,8 @@ public interface DDMStructureVersionPersistence extends BasePersistence<DDMStruc
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching ddm structure version, or <code>null</code> if a matching ddm structure version could not be found
 	*/
-	public DDMStructureVersion fetchByS_V(long structureId,
-		java.lang.String version, boolean retrieveFromCache);
+	public DDMStructureVersion fetchByS_V(long structureId, String version,
+		boolean retrieveFromCache);
 
 	/**
 	* Removes the ddm structure version where structureId = &#63; and version = &#63; from the database.
@@ -213,8 +212,8 @@ public interface DDMStructureVersionPersistence extends BasePersistence<DDMStruc
 	* @param version the version
 	* @return the ddm structure version that was removed
 	*/
-	public DDMStructureVersion removeByS_V(long structureId,
-		java.lang.String version) throws NoSuchStructureVersionException;
+	public DDMStructureVersion removeByS_V(long structureId, String version)
+		throws NoSuchStructureVersionException;
 
 	/**
 	* Returns the number of ddm structure versions where structureId = &#63; and version = &#63;.
@@ -223,7 +222,7 @@ public interface DDMStructureVersionPersistence extends BasePersistence<DDMStruc
 	* @param version the version
 	* @return the number of matching ddm structure versions
 	*/
-	public int countByS_V(long structureId, java.lang.String version);
+	public int countByS_V(long structureId, String version);
 
 	/**
 	* Returns all the ddm structure versions where structureId = &#63; and status = &#63;.
@@ -492,5 +491,5 @@ public interface DDMStructureVersionPersistence extends BasePersistence<DDMStruc
 	public int countAll();
 
 	@Override
-	public java.util.Set<java.lang.String> getBadColumnNames();
+	public java.util.Set<String> getBadColumnNames();
 }

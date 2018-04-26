@@ -425,7 +425,7 @@ public class ShoppingOrderWrapper implements ShoppingOrder,
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new ShoppingOrderWrapper((ShoppingOrder)_shoppingOrder.clone());
 	}
 
@@ -440,7 +440,7 @@ public class ShoppingOrderWrapper implements ShoppingOrder,
 	* @return the alt shipping of this shopping order
 	*/
 	@Override
-	public java.lang.String getAltShipping() {
+	public String getAltShipping() {
 		return _shoppingOrder.getAltShipping();
 	}
 
@@ -450,7 +450,7 @@ public class ShoppingOrderWrapper implements ShoppingOrder,
 	* @return the billing city of this shopping order
 	*/
 	@Override
-	public java.lang.String getBillingCity() {
+	public String getBillingCity() {
 		return _shoppingOrder.getBillingCity();
 	}
 
@@ -460,7 +460,7 @@ public class ShoppingOrderWrapper implements ShoppingOrder,
 	* @return the billing company of this shopping order
 	*/
 	@Override
-	public java.lang.String getBillingCompany() {
+	public String getBillingCompany() {
 		return _shoppingOrder.getBillingCompany();
 	}
 
@@ -470,7 +470,7 @@ public class ShoppingOrderWrapper implements ShoppingOrder,
 	* @return the billing country of this shopping order
 	*/
 	@Override
-	public java.lang.String getBillingCountry() {
+	public String getBillingCountry() {
 		return _shoppingOrder.getBillingCountry();
 	}
 
@@ -480,7 +480,7 @@ public class ShoppingOrderWrapper implements ShoppingOrder,
 	* @return the billing email address of this shopping order
 	*/
 	@Override
-	public java.lang.String getBillingEmailAddress() {
+	public String getBillingEmailAddress() {
 		return _shoppingOrder.getBillingEmailAddress();
 	}
 
@@ -490,7 +490,7 @@ public class ShoppingOrderWrapper implements ShoppingOrder,
 	* @return the billing first name of this shopping order
 	*/
 	@Override
-	public java.lang.String getBillingFirstName() {
+	public String getBillingFirstName() {
 		return _shoppingOrder.getBillingFirstName();
 	}
 
@@ -500,7 +500,7 @@ public class ShoppingOrderWrapper implements ShoppingOrder,
 	* @return the billing last name of this shopping order
 	*/
 	@Override
-	public java.lang.String getBillingLastName() {
+	public String getBillingLastName() {
 		return _shoppingOrder.getBillingLastName();
 	}
 
@@ -510,7 +510,7 @@ public class ShoppingOrderWrapper implements ShoppingOrder,
 	* @return the billing phone of this shopping order
 	*/
 	@Override
-	public java.lang.String getBillingPhone() {
+	public String getBillingPhone() {
 		return _shoppingOrder.getBillingPhone();
 	}
 
@@ -520,7 +520,7 @@ public class ShoppingOrderWrapper implements ShoppingOrder,
 	* @return the billing state of this shopping order
 	*/
 	@Override
-	public java.lang.String getBillingState() {
+	public String getBillingState() {
 		return _shoppingOrder.getBillingState();
 	}
 
@@ -530,7 +530,7 @@ public class ShoppingOrderWrapper implements ShoppingOrder,
 	* @return the billing street of this shopping order
 	*/
 	@Override
-	public java.lang.String getBillingStreet() {
+	public String getBillingStreet() {
 		return _shoppingOrder.getBillingStreet();
 	}
 
@@ -540,7 +540,7 @@ public class ShoppingOrderWrapper implements ShoppingOrder,
 	* @return the billing zip of this shopping order
 	*/
 	@Override
-	public java.lang.String getBillingZip() {
+	public String getBillingZip() {
 		return _shoppingOrder.getBillingZip();
 	}
 
@@ -570,7 +570,7 @@ public class ShoppingOrderWrapper implements ShoppingOrder,
 	* @return the cc name of this shopping order
 	*/
 	@Override
-	public java.lang.String getCcName() {
+	public String getCcName() {
 		return _shoppingOrder.getCcName();
 	}
 
@@ -580,7 +580,7 @@ public class ShoppingOrderWrapper implements ShoppingOrder,
 	* @return the cc number of this shopping order
 	*/
 	@Override
-	public java.lang.String getCcNumber() {
+	public String getCcNumber() {
 		return _shoppingOrder.getCcNumber();
 	}
 
@@ -590,7 +590,7 @@ public class ShoppingOrderWrapper implements ShoppingOrder,
 	* @return the cc type of this shopping order
 	*/
 	@Override
-	public java.lang.String getCcType() {
+	public String getCcType() {
 		return _shoppingOrder.getCcType();
 	}
 
@@ -600,7 +600,7 @@ public class ShoppingOrderWrapper implements ShoppingOrder,
 	* @return the cc ver number of this shopping order
 	*/
 	@Override
-	public java.lang.String getCcVerNumber() {
+	public String getCcVerNumber() {
 		return _shoppingOrder.getCcVerNumber();
 	}
 
@@ -610,7 +610,7 @@ public class ShoppingOrderWrapper implements ShoppingOrder,
 	* @return the comments of this shopping order
 	*/
 	@Override
-	public java.lang.String getComments() {
+	public String getComments() {
 		return _shoppingOrder.getComments();
 	}
 
@@ -630,7 +630,7 @@ public class ShoppingOrderWrapper implements ShoppingOrder,
 	* @return the coupon codes of this shopping order
 	*/
 	@Override
-	public java.lang.String getCouponCodes() {
+	public String getCouponCodes() {
 		return _shoppingOrder.getCouponCodes();
 	}
 
@@ -705,7 +705,7 @@ public class ShoppingOrderWrapper implements ShoppingOrder,
 	* @return the number of this shopping order
 	*/
 	@Override
-	public java.lang.String getNumber() {
+	public String getNumber() {
 		return _shoppingOrder.getNumber();
 	}
 
@@ -725,7 +725,7 @@ public class ShoppingOrderWrapper implements ShoppingOrder,
 	* @return the pp payer email of this shopping order
 	*/
 	@Override
-	public java.lang.String getPpPayerEmail() {
+	public String getPpPayerEmail() {
 		return _shoppingOrder.getPpPayerEmail();
 	}
 
@@ -745,7 +745,7 @@ public class ShoppingOrderWrapper implements ShoppingOrder,
 	* @return the pp payment status of this shopping order
 	*/
 	@Override
-	public java.lang.String getPpPaymentStatus() {
+	public String getPpPaymentStatus() {
 		return _shoppingOrder.getPpPaymentStatus();
 	}
 
@@ -755,7 +755,7 @@ public class ShoppingOrderWrapper implements ShoppingOrder,
 	* @return the pp receiver email of this shopping order
 	*/
 	@Override
-	public java.lang.String getPpReceiverEmail() {
+	public String getPpReceiverEmail() {
 		return _shoppingOrder.getPpReceiverEmail();
 	}
 
@@ -765,7 +765,7 @@ public class ShoppingOrderWrapper implements ShoppingOrder,
 	* @return the pp txn ID of this shopping order
 	*/
 	@Override
-	public java.lang.String getPpTxnId() {
+	public String getPpTxnId() {
 		return _shoppingOrder.getPpTxnId();
 	}
 
@@ -830,7 +830,7 @@ public class ShoppingOrderWrapper implements ShoppingOrder,
 	* @return the shipping city of this shopping order
 	*/
 	@Override
-	public java.lang.String getShippingCity() {
+	public String getShippingCity() {
 		return _shoppingOrder.getShippingCity();
 	}
 
@@ -840,7 +840,7 @@ public class ShoppingOrderWrapper implements ShoppingOrder,
 	* @return the shipping company of this shopping order
 	*/
 	@Override
-	public java.lang.String getShippingCompany() {
+	public String getShippingCompany() {
 		return _shoppingOrder.getShippingCompany();
 	}
 
@@ -850,7 +850,7 @@ public class ShoppingOrderWrapper implements ShoppingOrder,
 	* @return the shipping country of this shopping order
 	*/
 	@Override
-	public java.lang.String getShippingCountry() {
+	public String getShippingCountry() {
 		return _shoppingOrder.getShippingCountry();
 	}
 
@@ -860,7 +860,7 @@ public class ShoppingOrderWrapper implements ShoppingOrder,
 	* @return the shipping email address of this shopping order
 	*/
 	@Override
-	public java.lang.String getShippingEmailAddress() {
+	public String getShippingEmailAddress() {
 		return _shoppingOrder.getShippingEmailAddress();
 	}
 
@@ -870,7 +870,7 @@ public class ShoppingOrderWrapper implements ShoppingOrder,
 	* @return the shipping first name of this shopping order
 	*/
 	@Override
-	public java.lang.String getShippingFirstName() {
+	public String getShippingFirstName() {
 		return _shoppingOrder.getShippingFirstName();
 	}
 
@@ -880,7 +880,7 @@ public class ShoppingOrderWrapper implements ShoppingOrder,
 	* @return the shipping last name of this shopping order
 	*/
 	@Override
-	public java.lang.String getShippingLastName() {
+	public String getShippingLastName() {
 		return _shoppingOrder.getShippingLastName();
 	}
 
@@ -890,7 +890,7 @@ public class ShoppingOrderWrapper implements ShoppingOrder,
 	* @return the shipping phone of this shopping order
 	*/
 	@Override
-	public java.lang.String getShippingPhone() {
+	public String getShippingPhone() {
 		return _shoppingOrder.getShippingPhone();
 	}
 
@@ -900,7 +900,7 @@ public class ShoppingOrderWrapper implements ShoppingOrder,
 	* @return the shipping state of this shopping order
 	*/
 	@Override
-	public java.lang.String getShippingState() {
+	public String getShippingState() {
 		return _shoppingOrder.getShippingState();
 	}
 
@@ -910,7 +910,7 @@ public class ShoppingOrderWrapper implements ShoppingOrder,
 	* @return the shipping street of this shopping order
 	*/
 	@Override
-	public java.lang.String getShippingStreet() {
+	public String getShippingStreet() {
 		return _shoppingOrder.getShippingStreet();
 	}
 
@@ -920,7 +920,7 @@ public class ShoppingOrderWrapper implements ShoppingOrder,
 	* @return the shipping zip of this shopping order
 	*/
 	@Override
-	public java.lang.String getShippingZip() {
+	public String getShippingZip() {
 		return _shoppingOrder.getShippingZip();
 	}
 
@@ -960,7 +960,7 @@ public class ShoppingOrderWrapper implements ShoppingOrder,
 	* @return the user name of this shopping order
 	*/
 	@Override
-	public java.lang.String getUserName() {
+	public String getUserName() {
 		return _shoppingOrder.getUserName();
 	}
 
@@ -970,7 +970,7 @@ public class ShoppingOrderWrapper implements ShoppingOrder,
 	* @return the user uuid of this shopping order
 	*/
 	@Override
-	public java.lang.String getUserUuid() {
+	public String getUserUuid() {
 		return _shoppingOrder.getUserUuid();
 	}
 
@@ -1055,7 +1055,7 @@ public class ShoppingOrderWrapper implements ShoppingOrder,
 	* @param altShipping the alt shipping of this shopping order
 	*/
 	@Override
-	public void setAltShipping(java.lang.String altShipping) {
+	public void setAltShipping(String altShipping) {
 		_shoppingOrder.setAltShipping(altShipping);
 	}
 
@@ -1065,7 +1065,7 @@ public class ShoppingOrderWrapper implements ShoppingOrder,
 	* @param billingCity the billing city of this shopping order
 	*/
 	@Override
-	public void setBillingCity(java.lang.String billingCity) {
+	public void setBillingCity(String billingCity) {
 		_shoppingOrder.setBillingCity(billingCity);
 	}
 
@@ -1075,7 +1075,7 @@ public class ShoppingOrderWrapper implements ShoppingOrder,
 	* @param billingCompany the billing company of this shopping order
 	*/
 	@Override
-	public void setBillingCompany(java.lang.String billingCompany) {
+	public void setBillingCompany(String billingCompany) {
 		_shoppingOrder.setBillingCompany(billingCompany);
 	}
 
@@ -1085,7 +1085,7 @@ public class ShoppingOrderWrapper implements ShoppingOrder,
 	* @param billingCountry the billing country of this shopping order
 	*/
 	@Override
-	public void setBillingCountry(java.lang.String billingCountry) {
+	public void setBillingCountry(String billingCountry) {
 		_shoppingOrder.setBillingCountry(billingCountry);
 	}
 
@@ -1095,7 +1095,7 @@ public class ShoppingOrderWrapper implements ShoppingOrder,
 	* @param billingEmailAddress the billing email address of this shopping order
 	*/
 	@Override
-	public void setBillingEmailAddress(java.lang.String billingEmailAddress) {
+	public void setBillingEmailAddress(String billingEmailAddress) {
 		_shoppingOrder.setBillingEmailAddress(billingEmailAddress);
 	}
 
@@ -1105,7 +1105,7 @@ public class ShoppingOrderWrapper implements ShoppingOrder,
 	* @param billingFirstName the billing first name of this shopping order
 	*/
 	@Override
-	public void setBillingFirstName(java.lang.String billingFirstName) {
+	public void setBillingFirstName(String billingFirstName) {
 		_shoppingOrder.setBillingFirstName(billingFirstName);
 	}
 
@@ -1115,7 +1115,7 @@ public class ShoppingOrderWrapper implements ShoppingOrder,
 	* @param billingLastName the billing last name of this shopping order
 	*/
 	@Override
-	public void setBillingLastName(java.lang.String billingLastName) {
+	public void setBillingLastName(String billingLastName) {
 		_shoppingOrder.setBillingLastName(billingLastName);
 	}
 
@@ -1125,7 +1125,7 @@ public class ShoppingOrderWrapper implements ShoppingOrder,
 	* @param billingPhone the billing phone of this shopping order
 	*/
 	@Override
-	public void setBillingPhone(java.lang.String billingPhone) {
+	public void setBillingPhone(String billingPhone) {
 		_shoppingOrder.setBillingPhone(billingPhone);
 	}
 
@@ -1135,7 +1135,7 @@ public class ShoppingOrderWrapper implements ShoppingOrder,
 	* @param billingState the billing state of this shopping order
 	*/
 	@Override
-	public void setBillingState(java.lang.String billingState) {
+	public void setBillingState(String billingState) {
 		_shoppingOrder.setBillingState(billingState);
 	}
 
@@ -1145,7 +1145,7 @@ public class ShoppingOrderWrapper implements ShoppingOrder,
 	* @param billingStreet the billing street of this shopping order
 	*/
 	@Override
-	public void setBillingStreet(java.lang.String billingStreet) {
+	public void setBillingStreet(String billingStreet) {
 		_shoppingOrder.setBillingStreet(billingStreet);
 	}
 
@@ -1155,7 +1155,7 @@ public class ShoppingOrderWrapper implements ShoppingOrder,
 	* @param billingZip the billing zip of this shopping order
 	*/
 	@Override
-	public void setBillingZip(java.lang.String billingZip) {
+	public void setBillingZip(String billingZip) {
 		_shoppingOrder.setBillingZip(billingZip);
 	}
 
@@ -1190,7 +1190,7 @@ public class ShoppingOrderWrapper implements ShoppingOrder,
 	* @param ccName the cc name of this shopping order
 	*/
 	@Override
-	public void setCcName(java.lang.String ccName) {
+	public void setCcName(String ccName) {
 		_shoppingOrder.setCcName(ccName);
 	}
 
@@ -1200,7 +1200,7 @@ public class ShoppingOrderWrapper implements ShoppingOrder,
 	* @param ccNumber the cc number of this shopping order
 	*/
 	@Override
-	public void setCcNumber(java.lang.String ccNumber) {
+	public void setCcNumber(String ccNumber) {
 		_shoppingOrder.setCcNumber(ccNumber);
 	}
 
@@ -1210,7 +1210,7 @@ public class ShoppingOrderWrapper implements ShoppingOrder,
 	* @param ccType the cc type of this shopping order
 	*/
 	@Override
-	public void setCcType(java.lang.String ccType) {
+	public void setCcType(String ccType) {
 		_shoppingOrder.setCcType(ccType);
 	}
 
@@ -1220,7 +1220,7 @@ public class ShoppingOrderWrapper implements ShoppingOrder,
 	* @param ccVerNumber the cc ver number of this shopping order
 	*/
 	@Override
-	public void setCcVerNumber(java.lang.String ccVerNumber) {
+	public void setCcVerNumber(String ccVerNumber) {
 		_shoppingOrder.setCcVerNumber(ccVerNumber);
 	}
 
@@ -1230,7 +1230,7 @@ public class ShoppingOrderWrapper implements ShoppingOrder,
 	* @param comments the comments of this shopping order
 	*/
 	@Override
-	public void setComments(java.lang.String comments) {
+	public void setComments(String comments) {
 		_shoppingOrder.setComments(comments);
 	}
 
@@ -1250,7 +1250,7 @@ public class ShoppingOrderWrapper implements ShoppingOrder,
 	* @param couponCodes the coupon codes of this shopping order
 	*/
 	@Override
-	public void setCouponCodes(java.lang.String couponCodes) {
+	public void setCouponCodes(String couponCodes) {
 		_shoppingOrder.setCouponCodes(couponCodes);
 	}
 
@@ -1341,7 +1341,7 @@ public class ShoppingOrderWrapper implements ShoppingOrder,
 	* @param number the number of this shopping order
 	*/
 	@Override
-	public void setNumber(java.lang.String number) {
+	public void setNumber(String number) {
 		_shoppingOrder.setNumber(number);
 	}
 
@@ -1361,7 +1361,7 @@ public class ShoppingOrderWrapper implements ShoppingOrder,
 	* @param ppPayerEmail the pp payer email of this shopping order
 	*/
 	@Override
-	public void setPpPayerEmail(java.lang.String ppPayerEmail) {
+	public void setPpPayerEmail(String ppPayerEmail) {
 		_shoppingOrder.setPpPayerEmail(ppPayerEmail);
 	}
 
@@ -1381,7 +1381,7 @@ public class ShoppingOrderWrapper implements ShoppingOrder,
 	* @param ppPaymentStatus the pp payment status of this shopping order
 	*/
 	@Override
-	public void setPpPaymentStatus(java.lang.String ppPaymentStatus) {
+	public void setPpPaymentStatus(String ppPaymentStatus) {
 		_shoppingOrder.setPpPaymentStatus(ppPaymentStatus);
 	}
 
@@ -1391,7 +1391,7 @@ public class ShoppingOrderWrapper implements ShoppingOrder,
 	* @param ppReceiverEmail the pp receiver email of this shopping order
 	*/
 	@Override
-	public void setPpReceiverEmail(java.lang.String ppReceiverEmail) {
+	public void setPpReceiverEmail(String ppReceiverEmail) {
 		_shoppingOrder.setPpReceiverEmail(ppReceiverEmail);
 	}
 
@@ -1401,7 +1401,7 @@ public class ShoppingOrderWrapper implements ShoppingOrder,
 	* @param ppTxnId the pp txn ID of this shopping order
 	*/
 	@Override
-	public void setPpTxnId(java.lang.String ppTxnId) {
+	public void setPpTxnId(String ppTxnId) {
 		_shoppingOrder.setPpTxnId(ppTxnId);
 	}
 
@@ -1466,7 +1466,7 @@ public class ShoppingOrderWrapper implements ShoppingOrder,
 	* @param shippingCity the shipping city of this shopping order
 	*/
 	@Override
-	public void setShippingCity(java.lang.String shippingCity) {
+	public void setShippingCity(String shippingCity) {
 		_shoppingOrder.setShippingCity(shippingCity);
 	}
 
@@ -1476,7 +1476,7 @@ public class ShoppingOrderWrapper implements ShoppingOrder,
 	* @param shippingCompany the shipping company of this shopping order
 	*/
 	@Override
-	public void setShippingCompany(java.lang.String shippingCompany) {
+	public void setShippingCompany(String shippingCompany) {
 		_shoppingOrder.setShippingCompany(shippingCompany);
 	}
 
@@ -1486,7 +1486,7 @@ public class ShoppingOrderWrapper implements ShoppingOrder,
 	* @param shippingCountry the shipping country of this shopping order
 	*/
 	@Override
-	public void setShippingCountry(java.lang.String shippingCountry) {
+	public void setShippingCountry(String shippingCountry) {
 		_shoppingOrder.setShippingCountry(shippingCountry);
 	}
 
@@ -1496,7 +1496,7 @@ public class ShoppingOrderWrapper implements ShoppingOrder,
 	* @param shippingEmailAddress the shipping email address of this shopping order
 	*/
 	@Override
-	public void setShippingEmailAddress(java.lang.String shippingEmailAddress) {
+	public void setShippingEmailAddress(String shippingEmailAddress) {
 		_shoppingOrder.setShippingEmailAddress(shippingEmailAddress);
 	}
 
@@ -1506,7 +1506,7 @@ public class ShoppingOrderWrapper implements ShoppingOrder,
 	* @param shippingFirstName the shipping first name of this shopping order
 	*/
 	@Override
-	public void setShippingFirstName(java.lang.String shippingFirstName) {
+	public void setShippingFirstName(String shippingFirstName) {
 		_shoppingOrder.setShippingFirstName(shippingFirstName);
 	}
 
@@ -1516,7 +1516,7 @@ public class ShoppingOrderWrapper implements ShoppingOrder,
 	* @param shippingLastName the shipping last name of this shopping order
 	*/
 	@Override
-	public void setShippingLastName(java.lang.String shippingLastName) {
+	public void setShippingLastName(String shippingLastName) {
 		_shoppingOrder.setShippingLastName(shippingLastName);
 	}
 
@@ -1526,7 +1526,7 @@ public class ShoppingOrderWrapper implements ShoppingOrder,
 	* @param shippingPhone the shipping phone of this shopping order
 	*/
 	@Override
-	public void setShippingPhone(java.lang.String shippingPhone) {
+	public void setShippingPhone(String shippingPhone) {
 		_shoppingOrder.setShippingPhone(shippingPhone);
 	}
 
@@ -1536,7 +1536,7 @@ public class ShoppingOrderWrapper implements ShoppingOrder,
 	* @param shippingState the shipping state of this shopping order
 	*/
 	@Override
-	public void setShippingState(java.lang.String shippingState) {
+	public void setShippingState(String shippingState) {
 		_shoppingOrder.setShippingState(shippingState);
 	}
 
@@ -1546,7 +1546,7 @@ public class ShoppingOrderWrapper implements ShoppingOrder,
 	* @param shippingStreet the shipping street of this shopping order
 	*/
 	@Override
-	public void setShippingStreet(java.lang.String shippingStreet) {
+	public void setShippingStreet(String shippingStreet) {
 		_shoppingOrder.setShippingStreet(shippingStreet);
 	}
 
@@ -1556,7 +1556,7 @@ public class ShoppingOrderWrapper implements ShoppingOrder,
 	* @param shippingZip the shipping zip of this shopping order
 	*/
 	@Override
-	public void setShippingZip(java.lang.String shippingZip) {
+	public void setShippingZip(String shippingZip) {
 		_shoppingOrder.setShippingZip(shippingZip);
 	}
 
@@ -1596,7 +1596,7 @@ public class ShoppingOrderWrapper implements ShoppingOrder,
 	* @param userName the user name of this shopping order
 	*/
 	@Override
-	public void setUserName(java.lang.String userName) {
+	public void setUserName(String userName) {
 		_shoppingOrder.setUserName(userName);
 	}
 
@@ -1606,7 +1606,7 @@ public class ShoppingOrderWrapper implements ShoppingOrder,
 	* @param userUuid the user uuid of this shopping order
 	*/
 	@Override
-	public void setUserUuid(java.lang.String userUuid) {
+	public void setUserUuid(String userUuid) {
 		_shoppingOrder.setUserUuid(userUuid);
 	}
 
@@ -1621,7 +1621,7 @@ public class ShoppingOrderWrapper implements ShoppingOrder,
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _shoppingOrder.toString();
 	}
 
@@ -1631,7 +1631,7 @@ public class ShoppingOrderWrapper implements ShoppingOrder,
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _shoppingOrder.toXmlString();
 	}
 

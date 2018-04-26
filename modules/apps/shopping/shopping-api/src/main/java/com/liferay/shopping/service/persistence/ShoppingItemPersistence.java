@@ -395,7 +395,7 @@ public interface ShoppingItemPersistence extends BasePersistence<ShoppingItem> {
 	* @return the matching shopping item
 	* @throws NoSuchItemException if a matching shopping item could not be found
 	*/
-	public ShoppingItem findByC_S(long companyId, java.lang.String sku)
+	public ShoppingItem findByC_S(long companyId, String sku)
 		throws NoSuchItemException;
 
 	/**
@@ -405,7 +405,7 @@ public interface ShoppingItemPersistence extends BasePersistence<ShoppingItem> {
 	* @param sku the sku
 	* @return the matching shopping item, or <code>null</code> if a matching shopping item could not be found
 	*/
-	public ShoppingItem fetchByC_S(long companyId, java.lang.String sku);
+	public ShoppingItem fetchByC_S(long companyId, String sku);
 
 	/**
 	* Returns the shopping item where companyId = &#63; and sku = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -415,7 +415,7 @@ public interface ShoppingItemPersistence extends BasePersistence<ShoppingItem> {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching shopping item, or <code>null</code> if a matching shopping item could not be found
 	*/
-	public ShoppingItem fetchByC_S(long companyId, java.lang.String sku,
+	public ShoppingItem fetchByC_S(long companyId, String sku,
 		boolean retrieveFromCache);
 
 	/**
@@ -425,7 +425,7 @@ public interface ShoppingItemPersistence extends BasePersistence<ShoppingItem> {
 	* @param sku the sku
 	* @return the shopping item that was removed
 	*/
-	public ShoppingItem removeByC_S(long companyId, java.lang.String sku)
+	public ShoppingItem removeByC_S(long companyId, String sku)
 		throws NoSuchItemException;
 
 	/**
@@ -435,7 +435,7 @@ public interface ShoppingItemPersistence extends BasePersistence<ShoppingItem> {
 	* @param sku the sku
 	* @return the number of matching shopping items
 	*/
-	public int countByC_S(long companyId, java.lang.String sku);
+	public int countByC_S(long companyId, String sku);
 
 	/**
 	* Caches the shopping item in the entity cache if it is enabled.
@@ -557,5 +557,5 @@ public interface ShoppingItemPersistence extends BasePersistence<ShoppingItem> {
 	public int countAll();
 
 	@Override
-	public java.util.Set<java.lang.String> getBadColumnNames();
+	public java.util.Set<String> getBadColumnNames();
 }

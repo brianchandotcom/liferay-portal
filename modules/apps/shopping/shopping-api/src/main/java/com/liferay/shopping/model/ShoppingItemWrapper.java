@@ -305,7 +305,7 @@ public class ShoppingItemWrapper implements ShoppingItem,
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new ShoppingItemWrapper((ShoppingItem)_shoppingItem.clone());
 	}
 
@@ -355,7 +355,7 @@ public class ShoppingItemWrapper implements ShoppingItem,
 	* @return the description of this shopping item
 	*/
 	@Override
-	public java.lang.String getDescription() {
+	public String getDescription() {
 		return _shoppingItem.getDescription();
 	}
 
@@ -400,12 +400,12 @@ public class ShoppingItemWrapper implements ShoppingItem,
 	* @return the fields quantities of this shopping item
 	*/
 	@Override
-	public java.lang.String getFieldsQuantities() {
+	public String getFieldsQuantities() {
 		return _shoppingItem.getFieldsQuantities();
 	}
 
 	@Override
-	public java.lang.String[] getFieldsQuantitiesArray() {
+	public String[] getFieldsQuantitiesArray() {
 		return _shoppingItem.getFieldsQuantitiesArray();
 	}
 
@@ -461,7 +461,7 @@ public class ShoppingItemWrapper implements ShoppingItem,
 	* @return the large image url of this shopping item
 	*/
 	@Override
-	public java.lang.String getLargeImageURL() {
+	public String getLargeImageURL() {
 		return _shoppingItem.getLargeImageURL();
 	}
 
@@ -501,7 +501,7 @@ public class ShoppingItemWrapper implements ShoppingItem,
 	* @return the medium image url of this shopping item
 	*/
 	@Override
-	public java.lang.String getMediumImageURL() {
+	public String getMediumImageURL() {
 		return _shoppingItem.getMediumImageURL();
 	}
 
@@ -531,7 +531,7 @@ public class ShoppingItemWrapper implements ShoppingItem,
 	* @return the name of this shopping item
 	*/
 	@Override
-	public java.lang.String getName() {
+	public String getName() {
 		return _shoppingItem.getName();
 	}
 
@@ -566,7 +566,7 @@ public class ShoppingItemWrapper implements ShoppingItem,
 	* @return the properties of this shopping item
 	*/
 	@Override
-	public java.lang.String getProperties() {
+	public String getProperties() {
 		return _shoppingItem.getProperties();
 	}
 
@@ -601,7 +601,7 @@ public class ShoppingItemWrapper implements ShoppingItem,
 	}
 
 	@Override
-	public java.lang.String getShoppingItemImageURL(
+	public String getShoppingItemImageURL(
 		com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay) {
 		return _shoppingItem.getShoppingItemImageURL(themeDisplay);
 	}
@@ -612,7 +612,7 @@ public class ShoppingItemWrapper implements ShoppingItem,
 	* @return the sku of this shopping item
 	*/
 	@Override
-	public java.lang.String getSku() {
+	public String getSku() {
 		return _shoppingItem.getSku();
 	}
 
@@ -642,7 +642,7 @@ public class ShoppingItemWrapper implements ShoppingItem,
 	* @return the small image url of this shopping item
 	*/
 	@Override
-	public java.lang.String getSmallImageURL() {
+	public String getSmallImageURL() {
 		return _shoppingItem.getSmallImageURL();
 	}
 
@@ -682,7 +682,7 @@ public class ShoppingItemWrapper implements ShoppingItem,
 	* @return the user name of this shopping item
 	*/
 	@Override
-	public java.lang.String getUserName() {
+	public String getUserName() {
 		return _shoppingItem.getUserName();
 	}
 
@@ -692,7 +692,7 @@ public class ShoppingItemWrapper implements ShoppingItem,
 	* @return the user uuid of this shopping item
 	*/
 	@Override
-	public java.lang.String getUserUuid() {
+	public String getUserUuid() {
 		return _shoppingItem.getUserUuid();
 	}
 
@@ -867,7 +867,7 @@ public class ShoppingItemWrapper implements ShoppingItem,
 	* @param description the description of this shopping item
 	*/
 	@Override
-	public void setDescription(java.lang.String description) {
+	public void setDescription(String description) {
 		_shoppingItem.setDescription(description);
 	}
 
@@ -923,13 +923,12 @@ public class ShoppingItemWrapper implements ShoppingItem,
 	* @param fieldsQuantities the fields quantities of this shopping item
 	*/
 	@Override
-	public void setFieldsQuantities(java.lang.String fieldsQuantities) {
+	public void setFieldsQuantities(String fieldsQuantities) {
 		_shoppingItem.setFieldsQuantities(fieldsQuantities);
 	}
 
 	@Override
-	public void setFieldsQuantitiesArray(
-		java.lang.String[] fieldsQuantitiesArray) {
+	public void setFieldsQuantitiesArray(String[] fieldsQuantitiesArray) {
 		_shoppingItem.setFieldsQuantitiesArray(fieldsQuantitiesArray);
 	}
 
@@ -979,7 +978,7 @@ public class ShoppingItemWrapper implements ShoppingItem,
 	* @param largeImageURL the large image url of this shopping item
 	*/
 	@Override
-	public void setLargeImageURL(java.lang.String largeImageURL) {
+	public void setLargeImageURL(String largeImageURL) {
 		_shoppingItem.setLargeImageURL(largeImageURL);
 	}
 
@@ -1019,7 +1018,7 @@ public class ShoppingItemWrapper implements ShoppingItem,
 	* @param mediumImageURL the medium image url of this shopping item
 	*/
 	@Override
-	public void setMediumImageURL(java.lang.String mediumImageURL) {
+	public void setMediumImageURL(String mediumImageURL) {
 		_shoppingItem.setMediumImageURL(mediumImageURL);
 	}
 
@@ -1049,7 +1048,7 @@ public class ShoppingItemWrapper implements ShoppingItem,
 	* @param name the name of this shopping item
 	*/
 	@Override
-	public void setName(java.lang.String name) {
+	public void setName(String name) {
 		_shoppingItem.setName(name);
 	}
 
@@ -1089,7 +1088,7 @@ public class ShoppingItemWrapper implements ShoppingItem,
 	* @param properties the properties of this shopping item
 	*/
 	@Override
-	public void setProperties(java.lang.String properties) {
+	public void setProperties(String properties) {
 		_shoppingItem.setProperties(properties);
 	}
 
@@ -1129,7 +1128,7 @@ public class ShoppingItemWrapper implements ShoppingItem,
 	* @param sku the sku of this shopping item
 	*/
 	@Override
-	public void setSku(java.lang.String sku) {
+	public void setSku(String sku) {
 		_shoppingItem.setSku(sku);
 	}
 
@@ -1159,7 +1158,7 @@ public class ShoppingItemWrapper implements ShoppingItem,
 	* @param smallImageURL the small image url of this shopping item
 	*/
 	@Override
-	public void setSmallImageURL(java.lang.String smallImageURL) {
+	public void setSmallImageURL(String smallImageURL) {
 		_shoppingItem.setSmallImageURL(smallImageURL);
 	}
 
@@ -1199,7 +1198,7 @@ public class ShoppingItemWrapper implements ShoppingItem,
 	* @param userName the user name of this shopping item
 	*/
 	@Override
-	public void setUserName(java.lang.String userName) {
+	public void setUserName(String userName) {
 		_shoppingItem.setUserName(userName);
 	}
 
@@ -1209,7 +1208,7 @@ public class ShoppingItemWrapper implements ShoppingItem,
 	* @param userUuid the user uuid of this shopping item
 	*/
 	@Override
-	public void setUserUuid(java.lang.String userUuid) {
+	public void setUserUuid(String userUuid) {
 		_shoppingItem.setUserUuid(userUuid);
 	}
 
@@ -1234,7 +1233,7 @@ public class ShoppingItemWrapper implements ShoppingItem,
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _shoppingItem.toString();
 	}
 
@@ -1244,7 +1243,7 @@ public class ShoppingItemWrapper implements ShoppingItem,
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _shoppingItem.toXmlString();
 	}
 

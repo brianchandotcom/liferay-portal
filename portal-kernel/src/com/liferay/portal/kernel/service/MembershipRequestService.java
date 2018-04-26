@@ -48,7 +48,7 @@ public interface MembershipRequestService extends BaseService {
 	 * Never modify or reference this interface directly. Always use {@link MembershipRequestServiceUtil} to access the membership request remote service. Add custom service methods to {@link com.liferay.portal.service.impl.MembershipRequestServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	public MembershipRequest addMembershipRequest(long groupId,
-		java.lang.String comments, ServiceContext serviceContext)
+		String comments, ServiceContext serviceContext)
 		throws PortalException;
 
 	public void deleteMembershipRequests(long groupId, long statusId)
@@ -63,9 +63,8 @@ public interface MembershipRequestService extends BaseService {
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
-	public void updateStatus(long membershipRequestId,
-		java.lang.String reviewComments, long statusId,
-		ServiceContext serviceContext) throws PortalException;
+	public void updateStatus(long membershipRequestId, String reviewComments,
+		long statusId, ServiceContext serviceContext) throws PortalException;
 }

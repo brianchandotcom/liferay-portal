@@ -136,7 +136,7 @@ public class HtmlPreviewEntryWrapper implements HtmlPreviewEntry,
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new HtmlPreviewEntryWrapper((HtmlPreviewEntry)_htmlPreviewEntry.clone());
 	}
 
@@ -151,7 +151,7 @@ public class HtmlPreviewEntryWrapper implements HtmlPreviewEntry,
 	* @return the fully qualified class name of this html preview entry
 	*/
 	@Override
-	public java.lang.String getClassName() {
+	public String getClassName() {
 		return _htmlPreviewEntry.getClassName();
 	}
 
@@ -231,7 +231,7 @@ public class HtmlPreviewEntryWrapper implements HtmlPreviewEntry,
 	}
 
 	@Override
-	public java.lang.String getImagePreviewURL(
+	public String getImagePreviewURL(
 		com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay) {
 		return _htmlPreviewEntry.getImagePreviewURL(themeDisplay);
 	}
@@ -277,7 +277,7 @@ public class HtmlPreviewEntryWrapper implements HtmlPreviewEntry,
 	* @return the user name of this html preview entry
 	*/
 	@Override
-	public java.lang.String getUserName() {
+	public String getUserName() {
 		return _htmlPreviewEntry.getUserName();
 	}
 
@@ -287,7 +287,7 @@ public class HtmlPreviewEntryWrapper implements HtmlPreviewEntry,
 	* @return the user uuid of this html preview entry
 	*/
 	@Override
-	public java.lang.String getUserUuid() {
+	public String getUserUuid() {
 		return _htmlPreviewEntry.getUserUuid();
 	}
 
@@ -322,7 +322,7 @@ public class HtmlPreviewEntryWrapper implements HtmlPreviewEntry,
 	}
 
 	@Override
-	public void setClassName(java.lang.String className) {
+	public void setClassName(String className) {
 		_htmlPreviewEntry.setClassName(className);
 	}
 
@@ -458,7 +458,7 @@ public class HtmlPreviewEntryWrapper implements HtmlPreviewEntry,
 	* @param userName the user name of this html preview entry
 	*/
 	@Override
-	public void setUserName(java.lang.String userName) {
+	public void setUserName(String userName) {
 		_htmlPreviewEntry.setUserName(userName);
 	}
 
@@ -468,7 +468,7 @@ public class HtmlPreviewEntryWrapper implements HtmlPreviewEntry,
 	* @param userUuid the user uuid of this html preview entry
 	*/
 	@Override
-	public void setUserUuid(java.lang.String userUuid) {
+	public void setUserUuid(String userUuid) {
 		_htmlPreviewEntry.setUserUuid(userUuid);
 	}
 
@@ -483,7 +483,7 @@ public class HtmlPreviewEntryWrapper implements HtmlPreviewEntry,
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _htmlPreviewEntry.toString();
 	}
 
@@ -493,7 +493,7 @@ public class HtmlPreviewEntryWrapper implements HtmlPreviewEntry,
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _htmlPreviewEntry.toXmlString();
 	}
 

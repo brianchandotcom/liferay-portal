@@ -58,9 +58,9 @@ public class CalendarNotificationTemplateLocalServiceUtil {
 	public static com.liferay.calendar.model.CalendarNotificationTemplate addCalendarNotificationTemplate(
 		long userId, long calendarId,
 		com.liferay.calendar.notification.NotificationType notificationType,
-		java.lang.String notificationTypeSettings,
+		String notificationTypeSettings,
 		com.liferay.calendar.notification.NotificationTemplateType notificationTemplateType,
-		java.lang.String subject, java.lang.String body,
+		String subject, String body,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
@@ -221,7 +221,7 @@ public class CalendarNotificationTemplateLocalServiceUtil {
 	* @return the matching calendar notification template, or <code>null</code> if a matching calendar notification template could not be found
 	*/
 	public static com.liferay.calendar.model.CalendarNotificationTemplate fetchCalendarNotificationTemplateByUuidAndGroupId(
-		java.lang.String uuid, long groupId) {
+		String uuid, long groupId) {
 		return getService()
 				   .fetchCalendarNotificationTemplateByUuidAndGroupId(uuid,
 			groupId);
@@ -254,7 +254,7 @@ public class CalendarNotificationTemplateLocalServiceUtil {
 	* @throws PortalException if a matching calendar notification template could not be found
 	*/
 	public static com.liferay.calendar.model.CalendarNotificationTemplate getCalendarNotificationTemplateByUuidAndGroupId(
-		java.lang.String uuid, long groupId)
+		String uuid, long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .getCalendarNotificationTemplateByUuidAndGroupId(uuid,
@@ -285,7 +285,7 @@ public class CalendarNotificationTemplateLocalServiceUtil {
 	* @return the matching calendar notification templates, or an empty list if no matches were found
 	*/
 	public static java.util.List<com.liferay.calendar.model.CalendarNotificationTemplate> getCalendarNotificationTemplatesByUuidAndCompanyId(
-		java.lang.String uuid, long companyId) {
+		String uuid, long companyId) {
 		return getService()
 				   .getCalendarNotificationTemplatesByUuidAndCompanyId(uuid,
 			companyId);
@@ -302,7 +302,7 @@ public class CalendarNotificationTemplateLocalServiceUtil {
 	* @return the range of matching calendar notification templates, or an empty list if no matches were found
 	*/
 	public static java.util.List<com.liferay.calendar.model.CalendarNotificationTemplate> getCalendarNotificationTemplatesByUuidAndCompanyId(
-		java.lang.String uuid, long companyId, int start, int end,
+		String uuid, long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.calendar.model.CalendarNotificationTemplate> orderByComparator) {
 		return getService()
 				   .getCalendarNotificationTemplatesByUuidAndCompanyId(uuid,
@@ -332,7 +332,7 @@ public class CalendarNotificationTemplateLocalServiceUtil {
 	*
 	* @return the OSGi service identifier
 	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
+	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 
@@ -355,9 +355,8 @@ public class CalendarNotificationTemplateLocalServiceUtil {
 	}
 
 	public static com.liferay.calendar.model.CalendarNotificationTemplate updateCalendarNotificationTemplate(
-		long calendarNotificationTemplateId,
-		java.lang.String notificationTypeSettings, java.lang.String subject,
-		java.lang.String body,
+		long calendarNotificationTemplateId, String notificationTypeSettings,
+		String subject, String body,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()

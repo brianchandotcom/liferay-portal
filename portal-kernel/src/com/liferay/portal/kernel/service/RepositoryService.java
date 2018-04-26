@@ -49,8 +49,7 @@ public interface RepositoryService extends BaseService {
 	 * Never modify or reference this interface directly. Always use {@link RepositoryServiceUtil} to access the repository remote service. Add custom service methods to {@link com.liferay.portal.service.impl.RepositoryServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	public Repository addRepository(long groupId, long classNameId,
-		long parentFolderId, java.lang.String name,
-		java.lang.String description, java.lang.String portletId,
+		long parentFolderId, String name, String description, String portletId,
 		UnicodeProperties typeSettingsProperties, ServiceContext serviceContext)
 		throws PortalException;
 
@@ -63,7 +62,7 @@ public interface RepositoryService extends BaseService {
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public Repository getRepository(long repositoryId)
@@ -72,30 +71,30 @@ public interface RepositoryService extends BaseService {
 	/**
 	* @deprecated As of 7.0.0, with no direct replacement
 	*/
-	@java.lang.Deprecated
+	@Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.lang.String[] getSupportedConfigurations(long classNameId);
+	public String[] getSupportedConfigurations(long classNameId);
 
 	/**
 	* @deprecated As of 7.0.0, with no direct replacement
 	*/
-	@java.lang.Deprecated
+	@Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.lang.String[] getSupportedParameters(long classNameId,
-		java.lang.String configuration);
+	public String[] getSupportedParameters(long classNameId,
+		String configuration);
 
 	/**
 	* @deprecated As of 7.0.0, with no direct replacement
 	*/
-	@java.lang.Deprecated
+	@Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.lang.String[] getSupportedParameters(
-		java.lang.String className, java.lang.String configuration);
+	public String[] getSupportedParameters(String className,
+		String configuration);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public UnicodeProperties getTypeSettingsProperties(long repositoryId)
 		throws PortalException;
 
-	public void updateRepository(long repositoryId, java.lang.String name,
-		java.lang.String description) throws PortalException;
+	public void updateRepository(long repositoryId, String name,
+		String description) throws PortalException;
 }

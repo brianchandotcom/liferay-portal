@@ -69,28 +69,28 @@ public interface PortalInstancesLocalService extends BaseLocalService {
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.lang.String[] getWebIds();
+	public String[] getWebIds();
 
 	public void initializePortalInstance(ServletContext servletContext,
-		java.lang.String webId);
+		String webId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public boolean isAutoLoginIgnoreHost(java.lang.String host);
+	public boolean isAutoLoginIgnoreHost(String host);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public boolean isAutoLoginIgnorePath(java.lang.String path);
+	public boolean isAutoLoginIgnorePath(String path);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public boolean isCompanyActive(long companyId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public boolean isVirtualHostsIgnoreHost(java.lang.String host);
+	public boolean isVirtualHostsIgnoreHost(String host);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public boolean isVirtualHostsIgnorePath(java.lang.String path);
+	public boolean isVirtualHostsIgnorePath(String path);
 
 	public void reload(ServletContext servletContext);
 

@@ -192,7 +192,7 @@ public class DDMStructureVersionWrapper implements DDMStructureVersion,
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new DDMStructureVersionWrapper((DDMStructureVersion)_ddmStructureVersion.clone());
 	}
 
@@ -202,7 +202,7 @@ public class DDMStructureVersionWrapper implements DDMStructureVersion,
 	}
 
 	@Override
-	public java.lang.String[] getAvailableLanguageIds() {
+	public String[] getAvailableLanguageIds() {
 		return _ddmStructureVersion.getAvailableLanguageIds();
 	}
 
@@ -238,7 +238,7 @@ public class DDMStructureVersionWrapper implements DDMStructureVersion,
 	}
 
 	@Override
-	public java.lang.String getDefaultLanguageId() {
+	public String getDefaultLanguageId() {
 		return _ddmStructureVersion.getDefaultLanguageId();
 	}
 
@@ -248,7 +248,7 @@ public class DDMStructureVersionWrapper implements DDMStructureVersion,
 	* @return the definition of this ddm structure version
 	*/
 	@Override
-	public java.lang.String getDefinition() {
+	public String getDefinition() {
 		return _ddmStructureVersion.getDefinition();
 	}
 
@@ -258,7 +258,7 @@ public class DDMStructureVersionWrapper implements DDMStructureVersion,
 	* @return the description of this ddm structure version
 	*/
 	@Override
-	public java.lang.String getDescription() {
+	public String getDescription() {
 		return _ddmStructureVersion.getDescription();
 	}
 
@@ -269,7 +269,7 @@ public class DDMStructureVersionWrapper implements DDMStructureVersion,
 	* @return the localized description of this ddm structure version
 	*/
 	@Override
-	public java.lang.String getDescription(java.util.Locale locale) {
+	public String getDescription(java.util.Locale locale) {
 		return _ddmStructureVersion.getDescription(locale);
 	}
 
@@ -281,8 +281,7 @@ public class DDMStructureVersionWrapper implements DDMStructureVersion,
 	* @return the localized description of this ddm structure version. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
 	*/
 	@Override
-	public java.lang.String getDescription(java.util.Locale locale,
-		boolean useDefault) {
+	public String getDescription(java.util.Locale locale, boolean useDefault) {
 		return _ddmStructureVersion.getDescription(locale, useDefault);
 	}
 
@@ -293,7 +292,7 @@ public class DDMStructureVersionWrapper implements DDMStructureVersion,
 	* @return the localized description of this ddm structure version
 	*/
 	@Override
-	public java.lang.String getDescription(java.lang.String languageId) {
+	public String getDescription(String languageId) {
 		return _ddmStructureVersion.getDescription(languageId);
 	}
 
@@ -305,18 +304,17 @@ public class DDMStructureVersionWrapper implements DDMStructureVersion,
 	* @return the localized description of this ddm structure version
 	*/
 	@Override
-	public java.lang.String getDescription(java.lang.String languageId,
-		boolean useDefault) {
+	public String getDescription(String languageId, boolean useDefault) {
 		return _ddmStructureVersion.getDescription(languageId, useDefault);
 	}
 
 	@Override
-	public java.lang.String getDescriptionCurrentLanguageId() {
+	public String getDescriptionCurrentLanguageId() {
 		return _ddmStructureVersion.getDescriptionCurrentLanguageId();
 	}
 
 	@Override
-	public java.lang.String getDescriptionCurrentValue() {
+	public String getDescriptionCurrentValue() {
 		return _ddmStructureVersion.getDescriptionCurrentValue();
 	}
 
@@ -326,7 +324,7 @@ public class DDMStructureVersionWrapper implements DDMStructureVersion,
 	* @return the locales and localized descriptions of this ddm structure version
 	*/
 	@Override
-	public Map<java.util.Locale, java.lang.String> getDescriptionMap() {
+	public Map<java.util.Locale, String> getDescriptionMap() {
 		return _ddmStructureVersion.getDescriptionMap();
 	}
 
@@ -351,7 +349,7 @@ public class DDMStructureVersionWrapper implements DDMStructureVersion,
 	* @return the name of this ddm structure version
 	*/
 	@Override
-	public java.lang.String getName() {
+	public String getName() {
 		return _ddmStructureVersion.getName();
 	}
 
@@ -362,7 +360,7 @@ public class DDMStructureVersionWrapper implements DDMStructureVersion,
 	* @return the localized name of this ddm structure version
 	*/
 	@Override
-	public java.lang.String getName(java.util.Locale locale) {
+	public String getName(java.util.Locale locale) {
 		return _ddmStructureVersion.getName(locale);
 	}
 
@@ -374,7 +372,7 @@ public class DDMStructureVersionWrapper implements DDMStructureVersion,
 	* @return the localized name of this ddm structure version. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
 	*/
 	@Override
-	public java.lang.String getName(java.util.Locale locale, boolean useDefault) {
+	public String getName(java.util.Locale locale, boolean useDefault) {
 		return _ddmStructureVersion.getName(locale, useDefault);
 	}
 
@@ -385,7 +383,7 @@ public class DDMStructureVersionWrapper implements DDMStructureVersion,
 	* @return the localized name of this ddm structure version
 	*/
 	@Override
-	public java.lang.String getName(java.lang.String languageId) {
+	public String getName(String languageId) {
 		return _ddmStructureVersion.getName(languageId);
 	}
 
@@ -397,18 +395,17 @@ public class DDMStructureVersionWrapper implements DDMStructureVersion,
 	* @return the localized name of this ddm structure version
 	*/
 	@Override
-	public java.lang.String getName(java.lang.String languageId,
-		boolean useDefault) {
+	public String getName(String languageId, boolean useDefault) {
 		return _ddmStructureVersion.getName(languageId, useDefault);
 	}
 
 	@Override
-	public java.lang.String getNameCurrentLanguageId() {
+	public String getNameCurrentLanguageId() {
 		return _ddmStructureVersion.getNameCurrentLanguageId();
 	}
 
 	@Override
-	public java.lang.String getNameCurrentValue() {
+	public String getNameCurrentValue() {
 		return _ddmStructureVersion.getNameCurrentValue();
 	}
 
@@ -418,7 +415,7 @@ public class DDMStructureVersionWrapper implements DDMStructureVersion,
 	* @return the locales and localized names of this ddm structure version
 	*/
 	@Override
-	public Map<java.util.Locale, java.lang.String> getNameMap() {
+	public Map<java.util.Locale, String> getNameMap() {
 		return _ddmStructureVersion.getNameMap();
 	}
 
@@ -473,7 +470,7 @@ public class DDMStructureVersionWrapper implements DDMStructureVersion,
 	* @return the status by user name of this ddm structure version
 	*/
 	@Override
-	public java.lang.String getStatusByUserName() {
+	public String getStatusByUserName() {
 		return _ddmStructureVersion.getStatusByUserName();
 	}
 
@@ -483,7 +480,7 @@ public class DDMStructureVersionWrapper implements DDMStructureVersion,
 	* @return the status by user uuid of this ddm structure version
 	*/
 	@Override
-	public java.lang.String getStatusByUserUuid() {
+	public String getStatusByUserUuid() {
 		return _ddmStructureVersion.getStatusByUserUuid();
 	}
 
@@ -503,7 +500,7 @@ public class DDMStructureVersionWrapper implements DDMStructureVersion,
 	* @return the storage type of this ddm structure version
 	*/
 	@Override
-	public java.lang.String getStorageType() {
+	public String getStorageType() {
 		return _ddmStructureVersion.getStorageType();
 	}
 
@@ -559,7 +556,7 @@ public class DDMStructureVersionWrapper implements DDMStructureVersion,
 	* @return the user name of this ddm structure version
 	*/
 	@Override
-	public java.lang.String getUserName() {
+	public String getUserName() {
 		return _ddmStructureVersion.getUserName();
 	}
 
@@ -569,7 +566,7 @@ public class DDMStructureVersionWrapper implements DDMStructureVersion,
 	* @return the user uuid of this ddm structure version
 	*/
 	@Override
-	public java.lang.String getUserUuid() {
+	public String getUserUuid() {
 		return _ddmStructureVersion.getUserUuid();
 	}
 
@@ -579,7 +576,7 @@ public class DDMStructureVersionWrapper implements DDMStructureVersion,
 	* @return the version of this ddm structure version
 	*/
 	@Override
-	public java.lang.String getVersion() {
+	public String getVersion() {
 		return _ddmStructureVersion.getVersion();
 	}
 
@@ -737,7 +734,7 @@ public class DDMStructureVersionWrapper implements DDMStructureVersion,
 	* @param definition the definition of this ddm structure version
 	*/
 	@Override
-	public void setDefinition(java.lang.String definition) {
+	public void setDefinition(String definition) {
 		_ddmStructureVersion.setDefinition(definition);
 	}
 
@@ -747,7 +744,7 @@ public class DDMStructureVersionWrapper implements DDMStructureVersion,
 	* @param description the description of this ddm structure version
 	*/
 	@Override
-	public void setDescription(java.lang.String description) {
+	public void setDescription(String description) {
 		_ddmStructureVersion.setDescription(description);
 	}
 
@@ -758,8 +755,7 @@ public class DDMStructureVersionWrapper implements DDMStructureVersion,
 	* @param locale the locale of the language
 	*/
 	@Override
-	public void setDescription(java.lang.String description,
-		java.util.Locale locale) {
+	public void setDescription(String description, java.util.Locale locale) {
 		_ddmStructureVersion.setDescription(description, locale);
 	}
 
@@ -771,13 +767,13 @@ public class DDMStructureVersionWrapper implements DDMStructureVersion,
 	* @param defaultLocale the default locale
 	*/
 	@Override
-	public void setDescription(java.lang.String description,
-		java.util.Locale locale, java.util.Locale defaultLocale) {
+	public void setDescription(String description, java.util.Locale locale,
+		java.util.Locale defaultLocale) {
 		_ddmStructureVersion.setDescription(description, locale, defaultLocale);
 	}
 
 	@Override
-	public void setDescriptionCurrentLanguageId(java.lang.String languageId) {
+	public void setDescriptionCurrentLanguageId(String languageId) {
 		_ddmStructureVersion.setDescriptionCurrentLanguageId(languageId);
 	}
 
@@ -787,8 +783,7 @@ public class DDMStructureVersionWrapper implements DDMStructureVersion,
 	* @param descriptionMap the locales and localized descriptions of this ddm structure version
 	*/
 	@Override
-	public void setDescriptionMap(
-		Map<java.util.Locale, java.lang.String> descriptionMap) {
+	public void setDescriptionMap(Map<java.util.Locale, String> descriptionMap) {
 		_ddmStructureVersion.setDescriptionMap(descriptionMap);
 	}
 
@@ -800,7 +795,7 @@ public class DDMStructureVersionWrapper implements DDMStructureVersion,
 	*/
 	@Override
 	public void setDescriptionMap(
-		Map<java.util.Locale, java.lang.String> descriptionMap,
+		Map<java.util.Locale, String> descriptionMap,
 		java.util.Locale defaultLocale) {
 		_ddmStructureVersion.setDescriptionMap(descriptionMap, defaultLocale);
 	}
@@ -837,7 +832,7 @@ public class DDMStructureVersionWrapper implements DDMStructureVersion,
 	* @param name the name of this ddm structure version
 	*/
 	@Override
-	public void setName(java.lang.String name) {
+	public void setName(String name) {
 		_ddmStructureVersion.setName(name);
 	}
 
@@ -848,7 +843,7 @@ public class DDMStructureVersionWrapper implements DDMStructureVersion,
 	* @param locale the locale of the language
 	*/
 	@Override
-	public void setName(java.lang.String name, java.util.Locale locale) {
+	public void setName(String name, java.util.Locale locale) {
 		_ddmStructureVersion.setName(name, locale);
 	}
 
@@ -860,13 +855,13 @@ public class DDMStructureVersionWrapper implements DDMStructureVersion,
 	* @param defaultLocale the default locale
 	*/
 	@Override
-	public void setName(java.lang.String name, java.util.Locale locale,
+	public void setName(String name, java.util.Locale locale,
 		java.util.Locale defaultLocale) {
 		_ddmStructureVersion.setName(name, locale, defaultLocale);
 	}
 
 	@Override
-	public void setNameCurrentLanguageId(java.lang.String languageId) {
+	public void setNameCurrentLanguageId(String languageId) {
 		_ddmStructureVersion.setNameCurrentLanguageId(languageId);
 	}
 
@@ -876,7 +871,7 @@ public class DDMStructureVersionWrapper implements DDMStructureVersion,
 	* @param nameMap the locales and localized names of this ddm structure version
 	*/
 	@Override
-	public void setNameMap(Map<java.util.Locale, java.lang.String> nameMap) {
+	public void setNameMap(Map<java.util.Locale, String> nameMap) {
 		_ddmStructureVersion.setNameMap(nameMap);
 	}
 
@@ -887,7 +882,7 @@ public class DDMStructureVersionWrapper implements DDMStructureVersion,
 	* @param defaultLocale the default locale
 	*/
 	@Override
-	public void setNameMap(Map<java.util.Locale, java.lang.String> nameMap,
+	public void setNameMap(Map<java.util.Locale, String> nameMap,
 		java.util.Locale defaultLocale) {
 		_ddmStructureVersion.setNameMap(nameMap, defaultLocale);
 	}
@@ -948,7 +943,7 @@ public class DDMStructureVersionWrapper implements DDMStructureVersion,
 	* @param statusByUserName the status by user name of this ddm structure version
 	*/
 	@Override
-	public void setStatusByUserName(java.lang.String statusByUserName) {
+	public void setStatusByUserName(String statusByUserName) {
 		_ddmStructureVersion.setStatusByUserName(statusByUserName);
 	}
 
@@ -958,7 +953,7 @@ public class DDMStructureVersionWrapper implements DDMStructureVersion,
 	* @param statusByUserUuid the status by user uuid of this ddm structure version
 	*/
 	@Override
-	public void setStatusByUserUuid(java.lang.String statusByUserUuid) {
+	public void setStatusByUserUuid(String statusByUserUuid) {
 		_ddmStructureVersion.setStatusByUserUuid(statusByUserUuid);
 	}
 
@@ -978,7 +973,7 @@ public class DDMStructureVersionWrapper implements DDMStructureVersion,
 	* @param storageType the storage type of this ddm structure version
 	*/
 	@Override
-	public void setStorageType(java.lang.String storageType) {
+	public void setStorageType(String storageType) {
 		_ddmStructureVersion.setStorageType(storageType);
 	}
 
@@ -1028,7 +1023,7 @@ public class DDMStructureVersionWrapper implements DDMStructureVersion,
 	* @param userName the user name of this ddm structure version
 	*/
 	@Override
-	public void setUserName(java.lang.String userName) {
+	public void setUserName(String userName) {
 		_ddmStructureVersion.setUserName(userName);
 	}
 
@@ -1038,7 +1033,7 @@ public class DDMStructureVersionWrapper implements DDMStructureVersion,
 	* @param userUuid the user uuid of this ddm structure version
 	*/
 	@Override
-	public void setUserUuid(java.lang.String userUuid) {
+	public void setUserUuid(String userUuid) {
 		_ddmStructureVersion.setUserUuid(userUuid);
 	}
 
@@ -1048,7 +1043,7 @@ public class DDMStructureVersionWrapper implements DDMStructureVersion,
 	* @param version the version of this ddm structure version
 	*/
 	@Override
-	public void setVersion(java.lang.String version) {
+	public void setVersion(String version) {
 		_ddmStructureVersion.setVersion(version);
 	}
 
@@ -1063,7 +1058,7 @@ public class DDMStructureVersionWrapper implements DDMStructureVersion,
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _ddmStructureVersion.toString();
 	}
 
@@ -1073,7 +1068,7 @@ public class DDMStructureVersionWrapper implements DDMStructureVersion,
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _ddmStructureVersion.toXmlString();
 	}
 

@@ -35,8 +35,7 @@ public class FragmentEntryServiceWrapper implements FragmentEntryService,
 
 	@Override
 	public com.liferay.fragment.model.FragmentEntry addFragmentEntry(
-		long groupId, long fragmentCollectionId, java.lang.String name,
-		int status,
+		long groupId, long fragmentCollectionId, String name, int status,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _fragmentEntryService.addFragmentEntry(groupId,
@@ -45,8 +44,8 @@ public class FragmentEntryServiceWrapper implements FragmentEntryService,
 
 	@Override
 	public com.liferay.fragment.model.FragmentEntry addFragmentEntry(
-		long groupId, long fragmentCollectionId,
-		java.lang.String fragmentEntryKey, java.lang.String name, int status,
+		long groupId, long fragmentCollectionId, String fragmentEntryKey,
+		String name, int status,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _fragmentEntryService.addFragmentEntry(groupId,
@@ -55,9 +54,8 @@ public class FragmentEntryServiceWrapper implements FragmentEntryService,
 
 	@Override
 	public com.liferay.fragment.model.FragmentEntry addFragmentEntry(
-		long groupId, long fragmentCollectionId, java.lang.String name,
-		java.lang.String css, java.lang.String html, java.lang.String js,
-		int status,
+		long groupId, long fragmentCollectionId, String name, String css,
+		String html, String js, int status,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _fragmentEntryService.addFragmentEntry(groupId,
@@ -66,10 +64,8 @@ public class FragmentEntryServiceWrapper implements FragmentEntryService,
 
 	@Override
 	public com.liferay.fragment.model.FragmentEntry addFragmentEntry(
-		long groupId, long fragmentCollectionId,
-		java.lang.String fragmentEntryKey, java.lang.String name,
-		java.lang.String css, java.lang.String html, java.lang.String js,
-		int status,
+		long groupId, long fragmentCollectionId, String fragmentEntryKey,
+		String name, String css, String html, String js, int status,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _fragmentEntryService.addFragmentEntry(groupId,
@@ -106,7 +102,7 @@ public class FragmentEntryServiceWrapper implements FragmentEntryService,
 
 	@Override
 	public int getFragmentCollectionsCount(long groupId,
-		long fragmentCollectionId, java.lang.String name) {
+		long fragmentCollectionId, String name) {
 		return _fragmentEntryService.getFragmentCollectionsCount(groupId,
 			fragmentCollectionId, name);
 	}
@@ -141,8 +137,8 @@ public class FragmentEntryServiceWrapper implements FragmentEntryService,
 
 	@Override
 	public java.util.List<com.liferay.fragment.model.FragmentEntry> getFragmentEntries(
-		long groupId, long fragmentCollectionId, java.lang.String name,
-		int start, int end,
+		long groupId, long fragmentCollectionId, String name, int start,
+		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.fragment.model.FragmentEntry> orderByComparator) {
 		return _fragmentEntryService.getFragmentEntries(groupId,
 			fragmentCollectionId, name, start, end, orderByComparator);
@@ -154,28 +150,27 @@ public class FragmentEntryServiceWrapper implements FragmentEntryService,
 	* @return the OSGi service identifier
 	*/
 	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
+	public String getOSGiServiceIdentifier() {
 		return _fragmentEntryService.getOSGiServiceIdentifier();
 	}
 
 	@Override
-	public java.lang.String[] getTempFileNames(long groupId,
-		java.lang.String folderName)
+	public String[] getTempFileNames(long groupId, String folderName)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _fragmentEntryService.getTempFileNames(groupId, folderName);
 	}
 
 	@Override
 	public com.liferay.fragment.model.FragmentEntry updateFragmentEntry(
-		long fragmentEntryId, java.lang.String name)
+		long fragmentEntryId, String name)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _fragmentEntryService.updateFragmentEntry(fragmentEntryId, name);
 	}
 
 	@Override
 	public com.liferay.fragment.model.FragmentEntry updateFragmentEntry(
-		long fragmentEntryId, java.lang.String name, java.lang.String css,
-		java.lang.String html, java.lang.String js, int status,
+		long fragmentEntryId, String name, String css, String html, String js,
+		int status,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _fragmentEntryService.updateFragmentEntry(fragmentEntryId, name,

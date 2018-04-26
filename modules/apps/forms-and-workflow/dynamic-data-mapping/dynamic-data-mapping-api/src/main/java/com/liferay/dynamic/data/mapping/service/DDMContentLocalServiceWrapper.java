@@ -35,8 +35,8 @@ public class DDMContentLocalServiceWrapper implements DDMContentLocalService,
 
 	@Override
 	public com.liferay.dynamic.data.mapping.model.DDMContent addContent(
-		long userId, long groupId, java.lang.String name,
-		java.lang.String description, java.lang.String data,
+		long userId, long groupId, String name, String description,
+		String data,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _ddmContentLocalService.addContent(userId, groupId, name,
@@ -214,7 +214,7 @@ public class DDMContentLocalServiceWrapper implements DDMContentLocalService,
 	*/
 	@Override
 	public com.liferay.dynamic.data.mapping.model.DDMContent fetchDDMContentByUuidAndGroupId(
-		java.lang.String uuid, long groupId) {
+		String uuid, long groupId) {
 		return _ddmContentLocalService.fetchDDMContentByUuidAndGroupId(uuid,
 			groupId);
 	}
@@ -277,7 +277,7 @@ public class DDMContentLocalServiceWrapper implements DDMContentLocalService,
 	*/
 	@Override
 	public com.liferay.dynamic.data.mapping.model.DDMContent getDDMContentByUuidAndGroupId(
-		java.lang.String uuid, long groupId)
+		String uuid, long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _ddmContentLocalService.getDDMContentByUuidAndGroupId(uuid,
 			groupId);
@@ -309,7 +309,7 @@ public class DDMContentLocalServiceWrapper implements DDMContentLocalService,
 	*/
 	@Override
 	public java.util.List<com.liferay.dynamic.data.mapping.model.DDMContent> getDDMContentsByUuidAndCompanyId(
-		java.lang.String uuid, long companyId) {
+		String uuid, long companyId) {
 		return _ddmContentLocalService.getDDMContentsByUuidAndCompanyId(uuid,
 			companyId);
 	}
@@ -326,7 +326,7 @@ public class DDMContentLocalServiceWrapper implements DDMContentLocalService,
 	*/
 	@Override
 	public java.util.List<com.liferay.dynamic.data.mapping.model.DDMContent> getDDMContentsByUuidAndCompanyId(
-		java.lang.String uuid, long companyId, int start, int end,
+		String uuid, long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.mapping.model.DDMContent> orderByComparator) {
 		return _ddmContentLocalService.getDDMContentsByUuidAndCompanyId(uuid,
 			companyId, start, end, orderByComparator);
@@ -359,7 +359,7 @@ public class DDMContentLocalServiceWrapper implements DDMContentLocalService,
 	* @return the OSGi service identifier
 	*/
 	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
+	public String getOSGiServiceIdentifier() {
 		return _ddmContentLocalService.getOSGiServiceIdentifier();
 	}
 
@@ -372,8 +372,7 @@ public class DDMContentLocalServiceWrapper implements DDMContentLocalService,
 
 	@Override
 	public com.liferay.dynamic.data.mapping.model.DDMContent updateContent(
-		long contentId, java.lang.String name, java.lang.String description,
-		java.lang.String data,
+		long contentId, String name, String description, String data,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _ddmContentLocalService.updateContent(contentId, name,

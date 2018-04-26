@@ -100,7 +100,7 @@ public class DDMTemplateLinkWrapper implements DDMTemplateLink,
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new DDMTemplateLinkWrapper((DDMTemplateLink)_ddmTemplateLink.clone());
 	}
 
@@ -115,7 +115,7 @@ public class DDMTemplateLinkWrapper implements DDMTemplateLink,
 	* @return the fully qualified class name of this ddm template link
 	*/
 	@Override
-	public java.lang.String getClassName() {
+	public String getClassName() {
 		return _ddmTemplateLink.getClassName();
 	}
 
@@ -226,7 +226,7 @@ public class DDMTemplateLinkWrapper implements DDMTemplateLink,
 	}
 
 	@Override
-	public void setClassName(java.lang.String className) {
+	public void setClassName(String className) {
 		_ddmTemplateLink.setClassName(className);
 	}
 
@@ -327,7 +327,7 @@ public class DDMTemplateLinkWrapper implements DDMTemplateLink,
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _ddmTemplateLink.toString();
 	}
 
@@ -337,7 +337,7 @@ public class DDMTemplateLinkWrapper implements DDMTemplateLink,
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _ddmTemplateLink.toXmlString();
 	}
 

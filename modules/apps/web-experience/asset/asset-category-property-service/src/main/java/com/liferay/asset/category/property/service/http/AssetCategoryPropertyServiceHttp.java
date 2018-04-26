@@ -56,8 +56,7 @@ import com.liferay.portal.kernel.util.MethodKey;
 @ProviderType
 public class AssetCategoryPropertyServiceHttp {
 	public static com.liferay.asset.category.property.model.AssetCategoryProperty addCategoryProperty(
-		HttpPrincipal httpPrincipal, long entryId, java.lang.String key,
-		java.lang.String value)
+		HttpPrincipal httpPrincipal, long entryId, String key, String value)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(AssetCategoryPropertyServiceUtil.class,
@@ -145,7 +144,7 @@ public class AssetCategoryPropertyServiceHttp {
 	}
 
 	public static java.util.List<com.liferay.asset.category.property.model.AssetCategoryProperty> getCategoryPropertyValues(
-		HttpPrincipal httpPrincipal, long companyId, java.lang.String key) {
+		HttpPrincipal httpPrincipal, long companyId, String key) {
 		try {
 			MethodKey methodKey = new MethodKey(AssetCategoryPropertyServiceUtil.class,
 					"getCategoryPropertyValues",
@@ -174,7 +173,7 @@ public class AssetCategoryPropertyServiceHttp {
 
 	public static com.liferay.asset.category.property.model.AssetCategoryProperty updateCategoryProperty(
 		HttpPrincipal httpPrincipal, long userId, long categoryPropertyId,
-		java.lang.String key, java.lang.String value)
+		String key, String value)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(AssetCategoryPropertyServiceUtil.class,
@@ -207,8 +206,8 @@ public class AssetCategoryPropertyServiceHttp {
 	}
 
 	public static com.liferay.asset.category.property.model.AssetCategoryProperty updateCategoryProperty(
-		HttpPrincipal httpPrincipal, long categoryPropertyId,
-		java.lang.String key, java.lang.String value)
+		HttpPrincipal httpPrincipal, long categoryPropertyId, String key,
+		String value)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(AssetCategoryPropertyServiceUtil.class,
@@ -242,7 +241,7 @@ public class AssetCategoryPropertyServiceHttp {
 
 	private static Log _log = LogFactoryUtil.getLog(AssetCategoryPropertyServiceHttp.class);
 	private static final Class<?>[] _addCategoryPropertyParameterTypes0 = new Class[] {
-			long.class, java.lang.String.class, java.lang.String.class
+			long.class, String.class, String.class
 		};
 	private static final Class<?>[] _deleteCategoryPropertyParameterTypes1 = new Class[] {
 			long.class
@@ -251,13 +250,12 @@ public class AssetCategoryPropertyServiceHttp {
 			long.class
 		};
 	private static final Class<?>[] _getCategoryPropertyValuesParameterTypes3 = new Class[] {
-			long.class, java.lang.String.class
+			long.class, String.class
 		};
 	private static final Class<?>[] _updateCategoryPropertyParameterTypes4 = new Class[] {
-			long.class, long.class, java.lang.String.class,
-			java.lang.String.class
+			long.class, long.class, String.class, String.class
 		};
 	private static final Class<?>[] _updateCategoryPropertyParameterTypes5 = new Class[] {
-			long.class, java.lang.String.class, java.lang.String.class
+			long.class, String.class, String.class
 		};
 }

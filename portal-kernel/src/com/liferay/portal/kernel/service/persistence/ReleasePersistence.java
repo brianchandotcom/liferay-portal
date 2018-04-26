@@ -46,7 +46,7 @@ public interface ReleasePersistence extends BasePersistence<Release> {
 	* @return the matching release
 	* @throws NoSuchReleaseException if a matching release could not be found
 	*/
-	public Release findByServletContextName(java.lang.String servletContextName)
+	public Release findByServletContextName(String servletContextName)
 		throws NoSuchReleaseException;
 
 	/**
@@ -55,8 +55,7 @@ public interface ReleasePersistence extends BasePersistence<Release> {
 	* @param servletContextName the servlet context name
 	* @return the matching release, or <code>null</code> if a matching release could not be found
 	*/
-	public Release fetchByServletContextName(
-		java.lang.String servletContextName);
+	public Release fetchByServletContextName(String servletContextName);
 
 	/**
 	* Returns the release where servletContextName = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -65,8 +64,8 @@ public interface ReleasePersistence extends BasePersistence<Release> {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching release, or <code>null</code> if a matching release could not be found
 	*/
-	public Release fetchByServletContextName(
-		java.lang.String servletContextName, boolean retrieveFromCache);
+	public Release fetchByServletContextName(String servletContextName,
+		boolean retrieveFromCache);
 
 	/**
 	* Removes the release where servletContextName = &#63; from the database.
@@ -74,8 +73,8 @@ public interface ReleasePersistence extends BasePersistence<Release> {
 	* @param servletContextName the servlet context name
 	* @return the release that was removed
 	*/
-	public Release removeByServletContextName(
-		java.lang.String servletContextName) throws NoSuchReleaseException;
+	public Release removeByServletContextName(String servletContextName)
+		throws NoSuchReleaseException;
 
 	/**
 	* Returns the number of releases where servletContextName = &#63;.
@@ -83,7 +82,7 @@ public interface ReleasePersistence extends BasePersistence<Release> {
 	* @param servletContextName the servlet context name
 	* @return the number of matching releases
 	*/
-	public int countByServletContextName(java.lang.String servletContextName);
+	public int countByServletContextName(String servletContextName);
 
 	/**
 	* Caches the release in the entity cache if it is enabled.
@@ -205,5 +204,5 @@ public interface ReleasePersistence extends BasePersistence<Release> {
 	public int countAll();
 
 	@Override
-	public java.util.Set<java.lang.String> getBadColumnNames();
+	public java.util.Set<String> getBadColumnNames();
 }

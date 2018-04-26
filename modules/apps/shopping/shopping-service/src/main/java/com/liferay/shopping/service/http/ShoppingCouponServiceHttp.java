@@ -56,14 +56,13 @@ import com.liferay.shopping.service.ShoppingCouponServiceUtil;
 @ProviderType
 public class ShoppingCouponServiceHttp {
 	public static com.liferay.shopping.model.ShoppingCoupon addCoupon(
-		HttpPrincipal httpPrincipal, java.lang.String code, boolean autoCode,
-		java.lang.String name, java.lang.String description,
-		int startDateMonth, int startDateDay, int startDateYear,
-		int startDateHour, int startDateMinute, int endDateMonth,
-		int endDateDay, int endDateYear, int endDateHour, int endDateMinute,
-		boolean neverExpire, boolean active, java.lang.String limitCategories,
-		java.lang.String limitSkus, double minOrder, double discount,
-		java.lang.String discountType,
+		HttpPrincipal httpPrincipal, String code, boolean autoCode,
+		String name, String description, int startDateMonth, int startDateDay,
+		int startDateYear, int startDateHour, int startDateMinute,
+		int endDateMonth, int endDateDay, int endDateYear, int endDateHour,
+		int endDateMinute, boolean neverExpire, boolean active,
+		String limitCategories, String limitSkus, double minOrder,
+		double discount, String discountType,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -160,10 +159,9 @@ public class ShoppingCouponServiceHttp {
 	}
 
 	public static java.util.List<com.liferay.shopping.model.ShoppingCoupon> search(
-		HttpPrincipal httpPrincipal, long groupId, long companyId,
-		java.lang.String code, boolean active, java.lang.String discountType,
-		boolean andOperator, int start, int end)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		HttpPrincipal httpPrincipal, long groupId, long companyId, String code,
+		boolean active, String discountType, boolean andOperator, int start,
+		int end) throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(ShoppingCouponServiceUtil.class,
 					"search", _searchParameterTypes3);
@@ -195,13 +193,13 @@ public class ShoppingCouponServiceHttp {
 	}
 
 	public static com.liferay.shopping.model.ShoppingCoupon updateCoupon(
-		HttpPrincipal httpPrincipal, long couponId, java.lang.String name,
-		java.lang.String description, int startDateMonth, int startDateDay,
+		HttpPrincipal httpPrincipal, long couponId, String name,
+		String description, int startDateMonth, int startDateDay,
 		int startDateYear, int startDateHour, int startDateMinute,
 		int endDateMonth, int endDateDay, int endDateYear, int endDateHour,
 		int endDateMinute, boolean neverExpire, boolean active,
-		java.lang.String limitCategories, java.lang.String limitSkus,
-		double minOrder, double discount, java.lang.String discountType,
+		String limitCategories, String limitSkus, double minOrder,
+		double discount, String discountType,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -239,12 +237,10 @@ public class ShoppingCouponServiceHttp {
 
 	private static Log _log = LogFactoryUtil.getLog(ShoppingCouponServiceHttp.class);
 	private static final Class<?>[] _addCouponParameterTypes0 = new Class[] {
-			java.lang.String.class, boolean.class, java.lang.String.class,
-			java.lang.String.class, int.class, int.class, int.class, int.class,
+			String.class, boolean.class, String.class, String.class, int.class,
 			int.class, int.class, int.class, int.class, int.class, int.class,
-			boolean.class, boolean.class, java.lang.String.class,
-			java.lang.String.class, double.class, double.class,
-			java.lang.String.class,
+			int.class, int.class, int.class, boolean.class, boolean.class,
+			String.class, String.class, double.class, double.class, String.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _deleteCouponParameterTypes1 = new Class[] {
@@ -254,15 +250,14 @@ public class ShoppingCouponServiceHttp {
 			long.class, long.class
 		};
 	private static final Class<?>[] _searchParameterTypes3 = new Class[] {
-			long.class, long.class, java.lang.String.class, boolean.class,
-			java.lang.String.class, boolean.class, int.class, int.class
+			long.class, long.class, String.class, boolean.class, String.class,
+			boolean.class, int.class, int.class
 		};
 	private static final Class<?>[] _updateCouponParameterTypes4 = new Class[] {
-			long.class, java.lang.String.class, java.lang.String.class,
+			long.class, String.class, String.class, int.class, int.class,
 			int.class, int.class, int.class, int.class, int.class, int.class,
-			int.class, int.class, int.class, int.class, boolean.class,
-			boolean.class, java.lang.String.class, java.lang.String.class,
-			double.class, double.class, java.lang.String.class,
+			int.class, int.class, boolean.class, boolean.class, String.class,
+			String.class, double.class, double.class, String.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 }

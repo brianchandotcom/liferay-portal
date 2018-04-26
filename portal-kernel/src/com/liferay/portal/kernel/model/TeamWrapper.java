@@ -150,7 +150,7 @@ public class TeamWrapper implements Team, ModelWrapper<Team> {
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new TeamWrapper((Team)_team.clone());
 	}
 
@@ -185,7 +185,7 @@ public class TeamWrapper implements Team, ModelWrapper<Team> {
 	* @return the description of this team
 	*/
 	@Override
-	public java.lang.String getDescription() {
+	public String getDescription() {
 		return _team.getDescription();
 	}
 
@@ -240,7 +240,7 @@ public class TeamWrapper implements Team, ModelWrapper<Team> {
 	* @return the name of this team
 	*/
 	@Override
-	public java.lang.String getName() {
+	public String getName() {
 		return _team.getName();
 	}
 
@@ -291,7 +291,7 @@ public class TeamWrapper implements Team, ModelWrapper<Team> {
 	* @return the user name of this team
 	*/
 	@Override
-	public java.lang.String getUserName() {
+	public String getUserName() {
 		return _team.getUserName();
 	}
 
@@ -301,7 +301,7 @@ public class TeamWrapper implements Team, ModelWrapper<Team> {
 	* @return the user uuid of this team
 	*/
 	@Override
-	public java.lang.String getUserUuid() {
+	public String getUserUuid() {
 		return _team.getUserUuid();
 	}
 
@@ -311,7 +311,7 @@ public class TeamWrapper implements Team, ModelWrapper<Team> {
 	* @return the uuid of this team
 	*/
 	@Override
-	public java.lang.String getUuid() {
+	public String getUuid() {
 		return _team.getUuid();
 	}
 
@@ -371,7 +371,7 @@ public class TeamWrapper implements Team, ModelWrapper<Team> {
 	* @param description the description of this team
 	*/
 	@Override
-	public void setDescription(java.lang.String description) {
+	public void setDescription(String description) {
 		_team.setDescription(description);
 	}
 
@@ -436,7 +436,7 @@ public class TeamWrapper implements Team, ModelWrapper<Team> {
 	* @param name the name of this team
 	*/
 	@Override
-	public void setName(java.lang.String name) {
+	public void setName(String name) {
 		_team.setName(name);
 	}
 
@@ -486,7 +486,7 @@ public class TeamWrapper implements Team, ModelWrapper<Team> {
 	* @param userName the user name of this team
 	*/
 	@Override
-	public void setUserName(java.lang.String userName) {
+	public void setUserName(String userName) {
 		_team.setUserName(userName);
 	}
 
@@ -496,7 +496,7 @@ public class TeamWrapper implements Team, ModelWrapper<Team> {
 	* @param userUuid the user uuid of this team
 	*/
 	@Override
-	public void setUserUuid(java.lang.String userUuid) {
+	public void setUserUuid(String userUuid) {
 		_team.setUserUuid(userUuid);
 	}
 
@@ -506,7 +506,7 @@ public class TeamWrapper implements Team, ModelWrapper<Team> {
 	* @param uuid the uuid of this team
 	*/
 	@Override
-	public void setUuid(java.lang.String uuid) {
+	public void setUuid(String uuid) {
 		_team.setUuid(uuid);
 	}
 
@@ -521,7 +521,7 @@ public class TeamWrapper implements Team, ModelWrapper<Team> {
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _team.toString();
 	}
 
@@ -531,7 +531,7 @@ public class TeamWrapper implements Team, ModelWrapper<Team> {
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _team.toXmlString();
 	}
 

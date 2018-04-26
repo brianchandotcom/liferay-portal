@@ -46,8 +46,7 @@ public class EntryLocalServiceWrapper implements EntryLocalService,
 
 	@Override
 	public com.liferay.contacts.model.Entry addEntry(long userId,
-		java.lang.String fullName, java.lang.String emailAddress,
-		java.lang.String comments)
+		String fullName, String emailAddress, String comments)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _entryLocalService.addEntry(userId, fullName, emailAddress,
 			comments);
@@ -255,7 +254,7 @@ public class EntryLocalServiceWrapper implements EntryLocalService,
 	* @return the OSGi service identifier
 	*/
 	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
+	public String getOSGiServiceIdentifier() {
 		return _entryLocalService.getOSGiServiceIdentifier();
 	}
 
@@ -268,26 +267,25 @@ public class EntryLocalServiceWrapper implements EntryLocalService,
 
 	@Override
 	public java.util.List<com.liferay.contacts.model.Entry> search(
-		long userId, java.lang.String keywords, int start, int end) {
+		long userId, String keywords, int start, int end) {
 		return _entryLocalService.search(userId, keywords, start, end);
 	}
 
 	@Override
-	public int searchCount(long userId, java.lang.String keywords) {
+	public int searchCount(long userId, String keywords) {
 		return _entryLocalService.searchCount(userId, keywords);
 	}
 
 	@Override
 	public java.util.List<com.liferay.portal.kernel.model.BaseModel<?>> searchUsersAndContacts(
-		long companyId, long userId, java.lang.String keywords, int start,
-		int end) {
+		long companyId, long userId, String keywords, int start, int end) {
 		return _entryLocalService.searchUsersAndContacts(companyId, userId,
 			keywords, start, end);
 	}
 
 	@Override
 	public int searchUsersAndContactsCount(long companyId, long userId,
-		java.lang.String keywords) {
+		String keywords) {
 		return _entryLocalService.searchUsersAndContactsCount(companyId,
 			userId, keywords);
 	}
@@ -306,8 +304,7 @@ public class EntryLocalServiceWrapper implements EntryLocalService,
 
 	@Override
 	public com.liferay.contacts.model.Entry updateEntry(long entryId,
-		java.lang.String fullName, java.lang.String emailAddress,
-		java.lang.String comments)
+		String fullName, String emailAddress, String comments)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _entryLocalService.updateEntry(entryId, fullName, emailAddress,
 			comments);

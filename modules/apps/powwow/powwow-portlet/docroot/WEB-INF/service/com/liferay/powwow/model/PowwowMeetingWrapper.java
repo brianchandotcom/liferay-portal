@@ -172,7 +172,7 @@ public class PowwowMeetingWrapper implements PowwowMeeting,
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new PowwowMeetingWrapper((PowwowMeeting)_powwowMeeting.clone());
 	}
 
@@ -217,7 +217,7 @@ public class PowwowMeetingWrapper implements PowwowMeeting,
 	* @return the description of this powwow meeting
 	*/
 	@Override
-	public java.lang.String getDescription() {
+	public String getDescription() {
 		return _powwowMeeting.getDescription();
 	}
 
@@ -242,7 +242,7 @@ public class PowwowMeetingWrapper implements PowwowMeeting,
 	* @return the language ID of this powwow meeting
 	*/
 	@Override
-	public java.lang.String getLanguageId() {
+	public String getLanguageId() {
 		return _powwowMeeting.getLanguageId();
 	}
 
@@ -262,7 +262,7 @@ public class PowwowMeetingWrapper implements PowwowMeeting,
 	* @return the name of this powwow meeting
 	*/
 	@Override
-	public java.lang.String getName() {
+	public String getName() {
 		return _powwowMeeting.getName();
 	}
 
@@ -307,7 +307,7 @@ public class PowwowMeetingWrapper implements PowwowMeeting,
 	* @return the provider type of this powwow meeting
 	*/
 	@Override
-	public java.lang.String getProviderType() {
+	public String getProviderType() {
 		return _powwowMeeting.getProviderType();
 	}
 
@@ -317,12 +317,12 @@ public class PowwowMeetingWrapper implements PowwowMeeting,
 	* @return the provider type metadata of this powwow meeting
 	*/
 	@Override
-	public java.lang.String getProviderTypeMetadata() {
+	public String getProviderTypeMetadata() {
 		return _powwowMeeting.getProviderTypeMetadata();
 	}
 
 	@Override
-	public Map<java.lang.String, Serializable> getProviderTypeMetadataMap() {
+	public Map<String, Serializable> getProviderTypeMetadataMap() {
 		return _powwowMeeting.getProviderTypeMetadataMap();
 	}
 
@@ -352,7 +352,7 @@ public class PowwowMeetingWrapper implements PowwowMeeting,
 	* @return the user name of this powwow meeting
 	*/
 	@Override
-	public java.lang.String getUserName() {
+	public String getUserName() {
 		return _powwowMeeting.getUserName();
 	}
 
@@ -362,7 +362,7 @@ public class PowwowMeetingWrapper implements PowwowMeeting,
 	* @return the user uuid of this powwow meeting
 	*/
 	@Override
-	public java.lang.String getUserUuid() {
+	public String getUserUuid() {
 		return _powwowMeeting.getUserUuid();
 	}
 
@@ -432,7 +432,7 @@ public class PowwowMeetingWrapper implements PowwowMeeting,
 	* @param description the description of this powwow meeting
 	*/
 	@Override
-	public void setDescription(java.lang.String description) {
+	public void setDescription(String description) {
 		_powwowMeeting.setDescription(description);
 	}
 
@@ -468,7 +468,7 @@ public class PowwowMeetingWrapper implements PowwowMeeting,
 	* @param languageId the language ID of this powwow meeting
 	*/
 	@Override
-	public void setLanguageId(java.lang.String languageId) {
+	public void setLanguageId(String languageId) {
 		_powwowMeeting.setLanguageId(languageId);
 	}
 
@@ -488,7 +488,7 @@ public class PowwowMeetingWrapper implements PowwowMeeting,
 	* @param name the name of this powwow meeting
 	*/
 	@Override
-	public void setName(java.lang.String name) {
+	public void setName(String name) {
 		_powwowMeeting.setName(name);
 	}
 
@@ -538,7 +538,7 @@ public class PowwowMeetingWrapper implements PowwowMeeting,
 	* @param providerType the provider type of this powwow meeting
 	*/
 	@Override
-	public void setProviderType(java.lang.String providerType) {
+	public void setProviderType(String providerType) {
 		_powwowMeeting.setProviderType(providerType);
 	}
 
@@ -548,7 +548,7 @@ public class PowwowMeetingWrapper implements PowwowMeeting,
 	* @param providerTypeMetadata the provider type metadata of this powwow meeting
 	*/
 	@Override
-	public void setProviderTypeMetadata(java.lang.String providerTypeMetadata) {
+	public void setProviderTypeMetadata(String providerTypeMetadata) {
 		_powwowMeeting.setProviderTypeMetadata(providerTypeMetadata);
 	}
 
@@ -578,7 +578,7 @@ public class PowwowMeetingWrapper implements PowwowMeeting,
 	* @param userName the user name of this powwow meeting
 	*/
 	@Override
-	public void setUserName(java.lang.String userName) {
+	public void setUserName(String userName) {
 		_powwowMeeting.setUserName(userName);
 	}
 
@@ -588,7 +588,7 @@ public class PowwowMeetingWrapper implements PowwowMeeting,
 	* @param userUuid the user uuid of this powwow meeting
 	*/
 	@Override
-	public void setUserUuid(java.lang.String userUuid) {
+	public void setUserUuid(String userUuid) {
 		_powwowMeeting.setUserUuid(userUuid);
 	}
 
@@ -603,7 +603,7 @@ public class PowwowMeetingWrapper implements PowwowMeeting,
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _powwowMeeting.toString();
 	}
 
@@ -613,7 +613,7 @@ public class PowwowMeetingWrapper implements PowwowMeeting,
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _powwowMeeting.toXmlString();
 	}
 

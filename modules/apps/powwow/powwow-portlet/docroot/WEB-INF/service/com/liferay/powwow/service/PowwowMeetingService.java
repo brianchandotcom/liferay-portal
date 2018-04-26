@@ -57,11 +57,10 @@ public interface PowwowMeetingService extends BaseService {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link PowwowMeetingServiceUtil} to access the powwow meeting remote service. Add custom service methods to {@link com.liferay.powwow.service.impl.PowwowMeetingServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public PowwowMeeting addPowwowMeeting(long groupId,
-		java.lang.String portletId, long powwowServerId, java.lang.String name,
-		java.lang.String description, java.lang.String providerType,
-		Map<java.lang.String, Serializable> providerTypeMetadataMap,
-		java.lang.String languageId, long calendarBookingId, int status,
+	public PowwowMeeting addPowwowMeeting(long groupId, String portletId,
+		long powwowServerId, String name, String description,
+		String providerType, Map<String, Serializable> providerTypeMetadataMap,
+		String languageId, long calendarBookingId, int status,
 		List<PowwowParticipant> powwowParticipants,
 		ServiceContext serviceContext) throws PortalException;
 
@@ -73,7 +72,7 @@ public interface PowwowMeetingService extends BaseService {
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public PowwowMeeting getPowwowMeeting(long powwowMeetingId)
@@ -87,10 +86,9 @@ public interface PowwowMeetingService extends BaseService {
 	public int getPowwowMeetingsCount(long groupId);
 
 	public PowwowMeeting updatePowwowMeeting(long powwowMeetingId,
-		long powwowServerId, java.lang.String name,
-		java.lang.String description, java.lang.String providerType,
-		Map<java.lang.String, Serializable> providerTypeMetadataMap,
-		java.lang.String languageId, long calendarBookingId, int status,
+		long powwowServerId, String name, String description,
+		String providerType, Map<String, Serializable> providerTypeMetadataMap,
+		String languageId, long calendarBookingId, int status,
 		List<PowwowParticipant> powwowParticipants,
 		ServiceContext serviceContext) throws PortalException;
 }

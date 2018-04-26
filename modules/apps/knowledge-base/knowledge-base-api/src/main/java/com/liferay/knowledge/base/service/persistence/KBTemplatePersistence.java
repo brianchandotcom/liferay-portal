@@ -47,7 +47,7 @@ public interface KBTemplatePersistence extends BasePersistence<KBTemplate> {
 	* @param uuid the uuid
 	* @return the matching kb templates
 	*/
-	public java.util.List<KBTemplate> findByUuid(java.lang.String uuid);
+	public java.util.List<KBTemplate> findByUuid(String uuid);
 
 	/**
 	* Returns a range of all the kb templates where uuid = &#63;.
@@ -61,8 +61,7 @@ public interface KBTemplatePersistence extends BasePersistence<KBTemplate> {
 	* @param end the upper bound of the range of kb templates (not inclusive)
 	* @return the range of matching kb templates
 	*/
-	public java.util.List<KBTemplate> findByUuid(java.lang.String uuid,
-		int start, int end);
+	public java.util.List<KBTemplate> findByUuid(String uuid, int start, int end);
 
 	/**
 	* Returns an ordered range of all the kb templates where uuid = &#63;.
@@ -77,8 +76,8 @@ public interface KBTemplatePersistence extends BasePersistence<KBTemplate> {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching kb templates
 	*/
-	public java.util.List<KBTemplate> findByUuid(java.lang.String uuid,
-		int start, int end,
+	public java.util.List<KBTemplate> findByUuid(String uuid, int start,
+		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<KBTemplate> orderByComparator);
 
 	/**
@@ -95,8 +94,8 @@ public interface KBTemplatePersistence extends BasePersistence<KBTemplate> {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching kb templates
 	*/
-	public java.util.List<KBTemplate> findByUuid(java.lang.String uuid,
-		int start, int end,
+	public java.util.List<KBTemplate> findByUuid(String uuid, int start,
+		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<KBTemplate> orderByComparator,
 		boolean retrieveFromCache);
 
@@ -108,7 +107,7 @@ public interface KBTemplatePersistence extends BasePersistence<KBTemplate> {
 	* @return the first matching kb template
 	* @throws NoSuchTemplateException if a matching kb template could not be found
 	*/
-	public KBTemplate findByUuid_First(java.lang.String uuid,
+	public KBTemplate findByUuid_First(String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<KBTemplate> orderByComparator)
 		throws NoSuchTemplateException;
 
@@ -119,7 +118,7 @@ public interface KBTemplatePersistence extends BasePersistence<KBTemplate> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching kb template, or <code>null</code> if a matching kb template could not be found
 	*/
-	public KBTemplate fetchByUuid_First(java.lang.String uuid,
+	public KBTemplate fetchByUuid_First(String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<KBTemplate> orderByComparator);
 
 	/**
@@ -130,7 +129,7 @@ public interface KBTemplatePersistence extends BasePersistence<KBTemplate> {
 	* @return the last matching kb template
 	* @throws NoSuchTemplateException if a matching kb template could not be found
 	*/
-	public KBTemplate findByUuid_Last(java.lang.String uuid,
+	public KBTemplate findByUuid_Last(String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<KBTemplate> orderByComparator)
 		throws NoSuchTemplateException;
 
@@ -141,7 +140,7 @@ public interface KBTemplatePersistence extends BasePersistence<KBTemplate> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching kb template, or <code>null</code> if a matching kb template could not be found
 	*/
-	public KBTemplate fetchByUuid_Last(java.lang.String uuid,
+	public KBTemplate fetchByUuid_Last(String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<KBTemplate> orderByComparator);
 
 	/**
@@ -153,8 +152,7 @@ public interface KBTemplatePersistence extends BasePersistence<KBTemplate> {
 	* @return the previous, current, and next kb template
 	* @throws NoSuchTemplateException if a kb template with the primary key could not be found
 	*/
-	public KBTemplate[] findByUuid_PrevAndNext(long kbTemplateId,
-		java.lang.String uuid,
+	public KBTemplate[] findByUuid_PrevAndNext(long kbTemplateId, String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<KBTemplate> orderByComparator)
 		throws NoSuchTemplateException;
 
@@ -163,7 +161,7 @@ public interface KBTemplatePersistence extends BasePersistence<KBTemplate> {
 	*
 	* @param uuid the uuid
 	*/
-	public void removeByUuid(java.lang.String uuid);
+	public void removeByUuid(String uuid);
 
 	/**
 	* Returns the number of kb templates where uuid = &#63;.
@@ -171,7 +169,7 @@ public interface KBTemplatePersistence extends BasePersistence<KBTemplate> {
 	* @param uuid the uuid
 	* @return the number of matching kb templates
 	*/
-	public int countByUuid(java.lang.String uuid);
+	public int countByUuid(String uuid);
 
 	/**
 	* Returns the kb template where uuid = &#63; and groupId = &#63; or throws a {@link NoSuchTemplateException} if it could not be found.
@@ -181,7 +179,7 @@ public interface KBTemplatePersistence extends BasePersistence<KBTemplate> {
 	* @return the matching kb template
 	* @throws NoSuchTemplateException if a matching kb template could not be found
 	*/
-	public KBTemplate findByUUID_G(java.lang.String uuid, long groupId)
+	public KBTemplate findByUUID_G(String uuid, long groupId)
 		throws NoSuchTemplateException;
 
 	/**
@@ -191,7 +189,7 @@ public interface KBTemplatePersistence extends BasePersistence<KBTemplate> {
 	* @param groupId the group ID
 	* @return the matching kb template, or <code>null</code> if a matching kb template could not be found
 	*/
-	public KBTemplate fetchByUUID_G(java.lang.String uuid, long groupId);
+	public KBTemplate fetchByUUID_G(String uuid, long groupId);
 
 	/**
 	* Returns the kb template where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -201,7 +199,7 @@ public interface KBTemplatePersistence extends BasePersistence<KBTemplate> {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching kb template, or <code>null</code> if a matching kb template could not be found
 	*/
-	public KBTemplate fetchByUUID_G(java.lang.String uuid, long groupId,
+	public KBTemplate fetchByUUID_G(String uuid, long groupId,
 		boolean retrieveFromCache);
 
 	/**
@@ -211,7 +209,7 @@ public interface KBTemplatePersistence extends BasePersistence<KBTemplate> {
 	* @param groupId the group ID
 	* @return the kb template that was removed
 	*/
-	public KBTemplate removeByUUID_G(java.lang.String uuid, long groupId)
+	public KBTemplate removeByUUID_G(String uuid, long groupId)
 		throws NoSuchTemplateException;
 
 	/**
@@ -221,7 +219,7 @@ public interface KBTemplatePersistence extends BasePersistence<KBTemplate> {
 	* @param groupId the group ID
 	* @return the number of matching kb templates
 	*/
-	public int countByUUID_G(java.lang.String uuid, long groupId);
+	public int countByUUID_G(String uuid, long groupId);
 
 	/**
 	* Returns all the kb templates where uuid = &#63; and companyId = &#63;.
@@ -230,8 +228,7 @@ public interface KBTemplatePersistence extends BasePersistence<KBTemplate> {
 	* @param companyId the company ID
 	* @return the matching kb templates
 	*/
-	public java.util.List<KBTemplate> findByUuid_C(java.lang.String uuid,
-		long companyId);
+	public java.util.List<KBTemplate> findByUuid_C(String uuid, long companyId);
 
 	/**
 	* Returns a range of all the kb templates where uuid = &#63; and companyId = &#63;.
@@ -246,8 +243,8 @@ public interface KBTemplatePersistence extends BasePersistence<KBTemplate> {
 	* @param end the upper bound of the range of kb templates (not inclusive)
 	* @return the range of matching kb templates
 	*/
-	public java.util.List<KBTemplate> findByUuid_C(java.lang.String uuid,
-		long companyId, int start, int end);
+	public java.util.List<KBTemplate> findByUuid_C(String uuid, long companyId,
+		int start, int end);
 
 	/**
 	* Returns an ordered range of all the kb templates where uuid = &#63; and companyId = &#63;.
@@ -263,8 +260,8 @@ public interface KBTemplatePersistence extends BasePersistence<KBTemplate> {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching kb templates
 	*/
-	public java.util.List<KBTemplate> findByUuid_C(java.lang.String uuid,
-		long companyId, int start, int end,
+	public java.util.List<KBTemplate> findByUuid_C(String uuid, long companyId,
+		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<KBTemplate> orderByComparator);
 
 	/**
@@ -282,8 +279,8 @@ public interface KBTemplatePersistence extends BasePersistence<KBTemplate> {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching kb templates
 	*/
-	public java.util.List<KBTemplate> findByUuid_C(java.lang.String uuid,
-		long companyId, int start, int end,
+	public java.util.List<KBTemplate> findByUuid_C(String uuid, long companyId,
+		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<KBTemplate> orderByComparator,
 		boolean retrieveFromCache);
 
@@ -296,7 +293,7 @@ public interface KBTemplatePersistence extends BasePersistence<KBTemplate> {
 	* @return the first matching kb template
 	* @throws NoSuchTemplateException if a matching kb template could not be found
 	*/
-	public KBTemplate findByUuid_C_First(java.lang.String uuid, long companyId,
+	public KBTemplate findByUuid_C_First(String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<KBTemplate> orderByComparator)
 		throws NoSuchTemplateException;
 
@@ -308,8 +305,7 @@ public interface KBTemplatePersistence extends BasePersistence<KBTemplate> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching kb template, or <code>null</code> if a matching kb template could not be found
 	*/
-	public KBTemplate fetchByUuid_C_First(java.lang.String uuid,
-		long companyId,
+	public KBTemplate fetchByUuid_C_First(String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<KBTemplate> orderByComparator);
 
 	/**
@@ -321,7 +317,7 @@ public interface KBTemplatePersistence extends BasePersistence<KBTemplate> {
 	* @return the last matching kb template
 	* @throws NoSuchTemplateException if a matching kb template could not be found
 	*/
-	public KBTemplate findByUuid_C_Last(java.lang.String uuid, long companyId,
+	public KBTemplate findByUuid_C_Last(String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<KBTemplate> orderByComparator)
 		throws NoSuchTemplateException;
 
@@ -333,7 +329,7 @@ public interface KBTemplatePersistence extends BasePersistence<KBTemplate> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching kb template, or <code>null</code> if a matching kb template could not be found
 	*/
-	public KBTemplate fetchByUuid_C_Last(java.lang.String uuid, long companyId,
+	public KBTemplate fetchByUuid_C_Last(String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<KBTemplate> orderByComparator);
 
 	/**
@@ -347,7 +343,7 @@ public interface KBTemplatePersistence extends BasePersistence<KBTemplate> {
 	* @throws NoSuchTemplateException if a kb template with the primary key could not be found
 	*/
 	public KBTemplate[] findByUuid_C_PrevAndNext(long kbTemplateId,
-		java.lang.String uuid, long companyId,
+		String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<KBTemplate> orderByComparator)
 		throws NoSuchTemplateException;
 
@@ -357,7 +353,7 @@ public interface KBTemplatePersistence extends BasePersistence<KBTemplate> {
 	* @param uuid the uuid
 	* @param companyId the company ID
 	*/
-	public void removeByUuid_C(java.lang.String uuid, long companyId);
+	public void removeByUuid_C(String uuid, long companyId);
 
 	/**
 	* Returns the number of kb templates where uuid = &#63; and companyId = &#63;.
@@ -366,7 +362,7 @@ public interface KBTemplatePersistence extends BasePersistence<KBTemplate> {
 	* @param companyId the company ID
 	* @return the number of matching kb templates
 	*/
-	public int countByUuid_C(java.lang.String uuid, long companyId);
+	public int countByUuid_C(String uuid, long companyId);
 
 	/**
 	* Returns all the kb templates where groupId = &#63;.
@@ -682,5 +678,5 @@ public interface KBTemplatePersistence extends BasePersistence<KBTemplate> {
 	public int countAll();
 
 	@Override
-	public java.util.Set<java.lang.String> getBadColumnNames();
+	public java.util.Set<String> getBadColumnNames();
 }

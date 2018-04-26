@@ -77,9 +77,8 @@ public class CompanyServiceSoap {
 	* @return the company
 	*/
 	public static com.liferay.portal.kernel.model.CompanySoap addCompany(
-		java.lang.String webId, java.lang.String virtualHost,
-		java.lang.String mx, boolean system, int maxUsers, boolean active)
-		throws RemoteException {
+		String webId, String virtualHost, String mx, boolean system,
+		int maxUsers, boolean active) throws RemoteException {
 		try {
 			com.liferay.portal.kernel.model.Company returnValue = CompanyServiceUtil.addCompany(webId,
 					virtualHost, mx, system, maxUsers, active);
@@ -170,7 +169,7 @@ public class CompanyServiceSoap {
 	* @return Returns the company with the mail domain
 	*/
 	public static com.liferay.portal.kernel.model.CompanySoap getCompanyByMx(
-		java.lang.String mx) throws RemoteException {
+		String mx) throws RemoteException {
 		try {
 			com.liferay.portal.kernel.model.Company returnValue = CompanyServiceUtil.getCompanyByMx(mx);
 
@@ -190,7 +189,7 @@ public class CompanyServiceSoap {
 	* @return Returns the company with the virtual host name
 	*/
 	public static com.liferay.portal.kernel.model.CompanySoap getCompanyByVirtualHost(
-		java.lang.String virtualHost) throws RemoteException {
+		String virtualHost) throws RemoteException {
 		try {
 			com.liferay.portal.kernel.model.Company returnValue = CompanyServiceUtil.getCompanyByVirtualHost(virtualHost);
 
@@ -210,7 +209,7 @@ public class CompanyServiceSoap {
 	* @return Returns the company with the web domain
 	*/
 	public static com.liferay.portal.kernel.model.CompanySoap getCompanyByWebId(
-		java.lang.String webId) throws RemoteException {
+		String webId) throws RemoteException {
 		try {
 			com.liferay.portal.kernel.model.Company returnValue = CompanyServiceUtil.getCompanyByWebId(webId);
 
@@ -233,7 +232,7 @@ public class CompanyServiceSoap {
 	* @param companyId the primary key of the company
 	* @param keys the company's preferences keys to be remove
 	*/
-	public static void removePreferences(long companyId, java.lang.String[] keys)
+	public static void removePreferences(long companyId, String[] keys)
 		throws RemoteException {
 		try {
 			CompanyServiceUtil.removePreferences(companyId, keys);
@@ -257,8 +256,8 @@ public class CompanyServiceSoap {
 	* @return the company with the primary key
 	*/
 	public static com.liferay.portal.kernel.model.CompanySoap updateCompany(
-		long companyId, java.lang.String virtualHost, java.lang.String mx,
-		int maxUsers, boolean active) throws RemoteException {
+		long companyId, String virtualHost, String mx, int maxUsers,
+		boolean active) throws RemoteException {
 		try {
 			com.liferay.portal.kernel.model.Company returnValue = CompanyServiceUtil.updateCompany(companyId,
 					virtualHost, mx, maxUsers, active);
@@ -299,13 +298,10 @@ public class CompanyServiceSoap {
 	* @return the the company with the primary key
 	*/
 	public static com.liferay.portal.kernel.model.CompanySoap updateCompany(
-		long companyId, java.lang.String virtualHost, java.lang.String mx,
-		java.lang.String homeURL, boolean logo, byte[] logoBytes,
-		java.lang.String name, java.lang.String legalName,
-		java.lang.String legalId, java.lang.String legalType,
-		java.lang.String sicCode, java.lang.String tickerSymbol,
-		java.lang.String industry, java.lang.String type, java.lang.String size)
-		throws RemoteException {
+		long companyId, String virtualHost, String mx, String homeURL,
+		boolean logo, byte[] logoBytes, String name, String legalName,
+		String legalId, String legalType, String sicCode, String tickerSymbol,
+		String industry, String type, String size) throws RemoteException {
 		try {
 			com.liferay.portal.kernel.model.Company returnValue = CompanyServiceUtil.updateCompany(companyId,
 					virtualHost, mx, homeURL, logo, logoBytes, name, legalName,
@@ -353,12 +349,10 @@ public class CompanyServiceSoap {
 	*/
 	@Deprecated
 	public static com.liferay.portal.kernel.model.CompanySoap updateCompany(
-		long companyId, java.lang.String virtualHost, java.lang.String mx,
-		java.lang.String homeURL, java.lang.String name,
-		java.lang.String legalName, java.lang.String legalId,
-		java.lang.String legalType, java.lang.String sicCode,
-		java.lang.String tickerSymbol, java.lang.String industry,
-		java.lang.String type, java.lang.String size) throws RemoteException {
+		long companyId, String virtualHost, String mx, String homeURL,
+		String name, String legalName, String legalId, String legalType,
+		String sicCode, String tickerSymbol, String industry, String type,
+		String size) throws RemoteException {
 		try {
 			com.liferay.portal.kernel.model.Company returnValue = CompanyServiceUtil.updateCompany(companyId,
 					virtualHost, mx, homeURL, name, legalName, legalId,
@@ -380,9 +374,8 @@ public class CompanyServiceSoap {
 	* @param languageId the ID of the company's default user's language
 	* @param timeZoneId the ID of the company's default user's time zone
 	*/
-	public static void updateDisplay(long companyId,
-		java.lang.String languageId, java.lang.String timeZoneId)
-		throws RemoteException {
+	public static void updateDisplay(long companyId, String languageId,
+		String timeZoneId) throws RemoteException {
 		try {
 			CompanyServiceUtil.updateDisplay(companyId, languageId, timeZoneId);
 		}
@@ -433,10 +426,10 @@ public class CompanyServiceSoap {
 	* @param siteLogo whether to to allow site administrators to use their own
 	logo instead of the enterprise logo
 	*/
-	public static void updateSecurity(long companyId,
-		java.lang.String authType, boolean autoLogin, boolean sendPassword,
-		boolean strangers, boolean strangersWithMx, boolean strangersVerify,
-		boolean siteLogo) throws RemoteException {
+	public static void updateSecurity(long companyId, String authType,
+		boolean autoLogin, boolean sendPassword, boolean strangers,
+		boolean strangersWithMx, boolean strangersVerify, boolean siteLogo)
+		throws RemoteException {
 		try {
 			CompanyServiceUtil.updateSecurity(companyId, authType, autoLogin,
 				sendPassword, strangers, strangersWithMx, strangersVerify,

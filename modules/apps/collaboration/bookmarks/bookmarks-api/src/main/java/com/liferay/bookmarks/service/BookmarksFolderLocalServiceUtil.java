@@ -55,8 +55,7 @@ public class BookmarksFolderLocalServiceUtil {
 	}
 
 	public static com.liferay.bookmarks.model.BookmarksFolder addFolder(
-		long userId, long parentFolderId, java.lang.String name,
-		java.lang.String description,
+		long userId, long parentFolderId, String name, String description,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
@@ -229,7 +228,7 @@ public class BookmarksFolderLocalServiceUtil {
 	* @return the matching bookmarks folder, or <code>null</code> if a matching bookmarks folder could not be found
 	*/
 	public static com.liferay.bookmarks.model.BookmarksFolder fetchBookmarksFolderByUuidAndGroupId(
-		java.lang.String uuid, long groupId) {
+		String uuid, long groupId) {
 		return getService().fetchBookmarksFolderByUuidAndGroupId(uuid, groupId);
 	}
 
@@ -259,7 +258,7 @@ public class BookmarksFolderLocalServiceUtil {
 	* @throws PortalException if a matching bookmarks folder could not be found
 	*/
 	public static com.liferay.bookmarks.model.BookmarksFolder getBookmarksFolderByUuidAndGroupId(
-		java.lang.String uuid, long groupId)
+		String uuid, long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getBookmarksFolderByUuidAndGroupId(uuid, groupId);
 	}
@@ -288,7 +287,7 @@ public class BookmarksFolderLocalServiceUtil {
 	* @return the matching bookmarks folders, or an empty list if no matches were found
 	*/
 	public static java.util.List<com.liferay.bookmarks.model.BookmarksFolder> getBookmarksFoldersByUuidAndCompanyId(
-		java.lang.String uuid, long companyId) {
+		String uuid, long companyId) {
 		return getService()
 				   .getBookmarksFoldersByUuidAndCompanyId(uuid, companyId);
 	}
@@ -304,7 +303,7 @@ public class BookmarksFolderLocalServiceUtil {
 	* @return the range of matching bookmarks folders, or an empty list if no matches were found
 	*/
 	public static java.util.List<com.liferay.bookmarks.model.BookmarksFolder> getBookmarksFoldersByUuidAndCompanyId(
-		java.lang.String uuid, long companyId, int start, int end,
+		String uuid, long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.bookmarks.model.BookmarksFolder> orderByComparator) {
 		return getService()
 				   .getBookmarksFoldersByUuidAndCompanyId(uuid, companyId,
@@ -361,24 +360,24 @@ public class BookmarksFolderLocalServiceUtil {
 				   .getFolders(groupId, parentFolderId, status, start, end);
 	}
 
-	public static java.util.List<java.lang.Object> getFoldersAndEntries(
-		long groupId, long folderId) {
+	public static java.util.List<Object> getFoldersAndEntries(long groupId,
+		long folderId) {
 		return getService().getFoldersAndEntries(groupId, folderId);
 	}
 
-	public static java.util.List<java.lang.Object> getFoldersAndEntries(
-		long groupId, long folderId, int status) {
+	public static java.util.List<Object> getFoldersAndEntries(long groupId,
+		long folderId, int status) {
 		return getService().getFoldersAndEntries(groupId, folderId, status);
 	}
 
-	public static java.util.List<java.lang.Object> getFoldersAndEntries(
-		long groupId, long folderId, int status, int start, int end) {
+	public static java.util.List<Object> getFoldersAndEntries(long groupId,
+		long folderId, int status, int start, int end) {
 		return getService()
 				   .getFoldersAndEntries(groupId, folderId, status, start, end);
 	}
 
-	public static java.util.List<java.lang.Object> getFoldersAndEntries(
-		long groupId, long folderId, int status, int start, int end,
+	public static java.util.List<Object> getFoldersAndEntries(long groupId,
+		long folderId, int status, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator obc) {
 		return getService()
 				   .getFoldersAndEntries(groupId, folderId, status, start, end,
@@ -412,7 +411,7 @@ public class BookmarksFolderLocalServiceUtil {
 	*
 	* @return the OSGi service identifier
 	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
+	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 
@@ -422,8 +421,8 @@ public class BookmarksFolderLocalServiceUtil {
 		return getService().getPersistedModel(primaryKeyObj);
 	}
 
-	public static void getSubfolderIds(
-		java.util.List<java.lang.Long> folderIds, long groupId, long folderId) {
+	public static void getSubfolderIds(java.util.List<Long> folderIds,
+		long groupId, long folderId) {
 		getService().getSubfolderIds(folderIds, groupId, folderId);
 	}
 
@@ -456,7 +455,7 @@ public class BookmarksFolderLocalServiceUtil {
 	}
 
 	public static void rebuildTree(long companyId, long parentFolderId,
-		java.lang.String parentTreePath, boolean reindex)
+		String parentTreePath, boolean reindex)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService()
 			.rebuildTree(companyId, parentFolderId, parentTreePath, reindex);
@@ -481,8 +480,8 @@ public class BookmarksFolderLocalServiceUtil {
 
 	public static void updateAsset(long userId,
 		com.liferay.bookmarks.model.BookmarksFolder folder,
-		long[] assetCategoryIds, java.lang.String[] assetTagNames,
-		long[] assetLinkEntryIds, java.lang.Double priority)
+		long[] assetCategoryIds, String[] assetTagNames,
+		long[] assetLinkEntryIds, Double priority)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService()
 			.updateAsset(userId, folder, assetCategoryIds, assetTagNames,
@@ -507,8 +506,8 @@ public class BookmarksFolderLocalServiceUtil {
 	*/
 	@Deprecated
 	public static com.liferay.bookmarks.model.BookmarksFolder updateFolder(
-		long userId, long folderId, long parentFolderId, java.lang.String name,
-		java.lang.String description, boolean mergeWithParentFolder,
+		long userId, long folderId, long parentFolderId, String name,
+		String description, boolean mergeWithParentFolder,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
@@ -517,8 +516,8 @@ public class BookmarksFolderLocalServiceUtil {
 	}
 
 	public static com.liferay.bookmarks.model.BookmarksFolder updateFolder(
-		long userId, long folderId, long parentFolderId, java.lang.String name,
-		java.lang.String description,
+		long userId, long folderId, long parentFolderId, String name,
+		String description,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()

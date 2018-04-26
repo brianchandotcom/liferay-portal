@@ -60,22 +60,20 @@ public interface ShoppingItemService extends BaseService {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link ShoppingItemServiceUtil} to access the shopping item remote service. Add custom service methods to {@link com.liferay.shopping.service.impl.ShoppingItemServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public ShoppingItem addItem(long groupId, long categoryId,
-		java.lang.String sku, java.lang.String name,
-		java.lang.String description, java.lang.String properties,
-		java.lang.String fieldsQuantities, boolean requiresShipping,
-		int stockQuantity, boolean featured, java.lang.Boolean sale,
-		boolean smallImage, java.lang.String smallImageURL, File smallFile,
-		boolean mediumImage, java.lang.String mediumImageURL, File mediumFile,
-		boolean largeImage, java.lang.String largeImageURL, File largeFile,
+	public ShoppingItem addItem(long groupId, long categoryId, String sku,
+		String name, String description, String properties,
+		String fieldsQuantities, boolean requiresShipping, int stockQuantity,
+		boolean featured, Boolean sale, boolean smallImage,
+		String smallImageURL, File smallFile, boolean mediumImage,
+		String mediumImageURL, File mediumFile, boolean largeImage,
+		String largeImageURL, File largeFile,
 		List<ShoppingItemField> itemFields, List<ShoppingItemPrice> itemPrices,
 		ServiceContext serviceContext) throws PortalException;
 
 	public void deleteItem(long itemId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getCategoriesItemsCount(long groupId,
-		List<java.lang.Long> categoryIds);
+	public int getCategoriesItemsCount(long groupId, List<Long> categoryIds);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ShoppingItem getItem(long itemId) throws PortalException;
@@ -99,16 +97,15 @@ public interface ShoppingItemService extends BaseService {
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	public ShoppingItem updateItem(long itemId, long groupId, long categoryId,
-		java.lang.String sku, java.lang.String name,
-		java.lang.String description, java.lang.String properties,
-		java.lang.String fieldsQuantities, boolean requiresShipping,
-		int stockQuantity, boolean featured, java.lang.Boolean sale,
-		boolean smallImage, java.lang.String smallImageURL, File smallFile,
-		boolean mediumImage, java.lang.String mediumImageURL, File mediumFile,
-		boolean largeImage, java.lang.String largeImageURL, File largeFile,
+		String sku, String name, String description, String properties,
+		String fieldsQuantities, boolean requiresShipping, int stockQuantity,
+		boolean featured, Boolean sale, boolean smallImage,
+		String smallImageURL, File smallFile, boolean mediumImage,
+		String mediumImageURL, File mediumFile, boolean largeImage,
+		String largeImageURL, File largeFile,
 		List<ShoppingItemField> itemFields, List<ShoppingItemPrice> itemPrices,
 		ServiceContext serviceContext) throws PortalException;
 }

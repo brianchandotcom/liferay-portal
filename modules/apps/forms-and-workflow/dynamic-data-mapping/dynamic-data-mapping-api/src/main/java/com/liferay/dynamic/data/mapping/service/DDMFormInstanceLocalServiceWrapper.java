@@ -49,8 +49,8 @@ public class DDMFormInstanceLocalServiceWrapper
 	@Override
 	public com.liferay.dynamic.data.mapping.model.DDMFormInstance addFormInstance(
 		long userId, long groupId, long ddmStructureId,
-		java.util.Map<java.util.Locale, java.lang.String> nameMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		java.util.Map<java.util.Locale, String> nameMap,
+		java.util.Map<java.util.Locale, String> descriptionMap,
 		com.liferay.dynamic.data.mapping.storage.DDMFormValues settingsDDMFormValues,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -62,9 +62,9 @@ public class DDMFormInstanceLocalServiceWrapper
 	@Override
 	public com.liferay.dynamic.data.mapping.model.DDMFormInstance addFormInstance(
 		long userId, long groupId, long ddmStructureId,
-		java.util.Map<java.util.Locale, java.lang.String> nameMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		java.lang.String serializedSettingsDDMFormValues,
+		java.util.Map<java.util.Locale, String> nameMap,
+		java.util.Map<java.util.Locale, String> descriptionMap,
+		String serializedSettingsDDMFormValues,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _ddmFormInstanceLocalService.addFormInstance(userId, groupId,
@@ -84,7 +84,7 @@ public class DDMFormInstanceLocalServiceWrapper
 	@Override
 	public void addFormInstanceResources(
 		com.liferay.dynamic.data.mapping.model.DDMFormInstance ddmFormInstance,
-		java.lang.String[] groupPermissions, java.lang.String[] guestPermissions)
+		String[] groupPermissions, String[] guestPermissions)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_ddmFormInstanceLocalService.addFormInstanceResources(ddmFormInstance,
 			groupPermissions, guestPermissions);
@@ -258,7 +258,7 @@ public class DDMFormInstanceLocalServiceWrapper
 	*/
 	@Override
 	public com.liferay.dynamic.data.mapping.model.DDMFormInstance fetchDDMFormInstanceByUuidAndGroupId(
-		java.lang.String uuid, long groupId) {
+		String uuid, long groupId) {
 		return _ddmFormInstanceLocalService.fetchDDMFormInstanceByUuidAndGroupId(uuid,
 			groupId);
 	}
@@ -298,7 +298,7 @@ public class DDMFormInstanceLocalServiceWrapper
 	*/
 	@Override
 	public com.liferay.dynamic.data.mapping.model.DDMFormInstance getDDMFormInstanceByUuidAndGroupId(
-		java.lang.String uuid, long groupId)
+		String uuid, long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _ddmFormInstanceLocalService.getDDMFormInstanceByUuidAndGroupId(uuid,
 			groupId);
@@ -330,7 +330,7 @@ public class DDMFormInstanceLocalServiceWrapper
 	*/
 	@Override
 	public java.util.List<com.liferay.dynamic.data.mapping.model.DDMFormInstance> getDDMFormInstancesByUuidAndCompanyId(
-		java.lang.String uuid, long companyId) {
+		String uuid, long companyId) {
 		return _ddmFormInstanceLocalService.getDDMFormInstancesByUuidAndCompanyId(uuid,
 			companyId);
 	}
@@ -347,7 +347,7 @@ public class DDMFormInstanceLocalServiceWrapper
 	*/
 	@Override
 	public java.util.List<com.liferay.dynamic.data.mapping.model.DDMFormInstance> getDDMFormInstancesByUuidAndCompanyId(
-		java.lang.String uuid, long companyId, int start, int end,
+		String uuid, long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.mapping.model.DDMFormInstance> orderByComparator) {
 		return _ddmFormInstanceLocalService.getDDMFormInstancesByUuidAndCompanyId(uuid,
 			companyId, start, end, orderByComparator);
@@ -378,7 +378,7 @@ public class DDMFormInstanceLocalServiceWrapper
 
 	@Override
 	public com.liferay.dynamic.data.mapping.model.DDMFormInstance getFormInstance(
-		java.lang.String uuid, long ddmFormInstanceId)
+		String uuid, long ddmFormInstanceId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _ddmFormInstanceLocalService.getFormInstance(uuid,
 			ddmFormInstanceId);
@@ -420,7 +420,7 @@ public class DDMFormInstanceLocalServiceWrapper
 	* @return the OSGi service identifier
 	*/
 	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
+	public String getOSGiServiceIdentifier() {
 		return _ddmFormInstanceLocalService.getOSGiServiceIdentifier();
 	}
 
@@ -433,8 +433,7 @@ public class DDMFormInstanceLocalServiceWrapper
 
 	@Override
 	public java.util.List<com.liferay.dynamic.data.mapping.model.DDMFormInstance> search(
-		long companyId, long groupId, java.lang.String keywords, int start,
-		int end,
+		long companyId, long groupId, String keywords, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.mapping.model.DDMFormInstance> orderByComparator) {
 		return _ddmFormInstanceLocalService.search(companyId, groupId,
 			keywords, start, end, orderByComparator);
@@ -442,25 +441,22 @@ public class DDMFormInstanceLocalServiceWrapper
 
 	@Override
 	public java.util.List<com.liferay.dynamic.data.mapping.model.DDMFormInstance> search(
-		long companyId, long groupId, java.lang.String[] names,
-		java.lang.String[] descriptions, boolean andOperator, int start,
-		int end,
+		long companyId, long groupId, String[] names, String[] descriptions,
+		boolean andOperator, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.mapping.model.DDMFormInstance> orderByComparator) {
 		return _ddmFormInstanceLocalService.search(companyId, groupId, names,
 			descriptions, andOperator, start, end, orderByComparator);
 	}
 
 	@Override
-	public int searchCount(long companyId, long groupId,
-		java.lang.String keywords) {
+	public int searchCount(long companyId, long groupId, String keywords) {
 		return _ddmFormInstanceLocalService.searchCount(companyId, groupId,
 			keywords);
 	}
 
 	@Override
-	public int searchCount(long companyId, long groupId,
-		java.lang.String[] names, java.lang.String[] descriptions,
-		boolean andOperator) {
+	public int searchCount(long companyId, long groupId, String[] names,
+		String[] descriptions, boolean andOperator) {
 		return _ddmFormInstanceLocalService.searchCount(companyId, groupId,
 			names, descriptions, andOperator);
 	}
@@ -489,8 +485,8 @@ public class DDMFormInstanceLocalServiceWrapper
 	@Override
 	public com.liferay.dynamic.data.mapping.model.DDMFormInstance updateFormInstance(
 		long ddmFormInstanceId, long ddmStructureId,
-		java.util.Map<java.util.Locale, java.lang.String> nameMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		java.util.Map<java.util.Locale, String> nameMap,
+		java.util.Map<java.util.Locale, String> descriptionMap,
 		com.liferay.dynamic.data.mapping.storage.DDMFormValues settingsDDMFormValues,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -502,9 +498,9 @@ public class DDMFormInstanceLocalServiceWrapper
 	@Override
 	public com.liferay.dynamic.data.mapping.model.DDMFormInstance updateFormInstance(
 		long ddmFormInstanceId, long ddmStructureId,
-		java.util.Map<java.util.Locale, java.lang.String> nameMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		java.lang.String serializedSettingsDDMFormValues,
+		java.util.Map<java.util.Locale, String> nameMap,
+		java.util.Map<java.util.Locale, String> descriptionMap,
+		String serializedSettingsDDMFormValues,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _ddmFormInstanceLocalService.updateFormInstance(ddmFormInstanceId,

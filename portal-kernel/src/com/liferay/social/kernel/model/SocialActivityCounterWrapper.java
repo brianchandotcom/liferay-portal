@@ -157,7 +157,7 @@ public class SocialActivityCounterWrapper implements SocialActivityCounter,
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new SocialActivityCounterWrapper((SocialActivityCounter)_socialActivityCounter.clone());
 	}
 
@@ -192,7 +192,7 @@ public class SocialActivityCounterWrapper implements SocialActivityCounter,
 	* @return the fully qualified class name of this social activity counter
 	*/
 	@Override
-	public java.lang.String getClassName() {
+	public String getClassName() {
 		return _socialActivityCounter.getClassName();
 	}
 
@@ -277,7 +277,7 @@ public class SocialActivityCounterWrapper implements SocialActivityCounter,
 	* @return the name of this social activity counter
 	*/
 	@Override
-	public java.lang.String getName() {
+	public String getName() {
 		return _socialActivityCounter.getName();
 	}
 
@@ -392,7 +392,7 @@ public class SocialActivityCounterWrapper implements SocialActivityCounter,
 	}
 
 	@Override
-	public void setClassName(java.lang.String className) {
+	public void setClassName(String className) {
 		_socialActivityCounter.setClassName(className);
 	}
 
@@ -488,7 +488,7 @@ public class SocialActivityCounterWrapper implements SocialActivityCounter,
 	* @param name the name of this social activity counter
 	*/
 	@Override
-	public void setName(java.lang.String name) {
+	public void setName(String name) {
 		_socialActivityCounter.setName(name);
 	}
 
@@ -553,7 +553,7 @@ public class SocialActivityCounterWrapper implements SocialActivityCounter,
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _socialActivityCounter.toString();
 	}
 
@@ -563,7 +563,7 @@ public class SocialActivityCounterWrapper implements SocialActivityCounter,
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _socialActivityCounter.toXmlString();
 	}
 

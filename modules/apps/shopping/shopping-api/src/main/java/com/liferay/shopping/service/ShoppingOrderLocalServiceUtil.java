@@ -59,10 +59,9 @@ public class ShoppingOrderLocalServiceUtil {
 		return getService().addShoppingOrder(shoppingOrder);
 	}
 
-	public static void completeOrder(java.lang.String number,
-		java.lang.String ppTxnId, java.lang.String ppPaymentStatus,
-		double ppPaymentGross, java.lang.String ppReceiverEmail,
-		java.lang.String ppPayerEmail, boolean updateInventory,
+	public static void completeOrder(String number, String ppTxnId,
+		String ppPaymentStatus, double ppPaymentGross, String ppReceiverEmail,
+		String ppPayerEmail, boolean updateInventory,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService()
@@ -234,7 +233,7 @@ public class ShoppingOrderLocalServiceUtil {
 	}
 
 	public static com.liferay.shopping.model.ShoppingOrder getOrder(
-		java.lang.String number)
+		String number)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getOrder(number);
 	}
@@ -244,12 +243,12 @@ public class ShoppingOrderLocalServiceUtil {
 	*
 	* @return the OSGi service identifier
 	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
+	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 
 	public static com.liferay.shopping.model.ShoppingOrder getPayPalTxnIdOrder(
-		java.lang.String ppTxnId)
+		String ppTxnId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getPayPalTxnIdOrder(ppTxnId);
 	}
@@ -305,13 +304,11 @@ public class ShoppingOrderLocalServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.shopping.model.ShoppingOrder> search(
-		long groupId, long companyId, long userId, java.lang.String number,
-		java.lang.String billingFirstName, java.lang.String billingLastName,
-		java.lang.String billingEmailAddress,
-		java.lang.String shippingFirstName, java.lang.String shippingLastName,
-		java.lang.String shippingEmailAddress,
-		java.lang.String ppPaymentStatus, boolean andOperator, int start,
-		int end) {
+		long groupId, long companyId, long userId, String number,
+		String billingFirstName, String billingLastName,
+		String billingEmailAddress, String shippingFirstName,
+		String shippingLastName, String shippingEmailAddress,
+		String ppPaymentStatus, boolean andOperator, int start, int end) {
 		return getService()
 				   .search(groupId, companyId, userId, number,
 			billingFirstName, billingLastName, billingEmailAddress,
@@ -320,11 +317,10 @@ public class ShoppingOrderLocalServiceUtil {
 	}
 
 	public static int searchCount(long groupId, long companyId, long userId,
-		java.lang.String number, java.lang.String billingFirstName,
-		java.lang.String billingLastName, java.lang.String billingEmailAddress,
-		java.lang.String shippingFirstName, java.lang.String shippingLastName,
-		java.lang.String shippingEmailAddress,
-		java.lang.String ppPaymentStatus, boolean andOperator) {
+		String number, String billingFirstName, String billingLastName,
+		String billingEmailAddress, String shippingFirstName,
+		String shippingLastName, String shippingEmailAddress,
+		String ppPaymentStatus, boolean andOperator) {
 		return getService()
 				   .searchCount(groupId, companyId, userId, number,
 			billingFirstName, billingLastName, billingEmailAddress,
@@ -332,35 +328,30 @@ public class ShoppingOrderLocalServiceUtil {
 			ppPaymentStatus, andOperator);
 	}
 
-	public static void sendEmail(long orderId, java.lang.String emailType,
+	public static void sendEmail(long orderId, String emailType,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().sendEmail(orderId, emailType, serviceContext);
 	}
 
 	public static void sendEmail(
-		com.liferay.shopping.model.ShoppingOrder order,
-		java.lang.String emailType,
+		com.liferay.shopping.model.ShoppingOrder order, String emailType,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().sendEmail(order, emailType, serviceContext);
 	}
 
 	public static com.liferay.shopping.model.ShoppingOrder updateLatestOrder(
-		long userId, long groupId, java.lang.String billingFirstName,
-		java.lang.String billingLastName, java.lang.String billingEmailAddress,
-		java.lang.String billingCompany, java.lang.String billingStreet,
-		java.lang.String billingCity, java.lang.String billingState,
-		java.lang.String billingZip, java.lang.String billingCountry,
-		java.lang.String billingPhone, boolean shipToBilling,
-		java.lang.String shippingFirstName, java.lang.String shippingLastName,
-		java.lang.String shippingEmailAddress,
-		java.lang.String shippingCompany, java.lang.String shippingStreet,
-		java.lang.String shippingCity, java.lang.String shippingState,
-		java.lang.String shippingZip, java.lang.String shippingCountry,
-		java.lang.String shippingPhone, java.lang.String ccName,
-		java.lang.String ccType, java.lang.String ccNumber, int ccExpMonth,
-		int ccExpYear, java.lang.String ccVerNumber, java.lang.String comments)
+		long userId, long groupId, String billingFirstName,
+		String billingLastName, String billingEmailAddress,
+		String billingCompany, String billingStreet, String billingCity,
+		String billingState, String billingZip, String billingCountry,
+		String billingPhone, boolean shipToBilling, String shippingFirstName,
+		String shippingLastName, String shippingEmailAddress,
+		String shippingCompany, String shippingStreet, String shippingCity,
+		String shippingState, String shippingZip, String shippingCountry,
+		String shippingPhone, String ccName, String ccType, String ccNumber,
+		int ccExpMonth, int ccExpYear, String ccVerNumber, String comments)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .updateLatestOrder(userId, groupId, billingFirstName,
@@ -374,9 +365,8 @@ public class ShoppingOrderLocalServiceUtil {
 	}
 
 	public static com.liferay.shopping.model.ShoppingOrder updateOrder(
-		long orderId, java.lang.String ppTxnId,
-		java.lang.String ppPaymentStatus, double ppPaymentGross,
-		java.lang.String ppReceiverEmail, java.lang.String ppPayerEmail)
+		long orderId, String ppTxnId, String ppPaymentStatus,
+		double ppPaymentGross, String ppReceiverEmail, String ppPayerEmail)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .updateOrder(orderId, ppTxnId, ppPaymentStatus,
@@ -384,20 +374,16 @@ public class ShoppingOrderLocalServiceUtil {
 	}
 
 	public static com.liferay.shopping.model.ShoppingOrder updateOrder(
-		long orderId, java.lang.String billingFirstName,
-		java.lang.String billingLastName, java.lang.String billingEmailAddress,
-		java.lang.String billingCompany, java.lang.String billingStreet,
-		java.lang.String billingCity, java.lang.String billingState,
-		java.lang.String billingZip, java.lang.String billingCountry,
-		java.lang.String billingPhone, boolean shipToBilling,
-		java.lang.String shippingFirstName, java.lang.String shippingLastName,
-		java.lang.String shippingEmailAddress,
-		java.lang.String shippingCompany, java.lang.String shippingStreet,
-		java.lang.String shippingCity, java.lang.String shippingState,
-		java.lang.String shippingZip, java.lang.String shippingCountry,
-		java.lang.String shippingPhone, java.lang.String ccName,
-		java.lang.String ccType, java.lang.String ccNumber, int ccExpMonth,
-		int ccExpYear, java.lang.String ccVerNumber, java.lang.String comments)
+		long orderId, String billingFirstName, String billingLastName,
+		String billingEmailAddress, String billingCompany,
+		String billingStreet, String billingCity, String billingState,
+		String billingZip, String billingCountry, String billingPhone,
+		boolean shipToBilling, String shippingFirstName,
+		String shippingLastName, String shippingEmailAddress,
+		String shippingCompany, String shippingStreet, String shippingCity,
+		String shippingState, String shippingZip, String shippingCountry,
+		String shippingPhone, String ccName, String ccType, String ccNumber,
+		int ccExpMonth, int ccExpYear, String ccVerNumber, String comments)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .updateOrder(orderId, billingFirstName, billingLastName,

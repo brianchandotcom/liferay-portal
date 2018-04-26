@@ -57,7 +57,7 @@ public interface DLFileVersion extends DLFileVersionModel, PersistedModel,
 		};
 
 	@Override
-	public java.lang.String buildTreePath()
+	public String buildTreePath()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public java.io.InputStream getContentStream(boolean incrementCounter)
@@ -77,7 +77,7 @@ public interface DLFileVersion extends DLFileVersionModel, PersistedModel,
 	public DLFolder getFolder()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
-	public java.lang.String getIcon();
+	public String getIcon();
 
 	public void setExtraSettingsProperties(
 		com.liferay.portal.kernel.util.UnicodeProperties extraSettingsProperties);

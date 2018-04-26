@@ -183,7 +183,7 @@ public interface JournalArticleLocalizationPersistence extends BasePersistence<J
 	* @throws NoSuchArticleLocalizationException if a matching journal article localization could not be found
 	*/
 	public JournalArticleLocalization findByA_L(long articlePK,
-		java.lang.String languageId) throws NoSuchArticleLocalizationException;
+		String languageId) throws NoSuchArticleLocalizationException;
 
 	/**
 	* Returns the journal article localization where articlePK = &#63; and languageId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
@@ -193,7 +193,7 @@ public interface JournalArticleLocalizationPersistence extends BasePersistence<J
 	* @return the matching journal article localization, or <code>null</code> if a matching journal article localization could not be found
 	*/
 	public JournalArticleLocalization fetchByA_L(long articlePK,
-		java.lang.String languageId);
+		String languageId);
 
 	/**
 	* Returns the journal article localization where articlePK = &#63; and languageId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -204,7 +204,7 @@ public interface JournalArticleLocalizationPersistence extends BasePersistence<J
 	* @return the matching journal article localization, or <code>null</code> if a matching journal article localization could not be found
 	*/
 	public JournalArticleLocalization fetchByA_L(long articlePK,
-		java.lang.String languageId, boolean retrieveFromCache);
+		String languageId, boolean retrieveFromCache);
 
 	/**
 	* Removes the journal article localization where articlePK = &#63; and languageId = &#63; from the database.
@@ -214,7 +214,7 @@ public interface JournalArticleLocalizationPersistence extends BasePersistence<J
 	* @return the journal article localization that was removed
 	*/
 	public JournalArticleLocalization removeByA_L(long articlePK,
-		java.lang.String languageId) throws NoSuchArticleLocalizationException;
+		String languageId) throws NoSuchArticleLocalizationException;
 
 	/**
 	* Returns the number of journal article localizations where articlePK = &#63; and languageId = &#63;.
@@ -223,7 +223,7 @@ public interface JournalArticleLocalizationPersistence extends BasePersistence<J
 	* @param languageId the language ID
 	* @return the number of matching journal article localizations
 	*/
-	public int countByA_L(long articlePK, java.lang.String languageId);
+	public int countByA_L(long articlePK, String languageId);
 
 	/**
 	* Caches the journal article localization in the entity cache if it is enabled.

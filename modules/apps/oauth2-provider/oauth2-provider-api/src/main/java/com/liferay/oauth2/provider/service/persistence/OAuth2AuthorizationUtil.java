@@ -454,7 +454,7 @@ public class OAuth2AuthorizationUtil {
 	* @throws NoSuchOAuth2AuthorizationException if a matching o auth2 authorization could not be found
 	*/
 	public static OAuth2Authorization findByAccessTokenContent(
-		java.lang.String accessTokenContent)
+		String accessTokenContent)
 		throws com.liferay.oauth2.provider.exception.NoSuchOAuth2AuthorizationException {
 		return getPersistence().findByAccessTokenContent(accessTokenContent);
 	}
@@ -466,7 +466,7 @@ public class OAuth2AuthorizationUtil {
 	* @return the matching o auth2 authorization, or <code>null</code> if a matching o auth2 authorization could not be found
 	*/
 	public static OAuth2Authorization fetchByAccessTokenContent(
-		java.lang.String accessTokenContent) {
+		String accessTokenContent) {
 		return getPersistence().fetchByAccessTokenContent(accessTokenContent);
 	}
 
@@ -478,7 +478,7 @@ public class OAuth2AuthorizationUtil {
 	* @return the matching o auth2 authorization, or <code>null</code> if a matching o auth2 authorization could not be found
 	*/
 	public static OAuth2Authorization fetchByAccessTokenContent(
-		java.lang.String accessTokenContent, boolean retrieveFromCache) {
+		String accessTokenContent, boolean retrieveFromCache) {
 		return getPersistence()
 				   .fetchByAccessTokenContent(accessTokenContent,
 			retrieveFromCache);
@@ -491,7 +491,7 @@ public class OAuth2AuthorizationUtil {
 	* @return the o auth2 authorization that was removed
 	*/
 	public static OAuth2Authorization removeByAccessTokenContent(
-		java.lang.String accessTokenContent)
+		String accessTokenContent)
 		throws com.liferay.oauth2.provider.exception.NoSuchOAuth2AuthorizationException {
 		return getPersistence().removeByAccessTokenContent(accessTokenContent);
 	}
@@ -502,8 +502,7 @@ public class OAuth2AuthorizationUtil {
 	* @param accessTokenContent the access token content
 	* @return the number of matching o auth2 authorizations
 	*/
-	public static int countByAccessTokenContent(
-		java.lang.String accessTokenContent) {
+	public static int countByAccessTokenContent(String accessTokenContent) {
 		return getPersistence().countByAccessTokenContent(accessTokenContent);
 	}
 
@@ -515,7 +514,7 @@ public class OAuth2AuthorizationUtil {
 	* @throws NoSuchOAuth2AuthorizationException if a matching o auth2 authorization could not be found
 	*/
 	public static OAuth2Authorization findByRefreshTokenContent(
-		java.lang.String refreshTokenContent)
+		String refreshTokenContent)
 		throws com.liferay.oauth2.provider.exception.NoSuchOAuth2AuthorizationException {
 		return getPersistence().findByRefreshTokenContent(refreshTokenContent);
 	}
@@ -527,7 +526,7 @@ public class OAuth2AuthorizationUtil {
 	* @return the matching o auth2 authorization, or <code>null</code> if a matching o auth2 authorization could not be found
 	*/
 	public static OAuth2Authorization fetchByRefreshTokenContent(
-		java.lang.String refreshTokenContent) {
+		String refreshTokenContent) {
 		return getPersistence().fetchByRefreshTokenContent(refreshTokenContent);
 	}
 
@@ -539,7 +538,7 @@ public class OAuth2AuthorizationUtil {
 	* @return the matching o auth2 authorization, or <code>null</code> if a matching o auth2 authorization could not be found
 	*/
 	public static OAuth2Authorization fetchByRefreshTokenContent(
-		java.lang.String refreshTokenContent, boolean retrieveFromCache) {
+		String refreshTokenContent, boolean retrieveFromCache) {
 		return getPersistence()
 				   .fetchByRefreshTokenContent(refreshTokenContent,
 			retrieveFromCache);
@@ -552,7 +551,7 @@ public class OAuth2AuthorizationUtil {
 	* @return the o auth2 authorization that was removed
 	*/
 	public static OAuth2Authorization removeByRefreshTokenContent(
-		java.lang.String refreshTokenContent)
+		String refreshTokenContent)
 		throws com.liferay.oauth2.provider.exception.NoSuchOAuth2AuthorizationException {
 		return getPersistence().removeByRefreshTokenContent(refreshTokenContent);
 	}
@@ -563,8 +562,7 @@ public class OAuth2AuthorizationUtil {
 	* @param refreshTokenContent the refresh token content
 	* @return the number of matching o auth2 authorizations
 	*/
-	public static int countByRefreshTokenContent(
-		java.lang.String refreshTokenContent) {
+	public static int countByRefreshTokenContent(String refreshTokenContent) {
 		return getPersistence().countByRefreshTokenContent(refreshTokenContent);
 	}
 
@@ -925,7 +923,7 @@ public class OAuth2AuthorizationUtil {
 		getPersistence().setOAuth2ScopeGrants(pk, oAuth2ScopeGrants);
 	}
 
-	public static java.util.Set<java.lang.String> getBadColumnNames() {
+	public static java.util.Set<String> getBadColumnNames() {
 		return getPersistence().getBadColumnNames();
 	}
 

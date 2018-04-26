@@ -55,7 +55,7 @@ public interface LayoutSetService extends BaseService {
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	/**
 	* Updates the state of the layout set prototype link.
@@ -77,7 +77,7 @@ public interface LayoutSetService extends BaseService {
 	*/
 	public void updateLayoutSetPrototypeLinkEnabled(long groupId,
 		boolean privateLayout, boolean layoutSetPrototypeLinkEnabled,
-		java.lang.String layoutSetPrototypeUuid) throws PortalException;
+		String layoutSetPrototypeUuid) throws PortalException;
 
 	public void updateLogo(long groupId, boolean privateLayout, boolean logo,
 		byte[] bytes) throws PortalException;
@@ -93,12 +93,12 @@ public interface LayoutSetService extends BaseService {
 		throws PortalException;
 
 	public LayoutSet updateLookAndFeel(long groupId, boolean privateLayout,
-		java.lang.String themeId, java.lang.String colorSchemeId,
-		java.lang.String css) throws PortalException;
+		String themeId, String colorSchemeId, String css)
+		throws PortalException;
 
 	public LayoutSet updateSettings(long groupId, boolean privateLayout,
-		java.lang.String settings) throws PortalException;
+		String settings) throws PortalException;
 
 	public LayoutSet updateVirtualHost(long groupId, boolean privateLayout,
-		java.lang.String virtualHost) throws PortalException;
+		String virtualHost) throws PortalException;
 }

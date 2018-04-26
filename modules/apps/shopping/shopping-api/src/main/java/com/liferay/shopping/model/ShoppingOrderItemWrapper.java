@@ -143,7 +143,7 @@ public class ShoppingOrderItemWrapper implements ShoppingOrderItem,
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new ShoppingOrderItemWrapper((ShoppingOrderItem)_shoppingOrderItem.clone());
 	}
 
@@ -168,7 +168,7 @@ public class ShoppingOrderItemWrapper implements ShoppingOrderItem,
 	* @return the description of this shopping order item
 	*/
 	@Override
-	public java.lang.String getDescription() {
+	public String getDescription() {
 		return _shoppingOrderItem.getDescription();
 	}
 
@@ -183,7 +183,7 @@ public class ShoppingOrderItemWrapper implements ShoppingOrderItem,
 	* @return the item ID of this shopping order item
 	*/
 	@Override
-	public java.lang.String getItemId() {
+	public String getItemId() {
 		return _shoppingOrderItem.getItemId();
 	}
 
@@ -193,7 +193,7 @@ public class ShoppingOrderItemWrapper implements ShoppingOrderItem,
 	* @return the name of this shopping order item
 	*/
 	@Override
-	public java.lang.String getName() {
+	public String getName() {
 		return _shoppingOrderItem.getName();
 	}
 
@@ -248,7 +248,7 @@ public class ShoppingOrderItemWrapper implements ShoppingOrderItem,
 	* @return the properties of this shopping order item
 	*/
 	@Override
-	public java.lang.String getProperties() {
+	public String getProperties() {
 		return _shoppingOrderItem.getProperties();
 	}
 
@@ -278,7 +278,7 @@ public class ShoppingOrderItemWrapper implements ShoppingOrderItem,
 	* @return the sku of this shopping order item
 	*/
 	@Override
-	public java.lang.String getSku() {
+	public String getSku() {
 		return _shoppingOrderItem.getSku();
 	}
 
@@ -328,7 +328,7 @@ public class ShoppingOrderItemWrapper implements ShoppingOrderItem,
 	* @param description the description of this shopping order item
 	*/
 	@Override
-	public void setDescription(java.lang.String description) {
+	public void setDescription(String description) {
 		_shoppingOrderItem.setDescription(description);
 	}
 
@@ -354,7 +354,7 @@ public class ShoppingOrderItemWrapper implements ShoppingOrderItem,
 	* @param itemId the item ID of this shopping order item
 	*/
 	@Override
-	public void setItemId(java.lang.String itemId) {
+	public void setItemId(String itemId) {
 		_shoppingOrderItem.setItemId(itemId);
 	}
 
@@ -364,7 +364,7 @@ public class ShoppingOrderItemWrapper implements ShoppingOrderItem,
 	* @param name the name of this shopping order item
 	*/
 	@Override
-	public void setName(java.lang.String name) {
+	public void setName(String name) {
 		_shoppingOrderItem.setName(name);
 	}
 
@@ -424,7 +424,7 @@ public class ShoppingOrderItemWrapper implements ShoppingOrderItem,
 	* @param properties the properties of this shopping order item
 	*/
 	@Override
-	public void setProperties(java.lang.String properties) {
+	public void setProperties(String properties) {
 		_shoppingOrderItem.setProperties(properties);
 	}
 
@@ -454,7 +454,7 @@ public class ShoppingOrderItemWrapper implements ShoppingOrderItem,
 	* @param sku the sku of this shopping order item
 	*/
 	@Override
-	public void setSku(java.lang.String sku) {
+	public void setSku(String sku) {
 		_shoppingOrderItem.setSku(sku);
 	}
 
@@ -469,7 +469,7 @@ public class ShoppingOrderItemWrapper implements ShoppingOrderItem,
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _shoppingOrderItem.toString();
 	}
 
@@ -479,7 +479,7 @@ public class ShoppingOrderItemWrapper implements ShoppingOrderItem,
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _shoppingOrderItem.toXmlString();
 	}
 

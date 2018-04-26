@@ -58,16 +58,13 @@ public interface MDRRuleService extends BaseService {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link MDRRuleServiceUtil} to access the mdr rule remote service. Add custom service methods to {@link com.liferay.mobile.device.rules.service.impl.MDRRuleServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public MDRRule addRule(long ruleGroupId,
-		Map<Locale, java.lang.String> nameMap,
-		Map<Locale, java.lang.String> descriptionMap, java.lang.String type,
-		java.lang.String typeSettings, ServiceContext serviceContext)
-		throws PortalException;
+	public MDRRule addRule(long ruleGroupId, Map<Locale, String> nameMap,
+		Map<Locale, String> descriptionMap, String type, String typeSettings,
+		ServiceContext serviceContext) throws PortalException;
 
 	@JSONWebService(mode = JSONWebServiceMode.IGNORE)
-	public MDRRule addRule(long ruleGroupId,
-		Map<Locale, java.lang.String> nameMap,
-		Map<Locale, java.lang.String> descriptionMap, java.lang.String type,
+	public MDRRule addRule(long ruleGroupId, Map<Locale, String> nameMap,
+		Map<Locale, String> descriptionMap, String type,
 		UnicodeProperties typeSettings, ServiceContext serviceContext)
 		throws PortalException;
 
@@ -81,20 +78,17 @@ public interface MDRRuleService extends BaseService {
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public MDRRule getRule(long ruleId) throws PortalException;
 
-	public MDRRule updateRule(long ruleId,
-		Map<Locale, java.lang.String> nameMap,
-		Map<Locale, java.lang.String> descriptionMap, java.lang.String type,
-		java.lang.String typeSettings, ServiceContext serviceContext)
-		throws PortalException;
+	public MDRRule updateRule(long ruleId, Map<Locale, String> nameMap,
+		Map<Locale, String> descriptionMap, String type, String typeSettings,
+		ServiceContext serviceContext) throws PortalException;
 
-	public MDRRule updateRule(long ruleId,
-		Map<Locale, java.lang.String> nameMap,
-		Map<Locale, java.lang.String> descriptionMap, java.lang.String type,
+	public MDRRule updateRule(long ruleId, Map<Locale, String> nameMap,
+		Map<Locale, String> descriptionMap, String type,
 		UnicodeProperties typeSettingsProperties, ServiceContext serviceContext)
 		throws PortalException;
 }

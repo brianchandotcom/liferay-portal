@@ -99,7 +99,7 @@ public class UserGroupGroupRoleWrapper implements UserGroupGroupRole,
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new UserGroupGroupRoleWrapper((UserGroupGroupRole)_userGroupGroupRole.clone());
 	}
 
@@ -323,7 +323,7 @@ public class UserGroupGroupRoleWrapper implements UserGroupGroupRole,
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _userGroupGroupRole.toString();
 	}
 
@@ -333,7 +333,7 @@ public class UserGroupGroupRoleWrapper implements UserGroupGroupRole,
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _userGroupGroupRole.toXmlString();
 	}
 

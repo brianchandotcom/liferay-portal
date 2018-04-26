@@ -214,7 +214,7 @@ public class DLFileEntryMetadataLocalServiceWrapper
 	*/
 	@Override
 	public com.liferay.document.library.kernel.model.DLFileEntryMetadata fetchDLFileEntryMetadataByUuidAndCompanyId(
-		java.lang.String uuid, long companyId) {
+		String uuid, long companyId) {
 		return _dlFileEntryMetadataLocalService.fetchDLFileEntryMetadataByUuidAndCompanyId(uuid,
 			companyId);
 	}
@@ -261,7 +261,7 @@ public class DLFileEntryMetadataLocalServiceWrapper
 	*/
 	@Override
 	public com.liferay.document.library.kernel.model.DLFileEntryMetadata getDLFileEntryMetadataByUuidAndCompanyId(
-		java.lang.String uuid, long companyId)
+		String uuid, long companyId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _dlFileEntryMetadataLocalService.getDLFileEntryMetadataByUuidAndCompanyId(uuid,
 			companyId);
@@ -342,7 +342,7 @@ public class DLFileEntryMetadataLocalServiceWrapper
 	* @return the OSGi service identifier
 	*/
 	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
+	public String getOSGiServiceIdentifier() {
 		return _dlFileEntryMetadataLocalService.getOSGiServiceIdentifier();
 	}
 
@@ -369,7 +369,7 @@ public class DLFileEntryMetadataLocalServiceWrapper
 	public void updateFileEntryMetadata(long companyId,
 		java.util.List<com.liferay.dynamic.data.mapping.kernel.DDMStructure> ddmStructures,
 		long fileEntryId, long fileVersionId,
-		java.util.Map<java.lang.String, com.liferay.dynamic.data.mapping.kernel.DDMFormValues> ddmFormValuesMap,
+		java.util.Map<String, com.liferay.dynamic.data.mapping.kernel.DDMFormValues> ddmFormValuesMap,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_dlFileEntryMetadataLocalService.updateFileEntryMetadata(companyId,
@@ -380,7 +380,7 @@ public class DLFileEntryMetadataLocalServiceWrapper
 	@Override
 	public void updateFileEntryMetadata(long fileEntryTypeId, long fileEntryId,
 		long fileVersionId,
-		java.util.Map<java.lang.String, com.liferay.dynamic.data.mapping.kernel.DDMFormValues> ddmFormValuesMap,
+		java.util.Map<String, com.liferay.dynamic.data.mapping.kernel.DDMFormValues> ddmFormValuesMap,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_dlFileEntryMetadataLocalService.updateFileEntryMetadata(fileEntryTypeId,

@@ -45,7 +45,7 @@ public interface LayoutPrototypePersistence extends BasePersistence<LayoutProtot
 	* @param uuid the uuid
 	* @return the matching layout prototypes
 	*/
-	public java.util.List<LayoutPrototype> findByUuid(java.lang.String uuid);
+	public java.util.List<LayoutPrototype> findByUuid(String uuid);
 
 	/**
 	* Returns a range of all the layout prototypes where uuid = &#63;.
@@ -59,8 +59,8 @@ public interface LayoutPrototypePersistence extends BasePersistence<LayoutProtot
 	* @param end the upper bound of the range of layout prototypes (not inclusive)
 	* @return the range of matching layout prototypes
 	*/
-	public java.util.List<LayoutPrototype> findByUuid(java.lang.String uuid,
-		int start, int end);
+	public java.util.List<LayoutPrototype> findByUuid(String uuid, int start,
+		int end);
 
 	/**
 	* Returns an ordered range of all the layout prototypes where uuid = &#63;.
@@ -75,8 +75,8 @@ public interface LayoutPrototypePersistence extends BasePersistence<LayoutProtot
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching layout prototypes
 	*/
-	public java.util.List<LayoutPrototype> findByUuid(java.lang.String uuid,
-		int start, int end,
+	public java.util.List<LayoutPrototype> findByUuid(String uuid, int start,
+		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<LayoutPrototype> orderByComparator);
 
 	/**
@@ -93,8 +93,8 @@ public interface LayoutPrototypePersistence extends BasePersistence<LayoutProtot
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching layout prototypes
 	*/
-	public java.util.List<LayoutPrototype> findByUuid(java.lang.String uuid,
-		int start, int end,
+	public java.util.List<LayoutPrototype> findByUuid(String uuid, int start,
+		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<LayoutPrototype> orderByComparator,
 		boolean retrieveFromCache);
 
@@ -106,7 +106,7 @@ public interface LayoutPrototypePersistence extends BasePersistence<LayoutProtot
 	* @return the first matching layout prototype
 	* @throws NoSuchLayoutPrototypeException if a matching layout prototype could not be found
 	*/
-	public LayoutPrototype findByUuid_First(java.lang.String uuid,
+	public LayoutPrototype findByUuid_First(String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<LayoutPrototype> orderByComparator)
 		throws NoSuchLayoutPrototypeException;
 
@@ -117,7 +117,7 @@ public interface LayoutPrototypePersistence extends BasePersistence<LayoutProtot
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching layout prototype, or <code>null</code> if a matching layout prototype could not be found
 	*/
-	public LayoutPrototype fetchByUuid_First(java.lang.String uuid,
+	public LayoutPrototype fetchByUuid_First(String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<LayoutPrototype> orderByComparator);
 
 	/**
@@ -128,7 +128,7 @@ public interface LayoutPrototypePersistence extends BasePersistence<LayoutProtot
 	* @return the last matching layout prototype
 	* @throws NoSuchLayoutPrototypeException if a matching layout prototype could not be found
 	*/
-	public LayoutPrototype findByUuid_Last(java.lang.String uuid,
+	public LayoutPrototype findByUuid_Last(String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<LayoutPrototype> orderByComparator)
 		throws NoSuchLayoutPrototypeException;
 
@@ -139,7 +139,7 @@ public interface LayoutPrototypePersistence extends BasePersistence<LayoutProtot
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching layout prototype, or <code>null</code> if a matching layout prototype could not be found
 	*/
-	public LayoutPrototype fetchByUuid_Last(java.lang.String uuid,
+	public LayoutPrototype fetchByUuid_Last(String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<LayoutPrototype> orderByComparator);
 
 	/**
@@ -152,7 +152,7 @@ public interface LayoutPrototypePersistence extends BasePersistence<LayoutProtot
 	* @throws NoSuchLayoutPrototypeException if a layout prototype with the primary key could not be found
 	*/
 	public LayoutPrototype[] findByUuid_PrevAndNext(long layoutPrototypeId,
-		java.lang.String uuid,
+		String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<LayoutPrototype> orderByComparator)
 		throws NoSuchLayoutPrototypeException;
 
@@ -162,8 +162,7 @@ public interface LayoutPrototypePersistence extends BasePersistence<LayoutProtot
 	* @param uuid the uuid
 	* @return the matching layout prototypes that the user has permission to view
 	*/
-	public java.util.List<LayoutPrototype> filterFindByUuid(
-		java.lang.String uuid);
+	public java.util.List<LayoutPrototype> filterFindByUuid(String uuid);
 
 	/**
 	* Returns a range of all the layout prototypes that the user has permission to view where uuid = &#63;.
@@ -177,8 +176,8 @@ public interface LayoutPrototypePersistence extends BasePersistence<LayoutProtot
 	* @param end the upper bound of the range of layout prototypes (not inclusive)
 	* @return the range of matching layout prototypes that the user has permission to view
 	*/
-	public java.util.List<LayoutPrototype> filterFindByUuid(
-		java.lang.String uuid, int start, int end);
+	public java.util.List<LayoutPrototype> filterFindByUuid(String uuid,
+		int start, int end);
 
 	/**
 	* Returns an ordered range of all the layout prototypes that the user has permissions to view where uuid = &#63;.
@@ -193,8 +192,8 @@ public interface LayoutPrototypePersistence extends BasePersistence<LayoutProtot
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching layout prototypes that the user has permission to view
 	*/
-	public java.util.List<LayoutPrototype> filterFindByUuid(
-		java.lang.String uuid, int start, int end,
+	public java.util.List<LayoutPrototype> filterFindByUuid(String uuid,
+		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<LayoutPrototype> orderByComparator);
 
 	/**
@@ -207,7 +206,7 @@ public interface LayoutPrototypePersistence extends BasePersistence<LayoutProtot
 	* @throws NoSuchLayoutPrototypeException if a layout prototype with the primary key could not be found
 	*/
 	public LayoutPrototype[] filterFindByUuid_PrevAndNext(
-		long layoutPrototypeId, java.lang.String uuid,
+		long layoutPrototypeId, String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<LayoutPrototype> orderByComparator)
 		throws NoSuchLayoutPrototypeException;
 
@@ -216,7 +215,7 @@ public interface LayoutPrototypePersistence extends BasePersistence<LayoutProtot
 	*
 	* @param uuid the uuid
 	*/
-	public void removeByUuid(java.lang.String uuid);
+	public void removeByUuid(String uuid);
 
 	/**
 	* Returns the number of layout prototypes where uuid = &#63;.
@@ -224,7 +223,7 @@ public interface LayoutPrototypePersistence extends BasePersistence<LayoutProtot
 	* @param uuid the uuid
 	* @return the number of matching layout prototypes
 	*/
-	public int countByUuid(java.lang.String uuid);
+	public int countByUuid(String uuid);
 
 	/**
 	* Returns the number of layout prototypes that the user has permission to view where uuid = &#63;.
@@ -232,7 +231,7 @@ public interface LayoutPrototypePersistence extends BasePersistence<LayoutProtot
 	* @param uuid the uuid
 	* @return the number of matching layout prototypes that the user has permission to view
 	*/
-	public int filterCountByUuid(java.lang.String uuid);
+	public int filterCountByUuid(String uuid);
 
 	/**
 	* Returns all the layout prototypes where uuid = &#63; and companyId = &#63;.
@@ -241,7 +240,7 @@ public interface LayoutPrototypePersistence extends BasePersistence<LayoutProtot
 	* @param companyId the company ID
 	* @return the matching layout prototypes
 	*/
-	public java.util.List<LayoutPrototype> findByUuid_C(java.lang.String uuid,
+	public java.util.List<LayoutPrototype> findByUuid_C(String uuid,
 		long companyId);
 
 	/**
@@ -257,7 +256,7 @@ public interface LayoutPrototypePersistence extends BasePersistence<LayoutProtot
 	* @param end the upper bound of the range of layout prototypes (not inclusive)
 	* @return the range of matching layout prototypes
 	*/
-	public java.util.List<LayoutPrototype> findByUuid_C(java.lang.String uuid,
+	public java.util.List<LayoutPrototype> findByUuid_C(String uuid,
 		long companyId, int start, int end);
 
 	/**
@@ -274,7 +273,7 @@ public interface LayoutPrototypePersistence extends BasePersistence<LayoutProtot
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching layout prototypes
 	*/
-	public java.util.List<LayoutPrototype> findByUuid_C(java.lang.String uuid,
+	public java.util.List<LayoutPrototype> findByUuid_C(String uuid,
 		long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<LayoutPrototype> orderByComparator);
 
@@ -293,7 +292,7 @@ public interface LayoutPrototypePersistence extends BasePersistence<LayoutProtot
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching layout prototypes
 	*/
-	public java.util.List<LayoutPrototype> findByUuid_C(java.lang.String uuid,
+	public java.util.List<LayoutPrototype> findByUuid_C(String uuid,
 		long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<LayoutPrototype> orderByComparator,
 		boolean retrieveFromCache);
@@ -307,8 +306,7 @@ public interface LayoutPrototypePersistence extends BasePersistence<LayoutProtot
 	* @return the first matching layout prototype
 	* @throws NoSuchLayoutPrototypeException if a matching layout prototype could not be found
 	*/
-	public LayoutPrototype findByUuid_C_First(java.lang.String uuid,
-		long companyId,
+	public LayoutPrototype findByUuid_C_First(String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<LayoutPrototype> orderByComparator)
 		throws NoSuchLayoutPrototypeException;
 
@@ -320,8 +318,7 @@ public interface LayoutPrototypePersistence extends BasePersistence<LayoutProtot
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching layout prototype, or <code>null</code> if a matching layout prototype could not be found
 	*/
-	public LayoutPrototype fetchByUuid_C_First(java.lang.String uuid,
-		long companyId,
+	public LayoutPrototype fetchByUuid_C_First(String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<LayoutPrototype> orderByComparator);
 
 	/**
@@ -333,8 +330,7 @@ public interface LayoutPrototypePersistence extends BasePersistence<LayoutProtot
 	* @return the last matching layout prototype
 	* @throws NoSuchLayoutPrototypeException if a matching layout prototype could not be found
 	*/
-	public LayoutPrototype findByUuid_C_Last(java.lang.String uuid,
-		long companyId,
+	public LayoutPrototype findByUuid_C_Last(String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<LayoutPrototype> orderByComparator)
 		throws NoSuchLayoutPrototypeException;
 
@@ -346,8 +342,7 @@ public interface LayoutPrototypePersistence extends BasePersistence<LayoutProtot
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching layout prototype, or <code>null</code> if a matching layout prototype could not be found
 	*/
-	public LayoutPrototype fetchByUuid_C_Last(java.lang.String uuid,
-		long companyId,
+	public LayoutPrototype fetchByUuid_C_Last(String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<LayoutPrototype> orderByComparator);
 
 	/**
@@ -361,7 +356,7 @@ public interface LayoutPrototypePersistence extends BasePersistence<LayoutProtot
 	* @throws NoSuchLayoutPrototypeException if a layout prototype with the primary key could not be found
 	*/
 	public LayoutPrototype[] findByUuid_C_PrevAndNext(long layoutPrototypeId,
-		java.lang.String uuid, long companyId,
+		String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<LayoutPrototype> orderByComparator)
 		throws NoSuchLayoutPrototypeException;
 
@@ -372,8 +367,8 @@ public interface LayoutPrototypePersistence extends BasePersistence<LayoutProtot
 	* @param companyId the company ID
 	* @return the matching layout prototypes that the user has permission to view
 	*/
-	public java.util.List<LayoutPrototype> filterFindByUuid_C(
-		java.lang.String uuid, long companyId);
+	public java.util.List<LayoutPrototype> filterFindByUuid_C(String uuid,
+		long companyId);
 
 	/**
 	* Returns a range of all the layout prototypes that the user has permission to view where uuid = &#63; and companyId = &#63;.
@@ -388,8 +383,8 @@ public interface LayoutPrototypePersistence extends BasePersistence<LayoutProtot
 	* @param end the upper bound of the range of layout prototypes (not inclusive)
 	* @return the range of matching layout prototypes that the user has permission to view
 	*/
-	public java.util.List<LayoutPrototype> filterFindByUuid_C(
-		java.lang.String uuid, long companyId, int start, int end);
+	public java.util.List<LayoutPrototype> filterFindByUuid_C(String uuid,
+		long companyId, int start, int end);
 
 	/**
 	* Returns an ordered range of all the layout prototypes that the user has permissions to view where uuid = &#63; and companyId = &#63;.
@@ -405,8 +400,8 @@ public interface LayoutPrototypePersistence extends BasePersistence<LayoutProtot
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching layout prototypes that the user has permission to view
 	*/
-	public java.util.List<LayoutPrototype> filterFindByUuid_C(
-		java.lang.String uuid, long companyId, int start, int end,
+	public java.util.List<LayoutPrototype> filterFindByUuid_C(String uuid,
+		long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<LayoutPrototype> orderByComparator);
 
 	/**
@@ -420,7 +415,7 @@ public interface LayoutPrototypePersistence extends BasePersistence<LayoutProtot
 	* @throws NoSuchLayoutPrototypeException if a layout prototype with the primary key could not be found
 	*/
 	public LayoutPrototype[] filterFindByUuid_C_PrevAndNext(
-		long layoutPrototypeId, java.lang.String uuid, long companyId,
+		long layoutPrototypeId, String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<LayoutPrototype> orderByComparator)
 		throws NoSuchLayoutPrototypeException;
 
@@ -430,7 +425,7 @@ public interface LayoutPrototypePersistence extends BasePersistence<LayoutProtot
 	* @param uuid the uuid
 	* @param companyId the company ID
 	*/
-	public void removeByUuid_C(java.lang.String uuid, long companyId);
+	public void removeByUuid_C(String uuid, long companyId);
 
 	/**
 	* Returns the number of layout prototypes where uuid = &#63; and companyId = &#63;.
@@ -439,7 +434,7 @@ public interface LayoutPrototypePersistence extends BasePersistence<LayoutProtot
 	* @param companyId the company ID
 	* @return the number of matching layout prototypes
 	*/
-	public int countByUuid_C(java.lang.String uuid, long companyId);
+	public int countByUuid_C(String uuid, long companyId);
 
 	/**
 	* Returns the number of layout prototypes that the user has permission to view where uuid = &#63; and companyId = &#63;.
@@ -448,7 +443,7 @@ public interface LayoutPrototypePersistence extends BasePersistence<LayoutProtot
 	* @param companyId the company ID
 	* @return the number of matching layout prototypes that the user has permission to view
 	*/
-	public int filterCountByUuid_C(java.lang.String uuid, long companyId);
+	public int filterCountByUuid_C(String uuid, long companyId);
 
 	/**
 	* Returns all the layout prototypes where companyId = &#63;.
@@ -977,5 +972,5 @@ public interface LayoutPrototypePersistence extends BasePersistence<LayoutProtot
 	public int countAll();
 
 	@Override
-	public java.util.Set<java.lang.String> getBadColumnNames();
+	public java.util.Set<String> getBadColumnNames();
 }

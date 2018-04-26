@@ -294,7 +294,7 @@ public class ExpandoTableUtil {
 	* @throws NoSuchTableException if a matching expando table could not be found
 	*/
 	public static ExpandoTable findByC_C_N(long companyId, long classNameId,
-		java.lang.String name)
+		String name)
 		throws com.liferay.expando.kernel.exception.NoSuchTableException {
 		return getPersistence().findByC_C_N(companyId, classNameId, name);
 	}
@@ -308,7 +308,7 @@ public class ExpandoTableUtil {
 	* @return the matching expando table, or <code>null</code> if a matching expando table could not be found
 	*/
 	public static ExpandoTable fetchByC_C_N(long companyId, long classNameId,
-		java.lang.String name) {
+		String name) {
 		return getPersistence().fetchByC_C_N(companyId, classNameId, name);
 	}
 
@@ -322,7 +322,7 @@ public class ExpandoTableUtil {
 	* @return the matching expando table, or <code>null</code> if a matching expando table could not be found
 	*/
 	public static ExpandoTable fetchByC_C_N(long companyId, long classNameId,
-		java.lang.String name, boolean retrieveFromCache) {
+		String name, boolean retrieveFromCache) {
 		return getPersistence()
 				   .fetchByC_C_N(companyId, classNameId, name, retrieveFromCache);
 	}
@@ -336,7 +336,7 @@ public class ExpandoTableUtil {
 	* @return the expando table that was removed
 	*/
 	public static ExpandoTable removeByC_C_N(long companyId, long classNameId,
-		java.lang.String name)
+		String name)
 		throws com.liferay.expando.kernel.exception.NoSuchTableException {
 		return getPersistence().removeByC_C_N(companyId, classNameId, name);
 	}
@@ -349,8 +349,7 @@ public class ExpandoTableUtil {
 	* @param name the name
 	* @return the number of matching expando tables
 	*/
-	public static int countByC_C_N(long companyId, long classNameId,
-		java.lang.String name) {
+	public static int countByC_C_N(long companyId, long classNameId, String name) {
 		return getPersistence().countByC_C_N(companyId, classNameId, name);
 	}
 

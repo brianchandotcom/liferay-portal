@@ -62,9 +62,9 @@ public interface WebsiteLocalService extends BaseLocalService,
 	 *
 	 * Never modify or reference this interface directly. Always use {@link WebsiteLocalServiceUtil} to access the website local service. Add custom service methods to {@link com.liferay.portal.service.impl.WebsiteLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public Website addWebsite(long userId, java.lang.String className,
-		long classPK, java.lang.String url, long typeId, boolean primary,
-		ServiceContext serviceContext) throws PortalException;
+	public Website addWebsite(long userId, String className, long classPK,
+		String url, long typeId, boolean primary, ServiceContext serviceContext)
+		throws PortalException;
 
 	/**
 	* Adds the website to the database. Also notifies the appropriate model listeners.
@@ -111,8 +111,7 @@ public interface WebsiteLocalService extends BaseLocalService,
 	@SystemEvent(action = SystemEventConstants.ACTION_SKIP, type = SystemEventConstants.TYPE_DELETE)
 	public Website deleteWebsite(Website website);
 
-	public void deleteWebsites(long companyId, java.lang.String className,
-		long classPK);
+	public void deleteWebsites(long companyId, String className, long classPK);
 
 	public DynamicQuery dynamicQuery();
 
@@ -184,8 +183,7 @@ public interface WebsiteLocalService extends BaseLocalService,
 	* @return the matching website, or <code>null</code> if a matching website could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Website fetchWebsiteByUuidAndCompanyId(java.lang.String uuid,
-		long companyId);
+	public Website fetchWebsiteByUuidAndCompanyId(String uuid, long companyId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
@@ -202,7 +200,7 @@ public interface WebsiteLocalService extends BaseLocalService,
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -228,8 +226,8 @@ public interface WebsiteLocalService extends BaseLocalService,
 	* @throws PortalException if a matching website could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Website getWebsiteByUuidAndCompanyId(java.lang.String uuid,
-		long companyId) throws PortalException;
+	public Website getWebsiteByUuidAndCompanyId(String uuid, long companyId)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<Website> getWebsites();
@@ -249,8 +247,8 @@ public interface WebsiteLocalService extends BaseLocalService,
 	public List<Website> getWebsites(int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<Website> getWebsites(long companyId,
-		java.lang.String className, long classPK);
+	public List<Website> getWebsites(long companyId, String className,
+		long classPK);
 
 	/**
 	* Returns the number of websites.
@@ -260,8 +258,8 @@ public interface WebsiteLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getWebsitesCount();
 
-	public Website updateWebsite(long websiteId, java.lang.String url,
-		long typeId, boolean primary) throws PortalException;
+	public Website updateWebsite(long websiteId, String url, long typeId,
+		boolean primary) throws PortalException;
 
 	/**
 	* Updates the website in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.

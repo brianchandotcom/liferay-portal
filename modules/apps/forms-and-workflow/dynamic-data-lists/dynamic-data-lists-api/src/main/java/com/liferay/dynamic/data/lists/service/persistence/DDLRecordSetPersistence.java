@@ -47,7 +47,7 @@ public interface DDLRecordSetPersistence extends BasePersistence<DDLRecordSet> {
 	* @param uuid the uuid
 	* @return the matching ddl record sets
 	*/
-	public java.util.List<DDLRecordSet> findByUuid(java.lang.String uuid);
+	public java.util.List<DDLRecordSet> findByUuid(String uuid);
 
 	/**
 	* Returns a range of all the ddl record sets where uuid = &#63;.
@@ -61,8 +61,8 @@ public interface DDLRecordSetPersistence extends BasePersistence<DDLRecordSet> {
 	* @param end the upper bound of the range of ddl record sets (not inclusive)
 	* @return the range of matching ddl record sets
 	*/
-	public java.util.List<DDLRecordSet> findByUuid(java.lang.String uuid,
-		int start, int end);
+	public java.util.List<DDLRecordSet> findByUuid(String uuid, int start,
+		int end);
 
 	/**
 	* Returns an ordered range of all the ddl record sets where uuid = &#63;.
@@ -77,8 +77,8 @@ public interface DDLRecordSetPersistence extends BasePersistence<DDLRecordSet> {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching ddl record sets
 	*/
-	public java.util.List<DDLRecordSet> findByUuid(java.lang.String uuid,
-		int start, int end,
+	public java.util.List<DDLRecordSet> findByUuid(String uuid, int start,
+		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<DDLRecordSet> orderByComparator);
 
 	/**
@@ -95,8 +95,8 @@ public interface DDLRecordSetPersistence extends BasePersistence<DDLRecordSet> {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching ddl record sets
 	*/
-	public java.util.List<DDLRecordSet> findByUuid(java.lang.String uuid,
-		int start, int end,
+	public java.util.List<DDLRecordSet> findByUuid(String uuid, int start,
+		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<DDLRecordSet> orderByComparator,
 		boolean retrieveFromCache);
 
@@ -108,7 +108,7 @@ public interface DDLRecordSetPersistence extends BasePersistence<DDLRecordSet> {
 	* @return the first matching ddl record set
 	* @throws NoSuchRecordSetException if a matching ddl record set could not be found
 	*/
-	public DDLRecordSet findByUuid_First(java.lang.String uuid,
+	public DDLRecordSet findByUuid_First(String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<DDLRecordSet> orderByComparator)
 		throws NoSuchRecordSetException;
 
@@ -119,7 +119,7 @@ public interface DDLRecordSetPersistence extends BasePersistence<DDLRecordSet> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching ddl record set, or <code>null</code> if a matching ddl record set could not be found
 	*/
-	public DDLRecordSet fetchByUuid_First(java.lang.String uuid,
+	public DDLRecordSet fetchByUuid_First(String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<DDLRecordSet> orderByComparator);
 
 	/**
@@ -130,7 +130,7 @@ public interface DDLRecordSetPersistence extends BasePersistence<DDLRecordSet> {
 	* @return the last matching ddl record set
 	* @throws NoSuchRecordSetException if a matching ddl record set could not be found
 	*/
-	public DDLRecordSet findByUuid_Last(java.lang.String uuid,
+	public DDLRecordSet findByUuid_Last(String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<DDLRecordSet> orderByComparator)
 		throws NoSuchRecordSetException;
 
@@ -141,7 +141,7 @@ public interface DDLRecordSetPersistence extends BasePersistence<DDLRecordSet> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching ddl record set, or <code>null</code> if a matching ddl record set could not be found
 	*/
-	public DDLRecordSet fetchByUuid_Last(java.lang.String uuid,
+	public DDLRecordSet fetchByUuid_Last(String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<DDLRecordSet> orderByComparator);
 
 	/**
@@ -153,8 +153,7 @@ public interface DDLRecordSetPersistence extends BasePersistence<DDLRecordSet> {
 	* @return the previous, current, and next ddl record set
 	* @throws NoSuchRecordSetException if a ddl record set with the primary key could not be found
 	*/
-	public DDLRecordSet[] findByUuid_PrevAndNext(long recordSetId,
-		java.lang.String uuid,
+	public DDLRecordSet[] findByUuid_PrevAndNext(long recordSetId, String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<DDLRecordSet> orderByComparator)
 		throws NoSuchRecordSetException;
 
@@ -163,7 +162,7 @@ public interface DDLRecordSetPersistence extends BasePersistence<DDLRecordSet> {
 	*
 	* @param uuid the uuid
 	*/
-	public void removeByUuid(java.lang.String uuid);
+	public void removeByUuid(String uuid);
 
 	/**
 	* Returns the number of ddl record sets where uuid = &#63;.
@@ -171,7 +170,7 @@ public interface DDLRecordSetPersistence extends BasePersistence<DDLRecordSet> {
 	* @param uuid the uuid
 	* @return the number of matching ddl record sets
 	*/
-	public int countByUuid(java.lang.String uuid);
+	public int countByUuid(String uuid);
 
 	/**
 	* Returns the ddl record set where uuid = &#63; and groupId = &#63; or throws a {@link NoSuchRecordSetException} if it could not be found.
@@ -181,7 +180,7 @@ public interface DDLRecordSetPersistence extends BasePersistence<DDLRecordSet> {
 	* @return the matching ddl record set
 	* @throws NoSuchRecordSetException if a matching ddl record set could not be found
 	*/
-	public DDLRecordSet findByUUID_G(java.lang.String uuid, long groupId)
+	public DDLRecordSet findByUUID_G(String uuid, long groupId)
 		throws NoSuchRecordSetException;
 
 	/**
@@ -191,7 +190,7 @@ public interface DDLRecordSetPersistence extends BasePersistence<DDLRecordSet> {
 	* @param groupId the group ID
 	* @return the matching ddl record set, or <code>null</code> if a matching ddl record set could not be found
 	*/
-	public DDLRecordSet fetchByUUID_G(java.lang.String uuid, long groupId);
+	public DDLRecordSet fetchByUUID_G(String uuid, long groupId);
 
 	/**
 	* Returns the ddl record set where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -201,7 +200,7 @@ public interface DDLRecordSetPersistence extends BasePersistence<DDLRecordSet> {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching ddl record set, or <code>null</code> if a matching ddl record set could not be found
 	*/
-	public DDLRecordSet fetchByUUID_G(java.lang.String uuid, long groupId,
+	public DDLRecordSet fetchByUUID_G(String uuid, long groupId,
 		boolean retrieveFromCache);
 
 	/**
@@ -211,7 +210,7 @@ public interface DDLRecordSetPersistence extends BasePersistence<DDLRecordSet> {
 	* @param groupId the group ID
 	* @return the ddl record set that was removed
 	*/
-	public DDLRecordSet removeByUUID_G(java.lang.String uuid, long groupId)
+	public DDLRecordSet removeByUUID_G(String uuid, long groupId)
 		throws NoSuchRecordSetException;
 
 	/**
@@ -221,7 +220,7 @@ public interface DDLRecordSetPersistence extends BasePersistence<DDLRecordSet> {
 	* @param groupId the group ID
 	* @return the number of matching ddl record sets
 	*/
-	public int countByUUID_G(java.lang.String uuid, long groupId);
+	public int countByUUID_G(String uuid, long groupId);
 
 	/**
 	* Returns all the ddl record sets where uuid = &#63; and companyId = &#63;.
@@ -230,8 +229,7 @@ public interface DDLRecordSetPersistence extends BasePersistence<DDLRecordSet> {
 	* @param companyId the company ID
 	* @return the matching ddl record sets
 	*/
-	public java.util.List<DDLRecordSet> findByUuid_C(java.lang.String uuid,
-		long companyId);
+	public java.util.List<DDLRecordSet> findByUuid_C(String uuid, long companyId);
 
 	/**
 	* Returns a range of all the ddl record sets where uuid = &#63; and companyId = &#63;.
@@ -246,7 +244,7 @@ public interface DDLRecordSetPersistence extends BasePersistence<DDLRecordSet> {
 	* @param end the upper bound of the range of ddl record sets (not inclusive)
 	* @return the range of matching ddl record sets
 	*/
-	public java.util.List<DDLRecordSet> findByUuid_C(java.lang.String uuid,
+	public java.util.List<DDLRecordSet> findByUuid_C(String uuid,
 		long companyId, int start, int end);
 
 	/**
@@ -263,7 +261,7 @@ public interface DDLRecordSetPersistence extends BasePersistence<DDLRecordSet> {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching ddl record sets
 	*/
-	public java.util.List<DDLRecordSet> findByUuid_C(java.lang.String uuid,
+	public java.util.List<DDLRecordSet> findByUuid_C(String uuid,
 		long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<DDLRecordSet> orderByComparator);
 
@@ -282,7 +280,7 @@ public interface DDLRecordSetPersistence extends BasePersistence<DDLRecordSet> {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching ddl record sets
 	*/
-	public java.util.List<DDLRecordSet> findByUuid_C(java.lang.String uuid,
+	public java.util.List<DDLRecordSet> findByUuid_C(String uuid,
 		long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<DDLRecordSet> orderByComparator,
 		boolean retrieveFromCache);
@@ -296,8 +294,7 @@ public interface DDLRecordSetPersistence extends BasePersistence<DDLRecordSet> {
 	* @return the first matching ddl record set
 	* @throws NoSuchRecordSetException if a matching ddl record set could not be found
 	*/
-	public DDLRecordSet findByUuid_C_First(java.lang.String uuid,
-		long companyId,
+	public DDLRecordSet findByUuid_C_First(String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<DDLRecordSet> orderByComparator)
 		throws NoSuchRecordSetException;
 
@@ -309,8 +306,7 @@ public interface DDLRecordSetPersistence extends BasePersistence<DDLRecordSet> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching ddl record set, or <code>null</code> if a matching ddl record set could not be found
 	*/
-	public DDLRecordSet fetchByUuid_C_First(java.lang.String uuid,
-		long companyId,
+	public DDLRecordSet fetchByUuid_C_First(String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<DDLRecordSet> orderByComparator);
 
 	/**
@@ -322,8 +318,7 @@ public interface DDLRecordSetPersistence extends BasePersistence<DDLRecordSet> {
 	* @return the last matching ddl record set
 	* @throws NoSuchRecordSetException if a matching ddl record set could not be found
 	*/
-	public DDLRecordSet findByUuid_C_Last(java.lang.String uuid,
-		long companyId,
+	public DDLRecordSet findByUuid_C_Last(String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<DDLRecordSet> orderByComparator)
 		throws NoSuchRecordSetException;
 
@@ -335,8 +330,7 @@ public interface DDLRecordSetPersistence extends BasePersistence<DDLRecordSet> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching ddl record set, or <code>null</code> if a matching ddl record set could not be found
 	*/
-	public DDLRecordSet fetchByUuid_C_Last(java.lang.String uuid,
-		long companyId,
+	public DDLRecordSet fetchByUuid_C_Last(String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<DDLRecordSet> orderByComparator);
 
 	/**
@@ -350,7 +344,7 @@ public interface DDLRecordSetPersistence extends BasePersistence<DDLRecordSet> {
 	* @throws NoSuchRecordSetException if a ddl record set with the primary key could not be found
 	*/
 	public DDLRecordSet[] findByUuid_C_PrevAndNext(long recordSetId,
-		java.lang.String uuid, long companyId,
+		String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<DDLRecordSet> orderByComparator)
 		throws NoSuchRecordSetException;
 
@@ -360,7 +354,7 @@ public interface DDLRecordSetPersistence extends BasePersistence<DDLRecordSet> {
 	* @param uuid the uuid
 	* @param companyId the company ID
 	*/
-	public void removeByUuid_C(java.lang.String uuid, long companyId);
+	public void removeByUuid_C(String uuid, long companyId);
 
 	/**
 	* Returns the number of ddl record sets where uuid = &#63; and companyId = &#63;.
@@ -369,7 +363,7 @@ public interface DDLRecordSetPersistence extends BasePersistence<DDLRecordSet> {
 	* @param companyId the company ID
 	* @return the number of matching ddl record sets
 	*/
-	public int countByUuid_C(java.lang.String uuid, long companyId);
+	public int countByUuid_C(String uuid, long companyId);
 
 	/**
 	* Returns all the ddl record sets where groupId = &#63;.
@@ -692,7 +686,7 @@ public interface DDLRecordSetPersistence extends BasePersistence<DDLRecordSet> {
 	* @return the matching ddl record set
 	* @throws NoSuchRecordSetException if a matching ddl record set could not be found
 	*/
-	public DDLRecordSet findByG_R(long groupId, java.lang.String recordSetKey)
+	public DDLRecordSet findByG_R(long groupId, String recordSetKey)
 		throws NoSuchRecordSetException;
 
 	/**
@@ -702,7 +696,7 @@ public interface DDLRecordSetPersistence extends BasePersistence<DDLRecordSet> {
 	* @param recordSetKey the record set key
 	* @return the matching ddl record set, or <code>null</code> if a matching ddl record set could not be found
 	*/
-	public DDLRecordSet fetchByG_R(long groupId, java.lang.String recordSetKey);
+	public DDLRecordSet fetchByG_R(long groupId, String recordSetKey);
 
 	/**
 	* Returns the ddl record set where groupId = &#63; and recordSetKey = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -712,7 +706,7 @@ public interface DDLRecordSetPersistence extends BasePersistence<DDLRecordSet> {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching ddl record set, or <code>null</code> if a matching ddl record set could not be found
 	*/
-	public DDLRecordSet fetchByG_R(long groupId, java.lang.String recordSetKey,
+	public DDLRecordSet fetchByG_R(long groupId, String recordSetKey,
 		boolean retrieveFromCache);
 
 	/**
@@ -722,7 +716,7 @@ public interface DDLRecordSetPersistence extends BasePersistence<DDLRecordSet> {
 	* @param recordSetKey the record set key
 	* @return the ddl record set that was removed
 	*/
-	public DDLRecordSet removeByG_R(long groupId, java.lang.String recordSetKey)
+	public DDLRecordSet removeByG_R(long groupId, String recordSetKey)
 		throws NoSuchRecordSetException;
 
 	/**
@@ -732,7 +726,7 @@ public interface DDLRecordSetPersistence extends BasePersistence<DDLRecordSet> {
 	* @param recordSetKey the record set key
 	* @return the number of matching ddl record sets
 	*/
-	public int countByG_R(long groupId, java.lang.String recordSetKey);
+	public int countByG_R(long groupId, String recordSetKey);
 
 	/**
 	* Caches the ddl record set in the entity cache if it is enabled.
@@ -855,5 +849,5 @@ public interface DDLRecordSetPersistence extends BasePersistence<DDLRecordSet> {
 	public int countAll();
 
 	@Override
-	public java.util.Set<java.lang.String> getBadColumnNames();
+	public java.util.Set<String> getBadColumnNames();
 }

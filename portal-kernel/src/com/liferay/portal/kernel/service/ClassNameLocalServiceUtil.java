@@ -53,7 +53,7 @@ public class ClassNameLocalServiceUtil {
 	}
 
 	public static com.liferay.portal.kernel.model.ClassName addClassName(
-		java.lang.String value) {
+		String value) {
 		return getService().addClassName(value);
 	}
 
@@ -194,7 +194,7 @@ public class ClassNameLocalServiceUtil {
 	}
 
 	public static com.liferay.portal.kernel.model.ClassName fetchClassName(
-		java.lang.String value) {
+		String value) {
 		return getService().fetchClassName(value);
 	}
 
@@ -216,15 +216,15 @@ public class ClassNameLocalServiceUtil {
 	}
 
 	public static com.liferay.portal.kernel.model.ClassName getClassName(
-		java.lang.String value) {
+		String value) {
 		return getService().getClassName(value);
 	}
 
-	public static long getClassNameId(java.lang.Class<?> clazz) {
+	public static long getClassNameId(Class<?> clazz) {
 		return getService().getClassNameId(clazz);
 	}
 
-	public static long getClassNameId(java.lang.String value) {
+	public static long getClassNameId(String value) {
 		return getService().getClassNameId(value);
 	}
 
@@ -262,7 +262,7 @@ public class ClassNameLocalServiceUtil {
 	*
 	* @return the OSGi service identifier
 	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
+	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 
@@ -272,7 +272,7 @@ public class ClassNameLocalServiceUtil {
 		return getService().getPersistedModel(primaryKeyObj);
 	}
 
-	public static java.lang.String getRegistryName() {
+	public static String getRegistryName() {
 		return getService().getRegistryName();
 	}
 

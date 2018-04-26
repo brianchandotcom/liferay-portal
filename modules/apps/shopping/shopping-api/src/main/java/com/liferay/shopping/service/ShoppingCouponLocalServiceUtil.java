@@ -43,14 +43,13 @@ public class ShoppingCouponLocalServiceUtil {
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.shopping.service.impl.ShoppingCouponLocalServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static com.liferay.shopping.model.ShoppingCoupon addCoupon(
-		long userId, java.lang.String code, boolean autoCode,
-		java.lang.String name, java.lang.String description,
-		int startDateMonth, int startDateDay, int startDateYear,
-		int startDateHour, int startDateMinute, int endDateMonth,
-		int endDateDay, int endDateYear, int endDateHour, int endDateMinute,
-		boolean neverExpire, boolean active, java.lang.String limitCategories,
-		java.lang.String limitSkus, double minOrder, double discount,
-		java.lang.String discountType,
+		long userId, String code, boolean autoCode, String name,
+		String description, int startDateMonth, int startDateDay,
+		int startDateYear, int startDateHour, int startDateMinute,
+		int endDateMonth, int endDateDay, int endDateYear, int endDateHour,
+		int endDateMinute, boolean neverExpire, boolean active,
+		String limitCategories, String limitSkus, double minOrder,
+		double discount, String discountType,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
@@ -224,8 +223,7 @@ public class ShoppingCouponLocalServiceUtil {
 	}
 
 	public static com.liferay.shopping.model.ShoppingCoupon getCoupon(
-		java.lang.String code)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		String code) throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getCoupon(code);
 	}
 
@@ -238,7 +236,7 @@ public class ShoppingCouponLocalServiceUtil {
 	*
 	* @return the OSGi service identifier
 	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
+	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 
@@ -287,29 +285,28 @@ public class ShoppingCouponLocalServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.shopping.model.ShoppingCoupon> search(
-		long groupId, long companyId, java.lang.String code, boolean active,
-		java.lang.String discountType, boolean andOperator, int start, int end) {
+		long groupId, long companyId, String code, boolean active,
+		String discountType, boolean andOperator, int start, int end) {
 		return getService()
 				   .search(groupId, companyId, code, active, discountType,
 			andOperator, start, end);
 	}
 
-	public static int searchCount(long groupId, long companyId,
-		java.lang.String code, boolean active, java.lang.String discountType,
-		boolean andOperator) {
+	public static int searchCount(long groupId, long companyId, String code,
+		boolean active, String discountType, boolean andOperator) {
 		return getService()
 				   .searchCount(groupId, companyId, code, active, discountType,
 			andOperator);
 	}
 
 	public static com.liferay.shopping.model.ShoppingCoupon updateCoupon(
-		long userId, long couponId, java.lang.String name,
-		java.lang.String description, int startDateMonth, int startDateDay,
-		int startDateYear, int startDateHour, int startDateMinute,
-		int endDateMonth, int endDateDay, int endDateYear, int endDateHour,
-		int endDateMinute, boolean neverExpire, boolean active,
-		java.lang.String limitCategories, java.lang.String limitSkus,
-		double minOrder, double discount, java.lang.String discountType,
+		long userId, long couponId, String name, String description,
+		int startDateMonth, int startDateDay, int startDateYear,
+		int startDateHour, int startDateMinute, int endDateMonth,
+		int endDateDay, int endDateYear, int endDateHour, int endDateMinute,
+		boolean neverExpire, boolean active, String limitCategories,
+		String limitSkus, double minOrder, double discount,
+		String discountType,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()

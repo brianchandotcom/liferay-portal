@@ -35,8 +35,7 @@ public class BookmarksEntryServiceWrapper implements BookmarksEntryService,
 
 	@Override
 	public com.liferay.bookmarks.model.BookmarksEntry addEntry(long groupId,
-		long folderId, java.lang.String name, java.lang.String url,
-		java.lang.String description,
+		long folderId, String name, String url, String description,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _bookmarksEntryService.addEntry(groupId, folderId, name, url,
@@ -81,7 +80,7 @@ public class BookmarksEntryServiceWrapper implements BookmarksEntryService,
 
 	@Override
 	public int getFoldersEntriesCount(long groupId,
-		java.util.List<java.lang.Long> folderIds) {
+		java.util.List<Long> folderIds) {
 		return _bookmarksEntryService.getFoldersEntriesCount(groupId, folderIds);
 	}
 
@@ -133,7 +132,7 @@ public class BookmarksEntryServiceWrapper implements BookmarksEntryService,
 	* @return the OSGi service identifier
 	*/
 	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
+	public String getOSGiServiceIdentifier() {
 		return _bookmarksEntryService.getOSGiServiceIdentifier();
 	}
 
@@ -199,8 +198,8 @@ public class BookmarksEntryServiceWrapper implements BookmarksEntryService,
 
 	@Override
 	public com.liferay.bookmarks.model.BookmarksEntry updateEntry(
-		long entryId, long groupId, long folderId, java.lang.String name,
-		java.lang.String url, java.lang.String description,
+		long entryId, long groupId, long folderId, String name, String url,
+		String description,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _bookmarksEntryService.updateEntry(entryId, groupId, folderId,

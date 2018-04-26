@@ -63,8 +63,8 @@ public interface ShoppingCategoryLocalService extends BaseLocalService,
 	 * Never modify or reference this interface directly. Always use {@link ShoppingCategoryLocalServiceUtil} to access the shopping category local service. Add custom service methods to {@link com.liferay.shopping.service.impl.ShoppingCategoryLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	public ShoppingCategory addCategory(long userId, long parentCategoryId,
-		java.lang.String name, java.lang.String description,
-		ServiceContext serviceContext) throws PortalException;
+		String name, String description, ServiceContext serviceContext)
+		throws PortalException;
 
 	public void addCategoryResources(long categoryId,
 		boolean addGroupPermissions, boolean addGuestPermissions)
@@ -214,8 +214,7 @@ public interface ShoppingCategoryLocalService extends BaseLocalService,
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ShoppingCategory getCategory(long groupId,
-		java.lang.String categoryName);
+	public ShoppingCategory getCategory(long groupId, String categoryName);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
@@ -225,7 +224,7 @@ public interface ShoppingCategoryLocalService extends BaseLocalService,
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<ShoppingCategory> getParentCategories(long categoryId)
@@ -278,13 +277,13 @@ public interface ShoppingCategoryLocalService extends BaseLocalService,
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public void getSubcategoryIds(List<java.lang.Long> categoryIds,
-		long groupId, long categoryId);
+	public void getSubcategoryIds(List<Long> categoryIds, long groupId,
+		long categoryId);
 
 	public ShoppingCategory updateCategory(long categoryId,
-		long parentCategoryId, java.lang.String name,
-		java.lang.String description, boolean mergeWithParentCategory,
-		ServiceContext serviceContext) throws PortalException;
+		long parentCategoryId, String name, String description,
+		boolean mergeWithParentCategory, ServiceContext serviceContext)
+		throws PortalException;
 
 	/**
 	* Updates the shopping category in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.

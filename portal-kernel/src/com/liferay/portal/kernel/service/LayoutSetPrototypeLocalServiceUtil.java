@@ -54,9 +54,9 @@ public class LayoutSetPrototypeLocalServiceUtil {
 
 	public static com.liferay.portal.kernel.model.LayoutSetPrototype addLayoutSetPrototype(
 		long userId, long companyId,
-		java.util.Map<java.util.Locale, java.lang.String> nameMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		boolean active, boolean layoutsUpdateable, ServiceContext serviceContext)
+		java.util.Map<java.util.Locale, String> nameMap,
+		java.util.Map<java.util.Locale, String> descriptionMap, boolean active,
+		boolean layoutsUpdateable, ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addLayoutSetPrototype(userId, companyId, nameMap,
@@ -70,9 +70,8 @@ public class LayoutSetPrototypeLocalServiceUtil {
 	@Deprecated
 	public static com.liferay.portal.kernel.model.LayoutSetPrototype addLayoutSetPrototype(
 		long userId, long companyId,
-		java.util.Map<java.util.Locale, java.lang.String> nameMap,
-		java.lang.String description, boolean active,
-		boolean layoutsUpdateable, ServiceContext serviceContext)
+		java.util.Map<java.util.Locale, String> nameMap, String description,
+		boolean active, boolean layoutsUpdateable, ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addLayoutSetPrototype(userId, companyId, nameMap,
@@ -226,7 +225,7 @@ public class LayoutSetPrototypeLocalServiceUtil {
 	* @return the matching layout set prototype, or <code>null</code> if a matching layout set prototype could not be found
 	*/
 	public static com.liferay.portal.kernel.model.LayoutSetPrototype fetchLayoutSetPrototypeByUuidAndCompanyId(
-		java.lang.String uuid, long companyId) {
+		String uuid, long companyId) {
 		return getService()
 				   .fetchLayoutSetPrototypeByUuidAndCompanyId(uuid, companyId);
 	}
@@ -266,7 +265,7 @@ public class LayoutSetPrototypeLocalServiceUtil {
 	* @throws PortalException if a matching layout set prototype could not be found
 	*/
 	public static com.liferay.portal.kernel.model.LayoutSetPrototype getLayoutSetPrototypeByUuidAndCompanyId(
-		java.lang.String uuid, long companyId)
+		String uuid, long companyId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .getLayoutSetPrototypeByUuidAndCompanyId(uuid, companyId);
@@ -307,7 +306,7 @@ public class LayoutSetPrototypeLocalServiceUtil {
 	*
 	* @return the OSGi service identifier
 	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
+	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 
@@ -318,12 +317,12 @@ public class LayoutSetPrototypeLocalServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.portal.kernel.model.LayoutSetPrototype> search(
-		long companyId, java.lang.Boolean active, int start, int end,
+		long companyId, Boolean active, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.kernel.model.LayoutSetPrototype> obc) {
 		return getService().search(companyId, active, start, end, obc);
 	}
 
-	public static int searchCount(long companyId, java.lang.Boolean active) {
+	public static int searchCount(long companyId, Boolean active) {
 		return getService().searchCount(companyId, active);
 	}
 
@@ -340,9 +339,9 @@ public class LayoutSetPrototypeLocalServiceUtil {
 
 	public static com.liferay.portal.kernel.model.LayoutSetPrototype updateLayoutSetPrototype(
 		long layoutSetPrototypeId,
-		java.util.Map<java.util.Locale, java.lang.String> nameMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		boolean active, boolean layoutsUpdateable, ServiceContext serviceContext)
+		java.util.Map<java.util.Locale, String> nameMap,
+		java.util.Map<java.util.Locale, String> descriptionMap, boolean active,
+		boolean layoutsUpdateable, ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .updateLayoutSetPrototype(layoutSetPrototypeId, nameMap,
@@ -357,9 +356,8 @@ public class LayoutSetPrototypeLocalServiceUtil {
 	@Deprecated
 	public static com.liferay.portal.kernel.model.LayoutSetPrototype updateLayoutSetPrototype(
 		long layoutSetPrototypeId,
-		java.util.Map<java.util.Locale, java.lang.String> nameMap,
-		java.lang.String description, boolean active,
-		boolean layoutsUpdateable, ServiceContext serviceContext)
+		java.util.Map<java.util.Locale, String> nameMap, String description,
+		boolean active, boolean layoutsUpdateable, ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .updateLayoutSetPrototype(layoutSetPrototypeId, nameMap,
@@ -367,7 +365,7 @@ public class LayoutSetPrototypeLocalServiceUtil {
 	}
 
 	public static com.liferay.portal.kernel.model.LayoutSetPrototype updateLayoutSetPrototype(
-		long layoutSetPrototypeId, java.lang.String settings)
+		long layoutSetPrototypeId, String settings)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .updateLayoutSetPrototype(layoutSetPrototypeId, settings);

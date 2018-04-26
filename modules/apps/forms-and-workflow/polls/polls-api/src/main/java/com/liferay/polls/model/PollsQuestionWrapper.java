@@ -159,7 +159,7 @@ public class PollsQuestionWrapper implements PollsQuestion,
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new PollsQuestionWrapper((PollsQuestion)_pollsQuestion.clone());
 	}
 
@@ -169,7 +169,7 @@ public class PollsQuestionWrapper implements PollsQuestion,
 	}
 
 	@Override
-	public java.lang.String[] getAvailableLanguageIds() {
+	public String[] getAvailableLanguageIds() {
 		return _pollsQuestion.getAvailableLanguageIds();
 	}
 
@@ -199,7 +199,7 @@ public class PollsQuestionWrapper implements PollsQuestion,
 	}
 
 	@Override
-	public java.lang.String getDefaultLanguageId() {
+	public String getDefaultLanguageId() {
 		return _pollsQuestion.getDefaultLanguageId();
 	}
 
@@ -209,7 +209,7 @@ public class PollsQuestionWrapper implements PollsQuestion,
 	* @return the description of this polls question
 	*/
 	@Override
-	public java.lang.String getDescription() {
+	public String getDescription() {
 		return _pollsQuestion.getDescription();
 	}
 
@@ -220,7 +220,7 @@ public class PollsQuestionWrapper implements PollsQuestion,
 	* @return the localized description of this polls question
 	*/
 	@Override
-	public java.lang.String getDescription(java.util.Locale locale) {
+	public String getDescription(java.util.Locale locale) {
 		return _pollsQuestion.getDescription(locale);
 	}
 
@@ -232,8 +232,7 @@ public class PollsQuestionWrapper implements PollsQuestion,
 	* @return the localized description of this polls question. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
 	*/
 	@Override
-	public java.lang.String getDescription(java.util.Locale locale,
-		boolean useDefault) {
+	public String getDescription(java.util.Locale locale, boolean useDefault) {
 		return _pollsQuestion.getDescription(locale, useDefault);
 	}
 
@@ -244,7 +243,7 @@ public class PollsQuestionWrapper implements PollsQuestion,
 	* @return the localized description of this polls question
 	*/
 	@Override
-	public java.lang.String getDescription(java.lang.String languageId) {
+	public String getDescription(String languageId) {
 		return _pollsQuestion.getDescription(languageId);
 	}
 
@@ -256,18 +255,17 @@ public class PollsQuestionWrapper implements PollsQuestion,
 	* @return the localized description of this polls question
 	*/
 	@Override
-	public java.lang.String getDescription(java.lang.String languageId,
-		boolean useDefault) {
+	public String getDescription(String languageId, boolean useDefault) {
 		return _pollsQuestion.getDescription(languageId, useDefault);
 	}
 
 	@Override
-	public java.lang.String getDescriptionCurrentLanguageId() {
+	public String getDescriptionCurrentLanguageId() {
 		return _pollsQuestion.getDescriptionCurrentLanguageId();
 	}
 
 	@Override
-	public java.lang.String getDescriptionCurrentValue() {
+	public String getDescriptionCurrentValue() {
 		return _pollsQuestion.getDescriptionCurrentValue();
 	}
 
@@ -277,7 +275,7 @@ public class PollsQuestionWrapper implements PollsQuestion,
 	* @return the locales and localized descriptions of this polls question
 	*/
 	@Override
-	public Map<java.util.Locale, java.lang.String> getDescriptionMap() {
+	public Map<java.util.Locale, String> getDescriptionMap() {
 		return _pollsQuestion.getDescriptionMap();
 	}
 
@@ -367,7 +365,7 @@ public class PollsQuestionWrapper implements PollsQuestion,
 	* @return the title of this polls question
 	*/
 	@Override
-	public java.lang.String getTitle() {
+	public String getTitle() {
 		return _pollsQuestion.getTitle();
 	}
 
@@ -378,7 +376,7 @@ public class PollsQuestionWrapper implements PollsQuestion,
 	* @return the localized title of this polls question
 	*/
 	@Override
-	public java.lang.String getTitle(java.util.Locale locale) {
+	public String getTitle(java.util.Locale locale) {
 		return _pollsQuestion.getTitle(locale);
 	}
 
@@ -390,7 +388,7 @@ public class PollsQuestionWrapper implements PollsQuestion,
 	* @return the localized title of this polls question. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
 	*/
 	@Override
-	public java.lang.String getTitle(java.util.Locale locale, boolean useDefault) {
+	public String getTitle(java.util.Locale locale, boolean useDefault) {
 		return _pollsQuestion.getTitle(locale, useDefault);
 	}
 
@@ -401,7 +399,7 @@ public class PollsQuestionWrapper implements PollsQuestion,
 	* @return the localized title of this polls question
 	*/
 	@Override
-	public java.lang.String getTitle(java.lang.String languageId) {
+	public String getTitle(String languageId) {
 		return _pollsQuestion.getTitle(languageId);
 	}
 
@@ -413,18 +411,17 @@ public class PollsQuestionWrapper implements PollsQuestion,
 	* @return the localized title of this polls question
 	*/
 	@Override
-	public java.lang.String getTitle(java.lang.String languageId,
-		boolean useDefault) {
+	public String getTitle(String languageId, boolean useDefault) {
 		return _pollsQuestion.getTitle(languageId, useDefault);
 	}
 
 	@Override
-	public java.lang.String getTitleCurrentLanguageId() {
+	public String getTitleCurrentLanguageId() {
 		return _pollsQuestion.getTitleCurrentLanguageId();
 	}
 
 	@Override
-	public java.lang.String getTitleCurrentValue() {
+	public String getTitleCurrentValue() {
 		return _pollsQuestion.getTitleCurrentValue();
 	}
 
@@ -434,7 +431,7 @@ public class PollsQuestionWrapper implements PollsQuestion,
 	* @return the locales and localized titles of this polls question
 	*/
 	@Override
-	public Map<java.util.Locale, java.lang.String> getTitleMap() {
+	public Map<java.util.Locale, String> getTitleMap() {
 		return _pollsQuestion.getTitleMap();
 	}
 
@@ -454,7 +451,7 @@ public class PollsQuestionWrapper implements PollsQuestion,
 	* @return the user name of this polls question
 	*/
 	@Override
-	public java.lang.String getUserName() {
+	public String getUserName() {
 		return _pollsQuestion.getUserName();
 	}
 
@@ -464,7 +461,7 @@ public class PollsQuestionWrapper implements PollsQuestion,
 	* @return the user uuid of this polls question
 	*/
 	@Override
-	public java.lang.String getUserUuid() {
+	public String getUserUuid() {
 		return _pollsQuestion.getUserUuid();
 	}
 
@@ -474,7 +471,7 @@ public class PollsQuestionWrapper implements PollsQuestion,
 	* @return the uuid of this polls question
 	*/
 	@Override
-	public java.lang.String getUuid() {
+	public String getUuid() {
 		return _pollsQuestion.getUuid();
 	}
 
@@ -573,7 +570,7 @@ public class PollsQuestionWrapper implements PollsQuestion,
 	* @param description the description of this polls question
 	*/
 	@Override
-	public void setDescription(java.lang.String description) {
+	public void setDescription(String description) {
 		_pollsQuestion.setDescription(description);
 	}
 
@@ -584,8 +581,7 @@ public class PollsQuestionWrapper implements PollsQuestion,
 	* @param locale the locale of the language
 	*/
 	@Override
-	public void setDescription(java.lang.String description,
-		java.util.Locale locale) {
+	public void setDescription(String description, java.util.Locale locale) {
 		_pollsQuestion.setDescription(description, locale);
 	}
 
@@ -597,13 +593,13 @@ public class PollsQuestionWrapper implements PollsQuestion,
 	* @param defaultLocale the default locale
 	*/
 	@Override
-	public void setDescription(java.lang.String description,
-		java.util.Locale locale, java.util.Locale defaultLocale) {
+	public void setDescription(String description, java.util.Locale locale,
+		java.util.Locale defaultLocale) {
 		_pollsQuestion.setDescription(description, locale, defaultLocale);
 	}
 
 	@Override
-	public void setDescriptionCurrentLanguageId(java.lang.String languageId) {
+	public void setDescriptionCurrentLanguageId(String languageId) {
 		_pollsQuestion.setDescriptionCurrentLanguageId(languageId);
 	}
 
@@ -613,8 +609,7 @@ public class PollsQuestionWrapper implements PollsQuestion,
 	* @param descriptionMap the locales and localized descriptions of this polls question
 	*/
 	@Override
-	public void setDescriptionMap(
-		Map<java.util.Locale, java.lang.String> descriptionMap) {
+	public void setDescriptionMap(Map<java.util.Locale, String> descriptionMap) {
 		_pollsQuestion.setDescriptionMap(descriptionMap);
 	}
 
@@ -626,7 +621,7 @@ public class PollsQuestionWrapper implements PollsQuestion,
 	*/
 	@Override
 	public void setDescriptionMap(
-		Map<java.util.Locale, java.lang.String> descriptionMap,
+		Map<java.util.Locale, String> descriptionMap,
 		java.util.Locale defaultLocale) {
 		_pollsQuestion.setDescriptionMap(descriptionMap, defaultLocale);
 	}
@@ -733,7 +728,7 @@ public class PollsQuestionWrapper implements PollsQuestion,
 	* @param title the title of this polls question
 	*/
 	@Override
-	public void setTitle(java.lang.String title) {
+	public void setTitle(String title) {
 		_pollsQuestion.setTitle(title);
 	}
 
@@ -744,7 +739,7 @@ public class PollsQuestionWrapper implements PollsQuestion,
 	* @param locale the locale of the language
 	*/
 	@Override
-	public void setTitle(java.lang.String title, java.util.Locale locale) {
+	public void setTitle(String title, java.util.Locale locale) {
 		_pollsQuestion.setTitle(title, locale);
 	}
 
@@ -756,13 +751,13 @@ public class PollsQuestionWrapper implements PollsQuestion,
 	* @param defaultLocale the default locale
 	*/
 	@Override
-	public void setTitle(java.lang.String title, java.util.Locale locale,
+	public void setTitle(String title, java.util.Locale locale,
 		java.util.Locale defaultLocale) {
 		_pollsQuestion.setTitle(title, locale, defaultLocale);
 	}
 
 	@Override
-	public void setTitleCurrentLanguageId(java.lang.String languageId) {
+	public void setTitleCurrentLanguageId(String languageId) {
 		_pollsQuestion.setTitleCurrentLanguageId(languageId);
 	}
 
@@ -772,7 +767,7 @@ public class PollsQuestionWrapper implements PollsQuestion,
 	* @param titleMap the locales and localized titles of this polls question
 	*/
 	@Override
-	public void setTitleMap(Map<java.util.Locale, java.lang.String> titleMap) {
+	public void setTitleMap(Map<java.util.Locale, String> titleMap) {
 		_pollsQuestion.setTitleMap(titleMap);
 	}
 
@@ -783,7 +778,7 @@ public class PollsQuestionWrapper implements PollsQuestion,
 	* @param defaultLocale the default locale
 	*/
 	@Override
-	public void setTitleMap(Map<java.util.Locale, java.lang.String> titleMap,
+	public void setTitleMap(Map<java.util.Locale, String> titleMap,
 		java.util.Locale defaultLocale) {
 		_pollsQuestion.setTitleMap(titleMap, defaultLocale);
 	}
@@ -804,7 +799,7 @@ public class PollsQuestionWrapper implements PollsQuestion,
 	* @param userName the user name of this polls question
 	*/
 	@Override
-	public void setUserName(java.lang.String userName) {
+	public void setUserName(String userName) {
 		_pollsQuestion.setUserName(userName);
 	}
 
@@ -814,7 +809,7 @@ public class PollsQuestionWrapper implements PollsQuestion,
 	* @param userUuid the user uuid of this polls question
 	*/
 	@Override
-	public void setUserUuid(java.lang.String userUuid) {
+	public void setUserUuid(String userUuid) {
 		_pollsQuestion.setUserUuid(userUuid);
 	}
 
@@ -824,7 +819,7 @@ public class PollsQuestionWrapper implements PollsQuestion,
 	* @param uuid the uuid of this polls question
 	*/
 	@Override
-	public void setUuid(java.lang.String uuid) {
+	public void setUuid(String uuid) {
 		_pollsQuestion.setUuid(uuid);
 	}
 
@@ -839,7 +834,7 @@ public class PollsQuestionWrapper implements PollsQuestion,
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _pollsQuestion.toString();
 	}
 
@@ -849,7 +844,7 @@ public class PollsQuestionWrapper implements PollsQuestion,
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _pollsQuestion.toXmlString();
 	}
 

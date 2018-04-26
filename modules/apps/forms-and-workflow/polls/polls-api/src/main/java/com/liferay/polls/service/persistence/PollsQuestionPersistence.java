@@ -47,7 +47,7 @@ public interface PollsQuestionPersistence extends BasePersistence<PollsQuestion>
 	* @param uuid the uuid
 	* @return the matching polls questions
 	*/
-	public java.util.List<PollsQuestion> findByUuid(java.lang.String uuid);
+	public java.util.List<PollsQuestion> findByUuid(String uuid);
 
 	/**
 	* Returns a range of all the polls questions where uuid = &#63;.
@@ -61,8 +61,8 @@ public interface PollsQuestionPersistence extends BasePersistence<PollsQuestion>
 	* @param end the upper bound of the range of polls questions (not inclusive)
 	* @return the range of matching polls questions
 	*/
-	public java.util.List<PollsQuestion> findByUuid(java.lang.String uuid,
-		int start, int end);
+	public java.util.List<PollsQuestion> findByUuid(String uuid, int start,
+		int end);
 
 	/**
 	* Returns an ordered range of all the polls questions where uuid = &#63;.
@@ -77,8 +77,8 @@ public interface PollsQuestionPersistence extends BasePersistence<PollsQuestion>
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching polls questions
 	*/
-	public java.util.List<PollsQuestion> findByUuid(java.lang.String uuid,
-		int start, int end,
+	public java.util.List<PollsQuestion> findByUuid(String uuid, int start,
+		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<PollsQuestion> orderByComparator);
 
 	/**
@@ -95,8 +95,8 @@ public interface PollsQuestionPersistence extends BasePersistence<PollsQuestion>
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching polls questions
 	*/
-	public java.util.List<PollsQuestion> findByUuid(java.lang.String uuid,
-		int start, int end,
+	public java.util.List<PollsQuestion> findByUuid(String uuid, int start,
+		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<PollsQuestion> orderByComparator,
 		boolean retrieveFromCache);
 
@@ -108,7 +108,7 @@ public interface PollsQuestionPersistence extends BasePersistence<PollsQuestion>
 	* @return the first matching polls question
 	* @throws NoSuchQuestionException if a matching polls question could not be found
 	*/
-	public PollsQuestion findByUuid_First(java.lang.String uuid,
+	public PollsQuestion findByUuid_First(String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<PollsQuestion> orderByComparator)
 		throws NoSuchQuestionException;
 
@@ -119,7 +119,7 @@ public interface PollsQuestionPersistence extends BasePersistence<PollsQuestion>
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching polls question, or <code>null</code> if a matching polls question could not be found
 	*/
-	public PollsQuestion fetchByUuid_First(java.lang.String uuid,
+	public PollsQuestion fetchByUuid_First(String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<PollsQuestion> orderByComparator);
 
 	/**
@@ -130,7 +130,7 @@ public interface PollsQuestionPersistence extends BasePersistence<PollsQuestion>
 	* @return the last matching polls question
 	* @throws NoSuchQuestionException if a matching polls question could not be found
 	*/
-	public PollsQuestion findByUuid_Last(java.lang.String uuid,
+	public PollsQuestion findByUuid_Last(String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<PollsQuestion> orderByComparator)
 		throws NoSuchQuestionException;
 
@@ -141,7 +141,7 @@ public interface PollsQuestionPersistence extends BasePersistence<PollsQuestion>
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching polls question, or <code>null</code> if a matching polls question could not be found
 	*/
-	public PollsQuestion fetchByUuid_Last(java.lang.String uuid,
+	public PollsQuestion fetchByUuid_Last(String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<PollsQuestion> orderByComparator);
 
 	/**
@@ -153,8 +153,7 @@ public interface PollsQuestionPersistence extends BasePersistence<PollsQuestion>
 	* @return the previous, current, and next polls question
 	* @throws NoSuchQuestionException if a polls question with the primary key could not be found
 	*/
-	public PollsQuestion[] findByUuid_PrevAndNext(long questionId,
-		java.lang.String uuid,
+	public PollsQuestion[] findByUuid_PrevAndNext(long questionId, String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<PollsQuestion> orderByComparator)
 		throws NoSuchQuestionException;
 
@@ -163,7 +162,7 @@ public interface PollsQuestionPersistence extends BasePersistence<PollsQuestion>
 	*
 	* @param uuid the uuid
 	*/
-	public void removeByUuid(java.lang.String uuid);
+	public void removeByUuid(String uuid);
 
 	/**
 	* Returns the number of polls questions where uuid = &#63;.
@@ -171,7 +170,7 @@ public interface PollsQuestionPersistence extends BasePersistence<PollsQuestion>
 	* @param uuid the uuid
 	* @return the number of matching polls questions
 	*/
-	public int countByUuid(java.lang.String uuid);
+	public int countByUuid(String uuid);
 
 	/**
 	* Returns the polls question where uuid = &#63; and groupId = &#63; or throws a {@link NoSuchQuestionException} if it could not be found.
@@ -181,7 +180,7 @@ public interface PollsQuestionPersistence extends BasePersistence<PollsQuestion>
 	* @return the matching polls question
 	* @throws NoSuchQuestionException if a matching polls question could not be found
 	*/
-	public PollsQuestion findByUUID_G(java.lang.String uuid, long groupId)
+	public PollsQuestion findByUUID_G(String uuid, long groupId)
 		throws NoSuchQuestionException;
 
 	/**
@@ -191,7 +190,7 @@ public interface PollsQuestionPersistence extends BasePersistence<PollsQuestion>
 	* @param groupId the group ID
 	* @return the matching polls question, or <code>null</code> if a matching polls question could not be found
 	*/
-	public PollsQuestion fetchByUUID_G(java.lang.String uuid, long groupId);
+	public PollsQuestion fetchByUUID_G(String uuid, long groupId);
 
 	/**
 	* Returns the polls question where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -201,7 +200,7 @@ public interface PollsQuestionPersistence extends BasePersistence<PollsQuestion>
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching polls question, or <code>null</code> if a matching polls question could not be found
 	*/
-	public PollsQuestion fetchByUUID_G(java.lang.String uuid, long groupId,
+	public PollsQuestion fetchByUUID_G(String uuid, long groupId,
 		boolean retrieveFromCache);
 
 	/**
@@ -211,7 +210,7 @@ public interface PollsQuestionPersistence extends BasePersistence<PollsQuestion>
 	* @param groupId the group ID
 	* @return the polls question that was removed
 	*/
-	public PollsQuestion removeByUUID_G(java.lang.String uuid, long groupId)
+	public PollsQuestion removeByUUID_G(String uuid, long groupId)
 		throws NoSuchQuestionException;
 
 	/**
@@ -221,7 +220,7 @@ public interface PollsQuestionPersistence extends BasePersistence<PollsQuestion>
 	* @param groupId the group ID
 	* @return the number of matching polls questions
 	*/
-	public int countByUUID_G(java.lang.String uuid, long groupId);
+	public int countByUUID_G(String uuid, long groupId);
 
 	/**
 	* Returns all the polls questions where uuid = &#63; and companyId = &#63;.
@@ -230,7 +229,7 @@ public interface PollsQuestionPersistence extends BasePersistence<PollsQuestion>
 	* @param companyId the company ID
 	* @return the matching polls questions
 	*/
-	public java.util.List<PollsQuestion> findByUuid_C(java.lang.String uuid,
+	public java.util.List<PollsQuestion> findByUuid_C(String uuid,
 		long companyId);
 
 	/**
@@ -246,7 +245,7 @@ public interface PollsQuestionPersistence extends BasePersistence<PollsQuestion>
 	* @param end the upper bound of the range of polls questions (not inclusive)
 	* @return the range of matching polls questions
 	*/
-	public java.util.List<PollsQuestion> findByUuid_C(java.lang.String uuid,
+	public java.util.List<PollsQuestion> findByUuid_C(String uuid,
 		long companyId, int start, int end);
 
 	/**
@@ -263,7 +262,7 @@ public interface PollsQuestionPersistence extends BasePersistence<PollsQuestion>
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching polls questions
 	*/
-	public java.util.List<PollsQuestion> findByUuid_C(java.lang.String uuid,
+	public java.util.List<PollsQuestion> findByUuid_C(String uuid,
 		long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<PollsQuestion> orderByComparator);
 
@@ -282,7 +281,7 @@ public interface PollsQuestionPersistence extends BasePersistence<PollsQuestion>
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching polls questions
 	*/
-	public java.util.List<PollsQuestion> findByUuid_C(java.lang.String uuid,
+	public java.util.List<PollsQuestion> findByUuid_C(String uuid,
 		long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<PollsQuestion> orderByComparator,
 		boolean retrieveFromCache);
@@ -296,8 +295,7 @@ public interface PollsQuestionPersistence extends BasePersistence<PollsQuestion>
 	* @return the first matching polls question
 	* @throws NoSuchQuestionException if a matching polls question could not be found
 	*/
-	public PollsQuestion findByUuid_C_First(java.lang.String uuid,
-		long companyId,
+	public PollsQuestion findByUuid_C_First(String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<PollsQuestion> orderByComparator)
 		throws NoSuchQuestionException;
 
@@ -309,8 +307,7 @@ public interface PollsQuestionPersistence extends BasePersistence<PollsQuestion>
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching polls question, or <code>null</code> if a matching polls question could not be found
 	*/
-	public PollsQuestion fetchByUuid_C_First(java.lang.String uuid,
-		long companyId,
+	public PollsQuestion fetchByUuid_C_First(String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<PollsQuestion> orderByComparator);
 
 	/**
@@ -322,8 +319,7 @@ public interface PollsQuestionPersistence extends BasePersistence<PollsQuestion>
 	* @return the last matching polls question
 	* @throws NoSuchQuestionException if a matching polls question could not be found
 	*/
-	public PollsQuestion findByUuid_C_Last(java.lang.String uuid,
-		long companyId,
+	public PollsQuestion findByUuid_C_Last(String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<PollsQuestion> orderByComparator)
 		throws NoSuchQuestionException;
 
@@ -335,8 +331,7 @@ public interface PollsQuestionPersistence extends BasePersistence<PollsQuestion>
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching polls question, or <code>null</code> if a matching polls question could not be found
 	*/
-	public PollsQuestion fetchByUuid_C_Last(java.lang.String uuid,
-		long companyId,
+	public PollsQuestion fetchByUuid_C_Last(String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<PollsQuestion> orderByComparator);
 
 	/**
@@ -350,7 +345,7 @@ public interface PollsQuestionPersistence extends BasePersistence<PollsQuestion>
 	* @throws NoSuchQuestionException if a polls question with the primary key could not be found
 	*/
 	public PollsQuestion[] findByUuid_C_PrevAndNext(long questionId,
-		java.lang.String uuid, long companyId,
+		String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<PollsQuestion> orderByComparator)
 		throws NoSuchQuestionException;
 
@@ -360,7 +355,7 @@ public interface PollsQuestionPersistence extends BasePersistence<PollsQuestion>
 	* @param uuid the uuid
 	* @param companyId the company ID
 	*/
-	public void removeByUuid_C(java.lang.String uuid, long companyId);
+	public void removeByUuid_C(String uuid, long companyId);
 
 	/**
 	* Returns the number of polls questions where uuid = &#63; and companyId = &#63;.
@@ -369,7 +364,7 @@ public interface PollsQuestionPersistence extends BasePersistence<PollsQuestion>
 	* @param companyId the company ID
 	* @return the number of matching polls questions
 	*/
-	public int countByUuid_C(java.lang.String uuid, long companyId);
+	public int countByUuid_C(String uuid, long companyId);
 
 	/**
 	* Returns all the polls questions where groupId = &#63;.
@@ -685,5 +680,5 @@ public interface PollsQuestionPersistence extends BasePersistence<PollsQuestion>
 	public int countAll();
 
 	@Override
-	public java.util.Set<java.lang.String> getBadColumnNames();
+	public java.util.Set<String> getBadColumnNames();
 }

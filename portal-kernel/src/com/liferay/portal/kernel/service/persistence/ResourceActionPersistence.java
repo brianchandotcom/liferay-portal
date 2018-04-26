@@ -45,7 +45,7 @@ public interface ResourceActionPersistence extends BasePersistence<ResourceActio
 	* @param name the name
 	* @return the matching resource actions
 	*/
-	public java.util.List<ResourceAction> findByName(java.lang.String name);
+	public java.util.List<ResourceAction> findByName(String name);
 
 	/**
 	* Returns a range of all the resource actions where name = &#63;.
@@ -59,8 +59,8 @@ public interface ResourceActionPersistence extends BasePersistence<ResourceActio
 	* @param end the upper bound of the range of resource actions (not inclusive)
 	* @return the range of matching resource actions
 	*/
-	public java.util.List<ResourceAction> findByName(java.lang.String name,
-		int start, int end);
+	public java.util.List<ResourceAction> findByName(String name, int start,
+		int end);
 
 	/**
 	* Returns an ordered range of all the resource actions where name = &#63;.
@@ -75,8 +75,8 @@ public interface ResourceActionPersistence extends BasePersistence<ResourceActio
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching resource actions
 	*/
-	public java.util.List<ResourceAction> findByName(java.lang.String name,
-		int start, int end,
+	public java.util.List<ResourceAction> findByName(String name, int start,
+		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<ResourceAction> orderByComparator);
 
 	/**
@@ -93,8 +93,8 @@ public interface ResourceActionPersistence extends BasePersistence<ResourceActio
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching resource actions
 	*/
-	public java.util.List<ResourceAction> findByName(java.lang.String name,
-		int start, int end,
+	public java.util.List<ResourceAction> findByName(String name, int start,
+		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<ResourceAction> orderByComparator,
 		boolean retrieveFromCache);
 
@@ -106,7 +106,7 @@ public interface ResourceActionPersistence extends BasePersistence<ResourceActio
 	* @return the first matching resource action
 	* @throws NoSuchResourceActionException if a matching resource action could not be found
 	*/
-	public ResourceAction findByName_First(java.lang.String name,
+	public ResourceAction findByName_First(String name,
 		com.liferay.portal.kernel.util.OrderByComparator<ResourceAction> orderByComparator)
 		throws NoSuchResourceActionException;
 
@@ -117,7 +117,7 @@ public interface ResourceActionPersistence extends BasePersistence<ResourceActio
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching resource action, or <code>null</code> if a matching resource action could not be found
 	*/
-	public ResourceAction fetchByName_First(java.lang.String name,
+	public ResourceAction fetchByName_First(String name,
 		com.liferay.portal.kernel.util.OrderByComparator<ResourceAction> orderByComparator);
 
 	/**
@@ -128,7 +128,7 @@ public interface ResourceActionPersistence extends BasePersistence<ResourceActio
 	* @return the last matching resource action
 	* @throws NoSuchResourceActionException if a matching resource action could not be found
 	*/
-	public ResourceAction findByName_Last(java.lang.String name,
+	public ResourceAction findByName_Last(String name,
 		com.liferay.portal.kernel.util.OrderByComparator<ResourceAction> orderByComparator)
 		throws NoSuchResourceActionException;
 
@@ -139,7 +139,7 @@ public interface ResourceActionPersistence extends BasePersistence<ResourceActio
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching resource action, or <code>null</code> if a matching resource action could not be found
 	*/
-	public ResourceAction fetchByName_Last(java.lang.String name,
+	public ResourceAction fetchByName_Last(String name,
 		com.liferay.portal.kernel.util.OrderByComparator<ResourceAction> orderByComparator);
 
 	/**
@@ -152,7 +152,7 @@ public interface ResourceActionPersistence extends BasePersistence<ResourceActio
 	* @throws NoSuchResourceActionException if a resource action with the primary key could not be found
 	*/
 	public ResourceAction[] findByName_PrevAndNext(long resourceActionId,
-		java.lang.String name,
+		String name,
 		com.liferay.portal.kernel.util.OrderByComparator<ResourceAction> orderByComparator)
 		throws NoSuchResourceActionException;
 
@@ -161,7 +161,7 @@ public interface ResourceActionPersistence extends BasePersistence<ResourceActio
 	*
 	* @param name the name
 	*/
-	public void removeByName(java.lang.String name);
+	public void removeByName(String name);
 
 	/**
 	* Returns the number of resource actions where name = &#63;.
@@ -169,7 +169,7 @@ public interface ResourceActionPersistence extends BasePersistence<ResourceActio
 	* @param name the name
 	* @return the number of matching resource actions
 	*/
-	public int countByName(java.lang.String name);
+	public int countByName(String name);
 
 	/**
 	* Returns the resource action where name = &#63; and actionId = &#63; or throws a {@link NoSuchResourceActionException} if it could not be found.
@@ -179,8 +179,8 @@ public interface ResourceActionPersistence extends BasePersistence<ResourceActio
 	* @return the matching resource action
 	* @throws NoSuchResourceActionException if a matching resource action could not be found
 	*/
-	public ResourceAction findByN_A(java.lang.String name,
-		java.lang.String actionId) throws NoSuchResourceActionException;
+	public ResourceAction findByN_A(String name, String actionId)
+		throws NoSuchResourceActionException;
 
 	/**
 	* Returns the resource action where name = &#63; and actionId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
@@ -189,8 +189,7 @@ public interface ResourceActionPersistence extends BasePersistence<ResourceActio
 	* @param actionId the action ID
 	* @return the matching resource action, or <code>null</code> if a matching resource action could not be found
 	*/
-	public ResourceAction fetchByN_A(java.lang.String name,
-		java.lang.String actionId);
+	public ResourceAction fetchByN_A(String name, String actionId);
 
 	/**
 	* Returns the resource action where name = &#63; and actionId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -200,8 +199,8 @@ public interface ResourceActionPersistence extends BasePersistence<ResourceActio
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching resource action, or <code>null</code> if a matching resource action could not be found
 	*/
-	public ResourceAction fetchByN_A(java.lang.String name,
-		java.lang.String actionId, boolean retrieveFromCache);
+	public ResourceAction fetchByN_A(String name, String actionId,
+		boolean retrieveFromCache);
 
 	/**
 	* Removes the resource action where name = &#63; and actionId = &#63; from the database.
@@ -210,8 +209,8 @@ public interface ResourceActionPersistence extends BasePersistence<ResourceActio
 	* @param actionId the action ID
 	* @return the resource action that was removed
 	*/
-	public ResourceAction removeByN_A(java.lang.String name,
-		java.lang.String actionId) throws NoSuchResourceActionException;
+	public ResourceAction removeByN_A(String name, String actionId)
+		throws NoSuchResourceActionException;
 
 	/**
 	* Returns the number of resource actions where name = &#63; and actionId = &#63;.
@@ -220,7 +219,7 @@ public interface ResourceActionPersistence extends BasePersistence<ResourceActio
 	* @param actionId the action ID
 	* @return the number of matching resource actions
 	*/
-	public int countByN_A(java.lang.String name, java.lang.String actionId);
+	public int countByN_A(String name, String actionId);
 
 	/**
 	* Caches the resource action in the entity cache if it is enabled.

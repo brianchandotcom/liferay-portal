@@ -35,16 +35,16 @@ public class DLContentLocalServiceWrapper implements DLContentLocalService,
 
 	@Override
 	public com.liferay.document.library.content.model.DLContent addContent(
-		long companyId, long repositoryId, java.lang.String path,
-		java.lang.String version, byte[] bytes) {
+		long companyId, long repositoryId, String path, String version,
+		byte[] bytes) {
 		return _dlContentLocalService.addContent(companyId, repositoryId, path,
 			version, bytes);
 	}
 
 	@Override
 	public com.liferay.document.library.content.model.DLContent addContent(
-		long companyId, long repositoryId, java.lang.String path,
-		java.lang.String version, java.io.InputStream inputStream, long size) {
+		long companyId, long repositoryId, String path, String version,
+		java.io.InputStream inputStream, long size) {
 		return _dlContentLocalService.addContent(companyId, repositoryId, path,
 			version, inputStream, size);
 	}
@@ -74,22 +74,21 @@ public class DLContentLocalServiceWrapper implements DLContentLocalService,
 	}
 
 	@Override
-	public void deleteContent(long companyId, long repositoryId,
-		java.lang.String path, java.lang.String version)
+	public void deleteContent(long companyId, long repositoryId, String path,
+		String version)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_dlContentLocalService.deleteContent(companyId, repositoryId, path,
 			version);
 	}
 
 	@Override
-	public void deleteContents(long companyId, long repositoryId,
-		java.lang.String path) {
+	public void deleteContents(long companyId, long repositoryId, String path) {
 		_dlContentLocalService.deleteContents(companyId, repositoryId, path);
 	}
 
 	@Override
 	public void deleteContentsByDirectory(long companyId, long repositoryId,
-		java.lang.String dirName) {
+		String dirName) {
 		_dlContentLocalService.deleteContentsByDirectory(companyId,
 			repositoryId, dirName);
 	}
@@ -227,15 +226,14 @@ public class DLContentLocalServiceWrapper implements DLContentLocalService,
 
 	@Override
 	public com.liferay.document.library.content.model.DLContent getContent(
-		long companyId, long repositoryId, java.lang.String path)
+		long companyId, long repositoryId, String path)
 		throws com.liferay.document.library.content.exception.NoSuchContentException {
 		return _dlContentLocalService.getContent(companyId, repositoryId, path);
 	}
 
 	@Override
 	public com.liferay.document.library.content.model.DLContent getContent(
-		long companyId, long repositoryId, java.lang.String path,
-		java.lang.String version)
+		long companyId, long repositoryId, String path, String version)
 		throws com.liferay.document.library.content.exception.NoSuchContentException {
 		return _dlContentLocalService.getContent(companyId, repositoryId, path,
 			version);
@@ -249,13 +247,13 @@ public class DLContentLocalServiceWrapper implements DLContentLocalService,
 
 	@Override
 	public java.util.List<com.liferay.document.library.content.model.DLContent> getContents(
-		long companyId, long repositoryId, java.lang.String path) {
+		long companyId, long repositoryId, String path) {
 		return _dlContentLocalService.getContents(companyId, repositoryId, path);
 	}
 
 	@Override
 	public java.util.List<com.liferay.document.library.content.model.DLContent> getContentsByDirectory(
-		long companyId, long repositoryId, java.lang.String dirName) {
+		long companyId, long repositoryId, String dirName) {
 		return _dlContentLocalService.getContentsByDirectory(companyId,
 			repositoryId, dirName);
 	}
@@ -318,7 +316,7 @@ public class DLContentLocalServiceWrapper implements DLContentLocalService,
 	* @return the OSGi service identifier
 	*/
 	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
+	public String getOSGiServiceIdentifier() {
 		return _dlContentLocalService.getOSGiServiceIdentifier();
 	}
 
@@ -330,8 +328,8 @@ public class DLContentLocalServiceWrapper implements DLContentLocalService,
 	}
 
 	@Override
-	public boolean hasContent(long companyId, long repositoryId,
-		java.lang.String path, java.lang.String version) {
+	public boolean hasContent(long companyId, long repositoryId, String path,
+		String version) {
 		return _dlContentLocalService.hasContent(companyId, repositoryId, path,
 			version);
 	}
@@ -350,7 +348,7 @@ public class DLContentLocalServiceWrapper implements DLContentLocalService,
 
 	@Override
 	public void updateDLContent(long companyId, long oldRepositoryId,
-		long newRepositoryId, java.lang.String oldPath, java.lang.String newPath) {
+		long newRepositoryId, String oldPath, String newPath) {
 		_dlContentLocalService.updateDLContent(companyId, oldRepositoryId,
 			newRepositoryId, oldPath, newPath);
 	}

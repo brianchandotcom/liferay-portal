@@ -66,7 +66,7 @@ public interface LayoutSet extends LayoutSetModel, PersistedModel {
 	*/
 	public ColorScheme getColorScheme();
 
-	public java.lang.String getCompanyFallbackVirtualHostname();
+	public String getCompanyFallbackVirtualHostname();
 
 	/**
 	* Returns the layout set's group.
@@ -96,12 +96,11 @@ public interface LayoutSet extends LayoutSetModel, PersistedModel {
 
 	public com.liferay.portal.kernel.util.UnicodeProperties getSettingsProperties();
 
-	public java.lang.String getSettingsProperty(java.lang.String key);
+	public String getSettingsProperty(String key);
 
 	public Theme getTheme();
 
-	public java.lang.String getThemeSetting(java.lang.String key,
-		java.lang.String device);
+	public String getThemeSetting(String key, String device);
 
 	/**
 	* Returns the name of the layout set's virtual host.
@@ -114,7 +113,7 @@ public interface LayoutSet extends LayoutSetModel, PersistedModel {
 	* @return the layout set's virtual host name, or an empty string if the
 	layout set has no virtual host configured
 	*/
-	public java.lang.String getVirtualHostname();
+	public String getVirtualHostname();
 
 	public boolean hasSetModifiedDate();
 
@@ -123,7 +122,7 @@ public interface LayoutSet extends LayoutSetModel, PersistedModel {
 	public boolean isLogo();
 
 	public void setCompanyFallbackVirtualHostname(
-		java.lang.String companyFallbackVirtualHostname);
+		String companyFallbackVirtualHostname);
 
 	public void setSettingsProperties(
 		com.liferay.portal.kernel.util.UnicodeProperties settingsProperties);
@@ -134,5 +133,5 @@ public interface LayoutSet extends LayoutSetModel, PersistedModel {
 	* @param virtualHostname the name of the layout set's virtual host
 	* @see #getVirtualHostname()
 	*/
-	public void setVirtualHostname(java.lang.String virtualHostname);
+	public void setVirtualHostname(String virtualHostname);
 }

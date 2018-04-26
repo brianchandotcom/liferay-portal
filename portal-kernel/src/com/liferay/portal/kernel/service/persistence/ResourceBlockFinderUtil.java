@@ -28,7 +28,7 @@ import com.liferay.portal.kernel.util.ReferenceRegistry;
 @ProviderType
 public class ResourceBlockFinderUtil {
 	public static com.liferay.portal.kernel.security.permission.ResourceBlockIdsBag findByC_G_N_R(
-		long companyId, long groupId, java.lang.String name, long[] roleIds) {
+		long companyId, long groupId, String name, long[] roleIds) {
 		return getFinder().findByC_G_N_R(companyId, groupId, name, roleIds);
 	}
 

@@ -56,8 +56,7 @@ import com.liferay.portal.kernel.util.MethodKey;
 public class RepositoryServiceHttp {
 	public static com.liferay.portal.kernel.model.Repository addRepository(
 		HttpPrincipal httpPrincipal, long groupId, long classNameId,
-		long parentFolderId, java.lang.String name,
-		java.lang.String description, java.lang.String portletId,
+		long parentFolderId, String name, String description, String portletId,
 		com.liferay.portal.kernel.util.UnicodeProperties typeSettingsProperties,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -179,7 +178,7 @@ public class RepositoryServiceHttp {
 		}
 	}
 
-	public static java.lang.String[] getSupportedConfigurations(
+	public static String[] getSupportedConfigurations(
 		HttpPrincipal httpPrincipal, long classNameId) {
 		try {
 			MethodKey methodKey = new MethodKey(RepositoryServiceUtil.class,
@@ -198,7 +197,7 @@ public class RepositoryServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (java.lang.String[])returnObj;
+			return (String[])returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -207,9 +206,8 @@ public class RepositoryServiceHttp {
 		}
 	}
 
-	public static java.lang.String[] getSupportedParameters(
-		HttpPrincipal httpPrincipal, long classNameId,
-		java.lang.String configuration) {
+	public static String[] getSupportedParameters(HttpPrincipal httpPrincipal,
+		long classNameId, String configuration) {
 		try {
 			MethodKey methodKey = new MethodKey(RepositoryServiceUtil.class,
 					"getSupportedParameters",
@@ -227,7 +225,7 @@ public class RepositoryServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (java.lang.String[])returnObj;
+			return (String[])returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -236,9 +234,8 @@ public class RepositoryServiceHttp {
 		}
 	}
 
-	public static java.lang.String[] getSupportedParameters(
-		HttpPrincipal httpPrincipal, java.lang.String className,
-		java.lang.String configuration) {
+	public static String[] getSupportedParameters(HttpPrincipal httpPrincipal,
+		String className, String configuration) {
 		try {
 			MethodKey methodKey = new MethodKey(RepositoryServiceUtil.class,
 					"getSupportedParameters",
@@ -256,7 +253,7 @@ public class RepositoryServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (java.lang.String[])returnObj;
+			return (String[])returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -299,7 +296,7 @@ public class RepositoryServiceHttp {
 	}
 
 	public static void updateRepository(HttpPrincipal httpPrincipal,
-		long repositoryId, java.lang.String name, java.lang.String description)
+		long repositoryId, String name, String description)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(RepositoryServiceUtil.class,
@@ -328,9 +325,8 @@ public class RepositoryServiceHttp {
 
 	private static Log _log = LogFactoryUtil.getLog(RepositoryServiceHttp.class);
 	private static final Class<?>[] _addRepositoryParameterTypes0 = new Class[] {
-			long.class, long.class, long.class, java.lang.String.class,
-			java.lang.String.class, java.lang.String.class,
-			com.liferay.portal.kernel.util.UnicodeProperties.class,
+			long.class, long.class, long.class, String.class, String.class,
+			String.class, com.liferay.portal.kernel.util.UnicodeProperties.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _checkRepositoryParameterTypes1 = new Class[] {
@@ -346,15 +342,15 @@ public class RepositoryServiceHttp {
 			long.class
 		};
 	private static final Class<?>[] _getSupportedParametersParameterTypes5 = new Class[] {
-			long.class, java.lang.String.class
+			long.class, String.class
 		};
 	private static final Class<?>[] _getSupportedParametersParameterTypes6 = new Class[] {
-			java.lang.String.class, java.lang.String.class
+			String.class, String.class
 		};
 	private static final Class<?>[] _getTypeSettingsPropertiesParameterTypes7 = new Class[] {
 			long.class
 		};
 	private static final Class<?>[] _updateRepositoryParameterTypes8 = new Class[] {
-			long.class, java.lang.String.class, java.lang.String.class
+			long.class, String.class, String.class
 		};
 }

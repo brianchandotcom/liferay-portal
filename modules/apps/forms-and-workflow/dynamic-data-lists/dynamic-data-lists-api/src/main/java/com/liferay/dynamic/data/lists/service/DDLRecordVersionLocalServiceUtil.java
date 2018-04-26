@@ -192,8 +192,7 @@ public class DDLRecordVersionLocalServiceUtil {
 	* @return the latest matching record version or <code>null</code>
 	*/
 	public static com.liferay.dynamic.data.lists.model.DDLRecordVersion fetchLatestRecordVersion(
-		long userId, long recordSetId, java.lang.String recordSetVersion,
-		int status) {
+		long userId, long recordSetId, String recordSetVersion, int status) {
 		return getService()
 				   .fetchLatestRecordVersion(userId, recordSetId,
 			recordSetVersion, status);
@@ -263,7 +262,7 @@ public class DDLRecordVersionLocalServiceUtil {
 	*
 	* @return the OSGi service identifier
 	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
+	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 
@@ -295,7 +294,7 @@ public class DDLRecordVersionLocalServiceUtil {
 	* @throws PortalException if a matching record set could not be found
 	*/
 	public static com.liferay.dynamic.data.lists.model.DDLRecordVersion getRecordVersion(
-		long recordId, java.lang.String version)
+		long recordId, String version)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getRecordVersion(recordId, version);
 	}

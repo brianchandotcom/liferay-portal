@@ -88,7 +88,7 @@ public class DDLRecordVersionServiceHttp {
 	}
 
 	public static com.liferay.dynamic.data.lists.model.DDLRecordVersion getRecordVersion(
-		HttpPrincipal httpPrincipal, long recordId, java.lang.String version)
+		HttpPrincipal httpPrincipal, long recordId, String version)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(DDLRecordVersionServiceUtil.class,
@@ -220,7 +220,7 @@ public class DDLRecordVersionServiceHttp {
 			long.class
 		};
 	private static final Class<?>[] _getRecordVersionParameterTypes1 = new Class[] {
-			long.class, java.lang.String.class
+			long.class, String.class
 		};
 	private static final Class<?>[] _getRecordVersionsParameterTypes2 = new Class[] {
 			long.class

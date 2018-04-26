@@ -119,7 +119,7 @@ public class OAuth2ApplicationScopeAliasesWrapper
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new OAuth2ApplicationScopeAliasesWrapper((OAuth2ApplicationScopeAliases)_oAuth2ApplicationScopeAliases.clone());
 	}
 
@@ -195,12 +195,12 @@ public class OAuth2ApplicationScopeAliasesWrapper
 	* @return the scope aliases of this o auth2 application scope aliases
 	*/
 	@Override
-	public java.lang.String getScopeAliases() {
+	public String getScopeAliases() {
 		return _oAuth2ApplicationScopeAliases.getScopeAliases();
 	}
 
 	@Override
-	public java.util.List<java.lang.String> getScopeAliasesList() {
+	public java.util.List<String> getScopeAliasesList() {
 		return _oAuth2ApplicationScopeAliases.getScopeAliasesList();
 	}
 
@@ -220,7 +220,7 @@ public class OAuth2ApplicationScopeAliasesWrapper
 	* @return the user name of this o auth2 application scope aliases
 	*/
 	@Override
-	public java.lang.String getUserName() {
+	public String getUserName() {
 		return _oAuth2ApplicationScopeAliases.getUserName();
 	}
 
@@ -230,7 +230,7 @@ public class OAuth2ApplicationScopeAliasesWrapper
 	* @return the user uuid of this o auth2 application scope aliases
 	*/
 	@Override
-	public java.lang.String getUserUuid() {
+	public String getUserUuid() {
 		return _oAuth2ApplicationScopeAliases.getUserUuid();
 	}
 
@@ -347,13 +347,12 @@ public class OAuth2ApplicationScopeAliasesWrapper
 	* @param scopeAliases the scope aliases of this o auth2 application scope aliases
 	*/
 	@Override
-	public void setScopeAliases(java.lang.String scopeAliases) {
+	public void setScopeAliases(String scopeAliases) {
 		_oAuth2ApplicationScopeAliases.setScopeAliases(scopeAliases);
 	}
 
 	@Override
-	public void setScopeAliasesList(
-		java.util.List<java.lang.String> scopeAliasesList) {
+	public void setScopeAliasesList(java.util.List<String> scopeAliasesList) {
 		_oAuth2ApplicationScopeAliases.setScopeAliasesList(scopeAliasesList);
 	}
 
@@ -373,7 +372,7 @@ public class OAuth2ApplicationScopeAliasesWrapper
 	* @param userName the user name of this o auth2 application scope aliases
 	*/
 	@Override
-	public void setUserName(java.lang.String userName) {
+	public void setUserName(String userName) {
 		_oAuth2ApplicationScopeAliases.setUserName(userName);
 	}
 
@@ -383,7 +382,7 @@ public class OAuth2ApplicationScopeAliasesWrapper
 	* @param userUuid the user uuid of this o auth2 application scope aliases
 	*/
 	@Override
-	public void setUserUuid(java.lang.String userUuid) {
+	public void setUserUuid(String userUuid) {
 		_oAuth2ApplicationScopeAliases.setUserUuid(userUuid);
 	}
 
@@ -398,7 +397,7 @@ public class OAuth2ApplicationScopeAliasesWrapper
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _oAuth2ApplicationScopeAliases.toString();
 	}
 
@@ -408,7 +407,7 @@ public class OAuth2ApplicationScopeAliasesWrapper
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _oAuth2ApplicationScopeAliases.toXmlString();
 	}
 

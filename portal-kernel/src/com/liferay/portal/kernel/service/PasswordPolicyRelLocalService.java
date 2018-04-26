@@ -58,7 +58,7 @@ public interface PasswordPolicyRelLocalService extends BaseLocalService,
 	 * Never modify or reference this interface directly. Always use {@link PasswordPolicyRelLocalServiceUtil} to access the password policy rel local service. Add custom service methods to {@link com.liferay.portal.service.impl.PasswordPolicyRelLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	public PasswordPolicyRel addPasswordPolicyRel(long passwordPolicyId,
-		java.lang.String className, long classPK);
+		String className, long classPK);
 
 	/**
 	* Adds the password policy rel to the database. Also notifies the appropriate model listeners.
@@ -70,8 +70,8 @@ public interface PasswordPolicyRelLocalService extends BaseLocalService,
 	public PasswordPolicyRel addPasswordPolicyRel(
 		PasswordPolicyRel passwordPolicyRel);
 
-	public void addPasswordPolicyRels(long passwordPolicyId,
-		java.lang.String className, long[] classPKs);
+	public void addPasswordPolicyRels(long passwordPolicyId, String className,
+		long[] classPKs);
 
 	/**
 	* Creates a new password policy rel with the primary key. Does not add the password policy rel to the database.
@@ -94,7 +94,7 @@ public interface PasswordPolicyRelLocalService extends BaseLocalService,
 		throws PortalException;
 
 	public void deletePasswordPolicyRel(long passwordPolicyId,
-		java.lang.String className, long classPK);
+		String className, long classPK);
 
 	/**
 	* Deletes the password policy rel from the database. Also notifies the appropriate model listeners.
@@ -106,12 +106,12 @@ public interface PasswordPolicyRelLocalService extends BaseLocalService,
 	public PasswordPolicyRel deletePasswordPolicyRel(
 		PasswordPolicyRel passwordPolicyRel);
 
-	public void deletePasswordPolicyRel(java.lang.String className, long classPK);
+	public void deletePasswordPolicyRel(String className, long classPK);
 
 	public void deletePasswordPolicyRels(long passwordPolicyId);
 
 	public void deletePasswordPolicyRels(long passwordPolicyId,
-		java.lang.String className, long[] classPKs);
+		String className, long[] classPKs);
 
 	/**
 	* @throws PortalException
@@ -183,8 +183,8 @@ public interface PasswordPolicyRelLocalService extends BaseLocalService,
 	public PasswordPolicyRel fetchPasswordPolicyRel(long passwordPolicyRelId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public PasswordPolicyRel fetchPasswordPolicyRel(
-		java.lang.String className, long classPK);
+	public PasswordPolicyRel fetchPasswordPolicyRel(String className,
+		long classPK);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
@@ -197,7 +197,7 @@ public interface PasswordPolicyRelLocalService extends BaseLocalService,
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	/**
 	* Returns the password policy rel with the primary key.
@@ -212,11 +212,11 @@ public interface PasswordPolicyRelLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public PasswordPolicyRel getPasswordPolicyRel(long passwordPolicyId,
-		java.lang.String className, long classPK) throws PortalException;
+		String className, long classPK) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public PasswordPolicyRel getPasswordPolicyRel(java.lang.String className,
-		long classPK) throws PortalException;
+	public PasswordPolicyRel getPasswordPolicyRel(String className, long classPK)
+		throws PortalException;
 
 	/**
 	* Returns a range of all the password policy rels.
@@ -247,7 +247,7 @@ public interface PasswordPolicyRelLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public boolean hasPasswordPolicyRel(long passwordPolicyId,
-		java.lang.String className, long classPK);
+		String className, long classPK);
 
 	/**
 	* Updates the password policy rel in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.

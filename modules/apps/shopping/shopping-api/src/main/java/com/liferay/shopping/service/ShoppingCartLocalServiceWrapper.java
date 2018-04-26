@@ -211,8 +211,8 @@ public class ShoppingCartLocalServiceWrapper implements ShoppingCartLocalService
 	}
 
 	@Override
-	public java.util.Map<com.liferay.shopping.model.ShoppingCartItem, java.lang.Integer> getItems(
-		long groupId, java.lang.String itemIds) {
+	public java.util.Map<com.liferay.shopping.model.ShoppingCartItem, Integer> getItems(
+		long groupId, String itemIds) {
 		return _shoppingCartLocalService.getItems(groupId, itemIds);
 	}
 
@@ -222,7 +222,7 @@ public class ShoppingCartLocalServiceWrapper implements ShoppingCartLocalService
 	* @return the OSGi service identifier
 	*/
 	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
+	public String getOSGiServiceIdentifier() {
 		return _shoppingCartLocalService.getOSGiServiceIdentifier();
 	}
 
@@ -275,8 +275,8 @@ public class ShoppingCartLocalServiceWrapper implements ShoppingCartLocalService
 
 	@Override
 	public com.liferay.shopping.model.ShoppingCart updateCart(long userId,
-		long groupId, java.lang.String itemIds, java.lang.String couponCodes,
-		int altShipping, boolean insure)
+		long groupId, String itemIds, String couponCodes, int altShipping,
+		boolean insure)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _shoppingCartLocalService.updateCart(userId, groupId, itemIds,
 			couponCodes, altShipping, insure);

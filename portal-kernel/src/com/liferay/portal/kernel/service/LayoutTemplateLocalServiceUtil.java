@@ -40,21 +40,18 @@ public class LayoutTemplateLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.portal.service.impl.LayoutTemplateLocalServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static java.lang.String getContent(
-		java.lang.String layoutTemplateId, boolean standard,
-		java.lang.String themeId) {
+	public static String getContent(String layoutTemplateId, boolean standard,
+		String themeId) {
 		return getService().getContent(layoutTemplateId, standard, themeId);
 	}
 
-	public static java.lang.String getLangType(
-		java.lang.String layoutTemplateId, boolean standard,
-		java.lang.String themeId) {
+	public static String getLangType(String layoutTemplateId, boolean standard,
+		String themeId) {
 		return getService().getLangType(layoutTemplateId, standard, themeId);
 	}
 
 	public static com.liferay.portal.kernel.model.LayoutTemplate getLayoutTemplate(
-		java.lang.String layoutTemplateId, boolean standard,
-		java.lang.String themeId) {
+		String layoutTemplateId, boolean standard, String themeId) {
 		return getService()
 				   .getLayoutTemplate(layoutTemplateId, standard, themeId);
 	}
@@ -64,7 +61,7 @@ public class LayoutTemplateLocalServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.portal.kernel.model.LayoutTemplate> getLayoutTemplates(
-		java.lang.String themeId) {
+		String themeId) {
 		return getService().getLayoutTemplates(themeId);
 	}
 
@@ -73,41 +70,41 @@ public class LayoutTemplateLocalServiceUtil {
 	*
 	* @return the OSGi service identifier
 	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
+	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 
 	public static java.util.List<com.liferay.portal.kernel.model.LayoutTemplate> init(
-		javax.servlet.ServletContext servletContext, java.lang.String[] xmls,
+		javax.servlet.ServletContext servletContext, String[] xmls,
 		com.liferay.portal.kernel.plugin.PluginPackage pluginPackage) {
 		return getService().init(servletContext, xmls, pluginPackage);
 	}
 
 	public static java.util.List<com.liferay.portal.kernel.model.LayoutTemplate> init(
-		java.lang.String servletContextName,
-		javax.servlet.ServletContext servletContext, java.lang.String[] xmls,
+		String servletContextName, javax.servlet.ServletContext servletContext,
+		String[] xmls,
 		com.liferay.portal.kernel.plugin.PluginPackage pluginPackage) {
 		return getService()
 				   .init(servletContextName, servletContext, xmls, pluginPackage);
 	}
 
-	public static void readLayoutTemplate(java.lang.String servletContextName,
+	public static void readLayoutTemplate(String servletContextName,
 		javax.servlet.ServletContext servletContext,
 		java.util.Set<com.liferay.portal.kernel.model.LayoutTemplate> layoutTemplates,
 		com.liferay.portal.kernel.xml.Element element, boolean standard,
-		java.lang.String themeId,
+		String themeId,
 		com.liferay.portal.kernel.plugin.PluginPackage pluginPackage) {
 		getService()
 			.readLayoutTemplate(servletContextName, servletContext,
 			layoutTemplates, element, standard, themeId, pluginPackage);
 	}
 
-	public static void uninstallLayoutTemplate(
-		java.lang.String layoutTemplateId, boolean standard) {
+	public static void uninstallLayoutTemplate(String layoutTemplateId,
+		boolean standard) {
 		getService().uninstallLayoutTemplate(layoutTemplateId, standard);
 	}
 
-	public static void uninstallLayoutTemplates(java.lang.String themeId) {
+	public static void uninstallLayoutTemplates(String themeId) {
 		getService().uninstallLayoutTemplates(themeId);
 	}
 

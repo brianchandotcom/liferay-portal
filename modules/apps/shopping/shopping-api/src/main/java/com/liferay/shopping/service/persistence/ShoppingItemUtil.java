@@ -542,7 +542,7 @@ public class ShoppingItemUtil {
 	* @return the matching shopping item
 	* @throws NoSuchItemException if a matching shopping item could not be found
 	*/
-	public static ShoppingItem findByC_S(long companyId, java.lang.String sku)
+	public static ShoppingItem findByC_S(long companyId, String sku)
 		throws com.liferay.shopping.exception.NoSuchItemException {
 		return getPersistence().findByC_S(companyId, sku);
 	}
@@ -554,7 +554,7 @@ public class ShoppingItemUtil {
 	* @param sku the sku
 	* @return the matching shopping item, or <code>null</code> if a matching shopping item could not be found
 	*/
-	public static ShoppingItem fetchByC_S(long companyId, java.lang.String sku) {
+	public static ShoppingItem fetchByC_S(long companyId, String sku) {
 		return getPersistence().fetchByC_S(companyId, sku);
 	}
 
@@ -566,7 +566,7 @@ public class ShoppingItemUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching shopping item, or <code>null</code> if a matching shopping item could not be found
 	*/
-	public static ShoppingItem fetchByC_S(long companyId, java.lang.String sku,
+	public static ShoppingItem fetchByC_S(long companyId, String sku,
 		boolean retrieveFromCache) {
 		return getPersistence().fetchByC_S(companyId, sku, retrieveFromCache);
 	}
@@ -578,7 +578,7 @@ public class ShoppingItemUtil {
 	* @param sku the sku
 	* @return the shopping item that was removed
 	*/
-	public static ShoppingItem removeByC_S(long companyId, java.lang.String sku)
+	public static ShoppingItem removeByC_S(long companyId, String sku)
 		throws com.liferay.shopping.exception.NoSuchItemException {
 		return getPersistence().removeByC_S(companyId, sku);
 	}
@@ -590,7 +590,7 @@ public class ShoppingItemUtil {
 	* @param sku the sku
 	* @return the number of matching shopping items
 	*/
-	public static int countByC_S(long companyId, java.lang.String sku) {
+	public static int countByC_S(long companyId, String sku) {
 		return getPersistence().countByC_S(companyId, sku);
 	}
 
@@ -742,7 +742,7 @@ public class ShoppingItemUtil {
 		return getPersistence().countAll();
 	}
 
-	public static java.util.Set<java.lang.String> getBadColumnNames() {
+	public static java.util.Set<String> getBadColumnNames() {
 		return getPersistence().getBadColumnNames();
 	}
 

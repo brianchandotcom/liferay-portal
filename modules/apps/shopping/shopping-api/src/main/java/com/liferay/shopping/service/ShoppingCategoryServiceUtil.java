@@ -43,8 +43,7 @@ public class ShoppingCategoryServiceUtil {
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.shopping.service.impl.ShoppingCategoryServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static com.liferay.shopping.model.ShoppingCategory addCategory(
-		long parentCategoryId, java.lang.String name,
-		java.lang.String description,
+		long parentCategoryId, String name, String description,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
@@ -67,8 +66,8 @@ public class ShoppingCategoryServiceUtil {
 		return getService().getCategories(groupId, parentCategoryId, start, end);
 	}
 
-	public static java.util.List<java.lang.Object> getCategoriesAndItems(
-		long groupId, long categoryId, int start, int end,
+	public static java.util.List<Object> getCategoriesAndItems(long groupId,
+		long categoryId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<?> obc) {
 		return getService()
 				   .getCategoriesAndItems(groupId, categoryId, start, end, obc);
@@ -93,19 +92,18 @@ public class ShoppingCategoryServiceUtil {
 	*
 	* @return the OSGi service identifier
 	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
+	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 
-	public static void getSubcategoryIds(
-		java.util.List<java.lang.Long> categoryIds, long groupId,
-		long categoryId) {
+	public static void getSubcategoryIds(java.util.List<Long> categoryIds,
+		long groupId, long categoryId) {
 		getService().getSubcategoryIds(categoryIds, groupId, categoryId);
 	}
 
 	public static com.liferay.shopping.model.ShoppingCategory updateCategory(
-		long categoryId, long parentCategoryId, java.lang.String name,
-		java.lang.String description, boolean mergeWithParentCategory,
+		long categoryId, long parentCategoryId, String name,
+		String description, boolean mergeWithParentCategory,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()

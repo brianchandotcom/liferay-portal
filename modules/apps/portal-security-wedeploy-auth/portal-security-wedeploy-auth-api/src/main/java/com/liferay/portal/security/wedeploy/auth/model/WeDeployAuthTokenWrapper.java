@@ -129,7 +129,7 @@ public class WeDeployAuthTokenWrapper implements WeDeployAuthToken,
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new WeDeployAuthTokenWrapper((WeDeployAuthToken)_weDeployAuthToken.clone());
 	}
 
@@ -144,7 +144,7 @@ public class WeDeployAuthTokenWrapper implements WeDeployAuthToken,
 	* @return the client ID of this we deploy auth token
 	*/
 	@Override
-	public java.lang.String getClientId() {
+	public String getClientId() {
 		return _weDeployAuthToken.getClientId();
 	}
 
@@ -204,7 +204,7 @@ public class WeDeployAuthTokenWrapper implements WeDeployAuthToken,
 	* @return the token of this we deploy auth token
 	*/
 	@Override
-	public java.lang.String getToken() {
+	public String getToken() {
 		return _weDeployAuthToken.getToken();
 	}
 
@@ -234,7 +234,7 @@ public class WeDeployAuthTokenWrapper implements WeDeployAuthToken,
 	* @return the user name of this we deploy auth token
 	*/
 	@Override
-	public java.lang.String getUserName() {
+	public String getUserName() {
 		return _weDeployAuthToken.getUserName();
 	}
 
@@ -244,7 +244,7 @@ public class WeDeployAuthTokenWrapper implements WeDeployAuthToken,
 	* @return the user uuid of this we deploy auth token
 	*/
 	@Override
-	public java.lang.String getUserUuid() {
+	public String getUserUuid() {
 		return _weDeployAuthToken.getUserUuid();
 	}
 
@@ -294,7 +294,7 @@ public class WeDeployAuthTokenWrapper implements WeDeployAuthToken,
 	* @param clientId the client ID of this we deploy auth token
 	*/
 	@Override
-	public void setClientId(java.lang.String clientId) {
+	public void setClientId(String clientId) {
 		_weDeployAuthToken.setClientId(clientId);
 	}
 
@@ -370,7 +370,7 @@ public class WeDeployAuthTokenWrapper implements WeDeployAuthToken,
 	* @param token the token of this we deploy auth token
 	*/
 	@Override
-	public void setToken(java.lang.String token) {
+	public void setToken(String token) {
 		_weDeployAuthToken.setToken(token);
 	}
 
@@ -400,7 +400,7 @@ public class WeDeployAuthTokenWrapper implements WeDeployAuthToken,
 	* @param userName the user name of this we deploy auth token
 	*/
 	@Override
-	public void setUserName(java.lang.String userName) {
+	public void setUserName(String userName) {
 		_weDeployAuthToken.setUserName(userName);
 	}
 
@@ -410,7 +410,7 @@ public class WeDeployAuthTokenWrapper implements WeDeployAuthToken,
 	* @param userUuid the user uuid of this we deploy auth token
 	*/
 	@Override
-	public void setUserUuid(java.lang.String userUuid) {
+	public void setUserUuid(String userUuid) {
 		_weDeployAuthToken.setUserUuid(userUuid);
 	}
 
@@ -435,7 +435,7 @@ public class WeDeployAuthTokenWrapper implements WeDeployAuthToken,
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _weDeployAuthToken.toString();
 	}
 
@@ -445,7 +445,7 @@ public class WeDeployAuthTokenWrapper implements WeDeployAuthToken,
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _weDeployAuthToken.toXmlString();
 	}
 

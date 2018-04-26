@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.security.ldap.PortalLDAP;
 import com.liferay.portal.security.ldap.authenticator.configuration.LDAPAuthConfiguration;
 import com.liferay.portal.security.ldap.configuration.LDAPServerConfiguration;
 import com.liferay.portal.security.ldap.configuration.SystemLDAPConfiguration;
@@ -32,6 +33,7 @@ import com.liferay.portal.security.ldap.constants.LDAPConstants;
 import com.liferay.portal.security.ldap.constants.LegacyLDAPPropsKeys;
 import com.liferay.portal.security.ldap.exportimport.configuration.LDAPExportConfiguration;
 import com.liferay.portal.security.ldap.exportimport.configuration.LDAPImportConfiguration;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.verify.VerifyException;
 import com.liferay.portal.verify.VerifyProcess;
@@ -46,6 +48,7 @@ import java.util.List;
 import javax.portlet.PortletPreferences;
 
 import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
@@ -60,6 +63,8 @@ import org.osgi.framework.InvalidSyntaxException;
 import org.osgi.framework.ServiceReference;
 import org.osgi.service.cm.Configuration;
 import org.osgi.service.cm.ConfigurationAdmin;
+import org.osgi.service.component.runtime.ServiceComponentRuntime;
+import org.osgi.service.component.runtime.dto.ComponentDescriptionDTO;
 
 /**
  * @author Michael C. Han
@@ -85,6 +90,31 @@ public class LDAPPropertiesVerifyProcessTest extends BaseVerifyProcessTestCase {
 
 		_configurationAdmin = _bundleContext.getService(
 			configurationAdminServiceReference);
+
+		ServiceReference<PortalLDAP> serviceReference =
+			_bundleContext.getServiceReference(PortalLDAP.class);
+
+		bundle = serviceReference.getBundle();
+
+		_componentDescriptionDTO =
+			_serviceComponentRuntime.getComponentDescriptionDTO(
+				bundle,
+				"com.liferay.portal.security.ldap.internal.configuration." +
+					"LDAPConfigurationListener");
+
+		_enabled = _serviceComponentRuntime.isComponentEnabled(
+			_componentDescriptionDTO);
+
+		if (_enabled) {
+			_serviceComponentRuntime.disableComponent(_componentDescriptionDTO);
+		}
+	}
+
+	@AfterClass
+	public static void tearDownClass() {
+		if (_enabled) {
+			_serviceComponentRuntime.enableComponent(_componentDescriptionDTO);
+		}
 	}
 
 	@After
@@ -563,7 +593,12 @@ public class LDAPPropertiesVerifyProcessTest extends BaseVerifyProcessTestCase {
 	}
 
 	private static BundleContext _bundleContext;
+	private static ComponentDescriptionDTO _componentDescriptionDTO;
 	private static ConfigurationAdmin _configurationAdmin;
+	private static boolean _enabled;
+
+	@Inject
+	private static ServiceComponentRuntime _serviceComponentRuntime;
 
 	private boolean _configureProperties = true;
 

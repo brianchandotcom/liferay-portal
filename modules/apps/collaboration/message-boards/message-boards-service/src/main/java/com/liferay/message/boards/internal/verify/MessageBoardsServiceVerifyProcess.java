@@ -14,14 +14,14 @@
 
 package com.liferay.message.boards.internal.verify;
 
+import com.liferay.message.boards.internal.verify.model.MBDiscussionVerifiableModel;
+import com.liferay.message.boards.internal.verify.model.MBThreadFlagVerifiableModel;
+import com.liferay.message.boards.internal.verify.model.MBThreadVerifiableModel;
 import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.verify.VerifyAuditedModel;
 import com.liferay.portal.verify.VerifyGroupedModel;
 import com.liferay.portal.verify.VerifyProcess;
-import com.liferay.message.boards.internal.verify.model.MBDiscussionVerifiableModel;
-import com.liferay.message.boards.internal.verify.model.MBThreadFlagVerifiableModel;
-import com.liferay.message.boards.internal.verify.model.MBThreadVerifiableModel;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;

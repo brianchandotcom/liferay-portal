@@ -658,7 +658,7 @@
 			<var name="searchAssetType" value="Document" />
 		</execute>
 
-		<execute macro="SearchPortlet#searchPG">
+		<!-- <execute macro="SearchPortlet#searchPG">
 			<var name="searchTerm" value="Message Boards" />
 		</execute>
 
@@ -666,7 +666,7 @@
 			<var name="searchAssetSummary" value="Message Boards Body" />
 			<var name="searchAssetTitle" value="Message Boards Subject" />
 			<var name="searchAssetType" value="Message Boards Message" />
-		</execute>
+		</execute> -->
 
 		<execute macro="SearchPortlet#searchPG">
 			<var name="searchTerm" value="Wiki" />

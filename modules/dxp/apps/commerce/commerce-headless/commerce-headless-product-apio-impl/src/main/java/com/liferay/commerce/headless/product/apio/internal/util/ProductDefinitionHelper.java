@@ -17,8 +17,6 @@ package com.liferay.commerce.headless.product.apio.internal.util;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.service.CPDefinitionService;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.QueryConfig;
@@ -199,9 +197,6 @@ public class ProductDefinitionHelper {
 
 		return serviceContext;
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		ProductDefinitionHelper.class);
 
 	@Reference
 	private CPDefinitionService _cpDefinitionService;

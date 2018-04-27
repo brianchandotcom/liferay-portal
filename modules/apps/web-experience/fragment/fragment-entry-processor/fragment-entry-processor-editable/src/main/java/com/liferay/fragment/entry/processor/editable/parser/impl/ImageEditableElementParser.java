@@ -36,6 +36,15 @@ import org.osgi.service.component.annotations.Component;
 public class ImageEditableElementParser implements EditableElementParser {
 
 	@Override
+	public String getValue(Element element) {
+		List<Element> elements = element.getElementsByTag("img");
+
+		Element replaceableElement = elements.get(0);
+
+		return replaceableElement.attr("src");
+	}
+
+	@Override
 	public void replace(Element element, String value) {
 		List<Element> elements = element.getElementsByTag("img");
 

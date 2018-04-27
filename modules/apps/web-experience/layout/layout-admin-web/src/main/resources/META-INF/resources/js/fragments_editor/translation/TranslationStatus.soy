@@ -1,0 +1,104 @@
+{namespace com.liferay.layout.admin.web.TranslationStatus}
+
+/**
+ * TranslationStatus
+ */
+{template .render}
+	{@param availableLanguages: ?}
+	{@param defaultLanguageId: string}
+	{@param languageId: string}
+	{@param spritemap: string}
+	{@param? translationStatus: [
+		languageValues: list<[
+			languageId: string,
+			values: list<string>
+		]>,
+		translationKeys: list<string>
+	]}
+
+	<div class="dropdown lfr-icon-menu">
+		<button class="btn btn-link p-1" data-toggle="dropdown" type="button">
+			<span class="inline-item">
+				{call .lexiconIcon}
+					{param name: $availableLanguages[$languageId].languageIcon /}
+					{param spritemap: $spritemap /}
+				{/call}
+			</span>
+			<span class="btn-section">{$availableLanguages[$languageId].languageLabel}</span>
+		</button>
+
+		{if isNonnull($translationStatus)}
+			<div class="dropdown-menu dropdown-menu-indicator-end">
+				{call .translationStatusItem}
+					{param isDefault: true /}
+					{param languageIcon: $availableLanguages[$defaultLanguageId].languageIcon /}
+					{param languageId: $defaultLanguageId /}
+					{param languageLabel: $availableLanguages[$defaultLanguageId].languageLabel /}
+					{param spritemap: $spritemap /}
+				{/call}
+
+				{foreach $languageTranslationStatus in $translationStatus.languageValues}
+					{if $languageTranslationStatus.languageId != $defaultLanguageId}
+						{call .translationStatusItem}
+							{param isDefault: false /}
+							{param languageIcon: $availableLanguages[$languageTranslationStatus.languageId].languageIcon /}
+							{param languageId: $languageTranslationStatus.languageId /}
+							{param languageLabel: $availableLanguages[$languageTranslationStatus.languageId].languageLabel /}
+							{param spritemap: $spritemap /}
+							{param translatedValues: length($languageTranslationStatus.values) /}
+							{param translationKeys: length($translationStatus.translationKeys) /}
+						{/call}
+					{/if}
+				{/foreach}
+			</div>
+		{/if}
+	</div>
+{/template}
+
+/**
+ * Translation Status item
+ */
+{template .translationStatusItem}
+	{@param isDefault: bool}
+	{@param languageId: string}
+	{@param spritemap: string}
+	{@param? languageIcon: string}
+	{@param? languageLabel: string}
+	{@param? translatedValues: int}
+	{@param? translationKeys: int}
+
+	<a class="dropdown-item" data-languageid="{$languageId}" data-onclick="_handleLanguageChange">
+		<span class="inline-item inline-item-before">
+			{call .lexiconIcon}
+				{param name: $languageIcon ?: '' /}
+				{param spritemap: $spritemap /}
+			{/call}
+		</span>
+		<span>
+			{$languageLabel}
+		</span>
+		<span class="dropdown-item-indicator">
+			{if $isDefault}
+				<span class="label label-info">{msg desc=""}default{/msg}</span>
+			{elseif $translatedValues == 0}
+				<span class="label label-secondary">{msg desc=""}not-translated{/msg}</span>
+			{elseif $translatedValues < $translationKeys}
+				<span class="label label-warning">{msg desc=""}translating{/msg}{sp}{$translatedValues}/{$translationKeys}</span>
+			{elseif $translatedValues == $translationKeys}
+				<span class="label label-success">{msg desc=""}translated{/msg}</span>
+			{/if}
+		</span>
+	</a>
+{/template}
+
+/**
+ * Lexicon icon
+ */
+{template .lexiconIcon}
+	{@param name: string}
+	{@param spritemap: string}
+
+	<svg aria-hidden="true" class="lexicon-icon lexicon-icon-{$name}">
+		<use xlink:href="{$spritemap}#{$name}" />
+	</svg>
+{/template}

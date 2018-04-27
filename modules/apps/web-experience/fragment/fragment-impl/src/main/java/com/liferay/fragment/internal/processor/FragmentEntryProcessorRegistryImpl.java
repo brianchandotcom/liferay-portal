@@ -21,6 +21,8 @@ import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
 import com.liferay.osgi.service.tracker.collections.map.PropertyServiceReferenceComparator;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONObject;
 
 import java.util.Collections;
 
@@ -30,6 +32,7 @@ import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Pavel Savinov
@@ -37,6 +40,27 @@ import org.osgi.service.component.annotations.Deactivate;
 @Component(immediate = true, service = FragmentEntryProcessorRegistry.class)
 public class FragmentEntryProcessorRegistryImpl
 	implements FragmentEntryProcessorRegistry {
+
+	@Override
+	public JSONObject getDefaultEditableValuesJSONObject(String html) {
+		JSONObject jsonObject = _jsonFactory.createJSONObject();
+
+		for (FragmentEntryProcessor fragmentEntryProcessor :
+				_serviceTrackerList) {
+
+			JSONObject defaultEditableValuesJSONObject =
+				fragmentEntryProcessor.getDefaultEditableValuesJSONObject(html);
+
+			if (defaultEditableValuesJSONObject != null) {
+				Class<?> clazz = fragmentEntryProcessor.getClass();
+
+				jsonObject.put(
+					clazz.getName(), defaultEditableValuesJSONObject);
+			}
+		}
+
+		return jsonObject;
+	}
 
 	@Override
 	public String processFragmentEntryLinkHTML(
@@ -86,6 +110,9 @@ public class FragmentEntryProcessorRegistryImpl
 	protected void deactivate() {
 		_serviceTrackerList.close();
 	}
+
+	@Reference
+	private JSONFactory _jsonFactory;
 
 	private ServiceTrackerList<FragmentEntryProcessor, FragmentEntryProcessor>
 		_serviceTrackerList;

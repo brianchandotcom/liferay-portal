@@ -36,6 +36,19 @@ class EditableTextFragmentProcessor {
 	}
 
 	/**
+	 * Finds an associated editor for a given editable id
+	 * @param {string} editableId The id of editable section
+	 * @return {?AlloyEditor}
+	 * @review
+	 */
+
+	findEditor(editableId) {
+		return this._editors.find(
+			editor => editor.editableId === editableId
+		);
+	}
+
+	/**
 	 * @inheritDoc
 	 * @review
 	 */
@@ -61,7 +74,9 @@ class EditableTextFragmentProcessor {
 
 		wrapper.dataset.lfrEditableId = editableId;
 		wrapper.innerHTML = editableContent;
-		editableField.parentNode.replaceChild(wrapper, editableField);
+
+		editableField.innerHTML = '';
+		editableField.appendChild(wrapper);
 
 		const editor = AlloyEditor.editable(
 			wrapper,
@@ -72,12 +87,29 @@ class EditableTextFragmentProcessor {
 		);
 
 		const nativeEditor = editor.get('nativeEditor');
+		const setData = nativeEditor.setData.bind(nativeEditor);
 
-		nativeEditor.name = `${this.fragmentEntryLink.portletNamespace}fragmentEntryLink_`;
-		nativeEditor.on('change', this._handleEditorChange);
-		nativeEditor.on('selectionChange', this._handleEditorChange);
+		const editorChangeHandler = nativeEditor.on(
+			'change',
+			this._handleEditorChange
+		);
 
-		return editor;
+		const editorSelectionChangeHandler = nativeEditor.on(
+			'selectionChange',
+			this._handleEditorChange
+		);
+
+		return {
+			defaultValue: editableContent,
+			editableField,
+			editableId,
+			editor,
+			eventHandlers: [
+				editorChangeHandler,
+				editorSelectionChangeHandler
+			],
+			setData
+		};
 	}
 
 	/**
@@ -102,8 +134,15 @@ class EditableTextFragmentProcessor {
 
 	_destroyEditors() {
 		this._editors.forEach(
-			editor => {
+			({editableField, editor, eventHandlers}) => {
+				eventHandlers.forEach(
+					eventHandler => {
+						eventHandler.removeListener();
+					}
+				);
+
 				editor.destroy();
+				editableField.innerHTML = editor.get('nativeEditor').getData();
 			}
 		);
 

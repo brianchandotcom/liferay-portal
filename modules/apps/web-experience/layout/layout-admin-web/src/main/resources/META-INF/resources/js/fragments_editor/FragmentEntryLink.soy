@@ -11,8 +11,23 @@
 	{@param? _handleFragmentRemoveButtonClick: any}
 	{@param? name: string}
 	{@param? showControlBar: bool}
+	{@param? languageId: string}
+	{@param? defaultLanguageId: string}
 
-	<div class="fragment-entry-link-wrapper" data-onkeyup="{$_handleFragmentKeyUp}" ref="fragmentEntryLinkWrapper" tabindex="0">
+	{let $wrapperClasses kind="text"}
+		fragment-entry-link-wrapper
+
+		{if $languageId != $defaultLanguageId}
+			{sp}translating
+		{/if}
+	{/let}
+
+	<div
+		class="{$wrapperClasses}"
+		data-onkeyup="{$_handleFragmentKeyUp}"
+		ref="fragmentEntryLinkWrapper"
+		tabindex="0"
+	>
 		{if $showControlBar}
 			<nav class="fragment-entry-link-control tbar">
 				<ul class="tbar-nav">

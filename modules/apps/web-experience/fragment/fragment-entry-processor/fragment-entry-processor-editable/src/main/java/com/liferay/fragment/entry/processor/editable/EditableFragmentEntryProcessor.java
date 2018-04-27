@@ -23,10 +23,13 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
@@ -52,6 +55,34 @@ import org.osgi.service.component.annotations.ReferencePolicy;
 public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 
 	@Override
+	public JSONObject getDefaultEditableValuesJSONObject(String html) {
+		JSONObject defaultEditableValuesJSONObject =
+			JSONFactoryUtil.createJSONObject();
+
+		Document document = _getDocument(html);
+
+		for (Element element : document.select("lfr-editable")) {
+			EditableElementParser editableElementParser =
+				_editableElementParsers.get(element.attr("type"));
+
+			if (editableElementParser == null) {
+				continue;
+			}
+
+			JSONObject defaultValueJSONObject =
+				JSONFactoryUtil.createJSONObject();
+
+			defaultValueJSONObject.put(
+				"defaultValue", editableElementParser.getValue(element));
+
+			defaultEditableValuesJSONObject.put(
+				element.attr("id"), defaultValueJSONObject);
+		}
+
+		return defaultEditableValuesJSONObject;
+	}
+
+	@Override
 	public String processFragmentEntryLinkHTML(
 			FragmentEntryLink fragmentEntryLink, String html, String mode)
 		throws PortalException {
@@ -71,11 +102,28 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 
 			String id = element.attr("id");
 
-			if (!jsonObject.has(id)) {
+			Class<?> clazz = getClass();
+
+			JSONObject editableValuesJSONObject = jsonObject.getJSONObject(
+				clazz.getName());
+
+			if (!editableValuesJSONObject.has(id)) {
 				continue;
 			}
 
-			editableElementParser.replace(element, jsonObject.getString(id));
+			Locale locale = LocaleUtil.getMostRelevantLocale();
+
+			JSONObject editableValueJSONObject =
+				editableValuesJSONObject.getJSONObject(id);
+
+			String value = editableValueJSONObject.getString(
+				LanguageUtil.getLanguageId(locale));
+
+			if (Validator.isNull(value)) {
+				value = editableValueJSONObject.getString("defaultValue");
+			}
+
+			editableElementParser.replace(element, value);
 		}
 
 		Element bodyElement = document.body();

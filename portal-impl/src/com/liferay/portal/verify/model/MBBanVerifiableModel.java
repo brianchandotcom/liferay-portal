@@ -12,49 +12,23 @@
  * details.
  */
 
-package com.liferay.message.boards.internal.verify.model;
+package com.liferay.portal.verify.model;
 
-import com.liferay.portal.kernel.verify.model.VerifiableAuditedModel;
 import com.liferay.portal.kernel.verify.model.VerifiableUUIDModel;
 
 /**
  * @author Miguel Pastor
  */
-public class MBThreadVerifiableModel implements VerifiableAuditedModel {
-
-	@Override
-	public String getJoinByTableName() {
-		return "rootMessageId";
-	}
+public class MBBanVerifiableModel implements VerifiableUUIDModel {
 
 	@Override
 	public String getPrimaryKeyColumnName() {
-		return "threadId";
-	}
-
-	@Override
-	public String getRelatedModelName() {
-		return "MBMessage";
-	}
-
-	@Override
-	public String getRelatedPKColumnName() {
-		return "messageId";
+		return "banId";
 	}
 
 	@Override
 	public String getTableName() {
-		return "MBThread";
-	}
-
-	@Override
-	public boolean isAnonymousUserAllowed() {
-		return false;
-	}
-
-	@Override
-	public boolean isUpdateDates() {
-		return true;
+		return "MBBan";
 	}
 
 }

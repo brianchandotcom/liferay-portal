@@ -14,10 +14,10 @@
 
 package com.liferay.message.boards.internal.verify;
 
-import com.liferay.message.boards.internal.verify.model.MBBanVerifiableModel;
-import com.liferay.message.boards.internal.verify.model.MBDiscussionVerifiableModel;
-import com.liferay.message.boards.internal.verify.model.MBThreadFlagVerifiableModel;
-import com.liferay.message.boards.internal.verify.model.MBThreadVerifiableModel;
+import com.liferay.portal.verify.model.MBBanVerifiableModel;
+import com.liferay.portal.verify.model.MBDiscussionVerifiableModel;
+import com.liferay.portal.verify.model.MBThreadFlagVerifiableModel;
+import com.liferay.portal.verify.model.MBThreadVerifiableModel;
 import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.verify.VerifyAuditedModel;
@@ -43,7 +43,6 @@ public class MessageBoardsServiceVerifyProcess extends VerifyProcess {
 	protected void doVerify() throws Exception {
 		verifyAuditedModels();
 		verifyGroupedModels();
-		verifyUUIDModels();
 	}
 
 	@Reference(
@@ -66,15 +65,6 @@ public class MessageBoardsServiceVerifyProcess extends VerifyProcess {
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
 			_verifyGroupedModel.verify(
 				new MBDiscussionVerifiableModel(),
-				new MBThreadFlagVerifiableModel());
-		}
-	}
-
-	protected void verifyUUIDModels() throws Exception {
-		try (LoggingTimer loggingTimer = new LoggingTimer()) {
-			VerifyUUID.verify(
-				new MBBanVerifiableModel(), new MBDiscussionVerifiableModel(),
-				new MBThreadVerifiableModel(),
 				new MBThreadFlagVerifiableModel());
 		}
 	}

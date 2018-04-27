@@ -55,8 +55,7 @@ import java.rmi.RemoteException;
 @ProviderType
 public class CommerceOrganizationServiceSoap {
 	public static com.liferay.portal.kernel.model.Organization addOrganization(
-		long parentOrganizationId, java.lang.String name,
-		java.lang.String type,
+		long parentOrganizationId, String name, String type,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
@@ -73,7 +72,7 @@ public class CommerceOrganizationServiceSoap {
 	}
 
 	public static void addOrganizationUsers(long organizationId,
-		java.lang.String[] emailAddresses,
+		String[] emailAddresses,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
@@ -143,11 +142,10 @@ public class CommerceOrganizationServiceSoap {
 	}
 
 	public static com.liferay.portal.kernel.model.Organization updateOrganization(
-		long organizationId, java.lang.String name, long emailAddressId,
-		java.lang.String address, long addressId, java.lang.String street1,
-		java.lang.String street2, java.lang.String street3,
-		java.lang.String city, java.lang.String zip, long regionId,
-		long countryId, boolean logo, byte[] logoBytes,
+		long organizationId, String name, long emailAddressId, String address,
+		long addressId, String street1, String street2, String street3,
+		String city, String zip, long regionId, long countryId, boolean logo,
+		byte[] logoBytes,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {

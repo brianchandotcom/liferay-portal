@@ -279,8 +279,7 @@ public class CommerceTaxMethodUtil {
 	* @return the matching commerce tax method
 	* @throws NoSuchTaxMethodException if a matching commerce tax method could not be found
 	*/
-	public static CommerceTaxMethod findByG_E(long groupId,
-		java.lang.String engineKey)
+	public static CommerceTaxMethod findByG_E(long groupId, String engineKey)
 		throws com.liferay.commerce.exception.NoSuchTaxMethodException {
 		return getPersistence().findByG_E(groupId, engineKey);
 	}
@@ -292,8 +291,7 @@ public class CommerceTaxMethodUtil {
 	* @param engineKey the engine key
 	* @return the matching commerce tax method, or <code>null</code> if a matching commerce tax method could not be found
 	*/
-	public static CommerceTaxMethod fetchByG_E(long groupId,
-		java.lang.String engineKey) {
+	public static CommerceTaxMethod fetchByG_E(long groupId, String engineKey) {
 		return getPersistence().fetchByG_E(groupId, engineKey);
 	}
 
@@ -305,8 +303,8 @@ public class CommerceTaxMethodUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching commerce tax method, or <code>null</code> if a matching commerce tax method could not be found
 	*/
-	public static CommerceTaxMethod fetchByG_E(long groupId,
-		java.lang.String engineKey, boolean retrieveFromCache) {
+	public static CommerceTaxMethod fetchByG_E(long groupId, String engineKey,
+		boolean retrieveFromCache) {
 		return getPersistence().fetchByG_E(groupId, engineKey, retrieveFromCache);
 	}
 
@@ -317,8 +315,7 @@ public class CommerceTaxMethodUtil {
 	* @param engineKey the engine key
 	* @return the commerce tax method that was removed
 	*/
-	public static CommerceTaxMethod removeByG_E(long groupId,
-		java.lang.String engineKey)
+	public static CommerceTaxMethod removeByG_E(long groupId, String engineKey)
 		throws com.liferay.commerce.exception.NoSuchTaxMethodException {
 		return getPersistence().removeByG_E(groupId, engineKey);
 	}
@@ -330,7 +327,7 @@ public class CommerceTaxMethodUtil {
 	* @param engineKey the engine key
 	* @return the number of matching commerce tax methods
 	*/
-	public static int countByG_E(long groupId, java.lang.String engineKey) {
+	public static int countByG_E(long groupId, String engineKey) {
 		return getPersistence().countByG_E(groupId, engineKey);
 	}
 
@@ -657,7 +654,7 @@ public class CommerceTaxMethodUtil {
 		return getPersistence().countAll();
 	}
 
-	public static java.util.Set<java.lang.String> getBadColumnNames() {
+	public static java.util.Set<String> getBadColumnNames() {
 		return getPersistence().getBadColumnNames();
 	}
 

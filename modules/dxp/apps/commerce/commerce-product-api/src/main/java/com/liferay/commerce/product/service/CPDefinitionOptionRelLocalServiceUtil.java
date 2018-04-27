@@ -65,11 +65,10 @@ public class CPDefinitionOptionRelLocalServiceUtil {
 
 	public static com.liferay.commerce.product.model.CPDefinitionOptionRel addCPDefinitionOptionRel(
 		long cpDefinitionId, long cpOptionId,
-		java.util.Map<java.util.Locale, java.lang.String> titleMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		java.lang.String ddmFormFieldTypeName, double priority,
-		boolean facetable, boolean required, boolean skuContributor,
-		boolean importOptionValue,
+		java.util.Map<java.util.Locale, String> titleMap,
+		java.util.Map<java.util.Locale, String> descriptionMap,
+		String ddmFormFieldTypeName, double priority, boolean facetable,
+		boolean required, boolean skuContributor, boolean importOptionValue,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
@@ -230,7 +229,7 @@ public class CPDefinitionOptionRelLocalServiceUtil {
 	* @return the matching cp definition option rel, or <code>null</code> if a matching cp definition option rel could not be found
 	*/
 	public static com.liferay.commerce.product.model.CPDefinitionOptionRel fetchCPDefinitionOptionRelByUuidAndGroupId(
-		java.lang.String uuid, long groupId) {
+		String uuid, long groupId) {
 		return getService()
 				   .fetchCPDefinitionOptionRelByUuidAndGroupId(uuid, groupId);
 	}
@@ -261,7 +260,7 @@ public class CPDefinitionOptionRelLocalServiceUtil {
 	* @throws PortalException if a matching cp definition option rel could not be found
 	*/
 	public static com.liferay.commerce.product.model.CPDefinitionOptionRel getCPDefinitionOptionRelByUuidAndGroupId(
-		java.lang.String uuid, long groupId)
+		String uuid, long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .getCPDefinitionOptionRelByUuidAndGroupId(uuid, groupId);
@@ -315,7 +314,7 @@ public class CPDefinitionOptionRelLocalServiceUtil {
 	* @return the matching cp definition option rels, or an empty list if no matches were found
 	*/
 	public static java.util.List<com.liferay.commerce.product.model.CPDefinitionOptionRel> getCPDefinitionOptionRelsByUuidAndCompanyId(
-		java.lang.String uuid, long companyId) {
+		String uuid, long companyId) {
 		return getService()
 				   .getCPDefinitionOptionRelsByUuidAndCompanyId(uuid, companyId);
 	}
@@ -331,7 +330,7 @@ public class CPDefinitionOptionRelLocalServiceUtil {
 	* @return the range of matching cp definition option rels, or an empty list if no matches were found
 	*/
 	public static java.util.List<com.liferay.commerce.product.model.CPDefinitionOptionRel> getCPDefinitionOptionRelsByUuidAndCompanyId(
-		java.lang.String uuid, long companyId, int start, int end,
+		String uuid, long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.product.model.CPDefinitionOptionRel> orderByComparator) {
 		return getService()
 				   .getCPDefinitionOptionRelsByUuidAndCompanyId(uuid,
@@ -372,7 +371,7 @@ public class CPDefinitionOptionRelLocalServiceUtil {
 	*
 	* @return the OSGi service identifier
 	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
+	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 
@@ -388,9 +387,8 @@ public class CPDefinitionOptionRelLocalServiceUtil {
 	}
 
 	public static com.liferay.portal.kernel.search.BaseModelSearchResult<com.liferay.commerce.product.model.CPDefinitionOptionRel> searchCPDefinitionOptionRels(
-		long companyId, long groupId, long cpDefinitionId,
-		java.lang.String keywords, int start, int end,
-		com.liferay.portal.kernel.search.Sort sort)
+		long companyId, long groupId, long cpDefinitionId, String keywords,
+		int start, int end, com.liferay.portal.kernel.search.Sort sort)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .searchCPDefinitionOptionRels(companyId, groupId,
@@ -410,10 +408,10 @@ public class CPDefinitionOptionRelLocalServiceUtil {
 
 	public static com.liferay.commerce.product.model.CPDefinitionOptionRel updateCPDefinitionOptionRel(
 		long cpDefinitionOptionRelId, long cpOptionId,
-		java.util.Map<java.util.Locale, java.lang.String> titleMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		java.lang.String ddmFormFieldTypeName, double priority,
-		boolean facetable, boolean required, boolean skuContributor,
+		java.util.Map<java.util.Locale, String> titleMap,
+		java.util.Map<java.util.Locale, String> descriptionMap,
+		String ddmFormFieldTypeName, double priority, boolean facetable,
+		boolean required, boolean skuContributor,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()

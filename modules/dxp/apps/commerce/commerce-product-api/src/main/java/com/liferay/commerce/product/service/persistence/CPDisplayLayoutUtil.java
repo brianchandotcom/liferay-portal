@@ -118,7 +118,7 @@ public class CPDisplayLayoutUtil {
 	* @param uuid the uuid
 	* @return the matching cp display layouts
 	*/
-	public static List<CPDisplayLayout> findByUuid(java.lang.String uuid) {
+	public static List<CPDisplayLayout> findByUuid(String uuid) {
 		return getPersistence().findByUuid(uuid);
 	}
 
@@ -134,8 +134,8 @@ public class CPDisplayLayoutUtil {
 	* @param end the upper bound of the range of cp display layouts (not inclusive)
 	* @return the range of matching cp display layouts
 	*/
-	public static List<CPDisplayLayout> findByUuid(java.lang.String uuid,
-		int start, int end) {
+	public static List<CPDisplayLayout> findByUuid(String uuid, int start,
+		int end) {
 		return getPersistence().findByUuid(uuid, start, end);
 	}
 
@@ -152,8 +152,8 @@ public class CPDisplayLayoutUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching cp display layouts
 	*/
-	public static List<CPDisplayLayout> findByUuid(java.lang.String uuid,
-		int start, int end, OrderByComparator<CPDisplayLayout> orderByComparator) {
+	public static List<CPDisplayLayout> findByUuid(String uuid, int start,
+		int end, OrderByComparator<CPDisplayLayout> orderByComparator) {
 		return getPersistence().findByUuid(uuid, start, end, orderByComparator);
 	}
 
@@ -171,9 +171,8 @@ public class CPDisplayLayoutUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching cp display layouts
 	*/
-	public static List<CPDisplayLayout> findByUuid(java.lang.String uuid,
-		int start, int end,
-		OrderByComparator<CPDisplayLayout> orderByComparator,
+	public static List<CPDisplayLayout> findByUuid(String uuid, int start,
+		int end, OrderByComparator<CPDisplayLayout> orderByComparator,
 		boolean retrieveFromCache) {
 		return getPersistence()
 				   .findByUuid(uuid, start, end, orderByComparator,
@@ -188,7 +187,7 @@ public class CPDisplayLayoutUtil {
 	* @return the first matching cp display layout
 	* @throws NoSuchCPDisplayLayoutException if a matching cp display layout could not be found
 	*/
-	public static CPDisplayLayout findByUuid_First(java.lang.String uuid,
+	public static CPDisplayLayout findByUuid_First(String uuid,
 		OrderByComparator<CPDisplayLayout> orderByComparator)
 		throws com.liferay.commerce.product.exception.NoSuchCPDisplayLayoutException {
 		return getPersistence().findByUuid_First(uuid, orderByComparator);
@@ -201,7 +200,7 @@ public class CPDisplayLayoutUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching cp display layout, or <code>null</code> if a matching cp display layout could not be found
 	*/
-	public static CPDisplayLayout fetchByUuid_First(java.lang.String uuid,
+	public static CPDisplayLayout fetchByUuid_First(String uuid,
 		OrderByComparator<CPDisplayLayout> orderByComparator) {
 		return getPersistence().fetchByUuid_First(uuid, orderByComparator);
 	}
@@ -214,7 +213,7 @@ public class CPDisplayLayoutUtil {
 	* @return the last matching cp display layout
 	* @throws NoSuchCPDisplayLayoutException if a matching cp display layout could not be found
 	*/
-	public static CPDisplayLayout findByUuid_Last(java.lang.String uuid,
+	public static CPDisplayLayout findByUuid_Last(String uuid,
 		OrderByComparator<CPDisplayLayout> orderByComparator)
 		throws com.liferay.commerce.product.exception.NoSuchCPDisplayLayoutException {
 		return getPersistence().findByUuid_Last(uuid, orderByComparator);
@@ -227,7 +226,7 @@ public class CPDisplayLayoutUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching cp display layout, or <code>null</code> if a matching cp display layout could not be found
 	*/
-	public static CPDisplayLayout fetchByUuid_Last(java.lang.String uuid,
+	public static CPDisplayLayout fetchByUuid_Last(String uuid,
 		OrderByComparator<CPDisplayLayout> orderByComparator) {
 		return getPersistence().fetchByUuid_Last(uuid, orderByComparator);
 	}
@@ -242,7 +241,7 @@ public class CPDisplayLayoutUtil {
 	* @throws NoSuchCPDisplayLayoutException if a cp display layout with the primary key could not be found
 	*/
 	public static CPDisplayLayout[] findByUuid_PrevAndNext(
-		long CPDisplayLayoutId, java.lang.String uuid,
+		long CPDisplayLayoutId, String uuid,
 		OrderByComparator<CPDisplayLayout> orderByComparator)
 		throws com.liferay.commerce.product.exception.NoSuchCPDisplayLayoutException {
 		return getPersistence()
@@ -255,7 +254,7 @@ public class CPDisplayLayoutUtil {
 	*
 	* @param uuid the uuid
 	*/
-	public static void removeByUuid(java.lang.String uuid) {
+	public static void removeByUuid(String uuid) {
 		getPersistence().removeByUuid(uuid);
 	}
 
@@ -265,7 +264,7 @@ public class CPDisplayLayoutUtil {
 	* @param uuid the uuid
 	* @return the number of matching cp display layouts
 	*/
-	public static int countByUuid(java.lang.String uuid) {
+	public static int countByUuid(String uuid) {
 		return getPersistence().countByUuid(uuid);
 	}
 
@@ -277,8 +276,7 @@ public class CPDisplayLayoutUtil {
 	* @return the matching cp display layout
 	* @throws NoSuchCPDisplayLayoutException if a matching cp display layout could not be found
 	*/
-	public static CPDisplayLayout findByUUID_G(java.lang.String uuid,
-		long groupId)
+	public static CPDisplayLayout findByUUID_G(String uuid, long groupId)
 		throws com.liferay.commerce.product.exception.NoSuchCPDisplayLayoutException {
 		return getPersistence().findByUUID_G(uuid, groupId);
 	}
@@ -290,8 +288,7 @@ public class CPDisplayLayoutUtil {
 	* @param groupId the group ID
 	* @return the matching cp display layout, or <code>null</code> if a matching cp display layout could not be found
 	*/
-	public static CPDisplayLayout fetchByUUID_G(java.lang.String uuid,
-		long groupId) {
+	public static CPDisplayLayout fetchByUUID_G(String uuid, long groupId) {
 		return getPersistence().fetchByUUID_G(uuid, groupId);
 	}
 
@@ -303,8 +300,8 @@ public class CPDisplayLayoutUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching cp display layout, or <code>null</code> if a matching cp display layout could not be found
 	*/
-	public static CPDisplayLayout fetchByUUID_G(java.lang.String uuid,
-		long groupId, boolean retrieveFromCache) {
+	public static CPDisplayLayout fetchByUUID_G(String uuid, long groupId,
+		boolean retrieveFromCache) {
 		return getPersistence().fetchByUUID_G(uuid, groupId, retrieveFromCache);
 	}
 
@@ -315,8 +312,7 @@ public class CPDisplayLayoutUtil {
 	* @param groupId the group ID
 	* @return the cp display layout that was removed
 	*/
-	public static CPDisplayLayout removeByUUID_G(java.lang.String uuid,
-		long groupId)
+	public static CPDisplayLayout removeByUUID_G(String uuid, long groupId)
 		throws com.liferay.commerce.product.exception.NoSuchCPDisplayLayoutException {
 		return getPersistence().removeByUUID_G(uuid, groupId);
 	}
@@ -328,7 +324,7 @@ public class CPDisplayLayoutUtil {
 	* @param groupId the group ID
 	* @return the number of matching cp display layouts
 	*/
-	public static int countByUUID_G(java.lang.String uuid, long groupId) {
+	public static int countByUUID_G(String uuid, long groupId) {
 		return getPersistence().countByUUID_G(uuid, groupId);
 	}
 
@@ -339,8 +335,7 @@ public class CPDisplayLayoutUtil {
 	* @param companyId the company ID
 	* @return the matching cp display layouts
 	*/
-	public static List<CPDisplayLayout> findByUuid_C(java.lang.String uuid,
-		long companyId) {
+	public static List<CPDisplayLayout> findByUuid_C(String uuid, long companyId) {
 		return getPersistence().findByUuid_C(uuid, companyId);
 	}
 
@@ -357,7 +352,7 @@ public class CPDisplayLayoutUtil {
 	* @param end the upper bound of the range of cp display layouts (not inclusive)
 	* @return the range of matching cp display layouts
 	*/
-	public static List<CPDisplayLayout> findByUuid_C(java.lang.String uuid,
+	public static List<CPDisplayLayout> findByUuid_C(String uuid,
 		long companyId, int start, int end) {
 		return getPersistence().findByUuid_C(uuid, companyId, start, end);
 	}
@@ -376,7 +371,7 @@ public class CPDisplayLayoutUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching cp display layouts
 	*/
-	public static List<CPDisplayLayout> findByUuid_C(java.lang.String uuid,
+	public static List<CPDisplayLayout> findByUuid_C(String uuid,
 		long companyId, int start, int end,
 		OrderByComparator<CPDisplayLayout> orderByComparator) {
 		return getPersistence()
@@ -398,7 +393,7 @@ public class CPDisplayLayoutUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching cp display layouts
 	*/
-	public static List<CPDisplayLayout> findByUuid_C(java.lang.String uuid,
+	public static List<CPDisplayLayout> findByUuid_C(String uuid,
 		long companyId, int start, int end,
 		OrderByComparator<CPDisplayLayout> orderByComparator,
 		boolean retrieveFromCache) {
@@ -416,7 +411,7 @@ public class CPDisplayLayoutUtil {
 	* @return the first matching cp display layout
 	* @throws NoSuchCPDisplayLayoutException if a matching cp display layout could not be found
 	*/
-	public static CPDisplayLayout findByUuid_C_First(java.lang.String uuid,
+	public static CPDisplayLayout findByUuid_C_First(String uuid,
 		long companyId, OrderByComparator<CPDisplayLayout> orderByComparator)
 		throws com.liferay.commerce.product.exception.NoSuchCPDisplayLayoutException {
 		return getPersistence()
@@ -431,7 +426,7 @@ public class CPDisplayLayoutUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching cp display layout, or <code>null</code> if a matching cp display layout could not be found
 	*/
-	public static CPDisplayLayout fetchByUuid_C_First(java.lang.String uuid,
+	public static CPDisplayLayout fetchByUuid_C_First(String uuid,
 		long companyId, OrderByComparator<CPDisplayLayout> orderByComparator) {
 		return getPersistence()
 				   .fetchByUuid_C_First(uuid, companyId, orderByComparator);
@@ -446,7 +441,7 @@ public class CPDisplayLayoutUtil {
 	* @return the last matching cp display layout
 	* @throws NoSuchCPDisplayLayoutException if a matching cp display layout could not be found
 	*/
-	public static CPDisplayLayout findByUuid_C_Last(java.lang.String uuid,
+	public static CPDisplayLayout findByUuid_C_Last(String uuid,
 		long companyId, OrderByComparator<CPDisplayLayout> orderByComparator)
 		throws com.liferay.commerce.product.exception.NoSuchCPDisplayLayoutException {
 		return getPersistence()
@@ -461,7 +456,7 @@ public class CPDisplayLayoutUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching cp display layout, or <code>null</code> if a matching cp display layout could not be found
 	*/
-	public static CPDisplayLayout fetchByUuid_C_Last(java.lang.String uuid,
+	public static CPDisplayLayout fetchByUuid_C_Last(String uuid,
 		long companyId, OrderByComparator<CPDisplayLayout> orderByComparator) {
 		return getPersistence()
 				   .fetchByUuid_C_Last(uuid, companyId, orderByComparator);
@@ -478,7 +473,7 @@ public class CPDisplayLayoutUtil {
 	* @throws NoSuchCPDisplayLayoutException if a cp display layout with the primary key could not be found
 	*/
 	public static CPDisplayLayout[] findByUuid_C_PrevAndNext(
-		long CPDisplayLayoutId, java.lang.String uuid, long companyId,
+		long CPDisplayLayoutId, String uuid, long companyId,
 		OrderByComparator<CPDisplayLayout> orderByComparator)
 		throws com.liferay.commerce.product.exception.NoSuchCPDisplayLayoutException {
 		return getPersistence()
@@ -492,7 +487,7 @@ public class CPDisplayLayoutUtil {
 	* @param uuid the uuid
 	* @param companyId the company ID
 	*/
-	public static void removeByUuid_C(java.lang.String uuid, long companyId) {
+	public static void removeByUuid_C(String uuid, long companyId) {
 		getPersistence().removeByUuid_C(uuid, companyId);
 	}
 
@@ -503,7 +498,7 @@ public class CPDisplayLayoutUtil {
 	* @param companyId the company ID
 	* @return the number of matching cp display layouts
 	*/
-	public static int countByUuid_C(java.lang.String uuid, long companyId) {
+	public static int countByUuid_C(String uuid, long companyId) {
 		return getPersistence().countByUuid_C(uuid, companyId);
 	}
 
@@ -716,7 +711,7 @@ public class CPDisplayLayoutUtil {
 		return getPersistence().countAll();
 	}
 
-	public static java.util.Set<java.lang.String> getBadColumnNames() {
+	public static java.util.Set<String> getBadColumnNames() {
 		return getPersistence().getBadColumnNames();
 	}
 

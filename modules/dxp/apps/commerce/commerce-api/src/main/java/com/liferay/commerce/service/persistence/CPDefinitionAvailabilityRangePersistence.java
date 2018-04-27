@@ -48,8 +48,7 @@ public interface CPDefinitionAvailabilityRangePersistence
 	* @param uuid the uuid
 	* @return the matching cp definition availability ranges
 	*/
-	public java.util.List<CPDefinitionAvailabilityRange> findByUuid(
-		java.lang.String uuid);
+	public java.util.List<CPDefinitionAvailabilityRange> findByUuid(String uuid);
 
 	/**
 	* Returns a range of all the cp definition availability ranges where uuid = &#63;.
@@ -64,7 +63,7 @@ public interface CPDefinitionAvailabilityRangePersistence
 	* @return the range of matching cp definition availability ranges
 	*/
 	public java.util.List<CPDefinitionAvailabilityRange> findByUuid(
-		java.lang.String uuid, int start, int end);
+		String uuid, int start, int end);
 
 	/**
 	* Returns an ordered range of all the cp definition availability ranges where uuid = &#63;.
@@ -80,7 +79,7 @@ public interface CPDefinitionAvailabilityRangePersistence
 	* @return the ordered range of matching cp definition availability ranges
 	*/
 	public java.util.List<CPDefinitionAvailabilityRange> findByUuid(
-		java.lang.String uuid, int start, int end,
+		String uuid, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<CPDefinitionAvailabilityRange> orderByComparator);
 
 	/**
@@ -98,7 +97,7 @@ public interface CPDefinitionAvailabilityRangePersistence
 	* @return the ordered range of matching cp definition availability ranges
 	*/
 	public java.util.List<CPDefinitionAvailabilityRange> findByUuid(
-		java.lang.String uuid, int start, int end,
+		String uuid, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<CPDefinitionAvailabilityRange> orderByComparator,
 		boolean retrieveFromCache);
 
@@ -110,8 +109,7 @@ public interface CPDefinitionAvailabilityRangePersistence
 	* @return the first matching cp definition availability range
 	* @throws NoSuchCPDefinitionAvailabilityRangeException if a matching cp definition availability range could not be found
 	*/
-	public CPDefinitionAvailabilityRange findByUuid_First(
-		java.lang.String uuid,
+	public CPDefinitionAvailabilityRange findByUuid_First(String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<CPDefinitionAvailabilityRange> orderByComparator)
 		throws NoSuchCPDefinitionAvailabilityRangeException;
 
@@ -122,8 +120,7 @@ public interface CPDefinitionAvailabilityRangePersistence
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching cp definition availability range, or <code>null</code> if a matching cp definition availability range could not be found
 	*/
-	public CPDefinitionAvailabilityRange fetchByUuid_First(
-		java.lang.String uuid,
+	public CPDefinitionAvailabilityRange fetchByUuid_First(String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<CPDefinitionAvailabilityRange> orderByComparator);
 
 	/**
@@ -134,8 +131,7 @@ public interface CPDefinitionAvailabilityRangePersistence
 	* @return the last matching cp definition availability range
 	* @throws NoSuchCPDefinitionAvailabilityRangeException if a matching cp definition availability range could not be found
 	*/
-	public CPDefinitionAvailabilityRange findByUuid_Last(
-		java.lang.String uuid,
+	public CPDefinitionAvailabilityRange findByUuid_Last(String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<CPDefinitionAvailabilityRange> orderByComparator)
 		throws NoSuchCPDefinitionAvailabilityRangeException;
 
@@ -146,8 +142,7 @@ public interface CPDefinitionAvailabilityRangePersistence
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching cp definition availability range, or <code>null</code> if a matching cp definition availability range could not be found
 	*/
-	public CPDefinitionAvailabilityRange fetchByUuid_Last(
-		java.lang.String uuid,
+	public CPDefinitionAvailabilityRange fetchByUuid_Last(String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<CPDefinitionAvailabilityRange> orderByComparator);
 
 	/**
@@ -160,7 +155,7 @@ public interface CPDefinitionAvailabilityRangePersistence
 	* @throws NoSuchCPDefinitionAvailabilityRangeException if a cp definition availability range with the primary key could not be found
 	*/
 	public CPDefinitionAvailabilityRange[] findByUuid_PrevAndNext(
-		long CPDefinitionAvailabilityRangeId, java.lang.String uuid,
+		long CPDefinitionAvailabilityRangeId, String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<CPDefinitionAvailabilityRange> orderByComparator)
 		throws NoSuchCPDefinitionAvailabilityRangeException;
 
@@ -169,7 +164,7 @@ public interface CPDefinitionAvailabilityRangePersistence
 	*
 	* @param uuid the uuid
 	*/
-	public void removeByUuid(java.lang.String uuid);
+	public void removeByUuid(String uuid);
 
 	/**
 	* Returns the number of cp definition availability ranges where uuid = &#63;.
@@ -177,7 +172,7 @@ public interface CPDefinitionAvailabilityRangePersistence
 	* @param uuid the uuid
 	* @return the number of matching cp definition availability ranges
 	*/
-	public int countByUuid(java.lang.String uuid);
+	public int countByUuid(String uuid);
 
 	/**
 	* Returns the cp definition availability range where uuid = &#63; and groupId = &#63; or throws a {@link NoSuchCPDefinitionAvailabilityRangeException} if it could not be found.
@@ -187,8 +182,8 @@ public interface CPDefinitionAvailabilityRangePersistence
 	* @return the matching cp definition availability range
 	* @throws NoSuchCPDefinitionAvailabilityRangeException if a matching cp definition availability range could not be found
 	*/
-	public CPDefinitionAvailabilityRange findByUUID_G(java.lang.String uuid,
-		long groupId) throws NoSuchCPDefinitionAvailabilityRangeException;
+	public CPDefinitionAvailabilityRange findByUUID_G(String uuid, long groupId)
+		throws NoSuchCPDefinitionAvailabilityRangeException;
 
 	/**
 	* Returns the cp definition availability range where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
@@ -197,8 +192,7 @@ public interface CPDefinitionAvailabilityRangePersistence
 	* @param groupId the group ID
 	* @return the matching cp definition availability range, or <code>null</code> if a matching cp definition availability range could not be found
 	*/
-	public CPDefinitionAvailabilityRange fetchByUUID_G(java.lang.String uuid,
-		long groupId);
+	public CPDefinitionAvailabilityRange fetchByUUID_G(String uuid, long groupId);
 
 	/**
 	* Returns the cp definition availability range where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -208,7 +202,7 @@ public interface CPDefinitionAvailabilityRangePersistence
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching cp definition availability range, or <code>null</code> if a matching cp definition availability range could not be found
 	*/
-	public CPDefinitionAvailabilityRange fetchByUUID_G(java.lang.String uuid,
+	public CPDefinitionAvailabilityRange fetchByUUID_G(String uuid,
 		long groupId, boolean retrieveFromCache);
 
 	/**
@@ -218,7 +212,7 @@ public interface CPDefinitionAvailabilityRangePersistence
 	* @param groupId the group ID
 	* @return the cp definition availability range that was removed
 	*/
-	public CPDefinitionAvailabilityRange removeByUUID_G(java.lang.String uuid,
+	public CPDefinitionAvailabilityRange removeByUUID_G(String uuid,
 		long groupId) throws NoSuchCPDefinitionAvailabilityRangeException;
 
 	/**
@@ -228,7 +222,7 @@ public interface CPDefinitionAvailabilityRangePersistence
 	* @param groupId the group ID
 	* @return the number of matching cp definition availability ranges
 	*/
-	public int countByUUID_G(java.lang.String uuid, long groupId);
+	public int countByUUID_G(String uuid, long groupId);
 
 	/**
 	* Returns all the cp definition availability ranges where uuid = &#63; and companyId = &#63;.
@@ -238,7 +232,7 @@ public interface CPDefinitionAvailabilityRangePersistence
 	* @return the matching cp definition availability ranges
 	*/
 	public java.util.List<CPDefinitionAvailabilityRange> findByUuid_C(
-		java.lang.String uuid, long companyId);
+		String uuid, long companyId);
 
 	/**
 	* Returns a range of all the cp definition availability ranges where uuid = &#63; and companyId = &#63;.
@@ -254,7 +248,7 @@ public interface CPDefinitionAvailabilityRangePersistence
 	* @return the range of matching cp definition availability ranges
 	*/
 	public java.util.List<CPDefinitionAvailabilityRange> findByUuid_C(
-		java.lang.String uuid, long companyId, int start, int end);
+		String uuid, long companyId, int start, int end);
 
 	/**
 	* Returns an ordered range of all the cp definition availability ranges where uuid = &#63; and companyId = &#63;.
@@ -271,7 +265,7 @@ public interface CPDefinitionAvailabilityRangePersistence
 	* @return the ordered range of matching cp definition availability ranges
 	*/
 	public java.util.List<CPDefinitionAvailabilityRange> findByUuid_C(
-		java.lang.String uuid, long companyId, int start, int end,
+		String uuid, long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<CPDefinitionAvailabilityRange> orderByComparator);
 
 	/**
@@ -290,7 +284,7 @@ public interface CPDefinitionAvailabilityRangePersistence
 	* @return the ordered range of matching cp definition availability ranges
 	*/
 	public java.util.List<CPDefinitionAvailabilityRange> findByUuid_C(
-		java.lang.String uuid, long companyId, int start, int end,
+		String uuid, long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<CPDefinitionAvailabilityRange> orderByComparator,
 		boolean retrieveFromCache);
 
@@ -303,8 +297,8 @@ public interface CPDefinitionAvailabilityRangePersistence
 	* @return the first matching cp definition availability range
 	* @throws NoSuchCPDefinitionAvailabilityRangeException if a matching cp definition availability range could not be found
 	*/
-	public CPDefinitionAvailabilityRange findByUuid_C_First(
-		java.lang.String uuid, long companyId,
+	public CPDefinitionAvailabilityRange findByUuid_C_First(String uuid,
+		long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<CPDefinitionAvailabilityRange> orderByComparator)
 		throws NoSuchCPDefinitionAvailabilityRangeException;
 
@@ -316,8 +310,8 @@ public interface CPDefinitionAvailabilityRangePersistence
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching cp definition availability range, or <code>null</code> if a matching cp definition availability range could not be found
 	*/
-	public CPDefinitionAvailabilityRange fetchByUuid_C_First(
-		java.lang.String uuid, long companyId,
+	public CPDefinitionAvailabilityRange fetchByUuid_C_First(String uuid,
+		long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<CPDefinitionAvailabilityRange> orderByComparator);
 
 	/**
@@ -329,8 +323,8 @@ public interface CPDefinitionAvailabilityRangePersistence
 	* @return the last matching cp definition availability range
 	* @throws NoSuchCPDefinitionAvailabilityRangeException if a matching cp definition availability range could not be found
 	*/
-	public CPDefinitionAvailabilityRange findByUuid_C_Last(
-		java.lang.String uuid, long companyId,
+	public CPDefinitionAvailabilityRange findByUuid_C_Last(String uuid,
+		long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<CPDefinitionAvailabilityRange> orderByComparator)
 		throws NoSuchCPDefinitionAvailabilityRangeException;
 
@@ -342,8 +336,8 @@ public interface CPDefinitionAvailabilityRangePersistence
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching cp definition availability range, or <code>null</code> if a matching cp definition availability range could not be found
 	*/
-	public CPDefinitionAvailabilityRange fetchByUuid_C_Last(
-		java.lang.String uuid, long companyId,
+	public CPDefinitionAvailabilityRange fetchByUuid_C_Last(String uuid,
+		long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<CPDefinitionAvailabilityRange> orderByComparator);
 
 	/**
@@ -357,8 +351,7 @@ public interface CPDefinitionAvailabilityRangePersistence
 	* @throws NoSuchCPDefinitionAvailabilityRangeException if a cp definition availability range with the primary key could not be found
 	*/
 	public CPDefinitionAvailabilityRange[] findByUuid_C_PrevAndNext(
-		long CPDefinitionAvailabilityRangeId, java.lang.String uuid,
-		long companyId,
+		long CPDefinitionAvailabilityRangeId, String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<CPDefinitionAvailabilityRange> orderByComparator)
 		throws NoSuchCPDefinitionAvailabilityRangeException;
 
@@ -368,7 +361,7 @@ public interface CPDefinitionAvailabilityRangePersistence
 	* @param uuid the uuid
 	* @param companyId the company ID
 	*/
-	public void removeByUuid_C(java.lang.String uuid, long companyId);
+	public void removeByUuid_C(String uuid, long companyId);
 
 	/**
 	* Returns the number of cp definition availability ranges where uuid = &#63; and companyId = &#63;.
@@ -377,7 +370,7 @@ public interface CPDefinitionAvailabilityRangePersistence
 	* @param companyId the company ID
 	* @return the number of matching cp definition availability ranges
 	*/
-	public int countByUuid_C(java.lang.String uuid, long companyId);
+	public int countByUuid_C(String uuid, long companyId);
 
 	/**
 	* Returns the cp definition availability range where CPDefinitionId = &#63; or throws a {@link NoSuchCPDefinitionAvailabilityRangeException} if it could not be found.
@@ -697,5 +690,5 @@ public interface CPDefinitionAvailabilityRangePersistence
 	public int countAll();
 
 	@Override
-	public java.util.Set<java.lang.String> getBadColumnNames();
+	public java.util.Set<String> getBadColumnNames();
 }

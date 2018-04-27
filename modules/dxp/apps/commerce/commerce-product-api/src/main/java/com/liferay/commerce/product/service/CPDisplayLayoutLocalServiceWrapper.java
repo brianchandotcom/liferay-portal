@@ -36,7 +36,7 @@ public class CPDisplayLayoutLocalServiceWrapper
 
 	@Override
 	public com.liferay.commerce.product.model.CPDisplayLayout addCPDisplayLayout(
-		java.lang.Class<?> clazz, long classPK, java.lang.String layoutUuid,
+		Class<?> clazz, long classPK, String layoutUuid,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext) {
 		return _cpDisplayLayoutLocalService.addCPDisplayLayout(clazz, classPK,
 			layoutUuid, serviceContext);
@@ -67,7 +67,7 @@ public class CPDisplayLayoutLocalServiceWrapper
 	}
 
 	@Override
-	public void deleteCPDisplayLayout(java.lang.Class<?> clazz, long classPK) {
+	public void deleteCPDisplayLayout(Class<?> clazz, long classPK) {
 		_cpDisplayLayoutLocalService.deleteCPDisplayLayout(clazz, classPK);
 	}
 
@@ -195,7 +195,7 @@ public class CPDisplayLayoutLocalServiceWrapper
 
 	@Override
 	public com.liferay.commerce.product.model.CPDisplayLayout fetchCPDisplayLayout(
-		java.lang.Class<?> clazz, long classPK) {
+		Class<?> clazz, long classPK) {
 		return _cpDisplayLayoutLocalService.fetchCPDisplayLayout(clazz, classPK);
 	}
 
@@ -214,7 +214,7 @@ public class CPDisplayLayoutLocalServiceWrapper
 	*/
 	@Override
 	public com.liferay.commerce.product.model.CPDisplayLayout fetchCPDisplayLayoutByUuidAndGroupId(
-		java.lang.String uuid, long groupId) {
+		String uuid, long groupId) {
 		return _cpDisplayLayoutLocalService.fetchCPDisplayLayoutByUuidAndGroupId(uuid,
 			groupId);
 	}
@@ -248,7 +248,7 @@ public class CPDisplayLayoutLocalServiceWrapper
 	*/
 	@Override
 	public com.liferay.commerce.product.model.CPDisplayLayout getCPDisplayLayoutByUuidAndGroupId(
-		java.lang.String uuid, long groupId)
+		String uuid, long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _cpDisplayLayoutLocalService.getCPDisplayLayoutByUuidAndGroupId(uuid,
 			groupId);
@@ -280,7 +280,7 @@ public class CPDisplayLayoutLocalServiceWrapper
 	*/
 	@Override
 	public java.util.List<com.liferay.commerce.product.model.CPDisplayLayout> getCPDisplayLayoutsByUuidAndCompanyId(
-		java.lang.String uuid, long companyId) {
+		String uuid, long companyId) {
 		return _cpDisplayLayoutLocalService.getCPDisplayLayoutsByUuidAndCompanyId(uuid,
 			companyId);
 	}
@@ -297,7 +297,7 @@ public class CPDisplayLayoutLocalServiceWrapper
 	*/
 	@Override
 	public java.util.List<com.liferay.commerce.product.model.CPDisplayLayout> getCPDisplayLayoutsByUuidAndCompanyId(
-		java.lang.String uuid, long companyId, int start, int end,
+		String uuid, long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.product.model.CPDisplayLayout> orderByComparator) {
 		return _cpDisplayLayoutLocalService.getCPDisplayLayoutsByUuidAndCompanyId(uuid,
 			companyId, start, end, orderByComparator);
@@ -330,7 +330,7 @@ public class CPDisplayLayoutLocalServiceWrapper
 	* @return the OSGi service identifier
 	*/
 	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
+	public String getOSGiServiceIdentifier() {
 		return _cpDisplayLayoutLocalService.getOSGiServiceIdentifier();
 	}
 

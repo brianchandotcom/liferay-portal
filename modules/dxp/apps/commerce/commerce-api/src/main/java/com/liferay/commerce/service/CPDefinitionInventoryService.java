@@ -54,12 +54,12 @@ public interface CPDefinitionInventoryService extends BaseService {
 	 * Never modify or reference this interface directly. Always use {@link CPDefinitionInventoryServiceUtil} to access the cp definition inventory remote service. Add custom service methods to {@link com.liferay.commerce.service.impl.CPDefinitionInventoryServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	public CPDefinitionInventory addCPDefinitionInventory(long cpDefinitionId,
-		java.lang.String cpDefinitionInventoryEngine,
-		java.lang.String lowStockActivity, boolean displayAvailability,
-		boolean displayStockQuantity, int minStockQuantity, boolean backOrders,
-		int minOrderQuantity, int maxOrderQuantity,
-		java.lang.String allowedOrderQuantities, int multipleOrderQuantity,
-		ServiceContext serviceContext) throws PortalException;
+		String cpDefinitionInventoryEngine, String lowStockActivity,
+		boolean displayAvailability, boolean displayStockQuantity,
+		int minStockQuantity, boolean backOrders, int minOrderQuantity,
+		int maxOrderQuantity, String allowedOrderQuantities,
+		int multipleOrderQuantity, ServiceContext serviceContext)
+		throws PortalException;
 
 	public void deleteCPDefinitionInventory(long cpDefinitionInventoryId)
 		throws PortalException;
@@ -77,14 +77,13 @@ public interface CPDefinitionInventoryService extends BaseService {
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	public CPDefinitionInventory updateCPDefinitionInventory(
-		long cpDefinitionInventoryId,
-		java.lang.String cpDefinitionInventoryEngine,
-		java.lang.String lowStockActivity, boolean displayAvailability,
+		long cpDefinitionInventoryId, String cpDefinitionInventoryEngine,
+		String lowStockActivity, boolean displayAvailability,
 		boolean displayStockQuantity, int minStockQuantity, boolean backOrders,
 		int minOrderQuantity, int maxOrderQuantity,
-		java.lang.String allowedOrderQuantities, int multipleOrderQuantity,
+		String allowedOrderQuantities, int multipleOrderQuantity,
 		ServiceContext serviceContext) throws PortalException;
 }

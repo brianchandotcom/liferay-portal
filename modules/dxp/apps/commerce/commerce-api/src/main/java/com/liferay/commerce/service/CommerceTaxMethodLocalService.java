@@ -74,11 +74,10 @@ public interface CommerceTaxMethodLocalService extends BaseLocalService,
 	public CommerceTaxMethod addCommerceTaxMethod(
 		CommerceTaxMethod commerceTaxMethod);
 
-	public CommerceTaxMethod addCommerceTaxMethod(
-		Map<Locale, java.lang.String> nameMap,
-		Map<Locale, java.lang.String> descriptionMap,
-		java.lang.String engineKey, boolean percentage, boolean active,
-		ServiceContext serviceContext) throws PortalException;
+	public CommerceTaxMethod addCommerceTaxMethod(Map<Locale, String> nameMap,
+		Map<Locale, String> descriptionMap, String engineKey,
+		boolean percentage, boolean active, ServiceContext serviceContext)
+		throws PortalException;
 
 	/**
 	* Creates a new commerce tax method with the primary key. Does not add the commerce tax method to the database.
@@ -184,7 +183,7 @@ public interface CommerceTaxMethodLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CommerceTaxMethod fetchCommerceTaxMethod(long groupId,
-		java.lang.String engineKey);
+		String engineKey);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
@@ -240,7 +239,7 @@ public interface CommerceTaxMethodLocalService extends BaseLocalService,
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -261,7 +260,6 @@ public interface CommerceTaxMethodLocalService extends BaseLocalService,
 		CommerceTaxMethod commerceTaxMethod);
 
 	public CommerceTaxMethod updateCommerceTaxMethod(long commerceTaxMethodId,
-		Map<Locale, java.lang.String> nameMap,
-		Map<Locale, java.lang.String> descriptionMap, boolean percentage,
-		boolean active) throws PortalException;
+		Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
+		boolean percentage, boolean active) throws PortalException;
 }

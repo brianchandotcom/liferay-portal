@@ -150,7 +150,7 @@ public class CommerceTaxMethodWrapper implements CommerceTaxMethod,
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new CommerceTaxMethodWrapper((CommerceTaxMethod)_commerceTaxMethod.clone());
 	}
 
@@ -170,7 +170,7 @@ public class CommerceTaxMethodWrapper implements CommerceTaxMethod,
 	}
 
 	@Override
-	public java.lang.String[] getAvailableLanguageIds() {
+	public String[] getAvailableLanguageIds() {
 		return _commerceTaxMethod.getAvailableLanguageIds();
 	}
 
@@ -205,7 +205,7 @@ public class CommerceTaxMethodWrapper implements CommerceTaxMethod,
 	}
 
 	@Override
-	public java.lang.String getDefaultLanguageId() {
+	public String getDefaultLanguageId() {
 		return _commerceTaxMethod.getDefaultLanguageId();
 	}
 
@@ -215,7 +215,7 @@ public class CommerceTaxMethodWrapper implements CommerceTaxMethod,
 	* @return the description of this commerce tax method
 	*/
 	@Override
-	public java.lang.String getDescription() {
+	public String getDescription() {
 		return _commerceTaxMethod.getDescription();
 	}
 
@@ -226,7 +226,7 @@ public class CommerceTaxMethodWrapper implements CommerceTaxMethod,
 	* @return the localized description of this commerce tax method
 	*/
 	@Override
-	public java.lang.String getDescription(java.util.Locale locale) {
+	public String getDescription(java.util.Locale locale) {
 		return _commerceTaxMethod.getDescription(locale);
 	}
 
@@ -238,8 +238,7 @@ public class CommerceTaxMethodWrapper implements CommerceTaxMethod,
 	* @return the localized description of this commerce tax method. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
 	*/
 	@Override
-	public java.lang.String getDescription(java.util.Locale locale,
-		boolean useDefault) {
+	public String getDescription(java.util.Locale locale, boolean useDefault) {
 		return _commerceTaxMethod.getDescription(locale, useDefault);
 	}
 
@@ -250,7 +249,7 @@ public class CommerceTaxMethodWrapper implements CommerceTaxMethod,
 	* @return the localized description of this commerce tax method
 	*/
 	@Override
-	public java.lang.String getDescription(java.lang.String languageId) {
+	public String getDescription(String languageId) {
 		return _commerceTaxMethod.getDescription(languageId);
 	}
 
@@ -262,18 +261,17 @@ public class CommerceTaxMethodWrapper implements CommerceTaxMethod,
 	* @return the localized description of this commerce tax method
 	*/
 	@Override
-	public java.lang.String getDescription(java.lang.String languageId,
-		boolean useDefault) {
+	public String getDescription(String languageId, boolean useDefault) {
 		return _commerceTaxMethod.getDescription(languageId, useDefault);
 	}
 
 	@Override
-	public java.lang.String getDescriptionCurrentLanguageId() {
+	public String getDescriptionCurrentLanguageId() {
 		return _commerceTaxMethod.getDescriptionCurrentLanguageId();
 	}
 
 	@Override
-	public java.lang.String getDescriptionCurrentValue() {
+	public String getDescriptionCurrentValue() {
 		return _commerceTaxMethod.getDescriptionCurrentValue();
 	}
 
@@ -283,7 +281,7 @@ public class CommerceTaxMethodWrapper implements CommerceTaxMethod,
 	* @return the locales and localized descriptions of this commerce tax method
 	*/
 	@Override
-	public Map<java.util.Locale, java.lang.String> getDescriptionMap() {
+	public Map<java.util.Locale, String> getDescriptionMap() {
 		return _commerceTaxMethod.getDescriptionMap();
 	}
 
@@ -293,7 +291,7 @@ public class CommerceTaxMethodWrapper implements CommerceTaxMethod,
 	* @return the engine key of this commerce tax method
 	*/
 	@Override
-	public java.lang.String getEngineKey() {
+	public String getEngineKey() {
 		return _commerceTaxMethod.getEngineKey();
 	}
 
@@ -328,7 +326,7 @@ public class CommerceTaxMethodWrapper implements CommerceTaxMethod,
 	* @return the name of this commerce tax method
 	*/
 	@Override
-	public java.lang.String getName() {
+	public String getName() {
 		return _commerceTaxMethod.getName();
 	}
 
@@ -339,7 +337,7 @@ public class CommerceTaxMethodWrapper implements CommerceTaxMethod,
 	* @return the localized name of this commerce tax method
 	*/
 	@Override
-	public java.lang.String getName(java.util.Locale locale) {
+	public String getName(java.util.Locale locale) {
 		return _commerceTaxMethod.getName(locale);
 	}
 
@@ -351,7 +349,7 @@ public class CommerceTaxMethodWrapper implements CommerceTaxMethod,
 	* @return the localized name of this commerce tax method. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
 	*/
 	@Override
-	public java.lang.String getName(java.util.Locale locale, boolean useDefault) {
+	public String getName(java.util.Locale locale, boolean useDefault) {
 		return _commerceTaxMethod.getName(locale, useDefault);
 	}
 
@@ -362,7 +360,7 @@ public class CommerceTaxMethodWrapper implements CommerceTaxMethod,
 	* @return the localized name of this commerce tax method
 	*/
 	@Override
-	public java.lang.String getName(java.lang.String languageId) {
+	public String getName(String languageId) {
 		return _commerceTaxMethod.getName(languageId);
 	}
 
@@ -374,18 +372,17 @@ public class CommerceTaxMethodWrapper implements CommerceTaxMethod,
 	* @return the localized name of this commerce tax method
 	*/
 	@Override
-	public java.lang.String getName(java.lang.String languageId,
-		boolean useDefault) {
+	public String getName(String languageId, boolean useDefault) {
 		return _commerceTaxMethod.getName(languageId, useDefault);
 	}
 
 	@Override
-	public java.lang.String getNameCurrentLanguageId() {
+	public String getNameCurrentLanguageId() {
 		return _commerceTaxMethod.getNameCurrentLanguageId();
 	}
 
 	@Override
-	public java.lang.String getNameCurrentValue() {
+	public String getNameCurrentValue() {
 		return _commerceTaxMethod.getNameCurrentValue();
 	}
 
@@ -395,7 +392,7 @@ public class CommerceTaxMethodWrapper implements CommerceTaxMethod,
 	* @return the locales and localized names of this commerce tax method
 	*/
 	@Override
-	public Map<java.util.Locale, java.lang.String> getNameMap() {
+	public Map<java.util.Locale, String> getNameMap() {
 		return _commerceTaxMethod.getNameMap();
 	}
 
@@ -440,7 +437,7 @@ public class CommerceTaxMethodWrapper implements CommerceTaxMethod,
 	* @return the user name of this commerce tax method
 	*/
 	@Override
-	public java.lang.String getUserName() {
+	public String getUserName() {
 		return _commerceTaxMethod.getUserName();
 	}
 
@@ -450,7 +447,7 @@ public class CommerceTaxMethodWrapper implements CommerceTaxMethod,
 	* @return the user uuid of this commerce tax method
 	*/
 	@Override
-	public java.lang.String getUserUuid() {
+	public String getUserUuid() {
 		return _commerceTaxMethod.getUserUuid();
 	}
 
@@ -563,7 +560,7 @@ public class CommerceTaxMethodWrapper implements CommerceTaxMethod,
 	* @param description the description of this commerce tax method
 	*/
 	@Override
-	public void setDescription(java.lang.String description) {
+	public void setDescription(String description) {
 		_commerceTaxMethod.setDescription(description);
 	}
 
@@ -574,8 +571,7 @@ public class CommerceTaxMethodWrapper implements CommerceTaxMethod,
 	* @param locale the locale of the language
 	*/
 	@Override
-	public void setDescription(java.lang.String description,
-		java.util.Locale locale) {
+	public void setDescription(String description, java.util.Locale locale) {
 		_commerceTaxMethod.setDescription(description, locale);
 	}
 
@@ -587,13 +583,13 @@ public class CommerceTaxMethodWrapper implements CommerceTaxMethod,
 	* @param defaultLocale the default locale
 	*/
 	@Override
-	public void setDescription(java.lang.String description,
-		java.util.Locale locale, java.util.Locale defaultLocale) {
+	public void setDescription(String description, java.util.Locale locale,
+		java.util.Locale defaultLocale) {
 		_commerceTaxMethod.setDescription(description, locale, defaultLocale);
 	}
 
 	@Override
-	public void setDescriptionCurrentLanguageId(java.lang.String languageId) {
+	public void setDescriptionCurrentLanguageId(String languageId) {
 		_commerceTaxMethod.setDescriptionCurrentLanguageId(languageId);
 	}
 
@@ -603,8 +599,7 @@ public class CommerceTaxMethodWrapper implements CommerceTaxMethod,
 	* @param descriptionMap the locales and localized descriptions of this commerce tax method
 	*/
 	@Override
-	public void setDescriptionMap(
-		Map<java.util.Locale, java.lang.String> descriptionMap) {
+	public void setDescriptionMap(Map<java.util.Locale, String> descriptionMap) {
 		_commerceTaxMethod.setDescriptionMap(descriptionMap);
 	}
 
@@ -616,7 +611,7 @@ public class CommerceTaxMethodWrapper implements CommerceTaxMethod,
 	*/
 	@Override
 	public void setDescriptionMap(
-		Map<java.util.Locale, java.lang.String> descriptionMap,
+		Map<java.util.Locale, String> descriptionMap,
 		java.util.Locale defaultLocale) {
 		_commerceTaxMethod.setDescriptionMap(descriptionMap, defaultLocale);
 	}
@@ -627,7 +622,7 @@ public class CommerceTaxMethodWrapper implements CommerceTaxMethod,
 	* @param engineKey the engine key of this commerce tax method
 	*/
 	@Override
-	public void setEngineKey(java.lang.String engineKey) {
+	public void setEngineKey(String engineKey) {
 		_commerceTaxMethod.setEngineKey(engineKey);
 	}
 
@@ -673,7 +668,7 @@ public class CommerceTaxMethodWrapper implements CommerceTaxMethod,
 	* @param name the name of this commerce tax method
 	*/
 	@Override
-	public void setName(java.lang.String name) {
+	public void setName(String name) {
 		_commerceTaxMethod.setName(name);
 	}
 
@@ -684,7 +679,7 @@ public class CommerceTaxMethodWrapper implements CommerceTaxMethod,
 	* @param locale the locale of the language
 	*/
 	@Override
-	public void setName(java.lang.String name, java.util.Locale locale) {
+	public void setName(String name, java.util.Locale locale) {
 		_commerceTaxMethod.setName(name, locale);
 	}
 
@@ -696,13 +691,13 @@ public class CommerceTaxMethodWrapper implements CommerceTaxMethod,
 	* @param defaultLocale the default locale
 	*/
 	@Override
-	public void setName(java.lang.String name, java.util.Locale locale,
+	public void setName(String name, java.util.Locale locale,
 		java.util.Locale defaultLocale) {
 		_commerceTaxMethod.setName(name, locale, defaultLocale);
 	}
 
 	@Override
-	public void setNameCurrentLanguageId(java.lang.String languageId) {
+	public void setNameCurrentLanguageId(String languageId) {
 		_commerceTaxMethod.setNameCurrentLanguageId(languageId);
 	}
 
@@ -712,7 +707,7 @@ public class CommerceTaxMethodWrapper implements CommerceTaxMethod,
 	* @param nameMap the locales and localized names of this commerce tax method
 	*/
 	@Override
-	public void setNameMap(Map<java.util.Locale, java.lang.String> nameMap) {
+	public void setNameMap(Map<java.util.Locale, String> nameMap) {
 		_commerceTaxMethod.setNameMap(nameMap);
 	}
 
@@ -723,7 +718,7 @@ public class CommerceTaxMethodWrapper implements CommerceTaxMethod,
 	* @param defaultLocale the default locale
 	*/
 	@Override
-	public void setNameMap(Map<java.util.Locale, java.lang.String> nameMap,
+	public void setNameMap(Map<java.util.Locale, String> nameMap,
 		java.util.Locale defaultLocale) {
 		_commerceTaxMethod.setNameMap(nameMap, defaultLocale);
 	}
@@ -774,7 +769,7 @@ public class CommerceTaxMethodWrapper implements CommerceTaxMethod,
 	* @param userName the user name of this commerce tax method
 	*/
 	@Override
-	public void setUserName(java.lang.String userName) {
+	public void setUserName(String userName) {
 		_commerceTaxMethod.setUserName(userName);
 	}
 
@@ -784,7 +779,7 @@ public class CommerceTaxMethodWrapper implements CommerceTaxMethod,
 	* @param userUuid the user uuid of this commerce tax method
 	*/
 	@Override
-	public void setUserUuid(java.lang.String userUuid) {
+	public void setUserUuid(String userUuid) {
 		_commerceTaxMethod.setUserUuid(userUuid);
 	}
 
@@ -799,7 +794,7 @@ public class CommerceTaxMethodWrapper implements CommerceTaxMethod,
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _commerceTaxMethod.toString();
 	}
 
@@ -809,7 +804,7 @@ public class CommerceTaxMethodWrapper implements CommerceTaxMethod,
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _commerceTaxMethod.toXmlString();
 	}
 

@@ -36,7 +36,7 @@ public class CommerceOrderServiceWrapper implements CommerceOrderService,
 	@Override
 	public com.liferay.commerce.model.CommerceOrder addOrganizationCommerceOrder(
 		long groupId, long siteGroupId, long orderOrganizationId,
-		long shippingAddressId, java.lang.String purchaseOrderNumber)
+		long shippingAddressId, String purchaseOrderNumber)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _commerceOrderService.addOrganizationCommerceOrder(groupId,
 			siteGroupId, orderOrganizationId, shippingAddressId,
@@ -99,8 +99,8 @@ public class CommerceOrderServiceWrapper implements CommerceOrderService,
 
 	@Override
 	public com.liferay.commerce.model.CommerceOrder executeWorkflowTransition(
-		long commerceOrderId, long workflowTaskId,
-		java.lang.String transitionName, java.lang.String comment)
+		long commerceOrderId, long workflowTaskId, String transitionName,
+		String comment)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _commerceOrderService.executeWorkflowTransition(commerceOrderId,
 			workflowTaskId, transitionName, comment);
@@ -122,7 +122,7 @@ public class CommerceOrderServiceWrapper implements CommerceOrderService,
 
 	@Override
 	public com.liferay.commerce.model.CommerceOrder fetchCommerceOrder(
-		java.lang.String uuid, long groupId)
+		String uuid, long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _commerceOrderService.fetchCommerceOrder(uuid, groupId);
 	}
@@ -142,7 +142,7 @@ public class CommerceOrderServiceWrapper implements CommerceOrderService,
 
 	@Override
 	public com.liferay.commerce.model.CommerceOrder getCommerceOrderByUuidAndGroupId(
-		java.lang.String uuid, long groupId)
+		String uuid, long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _commerceOrderService.getCommerceOrderByUuidAndGroupId(uuid,
 			groupId);
@@ -169,7 +169,7 @@ public class CommerceOrderServiceWrapper implements CommerceOrderService,
 	* @return the OSGi service identifier
 	*/
 	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
+	public String getOSGiServiceIdentifier() {
 		return _commerceOrderService.getOSGiServiceIdentifier();
 	}
 
@@ -190,7 +190,7 @@ public class CommerceOrderServiceWrapper implements CommerceOrderService,
 	}
 
 	@Override
-	public java.lang.String startCommerceOrderPayment(long commerceOrderId,
+	public String startCommerceOrderPayment(long commerceOrderId,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _commerceOrderService.startCommerceOrderPayment(commerceOrderId,
@@ -206,11 +206,9 @@ public class CommerceOrderServiceWrapper implements CommerceOrderService,
 
 	@Override
 	public com.liferay.commerce.model.CommerceOrder updateBillingAddress(
-		long commerceOrderId, java.lang.String name,
-		java.lang.String description, java.lang.String street1,
-		java.lang.String street2, java.lang.String street3,
-		java.lang.String city, java.lang.String zip, long commerceRegionId,
-		long commerceCountryId, java.lang.String phoneNumber,
+		long commerceOrderId, String name, String description, String street1,
+		String street2, String street3, String city, String zip,
+		long commerceRegionId, long commerceCountryId, String phoneNumber,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _commerceOrderService.updateBillingAddress(commerceOrderId,
@@ -222,10 +220,9 @@ public class CommerceOrderServiceWrapper implements CommerceOrderService,
 	public com.liferay.commerce.model.CommerceOrder updateCommerceOrder(
 		long commerceOrderId, long billingAddressId, long shippingAddressId,
 		long commercePaymentMethodId, long commerceShippingMethodId,
-		java.lang.String shippingOptionName,
-		java.lang.String purchaseOrderNumber, java.math.BigDecimal subtotal,
-		java.math.BigDecimal shippingPrice, java.math.BigDecimal total,
-		java.lang.String advanceStatus)
+		String shippingOptionName, String purchaseOrderNumber,
+		java.math.BigDecimal subtotal, java.math.BigDecimal shippingPrice,
+		java.math.BigDecimal total, String advanceStatus)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _commerceOrderService.updateCommerceOrder(commerceOrderId,
 			billingAddressId, shippingAddressId, commercePaymentMethodId,
@@ -252,7 +249,7 @@ public class CommerceOrderServiceWrapper implements CommerceOrderService,
 
 	@Override
 	public com.liferay.commerce.model.CommerceOrder updatePurchaseOrderNumber(
-		long commerceOrderId, java.lang.String purchaseOrderNumber)
+		long commerceOrderId, String purchaseOrderNumber)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _commerceOrderService.updatePurchaseOrderNumber(commerceOrderId,
 			purchaseOrderNumber);
@@ -260,11 +257,9 @@ public class CommerceOrderServiceWrapper implements CommerceOrderService,
 
 	@Override
 	public com.liferay.commerce.model.CommerceOrder updateShippingAddress(
-		long commerceOrderId, java.lang.String name,
-		java.lang.String description, java.lang.String street1,
-		java.lang.String street2, java.lang.String street3,
-		java.lang.String city, java.lang.String zip, long commerceRegionId,
-		long commerceCountryId, java.lang.String phoneNumber,
+		long commerceOrderId, String name, String description, String street1,
+		String street2, String street3, String city, String zip,
+		long commerceRegionId, long commerceCountryId, String phoneNumber,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _commerceOrderService.updateShippingAddress(commerceOrderId,

@@ -56,8 +56,8 @@ public interface CommerceOrderNoteService extends BaseService {
 	 * Never modify or reference this interface directly. Always use {@link CommerceOrderNoteServiceUtil} to access the commerce order note remote service. Add custom service methods to {@link com.liferay.commerce.service.impl.CommerceOrderNoteServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	public CommerceOrderNote addCommerceOrderNote(long commerceOrderId,
-		java.lang.String content, boolean restricted,
-		ServiceContext serviceContext) throws PortalException;
+		String content, boolean restricted, ServiceContext serviceContext)
+		throws PortalException;
 
 	public void deleteCommerceOrderNote(long commerceOrderNoteId)
 		throws PortalException;
@@ -87,8 +87,8 @@ public interface CommerceOrderNoteService extends BaseService {
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	public CommerceOrderNote updateCommerceOrderNote(long commerceOrderNoteId,
-		java.lang.String content, boolean restricted) throws PortalException;
+		String content, boolean restricted) throws PortalException;
 }

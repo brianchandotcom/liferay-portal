@@ -35,11 +35,11 @@ public class CommerceCountryServiceWrapper implements CommerceCountryService,
 
 	@Override
 	public com.liferay.commerce.model.CommerceCountry addCommerceCountry(
-		java.util.Map<java.util.Locale, java.lang.String> nameMap,
+		java.util.Map<java.util.Locale, String> nameMap,
 		boolean billingAllowed, boolean shippingAllowed,
-		java.lang.String twoLettersISOCode,
-		java.lang.String threeLettersISOCode, int numericISOCode,
-		boolean subjectToVAT, double priority, boolean active,
+		String twoLettersISOCode, String threeLettersISOCode,
+		int numericISOCode, boolean subjectToVAT, double priority,
+		boolean active,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _commerceCountryService.addCommerceCountry(nameMap,
@@ -106,7 +106,7 @@ public class CommerceCountryServiceWrapper implements CommerceCountryService,
 	* @return the OSGi service identifier
 	*/
 	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
+	public String getOSGiServiceIdentifier() {
 		return _commerceCountryService.getOSGiServiceIdentifier();
 	}
 
@@ -135,11 +135,11 @@ public class CommerceCountryServiceWrapper implements CommerceCountryService,
 	@Override
 	public com.liferay.commerce.model.CommerceCountry updateCommerceCountry(
 		long commerceCountryId,
-		java.util.Map<java.util.Locale, java.lang.String> nameMap,
+		java.util.Map<java.util.Locale, String> nameMap,
 		boolean billingAllowed, boolean shippingAllowed,
-		java.lang.String twoLettersISOCode,
-		java.lang.String threeLettersISOCode, int numericISOCode,
-		boolean subjectToVAT, double priority, boolean active,
+		String twoLettersISOCode, String threeLettersISOCode,
+		int numericISOCode, boolean subjectToVAT, double priority,
+		boolean active,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _commerceCountryService.updateCommerceCountry(commerceCountryId,

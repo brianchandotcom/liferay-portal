@@ -119,7 +119,7 @@ public class CommerceWishListUtil {
 	* @param uuid the uuid
 	* @return the matching commerce wish lists
 	*/
-	public static List<CommerceWishList> findByUuid(java.lang.String uuid) {
+	public static List<CommerceWishList> findByUuid(String uuid) {
 		return getPersistence().findByUuid(uuid);
 	}
 
@@ -135,8 +135,8 @@ public class CommerceWishListUtil {
 	* @param end the upper bound of the range of commerce wish lists (not inclusive)
 	* @return the range of matching commerce wish lists
 	*/
-	public static List<CommerceWishList> findByUuid(java.lang.String uuid,
-		int start, int end) {
+	public static List<CommerceWishList> findByUuid(String uuid, int start,
+		int end) {
 		return getPersistence().findByUuid(uuid, start, end);
 	}
 
@@ -153,9 +153,8 @@ public class CommerceWishListUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching commerce wish lists
 	*/
-	public static List<CommerceWishList> findByUuid(java.lang.String uuid,
-		int start, int end,
-		OrderByComparator<CommerceWishList> orderByComparator) {
+	public static List<CommerceWishList> findByUuid(String uuid, int start,
+		int end, OrderByComparator<CommerceWishList> orderByComparator) {
 		return getPersistence().findByUuid(uuid, start, end, orderByComparator);
 	}
 
@@ -173,9 +172,8 @@ public class CommerceWishListUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching commerce wish lists
 	*/
-	public static List<CommerceWishList> findByUuid(java.lang.String uuid,
-		int start, int end,
-		OrderByComparator<CommerceWishList> orderByComparator,
+	public static List<CommerceWishList> findByUuid(String uuid, int start,
+		int end, OrderByComparator<CommerceWishList> orderByComparator,
 		boolean retrieveFromCache) {
 		return getPersistence()
 				   .findByUuid(uuid, start, end, orderByComparator,
@@ -190,7 +188,7 @@ public class CommerceWishListUtil {
 	* @return the first matching commerce wish list
 	* @throws NoSuchWishListException if a matching commerce wish list could not be found
 	*/
-	public static CommerceWishList findByUuid_First(java.lang.String uuid,
+	public static CommerceWishList findByUuid_First(String uuid,
 		OrderByComparator<CommerceWishList> orderByComparator)
 		throws com.liferay.commerce.wish.list.exception.NoSuchWishListException {
 		return getPersistence().findByUuid_First(uuid, orderByComparator);
@@ -203,7 +201,7 @@ public class CommerceWishListUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching commerce wish list, or <code>null</code> if a matching commerce wish list could not be found
 	*/
-	public static CommerceWishList fetchByUuid_First(java.lang.String uuid,
+	public static CommerceWishList fetchByUuid_First(String uuid,
 		OrderByComparator<CommerceWishList> orderByComparator) {
 		return getPersistence().fetchByUuid_First(uuid, orderByComparator);
 	}
@@ -216,7 +214,7 @@ public class CommerceWishListUtil {
 	* @return the last matching commerce wish list
 	* @throws NoSuchWishListException if a matching commerce wish list could not be found
 	*/
-	public static CommerceWishList findByUuid_Last(java.lang.String uuid,
+	public static CommerceWishList findByUuid_Last(String uuid,
 		OrderByComparator<CommerceWishList> orderByComparator)
 		throws com.liferay.commerce.wish.list.exception.NoSuchWishListException {
 		return getPersistence().findByUuid_Last(uuid, orderByComparator);
@@ -229,7 +227,7 @@ public class CommerceWishListUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching commerce wish list, or <code>null</code> if a matching commerce wish list could not be found
 	*/
-	public static CommerceWishList fetchByUuid_Last(java.lang.String uuid,
+	public static CommerceWishList fetchByUuid_Last(String uuid,
 		OrderByComparator<CommerceWishList> orderByComparator) {
 		return getPersistence().fetchByUuid_Last(uuid, orderByComparator);
 	}
@@ -244,7 +242,7 @@ public class CommerceWishListUtil {
 	* @throws NoSuchWishListException if a commerce wish list with the primary key could not be found
 	*/
 	public static CommerceWishList[] findByUuid_PrevAndNext(
-		long commerceWishListId, java.lang.String uuid,
+		long commerceWishListId, String uuid,
 		OrderByComparator<CommerceWishList> orderByComparator)
 		throws com.liferay.commerce.wish.list.exception.NoSuchWishListException {
 		return getPersistence()
@@ -257,7 +255,7 @@ public class CommerceWishListUtil {
 	*
 	* @param uuid the uuid
 	*/
-	public static void removeByUuid(java.lang.String uuid) {
+	public static void removeByUuid(String uuid) {
 		getPersistence().removeByUuid(uuid);
 	}
 
@@ -267,7 +265,7 @@ public class CommerceWishListUtil {
 	* @param uuid the uuid
 	* @return the number of matching commerce wish lists
 	*/
-	public static int countByUuid(java.lang.String uuid) {
+	public static int countByUuid(String uuid) {
 		return getPersistence().countByUuid(uuid);
 	}
 
@@ -279,8 +277,7 @@ public class CommerceWishListUtil {
 	* @return the matching commerce wish list
 	* @throws NoSuchWishListException if a matching commerce wish list could not be found
 	*/
-	public static CommerceWishList findByUUID_G(java.lang.String uuid,
-		long groupId)
+	public static CommerceWishList findByUUID_G(String uuid, long groupId)
 		throws com.liferay.commerce.wish.list.exception.NoSuchWishListException {
 		return getPersistence().findByUUID_G(uuid, groupId);
 	}
@@ -292,8 +289,7 @@ public class CommerceWishListUtil {
 	* @param groupId the group ID
 	* @return the matching commerce wish list, or <code>null</code> if a matching commerce wish list could not be found
 	*/
-	public static CommerceWishList fetchByUUID_G(java.lang.String uuid,
-		long groupId) {
+	public static CommerceWishList fetchByUUID_G(String uuid, long groupId) {
 		return getPersistence().fetchByUUID_G(uuid, groupId);
 	}
 
@@ -305,8 +301,8 @@ public class CommerceWishListUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching commerce wish list, or <code>null</code> if a matching commerce wish list could not be found
 	*/
-	public static CommerceWishList fetchByUUID_G(java.lang.String uuid,
-		long groupId, boolean retrieveFromCache) {
+	public static CommerceWishList fetchByUUID_G(String uuid, long groupId,
+		boolean retrieveFromCache) {
 		return getPersistence().fetchByUUID_G(uuid, groupId, retrieveFromCache);
 	}
 
@@ -317,8 +313,7 @@ public class CommerceWishListUtil {
 	* @param groupId the group ID
 	* @return the commerce wish list that was removed
 	*/
-	public static CommerceWishList removeByUUID_G(java.lang.String uuid,
-		long groupId)
+	public static CommerceWishList removeByUUID_G(String uuid, long groupId)
 		throws com.liferay.commerce.wish.list.exception.NoSuchWishListException {
 		return getPersistence().removeByUUID_G(uuid, groupId);
 	}
@@ -330,7 +325,7 @@ public class CommerceWishListUtil {
 	* @param groupId the group ID
 	* @return the number of matching commerce wish lists
 	*/
-	public static int countByUUID_G(java.lang.String uuid, long groupId) {
+	public static int countByUUID_G(String uuid, long groupId) {
 		return getPersistence().countByUUID_G(uuid, groupId);
 	}
 
@@ -341,7 +336,7 @@ public class CommerceWishListUtil {
 	* @param companyId the company ID
 	* @return the matching commerce wish lists
 	*/
-	public static List<CommerceWishList> findByUuid_C(java.lang.String uuid,
+	public static List<CommerceWishList> findByUuid_C(String uuid,
 		long companyId) {
 		return getPersistence().findByUuid_C(uuid, companyId);
 	}
@@ -359,7 +354,7 @@ public class CommerceWishListUtil {
 	* @param end the upper bound of the range of commerce wish lists (not inclusive)
 	* @return the range of matching commerce wish lists
 	*/
-	public static List<CommerceWishList> findByUuid_C(java.lang.String uuid,
+	public static List<CommerceWishList> findByUuid_C(String uuid,
 		long companyId, int start, int end) {
 		return getPersistence().findByUuid_C(uuid, companyId, start, end);
 	}
@@ -378,7 +373,7 @@ public class CommerceWishListUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching commerce wish lists
 	*/
-	public static List<CommerceWishList> findByUuid_C(java.lang.String uuid,
+	public static List<CommerceWishList> findByUuid_C(String uuid,
 		long companyId, int start, int end,
 		OrderByComparator<CommerceWishList> orderByComparator) {
 		return getPersistence()
@@ -400,7 +395,7 @@ public class CommerceWishListUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching commerce wish lists
 	*/
-	public static List<CommerceWishList> findByUuid_C(java.lang.String uuid,
+	public static List<CommerceWishList> findByUuid_C(String uuid,
 		long companyId, int start, int end,
 		OrderByComparator<CommerceWishList> orderByComparator,
 		boolean retrieveFromCache) {
@@ -418,7 +413,7 @@ public class CommerceWishListUtil {
 	* @return the first matching commerce wish list
 	* @throws NoSuchWishListException if a matching commerce wish list could not be found
 	*/
-	public static CommerceWishList findByUuid_C_First(java.lang.String uuid,
+	public static CommerceWishList findByUuid_C_First(String uuid,
 		long companyId, OrderByComparator<CommerceWishList> orderByComparator)
 		throws com.liferay.commerce.wish.list.exception.NoSuchWishListException {
 		return getPersistence()
@@ -433,7 +428,7 @@ public class CommerceWishListUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching commerce wish list, or <code>null</code> if a matching commerce wish list could not be found
 	*/
-	public static CommerceWishList fetchByUuid_C_First(java.lang.String uuid,
+	public static CommerceWishList fetchByUuid_C_First(String uuid,
 		long companyId, OrderByComparator<CommerceWishList> orderByComparator) {
 		return getPersistence()
 				   .fetchByUuid_C_First(uuid, companyId, orderByComparator);
@@ -448,7 +443,7 @@ public class CommerceWishListUtil {
 	* @return the last matching commerce wish list
 	* @throws NoSuchWishListException if a matching commerce wish list could not be found
 	*/
-	public static CommerceWishList findByUuid_C_Last(java.lang.String uuid,
+	public static CommerceWishList findByUuid_C_Last(String uuid,
 		long companyId, OrderByComparator<CommerceWishList> orderByComparator)
 		throws com.liferay.commerce.wish.list.exception.NoSuchWishListException {
 		return getPersistence()
@@ -463,7 +458,7 @@ public class CommerceWishListUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching commerce wish list, or <code>null</code> if a matching commerce wish list could not be found
 	*/
-	public static CommerceWishList fetchByUuid_C_Last(java.lang.String uuid,
+	public static CommerceWishList fetchByUuid_C_Last(String uuid,
 		long companyId, OrderByComparator<CommerceWishList> orderByComparator) {
 		return getPersistence()
 				   .fetchByUuid_C_Last(uuid, companyId, orderByComparator);
@@ -480,7 +475,7 @@ public class CommerceWishListUtil {
 	* @throws NoSuchWishListException if a commerce wish list with the primary key could not be found
 	*/
 	public static CommerceWishList[] findByUuid_C_PrevAndNext(
-		long commerceWishListId, java.lang.String uuid, long companyId,
+		long commerceWishListId, String uuid, long companyId,
 		OrderByComparator<CommerceWishList> orderByComparator)
 		throws com.liferay.commerce.wish.list.exception.NoSuchWishListException {
 		return getPersistence()
@@ -494,7 +489,7 @@ public class CommerceWishListUtil {
 	* @param uuid the uuid
 	* @param companyId the company ID
 	*/
-	public static void removeByUuid_C(java.lang.String uuid, long companyId) {
+	public static void removeByUuid_C(String uuid, long companyId) {
 		getPersistence().removeByUuid_C(uuid, companyId);
 	}
 
@@ -505,7 +500,7 @@ public class CommerceWishListUtil {
 	* @param companyId the company ID
 	* @return the number of matching commerce wish lists
 	*/
-	public static int countByUuid_C(java.lang.String uuid, long companyId) {
+	public static int countByUuid_C(String uuid, long companyId) {
 		return getPersistence().countByUuid_C(uuid, companyId);
 	}
 
@@ -1520,7 +1515,7 @@ public class CommerceWishListUtil {
 		return getPersistence().countAll();
 	}
 
-	public static java.util.Set<java.lang.String> getBadColumnNames() {
+	public static java.util.Set<String> getBadColumnNames() {
 		return getPersistence().getBadColumnNames();
 	}
 

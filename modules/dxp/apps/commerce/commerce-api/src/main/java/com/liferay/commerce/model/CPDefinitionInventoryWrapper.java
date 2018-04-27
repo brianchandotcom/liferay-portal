@@ -209,7 +209,7 @@ public class CPDefinitionInventoryWrapper implements CPDefinitionInventory,
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new CPDefinitionInventoryWrapper((CPDefinitionInventory)_cpDefinitionInventory.clone());
 	}
 
@@ -224,7 +224,7 @@ public class CPDefinitionInventoryWrapper implements CPDefinitionInventory,
 	* @return the allowed order quantities of this cp definition inventory
 	*/
 	@Override
-	public java.lang.String getAllowedOrderQuantities() {
+	public String getAllowedOrderQuantities() {
 		return _cpDefinitionInventory.getAllowedOrderQuantities();
 	}
 
@@ -264,7 +264,7 @@ public class CPDefinitionInventoryWrapper implements CPDefinitionInventory,
 	* @return the cp definition inventory engine of this cp definition inventory
 	*/
 	@Override
-	public java.lang.String getCPDefinitionInventoryEngine() {
+	public String getCPDefinitionInventoryEngine() {
 		return _cpDefinitionInventory.getCPDefinitionInventoryEngine();
 	}
 
@@ -329,7 +329,7 @@ public class CPDefinitionInventoryWrapper implements CPDefinitionInventory,
 	* @return the low stock activity of this cp definition inventory
 	*/
 	@Override
-	public java.lang.String getLowStockActivity() {
+	public String getLowStockActivity() {
 		return _cpDefinitionInventory.getLowStockActivity();
 	}
 
@@ -414,7 +414,7 @@ public class CPDefinitionInventoryWrapper implements CPDefinitionInventory,
 	* @return the user name of this cp definition inventory
 	*/
 	@Override
-	public java.lang.String getUserName() {
+	public String getUserName() {
 		return _cpDefinitionInventory.getUserName();
 	}
 
@@ -424,7 +424,7 @@ public class CPDefinitionInventoryWrapper implements CPDefinitionInventory,
 	* @return the user uuid of this cp definition inventory
 	*/
 	@Override
-	public java.lang.String getUserUuid() {
+	public String getUserUuid() {
 		return _cpDefinitionInventory.getUserUuid();
 	}
 
@@ -434,7 +434,7 @@ public class CPDefinitionInventoryWrapper implements CPDefinitionInventory,
 	* @return the uuid of this cp definition inventory
 	*/
 	@Override
-	public java.lang.String getUuid() {
+	public String getUuid() {
 		return _cpDefinitionInventory.getUuid();
 	}
 
@@ -499,8 +499,7 @@ public class CPDefinitionInventoryWrapper implements CPDefinitionInventory,
 	* @param allowedOrderQuantities the allowed order quantities of this cp definition inventory
 	*/
 	@Override
-	public void setAllowedOrderQuantities(
-		java.lang.String allowedOrderQuantities) {
+	public void setAllowedOrderQuantities(String allowedOrderQuantities) {
 		_cpDefinitionInventory.setAllowedOrderQuantities(allowedOrderQuantities);
 	}
 
@@ -546,7 +545,7 @@ public class CPDefinitionInventoryWrapper implements CPDefinitionInventory,
 	*/
 	@Override
 	public void setCPDefinitionInventoryEngine(
-		java.lang.String CPDefinitionInventoryEngine) {
+		String CPDefinitionInventoryEngine) {
 		_cpDefinitionInventory.setCPDefinitionInventoryEngine(CPDefinitionInventoryEngine);
 	}
 
@@ -622,7 +621,7 @@ public class CPDefinitionInventoryWrapper implements CPDefinitionInventory,
 	* @param lowStockActivity the low stock activity of this cp definition inventory
 	*/
 	@Override
-	public void setLowStockActivity(java.lang.String lowStockActivity) {
+	public void setLowStockActivity(String lowStockActivity) {
 		_cpDefinitionInventory.setLowStockActivity(lowStockActivity);
 	}
 
@@ -712,7 +711,7 @@ public class CPDefinitionInventoryWrapper implements CPDefinitionInventory,
 	* @param userName the user name of this cp definition inventory
 	*/
 	@Override
-	public void setUserName(java.lang.String userName) {
+	public void setUserName(String userName) {
 		_cpDefinitionInventory.setUserName(userName);
 	}
 
@@ -722,7 +721,7 @@ public class CPDefinitionInventoryWrapper implements CPDefinitionInventory,
 	* @param userUuid the user uuid of this cp definition inventory
 	*/
 	@Override
-	public void setUserUuid(java.lang.String userUuid) {
+	public void setUserUuid(String userUuid) {
 		_cpDefinitionInventory.setUserUuid(userUuid);
 	}
 
@@ -732,7 +731,7 @@ public class CPDefinitionInventoryWrapper implements CPDefinitionInventory,
 	* @param uuid the uuid of this cp definition inventory
 	*/
 	@Override
-	public void setUuid(java.lang.String uuid) {
+	public void setUuid(String uuid) {
 		_cpDefinitionInventory.setUuid(uuid);
 	}
 
@@ -747,7 +746,7 @@ public class CPDefinitionInventoryWrapper implements CPDefinitionInventory,
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _cpDefinitionInventory.toString();
 	}
 
@@ -757,7 +756,7 @@ public class CPDefinitionInventoryWrapper implements CPDefinitionInventory,
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _cpDefinitionInventory.toXmlString();
 	}
 

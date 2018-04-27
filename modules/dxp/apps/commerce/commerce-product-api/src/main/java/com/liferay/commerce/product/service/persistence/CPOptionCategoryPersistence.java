@@ -47,7 +47,7 @@ public interface CPOptionCategoryPersistence extends BasePersistence<CPOptionCat
 	* @param uuid the uuid
 	* @return the matching cp option categories
 	*/
-	public java.util.List<CPOptionCategory> findByUuid(java.lang.String uuid);
+	public java.util.List<CPOptionCategory> findByUuid(String uuid);
 
 	/**
 	* Returns a range of all the cp option categories where uuid = &#63;.
@@ -61,8 +61,8 @@ public interface CPOptionCategoryPersistence extends BasePersistence<CPOptionCat
 	* @param end the upper bound of the range of cp option categories (not inclusive)
 	* @return the range of matching cp option categories
 	*/
-	public java.util.List<CPOptionCategory> findByUuid(java.lang.String uuid,
-		int start, int end);
+	public java.util.List<CPOptionCategory> findByUuid(String uuid, int start,
+		int end);
 
 	/**
 	* Returns an ordered range of all the cp option categories where uuid = &#63;.
@@ -77,8 +77,8 @@ public interface CPOptionCategoryPersistence extends BasePersistence<CPOptionCat
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching cp option categories
 	*/
-	public java.util.List<CPOptionCategory> findByUuid(java.lang.String uuid,
-		int start, int end,
+	public java.util.List<CPOptionCategory> findByUuid(String uuid, int start,
+		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<CPOptionCategory> orderByComparator);
 
 	/**
@@ -95,8 +95,8 @@ public interface CPOptionCategoryPersistence extends BasePersistence<CPOptionCat
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching cp option categories
 	*/
-	public java.util.List<CPOptionCategory> findByUuid(java.lang.String uuid,
-		int start, int end,
+	public java.util.List<CPOptionCategory> findByUuid(String uuid, int start,
+		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<CPOptionCategory> orderByComparator,
 		boolean retrieveFromCache);
 
@@ -108,7 +108,7 @@ public interface CPOptionCategoryPersistence extends BasePersistence<CPOptionCat
 	* @return the first matching cp option category
 	* @throws NoSuchCPOptionCategoryException if a matching cp option category could not be found
 	*/
-	public CPOptionCategory findByUuid_First(java.lang.String uuid,
+	public CPOptionCategory findByUuid_First(String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<CPOptionCategory> orderByComparator)
 		throws NoSuchCPOptionCategoryException;
 
@@ -119,7 +119,7 @@ public interface CPOptionCategoryPersistence extends BasePersistence<CPOptionCat
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching cp option category, or <code>null</code> if a matching cp option category could not be found
 	*/
-	public CPOptionCategory fetchByUuid_First(java.lang.String uuid,
+	public CPOptionCategory fetchByUuid_First(String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<CPOptionCategory> orderByComparator);
 
 	/**
@@ -130,7 +130,7 @@ public interface CPOptionCategoryPersistence extends BasePersistence<CPOptionCat
 	* @return the last matching cp option category
 	* @throws NoSuchCPOptionCategoryException if a matching cp option category could not be found
 	*/
-	public CPOptionCategory findByUuid_Last(java.lang.String uuid,
+	public CPOptionCategory findByUuid_Last(String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<CPOptionCategory> orderByComparator)
 		throws NoSuchCPOptionCategoryException;
 
@@ -141,7 +141,7 @@ public interface CPOptionCategoryPersistence extends BasePersistence<CPOptionCat
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching cp option category, or <code>null</code> if a matching cp option category could not be found
 	*/
-	public CPOptionCategory fetchByUuid_Last(java.lang.String uuid,
+	public CPOptionCategory fetchByUuid_Last(String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<CPOptionCategory> orderByComparator);
 
 	/**
@@ -154,7 +154,7 @@ public interface CPOptionCategoryPersistence extends BasePersistence<CPOptionCat
 	* @throws NoSuchCPOptionCategoryException if a cp option category with the primary key could not be found
 	*/
 	public CPOptionCategory[] findByUuid_PrevAndNext(long CPOptionCategoryId,
-		java.lang.String uuid,
+		String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<CPOptionCategory> orderByComparator)
 		throws NoSuchCPOptionCategoryException;
 
@@ -163,7 +163,7 @@ public interface CPOptionCategoryPersistence extends BasePersistence<CPOptionCat
 	*
 	* @param uuid the uuid
 	*/
-	public void removeByUuid(java.lang.String uuid);
+	public void removeByUuid(String uuid);
 
 	/**
 	* Returns the number of cp option categories where uuid = &#63;.
@@ -171,7 +171,7 @@ public interface CPOptionCategoryPersistence extends BasePersistence<CPOptionCat
 	* @param uuid the uuid
 	* @return the number of matching cp option categories
 	*/
-	public int countByUuid(java.lang.String uuid);
+	public int countByUuid(String uuid);
 
 	/**
 	* Returns the cp option category where uuid = &#63; and groupId = &#63; or throws a {@link NoSuchCPOptionCategoryException} if it could not be found.
@@ -181,7 +181,7 @@ public interface CPOptionCategoryPersistence extends BasePersistence<CPOptionCat
 	* @return the matching cp option category
 	* @throws NoSuchCPOptionCategoryException if a matching cp option category could not be found
 	*/
-	public CPOptionCategory findByUUID_G(java.lang.String uuid, long groupId)
+	public CPOptionCategory findByUUID_G(String uuid, long groupId)
 		throws NoSuchCPOptionCategoryException;
 
 	/**
@@ -191,7 +191,7 @@ public interface CPOptionCategoryPersistence extends BasePersistence<CPOptionCat
 	* @param groupId the group ID
 	* @return the matching cp option category, or <code>null</code> if a matching cp option category could not be found
 	*/
-	public CPOptionCategory fetchByUUID_G(java.lang.String uuid, long groupId);
+	public CPOptionCategory fetchByUUID_G(String uuid, long groupId);
 
 	/**
 	* Returns the cp option category where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -201,7 +201,7 @@ public interface CPOptionCategoryPersistence extends BasePersistence<CPOptionCat
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching cp option category, or <code>null</code> if a matching cp option category could not be found
 	*/
-	public CPOptionCategory fetchByUUID_G(java.lang.String uuid, long groupId,
+	public CPOptionCategory fetchByUUID_G(String uuid, long groupId,
 		boolean retrieveFromCache);
 
 	/**
@@ -211,7 +211,7 @@ public interface CPOptionCategoryPersistence extends BasePersistence<CPOptionCat
 	* @param groupId the group ID
 	* @return the cp option category that was removed
 	*/
-	public CPOptionCategory removeByUUID_G(java.lang.String uuid, long groupId)
+	public CPOptionCategory removeByUUID_G(String uuid, long groupId)
 		throws NoSuchCPOptionCategoryException;
 
 	/**
@@ -221,7 +221,7 @@ public interface CPOptionCategoryPersistence extends BasePersistence<CPOptionCat
 	* @param groupId the group ID
 	* @return the number of matching cp option categories
 	*/
-	public int countByUUID_G(java.lang.String uuid, long groupId);
+	public int countByUUID_G(String uuid, long groupId);
 
 	/**
 	* Returns all the cp option categories where uuid = &#63; and companyId = &#63;.
@@ -230,8 +230,8 @@ public interface CPOptionCategoryPersistence extends BasePersistence<CPOptionCat
 	* @param companyId the company ID
 	* @return the matching cp option categories
 	*/
-	public java.util.List<CPOptionCategory> findByUuid_C(
-		java.lang.String uuid, long companyId);
+	public java.util.List<CPOptionCategory> findByUuid_C(String uuid,
+		long companyId);
 
 	/**
 	* Returns a range of all the cp option categories where uuid = &#63; and companyId = &#63;.
@@ -246,8 +246,8 @@ public interface CPOptionCategoryPersistence extends BasePersistence<CPOptionCat
 	* @param end the upper bound of the range of cp option categories (not inclusive)
 	* @return the range of matching cp option categories
 	*/
-	public java.util.List<CPOptionCategory> findByUuid_C(
-		java.lang.String uuid, long companyId, int start, int end);
+	public java.util.List<CPOptionCategory> findByUuid_C(String uuid,
+		long companyId, int start, int end);
 
 	/**
 	* Returns an ordered range of all the cp option categories where uuid = &#63; and companyId = &#63;.
@@ -263,8 +263,8 @@ public interface CPOptionCategoryPersistence extends BasePersistence<CPOptionCat
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching cp option categories
 	*/
-	public java.util.List<CPOptionCategory> findByUuid_C(
-		java.lang.String uuid, long companyId, int start, int end,
+	public java.util.List<CPOptionCategory> findByUuid_C(String uuid,
+		long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<CPOptionCategory> orderByComparator);
 
 	/**
@@ -282,8 +282,8 @@ public interface CPOptionCategoryPersistence extends BasePersistence<CPOptionCat
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching cp option categories
 	*/
-	public java.util.List<CPOptionCategory> findByUuid_C(
-		java.lang.String uuid, long companyId, int start, int end,
+	public java.util.List<CPOptionCategory> findByUuid_C(String uuid,
+		long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<CPOptionCategory> orderByComparator,
 		boolean retrieveFromCache);
 
@@ -296,8 +296,7 @@ public interface CPOptionCategoryPersistence extends BasePersistence<CPOptionCat
 	* @return the first matching cp option category
 	* @throws NoSuchCPOptionCategoryException if a matching cp option category could not be found
 	*/
-	public CPOptionCategory findByUuid_C_First(java.lang.String uuid,
-		long companyId,
+	public CPOptionCategory findByUuid_C_First(String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<CPOptionCategory> orderByComparator)
 		throws NoSuchCPOptionCategoryException;
 
@@ -309,8 +308,7 @@ public interface CPOptionCategoryPersistence extends BasePersistence<CPOptionCat
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching cp option category, or <code>null</code> if a matching cp option category could not be found
 	*/
-	public CPOptionCategory fetchByUuid_C_First(java.lang.String uuid,
-		long companyId,
+	public CPOptionCategory fetchByUuid_C_First(String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<CPOptionCategory> orderByComparator);
 
 	/**
@@ -322,8 +320,7 @@ public interface CPOptionCategoryPersistence extends BasePersistence<CPOptionCat
 	* @return the last matching cp option category
 	* @throws NoSuchCPOptionCategoryException if a matching cp option category could not be found
 	*/
-	public CPOptionCategory findByUuid_C_Last(java.lang.String uuid,
-		long companyId,
+	public CPOptionCategory findByUuid_C_Last(String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<CPOptionCategory> orderByComparator)
 		throws NoSuchCPOptionCategoryException;
 
@@ -335,8 +332,7 @@ public interface CPOptionCategoryPersistence extends BasePersistence<CPOptionCat
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching cp option category, or <code>null</code> if a matching cp option category could not be found
 	*/
-	public CPOptionCategory fetchByUuid_C_Last(java.lang.String uuid,
-		long companyId,
+	public CPOptionCategory fetchByUuid_C_Last(String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<CPOptionCategory> orderByComparator);
 
 	/**
@@ -350,7 +346,7 @@ public interface CPOptionCategoryPersistence extends BasePersistence<CPOptionCat
 	* @throws NoSuchCPOptionCategoryException if a cp option category with the primary key could not be found
 	*/
 	public CPOptionCategory[] findByUuid_C_PrevAndNext(
-		long CPOptionCategoryId, java.lang.String uuid, long companyId,
+		long CPOptionCategoryId, String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<CPOptionCategory> orderByComparator)
 		throws NoSuchCPOptionCategoryException;
 
@@ -360,7 +356,7 @@ public interface CPOptionCategoryPersistence extends BasePersistence<CPOptionCat
 	* @param uuid the uuid
 	* @param companyId the company ID
 	*/
-	public void removeByUuid_C(java.lang.String uuid, long companyId);
+	public void removeByUuid_C(String uuid, long companyId);
 
 	/**
 	* Returns the number of cp option categories where uuid = &#63; and companyId = &#63;.
@@ -369,7 +365,7 @@ public interface CPOptionCategoryPersistence extends BasePersistence<CPOptionCat
 	* @param companyId the company ID
 	* @return the number of matching cp option categories
 	*/
-	public int countByUuid_C(java.lang.String uuid, long companyId);
+	public int countByUuid_C(String uuid, long companyId);
 
 	/**
 	* Returns all the cp option categories where groupId = &#63;.
@@ -705,7 +701,7 @@ public interface CPOptionCategoryPersistence extends BasePersistence<CPOptionCat
 	* @return the matching cp option category
 	* @throws NoSuchCPOptionCategoryException if a matching cp option category could not be found
 	*/
-	public CPOptionCategory findByG_K(long groupId, java.lang.String key)
+	public CPOptionCategory findByG_K(long groupId, String key)
 		throws NoSuchCPOptionCategoryException;
 
 	/**
@@ -715,7 +711,7 @@ public interface CPOptionCategoryPersistence extends BasePersistence<CPOptionCat
 	* @param key the key
 	* @return the matching cp option category, or <code>null</code> if a matching cp option category could not be found
 	*/
-	public CPOptionCategory fetchByG_K(long groupId, java.lang.String key);
+	public CPOptionCategory fetchByG_K(long groupId, String key);
 
 	/**
 	* Returns the cp option category where groupId = &#63; and key = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -725,7 +721,7 @@ public interface CPOptionCategoryPersistence extends BasePersistence<CPOptionCat
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching cp option category, or <code>null</code> if a matching cp option category could not be found
 	*/
-	public CPOptionCategory fetchByG_K(long groupId, java.lang.String key,
+	public CPOptionCategory fetchByG_K(long groupId, String key,
 		boolean retrieveFromCache);
 
 	/**
@@ -735,7 +731,7 @@ public interface CPOptionCategoryPersistence extends BasePersistence<CPOptionCat
 	* @param key the key
 	* @return the cp option category that was removed
 	*/
-	public CPOptionCategory removeByG_K(long groupId, java.lang.String key)
+	public CPOptionCategory removeByG_K(long groupId, String key)
 		throws NoSuchCPOptionCategoryException;
 
 	/**
@@ -745,7 +741,7 @@ public interface CPOptionCategoryPersistence extends BasePersistence<CPOptionCat
 	* @param key the key
 	* @return the number of matching cp option categories
 	*/
-	public int countByG_K(long groupId, java.lang.String key);
+	public int countByG_K(long groupId, String key);
 
 	/**
 	* Caches the cp option category in the entity cache if it is enabled.
@@ -868,5 +864,5 @@ public interface CPOptionCategoryPersistence extends BasePersistence<CPOptionCat
 	public int countAll();
 
 	@Override
-	public java.util.Set<java.lang.String> getBadColumnNames();
+	public java.util.Set<String> getBadColumnNames();
 }

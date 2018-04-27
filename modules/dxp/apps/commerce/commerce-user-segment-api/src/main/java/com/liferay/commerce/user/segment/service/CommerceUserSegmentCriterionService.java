@@ -57,9 +57,9 @@ public interface CommerceUserSegmentCriterionService extends BaseService {
 	 * Never modify or reference this interface directly. Always use {@link CommerceUserSegmentCriterionServiceUtil} to access the commerce user segment criterion remote service. Add custom service methods to {@link com.liferay.commerce.user.segment.service.impl.CommerceUserSegmentCriterionServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	public CommerceUserSegmentCriterion addCommerceUserSegmentCriterion(
-		long commerceUserSegmentEntryId, java.lang.String type,
-		java.lang.String typeSettings, double priority,
-		ServiceContext serviceContext) throws PortalException;
+		long commerceUserSegmentEntryId, String type, String typeSettings,
+		double priority, ServiceContext serviceContext)
+		throws PortalException;
 
 	public void deleteCommerceUserSegmentCriterion(
 		long commerceUserSegmentCriterionId) throws PortalException;
@@ -83,10 +83,10 @@ public interface CommerceUserSegmentCriterionService extends BaseService {
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	public CommerceUserSegmentCriterion updateCommerceUserSegmentCriterion(
-		long commerceUserSegmentCriterionId, java.lang.String type,
-		java.lang.String typeSettings, double priority,
-		ServiceContext serviceContext) throws PortalException;
+		long commerceUserSegmentCriterionId, String type, String typeSettings,
+		double priority, ServiceContext serviceContext)
+		throws PortalException;
 }

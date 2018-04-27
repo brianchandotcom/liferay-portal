@@ -119,7 +119,7 @@ public class CPDefinitionUtil {
 	* @param uuid the uuid
 	* @return the matching cp definitions
 	*/
-	public static List<CPDefinition> findByUuid(java.lang.String uuid) {
+	public static List<CPDefinition> findByUuid(String uuid) {
 		return getPersistence().findByUuid(uuid);
 	}
 
@@ -135,8 +135,7 @@ public class CPDefinitionUtil {
 	* @param end the upper bound of the range of cp definitions (not inclusive)
 	* @return the range of matching cp definitions
 	*/
-	public static List<CPDefinition> findByUuid(java.lang.String uuid,
-		int start, int end) {
+	public static List<CPDefinition> findByUuid(String uuid, int start, int end) {
 		return getPersistence().findByUuid(uuid, start, end);
 	}
 
@@ -153,8 +152,8 @@ public class CPDefinitionUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching cp definitions
 	*/
-	public static List<CPDefinition> findByUuid(java.lang.String uuid,
-		int start, int end, OrderByComparator<CPDefinition> orderByComparator) {
+	public static List<CPDefinition> findByUuid(String uuid, int start,
+		int end, OrderByComparator<CPDefinition> orderByComparator) {
 		return getPersistence().findByUuid(uuid, start, end, orderByComparator);
 	}
 
@@ -172,8 +171,8 @@ public class CPDefinitionUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching cp definitions
 	*/
-	public static List<CPDefinition> findByUuid(java.lang.String uuid,
-		int start, int end, OrderByComparator<CPDefinition> orderByComparator,
+	public static List<CPDefinition> findByUuid(String uuid, int start,
+		int end, OrderByComparator<CPDefinition> orderByComparator,
 		boolean retrieveFromCache) {
 		return getPersistence()
 				   .findByUuid(uuid, start, end, orderByComparator,
@@ -188,7 +187,7 @@ public class CPDefinitionUtil {
 	* @return the first matching cp definition
 	* @throws NoSuchCPDefinitionException if a matching cp definition could not be found
 	*/
-	public static CPDefinition findByUuid_First(java.lang.String uuid,
+	public static CPDefinition findByUuid_First(String uuid,
 		OrderByComparator<CPDefinition> orderByComparator)
 		throws com.liferay.commerce.product.exception.NoSuchCPDefinitionException {
 		return getPersistence().findByUuid_First(uuid, orderByComparator);
@@ -201,7 +200,7 @@ public class CPDefinitionUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching cp definition, or <code>null</code> if a matching cp definition could not be found
 	*/
-	public static CPDefinition fetchByUuid_First(java.lang.String uuid,
+	public static CPDefinition fetchByUuid_First(String uuid,
 		OrderByComparator<CPDefinition> orderByComparator) {
 		return getPersistence().fetchByUuid_First(uuid, orderByComparator);
 	}
@@ -214,7 +213,7 @@ public class CPDefinitionUtil {
 	* @return the last matching cp definition
 	* @throws NoSuchCPDefinitionException if a matching cp definition could not be found
 	*/
-	public static CPDefinition findByUuid_Last(java.lang.String uuid,
+	public static CPDefinition findByUuid_Last(String uuid,
 		OrderByComparator<CPDefinition> orderByComparator)
 		throws com.liferay.commerce.product.exception.NoSuchCPDefinitionException {
 		return getPersistence().findByUuid_Last(uuid, orderByComparator);
@@ -227,7 +226,7 @@ public class CPDefinitionUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching cp definition, or <code>null</code> if a matching cp definition could not be found
 	*/
-	public static CPDefinition fetchByUuid_Last(java.lang.String uuid,
+	public static CPDefinition fetchByUuid_Last(String uuid,
 		OrderByComparator<CPDefinition> orderByComparator) {
 		return getPersistence().fetchByUuid_Last(uuid, orderByComparator);
 	}
@@ -242,7 +241,7 @@ public class CPDefinitionUtil {
 	* @throws NoSuchCPDefinitionException if a cp definition with the primary key could not be found
 	*/
 	public static CPDefinition[] findByUuid_PrevAndNext(long CPDefinitionId,
-		java.lang.String uuid, OrderByComparator<CPDefinition> orderByComparator)
+		String uuid, OrderByComparator<CPDefinition> orderByComparator)
 		throws com.liferay.commerce.product.exception.NoSuchCPDefinitionException {
 		return getPersistence()
 				   .findByUuid_PrevAndNext(CPDefinitionId, uuid,
@@ -254,7 +253,7 @@ public class CPDefinitionUtil {
 	*
 	* @param uuid the uuid
 	*/
-	public static void removeByUuid(java.lang.String uuid) {
+	public static void removeByUuid(String uuid) {
 		getPersistence().removeByUuid(uuid);
 	}
 
@@ -264,7 +263,7 @@ public class CPDefinitionUtil {
 	* @param uuid the uuid
 	* @return the number of matching cp definitions
 	*/
-	public static int countByUuid(java.lang.String uuid) {
+	public static int countByUuid(String uuid) {
 		return getPersistence().countByUuid(uuid);
 	}
 
@@ -276,7 +275,7 @@ public class CPDefinitionUtil {
 	* @return the matching cp definition
 	* @throws NoSuchCPDefinitionException if a matching cp definition could not be found
 	*/
-	public static CPDefinition findByUUID_G(java.lang.String uuid, long groupId)
+	public static CPDefinition findByUUID_G(String uuid, long groupId)
 		throws com.liferay.commerce.product.exception.NoSuchCPDefinitionException {
 		return getPersistence().findByUUID_G(uuid, groupId);
 	}
@@ -288,7 +287,7 @@ public class CPDefinitionUtil {
 	* @param groupId the group ID
 	* @return the matching cp definition, or <code>null</code> if a matching cp definition could not be found
 	*/
-	public static CPDefinition fetchByUUID_G(java.lang.String uuid, long groupId) {
+	public static CPDefinition fetchByUUID_G(String uuid, long groupId) {
 		return getPersistence().fetchByUUID_G(uuid, groupId);
 	}
 
@@ -300,8 +299,8 @@ public class CPDefinitionUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching cp definition, or <code>null</code> if a matching cp definition could not be found
 	*/
-	public static CPDefinition fetchByUUID_G(java.lang.String uuid,
-		long groupId, boolean retrieveFromCache) {
+	public static CPDefinition fetchByUUID_G(String uuid, long groupId,
+		boolean retrieveFromCache) {
 		return getPersistence().fetchByUUID_G(uuid, groupId, retrieveFromCache);
 	}
 
@@ -312,8 +311,7 @@ public class CPDefinitionUtil {
 	* @param groupId the group ID
 	* @return the cp definition that was removed
 	*/
-	public static CPDefinition removeByUUID_G(java.lang.String uuid,
-		long groupId)
+	public static CPDefinition removeByUUID_G(String uuid, long groupId)
 		throws com.liferay.commerce.product.exception.NoSuchCPDefinitionException {
 		return getPersistence().removeByUUID_G(uuid, groupId);
 	}
@@ -325,7 +323,7 @@ public class CPDefinitionUtil {
 	* @param groupId the group ID
 	* @return the number of matching cp definitions
 	*/
-	public static int countByUUID_G(java.lang.String uuid, long groupId) {
+	public static int countByUUID_G(String uuid, long groupId) {
 		return getPersistence().countByUUID_G(uuid, groupId);
 	}
 
@@ -336,8 +334,7 @@ public class CPDefinitionUtil {
 	* @param companyId the company ID
 	* @return the matching cp definitions
 	*/
-	public static List<CPDefinition> findByUuid_C(java.lang.String uuid,
-		long companyId) {
+	public static List<CPDefinition> findByUuid_C(String uuid, long companyId) {
 		return getPersistence().findByUuid_C(uuid, companyId);
 	}
 
@@ -354,8 +351,8 @@ public class CPDefinitionUtil {
 	* @param end the upper bound of the range of cp definitions (not inclusive)
 	* @return the range of matching cp definitions
 	*/
-	public static List<CPDefinition> findByUuid_C(java.lang.String uuid,
-		long companyId, int start, int end) {
+	public static List<CPDefinition> findByUuid_C(String uuid, long companyId,
+		int start, int end) {
 		return getPersistence().findByUuid_C(uuid, companyId, start, end);
 	}
 
@@ -373,9 +370,8 @@ public class CPDefinitionUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching cp definitions
 	*/
-	public static List<CPDefinition> findByUuid_C(java.lang.String uuid,
-		long companyId, int start, int end,
-		OrderByComparator<CPDefinition> orderByComparator) {
+	public static List<CPDefinition> findByUuid_C(String uuid, long companyId,
+		int start, int end, OrderByComparator<CPDefinition> orderByComparator) {
 		return getPersistence()
 				   .findByUuid_C(uuid, companyId, start, end, orderByComparator);
 	}
@@ -395,9 +391,8 @@ public class CPDefinitionUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching cp definitions
 	*/
-	public static List<CPDefinition> findByUuid_C(java.lang.String uuid,
-		long companyId, int start, int end,
-		OrderByComparator<CPDefinition> orderByComparator,
+	public static List<CPDefinition> findByUuid_C(String uuid, long companyId,
+		int start, int end, OrderByComparator<CPDefinition> orderByComparator,
 		boolean retrieveFromCache) {
 		return getPersistence()
 				   .findByUuid_C(uuid, companyId, start, end,
@@ -413,8 +408,8 @@ public class CPDefinitionUtil {
 	* @return the first matching cp definition
 	* @throws NoSuchCPDefinitionException if a matching cp definition could not be found
 	*/
-	public static CPDefinition findByUuid_C_First(java.lang.String uuid,
-		long companyId, OrderByComparator<CPDefinition> orderByComparator)
+	public static CPDefinition findByUuid_C_First(String uuid, long companyId,
+		OrderByComparator<CPDefinition> orderByComparator)
 		throws com.liferay.commerce.product.exception.NoSuchCPDefinitionException {
 		return getPersistence()
 				   .findByUuid_C_First(uuid, companyId, orderByComparator);
@@ -428,8 +423,8 @@ public class CPDefinitionUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching cp definition, or <code>null</code> if a matching cp definition could not be found
 	*/
-	public static CPDefinition fetchByUuid_C_First(java.lang.String uuid,
-		long companyId, OrderByComparator<CPDefinition> orderByComparator) {
+	public static CPDefinition fetchByUuid_C_First(String uuid, long companyId,
+		OrderByComparator<CPDefinition> orderByComparator) {
 		return getPersistence()
 				   .fetchByUuid_C_First(uuid, companyId, orderByComparator);
 	}
@@ -443,8 +438,8 @@ public class CPDefinitionUtil {
 	* @return the last matching cp definition
 	* @throws NoSuchCPDefinitionException if a matching cp definition could not be found
 	*/
-	public static CPDefinition findByUuid_C_Last(java.lang.String uuid,
-		long companyId, OrderByComparator<CPDefinition> orderByComparator)
+	public static CPDefinition findByUuid_C_Last(String uuid, long companyId,
+		OrderByComparator<CPDefinition> orderByComparator)
 		throws com.liferay.commerce.product.exception.NoSuchCPDefinitionException {
 		return getPersistence()
 				   .findByUuid_C_Last(uuid, companyId, orderByComparator);
@@ -458,8 +453,8 @@ public class CPDefinitionUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching cp definition, or <code>null</code> if a matching cp definition could not be found
 	*/
-	public static CPDefinition fetchByUuid_C_Last(java.lang.String uuid,
-		long companyId, OrderByComparator<CPDefinition> orderByComparator) {
+	public static CPDefinition fetchByUuid_C_Last(String uuid, long companyId,
+		OrderByComparator<CPDefinition> orderByComparator) {
 		return getPersistence()
 				   .fetchByUuid_C_Last(uuid, companyId, orderByComparator);
 	}
@@ -475,7 +470,7 @@ public class CPDefinitionUtil {
 	* @throws NoSuchCPDefinitionException if a cp definition with the primary key could not be found
 	*/
 	public static CPDefinition[] findByUuid_C_PrevAndNext(long CPDefinitionId,
-		java.lang.String uuid, long companyId,
+		String uuid, long companyId,
 		OrderByComparator<CPDefinition> orderByComparator)
 		throws com.liferay.commerce.product.exception.NoSuchCPDefinitionException {
 		return getPersistence()
@@ -489,7 +484,7 @@ public class CPDefinitionUtil {
 	* @param uuid the uuid
 	* @param companyId the company ID
 	*/
-	public static void removeByUuid_C(java.lang.String uuid, long companyId) {
+	public static void removeByUuid_C(String uuid, long companyId) {
 		getPersistence().removeByUuid_C(uuid, companyId);
 	}
 
@@ -500,7 +495,7 @@ public class CPDefinitionUtil {
 	* @param companyId the company ID
 	* @return the number of matching cp definitions
 	*/
-	public static int countByUuid_C(java.lang.String uuid, long companyId) {
+	public static int countByUuid_C(String uuid, long companyId) {
 		return getPersistence().countByUuid_C(uuid, companyId);
 	}
 
@@ -1891,7 +1886,7 @@ public class CPDefinitionUtil {
 		return getPersistence().countAll();
 	}
 
-	public static java.util.Set<java.lang.String> getBadColumnNames() {
+	public static java.util.Set<String> getBadColumnNames() {
 		return getPersistence().getBadColumnNames();
 	}
 

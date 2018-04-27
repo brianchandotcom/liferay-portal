@@ -56,7 +56,7 @@ public class CommerceWishListItemLocalServiceUtil {
 
 	public static com.liferay.commerce.wish.list.model.CommerceWishListItem addCommerceWishListItem(
 		long commerceWishListId, long cpDefinitionId, long cpInstanceId,
-		java.lang.String json,
+		String json,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
@@ -268,7 +268,7 @@ public class CommerceWishListItemLocalServiceUtil {
 	*
 	* @return the OSGi service identifier
 	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
+	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 

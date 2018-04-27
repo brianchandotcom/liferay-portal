@@ -57,8 +57,8 @@ import com.liferay.portal.kernel.util.MethodKey;
 public class CPDefinitionOptionValueRelServiceHttp {
 	public static com.liferay.commerce.product.model.CPDefinitionOptionValueRel addCPDefinitionOptionValueRel(
 		HttpPrincipal httpPrincipal, long cpDefinitionOptionRelId,
-		java.util.Map<java.util.Locale, java.lang.String> titleMap,
-		double priority, java.lang.String key,
+		java.util.Map<java.util.Locale, String> titleMap, double priority,
+		String key,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -294,8 +294,8 @@ public class CPDefinitionOptionValueRelServiceHttp {
 	}
 
 	public static java.util.List<com.liferay.commerce.product.model.CPDefinitionOptionValueRel> getCPDefinitionOptionValueRels(
-		HttpPrincipal httpPrincipal, long groupId, java.lang.String key,
-		int start, int end) {
+		HttpPrincipal httpPrincipal, long groupId, String key, int start,
+		int end) {
 		try {
 			MethodKey methodKey = new MethodKey(CPDefinitionOptionValueRelServiceUtil.class,
 					"getCPDefinitionOptionValueRels",
@@ -385,8 +385,8 @@ public class CPDefinitionOptionValueRelServiceHttp {
 
 	public static com.liferay.portal.kernel.search.BaseModelSearchResult<com.liferay.commerce.product.model.CPDefinitionOptionValueRel> searchCPDefinitionOptionValueRels(
 		HttpPrincipal httpPrincipal, long companyId, long groupId,
-		long cpDefinitionOptionRelId, java.lang.String keywords, int start,
-		int end, com.liferay.portal.kernel.search.Sort sort)
+		long cpDefinitionOptionRelId, String keywords, int start, int end,
+		com.liferay.portal.kernel.search.Sort sort)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(CPDefinitionOptionValueRelServiceUtil.class,
@@ -421,8 +421,8 @@ public class CPDefinitionOptionValueRelServiceHttp {
 
 	public static com.liferay.commerce.product.model.CPDefinitionOptionValueRel updateCPDefinitionOptionValueRel(
 		HttpPrincipal httpPrincipal, long cpDefinitionOptionValueRelId,
-		java.util.Map<java.util.Locale, java.lang.String> titleMap,
-		double priority, java.lang.String key,
+		java.util.Map<java.util.Locale, String> titleMap, double priority,
+		String key,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -459,8 +459,7 @@ public class CPDefinitionOptionValueRelServiceHttp {
 	private static Log _log = LogFactoryUtil.getLog(CPDefinitionOptionValueRelServiceHttp.class);
 	private static final Class<?>[] _addCPDefinitionOptionValueRelParameterTypes0 =
 		new Class[] {
-			long.class, java.util.Map.class, double.class,
-			java.lang.String.class,
+			long.class, java.util.Map.class, double.class, String.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _deleteCPDefinitionOptionValueRelParameterTypes1 =
@@ -481,7 +480,7 @@ public class CPDefinitionOptionValueRelServiceHttp {
 			com.liferay.portal.kernel.util.OrderByComparator.class
 		};
 	private static final Class<?>[] _getCPDefinitionOptionValueRelsParameterTypes7 =
-		new Class[] { long.class, java.lang.String.class, int.class, int.class };
+		new Class[] { long.class, String.class, int.class, int.class };
 	private static final Class<?>[] _getCPDefinitionOptionValueRelsCountParameterTypes8 =
 		new Class[] { long.class };
 	private static final Class<?>[] _searchParameterTypes9 = new Class[] {
@@ -489,13 +488,12 @@ public class CPDefinitionOptionValueRelServiceHttp {
 		};
 	private static final Class<?>[] _searchCPDefinitionOptionValueRelsParameterTypes10 =
 		new Class[] {
-			long.class, long.class, long.class, java.lang.String.class,
-			int.class, int.class, com.liferay.portal.kernel.search.Sort.class
+			long.class, long.class, long.class, String.class, int.class,
+			int.class, com.liferay.portal.kernel.search.Sort.class
 		};
 	private static final Class<?>[] _updateCPDefinitionOptionValueRelParameterTypes11 =
 		new Class[] {
-			long.class, java.util.Map.class, double.class,
-			java.lang.String.class,
+			long.class, java.util.Map.class, double.class, String.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 }

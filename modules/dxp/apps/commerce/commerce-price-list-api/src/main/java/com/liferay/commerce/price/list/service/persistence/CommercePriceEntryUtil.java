@@ -119,7 +119,7 @@ public class CommercePriceEntryUtil {
 	* @param uuid the uuid
 	* @return the matching commerce price entries
 	*/
-	public static List<CommercePriceEntry> findByUuid(java.lang.String uuid) {
+	public static List<CommercePriceEntry> findByUuid(String uuid) {
 		return getPersistence().findByUuid(uuid);
 	}
 
@@ -135,8 +135,8 @@ public class CommercePriceEntryUtil {
 	* @param end the upper bound of the range of commerce price entries (not inclusive)
 	* @return the range of matching commerce price entries
 	*/
-	public static List<CommercePriceEntry> findByUuid(java.lang.String uuid,
-		int start, int end) {
+	public static List<CommercePriceEntry> findByUuid(String uuid, int start,
+		int end) {
 		return getPersistence().findByUuid(uuid, start, end);
 	}
 
@@ -153,9 +153,8 @@ public class CommercePriceEntryUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching commerce price entries
 	*/
-	public static List<CommercePriceEntry> findByUuid(java.lang.String uuid,
-		int start, int end,
-		OrderByComparator<CommercePriceEntry> orderByComparator) {
+	public static List<CommercePriceEntry> findByUuid(String uuid, int start,
+		int end, OrderByComparator<CommercePriceEntry> orderByComparator) {
 		return getPersistence().findByUuid(uuid, start, end, orderByComparator);
 	}
 
@@ -173,9 +172,8 @@ public class CommercePriceEntryUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching commerce price entries
 	*/
-	public static List<CommercePriceEntry> findByUuid(java.lang.String uuid,
-		int start, int end,
-		OrderByComparator<CommercePriceEntry> orderByComparator,
+	public static List<CommercePriceEntry> findByUuid(String uuid, int start,
+		int end, OrderByComparator<CommercePriceEntry> orderByComparator,
 		boolean retrieveFromCache) {
 		return getPersistence()
 				   .findByUuid(uuid, start, end, orderByComparator,
@@ -190,7 +188,7 @@ public class CommercePriceEntryUtil {
 	* @return the first matching commerce price entry
 	* @throws NoSuchPriceEntryException if a matching commerce price entry could not be found
 	*/
-	public static CommercePriceEntry findByUuid_First(java.lang.String uuid,
+	public static CommercePriceEntry findByUuid_First(String uuid,
 		OrderByComparator<CommercePriceEntry> orderByComparator)
 		throws com.liferay.commerce.price.list.exception.NoSuchPriceEntryException {
 		return getPersistence().findByUuid_First(uuid, orderByComparator);
@@ -203,7 +201,7 @@ public class CommercePriceEntryUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching commerce price entry, or <code>null</code> if a matching commerce price entry could not be found
 	*/
-	public static CommercePriceEntry fetchByUuid_First(java.lang.String uuid,
+	public static CommercePriceEntry fetchByUuid_First(String uuid,
 		OrderByComparator<CommercePriceEntry> orderByComparator) {
 		return getPersistence().fetchByUuid_First(uuid, orderByComparator);
 	}
@@ -216,7 +214,7 @@ public class CommercePriceEntryUtil {
 	* @return the last matching commerce price entry
 	* @throws NoSuchPriceEntryException if a matching commerce price entry could not be found
 	*/
-	public static CommercePriceEntry findByUuid_Last(java.lang.String uuid,
+	public static CommercePriceEntry findByUuid_Last(String uuid,
 		OrderByComparator<CommercePriceEntry> orderByComparator)
 		throws com.liferay.commerce.price.list.exception.NoSuchPriceEntryException {
 		return getPersistence().findByUuid_Last(uuid, orderByComparator);
@@ -229,7 +227,7 @@ public class CommercePriceEntryUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching commerce price entry, or <code>null</code> if a matching commerce price entry could not be found
 	*/
-	public static CommercePriceEntry fetchByUuid_Last(java.lang.String uuid,
+	public static CommercePriceEntry fetchByUuid_Last(String uuid,
 		OrderByComparator<CommercePriceEntry> orderByComparator) {
 		return getPersistence().fetchByUuid_Last(uuid, orderByComparator);
 	}
@@ -244,7 +242,7 @@ public class CommercePriceEntryUtil {
 	* @throws NoSuchPriceEntryException if a commerce price entry with the primary key could not be found
 	*/
 	public static CommercePriceEntry[] findByUuid_PrevAndNext(
-		long commercePriceEntryId, java.lang.String uuid,
+		long commercePriceEntryId, String uuid,
 		OrderByComparator<CommercePriceEntry> orderByComparator)
 		throws com.liferay.commerce.price.list.exception.NoSuchPriceEntryException {
 		return getPersistence()
@@ -257,7 +255,7 @@ public class CommercePriceEntryUtil {
 	*
 	* @param uuid the uuid
 	*/
-	public static void removeByUuid(java.lang.String uuid) {
+	public static void removeByUuid(String uuid) {
 		getPersistence().removeByUuid(uuid);
 	}
 
@@ -267,7 +265,7 @@ public class CommercePriceEntryUtil {
 	* @param uuid the uuid
 	* @return the number of matching commerce price entries
 	*/
-	public static int countByUuid(java.lang.String uuid) {
+	public static int countByUuid(String uuid) {
 		return getPersistence().countByUuid(uuid);
 	}
 
@@ -279,8 +277,7 @@ public class CommercePriceEntryUtil {
 	* @return the matching commerce price entry
 	* @throws NoSuchPriceEntryException if a matching commerce price entry could not be found
 	*/
-	public static CommercePriceEntry findByUUID_G(java.lang.String uuid,
-		long groupId)
+	public static CommercePriceEntry findByUUID_G(String uuid, long groupId)
 		throws com.liferay.commerce.price.list.exception.NoSuchPriceEntryException {
 		return getPersistence().findByUUID_G(uuid, groupId);
 	}
@@ -292,8 +289,7 @@ public class CommercePriceEntryUtil {
 	* @param groupId the group ID
 	* @return the matching commerce price entry, or <code>null</code> if a matching commerce price entry could not be found
 	*/
-	public static CommercePriceEntry fetchByUUID_G(java.lang.String uuid,
-		long groupId) {
+	public static CommercePriceEntry fetchByUUID_G(String uuid, long groupId) {
 		return getPersistence().fetchByUUID_G(uuid, groupId);
 	}
 
@@ -305,8 +301,8 @@ public class CommercePriceEntryUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching commerce price entry, or <code>null</code> if a matching commerce price entry could not be found
 	*/
-	public static CommercePriceEntry fetchByUUID_G(java.lang.String uuid,
-		long groupId, boolean retrieveFromCache) {
+	public static CommercePriceEntry fetchByUUID_G(String uuid, long groupId,
+		boolean retrieveFromCache) {
 		return getPersistence().fetchByUUID_G(uuid, groupId, retrieveFromCache);
 	}
 
@@ -317,8 +313,7 @@ public class CommercePriceEntryUtil {
 	* @param groupId the group ID
 	* @return the commerce price entry that was removed
 	*/
-	public static CommercePriceEntry removeByUUID_G(java.lang.String uuid,
-		long groupId)
+	public static CommercePriceEntry removeByUUID_G(String uuid, long groupId)
 		throws com.liferay.commerce.price.list.exception.NoSuchPriceEntryException {
 		return getPersistence().removeByUUID_G(uuid, groupId);
 	}
@@ -330,7 +325,7 @@ public class CommercePriceEntryUtil {
 	* @param groupId the group ID
 	* @return the number of matching commerce price entries
 	*/
-	public static int countByUUID_G(java.lang.String uuid, long groupId) {
+	public static int countByUUID_G(String uuid, long groupId) {
 		return getPersistence().countByUUID_G(uuid, groupId);
 	}
 
@@ -341,7 +336,7 @@ public class CommercePriceEntryUtil {
 	* @param companyId the company ID
 	* @return the matching commerce price entries
 	*/
-	public static List<CommercePriceEntry> findByUuid_C(java.lang.String uuid,
+	public static List<CommercePriceEntry> findByUuid_C(String uuid,
 		long companyId) {
 		return getPersistence().findByUuid_C(uuid, companyId);
 	}
@@ -359,7 +354,7 @@ public class CommercePriceEntryUtil {
 	* @param end the upper bound of the range of commerce price entries (not inclusive)
 	* @return the range of matching commerce price entries
 	*/
-	public static List<CommercePriceEntry> findByUuid_C(java.lang.String uuid,
+	public static List<CommercePriceEntry> findByUuid_C(String uuid,
 		long companyId, int start, int end) {
 		return getPersistence().findByUuid_C(uuid, companyId, start, end);
 	}
@@ -378,7 +373,7 @@ public class CommercePriceEntryUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching commerce price entries
 	*/
-	public static List<CommercePriceEntry> findByUuid_C(java.lang.String uuid,
+	public static List<CommercePriceEntry> findByUuid_C(String uuid,
 		long companyId, int start, int end,
 		OrderByComparator<CommercePriceEntry> orderByComparator) {
 		return getPersistence()
@@ -400,7 +395,7 @@ public class CommercePriceEntryUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching commerce price entries
 	*/
-	public static List<CommercePriceEntry> findByUuid_C(java.lang.String uuid,
+	public static List<CommercePriceEntry> findByUuid_C(String uuid,
 		long companyId, int start, int end,
 		OrderByComparator<CommercePriceEntry> orderByComparator,
 		boolean retrieveFromCache) {
@@ -418,7 +413,7 @@ public class CommercePriceEntryUtil {
 	* @return the first matching commerce price entry
 	* @throws NoSuchPriceEntryException if a matching commerce price entry could not be found
 	*/
-	public static CommercePriceEntry findByUuid_C_First(java.lang.String uuid,
+	public static CommercePriceEntry findByUuid_C_First(String uuid,
 		long companyId, OrderByComparator<CommercePriceEntry> orderByComparator)
 		throws com.liferay.commerce.price.list.exception.NoSuchPriceEntryException {
 		return getPersistence()
@@ -433,9 +428,8 @@ public class CommercePriceEntryUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching commerce price entry, or <code>null</code> if a matching commerce price entry could not be found
 	*/
-	public static CommercePriceEntry fetchByUuid_C_First(
-		java.lang.String uuid, long companyId,
-		OrderByComparator<CommercePriceEntry> orderByComparator) {
+	public static CommercePriceEntry fetchByUuid_C_First(String uuid,
+		long companyId, OrderByComparator<CommercePriceEntry> orderByComparator) {
 		return getPersistence()
 				   .fetchByUuid_C_First(uuid, companyId, orderByComparator);
 	}
@@ -449,7 +443,7 @@ public class CommercePriceEntryUtil {
 	* @return the last matching commerce price entry
 	* @throws NoSuchPriceEntryException if a matching commerce price entry could not be found
 	*/
-	public static CommercePriceEntry findByUuid_C_Last(java.lang.String uuid,
+	public static CommercePriceEntry findByUuid_C_Last(String uuid,
 		long companyId, OrderByComparator<CommercePriceEntry> orderByComparator)
 		throws com.liferay.commerce.price.list.exception.NoSuchPriceEntryException {
 		return getPersistence()
@@ -464,7 +458,7 @@ public class CommercePriceEntryUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching commerce price entry, or <code>null</code> if a matching commerce price entry could not be found
 	*/
-	public static CommercePriceEntry fetchByUuid_C_Last(java.lang.String uuid,
+	public static CommercePriceEntry fetchByUuid_C_Last(String uuid,
 		long companyId, OrderByComparator<CommercePriceEntry> orderByComparator) {
 		return getPersistence()
 				   .fetchByUuid_C_Last(uuid, companyId, orderByComparator);
@@ -481,7 +475,7 @@ public class CommercePriceEntryUtil {
 	* @throws NoSuchPriceEntryException if a commerce price entry with the primary key could not be found
 	*/
 	public static CommercePriceEntry[] findByUuid_C_PrevAndNext(
-		long commercePriceEntryId, java.lang.String uuid, long companyId,
+		long commercePriceEntryId, String uuid, long companyId,
 		OrderByComparator<CommercePriceEntry> orderByComparator)
 		throws com.liferay.commerce.price.list.exception.NoSuchPriceEntryException {
 		return getPersistence()
@@ -495,7 +489,7 @@ public class CommercePriceEntryUtil {
 	* @param uuid the uuid
 	* @param companyId the company ID
 	*/
-	public static void removeByUuid_C(java.lang.String uuid, long companyId) {
+	public static void removeByUuid_C(String uuid, long companyId) {
 		getPersistence().removeByUuid_C(uuid, companyId);
 	}
 
@@ -506,7 +500,7 @@ public class CommercePriceEntryUtil {
 	* @param companyId the company ID
 	* @return the number of matching commerce price entries
 	*/
-	public static int countByUuid_C(java.lang.String uuid, long companyId) {
+	public static int countByUuid_C(String uuid, long companyId) {
 		return getPersistence().countByUuid_C(uuid, companyId);
 	}
 
@@ -1390,7 +1384,7 @@ public class CommercePriceEntryUtil {
 		return getPersistence().countAll();
 	}
 
-	public static java.util.Set<java.lang.String> getBadColumnNames() {
+	public static java.util.Set<String> getBadColumnNames() {
 		return getPersistence().getBadColumnNames();
 	}
 

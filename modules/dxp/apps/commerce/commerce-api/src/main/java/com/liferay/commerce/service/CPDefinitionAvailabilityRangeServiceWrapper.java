@@ -53,7 +53,7 @@ public class CPDefinitionAvailabilityRangeServiceWrapper
 	* @return the OSGi service identifier
 	*/
 	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
+	public String getOSGiServiceIdentifier() {
 		return _cpDefinitionAvailabilityRangeService.getOSGiServiceIdentifier();
 	}
 

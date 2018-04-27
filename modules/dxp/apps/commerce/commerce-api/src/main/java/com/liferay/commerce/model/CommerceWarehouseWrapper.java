@@ -199,7 +199,7 @@ public class CommerceWarehouseWrapper implements CommerceWarehouse,
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new CommerceWarehouseWrapper((CommerceWarehouse)_commerceWarehouse.clone());
 	}
 
@@ -224,7 +224,7 @@ public class CommerceWarehouseWrapper implements CommerceWarehouse,
 	* @return the city of this commerce warehouse
 	*/
 	@Override
-	public java.lang.String getCity() {
+	public String getCity() {
 		return _commerceWarehouse.getCity();
 	}
 
@@ -301,7 +301,7 @@ public class CommerceWarehouseWrapper implements CommerceWarehouse,
 	* @return the description of this commerce warehouse
 	*/
 	@Override
-	public java.lang.String getDescription() {
+	public String getDescription() {
 		return _commerceWarehouse.getDescription();
 	}
 
@@ -356,7 +356,7 @@ public class CommerceWarehouseWrapper implements CommerceWarehouse,
 	* @return the name of this commerce warehouse
 	*/
 	@Override
-	public java.lang.String getName() {
+	public String getName() {
 		return _commerceWarehouse.getName();
 	}
 
@@ -381,7 +381,7 @@ public class CommerceWarehouseWrapper implements CommerceWarehouse,
 	* @return the street1 of this commerce warehouse
 	*/
 	@Override
-	public java.lang.String getStreet1() {
+	public String getStreet1() {
 		return _commerceWarehouse.getStreet1();
 	}
 
@@ -391,7 +391,7 @@ public class CommerceWarehouseWrapper implements CommerceWarehouse,
 	* @return the street2 of this commerce warehouse
 	*/
 	@Override
-	public java.lang.String getStreet2() {
+	public String getStreet2() {
 		return _commerceWarehouse.getStreet2();
 	}
 
@@ -401,7 +401,7 @@ public class CommerceWarehouseWrapper implements CommerceWarehouse,
 	* @return the street3 of this commerce warehouse
 	*/
 	@Override
-	public java.lang.String getStreet3() {
+	public String getStreet3() {
 		return _commerceWarehouse.getStreet3();
 	}
 
@@ -421,7 +421,7 @@ public class CommerceWarehouseWrapper implements CommerceWarehouse,
 	* @return the user name of this commerce warehouse
 	*/
 	@Override
-	public java.lang.String getUserName() {
+	public String getUserName() {
 		return _commerceWarehouse.getUserName();
 	}
 
@@ -431,7 +431,7 @@ public class CommerceWarehouseWrapper implements CommerceWarehouse,
 	* @return the user uuid of this commerce warehouse
 	*/
 	@Override
-	public java.lang.String getUserUuid() {
+	public String getUserUuid() {
 		return _commerceWarehouse.getUserUuid();
 	}
 
@@ -441,7 +441,7 @@ public class CommerceWarehouseWrapper implements CommerceWarehouse,
 	* @return the zip of this commerce warehouse
 	*/
 	@Override
-	public java.lang.String getZip() {
+	public String getZip() {
 		return _commerceWarehouse.getZip();
 	}
 
@@ -506,7 +506,7 @@ public class CommerceWarehouseWrapper implements CommerceWarehouse,
 	* @param city the city of this commerce warehouse
 	*/
 	@Override
-	public void setCity(java.lang.String city) {
+	public void setCity(String city) {
 		_commerceWarehouse.setCity(city);
 	}
 
@@ -566,7 +566,7 @@ public class CommerceWarehouseWrapper implements CommerceWarehouse,
 	* @param description the description of this commerce warehouse
 	*/
 	@Override
-	public void setDescription(java.lang.String description) {
+	public void setDescription(String description) {
 		_commerceWarehouse.setDescription(description);
 	}
 
@@ -632,7 +632,7 @@ public class CommerceWarehouseWrapper implements CommerceWarehouse,
 	* @param name the name of this commerce warehouse
 	*/
 	@Override
-	public void setName(java.lang.String name) {
+	public void setName(String name) {
 		_commerceWarehouse.setName(name);
 	}
 
@@ -662,7 +662,7 @@ public class CommerceWarehouseWrapper implements CommerceWarehouse,
 	* @param street1 the street1 of this commerce warehouse
 	*/
 	@Override
-	public void setStreet1(java.lang.String street1) {
+	public void setStreet1(String street1) {
 		_commerceWarehouse.setStreet1(street1);
 	}
 
@@ -672,7 +672,7 @@ public class CommerceWarehouseWrapper implements CommerceWarehouse,
 	* @param street2 the street2 of this commerce warehouse
 	*/
 	@Override
-	public void setStreet2(java.lang.String street2) {
+	public void setStreet2(String street2) {
 		_commerceWarehouse.setStreet2(street2);
 	}
 
@@ -682,7 +682,7 @@ public class CommerceWarehouseWrapper implements CommerceWarehouse,
 	* @param street3 the street3 of this commerce warehouse
 	*/
 	@Override
-	public void setStreet3(java.lang.String street3) {
+	public void setStreet3(String street3) {
 		_commerceWarehouse.setStreet3(street3);
 	}
 
@@ -702,7 +702,7 @@ public class CommerceWarehouseWrapper implements CommerceWarehouse,
 	* @param userName the user name of this commerce warehouse
 	*/
 	@Override
-	public void setUserName(java.lang.String userName) {
+	public void setUserName(String userName) {
 		_commerceWarehouse.setUserName(userName);
 	}
 
@@ -712,7 +712,7 @@ public class CommerceWarehouseWrapper implements CommerceWarehouse,
 	* @param userUuid the user uuid of this commerce warehouse
 	*/
 	@Override
-	public void setUserUuid(java.lang.String userUuid) {
+	public void setUserUuid(String userUuid) {
 		_commerceWarehouse.setUserUuid(userUuid);
 	}
 
@@ -722,7 +722,7 @@ public class CommerceWarehouseWrapper implements CommerceWarehouse,
 	* @param zip the zip of this commerce warehouse
 	*/
 	@Override
-	public void setZip(java.lang.String zip) {
+	public void setZip(String zip) {
 		_commerceWarehouse.setZip(zip);
 	}
 
@@ -737,7 +737,7 @@ public class CommerceWarehouseWrapper implements CommerceWarehouse,
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _commerceWarehouse.toString();
 	}
 
@@ -747,7 +747,7 @@ public class CommerceWarehouseWrapper implements CommerceWarehouse,
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _commerceWarehouse.toXmlString();
 	}
 

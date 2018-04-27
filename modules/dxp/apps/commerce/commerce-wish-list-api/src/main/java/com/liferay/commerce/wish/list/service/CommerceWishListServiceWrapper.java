@@ -35,7 +35,7 @@ public class CommerceWishListServiceWrapper implements CommerceWishListService,
 
 	@Override
 	public com.liferay.commerce.wish.list.model.CommerceWishList addCommerceWishList(
-		java.lang.String name, boolean defaultWishList,
+		String name, boolean defaultWishList,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _commerceWishListService.addCommerceWishList(name,
@@ -92,13 +92,13 @@ public class CommerceWishListServiceWrapper implements CommerceWishListService,
 	* @return the OSGi service identifier
 	*/
 	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
+	public String getOSGiServiceIdentifier() {
 		return _commerceWishListService.getOSGiServiceIdentifier();
 	}
 
 	@Override
 	public com.liferay.commerce.wish.list.model.CommerceWishList updateCommerceWishList(
-		long commerceWishListId, java.lang.String name, boolean defaultWishList)
+		long commerceWishListId, String name, boolean defaultWishList)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _commerceWishListService.updateCommerceWishList(commerceWishListId,
 			name, defaultWishList);

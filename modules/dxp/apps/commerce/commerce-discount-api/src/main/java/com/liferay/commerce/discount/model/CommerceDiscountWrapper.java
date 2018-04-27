@@ -288,7 +288,7 @@ public class CommerceDiscountWrapper implements CommerceDiscount,
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new CommerceDiscountWrapper((CommerceDiscount)_commerceDiscount.clone());
 	}
 
@@ -333,7 +333,7 @@ public class CommerceDiscountWrapper implements CommerceDiscount,
 	* @return the coupon code of this commerce discount
 	*/
 	@Override
-	public java.lang.String getCouponCode() {
+	public String getCouponCode() {
 		return _commerceDiscount.getCouponCode();
 	}
 
@@ -448,7 +448,7 @@ public class CommerceDiscountWrapper implements CommerceDiscount,
 	* @return the limitation type of this commerce discount
 	*/
 	@Override
-	public java.lang.String getLimitationType() {
+	public String getLimitationType() {
 		return _commerceDiscount.getLimitationType();
 	}
 
@@ -523,7 +523,7 @@ public class CommerceDiscountWrapper implements CommerceDiscount,
 	* @return the status by user name of this commerce discount
 	*/
 	@Override
-	public java.lang.String getStatusByUserName() {
+	public String getStatusByUserName() {
 		return _commerceDiscount.getStatusByUserName();
 	}
 
@@ -533,7 +533,7 @@ public class CommerceDiscountWrapper implements CommerceDiscount,
 	* @return the status by user uuid of this commerce discount
 	*/
 	@Override
-	public java.lang.String getStatusByUserUuid() {
+	public String getStatusByUserUuid() {
 		return _commerceDiscount.getStatusByUserUuid();
 	}
 
@@ -553,7 +553,7 @@ public class CommerceDiscountWrapper implements CommerceDiscount,
 	* @return the target of this commerce discount
 	*/
 	@Override
-	public java.lang.String getTarget() {
+	public String getTarget() {
 		return _commerceDiscount.getTarget();
 	}
 
@@ -563,7 +563,7 @@ public class CommerceDiscountWrapper implements CommerceDiscount,
 	* @return the title of this commerce discount
 	*/
 	@Override
-	public java.lang.String getTitle() {
+	public String getTitle() {
 		return _commerceDiscount.getTitle();
 	}
 
@@ -573,7 +573,7 @@ public class CommerceDiscountWrapper implements CommerceDiscount,
 	* @return the type of this commerce discount
 	*/
 	@Override
-	public java.lang.String getType() {
+	public String getType() {
 		return _commerceDiscount.getType();
 	}
 
@@ -583,7 +583,7 @@ public class CommerceDiscountWrapper implements CommerceDiscount,
 	* @return the type settings of this commerce discount
 	*/
 	@Override
-	public java.lang.String getTypeSettings() {
+	public String getTypeSettings() {
 		return _commerceDiscount.getTypeSettings();
 	}
 
@@ -623,7 +623,7 @@ public class CommerceDiscountWrapper implements CommerceDiscount,
 	* @return the user name of this commerce discount
 	*/
 	@Override
-	public java.lang.String getUserName() {
+	public String getUserName() {
 		return _commerceDiscount.getUserName();
 	}
 
@@ -633,7 +633,7 @@ public class CommerceDiscountWrapper implements CommerceDiscount,
 	* @return the user uuid of this commerce discount
 	*/
 	@Override
-	public java.lang.String getUserUuid() {
+	public String getUserUuid() {
 		return _commerceDiscount.getUserUuid();
 	}
 
@@ -643,7 +643,7 @@ public class CommerceDiscountWrapper implements CommerceDiscount,
 	* @return the uuid of this commerce discount
 	*/
 	@Override
-	public java.lang.String getUuid() {
+	public String getUuid() {
 		return _commerceDiscount.getUuid();
 	}
 
@@ -833,7 +833,7 @@ public class CommerceDiscountWrapper implements CommerceDiscount,
 	* @param couponCode the coupon code of this commerce discount
 	*/
 	@Override
-	public void setCouponCode(java.lang.String couponCode) {
+	public void setCouponCode(String couponCode) {
 		_commerceDiscount.setCouponCode(couponCode);
 	}
 
@@ -959,7 +959,7 @@ public class CommerceDiscountWrapper implements CommerceDiscount,
 	* @param limitationType the limitation type of this commerce discount
 	*/
 	@Override
-	public void setLimitationType(java.lang.String limitationType) {
+	public void setLimitationType(String limitationType) {
 		_commerceDiscount.setLimitationType(limitationType);
 	}
 
@@ -1039,7 +1039,7 @@ public class CommerceDiscountWrapper implements CommerceDiscount,
 	* @param statusByUserName the status by user name of this commerce discount
 	*/
 	@Override
-	public void setStatusByUserName(java.lang.String statusByUserName) {
+	public void setStatusByUserName(String statusByUserName) {
 		_commerceDiscount.setStatusByUserName(statusByUserName);
 	}
 
@@ -1049,7 +1049,7 @@ public class CommerceDiscountWrapper implements CommerceDiscount,
 	* @param statusByUserUuid the status by user uuid of this commerce discount
 	*/
 	@Override
-	public void setStatusByUserUuid(java.lang.String statusByUserUuid) {
+	public void setStatusByUserUuid(String statusByUserUuid) {
 		_commerceDiscount.setStatusByUserUuid(statusByUserUuid);
 	}
 
@@ -1069,7 +1069,7 @@ public class CommerceDiscountWrapper implements CommerceDiscount,
 	* @param target the target of this commerce discount
 	*/
 	@Override
-	public void setTarget(java.lang.String target) {
+	public void setTarget(String target) {
 		_commerceDiscount.setTarget(target);
 	}
 
@@ -1079,7 +1079,7 @@ public class CommerceDiscountWrapper implements CommerceDiscount,
 	* @param title the title of this commerce discount
 	*/
 	@Override
-	public void setTitle(java.lang.String title) {
+	public void setTitle(String title) {
 		_commerceDiscount.setTitle(title);
 	}
 
@@ -1089,7 +1089,7 @@ public class CommerceDiscountWrapper implements CommerceDiscount,
 	* @param type the type of this commerce discount
 	*/
 	@Override
-	public void setType(java.lang.String type) {
+	public void setType(String type) {
 		_commerceDiscount.setType(type);
 	}
 
@@ -1099,7 +1099,7 @@ public class CommerceDiscountWrapper implements CommerceDiscount,
 	* @param typeSettings the type settings of this commerce discount
 	*/
 	@Override
-	public void setTypeSettings(java.lang.String typeSettings) {
+	public void setTypeSettings(String typeSettings) {
 		_commerceDiscount.setTypeSettings(typeSettings);
 	}
 
@@ -1139,7 +1139,7 @@ public class CommerceDiscountWrapper implements CommerceDiscount,
 	* @param userName the user name of this commerce discount
 	*/
 	@Override
-	public void setUserName(java.lang.String userName) {
+	public void setUserName(String userName) {
 		_commerceDiscount.setUserName(userName);
 	}
 
@@ -1149,7 +1149,7 @@ public class CommerceDiscountWrapper implements CommerceDiscount,
 	* @param userUuid the user uuid of this commerce discount
 	*/
 	@Override
-	public void setUserUuid(java.lang.String userUuid) {
+	public void setUserUuid(String userUuid) {
 		_commerceDiscount.setUserUuid(userUuid);
 	}
 
@@ -1159,7 +1159,7 @@ public class CommerceDiscountWrapper implements CommerceDiscount,
 	* @param uuid the uuid of this commerce discount
 	*/
 	@Override
-	public void setUuid(java.lang.String uuid) {
+	public void setUuid(String uuid) {
 		_commerceDiscount.setUuid(uuid);
 	}
 
@@ -1174,7 +1174,7 @@ public class CommerceDiscountWrapper implements CommerceDiscount,
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _commerceDiscount.toString();
 	}
 
@@ -1184,7 +1184,7 @@ public class CommerceDiscountWrapper implements CommerceDiscount,
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _commerceDiscount.toXmlString();
 	}
 

@@ -57,7 +57,7 @@ public class CommerceTaxFixedRateAddressRelLocalServiceUtil {
 
 	public static com.liferay.commerce.tax.engine.fixed.model.CommerceTaxFixedRateAddressRel addCommerceTaxFixedRateAddressRel(
 		long commerceTaxMethodId, long cpTaxCategoryId, long commerceCountryId,
-		long commerceRegionId, java.lang.String zip, double rate,
+		long commerceRegionId, String zip, double rate,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
@@ -211,7 +211,7 @@ public class CommerceTaxFixedRateAddressRelLocalServiceUtil {
 
 	public static com.liferay.commerce.tax.engine.fixed.model.CommerceTaxFixedRateAddressRel fetchCommerceTaxFixedRateAddressRel(
 		long commerceTaxMethodId, long commerceCountryId,
-		long commerceRegionId, java.lang.String zip) {
+		long commerceRegionId, String zip) {
 		return getService()
 				   .fetchCommerceTaxFixedRateAddressRel(commerceTaxMethodId,
 			commerceCountryId, commerceRegionId, zip);
@@ -311,7 +311,7 @@ public class CommerceTaxFixedRateAddressRelLocalServiceUtil {
 	*
 	* @return the OSGi service identifier
 	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
+	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 
@@ -335,7 +335,7 @@ public class CommerceTaxFixedRateAddressRelLocalServiceUtil {
 
 	public static com.liferay.commerce.tax.engine.fixed.model.CommerceTaxFixedRateAddressRel updateCommerceTaxFixedRateAddressRel(
 		long commerceTaxFixedRateAddressRelId, long commerceCountryId,
-		long commerceRegionId, java.lang.String zip, double rate)
+		long commerceRegionId, String zip, double rate)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .updateCommerceTaxFixedRateAddressRel(commerceTaxFixedRateAddressRelId,

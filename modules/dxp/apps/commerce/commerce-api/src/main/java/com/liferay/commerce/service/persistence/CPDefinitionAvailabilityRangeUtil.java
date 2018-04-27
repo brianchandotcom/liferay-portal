@@ -122,8 +122,7 @@ public class CPDefinitionAvailabilityRangeUtil {
 	* @param uuid the uuid
 	* @return the matching cp definition availability ranges
 	*/
-	public static List<CPDefinitionAvailabilityRange> findByUuid(
-		java.lang.String uuid) {
+	public static List<CPDefinitionAvailabilityRange> findByUuid(String uuid) {
 		return getPersistence().findByUuid(uuid);
 	}
 
@@ -139,8 +138,8 @@ public class CPDefinitionAvailabilityRangeUtil {
 	* @param end the upper bound of the range of cp definition availability ranges (not inclusive)
 	* @return the range of matching cp definition availability ranges
 	*/
-	public static List<CPDefinitionAvailabilityRange> findByUuid(
-		java.lang.String uuid, int start, int end) {
+	public static List<CPDefinitionAvailabilityRange> findByUuid(String uuid,
+		int start, int end) {
 		return getPersistence().findByUuid(uuid, start, end);
 	}
 
@@ -157,8 +156,8 @@ public class CPDefinitionAvailabilityRangeUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching cp definition availability ranges
 	*/
-	public static List<CPDefinitionAvailabilityRange> findByUuid(
-		java.lang.String uuid, int start, int end,
+	public static List<CPDefinitionAvailabilityRange> findByUuid(String uuid,
+		int start, int end,
 		OrderByComparator<CPDefinitionAvailabilityRange> orderByComparator) {
 		return getPersistence().findByUuid(uuid, start, end, orderByComparator);
 	}
@@ -177,8 +176,8 @@ public class CPDefinitionAvailabilityRangeUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching cp definition availability ranges
 	*/
-	public static List<CPDefinitionAvailabilityRange> findByUuid(
-		java.lang.String uuid, int start, int end,
+	public static List<CPDefinitionAvailabilityRange> findByUuid(String uuid,
+		int start, int end,
 		OrderByComparator<CPDefinitionAvailabilityRange> orderByComparator,
 		boolean retrieveFromCache) {
 		return getPersistence()
@@ -194,8 +193,7 @@ public class CPDefinitionAvailabilityRangeUtil {
 	* @return the first matching cp definition availability range
 	* @throws NoSuchCPDefinitionAvailabilityRangeException if a matching cp definition availability range could not be found
 	*/
-	public static CPDefinitionAvailabilityRange findByUuid_First(
-		java.lang.String uuid,
+	public static CPDefinitionAvailabilityRange findByUuid_First(String uuid,
 		OrderByComparator<CPDefinitionAvailabilityRange> orderByComparator)
 		throws com.liferay.commerce.exception.NoSuchCPDefinitionAvailabilityRangeException {
 		return getPersistence().findByUuid_First(uuid, orderByComparator);
@@ -208,8 +206,7 @@ public class CPDefinitionAvailabilityRangeUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching cp definition availability range, or <code>null</code> if a matching cp definition availability range could not be found
 	*/
-	public static CPDefinitionAvailabilityRange fetchByUuid_First(
-		java.lang.String uuid,
+	public static CPDefinitionAvailabilityRange fetchByUuid_First(String uuid,
 		OrderByComparator<CPDefinitionAvailabilityRange> orderByComparator) {
 		return getPersistence().fetchByUuid_First(uuid, orderByComparator);
 	}
@@ -222,8 +219,7 @@ public class CPDefinitionAvailabilityRangeUtil {
 	* @return the last matching cp definition availability range
 	* @throws NoSuchCPDefinitionAvailabilityRangeException if a matching cp definition availability range could not be found
 	*/
-	public static CPDefinitionAvailabilityRange findByUuid_Last(
-		java.lang.String uuid,
+	public static CPDefinitionAvailabilityRange findByUuid_Last(String uuid,
 		OrderByComparator<CPDefinitionAvailabilityRange> orderByComparator)
 		throws com.liferay.commerce.exception.NoSuchCPDefinitionAvailabilityRangeException {
 		return getPersistence().findByUuid_Last(uuid, orderByComparator);
@@ -236,8 +232,7 @@ public class CPDefinitionAvailabilityRangeUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching cp definition availability range, or <code>null</code> if a matching cp definition availability range could not be found
 	*/
-	public static CPDefinitionAvailabilityRange fetchByUuid_Last(
-		java.lang.String uuid,
+	public static CPDefinitionAvailabilityRange fetchByUuid_Last(String uuid,
 		OrderByComparator<CPDefinitionAvailabilityRange> orderByComparator) {
 		return getPersistence().fetchByUuid_Last(uuid, orderByComparator);
 	}
@@ -252,7 +247,7 @@ public class CPDefinitionAvailabilityRangeUtil {
 	* @throws NoSuchCPDefinitionAvailabilityRangeException if a cp definition availability range with the primary key could not be found
 	*/
 	public static CPDefinitionAvailabilityRange[] findByUuid_PrevAndNext(
-		long CPDefinitionAvailabilityRangeId, java.lang.String uuid,
+		long CPDefinitionAvailabilityRangeId, String uuid,
 		OrderByComparator<CPDefinitionAvailabilityRange> orderByComparator)
 		throws com.liferay.commerce.exception.NoSuchCPDefinitionAvailabilityRangeException {
 		return getPersistence()
@@ -265,7 +260,7 @@ public class CPDefinitionAvailabilityRangeUtil {
 	*
 	* @param uuid the uuid
 	*/
-	public static void removeByUuid(java.lang.String uuid) {
+	public static void removeByUuid(String uuid) {
 		getPersistence().removeByUuid(uuid);
 	}
 
@@ -275,7 +270,7 @@ public class CPDefinitionAvailabilityRangeUtil {
 	* @param uuid the uuid
 	* @return the number of matching cp definition availability ranges
 	*/
-	public static int countByUuid(java.lang.String uuid) {
+	public static int countByUuid(String uuid) {
 		return getPersistence().countByUuid(uuid);
 	}
 
@@ -287,8 +282,8 @@ public class CPDefinitionAvailabilityRangeUtil {
 	* @return the matching cp definition availability range
 	* @throws NoSuchCPDefinitionAvailabilityRangeException if a matching cp definition availability range could not be found
 	*/
-	public static CPDefinitionAvailabilityRange findByUUID_G(
-		java.lang.String uuid, long groupId)
+	public static CPDefinitionAvailabilityRange findByUUID_G(String uuid,
+		long groupId)
 		throws com.liferay.commerce.exception.NoSuchCPDefinitionAvailabilityRangeException {
 		return getPersistence().findByUUID_G(uuid, groupId);
 	}
@@ -300,8 +295,8 @@ public class CPDefinitionAvailabilityRangeUtil {
 	* @param groupId the group ID
 	* @return the matching cp definition availability range, or <code>null</code> if a matching cp definition availability range could not be found
 	*/
-	public static CPDefinitionAvailabilityRange fetchByUUID_G(
-		java.lang.String uuid, long groupId) {
+	public static CPDefinitionAvailabilityRange fetchByUUID_G(String uuid,
+		long groupId) {
 		return getPersistence().fetchByUUID_G(uuid, groupId);
 	}
 
@@ -313,8 +308,8 @@ public class CPDefinitionAvailabilityRangeUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching cp definition availability range, or <code>null</code> if a matching cp definition availability range could not be found
 	*/
-	public static CPDefinitionAvailabilityRange fetchByUUID_G(
-		java.lang.String uuid, long groupId, boolean retrieveFromCache) {
+	public static CPDefinitionAvailabilityRange fetchByUUID_G(String uuid,
+		long groupId, boolean retrieveFromCache) {
 		return getPersistence().fetchByUUID_G(uuid, groupId, retrieveFromCache);
 	}
 
@@ -325,8 +320,8 @@ public class CPDefinitionAvailabilityRangeUtil {
 	* @param groupId the group ID
 	* @return the cp definition availability range that was removed
 	*/
-	public static CPDefinitionAvailabilityRange removeByUUID_G(
-		java.lang.String uuid, long groupId)
+	public static CPDefinitionAvailabilityRange removeByUUID_G(String uuid,
+		long groupId)
 		throws com.liferay.commerce.exception.NoSuchCPDefinitionAvailabilityRangeException {
 		return getPersistence().removeByUUID_G(uuid, groupId);
 	}
@@ -338,7 +333,7 @@ public class CPDefinitionAvailabilityRangeUtil {
 	* @param groupId the group ID
 	* @return the number of matching cp definition availability ranges
 	*/
-	public static int countByUUID_G(java.lang.String uuid, long groupId) {
+	public static int countByUUID_G(String uuid, long groupId) {
 		return getPersistence().countByUUID_G(uuid, groupId);
 	}
 
@@ -350,7 +345,7 @@ public class CPDefinitionAvailabilityRangeUtil {
 	* @return the matching cp definition availability ranges
 	*/
 	public static List<CPDefinitionAvailabilityRange> findByUuid_C(
-		java.lang.String uuid, long companyId) {
+		String uuid, long companyId) {
 		return getPersistence().findByUuid_C(uuid, companyId);
 	}
 
@@ -368,7 +363,7 @@ public class CPDefinitionAvailabilityRangeUtil {
 	* @return the range of matching cp definition availability ranges
 	*/
 	public static List<CPDefinitionAvailabilityRange> findByUuid_C(
-		java.lang.String uuid, long companyId, int start, int end) {
+		String uuid, long companyId, int start, int end) {
 		return getPersistence().findByUuid_C(uuid, companyId, start, end);
 	}
 
@@ -387,7 +382,7 @@ public class CPDefinitionAvailabilityRangeUtil {
 	* @return the ordered range of matching cp definition availability ranges
 	*/
 	public static List<CPDefinitionAvailabilityRange> findByUuid_C(
-		java.lang.String uuid, long companyId, int start, int end,
+		String uuid, long companyId, int start, int end,
 		OrderByComparator<CPDefinitionAvailabilityRange> orderByComparator) {
 		return getPersistence()
 				   .findByUuid_C(uuid, companyId, start, end, orderByComparator);
@@ -409,7 +404,7 @@ public class CPDefinitionAvailabilityRangeUtil {
 	* @return the ordered range of matching cp definition availability ranges
 	*/
 	public static List<CPDefinitionAvailabilityRange> findByUuid_C(
-		java.lang.String uuid, long companyId, int start, int end,
+		String uuid, long companyId, int start, int end,
 		OrderByComparator<CPDefinitionAvailabilityRange> orderByComparator,
 		boolean retrieveFromCache) {
 		return getPersistence()
@@ -427,7 +422,7 @@ public class CPDefinitionAvailabilityRangeUtil {
 	* @throws NoSuchCPDefinitionAvailabilityRangeException if a matching cp definition availability range could not be found
 	*/
 	public static CPDefinitionAvailabilityRange findByUuid_C_First(
-		java.lang.String uuid, long companyId,
+		String uuid, long companyId,
 		OrderByComparator<CPDefinitionAvailabilityRange> orderByComparator)
 		throws com.liferay.commerce.exception.NoSuchCPDefinitionAvailabilityRangeException {
 		return getPersistence()
@@ -443,7 +438,7 @@ public class CPDefinitionAvailabilityRangeUtil {
 	* @return the first matching cp definition availability range, or <code>null</code> if a matching cp definition availability range could not be found
 	*/
 	public static CPDefinitionAvailabilityRange fetchByUuid_C_First(
-		java.lang.String uuid, long companyId,
+		String uuid, long companyId,
 		OrderByComparator<CPDefinitionAvailabilityRange> orderByComparator) {
 		return getPersistence()
 				   .fetchByUuid_C_First(uuid, companyId, orderByComparator);
@@ -458,8 +453,8 @@ public class CPDefinitionAvailabilityRangeUtil {
 	* @return the last matching cp definition availability range
 	* @throws NoSuchCPDefinitionAvailabilityRangeException if a matching cp definition availability range could not be found
 	*/
-	public static CPDefinitionAvailabilityRange findByUuid_C_Last(
-		java.lang.String uuid, long companyId,
+	public static CPDefinitionAvailabilityRange findByUuid_C_Last(String uuid,
+		long companyId,
 		OrderByComparator<CPDefinitionAvailabilityRange> orderByComparator)
 		throws com.liferay.commerce.exception.NoSuchCPDefinitionAvailabilityRangeException {
 		return getPersistence()
@@ -475,7 +470,7 @@ public class CPDefinitionAvailabilityRangeUtil {
 	* @return the last matching cp definition availability range, or <code>null</code> if a matching cp definition availability range could not be found
 	*/
 	public static CPDefinitionAvailabilityRange fetchByUuid_C_Last(
-		java.lang.String uuid, long companyId,
+		String uuid, long companyId,
 		OrderByComparator<CPDefinitionAvailabilityRange> orderByComparator) {
 		return getPersistence()
 				   .fetchByUuid_C_Last(uuid, companyId, orderByComparator);
@@ -492,8 +487,7 @@ public class CPDefinitionAvailabilityRangeUtil {
 	* @throws NoSuchCPDefinitionAvailabilityRangeException if a cp definition availability range with the primary key could not be found
 	*/
 	public static CPDefinitionAvailabilityRange[] findByUuid_C_PrevAndNext(
-		long CPDefinitionAvailabilityRangeId, java.lang.String uuid,
-		long companyId,
+		long CPDefinitionAvailabilityRangeId, String uuid, long companyId,
 		OrderByComparator<CPDefinitionAvailabilityRange> orderByComparator)
 		throws com.liferay.commerce.exception.NoSuchCPDefinitionAvailabilityRangeException {
 		return getPersistence()
@@ -507,7 +501,7 @@ public class CPDefinitionAvailabilityRangeUtil {
 	* @param uuid the uuid
 	* @param companyId the company ID
 	*/
-	public static void removeByUuid_C(java.lang.String uuid, long companyId) {
+	public static void removeByUuid_C(String uuid, long companyId) {
 		getPersistence().removeByUuid_C(uuid, companyId);
 	}
 
@@ -518,7 +512,7 @@ public class CPDefinitionAvailabilityRangeUtil {
 	* @param companyId the company ID
 	* @return the number of matching cp definition availability ranges
 	*/
-	public static int countByUuid_C(java.lang.String uuid, long companyId) {
+	public static int countByUuid_C(String uuid, long companyId) {
 		return getPersistence().countByUuid_C(uuid, companyId);
 	}
 
@@ -919,7 +913,7 @@ public class CPDefinitionAvailabilityRangeUtil {
 		return getPersistence().countAll();
 	}
 
-	public static java.util.Set<java.lang.String> getBadColumnNames() {
+	public static java.util.Set<String> getBadColumnNames() {
 		return getPersistence().getBadColumnNames();
 	}
 

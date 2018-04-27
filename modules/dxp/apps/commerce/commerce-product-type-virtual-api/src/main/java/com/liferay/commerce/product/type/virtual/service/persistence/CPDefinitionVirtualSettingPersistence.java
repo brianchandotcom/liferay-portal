@@ -47,8 +47,7 @@ public interface CPDefinitionVirtualSettingPersistence extends BasePersistence<C
 	* @param uuid the uuid
 	* @return the matching cp definition virtual settings
 	*/
-	public java.util.List<CPDefinitionVirtualSetting> findByUuid(
-		java.lang.String uuid);
+	public java.util.List<CPDefinitionVirtualSetting> findByUuid(String uuid);
 
 	/**
 	* Returns a range of all the cp definition virtual settings where uuid = &#63;.
@@ -62,8 +61,8 @@ public interface CPDefinitionVirtualSettingPersistence extends BasePersistence<C
 	* @param end the upper bound of the range of cp definition virtual settings (not inclusive)
 	* @return the range of matching cp definition virtual settings
 	*/
-	public java.util.List<CPDefinitionVirtualSetting> findByUuid(
-		java.lang.String uuid, int start, int end);
+	public java.util.List<CPDefinitionVirtualSetting> findByUuid(String uuid,
+		int start, int end);
 
 	/**
 	* Returns an ordered range of all the cp definition virtual settings where uuid = &#63;.
@@ -78,8 +77,8 @@ public interface CPDefinitionVirtualSettingPersistence extends BasePersistence<C
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching cp definition virtual settings
 	*/
-	public java.util.List<CPDefinitionVirtualSetting> findByUuid(
-		java.lang.String uuid, int start, int end,
+	public java.util.List<CPDefinitionVirtualSetting> findByUuid(String uuid,
+		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<CPDefinitionVirtualSetting> orderByComparator);
 
 	/**
@@ -96,8 +95,8 @@ public interface CPDefinitionVirtualSettingPersistence extends BasePersistence<C
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching cp definition virtual settings
 	*/
-	public java.util.List<CPDefinitionVirtualSetting> findByUuid(
-		java.lang.String uuid, int start, int end,
+	public java.util.List<CPDefinitionVirtualSetting> findByUuid(String uuid,
+		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<CPDefinitionVirtualSetting> orderByComparator,
 		boolean retrieveFromCache);
 
@@ -109,7 +108,7 @@ public interface CPDefinitionVirtualSettingPersistence extends BasePersistence<C
 	* @return the first matching cp definition virtual setting
 	* @throws NoSuchCPDefinitionVirtualSettingException if a matching cp definition virtual setting could not be found
 	*/
-	public CPDefinitionVirtualSetting findByUuid_First(java.lang.String uuid,
+	public CPDefinitionVirtualSetting findByUuid_First(String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<CPDefinitionVirtualSetting> orderByComparator)
 		throws NoSuchCPDefinitionVirtualSettingException;
 
@@ -120,7 +119,7 @@ public interface CPDefinitionVirtualSettingPersistence extends BasePersistence<C
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching cp definition virtual setting, or <code>null</code> if a matching cp definition virtual setting could not be found
 	*/
-	public CPDefinitionVirtualSetting fetchByUuid_First(java.lang.String uuid,
+	public CPDefinitionVirtualSetting fetchByUuid_First(String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<CPDefinitionVirtualSetting> orderByComparator);
 
 	/**
@@ -131,7 +130,7 @@ public interface CPDefinitionVirtualSettingPersistence extends BasePersistence<C
 	* @return the last matching cp definition virtual setting
 	* @throws NoSuchCPDefinitionVirtualSettingException if a matching cp definition virtual setting could not be found
 	*/
-	public CPDefinitionVirtualSetting findByUuid_Last(java.lang.String uuid,
+	public CPDefinitionVirtualSetting findByUuid_Last(String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<CPDefinitionVirtualSetting> orderByComparator)
 		throws NoSuchCPDefinitionVirtualSettingException;
 
@@ -142,7 +141,7 @@ public interface CPDefinitionVirtualSettingPersistence extends BasePersistence<C
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching cp definition virtual setting, or <code>null</code> if a matching cp definition virtual setting could not be found
 	*/
-	public CPDefinitionVirtualSetting fetchByUuid_Last(java.lang.String uuid,
+	public CPDefinitionVirtualSetting fetchByUuid_Last(String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<CPDefinitionVirtualSetting> orderByComparator);
 
 	/**
@@ -155,7 +154,7 @@ public interface CPDefinitionVirtualSettingPersistence extends BasePersistence<C
 	* @throws NoSuchCPDefinitionVirtualSettingException if a cp definition virtual setting with the primary key could not be found
 	*/
 	public CPDefinitionVirtualSetting[] findByUuid_PrevAndNext(
-		long CPDefinitionVirtualSettingId, java.lang.String uuid,
+		long CPDefinitionVirtualSettingId, String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<CPDefinitionVirtualSetting> orderByComparator)
 		throws NoSuchCPDefinitionVirtualSettingException;
 
@@ -164,7 +163,7 @@ public interface CPDefinitionVirtualSettingPersistence extends BasePersistence<C
 	*
 	* @param uuid the uuid
 	*/
-	public void removeByUuid(java.lang.String uuid);
+	public void removeByUuid(String uuid);
 
 	/**
 	* Returns the number of cp definition virtual settings where uuid = &#63;.
@@ -172,7 +171,7 @@ public interface CPDefinitionVirtualSettingPersistence extends BasePersistence<C
 	* @param uuid the uuid
 	* @return the number of matching cp definition virtual settings
 	*/
-	public int countByUuid(java.lang.String uuid);
+	public int countByUuid(String uuid);
 
 	/**
 	* Returns the cp definition virtual setting where uuid = &#63; and groupId = &#63; or throws a {@link NoSuchCPDefinitionVirtualSettingException} if it could not be found.
@@ -182,8 +181,8 @@ public interface CPDefinitionVirtualSettingPersistence extends BasePersistence<C
 	* @return the matching cp definition virtual setting
 	* @throws NoSuchCPDefinitionVirtualSettingException if a matching cp definition virtual setting could not be found
 	*/
-	public CPDefinitionVirtualSetting findByUUID_G(java.lang.String uuid,
-		long groupId) throws NoSuchCPDefinitionVirtualSettingException;
+	public CPDefinitionVirtualSetting findByUUID_G(String uuid, long groupId)
+		throws NoSuchCPDefinitionVirtualSettingException;
 
 	/**
 	* Returns the cp definition virtual setting where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
@@ -192,8 +191,7 @@ public interface CPDefinitionVirtualSettingPersistence extends BasePersistence<C
 	* @param groupId the group ID
 	* @return the matching cp definition virtual setting, or <code>null</code> if a matching cp definition virtual setting could not be found
 	*/
-	public CPDefinitionVirtualSetting fetchByUUID_G(java.lang.String uuid,
-		long groupId);
+	public CPDefinitionVirtualSetting fetchByUUID_G(String uuid, long groupId);
 
 	/**
 	* Returns the cp definition virtual setting where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -203,8 +201,8 @@ public interface CPDefinitionVirtualSettingPersistence extends BasePersistence<C
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching cp definition virtual setting, or <code>null</code> if a matching cp definition virtual setting could not be found
 	*/
-	public CPDefinitionVirtualSetting fetchByUUID_G(java.lang.String uuid,
-		long groupId, boolean retrieveFromCache);
+	public CPDefinitionVirtualSetting fetchByUUID_G(String uuid, long groupId,
+		boolean retrieveFromCache);
 
 	/**
 	* Removes the cp definition virtual setting where uuid = &#63; and groupId = &#63; from the database.
@@ -213,8 +211,8 @@ public interface CPDefinitionVirtualSettingPersistence extends BasePersistence<C
 	* @param groupId the group ID
 	* @return the cp definition virtual setting that was removed
 	*/
-	public CPDefinitionVirtualSetting removeByUUID_G(java.lang.String uuid,
-		long groupId) throws NoSuchCPDefinitionVirtualSettingException;
+	public CPDefinitionVirtualSetting removeByUUID_G(String uuid, long groupId)
+		throws NoSuchCPDefinitionVirtualSettingException;
 
 	/**
 	* Returns the number of cp definition virtual settings where uuid = &#63; and groupId = &#63;.
@@ -223,7 +221,7 @@ public interface CPDefinitionVirtualSettingPersistence extends BasePersistence<C
 	* @param groupId the group ID
 	* @return the number of matching cp definition virtual settings
 	*/
-	public int countByUUID_G(java.lang.String uuid, long groupId);
+	public int countByUUID_G(String uuid, long groupId);
 
 	/**
 	* Returns all the cp definition virtual settings where uuid = &#63; and companyId = &#63;.
@@ -233,7 +231,7 @@ public interface CPDefinitionVirtualSettingPersistence extends BasePersistence<C
 	* @return the matching cp definition virtual settings
 	*/
 	public java.util.List<CPDefinitionVirtualSetting> findByUuid_C(
-		java.lang.String uuid, long companyId);
+		String uuid, long companyId);
 
 	/**
 	* Returns a range of all the cp definition virtual settings where uuid = &#63; and companyId = &#63;.
@@ -249,7 +247,7 @@ public interface CPDefinitionVirtualSettingPersistence extends BasePersistence<C
 	* @return the range of matching cp definition virtual settings
 	*/
 	public java.util.List<CPDefinitionVirtualSetting> findByUuid_C(
-		java.lang.String uuid, long companyId, int start, int end);
+		String uuid, long companyId, int start, int end);
 
 	/**
 	* Returns an ordered range of all the cp definition virtual settings where uuid = &#63; and companyId = &#63;.
@@ -266,7 +264,7 @@ public interface CPDefinitionVirtualSettingPersistence extends BasePersistence<C
 	* @return the ordered range of matching cp definition virtual settings
 	*/
 	public java.util.List<CPDefinitionVirtualSetting> findByUuid_C(
-		java.lang.String uuid, long companyId, int start, int end,
+		String uuid, long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<CPDefinitionVirtualSetting> orderByComparator);
 
 	/**
@@ -285,7 +283,7 @@ public interface CPDefinitionVirtualSettingPersistence extends BasePersistence<C
 	* @return the ordered range of matching cp definition virtual settings
 	*/
 	public java.util.List<CPDefinitionVirtualSetting> findByUuid_C(
-		java.lang.String uuid, long companyId, int start, int end,
+		String uuid, long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<CPDefinitionVirtualSetting> orderByComparator,
 		boolean retrieveFromCache);
 
@@ -298,8 +296,8 @@ public interface CPDefinitionVirtualSettingPersistence extends BasePersistence<C
 	* @return the first matching cp definition virtual setting
 	* @throws NoSuchCPDefinitionVirtualSettingException if a matching cp definition virtual setting could not be found
 	*/
-	public CPDefinitionVirtualSetting findByUuid_C_First(
-		java.lang.String uuid, long companyId,
+	public CPDefinitionVirtualSetting findByUuid_C_First(String uuid,
+		long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<CPDefinitionVirtualSetting> orderByComparator)
 		throws NoSuchCPDefinitionVirtualSettingException;
 
@@ -311,8 +309,8 @@ public interface CPDefinitionVirtualSettingPersistence extends BasePersistence<C
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching cp definition virtual setting, or <code>null</code> if a matching cp definition virtual setting could not be found
 	*/
-	public CPDefinitionVirtualSetting fetchByUuid_C_First(
-		java.lang.String uuid, long companyId,
+	public CPDefinitionVirtualSetting fetchByUuid_C_First(String uuid,
+		long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<CPDefinitionVirtualSetting> orderByComparator);
 
 	/**
@@ -324,7 +322,7 @@ public interface CPDefinitionVirtualSettingPersistence extends BasePersistence<C
 	* @return the last matching cp definition virtual setting
 	* @throws NoSuchCPDefinitionVirtualSettingException if a matching cp definition virtual setting could not be found
 	*/
-	public CPDefinitionVirtualSetting findByUuid_C_Last(java.lang.String uuid,
+	public CPDefinitionVirtualSetting findByUuid_C_Last(String uuid,
 		long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<CPDefinitionVirtualSetting> orderByComparator)
 		throws NoSuchCPDefinitionVirtualSettingException;
@@ -337,8 +335,8 @@ public interface CPDefinitionVirtualSettingPersistence extends BasePersistence<C
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching cp definition virtual setting, or <code>null</code> if a matching cp definition virtual setting could not be found
 	*/
-	public CPDefinitionVirtualSetting fetchByUuid_C_Last(
-		java.lang.String uuid, long companyId,
+	public CPDefinitionVirtualSetting fetchByUuid_C_Last(String uuid,
+		long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<CPDefinitionVirtualSetting> orderByComparator);
 
 	/**
@@ -352,8 +350,7 @@ public interface CPDefinitionVirtualSettingPersistence extends BasePersistence<C
 	* @throws NoSuchCPDefinitionVirtualSettingException if a cp definition virtual setting with the primary key could not be found
 	*/
 	public CPDefinitionVirtualSetting[] findByUuid_C_PrevAndNext(
-		long CPDefinitionVirtualSettingId, java.lang.String uuid,
-		long companyId,
+		long CPDefinitionVirtualSettingId, String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<CPDefinitionVirtualSetting> orderByComparator)
 		throws NoSuchCPDefinitionVirtualSettingException;
 
@@ -363,7 +360,7 @@ public interface CPDefinitionVirtualSettingPersistence extends BasePersistence<C
 	* @param uuid the uuid
 	* @param companyId the company ID
 	*/
-	public void removeByUuid_C(java.lang.String uuid, long companyId);
+	public void removeByUuid_C(String uuid, long companyId);
 
 	/**
 	* Returns the number of cp definition virtual settings where uuid = &#63; and companyId = &#63;.
@@ -372,7 +369,7 @@ public interface CPDefinitionVirtualSettingPersistence extends BasePersistence<C
 	* @param companyId the company ID
 	* @return the number of matching cp definition virtual settings
 	*/
-	public int countByUuid_C(java.lang.String uuid, long companyId);
+	public int countByUuid_C(String uuid, long companyId);
 
 	/**
 	* Returns the cp definition virtual setting where CPDefinitionId = &#63; or throws a {@link NoSuchCPDefinitionVirtualSettingException} if it could not be found.
@@ -547,5 +544,5 @@ public interface CPDefinitionVirtualSettingPersistence extends BasePersistence<C
 	public int countAll();
 
 	@Override
-	public java.util.Set<java.lang.String> getBadColumnNames();
+	public java.util.Set<String> getBadColumnNames();
 }

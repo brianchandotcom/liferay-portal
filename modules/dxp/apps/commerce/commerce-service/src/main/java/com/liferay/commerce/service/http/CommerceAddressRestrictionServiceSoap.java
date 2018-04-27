@@ -66,7 +66,7 @@ import java.rmi.RemoteException;
 @ProviderType
 public class CommerceAddressRestrictionServiceSoap {
 	public static com.liferay.commerce.model.CommerceAddressRestrictionSoap addCommerceAddressRestriction(
-		java.lang.String className, long classPK, long commerceCountryId,
+		String className, long classPK, long commerceCountryId,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
@@ -95,7 +95,7 @@ public class CommerceAddressRestrictionServiceSoap {
 	}
 
 	public static com.liferay.commerce.model.CommerceAddressRestrictionSoap fetchCommerceAddressRestriction(
-		java.lang.String className, long classPK, long commerceCountryId)
+		String className, long classPK, long commerceCountryId)
 		throws RemoteException {
 		try {
 			com.liferay.commerce.model.CommerceAddressRestriction returnValue = CommerceAddressRestrictionServiceUtil.fetchCommerceAddressRestriction(className,
@@ -111,7 +111,7 @@ public class CommerceAddressRestrictionServiceSoap {
 	}
 
 	public static com.liferay.commerce.model.CommerceAddressRestrictionSoap[] getCommerceAddressRestrictions(
-		java.lang.String className, long classPK, int start, int end,
+		String className, long classPK, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.model.CommerceAddressRestriction> orderByComparator)
 		throws RemoteException {
 		try {
@@ -128,8 +128,8 @@ public class CommerceAddressRestrictionServiceSoap {
 		}
 	}
 
-	public static int getCommerceAddressRestrictionsCount(
-		java.lang.String className, long classPK) throws RemoteException {
+	public static int getCommerceAddressRestrictionsCount(String className,
+		long classPK) throws RemoteException {
 		try {
 			int returnValue = CommerceAddressRestrictionServiceUtil.getCommerceAddressRestrictionsCount(className,
 					classPK);
@@ -143,9 +143,8 @@ public class CommerceAddressRestrictionServiceSoap {
 		}
 	}
 
-	public static boolean isCommerceAddressRestricted(
-		java.lang.String className, long classPK, long commerceCountryId)
-		throws RemoteException {
+	public static boolean isCommerceAddressRestricted(String className,
+		long classPK, long commerceCountryId) throws RemoteException {
 		try {
 			boolean returnValue = CommerceAddressRestrictionServiceUtil.isCommerceAddressRestricted(className,
 					classPK, commerceCountryId);

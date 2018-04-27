@@ -118,7 +118,7 @@ public class CPOptionValueUtil {
 	* @param uuid the uuid
 	* @return the matching cp option values
 	*/
-	public static List<CPOptionValue> findByUuid(java.lang.String uuid) {
+	public static List<CPOptionValue> findByUuid(String uuid) {
 		return getPersistence().findByUuid(uuid);
 	}
 
@@ -134,8 +134,7 @@ public class CPOptionValueUtil {
 	* @param end the upper bound of the range of cp option values (not inclusive)
 	* @return the range of matching cp option values
 	*/
-	public static List<CPOptionValue> findByUuid(java.lang.String uuid,
-		int start, int end) {
+	public static List<CPOptionValue> findByUuid(String uuid, int start, int end) {
 		return getPersistence().findByUuid(uuid, start, end);
 	}
 
@@ -152,8 +151,8 @@ public class CPOptionValueUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching cp option values
 	*/
-	public static List<CPOptionValue> findByUuid(java.lang.String uuid,
-		int start, int end, OrderByComparator<CPOptionValue> orderByComparator) {
+	public static List<CPOptionValue> findByUuid(String uuid, int start,
+		int end, OrderByComparator<CPOptionValue> orderByComparator) {
 		return getPersistence().findByUuid(uuid, start, end, orderByComparator);
 	}
 
@@ -171,8 +170,8 @@ public class CPOptionValueUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching cp option values
 	*/
-	public static List<CPOptionValue> findByUuid(java.lang.String uuid,
-		int start, int end, OrderByComparator<CPOptionValue> orderByComparator,
+	public static List<CPOptionValue> findByUuid(String uuid, int start,
+		int end, OrderByComparator<CPOptionValue> orderByComparator,
 		boolean retrieveFromCache) {
 		return getPersistence()
 				   .findByUuid(uuid, start, end, orderByComparator,
@@ -187,7 +186,7 @@ public class CPOptionValueUtil {
 	* @return the first matching cp option value
 	* @throws NoSuchCPOptionValueException if a matching cp option value could not be found
 	*/
-	public static CPOptionValue findByUuid_First(java.lang.String uuid,
+	public static CPOptionValue findByUuid_First(String uuid,
 		OrderByComparator<CPOptionValue> orderByComparator)
 		throws com.liferay.commerce.product.exception.NoSuchCPOptionValueException {
 		return getPersistence().findByUuid_First(uuid, orderByComparator);
@@ -200,7 +199,7 @@ public class CPOptionValueUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching cp option value, or <code>null</code> if a matching cp option value could not be found
 	*/
-	public static CPOptionValue fetchByUuid_First(java.lang.String uuid,
+	public static CPOptionValue fetchByUuid_First(String uuid,
 		OrderByComparator<CPOptionValue> orderByComparator) {
 		return getPersistence().fetchByUuid_First(uuid, orderByComparator);
 	}
@@ -213,7 +212,7 @@ public class CPOptionValueUtil {
 	* @return the last matching cp option value
 	* @throws NoSuchCPOptionValueException if a matching cp option value could not be found
 	*/
-	public static CPOptionValue findByUuid_Last(java.lang.String uuid,
+	public static CPOptionValue findByUuid_Last(String uuid,
 		OrderByComparator<CPOptionValue> orderByComparator)
 		throws com.liferay.commerce.product.exception.NoSuchCPOptionValueException {
 		return getPersistence().findByUuid_Last(uuid, orderByComparator);
@@ -226,7 +225,7 @@ public class CPOptionValueUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching cp option value, or <code>null</code> if a matching cp option value could not be found
 	*/
-	public static CPOptionValue fetchByUuid_Last(java.lang.String uuid,
+	public static CPOptionValue fetchByUuid_Last(String uuid,
 		OrderByComparator<CPOptionValue> orderByComparator) {
 		return getPersistence().fetchByUuid_Last(uuid, orderByComparator);
 	}
@@ -241,8 +240,7 @@ public class CPOptionValueUtil {
 	* @throws NoSuchCPOptionValueException if a cp option value with the primary key could not be found
 	*/
 	public static CPOptionValue[] findByUuid_PrevAndNext(long CPOptionValueId,
-		java.lang.String uuid,
-		OrderByComparator<CPOptionValue> orderByComparator)
+		String uuid, OrderByComparator<CPOptionValue> orderByComparator)
 		throws com.liferay.commerce.product.exception.NoSuchCPOptionValueException {
 		return getPersistence()
 				   .findByUuid_PrevAndNext(CPOptionValueId, uuid,
@@ -254,7 +252,7 @@ public class CPOptionValueUtil {
 	*
 	* @param uuid the uuid
 	*/
-	public static void removeByUuid(java.lang.String uuid) {
+	public static void removeByUuid(String uuid) {
 		getPersistence().removeByUuid(uuid);
 	}
 
@@ -264,7 +262,7 @@ public class CPOptionValueUtil {
 	* @param uuid the uuid
 	* @return the number of matching cp option values
 	*/
-	public static int countByUuid(java.lang.String uuid) {
+	public static int countByUuid(String uuid) {
 		return getPersistence().countByUuid(uuid);
 	}
 
@@ -276,7 +274,7 @@ public class CPOptionValueUtil {
 	* @return the matching cp option value
 	* @throws NoSuchCPOptionValueException if a matching cp option value could not be found
 	*/
-	public static CPOptionValue findByUUID_G(java.lang.String uuid, long groupId)
+	public static CPOptionValue findByUUID_G(String uuid, long groupId)
 		throws com.liferay.commerce.product.exception.NoSuchCPOptionValueException {
 		return getPersistence().findByUUID_G(uuid, groupId);
 	}
@@ -288,8 +286,7 @@ public class CPOptionValueUtil {
 	* @param groupId the group ID
 	* @return the matching cp option value, or <code>null</code> if a matching cp option value could not be found
 	*/
-	public static CPOptionValue fetchByUUID_G(java.lang.String uuid,
-		long groupId) {
+	public static CPOptionValue fetchByUUID_G(String uuid, long groupId) {
 		return getPersistence().fetchByUUID_G(uuid, groupId);
 	}
 
@@ -301,8 +298,8 @@ public class CPOptionValueUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching cp option value, or <code>null</code> if a matching cp option value could not be found
 	*/
-	public static CPOptionValue fetchByUUID_G(java.lang.String uuid,
-		long groupId, boolean retrieveFromCache) {
+	public static CPOptionValue fetchByUUID_G(String uuid, long groupId,
+		boolean retrieveFromCache) {
 		return getPersistence().fetchByUUID_G(uuid, groupId, retrieveFromCache);
 	}
 
@@ -313,8 +310,7 @@ public class CPOptionValueUtil {
 	* @param groupId the group ID
 	* @return the cp option value that was removed
 	*/
-	public static CPOptionValue removeByUUID_G(java.lang.String uuid,
-		long groupId)
+	public static CPOptionValue removeByUUID_G(String uuid, long groupId)
 		throws com.liferay.commerce.product.exception.NoSuchCPOptionValueException {
 		return getPersistence().removeByUUID_G(uuid, groupId);
 	}
@@ -326,7 +322,7 @@ public class CPOptionValueUtil {
 	* @param groupId the group ID
 	* @return the number of matching cp option values
 	*/
-	public static int countByUUID_G(java.lang.String uuid, long groupId) {
+	public static int countByUUID_G(String uuid, long groupId) {
 		return getPersistence().countByUUID_G(uuid, groupId);
 	}
 
@@ -337,8 +333,7 @@ public class CPOptionValueUtil {
 	* @param companyId the company ID
 	* @return the matching cp option values
 	*/
-	public static List<CPOptionValue> findByUuid_C(java.lang.String uuid,
-		long companyId) {
+	public static List<CPOptionValue> findByUuid_C(String uuid, long companyId) {
 		return getPersistence().findByUuid_C(uuid, companyId);
 	}
 
@@ -355,8 +350,8 @@ public class CPOptionValueUtil {
 	* @param end the upper bound of the range of cp option values (not inclusive)
 	* @return the range of matching cp option values
 	*/
-	public static List<CPOptionValue> findByUuid_C(java.lang.String uuid,
-		long companyId, int start, int end) {
+	public static List<CPOptionValue> findByUuid_C(String uuid, long companyId,
+		int start, int end) {
 		return getPersistence().findByUuid_C(uuid, companyId, start, end);
 	}
 
@@ -374,9 +369,8 @@ public class CPOptionValueUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching cp option values
 	*/
-	public static List<CPOptionValue> findByUuid_C(java.lang.String uuid,
-		long companyId, int start, int end,
-		OrderByComparator<CPOptionValue> orderByComparator) {
+	public static List<CPOptionValue> findByUuid_C(String uuid, long companyId,
+		int start, int end, OrderByComparator<CPOptionValue> orderByComparator) {
 		return getPersistence()
 				   .findByUuid_C(uuid, companyId, start, end, orderByComparator);
 	}
@@ -396,9 +390,8 @@ public class CPOptionValueUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching cp option values
 	*/
-	public static List<CPOptionValue> findByUuid_C(java.lang.String uuid,
-		long companyId, int start, int end,
-		OrderByComparator<CPOptionValue> orderByComparator,
+	public static List<CPOptionValue> findByUuid_C(String uuid, long companyId,
+		int start, int end, OrderByComparator<CPOptionValue> orderByComparator,
 		boolean retrieveFromCache) {
 		return getPersistence()
 				   .findByUuid_C(uuid, companyId, start, end,
@@ -414,8 +407,8 @@ public class CPOptionValueUtil {
 	* @return the first matching cp option value
 	* @throws NoSuchCPOptionValueException if a matching cp option value could not be found
 	*/
-	public static CPOptionValue findByUuid_C_First(java.lang.String uuid,
-		long companyId, OrderByComparator<CPOptionValue> orderByComparator)
+	public static CPOptionValue findByUuid_C_First(String uuid, long companyId,
+		OrderByComparator<CPOptionValue> orderByComparator)
 		throws com.liferay.commerce.product.exception.NoSuchCPOptionValueException {
 		return getPersistence()
 				   .findByUuid_C_First(uuid, companyId, orderByComparator);
@@ -429,7 +422,7 @@ public class CPOptionValueUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching cp option value, or <code>null</code> if a matching cp option value could not be found
 	*/
-	public static CPOptionValue fetchByUuid_C_First(java.lang.String uuid,
+	public static CPOptionValue fetchByUuid_C_First(String uuid,
 		long companyId, OrderByComparator<CPOptionValue> orderByComparator) {
 		return getPersistence()
 				   .fetchByUuid_C_First(uuid, companyId, orderByComparator);
@@ -444,8 +437,8 @@ public class CPOptionValueUtil {
 	* @return the last matching cp option value
 	* @throws NoSuchCPOptionValueException if a matching cp option value could not be found
 	*/
-	public static CPOptionValue findByUuid_C_Last(java.lang.String uuid,
-		long companyId, OrderByComparator<CPOptionValue> orderByComparator)
+	public static CPOptionValue findByUuid_C_Last(String uuid, long companyId,
+		OrderByComparator<CPOptionValue> orderByComparator)
 		throws com.liferay.commerce.product.exception.NoSuchCPOptionValueException {
 		return getPersistence()
 				   .findByUuid_C_Last(uuid, companyId, orderByComparator);
@@ -459,8 +452,8 @@ public class CPOptionValueUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching cp option value, or <code>null</code> if a matching cp option value could not be found
 	*/
-	public static CPOptionValue fetchByUuid_C_Last(java.lang.String uuid,
-		long companyId, OrderByComparator<CPOptionValue> orderByComparator) {
+	public static CPOptionValue fetchByUuid_C_Last(String uuid, long companyId,
+		OrderByComparator<CPOptionValue> orderByComparator) {
 		return getPersistence()
 				   .fetchByUuid_C_Last(uuid, companyId, orderByComparator);
 	}
@@ -476,7 +469,7 @@ public class CPOptionValueUtil {
 	* @throws NoSuchCPOptionValueException if a cp option value with the primary key could not be found
 	*/
 	public static CPOptionValue[] findByUuid_C_PrevAndNext(
-		long CPOptionValueId, java.lang.String uuid, long companyId,
+		long CPOptionValueId, String uuid, long companyId,
 		OrderByComparator<CPOptionValue> orderByComparator)
 		throws com.liferay.commerce.product.exception.NoSuchCPOptionValueException {
 		return getPersistence()
@@ -490,7 +483,7 @@ public class CPOptionValueUtil {
 	* @param uuid the uuid
 	* @param companyId the company ID
 	*/
-	public static void removeByUuid_C(java.lang.String uuid, long companyId) {
+	public static void removeByUuid_C(String uuid, long companyId) {
 		getPersistence().removeByUuid_C(uuid, companyId);
 	}
 
@@ -501,7 +494,7 @@ public class CPOptionValueUtil {
 	* @param companyId the company ID
 	* @return the number of matching cp option values
 	*/
-	public static int countByUuid_C(java.lang.String uuid, long companyId) {
+	public static int countByUuid_C(String uuid, long companyId) {
 		return getPersistence().countByUuid_C(uuid, companyId);
 	}
 
@@ -992,7 +985,7 @@ public class CPOptionValueUtil {
 	* @return the matching cp option value
 	* @throws NoSuchCPOptionValueException if a matching cp option value could not be found
 	*/
-	public static CPOptionValue findByC_K(long CPOptionId, java.lang.String key)
+	public static CPOptionValue findByC_K(long CPOptionId, String key)
 		throws com.liferay.commerce.product.exception.NoSuchCPOptionValueException {
 		return getPersistence().findByC_K(CPOptionId, key);
 	}
@@ -1004,7 +997,7 @@ public class CPOptionValueUtil {
 	* @param key the key
 	* @return the matching cp option value, or <code>null</code> if a matching cp option value could not be found
 	*/
-	public static CPOptionValue fetchByC_K(long CPOptionId, java.lang.String key) {
+	public static CPOptionValue fetchByC_K(long CPOptionId, String key) {
 		return getPersistence().fetchByC_K(CPOptionId, key);
 	}
 
@@ -1016,8 +1009,8 @@ public class CPOptionValueUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching cp option value, or <code>null</code> if a matching cp option value could not be found
 	*/
-	public static CPOptionValue fetchByC_K(long CPOptionId,
-		java.lang.String key, boolean retrieveFromCache) {
+	public static CPOptionValue fetchByC_K(long CPOptionId, String key,
+		boolean retrieveFromCache) {
 		return getPersistence().fetchByC_K(CPOptionId, key, retrieveFromCache);
 	}
 
@@ -1028,8 +1021,7 @@ public class CPOptionValueUtil {
 	* @param key the key
 	* @return the cp option value that was removed
 	*/
-	public static CPOptionValue removeByC_K(long CPOptionId,
-		java.lang.String key)
+	public static CPOptionValue removeByC_K(long CPOptionId, String key)
 		throws com.liferay.commerce.product.exception.NoSuchCPOptionValueException {
 		return getPersistence().removeByC_K(CPOptionId, key);
 	}
@@ -1041,7 +1033,7 @@ public class CPOptionValueUtil {
 	* @param key the key
 	* @return the number of matching cp option values
 	*/
-	public static int countByC_K(long CPOptionId, java.lang.String key) {
+	public static int countByC_K(long CPOptionId, String key) {
 		return getPersistence().countByC_K(CPOptionId, key);
 	}
 
@@ -1193,7 +1185,7 @@ public class CPOptionValueUtil {
 		return getPersistence().countAll();
 	}
 
-	public static java.util.Set<java.lang.String> getBadColumnNames() {
+	public static java.util.Set<String> getBadColumnNames() {
 		return getPersistence().getBadColumnNames();
 	}
 

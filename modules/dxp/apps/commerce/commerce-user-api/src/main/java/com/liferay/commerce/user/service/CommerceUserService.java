@@ -58,28 +58,26 @@ public interface CommerceUserService extends BaseService {
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public User getUser(long userId) throws PortalException;
 
-	public User updatePassword(long userId, java.lang.String password1,
-		java.lang.String password2, boolean passwordReset)
-		throws PortalException;
+	public User updatePassword(long userId, String password1, String password2,
+		boolean passwordReset) throws PortalException;
 
 	public User updatePasswordReset(long userId, boolean passwordReset)
 		throws PortalException;
 
-	public User updateReminderQuery(long userId, java.lang.String question,
-		java.lang.String answer) throws PortalException;
+	public User updateReminderQuery(long userId, String question, String answer)
+		throws PortalException;
 
-	public User updateUser(long userId, java.lang.String screenName,
-		java.lang.String emailAddress, boolean portrait, byte[] portraitBytes,
-		java.lang.String languageId, java.lang.String firstName,
-		java.lang.String middleName, java.lang.String lastName, long prefixId,
+	public User updateUser(long userId, String screenName, String emailAddress,
+		boolean portrait, byte[] portraitBytes, String languageId,
+		String firstName, String middleName, String lastName, long prefixId,
 		long suffixId, boolean male, int birthdayMonth, int birthdayDay,
-		int birthdayYear, java.lang.String jobTitle,
-		ServiceContext serviceContext) throws PortalException;
+		int birthdayYear, String jobTitle, ServiceContext serviceContext)
+		throws PortalException;
 
 	public void updateUserRoles(long userId, long groupId, long[] roleIds)
 		throws PortalException;

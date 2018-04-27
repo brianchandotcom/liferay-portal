@@ -352,5 +352,5 @@ public interface CPRulePersistence extends BasePersistence<CPRule> {
 	public int countAll();
 
 	@Override
-	public java.util.Set<java.lang.String> getBadColumnNames();
+	public java.util.Set<String> getBadColumnNames();
 }

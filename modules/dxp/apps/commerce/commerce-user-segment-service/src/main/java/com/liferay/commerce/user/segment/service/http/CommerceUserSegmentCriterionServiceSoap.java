@@ -66,8 +66,8 @@ import java.rmi.RemoteException;
 @ProviderType
 public class CommerceUserSegmentCriterionServiceSoap {
 	public static com.liferay.commerce.user.segment.model.CommerceUserSegmentCriterionSoap addCommerceUserSegmentCriterion(
-		long commerceUserSegmentEntryId, java.lang.String type,
-		java.lang.String typeSettings, double priority,
+		long commerceUserSegmentEntryId, String type, String typeSettings,
+		double priority,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
@@ -144,8 +144,8 @@ public class CommerceUserSegmentCriterionServiceSoap {
 	}
 
 	public static com.liferay.commerce.user.segment.model.CommerceUserSegmentCriterionSoap updateCommerceUserSegmentCriterion(
-		long commerceUserSegmentCriterionId, java.lang.String type,
-		java.lang.String typeSettings, double priority,
+		long commerceUserSegmentCriterionId, String type, String typeSettings,
+		double priority,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {

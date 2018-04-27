@@ -57,8 +57,8 @@ import com.liferay.portal.kernel.util.MethodKey;
 public class CommerceUserSegmentEntryServiceHttp {
 	public static com.liferay.commerce.user.segment.model.CommerceUserSegmentEntry addCommerceUserSegmentEntry(
 		HttpPrincipal httpPrincipal,
-		java.util.Map<java.util.Locale, java.lang.String> nameMap,
-		java.lang.String key, boolean active, boolean system, double priority,
+		java.util.Map<java.util.Locale, String> nameMap, String key,
+		boolean active, boolean system, double priority,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -225,7 +225,7 @@ public class CommerceUserSegmentEntryServiceHttp {
 
 	public static com.liferay.portal.kernel.search.BaseModelSearchResult<com.liferay.commerce.user.segment.model.CommerceUserSegmentEntry> searchCommerceUserSegmentEntries(
 		HttpPrincipal httpPrincipal, long companyId, long groupId,
-		java.lang.String keywords, int start, int end,
+		String keywords, int start, int end,
 		com.liferay.portal.kernel.search.Sort sort)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -294,8 +294,8 @@ public class CommerceUserSegmentEntryServiceHttp {
 
 	public static com.liferay.commerce.user.segment.model.CommerceUserSegmentEntry updateCommerceUserSegmentEntry(
 		HttpPrincipal httpPrincipal, long commerceUserSegmentEntryId,
-		java.util.Map<java.util.Locale, java.lang.String> nameMap,
-		java.lang.String key, boolean active, double priority,
+		java.util.Map<java.util.Locale, String> nameMap, String key,
+		boolean active, double priority,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -331,9 +331,8 @@ public class CommerceUserSegmentEntryServiceHttp {
 
 	private static Log _log = LogFactoryUtil.getLog(CommerceUserSegmentEntryServiceHttp.class);
 	private static final Class<?>[] _addCommerceUserSegmentEntryParameterTypes0 = new Class[] {
-			java.util.Map.class, java.lang.String.class, boolean.class,
-			boolean.class, double.class,
-			com.liferay.portal.kernel.service.ServiceContext.class
+			java.util.Map.class, String.class, boolean.class, boolean.class,
+			double.class, com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _deleteCommerceUserSegmentEntryParameterTypes1 =
 		new Class[] { long.class };
@@ -349,15 +348,14 @@ public class CommerceUserSegmentEntryServiceHttp {
 		};
 	private static final Class<?>[] _searchCommerceUserSegmentEntriesParameterTypes5 =
 		new Class[] {
-			long.class, long.class, java.lang.String.class, int.class, int.class,
+			long.class, long.class, String.class, int.class, int.class,
 			com.liferay.portal.kernel.search.Sort.class
 		};
 	private static final Class<?>[] _searchCommerceUserSegmentEntriesParameterTypes6 =
 		new Class[] { com.liferay.portal.kernel.search.SearchContext.class };
 	private static final Class<?>[] _updateCommerceUserSegmentEntryParameterTypes7 =
 		new Class[] {
-			long.class, java.util.Map.class, java.lang.String.class,
-			boolean.class, double.class,
-			com.liferay.portal.kernel.service.ServiceContext.class
+			long.class, java.util.Map.class, String.class, boolean.class,
+			double.class, com.liferay.portal.kernel.service.ServiceContext.class
 		};
 }

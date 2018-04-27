@@ -75,10 +75,9 @@ public interface CPTaxCategoryLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.REINDEX)
 	public CPTaxCategory addCPTaxCategory(CPTaxCategory cpTaxCategory);
 
-	public CPTaxCategory addCPTaxCategory(
-		Map<Locale, java.lang.String> nameMap,
-		Map<Locale, java.lang.String> descriptionMap,
-		ServiceContext serviceContext) throws PortalException;
+	public CPTaxCategory addCPTaxCategory(Map<Locale, String> nameMap,
+		Map<Locale, String> descriptionMap, ServiceContext serviceContext)
+		throws PortalException;
 
 	/**
 	* Creates a new cp tax category with the primary key. Does not add the cp tax category to the database.
@@ -237,7 +236,7 @@ public interface CPTaxCategoryLocalService extends BaseLocalService,
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -254,6 +253,6 @@ public interface CPTaxCategoryLocalService extends BaseLocalService,
 	public CPTaxCategory updateCPTaxCategory(CPTaxCategory cpTaxCategory);
 
 	public CPTaxCategory updateCPTaxCategory(long cpTaxCategoryId,
-		Map<Locale, java.lang.String> nameMap,
-		Map<Locale, java.lang.String> descriptionMap) throws PortalException;
+		Map<Locale, String> nameMap, Map<Locale, String> descriptionMap)
+		throws PortalException;
 }

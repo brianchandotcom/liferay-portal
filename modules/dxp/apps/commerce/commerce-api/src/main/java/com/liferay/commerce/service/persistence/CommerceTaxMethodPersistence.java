@@ -181,7 +181,7 @@ public interface CommerceTaxMethodPersistence extends BasePersistence<CommerceTa
 	* @return the matching commerce tax method
 	* @throws NoSuchTaxMethodException if a matching commerce tax method could not be found
 	*/
-	public CommerceTaxMethod findByG_E(long groupId, java.lang.String engineKey)
+	public CommerceTaxMethod findByG_E(long groupId, String engineKey)
 		throws NoSuchTaxMethodException;
 
 	/**
@@ -191,7 +191,7 @@ public interface CommerceTaxMethodPersistence extends BasePersistence<CommerceTa
 	* @param engineKey the engine key
 	* @return the matching commerce tax method, or <code>null</code> if a matching commerce tax method could not be found
 	*/
-	public CommerceTaxMethod fetchByG_E(long groupId, java.lang.String engineKey);
+	public CommerceTaxMethod fetchByG_E(long groupId, String engineKey);
 
 	/**
 	* Returns the commerce tax method where groupId = &#63; and engineKey = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -201,8 +201,8 @@ public interface CommerceTaxMethodPersistence extends BasePersistence<CommerceTa
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching commerce tax method, or <code>null</code> if a matching commerce tax method could not be found
 	*/
-	public CommerceTaxMethod fetchByG_E(long groupId,
-		java.lang.String engineKey, boolean retrieveFromCache);
+	public CommerceTaxMethod fetchByG_E(long groupId, String engineKey,
+		boolean retrieveFromCache);
 
 	/**
 	* Removes the commerce tax method where groupId = &#63; and engineKey = &#63; from the database.
@@ -211,8 +211,8 @@ public interface CommerceTaxMethodPersistence extends BasePersistence<CommerceTa
 	* @param engineKey the engine key
 	* @return the commerce tax method that was removed
 	*/
-	public CommerceTaxMethod removeByG_E(long groupId,
-		java.lang.String engineKey) throws NoSuchTaxMethodException;
+	public CommerceTaxMethod removeByG_E(long groupId, String engineKey)
+		throws NoSuchTaxMethodException;
 
 	/**
 	* Returns the number of commerce tax methods where groupId = &#63; and engineKey = &#63;.
@@ -221,7 +221,7 @@ public interface CommerceTaxMethodPersistence extends BasePersistence<CommerceTa
 	* @param engineKey the engine key
 	* @return the number of matching commerce tax methods
 	*/
-	public int countByG_E(long groupId, java.lang.String engineKey);
+	public int countByG_E(long groupId, String engineKey);
 
 	/**
 	* Returns all the commerce tax methods where groupId = &#63; and active = &#63;.
@@ -489,5 +489,5 @@ public interface CommerceTaxMethodPersistence extends BasePersistence<CommerceTa
 	public int countAll();
 
 	@Override
-	public java.util.Set<java.lang.String> getBadColumnNames();
+	public java.util.Set<String> getBadColumnNames();
 }

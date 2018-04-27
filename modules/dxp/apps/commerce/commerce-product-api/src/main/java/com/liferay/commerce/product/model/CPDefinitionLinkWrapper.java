@@ -152,7 +152,7 @@ public class CPDefinitionLinkWrapper implements CPDefinitionLink,
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new CPDefinitionLinkWrapper((CPDefinitionLink)_cpDefinitionLink.clone());
 	}
 
@@ -277,7 +277,7 @@ public class CPDefinitionLinkWrapper implements CPDefinitionLink,
 	* @return the type of this cp definition link
 	*/
 	@Override
-	public java.lang.String getType() {
+	public String getType() {
 		return _cpDefinitionLink.getType();
 	}
 
@@ -297,7 +297,7 @@ public class CPDefinitionLinkWrapper implements CPDefinitionLink,
 	* @return the user name of this cp definition link
 	*/
 	@Override
-	public java.lang.String getUserName() {
+	public String getUserName() {
 		return _cpDefinitionLink.getUserName();
 	}
 
@@ -307,7 +307,7 @@ public class CPDefinitionLinkWrapper implements CPDefinitionLink,
 	* @return the user uuid of this cp definition link
 	*/
 	@Override
-	public java.lang.String getUserUuid() {
+	public String getUserUuid() {
 		return _cpDefinitionLink.getUserUuid();
 	}
 
@@ -317,7 +317,7 @@ public class CPDefinitionLinkWrapper implements CPDefinitionLink,
 	* @return the uuid of this cp definition link
 	*/
 	@Override
-	public java.lang.String getUuid() {
+	public String getUuid() {
 		return _cpDefinitionLink.getUuid();
 	}
 
@@ -473,7 +473,7 @@ public class CPDefinitionLinkWrapper implements CPDefinitionLink,
 	* @param type the type of this cp definition link
 	*/
 	@Override
-	public void setType(java.lang.String type) {
+	public void setType(String type) {
 		_cpDefinitionLink.setType(type);
 	}
 
@@ -493,7 +493,7 @@ public class CPDefinitionLinkWrapper implements CPDefinitionLink,
 	* @param userName the user name of this cp definition link
 	*/
 	@Override
-	public void setUserName(java.lang.String userName) {
+	public void setUserName(String userName) {
 		_cpDefinitionLink.setUserName(userName);
 	}
 
@@ -503,7 +503,7 @@ public class CPDefinitionLinkWrapper implements CPDefinitionLink,
 	* @param userUuid the user uuid of this cp definition link
 	*/
 	@Override
-	public void setUserUuid(java.lang.String userUuid) {
+	public void setUserUuid(String userUuid) {
 		_cpDefinitionLink.setUserUuid(userUuid);
 	}
 
@@ -513,7 +513,7 @@ public class CPDefinitionLinkWrapper implements CPDefinitionLink,
 	* @param uuid the uuid of this cp definition link
 	*/
 	@Override
-	public void setUuid(java.lang.String uuid) {
+	public void setUuid(String uuid) {
 		_cpDefinitionLink.setUuid(uuid);
 	}
 
@@ -528,7 +528,7 @@ public class CPDefinitionLinkWrapper implements CPDefinitionLink,
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _cpDefinitionLink.toString();
 	}
 
@@ -538,7 +538,7 @@ public class CPDefinitionLinkWrapper implements CPDefinitionLink,
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _cpDefinitionLink.toXmlString();
 	}
 

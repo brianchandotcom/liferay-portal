@@ -198,7 +198,7 @@ public interface CPDefinitionGroupedEntryLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CPDefinitionGroupedEntry fetchCPDefinitionGroupedEntryByUuidAndGroupId(
-		java.lang.String uuid, long groupId);
+		String uuid, long groupId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
@@ -240,7 +240,7 @@ public interface CPDefinitionGroupedEntryLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CPDefinitionGroupedEntry> getCPDefinitionGroupedEntriesByUuidAndCompanyId(
-		java.lang.String uuid, long companyId);
+		String uuid, long companyId);
 
 	/**
 	* Returns a range of cp definition grouped entries matching the UUID and company.
@@ -254,7 +254,7 @@ public interface CPDefinitionGroupedEntryLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CPDefinitionGroupedEntry> getCPDefinitionGroupedEntriesByUuidAndCompanyId(
-		java.lang.String uuid, long companyId, int start, int end,
+		String uuid, long companyId, int start, int end,
 		OrderByComparator<CPDefinitionGroupedEntry> orderByComparator);
 
 	/**
@@ -289,7 +289,7 @@ public interface CPDefinitionGroupedEntryLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CPDefinitionGroupedEntry getCPDefinitionGroupedEntryByUuidAndGroupId(
-		java.lang.String uuid, long groupId) throws PortalException;
+		String uuid, long groupId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
@@ -303,7 +303,7 @@ public interface CPDefinitionGroupedEntryLocalService extends BaseLocalService,
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

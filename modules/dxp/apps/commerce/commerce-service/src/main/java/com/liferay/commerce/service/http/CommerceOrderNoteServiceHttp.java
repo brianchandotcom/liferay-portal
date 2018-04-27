@@ -56,8 +56,8 @@ import com.liferay.portal.kernel.util.MethodKey;
 @ProviderType
 public class CommerceOrderNoteServiceHttp {
 	public static com.liferay.commerce.model.CommerceOrderNote addCommerceOrderNote(
-		HttpPrincipal httpPrincipal, long commerceOrderId,
-		java.lang.String content, boolean restricted,
+		HttpPrincipal httpPrincipal, long commerceOrderId, String content,
+		boolean restricted,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -283,8 +283,8 @@ public class CommerceOrderNoteServiceHttp {
 	}
 
 	public static com.liferay.commerce.model.CommerceOrderNote updateCommerceOrderNote(
-		HttpPrincipal httpPrincipal, long commerceOrderNoteId,
-		java.lang.String content, boolean restricted)
+		HttpPrincipal httpPrincipal, long commerceOrderNoteId, String content,
+		boolean restricted)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(CommerceOrderNoteServiceUtil.class,
@@ -318,7 +318,7 @@ public class CommerceOrderNoteServiceHttp {
 
 	private static Log _log = LogFactoryUtil.getLog(CommerceOrderNoteServiceHttp.class);
 	private static final Class<?>[] _addCommerceOrderNoteParameterTypes0 = new Class[] {
-			long.class, java.lang.String.class, boolean.class,
+			long.class, String.class, boolean.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _deleteCommerceOrderNoteParameterTypes1 = new Class[] {
@@ -340,6 +340,6 @@ public class CommerceOrderNoteServiceHttp {
 			long.class, boolean.class
 		};
 	private static final Class<?>[] _updateCommerceOrderNoteParameterTypes7 = new Class[] {
-			long.class, java.lang.String.class, boolean.class
+			long.class, String.class, boolean.class
 		};
 }

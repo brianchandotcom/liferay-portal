@@ -43,11 +43,11 @@ public class CommerceCountryServiceUtil {
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.commerce.service.impl.CommerceCountryServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static com.liferay.commerce.model.CommerceCountry addCommerceCountry(
-		java.util.Map<java.util.Locale, java.lang.String> nameMap,
+		java.util.Map<java.util.Locale, String> nameMap,
 		boolean billingAllowed, boolean shippingAllowed,
-		java.lang.String twoLettersISOCode,
-		java.lang.String threeLettersISOCode, int numericISOCode,
-		boolean subjectToVAT, double priority, boolean active,
+		String twoLettersISOCode, String threeLettersISOCode,
+		int numericISOCode, boolean subjectToVAT, double priority,
+		boolean active,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
@@ -106,7 +106,7 @@ public class CommerceCountryServiceUtil {
 	*
 	* @return the OSGi service identifier
 	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
+	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 
@@ -131,11 +131,11 @@ public class CommerceCountryServiceUtil {
 
 	public static com.liferay.commerce.model.CommerceCountry updateCommerceCountry(
 		long commerceCountryId,
-		java.util.Map<java.util.Locale, java.lang.String> nameMap,
+		java.util.Map<java.util.Locale, String> nameMap,
 		boolean billingAllowed, boolean shippingAllowed,
-		java.lang.String twoLettersISOCode,
-		java.lang.String threeLettersISOCode, int numericISOCode,
-		boolean subjectToVAT, double priority, boolean active,
+		String twoLettersISOCode, String threeLettersISOCode,
+		int numericISOCode, boolean subjectToVAT, double priority,
+		boolean active,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()

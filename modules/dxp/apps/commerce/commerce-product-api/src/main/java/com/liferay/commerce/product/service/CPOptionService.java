@@ -62,11 +62,10 @@ public interface CPOptionService extends BaseService {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CPOptionServiceUtil} to access the cp option remote service. Add custom service methods to {@link com.liferay.commerce.product.service.impl.CPOptionServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public CPOption addCPOption(Map<Locale, java.lang.String> titleMap,
-		Map<Locale, java.lang.String> descriptionMap,
-		java.lang.String ddmFormFieldTypeName, boolean facetable,
-		boolean required, boolean skuContributor, java.lang.String key,
-		ServiceContext serviceContext) throws PortalException;
+	public CPOption addCPOption(Map<Locale, String> titleMap,
+		Map<Locale, String> descriptionMap, String ddmFormFieldTypeName,
+		boolean facetable, boolean required, boolean skuContributor,
+		String key, ServiceContext serviceContext) throws PortalException;
 
 	public void deleteCPOption(long cpOptionId) throws PortalException;
 
@@ -74,7 +73,7 @@ public interface CPOptionService extends BaseService {
 	public CPOption fetchCPOption(long cpOptionId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CPOption fetchCPOption(long groupId, java.lang.String key)
+	public CPOption fetchCPOption(long groupId, String key)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -95,14 +94,14 @@ public interface CPOptionService extends BaseService {
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public Hits search(SearchContext searchContext);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public BaseModelSearchResult<CPOption> searchCPOptions(long companyId,
-		long groupId, java.lang.String keywords, int start, int end, Sort sort)
+		long groupId, String keywords, int start, int end, Sort sort)
 		throws PortalException;
 
 	public CPOption setFacetable(long cpOptionId, boolean facetable)
@@ -115,9 +114,8 @@ public interface CPOptionService extends BaseService {
 		throws PortalException;
 
 	public CPOption updateCPOption(long cpOptionId,
-		Map<Locale, java.lang.String> titleMap,
-		Map<Locale, java.lang.String> descriptionMap,
-		java.lang.String ddmFormFieldTypeName, boolean facetable,
-		boolean required, boolean skuContributor, java.lang.String key,
-		ServiceContext serviceContext) throws PortalException;
+		Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
+		String ddmFormFieldTypeName, boolean facetable, boolean required,
+		boolean skuContributor, String key, ServiceContext serviceContext)
+		throws PortalException;
 }

@@ -57,9 +57,9 @@ import com.liferay.portal.kernel.util.MethodKey;
 public class CommerceTaxMethodServiceHttp {
 	public static com.liferay.commerce.model.CommerceTaxMethod addCommerceTaxMethod(
 		HttpPrincipal httpPrincipal,
-		java.util.Map<java.util.Locale, java.lang.String> nameMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		java.lang.String engineKey, boolean percentage, boolean active,
+		java.util.Map<java.util.Locale, String> nameMap,
+		java.util.Map<java.util.Locale, String> descriptionMap,
+		String engineKey, boolean percentage, boolean active,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -150,7 +150,7 @@ public class CommerceTaxMethodServiceHttp {
 	}
 
 	public static com.liferay.commerce.model.CommerceTaxMethod fetchCommerceTaxMethod(
-		HttpPrincipal httpPrincipal, long groupId, java.lang.String engineKey) {
+		HttpPrincipal httpPrincipal, long groupId, String engineKey) {
 		try {
 			MethodKey methodKey = new MethodKey(CommerceTaxMethodServiceUtil.class,
 					"fetchCommerceTaxMethod",
@@ -331,8 +331,8 @@ public class CommerceTaxMethodServiceHttp {
 
 	public static com.liferay.commerce.model.CommerceTaxMethod updateCommerceTaxMethod(
 		HttpPrincipal httpPrincipal, long commerceTaxMethodId,
-		java.util.Map<java.util.Locale, java.lang.String> nameMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		java.util.Map<java.util.Locale, String> nameMap,
+		java.util.Map<java.util.Locale, String> descriptionMap,
 		boolean percentage, boolean active)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -368,7 +368,7 @@ public class CommerceTaxMethodServiceHttp {
 
 	private static Log _log = LogFactoryUtil.getLog(CommerceTaxMethodServiceHttp.class);
 	private static final Class<?>[] _addCommerceTaxMethodParameterTypes0 = new Class[] {
-			java.util.Map.class, java.util.Map.class, java.lang.String.class,
+			java.util.Map.class, java.util.Map.class, String.class,
 			boolean.class, boolean.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
@@ -379,7 +379,7 @@ public class CommerceTaxMethodServiceHttp {
 			long.class
 		};
 	private static final Class<?>[] _fetchCommerceTaxMethodParameterTypes3 = new Class[] {
-			long.class, java.lang.String.class
+			long.class, String.class
 		};
 	private static final Class<?>[] _getCommerceTaxMethodParameterTypes4 = new Class[] {
 			long.class

@@ -87,8 +87,8 @@ public class CommerceUserServiceHttp {
 	}
 
 	public static com.liferay.portal.kernel.model.User updatePassword(
-		HttpPrincipal httpPrincipal, long userId, java.lang.String password1,
-		java.lang.String password2, boolean passwordReset)
+		HttpPrincipal httpPrincipal, long userId, String password1,
+		String password2, boolean passwordReset)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(CommerceUserServiceUtil.class,
@@ -152,8 +152,7 @@ public class CommerceUserServiceHttp {
 	}
 
 	public static com.liferay.portal.kernel.model.User updateReminderQuery(
-		HttpPrincipal httpPrincipal, long userId, java.lang.String question,
-		java.lang.String answer)
+		HttpPrincipal httpPrincipal, long userId, String question, String answer)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(CommerceUserServiceUtil.class,
@@ -185,12 +184,11 @@ public class CommerceUserServiceHttp {
 	}
 
 	public static com.liferay.portal.kernel.model.User updateUser(
-		HttpPrincipal httpPrincipal, long userId, java.lang.String screenName,
-		java.lang.String emailAddress, boolean portrait, byte[] portraitBytes,
-		java.lang.String languageId, java.lang.String firstName,
-		java.lang.String middleName, java.lang.String lastName, long prefixId,
-		long suffixId, boolean male, int birthdayMonth, int birthdayDay,
-		int birthdayYear, java.lang.String jobTitle,
+		HttpPrincipal httpPrincipal, long userId, String screenName,
+		String emailAddress, boolean portrait, byte[] portraitBytes,
+		String languageId, String firstName, String middleName,
+		String lastName, long prefixId, long suffixId, boolean male,
+		int birthdayMonth, int birthdayDay, int birthdayYear, String jobTitle,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -258,22 +256,19 @@ public class CommerceUserServiceHttp {
 			long.class
 		};
 	private static final Class<?>[] _updatePasswordParameterTypes1 = new Class[] {
-			long.class, java.lang.String.class, java.lang.String.class,
-			boolean.class
+			long.class, String.class, String.class, boolean.class
 		};
 	private static final Class<?>[] _updatePasswordResetParameterTypes2 = new Class[] {
 			long.class, boolean.class
 		};
 	private static final Class<?>[] _updateReminderQueryParameterTypes3 = new Class[] {
-			long.class, java.lang.String.class, java.lang.String.class
+			long.class, String.class, String.class
 		};
 	private static final Class<?>[] _updateUserParameterTypes4 = new Class[] {
-			long.class, java.lang.String.class, java.lang.String.class,
-			boolean.class, byte[].class, java.lang.String.class,
-			java.lang.String.class, java.lang.String.class,
-			java.lang.String.class, long.class, long.class, boolean.class,
-			int.class, int.class, int.class, java.lang.String.class,
-			com.liferay.portal.kernel.service.ServiceContext.class
+			long.class, String.class, String.class, boolean.class, byte[].class,
+			String.class, String.class, String.class, String.class, long.class,
+			long.class, boolean.class, int.class, int.class, int.class,
+			String.class, com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _updateUserRolesParameterTypes5 = new Class[] {
 			long.class, long.class, long[].class

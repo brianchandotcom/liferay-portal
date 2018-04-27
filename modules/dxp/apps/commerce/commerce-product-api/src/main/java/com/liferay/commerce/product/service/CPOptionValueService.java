@@ -63,9 +63,8 @@ public interface CPOptionValueService extends BaseService {
 	 * Never modify or reference this interface directly. Always use {@link CPOptionValueServiceUtil} to access the cp option value remote service. Add custom service methods to {@link com.liferay.commerce.product.service.impl.CPOptionValueServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	public CPOptionValue addCPOptionValue(long cpOptionId,
-		Map<Locale, java.lang.String> titleMap, double priority,
-		java.lang.String key, ServiceContext serviceContext)
-		throws PortalException;
+		Map<Locale, String> titleMap, double priority, String key,
+		ServiceContext serviceContext) throws PortalException;
 
 	public CPOptionValue deleteCPOptionValue(CPOptionValue cpOptionValue)
 		throws PortalException;
@@ -99,19 +98,17 @@ public interface CPOptionValueService extends BaseService {
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public Hits search(SearchContext searchContext);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public BaseModelSearchResult<CPOptionValue> searchCPOptionValues(
-		long companyId, long groupId, long cpOptionId,
-		java.lang.String keywords, int start, int end, Sort sort)
-		throws PortalException;
+		long companyId, long groupId, long cpOptionId, String keywords,
+		int start, int end, Sort sort) throws PortalException;
 
 	public CPOptionValue updateCPOptionValue(long cpOptionValueId,
-		Map<Locale, java.lang.String> titleMap, double priority,
-		java.lang.String key, ServiceContext serviceContext)
-		throws PortalException;
+		Map<Locale, String> titleMap, double priority, String key,
+		ServiceContext serviceContext) throws PortalException;
 }

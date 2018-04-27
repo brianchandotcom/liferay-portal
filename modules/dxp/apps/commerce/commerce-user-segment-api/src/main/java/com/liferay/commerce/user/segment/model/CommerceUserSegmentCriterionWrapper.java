@@ -149,7 +149,7 @@ public class CommerceUserSegmentCriterionWrapper
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new CommerceUserSegmentCriterionWrapper((CommerceUserSegmentCriterion)_commerceUserSegmentCriterion.clone());
 	}
 
@@ -255,7 +255,7 @@ public class CommerceUserSegmentCriterionWrapper
 	* @return the type of this commerce user segment criterion
 	*/
 	@Override
-	public java.lang.String getType() {
+	public String getType() {
 		return _commerceUserSegmentCriterion.getType();
 	}
 
@@ -265,7 +265,7 @@ public class CommerceUserSegmentCriterionWrapper
 	* @return the type settings of this commerce user segment criterion
 	*/
 	@Override
-	public java.lang.String getTypeSettings() {
+	public String getTypeSettings() {
 		return _commerceUserSegmentCriterion.getTypeSettings();
 	}
 
@@ -285,7 +285,7 @@ public class CommerceUserSegmentCriterionWrapper
 	* @return the user name of this commerce user segment criterion
 	*/
 	@Override
-	public java.lang.String getUserName() {
+	public String getUserName() {
 		return _commerceUserSegmentCriterion.getUserName();
 	}
 
@@ -295,7 +295,7 @@ public class CommerceUserSegmentCriterionWrapper
 	* @return the user uuid of this commerce user segment criterion
 	*/
 	@Override
-	public java.lang.String getUserUuid() {
+	public String getUserUuid() {
 		return _commerceUserSegmentCriterion.getUserUuid();
 	}
 
@@ -442,7 +442,7 @@ public class CommerceUserSegmentCriterionWrapper
 	* @param type the type of this commerce user segment criterion
 	*/
 	@Override
-	public void setType(java.lang.String type) {
+	public void setType(String type) {
 		_commerceUserSegmentCriterion.setType(type);
 	}
 
@@ -452,7 +452,7 @@ public class CommerceUserSegmentCriterionWrapper
 	* @param typeSettings the type settings of this commerce user segment criterion
 	*/
 	@Override
-	public void setTypeSettings(java.lang.String typeSettings) {
+	public void setTypeSettings(String typeSettings) {
 		_commerceUserSegmentCriterion.setTypeSettings(typeSettings);
 	}
 
@@ -472,7 +472,7 @@ public class CommerceUserSegmentCriterionWrapper
 	* @param userName the user name of this commerce user segment criterion
 	*/
 	@Override
-	public void setUserName(java.lang.String userName) {
+	public void setUserName(String userName) {
 		_commerceUserSegmentCriterion.setUserName(userName);
 	}
 
@@ -482,7 +482,7 @@ public class CommerceUserSegmentCriterionWrapper
 	* @param userUuid the user uuid of this commerce user segment criterion
 	*/
 	@Override
-	public void setUserUuid(java.lang.String userUuid) {
+	public void setUserUuid(String userUuid) {
 		_commerceUserSegmentCriterion.setUserUuid(userUuid);
 	}
 
@@ -497,7 +497,7 @@ public class CommerceUserSegmentCriterionWrapper
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _commerceUserSegmentCriterion.toString();
 	}
 
@@ -507,7 +507,7 @@ public class CommerceUserSegmentCriterionWrapper
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _commerceUserSegmentCriterion.toXmlString();
 	}
 

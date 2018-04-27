@@ -75,9 +75,9 @@ public interface CommerceUserSegmentCriterionLocalService
 		CommerceUserSegmentCriterion commerceUserSegmentCriterion);
 
 	public CommerceUserSegmentCriterion addCommerceUserSegmentCriterion(
-		long commerceUserSegmentEntryId, java.lang.String type,
-		java.lang.String typeSettings, double priority,
-		ServiceContext serviceContext) throws PortalException;
+		long commerceUserSegmentEntryId, String type, String typeSettings,
+		double priority, ServiceContext serviceContext)
+		throws PortalException;
 
 	/**
 	* Creates a new commerce user segment criterion with the primary key. Does not add the commerce user segment criterion to the database.
@@ -240,7 +240,7 @@ public interface CommerceUserSegmentCriterionLocalService
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -258,7 +258,7 @@ public interface CommerceUserSegmentCriterionLocalService
 		CommerceUserSegmentCriterion commerceUserSegmentCriterion);
 
 	public CommerceUserSegmentCriterion updateCommerceUserSegmentCriterion(
-		long commerceUserSegmentCriterionId, java.lang.String type,
-		java.lang.String typeSettings, double priority,
-		ServiceContext serviceContext) throws PortalException;
+		long commerceUserSegmentCriterionId, String type, String typeSettings,
+		double priority, ServiceContext serviceContext)
+		throws PortalException;
 }

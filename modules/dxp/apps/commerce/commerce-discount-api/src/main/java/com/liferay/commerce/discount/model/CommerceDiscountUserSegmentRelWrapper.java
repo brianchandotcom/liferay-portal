@@ -135,7 +135,7 @@ public class CommerceDiscountUserSegmentRelWrapper
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new CommerceDiscountUserSegmentRelWrapper((CommerceDiscountUserSegmentRel)_commerceDiscountUserSegmentRel.clone());
 	}
 
@@ -251,7 +251,7 @@ public class CommerceDiscountUserSegmentRelWrapper
 	* @return the user name of this commerce discount user segment rel
 	*/
 	@Override
-	public java.lang.String getUserName() {
+	public String getUserName() {
 		return _commerceDiscountUserSegmentRel.getUserName();
 	}
 
@@ -261,7 +261,7 @@ public class CommerceDiscountUserSegmentRelWrapper
 	* @return the user uuid of this commerce discount user segment rel
 	*/
 	@Override
-	public java.lang.String getUserUuid() {
+	public String getUserUuid() {
 		return _commerceDiscountUserSegmentRel.getUserUuid();
 	}
 
@@ -418,7 +418,7 @@ public class CommerceDiscountUserSegmentRelWrapper
 	* @param userName the user name of this commerce discount user segment rel
 	*/
 	@Override
-	public void setUserName(java.lang.String userName) {
+	public void setUserName(String userName) {
 		_commerceDiscountUserSegmentRel.setUserName(userName);
 	}
 
@@ -428,7 +428,7 @@ public class CommerceDiscountUserSegmentRelWrapper
 	* @param userUuid the user uuid of this commerce discount user segment rel
 	*/
 	@Override
-	public void setUserUuid(java.lang.String userUuid) {
+	public void setUserUuid(String userUuid) {
 		_commerceDiscountUserSegmentRel.setUserUuid(userUuid);
 	}
 
@@ -443,7 +443,7 @@ public class CommerceDiscountUserSegmentRelWrapper
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _commerceDiscountUserSegmentRel.toString();
 	}
 
@@ -453,7 +453,7 @@ public class CommerceDiscountUserSegmentRelWrapper
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _commerceDiscountUserSegmentRel.toXmlString();
 	}
 

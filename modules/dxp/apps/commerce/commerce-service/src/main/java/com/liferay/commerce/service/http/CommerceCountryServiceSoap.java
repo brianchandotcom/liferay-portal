@@ -70,11 +70,11 @@ import java.util.Map;
 @ProviderType
 public class CommerceCountryServiceSoap {
 	public static com.liferay.commerce.model.CommerceCountrySoap addCommerceCountry(
-		java.lang.String[] nameMapLanguageIds,
-		java.lang.String[] nameMapValues, boolean billingAllowed,
-		boolean shippingAllowed, java.lang.String twoLettersISOCode,
-		java.lang.String threeLettersISOCode, int numericISOCode,
-		boolean subjectToVAT, double priority, boolean active,
+		String[] nameMapLanguageIds, String[] nameMapValues,
+		boolean billingAllowed, boolean shippingAllowed,
+		String twoLettersISOCode, String threeLettersISOCode,
+		int numericISOCode, boolean subjectToVAT, double priority,
+		boolean active,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
@@ -252,11 +252,11 @@ public class CommerceCountryServiceSoap {
 	}
 
 	public static com.liferay.commerce.model.CommerceCountrySoap updateCommerceCountry(
-		long commerceCountryId, java.lang.String[] nameMapLanguageIds,
-		java.lang.String[] nameMapValues, boolean billingAllowed,
-		boolean shippingAllowed, java.lang.String twoLettersISOCode,
-		java.lang.String threeLettersISOCode, int numericISOCode,
-		boolean subjectToVAT, double priority, boolean active,
+		long commerceCountryId, String[] nameMapLanguageIds,
+		String[] nameMapValues, boolean billingAllowed,
+		boolean shippingAllowed, String twoLettersISOCode,
+		String threeLettersISOCode, int numericISOCode, boolean subjectToVAT,
+		double priority, boolean active,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {

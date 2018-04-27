@@ -55,9 +55,8 @@ public class CommerceDiscountLocalServiceUtil {
 	}
 
 	public static com.liferay.commerce.discount.model.CommerceDiscount addCommerceDiscount(
-		java.lang.String title, java.lang.String target, java.lang.String type,
-		java.lang.String typeSettings, boolean useCouponCode,
-		java.lang.String couponCode, java.lang.String limitationType,
+		String title, String target, String type, String typeSettings,
+		boolean useCouponCode, String couponCode, String limitationType,
 		int limitationTimes, int numberOfUse, boolean cumulative,
 		boolean usePercentage, java.math.BigDecimal level1,
 		java.math.BigDecimal level2, java.math.BigDecimal level3,
@@ -226,7 +225,7 @@ public class CommerceDiscountLocalServiceUtil {
 	* @return the matching commerce discount, or <code>null</code> if a matching commerce discount could not be found
 	*/
 	public static com.liferay.commerce.discount.model.CommerceDiscount fetchCommerceDiscountByUuidAndGroupId(
-		java.lang.String uuid, long groupId) {
+		String uuid, long groupId) {
 		return getService().fetchCommerceDiscountByUuidAndGroupId(uuid, groupId);
 	}
 
@@ -256,7 +255,7 @@ public class CommerceDiscountLocalServiceUtil {
 	* @throws PortalException if a matching commerce discount could not be found
 	*/
 	public static com.liferay.commerce.discount.model.CommerceDiscount getCommerceDiscountByUuidAndGroupId(
-		java.lang.String uuid, long groupId)
+		String uuid, long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getCommerceDiscountByUuidAndGroupId(uuid, groupId);
 	}
@@ -285,7 +284,7 @@ public class CommerceDiscountLocalServiceUtil {
 	* @return the matching commerce discounts, or an empty list if no matches were found
 	*/
 	public static java.util.List<com.liferay.commerce.discount.model.CommerceDiscount> getCommerceDiscountsByUuidAndCompanyId(
-		java.lang.String uuid, long companyId) {
+		String uuid, long companyId) {
 		return getService()
 				   .getCommerceDiscountsByUuidAndCompanyId(uuid, companyId);
 	}
@@ -301,7 +300,7 @@ public class CommerceDiscountLocalServiceUtil {
 	* @return the range of matching commerce discounts, or an empty list if no matches were found
 	*/
 	public static java.util.List<com.liferay.commerce.discount.model.CommerceDiscount> getCommerceDiscountsByUuidAndCompanyId(
-		java.lang.String uuid, long companyId, int start, int end,
+		String uuid, long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.discount.model.CommerceDiscount> orderByComparator) {
 		return getService()
 				   .getCommerceDiscountsByUuidAndCompanyId(uuid, companyId,
@@ -331,7 +330,7 @@ public class CommerceDiscountLocalServiceUtil {
 	*
 	* @return the OSGi service identifier
 	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
+	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 
@@ -342,8 +341,8 @@ public class CommerceDiscountLocalServiceUtil {
 	}
 
 	public static com.liferay.portal.kernel.search.BaseModelSearchResult<com.liferay.commerce.discount.model.CommerceDiscount> searchCommerceDiscounts(
-		long companyId, long groupId, java.lang.String keywords, int status,
-		int start, int end, com.liferay.portal.kernel.search.Sort sort)
+		long companyId, long groupId, String keywords, int status, int start,
+		int end, com.liferay.portal.kernel.search.Sort sort)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .searchCommerceDiscounts(companyId, groupId, keywords,
@@ -362,12 +361,10 @@ public class CommerceDiscountLocalServiceUtil {
 	}
 
 	public static com.liferay.commerce.discount.model.CommerceDiscount updateCommerceDiscount(
-		long commerceDiscountId, java.lang.String title,
-		java.lang.String target, java.lang.String type,
-		java.lang.String typeSettings, boolean useCouponCode,
-		java.lang.String couponCode, java.lang.String limitationType,
-		int limitationTimes, int numberOfUse, boolean cumulative,
-		boolean usePercentage, java.math.BigDecimal level1,
+		long commerceDiscountId, String title, String target, String type,
+		String typeSettings, boolean useCouponCode, String couponCode,
+		String limitationType, int limitationTimes, int numberOfUse,
+		boolean cumulative, boolean usePercentage, java.math.BigDecimal level1,
 		java.math.BigDecimal level2, java.math.BigDecimal level3,
 		java.math.BigDecimal maximumDiscountAmount, boolean active,
 		int displayDateMonth, int displayDateDay, int displayDateYear,
@@ -390,7 +387,7 @@ public class CommerceDiscountLocalServiceUtil {
 	public static com.liferay.commerce.discount.model.CommerceDiscount updateStatus(
 		long userId, long commerceDiscountId, int status,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext,
-		java.util.Map<java.lang.String, java.io.Serializable> workflowContext)
+		java.util.Map<String, java.io.Serializable> workflowContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .updateStatus(userId, commerceDiscountId, status,

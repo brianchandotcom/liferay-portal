@@ -56,12 +56,10 @@ import com.liferay.portal.kernel.util.MethodKey;
 @ProviderType
 public class CommerceDiscountServiceHttp {
 	public static com.liferay.commerce.discount.model.CommerceDiscount addCommerceDiscount(
-		HttpPrincipal httpPrincipal, java.lang.String title,
-		java.lang.String target, java.lang.String type,
-		java.lang.String typeSettings, boolean useCouponCode,
-		java.lang.String couponCode, java.lang.String limitationType,
-		int limitationTimes, int numberOfUse, boolean cumulative,
-		boolean usePercentage, java.math.BigDecimal level1,
+		HttpPrincipal httpPrincipal, String title, String target, String type,
+		String typeSettings, boolean useCouponCode, String couponCode,
+		String limitationType, int limitationTimes, int numberOfUse,
+		boolean cumulative, boolean usePercentage, java.math.BigDecimal level1,
 		java.math.BigDecimal level2, java.math.BigDecimal level3,
 		java.math.BigDecimal maximumDiscountAmount, boolean active,
 		int displayDateMonth, int displayDateDay, int displayDateYear,
@@ -136,13 +134,12 @@ public class CommerceDiscountServiceHttp {
 	}
 
 	public static com.liferay.commerce.discount.model.CommerceDiscount updateCommerceDiscount(
-		HttpPrincipal httpPrincipal, long commerceDiscountId,
-		java.lang.String title, java.lang.String target, java.lang.String type,
-		java.lang.String typeSettings, boolean useCouponCode,
-		java.lang.String couponCode, java.lang.String limitationType,
-		int limitationTimes, int numberOfUse, boolean cumulative,
-		boolean usePercentage, java.math.BigDecimal level1,
-		java.math.BigDecimal level2, java.math.BigDecimal level3,
+		HttpPrincipal httpPrincipal, long commerceDiscountId, String title,
+		String target, String type, String typeSettings, boolean useCouponCode,
+		String couponCode, String limitationType, int limitationTimes,
+		int numberOfUse, boolean cumulative, boolean usePercentage,
+		java.math.BigDecimal level1, java.math.BigDecimal level2,
+		java.math.BigDecimal level3,
 		java.math.BigDecimal maximumDiscountAmount, boolean active,
 		int displayDateMonth, int displayDateDay, int displayDateYear,
 		int displayDateHour, int displayDateMinute, int expirationDateMonth,
@@ -189,9 +186,8 @@ public class CommerceDiscountServiceHttp {
 
 	private static Log _log = LogFactoryUtil.getLog(CommerceDiscountServiceHttp.class);
 	private static final Class<?>[] _addCommerceDiscountParameterTypes0 = new Class[] {
-			java.lang.String.class, java.lang.String.class,
-			java.lang.String.class, java.lang.String.class, boolean.class,
-			java.lang.String.class, java.lang.String.class, int.class, int.class,
+			String.class, String.class, String.class, String.class,
+			boolean.class, String.class, String.class, int.class, int.class,
 			boolean.class, boolean.class, java.math.BigDecimal.class,
 			java.math.BigDecimal.class, java.math.BigDecimal.class,
 			java.math.BigDecimal.class, boolean.class, int.class, int.class,
@@ -203,9 +199,8 @@ public class CommerceDiscountServiceHttp {
 			long.class
 		};
 	private static final Class<?>[] _updateCommerceDiscountParameterTypes2 = new Class[] {
-			long.class, java.lang.String.class, java.lang.String.class,
-			java.lang.String.class, java.lang.String.class, boolean.class,
-			java.lang.String.class, java.lang.String.class, int.class, int.class,
+			long.class, String.class, String.class, String.class, String.class,
+			boolean.class, String.class, String.class, int.class, int.class,
 			boolean.class, boolean.class, java.math.BigDecimal.class,
 			java.math.BigDecimal.class, java.math.BigDecimal.class,
 			java.math.BigDecimal.class, boolean.class, int.class, int.class,

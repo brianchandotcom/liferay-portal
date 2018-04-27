@@ -103,7 +103,7 @@ public class CommercePriceEntryServiceUtil {
 	*
 	* @return the OSGi service identifier
 	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
+	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 
@@ -114,7 +114,7 @@ public class CommercePriceEntryServiceUtil {
 
 	public static com.liferay.portal.kernel.search.BaseModelSearchResult<com.liferay.commerce.price.list.model.CommercePriceEntry> searchCommercePriceEntries(
 		long companyId, long groupId, long commercePriceListId,
-		java.lang.String keywords, int start, int end,
+		String keywords, int start, int end,
 		com.liferay.portal.kernel.search.Sort sort)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()

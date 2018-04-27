@@ -70,11 +70,9 @@ import java.util.Map;
 @ProviderType
 public class CPSpecificationOptionServiceSoap {
 	public static com.liferay.commerce.product.model.CPSpecificationOptionSoap addCPSpecificationOption(
-		long cpOptionCategoryId, java.lang.String[] titleMapLanguageIds,
-		java.lang.String[] titleMapValues,
-		java.lang.String[] descriptionMapLanguageIds,
-		java.lang.String[] descriptionMapValues, boolean facetable,
-		java.lang.String key,
+		long cpOptionCategoryId, String[] titleMapLanguageIds,
+		String[] titleMapValues, String[] descriptionMapLanguageIds,
+		String[] descriptionMapValues, boolean facetable, String key,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
@@ -157,11 +155,9 @@ public class CPSpecificationOptionServiceSoap {
 
 	public static com.liferay.commerce.product.model.CPSpecificationOptionSoap updateCPSpecificationOption(
 		long cpSpecificationOptionId, long cpOptionCategoryId,
-		java.lang.String[] titleMapLanguageIds,
-		java.lang.String[] titleMapValues,
-		java.lang.String[] descriptionMapLanguageIds,
-		java.lang.String[] descriptionMapValues, boolean facetable,
-		java.lang.String key,
+		String[] titleMapLanguageIds, String[] titleMapValues,
+		String[] descriptionMapLanguageIds, String[] descriptionMapValues,
+		boolean facetable, String key,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {

@@ -57,11 +57,11 @@ import com.liferay.portal.kernel.util.MethodKey;
 public class CPDefinitionInventoryServiceHttp {
 	public static com.liferay.commerce.model.CPDefinitionInventory addCPDefinitionInventory(
 		HttpPrincipal httpPrincipal, long cpDefinitionId,
-		java.lang.String cpDefinitionInventoryEngine,
-		java.lang.String lowStockActivity, boolean displayAvailability,
-		boolean displayStockQuantity, int minStockQuantity, boolean backOrders,
-		int minOrderQuantity, int maxOrderQuantity,
-		java.lang.String allowedOrderQuantities, int multipleOrderQuantity,
+		String cpDefinitionInventoryEngine, String lowStockActivity,
+		boolean displayAvailability, boolean displayStockQuantity,
+		int minStockQuantity, boolean backOrders, int minOrderQuantity,
+		int maxOrderQuantity, String allowedOrderQuantities,
+		int multipleOrderQuantity,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -190,11 +190,11 @@ public class CPDefinitionInventoryServiceHttp {
 
 	public static com.liferay.commerce.model.CPDefinitionInventory updateCPDefinitionInventory(
 		HttpPrincipal httpPrincipal, long cpDefinitionInventoryId,
-		java.lang.String cpDefinitionInventoryEngine,
-		java.lang.String lowStockActivity, boolean displayAvailability,
-		boolean displayStockQuantity, int minStockQuantity, boolean backOrders,
-		int minOrderQuantity, int maxOrderQuantity,
-		java.lang.String allowedOrderQuantities, int multipleOrderQuantity,
+		String cpDefinitionInventoryEngine, String lowStockActivity,
+		boolean displayAvailability, boolean displayStockQuantity,
+		int minStockQuantity, boolean backOrders, int minOrderQuantity,
+		int maxOrderQuantity, String allowedOrderQuantities,
+		int multipleOrderQuantity,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -233,10 +233,9 @@ public class CPDefinitionInventoryServiceHttp {
 
 	private static Log _log = LogFactoryUtil.getLog(CPDefinitionInventoryServiceHttp.class);
 	private static final Class<?>[] _addCPDefinitionInventoryParameterTypes0 = new Class[] {
-			long.class, java.lang.String.class, java.lang.String.class,
-			boolean.class, boolean.class, int.class, boolean.class, int.class,
-			int.class, java.lang.String.class, int.class,
-			com.liferay.portal.kernel.service.ServiceContext.class
+			long.class, String.class, String.class, boolean.class, boolean.class,
+			int.class, boolean.class, int.class, int.class, String.class,
+			int.class, com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _deleteCPDefinitionInventoryParameterTypes1 = new Class[] {
 			long.class
@@ -247,9 +246,8 @@ public class CPDefinitionInventoryServiceHttp {
 	private static final Class<?>[] _fetchCPDefinitionInventoryByCPDefinitionIdParameterTypes3 =
 		new Class[] { long.class };
 	private static final Class<?>[] _updateCPDefinitionInventoryParameterTypes4 = new Class[] {
-			long.class, java.lang.String.class, java.lang.String.class,
-			boolean.class, boolean.class, int.class, boolean.class, int.class,
-			int.class, java.lang.String.class, int.class,
-			com.liferay.portal.kernel.service.ServiceContext.class
+			long.class, String.class, String.class, boolean.class, boolean.class,
+			int.class, boolean.class, int.class, int.class, String.class,
+			int.class, com.liferay.portal.kernel.service.ServiceContext.class
 		};
 }

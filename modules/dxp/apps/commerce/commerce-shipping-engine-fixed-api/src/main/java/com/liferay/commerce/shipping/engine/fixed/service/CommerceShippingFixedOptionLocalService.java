@@ -77,10 +77,9 @@ public interface CommerceShippingFixedOptionLocalService
 		CommerceShippingFixedOption commerceShippingFixedOption);
 
 	public CommerceShippingFixedOption addCommerceShippingFixedOption(
-		long commerceShippingMethodId, Map<Locale, java.lang.String> nameMap,
-		Map<Locale, java.lang.String> descriptionMap, BigDecimal amount,
-		double priority, ServiceContext serviceContext)
-		throws PortalException;
+		long commerceShippingMethodId, Map<Locale, String> nameMap,
+		Map<Locale, String> descriptionMap, BigDecimal amount, double priority,
+		ServiceContext serviceContext) throws PortalException;
 
 	/**
 	* Creates a new commerce shipping fixed option with the primary key. Does not add the commerce shipping fixed option to the database.
@@ -244,7 +243,7 @@ public interface CommerceShippingFixedOptionLocalService
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -262,8 +261,7 @@ public interface CommerceShippingFixedOptionLocalService
 		CommerceShippingFixedOption commerceShippingFixedOption);
 
 	public CommerceShippingFixedOption updateCommerceShippingFixedOption(
-		long commerceShippingFixedOptionId,
-		Map<Locale, java.lang.String> nameMap,
-		Map<Locale, java.lang.String> descriptionMap, BigDecimal amount,
-		double priority) throws PortalException;
+		long commerceShippingFixedOptionId, Map<Locale, String> nameMap,
+		Map<Locale, String> descriptionMap, BigDecimal amount, double priority)
+		throws PortalException;
 }

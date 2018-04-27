@@ -58,7 +58,7 @@ public class CommerceOrderServiceHttp {
 	public static com.liferay.commerce.model.CommerceOrder addOrganizationCommerceOrder(
 		HttpPrincipal httpPrincipal, long groupId, long siteGroupId,
 		long orderOrganizationId, long shippingAddressId,
-		java.lang.String purchaseOrderNumber)
+		String purchaseOrderNumber)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(CommerceOrderServiceUtil.class,
@@ -318,7 +318,7 @@ public class CommerceOrderServiceHttp {
 
 	public static com.liferay.commerce.model.CommerceOrder executeWorkflowTransition(
 		HttpPrincipal httpPrincipal, long commerceOrderId, long workflowTaskId,
-		java.lang.String transitionName, java.lang.String comment)
+		String transitionName, String comment)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(CommerceOrderServiceUtil.class,
@@ -415,7 +415,7 @@ public class CommerceOrderServiceHttp {
 	}
 
 	public static com.liferay.commerce.model.CommerceOrder fetchCommerceOrder(
-		HttpPrincipal httpPrincipal, java.lang.String uuid, long groupId)
+		HttpPrincipal httpPrincipal, String uuid, long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(CommerceOrderServiceUtil.class,
@@ -512,7 +512,7 @@ public class CommerceOrderServiceHttp {
 	}
 
 	public static com.liferay.commerce.model.CommerceOrder getCommerceOrderByUuidAndGroupId(
-		HttpPrincipal httpPrincipal, java.lang.String uuid, long groupId)
+		HttpPrincipal httpPrincipal, String uuid, long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(CommerceOrderServiceUtil.class,
@@ -674,7 +674,7 @@ public class CommerceOrderServiceHttp {
 		}
 	}
 
-	public static java.lang.String startCommerceOrderPayment(
+	public static String startCommerceOrderPayment(
 		HttpPrincipal httpPrincipal, long commerceOrderId,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -699,7 +699,7 @@ public class CommerceOrderServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (java.lang.String)returnObj;
+			return (String)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -741,12 +741,10 @@ public class CommerceOrderServiceHttp {
 	}
 
 	public static com.liferay.commerce.model.CommerceOrder updateBillingAddress(
-		HttpPrincipal httpPrincipal, long commerceOrderId,
-		java.lang.String name, java.lang.String description,
-		java.lang.String street1, java.lang.String street2,
-		java.lang.String street3, java.lang.String city, java.lang.String zip,
-		long commerceRegionId, long commerceCountryId,
-		java.lang.String phoneNumber,
+		HttpPrincipal httpPrincipal, long commerceOrderId, String name,
+		String description, String street1, String street2, String street3,
+		String city, String zip, long commerceRegionId, long commerceCountryId,
+		String phoneNumber,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -785,10 +783,9 @@ public class CommerceOrderServiceHttp {
 		HttpPrincipal httpPrincipal, long commerceOrderId,
 		long billingAddressId, long shippingAddressId,
 		long commercePaymentMethodId, long commerceShippingMethodId,
-		java.lang.String shippingOptionName,
-		java.lang.String purchaseOrderNumber, java.math.BigDecimal subtotal,
-		java.math.BigDecimal shippingPrice, java.math.BigDecimal total,
-		java.lang.String advanceStatus)
+		String shippingOptionName, String purchaseOrderNumber,
+		java.math.BigDecimal subtotal, java.math.BigDecimal shippingPrice,
+		java.math.BigDecimal total, String advanceStatus)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(CommerceOrderServiceUtil.class,
@@ -889,7 +886,7 @@ public class CommerceOrderServiceHttp {
 
 	public static com.liferay.commerce.model.CommerceOrder updatePurchaseOrderNumber(
 		HttpPrincipal httpPrincipal, long commerceOrderId,
-		java.lang.String purchaseOrderNumber)
+		String purchaseOrderNumber)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(CommerceOrderServiceUtil.class,
@@ -922,12 +919,10 @@ public class CommerceOrderServiceHttp {
 	}
 
 	public static com.liferay.commerce.model.CommerceOrder updateShippingAddress(
-		HttpPrincipal httpPrincipal, long commerceOrderId,
-		java.lang.String name, java.lang.String description,
-		java.lang.String street1, java.lang.String street2,
-		java.lang.String street3, java.lang.String city, java.lang.String zip,
-		long commerceRegionId, long commerceCountryId,
-		java.lang.String phoneNumber,
+		HttpPrincipal httpPrincipal, long commerceOrderId, String name,
+		String description, String street1, String street2, String street3,
+		String city, String zip, long commerceRegionId, long commerceCountryId,
+		String phoneNumber,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -996,10 +991,7 @@ public class CommerceOrderServiceHttp {
 
 	private static Log _log = LogFactoryUtil.getLog(CommerceOrderServiceHttp.class);
 	private static final Class<?>[] _addOrganizationCommerceOrderParameterTypes0 =
-		new Class[] {
-			long.class, long.class, long.class, long.class,
-			java.lang.String.class
-		};
+		new Class[] { long.class, long.class, long.class, long.class, String.class };
 	private static final Class<?>[] _addUserCommerceOrderParameterTypes1 = new Class[] {
 			long.class
 		};
@@ -1023,8 +1015,7 @@ public class CommerceOrderServiceHttp {
 			long.class
 		};
 	private static final Class<?>[] _executeWorkflowTransitionParameterTypes8 = new Class[] {
-			long.class, long.class, java.lang.String.class,
-			java.lang.String.class
+			long.class, long.class, String.class, String.class
 		};
 	private static final Class<?>[] _fetchCommerceOrderParameterTypes9 = new Class[] {
 			long.class
@@ -1033,7 +1024,7 @@ public class CommerceOrderServiceHttp {
 			long.class, int.class
 		};
 	private static final Class<?>[] _fetchCommerceOrderParameterTypes11 = new Class[] {
-			java.lang.String.class, long.class
+			String.class, long.class
 		};
 	private static final Class<?>[] _getAvailableOrderStatusesParameterTypes12 = new Class[] {
 			long.class
@@ -1042,7 +1033,7 @@ public class CommerceOrderServiceHttp {
 			long.class
 		};
 	private static final Class<?>[] _getCommerceOrderByUuidAndGroupIdParameterTypes14 =
-		new Class[] { java.lang.String.class, long.class };
+		new Class[] { String.class, long.class };
 	private static final Class<?>[] _getCommerceOrdersParameterTypes15 = new Class[] {
 			long.class, long.class, int.class, int.class,
 			com.liferay.portal.kernel.util.OrderByComparator.class
@@ -1064,18 +1055,14 @@ public class CommerceOrderServiceHttp {
 			long.class
 		};
 	private static final Class<?>[] _updateBillingAddressParameterTypes21 = new Class[] {
-			long.class, java.lang.String.class, java.lang.String.class,
-			java.lang.String.class, java.lang.String.class,
-			java.lang.String.class, java.lang.String.class,
-			java.lang.String.class, long.class, long.class,
-			java.lang.String.class,
-			com.liferay.portal.kernel.service.ServiceContext.class
+			long.class, String.class, String.class, String.class, String.class,
+			String.class, String.class, String.class, long.class, long.class,
+			String.class, com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _updateCommerceOrderParameterTypes22 = new Class[] {
 			long.class, long.class, long.class, long.class, long.class,
-			java.lang.String.class, java.lang.String.class,
-			java.math.BigDecimal.class, java.math.BigDecimal.class,
-			java.math.BigDecimal.class, java.lang.String.class
+			String.class, String.class, java.math.BigDecimal.class,
+			java.math.BigDecimal.class, java.math.BigDecimal.class, String.class
 		};
 	private static final Class<?>[] _updateOrderStatusParameterTypes23 = new Class[] {
 			long.class, int.class
@@ -1085,15 +1072,12 @@ public class CommerceOrderServiceHttp {
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _updatePurchaseOrderNumberParameterTypes25 = new Class[] {
-			long.class, java.lang.String.class
+			long.class, String.class
 		};
 	private static final Class<?>[] _updateShippingAddressParameterTypes26 = new Class[] {
-			long.class, java.lang.String.class, java.lang.String.class,
-			java.lang.String.class, java.lang.String.class,
-			java.lang.String.class, java.lang.String.class,
-			java.lang.String.class, long.class, long.class,
-			java.lang.String.class,
-			com.liferay.portal.kernel.service.ServiceContext.class
+			long.class, String.class, String.class, String.class, String.class,
+			String.class, String.class, String.class, long.class, long.class,
+			String.class, com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _updateUserParameterTypes27 = new Class[] {
 			long.class, long.class

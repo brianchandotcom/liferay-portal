@@ -227,7 +227,7 @@ public class CommerceAddressWrapper implements CommerceAddress,
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new CommerceAddressWrapper((CommerceAddress)_commerceAddress.clone());
 	}
 
@@ -242,7 +242,7 @@ public class CommerceAddressWrapper implements CommerceAddress,
 	* @return the city of this commerce address
 	*/
 	@Override
-	public java.lang.String getCity() {
+	public String getCity() {
 		return _commerceAddress.getCity();
 	}
 
@@ -252,7 +252,7 @@ public class CommerceAddressWrapper implements CommerceAddress,
 	* @return the fully qualified class name of this commerce address
 	*/
 	@Override
-	public java.lang.String getClassName() {
+	public String getClassName() {
 		return _commerceAddress.getClassName();
 	}
 
@@ -364,7 +364,7 @@ public class CommerceAddressWrapper implements CommerceAddress,
 	* @return the description of this commerce address
 	*/
 	@Override
-	public java.lang.String getDescription() {
+	public String getDescription() {
 		return _commerceAddress.getDescription();
 	}
 
@@ -419,7 +419,7 @@ public class CommerceAddressWrapper implements CommerceAddress,
 	* @return the name of this commerce address
 	*/
 	@Override
-	public java.lang.String getName() {
+	public String getName() {
 		return _commerceAddress.getName();
 	}
 
@@ -429,7 +429,7 @@ public class CommerceAddressWrapper implements CommerceAddress,
 	* @return the phone number of this commerce address
 	*/
 	@Override
-	public java.lang.String getPhoneNumber() {
+	public String getPhoneNumber() {
 		return _commerceAddress.getPhoneNumber();
 	}
 
@@ -454,7 +454,7 @@ public class CommerceAddressWrapper implements CommerceAddress,
 	* @return the street1 of this commerce address
 	*/
 	@Override
-	public java.lang.String getStreet1() {
+	public String getStreet1() {
 		return _commerceAddress.getStreet1();
 	}
 
@@ -464,7 +464,7 @@ public class CommerceAddressWrapper implements CommerceAddress,
 	* @return the street2 of this commerce address
 	*/
 	@Override
-	public java.lang.String getStreet2() {
+	public String getStreet2() {
 		return _commerceAddress.getStreet2();
 	}
 
@@ -474,7 +474,7 @@ public class CommerceAddressWrapper implements CommerceAddress,
 	* @return the street3 of this commerce address
 	*/
 	@Override
-	public java.lang.String getStreet3() {
+	public String getStreet3() {
 		return _commerceAddress.getStreet3();
 	}
 
@@ -494,7 +494,7 @@ public class CommerceAddressWrapper implements CommerceAddress,
 	* @return the user name of this commerce address
 	*/
 	@Override
-	public java.lang.String getUserName() {
+	public String getUserName() {
 		return _commerceAddress.getUserName();
 	}
 
@@ -504,7 +504,7 @@ public class CommerceAddressWrapper implements CommerceAddress,
 	* @return the user uuid of this commerce address
 	*/
 	@Override
-	public java.lang.String getUserUuid() {
+	public String getUserUuid() {
 		return _commerceAddress.getUserUuid();
 	}
 
@@ -514,7 +514,7 @@ public class CommerceAddressWrapper implements CommerceAddress,
 	* @return the zip of this commerce address
 	*/
 	@Override
-	public java.lang.String getZip() {
+	public String getZip() {
 		return _commerceAddress.getZip();
 	}
 
@@ -584,12 +584,12 @@ public class CommerceAddressWrapper implements CommerceAddress,
 	* @param city the city of this commerce address
 	*/
 	@Override
-	public void setCity(java.lang.String city) {
+	public void setCity(String city) {
 		_commerceAddress.setCity(city);
 	}
 
 	@Override
-	public void setClassName(java.lang.String className) {
+	public void setClassName(String className) {
 		_commerceAddress.setClassName(className);
 	}
 
@@ -689,7 +689,7 @@ public class CommerceAddressWrapper implements CommerceAddress,
 	* @param description the description of this commerce address
 	*/
 	@Override
-	public void setDescription(java.lang.String description) {
+	public void setDescription(String description) {
 		_commerceAddress.setDescription(description);
 	}
 
@@ -755,7 +755,7 @@ public class CommerceAddressWrapper implements CommerceAddress,
 	* @param name the name of this commerce address
 	*/
 	@Override
-	public void setName(java.lang.String name) {
+	public void setName(String name) {
 		_commerceAddress.setName(name);
 	}
 
@@ -770,7 +770,7 @@ public class CommerceAddressWrapper implements CommerceAddress,
 	* @param phoneNumber the phone number of this commerce address
 	*/
 	@Override
-	public void setPhoneNumber(java.lang.String phoneNumber) {
+	public void setPhoneNumber(String phoneNumber) {
 		_commerceAddress.setPhoneNumber(phoneNumber);
 	}
 
@@ -795,7 +795,7 @@ public class CommerceAddressWrapper implements CommerceAddress,
 	* @param street1 the street1 of this commerce address
 	*/
 	@Override
-	public void setStreet1(java.lang.String street1) {
+	public void setStreet1(String street1) {
 		_commerceAddress.setStreet1(street1);
 	}
 
@@ -805,7 +805,7 @@ public class CommerceAddressWrapper implements CommerceAddress,
 	* @param street2 the street2 of this commerce address
 	*/
 	@Override
-	public void setStreet2(java.lang.String street2) {
+	public void setStreet2(String street2) {
 		_commerceAddress.setStreet2(street2);
 	}
 
@@ -815,7 +815,7 @@ public class CommerceAddressWrapper implements CommerceAddress,
 	* @param street3 the street3 of this commerce address
 	*/
 	@Override
-	public void setStreet3(java.lang.String street3) {
+	public void setStreet3(String street3) {
 		_commerceAddress.setStreet3(street3);
 	}
 
@@ -835,7 +835,7 @@ public class CommerceAddressWrapper implements CommerceAddress,
 	* @param userName the user name of this commerce address
 	*/
 	@Override
-	public void setUserName(java.lang.String userName) {
+	public void setUserName(String userName) {
 		_commerceAddress.setUserName(userName);
 	}
 
@@ -845,7 +845,7 @@ public class CommerceAddressWrapper implements CommerceAddress,
 	* @param userUuid the user uuid of this commerce address
 	*/
 	@Override
-	public void setUserUuid(java.lang.String userUuid) {
+	public void setUserUuid(String userUuid) {
 		_commerceAddress.setUserUuid(userUuid);
 	}
 
@@ -855,7 +855,7 @@ public class CommerceAddressWrapper implements CommerceAddress,
 	* @param zip the zip of this commerce address
 	*/
 	@Override
-	public void setZip(java.lang.String zip) {
+	public void setZip(String zip) {
 		_commerceAddress.setZip(zip);
 	}
 
@@ -870,7 +870,7 @@ public class CommerceAddressWrapper implements CommerceAddress,
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _commerceAddress.toString();
 	}
 
@@ -880,7 +880,7 @@ public class CommerceAddressWrapper implements CommerceAddress,
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _commerceAddress.toXmlString();
 	}
 

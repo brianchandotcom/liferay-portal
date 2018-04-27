@@ -60,8 +60,8 @@ public interface CommerceOrderItemService extends BaseService {
 	 * Never modify or reference this interface directly. Always use {@link CommerceOrderItemServiceUtil} to access the commerce order item remote service. Add custom service methods to {@link com.liferay.commerce.service.impl.CommerceOrderItemServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	public CommerceOrderItem addCommerceOrderItem(long commerceOrderId,
-		long cpInstanceId, int quantity, int shippedQuantity,
-		java.lang.String json, BigDecimal price, ServiceContext serviceContext)
+		long cpInstanceId, int quantity, int shippedQuantity, String json,
+		BigDecimal price, ServiceContext serviceContext)
 		throws PortalException;
 
 	public void deleteCommerceOrderItem(long commerceOrderItemId)
@@ -92,23 +92,21 @@ public interface CommerceOrderItemService extends BaseService {
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public BaseModelSearchResult<CommerceOrderItem> search(
-		long commerceOrderId, java.lang.String keywords, int start, int end,
-		Sort sort) throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public BaseModelSearchResult<CommerceOrderItem> search(
-		long commerceOrderId, java.lang.String sku, java.lang.String title,
-		boolean andOperator, int start, int end, Sort sort)
+		long commerceOrderId, String keywords, int start, int end, Sort sort)
 		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public BaseModelSearchResult<CommerceOrderItem> search(
+		long commerceOrderId, String sku, String title, boolean andOperator,
+		int start, int end, Sort sort) throws PortalException;
 
 	public CommerceOrderItem updateCommerceOrderItem(long commerceOrderItemId,
 		int quantity) throws PortalException;
 
 	public CommerceOrderItem updateCommerceOrderItem(long commerceOrderItemId,
-		int quantity, java.lang.String json, BigDecimal price)
-		throws PortalException;
+		int quantity, String json, BigDecimal price) throws PortalException;
 }

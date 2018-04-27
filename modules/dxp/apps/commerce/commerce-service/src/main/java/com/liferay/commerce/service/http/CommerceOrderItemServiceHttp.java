@@ -57,7 +57,7 @@ import com.liferay.portal.kernel.util.MethodKey;
 public class CommerceOrderItemServiceHttp {
 	public static com.liferay.commerce.model.CommerceOrderItem addCommerceOrderItem(
 		HttpPrincipal httpPrincipal, long commerceOrderId, long cpInstanceId,
-		int quantity, int shippedQuantity, java.lang.String json,
+		int quantity, int shippedQuantity, String json,
 		java.math.BigDecimal price,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -285,9 +285,8 @@ public class CommerceOrderItemServiceHttp {
 	}
 
 	public static com.liferay.portal.kernel.search.BaseModelSearchResult<com.liferay.commerce.model.CommerceOrderItem> search(
-		HttpPrincipal httpPrincipal, long commerceOrderId,
-		java.lang.String keywords, int start, int end,
-		com.liferay.portal.kernel.search.Sort sort)
+		HttpPrincipal httpPrincipal, long commerceOrderId, String keywords,
+		int start, int end, com.liferay.portal.kernel.search.Sort sort)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(CommerceOrderItemServiceUtil.class,
@@ -319,9 +318,9 @@ public class CommerceOrderItemServiceHttp {
 	}
 
 	public static com.liferay.portal.kernel.search.BaseModelSearchResult<com.liferay.commerce.model.CommerceOrderItem> search(
-		HttpPrincipal httpPrincipal, long commerceOrderId,
-		java.lang.String sku, java.lang.String title, boolean andOperator,
-		int start, int end, com.liferay.portal.kernel.search.Sort sort)
+		HttpPrincipal httpPrincipal, long commerceOrderId, String sku,
+		String title, boolean andOperator, int start, int end,
+		com.liferay.portal.kernel.search.Sort sort)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(CommerceOrderItemServiceUtil.class,
@@ -387,7 +386,7 @@ public class CommerceOrderItemServiceHttp {
 
 	public static com.liferay.commerce.model.CommerceOrderItem updateCommerceOrderItem(
 		HttpPrincipal httpPrincipal, long commerceOrderItemId, int quantity,
-		java.lang.String json, java.math.BigDecimal price)
+		String json, java.math.BigDecimal price)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(CommerceOrderItemServiceUtil.class,
@@ -421,7 +420,7 @@ public class CommerceOrderItemServiceHttp {
 
 	private static Log _log = LogFactoryUtil.getLog(CommerceOrderItemServiceHttp.class);
 	private static final Class<?>[] _addCommerceOrderItemParameterTypes0 = new Class[] {
-			long.class, long.class, int.class, int.class, java.lang.String.class,
+			long.class, long.class, int.class, int.class, String.class,
 			java.math.BigDecimal.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
@@ -443,19 +442,17 @@ public class CommerceOrderItemServiceHttp {
 	private static final Class<?>[] _getCommerceOrderItemsQuantityParameterTypes6 =
 		new Class[] { long.class };
 	private static final Class<?>[] _searchParameterTypes7 = new Class[] {
-			long.class, java.lang.String.class, int.class, int.class,
+			long.class, String.class, int.class, int.class,
 			com.liferay.portal.kernel.search.Sort.class
 		};
 	private static final Class<?>[] _searchParameterTypes8 = new Class[] {
-			long.class, java.lang.String.class, java.lang.String.class,
-			boolean.class, int.class, int.class,
-			com.liferay.portal.kernel.search.Sort.class
+			long.class, String.class, String.class, boolean.class, int.class,
+			int.class, com.liferay.portal.kernel.search.Sort.class
 		};
 	private static final Class<?>[] _updateCommerceOrderItemParameterTypes9 = new Class[] {
 			long.class, int.class
 		};
 	private static final Class<?>[] _updateCommerceOrderItemParameterTypes10 = new Class[] {
-			long.class, int.class, java.lang.String.class,
-			java.math.BigDecimal.class
+			long.class, int.class, String.class, java.math.BigDecimal.class
 		};
 }

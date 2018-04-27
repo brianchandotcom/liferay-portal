@@ -64,8 +64,8 @@ public interface CPDisplayLayoutLocalService extends BaseLocalService,
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CPDisplayLayoutLocalServiceUtil} to access the cp display layout local service. Add custom service methods to {@link com.liferay.commerce.product.service.impl.CPDisplayLayoutLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public CPDisplayLayout addCPDisplayLayout(java.lang.Class<?> clazz,
-		long classPK, java.lang.String layoutUuid, ServiceContext serviceContext);
+	public CPDisplayLayout addCPDisplayLayout(Class<?> clazz, long classPK,
+		String layoutUuid, ServiceContext serviceContext);
 
 	/**
 	* Adds the cp display layout to the database. Also notifies the appropriate model listeners.
@@ -85,7 +85,7 @@ public interface CPDisplayLayoutLocalService extends BaseLocalService,
 	@Transactional(enabled = false)
 	public CPDisplayLayout createCPDisplayLayout(long CPDisplayLayoutId);
 
-	public void deleteCPDisplayLayout(java.lang.Class<?> clazz, long classPK);
+	public void deleteCPDisplayLayout(Class<?> clazz, long classPK);
 
 	/**
 	* Deletes the cp display layout from the database. Also notifies the appropriate model listeners.
@@ -175,8 +175,7 @@ public interface CPDisplayLayoutLocalService extends BaseLocalService,
 		Projection projection);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CPDisplayLayout fetchCPDisplayLayout(java.lang.Class<?> clazz,
-		long classPK);
+	public CPDisplayLayout fetchCPDisplayLayout(Class<?> clazz, long classPK);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CPDisplayLayout fetchCPDisplayLayout(long CPDisplayLayoutId);
@@ -189,8 +188,8 @@ public interface CPDisplayLayoutLocalService extends BaseLocalService,
 	* @return the matching cp display layout, or <code>null</code> if a matching cp display layout could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CPDisplayLayout fetchCPDisplayLayoutByUuidAndGroupId(
-		java.lang.String uuid, long groupId);
+	public CPDisplayLayout fetchCPDisplayLayoutByUuidAndGroupId(String uuid,
+		long groupId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
@@ -215,8 +214,8 @@ public interface CPDisplayLayoutLocalService extends BaseLocalService,
 	* @throws PortalException if a matching cp display layout could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CPDisplayLayout getCPDisplayLayoutByUuidAndGroupId(
-		java.lang.String uuid, long groupId) throws PortalException;
+	public CPDisplayLayout getCPDisplayLayoutByUuidAndGroupId(String uuid,
+		long groupId) throws PortalException;
 
 	/**
 	* Returns a range of all the cp display layouts.
@@ -241,7 +240,7 @@ public interface CPDisplayLayoutLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CPDisplayLayout> getCPDisplayLayoutsByUuidAndCompanyId(
-		java.lang.String uuid, long companyId);
+		String uuid, long companyId);
 
 	/**
 	* Returns a range of cp display layouts matching the UUID and company.
@@ -255,7 +254,7 @@ public interface CPDisplayLayoutLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CPDisplayLayout> getCPDisplayLayoutsByUuidAndCompanyId(
-		java.lang.String uuid, long companyId, int start, int end,
+		String uuid, long companyId, int start, int end,
 		OrderByComparator<CPDisplayLayout> orderByComparator);
 
 	/**
@@ -278,7 +277,7 @@ public interface CPDisplayLayoutLocalService extends BaseLocalService,
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

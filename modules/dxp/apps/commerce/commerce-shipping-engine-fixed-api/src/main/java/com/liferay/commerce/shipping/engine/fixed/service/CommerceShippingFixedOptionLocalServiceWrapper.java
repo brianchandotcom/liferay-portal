@@ -49,8 +49,8 @@ public class CommerceShippingFixedOptionLocalServiceWrapper
 	@Override
 	public com.liferay.commerce.shipping.engine.fixed.model.CommerceShippingFixedOption addCommerceShippingFixedOption(
 		long commerceShippingMethodId,
-		java.util.Map<java.util.Locale, java.lang.String> nameMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		java.util.Map<java.util.Locale, String> nameMap,
+		java.util.Map<java.util.Locale, String> descriptionMap,
 		java.math.BigDecimal amount, double priority,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -283,7 +283,7 @@ public class CommerceShippingFixedOptionLocalServiceWrapper
 	* @return the OSGi service identifier
 	*/
 	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
+	public String getOSGiServiceIdentifier() {
 		return _commerceShippingFixedOptionLocalService.getOSGiServiceIdentifier();
 	}
 
@@ -309,8 +309,8 @@ public class CommerceShippingFixedOptionLocalServiceWrapper
 	@Override
 	public com.liferay.commerce.shipping.engine.fixed.model.CommerceShippingFixedOption updateCommerceShippingFixedOption(
 		long commerceShippingFixedOptionId,
-		java.util.Map<java.util.Locale, java.lang.String> nameMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		java.util.Map<java.util.Locale, String> nameMap,
+		java.util.Map<java.util.Locale, String> descriptionMap,
 		java.math.BigDecimal amount, double priority)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _commerceShippingFixedOptionLocalService.updateCommerceShippingFixedOption(commerceShippingFixedOptionId,

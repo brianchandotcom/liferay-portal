@@ -22,5 +22,5 @@ import aQute.bnd.annotation.ProviderType;
  */
 @ProviderType
 public interface CommerceCurrencyFinder {
-	public java.util.List<java.lang.Long> getGroupIds();
+	public java.util.List<Long> getGroupIds();
 }

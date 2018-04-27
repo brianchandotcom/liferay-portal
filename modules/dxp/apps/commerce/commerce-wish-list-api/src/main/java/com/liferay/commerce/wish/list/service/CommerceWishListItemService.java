@@ -58,8 +58,7 @@ public interface CommerceWishListItemService extends BaseService {
 	 */
 	public CommerceWishListItem addCommerceWishListItem(
 		long commerceWishListId, long cpDefinitionId, long cpInstanceId,
-		java.lang.String json, ServiceContext serviceContext)
-		throws PortalException;
+		String json, ServiceContext serviceContext) throws PortalException;
 
 	public void deleteCommerceWishListItem(long commerceWishListItemId)
 		throws PortalException;
@@ -83,5 +82,5 @@ public interface CommerceWishListItemService extends BaseService {
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 }

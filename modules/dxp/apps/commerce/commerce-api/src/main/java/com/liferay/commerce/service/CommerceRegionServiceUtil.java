@@ -43,8 +43,8 @@ public class CommerceRegionServiceUtil {
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.commerce.service.impl.CommerceRegionServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static com.liferay.commerce.model.CommerceRegion addCommerceRegion(
-		long commerceCountryId, java.lang.String name, java.lang.String code,
-		double priority, boolean active,
+		long commerceCountryId, String name, String code, double priority,
+		boolean active,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
@@ -98,13 +98,13 @@ public class CommerceRegionServiceUtil {
 	*
 	* @return the OSGi service identifier
 	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
+	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 
 	public static com.liferay.commerce.model.CommerceRegion updateCommerceRegion(
-		long commerceRegionId, java.lang.String name, java.lang.String code,
-		double priority, boolean active,
+		long commerceRegionId, String name, String code, double priority,
+		boolean active,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()

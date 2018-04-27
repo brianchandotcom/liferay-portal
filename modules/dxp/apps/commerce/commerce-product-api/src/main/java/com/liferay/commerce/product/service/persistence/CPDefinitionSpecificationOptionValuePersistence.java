@@ -49,7 +49,7 @@ public interface CPDefinitionSpecificationOptionValuePersistence
 	* @return the matching cp definition specification option values
 	*/
 	public java.util.List<CPDefinitionSpecificationOptionValue> findByUuid(
-		java.lang.String uuid);
+		String uuid);
 
 	/**
 	* Returns a range of all the cp definition specification option values where uuid = &#63;.
@@ -64,7 +64,7 @@ public interface CPDefinitionSpecificationOptionValuePersistence
 	* @return the range of matching cp definition specification option values
 	*/
 	public java.util.List<CPDefinitionSpecificationOptionValue> findByUuid(
-		java.lang.String uuid, int start, int end);
+		String uuid, int start, int end);
 
 	/**
 	* Returns an ordered range of all the cp definition specification option values where uuid = &#63;.
@@ -80,7 +80,7 @@ public interface CPDefinitionSpecificationOptionValuePersistence
 	* @return the ordered range of matching cp definition specification option values
 	*/
 	public java.util.List<CPDefinitionSpecificationOptionValue> findByUuid(
-		java.lang.String uuid, int start, int end,
+		String uuid, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<CPDefinitionSpecificationOptionValue> orderByComparator);
 
 	/**
@@ -98,7 +98,7 @@ public interface CPDefinitionSpecificationOptionValuePersistence
 	* @return the ordered range of matching cp definition specification option values
 	*/
 	public java.util.List<CPDefinitionSpecificationOptionValue> findByUuid(
-		java.lang.String uuid, int start, int end,
+		String uuid, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<CPDefinitionSpecificationOptionValue> orderByComparator,
 		boolean retrieveFromCache);
 
@@ -110,8 +110,7 @@ public interface CPDefinitionSpecificationOptionValuePersistence
 	* @return the first matching cp definition specification option value
 	* @throws NoSuchCPDefinitionSpecificationOptionValueException if a matching cp definition specification option value could not be found
 	*/
-	public CPDefinitionSpecificationOptionValue findByUuid_First(
-		java.lang.String uuid,
+	public CPDefinitionSpecificationOptionValue findByUuid_First(String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<CPDefinitionSpecificationOptionValue> orderByComparator)
 		throws NoSuchCPDefinitionSpecificationOptionValueException;
 
@@ -122,8 +121,7 @@ public interface CPDefinitionSpecificationOptionValuePersistence
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching cp definition specification option value, or <code>null</code> if a matching cp definition specification option value could not be found
 	*/
-	public CPDefinitionSpecificationOptionValue fetchByUuid_First(
-		java.lang.String uuid,
+	public CPDefinitionSpecificationOptionValue fetchByUuid_First(String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<CPDefinitionSpecificationOptionValue> orderByComparator);
 
 	/**
@@ -134,8 +132,7 @@ public interface CPDefinitionSpecificationOptionValuePersistence
 	* @return the last matching cp definition specification option value
 	* @throws NoSuchCPDefinitionSpecificationOptionValueException if a matching cp definition specification option value could not be found
 	*/
-	public CPDefinitionSpecificationOptionValue findByUuid_Last(
-		java.lang.String uuid,
+	public CPDefinitionSpecificationOptionValue findByUuid_Last(String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<CPDefinitionSpecificationOptionValue> orderByComparator)
 		throws NoSuchCPDefinitionSpecificationOptionValueException;
 
@@ -146,8 +143,7 @@ public interface CPDefinitionSpecificationOptionValuePersistence
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching cp definition specification option value, or <code>null</code> if a matching cp definition specification option value could not be found
 	*/
-	public CPDefinitionSpecificationOptionValue fetchByUuid_Last(
-		java.lang.String uuid,
+	public CPDefinitionSpecificationOptionValue fetchByUuid_Last(String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<CPDefinitionSpecificationOptionValue> orderByComparator);
 
 	/**
@@ -160,7 +156,7 @@ public interface CPDefinitionSpecificationOptionValuePersistence
 	* @throws NoSuchCPDefinitionSpecificationOptionValueException if a cp definition specification option value with the primary key could not be found
 	*/
 	public CPDefinitionSpecificationOptionValue[] findByUuid_PrevAndNext(
-		long CPDefinitionSpecificationOptionValueId, java.lang.String uuid,
+		long CPDefinitionSpecificationOptionValueId, String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<CPDefinitionSpecificationOptionValue> orderByComparator)
 		throws NoSuchCPDefinitionSpecificationOptionValueException;
 
@@ -169,7 +165,7 @@ public interface CPDefinitionSpecificationOptionValuePersistence
 	*
 	* @param uuid the uuid
 	*/
-	public void removeByUuid(java.lang.String uuid);
+	public void removeByUuid(String uuid);
 
 	/**
 	* Returns the number of cp definition specification option values where uuid = &#63;.
@@ -177,7 +173,7 @@ public interface CPDefinitionSpecificationOptionValuePersistence
 	* @param uuid the uuid
 	* @return the number of matching cp definition specification option values
 	*/
-	public int countByUuid(java.lang.String uuid);
+	public int countByUuid(String uuid);
 
 	/**
 	* Returns the cp definition specification option value where uuid = &#63; and groupId = &#63; or throws a {@link NoSuchCPDefinitionSpecificationOptionValueException} if it could not be found.
@@ -187,8 +183,8 @@ public interface CPDefinitionSpecificationOptionValuePersistence
 	* @return the matching cp definition specification option value
 	* @throws NoSuchCPDefinitionSpecificationOptionValueException if a matching cp definition specification option value could not be found
 	*/
-	public CPDefinitionSpecificationOptionValue findByUUID_G(
-		java.lang.String uuid, long groupId)
+	public CPDefinitionSpecificationOptionValue findByUUID_G(String uuid,
+		long groupId)
 		throws NoSuchCPDefinitionSpecificationOptionValueException;
 
 	/**
@@ -198,8 +194,8 @@ public interface CPDefinitionSpecificationOptionValuePersistence
 	* @param groupId the group ID
 	* @return the matching cp definition specification option value, or <code>null</code> if a matching cp definition specification option value could not be found
 	*/
-	public CPDefinitionSpecificationOptionValue fetchByUUID_G(
-		java.lang.String uuid, long groupId);
+	public CPDefinitionSpecificationOptionValue fetchByUUID_G(String uuid,
+		long groupId);
 
 	/**
 	* Returns the cp definition specification option value where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -209,8 +205,8 @@ public interface CPDefinitionSpecificationOptionValuePersistence
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching cp definition specification option value, or <code>null</code> if a matching cp definition specification option value could not be found
 	*/
-	public CPDefinitionSpecificationOptionValue fetchByUUID_G(
-		java.lang.String uuid, long groupId, boolean retrieveFromCache);
+	public CPDefinitionSpecificationOptionValue fetchByUUID_G(String uuid,
+		long groupId, boolean retrieveFromCache);
 
 	/**
 	* Removes the cp definition specification option value where uuid = &#63; and groupId = &#63; from the database.
@@ -219,8 +215,8 @@ public interface CPDefinitionSpecificationOptionValuePersistence
 	* @param groupId the group ID
 	* @return the cp definition specification option value that was removed
 	*/
-	public CPDefinitionSpecificationOptionValue removeByUUID_G(
-		java.lang.String uuid, long groupId)
+	public CPDefinitionSpecificationOptionValue removeByUUID_G(String uuid,
+		long groupId)
 		throws NoSuchCPDefinitionSpecificationOptionValueException;
 
 	/**
@@ -230,7 +226,7 @@ public interface CPDefinitionSpecificationOptionValuePersistence
 	* @param groupId the group ID
 	* @return the number of matching cp definition specification option values
 	*/
-	public int countByUUID_G(java.lang.String uuid, long groupId);
+	public int countByUUID_G(String uuid, long groupId);
 
 	/**
 	* Returns all the cp definition specification option values where uuid = &#63; and companyId = &#63;.
@@ -240,7 +236,7 @@ public interface CPDefinitionSpecificationOptionValuePersistence
 	* @return the matching cp definition specification option values
 	*/
 	public java.util.List<CPDefinitionSpecificationOptionValue> findByUuid_C(
-		java.lang.String uuid, long companyId);
+		String uuid, long companyId);
 
 	/**
 	* Returns a range of all the cp definition specification option values where uuid = &#63; and companyId = &#63;.
@@ -256,7 +252,7 @@ public interface CPDefinitionSpecificationOptionValuePersistence
 	* @return the range of matching cp definition specification option values
 	*/
 	public java.util.List<CPDefinitionSpecificationOptionValue> findByUuid_C(
-		java.lang.String uuid, long companyId, int start, int end);
+		String uuid, long companyId, int start, int end);
 
 	/**
 	* Returns an ordered range of all the cp definition specification option values where uuid = &#63; and companyId = &#63;.
@@ -273,7 +269,7 @@ public interface CPDefinitionSpecificationOptionValuePersistence
 	* @return the ordered range of matching cp definition specification option values
 	*/
 	public java.util.List<CPDefinitionSpecificationOptionValue> findByUuid_C(
-		java.lang.String uuid, long companyId, int start, int end,
+		String uuid, long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<CPDefinitionSpecificationOptionValue> orderByComparator);
 
 	/**
@@ -292,7 +288,7 @@ public interface CPDefinitionSpecificationOptionValuePersistence
 	* @return the ordered range of matching cp definition specification option values
 	*/
 	public java.util.List<CPDefinitionSpecificationOptionValue> findByUuid_C(
-		java.lang.String uuid, long companyId, int start, int end,
+		String uuid, long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<CPDefinitionSpecificationOptionValue> orderByComparator,
 		boolean retrieveFromCache);
 
@@ -306,7 +302,7 @@ public interface CPDefinitionSpecificationOptionValuePersistence
 	* @throws NoSuchCPDefinitionSpecificationOptionValueException if a matching cp definition specification option value could not be found
 	*/
 	public CPDefinitionSpecificationOptionValue findByUuid_C_First(
-		java.lang.String uuid, long companyId,
+		String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<CPDefinitionSpecificationOptionValue> orderByComparator)
 		throws NoSuchCPDefinitionSpecificationOptionValueException;
 
@@ -319,7 +315,7 @@ public interface CPDefinitionSpecificationOptionValuePersistence
 	* @return the first matching cp definition specification option value, or <code>null</code> if a matching cp definition specification option value could not be found
 	*/
 	public CPDefinitionSpecificationOptionValue fetchByUuid_C_First(
-		java.lang.String uuid, long companyId,
+		String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<CPDefinitionSpecificationOptionValue> orderByComparator);
 
 	/**
@@ -331,8 +327,8 @@ public interface CPDefinitionSpecificationOptionValuePersistence
 	* @return the last matching cp definition specification option value
 	* @throws NoSuchCPDefinitionSpecificationOptionValueException if a matching cp definition specification option value could not be found
 	*/
-	public CPDefinitionSpecificationOptionValue findByUuid_C_Last(
-		java.lang.String uuid, long companyId,
+	public CPDefinitionSpecificationOptionValue findByUuid_C_Last(String uuid,
+		long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<CPDefinitionSpecificationOptionValue> orderByComparator)
 		throws NoSuchCPDefinitionSpecificationOptionValueException;
 
@@ -345,7 +341,7 @@ public interface CPDefinitionSpecificationOptionValuePersistence
 	* @return the last matching cp definition specification option value, or <code>null</code> if a matching cp definition specification option value could not be found
 	*/
 	public CPDefinitionSpecificationOptionValue fetchByUuid_C_Last(
-		java.lang.String uuid, long companyId,
+		String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<CPDefinitionSpecificationOptionValue> orderByComparator);
 
 	/**
@@ -359,7 +355,7 @@ public interface CPDefinitionSpecificationOptionValuePersistence
 	* @throws NoSuchCPDefinitionSpecificationOptionValueException if a cp definition specification option value with the primary key could not be found
 	*/
 	public CPDefinitionSpecificationOptionValue[] findByUuid_C_PrevAndNext(
-		long CPDefinitionSpecificationOptionValueId, java.lang.String uuid,
+		long CPDefinitionSpecificationOptionValueId, String uuid,
 		long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<CPDefinitionSpecificationOptionValue> orderByComparator)
 		throws NoSuchCPDefinitionSpecificationOptionValueException;
@@ -370,7 +366,7 @@ public interface CPDefinitionSpecificationOptionValuePersistence
 	* @param uuid the uuid
 	* @param companyId the company ID
 	*/
-	public void removeByUuid_C(java.lang.String uuid, long companyId);
+	public void removeByUuid_C(String uuid, long companyId);
 
 	/**
 	* Returns the number of cp definition specification option values where uuid = &#63; and companyId = &#63;.
@@ -379,7 +375,7 @@ public interface CPDefinitionSpecificationOptionValuePersistence
 	* @param companyId the company ID
 	* @return the number of matching cp definition specification option values
 	*/
-	public int countByUuid_C(java.lang.String uuid, long companyId);
+	public int countByUuid_C(String uuid, long companyId);
 
 	/**
 	* Returns all the cp definition specification option values where groupId = &#63;.
@@ -1264,5 +1260,5 @@ public interface CPDefinitionSpecificationOptionValuePersistence
 	public int countAll();
 
 	@Override
-	public java.util.Set<java.lang.String> getBadColumnNames();
+	public java.util.Set<String> getBadColumnNames();
 }

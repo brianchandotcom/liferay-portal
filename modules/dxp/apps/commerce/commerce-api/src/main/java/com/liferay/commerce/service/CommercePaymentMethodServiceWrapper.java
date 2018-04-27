@@ -36,11 +36,11 @@ public class CommercePaymentMethodServiceWrapper
 
 	@Override
 	public com.liferay.commerce.model.CommercePaymentMethod addCommercePaymentMethod(
-		java.util.Map<java.util.Locale, java.lang.String> nameMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		java.io.File imageFile, java.lang.String engineKey,
-		java.util.Map<java.lang.String, java.lang.String> engineParameterMap,
-		double priority, boolean active,
+		java.util.Map<java.util.Locale, String> nameMap,
+		java.util.Map<java.util.Locale, String> descriptionMap,
+		java.io.File imageFile, String engineKey,
+		java.util.Map<String, String> engineParameterMap, double priority,
+		boolean active,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _commercePaymentMethodService.addCommercePaymentMethod(nameMap,
@@ -100,7 +100,7 @@ public class CommercePaymentMethodServiceWrapper
 	* @return the OSGi service identifier
 	*/
 	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
+	public String getOSGiServiceIdentifier() {
 		return _commercePaymentMethodService.getOSGiServiceIdentifier();
 	}
 
@@ -115,11 +115,11 @@ public class CommercePaymentMethodServiceWrapper
 	@Override
 	public com.liferay.commerce.model.CommercePaymentMethod updateCommercePaymentMethod(
 		long commercePaymentMethodId,
-		java.util.Map<java.util.Locale, java.lang.String> nameMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		java.util.Map<java.util.Locale, String> nameMap,
+		java.util.Map<java.util.Locale, String> descriptionMap,
 		java.io.File imageFile,
-		java.util.Map<java.lang.String, java.lang.String> engineParameterMap,
-		double priority, boolean active,
+		java.util.Map<String, String> engineParameterMap, double priority,
+		boolean active,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _commercePaymentMethodService.updateCommercePaymentMethod(commercePaymentMethodId,

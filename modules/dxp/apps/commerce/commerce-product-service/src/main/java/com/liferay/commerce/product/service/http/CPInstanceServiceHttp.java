@@ -56,12 +56,12 @@ import com.liferay.portal.kernel.util.MethodKey;
 @ProviderType
 public class CPInstanceServiceHttp {
 	public static com.liferay.commerce.product.model.CPInstance addCPInstance(
-		HttpPrincipal httpPrincipal, long cpDefinitionId, java.lang.String sku,
-		java.lang.String gtin, java.lang.String manufacturerPartNumber,
-		boolean purchasable, java.lang.String ddmContent, boolean published,
-		int displayDateMonth, int displayDateDay, int displayDateYear,
-		int displayDateHour, int displayDateMinute, int expirationDateMonth,
-		int expirationDateDay, int expirationDateYear, int expirationDateHour,
+		HttpPrincipal httpPrincipal, long cpDefinitionId, String sku,
+		String gtin, String manufacturerPartNumber, boolean purchasable,
+		String ddmContent, boolean published, int displayDateMonth,
+		int displayDateDay, int displayDateYear, int displayDateHour,
+		int displayDateMinute, int expirationDateMonth, int expirationDateDay,
+		int expirationDateYear, int expirationDateHour,
 		int expirationDateMinute, boolean neverExpire,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -100,15 +100,15 @@ public class CPInstanceServiceHttp {
 	}
 
 	public static com.liferay.commerce.product.model.CPInstance addCPInstance(
-		HttpPrincipal httpPrincipal, long cpDefinitionId, java.lang.String sku,
-		java.lang.String gtin, java.lang.String manufacturerPartNumber,
-		boolean purchasable, java.lang.String ddmContent, double width,
-		double height, double depth, double weight, java.math.BigDecimal cost,
-		java.math.BigDecimal price, java.math.BigDecimal promoPrice,
-		boolean published, int displayDateMonth, int displayDateDay,
-		int displayDateYear, int displayDateHour, int displayDateMinute,
-		int expirationDateMonth, int expirationDateDay, int expirationDateYear,
-		int expirationDateHour, int expirationDateMinute, boolean neverExpire,
+		HttpPrincipal httpPrincipal, long cpDefinitionId, String sku,
+		String gtin, String manufacturerPartNumber, boolean purchasable,
+		String ddmContent, double width, double height, double depth,
+		double weight, java.math.BigDecimal cost, java.math.BigDecimal price,
+		java.math.BigDecimal promoPrice, boolean published,
+		int displayDateMonth, int displayDateDay, int displayDateYear,
+		int displayDateHour, int displayDateMinute, int expirationDateMonth,
+		int expirationDateDay, int expirationDateYear, int expirationDateHour,
+		int expirationDateMinute, boolean neverExpire,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -501,8 +501,8 @@ public class CPInstanceServiceHttp {
 
 	public static com.liferay.portal.kernel.search.BaseModelSearchResult<com.liferay.commerce.product.model.CPInstance> searchCPDefinitionInstances(
 		HttpPrincipal httpPrincipal, long companyId, long groupId,
-		long cpDefinitionId, java.lang.String keywords, int status, int start,
-		int end, com.liferay.portal.kernel.search.Sort sort)
+		long cpDefinitionId, String keywords, int status, int start, int end,
+		com.liferay.portal.kernel.search.Sort sort)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(CPInstanceServiceUtil.class,
@@ -537,7 +537,7 @@ public class CPInstanceServiceHttp {
 
 	public static com.liferay.portal.kernel.search.BaseModelSearchResult<com.liferay.commerce.product.model.CPInstance> searchCPInstances(
 		HttpPrincipal httpPrincipal, long companyId, long groupId,
-		java.lang.String keywords, int status, int start, int end,
+		String keywords, int status, int start, int end,
 		com.liferay.portal.kernel.search.Sort sort)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -603,13 +603,12 @@ public class CPInstanceServiceHttp {
 	}
 
 	public static com.liferay.commerce.product.model.CPInstance updateCPInstance(
-		HttpPrincipal httpPrincipal, long cpInstanceId, java.lang.String sku,
-		java.lang.String gtin, java.lang.String manufacturerPartNumber,
-		boolean purchasable, boolean published, int displayDateMonth,
-		int displayDateDay, int displayDateYear, int displayDateHour,
-		int displayDateMinute, int expirationDateMonth, int expirationDateDay,
-		int expirationDateYear, int expirationDateHour,
-		int expirationDateMinute, boolean neverExpire,
+		HttpPrincipal httpPrincipal, long cpInstanceId, String sku,
+		String gtin, String manufacturerPartNumber, boolean purchasable,
+		boolean published, int displayDateMonth, int displayDateDay,
+		int displayDateYear, int displayDateHour, int displayDateMinute,
+		int expirationDateMonth, int expirationDateDay, int expirationDateYear,
+		int expirationDateHour, int expirationDateMinute, boolean neverExpire,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -647,10 +646,10 @@ public class CPInstanceServiceHttp {
 	}
 
 	public static com.liferay.commerce.product.model.CPInstance updateCPInstance(
-		HttpPrincipal httpPrincipal, long cpInstanceId, java.lang.String sku,
-		java.lang.String gtin, java.lang.String manufacturerPartNumber,
-		boolean purchasable, double width, double height, double depth,
-		double weight, java.math.BigDecimal cost, java.math.BigDecimal price,
+		HttpPrincipal httpPrincipal, long cpInstanceId, String sku,
+		String gtin, String manufacturerPartNumber, boolean purchasable,
+		double width, double height, double depth, double weight,
+		java.math.BigDecimal cost, java.math.BigDecimal price,
 		java.math.BigDecimal promoPrice, boolean published,
 		int displayDateMonth, int displayDateDay, int displayDateYear,
 		int displayDateHour, int displayDateMinute, int expirationDateMonth,
@@ -766,7 +765,7 @@ public class CPInstanceServiceHttp {
 		HttpPrincipal httpPrincipal, long userId, long cpInstanceId,
 		int status,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext,
-		java.util.Map<java.lang.String, java.io.Serializable> workflowContext)
+		java.util.Map<String, java.io.Serializable> workflowContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(CPInstanceServiceUtil.class,
@@ -799,16 +798,15 @@ public class CPInstanceServiceHttp {
 
 	private static Log _log = LogFactoryUtil.getLog(CPInstanceServiceHttp.class);
 	private static final Class<?>[] _addCPInstanceParameterTypes0 = new Class[] {
-			long.class, java.lang.String.class, java.lang.String.class,
-			java.lang.String.class, boolean.class, java.lang.String.class,
-			boolean.class, int.class, int.class, int.class, int.class, int.class,
-			int.class, int.class, int.class, int.class, int.class, boolean.class,
+			long.class, String.class, String.class, String.class, boolean.class,
+			String.class, boolean.class, int.class, int.class, int.class,
+			int.class, int.class, int.class, int.class, int.class, int.class,
+			int.class, boolean.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _addCPInstanceParameterTypes1 = new Class[] {
-			long.class, java.lang.String.class, java.lang.String.class,
-			java.lang.String.class, boolean.class, java.lang.String.class,
-			double.class, double.class, double.class, double.class,
+			long.class, String.class, String.class, String.class, boolean.class,
+			String.class, double.class, double.class, double.class, double.class,
 			java.math.BigDecimal.class, java.math.BigDecimal.class,
 			java.math.BigDecimal.class, boolean.class, int.class, int.class,
 			int.class, int.class, int.class, int.class, int.class, int.class,
@@ -851,31 +849,29 @@ public class CPInstanceServiceHttp {
 		};
 	private static final Class<?>[] _searchCPDefinitionInstancesParameterTypes13 =
 		new Class[] {
-			long.class, long.class, long.class, java.lang.String.class,
-			int.class, int.class, int.class,
-			com.liferay.portal.kernel.search.Sort.class
+			long.class, long.class, long.class, String.class, int.class,
+			int.class, int.class, com.liferay.portal.kernel.search.Sort.class
 		};
 	private static final Class<?>[] _searchCPInstancesParameterTypes14 = new Class[] {
-			long.class, long.class, java.lang.String.class, int.class, int.class,
+			long.class, long.class, String.class, int.class, int.class,
 			int.class, com.liferay.portal.kernel.search.Sort.class
 		};
 	private static final Class<?>[] _searchCPInstancesParameterTypes15 = new Class[] {
 			com.liferay.portal.kernel.search.SearchContext.class
 		};
 	private static final Class<?>[] _updateCPInstanceParameterTypes16 = new Class[] {
-			long.class, java.lang.String.class, java.lang.String.class,
-			java.lang.String.class, boolean.class, boolean.class, int.class,
-			int.class, int.class, int.class, int.class, int.class, int.class,
-			int.class, int.class, int.class, boolean.class,
+			long.class, String.class, String.class, String.class, boolean.class,
+			boolean.class, int.class, int.class, int.class, int.class, int.class,
+			int.class, int.class, int.class, int.class, int.class, boolean.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _updateCPInstanceParameterTypes17 = new Class[] {
-			long.class, java.lang.String.class, java.lang.String.class,
-			java.lang.String.class, boolean.class, double.class, double.class,
-			double.class, double.class, java.math.BigDecimal.class,
+			long.class, String.class, String.class, String.class, boolean.class,
+			double.class, double.class, double.class, double.class,
 			java.math.BigDecimal.class, java.math.BigDecimal.class,
-			boolean.class, int.class, int.class, int.class, int.class, int.class,
-			int.class, int.class, int.class, int.class, int.class, boolean.class,
+			java.math.BigDecimal.class, boolean.class, int.class, int.class,
+			int.class, int.class, int.class, int.class, int.class, int.class,
+			int.class, int.class, boolean.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _updatePricingInfoParameterTypes18 = new Class[] {

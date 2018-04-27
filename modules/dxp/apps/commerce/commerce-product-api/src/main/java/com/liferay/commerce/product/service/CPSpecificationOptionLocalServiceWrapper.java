@@ -49,9 +49,9 @@ public class CPSpecificationOptionLocalServiceWrapper
 	@Override
 	public com.liferay.commerce.product.model.CPSpecificationOption addCPSpecificationOption(
 		long cpOptionCategoryId,
-		java.util.Map<java.util.Locale, java.lang.String> titleMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		boolean facetable, java.lang.String key,
+		java.util.Map<java.util.Locale, String> titleMap,
+		java.util.Map<java.util.Locale, String> descriptionMap,
+		boolean facetable, String key,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _cpSpecificationOptionLocalService.addCPSpecificationOption(cpOptionCategoryId,
@@ -215,7 +215,7 @@ public class CPSpecificationOptionLocalServiceWrapper
 	*/
 	@Override
 	public com.liferay.commerce.product.model.CPSpecificationOption fetchCPSpecificationOptionByUuidAndGroupId(
-		java.lang.String uuid, long groupId) {
+		String uuid, long groupId) {
 		return _cpSpecificationOptionLocalService.fetchCPSpecificationOptionByUuidAndGroupId(uuid,
 			groupId);
 	}
@@ -249,7 +249,7 @@ public class CPSpecificationOptionLocalServiceWrapper
 	*/
 	@Override
 	public com.liferay.commerce.product.model.CPSpecificationOption getCPSpecificationOptionByUuidAndGroupId(
-		java.lang.String uuid, long groupId)
+		String uuid, long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _cpSpecificationOptionLocalService.getCPSpecificationOptionByUuidAndGroupId(uuid,
 			groupId);
@@ -282,7 +282,7 @@ public class CPSpecificationOptionLocalServiceWrapper
 	*/
 	@Override
 	public java.util.List<com.liferay.commerce.product.model.CPSpecificationOption> getCPSpecificationOptionsByUuidAndCompanyId(
-		java.lang.String uuid, long companyId) {
+		String uuid, long companyId) {
 		return _cpSpecificationOptionLocalService.getCPSpecificationOptionsByUuidAndCompanyId(uuid,
 			companyId);
 	}
@@ -299,7 +299,7 @@ public class CPSpecificationOptionLocalServiceWrapper
 	*/
 	@Override
 	public java.util.List<com.liferay.commerce.product.model.CPSpecificationOption> getCPSpecificationOptionsByUuidAndCompanyId(
-		java.lang.String uuid, long companyId, int start, int end,
+		String uuid, long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.product.model.CPSpecificationOption> orderByComparator) {
 		return _cpSpecificationOptionLocalService.getCPSpecificationOptionsByUuidAndCompanyId(uuid,
 			companyId, start, end, orderByComparator);
@@ -332,7 +332,7 @@ public class CPSpecificationOptionLocalServiceWrapper
 	* @return the OSGi service identifier
 	*/
 	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
+	public String getOSGiServiceIdentifier() {
 		return _cpSpecificationOptionLocalService.getOSGiServiceIdentifier();
 	}
 
@@ -351,8 +351,8 @@ public class CPSpecificationOptionLocalServiceWrapper
 
 	@Override
 	public com.liferay.portal.kernel.search.BaseModelSearchResult<com.liferay.commerce.product.model.CPSpecificationOption> searchCPSpecificationOptions(
-		long companyId, long groupId, java.lang.String keywords, int start,
-		int end, com.liferay.portal.kernel.search.Sort sort)
+		long companyId, long groupId, String keywords, int start, int end,
+		com.liferay.portal.kernel.search.Sort sort)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _cpSpecificationOptionLocalService.searchCPSpecificationOptions(companyId,
 			groupId, keywords, start, end, sort);
@@ -381,9 +381,9 @@ public class CPSpecificationOptionLocalServiceWrapper
 	@Override
 	public com.liferay.commerce.product.model.CPSpecificationOption updateCPSpecificationOption(
 		long cpSpecificationOptionId, long cpOptionCategoryId,
-		java.util.Map<java.util.Locale, java.lang.String> titleMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		boolean facetable, java.lang.String key,
+		java.util.Map<java.util.Locale, String> titleMap,
+		java.util.Map<java.util.Locale, String> descriptionMap,
+		boolean facetable, String key,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _cpSpecificationOptionLocalService.updateCPSpecificationOption(cpSpecificationOptionId,

@@ -56,9 +56,8 @@ import com.liferay.portal.kernel.util.MethodKey;
 @ProviderType
 public class CommerceRegionServiceHttp {
 	public static com.liferay.commerce.model.CommerceRegion addCommerceRegion(
-		HttpPrincipal httpPrincipal, long commerceCountryId,
-		java.lang.String name, java.lang.String code, double priority,
-		boolean active,
+		HttpPrincipal httpPrincipal, long commerceCountryId, String name,
+		String code, double priority, boolean active,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -293,9 +292,8 @@ public class CommerceRegionServiceHttp {
 	}
 
 	public static com.liferay.commerce.model.CommerceRegion updateCommerceRegion(
-		HttpPrincipal httpPrincipal, long commerceRegionId,
-		java.lang.String name, java.lang.String code, double priority,
-		boolean active,
+		HttpPrincipal httpPrincipal, long commerceRegionId, String name,
+		String code, double priority, boolean active,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -330,8 +328,7 @@ public class CommerceRegionServiceHttp {
 
 	private static Log _log = LogFactoryUtil.getLog(CommerceRegionServiceHttp.class);
 	private static final Class<?>[] _addCommerceRegionParameterTypes0 = new Class[] {
-			long.class, java.lang.String.class, java.lang.String.class,
-			double.class, boolean.class,
+			long.class, String.class, String.class, double.class, boolean.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _deleteCommerceRegionParameterTypes1 = new Class[] {
@@ -358,8 +355,7 @@ public class CommerceRegionServiceHttp {
 			long.class, boolean.class
 		};
 	private static final Class<?>[] _updateCommerceRegionParameterTypes8 = new Class[] {
-			long.class, java.lang.String.class, java.lang.String.class,
-			double.class, boolean.class,
+			long.class, String.class, String.class, double.class, boolean.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 }

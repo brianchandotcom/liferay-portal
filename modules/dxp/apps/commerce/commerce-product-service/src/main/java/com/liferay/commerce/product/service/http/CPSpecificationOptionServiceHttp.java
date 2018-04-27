@@ -57,9 +57,9 @@ import com.liferay.portal.kernel.util.MethodKey;
 public class CPSpecificationOptionServiceHttp {
 	public static com.liferay.commerce.product.model.CPSpecificationOption addCPSpecificationOption(
 		HttpPrincipal httpPrincipal, long cpOptionCategoryId,
-		java.util.Map<java.util.Locale, java.lang.String> titleMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		boolean facetable, java.lang.String key,
+		java.util.Map<java.util.Locale, String> titleMap,
+		java.util.Map<java.util.Locale, String> descriptionMap,
+		boolean facetable, String key,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -218,7 +218,7 @@ public class CPSpecificationOptionServiceHttp {
 
 	public static com.liferay.portal.kernel.search.BaseModelSearchResult<com.liferay.commerce.product.model.CPSpecificationOption> searchCPSpecificationOptions(
 		HttpPrincipal httpPrincipal, long companyId, long groupId,
-		java.lang.String keywords, int start, int end,
+		String keywords, int start, int end,
 		com.liferay.portal.kernel.search.Sort sort)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -254,9 +254,9 @@ public class CPSpecificationOptionServiceHttp {
 	public static com.liferay.commerce.product.model.CPSpecificationOption updateCPSpecificationOption(
 		HttpPrincipal httpPrincipal, long cpSpecificationOptionId,
 		long cpOptionCategoryId,
-		java.util.Map<java.util.Locale, java.lang.String> titleMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		boolean facetable, java.lang.String key,
+		java.util.Map<java.util.Locale, String> titleMap,
+		java.util.Map<java.util.Locale, String> descriptionMap,
+		boolean facetable, String key,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -293,8 +293,7 @@ public class CPSpecificationOptionServiceHttp {
 	private static Log _log = LogFactoryUtil.getLog(CPSpecificationOptionServiceHttp.class);
 	private static final Class<?>[] _addCPSpecificationOptionParameterTypes0 = new Class[] {
 			long.class, java.util.Map.class, java.util.Map.class, boolean.class,
-			java.lang.String.class,
-			com.liferay.portal.kernel.service.ServiceContext.class
+			String.class, com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _deleteCPSpecificationOptionParameterTypes1 = new Class[] {
 			long.class
@@ -310,12 +309,12 @@ public class CPSpecificationOptionServiceHttp {
 		new Class[] { long.class };
 	private static final Class<?>[] _searchCPSpecificationOptionsParameterTypes5 =
 		new Class[] {
-			long.class, long.class, java.lang.String.class, int.class, int.class,
+			long.class, long.class, String.class, int.class, int.class,
 			com.liferay.portal.kernel.search.Sort.class
 		};
 	private static final Class<?>[] _updateCPSpecificationOptionParameterTypes6 = new Class[] {
 			long.class, long.class, java.util.Map.class, java.util.Map.class,
-			boolean.class, java.lang.String.class,
+			boolean.class, String.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 }

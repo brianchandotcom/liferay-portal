@@ -118,7 +118,7 @@ public class CommerceRegionUtil {
 	* @param uuid the uuid
 	* @return the matching commerce regions
 	*/
-	public static List<CommerceRegion> findByUuid(java.lang.String uuid) {
+	public static List<CommerceRegion> findByUuid(String uuid) {
 		return getPersistence().findByUuid(uuid);
 	}
 
@@ -134,8 +134,8 @@ public class CommerceRegionUtil {
 	* @param end the upper bound of the range of commerce regions (not inclusive)
 	* @return the range of matching commerce regions
 	*/
-	public static List<CommerceRegion> findByUuid(java.lang.String uuid,
-		int start, int end) {
+	public static List<CommerceRegion> findByUuid(String uuid, int start,
+		int end) {
 		return getPersistence().findByUuid(uuid, start, end);
 	}
 
@@ -152,8 +152,8 @@ public class CommerceRegionUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching commerce regions
 	*/
-	public static List<CommerceRegion> findByUuid(java.lang.String uuid,
-		int start, int end, OrderByComparator<CommerceRegion> orderByComparator) {
+	public static List<CommerceRegion> findByUuid(String uuid, int start,
+		int end, OrderByComparator<CommerceRegion> orderByComparator) {
 		return getPersistence().findByUuid(uuid, start, end, orderByComparator);
 	}
 
@@ -171,9 +171,8 @@ public class CommerceRegionUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching commerce regions
 	*/
-	public static List<CommerceRegion> findByUuid(java.lang.String uuid,
-		int start, int end,
-		OrderByComparator<CommerceRegion> orderByComparator,
+	public static List<CommerceRegion> findByUuid(String uuid, int start,
+		int end, OrderByComparator<CommerceRegion> orderByComparator,
 		boolean retrieveFromCache) {
 		return getPersistence()
 				   .findByUuid(uuid, start, end, orderByComparator,
@@ -188,7 +187,7 @@ public class CommerceRegionUtil {
 	* @return the first matching commerce region
 	* @throws NoSuchRegionException if a matching commerce region could not be found
 	*/
-	public static CommerceRegion findByUuid_First(java.lang.String uuid,
+	public static CommerceRegion findByUuid_First(String uuid,
 		OrderByComparator<CommerceRegion> orderByComparator)
 		throws com.liferay.commerce.exception.NoSuchRegionException {
 		return getPersistence().findByUuid_First(uuid, orderByComparator);
@@ -201,7 +200,7 @@ public class CommerceRegionUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching commerce region, or <code>null</code> if a matching commerce region could not be found
 	*/
-	public static CommerceRegion fetchByUuid_First(java.lang.String uuid,
+	public static CommerceRegion fetchByUuid_First(String uuid,
 		OrderByComparator<CommerceRegion> orderByComparator) {
 		return getPersistence().fetchByUuid_First(uuid, orderByComparator);
 	}
@@ -214,7 +213,7 @@ public class CommerceRegionUtil {
 	* @return the last matching commerce region
 	* @throws NoSuchRegionException if a matching commerce region could not be found
 	*/
-	public static CommerceRegion findByUuid_Last(java.lang.String uuid,
+	public static CommerceRegion findByUuid_Last(String uuid,
 		OrderByComparator<CommerceRegion> orderByComparator)
 		throws com.liferay.commerce.exception.NoSuchRegionException {
 		return getPersistence().findByUuid_Last(uuid, orderByComparator);
@@ -227,7 +226,7 @@ public class CommerceRegionUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching commerce region, or <code>null</code> if a matching commerce region could not be found
 	*/
-	public static CommerceRegion fetchByUuid_Last(java.lang.String uuid,
+	public static CommerceRegion fetchByUuid_Last(String uuid,
 		OrderByComparator<CommerceRegion> orderByComparator) {
 		return getPersistence().fetchByUuid_Last(uuid, orderByComparator);
 	}
@@ -242,7 +241,7 @@ public class CommerceRegionUtil {
 	* @throws NoSuchRegionException if a commerce region with the primary key could not be found
 	*/
 	public static CommerceRegion[] findByUuid_PrevAndNext(
-		long commerceRegionId, java.lang.String uuid,
+		long commerceRegionId, String uuid,
 		OrderByComparator<CommerceRegion> orderByComparator)
 		throws com.liferay.commerce.exception.NoSuchRegionException {
 		return getPersistence()
@@ -255,7 +254,7 @@ public class CommerceRegionUtil {
 	*
 	* @param uuid the uuid
 	*/
-	public static void removeByUuid(java.lang.String uuid) {
+	public static void removeByUuid(String uuid) {
 		getPersistence().removeByUuid(uuid);
 	}
 
@@ -265,7 +264,7 @@ public class CommerceRegionUtil {
 	* @param uuid the uuid
 	* @return the number of matching commerce regions
 	*/
-	public static int countByUuid(java.lang.String uuid) {
+	public static int countByUuid(String uuid) {
 		return getPersistence().countByUuid(uuid);
 	}
 
@@ -277,8 +276,7 @@ public class CommerceRegionUtil {
 	* @return the matching commerce region
 	* @throws NoSuchRegionException if a matching commerce region could not be found
 	*/
-	public static CommerceRegion findByUUID_G(java.lang.String uuid,
-		long groupId)
+	public static CommerceRegion findByUUID_G(String uuid, long groupId)
 		throws com.liferay.commerce.exception.NoSuchRegionException {
 		return getPersistence().findByUUID_G(uuid, groupId);
 	}
@@ -290,8 +288,7 @@ public class CommerceRegionUtil {
 	* @param groupId the group ID
 	* @return the matching commerce region, or <code>null</code> if a matching commerce region could not be found
 	*/
-	public static CommerceRegion fetchByUUID_G(java.lang.String uuid,
-		long groupId) {
+	public static CommerceRegion fetchByUUID_G(String uuid, long groupId) {
 		return getPersistence().fetchByUUID_G(uuid, groupId);
 	}
 
@@ -303,8 +300,8 @@ public class CommerceRegionUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching commerce region, or <code>null</code> if a matching commerce region could not be found
 	*/
-	public static CommerceRegion fetchByUUID_G(java.lang.String uuid,
-		long groupId, boolean retrieveFromCache) {
+	public static CommerceRegion fetchByUUID_G(String uuid, long groupId,
+		boolean retrieveFromCache) {
 		return getPersistence().fetchByUUID_G(uuid, groupId, retrieveFromCache);
 	}
 
@@ -315,8 +312,7 @@ public class CommerceRegionUtil {
 	* @param groupId the group ID
 	* @return the commerce region that was removed
 	*/
-	public static CommerceRegion removeByUUID_G(java.lang.String uuid,
-		long groupId)
+	public static CommerceRegion removeByUUID_G(String uuid, long groupId)
 		throws com.liferay.commerce.exception.NoSuchRegionException {
 		return getPersistence().removeByUUID_G(uuid, groupId);
 	}
@@ -328,7 +324,7 @@ public class CommerceRegionUtil {
 	* @param groupId the group ID
 	* @return the number of matching commerce regions
 	*/
-	public static int countByUUID_G(java.lang.String uuid, long groupId) {
+	public static int countByUUID_G(String uuid, long groupId) {
 		return getPersistence().countByUUID_G(uuid, groupId);
 	}
 
@@ -339,8 +335,7 @@ public class CommerceRegionUtil {
 	* @param companyId the company ID
 	* @return the matching commerce regions
 	*/
-	public static List<CommerceRegion> findByUuid_C(java.lang.String uuid,
-		long companyId) {
+	public static List<CommerceRegion> findByUuid_C(String uuid, long companyId) {
 		return getPersistence().findByUuid_C(uuid, companyId);
 	}
 
@@ -357,7 +352,7 @@ public class CommerceRegionUtil {
 	* @param end the upper bound of the range of commerce regions (not inclusive)
 	* @return the range of matching commerce regions
 	*/
-	public static List<CommerceRegion> findByUuid_C(java.lang.String uuid,
+	public static List<CommerceRegion> findByUuid_C(String uuid,
 		long companyId, int start, int end) {
 		return getPersistence().findByUuid_C(uuid, companyId, start, end);
 	}
@@ -376,7 +371,7 @@ public class CommerceRegionUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching commerce regions
 	*/
-	public static List<CommerceRegion> findByUuid_C(java.lang.String uuid,
+	public static List<CommerceRegion> findByUuid_C(String uuid,
 		long companyId, int start, int end,
 		OrderByComparator<CommerceRegion> orderByComparator) {
 		return getPersistence()
@@ -398,7 +393,7 @@ public class CommerceRegionUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching commerce regions
 	*/
-	public static List<CommerceRegion> findByUuid_C(java.lang.String uuid,
+	public static List<CommerceRegion> findByUuid_C(String uuid,
 		long companyId, int start, int end,
 		OrderByComparator<CommerceRegion> orderByComparator,
 		boolean retrieveFromCache) {
@@ -416,7 +411,7 @@ public class CommerceRegionUtil {
 	* @return the first matching commerce region
 	* @throws NoSuchRegionException if a matching commerce region could not be found
 	*/
-	public static CommerceRegion findByUuid_C_First(java.lang.String uuid,
+	public static CommerceRegion findByUuid_C_First(String uuid,
 		long companyId, OrderByComparator<CommerceRegion> orderByComparator)
 		throws com.liferay.commerce.exception.NoSuchRegionException {
 		return getPersistence()
@@ -431,7 +426,7 @@ public class CommerceRegionUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching commerce region, or <code>null</code> if a matching commerce region could not be found
 	*/
-	public static CommerceRegion fetchByUuid_C_First(java.lang.String uuid,
+	public static CommerceRegion fetchByUuid_C_First(String uuid,
 		long companyId, OrderByComparator<CommerceRegion> orderByComparator) {
 		return getPersistence()
 				   .fetchByUuid_C_First(uuid, companyId, orderByComparator);
@@ -446,8 +441,8 @@ public class CommerceRegionUtil {
 	* @return the last matching commerce region
 	* @throws NoSuchRegionException if a matching commerce region could not be found
 	*/
-	public static CommerceRegion findByUuid_C_Last(java.lang.String uuid,
-		long companyId, OrderByComparator<CommerceRegion> orderByComparator)
+	public static CommerceRegion findByUuid_C_Last(String uuid, long companyId,
+		OrderByComparator<CommerceRegion> orderByComparator)
 		throws com.liferay.commerce.exception.NoSuchRegionException {
 		return getPersistence()
 				   .findByUuid_C_Last(uuid, companyId, orderByComparator);
@@ -461,7 +456,7 @@ public class CommerceRegionUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching commerce region, or <code>null</code> if a matching commerce region could not be found
 	*/
-	public static CommerceRegion fetchByUuid_C_Last(java.lang.String uuid,
+	public static CommerceRegion fetchByUuid_C_Last(String uuid,
 		long companyId, OrderByComparator<CommerceRegion> orderByComparator) {
 		return getPersistence()
 				   .fetchByUuid_C_Last(uuid, companyId, orderByComparator);
@@ -478,7 +473,7 @@ public class CommerceRegionUtil {
 	* @throws NoSuchRegionException if a commerce region with the primary key could not be found
 	*/
 	public static CommerceRegion[] findByUuid_C_PrevAndNext(
-		long commerceRegionId, java.lang.String uuid, long companyId,
+		long commerceRegionId, String uuid, long companyId,
 		OrderByComparator<CommerceRegion> orderByComparator)
 		throws com.liferay.commerce.exception.NoSuchRegionException {
 		return getPersistence()
@@ -492,7 +487,7 @@ public class CommerceRegionUtil {
 	* @param uuid the uuid
 	* @param companyId the company ID
 	*/
-	public static void removeByUuid_C(java.lang.String uuid, long companyId) {
+	public static void removeByUuid_C(String uuid, long companyId) {
 		getPersistence().removeByUuid_C(uuid, companyId);
 	}
 
@@ -503,7 +498,7 @@ public class CommerceRegionUtil {
 	* @param companyId the company ID
 	* @return the number of matching commerce regions
 	*/
-	public static int countByUuid_C(java.lang.String uuid, long companyId) {
+	public static int countByUuid_C(String uuid, long companyId) {
 		return getPersistence().countByUuid_C(uuid, companyId);
 	}
 
@@ -1006,7 +1001,7 @@ public class CommerceRegionUtil {
 		return getPersistence().countAll();
 	}
 
-	public static java.util.Set<java.lang.String> getBadColumnNames() {
+	public static java.util.Set<String> getBadColumnNames() {
 		return getPersistence().getBadColumnNames();
 	}
 

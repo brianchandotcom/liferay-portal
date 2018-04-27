@@ -43,8 +43,7 @@ public class CommerceDiscountRuleServiceUtil {
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.commerce.discount.service.impl.CommerceDiscountRuleServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static com.liferay.commerce.discount.model.CommerceDiscountRule addCommerceDiscountRule(
-		long commerceDiscountId, java.lang.String type,
-		java.lang.String typeSettings,
+		long commerceDiscountId, String type, String typeSettings,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
@@ -62,13 +61,12 @@ public class CommerceDiscountRuleServiceUtil {
 	*
 	* @return the OSGi service identifier
 	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
+	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 
 	public static com.liferay.commerce.discount.model.CommerceDiscountRule updateCommerceDiscountRule(
-		long commerceDiscountRuleId, java.lang.String type,
-		java.lang.String typeSettings)
+		long commerceDiscountRuleId, String type, String typeSettings)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .updateCommerceDiscountRule(commerceDiscountRuleId, type,

@@ -85,7 +85,7 @@ public interface CommercePriceListUserSegmentEntryRelService extends BaseService
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	public CommercePriceListUserSegmentEntryRel updateCommercePriceListUserSegmentEntryRel(
 		long commercePriceListUserSegmentEntryRelId, int order,

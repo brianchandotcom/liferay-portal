@@ -149,7 +149,7 @@ public class CommerceAvailabilityRangeWrapper
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new CommerceAvailabilityRangeWrapper((CommerceAvailabilityRange)_commerceAvailabilityRange.clone());
 	}
 
@@ -159,7 +159,7 @@ public class CommerceAvailabilityRangeWrapper
 	}
 
 	@Override
-	public java.lang.String[] getAvailableLanguageIds() {
+	public String[] getAvailableLanguageIds() {
 		return _commerceAvailabilityRange.getAvailableLanguageIds();
 	}
 
@@ -194,7 +194,7 @@ public class CommerceAvailabilityRangeWrapper
 	}
 
 	@Override
-	public java.lang.String getDefaultLanguageId() {
+	public String getDefaultLanguageId() {
 		return _commerceAvailabilityRange.getDefaultLanguageId();
 	}
 
@@ -264,7 +264,7 @@ public class CommerceAvailabilityRangeWrapper
 	* @return the title of this commerce availability range
 	*/
 	@Override
-	public java.lang.String getTitle() {
+	public String getTitle() {
 		return _commerceAvailabilityRange.getTitle();
 	}
 
@@ -275,7 +275,7 @@ public class CommerceAvailabilityRangeWrapper
 	* @return the localized title of this commerce availability range
 	*/
 	@Override
-	public java.lang.String getTitle(java.util.Locale locale) {
+	public String getTitle(java.util.Locale locale) {
 		return _commerceAvailabilityRange.getTitle(locale);
 	}
 
@@ -287,7 +287,7 @@ public class CommerceAvailabilityRangeWrapper
 	* @return the localized title of this commerce availability range. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
 	*/
 	@Override
-	public java.lang.String getTitle(java.util.Locale locale, boolean useDefault) {
+	public String getTitle(java.util.Locale locale, boolean useDefault) {
 		return _commerceAvailabilityRange.getTitle(locale, useDefault);
 	}
 
@@ -298,7 +298,7 @@ public class CommerceAvailabilityRangeWrapper
 	* @return the localized title of this commerce availability range
 	*/
 	@Override
-	public java.lang.String getTitle(java.lang.String languageId) {
+	public String getTitle(String languageId) {
 		return _commerceAvailabilityRange.getTitle(languageId);
 	}
 
@@ -310,18 +310,17 @@ public class CommerceAvailabilityRangeWrapper
 	* @return the localized title of this commerce availability range
 	*/
 	@Override
-	public java.lang.String getTitle(java.lang.String languageId,
-		boolean useDefault) {
+	public String getTitle(String languageId, boolean useDefault) {
 		return _commerceAvailabilityRange.getTitle(languageId, useDefault);
 	}
 
 	@Override
-	public java.lang.String getTitleCurrentLanguageId() {
+	public String getTitleCurrentLanguageId() {
 		return _commerceAvailabilityRange.getTitleCurrentLanguageId();
 	}
 
 	@Override
-	public java.lang.String getTitleCurrentValue() {
+	public String getTitleCurrentValue() {
 		return _commerceAvailabilityRange.getTitleCurrentValue();
 	}
 
@@ -331,7 +330,7 @@ public class CommerceAvailabilityRangeWrapper
 	* @return the locales and localized titles of this commerce availability range
 	*/
 	@Override
-	public Map<java.util.Locale, java.lang.String> getTitleMap() {
+	public Map<java.util.Locale, String> getTitleMap() {
 		return _commerceAvailabilityRange.getTitleMap();
 	}
 
@@ -351,7 +350,7 @@ public class CommerceAvailabilityRangeWrapper
 	* @return the user name of this commerce availability range
 	*/
 	@Override
-	public java.lang.String getUserName() {
+	public String getUserName() {
 		return _commerceAvailabilityRange.getUserName();
 	}
 
@@ -361,7 +360,7 @@ public class CommerceAvailabilityRangeWrapper
 	* @return the user uuid of this commerce availability range
 	*/
 	@Override
-	public java.lang.String getUserUuid() {
+	public String getUserUuid() {
 		return _commerceAvailabilityRange.getUserUuid();
 	}
 
@@ -371,7 +370,7 @@ public class CommerceAvailabilityRangeWrapper
 	* @return the uuid of this commerce availability range
 	*/
 	@Override
-	public java.lang.String getUuid() {
+	public String getUuid() {
 		return _commerceAvailabilityRange.getUuid();
 	}
 
@@ -530,7 +529,7 @@ public class CommerceAvailabilityRangeWrapper
 	* @param title the title of this commerce availability range
 	*/
 	@Override
-	public void setTitle(java.lang.String title) {
+	public void setTitle(String title) {
 		_commerceAvailabilityRange.setTitle(title);
 	}
 
@@ -541,7 +540,7 @@ public class CommerceAvailabilityRangeWrapper
 	* @param locale the locale of the language
 	*/
 	@Override
-	public void setTitle(java.lang.String title, java.util.Locale locale) {
+	public void setTitle(String title, java.util.Locale locale) {
 		_commerceAvailabilityRange.setTitle(title, locale);
 	}
 
@@ -553,13 +552,13 @@ public class CommerceAvailabilityRangeWrapper
 	* @param defaultLocale the default locale
 	*/
 	@Override
-	public void setTitle(java.lang.String title, java.util.Locale locale,
+	public void setTitle(String title, java.util.Locale locale,
 		java.util.Locale defaultLocale) {
 		_commerceAvailabilityRange.setTitle(title, locale, defaultLocale);
 	}
 
 	@Override
-	public void setTitleCurrentLanguageId(java.lang.String languageId) {
+	public void setTitleCurrentLanguageId(String languageId) {
 		_commerceAvailabilityRange.setTitleCurrentLanguageId(languageId);
 	}
 
@@ -569,7 +568,7 @@ public class CommerceAvailabilityRangeWrapper
 	* @param titleMap the locales and localized titles of this commerce availability range
 	*/
 	@Override
-	public void setTitleMap(Map<java.util.Locale, java.lang.String> titleMap) {
+	public void setTitleMap(Map<java.util.Locale, String> titleMap) {
 		_commerceAvailabilityRange.setTitleMap(titleMap);
 	}
 
@@ -580,7 +579,7 @@ public class CommerceAvailabilityRangeWrapper
 	* @param defaultLocale the default locale
 	*/
 	@Override
-	public void setTitleMap(Map<java.util.Locale, java.lang.String> titleMap,
+	public void setTitleMap(Map<java.util.Locale, String> titleMap,
 		java.util.Locale defaultLocale) {
 		_commerceAvailabilityRange.setTitleMap(titleMap, defaultLocale);
 	}
@@ -601,7 +600,7 @@ public class CommerceAvailabilityRangeWrapper
 	* @param userName the user name of this commerce availability range
 	*/
 	@Override
-	public void setUserName(java.lang.String userName) {
+	public void setUserName(String userName) {
 		_commerceAvailabilityRange.setUserName(userName);
 	}
 
@@ -611,7 +610,7 @@ public class CommerceAvailabilityRangeWrapper
 	* @param userUuid the user uuid of this commerce availability range
 	*/
 	@Override
-	public void setUserUuid(java.lang.String userUuid) {
+	public void setUserUuid(String userUuid) {
 		_commerceAvailabilityRange.setUserUuid(userUuid);
 	}
 
@@ -621,7 +620,7 @@ public class CommerceAvailabilityRangeWrapper
 	* @param uuid the uuid of this commerce availability range
 	*/
 	@Override
-	public void setUuid(java.lang.String uuid) {
+	public void setUuid(String uuid) {
 		_commerceAvailabilityRange.setUuid(uuid);
 	}
 
@@ -636,7 +635,7 @@ public class CommerceAvailabilityRangeWrapper
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _commerceAvailabilityRange.toString();
 	}
 
@@ -646,7 +645,7 @@ public class CommerceAvailabilityRangeWrapper
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _commerceAvailabilityRange.toXmlString();
 	}
 

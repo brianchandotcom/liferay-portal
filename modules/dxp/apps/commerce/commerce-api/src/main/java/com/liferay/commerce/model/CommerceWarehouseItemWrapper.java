@@ -138,7 +138,7 @@ public class CommerceWarehouseItemWrapper implements CommerceWarehouseItem,
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new CommerceWarehouseItemWrapper((CommerceWarehouseItem)_commerceWarehouseItem.clone());
 	}
 
@@ -275,7 +275,7 @@ public class CommerceWarehouseItemWrapper implements CommerceWarehouseItem,
 	* @return the user name of this commerce warehouse item
 	*/
 	@Override
-	public java.lang.String getUserName() {
+	public String getUserName() {
 		return _commerceWarehouseItem.getUserName();
 	}
 
@@ -285,7 +285,7 @@ public class CommerceWarehouseItemWrapper implements CommerceWarehouseItem,
 	* @return the user uuid of this commerce warehouse item
 	*/
 	@Override
-	public java.lang.String getUserUuid() {
+	public String getUserUuid() {
 		return _commerceWarehouseItem.getUserUuid();
 	}
 
@@ -451,7 +451,7 @@ public class CommerceWarehouseItemWrapper implements CommerceWarehouseItem,
 	* @param userName the user name of this commerce warehouse item
 	*/
 	@Override
-	public void setUserName(java.lang.String userName) {
+	public void setUserName(String userName) {
 		_commerceWarehouseItem.setUserName(userName);
 	}
 
@@ -461,7 +461,7 @@ public class CommerceWarehouseItemWrapper implements CommerceWarehouseItem,
 	* @param userUuid the user uuid of this commerce warehouse item
 	*/
 	@Override
-	public void setUserUuid(java.lang.String userUuid) {
+	public void setUserUuid(String userUuid) {
 		_commerceWarehouseItem.setUserUuid(userUuid);
 	}
 
@@ -476,7 +476,7 @@ public class CommerceWarehouseItemWrapper implements CommerceWarehouseItem,
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _commerceWarehouseItem.toString();
 	}
 
@@ -486,7 +486,7 @@ public class CommerceWarehouseItemWrapper implements CommerceWarehouseItem,
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _commerceWarehouseItem.toXmlString();
 	}
 

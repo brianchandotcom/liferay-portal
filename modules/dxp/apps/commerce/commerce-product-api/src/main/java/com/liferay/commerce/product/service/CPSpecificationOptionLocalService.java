@@ -85,10 +85,9 @@ public interface CPSpecificationOptionLocalService extends BaseLocalService,
 
 	@Indexable(type = IndexableType.REINDEX)
 	public CPSpecificationOption addCPSpecificationOption(
-		long cpOptionCategoryId, Map<Locale, java.lang.String> titleMap,
-		Map<Locale, java.lang.String> descriptionMap, boolean facetable,
-		java.lang.String key, ServiceContext serviceContext)
-		throws PortalException;
+		long cpOptionCategoryId, Map<Locale, String> titleMap,
+		Map<Locale, String> descriptionMap, boolean facetable, String key,
+		ServiceContext serviceContext) throws PortalException;
 
 	/**
 	* Creates a new cp specification option with the primary key. Does not add the cp specification option to the database.
@@ -205,7 +204,7 @@ public interface CPSpecificationOptionLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CPSpecificationOption fetchCPSpecificationOptionByUuidAndGroupId(
-		java.lang.String uuid, long groupId);
+		String uuid, long groupId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
@@ -231,7 +230,7 @@ public interface CPSpecificationOptionLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CPSpecificationOption getCPSpecificationOptionByUuidAndGroupId(
-		java.lang.String uuid, long groupId) throws PortalException;
+		String uuid, long groupId) throws PortalException;
 
 	/**
 	* Returns a range of all the cp specification options.
@@ -257,7 +256,7 @@ public interface CPSpecificationOptionLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CPSpecificationOption> getCPSpecificationOptionsByUuidAndCompanyId(
-		java.lang.String uuid, long companyId);
+		String uuid, long companyId);
 
 	/**
 	* Returns a range of cp specification options matching the UUID and company.
@@ -271,7 +270,7 @@ public interface CPSpecificationOptionLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CPSpecificationOption> getCPSpecificationOptionsByUuidAndCompanyId(
-		java.lang.String uuid, long companyId, int start, int end,
+		String uuid, long companyId, int start, int end,
 		OrderByComparator<CPSpecificationOption> orderByComparator);
 
 	/**
@@ -294,7 +293,7 @@ public interface CPSpecificationOptionLocalService extends BaseLocalService,
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -306,8 +305,8 @@ public interface CPSpecificationOptionLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public BaseModelSearchResult<CPSpecificationOption> searchCPSpecificationOptions(
-		long companyId, long groupId, java.lang.String keywords, int start,
-		int end, Sort sort) throws PortalException;
+		long companyId, long groupId, String keywords, int start, int end,
+		Sort sort) throws PortalException;
 
 	public CPSpecificationOption updateCPOptionCategoryId(
 		long cpSpecificationOptionId, long cpOptionCategoryId)
@@ -326,8 +325,7 @@ public interface CPSpecificationOptionLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.REINDEX)
 	public CPSpecificationOption updateCPSpecificationOption(
 		long cpSpecificationOptionId, long cpOptionCategoryId,
-		Map<Locale, java.lang.String> titleMap,
-		Map<Locale, java.lang.String> descriptionMap, boolean facetable,
-		java.lang.String key, ServiceContext serviceContext)
+		Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
+		boolean facetable, String key, ServiceContext serviceContext)
 		throws PortalException;
 }

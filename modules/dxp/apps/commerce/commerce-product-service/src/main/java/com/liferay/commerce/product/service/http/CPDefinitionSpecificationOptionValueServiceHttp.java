@@ -58,8 +58,7 @@ public class CPDefinitionSpecificationOptionValueServiceHttp {
 	public static com.liferay.commerce.product.model.CPDefinitionSpecificationOptionValue addCPDefinitionSpecificationOptionValue(
 		HttpPrincipal httpPrincipal, long cpDefinitionId,
 		long cpSpecificationOptionId, long cpOptionCategoryId,
-		java.util.Map<java.util.Locale, java.lang.String> valueMap,
-		double priority,
+		java.util.Map<java.util.Locale, String> valueMap, double priority,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -282,8 +281,7 @@ public class CPDefinitionSpecificationOptionValueServiceHttp {
 	public static com.liferay.commerce.product.model.CPDefinitionSpecificationOptionValue updateCPDefinitionSpecificationOptionValue(
 		HttpPrincipal httpPrincipal,
 		long cpDefinitionSpecificationOptionValueId, long cpOptionCategoryId,
-		java.util.Map<java.util.Locale, java.lang.String> valueMap,
-		double priority,
+		java.util.Map<java.util.Locale, String> valueMap, double priority,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {

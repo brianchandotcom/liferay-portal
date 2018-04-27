@@ -84,9 +84,8 @@ public interface CPOptionValueLocalService extends BaseLocalService,
 
 	@Indexable(type = IndexableType.REINDEX)
 	public CPOptionValue addCPOptionValue(long cpOptionId,
-		Map<Locale, java.lang.String> titleMap, double priority,
-		java.lang.String key, ServiceContext serviceContext)
-		throws PortalException;
+		Map<Locale, String> titleMap, double priority, String key,
+		ServiceContext serviceContext) throws PortalException;
 
 	/**
 	* Creates a new cp option value with the primary key. Does not add the cp option value to the database.
@@ -199,8 +198,8 @@ public interface CPOptionValueLocalService extends BaseLocalService,
 	* @return the matching cp option value, or <code>null</code> if a matching cp option value could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CPOptionValue fetchCPOptionValueByUuidAndGroupId(
-		java.lang.String uuid, long groupId);
+	public CPOptionValue fetchCPOptionValueByUuidAndGroupId(String uuid,
+		long groupId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
@@ -225,8 +224,8 @@ public interface CPOptionValueLocalService extends BaseLocalService,
 	* @throws PortalException if a matching cp option value could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CPOptionValue getCPOptionValueByUuidAndGroupId(
-		java.lang.String uuid, long groupId) throws PortalException;
+	public CPOptionValue getCPOptionValueByUuidAndGroupId(String uuid,
+		long groupId) throws PortalException;
 
 	/**
 	* Returns a range of all the cp option values.
@@ -259,7 +258,7 @@ public interface CPOptionValueLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CPOptionValue> getCPOptionValuesByUuidAndCompanyId(
-		java.lang.String uuid, long companyId);
+		String uuid, long companyId);
 
 	/**
 	* Returns a range of cp option values matching the UUID and company.
@@ -273,7 +272,7 @@ public interface CPOptionValueLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CPOptionValue> getCPOptionValuesByUuidAndCompanyId(
-		java.lang.String uuid, long companyId, int start, int end,
+		String uuid, long companyId, int start, int end,
 		OrderByComparator<CPOptionValue> orderByComparator);
 
 	/**
@@ -299,7 +298,7 @@ public interface CPOptionValueLocalService extends BaseLocalService,
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -311,9 +310,8 @@ public interface CPOptionValueLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public BaseModelSearchResult<CPOptionValue> searchCPOptionValues(
-		long companyId, long groupId, long cpOptionId,
-		java.lang.String keywords, int start, int end, Sort sort)
-		throws PortalException;
+		long companyId, long groupId, long cpOptionId, String keywords,
+		int start, int end, Sort sort) throws PortalException;
 
 	/**
 	* Updates the cp option value in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
@@ -326,7 +324,6 @@ public interface CPOptionValueLocalService extends BaseLocalService,
 
 	@Indexable(type = IndexableType.REINDEX)
 	public CPOptionValue updateCPOptionValue(long cpOptionValueId,
-		Map<Locale, java.lang.String> titleMap, double priority,
-		java.lang.String key, ServiceContext serviceContext)
-		throws PortalException;
+		Map<Locale, String> titleMap, double priority, String key,
+		ServiceContext serviceContext) throws PortalException;
 }

@@ -56,6 +56,6 @@ public interface CommercePaymentMethod extends CommercePaymentMethodModel,
 			}
 		};
 
-	public java.lang.String getImageURL(
+	public String getImageURL(
 		com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay);
 }

@@ -138,7 +138,7 @@ public class CommerceDiscountRuleWrapper implements CommerceDiscountRule,
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new CommerceDiscountRuleWrapper((CommerceDiscountRule)_commerceDiscountRule.clone());
 	}
 
@@ -233,7 +233,7 @@ public class CommerceDiscountRuleWrapper implements CommerceDiscountRule,
 	* @return the type of this commerce discount rule
 	*/
 	@Override
-	public java.lang.String getType() {
+	public String getType() {
 		return _commerceDiscountRule.getType();
 	}
 
@@ -243,7 +243,7 @@ public class CommerceDiscountRuleWrapper implements CommerceDiscountRule,
 	* @return the type settings of this commerce discount rule
 	*/
 	@Override
-	public java.lang.String getTypeSettings() {
+	public String getTypeSettings() {
 		return _commerceDiscountRule.getTypeSettings();
 	}
 
@@ -263,7 +263,7 @@ public class CommerceDiscountRuleWrapper implements CommerceDiscountRule,
 	* @return the user name of this commerce discount rule
 	*/
 	@Override
-	public java.lang.String getUserName() {
+	public String getUserName() {
 		return _commerceDiscountRule.getUserName();
 	}
 
@@ -273,7 +273,7 @@ public class CommerceDiscountRuleWrapper implements CommerceDiscountRule,
 	* @return the user uuid of this commerce discount rule
 	*/
 	@Override
-	public java.lang.String getUserUuid() {
+	public String getUserUuid() {
 		return _commerceDiscountRule.getUserUuid();
 	}
 
@@ -409,7 +409,7 @@ public class CommerceDiscountRuleWrapper implements CommerceDiscountRule,
 	* @param type the type of this commerce discount rule
 	*/
 	@Override
-	public void setType(java.lang.String type) {
+	public void setType(String type) {
 		_commerceDiscountRule.setType(type);
 	}
 
@@ -419,7 +419,7 @@ public class CommerceDiscountRuleWrapper implements CommerceDiscountRule,
 	* @param typeSettings the type settings of this commerce discount rule
 	*/
 	@Override
-	public void setTypeSettings(java.lang.String typeSettings) {
+	public void setTypeSettings(String typeSettings) {
 		_commerceDiscountRule.setTypeSettings(typeSettings);
 	}
 
@@ -439,7 +439,7 @@ public class CommerceDiscountRuleWrapper implements CommerceDiscountRule,
 	* @param userName the user name of this commerce discount rule
 	*/
 	@Override
-	public void setUserName(java.lang.String userName) {
+	public void setUserName(String userName) {
 		_commerceDiscountRule.setUserName(userName);
 	}
 
@@ -449,7 +449,7 @@ public class CommerceDiscountRuleWrapper implements CommerceDiscountRule,
 	* @param userUuid the user uuid of this commerce discount rule
 	*/
 	@Override
-	public void setUserUuid(java.lang.String userUuid) {
+	public void setUserUuid(String userUuid) {
 		_commerceDiscountRule.setUserUuid(userUuid);
 	}
 
@@ -464,7 +464,7 @@ public class CommerceDiscountRuleWrapper implements CommerceDiscountRule,
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _commerceDiscountRule.toString();
 	}
 
@@ -474,7 +474,7 @@ public class CommerceDiscountRuleWrapper implements CommerceDiscountRule,
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _commerceDiscountRule.toXmlString();
 	}
 

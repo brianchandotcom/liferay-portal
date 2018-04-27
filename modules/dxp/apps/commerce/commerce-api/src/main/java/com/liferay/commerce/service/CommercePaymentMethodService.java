@@ -60,11 +60,10 @@ public interface CommercePaymentMethodService extends BaseService {
 	 * Never modify or reference this interface directly. Always use {@link CommercePaymentMethodServiceUtil} to access the commerce payment method remote service. Add custom service methods to {@link com.liferay.commerce.service.impl.CommercePaymentMethodServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	public CommercePaymentMethod addCommercePaymentMethod(
-		Map<Locale, java.lang.String> nameMap,
-		Map<Locale, java.lang.String> descriptionMap, File imageFile,
-		java.lang.String engineKey,
-		Map<java.lang.String, java.lang.String> engineParameterMap,
-		double priority, boolean active, ServiceContext serviceContext)
+		Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
+		File imageFile, String engineKey,
+		Map<String, String> engineParameterMap, double priority,
+		boolean active, ServiceContext serviceContext)
 		throws PortalException;
 
 	public CommercePaymentMethod createCommercePaymentMethod(
@@ -96,15 +95,15 @@ public interface CommercePaymentMethodService extends BaseService {
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	public CommercePaymentMethod setActive(long commercePaymentMethodId,
 		boolean active) throws PortalException;
 
 	public CommercePaymentMethod updateCommercePaymentMethod(
-		long commercePaymentMethodId, Map<Locale, java.lang.String> nameMap,
-		Map<Locale, java.lang.String> descriptionMap, File imageFile,
-		Map<java.lang.String, java.lang.String> engineParameterMap,
-		double priority, boolean active, ServiceContext serviceContext)
+		long commercePaymentMethodId, Map<Locale, String> nameMap,
+		Map<Locale, String> descriptionMap, File imageFile,
+		Map<String, String> engineParameterMap, double priority,
+		boolean active, ServiceContext serviceContext)
 		throws PortalException;
 }

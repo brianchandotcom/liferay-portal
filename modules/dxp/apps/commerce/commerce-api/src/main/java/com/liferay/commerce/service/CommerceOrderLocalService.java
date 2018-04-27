@@ -83,7 +83,7 @@ public interface CommerceOrderLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.REINDEX)
 	public CommerceOrder addOrganizationCommerceOrder(long groupId,
 		long userId, long siteGroupId, long orderOrganizationId,
-		long shippingAddressId, java.lang.String purchaseOrderNumber)
+		long shippingAddressId, String purchaseOrderNumber)
 		throws PortalException;
 
 	public CommerceOrder addUserCommerceOrder(long groupId, long userId)
@@ -209,9 +209,8 @@ public interface CommerceOrderLocalService extends BaseLocalService,
 		Projection projection);
 
 	public CommerceOrder executeWorkflowTransition(long userId,
-		long commerceOrderId, long workflowTaskId,
-		java.lang.String transitionName, java.lang.String comment)
-		throws PortalException;
+		long commerceOrderId, long workflowTaskId, String transitionName,
+		String comment) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CommerceOrder fetchCommerceOrder(long commerceOrderId);
@@ -228,8 +227,8 @@ public interface CommerceOrderLocalService extends BaseLocalService,
 	* @return the matching commerce order, or <code>null</code> if a matching commerce order could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CommerceOrder fetchCommerceOrderByUuidAndGroupId(
-		java.lang.String uuid, long groupId);
+	public CommerceOrder fetchCommerceOrderByUuidAndGroupId(String uuid,
+		long groupId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
@@ -258,8 +257,8 @@ public interface CommerceOrderLocalService extends BaseLocalService,
 	* @throws PortalException if a matching commerce order could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CommerceOrder getCommerceOrderByUuidAndGroupId(
-		java.lang.String uuid, long groupId) throws PortalException;
+	public CommerceOrder getCommerceOrderByUuidAndGroupId(String uuid,
+		long groupId) throws PortalException;
 
 	/**
 	* Returns a range of all the commerce orders.
@@ -297,7 +296,7 @@ public interface CommerceOrderLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommerceOrder> getCommerceOrdersByUuidAndCompanyId(
-		java.lang.String uuid, long companyId);
+		String uuid, long companyId);
 
 	/**
 	* Returns a range of commerce orders matching the UUID and company.
@@ -311,7 +310,7 @@ public interface CommerceOrderLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommerceOrder> getCommerceOrdersByUuidAndCompanyId(
-		java.lang.String uuid, long companyId, int start, int end,
+		String uuid, long companyId, int start, int end,
 		OrderByComparator<CommerceOrder> orderByComparator);
 
 	/**
@@ -337,7 +336,7 @@ public interface CommerceOrderLocalService extends BaseLocalService,
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -362,7 +361,7 @@ public interface CommerceOrderLocalService extends BaseLocalService,
 	public long searchCommerceOrdersCount(SearchContext searchContext)
 		throws PortalException;
 
-	public java.lang.String startCommerceOrderPayment(long commerceOrderId,
+	public String startCommerceOrderPayment(long commerceOrderId,
 		ServiceContext serviceContext) throws PortalException;
 
 	@Indexable(type = IndexableType.REINDEX)
@@ -371,12 +370,10 @@ public interface CommerceOrderLocalService extends BaseLocalService,
 
 	@Indexable(type = IndexableType.REINDEX)
 	public CommerceOrder updateBillingAddress(long commerceOrderId,
-		java.lang.String name, java.lang.String description,
-		java.lang.String street1, java.lang.String street2,
-		java.lang.String street3, java.lang.String city, java.lang.String zip,
-		long commerceRegionId, long commerceCountryId,
-		java.lang.String phoneNumber, ServiceContext serviceContext)
-		throws PortalException;
+		String name, String description, String street1, String street2,
+		String street3, String city, String zip, long commerceRegionId,
+		long commerceCountryId, String phoneNumber,
+		ServiceContext serviceContext) throws PortalException;
 
 	/**
 	* Updates the commerce order in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
@@ -391,10 +388,9 @@ public interface CommerceOrderLocalService extends BaseLocalService,
 	public CommerceOrder updateCommerceOrder(long commerceOrderId,
 		long billingAddressId, long shippingAddressId,
 		long commercePaymentMethodId, long commerceShippingMethodId,
-		java.lang.String shippingOptionName,
-		java.lang.String purchaseOrderNumber, BigDecimal subtotal,
-		BigDecimal shippingPrice, BigDecimal total,
-		java.lang.String advanceStatus) throws PortalException;
+		String shippingOptionName, String purchaseOrderNumber,
+		BigDecimal subtotal, BigDecimal shippingPrice, BigDecimal total,
+		String advanceStatus) throws PortalException;
 
 	@Indexable(type = IndexableType.REINDEX)
 	public CommerceOrder updateOrderStatus(long commerceOrderId, int orderStatus)
@@ -406,22 +402,19 @@ public interface CommerceOrderLocalService extends BaseLocalService,
 
 	@Indexable(type = IndexableType.REINDEX)
 	public CommerceOrder updatePurchaseOrderNumber(long commerceOrderId,
-		java.lang.String purchaseOrderNumber) throws PortalException;
+		String purchaseOrderNumber) throws PortalException;
 
 	@Indexable(type = IndexableType.REINDEX)
 	public CommerceOrder updateShippingAddress(long commerceOrderId,
-		java.lang.String name, java.lang.String description,
-		java.lang.String street1, java.lang.String street2,
-		java.lang.String street3, java.lang.String city, java.lang.String zip,
-		long commerceRegionId, long commerceCountryId,
-		java.lang.String phoneNumber, ServiceContext serviceContext)
-		throws PortalException;
+		String name, String description, String street1, String street2,
+		String street3, String city, String zip, long commerceRegionId,
+		long commerceCountryId, String phoneNumber,
+		ServiceContext serviceContext) throws PortalException;
 
 	@Indexable(type = IndexableType.REINDEX)
 	public CommerceOrder updateStatus(long userId, long commerceOrderId,
 		int status, ServiceContext serviceContext,
-		Map<java.lang.String, Serializable> workflowContext)
-		throws PortalException;
+		Map<String, Serializable> workflowContext) throws PortalException;
 
 	public CommerceOrder updateUser(long commerceOrderId, long userId)
 		throws PortalException;

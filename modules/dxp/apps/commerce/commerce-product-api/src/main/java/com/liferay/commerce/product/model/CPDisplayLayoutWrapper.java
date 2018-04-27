@@ -145,7 +145,7 @@ public class CPDisplayLayoutWrapper implements CPDisplayLayout,
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new CPDisplayLayoutWrapper((CPDisplayLayout)_cpDisplayLayout.clone());
 	}
 
@@ -160,7 +160,7 @@ public class CPDisplayLayoutWrapper implements CPDisplayLayout,
 	* @return the fully qualified class name of this cp display layout
 	*/
 	@Override
-	public java.lang.String getClassName() {
+	public String getClassName() {
 		return _cpDisplayLayout.getClassName();
 	}
 
@@ -235,7 +235,7 @@ public class CPDisplayLayoutWrapper implements CPDisplayLayout,
 	* @return the layout uuid of this cp display layout
 	*/
 	@Override
-	public java.lang.String getLayoutUuid() {
+	public String getLayoutUuid() {
 		return _cpDisplayLayout.getLayoutUuid();
 	}
 
@@ -280,7 +280,7 @@ public class CPDisplayLayoutWrapper implements CPDisplayLayout,
 	* @return the user name of this cp display layout
 	*/
 	@Override
-	public java.lang.String getUserName() {
+	public String getUserName() {
 		return _cpDisplayLayout.getUserName();
 	}
 
@@ -290,7 +290,7 @@ public class CPDisplayLayoutWrapper implements CPDisplayLayout,
 	* @return the user uuid of this cp display layout
 	*/
 	@Override
-	public java.lang.String getUserUuid() {
+	public String getUserUuid() {
 		return _cpDisplayLayout.getUserUuid();
 	}
 
@@ -300,7 +300,7 @@ public class CPDisplayLayoutWrapper implements CPDisplayLayout,
 	* @return the uuid of this cp display layout
 	*/
 	@Override
-	public java.lang.String getUuid() {
+	public String getUuid() {
 		return _cpDisplayLayout.getUuid();
 	}
 
@@ -335,7 +335,7 @@ public class CPDisplayLayoutWrapper implements CPDisplayLayout,
 	}
 
 	@Override
-	public void setClassName(java.lang.String className) {
+	public void setClassName(String className) {
 		_cpDisplayLayout.setClassName(className);
 	}
 
@@ -421,7 +421,7 @@ public class CPDisplayLayoutWrapper implements CPDisplayLayout,
 	* @param layoutUuid the layout uuid of this cp display layout
 	*/
 	@Override
-	public void setLayoutUuid(java.lang.String layoutUuid) {
+	public void setLayoutUuid(String layoutUuid) {
 		_cpDisplayLayout.setLayoutUuid(layoutUuid);
 	}
 
@@ -471,7 +471,7 @@ public class CPDisplayLayoutWrapper implements CPDisplayLayout,
 	* @param userName the user name of this cp display layout
 	*/
 	@Override
-	public void setUserName(java.lang.String userName) {
+	public void setUserName(String userName) {
 		_cpDisplayLayout.setUserName(userName);
 	}
 
@@ -481,7 +481,7 @@ public class CPDisplayLayoutWrapper implements CPDisplayLayout,
 	* @param userUuid the user uuid of this cp display layout
 	*/
 	@Override
-	public void setUserUuid(java.lang.String userUuid) {
+	public void setUserUuid(String userUuid) {
 		_cpDisplayLayout.setUserUuid(userUuid);
 	}
 
@@ -491,7 +491,7 @@ public class CPDisplayLayoutWrapper implements CPDisplayLayout,
 	* @param uuid the uuid of this cp display layout
 	*/
 	@Override
-	public void setUuid(java.lang.String uuid) {
+	public void setUuid(String uuid) {
 		_cpDisplayLayout.setUuid(uuid);
 	}
 
@@ -506,7 +506,7 @@ public class CPDisplayLayoutWrapper implements CPDisplayLayout,
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _cpDisplayLayout.toString();
 	}
 
@@ -516,7 +516,7 @@ public class CPDisplayLayoutWrapper implements CPDisplayLayout,
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _cpDisplayLayout.toXmlString();
 	}
 

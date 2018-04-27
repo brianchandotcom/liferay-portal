@@ -55,10 +55,9 @@ public class CommerceCurrencyLocalServiceUtil {
 	}
 
 	public static com.liferay.commerce.currency.model.CommerceCurrency addCommerceCurrency(
-		java.lang.String code,
-		java.util.Map<java.util.Locale, java.lang.String> nameMap,
-		java.math.BigDecimal rate, java.lang.String roundingType,
-		boolean primary, double priority, boolean active,
+		String code, java.util.Map<java.util.Locale, String> nameMap,
+		java.math.BigDecimal rate, String roundingType, boolean primary,
+		double priority, boolean active,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
@@ -205,7 +204,7 @@ public class CommerceCurrencyLocalServiceUtil {
 	* @return the matching commerce currency, or <code>null</code> if a matching commerce currency could not be found
 	*/
 	public static com.liferay.commerce.currency.model.CommerceCurrency fetchCommerceCurrencyByUuidAndGroupId(
-		java.lang.String uuid, long groupId) {
+		String uuid, long groupId) {
 		return getService().fetchCommerceCurrencyByUuidAndGroupId(uuid, groupId);
 	}
 
@@ -262,7 +261,7 @@ public class CommerceCurrencyLocalServiceUtil {
 	* @return the matching commerce currencies, or an empty list if no matches were found
 	*/
 	public static java.util.List<com.liferay.commerce.currency.model.CommerceCurrency> getCommerceCurrenciesByUuidAndCompanyId(
-		java.lang.String uuid, long companyId) {
+		String uuid, long companyId) {
 		return getService()
 				   .getCommerceCurrenciesByUuidAndCompanyId(uuid, companyId);
 	}
@@ -278,7 +277,7 @@ public class CommerceCurrencyLocalServiceUtil {
 	* @return the range of matching commerce currencies, or an empty list if no matches were found
 	*/
 	public static java.util.List<com.liferay.commerce.currency.model.CommerceCurrency> getCommerceCurrenciesByUuidAndCompanyId(
-		java.lang.String uuid, long companyId, int start, int end,
+		String uuid, long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.currency.model.CommerceCurrency> orderByComparator) {
 		return getService()
 				   .getCommerceCurrenciesByUuidAndCompanyId(uuid, companyId,
@@ -324,7 +323,7 @@ public class CommerceCurrencyLocalServiceUtil {
 	* @throws PortalException if a matching commerce currency could not be found
 	*/
 	public static com.liferay.commerce.currency.model.CommerceCurrency getCommerceCurrencyByUuidAndGroupId(
-		java.lang.String uuid, long groupId)
+		String uuid, long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getCommerceCurrencyByUuidAndGroupId(uuid, groupId);
 	}
@@ -343,7 +342,7 @@ public class CommerceCurrencyLocalServiceUtil {
 	*
 	* @return the OSGi service identifier
 	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
+	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 
@@ -355,7 +354,7 @@ public class CommerceCurrencyLocalServiceUtil {
 
 	public static void importDefaultValues(
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws java.lang.Exception {
+		throws Exception {
 		getService().importDefaultValues(serviceContext);
 	}
 
@@ -383,10 +382,10 @@ public class CommerceCurrencyLocalServiceUtil {
 	}
 
 	public static com.liferay.commerce.currency.model.CommerceCurrency updateCommerceCurrency(
-		long commerceCurrencyId, java.lang.String code,
-		java.util.Map<java.util.Locale, java.lang.String> nameMap,
-		java.math.BigDecimal rate, java.lang.String roundingType,
-		boolean primary, double priority, boolean active,
+		long commerceCurrencyId, String code,
+		java.util.Map<java.util.Locale, String> nameMap,
+		java.math.BigDecimal rate, String roundingType, boolean primary,
+		double priority, boolean active,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
@@ -401,7 +400,7 @@ public class CommerceCurrencyLocalServiceUtil {
 	}
 
 	public static void updateExchangeRate(long commerceCurrencyId,
-		java.lang.String exchangeRateProviderKey)
+		String exchangeRateProviderKey)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService()
 			.updateExchangeRate(commerceCurrencyId, exchangeRateProviderKey);

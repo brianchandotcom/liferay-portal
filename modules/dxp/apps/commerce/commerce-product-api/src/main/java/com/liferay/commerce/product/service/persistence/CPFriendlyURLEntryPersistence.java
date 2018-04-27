@@ -47,7 +47,7 @@ public interface CPFriendlyURLEntryPersistence extends BasePersistence<CPFriendl
 	* @param uuid the uuid
 	* @return the matching cp friendly url entries
 	*/
-	public java.util.List<CPFriendlyURLEntry> findByUuid(java.lang.String uuid);
+	public java.util.List<CPFriendlyURLEntry> findByUuid(String uuid);
 
 	/**
 	* Returns a range of all the cp friendly url entries where uuid = &#63;.
@@ -61,8 +61,8 @@ public interface CPFriendlyURLEntryPersistence extends BasePersistence<CPFriendl
 	* @param end the upper bound of the range of cp friendly url entries (not inclusive)
 	* @return the range of matching cp friendly url entries
 	*/
-	public java.util.List<CPFriendlyURLEntry> findByUuid(
-		java.lang.String uuid, int start, int end);
+	public java.util.List<CPFriendlyURLEntry> findByUuid(String uuid,
+		int start, int end);
 
 	/**
 	* Returns an ordered range of all the cp friendly url entries where uuid = &#63;.
@@ -77,8 +77,8 @@ public interface CPFriendlyURLEntryPersistence extends BasePersistence<CPFriendl
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching cp friendly url entries
 	*/
-	public java.util.List<CPFriendlyURLEntry> findByUuid(
-		java.lang.String uuid, int start, int end,
+	public java.util.List<CPFriendlyURLEntry> findByUuid(String uuid,
+		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<CPFriendlyURLEntry> orderByComparator);
 
 	/**
@@ -95,8 +95,8 @@ public interface CPFriendlyURLEntryPersistence extends BasePersistence<CPFriendl
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching cp friendly url entries
 	*/
-	public java.util.List<CPFriendlyURLEntry> findByUuid(
-		java.lang.String uuid, int start, int end,
+	public java.util.List<CPFriendlyURLEntry> findByUuid(String uuid,
+		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<CPFriendlyURLEntry> orderByComparator,
 		boolean retrieveFromCache);
 
@@ -108,7 +108,7 @@ public interface CPFriendlyURLEntryPersistence extends BasePersistence<CPFriendl
 	* @return the first matching cp friendly url entry
 	* @throws NoSuchCPFriendlyURLEntryException if a matching cp friendly url entry could not be found
 	*/
-	public CPFriendlyURLEntry findByUuid_First(java.lang.String uuid,
+	public CPFriendlyURLEntry findByUuid_First(String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<CPFriendlyURLEntry> orderByComparator)
 		throws NoSuchCPFriendlyURLEntryException;
 
@@ -119,7 +119,7 @@ public interface CPFriendlyURLEntryPersistence extends BasePersistence<CPFriendl
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching cp friendly url entry, or <code>null</code> if a matching cp friendly url entry could not be found
 	*/
-	public CPFriendlyURLEntry fetchByUuid_First(java.lang.String uuid,
+	public CPFriendlyURLEntry fetchByUuid_First(String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<CPFriendlyURLEntry> orderByComparator);
 
 	/**
@@ -130,7 +130,7 @@ public interface CPFriendlyURLEntryPersistence extends BasePersistence<CPFriendl
 	* @return the last matching cp friendly url entry
 	* @throws NoSuchCPFriendlyURLEntryException if a matching cp friendly url entry could not be found
 	*/
-	public CPFriendlyURLEntry findByUuid_Last(java.lang.String uuid,
+	public CPFriendlyURLEntry findByUuid_Last(String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<CPFriendlyURLEntry> orderByComparator)
 		throws NoSuchCPFriendlyURLEntryException;
 
@@ -141,7 +141,7 @@ public interface CPFriendlyURLEntryPersistence extends BasePersistence<CPFriendl
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching cp friendly url entry, or <code>null</code> if a matching cp friendly url entry could not be found
 	*/
-	public CPFriendlyURLEntry fetchByUuid_Last(java.lang.String uuid,
+	public CPFriendlyURLEntry fetchByUuid_Last(String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<CPFriendlyURLEntry> orderByComparator);
 
 	/**
@@ -154,7 +154,7 @@ public interface CPFriendlyURLEntryPersistence extends BasePersistence<CPFriendl
 	* @throws NoSuchCPFriendlyURLEntryException if a cp friendly url entry with the primary key could not be found
 	*/
 	public CPFriendlyURLEntry[] findByUuid_PrevAndNext(
-		long CPFriendlyURLEntryId, java.lang.String uuid,
+		long CPFriendlyURLEntryId, String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<CPFriendlyURLEntry> orderByComparator)
 		throws NoSuchCPFriendlyURLEntryException;
 
@@ -163,7 +163,7 @@ public interface CPFriendlyURLEntryPersistence extends BasePersistence<CPFriendl
 	*
 	* @param uuid the uuid
 	*/
-	public void removeByUuid(java.lang.String uuid);
+	public void removeByUuid(String uuid);
 
 	/**
 	* Returns the number of cp friendly url entries where uuid = &#63;.
@@ -171,7 +171,7 @@ public interface CPFriendlyURLEntryPersistence extends BasePersistence<CPFriendl
 	* @param uuid the uuid
 	* @return the number of matching cp friendly url entries
 	*/
-	public int countByUuid(java.lang.String uuid);
+	public int countByUuid(String uuid);
 
 	/**
 	* Returns the cp friendly url entry where uuid = &#63; and groupId = &#63; or throws a {@link NoSuchCPFriendlyURLEntryException} if it could not be found.
@@ -181,7 +181,7 @@ public interface CPFriendlyURLEntryPersistence extends BasePersistence<CPFriendl
 	* @return the matching cp friendly url entry
 	* @throws NoSuchCPFriendlyURLEntryException if a matching cp friendly url entry could not be found
 	*/
-	public CPFriendlyURLEntry findByUUID_G(java.lang.String uuid, long groupId)
+	public CPFriendlyURLEntry findByUUID_G(String uuid, long groupId)
 		throws NoSuchCPFriendlyURLEntryException;
 
 	/**
@@ -191,7 +191,7 @@ public interface CPFriendlyURLEntryPersistence extends BasePersistence<CPFriendl
 	* @param groupId the group ID
 	* @return the matching cp friendly url entry, or <code>null</code> if a matching cp friendly url entry could not be found
 	*/
-	public CPFriendlyURLEntry fetchByUUID_G(java.lang.String uuid, long groupId);
+	public CPFriendlyURLEntry fetchByUUID_G(String uuid, long groupId);
 
 	/**
 	* Returns the cp friendly url entry where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -201,8 +201,8 @@ public interface CPFriendlyURLEntryPersistence extends BasePersistence<CPFriendl
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching cp friendly url entry, or <code>null</code> if a matching cp friendly url entry could not be found
 	*/
-	public CPFriendlyURLEntry fetchByUUID_G(java.lang.String uuid,
-		long groupId, boolean retrieveFromCache);
+	public CPFriendlyURLEntry fetchByUUID_G(String uuid, long groupId,
+		boolean retrieveFromCache);
 
 	/**
 	* Removes the cp friendly url entry where uuid = &#63; and groupId = &#63; from the database.
@@ -211,7 +211,7 @@ public interface CPFriendlyURLEntryPersistence extends BasePersistence<CPFriendl
 	* @param groupId the group ID
 	* @return the cp friendly url entry that was removed
 	*/
-	public CPFriendlyURLEntry removeByUUID_G(java.lang.String uuid, long groupId)
+	public CPFriendlyURLEntry removeByUUID_G(String uuid, long groupId)
 		throws NoSuchCPFriendlyURLEntryException;
 
 	/**
@@ -221,7 +221,7 @@ public interface CPFriendlyURLEntryPersistence extends BasePersistence<CPFriendl
 	* @param groupId the group ID
 	* @return the number of matching cp friendly url entries
 	*/
-	public int countByUUID_G(java.lang.String uuid, long groupId);
+	public int countByUUID_G(String uuid, long groupId);
 
 	/**
 	* Returns all the cp friendly url entries where uuid = &#63; and companyId = &#63;.
@@ -230,8 +230,8 @@ public interface CPFriendlyURLEntryPersistence extends BasePersistence<CPFriendl
 	* @param companyId the company ID
 	* @return the matching cp friendly url entries
 	*/
-	public java.util.List<CPFriendlyURLEntry> findByUuid_C(
-		java.lang.String uuid, long companyId);
+	public java.util.List<CPFriendlyURLEntry> findByUuid_C(String uuid,
+		long companyId);
 
 	/**
 	* Returns a range of all the cp friendly url entries where uuid = &#63; and companyId = &#63;.
@@ -246,8 +246,8 @@ public interface CPFriendlyURLEntryPersistence extends BasePersistence<CPFriendl
 	* @param end the upper bound of the range of cp friendly url entries (not inclusive)
 	* @return the range of matching cp friendly url entries
 	*/
-	public java.util.List<CPFriendlyURLEntry> findByUuid_C(
-		java.lang.String uuid, long companyId, int start, int end);
+	public java.util.List<CPFriendlyURLEntry> findByUuid_C(String uuid,
+		long companyId, int start, int end);
 
 	/**
 	* Returns an ordered range of all the cp friendly url entries where uuid = &#63; and companyId = &#63;.
@@ -263,8 +263,8 @@ public interface CPFriendlyURLEntryPersistence extends BasePersistence<CPFriendl
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching cp friendly url entries
 	*/
-	public java.util.List<CPFriendlyURLEntry> findByUuid_C(
-		java.lang.String uuid, long companyId, int start, int end,
+	public java.util.List<CPFriendlyURLEntry> findByUuid_C(String uuid,
+		long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<CPFriendlyURLEntry> orderByComparator);
 
 	/**
@@ -282,8 +282,8 @@ public interface CPFriendlyURLEntryPersistence extends BasePersistence<CPFriendl
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching cp friendly url entries
 	*/
-	public java.util.List<CPFriendlyURLEntry> findByUuid_C(
-		java.lang.String uuid, long companyId, int start, int end,
+	public java.util.List<CPFriendlyURLEntry> findByUuid_C(String uuid,
+		long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<CPFriendlyURLEntry> orderByComparator,
 		boolean retrieveFromCache);
 
@@ -296,8 +296,7 @@ public interface CPFriendlyURLEntryPersistence extends BasePersistence<CPFriendl
 	* @return the first matching cp friendly url entry
 	* @throws NoSuchCPFriendlyURLEntryException if a matching cp friendly url entry could not be found
 	*/
-	public CPFriendlyURLEntry findByUuid_C_First(java.lang.String uuid,
-		long companyId,
+	public CPFriendlyURLEntry findByUuid_C_First(String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<CPFriendlyURLEntry> orderByComparator)
 		throws NoSuchCPFriendlyURLEntryException;
 
@@ -309,8 +308,7 @@ public interface CPFriendlyURLEntryPersistence extends BasePersistence<CPFriendl
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching cp friendly url entry, or <code>null</code> if a matching cp friendly url entry could not be found
 	*/
-	public CPFriendlyURLEntry fetchByUuid_C_First(java.lang.String uuid,
-		long companyId,
+	public CPFriendlyURLEntry fetchByUuid_C_First(String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<CPFriendlyURLEntry> orderByComparator);
 
 	/**
@@ -322,8 +320,7 @@ public interface CPFriendlyURLEntryPersistence extends BasePersistence<CPFriendl
 	* @return the last matching cp friendly url entry
 	* @throws NoSuchCPFriendlyURLEntryException if a matching cp friendly url entry could not be found
 	*/
-	public CPFriendlyURLEntry findByUuid_C_Last(java.lang.String uuid,
-		long companyId,
+	public CPFriendlyURLEntry findByUuid_C_Last(String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<CPFriendlyURLEntry> orderByComparator)
 		throws NoSuchCPFriendlyURLEntryException;
 
@@ -335,8 +332,7 @@ public interface CPFriendlyURLEntryPersistence extends BasePersistence<CPFriendl
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching cp friendly url entry, or <code>null</code> if a matching cp friendly url entry could not be found
 	*/
-	public CPFriendlyURLEntry fetchByUuid_C_Last(java.lang.String uuid,
-		long companyId,
+	public CPFriendlyURLEntry fetchByUuid_C_Last(String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<CPFriendlyURLEntry> orderByComparator);
 
 	/**
@@ -350,7 +346,7 @@ public interface CPFriendlyURLEntryPersistence extends BasePersistence<CPFriendl
 	* @throws NoSuchCPFriendlyURLEntryException if a cp friendly url entry with the primary key could not be found
 	*/
 	public CPFriendlyURLEntry[] findByUuid_C_PrevAndNext(
-		long CPFriendlyURLEntryId, java.lang.String uuid, long companyId,
+		long CPFriendlyURLEntryId, String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<CPFriendlyURLEntry> orderByComparator)
 		throws NoSuchCPFriendlyURLEntryException;
 
@@ -360,7 +356,7 @@ public interface CPFriendlyURLEntryPersistence extends BasePersistence<CPFriendl
 	* @param uuid the uuid
 	* @param companyId the company ID
 	*/
-	public void removeByUuid_C(java.lang.String uuid, long companyId);
+	public void removeByUuid_C(String uuid, long companyId);
 
 	/**
 	* Returns the number of cp friendly url entries where uuid = &#63; and companyId = &#63;.
@@ -369,7 +365,7 @@ public interface CPFriendlyURLEntryPersistence extends BasePersistence<CPFriendl
 	* @param companyId the company ID
 	* @return the number of matching cp friendly url entries
 	*/
-	public int countByUuid_C(java.lang.String uuid, long companyId);
+	public int countByUuid_C(String uuid, long companyId);
 
 	/**
 	* Returns all the cp friendly url entries where groupId = &#63; and classNameId = &#63; and classPK = &#63;.
@@ -540,7 +536,7 @@ public interface CPFriendlyURLEntryPersistence extends BasePersistence<CPFriendl
 	* @return the matching cp friendly url entries
 	*/
 	public java.util.List<CPFriendlyURLEntry> findByG_C_U(long groupId,
-		long classNameId, java.lang.String urlTitle);
+		long classNameId, String urlTitle);
 
 	/**
 	* Returns a range of all the cp friendly url entries where groupId = &#63; and classNameId = &#63; and urlTitle = &#63;.
@@ -557,7 +553,7 @@ public interface CPFriendlyURLEntryPersistence extends BasePersistence<CPFriendl
 	* @return the range of matching cp friendly url entries
 	*/
 	public java.util.List<CPFriendlyURLEntry> findByG_C_U(long groupId,
-		long classNameId, java.lang.String urlTitle, int start, int end);
+		long classNameId, String urlTitle, int start, int end);
 
 	/**
 	* Returns an ordered range of all the cp friendly url entries where groupId = &#63; and classNameId = &#63; and urlTitle = &#63;.
@@ -575,7 +571,7 @@ public interface CPFriendlyURLEntryPersistence extends BasePersistence<CPFriendl
 	* @return the ordered range of matching cp friendly url entries
 	*/
 	public java.util.List<CPFriendlyURLEntry> findByG_C_U(long groupId,
-		long classNameId, java.lang.String urlTitle, int start, int end,
+		long classNameId, String urlTitle, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<CPFriendlyURLEntry> orderByComparator);
 
 	/**
@@ -595,7 +591,7 @@ public interface CPFriendlyURLEntryPersistence extends BasePersistence<CPFriendl
 	* @return the ordered range of matching cp friendly url entries
 	*/
 	public java.util.List<CPFriendlyURLEntry> findByG_C_U(long groupId,
-		long classNameId, java.lang.String urlTitle, int start, int end,
+		long classNameId, String urlTitle, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<CPFriendlyURLEntry> orderByComparator,
 		boolean retrieveFromCache);
 
@@ -610,7 +606,7 @@ public interface CPFriendlyURLEntryPersistence extends BasePersistence<CPFriendl
 	* @throws NoSuchCPFriendlyURLEntryException if a matching cp friendly url entry could not be found
 	*/
 	public CPFriendlyURLEntry findByG_C_U_First(long groupId, long classNameId,
-		java.lang.String urlTitle,
+		String urlTitle,
 		com.liferay.portal.kernel.util.OrderByComparator<CPFriendlyURLEntry> orderByComparator)
 		throws NoSuchCPFriendlyURLEntryException;
 
@@ -624,7 +620,7 @@ public interface CPFriendlyURLEntryPersistence extends BasePersistence<CPFriendl
 	* @return the first matching cp friendly url entry, or <code>null</code> if a matching cp friendly url entry could not be found
 	*/
 	public CPFriendlyURLEntry fetchByG_C_U_First(long groupId,
-		long classNameId, java.lang.String urlTitle,
+		long classNameId, String urlTitle,
 		com.liferay.portal.kernel.util.OrderByComparator<CPFriendlyURLEntry> orderByComparator);
 
 	/**
@@ -638,7 +634,7 @@ public interface CPFriendlyURLEntryPersistence extends BasePersistence<CPFriendl
 	* @throws NoSuchCPFriendlyURLEntryException if a matching cp friendly url entry could not be found
 	*/
 	public CPFriendlyURLEntry findByG_C_U_Last(long groupId, long classNameId,
-		java.lang.String urlTitle,
+		String urlTitle,
 		com.liferay.portal.kernel.util.OrderByComparator<CPFriendlyURLEntry> orderByComparator)
 		throws NoSuchCPFriendlyURLEntryException;
 
@@ -652,7 +648,7 @@ public interface CPFriendlyURLEntryPersistence extends BasePersistence<CPFriendl
 	* @return the last matching cp friendly url entry, or <code>null</code> if a matching cp friendly url entry could not be found
 	*/
 	public CPFriendlyURLEntry fetchByG_C_U_Last(long groupId, long classNameId,
-		java.lang.String urlTitle,
+		String urlTitle,
 		com.liferay.portal.kernel.util.OrderByComparator<CPFriendlyURLEntry> orderByComparator);
 
 	/**
@@ -668,7 +664,7 @@ public interface CPFriendlyURLEntryPersistence extends BasePersistence<CPFriendl
 	*/
 	public CPFriendlyURLEntry[] findByG_C_U_PrevAndNext(
 		long CPFriendlyURLEntryId, long groupId, long classNameId,
-		java.lang.String urlTitle,
+		String urlTitle,
 		com.liferay.portal.kernel.util.OrderByComparator<CPFriendlyURLEntry> orderByComparator)
 		throws NoSuchCPFriendlyURLEntryException;
 
@@ -679,8 +675,7 @@ public interface CPFriendlyURLEntryPersistence extends BasePersistence<CPFriendl
 	* @param classNameId the class name ID
 	* @param urlTitle the url title
 	*/
-	public void removeByG_C_U(long groupId, long classNameId,
-		java.lang.String urlTitle);
+	public void removeByG_C_U(long groupId, long classNameId, String urlTitle);
 
 	/**
 	* Returns the number of cp friendly url entries where groupId = &#63; and classNameId = &#63; and urlTitle = &#63;.
@@ -690,8 +685,7 @@ public interface CPFriendlyURLEntryPersistence extends BasePersistence<CPFriendl
 	* @param urlTitle the url title
 	* @return the number of matching cp friendly url entries
 	*/
-	public int countByG_C_U(long groupId, long classNameId,
-		java.lang.String urlTitle);
+	public int countByG_C_U(long groupId, long classNameId, String urlTitle);
 
 	/**
 	* Returns all the cp friendly url entries where groupId = &#63; and classNameId = &#63; and classPK = &#63; and main = &#63;.
@@ -877,7 +871,7 @@ public interface CPFriendlyURLEntryPersistence extends BasePersistence<CPFriendl
 	* @throws NoSuchCPFriendlyURLEntryException if a matching cp friendly url entry could not be found
 	*/
 	public CPFriendlyURLEntry findByG_C_L_U(long groupId, long classNameId,
-		java.lang.String languageId, java.lang.String urlTitle)
+		String languageId, String urlTitle)
 		throws NoSuchCPFriendlyURLEntryException;
 
 	/**
@@ -890,7 +884,7 @@ public interface CPFriendlyURLEntryPersistence extends BasePersistence<CPFriendl
 	* @return the matching cp friendly url entry, or <code>null</code> if a matching cp friendly url entry could not be found
 	*/
 	public CPFriendlyURLEntry fetchByG_C_L_U(long groupId, long classNameId,
-		java.lang.String languageId, java.lang.String urlTitle);
+		String languageId, String urlTitle);
 
 	/**
 	* Returns the cp friendly url entry where groupId = &#63; and classNameId = &#63; and languageId = &#63; and urlTitle = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -903,8 +897,7 @@ public interface CPFriendlyURLEntryPersistence extends BasePersistence<CPFriendl
 	* @return the matching cp friendly url entry, or <code>null</code> if a matching cp friendly url entry could not be found
 	*/
 	public CPFriendlyURLEntry fetchByG_C_L_U(long groupId, long classNameId,
-		java.lang.String languageId, java.lang.String urlTitle,
-		boolean retrieveFromCache);
+		String languageId, String urlTitle, boolean retrieveFromCache);
 
 	/**
 	* Removes the cp friendly url entry where groupId = &#63; and classNameId = &#63; and languageId = &#63; and urlTitle = &#63; from the database.
@@ -916,7 +909,7 @@ public interface CPFriendlyURLEntryPersistence extends BasePersistence<CPFriendl
 	* @return the cp friendly url entry that was removed
 	*/
 	public CPFriendlyURLEntry removeByG_C_L_U(long groupId, long classNameId,
-		java.lang.String languageId, java.lang.String urlTitle)
+		String languageId, String urlTitle)
 		throws NoSuchCPFriendlyURLEntryException;
 
 	/**
@@ -929,7 +922,7 @@ public interface CPFriendlyURLEntryPersistence extends BasePersistence<CPFriendl
 	* @return the number of matching cp friendly url entries
 	*/
 	public int countByG_C_L_U(long groupId, long classNameId,
-		java.lang.String languageId, java.lang.String urlTitle);
+		String languageId, String urlTitle);
 
 	/**
 	* Returns the cp friendly url entry where groupId = &#63; and classNameId = &#63; and classPK = &#63; and languageId = &#63; and urlTitle = &#63; or throws a {@link NoSuchCPFriendlyURLEntryException} if it could not be found.
@@ -943,7 +936,7 @@ public interface CPFriendlyURLEntryPersistence extends BasePersistence<CPFriendl
 	* @throws NoSuchCPFriendlyURLEntryException if a matching cp friendly url entry could not be found
 	*/
 	public CPFriendlyURLEntry findByG_C_C_L_U(long groupId, long classNameId,
-		long classPK, java.lang.String languageId, java.lang.String urlTitle)
+		long classPK, String languageId, String urlTitle)
 		throws NoSuchCPFriendlyURLEntryException;
 
 	/**
@@ -957,7 +950,7 @@ public interface CPFriendlyURLEntryPersistence extends BasePersistence<CPFriendl
 	* @return the matching cp friendly url entry, or <code>null</code> if a matching cp friendly url entry could not be found
 	*/
 	public CPFriendlyURLEntry fetchByG_C_C_L_U(long groupId, long classNameId,
-		long classPK, java.lang.String languageId, java.lang.String urlTitle);
+		long classPK, String languageId, String urlTitle);
 
 	/**
 	* Returns the cp friendly url entry where groupId = &#63; and classNameId = &#63; and classPK = &#63; and languageId = &#63; and urlTitle = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -971,7 +964,7 @@ public interface CPFriendlyURLEntryPersistence extends BasePersistence<CPFriendl
 	* @return the matching cp friendly url entry, or <code>null</code> if a matching cp friendly url entry could not be found
 	*/
 	public CPFriendlyURLEntry fetchByG_C_C_L_U(long groupId, long classNameId,
-		long classPK, java.lang.String languageId, java.lang.String urlTitle,
+		long classPK, String languageId, String urlTitle,
 		boolean retrieveFromCache);
 
 	/**
@@ -985,7 +978,7 @@ public interface CPFriendlyURLEntryPersistence extends BasePersistence<CPFriendl
 	* @return the cp friendly url entry that was removed
 	*/
 	public CPFriendlyURLEntry removeByG_C_C_L_U(long groupId, long classNameId,
-		long classPK, java.lang.String languageId, java.lang.String urlTitle)
+		long classPK, String languageId, String urlTitle)
 		throws NoSuchCPFriendlyURLEntryException;
 
 	/**
@@ -999,7 +992,7 @@ public interface CPFriendlyURLEntryPersistence extends BasePersistence<CPFriendl
 	* @return the number of matching cp friendly url entries
 	*/
 	public int countByG_C_C_L_U(long groupId, long classNameId, long classPK,
-		java.lang.String languageId, java.lang.String urlTitle);
+		String languageId, String urlTitle);
 
 	/**
 	* Returns the cp friendly url entry where groupId = &#63; and classNameId = &#63; and classPK = &#63; and languageId = &#63; and main = &#63; or throws a {@link NoSuchCPFriendlyURLEntryException} if it could not be found.
@@ -1013,7 +1006,7 @@ public interface CPFriendlyURLEntryPersistence extends BasePersistence<CPFriendl
 	* @throws NoSuchCPFriendlyURLEntryException if a matching cp friendly url entry could not be found
 	*/
 	public CPFriendlyURLEntry findByG_C_C_L_M(long groupId, long classNameId,
-		long classPK, java.lang.String languageId, boolean main)
+		long classPK, String languageId, boolean main)
 		throws NoSuchCPFriendlyURLEntryException;
 
 	/**
@@ -1027,7 +1020,7 @@ public interface CPFriendlyURLEntryPersistence extends BasePersistence<CPFriendl
 	* @return the matching cp friendly url entry, or <code>null</code> if a matching cp friendly url entry could not be found
 	*/
 	public CPFriendlyURLEntry fetchByG_C_C_L_M(long groupId, long classNameId,
-		long classPK, java.lang.String languageId, boolean main);
+		long classPK, String languageId, boolean main);
 
 	/**
 	* Returns the cp friendly url entry where groupId = &#63; and classNameId = &#63; and classPK = &#63; and languageId = &#63; and main = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -1041,8 +1034,7 @@ public interface CPFriendlyURLEntryPersistence extends BasePersistence<CPFriendl
 	* @return the matching cp friendly url entry, or <code>null</code> if a matching cp friendly url entry could not be found
 	*/
 	public CPFriendlyURLEntry fetchByG_C_C_L_M(long groupId, long classNameId,
-		long classPK, java.lang.String languageId, boolean main,
-		boolean retrieveFromCache);
+		long classPK, String languageId, boolean main, boolean retrieveFromCache);
 
 	/**
 	* Removes the cp friendly url entry where groupId = &#63; and classNameId = &#63; and classPK = &#63; and languageId = &#63; and main = &#63; from the database.
@@ -1055,7 +1047,7 @@ public interface CPFriendlyURLEntryPersistence extends BasePersistence<CPFriendl
 	* @return the cp friendly url entry that was removed
 	*/
 	public CPFriendlyURLEntry removeByG_C_C_L_M(long groupId, long classNameId,
-		long classPK, java.lang.String languageId, boolean main)
+		long classPK, String languageId, boolean main)
 		throws NoSuchCPFriendlyURLEntryException;
 
 	/**
@@ -1069,7 +1061,7 @@ public interface CPFriendlyURLEntryPersistence extends BasePersistence<CPFriendl
 	* @return the number of matching cp friendly url entries
 	*/
 	public int countByG_C_C_L_M(long groupId, long classNameId, long classPK,
-		java.lang.String languageId, boolean main);
+		String languageId, boolean main);
 
 	/**
 	* Caches the cp friendly url entry in the entity cache if it is enabled.
@@ -1193,5 +1185,5 @@ public interface CPFriendlyURLEntryPersistence extends BasePersistence<CPFriendl
 	public int countAll();
 
 	@Override
-	public java.util.Set<java.lang.String> getBadColumnNames();
+	public java.util.Set<String> getBadColumnNames();
 }

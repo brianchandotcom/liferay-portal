@@ -36,8 +36,7 @@ public class CommerceOrganizationServiceWrapper
 
 	@Override
 	public com.liferay.portal.kernel.model.Organization addOrganization(
-		long parentOrganizationId, java.lang.String name,
-		java.lang.String type,
+		long parentOrganizationId, String name, String type,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _commerceOrganizationService.addOrganization(parentOrganizationId,
@@ -46,7 +45,7 @@ public class CommerceOrganizationServiceWrapper
 
 	@Override
 	public void addOrganizationUsers(long organizationId,
-		java.lang.String[] emailAddresses,
+		String[] emailAddresses,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_commerceOrganizationService.addOrganizationUsers(organizationId,
@@ -80,15 +79,14 @@ public class CommerceOrganizationServiceWrapper
 	* @return the OSGi service identifier
 	*/
 	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
+	public String getOSGiServiceIdentifier() {
 		return _commerceOrganizationService.getOSGiServiceIdentifier();
 	}
 
 	@Override
 	public com.liferay.portal.kernel.search.BaseModelSearchResult<com.liferay.portal.kernel.model.Organization> searchOrganizations(
-		long userId, long organizationId, java.lang.String type,
-		java.lang.String keywords, int start, int end,
-		com.liferay.portal.kernel.search.Sort[] sorts)
+		long userId, long organizationId, String type, String keywords,
+		int start, int end, com.liferay.portal.kernel.search.Sort[] sorts)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _commerceOrganizationService.searchOrganizations(userId,
 			organizationId, type, keywords, start, end, sorts);
@@ -96,9 +94,8 @@ public class CommerceOrganizationServiceWrapper
 
 	@Override
 	public com.liferay.portal.kernel.search.BaseModelSearchResult<com.liferay.portal.kernel.model.Organization> searchOrganizationsByGroup(
-		long groupId, long userId, java.lang.String type,
-		java.lang.String keywords, int start, int end,
-		com.liferay.portal.kernel.search.Sort[] sorts)
+		long groupId, long userId, String type, String keywords, int start,
+		int end, com.liferay.portal.kernel.search.Sort[] sorts)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _commerceOrganizationService.searchOrganizationsByGroup(groupId,
 			userId, type, keywords, start, end, sorts);
@@ -113,11 +110,10 @@ public class CommerceOrganizationServiceWrapper
 
 	@Override
 	public com.liferay.portal.kernel.model.Organization updateOrganization(
-		long organizationId, java.lang.String name, long emailAddressId,
-		java.lang.String address, long addressId, java.lang.String street1,
-		java.lang.String street2, java.lang.String street3,
-		java.lang.String city, java.lang.String zip, long regionId,
-		long countryId, boolean logo, byte[] logoBytes,
+		long organizationId, String name, long emailAddressId, String address,
+		long addressId, String street1, String street2, String street3,
+		String city, String zip, long regionId, long countryId, boolean logo,
+		byte[] logoBytes,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _commerceOrganizationService.updateOrganization(organizationId,

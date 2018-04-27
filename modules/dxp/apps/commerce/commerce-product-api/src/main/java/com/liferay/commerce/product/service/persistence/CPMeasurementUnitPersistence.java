@@ -47,7 +47,7 @@ public interface CPMeasurementUnitPersistence extends BasePersistence<CPMeasurem
 	* @param uuid the uuid
 	* @return the matching cp measurement units
 	*/
-	public java.util.List<CPMeasurementUnit> findByUuid(java.lang.String uuid);
+	public java.util.List<CPMeasurementUnit> findByUuid(String uuid);
 
 	/**
 	* Returns a range of all the cp measurement units where uuid = &#63;.
@@ -61,8 +61,8 @@ public interface CPMeasurementUnitPersistence extends BasePersistence<CPMeasurem
 	* @param end the upper bound of the range of cp measurement units (not inclusive)
 	* @return the range of matching cp measurement units
 	*/
-	public java.util.List<CPMeasurementUnit> findByUuid(java.lang.String uuid,
-		int start, int end);
+	public java.util.List<CPMeasurementUnit> findByUuid(String uuid, int start,
+		int end);
 
 	/**
 	* Returns an ordered range of all the cp measurement units where uuid = &#63;.
@@ -77,8 +77,8 @@ public interface CPMeasurementUnitPersistence extends BasePersistence<CPMeasurem
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching cp measurement units
 	*/
-	public java.util.List<CPMeasurementUnit> findByUuid(java.lang.String uuid,
-		int start, int end,
+	public java.util.List<CPMeasurementUnit> findByUuid(String uuid, int start,
+		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<CPMeasurementUnit> orderByComparator);
 
 	/**
@@ -95,8 +95,8 @@ public interface CPMeasurementUnitPersistence extends BasePersistence<CPMeasurem
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching cp measurement units
 	*/
-	public java.util.List<CPMeasurementUnit> findByUuid(java.lang.String uuid,
-		int start, int end,
+	public java.util.List<CPMeasurementUnit> findByUuid(String uuid, int start,
+		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<CPMeasurementUnit> orderByComparator,
 		boolean retrieveFromCache);
 
@@ -108,7 +108,7 @@ public interface CPMeasurementUnitPersistence extends BasePersistence<CPMeasurem
 	* @return the first matching cp measurement unit
 	* @throws NoSuchCPMeasurementUnitException if a matching cp measurement unit could not be found
 	*/
-	public CPMeasurementUnit findByUuid_First(java.lang.String uuid,
+	public CPMeasurementUnit findByUuid_First(String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<CPMeasurementUnit> orderByComparator)
 		throws NoSuchCPMeasurementUnitException;
 
@@ -119,7 +119,7 @@ public interface CPMeasurementUnitPersistence extends BasePersistence<CPMeasurem
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching cp measurement unit, or <code>null</code> if a matching cp measurement unit could not be found
 	*/
-	public CPMeasurementUnit fetchByUuid_First(java.lang.String uuid,
+	public CPMeasurementUnit fetchByUuid_First(String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<CPMeasurementUnit> orderByComparator);
 
 	/**
@@ -130,7 +130,7 @@ public interface CPMeasurementUnitPersistence extends BasePersistence<CPMeasurem
 	* @return the last matching cp measurement unit
 	* @throws NoSuchCPMeasurementUnitException if a matching cp measurement unit could not be found
 	*/
-	public CPMeasurementUnit findByUuid_Last(java.lang.String uuid,
+	public CPMeasurementUnit findByUuid_Last(String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<CPMeasurementUnit> orderByComparator)
 		throws NoSuchCPMeasurementUnitException;
 
@@ -141,7 +141,7 @@ public interface CPMeasurementUnitPersistence extends BasePersistence<CPMeasurem
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching cp measurement unit, or <code>null</code> if a matching cp measurement unit could not be found
 	*/
-	public CPMeasurementUnit fetchByUuid_Last(java.lang.String uuid,
+	public CPMeasurementUnit fetchByUuid_Last(String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<CPMeasurementUnit> orderByComparator);
 
 	/**
@@ -154,7 +154,7 @@ public interface CPMeasurementUnitPersistence extends BasePersistence<CPMeasurem
 	* @throws NoSuchCPMeasurementUnitException if a cp measurement unit with the primary key could not be found
 	*/
 	public CPMeasurementUnit[] findByUuid_PrevAndNext(
-		long CPMeasurementUnitId, java.lang.String uuid,
+		long CPMeasurementUnitId, String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<CPMeasurementUnit> orderByComparator)
 		throws NoSuchCPMeasurementUnitException;
 
@@ -163,7 +163,7 @@ public interface CPMeasurementUnitPersistence extends BasePersistence<CPMeasurem
 	*
 	* @param uuid the uuid
 	*/
-	public void removeByUuid(java.lang.String uuid);
+	public void removeByUuid(String uuid);
 
 	/**
 	* Returns the number of cp measurement units where uuid = &#63;.
@@ -171,7 +171,7 @@ public interface CPMeasurementUnitPersistence extends BasePersistence<CPMeasurem
 	* @param uuid the uuid
 	* @return the number of matching cp measurement units
 	*/
-	public int countByUuid(java.lang.String uuid);
+	public int countByUuid(String uuid);
 
 	/**
 	* Returns the cp measurement unit where uuid = &#63; and groupId = &#63; or throws a {@link NoSuchCPMeasurementUnitException} if it could not be found.
@@ -181,7 +181,7 @@ public interface CPMeasurementUnitPersistence extends BasePersistence<CPMeasurem
 	* @return the matching cp measurement unit
 	* @throws NoSuchCPMeasurementUnitException if a matching cp measurement unit could not be found
 	*/
-	public CPMeasurementUnit findByUUID_G(java.lang.String uuid, long groupId)
+	public CPMeasurementUnit findByUUID_G(String uuid, long groupId)
 		throws NoSuchCPMeasurementUnitException;
 
 	/**
@@ -191,7 +191,7 @@ public interface CPMeasurementUnitPersistence extends BasePersistence<CPMeasurem
 	* @param groupId the group ID
 	* @return the matching cp measurement unit, or <code>null</code> if a matching cp measurement unit could not be found
 	*/
-	public CPMeasurementUnit fetchByUUID_G(java.lang.String uuid, long groupId);
+	public CPMeasurementUnit fetchByUUID_G(String uuid, long groupId);
 
 	/**
 	* Returns the cp measurement unit where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -201,7 +201,7 @@ public interface CPMeasurementUnitPersistence extends BasePersistence<CPMeasurem
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching cp measurement unit, or <code>null</code> if a matching cp measurement unit could not be found
 	*/
-	public CPMeasurementUnit fetchByUUID_G(java.lang.String uuid, long groupId,
+	public CPMeasurementUnit fetchByUUID_G(String uuid, long groupId,
 		boolean retrieveFromCache);
 
 	/**
@@ -211,7 +211,7 @@ public interface CPMeasurementUnitPersistence extends BasePersistence<CPMeasurem
 	* @param groupId the group ID
 	* @return the cp measurement unit that was removed
 	*/
-	public CPMeasurementUnit removeByUUID_G(java.lang.String uuid, long groupId)
+	public CPMeasurementUnit removeByUUID_G(String uuid, long groupId)
 		throws NoSuchCPMeasurementUnitException;
 
 	/**
@@ -221,7 +221,7 @@ public interface CPMeasurementUnitPersistence extends BasePersistence<CPMeasurem
 	* @param groupId the group ID
 	* @return the number of matching cp measurement units
 	*/
-	public int countByUUID_G(java.lang.String uuid, long groupId);
+	public int countByUUID_G(String uuid, long groupId);
 
 	/**
 	* Returns all the cp measurement units where uuid = &#63; and companyId = &#63;.
@@ -230,8 +230,8 @@ public interface CPMeasurementUnitPersistence extends BasePersistence<CPMeasurem
 	* @param companyId the company ID
 	* @return the matching cp measurement units
 	*/
-	public java.util.List<CPMeasurementUnit> findByUuid_C(
-		java.lang.String uuid, long companyId);
+	public java.util.List<CPMeasurementUnit> findByUuid_C(String uuid,
+		long companyId);
 
 	/**
 	* Returns a range of all the cp measurement units where uuid = &#63; and companyId = &#63;.
@@ -246,8 +246,8 @@ public interface CPMeasurementUnitPersistence extends BasePersistence<CPMeasurem
 	* @param end the upper bound of the range of cp measurement units (not inclusive)
 	* @return the range of matching cp measurement units
 	*/
-	public java.util.List<CPMeasurementUnit> findByUuid_C(
-		java.lang.String uuid, long companyId, int start, int end);
+	public java.util.List<CPMeasurementUnit> findByUuid_C(String uuid,
+		long companyId, int start, int end);
 
 	/**
 	* Returns an ordered range of all the cp measurement units where uuid = &#63; and companyId = &#63;.
@@ -263,8 +263,8 @@ public interface CPMeasurementUnitPersistence extends BasePersistence<CPMeasurem
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching cp measurement units
 	*/
-	public java.util.List<CPMeasurementUnit> findByUuid_C(
-		java.lang.String uuid, long companyId, int start, int end,
+	public java.util.List<CPMeasurementUnit> findByUuid_C(String uuid,
+		long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<CPMeasurementUnit> orderByComparator);
 
 	/**
@@ -282,8 +282,8 @@ public interface CPMeasurementUnitPersistence extends BasePersistence<CPMeasurem
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching cp measurement units
 	*/
-	public java.util.List<CPMeasurementUnit> findByUuid_C(
-		java.lang.String uuid, long companyId, int start, int end,
+	public java.util.List<CPMeasurementUnit> findByUuid_C(String uuid,
+		long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<CPMeasurementUnit> orderByComparator,
 		boolean retrieveFromCache);
 
@@ -296,8 +296,7 @@ public interface CPMeasurementUnitPersistence extends BasePersistence<CPMeasurem
 	* @return the first matching cp measurement unit
 	* @throws NoSuchCPMeasurementUnitException if a matching cp measurement unit could not be found
 	*/
-	public CPMeasurementUnit findByUuid_C_First(java.lang.String uuid,
-		long companyId,
+	public CPMeasurementUnit findByUuid_C_First(String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<CPMeasurementUnit> orderByComparator)
 		throws NoSuchCPMeasurementUnitException;
 
@@ -309,8 +308,7 @@ public interface CPMeasurementUnitPersistence extends BasePersistence<CPMeasurem
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching cp measurement unit, or <code>null</code> if a matching cp measurement unit could not be found
 	*/
-	public CPMeasurementUnit fetchByUuid_C_First(java.lang.String uuid,
-		long companyId,
+	public CPMeasurementUnit fetchByUuid_C_First(String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<CPMeasurementUnit> orderByComparator);
 
 	/**
@@ -322,8 +320,7 @@ public interface CPMeasurementUnitPersistence extends BasePersistence<CPMeasurem
 	* @return the last matching cp measurement unit
 	* @throws NoSuchCPMeasurementUnitException if a matching cp measurement unit could not be found
 	*/
-	public CPMeasurementUnit findByUuid_C_Last(java.lang.String uuid,
-		long companyId,
+	public CPMeasurementUnit findByUuid_C_Last(String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<CPMeasurementUnit> orderByComparator)
 		throws NoSuchCPMeasurementUnitException;
 
@@ -335,8 +332,7 @@ public interface CPMeasurementUnitPersistence extends BasePersistence<CPMeasurem
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching cp measurement unit, or <code>null</code> if a matching cp measurement unit could not be found
 	*/
-	public CPMeasurementUnit fetchByUuid_C_Last(java.lang.String uuid,
-		long companyId,
+	public CPMeasurementUnit fetchByUuid_C_Last(String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<CPMeasurementUnit> orderByComparator);
 
 	/**
@@ -350,7 +346,7 @@ public interface CPMeasurementUnitPersistence extends BasePersistence<CPMeasurem
 	* @throws NoSuchCPMeasurementUnitException if a cp measurement unit with the primary key could not be found
 	*/
 	public CPMeasurementUnit[] findByUuid_C_PrevAndNext(
-		long CPMeasurementUnitId, java.lang.String uuid, long companyId,
+		long CPMeasurementUnitId, String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<CPMeasurementUnit> orderByComparator)
 		throws NoSuchCPMeasurementUnitException;
 
@@ -360,7 +356,7 @@ public interface CPMeasurementUnitPersistence extends BasePersistence<CPMeasurem
 	* @param uuid the uuid
 	* @param companyId the company ID
 	*/
-	public void removeByUuid_C(java.lang.String uuid, long companyId);
+	public void removeByUuid_C(String uuid, long companyId);
 
 	/**
 	* Returns the number of cp measurement units where uuid = &#63; and companyId = &#63;.
@@ -369,7 +365,7 @@ public interface CPMeasurementUnitPersistence extends BasePersistence<CPMeasurem
 	* @param companyId the company ID
 	* @return the number of matching cp measurement units
 	*/
-	public int countByUuid_C(java.lang.String uuid, long companyId);
+	public int countByUuid_C(String uuid, long companyId);
 
 	/**
 	* Returns all the cp measurement units where groupId = &#63;.
@@ -655,8 +651,8 @@ public interface CPMeasurementUnitPersistence extends BasePersistence<CPMeasurem
 	* @return the matching cp measurement unit
 	* @throws NoSuchCPMeasurementUnitException if a matching cp measurement unit could not be found
 	*/
-	public CPMeasurementUnit findByG_K_T(long groupId, java.lang.String key,
-		int type) throws NoSuchCPMeasurementUnitException;
+	public CPMeasurementUnit findByG_K_T(long groupId, String key, int type)
+		throws NoSuchCPMeasurementUnitException;
 
 	/**
 	* Returns the cp measurement unit where groupId = &#63; and key = &#63; and type = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
@@ -666,8 +662,7 @@ public interface CPMeasurementUnitPersistence extends BasePersistence<CPMeasurem
 	* @param type the type
 	* @return the matching cp measurement unit, or <code>null</code> if a matching cp measurement unit could not be found
 	*/
-	public CPMeasurementUnit fetchByG_K_T(long groupId, java.lang.String key,
-		int type);
+	public CPMeasurementUnit fetchByG_K_T(long groupId, String key, int type);
 
 	/**
 	* Returns the cp measurement unit where groupId = &#63; and key = &#63; and type = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -678,8 +673,8 @@ public interface CPMeasurementUnitPersistence extends BasePersistence<CPMeasurem
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching cp measurement unit, or <code>null</code> if a matching cp measurement unit could not be found
 	*/
-	public CPMeasurementUnit fetchByG_K_T(long groupId, java.lang.String key,
-		int type, boolean retrieveFromCache);
+	public CPMeasurementUnit fetchByG_K_T(long groupId, String key, int type,
+		boolean retrieveFromCache);
 
 	/**
 	* Removes the cp measurement unit where groupId = &#63; and key = &#63; and type = &#63; from the database.
@@ -689,8 +684,8 @@ public interface CPMeasurementUnitPersistence extends BasePersistence<CPMeasurem
 	* @param type the type
 	* @return the cp measurement unit that was removed
 	*/
-	public CPMeasurementUnit removeByG_K_T(long groupId, java.lang.String key,
-		int type) throws NoSuchCPMeasurementUnitException;
+	public CPMeasurementUnit removeByG_K_T(long groupId, String key, int type)
+		throws NoSuchCPMeasurementUnitException;
 
 	/**
 	* Returns the number of cp measurement units where groupId = &#63; and key = &#63; and type = &#63;.
@@ -700,7 +695,7 @@ public interface CPMeasurementUnitPersistence extends BasePersistence<CPMeasurem
 	* @param type the type
 	* @return the number of matching cp measurement units
 	*/
-	public int countByG_K_T(long groupId, java.lang.String key, int type);
+	public int countByG_K_T(long groupId, String key, int type);
 
 	/**
 	* Returns all the cp measurement units where groupId = &#63; and primary = &#63; and type = &#63;.
@@ -983,5 +978,5 @@ public interface CPMeasurementUnitPersistence extends BasePersistence<CPMeasurem
 	public int countAll();
 
 	@Override
-	public java.util.Set<java.lang.String> getBadColumnNames();
+	public java.util.Set<String> getBadColumnNames();
 }

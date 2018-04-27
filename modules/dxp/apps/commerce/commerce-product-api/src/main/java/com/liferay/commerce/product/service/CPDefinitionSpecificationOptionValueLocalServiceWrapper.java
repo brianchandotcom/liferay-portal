@@ -50,8 +50,7 @@ public class CPDefinitionSpecificationOptionValueLocalServiceWrapper
 	public com.liferay.commerce.product.model.CPDefinitionSpecificationOptionValue addCPDefinitionSpecificationOptionValue(
 		long cpDefinitionId, long cpSpecificationOptionId,
 		long cpOptionCategoryId,
-		java.util.Map<java.util.Locale, java.lang.String> valueMap,
-		double priority,
+		java.util.Map<java.util.Locale, String> valueMap, double priority,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _cpDefinitionSpecificationOptionValueLocalService.addCPDefinitionSpecificationOptionValue(cpDefinitionId,
@@ -226,7 +225,7 @@ public class CPDefinitionSpecificationOptionValueLocalServiceWrapper
 	*/
 	@Override
 	public com.liferay.commerce.product.model.CPDefinitionSpecificationOptionValue fetchCPDefinitionSpecificationOptionValueByUuidAndGroupId(
-		java.lang.String uuid, long groupId) {
+		String uuid, long groupId) {
 		return _cpDefinitionSpecificationOptionValueLocalService.fetchCPDefinitionSpecificationOptionValueByUuidAndGroupId(uuid,
 			groupId);
 	}
@@ -260,7 +259,7 @@ public class CPDefinitionSpecificationOptionValueLocalServiceWrapper
 	*/
 	@Override
 	public com.liferay.commerce.product.model.CPDefinitionSpecificationOptionValue getCPDefinitionSpecificationOptionValueByUuidAndGroupId(
-		java.lang.String uuid, long groupId)
+		String uuid, long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _cpDefinitionSpecificationOptionValueLocalService.getCPDefinitionSpecificationOptionValueByUuidAndGroupId(uuid,
 			groupId);
@@ -306,7 +305,7 @@ public class CPDefinitionSpecificationOptionValueLocalServiceWrapper
 	*/
 	@Override
 	public java.util.List<com.liferay.commerce.product.model.CPDefinitionSpecificationOptionValue> getCPDefinitionSpecificationOptionValuesByUuidAndCompanyId(
-		java.lang.String uuid, long companyId) {
+		String uuid, long companyId) {
 		return _cpDefinitionSpecificationOptionValueLocalService.getCPDefinitionSpecificationOptionValuesByUuidAndCompanyId(uuid,
 			companyId);
 	}
@@ -323,7 +322,7 @@ public class CPDefinitionSpecificationOptionValueLocalServiceWrapper
 	*/
 	@Override
 	public java.util.List<com.liferay.commerce.product.model.CPDefinitionSpecificationOptionValue> getCPDefinitionSpecificationOptionValuesByUuidAndCompanyId(
-		java.lang.String uuid, long companyId, int start, int end,
+		String uuid, long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.product.model.CPDefinitionSpecificationOptionValue> orderByComparator) {
 		return _cpDefinitionSpecificationOptionValueLocalService.getCPDefinitionSpecificationOptionValuesByUuidAndCompanyId(uuid,
 			companyId, start, end, orderByComparator);
@@ -356,7 +355,7 @@ public class CPDefinitionSpecificationOptionValueLocalServiceWrapper
 	* @return the OSGi service identifier
 	*/
 	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
+	public String getOSGiServiceIdentifier() {
 		return _cpDefinitionSpecificationOptionValueLocalService.getOSGiServiceIdentifier();
 	}
 
@@ -382,8 +381,7 @@ public class CPDefinitionSpecificationOptionValueLocalServiceWrapper
 	@Override
 	public com.liferay.commerce.product.model.CPDefinitionSpecificationOptionValue updateCPDefinitionSpecificationOptionValue(
 		long cpDefinitionSpecificationOptionValueId, long cpOptionCategoryId,
-		java.util.Map<java.util.Locale, java.lang.String> valueMap,
-		double priority,
+		java.util.Map<java.util.Locale, String> valueMap, double priority,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _cpDefinitionSpecificationOptionValueLocalService.updateCPDefinitionSpecificationOptionValue(cpDefinitionSpecificationOptionValueId,

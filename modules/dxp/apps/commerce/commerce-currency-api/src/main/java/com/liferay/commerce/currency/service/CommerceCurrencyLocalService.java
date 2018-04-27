@@ -81,11 +81,10 @@ public interface CommerceCurrencyLocalService extends BaseLocalService,
 	public CommerceCurrency addCommerceCurrency(
 		CommerceCurrency commerceCurrency);
 
-	public CommerceCurrency addCommerceCurrency(java.lang.String code,
-		Map<Locale, java.lang.String> nameMap, BigDecimal rate,
-		java.lang.String roundingType, boolean primary, double priority,
-		boolean active, ServiceContext serviceContext)
-		throws PortalException;
+	public CommerceCurrency addCommerceCurrency(String code,
+		Map<Locale, String> nameMap, BigDecimal rate, String roundingType,
+		boolean primary, double priority, boolean active,
+		ServiceContext serviceContext) throws PortalException;
 
 	/**
 	* Creates a new commerce currency with the primary key. Does not add the commerce currency to the database.
@@ -197,8 +196,8 @@ public interface CommerceCurrencyLocalService extends BaseLocalService,
 	* @return the matching commerce currency, or <code>null</code> if a matching commerce currency could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CommerceCurrency fetchCommerceCurrencyByUuidAndGroupId(
-		java.lang.String uuid, long groupId);
+	public CommerceCurrency fetchCommerceCurrencyByUuidAndGroupId(String uuid,
+		long groupId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CommerceCurrency fetchPrimaryCommerceCurrency(long groupId);
@@ -243,7 +242,7 @@ public interface CommerceCurrencyLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommerceCurrency> getCommerceCurrenciesByUuidAndCompanyId(
-		java.lang.String uuid, long companyId);
+		String uuid, long companyId);
 
 	/**
 	* Returns a range of commerce currencies matching the UUID and company.
@@ -257,7 +256,7 @@ public interface CommerceCurrencyLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommerceCurrency> getCommerceCurrenciesByUuidAndCompanyId(
-		java.lang.String uuid, long companyId, int start, int end,
+		String uuid, long companyId, int start, int end,
 		OrderByComparator<CommerceCurrency> orderByComparator);
 
 	/**
@@ -294,8 +293,8 @@ public interface CommerceCurrencyLocalService extends BaseLocalService,
 	* @throws PortalException if a matching commerce currency could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CommerceCurrency getCommerceCurrencyByUuidAndGroupId(
-		java.lang.String uuid, long groupId) throws PortalException;
+	public CommerceCurrency getCommerceCurrencyByUuidAndGroupId(String uuid,
+		long groupId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
@@ -309,7 +308,7 @@ public interface CommerceCurrencyLocalService extends BaseLocalService,
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -317,7 +316,7 @@ public interface CommerceCurrencyLocalService extends BaseLocalService,
 		throws PortalException;
 
 	public void importDefaultValues(ServiceContext serviceContext)
-		throws java.lang.Exception;
+		throws Exception;
 
 	public CommerceCurrency setActive(long commerceCurrencyId, boolean active)
 		throws PortalException;
@@ -336,16 +335,15 @@ public interface CommerceCurrencyLocalService extends BaseLocalService,
 		CommerceCurrency commerceCurrency);
 
 	public CommerceCurrency updateCommerceCurrency(long commerceCurrencyId,
-		java.lang.String code, Map<Locale, java.lang.String> nameMap,
-		BigDecimal rate, java.lang.String roundingType, boolean primary,
-		double priority, boolean active, ServiceContext serviceContext)
-		throws PortalException;
+		String code, Map<Locale, String> nameMap, BigDecimal rate,
+		String roundingType, boolean primary, double priority, boolean active,
+		ServiceContext serviceContext) throws PortalException;
 
 	public CommerceCurrency updateCommerceCurrencyRate(
 		long commerceCurrencyId, BigDecimal rate) throws PortalException;
 
 	public void updateExchangeRate(long commerceCurrencyId,
-		java.lang.String exchangeRateProviderKey) throws PortalException;
+		String exchangeRateProviderKey) throws PortalException;
 
 	public void updateExchangeRates() throws PortalException;
 }

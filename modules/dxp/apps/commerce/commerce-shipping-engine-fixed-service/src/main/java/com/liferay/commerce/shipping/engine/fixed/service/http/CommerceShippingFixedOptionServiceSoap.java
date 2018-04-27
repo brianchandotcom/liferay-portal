@@ -70,10 +70,9 @@ import java.util.Map;
 @ProviderType
 public class CommerceShippingFixedOptionServiceSoap {
 	public static com.liferay.commerce.shipping.engine.fixed.model.CommerceShippingFixedOptionSoap addCommerceShippingFixedOption(
-		long commerceShippingMethodId, java.lang.String[] nameMapLanguageIds,
-		java.lang.String[] nameMapValues,
-		java.lang.String[] descriptionMapLanguageIds,
-		java.lang.String[] descriptionMapValues, java.math.BigDecimal amount,
+		long commerceShippingMethodId, String[] nameMapLanguageIds,
+		String[] nameMapValues, String[] descriptionMapLanguageIds,
+		String[] descriptionMapValues, java.math.BigDecimal amount,
 		double priority,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
@@ -173,11 +172,9 @@ public class CommerceShippingFixedOptionServiceSoap {
 	}
 
 	public static com.liferay.commerce.shipping.engine.fixed.model.CommerceShippingFixedOptionSoap updateCommerceShippingFixedOption(
-		long commerceShippingFixedOptionId,
-		java.lang.String[] nameMapLanguageIds,
-		java.lang.String[] nameMapValues,
-		java.lang.String[] descriptionMapLanguageIds,
-		java.lang.String[] descriptionMapValues, java.math.BigDecimal amount,
+		long commerceShippingFixedOptionId, String[] nameMapLanguageIds,
+		String[] nameMapValues, String[] descriptionMapLanguageIds,
+		String[] descriptionMapValues, java.math.BigDecimal amount,
 		double priority) throws RemoteException {
 		try {
 			Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(nameMapLanguageIds,

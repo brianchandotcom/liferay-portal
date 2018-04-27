@@ -44,9 +44,9 @@ public class CPSpecificationOptionServiceUtil {
 	 */
 	public static com.liferay.commerce.product.model.CPSpecificationOption addCPSpecificationOption(
 		long cpOptionCategoryId,
-		java.util.Map<java.util.Locale, java.lang.String> titleMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		boolean facetable, java.lang.String key,
+		java.util.Map<java.util.Locale, String> titleMap,
+		java.util.Map<java.util.Locale, String> descriptionMap,
+		boolean facetable, String key,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
@@ -83,13 +83,13 @@ public class CPSpecificationOptionServiceUtil {
 	*
 	* @return the OSGi service identifier
 	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
+	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 
 	public static com.liferay.portal.kernel.search.BaseModelSearchResult<com.liferay.commerce.product.model.CPSpecificationOption> searchCPSpecificationOptions(
-		long companyId, long groupId, java.lang.String keywords, int start,
-		int end, com.liferay.portal.kernel.search.Sort sort)
+		long companyId, long groupId, String keywords, int start, int end,
+		com.liferay.portal.kernel.search.Sort sort)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .searchCPSpecificationOptions(companyId, groupId, keywords,
@@ -98,9 +98,9 @@ public class CPSpecificationOptionServiceUtil {
 
 	public static com.liferay.commerce.product.model.CPSpecificationOption updateCPSpecificationOption(
 		long cpSpecificationOptionId, long cpOptionCategoryId,
-		java.util.Map<java.util.Locale, java.lang.String> titleMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		boolean facetable, java.lang.String key,
+		java.util.Map<java.util.Locale, String> titleMap,
+		java.util.Map<java.util.Locale, String> descriptionMap,
+		boolean facetable, String key,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()

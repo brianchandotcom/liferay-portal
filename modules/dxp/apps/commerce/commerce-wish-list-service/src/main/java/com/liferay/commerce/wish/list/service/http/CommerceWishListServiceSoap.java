@@ -66,7 +66,7 @@ import java.rmi.RemoteException;
 @ProviderType
 public class CommerceWishListServiceSoap {
 	public static com.liferay.commerce.wish.list.model.CommerceWishListSoap addCommerceWishList(
-		java.lang.String name, boolean defaultWishList,
+		String name, boolean defaultWishList,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
@@ -174,7 +174,7 @@ public class CommerceWishListServiceSoap {
 	}
 
 	public static com.liferay.commerce.wish.list.model.CommerceWishListSoap updateCommerceWishList(
-		long commerceWishListId, java.lang.String name, boolean defaultWishList)
+		long commerceWishListId, String name, boolean defaultWishList)
 		throws RemoteException {
 		try {
 			com.liferay.commerce.wish.list.model.CommerceWishList returnValue = CommerceWishListServiceUtil.updateCommerceWishList(commerceWishListId,

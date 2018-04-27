@@ -83,16 +83,15 @@ public interface CommerceDiscountLocalService extends BaseLocalService,
 		CommerceDiscount commerceDiscount);
 
 	@Indexable(type = IndexableType.REINDEX)
-	public CommerceDiscount addCommerceDiscount(java.lang.String title,
-		java.lang.String target, java.lang.String type,
-		java.lang.String typeSettings, boolean useCouponCode,
-		java.lang.String couponCode, java.lang.String limitationType,
-		int limitationTimes, int numberOfUse, boolean cumulative,
-		boolean usePercentage, BigDecimal level1, BigDecimal level2,
-		BigDecimal level3, BigDecimal maximumDiscountAmount, boolean active,
-		int displayDateMonth, int displayDateDay, int displayDateYear,
-		int displayDateHour, int displayDateMinute, int expirationDateMonth,
-		int expirationDateDay, int expirationDateYear, int expirationDateHour,
+	public CommerceDiscount addCommerceDiscount(String title, String target,
+		String type, String typeSettings, boolean useCouponCode,
+		String couponCode, String limitationType, int limitationTimes,
+		int numberOfUse, boolean cumulative, boolean usePercentage,
+		BigDecimal level1, BigDecimal level2, BigDecimal level3,
+		BigDecimal maximumDiscountAmount, boolean active, int displayDateMonth,
+		int displayDateDay, int displayDateYear, int displayDateHour,
+		int displayDateMinute, int expirationDateMonth, int expirationDateDay,
+		int expirationDateYear, int expirationDateHour,
 		int expirationDateMinute, boolean neverExpire,
 		ServiceContext serviceContext) throws PortalException;
 
@@ -209,8 +208,8 @@ public interface CommerceDiscountLocalService extends BaseLocalService,
 	* @return the matching commerce discount, or <code>null</code> if a matching commerce discount could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CommerceDiscount fetchCommerceDiscountByUuidAndGroupId(
-		java.lang.String uuid, long groupId);
+	public CommerceDiscount fetchCommerceDiscountByUuidAndGroupId(String uuid,
+		long groupId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
@@ -235,8 +234,8 @@ public interface CommerceDiscountLocalService extends BaseLocalService,
 	* @throws PortalException if a matching commerce discount could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CommerceDiscount getCommerceDiscountByUuidAndGroupId(
-		java.lang.String uuid, long groupId) throws PortalException;
+	public CommerceDiscount getCommerceDiscountByUuidAndGroupId(String uuid,
+		long groupId) throws PortalException;
 
 	/**
 	* Returns a range of all the commerce discounts.
@@ -261,7 +260,7 @@ public interface CommerceDiscountLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommerceDiscount> getCommerceDiscountsByUuidAndCompanyId(
-		java.lang.String uuid, long companyId);
+		String uuid, long companyId);
 
 	/**
 	* Returns a range of commerce discounts matching the UUID and company.
@@ -275,7 +274,7 @@ public interface CommerceDiscountLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommerceDiscount> getCommerceDiscountsByUuidAndCompanyId(
-		java.lang.String uuid, long companyId, int start, int end,
+		String uuid, long companyId, int start, int end,
 		OrderByComparator<CommerceDiscount> orderByComparator);
 
 	/**
@@ -298,7 +297,7 @@ public interface CommerceDiscountLocalService extends BaseLocalService,
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -307,8 +306,8 @@ public interface CommerceDiscountLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public BaseModelSearchResult<CommerceDiscount> searchCommerceDiscounts(
-		long companyId, long groupId, java.lang.String keywords, int status,
-		int start, int end, Sort sort) throws PortalException;
+		long companyId, long groupId, String keywords, int status, int start,
+		int end, Sort sort) throws PortalException;
 
 	/**
 	* Updates the commerce discount in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
@@ -322,9 +321,8 @@ public interface CommerceDiscountLocalService extends BaseLocalService,
 
 	@Indexable(type = IndexableType.REINDEX)
 	public CommerceDiscount updateCommerceDiscount(long commerceDiscountId,
-		java.lang.String title, java.lang.String target, java.lang.String type,
-		java.lang.String typeSettings, boolean useCouponCode,
-		java.lang.String couponCode, java.lang.String limitationType,
+		String title, String target, String type, String typeSettings,
+		boolean useCouponCode, String couponCode, String limitationType,
 		int limitationTimes, int numberOfUse, boolean cumulative,
 		boolean usePercentage, BigDecimal level1, BigDecimal level2,
 		BigDecimal level3, BigDecimal maximumDiscountAmount, boolean active,
@@ -337,6 +335,5 @@ public interface CommerceDiscountLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.REINDEX)
 	public CommerceDiscount updateStatus(long userId, long commerceDiscountId,
 		int status, ServiceContext serviceContext,
-		Map<java.lang.String, Serializable> workflowContext)
-		throws PortalException;
+		Map<String, Serializable> workflowContext) throws PortalException;
 }

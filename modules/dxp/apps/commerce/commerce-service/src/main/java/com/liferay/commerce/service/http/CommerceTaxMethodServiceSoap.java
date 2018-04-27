@@ -70,11 +70,9 @@ import java.util.Map;
 @ProviderType
 public class CommerceTaxMethodServiceSoap {
 	public static com.liferay.commerce.model.CommerceTaxMethodSoap addCommerceTaxMethod(
-		java.lang.String[] nameMapLanguageIds,
-		java.lang.String[] nameMapValues,
-		java.lang.String[] descriptionMapLanguageIds,
-		java.lang.String[] descriptionMapValues, java.lang.String engineKey,
-		boolean percentage, boolean active,
+		String[] nameMapLanguageIds, String[] nameMapValues,
+		String[] descriptionMapLanguageIds, String[] descriptionMapValues,
+		String engineKey, boolean percentage, boolean active,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
@@ -123,7 +121,7 @@ public class CommerceTaxMethodServiceSoap {
 	}
 
 	public static com.liferay.commerce.model.CommerceTaxMethodSoap fetchCommerceTaxMethod(
-		long groupId, java.lang.String engineKey) throws RemoteException {
+		long groupId, String engineKey) throws RemoteException {
 		try {
 			com.liferay.commerce.model.CommerceTaxMethod returnValue = CommerceTaxMethodServiceUtil.fetchCommerceTaxMethod(groupId,
 					engineKey);
@@ -213,11 +211,10 @@ public class CommerceTaxMethodServiceSoap {
 	}
 
 	public static com.liferay.commerce.model.CommerceTaxMethodSoap updateCommerceTaxMethod(
-		long commerceTaxMethodId, java.lang.String[] nameMapLanguageIds,
-		java.lang.String[] nameMapValues,
-		java.lang.String[] descriptionMapLanguageIds,
-		java.lang.String[] descriptionMapValues, boolean percentage,
-		boolean active) throws RemoteException {
+		long commerceTaxMethodId, String[] nameMapLanguageIds,
+		String[] nameMapValues, String[] descriptionMapLanguageIds,
+		String[] descriptionMapValues, boolean percentage, boolean active)
+		throws RemoteException {
 		try {
 			Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(nameMapLanguageIds,
 					nameMapValues);

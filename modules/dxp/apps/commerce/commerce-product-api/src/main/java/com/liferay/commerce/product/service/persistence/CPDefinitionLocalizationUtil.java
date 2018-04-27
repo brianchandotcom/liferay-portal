@@ -294,7 +294,7 @@ public class CPDefinitionLocalizationUtil {
 	* @throws NoSuchCPDefinitionLocalizationException if a matching cp definition localization could not be found
 	*/
 	public static CPDefinitionLocalization findByCPDefinitionId_LanguageId(
-		long CPDefinitionId, java.lang.String languageId)
+		long CPDefinitionId, String languageId)
 		throws com.liferay.commerce.product.exception.NoSuchCPDefinitionLocalizationException {
 		return getPersistence()
 				   .findByCPDefinitionId_LanguageId(CPDefinitionId, languageId);
@@ -308,7 +308,7 @@ public class CPDefinitionLocalizationUtil {
 	* @return the matching cp definition localization, or <code>null</code> if a matching cp definition localization could not be found
 	*/
 	public static CPDefinitionLocalization fetchByCPDefinitionId_LanguageId(
-		long CPDefinitionId, java.lang.String languageId) {
+		long CPDefinitionId, String languageId) {
 		return getPersistence()
 				   .fetchByCPDefinitionId_LanguageId(CPDefinitionId, languageId);
 	}
@@ -322,8 +322,7 @@ public class CPDefinitionLocalizationUtil {
 	* @return the matching cp definition localization, or <code>null</code> if a matching cp definition localization could not be found
 	*/
 	public static CPDefinitionLocalization fetchByCPDefinitionId_LanguageId(
-		long CPDefinitionId, java.lang.String languageId,
-		boolean retrieveFromCache) {
+		long CPDefinitionId, String languageId, boolean retrieveFromCache) {
 		return getPersistence()
 				   .fetchByCPDefinitionId_LanguageId(CPDefinitionId,
 			languageId, retrieveFromCache);
@@ -337,7 +336,7 @@ public class CPDefinitionLocalizationUtil {
 	* @return the cp definition localization that was removed
 	*/
 	public static CPDefinitionLocalization removeByCPDefinitionId_LanguageId(
-		long CPDefinitionId, java.lang.String languageId)
+		long CPDefinitionId, String languageId)
 		throws com.liferay.commerce.product.exception.NoSuchCPDefinitionLocalizationException {
 		return getPersistence()
 				   .removeByCPDefinitionId_LanguageId(CPDefinitionId, languageId);
@@ -351,7 +350,7 @@ public class CPDefinitionLocalizationUtil {
 	* @return the number of matching cp definition localizations
 	*/
 	public static int countByCPDefinitionId_LanguageId(long CPDefinitionId,
-		java.lang.String languageId) {
+		String languageId) {
 		return getPersistence()
 				   .countByCPDefinitionId_LanguageId(CPDefinitionId, languageId);
 	}

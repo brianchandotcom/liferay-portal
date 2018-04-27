@@ -224,7 +224,7 @@ public class CPAttachmentFileEntryWrapper implements CPAttachmentFileEntry,
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new CPAttachmentFileEntryWrapper((CPAttachmentFileEntry)_cpAttachmentFileEntry.clone());
 	}
 
@@ -234,7 +234,7 @@ public class CPAttachmentFileEntryWrapper implements CPAttachmentFileEntry,
 	}
 
 	@Override
-	public java.lang.String[] getAvailableLanguageIds() {
+	public String[] getAvailableLanguageIds() {
 		return _cpAttachmentFileEntry.getAvailableLanguageIds();
 	}
 
@@ -244,7 +244,7 @@ public class CPAttachmentFileEntryWrapper implements CPAttachmentFileEntry,
 	* @return the fully qualified class name of this cp attachment file entry
 	*/
 	@Override
-	public java.lang.String getClassName() {
+	public String getClassName() {
 		return _cpAttachmentFileEntry.getClassName();
 	}
 
@@ -299,7 +299,7 @@ public class CPAttachmentFileEntryWrapper implements CPAttachmentFileEntry,
 	}
 
 	@Override
-	public java.lang.String getDefaultLanguageId() {
+	public String getDefaultLanguageId() {
 		return _cpAttachmentFileEntry.getDefaultLanguageId();
 	}
 
@@ -360,7 +360,7 @@ public class CPAttachmentFileEntryWrapper implements CPAttachmentFileEntry,
 	* @return the json of this cp attachment file entry
 	*/
 	@Override
-	public java.lang.String getJson() {
+	public String getJson() {
 		return _cpAttachmentFileEntry.getJson();
 	}
 
@@ -435,7 +435,7 @@ public class CPAttachmentFileEntryWrapper implements CPAttachmentFileEntry,
 	* @return the status by user name of this cp attachment file entry
 	*/
 	@Override
-	public java.lang.String getStatusByUserName() {
+	public String getStatusByUserName() {
 		return _cpAttachmentFileEntry.getStatusByUserName();
 	}
 
@@ -445,7 +445,7 @@ public class CPAttachmentFileEntryWrapper implements CPAttachmentFileEntry,
 	* @return the status by user uuid of this cp attachment file entry
 	*/
 	@Override
-	public java.lang.String getStatusByUserUuid() {
+	public String getStatusByUserUuid() {
 		return _cpAttachmentFileEntry.getStatusByUserUuid();
 	}
 
@@ -465,7 +465,7 @@ public class CPAttachmentFileEntryWrapper implements CPAttachmentFileEntry,
 	* @return the title of this cp attachment file entry
 	*/
 	@Override
-	public java.lang.String getTitle() {
+	public String getTitle() {
 		return _cpAttachmentFileEntry.getTitle();
 	}
 
@@ -476,7 +476,7 @@ public class CPAttachmentFileEntryWrapper implements CPAttachmentFileEntry,
 	* @return the localized title of this cp attachment file entry
 	*/
 	@Override
-	public java.lang.String getTitle(java.util.Locale locale) {
+	public String getTitle(java.util.Locale locale) {
 		return _cpAttachmentFileEntry.getTitle(locale);
 	}
 
@@ -488,7 +488,7 @@ public class CPAttachmentFileEntryWrapper implements CPAttachmentFileEntry,
 	* @return the localized title of this cp attachment file entry. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
 	*/
 	@Override
-	public java.lang.String getTitle(java.util.Locale locale, boolean useDefault) {
+	public String getTitle(java.util.Locale locale, boolean useDefault) {
 		return _cpAttachmentFileEntry.getTitle(locale, useDefault);
 	}
 
@@ -499,7 +499,7 @@ public class CPAttachmentFileEntryWrapper implements CPAttachmentFileEntry,
 	* @return the localized title of this cp attachment file entry
 	*/
 	@Override
-	public java.lang.String getTitle(java.lang.String languageId) {
+	public String getTitle(String languageId) {
 		return _cpAttachmentFileEntry.getTitle(languageId);
 	}
 
@@ -511,18 +511,17 @@ public class CPAttachmentFileEntryWrapper implements CPAttachmentFileEntry,
 	* @return the localized title of this cp attachment file entry
 	*/
 	@Override
-	public java.lang.String getTitle(java.lang.String languageId,
-		boolean useDefault) {
+	public String getTitle(String languageId, boolean useDefault) {
 		return _cpAttachmentFileEntry.getTitle(languageId, useDefault);
 	}
 
 	@Override
-	public java.lang.String getTitleCurrentLanguageId() {
+	public String getTitleCurrentLanguageId() {
 		return _cpAttachmentFileEntry.getTitleCurrentLanguageId();
 	}
 
 	@Override
-	public java.lang.String getTitleCurrentValue() {
+	public String getTitleCurrentValue() {
 		return _cpAttachmentFileEntry.getTitleCurrentValue();
 	}
 
@@ -532,7 +531,7 @@ public class CPAttachmentFileEntryWrapper implements CPAttachmentFileEntry,
 	* @return the locales and localized titles of this cp attachment file entry
 	*/
 	@Override
-	public Map<java.util.Locale, java.lang.String> getTitleMap() {
+	public Map<java.util.Locale, String> getTitleMap() {
 		return _cpAttachmentFileEntry.getTitleMap();
 	}
 
@@ -562,7 +561,7 @@ public class CPAttachmentFileEntryWrapper implements CPAttachmentFileEntry,
 	* @return the user name of this cp attachment file entry
 	*/
 	@Override
-	public java.lang.String getUserName() {
+	public String getUserName() {
 		return _cpAttachmentFileEntry.getUserName();
 	}
 
@@ -572,7 +571,7 @@ public class CPAttachmentFileEntryWrapper implements CPAttachmentFileEntry,
 	* @return the user uuid of this cp attachment file entry
 	*/
 	@Override
-	public java.lang.String getUserUuid() {
+	public String getUserUuid() {
 		return _cpAttachmentFileEntry.getUserUuid();
 	}
 
@@ -582,7 +581,7 @@ public class CPAttachmentFileEntryWrapper implements CPAttachmentFileEntry,
 	* @return the uuid of this cp attachment file entry
 	*/
 	@Override
-	public java.lang.String getUuid() {
+	public String getUuid() {
 		return _cpAttachmentFileEntry.getUuid();
 	}
 
@@ -710,7 +709,7 @@ public class CPAttachmentFileEntryWrapper implements CPAttachmentFileEntry,
 	}
 
 	@Override
-	public void setClassName(java.lang.String className) {
+	public void setClassName(String className) {
 		_cpAttachmentFileEntry.setClassName(className);
 	}
 
@@ -826,7 +825,7 @@ public class CPAttachmentFileEntryWrapper implements CPAttachmentFileEntry,
 	* @param json the json of this cp attachment file entry
 	*/
 	@Override
-	public void setJson(java.lang.String json) {
+	public void setJson(String json) {
 		_cpAttachmentFileEntry.setJson(json);
 	}
 
@@ -906,7 +905,7 @@ public class CPAttachmentFileEntryWrapper implements CPAttachmentFileEntry,
 	* @param statusByUserName the status by user name of this cp attachment file entry
 	*/
 	@Override
-	public void setStatusByUserName(java.lang.String statusByUserName) {
+	public void setStatusByUserName(String statusByUserName) {
 		_cpAttachmentFileEntry.setStatusByUserName(statusByUserName);
 	}
 
@@ -916,7 +915,7 @@ public class CPAttachmentFileEntryWrapper implements CPAttachmentFileEntry,
 	* @param statusByUserUuid the status by user uuid of this cp attachment file entry
 	*/
 	@Override
-	public void setStatusByUserUuid(java.lang.String statusByUserUuid) {
+	public void setStatusByUserUuid(String statusByUserUuid) {
 		_cpAttachmentFileEntry.setStatusByUserUuid(statusByUserUuid);
 	}
 
@@ -936,7 +935,7 @@ public class CPAttachmentFileEntryWrapper implements CPAttachmentFileEntry,
 	* @param title the title of this cp attachment file entry
 	*/
 	@Override
-	public void setTitle(java.lang.String title) {
+	public void setTitle(String title) {
 		_cpAttachmentFileEntry.setTitle(title);
 	}
 
@@ -947,7 +946,7 @@ public class CPAttachmentFileEntryWrapper implements CPAttachmentFileEntry,
 	* @param locale the locale of the language
 	*/
 	@Override
-	public void setTitle(java.lang.String title, java.util.Locale locale) {
+	public void setTitle(String title, java.util.Locale locale) {
 		_cpAttachmentFileEntry.setTitle(title, locale);
 	}
 
@@ -959,13 +958,13 @@ public class CPAttachmentFileEntryWrapper implements CPAttachmentFileEntry,
 	* @param defaultLocale the default locale
 	*/
 	@Override
-	public void setTitle(java.lang.String title, java.util.Locale locale,
+	public void setTitle(String title, java.util.Locale locale,
 		java.util.Locale defaultLocale) {
 		_cpAttachmentFileEntry.setTitle(title, locale, defaultLocale);
 	}
 
 	@Override
-	public void setTitleCurrentLanguageId(java.lang.String languageId) {
+	public void setTitleCurrentLanguageId(String languageId) {
 		_cpAttachmentFileEntry.setTitleCurrentLanguageId(languageId);
 	}
 
@@ -975,7 +974,7 @@ public class CPAttachmentFileEntryWrapper implements CPAttachmentFileEntry,
 	* @param titleMap the locales and localized titles of this cp attachment file entry
 	*/
 	@Override
-	public void setTitleMap(Map<java.util.Locale, java.lang.String> titleMap) {
+	public void setTitleMap(Map<java.util.Locale, String> titleMap) {
 		_cpAttachmentFileEntry.setTitleMap(titleMap);
 	}
 
@@ -986,7 +985,7 @@ public class CPAttachmentFileEntryWrapper implements CPAttachmentFileEntry,
 	* @param defaultLocale the default locale
 	*/
 	@Override
-	public void setTitleMap(Map<java.util.Locale, java.lang.String> titleMap,
+	public void setTitleMap(Map<java.util.Locale, String> titleMap,
 		java.util.Locale defaultLocale) {
 		_cpAttachmentFileEntry.setTitleMap(titleMap, defaultLocale);
 	}
@@ -1017,7 +1016,7 @@ public class CPAttachmentFileEntryWrapper implements CPAttachmentFileEntry,
 	* @param userName the user name of this cp attachment file entry
 	*/
 	@Override
-	public void setUserName(java.lang.String userName) {
+	public void setUserName(String userName) {
 		_cpAttachmentFileEntry.setUserName(userName);
 	}
 
@@ -1027,7 +1026,7 @@ public class CPAttachmentFileEntryWrapper implements CPAttachmentFileEntry,
 	* @param userUuid the user uuid of this cp attachment file entry
 	*/
 	@Override
-	public void setUserUuid(java.lang.String userUuid) {
+	public void setUserUuid(String userUuid) {
 		_cpAttachmentFileEntry.setUserUuid(userUuid);
 	}
 
@@ -1037,7 +1036,7 @@ public class CPAttachmentFileEntryWrapper implements CPAttachmentFileEntry,
 	* @param uuid the uuid of this cp attachment file entry
 	*/
 	@Override
-	public void setUuid(java.lang.String uuid) {
+	public void setUuid(String uuid) {
 		_cpAttachmentFileEntry.setUuid(uuid);
 	}
 
@@ -1052,7 +1051,7 @@ public class CPAttachmentFileEntryWrapper implements CPAttachmentFileEntry,
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _cpAttachmentFileEntry.toString();
 	}
 
@@ -1062,7 +1061,7 @@ public class CPAttachmentFileEntryWrapper implements CPAttachmentFileEntry,
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _cpAttachmentFileEntry.toXmlString();
 	}
 

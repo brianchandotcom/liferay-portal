@@ -36,11 +36,11 @@ public class CPDefinitionInventoryServiceWrapper
 
 	@Override
 	public com.liferay.commerce.model.CPDefinitionInventory addCPDefinitionInventory(
-		long cpDefinitionId, java.lang.String cpDefinitionInventoryEngine,
-		java.lang.String lowStockActivity, boolean displayAvailability,
+		long cpDefinitionId, String cpDefinitionInventoryEngine,
+		String lowStockActivity, boolean displayAvailability,
 		boolean displayStockQuantity, int minStockQuantity, boolean backOrders,
 		int minOrderQuantity, int maxOrderQuantity,
-		java.lang.String allowedOrderQuantities, int multipleOrderQuantity,
+		String allowedOrderQuantities, int multipleOrderQuantity,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _cpDefinitionInventoryService.addCPDefinitionInventory(cpDefinitionId,
@@ -75,18 +75,17 @@ public class CPDefinitionInventoryServiceWrapper
 	* @return the OSGi service identifier
 	*/
 	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
+	public String getOSGiServiceIdentifier() {
 		return _cpDefinitionInventoryService.getOSGiServiceIdentifier();
 	}
 
 	@Override
 	public com.liferay.commerce.model.CPDefinitionInventory updateCPDefinitionInventory(
-		long cpDefinitionInventoryId,
-		java.lang.String cpDefinitionInventoryEngine,
-		java.lang.String lowStockActivity, boolean displayAvailability,
+		long cpDefinitionInventoryId, String cpDefinitionInventoryEngine,
+		String lowStockActivity, boolean displayAvailability,
 		boolean displayStockQuantity, int minStockQuantity, boolean backOrders,
 		int minOrderQuantity, int maxOrderQuantity,
-		java.lang.String allowedOrderQuantities, int multipleOrderQuantity,
+		String allowedOrderQuantities, int multipleOrderQuantity,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _cpDefinitionInventoryService.updateCPDefinitionInventory(cpDefinitionInventoryId,

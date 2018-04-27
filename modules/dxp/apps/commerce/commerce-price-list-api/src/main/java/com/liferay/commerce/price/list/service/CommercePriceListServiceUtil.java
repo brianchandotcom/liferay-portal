@@ -43,7 +43,7 @@ public class CommercePriceListServiceUtil {
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.commerce.price.list.service.impl.CommercePriceListServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static com.liferay.commerce.price.list.model.CommercePriceList addCommercePriceList(
-		long commerceCurrencyId, java.lang.String name, double priority,
+		long commerceCurrencyId, String name, double priority,
 		int displayDateMonth, int displayDateDay, int displayDateYear,
 		int displayDateHour, int displayDateMinute, int expirationDateMonth,
 		int expirationDateDay, int expirationDateYear, int expirationDateHour,
@@ -90,7 +90,7 @@ public class CommercePriceListServiceUtil {
 	*
 	* @return the OSGi service identifier
 	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
+	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 
@@ -100,8 +100,8 @@ public class CommercePriceListServiceUtil {
 	}
 
 	public static com.liferay.portal.kernel.search.BaseModelSearchResult<com.liferay.commerce.price.list.model.CommercePriceList> searchCommercePriceLists(
-		long companyId, long groupId, java.lang.String keywords, int status,
-		int start, int end, com.liferay.portal.kernel.search.Sort sort)
+		long companyId, long groupId, String keywords, int status, int start,
+		int end, com.liferay.portal.kernel.search.Sort sort)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .searchCommercePriceLists(companyId, groupId, keywords,
@@ -109,12 +109,11 @@ public class CommercePriceListServiceUtil {
 	}
 
 	public static com.liferay.commerce.price.list.model.CommercePriceList updateCommercePriceList(
-		long commercePriceListId, long commerceCurrencyId,
-		java.lang.String name, double priority, int displayDateMonth,
-		int displayDateDay, int displayDateYear, int displayDateHour,
-		int displayDateMinute, int expirationDateMonth, int expirationDateDay,
-		int expirationDateYear, int expirationDateHour,
-		int expirationDateMinute, boolean neverExpire,
+		long commercePriceListId, long commerceCurrencyId, String name,
+		double priority, int displayDateMonth, int displayDateDay,
+		int displayDateYear, int displayDateHour, int displayDateMinute,
+		int expirationDateMonth, int expirationDateDay, int expirationDateYear,
+		int expirationDateHour, int expirationDateMinute, boolean neverExpire,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()

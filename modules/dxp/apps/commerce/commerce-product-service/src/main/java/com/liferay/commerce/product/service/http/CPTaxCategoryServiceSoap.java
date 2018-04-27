@@ -70,10 +70,8 @@ import java.util.Map;
 @ProviderType
 public class CPTaxCategoryServiceSoap {
 	public static com.liferay.commerce.product.model.CPTaxCategorySoap addCPTaxCategory(
-		java.lang.String[] nameMapLanguageIds,
-		java.lang.String[] nameMapValues,
-		java.lang.String[] descriptionMapLanguageIds,
-		java.lang.String[] descriptionMapValues,
+		String[] nameMapLanguageIds, String[] nameMapValues,
+		String[] descriptionMapLanguageIds, String[] descriptionMapValues,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
@@ -168,10 +166,9 @@ public class CPTaxCategoryServiceSoap {
 	}
 
 	public static com.liferay.commerce.product.model.CPTaxCategorySoap updateCPTaxCategory(
-		long cpTaxCategoryId, java.lang.String[] nameMapLanguageIds,
-		java.lang.String[] nameMapValues,
-		java.lang.String[] descriptionMapLanguageIds,
-		java.lang.String[] descriptionMapValues) throws RemoteException {
+		long cpTaxCategoryId, String[] nameMapLanguageIds,
+		String[] nameMapValues, String[] descriptionMapLanguageIds,
+		String[] descriptionMapValues) throws RemoteException {
 		try {
 			Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(nameMapLanguageIds,
 					nameMapValues);

@@ -79,11 +79,9 @@ public interface CPOptionCategoryLocalService extends BaseLocalService,
 	public CPOptionCategory addCPOptionCategory(
 		CPOptionCategory cpOptionCategory);
 
-	public CPOptionCategory addCPOptionCategory(
-		Map<Locale, java.lang.String> titleMap,
-		Map<Locale, java.lang.String> descriptionMap, double priority,
-		java.lang.String key, ServiceContext serviceContext)
-		throws PortalException;
+	public CPOptionCategory addCPOptionCategory(Map<Locale, String> titleMap,
+		Map<Locale, String> descriptionMap, double priority, String key,
+		ServiceContext serviceContext) throws PortalException;
 
 	/**
 	* Creates a new cp option category with the primary key. Does not add the cp option category to the database.
@@ -190,8 +188,7 @@ public interface CPOptionCategoryLocalService extends BaseLocalService,
 	public CPOptionCategory fetchCPOptionCategory(long CPOptionCategoryId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CPOptionCategory fetchCPOptionCategory(long groupId,
-		java.lang.String key);
+	public CPOptionCategory fetchCPOptionCategory(long groupId, String key);
 
 	/**
 	* Returns the cp option category matching the UUID and group.
@@ -201,8 +198,8 @@ public interface CPOptionCategoryLocalService extends BaseLocalService,
 	* @return the matching cp option category, or <code>null</code> if a matching cp option category could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CPOptionCategory fetchCPOptionCategoryByUuidAndGroupId(
-		java.lang.String uuid, long groupId);
+	public CPOptionCategory fetchCPOptionCategoryByUuidAndGroupId(String uuid,
+		long groupId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
@@ -239,7 +236,7 @@ public interface CPOptionCategoryLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CPOptionCategory> getCPOptionCategoriesByUuidAndCompanyId(
-		java.lang.String uuid, long companyId);
+		String uuid, long companyId);
 
 	/**
 	* Returns a range of cp option categories matching the UUID and company.
@@ -253,7 +250,7 @@ public interface CPOptionCategoryLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CPOptionCategory> getCPOptionCategoriesByUuidAndCompanyId(
-		java.lang.String uuid, long companyId, int start, int end,
+		String uuid, long companyId, int start, int end,
 		OrderByComparator<CPOptionCategory> orderByComparator);
 
 	/**
@@ -287,8 +284,8 @@ public interface CPOptionCategoryLocalService extends BaseLocalService,
 	* @throws PortalException if a matching cp option category could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CPOptionCategory getCPOptionCategoryByUuidAndGroupId(
-		java.lang.String uuid, long groupId) throws PortalException;
+	public CPOptionCategory getCPOptionCategoryByUuidAndGroupId(String uuid,
+		long groupId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
@@ -302,7 +299,7 @@ public interface CPOptionCategoryLocalService extends BaseLocalService,
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -320,8 +317,7 @@ public interface CPOptionCategoryLocalService extends BaseLocalService,
 		CPOptionCategory cpOptionCategory);
 
 	public CPOptionCategory updateCPOptionCategory(long cpOptionCategoryId,
-		Map<Locale, java.lang.String> titleMap,
-		Map<Locale, java.lang.String> descriptionMap, double priority,
-		java.lang.String key, ServiceContext serviceContext)
+		Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
+		double priority, String key, ServiceContext serviceContext)
 		throws PortalException;
 }

@@ -173,7 +173,7 @@ public class CPMeasurementUnitWrapper implements CPMeasurementUnit,
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new CPMeasurementUnitWrapper((CPMeasurementUnit)_cpMeasurementUnit.clone());
 	}
 
@@ -183,7 +183,7 @@ public class CPMeasurementUnitWrapper implements CPMeasurementUnit,
 	}
 
 	@Override
-	public java.lang.String[] getAvailableLanguageIds() {
+	public String[] getAvailableLanguageIds() {
 		return _cpMeasurementUnit.getAvailableLanguageIds();
 	}
 
@@ -218,7 +218,7 @@ public class CPMeasurementUnitWrapper implements CPMeasurementUnit,
 	}
 
 	@Override
-	public java.lang.String getDefaultLanguageId() {
+	public String getDefaultLanguageId() {
 		return _cpMeasurementUnit.getDefaultLanguageId();
 	}
 
@@ -243,7 +243,7 @@ public class CPMeasurementUnitWrapper implements CPMeasurementUnit,
 	* @return the key of this cp measurement unit
 	*/
 	@Override
-	public java.lang.String getKey() {
+	public String getKey() {
 		return _cpMeasurementUnit.getKey();
 	}
 
@@ -273,7 +273,7 @@ public class CPMeasurementUnitWrapper implements CPMeasurementUnit,
 	* @return the name of this cp measurement unit
 	*/
 	@Override
-	public java.lang.String getName() {
+	public String getName() {
 		return _cpMeasurementUnit.getName();
 	}
 
@@ -284,7 +284,7 @@ public class CPMeasurementUnitWrapper implements CPMeasurementUnit,
 	* @return the localized name of this cp measurement unit
 	*/
 	@Override
-	public java.lang.String getName(java.util.Locale locale) {
+	public String getName(java.util.Locale locale) {
 		return _cpMeasurementUnit.getName(locale);
 	}
 
@@ -296,7 +296,7 @@ public class CPMeasurementUnitWrapper implements CPMeasurementUnit,
 	* @return the localized name of this cp measurement unit. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
 	*/
 	@Override
-	public java.lang.String getName(java.util.Locale locale, boolean useDefault) {
+	public String getName(java.util.Locale locale, boolean useDefault) {
 		return _cpMeasurementUnit.getName(locale, useDefault);
 	}
 
@@ -307,7 +307,7 @@ public class CPMeasurementUnitWrapper implements CPMeasurementUnit,
 	* @return the localized name of this cp measurement unit
 	*/
 	@Override
-	public java.lang.String getName(java.lang.String languageId) {
+	public String getName(String languageId) {
 		return _cpMeasurementUnit.getName(languageId);
 	}
 
@@ -319,18 +319,17 @@ public class CPMeasurementUnitWrapper implements CPMeasurementUnit,
 	* @return the localized name of this cp measurement unit
 	*/
 	@Override
-	public java.lang.String getName(java.lang.String languageId,
-		boolean useDefault) {
+	public String getName(String languageId, boolean useDefault) {
 		return _cpMeasurementUnit.getName(languageId, useDefault);
 	}
 
 	@Override
-	public java.lang.String getNameCurrentLanguageId() {
+	public String getNameCurrentLanguageId() {
 		return _cpMeasurementUnit.getNameCurrentLanguageId();
 	}
 
 	@Override
-	public java.lang.String getNameCurrentValue() {
+	public String getNameCurrentValue() {
 		return _cpMeasurementUnit.getNameCurrentValue();
 	}
 
@@ -340,7 +339,7 @@ public class CPMeasurementUnitWrapper implements CPMeasurementUnit,
 	* @return the locales and localized names of this cp measurement unit
 	*/
 	@Override
-	public Map<java.util.Locale, java.lang.String> getNameMap() {
+	public Map<java.util.Locale, String> getNameMap() {
 		return _cpMeasurementUnit.getNameMap();
 	}
 
@@ -415,7 +414,7 @@ public class CPMeasurementUnitWrapper implements CPMeasurementUnit,
 	* @return the user name of this cp measurement unit
 	*/
 	@Override
-	public java.lang.String getUserName() {
+	public String getUserName() {
 		return _cpMeasurementUnit.getUserName();
 	}
 
@@ -425,7 +424,7 @@ public class CPMeasurementUnitWrapper implements CPMeasurementUnit,
 	* @return the user uuid of this cp measurement unit
 	*/
 	@Override
-	public java.lang.String getUserUuid() {
+	public String getUserUuid() {
 		return _cpMeasurementUnit.getUserUuid();
 	}
 
@@ -435,7 +434,7 @@ public class CPMeasurementUnitWrapper implements CPMeasurementUnit,
 	* @return the uuid of this cp measurement unit
 	*/
 	@Override
-	public java.lang.String getUuid() {
+	public String getUuid() {
 		return _cpMeasurementUnit.getUuid();
 	}
 
@@ -554,7 +553,7 @@ public class CPMeasurementUnitWrapper implements CPMeasurementUnit,
 	* @param key the key of this cp measurement unit
 	*/
 	@Override
-	public void setKey(java.lang.String key) {
+	public void setKey(String key) {
 		_cpMeasurementUnit.setKey(key);
 	}
 
@@ -584,7 +583,7 @@ public class CPMeasurementUnitWrapper implements CPMeasurementUnit,
 	* @param name the name of this cp measurement unit
 	*/
 	@Override
-	public void setName(java.lang.String name) {
+	public void setName(String name) {
 		_cpMeasurementUnit.setName(name);
 	}
 
@@ -595,7 +594,7 @@ public class CPMeasurementUnitWrapper implements CPMeasurementUnit,
 	* @param locale the locale of the language
 	*/
 	@Override
-	public void setName(java.lang.String name, java.util.Locale locale) {
+	public void setName(String name, java.util.Locale locale) {
 		_cpMeasurementUnit.setName(name, locale);
 	}
 
@@ -607,13 +606,13 @@ public class CPMeasurementUnitWrapper implements CPMeasurementUnit,
 	* @param defaultLocale the default locale
 	*/
 	@Override
-	public void setName(java.lang.String name, java.util.Locale locale,
+	public void setName(String name, java.util.Locale locale,
 		java.util.Locale defaultLocale) {
 		_cpMeasurementUnit.setName(name, locale, defaultLocale);
 	}
 
 	@Override
-	public void setNameCurrentLanguageId(java.lang.String languageId) {
+	public void setNameCurrentLanguageId(String languageId) {
 		_cpMeasurementUnit.setNameCurrentLanguageId(languageId);
 	}
 
@@ -623,7 +622,7 @@ public class CPMeasurementUnitWrapper implements CPMeasurementUnit,
 	* @param nameMap the locales and localized names of this cp measurement unit
 	*/
 	@Override
-	public void setNameMap(Map<java.util.Locale, java.lang.String> nameMap) {
+	public void setNameMap(Map<java.util.Locale, String> nameMap) {
 		_cpMeasurementUnit.setNameMap(nameMap);
 	}
 
@@ -634,7 +633,7 @@ public class CPMeasurementUnitWrapper implements CPMeasurementUnit,
 	* @param defaultLocale the default locale
 	*/
 	@Override
-	public void setNameMap(Map<java.util.Locale, java.lang.String> nameMap,
+	public void setNameMap(Map<java.util.Locale, String> nameMap,
 		java.util.Locale defaultLocale) {
 		_cpMeasurementUnit.setNameMap(nameMap, defaultLocale);
 	}
@@ -715,7 +714,7 @@ public class CPMeasurementUnitWrapper implements CPMeasurementUnit,
 	* @param userName the user name of this cp measurement unit
 	*/
 	@Override
-	public void setUserName(java.lang.String userName) {
+	public void setUserName(String userName) {
 		_cpMeasurementUnit.setUserName(userName);
 	}
 
@@ -725,7 +724,7 @@ public class CPMeasurementUnitWrapper implements CPMeasurementUnit,
 	* @param userUuid the user uuid of this cp measurement unit
 	*/
 	@Override
-	public void setUserUuid(java.lang.String userUuid) {
+	public void setUserUuid(String userUuid) {
 		_cpMeasurementUnit.setUserUuid(userUuid);
 	}
 
@@ -735,7 +734,7 @@ public class CPMeasurementUnitWrapper implements CPMeasurementUnit,
 	* @param uuid the uuid of this cp measurement unit
 	*/
 	@Override
-	public void setUuid(java.lang.String uuid) {
+	public void setUuid(String uuid) {
 		_cpMeasurementUnit.setUuid(uuid);
 	}
 
@@ -750,7 +749,7 @@ public class CPMeasurementUnitWrapper implements CPMeasurementUnit,
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _cpMeasurementUnit.toString();
 	}
 
@@ -760,7 +759,7 @@ public class CPMeasurementUnitWrapper implements CPMeasurementUnit,
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _cpMeasurementUnit.toXmlString();
 	}
 

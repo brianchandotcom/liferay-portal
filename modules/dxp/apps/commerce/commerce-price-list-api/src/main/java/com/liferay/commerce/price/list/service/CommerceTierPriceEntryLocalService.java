@@ -205,7 +205,7 @@ public interface CommerceTierPriceEntryLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CommerceTierPriceEntry fetchCommerceTierPriceEntryByUuidAndGroupId(
-		java.lang.String uuid, long groupId);
+		String uuid, long groupId);
 
 	public CommerceTierPriceEntry findClosestCommerceTierPriceEntry(
 		long commercePriceEntryId, int quantity);
@@ -246,7 +246,7 @@ public interface CommerceTierPriceEntryLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommerceTierPriceEntry> getCommerceTierPriceEntriesByUuidAndCompanyId(
-		java.lang.String uuid, long companyId);
+		String uuid, long companyId);
 
 	/**
 	* Returns a range of commerce tier price entries matching the UUID and company.
@@ -260,7 +260,7 @@ public interface CommerceTierPriceEntryLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommerceTierPriceEntry> getCommerceTierPriceEntriesByUuidAndCompanyId(
-		java.lang.String uuid, long companyId, int start, int end,
+		String uuid, long companyId, int start, int end,
 		OrderByComparator<CommerceTierPriceEntry> orderByComparator);
 
 	/**
@@ -295,7 +295,7 @@ public interface CommerceTierPriceEntryLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CommerceTierPriceEntry getCommerceTierPriceEntryByUuidAndGroupId(
-		java.lang.String uuid, long groupId) throws PortalException;
+		String uuid, long groupId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
@@ -309,7 +309,7 @@ public interface CommerceTierPriceEntryLocalService extends BaseLocalService,
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -322,7 +322,7 @@ public interface CommerceTierPriceEntryLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public BaseModelSearchResult<CommerceTierPriceEntry> searchCommerceTierPriceEntries(
 		long companyId, long groupId, long commercePriceEntryId,
-		java.lang.String keywords, int start, int end, Sort sort)
+		String keywords, int start, int end, Sort sort)
 		throws PortalException;
 
 	/**

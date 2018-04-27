@@ -67,7 +67,7 @@ import java.rmi.RemoteException;
 public class CommerceTaxFixedRateAddressRelServiceSoap {
 	public static com.liferay.commerce.tax.engine.fixed.model.CommerceTaxFixedRateAddressRelSoap addCommerceTaxFixedRateAddressRel(
 		long commerceTaxMethodId, long cpTaxCategoryId, long commerceCountryId,
-		long commerceRegionId, java.lang.String zip, double rate,
+		long commerceRegionId, String zip, double rate,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
@@ -147,7 +147,7 @@ public class CommerceTaxFixedRateAddressRelServiceSoap {
 
 	public static com.liferay.commerce.tax.engine.fixed.model.CommerceTaxFixedRateAddressRelSoap updateCommerceTaxFixedRateAddressRel(
 		long commerceTaxFixedRateAddressRelId, long commerceCountryId,
-		long commerceRegionId, java.lang.String zip, double rate)
+		long commerceRegionId, String zip, double rate)
 		throws RemoteException {
 		try {
 			com.liferay.commerce.tax.engine.fixed.model.CommerceTaxFixedRateAddressRel returnValue =

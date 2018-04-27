@@ -145,7 +145,7 @@ public class CommerceWishListItemWrapper implements CommerceWishListItem,
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new CommerceWishListItemWrapper((CommerceWishListItem)_commerceWishListItem.clone());
 	}
 
@@ -253,7 +253,7 @@ public class CommerceWishListItemWrapper implements CommerceWishListItem,
 	* @return the json of this commerce wish list item
 	*/
 	@Override
-	public java.lang.String getJson() {
+	public String getJson() {
 		return _commerceWishListItem.getJson();
 	}
 
@@ -298,7 +298,7 @@ public class CommerceWishListItemWrapper implements CommerceWishListItem,
 	* @return the user name of this commerce wish list item
 	*/
 	@Override
-	public java.lang.String getUserName() {
+	public String getUserName() {
 		return _commerceWishListItem.getUserName();
 	}
 
@@ -308,7 +308,7 @@ public class CommerceWishListItemWrapper implements CommerceWishListItem,
 	* @return the user uuid of this commerce wish list item
 	*/
 	@Override
-	public java.lang.String getUserUuid() {
+	public String getUserUuid() {
 		return _commerceWishListItem.getUserUuid();
 	}
 
@@ -440,7 +440,7 @@ public class CommerceWishListItemWrapper implements CommerceWishListItem,
 	* @param json the json of this commerce wish list item
 	*/
 	@Override
-	public void setJson(java.lang.String json) {
+	public void setJson(String json) {
 		_commerceWishListItem.setJson(json);
 	}
 
@@ -490,7 +490,7 @@ public class CommerceWishListItemWrapper implements CommerceWishListItem,
 	* @param userName the user name of this commerce wish list item
 	*/
 	@Override
-	public void setUserName(java.lang.String userName) {
+	public void setUserName(String userName) {
 		_commerceWishListItem.setUserName(userName);
 	}
 
@@ -500,7 +500,7 @@ public class CommerceWishListItemWrapper implements CommerceWishListItem,
 	* @param userUuid the user uuid of this commerce wish list item
 	*/
 	@Override
-	public void setUserUuid(java.lang.String userUuid) {
+	public void setUserUuid(String userUuid) {
 		_commerceWishListItem.setUserUuid(userUuid);
 	}
 
@@ -515,7 +515,7 @@ public class CommerceWishListItemWrapper implements CommerceWishListItem,
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _commerceWishListItem.toString();
 	}
 
@@ -525,7 +525,7 @@ public class CommerceWishListItemWrapper implements CommerceWishListItem,
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _commerceWishListItem.toXmlString();
 	}
 

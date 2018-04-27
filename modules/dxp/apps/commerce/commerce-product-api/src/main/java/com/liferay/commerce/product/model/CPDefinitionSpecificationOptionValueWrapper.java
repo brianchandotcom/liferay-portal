@@ -171,7 +171,7 @@ public class CPDefinitionSpecificationOptionValueWrapper
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new CPDefinitionSpecificationOptionValueWrapper((CPDefinitionSpecificationOptionValue)_cpDefinitionSpecificationOptionValue.clone());
 	}
 
@@ -182,7 +182,7 @@ public class CPDefinitionSpecificationOptionValueWrapper
 	}
 
 	@Override
-	public java.lang.String[] getAvailableLanguageIds() {
+	public String[] getAvailableLanguageIds() {
 		return _cpDefinitionSpecificationOptionValue.getAvailableLanguageIds();
 	}
 
@@ -265,7 +265,7 @@ public class CPDefinitionSpecificationOptionValueWrapper
 	}
 
 	@Override
-	public java.lang.String getDefaultLanguageId() {
+	public String getDefaultLanguageId() {
 		return _cpDefinitionSpecificationOptionValue.getDefaultLanguageId();
 	}
 
@@ -345,7 +345,7 @@ public class CPDefinitionSpecificationOptionValueWrapper
 	* @return the user name of this cp definition specification option value
 	*/
 	@Override
-	public java.lang.String getUserName() {
+	public String getUserName() {
 		return _cpDefinitionSpecificationOptionValue.getUserName();
 	}
 
@@ -355,7 +355,7 @@ public class CPDefinitionSpecificationOptionValueWrapper
 	* @return the user uuid of this cp definition specification option value
 	*/
 	@Override
-	public java.lang.String getUserUuid() {
+	public String getUserUuid() {
 		return _cpDefinitionSpecificationOptionValue.getUserUuid();
 	}
 
@@ -365,7 +365,7 @@ public class CPDefinitionSpecificationOptionValueWrapper
 	* @return the uuid of this cp definition specification option value
 	*/
 	@Override
-	public java.lang.String getUuid() {
+	public String getUuid() {
 		return _cpDefinitionSpecificationOptionValue.getUuid();
 	}
 
@@ -375,7 +375,7 @@ public class CPDefinitionSpecificationOptionValueWrapper
 	* @return the value of this cp definition specification option value
 	*/
 	@Override
-	public java.lang.String getValue() {
+	public String getValue() {
 		return _cpDefinitionSpecificationOptionValue.getValue();
 	}
 
@@ -386,7 +386,7 @@ public class CPDefinitionSpecificationOptionValueWrapper
 	* @return the localized value of this cp definition specification option value
 	*/
 	@Override
-	public java.lang.String getValue(java.util.Locale locale) {
+	public String getValue(java.util.Locale locale) {
 		return _cpDefinitionSpecificationOptionValue.getValue(locale);
 	}
 
@@ -398,7 +398,7 @@ public class CPDefinitionSpecificationOptionValueWrapper
 	* @return the localized value of this cp definition specification option value. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
 	*/
 	@Override
-	public java.lang.String getValue(java.util.Locale locale, boolean useDefault) {
+	public String getValue(java.util.Locale locale, boolean useDefault) {
 		return _cpDefinitionSpecificationOptionValue.getValue(locale, useDefault);
 	}
 
@@ -409,7 +409,7 @@ public class CPDefinitionSpecificationOptionValueWrapper
 	* @return the localized value of this cp definition specification option value
 	*/
 	@Override
-	public java.lang.String getValue(java.lang.String languageId) {
+	public String getValue(String languageId) {
 		return _cpDefinitionSpecificationOptionValue.getValue(languageId);
 	}
 
@@ -421,19 +421,18 @@ public class CPDefinitionSpecificationOptionValueWrapper
 	* @return the localized value of this cp definition specification option value
 	*/
 	@Override
-	public java.lang.String getValue(java.lang.String languageId,
-		boolean useDefault) {
+	public String getValue(String languageId, boolean useDefault) {
 		return _cpDefinitionSpecificationOptionValue.getValue(languageId,
 			useDefault);
 	}
 
 	@Override
-	public java.lang.String getValueCurrentLanguageId() {
+	public String getValueCurrentLanguageId() {
 		return _cpDefinitionSpecificationOptionValue.getValueCurrentLanguageId();
 	}
 
 	@Override
-	public java.lang.String getValueCurrentValue() {
+	public String getValueCurrentValue() {
 		return _cpDefinitionSpecificationOptionValue.getValueCurrentValue();
 	}
 
@@ -443,7 +442,7 @@ public class CPDefinitionSpecificationOptionValueWrapper
 	* @return the locales and localized values of this cp definition specification option value
 	*/
 	@Override
-	public Map<java.util.Locale, java.lang.String> getValueMap() {
+	public Map<java.util.Locale, String> getValueMap() {
 		return _cpDefinitionSpecificationOptionValue.getValueMap();
 	}
 
@@ -643,7 +642,7 @@ public class CPDefinitionSpecificationOptionValueWrapper
 	* @param userName the user name of this cp definition specification option value
 	*/
 	@Override
-	public void setUserName(java.lang.String userName) {
+	public void setUserName(String userName) {
 		_cpDefinitionSpecificationOptionValue.setUserName(userName);
 	}
 
@@ -653,7 +652,7 @@ public class CPDefinitionSpecificationOptionValueWrapper
 	* @param userUuid the user uuid of this cp definition specification option value
 	*/
 	@Override
-	public void setUserUuid(java.lang.String userUuid) {
+	public void setUserUuid(String userUuid) {
 		_cpDefinitionSpecificationOptionValue.setUserUuid(userUuid);
 	}
 
@@ -663,7 +662,7 @@ public class CPDefinitionSpecificationOptionValueWrapper
 	* @param uuid the uuid of this cp definition specification option value
 	*/
 	@Override
-	public void setUuid(java.lang.String uuid) {
+	public void setUuid(String uuid) {
 		_cpDefinitionSpecificationOptionValue.setUuid(uuid);
 	}
 
@@ -673,7 +672,7 @@ public class CPDefinitionSpecificationOptionValueWrapper
 	* @param value the value of this cp definition specification option value
 	*/
 	@Override
-	public void setValue(java.lang.String value) {
+	public void setValue(String value) {
 		_cpDefinitionSpecificationOptionValue.setValue(value);
 	}
 
@@ -684,7 +683,7 @@ public class CPDefinitionSpecificationOptionValueWrapper
 	* @param locale the locale of the language
 	*/
 	@Override
-	public void setValue(java.lang.String value, java.util.Locale locale) {
+	public void setValue(String value, java.util.Locale locale) {
 		_cpDefinitionSpecificationOptionValue.setValue(value, locale);
 	}
 
@@ -696,14 +695,14 @@ public class CPDefinitionSpecificationOptionValueWrapper
 	* @param defaultLocale the default locale
 	*/
 	@Override
-	public void setValue(java.lang.String value, java.util.Locale locale,
+	public void setValue(String value, java.util.Locale locale,
 		java.util.Locale defaultLocale) {
 		_cpDefinitionSpecificationOptionValue.setValue(value, locale,
 			defaultLocale);
 	}
 
 	@Override
-	public void setValueCurrentLanguageId(java.lang.String languageId) {
+	public void setValueCurrentLanguageId(String languageId) {
 		_cpDefinitionSpecificationOptionValue.setValueCurrentLanguageId(languageId);
 	}
 
@@ -713,7 +712,7 @@ public class CPDefinitionSpecificationOptionValueWrapper
 	* @param valueMap the locales and localized values of this cp definition specification option value
 	*/
 	@Override
-	public void setValueMap(Map<java.util.Locale, java.lang.String> valueMap) {
+	public void setValueMap(Map<java.util.Locale, String> valueMap) {
 		_cpDefinitionSpecificationOptionValue.setValueMap(valueMap);
 	}
 
@@ -724,7 +723,7 @@ public class CPDefinitionSpecificationOptionValueWrapper
 	* @param defaultLocale the default locale
 	*/
 	@Override
-	public void setValueMap(Map<java.util.Locale, java.lang.String> valueMap,
+	public void setValueMap(Map<java.util.Locale, String> valueMap,
 		java.util.Locale defaultLocale) {
 		_cpDefinitionSpecificationOptionValue.setValueMap(valueMap,
 			defaultLocale);
@@ -741,7 +740,7 @@ public class CPDefinitionSpecificationOptionValueWrapper
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _cpDefinitionSpecificationOptionValue.toString();
 	}
 
@@ -751,7 +750,7 @@ public class CPDefinitionSpecificationOptionValueWrapper
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _cpDefinitionSpecificationOptionValue.toXmlString();
 	}
 

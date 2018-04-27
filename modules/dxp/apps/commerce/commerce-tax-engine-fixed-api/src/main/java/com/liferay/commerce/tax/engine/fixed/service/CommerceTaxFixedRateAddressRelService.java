@@ -58,7 +58,7 @@ public interface CommerceTaxFixedRateAddressRelService extends BaseService {
 	 */
 	public CommerceTaxFixedRateAddressRel addCommerceTaxFixedRateAddressRel(
 		long commerceTaxMethodId, long cpTaxCategoryId, long commerceCountryId,
-		long commerceRegionId, java.lang.String zip, double rate,
+		long commerceRegionId, String zip, double rate,
 		ServiceContext serviceContext) throws PortalException;
 
 	public void deleteCommerceTaxFixedRateAddressRel(
@@ -83,10 +83,10 @@ public interface CommerceTaxFixedRateAddressRelService extends BaseService {
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	public CommerceTaxFixedRateAddressRel updateCommerceTaxFixedRateAddressRel(
 		long commerceTaxFixedRateAddressRelId, long commerceCountryId,
-		long commerceRegionId, java.lang.String zip, double rate)
+		long commerceRegionId, String zip, double rate)
 		throws PortalException;
 }

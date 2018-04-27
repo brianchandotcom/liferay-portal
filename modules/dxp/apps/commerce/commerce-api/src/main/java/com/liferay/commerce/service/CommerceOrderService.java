@@ -60,7 +60,7 @@ public interface CommerceOrderService extends BaseService {
 	 */
 	public CommerceOrder addOrganizationCommerceOrder(long groupId,
 		long siteGroupId, long orderOrganizationId, long shippingAddressId,
-		java.lang.String purchaseOrderNumber) throws PortalException;
+		String purchaseOrderNumber) throws PortalException;
 
 	public CommerceOrder addUserCommerceOrder(long groupId)
 		throws PortalException;
@@ -84,8 +84,8 @@ public interface CommerceOrderService extends BaseService {
 		throws PortalException;
 
 	public CommerceOrder executeWorkflowTransition(long commerceOrderId,
-		long workflowTaskId, java.lang.String transitionName,
-		java.lang.String comment) throws PortalException;
+		long workflowTaskId, String transitionName, String comment)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CommerceOrder fetchCommerceOrder(long commerceOrderId)
@@ -96,7 +96,7 @@ public interface CommerceOrderService extends BaseService {
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CommerceOrder fetchCommerceOrder(java.lang.String uuid, long groupId)
+	public CommerceOrder fetchCommerceOrder(String uuid, long groupId)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -108,8 +108,8 @@ public interface CommerceOrderService extends BaseService {
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CommerceOrder getCommerceOrderByUuidAndGroupId(
-		java.lang.String uuid, long groupId) throws PortalException;
+	public CommerceOrder getCommerceOrderByUuidAndGroupId(String uuid,
+		long groupId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommerceOrder> getCommerceOrders(long groupId,
@@ -126,7 +126,7 @@ public interface CommerceOrderService extends BaseService {
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	public void mergeGuestCommerceOrder(long guestCommerceOrderId,
 		long userCommerceOrderId, ServiceContext serviceContext)
@@ -135,27 +135,24 @@ public interface CommerceOrderService extends BaseService {
 	public CommerceOrder reorderCommerceOrder(long commerceOrderId)
 		throws PortalException;
 
-	public java.lang.String startCommerceOrderPayment(long commerceOrderId,
+	public String startCommerceOrderPayment(long commerceOrderId,
 		ServiceContext serviceContext) throws PortalException;
 
 	public CommerceOrder submitCommerceOrder(long commerceOrderId)
 		throws PortalException;
 
 	public CommerceOrder updateBillingAddress(long commerceOrderId,
-		java.lang.String name, java.lang.String description,
-		java.lang.String street1, java.lang.String street2,
-		java.lang.String street3, java.lang.String city, java.lang.String zip,
-		long commerceRegionId, long commerceCountryId,
-		java.lang.String phoneNumber, ServiceContext serviceContext)
-		throws PortalException;
+		String name, String description, String street1, String street2,
+		String street3, String city, String zip, long commerceRegionId,
+		long commerceCountryId, String phoneNumber,
+		ServiceContext serviceContext) throws PortalException;
 
 	public CommerceOrder updateCommerceOrder(long commerceOrderId,
 		long billingAddressId, long shippingAddressId,
 		long commercePaymentMethodId, long commerceShippingMethodId,
-		java.lang.String shippingOptionName,
-		java.lang.String purchaseOrderNumber, BigDecimal subtotal,
-		BigDecimal shippingPrice, BigDecimal total,
-		java.lang.String advanceStatus) throws PortalException;
+		String shippingOptionName, String purchaseOrderNumber,
+		BigDecimal subtotal, BigDecimal shippingPrice, BigDecimal total,
+		String advanceStatus) throws PortalException;
 
 	public CommerceOrder updateOrderStatus(long commerceOrderId, int orderStatus)
 		throws PortalException;
@@ -165,15 +162,13 @@ public interface CommerceOrderService extends BaseService {
 		throws PortalException;
 
 	public CommerceOrder updatePurchaseOrderNumber(long commerceOrderId,
-		java.lang.String purchaseOrderNumber) throws PortalException;
+		String purchaseOrderNumber) throws PortalException;
 
 	public CommerceOrder updateShippingAddress(long commerceOrderId,
-		java.lang.String name, java.lang.String description,
-		java.lang.String street1, java.lang.String street2,
-		java.lang.String street3, java.lang.String city, java.lang.String zip,
-		long commerceRegionId, long commerceCountryId,
-		java.lang.String phoneNumber, ServiceContext serviceContext)
-		throws PortalException;
+		String name, String description, String street1, String street2,
+		String street3, String city, String zip, long commerceRegionId,
+		long commerceCountryId, String phoneNumber,
+		ServiceContext serviceContext) throws PortalException;
 
 	public CommerceOrder updateUser(long commerceOrderId, long userId)
 		throws PortalException;

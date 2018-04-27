@@ -48,10 +48,10 @@ public interface CommercePriceCalculationLocalService extends BaseLocalService {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CommercePriceCalculationLocalServiceUtil} to access the commerce price calculation local service. Add custom service methods to {@link com.liferay.commerce.service.impl.CommercePriceCalculationLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public java.lang.String formatPrice(long groupId, BigDecimal price)
+	public String formatPrice(long groupId, BigDecimal price)
 		throws PortalException;
 
-	public java.lang.String formatPriceWithCurrency(long commerceCurrencyId,
+	public String formatPriceWithCurrency(long commerceCurrencyId,
 		BigDecimal price) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -63,17 +63,16 @@ public interface CommercePriceCalculationLocalService extends BaseLocalService {
 		long userId, long cpInstanceId, int quantity) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.lang.String getFormattedFinalPrice(long groupId, long userId,
+	public String getFormattedFinalPrice(long groupId, long userId,
 		long cpInstanceId, int quantity) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.lang.String getFormattedFinalPrice(long groupId,
-		long commerceCurrencyId, long userId, long cpInstanceId, int quantity)
-		throws PortalException;
+	public String getFormattedFinalPrice(long groupId, long commerceCurrencyId,
+		long userId, long cpInstanceId, int quantity) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.lang.String getFormattedOrderSubtotal(
-		CommerceOrder commerceOrder) throws PortalException;
+	public String getFormattedOrderSubtotal(CommerceOrder commerceOrder)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public BigDecimal getOrderSubtotal(CommerceOrder commerceOrder)
@@ -84,7 +83,7 @@ public interface CommercePriceCalculationLocalService extends BaseLocalService {
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public BigDecimal getUnitPrice(long groupId, long userId,

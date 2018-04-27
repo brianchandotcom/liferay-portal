@@ -70,25 +70,18 @@ import java.util.Map;
 @ProviderType
 public class CPDefinitionServiceSoap {
 	public static com.liferay.commerce.product.model.CPDefinitionSoap addCPDefinition(
-		java.lang.String[] titleMapLanguageIds,
-		java.lang.String[] titleMapValues,
-		java.lang.String[] shortDescriptionMapLanguageIds,
-		java.lang.String[] shortDescriptionMapValues,
-		java.lang.String[] descriptionMapLanguageIds,
-		java.lang.String[] descriptionMapValues,
-		java.lang.String[] urlTitleMapLanguageIds,
-		java.lang.String[] urlTitleMapValues,
-		java.lang.String[] metaTitleMapLanguageIds,
-		java.lang.String[] metaTitleMapValues,
-		java.lang.String[] metaKeywordsMapLanguageIds,
-		java.lang.String[] metaKeywordsMapValues,
-		java.lang.String[] metaDescriptionMapLanguageIds,
-		java.lang.String[] metaDescriptionMapValues,
-		java.lang.String productTypeName, boolean ignoreSKUCombinations,
-		boolean shippable, boolean freeShipping, boolean shipSeparately,
-		double shippingExtraPrice, double width, double height, double depth,
-		double weight, long cpTaxCategoryId, boolean taxExempt,
-		boolean telcoOrElectronics, java.lang.String ddmStructureKey,
+		String[] titleMapLanguageIds, String[] titleMapValues,
+		String[] shortDescriptionMapLanguageIds,
+		String[] shortDescriptionMapValues, String[] descriptionMapLanguageIds,
+		String[] descriptionMapValues, String[] urlTitleMapLanguageIds,
+		String[] urlTitleMapValues, String[] metaTitleMapLanguageIds,
+		String[] metaTitleMapValues, String[] metaKeywordsMapLanguageIds,
+		String[] metaKeywordsMapValues, String[] metaDescriptionMapLanguageIds,
+		String[] metaDescriptionMapValues, String productTypeName,
+		boolean ignoreSKUCombinations, boolean shippable, boolean freeShipping,
+		boolean shipSeparately, double shippingExtraPrice, double width,
+		double height, double depth, double weight, long cpTaxCategoryId,
+		boolean taxExempt, boolean telcoOrElectronics, String ddmStructureKey,
 		boolean published, int displayDateMonth, int displayDateDay,
 		int displayDateYear, int displayDateHour, int displayDateMinute,
 		int expirationDateMonth, int expirationDateDay, int expirationDateYear,
@@ -133,26 +126,19 @@ public class CPDefinitionServiceSoap {
 	}
 
 	public static com.liferay.commerce.product.model.CPDefinitionSoap addCPDefinition(
-		java.lang.String[] titleMapLanguageIds,
-		java.lang.String[] titleMapValues,
-		java.lang.String[] shortDescriptionMapLanguageIds,
-		java.lang.String[] shortDescriptionMapValues,
-		java.lang.String[] descriptionMapLanguageIds,
-		java.lang.String[] descriptionMapValues,
-		java.lang.String[] urlTitleMapLanguageIds,
-		java.lang.String[] urlTitleMapValues,
-		java.lang.String[] metaTitleMapLanguageIds,
-		java.lang.String[] metaTitleMapValues,
-		java.lang.String[] metaKeywordsMapLanguageIds,
-		java.lang.String[] metaKeywordsMapValues,
-		java.lang.String[] metaDescriptionMapLanguageIds,
-		java.lang.String[] metaDescriptionMapValues,
-		java.lang.String productTypeName, boolean ignoreSKUCombinations,
-		java.lang.String ddmStructureKey, boolean published,
-		int displayDateMonth, int displayDateDay, int displayDateYear,
-		int displayDateHour, int displayDateMinute, int expirationDateMonth,
-		int expirationDateDay, int expirationDateYear, int expirationDateHour,
-		int expirationDateMinute, boolean neverExpire,
+		String[] titleMapLanguageIds, String[] titleMapValues,
+		String[] shortDescriptionMapLanguageIds,
+		String[] shortDescriptionMapValues, String[] descriptionMapLanguageIds,
+		String[] descriptionMapValues, String[] urlTitleMapLanguageIds,
+		String[] urlTitleMapValues, String[] metaTitleMapLanguageIds,
+		String[] metaTitleMapValues, String[] metaKeywordsMapLanguageIds,
+		String[] metaKeywordsMapValues, String[] metaDescriptionMapLanguageIds,
+		String[] metaDescriptionMapValues, String productTypeName,
+		boolean ignoreSKUCombinations, String ddmStructureKey,
+		boolean published, int displayDateMonth, int displayDateDay,
+		int displayDateYear, int displayDateHour, int displayDateMinute,
+		int expirationDateMonth, int expirationDateDay, int expirationDateYear,
+		int expirationDateHour, int expirationDateMinute, boolean neverExpire,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
@@ -246,8 +232,8 @@ public class CPDefinitionServiceSoap {
 	}
 
 	public static com.liferay.commerce.product.model.CPDefinitionSoap[] getCPDefinitions(
-		long groupId, java.lang.String productTypeName,
-		java.lang.String languageId, int status, int start, int end,
+		long groupId, String productTypeName, String languageId, int status,
+		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.product.model.CPDefinition> orderByComparator)
 		throws RemoteException {
 		try {
@@ -282,8 +268,8 @@ public class CPDefinitionServiceSoap {
 	}
 
 	public static int getCPDefinitionsCount(long groupId,
-		java.lang.String productTypeName, java.lang.String languageId,
-		int status) throws RemoteException {
+		String productTypeName, String languageId, int status)
+		throws RemoteException {
 		try {
 			int returnValue = CPDefinitionServiceUtil.getCPDefinitionsCount(groupId,
 					productTypeName, languageId, status);
@@ -326,10 +312,10 @@ public class CPDefinitionServiceSoap {
 		}
 	}
 
-	public static java.lang.String getLayoutUuid(long cpDefinitionId)
+	public static String getLayoutUuid(long cpDefinitionId)
 		throws RemoteException {
 		try {
-			java.lang.String returnValue = CPDefinitionServiceUtil.getLayoutUuid(cpDefinitionId);
+			String returnValue = CPDefinitionServiceUtil.getLayoutUuid(cpDefinitionId);
 
 			return returnValue;
 		}
@@ -340,10 +326,10 @@ public class CPDefinitionServiceSoap {
 		}
 	}
 
-	public static java.lang.String getUrlTitleMapAsXML(long cpDefinitionId)
+	public static String getUrlTitleMapAsXML(long cpDefinitionId)
 		throws RemoteException {
 		try {
-			java.lang.String returnValue = CPDefinitionServiceUtil.getUrlTitleMapAsXML(cpDefinitionId);
+			String returnValue = CPDefinitionServiceUtil.getUrlTitleMapAsXML(cpDefinitionId);
 
 			return returnValue;
 		}
@@ -381,25 +367,18 @@ public class CPDefinitionServiceSoap {
 	}
 
 	public static com.liferay.commerce.product.model.CPDefinitionSoap updateCPDefinition(
-		long cpDefinitionId, java.lang.String[] titleMapLanguageIds,
-		java.lang.String[] titleMapValues,
-		java.lang.String[] shortDescriptionMapLanguageIds,
-		java.lang.String[] shortDescriptionMapValues,
-		java.lang.String[] descriptionMapLanguageIds,
-		java.lang.String[] descriptionMapValues,
-		java.lang.String[] urlTitleMapLanguageIds,
-		java.lang.String[] urlTitleMapValues,
-		java.lang.String[] metaTitleMapLanguageIds,
-		java.lang.String[] metaTitleMapValues,
-		java.lang.String[] metaKeywordsMapLanguageIds,
-		java.lang.String[] metaKeywordsMapValues,
-		java.lang.String[] metaDescriptionMapLanguageIds,
-		java.lang.String[] metaDescriptionMapValues,
-		boolean ignoreSKUCombinations, boolean shippable, boolean freeShipping,
-		boolean shipSeparately, double shippingExtraPrice, double width,
-		double height, double depth, double weight, long cpTaxCategoryId,
-		boolean taxExempt, boolean telcoOrElectronics,
-		java.lang.String ddmStructureKey, boolean published,
+		long cpDefinitionId, String[] titleMapLanguageIds,
+		String[] titleMapValues, String[] shortDescriptionMapLanguageIds,
+		String[] shortDescriptionMapValues, String[] descriptionMapLanguageIds,
+		String[] descriptionMapValues, String[] urlTitleMapLanguageIds,
+		String[] urlTitleMapValues, String[] metaTitleMapLanguageIds,
+		String[] metaTitleMapValues, String[] metaKeywordsMapLanguageIds,
+		String[] metaKeywordsMapValues, String[] metaDescriptionMapLanguageIds,
+		String[] metaDescriptionMapValues, boolean ignoreSKUCombinations,
+		boolean shippable, boolean freeShipping, boolean shipSeparately,
+		double shippingExtraPrice, double width, double height, double depth,
+		double weight, long cpTaxCategoryId, boolean taxExempt,
+		boolean telcoOrElectronics, String ddmStructureKey, boolean published,
 		int displayDateMonth, int displayDateDay, int displayDateYear,
 		int displayDateHour, int displayDateMinute, int expirationDateMonth,
 		int expirationDateDay, int expirationDateYear, int expirationDateHour,
@@ -444,25 +423,19 @@ public class CPDefinitionServiceSoap {
 	}
 
 	public static com.liferay.commerce.product.model.CPDefinitionSoap updateCPDefinition(
-		long cpDefinitionId, java.lang.String[] titleMapLanguageIds,
-		java.lang.String[] titleMapValues,
-		java.lang.String[] shortDescriptionMapLanguageIds,
-		java.lang.String[] shortDescriptionMapValues,
-		java.lang.String[] descriptionMapLanguageIds,
-		java.lang.String[] descriptionMapValues,
-		java.lang.String[] urlTitleMapLanguageIds,
-		java.lang.String[] urlTitleMapValues,
-		java.lang.String[] metaTitleMapLanguageIds,
-		java.lang.String[] metaTitleMapValues,
-		java.lang.String[] metaKeywordsMapLanguageIds,
-		java.lang.String[] metaKeywordsMapValues,
-		java.lang.String[] metaDescriptionMapLanguageIds,
-		java.lang.String[] metaDescriptionMapValues,
-		boolean ignoreSKUCombinations, java.lang.String ddmStructureKey,
-		boolean published, int displayDateMonth, int displayDateDay,
-		int displayDateYear, int displayDateHour, int displayDateMinute,
-		int expirationDateMonth, int expirationDateDay, int expirationDateYear,
-		int expirationDateHour, int expirationDateMinute, boolean neverExpire,
+		long cpDefinitionId, String[] titleMapLanguageIds,
+		String[] titleMapValues, String[] shortDescriptionMapLanguageIds,
+		String[] shortDescriptionMapValues, String[] descriptionMapLanguageIds,
+		String[] descriptionMapValues, String[] urlTitleMapLanguageIds,
+		String[] urlTitleMapValues, String[] metaTitleMapLanguageIds,
+		String[] metaTitleMapValues, String[] metaKeywordsMapLanguageIds,
+		String[] metaKeywordsMapValues, String[] metaDescriptionMapLanguageIds,
+		String[] metaDescriptionMapValues, boolean ignoreSKUCombinations,
+		String ddmStructureKey, boolean published, int displayDateMonth,
+		int displayDateDay, int displayDateYear, int displayDateHour,
+		int displayDateMinute, int expirationDateMonth, int expirationDateDay,
+		int expirationDateYear, int expirationDateHour,
+		int expirationDateMinute, boolean neverExpire,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
@@ -534,7 +507,7 @@ public class CPDefinitionServiceSoap {
 	}
 
 	public static void updateCPDisplayLayout(long cpDefinitionId,
-		java.lang.String layoutUuid,
+		String layoutUuid,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {

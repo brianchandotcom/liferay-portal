@@ -53,11 +53,10 @@ public class CPDefinitionOptionRelServiceUtil {
 
 	public static com.liferay.commerce.product.model.CPDefinitionOptionRel addCPDefinitionOptionRel(
 		long cpDefinitionId, long cpOptionId,
-		java.util.Map<java.util.Locale, java.lang.String> titleMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		java.lang.String ddmFormFieldTypeName, double priority,
-		boolean facetable, boolean required, boolean skuContributor,
-		boolean importOptionValue,
+		java.util.Map<java.util.Locale, String> titleMap,
+		java.util.Map<java.util.Locale, String> descriptionMap,
+		String ddmFormFieldTypeName, double priority, boolean facetable,
+		boolean required, boolean skuContributor, boolean importOptionValue,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
@@ -140,7 +139,7 @@ public class CPDefinitionOptionRelServiceUtil {
 	*
 	* @return the OSGi service identifier
 	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
+	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 
@@ -150,9 +149,8 @@ public class CPDefinitionOptionRelServiceUtil {
 	}
 
 	public static com.liferay.portal.kernel.search.BaseModelSearchResult<com.liferay.commerce.product.model.CPDefinitionOptionRel> searchCPDefinitionOptionRels(
-		long companyId, long groupId, long cpDefinitionId,
-		java.lang.String keywords, int start, int end,
-		com.liferay.portal.kernel.search.Sort sort)
+		long companyId, long groupId, long cpDefinitionId, String keywords,
+		int start, int end, com.liferay.portal.kernel.search.Sort sort)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .searchCPDefinitionOptionRels(companyId, groupId,
@@ -161,10 +159,10 @@ public class CPDefinitionOptionRelServiceUtil {
 
 	public static com.liferay.commerce.product.model.CPDefinitionOptionRel updateCPDefinitionOptionRel(
 		long cpDefinitionOptionRelId, long cpOptionId,
-		java.util.Map<java.util.Locale, java.lang.String> titleMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		java.lang.String ddmFormFieldTypeName, double priority,
-		boolean facetable, boolean required, boolean skuContributor,
+		java.util.Map<java.util.Locale, String> titleMap,
+		java.util.Map<java.util.Locale, String> descriptionMap,
+		String ddmFormFieldTypeName, double priority, boolean facetable,
+		boolean required, boolean skuContributor,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()

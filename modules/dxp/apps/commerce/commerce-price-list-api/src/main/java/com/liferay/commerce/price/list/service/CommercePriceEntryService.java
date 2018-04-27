@@ -101,7 +101,7 @@ public interface CommercePriceEntryService extends BaseService {
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public Hits search(SearchContext searchContext);
@@ -109,7 +109,7 @@ public interface CommercePriceEntryService extends BaseService {
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public BaseModelSearchResult<CommercePriceEntry> searchCommercePriceEntries(
 		long companyId, long groupId, long commercePriceListId,
-		java.lang.String keywords, int start, int end, Sort sort)
+		String keywords, int start, int end, Sort sort)
 		throws PortalException;
 
 	public CommercePriceEntry updateCommercePriceEntry(

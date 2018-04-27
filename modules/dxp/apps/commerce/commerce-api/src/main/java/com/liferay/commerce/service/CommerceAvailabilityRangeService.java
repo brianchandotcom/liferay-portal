@@ -59,7 +59,7 @@ public interface CommerceAvailabilityRangeService extends BaseService {
 	 * Never modify or reference this interface directly. Always use {@link CommerceAvailabilityRangeServiceUtil} to access the commerce availability range remote service. Add custom service methods to {@link com.liferay.commerce.service.impl.CommerceAvailabilityRangeServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	public CommerceAvailabilityRange addCommerceAvailabilityRange(
-		Map<Locale, java.lang.String> titleMap, double priority,
+		Map<Locale, String> titleMap, double priority,
 		ServiceContext serviceContext) throws PortalException;
 
 	public void deleteCommerceAvailabilityRange(
@@ -82,10 +82,10 @@ public interface CommerceAvailabilityRangeService extends BaseService {
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	public CommerceAvailabilityRange updateCommerceAvailabilityRange(
-		long commerceAvailabilityRangeId,
-		Map<Locale, java.lang.String> titleMap, double priority,
-		ServiceContext serviceContext) throws PortalException;
+		long commerceAvailabilityRangeId, Map<Locale, String> titleMap,
+		double priority, ServiceContext serviceContext)
+		throws PortalException;
 }

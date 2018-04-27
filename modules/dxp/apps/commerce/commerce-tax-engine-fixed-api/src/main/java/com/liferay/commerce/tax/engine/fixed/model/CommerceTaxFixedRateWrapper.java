@@ -138,7 +138,7 @@ public class CommerceTaxFixedRateWrapper implements CommerceTaxFixedRate,
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new CommerceTaxFixedRateWrapper((CommerceTaxFixedRate)_commerceTaxFixedRate.clone());
 	}
 
@@ -269,7 +269,7 @@ public class CommerceTaxFixedRateWrapper implements CommerceTaxFixedRate,
 	* @return the user name of this commerce tax fixed rate
 	*/
 	@Override
-	public java.lang.String getUserName() {
+	public String getUserName() {
 		return _commerceTaxFixedRate.getUserName();
 	}
 
@@ -279,7 +279,7 @@ public class CommerceTaxFixedRateWrapper implements CommerceTaxFixedRate,
 	* @return the user uuid of this commerce tax fixed rate
 	*/
 	@Override
-	public java.lang.String getUserUuid() {
+	public String getUserUuid() {
 		return _commerceTaxFixedRate.getUserUuid();
 	}
 
@@ -445,7 +445,7 @@ public class CommerceTaxFixedRateWrapper implements CommerceTaxFixedRate,
 	* @param userName the user name of this commerce tax fixed rate
 	*/
 	@Override
-	public void setUserName(java.lang.String userName) {
+	public void setUserName(String userName) {
 		_commerceTaxFixedRate.setUserName(userName);
 	}
 
@@ -455,7 +455,7 @@ public class CommerceTaxFixedRateWrapper implements CommerceTaxFixedRate,
 	* @param userUuid the user uuid of this commerce tax fixed rate
 	*/
 	@Override
-	public void setUserUuid(java.lang.String userUuid) {
+	public void setUserUuid(String userUuid) {
 		_commerceTaxFixedRate.setUserUuid(userUuid);
 	}
 
@@ -470,7 +470,7 @@ public class CommerceTaxFixedRateWrapper implements CommerceTaxFixedRate,
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _commerceTaxFixedRate.toString();
 	}
 
@@ -480,7 +480,7 @@ public class CommerceTaxFixedRateWrapper implements CommerceTaxFixedRate,
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _commerceTaxFixedRate.toXmlString();
 	}
 

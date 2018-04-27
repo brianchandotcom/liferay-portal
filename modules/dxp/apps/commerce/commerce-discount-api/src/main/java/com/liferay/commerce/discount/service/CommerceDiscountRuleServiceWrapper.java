@@ -36,8 +36,7 @@ public class CommerceDiscountRuleServiceWrapper
 
 	@Override
 	public com.liferay.commerce.discount.model.CommerceDiscountRule addCommerceDiscountRule(
-		long commerceDiscountId, java.lang.String type,
-		java.lang.String typeSettings,
+		long commerceDiscountId, String type, String typeSettings,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _commerceDiscountRuleService.addCommerceDiscountRule(commerceDiscountId,
@@ -56,14 +55,13 @@ public class CommerceDiscountRuleServiceWrapper
 	* @return the OSGi service identifier
 	*/
 	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
+	public String getOSGiServiceIdentifier() {
 		return _commerceDiscountRuleService.getOSGiServiceIdentifier();
 	}
 
 	@Override
 	public com.liferay.commerce.discount.model.CommerceDiscountRule updateCommerceDiscountRule(
-		long commerceDiscountRuleId, java.lang.String type,
-		java.lang.String typeSettings)
+		long commerceDiscountRuleId, String type, String typeSettings)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _commerceDiscountRuleService.updateCommerceDiscountRule(commerceDiscountRuleId,
 			type, typeSettings);

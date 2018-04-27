@@ -72,10 +72,9 @@ public interface CommerceWarehouseLocalService extends BaseLocalService,
 	public CommerceWarehouse addCommerceWarehouse(
 		CommerceWarehouse commerceWarehouse);
 
-	public CommerceWarehouse addCommerceWarehouse(java.lang.String name,
-		java.lang.String description, boolean active, java.lang.String street1,
-		java.lang.String street2, java.lang.String street3,
-		java.lang.String city, java.lang.String zip, long commerceRegionId,
+	public CommerceWarehouse addCommerceWarehouse(String name,
+		String description, boolean active, String street1, String street2,
+		String street3, String city, String zip, long commerceRegionId,
 		long commerceCountryId, double latitude, double longitude,
 		ServiceContext serviceContext) throws PortalException;
 
@@ -257,7 +256,7 @@ public interface CommerceWarehouseLocalService extends BaseLocalService,
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -265,14 +264,13 @@ public interface CommerceWarehouseLocalService extends BaseLocalService,
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<CommerceWarehouse> search(long groupId,
-		java.lang.String keywords, boolean all, long commerceCountryId,
-		int start, int end,
+	public List<CommerceWarehouse> search(long groupId, String keywords,
+		boolean all, long commerceCountryId, int start, int end,
 		OrderByComparator<CommerceWarehouse> orderByComparator);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int searchCount(long groupId, java.lang.String keywords,
-		boolean all, long commerceCountryId);
+	public int searchCount(long groupId, String keywords, boolean all,
+		long commerceCountryId);
 
 	public CommerceWarehouse setActive(long commerceWarehouseId, boolean active)
 		throws PortalException;
@@ -288,18 +286,15 @@ public interface CommerceWarehouseLocalService extends BaseLocalService,
 		CommerceWarehouse commerceWarehouse);
 
 	public CommerceWarehouse updateCommerceWarehouse(long commerceWarehouseId,
-		java.lang.String name, java.lang.String description, boolean active,
-		java.lang.String street1, java.lang.String street2,
-		java.lang.String street3, java.lang.String city, java.lang.String zip,
+		String name, String description, boolean active, String street1,
+		String street2, String street3, String city, String zip,
 		long commerceRegionId, long commerceCountryId, double latitude,
 		double longitude, ServiceContext serviceContext)
 		throws PortalException;
 
 	public CommerceWarehouse updateDefaultCommerceWarehouse(
-		long commerceWarehouseId, java.lang.String name,
-		java.lang.String street1, java.lang.String street2,
-		java.lang.String street3, java.lang.String city, java.lang.String zip,
-		long commerceRegionId, long commerceCountryId, double latitude,
-		double longitude, ServiceContext serviceContext)
-		throws PortalException;
+		long commerceWarehouseId, String name, String street1, String street2,
+		String street3, String city, String zip, long commerceRegionId,
+		long commerceCountryId, double latitude, double longitude,
+		ServiceContext serviceContext) throws PortalException;
 }

@@ -55,11 +55,11 @@ public class CommerceCountryLocalServiceUtil {
 	}
 
 	public static com.liferay.commerce.model.CommerceCountry addCommerceCountry(
-		java.util.Map<java.util.Locale, java.lang.String> nameMap,
+		java.util.Map<java.util.Locale, String> nameMap,
 		boolean billingAllowed, boolean shippingAllowed,
-		java.lang.String twoLettersISOCode,
-		java.lang.String threeLettersISOCode, int numericISOCode,
-		boolean subjectToVAT, double priority, boolean active,
+		String twoLettersISOCode, String threeLettersISOCode,
+		int numericISOCode, boolean subjectToVAT, double priority,
+		boolean active,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
@@ -216,7 +216,7 @@ public class CommerceCountryLocalServiceUtil {
 	* @return the matching commerce country, or <code>null</code> if a matching commerce country could not be found
 	*/
 	public static com.liferay.commerce.model.CommerceCountry fetchCommerceCountryByUuidAndGroupId(
-		java.lang.String uuid, long groupId) {
+		String uuid, long groupId) {
 		return getService().fetchCommerceCountryByUuidAndGroupId(uuid, groupId);
 	}
 
@@ -274,7 +274,7 @@ public class CommerceCountryLocalServiceUtil {
 	* @return the matching commerce countries, or an empty list if no matches were found
 	*/
 	public static java.util.List<com.liferay.commerce.model.CommerceCountry> getCommerceCountriesByUuidAndCompanyId(
-		java.lang.String uuid, long companyId) {
+		String uuid, long companyId) {
 		return getService()
 				   .getCommerceCountriesByUuidAndCompanyId(uuid, companyId);
 	}
@@ -290,7 +290,7 @@ public class CommerceCountryLocalServiceUtil {
 	* @return the range of matching commerce countries, or an empty list if no matches were found
 	*/
 	public static java.util.List<com.liferay.commerce.model.CommerceCountry> getCommerceCountriesByUuidAndCompanyId(
-		java.lang.String uuid, long companyId, int start, int end,
+		String uuid, long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.model.CommerceCountry> orderByComparator) {
 		return getService()
 				   .getCommerceCountriesByUuidAndCompanyId(uuid, companyId,
@@ -336,7 +336,7 @@ public class CommerceCountryLocalServiceUtil {
 	* @throws PortalException if a matching commerce country could not be found
 	*/
 	public static com.liferay.commerce.model.CommerceCountry getCommerceCountryByUuidAndGroupId(
-		java.lang.String uuid, long groupId)
+		String uuid, long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getCommerceCountryByUuidAndGroupId(uuid, groupId);
 	}
@@ -355,7 +355,7 @@ public class CommerceCountryLocalServiceUtil {
 	*
 	* @return the OSGi service identifier
 	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
+	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 
@@ -379,7 +379,7 @@ public class CommerceCountryLocalServiceUtil {
 
 	public static void importDefaultCountries(
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws java.lang.Exception {
+		throws Exception {
 		getService().importDefaultCountries(serviceContext);
 	}
 
@@ -402,11 +402,11 @@ public class CommerceCountryLocalServiceUtil {
 
 	public static com.liferay.commerce.model.CommerceCountry updateCommerceCountry(
 		long commerceCountryId,
-		java.util.Map<java.util.Locale, java.lang.String> nameMap,
+		java.util.Map<java.util.Locale, String> nameMap,
 		boolean billingAllowed, boolean shippingAllowed,
-		java.lang.String twoLettersISOCode,
-		java.lang.String threeLettersISOCode, int numericISOCode,
-		boolean subjectToVAT, double priority, boolean active,
+		String twoLettersISOCode, String threeLettersISOCode,
+		int numericISOCode, boolean subjectToVAT, double priority,
+		boolean active,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()

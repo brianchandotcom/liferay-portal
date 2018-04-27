@@ -66,8 +66,7 @@ import java.rmi.RemoteException;
 @ProviderType
 public class CPRuleServiceSoap {
 	public static com.liferay.commerce.product.model.CPRuleSoap addCPRule(
-		java.lang.String name, boolean active, java.lang.String type,
-		java.lang.String typeSettings,
+		String name, boolean active, String type, String typeSettings,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
@@ -143,8 +142,8 @@ public class CPRuleServiceSoap {
 	}
 
 	public static com.liferay.commerce.product.model.CPRuleSoap updateCPRule(
-		long cpRuleId, java.lang.String name, boolean active,
-		java.lang.String type, java.lang.String typeSettings,
+		long cpRuleId, String name, boolean active, String type,
+		String typeSettings,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {

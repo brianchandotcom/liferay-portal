@@ -57,8 +57,7 @@ import com.liferay.portal.kernel.util.MethodKey;
 public class CommerceAvailabilityRangeServiceHttp {
 	public static com.liferay.commerce.model.CommerceAvailabilityRange addCommerceAvailabilityRange(
 		HttpPrincipal httpPrincipal,
-		java.util.Map<java.util.Locale, java.lang.String> titleMap,
-		double priority,
+		java.util.Map<java.util.Locale, String> titleMap, double priority,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -211,8 +210,7 @@ public class CommerceAvailabilityRangeServiceHttp {
 
 	public static com.liferay.commerce.model.CommerceAvailabilityRange updateCommerceAvailabilityRange(
 		HttpPrincipal httpPrincipal, long commerceAvailabilityRangeId,
-		java.util.Map<java.util.Locale, java.lang.String> titleMap,
-		double priority,
+		java.util.Map<java.util.Locale, String> titleMap, double priority,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {

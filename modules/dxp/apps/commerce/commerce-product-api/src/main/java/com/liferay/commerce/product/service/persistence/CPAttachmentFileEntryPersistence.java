@@ -49,8 +49,7 @@ public interface CPAttachmentFileEntryPersistence extends BasePersistence<CPAtta
 	* @param uuid the uuid
 	* @return the matching cp attachment file entries
 	*/
-	public java.util.List<CPAttachmentFileEntry> findByUuid(
-		java.lang.String uuid);
+	public java.util.List<CPAttachmentFileEntry> findByUuid(String uuid);
 
 	/**
 	* Returns a range of all the cp attachment file entries where uuid = &#63;.
@@ -64,8 +63,8 @@ public interface CPAttachmentFileEntryPersistence extends BasePersistence<CPAtta
 	* @param end the upper bound of the range of cp attachment file entries (not inclusive)
 	* @return the range of matching cp attachment file entries
 	*/
-	public java.util.List<CPAttachmentFileEntry> findByUuid(
-		java.lang.String uuid, int start, int end);
+	public java.util.List<CPAttachmentFileEntry> findByUuid(String uuid,
+		int start, int end);
 
 	/**
 	* Returns an ordered range of all the cp attachment file entries where uuid = &#63;.
@@ -80,8 +79,8 @@ public interface CPAttachmentFileEntryPersistence extends BasePersistence<CPAtta
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching cp attachment file entries
 	*/
-	public java.util.List<CPAttachmentFileEntry> findByUuid(
-		java.lang.String uuid, int start, int end,
+	public java.util.List<CPAttachmentFileEntry> findByUuid(String uuid,
+		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<CPAttachmentFileEntry> orderByComparator);
 
 	/**
@@ -98,8 +97,8 @@ public interface CPAttachmentFileEntryPersistence extends BasePersistence<CPAtta
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching cp attachment file entries
 	*/
-	public java.util.List<CPAttachmentFileEntry> findByUuid(
-		java.lang.String uuid, int start, int end,
+	public java.util.List<CPAttachmentFileEntry> findByUuid(String uuid,
+		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<CPAttachmentFileEntry> orderByComparator,
 		boolean retrieveFromCache);
 
@@ -111,7 +110,7 @@ public interface CPAttachmentFileEntryPersistence extends BasePersistence<CPAtta
 	* @return the first matching cp attachment file entry
 	* @throws NoSuchCPAttachmentFileEntryException if a matching cp attachment file entry could not be found
 	*/
-	public CPAttachmentFileEntry findByUuid_First(java.lang.String uuid,
+	public CPAttachmentFileEntry findByUuid_First(String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<CPAttachmentFileEntry> orderByComparator)
 		throws NoSuchCPAttachmentFileEntryException;
 
@@ -122,7 +121,7 @@ public interface CPAttachmentFileEntryPersistence extends BasePersistence<CPAtta
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching cp attachment file entry, or <code>null</code> if a matching cp attachment file entry could not be found
 	*/
-	public CPAttachmentFileEntry fetchByUuid_First(java.lang.String uuid,
+	public CPAttachmentFileEntry fetchByUuid_First(String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<CPAttachmentFileEntry> orderByComparator);
 
 	/**
@@ -133,7 +132,7 @@ public interface CPAttachmentFileEntryPersistence extends BasePersistence<CPAtta
 	* @return the last matching cp attachment file entry
 	* @throws NoSuchCPAttachmentFileEntryException if a matching cp attachment file entry could not be found
 	*/
-	public CPAttachmentFileEntry findByUuid_Last(java.lang.String uuid,
+	public CPAttachmentFileEntry findByUuid_Last(String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<CPAttachmentFileEntry> orderByComparator)
 		throws NoSuchCPAttachmentFileEntryException;
 
@@ -144,7 +143,7 @@ public interface CPAttachmentFileEntryPersistence extends BasePersistence<CPAtta
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching cp attachment file entry, or <code>null</code> if a matching cp attachment file entry could not be found
 	*/
-	public CPAttachmentFileEntry fetchByUuid_Last(java.lang.String uuid,
+	public CPAttachmentFileEntry fetchByUuid_Last(String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<CPAttachmentFileEntry> orderByComparator);
 
 	/**
@@ -157,7 +156,7 @@ public interface CPAttachmentFileEntryPersistence extends BasePersistence<CPAtta
 	* @throws NoSuchCPAttachmentFileEntryException if a cp attachment file entry with the primary key could not be found
 	*/
 	public CPAttachmentFileEntry[] findByUuid_PrevAndNext(
-		long CPAttachmentFileEntryId, java.lang.String uuid,
+		long CPAttachmentFileEntryId, String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<CPAttachmentFileEntry> orderByComparator)
 		throws NoSuchCPAttachmentFileEntryException;
 
@@ -166,7 +165,7 @@ public interface CPAttachmentFileEntryPersistence extends BasePersistence<CPAtta
 	*
 	* @param uuid the uuid
 	*/
-	public void removeByUuid(java.lang.String uuid);
+	public void removeByUuid(String uuid);
 
 	/**
 	* Returns the number of cp attachment file entries where uuid = &#63;.
@@ -174,7 +173,7 @@ public interface CPAttachmentFileEntryPersistence extends BasePersistence<CPAtta
 	* @param uuid the uuid
 	* @return the number of matching cp attachment file entries
 	*/
-	public int countByUuid(java.lang.String uuid);
+	public int countByUuid(String uuid);
 
 	/**
 	* Returns the cp attachment file entry where uuid = &#63; and groupId = &#63; or throws a {@link NoSuchCPAttachmentFileEntryException} if it could not be found.
@@ -184,8 +183,8 @@ public interface CPAttachmentFileEntryPersistence extends BasePersistence<CPAtta
 	* @return the matching cp attachment file entry
 	* @throws NoSuchCPAttachmentFileEntryException if a matching cp attachment file entry could not be found
 	*/
-	public CPAttachmentFileEntry findByUUID_G(java.lang.String uuid,
-		long groupId) throws NoSuchCPAttachmentFileEntryException;
+	public CPAttachmentFileEntry findByUUID_G(String uuid, long groupId)
+		throws NoSuchCPAttachmentFileEntryException;
 
 	/**
 	* Returns the cp attachment file entry where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
@@ -194,8 +193,7 @@ public interface CPAttachmentFileEntryPersistence extends BasePersistence<CPAtta
 	* @param groupId the group ID
 	* @return the matching cp attachment file entry, or <code>null</code> if a matching cp attachment file entry could not be found
 	*/
-	public CPAttachmentFileEntry fetchByUUID_G(java.lang.String uuid,
-		long groupId);
+	public CPAttachmentFileEntry fetchByUUID_G(String uuid, long groupId);
 
 	/**
 	* Returns the cp attachment file entry where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -205,8 +203,8 @@ public interface CPAttachmentFileEntryPersistence extends BasePersistence<CPAtta
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching cp attachment file entry, or <code>null</code> if a matching cp attachment file entry could not be found
 	*/
-	public CPAttachmentFileEntry fetchByUUID_G(java.lang.String uuid,
-		long groupId, boolean retrieveFromCache);
+	public CPAttachmentFileEntry fetchByUUID_G(String uuid, long groupId,
+		boolean retrieveFromCache);
 
 	/**
 	* Removes the cp attachment file entry where uuid = &#63; and groupId = &#63; from the database.
@@ -215,8 +213,8 @@ public interface CPAttachmentFileEntryPersistence extends BasePersistence<CPAtta
 	* @param groupId the group ID
 	* @return the cp attachment file entry that was removed
 	*/
-	public CPAttachmentFileEntry removeByUUID_G(java.lang.String uuid,
-		long groupId) throws NoSuchCPAttachmentFileEntryException;
+	public CPAttachmentFileEntry removeByUUID_G(String uuid, long groupId)
+		throws NoSuchCPAttachmentFileEntryException;
 
 	/**
 	* Returns the number of cp attachment file entries where uuid = &#63; and groupId = &#63;.
@@ -225,7 +223,7 @@ public interface CPAttachmentFileEntryPersistence extends BasePersistence<CPAtta
 	* @param groupId the group ID
 	* @return the number of matching cp attachment file entries
 	*/
-	public int countByUUID_G(java.lang.String uuid, long groupId);
+	public int countByUUID_G(String uuid, long groupId);
 
 	/**
 	* Returns all the cp attachment file entries where uuid = &#63; and companyId = &#63;.
@@ -234,8 +232,8 @@ public interface CPAttachmentFileEntryPersistence extends BasePersistence<CPAtta
 	* @param companyId the company ID
 	* @return the matching cp attachment file entries
 	*/
-	public java.util.List<CPAttachmentFileEntry> findByUuid_C(
-		java.lang.String uuid, long companyId);
+	public java.util.List<CPAttachmentFileEntry> findByUuid_C(String uuid,
+		long companyId);
 
 	/**
 	* Returns a range of all the cp attachment file entries where uuid = &#63; and companyId = &#63;.
@@ -250,8 +248,8 @@ public interface CPAttachmentFileEntryPersistence extends BasePersistence<CPAtta
 	* @param end the upper bound of the range of cp attachment file entries (not inclusive)
 	* @return the range of matching cp attachment file entries
 	*/
-	public java.util.List<CPAttachmentFileEntry> findByUuid_C(
-		java.lang.String uuid, long companyId, int start, int end);
+	public java.util.List<CPAttachmentFileEntry> findByUuid_C(String uuid,
+		long companyId, int start, int end);
 
 	/**
 	* Returns an ordered range of all the cp attachment file entries where uuid = &#63; and companyId = &#63;.
@@ -267,8 +265,8 @@ public interface CPAttachmentFileEntryPersistence extends BasePersistence<CPAtta
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching cp attachment file entries
 	*/
-	public java.util.List<CPAttachmentFileEntry> findByUuid_C(
-		java.lang.String uuid, long companyId, int start, int end,
+	public java.util.List<CPAttachmentFileEntry> findByUuid_C(String uuid,
+		long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<CPAttachmentFileEntry> orderByComparator);
 
 	/**
@@ -286,8 +284,8 @@ public interface CPAttachmentFileEntryPersistence extends BasePersistence<CPAtta
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching cp attachment file entries
 	*/
-	public java.util.List<CPAttachmentFileEntry> findByUuid_C(
-		java.lang.String uuid, long companyId, int start, int end,
+	public java.util.List<CPAttachmentFileEntry> findByUuid_C(String uuid,
+		long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<CPAttachmentFileEntry> orderByComparator,
 		boolean retrieveFromCache);
 
@@ -300,7 +298,7 @@ public interface CPAttachmentFileEntryPersistence extends BasePersistence<CPAtta
 	* @return the first matching cp attachment file entry
 	* @throws NoSuchCPAttachmentFileEntryException if a matching cp attachment file entry could not be found
 	*/
-	public CPAttachmentFileEntry findByUuid_C_First(java.lang.String uuid,
+	public CPAttachmentFileEntry findByUuid_C_First(String uuid,
 		long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<CPAttachmentFileEntry> orderByComparator)
 		throws NoSuchCPAttachmentFileEntryException;
@@ -313,7 +311,7 @@ public interface CPAttachmentFileEntryPersistence extends BasePersistence<CPAtta
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching cp attachment file entry, or <code>null</code> if a matching cp attachment file entry could not be found
 	*/
-	public CPAttachmentFileEntry fetchByUuid_C_First(java.lang.String uuid,
+	public CPAttachmentFileEntry fetchByUuid_C_First(String uuid,
 		long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<CPAttachmentFileEntry> orderByComparator);
 
@@ -326,8 +324,7 @@ public interface CPAttachmentFileEntryPersistence extends BasePersistence<CPAtta
 	* @return the last matching cp attachment file entry
 	* @throws NoSuchCPAttachmentFileEntryException if a matching cp attachment file entry could not be found
 	*/
-	public CPAttachmentFileEntry findByUuid_C_Last(java.lang.String uuid,
-		long companyId,
+	public CPAttachmentFileEntry findByUuid_C_Last(String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<CPAttachmentFileEntry> orderByComparator)
 		throws NoSuchCPAttachmentFileEntryException;
 
@@ -339,7 +336,7 @@ public interface CPAttachmentFileEntryPersistence extends BasePersistence<CPAtta
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching cp attachment file entry, or <code>null</code> if a matching cp attachment file entry could not be found
 	*/
-	public CPAttachmentFileEntry fetchByUuid_C_Last(java.lang.String uuid,
+	public CPAttachmentFileEntry fetchByUuid_C_Last(String uuid,
 		long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<CPAttachmentFileEntry> orderByComparator);
 
@@ -354,7 +351,7 @@ public interface CPAttachmentFileEntryPersistence extends BasePersistence<CPAtta
 	* @throws NoSuchCPAttachmentFileEntryException if a cp attachment file entry with the primary key could not be found
 	*/
 	public CPAttachmentFileEntry[] findByUuid_C_PrevAndNext(
-		long CPAttachmentFileEntryId, java.lang.String uuid, long companyId,
+		long CPAttachmentFileEntryId, String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<CPAttachmentFileEntry> orderByComparator)
 		throws NoSuchCPAttachmentFileEntryException;
 
@@ -364,7 +361,7 @@ public interface CPAttachmentFileEntryPersistence extends BasePersistence<CPAtta
 	* @param uuid the uuid
 	* @param companyId the company ID
 	*/
-	public void removeByUuid_C(java.lang.String uuid, long companyId);
+	public void removeByUuid_C(String uuid, long companyId);
 
 	/**
 	* Returns the number of cp attachment file entries where uuid = &#63; and companyId = &#63;.
@@ -373,7 +370,7 @@ public interface CPAttachmentFileEntryPersistence extends BasePersistence<CPAtta
 	* @param companyId the company ID
 	* @return the number of matching cp attachment file entries
 	*/
-	public int countByUuid_C(java.lang.String uuid, long companyId);
+	public int countByUuid_C(String uuid, long companyId);
 
 	/**
 	* Returns all the cp attachment file entries where classNameId = &#63; and classPK = &#63;.
@@ -1318,5 +1315,5 @@ public interface CPAttachmentFileEntryPersistence extends BasePersistence<CPAtta
 	public int countAll();
 
 	@Override
-	public java.util.Set<java.lang.String> getBadColumnNames();
+	public java.util.Set<String> getBadColumnNames();
 }

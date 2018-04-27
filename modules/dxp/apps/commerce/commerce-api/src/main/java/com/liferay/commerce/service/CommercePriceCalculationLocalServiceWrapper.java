@@ -35,13 +35,13 @@ public class CommercePriceCalculationLocalServiceWrapper
 	}
 
 	@Override
-	public java.lang.String formatPrice(long groupId, java.math.BigDecimal price)
+	public String formatPrice(long groupId, java.math.BigDecimal price)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _commercePriceCalculationLocalService.formatPrice(groupId, price);
 	}
 
 	@Override
-	public java.lang.String formatPriceWithCurrency(long commerceCurrencyId,
+	public String formatPriceWithCurrency(long commerceCurrencyId,
 		java.math.BigDecimal price)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _commercePriceCalculationLocalService.formatPriceWithCurrency(commerceCurrencyId,
@@ -65,7 +65,7 @@ public class CommercePriceCalculationLocalServiceWrapper
 	}
 
 	@Override
-	public java.lang.String getFormattedFinalPrice(long groupId, long userId,
+	public String getFormattedFinalPrice(long groupId, long userId,
 		long cpInstanceId, int quantity)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _commercePriceCalculationLocalService.getFormattedFinalPrice(groupId,
@@ -73,15 +73,15 @@ public class CommercePriceCalculationLocalServiceWrapper
 	}
 
 	@Override
-	public java.lang.String getFormattedFinalPrice(long groupId,
-		long commerceCurrencyId, long userId, long cpInstanceId, int quantity)
+	public String getFormattedFinalPrice(long groupId, long commerceCurrencyId,
+		long userId, long cpInstanceId, int quantity)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _commercePriceCalculationLocalService.getFormattedFinalPrice(groupId,
 			commerceCurrencyId, userId, cpInstanceId, quantity);
 	}
 
 	@Override
-	public java.lang.String getFormattedOrderSubtotal(
+	public String getFormattedOrderSubtotal(
 		com.liferay.commerce.model.CommerceOrder commerceOrder)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _commercePriceCalculationLocalService.getFormattedOrderSubtotal(commerceOrder);
@@ -100,7 +100,7 @@ public class CommercePriceCalculationLocalServiceWrapper
 	* @return the OSGi service identifier
 	*/
 	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
+	public String getOSGiServiceIdentifier() {
 		return _commercePriceCalculationLocalService.getOSGiServiceIdentifier();
 	}
 

@@ -181,8 +181,8 @@ public interface CommerceShippingMethodPersistence extends BasePersistence<Comme
 	* @return the matching commerce shipping method
 	* @throws NoSuchShippingMethodException if a matching commerce shipping method could not be found
 	*/
-	public CommerceShippingMethod findByG_E(long groupId,
-		java.lang.String engineKey) throws NoSuchShippingMethodException;
+	public CommerceShippingMethod findByG_E(long groupId, String engineKey)
+		throws NoSuchShippingMethodException;
 
 	/**
 	* Returns the commerce shipping method where groupId = &#63; and engineKey = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
@@ -191,8 +191,7 @@ public interface CommerceShippingMethodPersistence extends BasePersistence<Comme
 	* @param engineKey the engine key
 	* @return the matching commerce shipping method, or <code>null</code> if a matching commerce shipping method could not be found
 	*/
-	public CommerceShippingMethod fetchByG_E(long groupId,
-		java.lang.String engineKey);
+	public CommerceShippingMethod fetchByG_E(long groupId, String engineKey);
 
 	/**
 	* Returns the commerce shipping method where groupId = &#63; and engineKey = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -202,8 +201,8 @@ public interface CommerceShippingMethodPersistence extends BasePersistence<Comme
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching commerce shipping method, or <code>null</code> if a matching commerce shipping method could not be found
 	*/
-	public CommerceShippingMethod fetchByG_E(long groupId,
-		java.lang.String engineKey, boolean retrieveFromCache);
+	public CommerceShippingMethod fetchByG_E(long groupId, String engineKey,
+		boolean retrieveFromCache);
 
 	/**
 	* Removes the commerce shipping method where groupId = &#63; and engineKey = &#63; from the database.
@@ -212,8 +211,8 @@ public interface CommerceShippingMethodPersistence extends BasePersistence<Comme
 	* @param engineKey the engine key
 	* @return the commerce shipping method that was removed
 	*/
-	public CommerceShippingMethod removeByG_E(long groupId,
-		java.lang.String engineKey) throws NoSuchShippingMethodException;
+	public CommerceShippingMethod removeByG_E(long groupId, String engineKey)
+		throws NoSuchShippingMethodException;
 
 	/**
 	* Returns the number of commerce shipping methods where groupId = &#63; and engineKey = &#63;.
@@ -222,7 +221,7 @@ public interface CommerceShippingMethodPersistence extends BasePersistence<Comme
 	* @param engineKey the engine key
 	* @return the number of matching commerce shipping methods
 	*/
-	public int countByG_E(long groupId, java.lang.String engineKey);
+	public int countByG_E(long groupId, String engineKey);
 
 	/**
 	* Returns all the commerce shipping methods where groupId = &#63; and active = &#63;.
@@ -493,5 +492,5 @@ public interface CommerceShippingMethodPersistence extends BasePersistence<Comme
 	public int countAll();
 
 	@Override
-	public java.util.Set<java.lang.String> getBadColumnNames();
+	public java.util.Set<String> getBadColumnNames();
 }

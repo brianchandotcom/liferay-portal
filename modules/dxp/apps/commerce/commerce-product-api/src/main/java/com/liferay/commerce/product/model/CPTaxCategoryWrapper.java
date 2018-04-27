@@ -129,7 +129,7 @@ public class CPTaxCategoryWrapper implements CPTaxCategory,
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new CPTaxCategoryWrapper((CPTaxCategory)_cpTaxCategory.clone());
 	}
 
@@ -139,7 +139,7 @@ public class CPTaxCategoryWrapper implements CPTaxCategory,
 	}
 
 	@Override
-	public java.lang.String[] getAvailableLanguageIds() {
+	public String[] getAvailableLanguageIds() {
 		return _cpTaxCategory.getAvailableLanguageIds();
 	}
 
@@ -174,7 +174,7 @@ public class CPTaxCategoryWrapper implements CPTaxCategory,
 	}
 
 	@Override
-	public java.lang.String getDefaultLanguageId() {
+	public String getDefaultLanguageId() {
 		return _cpTaxCategory.getDefaultLanguageId();
 	}
 
@@ -184,7 +184,7 @@ public class CPTaxCategoryWrapper implements CPTaxCategory,
 	* @return the description of this cp tax category
 	*/
 	@Override
-	public java.lang.String getDescription() {
+	public String getDescription() {
 		return _cpTaxCategory.getDescription();
 	}
 
@@ -195,7 +195,7 @@ public class CPTaxCategoryWrapper implements CPTaxCategory,
 	* @return the localized description of this cp tax category
 	*/
 	@Override
-	public java.lang.String getDescription(java.util.Locale locale) {
+	public String getDescription(java.util.Locale locale) {
 		return _cpTaxCategory.getDescription(locale);
 	}
 
@@ -207,8 +207,7 @@ public class CPTaxCategoryWrapper implements CPTaxCategory,
 	* @return the localized description of this cp tax category. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
 	*/
 	@Override
-	public java.lang.String getDescription(java.util.Locale locale,
-		boolean useDefault) {
+	public String getDescription(java.util.Locale locale, boolean useDefault) {
 		return _cpTaxCategory.getDescription(locale, useDefault);
 	}
 
@@ -219,7 +218,7 @@ public class CPTaxCategoryWrapper implements CPTaxCategory,
 	* @return the localized description of this cp tax category
 	*/
 	@Override
-	public java.lang.String getDescription(java.lang.String languageId) {
+	public String getDescription(String languageId) {
 		return _cpTaxCategory.getDescription(languageId);
 	}
 
@@ -231,18 +230,17 @@ public class CPTaxCategoryWrapper implements CPTaxCategory,
 	* @return the localized description of this cp tax category
 	*/
 	@Override
-	public java.lang.String getDescription(java.lang.String languageId,
-		boolean useDefault) {
+	public String getDescription(String languageId, boolean useDefault) {
 		return _cpTaxCategory.getDescription(languageId, useDefault);
 	}
 
 	@Override
-	public java.lang.String getDescriptionCurrentLanguageId() {
+	public String getDescriptionCurrentLanguageId() {
 		return _cpTaxCategory.getDescriptionCurrentLanguageId();
 	}
 
 	@Override
-	public java.lang.String getDescriptionCurrentValue() {
+	public String getDescriptionCurrentValue() {
 		return _cpTaxCategory.getDescriptionCurrentValue();
 	}
 
@@ -252,7 +250,7 @@ public class CPTaxCategoryWrapper implements CPTaxCategory,
 	* @return the locales and localized descriptions of this cp tax category
 	*/
 	@Override
-	public Map<java.util.Locale, java.lang.String> getDescriptionMap() {
+	public Map<java.util.Locale, String> getDescriptionMap() {
 		return _cpTaxCategory.getDescriptionMap();
 	}
 
@@ -287,7 +285,7 @@ public class CPTaxCategoryWrapper implements CPTaxCategory,
 	* @return the name of this cp tax category
 	*/
 	@Override
-	public java.lang.String getName() {
+	public String getName() {
 		return _cpTaxCategory.getName();
 	}
 
@@ -298,7 +296,7 @@ public class CPTaxCategoryWrapper implements CPTaxCategory,
 	* @return the localized name of this cp tax category
 	*/
 	@Override
-	public java.lang.String getName(java.util.Locale locale) {
+	public String getName(java.util.Locale locale) {
 		return _cpTaxCategory.getName(locale);
 	}
 
@@ -310,7 +308,7 @@ public class CPTaxCategoryWrapper implements CPTaxCategory,
 	* @return the localized name of this cp tax category. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
 	*/
 	@Override
-	public java.lang.String getName(java.util.Locale locale, boolean useDefault) {
+	public String getName(java.util.Locale locale, boolean useDefault) {
 		return _cpTaxCategory.getName(locale, useDefault);
 	}
 
@@ -321,7 +319,7 @@ public class CPTaxCategoryWrapper implements CPTaxCategory,
 	* @return the localized name of this cp tax category
 	*/
 	@Override
-	public java.lang.String getName(java.lang.String languageId) {
+	public String getName(String languageId) {
 		return _cpTaxCategory.getName(languageId);
 	}
 
@@ -333,18 +331,17 @@ public class CPTaxCategoryWrapper implements CPTaxCategory,
 	* @return the localized name of this cp tax category
 	*/
 	@Override
-	public java.lang.String getName(java.lang.String languageId,
-		boolean useDefault) {
+	public String getName(String languageId, boolean useDefault) {
 		return _cpTaxCategory.getName(languageId, useDefault);
 	}
 
 	@Override
-	public java.lang.String getNameCurrentLanguageId() {
+	public String getNameCurrentLanguageId() {
 		return _cpTaxCategory.getNameCurrentLanguageId();
 	}
 
 	@Override
-	public java.lang.String getNameCurrentValue() {
+	public String getNameCurrentValue() {
 		return _cpTaxCategory.getNameCurrentValue();
 	}
 
@@ -354,7 +351,7 @@ public class CPTaxCategoryWrapper implements CPTaxCategory,
 	* @return the locales and localized names of this cp tax category
 	*/
 	@Override
-	public Map<java.util.Locale, java.lang.String> getNameMap() {
+	public Map<java.util.Locale, String> getNameMap() {
 		return _cpTaxCategory.getNameMap();
 	}
 
@@ -389,7 +386,7 @@ public class CPTaxCategoryWrapper implements CPTaxCategory,
 	* @return the user name of this cp tax category
 	*/
 	@Override
-	public java.lang.String getUserName() {
+	public String getUserName() {
 		return _cpTaxCategory.getUserName();
 	}
 
@@ -399,7 +396,7 @@ public class CPTaxCategoryWrapper implements CPTaxCategory,
 	* @return the user uuid of this cp tax category
 	*/
 	@Override
-	public java.lang.String getUserUuid() {
+	public String getUserUuid() {
 		return _cpTaxCategory.getUserUuid();
 	}
 
@@ -482,7 +479,7 @@ public class CPTaxCategoryWrapper implements CPTaxCategory,
 	* @param description the description of this cp tax category
 	*/
 	@Override
-	public void setDescription(java.lang.String description) {
+	public void setDescription(String description) {
 		_cpTaxCategory.setDescription(description);
 	}
 
@@ -493,8 +490,7 @@ public class CPTaxCategoryWrapper implements CPTaxCategory,
 	* @param locale the locale of the language
 	*/
 	@Override
-	public void setDescription(java.lang.String description,
-		java.util.Locale locale) {
+	public void setDescription(String description, java.util.Locale locale) {
 		_cpTaxCategory.setDescription(description, locale);
 	}
 
@@ -506,13 +502,13 @@ public class CPTaxCategoryWrapper implements CPTaxCategory,
 	* @param defaultLocale the default locale
 	*/
 	@Override
-	public void setDescription(java.lang.String description,
-		java.util.Locale locale, java.util.Locale defaultLocale) {
+	public void setDescription(String description, java.util.Locale locale,
+		java.util.Locale defaultLocale) {
 		_cpTaxCategory.setDescription(description, locale, defaultLocale);
 	}
 
 	@Override
-	public void setDescriptionCurrentLanguageId(java.lang.String languageId) {
+	public void setDescriptionCurrentLanguageId(String languageId) {
 		_cpTaxCategory.setDescriptionCurrentLanguageId(languageId);
 	}
 
@@ -522,8 +518,7 @@ public class CPTaxCategoryWrapper implements CPTaxCategory,
 	* @param descriptionMap the locales and localized descriptions of this cp tax category
 	*/
 	@Override
-	public void setDescriptionMap(
-		Map<java.util.Locale, java.lang.String> descriptionMap) {
+	public void setDescriptionMap(Map<java.util.Locale, String> descriptionMap) {
 		_cpTaxCategory.setDescriptionMap(descriptionMap);
 	}
 
@@ -535,7 +530,7 @@ public class CPTaxCategoryWrapper implements CPTaxCategory,
 	*/
 	@Override
 	public void setDescriptionMap(
-		Map<java.util.Locale, java.lang.String> descriptionMap,
+		Map<java.util.Locale, String> descriptionMap,
 		java.util.Locale defaultLocale) {
 		_cpTaxCategory.setDescriptionMap(descriptionMap, defaultLocale);
 	}
@@ -582,7 +577,7 @@ public class CPTaxCategoryWrapper implements CPTaxCategory,
 	* @param name the name of this cp tax category
 	*/
 	@Override
-	public void setName(java.lang.String name) {
+	public void setName(String name) {
 		_cpTaxCategory.setName(name);
 	}
 
@@ -593,7 +588,7 @@ public class CPTaxCategoryWrapper implements CPTaxCategory,
 	* @param locale the locale of the language
 	*/
 	@Override
-	public void setName(java.lang.String name, java.util.Locale locale) {
+	public void setName(String name, java.util.Locale locale) {
 		_cpTaxCategory.setName(name, locale);
 	}
 
@@ -605,13 +600,13 @@ public class CPTaxCategoryWrapper implements CPTaxCategory,
 	* @param defaultLocale the default locale
 	*/
 	@Override
-	public void setName(java.lang.String name, java.util.Locale locale,
+	public void setName(String name, java.util.Locale locale,
 		java.util.Locale defaultLocale) {
 		_cpTaxCategory.setName(name, locale, defaultLocale);
 	}
 
 	@Override
-	public void setNameCurrentLanguageId(java.lang.String languageId) {
+	public void setNameCurrentLanguageId(String languageId) {
 		_cpTaxCategory.setNameCurrentLanguageId(languageId);
 	}
 
@@ -621,7 +616,7 @@ public class CPTaxCategoryWrapper implements CPTaxCategory,
 	* @param nameMap the locales and localized names of this cp tax category
 	*/
 	@Override
-	public void setNameMap(Map<java.util.Locale, java.lang.String> nameMap) {
+	public void setNameMap(Map<java.util.Locale, String> nameMap) {
 		_cpTaxCategory.setNameMap(nameMap);
 	}
 
@@ -632,7 +627,7 @@ public class CPTaxCategoryWrapper implements CPTaxCategory,
 	* @param defaultLocale the default locale
 	*/
 	@Override
-	public void setNameMap(Map<java.util.Locale, java.lang.String> nameMap,
+	public void setNameMap(Map<java.util.Locale, String> nameMap,
 		java.util.Locale defaultLocale) {
 		_cpTaxCategory.setNameMap(nameMap, defaultLocale);
 	}
@@ -673,7 +668,7 @@ public class CPTaxCategoryWrapper implements CPTaxCategory,
 	* @param userName the user name of this cp tax category
 	*/
 	@Override
-	public void setUserName(java.lang.String userName) {
+	public void setUserName(String userName) {
 		_cpTaxCategory.setUserName(userName);
 	}
 
@@ -683,7 +678,7 @@ public class CPTaxCategoryWrapper implements CPTaxCategory,
 	* @param userUuid the user uuid of this cp tax category
 	*/
 	@Override
-	public void setUserUuid(java.lang.String userUuid) {
+	public void setUserUuid(String userUuid) {
 		_cpTaxCategory.setUserUuid(userUuid);
 	}
 
@@ -698,7 +693,7 @@ public class CPTaxCategoryWrapper implements CPTaxCategory,
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _cpTaxCategory.toString();
 	}
 
@@ -708,7 +703,7 @@ public class CPTaxCategoryWrapper implements CPTaxCategory,
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _cpTaxCategory.toXmlString();
 	}
 

@@ -49,7 +49,7 @@ public interface CPDefinitionPersistence extends BasePersistence<CPDefinition> {
 	* @param uuid the uuid
 	* @return the matching cp definitions
 	*/
-	public java.util.List<CPDefinition> findByUuid(java.lang.String uuid);
+	public java.util.List<CPDefinition> findByUuid(String uuid);
 
 	/**
 	* Returns a range of all the cp definitions where uuid = &#63;.
@@ -63,8 +63,8 @@ public interface CPDefinitionPersistence extends BasePersistence<CPDefinition> {
 	* @param end the upper bound of the range of cp definitions (not inclusive)
 	* @return the range of matching cp definitions
 	*/
-	public java.util.List<CPDefinition> findByUuid(java.lang.String uuid,
-		int start, int end);
+	public java.util.List<CPDefinition> findByUuid(String uuid, int start,
+		int end);
 
 	/**
 	* Returns an ordered range of all the cp definitions where uuid = &#63;.
@@ -79,8 +79,8 @@ public interface CPDefinitionPersistence extends BasePersistence<CPDefinition> {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching cp definitions
 	*/
-	public java.util.List<CPDefinition> findByUuid(java.lang.String uuid,
-		int start, int end,
+	public java.util.List<CPDefinition> findByUuid(String uuid, int start,
+		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<CPDefinition> orderByComparator);
 
 	/**
@@ -97,8 +97,8 @@ public interface CPDefinitionPersistence extends BasePersistence<CPDefinition> {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching cp definitions
 	*/
-	public java.util.List<CPDefinition> findByUuid(java.lang.String uuid,
-		int start, int end,
+	public java.util.List<CPDefinition> findByUuid(String uuid, int start,
+		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<CPDefinition> orderByComparator,
 		boolean retrieveFromCache);
 
@@ -110,7 +110,7 @@ public interface CPDefinitionPersistence extends BasePersistence<CPDefinition> {
 	* @return the first matching cp definition
 	* @throws NoSuchCPDefinitionException if a matching cp definition could not be found
 	*/
-	public CPDefinition findByUuid_First(java.lang.String uuid,
+	public CPDefinition findByUuid_First(String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<CPDefinition> orderByComparator)
 		throws NoSuchCPDefinitionException;
 
@@ -121,7 +121,7 @@ public interface CPDefinitionPersistence extends BasePersistence<CPDefinition> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching cp definition, or <code>null</code> if a matching cp definition could not be found
 	*/
-	public CPDefinition fetchByUuid_First(java.lang.String uuid,
+	public CPDefinition fetchByUuid_First(String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<CPDefinition> orderByComparator);
 
 	/**
@@ -132,7 +132,7 @@ public interface CPDefinitionPersistence extends BasePersistence<CPDefinition> {
 	* @return the last matching cp definition
 	* @throws NoSuchCPDefinitionException if a matching cp definition could not be found
 	*/
-	public CPDefinition findByUuid_Last(java.lang.String uuid,
+	public CPDefinition findByUuid_Last(String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<CPDefinition> orderByComparator)
 		throws NoSuchCPDefinitionException;
 
@@ -143,7 +143,7 @@ public interface CPDefinitionPersistence extends BasePersistence<CPDefinition> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching cp definition, or <code>null</code> if a matching cp definition could not be found
 	*/
-	public CPDefinition fetchByUuid_Last(java.lang.String uuid,
+	public CPDefinition fetchByUuid_Last(String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<CPDefinition> orderByComparator);
 
 	/**
@@ -156,7 +156,7 @@ public interface CPDefinitionPersistence extends BasePersistence<CPDefinition> {
 	* @throws NoSuchCPDefinitionException if a cp definition with the primary key could not be found
 	*/
 	public CPDefinition[] findByUuid_PrevAndNext(long CPDefinitionId,
-		java.lang.String uuid,
+		String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<CPDefinition> orderByComparator)
 		throws NoSuchCPDefinitionException;
 
@@ -165,7 +165,7 @@ public interface CPDefinitionPersistence extends BasePersistence<CPDefinition> {
 	*
 	* @param uuid the uuid
 	*/
-	public void removeByUuid(java.lang.String uuid);
+	public void removeByUuid(String uuid);
 
 	/**
 	* Returns the number of cp definitions where uuid = &#63;.
@@ -173,7 +173,7 @@ public interface CPDefinitionPersistence extends BasePersistence<CPDefinition> {
 	* @param uuid the uuid
 	* @return the number of matching cp definitions
 	*/
-	public int countByUuid(java.lang.String uuid);
+	public int countByUuid(String uuid);
 
 	/**
 	* Returns the cp definition where uuid = &#63; and groupId = &#63; or throws a {@link NoSuchCPDefinitionException} if it could not be found.
@@ -183,7 +183,7 @@ public interface CPDefinitionPersistence extends BasePersistence<CPDefinition> {
 	* @return the matching cp definition
 	* @throws NoSuchCPDefinitionException if a matching cp definition could not be found
 	*/
-	public CPDefinition findByUUID_G(java.lang.String uuid, long groupId)
+	public CPDefinition findByUUID_G(String uuid, long groupId)
 		throws NoSuchCPDefinitionException;
 
 	/**
@@ -193,7 +193,7 @@ public interface CPDefinitionPersistence extends BasePersistence<CPDefinition> {
 	* @param groupId the group ID
 	* @return the matching cp definition, or <code>null</code> if a matching cp definition could not be found
 	*/
-	public CPDefinition fetchByUUID_G(java.lang.String uuid, long groupId);
+	public CPDefinition fetchByUUID_G(String uuid, long groupId);
 
 	/**
 	* Returns the cp definition where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -203,7 +203,7 @@ public interface CPDefinitionPersistence extends BasePersistence<CPDefinition> {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching cp definition, or <code>null</code> if a matching cp definition could not be found
 	*/
-	public CPDefinition fetchByUUID_G(java.lang.String uuid, long groupId,
+	public CPDefinition fetchByUUID_G(String uuid, long groupId,
 		boolean retrieveFromCache);
 
 	/**
@@ -213,7 +213,7 @@ public interface CPDefinitionPersistence extends BasePersistence<CPDefinition> {
 	* @param groupId the group ID
 	* @return the cp definition that was removed
 	*/
-	public CPDefinition removeByUUID_G(java.lang.String uuid, long groupId)
+	public CPDefinition removeByUUID_G(String uuid, long groupId)
 		throws NoSuchCPDefinitionException;
 
 	/**
@@ -223,7 +223,7 @@ public interface CPDefinitionPersistence extends BasePersistence<CPDefinition> {
 	* @param groupId the group ID
 	* @return the number of matching cp definitions
 	*/
-	public int countByUUID_G(java.lang.String uuid, long groupId);
+	public int countByUUID_G(String uuid, long groupId);
 
 	/**
 	* Returns all the cp definitions where uuid = &#63; and companyId = &#63;.
@@ -232,8 +232,7 @@ public interface CPDefinitionPersistence extends BasePersistence<CPDefinition> {
 	* @param companyId the company ID
 	* @return the matching cp definitions
 	*/
-	public java.util.List<CPDefinition> findByUuid_C(java.lang.String uuid,
-		long companyId);
+	public java.util.List<CPDefinition> findByUuid_C(String uuid, long companyId);
 
 	/**
 	* Returns a range of all the cp definitions where uuid = &#63; and companyId = &#63;.
@@ -248,7 +247,7 @@ public interface CPDefinitionPersistence extends BasePersistence<CPDefinition> {
 	* @param end the upper bound of the range of cp definitions (not inclusive)
 	* @return the range of matching cp definitions
 	*/
-	public java.util.List<CPDefinition> findByUuid_C(java.lang.String uuid,
+	public java.util.List<CPDefinition> findByUuid_C(String uuid,
 		long companyId, int start, int end);
 
 	/**
@@ -265,7 +264,7 @@ public interface CPDefinitionPersistence extends BasePersistence<CPDefinition> {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching cp definitions
 	*/
-	public java.util.List<CPDefinition> findByUuid_C(java.lang.String uuid,
+	public java.util.List<CPDefinition> findByUuid_C(String uuid,
 		long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<CPDefinition> orderByComparator);
 
@@ -284,7 +283,7 @@ public interface CPDefinitionPersistence extends BasePersistence<CPDefinition> {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching cp definitions
 	*/
-	public java.util.List<CPDefinition> findByUuid_C(java.lang.String uuid,
+	public java.util.List<CPDefinition> findByUuid_C(String uuid,
 		long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<CPDefinition> orderByComparator,
 		boolean retrieveFromCache);
@@ -298,8 +297,7 @@ public interface CPDefinitionPersistence extends BasePersistence<CPDefinition> {
 	* @return the first matching cp definition
 	* @throws NoSuchCPDefinitionException if a matching cp definition could not be found
 	*/
-	public CPDefinition findByUuid_C_First(java.lang.String uuid,
-		long companyId,
+	public CPDefinition findByUuid_C_First(String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<CPDefinition> orderByComparator)
 		throws NoSuchCPDefinitionException;
 
@@ -311,8 +309,7 @@ public interface CPDefinitionPersistence extends BasePersistence<CPDefinition> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching cp definition, or <code>null</code> if a matching cp definition could not be found
 	*/
-	public CPDefinition fetchByUuid_C_First(java.lang.String uuid,
-		long companyId,
+	public CPDefinition fetchByUuid_C_First(String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<CPDefinition> orderByComparator);
 
 	/**
@@ -324,8 +321,7 @@ public interface CPDefinitionPersistence extends BasePersistence<CPDefinition> {
 	* @return the last matching cp definition
 	* @throws NoSuchCPDefinitionException if a matching cp definition could not be found
 	*/
-	public CPDefinition findByUuid_C_Last(java.lang.String uuid,
-		long companyId,
+	public CPDefinition findByUuid_C_Last(String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<CPDefinition> orderByComparator)
 		throws NoSuchCPDefinitionException;
 
@@ -337,8 +333,7 @@ public interface CPDefinitionPersistence extends BasePersistence<CPDefinition> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching cp definition, or <code>null</code> if a matching cp definition could not be found
 	*/
-	public CPDefinition fetchByUuid_C_Last(java.lang.String uuid,
-		long companyId,
+	public CPDefinition fetchByUuid_C_Last(String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<CPDefinition> orderByComparator);
 
 	/**
@@ -352,7 +347,7 @@ public interface CPDefinitionPersistence extends BasePersistence<CPDefinition> {
 	* @throws NoSuchCPDefinitionException if a cp definition with the primary key could not be found
 	*/
 	public CPDefinition[] findByUuid_C_PrevAndNext(long CPDefinitionId,
-		java.lang.String uuid, long companyId,
+		String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<CPDefinition> orderByComparator)
 		throws NoSuchCPDefinitionException;
 
@@ -362,7 +357,7 @@ public interface CPDefinitionPersistence extends BasePersistence<CPDefinition> {
 	* @param uuid the uuid
 	* @param companyId the company ID
 	*/
-	public void removeByUuid_C(java.lang.String uuid, long companyId);
+	public void removeByUuid_C(String uuid, long companyId);
 
 	/**
 	* Returns the number of cp definitions where uuid = &#63; and companyId = &#63;.
@@ -371,7 +366,7 @@ public interface CPDefinitionPersistence extends BasePersistence<CPDefinition> {
 	* @param companyId the company ID
 	* @return the number of matching cp definitions
 	*/
-	public int countByUuid_C(java.lang.String uuid, long companyId);
+	public int countByUuid_C(String uuid, long companyId);
 
 	/**
 	* Returns all the cp definitions where groupId = &#63;.
@@ -1517,5 +1512,5 @@ public interface CPDefinitionPersistence extends BasePersistence<CPDefinition> {
 	public int countAll();
 
 	@Override
-	public java.util.Set<java.lang.String> getBadColumnNames();
+	public java.util.Set<String> getBadColumnNames();
 }

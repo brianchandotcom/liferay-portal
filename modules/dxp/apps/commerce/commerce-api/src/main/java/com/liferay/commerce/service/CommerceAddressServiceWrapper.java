@@ -35,12 +35,10 @@ public class CommerceAddressServiceWrapper implements CommerceAddressService,
 
 	@Override
 	public com.liferay.commerce.model.CommerceAddress addCommerceAddress(
-		java.lang.String className, long classPK, java.lang.String name,
-		java.lang.String description, java.lang.String street1,
-		java.lang.String street2, java.lang.String street3,
-		java.lang.String city, java.lang.String zip, long commerceRegionId,
-		long commerceCountryId, java.lang.String phoneNumber,
-		boolean defaultBilling, boolean defaultShipping,
+		String className, long classPK, String name, String description,
+		String street1, String street2, String street3, String city,
+		String zip, long commerceRegionId, long commerceCountryId,
+		String phoneNumber, boolean defaultBilling, boolean defaultShipping,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _commerceAddressService.addCommerceAddress(className, classPK,
@@ -71,7 +69,7 @@ public class CommerceAddressServiceWrapper implements CommerceAddressService,
 
 	@Override
 	public java.util.List<com.liferay.commerce.model.CommerceAddress> getCommerceAddresses(
-		long groupId, java.lang.String className, long classPK)
+		long groupId, String className, long classPK)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _commerceAddressService.getCommerceAddresses(groupId, className,
 			classPK);
@@ -79,8 +77,7 @@ public class CommerceAddressServiceWrapper implements CommerceAddressService,
 
 	@Override
 	public java.util.List<com.liferay.commerce.model.CommerceAddress> getCommerceAddresses(
-		long groupId, java.lang.String className, long classPK, int start,
-		int end,
+		long groupId, String className, long classPK, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.model.CommerceAddress> orderByComparator)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _commerceAddressService.getCommerceAddresses(groupId, className,
@@ -88,8 +85,8 @@ public class CommerceAddressServiceWrapper implements CommerceAddressService,
 	}
 
 	@Override
-	public int getCommerceAddressesCount(long groupId,
-		java.lang.String className, long classPK)
+	public int getCommerceAddressesCount(long groupId, String className,
+		long classPK)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _commerceAddressService.getCommerceAddressesCount(groupId,
 			className, classPK);
@@ -101,14 +98,14 @@ public class CommerceAddressServiceWrapper implements CommerceAddressService,
 	* @return the OSGi service identifier
 	*/
 	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
+	public String getOSGiServiceIdentifier() {
 		return _commerceAddressService.getOSGiServiceIdentifier();
 	}
 
 	@Override
 	public com.liferay.portal.kernel.search.BaseModelSearchResult<com.liferay.commerce.model.CommerceAddress> searchCommerceAddresses(
-		long companyId, long groupId, java.lang.String className, long classPK,
-		java.lang.String keywords, int start, int end,
+		long companyId, long groupId, String className, long classPK,
+		String keywords, int start, int end,
 		com.liferay.portal.kernel.search.Sort sort)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _commerceAddressService.searchCommerceAddresses(companyId,
@@ -117,12 +114,10 @@ public class CommerceAddressServiceWrapper implements CommerceAddressService,
 
 	@Override
 	public com.liferay.commerce.model.CommerceAddress updateCommerceAddress(
-		long commerceAddressId, java.lang.String name,
-		java.lang.String description, java.lang.String street1,
-		java.lang.String street2, java.lang.String street3,
-		java.lang.String city, java.lang.String zip, long commerceRegionId,
-		long commerceCountryId, java.lang.String phoneNumber,
-		boolean defaultBilling, boolean defaultShipping,
+		long commerceAddressId, String name, String description,
+		String street1, String street2, String street3, String city,
+		String zip, long commerceRegionId, long commerceCountryId,
+		String phoneNumber, boolean defaultBilling, boolean defaultShipping,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _commerceAddressService.updateCommerceAddress(commerceAddressId,

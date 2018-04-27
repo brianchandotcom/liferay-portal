@@ -120,7 +120,7 @@ public class CPSpecificationOptionUtil {
 	* @param uuid the uuid
 	* @return the matching cp specification options
 	*/
-	public static List<CPSpecificationOption> findByUuid(java.lang.String uuid) {
+	public static List<CPSpecificationOption> findByUuid(String uuid) {
 		return getPersistence().findByUuid(uuid);
 	}
 
@@ -136,8 +136,8 @@ public class CPSpecificationOptionUtil {
 	* @param end the upper bound of the range of cp specification options (not inclusive)
 	* @return the range of matching cp specification options
 	*/
-	public static List<CPSpecificationOption> findByUuid(
-		java.lang.String uuid, int start, int end) {
+	public static List<CPSpecificationOption> findByUuid(String uuid,
+		int start, int end) {
 		return getPersistence().findByUuid(uuid, start, end);
 	}
 
@@ -154,8 +154,8 @@ public class CPSpecificationOptionUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching cp specification options
 	*/
-	public static List<CPSpecificationOption> findByUuid(
-		java.lang.String uuid, int start, int end,
+	public static List<CPSpecificationOption> findByUuid(String uuid,
+		int start, int end,
 		OrderByComparator<CPSpecificationOption> orderByComparator) {
 		return getPersistence().findByUuid(uuid, start, end, orderByComparator);
 	}
@@ -174,8 +174,8 @@ public class CPSpecificationOptionUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching cp specification options
 	*/
-	public static List<CPSpecificationOption> findByUuid(
-		java.lang.String uuid, int start, int end,
+	public static List<CPSpecificationOption> findByUuid(String uuid,
+		int start, int end,
 		OrderByComparator<CPSpecificationOption> orderByComparator,
 		boolean retrieveFromCache) {
 		return getPersistence()
@@ -191,8 +191,7 @@ public class CPSpecificationOptionUtil {
 	* @return the first matching cp specification option
 	* @throws NoSuchCPSpecificationOptionException if a matching cp specification option could not be found
 	*/
-	public static CPSpecificationOption findByUuid_First(
-		java.lang.String uuid,
+	public static CPSpecificationOption findByUuid_First(String uuid,
 		OrderByComparator<CPSpecificationOption> orderByComparator)
 		throws com.liferay.commerce.product.exception.NoSuchCPSpecificationOptionException {
 		return getPersistence().findByUuid_First(uuid, orderByComparator);
@@ -205,8 +204,7 @@ public class CPSpecificationOptionUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching cp specification option, or <code>null</code> if a matching cp specification option could not be found
 	*/
-	public static CPSpecificationOption fetchByUuid_First(
-		java.lang.String uuid,
+	public static CPSpecificationOption fetchByUuid_First(String uuid,
 		OrderByComparator<CPSpecificationOption> orderByComparator) {
 		return getPersistence().fetchByUuid_First(uuid, orderByComparator);
 	}
@@ -219,7 +217,7 @@ public class CPSpecificationOptionUtil {
 	* @return the last matching cp specification option
 	* @throws NoSuchCPSpecificationOptionException if a matching cp specification option could not be found
 	*/
-	public static CPSpecificationOption findByUuid_Last(java.lang.String uuid,
+	public static CPSpecificationOption findByUuid_Last(String uuid,
 		OrderByComparator<CPSpecificationOption> orderByComparator)
 		throws com.liferay.commerce.product.exception.NoSuchCPSpecificationOptionException {
 		return getPersistence().findByUuid_Last(uuid, orderByComparator);
@@ -232,8 +230,7 @@ public class CPSpecificationOptionUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching cp specification option, or <code>null</code> if a matching cp specification option could not be found
 	*/
-	public static CPSpecificationOption fetchByUuid_Last(
-		java.lang.String uuid,
+	public static CPSpecificationOption fetchByUuid_Last(String uuid,
 		OrderByComparator<CPSpecificationOption> orderByComparator) {
 		return getPersistence().fetchByUuid_Last(uuid, orderByComparator);
 	}
@@ -248,7 +245,7 @@ public class CPSpecificationOptionUtil {
 	* @throws NoSuchCPSpecificationOptionException if a cp specification option with the primary key could not be found
 	*/
 	public static CPSpecificationOption[] findByUuid_PrevAndNext(
-		long CPSpecificationOptionId, java.lang.String uuid,
+		long CPSpecificationOptionId, String uuid,
 		OrderByComparator<CPSpecificationOption> orderByComparator)
 		throws com.liferay.commerce.product.exception.NoSuchCPSpecificationOptionException {
 		return getPersistence()
@@ -261,7 +258,7 @@ public class CPSpecificationOptionUtil {
 	*
 	* @param uuid the uuid
 	*/
-	public static void removeByUuid(java.lang.String uuid) {
+	public static void removeByUuid(String uuid) {
 		getPersistence().removeByUuid(uuid);
 	}
 
@@ -271,7 +268,7 @@ public class CPSpecificationOptionUtil {
 	* @param uuid the uuid
 	* @return the number of matching cp specification options
 	*/
-	public static int countByUuid(java.lang.String uuid) {
+	public static int countByUuid(String uuid) {
 		return getPersistence().countByUuid(uuid);
 	}
 
@@ -283,8 +280,7 @@ public class CPSpecificationOptionUtil {
 	* @return the matching cp specification option
 	* @throws NoSuchCPSpecificationOptionException if a matching cp specification option could not be found
 	*/
-	public static CPSpecificationOption findByUUID_G(java.lang.String uuid,
-		long groupId)
+	public static CPSpecificationOption findByUUID_G(String uuid, long groupId)
 		throws com.liferay.commerce.product.exception.NoSuchCPSpecificationOptionException {
 		return getPersistence().findByUUID_G(uuid, groupId);
 	}
@@ -296,8 +292,7 @@ public class CPSpecificationOptionUtil {
 	* @param groupId the group ID
 	* @return the matching cp specification option, or <code>null</code> if a matching cp specification option could not be found
 	*/
-	public static CPSpecificationOption fetchByUUID_G(java.lang.String uuid,
-		long groupId) {
+	public static CPSpecificationOption fetchByUUID_G(String uuid, long groupId) {
 		return getPersistence().fetchByUUID_G(uuid, groupId);
 	}
 
@@ -309,7 +304,7 @@ public class CPSpecificationOptionUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching cp specification option, or <code>null</code> if a matching cp specification option could not be found
 	*/
-	public static CPSpecificationOption fetchByUUID_G(java.lang.String uuid,
+	public static CPSpecificationOption fetchByUUID_G(String uuid,
 		long groupId, boolean retrieveFromCache) {
 		return getPersistence().fetchByUUID_G(uuid, groupId, retrieveFromCache);
 	}
@@ -321,8 +316,7 @@ public class CPSpecificationOptionUtil {
 	* @param groupId the group ID
 	* @return the cp specification option that was removed
 	*/
-	public static CPSpecificationOption removeByUUID_G(java.lang.String uuid,
-		long groupId)
+	public static CPSpecificationOption removeByUUID_G(String uuid, long groupId)
 		throws com.liferay.commerce.product.exception.NoSuchCPSpecificationOptionException {
 		return getPersistence().removeByUUID_G(uuid, groupId);
 	}
@@ -334,7 +328,7 @@ public class CPSpecificationOptionUtil {
 	* @param groupId the group ID
 	* @return the number of matching cp specification options
 	*/
-	public static int countByUUID_G(java.lang.String uuid, long groupId) {
+	public static int countByUUID_G(String uuid, long groupId) {
 		return getPersistence().countByUUID_G(uuid, groupId);
 	}
 
@@ -345,8 +339,8 @@ public class CPSpecificationOptionUtil {
 	* @param companyId the company ID
 	* @return the matching cp specification options
 	*/
-	public static List<CPSpecificationOption> findByUuid_C(
-		java.lang.String uuid, long companyId) {
+	public static List<CPSpecificationOption> findByUuid_C(String uuid,
+		long companyId) {
 		return getPersistence().findByUuid_C(uuid, companyId);
 	}
 
@@ -363,8 +357,8 @@ public class CPSpecificationOptionUtil {
 	* @param end the upper bound of the range of cp specification options (not inclusive)
 	* @return the range of matching cp specification options
 	*/
-	public static List<CPSpecificationOption> findByUuid_C(
-		java.lang.String uuid, long companyId, int start, int end) {
+	public static List<CPSpecificationOption> findByUuid_C(String uuid,
+		long companyId, int start, int end) {
 		return getPersistence().findByUuid_C(uuid, companyId, start, end);
 	}
 
@@ -382,8 +376,8 @@ public class CPSpecificationOptionUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching cp specification options
 	*/
-	public static List<CPSpecificationOption> findByUuid_C(
-		java.lang.String uuid, long companyId, int start, int end,
+	public static List<CPSpecificationOption> findByUuid_C(String uuid,
+		long companyId, int start, int end,
 		OrderByComparator<CPSpecificationOption> orderByComparator) {
 		return getPersistence()
 				   .findByUuid_C(uuid, companyId, start, end, orderByComparator);
@@ -404,8 +398,8 @@ public class CPSpecificationOptionUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching cp specification options
 	*/
-	public static List<CPSpecificationOption> findByUuid_C(
-		java.lang.String uuid, long companyId, int start, int end,
+	public static List<CPSpecificationOption> findByUuid_C(String uuid,
+		long companyId, int start, int end,
 		OrderByComparator<CPSpecificationOption> orderByComparator,
 		boolean retrieveFromCache) {
 		return getPersistence()
@@ -422,8 +416,8 @@ public class CPSpecificationOptionUtil {
 	* @return the first matching cp specification option
 	* @throws NoSuchCPSpecificationOptionException if a matching cp specification option could not be found
 	*/
-	public static CPSpecificationOption findByUuid_C_First(
-		java.lang.String uuid, long companyId,
+	public static CPSpecificationOption findByUuid_C_First(String uuid,
+		long companyId,
 		OrderByComparator<CPSpecificationOption> orderByComparator)
 		throws com.liferay.commerce.product.exception.NoSuchCPSpecificationOptionException {
 		return getPersistence()
@@ -438,8 +432,8 @@ public class CPSpecificationOptionUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching cp specification option, or <code>null</code> if a matching cp specification option could not be found
 	*/
-	public static CPSpecificationOption fetchByUuid_C_First(
-		java.lang.String uuid, long companyId,
+	public static CPSpecificationOption fetchByUuid_C_First(String uuid,
+		long companyId,
 		OrderByComparator<CPSpecificationOption> orderByComparator) {
 		return getPersistence()
 				   .fetchByUuid_C_First(uuid, companyId, orderByComparator);
@@ -454,8 +448,8 @@ public class CPSpecificationOptionUtil {
 	* @return the last matching cp specification option
 	* @throws NoSuchCPSpecificationOptionException if a matching cp specification option could not be found
 	*/
-	public static CPSpecificationOption findByUuid_C_Last(
-		java.lang.String uuid, long companyId,
+	public static CPSpecificationOption findByUuid_C_Last(String uuid,
+		long companyId,
 		OrderByComparator<CPSpecificationOption> orderByComparator)
 		throws com.liferay.commerce.product.exception.NoSuchCPSpecificationOptionException {
 		return getPersistence()
@@ -470,8 +464,8 @@ public class CPSpecificationOptionUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching cp specification option, or <code>null</code> if a matching cp specification option could not be found
 	*/
-	public static CPSpecificationOption fetchByUuid_C_Last(
-		java.lang.String uuid, long companyId,
+	public static CPSpecificationOption fetchByUuid_C_Last(String uuid,
+		long companyId,
 		OrderByComparator<CPSpecificationOption> orderByComparator) {
 		return getPersistence()
 				   .fetchByUuid_C_Last(uuid, companyId, orderByComparator);
@@ -488,7 +482,7 @@ public class CPSpecificationOptionUtil {
 	* @throws NoSuchCPSpecificationOptionException if a cp specification option with the primary key could not be found
 	*/
 	public static CPSpecificationOption[] findByUuid_C_PrevAndNext(
-		long CPSpecificationOptionId, java.lang.String uuid, long companyId,
+		long CPSpecificationOptionId, String uuid, long companyId,
 		OrderByComparator<CPSpecificationOption> orderByComparator)
 		throws com.liferay.commerce.product.exception.NoSuchCPSpecificationOptionException {
 		return getPersistence()
@@ -502,7 +496,7 @@ public class CPSpecificationOptionUtil {
 	* @param uuid the uuid
 	* @param companyId the company ID
 	*/
-	public static void removeByUuid_C(java.lang.String uuid, long companyId) {
+	public static void removeByUuid_C(String uuid, long companyId) {
 		getPersistence().removeByUuid_C(uuid, companyId);
 	}
 
@@ -513,7 +507,7 @@ public class CPSpecificationOptionUtil {
 	* @param companyId the company ID
 	* @return the number of matching cp specification options
 	*/
-	public static int countByUuid_C(java.lang.String uuid, long companyId) {
+	public static int countByUuid_C(String uuid, long companyId) {
 		return getPersistence().countByUuid_C(uuid, companyId);
 	}
 
@@ -933,8 +927,7 @@ public class CPSpecificationOptionUtil {
 	* @return the matching cp specification option
 	* @throws NoSuchCPSpecificationOptionException if a matching cp specification option could not be found
 	*/
-	public static CPSpecificationOption findByG_K(long groupId,
-		java.lang.String key)
+	public static CPSpecificationOption findByG_K(long groupId, String key)
 		throws com.liferay.commerce.product.exception.NoSuchCPSpecificationOptionException {
 		return getPersistence().findByG_K(groupId, key);
 	}
@@ -946,8 +939,7 @@ public class CPSpecificationOptionUtil {
 	* @param key the key
 	* @return the matching cp specification option, or <code>null</code> if a matching cp specification option could not be found
 	*/
-	public static CPSpecificationOption fetchByG_K(long groupId,
-		java.lang.String key) {
+	public static CPSpecificationOption fetchByG_K(long groupId, String key) {
 		return getPersistence().fetchByG_K(groupId, key);
 	}
 
@@ -959,8 +951,8 @@ public class CPSpecificationOptionUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching cp specification option, or <code>null</code> if a matching cp specification option could not be found
 	*/
-	public static CPSpecificationOption fetchByG_K(long groupId,
-		java.lang.String key, boolean retrieveFromCache) {
+	public static CPSpecificationOption fetchByG_K(long groupId, String key,
+		boolean retrieveFromCache) {
 		return getPersistence().fetchByG_K(groupId, key, retrieveFromCache);
 	}
 
@@ -971,8 +963,7 @@ public class CPSpecificationOptionUtil {
 	* @param key the key
 	* @return the cp specification option that was removed
 	*/
-	public static CPSpecificationOption removeByG_K(long groupId,
-		java.lang.String key)
+	public static CPSpecificationOption removeByG_K(long groupId, String key)
 		throws com.liferay.commerce.product.exception.NoSuchCPSpecificationOptionException {
 		return getPersistence().removeByG_K(groupId, key);
 	}
@@ -984,7 +975,7 @@ public class CPSpecificationOptionUtil {
 	* @param key the key
 	* @return the number of matching cp specification options
 	*/
-	public static int countByG_K(long groupId, java.lang.String key) {
+	public static int countByG_K(long groupId, String key) {
 		return getPersistence().countByG_K(groupId, key);
 	}
 
@@ -1140,7 +1131,7 @@ public class CPSpecificationOptionUtil {
 		return getPersistence().countAll();
 	}
 
-	public static java.util.Set<java.lang.String> getBadColumnNames() {
+	public static java.util.Set<String> getBadColumnNames() {
 		return getPersistence().getBadColumnNames();
 	}
 

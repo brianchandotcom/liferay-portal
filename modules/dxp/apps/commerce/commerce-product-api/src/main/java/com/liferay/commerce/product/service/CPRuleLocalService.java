@@ -77,9 +77,9 @@ public interface CPRuleLocalService extends BaseLocalService,
 	public CPRule addCPRule(CPRule cpRule);
 
 	@Indexable(type = IndexableType.REINDEX)
-	public CPRule addCPRule(java.lang.String name, boolean active,
-		java.lang.String type, java.lang.String typeSettings,
-		ServiceContext serviceContext) throws PortalException;
+	public CPRule addCPRule(String name, boolean active, String type,
+		String typeSettings, ServiceContext serviceContext)
+		throws PortalException;
 
 	/**
 	* Creates a new cp rule with the primary key. Does not add the cp rule to the database.
@@ -232,7 +232,7 @@ public interface CPRuleLocalService extends BaseLocalService,
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -241,7 +241,7 @@ public interface CPRuleLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public BaseModelSearchResult<CPRule> searchCPRules(long companyId,
-		long groupId, java.lang.String keywords, int start, int end, Sort sort)
+		long groupId, String keywords, int start, int end, Sort sort)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -258,7 +258,7 @@ public interface CPRuleLocalService extends BaseLocalService,
 	public CPRule updateCPRule(CPRule cpRule);
 
 	@Indexable(type = IndexableType.REINDEX)
-	public CPRule updateCPRule(long cpRuleId, java.lang.String name,
-		boolean active, java.lang.String type, java.lang.String typeSettings,
-		ServiceContext serviceContext) throws PortalException;
+	public CPRule updateCPRule(long cpRuleId, String name, boolean active,
+		String type, String typeSettings, ServiceContext serviceContext)
+		throws PortalException;
 }

@@ -214,7 +214,7 @@ public class CPDefinitionAvailabilityRangeLocalServiceWrapper
 	*/
 	@Override
 	public com.liferay.commerce.model.CPDefinitionAvailabilityRange fetchCPDefinitionAvailabilityRangeByUuidAndGroupId(
-		java.lang.String uuid, long groupId) {
+		String uuid, long groupId) {
 		return _cpDefinitionAvailabilityRangeLocalService.fetchCPDefinitionAvailabilityRangeByUuidAndGroupId(uuid,
 			groupId);
 	}
@@ -248,7 +248,7 @@ public class CPDefinitionAvailabilityRangeLocalServiceWrapper
 	*/
 	@Override
 	public com.liferay.commerce.model.CPDefinitionAvailabilityRange getCPDefinitionAvailabilityRangeByUuidAndGroupId(
-		java.lang.String uuid, long groupId)
+		String uuid, long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _cpDefinitionAvailabilityRangeLocalService.getCPDefinitionAvailabilityRangeByUuidAndGroupId(uuid,
 			groupId);
@@ -281,7 +281,7 @@ public class CPDefinitionAvailabilityRangeLocalServiceWrapper
 	*/
 	@Override
 	public java.util.List<com.liferay.commerce.model.CPDefinitionAvailabilityRange> getCPDefinitionAvailabilityRangesByUuidAndCompanyId(
-		java.lang.String uuid, long companyId) {
+		String uuid, long companyId) {
 		return _cpDefinitionAvailabilityRangeLocalService.getCPDefinitionAvailabilityRangesByUuidAndCompanyId(uuid,
 			companyId);
 	}
@@ -298,7 +298,7 @@ public class CPDefinitionAvailabilityRangeLocalServiceWrapper
 	*/
 	@Override
 	public java.util.List<com.liferay.commerce.model.CPDefinitionAvailabilityRange> getCPDefinitionAvailabilityRangesByUuidAndCompanyId(
-		java.lang.String uuid, long companyId, int start, int end,
+		String uuid, long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.model.CPDefinitionAvailabilityRange> orderByComparator) {
 		return _cpDefinitionAvailabilityRangeLocalService.getCPDefinitionAvailabilityRangesByUuidAndCompanyId(uuid,
 			companyId, start, end, orderByComparator);
@@ -331,7 +331,7 @@ public class CPDefinitionAvailabilityRangeLocalServiceWrapper
 	* @return the OSGi service identifier
 	*/
 	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
+	public String getOSGiServiceIdentifier() {
 		return _cpDefinitionAvailabilityRangeLocalService.getOSGiServiceIdentifier();
 	}
 

@@ -36,8 +36,8 @@ public class CommerceUserSegmentCriterionServiceWrapper
 
 	@Override
 	public com.liferay.commerce.user.segment.model.CommerceUserSegmentCriterion addCommerceUserSegmentCriterion(
-		long commerceUserSegmentEntryId, java.lang.String type,
-		java.lang.String typeSettings, double priority,
+		long commerceUserSegmentEntryId, String type, String typeSettings,
+		double priority,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _commerceUserSegmentCriterionService.addCommerceUserSegmentCriterion(commerceUserSegmentEntryId,
@@ -80,14 +80,14 @@ public class CommerceUserSegmentCriterionServiceWrapper
 	* @return the OSGi service identifier
 	*/
 	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
+	public String getOSGiServiceIdentifier() {
 		return _commerceUserSegmentCriterionService.getOSGiServiceIdentifier();
 	}
 
 	@Override
 	public com.liferay.commerce.user.segment.model.CommerceUserSegmentCriterion updateCommerceUserSegmentCriterion(
-		long commerceUserSegmentCriterionId, java.lang.String type,
-		java.lang.String typeSettings, double priority,
+		long commerceUserSegmentCriterionId, String type, String typeSettings,
+		double priority,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _commerceUserSegmentCriterionService.updateCommerceUserSegmentCriterion(commerceUserSegmentCriterionId,

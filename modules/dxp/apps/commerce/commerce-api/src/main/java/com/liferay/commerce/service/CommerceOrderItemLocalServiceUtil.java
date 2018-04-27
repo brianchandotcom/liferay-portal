@@ -56,7 +56,7 @@ public class CommerceOrderItemLocalServiceUtil {
 
 	public static com.liferay.commerce.model.CommerceOrderItem addCommerceOrderItem(
 		long commerceOrderId, long cpInstanceId, int quantity,
-		int shippedQuantity, java.lang.String json, java.math.BigDecimal price,
+		int shippedQuantity, String json, java.math.BigDecimal price,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
@@ -294,7 +294,7 @@ public class CommerceOrderItemLocalServiceUtil {
 	*
 	* @return the OSGi service identifier
 	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
+	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 
@@ -313,16 +313,15 @@ public class CommerceOrderItemLocalServiceUtil {
 	}
 
 	public static com.liferay.portal.kernel.search.BaseModelSearchResult<com.liferay.commerce.model.CommerceOrderItem> search(
-		long commerceOrderId, java.lang.String keywords, int start, int end,
+		long commerceOrderId, String keywords, int start, int end,
 		com.liferay.portal.kernel.search.Sort sort)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().search(commerceOrderId, keywords, start, end, sort);
 	}
 
 	public static com.liferay.portal.kernel.search.BaseModelSearchResult<com.liferay.commerce.model.CommerceOrderItem> search(
-		long commerceOrderId, java.lang.String sku, java.lang.String title,
-		boolean andOperator, int start, int end,
-		com.liferay.portal.kernel.search.Sort sort)
+		long commerceOrderId, String sku, String title, boolean andOperator,
+		int start, int end, com.liferay.portal.kernel.search.Sort sort)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .search(commerceOrderId, sku, title, andOperator, start,
@@ -348,7 +347,7 @@ public class CommerceOrderItemLocalServiceUtil {
 	}
 
 	public static com.liferay.commerce.model.CommerceOrderItem updateCommerceOrderItem(
-		long commerceOrderItemId, int quantity, java.lang.String json,
+		long commerceOrderItemId, int quantity, String json,
 		java.math.BigDecimal price)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()

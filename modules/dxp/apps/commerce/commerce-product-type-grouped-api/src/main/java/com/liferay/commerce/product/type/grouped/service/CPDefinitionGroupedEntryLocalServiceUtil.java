@@ -222,7 +222,7 @@ public class CPDefinitionGroupedEntryLocalServiceUtil {
 	* @return the matching cp definition grouped entry, or <code>null</code> if a matching cp definition grouped entry could not be found
 	*/
 	public static com.liferay.commerce.product.type.grouped.model.CPDefinitionGroupedEntry fetchCPDefinitionGroupedEntryByUuidAndGroupId(
-		java.lang.String uuid, long groupId) {
+		String uuid, long groupId) {
 		return getService()
 				   .fetchCPDefinitionGroupedEntryByUuidAndGroupId(uuid, groupId);
 	}
@@ -274,7 +274,7 @@ public class CPDefinitionGroupedEntryLocalServiceUtil {
 	* @return the matching cp definition grouped entries, or an empty list if no matches were found
 	*/
 	public static java.util.List<com.liferay.commerce.product.type.grouped.model.CPDefinitionGroupedEntry> getCPDefinitionGroupedEntriesByUuidAndCompanyId(
-		java.lang.String uuid, long companyId) {
+		String uuid, long companyId) {
 		return getService()
 				   .getCPDefinitionGroupedEntriesByUuidAndCompanyId(uuid,
 			companyId);
@@ -291,7 +291,7 @@ public class CPDefinitionGroupedEntryLocalServiceUtil {
 	* @return the range of matching cp definition grouped entries, or an empty list if no matches were found
 	*/
 	public static java.util.List<com.liferay.commerce.product.type.grouped.model.CPDefinitionGroupedEntry> getCPDefinitionGroupedEntriesByUuidAndCompanyId(
-		java.lang.String uuid, long companyId, int start, int end,
+		String uuid, long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.product.type.grouped.model.CPDefinitionGroupedEntry> orderByComparator) {
 		return getService()
 				   .getCPDefinitionGroupedEntriesByUuidAndCompanyId(uuid,
@@ -334,7 +334,7 @@ public class CPDefinitionGroupedEntryLocalServiceUtil {
 	* @throws PortalException if a matching cp definition grouped entry could not be found
 	*/
 	public static com.liferay.commerce.product.type.grouped.model.CPDefinitionGroupedEntry getCPDefinitionGroupedEntryByUuidAndGroupId(
-		java.lang.String uuid, long groupId)
+		String uuid, long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .getCPDefinitionGroupedEntryByUuidAndGroupId(uuid, groupId);
@@ -354,7 +354,7 @@ public class CPDefinitionGroupedEntryLocalServiceUtil {
 	*
 	* @return the OSGi service identifier
 	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
+	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 

@@ -57,9 +57,8 @@ import com.liferay.portal.kernel.util.MethodKey;
 public class CPMeasurementUnitServiceHttp {
 	public static com.liferay.commerce.product.model.CPMeasurementUnit addCPMeasurementUnit(
 		HttpPrincipal httpPrincipal,
-		java.util.Map<java.util.Locale, java.lang.String> nameMap,
-		java.lang.String key, double rate, boolean primary, double priority,
-		int type,
+		java.util.Map<java.util.Locale, String> nameMap, String key,
+		double rate, boolean primary, double priority, int type,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -240,9 +239,8 @@ public class CPMeasurementUnitServiceHttp {
 
 	public static com.liferay.commerce.product.model.CPMeasurementUnit updateCPMeasurementUnit(
 		HttpPrincipal httpPrincipal, long cpMeasurementUnitId,
-		java.util.Map<java.util.Locale, java.lang.String> nameMap,
-		java.lang.String key, double rate, boolean primary, double priority,
-		int type,
+		java.util.Map<java.util.Locale, String> nameMap, String key,
+		double rate, boolean primary, double priority, int type,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -278,8 +276,8 @@ public class CPMeasurementUnitServiceHttp {
 
 	private static Log _log = LogFactoryUtil.getLog(CPMeasurementUnitServiceHttp.class);
 	private static final Class<?>[] _addCPMeasurementUnitParameterTypes0 = new Class[] {
-			java.util.Map.class, java.lang.String.class, double.class,
-			boolean.class, double.class, int.class,
+			java.util.Map.class, String.class, double.class, boolean.class,
+			double.class, int.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _deleteCPMeasurementUnitParameterTypes1 = new Class[] {
@@ -298,8 +296,8 @@ public class CPMeasurementUnitServiceHttp {
 			long.class, int.class
 		};
 	private static final Class<?>[] _updateCPMeasurementUnitParameterTypes6 = new Class[] {
-			long.class, java.util.Map.class, java.lang.String.class,
-			double.class, boolean.class, double.class, int.class,
+			long.class, java.util.Map.class, String.class, double.class,
+			boolean.class, double.class, int.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 }

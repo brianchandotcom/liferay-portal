@@ -273,7 +273,7 @@ public class CPInstanceWrapper implements CPInstance, ModelWrapper<CPInstance> {
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new CPInstanceWrapper((CPInstance)_cpInstance.clone());
 	}
 
@@ -344,7 +344,7 @@ public class CPInstanceWrapper implements CPInstance, ModelWrapper<CPInstance> {
 	* @return the ddm content of this cp instance
 	*/
 	@Override
-	public java.lang.String getDDMContent() {
+	public String getDDMContent() {
 		return _cpInstance.getDDMContent();
 	}
 
@@ -399,7 +399,7 @@ public class CPInstanceWrapper implements CPInstance, ModelWrapper<CPInstance> {
 	* @return the gtin of this cp instance
 	*/
 	@Override
-	public java.lang.String getGtin() {
+	public String getGtin() {
 		return _cpInstance.getGtin();
 	}
 
@@ -429,7 +429,7 @@ public class CPInstanceWrapper implements CPInstance, ModelWrapper<CPInstance> {
 	* @return the manufacturer part number of this cp instance
 	*/
 	@Override
-	public java.lang.String getManufacturerPartNumber() {
+	public String getManufacturerPartNumber() {
 		return _cpInstance.getManufacturerPartNumber();
 	}
 
@@ -504,7 +504,7 @@ public class CPInstanceWrapper implements CPInstance, ModelWrapper<CPInstance> {
 	* @return the sku of this cp instance
 	*/
 	@Override
-	public java.lang.String getSku() {
+	public String getSku() {
 		return _cpInstance.getSku();
 	}
 
@@ -534,7 +534,7 @@ public class CPInstanceWrapper implements CPInstance, ModelWrapper<CPInstance> {
 	* @return the status by user name of this cp instance
 	*/
 	@Override
-	public java.lang.String getStatusByUserName() {
+	public String getStatusByUserName() {
 		return _cpInstance.getStatusByUserName();
 	}
 
@@ -544,7 +544,7 @@ public class CPInstanceWrapper implements CPInstance, ModelWrapper<CPInstance> {
 	* @return the status by user uuid of this cp instance
 	*/
 	@Override
-	public java.lang.String getStatusByUserUuid() {
+	public String getStatusByUserUuid() {
 		return _cpInstance.getStatusByUserUuid();
 	}
 
@@ -607,7 +607,7 @@ public class CPInstanceWrapper implements CPInstance, ModelWrapper<CPInstance> {
 	* @return the user name of this cp instance
 	*/
 	@Override
-	public java.lang.String getUserName() {
+	public String getUserName() {
 		return _cpInstance.getUserName();
 	}
 
@@ -617,7 +617,7 @@ public class CPInstanceWrapper implements CPInstance, ModelWrapper<CPInstance> {
 	* @return the user uuid of this cp instance
 	*/
 	@Override
-	public java.lang.String getUserUuid() {
+	public String getUserUuid() {
 		return _cpInstance.getUserUuid();
 	}
 
@@ -627,7 +627,7 @@ public class CPInstanceWrapper implements CPInstance, ModelWrapper<CPInstance> {
 	* @return the uuid of this cp instance
 	*/
 	@Override
-	public java.lang.String getUuid() {
+	public String getUuid() {
 		return _cpInstance.getUuid();
 	}
 
@@ -867,7 +867,7 @@ public class CPInstanceWrapper implements CPInstance, ModelWrapper<CPInstance> {
 	* @param DDMContent the ddm content of this cp instance
 	*/
 	@Override
-	public void setDDMContent(java.lang.String DDMContent) {
+	public void setDDMContent(String DDMContent) {
 		_cpInstance.setDDMContent(DDMContent);
 	}
 
@@ -933,7 +933,7 @@ public class CPInstanceWrapper implements CPInstance, ModelWrapper<CPInstance> {
 	* @param gtin the gtin of this cp instance
 	*/
 	@Override
-	public void setGtin(java.lang.String gtin) {
+	public void setGtin(String gtin) {
 		_cpInstance.setGtin(gtin);
 	}
 
@@ -963,8 +963,7 @@ public class CPInstanceWrapper implements CPInstance, ModelWrapper<CPInstance> {
 	* @param manufacturerPartNumber the manufacturer part number of this cp instance
 	*/
 	@Override
-	public void setManufacturerPartNumber(
-		java.lang.String manufacturerPartNumber) {
+	public void setManufacturerPartNumber(String manufacturerPartNumber) {
 		_cpInstance.setManufacturerPartNumber(manufacturerPartNumber);
 	}
 
@@ -1044,7 +1043,7 @@ public class CPInstanceWrapper implements CPInstance, ModelWrapper<CPInstance> {
 	* @param sku the sku of this cp instance
 	*/
 	@Override
-	public void setSku(java.lang.String sku) {
+	public void setSku(String sku) {
 		_cpInstance.setSku(sku);
 	}
 
@@ -1074,7 +1073,7 @@ public class CPInstanceWrapper implements CPInstance, ModelWrapper<CPInstance> {
 	* @param statusByUserName the status by user name of this cp instance
 	*/
 	@Override
-	public void setStatusByUserName(java.lang.String statusByUserName) {
+	public void setStatusByUserName(String statusByUserName) {
 		_cpInstance.setStatusByUserName(statusByUserName);
 	}
 
@@ -1084,7 +1083,7 @@ public class CPInstanceWrapper implements CPInstance, ModelWrapper<CPInstance> {
 	* @param statusByUserUuid the status by user uuid of this cp instance
 	*/
 	@Override
-	public void setStatusByUserUuid(java.lang.String statusByUserUuid) {
+	public void setStatusByUserUuid(String statusByUserUuid) {
 		_cpInstance.setStatusByUserUuid(statusByUserUuid);
 	}
 
@@ -1114,7 +1113,7 @@ public class CPInstanceWrapper implements CPInstance, ModelWrapper<CPInstance> {
 	* @param userName the user name of this cp instance
 	*/
 	@Override
-	public void setUserName(java.lang.String userName) {
+	public void setUserName(String userName) {
 		_cpInstance.setUserName(userName);
 	}
 
@@ -1124,7 +1123,7 @@ public class CPInstanceWrapper implements CPInstance, ModelWrapper<CPInstance> {
 	* @param userUuid the user uuid of this cp instance
 	*/
 	@Override
-	public void setUserUuid(java.lang.String userUuid) {
+	public void setUserUuid(String userUuid) {
 		_cpInstance.setUserUuid(userUuid);
 	}
 
@@ -1134,7 +1133,7 @@ public class CPInstanceWrapper implements CPInstance, ModelWrapper<CPInstance> {
 	* @param uuid the uuid of this cp instance
 	*/
 	@Override
-	public void setUuid(java.lang.String uuid) {
+	public void setUuid(String uuid) {
 		_cpInstance.setUuid(uuid);
 	}
 
@@ -1169,7 +1168,7 @@ public class CPInstanceWrapper implements CPInstance, ModelWrapper<CPInstance> {
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _cpInstance.toString();
 	}
 
@@ -1179,7 +1178,7 @@ public class CPInstanceWrapper implements CPInstance, ModelWrapper<CPInstance> {
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _cpInstance.toXmlString();
 	}
 

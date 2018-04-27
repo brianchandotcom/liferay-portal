@@ -83,19 +83,15 @@ public interface CPDefinitionLocalService extends BaseLocalService,
 	public CPDefinition addCPDefinition(CPDefinition cpDefinition);
 
 	@Indexable(type = IndexableType.REINDEX)
-	public CPDefinition addCPDefinition(
-		Map<Locale, java.lang.String> titleMap,
-		Map<Locale, java.lang.String> shortDescriptionMap,
-		Map<Locale, java.lang.String> descriptionMap,
-		Map<Locale, java.lang.String> urlTitleMap,
-		Map<Locale, java.lang.String> metaTitleMap,
-		Map<Locale, java.lang.String> metaKeywordsMap,
-		Map<Locale, java.lang.String> metaDescriptionMap,
-		java.lang.String productTypeName, boolean ignoreSKUCombinations,
-		boolean shippable, boolean freeShipping, boolean shipSeparately,
-		double shippingExtraPrice, double width, double height, double depth,
-		double weight, long cpTaxCategoryId, boolean taxExempt,
-		boolean telcoOrElectronics, java.lang.String ddmStructureKey,
+	public CPDefinition addCPDefinition(Map<Locale, String> titleMap,
+		Map<Locale, String> shortDescriptionMap,
+		Map<Locale, String> descriptionMap, Map<Locale, String> urlTitleMap,
+		Map<Locale, String> metaTitleMap, Map<Locale, String> metaKeywordsMap,
+		Map<Locale, String> metaDescriptionMap, String productTypeName,
+		boolean ignoreSKUCombinations, boolean shippable, boolean freeShipping,
+		boolean shipSeparately, double shippingExtraPrice, double width,
+		double height, double depth, double weight, long cpTaxCategoryId,
+		boolean taxExempt, boolean telcoOrElectronics, String ddmStructureKey,
 		boolean published, int displayDateMonth, int displayDateDay,
 		int displayDateYear, int displayDateHour, int displayDateMinute,
 		int expirationDateMonth, int expirationDateDay, int expirationDateYear,
@@ -103,39 +99,31 @@ public interface CPDefinitionLocalService extends BaseLocalService,
 		boolean hasDefaultInstance, ServiceContext serviceContext)
 		throws PortalException;
 
-	public CPDefinition addCPDefinition(
-		Map<Locale, java.lang.String> titleMap,
-		Map<Locale, java.lang.String> shortDescriptionMap,
-		Map<Locale, java.lang.String> descriptionMap,
-		Map<Locale, java.lang.String> urlTitleMap,
-		Map<Locale, java.lang.String> metaTitleMap,
-		Map<Locale, java.lang.String> metaKeywordsMap,
-		Map<Locale, java.lang.String> metaDescriptionMap,
-		java.lang.String productTypeName, boolean ignoreSKUCombinations,
-		boolean shippable, boolean freeShipping, boolean shipSeparately,
-		double shippingExtraPrice, double width, double height, double depth,
-		double weight, long cpTaxCategoryId, boolean taxExempt,
-		boolean telcoOrElectronics, java.lang.String ddmStructureKey,
+	public CPDefinition addCPDefinition(Map<Locale, String> titleMap,
+		Map<Locale, String> shortDescriptionMap,
+		Map<Locale, String> descriptionMap, Map<Locale, String> urlTitleMap,
+		Map<Locale, String> metaTitleMap, Map<Locale, String> metaKeywordsMap,
+		Map<Locale, String> metaDescriptionMap, String productTypeName,
+		boolean ignoreSKUCombinations, boolean shippable, boolean freeShipping,
+		boolean shipSeparately, double shippingExtraPrice, double width,
+		double height, double depth, double weight, long cpTaxCategoryId,
+		boolean taxExempt, boolean telcoOrElectronics, String ddmStructureKey,
 		boolean published, int displayDateMonth, int displayDateDay,
 		int displayDateYear, int displayDateHour, int displayDateMinute,
 		int expirationDateMonth, int expirationDateDay, int expirationDateYear,
 		int expirationDateHour, int expirationDateMinute, boolean neverExpire,
 		ServiceContext serviceContext) throws PortalException;
 
-	public CPDefinition addCPDefinition(
-		Map<Locale, java.lang.String> titleMap,
-		Map<Locale, java.lang.String> shortDescriptionMap,
-		Map<Locale, java.lang.String> descriptionMap,
-		Map<Locale, java.lang.String> urlTitleMap,
-		Map<Locale, java.lang.String> metaTitleMap,
-		Map<Locale, java.lang.String> metaKeywordsMap,
-		Map<Locale, java.lang.String> metaDescriptionMap,
-		java.lang.String productTypeName, boolean ignoreSKUCombinations,
-		java.lang.String ddmStructureKey, boolean published,
-		int displayDateMonth, int displayDateDay, int displayDateYear,
-		int displayDateHour, int displayDateMinute, int expirationDateMonth,
-		int expirationDateDay, int expirationDateYear, int expirationDateHour,
-		int expirationDateMinute, boolean neverExpire,
+	public CPDefinition addCPDefinition(Map<Locale, String> titleMap,
+		Map<Locale, String> shortDescriptionMap,
+		Map<Locale, String> descriptionMap, Map<Locale, String> urlTitleMap,
+		Map<Locale, String> metaTitleMap, Map<Locale, String> metaKeywordsMap,
+		Map<Locale, String> metaDescriptionMap, String productTypeName,
+		boolean ignoreSKUCombinations, String ddmStructureKey,
+		boolean published, int displayDateMonth, int displayDateDay,
+		int displayDateYear, int displayDateHour, int displayDateMinute,
+		int expirationDateMonth, int expirationDateDay, int expirationDateYear,
+		int expirationDateHour, int expirationDateMinute, boolean neverExpire,
 		ServiceContext serviceContext) throws PortalException;
 
 	public void checkCPDefinitions() throws PortalException;
@@ -254,12 +242,12 @@ public interface CPDefinitionLocalService extends BaseLocalService,
 	* @return the matching cp definition, or <code>null</code> if a matching cp definition could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CPDefinition fetchCPDefinitionByUuidAndGroupId(
-		java.lang.String uuid, long groupId);
+	public CPDefinition fetchCPDefinitionByUuidAndGroupId(String uuid,
+		long groupId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CPDefinitionLocalization fetchCPDefinitionLocalization(
-		long CPDefinitionId, java.lang.String languageId);
+		long CPDefinitionId, String languageId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
@@ -284,20 +272,19 @@ public interface CPDefinitionLocalService extends BaseLocalService,
 	* @throws PortalException if a matching cp definition could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CPDefinition getCPDefinitionByUuidAndGroupId(java.lang.String uuid,
+	public CPDefinition getCPDefinitionByUuidAndGroupId(String uuid,
 		long groupId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Map<Locale, java.lang.String> getCPDefinitionDescriptionMap(
+	public Map<Locale, String> getCPDefinitionDescriptionMap(
 		long cpDefinitionId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CPDefinitionLocalization getCPDefinitionLocalization(
-		long CPDefinitionId, java.lang.String languageId)
-		throws PortalException;
+		long CPDefinitionId, String languageId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<java.lang.String> getCPDefinitionLocalizationLanguageIds(
+	public List<String> getCPDefinitionLocalizationLanguageIds(
 		long cpDefinitionId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -305,16 +292,15 @@ public interface CPDefinitionLocalService extends BaseLocalService,
 		long CPDefinitionId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Map<Locale, java.lang.String> getCPDefinitionMetaDescriptionMap(
+	public Map<Locale, String> getCPDefinitionMetaDescriptionMap(
 		long cpDefinitionId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Map<Locale, java.lang.String> getCPDefinitionMetaKeywordsMap(
+	public Map<Locale, String> getCPDefinitionMetaKeywordsMap(
 		long cpDefinitionId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Map<Locale, java.lang.String> getCPDefinitionMetaTitleMap(
-		long cpDefinitionId);
+	public Map<Locale, String> getCPDefinitionMetaTitleMap(long cpDefinitionId);
 
 	/**
 	* Returns a range of all the cp definitions.
@@ -342,8 +328,8 @@ public interface CPDefinitionLocalService extends BaseLocalService,
 	* @return the matching cp definitions, or an empty list if no matches were found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<CPDefinition> getCPDefinitionsByUuidAndCompanyId(
-		java.lang.String uuid, long companyId);
+	public List<CPDefinition> getCPDefinitionsByUuidAndCompanyId(String uuid,
+		long companyId);
 
 	/**
 	* Returns a range of cp definitions matching the UUID and company.
@@ -356,8 +342,8 @@ public interface CPDefinitionLocalService extends BaseLocalService,
 	* @return the range of matching cp definitions, or an empty list if no matches were found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<CPDefinition> getCPDefinitionsByUuidAndCompanyId(
-		java.lang.String uuid, long companyId, int start, int end,
+	public List<CPDefinition> getCPDefinitionsByUuidAndCompanyId(String uuid,
+		long companyId, int start, int end,
 		OrderByComparator<CPDefinition> orderByComparator);
 
 	/**
@@ -372,12 +358,11 @@ public interface CPDefinitionLocalService extends BaseLocalService,
 	public int getCPDefinitionsCountByCategoryId(long categoryId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Map<Locale, java.lang.String> getCPDefinitionShortDescriptionMap(
+	public Map<Locale, String> getCPDefinitionShortDescriptionMap(
 		long cpDefinitionId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Map<Locale, java.lang.String> getCPDefinitionTitleMap(
-		long cpDefinitionId);
+	public Map<Locale, String> getCPDefinitionTitleMap(long cpDefinitionId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CPAttachmentFileEntry getDefaultImage(long cpDefinitionId)
@@ -391,14 +376,14 @@ public interface CPDefinitionLocalService extends BaseLocalService,
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.lang.String getLayoutUuid(long cpDefinitionId);
+	public String getLayoutUuid(long cpDefinitionId);
 
 	/**
 	* Returns the OSGi service identifier.
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -406,10 +391,10 @@ public interface CPDefinitionLocalService extends BaseLocalService,
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Map<Locale, java.lang.String> getUrlTitleMap(long cpDefinitionId);
+	public Map<Locale, String> getUrlTitleMap(long cpDefinitionId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.lang.String getUrlTitleMapAsXML(long cpDefinitionId)
+	public String getUrlTitleMapAsXML(long cpDefinitionId)
 		throws PortalException;
 
 	public void moveCPDefinitionsToTrash(long groupId, long userId)
@@ -449,13 +434,12 @@ public interface CPDefinitionLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public BaseModelSearchResult<CPDefinition> searchCPDefinitions(
-		long companyId, long groupId, java.lang.String keywords, int status,
-		int start, int end, Sort sort) throws PortalException;
+		long companyId, long groupId, String keywords, int status, int start,
+		int end, Sort sort) throws PortalException;
 
 	public void updateAsset(long userId, CPDefinition cpDefinition,
-		long[] assetCategoryIds, java.lang.String[] assetTagNames,
-		long[] assetLinkEntryIds, java.lang.Double priority)
-		throws PortalException;
+		long[] assetCategoryIds, String[] assetTagNames,
+		long[] assetLinkEntryIds, Double priority) throws PortalException;
 
 	/**
 	* Updates the cp definition in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
@@ -468,18 +452,14 @@ public interface CPDefinitionLocalService extends BaseLocalService,
 
 	@Indexable(type = IndexableType.REINDEX)
 	public CPDefinition updateCPDefinition(long cpDefinitionId,
-		Map<Locale, java.lang.String> titleMap,
-		Map<Locale, java.lang.String> shortDescriptionMap,
-		Map<Locale, java.lang.String> descriptionMap,
-		Map<Locale, java.lang.String> urlTitleMap,
-		Map<Locale, java.lang.String> metaTitleMap,
-		Map<Locale, java.lang.String> metaKeywordsMap,
-		Map<Locale, java.lang.String> metaDescriptionMap,
-		boolean ignoreSKUCombinations, boolean shippable, boolean freeShipping,
-		boolean shipSeparately, double shippingExtraPrice, double width,
-		double height, double depth, double weight, long cpTaxCategoryId,
-		boolean taxExempt, boolean telcoOrElectronics,
-		java.lang.String ddmStructureKey, boolean published,
+		Map<Locale, String> titleMap, Map<Locale, String> shortDescriptionMap,
+		Map<Locale, String> descriptionMap, Map<Locale, String> urlTitleMap,
+		Map<Locale, String> metaTitleMap, Map<Locale, String> metaKeywordsMap,
+		Map<Locale, String> metaDescriptionMap, boolean ignoreSKUCombinations,
+		boolean shippable, boolean freeShipping, boolean shipSeparately,
+		double shippingExtraPrice, double width, double height, double depth,
+		double weight, long cpTaxCategoryId, boolean taxExempt,
+		boolean telcoOrElectronics, String ddmStructureKey, boolean published,
 		int displayDateMonth, int displayDateDay, int displayDateYear,
 		int displayDateHour, int displayDateMinute, int expirationDateMonth,
 		int expirationDateDay, int expirationDateYear, int expirationDateHour,
@@ -487,18 +467,15 @@ public interface CPDefinitionLocalService extends BaseLocalService,
 		ServiceContext serviceContext) throws PortalException;
 
 	public CPDefinition updateCPDefinition(long cpDefinitionId,
-		Map<Locale, java.lang.String> titleMap,
-		Map<Locale, java.lang.String> shortDescriptionMap,
-		Map<Locale, java.lang.String> descriptionMap,
-		Map<Locale, java.lang.String> urlTitleMap,
-		Map<Locale, java.lang.String> metaTitleMap,
-		Map<Locale, java.lang.String> metaKeywordsMap,
-		Map<Locale, java.lang.String> metaDescriptionMap,
-		boolean ignoreSKUCombinations, java.lang.String ddmStructureKey,
-		boolean published, int displayDateMonth, int displayDateDay,
-		int displayDateYear, int displayDateHour, int displayDateMinute,
-		int expirationDateMonth, int expirationDateDay, int expirationDateYear,
-		int expirationDateHour, int expirationDateMinute, boolean neverExpire,
+		Map<Locale, String> titleMap, Map<Locale, String> shortDescriptionMap,
+		Map<Locale, String> descriptionMap, Map<Locale, String> urlTitleMap,
+		Map<Locale, String> metaTitleMap, Map<Locale, String> metaKeywordsMap,
+		Map<Locale, String> metaDescriptionMap, boolean ignoreSKUCombinations,
+		String ddmStructureKey, boolean published, int displayDateMonth,
+		int displayDateDay, int displayDateYear, int displayDateHour,
+		int displayDateMinute, int expirationDateMonth, int expirationDateDay,
+		int expirationDateYear, int expirationDateHour,
+		int expirationDateMinute, boolean neverExpire,
 		ServiceContext serviceContext) throws PortalException;
 
 	@Indexable(type = IndexableType.REINDEX)
@@ -522,8 +499,7 @@ public interface CPDefinitionLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.REINDEX)
 	public CPDefinition updateStatus(long userId, long cpDefinitionId,
 		int status, ServiceContext serviceContext,
-		Map<java.lang.String, Serializable> workflowContext)
-		throws PortalException;
+		Map<String, Serializable> workflowContext) throws PortalException;
 
 	public CPDefinition updateTaxCategoryInfo(long cpDefinitionId,
 		long cpTaxCategoryId, boolean taxExempt, boolean telcoOrElectronics)

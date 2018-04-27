@@ -87,7 +87,7 @@ public class CommerceTaxFixedRateServiceWrapper
 	* @return the OSGi service identifier
 	*/
 	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
+	public String getOSGiServiceIdentifier() {
 		return _commerceTaxFixedRateService.getOSGiServiceIdentifier();
 	}
 

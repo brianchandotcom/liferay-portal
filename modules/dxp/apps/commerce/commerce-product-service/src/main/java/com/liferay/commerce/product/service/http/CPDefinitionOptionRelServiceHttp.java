@@ -93,11 +93,10 @@ public class CPDefinitionOptionRelServiceHttp {
 
 	public static com.liferay.commerce.product.model.CPDefinitionOptionRel addCPDefinitionOptionRel(
 		HttpPrincipal httpPrincipal, long cpDefinitionId, long cpOptionId,
-		java.util.Map<java.util.Locale, java.lang.String> titleMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		java.lang.String ddmFormFieldTypeName, double priority,
-		boolean facetable, boolean required, boolean skuContributor,
-		boolean importOptionValue,
+		java.util.Map<java.util.Locale, String> titleMap,
+		java.util.Map<java.util.Locale, String> descriptionMap,
+		String ddmFormFieldTypeName, double priority, boolean facetable,
+		boolean required, boolean skuContributor, boolean importOptionValue,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -495,7 +494,7 @@ public class CPDefinitionOptionRelServiceHttp {
 
 	public static com.liferay.portal.kernel.search.BaseModelSearchResult<com.liferay.commerce.product.model.CPDefinitionOptionRel> searchCPDefinitionOptionRels(
 		HttpPrincipal httpPrincipal, long companyId, long groupId,
-		long cpDefinitionId, java.lang.String keywords, int start, int end,
+		long cpDefinitionId, String keywords, int start, int end,
 		com.liferay.portal.kernel.search.Sort sort)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -531,11 +530,10 @@ public class CPDefinitionOptionRelServiceHttp {
 
 	public static com.liferay.commerce.product.model.CPDefinitionOptionRel updateCPDefinitionOptionRel(
 		HttpPrincipal httpPrincipal, long cpDefinitionOptionRelId,
-		long cpOptionId,
-		java.util.Map<java.util.Locale, java.lang.String> titleMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		java.lang.String ddmFormFieldTypeName, double priority,
-		boolean facetable, boolean required, boolean skuContributor,
+		long cpOptionId, java.util.Map<java.util.Locale, String> titleMap,
+		java.util.Map<java.util.Locale, String> descriptionMap,
+		String ddmFormFieldTypeName, double priority, boolean facetable,
+		boolean required, boolean skuContributor,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -577,7 +575,7 @@ public class CPDefinitionOptionRelServiceHttp {
 		};
 	private static final Class<?>[] _addCPDefinitionOptionRelParameterTypes1 = new Class[] {
 			long.class, long.class, java.util.Map.class, java.util.Map.class,
-			java.lang.String.class, double.class, boolean.class, boolean.class,
+			String.class, double.class, boolean.class, boolean.class,
 			boolean.class, boolean.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
@@ -616,13 +614,13 @@ public class CPDefinitionOptionRelServiceHttp {
 		};
 	private static final Class<?>[] _searchCPDefinitionOptionRelsParameterTypes13 =
 		new Class[] {
-			long.class, long.class, long.class, java.lang.String.class,
-			int.class, int.class, com.liferay.portal.kernel.search.Sort.class
+			long.class, long.class, long.class, String.class, int.class,
+			int.class, com.liferay.portal.kernel.search.Sort.class
 		};
 	private static final Class<?>[] _updateCPDefinitionOptionRelParameterTypes14 =
 		new Class[] {
 			long.class, long.class, java.util.Map.class, java.util.Map.class,
-			java.lang.String.class, double.class, boolean.class, boolean.class,
+			String.class, double.class, boolean.class, boolean.class,
 			boolean.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};

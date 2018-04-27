@@ -43,10 +43,10 @@ public class CPOptionServiceUtil {
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.commerce.product.service.impl.CPOptionServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static com.liferay.commerce.product.model.CPOption addCPOption(
-		java.util.Map<java.util.Locale, java.lang.String> titleMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		java.lang.String ddmFormFieldTypeName, boolean facetable,
-		boolean required, boolean skuContributor, java.lang.String key,
+		java.util.Map<java.util.Locale, String> titleMap,
+		java.util.Map<java.util.Locale, String> descriptionMap,
+		String ddmFormFieldTypeName, boolean facetable, boolean required,
+		boolean skuContributor, String key,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
@@ -66,7 +66,7 @@ public class CPOptionServiceUtil {
 	}
 
 	public static com.liferay.commerce.product.model.CPOption fetchCPOption(
-		long groupId, java.lang.String key)
+		long groupId, String key)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().fetchCPOption(groupId, key);
 	}
@@ -97,7 +97,7 @@ public class CPOptionServiceUtil {
 	*
 	* @return the OSGi service identifier
 	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
+	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 
@@ -107,8 +107,8 @@ public class CPOptionServiceUtil {
 	}
 
 	public static com.liferay.portal.kernel.search.BaseModelSearchResult<com.liferay.commerce.product.model.CPOption> searchCPOptions(
-		long companyId, long groupId, java.lang.String keywords, int start,
-		int end, com.liferay.portal.kernel.search.Sort sort)
+		long companyId, long groupId, String keywords, int start, int end,
+		com.liferay.portal.kernel.search.Sort sort)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .searchCPOptions(companyId, groupId, keywords, start, end,
@@ -134,11 +134,10 @@ public class CPOptionServiceUtil {
 	}
 
 	public static com.liferay.commerce.product.model.CPOption updateCPOption(
-		long cpOptionId,
-		java.util.Map<java.util.Locale, java.lang.String> titleMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		java.lang.String ddmFormFieldTypeName, boolean facetable,
-		boolean required, boolean skuContributor, java.lang.String key,
+		long cpOptionId, java.util.Map<java.util.Locale, String> titleMap,
+		java.util.Map<java.util.Locale, String> descriptionMap,
+		String ddmFormFieldTypeName, boolean facetable, boolean required,
+		boolean skuContributor, String key,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()

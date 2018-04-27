@@ -213,7 +213,7 @@ public class CPDefinitionAvailabilityRangeLocalServiceUtil {
 	* @return the matching cp definition availability range, or <code>null</code> if a matching cp definition availability range could not be found
 	*/
 	public static com.liferay.commerce.model.CPDefinitionAvailabilityRange fetchCPDefinitionAvailabilityRangeByUuidAndGroupId(
-		java.lang.String uuid, long groupId) {
+		String uuid, long groupId) {
 		return getService()
 				   .fetchCPDefinitionAvailabilityRangeByUuidAndGroupId(uuid,
 			groupId);
@@ -246,7 +246,7 @@ public class CPDefinitionAvailabilityRangeLocalServiceUtil {
 	* @throws PortalException if a matching cp definition availability range could not be found
 	*/
 	public static com.liferay.commerce.model.CPDefinitionAvailabilityRange getCPDefinitionAvailabilityRangeByUuidAndGroupId(
-		java.lang.String uuid, long groupId)
+		String uuid, long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .getCPDefinitionAvailabilityRangeByUuidAndGroupId(uuid,
@@ -277,7 +277,7 @@ public class CPDefinitionAvailabilityRangeLocalServiceUtil {
 	* @return the matching cp definition availability ranges, or an empty list if no matches were found
 	*/
 	public static java.util.List<com.liferay.commerce.model.CPDefinitionAvailabilityRange> getCPDefinitionAvailabilityRangesByUuidAndCompanyId(
-		java.lang.String uuid, long companyId) {
+		String uuid, long companyId) {
 		return getService()
 				   .getCPDefinitionAvailabilityRangesByUuidAndCompanyId(uuid,
 			companyId);
@@ -294,7 +294,7 @@ public class CPDefinitionAvailabilityRangeLocalServiceUtil {
 	* @return the range of matching cp definition availability ranges, or an empty list if no matches were found
 	*/
 	public static java.util.List<com.liferay.commerce.model.CPDefinitionAvailabilityRange> getCPDefinitionAvailabilityRangesByUuidAndCompanyId(
-		java.lang.String uuid, long companyId, int start, int end,
+		String uuid, long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.model.CPDefinitionAvailabilityRange> orderByComparator) {
 		return getService()
 				   .getCPDefinitionAvailabilityRangesByUuidAndCompanyId(uuid,
@@ -324,7 +324,7 @@ public class CPDefinitionAvailabilityRangeLocalServiceUtil {
 	*
 	* @return the OSGi service identifier
 	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
+	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 

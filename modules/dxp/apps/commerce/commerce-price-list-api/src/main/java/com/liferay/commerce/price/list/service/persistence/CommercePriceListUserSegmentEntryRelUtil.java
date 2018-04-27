@@ -123,7 +123,7 @@ public class CommercePriceListUserSegmentEntryRelUtil {
 	* @return the matching commerce price list user segment entry rels
 	*/
 	public static List<CommercePriceListUserSegmentEntryRel> findByUuid(
-		java.lang.String uuid) {
+		String uuid) {
 		return getPersistence().findByUuid(uuid);
 	}
 
@@ -140,7 +140,7 @@ public class CommercePriceListUserSegmentEntryRelUtil {
 	* @return the range of matching commerce price list user segment entry rels
 	*/
 	public static List<CommercePriceListUserSegmentEntryRel> findByUuid(
-		java.lang.String uuid, int start, int end) {
+		String uuid, int start, int end) {
 		return getPersistence().findByUuid(uuid, start, end);
 	}
 
@@ -158,7 +158,7 @@ public class CommercePriceListUserSegmentEntryRelUtil {
 	* @return the ordered range of matching commerce price list user segment entry rels
 	*/
 	public static List<CommercePriceListUserSegmentEntryRel> findByUuid(
-		java.lang.String uuid, int start, int end,
+		String uuid, int start, int end,
 		OrderByComparator<CommercePriceListUserSegmentEntryRel> orderByComparator) {
 		return getPersistence().findByUuid(uuid, start, end, orderByComparator);
 	}
@@ -178,7 +178,7 @@ public class CommercePriceListUserSegmentEntryRelUtil {
 	* @return the ordered range of matching commerce price list user segment entry rels
 	*/
 	public static List<CommercePriceListUserSegmentEntryRel> findByUuid(
-		java.lang.String uuid, int start, int end,
+		String uuid, int start, int end,
 		OrderByComparator<CommercePriceListUserSegmentEntryRel> orderByComparator,
 		boolean retrieveFromCache) {
 		return getPersistence()
@@ -195,7 +195,7 @@ public class CommercePriceListUserSegmentEntryRelUtil {
 	* @throws NoSuchPriceListUserSegmentEntryRelException if a matching commerce price list user segment entry rel could not be found
 	*/
 	public static CommercePriceListUserSegmentEntryRel findByUuid_First(
-		java.lang.String uuid,
+		String uuid,
 		OrderByComparator<CommercePriceListUserSegmentEntryRel> orderByComparator)
 		throws com.liferay.commerce.price.list.exception.NoSuchPriceListUserSegmentEntryRelException {
 		return getPersistence().findByUuid_First(uuid, orderByComparator);
@@ -209,7 +209,7 @@ public class CommercePriceListUserSegmentEntryRelUtil {
 	* @return the first matching commerce price list user segment entry rel, or <code>null</code> if a matching commerce price list user segment entry rel could not be found
 	*/
 	public static CommercePriceListUserSegmentEntryRel fetchByUuid_First(
-		java.lang.String uuid,
+		String uuid,
 		OrderByComparator<CommercePriceListUserSegmentEntryRel> orderByComparator) {
 		return getPersistence().fetchByUuid_First(uuid, orderByComparator);
 	}
@@ -223,7 +223,7 @@ public class CommercePriceListUserSegmentEntryRelUtil {
 	* @throws NoSuchPriceListUserSegmentEntryRelException if a matching commerce price list user segment entry rel could not be found
 	*/
 	public static CommercePriceListUserSegmentEntryRel findByUuid_Last(
-		java.lang.String uuid,
+		String uuid,
 		OrderByComparator<CommercePriceListUserSegmentEntryRel> orderByComparator)
 		throws com.liferay.commerce.price.list.exception.NoSuchPriceListUserSegmentEntryRelException {
 		return getPersistence().findByUuid_Last(uuid, orderByComparator);
@@ -237,7 +237,7 @@ public class CommercePriceListUserSegmentEntryRelUtil {
 	* @return the last matching commerce price list user segment entry rel, or <code>null</code> if a matching commerce price list user segment entry rel could not be found
 	*/
 	public static CommercePriceListUserSegmentEntryRel fetchByUuid_Last(
-		java.lang.String uuid,
+		String uuid,
 		OrderByComparator<CommercePriceListUserSegmentEntryRel> orderByComparator) {
 		return getPersistence().fetchByUuid_Last(uuid, orderByComparator);
 	}
@@ -252,7 +252,7 @@ public class CommercePriceListUserSegmentEntryRelUtil {
 	* @throws NoSuchPriceListUserSegmentEntryRelException if a commerce price list user segment entry rel with the primary key could not be found
 	*/
 	public static CommercePriceListUserSegmentEntryRel[] findByUuid_PrevAndNext(
-		long commercePriceListUserSegmentEntryRelId, java.lang.String uuid,
+		long commercePriceListUserSegmentEntryRelId, String uuid,
 		OrderByComparator<CommercePriceListUserSegmentEntryRel> orderByComparator)
 		throws com.liferay.commerce.price.list.exception.NoSuchPriceListUserSegmentEntryRelException {
 		return getPersistence()
@@ -265,7 +265,7 @@ public class CommercePriceListUserSegmentEntryRelUtil {
 	*
 	* @param uuid the uuid
 	*/
-	public static void removeByUuid(java.lang.String uuid) {
+	public static void removeByUuid(String uuid) {
 		getPersistence().removeByUuid(uuid);
 	}
 
@@ -275,7 +275,7 @@ public class CommercePriceListUserSegmentEntryRelUtil {
 	* @param uuid the uuid
 	* @return the number of matching commerce price list user segment entry rels
 	*/
-	public static int countByUuid(java.lang.String uuid) {
+	public static int countByUuid(String uuid) {
 		return getPersistence().countByUuid(uuid);
 	}
 
@@ -288,7 +288,7 @@ public class CommercePriceListUserSegmentEntryRelUtil {
 	* @throws NoSuchPriceListUserSegmentEntryRelException if a matching commerce price list user segment entry rel could not be found
 	*/
 	public static CommercePriceListUserSegmentEntryRel findByUUID_G(
-		java.lang.String uuid, long groupId)
+		String uuid, long groupId)
 		throws com.liferay.commerce.price.list.exception.NoSuchPriceListUserSegmentEntryRelException {
 		return getPersistence().findByUUID_G(uuid, groupId);
 	}
@@ -301,7 +301,7 @@ public class CommercePriceListUserSegmentEntryRelUtil {
 	* @return the matching commerce price list user segment entry rel, or <code>null</code> if a matching commerce price list user segment entry rel could not be found
 	*/
 	public static CommercePriceListUserSegmentEntryRel fetchByUUID_G(
-		java.lang.String uuid, long groupId) {
+		String uuid, long groupId) {
 		return getPersistence().fetchByUUID_G(uuid, groupId);
 	}
 
@@ -314,7 +314,7 @@ public class CommercePriceListUserSegmentEntryRelUtil {
 	* @return the matching commerce price list user segment entry rel, or <code>null</code> if a matching commerce price list user segment entry rel could not be found
 	*/
 	public static CommercePriceListUserSegmentEntryRel fetchByUUID_G(
-		java.lang.String uuid, long groupId, boolean retrieveFromCache) {
+		String uuid, long groupId, boolean retrieveFromCache) {
 		return getPersistence().fetchByUUID_G(uuid, groupId, retrieveFromCache);
 	}
 
@@ -326,7 +326,7 @@ public class CommercePriceListUserSegmentEntryRelUtil {
 	* @return the commerce price list user segment entry rel that was removed
 	*/
 	public static CommercePriceListUserSegmentEntryRel removeByUUID_G(
-		java.lang.String uuid, long groupId)
+		String uuid, long groupId)
 		throws com.liferay.commerce.price.list.exception.NoSuchPriceListUserSegmentEntryRelException {
 		return getPersistence().removeByUUID_G(uuid, groupId);
 	}
@@ -338,7 +338,7 @@ public class CommercePriceListUserSegmentEntryRelUtil {
 	* @param groupId the group ID
 	* @return the number of matching commerce price list user segment entry rels
 	*/
-	public static int countByUUID_G(java.lang.String uuid, long groupId) {
+	public static int countByUUID_G(String uuid, long groupId) {
 		return getPersistence().countByUUID_G(uuid, groupId);
 	}
 
@@ -350,7 +350,7 @@ public class CommercePriceListUserSegmentEntryRelUtil {
 	* @return the matching commerce price list user segment entry rels
 	*/
 	public static List<CommercePriceListUserSegmentEntryRel> findByUuid_C(
-		java.lang.String uuid, long companyId) {
+		String uuid, long companyId) {
 		return getPersistence().findByUuid_C(uuid, companyId);
 	}
 
@@ -368,7 +368,7 @@ public class CommercePriceListUserSegmentEntryRelUtil {
 	* @return the range of matching commerce price list user segment entry rels
 	*/
 	public static List<CommercePriceListUserSegmentEntryRel> findByUuid_C(
-		java.lang.String uuid, long companyId, int start, int end) {
+		String uuid, long companyId, int start, int end) {
 		return getPersistence().findByUuid_C(uuid, companyId, start, end);
 	}
 
@@ -387,7 +387,7 @@ public class CommercePriceListUserSegmentEntryRelUtil {
 	* @return the ordered range of matching commerce price list user segment entry rels
 	*/
 	public static List<CommercePriceListUserSegmentEntryRel> findByUuid_C(
-		java.lang.String uuid, long companyId, int start, int end,
+		String uuid, long companyId, int start, int end,
 		OrderByComparator<CommercePriceListUserSegmentEntryRel> orderByComparator) {
 		return getPersistence()
 				   .findByUuid_C(uuid, companyId, start, end, orderByComparator);
@@ -409,7 +409,7 @@ public class CommercePriceListUserSegmentEntryRelUtil {
 	* @return the ordered range of matching commerce price list user segment entry rels
 	*/
 	public static List<CommercePriceListUserSegmentEntryRel> findByUuid_C(
-		java.lang.String uuid, long companyId, int start, int end,
+		String uuid, long companyId, int start, int end,
 		OrderByComparator<CommercePriceListUserSegmentEntryRel> orderByComparator,
 		boolean retrieveFromCache) {
 		return getPersistence()
@@ -427,7 +427,7 @@ public class CommercePriceListUserSegmentEntryRelUtil {
 	* @throws NoSuchPriceListUserSegmentEntryRelException if a matching commerce price list user segment entry rel could not be found
 	*/
 	public static CommercePriceListUserSegmentEntryRel findByUuid_C_First(
-		java.lang.String uuid, long companyId,
+		String uuid, long companyId,
 		OrderByComparator<CommercePriceListUserSegmentEntryRel> orderByComparator)
 		throws com.liferay.commerce.price.list.exception.NoSuchPriceListUserSegmentEntryRelException {
 		return getPersistence()
@@ -443,7 +443,7 @@ public class CommercePriceListUserSegmentEntryRelUtil {
 	* @return the first matching commerce price list user segment entry rel, or <code>null</code> if a matching commerce price list user segment entry rel could not be found
 	*/
 	public static CommercePriceListUserSegmentEntryRel fetchByUuid_C_First(
-		java.lang.String uuid, long companyId,
+		String uuid, long companyId,
 		OrderByComparator<CommercePriceListUserSegmentEntryRel> orderByComparator) {
 		return getPersistence()
 				   .fetchByUuid_C_First(uuid, companyId, orderByComparator);
@@ -459,7 +459,7 @@ public class CommercePriceListUserSegmentEntryRelUtil {
 	* @throws NoSuchPriceListUserSegmentEntryRelException if a matching commerce price list user segment entry rel could not be found
 	*/
 	public static CommercePriceListUserSegmentEntryRel findByUuid_C_Last(
-		java.lang.String uuid, long companyId,
+		String uuid, long companyId,
 		OrderByComparator<CommercePriceListUserSegmentEntryRel> orderByComparator)
 		throws com.liferay.commerce.price.list.exception.NoSuchPriceListUserSegmentEntryRelException {
 		return getPersistence()
@@ -475,7 +475,7 @@ public class CommercePriceListUserSegmentEntryRelUtil {
 	* @return the last matching commerce price list user segment entry rel, or <code>null</code> if a matching commerce price list user segment entry rel could not be found
 	*/
 	public static CommercePriceListUserSegmentEntryRel fetchByUuid_C_Last(
-		java.lang.String uuid, long companyId,
+		String uuid, long companyId,
 		OrderByComparator<CommercePriceListUserSegmentEntryRel> orderByComparator) {
 		return getPersistence()
 				   .fetchByUuid_C_Last(uuid, companyId, orderByComparator);
@@ -492,7 +492,7 @@ public class CommercePriceListUserSegmentEntryRelUtil {
 	* @throws NoSuchPriceListUserSegmentEntryRelException if a commerce price list user segment entry rel with the primary key could not be found
 	*/
 	public static CommercePriceListUserSegmentEntryRel[] findByUuid_C_PrevAndNext(
-		long commercePriceListUserSegmentEntryRelId, java.lang.String uuid,
+		long commercePriceListUserSegmentEntryRelId, String uuid,
 		long companyId,
 		OrderByComparator<CommercePriceListUserSegmentEntryRel> orderByComparator)
 		throws com.liferay.commerce.price.list.exception.NoSuchPriceListUserSegmentEntryRelException {
@@ -507,7 +507,7 @@ public class CommercePriceListUserSegmentEntryRelUtil {
 	* @param uuid the uuid
 	* @param companyId the company ID
 	*/
-	public static void removeByUuid_C(java.lang.String uuid, long companyId) {
+	public static void removeByUuid_C(String uuid, long companyId) {
 		getPersistence().removeByUuid_C(uuid, companyId);
 	}
 
@@ -518,7 +518,7 @@ public class CommercePriceListUserSegmentEntryRelUtil {
 	* @param companyId the company ID
 	* @return the number of matching commerce price list user segment entry rels
 	*/
-	public static int countByUuid_C(java.lang.String uuid, long companyId) {
+	public static int countByUuid_C(String uuid, long companyId) {
 		return getPersistence().countByUuid_C(uuid, companyId);
 	}
 
@@ -927,7 +927,7 @@ public class CommercePriceListUserSegmentEntryRelUtil {
 		return getPersistence().countAll();
 	}
 
-	public static java.util.Set<java.lang.String> getBadColumnNames() {
+	public static java.util.Set<String> getBadColumnNames() {
 		return getPersistence().getBadColumnNames();
 	}
 

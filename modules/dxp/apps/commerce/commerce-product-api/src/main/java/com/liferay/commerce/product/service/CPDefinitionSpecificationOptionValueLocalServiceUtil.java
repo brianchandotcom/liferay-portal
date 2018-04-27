@@ -58,8 +58,7 @@ public class CPDefinitionSpecificationOptionValueLocalServiceUtil {
 	public static com.liferay.commerce.product.model.CPDefinitionSpecificationOptionValue addCPDefinitionSpecificationOptionValue(
 		long cpDefinitionId, long cpSpecificationOptionId,
 		long cpOptionCategoryId,
-		java.util.Map<java.util.Locale, java.lang.String> valueMap,
-		double priority,
+		java.util.Map<java.util.Locale, String> valueMap, double priority,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
@@ -225,7 +224,7 @@ public class CPDefinitionSpecificationOptionValueLocalServiceUtil {
 	* @return the matching cp definition specification option value, or <code>null</code> if a matching cp definition specification option value could not be found
 	*/
 	public static com.liferay.commerce.product.model.CPDefinitionSpecificationOptionValue fetchCPDefinitionSpecificationOptionValueByUuidAndGroupId(
-		java.lang.String uuid, long groupId) {
+		String uuid, long groupId) {
 		return getService()
 				   .fetchCPDefinitionSpecificationOptionValueByUuidAndGroupId(uuid,
 			groupId);
@@ -258,7 +257,7 @@ public class CPDefinitionSpecificationOptionValueLocalServiceUtil {
 	* @throws PortalException if a matching cp definition specification option value could not be found
 	*/
 	public static com.liferay.commerce.product.model.CPDefinitionSpecificationOptionValue getCPDefinitionSpecificationOptionValueByUuidAndGroupId(
-		java.lang.String uuid, long groupId)
+		String uuid, long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .getCPDefinitionSpecificationOptionValueByUuidAndGroupId(uuid,
@@ -302,7 +301,7 @@ public class CPDefinitionSpecificationOptionValueLocalServiceUtil {
 	* @return the matching cp definition specification option values, or an empty list if no matches were found
 	*/
 	public static java.util.List<com.liferay.commerce.product.model.CPDefinitionSpecificationOptionValue> getCPDefinitionSpecificationOptionValuesByUuidAndCompanyId(
-		java.lang.String uuid, long companyId) {
+		String uuid, long companyId) {
 		return getService()
 				   .getCPDefinitionSpecificationOptionValuesByUuidAndCompanyId(uuid,
 			companyId);
@@ -319,7 +318,7 @@ public class CPDefinitionSpecificationOptionValueLocalServiceUtil {
 	* @return the range of matching cp definition specification option values, or an empty list if no matches were found
 	*/
 	public static java.util.List<com.liferay.commerce.product.model.CPDefinitionSpecificationOptionValue> getCPDefinitionSpecificationOptionValuesByUuidAndCompanyId(
-		java.lang.String uuid, long companyId, int start, int end,
+		String uuid, long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.product.model.CPDefinitionSpecificationOptionValue> orderByComparator) {
 		return getService()
 				   .getCPDefinitionSpecificationOptionValuesByUuidAndCompanyId(uuid,
@@ -349,7 +348,7 @@ public class CPDefinitionSpecificationOptionValueLocalServiceUtil {
 	*
 	* @return the OSGi service identifier
 	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
+	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 
@@ -373,8 +372,7 @@ public class CPDefinitionSpecificationOptionValueLocalServiceUtil {
 
 	public static com.liferay.commerce.product.model.CPDefinitionSpecificationOptionValue updateCPDefinitionSpecificationOptionValue(
 		long cpDefinitionSpecificationOptionValueId, long cpOptionCategoryId,
-		java.util.Map<java.util.Locale, java.lang.String> valueMap,
-		double priority,
+		java.util.Map<java.util.Locale, String> valueMap, double priority,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()

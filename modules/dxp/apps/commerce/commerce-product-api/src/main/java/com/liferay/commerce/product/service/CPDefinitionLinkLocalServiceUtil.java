@@ -56,7 +56,7 @@ public class CPDefinitionLinkLocalServiceUtil {
 
 	public static com.liferay.commerce.product.model.CPDefinitionLink addCPDefinitionLink(
 		long cpDefinitionId1, long cpDefinitionId2, double priority,
-		java.lang.String type,
+		String type,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
@@ -203,7 +203,7 @@ public class CPDefinitionLinkLocalServiceUtil {
 	* @return the matching cp definition link, or <code>null</code> if a matching cp definition link could not be found
 	*/
 	public static com.liferay.commerce.product.model.CPDefinitionLink fetchCPDefinitionLinkByUuidAndGroupId(
-		java.lang.String uuid, long groupId) {
+		String uuid, long groupId) {
 		return getService().fetchCPDefinitionLinkByUuidAndGroupId(uuid, groupId);
 	}
 
@@ -233,7 +233,7 @@ public class CPDefinitionLinkLocalServiceUtil {
 	* @throws PortalException if a matching cp definition link could not be found
 	*/
 	public static com.liferay.commerce.product.model.CPDefinitionLink getCPDefinitionLinkByUuidAndGroupId(
-		java.lang.String uuid, long groupId)
+		String uuid, long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getCPDefinitionLinkByUuidAndGroupId(uuid, groupId);
 	}
@@ -255,13 +255,13 @@ public class CPDefinitionLinkLocalServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.commerce.product.model.CPDefinitionLink> getCPDefinitionLinks(
-		long cpDefinitionId1, java.lang.String type)
+		long cpDefinitionId1, String type)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getCPDefinitionLinks(cpDefinitionId1, type);
 	}
 
 	public static java.util.List<com.liferay.commerce.product.model.CPDefinitionLink> getCPDefinitionLinks(
-		long cpDefinitionId1, java.lang.String type, int start, int end,
+		long cpDefinitionId1, String type, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.product.model.CPDefinitionLink> orderByComparator)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
@@ -277,7 +277,7 @@ public class CPDefinitionLinkLocalServiceUtil {
 	* @return the matching cp definition links, or an empty list if no matches were found
 	*/
 	public static java.util.List<com.liferay.commerce.product.model.CPDefinitionLink> getCPDefinitionLinksByUuidAndCompanyId(
-		java.lang.String uuid, long companyId) {
+		String uuid, long companyId) {
 		return getService()
 				   .getCPDefinitionLinksByUuidAndCompanyId(uuid, companyId);
 	}
@@ -293,7 +293,7 @@ public class CPDefinitionLinkLocalServiceUtil {
 	* @return the range of matching cp definition links, or an empty list if no matches were found
 	*/
 	public static java.util.List<com.liferay.commerce.product.model.CPDefinitionLink> getCPDefinitionLinksByUuidAndCompanyId(
-		java.lang.String uuid, long companyId, int start, int end,
+		String uuid, long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.product.model.CPDefinitionLink> orderByComparator) {
 		return getService()
 				   .getCPDefinitionLinksByUuidAndCompanyId(uuid, companyId,
@@ -310,8 +310,7 @@ public class CPDefinitionLinkLocalServiceUtil {
 	}
 
 	public static int getCPDefinitionLinksCount(long cpDefinitionId1,
-		java.lang.String type)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		String type) throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getCPDefinitionLinksCount(cpDefinitionId1, type);
 	}
 
@@ -329,7 +328,7 @@ public class CPDefinitionLinkLocalServiceUtil {
 	*
 	* @return the OSGi service identifier
 	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
+	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 
@@ -340,7 +339,7 @@ public class CPDefinitionLinkLocalServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.commerce.product.model.CPDefinitionLink> getReverseCPDefinitionLinks(
-		long cpDefinitionId, java.lang.String type) {
+		long cpDefinitionId, String type) {
 		return getService().getReverseCPDefinitionLinks(cpDefinitionId, type);
 	}
 
@@ -365,7 +364,7 @@ public class CPDefinitionLinkLocalServiceUtil {
 	}
 
 	public static void updateCPDefinitionLinks(long cpDefinitionId1,
-		long[] cpDefinitionIds2, java.lang.String type,
+		long[] cpDefinitionIds2, String type,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService()

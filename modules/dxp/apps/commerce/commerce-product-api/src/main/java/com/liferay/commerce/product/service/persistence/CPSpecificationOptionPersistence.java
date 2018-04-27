@@ -47,8 +47,7 @@ public interface CPSpecificationOptionPersistence extends BasePersistence<CPSpec
 	* @param uuid the uuid
 	* @return the matching cp specification options
 	*/
-	public java.util.List<CPSpecificationOption> findByUuid(
-		java.lang.String uuid);
+	public java.util.List<CPSpecificationOption> findByUuid(String uuid);
 
 	/**
 	* Returns a range of all the cp specification options where uuid = &#63;.
@@ -62,8 +61,8 @@ public interface CPSpecificationOptionPersistence extends BasePersistence<CPSpec
 	* @param end the upper bound of the range of cp specification options (not inclusive)
 	* @return the range of matching cp specification options
 	*/
-	public java.util.List<CPSpecificationOption> findByUuid(
-		java.lang.String uuid, int start, int end);
+	public java.util.List<CPSpecificationOption> findByUuid(String uuid,
+		int start, int end);
 
 	/**
 	* Returns an ordered range of all the cp specification options where uuid = &#63;.
@@ -78,8 +77,8 @@ public interface CPSpecificationOptionPersistence extends BasePersistence<CPSpec
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching cp specification options
 	*/
-	public java.util.List<CPSpecificationOption> findByUuid(
-		java.lang.String uuid, int start, int end,
+	public java.util.List<CPSpecificationOption> findByUuid(String uuid,
+		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<CPSpecificationOption> orderByComparator);
 
 	/**
@@ -96,8 +95,8 @@ public interface CPSpecificationOptionPersistence extends BasePersistence<CPSpec
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching cp specification options
 	*/
-	public java.util.List<CPSpecificationOption> findByUuid(
-		java.lang.String uuid, int start, int end,
+	public java.util.List<CPSpecificationOption> findByUuid(String uuid,
+		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<CPSpecificationOption> orderByComparator,
 		boolean retrieveFromCache);
 
@@ -109,7 +108,7 @@ public interface CPSpecificationOptionPersistence extends BasePersistence<CPSpec
 	* @return the first matching cp specification option
 	* @throws NoSuchCPSpecificationOptionException if a matching cp specification option could not be found
 	*/
-	public CPSpecificationOption findByUuid_First(java.lang.String uuid,
+	public CPSpecificationOption findByUuid_First(String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<CPSpecificationOption> orderByComparator)
 		throws NoSuchCPSpecificationOptionException;
 
@@ -120,7 +119,7 @@ public interface CPSpecificationOptionPersistence extends BasePersistence<CPSpec
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching cp specification option, or <code>null</code> if a matching cp specification option could not be found
 	*/
-	public CPSpecificationOption fetchByUuid_First(java.lang.String uuid,
+	public CPSpecificationOption fetchByUuid_First(String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<CPSpecificationOption> orderByComparator);
 
 	/**
@@ -131,7 +130,7 @@ public interface CPSpecificationOptionPersistence extends BasePersistence<CPSpec
 	* @return the last matching cp specification option
 	* @throws NoSuchCPSpecificationOptionException if a matching cp specification option could not be found
 	*/
-	public CPSpecificationOption findByUuid_Last(java.lang.String uuid,
+	public CPSpecificationOption findByUuid_Last(String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<CPSpecificationOption> orderByComparator)
 		throws NoSuchCPSpecificationOptionException;
 
@@ -142,7 +141,7 @@ public interface CPSpecificationOptionPersistence extends BasePersistence<CPSpec
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching cp specification option, or <code>null</code> if a matching cp specification option could not be found
 	*/
-	public CPSpecificationOption fetchByUuid_Last(java.lang.String uuid,
+	public CPSpecificationOption fetchByUuid_Last(String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<CPSpecificationOption> orderByComparator);
 
 	/**
@@ -155,7 +154,7 @@ public interface CPSpecificationOptionPersistence extends BasePersistence<CPSpec
 	* @throws NoSuchCPSpecificationOptionException if a cp specification option with the primary key could not be found
 	*/
 	public CPSpecificationOption[] findByUuid_PrevAndNext(
-		long CPSpecificationOptionId, java.lang.String uuid,
+		long CPSpecificationOptionId, String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<CPSpecificationOption> orderByComparator)
 		throws NoSuchCPSpecificationOptionException;
 
@@ -164,7 +163,7 @@ public interface CPSpecificationOptionPersistence extends BasePersistence<CPSpec
 	*
 	* @param uuid the uuid
 	*/
-	public void removeByUuid(java.lang.String uuid);
+	public void removeByUuid(String uuid);
 
 	/**
 	* Returns the number of cp specification options where uuid = &#63;.
@@ -172,7 +171,7 @@ public interface CPSpecificationOptionPersistence extends BasePersistence<CPSpec
 	* @param uuid the uuid
 	* @return the number of matching cp specification options
 	*/
-	public int countByUuid(java.lang.String uuid);
+	public int countByUuid(String uuid);
 
 	/**
 	* Returns the cp specification option where uuid = &#63; and groupId = &#63; or throws a {@link NoSuchCPSpecificationOptionException} if it could not be found.
@@ -182,8 +181,8 @@ public interface CPSpecificationOptionPersistence extends BasePersistence<CPSpec
 	* @return the matching cp specification option
 	* @throws NoSuchCPSpecificationOptionException if a matching cp specification option could not be found
 	*/
-	public CPSpecificationOption findByUUID_G(java.lang.String uuid,
-		long groupId) throws NoSuchCPSpecificationOptionException;
+	public CPSpecificationOption findByUUID_G(String uuid, long groupId)
+		throws NoSuchCPSpecificationOptionException;
 
 	/**
 	* Returns the cp specification option where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
@@ -192,8 +191,7 @@ public interface CPSpecificationOptionPersistence extends BasePersistence<CPSpec
 	* @param groupId the group ID
 	* @return the matching cp specification option, or <code>null</code> if a matching cp specification option could not be found
 	*/
-	public CPSpecificationOption fetchByUUID_G(java.lang.String uuid,
-		long groupId);
+	public CPSpecificationOption fetchByUUID_G(String uuid, long groupId);
 
 	/**
 	* Returns the cp specification option where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -203,8 +201,8 @@ public interface CPSpecificationOptionPersistence extends BasePersistence<CPSpec
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching cp specification option, or <code>null</code> if a matching cp specification option could not be found
 	*/
-	public CPSpecificationOption fetchByUUID_G(java.lang.String uuid,
-		long groupId, boolean retrieveFromCache);
+	public CPSpecificationOption fetchByUUID_G(String uuid, long groupId,
+		boolean retrieveFromCache);
 
 	/**
 	* Removes the cp specification option where uuid = &#63; and groupId = &#63; from the database.
@@ -213,8 +211,8 @@ public interface CPSpecificationOptionPersistence extends BasePersistence<CPSpec
 	* @param groupId the group ID
 	* @return the cp specification option that was removed
 	*/
-	public CPSpecificationOption removeByUUID_G(java.lang.String uuid,
-		long groupId) throws NoSuchCPSpecificationOptionException;
+	public CPSpecificationOption removeByUUID_G(String uuid, long groupId)
+		throws NoSuchCPSpecificationOptionException;
 
 	/**
 	* Returns the number of cp specification options where uuid = &#63; and groupId = &#63;.
@@ -223,7 +221,7 @@ public interface CPSpecificationOptionPersistence extends BasePersistence<CPSpec
 	* @param groupId the group ID
 	* @return the number of matching cp specification options
 	*/
-	public int countByUUID_G(java.lang.String uuid, long groupId);
+	public int countByUUID_G(String uuid, long groupId);
 
 	/**
 	* Returns all the cp specification options where uuid = &#63; and companyId = &#63;.
@@ -232,8 +230,8 @@ public interface CPSpecificationOptionPersistence extends BasePersistence<CPSpec
 	* @param companyId the company ID
 	* @return the matching cp specification options
 	*/
-	public java.util.List<CPSpecificationOption> findByUuid_C(
-		java.lang.String uuid, long companyId);
+	public java.util.List<CPSpecificationOption> findByUuid_C(String uuid,
+		long companyId);
 
 	/**
 	* Returns a range of all the cp specification options where uuid = &#63; and companyId = &#63;.
@@ -248,8 +246,8 @@ public interface CPSpecificationOptionPersistence extends BasePersistence<CPSpec
 	* @param end the upper bound of the range of cp specification options (not inclusive)
 	* @return the range of matching cp specification options
 	*/
-	public java.util.List<CPSpecificationOption> findByUuid_C(
-		java.lang.String uuid, long companyId, int start, int end);
+	public java.util.List<CPSpecificationOption> findByUuid_C(String uuid,
+		long companyId, int start, int end);
 
 	/**
 	* Returns an ordered range of all the cp specification options where uuid = &#63; and companyId = &#63;.
@@ -265,8 +263,8 @@ public interface CPSpecificationOptionPersistence extends BasePersistence<CPSpec
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching cp specification options
 	*/
-	public java.util.List<CPSpecificationOption> findByUuid_C(
-		java.lang.String uuid, long companyId, int start, int end,
+	public java.util.List<CPSpecificationOption> findByUuid_C(String uuid,
+		long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<CPSpecificationOption> orderByComparator);
 
 	/**
@@ -284,8 +282,8 @@ public interface CPSpecificationOptionPersistence extends BasePersistence<CPSpec
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching cp specification options
 	*/
-	public java.util.List<CPSpecificationOption> findByUuid_C(
-		java.lang.String uuid, long companyId, int start, int end,
+	public java.util.List<CPSpecificationOption> findByUuid_C(String uuid,
+		long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<CPSpecificationOption> orderByComparator,
 		boolean retrieveFromCache);
 
@@ -298,7 +296,7 @@ public interface CPSpecificationOptionPersistence extends BasePersistence<CPSpec
 	* @return the first matching cp specification option
 	* @throws NoSuchCPSpecificationOptionException if a matching cp specification option could not be found
 	*/
-	public CPSpecificationOption findByUuid_C_First(java.lang.String uuid,
+	public CPSpecificationOption findByUuid_C_First(String uuid,
 		long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<CPSpecificationOption> orderByComparator)
 		throws NoSuchCPSpecificationOptionException;
@@ -311,7 +309,7 @@ public interface CPSpecificationOptionPersistence extends BasePersistence<CPSpec
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching cp specification option, or <code>null</code> if a matching cp specification option could not be found
 	*/
-	public CPSpecificationOption fetchByUuid_C_First(java.lang.String uuid,
+	public CPSpecificationOption fetchByUuid_C_First(String uuid,
 		long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<CPSpecificationOption> orderByComparator);
 
@@ -324,8 +322,7 @@ public interface CPSpecificationOptionPersistence extends BasePersistence<CPSpec
 	* @return the last matching cp specification option
 	* @throws NoSuchCPSpecificationOptionException if a matching cp specification option could not be found
 	*/
-	public CPSpecificationOption findByUuid_C_Last(java.lang.String uuid,
-		long companyId,
+	public CPSpecificationOption findByUuid_C_Last(String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<CPSpecificationOption> orderByComparator)
 		throws NoSuchCPSpecificationOptionException;
 
@@ -337,7 +334,7 @@ public interface CPSpecificationOptionPersistence extends BasePersistence<CPSpec
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching cp specification option, or <code>null</code> if a matching cp specification option could not be found
 	*/
-	public CPSpecificationOption fetchByUuid_C_Last(java.lang.String uuid,
+	public CPSpecificationOption fetchByUuid_C_Last(String uuid,
 		long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<CPSpecificationOption> orderByComparator);
 
@@ -352,7 +349,7 @@ public interface CPSpecificationOptionPersistence extends BasePersistence<CPSpec
 	* @throws NoSuchCPSpecificationOptionException if a cp specification option with the primary key could not be found
 	*/
 	public CPSpecificationOption[] findByUuid_C_PrevAndNext(
-		long CPSpecificationOptionId, java.lang.String uuid, long companyId,
+		long CPSpecificationOptionId, String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<CPSpecificationOption> orderByComparator)
 		throws NoSuchCPSpecificationOptionException;
 
@@ -362,7 +359,7 @@ public interface CPSpecificationOptionPersistence extends BasePersistence<CPSpec
 	* @param uuid the uuid
 	* @param companyId the company ID
 	*/
-	public void removeByUuid_C(java.lang.String uuid, long companyId);
+	public void removeByUuid_C(String uuid, long companyId);
 
 	/**
 	* Returns the number of cp specification options where uuid = &#63; and companyId = &#63;.
@@ -371,7 +368,7 @@ public interface CPSpecificationOptionPersistence extends BasePersistence<CPSpec
 	* @param companyId the company ID
 	* @return the number of matching cp specification options
 	*/
-	public int countByUuid_C(java.lang.String uuid, long companyId);
+	public int countByUuid_C(String uuid, long companyId);
 
 	/**
 	* Returns all the cp specification options where groupId = &#63;.
@@ -713,7 +710,7 @@ public interface CPSpecificationOptionPersistence extends BasePersistence<CPSpec
 	* @return the matching cp specification option
 	* @throws NoSuchCPSpecificationOptionException if a matching cp specification option could not be found
 	*/
-	public CPSpecificationOption findByG_K(long groupId, java.lang.String key)
+	public CPSpecificationOption findByG_K(long groupId, String key)
 		throws NoSuchCPSpecificationOptionException;
 
 	/**
@@ -723,7 +720,7 @@ public interface CPSpecificationOptionPersistence extends BasePersistence<CPSpec
 	* @param key the key
 	* @return the matching cp specification option, or <code>null</code> if a matching cp specification option could not be found
 	*/
-	public CPSpecificationOption fetchByG_K(long groupId, java.lang.String key);
+	public CPSpecificationOption fetchByG_K(long groupId, String key);
 
 	/**
 	* Returns the cp specification option where groupId = &#63; and key = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -733,7 +730,7 @@ public interface CPSpecificationOptionPersistence extends BasePersistence<CPSpec
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching cp specification option, or <code>null</code> if a matching cp specification option could not be found
 	*/
-	public CPSpecificationOption fetchByG_K(long groupId, java.lang.String key,
+	public CPSpecificationOption fetchByG_K(long groupId, String key,
 		boolean retrieveFromCache);
 
 	/**
@@ -743,7 +740,7 @@ public interface CPSpecificationOptionPersistence extends BasePersistence<CPSpec
 	* @param key the key
 	* @return the cp specification option that was removed
 	*/
-	public CPSpecificationOption removeByG_K(long groupId, java.lang.String key)
+	public CPSpecificationOption removeByG_K(long groupId, String key)
 		throws NoSuchCPSpecificationOptionException;
 
 	/**
@@ -753,7 +750,7 @@ public interface CPSpecificationOptionPersistence extends BasePersistence<CPSpec
 	* @param key the key
 	* @return the number of matching cp specification options
 	*/
-	public int countByG_K(long groupId, java.lang.String key);
+	public int countByG_K(long groupId, String key);
 
 	/**
 	* Caches the cp specification option in the entity cache if it is enabled.
@@ -878,5 +875,5 @@ public interface CPSpecificationOptionPersistence extends BasePersistence<CPSpec
 	public int countAll();
 
 	@Override
-	public java.util.Set<java.lang.String> getBadColumnNames();
+	public java.util.Set<String> getBadColumnNames();
 }

@@ -161,7 +161,7 @@ public class CommerceTaxFixedRateAddressRelWrapper
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new CommerceTaxFixedRateAddressRelWrapper((CommerceTaxFixedRateAddressRel)_commerceTaxFixedRateAddressRel.clone());
 	}
 
@@ -331,7 +331,7 @@ public class CommerceTaxFixedRateAddressRelWrapper
 	* @return the user name of this commerce tax fixed rate address rel
 	*/
 	@Override
-	public java.lang.String getUserName() {
+	public String getUserName() {
 		return _commerceTaxFixedRateAddressRel.getUserName();
 	}
 
@@ -341,7 +341,7 @@ public class CommerceTaxFixedRateAddressRelWrapper
 	* @return the user uuid of this commerce tax fixed rate address rel
 	*/
 	@Override
-	public java.lang.String getUserUuid() {
+	public String getUserUuid() {
 		return _commerceTaxFixedRateAddressRel.getUserUuid();
 	}
 
@@ -351,7 +351,7 @@ public class CommerceTaxFixedRateAddressRelWrapper
 	* @return the zip of this commerce tax fixed rate address rel
 	*/
 	@Override
-	public java.lang.String getZip() {
+	public String getZip() {
 		return _commerceTaxFixedRateAddressRel.getZip();
 	}
 
@@ -538,7 +538,7 @@ public class CommerceTaxFixedRateAddressRelWrapper
 	* @param userName the user name of this commerce tax fixed rate address rel
 	*/
 	@Override
-	public void setUserName(java.lang.String userName) {
+	public void setUserName(String userName) {
 		_commerceTaxFixedRateAddressRel.setUserName(userName);
 	}
 
@@ -548,7 +548,7 @@ public class CommerceTaxFixedRateAddressRelWrapper
 	* @param userUuid the user uuid of this commerce tax fixed rate address rel
 	*/
 	@Override
-	public void setUserUuid(java.lang.String userUuid) {
+	public void setUserUuid(String userUuid) {
 		_commerceTaxFixedRateAddressRel.setUserUuid(userUuid);
 	}
 
@@ -558,7 +558,7 @@ public class CommerceTaxFixedRateAddressRelWrapper
 	* @param zip the zip of this commerce tax fixed rate address rel
 	*/
 	@Override
-	public void setZip(java.lang.String zip) {
+	public void setZip(String zip) {
 		_commerceTaxFixedRateAddressRel.setZip(zip);
 	}
 
@@ -573,7 +573,7 @@ public class CommerceTaxFixedRateAddressRelWrapper
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _commerceTaxFixedRateAddressRel.toString();
 	}
 
@@ -583,7 +583,7 @@ public class CommerceTaxFixedRateAddressRelWrapper
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _commerceTaxFixedRateAddressRel.toXmlString();
 	}
 

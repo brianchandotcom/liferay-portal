@@ -281,8 +281,7 @@ public class CommercePaymentMethodUtil {
 	* @return the matching commerce payment method
 	* @throws NoSuchPaymentMethodException if a matching commerce payment method could not be found
 	*/
-	public static CommercePaymentMethod findByG_E(long groupId,
-		java.lang.String engineKey)
+	public static CommercePaymentMethod findByG_E(long groupId, String engineKey)
 		throws com.liferay.commerce.exception.NoSuchPaymentMethodException {
 		return getPersistence().findByG_E(groupId, engineKey);
 	}
@@ -295,7 +294,7 @@ public class CommercePaymentMethodUtil {
 	* @return the matching commerce payment method, or <code>null</code> if a matching commerce payment method could not be found
 	*/
 	public static CommercePaymentMethod fetchByG_E(long groupId,
-		java.lang.String engineKey) {
+		String engineKey) {
 		return getPersistence().fetchByG_E(groupId, engineKey);
 	}
 
@@ -308,7 +307,7 @@ public class CommercePaymentMethodUtil {
 	* @return the matching commerce payment method, or <code>null</code> if a matching commerce payment method could not be found
 	*/
 	public static CommercePaymentMethod fetchByG_E(long groupId,
-		java.lang.String engineKey, boolean retrieveFromCache) {
+		String engineKey, boolean retrieveFromCache) {
 		return getPersistence().fetchByG_E(groupId, engineKey, retrieveFromCache);
 	}
 
@@ -320,7 +319,7 @@ public class CommercePaymentMethodUtil {
 	* @return the commerce payment method that was removed
 	*/
 	public static CommercePaymentMethod removeByG_E(long groupId,
-		java.lang.String engineKey)
+		String engineKey)
 		throws com.liferay.commerce.exception.NoSuchPaymentMethodException {
 		return getPersistence().removeByG_E(groupId, engineKey);
 	}
@@ -332,7 +331,7 @@ public class CommercePaymentMethodUtil {
 	* @param engineKey the engine key
 	* @return the number of matching commerce payment methods
 	*/
-	public static int countByG_E(long groupId, java.lang.String engineKey) {
+	public static int countByG_E(long groupId, String engineKey) {
 		return getPersistence().countByG_E(groupId, engineKey);
 	}
 
@@ -667,7 +666,7 @@ public class CommercePaymentMethodUtil {
 		return getPersistence().countAll();
 	}
 
-	public static java.util.Set<java.lang.String> getBadColumnNames() {
+	public static java.util.Set<String> getBadColumnNames() {
 		return getPersistence().getBadColumnNames();
 	}
 

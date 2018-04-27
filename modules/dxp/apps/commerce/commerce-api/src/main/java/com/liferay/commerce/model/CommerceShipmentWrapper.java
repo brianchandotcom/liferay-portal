@@ -186,7 +186,7 @@ public class CommerceShipmentWrapper implements CommerceShipment,
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new CommerceShipmentWrapper((CommerceShipment)_commerceShipment.clone());
 	}
 
@@ -216,7 +216,7 @@ public class CommerceShipmentWrapper implements CommerceShipment,
 	* @return the carrier of this commerce shipment
 	*/
 	@Override
-	public java.lang.String getCarrier() {
+	public String getCarrier() {
 		return _commerceShipment.getCarrier();
 	}
 
@@ -356,7 +356,7 @@ public class CommerceShipmentWrapper implements CommerceShipment,
 	* @return the shipment user uuid of this commerce shipment
 	*/
 	@Override
-	public java.lang.String getShipmentUserUuid() {
+	public String getShipmentUserUuid() {
 		return _commerceShipment.getShipmentUserUuid();
 	}
 
@@ -386,7 +386,7 @@ public class CommerceShipmentWrapper implements CommerceShipment,
 	* @return the tracking number of this commerce shipment
 	*/
 	@Override
-	public java.lang.String getTrackingNumber() {
+	public String getTrackingNumber() {
 		return _commerceShipment.getTrackingNumber();
 	}
 
@@ -406,7 +406,7 @@ public class CommerceShipmentWrapper implements CommerceShipment,
 	* @return the user name of this commerce shipment
 	*/
 	@Override
-	public java.lang.String getUserName() {
+	public String getUserName() {
 		return _commerceShipment.getUserName();
 	}
 
@@ -416,7 +416,7 @@ public class CommerceShipmentWrapper implements CommerceShipment,
 	* @return the user uuid of this commerce shipment
 	*/
 	@Override
-	public java.lang.String getUserUuid() {
+	public String getUserUuid() {
 		return _commerceShipment.getUserUuid();
 	}
 
@@ -456,7 +456,7 @@ public class CommerceShipmentWrapper implements CommerceShipment,
 	* @param carrier the carrier of this commerce shipment
 	*/
 	@Override
-	public void setCarrier(java.lang.String carrier) {
+	public void setCarrier(String carrier) {
 		_commerceShipment.setCarrier(carrier);
 	}
 
@@ -612,7 +612,7 @@ public class CommerceShipmentWrapper implements CommerceShipment,
 	* @param shipmentUserUuid the shipment user uuid of this commerce shipment
 	*/
 	@Override
-	public void setShipmentUserUuid(java.lang.String shipmentUserUuid) {
+	public void setShipmentUserUuid(String shipmentUserUuid) {
 		_commerceShipment.setShipmentUserUuid(shipmentUserUuid);
 	}
 
@@ -642,7 +642,7 @@ public class CommerceShipmentWrapper implements CommerceShipment,
 	* @param trackingNumber the tracking number of this commerce shipment
 	*/
 	@Override
-	public void setTrackingNumber(java.lang.String trackingNumber) {
+	public void setTrackingNumber(String trackingNumber) {
 		_commerceShipment.setTrackingNumber(trackingNumber);
 	}
 
@@ -662,7 +662,7 @@ public class CommerceShipmentWrapper implements CommerceShipment,
 	* @param userName the user name of this commerce shipment
 	*/
 	@Override
-	public void setUserName(java.lang.String userName) {
+	public void setUserName(String userName) {
 		_commerceShipment.setUserName(userName);
 	}
 
@@ -672,7 +672,7 @@ public class CommerceShipmentWrapper implements CommerceShipment,
 	* @param userUuid the user uuid of this commerce shipment
 	*/
 	@Override
-	public void setUserUuid(java.lang.String userUuid) {
+	public void setUserUuid(String userUuid) {
 		_commerceShipment.setUserUuid(userUuid);
 	}
 
@@ -687,7 +687,7 @@ public class CommerceShipmentWrapper implements CommerceShipment,
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _commerceShipment.toString();
 	}
 
@@ -697,7 +697,7 @@ public class CommerceShipmentWrapper implements CommerceShipment,
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _commerceShipment.toXmlString();
 	}
 

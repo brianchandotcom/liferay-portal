@@ -58,9 +58,8 @@ public interface CPMeasurementUnitService extends BaseService {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CPMeasurementUnitServiceUtil} to access the cp measurement unit remote service. Add custom service methods to {@link com.liferay.commerce.product.service.impl.CPMeasurementUnitServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public CPMeasurementUnit addCPMeasurementUnit(
-		Map<Locale, java.lang.String> nameMap, java.lang.String key,
-		double rate, boolean primary, double priority, int type,
+	public CPMeasurementUnit addCPMeasurementUnit(Map<Locale, String> nameMap,
+		String key, double rate, boolean primary, double priority, int type,
 		ServiceContext serviceContext) throws PortalException;
 
 	public void deleteCPMeasurementUnit(long cpMeasurementUnitId)
@@ -87,10 +86,10 @@ public interface CPMeasurementUnitService extends BaseService {
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	public CPMeasurementUnit updateCPMeasurementUnit(long cpMeasurementUnitId,
-		Map<Locale, java.lang.String> nameMap, java.lang.String key,
-		double rate, boolean primary, double priority, int type,
-		ServiceContext serviceContext) throws PortalException;
+		Map<Locale, String> nameMap, String key, double rate, boolean primary,
+		double priority, int type, ServiceContext serviceContext)
+		throws PortalException;
 }

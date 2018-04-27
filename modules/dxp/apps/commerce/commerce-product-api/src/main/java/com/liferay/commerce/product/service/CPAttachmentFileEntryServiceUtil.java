@@ -48,8 +48,8 @@ public class CPAttachmentFileEntryServiceUtil {
 		int displayDateMinute, int expirationDateMonth, int expirationDateDay,
 		int expirationDateYear, int expirationDateHour,
 		int expirationDateMinute, boolean neverExpire,
-		java.util.Map<java.util.Locale, java.lang.String> titleMap,
-		java.lang.String json, double priority, int type,
+		java.util.Map<java.util.Locale, String> titleMap, String json,
+		double priority, int type,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
@@ -114,7 +114,7 @@ public class CPAttachmentFileEntryServiceUtil {
 	*
 	* @return the OSGi service identifier
 	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
+	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 
@@ -124,8 +124,8 @@ public class CPAttachmentFileEntryServiceUtil {
 		int displayDateMinute, int expirationDateMonth, int expirationDateDay,
 		int expirationDateYear, int expirationDateHour,
 		int expirationDateMinute, boolean neverExpire,
-		java.util.Map<java.util.Locale, java.lang.String> titleMap,
-		java.lang.String json, double priority, int type,
+		java.util.Map<java.util.Locale, String> titleMap, String json,
+		double priority, int type,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
@@ -140,7 +140,7 @@ public class CPAttachmentFileEntryServiceUtil {
 	public static com.liferay.commerce.product.model.CPAttachmentFileEntry updateStatus(
 		long userId, long cpAttachmentFileEntryId, int status,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext,
-		java.util.Map<java.lang.String, java.io.Serializable> workflowContext)
+		java.util.Map<String, java.io.Serializable> workflowContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .updateStatus(userId, cpAttachmentFileEntryId, status,

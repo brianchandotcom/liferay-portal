@@ -48,12 +48,10 @@ public class CommerceAddressLocalServiceWrapper
 
 	@Override
 	public com.liferay.commerce.model.CommerceAddress addCommerceAddress(
-		java.lang.String className, long classPK, java.lang.String name,
-		java.lang.String description, java.lang.String street1,
-		java.lang.String street2, java.lang.String street3,
-		java.lang.String city, java.lang.String zip, long commerceRegionId,
-		long commerceCountryId, java.lang.String phoneNumber,
-		boolean defaultBilling, boolean defaultShipping,
+		String className, long classPK, String name, String description,
+		String street1, String street2, String street3, String city,
+		String zip, long commerceRegionId, long commerceCountryId,
+		String phoneNumber, boolean defaultBilling, boolean defaultShipping,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _commerceAddressLocalService.addCommerceAddress(className,
@@ -64,7 +62,7 @@ public class CommerceAddressLocalServiceWrapper
 
 	@Override
 	public com.liferay.commerce.model.CommerceAddress copyCommerceAddress(
-		long commerceAddressId, java.lang.String className, long classPK,
+		long commerceAddressId, String className, long classPK,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _commerceAddressLocalService.copyCommerceAddress(commerceAddressId,
@@ -112,7 +110,7 @@ public class CommerceAddressLocalServiceWrapper
 	}
 
 	@Override
-	public void deleteCommerceAddresses(java.lang.String className, long classPK)
+	public void deleteCommerceAddresses(String className, long classPK)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_commerceAddressLocalService.deleteCommerceAddresses(className, classPK);
 	}
@@ -276,15 +274,14 @@ public class CommerceAddressLocalServiceWrapper
 
 	@Override
 	public java.util.List<com.liferay.commerce.model.CommerceAddress> getCommerceAddresses(
-		long groupId, java.lang.String className, long classPK) {
+		long groupId, String className, long classPK) {
 		return _commerceAddressLocalService.getCommerceAddresses(groupId,
 			className, classPK);
 	}
 
 	@Override
 	public java.util.List<com.liferay.commerce.model.CommerceAddress> getCommerceAddresses(
-		long groupId, java.lang.String className, long classPK, int start,
-		int end,
+		long groupId, String className, long classPK, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.model.CommerceAddress> orderByComparator) {
 		return _commerceAddressLocalService.getCommerceAddresses(groupId,
 			className, classPK, start, end, orderByComparator);
@@ -301,8 +298,8 @@ public class CommerceAddressLocalServiceWrapper
 	}
 
 	@Override
-	public int getCommerceAddressesCount(long groupId,
-		java.lang.String className, long classPK) {
+	public int getCommerceAddressesCount(long groupId, String className,
+		long classPK) {
 		return _commerceAddressLocalService.getCommerceAddressesCount(groupId,
 			className, classPK);
 	}
@@ -318,7 +315,7 @@ public class CommerceAddressLocalServiceWrapper
 	* @return the OSGi service identifier
 	*/
 	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
+	public String getOSGiServiceIdentifier() {
 		return _commerceAddressLocalService.getOSGiServiceIdentifier();
 	}
 
@@ -331,8 +328,8 @@ public class CommerceAddressLocalServiceWrapper
 
 	@Override
 	public com.liferay.portal.kernel.search.BaseModelSearchResult<com.liferay.commerce.model.CommerceAddress> searchCommerceAddresses(
-		long companyId, long groupId, java.lang.String className, long classPK,
-		java.lang.String keywords, int start, int end,
+		long companyId, long groupId, String className, long classPK,
+		String keywords, int start, int end,
 		com.liferay.portal.kernel.search.Sort sort)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _commerceAddressLocalService.searchCommerceAddresses(companyId,
@@ -353,12 +350,10 @@ public class CommerceAddressLocalServiceWrapper
 
 	@Override
 	public com.liferay.commerce.model.CommerceAddress updateCommerceAddress(
-		long commerceAddressId, java.lang.String name,
-		java.lang.String description, java.lang.String street1,
-		java.lang.String street2, java.lang.String street3,
-		java.lang.String city, java.lang.String zip, long commerceRegionId,
-		long commerceCountryId, java.lang.String phoneNumber,
-		boolean defaultBilling, boolean defaultShipping,
+		long commerceAddressId, String name, String description,
+		String street1, String street2, String street3, String city,
+		String zip, long commerceRegionId, long commerceCountryId,
+		String phoneNumber, boolean defaultBilling, boolean defaultShipping,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _commerceAddressLocalService.updateCommerceAddress(commerceAddressId,

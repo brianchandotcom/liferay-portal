@@ -119,7 +119,7 @@ public class CPFriendlyURLEntryUtil {
 	* @param uuid the uuid
 	* @return the matching cp friendly url entries
 	*/
-	public static List<CPFriendlyURLEntry> findByUuid(java.lang.String uuid) {
+	public static List<CPFriendlyURLEntry> findByUuid(String uuid) {
 		return getPersistence().findByUuid(uuid);
 	}
 
@@ -135,8 +135,8 @@ public class CPFriendlyURLEntryUtil {
 	* @param end the upper bound of the range of cp friendly url entries (not inclusive)
 	* @return the range of matching cp friendly url entries
 	*/
-	public static List<CPFriendlyURLEntry> findByUuid(java.lang.String uuid,
-		int start, int end) {
+	public static List<CPFriendlyURLEntry> findByUuid(String uuid, int start,
+		int end) {
 		return getPersistence().findByUuid(uuid, start, end);
 	}
 
@@ -153,9 +153,8 @@ public class CPFriendlyURLEntryUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching cp friendly url entries
 	*/
-	public static List<CPFriendlyURLEntry> findByUuid(java.lang.String uuid,
-		int start, int end,
-		OrderByComparator<CPFriendlyURLEntry> orderByComparator) {
+	public static List<CPFriendlyURLEntry> findByUuid(String uuid, int start,
+		int end, OrderByComparator<CPFriendlyURLEntry> orderByComparator) {
 		return getPersistence().findByUuid(uuid, start, end, orderByComparator);
 	}
 
@@ -173,9 +172,8 @@ public class CPFriendlyURLEntryUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching cp friendly url entries
 	*/
-	public static List<CPFriendlyURLEntry> findByUuid(java.lang.String uuid,
-		int start, int end,
-		OrderByComparator<CPFriendlyURLEntry> orderByComparator,
+	public static List<CPFriendlyURLEntry> findByUuid(String uuid, int start,
+		int end, OrderByComparator<CPFriendlyURLEntry> orderByComparator,
 		boolean retrieveFromCache) {
 		return getPersistence()
 				   .findByUuid(uuid, start, end, orderByComparator,
@@ -190,7 +188,7 @@ public class CPFriendlyURLEntryUtil {
 	* @return the first matching cp friendly url entry
 	* @throws NoSuchCPFriendlyURLEntryException if a matching cp friendly url entry could not be found
 	*/
-	public static CPFriendlyURLEntry findByUuid_First(java.lang.String uuid,
+	public static CPFriendlyURLEntry findByUuid_First(String uuid,
 		OrderByComparator<CPFriendlyURLEntry> orderByComparator)
 		throws com.liferay.commerce.product.exception.NoSuchCPFriendlyURLEntryException {
 		return getPersistence().findByUuid_First(uuid, orderByComparator);
@@ -203,7 +201,7 @@ public class CPFriendlyURLEntryUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching cp friendly url entry, or <code>null</code> if a matching cp friendly url entry could not be found
 	*/
-	public static CPFriendlyURLEntry fetchByUuid_First(java.lang.String uuid,
+	public static CPFriendlyURLEntry fetchByUuid_First(String uuid,
 		OrderByComparator<CPFriendlyURLEntry> orderByComparator) {
 		return getPersistence().fetchByUuid_First(uuid, orderByComparator);
 	}
@@ -216,7 +214,7 @@ public class CPFriendlyURLEntryUtil {
 	* @return the last matching cp friendly url entry
 	* @throws NoSuchCPFriendlyURLEntryException if a matching cp friendly url entry could not be found
 	*/
-	public static CPFriendlyURLEntry findByUuid_Last(java.lang.String uuid,
+	public static CPFriendlyURLEntry findByUuid_Last(String uuid,
 		OrderByComparator<CPFriendlyURLEntry> orderByComparator)
 		throws com.liferay.commerce.product.exception.NoSuchCPFriendlyURLEntryException {
 		return getPersistence().findByUuid_Last(uuid, orderByComparator);
@@ -229,7 +227,7 @@ public class CPFriendlyURLEntryUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching cp friendly url entry, or <code>null</code> if a matching cp friendly url entry could not be found
 	*/
-	public static CPFriendlyURLEntry fetchByUuid_Last(java.lang.String uuid,
+	public static CPFriendlyURLEntry fetchByUuid_Last(String uuid,
 		OrderByComparator<CPFriendlyURLEntry> orderByComparator) {
 		return getPersistence().fetchByUuid_Last(uuid, orderByComparator);
 	}
@@ -244,7 +242,7 @@ public class CPFriendlyURLEntryUtil {
 	* @throws NoSuchCPFriendlyURLEntryException if a cp friendly url entry with the primary key could not be found
 	*/
 	public static CPFriendlyURLEntry[] findByUuid_PrevAndNext(
-		long CPFriendlyURLEntryId, java.lang.String uuid,
+		long CPFriendlyURLEntryId, String uuid,
 		OrderByComparator<CPFriendlyURLEntry> orderByComparator)
 		throws com.liferay.commerce.product.exception.NoSuchCPFriendlyURLEntryException {
 		return getPersistence()
@@ -257,7 +255,7 @@ public class CPFriendlyURLEntryUtil {
 	*
 	* @param uuid the uuid
 	*/
-	public static void removeByUuid(java.lang.String uuid) {
+	public static void removeByUuid(String uuid) {
 		getPersistence().removeByUuid(uuid);
 	}
 
@@ -267,7 +265,7 @@ public class CPFriendlyURLEntryUtil {
 	* @param uuid the uuid
 	* @return the number of matching cp friendly url entries
 	*/
-	public static int countByUuid(java.lang.String uuid) {
+	public static int countByUuid(String uuid) {
 		return getPersistence().countByUuid(uuid);
 	}
 
@@ -279,8 +277,7 @@ public class CPFriendlyURLEntryUtil {
 	* @return the matching cp friendly url entry
 	* @throws NoSuchCPFriendlyURLEntryException if a matching cp friendly url entry could not be found
 	*/
-	public static CPFriendlyURLEntry findByUUID_G(java.lang.String uuid,
-		long groupId)
+	public static CPFriendlyURLEntry findByUUID_G(String uuid, long groupId)
 		throws com.liferay.commerce.product.exception.NoSuchCPFriendlyURLEntryException {
 		return getPersistence().findByUUID_G(uuid, groupId);
 	}
@@ -292,8 +289,7 @@ public class CPFriendlyURLEntryUtil {
 	* @param groupId the group ID
 	* @return the matching cp friendly url entry, or <code>null</code> if a matching cp friendly url entry could not be found
 	*/
-	public static CPFriendlyURLEntry fetchByUUID_G(java.lang.String uuid,
-		long groupId) {
+	public static CPFriendlyURLEntry fetchByUUID_G(String uuid, long groupId) {
 		return getPersistence().fetchByUUID_G(uuid, groupId);
 	}
 
@@ -305,8 +301,8 @@ public class CPFriendlyURLEntryUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching cp friendly url entry, or <code>null</code> if a matching cp friendly url entry could not be found
 	*/
-	public static CPFriendlyURLEntry fetchByUUID_G(java.lang.String uuid,
-		long groupId, boolean retrieveFromCache) {
+	public static CPFriendlyURLEntry fetchByUUID_G(String uuid, long groupId,
+		boolean retrieveFromCache) {
 		return getPersistence().fetchByUUID_G(uuid, groupId, retrieveFromCache);
 	}
 
@@ -317,8 +313,7 @@ public class CPFriendlyURLEntryUtil {
 	* @param groupId the group ID
 	* @return the cp friendly url entry that was removed
 	*/
-	public static CPFriendlyURLEntry removeByUUID_G(java.lang.String uuid,
-		long groupId)
+	public static CPFriendlyURLEntry removeByUUID_G(String uuid, long groupId)
 		throws com.liferay.commerce.product.exception.NoSuchCPFriendlyURLEntryException {
 		return getPersistence().removeByUUID_G(uuid, groupId);
 	}
@@ -330,7 +325,7 @@ public class CPFriendlyURLEntryUtil {
 	* @param groupId the group ID
 	* @return the number of matching cp friendly url entries
 	*/
-	public static int countByUUID_G(java.lang.String uuid, long groupId) {
+	public static int countByUUID_G(String uuid, long groupId) {
 		return getPersistence().countByUUID_G(uuid, groupId);
 	}
 
@@ -341,7 +336,7 @@ public class CPFriendlyURLEntryUtil {
 	* @param companyId the company ID
 	* @return the matching cp friendly url entries
 	*/
-	public static List<CPFriendlyURLEntry> findByUuid_C(java.lang.String uuid,
+	public static List<CPFriendlyURLEntry> findByUuid_C(String uuid,
 		long companyId) {
 		return getPersistence().findByUuid_C(uuid, companyId);
 	}
@@ -359,7 +354,7 @@ public class CPFriendlyURLEntryUtil {
 	* @param end the upper bound of the range of cp friendly url entries (not inclusive)
 	* @return the range of matching cp friendly url entries
 	*/
-	public static List<CPFriendlyURLEntry> findByUuid_C(java.lang.String uuid,
+	public static List<CPFriendlyURLEntry> findByUuid_C(String uuid,
 		long companyId, int start, int end) {
 		return getPersistence().findByUuid_C(uuid, companyId, start, end);
 	}
@@ -378,7 +373,7 @@ public class CPFriendlyURLEntryUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching cp friendly url entries
 	*/
-	public static List<CPFriendlyURLEntry> findByUuid_C(java.lang.String uuid,
+	public static List<CPFriendlyURLEntry> findByUuid_C(String uuid,
 		long companyId, int start, int end,
 		OrderByComparator<CPFriendlyURLEntry> orderByComparator) {
 		return getPersistence()
@@ -400,7 +395,7 @@ public class CPFriendlyURLEntryUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching cp friendly url entries
 	*/
-	public static List<CPFriendlyURLEntry> findByUuid_C(java.lang.String uuid,
+	public static List<CPFriendlyURLEntry> findByUuid_C(String uuid,
 		long companyId, int start, int end,
 		OrderByComparator<CPFriendlyURLEntry> orderByComparator,
 		boolean retrieveFromCache) {
@@ -418,7 +413,7 @@ public class CPFriendlyURLEntryUtil {
 	* @return the first matching cp friendly url entry
 	* @throws NoSuchCPFriendlyURLEntryException if a matching cp friendly url entry could not be found
 	*/
-	public static CPFriendlyURLEntry findByUuid_C_First(java.lang.String uuid,
+	public static CPFriendlyURLEntry findByUuid_C_First(String uuid,
 		long companyId, OrderByComparator<CPFriendlyURLEntry> orderByComparator)
 		throws com.liferay.commerce.product.exception.NoSuchCPFriendlyURLEntryException {
 		return getPersistence()
@@ -433,9 +428,8 @@ public class CPFriendlyURLEntryUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching cp friendly url entry, or <code>null</code> if a matching cp friendly url entry could not be found
 	*/
-	public static CPFriendlyURLEntry fetchByUuid_C_First(
-		java.lang.String uuid, long companyId,
-		OrderByComparator<CPFriendlyURLEntry> orderByComparator) {
+	public static CPFriendlyURLEntry fetchByUuid_C_First(String uuid,
+		long companyId, OrderByComparator<CPFriendlyURLEntry> orderByComparator) {
 		return getPersistence()
 				   .fetchByUuid_C_First(uuid, companyId, orderByComparator);
 	}
@@ -449,7 +443,7 @@ public class CPFriendlyURLEntryUtil {
 	* @return the last matching cp friendly url entry
 	* @throws NoSuchCPFriendlyURLEntryException if a matching cp friendly url entry could not be found
 	*/
-	public static CPFriendlyURLEntry findByUuid_C_Last(java.lang.String uuid,
+	public static CPFriendlyURLEntry findByUuid_C_Last(String uuid,
 		long companyId, OrderByComparator<CPFriendlyURLEntry> orderByComparator)
 		throws com.liferay.commerce.product.exception.NoSuchCPFriendlyURLEntryException {
 		return getPersistence()
@@ -464,7 +458,7 @@ public class CPFriendlyURLEntryUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching cp friendly url entry, or <code>null</code> if a matching cp friendly url entry could not be found
 	*/
-	public static CPFriendlyURLEntry fetchByUuid_C_Last(java.lang.String uuid,
+	public static CPFriendlyURLEntry fetchByUuid_C_Last(String uuid,
 		long companyId, OrderByComparator<CPFriendlyURLEntry> orderByComparator) {
 		return getPersistence()
 				   .fetchByUuid_C_Last(uuid, companyId, orderByComparator);
@@ -481,7 +475,7 @@ public class CPFriendlyURLEntryUtil {
 	* @throws NoSuchCPFriendlyURLEntryException if a cp friendly url entry with the primary key could not be found
 	*/
 	public static CPFriendlyURLEntry[] findByUuid_C_PrevAndNext(
-		long CPFriendlyURLEntryId, java.lang.String uuid, long companyId,
+		long CPFriendlyURLEntryId, String uuid, long companyId,
 		OrderByComparator<CPFriendlyURLEntry> orderByComparator)
 		throws com.liferay.commerce.product.exception.NoSuchCPFriendlyURLEntryException {
 		return getPersistence()
@@ -495,7 +489,7 @@ public class CPFriendlyURLEntryUtil {
 	* @param uuid the uuid
 	* @param companyId the company ID
 	*/
-	public static void removeByUuid_C(java.lang.String uuid, long companyId) {
+	public static void removeByUuid_C(String uuid, long companyId) {
 		getPersistence().removeByUuid_C(uuid, companyId);
 	}
 
@@ -506,7 +500,7 @@ public class CPFriendlyURLEntryUtil {
 	* @param companyId the company ID
 	* @return the number of matching cp friendly url entries
 	*/
-	public static int countByUuid_C(java.lang.String uuid, long companyId) {
+	public static int countByUuid_C(String uuid, long companyId) {
 		return getPersistence().countByUuid_C(uuid, companyId);
 	}
 
@@ -716,7 +710,7 @@ public class CPFriendlyURLEntryUtil {
 	* @return the matching cp friendly url entries
 	*/
 	public static List<CPFriendlyURLEntry> findByG_C_U(long groupId,
-		long classNameId, java.lang.String urlTitle) {
+		long classNameId, String urlTitle) {
 		return getPersistence().findByG_C_U(groupId, classNameId, urlTitle);
 	}
 
@@ -735,7 +729,7 @@ public class CPFriendlyURLEntryUtil {
 	* @return the range of matching cp friendly url entries
 	*/
 	public static List<CPFriendlyURLEntry> findByG_C_U(long groupId,
-		long classNameId, java.lang.String urlTitle, int start, int end) {
+		long classNameId, String urlTitle, int start, int end) {
 		return getPersistence()
 				   .findByG_C_U(groupId, classNameId, urlTitle, start, end);
 	}
@@ -756,7 +750,7 @@ public class CPFriendlyURLEntryUtil {
 	* @return the ordered range of matching cp friendly url entries
 	*/
 	public static List<CPFriendlyURLEntry> findByG_C_U(long groupId,
-		long classNameId, java.lang.String urlTitle, int start, int end,
+		long classNameId, String urlTitle, int start, int end,
 		OrderByComparator<CPFriendlyURLEntry> orderByComparator) {
 		return getPersistence()
 				   .findByG_C_U(groupId, classNameId, urlTitle, start, end,
@@ -780,7 +774,7 @@ public class CPFriendlyURLEntryUtil {
 	* @return the ordered range of matching cp friendly url entries
 	*/
 	public static List<CPFriendlyURLEntry> findByG_C_U(long groupId,
-		long classNameId, java.lang.String urlTitle, int start, int end,
+		long classNameId, String urlTitle, int start, int end,
 		OrderByComparator<CPFriendlyURLEntry> orderByComparator,
 		boolean retrieveFromCache) {
 		return getPersistence()
@@ -799,7 +793,7 @@ public class CPFriendlyURLEntryUtil {
 	* @throws NoSuchCPFriendlyURLEntryException if a matching cp friendly url entry could not be found
 	*/
 	public static CPFriendlyURLEntry findByG_C_U_First(long groupId,
-		long classNameId, java.lang.String urlTitle,
+		long classNameId, String urlTitle,
 		OrderByComparator<CPFriendlyURLEntry> orderByComparator)
 		throws com.liferay.commerce.product.exception.NoSuchCPFriendlyURLEntryException {
 		return getPersistence()
@@ -817,7 +811,7 @@ public class CPFriendlyURLEntryUtil {
 	* @return the first matching cp friendly url entry, or <code>null</code> if a matching cp friendly url entry could not be found
 	*/
 	public static CPFriendlyURLEntry fetchByG_C_U_First(long groupId,
-		long classNameId, java.lang.String urlTitle,
+		long classNameId, String urlTitle,
 		OrderByComparator<CPFriendlyURLEntry> orderByComparator) {
 		return getPersistence()
 				   .fetchByG_C_U_First(groupId, classNameId, urlTitle,
@@ -835,7 +829,7 @@ public class CPFriendlyURLEntryUtil {
 	* @throws NoSuchCPFriendlyURLEntryException if a matching cp friendly url entry could not be found
 	*/
 	public static CPFriendlyURLEntry findByG_C_U_Last(long groupId,
-		long classNameId, java.lang.String urlTitle,
+		long classNameId, String urlTitle,
 		OrderByComparator<CPFriendlyURLEntry> orderByComparator)
 		throws com.liferay.commerce.product.exception.NoSuchCPFriendlyURLEntryException {
 		return getPersistence()
@@ -853,7 +847,7 @@ public class CPFriendlyURLEntryUtil {
 	* @return the last matching cp friendly url entry, or <code>null</code> if a matching cp friendly url entry could not be found
 	*/
 	public static CPFriendlyURLEntry fetchByG_C_U_Last(long groupId,
-		long classNameId, java.lang.String urlTitle,
+		long classNameId, String urlTitle,
 		OrderByComparator<CPFriendlyURLEntry> orderByComparator) {
 		return getPersistence()
 				   .fetchByG_C_U_Last(groupId, classNameId, urlTitle,
@@ -873,8 +867,7 @@ public class CPFriendlyURLEntryUtil {
 	*/
 	public static CPFriendlyURLEntry[] findByG_C_U_PrevAndNext(
 		long CPFriendlyURLEntryId, long groupId, long classNameId,
-		java.lang.String urlTitle,
-		OrderByComparator<CPFriendlyURLEntry> orderByComparator)
+		String urlTitle, OrderByComparator<CPFriendlyURLEntry> orderByComparator)
 		throws com.liferay.commerce.product.exception.NoSuchCPFriendlyURLEntryException {
 		return getPersistence()
 				   .findByG_C_U_PrevAndNext(CPFriendlyURLEntryId, groupId,
@@ -889,7 +882,7 @@ public class CPFriendlyURLEntryUtil {
 	* @param urlTitle the url title
 	*/
 	public static void removeByG_C_U(long groupId, long classNameId,
-		java.lang.String urlTitle) {
+		String urlTitle) {
 		getPersistence().removeByG_C_U(groupId, classNameId, urlTitle);
 	}
 
@@ -902,7 +895,7 @@ public class CPFriendlyURLEntryUtil {
 	* @return the number of matching cp friendly url entries
 	*/
 	public static int countByG_C_U(long groupId, long classNameId,
-		java.lang.String urlTitle) {
+		String urlTitle) {
 		return getPersistence().countByG_C_U(groupId, classNameId, urlTitle);
 	}
 
@@ -1130,7 +1123,7 @@ public class CPFriendlyURLEntryUtil {
 	* @throws NoSuchCPFriendlyURLEntryException if a matching cp friendly url entry could not be found
 	*/
 	public static CPFriendlyURLEntry findByG_C_L_U(long groupId,
-		long classNameId, java.lang.String languageId, java.lang.String urlTitle)
+		long classNameId, String languageId, String urlTitle)
 		throws com.liferay.commerce.product.exception.NoSuchCPFriendlyURLEntryException {
 		return getPersistence()
 				   .findByG_C_L_U(groupId, classNameId, languageId, urlTitle);
@@ -1146,7 +1139,7 @@ public class CPFriendlyURLEntryUtil {
 	* @return the matching cp friendly url entry, or <code>null</code> if a matching cp friendly url entry could not be found
 	*/
 	public static CPFriendlyURLEntry fetchByG_C_L_U(long groupId,
-		long classNameId, java.lang.String languageId, java.lang.String urlTitle) {
+		long classNameId, String languageId, String urlTitle) {
 		return getPersistence()
 				   .fetchByG_C_L_U(groupId, classNameId, languageId, urlTitle);
 	}
@@ -1162,8 +1155,8 @@ public class CPFriendlyURLEntryUtil {
 	* @return the matching cp friendly url entry, or <code>null</code> if a matching cp friendly url entry could not be found
 	*/
 	public static CPFriendlyURLEntry fetchByG_C_L_U(long groupId,
-		long classNameId, java.lang.String languageId,
-		java.lang.String urlTitle, boolean retrieveFromCache) {
+		long classNameId, String languageId, String urlTitle,
+		boolean retrieveFromCache) {
 		return getPersistence()
 				   .fetchByG_C_L_U(groupId, classNameId, languageId, urlTitle,
 			retrieveFromCache);
@@ -1179,7 +1172,7 @@ public class CPFriendlyURLEntryUtil {
 	* @return the cp friendly url entry that was removed
 	*/
 	public static CPFriendlyURLEntry removeByG_C_L_U(long groupId,
-		long classNameId, java.lang.String languageId, java.lang.String urlTitle)
+		long classNameId, String languageId, String urlTitle)
 		throws com.liferay.commerce.product.exception.NoSuchCPFriendlyURLEntryException {
 		return getPersistence()
 				   .removeByG_C_L_U(groupId, classNameId, languageId, urlTitle);
@@ -1195,7 +1188,7 @@ public class CPFriendlyURLEntryUtil {
 	* @return the number of matching cp friendly url entries
 	*/
 	public static int countByG_C_L_U(long groupId, long classNameId,
-		java.lang.String languageId, java.lang.String urlTitle) {
+		String languageId, String urlTitle) {
 		return getPersistence()
 				   .countByG_C_L_U(groupId, classNameId, languageId, urlTitle);
 	}
@@ -1212,8 +1205,7 @@ public class CPFriendlyURLEntryUtil {
 	* @throws NoSuchCPFriendlyURLEntryException if a matching cp friendly url entry could not be found
 	*/
 	public static CPFriendlyURLEntry findByG_C_C_L_U(long groupId,
-		long classNameId, long classPK, java.lang.String languageId,
-		java.lang.String urlTitle)
+		long classNameId, long classPK, String languageId, String urlTitle)
 		throws com.liferay.commerce.product.exception.NoSuchCPFriendlyURLEntryException {
 		return getPersistence()
 				   .findByG_C_C_L_U(groupId, classNameId, classPK, languageId,
@@ -1231,8 +1223,7 @@ public class CPFriendlyURLEntryUtil {
 	* @return the matching cp friendly url entry, or <code>null</code> if a matching cp friendly url entry could not be found
 	*/
 	public static CPFriendlyURLEntry fetchByG_C_C_L_U(long groupId,
-		long classNameId, long classPK, java.lang.String languageId,
-		java.lang.String urlTitle) {
+		long classNameId, long classPK, String languageId, String urlTitle) {
 		return getPersistence()
 				   .fetchByG_C_C_L_U(groupId, classNameId, classPK, languageId,
 			urlTitle);
@@ -1250,8 +1241,8 @@ public class CPFriendlyURLEntryUtil {
 	* @return the matching cp friendly url entry, or <code>null</code> if a matching cp friendly url entry could not be found
 	*/
 	public static CPFriendlyURLEntry fetchByG_C_C_L_U(long groupId,
-		long classNameId, long classPK, java.lang.String languageId,
-		java.lang.String urlTitle, boolean retrieveFromCache) {
+		long classNameId, long classPK, String languageId, String urlTitle,
+		boolean retrieveFromCache) {
 		return getPersistence()
 				   .fetchByG_C_C_L_U(groupId, classNameId, classPK, languageId,
 			urlTitle, retrieveFromCache);
@@ -1268,8 +1259,7 @@ public class CPFriendlyURLEntryUtil {
 	* @return the cp friendly url entry that was removed
 	*/
 	public static CPFriendlyURLEntry removeByG_C_C_L_U(long groupId,
-		long classNameId, long classPK, java.lang.String languageId,
-		java.lang.String urlTitle)
+		long classNameId, long classPK, String languageId, String urlTitle)
 		throws com.liferay.commerce.product.exception.NoSuchCPFriendlyURLEntryException {
 		return getPersistence()
 				   .removeByG_C_C_L_U(groupId, classNameId, classPK,
@@ -1287,7 +1277,7 @@ public class CPFriendlyURLEntryUtil {
 	* @return the number of matching cp friendly url entries
 	*/
 	public static int countByG_C_C_L_U(long groupId, long classNameId,
-		long classPK, java.lang.String languageId, java.lang.String urlTitle) {
+		long classPK, String languageId, String urlTitle) {
 		return getPersistence()
 				   .countByG_C_C_L_U(groupId, classNameId, classPK, languageId,
 			urlTitle);
@@ -1305,8 +1295,7 @@ public class CPFriendlyURLEntryUtil {
 	* @throws NoSuchCPFriendlyURLEntryException if a matching cp friendly url entry could not be found
 	*/
 	public static CPFriendlyURLEntry findByG_C_C_L_M(long groupId,
-		long classNameId, long classPK, java.lang.String languageId,
-		boolean main)
+		long classNameId, long classPK, String languageId, boolean main)
 		throws com.liferay.commerce.product.exception.NoSuchCPFriendlyURLEntryException {
 		return getPersistence()
 				   .findByG_C_C_L_M(groupId, classNameId, classPK, languageId,
@@ -1324,8 +1313,7 @@ public class CPFriendlyURLEntryUtil {
 	* @return the matching cp friendly url entry, or <code>null</code> if a matching cp friendly url entry could not be found
 	*/
 	public static CPFriendlyURLEntry fetchByG_C_C_L_M(long groupId,
-		long classNameId, long classPK, java.lang.String languageId,
-		boolean main) {
+		long classNameId, long classPK, String languageId, boolean main) {
 		return getPersistence()
 				   .fetchByG_C_C_L_M(groupId, classNameId, classPK, languageId,
 			main);
@@ -1343,8 +1331,8 @@ public class CPFriendlyURLEntryUtil {
 	* @return the matching cp friendly url entry, or <code>null</code> if a matching cp friendly url entry could not be found
 	*/
 	public static CPFriendlyURLEntry fetchByG_C_C_L_M(long groupId,
-		long classNameId, long classPK, java.lang.String languageId,
-		boolean main, boolean retrieveFromCache) {
+		long classNameId, long classPK, String languageId, boolean main,
+		boolean retrieveFromCache) {
 		return getPersistence()
 				   .fetchByG_C_C_L_M(groupId, classNameId, classPK, languageId,
 			main, retrieveFromCache);
@@ -1361,8 +1349,7 @@ public class CPFriendlyURLEntryUtil {
 	* @return the cp friendly url entry that was removed
 	*/
 	public static CPFriendlyURLEntry removeByG_C_C_L_M(long groupId,
-		long classNameId, long classPK, java.lang.String languageId,
-		boolean main)
+		long classNameId, long classPK, String languageId, boolean main)
 		throws com.liferay.commerce.product.exception.NoSuchCPFriendlyURLEntryException {
 		return getPersistence()
 				   .removeByG_C_C_L_M(groupId, classNameId, classPK,
@@ -1380,7 +1367,7 @@ public class CPFriendlyURLEntryUtil {
 	* @return the number of matching cp friendly url entries
 	*/
 	public static int countByG_C_C_L_M(long groupId, long classNameId,
-		long classPK, java.lang.String languageId, boolean main) {
+		long classPK, String languageId, boolean main) {
 		return getPersistence()
 				   .countByG_C_C_L_M(groupId, classNameId, classPK, languageId,
 			main);
@@ -1537,7 +1524,7 @@ public class CPFriendlyURLEntryUtil {
 		return getPersistence().countAll();
 	}
 
-	public static java.util.Set<java.lang.String> getBadColumnNames() {
+	public static java.util.Set<String> getBadColumnNames() {
 		return getPersistence().getBadColumnNames();
 	}
 

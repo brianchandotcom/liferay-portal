@@ -81,12 +81,12 @@ public interface CommerceCountryLocalService extends BaseLocalService,
 	public CommerceCountry addCommerceCountry(CommerceCountry commerceCountry);
 
 	@Indexable(type = IndexableType.REINDEX)
-	public CommerceCountry addCommerceCountry(
-		Map<Locale, java.lang.String> nameMap, boolean billingAllowed,
-		boolean shippingAllowed, java.lang.String twoLettersISOCode,
-		java.lang.String threeLettersISOCode, int numericISOCode,
-		boolean subjectToVAT, double priority, boolean active,
-		ServiceContext serviceContext) throws PortalException;
+	public CommerceCountry addCommerceCountry(Map<Locale, String> nameMap,
+		boolean billingAllowed, boolean shippingAllowed,
+		String twoLettersISOCode, String threeLettersISOCode,
+		int numericISOCode, boolean subjectToVAT, double priority,
+		boolean active, ServiceContext serviceContext)
+		throws PortalException;
 
 	/**
 	* Creates a new commerce country with the primary key. Does not add the commerce country to the database.
@@ -203,8 +203,8 @@ public interface CommerceCountryLocalService extends BaseLocalService,
 	* @return the matching commerce country, or <code>null</code> if a matching commerce country could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CommerceCountry fetchCommerceCountryByUuidAndGroupId(
-		java.lang.String uuid, long groupId);
+	public CommerceCountry fetchCommerceCountryByUuidAndGroupId(String uuid,
+		long groupId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
@@ -249,7 +249,7 @@ public interface CommerceCountryLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommerceCountry> getCommerceCountriesByUuidAndCompanyId(
-		java.lang.String uuid, long companyId);
+		String uuid, long companyId);
 
 	/**
 	* Returns a range of commerce countries matching the UUID and company.
@@ -263,7 +263,7 @@ public interface CommerceCountryLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommerceCountry> getCommerceCountriesByUuidAndCompanyId(
-		java.lang.String uuid, long companyId, int start, int end,
+		String uuid, long companyId, int start, int end,
 		OrderByComparator<CommerceCountry> orderByComparator);
 
 	/**
@@ -300,8 +300,8 @@ public interface CommerceCountryLocalService extends BaseLocalService,
 	* @throws PortalException if a matching commerce country could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CommerceCountry getCommerceCountryByUuidAndGroupId(
-		java.lang.String uuid, long groupId) throws PortalException;
+	public CommerceCountry getCommerceCountryByUuidAndGroupId(String uuid,
+		long groupId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
@@ -315,7 +315,7 @@ public interface CommerceCountryLocalService extends BaseLocalService,
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -331,7 +331,7 @@ public interface CommerceCountryLocalService extends BaseLocalService,
 		boolean all);
 
 	public void importDefaultCountries(ServiceContext serviceContext)
-		throws java.lang.Exception;
+		throws Exception;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public BaseModelSearchResult<CommerceCountry> searchCommerceCountries(
@@ -349,9 +349,9 @@ public interface CommerceCountryLocalService extends BaseLocalService,
 
 	@Indexable(type = IndexableType.REINDEX)
 	public CommerceCountry updateCommerceCountry(long commerceCountryId,
-		Map<Locale, java.lang.String> nameMap, boolean billingAllowed,
-		boolean shippingAllowed, java.lang.String twoLettersISOCode,
-		java.lang.String threeLettersISOCode, int numericISOCode,
-		boolean subjectToVAT, double priority, boolean active,
-		ServiceContext serviceContext) throws PortalException;
+		Map<Locale, String> nameMap, boolean billingAllowed,
+		boolean shippingAllowed, String twoLettersISOCode,
+		String threeLettersISOCode, int numericISOCode, boolean subjectToVAT,
+		double priority, boolean active, ServiceContext serviceContext)
+		throws PortalException;
 }

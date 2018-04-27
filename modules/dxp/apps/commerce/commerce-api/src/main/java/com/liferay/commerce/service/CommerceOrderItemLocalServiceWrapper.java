@@ -49,7 +49,7 @@ public class CommerceOrderItemLocalServiceWrapper
 	@Override
 	public com.liferay.commerce.model.CommerceOrderItem addCommerceOrderItem(
 		long commerceOrderId, long cpInstanceId, int quantity,
-		int shippedQuantity, java.lang.String json, java.math.BigDecimal price,
+		int shippedQuantity, String json, java.math.BigDecimal price,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _commerceOrderItemLocalService.addCommerceOrderItem(commerceOrderId,
@@ -313,7 +313,7 @@ public class CommerceOrderItemLocalServiceWrapper
 	* @return the OSGi service identifier
 	*/
 	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
+	public String getOSGiServiceIdentifier() {
 		return _commerceOrderItemLocalService.getOSGiServiceIdentifier();
 	}
 
@@ -334,7 +334,7 @@ public class CommerceOrderItemLocalServiceWrapper
 
 	@Override
 	public com.liferay.portal.kernel.search.BaseModelSearchResult<com.liferay.commerce.model.CommerceOrderItem> search(
-		long commerceOrderId, java.lang.String keywords, int start, int end,
+		long commerceOrderId, String keywords, int start, int end,
 		com.liferay.portal.kernel.search.Sort sort)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _commerceOrderItemLocalService.search(commerceOrderId, keywords,
@@ -343,9 +343,8 @@ public class CommerceOrderItemLocalServiceWrapper
 
 	@Override
 	public com.liferay.portal.kernel.search.BaseModelSearchResult<com.liferay.commerce.model.CommerceOrderItem> search(
-		long commerceOrderId, java.lang.String sku, java.lang.String title,
-		boolean andOperator, int start, int end,
-		com.liferay.portal.kernel.search.Sort sort)
+		long commerceOrderId, String sku, String title, boolean andOperator,
+		int start, int end, com.liferay.portal.kernel.search.Sort sort)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _commerceOrderItemLocalService.search(commerceOrderId, sku,
 			title, andOperator, start, end, sort);
@@ -373,7 +372,7 @@ public class CommerceOrderItemLocalServiceWrapper
 
 	@Override
 	public com.liferay.commerce.model.CommerceOrderItem updateCommerceOrderItem(
-		long commerceOrderItemId, int quantity, java.lang.String json,
+		long commerceOrderItemId, int quantity, String json,
 		java.math.BigDecimal price)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _commerceOrderItemLocalService.updateCommerceOrderItem(commerceOrderItemId,

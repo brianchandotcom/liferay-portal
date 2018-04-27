@@ -226,7 +226,7 @@ public class CommercePriceEntryLocalServiceWrapper
 	*/
 	@Override
 	public com.liferay.commerce.price.list.model.CommercePriceEntry fetchCommercePriceEntryByUuidAndGroupId(
-		java.lang.String uuid, long groupId) {
+		String uuid, long groupId) {
 		return _commercePriceEntryLocalService.fetchCommercePriceEntryByUuidAndGroupId(uuid,
 			groupId);
 	}
@@ -278,7 +278,7 @@ public class CommercePriceEntryLocalServiceWrapper
 	*/
 	@Override
 	public java.util.List<com.liferay.commerce.price.list.model.CommercePriceEntry> getCommercePriceEntriesByUuidAndCompanyId(
-		java.lang.String uuid, long companyId) {
+		String uuid, long companyId) {
 		return _commercePriceEntryLocalService.getCommercePriceEntriesByUuidAndCompanyId(uuid,
 			companyId);
 	}
@@ -295,7 +295,7 @@ public class CommercePriceEntryLocalServiceWrapper
 	*/
 	@Override
 	public java.util.List<com.liferay.commerce.price.list.model.CommercePriceEntry> getCommercePriceEntriesByUuidAndCompanyId(
-		java.lang.String uuid, long companyId, int start, int end,
+		String uuid, long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.price.list.model.CommercePriceEntry> orderByComparator) {
 		return _commercePriceEntryLocalService.getCommercePriceEntriesByUuidAndCompanyId(uuid,
 			companyId, start, end, orderByComparator);
@@ -340,7 +340,7 @@ public class CommercePriceEntryLocalServiceWrapper
 	*/
 	@Override
 	public com.liferay.commerce.price.list.model.CommercePriceEntry getCommercePriceEntryByUuidAndGroupId(
-		java.lang.String uuid, long groupId)
+		String uuid, long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _commercePriceEntryLocalService.getCommercePriceEntryByUuidAndGroupId(uuid,
 			groupId);
@@ -383,7 +383,7 @@ public class CommercePriceEntryLocalServiceWrapper
 	* @return the OSGi service identifier
 	*/
 	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
+	public String getOSGiServiceIdentifier() {
 		return _commercePriceEntryLocalService.getOSGiServiceIdentifier();
 	}
 
@@ -403,7 +403,7 @@ public class CommercePriceEntryLocalServiceWrapper
 	@Override
 	public com.liferay.portal.kernel.search.BaseModelSearchResult<com.liferay.commerce.price.list.model.CommercePriceEntry> searchCommercePriceEntries(
 		long companyId, long groupId, long commercePriceListId,
-		java.lang.String keywords, int start, int end,
+		String keywords, int start, int end,
 		com.liferay.portal.kernel.search.Sort sort)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _commercePriceEntryLocalService.searchCommercePriceEntries(companyId,

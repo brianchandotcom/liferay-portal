@@ -61,11 +61,10 @@ public interface CommercePriceListService extends BaseService {
 	 * Never modify or reference this interface directly. Always use {@link CommercePriceListServiceUtil} to access the commerce price list remote service. Add custom service methods to {@link com.liferay.commerce.price.list.service.impl.CommercePriceListServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	public CommercePriceList addCommercePriceList(long commerceCurrencyId,
-		java.lang.String name, double priority, int displayDateMonth,
-		int displayDateDay, int displayDateYear, int displayDateHour,
-		int displayDateMinute, int expirationDateMonth, int expirationDateDay,
-		int expirationDateYear, int expirationDateHour,
-		int expirationDateMinute, boolean neverExpire,
+		String name, double priority, int displayDateMonth, int displayDateDay,
+		int displayDateYear, int displayDateHour, int displayDateMinute,
+		int expirationDateMonth, int expirationDateDay, int expirationDateYear,
+		int expirationDateHour, int expirationDateMinute, boolean neverExpire,
 		ServiceContext serviceContext) throws PortalException;
 
 	public void deleteCommercePriceList(long commercePriceListId)
@@ -91,18 +90,18 @@ public interface CommercePriceListService extends BaseService {
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public Hits search(SearchContext searchContext);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public BaseModelSearchResult<CommercePriceList> searchCommercePriceLists(
-		long companyId, long groupId, java.lang.String keywords, int status,
-		int start, int end, Sort sort) throws PortalException;
+		long companyId, long groupId, String keywords, int status, int start,
+		int end, Sort sort) throws PortalException;
 
 	public CommercePriceList updateCommercePriceList(long commercePriceListId,
-		long commerceCurrencyId, java.lang.String name, double priority,
+		long commerceCurrencyId, String name, double priority,
 		int displayDateMonth, int displayDateDay, int displayDateYear,
 		int displayDateHour, int displayDateMinute, int expirationDateMonth,
 		int expirationDateDay, int expirationDateYear, int expirationDateHour,

@@ -71,8 +71,8 @@ import java.util.Map;
 public class CPDefinitionSpecificationOptionValueServiceSoap {
 	public static com.liferay.commerce.product.model.CPDefinitionSpecificationOptionValueSoap addCPDefinitionSpecificationOptionValue(
 		long cpDefinitionId, long cpSpecificationOptionId,
-		long cpOptionCategoryId, java.lang.String[] valueMapLanguageIds,
-		java.lang.String[] valueMapValues, double priority,
+		long cpOptionCategoryId, String[] valueMapLanguageIds,
+		String[] valueMapValues, double priority,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
@@ -185,8 +185,7 @@ public class CPDefinitionSpecificationOptionValueServiceSoap {
 
 	public static com.liferay.commerce.product.model.CPDefinitionSpecificationOptionValueSoap updateCPDefinitionSpecificationOptionValue(
 		long cpDefinitionSpecificationOptionValueId, long cpOptionCategoryId,
-		java.lang.String[] valueMapLanguageIds,
-		java.lang.String[] valueMapValues, double priority,
+		String[] valueMapLanguageIds, String[] valueMapValues, double priority,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {

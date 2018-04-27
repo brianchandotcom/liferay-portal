@@ -78,8 +78,8 @@ public interface CommerceOrderItemLocalService extends BaseLocalService,
 
 	@Indexable(type = IndexableType.REINDEX)
 	public CommerceOrderItem addCommerceOrderItem(long commerceOrderId,
-		long cpInstanceId, int quantity, int shippedQuantity,
-		java.lang.String json, BigDecimal price, ServiceContext serviceContext)
+		long cpInstanceId, int quantity, int shippedQuantity, String json,
+		BigDecimal price, ServiceContext serviceContext)
 		throws PortalException;
 
 	/**
@@ -258,7 +258,7 @@ public interface CommerceOrderItemLocalService extends BaseLocalService,
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -271,14 +271,13 @@ public interface CommerceOrderItemLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public BaseModelSearchResult<CommerceOrderItem> search(
-		long commerceOrderId, java.lang.String keywords, int start, int end,
-		Sort sort) throws PortalException;
+		long commerceOrderId, String keywords, int start, int end, Sort sort)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public BaseModelSearchResult<CommerceOrderItem> search(
-		long commerceOrderId, java.lang.String sku, java.lang.String title,
-		boolean andOperator, int start, int end, Sort sort)
-		throws PortalException;
+		long commerceOrderId, String sku, String title, boolean andOperator,
+		int start, int end, Sort sort) throws PortalException;
 
 	/**
 	* Updates the commerce order item in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
@@ -295,6 +294,5 @@ public interface CommerceOrderItemLocalService extends BaseLocalService,
 
 	@Indexable(type = IndexableType.REINDEX)
 	public CommerceOrderItem updateCommerceOrderItem(long commerceOrderItemId,
-		int quantity, java.lang.String json, BigDecimal price)
-		throws PortalException;
+		int quantity, String json, BigDecimal price) throws PortalException;
 }

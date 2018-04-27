@@ -58,13 +58,12 @@ public interface CommerceShipmentService extends BaseService {
 	 */
 	public CommerceShipment addCommerceShipment(long shipmentUserId,
 		long commerceAddressId, long commerceShippingMethodId,
-		long commerceWarehouseId, java.lang.String carrier,
-		java.lang.String trackingNumber, int expectedDuration, int status,
-		int shippingDateMonth, int shippingDateDay, int shippingDateYear,
-		int shippingDateHour, int shippingDateMinute, int expectedDateMonth,
-		int expectedDateDay, int expectedDateYear, int expectedDateHour,
-		int expectedDateMinute, ServiceContext serviceContext)
-		throws PortalException;
+		long commerceWarehouseId, String carrier, String trackingNumber,
+		int expectedDuration, int status, int shippingDateMonth,
+		int shippingDateDay, int shippingDateYear, int shippingDateHour,
+		int shippingDateMinute, int expectedDateMonth, int expectedDateDay,
+		int expectedDateYear, int expectedDateHour, int expectedDateMinute,
+		ServiceContext serviceContext) throws PortalException;
 
 	public void deleteCommerceShipment(long commerceShipmentId)
 		throws PortalException;
@@ -85,14 +84,14 @@ public interface CommerceShipmentService extends BaseService {
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	public CommerceShipment updateCommerceShipment(long commerceShipmentId,
 		long shipmentUserId, long commerceAddressId,
-		long commerceShippingMethodId, java.lang.String carrier,
-		java.lang.String trackingNumber, int expectedDuration, int status,
-		int shippingDateMonth, int shippingDateDay, int shippingDateYear,
-		int shippingDateHour, int shippingDateMinute, int expectedDateMonth,
-		int expectedDateDay, int expectedDateYear, int expectedDateHour,
-		int expectedDateMinute) throws PortalException;
+		long commerceShippingMethodId, String carrier, String trackingNumber,
+		int expectedDuration, int status, int shippingDateMonth,
+		int shippingDateDay, int shippingDateYear, int shippingDateHour,
+		int shippingDateMinute, int expectedDateMonth, int expectedDateDay,
+		int expectedDateYear, int expectedDateHour, int expectedDateMinute)
+		throws PortalException;
 }

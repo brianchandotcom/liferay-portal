@@ -66,11 +66,11 @@ import java.rmi.RemoteException;
 @ProviderType
 public class CPDefinitionInventoryServiceSoap {
 	public static com.liferay.commerce.model.CPDefinitionInventorySoap addCPDefinitionInventory(
-		long cpDefinitionId, java.lang.String cpDefinitionInventoryEngine,
-		java.lang.String lowStockActivity, boolean displayAvailability,
+		long cpDefinitionId, String cpDefinitionInventoryEngine,
+		String lowStockActivity, boolean displayAvailability,
 		boolean displayStockQuantity, int minStockQuantity, boolean backOrders,
 		int minOrderQuantity, int maxOrderQuantity,
-		java.lang.String allowedOrderQuantities, int multipleOrderQuantity,
+		String allowedOrderQuantities, int multipleOrderQuantity,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
@@ -131,12 +131,11 @@ public class CPDefinitionInventoryServiceSoap {
 	}
 
 	public static com.liferay.commerce.model.CPDefinitionInventorySoap updateCPDefinitionInventory(
-		long cpDefinitionInventoryId,
-		java.lang.String cpDefinitionInventoryEngine,
-		java.lang.String lowStockActivity, boolean displayAvailability,
+		long cpDefinitionInventoryId, String cpDefinitionInventoryEngine,
+		String lowStockActivity, boolean displayAvailability,
 		boolean displayStockQuantity, int minStockQuantity, boolean backOrders,
 		int minOrderQuantity, int maxOrderQuantity,
-		java.lang.String allowedOrderQuantities, int multipleOrderQuantity,
+		String allowedOrderQuantities, int multipleOrderQuantity,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {

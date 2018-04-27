@@ -68,9 +68,8 @@ public interface CPAttachmentFileEntryService extends BaseService {
 		int displayDateMinute, int expirationDateMonth, int expirationDateDay,
 		int expirationDateYear, int expirationDateHour,
 		int expirationDateMinute, boolean neverExpire,
-		Map<Locale, java.lang.String> titleMap, java.lang.String json,
-		double priority, int type, ServiceContext serviceContext)
-		throws PortalException;
+		Map<Locale, String> titleMap, String json, double priority, int type,
+		ServiceContext serviceContext) throws PortalException;
 
 	public CPAttachmentFileEntry deleteCPAttachmentFileEntry(
 		CPAttachmentFileEntry cpAttachmentFileEntry) throws PortalException;
@@ -106,7 +105,7 @@ public interface CPAttachmentFileEntryService extends BaseService {
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Indexable(type = IndexableType.REINDEX)
 	public CPAttachmentFileEntry updateCPAttachmentFileEntry(
@@ -115,13 +114,11 @@ public interface CPAttachmentFileEntryService extends BaseService {
 		int displayDateMinute, int expirationDateMonth, int expirationDateDay,
 		int expirationDateYear, int expirationDateHour,
 		int expirationDateMinute, boolean neverExpire,
-		Map<Locale, java.lang.String> titleMap, java.lang.String json,
-		double priority, int type, ServiceContext serviceContext)
-		throws PortalException;
+		Map<Locale, String> titleMap, String json, double priority, int type,
+		ServiceContext serviceContext) throws PortalException;
 
 	public CPAttachmentFileEntry updateStatus(long userId,
 		long cpAttachmentFileEntryId, int status,
-		ServiceContext serviceContext,
-		Map<java.lang.String, Serializable> workflowContext)
+		ServiceContext serviceContext, Map<String, Serializable> workflowContext)
 		throws PortalException;
 }

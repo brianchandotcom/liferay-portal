@@ -48,9 +48,8 @@ public class CommerceWarehouseLocalServiceWrapper
 
 	@Override
 	public com.liferay.commerce.model.CommerceWarehouse addCommerceWarehouse(
-		java.lang.String name, java.lang.String description, boolean active,
-		java.lang.String street1, java.lang.String street2,
-		java.lang.String street3, java.lang.String city, java.lang.String zip,
+		String name, String description, boolean active, String street1,
+		String street2, String street3, String city, String zip,
 		long commerceRegionId, long commerceCountryId, double latitude,
 		double longitude,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
@@ -322,7 +321,7 @@ public class CommerceWarehouseLocalServiceWrapper
 	* @return the OSGi service identifier
 	*/
 	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
+	public String getOSGiServiceIdentifier() {
 		return _commerceWarehouseLocalService.getOSGiServiceIdentifier();
 	}
 
@@ -335,16 +334,16 @@ public class CommerceWarehouseLocalServiceWrapper
 
 	@Override
 	public java.util.List<com.liferay.commerce.model.CommerceWarehouse> search(
-		long groupId, java.lang.String keywords, boolean all,
-		long commerceCountryId, int start, int end,
+		long groupId, String keywords, boolean all, long commerceCountryId,
+		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.model.CommerceWarehouse> orderByComparator) {
 		return _commerceWarehouseLocalService.search(groupId, keywords, all,
 			commerceCountryId, start, end, orderByComparator);
 	}
 
 	@Override
-	public int searchCount(long groupId, java.lang.String keywords,
-		boolean all, long commerceCountryId) {
+	public int searchCount(long groupId, String keywords, boolean all,
+		long commerceCountryId) {
 		return _commerceWarehouseLocalService.searchCount(groupId, keywords,
 			all, commerceCountryId);
 	}
@@ -371,11 +370,10 @@ public class CommerceWarehouseLocalServiceWrapper
 
 	@Override
 	public com.liferay.commerce.model.CommerceWarehouse updateCommerceWarehouse(
-		long commerceWarehouseId, java.lang.String name,
-		java.lang.String description, boolean active, java.lang.String street1,
-		java.lang.String street2, java.lang.String street3,
-		java.lang.String city, java.lang.String zip, long commerceRegionId,
-		long commerceCountryId, double latitude, double longitude,
+		long commerceWarehouseId, String name, String description,
+		boolean active, String street1, String street2, String street3,
+		String city, String zip, long commerceRegionId, long commerceCountryId,
+		double latitude, double longitude,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _commerceWarehouseLocalService.updateCommerceWarehouse(commerceWarehouseId,
@@ -386,11 +384,9 @@ public class CommerceWarehouseLocalServiceWrapper
 
 	@Override
 	public com.liferay.commerce.model.CommerceWarehouse updateDefaultCommerceWarehouse(
-		long commerceWarehouseId, java.lang.String name,
-		java.lang.String street1, java.lang.String street2,
-		java.lang.String street3, java.lang.String city, java.lang.String zip,
-		long commerceRegionId, long commerceCountryId, double latitude,
-		double longitude,
+		long commerceWarehouseId, String name, String street1, String street2,
+		String street3, String city, String zip, long commerceRegionId,
+		long commerceCountryId, double latitude, double longitude,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _commerceWarehouseLocalService.updateDefaultCommerceWarehouse(commerceWarehouseId,

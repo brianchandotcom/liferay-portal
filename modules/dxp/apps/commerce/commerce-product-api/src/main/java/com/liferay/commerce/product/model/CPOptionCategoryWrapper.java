@@ -159,7 +159,7 @@ public class CPOptionCategoryWrapper implements CPOptionCategory,
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new CPOptionCategoryWrapper((CPOptionCategory)_cpOptionCategory.clone());
 	}
 
@@ -169,7 +169,7 @@ public class CPOptionCategoryWrapper implements CPOptionCategory,
 	}
 
 	@Override
-	public java.lang.String[] getAvailableLanguageIds() {
+	public String[] getAvailableLanguageIds() {
 		return _cpOptionCategory.getAvailableLanguageIds();
 	}
 
@@ -204,7 +204,7 @@ public class CPOptionCategoryWrapper implements CPOptionCategory,
 	}
 
 	@Override
-	public java.lang.String getDefaultLanguageId() {
+	public String getDefaultLanguageId() {
 		return _cpOptionCategory.getDefaultLanguageId();
 	}
 
@@ -214,7 +214,7 @@ public class CPOptionCategoryWrapper implements CPOptionCategory,
 	* @return the description of this cp option category
 	*/
 	@Override
-	public java.lang.String getDescription() {
+	public String getDescription() {
 		return _cpOptionCategory.getDescription();
 	}
 
@@ -225,7 +225,7 @@ public class CPOptionCategoryWrapper implements CPOptionCategory,
 	* @return the localized description of this cp option category
 	*/
 	@Override
-	public java.lang.String getDescription(java.util.Locale locale) {
+	public String getDescription(java.util.Locale locale) {
 		return _cpOptionCategory.getDescription(locale);
 	}
 
@@ -237,8 +237,7 @@ public class CPOptionCategoryWrapper implements CPOptionCategory,
 	* @return the localized description of this cp option category. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
 	*/
 	@Override
-	public java.lang.String getDescription(java.util.Locale locale,
-		boolean useDefault) {
+	public String getDescription(java.util.Locale locale, boolean useDefault) {
 		return _cpOptionCategory.getDescription(locale, useDefault);
 	}
 
@@ -249,7 +248,7 @@ public class CPOptionCategoryWrapper implements CPOptionCategory,
 	* @return the localized description of this cp option category
 	*/
 	@Override
-	public java.lang.String getDescription(java.lang.String languageId) {
+	public String getDescription(String languageId) {
 		return _cpOptionCategory.getDescription(languageId);
 	}
 
@@ -261,18 +260,17 @@ public class CPOptionCategoryWrapper implements CPOptionCategory,
 	* @return the localized description of this cp option category
 	*/
 	@Override
-	public java.lang.String getDescription(java.lang.String languageId,
-		boolean useDefault) {
+	public String getDescription(String languageId, boolean useDefault) {
 		return _cpOptionCategory.getDescription(languageId, useDefault);
 	}
 
 	@Override
-	public java.lang.String getDescriptionCurrentLanguageId() {
+	public String getDescriptionCurrentLanguageId() {
 		return _cpOptionCategory.getDescriptionCurrentLanguageId();
 	}
 
 	@Override
-	public java.lang.String getDescriptionCurrentValue() {
+	public String getDescriptionCurrentValue() {
 		return _cpOptionCategory.getDescriptionCurrentValue();
 	}
 
@@ -282,7 +280,7 @@ public class CPOptionCategoryWrapper implements CPOptionCategory,
 	* @return the locales and localized descriptions of this cp option category
 	*/
 	@Override
-	public Map<java.util.Locale, java.lang.String> getDescriptionMap() {
+	public Map<java.util.Locale, String> getDescriptionMap() {
 		return _cpOptionCategory.getDescriptionMap();
 	}
 
@@ -307,7 +305,7 @@ public class CPOptionCategoryWrapper implements CPOptionCategory,
 	* @return the key of this cp option category
 	*/
 	@Override
-	public java.lang.String getKey() {
+	public String getKey() {
 		return _cpOptionCategory.getKey();
 	}
 
@@ -362,7 +360,7 @@ public class CPOptionCategoryWrapper implements CPOptionCategory,
 	* @return the title of this cp option category
 	*/
 	@Override
-	public java.lang.String getTitle() {
+	public String getTitle() {
 		return _cpOptionCategory.getTitle();
 	}
 
@@ -373,7 +371,7 @@ public class CPOptionCategoryWrapper implements CPOptionCategory,
 	* @return the localized title of this cp option category
 	*/
 	@Override
-	public java.lang.String getTitle(java.util.Locale locale) {
+	public String getTitle(java.util.Locale locale) {
 		return _cpOptionCategory.getTitle(locale);
 	}
 
@@ -385,7 +383,7 @@ public class CPOptionCategoryWrapper implements CPOptionCategory,
 	* @return the localized title of this cp option category. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
 	*/
 	@Override
-	public java.lang.String getTitle(java.util.Locale locale, boolean useDefault) {
+	public String getTitle(java.util.Locale locale, boolean useDefault) {
 		return _cpOptionCategory.getTitle(locale, useDefault);
 	}
 
@@ -396,7 +394,7 @@ public class CPOptionCategoryWrapper implements CPOptionCategory,
 	* @return the localized title of this cp option category
 	*/
 	@Override
-	public java.lang.String getTitle(java.lang.String languageId) {
+	public String getTitle(String languageId) {
 		return _cpOptionCategory.getTitle(languageId);
 	}
 
@@ -408,18 +406,17 @@ public class CPOptionCategoryWrapper implements CPOptionCategory,
 	* @return the localized title of this cp option category
 	*/
 	@Override
-	public java.lang.String getTitle(java.lang.String languageId,
-		boolean useDefault) {
+	public String getTitle(String languageId, boolean useDefault) {
 		return _cpOptionCategory.getTitle(languageId, useDefault);
 	}
 
 	@Override
-	public java.lang.String getTitleCurrentLanguageId() {
+	public String getTitleCurrentLanguageId() {
 		return _cpOptionCategory.getTitleCurrentLanguageId();
 	}
 
 	@Override
-	public java.lang.String getTitleCurrentValue() {
+	public String getTitleCurrentValue() {
 		return _cpOptionCategory.getTitleCurrentValue();
 	}
 
@@ -429,7 +426,7 @@ public class CPOptionCategoryWrapper implements CPOptionCategory,
 	* @return the locales and localized titles of this cp option category
 	*/
 	@Override
-	public Map<java.util.Locale, java.lang.String> getTitleMap() {
+	public Map<java.util.Locale, String> getTitleMap() {
 		return _cpOptionCategory.getTitleMap();
 	}
 
@@ -449,7 +446,7 @@ public class CPOptionCategoryWrapper implements CPOptionCategory,
 	* @return the user name of this cp option category
 	*/
 	@Override
-	public java.lang.String getUserName() {
+	public String getUserName() {
 		return _cpOptionCategory.getUserName();
 	}
 
@@ -459,7 +456,7 @@ public class CPOptionCategoryWrapper implements CPOptionCategory,
 	* @return the user uuid of this cp option category
 	*/
 	@Override
-	public java.lang.String getUserUuid() {
+	public String getUserUuid() {
 		return _cpOptionCategory.getUserUuid();
 	}
 
@@ -469,7 +466,7 @@ public class CPOptionCategoryWrapper implements CPOptionCategory,
 	* @return the uuid of this cp option category
 	*/
 	@Override
-	public java.lang.String getUuid() {
+	public String getUuid() {
 		return _cpOptionCategory.getUuid();
 	}
 
@@ -552,7 +549,7 @@ public class CPOptionCategoryWrapper implements CPOptionCategory,
 	* @param description the description of this cp option category
 	*/
 	@Override
-	public void setDescription(java.lang.String description) {
+	public void setDescription(String description) {
 		_cpOptionCategory.setDescription(description);
 	}
 
@@ -563,8 +560,7 @@ public class CPOptionCategoryWrapper implements CPOptionCategory,
 	* @param locale the locale of the language
 	*/
 	@Override
-	public void setDescription(java.lang.String description,
-		java.util.Locale locale) {
+	public void setDescription(String description, java.util.Locale locale) {
 		_cpOptionCategory.setDescription(description, locale);
 	}
 
@@ -576,13 +572,13 @@ public class CPOptionCategoryWrapper implements CPOptionCategory,
 	* @param defaultLocale the default locale
 	*/
 	@Override
-	public void setDescription(java.lang.String description,
-		java.util.Locale locale, java.util.Locale defaultLocale) {
+	public void setDescription(String description, java.util.Locale locale,
+		java.util.Locale defaultLocale) {
 		_cpOptionCategory.setDescription(description, locale, defaultLocale);
 	}
 
 	@Override
-	public void setDescriptionCurrentLanguageId(java.lang.String languageId) {
+	public void setDescriptionCurrentLanguageId(String languageId) {
 		_cpOptionCategory.setDescriptionCurrentLanguageId(languageId);
 	}
 
@@ -592,8 +588,7 @@ public class CPOptionCategoryWrapper implements CPOptionCategory,
 	* @param descriptionMap the locales and localized descriptions of this cp option category
 	*/
 	@Override
-	public void setDescriptionMap(
-		Map<java.util.Locale, java.lang.String> descriptionMap) {
+	public void setDescriptionMap(Map<java.util.Locale, String> descriptionMap) {
 		_cpOptionCategory.setDescriptionMap(descriptionMap);
 	}
 
@@ -605,7 +600,7 @@ public class CPOptionCategoryWrapper implements CPOptionCategory,
 	*/
 	@Override
 	public void setDescriptionMap(
-		Map<java.util.Locale, java.lang.String> descriptionMap,
+		Map<java.util.Locale, String> descriptionMap,
 		java.util.Locale defaultLocale) {
 		_cpOptionCategory.setDescriptionMap(descriptionMap, defaultLocale);
 	}
@@ -642,7 +637,7 @@ public class CPOptionCategoryWrapper implements CPOptionCategory,
 	* @param key the key of this cp option category
 	*/
 	@Override
-	public void setKey(java.lang.String key) {
+	public void setKey(String key) {
 		_cpOptionCategory.setKey(key);
 	}
 
@@ -702,7 +697,7 @@ public class CPOptionCategoryWrapper implements CPOptionCategory,
 	* @param title the title of this cp option category
 	*/
 	@Override
-	public void setTitle(java.lang.String title) {
+	public void setTitle(String title) {
 		_cpOptionCategory.setTitle(title);
 	}
 
@@ -713,7 +708,7 @@ public class CPOptionCategoryWrapper implements CPOptionCategory,
 	* @param locale the locale of the language
 	*/
 	@Override
-	public void setTitle(java.lang.String title, java.util.Locale locale) {
+	public void setTitle(String title, java.util.Locale locale) {
 		_cpOptionCategory.setTitle(title, locale);
 	}
 
@@ -725,13 +720,13 @@ public class CPOptionCategoryWrapper implements CPOptionCategory,
 	* @param defaultLocale the default locale
 	*/
 	@Override
-	public void setTitle(java.lang.String title, java.util.Locale locale,
+	public void setTitle(String title, java.util.Locale locale,
 		java.util.Locale defaultLocale) {
 		_cpOptionCategory.setTitle(title, locale, defaultLocale);
 	}
 
 	@Override
-	public void setTitleCurrentLanguageId(java.lang.String languageId) {
+	public void setTitleCurrentLanguageId(String languageId) {
 		_cpOptionCategory.setTitleCurrentLanguageId(languageId);
 	}
 
@@ -741,7 +736,7 @@ public class CPOptionCategoryWrapper implements CPOptionCategory,
 	* @param titleMap the locales and localized titles of this cp option category
 	*/
 	@Override
-	public void setTitleMap(Map<java.util.Locale, java.lang.String> titleMap) {
+	public void setTitleMap(Map<java.util.Locale, String> titleMap) {
 		_cpOptionCategory.setTitleMap(titleMap);
 	}
 
@@ -752,7 +747,7 @@ public class CPOptionCategoryWrapper implements CPOptionCategory,
 	* @param defaultLocale the default locale
 	*/
 	@Override
-	public void setTitleMap(Map<java.util.Locale, java.lang.String> titleMap,
+	public void setTitleMap(Map<java.util.Locale, String> titleMap,
 		java.util.Locale defaultLocale) {
 		_cpOptionCategory.setTitleMap(titleMap, defaultLocale);
 	}
@@ -773,7 +768,7 @@ public class CPOptionCategoryWrapper implements CPOptionCategory,
 	* @param userName the user name of this cp option category
 	*/
 	@Override
-	public void setUserName(java.lang.String userName) {
+	public void setUserName(String userName) {
 		_cpOptionCategory.setUserName(userName);
 	}
 
@@ -783,7 +778,7 @@ public class CPOptionCategoryWrapper implements CPOptionCategory,
 	* @param userUuid the user uuid of this cp option category
 	*/
 	@Override
-	public void setUserUuid(java.lang.String userUuid) {
+	public void setUserUuid(String userUuid) {
 		_cpOptionCategory.setUserUuid(userUuid);
 	}
 
@@ -793,7 +788,7 @@ public class CPOptionCategoryWrapper implements CPOptionCategory,
 	* @param uuid the uuid of this cp option category
 	*/
 	@Override
-	public void setUuid(java.lang.String uuid) {
+	public void setUuid(String uuid) {
 		_cpOptionCategory.setUuid(uuid);
 	}
 
@@ -808,7 +803,7 @@ public class CPOptionCategoryWrapper implements CPOptionCategory,
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _cpOptionCategory.toString();
 	}
 
@@ -818,7 +813,7 @@ public class CPOptionCategoryWrapper implements CPOptionCategory,
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _cpOptionCategory.toXmlString();
 	}
 

@@ -49,7 +49,7 @@ public class CommerceTaxFixedRateAddressRelLocalServiceWrapper
 	@Override
 	public com.liferay.commerce.tax.engine.fixed.model.CommerceTaxFixedRateAddressRel addCommerceTaxFixedRateAddressRel(
 		long commerceTaxMethodId, long cpTaxCategoryId, long commerceCountryId,
-		long commerceRegionId, java.lang.String zip, double rate,
+		long commerceRegionId, String zip, double rate,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _commerceTaxFixedRateAddressRelLocalService.addCommerceTaxFixedRateAddressRel(commerceTaxMethodId,
@@ -212,7 +212,7 @@ public class CommerceTaxFixedRateAddressRelLocalServiceWrapper
 	@Override
 	public com.liferay.commerce.tax.engine.fixed.model.CommerceTaxFixedRateAddressRel fetchCommerceTaxFixedRateAddressRel(
 		long commerceTaxMethodId, long commerceCountryId,
-		long commerceRegionId, java.lang.String zip) {
+		long commerceRegionId, String zip) {
 		return _commerceTaxFixedRateAddressRelLocalService.fetchCommerceTaxFixedRateAddressRel(commerceTaxMethodId,
 			commerceCountryId, commerceRegionId, zip);
 	}
@@ -316,7 +316,7 @@ public class CommerceTaxFixedRateAddressRelLocalServiceWrapper
 	* @return the OSGi service identifier
 	*/
 	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
+	public String getOSGiServiceIdentifier() {
 		return _commerceTaxFixedRateAddressRelLocalService.getOSGiServiceIdentifier();
 	}
 
@@ -342,7 +342,7 @@ public class CommerceTaxFixedRateAddressRelLocalServiceWrapper
 	@Override
 	public com.liferay.commerce.tax.engine.fixed.model.CommerceTaxFixedRateAddressRel updateCommerceTaxFixedRateAddressRel(
 		long commerceTaxFixedRateAddressRelId, long commerceCountryId,
-		long commerceRegionId, java.lang.String zip, double rate)
+		long commerceRegionId, String zip, double rate)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _commerceTaxFixedRateAddressRelLocalService.updateCommerceTaxFixedRateAddressRel(commerceTaxFixedRateAddressRelId,
 			commerceCountryId, commerceRegionId, zip, rate);

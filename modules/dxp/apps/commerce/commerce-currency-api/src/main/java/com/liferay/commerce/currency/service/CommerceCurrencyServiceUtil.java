@@ -43,10 +43,9 @@ public class CommerceCurrencyServiceUtil {
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.commerce.currency.service.impl.CommerceCurrencyServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static com.liferay.commerce.currency.model.CommerceCurrency addCommerceCurrency(
-		java.lang.String code,
-		java.util.Map<java.util.Locale, java.lang.String> nameMap,
-		java.math.BigDecimal rate, java.lang.String roundingType,
-		boolean primary, double priority, boolean active,
+		String code, java.util.Map<java.util.Locale, String> nameMap,
+		java.math.BigDecimal rate, String roundingType, boolean primary,
+		double priority, boolean active,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
@@ -98,7 +97,7 @@ public class CommerceCurrencyServiceUtil {
 	*
 	* @return the OSGi service identifier
 	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
+	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 
@@ -115,10 +114,10 @@ public class CommerceCurrencyServiceUtil {
 	}
 
 	public static com.liferay.commerce.currency.model.CommerceCurrency updateCommerceCurrency(
-		long commerceCurrencyId, java.lang.String code,
-		java.util.Map<java.util.Locale, java.lang.String> nameMap,
-		java.math.BigDecimal rate, java.lang.String roundingType,
-		boolean primary, double priority, boolean active,
+		long commerceCurrencyId, String code,
+		java.util.Map<java.util.Locale, String> nameMap,
+		java.math.BigDecimal rate, String roundingType, boolean primary,
+		double priority, boolean active,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
@@ -127,7 +126,7 @@ public class CommerceCurrencyServiceUtil {
 	}
 
 	public static void updateExchangeRate(long commerceCurrencyId,
-		java.lang.String exchangeRateProviderKey)
+		String exchangeRateProviderKey)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService()
 			.updateExchangeRate(commerceCurrencyId, exchangeRateProviderKey);

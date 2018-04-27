@@ -79,9 +79,8 @@ public interface CPMeasurementUnitLocalService extends BaseLocalService,
 	public CPMeasurementUnit addCPMeasurementUnit(
 		CPMeasurementUnit cpMeasurementUnit);
 
-	public CPMeasurementUnit addCPMeasurementUnit(
-		Map<Locale, java.lang.String> nameMap, java.lang.String key,
-		double rate, boolean primary, double priority, int type,
+	public CPMeasurementUnit addCPMeasurementUnit(Map<Locale, String> nameMap,
+		String key, double rate, boolean primary, double priority, int type,
 		ServiceContext serviceContext) throws PortalException;
 
 	/**
@@ -195,7 +194,7 @@ public interface CPMeasurementUnitLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CPMeasurementUnit fetchCPMeasurementUnitByUuidAndGroupId(
-		java.lang.String uuid, long groupId);
+		String uuid, long groupId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CPMeasurementUnit fetchPrimaryCPMeasurementUnit(long groupId,
@@ -224,8 +223,8 @@ public interface CPMeasurementUnitLocalService extends BaseLocalService,
 	* @throws PortalException if a matching cp measurement unit could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CPMeasurementUnit getCPMeasurementUnitByUuidAndGroupId(
-		java.lang.String uuid, long groupId) throws PortalException;
+	public CPMeasurementUnit getCPMeasurementUnitByUuidAndGroupId(String uuid,
+		long groupId) throws PortalException;
 
 	/**
 	* Returns a range of all the cp measurement units.
@@ -248,7 +247,7 @@ public interface CPMeasurementUnitLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CPMeasurementUnit> getCPMeasurementUnits(long groupId,
-		java.lang.String[] keys, int type);
+		String[] keys, int type);
 
 	/**
 	* Returns all the cp measurement units matching the UUID and company.
@@ -259,7 +258,7 @@ public interface CPMeasurementUnitLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CPMeasurementUnit> getCPMeasurementUnitsByUuidAndCompanyId(
-		java.lang.String uuid, long companyId);
+		String uuid, long companyId);
 
 	/**
 	* Returns a range of cp measurement units matching the UUID and company.
@@ -273,7 +272,7 @@ public interface CPMeasurementUnitLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CPMeasurementUnit> getCPMeasurementUnitsByUuidAndCompanyId(
-		java.lang.String uuid, long companyId, int start, int end,
+		String uuid, long companyId, int start, int end,
 		OrderByComparator<CPMeasurementUnit> orderByComparator);
 
 	/**
@@ -302,7 +301,7 @@ public interface CPMeasurementUnitLocalService extends BaseLocalService,
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -323,7 +322,7 @@ public interface CPMeasurementUnitLocalService extends BaseLocalService,
 		CPMeasurementUnit cpMeasurementUnit);
 
 	public CPMeasurementUnit updateCPMeasurementUnit(long cpMeasurementUnitId,
-		Map<Locale, java.lang.String> nameMap, java.lang.String key,
-		double rate, boolean primary, double priority, int type,
-		ServiceContext serviceContext) throws PortalException;
+		Map<Locale, String> nameMap, String key, double rate, boolean primary,
+		double priority, int type, ServiceContext serviceContext)
+		throws PortalException;
 }

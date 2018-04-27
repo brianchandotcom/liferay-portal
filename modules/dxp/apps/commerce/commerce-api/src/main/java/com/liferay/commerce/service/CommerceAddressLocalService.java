@@ -74,17 +74,15 @@ public interface CommerceAddressLocalService extends BaseLocalService,
 	public CommerceAddress addCommerceAddress(CommerceAddress commerceAddress);
 
 	@Indexable(type = IndexableType.REINDEX)
-	public CommerceAddress addCommerceAddress(java.lang.String className,
-		long classPK, java.lang.String name, java.lang.String description,
-		java.lang.String street1, java.lang.String street2,
-		java.lang.String street3, java.lang.String city, java.lang.String zip,
-		long commerceRegionId, long commerceCountryId,
-		java.lang.String phoneNumber, boolean defaultBilling,
+	public CommerceAddress addCommerceAddress(String className, long classPK,
+		String name, String description, String street1, String street2,
+		String street3, String city, String zip, long commerceRegionId,
+		long commerceCountryId, String phoneNumber, boolean defaultBilling,
 		boolean defaultShipping, ServiceContext serviceContext)
 		throws PortalException;
 
 	public CommerceAddress copyCommerceAddress(long commerceAddressId,
-		java.lang.String className, long classPK, ServiceContext serviceContext)
+		String className, long classPK, ServiceContext serviceContext)
 		throws PortalException;
 
 	/**
@@ -118,7 +116,7 @@ public interface CommerceAddressLocalService extends BaseLocalService,
 	public CommerceAddress deleteCommerceAddress(long commerceAddressId)
 		throws PortalException;
 
-	public void deleteCommerceAddresses(java.lang.String className, long classPK)
+	public void deleteCommerceAddresses(String className, long classPK)
 		throws PortalException;
 
 	public void deleteCountryCommerceAddresses(long commerceCountryId)
@@ -230,11 +228,11 @@ public interface CommerceAddressLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommerceAddress> getCommerceAddresses(long groupId,
-		java.lang.String className, long classPK);
+		String className, long classPK);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommerceAddress> getCommerceAddresses(long groupId,
-		java.lang.String className, long classPK, int start, int end,
+		String className, long classPK, int start, int end,
 		OrderByComparator<CommerceAddress> orderByComparator);
 
 	/**
@@ -246,8 +244,8 @@ public interface CommerceAddressLocalService extends BaseLocalService,
 	public int getCommerceAddressesCount();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getCommerceAddressesCount(long groupId,
-		java.lang.String className, long classPK);
+	public int getCommerceAddressesCount(long groupId, String className,
+		long classPK);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
@@ -257,7 +255,7 @@ public interface CommerceAddressLocalService extends BaseLocalService,
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -266,8 +264,8 @@ public interface CommerceAddressLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public BaseModelSearchResult<CommerceAddress> searchCommerceAddresses(
-		long companyId, long groupId, java.lang.String className, long classPK,
-		java.lang.String keywords, int start, int end, Sort sort)
+		long companyId, long groupId, String className, long classPK,
+		String keywords, int start, int end, Sort sort)
 		throws PortalException;
 
 	/**
@@ -282,11 +280,9 @@ public interface CommerceAddressLocalService extends BaseLocalService,
 
 	@Indexable(type = IndexableType.REINDEX)
 	public CommerceAddress updateCommerceAddress(long commerceAddressId,
-		java.lang.String name, java.lang.String description,
-		java.lang.String street1, java.lang.String street2,
-		java.lang.String street3, java.lang.String city, java.lang.String zip,
-		long commerceRegionId, long commerceCountryId,
-		java.lang.String phoneNumber, boolean defaultBilling,
+		String name, String description, String street1, String street2,
+		String street3, String city, String zip, long commerceRegionId,
+		long commerceCountryId, String phoneNumber, boolean defaultBilling,
 		boolean defaultShipping, ServiceContext serviceContext)
 		throws PortalException;
 }

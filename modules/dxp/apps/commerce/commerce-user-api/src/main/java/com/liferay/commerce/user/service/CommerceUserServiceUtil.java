@@ -48,7 +48,7 @@ public class CommerceUserServiceUtil {
 	*
 	* @return the OSGi service identifier
 	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
+	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 
@@ -58,8 +58,7 @@ public class CommerceUserServiceUtil {
 	}
 
 	public static com.liferay.portal.kernel.model.User updatePassword(
-		long userId, java.lang.String password1, java.lang.String password2,
-		boolean passwordReset)
+		long userId, String password1, String password2, boolean passwordReset)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .updatePassword(userId, password1, password2, passwordReset);
@@ -72,18 +71,17 @@ public class CommerceUserServiceUtil {
 	}
 
 	public static com.liferay.portal.kernel.model.User updateReminderQuery(
-		long userId, java.lang.String question, java.lang.String answer)
+		long userId, String question, String answer)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().updateReminderQuery(userId, question, answer);
 	}
 
 	public static com.liferay.portal.kernel.model.User updateUser(long userId,
-		java.lang.String screenName, java.lang.String emailAddress,
-		boolean portrait, byte[] portraitBytes, java.lang.String languageId,
-		java.lang.String firstName, java.lang.String middleName,
-		java.lang.String lastName, long prefixId, long suffixId, boolean male,
-		int birthdayMonth, int birthdayDay, int birthdayYear,
-		java.lang.String jobTitle,
+		String screenName, String emailAddress, boolean portrait,
+		byte[] portraitBytes, String languageId, String firstName,
+		String middleName, String lastName, long prefixId, long suffixId,
+		boolean male, int birthdayMonth, int birthdayDay, int birthdayYear,
+		String jobTitle,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()

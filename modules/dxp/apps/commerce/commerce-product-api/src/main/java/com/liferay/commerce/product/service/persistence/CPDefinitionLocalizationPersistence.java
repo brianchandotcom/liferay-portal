@@ -187,7 +187,7 @@ public interface CPDefinitionLocalizationPersistence extends BasePersistence<CPD
 	* @throws NoSuchCPDefinitionLocalizationException if a matching cp definition localization could not be found
 	*/
 	public CPDefinitionLocalization findByCPDefinitionId_LanguageId(
-		long CPDefinitionId, java.lang.String languageId)
+		long CPDefinitionId, String languageId)
 		throws NoSuchCPDefinitionLocalizationException;
 
 	/**
@@ -198,7 +198,7 @@ public interface CPDefinitionLocalizationPersistence extends BasePersistence<CPD
 	* @return the matching cp definition localization, or <code>null</code> if a matching cp definition localization could not be found
 	*/
 	public CPDefinitionLocalization fetchByCPDefinitionId_LanguageId(
-		long CPDefinitionId, java.lang.String languageId);
+		long CPDefinitionId, String languageId);
 
 	/**
 	* Returns the cp definition localization where CPDefinitionId = &#63; and languageId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -209,8 +209,7 @@ public interface CPDefinitionLocalizationPersistence extends BasePersistence<CPD
 	* @return the matching cp definition localization, or <code>null</code> if a matching cp definition localization could not be found
 	*/
 	public CPDefinitionLocalization fetchByCPDefinitionId_LanguageId(
-		long CPDefinitionId, java.lang.String languageId,
-		boolean retrieveFromCache);
+		long CPDefinitionId, String languageId, boolean retrieveFromCache);
 
 	/**
 	* Removes the cp definition localization where CPDefinitionId = &#63; and languageId = &#63; from the database.
@@ -220,7 +219,7 @@ public interface CPDefinitionLocalizationPersistence extends BasePersistence<CPD
 	* @return the cp definition localization that was removed
 	*/
 	public CPDefinitionLocalization removeByCPDefinitionId_LanguageId(
-		long CPDefinitionId, java.lang.String languageId)
+		long CPDefinitionId, String languageId)
 		throws NoSuchCPDefinitionLocalizationException;
 
 	/**
@@ -231,7 +230,7 @@ public interface CPDefinitionLocalizationPersistence extends BasePersistence<CPD
 	* @return the number of matching cp definition localizations
 	*/
 	public int countByCPDefinitionId_LanguageId(long CPDefinitionId,
-		java.lang.String languageId);
+		String languageId);
 
 	/**
 	* Caches the cp definition localization in the entity cache if it is enabled.

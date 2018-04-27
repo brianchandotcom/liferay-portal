@@ -151,7 +151,7 @@ public class CPDefinitionAvailabilityRangeWrapper
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new CPDefinitionAvailabilityRangeWrapper((CPDefinitionAvailabilityRange)_cpDefinitionAvailabilityRange.clone());
 	}
 
@@ -283,7 +283,7 @@ public class CPDefinitionAvailabilityRangeWrapper
 	* @return the user name of this cp definition availability range
 	*/
 	@Override
-	public java.lang.String getUserName() {
+	public String getUserName() {
 		return _cpDefinitionAvailabilityRange.getUserName();
 	}
 
@@ -293,7 +293,7 @@ public class CPDefinitionAvailabilityRangeWrapper
 	* @return the user uuid of this cp definition availability range
 	*/
 	@Override
-	public java.lang.String getUserUuid() {
+	public String getUserUuid() {
 		return _cpDefinitionAvailabilityRange.getUserUuid();
 	}
 
@@ -303,7 +303,7 @@ public class CPDefinitionAvailabilityRangeWrapper
 	* @return the uuid of this cp definition availability range
 	*/
 	@Override
-	public java.lang.String getUuid() {
+	public String getUuid() {
 		return _cpDefinitionAvailabilityRange.getUuid();
 	}
 
@@ -470,7 +470,7 @@ public class CPDefinitionAvailabilityRangeWrapper
 	* @param userName the user name of this cp definition availability range
 	*/
 	@Override
-	public void setUserName(java.lang.String userName) {
+	public void setUserName(String userName) {
 		_cpDefinitionAvailabilityRange.setUserName(userName);
 	}
 
@@ -480,7 +480,7 @@ public class CPDefinitionAvailabilityRangeWrapper
 	* @param userUuid the user uuid of this cp definition availability range
 	*/
 	@Override
-	public void setUserUuid(java.lang.String userUuid) {
+	public void setUserUuid(String userUuid) {
 		_cpDefinitionAvailabilityRange.setUserUuid(userUuid);
 	}
 
@@ -490,7 +490,7 @@ public class CPDefinitionAvailabilityRangeWrapper
 	* @param uuid the uuid of this cp definition availability range
 	*/
 	@Override
-	public void setUuid(java.lang.String uuid) {
+	public void setUuid(String uuid) {
 		_cpDefinitionAvailabilityRange.setUuid(uuid);
 	}
 
@@ -505,7 +505,7 @@ public class CPDefinitionAvailabilityRangeWrapper
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _cpDefinitionAvailabilityRange.toString();
 	}
 
@@ -515,7 +515,7 @@ public class CPDefinitionAvailabilityRangeWrapper
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _cpDefinitionAvailabilityRange.toXmlString();
 	}
 

@@ -56,7 +56,7 @@ public interface CommerceWishListService extends BaseService {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CommerceWishListServiceUtil} to access the commerce wish list remote service. Add custom service methods to {@link com.liferay.commerce.wish.list.service.impl.CommerceWishListServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public CommerceWishList addCommerceWishList(java.lang.String name,
+	public CommerceWishList addCommerceWishList(String name,
 		boolean defaultWishList, ServiceContext serviceContext)
 		throws PortalException;
 
@@ -91,9 +91,8 @@ public interface CommerceWishListService extends BaseService {
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	public CommerceWishList updateCommerceWishList(long commerceWishListId,
-		java.lang.String name, boolean defaultWishList)
-		throws PortalException;
+		String name, boolean defaultWishList) throws PortalException;
 }

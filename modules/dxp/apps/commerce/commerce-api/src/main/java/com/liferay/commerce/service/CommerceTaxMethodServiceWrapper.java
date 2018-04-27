@@ -35,9 +35,9 @@ public class CommerceTaxMethodServiceWrapper implements CommerceTaxMethodService
 
 	@Override
 	public com.liferay.commerce.model.CommerceTaxMethod addCommerceTaxMethod(
-		java.util.Map<java.util.Locale, java.lang.String> nameMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		java.lang.String engineKey, boolean percentage, boolean active,
+		java.util.Map<java.util.Locale, String> nameMap,
+		java.util.Map<java.util.Locale, String> descriptionMap,
+		String engineKey, boolean percentage, boolean active,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _commerceTaxMethodService.addCommerceTaxMethod(nameMap,
@@ -58,7 +58,7 @@ public class CommerceTaxMethodServiceWrapper implements CommerceTaxMethodService
 
 	@Override
 	public com.liferay.commerce.model.CommerceTaxMethod fetchCommerceTaxMethod(
-		long groupId, java.lang.String engineKey) {
+		long groupId, String engineKey) {
 		return _commerceTaxMethodService.fetchCommerceTaxMethod(groupId,
 			engineKey);
 	}
@@ -95,7 +95,7 @@ public class CommerceTaxMethodServiceWrapper implements CommerceTaxMethodService
 	* @return the OSGi service identifier
 	*/
 	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
+	public String getOSGiServiceIdentifier() {
 		return _commerceTaxMethodService.getOSGiServiceIdentifier();
 	}
 
@@ -109,8 +109,8 @@ public class CommerceTaxMethodServiceWrapper implements CommerceTaxMethodService
 	@Override
 	public com.liferay.commerce.model.CommerceTaxMethod updateCommerceTaxMethod(
 		long commerceTaxMethodId,
-		java.util.Map<java.util.Locale, java.lang.String> nameMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		java.util.Map<java.util.Locale, String> nameMap,
+		java.util.Map<java.util.Locale, String> descriptionMap,
 		boolean percentage, boolean active)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _commerceTaxMethodService.updateCommerceTaxMethod(commerceTaxMethodId,

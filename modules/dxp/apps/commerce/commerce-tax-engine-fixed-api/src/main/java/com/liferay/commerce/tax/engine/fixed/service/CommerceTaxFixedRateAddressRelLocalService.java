@@ -74,7 +74,7 @@ public interface CommerceTaxFixedRateAddressRelLocalService
 
 	public CommerceTaxFixedRateAddressRel addCommerceTaxFixedRateAddressRel(
 		long commerceTaxMethodId, long cpTaxCategoryId, long commerceCountryId,
-		long commerceRegionId, java.lang.String zip, double rate,
+		long commerceRegionId, String zip, double rate,
 		ServiceContext serviceContext) throws PortalException;
 
 	/**
@@ -187,7 +187,7 @@ public interface CommerceTaxFixedRateAddressRelLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CommerceTaxFixedRateAddressRel fetchCommerceTaxFixedRateAddressRel(
 		long commerceTaxMethodId, long commerceCountryId,
-		long commerceRegionId, java.lang.String zip);
+		long commerceRegionId, String zip);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
@@ -259,7 +259,7 @@ public interface CommerceTaxFixedRateAddressRelLocalService
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -278,6 +278,6 @@ public interface CommerceTaxFixedRateAddressRelLocalService
 
 	public CommerceTaxFixedRateAddressRel updateCommerceTaxFixedRateAddressRel(
 		long commerceTaxFixedRateAddressRelId, long commerceCountryId,
-		long commerceRegionId, java.lang.String zip, double rate)
+		long commerceRegionId, String zip, double rate)
 		throws PortalException;
 }

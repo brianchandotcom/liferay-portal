@@ -57,10 +57,10 @@ import com.liferay.portal.kernel.util.MethodKey;
 public class CPOptionServiceHttp {
 	public static com.liferay.commerce.product.model.CPOption addCPOption(
 		HttpPrincipal httpPrincipal,
-		java.util.Map<java.util.Locale, java.lang.String> titleMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		java.lang.String ddmFormFieldTypeName, boolean facetable,
-		boolean required, boolean skuContributor, java.lang.String key,
+		java.util.Map<java.util.Locale, String> titleMap,
+		java.util.Map<java.util.Locale, String> descriptionMap,
+		String ddmFormFieldTypeName, boolean facetable, boolean required,
+		boolean skuContributor, String key,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -154,7 +154,7 @@ public class CPOptionServiceHttp {
 	}
 
 	public static com.liferay.commerce.product.model.CPOption fetchCPOption(
-		HttpPrincipal httpPrincipal, long groupId, java.lang.String key)
+		HttpPrincipal httpPrincipal, long groupId, String key)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(CPOptionServiceUtil.class,
@@ -328,7 +328,7 @@ public class CPOptionServiceHttp {
 
 	public static com.liferay.portal.kernel.search.BaseModelSearchResult<com.liferay.commerce.product.model.CPOption> searchCPOptions(
 		HttpPrincipal httpPrincipal, long companyId, long groupId,
-		java.lang.String keywords, int start, int end,
+		String keywords, int start, int end,
 		com.liferay.portal.kernel.search.Sort sort)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -458,10 +458,10 @@ public class CPOptionServiceHttp {
 
 	public static com.liferay.commerce.product.model.CPOption updateCPOption(
 		HttpPrincipal httpPrincipal, long cpOptionId,
-		java.util.Map<java.util.Locale, java.lang.String> titleMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		java.lang.String ddmFormFieldTypeName, boolean facetable,
-		boolean required, boolean skuContributor, java.lang.String key,
+		java.util.Map<java.util.Locale, String> titleMap,
+		java.util.Map<java.util.Locale, String> descriptionMap,
+		String ddmFormFieldTypeName, boolean facetable, boolean required,
+		boolean skuContributor, String key,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -496,8 +496,8 @@ public class CPOptionServiceHttp {
 
 	private static Log _log = LogFactoryUtil.getLog(CPOptionServiceHttp.class);
 	private static final Class<?>[] _addCPOptionParameterTypes0 = new Class[] {
-			java.util.Map.class, java.util.Map.class, java.lang.String.class,
-			boolean.class, boolean.class, boolean.class, java.lang.String.class,
+			java.util.Map.class, java.util.Map.class, String.class,
+			boolean.class, boolean.class, boolean.class, String.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _deleteCPOptionParameterTypes1 = new Class[] {
@@ -507,7 +507,7 @@ public class CPOptionServiceHttp {
 			long.class
 		};
 	private static final Class<?>[] _fetchCPOptionParameterTypes3 = new Class[] {
-			long.class, java.lang.String.class
+			long.class, String.class
 		};
 	private static final Class<?>[] _getCPOptionParameterTypes4 = new Class[] {
 			long.class
@@ -526,7 +526,7 @@ public class CPOptionServiceHttp {
 			com.liferay.portal.kernel.search.SearchContext.class
 		};
 	private static final Class<?>[] _searchCPOptionsParameterTypes9 = new Class[] {
-			long.class, long.class, java.lang.String.class, int.class, int.class,
+			long.class, long.class, String.class, int.class, int.class,
 			com.liferay.portal.kernel.search.Sort.class
 		};
 	private static final Class<?>[] _setFacetableParameterTypes10 = new Class[] {
@@ -539,9 +539,8 @@ public class CPOptionServiceHttp {
 			long.class, boolean.class
 		};
 	private static final Class<?>[] _updateCPOptionParameterTypes13 = new Class[] {
-			long.class, java.util.Map.class, java.util.Map.class,
-			java.lang.String.class, boolean.class, boolean.class, boolean.class,
-			java.lang.String.class,
+			long.class, java.util.Map.class, java.util.Map.class, String.class,
+			boolean.class, boolean.class, boolean.class, String.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 }

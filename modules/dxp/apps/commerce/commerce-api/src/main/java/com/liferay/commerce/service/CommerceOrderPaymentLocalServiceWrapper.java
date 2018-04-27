@@ -48,7 +48,7 @@ public class CommerceOrderPaymentLocalServiceWrapper
 
 	@Override
 	public com.liferay.commerce.model.CommerceOrderPayment addCommerceOrderPayment(
-		long commerceOrderId, int status, java.lang.String content,
+		long commerceOrderId, int status, String content,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _commerceOrderPaymentLocalService.addCommerceOrderPayment(commerceOrderId,
@@ -265,7 +265,7 @@ public class CommerceOrderPaymentLocalServiceWrapper
 	* @return the OSGi service identifier
 	*/
 	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
+	public String getOSGiServiceIdentifier() {
 		return _commerceOrderPaymentLocalService.getOSGiServiceIdentifier();
 	}
 

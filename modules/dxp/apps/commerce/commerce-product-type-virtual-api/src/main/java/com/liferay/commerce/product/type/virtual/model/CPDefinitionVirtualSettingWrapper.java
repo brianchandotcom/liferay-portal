@@ -222,7 +222,7 @@ public class CPDefinitionVirtualSettingWrapper
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new CPDefinitionVirtualSettingWrapper((CPDefinitionVirtualSetting)_cpDefinitionVirtualSetting.clone());
 	}
 
@@ -237,12 +237,12 @@ public class CPDefinitionVirtualSettingWrapper
 	* @return the activation status of this cp definition virtual setting
 	*/
 	@Override
-	public java.lang.String getActivationStatus() {
+	public String getActivationStatus() {
 		return _cpDefinitionVirtualSetting.getActivationStatus();
 	}
 
 	@Override
-	public java.lang.String[] getAvailableLanguageIds() {
+	public String[] getAvailableLanguageIds() {
 		return _cpDefinitionVirtualSetting.getAvailableLanguageIds();
 	}
 
@@ -293,7 +293,7 @@ public class CPDefinitionVirtualSettingWrapper
 	}
 
 	@Override
-	public java.lang.String getDefaultLanguageId() {
+	public String getDefaultLanguageId() {
 		return _cpDefinitionVirtualSetting.getDefaultLanguageId();
 	}
 
@@ -405,7 +405,7 @@ public class CPDefinitionVirtualSettingWrapper
 	* @return the sample url of this cp definition virtual setting
 	*/
 	@Override
-	public java.lang.String getSampleUrl() {
+	public String getSampleUrl() {
 		return _cpDefinitionVirtualSetting.getSampleUrl();
 	}
 
@@ -415,7 +415,7 @@ public class CPDefinitionVirtualSettingWrapper
 	* @return the terms of use content of this cp definition virtual setting
 	*/
 	@Override
-	public java.lang.String getTermsOfUseContent() {
+	public String getTermsOfUseContent() {
 		return _cpDefinitionVirtualSetting.getTermsOfUseContent();
 	}
 
@@ -426,7 +426,7 @@ public class CPDefinitionVirtualSettingWrapper
 	* @return the localized terms of use content of this cp definition virtual setting
 	*/
 	@Override
-	public java.lang.String getTermsOfUseContent(java.util.Locale locale) {
+	public String getTermsOfUseContent(java.util.Locale locale) {
 		return _cpDefinitionVirtualSetting.getTermsOfUseContent(locale);
 	}
 
@@ -438,7 +438,7 @@ public class CPDefinitionVirtualSettingWrapper
 	* @return the localized terms of use content of this cp definition virtual setting. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
 	*/
 	@Override
-	public java.lang.String getTermsOfUseContent(java.util.Locale locale,
+	public String getTermsOfUseContent(java.util.Locale locale,
 		boolean useDefault) {
 		return _cpDefinitionVirtualSetting.getTermsOfUseContent(locale,
 			useDefault);
@@ -451,7 +451,7 @@ public class CPDefinitionVirtualSettingWrapper
 	* @return the localized terms of use content of this cp definition virtual setting
 	*/
 	@Override
-	public java.lang.String getTermsOfUseContent(java.lang.String languageId) {
+	public String getTermsOfUseContent(String languageId) {
 		return _cpDefinitionVirtualSetting.getTermsOfUseContent(languageId);
 	}
 
@@ -463,19 +463,18 @@ public class CPDefinitionVirtualSettingWrapper
 	* @return the localized terms of use content of this cp definition virtual setting
 	*/
 	@Override
-	public java.lang.String getTermsOfUseContent(java.lang.String languageId,
-		boolean useDefault) {
+	public String getTermsOfUseContent(String languageId, boolean useDefault) {
 		return _cpDefinitionVirtualSetting.getTermsOfUseContent(languageId,
 			useDefault);
 	}
 
 	@Override
-	public java.lang.String getTermsOfUseContentCurrentLanguageId() {
+	public String getTermsOfUseContentCurrentLanguageId() {
 		return _cpDefinitionVirtualSetting.getTermsOfUseContentCurrentLanguageId();
 	}
 
 	@Override
-	public java.lang.String getTermsOfUseContentCurrentValue() {
+	public String getTermsOfUseContentCurrentValue() {
 		return _cpDefinitionVirtualSetting.getTermsOfUseContentCurrentValue();
 	}
 
@@ -485,7 +484,7 @@ public class CPDefinitionVirtualSettingWrapper
 	* @return the locales and localized terms of use contents of this cp definition virtual setting
 	*/
 	@Override
-	public Map<java.util.Locale, java.lang.String> getTermsOfUseContentMap() {
+	public Map<java.util.Locale, String> getTermsOfUseContentMap() {
 		return _cpDefinitionVirtualSetting.getTermsOfUseContentMap();
 	}
 
@@ -521,7 +520,7 @@ public class CPDefinitionVirtualSettingWrapper
 	* @return the url of this cp definition virtual setting
 	*/
 	@Override
-	public java.lang.String getUrl() {
+	public String getUrl() {
 		return _cpDefinitionVirtualSetting.getUrl();
 	}
 
@@ -541,7 +540,7 @@ public class CPDefinitionVirtualSettingWrapper
 	* @return the user name of this cp definition virtual setting
 	*/
 	@Override
-	public java.lang.String getUserName() {
+	public String getUserName() {
 		return _cpDefinitionVirtualSetting.getUserName();
 	}
 
@@ -551,7 +550,7 @@ public class CPDefinitionVirtualSettingWrapper
 	* @return the user uuid of this cp definition virtual setting
 	*/
 	@Override
-	public java.lang.String getUserUuid() {
+	public String getUserUuid() {
 		return _cpDefinitionVirtualSetting.getUserUuid();
 	}
 
@@ -571,7 +570,7 @@ public class CPDefinitionVirtualSettingWrapper
 	* @return the uuid of this cp definition virtual setting
 	*/
 	@Override
-	public java.lang.String getUuid() {
+	public String getUuid() {
 		return _cpDefinitionVirtualSetting.getUuid();
 	}
 
@@ -654,7 +653,7 @@ public class CPDefinitionVirtualSettingWrapper
 	* @param activationStatus the activation status of this cp definition virtual setting
 	*/
 	@Override
-	public void setActivationStatus(java.lang.String activationStatus) {
+	public void setActivationStatus(String activationStatus) {
 		_cpDefinitionVirtualSetting.setActivationStatus(activationStatus);
 	}
 
@@ -816,7 +815,7 @@ public class CPDefinitionVirtualSettingWrapper
 	* @param sampleUrl the sample url of this cp definition virtual setting
 	*/
 	@Override
-	public void setSampleUrl(java.lang.String sampleUrl) {
+	public void setSampleUrl(String sampleUrl) {
 		_cpDefinitionVirtualSetting.setSampleUrl(sampleUrl);
 	}
 
@@ -826,7 +825,7 @@ public class CPDefinitionVirtualSettingWrapper
 	* @param termsOfUseContent the terms of use content of this cp definition virtual setting
 	*/
 	@Override
-	public void setTermsOfUseContent(java.lang.String termsOfUseContent) {
+	public void setTermsOfUseContent(String termsOfUseContent) {
 		_cpDefinitionVirtualSetting.setTermsOfUseContent(termsOfUseContent);
 	}
 
@@ -837,7 +836,7 @@ public class CPDefinitionVirtualSettingWrapper
 	* @param locale the locale of the language
 	*/
 	@Override
-	public void setTermsOfUseContent(java.lang.String termsOfUseContent,
+	public void setTermsOfUseContent(String termsOfUseContent,
 		java.util.Locale locale) {
 		_cpDefinitionVirtualSetting.setTermsOfUseContent(termsOfUseContent,
 			locale);
@@ -851,15 +850,14 @@ public class CPDefinitionVirtualSettingWrapper
 	* @param defaultLocale the default locale
 	*/
 	@Override
-	public void setTermsOfUseContent(java.lang.String termsOfUseContent,
+	public void setTermsOfUseContent(String termsOfUseContent,
 		java.util.Locale locale, java.util.Locale defaultLocale) {
 		_cpDefinitionVirtualSetting.setTermsOfUseContent(termsOfUseContent,
 			locale, defaultLocale);
 	}
 
 	@Override
-	public void setTermsOfUseContentCurrentLanguageId(
-		java.lang.String languageId) {
+	public void setTermsOfUseContentCurrentLanguageId(String languageId) {
 		_cpDefinitionVirtualSetting.setTermsOfUseContentCurrentLanguageId(languageId);
 	}
 
@@ -870,7 +868,7 @@ public class CPDefinitionVirtualSettingWrapper
 	*/
 	@Override
 	public void setTermsOfUseContentMap(
-		Map<java.util.Locale, java.lang.String> termsOfUseContentMap) {
+		Map<java.util.Locale, String> termsOfUseContentMap) {
 		_cpDefinitionVirtualSetting.setTermsOfUseContentMap(termsOfUseContentMap);
 	}
 
@@ -882,7 +880,7 @@ public class CPDefinitionVirtualSettingWrapper
 	*/
 	@Override
 	public void setTermsOfUseContentMap(
-		Map<java.util.Locale, java.lang.String> termsOfUseContentMap,
+		Map<java.util.Locale, String> termsOfUseContentMap,
 		java.util.Locale defaultLocale) {
 		_cpDefinitionVirtualSetting.setTermsOfUseContentMap(termsOfUseContentMap,
 			defaultLocale);
@@ -915,7 +913,7 @@ public class CPDefinitionVirtualSettingWrapper
 	* @param url the url of this cp definition virtual setting
 	*/
 	@Override
-	public void setUrl(java.lang.String url) {
+	public void setUrl(String url) {
 		_cpDefinitionVirtualSetting.setUrl(url);
 	}
 
@@ -935,7 +933,7 @@ public class CPDefinitionVirtualSettingWrapper
 	* @param userName the user name of this cp definition virtual setting
 	*/
 	@Override
-	public void setUserName(java.lang.String userName) {
+	public void setUserName(String userName) {
 		_cpDefinitionVirtualSetting.setUserName(userName);
 	}
 
@@ -945,7 +943,7 @@ public class CPDefinitionVirtualSettingWrapper
 	* @param userUuid the user uuid of this cp definition virtual setting
 	*/
 	@Override
-	public void setUserUuid(java.lang.String userUuid) {
+	public void setUserUuid(String userUuid) {
 		_cpDefinitionVirtualSetting.setUserUuid(userUuid);
 	}
 
@@ -965,7 +963,7 @@ public class CPDefinitionVirtualSettingWrapper
 	* @param uuid the uuid of this cp definition virtual setting
 	*/
 	@Override
-	public void setUuid(java.lang.String uuid) {
+	public void setUuid(String uuid) {
 		_cpDefinitionVirtualSetting.setUuid(uuid);
 	}
 
@@ -980,7 +978,7 @@ public class CPDefinitionVirtualSettingWrapper
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _cpDefinitionVirtualSetting.toString();
 	}
 
@@ -990,7 +988,7 @@ public class CPDefinitionVirtualSettingWrapper
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _cpDefinitionVirtualSetting.toXmlString();
 	}
 

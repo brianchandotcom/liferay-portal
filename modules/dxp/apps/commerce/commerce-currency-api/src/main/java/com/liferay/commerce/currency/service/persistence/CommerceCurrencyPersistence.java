@@ -47,7 +47,7 @@ public interface CommerceCurrencyPersistence extends BasePersistence<CommerceCur
 	* @param uuid the uuid
 	* @return the matching commerce currencies
 	*/
-	public java.util.List<CommerceCurrency> findByUuid(java.lang.String uuid);
+	public java.util.List<CommerceCurrency> findByUuid(String uuid);
 
 	/**
 	* Returns a range of all the commerce currencies where uuid = &#63;.
@@ -61,8 +61,8 @@ public interface CommerceCurrencyPersistence extends BasePersistence<CommerceCur
 	* @param end the upper bound of the range of commerce currencies (not inclusive)
 	* @return the range of matching commerce currencies
 	*/
-	public java.util.List<CommerceCurrency> findByUuid(java.lang.String uuid,
-		int start, int end);
+	public java.util.List<CommerceCurrency> findByUuid(String uuid, int start,
+		int end);
 
 	/**
 	* Returns an ordered range of all the commerce currencies where uuid = &#63;.
@@ -77,8 +77,8 @@ public interface CommerceCurrencyPersistence extends BasePersistence<CommerceCur
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching commerce currencies
 	*/
-	public java.util.List<CommerceCurrency> findByUuid(java.lang.String uuid,
-		int start, int end,
+	public java.util.List<CommerceCurrency> findByUuid(String uuid, int start,
+		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<CommerceCurrency> orderByComparator);
 
 	/**
@@ -95,8 +95,8 @@ public interface CommerceCurrencyPersistence extends BasePersistence<CommerceCur
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching commerce currencies
 	*/
-	public java.util.List<CommerceCurrency> findByUuid(java.lang.String uuid,
-		int start, int end,
+	public java.util.List<CommerceCurrency> findByUuid(String uuid, int start,
+		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<CommerceCurrency> orderByComparator,
 		boolean retrieveFromCache);
 
@@ -108,7 +108,7 @@ public interface CommerceCurrencyPersistence extends BasePersistence<CommerceCur
 	* @return the first matching commerce currency
 	* @throws NoSuchCurrencyException if a matching commerce currency could not be found
 	*/
-	public CommerceCurrency findByUuid_First(java.lang.String uuid,
+	public CommerceCurrency findByUuid_First(String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<CommerceCurrency> orderByComparator)
 		throws NoSuchCurrencyException;
 
@@ -119,7 +119,7 @@ public interface CommerceCurrencyPersistence extends BasePersistence<CommerceCur
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching commerce currency, or <code>null</code> if a matching commerce currency could not be found
 	*/
-	public CommerceCurrency fetchByUuid_First(java.lang.String uuid,
+	public CommerceCurrency fetchByUuid_First(String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<CommerceCurrency> orderByComparator);
 
 	/**
@@ -130,7 +130,7 @@ public interface CommerceCurrencyPersistence extends BasePersistence<CommerceCur
 	* @return the last matching commerce currency
 	* @throws NoSuchCurrencyException if a matching commerce currency could not be found
 	*/
-	public CommerceCurrency findByUuid_Last(java.lang.String uuid,
+	public CommerceCurrency findByUuid_Last(String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<CommerceCurrency> orderByComparator)
 		throws NoSuchCurrencyException;
 
@@ -141,7 +141,7 @@ public interface CommerceCurrencyPersistence extends BasePersistence<CommerceCur
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching commerce currency, or <code>null</code> if a matching commerce currency could not be found
 	*/
-	public CommerceCurrency fetchByUuid_Last(java.lang.String uuid,
+	public CommerceCurrency fetchByUuid_Last(String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<CommerceCurrency> orderByComparator);
 
 	/**
@@ -154,7 +154,7 @@ public interface CommerceCurrencyPersistence extends BasePersistence<CommerceCur
 	* @throws NoSuchCurrencyException if a commerce currency with the primary key could not be found
 	*/
 	public CommerceCurrency[] findByUuid_PrevAndNext(long commerceCurrencyId,
-		java.lang.String uuid,
+		String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<CommerceCurrency> orderByComparator)
 		throws NoSuchCurrencyException;
 
@@ -163,7 +163,7 @@ public interface CommerceCurrencyPersistence extends BasePersistence<CommerceCur
 	*
 	* @param uuid the uuid
 	*/
-	public void removeByUuid(java.lang.String uuid);
+	public void removeByUuid(String uuid);
 
 	/**
 	* Returns the number of commerce currencies where uuid = &#63;.
@@ -171,7 +171,7 @@ public interface CommerceCurrencyPersistence extends BasePersistence<CommerceCur
 	* @param uuid the uuid
 	* @return the number of matching commerce currencies
 	*/
-	public int countByUuid(java.lang.String uuid);
+	public int countByUuid(String uuid);
 
 	/**
 	* Returns the commerce currency where uuid = &#63; and groupId = &#63; or throws a {@link NoSuchCurrencyException} if it could not be found.
@@ -181,7 +181,7 @@ public interface CommerceCurrencyPersistence extends BasePersistence<CommerceCur
 	* @return the matching commerce currency
 	* @throws NoSuchCurrencyException if a matching commerce currency could not be found
 	*/
-	public CommerceCurrency findByUUID_G(java.lang.String uuid, long groupId)
+	public CommerceCurrency findByUUID_G(String uuid, long groupId)
 		throws NoSuchCurrencyException;
 
 	/**
@@ -191,7 +191,7 @@ public interface CommerceCurrencyPersistence extends BasePersistence<CommerceCur
 	* @param groupId the group ID
 	* @return the matching commerce currency, or <code>null</code> if a matching commerce currency could not be found
 	*/
-	public CommerceCurrency fetchByUUID_G(java.lang.String uuid, long groupId);
+	public CommerceCurrency fetchByUUID_G(String uuid, long groupId);
 
 	/**
 	* Returns the commerce currency where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -201,7 +201,7 @@ public interface CommerceCurrencyPersistence extends BasePersistence<CommerceCur
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching commerce currency, or <code>null</code> if a matching commerce currency could not be found
 	*/
-	public CommerceCurrency fetchByUUID_G(java.lang.String uuid, long groupId,
+	public CommerceCurrency fetchByUUID_G(String uuid, long groupId,
 		boolean retrieveFromCache);
 
 	/**
@@ -211,7 +211,7 @@ public interface CommerceCurrencyPersistence extends BasePersistence<CommerceCur
 	* @param groupId the group ID
 	* @return the commerce currency that was removed
 	*/
-	public CommerceCurrency removeByUUID_G(java.lang.String uuid, long groupId)
+	public CommerceCurrency removeByUUID_G(String uuid, long groupId)
 		throws NoSuchCurrencyException;
 
 	/**
@@ -221,7 +221,7 @@ public interface CommerceCurrencyPersistence extends BasePersistence<CommerceCur
 	* @param groupId the group ID
 	* @return the number of matching commerce currencies
 	*/
-	public int countByUUID_G(java.lang.String uuid, long groupId);
+	public int countByUUID_G(String uuid, long groupId);
 
 	/**
 	* Returns all the commerce currencies where uuid = &#63; and companyId = &#63;.
@@ -230,8 +230,8 @@ public interface CommerceCurrencyPersistence extends BasePersistence<CommerceCur
 	* @param companyId the company ID
 	* @return the matching commerce currencies
 	*/
-	public java.util.List<CommerceCurrency> findByUuid_C(
-		java.lang.String uuid, long companyId);
+	public java.util.List<CommerceCurrency> findByUuid_C(String uuid,
+		long companyId);
 
 	/**
 	* Returns a range of all the commerce currencies where uuid = &#63; and companyId = &#63;.
@@ -246,8 +246,8 @@ public interface CommerceCurrencyPersistence extends BasePersistence<CommerceCur
 	* @param end the upper bound of the range of commerce currencies (not inclusive)
 	* @return the range of matching commerce currencies
 	*/
-	public java.util.List<CommerceCurrency> findByUuid_C(
-		java.lang.String uuid, long companyId, int start, int end);
+	public java.util.List<CommerceCurrency> findByUuid_C(String uuid,
+		long companyId, int start, int end);
 
 	/**
 	* Returns an ordered range of all the commerce currencies where uuid = &#63; and companyId = &#63;.
@@ -263,8 +263,8 @@ public interface CommerceCurrencyPersistence extends BasePersistence<CommerceCur
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching commerce currencies
 	*/
-	public java.util.List<CommerceCurrency> findByUuid_C(
-		java.lang.String uuid, long companyId, int start, int end,
+	public java.util.List<CommerceCurrency> findByUuid_C(String uuid,
+		long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<CommerceCurrency> orderByComparator);
 
 	/**
@@ -282,8 +282,8 @@ public interface CommerceCurrencyPersistence extends BasePersistence<CommerceCur
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching commerce currencies
 	*/
-	public java.util.List<CommerceCurrency> findByUuid_C(
-		java.lang.String uuid, long companyId, int start, int end,
+	public java.util.List<CommerceCurrency> findByUuid_C(String uuid,
+		long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<CommerceCurrency> orderByComparator,
 		boolean retrieveFromCache);
 
@@ -296,8 +296,7 @@ public interface CommerceCurrencyPersistence extends BasePersistence<CommerceCur
 	* @return the first matching commerce currency
 	* @throws NoSuchCurrencyException if a matching commerce currency could not be found
 	*/
-	public CommerceCurrency findByUuid_C_First(java.lang.String uuid,
-		long companyId,
+	public CommerceCurrency findByUuid_C_First(String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<CommerceCurrency> orderByComparator)
 		throws NoSuchCurrencyException;
 
@@ -309,8 +308,7 @@ public interface CommerceCurrencyPersistence extends BasePersistence<CommerceCur
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching commerce currency, or <code>null</code> if a matching commerce currency could not be found
 	*/
-	public CommerceCurrency fetchByUuid_C_First(java.lang.String uuid,
-		long companyId,
+	public CommerceCurrency fetchByUuid_C_First(String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<CommerceCurrency> orderByComparator);
 
 	/**
@@ -322,8 +320,7 @@ public interface CommerceCurrencyPersistence extends BasePersistence<CommerceCur
 	* @return the last matching commerce currency
 	* @throws NoSuchCurrencyException if a matching commerce currency could not be found
 	*/
-	public CommerceCurrency findByUuid_C_Last(java.lang.String uuid,
-		long companyId,
+	public CommerceCurrency findByUuid_C_Last(String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<CommerceCurrency> orderByComparator)
 		throws NoSuchCurrencyException;
 
@@ -335,8 +332,7 @@ public interface CommerceCurrencyPersistence extends BasePersistence<CommerceCur
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching commerce currency, or <code>null</code> if a matching commerce currency could not be found
 	*/
-	public CommerceCurrency fetchByUuid_C_Last(java.lang.String uuid,
-		long companyId,
+	public CommerceCurrency fetchByUuid_C_Last(String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<CommerceCurrency> orderByComparator);
 
 	/**
@@ -350,7 +346,7 @@ public interface CommerceCurrencyPersistence extends BasePersistence<CommerceCur
 	* @throws NoSuchCurrencyException if a commerce currency with the primary key could not be found
 	*/
 	public CommerceCurrency[] findByUuid_C_PrevAndNext(
-		long commerceCurrencyId, java.lang.String uuid, long companyId,
+		long commerceCurrencyId, String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<CommerceCurrency> orderByComparator)
 		throws NoSuchCurrencyException;
 
@@ -360,7 +356,7 @@ public interface CommerceCurrencyPersistence extends BasePersistence<CommerceCur
 	* @param uuid the uuid
 	* @param companyId the company ID
 	*/
-	public void removeByUuid_C(java.lang.String uuid, long companyId);
+	public void removeByUuid_C(String uuid, long companyId);
 
 	/**
 	* Returns the number of commerce currencies where uuid = &#63; and companyId = &#63;.
@@ -369,7 +365,7 @@ public interface CommerceCurrencyPersistence extends BasePersistence<CommerceCur
 	* @param companyId the company ID
 	* @return the number of matching commerce currencies
 	*/
-	public int countByUuid_C(java.lang.String uuid, long companyId);
+	public int countByUuid_C(String uuid, long companyId);
 
 	/**
 	* Returns all the commerce currencies where groupId = &#63;.
@@ -1071,5 +1067,5 @@ public interface CommerceCurrencyPersistence extends BasePersistence<CommerceCur
 	public int countAll();
 
 	@Override
-	public java.util.Set<java.lang.String> getBadColumnNames();
+	public java.util.Set<String> getBadColumnNames();
 }

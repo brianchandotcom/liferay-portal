@@ -122,8 +122,7 @@ public class CPDefinitionOptionValueRelUtil {
 	* @param uuid the uuid
 	* @return the matching cp definition option value rels
 	*/
-	public static List<CPDefinitionOptionValueRel> findByUuid(
-		java.lang.String uuid) {
+	public static List<CPDefinitionOptionValueRel> findByUuid(String uuid) {
 		return getPersistence().findByUuid(uuid);
 	}
 
@@ -139,8 +138,8 @@ public class CPDefinitionOptionValueRelUtil {
 	* @param end the upper bound of the range of cp definition option value rels (not inclusive)
 	* @return the range of matching cp definition option value rels
 	*/
-	public static List<CPDefinitionOptionValueRel> findByUuid(
-		java.lang.String uuid, int start, int end) {
+	public static List<CPDefinitionOptionValueRel> findByUuid(String uuid,
+		int start, int end) {
 		return getPersistence().findByUuid(uuid, start, end);
 	}
 
@@ -157,8 +156,8 @@ public class CPDefinitionOptionValueRelUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching cp definition option value rels
 	*/
-	public static List<CPDefinitionOptionValueRel> findByUuid(
-		java.lang.String uuid, int start, int end,
+	public static List<CPDefinitionOptionValueRel> findByUuid(String uuid,
+		int start, int end,
 		OrderByComparator<CPDefinitionOptionValueRel> orderByComparator) {
 		return getPersistence().findByUuid(uuid, start, end, orderByComparator);
 	}
@@ -177,8 +176,8 @@ public class CPDefinitionOptionValueRelUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching cp definition option value rels
 	*/
-	public static List<CPDefinitionOptionValueRel> findByUuid(
-		java.lang.String uuid, int start, int end,
+	public static List<CPDefinitionOptionValueRel> findByUuid(String uuid,
+		int start, int end,
 		OrderByComparator<CPDefinitionOptionValueRel> orderByComparator,
 		boolean retrieveFromCache) {
 		return getPersistence()
@@ -194,8 +193,7 @@ public class CPDefinitionOptionValueRelUtil {
 	* @return the first matching cp definition option value rel
 	* @throws NoSuchCPDefinitionOptionValueRelException if a matching cp definition option value rel could not be found
 	*/
-	public static CPDefinitionOptionValueRel findByUuid_First(
-		java.lang.String uuid,
+	public static CPDefinitionOptionValueRel findByUuid_First(String uuid,
 		OrderByComparator<CPDefinitionOptionValueRel> orderByComparator)
 		throws com.liferay.commerce.product.exception.NoSuchCPDefinitionOptionValueRelException {
 		return getPersistence().findByUuid_First(uuid, orderByComparator);
@@ -208,8 +206,7 @@ public class CPDefinitionOptionValueRelUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching cp definition option value rel, or <code>null</code> if a matching cp definition option value rel could not be found
 	*/
-	public static CPDefinitionOptionValueRel fetchByUuid_First(
-		java.lang.String uuid,
+	public static CPDefinitionOptionValueRel fetchByUuid_First(String uuid,
 		OrderByComparator<CPDefinitionOptionValueRel> orderByComparator) {
 		return getPersistence().fetchByUuid_First(uuid, orderByComparator);
 	}
@@ -222,8 +219,7 @@ public class CPDefinitionOptionValueRelUtil {
 	* @return the last matching cp definition option value rel
 	* @throws NoSuchCPDefinitionOptionValueRelException if a matching cp definition option value rel could not be found
 	*/
-	public static CPDefinitionOptionValueRel findByUuid_Last(
-		java.lang.String uuid,
+	public static CPDefinitionOptionValueRel findByUuid_Last(String uuid,
 		OrderByComparator<CPDefinitionOptionValueRel> orderByComparator)
 		throws com.liferay.commerce.product.exception.NoSuchCPDefinitionOptionValueRelException {
 		return getPersistence().findByUuid_Last(uuid, orderByComparator);
@@ -236,8 +232,7 @@ public class CPDefinitionOptionValueRelUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching cp definition option value rel, or <code>null</code> if a matching cp definition option value rel could not be found
 	*/
-	public static CPDefinitionOptionValueRel fetchByUuid_Last(
-		java.lang.String uuid,
+	public static CPDefinitionOptionValueRel fetchByUuid_Last(String uuid,
 		OrderByComparator<CPDefinitionOptionValueRel> orderByComparator) {
 		return getPersistence().fetchByUuid_Last(uuid, orderByComparator);
 	}
@@ -252,7 +247,7 @@ public class CPDefinitionOptionValueRelUtil {
 	* @throws NoSuchCPDefinitionOptionValueRelException if a cp definition option value rel with the primary key could not be found
 	*/
 	public static CPDefinitionOptionValueRel[] findByUuid_PrevAndNext(
-		long CPDefinitionOptionValueRelId, java.lang.String uuid,
+		long CPDefinitionOptionValueRelId, String uuid,
 		OrderByComparator<CPDefinitionOptionValueRel> orderByComparator)
 		throws com.liferay.commerce.product.exception.NoSuchCPDefinitionOptionValueRelException {
 		return getPersistence()
@@ -265,7 +260,7 @@ public class CPDefinitionOptionValueRelUtil {
 	*
 	* @param uuid the uuid
 	*/
-	public static void removeByUuid(java.lang.String uuid) {
+	public static void removeByUuid(String uuid) {
 		getPersistence().removeByUuid(uuid);
 	}
 
@@ -275,7 +270,7 @@ public class CPDefinitionOptionValueRelUtil {
 	* @param uuid the uuid
 	* @return the number of matching cp definition option value rels
 	*/
-	public static int countByUuid(java.lang.String uuid) {
+	public static int countByUuid(String uuid) {
 		return getPersistence().countByUuid(uuid);
 	}
 
@@ -287,8 +282,8 @@ public class CPDefinitionOptionValueRelUtil {
 	* @return the matching cp definition option value rel
 	* @throws NoSuchCPDefinitionOptionValueRelException if a matching cp definition option value rel could not be found
 	*/
-	public static CPDefinitionOptionValueRel findByUUID_G(
-		java.lang.String uuid, long groupId)
+	public static CPDefinitionOptionValueRel findByUUID_G(String uuid,
+		long groupId)
 		throws com.liferay.commerce.product.exception.NoSuchCPDefinitionOptionValueRelException {
 		return getPersistence().findByUUID_G(uuid, groupId);
 	}
@@ -300,8 +295,8 @@ public class CPDefinitionOptionValueRelUtil {
 	* @param groupId the group ID
 	* @return the matching cp definition option value rel, or <code>null</code> if a matching cp definition option value rel could not be found
 	*/
-	public static CPDefinitionOptionValueRel fetchByUUID_G(
-		java.lang.String uuid, long groupId) {
+	public static CPDefinitionOptionValueRel fetchByUUID_G(String uuid,
+		long groupId) {
 		return getPersistence().fetchByUUID_G(uuid, groupId);
 	}
 
@@ -313,8 +308,8 @@ public class CPDefinitionOptionValueRelUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching cp definition option value rel, or <code>null</code> if a matching cp definition option value rel could not be found
 	*/
-	public static CPDefinitionOptionValueRel fetchByUUID_G(
-		java.lang.String uuid, long groupId, boolean retrieveFromCache) {
+	public static CPDefinitionOptionValueRel fetchByUUID_G(String uuid,
+		long groupId, boolean retrieveFromCache) {
 		return getPersistence().fetchByUUID_G(uuid, groupId, retrieveFromCache);
 	}
 
@@ -325,8 +320,8 @@ public class CPDefinitionOptionValueRelUtil {
 	* @param groupId the group ID
 	* @return the cp definition option value rel that was removed
 	*/
-	public static CPDefinitionOptionValueRel removeByUUID_G(
-		java.lang.String uuid, long groupId)
+	public static CPDefinitionOptionValueRel removeByUUID_G(String uuid,
+		long groupId)
 		throws com.liferay.commerce.product.exception.NoSuchCPDefinitionOptionValueRelException {
 		return getPersistence().removeByUUID_G(uuid, groupId);
 	}
@@ -338,7 +333,7 @@ public class CPDefinitionOptionValueRelUtil {
 	* @param groupId the group ID
 	* @return the number of matching cp definition option value rels
 	*/
-	public static int countByUUID_G(java.lang.String uuid, long groupId) {
+	public static int countByUUID_G(String uuid, long groupId) {
 		return getPersistence().countByUUID_G(uuid, groupId);
 	}
 
@@ -349,8 +344,8 @@ public class CPDefinitionOptionValueRelUtil {
 	* @param companyId the company ID
 	* @return the matching cp definition option value rels
 	*/
-	public static List<CPDefinitionOptionValueRel> findByUuid_C(
-		java.lang.String uuid, long companyId) {
+	public static List<CPDefinitionOptionValueRel> findByUuid_C(String uuid,
+		long companyId) {
 		return getPersistence().findByUuid_C(uuid, companyId);
 	}
 
@@ -367,8 +362,8 @@ public class CPDefinitionOptionValueRelUtil {
 	* @param end the upper bound of the range of cp definition option value rels (not inclusive)
 	* @return the range of matching cp definition option value rels
 	*/
-	public static List<CPDefinitionOptionValueRel> findByUuid_C(
-		java.lang.String uuid, long companyId, int start, int end) {
+	public static List<CPDefinitionOptionValueRel> findByUuid_C(String uuid,
+		long companyId, int start, int end) {
 		return getPersistence().findByUuid_C(uuid, companyId, start, end);
 	}
 
@@ -386,8 +381,8 @@ public class CPDefinitionOptionValueRelUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching cp definition option value rels
 	*/
-	public static List<CPDefinitionOptionValueRel> findByUuid_C(
-		java.lang.String uuid, long companyId, int start, int end,
+	public static List<CPDefinitionOptionValueRel> findByUuid_C(String uuid,
+		long companyId, int start, int end,
 		OrderByComparator<CPDefinitionOptionValueRel> orderByComparator) {
 		return getPersistence()
 				   .findByUuid_C(uuid, companyId, start, end, orderByComparator);
@@ -408,8 +403,8 @@ public class CPDefinitionOptionValueRelUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching cp definition option value rels
 	*/
-	public static List<CPDefinitionOptionValueRel> findByUuid_C(
-		java.lang.String uuid, long companyId, int start, int end,
+	public static List<CPDefinitionOptionValueRel> findByUuid_C(String uuid,
+		long companyId, int start, int end,
 		OrderByComparator<CPDefinitionOptionValueRel> orderByComparator,
 		boolean retrieveFromCache) {
 		return getPersistence()
@@ -426,8 +421,8 @@ public class CPDefinitionOptionValueRelUtil {
 	* @return the first matching cp definition option value rel
 	* @throws NoSuchCPDefinitionOptionValueRelException if a matching cp definition option value rel could not be found
 	*/
-	public static CPDefinitionOptionValueRel findByUuid_C_First(
-		java.lang.String uuid, long companyId,
+	public static CPDefinitionOptionValueRel findByUuid_C_First(String uuid,
+		long companyId,
 		OrderByComparator<CPDefinitionOptionValueRel> orderByComparator)
 		throws com.liferay.commerce.product.exception.NoSuchCPDefinitionOptionValueRelException {
 		return getPersistence()
@@ -442,8 +437,8 @@ public class CPDefinitionOptionValueRelUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching cp definition option value rel, or <code>null</code> if a matching cp definition option value rel could not be found
 	*/
-	public static CPDefinitionOptionValueRel fetchByUuid_C_First(
-		java.lang.String uuid, long companyId,
+	public static CPDefinitionOptionValueRel fetchByUuid_C_First(String uuid,
+		long companyId,
 		OrderByComparator<CPDefinitionOptionValueRel> orderByComparator) {
 		return getPersistence()
 				   .fetchByUuid_C_First(uuid, companyId, orderByComparator);
@@ -458,8 +453,8 @@ public class CPDefinitionOptionValueRelUtil {
 	* @return the last matching cp definition option value rel
 	* @throws NoSuchCPDefinitionOptionValueRelException if a matching cp definition option value rel could not be found
 	*/
-	public static CPDefinitionOptionValueRel findByUuid_C_Last(
-		java.lang.String uuid, long companyId,
+	public static CPDefinitionOptionValueRel findByUuid_C_Last(String uuid,
+		long companyId,
 		OrderByComparator<CPDefinitionOptionValueRel> orderByComparator)
 		throws com.liferay.commerce.product.exception.NoSuchCPDefinitionOptionValueRelException {
 		return getPersistence()
@@ -474,8 +469,8 @@ public class CPDefinitionOptionValueRelUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching cp definition option value rel, or <code>null</code> if a matching cp definition option value rel could not be found
 	*/
-	public static CPDefinitionOptionValueRel fetchByUuid_C_Last(
-		java.lang.String uuid, long companyId,
+	public static CPDefinitionOptionValueRel fetchByUuid_C_Last(String uuid,
+		long companyId,
 		OrderByComparator<CPDefinitionOptionValueRel> orderByComparator) {
 		return getPersistence()
 				   .fetchByUuid_C_Last(uuid, companyId, orderByComparator);
@@ -492,8 +487,7 @@ public class CPDefinitionOptionValueRelUtil {
 	* @throws NoSuchCPDefinitionOptionValueRelException if a cp definition option value rel with the primary key could not be found
 	*/
 	public static CPDefinitionOptionValueRel[] findByUuid_C_PrevAndNext(
-		long CPDefinitionOptionValueRelId, java.lang.String uuid,
-		long companyId,
+		long CPDefinitionOptionValueRelId, String uuid, long companyId,
 		OrderByComparator<CPDefinitionOptionValueRel> orderByComparator)
 		throws com.liferay.commerce.product.exception.NoSuchCPDefinitionOptionValueRelException {
 		return getPersistence()
@@ -507,7 +501,7 @@ public class CPDefinitionOptionValueRelUtil {
 	* @param uuid the uuid
 	* @param companyId the company ID
 	*/
-	public static void removeByUuid_C(java.lang.String uuid, long companyId) {
+	public static void removeByUuid_C(String uuid, long companyId) {
 		getPersistence().removeByUuid_C(uuid, companyId);
 	}
 
@@ -518,7 +512,7 @@ public class CPDefinitionOptionValueRelUtil {
 	* @param companyId the company ID
 	* @return the number of matching cp definition option value rels
 	*/
-	public static int countByUuid_C(java.lang.String uuid, long companyId) {
+	public static int countByUuid_C(String uuid, long companyId) {
 		return getPersistence().countByUuid_C(uuid, companyId);
 	}
 
@@ -1035,8 +1029,7 @@ public class CPDefinitionOptionValueRelUtil {
 	* @param key the key
 	* @return the matching cp definition option value rels
 	*/
-	public static List<CPDefinitionOptionValueRel> findBykey(
-		java.lang.String key) {
+	public static List<CPDefinitionOptionValueRel> findBykey(String key) {
 		return getPersistence().findBykey(key);
 	}
 
@@ -1052,8 +1045,8 @@ public class CPDefinitionOptionValueRelUtil {
 	* @param end the upper bound of the range of cp definition option value rels (not inclusive)
 	* @return the range of matching cp definition option value rels
 	*/
-	public static List<CPDefinitionOptionValueRel> findBykey(
-		java.lang.String key, int start, int end) {
+	public static List<CPDefinitionOptionValueRel> findBykey(String key,
+		int start, int end) {
 		return getPersistence().findBykey(key, start, end);
 	}
 
@@ -1070,8 +1063,8 @@ public class CPDefinitionOptionValueRelUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching cp definition option value rels
 	*/
-	public static List<CPDefinitionOptionValueRel> findBykey(
-		java.lang.String key, int start, int end,
+	public static List<CPDefinitionOptionValueRel> findBykey(String key,
+		int start, int end,
 		OrderByComparator<CPDefinitionOptionValueRel> orderByComparator) {
 		return getPersistence().findBykey(key, start, end, orderByComparator);
 	}
@@ -1090,8 +1083,8 @@ public class CPDefinitionOptionValueRelUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching cp definition option value rels
 	*/
-	public static List<CPDefinitionOptionValueRel> findBykey(
-		java.lang.String key, int start, int end,
+	public static List<CPDefinitionOptionValueRel> findBykey(String key,
+		int start, int end,
 		OrderByComparator<CPDefinitionOptionValueRel> orderByComparator,
 		boolean retrieveFromCache) {
 		return getPersistence()
@@ -1107,8 +1100,7 @@ public class CPDefinitionOptionValueRelUtil {
 	* @return the first matching cp definition option value rel
 	* @throws NoSuchCPDefinitionOptionValueRelException if a matching cp definition option value rel could not be found
 	*/
-	public static CPDefinitionOptionValueRel findBykey_First(
-		java.lang.String key,
+	public static CPDefinitionOptionValueRel findBykey_First(String key,
 		OrderByComparator<CPDefinitionOptionValueRel> orderByComparator)
 		throws com.liferay.commerce.product.exception.NoSuchCPDefinitionOptionValueRelException {
 		return getPersistence().findBykey_First(key, orderByComparator);
@@ -1121,8 +1113,7 @@ public class CPDefinitionOptionValueRelUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching cp definition option value rel, or <code>null</code> if a matching cp definition option value rel could not be found
 	*/
-	public static CPDefinitionOptionValueRel fetchBykey_First(
-		java.lang.String key,
+	public static CPDefinitionOptionValueRel fetchBykey_First(String key,
 		OrderByComparator<CPDefinitionOptionValueRel> orderByComparator) {
 		return getPersistence().fetchBykey_First(key, orderByComparator);
 	}
@@ -1135,8 +1126,7 @@ public class CPDefinitionOptionValueRelUtil {
 	* @return the last matching cp definition option value rel
 	* @throws NoSuchCPDefinitionOptionValueRelException if a matching cp definition option value rel could not be found
 	*/
-	public static CPDefinitionOptionValueRel findBykey_Last(
-		java.lang.String key,
+	public static CPDefinitionOptionValueRel findBykey_Last(String key,
 		OrderByComparator<CPDefinitionOptionValueRel> orderByComparator)
 		throws com.liferay.commerce.product.exception.NoSuchCPDefinitionOptionValueRelException {
 		return getPersistence().findBykey_Last(key, orderByComparator);
@@ -1149,8 +1139,7 @@ public class CPDefinitionOptionValueRelUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching cp definition option value rel, or <code>null</code> if a matching cp definition option value rel could not be found
 	*/
-	public static CPDefinitionOptionValueRel fetchBykey_Last(
-		java.lang.String key,
+	public static CPDefinitionOptionValueRel fetchBykey_Last(String key,
 		OrderByComparator<CPDefinitionOptionValueRel> orderByComparator) {
 		return getPersistence().fetchBykey_Last(key, orderByComparator);
 	}
@@ -1165,7 +1154,7 @@ public class CPDefinitionOptionValueRelUtil {
 	* @throws NoSuchCPDefinitionOptionValueRelException if a cp definition option value rel with the primary key could not be found
 	*/
 	public static CPDefinitionOptionValueRel[] findBykey_PrevAndNext(
-		long CPDefinitionOptionValueRelId, java.lang.String key,
+		long CPDefinitionOptionValueRelId, String key,
 		OrderByComparator<CPDefinitionOptionValueRel> orderByComparator)
 		throws com.liferay.commerce.product.exception.NoSuchCPDefinitionOptionValueRelException {
 		return getPersistence()
@@ -1178,7 +1167,7 @@ public class CPDefinitionOptionValueRelUtil {
 	*
 	* @param key the key
 	*/
-	public static void removeBykey(java.lang.String key) {
+	public static void removeBykey(String key) {
 		getPersistence().removeBykey(key);
 	}
 
@@ -1188,7 +1177,7 @@ public class CPDefinitionOptionValueRelUtil {
 	* @param key the key
 	* @return the number of matching cp definition option value rels
 	*/
-	public static int countBykey(java.lang.String key) {
+	public static int countBykey(String key) {
 		return getPersistence().countBykey(key);
 	}
 
@@ -1201,7 +1190,7 @@ public class CPDefinitionOptionValueRelUtil {
 	* @throws NoSuchCPDefinitionOptionValueRelException if a matching cp definition option value rel could not be found
 	*/
 	public static CPDefinitionOptionValueRel findByC_K(
-		long CPDefinitionOptionRelId, java.lang.String key)
+		long CPDefinitionOptionRelId, String key)
 		throws com.liferay.commerce.product.exception.NoSuchCPDefinitionOptionValueRelException {
 		return getPersistence().findByC_K(CPDefinitionOptionRelId, key);
 	}
@@ -1214,7 +1203,7 @@ public class CPDefinitionOptionValueRelUtil {
 	* @return the matching cp definition option value rel, or <code>null</code> if a matching cp definition option value rel could not be found
 	*/
 	public static CPDefinitionOptionValueRel fetchByC_K(
-		long CPDefinitionOptionRelId, java.lang.String key) {
+		long CPDefinitionOptionRelId, String key) {
 		return getPersistence().fetchByC_K(CPDefinitionOptionRelId, key);
 	}
 
@@ -1227,8 +1216,7 @@ public class CPDefinitionOptionValueRelUtil {
 	* @return the matching cp definition option value rel, or <code>null</code> if a matching cp definition option value rel could not be found
 	*/
 	public static CPDefinitionOptionValueRel fetchByC_K(
-		long CPDefinitionOptionRelId, java.lang.String key,
-		boolean retrieveFromCache) {
+		long CPDefinitionOptionRelId, String key, boolean retrieveFromCache) {
 		return getPersistence()
 				   .fetchByC_K(CPDefinitionOptionRelId, key, retrieveFromCache);
 	}
@@ -1241,7 +1229,7 @@ public class CPDefinitionOptionValueRelUtil {
 	* @return the cp definition option value rel that was removed
 	*/
 	public static CPDefinitionOptionValueRel removeByC_K(
-		long CPDefinitionOptionRelId, java.lang.String key)
+		long CPDefinitionOptionRelId, String key)
 		throws com.liferay.commerce.product.exception.NoSuchCPDefinitionOptionValueRelException {
 		return getPersistence().removeByC_K(CPDefinitionOptionRelId, key);
 	}
@@ -1253,8 +1241,7 @@ public class CPDefinitionOptionValueRelUtil {
 	* @param key the key
 	* @return the number of matching cp definition option value rels
 	*/
-	public static int countByC_K(long CPDefinitionOptionRelId,
-		java.lang.String key) {
+	public static int countByC_K(long CPDefinitionOptionRelId, String key) {
 		return getPersistence().countByC_K(CPDefinitionOptionRelId, key);
 	}
 
@@ -1413,7 +1400,7 @@ public class CPDefinitionOptionValueRelUtil {
 		return getPersistence().countAll();
 	}
 
-	public static java.util.Set<java.lang.String> getBadColumnNames() {
+	public static java.util.Set<String> getBadColumnNames() {
 		return getPersistence().getBadColumnNames();
 	}
 

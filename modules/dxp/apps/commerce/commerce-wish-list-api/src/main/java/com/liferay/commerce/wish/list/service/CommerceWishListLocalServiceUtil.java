@@ -55,7 +55,7 @@ public class CommerceWishListLocalServiceUtil {
 	}
 
 	public static com.liferay.commerce.wish.list.model.CommerceWishList addCommerceWishList(
-		java.lang.String name, boolean defaultWishList,
+		String name, boolean defaultWishList,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
@@ -209,7 +209,7 @@ public class CommerceWishListLocalServiceUtil {
 	* @return the matching commerce wish list, or <code>null</code> if a matching commerce wish list could not be found
 	*/
 	public static com.liferay.commerce.wish.list.model.CommerceWishList fetchCommerceWishListByUuidAndGroupId(
-		java.lang.String uuid, long groupId) {
+		String uuid, long groupId) {
 		return getService().fetchCommerceWishListByUuidAndGroupId(uuid, groupId);
 	}
 
@@ -239,7 +239,7 @@ public class CommerceWishListLocalServiceUtil {
 	* @throws PortalException if a matching commerce wish list could not be found
 	*/
 	public static com.liferay.commerce.wish.list.model.CommerceWishList getCommerceWishListByUuidAndGroupId(
-		java.lang.String uuid, long groupId)
+		String uuid, long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getCommerceWishListByUuidAndGroupId(uuid, groupId);
 	}
@@ -283,7 +283,7 @@ public class CommerceWishListLocalServiceUtil {
 	* @return the matching commerce wish lists, or an empty list if no matches were found
 	*/
 	public static java.util.List<com.liferay.commerce.wish.list.model.CommerceWishList> getCommerceWishListsByUuidAndCompanyId(
-		java.lang.String uuid, long companyId) {
+		String uuid, long companyId) {
 		return getService()
 				   .getCommerceWishListsByUuidAndCompanyId(uuid, companyId);
 	}
@@ -299,7 +299,7 @@ public class CommerceWishListLocalServiceUtil {
 	* @return the range of matching commerce wish lists, or an empty list if no matches were found
 	*/
 	public static java.util.List<com.liferay.commerce.wish.list.model.CommerceWishList> getCommerceWishListsByUuidAndCompanyId(
-		java.lang.String uuid, long companyId, int start, int end,
+		String uuid, long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.wish.list.model.CommerceWishList> orderByComparator) {
 		return getService()
 				   .getCommerceWishListsByUuidAndCompanyId(uuid, companyId,
@@ -324,7 +324,7 @@ public class CommerceWishListLocalServiceUtil {
 	}
 
 	public static com.liferay.commerce.wish.list.model.CommerceWishList getDefaultCommerceWishList(
-		long groupId, long userId, java.lang.String guestUuid)
+		long groupId, long userId, String guestUuid)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .getDefaultCommerceWishList(groupId, userId, guestUuid);
@@ -344,7 +344,7 @@ public class CommerceWishListLocalServiceUtil {
 	*
 	* @return the OSGi service identifier
 	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
+	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 
@@ -366,7 +366,7 @@ public class CommerceWishListLocalServiceUtil {
 	}
 
 	public static com.liferay.commerce.wish.list.model.CommerceWishList updateCommerceWishList(
-		long commerceWishListId, java.lang.String name, boolean defaultWishList)
+		long commerceWishListId, String name, boolean defaultWishList)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .updateCommerceWishList(commerceWishListId, name,

@@ -73,9 +73,8 @@ public interface CommerceDiscountRuleLocalService extends BaseLocalService,
 		CommerceDiscountRule commerceDiscountRule);
 
 	public CommerceDiscountRule addCommerceDiscountRule(
-		long commerceDiscountId, java.lang.String type,
-		java.lang.String typeSettings, ServiceContext serviceContext)
-		throws PortalException;
+		long commerceDiscountId, String type, String typeSettings,
+		ServiceContext serviceContext) throws PortalException;
 
 	/**
 	* Creates a new commerce discount rule with the primary key. Does not add the commerce discount rule to the database.
@@ -225,7 +224,7 @@ public interface CommerceDiscountRuleLocalService extends BaseLocalService,
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -243,6 +242,6 @@ public interface CommerceDiscountRuleLocalService extends BaseLocalService,
 		CommerceDiscountRule commerceDiscountRule);
 
 	public CommerceDiscountRule updateCommerceDiscountRule(
-		long commerceDiscountRuleId, java.lang.String type,
-		java.lang.String typeSettings) throws PortalException;
+		long commerceDiscountRuleId, String type, String typeSettings)
+		throws PortalException;
 }

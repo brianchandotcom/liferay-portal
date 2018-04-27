@@ -118,7 +118,7 @@ public class CPMeasurementUnitUtil {
 	* @param uuid the uuid
 	* @return the matching cp measurement units
 	*/
-	public static List<CPMeasurementUnit> findByUuid(java.lang.String uuid) {
+	public static List<CPMeasurementUnit> findByUuid(String uuid) {
 		return getPersistence().findByUuid(uuid);
 	}
 
@@ -134,8 +134,8 @@ public class CPMeasurementUnitUtil {
 	* @param end the upper bound of the range of cp measurement units (not inclusive)
 	* @return the range of matching cp measurement units
 	*/
-	public static List<CPMeasurementUnit> findByUuid(java.lang.String uuid,
-		int start, int end) {
+	public static List<CPMeasurementUnit> findByUuid(String uuid, int start,
+		int end) {
 		return getPersistence().findByUuid(uuid, start, end);
 	}
 
@@ -152,9 +152,8 @@ public class CPMeasurementUnitUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching cp measurement units
 	*/
-	public static List<CPMeasurementUnit> findByUuid(java.lang.String uuid,
-		int start, int end,
-		OrderByComparator<CPMeasurementUnit> orderByComparator) {
+	public static List<CPMeasurementUnit> findByUuid(String uuid, int start,
+		int end, OrderByComparator<CPMeasurementUnit> orderByComparator) {
 		return getPersistence().findByUuid(uuid, start, end, orderByComparator);
 	}
 
@@ -172,9 +171,8 @@ public class CPMeasurementUnitUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching cp measurement units
 	*/
-	public static List<CPMeasurementUnit> findByUuid(java.lang.String uuid,
-		int start, int end,
-		OrderByComparator<CPMeasurementUnit> orderByComparator,
+	public static List<CPMeasurementUnit> findByUuid(String uuid, int start,
+		int end, OrderByComparator<CPMeasurementUnit> orderByComparator,
 		boolean retrieveFromCache) {
 		return getPersistence()
 				   .findByUuid(uuid, start, end, orderByComparator,
@@ -189,7 +187,7 @@ public class CPMeasurementUnitUtil {
 	* @return the first matching cp measurement unit
 	* @throws NoSuchCPMeasurementUnitException if a matching cp measurement unit could not be found
 	*/
-	public static CPMeasurementUnit findByUuid_First(java.lang.String uuid,
+	public static CPMeasurementUnit findByUuid_First(String uuid,
 		OrderByComparator<CPMeasurementUnit> orderByComparator)
 		throws com.liferay.commerce.product.exception.NoSuchCPMeasurementUnitException {
 		return getPersistence().findByUuid_First(uuid, orderByComparator);
@@ -202,7 +200,7 @@ public class CPMeasurementUnitUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching cp measurement unit, or <code>null</code> if a matching cp measurement unit could not be found
 	*/
-	public static CPMeasurementUnit fetchByUuid_First(java.lang.String uuid,
+	public static CPMeasurementUnit fetchByUuid_First(String uuid,
 		OrderByComparator<CPMeasurementUnit> orderByComparator) {
 		return getPersistence().fetchByUuid_First(uuid, orderByComparator);
 	}
@@ -215,7 +213,7 @@ public class CPMeasurementUnitUtil {
 	* @return the last matching cp measurement unit
 	* @throws NoSuchCPMeasurementUnitException if a matching cp measurement unit could not be found
 	*/
-	public static CPMeasurementUnit findByUuid_Last(java.lang.String uuid,
+	public static CPMeasurementUnit findByUuid_Last(String uuid,
 		OrderByComparator<CPMeasurementUnit> orderByComparator)
 		throws com.liferay.commerce.product.exception.NoSuchCPMeasurementUnitException {
 		return getPersistence().findByUuid_Last(uuid, orderByComparator);
@@ -228,7 +226,7 @@ public class CPMeasurementUnitUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching cp measurement unit, or <code>null</code> if a matching cp measurement unit could not be found
 	*/
-	public static CPMeasurementUnit fetchByUuid_Last(java.lang.String uuid,
+	public static CPMeasurementUnit fetchByUuid_Last(String uuid,
 		OrderByComparator<CPMeasurementUnit> orderByComparator) {
 		return getPersistence().fetchByUuid_Last(uuid, orderByComparator);
 	}
@@ -243,7 +241,7 @@ public class CPMeasurementUnitUtil {
 	* @throws NoSuchCPMeasurementUnitException if a cp measurement unit with the primary key could not be found
 	*/
 	public static CPMeasurementUnit[] findByUuid_PrevAndNext(
-		long CPMeasurementUnitId, java.lang.String uuid,
+		long CPMeasurementUnitId, String uuid,
 		OrderByComparator<CPMeasurementUnit> orderByComparator)
 		throws com.liferay.commerce.product.exception.NoSuchCPMeasurementUnitException {
 		return getPersistence()
@@ -256,7 +254,7 @@ public class CPMeasurementUnitUtil {
 	*
 	* @param uuid the uuid
 	*/
-	public static void removeByUuid(java.lang.String uuid) {
+	public static void removeByUuid(String uuid) {
 		getPersistence().removeByUuid(uuid);
 	}
 
@@ -266,7 +264,7 @@ public class CPMeasurementUnitUtil {
 	* @param uuid the uuid
 	* @return the number of matching cp measurement units
 	*/
-	public static int countByUuid(java.lang.String uuid) {
+	public static int countByUuid(String uuid) {
 		return getPersistence().countByUuid(uuid);
 	}
 
@@ -278,8 +276,7 @@ public class CPMeasurementUnitUtil {
 	* @return the matching cp measurement unit
 	* @throws NoSuchCPMeasurementUnitException if a matching cp measurement unit could not be found
 	*/
-	public static CPMeasurementUnit findByUUID_G(java.lang.String uuid,
-		long groupId)
+	public static CPMeasurementUnit findByUUID_G(String uuid, long groupId)
 		throws com.liferay.commerce.product.exception.NoSuchCPMeasurementUnitException {
 		return getPersistence().findByUUID_G(uuid, groupId);
 	}
@@ -291,8 +288,7 @@ public class CPMeasurementUnitUtil {
 	* @param groupId the group ID
 	* @return the matching cp measurement unit, or <code>null</code> if a matching cp measurement unit could not be found
 	*/
-	public static CPMeasurementUnit fetchByUUID_G(java.lang.String uuid,
-		long groupId) {
+	public static CPMeasurementUnit fetchByUUID_G(String uuid, long groupId) {
 		return getPersistence().fetchByUUID_G(uuid, groupId);
 	}
 
@@ -304,8 +300,8 @@ public class CPMeasurementUnitUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching cp measurement unit, or <code>null</code> if a matching cp measurement unit could not be found
 	*/
-	public static CPMeasurementUnit fetchByUUID_G(java.lang.String uuid,
-		long groupId, boolean retrieveFromCache) {
+	public static CPMeasurementUnit fetchByUUID_G(String uuid, long groupId,
+		boolean retrieveFromCache) {
 		return getPersistence().fetchByUUID_G(uuid, groupId, retrieveFromCache);
 	}
 
@@ -316,8 +312,7 @@ public class CPMeasurementUnitUtil {
 	* @param groupId the group ID
 	* @return the cp measurement unit that was removed
 	*/
-	public static CPMeasurementUnit removeByUUID_G(java.lang.String uuid,
-		long groupId)
+	public static CPMeasurementUnit removeByUUID_G(String uuid, long groupId)
 		throws com.liferay.commerce.product.exception.NoSuchCPMeasurementUnitException {
 		return getPersistence().removeByUUID_G(uuid, groupId);
 	}
@@ -329,7 +324,7 @@ public class CPMeasurementUnitUtil {
 	* @param groupId the group ID
 	* @return the number of matching cp measurement units
 	*/
-	public static int countByUUID_G(java.lang.String uuid, long groupId) {
+	public static int countByUUID_G(String uuid, long groupId) {
 		return getPersistence().countByUUID_G(uuid, groupId);
 	}
 
@@ -340,7 +335,7 @@ public class CPMeasurementUnitUtil {
 	* @param companyId the company ID
 	* @return the matching cp measurement units
 	*/
-	public static List<CPMeasurementUnit> findByUuid_C(java.lang.String uuid,
+	public static List<CPMeasurementUnit> findByUuid_C(String uuid,
 		long companyId) {
 		return getPersistence().findByUuid_C(uuid, companyId);
 	}
@@ -358,7 +353,7 @@ public class CPMeasurementUnitUtil {
 	* @param end the upper bound of the range of cp measurement units (not inclusive)
 	* @return the range of matching cp measurement units
 	*/
-	public static List<CPMeasurementUnit> findByUuid_C(java.lang.String uuid,
+	public static List<CPMeasurementUnit> findByUuid_C(String uuid,
 		long companyId, int start, int end) {
 		return getPersistence().findByUuid_C(uuid, companyId, start, end);
 	}
@@ -377,7 +372,7 @@ public class CPMeasurementUnitUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching cp measurement units
 	*/
-	public static List<CPMeasurementUnit> findByUuid_C(java.lang.String uuid,
+	public static List<CPMeasurementUnit> findByUuid_C(String uuid,
 		long companyId, int start, int end,
 		OrderByComparator<CPMeasurementUnit> orderByComparator) {
 		return getPersistence()
@@ -399,7 +394,7 @@ public class CPMeasurementUnitUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching cp measurement units
 	*/
-	public static List<CPMeasurementUnit> findByUuid_C(java.lang.String uuid,
+	public static List<CPMeasurementUnit> findByUuid_C(String uuid,
 		long companyId, int start, int end,
 		OrderByComparator<CPMeasurementUnit> orderByComparator,
 		boolean retrieveFromCache) {
@@ -417,7 +412,7 @@ public class CPMeasurementUnitUtil {
 	* @return the first matching cp measurement unit
 	* @throws NoSuchCPMeasurementUnitException if a matching cp measurement unit could not be found
 	*/
-	public static CPMeasurementUnit findByUuid_C_First(java.lang.String uuid,
+	public static CPMeasurementUnit findByUuid_C_First(String uuid,
 		long companyId, OrderByComparator<CPMeasurementUnit> orderByComparator)
 		throws com.liferay.commerce.product.exception.NoSuchCPMeasurementUnitException {
 		return getPersistence()
@@ -432,7 +427,7 @@ public class CPMeasurementUnitUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching cp measurement unit, or <code>null</code> if a matching cp measurement unit could not be found
 	*/
-	public static CPMeasurementUnit fetchByUuid_C_First(java.lang.String uuid,
+	public static CPMeasurementUnit fetchByUuid_C_First(String uuid,
 		long companyId, OrderByComparator<CPMeasurementUnit> orderByComparator) {
 		return getPersistence()
 				   .fetchByUuid_C_First(uuid, companyId, orderByComparator);
@@ -447,7 +442,7 @@ public class CPMeasurementUnitUtil {
 	* @return the last matching cp measurement unit
 	* @throws NoSuchCPMeasurementUnitException if a matching cp measurement unit could not be found
 	*/
-	public static CPMeasurementUnit findByUuid_C_Last(java.lang.String uuid,
+	public static CPMeasurementUnit findByUuid_C_Last(String uuid,
 		long companyId, OrderByComparator<CPMeasurementUnit> orderByComparator)
 		throws com.liferay.commerce.product.exception.NoSuchCPMeasurementUnitException {
 		return getPersistence()
@@ -462,7 +457,7 @@ public class CPMeasurementUnitUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching cp measurement unit, or <code>null</code> if a matching cp measurement unit could not be found
 	*/
-	public static CPMeasurementUnit fetchByUuid_C_Last(java.lang.String uuid,
+	public static CPMeasurementUnit fetchByUuid_C_Last(String uuid,
 		long companyId, OrderByComparator<CPMeasurementUnit> orderByComparator) {
 		return getPersistence()
 				   .fetchByUuid_C_Last(uuid, companyId, orderByComparator);
@@ -479,7 +474,7 @@ public class CPMeasurementUnitUtil {
 	* @throws NoSuchCPMeasurementUnitException if a cp measurement unit with the primary key could not be found
 	*/
 	public static CPMeasurementUnit[] findByUuid_C_PrevAndNext(
-		long CPMeasurementUnitId, java.lang.String uuid, long companyId,
+		long CPMeasurementUnitId, String uuid, long companyId,
 		OrderByComparator<CPMeasurementUnit> orderByComparator)
 		throws com.liferay.commerce.product.exception.NoSuchCPMeasurementUnitException {
 		return getPersistence()
@@ -493,7 +488,7 @@ public class CPMeasurementUnitUtil {
 	* @param uuid the uuid
 	* @param companyId the company ID
 	*/
-	public static void removeByUuid_C(java.lang.String uuid, long companyId) {
+	public static void removeByUuid_C(String uuid, long companyId) {
 		getPersistence().removeByUuid_C(uuid, companyId);
 	}
 
@@ -504,7 +499,7 @@ public class CPMeasurementUnitUtil {
 	* @param companyId the company ID
 	* @return the number of matching cp measurement units
 	*/
-	public static int countByUuid_C(java.lang.String uuid, long companyId) {
+	public static int countByUuid_C(String uuid, long companyId) {
 		return getPersistence().countByUuid_C(uuid, companyId);
 	}
 
@@ -847,8 +842,8 @@ public class CPMeasurementUnitUtil {
 	* @return the matching cp measurement unit
 	* @throws NoSuchCPMeasurementUnitException if a matching cp measurement unit could not be found
 	*/
-	public static CPMeasurementUnit findByG_K_T(long groupId,
-		java.lang.String key, int type)
+	public static CPMeasurementUnit findByG_K_T(long groupId, String key,
+		int type)
 		throws com.liferay.commerce.product.exception.NoSuchCPMeasurementUnitException {
 		return getPersistence().findByG_K_T(groupId, key, type);
 	}
@@ -861,8 +856,8 @@ public class CPMeasurementUnitUtil {
 	* @param type the type
 	* @return the matching cp measurement unit, or <code>null</code> if a matching cp measurement unit could not be found
 	*/
-	public static CPMeasurementUnit fetchByG_K_T(long groupId,
-		java.lang.String key, int type) {
+	public static CPMeasurementUnit fetchByG_K_T(long groupId, String key,
+		int type) {
 		return getPersistence().fetchByG_K_T(groupId, key, type);
 	}
 
@@ -875,8 +870,8 @@ public class CPMeasurementUnitUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching cp measurement unit, or <code>null</code> if a matching cp measurement unit could not be found
 	*/
-	public static CPMeasurementUnit fetchByG_K_T(long groupId,
-		java.lang.String key, int type, boolean retrieveFromCache) {
+	public static CPMeasurementUnit fetchByG_K_T(long groupId, String key,
+		int type, boolean retrieveFromCache) {
 		return getPersistence()
 				   .fetchByG_K_T(groupId, key, type, retrieveFromCache);
 	}
@@ -889,8 +884,8 @@ public class CPMeasurementUnitUtil {
 	* @param type the type
 	* @return the cp measurement unit that was removed
 	*/
-	public static CPMeasurementUnit removeByG_K_T(long groupId,
-		java.lang.String key, int type)
+	public static CPMeasurementUnit removeByG_K_T(long groupId, String key,
+		int type)
 		throws com.liferay.commerce.product.exception.NoSuchCPMeasurementUnitException {
 		return getPersistence().removeByG_K_T(groupId, key, type);
 	}
@@ -903,7 +898,7 @@ public class CPMeasurementUnitUtil {
 	* @param type the type
 	* @return the number of matching cp measurement units
 	*/
-	public static int countByG_K_T(long groupId, java.lang.String key, int type) {
+	public static int countByG_K_T(long groupId, String key, int type) {
 		return getPersistence().countByG_K_T(groupId, key, type);
 	}
 
@@ -1247,7 +1242,7 @@ public class CPMeasurementUnitUtil {
 		return getPersistence().countAll();
 	}
 
-	public static java.util.Set<java.lang.String> getBadColumnNames() {
+	public static java.util.Set<String> getBadColumnNames() {
 		return getPersistence().getBadColumnNames();
 	}
 

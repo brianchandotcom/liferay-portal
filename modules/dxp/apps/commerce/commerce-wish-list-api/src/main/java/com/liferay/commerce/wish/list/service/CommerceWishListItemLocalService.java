@@ -74,8 +74,7 @@ public interface CommerceWishListItemLocalService extends BaseLocalService,
 
 	public CommerceWishListItem addCommerceWishListItem(
 		long commerceWishListId, long cpDefinitionId, long cpInstanceId,
-		java.lang.String json, ServiceContext serviceContext)
-		throws PortalException;
+		String json, ServiceContext serviceContext) throws PortalException;
 
 	/**
 	* Creates a new commerce wish list item with the primary key. Does not add the commerce wish list item to the database.
@@ -237,7 +236,7 @@ public interface CommerceWishListItemLocalService extends BaseLocalService,
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

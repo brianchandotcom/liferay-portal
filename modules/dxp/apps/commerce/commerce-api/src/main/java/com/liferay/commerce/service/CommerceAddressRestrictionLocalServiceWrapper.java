@@ -48,7 +48,7 @@ public class CommerceAddressRestrictionLocalServiceWrapper
 
 	@Override
 	public com.liferay.commerce.model.CommerceAddressRestriction addCommerceAddressRestriction(
-		java.lang.String className, long classPK, long commerceCountryId,
+		String className, long classPK, long commerceCountryId,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _commerceAddressRestrictionLocalService.addCommerceAddressRestriction(className,
@@ -99,8 +99,7 @@ public class CommerceAddressRestrictionLocalServiceWrapper
 	}
 
 	@Override
-	public void deleteCommerceAddressRestrictions(java.lang.String className,
-		long classPK) {
+	public void deleteCommerceAddressRestrictions(String className, long classPK) {
 		_commerceAddressRestrictionLocalService.deleteCommerceAddressRestrictions(className,
 			classPK);
 	}
@@ -209,7 +208,7 @@ public class CommerceAddressRestrictionLocalServiceWrapper
 
 	@Override
 	public com.liferay.commerce.model.CommerceAddressRestriction fetchCommerceAddressRestriction(
-		java.lang.String className, long classPK, long commerceCountryId) {
+		String className, long classPK, long commerceCountryId) {
 		return _commerceAddressRestrictionLocalService.fetchCommerceAddressRestriction(className,
 			classPK, commerceCountryId);
 	}
@@ -253,7 +252,7 @@ public class CommerceAddressRestrictionLocalServiceWrapper
 
 	@Override
 	public java.util.List<com.liferay.commerce.model.CommerceAddressRestriction> getCommerceAddressRestrictions(
-		java.lang.String className, long classPK, int start, int end,
+		String className, long classPK, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.model.CommerceAddressRestriction> orderByComparator) {
 		return _commerceAddressRestrictionLocalService.getCommerceAddressRestrictions(className,
 			classPK, start, end, orderByComparator);
@@ -270,7 +269,7 @@ public class CommerceAddressRestrictionLocalServiceWrapper
 	}
 
 	@Override
-	public int getCommerceAddressRestrictionsCount(java.lang.String className,
+	public int getCommerceAddressRestrictionsCount(String className,
 		long classPK) {
 		return _commerceAddressRestrictionLocalService.getCommerceAddressRestrictionsCount(className,
 			classPK);
@@ -287,7 +286,7 @@ public class CommerceAddressRestrictionLocalServiceWrapper
 	* @return the OSGi service identifier
 	*/
 	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
+	public String getOSGiServiceIdentifier() {
 		return _commerceAddressRestrictionLocalService.getOSGiServiceIdentifier();
 	}
 
@@ -299,8 +298,8 @@ public class CommerceAddressRestrictionLocalServiceWrapper
 	}
 
 	@Override
-	public boolean isCommerceAddressRestricted(java.lang.String className,
-		long classPK, long commerceCountryId) {
+	public boolean isCommerceAddressRestricted(String className, long classPK,
+		long commerceCountryId) {
 		return _commerceAddressRestrictionLocalService.isCommerceAddressRestricted(className,
 			classPK, commerceCountryId);
 	}

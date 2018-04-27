@@ -66,9 +66,8 @@ import java.rmi.RemoteException;
 @ProviderType
 public class CommerceWarehouseServiceSoap {
 	public static com.liferay.commerce.model.CommerceWarehouseSoap addCommerceWarehouse(
-		java.lang.String name, java.lang.String description, boolean active,
-		java.lang.String street1, java.lang.String street2,
-		java.lang.String street3, java.lang.String city, java.lang.String zip,
+		String name, String description, boolean active, String street1,
+		String street2, String street3, String city, String zip,
 		long commerceRegionId, long commerceCountryId, double latitude,
 		double longitude,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
@@ -229,8 +228,8 @@ public class CommerceWarehouseServiceSoap {
 	}
 
 	public static com.liferay.commerce.model.CommerceWarehouseSoap[] search(
-		long groupId, java.lang.String keywords, boolean all,
-		long commerceCountryId, int start, int end,
+		long groupId, String keywords, boolean all, long commerceCountryId,
+		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.model.CommerceWarehouse> orderByComparator)
 		throws RemoteException {
 		try {
@@ -247,8 +246,8 @@ public class CommerceWarehouseServiceSoap {
 		}
 	}
 
-	public static int searchCount(long groupId, java.lang.String keywords,
-		boolean all, long commerceCountryId) throws RemoteException {
+	public static int searchCount(long groupId, String keywords, boolean all,
+		long commerceCountryId) throws RemoteException {
 		try {
 			int returnValue = CommerceWarehouseServiceUtil.searchCount(groupId,
 					keywords, all, commerceCountryId);
@@ -278,11 +277,10 @@ public class CommerceWarehouseServiceSoap {
 	}
 
 	public static com.liferay.commerce.model.CommerceWarehouseSoap updateCommerceWarehouse(
-		long commerceWarehouseId, java.lang.String name,
-		java.lang.String description, boolean active, java.lang.String street1,
-		java.lang.String street2, java.lang.String street3,
-		java.lang.String city, java.lang.String zip, long commerceRegionId,
-		long commerceCountryId, double latitude, double longitude,
+		long commerceWarehouseId, String name, String description,
+		boolean active, String street1, String street2, String street3,
+		String city, String zip, long commerceRegionId, long commerceCountryId,
+		double latitude, double longitude,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
@@ -301,11 +299,9 @@ public class CommerceWarehouseServiceSoap {
 	}
 
 	public static com.liferay.commerce.model.CommerceWarehouseSoap updateDefaultCommerceWarehouse(
-		long commerceWarehouseId, java.lang.String name,
-		java.lang.String street1, java.lang.String street2,
-		java.lang.String street3, java.lang.String city, java.lang.String zip,
-		long commerceRegionId, long commerceCountryId, double latitude,
-		double longitude,
+		long commerceWarehouseId, String name, String street1, String street2,
+		String street3, String city, String zip, long commerceRegionId,
+		long commerceCountryId, double latitude, double longitude,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {

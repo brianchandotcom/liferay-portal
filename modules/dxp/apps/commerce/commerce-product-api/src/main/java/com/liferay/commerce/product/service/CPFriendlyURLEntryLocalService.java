@@ -66,8 +66,8 @@ public interface CPFriendlyURLEntryLocalService extends BaseLocalService,
 	 * Never modify or reference this interface directly. Always use {@link CPFriendlyURLEntryLocalServiceUtil} to access the cp friendly url entry local service. Add custom service methods to {@link com.liferay.commerce.product.service.impl.CPFriendlyURLEntryLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	public void addCPFriendlyURLEntries(long groupId, long companyId,
-		java.lang.Class<?> clazz, long classPK,
-		Map<Locale, java.lang.String> urlTitleMap) throws PortalException;
+		Class<?> clazz, long classPK, Map<Locale, String> urlTitleMap)
+		throws PortalException;
 
 	/**
 	* Adds the cp friendly url entry to the database. Also notifies the appropriate model listeners.
@@ -79,8 +79,8 @@ public interface CPFriendlyURLEntryLocalService extends BaseLocalService,
 	public CPFriendlyURLEntry addCPFriendlyURLEntry(
 		CPFriendlyURLEntry cpFriendlyURLEntry);
 
-	public java.lang.String buildUrlTitle(long groupId, long classNameId,
-		long classPK, java.lang.String languageId, java.lang.String title);
+	public String buildUrlTitle(long groupId, long classNameId, long classPK,
+		String languageId, String title);
 
 	/**
 	* Creates a new cp friendly url entry with the primary key. Does not add the cp friendly url entry to the database.
@@ -92,8 +92,8 @@ public interface CPFriendlyURLEntryLocalService extends BaseLocalService,
 	public CPFriendlyURLEntry createCPFriendlyURLEntry(
 		long CPFriendlyURLEntryId);
 
-	public void deleteCPFriendlyURLEntries(long groupId,
-		java.lang.Class<?> clazz, long classPK);
+	public void deleteCPFriendlyURLEntries(long groupId, Class<?> clazz,
+		long classPK);
 
 	/**
 	* Deletes the cp friendly url entry from the database. Also notifies the appropriate model listeners.
@@ -187,8 +187,7 @@ public interface CPFriendlyURLEntryLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CPFriendlyURLEntry fetchCPFriendlyURLEntry(long groupId,
-		long classNameId, long classPK, java.lang.String languageId,
-		boolean main);
+		long classNameId, long classPK, String languageId, boolean main);
 
 	/**
 	* Returns the cp friendly url entry matching the UUID and group.
@@ -199,7 +198,7 @@ public interface CPFriendlyURLEntryLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CPFriendlyURLEntry fetchCPFriendlyURLEntryByUuidAndGroupId(
-		java.lang.String uuid, long groupId);
+		String uuid, long groupId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
@@ -231,7 +230,7 @@ public interface CPFriendlyURLEntryLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CPFriendlyURLEntry> getCPFriendlyURLEntriesByUuidAndCompanyId(
-		java.lang.String uuid, long companyId);
+		String uuid, long companyId);
 
 	/**
 	* Returns a range of cp friendly url entries matching the UUID and company.
@@ -245,7 +244,7 @@ public interface CPFriendlyURLEntryLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CPFriendlyURLEntry> getCPFriendlyURLEntriesByUuidAndCompanyId(
-		java.lang.String uuid, long companyId, int start, int end,
+		String uuid, long companyId, int start, int end,
 		OrderByComparator<CPFriendlyURLEntry> orderByComparator);
 
 	/**
@@ -269,7 +268,7 @@ public interface CPFriendlyURLEntryLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CPFriendlyURLEntry getCPFriendlyURLEntry(long groupId,
-		long classNameId, java.lang.String languageId, java.lang.String urlTitle)
+		long classNameId, String languageId, String urlTitle)
 		throws PortalException;
 
 	/**
@@ -282,7 +281,7 @@ public interface CPFriendlyURLEntryLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CPFriendlyURLEntry getCPFriendlyURLEntryByUuidAndGroupId(
-		java.lang.String uuid, long groupId) throws PortalException;
+		String uuid, long groupId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
@@ -292,15 +291,15 @@ public interface CPFriendlyURLEntryLocalService extends BaseLocalService,
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Map<java.lang.String, java.lang.String> getLanguageIdToUrlTitleMap(
-		long groupId, long classNameId, long classPK);
+	public Map<String, String> getLanguageIdToUrlTitleMap(long groupId,
+		long classNameId, long classPK);
 
 	/**
 	* Returns the OSGi service identifier.
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -308,12 +307,12 @@ public interface CPFriendlyURLEntryLocalService extends BaseLocalService,
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Map<Locale, java.lang.String> getUrlTitleMap(long groupId,
-		long classNameId, long classPK);
+	public Map<Locale, String> getUrlTitleMap(long groupId, long classNameId,
+		long classPK);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.lang.String getUrlTitleMapAsXML(long groupId, long classNameId,
-		long classPK, java.lang.String defaultLanguageId);
+	public String getUrlTitleMapAsXML(long groupId, long classNameId,
+		long classPK, String defaultLanguageId);
 
 	/**
 	* Updates the cp friendly url entry in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.

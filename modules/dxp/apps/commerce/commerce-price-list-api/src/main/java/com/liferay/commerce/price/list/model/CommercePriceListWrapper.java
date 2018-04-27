@@ -203,7 +203,7 @@ public class CommercePriceListWrapper implements CommercePriceList,
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new CommercePriceListWrapper((CommercePriceList)_commercePriceList.clone());
 	}
 
@@ -319,7 +319,7 @@ public class CommercePriceListWrapper implements CommercePriceList,
 	* @return the name of this commerce price list
 	*/
 	@Override
-	public java.lang.String getName() {
+	public String getName() {
 		return _commercePriceList.getName();
 	}
 
@@ -384,7 +384,7 @@ public class CommercePriceListWrapper implements CommercePriceList,
 	* @return the status by user name of this commerce price list
 	*/
 	@Override
-	public java.lang.String getStatusByUserName() {
+	public String getStatusByUserName() {
 		return _commercePriceList.getStatusByUserName();
 	}
 
@@ -394,7 +394,7 @@ public class CommercePriceListWrapper implements CommercePriceList,
 	* @return the status by user uuid of this commerce price list
 	*/
 	@Override
-	public java.lang.String getStatusByUserUuid() {
+	public String getStatusByUserUuid() {
 		return _commercePriceList.getStatusByUserUuid();
 	}
 
@@ -424,7 +424,7 @@ public class CommercePriceListWrapper implements CommercePriceList,
 	* @return the user name of this commerce price list
 	*/
 	@Override
-	public java.lang.String getUserName() {
+	public String getUserName() {
 		return _commercePriceList.getUserName();
 	}
 
@@ -434,7 +434,7 @@ public class CommercePriceListWrapper implements CommercePriceList,
 	* @return the user uuid of this commerce price list
 	*/
 	@Override
-	public java.lang.String getUserUuid() {
+	public String getUserUuid() {
 		return _commercePriceList.getUserUuid();
 	}
 
@@ -444,7 +444,7 @@ public class CommercePriceListWrapper implements CommercePriceList,
 	* @return the uuid of this commerce price list
 	*/
 	@Override
-	public java.lang.String getUuid() {
+	public String getUuid() {
 		return _commercePriceList.getUuid();
 	}
 
@@ -670,7 +670,7 @@ public class CommercePriceListWrapper implements CommercePriceList,
 	* @param name the name of this commerce price list
 	*/
 	@Override
-	public void setName(java.lang.String name) {
+	public void setName(String name) {
 		_commercePriceList.setName(name);
 	}
 
@@ -740,7 +740,7 @@ public class CommercePriceListWrapper implements CommercePriceList,
 	* @param statusByUserName the status by user name of this commerce price list
 	*/
 	@Override
-	public void setStatusByUserName(java.lang.String statusByUserName) {
+	public void setStatusByUserName(String statusByUserName) {
 		_commercePriceList.setStatusByUserName(statusByUserName);
 	}
 
@@ -750,7 +750,7 @@ public class CommercePriceListWrapper implements CommercePriceList,
 	* @param statusByUserUuid the status by user uuid of this commerce price list
 	*/
 	@Override
-	public void setStatusByUserUuid(java.lang.String statusByUserUuid) {
+	public void setStatusByUserUuid(String statusByUserUuid) {
 		_commercePriceList.setStatusByUserUuid(statusByUserUuid);
 	}
 
@@ -780,7 +780,7 @@ public class CommercePriceListWrapper implements CommercePriceList,
 	* @param userName the user name of this commerce price list
 	*/
 	@Override
-	public void setUserName(java.lang.String userName) {
+	public void setUserName(String userName) {
 		_commercePriceList.setUserName(userName);
 	}
 
@@ -790,7 +790,7 @@ public class CommercePriceListWrapper implements CommercePriceList,
 	* @param userUuid the user uuid of this commerce price list
 	*/
 	@Override
-	public void setUserUuid(java.lang.String userUuid) {
+	public void setUserUuid(String userUuid) {
 		_commercePriceList.setUserUuid(userUuid);
 	}
 
@@ -800,7 +800,7 @@ public class CommercePriceListWrapper implements CommercePriceList,
 	* @param uuid the uuid of this commerce price list
 	*/
 	@Override
-	public void setUuid(java.lang.String uuid) {
+	public void setUuid(String uuid) {
 		_commercePriceList.setUuid(uuid);
 	}
 
@@ -815,7 +815,7 @@ public class CommercePriceListWrapper implements CommercePriceList,
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _commercePriceList.toString();
 	}
 
@@ -825,7 +825,7 @@ public class CommercePriceListWrapper implements CommercePriceList,
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _commercePriceList.toXmlString();
 	}
 

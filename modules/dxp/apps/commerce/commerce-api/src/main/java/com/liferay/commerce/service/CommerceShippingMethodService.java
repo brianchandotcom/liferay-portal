@@ -60,9 +60,8 @@ public interface CommerceShippingMethodService extends BaseService {
 	 * Never modify or reference this interface directly. Always use {@link CommerceShippingMethodServiceUtil} to access the commerce shipping method remote service. Add custom service methods to {@link com.liferay.commerce.service.impl.CommerceShippingMethodServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	public CommerceShippingMethod addCommerceShippingMethod(
-		Map<Locale, java.lang.String> nameMap,
-		Map<Locale, java.lang.String> descriptionMap, File imageFile,
-		java.lang.String engineKey, double priority, boolean active,
+		Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
+		File imageFile, String engineKey, double priority, boolean active,
 		ServiceContext serviceContext) throws PortalException;
 
 	public CommerceShippingMethod createCommerceShippingMethod(
@@ -73,7 +72,7 @@ public interface CommerceShippingMethodService extends BaseService {
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CommerceShippingMethod fetchCommerceShippingMethod(long groupId,
-		java.lang.String engineKey);
+		String engineKey);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CommerceShippingMethod getCommerceShippingMethod(
@@ -95,13 +94,13 @@ public interface CommerceShippingMethodService extends BaseService {
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	public CommerceShippingMethod setActive(long commerceShippingMethodId,
 		boolean active) throws PortalException;
 
 	public CommerceShippingMethod updateCommerceShippingMethod(
-		long commerceShippingMethodId, Map<Locale, java.lang.String> nameMap,
-		Map<Locale, java.lang.String> descriptionMap, File imageFile,
-		double priority, boolean active) throws PortalException;
+		long commerceShippingMethodId, Map<Locale, String> nameMap,
+		Map<Locale, String> descriptionMap, File imageFile, double priority,
+		boolean active) throws PortalException;
 }

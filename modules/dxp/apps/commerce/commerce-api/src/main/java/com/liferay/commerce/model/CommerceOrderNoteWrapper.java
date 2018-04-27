@@ -136,7 +136,7 @@ public class CommerceOrderNoteWrapper implements CommerceOrderNote,
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new CommerceOrderNoteWrapper((CommerceOrderNote)_commerceOrderNote.clone());
 	}
 
@@ -181,7 +181,7 @@ public class CommerceOrderNoteWrapper implements CommerceOrderNote,
 	* @return the content of this commerce order note
 	*/
 	@Override
-	public java.lang.String getContent() {
+	public String getContent() {
 		return _commerceOrderNote.getContent();
 	}
 
@@ -266,7 +266,7 @@ public class CommerceOrderNoteWrapper implements CommerceOrderNote,
 	* @return the user name of this commerce order note
 	*/
 	@Override
-	public java.lang.String getUserName() {
+	public String getUserName() {
 		return _commerceOrderNote.getUserName();
 	}
 
@@ -276,7 +276,7 @@ public class CommerceOrderNoteWrapper implements CommerceOrderNote,
 	* @return the user uuid of this commerce order note
 	*/
 	@Override
-	public java.lang.String getUserUuid() {
+	public String getUserUuid() {
 		return _commerceOrderNote.getUserUuid();
 	}
 
@@ -356,7 +356,7 @@ public class CommerceOrderNoteWrapper implements CommerceOrderNote,
 	* @param content the content of this commerce order note
 	*/
 	@Override
-	public void setContent(java.lang.String content) {
+	public void setContent(String content) {
 		_commerceOrderNote.setContent(content);
 	}
 
@@ -452,7 +452,7 @@ public class CommerceOrderNoteWrapper implements CommerceOrderNote,
 	* @param userName the user name of this commerce order note
 	*/
 	@Override
-	public void setUserName(java.lang.String userName) {
+	public void setUserName(String userName) {
 		_commerceOrderNote.setUserName(userName);
 	}
 
@@ -462,7 +462,7 @@ public class CommerceOrderNoteWrapper implements CommerceOrderNote,
 	* @param userUuid the user uuid of this commerce order note
 	*/
 	@Override
-	public void setUserUuid(java.lang.String userUuid) {
+	public void setUserUuid(String userUuid) {
 		_commerceOrderNote.setUserUuid(userUuid);
 	}
 
@@ -477,7 +477,7 @@ public class CommerceOrderNoteWrapper implements CommerceOrderNote,
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _commerceOrderNote.toString();
 	}
 
@@ -487,7 +487,7 @@ public class CommerceOrderNoteWrapper implements CommerceOrderNote,
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _commerceOrderNote.toXmlString();
 	}
 

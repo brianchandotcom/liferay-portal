@@ -49,7 +49,7 @@ public interface CommerceOrderPersistence extends BasePersistence<CommerceOrder>
 	* @param uuid the uuid
 	* @return the matching commerce orders
 	*/
-	public java.util.List<CommerceOrder> findByUuid(java.lang.String uuid);
+	public java.util.List<CommerceOrder> findByUuid(String uuid);
 
 	/**
 	* Returns a range of all the commerce orders where uuid = &#63;.
@@ -63,8 +63,8 @@ public interface CommerceOrderPersistence extends BasePersistence<CommerceOrder>
 	* @param end the upper bound of the range of commerce orders (not inclusive)
 	* @return the range of matching commerce orders
 	*/
-	public java.util.List<CommerceOrder> findByUuid(java.lang.String uuid,
-		int start, int end);
+	public java.util.List<CommerceOrder> findByUuid(String uuid, int start,
+		int end);
 
 	/**
 	* Returns an ordered range of all the commerce orders where uuid = &#63;.
@@ -79,8 +79,8 @@ public interface CommerceOrderPersistence extends BasePersistence<CommerceOrder>
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching commerce orders
 	*/
-	public java.util.List<CommerceOrder> findByUuid(java.lang.String uuid,
-		int start, int end,
+	public java.util.List<CommerceOrder> findByUuid(String uuid, int start,
+		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<CommerceOrder> orderByComparator);
 
 	/**
@@ -97,8 +97,8 @@ public interface CommerceOrderPersistence extends BasePersistence<CommerceOrder>
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching commerce orders
 	*/
-	public java.util.List<CommerceOrder> findByUuid(java.lang.String uuid,
-		int start, int end,
+	public java.util.List<CommerceOrder> findByUuid(String uuid, int start,
+		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<CommerceOrder> orderByComparator,
 		boolean retrieveFromCache);
 
@@ -110,7 +110,7 @@ public interface CommerceOrderPersistence extends BasePersistence<CommerceOrder>
 	* @return the first matching commerce order
 	* @throws NoSuchOrderException if a matching commerce order could not be found
 	*/
-	public CommerceOrder findByUuid_First(java.lang.String uuid,
+	public CommerceOrder findByUuid_First(String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<CommerceOrder> orderByComparator)
 		throws NoSuchOrderException;
 
@@ -121,7 +121,7 @@ public interface CommerceOrderPersistence extends BasePersistence<CommerceOrder>
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching commerce order, or <code>null</code> if a matching commerce order could not be found
 	*/
-	public CommerceOrder fetchByUuid_First(java.lang.String uuid,
+	public CommerceOrder fetchByUuid_First(String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<CommerceOrder> orderByComparator);
 
 	/**
@@ -132,7 +132,7 @@ public interface CommerceOrderPersistence extends BasePersistence<CommerceOrder>
 	* @return the last matching commerce order
 	* @throws NoSuchOrderException if a matching commerce order could not be found
 	*/
-	public CommerceOrder findByUuid_Last(java.lang.String uuid,
+	public CommerceOrder findByUuid_Last(String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<CommerceOrder> orderByComparator)
 		throws NoSuchOrderException;
 
@@ -143,7 +143,7 @@ public interface CommerceOrderPersistence extends BasePersistence<CommerceOrder>
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching commerce order, or <code>null</code> if a matching commerce order could not be found
 	*/
-	public CommerceOrder fetchByUuid_Last(java.lang.String uuid,
+	public CommerceOrder fetchByUuid_Last(String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<CommerceOrder> orderByComparator);
 
 	/**
@@ -156,7 +156,7 @@ public interface CommerceOrderPersistence extends BasePersistence<CommerceOrder>
 	* @throws NoSuchOrderException if a commerce order with the primary key could not be found
 	*/
 	public CommerceOrder[] findByUuid_PrevAndNext(long commerceOrderId,
-		java.lang.String uuid,
+		String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<CommerceOrder> orderByComparator)
 		throws NoSuchOrderException;
 
@@ -165,7 +165,7 @@ public interface CommerceOrderPersistence extends BasePersistence<CommerceOrder>
 	*
 	* @param uuid the uuid
 	*/
-	public void removeByUuid(java.lang.String uuid);
+	public void removeByUuid(String uuid);
 
 	/**
 	* Returns the number of commerce orders where uuid = &#63;.
@@ -173,7 +173,7 @@ public interface CommerceOrderPersistence extends BasePersistence<CommerceOrder>
 	* @param uuid the uuid
 	* @return the number of matching commerce orders
 	*/
-	public int countByUuid(java.lang.String uuid);
+	public int countByUuid(String uuid);
 
 	/**
 	* Returns the commerce order where uuid = &#63; and groupId = &#63; or throws a {@link NoSuchOrderException} if it could not be found.
@@ -183,7 +183,7 @@ public interface CommerceOrderPersistence extends BasePersistence<CommerceOrder>
 	* @return the matching commerce order
 	* @throws NoSuchOrderException if a matching commerce order could not be found
 	*/
-	public CommerceOrder findByUUID_G(java.lang.String uuid, long groupId)
+	public CommerceOrder findByUUID_G(String uuid, long groupId)
 		throws NoSuchOrderException;
 
 	/**
@@ -193,7 +193,7 @@ public interface CommerceOrderPersistence extends BasePersistence<CommerceOrder>
 	* @param groupId the group ID
 	* @return the matching commerce order, or <code>null</code> if a matching commerce order could not be found
 	*/
-	public CommerceOrder fetchByUUID_G(java.lang.String uuid, long groupId);
+	public CommerceOrder fetchByUUID_G(String uuid, long groupId);
 
 	/**
 	* Returns the commerce order where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -203,7 +203,7 @@ public interface CommerceOrderPersistence extends BasePersistence<CommerceOrder>
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching commerce order, or <code>null</code> if a matching commerce order could not be found
 	*/
-	public CommerceOrder fetchByUUID_G(java.lang.String uuid, long groupId,
+	public CommerceOrder fetchByUUID_G(String uuid, long groupId,
 		boolean retrieveFromCache);
 
 	/**
@@ -213,7 +213,7 @@ public interface CommerceOrderPersistence extends BasePersistence<CommerceOrder>
 	* @param groupId the group ID
 	* @return the commerce order that was removed
 	*/
-	public CommerceOrder removeByUUID_G(java.lang.String uuid, long groupId)
+	public CommerceOrder removeByUUID_G(String uuid, long groupId)
 		throws NoSuchOrderException;
 
 	/**
@@ -223,7 +223,7 @@ public interface CommerceOrderPersistence extends BasePersistence<CommerceOrder>
 	* @param groupId the group ID
 	* @return the number of matching commerce orders
 	*/
-	public int countByUUID_G(java.lang.String uuid, long groupId);
+	public int countByUUID_G(String uuid, long groupId);
 
 	/**
 	* Returns all the commerce orders where uuid = &#63; and companyId = &#63;.
@@ -232,7 +232,7 @@ public interface CommerceOrderPersistence extends BasePersistence<CommerceOrder>
 	* @param companyId the company ID
 	* @return the matching commerce orders
 	*/
-	public java.util.List<CommerceOrder> findByUuid_C(java.lang.String uuid,
+	public java.util.List<CommerceOrder> findByUuid_C(String uuid,
 		long companyId);
 
 	/**
@@ -248,7 +248,7 @@ public interface CommerceOrderPersistence extends BasePersistence<CommerceOrder>
 	* @param end the upper bound of the range of commerce orders (not inclusive)
 	* @return the range of matching commerce orders
 	*/
-	public java.util.List<CommerceOrder> findByUuid_C(java.lang.String uuid,
+	public java.util.List<CommerceOrder> findByUuid_C(String uuid,
 		long companyId, int start, int end);
 
 	/**
@@ -265,7 +265,7 @@ public interface CommerceOrderPersistence extends BasePersistence<CommerceOrder>
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching commerce orders
 	*/
-	public java.util.List<CommerceOrder> findByUuid_C(java.lang.String uuid,
+	public java.util.List<CommerceOrder> findByUuid_C(String uuid,
 		long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<CommerceOrder> orderByComparator);
 
@@ -284,7 +284,7 @@ public interface CommerceOrderPersistence extends BasePersistence<CommerceOrder>
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching commerce orders
 	*/
-	public java.util.List<CommerceOrder> findByUuid_C(java.lang.String uuid,
+	public java.util.List<CommerceOrder> findByUuid_C(String uuid,
 		long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<CommerceOrder> orderByComparator,
 		boolean retrieveFromCache);
@@ -298,8 +298,7 @@ public interface CommerceOrderPersistence extends BasePersistence<CommerceOrder>
 	* @return the first matching commerce order
 	* @throws NoSuchOrderException if a matching commerce order could not be found
 	*/
-	public CommerceOrder findByUuid_C_First(java.lang.String uuid,
-		long companyId,
+	public CommerceOrder findByUuid_C_First(String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<CommerceOrder> orderByComparator)
 		throws NoSuchOrderException;
 
@@ -311,8 +310,7 @@ public interface CommerceOrderPersistence extends BasePersistence<CommerceOrder>
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching commerce order, or <code>null</code> if a matching commerce order could not be found
 	*/
-	public CommerceOrder fetchByUuid_C_First(java.lang.String uuid,
-		long companyId,
+	public CommerceOrder fetchByUuid_C_First(String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<CommerceOrder> orderByComparator);
 
 	/**
@@ -324,8 +322,7 @@ public interface CommerceOrderPersistence extends BasePersistence<CommerceOrder>
 	* @return the last matching commerce order
 	* @throws NoSuchOrderException if a matching commerce order could not be found
 	*/
-	public CommerceOrder findByUuid_C_Last(java.lang.String uuid,
-		long companyId,
+	public CommerceOrder findByUuid_C_Last(String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<CommerceOrder> orderByComparator)
 		throws NoSuchOrderException;
 
@@ -337,8 +334,7 @@ public interface CommerceOrderPersistence extends BasePersistence<CommerceOrder>
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching commerce order, or <code>null</code> if a matching commerce order could not be found
 	*/
-	public CommerceOrder fetchByUuid_C_Last(java.lang.String uuid,
-		long companyId,
+	public CommerceOrder fetchByUuid_C_Last(String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<CommerceOrder> orderByComparator);
 
 	/**
@@ -352,7 +348,7 @@ public interface CommerceOrderPersistence extends BasePersistence<CommerceOrder>
 	* @throws NoSuchOrderException if a commerce order with the primary key could not be found
 	*/
 	public CommerceOrder[] findByUuid_C_PrevAndNext(long commerceOrderId,
-		java.lang.String uuid, long companyId,
+		String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<CommerceOrder> orderByComparator)
 		throws NoSuchOrderException;
 
@@ -362,7 +358,7 @@ public interface CommerceOrderPersistence extends BasePersistence<CommerceOrder>
 	* @param uuid the uuid
 	* @param companyId the company ID
 	*/
-	public void removeByUuid_C(java.lang.String uuid, long companyId);
+	public void removeByUuid_C(String uuid, long companyId);
 
 	/**
 	* Returns the number of commerce orders where uuid = &#63; and companyId = &#63;.
@@ -371,7 +367,7 @@ public interface CommerceOrderPersistence extends BasePersistence<CommerceOrder>
 	* @param companyId the company ID
 	* @return the number of matching commerce orders
 	*/
-	public int countByUuid_C(java.lang.String uuid, long companyId);
+	public int countByUuid_C(String uuid, long companyId);
 
 	/**
 	* Returns all the commerce orders where groupId = &#63;.
@@ -1487,5 +1483,5 @@ public interface CommerceOrderPersistence extends BasePersistence<CommerceOrder>
 	public int countAll();
 
 	@Override
-	public java.util.Set<java.lang.String> getBadColumnNames();
+	public java.util.Set<String> getBadColumnNames();
 }

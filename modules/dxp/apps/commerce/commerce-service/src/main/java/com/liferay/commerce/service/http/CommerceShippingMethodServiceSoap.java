@@ -92,7 +92,7 @@ public class CommerceShippingMethodServiceSoap {
 	}
 
 	public static com.liferay.commerce.model.CommerceShippingMethodSoap fetchCommerceShippingMethod(
-		long groupId, java.lang.String engineKey) throws RemoteException {
+		long groupId, String engineKey) throws RemoteException {
 		try {
 			com.liferay.commerce.model.CommerceShippingMethod returnValue = CommerceShippingMethodServiceUtil.fetchCommerceShippingMethod(groupId,
 					engineKey);

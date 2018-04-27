@@ -57,11 +57,11 @@ import com.liferay.portal.kernel.util.MethodKey;
 public class CommerceCountryServiceHttp {
 	public static com.liferay.commerce.model.CommerceCountry addCommerceCountry(
 		HttpPrincipal httpPrincipal,
-		java.util.Map<java.util.Locale, java.lang.String> nameMap,
+		java.util.Map<java.util.Locale, String> nameMap,
 		boolean billingAllowed, boolean shippingAllowed,
-		java.lang.String twoLettersISOCode,
-		java.lang.String threeLettersISOCode, int numericISOCode,
-		boolean subjectToVAT, double priority, boolean active,
+		String twoLettersISOCode, String threeLettersISOCode,
+		int numericISOCode, boolean subjectToVAT, double priority,
+		boolean active,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -422,11 +422,11 @@ public class CommerceCountryServiceHttp {
 
 	public static com.liferay.commerce.model.CommerceCountry updateCommerceCountry(
 		HttpPrincipal httpPrincipal, long commerceCountryId,
-		java.util.Map<java.util.Locale, java.lang.String> nameMap,
+		java.util.Map<java.util.Locale, String> nameMap,
 		boolean billingAllowed, boolean shippingAllowed,
-		java.lang.String twoLettersISOCode,
-		java.lang.String threeLettersISOCode, int numericISOCode,
-		boolean subjectToVAT, double priority, boolean active,
+		String twoLettersISOCode, String threeLettersISOCode,
+		int numericISOCode, boolean subjectToVAT, double priority,
+		boolean active,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -464,9 +464,8 @@ public class CommerceCountryServiceHttp {
 
 	private static Log _log = LogFactoryUtil.getLog(CommerceCountryServiceHttp.class);
 	private static final Class<?>[] _addCommerceCountryParameterTypes0 = new Class[] {
-			java.util.Map.class, boolean.class, boolean.class,
-			java.lang.String.class, java.lang.String.class, int.class,
-			boolean.class, double.class, boolean.class,
+			java.util.Map.class, boolean.class, boolean.class, String.class,
+			String.class, int.class, boolean.class, double.class, boolean.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _deleteCommerceCountryParameterTypes1 = new Class[] {
@@ -504,8 +503,8 @@ public class CommerceCountryServiceHttp {
 		};
 	private static final Class<?>[] _updateCommerceCountryParameterTypes12 = new Class[] {
 			long.class, java.util.Map.class, boolean.class, boolean.class,
-			java.lang.String.class, java.lang.String.class, int.class,
-			boolean.class, double.class, boolean.class,
+			String.class, String.class, int.class, boolean.class, double.class,
+			boolean.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 }

@@ -57,7 +57,7 @@ public interface CommerceAddressRestrictionService extends BaseService {
 	 * Never modify or reference this interface directly. Always use {@link CommerceAddressRestrictionServiceUtil} to access the commerce address restriction remote service. Add custom service methods to {@link com.liferay.commerce.service.impl.CommerceAddressRestrictionServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	public CommerceAddressRestriction addCommerceAddressRestriction(
-		java.lang.String className, long classPK, long commerceCountryId,
+		String className, long classPK, long commerceCountryId,
 		ServiceContext serviceContext) throws PortalException;
 
 	public void deleteCommerceAddressRestriction(
@@ -65,15 +65,15 @@ public interface CommerceAddressRestrictionService extends BaseService {
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CommerceAddressRestriction fetchCommerceAddressRestriction(
-		java.lang.String className, long classPK, long commerceCountryId);
+		String className, long classPK, long commerceCountryId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommerceAddressRestriction> getCommerceAddressRestrictions(
-		java.lang.String className, long classPK, int start, int end,
+		String className, long classPK, int start, int end,
 		OrderByComparator<CommerceAddressRestriction> orderByComparator);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getCommerceAddressRestrictionsCount(java.lang.String className,
+	public int getCommerceAddressRestrictionsCount(String className,
 		long classPK);
 
 	/**
@@ -81,11 +81,11 @@ public interface CommerceAddressRestrictionService extends BaseService {
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public boolean isCommerceAddressRestricted(java.lang.String className,
-		long classPK, long commerceCountryId);
+	public boolean isCommerceAddressRestricted(String className, long classPK,
+		long commerceCountryId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public boolean isCommercePaymentMethodRestricted(

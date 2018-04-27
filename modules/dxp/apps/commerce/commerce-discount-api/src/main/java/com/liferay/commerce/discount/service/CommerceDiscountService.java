@@ -54,16 +54,15 @@ public interface CommerceDiscountService extends BaseService {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CommerceDiscountServiceUtil} to access the commerce discount remote service. Add custom service methods to {@link com.liferay.commerce.discount.service.impl.CommerceDiscountServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public CommerceDiscount addCommerceDiscount(java.lang.String title,
-		java.lang.String target, java.lang.String type,
-		java.lang.String typeSettings, boolean useCouponCode,
-		java.lang.String couponCode, java.lang.String limitationType,
-		int limitationTimes, int numberOfUse, boolean cumulative,
-		boolean usePercentage, BigDecimal level1, BigDecimal level2,
-		BigDecimal level3, BigDecimal maximumDiscountAmount, boolean active,
-		int displayDateMonth, int displayDateDay, int displayDateYear,
-		int displayDateHour, int displayDateMinute, int expirationDateMonth,
-		int expirationDateDay, int expirationDateYear, int expirationDateHour,
+	public CommerceDiscount addCommerceDiscount(String title, String target,
+		String type, String typeSettings, boolean useCouponCode,
+		String couponCode, String limitationType, int limitationTimes,
+		int numberOfUse, boolean cumulative, boolean usePercentage,
+		BigDecimal level1, BigDecimal level2, BigDecimal level3,
+		BigDecimal maximumDiscountAmount, boolean active, int displayDateMonth,
+		int displayDateDay, int displayDateYear, int displayDateHour,
+		int displayDateMinute, int expirationDateMonth, int expirationDateDay,
+		int expirationDateYear, int expirationDateHour,
 		int expirationDateMinute, boolean neverExpire,
 		ServiceContext serviceContext) throws PortalException;
 
@@ -75,12 +74,11 @@ public interface CommerceDiscountService extends BaseService {
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	public CommerceDiscount updateCommerceDiscount(long commerceDiscountId,
-		java.lang.String title, java.lang.String target, java.lang.String type,
-		java.lang.String typeSettings, boolean useCouponCode,
-		java.lang.String couponCode, java.lang.String limitationType,
+		String title, String target, String type, String typeSettings,
+		boolean useCouponCode, String couponCode, String limitationType,
 		int limitationTimes, int numberOfUse, boolean cumulative,
 		boolean usePercentage, BigDecimal level1, BigDecimal level2,
 		BigDecimal level3, BigDecimal maximumDiscountAmount, boolean active,

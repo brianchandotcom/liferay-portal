@@ -44,8 +44,8 @@ public class CPDefinitionOptionValueRelServiceUtil {
 	 */
 	public static com.liferay.commerce.product.model.CPDefinitionOptionValueRel addCPDefinitionOptionValueRel(
 		long cpDefinitionOptionRelId,
-		java.util.Map<java.util.Locale, java.lang.String> titleMap,
-		double priority, java.lang.String key,
+		java.util.Map<java.util.Locale, String> titleMap, double priority,
+		String key,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
@@ -99,7 +99,7 @@ public class CPDefinitionOptionValueRelServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.commerce.product.model.CPDefinitionOptionValueRel> getCPDefinitionOptionValueRels(
-		long groupId, java.lang.String key, int start, int end) {
+		long groupId, String key, int start, int end) {
 		return getService()
 				   .getCPDefinitionOptionValueRels(groupId, key, start, end);
 	}
@@ -116,7 +116,7 @@ public class CPDefinitionOptionValueRelServiceUtil {
 	*
 	* @return the OSGi service identifier
 	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
+	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 
@@ -127,7 +127,7 @@ public class CPDefinitionOptionValueRelServiceUtil {
 
 	public static com.liferay.portal.kernel.search.BaseModelSearchResult<com.liferay.commerce.product.model.CPDefinitionOptionValueRel> searchCPDefinitionOptionValueRels(
 		long companyId, long groupId, long cpDefinitionOptionRelId,
-		java.lang.String keywords, int start, int end,
+		String keywords, int start, int end,
 		com.liferay.portal.kernel.search.Sort sort)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
@@ -137,8 +137,8 @@ public class CPDefinitionOptionValueRelServiceUtil {
 
 	public static com.liferay.commerce.product.model.CPDefinitionOptionValueRel updateCPDefinitionOptionValueRel(
 		long cpDefinitionOptionValueRelId,
-		java.util.Map<java.util.Locale, java.lang.String> titleMap,
-		double priority, java.lang.String key,
+		java.util.Map<java.util.Locale, String> titleMap, double priority,
+		String key,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()

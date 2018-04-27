@@ -73,7 +73,7 @@ public interface CommerceAddressRestrictionLocalService extends BaseLocalService
 		CommerceAddressRestriction commerceAddressRestriction);
 
 	public CommerceAddressRestriction addCommerceAddressRestriction(
-		java.lang.String className, long classPK, long commerceCountryId,
+		String className, long classPK, long commerceCountryId,
 		ServiceContext serviceContext) throws PortalException;
 
 	/**
@@ -109,8 +109,7 @@ public interface CommerceAddressRestrictionLocalService extends BaseLocalService
 
 	public void deleteCommerceAddressRestrictions(long commerceCountryId);
 
-	public void deleteCommerceAddressRestrictions(java.lang.String className,
-		long classPK);
+	public void deleteCommerceAddressRestrictions(String className, long classPK);
 
 	/**
 	* @throws PortalException
@@ -184,7 +183,7 @@ public interface CommerceAddressRestrictionLocalService extends BaseLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CommerceAddressRestriction fetchCommerceAddressRestriction(
-		java.lang.String className, long classPK, long commerceCountryId);
+		String className, long classPK, long commerceCountryId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
@@ -217,7 +216,7 @@ public interface CommerceAddressRestrictionLocalService extends BaseLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommerceAddressRestriction> getCommerceAddressRestrictions(
-		java.lang.String className, long classPK, int start, int end,
+		String className, long classPK, int start, int end,
 		OrderByComparator<CommerceAddressRestriction> orderByComparator);
 
 	/**
@@ -229,7 +228,7 @@ public interface CommerceAddressRestrictionLocalService extends BaseLocalService
 	public int getCommerceAddressRestrictionsCount();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getCommerceAddressRestrictionsCount(java.lang.String className,
+	public int getCommerceAddressRestrictionsCount(String className,
 		long classPK);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -240,7 +239,7 @@ public interface CommerceAddressRestrictionLocalService extends BaseLocalService
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -248,8 +247,8 @@ public interface CommerceAddressRestrictionLocalService extends BaseLocalService
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public boolean isCommerceAddressRestricted(java.lang.String className,
-		long classPK, long commerceCountryId);
+	public boolean isCommerceAddressRestricted(String className, long classPK,
+		long commerceCountryId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public boolean isCommercePaymentMethodRestricted(

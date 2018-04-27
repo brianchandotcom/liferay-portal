@@ -66,8 +66,7 @@ import java.rmi.RemoteException;
 @ProviderType
 public class CommerceDiscountRuleServiceSoap {
 	public static com.liferay.commerce.discount.model.CommerceDiscountRuleSoap addCommerceDiscountRule(
-		long commerceDiscountId, java.lang.String type,
-		java.lang.String typeSettings,
+		long commerceDiscountId, String type, String typeSettings,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
@@ -97,8 +96,8 @@ public class CommerceDiscountRuleServiceSoap {
 	}
 
 	public static com.liferay.commerce.discount.model.CommerceDiscountRuleSoap updateCommerceDiscountRule(
-		long commerceDiscountRuleId, java.lang.String type,
-		java.lang.String typeSettings) throws RemoteException {
+		long commerceDiscountRuleId, String type, String typeSettings)
+		throws RemoteException {
 		try {
 			com.liferay.commerce.discount.model.CommerceDiscountRule returnValue =
 				CommerceDiscountRuleServiceUtil.updateCommerceDiscountRule(commerceDiscountRuleId,

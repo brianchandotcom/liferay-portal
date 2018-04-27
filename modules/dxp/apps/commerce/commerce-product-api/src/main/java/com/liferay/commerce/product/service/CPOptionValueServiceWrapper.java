@@ -35,9 +35,8 @@ public class CPOptionValueServiceWrapper implements CPOptionValueService,
 
 	@Override
 	public com.liferay.commerce.product.model.CPOptionValue addCPOptionValue(
-		long cpOptionId,
-		java.util.Map<java.util.Locale, java.lang.String> titleMap,
-		double priority, java.lang.String key,
+		long cpOptionId, java.util.Map<java.util.Locale, String> titleMap,
+		double priority, String key,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _cpOptionValueService.addCPOptionValue(cpOptionId, titleMap,
@@ -100,7 +99,7 @@ public class CPOptionValueServiceWrapper implements CPOptionValueService,
 	* @return the OSGi service identifier
 	*/
 	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
+	public String getOSGiServiceIdentifier() {
 		return _cpOptionValueService.getOSGiServiceIdentifier();
 	}
 
@@ -112,9 +111,8 @@ public class CPOptionValueServiceWrapper implements CPOptionValueService,
 
 	@Override
 	public com.liferay.portal.kernel.search.BaseModelSearchResult<com.liferay.commerce.product.model.CPOptionValue> searchCPOptionValues(
-		long companyId, long groupId, long cpOptionId,
-		java.lang.String keywords, int start, int end,
-		com.liferay.portal.kernel.search.Sort sort)
+		long companyId, long groupId, long cpOptionId, String keywords,
+		int start, int end, com.liferay.portal.kernel.search.Sort sort)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _cpOptionValueService.searchCPOptionValues(companyId, groupId,
 			cpOptionId, keywords, start, end, sort);
@@ -122,9 +120,8 @@ public class CPOptionValueServiceWrapper implements CPOptionValueService,
 
 	@Override
 	public com.liferay.commerce.product.model.CPOptionValue updateCPOptionValue(
-		long cpOptionValueId,
-		java.util.Map<java.util.Locale, java.lang.String> titleMap,
-		double priority, java.lang.String key,
+		long cpOptionValueId, java.util.Map<java.util.Locale, String> titleMap,
+		double priority, String key,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _cpOptionValueService.updateCPOptionValue(cpOptionValueId,

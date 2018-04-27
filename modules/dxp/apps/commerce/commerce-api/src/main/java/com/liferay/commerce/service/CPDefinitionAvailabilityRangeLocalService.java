@@ -198,7 +198,7 @@ public interface CPDefinitionAvailabilityRangeLocalService
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CPDefinitionAvailabilityRange fetchCPDefinitionAvailabilityRangeByUuidAndGroupId(
-		java.lang.String uuid, long groupId);
+		String uuid, long groupId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
@@ -224,7 +224,7 @@ public interface CPDefinitionAvailabilityRangeLocalService
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CPDefinitionAvailabilityRange getCPDefinitionAvailabilityRangeByUuidAndGroupId(
-		java.lang.String uuid, long groupId) throws PortalException;
+		String uuid, long groupId) throws PortalException;
 
 	/**
 	* Returns a range of all the cp definition availability ranges.
@@ -250,7 +250,7 @@ public interface CPDefinitionAvailabilityRangeLocalService
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CPDefinitionAvailabilityRange> getCPDefinitionAvailabilityRangesByUuidAndCompanyId(
-		java.lang.String uuid, long companyId);
+		String uuid, long companyId);
 
 	/**
 	* Returns a range of cp definition availability ranges matching the UUID and company.
@@ -264,7 +264,7 @@ public interface CPDefinitionAvailabilityRangeLocalService
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CPDefinitionAvailabilityRange> getCPDefinitionAvailabilityRangesByUuidAndCompanyId(
-		java.lang.String uuid, long companyId, int start, int end,
+		String uuid, long companyId, int start, int end,
 		OrderByComparator<CPDefinitionAvailabilityRange> orderByComparator);
 
 	/**
@@ -287,7 +287,7 @@ public interface CPDefinitionAvailabilityRangeLocalService
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

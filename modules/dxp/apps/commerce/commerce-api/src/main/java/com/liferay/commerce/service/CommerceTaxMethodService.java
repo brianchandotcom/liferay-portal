@@ -57,11 +57,10 @@ public interface CommerceTaxMethodService extends BaseService {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CommerceTaxMethodServiceUtil} to access the commerce tax method remote service. Add custom service methods to {@link com.liferay.commerce.service.impl.CommerceTaxMethodServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public CommerceTaxMethod addCommerceTaxMethod(
-		Map<Locale, java.lang.String> nameMap,
-		Map<Locale, java.lang.String> descriptionMap,
-		java.lang.String engineKey, boolean percentage, boolean active,
-		ServiceContext serviceContext) throws PortalException;
+	public CommerceTaxMethod addCommerceTaxMethod(Map<Locale, String> nameMap,
+		Map<Locale, String> descriptionMap, String engineKey,
+		boolean percentage, boolean active, ServiceContext serviceContext)
+		throws PortalException;
 
 	public CommerceTaxMethod createCommerceTaxMethod(long commerceTaxMethodId);
 
@@ -70,7 +69,7 @@ public interface CommerceTaxMethodService extends BaseService {
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CommerceTaxMethod fetchCommerceTaxMethod(long groupId,
-		java.lang.String engineKey);
+		String engineKey);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CommerceTaxMethod getCommerceTaxMethod(long commerceTaxMethodId)
@@ -92,13 +91,12 @@ public interface CommerceTaxMethodService extends BaseService {
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	public CommerceTaxMethod setActive(long commerceTaxMethodId, boolean active)
 		throws PortalException;
 
 	public CommerceTaxMethod updateCommerceTaxMethod(long commerceTaxMethodId,
-		Map<Locale, java.lang.String> nameMap,
-		Map<Locale, java.lang.String> descriptionMap, boolean percentage,
-		boolean active) throws PortalException;
+		Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
+		boolean percentage, boolean active) throws PortalException;
 }

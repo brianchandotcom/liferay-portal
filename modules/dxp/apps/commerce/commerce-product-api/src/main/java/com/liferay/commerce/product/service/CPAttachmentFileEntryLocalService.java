@@ -87,9 +87,8 @@ public interface CPAttachmentFileEntryLocalService extends BaseLocalService,
 		int displayDateMinute, int expirationDateMonth, int expirationDateDay,
 		int expirationDateYear, int expirationDateHour,
 		int expirationDateMinute, boolean neverExpire,
-		Map<Locale, java.lang.String> titleMap, java.lang.String json,
-		double priority, int type, ServiceContext serviceContext)
-		throws PortalException;
+		Map<Locale, String> titleMap, String json, double priority, int type,
+		ServiceContext serviceContext) throws PortalException;
 
 	public void checkCPAttachmentFileEntries() throws PortalException;
 
@@ -106,8 +105,8 @@ public interface CPAttachmentFileEntryLocalService extends BaseLocalService,
 	public CPAttachmentFileEntry createCPAttachmentFileEntry(
 		long CPAttachmentFileEntryId);
 
-	public void deleteCPAttachmentFileEntries(java.lang.String className,
-		long classPK) throws PortalException;
+	public void deleteCPAttachmentFileEntries(String className, long classPK)
+		throws PortalException;
 
 	/**
 	* Deletes the cp attachment file entry from the database. Also notifies the appropriate model listeners.
@@ -211,14 +210,14 @@ public interface CPAttachmentFileEntryLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CPAttachmentFileEntry fetchCPAttachmentFileEntryByUuidAndGroupId(
-		java.lang.String uuid, long groupId);
+		String uuid, long groupId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public Folder getAttachmentsFolder(long userId, long groupId,
-		java.lang.String className, long classPK) throws PortalException;
+		String className, long classPK) throws PortalException;
 
 	/**
 	* Returns a range of all the cp attachment file entries.
@@ -255,7 +254,7 @@ public interface CPAttachmentFileEntryLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CPAttachmentFileEntry> getCPAttachmentFileEntriesByUuidAndCompanyId(
-		java.lang.String uuid, long companyId);
+		String uuid, long companyId);
 
 	/**
 	* Returns a range of cp attachment file entries matching the UUID and company.
@@ -269,7 +268,7 @@ public interface CPAttachmentFileEntryLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CPAttachmentFileEntry> getCPAttachmentFileEntriesByUuidAndCompanyId(
-		java.lang.String uuid, long companyId, int start, int end,
+		String uuid, long companyId, int start, int end,
 		OrderByComparator<CPAttachmentFileEntry> orderByComparator);
 
 	/**
@@ -305,7 +304,7 @@ public interface CPAttachmentFileEntryLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CPAttachmentFileEntry getCPAttachmentFileEntryByUuidAndGroupId(
-		java.lang.String uuid, long groupId) throws PortalException;
+		String uuid, long groupId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
@@ -319,7 +318,7 @@ public interface CPAttachmentFileEntryLocalService extends BaseLocalService,
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -343,14 +342,12 @@ public interface CPAttachmentFileEntryLocalService extends BaseLocalService,
 		int displayDateMinute, int expirationDateMonth, int expirationDateDay,
 		int expirationDateYear, int expirationDateHour,
 		int expirationDateMinute, boolean neverExpire,
-		Map<Locale, java.lang.String> titleMap, java.lang.String json,
-		double priority, int type, ServiceContext serviceContext)
-		throws PortalException;
+		Map<Locale, String> titleMap, String json, double priority, int type,
+		ServiceContext serviceContext) throws PortalException;
 
 	@Indexable(type = IndexableType.REINDEX)
 	public CPAttachmentFileEntry updateStatus(long userId,
 		long cpAttachmentFileEntryId, int status,
-		ServiceContext serviceContext,
-		Map<java.lang.String, Serializable> workflowContext)
+		ServiceContext serviceContext, Map<String, Serializable> workflowContext)
 		throws PortalException;
 }

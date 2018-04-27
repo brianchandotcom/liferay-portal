@@ -58,10 +58,9 @@ public interface CPTaxCategoryService extends BaseService {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CPTaxCategoryServiceUtil} to access the cp tax category remote service. Add custom service methods to {@link com.liferay.commerce.product.service.impl.CPTaxCategoryServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public CPTaxCategory addCPTaxCategory(
-		Map<Locale, java.lang.String> nameMap,
-		Map<Locale, java.lang.String> descriptionMap,
-		ServiceContext serviceContext) throws PortalException;
+	public CPTaxCategory addCPTaxCategory(Map<Locale, String> nameMap,
+		Map<Locale, String> descriptionMap, ServiceContext serviceContext)
+		throws PortalException;
 
 	public void deleteCPTaxCategory(long cpTaxCategoryId)
 		throws PortalException;
@@ -87,9 +86,9 @@ public interface CPTaxCategoryService extends BaseService {
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	public CPTaxCategory updateCPTaxCategory(long cpTaxCategoryId,
-		Map<Locale, java.lang.String> nameMap,
-		Map<Locale, java.lang.String> descriptionMap) throws PortalException;
+		Map<Locale, String> nameMap, Map<Locale, String> descriptionMap)
+		throws PortalException;
 }

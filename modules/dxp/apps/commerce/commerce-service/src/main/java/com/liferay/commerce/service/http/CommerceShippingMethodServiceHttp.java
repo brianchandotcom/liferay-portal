@@ -57,9 +57,9 @@ import com.liferay.portal.kernel.util.MethodKey;
 public class CommerceShippingMethodServiceHttp {
 	public static com.liferay.commerce.model.CommerceShippingMethod addCommerceShippingMethod(
 		HttpPrincipal httpPrincipal,
-		java.util.Map<java.util.Locale, java.lang.String> nameMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		java.io.File imageFile, java.lang.String engineKey, double priority,
+		java.util.Map<java.util.Locale, String> nameMap,
+		java.util.Map<java.util.Locale, String> descriptionMap,
+		java.io.File imageFile, String engineKey, double priority,
 		boolean active,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -157,7 +157,7 @@ public class CommerceShippingMethodServiceHttp {
 	}
 
 	public static com.liferay.commerce.model.CommerceShippingMethod fetchCommerceShippingMethod(
-		HttpPrincipal httpPrincipal, long groupId, java.lang.String engineKey) {
+		HttpPrincipal httpPrincipal, long groupId, String engineKey) {
 		try {
 			MethodKey methodKey = new MethodKey(CommerceShippingMethodServiceUtil.class,
 					"fetchCommerceShippingMethod",
@@ -340,8 +340,8 @@ public class CommerceShippingMethodServiceHttp {
 
 	public static com.liferay.commerce.model.CommerceShippingMethod updateCommerceShippingMethod(
 		HttpPrincipal httpPrincipal, long commerceShippingMethodId,
-		java.util.Map<java.util.Locale, java.lang.String> nameMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		java.util.Map<java.util.Locale, String> nameMap,
+		java.util.Map<java.util.Locale, String> descriptionMap,
 		java.io.File imageFile, double priority, boolean active)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -378,7 +378,7 @@ public class CommerceShippingMethodServiceHttp {
 	private static Log _log = LogFactoryUtil.getLog(CommerceShippingMethodServiceHttp.class);
 	private static final Class<?>[] _addCommerceShippingMethodParameterTypes0 = new Class[] {
 			java.util.Map.class, java.util.Map.class, java.io.File.class,
-			java.lang.String.class, double.class, boolean.class,
+			String.class, double.class, boolean.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _createCommerceShippingMethodParameterTypes1 =
@@ -386,7 +386,7 @@ public class CommerceShippingMethodServiceHttp {
 	private static final Class<?>[] _deleteCommerceShippingMethodParameterTypes2 =
 		new Class[] { long.class };
 	private static final Class<?>[] _fetchCommerceShippingMethodParameterTypes3 = new Class[] {
-			long.class, java.lang.String.class
+			long.class, String.class
 		};
 	private static final Class<?>[] _getCommerceShippingMethodParameterTypes4 = new Class[] {
 			long.class

@@ -146,7 +146,7 @@ public class CommerceOrderPaymentWrapper implements CommerceOrderPayment,
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new CommerceOrderPaymentWrapper((CommerceOrderPayment)_commerceOrderPayment.clone());
 	}
 
@@ -201,7 +201,7 @@ public class CommerceOrderPaymentWrapper implements CommerceOrderPayment,
 	* @return the content of this commerce order payment
 	*/
 	@Override
-	public java.lang.String getContent() {
+	public String getContent() {
 		return _commerceOrderPayment.getContent();
 	}
 
@@ -281,7 +281,7 @@ public class CommerceOrderPaymentWrapper implements CommerceOrderPayment,
 	* @return the user name of this commerce order payment
 	*/
 	@Override
-	public java.lang.String getUserName() {
+	public String getUserName() {
 		return _commerceOrderPayment.getUserName();
 	}
 
@@ -291,7 +291,7 @@ public class CommerceOrderPaymentWrapper implements CommerceOrderPayment,
 	* @return the user uuid of this commerce order payment
 	*/
 	@Override
-	public java.lang.String getUserUuid() {
+	public String getUserUuid() {
 		return _commerceOrderPayment.getUserUuid();
 	}
 
@@ -371,7 +371,7 @@ public class CommerceOrderPaymentWrapper implements CommerceOrderPayment,
 	* @param content the content of this commerce order payment
 	*/
 	@Override
-	public void setContent(java.lang.String content) {
+	public void setContent(String content) {
 		_commerceOrderPayment.setContent(content);
 	}
 
@@ -467,7 +467,7 @@ public class CommerceOrderPaymentWrapper implements CommerceOrderPayment,
 	* @param userName the user name of this commerce order payment
 	*/
 	@Override
-	public void setUserName(java.lang.String userName) {
+	public void setUserName(String userName) {
 		_commerceOrderPayment.setUserName(userName);
 	}
 
@@ -477,7 +477,7 @@ public class CommerceOrderPaymentWrapper implements CommerceOrderPayment,
 	* @param userUuid the user uuid of this commerce order payment
 	*/
 	@Override
-	public void setUserUuid(java.lang.String userUuid) {
+	public void setUserUuid(String userUuid) {
 		_commerceOrderPayment.setUserUuid(userUuid);
 	}
 
@@ -492,7 +492,7 @@ public class CommerceOrderPaymentWrapper implements CommerceOrderPayment,
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _commerceOrderPayment.toString();
 	}
 
@@ -502,7 +502,7 @@ public class CommerceOrderPaymentWrapper implements CommerceOrderPayment,
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _commerceOrderPayment.toXmlString();
 	}
 

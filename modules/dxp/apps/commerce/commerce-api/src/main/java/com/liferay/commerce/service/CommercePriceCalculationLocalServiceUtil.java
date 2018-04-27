@@ -42,14 +42,13 @@ public class CommercePriceCalculationLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.commerce.service.impl.CommercePriceCalculationLocalServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static java.lang.String formatPrice(long groupId,
-		java.math.BigDecimal price)
+	public static String formatPrice(long groupId, java.math.BigDecimal price)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().formatPrice(groupId, price);
 	}
 
-	public static java.lang.String formatPriceWithCurrency(
-		long commerceCurrencyId, java.math.BigDecimal price)
+	public static String formatPriceWithCurrency(long commerceCurrencyId,
+		java.math.BigDecimal price)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().formatPriceWithCurrency(commerceCurrencyId, price);
 	}
@@ -69,15 +68,15 @@ public class CommercePriceCalculationLocalServiceUtil {
 			cpInstanceId, quantity);
 	}
 
-	public static java.lang.String getFormattedFinalPrice(long groupId,
-		long userId, long cpInstanceId, int quantity)
+	public static String getFormattedFinalPrice(long groupId, long userId,
+		long cpInstanceId, int quantity)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .getFormattedFinalPrice(groupId, userId, cpInstanceId,
 			quantity);
 	}
 
-	public static java.lang.String getFormattedFinalPrice(long groupId,
+	public static String getFormattedFinalPrice(long groupId,
 		long commerceCurrencyId, long userId, long cpInstanceId, int quantity)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
@@ -85,7 +84,7 @@ public class CommercePriceCalculationLocalServiceUtil {
 			cpInstanceId, quantity);
 	}
 
-	public static java.lang.String getFormattedOrderSubtotal(
+	public static String getFormattedOrderSubtotal(
 		com.liferay.commerce.model.CommerceOrder commerceOrder)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getFormattedOrderSubtotal(commerceOrder);
@@ -102,7 +101,7 @@ public class CommercePriceCalculationLocalServiceUtil {
 	*
 	* @return the OSGi service identifier
 	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
+	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 

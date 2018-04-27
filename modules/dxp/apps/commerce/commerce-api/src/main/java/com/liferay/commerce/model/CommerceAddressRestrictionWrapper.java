@@ -140,7 +140,7 @@ public class CommerceAddressRestrictionWrapper
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new CommerceAddressRestrictionWrapper((CommerceAddressRestriction)_commerceAddressRestriction.clone());
 	}
 
@@ -155,7 +155,7 @@ public class CommerceAddressRestrictionWrapper
 	* @return the fully qualified class name of this commerce address restriction
 	*/
 	@Override
-	public java.lang.String getClassName() {
+	public String getClassName() {
 		return _commerceAddressRestriction.getClassName();
 	}
 
@@ -281,7 +281,7 @@ public class CommerceAddressRestrictionWrapper
 	* @return the user name of this commerce address restriction
 	*/
 	@Override
-	public java.lang.String getUserName() {
+	public String getUserName() {
 		return _commerceAddressRestriction.getUserName();
 	}
 
@@ -291,7 +291,7 @@ public class CommerceAddressRestrictionWrapper
 	* @return the user uuid of this commerce address restriction
 	*/
 	@Override
-	public java.lang.String getUserUuid() {
+	public String getUserUuid() {
 		return _commerceAddressRestriction.getUserUuid();
 	}
 
@@ -326,7 +326,7 @@ public class CommerceAddressRestrictionWrapper
 	}
 
 	@Override
-	public void setClassName(java.lang.String className) {
+	public void setClassName(String className) {
 		_commerceAddressRestriction.setClassName(className);
 	}
 
@@ -463,7 +463,7 @@ public class CommerceAddressRestrictionWrapper
 	* @param userName the user name of this commerce address restriction
 	*/
 	@Override
-	public void setUserName(java.lang.String userName) {
+	public void setUserName(String userName) {
 		_commerceAddressRestriction.setUserName(userName);
 	}
 
@@ -473,7 +473,7 @@ public class CommerceAddressRestrictionWrapper
 	* @param userUuid the user uuid of this commerce address restriction
 	*/
 	@Override
-	public void setUserUuid(java.lang.String userUuid) {
+	public void setUserUuid(String userUuid) {
 		_commerceAddressRestriction.setUserUuid(userUuid);
 	}
 
@@ -488,7 +488,7 @@ public class CommerceAddressRestrictionWrapper
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _commerceAddressRestriction.toString();
 	}
 
@@ -498,7 +498,7 @@ public class CommerceAddressRestrictionWrapper
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _commerceAddressRestriction.toXmlString();
 	}
 

@@ -73,7 +73,7 @@ public interface CommerceOrderPaymentLocalService extends BaseLocalService,
 		CommerceOrderPayment commerceOrderPayment);
 
 	public CommerceOrderPayment addCommerceOrderPayment(long commerceOrderId,
-		int status, java.lang.String content, ServiceContext serviceContext)
+		int status, String content, ServiceContext serviceContext)
 		throws PortalException;
 
 	/**
@@ -228,7 +228,7 @@ public interface CommerceOrderPaymentLocalService extends BaseLocalService,
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

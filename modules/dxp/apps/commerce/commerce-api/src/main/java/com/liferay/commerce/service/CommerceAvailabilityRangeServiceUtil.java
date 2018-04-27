@@ -43,8 +43,7 @@ public class CommerceAvailabilityRangeServiceUtil {
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.commerce.service.impl.CommerceAvailabilityRangeServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static com.liferay.commerce.model.CommerceAvailabilityRange addCommerceAvailabilityRange(
-		java.util.Map<java.util.Locale, java.lang.String> titleMap,
-		double priority,
+		java.util.Map<java.util.Locale, String> titleMap, double priority,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
@@ -82,14 +81,13 @@ public class CommerceAvailabilityRangeServiceUtil {
 	*
 	* @return the OSGi service identifier
 	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
+	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 
 	public static com.liferay.commerce.model.CommerceAvailabilityRange updateCommerceAvailabilityRange(
 		long commerceAvailabilityRangeId,
-		java.util.Map<java.util.Locale, java.lang.String> titleMap,
-		double priority,
+		java.util.Map<java.util.Locale, String> titleMap, double priority,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()

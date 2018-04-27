@@ -63,8 +63,8 @@ public interface CPDefinitionOptionValueRelService extends BaseService {
 	 * Never modify or reference this interface directly. Always use {@link CPDefinitionOptionValueRelServiceUtil} to access the cp definition option value rel remote service. Add custom service methods to {@link com.liferay.commerce.product.service.impl.CPDefinitionOptionValueRelServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	public CPDefinitionOptionValueRel addCPDefinitionOptionValueRel(
-		long cpDefinitionOptionRelId, Map<Locale, java.lang.String> titleMap,
-		double priority, java.lang.String key, ServiceContext serviceContext)
+		long cpDefinitionOptionRelId, Map<Locale, String> titleMap,
+		double priority, String key, ServiceContext serviceContext)
 		throws PortalException;
 
 	public CPDefinitionOptionValueRel deleteCPDefinitionOptionValueRel(
@@ -95,7 +95,7 @@ public interface CPDefinitionOptionValueRelService extends BaseService {
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CPDefinitionOptionValueRel> getCPDefinitionOptionValueRels(
-		long groupId, java.lang.String key, int start, int end);
+		long groupId, String key, int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getCPDefinitionOptionValueRelsCount(long cpDefinitionOptionRelId)
@@ -106,7 +106,7 @@ public interface CPDefinitionOptionValueRelService extends BaseService {
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public Hits search(SearchContext searchContext);
@@ -114,12 +114,11 @@ public interface CPDefinitionOptionValueRelService extends BaseService {
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public BaseModelSearchResult<CPDefinitionOptionValueRel> searchCPDefinitionOptionValueRels(
 		long companyId, long groupId, long cpDefinitionOptionRelId,
-		java.lang.String keywords, int start, int end, Sort sort)
+		String keywords, int start, int end, Sort sort)
 		throws PortalException;
 
 	public CPDefinitionOptionValueRel updateCPDefinitionOptionValueRel(
-		long cpDefinitionOptionValueRelId,
-		Map<Locale, java.lang.String> titleMap, double priority,
-		java.lang.String key, ServiceContext serviceContext)
+		long cpDefinitionOptionValueRelId, Map<Locale, String> titleMap,
+		double priority, String key, ServiceContext serviceContext)
 		throws PortalException;
 }

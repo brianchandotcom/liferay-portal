@@ -48,8 +48,7 @@ public class CommerceAvailabilityRangeLocalServiceWrapper
 
 	@Override
 	public com.liferay.commerce.model.CommerceAvailabilityRange addCommerceAvailabilityRange(
-		java.util.Map<java.util.Locale, java.lang.String> titleMap,
-		double priority,
+		java.util.Map<java.util.Locale, String> titleMap, double priority,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _commerceAvailabilityRangeLocalService.addCommerceAvailabilityRange(titleMap,
@@ -213,7 +212,7 @@ public class CommerceAvailabilityRangeLocalServiceWrapper
 	*/
 	@Override
 	public com.liferay.commerce.model.CommerceAvailabilityRange fetchCommerceAvailabilityRangeByUuidAndGroupId(
-		java.lang.String uuid, long groupId) {
+		String uuid, long groupId) {
 		return _commerceAvailabilityRangeLocalService.fetchCommerceAvailabilityRangeByUuidAndGroupId(uuid,
 			groupId);
 	}
@@ -247,7 +246,7 @@ public class CommerceAvailabilityRangeLocalServiceWrapper
 	*/
 	@Override
 	public com.liferay.commerce.model.CommerceAvailabilityRange getCommerceAvailabilityRangeByUuidAndGroupId(
-		java.lang.String uuid, long groupId)
+		String uuid, long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _commerceAvailabilityRangeLocalService.getCommerceAvailabilityRangeByUuidAndGroupId(uuid,
 			groupId);
@@ -288,7 +287,7 @@ public class CommerceAvailabilityRangeLocalServiceWrapper
 	*/
 	@Override
 	public java.util.List<com.liferay.commerce.model.CommerceAvailabilityRange> getCommerceAvailabilityRangesByUuidAndCompanyId(
-		java.lang.String uuid, long companyId) {
+		String uuid, long companyId) {
 		return _commerceAvailabilityRangeLocalService.getCommerceAvailabilityRangesByUuidAndCompanyId(uuid,
 			companyId);
 	}
@@ -305,7 +304,7 @@ public class CommerceAvailabilityRangeLocalServiceWrapper
 	*/
 	@Override
 	public java.util.List<com.liferay.commerce.model.CommerceAvailabilityRange> getCommerceAvailabilityRangesByUuidAndCompanyId(
-		java.lang.String uuid, long companyId, int start, int end,
+		String uuid, long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.model.CommerceAvailabilityRange> orderByComparator) {
 		return _commerceAvailabilityRangeLocalService.getCommerceAvailabilityRangesByUuidAndCompanyId(uuid,
 			companyId, start, end, orderByComparator);
@@ -343,7 +342,7 @@ public class CommerceAvailabilityRangeLocalServiceWrapper
 	* @return the OSGi service identifier
 	*/
 	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
+	public String getOSGiServiceIdentifier() {
 		return _commerceAvailabilityRangeLocalService.getOSGiServiceIdentifier();
 	}
 
@@ -369,8 +368,7 @@ public class CommerceAvailabilityRangeLocalServiceWrapper
 	@Override
 	public com.liferay.commerce.model.CommerceAvailabilityRange updateCommerceAvailabilityRange(
 		long commerceAvailabilityId,
-		java.util.Map<java.util.Locale, java.lang.String> titleMap,
-		double priority,
+		java.util.Map<java.util.Locale, String> titleMap, double priority,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _commerceAvailabilityRangeLocalService.updateCommerceAvailabilityRange(commerceAvailabilityId,

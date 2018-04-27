@@ -79,9 +79,8 @@ public interface CPDefinitionSpecificationOptionValueLocalService
 
 	public CPDefinitionSpecificationOptionValue addCPDefinitionSpecificationOptionValue(
 		long cpDefinitionId, long cpSpecificationOptionId,
-		long cpOptionCategoryId, Map<Locale, java.lang.String> valueMap,
-		double priority, ServiceContext serviceContext)
-		throws PortalException;
+		long cpOptionCategoryId, Map<Locale, String> valueMap, double priority,
+		ServiceContext serviceContext) throws PortalException;
 
 	/**
 	* Creates a new cp definition specification option value with the primary key. Does not add the cp definition specification option value to the database.
@@ -202,7 +201,7 @@ public interface CPDefinitionSpecificationOptionValueLocalService
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CPDefinitionSpecificationOptionValue fetchCPDefinitionSpecificationOptionValueByUuidAndGroupId(
-		java.lang.String uuid, long groupId);
+		String uuid, long groupId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
@@ -228,7 +227,7 @@ public interface CPDefinitionSpecificationOptionValueLocalService
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CPDefinitionSpecificationOptionValue getCPDefinitionSpecificationOptionValueByUuidAndGroupId(
-		java.lang.String uuid, long groupId) throws PortalException;
+		String uuid, long groupId) throws PortalException;
 
 	/**
 	* Returns a range of all the cp definition specification option values.
@@ -262,7 +261,7 @@ public interface CPDefinitionSpecificationOptionValueLocalService
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CPDefinitionSpecificationOptionValue> getCPDefinitionSpecificationOptionValuesByUuidAndCompanyId(
-		java.lang.String uuid, long companyId);
+		String uuid, long companyId);
 
 	/**
 	* Returns a range of cp definition specification option values matching the UUID and company.
@@ -276,7 +275,7 @@ public interface CPDefinitionSpecificationOptionValueLocalService
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CPDefinitionSpecificationOptionValue> getCPDefinitionSpecificationOptionValuesByUuidAndCompanyId(
-		java.lang.String uuid, long companyId, int start, int end,
+		String uuid, long companyId, int start, int end,
 		OrderByComparator<CPDefinitionSpecificationOptionValue> orderByComparator);
 
 	/**
@@ -299,7 +298,7 @@ public interface CPDefinitionSpecificationOptionValueLocalService
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -318,7 +317,7 @@ public interface CPDefinitionSpecificationOptionValueLocalService
 
 	public CPDefinitionSpecificationOptionValue updateCPDefinitionSpecificationOptionValue(
 		long cpDefinitionSpecificationOptionValueId, long cpOptionCategoryId,
-		Map<Locale, java.lang.String> valueMap, double priority,
+		Map<Locale, String> valueMap, double priority,
 		ServiceContext serviceContext) throws PortalException;
 
 	public CPDefinitionSpecificationOptionValue updateCPOptionCategoryId(

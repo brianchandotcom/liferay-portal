@@ -43,7 +43,7 @@ public class CommerceOrderNoteServiceUtil {
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.commerce.service.impl.CommerceOrderNoteServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static com.liferay.commerce.model.CommerceOrderNote addCommerceOrderNote(
-		long commerceOrderId, java.lang.String content, boolean restricted,
+		long commerceOrderId, String content, boolean restricted,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
@@ -91,12 +91,12 @@ public class CommerceOrderNoteServiceUtil {
 	*
 	* @return the OSGi service identifier
 	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
+	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 
 	public static com.liferay.commerce.model.CommerceOrderNote updateCommerceOrderNote(
-		long commerceOrderNoteId, java.lang.String content, boolean restricted)
+		long commerceOrderNoteId, String content, boolean restricted)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .updateCommerceOrderNote(commerceOrderNoteId, content,

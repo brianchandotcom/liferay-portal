@@ -48,8 +48,8 @@ public class CommerceUserSegmentEntryLocalServiceWrapper
 
 	@Override
 	public com.liferay.commerce.user.segment.model.CommerceUserSegmentEntry addCommerceUserSegmentEntry(
-		java.util.Map<java.util.Locale, java.lang.String> nameMap,
-		java.lang.String key, boolean active, boolean system, double priority,
+		java.util.Map<java.util.Locale, String> nameMap, String key,
+		boolean active, boolean system, double priority,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _commerceUserSegmentEntryLocalService.addCommerceUserSegmentEntry(nameMap,
@@ -206,7 +206,7 @@ public class CommerceUserSegmentEntryLocalServiceWrapper
 
 	@Override
 	public com.liferay.commerce.user.segment.model.CommerceUserSegmentEntry fetchCommerceUserSegmentEntry(
-		long groupId, java.lang.String key) {
+		long groupId, String key) {
 		return _commerceUserSegmentEntryLocalService.fetchCommerceUserSegmentEntry(groupId,
 			key);
 	}
@@ -290,7 +290,7 @@ public class CommerceUserSegmentEntryLocalServiceWrapper
 	* @return the OSGi service identifier
 	*/
 	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
+	public String getOSGiServiceIdentifier() {
 		return _commerceUserSegmentEntryLocalService.getOSGiServiceIdentifier();
 	}
 
@@ -310,8 +310,8 @@ public class CommerceUserSegmentEntryLocalServiceWrapper
 
 	@Override
 	public com.liferay.portal.kernel.search.BaseModelSearchResult<com.liferay.commerce.user.segment.model.CommerceUserSegmentEntry> searchCommerceUserSegmentEntries(
-		long companyId, long groupId, java.lang.String keywords, int start,
-		int end, com.liferay.portal.kernel.search.Sort sort)
+		long companyId, long groupId, String keywords, int start, int end,
+		com.liferay.portal.kernel.search.Sort sort)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _commerceUserSegmentEntryLocalService.searchCommerceUserSegmentEntries(companyId,
 			groupId, keywords, start, end, sort);
@@ -339,8 +339,8 @@ public class CommerceUserSegmentEntryLocalServiceWrapper
 	@Override
 	public com.liferay.commerce.user.segment.model.CommerceUserSegmentEntry updateCommerceUserSegmentEntry(
 		long commerceUserSegmentEntryId,
-		java.util.Map<java.util.Locale, java.lang.String> nameMap,
-		java.lang.String key, boolean active, double priority,
+		java.util.Map<java.util.Locale, String> nameMap, String key,
+		boolean active, double priority,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _commerceUserSegmentEntryLocalService.updateCommerceUserSegmentEntry(commerceUserSegmentEntryId,

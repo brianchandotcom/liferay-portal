@@ -59,9 +59,9 @@ public interface CPRuleService extends BaseService {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CPRuleServiceUtil} to access the cp rule remote service. Add custom service methods to {@link com.liferay.commerce.product.service.impl.CPRuleServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public CPRule addCPRule(java.lang.String name, boolean active,
-		java.lang.String type, java.lang.String typeSettings,
-		ServiceContext serviceContext) throws PortalException;
+	public CPRule addCPRule(String name, boolean active, String type,
+		String typeSettings, ServiceContext serviceContext)
+		throws PortalException;
 
 	public CPRule deleteCPRule(long cpRuleId) throws PortalException;
 
@@ -80,18 +80,18 @@ public interface CPRuleService extends BaseService {
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public BaseModelSearchResult<CPRule> searchCPRules(long companyId,
-		long groupId, java.lang.String keywords, int start, int end, Sort sort)
+		long groupId, String keywords, int start, int end, Sort sort)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public BaseModelSearchResult<CPRule> searchCPRules(
 		SearchContext searchContext) throws PortalException;
 
-	public CPRule updateCPRule(long cpRuleId, java.lang.String name,
-		boolean active, java.lang.String type, java.lang.String typeSettings,
-		ServiceContext serviceContext) throws PortalException;
+	public CPRule updateCPRule(long cpRuleId, String name, boolean active,
+		String type, String typeSettings, ServiceContext serviceContext)
+		throws PortalException;
 }

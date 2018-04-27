@@ -50,12 +50,11 @@ public interface CommerceOrganizationLocalService extends BaseLocalService {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CommerceOrganizationLocalServiceUtil} to access the commerce organization local service. Add custom service methods to {@link com.liferay.commerce.organization.service.impl.CommerceOrganizationLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public Organization addOrganization(long parentOrganizationId,
-		java.lang.String name, java.lang.String type,
-		ServiceContext serviceContext) throws PortalException;
+	public Organization addOrganization(long parentOrganizationId, String name,
+		String type, ServiceContext serviceContext) throws PortalException;
 
 	public void addOrganizationUsers(long organizationId,
-		java.lang.String[] emailAddresses, ServiceContext serviceContext)
+		String[] emailAddresses, ServiceContext serviceContext)
 		throws PortalException;
 
 	public void configureB2BSite(long groupId, ServiceContext serviceContext)
@@ -78,7 +77,7 @@ public interface CommerceOrganizationLocalService extends BaseLocalService {
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public boolean hasGroupOrganization(long siteGroupId, long organizationId)
@@ -90,23 +89,20 @@ public interface CommerceOrganizationLocalService extends BaseLocalService {
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public BaseModelSearchResult<Organization> searchOrganizations(
-		long userId, long parentOrganizationId, java.lang.String type,
-		java.lang.String keywords, int start, int end, Sort[] sorts)
-		throws PortalException;
+		long userId, long parentOrganizationId, String type, String keywords,
+		int start, int end, Sort[] sorts) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public BaseModelSearchResult<Organization> searchOrganizationsByGroup(
-		long groupId, long userId, java.lang.String type,
-		java.lang.String keywords, int start, int end, Sort[] sorts)
-		throws PortalException;
+		long groupId, long userId, String type, String keywords, int start,
+		int end, Sort[] sorts) throws PortalException;
 
 	public void unsetOrganizationUsers(long organizationId, long[] userIds)
 		throws PortalException;
 
-	public Organization updateOrganization(long organizationId,
-		java.lang.String name, long emailAddressId, java.lang.String address,
-		long addressId, java.lang.String street1, java.lang.String street2,
-		java.lang.String street3, java.lang.String city, java.lang.String zip,
-		long regionId, long countryId, boolean logo, byte[] logoBytes,
+	public Organization updateOrganization(long organizationId, String name,
+		long emailAddressId, String address, long addressId, String street1,
+		String street2, String street3, String city, String zip, long regionId,
+		long countryId, boolean logo, byte[] logoBytes,
 		ServiceContext serviceContext) throws PortalException;
 }

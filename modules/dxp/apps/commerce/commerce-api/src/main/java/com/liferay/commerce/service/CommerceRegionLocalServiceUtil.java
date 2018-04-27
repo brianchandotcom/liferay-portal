@@ -55,8 +55,8 @@ public class CommerceRegionLocalServiceUtil {
 	}
 
 	public static com.liferay.commerce.model.CommerceRegion addCommerceRegion(
-		long commerceCountryId, java.lang.String name, java.lang.String code,
-		double priority, boolean active,
+		long commerceCountryId, String name, String code, double priority,
+		boolean active,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
@@ -206,7 +206,7 @@ public class CommerceRegionLocalServiceUtil {
 	* @return the matching commerce region, or <code>null</code> if a matching commerce region could not be found
 	*/
 	public static com.liferay.commerce.model.CommerceRegion fetchCommerceRegionByUuidAndGroupId(
-		java.lang.String uuid, long groupId) {
+		String uuid, long groupId) {
 		return getService().fetchCommerceRegionByUuidAndGroupId(uuid, groupId);
 	}
 
@@ -236,7 +236,7 @@ public class CommerceRegionLocalServiceUtil {
 	* @throws PortalException if a matching commerce region could not be found
 	*/
 	public static com.liferay.commerce.model.CommerceRegion getCommerceRegionByUuidAndGroupId(
-		java.lang.String uuid, long groupId)
+		String uuid, long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getCommerceRegionByUuidAndGroupId(uuid, groupId);
 	}
@@ -286,7 +286,7 @@ public class CommerceRegionLocalServiceUtil {
 	* @return the matching commerce regions, or an empty list if no matches were found
 	*/
 	public static java.util.List<com.liferay.commerce.model.CommerceRegion> getCommerceRegionsByUuidAndCompanyId(
-		java.lang.String uuid, long companyId) {
+		String uuid, long companyId) {
 		return getService().getCommerceRegionsByUuidAndCompanyId(uuid, companyId);
 	}
 
@@ -301,7 +301,7 @@ public class CommerceRegionLocalServiceUtil {
 	* @return the range of matching commerce regions, or an empty list if no matches were found
 	*/
 	public static java.util.List<com.liferay.commerce.model.CommerceRegion> getCommerceRegionsByUuidAndCompanyId(
-		java.lang.String uuid, long companyId, int start, int end,
+		String uuid, long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.model.CommerceRegion> orderByComparator) {
 		return getService()
 				   .getCommerceRegionsByUuidAndCompanyId(uuid, companyId,
@@ -340,7 +340,7 @@ public class CommerceRegionLocalServiceUtil {
 	*
 	* @return the OSGi service identifier
 	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
+	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 
@@ -362,8 +362,8 @@ public class CommerceRegionLocalServiceUtil {
 	}
 
 	public static com.liferay.commerce.model.CommerceRegion updateCommerceRegion(
-		long commerceRegionId, java.lang.String name, java.lang.String code,
-		double priority, boolean active,
+		long commerceRegionId, String name, String code, double priority,
+		boolean active,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()

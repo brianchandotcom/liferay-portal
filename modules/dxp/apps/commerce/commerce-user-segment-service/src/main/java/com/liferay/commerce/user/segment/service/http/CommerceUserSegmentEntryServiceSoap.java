@@ -70,9 +70,8 @@ import java.util.Map;
 @ProviderType
 public class CommerceUserSegmentEntryServiceSoap {
 	public static com.liferay.commerce.user.segment.model.CommerceUserSegmentEntrySoap addCommerceUserSegmentEntry(
-		java.lang.String[] nameMapLanguageIds,
-		java.lang.String[] nameMapValues, java.lang.String key, boolean active,
-		boolean system, double priority,
+		String[] nameMapLanguageIds, String[] nameMapValues, String key,
+		boolean active, boolean system, double priority,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
@@ -155,9 +154,8 @@ public class CommerceUserSegmentEntryServiceSoap {
 	}
 
 	public static com.liferay.commerce.user.segment.model.CommerceUserSegmentEntrySoap updateCommerceUserSegmentEntry(
-		long commerceUserSegmentEntryId, java.lang.String[] nameMapLanguageIds,
-		java.lang.String[] nameMapValues, java.lang.String key, boolean active,
-		double priority,
+		long commerceUserSegmentEntryId, String[] nameMapLanguageIds,
+		String[] nameMapValues, String key, boolean active, double priority,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {

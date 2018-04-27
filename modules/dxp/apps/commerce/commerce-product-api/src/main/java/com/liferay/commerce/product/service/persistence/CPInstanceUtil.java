@@ -119,7 +119,7 @@ public class CPInstanceUtil {
 	* @param uuid the uuid
 	* @return the matching cp instances
 	*/
-	public static List<CPInstance> findByUuid(java.lang.String uuid) {
+	public static List<CPInstance> findByUuid(String uuid) {
 		return getPersistence().findByUuid(uuid);
 	}
 
@@ -135,8 +135,7 @@ public class CPInstanceUtil {
 	* @param end the upper bound of the range of cp instances (not inclusive)
 	* @return the range of matching cp instances
 	*/
-	public static List<CPInstance> findByUuid(java.lang.String uuid, int start,
-		int end) {
+	public static List<CPInstance> findByUuid(String uuid, int start, int end) {
 		return getPersistence().findByUuid(uuid, start, end);
 	}
 
@@ -153,8 +152,8 @@ public class CPInstanceUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching cp instances
 	*/
-	public static List<CPInstance> findByUuid(java.lang.String uuid, int start,
-		int end, OrderByComparator<CPInstance> orderByComparator) {
+	public static List<CPInstance> findByUuid(String uuid, int start, int end,
+		OrderByComparator<CPInstance> orderByComparator) {
 		return getPersistence().findByUuid(uuid, start, end, orderByComparator);
 	}
 
@@ -172,8 +171,8 @@ public class CPInstanceUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching cp instances
 	*/
-	public static List<CPInstance> findByUuid(java.lang.String uuid, int start,
-		int end, OrderByComparator<CPInstance> orderByComparator,
+	public static List<CPInstance> findByUuid(String uuid, int start, int end,
+		OrderByComparator<CPInstance> orderByComparator,
 		boolean retrieveFromCache) {
 		return getPersistence()
 				   .findByUuid(uuid, start, end, orderByComparator,
@@ -188,7 +187,7 @@ public class CPInstanceUtil {
 	* @return the first matching cp instance
 	* @throws NoSuchCPInstanceException if a matching cp instance could not be found
 	*/
-	public static CPInstance findByUuid_First(java.lang.String uuid,
+	public static CPInstance findByUuid_First(String uuid,
 		OrderByComparator<CPInstance> orderByComparator)
 		throws com.liferay.commerce.product.exception.NoSuchCPInstanceException {
 		return getPersistence().findByUuid_First(uuid, orderByComparator);
@@ -201,7 +200,7 @@ public class CPInstanceUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching cp instance, or <code>null</code> if a matching cp instance could not be found
 	*/
-	public static CPInstance fetchByUuid_First(java.lang.String uuid,
+	public static CPInstance fetchByUuid_First(String uuid,
 		OrderByComparator<CPInstance> orderByComparator) {
 		return getPersistence().fetchByUuid_First(uuid, orderByComparator);
 	}
@@ -214,7 +213,7 @@ public class CPInstanceUtil {
 	* @return the last matching cp instance
 	* @throws NoSuchCPInstanceException if a matching cp instance could not be found
 	*/
-	public static CPInstance findByUuid_Last(java.lang.String uuid,
+	public static CPInstance findByUuid_Last(String uuid,
 		OrderByComparator<CPInstance> orderByComparator)
 		throws com.liferay.commerce.product.exception.NoSuchCPInstanceException {
 		return getPersistence().findByUuid_Last(uuid, orderByComparator);
@@ -227,7 +226,7 @@ public class CPInstanceUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching cp instance, or <code>null</code> if a matching cp instance could not be found
 	*/
-	public static CPInstance fetchByUuid_Last(java.lang.String uuid,
+	public static CPInstance fetchByUuid_Last(String uuid,
 		OrderByComparator<CPInstance> orderByComparator) {
 		return getPersistence().fetchByUuid_Last(uuid, orderByComparator);
 	}
@@ -242,7 +241,7 @@ public class CPInstanceUtil {
 	* @throws NoSuchCPInstanceException if a cp instance with the primary key could not be found
 	*/
 	public static CPInstance[] findByUuid_PrevAndNext(long CPInstanceId,
-		java.lang.String uuid, OrderByComparator<CPInstance> orderByComparator)
+		String uuid, OrderByComparator<CPInstance> orderByComparator)
 		throws com.liferay.commerce.product.exception.NoSuchCPInstanceException {
 		return getPersistence()
 				   .findByUuid_PrevAndNext(CPInstanceId, uuid, orderByComparator);
@@ -253,7 +252,7 @@ public class CPInstanceUtil {
 	*
 	* @param uuid the uuid
 	*/
-	public static void removeByUuid(java.lang.String uuid) {
+	public static void removeByUuid(String uuid) {
 		getPersistence().removeByUuid(uuid);
 	}
 
@@ -263,7 +262,7 @@ public class CPInstanceUtil {
 	* @param uuid the uuid
 	* @return the number of matching cp instances
 	*/
-	public static int countByUuid(java.lang.String uuid) {
+	public static int countByUuid(String uuid) {
 		return getPersistence().countByUuid(uuid);
 	}
 
@@ -275,7 +274,7 @@ public class CPInstanceUtil {
 	* @return the matching cp instance
 	* @throws NoSuchCPInstanceException if a matching cp instance could not be found
 	*/
-	public static CPInstance findByUUID_G(java.lang.String uuid, long groupId)
+	public static CPInstance findByUUID_G(String uuid, long groupId)
 		throws com.liferay.commerce.product.exception.NoSuchCPInstanceException {
 		return getPersistence().findByUUID_G(uuid, groupId);
 	}
@@ -287,7 +286,7 @@ public class CPInstanceUtil {
 	* @param groupId the group ID
 	* @return the matching cp instance, or <code>null</code> if a matching cp instance could not be found
 	*/
-	public static CPInstance fetchByUUID_G(java.lang.String uuid, long groupId) {
+	public static CPInstance fetchByUUID_G(String uuid, long groupId) {
 		return getPersistence().fetchByUUID_G(uuid, groupId);
 	}
 
@@ -299,7 +298,7 @@ public class CPInstanceUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching cp instance, or <code>null</code> if a matching cp instance could not be found
 	*/
-	public static CPInstance fetchByUUID_G(java.lang.String uuid, long groupId,
+	public static CPInstance fetchByUUID_G(String uuid, long groupId,
 		boolean retrieveFromCache) {
 		return getPersistence().fetchByUUID_G(uuid, groupId, retrieveFromCache);
 	}
@@ -311,7 +310,7 @@ public class CPInstanceUtil {
 	* @param groupId the group ID
 	* @return the cp instance that was removed
 	*/
-	public static CPInstance removeByUUID_G(java.lang.String uuid, long groupId)
+	public static CPInstance removeByUUID_G(String uuid, long groupId)
 		throws com.liferay.commerce.product.exception.NoSuchCPInstanceException {
 		return getPersistence().removeByUUID_G(uuid, groupId);
 	}
@@ -323,7 +322,7 @@ public class CPInstanceUtil {
 	* @param groupId the group ID
 	* @return the number of matching cp instances
 	*/
-	public static int countByUUID_G(java.lang.String uuid, long groupId) {
+	public static int countByUUID_G(String uuid, long groupId) {
 		return getPersistence().countByUUID_G(uuid, groupId);
 	}
 
@@ -334,8 +333,7 @@ public class CPInstanceUtil {
 	* @param companyId the company ID
 	* @return the matching cp instances
 	*/
-	public static List<CPInstance> findByUuid_C(java.lang.String uuid,
-		long companyId) {
+	public static List<CPInstance> findByUuid_C(String uuid, long companyId) {
 		return getPersistence().findByUuid_C(uuid, companyId);
 	}
 
@@ -352,8 +350,8 @@ public class CPInstanceUtil {
 	* @param end the upper bound of the range of cp instances (not inclusive)
 	* @return the range of matching cp instances
 	*/
-	public static List<CPInstance> findByUuid_C(java.lang.String uuid,
-		long companyId, int start, int end) {
+	public static List<CPInstance> findByUuid_C(String uuid, long companyId,
+		int start, int end) {
 		return getPersistence().findByUuid_C(uuid, companyId, start, end);
 	}
 
@@ -371,9 +369,8 @@ public class CPInstanceUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching cp instances
 	*/
-	public static List<CPInstance> findByUuid_C(java.lang.String uuid,
-		long companyId, int start, int end,
-		OrderByComparator<CPInstance> orderByComparator) {
+	public static List<CPInstance> findByUuid_C(String uuid, long companyId,
+		int start, int end, OrderByComparator<CPInstance> orderByComparator) {
 		return getPersistence()
 				   .findByUuid_C(uuid, companyId, start, end, orderByComparator);
 	}
@@ -393,9 +390,8 @@ public class CPInstanceUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching cp instances
 	*/
-	public static List<CPInstance> findByUuid_C(java.lang.String uuid,
-		long companyId, int start, int end,
-		OrderByComparator<CPInstance> orderByComparator,
+	public static List<CPInstance> findByUuid_C(String uuid, long companyId,
+		int start, int end, OrderByComparator<CPInstance> orderByComparator,
 		boolean retrieveFromCache) {
 		return getPersistence()
 				   .findByUuid_C(uuid, companyId, start, end,
@@ -411,8 +407,8 @@ public class CPInstanceUtil {
 	* @return the first matching cp instance
 	* @throws NoSuchCPInstanceException if a matching cp instance could not be found
 	*/
-	public static CPInstance findByUuid_C_First(java.lang.String uuid,
-		long companyId, OrderByComparator<CPInstance> orderByComparator)
+	public static CPInstance findByUuid_C_First(String uuid, long companyId,
+		OrderByComparator<CPInstance> orderByComparator)
 		throws com.liferay.commerce.product.exception.NoSuchCPInstanceException {
 		return getPersistence()
 				   .findByUuid_C_First(uuid, companyId, orderByComparator);
@@ -426,8 +422,8 @@ public class CPInstanceUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching cp instance, or <code>null</code> if a matching cp instance could not be found
 	*/
-	public static CPInstance fetchByUuid_C_First(java.lang.String uuid,
-		long companyId, OrderByComparator<CPInstance> orderByComparator) {
+	public static CPInstance fetchByUuid_C_First(String uuid, long companyId,
+		OrderByComparator<CPInstance> orderByComparator) {
 		return getPersistence()
 				   .fetchByUuid_C_First(uuid, companyId, orderByComparator);
 	}
@@ -441,8 +437,8 @@ public class CPInstanceUtil {
 	* @return the last matching cp instance
 	* @throws NoSuchCPInstanceException if a matching cp instance could not be found
 	*/
-	public static CPInstance findByUuid_C_Last(java.lang.String uuid,
-		long companyId, OrderByComparator<CPInstance> orderByComparator)
+	public static CPInstance findByUuid_C_Last(String uuid, long companyId,
+		OrderByComparator<CPInstance> orderByComparator)
 		throws com.liferay.commerce.product.exception.NoSuchCPInstanceException {
 		return getPersistence()
 				   .findByUuid_C_Last(uuid, companyId, orderByComparator);
@@ -456,8 +452,8 @@ public class CPInstanceUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching cp instance, or <code>null</code> if a matching cp instance could not be found
 	*/
-	public static CPInstance fetchByUuid_C_Last(java.lang.String uuid,
-		long companyId, OrderByComparator<CPInstance> orderByComparator) {
+	public static CPInstance fetchByUuid_C_Last(String uuid, long companyId,
+		OrderByComparator<CPInstance> orderByComparator) {
 		return getPersistence()
 				   .fetchByUuid_C_Last(uuid, companyId, orderByComparator);
 	}
@@ -473,7 +469,7 @@ public class CPInstanceUtil {
 	* @throws NoSuchCPInstanceException if a cp instance with the primary key could not be found
 	*/
 	public static CPInstance[] findByUuid_C_PrevAndNext(long CPInstanceId,
-		java.lang.String uuid, long companyId,
+		String uuid, long companyId,
 		OrderByComparator<CPInstance> orderByComparator)
 		throws com.liferay.commerce.product.exception.NoSuchCPInstanceException {
 		return getPersistence()
@@ -487,7 +483,7 @@ public class CPInstanceUtil {
 	* @param uuid the uuid
 	* @param companyId the company ID
 	*/
-	public static void removeByUuid_C(java.lang.String uuid, long companyId) {
+	public static void removeByUuid_C(String uuid, long companyId) {
 		getPersistence().removeByUuid_C(uuid, companyId);
 	}
 
@@ -498,7 +494,7 @@ public class CPInstanceUtil {
 	* @param companyId the company ID
 	* @return the number of matching cp instances
 	*/
-	public static int countByUuid_C(java.lang.String uuid, long companyId) {
+	public static int countByUuid_C(String uuid, long companyId) {
 		return getPersistence().countByUuid_C(uuid, companyId);
 	}
 
@@ -1333,7 +1329,7 @@ public class CPInstanceUtil {
 	* @return the matching cp instance
 	* @throws NoSuchCPInstanceException if a matching cp instance could not be found
 	*/
-	public static CPInstance findByC_S(long CPDefinitionId, java.lang.String sku)
+	public static CPInstance findByC_S(long CPDefinitionId, String sku)
 		throws com.liferay.commerce.product.exception.NoSuchCPInstanceException {
 		return getPersistence().findByC_S(CPDefinitionId, sku);
 	}
@@ -1345,8 +1341,7 @@ public class CPInstanceUtil {
 	* @param sku the sku
 	* @return the matching cp instance, or <code>null</code> if a matching cp instance could not be found
 	*/
-	public static CPInstance fetchByC_S(long CPDefinitionId,
-		java.lang.String sku) {
+	public static CPInstance fetchByC_S(long CPDefinitionId, String sku) {
 		return getPersistence().fetchByC_S(CPDefinitionId, sku);
 	}
 
@@ -1358,8 +1353,8 @@ public class CPInstanceUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching cp instance, or <code>null</code> if a matching cp instance could not be found
 	*/
-	public static CPInstance fetchByC_S(long CPDefinitionId,
-		java.lang.String sku, boolean retrieveFromCache) {
+	public static CPInstance fetchByC_S(long CPDefinitionId, String sku,
+		boolean retrieveFromCache) {
 		return getPersistence()
 				   .fetchByC_S(CPDefinitionId, sku, retrieveFromCache);
 	}
@@ -1371,8 +1366,7 @@ public class CPInstanceUtil {
 	* @param sku the sku
 	* @return the cp instance that was removed
 	*/
-	public static CPInstance removeByC_S(long CPDefinitionId,
-		java.lang.String sku)
+	public static CPInstance removeByC_S(long CPDefinitionId, String sku)
 		throws com.liferay.commerce.product.exception.NoSuchCPInstanceException {
 		return getPersistence().removeByC_S(CPDefinitionId, sku);
 	}
@@ -1384,7 +1378,7 @@ public class CPInstanceUtil {
 	* @param sku the sku
 	* @return the number of matching cp instances
 	*/
-	public static int countByC_S(long CPDefinitionId, java.lang.String sku) {
+	public static int countByC_S(long CPDefinitionId, String sku) {
 		return getPersistence().countByC_S(CPDefinitionId, sku);
 	}
 
@@ -2261,7 +2255,7 @@ public class CPInstanceUtil {
 		return getPersistence().countAll();
 	}
 
-	public static java.util.Set<java.lang.String> getBadColumnNames() {
+	public static java.util.Set<String> getBadColumnNames() {
 		return getPersistence().getBadColumnNames();
 	}
 

@@ -73,8 +73,8 @@ public interface CommerceOrderNoteLocalService extends BaseLocalService,
 		CommerceOrderNote commerceOrderNote);
 
 	public CommerceOrderNote addCommerceOrderNote(long commerceOrderId,
-		java.lang.String content, boolean restricted,
-		ServiceContext serviceContext) throws PortalException;
+		String content, boolean restricted, ServiceContext serviceContext)
+		throws PortalException;
 
 	/**
 	* Creates a new commerce order note with the primary key. Does not add the commerce order note to the database.
@@ -236,7 +236,7 @@ public interface CommerceOrderNoteLocalService extends BaseLocalService,
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -254,5 +254,5 @@ public interface CommerceOrderNoteLocalService extends BaseLocalService,
 		CommerceOrderNote commerceOrderNote);
 
 	public CommerceOrderNote updateCommerceOrderNote(long commerceOrderNoteId,
-		java.lang.String content, boolean restricted) throws PortalException;
+		String content, boolean restricted) throws PortalException;
 }

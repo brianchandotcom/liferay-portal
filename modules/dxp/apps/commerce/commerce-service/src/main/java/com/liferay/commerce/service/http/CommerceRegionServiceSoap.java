@@ -66,8 +66,8 @@ import java.rmi.RemoteException;
 @ProviderType
 public class CommerceRegionServiceSoap {
 	public static com.liferay.commerce.model.CommerceRegionSoap addCommerceRegion(
-		long commerceCountryId, java.lang.String name, java.lang.String code,
-		double priority, boolean active,
+		long commerceCountryId, String name, String code, double priority,
+		boolean active,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
@@ -191,8 +191,8 @@ public class CommerceRegionServiceSoap {
 	}
 
 	public static com.liferay.commerce.model.CommerceRegionSoap updateCommerceRegion(
-		long commerceRegionId, java.lang.String name, java.lang.String code,
-		double priority, boolean active,
+		long commerceRegionId, String name, String code, double priority,
+		boolean active,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {

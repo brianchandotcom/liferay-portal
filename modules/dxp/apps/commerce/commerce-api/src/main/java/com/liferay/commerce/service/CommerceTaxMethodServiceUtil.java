@@ -43,9 +43,9 @@ public class CommerceTaxMethodServiceUtil {
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.commerce.service.impl.CommerceTaxMethodServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static com.liferay.commerce.model.CommerceTaxMethod addCommerceTaxMethod(
-		java.util.Map<java.util.Locale, java.lang.String> nameMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		java.lang.String engineKey, boolean percentage, boolean active,
+		java.util.Map<java.util.Locale, String> nameMap,
+		java.util.Map<java.util.Locale, String> descriptionMap,
+		String engineKey, boolean percentage, boolean active,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
@@ -64,7 +64,7 @@ public class CommerceTaxMethodServiceUtil {
 	}
 
 	public static com.liferay.commerce.model.CommerceTaxMethod fetchCommerceTaxMethod(
-		long groupId, java.lang.String engineKey) {
+		long groupId, String engineKey) {
 		return getService().fetchCommerceTaxMethod(groupId, engineKey);
 	}
 
@@ -94,7 +94,7 @@ public class CommerceTaxMethodServiceUtil {
 	*
 	* @return the OSGi service identifier
 	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
+	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 
@@ -106,8 +106,8 @@ public class CommerceTaxMethodServiceUtil {
 
 	public static com.liferay.commerce.model.CommerceTaxMethod updateCommerceTaxMethod(
 		long commerceTaxMethodId,
-		java.util.Map<java.util.Locale, java.lang.String> nameMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		java.util.Map<java.util.Locale, String> nameMap,
+		java.util.Map<java.util.Locale, String> descriptionMap,
 		boolean percentage, boolean active)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()

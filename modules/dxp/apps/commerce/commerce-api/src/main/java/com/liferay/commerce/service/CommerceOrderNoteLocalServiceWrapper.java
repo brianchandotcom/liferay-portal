@@ -48,7 +48,7 @@ public class CommerceOrderNoteLocalServiceWrapper
 
 	@Override
 	public com.liferay.commerce.model.CommerceOrderNote addCommerceOrderNote(
-		long commerceOrderId, java.lang.String content, boolean restricted,
+		long commerceOrderId, String content, boolean restricted,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _commerceOrderNoteLocalService.addCommerceOrderNote(commerceOrderId,
@@ -283,7 +283,7 @@ public class CommerceOrderNoteLocalServiceWrapper
 	* @return the OSGi service identifier
 	*/
 	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
+	public String getOSGiServiceIdentifier() {
 		return _commerceOrderNoteLocalService.getOSGiServiceIdentifier();
 	}
 
@@ -308,7 +308,7 @@ public class CommerceOrderNoteLocalServiceWrapper
 
 	@Override
 	public com.liferay.commerce.model.CommerceOrderNote updateCommerceOrderNote(
-		long commerceOrderNoteId, java.lang.String content, boolean restricted)
+		long commerceOrderNoteId, String content, boolean restricted)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _commerceOrderNoteLocalService.updateCommerceOrderNote(commerceOrderNoteId,
 			content, restricted);

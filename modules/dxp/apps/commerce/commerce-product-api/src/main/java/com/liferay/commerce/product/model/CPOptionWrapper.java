@@ -180,7 +180,7 @@ public class CPOptionWrapper implements CPOption, ModelWrapper<CPOption> {
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new CPOptionWrapper((CPOption)_cpOption.clone());
 	}
 
@@ -190,7 +190,7 @@ public class CPOptionWrapper implements CPOption, ModelWrapper<CPOption> {
 	}
 
 	@Override
-	public java.lang.String[] getAvailableLanguageIds() {
+	public String[] getAvailableLanguageIds() {
 		return _cpOption.getAvailableLanguageIds();
 	}
 
@@ -235,12 +235,12 @@ public class CPOptionWrapper implements CPOption, ModelWrapper<CPOption> {
 	* @return the ddm form field type name of this cp option
 	*/
 	@Override
-	public java.lang.String getDDMFormFieldTypeName() {
+	public String getDDMFormFieldTypeName() {
 		return _cpOption.getDDMFormFieldTypeName();
 	}
 
 	@Override
-	public java.lang.String getDefaultLanguageId() {
+	public String getDefaultLanguageId() {
 		return _cpOption.getDefaultLanguageId();
 	}
 
@@ -250,7 +250,7 @@ public class CPOptionWrapper implements CPOption, ModelWrapper<CPOption> {
 	* @return the description of this cp option
 	*/
 	@Override
-	public java.lang.String getDescription() {
+	public String getDescription() {
 		return _cpOption.getDescription();
 	}
 
@@ -261,7 +261,7 @@ public class CPOptionWrapper implements CPOption, ModelWrapper<CPOption> {
 	* @return the localized description of this cp option
 	*/
 	@Override
-	public java.lang.String getDescription(java.util.Locale locale) {
+	public String getDescription(java.util.Locale locale) {
 		return _cpOption.getDescription(locale);
 	}
 
@@ -273,8 +273,7 @@ public class CPOptionWrapper implements CPOption, ModelWrapper<CPOption> {
 	* @return the localized description of this cp option. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
 	*/
 	@Override
-	public java.lang.String getDescription(java.util.Locale locale,
-		boolean useDefault) {
+	public String getDescription(java.util.Locale locale, boolean useDefault) {
 		return _cpOption.getDescription(locale, useDefault);
 	}
 
@@ -285,7 +284,7 @@ public class CPOptionWrapper implements CPOption, ModelWrapper<CPOption> {
 	* @return the localized description of this cp option
 	*/
 	@Override
-	public java.lang.String getDescription(java.lang.String languageId) {
+	public String getDescription(String languageId) {
 		return _cpOption.getDescription(languageId);
 	}
 
@@ -297,18 +296,17 @@ public class CPOptionWrapper implements CPOption, ModelWrapper<CPOption> {
 	* @return the localized description of this cp option
 	*/
 	@Override
-	public java.lang.String getDescription(java.lang.String languageId,
-		boolean useDefault) {
+	public String getDescription(String languageId, boolean useDefault) {
 		return _cpOption.getDescription(languageId, useDefault);
 	}
 
 	@Override
-	public java.lang.String getDescriptionCurrentLanguageId() {
+	public String getDescriptionCurrentLanguageId() {
 		return _cpOption.getDescriptionCurrentLanguageId();
 	}
 
 	@Override
-	public java.lang.String getDescriptionCurrentValue() {
+	public String getDescriptionCurrentValue() {
 		return _cpOption.getDescriptionCurrentValue();
 	}
 
@@ -318,7 +316,7 @@ public class CPOptionWrapper implements CPOption, ModelWrapper<CPOption> {
 	* @return the locales and localized descriptions of this cp option
 	*/
 	@Override
-	public Map<java.util.Locale, java.lang.String> getDescriptionMap() {
+	public Map<java.util.Locale, String> getDescriptionMap() {
 		return _cpOption.getDescriptionMap();
 	}
 
@@ -353,7 +351,7 @@ public class CPOptionWrapper implements CPOption, ModelWrapper<CPOption> {
 	* @return the key of this cp option
 	*/
 	@Override
-	public java.lang.String getKey() {
+	public String getKey() {
 		return _cpOption.getKey();
 	}
 
@@ -418,7 +416,7 @@ public class CPOptionWrapper implements CPOption, ModelWrapper<CPOption> {
 	* @return the title of this cp option
 	*/
 	@Override
-	public java.lang.String getTitle() {
+	public String getTitle() {
 		return _cpOption.getTitle();
 	}
 
@@ -429,7 +427,7 @@ public class CPOptionWrapper implements CPOption, ModelWrapper<CPOption> {
 	* @return the localized title of this cp option
 	*/
 	@Override
-	public java.lang.String getTitle(java.util.Locale locale) {
+	public String getTitle(java.util.Locale locale) {
 		return _cpOption.getTitle(locale);
 	}
 
@@ -441,7 +439,7 @@ public class CPOptionWrapper implements CPOption, ModelWrapper<CPOption> {
 	* @return the localized title of this cp option. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
 	*/
 	@Override
-	public java.lang.String getTitle(java.util.Locale locale, boolean useDefault) {
+	public String getTitle(java.util.Locale locale, boolean useDefault) {
 		return _cpOption.getTitle(locale, useDefault);
 	}
 
@@ -452,7 +450,7 @@ public class CPOptionWrapper implements CPOption, ModelWrapper<CPOption> {
 	* @return the localized title of this cp option
 	*/
 	@Override
-	public java.lang.String getTitle(java.lang.String languageId) {
+	public String getTitle(String languageId) {
 		return _cpOption.getTitle(languageId);
 	}
 
@@ -464,18 +462,17 @@ public class CPOptionWrapper implements CPOption, ModelWrapper<CPOption> {
 	* @return the localized title of this cp option
 	*/
 	@Override
-	public java.lang.String getTitle(java.lang.String languageId,
-		boolean useDefault) {
+	public String getTitle(String languageId, boolean useDefault) {
 		return _cpOption.getTitle(languageId, useDefault);
 	}
 
 	@Override
-	public java.lang.String getTitleCurrentLanguageId() {
+	public String getTitleCurrentLanguageId() {
 		return _cpOption.getTitleCurrentLanguageId();
 	}
 
 	@Override
-	public java.lang.String getTitleCurrentValue() {
+	public String getTitleCurrentValue() {
 		return _cpOption.getTitleCurrentValue();
 	}
 
@@ -485,7 +482,7 @@ public class CPOptionWrapper implements CPOption, ModelWrapper<CPOption> {
 	* @return the locales and localized titles of this cp option
 	*/
 	@Override
-	public Map<java.util.Locale, java.lang.String> getTitleMap() {
+	public Map<java.util.Locale, String> getTitleMap() {
 		return _cpOption.getTitleMap();
 	}
 
@@ -505,7 +502,7 @@ public class CPOptionWrapper implements CPOption, ModelWrapper<CPOption> {
 	* @return the user name of this cp option
 	*/
 	@Override
-	public java.lang.String getUserName() {
+	public String getUserName() {
 		return _cpOption.getUserName();
 	}
 
@@ -515,7 +512,7 @@ public class CPOptionWrapper implements CPOption, ModelWrapper<CPOption> {
 	* @return the user uuid of this cp option
 	*/
 	@Override
-	public java.lang.String getUserUuid() {
+	public String getUserUuid() {
 		return _cpOption.getUserUuid();
 	}
 
@@ -525,7 +522,7 @@ public class CPOptionWrapper implements CPOption, ModelWrapper<CPOption> {
 	* @return the uuid of this cp option
 	*/
 	@Override
-	public java.lang.String getUuid() {
+	public String getUuid() {
 		return _cpOption.getUuid();
 	}
 
@@ -638,7 +635,7 @@ public class CPOptionWrapper implements CPOption, ModelWrapper<CPOption> {
 	* @param DDMFormFieldTypeName the ddm form field type name of this cp option
 	*/
 	@Override
-	public void setDDMFormFieldTypeName(java.lang.String DDMFormFieldTypeName) {
+	public void setDDMFormFieldTypeName(String DDMFormFieldTypeName) {
 		_cpOption.setDDMFormFieldTypeName(DDMFormFieldTypeName);
 	}
 
@@ -648,7 +645,7 @@ public class CPOptionWrapper implements CPOption, ModelWrapper<CPOption> {
 	* @param description the description of this cp option
 	*/
 	@Override
-	public void setDescription(java.lang.String description) {
+	public void setDescription(String description) {
 		_cpOption.setDescription(description);
 	}
 
@@ -659,8 +656,7 @@ public class CPOptionWrapper implements CPOption, ModelWrapper<CPOption> {
 	* @param locale the locale of the language
 	*/
 	@Override
-	public void setDescription(java.lang.String description,
-		java.util.Locale locale) {
+	public void setDescription(String description, java.util.Locale locale) {
 		_cpOption.setDescription(description, locale);
 	}
 
@@ -672,13 +668,13 @@ public class CPOptionWrapper implements CPOption, ModelWrapper<CPOption> {
 	* @param defaultLocale the default locale
 	*/
 	@Override
-	public void setDescription(java.lang.String description,
-		java.util.Locale locale, java.util.Locale defaultLocale) {
+	public void setDescription(String description, java.util.Locale locale,
+		java.util.Locale defaultLocale) {
 		_cpOption.setDescription(description, locale, defaultLocale);
 	}
 
 	@Override
-	public void setDescriptionCurrentLanguageId(java.lang.String languageId) {
+	public void setDescriptionCurrentLanguageId(String languageId) {
 		_cpOption.setDescriptionCurrentLanguageId(languageId);
 	}
 
@@ -688,8 +684,7 @@ public class CPOptionWrapper implements CPOption, ModelWrapper<CPOption> {
 	* @param descriptionMap the locales and localized descriptions of this cp option
 	*/
 	@Override
-	public void setDescriptionMap(
-		Map<java.util.Locale, java.lang.String> descriptionMap) {
+	public void setDescriptionMap(Map<java.util.Locale, String> descriptionMap) {
 		_cpOption.setDescriptionMap(descriptionMap);
 	}
 
@@ -701,7 +696,7 @@ public class CPOptionWrapper implements CPOption, ModelWrapper<CPOption> {
 	*/
 	@Override
 	public void setDescriptionMap(
-		Map<java.util.Locale, java.lang.String> descriptionMap,
+		Map<java.util.Locale, String> descriptionMap,
 		java.util.Locale defaultLocale) {
 		_cpOption.setDescriptionMap(descriptionMap, defaultLocale);
 	}
@@ -748,7 +743,7 @@ public class CPOptionWrapper implements CPOption, ModelWrapper<CPOption> {
 	* @param key the key of this cp option
 	*/
 	@Override
-	public void setKey(java.lang.String key) {
+	public void setKey(String key) {
 		_cpOption.setKey(key);
 	}
 
@@ -818,7 +813,7 @@ public class CPOptionWrapper implements CPOption, ModelWrapper<CPOption> {
 	* @param title the title of this cp option
 	*/
 	@Override
-	public void setTitle(java.lang.String title) {
+	public void setTitle(String title) {
 		_cpOption.setTitle(title);
 	}
 
@@ -829,7 +824,7 @@ public class CPOptionWrapper implements CPOption, ModelWrapper<CPOption> {
 	* @param locale the locale of the language
 	*/
 	@Override
-	public void setTitle(java.lang.String title, java.util.Locale locale) {
+	public void setTitle(String title, java.util.Locale locale) {
 		_cpOption.setTitle(title, locale);
 	}
 
@@ -841,13 +836,13 @@ public class CPOptionWrapper implements CPOption, ModelWrapper<CPOption> {
 	* @param defaultLocale the default locale
 	*/
 	@Override
-	public void setTitle(java.lang.String title, java.util.Locale locale,
+	public void setTitle(String title, java.util.Locale locale,
 		java.util.Locale defaultLocale) {
 		_cpOption.setTitle(title, locale, defaultLocale);
 	}
 
 	@Override
-	public void setTitleCurrentLanguageId(java.lang.String languageId) {
+	public void setTitleCurrentLanguageId(String languageId) {
 		_cpOption.setTitleCurrentLanguageId(languageId);
 	}
 
@@ -857,7 +852,7 @@ public class CPOptionWrapper implements CPOption, ModelWrapper<CPOption> {
 	* @param titleMap the locales and localized titles of this cp option
 	*/
 	@Override
-	public void setTitleMap(Map<java.util.Locale, java.lang.String> titleMap) {
+	public void setTitleMap(Map<java.util.Locale, String> titleMap) {
 		_cpOption.setTitleMap(titleMap);
 	}
 
@@ -868,7 +863,7 @@ public class CPOptionWrapper implements CPOption, ModelWrapper<CPOption> {
 	* @param defaultLocale the default locale
 	*/
 	@Override
-	public void setTitleMap(Map<java.util.Locale, java.lang.String> titleMap,
+	public void setTitleMap(Map<java.util.Locale, String> titleMap,
 		java.util.Locale defaultLocale) {
 		_cpOption.setTitleMap(titleMap, defaultLocale);
 	}
@@ -889,7 +884,7 @@ public class CPOptionWrapper implements CPOption, ModelWrapper<CPOption> {
 	* @param userName the user name of this cp option
 	*/
 	@Override
-	public void setUserName(java.lang.String userName) {
+	public void setUserName(String userName) {
 		_cpOption.setUserName(userName);
 	}
 
@@ -899,7 +894,7 @@ public class CPOptionWrapper implements CPOption, ModelWrapper<CPOption> {
 	* @param userUuid the user uuid of this cp option
 	*/
 	@Override
-	public void setUserUuid(java.lang.String userUuid) {
+	public void setUserUuid(String userUuid) {
 		_cpOption.setUserUuid(userUuid);
 	}
 
@@ -909,7 +904,7 @@ public class CPOptionWrapper implements CPOption, ModelWrapper<CPOption> {
 	* @param uuid the uuid of this cp option
 	*/
 	@Override
-	public void setUuid(java.lang.String uuid) {
+	public void setUuid(String uuid) {
 		_cpOption.setUuid(uuid);
 	}
 
@@ -924,7 +919,7 @@ public class CPOptionWrapper implements CPOption, ModelWrapper<CPOption> {
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _cpOption.toString();
 	}
 
@@ -934,7 +929,7 @@ public class CPOptionWrapper implements CPOption, ModelWrapper<CPOption> {
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _cpOption.toXmlString();
 	}
 

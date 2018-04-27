@@ -351,8 +351,8 @@ public class CommercePriceEntryServiceHttp {
 
 	public static com.liferay.portal.kernel.search.BaseModelSearchResult<com.liferay.commerce.price.list.model.CommercePriceEntry> searchCommercePriceEntries(
 		HttpPrincipal httpPrincipal, long companyId, long groupId,
-		long commercePriceListId, java.lang.String keywords, int start,
-		int end, com.liferay.portal.kernel.search.Sort sort)
+		long commercePriceListId, String keywords, int start, int end,
+		com.liferay.portal.kernel.search.Sort sort)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(CommercePriceEntryServiceUtil.class,
@@ -454,8 +454,8 @@ public class CommercePriceEntryServiceHttp {
 			com.liferay.portal.kernel.search.SearchContext.class
 		};
 	private static final Class<?>[] _searchCommercePriceEntriesParameterTypes10 = new Class[] {
-			long.class, long.class, long.class, java.lang.String.class,
-			int.class, int.class, com.liferay.portal.kernel.search.Sort.class
+			long.class, long.class, long.class, String.class, int.class,
+			int.class, com.liferay.portal.kernel.search.Sort.class
 		};
 	private static final Class<?>[] _updateCommercePriceEntryParameterTypes11 = new Class[] {
 			long.class, java.math.BigDecimal.class, java.math.BigDecimal.class,

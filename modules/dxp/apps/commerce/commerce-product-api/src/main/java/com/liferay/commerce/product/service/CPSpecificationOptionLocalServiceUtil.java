@@ -56,9 +56,9 @@ public class CPSpecificationOptionLocalServiceUtil {
 
 	public static com.liferay.commerce.product.model.CPSpecificationOption addCPSpecificationOption(
 		long cpOptionCategoryId,
-		java.util.Map<java.util.Locale, java.lang.String> titleMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		boolean facetable, java.lang.String key,
+		java.util.Map<java.util.Locale, String> titleMap,
+		java.util.Map<java.util.Locale, String> descriptionMap,
+		boolean facetable, String key,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
@@ -208,7 +208,7 @@ public class CPSpecificationOptionLocalServiceUtil {
 	* @return the matching cp specification option, or <code>null</code> if a matching cp specification option could not be found
 	*/
 	public static com.liferay.commerce.product.model.CPSpecificationOption fetchCPSpecificationOptionByUuidAndGroupId(
-		java.lang.String uuid, long groupId) {
+		String uuid, long groupId) {
 		return getService()
 				   .fetchCPSpecificationOptionByUuidAndGroupId(uuid, groupId);
 	}
@@ -239,7 +239,7 @@ public class CPSpecificationOptionLocalServiceUtil {
 	* @throws PortalException if a matching cp specification option could not be found
 	*/
 	public static com.liferay.commerce.product.model.CPSpecificationOption getCPSpecificationOptionByUuidAndGroupId(
-		java.lang.String uuid, long groupId)
+		String uuid, long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .getCPSpecificationOptionByUuidAndGroupId(uuid, groupId);
@@ -269,7 +269,7 @@ public class CPSpecificationOptionLocalServiceUtil {
 	* @return the matching cp specification options, or an empty list if no matches were found
 	*/
 	public static java.util.List<com.liferay.commerce.product.model.CPSpecificationOption> getCPSpecificationOptionsByUuidAndCompanyId(
-		java.lang.String uuid, long companyId) {
+		String uuid, long companyId) {
 		return getService()
 				   .getCPSpecificationOptionsByUuidAndCompanyId(uuid, companyId);
 	}
@@ -285,7 +285,7 @@ public class CPSpecificationOptionLocalServiceUtil {
 	* @return the range of matching cp specification options, or an empty list if no matches were found
 	*/
 	public static java.util.List<com.liferay.commerce.product.model.CPSpecificationOption> getCPSpecificationOptionsByUuidAndCompanyId(
-		java.lang.String uuid, long companyId, int start, int end,
+		String uuid, long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.product.model.CPSpecificationOption> orderByComparator) {
 		return getService()
 				   .getCPSpecificationOptionsByUuidAndCompanyId(uuid,
@@ -315,7 +315,7 @@ public class CPSpecificationOptionLocalServiceUtil {
 	*
 	* @return the OSGi service identifier
 	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
+	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 
@@ -331,8 +331,8 @@ public class CPSpecificationOptionLocalServiceUtil {
 	}
 
 	public static com.liferay.portal.kernel.search.BaseModelSearchResult<com.liferay.commerce.product.model.CPSpecificationOption> searchCPSpecificationOptions(
-		long companyId, long groupId, java.lang.String keywords, int start,
-		int end, com.liferay.portal.kernel.search.Sort sort)
+		long companyId, long groupId, String keywords, int start, int end,
+		com.liferay.portal.kernel.search.Sort sort)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .searchCPSpecificationOptions(companyId, groupId, keywords,
@@ -360,9 +360,9 @@ public class CPSpecificationOptionLocalServiceUtil {
 
 	public static com.liferay.commerce.product.model.CPSpecificationOption updateCPSpecificationOption(
 		long cpSpecificationOptionId, long cpOptionCategoryId,
-		java.util.Map<java.util.Locale, java.lang.String> titleMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		boolean facetable, java.lang.String key,
+		java.util.Map<java.util.Locale, String> titleMap,
+		java.util.Map<java.util.Locale, String> descriptionMap,
+		boolean facetable, String key,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()

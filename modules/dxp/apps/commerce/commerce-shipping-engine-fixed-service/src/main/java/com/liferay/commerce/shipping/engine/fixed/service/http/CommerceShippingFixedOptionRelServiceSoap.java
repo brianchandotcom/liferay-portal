@@ -68,8 +68,8 @@ public class CommerceShippingFixedOptionRelServiceSoap {
 	public static com.liferay.commerce.shipping.engine.fixed.model.CommerceShippingFixedOptionRelSoap addCommerceShippingFixedOptionRel(
 		long commerceShippingMethodId, long commerceShippingFixedOptionId,
 		long commerceWarehouseId, long commerceCountryId,
-		long commerceRegionId, java.lang.String zip, double weightFrom,
-		double weightTo, java.math.BigDecimal fixedPrice,
+		long commerceRegionId, String zip, double weightFrom, double weightTo,
+		java.math.BigDecimal fixedPrice,
 		java.math.BigDecimal rateUnitWeightPrice, double ratePercentage,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
@@ -119,7 +119,7 @@ public class CommerceShippingFixedOptionRelServiceSoap {
 
 	public static com.liferay.commerce.shipping.engine.fixed.model.CommerceShippingFixedOptionRelSoap fetchCommerceShippingFixedOptionRel(
 		long commerceShippingFixedOptionId, long commerceCountryId,
-		long commerceRegionId, java.lang.String zip, double weight)
+		long commerceRegionId, String zip, double weight)
 		throws RemoteException {
 		try {
 			com.liferay.commerce.shipping.engine.fixed.model.CommerceShippingFixedOptionRel returnValue =
@@ -235,7 +235,7 @@ public class CommerceShippingFixedOptionRelServiceSoap {
 
 	public static com.liferay.commerce.shipping.engine.fixed.model.CommerceShippingFixedOptionRelSoap updateCommerceShippingFixedOptionRel(
 		long commerceShippingFixedOptionRelId, long commerceWarehouseId,
-		long commerceCountryId, long commerceRegionId, java.lang.String zip,
+		long commerceCountryId, long commerceRegionId, String zip,
 		double weightFrom, double weightTo, java.math.BigDecimal fixedPrice,
 		java.math.BigDecimal rateUnitWeightPrice, double ratePercentage)
 		throws RemoteException {

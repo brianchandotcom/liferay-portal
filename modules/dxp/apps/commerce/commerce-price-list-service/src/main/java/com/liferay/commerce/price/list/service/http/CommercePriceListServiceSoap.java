@@ -66,7 +66,7 @@ import java.rmi.RemoteException;
 @ProviderType
 public class CommercePriceListServiceSoap {
 	public static com.liferay.commerce.price.list.model.CommercePriceListSoap addCommercePriceList(
-		long commerceCurrencyId, java.lang.String name, double priority,
+		long commerceCurrencyId, String name, double priority,
 		int displayDateMonth, int displayDateDay, int displayDateYear,
 		int displayDateHour, int displayDateMinute, int expirationDateMonth,
 		int expirationDateDay, int expirationDateYear, int expirationDateHour,
@@ -166,12 +166,11 @@ public class CommercePriceListServiceSoap {
 	}
 
 	public static com.liferay.commerce.price.list.model.CommercePriceListSoap updateCommercePriceList(
-		long commercePriceListId, long commerceCurrencyId,
-		java.lang.String name, double priority, int displayDateMonth,
-		int displayDateDay, int displayDateYear, int displayDateHour,
-		int displayDateMinute, int expirationDateMonth, int expirationDateDay,
-		int expirationDateYear, int expirationDateHour,
-		int expirationDateMinute, boolean neverExpire,
+		long commercePriceListId, long commerceCurrencyId, String name,
+		double priority, int displayDateMonth, int displayDateDay,
+		int displayDateYear, int displayDateHour, int displayDateMinute,
+		int expirationDateMonth, int expirationDateDay, int expirationDateYear,
+		int expirationDateHour, int expirationDateMinute, boolean neverExpire,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {

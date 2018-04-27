@@ -56,7 +56,7 @@ import com.liferay.portal.kernel.util.MethodKey;
 @ProviderType
 public class CommerceAddressRestrictionServiceHttp {
 	public static com.liferay.commerce.model.CommerceAddressRestriction addCommerceAddressRestriction(
-		HttpPrincipal httpPrincipal, java.lang.String className, long classPK,
+		HttpPrincipal httpPrincipal, String className, long classPK,
 		long commerceCountryId,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -120,7 +120,7 @@ public class CommerceAddressRestrictionServiceHttp {
 	}
 
 	public static com.liferay.commerce.model.CommerceAddressRestriction fetchCommerceAddressRestriction(
-		HttpPrincipal httpPrincipal, java.lang.String className, long classPK,
+		HttpPrincipal httpPrincipal, String className, long classPK,
 		long commerceCountryId) {
 		try {
 			MethodKey methodKey = new MethodKey(CommerceAddressRestrictionServiceUtil.class,
@@ -149,8 +149,8 @@ public class CommerceAddressRestrictionServiceHttp {
 	}
 
 	public static java.util.List<com.liferay.commerce.model.CommerceAddressRestriction> getCommerceAddressRestrictions(
-		HttpPrincipal httpPrincipal, java.lang.String className, long classPK,
-		int start, int end,
+		HttpPrincipal httpPrincipal, String className, long classPK, int start,
+		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.model.CommerceAddressRestriction> orderByComparator) {
 		try {
 			MethodKey methodKey = new MethodKey(CommerceAddressRestrictionServiceUtil.class,
@@ -179,7 +179,7 @@ public class CommerceAddressRestrictionServiceHttp {
 	}
 
 	public static int getCommerceAddressRestrictionsCount(
-		HttpPrincipal httpPrincipal, java.lang.String className, long classPK) {
+		HttpPrincipal httpPrincipal, String className, long classPK) {
 		try {
 			MethodKey methodKey = new MethodKey(CommerceAddressRestrictionServiceUtil.class,
 					"getCommerceAddressRestrictionsCount",
@@ -207,7 +207,7 @@ public class CommerceAddressRestrictionServiceHttp {
 	}
 
 	public static boolean isCommerceAddressRestricted(
-		HttpPrincipal httpPrincipal, java.lang.String className, long classPK,
+		HttpPrincipal httpPrincipal, String className, long classPK,
 		long commerceCountryId) {
 		try {
 			MethodKey methodKey = new MethodKey(CommerceAddressRestrictionServiceUtil.class,
@@ -296,22 +296,22 @@ public class CommerceAddressRestrictionServiceHttp {
 	private static Log _log = LogFactoryUtil.getLog(CommerceAddressRestrictionServiceHttp.class);
 	private static final Class<?>[] _addCommerceAddressRestrictionParameterTypes0 =
 		new Class[] {
-			java.lang.String.class, long.class, long.class,
+			String.class, long.class, long.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _deleteCommerceAddressRestrictionParameterTypes1 =
 		new Class[] { long.class };
 	private static final Class<?>[] _fetchCommerceAddressRestrictionParameterTypes2 =
-		new Class[] { java.lang.String.class, long.class, long.class };
+		new Class[] { String.class, long.class, long.class };
 	private static final Class<?>[] _getCommerceAddressRestrictionsParameterTypes3 =
 		new Class[] {
-			java.lang.String.class, long.class, int.class, int.class,
+			String.class, long.class, int.class, int.class,
 			com.liferay.portal.kernel.util.OrderByComparator.class
 		};
 	private static final Class<?>[] _getCommerceAddressRestrictionsCountParameterTypes4 =
-		new Class[] { java.lang.String.class, long.class };
+		new Class[] { String.class, long.class };
 	private static final Class<?>[] _isCommerceAddressRestrictedParameterTypes5 = new Class[] {
-			java.lang.String.class, long.class, long.class
+			String.class, long.class, long.class
 		};
 	private static final Class<?>[] _isCommercePaymentMethodRestrictedParameterTypes6 =
 		new Class[] { long.class, long.class };

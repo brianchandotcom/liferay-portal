@@ -66,12 +66,10 @@ import java.rmi.RemoteException;
 @ProviderType
 public class CommerceAddressServiceSoap {
 	public static com.liferay.commerce.model.CommerceAddressSoap addCommerceAddress(
-		java.lang.String className, long classPK, java.lang.String name,
-		java.lang.String description, java.lang.String street1,
-		java.lang.String street2, java.lang.String street3,
-		java.lang.String city, java.lang.String zip, long commerceRegionId,
-		long commerceCountryId, java.lang.String phoneNumber,
-		boolean defaultBilling, boolean defaultShipping,
+		String className, long classPK, String name, String description,
+		String street1, String street2, String street3, String city,
+		String zip, long commerceRegionId, long commerceCountryId,
+		String phoneNumber, boolean defaultBilling, boolean defaultShipping,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
@@ -130,8 +128,7 @@ public class CommerceAddressServiceSoap {
 	}
 
 	public static com.liferay.commerce.model.CommerceAddressSoap[] getCommerceAddresses(
-		long groupId, java.lang.String className, long classPK)
-		throws RemoteException {
+		long groupId, String className, long classPK) throws RemoteException {
 		try {
 			java.util.List<com.liferay.commerce.model.CommerceAddress> returnValue =
 				CommerceAddressServiceUtil.getCommerceAddresses(groupId,
@@ -147,8 +144,7 @@ public class CommerceAddressServiceSoap {
 	}
 
 	public static com.liferay.commerce.model.CommerceAddressSoap[] getCommerceAddresses(
-		long groupId, java.lang.String className, long classPK, int start,
-		int end,
+		long groupId, String className, long classPK, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.model.CommerceAddress> orderByComparator)
 		throws RemoteException {
 		try {
@@ -165,8 +161,8 @@ public class CommerceAddressServiceSoap {
 		}
 	}
 
-	public static int getCommerceAddressesCount(long groupId,
-		java.lang.String className, long classPK) throws RemoteException {
+	public static int getCommerceAddressesCount(long groupId, String className,
+		long classPK) throws RemoteException {
 		try {
 			int returnValue = CommerceAddressServiceUtil.getCommerceAddressesCount(groupId,
 					className, classPK);
@@ -181,12 +177,10 @@ public class CommerceAddressServiceSoap {
 	}
 
 	public static com.liferay.commerce.model.CommerceAddressSoap updateCommerceAddress(
-		long commerceAddressId, java.lang.String name,
-		java.lang.String description, java.lang.String street1,
-		java.lang.String street2, java.lang.String street3,
-		java.lang.String city, java.lang.String zip, long commerceRegionId,
-		long commerceCountryId, java.lang.String phoneNumber,
-		boolean defaultBilling, boolean defaultShipping,
+		long commerceAddressId, String name, String description,
+		String street1, String street2, String street3, String city,
+		String zip, long commerceRegionId, long commerceCountryId,
+		String phoneNumber, boolean defaultBilling, boolean defaultShipping,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {

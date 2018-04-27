@@ -202,7 +202,7 @@ public class CommerceShippingFixedOptionRelWrapper
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new CommerceShippingFixedOptionRelWrapper((CommerceShippingFixedOptionRel)_commerceShippingFixedOptionRel.clone());
 	}
 
@@ -408,7 +408,7 @@ public class CommerceShippingFixedOptionRelWrapper
 	* @return the user name of this commerce shipping fixed option rel
 	*/
 	@Override
-	public java.lang.String getUserName() {
+	public String getUserName() {
 		return _commerceShippingFixedOptionRel.getUserName();
 	}
 
@@ -418,7 +418,7 @@ public class CommerceShippingFixedOptionRelWrapper
 	* @return the user uuid of this commerce shipping fixed option rel
 	*/
 	@Override
-	public java.lang.String getUserUuid() {
+	public String getUserUuid() {
 		return _commerceShippingFixedOptionRel.getUserUuid();
 	}
 
@@ -448,7 +448,7 @@ public class CommerceShippingFixedOptionRelWrapper
 	* @return the zip of this commerce shipping fixed option rel
 	*/
 	@Override
-	public java.lang.String getZip() {
+	public String getZip() {
 		return _commerceShippingFixedOptionRel.getZip();
 	}
 
@@ -666,7 +666,7 @@ public class CommerceShippingFixedOptionRelWrapper
 	* @param userName the user name of this commerce shipping fixed option rel
 	*/
 	@Override
-	public void setUserName(java.lang.String userName) {
+	public void setUserName(String userName) {
 		_commerceShippingFixedOptionRel.setUserName(userName);
 	}
 
@@ -676,7 +676,7 @@ public class CommerceShippingFixedOptionRelWrapper
 	* @param userUuid the user uuid of this commerce shipping fixed option rel
 	*/
 	@Override
-	public void setUserUuid(java.lang.String userUuid) {
+	public void setUserUuid(String userUuid) {
 		_commerceShippingFixedOptionRel.setUserUuid(userUuid);
 	}
 
@@ -706,7 +706,7 @@ public class CommerceShippingFixedOptionRelWrapper
 	* @param zip the zip of this commerce shipping fixed option rel
 	*/
 	@Override
-	public void setZip(java.lang.String zip) {
+	public void setZip(String zip) {
 		_commerceShippingFixedOptionRel.setZip(zip);
 	}
 
@@ -721,7 +721,7 @@ public class CommerceShippingFixedOptionRelWrapper
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _commerceShippingFixedOptionRel.toString();
 	}
 
@@ -731,7 +731,7 @@ public class CommerceShippingFixedOptionRelWrapper
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _commerceShippingFixedOptionRel.toXmlString();
 	}
 

@@ -85,11 +85,10 @@ public interface CommercePriceListLocalService extends BaseLocalService,
 
 	@Indexable(type = IndexableType.REINDEX)
 	public CommercePriceList addCommercePriceList(long commerceCurrencyId,
-		java.lang.String name, double priority, int displayDateMonth,
-		int displayDateDay, int displayDateYear, int displayDateHour,
-		int displayDateMinute, int expirationDateMonth, int expirationDateDay,
-		int expirationDateYear, int expirationDateHour,
-		int expirationDateMinute, boolean neverExpire,
+		String name, double priority, int displayDateMonth, int displayDateDay,
+		int displayDateYear, int displayDateHour, int displayDateMinute,
+		int expirationDateMonth, int expirationDateDay, int expirationDateYear,
+		int expirationDateHour, int expirationDateMinute, boolean neverExpire,
 		ServiceContext serviceContext) throws PortalException;
 
 	public void checkCommercePriceLists() throws PortalException;
@@ -209,7 +208,7 @@ public interface CommercePriceListLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CommercePriceList fetchCommercePriceListByUuidAndGroupId(
-		java.lang.String uuid, long groupId);
+		String uuid, long groupId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
@@ -234,8 +233,8 @@ public interface CommercePriceListLocalService extends BaseLocalService,
 	* @throws PortalException if a matching commerce price list could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CommercePriceList getCommercePriceListByUuidAndGroupId(
-		java.lang.String uuid, long groupId) throws PortalException;
+	public CommercePriceList getCommercePriceListByUuidAndGroupId(String uuid,
+		long groupId) throws PortalException;
 
 	/**
 	* Returns a range of all the commerce price lists.
@@ -269,7 +268,7 @@ public interface CommercePriceListLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommercePriceList> getCommercePriceListsByUuidAndCompanyId(
-		java.lang.String uuid, long companyId);
+		String uuid, long companyId);
 
 	/**
 	* Returns a range of commerce price lists matching the UUID and company.
@@ -283,7 +282,7 @@ public interface CommercePriceListLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommercePriceList> getCommercePriceListsByUuidAndCompanyId(
-		java.lang.String uuid, long companyId, int start, int end,
+		String uuid, long companyId, int start, int end,
 		OrderByComparator<CommercePriceList> orderByComparator);
 
 	/**
@@ -309,7 +308,7 @@ public interface CommercePriceListLocalService extends BaseLocalService,
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -329,8 +328,8 @@ public interface CommercePriceListLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public BaseModelSearchResult<CommercePriceList> searchCommercePriceLists(
-		long companyId, long groupId, java.lang.String keywords, int status,
-		int start, int end, Sort sort) throws PortalException;
+		long companyId, long groupId, String keywords, int status, int start,
+		int end, Sort sort) throws PortalException;
 
 	/**
 	* Updates the commerce price list in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
@@ -344,7 +343,7 @@ public interface CommercePriceListLocalService extends BaseLocalService,
 
 	@Indexable(type = IndexableType.REINDEX)
 	public CommercePriceList updateCommercePriceList(long commercePriceListId,
-		long commerceCurrencyId, java.lang.String name, double priority,
+		long commerceCurrencyId, String name, double priority,
 		int displayDateMonth, int displayDateDay, int displayDateYear,
 		int displayDateHour, int displayDateMinute, int expirationDateMonth,
 		int expirationDateDay, int expirationDateYear, int expirationDateHour,
@@ -357,6 +356,5 @@ public interface CommercePriceListLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.REINDEX)
 	public CommercePriceList updateStatus(long userId,
 		long commercePriceListId, int status, ServiceContext serviceContext,
-		Map<java.lang.String, Serializable> workflowContext)
-		throws PortalException;
+		Map<String, Serializable> workflowContext) throws PortalException;
 }

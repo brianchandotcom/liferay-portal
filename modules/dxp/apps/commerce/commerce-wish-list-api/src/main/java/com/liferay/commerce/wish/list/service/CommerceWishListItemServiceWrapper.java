@@ -37,7 +37,7 @@ public class CommerceWishListItemServiceWrapper
 	@Override
 	public com.liferay.commerce.wish.list.model.CommerceWishListItem addCommerceWishListItem(
 		long commerceWishListId, long cpDefinitionId, long cpInstanceId,
-		java.lang.String json,
+		String json,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _commerceWishListItemService.addCommerceWishListItem(commerceWishListId,
@@ -78,7 +78,7 @@ public class CommerceWishListItemServiceWrapper
 	* @return the OSGi service identifier
 	*/
 	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
+	public String getOSGiServiceIdentifier() {
 		return _commerceWishListItemService.getOSGiServiceIdentifier();
 	}
 

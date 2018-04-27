@@ -43,8 +43,8 @@ public class CPFriendlyURLEntryLocalServiceUtil {
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.commerce.product.service.impl.CPFriendlyURLEntryLocalServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static void addCPFriendlyURLEntries(long groupId, long companyId,
-		java.lang.Class<?> clazz, long classPK,
-		java.util.Map<java.util.Locale, java.lang.String> urlTitleMap)
+		Class<?> clazz, long classPK,
+		java.util.Map<java.util.Locale, String> urlTitleMap)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService()
 			.addCPFriendlyURLEntries(groupId, companyId, clazz, classPK,
@@ -62,9 +62,8 @@ public class CPFriendlyURLEntryLocalServiceUtil {
 		return getService().addCPFriendlyURLEntry(cpFriendlyURLEntry);
 	}
 
-	public static java.lang.String buildUrlTitle(long groupId,
-		long classNameId, long classPK, java.lang.String languageId,
-		java.lang.String title) {
+	public static String buildUrlTitle(long groupId, long classNameId,
+		long classPK, String languageId, String title) {
 		return getService()
 				   .buildUrlTitle(groupId, classNameId, classPK, languageId,
 			title);
@@ -81,8 +80,8 @@ public class CPFriendlyURLEntryLocalServiceUtil {
 		return getService().createCPFriendlyURLEntry(CPFriendlyURLEntryId);
 	}
 
-	public static void deleteCPFriendlyURLEntries(long groupId,
-		java.lang.Class<?> clazz, long classPK) {
+	public static void deleteCPFriendlyURLEntries(long groupId, Class<?> clazz,
+		long classPK) {
 		getService().deleteCPFriendlyURLEntries(groupId, clazz, classPK);
 	}
 
@@ -203,8 +202,8 @@ public class CPFriendlyURLEntryLocalServiceUtil {
 	}
 
 	public static com.liferay.commerce.product.model.CPFriendlyURLEntry fetchCPFriendlyURLEntry(
-		long groupId, long classNameId, long classPK,
-		java.lang.String languageId, boolean main) {
+		long groupId, long classNameId, long classPK, String languageId,
+		boolean main) {
 		return getService()
 				   .fetchCPFriendlyURLEntry(groupId, classNameId, classPK,
 			languageId, main);
@@ -218,7 +217,7 @@ public class CPFriendlyURLEntryLocalServiceUtil {
 	* @return the matching cp friendly url entry, or <code>null</code> if a matching cp friendly url entry could not be found
 	*/
 	public static com.liferay.commerce.product.model.CPFriendlyURLEntry fetchCPFriendlyURLEntryByUuidAndGroupId(
-		java.lang.String uuid, long groupId) {
+		String uuid, long groupId) {
 		return getService()
 				   .fetchCPFriendlyURLEntryByUuidAndGroupId(uuid, groupId);
 	}
@@ -257,7 +256,7 @@ public class CPFriendlyURLEntryLocalServiceUtil {
 	* @return the matching cp friendly url entries, or an empty list if no matches were found
 	*/
 	public static java.util.List<com.liferay.commerce.product.model.CPFriendlyURLEntry> getCPFriendlyURLEntriesByUuidAndCompanyId(
-		java.lang.String uuid, long companyId) {
+		String uuid, long companyId) {
 		return getService()
 				   .getCPFriendlyURLEntriesByUuidAndCompanyId(uuid, companyId);
 	}
@@ -273,7 +272,7 @@ public class CPFriendlyURLEntryLocalServiceUtil {
 	* @return the range of matching cp friendly url entries, or an empty list if no matches were found
 	*/
 	public static java.util.List<com.liferay.commerce.product.model.CPFriendlyURLEntry> getCPFriendlyURLEntriesByUuidAndCompanyId(
-		java.lang.String uuid, long companyId, int start, int end,
+		String uuid, long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.product.model.CPFriendlyURLEntry> orderByComparator) {
 		return getService()
 				   .getCPFriendlyURLEntriesByUuidAndCompanyId(uuid, companyId,
@@ -303,8 +302,7 @@ public class CPFriendlyURLEntryLocalServiceUtil {
 	}
 
 	public static com.liferay.commerce.product.model.CPFriendlyURLEntry getCPFriendlyURLEntry(
-		long groupId, long classNameId, java.lang.String languageId,
-		java.lang.String urlTitle)
+		long groupId, long classNameId, String languageId, String urlTitle)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .getCPFriendlyURLEntry(groupId, classNameId, languageId,
@@ -320,7 +318,7 @@ public class CPFriendlyURLEntryLocalServiceUtil {
 	* @throws PortalException if a matching cp friendly url entry could not be found
 	*/
 	public static com.liferay.commerce.product.model.CPFriendlyURLEntry getCPFriendlyURLEntryByUuidAndGroupId(
-		java.lang.String uuid, long groupId)
+		String uuid, long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getCPFriendlyURLEntryByUuidAndGroupId(uuid, groupId);
 	}
@@ -334,7 +332,7 @@ public class CPFriendlyURLEntryLocalServiceUtil {
 		return getService().getIndexableActionableDynamicQuery();
 	}
 
-	public static java.util.Map<java.lang.String, java.lang.String> getLanguageIdToUrlTitleMap(
+	public static java.util.Map<String, String> getLanguageIdToUrlTitleMap(
 		long groupId, long classNameId, long classPK) {
 		return getService()
 				   .getLanguageIdToUrlTitleMap(groupId, classNameId, classPK);
@@ -345,7 +343,7 @@ public class CPFriendlyURLEntryLocalServiceUtil {
 	*
 	* @return the OSGi service identifier
 	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
+	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 
@@ -355,13 +353,13 @@ public class CPFriendlyURLEntryLocalServiceUtil {
 		return getService().getPersistedModel(primaryKeyObj);
 	}
 
-	public static java.util.Map<java.util.Locale, java.lang.String> getUrlTitleMap(
+	public static java.util.Map<java.util.Locale, String> getUrlTitleMap(
 		long groupId, long classNameId, long classPK) {
 		return getService().getUrlTitleMap(groupId, classNameId, classPK);
 	}
 
-	public static java.lang.String getUrlTitleMapAsXML(long groupId,
-		long classNameId, long classPK, java.lang.String defaultLanguageId) {
+	public static String getUrlTitleMapAsXML(long groupId, long classNameId,
+		long classPK, String defaultLanguageId) {
 		return getService()
 				   .getUrlTitleMapAsXML(groupId, classNameId, classPK,
 			defaultLanguageId);

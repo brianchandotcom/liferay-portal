@@ -57,11 +57,10 @@ public interface CPDefinitionVirtualSettingService extends BaseService {
 	 * Never modify or reference this interface directly. Always use {@link CPDefinitionVirtualSettingServiceUtil} to access the cp definition virtual setting remote service. Add custom service methods to {@link com.liferay.commerce.product.type.virtual.service.impl.CPDefinitionVirtualSettingServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	public CPDefinitionVirtualSetting addCPDefinitionVirtualSetting(
-		long cpDefinitionId, long fileEntryId, java.lang.String url,
-		java.lang.String activationStatus, long duration, int maxUsages,
-		boolean useSample, long sampleFileEntryId, java.lang.String sampleUrl,
-		boolean termsOfUseRequired,
-		Map<Locale, java.lang.String> termsOfUseContentMap,
+		long cpDefinitionId, long fileEntryId, String url,
+		String activationStatus, long duration, int maxUsages,
+		boolean useSample, long sampleFileEntryId, String sampleUrl,
+		boolean termsOfUseRequired, Map<Locale, String> termsOfUseContentMap,
 		long termsOfUseJournalArticleResourcePrimKey,
 		ServiceContext serviceContext) throws PortalException;
 
@@ -74,14 +73,13 @@ public interface CPDefinitionVirtualSettingService extends BaseService {
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	public CPDefinitionVirtualSetting updateCPDefinitionVirtualSetting(
-		long cpDefinitionVirtualSettingId, long fileEntryId,
-		java.lang.String url, java.lang.String activationStatus, long duration,
-		int maxUsages, boolean useSample, long sampleFileEntryId,
-		java.lang.String sampleUrl, boolean termsOfUseRequired,
-		Map<Locale, java.lang.String> termsOfUseContentMap,
+		long cpDefinitionVirtualSettingId, long fileEntryId, String url,
+		String activationStatus, long duration, int maxUsages,
+		boolean useSample, long sampleFileEntryId, String sampleUrl,
+		boolean termsOfUseRequired, Map<Locale, String> termsOfUseContentMap,
 		long termsOfUseJournalArticleResourcePrimKey,
 		ServiceContext serviceContext) throws PortalException;
 }

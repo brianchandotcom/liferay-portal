@@ -158,7 +158,7 @@ public class CommercePriceListUserSegmentEntryRelWrapper
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new CommercePriceListUserSegmentEntryRelWrapper((CommercePriceListUserSegmentEntryRel)_commercePriceListUserSegmentEntryRel.clone());
 	}
 
@@ -294,7 +294,7 @@ public class CommercePriceListUserSegmentEntryRelWrapper
 	* @return the user name of this commerce price list user segment entry rel
 	*/
 	@Override
-	public java.lang.String getUserName() {
+	public String getUserName() {
 		return _commercePriceListUserSegmentEntryRel.getUserName();
 	}
 
@@ -304,7 +304,7 @@ public class CommercePriceListUserSegmentEntryRelWrapper
 	* @return the user uuid of this commerce price list user segment entry rel
 	*/
 	@Override
-	public java.lang.String getUserUuid() {
+	public String getUserUuid() {
 		return _commercePriceListUserSegmentEntryRel.getUserUuid();
 	}
 
@@ -314,7 +314,7 @@ public class CommercePriceListUserSegmentEntryRelWrapper
 	* @return the uuid of this commerce price list user segment entry rel
 	*/
 	@Override
-	public java.lang.String getUuid() {
+	public String getUuid() {
 		return _commercePriceListUserSegmentEntryRel.getUuid();
 	}
 
@@ -491,7 +491,7 @@ public class CommercePriceListUserSegmentEntryRelWrapper
 	* @param userName the user name of this commerce price list user segment entry rel
 	*/
 	@Override
-	public void setUserName(java.lang.String userName) {
+	public void setUserName(String userName) {
 		_commercePriceListUserSegmentEntryRel.setUserName(userName);
 	}
 
@@ -501,7 +501,7 @@ public class CommercePriceListUserSegmentEntryRelWrapper
 	* @param userUuid the user uuid of this commerce price list user segment entry rel
 	*/
 	@Override
-	public void setUserUuid(java.lang.String userUuid) {
+	public void setUserUuid(String userUuid) {
 		_commercePriceListUserSegmentEntryRel.setUserUuid(userUuid);
 	}
 
@@ -511,7 +511,7 @@ public class CommercePriceListUserSegmentEntryRelWrapper
 	* @param uuid the uuid of this commerce price list user segment entry rel
 	*/
 	@Override
-	public void setUuid(java.lang.String uuid) {
+	public void setUuid(String uuid) {
 		_commercePriceListUserSegmentEntryRel.setUuid(uuid);
 	}
 
@@ -526,7 +526,7 @@ public class CommercePriceListUserSegmentEntryRelWrapper
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _commercePriceListUserSegmentEntryRel.toString();
 	}
 
@@ -536,7 +536,7 @@ public class CommercePriceListUserSegmentEntryRelWrapper
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _commercePriceListUserSegmentEntryRel.toXmlString();
 	}
 

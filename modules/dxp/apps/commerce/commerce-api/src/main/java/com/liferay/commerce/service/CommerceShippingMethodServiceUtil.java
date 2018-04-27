@@ -43,9 +43,9 @@ public class CommerceShippingMethodServiceUtil {
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.commerce.service.impl.CommerceShippingMethodServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static com.liferay.commerce.model.CommerceShippingMethod addCommerceShippingMethod(
-		java.util.Map<java.util.Locale, java.lang.String> nameMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		java.io.File imageFile, java.lang.String engineKey, double priority,
+		java.util.Map<java.util.Locale, String> nameMap,
+		java.util.Map<java.util.Locale, String> descriptionMap,
+		java.io.File imageFile, String engineKey, double priority,
 		boolean active,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -68,7 +68,7 @@ public class CommerceShippingMethodServiceUtil {
 	}
 
 	public static com.liferay.commerce.model.CommerceShippingMethod fetchCommerceShippingMethod(
-		long groupId, java.lang.String engineKey) {
+		long groupId, String engineKey) {
 		return getService().fetchCommerceShippingMethod(groupId, engineKey);
 	}
 
@@ -99,7 +99,7 @@ public class CommerceShippingMethodServiceUtil {
 	*
 	* @return the OSGi service identifier
 	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
+	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 
@@ -111,8 +111,8 @@ public class CommerceShippingMethodServiceUtil {
 
 	public static com.liferay.commerce.model.CommerceShippingMethod updateCommerceShippingMethod(
 		long commerceShippingMethodId,
-		java.util.Map<java.util.Locale, java.lang.String> nameMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		java.util.Map<java.util.Locale, String> nameMap,
+		java.util.Map<java.util.Locale, String> descriptionMap,
 		java.io.File imageFile, double priority, boolean active)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()

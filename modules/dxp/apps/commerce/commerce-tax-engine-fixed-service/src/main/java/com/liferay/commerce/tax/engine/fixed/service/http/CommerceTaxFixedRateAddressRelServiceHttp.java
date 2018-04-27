@@ -58,7 +58,7 @@ public class CommerceTaxFixedRateAddressRelServiceHttp {
 	public static com.liferay.commerce.tax.engine.fixed.model.CommerceTaxFixedRateAddressRel addCommerceTaxFixedRateAddressRel(
 		HttpPrincipal httpPrincipal, long commerceTaxMethodId,
 		long cpTaxCategoryId, long commerceCountryId, long commerceRegionId,
-		java.lang.String zip, double rate,
+		String zip, double rate,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -224,8 +224,8 @@ public class CommerceTaxFixedRateAddressRelServiceHttp {
 
 	public static com.liferay.commerce.tax.engine.fixed.model.CommerceTaxFixedRateAddressRel updateCommerceTaxFixedRateAddressRel(
 		HttpPrincipal httpPrincipal, long commerceTaxFixedRateAddressRelId,
-		long commerceCountryId, long commerceRegionId, java.lang.String zip,
-		double rate) throws com.liferay.portal.kernel.exception.PortalException {
+		long commerceCountryId, long commerceRegionId, String zip, double rate)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(CommerceTaxFixedRateAddressRelServiceUtil.class,
 					"updateCommerceTaxFixedRateAddressRel",
@@ -260,9 +260,8 @@ public class CommerceTaxFixedRateAddressRelServiceHttp {
 	private static Log _log = LogFactoryUtil.getLog(CommerceTaxFixedRateAddressRelServiceHttp.class);
 	private static final Class<?>[] _addCommerceTaxFixedRateAddressRelParameterTypes0 =
 		new Class[] {
-			long.class, long.class, long.class, long.class,
-			java.lang.String.class, double.class,
-			com.liferay.portal.kernel.service.ServiceContext.class
+			long.class, long.class, long.class, long.class, String.class,
+			double.class, com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _deleteCommerceTaxFixedRateAddressRelParameterTypes1 =
 		new Class[] { long.class };
@@ -277,7 +276,6 @@ public class CommerceTaxFixedRateAddressRelServiceHttp {
 		new Class[] { long.class, long.class };
 	private static final Class<?>[] _updateCommerceTaxFixedRateAddressRelParameterTypes5 =
 		new Class[] {
-			long.class, long.class, long.class, java.lang.String.class,
-			double.class
+			long.class, long.class, long.class, String.class, double.class
 		};
 }

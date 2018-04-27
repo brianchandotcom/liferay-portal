@@ -90,8 +90,8 @@ public interface CPDefinitionOptionValueRelLocalService extends BaseLocalService
 
 	@Indexable(type = IndexableType.REINDEX)
 	public CPDefinitionOptionValueRel addCPDefinitionOptionValueRel(
-		long cpDefinitionOptionRelId, Map<Locale, java.lang.String> titleMap,
-		double priority, java.lang.String key, ServiceContext serviceContext)
+		long cpDefinitionOptionRelId, Map<Locale, String> titleMap,
+		double priority, String key, ServiceContext serviceContext)
 		throws PortalException;
 
 	/**
@@ -210,7 +210,7 @@ public interface CPDefinitionOptionValueRelLocalService extends BaseLocalService
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CPDefinitionOptionValueRel fetchCPDefinitionOptionValueRelByUuidAndGroupId(
-		java.lang.String uuid, long groupId);
+		String uuid, long groupId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
@@ -236,7 +236,7 @@ public interface CPDefinitionOptionValueRelLocalService extends BaseLocalService
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CPDefinitionOptionValueRel getCPDefinitionOptionValueRelByUuidAndGroupId(
-		java.lang.String uuid, long groupId) throws PortalException;
+		String uuid, long groupId) throws PortalException;
 
 	/**
 	* Returns a range of all the cp definition option value rels.
@@ -272,7 +272,7 @@ public interface CPDefinitionOptionValueRelLocalService extends BaseLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CPDefinitionOptionValueRel> getCPDefinitionOptionValueRels(
-		java.lang.String key, int start, int end);
+		String key, int start, int end);
 
 	/**
 	* Returns all the cp definition option value rels matching the UUID and company.
@@ -283,7 +283,7 @@ public interface CPDefinitionOptionValueRelLocalService extends BaseLocalService
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CPDefinitionOptionValueRel> getCPDefinitionOptionValueRelsByUuidAndCompanyId(
-		java.lang.String uuid, long companyId);
+		String uuid, long companyId);
 
 	/**
 	* Returns a range of cp definition option value rels matching the UUID and company.
@@ -297,7 +297,7 @@ public interface CPDefinitionOptionValueRelLocalService extends BaseLocalService
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CPDefinitionOptionValueRel> getCPDefinitionOptionValueRelsByUuidAndCompanyId(
-		java.lang.String uuid, long companyId, int start, int end,
+		String uuid, long companyId, int start, int end,
 		OrderByComparator<CPDefinitionOptionValueRel> orderByComparator);
 
 	/**
@@ -323,7 +323,7 @@ public interface CPDefinitionOptionValueRelLocalService extends BaseLocalService
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -339,7 +339,7 @@ public interface CPDefinitionOptionValueRelLocalService extends BaseLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public BaseModelSearchResult<CPDefinitionOptionValueRel> searchCPDefinitionOptionValueRels(
 		long companyId, long groupId, long cpDefinitionOptionRelId,
-		java.lang.String keywords, int start, int end, Sort sort)
+		String keywords, int start, int end, Sort sort)
 		throws PortalException;
 
 	/**
@@ -354,8 +354,7 @@ public interface CPDefinitionOptionValueRelLocalService extends BaseLocalService
 
 	@Indexable(type = IndexableType.REINDEX)
 	public CPDefinitionOptionValueRel updateCPDefinitionOptionValueRel(
-		long cpDefinitionOptionValueRelId,
-		Map<Locale, java.lang.String> titleMap, double priority,
-		java.lang.String key, ServiceContext serviceContext)
+		long cpDefinitionOptionValueRelId, Map<Locale, String> titleMap,
+		double priority, String key, ServiceContext serviceContext)
 		throws PortalException;
 }

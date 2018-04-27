@@ -216,7 +216,7 @@ public class CommercePriceListUserSegmentEntryRelLocalServiceUtil {
 	* @return the matching commerce price list user segment entry rel, or <code>null</code> if a matching commerce price list user segment entry rel could not be found
 	*/
 	public static com.liferay.commerce.price.list.model.CommercePriceListUserSegmentEntryRel fetchCommercePriceListUserSegmentEntryRelByUuidAndGroupId(
-		java.lang.String uuid, long groupId) {
+		String uuid, long groupId) {
 		return getService()
 				   .fetchCommercePriceListUserSegmentEntryRelByUuidAndGroupId(uuid,
 			groupId);
@@ -249,7 +249,7 @@ public class CommercePriceListUserSegmentEntryRelLocalServiceUtil {
 	* @throws PortalException if a matching commerce price list user segment entry rel could not be found
 	*/
 	public static com.liferay.commerce.price.list.model.CommercePriceListUserSegmentEntryRel getCommercePriceListUserSegmentEntryRelByUuidAndGroupId(
-		java.lang.String uuid, long groupId)
+		String uuid, long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .getCommercePriceListUserSegmentEntryRelByUuidAndGroupId(uuid,
@@ -294,7 +294,7 @@ public class CommercePriceListUserSegmentEntryRelLocalServiceUtil {
 	* @return the matching commerce price list user segment entry rels, or an empty list if no matches were found
 	*/
 	public static java.util.List<com.liferay.commerce.price.list.model.CommercePriceListUserSegmentEntryRel> getCommercePriceListUserSegmentEntryRelsByUuidAndCompanyId(
-		java.lang.String uuid, long companyId) {
+		String uuid, long companyId) {
 		return getService()
 				   .getCommercePriceListUserSegmentEntryRelsByUuidAndCompanyId(uuid,
 			companyId);
@@ -311,7 +311,7 @@ public class CommercePriceListUserSegmentEntryRelLocalServiceUtil {
 	* @return the range of matching commerce price list user segment entry rels, or an empty list if no matches were found
 	*/
 	public static java.util.List<com.liferay.commerce.price.list.model.CommercePriceListUserSegmentEntryRel> getCommercePriceListUserSegmentEntryRelsByUuidAndCompanyId(
-		java.lang.String uuid, long companyId, int start, int end,
+		String uuid, long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.price.list.model.CommercePriceListUserSegmentEntryRel> orderByComparator) {
 		return getService()
 				   .getCommercePriceListUserSegmentEntryRelsByUuidAndCompanyId(uuid,
@@ -347,7 +347,7 @@ public class CommercePriceListUserSegmentEntryRelLocalServiceUtil {
 	*
 	* @return the OSGi service identifier
 	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
+	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 

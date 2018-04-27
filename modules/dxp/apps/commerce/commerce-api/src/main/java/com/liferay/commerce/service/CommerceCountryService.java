@@ -60,12 +60,12 @@ public interface CommerceCountryService extends BaseService {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CommerceCountryServiceUtil} to access the commerce country remote service. Add custom service methods to {@link com.liferay.commerce.service.impl.CommerceCountryServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public CommerceCountry addCommerceCountry(
-		Map<Locale, java.lang.String> nameMap, boolean billingAllowed,
-		boolean shippingAllowed, java.lang.String twoLettersISOCode,
-		java.lang.String threeLettersISOCode, int numericISOCode,
-		boolean subjectToVAT, double priority, boolean active,
-		ServiceContext serviceContext) throws PortalException;
+	public CommerceCountry addCommerceCountry(Map<Locale, String> nameMap,
+		boolean billingAllowed, boolean shippingAllowed,
+		String twoLettersISOCode, String threeLettersISOCode,
+		int numericISOCode, boolean subjectToVAT, double priority,
+		boolean active, ServiceContext serviceContext)
+		throws PortalException;
 
 	public void deleteCommerceCountry(long commerceCountryId)
 		throws PortalException;
@@ -102,7 +102,7 @@ public interface CommerceCountryService extends BaseService {
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommerceCountry> getShippingCommerceCountries(long groupId,
@@ -117,9 +117,9 @@ public interface CommerceCountryService extends BaseService {
 		SearchContext searchContext) throws PortalException;
 
 	public CommerceCountry updateCommerceCountry(long commerceCountryId,
-		Map<Locale, java.lang.String> nameMap, boolean billingAllowed,
-		boolean shippingAllowed, java.lang.String twoLettersISOCode,
-		java.lang.String threeLettersISOCode, int numericISOCode,
-		boolean subjectToVAT, double priority, boolean active,
-		ServiceContext serviceContext) throws PortalException;
+		Map<Locale, String> nameMap, boolean billingAllowed,
+		boolean shippingAllowed, String twoLettersISOCode,
+		String threeLettersISOCode, int numericISOCode, boolean subjectToVAT,
+		double priority, boolean active, ServiceContext serviceContext)
+		throws PortalException;
 }

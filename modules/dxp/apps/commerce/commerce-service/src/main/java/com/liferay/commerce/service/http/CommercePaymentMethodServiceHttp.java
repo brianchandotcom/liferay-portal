@@ -57,11 +57,11 @@ import com.liferay.portal.kernel.util.MethodKey;
 public class CommercePaymentMethodServiceHttp {
 	public static com.liferay.commerce.model.CommercePaymentMethod addCommercePaymentMethod(
 		HttpPrincipal httpPrincipal,
-		java.util.Map<java.util.Locale, java.lang.String> nameMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		java.io.File imageFile, java.lang.String engineKey,
-		java.util.Map<java.lang.String, java.lang.String> engineParameterMap,
-		double priority, boolean active,
+		java.util.Map<java.util.Locale, String> nameMap,
+		java.util.Map<java.util.Locale, String> descriptionMap,
+		java.io.File imageFile, String engineKey,
+		java.util.Map<String, String> engineParameterMap, double priority,
+		boolean active,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -337,11 +337,11 @@ public class CommercePaymentMethodServiceHttp {
 
 	public static com.liferay.commerce.model.CommercePaymentMethod updateCommercePaymentMethod(
 		HttpPrincipal httpPrincipal, long commercePaymentMethodId,
-		java.util.Map<java.util.Locale, java.lang.String> nameMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		java.util.Map<java.util.Locale, String> nameMap,
+		java.util.Map<java.util.Locale, String> descriptionMap,
 		java.io.File imageFile,
-		java.util.Map<java.lang.String, java.lang.String> engineParameterMap,
-		double priority, boolean active,
+		java.util.Map<String, String> engineParameterMap, double priority,
+		boolean active,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -379,8 +379,7 @@ public class CommercePaymentMethodServiceHttp {
 	private static Log _log = LogFactoryUtil.getLog(CommercePaymentMethodServiceHttp.class);
 	private static final Class<?>[] _addCommercePaymentMethodParameterTypes0 = new Class[] {
 			java.util.Map.class, java.util.Map.class, java.io.File.class,
-			java.lang.String.class, java.util.Map.class, double.class,
-			boolean.class,
+			String.class, java.util.Map.class, double.class, boolean.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _createCommercePaymentMethodParameterTypes1 = new Class[] {

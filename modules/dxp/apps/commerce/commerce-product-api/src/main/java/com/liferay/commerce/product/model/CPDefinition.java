@@ -55,7 +55,7 @@ public interface CPDefinition extends CPDefinitionModel, PersistedModel {
 		};
 
 	@Override
-	public boolean equals(java.lang.Object object);
+	public boolean equals(Object object);
 
 	public java.util.List<CPDefinitionOptionRel> getCPDefinitionOptionRels();
 
@@ -63,39 +63,38 @@ public interface CPDefinition extends CPDefinitionModel, PersistedModel {
 
 	public java.util.List<CPInstance> getCPInstances();
 
-	public java.lang.String getDefaultImageThumbnailSrc(
+	public String getDefaultImageThumbnailSrc(
 		com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay)
-		throws java.lang.Exception;
+		throws Exception;
 
-	public java.util.Map<java.util.Locale, java.lang.String> getDescriptionMap();
+	public java.util.Map<java.util.Locale, String> getDescriptionMap();
 
-	public java.lang.String getLayoutUuid();
+	public String getLayoutUuid();
 
-	public java.util.Map<java.util.Locale, java.lang.String> getMetaDescriptionMap();
+	public java.util.Map<java.util.Locale, String> getMetaDescriptionMap();
 
-	public java.util.Map<java.util.Locale, java.lang.String> getMetaKeywordsMap();
+	public java.util.Map<java.util.Locale, String> getMetaKeywordsMap();
 
-	public java.util.Map<java.util.Locale, java.lang.String> getMetaTitleMap();
+	public java.util.Map<java.util.Locale, String> getMetaTitleMap();
 
-	public java.util.Map<java.util.Locale, java.lang.String> getShortDescriptionMap();
+	public java.util.Map<java.util.Locale, String> getShortDescriptionMap();
 
-	public java.lang.String getTitleCurrentValue();
+	public String getTitleCurrentValue();
 
-	public java.util.Map<java.util.Locale, java.lang.String> getTitleMap();
+	public java.util.Map<java.util.Locale, String> getTitleMap();
 
-	public java.util.Map<java.util.Locale, java.lang.String> getUrlTitleMap();
+	public java.util.Map<java.util.Locale, String> getUrlTitleMap();
 
 	public void setDescriptionMap(
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap);
+		java.util.Map<java.util.Locale, String> descriptionMap);
 
-	public void setLayoutUuid(java.lang.String layoutUuid);
+	public void setLayoutUuid(String layoutUuid);
 
 	public void setShortDescriptionMap(
-		java.util.Map<java.util.Locale, java.lang.String> shortDescriptionMap);
+		java.util.Map<java.util.Locale, String> shortDescriptionMap);
 
-	public void setTitleMap(
-		java.util.Map<java.util.Locale, java.lang.String> titleMap);
+	public void setTitleMap(java.util.Map<java.util.Locale, String> titleMap);
 
 	public void setUrlTitleMap(
-		java.util.Map<java.util.Locale, java.lang.String> urlTitleMap);
+		java.util.Map<java.util.Locale, String> urlTitleMap);
 }

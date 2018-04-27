@@ -77,7 +77,7 @@ public interface CommerceWishListLocalService extends BaseLocalService,
 	public CommerceWishList addCommerceWishList(
 		CommerceWishList commerceWishList);
 
-	public CommerceWishList addCommerceWishList(java.lang.String name,
+	public CommerceWishList addCommerceWishList(String name,
 		boolean defaultWishList, ServiceContext serviceContext)
 		throws PortalException;
 
@@ -194,8 +194,8 @@ public interface CommerceWishListLocalService extends BaseLocalService,
 	* @return the matching commerce wish list, or <code>null</code> if a matching commerce wish list could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CommerceWishList fetchCommerceWishListByUuidAndGroupId(
-		java.lang.String uuid, long groupId);
+	public CommerceWishList fetchCommerceWishListByUuidAndGroupId(String uuid,
+		long groupId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
@@ -220,8 +220,8 @@ public interface CommerceWishListLocalService extends BaseLocalService,
 	* @throws PortalException if a matching commerce wish list could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CommerceWishList getCommerceWishListByUuidAndGroupId(
-		java.lang.String uuid, long groupId) throws PortalException;
+	public CommerceWishList getCommerceWishListByUuidAndGroupId(String uuid,
+		long groupId) throws PortalException;
 
 	/**
 	* Returns a range of all the commerce wish lists.
@@ -255,7 +255,7 @@ public interface CommerceWishListLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommerceWishList> getCommerceWishListsByUuidAndCompanyId(
-		java.lang.String uuid, long companyId);
+		String uuid, long companyId);
 
 	/**
 	* Returns a range of commerce wish lists matching the UUID and company.
@@ -269,7 +269,7 @@ public interface CommerceWishListLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommerceWishList> getCommerceWishListsByUuidAndCompanyId(
-		java.lang.String uuid, long companyId, int start, int end,
+		String uuid, long companyId, int start, int end,
 		OrderByComparator<CommerceWishList> orderByComparator);
 
 	/**
@@ -289,7 +289,7 @@ public interface CommerceWishListLocalService extends BaseLocalService,
 	@ThreadLocalCachable
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CommerceWishList getDefaultCommerceWishList(long groupId,
-		long userId, java.lang.String guestUuid) throws PortalException;
+		long userId, String guestUuid) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
@@ -303,7 +303,7 @@ public interface CommerceWishListLocalService extends BaseLocalService,
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -321,6 +321,5 @@ public interface CommerceWishListLocalService extends BaseLocalService,
 		CommerceWishList commerceWishList);
 
 	public CommerceWishList updateCommerceWishList(long commerceWishListId,
-		java.lang.String name, boolean defaultWishList)
-		throws PortalException;
+		String name, boolean defaultWishList) throws PortalException;
 }

@@ -62,9 +62,9 @@ public interface CommerceUserSegmentEntryService extends BaseService {
 	 * Never modify or reference this interface directly. Always use {@link CommerceUserSegmentEntryServiceUtil} to access the commerce user segment entry remote service. Add custom service methods to {@link com.liferay.commerce.user.segment.service.impl.CommerceUserSegmentEntryServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	public CommerceUserSegmentEntry addCommerceUserSegmentEntry(
-		Map<Locale, java.lang.String> nameMap, java.lang.String key,
-		boolean active, boolean system, double priority,
-		ServiceContext serviceContext) throws PortalException;
+		Map<Locale, String> nameMap, String key, boolean active,
+		boolean system, double priority, ServiceContext serviceContext)
+		throws PortalException;
 
 	public CommerceUserSegmentEntry deleteCommerceUserSegmentEntry(
 		long commerceUserSegmentEntryId) throws PortalException;
@@ -88,19 +88,19 @@ public interface CommerceUserSegmentEntryService extends BaseService {
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public BaseModelSearchResult<CommerceUserSegmentEntry> searchCommerceUserSegmentEntries(
-		long companyId, long groupId, java.lang.String keywords, int start,
-		int end, Sort sort) throws PortalException;
+		long companyId, long groupId, String keywords, int start, int end,
+		Sort sort) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public BaseModelSearchResult<CommerceUserSegmentEntry> searchCommerceUserSegmentEntries(
 		SearchContext searchContext) throws PortalException;
 
 	public CommerceUserSegmentEntry updateCommerceUserSegmentEntry(
-		long commerceUserSegmentEntryId, Map<Locale, java.lang.String> nameMap,
-		java.lang.String key, boolean active, double priority,
+		long commerceUserSegmentEntryId, Map<Locale, String> nameMap,
+		String key, boolean active, double priority,
 		ServiceContext serviceContext) throws PortalException;
 }

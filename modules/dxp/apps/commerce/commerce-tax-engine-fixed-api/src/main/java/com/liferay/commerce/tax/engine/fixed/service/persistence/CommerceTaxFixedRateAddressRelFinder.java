@@ -24,13 +24,13 @@ import aQute.bnd.annotation.ProviderType;
 public interface CommerceTaxFixedRateAddressRelFinder {
 	public com.liferay.commerce.tax.engine.fixed.model.CommerceTaxFixedRateAddressRel fetchByC_C_C_Z_First(
 		long commerceTaxMethodId, long commerceCountryId,
-		long commerceRegionId, java.lang.String zip);
+		long commerceRegionId, String zip);
 
 	public java.util.List<com.liferay.commerce.tax.engine.fixed.model.CommerceTaxFixedRateAddressRel> findByC_C_C_Z(
 		long commerceTaxMethodId, long commerceCountryId,
-		long commerceRegionId, java.lang.String zip);
+		long commerceRegionId, String zip);
 
 	public java.util.List<com.liferay.commerce.tax.engine.fixed.model.CommerceTaxFixedRateAddressRel> findByC_C_C_Z(
 		long commerceTaxMethodId, long commerceCountryId,
-		long commerceRegionId, java.lang.String zip, int start, int end);
+		long commerceRegionId, String zip, int start, int end);
 }

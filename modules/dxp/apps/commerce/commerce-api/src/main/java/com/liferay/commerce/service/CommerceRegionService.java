@@ -57,9 +57,8 @@ public interface CommerceRegionService extends BaseService {
 	 * Never modify or reference this interface directly. Always use {@link CommerceRegionServiceUtil} to access the commerce region remote service. Add custom service methods to {@link com.liferay.commerce.service.impl.CommerceRegionServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	public CommerceRegion addCommerceRegion(long commerceCountryId,
-		java.lang.String name, java.lang.String code, double priority,
-		boolean active, ServiceContext serviceContext)
-		throws PortalException;
+		String name, String code, double priority, boolean active,
+		ServiceContext serviceContext) throws PortalException;
 
 	public void deleteCommerceRegion(long commerceRegionId)
 		throws PortalException;
@@ -92,10 +91,9 @@ public interface CommerceRegionService extends BaseService {
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	public CommerceRegion updateCommerceRegion(long commerceRegionId,
-		java.lang.String name, java.lang.String code, double priority,
-		boolean active, ServiceContext serviceContext)
-		throws PortalException;
+		String name, String code, double priority, boolean active,
+		ServiceContext serviceContext) throws PortalException;
 }

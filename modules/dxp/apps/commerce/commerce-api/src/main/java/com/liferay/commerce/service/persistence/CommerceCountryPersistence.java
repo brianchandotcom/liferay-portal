@@ -47,7 +47,7 @@ public interface CommerceCountryPersistence extends BasePersistence<CommerceCoun
 	* @param uuid the uuid
 	* @return the matching commerce countries
 	*/
-	public java.util.List<CommerceCountry> findByUuid(java.lang.String uuid);
+	public java.util.List<CommerceCountry> findByUuid(String uuid);
 
 	/**
 	* Returns a range of all the commerce countries where uuid = &#63;.
@@ -61,8 +61,8 @@ public interface CommerceCountryPersistence extends BasePersistence<CommerceCoun
 	* @param end the upper bound of the range of commerce countries (not inclusive)
 	* @return the range of matching commerce countries
 	*/
-	public java.util.List<CommerceCountry> findByUuid(java.lang.String uuid,
-		int start, int end);
+	public java.util.List<CommerceCountry> findByUuid(String uuid, int start,
+		int end);
 
 	/**
 	* Returns an ordered range of all the commerce countries where uuid = &#63;.
@@ -77,8 +77,8 @@ public interface CommerceCountryPersistence extends BasePersistence<CommerceCoun
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching commerce countries
 	*/
-	public java.util.List<CommerceCountry> findByUuid(java.lang.String uuid,
-		int start, int end,
+	public java.util.List<CommerceCountry> findByUuid(String uuid, int start,
+		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<CommerceCountry> orderByComparator);
 
 	/**
@@ -95,8 +95,8 @@ public interface CommerceCountryPersistence extends BasePersistence<CommerceCoun
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching commerce countries
 	*/
-	public java.util.List<CommerceCountry> findByUuid(java.lang.String uuid,
-		int start, int end,
+	public java.util.List<CommerceCountry> findByUuid(String uuid, int start,
+		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<CommerceCountry> orderByComparator,
 		boolean retrieveFromCache);
 
@@ -108,7 +108,7 @@ public interface CommerceCountryPersistence extends BasePersistence<CommerceCoun
 	* @return the first matching commerce country
 	* @throws NoSuchCountryException if a matching commerce country could not be found
 	*/
-	public CommerceCountry findByUuid_First(java.lang.String uuid,
+	public CommerceCountry findByUuid_First(String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<CommerceCountry> orderByComparator)
 		throws NoSuchCountryException;
 
@@ -119,7 +119,7 @@ public interface CommerceCountryPersistence extends BasePersistence<CommerceCoun
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching commerce country, or <code>null</code> if a matching commerce country could not be found
 	*/
-	public CommerceCountry fetchByUuid_First(java.lang.String uuid,
+	public CommerceCountry fetchByUuid_First(String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<CommerceCountry> orderByComparator);
 
 	/**
@@ -130,7 +130,7 @@ public interface CommerceCountryPersistence extends BasePersistence<CommerceCoun
 	* @return the last matching commerce country
 	* @throws NoSuchCountryException if a matching commerce country could not be found
 	*/
-	public CommerceCountry findByUuid_Last(java.lang.String uuid,
+	public CommerceCountry findByUuid_Last(String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<CommerceCountry> orderByComparator)
 		throws NoSuchCountryException;
 
@@ -141,7 +141,7 @@ public interface CommerceCountryPersistence extends BasePersistence<CommerceCoun
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching commerce country, or <code>null</code> if a matching commerce country could not be found
 	*/
-	public CommerceCountry fetchByUuid_Last(java.lang.String uuid,
+	public CommerceCountry fetchByUuid_Last(String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<CommerceCountry> orderByComparator);
 
 	/**
@@ -154,7 +154,7 @@ public interface CommerceCountryPersistence extends BasePersistence<CommerceCoun
 	* @throws NoSuchCountryException if a commerce country with the primary key could not be found
 	*/
 	public CommerceCountry[] findByUuid_PrevAndNext(long commerceCountryId,
-		java.lang.String uuid,
+		String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<CommerceCountry> orderByComparator)
 		throws NoSuchCountryException;
 
@@ -163,7 +163,7 @@ public interface CommerceCountryPersistence extends BasePersistence<CommerceCoun
 	*
 	* @param uuid the uuid
 	*/
-	public void removeByUuid(java.lang.String uuid);
+	public void removeByUuid(String uuid);
 
 	/**
 	* Returns the number of commerce countries where uuid = &#63;.
@@ -171,7 +171,7 @@ public interface CommerceCountryPersistence extends BasePersistence<CommerceCoun
 	* @param uuid the uuid
 	* @return the number of matching commerce countries
 	*/
-	public int countByUuid(java.lang.String uuid);
+	public int countByUuid(String uuid);
 
 	/**
 	* Returns the commerce country where uuid = &#63; and groupId = &#63; or throws a {@link NoSuchCountryException} if it could not be found.
@@ -181,7 +181,7 @@ public interface CommerceCountryPersistence extends BasePersistence<CommerceCoun
 	* @return the matching commerce country
 	* @throws NoSuchCountryException if a matching commerce country could not be found
 	*/
-	public CommerceCountry findByUUID_G(java.lang.String uuid, long groupId)
+	public CommerceCountry findByUUID_G(String uuid, long groupId)
 		throws NoSuchCountryException;
 
 	/**
@@ -191,7 +191,7 @@ public interface CommerceCountryPersistence extends BasePersistence<CommerceCoun
 	* @param groupId the group ID
 	* @return the matching commerce country, or <code>null</code> if a matching commerce country could not be found
 	*/
-	public CommerceCountry fetchByUUID_G(java.lang.String uuid, long groupId);
+	public CommerceCountry fetchByUUID_G(String uuid, long groupId);
 
 	/**
 	* Returns the commerce country where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -201,7 +201,7 @@ public interface CommerceCountryPersistence extends BasePersistence<CommerceCoun
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching commerce country, or <code>null</code> if a matching commerce country could not be found
 	*/
-	public CommerceCountry fetchByUUID_G(java.lang.String uuid, long groupId,
+	public CommerceCountry fetchByUUID_G(String uuid, long groupId,
 		boolean retrieveFromCache);
 
 	/**
@@ -211,7 +211,7 @@ public interface CommerceCountryPersistence extends BasePersistence<CommerceCoun
 	* @param groupId the group ID
 	* @return the commerce country that was removed
 	*/
-	public CommerceCountry removeByUUID_G(java.lang.String uuid, long groupId)
+	public CommerceCountry removeByUUID_G(String uuid, long groupId)
 		throws NoSuchCountryException;
 
 	/**
@@ -221,7 +221,7 @@ public interface CommerceCountryPersistence extends BasePersistence<CommerceCoun
 	* @param groupId the group ID
 	* @return the number of matching commerce countries
 	*/
-	public int countByUUID_G(java.lang.String uuid, long groupId);
+	public int countByUUID_G(String uuid, long groupId);
 
 	/**
 	* Returns all the commerce countries where uuid = &#63; and companyId = &#63;.
@@ -230,7 +230,7 @@ public interface CommerceCountryPersistence extends BasePersistence<CommerceCoun
 	* @param companyId the company ID
 	* @return the matching commerce countries
 	*/
-	public java.util.List<CommerceCountry> findByUuid_C(java.lang.String uuid,
+	public java.util.List<CommerceCountry> findByUuid_C(String uuid,
 		long companyId);
 
 	/**
@@ -246,7 +246,7 @@ public interface CommerceCountryPersistence extends BasePersistence<CommerceCoun
 	* @param end the upper bound of the range of commerce countries (not inclusive)
 	* @return the range of matching commerce countries
 	*/
-	public java.util.List<CommerceCountry> findByUuid_C(java.lang.String uuid,
+	public java.util.List<CommerceCountry> findByUuid_C(String uuid,
 		long companyId, int start, int end);
 
 	/**
@@ -263,7 +263,7 @@ public interface CommerceCountryPersistence extends BasePersistence<CommerceCoun
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching commerce countries
 	*/
-	public java.util.List<CommerceCountry> findByUuid_C(java.lang.String uuid,
+	public java.util.List<CommerceCountry> findByUuid_C(String uuid,
 		long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<CommerceCountry> orderByComparator);
 
@@ -282,7 +282,7 @@ public interface CommerceCountryPersistence extends BasePersistence<CommerceCoun
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching commerce countries
 	*/
-	public java.util.List<CommerceCountry> findByUuid_C(java.lang.String uuid,
+	public java.util.List<CommerceCountry> findByUuid_C(String uuid,
 		long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<CommerceCountry> orderByComparator,
 		boolean retrieveFromCache);
@@ -296,8 +296,7 @@ public interface CommerceCountryPersistence extends BasePersistence<CommerceCoun
 	* @return the first matching commerce country
 	* @throws NoSuchCountryException if a matching commerce country could not be found
 	*/
-	public CommerceCountry findByUuid_C_First(java.lang.String uuid,
-		long companyId,
+	public CommerceCountry findByUuid_C_First(String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<CommerceCountry> orderByComparator)
 		throws NoSuchCountryException;
 
@@ -309,8 +308,7 @@ public interface CommerceCountryPersistence extends BasePersistence<CommerceCoun
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching commerce country, or <code>null</code> if a matching commerce country could not be found
 	*/
-	public CommerceCountry fetchByUuid_C_First(java.lang.String uuid,
-		long companyId,
+	public CommerceCountry fetchByUuid_C_First(String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<CommerceCountry> orderByComparator);
 
 	/**
@@ -322,8 +320,7 @@ public interface CommerceCountryPersistence extends BasePersistence<CommerceCoun
 	* @return the last matching commerce country
 	* @throws NoSuchCountryException if a matching commerce country could not be found
 	*/
-	public CommerceCountry findByUuid_C_Last(java.lang.String uuid,
-		long companyId,
+	public CommerceCountry findByUuid_C_Last(String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<CommerceCountry> orderByComparator)
 		throws NoSuchCountryException;
 
@@ -335,8 +332,7 @@ public interface CommerceCountryPersistence extends BasePersistence<CommerceCoun
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching commerce country, or <code>null</code> if a matching commerce country could not be found
 	*/
-	public CommerceCountry fetchByUuid_C_Last(java.lang.String uuid,
-		long companyId,
+	public CommerceCountry fetchByUuid_C_Last(String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<CommerceCountry> orderByComparator);
 
 	/**
@@ -350,7 +346,7 @@ public interface CommerceCountryPersistence extends BasePersistence<CommerceCoun
 	* @throws NoSuchCountryException if a commerce country with the primary key could not be found
 	*/
 	public CommerceCountry[] findByUuid_C_PrevAndNext(long commerceCountryId,
-		java.lang.String uuid, long companyId,
+		String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<CommerceCountry> orderByComparator)
 		throws NoSuchCountryException;
 
@@ -360,7 +356,7 @@ public interface CommerceCountryPersistence extends BasePersistence<CommerceCoun
 	* @param uuid the uuid
 	* @param companyId the company ID
 	*/
-	public void removeByUuid_C(java.lang.String uuid, long companyId);
+	public void removeByUuid_C(String uuid, long companyId);
 
 	/**
 	* Returns the number of commerce countries where uuid = &#63; and companyId = &#63;.
@@ -369,7 +365,7 @@ public interface CommerceCountryPersistence extends BasePersistence<CommerceCoun
 	* @param companyId the company ID
 	* @return the number of matching commerce countries
 	*/
-	public int countByUuid_C(java.lang.String uuid, long companyId);
+	public int countByUuid_C(String uuid, long companyId);
 
 	/**
 	* Returns all the commerce countries where groupId = &#63;.
@@ -1139,5 +1135,5 @@ public interface CommerceCountryPersistence extends BasePersistence<CommerceCoun
 	public int countAll();
 
 	@Override
-	public java.util.Set<java.lang.String> getBadColumnNames();
+	public java.util.Set<String> getBadColumnNames();
 }

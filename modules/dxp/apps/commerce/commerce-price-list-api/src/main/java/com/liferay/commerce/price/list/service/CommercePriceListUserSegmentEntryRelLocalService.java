@@ -196,7 +196,7 @@ public interface CommercePriceListUserSegmentEntryRelLocalService
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CommercePriceListUserSegmentEntryRel fetchCommercePriceListUserSegmentEntryRelByUuidAndGroupId(
-		java.lang.String uuid, long groupId);
+		String uuid, long groupId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
@@ -222,7 +222,7 @@ public interface CommercePriceListUserSegmentEntryRelLocalService
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CommercePriceListUserSegmentEntryRel getCommercePriceListUserSegmentEntryRelByUuidAndGroupId(
-		java.lang.String uuid, long groupId) throws PortalException;
+		String uuid, long groupId) throws PortalException;
 
 	/**
 	* Returns a range of all the commerce price list user segment entry rels.
@@ -257,7 +257,7 @@ public interface CommercePriceListUserSegmentEntryRelLocalService
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommercePriceListUserSegmentEntryRel> getCommercePriceListUserSegmentEntryRelsByUuidAndCompanyId(
-		java.lang.String uuid, long companyId);
+		String uuid, long companyId);
 
 	/**
 	* Returns a range of commerce price list user segment entry rels matching the UUID and company.
@@ -271,7 +271,7 @@ public interface CommercePriceListUserSegmentEntryRelLocalService
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommercePriceListUserSegmentEntryRel> getCommercePriceListUserSegmentEntryRelsByUuidAndCompanyId(
-		java.lang.String uuid, long companyId, int start, int end,
+		String uuid, long companyId, int start, int end,
 		OrderByComparator<CommercePriceListUserSegmentEntryRel> orderByComparator);
 
 	/**
@@ -298,7 +298,7 @@ public interface CommercePriceListUserSegmentEntryRelLocalService
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

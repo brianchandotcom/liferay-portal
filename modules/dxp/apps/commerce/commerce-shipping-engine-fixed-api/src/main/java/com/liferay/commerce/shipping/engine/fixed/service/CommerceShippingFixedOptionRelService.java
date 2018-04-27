@@ -61,8 +61,8 @@ public interface CommerceShippingFixedOptionRelService extends BaseService {
 	public CommerceShippingFixedOptionRel addCommerceShippingFixedOptionRel(
 		long commerceShippingMethodId, long commerceShippingFixedOptionId,
 		long commerceWarehouseId, long commerceCountryId,
-		long commerceRegionId, java.lang.String zip, double weightFrom,
-		double weightTo, BigDecimal fixedPrice, BigDecimal rateUnitWeightPrice,
+		long commerceRegionId, String zip, double weightFrom, double weightTo,
+		BigDecimal fixedPrice, BigDecimal rateUnitWeightPrice,
 		double ratePercentage, ServiceContext serviceContext)
 		throws PortalException;
 
@@ -76,7 +76,7 @@ public interface CommerceShippingFixedOptionRelService extends BaseService {
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CommerceShippingFixedOptionRel fetchCommerceShippingFixedOptionRel(
 		long commerceShippingFixedOptionId, long commerceCountryId,
-		long commerceRegionId, java.lang.String zip, double weight);
+		long commerceRegionId, String zip, double weight);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommerceShippingFixedOptionRel> getCommerceShippingFixedOptionRels(
@@ -109,11 +109,11 @@ public interface CommerceShippingFixedOptionRelService extends BaseService {
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	public CommerceShippingFixedOptionRel updateCommerceShippingFixedOptionRel(
 		long commerceShippingFixedOptionRelId, long commerceWarehouseId,
-		long commerceCountryId, long commerceRegionId, java.lang.String zip,
+		long commerceCountryId, long commerceRegionId, String zip,
 		double weightFrom, double weightTo, BigDecimal fixedPrice,
 		BigDecimal rateUnitWeightPrice, double ratePercentage)
 		throws PortalException;

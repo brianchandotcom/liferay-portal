@@ -61,10 +61,9 @@ public interface CommerceShippingFixedOptionService extends BaseService {
 	 * Never modify or reference this interface directly. Always use {@link CommerceShippingFixedOptionServiceUtil} to access the commerce shipping fixed option remote service. Add custom service methods to {@link com.liferay.commerce.shipping.engine.fixed.service.impl.CommerceShippingFixedOptionServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	public CommerceShippingFixedOption addCommerceShippingFixedOption(
-		long commerceShippingMethodId, Map<Locale, java.lang.String> nameMap,
-		Map<Locale, java.lang.String> descriptionMap, BigDecimal amount,
-		double priority, ServiceContext serviceContext)
-		throws PortalException;
+		long commerceShippingMethodId, Map<Locale, String> nameMap,
+		Map<Locale, String> descriptionMap, BigDecimal amount, double priority,
+		ServiceContext serviceContext) throws PortalException;
 
 	public void deleteCommerceShippingFixedOption(
 		long commerceShippingFixedOptionId) throws PortalException;
@@ -91,11 +90,10 @@ public interface CommerceShippingFixedOptionService extends BaseService {
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	public CommerceShippingFixedOption updateCommerceShippingFixedOption(
-		long commerceShippingFixedOptionId,
-		Map<Locale, java.lang.String> nameMap,
-		Map<Locale, java.lang.String> descriptionMap, BigDecimal amount,
-		double priority) throws PortalException;
+		long commerceShippingFixedOptionId, Map<Locale, String> nameMap,
+		Map<Locale, String> descriptionMap, BigDecimal amount, double priority)
+		throws PortalException;
 }

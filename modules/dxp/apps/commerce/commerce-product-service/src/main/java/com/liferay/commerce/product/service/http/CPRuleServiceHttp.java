@@ -56,8 +56,8 @@ import com.liferay.portal.kernel.util.MethodKey;
 @ProviderType
 public class CPRuleServiceHttp {
 	public static com.liferay.commerce.product.model.CPRule addCPRule(
-		HttpPrincipal httpPrincipal, java.lang.String name, boolean active,
-		java.lang.String type, java.lang.String typeSettings,
+		HttpPrincipal httpPrincipal, String name, boolean active, String type,
+		String typeSettings,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -216,7 +216,7 @@ public class CPRuleServiceHttp {
 
 	public static com.liferay.portal.kernel.search.BaseModelSearchResult<com.liferay.commerce.product.model.CPRule> searchCPRules(
 		HttpPrincipal httpPrincipal, long companyId, long groupId,
-		java.lang.String keywords, int start, int end,
+		String keywords, int start, int end,
 		com.liferay.portal.kernel.search.Sort sort)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -282,8 +282,8 @@ public class CPRuleServiceHttp {
 	}
 
 	public static com.liferay.commerce.product.model.CPRule updateCPRule(
-		HttpPrincipal httpPrincipal, long cpRuleId, java.lang.String name,
-		boolean active, java.lang.String type, java.lang.String typeSettings,
+		HttpPrincipal httpPrincipal, long cpRuleId, String name,
+		boolean active, String type, String typeSettings,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -317,8 +317,7 @@ public class CPRuleServiceHttp {
 
 	private static Log _log = LogFactoryUtil.getLog(CPRuleServiceHttp.class);
 	private static final Class<?>[] _addCPRuleParameterTypes0 = new Class[] {
-			java.lang.String.class, boolean.class, java.lang.String.class,
-			java.lang.String.class,
+			String.class, boolean.class, String.class, String.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _deleteCPRuleParameterTypes1 = new Class[] {
@@ -335,15 +334,14 @@ public class CPRuleServiceHttp {
 			long.class
 		};
 	private static final Class<?>[] _searchCPRulesParameterTypes5 = new Class[] {
-			long.class, long.class, java.lang.String.class, int.class, int.class,
+			long.class, long.class, String.class, int.class, int.class,
 			com.liferay.portal.kernel.search.Sort.class
 		};
 	private static final Class<?>[] _searchCPRulesParameterTypes6 = new Class[] {
 			com.liferay.portal.kernel.search.SearchContext.class
 		};
 	private static final Class<?>[] _updateCPRuleParameterTypes7 = new Class[] {
-			long.class, java.lang.String.class, boolean.class,
-			java.lang.String.class, java.lang.String.class,
+			long.class, String.class, boolean.class, String.class, String.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 }

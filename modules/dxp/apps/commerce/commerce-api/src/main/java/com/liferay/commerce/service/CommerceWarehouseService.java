@@ -56,10 +56,9 @@ public interface CommerceWarehouseService extends BaseService {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CommerceWarehouseServiceUtil} to access the commerce warehouse remote service. Add custom service methods to {@link com.liferay.commerce.service.impl.CommerceWarehouseServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public CommerceWarehouse addCommerceWarehouse(java.lang.String name,
-		java.lang.String description, boolean active, java.lang.String street1,
-		java.lang.String street2, java.lang.String street3,
-		java.lang.String city, java.lang.String zip, long commerceRegionId,
+	public CommerceWarehouse addCommerceWarehouse(String name,
+		String description, boolean active, String street1, String street2,
+		String street3, String city, String zip, long commerceRegionId,
 		long commerceCountryId, double latitude, double longitude,
 		ServiceContext serviceContext) throws PortalException;
 
@@ -105,35 +104,31 @@ public interface CommerceWarehouseService extends BaseService {
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<CommerceWarehouse> search(long groupId,
-		java.lang.String keywords, boolean all, long commerceCountryId,
-		int start, int end,
+	public List<CommerceWarehouse> search(long groupId, String keywords,
+		boolean all, long commerceCountryId, int start, int end,
 		OrderByComparator<CommerceWarehouse> orderByComparator)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int searchCount(long groupId, java.lang.String keywords,
-		boolean all, long commerceCountryId) throws PortalException;
+	public int searchCount(long groupId, String keywords, boolean all,
+		long commerceCountryId) throws PortalException;
 
 	public CommerceWarehouse setActive(long commerceWarehouseId, boolean active)
 		throws PortalException;
 
 	public CommerceWarehouse updateCommerceWarehouse(long commerceWarehouseId,
-		java.lang.String name, java.lang.String description, boolean active,
-		java.lang.String street1, java.lang.String street2,
-		java.lang.String street3, java.lang.String city, java.lang.String zip,
+		String name, String description, boolean active, String street1,
+		String street2, String street3, String city, String zip,
 		long commerceRegionId, long commerceCountryId, double latitude,
 		double longitude, ServiceContext serviceContext)
 		throws PortalException;
 
 	public CommerceWarehouse updateDefaultCommerceWarehouse(
-		long commerceWarehouseId, java.lang.String name,
-		java.lang.String street1, java.lang.String street2,
-		java.lang.String street3, java.lang.String city, java.lang.String zip,
-		long commerceRegionId, long commerceCountryId, double latitude,
-		double longitude, ServiceContext serviceContext)
-		throws PortalException;
+		long commerceWarehouseId, String name, String street1, String street2,
+		String street3, String city, String zip, long commerceRegionId,
+		long commerceCountryId, double latitude, double longitude,
+		ServiceContext serviceContext) throws PortalException;
 }

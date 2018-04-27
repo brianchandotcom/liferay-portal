@@ -154,7 +154,7 @@ public class CPDefinitionLinkServiceHttp {
 	}
 
 	public static java.util.List<com.liferay.commerce.product.model.CPDefinitionLink> getCPDefinitionLinks(
-		HttpPrincipal httpPrincipal, long cpDefinitionId1, java.lang.String type)
+		HttpPrincipal httpPrincipal, long cpDefinitionId1, String type)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(CPDefinitionLinkServiceUtil.class,
@@ -186,8 +186,8 @@ public class CPDefinitionLinkServiceHttp {
 	}
 
 	public static java.util.List<com.liferay.commerce.product.model.CPDefinitionLink> getCPDefinitionLinks(
-		HttpPrincipal httpPrincipal, long cpDefinitionId1,
-		java.lang.String type, int start, int end,
+		HttpPrincipal httpPrincipal, long cpDefinitionId1, String type,
+		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.product.model.CPDefinitionLink> orderByComparator)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -220,7 +220,7 @@ public class CPDefinitionLinkServiceHttp {
 	}
 
 	public static int getCPDefinitionLinksCount(HttpPrincipal httpPrincipal,
-		long cpDefinitionId1, java.lang.String type)
+		long cpDefinitionId1, String type)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(CPDefinitionLinkServiceUtil.class,
@@ -287,7 +287,7 @@ public class CPDefinitionLinkServiceHttp {
 	}
 
 	public static void updateCPDefinitionLinks(HttpPrincipal httpPrincipal,
-		long cpDefinitionId1, long[] cpDefinitionIds2, java.lang.String type,
+		long cpDefinitionId1, long[] cpDefinitionIds2, String type,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -327,21 +327,21 @@ public class CPDefinitionLinkServiceHttp {
 			long.class
 		};
 	private static final Class<?>[] _getCPDefinitionLinksParameterTypes3 = new Class[] {
-			long.class, java.lang.String.class
+			long.class, String.class
 		};
 	private static final Class<?>[] _getCPDefinitionLinksParameterTypes4 = new Class[] {
-			long.class, java.lang.String.class, int.class, int.class,
+			long.class, String.class, int.class, int.class,
 			com.liferay.portal.kernel.util.OrderByComparator.class
 		};
 	private static final Class<?>[] _getCPDefinitionLinksCountParameterTypes5 = new Class[] {
-			long.class, java.lang.String.class
+			long.class, String.class
 		};
 	private static final Class<?>[] _updateCPDefinitionLinkParameterTypes6 = new Class[] {
 			long.class, double.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _updateCPDefinitionLinksParameterTypes7 = new Class[] {
-			long.class, long[].class, java.lang.String.class,
+			long.class, long[].class, String.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 }

@@ -78,11 +78,10 @@ public interface CPDefinitionVirtualSettingLocalService extends BaseLocalService
 		CPDefinitionVirtualSetting cpDefinitionVirtualSetting);
 
 	public CPDefinitionVirtualSetting addCPDefinitionVirtualSetting(
-		long cpDefinitionId, long fileEntryId, java.lang.String url,
-		java.lang.String activationStatus, long duration, int maxUsages,
-		boolean useSample, long sampleFileEntryId, java.lang.String sampleUrl,
-		boolean termsOfUseRequired,
-		Map<Locale, java.lang.String> termsOfUseContentMap,
+		long cpDefinitionId, long fileEntryId, String url,
+		String activationStatus, long duration, int maxUsages,
+		boolean useSample, long sampleFileEntryId, String sampleUrl,
+		boolean termsOfUseRequired, Map<Locale, String> termsOfUseContentMap,
 		long termsOfUseJournalArticleResourcePrimKey,
 		ServiceContext serviceContext) throws PortalException;
 
@@ -203,7 +202,7 @@ public interface CPDefinitionVirtualSettingLocalService extends BaseLocalService
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CPDefinitionVirtualSetting fetchCPDefinitionVirtualSettingByUuidAndGroupId(
-		java.lang.String uuid, long groupId);
+		String uuid, long groupId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
@@ -229,7 +228,7 @@ public interface CPDefinitionVirtualSettingLocalService extends BaseLocalService
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CPDefinitionVirtualSetting getCPDefinitionVirtualSettingByUuidAndGroupId(
-		java.lang.String uuid, long groupId) throws PortalException;
+		String uuid, long groupId) throws PortalException;
 
 	/**
 	* Returns a range of all the cp definition virtual settings.
@@ -255,7 +254,7 @@ public interface CPDefinitionVirtualSettingLocalService extends BaseLocalService
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CPDefinitionVirtualSetting> getCPDefinitionVirtualSettingsByUuidAndCompanyId(
-		java.lang.String uuid, long companyId);
+		String uuid, long companyId);
 
 	/**
 	* Returns a range of cp definition virtual settings matching the UUID and company.
@@ -269,7 +268,7 @@ public interface CPDefinitionVirtualSettingLocalService extends BaseLocalService
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CPDefinitionVirtualSetting> getCPDefinitionVirtualSettingsByUuidAndCompanyId(
-		java.lang.String uuid, long companyId, int start, int end,
+		String uuid, long companyId, int start, int end,
 		OrderByComparator<CPDefinitionVirtualSetting> orderByComparator);
 
 	/**
@@ -292,7 +291,7 @@ public interface CPDefinitionVirtualSettingLocalService extends BaseLocalService
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -310,11 +309,10 @@ public interface CPDefinitionVirtualSettingLocalService extends BaseLocalService
 		CPDefinitionVirtualSetting cpDefinitionVirtualSetting);
 
 	public CPDefinitionVirtualSetting updateCPDefinitionVirtualSetting(
-		long cpDefinitionVirtualSettingId, long fileEntryId,
-		java.lang.String url, java.lang.String activationStatus, long duration,
-		int maxUsages, boolean useSample, long sampleFileEntryId,
-		java.lang.String sampleUrl, boolean termsOfUseRequired,
-		Map<Locale, java.lang.String> termsOfUseContentMap,
+		long cpDefinitionVirtualSettingId, long fileEntryId, String url,
+		String activationStatus, long duration, int maxUsages,
+		boolean useSample, long sampleFileEntryId, String sampleUrl,
+		boolean termsOfUseRequired, Map<Locale, String> termsOfUseContentMap,
 		long termsOfUseJournalArticleResourcePrimKey,
 		ServiceContext serviceContext) throws PortalException;
 }

@@ -78,12 +78,12 @@ public interface CPDefinitionInventoryLocalService extends BaseLocalService,
 		CPDefinitionInventory cpDefinitionInventory);
 
 	public CPDefinitionInventory addCPDefinitionInventory(long cpDefinitionId,
-		java.lang.String cpDefinitionInventoryEngine,
-		java.lang.String lowStockActivity, boolean displayAvailability,
-		boolean displayStockQuantity, int minStockQuantity, boolean backOrders,
-		int minOrderQuantity, int maxOrderQuantity,
-		java.lang.String allowedOrderQuantities, int multipleOrderQuantity,
-		ServiceContext serviceContext) throws PortalException;
+		String cpDefinitionInventoryEngine, String lowStockActivity,
+		boolean displayAvailability, boolean displayStockQuantity,
+		int minStockQuantity, boolean backOrders, int minOrderQuantity,
+		int maxOrderQuantity, String allowedOrderQuantities,
+		int multipleOrderQuantity, ServiceContext serviceContext)
+		throws PortalException;
 
 	/**
 	* Creates a new cp definition inventory with the primary key. Does not add the cp definition inventory to the database.
@@ -202,7 +202,7 @@ public interface CPDefinitionInventoryLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CPDefinitionInventory fetchCPDefinitionInventoryByUuidAndGroupId(
-		java.lang.String uuid, long groupId);
+		String uuid, long groupId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
@@ -231,7 +231,7 @@ public interface CPDefinitionInventoryLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CPDefinitionInventory> getCPDefinitionInventoriesByUuidAndCompanyId(
-		java.lang.String uuid, long companyId);
+		String uuid, long companyId);
 
 	/**
 	* Returns a range of cp definition inventories matching the UUID and company.
@@ -245,7 +245,7 @@ public interface CPDefinitionInventoryLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CPDefinitionInventory> getCPDefinitionInventoriesByUuidAndCompanyId(
-		java.lang.String uuid, long companyId, int start, int end,
+		String uuid, long companyId, int start, int end,
 		OrderByComparator<CPDefinitionInventory> orderByComparator);
 
 	/**
@@ -277,7 +277,7 @@ public interface CPDefinitionInventoryLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CPDefinitionInventory getCPDefinitionInventoryByUuidAndGroupId(
-		java.lang.String uuid, long groupId) throws PortalException;
+		String uuid, long groupId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
@@ -291,7 +291,7 @@ public interface CPDefinitionInventoryLocalService extends BaseLocalService,
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -309,11 +309,10 @@ public interface CPDefinitionInventoryLocalService extends BaseLocalService,
 		CPDefinitionInventory cpDefinitionInventory);
 
 	public CPDefinitionInventory updateCPDefinitionInventory(
-		long cpDefinitionInventoryId,
-		java.lang.String cpDefinitionInventoryEngine,
-		java.lang.String lowStockActivity, boolean displayAvailability,
+		long cpDefinitionInventoryId, String cpDefinitionInventoryEngine,
+		String lowStockActivity, boolean displayAvailability,
 		boolean displayStockQuantity, int minStockQuantity, boolean backOrders,
 		int minOrderQuantity, int maxOrderQuantity,
-		java.lang.String allowedOrderQuantities, int multipleOrderQuantity,
+		String allowedOrderQuantities, int multipleOrderQuantity,
 		ServiceContext serviceContext) throws PortalException;
 }

@@ -66,9 +66,8 @@ import java.rmi.RemoteException;
 @ProviderType
 public class CommerceDiscountServiceSoap {
 	public static com.liferay.commerce.discount.model.CommerceDiscountSoap addCommerceDiscount(
-		java.lang.String title, java.lang.String target, java.lang.String type,
-		java.lang.String typeSettings, boolean useCouponCode,
-		java.lang.String couponCode, java.lang.String limitationType,
+		String title, String target, String type, String typeSettings,
+		boolean useCouponCode, String couponCode, String limitationType,
 		int limitationTimes, int numberOfUse, boolean cumulative,
 		boolean usePercentage, java.math.BigDecimal level1,
 		java.math.BigDecimal level2, java.math.BigDecimal level3,
@@ -112,12 +111,10 @@ public class CommerceDiscountServiceSoap {
 	}
 
 	public static com.liferay.commerce.discount.model.CommerceDiscountSoap updateCommerceDiscount(
-		long commerceDiscountId, java.lang.String title,
-		java.lang.String target, java.lang.String type,
-		java.lang.String typeSettings, boolean useCouponCode,
-		java.lang.String couponCode, java.lang.String limitationType,
-		int limitationTimes, int numberOfUse, boolean cumulative,
-		boolean usePercentage, java.math.BigDecimal level1,
+		long commerceDiscountId, String title, String target, String type,
+		String typeSettings, boolean useCouponCode, String couponCode,
+		String limitationType, int limitationTimes, int numberOfUse,
+		boolean cumulative, boolean usePercentage, java.math.BigDecimal level1,
 		java.math.BigDecimal level2, java.math.BigDecimal level3,
 		java.math.BigDecimal maximumDiscountAmount, boolean active,
 		int displayDateMonth, int displayDateDay, int displayDateYear,

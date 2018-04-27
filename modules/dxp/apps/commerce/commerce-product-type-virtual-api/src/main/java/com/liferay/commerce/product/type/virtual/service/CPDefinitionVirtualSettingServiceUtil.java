@@ -43,11 +43,11 @@ public class CPDefinitionVirtualSettingServiceUtil {
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.commerce.product.type.virtual.service.impl.CPDefinitionVirtualSettingServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static com.liferay.commerce.product.type.virtual.model.CPDefinitionVirtualSetting addCPDefinitionVirtualSetting(
-		long cpDefinitionId, long fileEntryId, java.lang.String url,
-		java.lang.String activationStatus, long duration, int maxUsages,
-		boolean useSample, long sampleFileEntryId, java.lang.String sampleUrl,
+		long cpDefinitionId, long fileEntryId, String url,
+		String activationStatus, long duration, int maxUsages,
+		boolean useSample, long sampleFileEntryId, String sampleUrl,
 		boolean termsOfUseRequired,
-		java.util.Map<java.util.Locale, java.lang.String> termsOfUseContentMap,
+		java.util.Map<java.util.Locale, String> termsOfUseContentMap,
 		long termsOfUseJournalArticleResourcePrimKey,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -71,16 +71,16 @@ public class CPDefinitionVirtualSettingServiceUtil {
 	*
 	* @return the OSGi service identifier
 	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
+	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 
 	public static com.liferay.commerce.product.type.virtual.model.CPDefinitionVirtualSetting updateCPDefinitionVirtualSetting(
-		long cpDefinitionVirtualSettingId, long fileEntryId,
-		java.lang.String url, java.lang.String activationStatus, long duration,
-		int maxUsages, boolean useSample, long sampleFileEntryId,
-		java.lang.String sampleUrl, boolean termsOfUseRequired,
-		java.util.Map<java.util.Locale, java.lang.String> termsOfUseContentMap,
+		long cpDefinitionVirtualSettingId, long fileEntryId, String url,
+		String activationStatus, long duration, int maxUsages,
+		boolean useSample, long sampleFileEntryId, String sampleUrl,
+		boolean termsOfUseRequired,
+		java.util.Map<java.util.Locale, String> termsOfUseContentMap,
 		long termsOfUseJournalArticleResourcePrimKey,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {

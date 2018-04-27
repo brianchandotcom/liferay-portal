@@ -56,8 +56,7 @@ import com.liferay.portal.kernel.util.MethodKey;
 @ProviderType
 public class CommerceWishListServiceHttp {
 	public static com.liferay.commerce.wish.list.model.CommerceWishList addCommerceWishList(
-		HttpPrincipal httpPrincipal, java.lang.String name,
-		boolean defaultWishList,
+		HttpPrincipal httpPrincipal, String name, boolean defaultWishList,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -283,8 +282,8 @@ public class CommerceWishListServiceHttp {
 	}
 
 	public static com.liferay.commerce.wish.list.model.CommerceWishList updateCommerceWishList(
-		HttpPrincipal httpPrincipal, long commerceWishListId,
-		java.lang.String name, boolean defaultWishList)
+		HttpPrincipal httpPrincipal, long commerceWishListId, String name,
+		boolean defaultWishList)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(CommerceWishListServiceUtil.class,
@@ -318,7 +317,7 @@ public class CommerceWishListServiceHttp {
 
 	private static Log _log = LogFactoryUtil.getLog(CommerceWishListServiceHttp.class);
 	private static final Class<?>[] _addCommerceWishListParameterTypes0 = new Class[] {
-			java.lang.String.class, boolean.class,
+			String.class, boolean.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _deleteCommerceWishListParameterTypes1 = new Class[] {
@@ -342,6 +341,6 @@ public class CommerceWishListServiceHttp {
 			long.class, long.class
 		};
 	private static final Class<?>[] _updateCommerceWishListParameterTypes7 = new Class[] {
-			long.class, java.lang.String.class, boolean.class
+			long.class, String.class, boolean.class
 		};
 }

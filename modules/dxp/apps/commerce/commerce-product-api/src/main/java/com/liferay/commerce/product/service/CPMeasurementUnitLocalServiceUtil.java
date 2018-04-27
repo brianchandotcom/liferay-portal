@@ -55,9 +55,8 @@ public class CPMeasurementUnitLocalServiceUtil {
 	}
 
 	public static com.liferay.commerce.product.model.CPMeasurementUnit addCPMeasurementUnit(
-		java.util.Map<java.util.Locale, java.lang.String> nameMap,
-		java.lang.String key, double rate, boolean primary, double priority,
-		int type,
+		java.util.Map<java.util.Locale, String> nameMap, String key,
+		double rate, boolean primary, double priority, int type,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
@@ -204,7 +203,7 @@ public class CPMeasurementUnitLocalServiceUtil {
 	* @return the matching cp measurement unit, or <code>null</code> if a matching cp measurement unit could not be found
 	*/
 	public static com.liferay.commerce.product.model.CPMeasurementUnit fetchCPMeasurementUnitByUuidAndGroupId(
-		java.lang.String uuid, long groupId) {
+		String uuid, long groupId) {
 		return getService().fetchCPMeasurementUnitByUuidAndGroupId(uuid, groupId);
 	}
 
@@ -239,7 +238,7 @@ public class CPMeasurementUnitLocalServiceUtil {
 	* @throws PortalException if a matching cp measurement unit could not be found
 	*/
 	public static com.liferay.commerce.product.model.CPMeasurementUnit getCPMeasurementUnitByUuidAndGroupId(
-		java.lang.String uuid, long groupId)
+		String uuid, long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getCPMeasurementUnitByUuidAndGroupId(uuid, groupId);
 	}
@@ -269,7 +268,7 @@ public class CPMeasurementUnitLocalServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.commerce.product.model.CPMeasurementUnit> getCPMeasurementUnits(
-		long groupId, java.lang.String[] keys, int type) {
+		long groupId, String[] keys, int type) {
 		return getService().getCPMeasurementUnits(groupId, keys, type);
 	}
 
@@ -281,7 +280,7 @@ public class CPMeasurementUnitLocalServiceUtil {
 	* @return the matching cp measurement units, or an empty list if no matches were found
 	*/
 	public static java.util.List<com.liferay.commerce.product.model.CPMeasurementUnit> getCPMeasurementUnitsByUuidAndCompanyId(
-		java.lang.String uuid, long companyId) {
+		String uuid, long companyId) {
 		return getService()
 				   .getCPMeasurementUnitsByUuidAndCompanyId(uuid, companyId);
 	}
@@ -297,7 +296,7 @@ public class CPMeasurementUnitLocalServiceUtil {
 	* @return the range of matching cp measurement units, or an empty list if no matches were found
 	*/
 	public static java.util.List<com.liferay.commerce.product.model.CPMeasurementUnit> getCPMeasurementUnitsByUuidAndCompanyId(
-		java.lang.String uuid, long companyId, int start, int end,
+		String uuid, long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.product.model.CPMeasurementUnit> orderByComparator) {
 		return getService()
 				   .getCPMeasurementUnitsByUuidAndCompanyId(uuid, companyId,
@@ -335,7 +334,7 @@ public class CPMeasurementUnitLocalServiceUtil {
 	*
 	* @return the OSGi service identifier
 	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
+	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 
@@ -364,9 +363,8 @@ public class CPMeasurementUnitLocalServiceUtil {
 
 	public static com.liferay.commerce.product.model.CPMeasurementUnit updateCPMeasurementUnit(
 		long cpMeasurementUnitId,
-		java.util.Map<java.util.Locale, java.lang.String> nameMap,
-		java.lang.String key, double rate, boolean primary, double priority,
-		int type,
+		java.util.Map<java.util.Locale, String> nameMap, String key,
+		double rate, boolean primary, double priority, int type,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()

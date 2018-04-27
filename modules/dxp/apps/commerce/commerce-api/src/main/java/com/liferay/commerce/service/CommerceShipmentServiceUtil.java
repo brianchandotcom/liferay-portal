@@ -45,11 +45,11 @@ public class CommerceShipmentServiceUtil {
 	public static com.liferay.commerce.model.CommerceShipment addCommerceShipment(
 		long shipmentUserId, long commerceAddressId,
 		long commerceShippingMethodId, long commerceWarehouseId,
-		java.lang.String carrier, java.lang.String trackingNumber,
-		int expectedDuration, int status, int shippingDateMonth,
-		int shippingDateDay, int shippingDateYear, int shippingDateHour,
-		int shippingDateMinute, int expectedDateMonth, int expectedDateDay,
-		int expectedDateYear, int expectedDateHour, int expectedDateMinute,
+		String carrier, String trackingNumber, int expectedDuration,
+		int status, int shippingDateMonth, int shippingDateDay,
+		int shippingDateYear, int shippingDateHour, int shippingDateMinute,
+		int expectedDateMonth, int expectedDateDay, int expectedDateYear,
+		int expectedDateHour, int expectedDateMinute,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
@@ -89,18 +89,17 @@ public class CommerceShipmentServiceUtil {
 	*
 	* @return the OSGi service identifier
 	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
+	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 
 	public static com.liferay.commerce.model.CommerceShipment updateCommerceShipment(
 		long commerceShipmentId, long shipmentUserId, long commerceAddressId,
-		long commerceShippingMethodId, java.lang.String carrier,
-		java.lang.String trackingNumber, int expectedDuration, int status,
-		int shippingDateMonth, int shippingDateDay, int shippingDateYear,
-		int shippingDateHour, int shippingDateMinute, int expectedDateMonth,
-		int expectedDateDay, int expectedDateYear, int expectedDateHour,
-		int expectedDateMinute)
+		long commerceShippingMethodId, String carrier, String trackingNumber,
+		int expectedDuration, int status, int shippingDateMonth,
+		int shippingDateDay, int shippingDateYear, int shippingDateHour,
+		int shippingDateMinute, int expectedDateMonth, int expectedDateDay,
+		int expectedDateYear, int expectedDateHour, int expectedDateMinute)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .updateCommerceShipment(commerceShipmentId, shipmentUserId,

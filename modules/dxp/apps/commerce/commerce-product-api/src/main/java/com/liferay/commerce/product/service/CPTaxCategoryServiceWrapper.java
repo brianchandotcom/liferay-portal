@@ -35,8 +35,8 @@ public class CPTaxCategoryServiceWrapper implements CPTaxCategoryService,
 
 	@Override
 	public com.liferay.commerce.product.model.CPTaxCategory addCPTaxCategory(
-		java.util.Map<java.util.Locale, java.lang.String> nameMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		java.util.Map<java.util.Locale, String> nameMap,
+		java.util.Map<java.util.Locale, String> descriptionMap,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _cpTaxCategoryService.addCPTaxCategory(nameMap, descriptionMap,
@@ -84,15 +84,14 @@ public class CPTaxCategoryServiceWrapper implements CPTaxCategoryService,
 	* @return the OSGi service identifier
 	*/
 	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
+	public String getOSGiServiceIdentifier() {
 		return _cpTaxCategoryService.getOSGiServiceIdentifier();
 	}
 
 	@Override
 	public com.liferay.commerce.product.model.CPTaxCategory updateCPTaxCategory(
-		long cpTaxCategoryId,
-		java.util.Map<java.util.Locale, java.lang.String> nameMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap)
+		long cpTaxCategoryId, java.util.Map<java.util.Locale, String> nameMap,
+		java.util.Map<java.util.Locale, String> descriptionMap)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _cpTaxCategoryService.updateCPTaxCategory(cpTaxCategoryId,
 			nameMap, descriptionMap);

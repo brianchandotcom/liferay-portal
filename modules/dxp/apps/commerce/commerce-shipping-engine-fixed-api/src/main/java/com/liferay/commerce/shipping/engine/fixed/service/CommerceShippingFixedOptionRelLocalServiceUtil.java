@@ -58,8 +58,8 @@ public class CommerceShippingFixedOptionRelLocalServiceUtil {
 	public static com.liferay.commerce.shipping.engine.fixed.model.CommerceShippingFixedOptionRel addCommerceShippingFixedOptionRel(
 		long commerceShippingMethodId, long commerceShippingFixedOptionId,
 		long commerceWarehouseId, long commerceCountryId,
-		long commerceRegionId, java.lang.String zip, double weightFrom,
-		double weightTo, java.math.BigDecimal fixedPrice,
+		long commerceRegionId, String zip, double weightFrom, double weightTo,
+		java.math.BigDecimal fixedPrice,
 		java.math.BigDecimal rateUnitWeightPrice, double ratePercentage,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -209,7 +209,7 @@ public class CommerceShippingFixedOptionRelLocalServiceUtil {
 
 	public static com.liferay.commerce.shipping.engine.fixed.model.CommerceShippingFixedOptionRel fetchCommerceShippingFixedOptionRel(
 		long commerceShippingFixedOptionId, long commerceCountryId,
-		long commerceRegionId, java.lang.String zip, double weight) {
+		long commerceRegionId, String zip, double weight) {
 		return getService()
 				   .fetchCommerceShippingFixedOptionRel(commerceShippingFixedOptionId,
 			commerceCountryId, commerceRegionId, zip, weight);
@@ -309,7 +309,7 @@ public class CommerceShippingFixedOptionRelLocalServiceUtil {
 	*
 	* @return the OSGi service identifier
 	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
+	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 
@@ -333,7 +333,7 @@ public class CommerceShippingFixedOptionRelLocalServiceUtil {
 
 	public static com.liferay.commerce.shipping.engine.fixed.model.CommerceShippingFixedOptionRel updateCommerceShippingFixedOptionRel(
 		long commerceShippingFixedOptionRelId, long commerceWarehouseId,
-		long commerceCountryId, long commerceRegionId, java.lang.String zip,
+		long commerceCountryId, long commerceRegionId, String zip,
 		double weightFrom, double weightTo, java.math.BigDecimal fixedPrice,
 		java.math.BigDecimal rateUnitWeightPrice, double ratePercentage)
 		throws com.liferay.portal.kernel.exception.PortalException {

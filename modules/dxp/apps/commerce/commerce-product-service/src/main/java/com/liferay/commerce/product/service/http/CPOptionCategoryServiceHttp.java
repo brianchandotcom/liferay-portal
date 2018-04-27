@@ -57,9 +57,9 @@ import com.liferay.portal.kernel.util.MethodKey;
 public class CPOptionCategoryServiceHttp {
 	public static com.liferay.commerce.product.model.CPOptionCategory addCPOptionCategory(
 		HttpPrincipal httpPrincipal,
-		java.util.Map<java.util.Locale, java.lang.String> titleMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		double priority, java.lang.String key,
+		java.util.Map<java.util.Locale, String> titleMap,
+		java.util.Map<java.util.Locale, String> descriptionMap,
+		double priority, String key,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -309,9 +309,9 @@ public class CPOptionCategoryServiceHttp {
 
 	public static com.liferay.commerce.product.model.CPOptionCategory updateCPOptionCategory(
 		HttpPrincipal httpPrincipal, long cpOptionCategoryId,
-		java.util.Map<java.util.Locale, java.lang.String> titleMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		double priority, java.lang.String key,
+		java.util.Map<java.util.Locale, String> titleMap,
+		java.util.Map<java.util.Locale, String> descriptionMap,
+		double priority, String key,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -347,8 +347,7 @@ public class CPOptionCategoryServiceHttp {
 
 	private static Log _log = LogFactoryUtil.getLog(CPOptionCategoryServiceHttp.class);
 	private static final Class<?>[] _addCPOptionCategoryParameterTypes0 = new Class[] {
-			java.util.Map.class, java.util.Map.class, double.class,
-			java.lang.String.class,
+			java.util.Map.class, java.util.Map.class, double.class, String.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _deleteCPOptionCategoryParameterTypes1 = new Class[] {
@@ -375,7 +374,6 @@ public class CPOptionCategoryServiceHttp {
 		};
 	private static final Class<?>[] _updateCPOptionCategoryParameterTypes8 = new Class[] {
 			long.class, java.util.Map.class, java.util.Map.class, double.class,
-			java.lang.String.class,
-			com.liferay.portal.kernel.service.ServiceContext.class
+			String.class, com.liferay.portal.kernel.service.ServiceContext.class
 		};
 }

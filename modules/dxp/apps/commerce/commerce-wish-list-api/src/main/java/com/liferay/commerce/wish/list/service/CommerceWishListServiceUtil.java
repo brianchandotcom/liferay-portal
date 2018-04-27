@@ -43,7 +43,7 @@ public class CommerceWishListServiceUtil {
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.commerce.wish.list.service.impl.CommerceWishListServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static com.liferay.commerce.wish.list.model.CommerceWishList addCommerceWishList(
-		java.lang.String name, boolean defaultWishList,
+		String name, boolean defaultWishList,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
@@ -93,12 +93,12 @@ public class CommerceWishListServiceUtil {
 	*
 	* @return the OSGi service identifier
 	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
+	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 
 	public static com.liferay.commerce.wish.list.model.CommerceWishList updateCommerceWishList(
-		long commerceWishListId, java.lang.String name, boolean defaultWishList)
+		long commerceWishListId, String name, boolean defaultWishList)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .updateCommerceWishList(commerceWishListId, name,

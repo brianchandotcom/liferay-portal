@@ -59,9 +59,8 @@ public interface CPDefinitionSpecificationOptionValueService extends BaseService
 	 */
 	public CPDefinitionSpecificationOptionValue addCPDefinitionSpecificationOptionValue(
 		long cpDefinitionId, long cpSpecificationOptionId,
-		long cpOptionCategoryId, Map<Locale, java.lang.String> valueMap,
-		double priority, ServiceContext serviceContext)
-		throws PortalException;
+		long cpOptionCategoryId, Map<Locale, String> valueMap, double priority,
+		ServiceContext serviceContext) throws PortalException;
 
 	public void deleteCPDefinitionSpecificationOptionValue(
 		long cpDefinitionSpecificationOptionValueId) throws PortalException;
@@ -91,10 +90,10 @@ public interface CPDefinitionSpecificationOptionValueService extends BaseService
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	public CPDefinitionSpecificationOptionValue updateCPDefinitionSpecificationOptionValue(
 		long cpDefinitionSpecificationOptionValueId, long cpOptionCategoryId,
-		Map<Locale, java.lang.String> valueMap, double priority,
+		Map<Locale, String> valueMap, double priority,
 		ServiceContext serviceContext) throws PortalException;
 }

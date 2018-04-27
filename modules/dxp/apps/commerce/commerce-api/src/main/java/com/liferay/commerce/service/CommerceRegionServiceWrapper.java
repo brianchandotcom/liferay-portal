@@ -35,8 +35,8 @@ public class CommerceRegionServiceWrapper implements CommerceRegionService,
 
 	@Override
 	public com.liferay.commerce.model.CommerceRegion addCommerceRegion(
-		long commerceCountryId, java.lang.String name, java.lang.String code,
-		double priority, boolean active,
+		long commerceCountryId, String name, String code, double priority,
+		boolean active,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _commerceRegionService.addCommerceRegion(commerceCountryId,
@@ -96,14 +96,14 @@ public class CommerceRegionServiceWrapper implements CommerceRegionService,
 	* @return the OSGi service identifier
 	*/
 	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
+	public String getOSGiServiceIdentifier() {
 		return _commerceRegionService.getOSGiServiceIdentifier();
 	}
 
 	@Override
 	public com.liferay.commerce.model.CommerceRegion updateCommerceRegion(
-		long commerceRegionId, java.lang.String name, java.lang.String code,
-		double priority, boolean active,
+		long commerceRegionId, String name, String code, double priority,
+		boolean active,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _commerceRegionService.updateCommerceRegion(commerceRegionId,

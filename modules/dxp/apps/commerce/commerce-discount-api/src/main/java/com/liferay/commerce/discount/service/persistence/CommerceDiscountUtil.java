@@ -119,7 +119,7 @@ public class CommerceDiscountUtil {
 	* @param uuid the uuid
 	* @return the matching commerce discounts
 	*/
-	public static List<CommerceDiscount> findByUuid(java.lang.String uuid) {
+	public static List<CommerceDiscount> findByUuid(String uuid) {
 		return getPersistence().findByUuid(uuid);
 	}
 
@@ -135,8 +135,8 @@ public class CommerceDiscountUtil {
 	* @param end the upper bound of the range of commerce discounts (not inclusive)
 	* @return the range of matching commerce discounts
 	*/
-	public static List<CommerceDiscount> findByUuid(java.lang.String uuid,
-		int start, int end) {
+	public static List<CommerceDiscount> findByUuid(String uuid, int start,
+		int end) {
 		return getPersistence().findByUuid(uuid, start, end);
 	}
 
@@ -153,9 +153,8 @@ public class CommerceDiscountUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching commerce discounts
 	*/
-	public static List<CommerceDiscount> findByUuid(java.lang.String uuid,
-		int start, int end,
-		OrderByComparator<CommerceDiscount> orderByComparator) {
+	public static List<CommerceDiscount> findByUuid(String uuid, int start,
+		int end, OrderByComparator<CommerceDiscount> orderByComparator) {
 		return getPersistence().findByUuid(uuid, start, end, orderByComparator);
 	}
 
@@ -173,9 +172,8 @@ public class CommerceDiscountUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching commerce discounts
 	*/
-	public static List<CommerceDiscount> findByUuid(java.lang.String uuid,
-		int start, int end,
-		OrderByComparator<CommerceDiscount> orderByComparator,
+	public static List<CommerceDiscount> findByUuid(String uuid, int start,
+		int end, OrderByComparator<CommerceDiscount> orderByComparator,
 		boolean retrieveFromCache) {
 		return getPersistence()
 				   .findByUuid(uuid, start, end, orderByComparator,
@@ -190,7 +188,7 @@ public class CommerceDiscountUtil {
 	* @return the first matching commerce discount
 	* @throws NoSuchDiscountException if a matching commerce discount could not be found
 	*/
-	public static CommerceDiscount findByUuid_First(java.lang.String uuid,
+	public static CommerceDiscount findByUuid_First(String uuid,
 		OrderByComparator<CommerceDiscount> orderByComparator)
 		throws com.liferay.commerce.discount.exception.NoSuchDiscountException {
 		return getPersistence().findByUuid_First(uuid, orderByComparator);
@@ -203,7 +201,7 @@ public class CommerceDiscountUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching commerce discount, or <code>null</code> if a matching commerce discount could not be found
 	*/
-	public static CommerceDiscount fetchByUuid_First(java.lang.String uuid,
+	public static CommerceDiscount fetchByUuid_First(String uuid,
 		OrderByComparator<CommerceDiscount> orderByComparator) {
 		return getPersistence().fetchByUuid_First(uuid, orderByComparator);
 	}
@@ -216,7 +214,7 @@ public class CommerceDiscountUtil {
 	* @return the last matching commerce discount
 	* @throws NoSuchDiscountException if a matching commerce discount could not be found
 	*/
-	public static CommerceDiscount findByUuid_Last(java.lang.String uuid,
+	public static CommerceDiscount findByUuid_Last(String uuid,
 		OrderByComparator<CommerceDiscount> orderByComparator)
 		throws com.liferay.commerce.discount.exception.NoSuchDiscountException {
 		return getPersistence().findByUuid_Last(uuid, orderByComparator);
@@ -229,7 +227,7 @@ public class CommerceDiscountUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching commerce discount, or <code>null</code> if a matching commerce discount could not be found
 	*/
-	public static CommerceDiscount fetchByUuid_Last(java.lang.String uuid,
+	public static CommerceDiscount fetchByUuid_Last(String uuid,
 		OrderByComparator<CommerceDiscount> orderByComparator) {
 		return getPersistence().fetchByUuid_Last(uuid, orderByComparator);
 	}
@@ -244,7 +242,7 @@ public class CommerceDiscountUtil {
 	* @throws NoSuchDiscountException if a commerce discount with the primary key could not be found
 	*/
 	public static CommerceDiscount[] findByUuid_PrevAndNext(
-		long commerceDiscountId, java.lang.String uuid,
+		long commerceDiscountId, String uuid,
 		OrderByComparator<CommerceDiscount> orderByComparator)
 		throws com.liferay.commerce.discount.exception.NoSuchDiscountException {
 		return getPersistence()
@@ -257,7 +255,7 @@ public class CommerceDiscountUtil {
 	*
 	* @param uuid the uuid
 	*/
-	public static void removeByUuid(java.lang.String uuid) {
+	public static void removeByUuid(String uuid) {
 		getPersistence().removeByUuid(uuid);
 	}
 
@@ -267,7 +265,7 @@ public class CommerceDiscountUtil {
 	* @param uuid the uuid
 	* @return the number of matching commerce discounts
 	*/
-	public static int countByUuid(java.lang.String uuid) {
+	public static int countByUuid(String uuid) {
 		return getPersistence().countByUuid(uuid);
 	}
 
@@ -279,8 +277,7 @@ public class CommerceDiscountUtil {
 	* @return the matching commerce discount
 	* @throws NoSuchDiscountException if a matching commerce discount could not be found
 	*/
-	public static CommerceDiscount findByUUID_G(java.lang.String uuid,
-		long groupId)
+	public static CommerceDiscount findByUUID_G(String uuid, long groupId)
 		throws com.liferay.commerce.discount.exception.NoSuchDiscountException {
 		return getPersistence().findByUUID_G(uuid, groupId);
 	}
@@ -292,8 +289,7 @@ public class CommerceDiscountUtil {
 	* @param groupId the group ID
 	* @return the matching commerce discount, or <code>null</code> if a matching commerce discount could not be found
 	*/
-	public static CommerceDiscount fetchByUUID_G(java.lang.String uuid,
-		long groupId) {
+	public static CommerceDiscount fetchByUUID_G(String uuid, long groupId) {
 		return getPersistence().fetchByUUID_G(uuid, groupId);
 	}
 
@@ -305,8 +301,8 @@ public class CommerceDiscountUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching commerce discount, or <code>null</code> if a matching commerce discount could not be found
 	*/
-	public static CommerceDiscount fetchByUUID_G(java.lang.String uuid,
-		long groupId, boolean retrieveFromCache) {
+	public static CommerceDiscount fetchByUUID_G(String uuid, long groupId,
+		boolean retrieveFromCache) {
 		return getPersistence().fetchByUUID_G(uuid, groupId, retrieveFromCache);
 	}
 
@@ -317,8 +313,7 @@ public class CommerceDiscountUtil {
 	* @param groupId the group ID
 	* @return the commerce discount that was removed
 	*/
-	public static CommerceDiscount removeByUUID_G(java.lang.String uuid,
-		long groupId)
+	public static CommerceDiscount removeByUUID_G(String uuid, long groupId)
 		throws com.liferay.commerce.discount.exception.NoSuchDiscountException {
 		return getPersistence().removeByUUID_G(uuid, groupId);
 	}
@@ -330,7 +325,7 @@ public class CommerceDiscountUtil {
 	* @param groupId the group ID
 	* @return the number of matching commerce discounts
 	*/
-	public static int countByUUID_G(java.lang.String uuid, long groupId) {
+	public static int countByUUID_G(String uuid, long groupId) {
 		return getPersistence().countByUUID_G(uuid, groupId);
 	}
 
@@ -341,7 +336,7 @@ public class CommerceDiscountUtil {
 	* @param companyId the company ID
 	* @return the matching commerce discounts
 	*/
-	public static List<CommerceDiscount> findByUuid_C(java.lang.String uuid,
+	public static List<CommerceDiscount> findByUuid_C(String uuid,
 		long companyId) {
 		return getPersistence().findByUuid_C(uuid, companyId);
 	}
@@ -359,7 +354,7 @@ public class CommerceDiscountUtil {
 	* @param end the upper bound of the range of commerce discounts (not inclusive)
 	* @return the range of matching commerce discounts
 	*/
-	public static List<CommerceDiscount> findByUuid_C(java.lang.String uuid,
+	public static List<CommerceDiscount> findByUuid_C(String uuid,
 		long companyId, int start, int end) {
 		return getPersistence().findByUuid_C(uuid, companyId, start, end);
 	}
@@ -378,7 +373,7 @@ public class CommerceDiscountUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching commerce discounts
 	*/
-	public static List<CommerceDiscount> findByUuid_C(java.lang.String uuid,
+	public static List<CommerceDiscount> findByUuid_C(String uuid,
 		long companyId, int start, int end,
 		OrderByComparator<CommerceDiscount> orderByComparator) {
 		return getPersistence()
@@ -400,7 +395,7 @@ public class CommerceDiscountUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching commerce discounts
 	*/
-	public static List<CommerceDiscount> findByUuid_C(java.lang.String uuid,
+	public static List<CommerceDiscount> findByUuid_C(String uuid,
 		long companyId, int start, int end,
 		OrderByComparator<CommerceDiscount> orderByComparator,
 		boolean retrieveFromCache) {
@@ -418,7 +413,7 @@ public class CommerceDiscountUtil {
 	* @return the first matching commerce discount
 	* @throws NoSuchDiscountException if a matching commerce discount could not be found
 	*/
-	public static CommerceDiscount findByUuid_C_First(java.lang.String uuid,
+	public static CommerceDiscount findByUuid_C_First(String uuid,
 		long companyId, OrderByComparator<CommerceDiscount> orderByComparator)
 		throws com.liferay.commerce.discount.exception.NoSuchDiscountException {
 		return getPersistence()
@@ -433,7 +428,7 @@ public class CommerceDiscountUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching commerce discount, or <code>null</code> if a matching commerce discount could not be found
 	*/
-	public static CommerceDiscount fetchByUuid_C_First(java.lang.String uuid,
+	public static CommerceDiscount fetchByUuid_C_First(String uuid,
 		long companyId, OrderByComparator<CommerceDiscount> orderByComparator) {
 		return getPersistence()
 				   .fetchByUuid_C_First(uuid, companyId, orderByComparator);
@@ -448,7 +443,7 @@ public class CommerceDiscountUtil {
 	* @return the last matching commerce discount
 	* @throws NoSuchDiscountException if a matching commerce discount could not be found
 	*/
-	public static CommerceDiscount findByUuid_C_Last(java.lang.String uuid,
+	public static CommerceDiscount findByUuid_C_Last(String uuid,
 		long companyId, OrderByComparator<CommerceDiscount> orderByComparator)
 		throws com.liferay.commerce.discount.exception.NoSuchDiscountException {
 		return getPersistence()
@@ -463,7 +458,7 @@ public class CommerceDiscountUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching commerce discount, or <code>null</code> if a matching commerce discount could not be found
 	*/
-	public static CommerceDiscount fetchByUuid_C_Last(java.lang.String uuid,
+	public static CommerceDiscount fetchByUuid_C_Last(String uuid,
 		long companyId, OrderByComparator<CommerceDiscount> orderByComparator) {
 		return getPersistence()
 				   .fetchByUuid_C_Last(uuid, companyId, orderByComparator);
@@ -480,7 +475,7 @@ public class CommerceDiscountUtil {
 	* @throws NoSuchDiscountException if a commerce discount with the primary key could not be found
 	*/
 	public static CommerceDiscount[] findByUuid_C_PrevAndNext(
-		long commerceDiscountId, java.lang.String uuid, long companyId,
+		long commerceDiscountId, String uuid, long companyId,
 		OrderByComparator<CommerceDiscount> orderByComparator)
 		throws com.liferay.commerce.discount.exception.NoSuchDiscountException {
 		return getPersistence()
@@ -494,7 +489,7 @@ public class CommerceDiscountUtil {
 	* @param uuid the uuid
 	* @param companyId the company ID
 	*/
-	public static void removeByUuid_C(java.lang.String uuid, long companyId) {
+	public static void removeByUuid_C(String uuid, long companyId) {
 		getPersistence().removeByUuid_C(uuid, companyId);
 	}
 
@@ -505,7 +500,7 @@ public class CommerceDiscountUtil {
 	* @param companyId the company ID
 	* @return the number of matching commerce discounts
 	*/
-	public static int countByUuid_C(java.lang.String uuid, long companyId) {
+	public static int countByUuid_C(String uuid, long companyId) {
 		return getPersistence().countByUuid_C(uuid, companyId);
 	}
 
@@ -1241,7 +1236,7 @@ public class CommerceDiscountUtil {
 		return getPersistence().countAll();
 	}
 
-	public static java.util.Set<java.lang.String> getBadColumnNames() {
+	public static java.util.Set<String> getBadColumnNames() {
 		return getPersistence().getBadColumnNames();
 	}
 

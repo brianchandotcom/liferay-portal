@@ -57,8 +57,8 @@ import com.liferay.portal.kernel.util.MethodKey;
 public class CPTaxCategoryServiceHttp {
 	public static com.liferay.commerce.product.model.CPTaxCategory addCPTaxCategory(
 		HttpPrincipal httpPrincipal,
-		java.util.Map<java.util.Locale, java.lang.String> nameMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		java.util.Map<java.util.Locale, String> nameMap,
+		java.util.Map<java.util.Locale, String> descriptionMap,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -248,8 +248,8 @@ public class CPTaxCategoryServiceHttp {
 
 	public static com.liferay.commerce.product.model.CPTaxCategory updateCPTaxCategory(
 		HttpPrincipal httpPrincipal, long cpTaxCategoryId,
-		java.util.Map<java.util.Locale, java.lang.String> nameMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap)
+		java.util.Map<java.util.Locale, String> nameMap,
+		java.util.Map<java.util.Locale, String> descriptionMap)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(CPTaxCategoryServiceUtil.class,

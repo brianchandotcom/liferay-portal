@@ -56,12 +56,11 @@ import com.liferay.portal.kernel.util.MethodKey;
 @ProviderType
 public class CommercePriceListServiceHttp {
 	public static com.liferay.commerce.price.list.model.CommercePriceList addCommercePriceList(
-		HttpPrincipal httpPrincipal, long commerceCurrencyId,
-		java.lang.String name, double priority, int displayDateMonth,
-		int displayDateDay, int displayDateYear, int displayDateHour,
-		int displayDateMinute, int expirationDateMonth, int expirationDateDay,
-		int expirationDateYear, int expirationDateHour,
-		int expirationDateMinute, boolean neverExpire,
+		HttpPrincipal httpPrincipal, long commerceCurrencyId, String name,
+		double priority, int displayDateMonth, int displayDateDay,
+		int displayDateYear, int displayDateHour, int displayDateMinute,
+		int expirationDateMonth, int expirationDateDay, int expirationDateYear,
+		int expirationDateHour, int expirationDateMinute, boolean neverExpire,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -270,7 +269,7 @@ public class CommercePriceListServiceHttp {
 
 	public static com.liferay.portal.kernel.search.BaseModelSearchResult<com.liferay.commerce.price.list.model.CommercePriceList> searchCommercePriceLists(
 		HttpPrincipal httpPrincipal, long companyId, long groupId,
-		java.lang.String keywords, int status, int start, int end,
+		String keywords, int status, int start, int end,
 		com.liferay.portal.kernel.search.Sort sort)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -305,7 +304,7 @@ public class CommercePriceListServiceHttp {
 
 	public static com.liferay.commerce.price.list.model.CommercePriceList updateCommercePriceList(
 		HttpPrincipal httpPrincipal, long commercePriceListId,
-		long commerceCurrencyId, java.lang.String name, double priority,
+		long commerceCurrencyId, String name, double priority,
 		int displayDateMonth, int displayDateDay, int displayDateYear,
 		int displayDateHour, int displayDateMinute, int expirationDateMonth,
 		int expirationDateDay, int expirationDateYear, int expirationDateHour,
@@ -348,9 +347,9 @@ public class CommercePriceListServiceHttp {
 
 	private static Log _log = LogFactoryUtil.getLog(CommercePriceListServiceHttp.class);
 	private static final Class<?>[] _addCommercePriceListParameterTypes0 = new Class[] {
-			long.class, java.lang.String.class, double.class, int.class,
+			long.class, String.class, double.class, int.class, int.class,
 			int.class, int.class, int.class, int.class, int.class, int.class,
-			int.class, int.class, int.class, boolean.class,
+			int.class, int.class, boolean.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _deleteCommercePriceListParameterTypes1 = new Class[] {
@@ -373,13 +372,13 @@ public class CommercePriceListServiceHttp {
 			com.liferay.portal.kernel.search.SearchContext.class
 		};
 	private static final Class<?>[] _searchCommercePriceListsParameterTypes7 = new Class[] {
-			long.class, long.class, java.lang.String.class, int.class, int.class,
+			long.class, long.class, String.class, int.class, int.class,
 			int.class, com.liferay.portal.kernel.search.Sort.class
 		};
 	private static final Class<?>[] _updateCommercePriceListParameterTypes8 = new Class[] {
-			long.class, long.class, java.lang.String.class, double.class,
+			long.class, long.class, String.class, double.class, int.class,
 			int.class, int.class, int.class, int.class, int.class, int.class,
-			int.class, int.class, int.class, int.class, boolean.class,
+			int.class, int.class, int.class, boolean.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 }

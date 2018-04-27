@@ -83,24 +83,24 @@ public interface CPInstanceLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.REINDEX)
 	public CPInstance addCPInstance(CPInstance cpInstance);
 
-	public CPInstance addCPInstance(long cpDefinitionId, java.lang.String sku,
-		java.lang.String gtin, java.lang.String manufacturerPartNumber,
-		boolean purchasable, java.lang.String ddmContent, boolean published,
-		int displayDateMonth, int displayDateDay, int displayDateYear,
-		int displayDateHour, int displayDateMinute, int expirationDateMonth,
-		int expirationDateDay, int expirationDateYear, int expirationDateHour,
+	public CPInstance addCPInstance(long cpDefinitionId, String sku,
+		String gtin, String manufacturerPartNumber, boolean purchasable,
+		String ddmContent, boolean published, int displayDateMonth,
+		int displayDateDay, int displayDateYear, int displayDateHour,
+		int displayDateMinute, int expirationDateMonth, int expirationDateDay,
+		int expirationDateYear, int expirationDateHour,
 		int expirationDateMinute, boolean neverExpire,
 		ServiceContext serviceContext) throws PortalException;
 
 	@Indexable(type = IndexableType.REINDEX)
-	public CPInstance addCPInstance(long cpDefinitionId, java.lang.String sku,
-		java.lang.String gtin, java.lang.String manufacturerPartNumber,
-		boolean purchasable, java.lang.String ddmContent, double width,
-		double height, double depth, double weight, BigDecimal cost,
-		BigDecimal price, BigDecimal promoPrice, boolean published,
-		int displayDateMonth, int displayDateDay, int displayDateYear,
-		int displayDateHour, int displayDateMinute, int expirationDateMonth,
-		int expirationDateDay, int expirationDateYear, int expirationDateHour,
+	public CPInstance addCPInstance(long cpDefinitionId, String sku,
+		String gtin, String manufacturerPartNumber, boolean purchasable,
+		String ddmContent, double width, double height, double depth,
+		double weight, BigDecimal cost, BigDecimal price,
+		BigDecimal promoPrice, boolean published, int displayDateMonth,
+		int displayDateDay, int displayDateYear, int displayDateHour,
+		int displayDateMinute, int expirationDateMonth, int expirationDateDay,
+		int expirationDateYear, int expirationDateHour,
 		int expirationDateMinute, boolean neverExpire,
 		ServiceContext serviceContext) throws PortalException;
 
@@ -224,8 +224,7 @@ public interface CPInstanceLocalService extends BaseLocalService,
 	* @return the matching cp instance, or <code>null</code> if a matching cp instance could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CPInstance fetchCPInstanceByUuidAndGroupId(java.lang.String uuid,
-		long groupId);
+	public CPInstance fetchCPInstanceByUuidAndGroupId(String uuid, long groupId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
@@ -257,7 +256,7 @@ public interface CPInstanceLocalService extends BaseLocalService,
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CPInstance getCPInstance(long cpDefinitionId, java.lang.String sku)
+	public CPInstance getCPInstance(long cpDefinitionId, String sku)
 		throws PortalException;
 
 	/**
@@ -269,8 +268,8 @@ public interface CPInstanceLocalService extends BaseLocalService,
 	* @throws PortalException if a matching cp instance could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CPInstance getCPInstanceByUuidAndGroupId(java.lang.String uuid,
-		long groupId) throws PortalException;
+	public CPInstance getCPInstanceByUuidAndGroupId(String uuid, long groupId)
+		throws PortalException;
 
 	/**
 	* Returns a range of all the cp instances.
@@ -299,8 +298,8 @@ public interface CPInstanceLocalService extends BaseLocalService,
 	* @return the matching cp instances, or an empty list if no matches were found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<CPInstance> getCPInstancesByUuidAndCompanyId(
-		java.lang.String uuid, long companyId);
+	public List<CPInstance> getCPInstancesByUuidAndCompanyId(String uuid,
+		long companyId);
 
 	/**
 	* Returns a range of cp instances matching the UUID and company.
@@ -313,8 +312,8 @@ public interface CPInstanceLocalService extends BaseLocalService,
 	* @return the range of matching cp instances, or an empty list if no matches were found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<CPInstance> getCPInstancesByUuidAndCompanyId(
-		java.lang.String uuid, long companyId, int start, int end,
+	public List<CPInstance> getCPInstancesByUuidAndCompanyId(String uuid,
+		long companyId, int start, int end,
 		OrderByComparator<CPInstance> orderByComparator);
 
 	/**
@@ -341,7 +340,7 @@ public interface CPInstanceLocalService extends BaseLocalService,
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -349,21 +348,20 @@ public interface CPInstanceLocalService extends BaseLocalService,
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.lang.String[] getSKUs(long cpDefinitionId);
+	public String[] getSKUs(long cpDefinitionId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public Hits search(SearchContext searchContext);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public BaseModelSearchResult<CPInstance> searchCPDefinitionInstances(
-		long companyId, long groupId, long cpDefinitionId,
-		java.lang.String keywords, int status, int start, int end, Sort sort)
-		throws PortalException;
+		long companyId, long groupId, long cpDefinitionId, String keywords,
+		int status, int start, int end, Sort sort) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public BaseModelSearchResult<CPInstance> searchCPInstances(long companyId,
-		long groupId, java.lang.String keywords, int status, int start,
-		int end, Sort sort) throws PortalException;
+		long groupId, String keywords, int status, int start, int end, Sort sort)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public BaseModelSearchResult<CPInstance> searchCPInstances(
@@ -378,20 +376,19 @@ public interface CPInstanceLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.REINDEX)
 	public CPInstance updateCPInstance(CPInstance cpInstance);
 
-	public CPInstance updateCPInstance(long cpInstanceId, java.lang.String sku,
-		java.lang.String gtin, java.lang.String manufacturerPartNumber,
-		boolean purchasable, boolean published, int displayDateMonth,
-		int displayDateDay, int displayDateYear, int displayDateHour,
-		int displayDateMinute, int expirationDateMonth, int expirationDateDay,
-		int expirationDateYear, int expirationDateHour,
-		int expirationDateMinute, boolean neverExpire,
+	public CPInstance updateCPInstance(long cpInstanceId, String sku,
+		String gtin, String manufacturerPartNumber, boolean purchasable,
+		boolean published, int displayDateMonth, int displayDateDay,
+		int displayDateYear, int displayDateHour, int displayDateMinute,
+		int expirationDateMonth, int expirationDateDay, int expirationDateYear,
+		int expirationDateHour, int expirationDateMinute, boolean neverExpire,
 		ServiceContext serviceContext) throws PortalException;
 
 	@Indexable(type = IndexableType.REINDEX)
-	public CPInstance updateCPInstance(long cpInstanceId, java.lang.String sku,
-		java.lang.String gtin, java.lang.String manufacturerPartNumber,
-		boolean purchasable, double width, double height, double depth,
-		double weight, BigDecimal cost, BigDecimal price, BigDecimal pomoPrice,
+	public CPInstance updateCPInstance(long cpInstanceId, String sku,
+		String gtin, String manufacturerPartNumber, boolean purchasable,
+		double width, double height, double depth, double weight,
+		BigDecimal cost, BigDecimal price, BigDecimal pomoPrice,
 		boolean published, int displayDateMonth, int displayDateDay,
 		int displayDateYear, int displayDateHour, int displayDateMinute,
 		int expirationDateMonth, int expirationDateDay, int expirationDateYear,
@@ -408,7 +405,6 @@ public interface CPInstanceLocalService extends BaseLocalService,
 
 	@Indexable(type = IndexableType.REINDEX)
 	public CPInstance updateStatus(long userId, long cpInstanceId, int status,
-		ServiceContext serviceContext,
-		Map<java.lang.String, Serializable> workflowContext)
+		ServiceContext serviceContext, Map<String, Serializable> workflowContext)
 		throws PortalException;
 }

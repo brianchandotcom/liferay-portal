@@ -35,9 +35,8 @@ public class CPMeasurementUnitServiceWrapper implements CPMeasurementUnitService
 
 	@Override
 	public com.liferay.commerce.product.model.CPMeasurementUnit addCPMeasurementUnit(
-		java.util.Map<java.util.Locale, java.lang.String> nameMap,
-		java.lang.String key, double rate, boolean primary, double priority,
-		int type,
+		java.util.Map<java.util.Locale, String> nameMap, String key,
+		double rate, boolean primary, double priority, int type,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _cpMeasurementUnitService.addCPMeasurementUnit(nameMap, key,
@@ -84,16 +83,15 @@ public class CPMeasurementUnitServiceWrapper implements CPMeasurementUnitService
 	* @return the OSGi service identifier
 	*/
 	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
+	public String getOSGiServiceIdentifier() {
 		return _cpMeasurementUnitService.getOSGiServiceIdentifier();
 	}
 
 	@Override
 	public com.liferay.commerce.product.model.CPMeasurementUnit updateCPMeasurementUnit(
 		long cpMeasurementUnitId,
-		java.util.Map<java.util.Locale, java.lang.String> nameMap,
-		java.lang.String key, double rate, boolean primary, double priority,
-		int type,
+		java.util.Map<java.util.Locale, String> nameMap, String key,
+		double rate, boolean primary, double priority, int type,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _cpMeasurementUnitService.updateCPMeasurementUnit(cpMeasurementUnitId,

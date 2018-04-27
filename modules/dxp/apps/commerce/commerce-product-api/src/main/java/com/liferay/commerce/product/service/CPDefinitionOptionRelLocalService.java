@@ -89,12 +89,11 @@ public interface CPDefinitionOptionRelLocalService extends BaseLocalService,
 
 	@Indexable(type = IndexableType.REINDEX)
 	public CPDefinitionOptionRel addCPDefinitionOptionRel(long cpDefinitionId,
-		long cpOptionId, Map<Locale, java.lang.String> titleMap,
-		Map<Locale, java.lang.String> descriptionMap,
-		java.lang.String ddmFormFieldTypeName, double priority,
-		boolean facetable, boolean required, boolean skuContributor,
-		boolean importOptionValue, ServiceContext serviceContext)
-		throws PortalException;
+		long cpOptionId, Map<Locale, String> titleMap,
+		Map<Locale, String> descriptionMap, String ddmFormFieldTypeName,
+		double priority, boolean facetable, boolean required,
+		boolean skuContributor, boolean importOptionValue,
+		ServiceContext serviceContext) throws PortalException;
 
 	public CPDefinitionOptionRel addCPDefinitionOptionRel(long cpDefinitionId,
 		long cpOptionId, ServiceContext serviceContext)
@@ -215,7 +214,7 @@ public interface CPDefinitionOptionRelLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CPDefinitionOptionRel fetchCPDefinitionOptionRelByUuidAndGroupId(
-		java.lang.String uuid, long groupId);
+		String uuid, long groupId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
@@ -241,7 +240,7 @@ public interface CPDefinitionOptionRelLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CPDefinitionOptionRel getCPDefinitionOptionRelByUuidAndGroupId(
-		java.lang.String uuid, long groupId) throws PortalException;
+		String uuid, long groupId) throws PortalException;
 
 	/**
 	* Returns a range of all the cp definition option rels.
@@ -284,7 +283,7 @@ public interface CPDefinitionOptionRelLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CPDefinitionOptionRel> getCPDefinitionOptionRelsByUuidAndCompanyId(
-		java.lang.String uuid, long companyId);
+		String uuid, long companyId);
 
 	/**
 	* Returns a range of cp definition option rels matching the UUID and company.
@@ -298,7 +297,7 @@ public interface CPDefinitionOptionRelLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CPDefinitionOptionRel> getCPDefinitionOptionRelsByUuidAndCompanyId(
-		java.lang.String uuid, long companyId, int start, int end,
+		String uuid, long companyId, int start, int end,
 		OrderByComparator<CPDefinitionOptionRel> orderByComparator);
 
 	/**
@@ -328,7 +327,7 @@ public interface CPDefinitionOptionRelLocalService extends BaseLocalService,
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -340,9 +339,8 @@ public interface CPDefinitionOptionRelLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public BaseModelSearchResult<CPDefinitionOptionRel> searchCPDefinitionOptionRels(
-		long companyId, long groupId, long cpDefinitionId,
-		java.lang.String keywords, int start, int end, Sort sort)
-		throws PortalException;
+		long companyId, long groupId, long cpDefinitionId, String keywords,
+		int start, int end, Sort sort) throws PortalException;
 
 	/**
 	* Updates the cp definition option rel in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
@@ -357,9 +355,8 @@ public interface CPDefinitionOptionRelLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.REINDEX)
 	public CPDefinitionOptionRel updateCPDefinitionOptionRel(
 		long cpDefinitionOptionRelId, long cpOptionId,
-		Map<Locale, java.lang.String> titleMap,
-		Map<Locale, java.lang.String> descriptionMap,
-		java.lang.String ddmFormFieldTypeName, double priority,
-		boolean facetable, boolean required, boolean skuContributor,
-		ServiceContext serviceContext) throws PortalException;
+		Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
+		String ddmFormFieldTypeName, double priority, boolean facetable,
+		boolean required, boolean skuContributor, ServiceContext serviceContext)
+		throws PortalException;
 }

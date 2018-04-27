@@ -35,9 +35,8 @@ public class CommerceDiscountServiceWrapper implements CommerceDiscountService,
 
 	@Override
 	public com.liferay.commerce.discount.model.CommerceDiscount addCommerceDiscount(
-		java.lang.String title, java.lang.String target, java.lang.String type,
-		java.lang.String typeSettings, boolean useCouponCode,
-		java.lang.String couponCode, java.lang.String limitationType,
+		String title, String target, String type, String typeSettings,
+		boolean useCouponCode, String couponCode, String limitationType,
 		int limitationTimes, int numberOfUse, boolean cumulative,
 		boolean usePercentage, java.math.BigDecimal level1,
 		java.math.BigDecimal level2, java.math.BigDecimal level3,
@@ -70,18 +69,16 @@ public class CommerceDiscountServiceWrapper implements CommerceDiscountService,
 	* @return the OSGi service identifier
 	*/
 	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
+	public String getOSGiServiceIdentifier() {
 		return _commerceDiscountService.getOSGiServiceIdentifier();
 	}
 
 	@Override
 	public com.liferay.commerce.discount.model.CommerceDiscount updateCommerceDiscount(
-		long commerceDiscountId, java.lang.String title,
-		java.lang.String target, java.lang.String type,
-		java.lang.String typeSettings, boolean useCouponCode,
-		java.lang.String couponCode, java.lang.String limitationType,
-		int limitationTimes, int numberOfUse, boolean cumulative,
-		boolean usePercentage, java.math.BigDecimal level1,
+		long commerceDiscountId, String title, String target, String type,
+		String typeSettings, boolean useCouponCode, String couponCode,
+		String limitationType, int limitationTimes, int numberOfUse,
+		boolean cumulative, boolean usePercentage, java.math.BigDecimal level1,
 		java.math.BigDecimal level2, java.math.BigDecimal level3,
 		java.math.BigDecimal maximumDiscountAmount, boolean active,
 		int displayDateMonth, int displayDateDay, int displayDateYear,

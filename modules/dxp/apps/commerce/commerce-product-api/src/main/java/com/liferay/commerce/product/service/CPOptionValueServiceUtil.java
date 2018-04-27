@@ -43,9 +43,8 @@ public class CPOptionValueServiceUtil {
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.commerce.product.service.impl.CPOptionValueServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static com.liferay.commerce.product.model.CPOptionValue addCPOptionValue(
-		long cpOptionId,
-		java.util.Map<java.util.Locale, java.lang.String> titleMap,
-		double priority, java.lang.String key,
+		long cpOptionId, java.util.Map<java.util.Locale, String> titleMap,
+		double priority, String key,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
@@ -101,7 +100,7 @@ public class CPOptionValueServiceUtil {
 	*
 	* @return the OSGi service identifier
 	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
+	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 
@@ -111,9 +110,8 @@ public class CPOptionValueServiceUtil {
 	}
 
 	public static com.liferay.portal.kernel.search.BaseModelSearchResult<com.liferay.commerce.product.model.CPOptionValue> searchCPOptionValues(
-		long companyId, long groupId, long cpOptionId,
-		java.lang.String keywords, int start, int end,
-		com.liferay.portal.kernel.search.Sort sort)
+		long companyId, long groupId, long cpOptionId, String keywords,
+		int start, int end, com.liferay.portal.kernel.search.Sort sort)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .searchCPOptionValues(companyId, groupId, cpOptionId,
@@ -121,9 +119,8 @@ public class CPOptionValueServiceUtil {
 	}
 
 	public static com.liferay.commerce.product.model.CPOptionValue updateCPOptionValue(
-		long cpOptionValueId,
-		java.util.Map<java.util.Locale, java.lang.String> titleMap,
-		double priority, java.lang.String key,
+		long cpOptionValueId, java.util.Map<java.util.Locale, String> titleMap,
+		double priority, String key,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()

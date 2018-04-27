@@ -43,12 +43,10 @@ public class CommerceAddressServiceUtil {
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.commerce.service.impl.CommerceAddressServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static com.liferay.commerce.model.CommerceAddress addCommerceAddress(
-		java.lang.String className, long classPK, java.lang.String name,
-		java.lang.String description, java.lang.String street1,
-		java.lang.String street2, java.lang.String street3,
-		java.lang.String city, java.lang.String zip, long commerceRegionId,
-		long commerceCountryId, java.lang.String phoneNumber,
-		boolean defaultBilling, boolean defaultShipping,
+		String className, long classPK, String name, String description,
+		String street1, String street2, String street3, String city,
+		String zip, long commerceRegionId, long commerceCountryId,
+		String phoneNumber, boolean defaultBilling, boolean defaultShipping,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
@@ -76,14 +74,13 @@ public class CommerceAddressServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.commerce.model.CommerceAddress> getCommerceAddresses(
-		long groupId, java.lang.String className, long classPK)
+		long groupId, String className, long classPK)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getCommerceAddresses(groupId, className, classPK);
 	}
 
 	public static java.util.List<com.liferay.commerce.model.CommerceAddress> getCommerceAddresses(
-		long groupId, java.lang.String className, long classPK, int start,
-		int end,
+		long groupId, String className, long classPK, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.model.CommerceAddress> orderByComparator)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
@@ -91,8 +88,8 @@ public class CommerceAddressServiceUtil {
 			end, orderByComparator);
 	}
 
-	public static int getCommerceAddressesCount(long groupId,
-		java.lang.String className, long classPK)
+	public static int getCommerceAddressesCount(long groupId, String className,
+		long classPK)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .getCommerceAddressesCount(groupId, className, classPK);
@@ -103,13 +100,13 @@ public class CommerceAddressServiceUtil {
 	*
 	* @return the OSGi service identifier
 	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
+	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 
 	public static com.liferay.portal.kernel.search.BaseModelSearchResult<com.liferay.commerce.model.CommerceAddress> searchCommerceAddresses(
-		long companyId, long groupId, java.lang.String className, long classPK,
-		java.lang.String keywords, int start, int end,
+		long companyId, long groupId, String className, long classPK,
+		String keywords, int start, int end,
 		com.liferay.portal.kernel.search.Sort sort)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
@@ -118,12 +115,10 @@ public class CommerceAddressServiceUtil {
 	}
 
 	public static com.liferay.commerce.model.CommerceAddress updateCommerceAddress(
-		long commerceAddressId, java.lang.String name,
-		java.lang.String description, java.lang.String street1,
-		java.lang.String street2, java.lang.String street3,
-		java.lang.String city, java.lang.String zip, long commerceRegionId,
-		long commerceCountryId, java.lang.String phoneNumber,
-		boolean defaultBilling, boolean defaultShipping,
+		long commerceAddressId, String name, String description,
+		String street1, String street2, String street3, String city,
+		String zip, long commerceRegionId, long commerceCountryId,
+		String phoneNumber, boolean defaultBilling, boolean defaultShipping,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()

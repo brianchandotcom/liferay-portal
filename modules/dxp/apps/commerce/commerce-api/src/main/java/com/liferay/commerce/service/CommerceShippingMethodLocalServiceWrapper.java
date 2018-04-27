@@ -48,9 +48,9 @@ public class CommerceShippingMethodLocalServiceWrapper
 
 	@Override
 	public com.liferay.commerce.model.CommerceShippingMethod addCommerceShippingMethod(
-		java.util.Map<java.util.Locale, java.lang.String> nameMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		java.io.File imageFile, java.lang.String engineKey, double priority,
+		java.util.Map<java.util.Locale, String> nameMap,
+		java.util.Map<java.util.Locale, String> descriptionMap,
+		java.io.File imageFile, String engineKey, double priority,
 		boolean active,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -209,7 +209,7 @@ public class CommerceShippingMethodLocalServiceWrapper
 
 	@Override
 	public com.liferay.commerce.model.CommerceShippingMethod fetchCommerceShippingMethod(
-		long groupId, java.lang.String engineKey) {
+		long groupId, String engineKey) {
 		return _commerceShippingMethodLocalService.fetchCommerceShippingMethod(groupId,
 			engineKey);
 	}
@@ -291,7 +291,7 @@ public class CommerceShippingMethodLocalServiceWrapper
 	* @return the OSGi service identifier
 	*/
 	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
+	public String getOSGiServiceIdentifier() {
 		return _commerceShippingMethodLocalService.getOSGiServiceIdentifier();
 	}
 
@@ -325,8 +325,8 @@ public class CommerceShippingMethodLocalServiceWrapper
 	@Override
 	public com.liferay.commerce.model.CommerceShippingMethod updateCommerceShippingMethod(
 		long commerceShippingMethodId,
-		java.util.Map<java.util.Locale, java.lang.String> nameMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		java.util.Map<java.util.Locale, String> nameMap,
+		java.util.Map<java.util.Locale, String> descriptionMap,
 		java.io.File imageFile, double priority, boolean active)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _commerceShippingMethodLocalService.updateCommerceShippingMethod(commerceShippingMethodId,

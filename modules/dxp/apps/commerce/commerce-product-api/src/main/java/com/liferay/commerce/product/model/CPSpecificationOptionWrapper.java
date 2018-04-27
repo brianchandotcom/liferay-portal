@@ -168,7 +168,7 @@ public class CPSpecificationOptionWrapper implements CPSpecificationOption,
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new CPSpecificationOptionWrapper((CPSpecificationOption)_cpSpecificationOption.clone());
 	}
 
@@ -178,7 +178,7 @@ public class CPSpecificationOptionWrapper implements CPSpecificationOption,
 	}
 
 	@Override
-	public java.lang.String[] getAvailableLanguageIds() {
+	public String[] getAvailableLanguageIds() {
 		return _cpSpecificationOption.getAvailableLanguageIds();
 	}
 
@@ -229,7 +229,7 @@ public class CPSpecificationOptionWrapper implements CPSpecificationOption,
 	}
 
 	@Override
-	public java.lang.String getDefaultLanguageId() {
+	public String getDefaultLanguageId() {
 		return _cpSpecificationOption.getDefaultLanguageId();
 	}
 
@@ -239,7 +239,7 @@ public class CPSpecificationOptionWrapper implements CPSpecificationOption,
 	* @return the description of this cp specification option
 	*/
 	@Override
-	public java.lang.String getDescription() {
+	public String getDescription() {
 		return _cpSpecificationOption.getDescription();
 	}
 
@@ -250,7 +250,7 @@ public class CPSpecificationOptionWrapper implements CPSpecificationOption,
 	* @return the localized description of this cp specification option
 	*/
 	@Override
-	public java.lang.String getDescription(java.util.Locale locale) {
+	public String getDescription(java.util.Locale locale) {
 		return _cpSpecificationOption.getDescription(locale);
 	}
 
@@ -262,8 +262,7 @@ public class CPSpecificationOptionWrapper implements CPSpecificationOption,
 	* @return the localized description of this cp specification option. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
 	*/
 	@Override
-	public java.lang.String getDescription(java.util.Locale locale,
-		boolean useDefault) {
+	public String getDescription(java.util.Locale locale, boolean useDefault) {
 		return _cpSpecificationOption.getDescription(locale, useDefault);
 	}
 
@@ -274,7 +273,7 @@ public class CPSpecificationOptionWrapper implements CPSpecificationOption,
 	* @return the localized description of this cp specification option
 	*/
 	@Override
-	public java.lang.String getDescription(java.lang.String languageId) {
+	public String getDescription(String languageId) {
 		return _cpSpecificationOption.getDescription(languageId);
 	}
 
@@ -286,18 +285,17 @@ public class CPSpecificationOptionWrapper implements CPSpecificationOption,
 	* @return the localized description of this cp specification option
 	*/
 	@Override
-	public java.lang.String getDescription(java.lang.String languageId,
-		boolean useDefault) {
+	public String getDescription(String languageId, boolean useDefault) {
 		return _cpSpecificationOption.getDescription(languageId, useDefault);
 	}
 
 	@Override
-	public java.lang.String getDescriptionCurrentLanguageId() {
+	public String getDescriptionCurrentLanguageId() {
 		return _cpSpecificationOption.getDescriptionCurrentLanguageId();
 	}
 
 	@Override
-	public java.lang.String getDescriptionCurrentValue() {
+	public String getDescriptionCurrentValue() {
 		return _cpSpecificationOption.getDescriptionCurrentValue();
 	}
 
@@ -307,7 +305,7 @@ public class CPSpecificationOptionWrapper implements CPSpecificationOption,
 	* @return the locales and localized descriptions of this cp specification option
 	*/
 	@Override
-	public Map<java.util.Locale, java.lang.String> getDescriptionMap() {
+	public Map<java.util.Locale, String> getDescriptionMap() {
 		return _cpSpecificationOption.getDescriptionMap();
 	}
 
@@ -342,7 +340,7 @@ public class CPSpecificationOptionWrapper implements CPSpecificationOption,
 	* @return the key of this cp specification option
 	*/
 	@Override
-	public java.lang.String getKey() {
+	public String getKey() {
 		return _cpSpecificationOption.getKey();
 	}
 
@@ -387,7 +385,7 @@ public class CPSpecificationOptionWrapper implements CPSpecificationOption,
 	* @return the title of this cp specification option
 	*/
 	@Override
-	public java.lang.String getTitle() {
+	public String getTitle() {
 		return _cpSpecificationOption.getTitle();
 	}
 
@@ -398,7 +396,7 @@ public class CPSpecificationOptionWrapper implements CPSpecificationOption,
 	* @return the localized title of this cp specification option
 	*/
 	@Override
-	public java.lang.String getTitle(java.util.Locale locale) {
+	public String getTitle(java.util.Locale locale) {
 		return _cpSpecificationOption.getTitle(locale);
 	}
 
@@ -410,7 +408,7 @@ public class CPSpecificationOptionWrapper implements CPSpecificationOption,
 	* @return the localized title of this cp specification option. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
 	*/
 	@Override
-	public java.lang.String getTitle(java.util.Locale locale, boolean useDefault) {
+	public String getTitle(java.util.Locale locale, boolean useDefault) {
 		return _cpSpecificationOption.getTitle(locale, useDefault);
 	}
 
@@ -421,7 +419,7 @@ public class CPSpecificationOptionWrapper implements CPSpecificationOption,
 	* @return the localized title of this cp specification option
 	*/
 	@Override
-	public java.lang.String getTitle(java.lang.String languageId) {
+	public String getTitle(String languageId) {
 		return _cpSpecificationOption.getTitle(languageId);
 	}
 
@@ -433,18 +431,17 @@ public class CPSpecificationOptionWrapper implements CPSpecificationOption,
 	* @return the localized title of this cp specification option
 	*/
 	@Override
-	public java.lang.String getTitle(java.lang.String languageId,
-		boolean useDefault) {
+	public String getTitle(String languageId, boolean useDefault) {
 		return _cpSpecificationOption.getTitle(languageId, useDefault);
 	}
 
 	@Override
-	public java.lang.String getTitleCurrentLanguageId() {
+	public String getTitleCurrentLanguageId() {
 		return _cpSpecificationOption.getTitleCurrentLanguageId();
 	}
 
 	@Override
-	public java.lang.String getTitleCurrentValue() {
+	public String getTitleCurrentValue() {
 		return _cpSpecificationOption.getTitleCurrentValue();
 	}
 
@@ -454,7 +451,7 @@ public class CPSpecificationOptionWrapper implements CPSpecificationOption,
 	* @return the locales and localized titles of this cp specification option
 	*/
 	@Override
-	public Map<java.util.Locale, java.lang.String> getTitleMap() {
+	public Map<java.util.Locale, String> getTitleMap() {
 		return _cpSpecificationOption.getTitleMap();
 	}
 
@@ -474,7 +471,7 @@ public class CPSpecificationOptionWrapper implements CPSpecificationOption,
 	* @return the user name of this cp specification option
 	*/
 	@Override
-	public java.lang.String getUserName() {
+	public String getUserName() {
 		return _cpSpecificationOption.getUserName();
 	}
 
@@ -484,7 +481,7 @@ public class CPSpecificationOptionWrapper implements CPSpecificationOption,
 	* @return the user uuid of this cp specification option
 	*/
 	@Override
-	public java.lang.String getUserUuid() {
+	public String getUserUuid() {
 		return _cpSpecificationOption.getUserUuid();
 	}
 
@@ -494,7 +491,7 @@ public class CPSpecificationOptionWrapper implements CPSpecificationOption,
 	* @return the uuid of this cp specification option
 	*/
 	@Override
-	public java.lang.String getUuid() {
+	public String getUuid() {
 		return _cpSpecificationOption.getUuid();
 	}
 
@@ -597,7 +594,7 @@ public class CPSpecificationOptionWrapper implements CPSpecificationOption,
 	* @param description the description of this cp specification option
 	*/
 	@Override
-	public void setDescription(java.lang.String description) {
+	public void setDescription(String description) {
 		_cpSpecificationOption.setDescription(description);
 	}
 
@@ -608,8 +605,7 @@ public class CPSpecificationOptionWrapper implements CPSpecificationOption,
 	* @param locale the locale of the language
 	*/
 	@Override
-	public void setDescription(java.lang.String description,
-		java.util.Locale locale) {
+	public void setDescription(String description, java.util.Locale locale) {
 		_cpSpecificationOption.setDescription(description, locale);
 	}
 
@@ -621,13 +617,13 @@ public class CPSpecificationOptionWrapper implements CPSpecificationOption,
 	* @param defaultLocale the default locale
 	*/
 	@Override
-	public void setDescription(java.lang.String description,
-		java.util.Locale locale, java.util.Locale defaultLocale) {
+	public void setDescription(String description, java.util.Locale locale,
+		java.util.Locale defaultLocale) {
 		_cpSpecificationOption.setDescription(description, locale, defaultLocale);
 	}
 
 	@Override
-	public void setDescriptionCurrentLanguageId(java.lang.String languageId) {
+	public void setDescriptionCurrentLanguageId(String languageId) {
 		_cpSpecificationOption.setDescriptionCurrentLanguageId(languageId);
 	}
 
@@ -637,8 +633,7 @@ public class CPSpecificationOptionWrapper implements CPSpecificationOption,
 	* @param descriptionMap the locales and localized descriptions of this cp specification option
 	*/
 	@Override
-	public void setDescriptionMap(
-		Map<java.util.Locale, java.lang.String> descriptionMap) {
+	public void setDescriptionMap(Map<java.util.Locale, String> descriptionMap) {
 		_cpSpecificationOption.setDescriptionMap(descriptionMap);
 	}
 
@@ -650,7 +645,7 @@ public class CPSpecificationOptionWrapper implements CPSpecificationOption,
 	*/
 	@Override
 	public void setDescriptionMap(
-		Map<java.util.Locale, java.lang.String> descriptionMap,
+		Map<java.util.Locale, String> descriptionMap,
 		java.util.Locale defaultLocale) {
 		_cpSpecificationOption.setDescriptionMap(descriptionMap, defaultLocale);
 	}
@@ -697,7 +692,7 @@ public class CPSpecificationOptionWrapper implements CPSpecificationOption,
 	* @param key the key of this cp specification option
 	*/
 	@Override
-	public void setKey(java.lang.String key) {
+	public void setKey(String key) {
 		_cpSpecificationOption.setKey(key);
 	}
 
@@ -747,7 +742,7 @@ public class CPSpecificationOptionWrapper implements CPSpecificationOption,
 	* @param title the title of this cp specification option
 	*/
 	@Override
-	public void setTitle(java.lang.String title) {
+	public void setTitle(String title) {
 		_cpSpecificationOption.setTitle(title);
 	}
 
@@ -758,7 +753,7 @@ public class CPSpecificationOptionWrapper implements CPSpecificationOption,
 	* @param locale the locale of the language
 	*/
 	@Override
-	public void setTitle(java.lang.String title, java.util.Locale locale) {
+	public void setTitle(String title, java.util.Locale locale) {
 		_cpSpecificationOption.setTitle(title, locale);
 	}
 
@@ -770,13 +765,13 @@ public class CPSpecificationOptionWrapper implements CPSpecificationOption,
 	* @param defaultLocale the default locale
 	*/
 	@Override
-	public void setTitle(java.lang.String title, java.util.Locale locale,
+	public void setTitle(String title, java.util.Locale locale,
 		java.util.Locale defaultLocale) {
 		_cpSpecificationOption.setTitle(title, locale, defaultLocale);
 	}
 
 	@Override
-	public void setTitleCurrentLanguageId(java.lang.String languageId) {
+	public void setTitleCurrentLanguageId(String languageId) {
 		_cpSpecificationOption.setTitleCurrentLanguageId(languageId);
 	}
 
@@ -786,7 +781,7 @@ public class CPSpecificationOptionWrapper implements CPSpecificationOption,
 	* @param titleMap the locales and localized titles of this cp specification option
 	*/
 	@Override
-	public void setTitleMap(Map<java.util.Locale, java.lang.String> titleMap) {
+	public void setTitleMap(Map<java.util.Locale, String> titleMap) {
 		_cpSpecificationOption.setTitleMap(titleMap);
 	}
 
@@ -797,7 +792,7 @@ public class CPSpecificationOptionWrapper implements CPSpecificationOption,
 	* @param defaultLocale the default locale
 	*/
 	@Override
-	public void setTitleMap(Map<java.util.Locale, java.lang.String> titleMap,
+	public void setTitleMap(Map<java.util.Locale, String> titleMap,
 		java.util.Locale defaultLocale) {
 		_cpSpecificationOption.setTitleMap(titleMap, defaultLocale);
 	}
@@ -818,7 +813,7 @@ public class CPSpecificationOptionWrapper implements CPSpecificationOption,
 	* @param userName the user name of this cp specification option
 	*/
 	@Override
-	public void setUserName(java.lang.String userName) {
+	public void setUserName(String userName) {
 		_cpSpecificationOption.setUserName(userName);
 	}
 
@@ -828,7 +823,7 @@ public class CPSpecificationOptionWrapper implements CPSpecificationOption,
 	* @param userUuid the user uuid of this cp specification option
 	*/
 	@Override
-	public void setUserUuid(java.lang.String userUuid) {
+	public void setUserUuid(String userUuid) {
 		_cpSpecificationOption.setUserUuid(userUuid);
 	}
 
@@ -838,7 +833,7 @@ public class CPSpecificationOptionWrapper implements CPSpecificationOption,
 	* @param uuid the uuid of this cp specification option
 	*/
 	@Override
-	public void setUuid(java.lang.String uuid) {
+	public void setUuid(String uuid) {
 		_cpSpecificationOption.setUuid(uuid);
 	}
 
@@ -853,7 +848,7 @@ public class CPSpecificationOptionWrapper implements CPSpecificationOption,
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _cpSpecificationOption.toString();
 	}
 
@@ -863,7 +858,7 @@ public class CPSpecificationOptionWrapper implements CPSpecificationOption,
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _cpSpecificationOption.toXmlString();
 	}
 

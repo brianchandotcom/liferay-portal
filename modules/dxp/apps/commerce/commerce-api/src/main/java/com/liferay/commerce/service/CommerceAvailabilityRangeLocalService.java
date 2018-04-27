@@ -80,7 +80,7 @@ public interface CommerceAvailabilityRangeLocalService extends BaseLocalService,
 		CommerceAvailabilityRange commerceAvailabilityRange);
 
 	public CommerceAvailabilityRange addCommerceAvailabilityRange(
-		Map<Locale, java.lang.String> titleMap, double priority,
+		Map<Locale, String> titleMap, double priority,
 		ServiceContext serviceContext) throws PortalException;
 
 	/**
@@ -199,7 +199,7 @@ public interface CommerceAvailabilityRangeLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CommerceAvailabilityRange fetchCommerceAvailabilityRangeByUuidAndGroupId(
-		java.lang.String uuid, long groupId);
+		String uuid, long groupId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
@@ -225,7 +225,7 @@ public interface CommerceAvailabilityRangeLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CommerceAvailabilityRange getCommerceAvailabilityRangeByUuidAndGroupId(
-		java.lang.String uuid, long groupId) throws PortalException;
+		String uuid, long groupId) throws PortalException;
 
 	/**
 	* Returns a range of all the commerce availability ranges.
@@ -256,7 +256,7 @@ public interface CommerceAvailabilityRangeLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommerceAvailabilityRange> getCommerceAvailabilityRangesByUuidAndCompanyId(
-		java.lang.String uuid, long companyId);
+		String uuid, long companyId);
 
 	/**
 	* Returns a range of commerce availability ranges matching the UUID and company.
@@ -270,7 +270,7 @@ public interface CommerceAvailabilityRangeLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommerceAvailabilityRange> getCommerceAvailabilityRangesByUuidAndCompanyId(
-		java.lang.String uuid, long companyId, int start, int end,
+		String uuid, long companyId, int start, int end,
 		OrderByComparator<CommerceAvailabilityRange> orderByComparator);
 
 	/**
@@ -296,7 +296,7 @@ public interface CommerceAvailabilityRangeLocalService extends BaseLocalService,
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -314,7 +314,7 @@ public interface CommerceAvailabilityRangeLocalService extends BaseLocalService,
 		CommerceAvailabilityRange commerceAvailabilityRange);
 
 	public CommerceAvailabilityRange updateCommerceAvailabilityRange(
-		long commerceAvailabilityId, Map<Locale, java.lang.String> titleMap,
+		long commerceAvailabilityId, Map<Locale, String> titleMap,
 		double priority, ServiceContext serviceContext)
 		throws PortalException;
 }

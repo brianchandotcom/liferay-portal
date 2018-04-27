@@ -157,7 +157,7 @@ public class CPDefinitionOptionValueRelWrapper
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new CPDefinitionOptionValueRelWrapper((CPDefinitionOptionValueRel)_cpDefinitionOptionValueRel.clone());
 	}
 
@@ -167,7 +167,7 @@ public class CPDefinitionOptionValueRelWrapper
 	}
 
 	@Override
-	public java.lang.String[] getAvailableLanguageIds() {
+	public String[] getAvailableLanguageIds() {
 		return _cpDefinitionOptionValueRel.getAvailableLanguageIds();
 	}
 
@@ -218,7 +218,7 @@ public class CPDefinitionOptionValueRelWrapper
 	}
 
 	@Override
-	public java.lang.String getDefaultLanguageId() {
+	public String getDefaultLanguageId() {
 		return _cpDefinitionOptionValueRel.getDefaultLanguageId();
 	}
 
@@ -243,7 +243,7 @@ public class CPDefinitionOptionValueRelWrapper
 	* @return the key of this cp definition option value rel
 	*/
 	@Override
-	public java.lang.String getKey() {
+	public String getKey() {
 		return _cpDefinitionOptionValueRel.getKey();
 	}
 
@@ -288,7 +288,7 @@ public class CPDefinitionOptionValueRelWrapper
 	* @return the title of this cp definition option value rel
 	*/
 	@Override
-	public java.lang.String getTitle() {
+	public String getTitle() {
 		return _cpDefinitionOptionValueRel.getTitle();
 	}
 
@@ -299,7 +299,7 @@ public class CPDefinitionOptionValueRelWrapper
 	* @return the localized title of this cp definition option value rel
 	*/
 	@Override
-	public java.lang.String getTitle(java.util.Locale locale) {
+	public String getTitle(java.util.Locale locale) {
 		return _cpDefinitionOptionValueRel.getTitle(locale);
 	}
 
@@ -311,7 +311,7 @@ public class CPDefinitionOptionValueRelWrapper
 	* @return the localized title of this cp definition option value rel. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
 	*/
 	@Override
-	public java.lang.String getTitle(java.util.Locale locale, boolean useDefault) {
+	public String getTitle(java.util.Locale locale, boolean useDefault) {
 		return _cpDefinitionOptionValueRel.getTitle(locale, useDefault);
 	}
 
@@ -322,7 +322,7 @@ public class CPDefinitionOptionValueRelWrapper
 	* @return the localized title of this cp definition option value rel
 	*/
 	@Override
-	public java.lang.String getTitle(java.lang.String languageId) {
+	public String getTitle(String languageId) {
 		return _cpDefinitionOptionValueRel.getTitle(languageId);
 	}
 
@@ -334,18 +334,17 @@ public class CPDefinitionOptionValueRelWrapper
 	* @return the localized title of this cp definition option value rel
 	*/
 	@Override
-	public java.lang.String getTitle(java.lang.String languageId,
-		boolean useDefault) {
+	public String getTitle(String languageId, boolean useDefault) {
 		return _cpDefinitionOptionValueRel.getTitle(languageId, useDefault);
 	}
 
 	@Override
-	public java.lang.String getTitleCurrentLanguageId() {
+	public String getTitleCurrentLanguageId() {
 		return _cpDefinitionOptionValueRel.getTitleCurrentLanguageId();
 	}
 
 	@Override
-	public java.lang.String getTitleCurrentValue() {
+	public String getTitleCurrentValue() {
 		return _cpDefinitionOptionValueRel.getTitleCurrentValue();
 	}
 
@@ -355,7 +354,7 @@ public class CPDefinitionOptionValueRelWrapper
 	* @return the locales and localized titles of this cp definition option value rel
 	*/
 	@Override
-	public Map<java.util.Locale, java.lang.String> getTitleMap() {
+	public Map<java.util.Locale, String> getTitleMap() {
 		return _cpDefinitionOptionValueRel.getTitleMap();
 	}
 
@@ -375,7 +374,7 @@ public class CPDefinitionOptionValueRelWrapper
 	* @return the user name of this cp definition option value rel
 	*/
 	@Override
-	public java.lang.String getUserName() {
+	public String getUserName() {
 		return _cpDefinitionOptionValueRel.getUserName();
 	}
 
@@ -385,7 +384,7 @@ public class CPDefinitionOptionValueRelWrapper
 	* @return the user uuid of this cp definition option value rel
 	*/
 	@Override
-	public java.lang.String getUserUuid() {
+	public String getUserUuid() {
 		return _cpDefinitionOptionValueRel.getUserUuid();
 	}
 
@@ -395,7 +394,7 @@ public class CPDefinitionOptionValueRelWrapper
 	* @return the uuid of this cp definition option value rel
 	*/
 	@Override
-	public java.lang.String getUuid() {
+	public String getUuid() {
 		return _cpDefinitionOptionValueRel.getUuid();
 	}
 
@@ -515,7 +514,7 @@ public class CPDefinitionOptionValueRelWrapper
 	* @param key the key of this cp definition option value rel
 	*/
 	@Override
-	public void setKey(java.lang.String key) {
+	public void setKey(String key) {
 		_cpDefinitionOptionValueRel.setKey(key);
 	}
 
@@ -565,7 +564,7 @@ public class CPDefinitionOptionValueRelWrapper
 	* @param title the title of this cp definition option value rel
 	*/
 	@Override
-	public void setTitle(java.lang.String title) {
+	public void setTitle(String title) {
 		_cpDefinitionOptionValueRel.setTitle(title);
 	}
 
@@ -576,7 +575,7 @@ public class CPDefinitionOptionValueRelWrapper
 	* @param locale the locale of the language
 	*/
 	@Override
-	public void setTitle(java.lang.String title, java.util.Locale locale) {
+	public void setTitle(String title, java.util.Locale locale) {
 		_cpDefinitionOptionValueRel.setTitle(title, locale);
 	}
 
@@ -588,13 +587,13 @@ public class CPDefinitionOptionValueRelWrapper
 	* @param defaultLocale the default locale
 	*/
 	@Override
-	public void setTitle(java.lang.String title, java.util.Locale locale,
+	public void setTitle(String title, java.util.Locale locale,
 		java.util.Locale defaultLocale) {
 		_cpDefinitionOptionValueRel.setTitle(title, locale, defaultLocale);
 	}
 
 	@Override
-	public void setTitleCurrentLanguageId(java.lang.String languageId) {
+	public void setTitleCurrentLanguageId(String languageId) {
 		_cpDefinitionOptionValueRel.setTitleCurrentLanguageId(languageId);
 	}
 
@@ -604,7 +603,7 @@ public class CPDefinitionOptionValueRelWrapper
 	* @param titleMap the locales and localized titles of this cp definition option value rel
 	*/
 	@Override
-	public void setTitleMap(Map<java.util.Locale, java.lang.String> titleMap) {
+	public void setTitleMap(Map<java.util.Locale, String> titleMap) {
 		_cpDefinitionOptionValueRel.setTitleMap(titleMap);
 	}
 
@@ -615,7 +614,7 @@ public class CPDefinitionOptionValueRelWrapper
 	* @param defaultLocale the default locale
 	*/
 	@Override
-	public void setTitleMap(Map<java.util.Locale, java.lang.String> titleMap,
+	public void setTitleMap(Map<java.util.Locale, String> titleMap,
 		java.util.Locale defaultLocale) {
 		_cpDefinitionOptionValueRel.setTitleMap(titleMap, defaultLocale);
 	}
@@ -636,7 +635,7 @@ public class CPDefinitionOptionValueRelWrapper
 	* @param userName the user name of this cp definition option value rel
 	*/
 	@Override
-	public void setUserName(java.lang.String userName) {
+	public void setUserName(String userName) {
 		_cpDefinitionOptionValueRel.setUserName(userName);
 	}
 
@@ -646,7 +645,7 @@ public class CPDefinitionOptionValueRelWrapper
 	* @param userUuid the user uuid of this cp definition option value rel
 	*/
 	@Override
-	public void setUserUuid(java.lang.String userUuid) {
+	public void setUserUuid(String userUuid) {
 		_cpDefinitionOptionValueRel.setUserUuid(userUuid);
 	}
 
@@ -656,7 +655,7 @@ public class CPDefinitionOptionValueRelWrapper
 	* @param uuid the uuid of this cp definition option value rel
 	*/
 	@Override
-	public void setUuid(java.lang.String uuid) {
+	public void setUuid(String uuid) {
 		_cpDefinitionOptionValueRel.setUuid(uuid);
 	}
 
@@ -671,7 +670,7 @@ public class CPDefinitionOptionValueRelWrapper
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _cpDefinitionOptionValueRel.toString();
 	}
 
@@ -681,7 +680,7 @@ public class CPDefinitionOptionValueRelWrapper
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _cpDefinitionOptionValueRel.toXmlString();
 	}
 

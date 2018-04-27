@@ -55,7 +55,7 @@ public class CommerceOrderPaymentLocalServiceUtil {
 	}
 
 	public static com.liferay.commerce.model.CommerceOrderPayment addCommerceOrderPayment(
-		long commerceOrderId, int status, java.lang.String content,
+		long commerceOrderId, int status, String content,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
@@ -251,7 +251,7 @@ public class CommerceOrderPaymentLocalServiceUtil {
 	*
 	* @return the OSGi service identifier
 	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
+	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 

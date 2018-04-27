@@ -61,13 +61,13 @@ public class CPDefinitionLinkServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.commerce.product.model.CPDefinitionLink> getCPDefinitionLinks(
-		long cpDefinitionId1, java.lang.String type)
+		long cpDefinitionId1, String type)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getCPDefinitionLinks(cpDefinitionId1, type);
 	}
 
 	public static java.util.List<com.liferay.commerce.product.model.CPDefinitionLink> getCPDefinitionLinks(
-		long cpDefinitionId1, java.lang.String type, int start, int end,
+		long cpDefinitionId1, String type, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.product.model.CPDefinitionLink> orderByComparator)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
@@ -76,8 +76,7 @@ public class CPDefinitionLinkServiceUtil {
 	}
 
 	public static int getCPDefinitionLinksCount(long cpDefinitionId1,
-		java.lang.String type)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		String type) throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getCPDefinitionLinksCount(cpDefinitionId1, type);
 	}
 
@@ -86,7 +85,7 @@ public class CPDefinitionLinkServiceUtil {
 	*
 	* @return the OSGi service identifier
 	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
+	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 
@@ -100,7 +99,7 @@ public class CPDefinitionLinkServiceUtil {
 	}
 
 	public static void updateCPDefinitionLinks(long cpDefinitionId1,
-		long[] cpDefinitionIds2, java.lang.String type,
+		long[] cpDefinitionIds2, String type,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService()

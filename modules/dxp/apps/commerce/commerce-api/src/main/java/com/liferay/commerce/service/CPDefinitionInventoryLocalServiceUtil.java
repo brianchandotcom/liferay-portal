@@ -55,11 +55,11 @@ public class CPDefinitionInventoryLocalServiceUtil {
 	}
 
 	public static com.liferay.commerce.model.CPDefinitionInventory addCPDefinitionInventory(
-		long cpDefinitionId, java.lang.String cpDefinitionInventoryEngine,
-		java.lang.String lowStockActivity, boolean displayAvailability,
+		long cpDefinitionId, String cpDefinitionInventoryEngine,
+		String lowStockActivity, boolean displayAvailability,
 		boolean displayStockQuantity, int minStockQuantity, boolean backOrders,
 		int minOrderQuantity, int maxOrderQuantity,
-		java.lang.String allowedOrderQuantities, int multipleOrderQuantity,
+		String allowedOrderQuantities, int multipleOrderQuantity,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
@@ -217,7 +217,7 @@ public class CPDefinitionInventoryLocalServiceUtil {
 	* @return the matching cp definition inventory, or <code>null</code> if a matching cp definition inventory could not be found
 	*/
 	public static com.liferay.commerce.model.CPDefinitionInventory fetchCPDefinitionInventoryByUuidAndGroupId(
-		java.lang.String uuid, long groupId) {
+		String uuid, long groupId) {
 		return getService()
 				   .fetchCPDefinitionInventoryByUuidAndGroupId(uuid, groupId);
 	}
@@ -250,7 +250,7 @@ public class CPDefinitionInventoryLocalServiceUtil {
 	* @return the matching cp definition inventories, or an empty list if no matches were found
 	*/
 	public static java.util.List<com.liferay.commerce.model.CPDefinitionInventory> getCPDefinitionInventoriesByUuidAndCompanyId(
-		java.lang.String uuid, long companyId) {
+		String uuid, long companyId) {
 		return getService()
 				   .getCPDefinitionInventoriesByUuidAndCompanyId(uuid, companyId);
 	}
@@ -266,7 +266,7 @@ public class CPDefinitionInventoryLocalServiceUtil {
 	* @return the range of matching cp definition inventories, or an empty list if no matches were found
 	*/
 	public static java.util.List<com.liferay.commerce.model.CPDefinitionInventory> getCPDefinitionInventoriesByUuidAndCompanyId(
-		java.lang.String uuid, long companyId, int start, int end,
+		String uuid, long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.model.CPDefinitionInventory> orderByComparator) {
 		return getService()
 				   .getCPDefinitionInventoriesByUuidAndCompanyId(uuid,
@@ -304,7 +304,7 @@ public class CPDefinitionInventoryLocalServiceUtil {
 	* @throws PortalException if a matching cp definition inventory could not be found
 	*/
 	public static com.liferay.commerce.model.CPDefinitionInventory getCPDefinitionInventoryByUuidAndGroupId(
-		java.lang.String uuid, long groupId)
+		String uuid, long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .getCPDefinitionInventoryByUuidAndGroupId(uuid, groupId);
@@ -324,7 +324,7 @@ public class CPDefinitionInventoryLocalServiceUtil {
 	*
 	* @return the OSGi service identifier
 	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
+	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 
@@ -346,12 +346,11 @@ public class CPDefinitionInventoryLocalServiceUtil {
 	}
 
 	public static com.liferay.commerce.model.CPDefinitionInventory updateCPDefinitionInventory(
-		long cpDefinitionInventoryId,
-		java.lang.String cpDefinitionInventoryEngine,
-		java.lang.String lowStockActivity, boolean displayAvailability,
+		long cpDefinitionInventoryId, String cpDefinitionInventoryEngine,
+		String lowStockActivity, boolean displayAvailability,
 		boolean displayStockQuantity, int minStockQuantity, boolean backOrders,
 		int minOrderQuantity, int maxOrderQuantity,
-		java.lang.String allowedOrderQuantities, int multipleOrderQuantity,
+		String allowedOrderQuantities, int multipleOrderQuantity,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()

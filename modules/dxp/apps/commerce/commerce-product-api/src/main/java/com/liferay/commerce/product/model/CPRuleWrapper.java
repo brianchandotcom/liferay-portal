@@ -142,7 +142,7 @@ public class CPRuleWrapper implements CPRule, ModelWrapper<CPRule> {
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new CPRuleWrapper((CPRule)_cpRule.clone());
 	}
 
@@ -222,7 +222,7 @@ public class CPRuleWrapper implements CPRule, ModelWrapper<CPRule> {
 	* @return the name of this cp rule
 	*/
 	@Override
-	public java.lang.String getName() {
+	public String getName() {
 		return _cpRule.getName();
 	}
 
@@ -247,7 +247,7 @@ public class CPRuleWrapper implements CPRule, ModelWrapper<CPRule> {
 	* @return the type of this cp rule
 	*/
 	@Override
-	public java.lang.String getType() {
+	public String getType() {
 		return _cpRule.getType();
 	}
 
@@ -257,7 +257,7 @@ public class CPRuleWrapper implements CPRule, ModelWrapper<CPRule> {
 	* @return the type settings of this cp rule
 	*/
 	@Override
-	public java.lang.String getTypeSettings() {
+	public String getTypeSettings() {
 		return _cpRule.getTypeSettings();
 	}
 
@@ -277,7 +277,7 @@ public class CPRuleWrapper implements CPRule, ModelWrapper<CPRule> {
 	* @return the user name of this cp rule
 	*/
 	@Override
-	public java.lang.String getUserName() {
+	public String getUserName() {
 		return _cpRule.getUserName();
 	}
 
@@ -287,7 +287,7 @@ public class CPRuleWrapper implements CPRule, ModelWrapper<CPRule> {
 	* @return the user uuid of this cp rule
 	*/
 	@Override
-	public java.lang.String getUserUuid() {
+	public String getUserUuid() {
 		return _cpRule.getUserUuid();
 	}
 
@@ -413,7 +413,7 @@ public class CPRuleWrapper implements CPRule, ModelWrapper<CPRule> {
 	* @param name the name of this cp rule
 	*/
 	@Override
-	public void setName(java.lang.String name) {
+	public void setName(String name) {
 		_cpRule.setName(name);
 	}
 
@@ -443,7 +443,7 @@ public class CPRuleWrapper implements CPRule, ModelWrapper<CPRule> {
 	* @param type the type of this cp rule
 	*/
 	@Override
-	public void setType(java.lang.String type) {
+	public void setType(String type) {
 		_cpRule.setType(type);
 	}
 
@@ -453,7 +453,7 @@ public class CPRuleWrapper implements CPRule, ModelWrapper<CPRule> {
 	* @param typeSettings the type settings of this cp rule
 	*/
 	@Override
-	public void setTypeSettings(java.lang.String typeSettings) {
+	public void setTypeSettings(String typeSettings) {
 		_cpRule.setTypeSettings(typeSettings);
 	}
 
@@ -473,7 +473,7 @@ public class CPRuleWrapper implements CPRule, ModelWrapper<CPRule> {
 	* @param userName the user name of this cp rule
 	*/
 	@Override
-	public void setUserName(java.lang.String userName) {
+	public void setUserName(String userName) {
 		_cpRule.setUserName(userName);
 	}
 
@@ -483,7 +483,7 @@ public class CPRuleWrapper implements CPRule, ModelWrapper<CPRule> {
 	* @param userUuid the user uuid of this cp rule
 	*/
 	@Override
-	public void setUserUuid(java.lang.String userUuid) {
+	public void setUserUuid(String userUuid) {
 		_cpRule.setUserUuid(userUuid);
 	}
 
@@ -498,7 +498,7 @@ public class CPRuleWrapper implements CPRule, ModelWrapper<CPRule> {
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _cpRule.toString();
 	}
 
@@ -508,7 +508,7 @@ public class CPRuleWrapper implements CPRule, ModelWrapper<CPRule> {
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _cpRule.toXmlString();
 	}
 

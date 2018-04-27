@@ -218,7 +218,7 @@ public class CommercePriceEntryLocalServiceUtil {
 	* @return the matching commerce price entry, or <code>null</code> if a matching commerce price entry could not be found
 	*/
 	public static com.liferay.commerce.price.list.model.CommercePriceEntry fetchCommercePriceEntryByUuidAndGroupId(
-		java.lang.String uuid, long groupId) {
+		String uuid, long groupId) {
 		return getService()
 				   .fetchCommercePriceEntryByUuidAndGroupId(uuid, groupId);
 	}
@@ -265,7 +265,7 @@ public class CommercePriceEntryLocalServiceUtil {
 	* @return the matching commerce price entries, or an empty list if no matches were found
 	*/
 	public static java.util.List<com.liferay.commerce.price.list.model.CommercePriceEntry> getCommercePriceEntriesByUuidAndCompanyId(
-		java.lang.String uuid, long companyId) {
+		String uuid, long companyId) {
 		return getService()
 				   .getCommercePriceEntriesByUuidAndCompanyId(uuid, companyId);
 	}
@@ -281,7 +281,7 @@ public class CommercePriceEntryLocalServiceUtil {
 	* @return the range of matching commerce price entries, or an empty list if no matches were found
 	*/
 	public static java.util.List<com.liferay.commerce.price.list.model.CommercePriceEntry> getCommercePriceEntriesByUuidAndCompanyId(
-		java.lang.String uuid, long companyId, int start, int end,
+		String uuid, long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.price.list.model.CommercePriceEntry> orderByComparator) {
 		return getService()
 				   .getCommercePriceEntriesByUuidAndCompanyId(uuid, companyId,
@@ -323,7 +323,7 @@ public class CommercePriceEntryLocalServiceUtil {
 	* @throws PortalException if a matching commerce price entry could not be found
 	*/
 	public static com.liferay.commerce.price.list.model.CommercePriceEntry getCommercePriceEntryByUuidAndGroupId(
-		java.lang.String uuid, long groupId)
+		String uuid, long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getCommercePriceEntryByUuidAndGroupId(uuid, groupId);
 	}
@@ -360,7 +360,7 @@ public class CommercePriceEntryLocalServiceUtil {
 	*
 	* @return the OSGi service identifier
 	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
+	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 
@@ -377,7 +377,7 @@ public class CommercePriceEntryLocalServiceUtil {
 
 	public static com.liferay.portal.kernel.search.BaseModelSearchResult<com.liferay.commerce.price.list.model.CommercePriceEntry> searchCommercePriceEntries(
 		long companyId, long groupId, long commercePriceListId,
-		java.lang.String keywords, int start, int end,
+		String keywords, int start, int end,
 		com.liferay.portal.kernel.search.Sort sort)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()

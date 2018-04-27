@@ -133,7 +133,7 @@ public class CPRuleUserSegmentRelWrapper implements CPRuleUserSegmentRel,
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new CPRuleUserSegmentRelWrapper((CPRuleUserSegmentRel)_cpRuleUserSegmentRel.clone());
 	}
 
@@ -254,7 +254,7 @@ public class CPRuleUserSegmentRelWrapper implements CPRuleUserSegmentRel,
 	* @return the user name of this cp rule user segment rel
 	*/
 	@Override
-	public java.lang.String getUserName() {
+	public String getUserName() {
 		return _cpRuleUserSegmentRel.getUserName();
 	}
 
@@ -264,7 +264,7 @@ public class CPRuleUserSegmentRelWrapper implements CPRuleUserSegmentRel,
 	* @return the user uuid of this cp rule user segment rel
 	*/
 	@Override
-	public java.lang.String getUserUuid() {
+	public String getUserUuid() {
 		return _cpRuleUserSegmentRel.getUserUuid();
 	}
 
@@ -420,7 +420,7 @@ public class CPRuleUserSegmentRelWrapper implements CPRuleUserSegmentRel,
 	* @param userName the user name of this cp rule user segment rel
 	*/
 	@Override
-	public void setUserName(java.lang.String userName) {
+	public void setUserName(String userName) {
 		_cpRuleUserSegmentRel.setUserName(userName);
 	}
 
@@ -430,7 +430,7 @@ public class CPRuleUserSegmentRelWrapper implements CPRuleUserSegmentRel,
 	* @param userUuid the user uuid of this cp rule user segment rel
 	*/
 	@Override
-	public void setUserUuid(java.lang.String userUuid) {
+	public void setUserUuid(String userUuid) {
 		_cpRuleUserSegmentRel.setUserUuid(userUuid);
 	}
 
@@ -445,7 +445,7 @@ public class CPRuleUserSegmentRelWrapper implements CPRuleUserSegmentRel,
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _cpRuleUserSegmentRel.toString();
 	}
 
@@ -455,7 +455,7 @@ public class CPRuleUserSegmentRelWrapper implements CPRuleUserSegmentRel,
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _cpRuleUserSegmentRel.toXmlString();
 	}
 

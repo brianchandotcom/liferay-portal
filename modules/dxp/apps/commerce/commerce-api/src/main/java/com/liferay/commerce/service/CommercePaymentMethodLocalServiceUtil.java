@@ -55,11 +55,11 @@ public class CommercePaymentMethodLocalServiceUtil {
 	}
 
 	public static com.liferay.commerce.model.CommercePaymentMethod addCommercePaymentMethod(
-		java.util.Map<java.util.Locale, java.lang.String> nameMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		java.io.File imageFile, java.lang.String engineKey,
-		java.util.Map<java.lang.String, java.lang.String> engineParameterMap,
-		double priority, boolean active,
+		java.util.Map<java.util.Locale, String> nameMap,
+		java.util.Map<java.util.Locale, String> descriptionMap,
+		java.io.File imageFile, String engineKey,
+		java.util.Map<String, String> engineParameterMap, double priority,
+		boolean active,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
@@ -274,7 +274,7 @@ public class CommercePaymentMethodLocalServiceUtil {
 	*
 	* @return the OSGi service identifier
 	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
+	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 
@@ -303,11 +303,11 @@ public class CommercePaymentMethodLocalServiceUtil {
 
 	public static com.liferay.commerce.model.CommercePaymentMethod updateCommercePaymentMethod(
 		long commercePaymentMethodId,
-		java.util.Map<java.util.Locale, java.lang.String> nameMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		java.util.Map<java.util.Locale, String> nameMap,
+		java.util.Map<java.util.Locale, String> descriptionMap,
 		java.io.File imageFile,
-		java.util.Map<java.lang.String, java.lang.String> engineParameterMap,
-		double priority, boolean active,
+		java.util.Map<String, String> engineParameterMap, double priority,
+		boolean active,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()

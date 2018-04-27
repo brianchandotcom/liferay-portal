@@ -56,8 +56,7 @@ public class CommerceAvailabilityRangeLocalServiceUtil {
 	}
 
 	public static com.liferay.commerce.model.CommerceAvailabilityRange addCommerceAvailabilityRange(
-		java.util.Map<java.util.Locale, java.lang.String> titleMap,
-		double priority,
+		java.util.Map<java.util.Locale, String> titleMap, double priority,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
@@ -211,7 +210,7 @@ public class CommerceAvailabilityRangeLocalServiceUtil {
 	* @return the matching commerce availability range, or <code>null</code> if a matching commerce availability range could not be found
 	*/
 	public static com.liferay.commerce.model.CommerceAvailabilityRange fetchCommerceAvailabilityRangeByUuidAndGroupId(
-		java.lang.String uuid, long groupId) {
+		String uuid, long groupId) {
 		return getService()
 				   .fetchCommerceAvailabilityRangeByUuidAndGroupId(uuid, groupId);
 	}
@@ -243,7 +242,7 @@ public class CommerceAvailabilityRangeLocalServiceUtil {
 	* @throws PortalException if a matching commerce availability range could not be found
 	*/
 	public static com.liferay.commerce.model.CommerceAvailabilityRange getCommerceAvailabilityRangeByUuidAndGroupId(
-		java.lang.String uuid, long groupId)
+		String uuid, long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .getCommerceAvailabilityRangeByUuidAndGroupId(uuid, groupId);
@@ -281,7 +280,7 @@ public class CommerceAvailabilityRangeLocalServiceUtil {
 	* @return the matching commerce availability ranges, or an empty list if no matches were found
 	*/
 	public static java.util.List<com.liferay.commerce.model.CommerceAvailabilityRange> getCommerceAvailabilityRangesByUuidAndCompanyId(
-		java.lang.String uuid, long companyId) {
+		String uuid, long companyId) {
 		return getService()
 				   .getCommerceAvailabilityRangesByUuidAndCompanyId(uuid,
 			companyId);
@@ -298,7 +297,7 @@ public class CommerceAvailabilityRangeLocalServiceUtil {
 	* @return the range of matching commerce availability ranges, or an empty list if no matches were found
 	*/
 	public static java.util.List<com.liferay.commerce.model.CommerceAvailabilityRange> getCommerceAvailabilityRangesByUuidAndCompanyId(
-		java.lang.String uuid, long companyId, int start, int end,
+		String uuid, long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.model.CommerceAvailabilityRange> orderByComparator) {
 		return getService()
 				   .getCommerceAvailabilityRangesByUuidAndCompanyId(uuid,
@@ -332,7 +331,7 @@ public class CommerceAvailabilityRangeLocalServiceUtil {
 	*
 	* @return the OSGi service identifier
 	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
+	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 
@@ -356,8 +355,7 @@ public class CommerceAvailabilityRangeLocalServiceUtil {
 
 	public static com.liferay.commerce.model.CommerceAvailabilityRange updateCommerceAvailabilityRange(
 		long commerceAvailabilityId,
-		java.util.Map<java.util.Locale, java.lang.String> titleMap,
-		double priority,
+		java.util.Map<java.util.Locale, String> titleMap, double priority,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()

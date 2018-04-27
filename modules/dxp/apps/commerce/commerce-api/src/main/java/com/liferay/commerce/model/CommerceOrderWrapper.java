@@ -276,7 +276,7 @@ public class CommerceOrderWrapper implements CommerceOrder,
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new CommerceOrderWrapper((CommerceOrder)_commerceOrder.clone());
 	}
 
@@ -291,7 +291,7 @@ public class CommerceOrderWrapper implements CommerceOrder,
 	* @return the advance status of this commerce order
 	*/
 	@Override
-	public java.lang.String getAdvanceStatus() {
+	public String getAdvanceStatus() {
 		return _commerceOrder.getAdvanceStatus();
 	}
 
@@ -312,7 +312,7 @@ public class CommerceOrderWrapper implements CommerceOrder,
 	}
 
 	@Override
-	public java.lang.String getClassName()
+	public String getClassName()
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _commerceOrder.getClassName();
 	}
@@ -412,7 +412,7 @@ public class CommerceOrderWrapper implements CommerceOrder,
 	}
 
 	@Override
-	public java.lang.String getCustomerName()
+	public String getCustomerName()
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _commerceOrder.getCustomerName();
 	}
@@ -490,7 +490,7 @@ public class CommerceOrderWrapper implements CommerceOrder,
 	* @return the order user uuid of this commerce order
 	*/
 	@Override
-	public java.lang.String getOrderUserUuid() {
+	public String getOrderUserUuid() {
 		return _commerceOrder.getOrderUserUuid();
 	}
 
@@ -525,7 +525,7 @@ public class CommerceOrderWrapper implements CommerceOrder,
 	* @return the purchase order number of this commerce order
 	*/
 	@Override
-	public java.lang.String getPurchaseOrderNumber() {
+	public String getPurchaseOrderNumber() {
 		return _commerceOrder.getPurchaseOrderNumber();
 	}
 
@@ -551,7 +551,7 @@ public class CommerceOrderWrapper implements CommerceOrder,
 	* @return the shipping option name of this commerce order
 	*/
 	@Override
-	public java.lang.String getShippingOptionName() {
+	public String getShippingOptionName() {
 		return _commerceOrder.getShippingOptionName();
 	}
 
@@ -611,7 +611,7 @@ public class CommerceOrderWrapper implements CommerceOrder,
 	* @return the status by user name of this commerce order
 	*/
 	@Override
-	public java.lang.String getStatusByUserName() {
+	public String getStatusByUserName() {
 		return _commerceOrder.getStatusByUserName();
 	}
 
@@ -621,7 +621,7 @@ public class CommerceOrderWrapper implements CommerceOrder,
 	* @return the status by user uuid of this commerce order
 	*/
 	@Override
-	public java.lang.String getStatusByUserUuid() {
+	public String getStatusByUserUuid() {
 		return _commerceOrder.getStatusByUserUuid();
 	}
 
@@ -671,7 +671,7 @@ public class CommerceOrderWrapper implements CommerceOrder,
 	* @return the user name of this commerce order
 	*/
 	@Override
-	public java.lang.String getUserName() {
+	public String getUserName() {
 		return _commerceOrder.getUserName();
 	}
 
@@ -681,7 +681,7 @@ public class CommerceOrderWrapper implements CommerceOrder,
 	* @return the user uuid of this commerce order
 	*/
 	@Override
-	public java.lang.String getUserUuid() {
+	public String getUserUuid() {
 		return _commerceOrder.getUserUuid();
 	}
 
@@ -691,7 +691,7 @@ public class CommerceOrderWrapper implements CommerceOrder,
 	* @return the uuid of this commerce order
 	*/
 	@Override
-	public java.lang.String getUuid() {
+	public String getUuid() {
 		return _commerceOrder.getUuid();
 	}
 
@@ -828,7 +828,7 @@ public class CommerceOrderWrapper implements CommerceOrder,
 	* @param advanceStatus the advance status of this commerce order
 	*/
 	@Override
-	public void setAdvanceStatus(java.lang.String advanceStatus) {
+	public void setAdvanceStatus(String advanceStatus) {
 		_commerceOrder.setAdvanceStatus(advanceStatus);
 	}
 
@@ -984,7 +984,7 @@ public class CommerceOrderWrapper implements CommerceOrder,
 	* @param orderUserUuid the order user uuid of this commerce order
 	*/
 	@Override
-	public void setOrderUserUuid(java.lang.String orderUserUuid) {
+	public void setOrderUserUuid(String orderUserUuid) {
 		_commerceOrder.setOrderUserUuid(orderUserUuid);
 	}
 
@@ -1019,7 +1019,7 @@ public class CommerceOrderWrapper implements CommerceOrder,
 	* @param purchaseOrderNumber the purchase order number of this commerce order
 	*/
 	@Override
-	public void setPurchaseOrderNumber(java.lang.String purchaseOrderNumber) {
+	public void setPurchaseOrderNumber(String purchaseOrderNumber) {
 		_commerceOrder.setPurchaseOrderNumber(purchaseOrderNumber);
 	}
 
@@ -1039,7 +1039,7 @@ public class CommerceOrderWrapper implements CommerceOrder,
 	* @param shippingOptionName the shipping option name of this commerce order
 	*/
 	@Override
-	public void setShippingOptionName(java.lang.String shippingOptionName) {
+	public void setShippingOptionName(String shippingOptionName) {
 		_commerceOrder.setShippingOptionName(shippingOptionName);
 	}
 
@@ -1099,7 +1099,7 @@ public class CommerceOrderWrapper implements CommerceOrder,
 	* @param statusByUserName the status by user name of this commerce order
 	*/
 	@Override
-	public void setStatusByUserName(java.lang.String statusByUserName) {
+	public void setStatusByUserName(String statusByUserName) {
 		_commerceOrder.setStatusByUserName(statusByUserName);
 	}
 
@@ -1109,7 +1109,7 @@ public class CommerceOrderWrapper implements CommerceOrder,
 	* @param statusByUserUuid the status by user uuid of this commerce order
 	*/
 	@Override
-	public void setStatusByUserUuid(java.lang.String statusByUserUuid) {
+	public void setStatusByUserUuid(String statusByUserUuid) {
 		_commerceOrder.setStatusByUserUuid(statusByUserUuid);
 	}
 
@@ -1159,7 +1159,7 @@ public class CommerceOrderWrapper implements CommerceOrder,
 	* @param userName the user name of this commerce order
 	*/
 	@Override
-	public void setUserName(java.lang.String userName) {
+	public void setUserName(String userName) {
 		_commerceOrder.setUserName(userName);
 	}
 
@@ -1169,7 +1169,7 @@ public class CommerceOrderWrapper implements CommerceOrder,
 	* @param userUuid the user uuid of this commerce order
 	*/
 	@Override
-	public void setUserUuid(java.lang.String userUuid) {
+	public void setUserUuid(String userUuid) {
 		_commerceOrder.setUserUuid(userUuid);
 	}
 
@@ -1179,7 +1179,7 @@ public class CommerceOrderWrapper implements CommerceOrder,
 	* @param uuid the uuid of this commerce order
 	*/
 	@Override
-	public void setUuid(java.lang.String uuid) {
+	public void setUuid(String uuid) {
 		_commerceOrder.setUuid(uuid);
 	}
 
@@ -1194,7 +1194,7 @@ public class CommerceOrderWrapper implements CommerceOrder,
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _commerceOrder.toString();
 	}
 
@@ -1204,7 +1204,7 @@ public class CommerceOrderWrapper implements CommerceOrder,
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _commerceOrder.toXmlString();
 	}
 

@@ -66,7 +66,7 @@ import java.rmi.RemoteException;
 @ProviderType
 public class CommerceOrderNoteServiceSoap {
 	public static com.liferay.commerce.model.CommerceOrderNoteSoap addCommerceOrderNote(
-		long commerceOrderId, java.lang.String content, boolean restricted,
+		long commerceOrderId, String content, boolean restricted,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
@@ -170,7 +170,7 @@ public class CommerceOrderNoteServiceSoap {
 	}
 
 	public static com.liferay.commerce.model.CommerceOrderNoteSoap updateCommerceOrderNote(
-		long commerceOrderNoteId, java.lang.String content, boolean restricted)
+		long commerceOrderNoteId, String content, boolean restricted)
 		throws RemoteException {
 		try {
 			com.liferay.commerce.model.CommerceOrderNote returnValue = CommerceOrderNoteServiceUtil.updateCommerceOrderNote(commerceOrderNoteId,

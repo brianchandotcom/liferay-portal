@@ -195,7 +195,7 @@ public class CommerceCountryWrapper implements CommerceCountry,
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new CommerceCountryWrapper((CommerceCountry)_commerceCountry.clone());
 	}
 
@@ -215,7 +215,7 @@ public class CommerceCountryWrapper implements CommerceCountry,
 	}
 
 	@Override
-	public java.lang.String[] getAvailableLanguageIds() {
+	public String[] getAvailableLanguageIds() {
 		return _commerceCountry.getAvailableLanguageIds();
 	}
 
@@ -260,7 +260,7 @@ public class CommerceCountryWrapper implements CommerceCountry,
 	}
 
 	@Override
-	public java.lang.String getDefaultLanguageId() {
+	public String getDefaultLanguageId() {
 		return _commerceCountry.getDefaultLanguageId();
 	}
 
@@ -305,7 +305,7 @@ public class CommerceCountryWrapper implements CommerceCountry,
 	* @return the name of this commerce country
 	*/
 	@Override
-	public java.lang.String getName() {
+	public String getName() {
 		return _commerceCountry.getName();
 	}
 
@@ -316,7 +316,7 @@ public class CommerceCountryWrapper implements CommerceCountry,
 	* @return the localized name of this commerce country
 	*/
 	@Override
-	public java.lang.String getName(java.util.Locale locale) {
+	public String getName(java.util.Locale locale) {
 		return _commerceCountry.getName(locale);
 	}
 
@@ -328,7 +328,7 @@ public class CommerceCountryWrapper implements CommerceCountry,
 	* @return the localized name of this commerce country. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
 	*/
 	@Override
-	public java.lang.String getName(java.util.Locale locale, boolean useDefault) {
+	public String getName(java.util.Locale locale, boolean useDefault) {
 		return _commerceCountry.getName(locale, useDefault);
 	}
 
@@ -339,7 +339,7 @@ public class CommerceCountryWrapper implements CommerceCountry,
 	* @return the localized name of this commerce country
 	*/
 	@Override
-	public java.lang.String getName(java.lang.String languageId) {
+	public String getName(String languageId) {
 		return _commerceCountry.getName(languageId);
 	}
 
@@ -351,18 +351,17 @@ public class CommerceCountryWrapper implements CommerceCountry,
 	* @return the localized name of this commerce country
 	*/
 	@Override
-	public java.lang.String getName(java.lang.String languageId,
-		boolean useDefault) {
+	public String getName(String languageId, boolean useDefault) {
 		return _commerceCountry.getName(languageId, useDefault);
 	}
 
 	@Override
-	public java.lang.String getNameCurrentLanguageId() {
+	public String getNameCurrentLanguageId() {
 		return _commerceCountry.getNameCurrentLanguageId();
 	}
 
 	@Override
-	public java.lang.String getNameCurrentValue() {
+	public String getNameCurrentValue() {
 		return _commerceCountry.getNameCurrentValue();
 	}
 
@@ -372,7 +371,7 @@ public class CommerceCountryWrapper implements CommerceCountry,
 	* @return the locales and localized names of this commerce country
 	*/
 	@Override
-	public Map<java.util.Locale, java.lang.String> getNameMap() {
+	public Map<java.util.Locale, String> getNameMap() {
 		return _commerceCountry.getNameMap();
 	}
 
@@ -437,7 +436,7 @@ public class CommerceCountryWrapper implements CommerceCountry,
 	* @return the three letters iso code of this commerce country
 	*/
 	@Override
-	public java.lang.String getThreeLettersISOCode() {
+	public String getThreeLettersISOCode() {
 		return _commerceCountry.getThreeLettersISOCode();
 	}
 
@@ -447,7 +446,7 @@ public class CommerceCountryWrapper implements CommerceCountry,
 	* @return the two letters iso code of this commerce country
 	*/
 	@Override
-	public java.lang.String getTwoLettersISOCode() {
+	public String getTwoLettersISOCode() {
 		return _commerceCountry.getTwoLettersISOCode();
 	}
 
@@ -467,7 +466,7 @@ public class CommerceCountryWrapper implements CommerceCountry,
 	* @return the user name of this commerce country
 	*/
 	@Override
-	public java.lang.String getUserName() {
+	public String getUserName() {
 		return _commerceCountry.getUserName();
 	}
 
@@ -477,7 +476,7 @@ public class CommerceCountryWrapper implements CommerceCountry,
 	* @return the user uuid of this commerce country
 	*/
 	@Override
-	public java.lang.String getUserUuid() {
+	public String getUserUuid() {
 		return _commerceCountry.getUserUuid();
 	}
 
@@ -487,7 +486,7 @@ public class CommerceCountryWrapper implements CommerceCountry,
 	* @return the uuid of this commerce country
 	*/
 	@Override
-	public java.lang.String getUuid() {
+	public String getUuid() {
 		return _commerceCountry.getUuid();
 	}
 
@@ -676,7 +675,7 @@ public class CommerceCountryWrapper implements CommerceCountry,
 	* @param name the name of this commerce country
 	*/
 	@Override
-	public void setName(java.lang.String name) {
+	public void setName(String name) {
 		_commerceCountry.setName(name);
 	}
 
@@ -687,7 +686,7 @@ public class CommerceCountryWrapper implements CommerceCountry,
 	* @param locale the locale of the language
 	*/
 	@Override
-	public void setName(java.lang.String name, java.util.Locale locale) {
+	public void setName(String name, java.util.Locale locale) {
 		_commerceCountry.setName(name, locale);
 	}
 
@@ -699,13 +698,13 @@ public class CommerceCountryWrapper implements CommerceCountry,
 	* @param defaultLocale the default locale
 	*/
 	@Override
-	public void setName(java.lang.String name, java.util.Locale locale,
+	public void setName(String name, java.util.Locale locale,
 		java.util.Locale defaultLocale) {
 		_commerceCountry.setName(name, locale, defaultLocale);
 	}
 
 	@Override
-	public void setNameCurrentLanguageId(java.lang.String languageId) {
+	public void setNameCurrentLanguageId(String languageId) {
 		_commerceCountry.setNameCurrentLanguageId(languageId);
 	}
 
@@ -715,7 +714,7 @@ public class CommerceCountryWrapper implements CommerceCountry,
 	* @param nameMap the locales and localized names of this commerce country
 	*/
 	@Override
-	public void setNameMap(Map<java.util.Locale, java.lang.String> nameMap) {
+	public void setNameMap(Map<java.util.Locale, String> nameMap) {
 		_commerceCountry.setNameMap(nameMap);
 	}
 
@@ -726,7 +725,7 @@ public class CommerceCountryWrapper implements CommerceCountry,
 	* @param defaultLocale the default locale
 	*/
 	@Override
-	public void setNameMap(Map<java.util.Locale, java.lang.String> nameMap,
+	public void setNameMap(Map<java.util.Locale, String> nameMap,
 		java.util.Locale defaultLocale) {
 		_commerceCountry.setNameMap(nameMap, defaultLocale);
 	}
@@ -797,7 +796,7 @@ public class CommerceCountryWrapper implements CommerceCountry,
 	* @param threeLettersISOCode the three letters iso code of this commerce country
 	*/
 	@Override
-	public void setThreeLettersISOCode(java.lang.String threeLettersISOCode) {
+	public void setThreeLettersISOCode(String threeLettersISOCode) {
 		_commerceCountry.setThreeLettersISOCode(threeLettersISOCode);
 	}
 
@@ -807,7 +806,7 @@ public class CommerceCountryWrapper implements CommerceCountry,
 	* @param twoLettersISOCode the two letters iso code of this commerce country
 	*/
 	@Override
-	public void setTwoLettersISOCode(java.lang.String twoLettersISOCode) {
+	public void setTwoLettersISOCode(String twoLettersISOCode) {
 		_commerceCountry.setTwoLettersISOCode(twoLettersISOCode);
 	}
 
@@ -827,7 +826,7 @@ public class CommerceCountryWrapper implements CommerceCountry,
 	* @param userName the user name of this commerce country
 	*/
 	@Override
-	public void setUserName(java.lang.String userName) {
+	public void setUserName(String userName) {
 		_commerceCountry.setUserName(userName);
 	}
 
@@ -837,7 +836,7 @@ public class CommerceCountryWrapper implements CommerceCountry,
 	* @param userUuid the user uuid of this commerce country
 	*/
 	@Override
-	public void setUserUuid(java.lang.String userUuid) {
+	public void setUserUuid(String userUuid) {
 		_commerceCountry.setUserUuid(userUuid);
 	}
 
@@ -847,7 +846,7 @@ public class CommerceCountryWrapper implements CommerceCountry,
 	* @param uuid the uuid of this commerce country
 	*/
 	@Override
-	public void setUuid(java.lang.String uuid) {
+	public void setUuid(String uuid) {
 		_commerceCountry.setUuid(uuid);
 	}
 
@@ -862,7 +861,7 @@ public class CommerceCountryWrapper implements CommerceCountry,
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _commerceCountry.toString();
 	}
 
@@ -872,7 +871,7 @@ public class CommerceCountryWrapper implements CommerceCountry,
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _commerceCountry.toXmlString();
 	}
 

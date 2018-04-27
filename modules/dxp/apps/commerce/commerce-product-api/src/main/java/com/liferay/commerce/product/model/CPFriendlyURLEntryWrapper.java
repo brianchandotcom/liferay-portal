@@ -159,7 +159,7 @@ public class CPFriendlyURLEntryWrapper implements CPFriendlyURLEntry,
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new CPFriendlyURLEntryWrapper((CPFriendlyURLEntry)_cpFriendlyURLEntry.clone());
 	}
 
@@ -174,7 +174,7 @@ public class CPFriendlyURLEntryWrapper implements CPFriendlyURLEntry,
 	* @return the fully qualified class name of this cp friendly url entry
 	*/
 	@Override
-	public java.lang.String getClassName() {
+	public String getClassName() {
 		return _cpFriendlyURLEntry.getClassName();
 	}
 
@@ -249,7 +249,7 @@ public class CPFriendlyURLEntryWrapper implements CPFriendlyURLEntry,
 	* @return the language ID of this cp friendly url entry
 	*/
 	@Override
-	public java.lang.String getLanguageId() {
+	public String getLanguageId() {
 		return _cpFriendlyURLEntry.getLanguageId();
 	}
 
@@ -299,7 +299,7 @@ public class CPFriendlyURLEntryWrapper implements CPFriendlyURLEntry,
 	* @return the url title of this cp friendly url entry
 	*/
 	@Override
-	public java.lang.String getUrlTitle() {
+	public String getUrlTitle() {
 		return _cpFriendlyURLEntry.getUrlTitle();
 	}
 
@@ -319,7 +319,7 @@ public class CPFriendlyURLEntryWrapper implements CPFriendlyURLEntry,
 	* @return the user name of this cp friendly url entry
 	*/
 	@Override
-	public java.lang.String getUserName() {
+	public String getUserName() {
 		return _cpFriendlyURLEntry.getUserName();
 	}
 
@@ -329,7 +329,7 @@ public class CPFriendlyURLEntryWrapper implements CPFriendlyURLEntry,
 	* @return the user uuid of this cp friendly url entry
 	*/
 	@Override
-	public java.lang.String getUserUuid() {
+	public String getUserUuid() {
 		return _cpFriendlyURLEntry.getUserUuid();
 	}
 
@@ -339,7 +339,7 @@ public class CPFriendlyURLEntryWrapper implements CPFriendlyURLEntry,
 	* @return the uuid of this cp friendly url entry
 	*/
 	@Override
-	public java.lang.String getUuid() {
+	public String getUuid() {
 		return _cpFriendlyURLEntry.getUuid();
 	}
 
@@ -384,7 +384,7 @@ public class CPFriendlyURLEntryWrapper implements CPFriendlyURLEntry,
 	}
 
 	@Override
-	public void setClassName(java.lang.String className) {
+	public void setClassName(String className) {
 		_cpFriendlyURLEntry.setClassName(className);
 	}
 
@@ -470,7 +470,7 @@ public class CPFriendlyURLEntryWrapper implements CPFriendlyURLEntry,
 	* @param languageId the language ID of this cp friendly url entry
 	*/
 	@Override
-	public void setLanguageId(java.lang.String languageId) {
+	public void setLanguageId(String languageId) {
 		_cpFriendlyURLEntry.setLanguageId(languageId);
 	}
 
@@ -520,7 +520,7 @@ public class CPFriendlyURLEntryWrapper implements CPFriendlyURLEntry,
 	* @param urlTitle the url title of this cp friendly url entry
 	*/
 	@Override
-	public void setUrlTitle(java.lang.String urlTitle) {
+	public void setUrlTitle(String urlTitle) {
 		_cpFriendlyURLEntry.setUrlTitle(urlTitle);
 	}
 
@@ -540,7 +540,7 @@ public class CPFriendlyURLEntryWrapper implements CPFriendlyURLEntry,
 	* @param userName the user name of this cp friendly url entry
 	*/
 	@Override
-	public void setUserName(java.lang.String userName) {
+	public void setUserName(String userName) {
 		_cpFriendlyURLEntry.setUserName(userName);
 	}
 
@@ -550,7 +550,7 @@ public class CPFriendlyURLEntryWrapper implements CPFriendlyURLEntry,
 	* @param userUuid the user uuid of this cp friendly url entry
 	*/
 	@Override
-	public void setUserUuid(java.lang.String userUuid) {
+	public void setUserUuid(String userUuid) {
 		_cpFriendlyURLEntry.setUserUuid(userUuid);
 	}
 
@@ -560,7 +560,7 @@ public class CPFriendlyURLEntryWrapper implements CPFriendlyURLEntry,
 	* @param uuid the uuid of this cp friendly url entry
 	*/
 	@Override
-	public void setUuid(java.lang.String uuid) {
+	public void setUuid(String uuid) {
 		_cpFriendlyURLEntry.setUuid(uuid);
 	}
 
@@ -575,7 +575,7 @@ public class CPFriendlyURLEntryWrapper implements CPFriendlyURLEntry,
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _cpFriendlyURLEntry.toString();
 	}
 
@@ -585,7 +585,7 @@ public class CPFriendlyURLEntryWrapper implements CPFriendlyURLEntry,
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _cpFriendlyURLEntry.toXmlString();
 	}
 

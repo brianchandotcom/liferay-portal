@@ -47,8 +47,7 @@ public interface CommerceAvailabilityRangePersistence extends BasePersistence<Co
 	* @param uuid the uuid
 	* @return the matching commerce availability ranges
 	*/
-	public java.util.List<CommerceAvailabilityRange> findByUuid(
-		java.lang.String uuid);
+	public java.util.List<CommerceAvailabilityRange> findByUuid(String uuid);
 
 	/**
 	* Returns a range of all the commerce availability ranges where uuid = &#63;.
@@ -62,8 +61,8 @@ public interface CommerceAvailabilityRangePersistence extends BasePersistence<Co
 	* @param end the upper bound of the range of commerce availability ranges (not inclusive)
 	* @return the range of matching commerce availability ranges
 	*/
-	public java.util.List<CommerceAvailabilityRange> findByUuid(
-		java.lang.String uuid, int start, int end);
+	public java.util.List<CommerceAvailabilityRange> findByUuid(String uuid,
+		int start, int end);
 
 	/**
 	* Returns an ordered range of all the commerce availability ranges where uuid = &#63;.
@@ -78,8 +77,8 @@ public interface CommerceAvailabilityRangePersistence extends BasePersistence<Co
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching commerce availability ranges
 	*/
-	public java.util.List<CommerceAvailabilityRange> findByUuid(
-		java.lang.String uuid, int start, int end,
+	public java.util.List<CommerceAvailabilityRange> findByUuid(String uuid,
+		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<CommerceAvailabilityRange> orderByComparator);
 
 	/**
@@ -96,8 +95,8 @@ public interface CommerceAvailabilityRangePersistence extends BasePersistence<Co
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching commerce availability ranges
 	*/
-	public java.util.List<CommerceAvailabilityRange> findByUuid(
-		java.lang.String uuid, int start, int end,
+	public java.util.List<CommerceAvailabilityRange> findByUuid(String uuid,
+		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<CommerceAvailabilityRange> orderByComparator,
 		boolean retrieveFromCache);
 
@@ -109,7 +108,7 @@ public interface CommerceAvailabilityRangePersistence extends BasePersistence<Co
 	* @return the first matching commerce availability range
 	* @throws NoSuchAvailabilityRangeException if a matching commerce availability range could not be found
 	*/
-	public CommerceAvailabilityRange findByUuid_First(java.lang.String uuid,
+	public CommerceAvailabilityRange findByUuid_First(String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<CommerceAvailabilityRange> orderByComparator)
 		throws NoSuchAvailabilityRangeException;
 
@@ -120,7 +119,7 @@ public interface CommerceAvailabilityRangePersistence extends BasePersistence<Co
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching commerce availability range, or <code>null</code> if a matching commerce availability range could not be found
 	*/
-	public CommerceAvailabilityRange fetchByUuid_First(java.lang.String uuid,
+	public CommerceAvailabilityRange fetchByUuid_First(String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<CommerceAvailabilityRange> orderByComparator);
 
 	/**
@@ -131,7 +130,7 @@ public interface CommerceAvailabilityRangePersistence extends BasePersistence<Co
 	* @return the last matching commerce availability range
 	* @throws NoSuchAvailabilityRangeException if a matching commerce availability range could not be found
 	*/
-	public CommerceAvailabilityRange findByUuid_Last(java.lang.String uuid,
+	public CommerceAvailabilityRange findByUuid_Last(String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<CommerceAvailabilityRange> orderByComparator)
 		throws NoSuchAvailabilityRangeException;
 
@@ -142,7 +141,7 @@ public interface CommerceAvailabilityRangePersistence extends BasePersistence<Co
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching commerce availability range, or <code>null</code> if a matching commerce availability range could not be found
 	*/
-	public CommerceAvailabilityRange fetchByUuid_Last(java.lang.String uuid,
+	public CommerceAvailabilityRange fetchByUuid_Last(String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<CommerceAvailabilityRange> orderByComparator);
 
 	/**
@@ -155,7 +154,7 @@ public interface CommerceAvailabilityRangePersistence extends BasePersistence<Co
 	* @throws NoSuchAvailabilityRangeException if a commerce availability range with the primary key could not be found
 	*/
 	public CommerceAvailabilityRange[] findByUuid_PrevAndNext(
-		long commerceAvailabilityRangeId, java.lang.String uuid,
+		long commerceAvailabilityRangeId, String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<CommerceAvailabilityRange> orderByComparator)
 		throws NoSuchAvailabilityRangeException;
 
@@ -164,7 +163,7 @@ public interface CommerceAvailabilityRangePersistence extends BasePersistence<Co
 	*
 	* @param uuid the uuid
 	*/
-	public void removeByUuid(java.lang.String uuid);
+	public void removeByUuid(String uuid);
 
 	/**
 	* Returns the number of commerce availability ranges where uuid = &#63;.
@@ -172,7 +171,7 @@ public interface CommerceAvailabilityRangePersistence extends BasePersistence<Co
 	* @param uuid the uuid
 	* @return the number of matching commerce availability ranges
 	*/
-	public int countByUuid(java.lang.String uuid);
+	public int countByUuid(String uuid);
 
 	/**
 	* Returns the commerce availability range where uuid = &#63; and groupId = &#63; or throws a {@link NoSuchAvailabilityRangeException} if it could not be found.
@@ -182,8 +181,8 @@ public interface CommerceAvailabilityRangePersistence extends BasePersistence<Co
 	* @return the matching commerce availability range
 	* @throws NoSuchAvailabilityRangeException if a matching commerce availability range could not be found
 	*/
-	public CommerceAvailabilityRange findByUUID_G(java.lang.String uuid,
-		long groupId) throws NoSuchAvailabilityRangeException;
+	public CommerceAvailabilityRange findByUUID_G(String uuid, long groupId)
+		throws NoSuchAvailabilityRangeException;
 
 	/**
 	* Returns the commerce availability range where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
@@ -192,8 +191,7 @@ public interface CommerceAvailabilityRangePersistence extends BasePersistence<Co
 	* @param groupId the group ID
 	* @return the matching commerce availability range, or <code>null</code> if a matching commerce availability range could not be found
 	*/
-	public CommerceAvailabilityRange fetchByUUID_G(java.lang.String uuid,
-		long groupId);
+	public CommerceAvailabilityRange fetchByUUID_G(String uuid, long groupId);
 
 	/**
 	* Returns the commerce availability range where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -203,8 +201,8 @@ public interface CommerceAvailabilityRangePersistence extends BasePersistence<Co
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching commerce availability range, or <code>null</code> if a matching commerce availability range could not be found
 	*/
-	public CommerceAvailabilityRange fetchByUUID_G(java.lang.String uuid,
-		long groupId, boolean retrieveFromCache);
+	public CommerceAvailabilityRange fetchByUUID_G(String uuid, long groupId,
+		boolean retrieveFromCache);
 
 	/**
 	* Removes the commerce availability range where uuid = &#63; and groupId = &#63; from the database.
@@ -213,8 +211,8 @@ public interface CommerceAvailabilityRangePersistence extends BasePersistence<Co
 	* @param groupId the group ID
 	* @return the commerce availability range that was removed
 	*/
-	public CommerceAvailabilityRange removeByUUID_G(java.lang.String uuid,
-		long groupId) throws NoSuchAvailabilityRangeException;
+	public CommerceAvailabilityRange removeByUUID_G(String uuid, long groupId)
+		throws NoSuchAvailabilityRangeException;
 
 	/**
 	* Returns the number of commerce availability ranges where uuid = &#63; and groupId = &#63;.
@@ -223,7 +221,7 @@ public interface CommerceAvailabilityRangePersistence extends BasePersistence<Co
 	* @param groupId the group ID
 	* @return the number of matching commerce availability ranges
 	*/
-	public int countByUUID_G(java.lang.String uuid, long groupId);
+	public int countByUUID_G(String uuid, long groupId);
 
 	/**
 	* Returns all the commerce availability ranges where uuid = &#63; and companyId = &#63;.
@@ -232,8 +230,8 @@ public interface CommerceAvailabilityRangePersistence extends BasePersistence<Co
 	* @param companyId the company ID
 	* @return the matching commerce availability ranges
 	*/
-	public java.util.List<CommerceAvailabilityRange> findByUuid_C(
-		java.lang.String uuid, long companyId);
+	public java.util.List<CommerceAvailabilityRange> findByUuid_C(String uuid,
+		long companyId);
 
 	/**
 	* Returns a range of all the commerce availability ranges where uuid = &#63; and companyId = &#63;.
@@ -248,8 +246,8 @@ public interface CommerceAvailabilityRangePersistence extends BasePersistence<Co
 	* @param end the upper bound of the range of commerce availability ranges (not inclusive)
 	* @return the range of matching commerce availability ranges
 	*/
-	public java.util.List<CommerceAvailabilityRange> findByUuid_C(
-		java.lang.String uuid, long companyId, int start, int end);
+	public java.util.List<CommerceAvailabilityRange> findByUuid_C(String uuid,
+		long companyId, int start, int end);
 
 	/**
 	* Returns an ordered range of all the commerce availability ranges where uuid = &#63; and companyId = &#63;.
@@ -265,8 +263,8 @@ public interface CommerceAvailabilityRangePersistence extends BasePersistence<Co
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching commerce availability ranges
 	*/
-	public java.util.List<CommerceAvailabilityRange> findByUuid_C(
-		java.lang.String uuid, long companyId, int start, int end,
+	public java.util.List<CommerceAvailabilityRange> findByUuid_C(String uuid,
+		long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<CommerceAvailabilityRange> orderByComparator);
 
 	/**
@@ -284,8 +282,8 @@ public interface CommerceAvailabilityRangePersistence extends BasePersistence<Co
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching commerce availability ranges
 	*/
-	public java.util.List<CommerceAvailabilityRange> findByUuid_C(
-		java.lang.String uuid, long companyId, int start, int end,
+	public java.util.List<CommerceAvailabilityRange> findByUuid_C(String uuid,
+		long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<CommerceAvailabilityRange> orderByComparator,
 		boolean retrieveFromCache);
 
@@ -298,7 +296,7 @@ public interface CommerceAvailabilityRangePersistence extends BasePersistence<Co
 	* @return the first matching commerce availability range
 	* @throws NoSuchAvailabilityRangeException if a matching commerce availability range could not be found
 	*/
-	public CommerceAvailabilityRange findByUuid_C_First(java.lang.String uuid,
+	public CommerceAvailabilityRange findByUuid_C_First(String uuid,
 		long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<CommerceAvailabilityRange> orderByComparator)
 		throws NoSuchAvailabilityRangeException;
@@ -311,8 +309,8 @@ public interface CommerceAvailabilityRangePersistence extends BasePersistence<Co
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching commerce availability range, or <code>null</code> if a matching commerce availability range could not be found
 	*/
-	public CommerceAvailabilityRange fetchByUuid_C_First(
-		java.lang.String uuid, long companyId,
+	public CommerceAvailabilityRange fetchByUuid_C_First(String uuid,
+		long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<CommerceAvailabilityRange> orderByComparator);
 
 	/**
@@ -324,7 +322,7 @@ public interface CommerceAvailabilityRangePersistence extends BasePersistence<Co
 	* @return the last matching commerce availability range
 	* @throws NoSuchAvailabilityRangeException if a matching commerce availability range could not be found
 	*/
-	public CommerceAvailabilityRange findByUuid_C_Last(java.lang.String uuid,
+	public CommerceAvailabilityRange findByUuid_C_Last(String uuid,
 		long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<CommerceAvailabilityRange> orderByComparator)
 		throws NoSuchAvailabilityRangeException;
@@ -337,7 +335,7 @@ public interface CommerceAvailabilityRangePersistence extends BasePersistence<Co
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching commerce availability range, or <code>null</code> if a matching commerce availability range could not be found
 	*/
-	public CommerceAvailabilityRange fetchByUuid_C_Last(java.lang.String uuid,
+	public CommerceAvailabilityRange fetchByUuid_C_Last(String uuid,
 		long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<CommerceAvailabilityRange> orderByComparator);
 
@@ -352,8 +350,7 @@ public interface CommerceAvailabilityRangePersistence extends BasePersistence<Co
 	* @throws NoSuchAvailabilityRangeException if a commerce availability range with the primary key could not be found
 	*/
 	public CommerceAvailabilityRange[] findByUuid_C_PrevAndNext(
-		long commerceAvailabilityRangeId, java.lang.String uuid,
-		long companyId,
+		long commerceAvailabilityRangeId, String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<CommerceAvailabilityRange> orderByComparator)
 		throws NoSuchAvailabilityRangeException;
 
@@ -363,7 +360,7 @@ public interface CommerceAvailabilityRangePersistence extends BasePersistence<Co
 	* @param uuid the uuid
 	* @param companyId the company ID
 	*/
-	public void removeByUuid_C(java.lang.String uuid, long companyId);
+	public void removeByUuid_C(String uuid, long companyId);
 
 	/**
 	* Returns the number of commerce availability ranges where uuid = &#63; and companyId = &#63;.
@@ -372,7 +369,7 @@ public interface CommerceAvailabilityRangePersistence extends BasePersistence<Co
 	* @param companyId the company ID
 	* @return the number of matching commerce availability ranges
 	*/
-	public int countByUuid_C(java.lang.String uuid, long companyId);
+	public int countByUuid_C(String uuid, long companyId);
 
 	/**
 	* Returns all the commerce availability ranges where groupId = &#63;.
@@ -633,5 +630,5 @@ public interface CommerceAvailabilityRangePersistence extends BasePersistence<Co
 	public int countAll();
 
 	@Override
-	public java.util.Set<java.lang.String> getBadColumnNames();
+	public java.util.Set<String> getBadColumnNames();
 }

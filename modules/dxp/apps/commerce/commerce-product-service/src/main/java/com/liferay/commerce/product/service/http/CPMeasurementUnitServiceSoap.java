@@ -70,9 +70,8 @@ import java.util.Map;
 @ProviderType
 public class CPMeasurementUnitServiceSoap {
 	public static com.liferay.commerce.product.model.CPMeasurementUnitSoap addCPMeasurementUnit(
-		java.lang.String[] nameMapLanguageIds,
-		java.lang.String[] nameMapValues, java.lang.String key, double rate,
-		boolean primary, double priority, int type,
+		String[] nameMapLanguageIds, String[] nameMapValues, String key,
+		double rate, boolean primary, double priority, int type,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
@@ -166,9 +165,9 @@ public class CPMeasurementUnitServiceSoap {
 	}
 
 	public static com.liferay.commerce.product.model.CPMeasurementUnitSoap updateCPMeasurementUnit(
-		long cpMeasurementUnitId, java.lang.String[] nameMapLanguageIds,
-		java.lang.String[] nameMapValues, java.lang.String key, double rate,
-		boolean primary, double priority, int type,
+		long cpMeasurementUnitId, String[] nameMapLanguageIds,
+		String[] nameMapValues, String key, double rate, boolean primary,
+		double priority, int type,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {

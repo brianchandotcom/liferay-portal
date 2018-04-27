@@ -36,11 +36,11 @@ public class CPDefinitionVirtualSettingServiceWrapper
 
 	@Override
 	public com.liferay.commerce.product.type.virtual.model.CPDefinitionVirtualSetting addCPDefinitionVirtualSetting(
-		long cpDefinitionId, long fileEntryId, java.lang.String url,
-		java.lang.String activationStatus, long duration, int maxUsages,
-		boolean useSample, long sampleFileEntryId, java.lang.String sampleUrl,
+		long cpDefinitionId, long fileEntryId, String url,
+		String activationStatus, long duration, int maxUsages,
+		boolean useSample, long sampleFileEntryId, String sampleUrl,
 		boolean termsOfUseRequired,
-		java.util.Map<java.util.Locale, java.lang.String> termsOfUseContentMap,
+		java.util.Map<java.util.Locale, String> termsOfUseContentMap,
 		long termsOfUseJournalArticleResourcePrimKey,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -64,17 +64,17 @@ public class CPDefinitionVirtualSettingServiceWrapper
 	* @return the OSGi service identifier
 	*/
 	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
+	public String getOSGiServiceIdentifier() {
 		return _cpDefinitionVirtualSettingService.getOSGiServiceIdentifier();
 	}
 
 	@Override
 	public com.liferay.commerce.product.type.virtual.model.CPDefinitionVirtualSetting updateCPDefinitionVirtualSetting(
-		long cpDefinitionVirtualSettingId, long fileEntryId,
-		java.lang.String url, java.lang.String activationStatus, long duration,
-		int maxUsages, boolean useSample, long sampleFileEntryId,
-		java.lang.String sampleUrl, boolean termsOfUseRequired,
-		java.util.Map<java.util.Locale, java.lang.String> termsOfUseContentMap,
+		long cpDefinitionVirtualSettingId, long fileEntryId, String url,
+		String activationStatus, long duration, int maxUsages,
+		boolean useSample, long sampleFileEntryId, String sampleUrl,
+		boolean termsOfUseRequired,
+		java.util.Map<java.util.Locale, String> termsOfUseContentMap,
 		long termsOfUseJournalArticleResourcePrimKey,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {

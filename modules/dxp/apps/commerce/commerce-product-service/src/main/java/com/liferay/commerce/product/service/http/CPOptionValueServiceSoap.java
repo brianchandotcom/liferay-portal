@@ -70,9 +70,8 @@ import java.util.Map;
 @ProviderType
 public class CPOptionValueServiceSoap {
 	public static com.liferay.commerce.product.model.CPOptionValueSoap addCPOptionValue(
-		long cpOptionId, java.lang.String[] titleMapLanguageIds,
-		java.lang.String[] titleMapValues, double priority,
-		java.lang.String key,
+		long cpOptionId, String[] titleMapLanguageIds, String[] titleMapValues,
+		double priority, String key,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
@@ -198,9 +197,8 @@ public class CPOptionValueServiceSoap {
 	}
 
 	public static com.liferay.commerce.product.model.CPOptionValueSoap updateCPOptionValue(
-		long cpOptionValueId, java.lang.String[] titleMapLanguageIds,
-		java.lang.String[] titleMapValues, double priority,
-		java.lang.String key,
+		long cpOptionValueId, String[] titleMapLanguageIds,
+		String[] titleMapValues, double priority, String key,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {

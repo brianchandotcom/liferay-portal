@@ -61,10 +61,9 @@ public interface CPSpecificationOptionService extends BaseService {
 	 * Never modify or reference this interface directly. Always use {@link CPSpecificationOptionServiceUtil} to access the cp specification option remote service. Add custom service methods to {@link com.liferay.commerce.product.service.impl.CPSpecificationOptionServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	public CPSpecificationOption addCPSpecificationOption(
-		long cpOptionCategoryId, Map<Locale, java.lang.String> titleMap,
-		Map<Locale, java.lang.String> descriptionMap, boolean facetable,
-		java.lang.String key, ServiceContext serviceContext)
-		throws PortalException;
+		long cpOptionCategoryId, Map<Locale, String> titleMap,
+		Map<Locale, String> descriptionMap, boolean facetable, String key,
+		ServiceContext serviceContext) throws PortalException;
 
 	public void deleteCPSpecificationOption(long cpSpecificationOptionId)
 		throws PortalException;
@@ -87,17 +86,16 @@ public interface CPSpecificationOptionService extends BaseService {
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public BaseModelSearchResult<CPSpecificationOption> searchCPSpecificationOptions(
-		long companyId, long groupId, java.lang.String keywords, int start,
-		int end, Sort sort) throws PortalException;
+		long companyId, long groupId, String keywords, int start, int end,
+		Sort sort) throws PortalException;
 
 	public CPSpecificationOption updateCPSpecificationOption(
 		long cpSpecificationOptionId, long cpOptionCategoryId,
-		Map<Locale, java.lang.String> titleMap,
-		Map<Locale, java.lang.String> descriptionMap, boolean facetable,
-		java.lang.String key, ServiceContext serviceContext)
+		Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
+		boolean facetable, String key, ServiceContext serviceContext)
 		throws PortalException;
 }

@@ -82,9 +82,9 @@ public interface CommerceUserSegmentEntryLocalService extends BaseLocalService,
 
 	@Indexable(type = IndexableType.REINDEX)
 	public CommerceUserSegmentEntry addCommerceUserSegmentEntry(
-		Map<Locale, java.lang.String> nameMap, java.lang.String key,
-		boolean active, boolean system, double priority,
-		ServiceContext serviceContext) throws PortalException;
+		Map<Locale, String> nameMap, String key, boolean active,
+		boolean system, double priority, ServiceContext serviceContext)
+		throws PortalException;
 
 	/**
 	* Creates a new commerce user segment entry with the primary key. Does not add the commerce user segment entry to the database.
@@ -195,7 +195,7 @@ public interface CommerceUserSegmentEntryLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CommerceUserSegmentEntry fetchCommerceUserSegmentEntry(
-		long groupId, java.lang.String key);
+		long groupId, String key);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
@@ -254,7 +254,7 @@ public interface CommerceUserSegmentEntryLocalService extends BaseLocalService,
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -266,8 +266,8 @@ public interface CommerceUserSegmentEntryLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public BaseModelSearchResult<CommerceUserSegmentEntry> searchCommerceUserSegmentEntries(
-		long companyId, long groupId, java.lang.String keywords, int start,
-		int end, Sort sort) throws PortalException;
+		long companyId, long groupId, String keywords, int start, int end,
+		Sort sort) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public BaseModelSearchResult<CommerceUserSegmentEntry> searchCommerceUserSegmentEntries(
@@ -285,7 +285,7 @@ public interface CommerceUserSegmentEntryLocalService extends BaseLocalService,
 
 	@Indexable(type = IndexableType.REINDEX)
 	public CommerceUserSegmentEntry updateCommerceUserSegmentEntry(
-		long commerceUserSegmentEntryId, Map<Locale, java.lang.String> nameMap,
-		java.lang.String key, boolean active, double priority,
+		long commerceUserSegmentEntryId, Map<Locale, String> nameMap,
+		String key, boolean active, double priority,
 		ServiceContext serviceContext) throws PortalException;
 }

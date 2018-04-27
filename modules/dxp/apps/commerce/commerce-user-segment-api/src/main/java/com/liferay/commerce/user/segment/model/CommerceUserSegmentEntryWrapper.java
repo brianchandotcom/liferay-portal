@@ -153,7 +153,7 @@ public class CommerceUserSegmentEntryWrapper implements CommerceUserSegmentEntry
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new CommerceUserSegmentEntryWrapper((CommerceUserSegmentEntry)_commerceUserSegmentEntry.clone());
 	}
 
@@ -173,7 +173,7 @@ public class CommerceUserSegmentEntryWrapper implements CommerceUserSegmentEntry
 	}
 
 	@Override
-	public java.lang.String[] getAvailableLanguageIds() {
+	public String[] getAvailableLanguageIds() {
 		return _commerceUserSegmentEntry.getAvailableLanguageIds();
 	}
 
@@ -208,7 +208,7 @@ public class CommerceUserSegmentEntryWrapper implements CommerceUserSegmentEntry
 	}
 
 	@Override
-	public java.lang.String getDefaultLanguageId() {
+	public String getDefaultLanguageId() {
 		return _commerceUserSegmentEntry.getDefaultLanguageId();
 	}
 
@@ -233,7 +233,7 @@ public class CommerceUserSegmentEntryWrapper implements CommerceUserSegmentEntry
 	* @return the key of this commerce user segment entry
 	*/
 	@Override
-	public java.lang.String getKey() {
+	public String getKey() {
 		return _commerceUserSegmentEntry.getKey();
 	}
 
@@ -253,7 +253,7 @@ public class CommerceUserSegmentEntryWrapper implements CommerceUserSegmentEntry
 	* @return the name of this commerce user segment entry
 	*/
 	@Override
-	public java.lang.String getName() {
+	public String getName() {
 		return _commerceUserSegmentEntry.getName();
 	}
 
@@ -264,7 +264,7 @@ public class CommerceUserSegmentEntryWrapper implements CommerceUserSegmentEntry
 	* @return the localized name of this commerce user segment entry
 	*/
 	@Override
-	public java.lang.String getName(java.util.Locale locale) {
+	public String getName(java.util.Locale locale) {
 		return _commerceUserSegmentEntry.getName(locale);
 	}
 
@@ -276,7 +276,7 @@ public class CommerceUserSegmentEntryWrapper implements CommerceUserSegmentEntry
 	* @return the localized name of this commerce user segment entry. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
 	*/
 	@Override
-	public java.lang.String getName(java.util.Locale locale, boolean useDefault) {
+	public String getName(java.util.Locale locale, boolean useDefault) {
 		return _commerceUserSegmentEntry.getName(locale, useDefault);
 	}
 
@@ -287,7 +287,7 @@ public class CommerceUserSegmentEntryWrapper implements CommerceUserSegmentEntry
 	* @return the localized name of this commerce user segment entry
 	*/
 	@Override
-	public java.lang.String getName(java.lang.String languageId) {
+	public String getName(String languageId) {
 		return _commerceUserSegmentEntry.getName(languageId);
 	}
 
@@ -299,18 +299,17 @@ public class CommerceUserSegmentEntryWrapper implements CommerceUserSegmentEntry
 	* @return the localized name of this commerce user segment entry
 	*/
 	@Override
-	public java.lang.String getName(java.lang.String languageId,
-		boolean useDefault) {
+	public String getName(String languageId, boolean useDefault) {
 		return _commerceUserSegmentEntry.getName(languageId, useDefault);
 	}
 
 	@Override
-	public java.lang.String getNameCurrentLanguageId() {
+	public String getNameCurrentLanguageId() {
 		return _commerceUserSegmentEntry.getNameCurrentLanguageId();
 	}
 
 	@Override
-	public java.lang.String getNameCurrentValue() {
+	public String getNameCurrentValue() {
 		return _commerceUserSegmentEntry.getNameCurrentValue();
 	}
 
@@ -320,7 +319,7 @@ public class CommerceUserSegmentEntryWrapper implements CommerceUserSegmentEntry
 	* @return the locales and localized names of this commerce user segment entry
 	*/
 	@Override
-	public Map<java.util.Locale, java.lang.String> getNameMap() {
+	public Map<java.util.Locale, String> getNameMap() {
 		return _commerceUserSegmentEntry.getNameMap();
 	}
 
@@ -375,7 +374,7 @@ public class CommerceUserSegmentEntryWrapper implements CommerceUserSegmentEntry
 	* @return the user name of this commerce user segment entry
 	*/
 	@Override
-	public java.lang.String getUserName() {
+	public String getUserName() {
 		return _commerceUserSegmentEntry.getUserName();
 	}
 
@@ -385,7 +384,7 @@ public class CommerceUserSegmentEntryWrapper implements CommerceUserSegmentEntry
 	* @return the user uuid of this commerce user segment entry
 	*/
 	@Override
-	public java.lang.String getUserUuid() {
+	public String getUserUuid() {
 		return _commerceUserSegmentEntry.getUserUuid();
 	}
 
@@ -524,7 +523,7 @@ public class CommerceUserSegmentEntryWrapper implements CommerceUserSegmentEntry
 	* @param key the key of this commerce user segment entry
 	*/
 	@Override
-	public void setKey(java.lang.String key) {
+	public void setKey(String key) {
 		_commerceUserSegmentEntry.setKey(key);
 	}
 
@@ -544,7 +543,7 @@ public class CommerceUserSegmentEntryWrapper implements CommerceUserSegmentEntry
 	* @param name the name of this commerce user segment entry
 	*/
 	@Override
-	public void setName(java.lang.String name) {
+	public void setName(String name) {
 		_commerceUserSegmentEntry.setName(name);
 	}
 
@@ -555,7 +554,7 @@ public class CommerceUserSegmentEntryWrapper implements CommerceUserSegmentEntry
 	* @param locale the locale of the language
 	*/
 	@Override
-	public void setName(java.lang.String name, java.util.Locale locale) {
+	public void setName(String name, java.util.Locale locale) {
 		_commerceUserSegmentEntry.setName(name, locale);
 	}
 
@@ -567,13 +566,13 @@ public class CommerceUserSegmentEntryWrapper implements CommerceUserSegmentEntry
 	* @param defaultLocale the default locale
 	*/
 	@Override
-	public void setName(java.lang.String name, java.util.Locale locale,
+	public void setName(String name, java.util.Locale locale,
 		java.util.Locale defaultLocale) {
 		_commerceUserSegmentEntry.setName(name, locale, defaultLocale);
 	}
 
 	@Override
-	public void setNameCurrentLanguageId(java.lang.String languageId) {
+	public void setNameCurrentLanguageId(String languageId) {
 		_commerceUserSegmentEntry.setNameCurrentLanguageId(languageId);
 	}
 
@@ -583,7 +582,7 @@ public class CommerceUserSegmentEntryWrapper implements CommerceUserSegmentEntry
 	* @param nameMap the locales and localized names of this commerce user segment entry
 	*/
 	@Override
-	public void setNameMap(Map<java.util.Locale, java.lang.String> nameMap) {
+	public void setNameMap(Map<java.util.Locale, String> nameMap) {
 		_commerceUserSegmentEntry.setNameMap(nameMap);
 	}
 
@@ -594,7 +593,7 @@ public class CommerceUserSegmentEntryWrapper implements CommerceUserSegmentEntry
 	* @param defaultLocale the default locale
 	*/
 	@Override
-	public void setNameMap(Map<java.util.Locale, java.lang.String> nameMap,
+	public void setNameMap(Map<java.util.Locale, String> nameMap,
 		java.util.Locale defaultLocale) {
 		_commerceUserSegmentEntry.setNameMap(nameMap, defaultLocale);
 	}
@@ -655,7 +654,7 @@ public class CommerceUserSegmentEntryWrapper implements CommerceUserSegmentEntry
 	* @param userName the user name of this commerce user segment entry
 	*/
 	@Override
-	public void setUserName(java.lang.String userName) {
+	public void setUserName(String userName) {
 		_commerceUserSegmentEntry.setUserName(userName);
 	}
 
@@ -665,7 +664,7 @@ public class CommerceUserSegmentEntryWrapper implements CommerceUserSegmentEntry
 	* @param userUuid the user uuid of this commerce user segment entry
 	*/
 	@Override
-	public void setUserUuid(java.lang.String userUuid) {
+	public void setUserUuid(String userUuid) {
 		_commerceUserSegmentEntry.setUserUuid(userUuid);
 	}
 
@@ -680,7 +679,7 @@ public class CommerceUserSegmentEntryWrapper implements CommerceUserSegmentEntry
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _commerceUserSegmentEntry.toString();
 	}
 
@@ -690,7 +689,7 @@ public class CommerceUserSegmentEntryWrapper implements CommerceUserSegmentEntry
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _commerceUserSegmentEntry.toXmlString();
 	}
 

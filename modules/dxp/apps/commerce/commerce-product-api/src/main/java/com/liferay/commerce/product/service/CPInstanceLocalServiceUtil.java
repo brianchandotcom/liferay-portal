@@ -55,13 +55,12 @@ public class CPInstanceLocalServiceUtil {
 	}
 
 	public static com.liferay.commerce.product.model.CPInstance addCPInstance(
-		long cpDefinitionId, java.lang.String sku, java.lang.String gtin,
-		java.lang.String manufacturerPartNumber, boolean purchasable,
-		java.lang.String ddmContent, boolean published, int displayDateMonth,
-		int displayDateDay, int displayDateYear, int displayDateHour,
-		int displayDateMinute, int expirationDateMonth, int expirationDateDay,
-		int expirationDateYear, int expirationDateHour,
-		int expirationDateMinute, boolean neverExpire,
+		long cpDefinitionId, String sku, String gtin,
+		String manufacturerPartNumber, boolean purchasable, String ddmContent,
+		boolean published, int displayDateMonth, int displayDateDay,
+		int displayDateYear, int displayDateHour, int displayDateMinute,
+		int expirationDateMonth, int expirationDateDay, int expirationDateYear,
+		int expirationDateHour, int expirationDateMinute, boolean neverExpire,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
@@ -74,10 +73,10 @@ public class CPInstanceLocalServiceUtil {
 	}
 
 	public static com.liferay.commerce.product.model.CPInstance addCPInstance(
-		long cpDefinitionId, java.lang.String sku, java.lang.String gtin,
-		java.lang.String manufacturerPartNumber, boolean purchasable,
-		java.lang.String ddmContent, double width, double height, double depth,
-		double weight, java.math.BigDecimal cost, java.math.BigDecimal price,
+		long cpDefinitionId, String sku, String gtin,
+		String manufacturerPartNumber, boolean purchasable, String ddmContent,
+		double width, double height, double depth, double weight,
+		java.math.BigDecimal cost, java.math.BigDecimal price,
 		java.math.BigDecimal promoPrice, boolean published,
 		int displayDateMonth, int displayDateDay, int displayDateYear,
 		int displayDateHour, int displayDateMinute, int expirationDateMonth,
@@ -253,7 +252,7 @@ public class CPInstanceLocalServiceUtil {
 	* @return the matching cp instance, or <code>null</code> if a matching cp instance could not be found
 	*/
 	public static com.liferay.commerce.product.model.CPInstance fetchCPInstanceByUuidAndGroupId(
-		java.lang.String uuid, long groupId) {
+		String uuid, long groupId) {
 		return getService().fetchCPInstanceByUuidAndGroupId(uuid, groupId);
 	}
 
@@ -298,7 +297,7 @@ public class CPInstanceLocalServiceUtil {
 	}
 
 	public static com.liferay.commerce.product.model.CPInstance getCPInstance(
-		long cpDefinitionId, java.lang.String sku)
+		long cpDefinitionId, String sku)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getCPInstance(cpDefinitionId, sku);
 	}
@@ -312,7 +311,7 @@ public class CPInstanceLocalServiceUtil {
 	* @throws PortalException if a matching cp instance could not be found
 	*/
 	public static com.liferay.commerce.product.model.CPInstance getCPInstanceByUuidAndGroupId(
-		java.lang.String uuid, long groupId)
+		String uuid, long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getCPInstanceByUuidAndGroupId(uuid, groupId);
 	}
@@ -350,7 +349,7 @@ public class CPInstanceLocalServiceUtil {
 	* @return the matching cp instances, or an empty list if no matches were found
 	*/
 	public static java.util.List<com.liferay.commerce.product.model.CPInstance> getCPInstancesByUuidAndCompanyId(
-		java.lang.String uuid, long companyId) {
+		String uuid, long companyId) {
 		return getService().getCPInstancesByUuidAndCompanyId(uuid, companyId);
 	}
 
@@ -365,7 +364,7 @@ public class CPInstanceLocalServiceUtil {
 	* @return the range of matching cp instances, or an empty list if no matches were found
 	*/
 	public static java.util.List<com.liferay.commerce.product.model.CPInstance> getCPInstancesByUuidAndCompanyId(
-		java.lang.String uuid, long companyId, int start, int end,
+		String uuid, long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.product.model.CPInstance> orderByComparator) {
 		return getService()
 				   .getCPInstancesByUuidAndCompanyId(uuid, companyId, start,
@@ -400,7 +399,7 @@ public class CPInstanceLocalServiceUtil {
 	*
 	* @return the OSGi service identifier
 	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
+	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 
@@ -410,7 +409,7 @@ public class CPInstanceLocalServiceUtil {
 		return getService().getPersistedModel(primaryKeyObj);
 	}
 
-	public static java.lang.String[] getSKUs(long cpDefinitionId) {
+	public static String[] getSKUs(long cpDefinitionId) {
 		return getService().getSKUs(cpDefinitionId);
 	}
 
@@ -420,8 +419,8 @@ public class CPInstanceLocalServiceUtil {
 	}
 
 	public static com.liferay.portal.kernel.search.BaseModelSearchResult<com.liferay.commerce.product.model.CPInstance> searchCPDefinitionInstances(
-		long companyId, long groupId, long cpDefinitionId,
-		java.lang.String keywords, int status, int start, int end,
+		long companyId, long groupId, long cpDefinitionId, String keywords,
+		int status, int start, int end,
 		com.liferay.portal.kernel.search.Sort sort)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
@@ -430,8 +429,8 @@ public class CPInstanceLocalServiceUtil {
 	}
 
 	public static com.liferay.portal.kernel.search.BaseModelSearchResult<com.liferay.commerce.product.model.CPInstance> searchCPInstances(
-		long companyId, long groupId, java.lang.String keywords, int status,
-		int start, int end, com.liferay.portal.kernel.search.Sort sort)
+		long companyId, long groupId, String keywords, int status, int start,
+		int end, com.liferay.portal.kernel.search.Sort sort)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .searchCPInstances(companyId, groupId, keywords, status,
@@ -456,12 +455,12 @@ public class CPInstanceLocalServiceUtil {
 	}
 
 	public static com.liferay.commerce.product.model.CPInstance updateCPInstance(
-		long cpInstanceId, java.lang.String sku, java.lang.String gtin,
-		java.lang.String manufacturerPartNumber, boolean purchasable,
-		boolean published, int displayDateMonth, int displayDateDay,
-		int displayDateYear, int displayDateHour, int displayDateMinute,
-		int expirationDateMonth, int expirationDateDay, int expirationDateYear,
-		int expirationDateHour, int expirationDateMinute, boolean neverExpire,
+		long cpInstanceId, String sku, String gtin,
+		String manufacturerPartNumber, boolean purchasable, boolean published,
+		int displayDateMonth, int displayDateDay, int displayDateYear,
+		int displayDateHour, int displayDateMinute, int expirationDateMonth,
+		int expirationDateDay, int expirationDateYear, int expirationDateHour,
+		int expirationDateMinute, boolean neverExpire,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
@@ -474,15 +473,14 @@ public class CPInstanceLocalServiceUtil {
 	}
 
 	public static com.liferay.commerce.product.model.CPInstance updateCPInstance(
-		long cpInstanceId, java.lang.String sku, java.lang.String gtin,
-		java.lang.String manufacturerPartNumber, boolean purchasable,
-		double width, double height, double depth, double weight,
-		java.math.BigDecimal cost, java.math.BigDecimal price,
-		java.math.BigDecimal pomoPrice, boolean published,
-		int displayDateMonth, int displayDateDay, int displayDateYear,
-		int displayDateHour, int displayDateMinute, int expirationDateMonth,
-		int expirationDateDay, int expirationDateYear, int expirationDateHour,
-		int expirationDateMinute, boolean neverExpire,
+		long cpInstanceId, String sku, String gtin,
+		String manufacturerPartNumber, boolean purchasable, double width,
+		double height, double depth, double weight, java.math.BigDecimal cost,
+		java.math.BigDecimal price, java.math.BigDecimal pomoPrice,
+		boolean published, int displayDateMonth, int displayDateDay,
+		int displayDateYear, int displayDateHour, int displayDateMinute,
+		int expirationDateMonth, int expirationDateDay, int expirationDateYear,
+		int expirationDateHour, int expirationDateMinute, boolean neverExpire,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
@@ -518,7 +516,7 @@ public class CPInstanceLocalServiceUtil {
 	public static com.liferay.commerce.product.model.CPInstance updateStatus(
 		long userId, long cpInstanceId, int status,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext,
-		java.util.Map<java.lang.String, java.io.Serializable> workflowContext)
+		java.util.Map<String, java.io.Serializable> workflowContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .updateStatus(userId, cpInstanceId, status, serviceContext,

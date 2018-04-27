@@ -56,6 +56,6 @@ public interface CommerceShippingMethod extends CommerceShippingMethodModel,
 			}
 		};
 
-	public java.lang.String getImageURL(
+	public String getImageURL(
 		com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay);
 }

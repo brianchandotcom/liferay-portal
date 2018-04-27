@@ -58,12 +58,11 @@ public class CommerceShipmentServiceHttp {
 	public static com.liferay.commerce.model.CommerceShipment addCommerceShipment(
 		HttpPrincipal httpPrincipal, long shipmentUserId,
 		long commerceAddressId, long commerceShippingMethodId,
-		long commerceWarehouseId, java.lang.String carrier,
-		java.lang.String trackingNumber, int expectedDuration, int status,
-		int shippingDateMonth, int shippingDateDay, int shippingDateYear,
-		int shippingDateHour, int shippingDateMinute, int expectedDateMonth,
-		int expectedDateDay, int expectedDateYear, int expectedDateHour,
-		int expectedDateMinute,
+		long commerceWarehouseId, String carrier, String trackingNumber,
+		int expectedDuration, int status, int shippingDateMonth,
+		int shippingDateDay, int shippingDateYear, int shippingDateHour,
+		int shippingDateMinute, int expectedDateMonth, int expectedDateDay,
+		int expectedDateYear, int expectedDateHour, int expectedDateMinute,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -220,12 +219,11 @@ public class CommerceShipmentServiceHttp {
 	public static com.liferay.commerce.model.CommerceShipment updateCommerceShipment(
 		HttpPrincipal httpPrincipal, long commerceShipmentId,
 		long shipmentUserId, long commerceAddressId,
-		long commerceShippingMethodId, java.lang.String carrier,
-		java.lang.String trackingNumber, int expectedDuration, int status,
-		int shippingDateMonth, int shippingDateDay, int shippingDateYear,
-		int shippingDateHour, int shippingDateMinute, int expectedDateMonth,
-		int expectedDateDay, int expectedDateYear, int expectedDateHour,
-		int expectedDateMinute)
+		long commerceShippingMethodId, String carrier, String trackingNumber,
+		int expectedDuration, int status, int shippingDateMonth,
+		int shippingDateDay, int shippingDateYear, int shippingDateHour,
+		int shippingDateMinute, int expectedDateMonth, int expectedDateDay,
+		int expectedDateYear, int expectedDateHour, int expectedDateMinute)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(CommerceShipmentServiceUtil.class,
@@ -264,11 +262,10 @@ public class CommerceShipmentServiceHttp {
 
 	private static Log _log = LogFactoryUtil.getLog(CommerceShipmentServiceHttp.class);
 	private static final Class<?>[] _addCommerceShipmentParameterTypes0 = new Class[] {
-			long.class, long.class, long.class, long.class,
-			java.lang.String.class, java.lang.String.class, int.class, int.class,
+			long.class, long.class, long.class, long.class, String.class,
+			String.class, int.class, int.class, int.class, int.class, int.class,
 			int.class, int.class, int.class, int.class, int.class, int.class,
-			int.class, int.class, int.class, int.class,
-			com.liferay.portal.kernel.service.ServiceContext.class
+			int.class, com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _deleteCommerceShipmentParameterTypes1 = new Class[] {
 			long.class
@@ -284,9 +281,9 @@ public class CommerceShipmentServiceHttp {
 			long.class
 		};
 	private static final Class<?>[] _updateCommerceShipmentParameterTypes5 = new Class[] {
-			long.class, long.class, long.class, long.class,
-			java.lang.String.class, java.lang.String.class, int.class, int.class,
+			long.class, long.class, long.class, long.class, String.class,
+			String.class, int.class, int.class, int.class, int.class, int.class,
 			int.class, int.class, int.class, int.class, int.class, int.class,
-			int.class, int.class, int.class, int.class
+			int.class
 		};
 }

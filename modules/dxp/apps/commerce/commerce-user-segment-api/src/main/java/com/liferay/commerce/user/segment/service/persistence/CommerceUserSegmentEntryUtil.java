@@ -358,8 +358,7 @@ public class CommerceUserSegmentEntryUtil {
 	* @return the matching commerce user segment entry
 	* @throws NoSuchUserSegmentEntryException if a matching commerce user segment entry could not be found
 	*/
-	public static CommerceUserSegmentEntry findByG_K(long groupId,
-		java.lang.String key)
+	public static CommerceUserSegmentEntry findByG_K(long groupId, String key)
 		throws com.liferay.commerce.user.segment.exception.NoSuchUserSegmentEntryException {
 		return getPersistence().findByG_K(groupId, key);
 	}
@@ -371,8 +370,7 @@ public class CommerceUserSegmentEntryUtil {
 	* @param key the key
 	* @return the matching commerce user segment entry, or <code>null</code> if a matching commerce user segment entry could not be found
 	*/
-	public static CommerceUserSegmentEntry fetchByG_K(long groupId,
-		java.lang.String key) {
+	public static CommerceUserSegmentEntry fetchByG_K(long groupId, String key) {
 		return getPersistence().fetchByG_K(groupId, key);
 	}
 
@@ -384,8 +382,8 @@ public class CommerceUserSegmentEntryUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching commerce user segment entry, or <code>null</code> if a matching commerce user segment entry could not be found
 	*/
-	public static CommerceUserSegmentEntry fetchByG_K(long groupId,
-		java.lang.String key, boolean retrieveFromCache) {
+	public static CommerceUserSegmentEntry fetchByG_K(long groupId, String key,
+		boolean retrieveFromCache) {
 		return getPersistence().fetchByG_K(groupId, key, retrieveFromCache);
 	}
 
@@ -396,8 +394,7 @@ public class CommerceUserSegmentEntryUtil {
 	* @param key the key
 	* @return the commerce user segment entry that was removed
 	*/
-	public static CommerceUserSegmentEntry removeByG_K(long groupId,
-		java.lang.String key)
+	public static CommerceUserSegmentEntry removeByG_K(long groupId, String key)
 		throws com.liferay.commerce.user.segment.exception.NoSuchUserSegmentEntryException {
 		return getPersistence().removeByG_K(groupId, key);
 	}
@@ -409,7 +406,7 @@ public class CommerceUserSegmentEntryUtil {
 	* @param key the key
 	* @return the number of matching commerce user segment entries
 	*/
-	public static int countByG_K(long groupId, java.lang.String key) {
+	public static int countByG_K(long groupId, String key) {
 		return getPersistence().countByG_K(groupId, key);
 	}
 
@@ -829,7 +826,7 @@ public class CommerceUserSegmentEntryUtil {
 		return getPersistence().countAll();
 	}
 
-	public static java.util.Set<java.lang.String> getBadColumnNames() {
+	public static java.util.Set<String> getBadColumnNames() {
 		return getPersistence().getBadColumnNames();
 	}
 

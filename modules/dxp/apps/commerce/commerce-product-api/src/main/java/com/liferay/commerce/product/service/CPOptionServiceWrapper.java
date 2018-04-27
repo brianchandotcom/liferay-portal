@@ -34,10 +34,10 @@ public class CPOptionServiceWrapper implements CPOptionService,
 
 	@Override
 	public com.liferay.commerce.product.model.CPOption addCPOption(
-		java.util.Map<java.util.Locale, java.lang.String> titleMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		java.lang.String ddmFormFieldTypeName, boolean facetable,
-		boolean required, boolean skuContributor, java.lang.String key,
+		java.util.Map<java.util.Locale, String> titleMap,
+		java.util.Map<java.util.Locale, String> descriptionMap,
+		String ddmFormFieldTypeName, boolean facetable, boolean required,
+		boolean skuContributor, String key,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _cpOptionService.addCPOption(titleMap, descriptionMap,
@@ -60,7 +60,7 @@ public class CPOptionServiceWrapper implements CPOptionService,
 
 	@Override
 	public com.liferay.commerce.product.model.CPOption fetchCPOption(
-		long groupId, java.lang.String key)
+		long groupId, String key)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _cpOptionService.fetchCPOption(groupId, key);
 	}
@@ -97,7 +97,7 @@ public class CPOptionServiceWrapper implements CPOptionService,
 	* @return the OSGi service identifier
 	*/
 	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
+	public String getOSGiServiceIdentifier() {
 		return _cpOptionService.getOSGiServiceIdentifier();
 	}
 
@@ -109,8 +109,8 @@ public class CPOptionServiceWrapper implements CPOptionService,
 
 	@Override
 	public com.liferay.portal.kernel.search.BaseModelSearchResult<com.liferay.commerce.product.model.CPOption> searchCPOptions(
-		long companyId, long groupId, java.lang.String keywords, int start,
-		int end, com.liferay.portal.kernel.search.Sort sort)
+		long companyId, long groupId, String keywords, int start, int end,
+		com.liferay.portal.kernel.search.Sort sort)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _cpOptionService.searchCPOptions(companyId, groupId, keywords,
 			start, end, sort);
@@ -139,11 +139,10 @@ public class CPOptionServiceWrapper implements CPOptionService,
 
 	@Override
 	public com.liferay.commerce.product.model.CPOption updateCPOption(
-		long cpOptionId,
-		java.util.Map<java.util.Locale, java.lang.String> titleMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		java.lang.String ddmFormFieldTypeName, boolean facetable,
-		boolean required, boolean skuContributor, java.lang.String key,
+		long cpOptionId, java.util.Map<java.util.Locale, String> titleMap,
+		java.util.Map<java.util.Locale, String> descriptionMap,
+		String ddmFormFieldTypeName, boolean facetable, boolean required,
+		boolean skuContributor, String key,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _cpOptionService.updateCPOption(cpOptionId, titleMap,

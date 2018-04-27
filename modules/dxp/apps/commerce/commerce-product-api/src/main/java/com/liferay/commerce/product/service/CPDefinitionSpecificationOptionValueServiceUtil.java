@@ -45,8 +45,7 @@ public class CPDefinitionSpecificationOptionValueServiceUtil {
 	public static com.liferay.commerce.product.model.CPDefinitionSpecificationOptionValue addCPDefinitionSpecificationOptionValue(
 		long cpDefinitionId, long cpSpecificationOptionId,
 		long cpOptionCategoryId,
-		java.util.Map<java.util.Locale, java.lang.String> valueMap,
-		double priority,
+		java.util.Map<java.util.Locale, String> valueMap, double priority,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
@@ -102,14 +101,13 @@ public class CPDefinitionSpecificationOptionValueServiceUtil {
 	*
 	* @return the OSGi service identifier
 	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
+	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 
 	public static com.liferay.commerce.product.model.CPDefinitionSpecificationOptionValue updateCPDefinitionSpecificationOptionValue(
 		long cpDefinitionSpecificationOptionValueId, long cpOptionCategoryId,
-		java.util.Map<java.util.Locale, java.lang.String> valueMap,
-		double priority,
+		java.util.Map<java.util.Locale, String> valueMap, double priority,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()

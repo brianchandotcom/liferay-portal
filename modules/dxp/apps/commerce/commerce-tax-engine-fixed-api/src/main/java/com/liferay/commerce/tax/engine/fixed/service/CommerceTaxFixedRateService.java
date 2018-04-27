@@ -87,7 +87,7 @@ public interface CommerceTaxFixedRateService extends BaseService {
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	public CommerceTaxFixedRate updateCommerceTaxFixedRate(
 		long commerceTaxFixedRateId, double rate) throws PortalException;

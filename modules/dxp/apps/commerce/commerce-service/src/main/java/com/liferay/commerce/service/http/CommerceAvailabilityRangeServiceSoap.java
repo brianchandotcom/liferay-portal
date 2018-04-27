@@ -70,8 +70,7 @@ import java.util.Map;
 @ProviderType
 public class CommerceAvailabilityRangeServiceSoap {
 	public static com.liferay.commerce.model.CommerceAvailabilityRangeSoap addCommerceAvailabilityRange(
-		java.lang.String[] titleMapLanguageIds,
-		java.lang.String[] titleMapValues, double priority,
+		String[] titleMapLanguageIds, String[] titleMapValues, double priority,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
@@ -149,9 +148,8 @@ public class CommerceAvailabilityRangeServiceSoap {
 	}
 
 	public static com.liferay.commerce.model.CommerceAvailabilityRangeSoap updateCommerceAvailabilityRange(
-		long commerceAvailabilityRangeId,
-		java.lang.String[] titleMapLanguageIds,
-		java.lang.String[] titleMapValues, double priority,
+		long commerceAvailabilityRangeId, String[] titleMapLanguageIds,
+		String[] titleMapValues, double priority,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {

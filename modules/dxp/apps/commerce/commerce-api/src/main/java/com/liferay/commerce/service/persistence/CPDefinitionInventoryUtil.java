@@ -120,7 +120,7 @@ public class CPDefinitionInventoryUtil {
 	* @param uuid the uuid
 	* @return the matching cp definition inventories
 	*/
-	public static List<CPDefinitionInventory> findByUuid(java.lang.String uuid) {
+	public static List<CPDefinitionInventory> findByUuid(String uuid) {
 		return getPersistence().findByUuid(uuid);
 	}
 
@@ -136,8 +136,8 @@ public class CPDefinitionInventoryUtil {
 	* @param end the upper bound of the range of cp definition inventories (not inclusive)
 	* @return the range of matching cp definition inventories
 	*/
-	public static List<CPDefinitionInventory> findByUuid(
-		java.lang.String uuid, int start, int end) {
+	public static List<CPDefinitionInventory> findByUuid(String uuid,
+		int start, int end) {
 		return getPersistence().findByUuid(uuid, start, end);
 	}
 
@@ -154,8 +154,8 @@ public class CPDefinitionInventoryUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching cp definition inventories
 	*/
-	public static List<CPDefinitionInventory> findByUuid(
-		java.lang.String uuid, int start, int end,
+	public static List<CPDefinitionInventory> findByUuid(String uuid,
+		int start, int end,
 		OrderByComparator<CPDefinitionInventory> orderByComparator) {
 		return getPersistence().findByUuid(uuid, start, end, orderByComparator);
 	}
@@ -174,8 +174,8 @@ public class CPDefinitionInventoryUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching cp definition inventories
 	*/
-	public static List<CPDefinitionInventory> findByUuid(
-		java.lang.String uuid, int start, int end,
+	public static List<CPDefinitionInventory> findByUuid(String uuid,
+		int start, int end,
 		OrderByComparator<CPDefinitionInventory> orderByComparator,
 		boolean retrieveFromCache) {
 		return getPersistence()
@@ -191,8 +191,7 @@ public class CPDefinitionInventoryUtil {
 	* @return the first matching cp definition inventory
 	* @throws NoSuchCPDefinitionInventoryException if a matching cp definition inventory could not be found
 	*/
-	public static CPDefinitionInventory findByUuid_First(
-		java.lang.String uuid,
+	public static CPDefinitionInventory findByUuid_First(String uuid,
 		OrderByComparator<CPDefinitionInventory> orderByComparator)
 		throws com.liferay.commerce.exception.NoSuchCPDefinitionInventoryException {
 		return getPersistence().findByUuid_First(uuid, orderByComparator);
@@ -205,8 +204,7 @@ public class CPDefinitionInventoryUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching cp definition inventory, or <code>null</code> if a matching cp definition inventory could not be found
 	*/
-	public static CPDefinitionInventory fetchByUuid_First(
-		java.lang.String uuid,
+	public static CPDefinitionInventory fetchByUuid_First(String uuid,
 		OrderByComparator<CPDefinitionInventory> orderByComparator) {
 		return getPersistence().fetchByUuid_First(uuid, orderByComparator);
 	}
@@ -219,7 +217,7 @@ public class CPDefinitionInventoryUtil {
 	* @return the last matching cp definition inventory
 	* @throws NoSuchCPDefinitionInventoryException if a matching cp definition inventory could not be found
 	*/
-	public static CPDefinitionInventory findByUuid_Last(java.lang.String uuid,
+	public static CPDefinitionInventory findByUuid_Last(String uuid,
 		OrderByComparator<CPDefinitionInventory> orderByComparator)
 		throws com.liferay.commerce.exception.NoSuchCPDefinitionInventoryException {
 		return getPersistence().findByUuid_Last(uuid, orderByComparator);
@@ -232,8 +230,7 @@ public class CPDefinitionInventoryUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching cp definition inventory, or <code>null</code> if a matching cp definition inventory could not be found
 	*/
-	public static CPDefinitionInventory fetchByUuid_Last(
-		java.lang.String uuid,
+	public static CPDefinitionInventory fetchByUuid_Last(String uuid,
 		OrderByComparator<CPDefinitionInventory> orderByComparator) {
 		return getPersistence().fetchByUuid_Last(uuid, orderByComparator);
 	}
@@ -248,7 +245,7 @@ public class CPDefinitionInventoryUtil {
 	* @throws NoSuchCPDefinitionInventoryException if a cp definition inventory with the primary key could not be found
 	*/
 	public static CPDefinitionInventory[] findByUuid_PrevAndNext(
-		long CPDefinitionInventoryId, java.lang.String uuid,
+		long CPDefinitionInventoryId, String uuid,
 		OrderByComparator<CPDefinitionInventory> orderByComparator)
 		throws com.liferay.commerce.exception.NoSuchCPDefinitionInventoryException {
 		return getPersistence()
@@ -261,7 +258,7 @@ public class CPDefinitionInventoryUtil {
 	*
 	* @param uuid the uuid
 	*/
-	public static void removeByUuid(java.lang.String uuid) {
+	public static void removeByUuid(String uuid) {
 		getPersistence().removeByUuid(uuid);
 	}
 
@@ -271,7 +268,7 @@ public class CPDefinitionInventoryUtil {
 	* @param uuid the uuid
 	* @return the number of matching cp definition inventories
 	*/
-	public static int countByUuid(java.lang.String uuid) {
+	public static int countByUuid(String uuid) {
 		return getPersistence().countByUuid(uuid);
 	}
 
@@ -283,8 +280,7 @@ public class CPDefinitionInventoryUtil {
 	* @return the matching cp definition inventory
 	* @throws NoSuchCPDefinitionInventoryException if a matching cp definition inventory could not be found
 	*/
-	public static CPDefinitionInventory findByUUID_G(java.lang.String uuid,
-		long groupId)
+	public static CPDefinitionInventory findByUUID_G(String uuid, long groupId)
 		throws com.liferay.commerce.exception.NoSuchCPDefinitionInventoryException {
 		return getPersistence().findByUUID_G(uuid, groupId);
 	}
@@ -296,8 +292,7 @@ public class CPDefinitionInventoryUtil {
 	* @param groupId the group ID
 	* @return the matching cp definition inventory, or <code>null</code> if a matching cp definition inventory could not be found
 	*/
-	public static CPDefinitionInventory fetchByUUID_G(java.lang.String uuid,
-		long groupId) {
+	public static CPDefinitionInventory fetchByUUID_G(String uuid, long groupId) {
 		return getPersistence().fetchByUUID_G(uuid, groupId);
 	}
 
@@ -309,7 +304,7 @@ public class CPDefinitionInventoryUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching cp definition inventory, or <code>null</code> if a matching cp definition inventory could not be found
 	*/
-	public static CPDefinitionInventory fetchByUUID_G(java.lang.String uuid,
+	public static CPDefinitionInventory fetchByUUID_G(String uuid,
 		long groupId, boolean retrieveFromCache) {
 		return getPersistence().fetchByUUID_G(uuid, groupId, retrieveFromCache);
 	}
@@ -321,8 +316,7 @@ public class CPDefinitionInventoryUtil {
 	* @param groupId the group ID
 	* @return the cp definition inventory that was removed
 	*/
-	public static CPDefinitionInventory removeByUUID_G(java.lang.String uuid,
-		long groupId)
+	public static CPDefinitionInventory removeByUUID_G(String uuid, long groupId)
 		throws com.liferay.commerce.exception.NoSuchCPDefinitionInventoryException {
 		return getPersistence().removeByUUID_G(uuid, groupId);
 	}
@@ -334,7 +328,7 @@ public class CPDefinitionInventoryUtil {
 	* @param groupId the group ID
 	* @return the number of matching cp definition inventories
 	*/
-	public static int countByUUID_G(java.lang.String uuid, long groupId) {
+	public static int countByUUID_G(String uuid, long groupId) {
 		return getPersistence().countByUUID_G(uuid, groupId);
 	}
 
@@ -345,8 +339,8 @@ public class CPDefinitionInventoryUtil {
 	* @param companyId the company ID
 	* @return the matching cp definition inventories
 	*/
-	public static List<CPDefinitionInventory> findByUuid_C(
-		java.lang.String uuid, long companyId) {
+	public static List<CPDefinitionInventory> findByUuid_C(String uuid,
+		long companyId) {
 		return getPersistence().findByUuid_C(uuid, companyId);
 	}
 
@@ -363,8 +357,8 @@ public class CPDefinitionInventoryUtil {
 	* @param end the upper bound of the range of cp definition inventories (not inclusive)
 	* @return the range of matching cp definition inventories
 	*/
-	public static List<CPDefinitionInventory> findByUuid_C(
-		java.lang.String uuid, long companyId, int start, int end) {
+	public static List<CPDefinitionInventory> findByUuid_C(String uuid,
+		long companyId, int start, int end) {
 		return getPersistence().findByUuid_C(uuid, companyId, start, end);
 	}
 
@@ -382,8 +376,8 @@ public class CPDefinitionInventoryUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching cp definition inventories
 	*/
-	public static List<CPDefinitionInventory> findByUuid_C(
-		java.lang.String uuid, long companyId, int start, int end,
+	public static List<CPDefinitionInventory> findByUuid_C(String uuid,
+		long companyId, int start, int end,
 		OrderByComparator<CPDefinitionInventory> orderByComparator) {
 		return getPersistence()
 				   .findByUuid_C(uuid, companyId, start, end, orderByComparator);
@@ -404,8 +398,8 @@ public class CPDefinitionInventoryUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching cp definition inventories
 	*/
-	public static List<CPDefinitionInventory> findByUuid_C(
-		java.lang.String uuid, long companyId, int start, int end,
+	public static List<CPDefinitionInventory> findByUuid_C(String uuid,
+		long companyId, int start, int end,
 		OrderByComparator<CPDefinitionInventory> orderByComparator,
 		boolean retrieveFromCache) {
 		return getPersistence()
@@ -422,8 +416,8 @@ public class CPDefinitionInventoryUtil {
 	* @return the first matching cp definition inventory
 	* @throws NoSuchCPDefinitionInventoryException if a matching cp definition inventory could not be found
 	*/
-	public static CPDefinitionInventory findByUuid_C_First(
-		java.lang.String uuid, long companyId,
+	public static CPDefinitionInventory findByUuid_C_First(String uuid,
+		long companyId,
 		OrderByComparator<CPDefinitionInventory> orderByComparator)
 		throws com.liferay.commerce.exception.NoSuchCPDefinitionInventoryException {
 		return getPersistence()
@@ -438,8 +432,8 @@ public class CPDefinitionInventoryUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching cp definition inventory, or <code>null</code> if a matching cp definition inventory could not be found
 	*/
-	public static CPDefinitionInventory fetchByUuid_C_First(
-		java.lang.String uuid, long companyId,
+	public static CPDefinitionInventory fetchByUuid_C_First(String uuid,
+		long companyId,
 		OrderByComparator<CPDefinitionInventory> orderByComparator) {
 		return getPersistence()
 				   .fetchByUuid_C_First(uuid, companyId, orderByComparator);
@@ -454,8 +448,8 @@ public class CPDefinitionInventoryUtil {
 	* @return the last matching cp definition inventory
 	* @throws NoSuchCPDefinitionInventoryException if a matching cp definition inventory could not be found
 	*/
-	public static CPDefinitionInventory findByUuid_C_Last(
-		java.lang.String uuid, long companyId,
+	public static CPDefinitionInventory findByUuid_C_Last(String uuid,
+		long companyId,
 		OrderByComparator<CPDefinitionInventory> orderByComparator)
 		throws com.liferay.commerce.exception.NoSuchCPDefinitionInventoryException {
 		return getPersistence()
@@ -470,8 +464,8 @@ public class CPDefinitionInventoryUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching cp definition inventory, or <code>null</code> if a matching cp definition inventory could not be found
 	*/
-	public static CPDefinitionInventory fetchByUuid_C_Last(
-		java.lang.String uuid, long companyId,
+	public static CPDefinitionInventory fetchByUuid_C_Last(String uuid,
+		long companyId,
 		OrderByComparator<CPDefinitionInventory> orderByComparator) {
 		return getPersistence()
 				   .fetchByUuid_C_Last(uuid, companyId, orderByComparator);
@@ -488,7 +482,7 @@ public class CPDefinitionInventoryUtil {
 	* @throws NoSuchCPDefinitionInventoryException if a cp definition inventory with the primary key could not be found
 	*/
 	public static CPDefinitionInventory[] findByUuid_C_PrevAndNext(
-		long CPDefinitionInventoryId, java.lang.String uuid, long companyId,
+		long CPDefinitionInventoryId, String uuid, long companyId,
 		OrderByComparator<CPDefinitionInventory> orderByComparator)
 		throws com.liferay.commerce.exception.NoSuchCPDefinitionInventoryException {
 		return getPersistence()
@@ -502,7 +496,7 @@ public class CPDefinitionInventoryUtil {
 	* @param uuid the uuid
 	* @param companyId the company ID
 	*/
-	public static void removeByUuid_C(java.lang.String uuid, long companyId) {
+	public static void removeByUuid_C(String uuid, long companyId) {
 		getPersistence().removeByUuid_C(uuid, companyId);
 	}
 
@@ -513,7 +507,7 @@ public class CPDefinitionInventoryUtil {
 	* @param companyId the company ID
 	* @return the number of matching cp definition inventories
 	*/
-	public static int countByUuid_C(java.lang.String uuid, long companyId) {
+	public static int countByUuid_C(String uuid, long companyId) {
 		return getPersistence().countByUuid_C(uuid, companyId);
 	}
 
@@ -728,7 +722,7 @@ public class CPDefinitionInventoryUtil {
 		return getPersistence().countAll();
 	}
 
-	public static java.util.Set<java.lang.String> getBadColumnNames() {
+	public static java.util.Set<String> getBadColumnNames() {
 		return getPersistence().getBadColumnNames();
 	}
 

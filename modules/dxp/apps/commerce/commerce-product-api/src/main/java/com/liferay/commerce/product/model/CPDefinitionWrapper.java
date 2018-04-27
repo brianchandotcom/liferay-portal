@@ -295,7 +295,7 @@ public class CPDefinitionWrapper implements CPDefinition,
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new CPDefinitionWrapper((CPDefinition)_cpDefinition.clone());
 	}
 
@@ -315,7 +315,7 @@ public class CPDefinitionWrapper implements CPDefinition,
 	}
 
 	@Override
-	public java.lang.String[] getAvailableLanguageIds() {
+	public String[] getAvailableLanguageIds() {
 		return _cpDefinition.getAvailableLanguageIds();
 	}
 
@@ -380,14 +380,14 @@ public class CPDefinitionWrapper implements CPDefinition,
 	* @return the ddm structure key of this cp definition
 	*/
 	@Override
-	public java.lang.String getDDMStructureKey() {
+	public String getDDMStructureKey() {
 		return _cpDefinition.getDDMStructureKey();
 	}
 
 	@Override
-	public java.lang.String getDefaultImageThumbnailSrc(
+	public String getDefaultImageThumbnailSrc(
 		com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay)
-		throws java.lang.Exception {
+		throws Exception {
 		return _cpDefinition.getDefaultImageThumbnailSrc(themeDisplay);
 	}
 
@@ -397,7 +397,7 @@ public class CPDefinitionWrapper implements CPDefinition,
 	* @return the default language ID of this cp definition
 	*/
 	@Override
-	public java.lang.String getDefaultLanguageId() {
+	public String getDefaultLanguageId() {
 		return _cpDefinition.getDefaultLanguageId();
 	}
 
@@ -412,28 +412,27 @@ public class CPDefinitionWrapper implements CPDefinition,
 	}
 
 	@Override
-	public java.lang.String getDescription() {
+	public String getDescription() {
 		return _cpDefinition.getDescription();
 	}
 
 	@Override
-	public java.lang.String getDescription(java.lang.String languageId) {
+	public String getDescription(String languageId) {
 		return _cpDefinition.getDescription(languageId);
 	}
 
 	@Override
-	public java.lang.String getDescription(java.lang.String languageId,
-		boolean useDefault) {
+	public String getDescription(String languageId, boolean useDefault) {
 		return _cpDefinition.getDescription(languageId, useDefault);
 	}
 
 	@Override
-	public Map<java.util.Locale, java.lang.String> getDescriptionMap() {
+	public Map<java.util.Locale, String> getDescriptionMap() {
 		return _cpDefinition.getDescriptionMap();
 	}
 
 	@Override
-	public java.lang.String getDescriptionMapAsXML() {
+	public String getDescriptionMapAsXML() {
 		return _cpDefinition.getDescriptionMapAsXML();
 	}
 
@@ -503,32 +502,32 @@ public class CPDefinitionWrapper implements CPDefinition,
 	}
 
 	@Override
-	public Map<java.lang.String, java.lang.String> getLanguageIdToDescriptionMap() {
+	public Map<String, String> getLanguageIdToDescriptionMap() {
 		return _cpDefinition.getLanguageIdToDescriptionMap();
 	}
 
 	@Override
-	public Map<java.lang.String, java.lang.String> getLanguageIdToMetaDescriptionMap() {
+	public Map<String, String> getLanguageIdToMetaDescriptionMap() {
 		return _cpDefinition.getLanguageIdToMetaDescriptionMap();
 	}
 
 	@Override
-	public Map<java.lang.String, java.lang.String> getLanguageIdToMetaKeywordsMap() {
+	public Map<String, String> getLanguageIdToMetaKeywordsMap() {
 		return _cpDefinition.getLanguageIdToMetaKeywordsMap();
 	}
 
 	@Override
-	public Map<java.lang.String, java.lang.String> getLanguageIdToMetaTitleMap() {
+	public Map<String, String> getLanguageIdToMetaTitleMap() {
 		return _cpDefinition.getLanguageIdToMetaTitleMap();
 	}
 
 	@Override
-	public Map<java.lang.String, java.lang.String> getLanguageIdToShortDescriptionMap() {
+	public Map<String, String> getLanguageIdToShortDescriptionMap() {
 		return _cpDefinition.getLanguageIdToShortDescriptionMap();
 	}
 
 	@Override
-	public Map<java.lang.String, java.lang.String> getLanguageIdToTitleMap() {
+	public Map<String, String> getLanguageIdToTitleMap() {
 		return _cpDefinition.getLanguageIdToTitleMap();
 	}
 
@@ -543,85 +542,82 @@ public class CPDefinitionWrapper implements CPDefinition,
 	}
 
 	@Override
-	public java.lang.String getLayoutUuid() {
+	public String getLayoutUuid() {
 		return _cpDefinition.getLayoutUuid();
 	}
 
 	@Override
-	public java.lang.String getMetaDescription() {
+	public String getMetaDescription() {
 		return _cpDefinition.getMetaDescription();
 	}
 
 	@Override
-	public java.lang.String getMetaDescription(java.lang.String languageId) {
+	public String getMetaDescription(String languageId) {
 		return _cpDefinition.getMetaDescription(languageId);
 	}
 
 	@Override
-	public java.lang.String getMetaDescription(java.lang.String languageId,
-		boolean useDefault) {
+	public String getMetaDescription(String languageId, boolean useDefault) {
 		return _cpDefinition.getMetaDescription(languageId, useDefault);
 	}
 
 	@Override
-	public Map<java.util.Locale, java.lang.String> getMetaDescriptionMap() {
+	public Map<java.util.Locale, String> getMetaDescriptionMap() {
 		return _cpDefinition.getMetaDescriptionMap();
 	}
 
 	@Override
-	public java.lang.String getMetaDescriptionMapAsXML() {
+	public String getMetaDescriptionMapAsXML() {
 		return _cpDefinition.getMetaDescriptionMapAsXML();
 	}
 
 	@Override
-	public java.lang.String getMetaKeywords() {
+	public String getMetaKeywords() {
 		return _cpDefinition.getMetaKeywords();
 	}
 
 	@Override
-	public java.lang.String getMetaKeywords(java.lang.String languageId) {
+	public String getMetaKeywords(String languageId) {
 		return _cpDefinition.getMetaKeywords(languageId);
 	}
 
 	@Override
-	public java.lang.String getMetaKeywords(java.lang.String languageId,
-		boolean useDefault) {
+	public String getMetaKeywords(String languageId, boolean useDefault) {
 		return _cpDefinition.getMetaKeywords(languageId, useDefault);
 	}
 
 	@Override
-	public Map<java.util.Locale, java.lang.String> getMetaKeywordsMap() {
+	public Map<java.util.Locale, String> getMetaKeywordsMap() {
 		return _cpDefinition.getMetaKeywordsMap();
 	}
 
 	@Override
-	public java.lang.String getMetaKeywordsMapAsXML() {
+	public String getMetaKeywordsMapAsXML() {
 		return _cpDefinition.getMetaKeywordsMapAsXML();
 	}
 
 	@Override
-	public java.lang.String getMetaTitle() {
+	public String getMetaTitle() {
 		return _cpDefinition.getMetaTitle();
 	}
 
 	@Override
-	public java.lang.String getMetaTitle(java.lang.String languageId) {
+	public String getMetaTitle(String languageId) {
 		return _cpDefinition.getMetaTitle(languageId);
 	}
 
 	@Override
-	public java.lang.String getMetaTitle(java.lang.String languageId,
-		boolean useDefault) {
+	public String getMetaTitle(String languageId, boolean useDefault) {
 		return _cpDefinition.getMetaTitle(languageId, useDefault);
 	}
 
 	@Override
-	public Map<java.util.Locale, java.lang.String> getMetaTitleMap() {
+	public Map<java.util.Locale, String> getMetaTitleMap() {
 		return _cpDefinition.getMetaTitleMap();
 	}
 
 	@Override
-	public java.lang.String getMetaTitleMapAsXML() {
+	public String getMetaTitleMapAsXML() {
 		return _cpDefinition.getMetaTitleMapAsXML();
 	}
 
@@ -656,7 +652,7 @@ public class CPDefinitionWrapper implements CPDefinition,
 	* @return the product type name of this cp definition
 	*/
 	@Override
-	public java.lang.String getProductTypeName() {
+	public String getProductTypeName() {
 		return _cpDefinition.getProductTypeName();
 	}
 
@@ -701,28 +697,27 @@ public class CPDefinitionWrapper implements CPDefinition,
 	}
 
 	@Override
-	public java.lang.String getShortDescription() {
+	public String getShortDescription() {
 		return _cpDefinition.getShortDescription();
 	}
 
 	@Override
-	public java.lang.String getShortDescription(java.lang.String languageId) {
+	public String getShortDescription(String languageId) {
 		return _cpDefinition.getShortDescription(languageId);
 	}
 
 	@Override
-	public java.lang.String getShortDescription(java.lang.String languageId,
-		boolean useDefault) {
+	public String getShortDescription(String languageId, boolean useDefault) {
 		return _cpDefinition.getShortDescription(languageId, useDefault);
 	}
 
 	@Override
-	public Map<java.util.Locale, java.lang.String> getShortDescriptionMap() {
+	public Map<java.util.Locale, String> getShortDescriptionMap() {
 		return _cpDefinition.getShortDescriptionMap();
 	}
 
 	@Override
-	public java.lang.String getShortDescriptionMapAsXML() {
+	public String getShortDescriptionMapAsXML() {
 		return _cpDefinition.getShortDescriptionMapAsXML();
 	}
 
@@ -752,7 +747,7 @@ public class CPDefinitionWrapper implements CPDefinition,
 	* @return the status by user name of this cp definition
 	*/
 	@Override
-	public java.lang.String getStatusByUserName() {
+	public String getStatusByUserName() {
 		return _cpDefinition.getStatusByUserName();
 	}
 
@@ -762,7 +757,7 @@ public class CPDefinitionWrapper implements CPDefinition,
 	* @return the status by user uuid of this cp definition
 	*/
 	@Override
-	public java.lang.String getStatusByUserUuid() {
+	public String getStatusByUserUuid() {
 		return _cpDefinition.getStatusByUserUuid();
 	}
 
@@ -797,33 +792,32 @@ public class CPDefinitionWrapper implements CPDefinition,
 	}
 
 	@Override
-	public java.lang.String getTitle() {
+	public String getTitle() {
 		return _cpDefinition.getTitle();
 	}
 
 	@Override
-	public java.lang.String getTitle(java.lang.String languageId) {
+	public String getTitle(String languageId) {
 		return _cpDefinition.getTitle(languageId);
 	}
 
 	@Override
-	public java.lang.String getTitle(java.lang.String languageId,
-		boolean useDefault) {
+	public String getTitle(String languageId, boolean useDefault) {
 		return _cpDefinition.getTitle(languageId, useDefault);
 	}
 
 	@Override
-	public java.lang.String getTitleCurrentValue() {
+	public String getTitleCurrentValue() {
 		return _cpDefinition.getTitleCurrentValue();
 	}
 
 	@Override
-	public Map<java.util.Locale, java.lang.String> getTitleMap() {
+	public Map<java.util.Locale, String> getTitleMap() {
 		return _cpDefinition.getTitleMap();
 	}
 
 	@Override
-	public java.lang.String getTitleMapAsXML() {
+	public String getTitleMapAsXML() {
 		return _cpDefinition.getTitleMapAsXML();
 	}
 
@@ -861,7 +855,7 @@ public class CPDefinitionWrapper implements CPDefinition,
 	}
 
 	@Override
-	public Map<java.util.Locale, java.lang.String> getUrlTitleMap() {
+	public Map<java.util.Locale, String> getUrlTitleMap() {
 		return _cpDefinition.getUrlTitleMap();
 	}
 
@@ -881,7 +875,7 @@ public class CPDefinitionWrapper implements CPDefinition,
 	* @return the user name of this cp definition
 	*/
 	@Override
-	public java.lang.String getUserName() {
+	public String getUserName() {
 		return _cpDefinition.getUserName();
 	}
 
@@ -891,7 +885,7 @@ public class CPDefinitionWrapper implements CPDefinition,
 	* @return the user uuid of this cp definition
 	*/
 	@Override
-	public java.lang.String getUserUuid() {
+	public String getUserUuid() {
 		return _cpDefinition.getUserUuid();
 	}
 
@@ -901,7 +895,7 @@ public class CPDefinitionWrapper implements CPDefinition,
 	* @return the uuid of this cp definition
 	*/
 	@Override
-	public java.lang.String getUuid() {
+	public String getUuid() {
 		return _cpDefinition.getUuid();
 	}
 
@@ -1201,7 +1195,7 @@ public class CPDefinitionWrapper implements CPDefinition,
 	* @param DDMStructureKey the ddm structure key of this cp definition
 	*/
 	@Override
-	public void setDDMStructureKey(java.lang.String DDMStructureKey) {
+	public void setDDMStructureKey(String DDMStructureKey) {
 		_cpDefinition.setDDMStructureKey(DDMStructureKey);
 	}
 
@@ -1211,7 +1205,7 @@ public class CPDefinitionWrapper implements CPDefinition,
 	* @param defaultLanguageId the default language ID of this cp definition
 	*/
 	@Override
-	public void setDefaultLanguageId(java.lang.String defaultLanguageId) {
+	public void setDefaultLanguageId(String defaultLanguageId) {
 		_cpDefinition.setDefaultLanguageId(defaultLanguageId);
 	}
 
@@ -1226,8 +1220,7 @@ public class CPDefinitionWrapper implements CPDefinition,
 	}
 
 	@Override
-	public void setDescriptionMap(
-		Map<java.util.Locale, java.lang.String> descriptionMap) {
+	public void setDescriptionMap(Map<java.util.Locale, String> descriptionMap) {
 		_cpDefinition.setDescriptionMap(descriptionMap);
 	}
 
@@ -1318,7 +1311,7 @@ public class CPDefinitionWrapper implements CPDefinition,
 	}
 
 	@Override
-	public void setLayoutUuid(java.lang.String layoutUuid) {
+	public void setLayoutUuid(String layoutUuid) {
 		_cpDefinition.setLayoutUuid(layoutUuid);
 	}
 
@@ -1358,7 +1351,7 @@ public class CPDefinitionWrapper implements CPDefinition,
 	* @param productTypeName the product type name of this cp definition
 	*/
 	@Override
-	public void setProductTypeName(java.lang.String productTypeName) {
+	public void setProductTypeName(String productTypeName) {
 		_cpDefinition.setProductTypeName(productTypeName);
 	}
 
@@ -1404,7 +1397,7 @@ public class CPDefinitionWrapper implements CPDefinition,
 
 	@Override
 	public void setShortDescriptionMap(
-		Map<java.util.Locale, java.lang.String> shortDescriptionMap) {
+		Map<java.util.Locale, String> shortDescriptionMap) {
 		_cpDefinition.setShortDescriptionMap(shortDescriptionMap);
 	}
 
@@ -1434,7 +1427,7 @@ public class CPDefinitionWrapper implements CPDefinition,
 	* @param statusByUserName the status by user name of this cp definition
 	*/
 	@Override
-	public void setStatusByUserName(java.lang.String statusByUserName) {
+	public void setStatusByUserName(String statusByUserName) {
 		_cpDefinition.setStatusByUserName(statusByUserName);
 	}
 
@@ -1444,7 +1437,7 @@ public class CPDefinitionWrapper implements CPDefinition,
 	* @param statusByUserUuid the status by user uuid of this cp definition
 	*/
 	@Override
-	public void setStatusByUserUuid(java.lang.String statusByUserUuid) {
+	public void setStatusByUserUuid(String statusByUserUuid) {
 		_cpDefinition.setStatusByUserUuid(statusByUserUuid);
 	}
 
@@ -1479,13 +1472,12 @@ public class CPDefinitionWrapper implements CPDefinition,
 	}
 
 	@Override
-	public void setTitleMap(Map<java.util.Locale, java.lang.String> titleMap) {
+	public void setTitleMap(Map<java.util.Locale, String> titleMap) {
 		_cpDefinition.setTitleMap(titleMap);
 	}
 
 	@Override
-	public void setUrlTitleMap(
-		Map<java.util.Locale, java.lang.String> urlTitleMap) {
+	public void setUrlTitleMap(Map<java.util.Locale, String> urlTitleMap) {
 		_cpDefinition.setUrlTitleMap(urlTitleMap);
 	}
 
@@ -1505,7 +1497,7 @@ public class CPDefinitionWrapper implements CPDefinition,
 	* @param userName the user name of this cp definition
 	*/
 	@Override
-	public void setUserName(java.lang.String userName) {
+	public void setUserName(String userName) {
 		_cpDefinition.setUserName(userName);
 	}
 
@@ -1515,7 +1507,7 @@ public class CPDefinitionWrapper implements CPDefinition,
 	* @param userUuid the user uuid of this cp definition
 	*/
 	@Override
-	public void setUserUuid(java.lang.String userUuid) {
+	public void setUserUuid(String userUuid) {
 		_cpDefinition.setUserUuid(userUuid);
 	}
 
@@ -1525,7 +1517,7 @@ public class CPDefinitionWrapper implements CPDefinition,
 	* @param uuid the uuid of this cp definition
 	*/
 	@Override
-	public void setUuid(java.lang.String uuid) {
+	public void setUuid(String uuid) {
 		_cpDefinition.setUuid(uuid);
 	}
 
@@ -1560,7 +1552,7 @@ public class CPDefinitionWrapper implements CPDefinition,
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _cpDefinition.toString();
 	}
 
@@ -1570,7 +1562,7 @@ public class CPDefinitionWrapper implements CPDefinition,
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _cpDefinition.toXmlString();
 	}
 

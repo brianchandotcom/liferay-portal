@@ -56,7 +56,7 @@ public class CommerceAddressRestrictionLocalServiceUtil {
 	}
 
 	public static com.liferay.commerce.model.CommerceAddressRestriction addCommerceAddressRestriction(
-		java.lang.String className, long classPK, long commerceCountryId,
+		String className, long classPK, long commerceCountryId,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
@@ -106,8 +106,8 @@ public class CommerceAddressRestrictionLocalServiceUtil {
 		getService().deleteCommerceAddressRestrictions(commerceCountryId);
 	}
 
-	public static void deleteCommerceAddressRestrictions(
-		java.lang.String className, long classPK) {
+	public static void deleteCommerceAddressRestrictions(String className,
+		long classPK) {
 		getService().deleteCommerceAddressRestrictions(className, classPK);
 	}
 
@@ -205,7 +205,7 @@ public class CommerceAddressRestrictionLocalServiceUtil {
 	}
 
 	public static com.liferay.commerce.model.CommerceAddressRestriction fetchCommerceAddressRestriction(
-		java.lang.String className, long classPK, long commerceCountryId) {
+		String className, long classPK, long commerceCountryId) {
 		return getService()
 				   .fetchCommerceAddressRestriction(className, classPK,
 			commerceCountryId);
@@ -246,7 +246,7 @@ public class CommerceAddressRestrictionLocalServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.commerce.model.CommerceAddressRestriction> getCommerceAddressRestrictions(
-		java.lang.String className, long classPK, int start, int end,
+		String className, long classPK, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.model.CommerceAddressRestriction> orderByComparator) {
 		return getService()
 				   .getCommerceAddressRestrictions(className, classPK, start,
@@ -262,8 +262,8 @@ public class CommerceAddressRestrictionLocalServiceUtil {
 		return getService().getCommerceAddressRestrictionsCount();
 	}
 
-	public static int getCommerceAddressRestrictionsCount(
-		java.lang.String className, long classPK) {
+	public static int getCommerceAddressRestrictionsCount(String className,
+		long classPK) {
 		return getService()
 				   .getCommerceAddressRestrictionsCount(className, classPK);
 	}
@@ -277,7 +277,7 @@ public class CommerceAddressRestrictionLocalServiceUtil {
 	*
 	* @return the OSGi service identifier
 	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
+	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 
@@ -287,8 +287,8 @@ public class CommerceAddressRestrictionLocalServiceUtil {
 		return getService().getPersistedModel(primaryKeyObj);
 	}
 
-	public static boolean isCommerceAddressRestricted(
-		java.lang.String className, long classPK, long commerceCountryId) {
+	public static boolean isCommerceAddressRestricted(String className,
+		long classPK, long commerceCountryId) {
 		return getService()
 				   .isCommerceAddressRestricted(className, classPK,
 			commerceCountryId);

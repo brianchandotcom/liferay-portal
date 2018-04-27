@@ -57,7 +57,7 @@ import com.liferay.portal.kernel.util.MethodKey;
 public class CommerceUserSegmentCriterionServiceHttp {
 	public static com.liferay.commerce.user.segment.model.CommerceUserSegmentCriterion addCommerceUserSegmentCriterion(
 		HttpPrincipal httpPrincipal, long commerceUserSegmentEntryId,
-		java.lang.String type, java.lang.String typeSettings, double priority,
+		String type, String typeSettings, double priority,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -223,7 +223,7 @@ public class CommerceUserSegmentCriterionServiceHttp {
 
 	public static com.liferay.commerce.user.segment.model.CommerceUserSegmentCriterion updateCommerceUserSegmentCriterion(
 		HttpPrincipal httpPrincipal, long commerceUserSegmentCriterionId,
-		java.lang.String type, java.lang.String typeSettings, double priority,
+		String type, String typeSettings, double priority,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -260,8 +260,8 @@ public class CommerceUserSegmentCriterionServiceHttp {
 	private static Log _log = LogFactoryUtil.getLog(CommerceUserSegmentCriterionServiceHttp.class);
 	private static final Class<?>[] _addCommerceUserSegmentCriterionParameterTypes0 =
 		new Class[] {
-			long.class, java.lang.String.class, java.lang.String.class,
-			double.class, com.liferay.portal.kernel.service.ServiceContext.class
+			long.class, String.class, String.class, double.class,
+			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _deleteCommerceUserSegmentCriterionParameterTypes1 =
 		new Class[] { long.class };
@@ -276,7 +276,7 @@ public class CommerceUserSegmentCriterionServiceHttp {
 		new Class[] { long.class };
 	private static final Class<?>[] _updateCommerceUserSegmentCriterionParameterTypes5 =
 		new Class[] {
-			long.class, java.lang.String.class, java.lang.String.class,
-			double.class, com.liferay.portal.kernel.service.ServiceContext.class
+			long.class, String.class, String.class, double.class,
+			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 }

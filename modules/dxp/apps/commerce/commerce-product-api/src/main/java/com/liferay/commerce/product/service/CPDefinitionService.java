@@ -63,39 +63,31 @@ public interface CPDefinitionService extends BaseService {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CPDefinitionServiceUtil} to access the cp definition remote service. Add custom service methods to {@link com.liferay.commerce.product.service.impl.CPDefinitionServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public CPDefinition addCPDefinition(
-		Map<Locale, java.lang.String> titleMap,
-		Map<Locale, java.lang.String> shortDescriptionMap,
-		Map<Locale, java.lang.String> descriptionMap,
-		Map<Locale, java.lang.String> urlTitleMap,
-		Map<Locale, java.lang.String> metaTitleMap,
-		Map<Locale, java.lang.String> metaKeywordsMap,
-		Map<Locale, java.lang.String> metaDescriptionMap,
-		java.lang.String productTypeName, boolean ignoreSKUCombinations,
-		boolean shippable, boolean freeShipping, boolean shipSeparately,
-		double shippingExtraPrice, double width, double height, double depth,
-		double weight, long cpTaxCategoryId, boolean taxExempt,
-		boolean telcoOrElectronics, java.lang.String ddmStructureKey,
+	public CPDefinition addCPDefinition(Map<Locale, String> titleMap,
+		Map<Locale, String> shortDescriptionMap,
+		Map<Locale, String> descriptionMap, Map<Locale, String> urlTitleMap,
+		Map<Locale, String> metaTitleMap, Map<Locale, String> metaKeywordsMap,
+		Map<Locale, String> metaDescriptionMap, String productTypeName,
+		boolean ignoreSKUCombinations, boolean shippable, boolean freeShipping,
+		boolean shipSeparately, double shippingExtraPrice, double width,
+		double height, double depth, double weight, long cpTaxCategoryId,
+		boolean taxExempt, boolean telcoOrElectronics, String ddmStructureKey,
 		boolean published, int displayDateMonth, int displayDateDay,
 		int displayDateYear, int displayDateHour, int displayDateMinute,
 		int expirationDateMonth, int expirationDateDay, int expirationDateYear,
 		int expirationDateHour, int expirationDateMinute, boolean neverExpire,
 		ServiceContext serviceContext) throws PortalException;
 
-	public CPDefinition addCPDefinition(
-		Map<Locale, java.lang.String> titleMap,
-		Map<Locale, java.lang.String> shortDescriptionMap,
-		Map<Locale, java.lang.String> descriptionMap,
-		Map<Locale, java.lang.String> urlTitleMap,
-		Map<Locale, java.lang.String> metaTitleMap,
-		Map<Locale, java.lang.String> metaKeywordsMap,
-		Map<Locale, java.lang.String> metaDescriptionMap,
-		java.lang.String productTypeName, boolean ignoreSKUCombinations,
-		java.lang.String ddmStructureKey, boolean published,
-		int displayDateMonth, int displayDateDay, int displayDateYear,
-		int displayDateHour, int displayDateMinute, int expirationDateMonth,
-		int expirationDateDay, int expirationDateYear, int expirationDateHour,
-		int expirationDateMinute, boolean neverExpire,
+	public CPDefinition addCPDefinition(Map<Locale, String> titleMap,
+		Map<Locale, String> shortDescriptionMap,
+		Map<Locale, String> descriptionMap, Map<Locale, String> urlTitleMap,
+		Map<Locale, String> metaTitleMap, Map<Locale, String> metaKeywordsMap,
+		Map<Locale, String> metaDescriptionMap, String productTypeName,
+		boolean ignoreSKUCombinations, String ddmStructureKey,
+		boolean published, int displayDateMonth, int displayDateDay,
+		int displayDateYear, int displayDateHour, int displayDateMinute,
+		int expirationDateMonth, int expirationDateDay, int expirationDateYear,
+		int expirationDateHour, int expirationDateMinute, boolean neverExpire,
 		ServiceContext serviceContext) throws PortalException;
 
 	public void deleteAssetCategoryCPDefinition(long cpDefinitionId,
@@ -114,9 +106,8 @@ public interface CPDefinitionService extends BaseService {
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CPDefinition> getCPDefinitions(long groupId,
-		java.lang.String productTypeName, java.lang.String languageId,
-		int status, int start, int end,
-		OrderByComparator<CPDefinition> orderByComparator)
+		String productTypeName, String languageId, int status, int start,
+		int end, OrderByComparator<CPDefinition> orderByComparator)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -124,9 +115,8 @@ public interface CPDefinitionService extends BaseService {
 		int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getCPDefinitionsCount(long groupId,
-		java.lang.String productTypeName, java.lang.String languageId,
-		int status);
+	public int getCPDefinitionsCount(long groupId, String productTypeName,
+		String languageId, int status);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getCPDefinitionsCountByCategoryId(long categoryId);
@@ -136,18 +126,17 @@ public interface CPDefinitionService extends BaseService {
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.lang.String getLayoutUuid(long cpDefinitionId)
-		throws PortalException;
+	public String getLayoutUuid(long cpDefinitionId) throws PortalException;
 
 	/**
 	* Returns the OSGi service identifier.
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.lang.String getUrlTitleMapAsXML(long cpDefinitionId)
+	public String getUrlTitleMapAsXML(long cpDefinitionId)
 		throws PortalException;
 
 	public CPDefinition moveCPDefinitionToTrash(long cpDefinitionId)
@@ -158,22 +147,18 @@ public interface CPDefinitionService extends BaseService {
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public BaseModelSearchResult<CPDefinition> searchCPDefinitions(
-		long companyId, long groupId, java.lang.String keywords, int status,
-		int start, int end, Sort sort) throws PortalException;
+		long companyId, long groupId, String keywords, int status, int start,
+		int end, Sort sort) throws PortalException;
 
 	public CPDefinition updateCPDefinition(long cpDefinitionId,
-		Map<Locale, java.lang.String> titleMap,
-		Map<Locale, java.lang.String> shortDescriptionMap,
-		Map<Locale, java.lang.String> descriptionMap,
-		Map<Locale, java.lang.String> urlTitleMap,
-		Map<Locale, java.lang.String> metaTitleMap,
-		Map<Locale, java.lang.String> metaKeywordsMap,
-		Map<Locale, java.lang.String> metaDescriptionMap,
-		boolean ignoreSKUCombinations, boolean shippable, boolean freeShipping,
-		boolean shipSeparately, double shippingExtraPrice, double width,
-		double height, double depth, double weight, long cpTaxCategoryId,
-		boolean taxExempt, boolean telcoOrElectronics,
-		java.lang.String ddmStructureKey, boolean published,
+		Map<Locale, String> titleMap, Map<Locale, String> shortDescriptionMap,
+		Map<Locale, String> descriptionMap, Map<Locale, String> urlTitleMap,
+		Map<Locale, String> metaTitleMap, Map<Locale, String> metaKeywordsMap,
+		Map<Locale, String> metaDescriptionMap, boolean ignoreSKUCombinations,
+		boolean shippable, boolean freeShipping, boolean shipSeparately,
+		double shippingExtraPrice, double width, double height, double depth,
+		double weight, long cpTaxCategoryId, boolean taxExempt,
+		boolean telcoOrElectronics, String ddmStructureKey, boolean published,
 		int displayDateMonth, int displayDateDay, int displayDateYear,
 		int displayDateHour, int displayDateMinute, int expirationDateMonth,
 		int expirationDateDay, int expirationDateYear, int expirationDateHour,
@@ -181,18 +166,15 @@ public interface CPDefinitionService extends BaseService {
 		ServiceContext serviceContext) throws PortalException;
 
 	public CPDefinition updateCPDefinition(long cpDefinitionId,
-		Map<Locale, java.lang.String> titleMap,
-		Map<Locale, java.lang.String> shortDescriptionMap,
-		Map<Locale, java.lang.String> descriptionMap,
-		Map<Locale, java.lang.String> urlTitleMap,
-		Map<Locale, java.lang.String> metaTitleMap,
-		Map<Locale, java.lang.String> metaKeywordsMap,
-		Map<Locale, java.lang.String> metaDescriptionMap,
-		boolean ignoreSKUCombinations, java.lang.String ddmStructureKey,
-		boolean published, int displayDateMonth, int displayDateDay,
-		int displayDateYear, int displayDateHour, int displayDateMinute,
-		int expirationDateMonth, int expirationDateDay, int expirationDateYear,
-		int expirationDateHour, int expirationDateMinute, boolean neverExpire,
+		Map<Locale, String> titleMap, Map<Locale, String> shortDescriptionMap,
+		Map<Locale, String> descriptionMap, Map<Locale, String> urlTitleMap,
+		Map<Locale, String> metaTitleMap, Map<Locale, String> metaKeywordsMap,
+		Map<Locale, String> metaDescriptionMap, boolean ignoreSKUCombinations,
+		String ddmStructureKey, boolean published, int displayDateMonth,
+		int displayDateDay, int displayDateYear, int displayDateHour,
+		int displayDateMinute, int expirationDateMonth, int expirationDateDay,
+		int expirationDateYear, int expirationDateHour,
+		int expirationDateMinute, boolean neverExpire,
 		ServiceContext serviceContext) throws PortalException;
 
 	public CPDefinition updateCPDefinitionCategorization(long cpDefinitionId,
@@ -202,9 +184,8 @@ public interface CPDefinitionService extends BaseService {
 		long cpDefinitionId, boolean ignoreSKUCombinations,
 		ServiceContext serviceContext) throws PortalException;
 
-	public void updateCPDisplayLayout(long cpDefinitionId,
-		java.lang.String layoutUuid, ServiceContext serviceContext)
-		throws PortalException;
+	public void updateCPDisplayLayout(long cpDefinitionId, String layoutUuid,
+		ServiceContext serviceContext) throws PortalException;
 
 	public CPDefinition updateShippingInfo(long cpDefinitionId,
 		boolean shippable, boolean freeShipping, boolean shipSeparately,
@@ -213,8 +194,7 @@ public interface CPDefinitionService extends BaseService {
 
 	public CPDefinition updateStatus(long userId, long cpDefinitionId,
 		int status, ServiceContext serviceContext,
-		Map<java.lang.String, Serializable> workflowContext)
-		throws PortalException;
+		Map<String, Serializable> workflowContext) throws PortalException;
 
 	public CPDefinition updateTaxCategoryInfo(long cpDefinitionId,
 		long cpTaxCategoryId, boolean taxExempt, boolean telcoOrElectronics)

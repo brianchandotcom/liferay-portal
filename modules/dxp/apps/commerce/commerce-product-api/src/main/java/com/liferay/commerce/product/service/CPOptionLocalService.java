@@ -83,11 +83,10 @@ public interface CPOptionLocalService extends BaseLocalService,
 	public CPOption addCPOption(CPOption cpOption);
 
 	@Indexable(type = IndexableType.REINDEX)
-	public CPOption addCPOption(Map<Locale, java.lang.String> titleMap,
-		Map<Locale, java.lang.String> descriptionMap,
-		java.lang.String ddmFormFieldTypeName, boolean facetable,
-		boolean required, boolean skuContributor, java.lang.String key,
-		ServiceContext serviceContext) throws PortalException;
+	public CPOption addCPOption(Map<Locale, String> titleMap,
+		Map<Locale, String> descriptionMap, String ddmFormFieldTypeName,
+		boolean facetable, boolean required, boolean skuContributor,
+		String key, ServiceContext serviceContext) throws PortalException;
 
 	/**
 	* Creates a new cp option with the primary key. Does not add the cp option to the database.
@@ -191,7 +190,7 @@ public interface CPOptionLocalService extends BaseLocalService,
 	public CPOption fetchCPOption(long CPOptionId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CPOption fetchCPOption(long groupId, java.lang.String key)
+	public CPOption fetchCPOption(long groupId, String key)
 		throws PortalException;
 
 	/**
@@ -202,8 +201,7 @@ public interface CPOptionLocalService extends BaseLocalService,
 	* @return the matching cp option, or <code>null</code> if a matching cp option could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CPOption fetchCPOptionByUuidAndGroupId(java.lang.String uuid,
-		long groupId);
+	public CPOption fetchCPOptionByUuidAndGroupId(String uuid, long groupId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
@@ -219,7 +217,7 @@ public interface CPOptionLocalService extends BaseLocalService,
 	public CPOption getCPOption(long CPOptionId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CPOption getCPOption(long groupId, java.lang.String key)
+	public CPOption getCPOption(long groupId, String key)
 		throws PortalException;
 
 	/**
@@ -231,8 +229,8 @@ public interface CPOptionLocalService extends BaseLocalService,
 	* @throws PortalException if a matching cp option could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CPOption getCPOptionByUuidAndGroupId(java.lang.String uuid,
-		long groupId) throws PortalException;
+	public CPOption getCPOptionByUuidAndGroupId(String uuid, long groupId)
+		throws PortalException;
 
 	/**
 	* Returns a range of all the cp options.
@@ -263,8 +261,8 @@ public interface CPOptionLocalService extends BaseLocalService,
 	* @return the matching cp options, or an empty list if no matches were found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<CPOption> getCPOptionsByUuidAndCompanyId(
-		java.lang.String uuid, long companyId);
+	public List<CPOption> getCPOptionsByUuidAndCompanyId(String uuid,
+		long companyId);
 
 	/**
 	* Returns a range of cp options matching the UUID and company.
@@ -277,8 +275,8 @@ public interface CPOptionLocalService extends BaseLocalService,
 	* @return the range of matching cp options, or an empty list if no matches were found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<CPOption> getCPOptionsByUuidAndCompanyId(
-		java.lang.String uuid, long companyId, int start, int end,
+	public List<CPOption> getCPOptionsByUuidAndCompanyId(String uuid,
+		long companyId, int start, int end,
 		OrderByComparator<CPOption> orderByComparator);
 
 	/**
@@ -304,7 +302,7 @@ public interface CPOptionLocalService extends BaseLocalService,
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -316,7 +314,7 @@ public interface CPOptionLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public BaseModelSearchResult<CPOption> searchCPOptions(long companyId,
-		long groupId, java.lang.String keywords, int start, int end, Sort sort)
+		long groupId, String keywords, int start, int end, Sort sort)
 		throws PortalException;
 
 	public CPOption setFacetable(long cpOptionId, boolean facetable)
@@ -339,9 +337,8 @@ public interface CPOptionLocalService extends BaseLocalService,
 
 	@Indexable(type = IndexableType.REINDEX)
 	public CPOption updateCPOption(long cpOptionId,
-		Map<Locale, java.lang.String> titleMap,
-		Map<Locale, java.lang.String> descriptionMap,
-		java.lang.String ddmFormFieldTypeName, boolean facetable,
-		boolean required, boolean skuContributor, java.lang.String key,
-		ServiceContext serviceContext) throws PortalException;
+		Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
+		String ddmFormFieldTypeName, boolean facetable, boolean required,
+		boolean skuContributor, String key, ServiceContext serviceContext)
+		throws PortalException;
 }

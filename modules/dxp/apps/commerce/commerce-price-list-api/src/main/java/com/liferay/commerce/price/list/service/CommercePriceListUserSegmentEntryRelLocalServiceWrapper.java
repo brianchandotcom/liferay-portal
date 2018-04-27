@@ -217,7 +217,7 @@ public class CommercePriceListUserSegmentEntryRelLocalServiceWrapper
 	*/
 	@Override
 	public com.liferay.commerce.price.list.model.CommercePriceListUserSegmentEntryRel fetchCommercePriceListUserSegmentEntryRelByUuidAndGroupId(
-		java.lang.String uuid, long groupId) {
+		String uuid, long groupId) {
 		return _commercePriceListUserSegmentEntryRelLocalService.fetchCommercePriceListUserSegmentEntryRelByUuidAndGroupId(uuid,
 			groupId);
 	}
@@ -251,7 +251,7 @@ public class CommercePriceListUserSegmentEntryRelLocalServiceWrapper
 	*/
 	@Override
 	public com.liferay.commerce.price.list.model.CommercePriceListUserSegmentEntryRel getCommercePriceListUserSegmentEntryRelByUuidAndGroupId(
-		java.lang.String uuid, long groupId)
+		String uuid, long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _commercePriceListUserSegmentEntryRelLocalService.getCommercePriceListUserSegmentEntryRelByUuidAndGroupId(uuid,
 			groupId);
@@ -298,7 +298,7 @@ public class CommercePriceListUserSegmentEntryRelLocalServiceWrapper
 	*/
 	@Override
 	public java.util.List<com.liferay.commerce.price.list.model.CommercePriceListUserSegmentEntryRel> getCommercePriceListUserSegmentEntryRelsByUuidAndCompanyId(
-		java.lang.String uuid, long companyId) {
+		String uuid, long companyId) {
 		return _commercePriceListUserSegmentEntryRelLocalService.getCommercePriceListUserSegmentEntryRelsByUuidAndCompanyId(uuid,
 			companyId);
 	}
@@ -315,7 +315,7 @@ public class CommercePriceListUserSegmentEntryRelLocalServiceWrapper
 	*/
 	@Override
 	public java.util.List<com.liferay.commerce.price.list.model.CommercePriceListUserSegmentEntryRel> getCommercePriceListUserSegmentEntryRelsByUuidAndCompanyId(
-		java.lang.String uuid, long companyId, int start, int end,
+		String uuid, long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.price.list.model.CommercePriceListUserSegmentEntryRel> orderByComparator) {
 		return _commercePriceListUserSegmentEntryRelLocalService.getCommercePriceListUserSegmentEntryRelsByUuidAndCompanyId(uuid,
 			companyId, start, end, orderByComparator);
@@ -354,7 +354,7 @@ public class CommercePriceListUserSegmentEntryRelLocalServiceWrapper
 	* @return the OSGi service identifier
 	*/
 	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
+	public String getOSGiServiceIdentifier() {
 		return _commercePriceListUserSegmentEntryRelLocalService.getOSGiServiceIdentifier();
 	}
 

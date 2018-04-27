@@ -36,8 +36,8 @@ public class CPFriendlyURLEntryLocalServiceWrapper
 
 	@Override
 	public void addCPFriendlyURLEntries(long groupId, long companyId,
-		java.lang.Class<?> clazz, long classPK,
-		java.util.Map<java.util.Locale, java.lang.String> urlTitleMap)
+		Class<?> clazz, long classPK,
+		java.util.Map<java.util.Locale, String> urlTitleMap)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_cpFriendlyURLEntryLocalService.addCPFriendlyURLEntries(groupId,
 			companyId, clazz, classPK, urlTitleMap);
@@ -56,8 +56,8 @@ public class CPFriendlyURLEntryLocalServiceWrapper
 	}
 
 	@Override
-	public java.lang.String buildUrlTitle(long groupId, long classNameId,
-		long classPK, java.lang.String languageId, java.lang.String title) {
+	public String buildUrlTitle(long groupId, long classNameId, long classPK,
+		String languageId, String title) {
 		return _cpFriendlyURLEntryLocalService.buildUrlTitle(groupId,
 			classNameId, classPK, languageId, title);
 	}
@@ -75,8 +75,8 @@ public class CPFriendlyURLEntryLocalServiceWrapper
 	}
 
 	@Override
-	public void deleteCPFriendlyURLEntries(long groupId,
-		java.lang.Class<?> clazz, long classPK) {
+	public void deleteCPFriendlyURLEntries(long groupId, Class<?> clazz,
+		long classPK) {
 		_cpFriendlyURLEntryLocalService.deleteCPFriendlyURLEntries(groupId,
 			clazz, classPK);
 	}
@@ -211,8 +211,8 @@ public class CPFriendlyURLEntryLocalServiceWrapper
 
 	@Override
 	public com.liferay.commerce.product.model.CPFriendlyURLEntry fetchCPFriendlyURLEntry(
-		long groupId, long classNameId, long classPK,
-		java.lang.String languageId, boolean main) {
+		long groupId, long classNameId, long classPK, String languageId,
+		boolean main) {
 		return _cpFriendlyURLEntryLocalService.fetchCPFriendlyURLEntry(groupId,
 			classNameId, classPK, languageId, main);
 	}
@@ -226,7 +226,7 @@ public class CPFriendlyURLEntryLocalServiceWrapper
 	*/
 	@Override
 	public com.liferay.commerce.product.model.CPFriendlyURLEntry fetchCPFriendlyURLEntryByUuidAndGroupId(
-		java.lang.String uuid, long groupId) {
+		String uuid, long groupId) {
 		return _cpFriendlyURLEntryLocalService.fetchCPFriendlyURLEntryByUuidAndGroupId(uuid,
 			groupId);
 	}
@@ -270,7 +270,7 @@ public class CPFriendlyURLEntryLocalServiceWrapper
 	*/
 	@Override
 	public java.util.List<com.liferay.commerce.product.model.CPFriendlyURLEntry> getCPFriendlyURLEntriesByUuidAndCompanyId(
-		java.lang.String uuid, long companyId) {
+		String uuid, long companyId) {
 		return _cpFriendlyURLEntryLocalService.getCPFriendlyURLEntriesByUuidAndCompanyId(uuid,
 			companyId);
 	}
@@ -287,7 +287,7 @@ public class CPFriendlyURLEntryLocalServiceWrapper
 	*/
 	@Override
 	public java.util.List<com.liferay.commerce.product.model.CPFriendlyURLEntry> getCPFriendlyURLEntriesByUuidAndCompanyId(
-		java.lang.String uuid, long companyId, int start, int end,
+		String uuid, long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.product.model.CPFriendlyURLEntry> orderByComparator) {
 		return _cpFriendlyURLEntryLocalService.getCPFriendlyURLEntriesByUuidAndCompanyId(uuid,
 			companyId, start, end, orderByComparator);
@@ -319,8 +319,7 @@ public class CPFriendlyURLEntryLocalServiceWrapper
 
 	@Override
 	public com.liferay.commerce.product.model.CPFriendlyURLEntry getCPFriendlyURLEntry(
-		long groupId, long classNameId, java.lang.String languageId,
-		java.lang.String urlTitle)
+		long groupId, long classNameId, String languageId, String urlTitle)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _cpFriendlyURLEntryLocalService.getCPFriendlyURLEntry(groupId,
 			classNameId, languageId, urlTitle);
@@ -336,7 +335,7 @@ public class CPFriendlyURLEntryLocalServiceWrapper
 	*/
 	@Override
 	public com.liferay.commerce.product.model.CPFriendlyURLEntry getCPFriendlyURLEntryByUuidAndGroupId(
-		java.lang.String uuid, long groupId)
+		String uuid, long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _cpFriendlyURLEntryLocalService.getCPFriendlyURLEntryByUuidAndGroupId(uuid,
 			groupId);
@@ -354,7 +353,7 @@ public class CPFriendlyURLEntryLocalServiceWrapper
 	}
 
 	@Override
-	public java.util.Map<java.lang.String, java.lang.String> getLanguageIdToUrlTitleMap(
+	public java.util.Map<String, String> getLanguageIdToUrlTitleMap(
 		long groupId, long classNameId, long classPK) {
 		return _cpFriendlyURLEntryLocalService.getLanguageIdToUrlTitleMap(groupId,
 			classNameId, classPK);
@@ -366,7 +365,7 @@ public class CPFriendlyURLEntryLocalServiceWrapper
 	* @return the OSGi service identifier
 	*/
 	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
+	public String getOSGiServiceIdentifier() {
 		return _cpFriendlyURLEntryLocalService.getOSGiServiceIdentifier();
 	}
 
@@ -378,15 +377,15 @@ public class CPFriendlyURLEntryLocalServiceWrapper
 	}
 
 	@Override
-	public java.util.Map<java.util.Locale, java.lang.String> getUrlTitleMap(
+	public java.util.Map<java.util.Locale, String> getUrlTitleMap(
 		long groupId, long classNameId, long classPK) {
 		return _cpFriendlyURLEntryLocalService.getUrlTitleMap(groupId,
 			classNameId, classPK);
 	}
 
 	@Override
-	public java.lang.String getUrlTitleMapAsXML(long groupId, long classNameId,
-		long classPK, java.lang.String defaultLanguageId) {
+	public String getUrlTitleMapAsXML(long groupId, long classNameId,
+		long classPK, String defaultLanguageId) {
 		return _cpFriendlyURLEntryLocalService.getUrlTitleMapAsXML(groupId,
 			classNameId, classPK, defaultLanguageId);
 	}

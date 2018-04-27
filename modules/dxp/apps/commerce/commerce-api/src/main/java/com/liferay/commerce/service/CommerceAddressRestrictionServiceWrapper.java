@@ -36,7 +36,7 @@ public class CommerceAddressRestrictionServiceWrapper
 
 	@Override
 	public com.liferay.commerce.model.CommerceAddressRestriction addCommerceAddressRestriction(
-		java.lang.String className, long classPK, long commerceCountryId,
+		String className, long classPK, long commerceCountryId,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _commerceAddressRestrictionService.addCommerceAddressRestriction(className,
@@ -52,21 +52,21 @@ public class CommerceAddressRestrictionServiceWrapper
 
 	@Override
 	public com.liferay.commerce.model.CommerceAddressRestriction fetchCommerceAddressRestriction(
-		java.lang.String className, long classPK, long commerceCountryId) {
+		String className, long classPK, long commerceCountryId) {
 		return _commerceAddressRestrictionService.fetchCommerceAddressRestriction(className,
 			classPK, commerceCountryId);
 	}
 
 	@Override
 	public java.util.List<com.liferay.commerce.model.CommerceAddressRestriction> getCommerceAddressRestrictions(
-		java.lang.String className, long classPK, int start, int end,
+		String className, long classPK, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.model.CommerceAddressRestriction> orderByComparator) {
 		return _commerceAddressRestrictionService.getCommerceAddressRestrictions(className,
 			classPK, start, end, orderByComparator);
 	}
 
 	@Override
-	public int getCommerceAddressRestrictionsCount(java.lang.String className,
+	public int getCommerceAddressRestrictionsCount(String className,
 		long classPK) {
 		return _commerceAddressRestrictionService.getCommerceAddressRestrictionsCount(className,
 			classPK);
@@ -78,13 +78,13 @@ public class CommerceAddressRestrictionServiceWrapper
 	* @return the OSGi service identifier
 	*/
 	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
+	public String getOSGiServiceIdentifier() {
 		return _commerceAddressRestrictionService.getOSGiServiceIdentifier();
 	}
 
 	@Override
-	public boolean isCommerceAddressRestricted(java.lang.String className,
-		long classPK, long commerceCountryId) {
+	public boolean isCommerceAddressRestricted(String className, long classPK,
+		long commerceCountryId) {
 		return _commerceAddressRestrictionService.isCommerceAddressRestricted(className,
 			classPK, commerceCountryId);
 	}

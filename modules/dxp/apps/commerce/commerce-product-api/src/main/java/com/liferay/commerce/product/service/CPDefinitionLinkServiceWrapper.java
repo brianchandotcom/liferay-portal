@@ -56,7 +56,7 @@ public class CPDefinitionLinkServiceWrapper implements CPDefinitionLinkService,
 
 	@Override
 	public java.util.List<com.liferay.commerce.product.model.CPDefinitionLink> getCPDefinitionLinks(
-		long cpDefinitionId1, java.lang.String type)
+		long cpDefinitionId1, String type)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _cpDefinitionLinkService.getCPDefinitionLinks(cpDefinitionId1,
 			type);
@@ -64,7 +64,7 @@ public class CPDefinitionLinkServiceWrapper implements CPDefinitionLinkService,
 
 	@Override
 	public java.util.List<com.liferay.commerce.product.model.CPDefinitionLink> getCPDefinitionLinks(
-		long cpDefinitionId1, java.lang.String type, int start, int end,
+		long cpDefinitionId1, String type, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.product.model.CPDefinitionLink> orderByComparator)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _cpDefinitionLinkService.getCPDefinitionLinks(cpDefinitionId1,
@@ -72,8 +72,7 @@ public class CPDefinitionLinkServiceWrapper implements CPDefinitionLinkService,
 	}
 
 	@Override
-	public int getCPDefinitionLinksCount(long cpDefinitionId1,
-		java.lang.String type)
+	public int getCPDefinitionLinksCount(long cpDefinitionId1, String type)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _cpDefinitionLinkService.getCPDefinitionLinksCount(cpDefinitionId1,
 			type);
@@ -85,7 +84,7 @@ public class CPDefinitionLinkServiceWrapper implements CPDefinitionLinkService,
 	* @return the OSGi service identifier
 	*/
 	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
+	public String getOSGiServiceIdentifier() {
 		return _cpDefinitionLinkService.getOSGiServiceIdentifier();
 	}
 
@@ -100,7 +99,7 @@ public class CPDefinitionLinkServiceWrapper implements CPDefinitionLinkService,
 
 	@Override
 	public void updateCPDefinitionLinks(long cpDefinitionId1,
-		long[] cpDefinitionIds2, java.lang.String type,
+		long[] cpDefinitionIds2, String type,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_cpDefinitionLinkService.updateCPDefinitionLinks(cpDefinitionId1,

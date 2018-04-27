@@ -60,11 +60,10 @@ public interface CommerceCurrencyService extends BaseService {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CommerceCurrencyServiceUtil} to access the commerce currency remote service. Add custom service methods to {@link com.liferay.commerce.currency.service.impl.CommerceCurrencyServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public CommerceCurrency addCommerceCurrency(java.lang.String code,
-		Map<Locale, java.lang.String> nameMap, BigDecimal rate,
-		java.lang.String roundingType, boolean primary, double priority,
-		boolean active, ServiceContext serviceContext)
-		throws PortalException;
+	public CommerceCurrency addCommerceCurrency(String code,
+		Map<Locale, String> nameMap, BigDecimal rate, String roundingType,
+		boolean primary, double priority, boolean active,
+		ServiceContext serviceContext) throws PortalException;
 
 	public void deleteCommerceCurrency(long commerceCurrencyId)
 		throws PortalException;
@@ -97,7 +96,7 @@ public interface CommerceCurrencyService extends BaseService {
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	public CommerceCurrency setActive(long commerceCurrencyId, boolean active)
 		throws PortalException;
@@ -106,13 +105,12 @@ public interface CommerceCurrencyService extends BaseService {
 		throws PortalException;
 
 	public CommerceCurrency updateCommerceCurrency(long commerceCurrencyId,
-		java.lang.String code, Map<Locale, java.lang.String> nameMap,
-		BigDecimal rate, java.lang.String roundingType, boolean primary,
-		double priority, boolean active, ServiceContext serviceContext)
-		throws PortalException;
+		String code, Map<Locale, String> nameMap, BigDecimal rate,
+		String roundingType, boolean primary, double priority, boolean active,
+		ServiceContext serviceContext) throws PortalException;
 
 	public void updateExchangeRate(long commerceCurrencyId,
-		java.lang.String exchangeRateProviderKey) throws PortalException;
+		String exchangeRateProviderKey) throws PortalException;
 
 	public void updateExchangeRates(ServiceContext serviceContext)
 		throws PortalException;

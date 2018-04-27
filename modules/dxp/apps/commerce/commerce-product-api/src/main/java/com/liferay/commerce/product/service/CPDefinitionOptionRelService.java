@@ -67,12 +67,11 @@ public interface CPDefinitionOptionRelService extends BaseService {
 		ServiceContext serviceContext) throws PortalException;
 
 	public CPDefinitionOptionRel addCPDefinitionOptionRel(long cpDefinitionId,
-		long cpOptionId, Map<Locale, java.lang.String> titleMap,
-		Map<Locale, java.lang.String> descriptionMap,
-		java.lang.String ddmFormFieldTypeName, double priority,
-		boolean facetable, boolean required, boolean skuContributor,
-		boolean importOptionValue, ServiceContext serviceContext)
-		throws PortalException;
+		long cpOptionId, Map<Locale, String> titleMap,
+		Map<Locale, String> descriptionMap, String ddmFormFieldTypeName,
+		double priority, boolean facetable, boolean required,
+		boolean skuContributor, boolean importOptionValue,
+		ServiceContext serviceContext) throws PortalException;
 
 	public CPDefinitionOptionRel addCPDefinitionOptionRel(long cpDefinitionId,
 		long cpOptionId, ServiceContext serviceContext)
@@ -119,22 +118,20 @@ public interface CPDefinitionOptionRelService extends BaseService {
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public Hits search(SearchContext searchContext);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public BaseModelSearchResult<CPDefinitionOptionRel> searchCPDefinitionOptionRels(
-		long companyId, long groupId, long cpDefinitionId,
-		java.lang.String keywords, int start, int end, Sort sort)
-		throws PortalException;
+		long companyId, long groupId, long cpDefinitionId, String keywords,
+		int start, int end, Sort sort) throws PortalException;
 
 	public CPDefinitionOptionRel updateCPDefinitionOptionRel(
 		long cpDefinitionOptionRelId, long cpOptionId,
-		Map<Locale, java.lang.String> titleMap,
-		Map<Locale, java.lang.String> descriptionMap,
-		java.lang.String ddmFormFieldTypeName, double priority,
-		boolean facetable, boolean required, boolean skuContributor,
-		ServiceContext serviceContext) throws PortalException;
+		Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
+		String ddmFormFieldTypeName, double priority, boolean facetable,
+		boolean required, boolean skuContributor, ServiceContext serviceContext)
+		throws PortalException;
 }

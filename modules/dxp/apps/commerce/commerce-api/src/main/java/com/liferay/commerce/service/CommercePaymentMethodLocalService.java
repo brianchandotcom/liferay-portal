@@ -76,11 +76,10 @@ public interface CommercePaymentMethodLocalService extends BaseLocalService,
 		CommercePaymentMethod commercePaymentMethod);
 
 	public CommercePaymentMethod addCommercePaymentMethod(
-		Map<Locale, java.lang.String> nameMap,
-		Map<Locale, java.lang.String> descriptionMap, File imageFile,
-		java.lang.String engineKey,
-		Map<java.lang.String, java.lang.String> engineParameterMap,
-		double priority, boolean active, ServiceContext serviceContext)
+		Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
+		File imageFile, String engineKey,
+		Map<String, String> engineParameterMap, double priority,
+		boolean active, ServiceContext serviceContext)
 		throws PortalException;
 
 	/**
@@ -247,7 +246,7 @@ public interface CommercePaymentMethodLocalService extends BaseLocalService,
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -268,9 +267,9 @@ public interface CommercePaymentMethodLocalService extends BaseLocalService,
 		CommercePaymentMethod commercePaymentMethod);
 
 	public CommercePaymentMethod updateCommercePaymentMethod(
-		long commercePaymentMethodId, Map<Locale, java.lang.String> nameMap,
-		Map<Locale, java.lang.String> descriptionMap, File imageFile,
-		Map<java.lang.String, java.lang.String> engineParameterMap,
-		double priority, boolean active, ServiceContext serviceContext)
+		long commercePaymentMethodId, Map<Locale, String> nameMap,
+		Map<Locale, String> descriptionMap, File imageFile,
+		Map<String, String> engineParameterMap, double priority,
+		boolean active, ServiceContext serviceContext)
 		throws PortalException;
 }

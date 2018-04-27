@@ -48,9 +48,8 @@ public class CPOptionValueLocalServiceWrapper
 
 	@Override
 	public com.liferay.commerce.product.model.CPOptionValue addCPOptionValue(
-		long cpOptionId,
-		java.util.Map<java.util.Locale, java.lang.String> titleMap,
-		double priority, java.lang.String key,
+		long cpOptionId, java.util.Map<java.util.Locale, String> titleMap,
+		double priority, String key,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _cpOptionValueLocalService.addCPOptionValue(cpOptionId,
@@ -213,7 +212,7 @@ public class CPOptionValueLocalServiceWrapper
 	*/
 	@Override
 	public com.liferay.commerce.product.model.CPOptionValue fetchCPOptionValueByUuidAndGroupId(
-		java.lang.String uuid, long groupId) {
+		String uuid, long groupId) {
 		return _cpOptionValueLocalService.fetchCPOptionValueByUuidAndGroupId(uuid,
 			groupId);
 	}
@@ -247,7 +246,7 @@ public class CPOptionValueLocalServiceWrapper
 	*/
 	@Override
 	public com.liferay.commerce.product.model.CPOptionValue getCPOptionValueByUuidAndGroupId(
-		java.lang.String uuid, long groupId)
+		String uuid, long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _cpOptionValueLocalService.getCPOptionValueByUuidAndGroupId(uuid,
 			groupId);
@@ -294,7 +293,7 @@ public class CPOptionValueLocalServiceWrapper
 	*/
 	@Override
 	public java.util.List<com.liferay.commerce.product.model.CPOptionValue> getCPOptionValuesByUuidAndCompanyId(
-		java.lang.String uuid, long companyId) {
+		String uuid, long companyId) {
 		return _cpOptionValueLocalService.getCPOptionValuesByUuidAndCompanyId(uuid,
 			companyId);
 	}
@@ -311,7 +310,7 @@ public class CPOptionValueLocalServiceWrapper
 	*/
 	@Override
 	public java.util.List<com.liferay.commerce.product.model.CPOptionValue> getCPOptionValuesByUuidAndCompanyId(
-		java.lang.String uuid, long companyId, int start, int end,
+		String uuid, long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.product.model.CPOptionValue> orderByComparator) {
 		return _cpOptionValueLocalService.getCPOptionValuesByUuidAndCompanyId(uuid,
 			companyId, start, end, orderByComparator);
@@ -349,7 +348,7 @@ public class CPOptionValueLocalServiceWrapper
 	* @return the OSGi service identifier
 	*/
 	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
+	public String getOSGiServiceIdentifier() {
 		return _cpOptionValueLocalService.getOSGiServiceIdentifier();
 	}
 
@@ -368,9 +367,8 @@ public class CPOptionValueLocalServiceWrapper
 
 	@Override
 	public com.liferay.portal.kernel.search.BaseModelSearchResult<com.liferay.commerce.product.model.CPOptionValue> searchCPOptionValues(
-		long companyId, long groupId, long cpOptionId,
-		java.lang.String keywords, int start, int end,
-		com.liferay.portal.kernel.search.Sort sort)
+		long companyId, long groupId, long cpOptionId, String keywords,
+		int start, int end, com.liferay.portal.kernel.search.Sort sort)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _cpOptionValueLocalService.searchCPOptionValues(companyId,
 			groupId, cpOptionId, keywords, start, end, sort);
@@ -390,9 +388,8 @@ public class CPOptionValueLocalServiceWrapper
 
 	@Override
 	public com.liferay.commerce.product.model.CPOptionValue updateCPOptionValue(
-		long cpOptionValueId,
-		java.util.Map<java.util.Locale, java.lang.String> titleMap,
-		double priority, java.lang.String key,
+		long cpOptionValueId, java.util.Map<java.util.Locale, String> titleMap,
+		double priority, String key,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _cpOptionValueLocalService.updateCPOptionValue(cpOptionValueId,

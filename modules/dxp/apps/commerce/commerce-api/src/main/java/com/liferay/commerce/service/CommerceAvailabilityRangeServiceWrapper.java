@@ -36,8 +36,7 @@ public class CommerceAvailabilityRangeServiceWrapper
 
 	@Override
 	public com.liferay.commerce.model.CommerceAvailabilityRange addCommerceAvailabilityRange(
-		java.util.Map<java.util.Locale, java.lang.String> titleMap,
-		double priority,
+		java.util.Map<java.util.Locale, String> titleMap, double priority,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _commerceAvailabilityRangeService.addCommerceAvailabilityRange(titleMap,
@@ -77,15 +76,14 @@ public class CommerceAvailabilityRangeServiceWrapper
 	* @return the OSGi service identifier
 	*/
 	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
+	public String getOSGiServiceIdentifier() {
 		return _commerceAvailabilityRangeService.getOSGiServiceIdentifier();
 	}
 
 	@Override
 	public com.liferay.commerce.model.CommerceAvailabilityRange updateCommerceAvailabilityRange(
 		long commerceAvailabilityRangeId,
-		java.util.Map<java.util.Locale, java.lang.String> titleMap,
-		double priority,
+		java.util.Map<java.util.Locale, String> titleMap, double priority,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _commerceAvailabilityRangeService.updateCommerceAvailabilityRange(commerceAvailabilityRangeId,

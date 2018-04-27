@@ -70,9 +70,8 @@ import java.util.Map;
 @ProviderType
 public class CPDefinitionOptionValueRelServiceSoap {
 	public static com.liferay.commerce.product.model.CPDefinitionOptionValueRelSoap addCPDefinitionOptionValueRel(
-		long cpDefinitionOptionRelId, java.lang.String[] titleMapLanguageIds,
-		java.lang.String[] titleMapValues, double priority,
-		java.lang.String key,
+		long cpDefinitionOptionRelId, String[] titleMapLanguageIds,
+		String[] titleMapValues, double priority, String key,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
@@ -190,8 +189,7 @@ public class CPDefinitionOptionValueRelServiceSoap {
 	}
 
 	public static com.liferay.commerce.product.model.CPDefinitionOptionValueRelSoap[] getCPDefinitionOptionValueRels(
-		long groupId, java.lang.String key, int start, int end)
-		throws RemoteException {
+		long groupId, String key, int start, int end) throws RemoteException {
 		try {
 			java.util.List<com.liferay.commerce.product.model.CPDefinitionOptionValueRel> returnValue =
 				CPDefinitionOptionValueRelServiceUtil.getCPDefinitionOptionValueRels(groupId,
@@ -221,10 +219,8 @@ public class CPDefinitionOptionValueRelServiceSoap {
 	}
 
 	public static com.liferay.commerce.product.model.CPDefinitionOptionValueRelSoap updateCPDefinitionOptionValueRel(
-		long cpDefinitionOptionValueRelId,
-		java.lang.String[] titleMapLanguageIds,
-		java.lang.String[] titleMapValues, double priority,
-		java.lang.String key,
+		long cpDefinitionOptionValueRelId, String[] titleMapLanguageIds,
+		String[] titleMapValues, double priority, String key,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {

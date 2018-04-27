@@ -48,9 +48,8 @@ public class CPMeasurementUnitLocalServiceWrapper
 
 	@Override
 	public com.liferay.commerce.product.model.CPMeasurementUnit addCPMeasurementUnit(
-		java.util.Map<java.util.Locale, java.lang.String> nameMap,
-		java.lang.String key, double rate, boolean primary, double priority,
-		int type,
+		java.util.Map<java.util.Locale, String> nameMap, String key,
+		double rate, boolean primary, double priority, int type,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _cpMeasurementUnitLocalService.addCPMeasurementUnit(nameMap,
@@ -211,7 +210,7 @@ public class CPMeasurementUnitLocalServiceWrapper
 	*/
 	@Override
 	public com.liferay.commerce.product.model.CPMeasurementUnit fetchCPMeasurementUnitByUuidAndGroupId(
-		java.lang.String uuid, long groupId) {
+		String uuid, long groupId) {
 		return _cpMeasurementUnitLocalService.fetchCPMeasurementUnitByUuidAndGroupId(uuid,
 			groupId);
 	}
@@ -252,7 +251,7 @@ public class CPMeasurementUnitLocalServiceWrapper
 	*/
 	@Override
 	public com.liferay.commerce.product.model.CPMeasurementUnit getCPMeasurementUnitByUuidAndGroupId(
-		java.lang.String uuid, long groupId)
+		String uuid, long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _cpMeasurementUnitLocalService.getCPMeasurementUnitByUuidAndGroupId(uuid,
 			groupId);
@@ -285,7 +284,7 @@ public class CPMeasurementUnitLocalServiceWrapper
 
 	@Override
 	public java.util.List<com.liferay.commerce.product.model.CPMeasurementUnit> getCPMeasurementUnits(
-		long groupId, java.lang.String[] keys, int type) {
+		long groupId, String[] keys, int type) {
 		return _cpMeasurementUnitLocalService.getCPMeasurementUnits(groupId,
 			keys, type);
 	}
@@ -299,7 +298,7 @@ public class CPMeasurementUnitLocalServiceWrapper
 	*/
 	@Override
 	public java.util.List<com.liferay.commerce.product.model.CPMeasurementUnit> getCPMeasurementUnitsByUuidAndCompanyId(
-		java.lang.String uuid, long companyId) {
+		String uuid, long companyId) {
 		return _cpMeasurementUnitLocalService.getCPMeasurementUnitsByUuidAndCompanyId(uuid,
 			companyId);
 	}
@@ -316,7 +315,7 @@ public class CPMeasurementUnitLocalServiceWrapper
 	*/
 	@Override
 	public java.util.List<com.liferay.commerce.product.model.CPMeasurementUnit> getCPMeasurementUnitsByUuidAndCompanyId(
-		java.lang.String uuid, long companyId, int start, int end,
+		String uuid, long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.product.model.CPMeasurementUnit> orderByComparator) {
 		return _cpMeasurementUnitLocalService.getCPMeasurementUnitsByUuidAndCompanyId(uuid,
 			companyId, start, end, orderByComparator);
@@ -360,7 +359,7 @@ public class CPMeasurementUnitLocalServiceWrapper
 	* @return the OSGi service identifier
 	*/
 	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
+	public String getOSGiServiceIdentifier() {
 		return _cpMeasurementUnitLocalService.getOSGiServiceIdentifier();
 	}
 
@@ -393,9 +392,8 @@ public class CPMeasurementUnitLocalServiceWrapper
 	@Override
 	public com.liferay.commerce.product.model.CPMeasurementUnit updateCPMeasurementUnit(
 		long cpMeasurementUnitId,
-		java.util.Map<java.util.Locale, java.lang.String> nameMap,
-		java.lang.String key, double rate, boolean primary, double priority,
-		int type,
+		java.util.Map<java.util.Locale, String> nameMap, String key,
+		double rate, boolean primary, double priority, int type,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _cpMeasurementUnitLocalService.updateCPMeasurementUnit(cpMeasurementUnitId,

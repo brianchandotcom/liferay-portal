@@ -77,9 +77,8 @@ public interface CommerceRegionLocalService extends BaseLocalService,
 	public CommerceRegion addCommerceRegion(CommerceRegion commerceRegion);
 
 	public CommerceRegion addCommerceRegion(long commerceCountryId,
-		java.lang.String name, java.lang.String code, double priority,
-		boolean active, ServiceContext serviceContext)
-		throws PortalException;
+		String name, String code, double priority, boolean active,
+		ServiceContext serviceContext) throws PortalException;
 
 	/**
 	* Creates a new commerce region with the primary key. Does not add the commerce region to the database.
@@ -193,8 +192,8 @@ public interface CommerceRegionLocalService extends BaseLocalService,
 	* @return the matching commerce region, or <code>null</code> if a matching commerce region could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CommerceRegion fetchCommerceRegionByUuidAndGroupId(
-		java.lang.String uuid, long groupId);
+	public CommerceRegion fetchCommerceRegionByUuidAndGroupId(String uuid,
+		long groupId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
@@ -219,8 +218,8 @@ public interface CommerceRegionLocalService extends BaseLocalService,
 	* @throws PortalException if a matching commerce region could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CommerceRegion getCommerceRegionByUuidAndGroupId(
-		java.lang.String uuid, long groupId) throws PortalException;
+	public CommerceRegion getCommerceRegionByUuidAndGroupId(String uuid,
+		long groupId) throws PortalException;
 
 	/**
 	* Returns a range of all the commerce regions.
@@ -258,7 +257,7 @@ public interface CommerceRegionLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommerceRegion> getCommerceRegionsByUuidAndCompanyId(
-		java.lang.String uuid, long companyId);
+		String uuid, long companyId);
 
 	/**
 	* Returns a range of commerce regions matching the UUID and company.
@@ -272,7 +271,7 @@ public interface CommerceRegionLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommerceRegion> getCommerceRegionsByUuidAndCompanyId(
-		java.lang.String uuid, long companyId, int start, int end,
+		String uuid, long companyId, int start, int end,
 		OrderByComparator<CommerceRegion> orderByComparator);
 
 	/**
@@ -301,7 +300,7 @@ public interface CommerceRegionLocalService extends BaseLocalService,
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -318,7 +317,6 @@ public interface CommerceRegionLocalService extends BaseLocalService,
 	public CommerceRegion updateCommerceRegion(CommerceRegion commerceRegion);
 
 	public CommerceRegion updateCommerceRegion(long commerceRegionId,
-		java.lang.String name, java.lang.String code, double priority,
-		boolean active, ServiceContext serviceContext)
-		throws PortalException;
+		String name, String code, double priority, boolean active,
+		ServiceContext serviceContext) throws PortalException;
 }

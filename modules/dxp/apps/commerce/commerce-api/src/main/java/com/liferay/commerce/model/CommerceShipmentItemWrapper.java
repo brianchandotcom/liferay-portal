@@ -138,7 +138,7 @@ public class CommerceShipmentItemWrapper implements CommerceShipmentItem,
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new CommerceShipmentItemWrapper((CommerceShipmentItem)_commerceShipmentItem.clone());
 	}
 
@@ -268,7 +268,7 @@ public class CommerceShipmentItemWrapper implements CommerceShipmentItem,
 	* @return the user name of this commerce shipment item
 	*/
 	@Override
-	public java.lang.String getUserName() {
+	public String getUserName() {
 		return _commerceShipmentItem.getUserName();
 	}
 
@@ -278,7 +278,7 @@ public class CommerceShipmentItemWrapper implements CommerceShipmentItem,
 	* @return the user uuid of this commerce shipment item
 	*/
 	@Override
-	public java.lang.String getUserUuid() {
+	public String getUserUuid() {
 		return _commerceShipmentItem.getUserUuid();
 	}
 
@@ -444,7 +444,7 @@ public class CommerceShipmentItemWrapper implements CommerceShipmentItem,
 	* @param userName the user name of this commerce shipment item
 	*/
 	@Override
-	public void setUserName(java.lang.String userName) {
+	public void setUserName(String userName) {
 		_commerceShipmentItem.setUserName(userName);
 	}
 
@@ -454,7 +454,7 @@ public class CommerceShipmentItemWrapper implements CommerceShipmentItem,
 	* @param userUuid the user uuid of this commerce shipment item
 	*/
 	@Override
-	public void setUserUuid(java.lang.String userUuid) {
+	public void setUserUuid(String userUuid) {
 		_commerceShipmentItem.setUserUuid(userUuid);
 	}
 
@@ -469,7 +469,7 @@ public class CommerceShipmentItemWrapper implements CommerceShipmentItem,
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _commerceShipmentItem.toString();
 	}
 
@@ -479,7 +479,7 @@ public class CommerceShipmentItemWrapper implements CommerceShipmentItem,
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _commerceShipmentItem.toXmlString();
 	}
 

@@ -35,9 +35,9 @@ public class CPOptionCategoryServiceWrapper implements CPOptionCategoryService,
 
 	@Override
 	public com.liferay.commerce.product.model.CPOptionCategory addCPOptionCategory(
-		java.util.Map<java.util.Locale, java.lang.String> titleMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		double priority, java.lang.String key,
+		java.util.Map<java.util.Locale, String> titleMap,
+		java.util.Map<java.util.Locale, String> descriptionMap,
+		double priority, String key,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _cpOptionCategoryService.addCPOptionCategory(titleMap,
@@ -98,16 +98,16 @@ public class CPOptionCategoryServiceWrapper implements CPOptionCategoryService,
 	* @return the OSGi service identifier
 	*/
 	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
+	public String getOSGiServiceIdentifier() {
 		return _cpOptionCategoryService.getOSGiServiceIdentifier();
 	}
 
 	@Override
 	public com.liferay.commerce.product.model.CPOptionCategory updateCPOptionCategory(
 		long cpOptionCategoryId,
-		java.util.Map<java.util.Locale, java.lang.String> titleMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		double priority, java.lang.String key,
+		java.util.Map<java.util.Locale, String> titleMap,
+		java.util.Map<java.util.Locale, String> descriptionMap,
+		double priority, String key,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _cpOptionCategoryService.updateCPOptionCategory(cpOptionCategoryId,

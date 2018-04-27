@@ -282,7 +282,7 @@ public class CommerceShippingMethodUtil {
 	* @throws NoSuchShippingMethodException if a matching commerce shipping method could not be found
 	*/
 	public static CommerceShippingMethod findByG_E(long groupId,
-		java.lang.String engineKey)
+		String engineKey)
 		throws com.liferay.commerce.exception.NoSuchShippingMethodException {
 		return getPersistence().findByG_E(groupId, engineKey);
 	}
@@ -295,7 +295,7 @@ public class CommerceShippingMethodUtil {
 	* @return the matching commerce shipping method, or <code>null</code> if a matching commerce shipping method could not be found
 	*/
 	public static CommerceShippingMethod fetchByG_E(long groupId,
-		java.lang.String engineKey) {
+		String engineKey) {
 		return getPersistence().fetchByG_E(groupId, engineKey);
 	}
 
@@ -308,7 +308,7 @@ public class CommerceShippingMethodUtil {
 	* @return the matching commerce shipping method, or <code>null</code> if a matching commerce shipping method could not be found
 	*/
 	public static CommerceShippingMethod fetchByG_E(long groupId,
-		java.lang.String engineKey, boolean retrieveFromCache) {
+		String engineKey, boolean retrieveFromCache) {
 		return getPersistence().fetchByG_E(groupId, engineKey, retrieveFromCache);
 	}
 
@@ -320,7 +320,7 @@ public class CommerceShippingMethodUtil {
 	* @return the commerce shipping method that was removed
 	*/
 	public static CommerceShippingMethod removeByG_E(long groupId,
-		java.lang.String engineKey)
+		String engineKey)
 		throws com.liferay.commerce.exception.NoSuchShippingMethodException {
 		return getPersistence().removeByG_E(groupId, engineKey);
 	}
@@ -332,7 +332,7 @@ public class CommerceShippingMethodUtil {
 	* @param engineKey the engine key
 	* @return the number of matching commerce shipping methods
 	*/
-	public static int countByG_E(long groupId, java.lang.String engineKey) {
+	public static int countByG_E(long groupId, String engineKey) {
 		return getPersistence().countByG_E(groupId, engineKey);
 	}
 
@@ -668,7 +668,7 @@ public class CommerceShippingMethodUtil {
 		return getPersistence().countAll();
 	}
 
-	public static java.util.Set<java.lang.String> getBadColumnNames() {
+	public static java.util.Set<String> getBadColumnNames() {
 		return getPersistence().getBadColumnNames();
 	}
 

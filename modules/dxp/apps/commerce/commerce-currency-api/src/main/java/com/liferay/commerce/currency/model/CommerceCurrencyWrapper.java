@@ -182,7 +182,7 @@ public class CommerceCurrencyWrapper implements CommerceCurrency,
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new CommerceCurrencyWrapper((CommerceCurrency)_commerceCurrency.clone());
 	}
 
@@ -202,7 +202,7 @@ public class CommerceCurrencyWrapper implements CommerceCurrency,
 	}
 
 	@Override
-	public java.lang.String[] getAvailableLanguageIds() {
+	public String[] getAvailableLanguageIds() {
 		return _commerceCurrency.getAvailableLanguageIds();
 	}
 
@@ -212,7 +212,7 @@ public class CommerceCurrencyWrapper implements CommerceCurrency,
 	* @return the code of this commerce currency
 	*/
 	@Override
-	public java.lang.String getCode() {
+	public String getCode() {
 		return _commerceCurrency.getCode();
 	}
 
@@ -247,7 +247,7 @@ public class CommerceCurrencyWrapper implements CommerceCurrency,
 	}
 
 	@Override
-	public java.lang.String getDefaultLanguageId() {
+	public String getDefaultLanguageId() {
 		return _commerceCurrency.getDefaultLanguageId();
 	}
 
@@ -292,7 +292,7 @@ public class CommerceCurrencyWrapper implements CommerceCurrency,
 	* @return the name of this commerce currency
 	*/
 	@Override
-	public java.lang.String getName() {
+	public String getName() {
 		return _commerceCurrency.getName();
 	}
 
@@ -303,7 +303,7 @@ public class CommerceCurrencyWrapper implements CommerceCurrency,
 	* @return the localized name of this commerce currency
 	*/
 	@Override
-	public java.lang.String getName(java.util.Locale locale) {
+	public String getName(java.util.Locale locale) {
 		return _commerceCurrency.getName(locale);
 	}
 
@@ -315,7 +315,7 @@ public class CommerceCurrencyWrapper implements CommerceCurrency,
 	* @return the localized name of this commerce currency. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
 	*/
 	@Override
-	public java.lang.String getName(java.util.Locale locale, boolean useDefault) {
+	public String getName(java.util.Locale locale, boolean useDefault) {
 		return _commerceCurrency.getName(locale, useDefault);
 	}
 
@@ -326,7 +326,7 @@ public class CommerceCurrencyWrapper implements CommerceCurrency,
 	* @return the localized name of this commerce currency
 	*/
 	@Override
-	public java.lang.String getName(java.lang.String languageId) {
+	public String getName(String languageId) {
 		return _commerceCurrency.getName(languageId);
 	}
 
@@ -338,18 +338,17 @@ public class CommerceCurrencyWrapper implements CommerceCurrency,
 	* @return the localized name of this commerce currency
 	*/
 	@Override
-	public java.lang.String getName(java.lang.String languageId,
-		boolean useDefault) {
+	public String getName(String languageId, boolean useDefault) {
 		return _commerceCurrency.getName(languageId, useDefault);
 	}
 
 	@Override
-	public java.lang.String getNameCurrentLanguageId() {
+	public String getNameCurrentLanguageId() {
 		return _commerceCurrency.getNameCurrentLanguageId();
 	}
 
 	@Override
-	public java.lang.String getNameCurrentValue() {
+	public String getNameCurrentValue() {
 		return _commerceCurrency.getNameCurrentValue();
 	}
 
@@ -359,7 +358,7 @@ public class CommerceCurrencyWrapper implements CommerceCurrency,
 	* @return the locales and localized names of this commerce currency
 	*/
 	@Override
-	public Map<java.util.Locale, java.lang.String> getNameMap() {
+	public Map<java.util.Locale, String> getNameMap() {
 		return _commerceCurrency.getNameMap();
 	}
 
@@ -414,7 +413,7 @@ public class CommerceCurrencyWrapper implements CommerceCurrency,
 	* @return the rounding type of this commerce currency
 	*/
 	@Override
-	public java.lang.String getRoundingType() {
+	public String getRoundingType() {
 		return _commerceCurrency.getRoundingType();
 	}
 
@@ -434,7 +433,7 @@ public class CommerceCurrencyWrapper implements CommerceCurrency,
 	* @return the user name of this commerce currency
 	*/
 	@Override
-	public java.lang.String getUserName() {
+	public String getUserName() {
 		return _commerceCurrency.getUserName();
 	}
 
@@ -444,7 +443,7 @@ public class CommerceCurrencyWrapper implements CommerceCurrency,
 	* @return the user uuid of this commerce currency
 	*/
 	@Override
-	public java.lang.String getUserUuid() {
+	public String getUserUuid() {
 		return _commerceCurrency.getUserUuid();
 	}
 
@@ -454,7 +453,7 @@ public class CommerceCurrencyWrapper implements CommerceCurrency,
 	* @return the uuid of this commerce currency
 	*/
 	@Override
-	public java.lang.String getUuid() {
+	public String getUuid() {
 		return _commerceCurrency.getUuid();
 	}
 
@@ -537,7 +536,7 @@ public class CommerceCurrencyWrapper implements CommerceCurrency,
 	* @param code the code of this commerce currency
 	*/
 	@Override
-	public void setCode(java.lang.String code) {
+	public void setCode(String code) {
 		_commerceCurrency.setCode(code);
 	}
 
@@ -623,7 +622,7 @@ public class CommerceCurrencyWrapper implements CommerceCurrency,
 	* @param name the name of this commerce currency
 	*/
 	@Override
-	public void setName(java.lang.String name) {
+	public void setName(String name) {
 		_commerceCurrency.setName(name);
 	}
 
@@ -634,7 +633,7 @@ public class CommerceCurrencyWrapper implements CommerceCurrency,
 	* @param locale the locale of the language
 	*/
 	@Override
-	public void setName(java.lang.String name, java.util.Locale locale) {
+	public void setName(String name, java.util.Locale locale) {
 		_commerceCurrency.setName(name, locale);
 	}
 
@@ -646,13 +645,13 @@ public class CommerceCurrencyWrapper implements CommerceCurrency,
 	* @param defaultLocale the default locale
 	*/
 	@Override
-	public void setName(java.lang.String name, java.util.Locale locale,
+	public void setName(String name, java.util.Locale locale,
 		java.util.Locale defaultLocale) {
 		_commerceCurrency.setName(name, locale, defaultLocale);
 	}
 
 	@Override
-	public void setNameCurrentLanguageId(java.lang.String languageId) {
+	public void setNameCurrentLanguageId(String languageId) {
 		_commerceCurrency.setNameCurrentLanguageId(languageId);
 	}
 
@@ -662,7 +661,7 @@ public class CommerceCurrencyWrapper implements CommerceCurrency,
 	* @param nameMap the locales and localized names of this commerce currency
 	*/
 	@Override
-	public void setNameMap(Map<java.util.Locale, java.lang.String> nameMap) {
+	public void setNameMap(Map<java.util.Locale, String> nameMap) {
 		_commerceCurrency.setNameMap(nameMap);
 	}
 
@@ -673,7 +672,7 @@ public class CommerceCurrencyWrapper implements CommerceCurrency,
 	* @param defaultLocale the default locale
 	*/
 	@Override
-	public void setNameMap(Map<java.util.Locale, java.lang.String> nameMap,
+	public void setNameMap(Map<java.util.Locale, String> nameMap,
 		java.util.Locale defaultLocale) {
 		_commerceCurrency.setNameMap(nameMap, defaultLocale);
 	}
@@ -734,7 +733,7 @@ public class CommerceCurrencyWrapper implements CommerceCurrency,
 	* @param roundingType the rounding type of this commerce currency
 	*/
 	@Override
-	public void setRoundingType(java.lang.String roundingType) {
+	public void setRoundingType(String roundingType) {
 		_commerceCurrency.setRoundingType(roundingType);
 	}
 
@@ -754,7 +753,7 @@ public class CommerceCurrencyWrapper implements CommerceCurrency,
 	* @param userName the user name of this commerce currency
 	*/
 	@Override
-	public void setUserName(java.lang.String userName) {
+	public void setUserName(String userName) {
 		_commerceCurrency.setUserName(userName);
 	}
 
@@ -764,7 +763,7 @@ public class CommerceCurrencyWrapper implements CommerceCurrency,
 	* @param userUuid the user uuid of this commerce currency
 	*/
 	@Override
-	public void setUserUuid(java.lang.String userUuid) {
+	public void setUserUuid(String userUuid) {
 		_commerceCurrency.setUserUuid(userUuid);
 	}
 
@@ -774,7 +773,7 @@ public class CommerceCurrencyWrapper implements CommerceCurrency,
 	* @param uuid the uuid of this commerce currency
 	*/
 	@Override
-	public void setUuid(java.lang.String uuid) {
+	public void setUuid(String uuid) {
 		_commerceCurrency.setUuid(uuid);
 	}
 
@@ -789,7 +788,7 @@ public class CommerceCurrencyWrapper implements CommerceCurrency,
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _commerceCurrency.toString();
 	}
 
@@ -799,7 +798,7 @@ public class CommerceCurrencyWrapper implements CommerceCurrency,
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _commerceCurrency.toXmlString();
 	}
 

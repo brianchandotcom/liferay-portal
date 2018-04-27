@@ -181,8 +181,8 @@ public interface CommercePaymentMethodPersistence extends BasePersistence<Commer
 	* @return the matching commerce payment method
 	* @throws NoSuchPaymentMethodException if a matching commerce payment method could not be found
 	*/
-	public CommercePaymentMethod findByG_E(long groupId,
-		java.lang.String engineKey) throws NoSuchPaymentMethodException;
+	public CommercePaymentMethod findByG_E(long groupId, String engineKey)
+		throws NoSuchPaymentMethodException;
 
 	/**
 	* Returns the commerce payment method where groupId = &#63; and engineKey = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
@@ -191,8 +191,7 @@ public interface CommercePaymentMethodPersistence extends BasePersistence<Commer
 	* @param engineKey the engine key
 	* @return the matching commerce payment method, or <code>null</code> if a matching commerce payment method could not be found
 	*/
-	public CommercePaymentMethod fetchByG_E(long groupId,
-		java.lang.String engineKey);
+	public CommercePaymentMethod fetchByG_E(long groupId, String engineKey);
 
 	/**
 	* Returns the commerce payment method where groupId = &#63; and engineKey = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -202,8 +201,8 @@ public interface CommercePaymentMethodPersistence extends BasePersistence<Commer
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching commerce payment method, or <code>null</code> if a matching commerce payment method could not be found
 	*/
-	public CommercePaymentMethod fetchByG_E(long groupId,
-		java.lang.String engineKey, boolean retrieveFromCache);
+	public CommercePaymentMethod fetchByG_E(long groupId, String engineKey,
+		boolean retrieveFromCache);
 
 	/**
 	* Removes the commerce payment method where groupId = &#63; and engineKey = &#63; from the database.
@@ -212,8 +211,8 @@ public interface CommercePaymentMethodPersistence extends BasePersistence<Commer
 	* @param engineKey the engine key
 	* @return the commerce payment method that was removed
 	*/
-	public CommercePaymentMethod removeByG_E(long groupId,
-		java.lang.String engineKey) throws NoSuchPaymentMethodException;
+	public CommercePaymentMethod removeByG_E(long groupId, String engineKey)
+		throws NoSuchPaymentMethodException;
 
 	/**
 	* Returns the number of commerce payment methods where groupId = &#63; and engineKey = &#63;.
@@ -222,7 +221,7 @@ public interface CommercePaymentMethodPersistence extends BasePersistence<Commer
 	* @param engineKey the engine key
 	* @return the number of matching commerce payment methods
 	*/
-	public int countByG_E(long groupId, java.lang.String engineKey);
+	public int countByG_E(long groupId, String engineKey);
 
 	/**
 	* Returns all the commerce payment methods where groupId = &#63; and active = &#63;.
@@ -491,5 +490,5 @@ public interface CommercePaymentMethodPersistence extends BasePersistence<Commer
 	public int countAll();
 
 	@Override
-	public java.util.Set<java.lang.String> getBadColumnNames();
+	public java.util.Set<String> getBadColumnNames();
 }

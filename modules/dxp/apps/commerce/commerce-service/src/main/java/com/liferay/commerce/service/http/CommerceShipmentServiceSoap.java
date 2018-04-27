@@ -68,11 +68,11 @@ public class CommerceShipmentServiceSoap {
 	public static com.liferay.commerce.model.CommerceShipmentSoap addCommerceShipment(
 		long shipmentUserId, long commerceAddressId,
 		long commerceShippingMethodId, long commerceWarehouseId,
-		java.lang.String carrier, java.lang.String trackingNumber,
-		int expectedDuration, int status, int shippingDateMonth,
-		int shippingDateDay, int shippingDateYear, int shippingDateHour,
-		int shippingDateMinute, int expectedDateMonth, int expectedDateDay,
-		int expectedDateYear, int expectedDateHour, int expectedDateMinute,
+		String carrier, String trackingNumber, int expectedDuration,
+		int status, int shippingDateMonth, int shippingDateDay,
+		int shippingDateYear, int shippingDateHour, int shippingDateMinute,
+		int expectedDateMonth, int expectedDateDay, int expectedDateYear,
+		int expectedDateHour, int expectedDateMinute,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
@@ -154,12 +154,12 @@ public class CommerceShipmentServiceSoap {
 
 	public static com.liferay.commerce.model.CommerceShipmentSoap updateCommerceShipment(
 		long commerceShipmentId, long shipmentUserId, long commerceAddressId,
-		long commerceShippingMethodId, java.lang.String carrier,
-		java.lang.String trackingNumber, int expectedDuration, int status,
-		int shippingDateMonth, int shippingDateDay, int shippingDateYear,
-		int shippingDateHour, int shippingDateMinute, int expectedDateMonth,
-		int expectedDateDay, int expectedDateYear, int expectedDateHour,
-		int expectedDateMinute) throws RemoteException {
+		long commerceShippingMethodId, String carrier, String trackingNumber,
+		int expectedDuration, int status, int shippingDateMonth,
+		int shippingDateDay, int shippingDateYear, int shippingDateHour,
+		int shippingDateMinute, int expectedDateMonth, int expectedDateDay,
+		int expectedDateYear, int expectedDateHour, int expectedDateMinute)
+		throws RemoteException {
 		try {
 			com.liferay.commerce.model.CommerceShipment returnValue = CommerceShipmentServiceUtil.updateCommerceShipment(commerceShipmentId,
 					shipmentUserId, commerceAddressId,

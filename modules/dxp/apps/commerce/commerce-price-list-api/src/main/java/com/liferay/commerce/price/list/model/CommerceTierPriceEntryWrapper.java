@@ -163,7 +163,7 @@ public class CommerceTierPriceEntryWrapper implements CommerceTierPriceEntry,
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new CommerceTierPriceEntryWrapper((CommerceTierPriceEntry)_commerceTierPriceEntry.clone());
 	}
 
@@ -314,7 +314,7 @@ public class CommerceTierPriceEntryWrapper implements CommerceTierPriceEntry,
 	* @return the user name of this commerce tier price entry
 	*/
 	@Override
-	public java.lang.String getUserName() {
+	public String getUserName() {
 		return _commerceTierPriceEntry.getUserName();
 	}
 
@@ -324,7 +324,7 @@ public class CommerceTierPriceEntryWrapper implements CommerceTierPriceEntry,
 	* @return the user uuid of this commerce tier price entry
 	*/
 	@Override
-	public java.lang.String getUserUuid() {
+	public String getUserUuid() {
 		return _commerceTierPriceEntry.getUserUuid();
 	}
 
@@ -334,7 +334,7 @@ public class CommerceTierPriceEntryWrapper implements CommerceTierPriceEntry,
 	* @return the uuid of this commerce tier price entry
 	*/
 	@Override
-	public java.lang.String getUuid() {
+	public String getUuid() {
 		return _commerceTierPriceEntry.getUuid();
 	}
 
@@ -520,7 +520,7 @@ public class CommerceTierPriceEntryWrapper implements CommerceTierPriceEntry,
 	* @param userName the user name of this commerce tier price entry
 	*/
 	@Override
-	public void setUserName(java.lang.String userName) {
+	public void setUserName(String userName) {
 		_commerceTierPriceEntry.setUserName(userName);
 	}
 
@@ -530,7 +530,7 @@ public class CommerceTierPriceEntryWrapper implements CommerceTierPriceEntry,
 	* @param userUuid the user uuid of this commerce tier price entry
 	*/
 	@Override
-	public void setUserUuid(java.lang.String userUuid) {
+	public void setUserUuid(String userUuid) {
 		_commerceTierPriceEntry.setUserUuid(userUuid);
 	}
 
@@ -540,7 +540,7 @@ public class CommerceTierPriceEntryWrapper implements CommerceTierPriceEntry,
 	* @param uuid the uuid of this commerce tier price entry
 	*/
 	@Override
-	public void setUuid(java.lang.String uuid) {
+	public void setUuid(String uuid) {
 		_commerceTierPriceEntry.setUuid(uuid);
 	}
 
@@ -555,7 +555,7 @@ public class CommerceTierPriceEntryWrapper implements CommerceTierPriceEntry,
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _commerceTierPriceEntry.toString();
 	}
 
@@ -565,7 +565,7 @@ public class CommerceTierPriceEntryWrapper implements CommerceTierPriceEntry,
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _commerceTierPriceEntry.toXmlString();
 	}
 

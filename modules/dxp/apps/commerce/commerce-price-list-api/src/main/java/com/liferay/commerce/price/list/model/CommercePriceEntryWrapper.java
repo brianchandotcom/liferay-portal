@@ -168,7 +168,7 @@ public class CommercePriceEntryWrapper implements CommercePriceEntry,
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new CommercePriceEntryWrapper((CommercePriceEntry)_commercePriceEntry.clone());
 	}
 
@@ -335,7 +335,7 @@ public class CommercePriceEntryWrapper implements CommercePriceEntry,
 	* @return the user name of this commerce price entry
 	*/
 	@Override
-	public java.lang.String getUserName() {
+	public String getUserName() {
 		return _commercePriceEntry.getUserName();
 	}
 
@@ -345,7 +345,7 @@ public class CommercePriceEntryWrapper implements CommercePriceEntry,
 	* @return the user uuid of this commerce price entry
 	*/
 	@Override
-	public java.lang.String getUserUuid() {
+	public String getUserUuid() {
 		return _commercePriceEntry.getUserUuid();
 	}
 
@@ -355,7 +355,7 @@ public class CommercePriceEntryWrapper implements CommercePriceEntry,
 	* @return the uuid of this commerce price entry
 	*/
 	@Override
-	public java.lang.String getUuid() {
+	public String getUuid() {
 		return _commercePriceEntry.getUuid();
 	}
 
@@ -561,7 +561,7 @@ public class CommercePriceEntryWrapper implements CommercePriceEntry,
 	* @param userName the user name of this commerce price entry
 	*/
 	@Override
-	public void setUserName(java.lang.String userName) {
+	public void setUserName(String userName) {
 		_commercePriceEntry.setUserName(userName);
 	}
 
@@ -571,7 +571,7 @@ public class CommercePriceEntryWrapper implements CommercePriceEntry,
 	* @param userUuid the user uuid of this commerce price entry
 	*/
 	@Override
-	public void setUserUuid(java.lang.String userUuid) {
+	public void setUserUuid(String userUuid) {
 		_commercePriceEntry.setUserUuid(userUuid);
 	}
 
@@ -581,7 +581,7 @@ public class CommercePriceEntryWrapper implements CommercePriceEntry,
 	* @param uuid the uuid of this commerce price entry
 	*/
 	@Override
-	public void setUuid(java.lang.String uuid) {
+	public void setUuid(String uuid) {
 		_commercePriceEntry.setUuid(uuid);
 	}
 
@@ -596,7 +596,7 @@ public class CommercePriceEntryWrapper implements CommercePriceEntry,
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _commercePriceEntry.toString();
 	}
 
@@ -606,7 +606,7 @@ public class CommercePriceEntryWrapper implements CommercePriceEntry,
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _commercePriceEntry.toXmlString();
 	}
 

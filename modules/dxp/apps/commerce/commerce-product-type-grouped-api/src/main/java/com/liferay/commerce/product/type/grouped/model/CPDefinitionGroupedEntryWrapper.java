@@ -155,7 +155,7 @@ public class CPDefinitionGroupedEntryWrapper implements CPDefinitionGroupedEntry
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new CPDefinitionGroupedEntryWrapper((CPDefinitionGroupedEntry)_cpDefinitionGroupedEntry.clone());
 	}
 
@@ -302,7 +302,7 @@ public class CPDefinitionGroupedEntryWrapper implements CPDefinitionGroupedEntry
 	* @return the user name of this cp definition grouped entry
 	*/
 	@Override
-	public java.lang.String getUserName() {
+	public String getUserName() {
 		return _cpDefinitionGroupedEntry.getUserName();
 	}
 
@@ -312,7 +312,7 @@ public class CPDefinitionGroupedEntryWrapper implements CPDefinitionGroupedEntry
 	* @return the user uuid of this cp definition grouped entry
 	*/
 	@Override
-	public java.lang.String getUserUuid() {
+	public String getUserUuid() {
 		return _cpDefinitionGroupedEntry.getUserUuid();
 	}
 
@@ -322,7 +322,7 @@ public class CPDefinitionGroupedEntryWrapper implements CPDefinitionGroupedEntry
 	* @return the uuid of this cp definition grouped entry
 	*/
 	@Override
-	public java.lang.String getUuid() {
+	public String getUuid() {
 		return _cpDefinitionGroupedEntry.getUuid();
 	}
 
@@ -498,7 +498,7 @@ public class CPDefinitionGroupedEntryWrapper implements CPDefinitionGroupedEntry
 	* @param userName the user name of this cp definition grouped entry
 	*/
 	@Override
-	public void setUserName(java.lang.String userName) {
+	public void setUserName(String userName) {
 		_cpDefinitionGroupedEntry.setUserName(userName);
 	}
 
@@ -508,7 +508,7 @@ public class CPDefinitionGroupedEntryWrapper implements CPDefinitionGroupedEntry
 	* @param userUuid the user uuid of this cp definition grouped entry
 	*/
 	@Override
-	public void setUserUuid(java.lang.String userUuid) {
+	public void setUserUuid(String userUuid) {
 		_cpDefinitionGroupedEntry.setUserUuid(userUuid);
 	}
 
@@ -518,7 +518,7 @@ public class CPDefinitionGroupedEntryWrapper implements CPDefinitionGroupedEntry
 	* @param uuid the uuid of this cp definition grouped entry
 	*/
 	@Override
-	public void setUuid(java.lang.String uuid) {
+	public void setUuid(String uuid) {
 		_cpDefinitionGroupedEntry.setUuid(uuid);
 	}
 
@@ -533,7 +533,7 @@ public class CPDefinitionGroupedEntryWrapper implements CPDefinitionGroupedEntry
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _cpDefinitionGroupedEntry.toString();
 	}
 
@@ -543,7 +543,7 @@ public class CPDefinitionGroupedEntryWrapper implements CPDefinitionGroupedEntry
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _cpDefinitionGroupedEntry.toXmlString();
 	}
 

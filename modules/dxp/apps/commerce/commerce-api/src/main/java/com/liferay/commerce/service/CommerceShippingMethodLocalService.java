@@ -76,9 +76,8 @@ public interface CommerceShippingMethodLocalService extends BaseLocalService,
 		CommerceShippingMethod commerceShippingMethod);
 
 	public CommerceShippingMethod addCommerceShippingMethod(
-		Map<Locale, java.lang.String> nameMap,
-		Map<Locale, java.lang.String> descriptionMap, File imageFile,
-		java.lang.String engineKey, double priority, boolean active,
+		Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
+		File imageFile, String engineKey, double priority, boolean active,
 		ServiceContext serviceContext) throws PortalException;
 
 	/**
@@ -189,7 +188,7 @@ public interface CommerceShippingMethodLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CommerceShippingMethod fetchCommerceShippingMethod(long groupId,
-		java.lang.String engineKey);
+		String engineKey);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
@@ -246,7 +245,7 @@ public interface CommerceShippingMethodLocalService extends BaseLocalService,
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -267,7 +266,7 @@ public interface CommerceShippingMethodLocalService extends BaseLocalService,
 		CommerceShippingMethod commerceShippingMethod);
 
 	public CommerceShippingMethod updateCommerceShippingMethod(
-		long commerceShippingMethodId, Map<Locale, java.lang.String> nameMap,
-		Map<Locale, java.lang.String> descriptionMap, File imageFile,
-		double priority, boolean active) throws PortalException;
+		long commerceShippingMethodId, Map<Locale, String> nameMap,
+		Map<Locale, String> descriptionMap, File imageFile, double priority,
+		boolean active) throws PortalException;
 }

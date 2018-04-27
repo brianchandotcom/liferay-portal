@@ -70,10 +70,9 @@ import java.util.Map;
 @ProviderType
 public class CommerceCurrencyServiceSoap {
 	public static com.liferay.commerce.currency.model.CommerceCurrencySoap addCommerceCurrency(
-		java.lang.String code, java.lang.String[] nameMapLanguageIds,
-		java.lang.String[] nameMapValues, java.math.BigDecimal rate,
-		java.lang.String roundingType, boolean primary, double priority,
-		boolean active,
+		String code, String[] nameMapLanguageIds, String[] nameMapValues,
+		java.math.BigDecimal rate, String roundingType, boolean primary,
+		double priority, boolean active,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
@@ -229,11 +228,9 @@ public class CommerceCurrencyServiceSoap {
 	}
 
 	public static com.liferay.commerce.currency.model.CommerceCurrencySoap updateCommerceCurrency(
-		long commerceCurrencyId, java.lang.String code,
-		java.lang.String[] nameMapLanguageIds,
-		java.lang.String[] nameMapValues, java.math.BigDecimal rate,
-		java.lang.String roundingType, boolean primary, double priority,
-		boolean active,
+		long commerceCurrencyId, String code, String[] nameMapLanguageIds,
+		String[] nameMapValues, java.math.BigDecimal rate, String roundingType,
+		boolean primary, double priority, boolean active,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
@@ -254,7 +251,7 @@ public class CommerceCurrencyServiceSoap {
 	}
 
 	public static void updateExchangeRate(long commerceCurrencyId,
-		java.lang.String exchangeRateProviderKey) throws RemoteException {
+		String exchangeRateProviderKey) throws RemoteException {
 		try {
 			CommerceCurrencyServiceUtil.updateExchangeRate(commerceCurrencyId,
 				exchangeRateProviderKey);

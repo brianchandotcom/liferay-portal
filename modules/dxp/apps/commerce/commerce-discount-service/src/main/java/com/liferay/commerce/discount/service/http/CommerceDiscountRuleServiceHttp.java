@@ -56,8 +56,8 @@ import com.liferay.portal.kernel.util.MethodKey;
 @ProviderType
 public class CommerceDiscountRuleServiceHttp {
 	public static com.liferay.commerce.discount.model.CommerceDiscountRule addCommerceDiscountRule(
-		HttpPrincipal httpPrincipal, long commerceDiscountId,
-		java.lang.String type, java.lang.String typeSettings,
+		HttpPrincipal httpPrincipal, long commerceDiscountId, String type,
+		String typeSettings,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -120,8 +120,8 @@ public class CommerceDiscountRuleServiceHttp {
 	}
 
 	public static com.liferay.commerce.discount.model.CommerceDiscountRule updateCommerceDiscountRule(
-		HttpPrincipal httpPrincipal, long commerceDiscountRuleId,
-		java.lang.String type, java.lang.String typeSettings)
+		HttpPrincipal httpPrincipal, long commerceDiscountRuleId, String type,
+		String typeSettings)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(CommerceDiscountRuleServiceUtil.class,
@@ -155,13 +155,13 @@ public class CommerceDiscountRuleServiceHttp {
 
 	private static Log _log = LogFactoryUtil.getLog(CommerceDiscountRuleServiceHttp.class);
 	private static final Class<?>[] _addCommerceDiscountRuleParameterTypes0 = new Class[] {
-			long.class, java.lang.String.class, java.lang.String.class,
+			long.class, String.class, String.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _deleteCommerceDiscountRuleParameterTypes1 = new Class[] {
 			long.class
 		};
 	private static final Class<?>[] _updateCommerceDiscountRuleParameterTypes2 = new Class[] {
-			long.class, java.lang.String.class, java.lang.String.class
+			long.class, String.class, String.class
 		};
 }

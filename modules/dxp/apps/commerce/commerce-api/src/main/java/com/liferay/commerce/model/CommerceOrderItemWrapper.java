@@ -173,7 +173,7 @@ public class CommerceOrderItemWrapper implements CommerceOrderItem,
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new CommerceOrderItemWrapper((CommerceOrderItem)_commerceOrderItem.clone());
 	}
 
@@ -183,7 +183,7 @@ public class CommerceOrderItemWrapper implements CommerceOrderItem,
 	}
 
 	@Override
-	public java.lang.String[] getAvailableLanguageIds() {
+	public String[] getAvailableLanguageIds() {
 		return _commerceOrderItem.getAvailableLanguageIds();
 	}
 
@@ -262,7 +262,7 @@ public class CommerceOrderItemWrapper implements CommerceOrderItem,
 	}
 
 	@Override
-	public java.lang.String getDefaultLanguageId() {
+	public String getDefaultLanguageId() {
 		return _commerceOrderItem.getDefaultLanguageId();
 	}
 
@@ -287,7 +287,7 @@ public class CommerceOrderItemWrapper implements CommerceOrderItem,
 	* @return the json of this commerce order item
 	*/
 	@Override
-	public java.lang.String getJson() {
+	public String getJson() {
 		return _commerceOrderItem.getJson();
 	}
 
@@ -352,7 +352,7 @@ public class CommerceOrderItemWrapper implements CommerceOrderItem,
 	* @return the sku of this commerce order item
 	*/
 	@Override
-	public java.lang.String getSku() {
+	public String getSku() {
 		return _commerceOrderItem.getSku();
 	}
 
@@ -362,7 +362,7 @@ public class CommerceOrderItemWrapper implements CommerceOrderItem,
 	* @return the title of this commerce order item
 	*/
 	@Override
-	public java.lang.String getTitle() {
+	public String getTitle() {
 		return _commerceOrderItem.getTitle();
 	}
 
@@ -373,7 +373,7 @@ public class CommerceOrderItemWrapper implements CommerceOrderItem,
 	* @return the localized title of this commerce order item
 	*/
 	@Override
-	public java.lang.String getTitle(java.util.Locale locale) {
+	public String getTitle(java.util.Locale locale) {
 		return _commerceOrderItem.getTitle(locale);
 	}
 
@@ -385,7 +385,7 @@ public class CommerceOrderItemWrapper implements CommerceOrderItem,
 	* @return the localized title of this commerce order item. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
 	*/
 	@Override
-	public java.lang.String getTitle(java.util.Locale locale, boolean useDefault) {
+	public String getTitle(java.util.Locale locale, boolean useDefault) {
 		return _commerceOrderItem.getTitle(locale, useDefault);
 	}
 
@@ -396,7 +396,7 @@ public class CommerceOrderItemWrapper implements CommerceOrderItem,
 	* @return the localized title of this commerce order item
 	*/
 	@Override
-	public java.lang.String getTitle(java.lang.String languageId) {
+	public String getTitle(String languageId) {
 		return _commerceOrderItem.getTitle(languageId);
 	}
 
@@ -408,18 +408,17 @@ public class CommerceOrderItemWrapper implements CommerceOrderItem,
 	* @return the localized title of this commerce order item
 	*/
 	@Override
-	public java.lang.String getTitle(java.lang.String languageId,
-		boolean useDefault) {
+	public String getTitle(String languageId, boolean useDefault) {
 		return _commerceOrderItem.getTitle(languageId, useDefault);
 	}
 
 	@Override
-	public java.lang.String getTitleCurrentLanguageId() {
+	public String getTitleCurrentLanguageId() {
 		return _commerceOrderItem.getTitleCurrentLanguageId();
 	}
 
 	@Override
-	public java.lang.String getTitleCurrentValue() {
+	public String getTitleCurrentValue() {
 		return _commerceOrderItem.getTitleCurrentValue();
 	}
 
@@ -429,7 +428,7 @@ public class CommerceOrderItemWrapper implements CommerceOrderItem,
 	* @return the locales and localized titles of this commerce order item
 	*/
 	@Override
-	public Map<java.util.Locale, java.lang.String> getTitleMap() {
+	public Map<java.util.Locale, String> getTitleMap() {
 		return _commerceOrderItem.getTitleMap();
 	}
 
@@ -449,7 +448,7 @@ public class CommerceOrderItemWrapper implements CommerceOrderItem,
 	* @return the user name of this commerce order item
 	*/
 	@Override
-	public java.lang.String getUserName() {
+	public String getUserName() {
 		return _commerceOrderItem.getUserName();
 	}
 
@@ -459,7 +458,7 @@ public class CommerceOrderItemWrapper implements CommerceOrderItem,
 	* @return the user uuid of this commerce order item
 	*/
 	@Override
-	public java.lang.String getUserUuid() {
+	public String getUserUuid() {
 		return _commerceOrderItem.getUserUuid();
 	}
 
@@ -588,7 +587,7 @@ public class CommerceOrderItemWrapper implements CommerceOrderItem,
 	* @param json the json of this commerce order item
 	*/
 	@Override
-	public void setJson(java.lang.String json) {
+	public void setJson(String json) {
 		_commerceOrderItem.setJson(json);
 	}
 
@@ -658,7 +657,7 @@ public class CommerceOrderItemWrapper implements CommerceOrderItem,
 	* @param sku the sku of this commerce order item
 	*/
 	@Override
-	public void setSku(java.lang.String sku) {
+	public void setSku(String sku) {
 		_commerceOrderItem.setSku(sku);
 	}
 
@@ -668,7 +667,7 @@ public class CommerceOrderItemWrapper implements CommerceOrderItem,
 	* @param title the title of this commerce order item
 	*/
 	@Override
-	public void setTitle(java.lang.String title) {
+	public void setTitle(String title) {
 		_commerceOrderItem.setTitle(title);
 	}
 
@@ -679,7 +678,7 @@ public class CommerceOrderItemWrapper implements CommerceOrderItem,
 	* @param locale the locale of the language
 	*/
 	@Override
-	public void setTitle(java.lang.String title, java.util.Locale locale) {
+	public void setTitle(String title, java.util.Locale locale) {
 		_commerceOrderItem.setTitle(title, locale);
 	}
 
@@ -691,13 +690,13 @@ public class CommerceOrderItemWrapper implements CommerceOrderItem,
 	* @param defaultLocale the default locale
 	*/
 	@Override
-	public void setTitle(java.lang.String title, java.util.Locale locale,
+	public void setTitle(String title, java.util.Locale locale,
 		java.util.Locale defaultLocale) {
 		_commerceOrderItem.setTitle(title, locale, defaultLocale);
 	}
 
 	@Override
-	public void setTitleCurrentLanguageId(java.lang.String languageId) {
+	public void setTitleCurrentLanguageId(String languageId) {
 		_commerceOrderItem.setTitleCurrentLanguageId(languageId);
 	}
 
@@ -707,7 +706,7 @@ public class CommerceOrderItemWrapper implements CommerceOrderItem,
 	* @param titleMap the locales and localized titles of this commerce order item
 	*/
 	@Override
-	public void setTitleMap(Map<java.util.Locale, java.lang.String> titleMap) {
+	public void setTitleMap(Map<java.util.Locale, String> titleMap) {
 		_commerceOrderItem.setTitleMap(titleMap);
 	}
 
@@ -718,7 +717,7 @@ public class CommerceOrderItemWrapper implements CommerceOrderItem,
 	* @param defaultLocale the default locale
 	*/
 	@Override
-	public void setTitleMap(Map<java.util.Locale, java.lang.String> titleMap,
+	public void setTitleMap(Map<java.util.Locale, String> titleMap,
 		java.util.Locale defaultLocale) {
 		_commerceOrderItem.setTitleMap(titleMap, defaultLocale);
 	}
@@ -739,7 +738,7 @@ public class CommerceOrderItemWrapper implements CommerceOrderItem,
 	* @param userName the user name of this commerce order item
 	*/
 	@Override
-	public void setUserName(java.lang.String userName) {
+	public void setUserName(String userName) {
 		_commerceOrderItem.setUserName(userName);
 	}
 
@@ -749,7 +748,7 @@ public class CommerceOrderItemWrapper implements CommerceOrderItem,
 	* @param userUuid the user uuid of this commerce order item
 	*/
 	@Override
-	public void setUserUuid(java.lang.String userUuid) {
+	public void setUserUuid(String userUuid) {
 		_commerceOrderItem.setUserUuid(userUuid);
 	}
 
@@ -764,7 +763,7 @@ public class CommerceOrderItemWrapper implements CommerceOrderItem,
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _commerceOrderItem.toString();
 	}
 
@@ -774,7 +773,7 @@ public class CommerceOrderItemWrapper implements CommerceOrderItem,
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _commerceOrderItem.toXmlString();
 	}
 

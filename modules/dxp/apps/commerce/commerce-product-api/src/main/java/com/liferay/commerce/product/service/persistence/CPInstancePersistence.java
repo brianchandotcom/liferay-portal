@@ -49,7 +49,7 @@ public interface CPInstancePersistence extends BasePersistence<CPInstance> {
 	* @param uuid the uuid
 	* @return the matching cp instances
 	*/
-	public java.util.List<CPInstance> findByUuid(java.lang.String uuid);
+	public java.util.List<CPInstance> findByUuid(String uuid);
 
 	/**
 	* Returns a range of all the cp instances where uuid = &#63;.
@@ -63,8 +63,7 @@ public interface CPInstancePersistence extends BasePersistence<CPInstance> {
 	* @param end the upper bound of the range of cp instances (not inclusive)
 	* @return the range of matching cp instances
 	*/
-	public java.util.List<CPInstance> findByUuid(java.lang.String uuid,
-		int start, int end);
+	public java.util.List<CPInstance> findByUuid(String uuid, int start, int end);
 
 	/**
 	* Returns an ordered range of all the cp instances where uuid = &#63;.
@@ -79,8 +78,8 @@ public interface CPInstancePersistence extends BasePersistence<CPInstance> {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching cp instances
 	*/
-	public java.util.List<CPInstance> findByUuid(java.lang.String uuid,
-		int start, int end,
+	public java.util.List<CPInstance> findByUuid(String uuid, int start,
+		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<CPInstance> orderByComparator);
 
 	/**
@@ -97,8 +96,8 @@ public interface CPInstancePersistence extends BasePersistence<CPInstance> {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching cp instances
 	*/
-	public java.util.List<CPInstance> findByUuid(java.lang.String uuid,
-		int start, int end,
+	public java.util.List<CPInstance> findByUuid(String uuid, int start,
+		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<CPInstance> orderByComparator,
 		boolean retrieveFromCache);
 
@@ -110,7 +109,7 @@ public interface CPInstancePersistence extends BasePersistence<CPInstance> {
 	* @return the first matching cp instance
 	* @throws NoSuchCPInstanceException if a matching cp instance could not be found
 	*/
-	public CPInstance findByUuid_First(java.lang.String uuid,
+	public CPInstance findByUuid_First(String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<CPInstance> orderByComparator)
 		throws NoSuchCPInstanceException;
 
@@ -121,7 +120,7 @@ public interface CPInstancePersistence extends BasePersistence<CPInstance> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching cp instance, or <code>null</code> if a matching cp instance could not be found
 	*/
-	public CPInstance fetchByUuid_First(java.lang.String uuid,
+	public CPInstance fetchByUuid_First(String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<CPInstance> orderByComparator);
 
 	/**
@@ -132,7 +131,7 @@ public interface CPInstancePersistence extends BasePersistence<CPInstance> {
 	* @return the last matching cp instance
 	* @throws NoSuchCPInstanceException if a matching cp instance could not be found
 	*/
-	public CPInstance findByUuid_Last(java.lang.String uuid,
+	public CPInstance findByUuid_Last(String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<CPInstance> orderByComparator)
 		throws NoSuchCPInstanceException;
 
@@ -143,7 +142,7 @@ public interface CPInstancePersistence extends BasePersistence<CPInstance> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching cp instance, or <code>null</code> if a matching cp instance could not be found
 	*/
-	public CPInstance fetchByUuid_Last(java.lang.String uuid,
+	public CPInstance fetchByUuid_Last(String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<CPInstance> orderByComparator);
 
 	/**
@@ -155,8 +154,7 @@ public interface CPInstancePersistence extends BasePersistence<CPInstance> {
 	* @return the previous, current, and next cp instance
 	* @throws NoSuchCPInstanceException if a cp instance with the primary key could not be found
 	*/
-	public CPInstance[] findByUuid_PrevAndNext(long CPInstanceId,
-		java.lang.String uuid,
+	public CPInstance[] findByUuid_PrevAndNext(long CPInstanceId, String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<CPInstance> orderByComparator)
 		throws NoSuchCPInstanceException;
 
@@ -165,7 +163,7 @@ public interface CPInstancePersistence extends BasePersistence<CPInstance> {
 	*
 	* @param uuid the uuid
 	*/
-	public void removeByUuid(java.lang.String uuid);
+	public void removeByUuid(String uuid);
 
 	/**
 	* Returns the number of cp instances where uuid = &#63;.
@@ -173,7 +171,7 @@ public interface CPInstancePersistence extends BasePersistence<CPInstance> {
 	* @param uuid the uuid
 	* @return the number of matching cp instances
 	*/
-	public int countByUuid(java.lang.String uuid);
+	public int countByUuid(String uuid);
 
 	/**
 	* Returns the cp instance where uuid = &#63; and groupId = &#63; or throws a {@link NoSuchCPInstanceException} if it could not be found.
@@ -183,7 +181,7 @@ public interface CPInstancePersistence extends BasePersistence<CPInstance> {
 	* @return the matching cp instance
 	* @throws NoSuchCPInstanceException if a matching cp instance could not be found
 	*/
-	public CPInstance findByUUID_G(java.lang.String uuid, long groupId)
+	public CPInstance findByUUID_G(String uuid, long groupId)
 		throws NoSuchCPInstanceException;
 
 	/**
@@ -193,7 +191,7 @@ public interface CPInstancePersistence extends BasePersistence<CPInstance> {
 	* @param groupId the group ID
 	* @return the matching cp instance, or <code>null</code> if a matching cp instance could not be found
 	*/
-	public CPInstance fetchByUUID_G(java.lang.String uuid, long groupId);
+	public CPInstance fetchByUUID_G(String uuid, long groupId);
 
 	/**
 	* Returns the cp instance where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -203,7 +201,7 @@ public interface CPInstancePersistence extends BasePersistence<CPInstance> {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching cp instance, or <code>null</code> if a matching cp instance could not be found
 	*/
-	public CPInstance fetchByUUID_G(java.lang.String uuid, long groupId,
+	public CPInstance fetchByUUID_G(String uuid, long groupId,
 		boolean retrieveFromCache);
 
 	/**
@@ -213,7 +211,7 @@ public interface CPInstancePersistence extends BasePersistence<CPInstance> {
 	* @param groupId the group ID
 	* @return the cp instance that was removed
 	*/
-	public CPInstance removeByUUID_G(java.lang.String uuid, long groupId)
+	public CPInstance removeByUUID_G(String uuid, long groupId)
 		throws NoSuchCPInstanceException;
 
 	/**
@@ -223,7 +221,7 @@ public interface CPInstancePersistence extends BasePersistence<CPInstance> {
 	* @param groupId the group ID
 	* @return the number of matching cp instances
 	*/
-	public int countByUUID_G(java.lang.String uuid, long groupId);
+	public int countByUUID_G(String uuid, long groupId);
 
 	/**
 	* Returns all the cp instances where uuid = &#63; and companyId = &#63;.
@@ -232,8 +230,7 @@ public interface CPInstancePersistence extends BasePersistence<CPInstance> {
 	* @param companyId the company ID
 	* @return the matching cp instances
 	*/
-	public java.util.List<CPInstance> findByUuid_C(java.lang.String uuid,
-		long companyId);
+	public java.util.List<CPInstance> findByUuid_C(String uuid, long companyId);
 
 	/**
 	* Returns a range of all the cp instances where uuid = &#63; and companyId = &#63;.
@@ -248,8 +245,8 @@ public interface CPInstancePersistence extends BasePersistence<CPInstance> {
 	* @param end the upper bound of the range of cp instances (not inclusive)
 	* @return the range of matching cp instances
 	*/
-	public java.util.List<CPInstance> findByUuid_C(java.lang.String uuid,
-		long companyId, int start, int end);
+	public java.util.List<CPInstance> findByUuid_C(String uuid, long companyId,
+		int start, int end);
 
 	/**
 	* Returns an ordered range of all the cp instances where uuid = &#63; and companyId = &#63;.
@@ -265,8 +262,8 @@ public interface CPInstancePersistence extends BasePersistence<CPInstance> {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching cp instances
 	*/
-	public java.util.List<CPInstance> findByUuid_C(java.lang.String uuid,
-		long companyId, int start, int end,
+	public java.util.List<CPInstance> findByUuid_C(String uuid, long companyId,
+		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<CPInstance> orderByComparator);
 
 	/**
@@ -284,8 +281,8 @@ public interface CPInstancePersistence extends BasePersistence<CPInstance> {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching cp instances
 	*/
-	public java.util.List<CPInstance> findByUuid_C(java.lang.String uuid,
-		long companyId, int start, int end,
+	public java.util.List<CPInstance> findByUuid_C(String uuid, long companyId,
+		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<CPInstance> orderByComparator,
 		boolean retrieveFromCache);
 
@@ -298,7 +295,7 @@ public interface CPInstancePersistence extends BasePersistence<CPInstance> {
 	* @return the first matching cp instance
 	* @throws NoSuchCPInstanceException if a matching cp instance could not be found
 	*/
-	public CPInstance findByUuid_C_First(java.lang.String uuid, long companyId,
+	public CPInstance findByUuid_C_First(String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<CPInstance> orderByComparator)
 		throws NoSuchCPInstanceException;
 
@@ -310,8 +307,7 @@ public interface CPInstancePersistence extends BasePersistence<CPInstance> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching cp instance, or <code>null</code> if a matching cp instance could not be found
 	*/
-	public CPInstance fetchByUuid_C_First(java.lang.String uuid,
-		long companyId,
+	public CPInstance fetchByUuid_C_First(String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<CPInstance> orderByComparator);
 
 	/**
@@ -323,7 +319,7 @@ public interface CPInstancePersistence extends BasePersistence<CPInstance> {
 	* @return the last matching cp instance
 	* @throws NoSuchCPInstanceException if a matching cp instance could not be found
 	*/
-	public CPInstance findByUuid_C_Last(java.lang.String uuid, long companyId,
+	public CPInstance findByUuid_C_Last(String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<CPInstance> orderByComparator)
 		throws NoSuchCPInstanceException;
 
@@ -335,7 +331,7 @@ public interface CPInstancePersistence extends BasePersistence<CPInstance> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching cp instance, or <code>null</code> if a matching cp instance could not be found
 	*/
-	public CPInstance fetchByUuid_C_Last(java.lang.String uuid, long companyId,
+	public CPInstance fetchByUuid_C_Last(String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<CPInstance> orderByComparator);
 
 	/**
@@ -349,7 +345,7 @@ public interface CPInstancePersistence extends BasePersistence<CPInstance> {
 	* @throws NoSuchCPInstanceException if a cp instance with the primary key could not be found
 	*/
 	public CPInstance[] findByUuid_C_PrevAndNext(long CPInstanceId,
-		java.lang.String uuid, long companyId,
+		String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<CPInstance> orderByComparator)
 		throws NoSuchCPInstanceException;
 
@@ -359,7 +355,7 @@ public interface CPInstancePersistence extends BasePersistence<CPInstance> {
 	* @param uuid the uuid
 	* @param companyId the company ID
 	*/
-	public void removeByUuid_C(java.lang.String uuid, long companyId);
+	public void removeByUuid_C(String uuid, long companyId);
 
 	/**
 	* Returns the number of cp instances where uuid = &#63; and companyId = &#63;.
@@ -368,7 +364,7 @@ public interface CPInstancePersistence extends BasePersistence<CPInstance> {
 	* @param companyId the company ID
 	* @return the number of matching cp instances
 	*/
-	public int countByUuid_C(java.lang.String uuid, long companyId);
+	public int countByUuid_C(String uuid, long companyId);
 
 	/**
 	* Returns all the cp instances where groupId = &#63;.
@@ -1060,7 +1056,7 @@ public interface CPInstancePersistence extends BasePersistence<CPInstance> {
 	* @return the matching cp instance
 	* @throws NoSuchCPInstanceException if a matching cp instance could not be found
 	*/
-	public CPInstance findByC_S(long CPDefinitionId, java.lang.String sku)
+	public CPInstance findByC_S(long CPDefinitionId, String sku)
 		throws NoSuchCPInstanceException;
 
 	/**
@@ -1070,7 +1066,7 @@ public interface CPInstancePersistence extends BasePersistence<CPInstance> {
 	* @param sku the sku
 	* @return the matching cp instance, or <code>null</code> if a matching cp instance could not be found
 	*/
-	public CPInstance fetchByC_S(long CPDefinitionId, java.lang.String sku);
+	public CPInstance fetchByC_S(long CPDefinitionId, String sku);
 
 	/**
 	* Returns the cp instance where CPDefinitionId = &#63; and sku = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -1080,7 +1076,7 @@ public interface CPInstancePersistence extends BasePersistence<CPInstance> {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching cp instance, or <code>null</code> if a matching cp instance could not be found
 	*/
-	public CPInstance fetchByC_S(long CPDefinitionId, java.lang.String sku,
+	public CPInstance fetchByC_S(long CPDefinitionId, String sku,
 		boolean retrieveFromCache);
 
 	/**
@@ -1090,7 +1086,7 @@ public interface CPInstancePersistence extends BasePersistence<CPInstance> {
 	* @param sku the sku
 	* @return the cp instance that was removed
 	*/
-	public CPInstance removeByC_S(long CPDefinitionId, java.lang.String sku)
+	public CPInstance removeByC_S(long CPDefinitionId, String sku)
 		throws NoSuchCPInstanceException;
 
 	/**
@@ -1100,7 +1096,7 @@ public interface CPInstancePersistence extends BasePersistence<CPInstance> {
 	* @param sku the sku
 	* @return the number of matching cp instances
 	*/
-	public int countByC_S(long CPDefinitionId, java.lang.String sku);
+	public int countByC_S(long CPDefinitionId, String sku);
 
 	/**
 	* Returns all the cp instances where CPDefinitionId = &#63; and status = &#63;.
@@ -1813,5 +1809,5 @@ public interface CPInstancePersistence extends BasePersistence<CPInstance> {
 	public int countAll();
 
 	@Override
-	public java.util.Set<java.lang.String> getBadColumnNames();
+	public java.util.Set<String> getBadColumnNames();
 }

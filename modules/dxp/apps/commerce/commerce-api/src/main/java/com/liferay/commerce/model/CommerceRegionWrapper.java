@@ -166,7 +166,7 @@ public class CommerceRegionWrapper implements CommerceRegion,
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new CommerceRegionWrapper((CommerceRegion)_commerceRegion.clone());
 	}
 
@@ -191,7 +191,7 @@ public class CommerceRegionWrapper implements CommerceRegion,
 	* @return the code of this commerce region
 	*/
 	@Override
-	public java.lang.String getCode() {
+	public String getCode() {
 		return _commerceRegion.getCode();
 	}
 
@@ -282,7 +282,7 @@ public class CommerceRegionWrapper implements CommerceRegion,
 	* @return the name of this commerce region
 	*/
 	@Override
-	public java.lang.String getName() {
+	public String getName() {
 		return _commerceRegion.getName();
 	}
 
@@ -327,7 +327,7 @@ public class CommerceRegionWrapper implements CommerceRegion,
 	* @return the user name of this commerce region
 	*/
 	@Override
-	public java.lang.String getUserName() {
+	public String getUserName() {
 		return _commerceRegion.getUserName();
 	}
 
@@ -337,7 +337,7 @@ public class CommerceRegionWrapper implements CommerceRegion,
 	* @return the user uuid of this commerce region
 	*/
 	@Override
-	public java.lang.String getUserUuid() {
+	public String getUserUuid() {
 		return _commerceRegion.getUserUuid();
 	}
 
@@ -347,7 +347,7 @@ public class CommerceRegionWrapper implements CommerceRegion,
 	* @return the uuid of this commerce region
 	*/
 	@Override
-	public java.lang.String getUuid() {
+	public String getUuid() {
 		return _commerceRegion.getUuid();
 	}
 
@@ -407,7 +407,7 @@ public class CommerceRegionWrapper implements CommerceRegion,
 	* @param code the code of this commerce region
 	*/
 	@Override
-	public void setCode(java.lang.String code) {
+	public void setCode(String code) {
 		_commerceRegion.setCode(code);
 	}
 
@@ -503,7 +503,7 @@ public class CommerceRegionWrapper implements CommerceRegion,
 	* @param name the name of this commerce region
 	*/
 	@Override
-	public void setName(java.lang.String name) {
+	public void setName(String name) {
 		_commerceRegion.setName(name);
 	}
 
@@ -553,7 +553,7 @@ public class CommerceRegionWrapper implements CommerceRegion,
 	* @param userName the user name of this commerce region
 	*/
 	@Override
-	public void setUserName(java.lang.String userName) {
+	public void setUserName(String userName) {
 		_commerceRegion.setUserName(userName);
 	}
 
@@ -563,7 +563,7 @@ public class CommerceRegionWrapper implements CommerceRegion,
 	* @param userUuid the user uuid of this commerce region
 	*/
 	@Override
-	public void setUserUuid(java.lang.String userUuid) {
+	public void setUserUuid(String userUuid) {
 		_commerceRegion.setUserUuid(userUuid);
 	}
 
@@ -573,7 +573,7 @@ public class CommerceRegionWrapper implements CommerceRegion,
 	* @param uuid the uuid of this commerce region
 	*/
 	@Override
-	public void setUuid(java.lang.String uuid) {
+	public void setUuid(String uuid) {
 		_commerceRegion.setUuid(uuid);
 	}
 
@@ -588,7 +588,7 @@ public class CommerceRegionWrapper implements CommerceRegion,
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _commerceRegion.toString();
 	}
 
@@ -598,7 +598,7 @@ public class CommerceRegionWrapper implements CommerceRegion,
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _commerceRegion.toXmlString();
 	}
 

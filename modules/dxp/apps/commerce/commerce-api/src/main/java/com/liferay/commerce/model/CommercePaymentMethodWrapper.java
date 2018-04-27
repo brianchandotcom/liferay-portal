@@ -159,7 +159,7 @@ public class CommercePaymentMethodWrapper implements CommercePaymentMethod,
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new CommercePaymentMethodWrapper((CommercePaymentMethod)_commercePaymentMethod.clone());
 	}
 
@@ -179,7 +179,7 @@ public class CommercePaymentMethodWrapper implements CommercePaymentMethod,
 	}
 
 	@Override
-	public java.lang.String[] getAvailableLanguageIds() {
+	public String[] getAvailableLanguageIds() {
 		return _commercePaymentMethod.getAvailableLanguageIds();
 	}
 
@@ -214,7 +214,7 @@ public class CommercePaymentMethodWrapper implements CommercePaymentMethod,
 	}
 
 	@Override
-	public java.lang.String getDefaultLanguageId() {
+	public String getDefaultLanguageId() {
 		return _commercePaymentMethod.getDefaultLanguageId();
 	}
 
@@ -224,7 +224,7 @@ public class CommercePaymentMethodWrapper implements CommercePaymentMethod,
 	* @return the description of this commerce payment method
 	*/
 	@Override
-	public java.lang.String getDescription() {
+	public String getDescription() {
 		return _commercePaymentMethod.getDescription();
 	}
 
@@ -235,7 +235,7 @@ public class CommercePaymentMethodWrapper implements CommercePaymentMethod,
 	* @return the localized description of this commerce payment method
 	*/
 	@Override
-	public java.lang.String getDescription(java.util.Locale locale) {
+	public String getDescription(java.util.Locale locale) {
 		return _commercePaymentMethod.getDescription(locale);
 	}
 
@@ -247,8 +247,7 @@ public class CommercePaymentMethodWrapper implements CommercePaymentMethod,
 	* @return the localized description of this commerce payment method. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
 	*/
 	@Override
-	public java.lang.String getDescription(java.util.Locale locale,
-		boolean useDefault) {
+	public String getDescription(java.util.Locale locale, boolean useDefault) {
 		return _commercePaymentMethod.getDescription(locale, useDefault);
 	}
 
@@ -259,7 +258,7 @@ public class CommercePaymentMethodWrapper implements CommercePaymentMethod,
 	* @return the localized description of this commerce payment method
 	*/
 	@Override
-	public java.lang.String getDescription(java.lang.String languageId) {
+	public String getDescription(String languageId) {
 		return _commercePaymentMethod.getDescription(languageId);
 	}
 
@@ -271,18 +270,17 @@ public class CommercePaymentMethodWrapper implements CommercePaymentMethod,
 	* @return the localized description of this commerce payment method
 	*/
 	@Override
-	public java.lang.String getDescription(java.lang.String languageId,
-		boolean useDefault) {
+	public String getDescription(String languageId, boolean useDefault) {
 		return _commercePaymentMethod.getDescription(languageId, useDefault);
 	}
 
 	@Override
-	public java.lang.String getDescriptionCurrentLanguageId() {
+	public String getDescriptionCurrentLanguageId() {
 		return _commercePaymentMethod.getDescriptionCurrentLanguageId();
 	}
 
 	@Override
-	public java.lang.String getDescriptionCurrentValue() {
+	public String getDescriptionCurrentValue() {
 		return _commercePaymentMethod.getDescriptionCurrentValue();
 	}
 
@@ -292,7 +290,7 @@ public class CommercePaymentMethodWrapper implements CommercePaymentMethod,
 	* @return the locales and localized descriptions of this commerce payment method
 	*/
 	@Override
-	public Map<java.util.Locale, java.lang.String> getDescriptionMap() {
+	public Map<java.util.Locale, String> getDescriptionMap() {
 		return _commercePaymentMethod.getDescriptionMap();
 	}
 
@@ -302,7 +300,7 @@ public class CommercePaymentMethodWrapper implements CommercePaymentMethod,
 	* @return the engine key of this commerce payment method
 	*/
 	@Override
-	public java.lang.String getEngineKey() {
+	public String getEngineKey() {
 		return _commercePaymentMethod.getEngineKey();
 	}
 
@@ -332,7 +330,7 @@ public class CommercePaymentMethodWrapper implements CommercePaymentMethod,
 	}
 
 	@Override
-	public java.lang.String getImageURL(
+	public String getImageURL(
 		com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay) {
 		return _commercePaymentMethod.getImageURL(themeDisplay);
 	}
@@ -353,7 +351,7 @@ public class CommercePaymentMethodWrapper implements CommercePaymentMethod,
 	* @return the name of this commerce payment method
 	*/
 	@Override
-	public java.lang.String getName() {
+	public String getName() {
 		return _commercePaymentMethod.getName();
 	}
 
@@ -364,7 +362,7 @@ public class CommercePaymentMethodWrapper implements CommercePaymentMethod,
 	* @return the localized name of this commerce payment method
 	*/
 	@Override
-	public java.lang.String getName(java.util.Locale locale) {
+	public String getName(java.util.Locale locale) {
 		return _commercePaymentMethod.getName(locale);
 	}
 
@@ -376,7 +374,7 @@ public class CommercePaymentMethodWrapper implements CommercePaymentMethod,
 	* @return the localized name of this commerce payment method. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
 	*/
 	@Override
-	public java.lang.String getName(java.util.Locale locale, boolean useDefault) {
+	public String getName(java.util.Locale locale, boolean useDefault) {
 		return _commercePaymentMethod.getName(locale, useDefault);
 	}
 
@@ -387,7 +385,7 @@ public class CommercePaymentMethodWrapper implements CommercePaymentMethod,
 	* @return the localized name of this commerce payment method
 	*/
 	@Override
-	public java.lang.String getName(java.lang.String languageId) {
+	public String getName(String languageId) {
 		return _commercePaymentMethod.getName(languageId);
 	}
 
@@ -399,18 +397,17 @@ public class CommercePaymentMethodWrapper implements CommercePaymentMethod,
 	* @return the localized name of this commerce payment method
 	*/
 	@Override
-	public java.lang.String getName(java.lang.String languageId,
-		boolean useDefault) {
+	public String getName(String languageId, boolean useDefault) {
 		return _commercePaymentMethod.getName(languageId, useDefault);
 	}
 
 	@Override
-	public java.lang.String getNameCurrentLanguageId() {
+	public String getNameCurrentLanguageId() {
 		return _commercePaymentMethod.getNameCurrentLanguageId();
 	}
 
 	@Override
-	public java.lang.String getNameCurrentValue() {
+	public String getNameCurrentValue() {
 		return _commercePaymentMethod.getNameCurrentValue();
 	}
 
@@ -420,7 +417,7 @@ public class CommercePaymentMethodWrapper implements CommercePaymentMethod,
 	* @return the locales and localized names of this commerce payment method
 	*/
 	@Override
-	public Map<java.util.Locale, java.lang.String> getNameMap() {
+	public Map<java.util.Locale, String> getNameMap() {
 		return _commercePaymentMethod.getNameMap();
 	}
 
@@ -465,7 +462,7 @@ public class CommercePaymentMethodWrapper implements CommercePaymentMethod,
 	* @return the user name of this commerce payment method
 	*/
 	@Override
-	public java.lang.String getUserName() {
+	public String getUserName() {
 		return _commercePaymentMethod.getUserName();
 	}
 
@@ -475,7 +472,7 @@ public class CommercePaymentMethodWrapper implements CommercePaymentMethod,
 	* @return the user uuid of this commerce payment method
 	*/
 	@Override
-	public java.lang.String getUserUuid() {
+	public String getUserUuid() {
 		return _commercePaymentMethod.getUserUuid();
 	}
 
@@ -578,7 +575,7 @@ public class CommercePaymentMethodWrapper implements CommercePaymentMethod,
 	* @param description the description of this commerce payment method
 	*/
 	@Override
-	public void setDescription(java.lang.String description) {
+	public void setDescription(String description) {
 		_commercePaymentMethod.setDescription(description);
 	}
 
@@ -589,8 +586,7 @@ public class CommercePaymentMethodWrapper implements CommercePaymentMethod,
 	* @param locale the locale of the language
 	*/
 	@Override
-	public void setDescription(java.lang.String description,
-		java.util.Locale locale) {
+	public void setDescription(String description, java.util.Locale locale) {
 		_commercePaymentMethod.setDescription(description, locale);
 	}
 
@@ -602,13 +598,13 @@ public class CommercePaymentMethodWrapper implements CommercePaymentMethod,
 	* @param defaultLocale the default locale
 	*/
 	@Override
-	public void setDescription(java.lang.String description,
-		java.util.Locale locale, java.util.Locale defaultLocale) {
+	public void setDescription(String description, java.util.Locale locale,
+		java.util.Locale defaultLocale) {
 		_commercePaymentMethod.setDescription(description, locale, defaultLocale);
 	}
 
 	@Override
-	public void setDescriptionCurrentLanguageId(java.lang.String languageId) {
+	public void setDescriptionCurrentLanguageId(String languageId) {
 		_commercePaymentMethod.setDescriptionCurrentLanguageId(languageId);
 	}
 
@@ -618,8 +614,7 @@ public class CommercePaymentMethodWrapper implements CommercePaymentMethod,
 	* @param descriptionMap the locales and localized descriptions of this commerce payment method
 	*/
 	@Override
-	public void setDescriptionMap(
-		Map<java.util.Locale, java.lang.String> descriptionMap) {
+	public void setDescriptionMap(Map<java.util.Locale, String> descriptionMap) {
 		_commercePaymentMethod.setDescriptionMap(descriptionMap);
 	}
 
@@ -631,7 +626,7 @@ public class CommercePaymentMethodWrapper implements CommercePaymentMethod,
 	*/
 	@Override
 	public void setDescriptionMap(
-		Map<java.util.Locale, java.lang.String> descriptionMap,
+		Map<java.util.Locale, String> descriptionMap,
 		java.util.Locale defaultLocale) {
 		_commercePaymentMethod.setDescriptionMap(descriptionMap, defaultLocale);
 	}
@@ -642,7 +637,7 @@ public class CommercePaymentMethodWrapper implements CommercePaymentMethod,
 	* @param engineKey the engine key of this commerce payment method
 	*/
 	@Override
-	public void setEngineKey(java.lang.String engineKey) {
+	public void setEngineKey(String engineKey) {
 		_commercePaymentMethod.setEngineKey(engineKey);
 	}
 
@@ -698,7 +693,7 @@ public class CommercePaymentMethodWrapper implements CommercePaymentMethod,
 	* @param name the name of this commerce payment method
 	*/
 	@Override
-	public void setName(java.lang.String name) {
+	public void setName(String name) {
 		_commercePaymentMethod.setName(name);
 	}
 
@@ -709,7 +704,7 @@ public class CommercePaymentMethodWrapper implements CommercePaymentMethod,
 	* @param locale the locale of the language
 	*/
 	@Override
-	public void setName(java.lang.String name, java.util.Locale locale) {
+	public void setName(String name, java.util.Locale locale) {
 		_commercePaymentMethod.setName(name, locale);
 	}
 
@@ -721,13 +716,13 @@ public class CommercePaymentMethodWrapper implements CommercePaymentMethod,
 	* @param defaultLocale the default locale
 	*/
 	@Override
-	public void setName(java.lang.String name, java.util.Locale locale,
+	public void setName(String name, java.util.Locale locale,
 		java.util.Locale defaultLocale) {
 		_commercePaymentMethod.setName(name, locale, defaultLocale);
 	}
 
 	@Override
-	public void setNameCurrentLanguageId(java.lang.String languageId) {
+	public void setNameCurrentLanguageId(String languageId) {
 		_commercePaymentMethod.setNameCurrentLanguageId(languageId);
 	}
 
@@ -737,7 +732,7 @@ public class CommercePaymentMethodWrapper implements CommercePaymentMethod,
 	* @param nameMap the locales and localized names of this commerce payment method
 	*/
 	@Override
-	public void setNameMap(Map<java.util.Locale, java.lang.String> nameMap) {
+	public void setNameMap(Map<java.util.Locale, String> nameMap) {
 		_commercePaymentMethod.setNameMap(nameMap);
 	}
 
@@ -748,7 +743,7 @@ public class CommercePaymentMethodWrapper implements CommercePaymentMethod,
 	* @param defaultLocale the default locale
 	*/
 	@Override
-	public void setNameMap(Map<java.util.Locale, java.lang.String> nameMap,
+	public void setNameMap(Map<java.util.Locale, String> nameMap,
 		java.util.Locale defaultLocale) {
 		_commercePaymentMethod.setNameMap(nameMap, defaultLocale);
 	}
@@ -799,7 +794,7 @@ public class CommercePaymentMethodWrapper implements CommercePaymentMethod,
 	* @param userName the user name of this commerce payment method
 	*/
 	@Override
-	public void setUserName(java.lang.String userName) {
+	public void setUserName(String userName) {
 		_commercePaymentMethod.setUserName(userName);
 	}
 
@@ -809,7 +804,7 @@ public class CommercePaymentMethodWrapper implements CommercePaymentMethod,
 	* @param userUuid the user uuid of this commerce payment method
 	*/
 	@Override
-	public void setUserUuid(java.lang.String userUuid) {
+	public void setUserUuid(String userUuid) {
 		_commercePaymentMethod.setUserUuid(userUuid);
 	}
 
@@ -824,7 +819,7 @@ public class CommercePaymentMethodWrapper implements CommercePaymentMethod,
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _commercePaymentMethod.toString();
 	}
 
@@ -834,7 +829,7 @@ public class CommercePaymentMethodWrapper implements CommercePaymentMethod,
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _commercePaymentMethod.toXmlString();
 	}
 

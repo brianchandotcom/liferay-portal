@@ -70,12 +70,11 @@ import java.util.Map;
 @ProviderType
 public class CPDefinitionVirtualSettingServiceSoap {
 	public static com.liferay.commerce.product.type.virtual.model.CPDefinitionVirtualSettingSoap addCPDefinitionVirtualSetting(
-		long cpDefinitionId, long fileEntryId, java.lang.String url,
-		java.lang.String activationStatus, long duration, int maxUsages,
-		boolean useSample, long sampleFileEntryId, java.lang.String sampleUrl,
-		boolean termsOfUseRequired,
-		java.lang.String[] termsOfUseContentMapLanguageIds,
-		java.lang.String[] termsOfUseContentMapValues,
+		long cpDefinitionId, long fileEntryId, String url,
+		String activationStatus, long duration, int maxUsages,
+		boolean useSample, long sampleFileEntryId, String sampleUrl,
+		boolean termsOfUseRequired, String[] termsOfUseContentMapLanguageIds,
+		String[] termsOfUseContentMapValues,
 		long termsOfUseJournalArticleResourcePrimKey,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
@@ -115,12 +114,11 @@ public class CPDefinitionVirtualSettingServiceSoap {
 	}
 
 	public static com.liferay.commerce.product.type.virtual.model.CPDefinitionVirtualSettingSoap updateCPDefinitionVirtualSetting(
-		long cpDefinitionVirtualSettingId, long fileEntryId,
-		java.lang.String url, java.lang.String activationStatus, long duration,
-		int maxUsages, boolean useSample, long sampleFileEntryId,
-		java.lang.String sampleUrl, boolean termsOfUseRequired,
-		java.lang.String[] termsOfUseContentMapLanguageIds,
-		java.lang.String[] termsOfUseContentMapValues,
+		long cpDefinitionVirtualSettingId, long fileEntryId, String url,
+		String activationStatus, long duration, int maxUsages,
+		boolean useSample, long sampleFileEntryId, String sampleUrl,
+		boolean termsOfUseRequired, String[] termsOfUseContentMapLanguageIds,
+		String[] termsOfUseContentMapValues,
 		long termsOfUseJournalArticleResourcePrimKey,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {

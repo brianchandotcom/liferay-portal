@@ -56,10 +56,10 @@ import com.liferay.portal.kernel.util.MethodKey;
 @ProviderType
 public class CommerceCurrencyServiceHttp {
 	public static com.liferay.commerce.currency.model.CommerceCurrency addCommerceCurrency(
-		HttpPrincipal httpPrincipal, java.lang.String code,
-		java.util.Map<java.util.Locale, java.lang.String> nameMap,
-		java.math.BigDecimal rate, java.lang.String roundingType,
-		boolean primary, double priority, boolean active,
+		HttpPrincipal httpPrincipal, String code,
+		java.util.Map<java.util.Locale, String> nameMap,
+		java.math.BigDecimal rate, String roundingType, boolean primary,
+		double priority, boolean active,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -359,11 +359,10 @@ public class CommerceCurrencyServiceHttp {
 	}
 
 	public static com.liferay.commerce.currency.model.CommerceCurrency updateCommerceCurrency(
-		HttpPrincipal httpPrincipal, long commerceCurrencyId,
-		java.lang.String code,
-		java.util.Map<java.util.Locale, java.lang.String> nameMap,
-		java.math.BigDecimal rate, java.lang.String roundingType,
-		boolean primary, double priority, boolean active,
+		HttpPrincipal httpPrincipal, long commerceCurrencyId, String code,
+		java.util.Map<java.util.Locale, String> nameMap,
+		java.math.BigDecimal rate, String roundingType, boolean primary,
+		double priority, boolean active,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -398,7 +397,7 @@ public class CommerceCurrencyServiceHttp {
 	}
 
 	public static void updateExchangeRate(HttpPrincipal httpPrincipal,
-		long commerceCurrencyId, java.lang.String exchangeRateProviderKey)
+		long commerceCurrencyId, String exchangeRateProviderKey)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(CommerceCurrencyServiceUtil.class,
@@ -455,9 +454,8 @@ public class CommerceCurrencyServiceHttp {
 
 	private static Log _log = LogFactoryUtil.getLog(CommerceCurrencyServiceHttp.class);
 	private static final Class<?>[] _addCommerceCurrencyParameterTypes0 = new Class[] {
-			java.lang.String.class, java.util.Map.class,
-			java.math.BigDecimal.class, java.lang.String.class, boolean.class,
-			double.class, boolean.class,
+			String.class, java.util.Map.class, java.math.BigDecimal.class,
+			String.class, boolean.class, double.class, boolean.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _deleteCommerceCurrencyParameterTypes1 = new Class[] {
@@ -489,13 +487,13 @@ public class CommerceCurrencyServiceHttp {
 			long.class, boolean.class
 		};
 	private static final Class<?>[] _updateCommerceCurrencyParameterTypes10 = new Class[] {
-			long.class, java.lang.String.class, java.util.Map.class,
-			java.math.BigDecimal.class, java.lang.String.class, boolean.class,
+			long.class, String.class, java.util.Map.class,
+			java.math.BigDecimal.class, String.class, boolean.class,
 			double.class, boolean.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _updateExchangeRateParameterTypes11 = new Class[] {
-			long.class, java.lang.String.class
+			long.class, String.class
 		};
 	private static final Class<?>[] _updateExchangeRatesParameterTypes12 = new Class[] {
 			com.liferay.portal.kernel.service.ServiceContext.class

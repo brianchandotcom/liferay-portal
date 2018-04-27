@@ -76,7 +76,7 @@ public interface CPDefinitionLinkLocalService extends BaseLocalService,
 		CPDefinitionLink cpDefinitionLink);
 
 	public CPDefinitionLink addCPDefinitionLink(long cpDefinitionId1,
-		long cpDefinitionId2, double priority, java.lang.String type,
+		long cpDefinitionId2, double priority, String type,
 		ServiceContext serviceContext) throws PortalException;
 
 	/**
@@ -188,8 +188,8 @@ public interface CPDefinitionLinkLocalService extends BaseLocalService,
 	* @return the matching cp definition link, or <code>null</code> if a matching cp definition link could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CPDefinitionLink fetchCPDefinitionLinkByUuidAndGroupId(
-		java.lang.String uuid, long groupId);
+	public CPDefinitionLink fetchCPDefinitionLinkByUuidAndGroupId(String uuid,
+		long groupId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
@@ -214,8 +214,8 @@ public interface CPDefinitionLinkLocalService extends BaseLocalService,
 	* @throws PortalException if a matching cp definition link could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CPDefinitionLink getCPDefinitionLinkByUuidAndGroupId(
-		java.lang.String uuid, long groupId) throws PortalException;
+	public CPDefinitionLink getCPDefinitionLinkByUuidAndGroupId(String uuid,
+		long groupId) throws PortalException;
 
 	/**
 	* Returns a range of all the cp definition links.
@@ -233,11 +233,11 @@ public interface CPDefinitionLinkLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CPDefinitionLink> getCPDefinitionLinks(long cpDefinitionId1,
-		java.lang.String type) throws PortalException;
+		String type) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CPDefinitionLink> getCPDefinitionLinks(long cpDefinitionId1,
-		java.lang.String type, int start, int end,
+		String type, int start, int end,
 		OrderByComparator<CPDefinitionLink> orderByComparator)
 		throws PortalException;
 
@@ -250,7 +250,7 @@ public interface CPDefinitionLinkLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CPDefinitionLink> getCPDefinitionLinksByUuidAndCompanyId(
-		java.lang.String uuid, long companyId);
+		String uuid, long companyId);
 
 	/**
 	* Returns a range of cp definition links matching the UUID and company.
@@ -264,7 +264,7 @@ public interface CPDefinitionLinkLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CPDefinitionLink> getCPDefinitionLinksByUuidAndCompanyId(
-		java.lang.String uuid, long companyId, int start, int end,
+		String uuid, long companyId, int start, int end,
 		OrderByComparator<CPDefinitionLink> orderByComparator);
 
 	/**
@@ -276,8 +276,8 @@ public interface CPDefinitionLinkLocalService extends BaseLocalService,
 	public int getCPDefinitionLinksCount();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getCPDefinitionLinksCount(long cpDefinitionId1,
-		java.lang.String type) throws PortalException;
+	public int getCPDefinitionLinksCount(long cpDefinitionId1, String type)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
@@ -291,7 +291,7 @@ public interface CPDefinitionLinkLocalService extends BaseLocalService,
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -300,7 +300,7 @@ public interface CPDefinitionLinkLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CPDefinitionLink> getReverseCPDefinitionLinks(
-		long cpDefinitionId, java.lang.String type);
+		long cpDefinitionId, String type);
 
 	/**
 	* Updates the cp definition link in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
@@ -317,6 +317,6 @@ public interface CPDefinitionLinkLocalService extends BaseLocalService,
 		throws PortalException;
 
 	public void updateCPDefinitionLinks(long cpDefinitionId1,
-		long[] cpDefinitionIds2, java.lang.String type,
-		ServiceContext serviceContext) throws PortalException;
+		long[] cpDefinitionIds2, String type, ServiceContext serviceContext)
+		throws PortalException;
 }

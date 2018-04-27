@@ -58,7 +58,7 @@ public class CommerceShippingFixedOptionRelServiceHttp {
 	public static com.liferay.commerce.shipping.engine.fixed.model.CommerceShippingFixedOptionRel addCommerceShippingFixedOptionRel(
 		HttpPrincipal httpPrincipal, long commerceShippingMethodId,
 		long commerceShippingFixedOptionId, long commerceWarehouseId,
-		long commerceCountryId, long commerceRegionId, java.lang.String zip,
+		long commerceCountryId, long commerceRegionId, String zip,
 		double weightFrom, double weightTo, java.math.BigDecimal fixedPrice,
 		java.math.BigDecimal rateUnitWeightPrice, double ratePercentage,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
@@ -155,8 +155,7 @@ public class CommerceShippingFixedOptionRelServiceHttp {
 
 	public static com.liferay.commerce.shipping.engine.fixed.model.CommerceShippingFixedOptionRel fetchCommerceShippingFixedOptionRel(
 		HttpPrincipal httpPrincipal, long commerceShippingFixedOptionId,
-		long commerceCountryId, long commerceRegionId, java.lang.String zip,
-		double weight) {
+		long commerceCountryId, long commerceRegionId, String zip, double weight) {
 		try {
 			MethodKey methodKey = new MethodKey(CommerceShippingFixedOptionRelServiceUtil.class,
 					"fetchCommerceShippingFixedOptionRel",
@@ -361,8 +360,8 @@ public class CommerceShippingFixedOptionRelServiceHttp {
 	public static com.liferay.commerce.shipping.engine.fixed.model.CommerceShippingFixedOptionRel updateCommerceShippingFixedOptionRel(
 		HttpPrincipal httpPrincipal, long commerceShippingFixedOptionRelId,
 		long commerceWarehouseId, long commerceCountryId,
-		long commerceRegionId, java.lang.String zip, double weightFrom,
-		double weightTo, java.math.BigDecimal fixedPrice,
+		long commerceRegionId, String zip, double weightFrom, double weightTo,
+		java.math.BigDecimal fixedPrice,
 		java.math.BigDecimal rateUnitWeightPrice, double ratePercentage)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -401,8 +400,8 @@ public class CommerceShippingFixedOptionRelServiceHttp {
 	private static final Class<?>[] _addCommerceShippingFixedOptionRelParameterTypes0 =
 		new Class[] {
 			long.class, long.class, long.class, long.class, long.class,
-			java.lang.String.class, double.class, double.class,
-			java.math.BigDecimal.class, java.math.BigDecimal.class, double.class,
+			String.class, double.class, double.class, java.math.BigDecimal.class,
+			java.math.BigDecimal.class, double.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _deleteCommerceShippingFixedOptionRelParameterTypes1 =
@@ -411,8 +410,7 @@ public class CommerceShippingFixedOptionRelServiceHttp {
 		new Class[] { long.class };
 	private static final Class<?>[] _fetchCommerceShippingFixedOptionRelParameterTypes3 =
 		new Class[] {
-			long.class, long.class, long.class, java.lang.String.class,
-			double.class
+			long.class, long.class, long.class, String.class, double.class
 		};
 	private static final Class<?>[] _getCommerceShippingFixedOptionRelsParameterTypes4 =
 		new Class[] { long.class, int.class, int.class };
@@ -434,8 +432,8 @@ public class CommerceShippingFixedOptionRelServiceHttp {
 		new Class[] { long.class };
 	private static final Class<?>[] _updateCommerceShippingFixedOptionRelParameterTypes10 =
 		new Class[] {
-			long.class, long.class, long.class, long.class,
-			java.lang.String.class, double.class, double.class,
-			java.math.BigDecimal.class, java.math.BigDecimal.class, double.class
+			long.class, long.class, long.class, long.class, String.class,
+			double.class, double.class, java.math.BigDecimal.class,
+			java.math.BigDecimal.class, double.class
 		};
 }

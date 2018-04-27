@@ -620,7 +620,10 @@ public class DLAdminDisplayContext {
 		SearchContainer searchContainer = new SearchContainer(
 			_liferayPortletRequest, getSearchSearchContainerURL(), null, null);
 
-		searchContainer.setResults(_getSearchResults(searchContainer));
+		List results = _getSearchResults(searchContainer);
+
+		searchContainer.setResults(results);
+		searchContainer.setTotal(results.size());
 
 		return searchContainer;
 	}

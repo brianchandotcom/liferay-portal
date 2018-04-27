@@ -42,11 +42,9 @@ public class RecentContentAssetPublisherCustomizer
 	public Integer getDelta(HttpServletRequest request) {
 		PortletPreferences portletPreferences = getPortletPreferences(request);
 
-		Integer delta = GetterUtil.getInteger(
+		return GetterUtil.getInteger(
 			portletPreferences.getValue("delta", null),
 			PropsValues.RECENT_CONTENT_MAX_DISPLAY_ITEMS);
-
-		return delta;
 	}
 
 	@Override

@@ -14,16 +14,14 @@
 
 package com.liferay.message.boards.internal.verify;
 
-import com.liferay.message.boards.internal.verify.model.MBBanVerifiableModel;
-import com.liferay.message.boards.internal.verify.model.MBDiscussionVerifiableModel;
-import com.liferay.message.boards.internal.verify.model.MBThreadFlagVerifiableModel;
-import com.liferay.message.boards.internal.verify.model.MBThreadVerifiableModel;
 import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.verify.VerifyAuditedModel;
 import com.liferay.portal.verify.VerifyGroupedModel;
 import com.liferay.portal.verify.VerifyProcess;
-import com.liferay.portal.verify.VerifyUUID;
+import com.liferay.message.boards.internal.verify.model.MBDiscussionVerifiableModel;
+import com.liferay.message.boards.internal.verify.model.MBThreadFlagVerifiableModel;
+import com.liferay.message.boards.internal.verify.model.MBThreadVerifiableModel;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -43,7 +41,6 @@ public class MessageBoardsServiceVerifyProcess extends VerifyProcess {
 	protected void doVerify() throws Exception {
 		verifyAuditedModels();
 		verifyGroupedModels();
-		verifyUUIDModels();
 	}
 
 	@Reference(
@@ -66,15 +63,6 @@ public class MessageBoardsServiceVerifyProcess extends VerifyProcess {
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
 			_verifyGroupedModel.verify(
 				new MBDiscussionVerifiableModel(),
-				new MBThreadFlagVerifiableModel());
-		}
-	}
-
-	protected void verifyUUIDModels() throws Exception {
-		try (LoggingTimer loggingTimer = new LoggingTimer()) {
-			VerifyUUID.verify(
-				new MBBanVerifiableModel(), new MBDiscussionVerifiableModel(),
-				new MBThreadVerifiableModel(),
 				new MBThreadFlagVerifiableModel());
 		}
 	}

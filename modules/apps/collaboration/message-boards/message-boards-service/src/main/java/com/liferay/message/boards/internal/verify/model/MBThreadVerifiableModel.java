@@ -15,13 +15,11 @@
 package com.liferay.message.boards.internal.verify.model;
 
 import com.liferay.portal.kernel.verify.model.VerifiableAuditedModel;
-import com.liferay.portal.kernel.verify.model.VerifiableUUIDModel;
 
 /**
  * @author Miguel Pastor
  */
-public class MBThreadVerifiableModel
-	implements VerifiableAuditedModel, VerifiableUUIDModel {
+public class MBThreadVerifiableModel implements VerifiableAuditedModel {
 
 	@Override
 	public String getJoinByTableName() {

@@ -119,16 +119,16 @@ public class DefaultDLAdminDisplayContext implements DLAdminDisplayContext {
 
 	public DefaultDLAdminDisplayContext(
 		LiferayPortletRequest liferayPortletRequest,
-		LiferayPortletResponse liferayPortletResponse, PortletURL currentURLObj,
-		HttpServletRequest request, PermissionChecker permissionChecker) {
+		LiferayPortletResponse liferayPortletResponse) {
 
 		_liferayPortletRequest = liferayPortletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
-		_currentURLObj = currentURLObj;
-		_request = request;
 
-		_dlRequestHelper = new DLRequestHelper(request);
-		_permissionChecker = permissionChecker;
+		_currentURLObj = PortletURLUtil.getCurrent(
+			liferayPortletRequest, liferayPortletResponse);
+		_request = liferayPortletRequest.getHttpServletRequest();
+
+		_dlRequestHelper = new DLRequestHelper(_request);
 
 		_dlPortletInstanceSettings =
 			_dlRequestHelper.getDLPortletInstanceSettings();
@@ -136,8 +136,10 @@ public class DefaultDLAdminDisplayContext implements DLAdminDisplayContext {
 		_dlPortletInstanceSettingsHelper = new DLPortletInstanceSettingsHelper(
 			_dlRequestHelper);
 
-		_themeDisplay = (ThemeDisplay)request.getAttribute(
+		_themeDisplay = (ThemeDisplay)_request.getAttribute(
 			WebKeys.THEME_DISPLAY);
+
+		_permissionChecker = _themeDisplay.getPermissionChecker();
 
 		_portalPreferences = PortletPreferencesFactoryUtil.getPortalPreferences(
 			liferayPortletRequest);

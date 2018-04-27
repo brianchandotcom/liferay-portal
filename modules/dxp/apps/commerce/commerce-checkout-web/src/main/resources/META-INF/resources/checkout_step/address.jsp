@@ -30,8 +30,10 @@ if (commerceAddressId == 0) {
 
 String selectLabel = "choose-" + baseAddressCheckoutStepDisplayContext.getTitle();
 
-long commerceCountryId = ParamUtil.getLong(request, "commerceCountryId");
-long commerceRegionId = ParamUtil.getLong(request, "commerceRegionId");
+CommerceAddress defaultCommerceAddress = baseAddressCheckoutStepDisplayContext.getCommerceAddress(defaultCommerceAddressId);
+
+long commerceCountryId = BeanParamUtil.getLong(defaultCommerceAddress, request, "commerceCountryId");
+long commerceRegionId = BeanParamUtil.getLong(defaultCommerceAddress, request, "commerceRegionId");
 %>
 
 <div class="form-group-autofit">

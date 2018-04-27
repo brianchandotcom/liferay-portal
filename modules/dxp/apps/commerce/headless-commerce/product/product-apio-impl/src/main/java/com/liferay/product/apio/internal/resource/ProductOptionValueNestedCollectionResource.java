@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.product.option.value.apio.internal.resource;
+package com.liferay.product.apio.internal.resource;
 
 import com.liferay.apio.architect.pagination.PageItems;
 import com.liferay.apio.architect.pagination.Pagination;

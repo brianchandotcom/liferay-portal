@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.product.option.value.apio.internal.resource;
+package com.liferay.product.apio.internal.resource;
 
 import com.liferay.apio.architect.pagination.PageItems;
 import com.liferay.apio.architect.pagination.Pagination;
@@ -26,7 +26,7 @@ import com.liferay.commerce.product.service.CPDefinitionOptionRelService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.product.apio.identifier.ProductDefinitionIdentifier;
-import com.liferay.product.option.apio.identifier.ProductOptionIdentifier;
+import com.liferay.product.apio.identifier.ProductOptionIdentifier;
 
 import java.util.List;
 

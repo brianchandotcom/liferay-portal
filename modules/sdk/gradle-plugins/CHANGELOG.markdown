@@ -4037,8 +4037,8 @@ version 1.0.189.
 ## 3.10.12 - 2018-04-09
 
 ### Added
-- [LPS-79450]: Filter out `.git`, `.gradle`, `build`, `node_modules`, and `tmp`
-in the project directory for Eclipse.
+- [LPS-79450]: Filter out the `.git`, `.gradle`, `build`, `node_modules`, and
+`tmp` files in the project directory for Eclipse.
 
 ### Changed
 - [LPS-79385]: Update the [Liferay Gradle Plugins Service Builder] dependency to
@@ -4049,8 +4049,8 @@ version 1.0.190.
 ## 3.10.13 - 2018-04-09
 
 ### Changed
-- [LPS-74171]: Update the default value of the
-`liferay.appServers.tomcat.version` property to `9.0.6`.
+- [LPS-74171]: Update the `liferay.appServers.tomcat.version` property's default
+value to `9.0.6`.
 
 ## 3.10.14 - 2018-04-10
 
@@ -4140,8 +4140,8 @@ to version 2.3.131.
 ## 3.11.5 - 2018-04-16
 
 ### Changed
-- [LPS-79665]: Update the default value of the
-`liferay.appServers.wildfly.version` property to `11.0.0`.
+- [LPS-79665]: Update the `liferay.appServers.wildfly.version` property's
+default value to `11.0.0`.
 - [LPS-79576]: Update the [Liferay Gradle Plugins Source Formatter] dependency
 to version 2.3.132.
 - [LPS-79576]: Update the [Liferay Source Formatter] dependency to version

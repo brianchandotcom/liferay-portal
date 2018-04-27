@@ -167,12 +167,12 @@ public class ProductNestedCollectionResource
 
 			if (hits.getLength() == 0) {
 				throw new NotFoundException(
-					"Unable to find product with Id: " + cpDefinitionId);
+					"Unable to find product with ID " + cpDefinitionId);
 			}
 			else if (hits.getLength() > 1) {
 				if (_log.isWarnEnabled()) {
 					_log.warn(
-						"More than one index found for product with Id: " +
+						"More than one document found for product with ID " +
 							cpDefinitionId);
 				}
 

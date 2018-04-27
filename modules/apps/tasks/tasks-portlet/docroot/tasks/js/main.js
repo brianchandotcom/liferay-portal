@@ -1,12 +1,6 @@
-AUI().use(
-	'aui-base',
-	'aui-io-plugin-deprecated',
-	'aui-modal',
-	'liferay-util-window',
-	'liferay-widget-zindex',
+AUI().add(
+	'liferay-tasks',
 	function(A) {
-		Liferay.namespace('Tasks');
-
 		Liferay.Tasks = {
 			init: function(param) {
 				var instance = this;
@@ -280,5 +274,9 @@ AUI().use(
 				A.io.request(portletURL.toString());
 			}
 		};
+	},
+	'',
+	{
+		requires: ['aui-base', 'aui-io-plugin-deprecated', 'aui-modal', 'liferay-util-window', 'liferay-widget-zindex']
 	}
 );

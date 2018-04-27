@@ -63,7 +63,7 @@ if (tabs1.equals("published")) {
 		WorkflowDefinition kaleoWorkflowDefinition = KaleoFormsUtil.getWorkflowDefinition(themeDisplay.getCompanyId(), workflowDefinitionName, workflowDefinitionVersion);
 
 		if (kaleoWorkflowDefinition != null) {
-			workflowDefinitionDisplay = kaleoWorkflowDefinition.getTitle(themeDisplay.getLanguageId()) + " (" + LanguageUtil.get(request, "version") + " " + workflowDefinitionVersion + ")";
+			workflowDefinitionDisplay = kaleoWorkflowDefinition.getTitle(themeDisplay.getLanguageId());
 		}
 	}
 	%>
@@ -238,10 +238,9 @@ if (tabs1.equals("published")) {
 
 			A.one('#<portlet:namespace />workflowDefinitionDisplay').html(
 				A.Lang.sub(
-					'{title} (<liferay-ui:message key="version" /> {version})',
+					'{title}',
 					{
-						title: Liferay.Util.escapeHTML(event.title),
-						version: event.version
+						title: Liferay.Util.escapeHTML(event.title)
 					}
 				)
 			);

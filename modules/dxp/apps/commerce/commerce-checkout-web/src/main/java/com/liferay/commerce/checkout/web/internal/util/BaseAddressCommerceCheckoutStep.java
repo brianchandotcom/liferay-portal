@@ -26,13 +26,17 @@ import com.liferay.commerce.exception.CommerceOrderShippingAddressException;
 import com.liferay.commerce.model.CommerceAddress;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.service.CommerceAddressService;
+import com.liferay.commerce.service.CommerceOrderLocalService;
 import com.liferay.commerce.service.CommerceOrderService;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -126,7 +130,10 @@ public abstract class BaseAddressCommerceCheckoutStep
 	protected abstract String getParamName();
 
 	protected void updateCommerceOrderAddress(ActionRequest actionRequest)
-		throws PortalException {
+		throws Exception {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
 
 		long commerceOrderId = ParamUtil.getLong(
 			actionRequest, "commerceOrderId");
@@ -146,15 +153,19 @@ public abstract class BaseAddressCommerceCheckoutStep
 			commerceAddressId = commerceAddress.getCommerceAddressId();
 		}
 
-		updateCommerceOrderAddress(commerceOrder, commerceAddressId);
+		updateCommerceOrderAddress(
+			themeDisplay.getUser(), commerceOrder, commerceAddressId);
 	}
 
 	protected abstract void updateCommerceOrderAddress(
-			CommerceOrder commerceOrder, long commerceAddressId)
-		throws PortalException;
+			User user, CommerceOrder commerceOrder, long commerceAddressId)
+		throws Exception;
 
 	@Reference
 	protected CommerceAddressService commerceAddressService;
+
+	@Reference
+	protected CommerceOrderLocalService commerceOrderLocalService;
 
 	@Reference
 	protected CommerceOrderService commerceOrderService;

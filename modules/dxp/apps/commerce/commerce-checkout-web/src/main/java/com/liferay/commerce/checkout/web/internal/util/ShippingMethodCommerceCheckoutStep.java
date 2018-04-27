@@ -18,12 +18,15 @@ import com.liferay.commerce.checkout.web.constants.CommerceCheckoutWebKeys;
 import com.liferay.commerce.checkout.web.internal.display.context.ShippingMethodCheckoutStepDisplayContext;
 import com.liferay.commerce.checkout.web.util.BaseCommerceCheckoutStep;
 import com.liferay.commerce.checkout.web.util.CommerceCheckoutStep;
+import com.liferay.commerce.constants.CommerceOrderActionKeys;
 import com.liferay.commerce.exception.CommerceOrderShippingMethodException;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceShippingEngine;
 import com.liferay.commerce.model.CommerceShippingMethod;
 import com.liferay.commerce.model.CommerceShippingOption;
+import com.liferay.commerce.order.web.security.permission.resource.CommerceOrderPermission;
 import com.liferay.commerce.price.CommercePriceFormatter;
+import com.liferay.commerce.service.CommerceOrderLocalService;
 import com.liferay.commerce.service.CommerceOrderService;
 import com.liferay.commerce.service.CommerceShippingMethodService;
 import com.liferay.commerce.util.CommerceShippingEngineRegistry;
@@ -31,6 +34,8 @@ import com.liferay.commerce.util.CommerceShippingHelper;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -197,6 +202,16 @@ public class ShippingMethodCommerceCheckoutStep
 		CommerceOrder commerceOrder = _commerceOrderService.getCommerceOrder(
 			commerceOrderId);
 
+		PermissionChecker permissionChecker =
+			PermissionCheckerFactoryUtil.create(themeDisplay.getUser());
+
+		if (!CommerceOrderPermission.contains(
+				permissionChecker, commerceOrder,
+				CommerceOrderActionKeys.CHECKOUT_OPEN_COMMERCE_ORDERS)) {
+
+			return;
+		}
+
 		int pos = commerceShippingOptionKey.indexOf(
 			COMMERCE_SHIPPING_OPTION_KEY_SEPARATOR);
 
@@ -209,7 +224,7 @@ public class ShippingMethodCommerceCheckoutStep
 			commerceOrder, commerceShippingMethodId, shippingOptionName,
 			themeDisplay.getLocale());
 
-		_commerceOrderService.updateCommerceOrder(
+		_commerceOrderLocalService.updateCommerceOrder(
 			commerceOrder.getCommerceOrderId(),
 			commerceOrder.getBillingAddressId(),
 			commerceOrder.getShippingAddressId(),
@@ -219,6 +234,9 @@ public class ShippingMethodCommerceCheckoutStep
 			shippingPrice, commerceOrder.getTotal(),
 			commerceOrder.getAdvanceStatus());
 	}
+
+	@Reference
+	private CommerceOrderLocalService _commerceOrderLocalService;
 
 	@Reference
 	private CommerceOrderService _commerceOrderService;

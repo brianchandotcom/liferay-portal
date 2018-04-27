@@ -409,7 +409,17 @@ AUI.add(
 								};
 
 								config.inputFormatter = function(value) {
-									return String(value.length > 0);
+									if (Array.isArray(value) && value.length > 0) {
+										value = value[0];
+									}
+
+									var checkedValue = 'false';
+
+									if (value === 'true') {
+										checkedValue = value;
+									}
+
+									return checkedValue;
 								};
 
 								item.formatter = function(obj) {

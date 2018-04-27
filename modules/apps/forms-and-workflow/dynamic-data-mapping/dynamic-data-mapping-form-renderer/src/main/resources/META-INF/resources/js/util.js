@@ -2,7 +2,7 @@ AUI.add(
 	'liferay-ddm-form-renderer-util',
 	function(A) {
 		var VALIDATIONS = {
-			number: [
+			numeric: [
 				{
 					label: Liferay.Language.get('is-greater-than-or-equal-to'),
 					name: 'gteq',

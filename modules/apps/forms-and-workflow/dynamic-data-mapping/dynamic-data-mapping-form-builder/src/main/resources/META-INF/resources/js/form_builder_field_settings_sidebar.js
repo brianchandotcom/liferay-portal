@@ -395,6 +395,8 @@ AUI.add(
 
 						var FormBuilderUtil = Liferay.DDM.FormBuilderUtil;
 
+						var ignoredFieldNames = ['dataType', 'type', 'validation'];
+
 						FormBuilderUtil.visitLayout(
 							newSettingsContext.pages,
 							function(settingsFormFieldContext) {
@@ -407,7 +409,7 @@ AUI.add(
 										var previousFieldLocalizable = previousSettingsFormFieldContext.localizable;
 										var previousFieldName = previousSettingsFormFieldContext.fieldName;
 
-										if (!(fieldName === 'type') && !(fieldName === 'dataType') && (fieldName === previousFieldName)) {
+										if ((ignoredFieldNames.indexOf(fieldName) === -1) && (fieldName === previousFieldName)) {
 											if (fieldLocalizable && previousFieldLocalizable) {
 												settingsFormFieldContext.localizedValue = previousSettingsFormFieldContext.localizedValue;
 											}

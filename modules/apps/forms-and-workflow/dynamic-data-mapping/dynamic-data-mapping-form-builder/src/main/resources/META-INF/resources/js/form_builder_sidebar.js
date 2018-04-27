@@ -104,8 +104,12 @@ AUI.add(
 							instance.fire('close');
 						}
 
-						instance.get('boundingBox').removeClass('open');
-						instance.get('boundingBox').addClass('closed');
+						var boundingBox = instance.get('boundingBox');
+
+						if (boundingBox._node) {
+							boundingBox.removeClass('open');
+							boundingBox.addClass('closed');
+						}
 
 						instance.set('field', null);
 					},

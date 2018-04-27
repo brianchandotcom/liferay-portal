@@ -111,7 +111,7 @@ public interface NumericDDMFormFieldTypeSettings
 	public LocalizedValue tooltip();
 
 	@DDMFormField(
-		dataType = "number", label = "%validation", type = "validation"
+		dataType = "numeric", label = "%validation", type = "validation"
 	)
 	@Override
 	public DDMFormFieldValidation validation();

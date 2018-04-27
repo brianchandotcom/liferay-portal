@@ -25,8 +25,8 @@ import com.liferay.commerce.product.model.CPDefinitionOptionValueRelModel;
 import com.liferay.commerce.product.service.CPDefinitionOptionValueRelService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.product.option.apio.identifier.ProductOptionIdentifier;
-import com.liferay.product.option.value.apio.identifier.ProductOptionValueIdentifier;
+import com.liferay.product.apio.identifier.ProductOptionIdentifier;
+import com.liferay.product.apio.identifier.ProductOptionValueIdentifier;
 
 import java.util.List;
 

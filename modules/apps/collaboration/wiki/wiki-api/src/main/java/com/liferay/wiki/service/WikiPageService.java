@@ -46,7 +46,7 @@ import java.util.Locale;
  *
  * @author Brian Wing Shun Chan
  * @see WikiPageServiceUtil
- * @see WikiPageServiceBaseImpl
+ * @see com.liferay.wiki.service.base.WikiPageServiceBaseImpl
  * @see com.liferay.wiki.service.impl.WikiPageServiceImpl
  * @generated
  */

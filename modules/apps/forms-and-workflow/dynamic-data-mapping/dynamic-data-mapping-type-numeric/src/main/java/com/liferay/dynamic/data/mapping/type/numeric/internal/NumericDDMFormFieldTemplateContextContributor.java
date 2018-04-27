@@ -69,20 +69,7 @@ public class NumericDDMFormFieldTemplateContextContributor
 			getValueString(
 				ddmFormField.getPredefinedValue(), locale,
 				ddmFormFieldRenderingContext));
-
-		Map<String, String> symbolMap = new HashMap<>();
-
-		DecimalFormatSymbols decimalFormatSymbols = getDecimalFormatSymbols(
-			locale);
-
-		symbolMap.put(
-			"decimalSymbol",
-			String.valueOf(decimalFormatSymbols.getDecimalSeparator()));
-		symbolMap.put(
-			"thousandsSeparator",
-			String.valueOf(decimalFormatSymbols.getGroupingSeparator()));
-
-		parameters.put("symbols", symbolMap);
+		parameters.put("symbols", getSymbolsMap(locale));
 
 		LocalizedValue tooltip = (LocalizedValue)ddmFormField.getProperty(
 			"tooltip");
@@ -119,6 +106,22 @@ public class NumericDDMFormFieldTemplateContextContributor
 			locale);
 
 		return formatter.getDecimalFormatSymbols();
+	}
+
+	protected Map<String, String> getSymbolsMap(Locale locale) {
+		DecimalFormatSymbols decimalFormatSymbols = getDecimalFormatSymbols(
+			locale);
+
+		Map<String, String> symbolsMap = new HashMap<>();
+
+		symbolsMap.put(
+			"decimalSymbol",
+			String.valueOf(decimalFormatSymbols.getDecimalSeparator()));
+		symbolsMap.put(
+			"thousandsSeparator",
+			String.valueOf(decimalFormatSymbols.getGroupingSeparator()));
+
+		return symbolsMap;
 	}
 
 	protected String getValueString(

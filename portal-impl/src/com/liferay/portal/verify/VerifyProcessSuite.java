@@ -23,8 +23,6 @@ public class VerifyProcessSuite extends VerifyProcess {
 	protected void doVerify() throws Exception {
 		verify(new VerifyProperties());
 
-		verify(new VerifyUUID());
-
 		verify(new VerifyPermission());
 		verify(new VerifyGroup());
 		verify(new VerifyRole());

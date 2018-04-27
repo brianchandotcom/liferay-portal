@@ -12,10 +12,10 @@
  * details.
  */
 
-package com.liferay.portal.upgrade.v7_1_x;
+package com.liferay.portal.upgrade.v7_0_6;
 
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.upgrade.v7_1_x.util.RepositoryTable;
+import com.liferay.portal.upgrade.v7_0_6.util.RepositoryTable;
 
 /**
  * @author Alec Shay

@@ -40,20 +40,20 @@ public class EleflowForecastConfigurationServiceVerticle
 
 		String callbackURL = _getCallbackURL(configJsonObject);
 
-		String eleflowHost = configJsonObject.getString(
+		String host = configJsonObject.getString(
 			"ELEFLOW_HOST", _DEFAULT_ELEFLOW_HOST);
-		String eleflowPath = configJsonObject.getString(
+		String path = configJsonObject.getString(
 			"ELEFLOW_PATH", _DEFAULT_ELEFLOW_PATH);
 
 		if (_logger.isInfoEnabled()) {
 			_logger.info(
 				"Using Eleflow forecast configuration implementation " +
 					"pointing to {0}{1}",
-				eleflowHost, eleflowPath);
+				host, path);
 		}
 
 		return new EleflowForecastConfigurationServiceImpl(
-			vertx, callbackURL, eleflowHost, eleflowPath);
+			vertx, callbackURL, host, path);
 	}
 
 	@Override

@@ -43,15 +43,14 @@ public class EleflowForecastConfigurationServiceImpl
 	implements ForecastConfigurationService {
 
 	public EleflowForecastConfigurationServiceImpl(
-		Vertx vertx, String callbackURL, String eleflowHost,
-		String eleflowPath) {
+		Vertx vertx, String callbackURL, String host, String path) {
 
 		_callbackURL = Objects.requireNonNull(callbackURL);
-		_eleflowPath = Objects.requireNonNull(eleflowPath);
+		_path = Objects.requireNonNull(path);
 
 		WebClientOptions webClientOptions = new WebClientOptions();
 
-		webClientOptions.setDefaultHost(Objects.requireNonNull(eleflowHost));
+		webClientOptions.setDefaultHost(Objects.requireNonNull(host));
 		webClientOptions.setDefaultPort(443);
 		webClientOptions.setSsl(true);
 
@@ -63,7 +62,7 @@ public class EleflowForecastConfigurationServiceImpl
 		Project project, Handler<AsyncResult<ForecastConfiguration>> handler) {
 
 		HttpRequest<ForecastConfiguration> httpRequest = _webClient.get(
-			_eleflowPath + "/scheduler"
+			_path + "/scheduler"
 		).as(
 			_bodyCodec
 		);
@@ -81,7 +80,7 @@ public class EleflowForecastConfigurationServiceImpl
 		Handler<AsyncResult<Void>> handler) {
 
 		HttpRequest<Void> httpRequest = _webClient.put(
-			_eleflowPath + "/scheduler"
+			_path + "/scheduler"
 		).as(
 			BodyCodec.none()
 		);
@@ -125,7 +124,7 @@ public class EleflowForecastConfigurationServiceImpl
 	}
 
 	private final String _callbackURL;
-	private final String _eleflowPath;
+	private final String _path;
 	private final WebClient _webClient;
 
 }

@@ -179,9 +179,11 @@ public class ProductNestedCollectionResource
 					"Unable to find product with Id: " + cpDefinitionId);
 			}
 			else if (hits.getLength() > 1) {
-				_log.warn(
-					"More than one index found for product with Id: " +
-						cpDefinitionId);
+				if (_log._log.isWarnEnabled()) {
+					_log.warn(
+						"More than one index found for product with Id: " +
+							cpDefinitionId);
+				}
 
 				CPDefinition cpDefinition =
 					_cpDefinitionService.getCPDefinition(cpDefinitionId);
@@ -232,7 +234,7 @@ public class ProductNestedCollectionResource
 	@Reference
 	private HasPermission _hasPermission;
 
-	private Indexer<CPDefinition> _indexer =
+	private final Indexer<CPDefinition> _indexer =
 		IndexerRegistryUtil.nullSafeGetIndexer(CPDefinition.class);
 
 	@Reference

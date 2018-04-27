@@ -106,10 +106,10 @@ public class OAuth2JSONWebServiceAuthVerifier implements AuthVerifier {
 
 			Set<String> scopes = new HashSet<>();
 
-			for (String accessTokenScope : bearerAccessToken.getScopes()) {
+			for (String scope : bearerAccessToken.getScopes()) {
 				Collection<LiferayOAuth2Scope> liferayOAuth2Scopes =
 					_scopeLocator.getLiferayOAuth2Scopes(
-						companyId, accessTokenScope,
+						companyId, scope,
 						OAuth2JSONWebServiceConstants.
 							LIFERAY_JSON_WEB_SERVICES);
 
@@ -170,7 +170,7 @@ public class OAuth2JSONWebServiceAuthVerifier implements AuthVerifier {
 
 		String scheme = authorizationParts[0];
 
-		if (!StringUtil.equalsIgnoreCase(scheme, _TOKEN_KEY)) {
+		if (!StringUtil.equalsIgnoreCase(scheme, _BEARER)) {
 			return null;
 		}
 
@@ -228,13 +228,13 @@ public class OAuth2JSONWebServiceAuthVerifier implements AuthVerifier {
 				expiresIn, new HashMap<>(), StringPool.BLANK, StringPool.BLANK,
 				issuedAt, StringPool.BLANK, StringPool.BLANK, new HashMap<>(),
 				StringPool.BLANK, StringPool.BLANK, scopeAliasesList,
-				accessTokenContent, _TOKEN_KEY, oAuth2Authorization.getUserId(),
+				accessTokenContent, _BEARER, oAuth2Authorization.getUserId(),
 				oAuth2Authorization.getUserName());
 
 		return accessToken;
 	}
 
-	private static final String _TOKEN_KEY = "Bearer";
+	private static final String _BEARER = "Bearer";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		OAuth2JSONWebServiceAuthVerifier.class);

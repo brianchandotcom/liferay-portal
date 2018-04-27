@@ -74,7 +74,7 @@ String keywords = ParamUtil.getString(request, "keywords");
 						<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
 						<portlet:param name="searchFolderId" value="<%= !searchEverywhere ? String.valueOf(DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) : String.valueOf(folderId) %>" />
 						<portlet:param name="keywords" value="<%= keywords %>" />
-						<portlet:param name="showRepositoryTabs" value="<% (searchEverywhere) ? Boolean.TRUE.toString() : Boolean.FALSE.toString() %>" />
+						<portlet:param name="showRepositoryTabs" value="<%= (searchEverywhere) ? Boolean.TRUE.toString() : Boolean.FALSE.toString() %>" />
 						<portlet:param name="showSearchInfo" value="<%= Boolean.TRUE.toString() %>" />
 					</portlet:renderURL>
 

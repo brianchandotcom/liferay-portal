@@ -1,1 +1,0 @@
-accessTokenPart--accessSecretPart--{"accessSecret":"accessSecretPart","accessToken":"accessTokenPart","lcsServicesConfiguration":["service-1","service-2","service-3"],"portalPropertiesBlacklist":"property.key.1,property.key.2"}

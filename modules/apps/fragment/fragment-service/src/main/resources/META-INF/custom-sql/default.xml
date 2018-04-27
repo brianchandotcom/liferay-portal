@@ -1,13 +1,40 @@
 <?xml version="1.0"?>
 
 <custom-sql>
+	<sql id="com.liferay.fragment.service.persistence.FragmentEntryLinkFinder.countByG_F">
+		<![CDATA[
+			SELECT
+				COUNT(DISTINCT FragmentEntryLink.fragmentEntryId) AS COUNT_VALUE
+			FROM
+				FragmentEntryLink
+			WHERE
+				(FragmentEntryLink.groupId = ?) AND
+				(FragmentEntryLink.fragmentEntryId = ?)
+		]]>
+	</sql>
+	<sql id="com.liferay.fragment.service.persistence.FragmentEntryLinkFinder.countByG_F_C">
+		<![CDATA[
+			SELECT
+				COUNT(DISTINCT Layout.plid) AS COUNT_VALUE
+			FROM
+				FragmentEntryLink
+			INNER JOIN
+				Layout ON
+					(FragmentEntryLink.groupId = Layout.groupId) AND
+					(FragmentEntryLink.classPK = Layout.plid)
+			WHERE
+				(FragmentEntryLink.groupId = ?) AND
+				(FragmentEntryLink.fragmentEntryId = ?) AND
+				(FragmentEntryLink.classNameId = ?)
+		]]>
+	</sql>
 	<sql id="com.liferay.fragment.service.persistence.FragmentEntryLinkFinder.countByG_F_C_L">
 		<![CDATA[
 			SELECT
-				COUNT(DISTINCT FragmentEntryLink.fragmentEntryLinkId) AS COUNT_VALUE
+				COUNT(DISTINCT LayoutPageTemplateEntry.layoutPageTemplateEntryId) AS COUNT_VALUE
 			FROM
 				FragmentEntryLink
-			LEFT JOIN
+			INNER JOIN
 				LayoutPageTemplateEntry ON
 					(FragmentEntryLink.groupId = LayoutPageTemplateEntry.groupId) AND
 					(FragmentEntryLink.classPK = LayoutPageTemplateEntry.layoutPageTemplateEntryId)
@@ -15,8 +42,64 @@
 				(FragmentEntryLink.groupId = ?) AND
 				(FragmentEntryLink.fragmentEntryId = ?) AND
 				(FragmentEntryLink.classNameId = ?) AND
-				(FragmentEntryLink.position = 1) AND
 				(LayoutPageTemplateEntry.type_ = ?)
+		]]>
+	</sql>
+	<sql id="com.liferay.fragment.service.persistence.FragmentEntryLinkFinder.findByG_F">
+		<![CDATA[
+			SELECT
+				FragmentEntryLink.*
+			FROM
+				FragmentEntryLink
+			WHERE
+				(FragmentEntryLink.groupId = ?) AND
+				(FragmentEntryLink.fragmentEntryId = ?) AND
+				(
+					FragmentEntryLink.createDate =
+						(
+							SELECT
+								MAX(tempFragmentEntryLink.createDate)
+							FROM
+								FragmentEntryLink tempFragmentEntryLink
+							WHERE
+								(tempFragmentEntryLink.groupId = FragmentEntryLink.groupId) AND
+								(tempFragmentEntryLink.classPK = FragmentEntryLink.classPK) AND
+								(tempFragmentEntryLink.fragmentEntryId = FragmentEntryLink.fragmentEntryId)
+						)
+				)
+			ORDER BY
+				FragmentEntryLink.fragmentEntryLinkId
+		]]>
+	</sql>
+	<sql id="com.liferay.fragment.service.persistence.FragmentEntryLinkFinder.findByG_F_C">
+		<![CDATA[
+			SELECT
+				FragmentEntryLink.*
+			FROM
+				Layout
+			INNER JOIN
+				FragmentEntryLink ON
+					(FragmentEntryLink.groupId = Layout.groupId) AND
+					(FragmentEntryLink.classPK = Layout.plid)
+			WHERE
+				(FragmentEntryLink.groupId = ?) AND
+				(FragmentEntryLink.fragmentEntryId = ?) AND
+				(FragmentEntryLink.classNameId = ?) AND
+				(
+					FragmentEntryLink.createDate =
+						(
+							SELECT
+								MAX(tempFragmentEntryLink.createDate)
+							FROM
+								FragmentEntryLink tempFragmentEntryLink
+							WHERE
+								(tempFragmentEntryLink.groupId = FragmentEntryLink.groupId) AND
+								(tempFragmentEntryLink.classPK = FragmentEntryLink.classPK) AND
+								(tempFragmentEntryLink.fragmentEntryId = FragmentEntryLink.fragmentEntryId)
+						)
+				)
+			ORDER BY
+				FragmentEntryLink.fragmentEntryLinkId
 		]]>
 	</sql>
 	<sql id="com.liferay.fragment.service.persistence.FragmentEntryLinkFinder.findByG_F_C_L">
@@ -24,17 +107,29 @@
 			SELECT
 				FragmentEntryLink.*
 			FROM
-				FragmentEntryLink
-			LEFT JOIN
-				LayoutPageTemplateEntry ON
+				LayoutPageTemplateEntry
+			INNER JOIN
+				FragmentEntryLink ON
 					(FragmentEntryLink.groupId = LayoutPageTemplateEntry.groupId) AND
 					(FragmentEntryLink.classPK = LayoutPageTemplateEntry.layoutPageTemplateEntryId)
 			WHERE
 				(FragmentEntryLink.groupId = ?) AND
 				(FragmentEntryLink.fragmentEntryId = ?) AND
 				(FragmentEntryLink.classNameId = ?) AND
-				(FragmentEntryLink.position = 1) AND
-				(LayoutPageTemplateEntry.type_ = ?)
+				(LayoutPageTemplateEntry.type_ = ?) AND
+				(
+					FragmentEntryLink.createDate =
+						(
+							SELECT
+								MAX(tempFragmentEntryLink.createDate)
+							FROM
+								FragmentEntryLink tempFragmentEntryLink
+							WHERE
+								(tempFragmentEntryLink.groupId = FragmentEntryLink.groupId) AND
+								(tempFragmentEntryLink.classPK = FragmentEntryLink.classPK) AND
+								(tempFragmentEntryLink.fragmentEntryId = FragmentEntryLink.fragmentEntryId)
+						)
+				)
 			ORDER BY
 				FragmentEntryLink.fragmentEntryLinkId
 		]]>

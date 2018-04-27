@@ -1047,12 +1047,7 @@ app.server.type=@{app.server.type}]]></echo>
 					</if>
 
 					<if>
-						<and>
-							<isset property="env.CI_TEST_SUITE" />
-							<not>
-								<contains string="${osgi.app.includes}" substring="portal-search-solr" />
-							</not>
-						</and>
+						<isset property="search.engine" />
 						<then>
 							<stop-search-engine />
 						</then>
@@ -1089,15 +1084,6 @@ app.server.type=@{app.server.type}]]></echo>
 						<then>
 							<prepare-test-environment />
 
-							<if>
-								<isset property="env.CI_TEST_SUITE" />
-								<then>
-									<propertycopy from="search.engine[${env.CI_TEST_SUITE}]" name="search.engine" silent="true" />
-
-									<prepare-search-engine search.engine="${search.engine}" />
-								</then>
-							</if>
-
 							<antcall inheritAll="false" target="record-test-class-file-names">
 								<param name="test.class.groups.size" value="${test.batch.size}" />
 							</antcall>
@@ -1106,11 +1092,20 @@ app.server.type=@{app.server.type}]]></echo>
 							<prepare-test-build />
 						</else>
 					</if>
+
+					<if>
+						<isset property="env.CI_TEST_SUITE" />
+						<then>
+							<propertycopy from="search.engine[${env.CI_TEST_SUITE}]" name="search.engine" silent="true" />
+
+							<prepare-search-engine search.engine="${search.engine}" />
+						</then>
+					</if>
 				</test-set-up>
 
 				<test-tear-down>
 					<if>
-						<isset property="env.DIST_PATH" />
+						<isset property="search.engine" />
 						<then>
 							<stop-search-engine />
 						</then>
@@ -1657,19 +1652,19 @@ app.server.type=@{app.server.type}]]></echo>
 						<isset property="env.DIST_PATH" />
 						<then>
 							<prepare-test-environment />
-
-							<if>
-								<isset property="env.CI_TEST_SUITE" />
-								<then>
-									<propertycopy from="search.engine[${env.CI_TEST_SUITE}]" name="search.engine" silent="true" />
-
-									<prepare-search-engine search.engine="${search.engine}" />
-								</then>
-							</if>
 						</then>
 						<else>
 							<prepare-test-build />
 						</else>
+					</if>
+
+					<if>
+						<isset property="env.CI_TEST_SUITE" />
+						<then>
+							<propertycopy from="search.engine[${env.CI_TEST_SUITE}]" name="search.engine" silent="true" />
+
+							<prepare-search-engine search.engine="${search.engine}" />
+						</then>
 					</if>
 
 					<if>
@@ -1692,7 +1687,7 @@ app.server.type=@{app.server.type}]]></echo>
 
 				<test-tear-down>
 					<if>
-						<isset property="env.DIST_PATH" />
+						<isset property="search.engine" />
 						<then>
 							<stop-search-engine />
 						</then>

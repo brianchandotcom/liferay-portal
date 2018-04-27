@@ -173,17 +173,19 @@ public abstract class BaseFailureMessageGenerator
 		return start;
 	}
 
+	protected static final int CONSOLE_TEXT_SNIPPET_MAX_LENGTH = 2500;
+
 	private String _getConsoleTextSnippet(
 		String consoleText, boolean truncateTop, int start, int end) {
 
-		if ((end - start) > 2500) {
+		if ((end - start) > CONSOLE_TEXT_SNIPPET_MAX_LENGTH) {
 			if (truncateTop) {
-				start = end - 2500;
+				start = end - CONSOLE_TEXT_SNIPPET_MAX_LENGTH;
 
 				start = consoleText.indexOf("\n", start);
 			}
 			else {
-				end = start + 2500;
+				end = start + CONSOLE_TEXT_SNIPPET_MAX_LENGTH;
 
 				int newlineEnd = consoleText.lastIndexOf("\n", end);
 

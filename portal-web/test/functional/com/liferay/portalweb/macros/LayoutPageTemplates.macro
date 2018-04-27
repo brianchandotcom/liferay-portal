@@ -19,6 +19,28 @@
 		</execute>
 	</command>
 
+	<command name="editFragmentImage">
+		<execute function="MouseOver#mouseOverNotVisible" locator1="Fragment#PAGE_TEMPLATE_FRAGMENT_HEADER">
+			<var name="key_fragmentName" value="${fragmentName}" />
+		</execute>
+
+		<execute function="Click" locator1="Fragment#PAGE_TEMPLATE_FRAGMENT_HEADER">
+			<var name="key_fragmentName" value="${fragmentName}" />
+		</execute>
+
+		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
+
+		<execute function="AssertClick" locator1="Button#SELECT_FILE" value1="Select File" />
+
+		<execute function="SikuliClick" locator1="OS#FILE_DIALOG_BOX_TYPE_FILE_NAME_ICON_PNG" />
+
+		<execute function="SikuliUploadCommonFile" locator1="OS#FILE_DIALOG_BOX_FILE_NAME_FIELD_PNG" value1="${fileName}" />
+
+		<execute function="SelectFrameTop" />
+
+		<execute function="Click" locator1="Button#ADD" />
+	</command>
+
 	<command name="expandFragmentCollection">
 		<if>
 			<condition function="IsElementPresent" locator1="Fragment#FRAGMENT_SIDEBAR_COLLECTION_PANEL_COLLAPSED">

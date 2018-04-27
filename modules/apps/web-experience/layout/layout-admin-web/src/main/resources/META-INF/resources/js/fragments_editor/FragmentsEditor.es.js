@@ -43,11 +43,17 @@ class FragmentsEditor extends Component {
 			[...this.sidebarTabs];
 
 		this.on('languageIdChanged', this._handleLanguageIdChange);
+	}
 
-		this._translationStatus = this._getTranslationStatus(
-			Object.keys(this.availableLanguages).filter(languageId => languageId !== '_INJECTED_DATA_'),
-			this._getEditableValues(this.fragmentEntryLinks)
-		);
+	rendered(firstRender) {
+		if (firstRender) {
+			this._translationStatus = this._getTranslationStatus(
+				Object
+					.keys(this.availableLanguages)
+					.filter(languageId => languageId !== '_INJECTED_DATA_'),
+				this._getEditableValues()
+			);
+		}
 	}
 
 	/**
@@ -149,12 +155,11 @@ class FragmentsEditor extends Component {
 	 */
 
 	_getEditableValues() {
-		return Object
-			.keys(this.fragmentEntryLinks)
+		return this.fragmentEntryLinks
 			.map(
-				fragmentEntryLinkId => {
+				fragmentEntryLink => {
 					const component = this._getFragmentEntryLinkComponent(
-						fragmentEntryLinkId
+						fragmentEntryLink.fragmentEntryLinkId
 					);
 
 					return component ? component.getEditableValues() : null;
@@ -609,7 +614,7 @@ class FragmentsEditor extends Component {
 
 					this._translationStatus = this._getTranslationStatus(
 						Object.keys(this.availableLanguages).filter(languageId => languageId !== '_INJECTED_DATA_'),
-						this._getEditableValues(this.fragmentEntryLinks)
+						this._getEditableValues()
 					);
 
 					const fragmentEntryLinkComponent = this.refs[`fragmentEntryLink_${fragmentEntryLink.fragmentEntryLinkId}`];

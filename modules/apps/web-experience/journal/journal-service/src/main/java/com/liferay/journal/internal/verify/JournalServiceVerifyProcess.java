@@ -18,7 +18,7 @@ import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.dynamic.data.mapping.exception.NoSuchStructureException;
 import com.liferay.journal.configuration.JournalServiceConfiguration;
-import com.liferay.journal.internal.verify.model.JournalArticleResourceVerifiableModel;
+import com.liferay.portal.verify.model.JournalArticleResourceVerifiableModel;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalArticleConstants;
 import com.liferay.journal.model.JournalContentSearch;
@@ -84,7 +84,6 @@ public class JournalServiceVerifyProcess extends VerifyLayout {
 		verifyContentSearch();
 		verifyFolderAssets();
 		verifyPermissions();
-		verifyUUIDModels();
 
 		VerifyProcess verifyProcess =
 			new JournalServiceSystemEventVerifyProcess(
@@ -576,12 +575,6 @@ public class JournalServiceVerifyProcess extends VerifyLayout {
 					JournalArticle.class.getName(),
 					article.getResourcePrimKey(), false, false, false);
 			}
-		}
-	}
-
-	protected void verifyUUIDModels() throws Exception {
-		try (LoggingTimer loggingTimer = new LoggingTimer()) {
-			VerifyUUID.verify(new JournalArticleResourceVerifiableModel());
 		}
 	}
 

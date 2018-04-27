@@ -14,6 +14,7 @@
 
 package com.liferay.portal.upgrade;
 
+import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.ReleaseInfo;
 import com.liferay.portal.upgrade.v6_2_0.UpgradeAnnouncements;
 import com.liferay.portal.upgrade.v6_2_0.UpgradeAssetPublisher;
@@ -45,6 +46,25 @@ import com.liferay.portal.upgrade.v6_2_0.UpgradeSocial;
 import com.liferay.portal.upgrade.v6_2_0.UpgradeUser;
 import com.liferay.portal.upgrade.v6_2_0.UpgradeWiki;
 import com.liferay.portal.upgrade.v6_2_0.UpgradeWikiAttachments;
+import com.liferay.portal.verify.VerifyUUID;
+import com.liferay.portal.verify.model.AddressVerifiableModel;
+import com.liferay.portal.verify.model.DLFileVersionVerifiableModel;
+import com.liferay.portal.verify.model.EmailAddressVerifiableModel;
+import com.liferay.portal.verify.model.GroupVerifiableModel;
+import com.liferay.portal.verify.model.JournalArticleResourceVerifiableModel;
+import com.liferay.portal.verify.model.LayoutPrototypeVerifiableModel;
+import com.liferay.portal.verify.model.LayoutSetPrototypeVerifiableModel;
+import com.liferay.portal.verify.model.MBBanVerifiableModel;
+import com.liferay.portal.verify.model.MBDiscussionVerifiableModel;
+import com.liferay.portal.verify.model.MBThreadFlagVerifiableModel;
+import com.liferay.portal.verify.model.MBThreadVerifiableModel;
+import com.liferay.portal.verify.model.OrganizationVerifiableAuditedModel;
+import com.liferay.portal.verify.model.PasswordPolicyVerifiableModel;
+import com.liferay.portal.verify.model.PhoneVerifiableModel;
+import com.liferay.portal.verify.model.PollsVoteVerifiableModel;
+import com.liferay.portal.verify.model.RoleVerifiableModel;
+import com.liferay.portal.verify.model.UserGroupVerifiableModel;
+import com.liferay.portal.verify.model.WebSiteVerifiableModel;
 
 /**
  * @author Raymond Augé
@@ -91,7 +111,28 @@ public class UpgradeProcess_6_2_0 extends Pre7UpgradeProcess {
 		upgrade(new UpgradeWiki());
 		upgrade(new UpgradeWikiAttachments());
 
+		verifyUUIDModels();
+
 		clearIndexesCache();
+	}
+
+	protected void verifyUUIDModels() throws Exception {
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			VerifyUUID.verify(
+				new AddressVerifiableModel(),
+				new DLFileVersionVerifiableModel(),
+				new EmailAddressVerifiableModel(), new GroupVerifiableModel(),
+				new JournalArticleResourceVerifiableModel(),
+				new LayoutPrototypeVerifiableModel(),
+				new LayoutSetPrototypeVerifiableModel(),
+				new MBBanVerifiableModel(), new MBDiscussionVerifiableModel(),
+				new MBThreadFlagVerifiableModel(),
+				new MBThreadVerifiableModel(), new PollsVoteVerifiableModel(),
+				new OrganizationVerifiableAuditedModel(),
+				new PasswordPolicyVerifiableModel(), new PhoneVerifiableModel(),
+				new RoleVerifiableModel(), new UserGroupVerifiableModel(),
+				new WebSiteVerifiableModel());
+		}
 	}
 
 }

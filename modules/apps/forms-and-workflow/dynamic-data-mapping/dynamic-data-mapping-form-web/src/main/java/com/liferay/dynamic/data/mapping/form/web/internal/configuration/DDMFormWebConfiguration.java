@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.dynamic.data.lists.web.configuration;
+package com.liferay.dynamic.data.mapping.form.web.internal.configuration;
 
 import aQute.bnd.annotation.metatype.Meta;
 
@@ -21,24 +21,26 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 /**
  * @author Lino Alves
  */
-@ExtendedObjectClassDefinition(category = "dynamic-data-lists")
-@Meta.OCD(
-	id = "com.liferay.dynamic.data.lists.web.configuration.DDLWebConfiguration",
-	localization = "content/Language", name = "ddl-web-configuration-name"
+@ExtendedObjectClassDefinition(
+	category = "dynamic-data-mapping",
+	scope = ExtendedObjectClassDefinition.Scope.GROUP
 )
-public interface DDLWebConfiguration {
+@Meta.OCD(
+	id = "com.liferay.dynamic.data.mapping.form.web.internal.configuration.DDMFormWebConfiguration",
+	localization = "content/Language", name = "ddm-form-web-configuration-name"
+)
+public interface DDMFormWebConfiguration {
 
 	@Meta.AD(
-		deflt = "false",
-		description = "changeable-default-language-description",
-		name = "changeable-default-language", required = false
+		deflt = "1", description = "autosave-interval-description",
+		name = "autosave-interval-name", required = false
 	)
-	public boolean changeableDefaultLanguage();
+	public int autosaveInterval();
 
 	@Meta.AD(
-		deflt = "list", name = "default-display-view",
-		optionLabels = {"List", "Descriptive"},
-		optionValues = {"list", "descriptive"}, required = false
+		deflt = "descriptive", name = "default-display-view",
+		optionLabels = {"Descriptive", "List"},
+		optionValues = {"descriptive", "list"}, required = false
 	)
 	public String defaultDisplayView();
 

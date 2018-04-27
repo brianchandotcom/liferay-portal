@@ -12,8 +12,9 @@
  * details.
  */
 
-package com.liferay.dynamic.data.lists.web.configuration;
+package com.liferay.dynamic.data.lists.web.internal.configuration.activator;
 
+import com.liferay.dynamic.data.lists.web.internal.configuration.DDLWebConfiguration;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 
 import java.util.Map;
@@ -27,7 +28,7 @@ import org.osgi.service.component.annotations.Modified;
  * @author Leonardo Barros
  */
 @Component(
-	configurationPid = "com.liferay.dynamic.data.lists.web.configuration.DDLWebConfigurationActivator",
+	configurationPid = "com.liferay.dynamic.data.lists.web.internal.configuration.DDLWebConfiguration",
 	configurationPolicy = ConfigurationPolicy.OPTIONAL, immediate = true,
 	service = DDLWebConfigurationActivator.class
 )

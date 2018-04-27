@@ -24,7 +24,7 @@ import com.liferay.dynamic.data.lists.util.DDL;
 import com.liferay.dynamic.data.lists.util.comparator.DDLRecordSetCreateDateComparator;
 import com.liferay.dynamic.data.lists.util.comparator.DDLRecordSetModifiedDateComparator;
 import com.liferay.dynamic.data.lists.util.comparator.DDLRecordSetNameComparator;
-import com.liferay.dynamic.data.lists.web.configuration.DDLWebConfiguration;
+import com.liferay.dynamic.data.lists.web.internal.configuration.DDLWebConfiguration;
 import com.liferay.dynamic.data.lists.web.internal.display.context.util.DDLRequestHelper;
 import com.liferay.dynamic.data.lists.web.internal.search.RecordSetSearch;
 import com.liferay.dynamic.data.lists.web.internal.security.permission.resource.DDLPermission;

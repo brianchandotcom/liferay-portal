@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.dynamic.data.lists.web.configuration;
+package com.liferay.dynamic.data.lists.web.internal.configuration;
 
 /**
  * @author Rafael Praxedes

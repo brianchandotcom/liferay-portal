@@ -45,6 +45,13 @@ public class EleflowForecastConfigurationServiceVerticle
 		String eleflowPath = configJsonObject.getString(
 			"ELEFLOW_PATH", _DEFAULT_ELEFLOW_PATH);
 
+		if (_logger.isInfoEnabled()) {
+			_logger.info(
+				"Using Eleflow forecast configuration implementation " +
+					"pointing to {0}{1}",
+				eleflowHost, eleflowPath);
+		}
+
 		return new EleflowForecastConfigurationServiceImpl(
 			vertx, callbackURL, eleflowHost, eleflowPath);
 	}

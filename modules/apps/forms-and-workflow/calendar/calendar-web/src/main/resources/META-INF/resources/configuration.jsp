@@ -18,33 +18,41 @@
 
 <liferay-portlet:actionURL portletConfiguration="<%= true %>" var="configurationActionURL" />
 
-<aui:form action="<%= configurationActionURL %>" cssClass="container-fluid-1280" method="post" name="fm">
+<liferay-frontend:edit-form
+	action="<%= configurationActionURL %>"
+	method="post"
+	name="fm"
+>
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
 
-	<div class="portlet-configuration-body-content">
-		<div class="container-fluid-1280">
-			<liferay-ui:tabs
-				names='<%= "user-settings,display-settings,rss" %>'
-				param="tabs2"
-				refresh="<%= false %>"
-				type="tabs nav-tabs-default"
-			>
-				<liferay-ui:section>
+	<liferay-frontend:edit-form-body>
+		<liferay-ui:tabs
+			names='<%= "user-settings,display-settings,rss" %>'
+			param="tabs2"
+			refresh="<%= false %>"
+			type="tabs nav-tabs-default"
+		>
+			<liferay-ui:section>
+				<liferay-frontend:fieldset-group>
 					<%@ include file="/configuration/user_settings.jspf" %>
-				</liferay-ui:section>
+				</liferay-frontend:fieldset-group>
+			</liferay-ui:section>
 
-				<liferay-ui:section>
+			<liferay-ui:section>
+				<liferay-frontend:fieldset-group>
 					<%@ include file="/configuration/display_settings.jspf" %>
-				</liferay-ui:section>
+				</liferay-frontend:fieldset-group>
+			</liferay-ui:section>
 
-				<liferay-ui:section>
+			<liferay-ui:section>
+				<liferay-frontend:fieldset-group>
 					<%@ include file="/configuration/rss.jspf" %>
-				</liferay-ui:section>
-			</liferay-ui:tabs>
-		</div>
-	</div>
+				</liferay-frontend:fieldset-group>
+			</liferay-ui:section>
+		</liferay-ui:tabs>
+	</liferay-frontend:edit-form-body>
 
-	<aui:button-row>
+	<liferay-frontend:edit-form-footer>
 		<aui:button type="submit" />
-	</aui:button-row>
-</aui:form>
+	</liferay-frontend:edit-form-footer>
+</liferay-frontend:edit-form>

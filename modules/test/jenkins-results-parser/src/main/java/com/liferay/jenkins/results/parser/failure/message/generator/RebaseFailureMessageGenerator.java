@@ -34,13 +34,24 @@ public class RebaseFailureMessageGenerator extends BaseFailureMessageGenerator {
 			return null;
 		}
 
-		int end = consoleText.indexOf(_TOKEN_REBASE_END);
-
-		end = consoleText.lastIndexOf("\n", end);
-
-		int start = consoleText.lastIndexOf(_TOKEN_REBASE_START, end);
+		int start = consoleText.lastIndexOf(_TOKEN_REBASE_START);
 
 		start = consoleText.lastIndexOf("\n", start);
+
+		int end = consoleText.indexOf(_TOKEN_REBASE_END, start);
+
+		if (end != -1) {
+			end = consoleText.lastIndexOf("\n", end);
+
+			if (end == -1) {
+				end = Math.min(
+					consoleText.length(),
+					start + CONSOLE_TEXT_SNIPPET_MAX_LENGTH);
+			}
+		}
+		else {
+			end = consoleText.length();
+		}
 
 		return Dom4JUtil.getNewElement(
 			"div", null,
@@ -51,7 +62,7 @@ public class RebaseFailureMessageGenerator extends BaseFailureMessageGenerator {
 				Dom4JUtil.getNewElement(
 					"strong", null,
 					getBaseBranchAnchorElement(build.getTopLevelBuild())),
-				getConsoleTextSnippetElement(consoleText, true, start, end)));
+				getConsoleTextSnippetElement(consoleText, false, start, end)));
 	}
 
 	private static final String _TOKEN_REBASE_END = "git rebase --abort";

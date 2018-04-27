@@ -214,7 +214,7 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 		}
 	}
 
-	protected List<File> autoBalanceTestFiles = new ArrayList();
+	protected List<File> autoBalanceTestFiles = new ArrayList<>();
 	protected final Map<Integer, AxisTestClassGroup> axisTestClassGroups =
 		new HashMap<>();
 	protected final String batchName;

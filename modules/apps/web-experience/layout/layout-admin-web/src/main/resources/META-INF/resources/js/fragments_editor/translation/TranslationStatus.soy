@@ -82,24 +82,37 @@
 			{$languageLabel}
 		</span>
 		<span class="dropdown-item-indicator">
-			{if $isDefault}
-				<span class="fragments-editor__translation-status-item__label label label-info">
+			{let $labelClasses kind="text"}
+				fragments-editor__translation-status-item__label
+				{sp}label
+
+				{if $isDefault}
+					{sp}default
+				{elseif $translatedValues == 0}
+					{sp}untranslated
+				{elseif $translatedValues < $translationKeys}
+					{sp}translating
+				{elseif $translatedValues == $translationKeys}
+					{sp}translated
+				{/if}
+			{/let}
+
+			{let $labelContent kind="text"}
+				{if $isDefault}
 					{msg desc=""}default{/msg}
-				</span>
-			{elseif $translatedValues == 0}
-				<span class="fragments-editor__translation-status-item__label label label-secondary">
+				{elseif $translatedValues == 0}
 					{msg desc=""}not-translated{/msg}
-				</span>
-			{elseif $translatedValues < $translationKeys}
-				<span class="fragments-editor__translation-status-item__label label label-warning">
-					{msg desc=""}translating{/msg}{sp}
-					{$translatedValues}/{$translationKeys}
-				</span>
-			{elseif $translatedValues == $translationKeys}
-				<span class="fragments-editor__translation-status-item__label label label-success">
+				{elseif $translatedValues < $translationKeys}
+					{msg desc=""}translating{/msg}
+					{sp}{$translatedValues}/{$translationKeys}
+				{elseif $translatedValues == $translationKeys}
 					{msg desc=""}translated{/msg}
-				</span>
-			{/if}
+				{/if}
+			{/let}
+
+			<span class="{$labelClasses}">
+				{$labelContent}
+			</span>
 		</span>
 	</a>
 {/template}

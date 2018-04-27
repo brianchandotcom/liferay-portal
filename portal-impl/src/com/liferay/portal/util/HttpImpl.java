@@ -505,6 +505,8 @@ public class HttpImpl implements Http {
 			return url;
 		}
 
+		url = url.trim();
+
 		if (_getProtocolDelimiterIndex(url) < 0) {
 			url = Http.HTTPS_WITH_SLASH + url;
 		}

@@ -352,12 +352,10 @@ public class CSSCompressor {
 			if (token.indexOf("___YUICSSMIN_PRESERVE_CANDIDATE_COMMENT_") >=
 					0) {
 
-				String comment = comments.get(i);
-
-				for (int i = 0, max = comments.size(); i < max; i += 1) {
+				for (int i = 0; i < comments.size(); i++) {
 					token = token.replace(
 						"___YUICSSMIN_PRESERVE_CANDIDATE_COMMENT_" + i + "___",
-						comment);
+						comments.get(i));
 				}
 			}
 
@@ -461,7 +459,7 @@ public class CSSCompressor {
 	private String _removeComments(
 		String css, List<String> comments, List<String> preservedTokens) {
 
-		for (int i = 0, max = comments.size(); i < max; i += 1) {
+		for (int i = 0; i < comments.size(); i++) {
 			String comment = comments.get(i);
 
 			String placeholder =
@@ -623,7 +621,7 @@ public class CSSCompressor {
 	private String _restorePreservedTokens(
 		String css, List<String> preservedTokens) {
 
-		for (int i = 0, max = preservedTokens.size(); i < max; i++) {
+		for (int i = 0; i < preservedTokens.size(); i++) {
 			String preservedToken = preservedTokens.get(i);
 
 			css = css.replace(

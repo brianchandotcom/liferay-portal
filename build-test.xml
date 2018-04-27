@@ -6045,7 +6045,14 @@ osb.lcs.portlet.oauth.consumer.secret=${osb.lcs.portlet.oauth.consumer.secret}</
 	<target name="prepare-osgi-module-configurations">
 		<get-testcase-property property.name="osgi.module.configurations" />
 
-		<prepare-blacklist-configuration />
+		<if>
+			<not>
+				<available file="${liferay.home}/osgi/configs/com.liferay.portal.bundle.blacklist.internal.BundleBlacklistConfiguration.config" />
+			</not>
+			<then>
+				<prepare-blacklist-configuration />
+			</then>
+		</if>
 
 		<if>
 			<not>

@@ -1573,6 +1573,7 @@ public class AssetPublisherDisplayContext {
 	private String _ddmStructureFieldName;
 	private String _ddmStructureFieldValue;
 	private Boolean _defaultAssetPublisher;
+	private Integer _delta;
 	private String _displayStyle;
 	private Long _displayStyleGroupId;
 	private Boolean _enableCommentRatings;

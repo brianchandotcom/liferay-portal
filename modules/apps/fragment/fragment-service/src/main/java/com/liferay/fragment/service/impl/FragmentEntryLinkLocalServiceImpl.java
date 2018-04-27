@@ -304,24 +304,30 @@ public class FragmentEntryLinkLocalServiceImpl
 	}
 
 	@Override
-	public FragmentEntryLink updateLatestChanges(long fragmentEntryLinkId)
+	public void updateLatestChanges(long fragmentEntryLinkId)
 		throws PortalException {
 
-		FragmentEntryLink fragmentEntryLink =
+		FragmentEntryLink oldFragmentEntryLink =
 			fragmentEntryLinkPersistence.findByPrimaryKey(fragmentEntryLinkId);
 
 		FragmentEntry fragmentEntry = fragmentEntryPersistence.findByPrimaryKey(
-			fragmentEntryLink.getFragmentEntryId());
+			oldFragmentEntryLink.getFragmentEntryId());
 
-		fragmentEntryLink.setCss(fragmentEntry.getCss());
-		fragmentEntryLink.setHtml(fragmentEntry.getHtml());
-		fragmentEntryLink.setJs(fragmentEntry.getJs());
+		List<FragmentEntryLink> fragmentEntryLinks =
+			fragmentEntryLinkPersistence.findByG_C_C(
+				oldFragmentEntryLink.getGroupId(),
+				oldFragmentEntryLink.getClassNameId(),
+				oldFragmentEntryLink.getClassPK());
 
-		fragmentEntryLink.setLastPropagationDate(new Date());
+		for (FragmentEntryLink fragmentEntryLink : fragmentEntryLinks) {
+			fragmentEntryLink.setCss(fragmentEntry.getCss());
+			fragmentEntryLink.setHtml(fragmentEntry.getHtml());
+			fragmentEntryLink.setJs(fragmentEntry.getJs());
 
-		fragmentEntryLinkPersistence.update(fragmentEntryLink);
+			fragmentEntryLink.setLastPropagationDate(new Date());
 
-		return fragmentEntryLink;
+			fragmentEntryLinkPersistence.update(fragmentEntryLink);
+		}
 	}
 
 	@ServiceReference(type = FragmentEntryProcessorRegistry.class)

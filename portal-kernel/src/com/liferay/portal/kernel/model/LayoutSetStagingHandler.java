@@ -154,7 +154,7 @@ public class LayoutSetStagingHandler
 	private Object _toEscapedModel() {
 		return ProxyUtil.newProxyInstance(
 			PortalClassLoaderUtil.getClassLoader(),
-			new Class<?>[] {Layout.class, ModelWrapper.class},
+			new Class<?>[] {LayoutSet.class, ModelWrapper.class},
 			new LayoutSetStagingHandler(_layoutSet.toEscapedModel()));
 	}
 

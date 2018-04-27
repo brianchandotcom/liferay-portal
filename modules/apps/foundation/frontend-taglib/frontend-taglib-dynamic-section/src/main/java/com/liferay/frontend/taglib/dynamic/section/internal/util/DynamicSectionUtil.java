@@ -15,6 +15,7 @@
 package com.liferay.frontend.taglib.dynamic.section.internal.util;
 
 import com.liferay.frontend.taglib.dynamic.section.DynamicSection;
+import com.liferay.frontend.taglib.dynamic.section.DynamicSectionReplace;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -37,9 +38,20 @@ import org.osgi.service.component.annotations.Component;
 @Component(immediate = true)
 public class DynamicSectionUtil {
 
+	public static boolean hasReplace(String name) {
+		DynamicSectionReplace dynamicSectionReplace =
+			_dynamicSectionReplaceServiceTrackerMap.getService(name);
+
+		if (dynamicSectionReplace == null) {
+			return false;
+		}
+
+		return true;
+	}
+
 	public static boolean hasServices(String name) {
-		List<DynamicSection> dynamicSections = _serviceTrackerMap.getService(
-			name);
+		List<DynamicSection> dynamicSections =
+			_dynamicSectionServiceTrackerMap.getService(name);
 
 		if ((dynamicSections == null) || dynamicSections.isEmpty()) {
 			return false;
@@ -52,8 +64,8 @@ public class DynamicSectionUtil {
 			String name, PageContext pageContext, StringBundler sb)
 		throws Exception {
 
-		List<DynamicSection> dynamicSections = _serviceTrackerMap.getService(
-			name);
+		List<DynamicSection> dynamicSections =
+			_dynamicSectionServiceTrackerMap.getService(name);
 
 		if (dynamicSections == null) {
 			return sb;
@@ -66,13 +78,34 @@ public class DynamicSectionUtil {
 		return sb;
 	}
 
+	public static String replace(String name, PageContext pageContext)
+		throws Exception {
+
+		DynamicSectionReplace dynamicSectionReplace =
+			_dynamicSectionReplaceServiceTrackerMap.getService(name);
+
+		if (dynamicSectionReplace != null) {
+			return dynamicSectionReplace.replace(pageContext);
+		}
+
+		throw new IllegalArgumentException(
+			StringBundler.concat(
+				"No ", DynamicSectionReplace.class.getName(),
+				" found for name ", name));
+	}
+
 	@Activate
 	protected void activate(BundleContext bundleContext) {
-		_serviceTrackerMap = ServiceTrackerMapFactory.openMultiValueMap(
-			bundleContext, DynamicSection.class, "(name=*)",
-			(serviceReference, emitter) ->
-				emitter.emit((String)serviceReference.getProperty("name")),
-			Comparator.comparing(this::_getServiceRanking));
+		_dynamicSectionServiceTrackerMap =
+			ServiceTrackerMapFactory.openMultiValueMap(
+				bundleContext, DynamicSection.class, "(name=*)",
+				(serviceReference, emitter) ->
+					emitter.emit((String)serviceReference.getProperty("name")),
+				Comparator.comparing(this::_getServiceRanking));
+
+		_dynamicSectionReplaceServiceTrackerMap =
+			ServiceTrackerMapFactory.openSingleValueMap(
+				bundleContext, DynamicSectionReplace.class, "name");
 	}
 
 	private Integer _getServiceRanking(ServiceReference serviceReference) {
@@ -82,7 +115,9 @@ public class DynamicSectionUtil {
 		return GetterUtil.getInteger(serviceRankingObject.toString());
 	}
 
+	private static ServiceTrackerMap<String, DynamicSectionReplace>
+		_dynamicSectionReplaceServiceTrackerMap;
 	private static ServiceTrackerMap<String, List<DynamicSection>>
-		_serviceTrackerMap;
+		_dynamicSectionServiceTrackerMap;
 
 }

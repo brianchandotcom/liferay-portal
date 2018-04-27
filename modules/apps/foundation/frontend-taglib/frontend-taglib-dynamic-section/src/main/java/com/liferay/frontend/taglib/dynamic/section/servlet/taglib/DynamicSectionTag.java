@@ -15,6 +15,7 @@
 package com.liferay.frontend.taglib.dynamic.section.servlet.taglib;
 
 import com.liferay.frontend.taglib.dynamic.section.internal.util.DynamicSectionUtil;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.taglib.BaseBodyTagSupport;
 
@@ -31,32 +32,37 @@ public class DynamicSectionTag extends BaseBodyTagSupport implements BodyTag {
 	@Override
 	public int doEndTag() throws JspException {
 		try {
-			if (!_hasServices) {
-				return EVAL_PAGE;
-			}
-
-			ServletRequest servletRequest = pageContext.getRequest();
-
-			String key = _generateKey(_name);
-
-			StringBundler sb = null;
-
-			if (_useOriginalBody) {
-				sb = (StringBundler)servletRequest.getAttribute(key);
-			}
-			else {
-				sb = getBodyContentAsStringBundler();
-
-				servletRequest.setAttribute(key, sb);
-
-				sb = DynamicSectionUtil.modify(_name, pageContext, sb);
-
-				servletRequest.removeAttribute(key);
-			}
-
 			JspWriter jspWriter = pageContext.getOut();
 
-			jspWriter.write(sb.toString());
+			String content = StringPool.BLANK;
+
+			if (_hasReplace) {
+				content = DynamicSectionUtil.replace(_name, pageContext);
+			}
+			else if (_hasServices) {
+				ServletRequest servletRequest = pageContext.getRequest();
+
+				String key = _generateKey(_name);
+
+				StringBundler sb = null;
+
+				if (_useOriginalBody) {
+					sb = (StringBundler)servletRequest.getAttribute(key);
+				}
+				else {
+					sb = getBodyContentAsStringBundler();
+
+					servletRequest.setAttribute(key, sb);
+
+					sb = DynamicSectionUtil.modify(_name, pageContext, sb);
+
+					servletRequest.removeAttribute(key);
+				}
+
+				content = sb.toString();
+			}
+
+			jspWriter.write(content);
 
 			return EVAL_PAGE;
 		}
@@ -66,12 +72,19 @@ public class DynamicSectionTag extends BaseBodyTagSupport implements BodyTag {
 		finally {
 			_name = null;
 			_hasServices = false;
+			_hasReplace = false;
 			_useOriginalBody = false;
 		}
 	}
 
 	@Override
 	public int doStartTag() {
+		_hasReplace = DynamicSectionUtil.hasReplace(_name);
+
+		if (_hasReplace) {
+			return SKIP_BODY;
+		}
+
 		_hasServices = DynamicSectionUtil.hasServices(_name);
 
 		if (_hasServices) {
@@ -93,6 +106,7 @@ public class DynamicSectionTag extends BaseBodyTagSupport implements BodyTag {
 		return DynamicSectionTag.class.getName() + "#" + name;
 	}
 
+	private boolean _hasReplace;
 	private boolean _hasServices;
 	private String _name;
 	private boolean _useOriginalBody;

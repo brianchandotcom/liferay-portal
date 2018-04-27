@@ -62,19 +62,21 @@ public class ProductDefinitionHelper {
 		String keywords, int start, int end, Sort sort,
 		ServiceContext serviceContext) {
 
-		Map<String, Serializable> attributes = new HashMap<>();
-		LinkedHashMap<String, Object> params = new LinkedHashMap<>();
-
-		params.put("keywords", keywords);
-
 		SearchContext searchContext = new SearchContext();
+
+		Map<String, Serializable> attributes = new HashMap<>();
 
 		attributes.put(Field.ENTRY_CLASS_PK, keywords);
 		attributes.put(Field.STATUS, WorkflowConstants.STATUS_APPROVED);
 
+		LinkedHashMap<String, Object> params = new LinkedHashMap<>();
+
+		params.put("keywords", keywords);
+
 		attributes.put("params", params);
 
 		searchContext.setAttributes(attributes);
+
 		searchContext.setStart(start);
 		searchContext.setEnd(end);
 		searchContext.setCompanyId(serviceContext.getCompanyId());
@@ -91,13 +93,9 @@ public class ProductDefinitionHelper {
 
 		QueryConfig queryConfig = searchContext.getQueryConfig();
 
-		queryConfig.addSelectedFieldNames(Field.CREATE_DATE);
-		queryConfig.addSelectedFieldNames(Field.ENTRY_CLASS_PK);
-		queryConfig.addSelectedFieldNames(Field.DESCRIPTION);
-		queryConfig.addSelectedFieldNames(Field.GROUP_ID);
-		queryConfig.addSelectedFieldNames(Field.MODIFIED_DATE);
-		queryConfig.addSelectedFieldNames(Field.TITLE);
-		queryConfig.addSelectedFieldNames(Field.USER_ID);
+		queryConfig.addSelectedFieldNames(
+			Field.CREATE_DATE, Field.ENTRY_CLASS_PK, Field.DESCRIPTION,
+			Field.GROUP_ID, Field.MODIFIED_DATE, Field.TITLE, Field.USER_ID);
 
 		queryConfig.setLocale(serviceContext.getLocale());
 		queryConfig.setHighlightEnabled(false);

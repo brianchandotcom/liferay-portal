@@ -37,7 +37,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
 /**
-* @author Marco Leo
+ * @author Marco Leo
  */
 public class OrderSummaryCheckoutStepDisplayContext {
 

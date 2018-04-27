@@ -532,8 +532,7 @@ public class CPInstanceHelperImpl implements CPInstanceHelper {
 	 * 		'cpDefinitionId=56698', ';', '56703=', getValue('56703'), ';',
 	 * 		'56706=', getValue('56706')),
 	 * 	'56703=color;56706=size')
-	 * </pre>
-	 */
+	 * </pre>	 */
 	protected String createDDMFormRuleAction(
 		DDMForm ddmForm, long cpDefinitionId) {
 
@@ -552,8 +551,7 @@ public class CPInstanceHelperImpl implements CPInstanceHelper {
 	 * <pre>
 	 * 	not(isEmpty(getValue('{sizeFieldName}'))) OR
 	 * 	not(isEmpty(getValue('{colorFieldName}')))
-	 * </pre>
-	 */
+	 * </pre>	 */
 	protected String createDDMFormRuleCondition(DDMForm ddmForm) {
 		String notEmptyStatement = "not(isEmpty(getValue('%s')))";
 

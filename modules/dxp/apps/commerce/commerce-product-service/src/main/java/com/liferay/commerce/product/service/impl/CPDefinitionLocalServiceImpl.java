@@ -699,7 +699,8 @@ public class CPDefinitionLocalServiceImpl
 	/**
 	 * Moves the commerce product definition to the recycle bin.
 	 *
-	 * @param  userId the primary key of the user moving the commerce product definition
+	 * @param  userId the primary key of the user moving the commerce product
+	 *         definition
 	 * @param  cpDefinition the commerce product definition to be moved
 	 * @return the moved commerce product definition
 	 */
@@ -742,8 +743,10 @@ public class CPDefinitionLocalServiceImpl
 	/**
 	 * Moves the commerce product definition with the ID to the recycle bin.
 	 *
-	 * @param  userId the primary key of the user moving the commerce product definition
-	 * @param  cpDefinitionId the primary key of the commerce product definition to be moved
+	 * @param  userId the primary key of the user moving the commerce product
+	 *         definition
+	 * @param  cpDefinitionId the primary key of the commerce product definition
+	 *         to be moved
 	 * @return the moved commerce product definition
 	 */
 	@Override
@@ -759,10 +762,13 @@ public class CPDefinitionLocalServiceImpl
 	}
 
 	/**
-	 * Restores the commerce product definition with the ID from the recycle bin.
+	 * Restores the commerce product definition with the ID from the recycle
+	 * bin.
 	 *
-	 * @param  userId the primary key of the user restoring the commerce product definition
-	 * @param  cpDefinitionId the primary key of the commerce product definition to be restored
+	 * @param  userId the primary key of the user restoring the commerce product
+	 *         definition
+	 * @param  cpDefinitionId the primary key of the commerce product definition
+	 *         to be restored
 	 * @return the restored commerce product definition from the recycle bin
 	 */
 	@Indexable(type = IndexableType.REINDEX)

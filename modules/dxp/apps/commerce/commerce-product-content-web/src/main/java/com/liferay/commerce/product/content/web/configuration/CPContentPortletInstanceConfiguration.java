@@ -20,7 +20,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 
 /**
  * @author Marco Leo
-*/
+ */
 @ExtendedObjectClassDefinition(
 	category = "commerce",
 	scope = ExtendedObjectClassDefinition.Scope.PORTLET_INSTANCE

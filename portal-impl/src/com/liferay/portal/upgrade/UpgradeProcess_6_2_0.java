@@ -111,12 +111,12 @@ public class UpgradeProcess_6_2_0 extends Pre7UpgradeProcess {
 		upgrade(new UpgradeWiki());
 		upgrade(new UpgradeWikiAttachments());
 
-		verifyUUIDModels();
+		populateUUIDModels();
 
 		clearIndexesCache();
 	}
 
-	protected void verifyUUIDModels() throws Exception {
+	protected void populateUUIDModels() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
 			VerifyUUID.verify(
 				new AddressVerifiableModel(),

@@ -113,12 +113,12 @@ public class UpgradeProcess_7_0_0 extends UpgradeProcess {
 
 		upgrade(new UpgradeMobileDeviceRules());
 
-		verifyUUIDModels();
+		populateUUIDModels();
 
 		clearIndexesCache();
 	}
 
-	protected void verifyUUIDModels() throws Exception {
+	protected void populateUUIDModels() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
 			VerifyUUID.verify(
 				new AssetTagVerifiableModel(),

@@ -52,7 +52,7 @@ templateSearch.setOrderByType(ddmDisplayContext.getOrderByType());
 	<portlet:param name="mvcPath" value="/select_template.jsp" />
 </portlet:actionURL>
 
-<liferay-util:include page="/template_navigation_bar.jsp" servletContext="<%= application %>">
+<liferay-util:include page="/navigation_bar.jsp" servletContext="<%= application %>">
 	<liferay-util:param name="mvcPath" value="/select_template.jsp" />
 	<liferay-util:param name="tabs1" value="<%= tabs1 %>" />
 	<liferay-util:param name="templateId" value="<%= String.valueOf(templateId) %>" />

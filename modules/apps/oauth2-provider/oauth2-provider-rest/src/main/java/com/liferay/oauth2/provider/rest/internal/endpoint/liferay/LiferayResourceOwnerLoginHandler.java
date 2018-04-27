@@ -55,13 +55,13 @@ public class LiferayResourceOwnerLoginHandler
 			}
 
 			UserSubject userSubject = new UserSubject(
-				user.getLogin(), GetterUtil.getString(user.getUserId()));
+				user.getLogin(), Long.toString(user.getUserId()));
 
 			Map<String, String> properties = userSubject.getProperties();
 
 			properties.put(
 				OAuth2ProviderRestEndpointConstants.PROPERTY_KEY_COMPANY_ID,
-				GetterUtil.getString(user.getCompanyId()));
+				Long.toString(user.getCompanyId()));
 
 			return userSubject;
 		}

@@ -32,8 +32,8 @@ import java.util.Map;
 public class ProductCreatorForm {
 
 	/**
-	 * Builds a {@code Form} that generates {@code ProductCreatorForm}
-	 * depending on the HTTP body.
+	 * Builds a {@code Form} that generates {@code ProductCreatorForm} depending
+	 * on the HTTP body.
 	 *
 	 * @param  formBuilder the {@code Form} builder
 	 * @return a product creator form

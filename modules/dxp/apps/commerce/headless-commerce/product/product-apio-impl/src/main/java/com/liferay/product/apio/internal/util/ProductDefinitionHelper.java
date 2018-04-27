@@ -51,15 +51,14 @@ import org.osgi.service.component.annotations.Reference;
 public class ProductDefinitionHelper {
 
 	/**
-	 * Builds the SearchContext for finding {@link CPDefinition}'s
-	 * {@link com.liferay.portal.kernel.search.Document}
+	 * Builds the SearchContext for finding {@link CPDefinition}'s {@link
+	 * com.liferay.portal.kernel.search.Document}
 	 *
-	 * @param keywords
-	 * @param start
-	 * @param end
-	 * @param sort
-	 * @param serviceContext
-	 *
+	 * @param  keywords
+	 * @param  start
+	 * @param  end
+	 * @param  sort
+	 * @param  serviceContext
 	 * @return SearchContext
 	 */
 	public SearchContext buildSearchContext(
@@ -171,13 +170,12 @@ public class ProductDefinitionHelper {
 	/**
 	 * Compose the ServiceContext object which is needed to add or update a
 	 * {@link CPDefinition}
-	 * @see BaseCPDemoDataCreatorHelper
 	 *
-	 * @param groupId
-	 * @param assetCategoryIds
-	 *
+	 * @param  groupId
+	 * @param  assetCategoryIds
 	 * @return ServiceContext
 	 * @throws PortalException
+	 * @see    BaseCPDemoDataCreatorHelper
 	 */
 	public ServiceContext getServiceContext(
 			long groupId, long[] assetCategoryIds)

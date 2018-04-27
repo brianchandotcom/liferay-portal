@@ -25,6 +25,7 @@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
 <%@ page import="com.liferay.frontend.taglib.clay.servlet.taglib.util.JSPNavigationItemList" %><%@
+page import="com.liferay.notifications.web.internal.display.context.NotificationsManagementToolbarDisplayContext" %><%@
 page import="com.liferay.notifications.web.internal.search.UserNotificationEventRowChecker" %><%@
 page import="com.liferay.notifications.web.internal.util.NotificationsUtil" %><%@
 page import="com.liferay.notifications.web.internal.util.comparator.PortletIdComparator" %><%@

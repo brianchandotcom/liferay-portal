@@ -8,7 +8,6 @@ import org.osgi.service.component.annotations.Component;
 
 /**
  * @author ${author}
- * @generated
  */
 @Component(
 	immediate = true,

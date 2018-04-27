@@ -19,6 +19,9 @@ package com.liferay.document.library.web.internal.constants;
  */
 public class DLWebKeys {
 
+	public static final String DOCUMENT_LIBRARY_ADMIN_DISPLAY_CONTEXT =
+		"DOCUMENT_LIBRARY_ADMIN_DISPLAY_CONTEXT";
+
 	public static final String DOCUMENT_LIBRARY_GROUP_SERVICE_SETTINGS =
 		"DOCUMENT_LIBRARY_GROUP_SERVICE_SETTINGS";
 

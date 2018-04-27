@@ -81,27 +81,29 @@ CommerceOrder commerceOrder = commerceOrganizationOrderDisplayContext.getCommerc
 				<liferay-util:include page="/order_transition.jsp" servletContext="<%= application %>" />
 			</div>
 
-			<div class="autofit-col">
-				<liferay-ui:icon-menu
-					direction="right"
-					icon="<%= StringPool.BLANK %>"
-					markupView="lexicon"
-					message="<%= StringPool.BLANK %>"
-					showWhenSingleIcon="<%= true %>"
-					triggerCssClass="component-action"
-				>
-					<portlet:actionURL name="editCommerceOrderItem" var="deleteURL">
-						<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.RESET %>" />
-						<portlet:param name="redirect" value="<%= currentURL %>" />
-						<portlet:param name="commerceOrderId" value="<%= String.valueOf(commerceOrder.getCommerceOrderId()) %>" />
-					</portlet:actionURL>
+			<c:if test="<%= commerceOrganizationOrderDisplayContext.hasPermission(commerceOrder, ActionKeys.UPDATE) %>">
+				<div class="autofit-col">
+					<liferay-ui:icon-menu
+						direction="right"
+						icon="<%= StringPool.BLANK %>"
+						markupView="lexicon"
+						message="<%= StringPool.BLANK %>"
+						showWhenSingleIcon="<%= true %>"
+						triggerCssClass="component-action"
+					>
+						<portlet:actionURL name="editCommerceOrderItem" var="deleteURL">
+							<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.RESET %>" />
+							<portlet:param name="redirect" value="<%= currentURL %>" />
+							<portlet:param name="commerceOrderId" value="<%= String.valueOf(commerceOrder.getCommerceOrderId()) %>" />
+						</portlet:actionURL>
 
-					<liferay-ui:icon-delete
-						message="delete-all"
-						url="<%= deleteURL %>"
-					/>
-				</liferay-ui:icon-menu>
-			</div>
+						<liferay-ui:icon-delete
+							message="delete-all"
+							url="<%= deleteURL %>"
+						/>
+					</liferay-ui:icon-menu>
+				</div>
+			</c:if>
 		</c:if>
 	</div>
 </div>
@@ -300,7 +302,7 @@ CommerceOrder commerceOrder = commerceOrganizationOrderDisplayContext.getCommerc
 			value="<%= commerceOrganizationOrderDisplayContext.getCommerceOrderItemPrice(commerceOrderItem) %>"
 		/>
 
-		<c:if test="<%= commerceOrder.isOpen() %>">
+		<c:if test="<%= commerceOrganizationOrderDisplayContext.hasPermission(commerceOrder, ActionKeys.UPDATE) && commerceOrder.isOpen() %>">
 			<liferay-ui:search-container-column-text>
 				<portlet:actionURL name="editCommerceOrderItem" var="deleteURL">
 					<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE %>" />

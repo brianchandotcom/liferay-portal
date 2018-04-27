@@ -902,6 +902,7 @@ public class ServiceBuilder {
 						}
 
 						if (entity.isUADEnabled()) {
+							_createBaseUADAnonymizer(entity);
 							_createBaseUADExporter(entity);
 							_createUADAggregator(entity);
 							_createUADAggregatorTest(entity);
@@ -926,6 +927,7 @@ public class ServiceBuilder {
 							}
 						}
 						else {
+							//_removeBaseUADAnonymizer(entity);
 							//_removeBaseUADExporter(entity);
 							//_removeUADAggregator(entity);
 							//_removeUADAggregatorTest(entity);
@@ -2140,6 +2142,36 @@ public class ServiceBuilder {
 		if (indexMetadata != null) {
 			indexMetadatas.add(indexMetadata);
 		}
+	}
+
+	private void _createBaseUADAnonymizer(Entity entity) throws Exception {
+		Map<String, Object> context = _getContext();
+
+		JavaClass javaClass = _getJavaClass(
+			StringBundler.concat(
+				_outputPath, "/service/impl/", entity.getName(),
+				_getSessionTypeName(_SESSION_TYPE_LOCAL), "ServiceImpl.java"));
+
+		String deleteUADEntityMethodName = _getDeleteUADEntityMethodName(
+			javaClass, entity.getName());
+
+		context.put("deleteUADEntityMethodName", deleteUADEntityMethodName);
+
+		context.put("entity", entity);
+
+		// Content
+
+		String content = _processTemplate(_tplBaseUADAnonymizer, context);
+
+		// Write file
+
+		File file = new File(
+			StringBundler.concat(
+				_uadOutputPath, "/uad/anonymizer/Base", entity.getName(),
+				"UADAnonymizer.java"));
+
+		ToolsUtil.writeFile(
+			file, content, _author, _jalopySettings, _modifiedFileNames);
 	}
 
 	private void _createBaseUADExporter(Entity entity) throws Exception {
@@ -4012,16 +4044,6 @@ public class ServiceBuilder {
 
 	private void _createUADAnonymizer(Entity entity) throws Exception {
 		Map<String, Object> context = _getContext();
-
-		JavaClass javaClass = _getJavaClass(
-			StringBundler.concat(
-				_outputPath, "/service/impl/", entity.getName(),
-				_getSessionTypeName(_SESSION_TYPE_LOCAL), "ServiceImpl.java"));
-
-		String deleteUADEntityMethodName = _getDeleteUADEntityMethodName(
-			javaClass, entity.getName());
-
-		context.put("deleteUADEntityMethodName", deleteUADEntityMethodName);
 
 		context.put("entity", entity);
 
@@ -6328,6 +6350,13 @@ public class ServiceBuilder {
 		file.delete();
 	}
 
+	private void _removeBaseUADAnonymizer(Entity entity) {
+		_deleteFile(
+			StringBundler.concat(
+				_uadOutputPath, "/uad/anonymizer/Base", entity.getName(),
+				"UADAnonymizer.java"));
+	}
+
 	private void _removeBaseUADExporter(Entity entity) {
 		_deleteFile(
 			StringBundler.concat(
@@ -6747,6 +6776,7 @@ public class ServiceBuilder {
 	private String _tplBadAliasNames = _TPL_ROOT + "bad_alias_names.txt";
 	private String _tplBadColumnNames = _TPL_ROOT + "bad_column_names.txt";
 	private String _tplBadTableNames = _TPL_ROOT + "bad_table_names.txt";
+	private String _tplBaseUADAnonymizer = _TPL_ROOT + "base_uad_anonymizer.ftl";
 	private String _tplBaseUADExporter = _TPL_ROOT + "base_uad_exporter.ftl";
 	private String _tplBlobModel = _TPL_ROOT + "blob_model.ftl";
 	private String _tplEjbPK = _TPL_ROOT + "ejb_pk.ftl";
